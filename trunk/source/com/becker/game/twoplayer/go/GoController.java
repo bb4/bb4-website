@@ -51,6 +51,21 @@ import javax.swing.*;
  * In reality, I'll probably never finish. That's ok, I'm not sure I want to. I enjoy doing it.
  *
  * bugs
+ *  - some eyes are marked true when they are clearly not (eg if one of tthe border stones is in atari.
+ *  - exception after undo
+ *  	at com.becker.common.Assert.exception(Assert.java:153)
+	at com.becker.game.twoplayer.go.GoBoard.confirmStoneInValidGroup(GoBoard.java:2195)
+	at com.becker.game.twoplayer.go.GoBoard.confirmStonesInValidGroups(GoBoard.java:2172)
+	at com.becker.game.twoplayer.go.GoBoard.updateAfterRestoringCaptures(GoBoard.java:1450)
+	at com.becker.game.twoplayer.go.GoBoard.undoMove(GoBoard.java:443)
+	at com.becker.game.twoplayer.go.GoController.generateMoves(GoController.java:600)
+	at com.becker.game.twoplayer.common.search.MiniMaxStrategy.search(MiniMaxStrategy.java:58)
+	at com.becker.game.twoplayer.common.TwoPlayerController.findComputerMove(TwoPlayerController.java:458)
+	at com.becker.game.twoplayer.common.TwoPlayerController.access$100(TwoPlayerController.java:25)
+	at com.becker.game.twoplayer.common.TwoPlayerController$1.construct(TwoPlayerController.java:596)
+	at com.becker.common.Worker$1.run(Worker.java:111)
+	at java.lang.Thread.run(Thread.java:595)
+
  *  - pause/continue not working in tree dialog.
  *  - at end of game, computer plays in its own eyes instead of passing.
  *  - When the computer plays in your eye, the eye goes away. It should not.

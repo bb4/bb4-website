@@ -4,6 +4,7 @@ import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
 import com.becker.game.twoplayer.go.GoController;
 import com.becker.game.twoplayer.common.ui.TwoPlayerInfoPanel;
+import com.becker.ui.ContinuousColorLegend;
 
 import javax.swing.*;
 
@@ -26,6 +27,8 @@ final class GoInfoPanel extends TwoPlayerInfoPanel implements GameChangedListene
 
     private static final String COLON = " " + GameContext.getLabel("COLON")+ " ";
 
+    private JPanel legendPanel_;
+
     //Construct the GoInfoPael
     public GoInfoPanel( GameController controller )
     {
@@ -35,6 +38,16 @@ final class GoInfoPanel extends TwoPlayerInfoPanel implements GameChangedListene
     protected final String getTitleText()
     {
         return GameContext.getLabel("GO_INFO");
+    }
+
+
+    protected void createSubPanels()
+    {
+        super.createSubPanels();
+
+        legendPanel_ = createLegendPanel();
+        this.add( legendPanel_ );
+        legendPanel_.setVisible(GameContext.getDebugMode() > 0);
     }
 
 
@@ -69,6 +82,13 @@ final class GoInfoPanel extends TwoPlayerInfoPanel implements GameChangedListene
         return customPanel;
     }
 
+    protected JPanel createLegendPanel() {
+        JPanel legendPanel = createSectionPanel("Group Health Legend");
+        GoBoardViewer gv = (GoBoardViewer)controller_.getViewer();
+        legendPanel.add(new ContinuousColorLegend(null, gv.getColorMap()));
+        return legendPanel;
+    }
+
     /**
      * update the info with controller stats when the game changes.
      */
@@ -85,6 +105,8 @@ final class GoInfoPanel extends TwoPlayerInfoPanel implements GameChangedListene
 
         p1TerritoryLabel_.setText( goController.getTerritoryEstimate( true ) + " " );
         p2TerritoryLabel_.setText( goController.getTerritoryEstimate( false ) + " " );
+
+        legendPanel_.setVisible(GameContext.getDebugMode() > 0);
     }
 
 }

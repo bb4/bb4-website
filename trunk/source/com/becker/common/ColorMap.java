@@ -66,12 +66,35 @@ public class ColorMap
 
     public Color getMinColor()
     {
-        return  colors_[0];
+        return colors_[0];
     }
 
     public Color getMaxColor()
     {
-        return  colors_[values_.length-1];
+        return colors_[values_.length-1];
     }
 
+    public double getMinValue() {
+        return values_[0];
+    }
+
+    public double getMaxValue() {
+        return values_[values_.length-1];
+    }
+
+    public double getMidPointValue() {
+        return (getMaxValue() - getMinValue())/2.0;
+    }
+
+    public double getValueRange() {
+        return getMaxValue() - getMinValue();
+    }
+
+    public Color[] getColors() {
+        return colors_;
+    }
+
+    public double[] getValues() {
+        return values_;
+    }
 }

@@ -129,6 +129,7 @@ public class PokerGameViewer extends GameBoardViewer
                 break;
             case CALL : 
                 int callAmount = pc.getCurrentMaxContribution() - robot.getContribution();
+                System.out.println("PGV: robot call amount = currentMaxContrib - robot.getContrib) = "+pc.getCurrentMaxContribution()+" - "+robot.getContribution());
                 if (callAmount <= robot.getCash())   {
                     robot.contributeToPot(pc, callAmount);
                 } else {

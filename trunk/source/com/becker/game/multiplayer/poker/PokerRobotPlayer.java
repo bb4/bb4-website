@@ -26,6 +26,8 @@ public abstract class PokerRobotPlayer extends PokerPlayer
     }
 
 
+    public abstract String getType();
+
     /**
      *
      * @return an appropriate action based on the situation
@@ -73,6 +75,8 @@ public abstract class PokerRobotPlayer extends PokerPlayer
         return null;
 
     }
+
+
 
     protected int min(int a, int b, int c) {
         return Math.min(Math.min(a, b), c);

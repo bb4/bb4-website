@@ -116,7 +116,7 @@ public final class ImageUtil
      * this will be added as appropriate.
      * @param fileName the fileName should not have an extension because it gets added based on VizContext.imageFormat
      * @param img the image to save
-     * @param type of image ("jpg" or "png" (default)
+     * @param type of image ("jpg" or "png" (default))
      */
     public static void saveAsImage( String fileName, Image img, String type )
     {
@@ -128,10 +128,12 @@ public final class ImageUtil
             else   // png
                 extension = ".png";
 
+            System.out.println("saving as "+  fileName + extension );
             os = new BufferedOutputStream( new FileOutputStream( fileName + extension ) );
         } catch (FileNotFoundException fne) {
             System.out.println( "File " + fileName + " not found" );
         }
+
         writeImage( img, os, type );
     }
 

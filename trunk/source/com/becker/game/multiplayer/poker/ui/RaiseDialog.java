@@ -27,6 +27,7 @@ public final class RaiseDialog extends OptionsDialog
     private int callAmount_;
     private int allInAmount_;
     private int maxRaiseAllowed_;
+    private int ante_;
 
     private static final int DEFAULT_RAISE_AMOUNT = 5; // dollars
 
@@ -36,12 +37,13 @@ public final class RaiseDialog extends OptionsDialog
      * @param callAmount
      * @param allInAmount
      */
-    public RaiseDialog(PokerPlayer player, int callAmount, int allInAmount, int maxRaiseAllowed)
+    public RaiseDialog(PokerPlayer player, int callAmount, int allInAmount, int maxRaiseAllowed, int ante)
     {
         player_ = player;
         callAmount_ = callAmount;
         allInAmount_ = allInAmount;
         maxRaiseAllowed_ = maxRaiseAllowed;
+        ante_ = ante;
         initUI();
     }
 
@@ -75,8 +77,9 @@ public final class RaiseDialog extends OptionsDialog
         }
         raiseAmount_ = new JTextField(DEFAULT_RAISE_AMOUNT);
         NumberInputPanel raiseInput = null;
-        if (player_.getCash() > allInAmount_ && allInAmount_ < maxRaiseAllowed_) {
-            JLabel instr3 = new JLabel("If you want, you can \"all in\" one of the players by raising $"+(allInAmount_ - callAmount_));
+        if ((player_.getCash() > allInAmount_ - player_.getContribution()) && allInAmount_ < maxRaiseAllowed_) {
+
+            JLabel instr3 = new JLabel("If you want, you can \"all in\" one of the players by raising $"+(allInAmount_ - callAmount_ - ante_));
             instructionsPanel.add(instr3, BorderLayout.SOUTH);
         }
         if (callAmount_ > 0) {
@@ -135,7 +138,7 @@ public final class RaiseDialog extends OptionsDialog
             else if ((maxRaiseAllowed_ < allInAmount_) && (getRaiseAmount() > maxRaiseAllowed_))  {
                JOptionPane.showMessageDialog(this, "The maximum raise allowed is $"+maxRaiseAllowed_+". You cannot raise by more than that.");
             }
-            else if (contrib > allInAmount_) {
+            else if (contrib > allInAmount_ - player_.getContribution()) {
                 JOptionPane.showMessageDialog(this, "You cannot raise by more money than the poorest player.");
             }
             else if (getRaiseAmount() > maxRaiseAllowed_) {

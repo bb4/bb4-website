@@ -51,6 +51,7 @@ public class PokerTable extends Board
         return rowsTimesCols_;
     }
 
+    private static final double RADIUS = .65;
     /**
      * place the players around the poker table
      * @param players
@@ -64,10 +65,9 @@ public class PokerTable extends Board
 
         for (int i=0; i<players.length; i++) {
 
-            int row =  (int)(.95*rowRad + (.74*rowRad) * (Math.sin(angle)));
-            int col =  (int)(.91*colRad + (.74*colRad) * (Math.cos(angle)));
+            int row =  (int)(.93*rowRad + (RADIUS*rowRad) * (Math.sin(angle)));
+            int col =  (int)(.9*colRad + (RADIUS*colRad) * (Math.cos(angle)));
 
-            //System.out.println("row = "+row+" col = "+col);
             BoardPosition position = getPosition(row, col);
             position.setPiece(players[i].getPiece());
             players[i].getPiece().setLocation(position.getLocation());

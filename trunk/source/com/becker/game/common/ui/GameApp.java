@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 
 /**
  * This is the application frame wrapper for the game programs.
@@ -28,12 +29,13 @@ public class GameApp implements ActionListener
 
     private JMenuItem openItem_;
     private JMenuItem saveItem_;
+    private JMenuItem saveImageItem_;
 
 
     // provide a mapping from games to implementing panel classes
-    private static final HashMap hmGameClasses_ = new HashMap();
-    // provide mapping from labels to game.
-    private static final HashMap hmGames_ = new HashMap();
+    private HashMap hmGameClasses_;
+    // provide mapping from cutpoints to game.
+    private HashMap hmGames_;
 
     static {
         GameContext.log(3, "GameApp static init." );
@@ -68,6 +70,9 @@ public class GameApp implements ActionListener
      */
     private void init()
     {
+        hmGameClasses_ = new HashMap();
+        hmGames_ = new LinkedHashMap();
+
         // these should get initialized from a text file resource so someone
         // adding a new game does not need to modify this file.
         hmGameClasses_.put("checkers", "com.becker.game.twoplayer.checkers.ui.CheckersPanel");
@@ -101,11 +106,13 @@ public class GameApp implements ActionListener
      */
     private void showGame(String gameName)
     {
-        // this will load the resources for the specified game.
-        GameContext.setGameName(gameName);
+
 
         String className = (String)hmGameClasses_.get(gameName);
         Class gameClass = Util.loadClass(className);
+
+        // this will load the resources for the specified game.
+        GameContext.loadGameResources(gameName, className);
 
         if (gamePanel_ != null) {
             //assert (frame_!=null) : "frame was null";
@@ -141,8 +148,10 @@ public class GameApp implements ActionListener
 
         openItem_ =  createMenuItem(GameContext.getLabel("OPEN"));
         saveItem_ =  createMenuItem(GameContext.getLabel("SAVE"));
+        saveImageItem_ =  createMenuItem(GameContext.getLabel("SAVE_IMAGE"));
         fileMenu.add(openItem_);
         fileMenu.add(saveItem_);
+        fileMenu.add(saveImageItem_);
 
         Iterator keyIt = hmGames_.keySet().iterator();
         while (keyIt.hasNext()) {
@@ -177,6 +186,9 @@ public class GameApp implements ActionListener
         }
         else if (item == saveItem_) {
             gamePanel_.saveGame();
+        }
+        else if (item == saveImageItem_) {
+            gamePanel_.saveSnapshot();
         }
         else {
             showGame( (String)hmGames_.get(item.getText()));

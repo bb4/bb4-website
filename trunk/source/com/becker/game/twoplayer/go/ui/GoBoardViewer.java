@@ -114,6 +114,11 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
         continuePlay( m );
     }
 
+    public ColorMap getColorMap() {
+        return colormap_;
+    }
+
+
     /**
      *  mouseClicked requires both the mouse down and mouse up event to occur at the same location.
      *  classes derived from TwoPlayerBoardViewer must call mousePressed first.
@@ -211,6 +216,7 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
         g.drawImage(woodGrainImage_.getImage(), (int)(startPos-1.35*t), (int)(startPos-1.35*t),
                                                 (rightEdgePos+t), (bottomEdgePos+t), null);
     }
+
 
     /**
      * @return the tooltip for the panel given a mouse event.
