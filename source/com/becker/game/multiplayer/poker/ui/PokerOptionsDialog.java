@@ -91,13 +91,13 @@ class PokerOptionsDialog extends GameOptionsDialog implements ActionListener, It
         /*
         Integer numPlanets = new Integer(numPlanets_.getText());
         // make sure the # of planets entered is in an acceptable range.
-        if (numPlanets > PokerBoard.MAX_NUM_PLANETS || numPlanets < PokerBoard.MIN_NUM_PLANETS) {
+        if (numPlanets > PokerTable.MAX_NUM_PLANETS || numPlanets < PokerTable.MIN_NUM_PLANETS) {
             String msg;
-            if (numPlanets > PokerBoard.MAX_NUM_PLANETS)  {
-                msg = "You cannot have more than "+ PokerBoard.MAX_NUM_PLANETS +" planets on the board";
+            if (numPlanets > PokerTable.MAX_NUM_PLANETS)  {
+                msg = "You cannot have more than "+ PokerTable.MAX_NUM_PLANETS +" planets on the board";
             }
             else {
-                msg = "You cannot have fewer than "+ PokerBoard.MIN_NUM_PLANETS +" planets";
+                msg = "You cannot have fewer than "+ PokerTable.MIN_NUM_PLANETS +" planets";
             }
             JOptionPane.showMessageDialog(this, msg, "Error", JOptionPane.ERROR_MESSAGE);
             return;

@@ -38,7 +38,7 @@ public abstract class GameBoardViewer
     protected static final Color LAST_MOVE_INDICATOR_COLOR = new Color( 250, 150, 0 );
     protected static final Stroke LAST_MOVE_INDICATOR_STROKE = new BasicStroke(1);
     // dont allow the cells of the game board to get smaller than this
-    protected static final int MINIMUM_CELL_SIZE = 10;
+    public static final int MINIMUM_CELL_SIZE = 8;
 
 
     // every GameBoardViewer must contain one of these
@@ -470,8 +470,6 @@ public abstract class GameBoardViewer
      */
     protected void paintComponent( Graphics g )
     {
-        int i;
-        int xpos, ypos;
         Board board = getBoard();
         int nrows = board.getNumRows();
         int ncols = board.getNumCols();
@@ -489,17 +487,35 @@ public abstract class GameBoardViewer
             nrows1 = nrows - 1;
             ncols1 = ncols - 1;
         }
+
         int startPos = BOARD_MARGIN + start * cellSize_ + gridOffset;
 
         int rightEdgePos = BOARD_MARGIN + cellSize_ * ncols1 + gridOffset;
         int bottomEdgePos = BOARD_MARGIN + cellSize_ * nrows1 + gridOffset;
 
-        drawBackground( g, startPos, rightEdgePos, bottomEdgePos );
+        drawBackground( g2, startPos, rightEdgePos, bottomEdgePos );
+
+        drawGrid(g2, startPos, rightEdgePos, bottomEdgePos, start, nrows1, ncols1, gridOffset);
 
         g2.setFont( VIEWER_FONT );
+        // now draw both player markers
+        drawMarkers( nrows, ncols, g2 );
+
+        // if there is a piece being dragged, draw it
+        if ( draggedShowPiece_ != null ) {
+            pieceRenderer_.render(g2, draggedShowPiece_, cellSize_, board);
+        }
+
+        drawLastMoveMarker(g2);
+    }
+
+    protected void drawGrid(Graphics2D g2, int startPos, int rightEdgePos, int bottomEdgePos, int start,
+                            int nrows1, int ncols1, int gridOffset) {
 
         // draw the hatches which deliniate the cells
         g2.setColor( gridColor_ );
+        int xpos, ypos;
+        int i;
 
         for ( i = start; i <= nrows1; i++ )  //   -----
         {
@@ -511,16 +527,6 @@ public abstract class GameBoardViewer
             xpos = BOARD_MARGIN + i * cellSize_ + gridOffset;
             g2.drawLine( xpos, startPos, xpos, bottomEdgePos );
         }
-
-        // now draw both player markers
-        drawMarkers( nrows, ncols, g2 );
-
-        // if there is a piece being dragged, draw it
-        if ( draggedShowPiece_ != null ) {
-            pieceRenderer_.render(g2, draggedShowPiece_, cellSize_, board);
-        }
-
-        drawLastMoveMarker(g2);
     }
 
     /**

@@ -13,7 +13,7 @@ import java.awt.*;
 
 /**
  *  Takes a PokerController as input and displays the
- *  current state of the Poker Game. The PokerController contains a PokerBoard object
+ *  current state of the Poker Game. The PokerController contains a PokerTable object
  *  which describes this state.
  *
  *  @author Barry Becker
@@ -22,12 +22,13 @@ public class PokerGameViewer extends GameBoardViewer
 {
 
     private static final Color GRID_COLOR = Color.GRAY;
+    private static final Color TABLE_COLOR = new Color(190, 160, 110);
     private boolean winnerDialogShown_ = false;
 
     //Construct the application
     public PokerGameViewer()
     {
-        pieceRenderer_ = PokerPlayerRenderer.getRenderer();
+        pieceRenderer_ = PokerRenderer.getRenderer();
     }
 
     protected PokerController createController()
@@ -122,8 +123,19 @@ public class PokerGameViewer extends GameBoardViewer
     {
         assert(!player.isHuman());
         PokerRobotPlayer robot = (PokerRobotPlayer)player;
-        PokerController gc = (PokerController) controller_;
-        //robot.makeOrders((PokerBoard)getBoard());
+        PokerController pc = (PokerController) controller_;
+
+        switch (robot.getAction()) {
+            case FOLD : robot.fold();
+                break;
+            case CALL : 
+                int callAmount =  pc.getCurrentMaxContribution() - robot.getContribution();
+                if (callAmount > 0)
+                    robot.contributeToPot(pc, callAmount);
+                break;
+            case RAISE : robot.contributeToPot(pc, robot.getRaise());
+                break;
+        }
 
         /*
         // records the result on the board.
@@ -133,7 +145,7 @@ public class PokerGameViewer extends GameBoardViewer
         */
         this.refresh();
 
-        gc.advanceToNextPlayer();
+        pc.advanceToNextPlayer();
 
         return false;
     }
@@ -215,36 +227,39 @@ public class PokerGameViewer extends GameBoardViewer
         this.refresh();
     }
 
+
+
+    protected void drawBackground(Graphics g, int startPos, int rightEdgePos, int bottomEdgePos )
+    {
+        g.setColor( backgroundColor_ );
+        int width = this.getWidth();
+        int height = this.getHeight();
+        g.setColor(TABLE_COLOR);
+        g.fillOval((int)(.05*width), (int)(0.05*height), (int)(.9*width), (int)(0.9*height));
+    }
+
+    /**
+     * no grid in poker
+     */
+    protected void drawGrid(Graphics2D g2, int startPos, int rightEdgePos, int bottomEdgePos, int start,
+                            int nrows1, int ncols1, int gridOffset) {
+    }
+
+
     private static final float OFFSET = .25f;
+
     /**
      * Draw the pieces and possibly other game markers for both players.
      */
     protected void drawMarkers( int nrows, int ncols, Graphics2D g2 )
     {
-        /*
-        // before we draw the planets, draw the fleets and their paths
-        Player[] players = controller_.getPlayers();
-        for (int i=0; i< players.length; i++) {
-            List orders = ((PokerPlayer)players[i]).getOrders();
-            Iterator orderIt = orders.iterator();
-            while (orderIt.hasNext()) {
-                Order order = (Order)orderIt.next();
+        // draw the pot in the middle
+        Location loc = new Location(getBoard().getNumRows()/2, getBoard().getNumCols()/2);
+        ((PokerRenderer)pieceRenderer_).renderChips(g2, loc, ((PokerController)controller_).getPotValue(),
+                                                    this.getCellSize());
 
-                Location begin = order.getOrigin().getLocation();
-                Point2D end = order.getCurrentLocation();
 
-                g2.setColor(order.getOwner().getColor());
-                int endX = (int)(cellSize_*(end.getX()-OFFSET ));
-                int endY = (int)(cellSize_*(end.getY()-OFFSET ));
-                g2.drawLine((int)(cellSize_*(begin.col-OFFSET )), (int)(cellSize_*begin.row-OFFSET ),  endX, endY);
-                // the triangle at the end of the line representing the fleet
-                int rad = (int)Math.sqrt(order.getFleetSize());
-                g2.drawOval((int)(endX-rad/2.0), (int)(endY-rad/2.0), rad, rad);
-            }
-        }
-        */
-
-        // now draw the players and their stuff (annotations, chips, cards, etc)
+        // now draw the players and their stuff (face, anme, chips, cards, etc)
         super.drawMarkers(nrows, ncols, g2);
     }
 

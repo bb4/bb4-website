@@ -1,6 +1,7 @@
 package com.becker.game.multiplayer.poker;
 
 import com.becker.game.card.Card;
+import com.becker.game.card.Rank;
 
 import java.util.*;
 
@@ -12,6 +13,7 @@ public class PokerHand {
 
     private List<Card> hand_;
     private Map matchMap_;
+    private boolean faceUp_;
 
     /**
      * @param hand  the initial poker hand  (not necessarily 5 cards)
@@ -28,6 +30,7 @@ public class PokerHand {
     public PokerHand(List<Card> deck, int numCards) {
         // deal numCards from the deck and make the poker hand from that
         hand_ = new ArrayList<Card>();
+        faceUp_ = false;
         assert(numCards <= deck.size()) : "you can't deal more cards than you have in the deck";
         for (int i = 0; i < numCards; i++)  {
             hand_.add(deck.remove(0));
@@ -39,6 +42,12 @@ public class PokerHand {
         hand_.add(card);
         // always keep the hand sorted
         update();
+    }
+
+    public List<Card> getCards() {
+        // return a copy so the client cannot change our state out from under us.
+        ArrayList<Card> cards = new ArrayList<Card>(hand_);
+        return cards;
     }
 
     /**
@@ -55,6 +64,17 @@ public class PokerHand {
         matchMap_  = getMatchMap();
     }
 
+    /**
+     * whether or not the cards are showing to the rest of the players
+     * @param faceUp
+     */
+    public void setFaceUp(boolean faceUp) {
+        faceUp_ = faceUp;
+    }
+
+    public boolean isFaceUp() {
+        return faceUp_;
+    }
 
     /**
      *  Calculate a score for this poker hand so it can be compared with others
@@ -93,7 +113,7 @@ public class PokerHand {
         boolean hasPair = hasNofaKind(2);
 
         switch (handType) {
-            case ROYAL_FLUSH: return (hasStraight && hasFlush && (hand_.get(0).rank() == Card.Rank.TEN));
+            case ROYAL_FLUSH: return (hasStraight && hasFlush && (hand_.get(0).rank() == Rank.TEN));
             case STRAIGHT_FLUSH: return (hasStraight && hasFlush);
             case FOUR_OF_A_KIND: return hasNofaKind(4);
             case FULL_HOUSE: return (hasPair && hasNofaKind(3));
@@ -126,18 +146,18 @@ public class PokerHand {
      */
     private boolean hasStraight() {
 
-        Card.Rank rank = hand_.get(0).rank();
+        Rank rank = hand_.get(0).rank();
         int run = 1;
         int start = 1;
         // special case for when ace is the low card in a straight
-        if (hand_.get(0).rank() == Card.Rank.ACE) {          
-            if (hand_.get(1).rank() == Card.Rank.DEUCE) {
+        if (hand_.get(0).rank() == Rank.ACE) {
+            if (hand_.get(1).rank() == Rank.DEUCE) {
                 rank = hand_.get(1).rank();
                 run = 2;
             }
         }
         for (Card c : hand_.subList(start, size())) {
-            Card.Rank[] ranks = Card.Rank.values();
+            Rank[] ranks = Rank.values();
             int nextRank = rank.ordinal()+1;
             if (nextRank < ranks.length &&  c.rank() == ranks[nextRank]) {
                 run++;

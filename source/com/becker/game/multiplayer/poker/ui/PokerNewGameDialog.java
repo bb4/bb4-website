@@ -34,14 +34,6 @@ public class PokerNewGameDialog extends NewGameDialog implements ActionListener,
         return GameContext.getLabel("POKER_OPTIONS");
     }
 
-    protected void buildMainOptionsPanel(JPanel mainOptionsPanel)
-    {
-        mainOptionsPanel.add( playerPanel_ );
-        mainOptionsPanel.add( boardParamPanel_ );
-        if ( customPanel_ != null )
-            mainOptionsPanel.add( customPanel_ );
-    }
-
     /**
      * Lets you initialize all the admirals. Some subset of the admirals may be robots and not human.
      * @return a table of players
@@ -81,6 +73,14 @@ public class PokerNewGameDialog extends NewGameDialog implements ActionListener,
         p.add(new JScrollPane(pokerPlayerTable_.getTable()), BorderLayout.CENTER);
         p.setPreferredSize(new Dimension(500,300));
         return p;
+    }
+
+    /**
+     * we don't allow them to change the dimensions of the board in poker since its not played on a grid.
+     */
+    protected JPanel createBoardParamPanel()
+    {
+        return null;
     }
 
     /**
