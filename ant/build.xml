@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="deploy" name="applets">
+  <description>usage: ant {task}
+  </description>
+
+  <!-- enable or disable assertions when runnning. Should disable before formally releasing a new version. -->
+  <property name="assertionsFlag" value="-enableassertions"/>
+  <!-- place where compiled classes go. images and resources also get copied here -->
+  <property name="classesDir" value="../classes"/>
+  <!-- place where all original source files come from. -->
+  <property name="sourceDir" value="../source"/>
+  <!-- place where all process files for distribution go. -->
+  <property name="distributionDir" value="../dist"/>
+  <!-- place where all thirdparty libraries are located. -->
+  <property name="libDir" value="../lib"/>
+  <!-- place to put .class files, images and resources, so they can be jar'd up -->
+  <property name="stagingDir" value="../temp/classes"/>
+  <!-- root dir for auxillieary ant libraries -->
+  <property name="antlibRoot" value="/usr/share"/>
+  <!-- the base game applicaiton class -->
+  <property name="gameAppClass" value="com.becker.game.common.ui.GameApp"/>
+  <!-- the jvm to use when executing -->
+  <property name="java_home" value="/usr/java/jdk1.5.0"/>
+  <property name="java14" value="/usr/java/jdk1.4.2/bin/java"/>
+  <property name="java15" value="${java_home}/bin/java"/>
+
+
+  <!-- Load additional tasks -->
+  <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+    <classpath>
+      <pathelement location="${antlibRoot}/ant/lib/ant-contrib-0.6.jar"/>
+    </classpath>
+  </taskdef>
+
+  <!-- source metrics
+  <taskdef name="javancss" classname="javancss.JavancssAntTask" classpath="${antlibRoot}/javaNCSS/javancss21.41/lib"/>
+   -->
+
+
+  <path id="compile.classpath">
+    <pathelement location="${libDir}/oalnf/oalnf.jar"/>
+    <pathelement location="${libDir}/vecmath.jar"/>
+    <pathelement location="${libDir}/sun.jar"/>
+    <pathelement location="${libDir}/jai_codec.jar"/>
+    <pathelement location="${libDir}/jnlp.jar"/>
+    <pathelement location="${libDir}/batik-awt-util.jar"/>
+    <pathelement location="${libDir}/batik-bridge.jar"/>
+    <pathelement location="${libDir}/batik-css.jar"/>
+    <pathelement location="${libDir}/batik-dom.jar"/>
+    <pathelement location="${libDir}/batik-ext.jar"/>
+    <pathelement location="${libDir}/batik-extension.jar"/>
+    <pathelement location="${libDir}/batik-gui-util.jar"/>
+    <pathelement location="${libDir}/batik-gvt.jar"/>
+    <pathelement location="${libDir}/batik-parser.jar"/>
+    <pathelement location="${libDir}/batik-svg-dom.jar"/>
+    <pathelement location="${libDir}/batik-svggen.jar"/>
+    <pathelement location="${libDir}/batik-swing.jar"/>
+    <pathelement location="${libDir}/batik-transcoder.jar"/>
+    <pathelement location="${libDir}/batik-util.jar"/>
+    <pathelement location="${libDir}/batik-xml.jar"/>
+  </path>
+
+
+  <target name="compile" depends="init" description="Compiles the source code">
+    <javac debug="yes" deprecation="on" destdir="${classesDir}"
+        nowarn="false" optimize="yes" srcdir="${sourceDir}" verbose="true"
+        executable="${java_home}/bin/javac"
+        compiler="modern" source="1.4">
+       <classpath refid="compile.classpath"/>
+    </javac>
+    <!-- use ant deploy to copy the resources to the classes dir -->
+
+  </target>
+
+  <target name="game metrics" depends="compile" description="calculate metrics (eg lines of code) for all the source files in the project">
+    <javancss srcdir="${sourceDir}/com/becker/game" generateReport="true" outputfile="../performance/javancss_metrics1.txt" format="plain">
+      <include name="**/*.java"/>
+    </javancss>
+  </target>
+
+
+  <target name="clean" depends="init" description="Cleans out all the existing compiled classes and $(distributionDir}">
+    <delete dir="${classesDir}"/>
+    <delete dir="${distributionDir}"/>
+    <ant antfile="rmi.xml" inheritall="true" target="rmi_clean"/>
+  </target>
+
+  <target name="init">
+    <mkdir dir="${classesDir}"/>
+    <mkdir dir="${distributionDir}"/>
+    <ant antfile="rmi.xml" inheritall="true" target="rmi_init"/>
+  </target>
+
+
+  <target name="deploy" depends="compile"
+      description="deploys the built jar files to the ${distributionDir} dir so they can be bulk copied to a website">
+      <ant antfile="distribute.xml" inheritall="true" target="distribute">
+          <property name="hello" value="test"/>
+      </ant>
+  </target>
+
+
+  <target name="deployRMI" depends="compile"
+      description="deploys rmi client and server stubs to ${rmiClientDir} and ${rmiServerDir} dirs">
+      <ant antfile="rmi.xml" inheritall="true" target="deployRMIClient"/>
+      <ant antfile="rmi.xml" inheritall="true" target="deployRMIServer"/>
+  </target>
+
+
+  <!--************** Tasks to execute programs ****************-->
+
+  <target name="executeGalactic" description="Run the Galactic Empire program">
+    <antcall target="executeProgram">
+      <param name="className" value="${gameAppClass}"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;"/>
+      <param name="arg1" value="galactic"/>
+    </antcall>
+  </target>
+
+  <target name="executePente" description="Run the pente program">
+    <antcall target="executeProgram">
+      <param name="className" value="${gameAppClass}"/>
+      <param name="arg1" value="pente"/>
+    </antcall>
+  </target>
+
+  <target name="executeBlockade" description="Run the blockade program">
+    <antcall target="executeProgram">
+      <param name="className" value="${gameAppClass}"/>
+      <param name="arg1" value="blockade"/>
+    </antcall>
+  </target>
+
+  <target name="executeCheckers" description="Run the checkers program">
+    <antcall target="executeProgram">
+      <param name="className" value="${gameAppClass}"/>
+      <param name="arg1" value="checkers"/>
+    </antcall>
+  </target>
+
+  <target name="executeChess" description="Run the chess program">
+    <antcall target="executeProgram">
+      <param name="className" value="${gameAppClass}"/>
+      <param name="arg1" value="chess"/>
+    </antcall>
+  </target>
+
+  <target name="executeGo" description="Run the go program">
+    <antcall target="executeProgram">
+      <param name="className" value="${gameAppClass}"/>
+      <param name="arg1" value="go"/>
+    </antcall>
+  </target>
+
+  <target name="executeMaze" description="Run the maze generation program">
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.maze.MazeSimulator"/>
+    </antcall>
+  </target>
+
+  <target name="executeSnake" description="Run the Snake simulation program">
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.snake.SnakeApplet"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
+    </antcall>
+  </target>
+
+  <target name="executeSpirograph" description="Run the SpiroGraph program">
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.spirograph.SpiroGraph"/>
+      <param name="libPath" value="${libDir}/jai_codec.jar"/>
+    </antcall>
+  </target>
+
+  <target name="executeLiquid" description="Run the Liquid simulator">
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.liquid.LiquidSimulator"/>
+      <param name="libPath" value="${libDir}/vecmath.jar"/>
+    </antcall>
+  </target>
+
+  <target name="executeRedPuzzle" depends="compile" description=" run the Red Puzzle simulator">
+    <echo message="now executing red puzzle"/>
+    <java classname="com.becker.redpuzzle.RedPuzzle" classpath="${classesDir}" fork="true" jvm="${java15}" maxmemory="128M"/>
+  </target>
+
+  <target name="showFonts" depends="compile">
+    <java classname="com.becker.java2d.examples.ShowFonts" classpath="${classesDir}"/>
+  </target>
+
+
+  <!-- call this to run java programs -->
+  <target name="executeProgram" depends="compile" description="Run a program">
+    <java classname="${className}" classpath="${classesDir};${libPath}" fork="true" jvm="${java15}">
+        <arg value="${arg1}"/>
+        <jvmarg value="-Xms128M"/>
+        <jvmarg value="-Xmx256M"/>
+        <jvmarg value="${assertionsFlag}"/>
+    </java>
+  </target>
+
+</project>
+
+

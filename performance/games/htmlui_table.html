@@ -1,0 +1,607 @@
+<!DOCTYPE doctype PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 9">
+<meta name=Originator content="Microsoft Word 9">
+<link rel=File-List href="./htmlui_table_files/filelist.xml">
+<link rel=Edit-Time-Data href="./htmlui_table_files/editdata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>HTML table component Design</title>
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;
+	mso-font-charset:2;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:0 268435456 0 0 -2147483648 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:center 3.0in right 6.0in;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:center 3.0in right 6.0in;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+p
+	{margin-right:0in;
+	mso-margin-top-alt:auto;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+tt
+	{mso-ascii-font-family:"Courier New";
+	mso-fareast-font-family:"Courier New";
+	mso-hansi-font-family:"Courier New";
+	mso-bidi-font-family:"Courier New";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+@list l0
+	{mso-list-id:114561838;
+	mso-list-type:hybrid;
+	mso-list-template-ids:379762088 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l0:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l1
+	{mso-list-id:1727340328;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-341827836 857635392 -2142234398 92207944 -960097310 528545378 -1883223018 1215472638 -226735870 1407896384;}
+@list l1:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l2
+	{mso-list-id:1852523658;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1503565654 634005358 330883016 -1563770148 71572550 -302369552 888550456 -1077507004 -1259729280 -1608245902;}
+@list l2:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+<meta name=Author content="Barry Becker">
+<!--[if gte mso 9]><xml>
+ <u1:DocumentProperties>
+  <u1:Author>wkoetke</u1:Author>
+  <u1:LastAuthor>wkoetke</u1:LastAuthor>
+  <u1:Revision>2</u1:Revision>
+  <u1:TotalTime>0</u1:TotalTime>
+  <u1:Created>2002-03-19T17:10:00Z</u1:Created>
+  <u1:LastSaved>2002-03-19T17:10:00Z</u1:LastSaved>
+  <u1:Pages>8</u1:Pages>
+  <u1:Words>3968</u1:Words>
+  <u1:Characters>22623</u1:Characters>
+  <u1:Company>Blue Martini Software</u1:Company>
+  <u1:Lines>188</u1:Lines>
+  <u1:Paragraphs>45</u1:Paragraphs>
+  <u1:CharactersWithSpaces>27782</u1:CharactersWithSpaces>
+  <u1:Version>9.3821</u1:Version>
+ </u1:DocumentProperties>
+</xml><![endif]-->
+</head>
+
+<body lang=EN-US link=blue vlink=blue style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoNormal>&nbsp; <br>
+&nbsp; </p>
+
+<table border=0 cellpadding=0 style='mso-cellspacing:1.5pt;mso-padding-alt:
+ 0in 0in 0in 0in'>
+ <tr>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal align=center style='text-align:center'><img width=154
+  height=84 id="_x0000_i1025"
+  src="http://embarcadero.bluemartini.com/martini//blmlogo.gif" nosave=""
+  border=0></p>
+  </td>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><b><span style='font-size:24.0pt'>HTTMLUI:</span></b></p>
+  <p class=MsoNormal><b><span style='font-size:24.0pt'>Table Component</span></b>
+  </p>
+  <p>Comments to <a href="mailto:becker@bluemartini.com">Barry Becker</a> </p>
+  <p><i>Release:&nbsp; Based on Saturn version of Blue Martini architecture</i>
+  </p>
+  <p><b><i><span style='font-size:10.0pt;font-family:Arial'>Proprietary and
+  Confidential, Blue Martini Software, Inc.&nbsp; Distribution outside of Blue
+  Martini Product Development is explicitly forbidden without prior written
+  permission</span></i></b><b><span style='font-size:10.0pt;font-family:Arial'>.</span></b></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal>&nbsp; <br>
+&nbsp; <o:p></o:p></p>
+
+<table border=0 cellspacing=0 cellpadding=0 width="100%" bgcolor="#000099"
+ style='width:100.0%;mso-cellspacing:0in;background:#000099;mso-padding-alt:
+ 0in 0in 0in 0in;background-attachment:scroll;background-position-x:0%;
+ background-position-y:50%;background-repeat:repeat'>
+ <tr>
+  <td style='padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><b><span style='font-size:13.5pt;color:white'>Introduction
+  and Motivation</span></b><a name=Glossary></a></p>
+  </td>
+ </tr>
+</table>
+
+<p>&nbsp;For version 6 of relationship marketing there is a requirement that
+many of the tables that display database objects be sortable, filterable,
+searchable, and pageable. We considered several approaches for this:</p>
+
+<p style='margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 lfo3;
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>Interactive applet &#8211; rejected because of long load
+time.<o:p></o:p></p>
+
+<p style='margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 lfo3;
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>Interactive javascript object &#8211; rejected because it
+would not scale to millions of rows (and would not be pageable).<o:p></o:p></p>
+
+<p style='margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 lfo3;
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>Use existing java HTMLTable class that is used
+extensively in contact center. &#8211; Rejected for the following reasons. Layout of
+the table is determined by java implementation and by tags in configuration
+files. So changes to the table format required knowledge of dna and the java
+implementation. Current implementation does not scale, even though paging is
+supported, because all rows are loaded in memory. All rows are returned and
+then paged through. Filtering is not supported.<o:p></o:p></p>
+
+<p style='margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 lfo3;
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol'>·<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]>Create a new HTMLUI component (table) which has java
+backend and jsp front end &#8211; This is the approach we selected because it offered
+the most flexibility and scalability. The backend will implement an interface
+and will manage the extraction of the data from the database. It will be
+scalable because it will only send a single &#8220;page&#8221; of rows to the client at any
+time. The format of the UI will be entirely jsp, and hence easy to modify.
+Predefined filters can be specified in a dna configuration file. We can
+leverage the expression format and parsing capabilities of the existing
+expressions framework to achieve filtering.<br>
+&nbsp; <o:p></o:p></p>
+
+<table border=0 cellspacing=0 cellpadding=0 width="100%" bgcolor="#000099"
+ style='width:100.0%;mso-cellspacing:0in;background:#000099;mso-padding-alt:
+ 0in 0in 0in 0in;background-attachment:scroll;background-position-x:50%;
+ background-position-y:0%;background-repeat:repeat'>
+ <tr>
+  <td style='padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><b><span style='font-size:13.5pt;color:white'>Description
+  of Design&nbsp;</span></b></p>
+  </td>
+ </tr>
+</table>
+
+<p>&nbsp;Participants in the initial design meeting were Llew Mason, Glenn
+Cochran, Jeff Brainerd, Barry Becker. We established several things related to
+the behavior of the UI. Pictures coming soon. For the backend, there will be an
+interface defined (see below) and a default implement that manages the
+extraction of rows from a database given the currently viewed page and filter.</p>
+
+<p>Here are a list of the files that I foresee we will need to do the implementation:</p>
+
+<p>modules/htmlui/approot/table/<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>templates/<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><b
+style='mso-bidi-font-weight:normal'>inc_table.jsp</b> <br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="mso-spacerun:
+yes">&nbsp;</span>(the main include for the table. It will take the following
+parameters: <span style="mso-spacerun: yes">&nbsp;</span><br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>unique name
+(string) so there can be several in the same page), <br>
+<span style="mso-spacerun: yes">&nbsp;&nbsp; </span><span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+style="mso-spacerun: yes">&nbsp;</span>read-only (boolean) determines if the
+table will have editable fields.<br>
+<span style="mso-spacerun: yes">&nbsp;&nbsp; </span><span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>height (int)
+fixed height. If rows don&#8217;t fit you get a scrollbar.<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;&nbsp;</span><b>dlg_filter.jsp</b><span
+style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp; </span>- container for holding the
+custom filter popup dlg.<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;&nbsp;</span><b>inc_filter_form.jsp</b><span
+style="mso-spacerun: yes">&nbsp; </span>- include for showing a series of form
+elements based on columns specified in htmltable.dna.<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;</span>styles/<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><b>styles_base.css</b><br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+style="mso-spacerun: yes">&nbsp;&nbsp;</span>js/<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span style="mso-spacerun: yes">&nbsp;</span><span style="mso-spacerun:
+yes">&nbsp;</span><span style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;</span><b>utils.js</b><br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span style="mso-spacerun: yes">&nbsp;&nbsp;</span><span
+style="mso-spacerun: yes">&nbsp;</span><span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;</span>images/<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+style="mso-spacerun: yes">&nbsp;&nbsp;</span><b>sort_arrow_up.gif</b><br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;</span><b>sort_arrow_down.gif</b><br>
+<span style="mso-spacerun: yes">&nbsp;&nbsp; </span><span style="mso-spacerun:
+yes">&nbsp;&nbsp;</span><span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;</span>config/table<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><b>messages_en.dna</b><br>
+<span style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp; </span><span
+style="mso-spacerun: yes">&nbsp;</span><span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;</span>java/com/bluemartini/htmlui/table/<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+style="mso-spacerun: yes">&nbsp;</span><b>HTMLTableContext.java</b> -loads the
+htmltable.dna config file and provides interface for accessing its data<br>
+<span style="mso-spacerun: yes">&nbsp;</span><span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;</span><span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><b>HTMLTableInterface.java</b>
+-interface to allow the front end to page and filter the displayed table (see
+below).<br>
+<span style="mso-spacerun: yes">&nbsp; </span><span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;</span><span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><b>HTMLTableBase.java</b> &#8211; abstract
+base class providing some common implementation<br>
+<span style="mso-spacerun: yes">&nbsp; </span><span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;</span><span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;</span><b>HTMLTableDefault</b> &#8211; default implementation
+of the interface.<br>
+<br>
+modules/&lt;module&gt;/config/&lt;application&gt;/<b>htmltable.dna</b><br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>This file will
+contain the application specific configuration information for the table
+component. For example. Suppose the module is RM and the application is relmkt,
+then this file should contain entries for all the business objects that you
+want to be able to display in a table. Things such as which columns to show,
+which columns to allow using when filtering, and which filters to allow if any.
+Suppose the businessObjects that you want to show tables for are
+IM_INTERACTION, IM_LAUNCH, IM_NODE, RM_AUDIENCE, EMAIL_LINK, EMAIL_TEMPLATE,
+MESSAGE_TEMPLATE. Then the htmltable.dna configuration file should have entries
+for each of these things with columns and filters defined. (is this list of BO&#8217;s
+correct?). Here is the possible format of the htmltable.dna file:</p>
+
+<p>DNA {<br>
+<span style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp; </span>&#8220;defaultPageSize&#8221; Integer
+&#8220;3&#8221;,<span style="mso-spacerun: yes">&nbsp; </span><span style="mso-spacerun:
+yes">&nbsp;</span><span style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;</span><span
+style="mso-spacerun: yes">&nbsp;</span>// this is just a default. You can
+override for different table specs<br>
+<span style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp; </span>&#8220;defaultHeight&#8221;
+Integer &#8220;400&#8221;,<span style="mso-spacerun: yes">&nbsp; </span><span
+style="mso-spacerun: yes">&nbsp;</span><span style="mso-spacerun:
+yes">&nbsp;&nbsp;</span>// can be overridden in jsp <br>
+<span style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp; </span><span
+style="mso-spacerun: yes">&nbsp;</span>&#8220;tableSpecs&#8221; DNA {<span
+style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+style="mso-spacerun: yes">&nbsp;&nbsp;</span>// this contains a specification
+for each bo that you want to show in a table.<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&#8220;&lt;boName&gt;&#8221;
+DNA {<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+style="mso-spacerun: yes">&nbsp;</span><span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>&#8220;displayColumns&#8221; StringArray [<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span style="mso-spacerun: yes">&nbsp;</span><span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>&lt;columns (corresponding to
+bo properties) to show in a particular order&gt;<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+style="mso-spacerun: yes">&nbsp;</span><span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;</span>],<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+style="mso-spacerun: yes">&nbsp;</span><span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;</span>&#8220;filters&#8221; DNAArray [<span
+style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;&nbsp; </span>// this is optional,
+if not present, then no filter dropdown.<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>&lt;list of predefined filters that will appear in a dropdown at the top
+of the table&gt;<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+style="mso-spacerun: yes">&nbsp;</span><span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;</span>]<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+style="mso-spacerun: yes">&nbsp;</span>},<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>:<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>&#8220;IM_LAUNCH&#8221;
+DNA {<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+style="mso-spacerun: yes">&nbsp;</span><span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;</span>&#8220;displayColumns&#8221; StringArray [<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>&#8220;label&#8221;, &#8220;status&#8221;, &#8220;createDt&#8221;, &#8220;createdBy&#8221;<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp; </span>// property names<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+style="mso-spacerun: yes">&nbsp;</span><span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;</span>],<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+style="mso-spacerun: yes">&nbsp;</span><span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;</span>&#8220;filters&#8221; DNAArray [<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp; </span>// these filters will appear in a dropdown above
+the table.<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>{<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>&#8220;name&#8221; String &#8220;all&#8221;,<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>// &#8220;all&#8221; has special meaning<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>&#8220;label&#8221; String &#8220;allLabel&#8221;<br>
+<span style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>},<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>{<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>&#8220;name&#8221; String &#8220;active&#8221;,<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>&#8220;label&#8221; String &#8220;activeFitlerLabel&#8221;,<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>&#8220;expression&#8221; String &#8220;status|isEqualTo|A&#8221;<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>},<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>{<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>&#8220;name&#8221; String &#8220;expired&#8221;,<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>&#8220;label&#8221; String &#8220;expiredFitlerLabel&#8221;,<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>&#8220;expression&#8221; String &#8220;status|isEqualTo|E&#8221;<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>},<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>{<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>&#8220;name&#8221; String &#8220;custom&#8221;,<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp; </span>// &#8220;custom&#8221; has special meaning<br>
+<span style="mso-spacerun: yes">&nbsp; </span><span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>&#8220;label&#8221;
+String &#8220;customLabel&#8221;,<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>&#8220;formElements&#8221; StringArray [<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp; </span>// the columns to use when building a
+filter form (in a particular order)<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>&#8220;label&#8221;, &#8220;status&#8221;, &#8220;createDt&#8221;, &#8220;createdBy&#8221;<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>],<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span style="mso-spacerun: yes">&nbsp;</span><span style="mso-spacerun:
+yes">&nbsp;&nbsp;</span>&#8220;caseInsensitive&#8221; Boolean &#8220;false&#8221;,<span
+style="mso-spacerun: yes">&nbsp;&nbsp; </span>// default could be different per
+table<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;&nbsp;</span>}<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span style="mso-spacerun: yes">&nbsp;</span><span style="mso-spacerun:
+yes">&nbsp;</span>]<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+style="mso-spacerun: yes">&nbsp;</span>}<br>
+<span style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;&nbsp; </span>}<br>
+}</p>
+
+<p>Here&#8217;s a proposal for the methods that could be in the HTMLTable interface
+(Walt to complete)<br>
+<span style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;</span>HTMLTable(String boName);<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>int getNumRows();<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>int getNumColums();<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>DNAStringArray getColumnLabels();<span
+style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp; </span>// in order they will
+appear<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>sort(String
+column, Boolean ascending);<br>
+<span style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;</span>setPageSize(int size)<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>getColumnType(String
+column)<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>filter(String
+expression)<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>getNextPage()<span
+style="mso-spacerun: yes">&nbsp; </span>// returns next page of rows<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>getPreviousPage()<span
+style="mso-spacerun: yes">&nbsp;&nbsp; </span>// returns previous page of rows<br>
+<span style="mso-spacerun:
+yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>getPage(int
+pageIndex);<br>
+<span style="mso-spacerun: yes">&nbsp;&nbsp; </span><o:p></o:p></p>
+
+<table border=0 cellspacing=0 cellpadding=0 width="100%" bgcolor="#000099"
+ style='width:100.0%;mso-cellspacing:0in;background:#000099;mso-padding-alt:
+ 0in 0in 0in 0in;background-attachment:scroll;background-position-x:0%;
+ background-position-y:50%;background-repeat:repeat'>
+ <tr>
+  <td style='padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><b><span style='font-size:13.5pt;color:white'>Design
+  Issues&nbsp;</span></b></p>
+  </td>
+ </tr>
+</table>
+
+<p>&#8230;.<o:p></o:p></p>
+
+<table border=0 cellspacing=0 cellpadding=0 width="100%" bgcolor="#000099"
+ style='width:100.0%;mso-cellspacing:0in;background:#000099;mso-padding-alt:
+ 0in 0in 0in 0in;background-attachment:scroll;background-position-x:50%;
+ background-position-y:0%;background-repeat:repeat'>
+ <tr>
+  <td style='padding:2.25pt 2.25pt 2.25pt 2.25pt'>
+  <p class=MsoNormal><b><span style='font-size:13.5pt;color:white'>Questions /
+  To Dos</span></b><a name=Issues></a></p>
+  </td>
+ </tr>
+</table>
+
+<p>Do we need searching if we have filtering?<br>
+&nbsp; <br>
+&nbsp;</p>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE attributes PUBLIC "-//NetBeans//DTD DefaultAttributes 1.0//EN" "http://www.netbeans.org/dtds/attributes-1_0.dtd">
+<attributes version="1.0">
+    <fileobject name="Bouncer.java">
+        <attr name="class_dependency_com.becker.java2d.AnimationComponent" stringvalue="Bouncer"/>
+    </fileobject>
+    <fileobject name="AnimationFrame.java">
+        <attr name="class_dependency_com.becker.java2d.ApplicationFrame" stringvalue="AnimationFrame"/>
+    </fileobject>
+    <fileobject name="AnimationComponent.java">
+        <attr name="class_dependency_java.awt.Container" stringvalue="AnimationComponent"/>
+        <attr name="EA-OpenIDE-Connection" serialvalue="aced0005737200146a6176612e7574696c2e4c696e6b65644c6973740c29535d4a608822030000787077040000000078"/>
+        <attr name="class_dependency_java.lang.Runnable" stringvalue="AnimationComponent"/>
+    </fileobject>
+    <fileobject name="ImageBouncer.java">
+        <attr name="class_dependency_com.becker.java2d.AnimationComponent" stringvalue="ImageBouncer"/>
+    </fileobject>
+    <fileobject name="ApplicationFrame.java">
+        <attr name="class_dependency_javax.swing.JFrame" stringvalue="ApplicationFrame"/>
+        <attr name="EA-OpenIDE-Connection" serialvalue="aced0005737200146a6176612e7574696c2e4c696e6b65644c6973740c29535d4a608822030000787077040000000078"/>
+    </fileobject>
+    <fileobject name="RedTown.java">
+        <attr name="class_dependency_javax.swing.JFrame" stringvalue="RedTown"/>
+    </fileobject>
+    <fileobject name="AnimationPanel.java">
+        <attr name="class_dependency_javax.swing.JPanel" stringvalue="AnimationPanel"/>
+        <attr name="class_dependency_com.becker.java2d.ChangeListener" stringvalue="AnimationPanel"/>
+    </fileobject>
+</attributes>
