@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Iterator;
 
 /**
- * Play a battle sequence that is stored in a GalacticMove.
+ * Play a battle sequence that is stored in a GalacticTurn.
  *
  * @author Barry Becker
  */

@@ -197,7 +197,7 @@ public class Galaxy extends Board
         build();
         // go through all the battle results in order and adjust the planets to account for one elapsed year.
 
-        //GalacticMove gmove = (GalacticMove)move;
+        //GalacticTurn gmove = (GalacticTurn)move;
         //destPlanet.setOwner( battle.getOwnerAfterAttack());
         //destPlanet.setNumShips( battle.getNumShipsAfterAttack() );
 

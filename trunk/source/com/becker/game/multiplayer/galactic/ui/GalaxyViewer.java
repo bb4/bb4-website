@@ -98,7 +98,7 @@ public class GalaxyViewer extends GameBoardViewer
      protected void showWinnerDialog()
      {
          //String message = getGameOverMessage();
-         TallyDialog tallyDialog = new TallyDialog(parent_, (GalacticController)controller_);
+         GalacticTallyDialog tallyDialog = new GalacticTallyDialog(parent_, (GalacticController)controller_);
          tallyDialog.showDialog();
 
          //JOptionPane.showMessageDialog( this, message, GameContext.getLabel("GAME_OVER"),
@@ -131,7 +131,7 @@ public class GalaxyViewer extends GameBoardViewer
         /*
         // records the result on the board.
         Move lastMove = gc.getLastMove();
-        GalacticMove gmove = GalacticMove.createMove((lastMove==null)? 0 : lastMove.moveNumber + 1);
+        GalacticTurn gmove = GalacticTurn.createMove((lastMove==null)? 0 : lastMove.moveNumber + 1);
         gc.makeMove(gmove);
         */
         this.refresh();
@@ -163,9 +163,9 @@ public class GalaxyViewer extends GameBoardViewer
      * Simulations may actually be a reinforcements instead of a battle.
      * @param lastMove the move to show (but now record)
      */
-    public GalacticMove createMove(Move lastMove)
+    public GalacticTurn createMove(Move lastMove)
     {
-        GalacticMove gmove = GalacticMove.createMove((lastMove==null)? 0 : lastMove.moveNumber+1);
+        GalacticTurn gmove = GalacticTurn.createMove((lastMove==null)? 0 : lastMove.moveNumber+1);
 
         // for each order of each player, apply it for one year
         // if there are battles, show them in the battle dialog and record the result in the move.

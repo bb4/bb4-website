@@ -19,7 +19,7 @@ public class GalacticNewGameDialog extends NewGameDialog implements ActionListen
     private GradientButton removeButton_;
 
     // list of players that will be admirals in the game.
-    private PlayerTable playerTable_;
+    private GalacticPlayerTable galacticPlayerTable_;
 
     public GalacticNewGameDialog( JFrame parent, GameBoardViewer viewer )
     {
@@ -74,10 +74,10 @@ public class GalacticNewGameDialog extends NewGameDialog implements ActionListen
 
         GalacticController c = (GalacticController)controller_;
 
-        playerTable_ = new PlayerTable((GalacticPlayer[])c.getPlayers());
-        playerTable_.addListSelectionListener(this);
+        galacticPlayerTable_ = new GalacticPlayerTable((GalacticPlayer[])c.getPlayers());
+        galacticPlayerTable_.addListSelectionListener(this);
 
-        p.add(new JScrollPane(playerTable_.getTable()), BorderLayout.CENTER);
+        p.add(new JScrollPane(galacticPlayerTable_.getTable()), BorderLayout.CENTER);
         p.setPreferredSize(new Dimension(500,300));
         return p;
     }
@@ -89,7 +89,7 @@ public class GalacticNewGameDialog extends NewGameDialog implements ActionListen
     protected void ok()
     {
         GalacticController c = (GalacticController)controller_;
-        c.setPlayers(playerTable_.getPlayers());
+        c.setPlayers(galacticPlayerTable_.getPlayers());
         super.ok();
     }
 
@@ -99,10 +99,10 @@ public class GalacticNewGameDialog extends NewGameDialog implements ActionListen
         Object source = e.getSource();
 
         if ( source == addButton_ ) {
-            playerTable_.addRow();
+            galacticPlayerTable_.addRow();
         }
         else if ( source == removeButton_ ) {
-            playerTable_.removeSelectedRows();
+            galacticPlayerTable_.removeSelectedRows();
         }
     }
 
@@ -112,7 +112,7 @@ public class GalacticNewGameDialog extends NewGameDialog implements ActionListen
      */
     public void valueChanged(ListSelectionEvent event)
     {
-        removeButton_.setEnabled(playerTable_.getTable().getSelectedRowCount()>0);
+        removeButton_.setEnabled(galacticPlayerTable_.getTable().getSelectedRowCount()>0);
     }
 }
 

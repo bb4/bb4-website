@@ -64,6 +64,7 @@ public class GameApp implements ActionListener
     /**
      * must do this initialization after we know the locale
      * (in other words it cannot be done statically)
+     * @@ this should really come from a plugin file so that you do not need to change code to add a new game.
      */
     private void init()
     {
@@ -75,6 +76,7 @@ public class GameApp implements ActionListener
         hmGameClasses_.put("blockade", "com.becker.game.twoplayer.blockade.ui.BlockadePanel");
         hmGameClasses_.put("go", "com.becker.game.twoplayer.go.ui.GoPanel");
         hmGameClasses_.put("galactic", "com.becker.game.multiplayer.galactic.ui.GalacticPanel");
+        hmGameClasses_.put("poker", "com.becker.game.multiplayer.poker.ui.PokerPanel");
 
         String CHECKERS_LABEL = GameContext.getLabel("CHECKERS");
         String CHESS_LABEL = GameContext.getLabel("CHESS");
@@ -82,6 +84,7 @@ public class GameApp implements ActionListener
         String BLOCKADE_LABEL = GameContext.getLabel("BLOCKADE");
         String GO_LABEL = GameContext.getLabel("GO");
         String GALACTIC_LABEL = GameContext.getLabel("GALACTIC");
+        String POKER_LABEL = GameContext.getLabel("POKER");
 
         hmGames_.put(CHECKERS_LABEL, "checkers");
         hmGames_.put(CHESS_LABEL, "chess");
@@ -89,6 +92,7 @@ public class GameApp implements ActionListener
         hmGames_.put(BLOCKADE_LABEL, "blockade");
         hmGames_.put(GO_LABEL, "go");
         hmGames_.put(GALACTIC_LABEL, "galactic");
+        hmGames_.put(POKER_LABEL, "poker");
     }
 
     /**

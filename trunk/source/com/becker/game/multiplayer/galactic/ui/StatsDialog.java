@@ -11,7 +11,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 /**
- * Draw the entire game tree using a java tree control.
+ * Draw stats about the palerys and planet ownership in the Galaxy
  *
  * @author Barry Becker
  */

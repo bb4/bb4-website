@@ -182,7 +182,7 @@ public class GalacticController extends GameController
             // the result in the move to the client.
             // however, there are problems with that, so I just calculate it in the veiwer for now.
 
-            GalacticMove gmove = gviewer.createMove(getLastMove());
+            GalacticTurn gmove = gviewer.createMove(getLastMove());
             //gviewer.showMove(gmove);
 
             // records the result on the board.
@@ -204,9 +204,9 @@ public class GalacticController extends GameController
      * @param lastMove
      * @return
      *
-    private GalacticMove createMove(Move lastMove)
+    private GalacticTurn createMove(Move lastMove)
     {
-        GalacticMove gmove = GalacticMove.createMove((lastMove==null)?0:lastMove.moveNumber+1);
+        GalacticTurn gmove = GalacticTurn.createMove((lastMove==null)?0:lastMove.moveNumber+1);
 
         // for each order of each player, apply it for one year
         // if there are battles, show them in the battle dialog and record the result in the move.
