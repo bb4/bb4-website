@@ -36,6 +36,7 @@ public class GameApplet extends JApplet
         Class gameClass = Util.loadClass(className);
 
         try {
+            
             gamePanel_ = (GamePanel)gameClass.newInstance();
 
         } catch (InstantiationException e) {

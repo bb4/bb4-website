@@ -53,7 +53,6 @@ public abstract class NewGameDialog extends OptionsDialog implements ActionListe
 
     protected void initUI()
     {
-        setResizable( true );
         mainPanel_.setLayout( new BorderLayout() );
 
         playerPanel_ = createPlayerPanel();

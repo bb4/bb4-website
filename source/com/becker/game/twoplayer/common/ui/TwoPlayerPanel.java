@@ -135,7 +135,7 @@ public abstract class TwoPlayerPanel extends GamePanel
         TwoPlayerBoardViewer v = (TwoPlayerBoardViewer)boardViewer_;
 
         if ( source == toolBar_.getNewGameButton()) {
-            newGameDialog_.setLocationRelativeTo( this );
+            //newGameDialog_.setLocationRelativeTo( this );
             get2PlayerController().pause();
             boolean canceled = newGameDialog_.showDialog();
             if ( !canceled ) { // newGame a game with the newly defined options
@@ -160,7 +160,7 @@ public abstract class TwoPlayerPanel extends GamePanel
             toolBar_.getUndoButton().setEnabled(true);
         }
         if ( source == toolBar_.getOptionsButton() ) {
-            optionsDialog_.setLocationRelativeTo( this );
+            //optionsDialog_.setLocationRelativeTo( this );
             boolean canceled = optionsDialog_.showDialog();
             //System.out.println( "options selected  canceled=" + canceled );
             if ( !canceled ) { // start a game with the newly defined options

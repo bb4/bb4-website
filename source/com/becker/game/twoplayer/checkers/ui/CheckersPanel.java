@@ -38,7 +38,7 @@ public class CheckersPanel extends TwoPlayerPanel
         return new CheckersNewGameDialog( parent, viewer );
     }
 
-    protected GameInfoPanel createInfoPanel( GameController controller )
+    protected GameInfoPanel createInfoPanel(GameController controller)
     {
         return new TwoPlayerInfoPanel( controller );
     }

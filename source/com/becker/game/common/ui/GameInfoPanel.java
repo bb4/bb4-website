@@ -18,6 +18,8 @@ public abstract class GameInfoPanel extends TexturedPanel implements GameChanged
 
     protected GameController controller_ = null;
 
+    protected JFrame parent_;
+
     protected JLabel moveNumLabel_;
     protected JLabel playerLabel_;
 
@@ -46,6 +48,9 @@ public abstract class GameInfoPanel extends TexturedPanel implements GameChanged
         this.add( filler );
     }
 
+    public void setParentFrame(JFrame parent) {
+        parent_ = parent;
+    }
     /**
      *  create all the sub panels in the desired order.
      *  Subclasses may override to get a different ordering.
