@@ -81,20 +81,21 @@ public class PokerHand implements Comparable {
      * @return
      */
     public float getScore() {
-        // need to take into account the suit and rank when determining the score to break ties if 2 handa are the same
-        float score = determineType().odds();
+        // need to take into account the suit and rank when determining the score to break ties if 2 hands are the same
+        float score = determineType().odds() * 1000 + this.determineType().getTieBreakerScore(this);
         return score;
     }
 
     private void sort() {
         Comparator<Card> comparator = new CardComparator();
+        // sort the cards from low to high
         Collections.sort(hand_, comparator);
     }
 
 
     public PokerHandEnum determineType() {
 
-        // first sort the cards so its easier to tell wha twe have.
+        // first sort the cards so its easier to tell what we have.
         sort();
 
         // first check for a royal flush. If it exists return it, else check for straight flush, and so on.
@@ -172,7 +173,7 @@ public class PokerHand implements Comparable {
 
     /**
      * returns true if there is exactly N of a certain rank in the hand
-     * (note: the is not 2 of a kind if there is 4 of a kind)
+     * (note: there is not 2 of a kind if there is 4 of a kind)
      */
     private boolean hasNofaKind(int num) {
 
@@ -182,6 +183,53 @@ public class PokerHand implements Comparable {
                 return true;
         }
         return false;
+    }
+
+    /**
+     * returns the rank of the n of a kind specified, null if does not have n of a kind.
+     * (note: the is not 2 of a kind if there is 4 of a kind)
+     * (note: if there is more than 1 n of a kind the highest rank is returned)
+     */
+    protected Rank getRankOfNofaKind(int num) {
+
+        Set entries = matchMap_.entrySet();
+        Rank highestRank = null;
+        for (Object entry : entries) {
+            Map.Entry e = (Map.Entry) entry;
+            if (((Integer)e.getValue()).intValue() == num) {
+                Rank r = (Rank)e.getKey();
+                if (highestRank == null || (r.ordinal() > highestRank.ordinal())) {
+                    highestRank = r;
+                }
+            }
+        }
+
+        return highestRank;
+    }
+
+    /**
+     * @return  the highest valued card in this hand
+     */
+    public Card getHighCard() {
+        return hand_.get(hand_.size()-1);
+        /*
+        Card highCard = hand_.get(0); // start assuming the first card is the highest
+        for (Card c : hand_) {
+            if (getValue(c) > getValue(highCard))  {
+                highCard = c;
+            }
+         }
+         return highCard;
+         */
+    }
+
+    /**
+     * @param c  card to evaluate
+     * @return the value of the card in terms of poker
+     * (note value is always less than 100 because the ace of hearts is 4*12 + 3 = 51
+     */
+    public static int getValue(Card c)  {
+         return 4 * c.rank().ordinal() + c.suit().ordinal();
     }
 
     /**
@@ -224,14 +272,14 @@ public class PokerHand implements Comparable {
 
     /**
      * compare this poker hand to another
-     * @param ohand
-     * @return 1 if this hand is higher than the other, -1 if lower, else 0.
+     * @param otherHand
+     * @return 1 if this hand is higher than the other hand, -1 if lower, else 0.
      */
-    public int compareTo(Object ohand) {
-        PokerHand hand = (PokerHand) ohand;
+    public int compareTo(Object otherHand) {
+        PokerHand hand = (PokerHand) otherHand;
         // first do a coars comparison based on the type of the hand
         // if a tie, then look more closely
-        float difference =  this.determineType().odds() - hand.determineType().odds();
+        float difference = this.determineType().odds() - hand.determineType().odds();
         if (difference > 0) {
             return 1;
         } else if (difference < 0) {
@@ -241,19 +289,29 @@ public class PokerHand implements Comparable {
         }
     }
 
+    /*
     public Rank getRankOfLargestNofaKind() {
         Iterator it = matchMap_.keySet().iterator();
         int largest = 0;
-        Rank rankOfSet = null;
+
         while (it.hasNext()) {
             Rank r = (Rank)it.next();
             Integer ii = (Integer)matchMap_.get(r);
             if (ii.intValue() > largest) {
                 largest = ii.intValue();
-                rankOfSet = r;
+
             }
         }
+        // now that we know the n
+        Rank rankOfSet = null;
+
+        rankOfSet = r;
+
         return rankOfSet;
+    } */
+
+    protected Map getMatchMap() {
+        return matchMap_;
     }
 
 
@@ -261,11 +319,11 @@ public class PokerHand implements Comparable {
      *
      * @param hand1
      * @param hand2
-     * @return  return 1 if hand1 greater than hand 2, 0 if equal, -1 if less.
+     * @return  return 1 if hand1 greater than hand2, 0 if equal, -1 if less.
      */
     public static int compareHandsOfEqualType(PokerHand hand1, PokerHand hand2) {
         assert(hand1.determineType() == hand2.determineType());
-        if (hand1.getRankOfLargestNofaKind().ordinal() > hand2.getRankOfLargestNofaKind().ordinal()) {
+        if (hand1.determineType().getTieBreakerScore(hand1) > hand2.determineType().getTieBreakerScore(hand2)) {
             return 1;
         } else {
             return -1;

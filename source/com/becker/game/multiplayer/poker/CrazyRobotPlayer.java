@@ -24,7 +24,8 @@ public class CrazyRobotPlayer extends PokerRobotPlayer
      * @return an appropriate action based on the situation
      */
     public Action getAction(PokerController pc) {
-        if (getHand().getScore() > 10 || Math.random() > .3) {
+
+        if ((getCash() > getCallAmount(pc)) && (getHand().getScore() > 10 || Math.random() > .3)) {
             return Action.RAISE;
         } else if (getHand().getScore() > 1 || Math.random() > .2 || allOthersFolded(pc)) {
             return Action.CALL;
@@ -32,11 +33,13 @@ public class CrazyRobotPlayer extends PokerRobotPlayer
         return Action.FOLD;
     }
 
-    public int getRaise() {
+    public int getRaise(PokerController pc) {
+        int allInAmt = pc.getAllInAmount();
+        int max = (getCash() - getCallAmount(pc));
         if (getHand().getScore() >100) {
-            return 10;
+            return min(10, max, allInAmt);
         }
-        return 2;
+        return min(2, max, allInAmt);
     }
 
 }

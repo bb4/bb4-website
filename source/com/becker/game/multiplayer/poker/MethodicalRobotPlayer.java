@@ -28,22 +28,27 @@ public class MethodicalRobotPlayer extends PokerRobotPlayer
      */
     public Action getAction(PokerController pc) {
         boolean othersFolded = allOthersFolded(pc);
-        if (!othersFolded && ( getHand().getScore() < 10 || Math.random() > .1)) {
-            return Action.FOLD;
-        } else if (getHand().getScore() >= 10 || Math.random() > .2 || othersFolded) {
+
+        if (getHand().getScore() >= 10 || Math.random() > .1 || othersFolded) {
             return Action.CALL;
-        } else {
+        } else if (getCash() > getCallAmount(pc) && Math.random() > .1) {
             return Action.RAISE;
+        } else {
+            return Action.FOLD;
         }
     }
 
-    public int getRaise() {
-        if (getHand().getScore() > 100 || Math.random() > .2) {
-            return this.getCash()/10;
-        } else if (getHand().getScore() > 10 || Math.random() > .1) {
-            return 1 + this.getCash()/40;
+    public int getRaise(PokerController pc) {
+        int allInAmt = pc.getAllInAmount();
+        int max = (getCash() - getCallAmount(pc));
+
+        if (getHand().getScore() >100 || Math.random() > .8) {
+            return min(this.getCash()/10, max, allInAmt);
+        }
+        else if (getHand().getScore() > 10 || Math.random() > .1) {
+            return min(1 + this.getCash()/40, max, allInAmt);
         } else {
-            return  1;
+            return min(1, max, allInAmt);
         }
     }
 

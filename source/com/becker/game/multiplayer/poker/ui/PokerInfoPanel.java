@@ -110,8 +110,9 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
               pc.advanceToNextPlayer();
            }
 
+
            BettingDialog bettingDialog =
-                   new BettingDialog(currentPlayer, (pc.getCurrentMaxContribution() - currentPlayer.getContribution()));
+                   new BettingDialog(pc); //currentPlayer, callAmount, allInAmount);
            Point p = this.getParent().getLocationOnScreen();
 
            // offset the dlg so the board is visible as a reference

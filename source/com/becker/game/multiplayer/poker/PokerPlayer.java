@@ -22,6 +22,8 @@ public abstract class PokerPlayer extends Player
     // in dollars
     private int cash_;
     private boolean hasFolded_;
+    // this becomes true when the player has no money left or not enough to ante up.
+    private boolean outOfGame_;
     // the maount that this player has contributed to the pot
     private int contribution_;
 
@@ -91,6 +93,15 @@ public abstract class PokerPlayer extends Player
         return hasFolded_;
     }
 
+    public void setOutOfGame(boolean out) {
+        outOfGame_ = out;
+        hasFolded_ = out;
+    }
+
+    public boolean isOutOfGame() {
+        return outOfGame_;
+    }
+
     public PokerPlayerMarker getPiece() {
         return piece_;
     }
@@ -113,6 +124,11 @@ public abstract class PokerPlayer extends Player
             contribution_ += amount;
             controller.addToPot(amount);
         }
+    }
+
+    public int getCallAmount(PokerController pc) {
+        int currentMaxContrib = pc.getCurrentMaxContribution();
+        return (currentMaxContrib - getContribution());
     }
 
     /**

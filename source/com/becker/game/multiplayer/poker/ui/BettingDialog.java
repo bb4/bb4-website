@@ -4,6 +4,7 @@ import com.becker.game.common.*;
 import com.becker.game.multiplayer.galactic.*;
 import com.becker.game.multiplayer.poker.PokerPlayer;
 import com.becker.game.multiplayer.poker.PokerHand;
+import com.becker.game.multiplayer.poker.PokerController;
 import com.becker.ui.*;
 
 import javax.swing.*;
@@ -29,21 +30,24 @@ public final class BettingDialog extends OptionsDialog
     private GradientButton callButton_;    // call or check
     private GradientButton raiseButton_;
 
-    private JLabel availableCash_;
+    private PokerController pc_;
     private int callAmount_;
     private int contributeAmount_;
 
     private JPanel pokerHandPanel_;
     private static NumberFormat currencyFormat_;
 
+    // PokerPlayer player, int callAmount, int allInAmount)
+
     /**
      * constructor - create the tree dialog.
-     * @param callAmount amount needed to call
+     * @param pc pokerController
      */
-    public BettingDialog(PokerPlayer player, int callAmount)
+    public BettingDialog(PokerController pc)
     {
-        player_ = player;
-        callAmount_ = callAmount;
+        pc_ = pc;
+        player_ = (PokerPlayer)pc_.getCurrentPlayer();
+        callAmount_ = (pc_.getCurrentMaxContribution() - player_.getContribution());
         contributeAmount_ = 0;
 
         initUI();
@@ -66,7 +70,6 @@ public final class BettingDialog extends OptionsDialog
 
         mainPanel_.add(pokerHandPanel_, BorderLayout.NORTH);
         mainPanel_.add(instructions, BorderLayout.CENTER);
-        //mainPanel_.add(new JLabel(" "), BorderLayout.SOUTH);
         mainPanel_.add(buttonsPanel, BorderLayout.SOUTH);
 
         getContentPane().add( mainPanel_ );
@@ -81,13 +84,18 @@ public final class BettingDialog extends OptionsDialog
 
         NumberFormat cf = getCurrencyFormat();
         String cash = cf.format(player_.getCash());
+        JPanel instr = new JPanel();
+        instr.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
         JLabel currentCash = new JLabel("You currently have "+cash);
+
         JLabel amountToCall = new JLabel("To call, you need to add "+cf.format(callAmount_));
 
         //panel.setPreferredSize(new Dimension(400, 100));
         panel.add(playerPanel, BorderLayout.NORTH);
         panel.add(currentCash, BorderLayout.CENTER);
-        panel.add(amountToCall, BorderLayout.SOUTH);
+        if (callAmount_ > 0)  {
+            panel.add(amountToCall, BorderLayout.SOUTH);
+        }
         return panel;
     }
 
@@ -101,6 +109,7 @@ public final class BettingDialog extends OptionsDialog
         p.add(playerLabel);
         return p;
     }
+
     /**
      *  create the OK/Cancel buttons that go at the bottom.
      */
@@ -165,9 +174,9 @@ public final class BettingDialog extends OptionsDialog
 
 
     public void showRaiseDialog() {
-              // open a dlg to get an order
+        // open a dlg to get an order
         RaiseDialog raiseDialog =
-                new RaiseDialog(player_, callAmount_);
+                new RaiseDialog(player_, callAmount_, pc_.getAllInAmount(), pc_.getMaxAbsoluteRaise());
 
         raiseDialog.setLocation((int)(this.getLocation().getX() + 40), (int)(this.getLocation().getY() +170));
 
@@ -198,7 +207,7 @@ public final class BettingDialog extends OptionsDialog
         protected void paintComponent(Graphics g) {
              PokerRenderer renderer = (PokerRenderer)PokerRenderer.getRenderer();
              renderer.renderHand((Graphics2D)g, new Location(0, 2), hand_, 22);
-         }
+        }
     }
 
 }

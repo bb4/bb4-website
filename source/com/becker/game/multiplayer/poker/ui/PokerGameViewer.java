@@ -38,7 +38,7 @@ public class PokerGameViewer extends GameBoardViewer
 
     protected int getDefaultCellSize()
     {
-        return 16;
+        return 8;
     }
 
     protected Color getDefaultGridColor()
@@ -131,7 +131,7 @@ public class PokerGameViewer extends GameBoardViewer
                 if (callAmount > 0)
                     robot.contributeToPot(pc, callAmount);
                 break;
-            case RAISE : robot.contributeToPot(pc, robot.getRaise());
+            case RAISE : robot.contributeToPot(pc, robot.getRaise(pc));
                 break;
         }
 
@@ -181,14 +181,14 @@ public class PokerGameViewer extends GameBoardViewer
             PokerPlayer player = (PokerPlayer) players[i];
             player.getHand().setFaceUp(true);
         }
-        //refresh();
+        refresh();
 
         RoundOverDialog roundOverDlg = new RoundOverDialog(null, winner, winnings);
 
         Point p = this.getParent().getLocationOnScreen();
 
         // offset the dlg so the board is visible as a reference
-        roundOverDlg.setLocation((int)(p.getX()+.7*getParent().getWidth()), (int)(p.getY()+getParent().getHeight()/3));
+        roundOverDlg.setLocation((int)(p.getX()+.9*getParent().getWidth()), (int)(p.getY()+getParent().getHeight()/3));
 
         roundOverDlg.setVisible(true);
     }
@@ -207,8 +207,8 @@ public class PokerGameViewer extends GameBoardViewer
     {
         super.drawBackground(g, startPos, rightEdgePos, bottomEdgePos);
         g.setColor( backgroundColor_ );
-        int width = this.getWidth();
-        int height = this.getHeight();
+        int width = this.getBoard().getNumCols() * this.getCellSize();
+        int height = this.getBoard().getNumRows() * this.getCellSize();
         g.setColor(TABLE_COLOR);
         g.fillOval((int)(.05*width), (int)(0.05*height), (int)(.9*width), (int)(0.9*height));
     }
@@ -229,7 +229,7 @@ public class PokerGameViewer extends GameBoardViewer
     protected void drawMarkers( int nrows, int ncols, Graphics2D g2 )
     {
         // draw the pot in the middle
-        Location loc = new Location(getBoard().getNumRows()/2, getBoard().getNumCols()/2-1);
+        Location loc = new Location(getBoard().getNumRows()/2, getBoard().getNumCols()/2-3);
         int pot = ((PokerController)controller_).getPotValue();
         ((PokerRenderer)pieceRenderer_).renderChips(g2, loc, pot, this.getCellSize());
 

@@ -25,17 +25,23 @@ public final class RaiseDialog extends OptionsDialog
     private GradientButton okButton_;
     private JTextField raiseAmount_;
     private int callAmount_;
+    private int allInAmount_;
+    private int maxRaiseAllowed_;
 
     private static final int DEFAULT_RAISE_AMOUNT = 5; // dollars
 
     /**
      * constructor - create the tree dialog.
+     * @param player
+     * @param callAmount
+     * @param allInAmount
      */
-    public RaiseDialog(PokerPlayer player, int callAmount)
+    public RaiseDialog(PokerPlayer player, int callAmount, int allInAmount, int maxRaiseAllowed)
     {
         player_ = player;
         callAmount_ = callAmount;
-
+        allInAmount_ = allInAmount;
+        maxRaiseAllowed_ = maxRaiseAllowed;
         initUI();
     }
 
@@ -48,22 +54,31 @@ public final class RaiseDialog extends OptionsDialog
         setResizable( true );
         mainPanel_ =  new JPanel();
         mainPanel_.setLayout( new BorderLayout() );
+        mainPanel_.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(10,10,10,10),
+                                                                BorderFactory.createEtchedBorder()));
 
         JPanel buttonsPanel = createButtonsPanel();
 
         // add the form elements
         JPanel instructionsPanel = new JPanel(new BorderLayout());
-        instructionsPanel.setMinimumSize(new Dimension(30,60));
+        instructionsPanel.setMinimumSize(new Dimension(30, 60));
 
         JLabel instr1 = new JLabel("You currently have $"+player_.getCash());
-        instructionsPanel.add(instr1, BorderLayout.CENTER);
+        instructionsPanel.add(instr1, BorderLayout.NORTH);
         if (callAmount_ > 0) {
             JLabel instr2 = new JLabel("You first need to add $"+callAmount_+" to meet what others have added.");
-            instructionsPanel.add(instr2, BorderLayout.SOUTH);
+            instructionsPanel.add(instr2, BorderLayout.CENTER);
+        }
+        raiseAmount_ = new JTextField(DEFAULT_RAISE_AMOUNT);
+        NumberInputPanel raiseInput = null;
+        if (player_.getCash() > allInAmount_ && allInAmount_ < maxRaiseAllowed_) {
+            JLabel instr3 = new JLabel("If you want, you can \"all in\" one of the players by raising $"+(allInAmount_ - callAmount_));
+            instructionsPanel.add(instr3, BorderLayout.SOUTH);
+            raiseInput = new NumberInputPanel(GameContext.getLabel("AMOUNT_TO_RAISE1"), raiseAmount_);
+        }  else {
+            raiseInput = new NumberInputPanel(GameContext.getLabel("AMOUNT_TO_RAISE2"), raiseAmount_);
         }
 
-        raiseAmount_ = new JTextField(DEFAULT_RAISE_AMOUNT);
-        NumberInputPanel raiseInput = new NumberInputPanel(GameContext.getLabel("AMOUNT_TO_RAISE"), raiseAmount_);
 
         mainPanel_.add(instructionsPanel, BorderLayout.NORTH);
         mainPanel_.add(raiseInput, BorderLayout.CENTER);
@@ -106,9 +121,17 @@ public final class RaiseDialog extends OptionsDialog
     {
         Object source = e.getSource();
         if (source == okButton_) {
-            if (callAmount_ + getRaiseAmount() > player_.getCash()) {
-                JOptionPane.showMessageDialog(this, "You can't raise by more money than you have!");
-            } else {
+            int contrib = callAmount_ + getRaiseAmount();
+            if (contrib > player_.getCash()) {
+                JOptionPane.showMessageDialog(this, "You cannot raise by more money than you have!");
+            }
+            else if (contrib > allInAmount_) {
+                JOptionPane.showMessageDialog(this, "You cannot raise by more money than the poorest player.");
+            }
+            else if (getRaiseAmount() > maxRaiseAllowed_) {
+                JOptionPane.showMessageDialog(this, "The maximum raise allowed is $"+maxRaiseAllowed_+". You cannot raise by more than that.");
+            }
+            else {
                 this.setVisible(false);
             }
         }

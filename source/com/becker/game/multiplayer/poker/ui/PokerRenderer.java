@@ -16,7 +16,6 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.Ellipse2D;
 import java.text.NumberFormat;
 
-import org.w3c.dom.css.Rect;
 
 /**
  *  a singleton class that takes a poker player and renders it for the PokerGameViewer.
@@ -172,7 +171,7 @@ public class PokerRenderer extends GamePieceRenderer
 
     private static final double CHIP_PILE_WIDTH = .9;
     private static final double CHIP_HEIGHT = .15;
-    private static final int POKER_CHIP_FONT_SIZE = 8;
+    private static final int POKER_CHIP_FONT_SIZE = 6;
     private static final Font POKER_CHIP_FONT = new Font( "Sans-serif", Font.PLAIN, POKER_CHIP_FONT_SIZE );
 
     public void renderChips(Graphics2D g2, Location location, int amount, int cellSize) {
