@@ -210,7 +210,6 @@ public class MazeGenerator extends JComponent
 
         Point currentPosition = startPosition_;
         MazeCell currentCell = grid_[currentPosition.x][currentPosition.y];
-        MazeCell lastCell = null;
 
         // push the initial moves
         pushMoves( currentPosition, new Point( 1, 0 ), 1, stack );
@@ -234,16 +233,10 @@ public class MazeGenerator extends JComponent
                 if ( depth > currentCell.depth )
                     currentCell.depth = depth;
 
-                lastCell = currentCell;
-                currentCell = grid_[currentPosition.x][currentPosition.y];
-                if (currentCell==null) {
-                    System.out.println( " currentPosition="+currentPosition);
-                    System.out.println( " grid_["+currentPosition.x+"].length="+grid_[currentPosition.x].length);
-                }
-                currentCell.visited = true;
 
-                Point nextPosition = (Point) currentPosition.clone();
-                nextPosition.translate( dir.x, dir.y );
+                currentCell = grid_[currentPosition.x][currentPosition.y];
+                Point nextPosition = getNextPosition(currentPosition, currentCell, dir);
+
                 MazeCell nextCell = grid_[nextPosition.x][nextPosition.y];
 
                 if ( !nextCell.visited ) {
@@ -287,7 +280,6 @@ public class MazeGenerator extends JComponent
 
         Point currentPosition = startPosition_;
         MazeCell currentCell = grid_[currentPosition.x][currentPosition.y];
-        MazeCell lastCell = null;
 
         // push the initial moves
         pushMoves( currentPosition, new Point( 1, 0 ), 1, stack );
@@ -309,17 +301,10 @@ public class MazeGenerator extends JComponent
             if ( depth > currentCell.depth )
                 currentCell.depth = depth;
 
-            lastCell = currentCell;
             currentCell = grid_[currentPosition.x][currentPosition.y];
-            if (currentCell==null) {
-                System.out.println( " currentPosition="+currentPosition);
-                System.out.println( " grid_["+currentPosition.x+"].length="+grid_[currentPosition.x].length);
-            }
-            currentCell.visited = true;
+            Point nextPosition = getNextPosition(currentPosition, currentCell, dir);
 
-            Point nextPosition = (Point) currentPosition.clone();
 
-            nextPosition.translate( dir.x, dir.y );
             MazeCell nextCell = grid_[nextPosition.x][nextPosition.y];
 
             boolean pathBlocked = (( dir.x ==  1 && currentCell.eastWall ) ||
@@ -346,6 +331,7 @@ public class MazeGenerator extends JComponent
                 }
 
                 nextCell.visited = true;
+
                 currentPosition = nextPosition;
 
                 // now at a new location
@@ -355,6 +341,20 @@ public class MazeGenerator extends JComponent
             }
         }
         paintAll();
+    }
+
+    private Point getNextPosition(Point currentPosition, MazeCell currentCell, Point dir)
+    {
+
+            if (currentCell == null) {
+                System.out.println( " currentPosition="+currentPosition);
+                System.out.println( " grid_["+currentPosition.x+"].length="+grid_[currentPosition.x].length);
+            }
+            currentCell.visited = true;
+
+            Point nextPosition = (Point) currentPosition.clone();
+            nextPosition.translate( dir.x, dir.y );
+            return nextPosition;
     }
 
     /**
