@@ -211,6 +211,10 @@ public class Galaxy extends Board
     }
 
 
+    public void higlightPlanet() {
+
+    }
+
     /**
      * For galactic empire, undoing a move means turning time back a year and
      * restoring the state of the game one full turn earlier

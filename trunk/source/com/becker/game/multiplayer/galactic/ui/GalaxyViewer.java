@@ -194,7 +194,7 @@ public class GalaxyViewer extends GameBoardViewer
 
                         Point p = this.getParent().getLocationOnScreen();
                         // offset the dlg so the Galaxy grid is visible as a reference.
-                        bDlg.setLocation((int)(p.getX()+.7*getParent().getWidth()), (int)(p.getY()+getParent().getHeight()-10));
+                        bDlg.setLocation((int)(p.getX()+getParent().getWidth()), (int)(p.getY()+.6*getParent().getHeight()));
                         bDlg.setModal(true);
                         bDlg.setVisible(true);
                     }
@@ -212,11 +212,15 @@ public class GalaxyViewer extends GameBoardViewer
 
     public void showPlanetUnderAttack(Planet planet, boolean showAttacked)
     {
-        // Galaxy galaxy = (Galaxy)controller_.getBoard();
         planet.setUnderAttack(showAttacked);
         this.refresh();
     }
 
+    public void highlightPlanet(Planet planet, boolean hightlighted)
+    {
+        planet.setHighlighted(hightlighted);
+        this.refresh();
+    }
 
     private static final float OFFSET = .25f;
     /**

@@ -18,8 +18,11 @@ public class PlanetRenderer extends GamePieceRenderer
     private static GamePieceRenderer renderer_ = null;
 
     private static final Color ATTACK_COLOR = new Color(255, 100, 0);
-
     private static final BasicStroke ATTACK_STROKE = new BasicStroke(3);
+
+    private static final Color HIGHLIGHT_COLOR = new Color(245, 255, 0);
+    private static final BasicStroke HIGHLIGHT_STROKE = new BasicStroke(2);
+
     /**
      * private constructor because this class is a singleton.
      * Use getPieceRenderer instead
@@ -78,6 +81,13 @@ public class PlanetRenderer extends GamePieceRenderer
             g2.setColor( ATTACK_COLOR );
             g2.drawOval( pos.x, pos.y, pieceSize + 1, pieceSize + 1 );
         }
+
+        if ( planet.isHighlighted() ) {
+                g2.setStroke(HIGHLIGHT_STROKE);
+                g2.setColor( HIGHLIGHT_COLOR );
+                g2.drawOval( pos.x, pos.y, pieceSize + 1, pieceSize + 1 );
+            }
+
 
         int offset = (pieceSize<(.6*cellSize))? -1 : cellSize/5;
         if ( planet.getAnnotation() != null ) {

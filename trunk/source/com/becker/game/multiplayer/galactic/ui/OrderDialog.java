@@ -10,8 +10,6 @@ import java.awt.event.*;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.HashMap;
-import java.util.Set;
-import java.util.Iterator;
 
 /**
  * Allow the user to specify a single order
@@ -23,7 +21,6 @@ public final class OrderDialog extends OptionsDialog
                                implements ActionListener, ItemListener
 {
     private GalacticPlayer player_;
-    private Galaxy galaxy_;
 
     private GradientButton okButton_;
 
@@ -43,10 +40,9 @@ public final class OrderDialog extends OptionsDialog
     /**
      * constructor - create the tree dialog.
      */
-    public OrderDialog(GalacticPlayer player, Galaxy galaxy, HashMap totalOutgoing, int numYearsRemaining )
+    public OrderDialog(GalacticPlayer player, HashMap totalOutgoing, int numYearsRemaining)
     {
         player_ = player;
-        galaxy_ = galaxy;
         totalOutgoing_ = totalOutgoing;
         numYearsRemaining_ = numYearsRemaining;
  
@@ -73,7 +69,7 @@ public final class OrderDialog extends OptionsDialog
         JPanel originPanel = createComboInputPanel(labelText, originCombo_);
 
         labelText = GameContext.getLabel("DESTINATION");
-        destinationCombo_ = createPlanetSelect(null);  //new JComboBox(galaxy_.getPlanets().toArray());
+        destinationCombo_ = createPlanetSelect(null);
         JPanel destPanel = createComboInputPanel( labelText, destinationCombo_);
 
         availableShips_ = new JLabel();
@@ -108,7 +104,8 @@ public final class OrderDialog extends OptionsDialog
             Planet planet = (Planet)planets.get(i);
             sPlanets[i] = Character.toString(planet.getName());
         }
-        return new JComboBox(sPlanets);
+        JComboBox cbox = new JComboBox(sPlanets);
+        return cbox;
     }
 
     /**
@@ -217,6 +214,7 @@ public final class OrderDialog extends OptionsDialog
     }
 
     private Planet getOrigin() {
+        System.out.println("originCombo_.getSelectedItem()="+originCombo_.getSelectedItem());
         return Galaxy.getPlanet(originCombo_.getSelectedItem().toString().charAt(0));
     }
 

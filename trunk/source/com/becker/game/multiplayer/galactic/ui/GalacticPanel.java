@@ -44,7 +44,8 @@ public class GalacticPanel extends GamePanel
 
     protected GameInfoPanel createInfoPanel(GameController controller)
     {
-        return new GalacticInfoPanel( controller );
+
+        return new GalacticInfoPanel( controller);
     }
 
     // Display the help dialog to give instructions

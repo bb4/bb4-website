@@ -36,7 +36,7 @@ final class BattleDialog extends OptionsDialog
 
     private final JLabel infoLabel_ = new JLabel();
     //private boolean paused_ = false;
-    private float scale_ = 1.0f;
+    //private float scale_ = 1.0f;
 
     private BattleSimulation battle_;
     private GalaxyViewer viewer_;
@@ -52,7 +52,8 @@ final class BattleDialog extends OptionsDialog
     {
         super( parent );
         this.setResizable(false);
-        this.setAlwaysOnTop(true);
+        if (!GUIUtil.isStandAlone())
+            this.setAlwaysOnTop(true);   // causes access control exception in applet
         battle_ = battle;
         viewer_ = viewer;
         initUI();
@@ -96,7 +97,8 @@ final class BattleDialog extends OptionsDialog
 
         canvas_.setPreferredSize(new Dimension(WIDTH, 100));
         JPanel canvasPanel = new JPanel();
-        canvasPanel.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+        canvasPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(5,5,5,5),
+                              BorderFactory.createLineBorder(Color.black, 1)));
         canvasPanel.add(canvas_);
 
         mainPanel_.add(descriptionLabel_, BorderLayout.NORTH);
@@ -112,57 +114,6 @@ final class BattleDialog extends OptionsDialog
         pack();
     }
 
-    private void doBattleAnimation()
-    {
-        Planet destPlanet = battle_.getPlanet();
-        int numAttackShips = battle_.getOrder().getFleetSize();
-        int numDefendShips = destPlanet.getNumShips();
-        String defender = (destPlanet.getOwner()==null)? "Neutral" : destPlanet.getOwner().getName();
-
-        // play back the move sequence
-        List sequence = battle_.getHitSequence();
-        if (sequence.isEmpty()) {
-            // reinforced!
-            GameContext.getMusicMaker().playNote( MusicMaker.APPLAUSE, 45, 0, 200, 1000 );
-            GameContext.getMusicMaker().playNote(70, 50, 900);
-            GameContext.getMusicMaker().playNote(90, 40, 1000);
-            descriptionLabel_.setText("Planet "+destPlanet.getName()+" has been reinforced.");
-        }
-        else {
-            Iterator it = sequence.iterator();
-            GameContext.getMusicMaker().playNote( MusicMaker.GUNSHOT, 45, 0, 200, 1000 );
-
-            while (it.hasNext()) {
-                GalacticPlayer p = (GalacticPlayer)it.next();
-                int total = numAttackShips + numDefendShips;
-                int time = 1+ BATTLE_SPEED / (1+total);
-                if (p == battle_.getOrder().getOwner()) {
-                    GameContext.getMusicMaker().playNote(100, time, 800);
-                    numAttackShips--;
-                }
-                else {
-                    GameContext.getMusicMaker().playNote(80, time, 800);
-                    numDefendShips--;
-                }
-                refresh(numAttackShips, numDefendShips);
-            }
-            assert(numAttackShips == 0 || numDefendShips == 0):
-                    "numAttackShips="+numAttackShips+" numDefendShips="+numDefendShips;
-            String winMessage;
-            if (numAttackShips==0)
-                winMessage = "Planet "+destPlanet.getName()+" has successfully defended itself.";
-            else
-                winMessage = battle_.getOrder().getOwner().getName()+ " has conquered planet "+destPlanet.getName();
-
-            descriptionLabel_.setText( "<html>"+ descriptionLabel_.getText()+ "<b>"+ winMessage +"/b></html>");
-        }
-
-        viewer_.showPlanetUnderAttack(battle_.getPlanet(), false);  // battle is done
-        closeButton_.setEnabled(true);
-
-        canvas_.repaint();
-
-    }
 
     protected JPanel createButtonsPanel()
     {
@@ -174,7 +125,8 @@ final class BattleDialog extends OptionsDialog
         //initBottomButton( cancelButton_, GameContext.getLabel("CANCEL"), GameContext.getLabel("CANCEL") );
 
         buttonsPanel_.add( startButton_, BorderLayout.CENTER);
-        //buttonsPanel_.add( closeButton_ );
+        buttonsPanel_.add( closeButton_, BorderLayout.EAST );
+        closeButton_.setEnabled(false);
 
         return buttonsPanel_;
     }
@@ -187,24 +139,24 @@ final class BattleDialog extends OptionsDialog
     public void actionPerformed( ActionEvent e )
     {
 
-        /* do the animation in a separate thread
-        Runnable doAnimation = new Runnable() {
-            public void run() {
-                doBattleAnimation();
-            }
-        }; */
-
         Object source = e.getSource();
         if (source == closeButton_) {
             this.setVisible(false);
         }
         else if (source == startButton_) {
-            buttonsPanel_.remove(startButton_);
-            buttonsPanel_.add(closeButton_, BorderLayout.CENTER);
-            this.invalidate();
-            closeButton_.setEnabled(false);
 
-            doBattleAnimation();
+            //buttonsPanel_.remove(startButton_);
+            //buttonsPanel_.add(closeButton_, BorderLayout.CENTER);
+            startButton_.setEnabled(false);
+            closeButton_.setEnabled(true);
+            this.invalidate();
+            this.paint(this.getGraphics());
+
+
+            //SwingUtilities.invokeLater(doAnimation);
+            Thread battle =  new Thread(canvas_);
+            SwingUtilities.invokeLater(battle);
+
             //doAnimation();
         }
     }
@@ -224,7 +176,7 @@ final class BattleDialog extends OptionsDialog
     /**
      * Canvas for showing the animation ----------------------------------
      */
-    private class BattleCanvas extends Canvas
+    private class BattleCanvas extends Canvas implements Runnable
     {
         int attackers_;
         int defenders_;
@@ -241,8 +193,68 @@ final class BattleDialog extends OptionsDialog
             this.paint(this.getGraphics());
         }
 
+        public void run()
+        {
+             Planet destPlanet = battle_.getPlanet();
+             int numAttackShips = battle_.getOrder().getFleetSize();
+             int numDefendShips = destPlanet.getNumShips();
+             //String defender = (destPlanet.getOwner()==null)? "Neutral" : destPlanet.getOwner().getName();
 
-        public void paint(Graphics g) {
+             // play back the move sequence
+             List sequence = battle_.getHitSequence();
+             if (sequence.isEmpty()) {
+                 // reinforced!
+                 GameContext.getMusicMaker().playNote( MusicMaker.APPLAUSE, 45, 0, 200, 1000 );
+                 GameContext.getMusicMaker().playNote(70, 50, 900);
+                 GameContext.getMusicMaker().playNote(90, 40, 1000);
+                 descriptionLabel_.setText("Planet "+destPlanet.getName()+" has been reinforced.");
+             }
+             else {
+                 Iterator it = sequence.iterator();
+                 if (GameContext.getUseSound())
+                     GameContext.getMusicMaker().playNote( MusicMaker.GUNSHOT, 45, 0, 200, 1000 );
+
+                 while (it.hasNext()) {
+                     GalacticPlayer p = (GalacticPlayer)it.next();
+                     int total = numAttackShips + numDefendShips;
+                     int time = 1 + BATTLE_SPEED / (1+total);
+                     if (p == battle_.getOrder().getOwner()) {
+                         if (GameContext.getUseSound())
+                             GameContext.getMusicMaker().playNote(100, time, 800);
+                         numAttackShips--;
+                     }
+                     else {
+                         if (GameContext.getUseSound())
+                             GameContext.getMusicMaker().playNote(80, time, 800);
+                         numDefendShips--;
+                     }
+
+                     refresh(numAttackShips, numDefendShips);
+
+                     try {
+                         Thread.sleep(time);
+                     } catch (InterruptedException e) { e.printStackTrace(); }
+                 }
+                 assert(numAttackShips == 0 || numDefendShips == 0):
+                         "numAttackShips="+numAttackShips+" numDefendShips="+numDefendShips;
+                 String winMessage;
+                 if (numAttackShips==0)
+                     winMessage = "Planet "+destPlanet.getName()+" has successfully defended itself.";
+                 else
+                     winMessage = battle_.getOrder().getOwner().getName()+ " has conquered planet "+destPlanet.getName();
+
+                 descriptionLabel_.setText( "<html>"+ descriptionLabel_.getText()+ "<b>"+ winMessage +"/b></html>");
+             }
+
+             viewer_.showPlanetUnderAttack(battle_.getPlanet(), false);  // battle is done
+             //closeButton_.setEnabled(true);
+
+             canvas_.repaint();
+
+         }
+
+
+        public synchronized void paint(Graphics g) {
 
             if (g == null)
                 return;
@@ -260,8 +272,8 @@ final class BattleDialog extends OptionsDialog
             g2.setColor(attackerColor.darker());
             String attackerString = "Attacker :"+battle_.getOrder().getOwner().getName();
             g2.drawString(attackerString, 10, 20);
-            g2.drawString(Integer.toString(attackers_), attackers_+15, 45);
-            if (attackers_> 0)  {
+            g2.drawString(Integer.toString(attackers_), attackers_+15, 42);
+            if (attackers_ > 0)  {
                 g2.drawRect(10,25, attackers_, 20);
             }
 

@@ -11,17 +11,23 @@ import java.util.*;
 /**
  * Defines everything the computer needs to know to play Galactic Empire.
  * @@ todo:
- *  - mousing over menu item should higlight planet in the viewer
+ *  - mousing over menu item should highlight planet in the viewer
+ *  - mouse over should still work when entering orders (non-modal?)
  *  - have robot players with different strategies.
  *  - have button to show stats dialog (basically same as tally dialog) on toolbar.
  *  - in addition to order dialog should be able to directly click on source, then dest planet,
  *    then enter number of ships.
  *
  * @@ bugs
- *  - after click on fight, it should change immediately to close.
- *  - mouse over should still work when entering orders (non-modal?)
+ *  - after click on fight, it should change immediately to close
  *  - remove selected source planet from dest list.
  *  - summary dialog should show number of years.
+ * 
+ * at java.lang.Integer.parseInt(Integer.java:468)
+	at java.lang.Integer.parseInt(Integer.java:497)
+	at com.becker.game.multiplayer.galactic.ui.OrderDialog.getFleetSize(OrderDialog.java:228)
+	at com.becker.game.multiplayer.galactic.ui.OrderDialog.getOrder(OrderDialog.java:210)
+	at com.becker.game.multiplayer.galactic.ui.OrderDialog.actionPerformed(OrderDialog.java:169)
  *
  * fixed:
  *    don't allow computer or players to send ships to distant planets if they will not arrive before end of the game.
@@ -158,8 +164,9 @@ public class GalacticController extends GameController
         GalaxyViewer gviewer  = (GalaxyViewer)this.getViewer();
 
         // show message when done.
+        System.out.println("done="+done());
         if (done()) {
-            //System.out.println( "advanceToNextPlayer done" );
+            System.out.println( "advanceToNextPlayer done" );
             ((GameBoardViewer)getViewer()).sendGameChangedEvent(null);
             return 0;
         }
