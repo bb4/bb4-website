@@ -1,6 +1,7 @@
 package com.becker.game.multiplayer.galactic.ui;
 
 import com.becker.game.multiplayer.galactic.*;
+import com.becker.game.multiplayer.common.ui.PlayerTableModel;
 import com.becker.game.common.GameContext;
 import com.becker.ui.HeaderRenderer;
 

@@ -6,7 +6,7 @@ import java.util.*;
 
 /**
  * Basically the DefaultTableModel with a few customizations
- * @see PlayerTable
+ * @see GalacticPlayerTable
  *
  * @author Barry Becker
  */

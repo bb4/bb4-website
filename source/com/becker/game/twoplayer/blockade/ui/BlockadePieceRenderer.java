@@ -80,7 +80,7 @@ class BlockadePieceRenderer extends GamePieceRenderer
         return drewWall;
     }
 
-        /**
+    /**
      * @param g2 graphic context
      * @param bpos board position
      * @param cellSize
