@@ -5,6 +5,7 @@ import com.becker.ui.TexturedPanel;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
 import java.awt.*;
 
 /**
@@ -84,6 +85,7 @@ public abstract class GameInfoPanel extends TexturedPanel implements GameChanged
 
         JLabel turnLabel = createLabel(GameContext.getLabel("PLAYER_TO_MOVE_COLON"));
         playerLabel_ = new JLabel();
+
         playerLabel_.setOpaque(true);
         playerLabel_.setFont(BOLD_FONT);
         setPlayerLabel();
@@ -91,7 +93,6 @@ public abstract class GameInfoPanel extends TexturedPanel implements GameChanged
         JLabel moveNumTextLabel = createLabel( getMoveNumLabel());
         moveNumTextLabel.setHorizontalAlignment(JLabel.LEFT);
         moveNumLabel_ = createLabel( " 0" );
-
 
         generalPanel.add( createRowEntryPanel( turnLabel, playerLabel_ ) );
         generalPanel.add( createRowEntryPanel( moveNumTextLabel, moveNumLabel_ ) );

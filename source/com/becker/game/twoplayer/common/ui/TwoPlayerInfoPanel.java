@@ -7,6 +7,8 @@ import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.ui.GUIUtil;
 
 import javax.swing.*;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.text.MessageFormat;
 
@@ -79,13 +81,12 @@ public class TwoPlayerInfoPanel extends GameInfoPanel implements GameChangedList
         GamePieceRenderer renderer = ((TwoPlayerBoardViewer)controller_.getViewer()).getPieceRenderer();
         boolean p1sturn = getController().isPlayer1sTurn();
         String player = p1sturn? getController().getPlayer1().getName() : getController().getPlayer2().getName();
-        playerLabel_.setText(player);
+        playerLabel_.setText(" " + player + " ");
+
         Color pColor = p1sturn? renderer.getPlayer1Color() : renderer.getPlayer2Color();
-        Color bgColor = GUIUtil.invertColor(pColor, 255);
-        playerLabel_.setForeground(pColor);
-        playerLabel_.setBackground(bgColor);
-        this.invalidate();
-        this.revalidate();
+        Border playerLabelBorder = BorderFactory.createEtchedBorder(pColor, pColor.darker());
+        playerLabel_.setBorder(playerLabelBorder);
+
         this.repaint();
     }
 

@@ -8,6 +8,8 @@ import com.becker.ui.GUIUtil;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+import javax.swing.border.Border;
+import javax.vecmath.Vector2d;
 import java.text.MessageFormat;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -163,12 +165,16 @@ class GalacticInfoPanel extends GameInfoPanel implements GameChangedListener, Ac
         Player player = controller_.getCurrentPlayer();
 
         String playerName = player.getName();
-        playerLabel_.setText(" "+playerName);
-        Color bgColor = player.getColor().brighter();
-        bgColor = new Color(bgColor.getRed(), bgColor.getGreen(), bgColor.getBlue(), 40);
-        Color pColor = player.getColor().darker().darker();
-        playerLabel_.setForeground(pColor);
-        playerLabel_.setBackground(bgColor);
+        playerLabel_.setText(" " + playerName + " ");
+
+              Vector2d unitVec = new Vector2d(10, 20);
+        System.out.println("vec="+unitVec);
+
+        Color pColor = player.getColor();
+        //playerLabel_.setForeground(pColor);
+
+        Border playerLabelBorder = BorderFactory.createLineBorder(pColor, 2);
+        playerLabel_.setBorder(playerLabelBorder);
 
         if (commandPanel_!=null) {
             //commandPanel_.setBackground(bgColor);
