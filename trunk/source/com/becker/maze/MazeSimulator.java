@@ -204,7 +204,7 @@ public class MazeSimulator extends JApplet implements ActionListener
 
     public void start()
     {
-        //regenerate();
+        resized(); 
     }
 
     //------ Main method --------------------------------------------------------

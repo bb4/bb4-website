@@ -47,7 +47,7 @@ public final class GoEye extends GoString implements GoMember
     {
         if (type_==null)
             return "unknown eye type";
-        return type_.getName();
+        return type_.toString();
     }
 
     /**

@@ -2,10 +2,10 @@ package com.becker.game.common;
 
 import com.becker.sound.MusicMaker;
 import com.becker.ui.Log;
-import com.becker.common.EnumeratedType;
 
 import javax.swing.*;
 import java.util.*;
+import java.lang.reflect.Array;
 
 /**
  * Manage game context info such as logging, debugging, resources, and profiling.
@@ -188,9 +188,9 @@ public final class GameContext
         loadGameResources();
     }
 
-    public static String getDefaultLocaleName()
+    public static LocaleType getDefaultLocaleType()
     {
-        return DEFAULT_LOCALE.getName();
+        return DEFAULT_LOCALE;
     }
 
     private static void loadGameResources()
@@ -268,10 +268,10 @@ public final class GameContext
         GameContext.log(1,"verifying consistency of message bundles... ");
         // an array of hashSets of the keys for each bundle
         ArrayList messageKeySets = new ArrayList();
-        EnumeratedType locales = LocaleType.getAvailableLocales();
-        for (int i=0; i<locales.getNames().length; i++) {
+        LocaleType[] locales = LocaleType.values();
+        for (int i=0; i<locales.length; i++) {
             ResourceBundle bundle = ResourceBundle.getBundle(COMMON_MESSAGE_BUNDLE,
-                                        ((LocaleType)locales.getValue(i)).getLocale());
+                                        locales[i].getLocale());
             HashSet keySet = new HashSet();
             Enumeration enumXXX = bundle.getKeys();
             while (enumXXX.hasMoreElements()) {
@@ -280,7 +280,7 @@ public final class GameContext
                 keySet.add(key);
             }
             messageKeySets.add(keySet);
-            GameContext.log(1, "keySet size for "+((LocaleType)locales.getValue(i)).getLocale() +"="+keySet.size());
+            GameContext.log(1, "keySet size for "+(locales[i]).getLocale() +"="+keySet.size());
         }
         // now that we have the keysets report on their consistency.
         // assume that the first is the default (en)
@@ -288,13 +288,13 @@ public final class GameContext
         HashSet defaultKeySet = (HashSet)messageKeySets.get(0);
         // first check that all the non-default locales do not contain keys
         // that the default locale does not have (less common).
-        for (int i=1; i<locales.getNames().length; i++) {
+        for (int i=1; i<locales.length; i++) {
             HashSet keySet = (HashSet)messageKeySets.get(i);
             Iterator it = keySet.iterator();
             while (it.hasNext()) {
                 String key = (String)it.next();
                 if (!defaultKeySet.contains(key)) {
-                    GameContext.log(0, COMMON_MESSAGE_BUNDLE+" for locale "+locales.getValue(i).getName()
+                    GameContext.log(0, COMMON_MESSAGE_BUNDLE+" for locale "+locales[i]
                             +" contains the key, "+key+", that is not in the default locale (en).");
                     allConsistent = false;
                 }
@@ -310,10 +310,10 @@ public final class GameContext
         Iterator it = defaultKeySet.iterator();
         while (it.hasNext())  {
             String key = (String)it.next();
-            for (int i=1; i<locales.getNames().length; i++) {
+            for (int i=1; i<locales.length; i++) {
                 HashSet keySet = (HashSet)messageKeySets.get(i);
                 if (!keySet.contains(key)) {
-                    GameContext.log(0, COMMON_MESSAGE_BUNDLE+" for locale "+locales.getValue(i).getName()
+                    GameContext.log(0, COMMON_MESSAGE_BUNDLE+" for locale "+locales[i]
                             +" does not contain the key "+key);
                     allConsistent = false;
                 }
@@ -338,13 +338,14 @@ public final class GameContext
         LocaleType type = LocaleType.ENGLISH;  // the default
 
         try {
-            type = (LocaleType) LocaleType.getAvailableLocales().getValue(name, finf);
+            type = LocaleType.valueOf(name);
         }
         catch (Error e) {
             log(0,  "***************" );
             log(0, name +" is not a valid locale. We currently only support: ");
-            for (int i=0; i<LocaleType.LOCALE_NAMES.length; i++)
-                log(0, LocaleType.LOCALE_NAMES[i] );
+            LocaleType[] values = LocaleType.values();
+            for (int i=0; i<values.length; i++)
+                log(0, values[i].toString() );
             log(0,  "Defaulting to English." );
             log(0, "***************" );
         }

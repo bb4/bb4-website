@@ -1,6 +1,5 @@
 package com.becker.optimization;
 
-import com.becker.optimization.GlobalSampleStrategy;
 import java.io.*;
 
 /**
@@ -75,33 +74,33 @@ public class Optimizer
 
         OptimizationStrategy optStrategy = null;
 
-        switch (optimizationType.getOrdinal()) {
-            case OptimizationType.GLOBAL_SAMPLING_CODE:
+        switch (optimizationType) {
+            case GLOBAL_SAMPLING:
                 optStrategy = new GlobalSampleStrategy(optimizee_, sLogFile_);
                 // 10 sample points in each dim. 1000 evaluations if 3 dimensions.
                 ((GlobalSampleStrategy)optStrategy).setSamplingRate(10);
                 break;
-            case OptimizationType.GLOBAL_HILL_CLIMBING_CODE:
+            case GLOBAL_HILL_CLIMBING:
                 optStrategy = new GlobalSampleStrategy(optimizee_, sLogFile_);
                 // 3 sample points along each dimensiont
                 ((GlobalSampleStrategy)optStrategy).setSamplingRate(3);
                 // first find a good place to start
                 params = optStrategy.doOptimization(params);
-            case OptimizationType.HILL_CLIMBING_CODE:
+            case HILL_CLIMBING:
                 optStrategy = new HillClimbingStrategy(optimizee_, sLogFile_);
                 break;
-            case OptimizationType.SIMULATED_ANNEALING_CODE:
+            case SIMULATED_ANNEALING:
                 optStrategy = new SimulatedAnnealingStrategy(optimizee_, sLogFile_);
                 ((SimulatedAnnealingStrategy)optStrategy).setMaxTemperature(fitnessRange/20.0);
                 break;
-            case OptimizationType.GENETIC_SEARCH_CODE:
+            case GENETIC_SEARCH:
                 optStrategy = new GeneticSearchStrategy(optimizee_, sLogFile_);
                 ((GeneticSearchStrategy)optStrategy).setImprovementEpsilon(fitnessRange/100000000.0);
                 break;
-            case OptimizationType.TABU_SEARCH_CODE:
+            case TABU_SEARCH:
                 //optStrategy = new TabuStrategy(optimizee_, sLogFile_);
                 break;
-            case OptimizationType.STATE_SPACE_CODE:
+            case STATE_SPACE:
                 break;
             default:
                 assert false:  "bad optimization type:" + optimizationType ;

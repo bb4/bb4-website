@@ -13,7 +13,6 @@
 <!ATTLIST node
     id        ID        #REQUIRED
     label     NMTOKENS  #REQUIRED
-    img       NMTOKEN   #REQUIRED
 >
 <!ATTLIST use
     ref       IDREF     #REQUIRED

@@ -22,7 +22,7 @@ public class SnakeSimulator extends AnimationComponent implements Optimizee
     private boolean bPaused_ = true;
 
     // the amount to advance the animation in time for each frame in seconds
-    private static final double TIME_STEP = .2;
+    private static final double TIME_STEP = .4;
     private static final int NUM_STEPS_PER_FRAME = 200;
 
     // change in center of the snake between timesteps

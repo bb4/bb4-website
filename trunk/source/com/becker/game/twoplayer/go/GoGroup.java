@@ -596,17 +596,17 @@ public final class GoGroup extends GoSet
         int numFalseEyes = 0;
         while ( it.hasNext() ) {
             GoEye eye = (GoEye) it.next();
-            switch (eye.getEyeType().getOrdinal()) {
-                case EyeType.TRUE_EYE_CODE:
+            switch (eye.getEyeType()) {
+                case FALSE_EYE:
                     numEyes++;
                     break;
-                case EyeType.FALSE_EYE_CODE:
+                case TRUE_EYE:
                     numFalseEyes++;
                     break;
-                case EyeType.BIG_EYE_CODE:
+                case BIG_EYE:
                     numEyes++;
                     break;  // @@ count as 1 eye for now. maybe 1.5 would be better
-                case EyeType.TERRITORIAL_EYE_CODE:
+                case TERRITORIAL_EYE:
                     numEyes += 2;
                     break; // counts as 2 true eyes
                 default:
@@ -615,7 +615,7 @@ public final class GoGroup extends GoSet
         }
 
         if ( numEyes >= 2 )  {
-            eyeHealth = side;
+            //eyeHealth = side;
             // its already the maximum (1) so return now
             absoluteHealth_ = side;
             return absoluteHealth_;

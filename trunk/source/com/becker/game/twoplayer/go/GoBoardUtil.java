@@ -26,21 +26,21 @@ public final class GoBoardUtil
         if (nbrStone.isUnoccupied()) return;
 
         boolean correctNeighborType = true;
-        switch (neighborType.getOrdinal()) {
-            case NeighborType.ANY_CODE:
+        switch (neighborType) {
+            case ANY:
                 correctNeighborType = true;
                 break;
-            case NeighborType.OCCUPIED_CODE:
+            case OCCUPIED:
                 correctNeighborType = (nbrStone.getPiece()!=null);
                 break;
-            case NeighborType.ENEMY_CODE: // the opposite color
+            case ENEMY: // the opposite color
                 GoStone st = (GoStone)nbrStone.getPiece();
                 correctNeighborType = (st.isOwnedByPlayer1() != friendOwnedByP1);
                 break;
-            case NeighborType.FRIEND_CODE: // the same color
+            case FRIEND: // the same color
                 correctNeighborType = (nbrStone.getPiece().isOwnedByPlayer1() == friendOwnedByP1);
                 break;
-            default : assert false: "unknown or unsupported neighbor type:"+neighborType.getName();
+            default : assert false: "unknown or unsupported neighbor type:"+neighborType;
         }
         if (correctNeighborType ) {
             // might happen if the stone belongs to an eye instead of a string.

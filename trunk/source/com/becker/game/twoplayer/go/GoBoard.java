@@ -1669,8 +1669,8 @@ public final class GoBoard extends TwoPlayerBoard
     {
         GoBoardPosition nbr = (GoBoardPosition) positions_[r + rowOffset][c + colOffset];
 
-        switch (type.getOrdinal()) {
-            case NeighborType.OCCUPIED_CODE:  // occupied black or white
+        switch (type) {
+            case OCCUPIED:  // occupied black or white
                 if ( !nbr.isVisited() && nbr.isOccupied() &&
                      (!samePlayerOnly || nbr.getPiece().isOwnedByPlayer1() == friendOwnedByPlayer1)) {
                     //if (samePlayerOnly && nbr.getPiece().isOwnedByPlayer1()!=s.getPiece().isOwnedByPlayer1())
@@ -1679,13 +1679,13 @@ public final class GoBoard extends TwoPlayerBoard
                     return 1;
                 }
                 break;
-           case NeighborType.UNOCCUPIED_CODE :  // empty space
+           case UNOCCUPIED:  // empty space
                 if ( !nbr.isVisited() && nbr.isUnoccupied() ) {
                     stack.add( 0, nbr );
                     return 1;
                 }
                 break;
-           case NeighborType.NOT_FRIEND_CODE :   // blank or enemy
+           case NOT_FRIEND:   // blank or enemy
                 if ( !nbr.isVisited() &&
                     ( nbr.isUnoccupied() ||
                        ( nbr.isOccupied() && (nbr.getPiece().isOwnedByPlayer1()!=friendOwnedByPlayer1))
@@ -1694,7 +1694,7 @@ public final class GoBoard extends TwoPlayerBoard
                     return 1;
                 }
                 break;
-           default : assert false: "unknown or unsupported neighbor type:"+type.getName();
+           default : assert false: "unknown or unsupported neighbor type:"+type;
         }
         return 0;
     }
