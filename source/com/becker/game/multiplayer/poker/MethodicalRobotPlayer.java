@@ -27,9 +27,10 @@ public class MethodicalRobotPlayer extends PokerRobotPlayer
      * @return an appropriate action based on the situation
      */
     public Action getAction(PokerController pc) {
-        if (getHand().getScore() < 10 || Math.random() > .1) {
+        boolean othersFolded = allOthersFolded(pc);
+        if (!othersFolded && ( getHand().getScore() < 10 || Math.random() > .1)) {
             return Action.FOLD;
-        } else if (getHand().getScore() >= 10 || Math.random() > .2) {
+        } else if (getHand().getScore() >= 10 || Math.random() > .2 || othersFolded) {
             return Action.CALL;
         } else {
             return Action.RAISE;

@@ -73,6 +73,16 @@ public abstract class PokerRobotPlayer extends PokerPlayer
         return null;
 
     }
+
+    protected boolean allOthersFolded(PokerController pc) {
+        PokerPlayer[] players = (PokerPlayer[]) pc.getPlayers();
+        for (int i=0; i<players.length; i++) {
+            if (!players[i].hasFolded() && (players[i] != this))  {
+                return false;
+            }
+        }
+        return true;
+    }
 }
 
 

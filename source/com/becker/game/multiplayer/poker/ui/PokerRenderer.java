@@ -61,9 +61,7 @@ public class PokerRenderer extends GamePieceRenderer
 
     protected int getPieceSize(int cellSize, GamePiece piece)
     {
-
         int pieceSize = (int) (.85f * cellSize * 2);
-
         return pieceSize;
     }
 
@@ -100,11 +98,12 @@ public class PokerRenderer extends GamePieceRenderer
         }
 
 
+        Font font = BASE_FONT.deriveFont(Font.BOLD, cellSize/(float)GameBoardViewer.MINIMUM_CELL_SIZE  * 8);
         int offset = (pieceSize<(.6*cellSize))? -1 : cellSize/5;
         if ( playerMarker.getAnnotation() != null ) {
             g2.setColor( Color.black );
-            g2.setFont( BASE_FONT );
-            g2.drawString( playerMarker.getAnnotation(), pos.x + 2*offset, pos.y + 3*offset);
+            g2.setFont( font );
+            g2.drawString( playerMarker.getAnnotation(), pos.x - 2*cellSize, pos.y - 3*offset);
         }
 
         //System.out.println("location ="+position.getLocation());
@@ -113,7 +112,7 @@ public class PokerRenderer extends GamePieceRenderer
         else {
             // they have folded. Cover with a gray rectangle to indicate.
             g2.setColor(FOLDED_COLOR);
-            g2.fillRect( pos.x, pos.y, 10*pieceSize , 10*pieceSize );
+            g2.fillRect( pos.x - cellSize, pos.y - cellSize, 6*pieceSize , 6*pieceSize );
         }
 
         renderChips(g2, position.getLocation(), playerMarker.getOwner().getCash(), cellSize);
@@ -123,7 +122,7 @@ public class PokerRenderer extends GamePieceRenderer
     private static final float CARD_WIDTH = 1.7f;
     private static final float CARD_HEIGHT = 3.0f;
     private static final float CARD_ARC = 0.28f;
-    private static final int POKER_CARD_FONT_SIZE = 12;
+    private static final int POKER_CARD_FONT_SIZE = 11;
     private static Font POKER_CARD_FONT = new Font( "Sans-serif", Font.PLAIN, POKER_CARD_FONT_SIZE );
     private static final Color CARD_BG_COLOR = Color.white;
     private static final Color CARD_BACK_COLOR = new Color(170, 220, 255);
@@ -153,7 +152,7 @@ public class PokerRenderer extends GamePieceRenderer
             if (hand.isFaceUp()) {
                 ImageIcon imgIcon = suitImages_[c.suit().ordinal()];
                 float rat = imgIcon.getIconHeight() / imgIcon.getIconWidth();
-                w = (int)(cellSize * .9 *CARD_WIDTH);
+                w = (int)(cellSize * .85 *CARD_WIDTH);
                 g2.drawImage(imgIcon.getImage(), (int)(x + .7*cardArc), (int)(y + cellSize*(CARD_HEIGHT/2)),
                              w, (int)(rat * w), null);
 

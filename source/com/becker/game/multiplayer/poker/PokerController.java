@@ -8,13 +8,15 @@ import com.becker.game.card.Card;
 import com.becker.optimization.ParameterArray;
 
 import java.util.*;
+import java.util.List;
+import java.awt.*;
 
 /**
  * Defines everything the computer needs to know to play Poker.
  *
  * ToDo list
- * - $number under chips
  * - use real faces for players
+ * - add chip legend in info panel
  *
  *  - options dialog
  *     - Texas holdem
@@ -39,8 +41,9 @@ public class PokerController extends GameController
     private static final int DEFAULT_ANTE = 2;
 
     private int currentPlayerIndex_;
-     private int ante_ = DEFAULT_ANTE;
+    private int ante_ = DEFAULT_ANTE;
     private int pot_;
+    private int startingPlayerIndex_ = 0;
 
     /**
      *  Construct the Poker game controller
@@ -117,6 +120,7 @@ public class PokerController extends GameController
             }
             PokerPlayer player = ((PokerPlayer)players_[i]);
             player.setHand(new PokerHand(deck, numCardsToDealToEachPlayer));
+            player.setFold(false);
         }
     }
 
@@ -235,30 +239,35 @@ public class PokerController extends GameController
         pviewer.refresh();
 
         // show message when done.
-        System.out.println("done="+done());
         if (done()) {
             System.out.println( "advanceToNextPlayer done" );
             pviewer.sendGameChangedEvent(null);
             return 0;
         }
 
+
         int nextIndex = advanceToNextPlayerIndex();
+
+        if (allButOneFolded())  {
+             PokerPlayer winner = determineWinner();
+             int winnings = this.getPotValue();
+             winner.claimPot(this);
+             pviewer.showRoundOver(winner, winnings);
+             // start a new round deal new cards and ante
+             dealCardsToPlayers(5);
+             anteUp();
+         }
 
         if (getCurrentPlayer() == getFirstPlayer()) {
             // we've made a complete round.
-            // If every non-folded player has contributed the same amount,
-            // then show the summary dialog and give the pot to someone.
-            // Give the option to continue or exit.
-            //    Otherwise we just continue for another round automatically
-            // as players continue to raise.
             PokerRound round = pviewer.createMove(getLastMove());
 
             // records the result on the board.
             makeMove(round);
-            pviewer.refresh();
+            //pviewer.refresh();
 
             if (roundOver())  {
-                showRoundOver();
+                 doRoundOverBookKeeping(pviewer);
             }
         }
 
@@ -272,11 +281,47 @@ public class PokerController extends GameController
         return nextIndex;
     }
 
+    private void doRoundOverBookKeeping(PokerGameViewer pviewer) {
+        PokerPlayer winner = determineWinner();
+        int winnings = this.getPotValue();
+        winner.claimPot(this);
+        pviewer.showRoundOver(winner, winnings);
+        // start a new round deal new cards and ante
+        dealCardsToPlayers(5);
+        anteUp();
+        startingPlayerIndex_++;
+    }
+
+    private boolean allButOneFolded() {
+        PokerPlayer[] players = (PokerPlayer[])getPlayers();
+
+        int numNotFolded = 0;
+        for (int i=0; i<players.length; i++) {
+            if (!players[i].hasFolded())  {
+                numNotFolded++;
+            }
+        }
+        if (numNotFolded == 1) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * the round is over if there is only one player left who has not folder, or
+     * everyone has called.
+     * @return true of the round is over
+     */
     private boolean roundOver() {
-        Player[] players = getPlayers();
+        PokerPlayer[] players = (PokerPlayer[])getPlayers();
+
+        if (allButOneFolded())  {
+            return true;
+        }
+
         int contrib = this.getCurrentMaxContribution();
         for (int i=0; i<players.length; i++) {
-            PokerPlayer p = (PokerPlayer)players[i];
+            PokerPlayer p = players[i];
             if (!p.hasFolded()) {
                 if (p.getContribution() != contrib) {
                     return false;
@@ -286,16 +331,7 @@ public class PokerController extends GameController
         return true;
     }
 
-    /**
-     * show who won the round and dispurse the pot
-     */
-    private void showRoundOver() {
-        PokerPlayer winner = determineWinner();
-        int winnings = this.getPotValue();
-        winner.claimPot(this);
-        RoundOverDialog roundOverDlg = new RoundOverDialog(null, winner, winnings);
-        roundOverDlg.setVisible(true);
-    }
+
 
     /**
      *
@@ -303,10 +339,20 @@ public class PokerController extends GameController
      */
     private PokerPlayer determineWinner() {
         PokerPlayer[] players = (PokerPlayer[])getPlayers();
-        PokerPlayer winner = players[0];
-        PokerHand bestHand = winner.getHand();
+        PokerPlayer winner = null;
+        PokerHand bestHand = null;
+        int first=0;
+        //
+        while (players[first].hasFolded() && first < players.length) {
+            first++;
+        }
+        if (players[first].hasFolded())
+            GameContext.log(0, "All players folded. That was dumb. The winner will be random.");
 
-        for (int i=1; i<players.length; i++) {
+        winner = players[first];
+        bestHand = winner.getHand();
+
+        for (int i=first+1; i<players.length; i++) {
             PokerPlayer p = players[i];
             if (!p.hasFolded() && p.getHand().compareTo(bestHand) > 0) {
                 bestHand = p.getHand();
@@ -324,36 +370,6 @@ public class PokerController extends GameController
     private PokerRound createMove(Move lastMove)
     {
         PokerRound gmove = PokerRound.createMove((lastMove==null)?0:lastMove.moveNumber+1);
-
-        // for each player, apply it for one year
-        // if there are battles, show them in the battle dialog and record the result in the move.
-        Player[] players = this.getPlayers();
-
-        /* do end of round processing here...
-        for (int i=0; i< players.length; i++) {
-            List orders = ((PokerPlayer)players[i]).getOrders();
-            Iterator orderIt = orders.iterator();
-            while (orderIt.hasNext()) {
-                Order order = (Order)orderIt.next();
-                // have we reached our destination?
-                // if so show and record the battle, and then remove the order from the list.
-                // If not adjust the distance remaining.
-                order.incrementYear();
-                if (order.hasArrived()) {
-                    //  show battle dialog
-                    Planet destPlanet = order.getDestination();
-
-                    gmove.addSimulation(order, destPlanet);
-
-                    //destPlanet.setOwner( gmove.getOwnerAfterAttack());
-                    //destPlanet.setNumShips( gmove.getNumShipsAfterAttack() );
-
-                    // remove this order as it has arrived.
-                    orderIt.remove();
-                }
-            }
-        }  */
-
         return gmove;
     }
 
@@ -372,7 +388,7 @@ public class PokerController extends GameController
      */
     public Player getFirstPlayer()
     {
-        return players_[0];
+        return players_[startingPlayerIndex_];
     }
 
     /**

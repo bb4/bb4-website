@@ -34,7 +34,7 @@ public final class BettingDialog extends OptionsDialog
     private int contributeAmount_;
 
     private JPanel pokerHandPanel_;
-    private NumberFormat currencyFormat_;
+    private static NumberFormat currencyFormat_;
 
     /**
      * constructor - create the tree dialog.
@@ -45,7 +45,7 @@ public final class BettingDialog extends OptionsDialog
         player_ = player;
         callAmount_ = callAmount;
         contributeAmount_ = 0;
-        currencyFormat_ =  NumberFormat.getCurrencyInstance(GameContext.getLocale());
+
         initUI();
     }
 
@@ -77,12 +77,12 @@ public final class BettingDialog extends OptionsDialog
 
     private JPanel createInstructionsPanel() {
         JPanel panel = new JPanel(new BorderLayout());
-        JPanel playerPanel = createPlayerLabel();
+        JPanel playerPanel = createPlayerLabel(player_);
 
-
-        String cash = currencyFormat_.format(player_.getCash());
+        NumberFormat cf = getCurrencyFormat();
+        String cash = cf.format(player_.getCash());
         JLabel currentCash = new JLabel("You currently have "+cash);
-        JLabel amountToCall = new JLabel("To call, you need to add "+currencyFormat_.format(callAmount_));
+        JLabel amountToCall = new JLabel("To call, you need to add "+cf.format(callAmount_));
 
         //panel.setPreferredSize(new Dimension(400, 100));
         panel.add(playerPanel, BorderLayout.NORTH);
@@ -91,12 +91,12 @@ public final class BettingDialog extends OptionsDialog
         return panel;
     }
 
-    private JPanel createPlayerLabel() {
+    public static JPanel createPlayerLabel(PokerPlayer player) {
         JPanel p = new JPanel();
         JPanel swatch = new JPanel();
         swatch.setPreferredSize(new Dimension(10, 10));
-        swatch.setBackground(player_.getColor());
-        JLabel playerLabel = new JLabel(player_.getName()+":");
+        swatch.setBackground(player.getColor());
+        JLabel playerLabel = new JLabel(player.getName());
         p.add(swatch);
         p.add(playerLabel);
         return p;
@@ -125,6 +125,13 @@ public final class BettingDialog extends OptionsDialog
     }
 
 
+    public static NumberFormat getCurrencyFormat() {
+        if (currencyFormat_ == null) {
+            currencyFormat_ =  NumberFormat.getCurrencyInstance(GameContext.getLocale());
+        }
+        return currencyFormat_;
+    }
+
     public String getTitle()
     {
         return GameContext.getLabel("MAKE_YOUR_BET");
@@ -140,8 +147,7 @@ public final class BettingDialog extends OptionsDialog
     {
         Object source = e.getSource();
         if (source == foldButton_) {
-            // if there is not enough time to reach the planet, warn the user, and don't close the dlg.
-            player_.fold();
+            player_.setFold(true);
             this.setVisible(false);
         }
         else if ( source == callButton_ ) {

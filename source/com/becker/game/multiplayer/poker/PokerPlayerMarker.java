@@ -96,7 +96,7 @@ public class PokerPlayerMarker extends GamePiece
       */
      public String toString()
      {
-         return toString( "\n" );
+         return getDescription();
      }
 
      /**
@@ -111,12 +111,10 @@ public class PokerPlayerMarker extends GamePiece
 
     public String toString(String newLine)
     {
-        StringBuffer sb = new StringBuffer("Planet: "+type_+newLine);
+        StringBuffer sb = new StringBuffer("");
 
         if (getOwner()!=null)
             sb.append("Owner: "+this.getOwner().getName()+newLine);
-        //sb.append("production:"+getProductionCapacity()+newLine);
-        //sb.append("Num ships: "+getNumShips());
         return sb.toString();
     }
 
