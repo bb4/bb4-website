@@ -1,0 +1,106 @@
+package com.becker.game.twoplayer.go.ui;
+
+import com.becker.game.common.BoardPosition;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.ui.GamePieceRenderer;
+import com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer;
+import com.becker.game.twoplayer.go.GoStone;
+import com.becker.game.twoplayer.go.GoBoardPosition;
+import com.becker.ui.GUIUtil;
+
+import javax.swing.*;
+import java.awt.*;
+
+/**
+ * Singleton class that takes a checkers piece and renders it for the ChessBoardViewer.
+ * @see com.becker.game.twoplayer.chess.ui.ChessBoardViewer
+ * @author Barry Becker
+ */
+final class GoStoneRenderer  extends GamePieceRenderer
+{
+    private static GamePieceRenderer renderer_ = null;
+
+    // if rendering the stones we use these colors
+    // the stone colors ( a specular highlight is added to the stones when rendering )
+    private static final Color PLAYER1_STONE_COLOR = new Color( 90, 90, 90 );
+    private static final Color PLAYER2_STONE_COLOR = new Color( 230, 230, 230 );  // off-white
+
+    // instead of rendering we can just show image icons which look even better.
+    // gets the images from resources or the filesystem depending if we are running as an applet or application respectively.
+    private static final String DIR = GameContext.GAME_ROOT+"twoplayer/go/ui/images/";
+    private static final ImageIcon blackStoneImage_ = GUIUtil.getIcon(DIR+"goStoneBlack.png");
+    private static final ImageIcon whiteStoneImage_ = GUIUtil.getIcon(DIR+"goStoneWhite.png");
+    private static final ImageIcon blackStoneDeadImage_ = GUIUtil.getIcon(DIR+"goStoneBlackDead.png");
+    private static final ImageIcon whiteStoneDeadImage_ = GUIUtil.getIcon(DIR+"goStoneWhiteDead.png");
+
+    /**
+     * protected constructor because this class is a singleton.
+     * Use getPieceRenderer instead
+     */
+    private GoStoneRenderer()
+    {}
+
+    public static GamePieceRenderer getRenderer()
+    {
+        if (renderer_ == null)
+            renderer_ = new GoStoneRenderer();
+        return renderer_;
+    }
+
+    /**
+     * @return the color the pieces for player1.   (black)
+     */
+    public final Color getPlayer1Color()
+    {
+        return PLAYER1_STONE_COLOR;
+    }
+
+     /**
+     * @return the color the pieces for player2.   (white)
+     */
+    public final Color getPlayer2Color()
+    {
+        return PLAYER2_STONE_COLOR;
+    }
+
+
+    /**
+     * @return  the image to show for the graphical represention of the go stone
+     */
+    private static Image getImage(GoStone stone)
+    {
+        if (stone.isDead())
+            return (stone.isOwnedByPlayer1() ? blackStoneDeadImage_.getImage(): whiteStoneDeadImage_.getImage());
+        else
+            return (stone.isOwnedByPlayer1() ? blackStoneImage_.getImage(): whiteStoneImage_.getImage());
+    }
+
+    /**
+     * this draws the actual piece
+     * Uses the RoundGradientFill from Knudsen to put a specular highlight on the stone
+     *
+     * @param g2 graphics context
+     * @param position of the piece to render
+     */
+    public final void render( Graphics2D g2, BoardPosition position, int cellSize)
+    {
+        if (GameContext.getDebugMode()>0)  {
+            //  as a debugging aid draw the background as a function of the territorial score (-1 : 1)
+            double score = ((GoBoardPosition)position).scoreContribution;
+            Color pc = (score >0? PLAYER1_STONE_COLOR : PLAYER2_STONE_COLOR);
+            Color c = new Color(pc.getRed(), pc.getGreen(), pc.getBlue(), (int)((127 * Math.abs(score))));
+            g2.setColor(c);
+            g2.fillRect(TwoPlayerBoardViewer.BOARD_MARGIN + cellSize*(position.getCol()-1),
+                        TwoPlayerBoardViewer.BOARD_MARGIN + cellSize*(position.getRow()-1),
+                         cellSize, cellSize );
+        }
+
+        GoStone stone = (GoStone)position.getPiece();
+        if (stone == null)
+            return; // nothing to render
+        int pieceSize = getPieceSize(cellSize, stone);
+        Point pos = getPosition(position, cellSize, pieceSize);
+        g2.drawImage(getImage(stone), pos.x, pos.y, pieceSize, pieceSize , null);
+    }
+
+}

@@ -1,0 +1,187 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.79 [en] (Windows NT 5.0; U) [Netscape]">
+</head>
+<body>
+
+<h2>
+A Go playing application</h2>
+This package implements the game of Go using the game framework.
+<br>If you have comments or questions send mail to BarryBecker4@yahoo.com
+<p>Go is a game with simple rules, but can take a lifetime to master. Stones
+are placed on the board one at a time and cannot be moved. There are only
+4 simple rules are:
+<ol>
+<li>
+When a group of stones is completely surrounded they are captured. Each
+capture counts as 1 point at the end.</li>
+
+<li>
+Every empty space completely surrounded by a group of stomes of one color
+counts as a point.</li>
+
+<li>
+The board cannot look like it did at any time in the past (rule of ko).</li>
+
+<li>
+When the 2 players have passed in succession, the game is over.</li>
+</ol>
+&nbsp; If you are not familiar with rules of go or the following terms,
+see
+<br>&nbsp; Mathematical Go by Berlekamp and Wolfe (appendix B).
+<br>&nbsp; terms: liberty, atari, snapback, ko, seki, string, group, dame
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; eye, false eye, big
+eye, dead stone, independently alive group,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; territory, bent 4,
+moyo, nobi, ikken tobi, nikken tobi, kogeima
+<p>&nbsp; I will try to adhere to Modern Chinese rules.
+<br>&nbsp; Here are the unique aspects of Chinese rules that differ from
+other common rulesets:
+<br>&nbsp;&nbsp; 1) any suicide move is considered illegal
+<br>&nbsp;&nbsp; 2) When you pass, your opponent gets a point.
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; For computer go, this is useful because
+it forces
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; decision/completion of groups to help
+determine life and death and a proper score.
+<br>&nbsp;&nbsp; 3) the game terminates when the 2 players pass consecutively
+<br>&nbsp;&nbsp; 4) score = komi (5.5) + stones on board of player + player
+territory (note: captures not counted)
+<p>&nbsp;The computer keeps track of hierachies of stones. The pecking
+order is:
+<br>&nbsp;&nbsp;&nbsp; stones - individual spaces. They can be empty or
+occupied.
+<br>&nbsp;&nbsp;&nbsp; strings - tightly connected collections of stones
+(nobi connections only)
+<br>&nbsp;&nbsp;&nbsp; groups - connected collections of strings (nikken
+tobi, and kogeima)
+<br>&nbsp;&nbsp;&nbsp; armies - loosely connected collections of groups
+(still to do).
+<br>
+Here is a dependency diagram of the classes and subpages
+<img src="package.png" />
+<br>
+<p>&nbsp;* Things still to do:
+<br>&nbsp;* Estimated days to implement are in ()'s after each item. I
+have about 4 hours in a day on the weekend.
+<br>&nbsp;* This lists only grows. As I complete one task, I typically
+add 2 more.
+<br>&nbsp;* If the list grows no more, it will take me 8 months until I'm
+finished at my current rate.
+<br>&nbsp;* If I were to become unemployed, I would probably complete in
+one-third the time.
+<br>&nbsp;* In reality, I'll probably never finish. That's ok, I'm not
+sure I want to. I enjoy doing it.
+<br>&nbsp;*
+<br>&nbsp;*&nbsp; - not playing final capturing move when it should on
+a 5x5 board.
+<br>&nbsp;*&nbsp; - dont play in an eye unless its a false eye
+<br>&nbsp;*&nbsp; - allow player to ask for suggested move (1)
+<br>&nbsp;*&nbsp; - show visualization of all next move values in main
+and debug windows
+<br>&nbsp;*&nbsp; - implement accurate scoring (2)
+<br>&nbsp;*&nbsp; - if the computer or player resigns, the playerWon vars
+should be set and the strcngth of the win should be large.
+<br>&nbsp;*
+<br>&nbsp;** core algorithm improvements
+<br>&nbsp;*&nbsp;&nbsp; - determine end of game. Allow computer to resign.
+<br>&nbsp;*&nbsp;&nbsp; - Computer should pass when appropriate. (not currently
+working)
+<br>&nbsp;*&nbsp;&nbsp; - proper scoring when the game is over (score what
+it can, and allow for player dispute fo score).
+<br>&nbsp;*&nbsp;&nbsp; - implement armies (2)
+<br>&nbsp;*&nbsp;&nbsp; - use runner up chaching (moves that were good
+in the past are likely to be still good) (2)
+<br>&nbsp;*&nbsp;&nbsp; - do automatic weight optimization so it can learn
+to play better (4)
+<br>&nbsp;*&nbsp;&nbsp; - add randomness to computer moves ( have option
+since sometimes its undesirable) (1)
+<br>&nbsp;*&nbsp;&nbsp; - adhere to chinese rules, add other rulesets as
+options. (4)
+<br>&nbsp;*&nbsp;&nbsp; - consider monkey jump connections.
+<br>&nbsp;*
+<br>&nbsp;**&nbsp; Packaging issues
+<br>&nbsp;*
+<br>&nbsp;*&nbsp;&nbsp;&nbsp; - make this a web page
+<br>&nbsp;*&nbsp;&nbsp;&nbsp; - maintain on website as applet and webstart
+(yahoo does not yet support webstart) (1)
+<br>&nbsp;*&nbsp;&nbsp;&nbsp; - cleanup all java doc (3)
+<br>&nbsp;*&nbsp;&nbsp;&nbsp; - add html documentation describing architecture
+(3)
+<br>&nbsp;*&nbsp;&nbsp;&nbsp; - make opensource (3)
+<br>&nbsp;*&nbsp;&nbsp;&nbsp; - write a book about it. Targetting 12 year
+olds. (30)
+<br>&nbsp;*
+<br>&nbsp;**&nbsp; Refactoring changes needed
+<br>&nbsp;*&nbsp;&nbsp;&nbsp; - Done: use optimizer package instead of
+local methods. Use ParameterArray instead of weights
+<br>&nbsp;*&nbsp;&nbsp;&nbsp; - use GameBoardPosition and GameBoardPosition
+instead of just GamePieces
+<br>&nbsp;*&nbsp;&nbsp;&nbsp; - switch to using type safe enums instead
+of int constants.
+<br>&nbsp;*&nbsp;&nbsp;&nbsp; - alpha-beta and queiscent setter/getter
+methods could be properties of the SearchStrategy instead of the game controller.
+<br>&nbsp;*
+<br>&nbsp;**&nbsp; UI features
+<br>&nbsp;*&nbsp;&nbsp;&nbsp; - gray &lt;&lt; >> buttons as appropriate
+<br>&nbsp;*&nbsp;&nbsp;&nbsp; - add resign button.
+<br>&nbsp;*&nbsp;&nbsp;&nbsp; - show real and false eyes
+<br>&nbsp;*&nbsp;&nbsp;&nbsp; - show outline around groups
+<br>&nbsp;*&nbsp;&nbsp;&nbsp; - use images for stones and board background
+(1)
+<br>&nbsp;*&nbsp;&nbsp;&nbsp; - add colormap ui component for when showing
+color for health of groups
+<br>&nbsp;*&nbsp;&nbsp;&nbsp; - have female void repeat all text if sound
+on.
+<br>&nbsp;*&nbsp;&nbsp;&nbsp; - run the search in a different thread so
+we can quite while animating, and so we can update the game tree while
+animating
+<br>&nbsp;*&nbsp;&nbsp;&nbsp; - show progress bar while computer thinks
+<br>&nbsp;*&nbsp;&nbsp;&nbsp; - visualize how pruning works. Animate the
+game tree rendering. Use VCR like controls to control animation
+<br>&nbsp;*&nbsp;&nbsp;&nbsp; - option to send output log file, (console
+and output window done). (1)
+<br>&nbsp;*&nbsp;&nbsp;&nbsp; - change to using menus instead of buttons
+(maybe) (1)
+<br>&nbsp;*&nbsp;&nbsp;&nbsp; - add save button (and load in new sgf format
+game) (1)
+<br>&nbsp;*
+<br>&nbsp;*&nbsp; - use kiseido for front end? (3)
+<br>&nbsp;*&nbsp; - improve performance with profiling (1)
+<br>&nbsp;*&nbsp; - try compiling to a native executable with GCJ to improve
+performance on windows.
+<br>&nbsp;*&nbsp; - defaults for options should come from config/preferences
+file rather than hardcode (1) (see jdk1.4 preferences)
+<br>&nbsp;*&nbsp; - handle time limits and options (2)
+<br>&nbsp;*&nbsp; - have it play automatically on Kiseido/IGS without intervention
+(like many faces of go does) (4)
+<br>&nbsp;*&nbsp; - allow playing over the net (4)
+<br>&nbsp;*
+<br>&nbsp;* Bugs and Verification:
+<br>&nbsp;*
+<br>&nbsp;*&nbsp; - after reloading an SGF file its the wrong player's
+turn
+<br>&nbsp;*&nbsp; - reading an SGF should set the state of the game params
+like board size
+<br>&nbsp;*&nbsp; - adding stones and strings to strings and groups that
+already contain them.
+<br>&nbsp;*&nbsp; - the toolbar is not the UI color (instead it is gray).
+<br>&nbsp;*&nbsp; - automatically run suite of regression tests. (2)
+<br>&nbsp;*
+<br>&nbsp;* Resolved bugs (check for regressions)
+<br>&nbsp;*&nbsp; - kos' now being enforced.
+<br>&nbsp;*&nbsp; - confirm computing eyes correctly (and health).
+<br>&nbsp;*&nbsp; - verify correctness of static evaluation weights and
+worth function (2)
+<br>&nbsp;*&nbsp; - confirm can play suicidal move when if captures enemy
+stones (1)
+<br>&nbsp;*&nbsp; - build in the rule of "ko" - i.e. no immediate takebacks
+(2)
+<br>&nbsp;*&nbsp; - Give the applet more memory so it doesn't run out of
+memory.
+<br>&nbsp;*&nbsp; - correct handling of snapbacks (1)
+<br>&nbsp;*
+<br>&nbsp;
+</body>
+</html>

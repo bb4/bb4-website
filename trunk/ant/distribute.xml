@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="distribute" name="distribute applet html">
+  <description>usage: ant {task}
+  </description>
+
+  <!-- need these for auto creation of applet html files -->
+  <property file="appletHtmlCommon.properties"/>
+  <property file="appletHtml_en.properties"/>
+  <property file="appletHtml_de.properties"/>
+  <property file="appletHtml_vi.properties"/>
+  <property file="appletHtml_jp.properties"/>
+
+
+  <target name="distribute"
+        description="deploys the built jar files and generated html pages to the ${distributionDir} dir so they can be bulk copied to a website">
+      <mkdir dir="${stagingDir}"/>
+
+      <!--/////////////////// create my jar files //////////////////////////////////////-->
+      <!-- there are only one set of jar files for all locales -->
+      <!-- copy the core class files that are needed for all my applets. Produces common.jar -->
+      <copy todir="${stagingDir}">
+        <fileset dir="${classesDir}">
+          <include name="com/becker/common/*.class"/>
+          <include name="com/becker/ui/*.class"/>
+          <include name="com/becker/java2d/ImageUtil.class"/>
+        </fileset>
+        <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
+      </copy>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionDir}/common.jar"/>
+      <delete dir="${stagingDir}/com"/>
+
+      <!-- copy the class files that are needed for programs that want to do optimization. Produces optimization.jar-->
+      <copy todir="${stagingDir}">
+        <fileset dir="${classesDir}">
+          <include name="com/becker/optimization/*.class"/>
+        </fileset>
+        <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
+      </copy>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionDir}/optimization.jar"/>
+      <delete dir="${stagingDir}/com"/>
+
+      <!-- copy the class files that are needed for programs that want to have sound. Produces sound.jar-->
+      <copy todir="${stagingDir}">
+        <fileset dir="${classesDir}">
+          <include name="com/becker/sound/*.class"/>
+        </fileset>
+        <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
+      </copy>
+      <antcall target="copyResources">
+        <param name="path" value="sound"/>
+        <param name="pattern" value="*.wav"/>
+      </antcall>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionDir}/sound.jar"/>
+      <delete dir="${stagingDir}/com"/>
+
+      <!-- copy just the core class files that are needed for all the games. Produces gameCommon.jar -->
+      <copy todir="${stagingDir}">
+        <fileset dir="${classesDir}">
+          <include name="com/becker/game/common/*.class"/>
+          <include name="com/becker/game/common/ui/*.class"/>
+          <include name="com/becker/java2d/*Gradient*.class"/>
+        </fileset>
+        <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
+      </copy>
+      <antcall target="copyResources">
+        <param name="path" value="game/common/ui/images"/>
+        <param name="pattern" value="*.png"/>
+      </antcall>
+      <antcall target="copyResources">
+        <param name="path" value="game/common/ui/images"/>
+        <param name="pattern" value="*.gif"/>
+      </antcall>
+      <antcall target="copyResources">
+        <param name="path" value="game/common/resources"/>
+        <param name="pattern" value="*.properties"/>
+      </antcall>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionDir}/gameCommon.jar"/>
+      <delete dir="${stagingDir}/com"/>
+
+      <!-- copy just the core class files that are needed for all the twoplayer games. Produces game2Common.jar -->
+      <copy todir="${stagingDir}">
+        <fileset dir="${classesDir}">
+          <include name="com/becker/game/twoplayer/common/*.class"/>
+          <include name="com/becker/game/twoplayer/common/ui/*.class"/>
+          <include name="com/becker/game/twoplayer/common/search/*.class"/>
+        </fileset>
+        <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
+      </copy>
+      <antcall target="copyResources">
+        <param name="path" value="game/twoplayer/common/ui/images"/>
+        <param name="pattern" value="*.png"/>
+      </antcall>
+      <antcall target="copyResources">
+        <param name="path" value="game/twoplayer/common/ui/images"/>
+        <param name="pattern" value="*.gif"/>
+      </antcall>
+      <antcall target="copyResources">
+        <param name="path" value="game/twoplayer/common/resources"/>
+        <param name="pattern" value="*.properties"/>
+      </antcall>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionDir}/game2Common.jar"/>
+      <delete dir="${stagingDir}/com"/>
+
+      <!-- copy the class files that are needed for pente deployment -->
+      <copy todir="${stagingDir}">
+        <fileset dir="${classesDir}">
+          <include name="com/becker/game/twoplayer/pente/*.class"/>
+          <include name="com/becker/game/twoplayer/pente/ui/*.class"/>
+        </fileset>
+        <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
+      </copy>
+      <antcall target="copyResources">
+        <param name="path" value="game/twoplayer/pente/ui/images"/>
+        <param name="pattern" value="*.png"/>
+      </antcall>
+      <antcall target="copyResources">
+        <param name="path" value="game/twoplayer/pente/resources"/>
+        <param name="pattern" value="*.properties"/>
+      </antcall>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionDir}/pente.jar"/>
+      <delete dir="${stagingDir}/com"/>
+
+      <!-- copy the class files that are needed for blockade deployment -->
+      <copy todir="${stagingDir}">
+        <fileset dir="${classesDir}">
+          <include name="com/becker/game/twoplayer/blockade/*.class"/>
+          <include name="com/becker/game/twoplayer/blockade/ui/*.class"/>
+        </fileset>
+        <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
+      </copy>
+      <antcall target="copyResources">
+        <param name="path" value="game/twoplayer/blockade/resources"/>
+        <param name="pattern" value="*.properties"/>
+      </antcall>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionDir}/blockade.jar"/>
+      <sleep seconds="1" />
+      <delete dir="${stagingDir}/com"/>
+
+      <!-- copy the class files that are needed for checkers deployment -->
+      <copy todir="${stagingDir}">
+        <fileset dir="${classesDir}">
+          <include name="com/becker/game/twoplayer/checkers/*.class"/>
+          <include name="com/becker/game/twoplayer/checkers/ui/*.class"/>
+        </fileset>
+        <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
+      </copy>
+      <antcall target="copyResources">
+        <param name="path" value="game/twoplayer/checkers/resources"/>
+        <param name="pattern" value="*.properties"/>
+      </antcall>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionDir}/checkers.jar"/>
+      <sleep seconds="1" />
+      <delete dir="${stagingDir}/com"/>
+
+      <!-- copy the class files that are needed for chess deployment -->
+      <copy todir="${stagingDir}">
+        <fileset dir="${classesDir}">
+          <include name="com/becker/game/twoplayer/checkers/*.class"/>
+          <include name="com/becker/game/twoplayer/chess/*.class"/>
+           <include name="com/becker/game/twoplayer/checkers/ui/*.class"/>
+          <include name="com/becker/game/twoplayer/chess/ui/*.class"/>
+        </fileset>
+        <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
+      </copy>
+      <antcall target="copyResources">
+        <param name="path" value="game/twoplayer/chess/ui/images"/>
+        <param name="pattern" value="*.png"/>
+      </antcall>
+      <antcall target="copyResources">
+        <param name="path" value="game/twoplayer/chess/resources"/>
+        <param name="pattern" value="*.properties"/>
+      </antcall>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionDir}/chess.jar"/>
+      <sleep seconds="1" />
+      <delete dir="${stagingDir}/com"/>
+
+      <!-- copy the class files that are needed for go deployment -->
+      <copy todir="${stagingDir}">
+        <fileset dir="${classesDir}">
+          <include name="com/becker/game/twoplayer/go/*.class"/>
+          <include name="com/becker/game/twoplayer/go/ui/*.class"/>
+          <include name="ca/dj/jigo/sgf/*.class"/>
+          <include name="ca/dj/jigo/sgf/tokens/*.class"/>
+        </fileset>
+        <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
+      </copy>
+      <antcall target="copyResources">
+        <param name="path" value="game/twoplayer/go/ui/images"/>
+        <param name="pattern" value="*.png"/>
+      </antcall>
+      <antcall target="copyResources">
+        <param name="path" value="game/twoplayer/go/resources"/>
+        <param name="pattern" value="*.properties"/>
+      </antcall>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionDir}/go.jar"/>
+      <sleep seconds="1" />
+      <delete dir="${stagingDir}/com"/>
+      <delete dir="${stagingDir}/ca"/>
+
+      <!-- copy the class files that are needed for galactic empire deployment -->
+      <copy todir="${stagingDir}">
+        <fileset dir="${classesDir}">
+          <include name="com/becker/game/multiplayer/galactic/*.class"/>
+          <include name="com/becker/game/multiplayer/galactic/ui/*.class"/>
+        </fileset>
+        <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
+      </copy>
+      <!--antcall target="copyResources">
+        <param name="path" value="game/multiplayer/galactic/ui/images"/>
+        <param name="pattern" value="*.png"/>
+      </antcall -->
+      <antcall target="copyResources">
+        <param name="path" value="game/multiplayer/galactic/resources"/>
+        <param name="pattern" value="*.properties"/>
+      </antcall>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionDir}/galactic.jar"/>
+      <sleep seconds="1" />
+      <delete dir="${stagingDir}/com"/>
+
+      <!-- copy the class files that are needed for maze deployment -->
+      <copy todir="${stagingDir}">
+        <fileset dir="${classesDir}">
+          <include name="com/becker/maze/*.class"/>
+        </fileset>
+        <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve directory hierarchy -->
+      </copy>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionDir}/maze.jar"/>
+      <delete dir="${stagingDir}/com"/>
+
+      <!-- copy the class files that are needed for snake deployment -->
+      <copy todir="${stagingDir}">
+        <fileset dir="${classesDir}">
+          <include name="com/becker/snake/*.class"/>
+        </fileset>
+        <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve directory hierarchy -->
+      </copy>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionDir}/snake.jar"/>
+      <delete dir="${stagingDir}/com"/>
+
+      <!-- copy the class files that are needed for spirograph deployment -->
+      <copy todir="${stagingDir}">
+        <fileset dir="${classesDir}">
+          <include name="com/becker/spirograph/*.class"/>
+        </fileset>
+        <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
+      </copy>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionDir}/spirograph.jar"/>
+      <delete dir="${stagingDir}/com"/>
+
+      <!-- copy the class files that are needed for redpuzzle deployment -->
+      <copy todir="${stagingDir}">
+        <fileset dir="${classesDir}">
+          <include name="com/becker/redpuzzle/*.class"/>
+        </fileset>
+        <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve directory hierarchy -->
+      </copy>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionDir}/redpuzzle.jar"/>
+      <sleep seconds="1" />
+      <delete dir="${stagingDir}/com"/>
+
+      <copy file="${libDir}/vecmath.jar" tofile="${distributionDir}/vecmath.jar"/>
+      <copy file="${libDir}/sun.jar" tofile="${distributionDir}/sun.jar"/>
+      <copy file="${libDir}/jai_codec.jar" tofile="${distributionDir}/jai_codec.jar"/>
+
+      <!-- copy image files to distrib dir -->
+      <mkdir dir="${distributionDir}/games"/>
+      <copy todir="${distributionDir}/games">
+        <fileset dir="${sourceDir}/images">
+          <include name="*.jpg"/>
+          <include name="*.png"/>
+          <include name="*.gif"/>
+        </fileset>
+      </copy>
+
+
+      <!--//////////////// auto generate the html based on the properties files ///////////////////-->
+      <!-- there needs to be a separate set of html files for each locale. -->
+
+      <!-- auto generate the index and applet html pages for all locales -->
+      <foreach delimiter="," list="${appletHtml.localesList}" param="locale" target="create_html_for_locale">
+         <param name="appletIndexFile" value="${appletIndexFile}"/>
+         <param name="sourceDir" value="${sourceDir}"/>
+         <param name="distributionDir" value="${distributionDir}"/>
+      </foreach>
+
+  </target>
+
+
+
+  <!-- /////////////////////////// helper tasks /////////////////////////////////// -->
+
+  <target name="create_html_for_locale"
+      description="deploys the all the html files for a specified locale. This includes the index page and all the applet pages.">
+
+      <echo message="locale=${locale}"/>
+      <propertycopy from="appletHtml.${locale}.appletList" name="appletListForLocale"/>
+      <propertycopy from="appletIndexFile.${locale}" name="appletIndexFileForLocale"/>
+      <echo message="Generating Table: ${appletListForLocale}"/>
+
+      <echo message="copying ${sourceDir}/html/${appletIndexFile} to ${distributionDir}/${appletIndexFileForLocale}"/>
+      <copy file="${sourceDir}/html/${appletIndexFile}" tofile="${distributionDir}/${appletIndexFileForLocale}"/>
+
+
+      <!-- top level locale specific replacements for the index file. -->
+      <foreach delimiter="," list="${htmlindex.replacementList}" param="token" target="substitute_in_indexfile">
+        <param name="item" value="appletHtml"/>
+        <param name="replaceFile" value="${distributionDir}/${appletIndexFileForLocale}"/>
+      </foreach>
+
+      <!-- create a TR entry for each applet -->
+      <foreach delimiter="," list="${appletListForLocale}" param="token" target="tr_substitute">
+        <param name="locale" value="${locale}"/>
+        <param name="distributionDir" value="${distributionDir}"/>
+      </foreach>
+
+      <!-- low level replacements for each locale specific index file -->
+      <foreach delimiter="," list="${appletListForLocale}" param="applet" target="substitute_for_indexfile">
+        <param name="locale" value="${locale}"/>
+        <param name="distributionDir" value="${distributionDir}"/>
+      </foreach>
+
+      <!-- instead of copying hand edited html and jnlps for each applet, I will generate them
+      automatically from base tempaltes and a properties file that specifies the substitutions
+      to make.  -->
+      <echo message="The applets to create files for are: ${appletListForLocale}"/>
+
+      <foreach delimiter="," list="${appletListForLocale}" param="appletName" target="create_applet_pages">
+        <param name="locale" value="${locale}"/>
+        <param name="sourceDir" value="${sourceDir}"/>
+      </foreach>
+  </target>
+
+
+  <target name="create_applet_pages">
+    <echo level="warning" message="Now creating html and jnlp for : ${appletName}"/>
+
+    <!-- there are 2 web files for each app to make substitutions in -->
+    <property name="suffices" value="html,jnlp"/>
+    <foreach delimiter="," list="${suffices}" param="suffix" target="substitute_for_file">
+      <param name="locale" value="${locale}"/>
+      <param name="applet" value="${appletName}"/>
+      <param name="sourceDir" value="${sourceDir}"/>
+    </foreach>
+  </target>
+
+
+  <target name="substitute_for_file">
+    <propertycopy from="${suffix}.replacementList" name="replacementList"/>
+    <echo message="${suffix}.replacementList : ${replacementList}"/>
+    <copy file="${sourceDir}/html/applet_template.${suffix}" tofile="${distributionDir}/${appletName}_${locale}.${suffix}"/>
+
+    <replace file="${distributionDir}/${appletName}_${locale}.${suffix}" token="{locale}" value="${locale}"/>
+
+    <!-- now replace all the keys in this jnlp file -->
+    <foreach delimiter="," list="${replacementList}" param="token" target="substitute">
+      <param name="replaceFile" value="${distributionDir}/${appletName}_${locale}.${suffix}"/>
+      <param name="applet" value="${appletName}"/>
+    </foreach>
+  </target>
+
+
+  <target name="substitute_for_indexfile">
+    <propertycopy from="htmlindexEntry.replacementList" name="replacementList"/>
+    <propertycopy from="appletIndexFile.${locale}" name="appletIndexFileForLocale"/>
+    <!-- now replace all the keys in this jnlp file -->
+    <foreach delimiter="," list="${replacementList}" param="token" target="substitute_in_indexfile">
+      <param name="locale" value="${locale}"/>
+      <param name="replaceFile" value="${distributionDir}/${appletIndexFileForLocale}"/>
+      <param name="item" value="${applet}"/>
+    </foreach>
+  </target>
+
+
+  <target name="substitute_in_indexfile">
+    <propertycopy from="${item}.${locale}.${token}" name="newValue"/>
+    <!--echo message="Substitute ${newValue} for ${applet}.${token} in ${replaceFile}"/-->
+    <replace file="${replaceFile}" token="{${item}.${token}}" value="${newValue}"/>
+  </target>
+
+
+  <target name="tr_substitute">
+    <propertycopy from="appletIndexFile.${locale}" name="appletIndexFileForLocale"/>
+    <property name="appName" value="${token}"/>
+    <property name="TRTemplate"
+        value="${TRTemplate1}${appName}.title${TRTemplate2}${appName}.longDescription${TRTemplate3}${appName}${TRTemplate4}${locale}${TRTemplate4a}${appName}.title${TRTemplate5}${appName}${TRTemplate6}${locale}${TRTemplate6a}${appName}.title${TRTemplate7}${appName}${TRTemplate8}${appName}.title${TRTemplate9}${appName}.title${TRTemplate10}"/>
+    <!--echo message="****** TR Substitute ${TRTemplate} in file ${appletIndexFileForLocale}"/-->
+    <replace file="${distributionDir}/${appletIndexFileForLocale}" token="{${token}TR}" value="${TRTemplate}"/>
+  </target>
+
+
+  <target name="substitute">
+    <propertycopy from="${applet}.${locale}.${token}" name="newValue"/>
+    <!--echo message="Substitute ${token} for ${applet}.${locale}.${token} = ${newValue} in ${replaceFile}"/-->
+    <replace file="${replaceFile}" token="{${token}}" value="${newValue}"/>
+  </target>
+
+
+  <!-- copies specified files to both classes dir and staging dir -->
+  <target name="copyResources">
+    <echo message="copying ${path}"/>
+    <copy todir="${classesDir}">
+      <fileset dir="${sourceDir}">
+        <include name="com/becker/${path}/${pattern}"/>
+      </fileset>
+      <mapper from="${pattern}" to="${pattern}" type="glob"/>   <!-- preserve hierarchy -->
+    </copy>
+    <copy todir="${stagingDir}">
+      <fileset dir="${sourceDir}">
+        <include name="com/becker/${path}/${pattern}"/>
+      </fileset>
+      <mapper from="${pattern}" to="${pattern}" type="glob"/>   <!-- preserve hierarchy -->
+    </copy>
+  </target>
+
+</project>

@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Created-By: Compuware
+Main-Class: com.compuware.pasta.application.gui.Start
+Class-Path: jh.jar

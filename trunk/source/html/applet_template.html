@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//{locale}">
+<html>
+  <head>
+    <title>{title}</title>                   
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta name="author" content="Barry Becker">
+    <meta name="description" content="{title} game applet">
+    <meta name="keywords" content="{title} game applet computer simulation java">
+    <meta http-equiv="Content-Type" content="text/html; charset={charset}">
+   
+    <script>
+      var applet = null;
+
+      // called when page done loading
+      //
+      function doInit()
+      {
+        if (document.applets == null || document.applets[0] == null)
+        {
+          var errorMsg = "You must have the java plugin for this page to work. \n";
+          errorMsg += "You can get it from http://java.sun.com/products/plugin/";
+          alert(errorMsg);
+          return;
+        }
+
+        applet = document.applets[0];
+
+        // resize the applet
+        resizeApplet({doResize});
+      }
+
+
+      // This sets the size of the applet based on the available space in the browser window
+      // if doIt is false, then this method does nothing
+      //
+      function resizeApplet(doIt)
+      {
+        if (!doIt) return;
+
+        // allow for a huge double width screen because that's what I have
+        var nWidthMax = 2000;
+        var nHeightMax = 1400;
+
+        var nWidthNew = document.body.clientWidth;
+        var nHeightNew = document.body.clientHeight;
+
+        if (nWidthNew > nWidthMax)
+          nWidthNew = nWidthMax;
+        if (nHeightNew > nHeightMax)
+          nHeightNew = nHeightMax;
+
+        applet.setSize(nWidthNew, nHeightNew-90);
+        window.scroll(0, 0);
+      }
+    </script>
+
+                
+  </head>
+  <body bgcolor="#EDFFF0" onload="doInit();" onresize="resizeApplet({doResize});" style="overflow-y: hidden; overflow-x: hidden;" topmargin="0" leftmargin="0">
+
+    <div style="width:100%; margin: 6 6 6 6; border: solid 1px #043C08;">
+      <table id="instructions"  width="100%" border="0" cellpadding="2" cellspacing="6">
+        <tr>
+          <td nowrap valign="top">
+            <h2>{title}</h2>
+          </td>
+          <td>
+            <div style="padding-left: 3px;">
+              <font size=-1>{description}</font>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <br>
+
+    <applet width="{width}" height="{height}" align="Baseline">
+      <param name="code" value="{qualifiedAppletClassName}">
+      <param name="codebase" value=".">
+      <param name="cache_option" value="Plugin">
+      <param name="cache_archive" value="{jarList}">
+      <param name="panel_class" value="{panelClass}">
+      <param name="name" value="{className}">
+      <param name="program_name" value="{name}">
+      <param name="locale" value="{language}">
+      <param name="type" value="application/x-java-applet;version=1.4">
+      <param name="scriptable" value="true">
+    </applet>
+
+  </body>
+</html>
+<noembed><xmp>

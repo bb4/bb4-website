@@ -1,0 +1,251 @@
+
+
+<script>
+var sOpsGeneric = new Array();
+var sOpsGenericFuncMap = new Array();
+var sOpsGenericCounts = new Array();
+sOpsGeneric["boolean|0"] = "equal to";
+sOpsGenericFuncMap["boolean|0"] = "isEqualTo";
+sOpsGeneric["boolean|1"] = "not equal to";
+sOpsGenericFuncMap["boolean|1"] = "isNotEqualTo";
+sOpsGenericCounts["boolean"] = 2;
+sOpsGeneric["currency|0"] = "equal to";
+sOpsGenericFuncMap["currency|0"] = "isEqualTo";
+sOpsGeneric["currency|1"] = "not equal to";
+sOpsGenericFuncMap["currency|1"] = "isNotEqualTo";
+sOpsGeneric["currency|2"] = "less than";
+sOpsGenericFuncMap["currency|2"] = "isLessThan";
+sOpsGeneric["currency|3"] = "greater than";
+sOpsGenericFuncMap["currency|3"] = "isGreaterThan";
+sOpsGeneric["currency|4"] = "less than or equal to";
+sOpsGenericFuncMap["currency|4"] = "isLessThanOrEqualTo";
+sOpsGeneric["currency|5"] = "greater than or equal to";
+sOpsGenericFuncMap["currency|5"] = "isGreaterThanOrEqualTo";
+sOpsGenericCounts["currency"] = 6;
+sOpsGeneric["datetime|0"] = "is within";
+sOpsGenericFuncMap["datetime|0"] = "isWithin";
+sOpsGeneric["datetime|1"] = "equal to";
+sOpsGenericFuncMap["datetime|1"] = "isEqualTo";
+sOpsGeneric["datetime|2"] = "not equal to";
+sOpsGenericFuncMap["datetime|2"] = "isNotEqualTo";
+sOpsGeneric["datetime|3"] = "less than";
+sOpsGenericFuncMap["datetime|3"] = "isLessThan";
+:
+:
+sOpsGeneric["orderedDomain|4"] = "less than or equal to";
+sOpsGenericFuncMap["orderedDomain|4"] = "isLessThanOrEqualTo";
+sOpsGeneric["orderedDomain|5"] = "greater than or equal to";
+sOpsGenericFuncMap["orderedDomain|5"] = "isGreaterThanOrEqualTo";
+sOpsGenericCounts["orderedDomain"] = 6;
+sOpsGeneric["string|0"] = "equal to";
+sOpsGenericFuncMap["string|0"] = "isEqualTo";
+sOpsGeneric["string|1"] = "not equal to";
+sOpsGenericFuncMap["string|1"] = "isNotEqualTo";
+sOpsGeneric["string|2"] = "contains";
+sOpsGenericFuncMap["string|2"] = "contains";
+sOpsGeneric["string|3"] = "starts with";
+sOpsGenericFuncMap["string|3"] = "startsWith";
+sOpsGeneric["string|4"] = "ends with";
+sOpsGenericFuncMap["string|4"] = "endsWith";
+sOpsGenericCounts["string"] = 5;
+sOpsGeneric["emailLinkID|0"] = "equal to";
+sOpsGenericFuncMap["emailLinkID|0"] = "isEqualTo";
+sOpsGeneric["emailLinkID|1"] = "not equal to";
+sOpsGenericFuncMap["emailLinkID|1"] = "isNotEqualTo";
+sOpsGenericCounts["emailLinkID"] = 2;
+sOpsGeneric["emailTemplateID|0"] = "equal to";
+sOpsGenericFuncMap["emailTemplateID|0"] = "isEqualTo";
+sOpsGeneric["emailTemplateID|1"] = "not equal to";
+sOpsGenericFuncMap["emailTemplateID|1"] = "isNotEqualTo";
+sOpsGenericCounts["emailTemplateID"] = 2;
+var sPropsTarget = new Array();
+var sPropsEvent = new Array();
+var sPropsVariable = new Array();
+var sPropsTargetAndVariables = new Array();
+var sPropsTargetAndVariablesItemMap = new Array();
+var sPropsTargetAndVariablesCounts = new Array();
+sPropsEvent[sPropsEvent.length] = "emailTemplateID|long|emailTemplateID";
+sPropsTarget[sPropsTarget.length] = "USA_ID|long";
+sPropsTargetAndVariables["long|0"] = "USA_ID";
+sPropsTargetAndVariablesItemMap["long|0"] = "participant.USA_ID";
+sPropsTarget[sPropsTarget.length] = "First Name|string";
+sPropsTargetAndVariables["string|0"] = "First Name";
+sPropsTargetAndVariablesItemMap["string|0"] = "participant.First Name";
+sPropsTarget[sPropsTarget.length] = "Middle Name|string";
+sPropsTargetAndVariables["string|1"] = "Middle Name";
+sPropsTargetAndVariablesItemMap["string|1"] = "participant.Middle Name";
+sPropsTarget[sPropsTarget.length] = "Last Name|string";
+sPropsTargetAndVariables["string|2"] = "Last Name";
+sPropsTargetAndVariablesItemMap["string|2"] = "participant.Last Name";
+sPropsTarget[sPropsTarget.length] = "EMAIL|string";
+sPropsTargetAndVariables["string|3"] = "EMAIL";
+sPropsTargetAndVariablesItemMap["string|3"] = "participant.EMAIL";
+sPropsTarget[sPropsTarget.length] = "Home Phone|string";
+sPropsTargetAndVariables["string|4"] = "Home Phone";
+sPropsTargetAndVariablesItemMap["string|4"] = "participant.Home Phone";
+sPropsTarget[sPropsTarget.length] = "Business Phone|string";
+sPropsTargetAndVariables["string|5"] = "Business Phone";
+sPropsTargetAndVariablesItemMap["string|5"] = "participant.Business Phone";
+sPropsTarget[sPropsTarget.length] = "Fax Number|string";
+sPropsTargetAndVariables["string|6"] = "Fax Number";
+sPropsTargetAndVariablesItemMap["string|6"] = "participant.Fax Number";
+var nPropsTargetCount = 8;
+var nPropsEventCount = 1;
+var nPropsVariableCount = 0;
+sPropsTargetAndVariablesCounts["string"] = 7
+sPropsTargetAndVariablesCounts["datetime"] = 0
+sPropsTargetAndVariablesCounts["integer"] = 0
+sPropsTargetAndVariablesCounts["long"] = 1
+sPropsTargetAndVariablesCounts["double"] = 0
+sPropsTargetAndVariablesCounts["currency"] = 0
+sPropsTargetAndVariablesCounts["boolean"] = 0
+var sRValueMonths = new Array();
+sRValueMonths[0] = 'January';
+sRValueMonths[1] = 'February';
+sRValueMonths[2] = 'March';
+sRValueMonths[3] = 'April';
+sRValueMonths[4] = 'May';
+sRValueMonths[5] = 'June';
+sRValueMonths[6] = 'July';
+sRValueMonths[7] = 'August';
+sRValueMonths[8] = 'September';
+sRValueMonths[9] = 'October';
+sRValueMonths[10] = 'November';
+sRValueMonths[11] = 'December';
+var sRValueDaysOfWeek = new Array();
+sRValueDaysOfWeek[2] = 'Monday';
+sRValueDaysOfWeek[3] = 'Tuesday';
+sRValueDaysOfWeek[4] = 'Wednesday';
+sRValueDaysOfWeek[5] = 'Thursday';
+sRValueDaysOfWeek[6] = 'Friday';
+sRValueDaysOfWeek[7] = 'Saturday';
+sRValueDaysOfWeek[1] = 'Sunday';
+var sURLBtnAccept = '/images/btn_exp_accept_20x20.gif';
+var sURLBtnBrowse = '/images/btn_exp_browse_20x20.gif';
+var sURLBtnDelete = '/images/btn_exp_delete_20x20.gif';
+var sALTBtnAccept = 'Accept';
+var sALTBtnBrowse = '...';
+var sALTBtnDelete = 'Delete';
+var sMSGClickHere = 'Click here to begin editing.';
+</script>
+
+
+<script>
+  //
+  // row operations
+  //
+  var sOpsRow = new Array();
+
+  sOpsRow[sOpsRow.length] = "AND";
+  sOpsRow[sOpsRow.length] = "OR";
+
+  //
+  // ops for rvalues by type
+  //
+  var sRValueOpsGeneric = new Array();
+
+  sRValueOpsGeneric["string|0"] =           'the value';
+  sRValueOpsGeneric["string|1"] =           'the value stored in';
+  sRValueOpsGeneric["integer|0"] =          'the value';
+  sRValueOpsGeneric["integer|1"] =          'the value stored in';
+  sRValueOpsGeneric["long|0"] =             'the value';
+  sRValueOpsGeneric["long|1"] =             'the value stored in';
+  sRValueOpsGeneric["double|0"] =           'the value';
+  sRValueOpsGeneric["double|1"] =           'the value stored in';
+  sRValueOpsGeneric["currency|0"] =         'the value';
+  sRValueOpsGeneric["currency|1"] =         'the value stored in';
+  sRValueOpsGeneric["datetime|0"] =         'now';
+  sRValueOpsGeneric["datetime|1"] =         'the formula';
+  sRValueOpsGeneric["datetime|2"] =         'the value stored in';
+  sRValueOpsGeneric["boolean|0"] =          'the value';
+  sRValueOpsGeneric["boolean|1"] =          'the value stored in';
+
+  var sRValueOpsGenericFuncMap = new Array();
+
+  sRValueOpsGenericFuncMap["string|0"] = "value";
+  sRValueOpsGenericFuncMap["string|1"] = "valueOf";
+  sRValueOpsGenericFuncMap["integer|0"] = "value";
+  sRValueOpsGenericFuncMap["integer|1"] = "valueOf";
+  sRValueOpsGenericFuncMap["long|0"] = "value";
+  sRValueOpsGenericFuncMap["long|1"] = "valueOf";
+  sRValueOpsGenericFuncMap["double|0"] = "value";
+  sRValueOpsGenericFuncMap["double|1"] = "valueOf";
+  sRValueOpsGenericFuncMap["currency|0"] = "value";
+  sRValueOpsGenericFuncMap["currency|1"] = "valueOf";
+  sRValueOpsGenericFuncMap["datetime|0"] = "now";
+  sRValueOpsGenericFuncMap["datetime|1"] = "formula";
+  sRValueOpsGenericFuncMap["datetime|2"] = "valueOf";
+  sRValueOpsGenericFuncMap["boolean|0"] = "value";
+  sRValueOpsGenericFuncMap["boolean|1"] = "valueOf";
+
+  var sRValueOpsGenericCounts = new Array();
+
+  sRValueOpsGenericCounts["string"] = 2;
+  sRValueOpsGenericCounts["integer"] = 2;
+  sRValueOpsGenericCounts["double"] = 2;
+  sRValueOpsGenericCounts["currency"] = 2;
+  sRValueOpsGenericCounts["long"] = 2;
+  sRValueOpsGenericCounts["datetime"] = 3;
+  sRValueOpsGenericCounts["boolean"] = 2;
+
+  //
+  // units for an rvalues expression for a target
+  //
+  var sRValueExpDateTimeUnits = new Array();
+
+  sRValueExpDateTimeUnits[sRValueExpDateTimeUnits.length] = 'Months';
+  sRValueExpDateTimeUnits[sRValueExpDateTimeUnits.length] = 'Days';
+  sRValueExpDateTimeUnits[sRValueExpDateTimeUnits.length] = 'Weeks';
+  sRValueExpDateTimeUnits[sRValueExpDateTimeUnits.length] = 'Years';
+  sRValueExpDateTimeUnits[sRValueExpDateTimeUnits.length] = 'Hours';
+  sRValueExpDateTimeUnits[sRValueExpDateTimeUnits.length] = 'Minutes';
+
+  var sRValueExpDateTimeUnitsFuncMap = new Array();
+
+  sRValueExpDateTimeUnitsFuncMap[sRValueExpDateTimeUnits.length] = "months";
+  sRValueExpDateTimeUnitsFuncMap[sRValueExpDateTimeUnits.length] = "days";
+  sRValueExpDateTimeUnitsFuncMap[sRValueExpDateTimeUnits.length] = "weeks";
+  sRValueExpDateTimeUnitsFuncMap[sRValueExpDateTimeUnits.length] = "years";
+  sRValueExpDateTimeUnitsFuncMap[sRValueExpDateTimeUnits.length] = "hours";
+  sRValueExpDateTimeUnitsFuncMap[sRValueExpDateTimeUnits.length] = "minutes";
+
+  //
+  // modifiers for an rvalues expression for a target
+  //
+  var sRValueExpModifier = new Array();
+
+  sRValueExpModifier[sRValueExpModifier.length] = 'before';
+  sRValueExpModifier[sRValueExpModifier.length] = 'after';
+
+  var sRValueExpModifierFuncMap = new Array();
+
+  sRValueExpModifierFuncMap[sRValueExpModifierFuncMap.length] = "before";
+  sRValueExpModifierFuncMap[sRValueExpModifierFuncMap.length] = "after";
+  
+  //
+  // properties of SysDateTime
+  //
+  var sPropsSysDateTime = new Array();
+
+  sPropsSysDateTime[sPropsSysDateTime.length] = 'Now'            + '|datetime';
+  sPropsSysDateTime[sPropsSysDateTime.length] = 'Month'          + '|integer';
+  sPropsSysDateTime[sPropsSysDateTime.length] = 'Day'            + '|integer';
+  sPropsSysDateTime[sPropsSysDateTime.length] = 'Year'           + '|integer';
+  sPropsSysDateTime[sPropsSysDateTime.length] = 'Day of Week'    + '|integer';
+  sPropsSysDateTime[sPropsSysDateTime.length] = 'Hours'          + '|integer';
+  sPropsSysDateTime[sPropsSysDateTime.length] = 'Minutes'        + '|integer';
+  sPropsSysDateTime[sPropsSysDateTime.length] = 'Seconds'        + '|integer';
+
+  var sPropsSysDateTimeFuncMap = new Array();
+
+  sPropsSysDateTimeFuncMap[sPropsSysDateTimeFuncMap.length] = "now";
+  sPropsSysDateTimeFuncMap[sPropsSysDateTimeFuncMap.length] = "month";
+  sPropsSysDateTimeFuncMap[sPropsSysDateTimeFuncMap.length] = "day";
+  sPropsSysDateTimeFuncMap[sPropsSysDateTimeFuncMap.length] = "year";
+  sPropsSysDateTimeFuncMap[sPropsSysDateTimeFuncMap.length] = "dayOfWeek";
+  sPropsSysDateTimeFuncMap[sPropsSysDateTimeFuncMap.length] = "hour";
+  sPropsSysDateTimeFuncMap[sPropsSysDateTimeFuncMap.length] = "minute";
+  sPropsSysDateTimeFuncMap[sPropsSysDateTimeFuncMap.length] = "second";
+</script>
+
+

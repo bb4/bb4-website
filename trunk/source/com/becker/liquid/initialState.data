@@ -1,0 +1,21 @@
+# this file describes the initial state of a liquid simulation
+# X  Y
+21 31
+# length of cell the edge
+10.0
+# gravity in mm/s^2
+980.0
+#Walls
+7
+0 0      21.0 0
+0 31.0   21.0 31.0
+0 0      0 31.0 
+21.0 0     21.0 31.0 
+0 10.0     10.0 10.0
+5.0 21.0  15.0 21.0 
+15.0 15.0 15.0 21.0
+# blocks of particles
+# region is specified in mm.
+# x1 y1  x2 y2,  mass, radius (in mm), elasticity
+1
+4.0 2.0 8.0 9.9  .1 2.0 
