@@ -98,7 +98,6 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
     protected void drawMarkers( int nrows, int ncols, Graphics2D g2 )
     {
         GoBoard board = (GoBoard)getBoard();
-        board.confirm();
 
         // draw the starpoint markers
         List starpoints = board.getStarPointPositions();
@@ -122,9 +121,7 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
                 GoGroupRenderer.drawGroupDecoration(group, colormap_, (float) cellSize_, board, g2 );
             }
         }
-        board.confirm();
         super.drawMarkers( nrows, ncols, g2 );
-        board.confirm();
         GameContext.log( 3, "drawing groups time=" + (System.currentTimeMillis() - time) );
     }
 
@@ -150,7 +147,6 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
      */
     public void mousePressed( MouseEvent e )
     {
-        this.getBoard().confirm();
         // all derived classes must check this to disable user clicks while the computer is thinking
         if (get2PlayerController().isProcessing())
             return;

@@ -259,6 +259,10 @@ public final class GoGroup extends GoSet
     public final void remove( GoString string )
     {
         clearEyes();
+        if (string == null || string.getMembers().isEmpty()) {
+            GameContext.log(2, "attempting to remove empty "+string+" from group."+this);
+            return ;
+        }
         if (members_.isEmpty())
         {
             GameContext.log(2, "attempting to remove "+string+" from already empty group.");
@@ -424,7 +428,7 @@ public final class GoGroup extends GoSet
                         eyes_.add( eye );
                     }
                     else {
-                        GoBoard.debugPrintList(2, "This list of stones was rejected as being an eye: ", eyeList);
+                        GoBoard.debugPrintList(3, "This list of stones was rejected as being an eye: ", eyeList);
                     }
                 }
             }
