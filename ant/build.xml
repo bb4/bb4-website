@@ -11,6 +11,7 @@
   <property name="sourceDir" value="../source"/>
   <!-- place where all process files for distribution go. -->
   <property name="distributionDir" value="../dist"/>
+  <property name="distributionGameDir" value="${distributionDir}/games"/>
   <!-- place where all thirdparty libraries are located. -->
   <property name="libDir" value="../lib"/>
   <!-- place to put .class files, images and resources, so they can be jar'd up -->
@@ -63,9 +64,8 @@
 
   <target name="compile" depends="init" description="Compiles the source code">
     <javac debug="yes" deprecation="on" destdir="${classesDir}"
-        nowarn="false" optimize="yes" srcdir="${sourceDir}" verbose="true"
-        executable="${java_home}/bin/javac"
-        compiler="modern" source="1.4">
+        nowarn="no" optimize="yes" srcdir="${sourceDir}" verbose="true"
+        executable="${java_home}/bin/javac" compiler="modern" source="1.5">  
        <classpath refid="compile.classpath"/>
     </javac>
     <!-- use ant deploy to copy the resources to the classes dir -->
@@ -88,6 +88,7 @@
   <target name="init">
     <mkdir dir="${classesDir}"/>
     <mkdir dir="${distributionDir}"/>
+    <mkdir dir="${distributionGameDir}"/>
     <ant antfile="rmi.xml" inheritall="true" target="rmi_init"/>
   </target>
 
@@ -183,6 +184,30 @@
     <echo message="now executing red puzzle"/>
     <java classname="com.becker.redpuzzle.RedPuzzle" classpath="${classesDir}" fork="true" jvm="${java15}" maxmemory="128M"/>
   </target>
+
+  <target name="XMLViewer" depends="compile" description=" run the XML Viewer app">
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.aikido.DomEcho"/>
+      <param name="libPath" value="${libDir}/vecmath.jar"/>
+      <!--param name="arg1" value="/home/becker/projects/svg/svg_cagle_book/StopSign2.svg"/-->
+      <param name="arg1" value="/home/becker/projects/java_projects/source/com/becker/aikido/katate_dori.xml"/>
+    </antcall>
+  </target>
+
+  <target name="XMLAppGenerator" depends="compile" description=" run the XML App Generator">
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.aikido.AikidoAppGenerator"/>
+      <param name="arg1" value="/home/becker/projects/java_projects/source/com/becker/aikido/katate_dori.xml"/>
+    </antcall>
+  </target>
+
+  <target name="cardgame" depends="compile" description=" run cardgame app">
+        <antcall target="executeProgram">
+          <param name="className" value="com.becker.game.card.Card"/>
+          <param name="libPath" value="${libDir}/vecmath.jar"/>
+        </antcall>
+    </target>
+
 
   <target name="showFonts" depends="compile">
     <java classname="com.becker.java2d.examples.ShowFonts" classpath="${classesDir}"/>

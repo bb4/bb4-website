@@ -12,7 +12,7 @@
 
 
   <target name="distribute"
-        description="deploys the built jar files and generated html pages to the ${distributionDir} dir so they can be bulk copied to a website">
+        description="deploys the built jar files and generated html pages to the ${distributionGameDir} dir so they can be bulk copied to a website">
       <mkdir dir="${stagingDir}"/>
 
       <!--/////////////////// create my jar files //////////////////////////////////////-->
@@ -26,7 +26,7 @@
         </fileset>
         <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
       </copy>
-      <jar basedir="${stagingDir}" compress="true" destfile="${distributionDir}/common.jar"/>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/common.jar"/>
       <delete dir="${stagingDir}/com"/>
 
       <!-- copy the class files that are needed for programs that want to do optimization. Produces optimization.jar-->
@@ -36,7 +36,7 @@
         </fileset>
         <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
       </copy>
-      <jar basedir="${stagingDir}" compress="true" destfile="${distributionDir}/optimization.jar"/>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/optimization.jar"/>
       <delete dir="${stagingDir}/com"/>
 
       <!-- copy the class files that are needed for programs that want to have sound. Produces sound.jar-->
@@ -48,9 +48,9 @@
       </copy>
       <antcall target="copyResources">
         <param name="path" value="sound"/>
-        <param name="pattern" value="*.wav"/>
+        <param name="pattern" value="*.wav,*.au"/>
       </antcall>
-      <jar basedir="${stagingDir}" compress="true" destfile="${distributionDir}/sound.jar"/>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/sound.jar"/>
       <delete dir="${stagingDir}/com"/>
 
       <!-- copy just the core class files that are needed for all the games. Produces gameCommon.jar -->
@@ -74,7 +74,7 @@
         <param name="path" value="game/common/resources"/>
         <param name="pattern" value="*.properties"/>
       </antcall>
-      <jar basedir="${stagingDir}" compress="true" destfile="${distributionDir}/gameCommon.jar"/>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/gameCommon.jar"/>
       <delete dir="${stagingDir}/com"/>
 
       <!-- copy just the core class files that are needed for all the twoplayer games. Produces game2Common.jar -->
@@ -98,7 +98,7 @@
         <param name="path" value="game/twoplayer/common/resources"/>
         <param name="pattern" value="*.properties"/>
       </antcall>
-      <jar basedir="${stagingDir}" compress="true" destfile="${distributionDir}/game2Common.jar"/>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/game2Common.jar"/>
       <delete dir="${stagingDir}/com"/>
 
       <!-- copy the class files that are needed for pente deployment -->
@@ -117,7 +117,7 @@
         <param name="path" value="game/twoplayer/pente/resources"/>
         <param name="pattern" value="*.properties"/>
       </antcall>
-      <jar basedir="${stagingDir}" compress="true" destfile="${distributionDir}/pente.jar"/>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/pente.jar"/>
       <delete dir="${stagingDir}/com"/>
 
       <!-- copy the class files that are needed for blockade deployment -->
@@ -132,7 +132,7 @@
         <param name="path" value="game/twoplayer/blockade/resources"/>
         <param name="pattern" value="*.properties"/>
       </antcall>
-      <jar basedir="${stagingDir}" compress="true" destfile="${distributionDir}/blockade.jar"/>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/blockade.jar"/>
       <sleep seconds="1" />
       <delete dir="${stagingDir}/com"/>
 
@@ -148,7 +148,7 @@
         <param name="path" value="game/twoplayer/checkers/resources"/>
         <param name="pattern" value="*.properties"/>
       </antcall>
-      <jar basedir="${stagingDir}" compress="true" destfile="${distributionDir}/checkers.jar"/>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/checkers.jar"/>
       <sleep seconds="1" />
       <delete dir="${stagingDir}/com"/>
 
@@ -170,7 +170,7 @@
         <param name="path" value="game/twoplayer/chess/resources"/>
         <param name="pattern" value="*.properties"/>
       </antcall>
-      <jar basedir="${stagingDir}" compress="true" destfile="${distributionDir}/chess.jar"/>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/chess.jar"/>
       <sleep seconds="1" />
       <delete dir="${stagingDir}/com"/>
 
@@ -192,7 +192,7 @@
         <param name="path" value="game/twoplayer/go/resources"/>
         <param name="pattern" value="*.properties"/>
       </antcall>
-      <jar basedir="${stagingDir}" compress="true" destfile="${distributionDir}/go.jar"/>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/go.jar"/>
       <sleep seconds="1" />
       <delete dir="${stagingDir}/com"/>
       <delete dir="${stagingDir}/ca"/>
@@ -213,7 +213,7 @@
         <param name="path" value="game/multiplayer/galactic/resources"/>
         <param name="pattern" value="*.properties"/>
       </antcall>
-      <jar basedir="${stagingDir}" compress="true" destfile="${distributionDir}/galactic.jar"/>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/galactic.jar"/>
       <sleep seconds="1" />
       <delete dir="${stagingDir}/com"/>
 
@@ -224,7 +224,7 @@
         </fileset>
         <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve directory hierarchy -->
       </copy>
-      <jar basedir="${stagingDir}" compress="true" destfile="${distributionDir}/maze.jar"/>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/maze.jar"/>
       <delete dir="${stagingDir}/com"/>
 
       <!-- copy the class files that are needed for snake deployment -->
@@ -234,7 +234,7 @@
         </fileset>
         <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve directory hierarchy -->
       </copy>
-      <jar basedir="${stagingDir}" compress="true" destfile="${distributionDir}/snake.jar"/>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/snake.jar"/>
       <delete dir="${stagingDir}/com"/>
 
       <!-- copy the class files that are needed for spirograph deployment -->
@@ -244,7 +244,7 @@
         </fileset>
         <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
       </copy>
-      <jar basedir="${stagingDir}" compress="true" destfile="${distributionDir}/spirograph.jar"/>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/spirograph.jar"/>
       <delete dir="${stagingDir}/com"/>
 
       <!-- copy the class files that are needed for redpuzzle deployment -->
@@ -254,17 +254,17 @@
         </fileset>
         <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve directory hierarchy -->
       </copy>
-      <jar basedir="${stagingDir}" compress="true" destfile="${distributionDir}/redpuzzle.jar"/>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/redpuzzle.jar"/>
       <sleep seconds="1" />
       <delete dir="${stagingDir}/com"/>
 
-      <copy file="${libDir}/vecmath.jar" tofile="${distributionDir}/vecmath.jar"/>
-      <copy file="${libDir}/sun.jar" tofile="${distributionDir}/sun.jar"/>
-      <copy file="${libDir}/jai_codec.jar" tofile="${distributionDir}/jai_codec.jar"/>
+      <copy file="${libDir}/vecmath.jar" tofile="${distributionGameDir}/vecmath.jar"/>
+      <copy file="${libDir}/sun.jar" tofile="${distributionGameDir}/sun.jar"/>
+      <copy file="${libDir}/jai_codec.jar" tofile="${distributionGameDir}/jai_codec.jar"/>
 
       <!-- copy image files to distrib dir -->
-      <mkdir dir="${distributionDir}/games"/>
-      <copy todir="${distributionDir}/games">
+      <mkdir dir="${distributionGameDir}"/>
+      <copy todir="${distributionGameDir}">
         <fileset dir="${sourceDir}/images">
           <include name="*.jpg"/>
           <include name="*.png"/>
@@ -280,7 +280,7 @@
       <foreach delimiter="," list="${appletHtml.localesList}" param="locale" target="create_html_for_locale">
          <param name="appletIndexFile" value="${appletIndexFile}"/>
          <param name="sourceDir" value="${sourceDir}"/>
-         <param name="distributionDir" value="${distributionDir}"/>
+         <param name="distributionDir" value="${distributionGameDir}"/>
       </foreach>
 
   </target>
@@ -297,30 +297,30 @@
       <propertycopy from="appletIndexFile.${locale}" name="appletIndexFileForLocale"/>
       <echo message="Generating Table: ${appletListForLocale}"/>
 
-      <echo message="copying ${sourceDir}/html/${appletIndexFile} to ${distributionDir}/${appletIndexFileForLocale}"/>
-      <copy file="${sourceDir}/html/${appletIndexFile}" tofile="${distributionDir}/${appletIndexFileForLocale}"/>
+      <echo message="copying ${sourceDir}/html/${appletIndexFile} to ${distributionDir}/../${appletIndexFileForLocale}"/>
+      <copy file="${sourceDir}/html/${appletIndexFile}" tofile="${distributionDir}/../${appletIndexFileForLocale}"/>
 
 
       <!-- top level locale specific replacements for the index file. -->
       <foreach delimiter="," list="${htmlindex.replacementList}" param="token" target="substitute_in_indexfile">
         <param name="item" value="appletHtml"/>
-        <param name="replaceFile" value="${distributionDir}/${appletIndexFileForLocale}"/>
+        <param name="replaceFile" value="${distributionDir}/../${appletIndexFileForLocale}"/>
       </foreach>
 
       <!-- create a TR entry for each applet -->
       <foreach delimiter="," list="${appletListForLocale}" param="token" target="tr_substitute">
         <param name="locale" value="${locale}"/>
-        <param name="distributionDir" value="${distributionDir}"/>
+        <param name="distributionDir" value="${distributionDir}/.."/>
       </foreach>
 
       <!-- low level replacements for each locale specific index file -->
       <foreach delimiter="," list="${appletListForLocale}" param="applet" target="substitute_for_indexfile">
         <param name="locale" value="${locale}"/>
-        <param name="distributionDir" value="${distributionDir}"/>
+        <param name="distributionDir" value="${distributionDir}/.."/>
       </foreach>
 
       <!-- instead of copying hand edited html and jnlps for each applet, I will generate them
-      automatically from base tempaltes and a properties file that specifies the substitutions
+      automatically from base templates and a properties file that specifies the substitutions
       to make.  -->
       <echo message="The applets to create files for are: ${appletListForLocale}"/>
 
@@ -332,7 +332,7 @@
 
 
   <target name="create_applet_pages">
-    <echo level="warning" message="Now creating html and jnlp for : ${appletName}"/>
+    <echo message="######### Now creating html and jnlp for : ${appletName}"/>
 
     <!-- there are 2 web files for each app to make substitutions in -->
     <property name="suffices" value="html,jnlp"/>
@@ -346,7 +346,7 @@
 
   <target name="substitute_for_file">
     <propertycopy from="${suffix}.replacementList" name="replacementList"/>
-    <echo message="${suffix}.replacementList : ${replacementList}"/>
+    <echo message="${distributionDir}/${appletName}_${locale}.${suffix}::: ${suffix}.replacementList : ${replacementList}"/>
     <copy file="${sourceDir}/html/applet_template.${suffix}" tofile="${distributionDir}/${appletName}_${locale}.${suffix}"/>
 
     <replace file="${distributionDir}/${appletName}_${locale}.${suffix}" token="{locale}" value="${locale}"/>
