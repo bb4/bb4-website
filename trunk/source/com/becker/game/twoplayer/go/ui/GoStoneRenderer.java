@@ -27,7 +27,8 @@ final class GoStoneRenderer  extends GamePieceRenderer
     private static final Color PLAYER1_STONE_COLOR = new Color( 90, 90, 90 );
     private static final Color PLAYER2_STONE_COLOR = new Color( 230, 230, 230 );  // off-white
 
-    private static final Color ATARI_COLOR = new Color( 255, 140, 90, 255 );  // bright red
+    private static final Color ATARI_COLOR = new Color( 255, 210, 90, 255 );  // bright red
+    private static final int ATARI_MARKER_RADIUS = 6;
 
     // instead of rendering we can just show image icons which look even better.
     // gets the images from resources or the filesystem depending if we are running as an applet or application respectively.
@@ -107,7 +108,7 @@ final class GoStoneRenderer  extends GamePieceRenderer
         g2.drawImage(getImage(stone), pos.x, pos.y, pieceSize, pieceSize , null);
         if (GameContext.getDebugMode() > 0 && stonePos.isInAtari((GoBoard)board)) {
             g2.setColor(ATARI_COLOR);
-            g2.drawOval(pos.x, pos.y, 3, 3);
+            g2.fillOval(pos.x, pos.y, ATARI_MARKER_RADIUS, ATARI_MARKER_RADIUS);
         }
     }
 
