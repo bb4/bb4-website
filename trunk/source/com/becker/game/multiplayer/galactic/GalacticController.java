@@ -164,7 +164,6 @@ public class GalacticController extends GameController
         GalaxyViewer gviewer  = (GalaxyViewer)this.getViewer();
 
         // show message when done.
-        System.out.println("done="+done());
         if (done()) {
             System.out.println( "advanceToNextPlayer done" );
             ((GameBoardViewer)getViewer()).sendGameChangedEvent(null);

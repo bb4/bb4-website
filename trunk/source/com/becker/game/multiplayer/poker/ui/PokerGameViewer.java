@@ -125,7 +125,7 @@ public class PokerGameViewer extends GameBoardViewer
         PokerRobotPlayer robot = (PokerRobotPlayer)player;
         PokerController pc = (PokerController) controller_;
 
-        switch (robot.getAction()) {
+        switch (robot.getAction(pc)) {
             case FOLD : robot.fold();
                 break;
             case CALL : 
@@ -254,10 +254,15 @@ public class PokerGameViewer extends GameBoardViewer
     protected void drawMarkers( int nrows, int ncols, Graphics2D g2 )
     {
         // draw the pot in the middle
-        Location loc = new Location(getBoard().getNumRows()/2, getBoard().getNumCols()/2);
-        ((PokerRenderer)pieceRenderer_).renderChips(g2, loc, ((PokerController)controller_).getPotValue(),
-                                                    this.getCellSize());
+        Location loc = new Location(getBoard().getNumRows()/2, getBoard().getNumCols()/2-1);
+        int pot = ((PokerController)controller_).getPotValue();
+        ((PokerRenderer)pieceRenderer_).renderChips(g2, loc, pot, this.getCellSize());
 
+        // draw a backroung circle for the player whose turn it is
+        PokerPlayer player = (PokerPlayer)controller_.getCurrentPlayer();
+        PokerPlayerMarker m = player.getPiece();
+        g2.setColor(PokerRenderer.HIGHLIGHT_COLOR);
+        g2.fillOval(cellSize_*(m.getLocation().col-2), cellSize_*(m.getLocation().row-2), 10*cellSize_, 10*cellSize_);
 
         // now draw the players and their stuff (face, anme, chips, cards, etc)
         super.drawMarkers(nrows, ncols, g2);

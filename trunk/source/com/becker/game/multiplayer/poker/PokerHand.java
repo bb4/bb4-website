@@ -9,7 +9,7 @@ import java.util.*;
  * User: Barry Becker
  * Date: Feb 26, 2005
  */
-public class PokerHand {
+public class PokerHand implements Comparable {
 
     private List<Card> hand_;
     private Map matchMap_;
@@ -61,7 +61,7 @@ public class PokerHand {
     private void update() {
         assert (!hand_.isEmpty()): "You can't have an empty poker hand!";
         sort();
-        matchMap_  = getMatchMap();
+        matchMap_ = computeMatchMap();
     }
 
     /**
@@ -207,7 +207,7 @@ public class PokerHand {
     /**
      * @return a map which has an entry for each card rank represented in the hand and its associated count.
      */
-    private Map getMatchMap() {
+    private Map computeMatchMap() {
         Map map = new HashMap();
 
         for (Card c : hand_) {
@@ -219,6 +219,51 @@ public class PokerHand {
                map.put(c.rank(), 1);
         }
         return map;
+    }
+
+
+    /**
+     * compare this poker hand to another
+     * @param ohand
+     * @return 1 if this hand is higher than the other, -1 if lower, else 0.
+     */
+    public int compareTo(Object ohand) {
+        PokerHand hand = (PokerHand) ohand;
+        // first do a coars comparison based on the type of the hand
+        // if a tie, then look more closely
+        float difference =  this.determineType().odds() - hand.determineType().odds();
+        if (difference > 0) {
+            return 1;
+        } else if (difference < 0) {
+            return -1;
+        } else {
+            return compareHandsOfEqualType(this, hand);
+        }
+    }
+
+    public Rank getRankOfLargestNofaKind() {
+        Iterator it = matchMap_.keySet().iterator();
+        int largest = 0;
+        Rank rankOfSet = null;
+        while (it.hasNext()) {
+            Rank r = (Rank)it.next();
+            Integer ii = (Integer)matchMap_.get(r);
+            if (ii.intValue() > largest) {
+                largest = ii.intValue();
+                rankOfSet = r;
+            }
+        }
+        return rankOfSet;
+    }
+
+
+    public static int compareHandsOfEqualType(PokerHand hand1, PokerHand hand2) {
+        assert(hand1.determineType() == hand2.determineType());
+        if (hand1.getRankOfLargestNofaKind().ordinal() > hand1.getRankOfLargestNofaKind().ordinal()) {
+            return 1;
+        } else {
+            return -1;
+        }
     }
 
     public String toString() { return "[" + hand_ + "]"; }
@@ -241,7 +286,6 @@ public class PokerHand {
             }
         }
     }
-
 
 
     /**
