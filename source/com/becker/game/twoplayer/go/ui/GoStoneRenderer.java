@@ -2,10 +2,12 @@ package com.becker.game.twoplayer.go.ui;
 
 import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GameContext;
+import com.becker.game.common.Board;
 import com.becker.game.common.ui.GamePieceRenderer;
 import com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer;
 import com.becker.game.twoplayer.go.GoStone;
 import com.becker.game.twoplayer.go.GoBoardPosition;
+import com.becker.game.twoplayer.go.GoBoard;
 import com.becker.ui.GUIUtil;
 
 import javax.swing.*;
@@ -24,6 +26,8 @@ final class GoStoneRenderer  extends GamePieceRenderer
     // the stone colors ( a specular highlight is added to the stones when rendering )
     private static final Color PLAYER1_STONE_COLOR = new Color( 90, 90, 90 );
     private static final Color PLAYER2_STONE_COLOR = new Color( 230, 230, 230 );  // off-white
+
+    private static final Color ATARI_COLOR = new Color( 255, 140, 90, 255 );  // bright red
 
     // instead of rendering we can just show image icons which look even better.
     // gets the images from resources or the filesystem depending if we are running as an applet or application respectively.
@@ -63,7 +67,6 @@ final class GoStoneRenderer  extends GamePieceRenderer
         return PLAYER2_STONE_COLOR;
     }
 
-
     /**
      * @return  the image to show for the graphical represention of the go stone
      */
@@ -82,7 +85,7 @@ final class GoStoneRenderer  extends GamePieceRenderer
      * @param g2 graphics context
      * @param position of the piece to render
      */
-    public final void render( Graphics2D g2, BoardPosition position, int cellSize)
+    public final void render( Graphics2D g2, BoardPosition position, int cellSize, Board board)
     {
         GoBoardPosition stonePos = (GoBoardPosition)position;
         if (GameContext.getDebugMode() > 0)  {
@@ -102,9 +105,10 @@ final class GoStoneRenderer  extends GamePieceRenderer
         int pieceSize = getPieceSize(cellSize, stone);
         Point pos = getPosition(position, cellSize, pieceSize);
         g2.drawImage(getImage(stone), pos.x, pos.y, pieceSize, pieceSize , null);
-        //if (stonePos.isInAtari()) {
-        //    g2.drawOval(pos.x, pos.y, 2, 2);
-        //}
+        if (GameContext.getDebugMode() > 0 && stonePos.isInAtari((GoBoard)board)) {
+            g2.setColor(ATARI_COLOR);
+            g2.drawOval(pos.x, pos.y, 3, 3);
+        }
     }
 
 }

@@ -1,6 +1,7 @@
 package com.becker.game.twoplayer.go;
 
 import com.becker.game.common.GameContext;
+import com.becker.game.common.BoardPosition;
 
 import java.util.*;
 
@@ -71,7 +72,7 @@ public final class GoEye extends GoString implements GoMember
     {
         assert ( spaces != null): "spaces is null";
         int size = spaces.size();
-        // iterate through. if any are marked false-eye then return false-eye.
+        // iterate through. if any are determined to be a false-eye then return false-eye.
         Iterator it = spaces.iterator();
         while ( it.hasNext() ) {
             GoBoardPosition space = (GoBoardPosition) it.next();
@@ -138,41 +139,72 @@ public final class GoEye extends GoString implements GoMember
      * and 2 or more of the diagonal nbrs are not, then it is a false eye.
      * However, if against the edge or in the corner, then 2 or more friendly nobi nbrs
      * and 1 or more enemy diagonal nbrs are needed in order to call a false eye.
+     * Those enemy diagonal neighbors need to be stronger otherwise they
+     * should be considered too weak to cause a false eye.
      *
      * @param space check to see if this space is part of a false eye.
      * @param board the go game board.
      */
     private boolean isFalseEye( GoBoardPosition space, GoBoard board )
     {
-        HashSet nbrs = board.getNobiNeighbors( space, getGroup().isOwnedByPlayer1(), NeighborType.FRIEND );
+        GoGroup ourGroup = getGroup();
+        boolean groupP1 = ourGroup.isOwnedByPlayer1();
+        HashSet nbrs = board.getNobiNeighbors( space, groupP1, NeighborType.FRIEND );
         int r = space.getRow();
         int c = space.getCol();
 
         if ( nbrs.size() >= 2 ) {
             int numOppDiag = 0;
-            // check the diagonals for >2 of the opponents pieces
-            // there are 2 cases: both opponent peices on the same vert or horiz, or
-            // the opponents pieces are on the diagonal diagonals
-            if ( (r > 1 && c  > 1) &&
-                 isEnemy( (GoBoardPosition)board.getPosition( r - 1, c - 1 ), board ) )
+            // check the diagonals for > 2 of the opponents pieces.
+            // there are 2 cases: both opponent pieces on the same vert or horiz, or
+            // the opponents pieces are on the opposite diagonals
+            if (qualifiedOpponentDiag(-1,-1, r,c, board, groupP1))
                 numOppDiag++;
-            if ( (r > 1 && c + 1 < board.getNumCols()) &&
-                 isEnemy( (GoBoardPosition)board.getPosition( r - 1, c + 1 ), board ) )
+            if (qualifiedOpponentDiag(-1, 1, r,c, board, groupP1))
                 numOppDiag++;
-            if ( (r + 1 < board.getNumRows() && c  > 1) &&
-                 isEnemy( (GoBoardPosition)board.getPosition( r + 1, c - 1 ), board ) )
+            if (qualifiedOpponentDiag( 1,-1, r,c, board, groupP1))
                 numOppDiag++;
-            if ( (r + 1 < board.getNumRows() && c + 1 < board.getNumCols()) &&
-                 isEnemy( (GoBoardPosition)board.getPosition( r + 1, c + 1 ), board ) )
+            if (qualifiedOpponentDiag( 1, 1, r,c, board, groupP1))
                 numOppDiag++;
 
-            // now decide if false eye based on ngbors and proximity to edge.
-            if ( numOppDiag >= 2  && (nbrs.size() >= 3))
-                return true;
-            else if (board.isOnEdge(space) && numOppDiag >=1)
-                return true;
+            // it is also a requirement that one of the friendly nbrs be in atari
+            boolean nbrInAtari = false;
+            Iterator it = nbrs.iterator();
+            while (it.hasNext() && !nbrInAtari) {
+                GoBoardPosition nbr = (GoBoardPosition)it.next();
+                if (nbr.isInAtari(board))
+                    nbrInAtari = true;
+            }
+
+            // now decide if false eye based on nbrs and proximity to edge.
+            if (nbrInAtari) {
+                if ( numOppDiag >= 2  && (nbrs.size() >= 3))
+                    return true;
+                else if (board.isOnEdge(space) && numOppDiag >=1 && nbrInAtari)
+                    return true;
+            }
         }
         return false;
+    }
+
+    /**
+     *
+     * @return true of the enemy piece on the diagoanl is relatively strong and there are groups stones adjacent
+     */
+    private boolean qualifiedOpponentDiag(int rowOffset, int colOffset, int r, int c,
+                                          GoBoard board, boolean groupP1)
+    {
+        GoBoardPosition diagPos = (GoBoardPosition)board.getPosition( r +rowOffset, c + colOffset );
+        if (diagPos == null || diagPos.isUnoccupied() || diagPos.getPiece().isOwnedByPlayer1() == groupP1 )
+            return false;
+
+        BoardPosition pos1 = board.getPosition( r + rowOffset, c );
+        BoardPosition pos2 = board.getPosition( r, c + colOffset );
+
+        return (r > 1 && c  > 1) &&
+                pos1.isOccupied() && pos1.getPiece().isOwnedByPlayer1()==groupP1 &&
+                pos2.isOccupied() && pos2.getPiece().isOwnedByPlayer1()==groupP1 &&
+                isEnemy( diagPos, board );
     }
 
     /**
@@ -185,9 +217,8 @@ public final class GoEye extends GoString implements GoMember
         assert (group_!=null): "group for "+this+" is null";
         GoStone stone = (GoStone)pos.getPiece();
         boolean withinDifferenceThreshold = true;
-        if (stone!=null)  {
-            withinDifferenceThreshold =
-                 (Math.abs(getGroup().getAbsoluteHealth() + stone.getHealth()) <= GoGroup.DIFFERENCE_THRESHOLD);
+        if (stone != null)  {
+            withinDifferenceThreshold = !isStoneWeaker(getGroup(), stone);
         }
         assert (getGroup().isOwnedByPlayer1() == this.isOwnedByPlayer1()):
                  getGroup()+"bad group ownership. eye="+this+". Group="+getGroup();

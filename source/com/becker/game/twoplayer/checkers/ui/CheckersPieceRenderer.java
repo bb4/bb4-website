@@ -32,7 +32,7 @@ public class CheckersPieceRenderer extends GamePieceRenderer
     /**
      * this draws the actual piece.
      */
-    public void render( Graphics2D g2, BoardPosition position, int cellSize)
+    public void render( Graphics2D g2, BoardPosition position, int cellSize, com.becker.game.common.Board b)
     {
         CheckersPiece piece = (CheckersPiece)position.getPiece();
         if (piece == null)
@@ -40,7 +40,7 @@ public class CheckersPieceRenderer extends GamePieceRenderer
 
         int pieceSize = getPieceSize(cellSize, piece);
         if ( piece.getType() == CheckersPiece.REGULAR_PIECE )
-            super.render( g2, position, cellSize);
+            super.render( g2, position, cellSize, b);
         else {  //draw a KING
             g2.setColor( getPieceColor(piece) );
             Point pos = getPosition(position, cellSize, pieceSize);

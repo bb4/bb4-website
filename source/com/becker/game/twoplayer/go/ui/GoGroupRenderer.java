@@ -304,6 +304,22 @@ final class GoGroupRenderer
         }
     }
 
+    private static void markAtariedStones(GoGroup group, GoBoard board, double cellSize, Graphics2D g2)
+    {
+        Iterator it = group.getMembers().iterator();
+        while (it.hasNext()) {
+            GoString string = (GoString)it.next();
+            if (string.isInAtari(board)) {
+                int cs = (int)(1+cellSize/6.0);
+                Iterator stoneIt = string.getMembers().iterator();
+                while (stoneIt.hasNext()) {
+                    GoStone stone = (GoStone)stoneIt.next();
+                    g2.drawOval(cs, cs, 2, 2);
+                }
+            }
+        }
+    }
+
     /**
      * draw debugging information about the group like its border and eyeshapes.
      * @see com.becker.game.twoplayer.go.ui.GoGroupRenderer
@@ -346,6 +362,8 @@ final class GoGroupRenderer
             //System.out.println( "GoGroup drawDecoration: eyes:"+eyes_ );
             GoGroupRenderer.drawEyes( cellSize, g2, group.getEyes() );
         }
+
+        markAtariedStones(group, board, cellSize, g2);
     }
 
 }

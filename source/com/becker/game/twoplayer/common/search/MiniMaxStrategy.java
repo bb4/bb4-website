@@ -60,7 +60,7 @@ public final class MiniMaxStrategy extends SearchStrategy
         if (depth == controller_.getLookAhead())
             numTopLevelMoves_ = list.size();
 
-        GameContext.log( 2, "there were " + list.size() + " moves generated." );
+        GameContext.log( 3, "there were " + list.size() + " moves generated." );
 
         if ( emptyMoveList( list, lastMove ) ) {
             // if there are no possible next moves, return null (we hit the end of the game).

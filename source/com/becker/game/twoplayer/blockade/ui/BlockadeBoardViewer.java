@@ -371,7 +371,7 @@ class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMotionLis
         for ( int i = 1; i <= nrows; i++ )  {
             for ( int j = 1; j <= ncols; j++ ) {
                 BlockadeBoardPosition pos = (BlockadeBoardPosition)board.getPosition( i, j );
-                pieceRenderer_.render(g2, pos,  cellSize_);
+                pieceRenderer_.render(g2, pos,  cellSize_, board);
             }
         }
 

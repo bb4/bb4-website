@@ -41,7 +41,7 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
         super( row, col, stone );
         string_ = string;
         eye_ = null;
-        assert ( string == null || string_.size() > 0 );
+        //assert ( string == null || string_.size() > 0 ): "Error creating board position at "+row+","+col+" String = "+string;
         visited_ = false;
     }
 
