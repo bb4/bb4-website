@@ -39,6 +39,7 @@ public class MazeGenerator extends JComponent
     // the start and stop positions
     private Point startPosition_ = null;
     private Point stopPosition_ = null;
+    private Point currentPosition_ = null;
     // put the stop point at the maximum search depth
     private static int maxDepth_ = 0;
 
@@ -57,10 +58,13 @@ public class MazeGenerator extends JComponent
     private double forwardProb_ = FORWARD_PROB;
     private double leftProb_ = LEFT_PROB;
     private double rightProb_ = RIGHT_PROB;
+    private double animationSpeed_;
 
     // rending attributes
     //private static final Color GRID_COLOR = new Color(20,20,20);
     private static final Color WALL_COLOR = new Color( 80, 0, 150 );
+    private static final Color PATH_COLOR = new Color( 190, 40, 20 );
+
     private static final Color TEXT_COLOR = new Color( 250, 0, 100 );
     private static final Color BG_COLOR = new Color( 225, 240, 250 );
     private static final Color VISITED_COLOR = new Color( 255, 255, 255 );
@@ -86,13 +90,13 @@ public class MazeGenerator extends JComponent
         xDim_ = (int) w; // +2
         yDim_ = (int) h; // +2
         int numCells = xDim_ * yDim_;
-        System.out.println( "initGenerator w=" + w + " h=" + h );
+        //System.out.println( "initGenerator w=" + w + " h=" + h );
         grid_ = new MazeCell[xDim_ ][yDim_];
         stopPosition_ = new Point( xDim_, yDim_ );
 
         // further refine the cell size so it never exceeds borders
         Dimension d = this.getSize();
-        System.out.println( "initGen(w=" + w + " h=" + h + ") allocation=(" + xDim_ + ", " + yDim_ + ") origSize=" + cellSize_ + "  xEst=" + d.getWidth() / xDim_ + " yEst=" + d.getHeight() / yDim_ );
+        //System.out.println( "initGen(w=" + w + " h=" + h + ") allocation=(" + xDim_ + ", " + yDim_ + ") origSize=" + cellSize_ + "  xEst=" + d.getWidth() / xDim_ + " yEst=" + d.getHeight() / yDim_ );
         cellSize_ = Math.min( d.getWidth() / (xDim_), d.getHeight() / (yDim_) );
 
         textFont_ = new Font( "Serif", Font.BOLD, 6 + 5000 / (100 + numCells) );
@@ -153,18 +157,18 @@ public class MazeGenerator extends JComponent
     /**
      * generate the maze
      */
-    public void generate( int thickness )
+    public void generate( int thickness, int animationSpeed )
     {
-        generate( thickness, FORWARD_PROB, LEFT_PROB, RIGHT_PROB );
+        generate( thickness, animationSpeed, FORWARD_PROB, LEFT_PROB, RIGHT_PROB );
     }
 
     /**
      * generate the maze
      */
-    public void generate( int thickness, double forwardProb, double leftProb, double rightProb )
+    public void generate( int thickness, int animationSpeed, double forwardProb, double leftProb, double rightProb )
     {
         Dimension dim = this.getSize();
-        System.out.println( "gen: dim.w=" + dim.getWidth() + " dim.ht=" + dim.getHeight() + " thickness=" + thickness );
+        //System.out.println( "gen: dim.width=" + dim.getWidth() + " dim.height=" + dim.getHeight() + " thickness=" + thickness+" speed="+animationSpeed );
 
         if ( thickness >= (dim.width / 4) || thickness >= (dim.height / 4) )
             thickness = Math.min( (dim.width / 5), (dim.height / 5) );
@@ -184,10 +188,20 @@ public class MazeGenerator extends JComponent
         forwardProb_ = forwardProb;
         leftProb_ = leftProb;
         rightProb_ = rightProb;
+        animationSpeed_ = (double)animationSpeed;
 
         search();
         //search( startPosition_, new Point(0,0), 0 );
         this.repaint();
+    }
+
+    /**
+     * show the maze being solved by the computer.
+     * @param animationSpeed
+     */
+    public void solve(int animationSpeed)
+    {
+       solve();
     }
 
     /**
@@ -200,10 +214,8 @@ public class MazeGenerator extends JComponent
         LinkedList stack = new LinkedList();
 
         Point currentPosition = startPosition_;
-        //System.out.println( "currentPos="+currentPosition );
-        //System.out.println( "grid dims ="+ (xDim_ )+" "+ (yDim_ ));
         MazeCell currentCell = grid_[currentPosition.x][currentPosition.y];
-        //System.out.println( "current cell===="+currentCell );
+        MazeCell lastCell = null;
 
         // push the initial moves
         pushMoves( currentPosition, new Point( 1, 0 ), 1, stack );
@@ -228,6 +240,7 @@ public class MazeGenerator extends JComponent
                 if ( depth > currentCell.depth )
                     currentCell.depth = depth;
 
+                lastCell = currentCell;
                 currentCell = grid_[currentPosition.x][currentPosition.y];
                 if (currentCell==null) {
                     System.out.println( " currentPosition="+currentPosition);
@@ -258,7 +271,7 @@ public class MazeGenerator extends JComponent
             } while ( !moved && !stack.isEmpty() );
 
             // this can be really slow if you do a refresh everytime
-            if ( RANDOM.nextDouble() < 10.0 / (xDim_ * yDim_) ) { // was 50.0
+            if ( RANDOM.nextDouble() < animationSpeed_ / (xDim_ * yDim_) ) {
                 this.paintImmediately( 0, 0, (int) d.getWidth(), (int) d.getHeight() );
             }
 
@@ -268,10 +281,148 @@ public class MazeGenerator extends JComponent
         }
     }
 
+    /**
+     * do a depth first search (without recursion) of the grid space to determine the graph.
+     * very similar to search above, but now we are solving
+     */
+    public void solve()
+    {
+        unvisitAll();
+        LinkedList stack = new LinkedList();
+
+        Point currentPosition = startPosition_;
+        MazeCell currentCell = grid_[currentPosition.x][currentPosition.y];
+        MazeCell lastCell = null;
+
+        // push the initial moves
+        pushMoves( currentPosition, new Point( 1, 0 ), 1, stack );
+        Point dir = null;
+        int depth = 1;
+        Dimension d = this.getSize();
+        boolean solved = false;
+
+        while ( !stack.isEmpty() && !solved ) {
+            boolean moved = true;
+
+            do {
+                GenState state = (GenState) stack.removeFirst();  // pop
+                /*
+                if (!moved) {
+                    // then we have backtracked, erase the path from where we just came from
+                    if ( dir.x == 1 ) {// east
+                        currentCell.westPath = false;
+                        lastCell.eastPath = false;
+                    }
+                    else if ( dir.y == 1 ) { // south
+                        currentCell.northPath = false;
+                        lastCell.southPath = false;
+                    }
+                    else if ( dir.x == -1 ) {  // west
+                        currentCell.eastPath = false;
+                        lastCell.westPath = false;
+                    }
+                    else if ( dir.y == -1 )  { // north
+                        currentCell.southPath = false;
+                        lastCell.northPath = false;
+                    }
+                } */
+
+                currentPosition = state.position;
+                if (currentPosition.equals(stopPosition_))
+                  solved = true;
+
+                dir = state.direction;
+                depth = state.depth;
+
+                if ( depth > maxDepth_ ) {
+                    maxDepth_ = depth;
+                    currentPosition_ = currentPosition;
+                }
+                if ( depth > currentCell.depth )
+                    currentCell.depth = depth;
+
+                lastCell = currentCell;
+                currentCell = grid_[currentPosition.x][currentPosition.y];
+                if (currentCell==null) {
+                    System.out.println( " currentPosition="+currentPosition);
+                    System.out.println( " grid_["+currentPosition.x+"].length="+grid_[currentPosition.x].length);
+                }
+                currentCell.visited = true;
+
+                Point nextPosition = (Point) currentPosition.clone();
+
+
+                nextPosition.translate( dir.x, dir.y );
+                MazeCell nextCell = grid_[nextPosition.x][nextPosition.y];
+
+                boolean pathBlocked = (( dir.x ==  1 && currentCell.eastWall ) ||
+                                       ( dir.x == -1 && nextCell.eastWall ) ||
+                                       ( dir.y ==  1 && currentCell.southWall ) ||
+                                       ( dir.y == -1 && nextCell.southWall ) );
+
+                if (!pathBlocked)  {
+                    if ( dir.x == 1 ) {// east
+                        currentCell.eastPath = true;
+                        nextCell.westPath = true;
+                    }
+                    else if ( dir.y == 1 ) { // south
+                        currentCell.southPath = true;
+                        nextCell.northPath = true;
+                    }
+                    else if ( dir.x == -1 ) {  // west
+                        currentCell.westPath = true;
+                        nextCell.eastPath = true;
+                    }
+                    else if ( dir.y == -1 )  { // north
+                        currentCell.northPath = true;
+                        nextCell.southPath = true;
+                    }
+
+                    moved = true;
+                    nextCell.visited = true;
+                    currentPosition = nextPosition;
+                }
+
+            } while ( !moved && !stack.isEmpty() );
+
+            // this can be really slow if you do a refresh everytime
+            //if ( RANDOM.nextDouble() < 2*animationSpeed_ / (xDim_ * yDim_) ) {
+            this.paintImmediately( 0, 0, (int) d.getWidth(), (int) d.getHeight() );
+            //}
+
+            // now at a new location
+            if ( moved )
+                pushMoves( currentPosition, dir, ++depth, stack );
+        }
+
+    }
+
+    /**
+     * mark all the cells unvisited.
+     */
+    private void unvisitAll()
+    {
+        // return everything to unvisited
+        for (int j = 0; j < yDim_; j++ ) {
+            for (int i = 0; i < xDim_; i++ ) {
+                //g.drawLine(OFFSET, ypos+OFFSET, rightEdgePos+OFFSET, ypos+OFFSET);
+                MazeCell c = grid_[i][j];
+                c.visited = false;
+            }
+        }
+    }
+
+    /**
+     *
+     * @param currentPosition
+     * @param fromDir
+     * @param depth
+     * @param stack
+     */
     protected void pushMoves( Point currentPosition, Point fromDir, int depth, LinkedList stack )
     {
         // from this point try each direction in a random order
-        // assigning probablilities to the order in which we check these directions can give interesting effects
+        // assigning probabilities to the order in which we check these directions can give interesting effects
         ArrayList directions = getShuffledDirections();
 
         // check all the directions except the one we came from
@@ -375,6 +526,7 @@ public class MazeGenerator extends JComponent
 
         int i,j;
         int cellSize = (int) cellSize_;
+        int halfCellSize =  (int) (cellSize_/2.0);
 
         // background
         g2.setColor( BG_COLOR );
@@ -429,10 +581,38 @@ public class MazeGenerator extends JComponent
             }
         }
 
+       g2.setColor( PATH_COLOR );
+       for ( j = 0; j < yDim_; j++ ) {
+           for ( i = 0; i < xDim_; i++ ) {
+               MazeCell c = grid_[i][j];
+               int xpos = i * cellSize;
+               int ypos = j * cellSize;
+
+                if ( c.eastPath )  {
+                    g2.drawLine( xpos + halfCellSize, ypos + halfCellSize, xpos + cellSize, ypos + halfCellSize );
+                }
+                if ( c.westPath )  {
+                    g2.drawLine( xpos, ypos + halfCellSize, xpos + halfCellSize, ypos + halfCellSize );
+                }
+                if ( c.northPath )  {
+                    g2.drawLine( xpos + halfCellSize, ypos + halfCellSize, xpos + halfCellSize, ypos );
+                }
+                if ( c.southPath )  {
+                    g2.drawLine( xpos + halfCellSize, ypos + cellSize, xpos + halfCellSize, ypos + halfCellSize );
+                }
+            }
+        }
+
         g2.setColor( TEXT_COLOR );
-        g2.drawString( "S", (int) ((startPosition_.x + .32) * cellSize), (int) ((startPosition_.y + .76) * cellSize) );
-        if ( stopPosition_ != null )
-            g2.drawString( "F", (int) ((stopPosition_.x + .32) * cellSize), (int) ((stopPosition_.y + .76) * cellSize) );
+        drawChar("S", startPosition_, cellSize, g2);
+        drawChar("F", stopPosition_, cellSize, g2);
+        drawChar("*", currentPosition_, cellSize, g2);
+    }
+
+    private void drawChar(String c, Point pos,  int cellSize, Graphics2D g2)
+    {
+        if (pos != null)
+          g2.drawString( c, (int) ((pos.x + .32) * cellSize), (int) ((pos.y + .76) * cellSize) );
     }
 
 }
