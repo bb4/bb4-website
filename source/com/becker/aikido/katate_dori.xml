@@ -4,10 +4,18 @@
   <node id="katate_dori" label="katate dori">
       <node id="tenkan_grabbed" label="tenkan entrance (grabbed)">
           <node id="sumi_grabbed" label="sumi entrance (grabbed)">
-              <node id="sumi_otoshi_basic" label="sumi otoshi (basic)"/>
-              <node id="sumi_otoshi_elbow" label="sumi otoshi (elbow)"/>
-              <node id="sumi_otoshi_inside_shoulder" label="sumi otoshi (inside shoulder)"/>
-              <node id="sumi_otoshi_outside_shoulder" label="sumi otoshi (outside shoulder)"/>
+              <node id="sumi_otoshi_basic" label="sumi otoshi (basic)">
+                  <node id="right_sit_fall" label="sit fall"/>
+              </node>
+              <node id="sumi_otoshi_elbow" label="sumi otoshi (hiji)">
+                  <use ref="zempo_nage_right_finish"/>
+              </node>
+              <node id="sumi_otoshi_inside_shoulder" label="sumi otoshi (inside shoulder)">
+                  <use ref="zempo_nage_right_finish"/>
+              </node>
+              <node id="sumi_otoshi_outside_shoulder" label="sumi otoshi (outside shoulder)">
+                  <use ref="zempo_nage_right_finish"/>
+              </node>
               <node id="sumi_otoshi_head" label="sumi otoshi (head)"/>
               <node id="sumi_koshinage_two_hands_on_arm" label="koshinage (morote seoinage)">
                   <node id="koshinage_right_finish" label="koshinage finish"/>
@@ -41,20 +49,27 @@
                           <node id="sankyo_zempo_nage" label="sankyo zempo nage">
                               <use ref="zempo_nage_left_finish"/>
                           </node>
-                          <node id="sankyo_bring_around" label="sankyo bring around behind">
-                              <node id="aiki_otoshi_zempo_nage" label="aiki otoshi zempo nage (?)">
-                                  <node id="zempo_nage_right_finish" label="zempo nage (right finish)"/>
+                          <node id="sankyo_bring_around" label="sankyo bring behind">
+                              <node id="aiki_otoshi_zempo_nage" label="aiki otoshi zempo (?)">
+                                  <node id="zempo_nage_right_finish" label="zempo nage"/>
                               </node>
                               <node id="koshinage_on_upper_arm" label="koshinage (on upper arm?)">
                                   <use ref="koshinage_right_finish"/>
                               </node>
-                              <node id="tai_otoshi" label="tai otoshi (over leg)"/>
+                              <node id="tai_otoshi" label="tai otoshi (over leg)">
+                                  <node id="tai_otoshi_finish" label="tai otoshi finish"/>
+                              </node>
                           </node>
                       </node>
                   </node>
+                  <node id="nikkyo_sankyo_combo" label="nikkyo-sankkyo combo">
+                      <node id="nikkyo_sankkyo_zempo" label="nikkyo-sankkyo zempo"/>
+                  </node>
                   <node id="ikkyo_uchi" label="ikkyo uchi">
-                      <node id="direct_downward_throw" label="direct downward throw"/>
-                      <use ref="shihonage_entrance"/>
+                      <node id="ikkyo_uchi_turned" label="ikkyo uchi turned">
+                          <node id="direct_downward_throw" label="direct downward throw"/>
+                          <use ref="shihonage_entrance"/>
+                      </node>
                   </node>
               </node>
               <node id="yonkyo_entrance" label="yonkyo entrance">
@@ -74,8 +89,8 @@
                       <node id="iriminage_right_throw" label="iriminage throw">
                           <node id="iriminage_right_finish" label="iriminage finish"/>
                       </node>
-                      <node id="irminage_full_entrance" label="iriminage full entrance throw">
-                          <node id="iriminage_full_entrance_finish" label="iriminage full entrance finish"/>
+                      <node id="iriminage_full_entrance" label="iriminage full entrance throw">
+                          <node id="iriminage_full_entrance_finish" label="irimi full entrance finish"/>
                       </node>
                   </node>
               </node>
@@ -109,17 +124,16 @@
                      <use ref="koshinage_right_finish"/>
                   </node>
               </node>
-
               <node id="soto_mawari_grabbed" label="soto mawari (grabbed)">
                   <use ref="zempo_nage_left_finish"/>
                   <use ref="kaiten_nage_continuance"/>
                   <use ref="arm_bar_continuance"/>
                   <node id="yonkyo_continuance" label="yonkyo continuance">
                       <use ref="yonkyo_omote"/>
-                      <node id="sankyo_like_continuance_omote" label="sankyo-like continuance (omote)">
+                      <node id="sankyo_like_continuance_omote" label="sankyo-like (omote)">
                           <use ref="sankyo_seated_pin"/>
                       </node>
-                      <node id="sankyo_like_continuance_ura" label="sankyo-like continuance (ura)">
+                      <node id="sankyo_like_continuance_ura" label="sankyo-like (ura)">
                           <use ref="sankyo_seated_pin"/>
                       </node>
                       <use ref="zempo_nage_left_finish"/>
@@ -147,7 +161,7 @@
           <node id="hook_arm" label="hook_arm">
               <use ref="zempo_nage_left_finish"/>
           </node>
-          <node id="continue_tenkan_180" label="continue temkan (180 degrees)">
+          <node id="continue_tenkan_180" label="continue temkan (180 deg)">
               <use ref="kokyo_nage_grabbed"/>
               <use ref="zempo_nage_left_finish"/>
           </node>
@@ -165,6 +179,10 @@
               <use ref="shihonage"/>
               <use ref="zempo_nage_left_finish"/>
           </node>
+          <node id="hiji_kime_entrance" label="hiji kime entrance">
+              <node id="zempo_nage_left_finish_toward_right" label="zempo nage"/>
+              <node id="hiji_kime_koshinage" label="hiji kime koshinage"/>
+          </node>
       </node>
       <use ref="step_forward_hand_to_head"/>
       <node id="shihonage_entrance" label="shihonage entrance">
@@ -172,20 +190,20 @@
           <node id="udekimonage" label="udekimonage">
               <node id="udekimonage_left_finish" label="udekimonage finish"/>
           </node>
-          <node id="kokyo_nage_grabbing" label="kokyo nage (grabbing)">
-              <use ref="kokyo_nage_throw"/>
-          </node>
+          <use ref="kokyo_nage_grabbing"/>
           <node id="shiho_koshinage" label="shiho koshinage (hand at center)">
               <node id="koshinage_left_finish" label="koshinage finish"/>
-          </node>    
+          </node>
           <node id="omote_iriminage" label="omote iriminage">
               <use ref="iriminage_right_finish"/>
           </node>
           <node id="koshinage_kata_guruma" label="koshinage (kata guruma)">
               <use ref="koshinage_right_finish"/>
           </node>
-          <node id="koshinage_sukui_nage" label="koshinage (sukui nage)">
-              <use ref="koshinage_right_finish"/>
+          <node id="sukui_nage_entrance" label="sukui nage entrance">
+              <node id="koshinage_sukui_nage" label="koshinage (sukui nage)">
+                  <node id="sukui_nage_finish" label="sukui nage finish"/>
+              </node>
           </node>
           <node id="arm_bar_over_shoulder" label="arm bar (over shoulder)">
               <node id="shiho_zempo_nage" label="shiho zempo nage">
@@ -195,14 +213,15 @@
       </node>
       <node id="irimi_entrance_break_grip" label="irimi entrance (break grip)">
           <use ref="iriminage_continuance"/>
-          <node id="kote_geishi_omote_continuance" label="kote geishi continuance (omote)">
+          <node id="kote_geishi_omote_continuance" label="kote geishi (omote)">
               <node id="kote_geishi_omote_throw" label="kote geishi throw (omote)">
                   <node id="kote_geishi_finish" label="kote geishi finish">
-                      <node id="kote_geishi_pin" label="kote geishi pin"/>
+                      <node id="kote_geishi_pin_omote" label="kote geishi pin (front)"/>
+                      <node id="kote_geishi_pin_ura" label="kote geishi pin (side)"/>
                   </node>
               </node>
           </node>
-          <node id="kote_geishi_ura_continuance" label="kote geishi continuance (ura)">
+          <node id="kote_geishi_ura_continuance" label="kote geishi (ura)">
               <node id="kote_geishi_ura_throw" label="kote geishi throw (ura)">
                   <use ref="kote_geishi_finish"/>
               </node>
@@ -210,6 +229,20 @@
           <node id="juji_nage_entrance" label="juji nage entrance">
               <node id="juji_nage_continuance" label="juji nage continuance">
                   <node id="juji_nage_throw" label="juji nage throw"/>
+              </node>
+          </node>
+          <node id="blend_palm_up" label="blend (palm up)">
+              <node id="turn_palm_down" label="turn and throw"/>
+          </node>
+          <node id="elbow_lock" label="elbow lock">
+              <node id="kokyo_nage_grabbing" label="kokyo nage">
+                   <use ref="kokyo_nage_throw"/>
+              </node>
+              <node id="omote_choke" label="choke"/>
+              <node id="locked_kote_geishi" label="locked kote geishi">
+                  <node id="locked_kote_geishi_finish" label="locked kote geishi throw">
+                      <node id="locked_kote_geishi_pin" label="locked kote geishi pin"/>
+                  </node>
               </node>
           </node>
       </node>
@@ -223,16 +256,16 @@
       <use ref="hiji_continuance"/>
       <node id="raise_hand" label="raise hand">
           <node id="turn_and_cut" label="turn and cut">
-              <use ref="zempo_nage_right_finish"/>
+              <use ref="zempo_nage_left_finish_toward_right"/>
           </node>
           <node id="irimi_omote_entrance" label="irimi omote entrance">
-              <node id="iriminage_left_throw" label="iriminage throw"/>
-              <node id="irimi_full_enter" label="irimi full enter">
-                  <node id="irimi_full_enter_finish" label="irimi full enter finish"/>
+              <node id="iriminage_left_throw" label="iriminage throw">
+                  <use ref="iriminage_full_entrance"/>
               </node>
           </node>
       </node>
-  </node>
+   </node>
 </hierarchy>
+
 
 

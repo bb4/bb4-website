@@ -1,4 +1,4 @@
-package com.becker.aikido;
+package com.becker.xml;
 
 /**
  *  This class wraps a DOM node and returns the text we want to

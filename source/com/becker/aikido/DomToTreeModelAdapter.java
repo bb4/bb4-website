@@ -1,4 +1,4 @@
-package com.becker.aikido;
+package com.becker.xml;
 
 import org.w3c.dom.Document;
 

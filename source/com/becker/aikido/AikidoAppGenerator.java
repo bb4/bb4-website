@@ -1,11 +1,10 @@
-package com.becker.aikido;
+package com.becker.xml;
 
 import org.w3c.dom.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.LinkedList;
 
@@ -16,12 +15,17 @@ import java.util.LinkedList;
  *   2. Take pictures corresponding to nodes in hierarchy using camcorder.
  *   3. Run this program to generate technique_builder.html
  *     and all_techniques.html in becker/projects/javascript_projects/aikido_builder/.
- *   4. upload technique_builder.html, alll_techniques.html and corresponding images to website.
+ *   4. upload technique_builder.html, all_techniques.html and corresponding images to website.
  *
  * @author Barry Becker
  * Date: Oct 15, 2004
  */
 public class AikidoAppGenerator {
+
+    // if in debug mode then we do the following things differently
+    // 1) in the all techniques page, show the ids instead of the labels, and make theimages bigger.
+    // 2) when replacing refs, don't substitute the whole subtree, just the subtree root node.
+    private static boolean DEBUG_MODE = false;
 
     private static String imgPath_ = null;
     private static final String IMG_SUFFIX = "_s.jpg";
@@ -349,10 +353,18 @@ public class AikidoAppGenerator {
             for (int i=1; i<parentList.size(); i++) {
                 NodeInfo info = (NodeInfo)parentList.get(i);
                 buf.append("    <td nowrap>\n");
-                buf.append("      <div style=\"height:14px; width:90px; overflow:hidden;\"\n");
-                buf.append("        <font size='-3'>");
-                buf.append(info.label);
-                buf.append("        </font>");
+                if (DEBUG_MODE)  {
+                    buf.append("      <div title=\""+info.id+"\" style=\"height:14px; width:120px; overflow:hidden;\"\n");
+                } else {
+                    buf.append("      <div title="+info.label+"style=\"height:14px; width:90px; overflow:hidden;\"\n");
+                }
+                buf.append("        <font size='-3'><span>");
+                if (DEBUG_MODE)  {
+                    buf.append(info.id);
+                }  else {
+                    buf.append(info.label);
+                }
+                buf.append("        </span></font>");
                 buf.append("      </div>");
                 buf.append("    </td>\n");
             }
@@ -362,7 +374,11 @@ public class AikidoAppGenerator {
                 NodeInfo info = (NodeInfo)parentList.get(i);
                 buf.append("    <td>\n");
                 //buf.append("      <img src=\""+ info.img +"\" style=\"width:50px; height:44px;\">\n");
-                buf.append("      <img src=\""+ info.img +"\" height=\"60\">\n");
+                if (DEBUG_MODE)  {
+                    buf.append("      <img src=\""+ info.img +"\" height=\"80\" title=\""+info.label+"\">\n");
+                } else {
+                    buf.append("      <img src=\""+ info.img +"\" height=\"60\" title=\""+info.label+"\">\n");
+                }
                 buf.append("    </td>\n");
             }
             buf.append("  </tr>   \n");
@@ -407,7 +423,7 @@ public class AikidoAppGenerator {
           + "<big><big style=\"font-weight: bold; text-decoration: underline;\">Aikido\n"
           + "Techniques</big></big><br>\n"
           + "<br>\n"
-          + "This page contains all techniques fro, katate dori.<br> If you see an error send mail to BarryBecker4@yahoo.com.<br>\n"
+          + "This page contains all techniques for, katate dori.<br> If you see an error send mail to BarryBecker4@yahoo.com.<br>\n"
           + "<font size='-1'>This application was built using XML, java and DHTML (<a href='technique_builder_desc.html'>more details</a>).</font> "
           + "<br><br>\n\n"
 
@@ -490,7 +506,7 @@ public class AikidoAppGenerator {
         }
 
         File file = new File(argv[0]);
-        document = DomUtil.parseXMLFile(file);
+        document = DomUtil.parseXMLFile(file, !DEBUG_MODE);
 
         try {
 
