@@ -3,6 +3,7 @@ package com.becker.game.multiplayer.galactic.ui;
 import com.becker.game.common.*;
 import com.becker.game.common.ui.GameOptionsDialog;
 import com.becker.game.multiplayer.galactic.GalacticController;
+import com.becker.game.multiplayer.galactic.Galaxy;
 import com.becker.ui.*;
 
 import javax.swing.*;
@@ -87,6 +88,19 @@ class GalacticOptionsDialog extends GameOptionsDialog implements ActionListener,
         GalacticController c = (GalacticController)controller_;
 
         Integer numPlanets = new Integer(numPlanets_.getText());
+        // make sure the # of planets entered is in an acceptable range.
+        if (numPlanets > Galaxy.MAX_NUM_PLANETS || numPlanets < Galaxy.MIN_NUM_PLANETS) {
+            String msg;
+            if (numPlanets > Galaxy.MAX_NUM_PLANETS)  {
+                msg = "You cannot have more than "+ Galaxy.MAX_NUM_PLANETS +" planets on the board";
+            }
+            else {
+                msg = "You cannot have fewer than "+ Galaxy.MIN_NUM_PLANETS +" planets";
+            }
+            JOptionPane.showMessageDialog(this, msg, "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         c.setNumPlanets(numPlanets.intValue());
 
         Integer planetProductionRate = new Integer(planetProductionRate_.getText());

@@ -7,7 +7,7 @@ import com.becker.sound.MusicMaker;
 import java.util.*;
 
 /**
- *  Captures the delta state change of everything that happened during one turn of the game.
+ *  Captures the delta state change of everything that happened during one turn (year) of the game.
  *
  *  @see Galaxy
  *  @author Barry Becker

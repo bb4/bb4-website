@@ -9,6 +9,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Set;
+import java.util.Iterator;
 
 /**
  * Allow the user to specify a single order
@@ -30,7 +33,9 @@ public final class OrderDialog extends OptionsDialog
     private JLabel availableShips_;
     private JTextField numShips_;
 
-    int totalOutgoing_ = 0;
+    private int numYearsRemaining_;
+
+    HashMap totalOutgoing_;
 
     private static final String DEFAULT_FLEET_SIZE = "10";
 
@@ -38,13 +43,13 @@ public final class OrderDialog extends OptionsDialog
     /**
      * constructor - create the tree dialog.
      */
-    public OrderDialog( GalacticPlayer player, Galaxy galaxy, int totalOutgoing )
+    public OrderDialog(GalacticPlayer player, Galaxy galaxy, HashMap totalOutgoing, int numYearsRemaining )
     {
-        super(null);
         player_ = player;
         galaxy_ = galaxy;
         totalOutgoing_ = totalOutgoing;
-
+        numYearsRemaining_ = numYearsRemaining;
+ 
         initUI();
     }
 
@@ -72,7 +77,8 @@ public final class OrderDialog extends OptionsDialog
         JPanel destPanel = createComboInputPanel( labelText, destinationCombo_);
 
         availableShips_ = new JLabel();
-        showAvailableShips(Galaxy.getPlanet(originCombo_.getSelectedItem().toString().charAt(0)));
+
+        showAvailableShips(getOrigin());
 
         JPanel routePanel = new JPanel(new BorderLayout());
         routePanel.setMinimumSize(new Dimension(30,60));
@@ -133,11 +139,22 @@ public final class OrderDialog extends OptionsDialog
      */
     private void showAvailableShips(Planet planet)
     {
-        assert(planet!=null);
-        int availShips = Galaxy.getPlanet(planet.getName()).getNumShips() - totalOutgoing_;
+        assert(planet != null);
+
+
+        int availShips = planet.getNumShips() - getOutgoingShips(planet);
         String[] arg = {(""+planet.getName()), Integer.toString(availShips)};
-        String text = MessageFormat.format(GameContext.getLabel("AVAILABLE_SHIPS"), (java.lang.String[])arg);
-        availableShips_ = new JLabel(text);
+        String text = MessageFormat.format(GameContext.getLabel("AVAILABLE_SHIPS"), (java.lang.Object[])arg);
+        availableShips_.setText(text);
+    }
+
+    private int getOutgoingShips(Planet planet)
+    {
+         int outgoing = 0;
+        if (totalOutgoing_.get(planet)!=null)  {
+           outgoing = ((Integer)totalOutgoing_.get(planet)).intValue();
+        }
+        return outgoing;
     }
 
     /**
@@ -148,13 +165,23 @@ public final class OrderDialog extends OptionsDialog
     {
         Object source = e.getSource();
         if (source == okButton_) {
-            this.setVisible(false);
+            // if there is not enough time to reach the planet, warn the user, and don't close the dlg.
+            Order order = getOrder();
+            if (order == null)
+                return;  // not sure why this can happen, but it did.
+            if (order.getTimeNeeded() > numYearsRemaining_) {
+                JOptionPane.showMessageDialog(this,
+                       "There are not enough years left ("+numYearsRemaining_+") in the game to reach that planet",
+                       "Information", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                this.setVisible(false);
+            }
         }
         else if ( source == cancelButton_ ) {
             cancel();
         }
         else {
-           System.out.println( "actiuonPerformed source="+source );
+           System.out.println( "actionPerformed source="+source+". not cancel and not ok" );
         }
     }
 
@@ -167,8 +194,7 @@ public final class OrderDialog extends OptionsDialog
         Object source = e.getSource();
         System.out.println( "itemStateChanged source="+source );
         if (source == originCombo_)  {
-
-            showAvailableShips(Galaxy.getPlanet(originCombo_.getSelectedItem().toString().charAt(0)));
+            showAvailableShips(getOrigin());
         }
     }
 
@@ -178,16 +204,28 @@ public final class OrderDialog extends OptionsDialog
     public Order getOrder()
     {
         // fill it it based on field elements
-        Planet origin = Galaxy.getPlanet(originCombo_.getSelectedItem().toString().charAt(0));
-        Planet destination = Galaxy.getPlanet(destinationCombo_.getSelectedItem().toString().charAt(0));
-        int fleetSize = Integer.parseInt(numShips_.getText());
+        Planet origin = getOrigin();
+        Planet destination = getDestination();
 
-        if (fleetSize > origin.getNumShips()-totalOutgoing_) {
+        int fleetSize = getFleetSize();
+        if (fleetSize > (origin.getNumShips() - getOutgoingShips(origin))) {
             JOptionPane.showMessageDialog(this, GameContext.getLabel("CANT_SEND_MORE_THAN_YOU_HAVE"));
             return null;
         }
         Order order = new Order(origin, destination, fleetSize);
         return order;
+    }
+
+    private Planet getOrigin() {
+        return Galaxy.getPlanet(originCombo_.getSelectedItem().toString().charAt(0));
+    }
+
+    private Planet getDestination() {
+        return Galaxy.getPlanet(destinationCombo_.getSelectedItem().toString().charAt(0));
+    }
+
+    private int getFleetSize() {
+        return Integer.parseInt(numShips_.getText());
     }
 
     /**

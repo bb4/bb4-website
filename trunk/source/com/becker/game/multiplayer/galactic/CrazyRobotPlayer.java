@@ -25,22 +25,22 @@ public class CrazyRobotPlayer extends GalacticRobotPlayer
     /**
      * @return the current list of this Robot's orders.
      */
-    public List makeOrders(Galaxy galaxy)
+    public List makeOrders(Galaxy galaxy, int numYearsRemaining)
     {
         List newOrders = new ArrayList();
 
-        List ownedPlanets = galaxy.getPlanets(this);
+        List ownedPlanets = Galaxy.getPlanets(this);
         Iterator it = ownedPlanets.iterator();
         while (it.hasNext()) {
             Planet origin = (Planet)it.next();
             if (origin.getNumShips()>200)
-                newOrders.addAll(getOrders(origin, 6, 20));
+                newOrders.addAll(getOrders(origin, 6, 20, numYearsRemaining));
             else if (origin.getNumShips()>100)
-                newOrders.addAll(getOrders(origin, 5, 10));
+                newOrders.addAll(getOrders(origin, 5, 10, numYearsRemaining));
             else if (origin.getNumShips()>50)
-                newOrders.addAll(getOrders(origin, 3, 5));
+                newOrders.addAll(getOrders(origin, 3, 5, numYearsRemaining));
             else if (origin.getNumShips()>20)
-                newOrders.addAll(getOrders(origin, 1, 3));
+                newOrders.addAll(getOrders(origin, 1, 3, numYearsRemaining));
             // else do nothing.
         }
         orders_.addAll(newOrders);

@@ -42,7 +42,7 @@ public class GalacticPanel extends GamePanel
         return new GalacticOptionsDialog( parent, controller );
     }
 
-    protected GameInfoPanel createInfoPanel( GameController controller )
+    protected GameInfoPanel createInfoPanel(GameController controller)
     {
         return new GalacticInfoPanel( controller );
     }

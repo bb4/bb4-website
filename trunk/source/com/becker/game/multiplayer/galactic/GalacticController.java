@@ -11,12 +11,25 @@ import java.util.*;
 /**
  * Defines everything the computer needs to know to play Galactic Empire.
  * @@ todo:
+ *  - mousing over menu item should higlight planet in the viewer
  *  - have robot players with different strategies.
- *  - have a pass button, so the player does not have to open, then close the orders dlg.
- *  - have button to show stats dialog (basically same as tally dialog).
+ *  - have button to show stats dialog (basically same as tally dialog) on toolbar.
+ *  - in addition to order dialog should be able to directly click on source, then dest planet,
+ *    then enter number of ships.
  *
  * @@ bugs
- *  -
+ *  - after click on fight, it should change immediately to close.
+ *  - mouse over should still work when entering orders (non-modal?)
+ *  - remove selected source planet from dest list.
+ *  - summary dialog should show number of years.
+ *
+ * fixed:
+ *    don't allow computer or players to send ships to distant planets if they will not arrive before end of the game.
+ *    the number of ships available to send does not change when you change the source planet in orders dlg.
+ *    after a battle the board does not refresh to show the captured planet.
+ *    order dialog should always be in front (modal?)
+ *    highlight the planet where a battle is occurring.
+ *    window not popping up in the right spot.
  *
  * @author Barry Becker
  */
@@ -28,7 +41,7 @@ public class GalacticController extends GameController
 
     private static final int DEFAULT_PLANET_PRODUCTION_RATE = 2;
     private static final int DEFAULT_PLANET_FLEET_SIZE = 10;
-    private static final int DEFAULT_MAX_YEARS = 100;
+    private static final int DEFAULT_MAX_YEARS = 10;
 
     private int planetProductionRate_ = DEFAULT_PLANET_PRODUCTION_RATE;
     private int initialFleetSize_ = DEFAULT_PLANET_FLEET_SIZE;
@@ -112,13 +125,23 @@ public class GalacticController extends GameController
 
     /**
      *
+     * @return the number of years (turns) remaining in the game.
+     */
+    public int getNumberOfYearsRemaining() {
+        Move m = getLastMove();
+        int years = maxYearsToPlay_ - ((m != null)? m.moveNumber : 0) - 2;
+        return years;
+    }
+    /**
+     *
      * @return true if the game is over.
      */
     public boolean done()
     {
         if (getLastMove()==null)
             return false;
-        if (getLastMove().moveNumber >maxYearsToPlay_)
+        // add one so indexed by 1 instead of 0, add 1 because its the "last" move
+        if ((getLastMove().moveNumber + 2) >= maxYearsToPlay_)
             return true; // done
         if (Galaxy.allPlanetsOwnedByOnePlayer())
             return true;
@@ -136,10 +159,11 @@ public class GalacticController extends GameController
 
         // show message when done.
         if (done()) {
-            System.out.println( "done" );
-            //((GameBoardViewer)getViewer()).sendGameChangedEvent(null);
+            //System.out.println( "advanceToNextPlayer done" );
+            ((GameBoardViewer)getViewer()).sendGameChangedEvent(null);
             return 0;
         }
+
 
         int nextIndex = advanceToNextPlayerIndex();
 
@@ -149,7 +173,7 @@ public class GalacticController extends GameController
             // @@ I would really like to
             // Precalculate the battle sequence on the server and store it in the move, then send
             // the result in the move to the client.
-            // however, there are problems with that so I just calcualte it in the veiwer for now.
+            // however, there are problems with that, so I just calculate it in the veiwer for now.
 
             GalacticMove gmove = gviewer.createMove(getLastMove());
             //gviewer.showMove(gmove);
@@ -163,8 +187,7 @@ public class GalacticController extends GameController
         }
 
         // fire game changed event
-        if (!done())
-            ((GameBoardViewer)getViewer()).sendGameChangedEvent(null);
+        ((GameBoardViewer)getViewer()).sendGameChangedEvent(null);
 
         return nextIndex;
     }
@@ -240,7 +263,7 @@ public class GalacticController extends GameController
      */
     public void setPlayers( Player[] players )
     {
-        players_ = players;
+         players_ = players;
     }
 
 
@@ -261,7 +284,7 @@ public class GalacticController extends GameController
      */
     public int getNumPlanets()
     {
-        return ((Galaxy)board_).getNumPlanets();
+        return Galaxy.getNumPlanets();
     }
 
     public void setNumPlanets(int numPlanets)
@@ -363,19 +386,4 @@ public class GalacticController extends GameController
         return false;
     }
 
-    public static void main(String[] args) {
-        Long a1 = new Long(5);
-        Long a2 = new Long(5L);
-
-        if (a1==a2)
-         System.out.println(" equal1");
-        if (a1.hashCode()==a2.hashCode())
-         System.out.println(" equal!!!");
-        if (a1!=a2)
-         System.out.println(" not equal1");
-        if (a1.equals(a2))
-         System.out.println(" equal2");
-
-
-    }
 }

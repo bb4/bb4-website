@@ -12,7 +12,7 @@ import java.awt.event.*;
 
 
 /**
- * Draw the entire game tree using a java tree control.
+ * 
  *
  * @author Barry Becker
  */

@@ -13,7 +13,7 @@ import java.awt.*;
 
 
 /**
- * Shows a list of th eremaining players stats at the end of the game.
+ * Shows a list of th remaining players stats at the end of the game.
  * None of the cells are editable.
  * @see GalacticPlayer
  *

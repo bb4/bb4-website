@@ -19,6 +19,7 @@ public abstract class GalacticRobotPlayer extends GalacticPlayer
     private static final int METHODICAL_ROBOT = 1;
     private static int NUM_ROBOT_TYPES = 2;
 
+
     public GalacticRobotPlayer(String name, Planet homePlanet, Color color)
     {
         super(name, homePlanet, color, false);
@@ -28,7 +29,7 @@ public abstract class GalacticRobotPlayer extends GalacticPlayer
     /**
      * @return the current list of this Robot's orders.
      */
-    public abstract List makeOrders(Galaxy galaxy);
+    public abstract List makeOrders(Galaxy galaxy, int numYearsRemaining);
 
 
     /**
@@ -37,7 +38,7 @@ public abstract class GalacticRobotPlayer extends GalacticPlayer
      * @param numAttacks
      * @return list of orders
      */
-    protected List getOrders(Planet origin, int numAttacks, int numShipsToLeaveBehind)
+    protected List getOrders(Planet origin, int numAttacks, int numShipsToLeaveBehind, int numYearsRemaining)
     {
         List orders = new ArrayList();
 
@@ -54,7 +55,8 @@ public abstract class GalacticRobotPlayer extends GalacticPlayer
         int ct = 0;
         while (it.hasNext() && ct<numAttacks) {
             Planet p = (Planet)it.next();
-            if (p.getOwner()!=origin.getOwner()) {
+
+            if (p.getOwner() != origin.getOwner()) {
                 closestEnemies.add(p);
                 ct++;
             }
@@ -66,9 +68,11 @@ public abstract class GalacticRobotPlayer extends GalacticPlayer
             Planet target = (Planet)it.next();
             Order order = new Order(origin, target, attackFleetSize);
 
-            origin.deductShips(attackFleetSize);
-
-            orders.add(order);
+            // only add the order if there is enough time remaining to reach that planet.
+            if (order.getTimeNeeded() < numYearsRemaining)  {
+                origin.deductShips(attackFleetSize);
+                orders.add(order);
+            }
         }
         return orders;
     }
