@@ -1,11 +1,8 @@
 package com.becker.cache;
 
-
-
 /**
  * Class representing an expiring entry in an LRU cache.
  */
-
 class CacheExpireEntry extends CacheEntry {
     static final int TYPE_LRU_EXPIRE = 2;
 

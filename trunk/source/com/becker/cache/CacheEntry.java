@@ -4,7 +4,6 @@ package com.becker.cache;
 /**
  * Class representing a non-expiring entry in an LRU cache.
  */
-
 class CacheEntry {
     static final int TYPE_LRU = 1;
 
