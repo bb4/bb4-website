@@ -92,19 +92,19 @@ public class MazeSimulator extends JApplet implements ActionListener
         JPanel controlsPanel = new JPanel();
         thicknessField_ = createTextField( Integer.toString( PASSAGE_THICKNESS ) );
         animationSpeedField_ = createTextField( Integer.toString( ANIMATION_SPEED ) );
-        NumberInputPanel thicknessPanel = new NumberInputPanel("Thickness:", thicknessField_, "The passage thickness");
-        NumberInputPanel animationSpeedPanel = new NumberInputPanel("Speed:", animationSpeedField_, "The animation speed (large number is slow).");
+        NumberInputPanel thicknessPanel = new NumberInputPanel("Thickness", thicknessField_, "The passage thickness");
+        NumberInputPanel animationSpeedPanel = new NumberInputPanel("Speed", animationSpeedField_, "The animation speed (large number is slow).");
 
         forwardProbField_ = createTextField( Double.toString( .34 ) );
         leftProbField_ = createTextField( Double.toString( .33 ) );
         rightProbField_ = createTextField( Double.toString( .33 ) );
-        NumberInputPanel forwardProbPanel = new NumberInputPanel("Forward:", forwardProbField_, "The probability of moving straight forward");
-        NumberInputPanel leftProbPanel = new NumberInputPanel("Left:", leftProbField_, "The probability of moving left");
-        NumberInputPanel rightProbPanel = new NumberInputPanel("Right:", rightProbField_, "The probability of moving right");
+        NumberInputPanel forwardProbPanel = new NumberInputPanel("Forward", forwardProbField_, "The probability of moving straight forward");
+        NumberInputPanel leftProbPanel = new NumberInputPanel("Left", leftProbField_, "The probability of moving left");
+        NumberInputPanel rightProbPanel = new NumberInputPanel("Right", rightProbField_, "The probability of moving right");
 
         controlsPanel.add( thicknessPanel );
         controlsPanel.add( animationSpeedPanel );
-        controlsPanel.add( Box.createHorizontalStrut( 20 ) );
+        controlsPanel.add( Box.createHorizontalStrut( 15 ) );
         controlsPanel.add( forwardProbPanel );
         controlsPanel.add( leftProbPanel );
         controlsPanel.add( rightProbPanel );

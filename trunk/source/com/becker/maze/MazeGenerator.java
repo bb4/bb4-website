@@ -12,10 +12,6 @@ import java.util.*;
  *  X axis increases to the left
  *  Y axis increases downwards to be consistent with java graphics
  *
- * todo:
- *   - applet doesn't refresh when resizing in a browser window.
- *   - add a button for animating a solution to the maze.
- *
  *  @author Barry Becker
  */
 public class MazeGenerator extends JComponent
@@ -70,6 +66,7 @@ public class MazeGenerator extends JComponent
     private static final Color VISITED_COLOR = new Color( 255, 255, 255 );
 
     private static final int WALL_LINE_WIDTH = 3;
+    private static final int PATH_LINE_WIDTH = 6;
 
     private Font textFont_ = null;
     //Log logger_ = null;
@@ -96,7 +93,6 @@ public class MazeGenerator extends JComponent
 
         // further refine the cell size so it never exceeds borders
         Dimension d = this.getSize();
-        //System.out.println( "initGen(w=" + w + " h=" + h + ") allocation=(" + xDim_ + ", " + yDim_ + ") origSize=" + cellSize_ + "  xEst=" + d.getWidth() / xDim_ + " yEst=" + d.getHeight() / yDim_ );
         cellSize_ = Math.min( d.getWidth() / (xDim_), d.getHeight() / (yDim_) );
 
         textFont_ = new Font( "Serif", Font.BOLD, 6 + 5000 / (100 + numCells) );
@@ -120,7 +116,7 @@ public class MazeGenerator extends JComponent
         // a border around the whole maze
         setConstraints();
 
-        // randomize these?
+        // randomize this?
         startPosition_ = new Point( 2, 2 );
     }
 
@@ -168,7 +164,6 @@ public class MazeGenerator extends JComponent
     public void generate( int thickness, int animationSpeed, double forwardProb, double leftProb, double rightProb )
     {
         Dimension dim = this.getSize();
-        //System.out.println( "gen: dim.width=" + dim.getWidth() + " dim.height=" + dim.getHeight() + " thickness=" + thickness+" speed="+animationSpeed );
 
         if ( thickness >= (dim.width / 4) || thickness >= (dim.height / 4) )
             thickness = Math.min( (dim.width / 5), (dim.height / 5) );
@@ -191,7 +186,6 @@ public class MazeGenerator extends JComponent
         animationSpeed_ = (double)animationSpeed;
 
         search();
-        //search( startPosition_, new Point(0,0), 0 );
         this.repaint();
     }
 
@@ -201,6 +195,7 @@ public class MazeGenerator extends JComponent
      */
     public void solve(int animationSpeed)
     {
+       animationSpeed_ = animationSpeed;
        solve();
     }
 
@@ -221,7 +216,6 @@ public class MazeGenerator extends JComponent
         pushMoves( currentPosition, new Point( 1, 0 ), 1, stack );
         Point dir = null;
         int depth = 1;
-        Dimension d = this.getSize();
 
         while ( !stack.isEmpty() ) {
             boolean moved = false;
@@ -272,7 +266,7 @@ public class MazeGenerator extends JComponent
 
             // this can be really slow if you do a refresh everytime
             if ( RANDOM.nextDouble() < animationSpeed_ / (xDim_ * yDim_) ) {
-                this.paintImmediately( 0, 0, (int) d.getWidth(), (int) d.getHeight() );
+                paintAll();
             }
 
             // now at a new location
@@ -281,8 +275,9 @@ public class MazeGenerator extends JComponent
         }
     }
 
+
     /**
-     * do a depth first search (without recursion) of the grid space to determine the graph.
+     * do a depth first search (without recursion) of the grid space to determine the solution to the maze.
      * very similar to search above, but now we are solving
      */
     public void solve()
@@ -298,104 +293,100 @@ public class MazeGenerator extends JComponent
         pushMoves( currentPosition, new Point( 1, 0 ), 1, stack );
         Point dir = null;
         int depth = 1;
-        Dimension d = this.getSize();
         boolean solved = false;
+        paintAll();
 
         while ( !stack.isEmpty() && !solved ) {
-            boolean moved = true;
 
-            do {
-                GenState state = (GenState) stack.removeFirst();  // pop
-                /*
-                if (!moved) {
-                    // then we have backtracked, erase the path from where we just came from
-                    if ( dir.x == 1 ) {// east
-                        currentCell.westPath = false;
-                        lastCell.eastPath = false;
-                    }
-                    else if ( dir.y == 1 ) { // south
-                        currentCell.northPath = false;
-                        lastCell.southPath = false;
-                    }
-                    else if ( dir.x == -1 ) {  // west
-                        currentCell.eastPath = false;
-                        lastCell.westPath = false;
-                    }
-                    else if ( dir.y == -1 )  { // north
-                        currentCell.southPath = false;
-                        lastCell.northPath = false;
-                    }
-                } */
+            GenState state = (GenState) stack.removeFirst();  // pop
 
-                currentPosition = state.position;
-                if (currentPosition.equals(stopPosition_))
-                  solved = true;
+            currentPosition = state.position;
+            if (currentPosition.equals(stopPosition_))
+              solved = true;
 
-                dir = state.direction;
-                depth = state.depth;
+            dir = state.direction;
+            depth = state.depth;
+            if ( depth > currentCell.depth )
+                currentCell.depth = depth;
 
-                if ( depth > maxDepth_ ) {
-                    maxDepth_ = depth;
-                    currentPosition_ = currentPosition;
+            lastCell = currentCell;
+            currentCell = grid_[currentPosition.x][currentPosition.y];
+            if (currentCell==null) {
+                System.out.println( " currentPosition="+currentPosition);
+                System.out.println( " grid_["+currentPosition.x+"].length="+grid_[currentPosition.x].length);
+            }
+            currentCell.visited = true;
+
+            Point nextPosition = (Point) currentPosition.clone();
+
+            nextPosition.translate( dir.x, dir.y );
+            MazeCell nextCell = grid_[nextPosition.x][nextPosition.y];
+
+            boolean pathBlocked = (( dir.x ==  1 && currentCell.eastWall ) ||
+                                   ( dir.x == -1 && nextCell.eastWall ) ||
+                                   ( dir.y ==  1 && currentCell.southWall ) ||
+                                   ( dir.y == -1 && nextCell.southWall ) );
+
+            if (!pathBlocked)  {
+                if ( dir.x == 1 ) {// east
+                    currentCell.eastPath = true;
+                    nextCell.westPath = true;
                 }
-                if ( depth > currentCell.depth )
-                    currentCell.depth = depth;
-
-                lastCell = currentCell;
-                currentCell = grid_[currentPosition.x][currentPosition.y];
-                if (currentCell==null) {
-                    System.out.println( " currentPosition="+currentPosition);
-                    System.out.println( " grid_["+currentPosition.x+"].length="+grid_[currentPosition.x].length);
+                else if ( dir.y == 1 ) { // south
+                    currentCell.southPath = true;
+                    nextCell.northPath = true;
                 }
-                currentCell.visited = true;
-
-                Point nextPosition = (Point) currentPosition.clone();
-
-
-                nextPosition.translate( dir.x, dir.y );
-                MazeCell nextCell = grid_[nextPosition.x][nextPosition.y];
-
-                boolean pathBlocked = (( dir.x ==  1 && currentCell.eastWall ) ||
-                                       ( dir.x == -1 && nextCell.eastWall ) ||
-                                       ( dir.y ==  1 && currentCell.southWall ) ||
-                                       ( dir.y == -1 && nextCell.southWall ) );
-
-                if (!pathBlocked)  {
-                    if ( dir.x == 1 ) {// east
-                        currentCell.eastPath = true;
-                        nextCell.westPath = true;
-                    }
-                    else if ( dir.y == 1 ) { // south
-                        currentCell.southPath = true;
-                        nextCell.northPath = true;
-                    }
-                    else if ( dir.x == -1 ) {  // west
-                        currentCell.westPath = true;
-                        nextCell.eastPath = true;
-                    }
-                    else if ( dir.y == -1 )  { // north
-                        currentCell.northPath = true;
-                        nextCell.southPath = true;
-                    }
-
-                    moved = true;
-                    nextCell.visited = true;
-                    currentPosition = nextPosition;
+                else if ( dir.x == -1 ) {  // west
+                    currentCell.westPath = true;
+                    nextCell.eastPath = true;
+                }
+                else if ( dir.y == -1 )  { // north
+                    currentCell.northPath = true;
+                    nextCell.southPath = true;
                 }
 
-            } while ( !moved && !stack.isEmpty() );
+                nextCell.visited = true;
+                currentPosition = nextPosition;
 
-            // this can be really slow if you do a refresh everytime
-            //if ( RANDOM.nextDouble() < 2*animationSpeed_ / (xDim_ * yDim_) ) {
-            this.paintImmediately( 0, 0, (int) d.getWidth(), (int) d.getHeight() );
-            //}
-
-            // now at a new location
-            if ( moved )
+                // now at a new location
                 pushMoves( currentPosition, dir, ++depth, stack );
-        }
 
+                paintCell(currentPosition);
+            }
+        }
+        paintAll();
     }
+
+    /**
+     * paint the whole window
+     */
+    private void paintAll()
+    {
+        Dimension d = this.getSize();
+        this.paintImmediately( 0, 0, (int) d.getWidth(), (int) d.getHeight() );
+    }
+
+    /**
+     * paint just the region around a single cell for performance.
+     * @param pt
+     */
+    private void paintCell(Point pt) {
+        int csized2 = (int)(cellSize_/2.0)+2;
+        int xpos = (int)(pt.getX() * cellSize_);
+        int ypos = (int)(pt.getY() * cellSize_);
+        if (animationSpeed_ > 20)  {
+            // this paints just the cell immediately (sorta slow)
+            this.paintImmediately( xpos-csized2, ypos-csized2, (int)(2.*cellSize_), (int)(2.*cellSize_));
+        }
+        else  {
+            if (RANDOM.nextDouble() < (animationSpeed_/200.))  {
+              paintAll();
+            }
+            else
+              this.repaint(xpos-csized2, ypos-csized2, (int)(2.*cellSize_), (int)(2.*cellSize_));
+        }
+    }
+
 
     /**
      * mark all the cells unvisited.
@@ -536,18 +527,27 @@ public class MazeGenerator extends JComponent
         //Stroke oldStroke = g2.getStroke();
 
         int lineWidth = WALL_LINE_WIDTH;
-        if ( cellSize_ < 20 )
+        int pathWidth = PATH_LINE_WIDTH;
+        if ( cellSize_ < 30 ) {
+            lineWidth = Math.min(3, WALL_LINE_WIDTH);
+            pathWidth = Math.min(4, PATH_LINE_WIDTH);
+        }
+        if ( cellSize_ < 20 ) {
             lineWidth = 2;
-        if ( cellSize_ < 8 )
+            pathWidth = 3;
+        }
+        if ( cellSize_ < 8 ) {
             lineWidth = 1;
+            pathWidth = 1;
+        }
         Stroke wallStroke = new BasicStroke( lineWidth );
-        g2.setStroke( wallStroke );
+        Stroke pathStroke = new BasicStroke( pathWidth );
+
         g2.setFont( textFont_ );
 
         g2.setColor( VISITED_COLOR );
         for ( j = 0; j < yDim_; j++ ) {
             for ( i = 0; i < xDim_; i++ ) {
-                //g.drawLine(OFFSET, ypos+OFFSET, rightEdgePos+OFFSET, ypos+OFFSET);
                 MazeCell c = grid_[i][j];
                 if ( c == null )
                     System.out.println( "Error1 pos i=" + i + " j=" + j + " is out of bounds. xDim=" + xDim_ + " yDim=" + yDim_ );
@@ -562,10 +562,10 @@ public class MazeGenerator extends JComponent
             }
         }
 
+        g2.setStroke( wallStroke );
         g2.setColor( WALL_COLOR );
         for ( j = 0; j < yDim_; j++ ) {
             for ( i = 0; i < xDim_; i++ ) {
-                //g.drawLine(OFFSET, ypos+OFFSET, rightEdgePos+OFFSET, ypos+OFFSET);
                 MazeCell c = grid_[i][j];
                 if ( c == null )
                     System.out.println( "Error2 pos i=" + i + " j=" + j + " is out of bounds. xDim=" + xDim_ + " yDim=" + yDim_ );
@@ -581,6 +581,7 @@ public class MazeGenerator extends JComponent
             }
         }
 
+       g2.setStroke( pathStroke );
        g2.setColor( PATH_COLOR );
        for ( j = 0; j < yDim_; j++ ) {
            for ( i = 0; i < xDim_; i++ ) {

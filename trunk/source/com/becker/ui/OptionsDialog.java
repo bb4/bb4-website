@@ -59,9 +59,13 @@ public abstract class OptionsDialog extends JDialog implements ActionListener
     public boolean showDialog()
     {
         canceled_ = false;
-        this.setVisible(true);
-        //this.setAlwaysOnTop(true);
+        this.setLocationRelativeTo( parent_ );
+        this.pack();
+        //this.setLocationByPlatform(true);
         this.toFront();
+        this.setVisible( true );
+        this.toFront();
+
         return canceled_;
     }
 

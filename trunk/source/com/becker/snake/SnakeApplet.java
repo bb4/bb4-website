@@ -14,7 +14,7 @@ public class SnakeApplet extends JApplet
 
     SnakeSimulator simulator_ = null;
     private ResizableAppletPanel resizablePanel_ = null;
-    private static final boolean RUN_OPTIMIZATION = true;
+    private static final boolean RUN_OPTIMIZATION = false;
 
     /**
      * the applet's init method

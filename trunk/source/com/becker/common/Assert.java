@@ -16,7 +16,7 @@ import java.util.Iterator;
  * An assertion firing is similar to a null pointer exception or index out
  *   of bounds in its severity.
  *
- * @//semi-deprecated use java 1.4 native assert instead so assertions can be turned off.
+ * @//semi-deprecated. use java 1.4 native assert instead so assertions can be turned off.
  * There are still some cases where this can be useful - like when you want the check to happen
  * even though asserts are off.
  */
