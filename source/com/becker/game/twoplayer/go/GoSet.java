@@ -27,7 +27,7 @@ public abstract class GoSet implements GoMember
      * if its not that much weaker then we don't really have an eye.
      * @@ make this a game parameter .9 - 1.8 that can be optimized.
      */
-    public static final float DIFFERENCE_THRESHOLD = .9f;
+    private static final float DIFFERENCE_THRESHOLD = .9f;
 
     /**
      * constructor.

@@ -8,20 +8,22 @@ import java.io.FileOutputStream;
 
 /**
  *
- * User: Barry Becker
- * Date: Oct 15, 2004
- * Time: 8:33:06 AM
- *
  * Instructions for creating an Aikido technique app:
  *   1. fill in the <aikdo_technique>.xml file. Its dtd is hierarchy.dtd.  It assumes one root.
  *   2. Take pictures corresponding to nodes in hierarchy using camcorder.
  *   3. Run this program to generate becker/projects/javascript_projects/aikido_builder/technique_builder.html
  *   4. upload technique_builder.html and corresponding images to website.
+ *
+ * @author Barry Becker
+ * Date: Oct 15, 2004
  */
 public class AikidoAppGenerator {
 
     private static String imgPath_ = null;
     private static final String IMG_SUFFIX = "_s.jpg";
+
+    private static int THUMB_IMG_WIDTH = 170;
+    private static int THUMB_IMG_HEIGHT = 130;
 
     //private static final String RESULT_FILE = "/home/becker/projects/java_projects/dist/technique_builder.html";
     private static final String RESULT_FILE = "/home/becker/projects/javascript_projects/aikido_builder/technique_builder.html";
@@ -38,7 +40,7 @@ public class AikidoAppGenerator {
     }
 
     private static String getScriptOpen() {
-        return "<script>";
+        return "<script language=\"JavaScript\">";
     }
 
     private static String getScriptClose() {
@@ -94,10 +96,11 @@ public class AikidoAppGenerator {
         if (attribMap!=null) {
             for (int i=0; i<attribMap.getLength(); i++) {
                 Node attr = attribMap.item(i);
-                if (attr.getNodeName().equals("id"))
+                if (attr.getNodeName().equals("id")) {
                     id = attr.getNodeValue();
-                else if (attr.getNodeName().equals("img"))
+                    // the id gets reused for the image name
                     img = imgPath_ + attr.getNodeValue() + IMG_SUFFIX;
+                }
                 else if (attr.getNodeName().equals("label"))
                     label = attr.getNodeValue();
             }
@@ -145,12 +148,15 @@ public class AikidoAppGenerator {
                 attributeVal = attr.getNodeValue();
         }
         assert (attributeVal!=null):
-                "no attribute named "+attribName+" for node "+node.getNodeName()+" "+node.getNodeValue();
+                "no attribute named '"+attribName+"' for node '"+node.getNodeName()+"' val="+node.getNodeValue();
         return attributeVal;
     }
 
     private static String getJSMethods() {
 
+        String copyRight = "Author: Barry G Becker\n"
+         + " Copyright 2004\n";
+   
         String getTableMethod = "  function getTable() {\n"
           + "    return document.getElementById(\"techniqueTable\");\n  }\n\n";
 
@@ -189,7 +195,10 @@ public class AikidoAppGenerator {
           + "    }\n\n"
 
           + "    var currentImage = imageRow.childNodes[stepNum].childNodes[0].childNodes[0];\n"
-          + "    currentImage.src = img[selectedVal];\n\n"
+          + "    if (selectedVal == '-----')\n"
+          + "      currentImage.src = 'images/select_s.png';\n"
+          +"     else \n"
+          + "      currentImage.src = img[selectedVal];\n\n"
 
           + "    // add the new select and corresponding image\n"
           + "    var tdSelect = document.createElement(\"td\");\n"
@@ -233,7 +242,9 @@ public class AikidoAppGenerator {
           + "    var imageId = 'step'+(stepNum+1)+'_image';\n"
           + "    newImageAnchor.onmouseover =  function anonymous() { mousedOnThumbnail(imageId); };\n"
           + "    newImage.setAttribute('id', imageId);\n"
-          + "    newImage.setAttribute('src', onlyOneChild?img[nextSelectOptions[0]]:'');\n"
+          + "    newImage.setAttribute('src', onlyOneChild?img[nextSelectOptions[0]]:'images/select_s.png');\n"
+          + "    newImage.setAttribute('width', '"+ THUMB_IMG_WIDTH +"');\n"
+          + "    newImage.setAttribute('height', '"+ THUMB_IMG_HEIGHT +"');\n"
           + "    \n"
           + "    newImage.setAttribute(\"border\", 0);\n"
           + "    newImageAnchor.appendChild(newImage);\n"
@@ -274,13 +285,14 @@ public class AikidoAppGenerator {
           + "Technique Builder</big></big><br>\n"
           + "<br>\n"
           + "Build an aikido technique using successive dropdowns below.<br>\n"
-          + "For simplicity, we currently restrict the attack to katate dori.<br>\n"
-          + "<br>\n\n"
+          + "For simplicity, we currently restrict the attack to katate dori.<br><br>\n"
+          + "<font size='-1'>This application was built using XML, java and DHTML (<a href='technique_builder_desc.html'>more details</a>).</font> "
+          + "<br><br>\n\n"
 
           + "<table id='outerTable' width=\"100%\" border=\"0\">\n"
           + "  <tr>\n"
           + "    <td>\n"
-          + "      <div style=\"width:1070px; overflow: auto;\">\n\n"
+          + "      <div style=\"width:970px; overflow: auto; font-family:arial; font-size:60%;\">\n\n"
 
           + "<table id='techniqueTable' width=\"100%\" border=\"1\">\n"
           + "  <tr>   \n"
@@ -296,7 +308,7 @@ public class AikidoAppGenerator {
           + "  <tr>\n"
           + "    <td nowrap>\n"
           + "      <a onmouseover=\"mousedOnThumbnail('step0_image')\">\n"
-          + "        <img id=\"step0_image\" name=\"step1img\" src=\"images/katate_dori/katate_dori_s.jpg\" border=\"0\">\n"
+          + "        <img id=\"step0_image\" name=\"step1img\" src=\"images/select_s.png\" border=\"0\" width="+THUMB_IMG_WIDTH+" height="+THUMB_IMG_HEIGHT+">\n"
           + "      </a>\n"
           + "    </td>\n"
           + "    <td nowrap width=\"100%\">\n"
@@ -313,7 +325,7 @@ public class AikidoAppGenerator {
           + "  <tr>\n"
           + "    <td>\n"
           + "      <div id=\"bigImgDiv\">\n"
-          + "        <img id=\"big_image\" name=\"step1img\" src=\"images/katate_dori/katate_dori_s.jpg\" border=\"1\">\n"
+          + "        <img id=\"big_image\" name=\"step1img\" src=\"select_m.png\" border=\"1\">\n"
           + "      </div>\n"
           + "    </td>\n"
           + "  </tr>\n"

@@ -2,7 +2,6 @@ package com.becker.game.common.ui;
 
 import com.becker.game.common.*;
 import com.becker.ui.*;
-import com.becker.common.EnumeratedType;
 
 import javax.swing.*;
 import java.awt.*;
@@ -273,16 +272,16 @@ public class GameOptionsDialog extends OptionsDialog implements ActionListener, 
          //label.setAlignmentX( Component.LEFT_ALIGNMENT );
          //p.add( label );
 
-         localeComboBox_ = new JComboBox(); //  GameContext.getLabel("LOCALE")); //, GameContext.getDefaultLocaleName() );
+         localeComboBox_ = new JComboBox(); //  GameContext.getLabel("LOCALE")); //, GameContext.getDefaultLocaleType() );
          localeComboBox_.setToolTipText( GameContext.getLabel("LOCALE_TIP") );
 
          // add the available locales to the dropdown
-         EnumeratedType locales = LocaleType.getAvailableLocales();
-         for (int i=0; i<locales.getNames().length; i++) {
-             String item = GameContext.getLabel(locales.getValue(i).getName());
+         LocaleType[] locales = LocaleType.values();
+         for (int i=0; i<locales.length; i++) {
+             String item = GameContext.getLabel(locales[i].toString());
              localeComboBox_.addItem(item);
          }
-         localeComboBox_.setSelectedItem(GameContext.getDefaultLocaleName());
+         localeComboBox_.setSelectedItem(GameContext.getDefaultLocaleType());
          localeComboBox_.addActionListener( this );
          localeComboBox_.setAlignmentX( Component.LEFT_ALIGNMENT );
          p.add( localeComboBox_,  BorderLayout.NORTH );
@@ -310,8 +309,8 @@ public class GameOptionsDialog extends OptionsDialog implements ActionListener, 
 
         GameContext.setUseSound( soundCheckbox_.isSelected() );
 
-        EnumeratedType locales = LocaleType.getAvailableLocales();
-        GameContext.setLocale((LocaleType)locales.getValue(localeComboBox_.getSelectedIndex()));
+        LocaleType[] locales = LocaleType.values();
+        GameContext.setLocale(locales[localeComboBox_.getSelectedIndex()]);
         this.setVisible( false );
     }
 

@@ -164,8 +164,8 @@ public class MazeGenerator extends JComponent
     public void generate( int thickness, int animationSpeed, double forwardProb, double leftProb, double rightProb )
     {
         Dimension dim = this.getSize();
-        System.out.println("in generate. dim="+dim);
-        if (dim.width <=0) {
+        System.out.println("in generate. dim="+dim+" w="+dim.width+" h="+dim.height);
+        if (dim.width <= 0) {
             dim = new Dimension(500, 300);
             this.setSize(dim);
             System.out.println("in generate. take 2. dim="+dim);

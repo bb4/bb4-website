@@ -94,7 +94,7 @@ public class GoString extends GoSet
         g.remove( string );
 
         Iterator it = string.getMembers().iterator();
-        GoBoardPosition stone = null;
+        GoBoardPosition stone;
         while ( it.hasNext() ) {
             stone = (GoBoardPosition) it.next();
             addMember( stone );

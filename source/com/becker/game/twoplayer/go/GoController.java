@@ -6,12 +6,10 @@ import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.common.Move;
 import com.becker.optimization.ParameterArray;
 
-import javax.swing.*;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 import java.util.List;
-import java.awt.*;
 
 /**
  * Defines everything the computer needs to know to play Go
@@ -458,7 +456,7 @@ public final class GoController extends TwoPlayerController
     protected double worth( Move lastMove, ParameterArray weights )
     {
         int row, col;
-        double worth = 0;
+        double worth;
 
         GoBoard board = (GoBoard)board_;
         worth = weights.get(CAPTURE_WEIGHT_INDEX).value * (getNumCaptures( true ) - getNumCaptures( false ));
@@ -469,8 +467,8 @@ public final class GoController extends TwoPlayerController
         for ( row = 1; row <= board.getNumRows(); row++ ) {    //rows
             for ( col = 1; col <= board.getNumCols(); col++ ) {  //cols
                 GoBoardPosition space = (GoBoardPosition) board.getPosition( row, col );
-                double badShapeScore = 0.0;
-                double posScore = 0.0;
+                double badShapeScore;
+                double posScore;
                 if (space.isInEye())  {
                     if (space.isOccupied())
                         space.scoreContribution = (space.getEye().isOwnedByPlayer1()? 2.0:-2.0);
