@@ -116,13 +116,8 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
     public void reset()
     {
         controller_.reset();  //clear what's there and start over
-        Board board = getBoard(); //controller_.getBoard();
-        int nrows = board.getNumRows();
-        int ncols = board.getNumCols();
-        setSize( new Dimension( 2*BOARD_MARGIN + ncols * getCellSize(),
-                                2*BOARD_MARGIN + nrows * getCellSize() ));
-        setPreferredSize( new Dimension( 2*BOARD_MARGIN + ncols * getDefaultCellSize(),
-                                         2*BOARD_MARGIN + nrows * getDefaultCellSize()) );
+        Board board = getBoard();
+        commonReset(board);
     }
 
     /**
@@ -443,13 +438,14 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
     {
         String message;
         TwoPlayerController c = get2PlayerController();
-        //String winner = "";
+
         boolean p1won = c.getPlayer1().hasWon();
         boolean p2won = c.getPlayer2().hasWon();
 
         if ( !p1won && !p2won )
             message = GameContext.getLabel("TIE_MSG");
         else {
+            assert (!(p1won && p2won)) : "Both players cannot be winners!";
             MessageFormat formatter = new MessageFormat(GameContext.getLabel("WON_MSG"));
             Object[] args = new String[5];
             args[0] = p1won? GameContext.getLabel("YOU") : GameContext.getLabel("THE_COMPUTER");

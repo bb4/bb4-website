@@ -98,6 +98,7 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
     protected void drawMarkers( int nrows, int ncols, Graphics2D g2 )
     {
         GoBoard board = (GoBoard)getBoard();
+        board.confirm();
 
         // draw the starpoint markers
         List starpoints = board.getStarPointPositions();
@@ -121,8 +122,9 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
                 GoGroupRenderer.drawGroupDecoration(group, colormap_, (float) cellSize_, board, g2 );
             }
         }
-
+        board.confirm();
         super.drawMarkers( nrows, ncols, g2 );
+        board.confirm();
         GameContext.log( 3, "drawing groups time=" + (System.currentTimeMillis() - time) );
     }
 
@@ -148,6 +150,7 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
      */
     public void mousePressed( MouseEvent e )
     {
+        this.getBoard().confirm();
         // all derived classes must check this to disable user clicks while the computer is thinking
         if (get2PlayerController().isProcessing())
             return;
@@ -173,7 +176,7 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
             GameContext.log( 0, "GoBoardViewer: There is already a stone there: " + stone );
             return;
         }
-        if ( controller.isTakeBack( m.getToRow(), m.getToCol(), (GoMove) controller.getLastMove(), board ) ) {
+        if ( GoController.isTakeBack( m.getToRow(), m.getToCol(), (GoMove) controller.getLastMove(), board ) ) {
             JOptionPane.showMessageDialog( null, GameContext.getLabel("NO_TAKEBACKS"));
             return;
         }
@@ -210,16 +213,20 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
 
         int blackCaptures = gm.getNumCaptures(true);
         int whiteCaptures = gm.getNumCaptures(false);
-        message += gm.getPlayer1Name() + CAPTURES + blackCaptures +"\n";
-        message += gm.getPlayer2Name() + CAPTURES + whiteCaptures +"\n\n";
+
+        String p1Name = gm.getPlayer1().getName();
+        String p2Name = gm.getPlayer2().getName();
+
+        message += p1Name +" "+ CAPTURES + blackCaptures +"\n";
+        message += p2Name +" "+ CAPTURES + whiteCaptures +"\n\n";
 
         int blackTerritory = gm.getTerritoryEstimate(true);
         int whiteTerritory = gm.getTerritoryEstimate(false);
-        message += gm.getPlayer1Name() + TERRITORY + blackTerritory +"\n";
-        message += gm.getPlayer2Name() + TERRITORY + whiteTerritory +"\n\n";
+        message += p1Name +" "+ TERRITORY + blackTerritory +"\n";
+        message += p2Name +" "+ TERRITORY + whiteTerritory +"\n\n";
 
-        message += gm.getPlayer1Name() + SCORE + gm.getScore(true) +"\n";
-        message += gm.getPlayer2Name() + SCORE + gm.getScore(false) +"\n";
+        message += p1Name +" "+ SCORE + gm.getScore(true) +"\n";
+        message += p2Name +" "+ SCORE + gm.getScore(false) +"\n";
 
         return super.getGameOverMessage() +"\n"+ message;
     }

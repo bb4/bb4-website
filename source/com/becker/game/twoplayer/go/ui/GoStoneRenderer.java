@@ -84,10 +84,11 @@ final class GoStoneRenderer  extends GamePieceRenderer
      */
     public final void render( Graphics2D g2, BoardPosition position, int cellSize)
     {
-        if (GameContext.getDebugMode()>0)  {
+        GoBoardPosition stonePos = (GoBoardPosition)position;
+        if (GameContext.getDebugMode() > 0)  {
             //  as a debugging aid draw the background as a function of the territorial score (-1 : 1)
             double score = ((GoBoardPosition)position).scoreContribution;
-            Color pc = (score >0? PLAYER1_STONE_COLOR : PLAYER2_STONE_COLOR);
+            Color pc = (score > 0? PLAYER1_STONE_COLOR : PLAYER2_STONE_COLOR);
             Color c = new Color(pc.getRed(), pc.getGreen(), pc.getBlue(), (int)((127 * Math.abs(score))));
             g2.setColor(c);
             g2.fillRect(TwoPlayerBoardViewer.BOARD_MARGIN + cellSize*(position.getCol()-1),
@@ -101,6 +102,9 @@ final class GoStoneRenderer  extends GamePieceRenderer
         int pieceSize = getPieceSize(cellSize, stone);
         Point pos = getPosition(position, cellSize, pieceSize);
         g2.drawImage(getImage(stone), pos.x, pos.y, pieceSize, pieceSize , null);
+        //if (stonePos.isInAtari()) {
+        //    g2.drawOval(pos.x, pos.y, 2, 2);
+        //}
     }
 
 }

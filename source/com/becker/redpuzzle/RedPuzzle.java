@@ -148,5 +148,6 @@ public final class RedPuzzle extends JApplet
 
         // this will call applet.init() and start() methods instead of the browser
         baseFrame_ = GUIUtil.showApplet( applet, "Red Puzzle Solver" );
+
     }
 }

@@ -2,7 +2,7 @@ package com.becker.ui;
 
 import com.becker.common.ClassLoaderSingleton;
 import com.becker.common.Util;
-import com.oyoaha.swing.plaf.oyoaha.OyoahaLookAndFeel;
+//import com.oyoaha.swing.plaf.oyoaha.OyoahaLookAndFeel;
 
 import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
@@ -196,7 +196,8 @@ public final class GUIUtil
             //UIManager.setLookAndFeel( new it.unitn.ing.swing.plaf.macos.MacOSLookAndFeel() );
 
             // turn on auditory cues.
-            UIManager.put("AuditoryCues.playList", UIManager.get("AuditoryCues.allAuditoryCues"));
+            // @@ can't do this under linux until I upgrade java or get the right soundcard driver.
+            ////UIManager.put("AuditoryCues.playList", UIManager.get("AuditoryCues.allAuditoryCues"));
 
             setUIManagerProperties( hmUIProps_ );
         } catch (Exception e) {
@@ -239,7 +240,7 @@ public final class GUIUtil
      * get the image icon given the full path to the image.
      */
     public static ImageIcon getIcon(String sPath) {
-        ImageIcon icon = null;
+        ImageIcon icon;
         //System.out.println( "loading "+sPath );
         if (isStandAlone_)   {
              icon = new ImageIcon( ClassLoaderSingleton.getClassLoader().getResource(sPath));
@@ -281,7 +282,7 @@ public final class GUIUtil
     {
         // show a splash screen initially (if we are running through web start)
         // so the user knows something is happenning
-        ImageIcon splash = null;
+        ImageIcon splash;
         URL url = ClassLoaderSingleton.getClassLoader().getResource("config/images/splash.gif");
         if (url==null) // then use a default
             splash = new ImageIcon( new BufferedImage( 300, 300, BufferedImage.TYPE_INT_RGB ) );
@@ -322,14 +323,14 @@ public final class GUIUtil
         int width = (int) Math.min(height*1.5, d.getWidth() / 2);
         baseFrame.setSize( width, height);
 
+        baseFrame.setVisible( true );
+
         // call the applet's init method
         applet.init();
 
         // call the applet's start method
         //baseFrame.setVisible( true );
-        applet.start();
-
-        baseFrame.setVisible( true );
+        applet.start();       
         return baseFrame;
     }
 
@@ -347,7 +348,7 @@ public final class GUIUtil
         if (sColor==null || sColor.length()<6 || sColor.length()>8)
             return defaultColor;
 
-        long intColor = 0;
+        long intColor;
         try {
             intColor = Long.decode("0x"+sColor).longValue();
         }

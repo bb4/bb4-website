@@ -6,9 +6,12 @@ import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.common.Move;
 import com.becker.optimization.ParameterArray;
 
+import javax.swing.*;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
+import java.util.List;
+import java.awt.*;
 
 /**
  * Defines everything the computer needs to know to play Go
@@ -43,9 +46,10 @@ import java.util.*;
  * bugs
  *  - pause/continue not working in tree dialog.
  *  - at end of game, computer plays in its own eyes instead of passing.
- *  - When the computer plays in your eye the eye goes away. It should not.
+ *  - When the computer plays in your eye, the eye goes away. It should not.
  *
  ** common algorithm improvements
+ *    - cache isInAtari for better performance
  *    - dont ever play in a way that eliminates a true eye.
  *    - Computer should pass when appropriate. (not currently working)
  *    - accurate scoring when the game is over (score what it can, and allow for player dispute of score).
@@ -236,15 +240,18 @@ public final class GoController extends TwoPlayerController
 
     }
 
-    public String getPlayer1Name()
+    /**
+     * @param p1
+     * @return player 1's name if p1 is true else p2's name
+     */
+    protected String getPlayerName(boolean p1)
     {
-        return GameContext.getLabel("BLACK");
+        if (p1)
+            return GameContext.getLabel("BLACK");
+        else
+            return GameContext.getLabel("WHITE");
     }
 
-    public String getPlayer2Name()
-    {
-        return GameContext.getLabel("WHITE");
-    }
 
     /**
      * @return true if the computer is to make the first move.
@@ -670,6 +677,9 @@ public final class GoController extends TwoPlayerController
         }
 
         if (gameOver && recordWin) {
+            //we should not call tis twice
+            assert(numDeadBlackStonesOnBoard_==0 && numDeadWhiteStonesOnBoard_==0):" should not update life and death twice.";
+
             // now that we are finally at the end of the game,
             // update the life and death of all the stones still on the board
             GameContext.log(1,  "about to update life and death." );
@@ -695,17 +705,28 @@ public final class GoController extends TwoPlayerController
    /**
     * Update the final life and death status of all the stones still on the board.
     * This method must only be called at the end of the game or stones will get prematurely get marked as dead.
+    * @@ should do in 2 passes. The first can update the health of groups and perhaps remove obviously dead stones.
     */
     public final void updateLifeAndDeath()
     {
-        // should assert that this is the end of the game (how to do it? the last 2 moves should be passes)
-        for ( int row = 1; row <= board_.getNumRows(); row++ ) {    //rows
+       // the last 2 moves were passes so we need to get the third to last move.
+       List moves = this.getMoveSequence();
+       if (moves.size() > 3) {
+           JOptionPane.showConfirmDialog((Component)viewer_, "before udpate territory");
+           GoMove lastMove = (GoMove)moves.get(moves.size()-3);
+           GoBoardPosition lastStone = (GoBoardPosition)board_.getPosition(lastMove.getToRow(), lastMove.getToCol());
+           ((GoBoard)board_).updateTerritory(lastStone, lastMove.moveNumber);
+           JOptionPane.showConfirmDialog((Component)viewer_, "udpated territory");
+       }
+
+       // should assert that this is the end of the game (how to do it? the last 2 moves should be passes)
+       for ( int row = 1; row <= board_.getNumRows(); row++ ) {    //rows
             for ( int col = 1; col <= board_.getNumCols(); col++ ) {  //cols
                 GoBoardPosition space = (GoBoardPosition)board_.getPosition( row, col );
                 if (space.isOccupied())  {
                     GoStone stone = (GoStone)space.getPiece();
                     int side = (stone.isOwnedByPlayer1() ? 1:-1);
-                    GameContext.log(0, "life & death: "+space+" health="+stone.getHealth()
+                    GameContext.log(1, "life & death: "+space+" health="+stone.getHealth()
                             +" string health=" +space.getGroup().getRelativeHealth());
                     if (side*stone.getHealth() < LIFE_THRESHOLD)  {
                         // then the stone is more dead than alive, so mark it so

@@ -38,7 +38,7 @@ final class GoGroupRenderer
      */
     private static Area calcGroupBorder( List groupStones, float cellSize, GoBoard board )
     {
-        if (groupStones==null || groupStones.isEmpty())
+        if (groupStones == null || groupStones.isEmpty())
           return null;  // nothing to draw an area for.
 
         GoBoardPosition firstStone = (GoBoardPosition) groupStones.get( 0 );
@@ -56,6 +56,7 @@ final class GoGroupRenderer
         // which does not allow dupes.
         ArrayList q = new ArrayList();
         HashSet qset = new HashSet();
+        List visitedSet = new ArrayList();
         q.add( firstStone );
         qset.add( firstStone );
         Area area = new Area();
@@ -64,6 +65,7 @@ final class GoGroupRenderer
             GoBoardPosition stone = (GoBoardPosition) q.remove( 0 );
             qset.remove( stone );
             stone.setVisited( true );
+            visitedSet.add(stone);
             HashSet nbrs = board.getGroupNeighbors( stone, true );
             Iterator it = nbrs.iterator();
             while ( it.hasNext() ) {
@@ -73,12 +75,13 @@ final class GoGroupRenderer
                 if ( !nbrStone.isVisited() && !qset.contains( nbrStone ) ) {
                     q.add( nbrStone );
                     qset.add( nbrStone );
-
                 }
             }
         }
         // mark all the stones in the group unvisited again.
-        GoBoardUtil.unvisitPositionsInList( groupStones );
+        if (visitedSet.size() != groupStones.size())
+            System.out.println(visitedSet.size() +"!="+ groupStones.size());
+        GoBoardUtil.unvisitPositionsInList( visitedSet );
         return area;
     }
 
@@ -319,9 +322,11 @@ final class GoGroupRenderer
             if (!group.isOwnedByPlayer1())
                 h = -h;
 
+            board.confirm();
             cachedBorderArea = GoGroupRenderer.calcGroupBorder( group.getStones(), cellSize, board );
             cachedBorderColor = colormap.getColorForValue( h );
             cachedCellSize = new Float(cellSize);
+            board.confirm();
 
             // cache these new values (until something changes again)
             hmBorderAreaCache_.put(group, cachedBorderArea);

@@ -241,16 +241,7 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
             showEditWeightsDialog( gameWeights_.getPlayer2Weights() );
         }
         else if ( source == openFileButton_ ) {
-            if (GUIUtil.isStandAlone())  {
-               JOptionPane.showMessageDialog(this, GameContext.getLabel("CANT_OPEN_WHEN_STANDALONE"));
-            } else {
-                JFileChooser chooser = GUIUtil.getFileChooser();
-                chooser.setCurrentDirectory( new File( HOME_DIR ) );
-                int state = chooser.showOpenDialog( null );
-                File file = chooser.getSelectedFile();
-                if ( file != null && state == JFileChooser.APPROVE_OPTION )
-                    openFileField_.setText( file.getAbsolutePath() );
-            }
+            openFile();
         }
         else if (source == optimizationCheckbox_) {
             boolean checked = optimizationCheckbox_.isSelected();
