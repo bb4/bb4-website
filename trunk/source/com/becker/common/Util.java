@@ -159,7 +159,7 @@ public final class Util
     }
 
     /**
-     * get string form of a generic set of objects(like a set or list).
+     * get string form of a generic set of objects (like a set or list).
      * @param c the set to print.
      */
     public static final String stringify(Collection c)

@@ -90,7 +90,7 @@ public final class NegaMaxStrategy extends SearchStrategy
 
             controller_.undoInternalMove( theMove );
 
-            if (selectedMove==null) {
+            if (selectedMove == null) {
                 // if this happens it means there isn't any possible move beyond theMove.
                 continue;
             }
@@ -182,8 +182,10 @@ public final class NegaMaxStrategy extends SearchStrategy
                 }
             }
         }
-        bestMove.selected = true;
-        lastMove.inheritedValue = -bestMove.inheritedValue;
+        if (bestMove != null) {
+            bestMove.selected = true;
+            lastMove.inheritedValue = -bestMove.inheritedValue;
+        }
         return bestMove;
     }
 

@@ -24,11 +24,6 @@ public abstract class NewGameDialog extends OptionsDialog implements ActionListe
     // contains the two tabls : options for creating a new game, or loading a saved game
     protected final JTabbedPane tabbedPanel_ = new JTabbedPane();
 
-    protected static final String HOME_DIR;
-    static {
-       HOME_DIR = GUIUtil.isStandAlone()?"":System.getProperty("user.home");
-    }
-
     protected JPanel playerPanel_ = null;
     protected JPanel boardParamPanel_ = null;
     protected JPanel customPanel_ = null;
@@ -56,7 +51,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ActionListe
         viewer_ = viewer;
     }
 
-     protected void initUI()
+    protected void initUI()
     {
         setResizable( true );
         mainPanel_.setLayout( new BorderLayout() );
@@ -207,7 +202,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ActionListe
         //restore the saved file if one was specified
         String fileToOpen = openFileField_.getText();
         if ( fileToOpen != null && fileToOpen.length() > 1 ) {
-            viewer_.openFile( fileToOpen );
+            controller_.restoreFromFile( fileToOpen );
             canceled_ = true;
         }
         else
@@ -221,7 +216,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ActionListe
              JOptionPane.showMessageDialog(this, GameContext.getLabel("CANT_OPEN_WHEN_STANDALONE"));
        } else {
             JFileChooser chooser = GUIUtil.getFileChooser();
-            chooser.setCurrentDirectory( new File( HOME_DIR ) );
+            chooser.setCurrentDirectory( new File( GameContext.getHomeDir()) );
             int state = chooser.showOpenDialog( null );
             File file = chooser.getSelectedFile();
             if ( file != null && state == JFileChooser.APPROVE_OPTION )

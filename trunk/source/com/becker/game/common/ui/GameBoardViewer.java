@@ -1,8 +1,5 @@
 package com.becker.game.common.ui;
 
-import ca.dj.jigo.sgf.*;
-import ca.dj.jigo.sgf.tokens.MoveToken;
-import ca.dj.jigo.sgf.tokens.SGFToken;
 import com.becker.game.common.*;
 import com.becker.game.common.Move;
 import com.becker.ui.GUIUtil;
@@ -130,23 +127,43 @@ public abstract class GameBoardViewer
     }
 
     /**
-     * restore a game from a previously saved file (in SGF = Smaprt Game Format)
+     * restore a game from a previously saved file (in SGF = Smart Game Format)
      * Derived classes should implement the details of the open
-     * @param fileName name of the file to open
      */
-    public void openFile( String fileName )
+    public void openGame()
     {
-        GameContext.log( 2, " about to open " + fileName );
-        File f = new File( fileName );
-        if ( !f.exists() ) {
-            MessageFormat formatter = new MessageFormat(GameContext.getLabel("MISSING_FILE"));
-            JOptionPane.showMessageDialog( this,
-                    formatter.format(fileName), //MessageFormat.format(GameContext.getLabel("MISSING_FILE"), fileName), 
-                    GameContext.getLabel("WARNING"),
-                    JOptionPane.WARNING_MESSAGE );
+        JFileChooser chooser = GUIUtil.getFileChooser();
+        chooser.setCurrentDirectory( new File( GameContext.getHomeDir() ) );
+        int state = chooser.showOpenDialog( null );
+        File file = chooser.getSelectedFile();
+        if ( file != null && state == JFileChooser.APPROVE_OPTION )  {
+            controller_.restoreFromFile(file.getAbsolutePath());
+            refresh();
         }
-
     }
+
+    /**
+     * save the current game to the specified file (in SGF = Smart Game Format)
+     * Derived classes should implement the details of the save
+     */
+    public void saveGame( AssertionError ae )
+    {
+        JFileChooser chooser = GUIUtil.getFileChooser();
+        chooser.setCurrentDirectory( new File( GameContext.getHomeDir() ) );
+        int state = chooser.showSaveDialog( null );
+        File file = chooser.getSelectedFile();
+        if ( file != null && state == JFileChooser.APPROVE_OPTION )
+            controller_.saveToFile( file.getAbsolutePath(), ae );
+    }
+
+    /**
+     * save the current game to the specified file (in SGF = Smart Game Format)
+     */
+    public void saveGame()
+    {
+       saveGame(null);
+    }
+
 
     protected Color getDefaultGridColor()
     {
@@ -173,64 +190,6 @@ public abstract class GameBoardViewer
         Graphics g = this.getGraphics();
         if (g!=null)
             this.paint(g);
-    }
-
-    /**
-     * This will retore a game from an SGF structure
-     */
-    protected void restoreGame( SGFGame game )
-    {
-        java.util.List moveSequence = new LinkedList();
-        extractMoveList( game.getTree(), moveSequence );
-        GameContext.log( 2, "move sequence= " + moveSequence );
-        //showMoveSequence( moveSequence );
-
-        Iterator it = moveSequence.iterator();
-        while ( it.hasNext() ) {
-            Move m = (Move) it.next();
-            controller_.makeMove( m );
-            sendGameChangedEvent( m );
-            refresh();
-        }
-    }
-
-    /**
-     * create a Move from an SGF token.
-     */
-    protected abstract Move createMoveFromToken( MoveToken token, int moveNum );
-
-    /**
-     * Given an SGFTree and a place to store the moves of a game, this
-     * method weeds out all the moves from the given SGFTree into a single
-     * Vector of moves.  Variations are discarded.
-     *
-     * @param tree - The SGFTree containing an SGF variation tree.
-     * @param moveList - The place to store the moves for the game's main
-     * variation.
-     */
-    private void extractMoveList( SGFTree tree, java.util.List moveList )
-    {
-        Enumeration trees = tree.getTrees(), leaves = tree.getLeaves(), tokens;
-
-        while ( (leaves != null) && leaves.hasMoreElements() ) {
-            SGFToken token;
-            tokens = ((SGFLeaf) (leaves.nextElement())).getTokens();
-            boolean found = false;
-
-            // While a move token hasn't been found, and there are more tokens to
-            // examine ... try and find a move token in this tree's leaves to add
-            // to the collective of moves (moveList).
-            while ( (tokens != null) && tokens.hasMoreElements() && !found ) {
-                if ( (token = (SGFToken) (tokens.nextElement())) instanceof MoveToken ) {
-                    moveList.add( createMoveFromToken( (MoveToken) token, moveList.size() ) );
-                    found = true;
-                }
-            }
-        }
-        // If there are variations, use the first variation, which is
-        // the entire game, without extraneous variations.
-        if ( (trees != null) && trees.hasMoreElements() )
-            extractMoveList( (SGFTree) (trees.nextElement()), moveList );
     }
 
 
@@ -580,12 +539,7 @@ public abstract class GameBoardViewer
         ae.printStackTrace();
         // make sure the state of the game at the point of the error is displayed.
         this.refresh();
-        JFileChooser chooser = GUIUtil.getFileChooser();
-        chooser.setCurrentDirectory( new File( GameContext.getHomeDir() ) );
-        int state = chooser.showSaveDialog( null );
-        File file = chooser.getSelectedFile();
-        if ( file != null && state == JFileChooser.APPROVE_OPTION )
-            controller_.saveToFile( file.getAbsolutePath(), ae );
+        saveGame();
     }
 
     /**

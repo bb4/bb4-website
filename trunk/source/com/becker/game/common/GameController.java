@@ -4,6 +4,12 @@ import com.becker.common.Util;
 
 import java.util.*;
 
+import ca.dj.jigo.sgf.SGFGame;
+import ca.dj.jigo.sgf.SGFTree;
+import ca.dj.jigo.sgf.SGFLeaf;
+import ca.dj.jigo.sgf.tokens.MoveToken;
+import ca.dj.jigo.sgf.tokens.SGFToken;
+
 /**
  * This is an abstract base class for a Game Controller.
  * It contains the key logic for n player games.
@@ -68,6 +74,7 @@ public abstract class GameController
     {
         return viewer_;
     }
+    
 
     /**
      * If called before the end of the game it just reutrns 0 - same as it does in the case of a tie.
@@ -200,6 +207,82 @@ public abstract class GameController
     }
 
     /**
+     * save the current state of the game to a file.
+     * You must override if you want it to work.
+     */
+    public void saveToFile( String fileName )
+    {
+        GameContext.log(0,  "Error: saveToFile("+fileName+") not implemented yet" );
+    }
+
+    public void restoreFromFile( String fileName)
+    {
+        GameContext.log(0,  "Error: restoreFromFile("+fileName+") not implemented yet" );
+    }
+
+
+    /**
+     * This will retore a game from an SGF structure
+     */
+    protected void restoreGame( SGFGame game )
+    {
+        java.util.List moveSequence = new LinkedList();
+        extractMoveList( game.getTree(), moveSequence );
+        GameContext.log( 2, "move sequence= " + moveSequence );
+        //showMoveSequence( moveSequence );
+        this.reset();
+
+        Iterator it = moveSequence.iterator();
+        while ( it.hasNext() ) {
+            Move m = (Move) it.next();
+            makeMove( m );
+            //sendGameChangedEvent( m );
+            //refresh();
+        }
+    }
+
+
+    /**
+     * create a Move from an SGF token.
+     */
+    protected abstract Move createMoveFromToken( MoveToken token, int moveNum );
+
+    /**
+     * Given an SGFTree and a place to store the moves of a game, this
+     * method weeds out all the moves from the given SGFTree into a single
+     * Vector of moves.  Variations are discarded.
+     *
+     * @param tree - The SGFTree containing an SGF variation tree.
+     * @param moveList - The place to store the moves for the game's main
+     * variation.
+     */
+    private void extractMoveList( SGFTree tree, java.util.List moveList )
+    {
+        Enumeration trees = tree.getTrees(), leaves = tree.getLeaves(), tokens;
+
+        while ( (leaves != null) && leaves.hasMoreElements() ) {
+            SGFToken token;
+            tokens = ((SGFLeaf) (leaves.nextElement())).getTokens();
+            boolean found = false;
+
+            // While a move token hasn't been found, and there are more tokens to
+            // examine ... try and find a move token in this tree's leaves to add
+            // to the collective of moves (moveList).
+            while ( (tokens != null) && tokens.hasMoreElements() && !found ) {
+                if ( (token = (SGFToken) (tokens.nextElement())) instanceof MoveToken ) {
+                    moveList.add( createMoveFromToken( (MoveToken) token, moveList.size()+1 ) );
+                    found = true;
+                }
+            }
+        }
+        // If there are variations, use the first variation, which is
+        // the entire game, without extraneous variations.
+        if ( (trees != null) && trees.hasMoreElements() )
+            extractMoveList( (SGFTree) (trees.nextElement()), moveList );
+    }
+
+
+    /**
      *
      * @return an array of the players playing the game (in the order that they move).
      */
@@ -246,12 +329,4 @@ public abstract class GameController
        return true;
     }
 
-    /**
-     * save the current state of the game to a file.
-     * You must override if you want it to work.
-     */
-    public static void saveToFile( String fileName )
-    {
-        GameContext.log(0,  "Error: saveToFile("+fileName+") not implemented yet" );
-    }
 }

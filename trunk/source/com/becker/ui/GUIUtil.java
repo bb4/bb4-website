@@ -37,7 +37,7 @@ public final class GUIUtil
     // don't create this here or applets using this class will have a security exception
     // instead we create a singleton when needed.
     private static JFileChooser fileChooser_ = null;
-
+   
 
     // default font and color for the UI
     public static final Font UI_FONT = new Font( "Sans Serif", Font.PLAIN, 10 );      // standard
@@ -55,6 +55,7 @@ public final class GUIUtil
     public static final Color UI_COLOR_SECONDARY3 = new Color(224, 224, 245); //( 204, 204, 255 );  // almost all backgrounds, active tabs.
 
     public static final Color UI_BUTTON_BACKGROUND = new Color( 204, 204, 255 ); // button backgrounds
+
     /*
     // Cyan color theme
     public static final Color UI_BLACK = new Color( 0, 0, 0 );

@@ -1,6 +1,5 @@
 package com.becker.game.twoplayer.go.ui;
 
-import ca.dj.jigo.sgf.*;
 import ca.dj.jigo.sgf.tokens.MoveToken;
 import com.becker.common.ColorMap;
 import com.becker.game.common.*;
@@ -12,7 +11,6 @@ import com.becker.ui.GUIUtil;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.io.*;
 import java.util.*;
 import java.util.List;
 
@@ -66,31 +64,6 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
         return 16;
     }
 
-    /**
-     * restore a game from a previously saved file (in SGF = Smart Game Format)
-     */
-    public void openFile( String fileName )
-    {
-        super.openFile( fileName );
-        try {
-            FileInputStream iStream = new FileInputStream( fileName );
-            GameContext.log( 2, "opening " + fileName );
-            SGFGame game = SGFLoader.load( iStream );
-            restoreGame( game );
-        } catch (FileNotFoundException fnfe) {
-            JOptionPane.showMessageDialog( null, "file " + fileName + " was not found" );
-        } catch (IOException ioe) {
-            JOptionPane.showMessageDialog( null, "IOException occurrred while reading " + fileName + " :" + ioe.getMessage() );
-        } catch (SGFException sgfe) {
-            JOptionPane.showMessageDialog( null, "file " + fileName + " had an SGF error while loading: " + sgfe.getMessage() );
-            sgfe.printStackTrace();
-        }
-    }
-
-    protected Move createMoveFromToken( MoveToken token, int moveNum )
-    {
-        return new GoMove( token.getY(), token.getX(), null, 0, moveNum, new GoStone(!token.isWhite()));
-    }
 
     /**
      * first draw borders for the groups in the appropriate color, then draw the pieces for both players.
