@@ -54,8 +54,12 @@ public final class RaiseDialog extends OptionsDialog
         setResizable( true );
         mainPanel_ =  new JPanel();
         mainPanel_.setLayout( new BorderLayout() );
-        mainPanel_.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(10,10,10,10),
-                                                                BorderFactory.createEtchedBorder()));
+
+        JPanel primaryPanel = new JPanel();
+        primaryPanel.setLayout( new BorderLayout() );
+
+        primaryPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEtchedBorder(),
+                                                                   BorderFactory.createEmptyBorder(10,10,10,10)));
 
         JPanel buttonsPanel = createButtonsPanel();
 
@@ -74,14 +78,17 @@ public final class RaiseDialog extends OptionsDialog
         if (player_.getCash() > allInAmount_ && allInAmount_ < maxRaiseAllowed_) {
             JLabel instr3 = new JLabel("If you want, you can \"all in\" one of the players by raising $"+(allInAmount_ - callAmount_));
             instructionsPanel.add(instr3, BorderLayout.SOUTH);
+        }
+        if (callAmount_ > 0) {
             raiseInput = new NumberInputPanel(GameContext.getLabel("AMOUNT_TO_RAISE1"), raiseAmount_);
-        }  else {
+        }
+        else {
             raiseInput = new NumberInputPanel(GameContext.getLabel("AMOUNT_TO_RAISE2"), raiseAmount_);
         }
 
-
-        mainPanel_.add(instructionsPanel, BorderLayout.NORTH);
-        mainPanel_.add(raiseInput, BorderLayout.CENTER);
+        primaryPanel.add(instructionsPanel, BorderLayout.NORTH);
+        primaryPanel.add(raiseInput, BorderLayout.CENTER);
+        mainPanel_.add(primaryPanel, BorderLayout.CENTER);
         mainPanel_.add(buttonsPanel, BorderLayout.SOUTH);
 
         getContentPane().add( mainPanel_ );
@@ -125,6 +132,9 @@ public final class RaiseDialog extends OptionsDialog
             if (contrib > player_.getCash()) {
                 JOptionPane.showMessageDialog(this, "You cannot raise by more money than you have!");
             }
+            else if ((maxRaiseAllowed_ < allInAmount_) && (getRaiseAmount() > maxRaiseAllowed_))  {
+               JOptionPane.showMessageDialog(this, "The maximum raise allowed is $"+maxRaiseAllowed_+". You cannot raise by more than that.");
+            }
             else if (contrib > allInAmount_) {
                 JOptionPane.showMessageDialog(this, "You cannot raise by more money than the poorest player.");
             }
@@ -149,7 +159,10 @@ public final class RaiseDialog extends OptionsDialog
      */
     public int getRaiseAmount()
     {
-         return Integer.parseInt(raiseAmount_.getText());
+        String sNum = raiseAmount_.getText();
+        if (sNum == null || sNum.equals(""))
+            return 0;
+        return Integer.parseInt(sNum);
     }
 
 }

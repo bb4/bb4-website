@@ -3,7 +3,6 @@ package com.becker.game.multiplayer.poker;
 import com.becker.game.common.*;
 import com.becker.game.common.Move;
 import com.becker.game.multiplayer.poker.ui.PokerGameViewer;
-import com.becker.game.multiplayer.poker.ui.RoundOverDialog;
 import com.becker.game.card.Card;
 import com.becker.optimization.ParameterArray;
 
@@ -31,6 +30,10 @@ import java.awt.*;
  *      - give option to start another round with same players
  *      - unless really done then you can only exit
  *
+ *  bugs
+ *     - the all in amount is not always right. sometimes says negative
+ *       this is because it should only inlcude the callAmount if the player has not aleady gone
+ *     - reduce player radii
  *  possible bugs
  *    - ante getting subtracted twice
  *    - first player always going first (should rotate)
@@ -54,7 +57,10 @@ public class PokerController extends GameController
     private int ante_ = DEFAULT_ANTE;
     private int maxAbsoluteRaise_ = DEFAULT_MAX_ABS_RAISE;
     private int pot_;
+    // there is a different starting player each round
     private int startingPlayerIndex_ = 0;
+    // the ith play in a given round
+    private int playIndex_ = 0;
 
     /**
      *  Construct the Poker game controller
@@ -88,6 +94,10 @@ public class PokerController extends GameController
     protected void initializeData()
     {
         pot_ = 0;
+        startingPlayerIndex_ = 0;
+        playIndex_ = 0;
+        currentPlayerIndex_ = 0;
+
         initPlayers();
         ((PokerTable)board_).initPlayers((PokerPlayer[])players_, this);
     }
@@ -112,7 +122,6 @@ public class PokerController extends GameController
 
         }
 
-        System.out.println(" init players dealcards");
         dealCardsToPlayers(5);
         currentPlayerIndex_ = 0;
     }
@@ -131,7 +140,7 @@ public class PokerController extends GameController
             }
             PokerPlayer player = ((PokerPlayer)players_[i]);
             player.setHand(new PokerHand(deck, numCardsToDealToEachPlayer));
-            player.setOutOfGame(false);
+            player.resetPlayerForNewRound();
         }
     }
 
@@ -144,11 +153,8 @@ public class PokerController extends GameController
             for (int i=0; i<players_.length; i++)  {
                 PokerPlayer player = ((PokerPlayer)players_[i]);
                 // if a player does not have enough money to ante up, he is out of the game
-                if (player.getCash() < getAnte())  {
-                    player.setOutOfGame(true);
-                } else {
-                    player.contributeToPot(this, getAnte());
-                }
+                player.contributeToPot(this, getAnte());
+
             }
         }
     }
@@ -237,17 +243,17 @@ public class PokerController extends GameController
      */
     public boolean done()
     {
-        if (getLastMove()==null)
+        if (getLastMove() == null)
             return false;
 
-
         Player[] players = getPlayers();
+        int numPlayersStillPlaying = 0;
         for (int i=0; i<players.length; i++) {
             PokerPlayer p = (PokerPlayer)players[i];
             if (!p.isOutOfGame())
-                return false;
+                numPlayersStillPlaying++;
         }
-        return true;
+        return (numPlayersStillPlaying == 1);
     }
 
 
@@ -262,7 +268,6 @@ public class PokerController extends GameController
 
         // show message when done.
         if (done()) {
-            System.out.println( "advanceToNextPlayer done" );
             pviewer.sendGameChangedEvent(null);
             return 0;
         }
@@ -291,6 +296,57 @@ public class PokerController extends GameController
     }
 
 
+    /**
+     * the round is over if there is only one player left who has not folded, or
+     * everyone has had a chance to call.
+     * @return true of the round is over
+     */
+    private boolean roundOver() {
+        PokerPlayer[] players = (PokerPlayer[])getPlayers();
+
+        if (allButOneFolded())  {
+            return true;
+        }
+
+        // special case of no one raising
+        int contrib = this.getCurrentMaxContribution();
+
+        for (int i=0; i<players.length; i++) {
+            PokerPlayer p = players[i];
+            if (!p.hasFolded()) {
+                if (p.getContribution() != contrib) {
+                    return false;
+                }
+            }
+        }
+
+        if ((playIndex_ < getNumNonFoldedPlayers()) ) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+      * @return  number of active players.
+      */
+     public int getNumNonFoldedPlayers()
+     {
+        // a player is not counted as active if he is "out of the game".
+        Player[] players = getPlayers();
+        int count = 0;
+        for (int i=0; i< players.length; i++) {
+            PokerPlayer p = (PokerPlayer)players[i];
+            if (!p.isOutOfGame())
+                count++;
+        }
+        return count;
+     }
+
+
+    /**
+     * take care of distrbuting the pot, dealing, anteing.
+     * @param pviewer
+     */
     private void doRoundOverBookKeeping(PokerGameViewer pviewer) {
         PokerPlayer winner = determineWinner();
         int winnings = this.getPotValue();
@@ -299,8 +355,14 @@ public class PokerController extends GameController
         // start a new round deal new cards and ante
         dealCardsToPlayers(5);
         anteUp();
-        startingPlayerIndex_ = (startingPlayerIndex_++) % this.getNumPlayers();
+        // the player to start the betting in the next round is the next player who still has some money left.
+        do {
+           startingPlayerIndex_ = (++startingPlayerIndex_) % this.getNumPlayers();
+        }
+        while (this.getPlayer(startingPlayerIndex_).isOutOfGame());
+
         currentPlayerIndex_ = startingPlayerIndex_;
+        playIndex_ = 0;
     }
 
     private boolean allButOneFolded() {
@@ -318,44 +380,14 @@ public class PokerController extends GameController
         return false;
     }
 
-    /**
-     * the round is over if there is only one player left who has not folded, or
-     * everyone has had a chance to call.
-     * @return true of the round is over
-     */
-    private boolean roundOver() {
+    private Player getFirstNonFoldedPlayer() {
         PokerPlayer[] players = (PokerPlayer[])getPlayers();
-
-        if (allButOneFolded())  {
-            System.out.println("all but one folded");
-            return true;
-        }
-
-        // special case of no one raising
-        boolean nooneRaisedYet = (getAnte()*getNumPlayers() == getPotValue());
-        if ((getCurrentPlayer() == getFirstPlayer()) && nooneRaisedYet) {
-            System.out.println("no one raised");
-            return true;
-        }
-        if (nooneRaisedYet)
-            return false;
-
-        int contrib = this.getCurrentMaxContribution();
-        //boolean allMetRaise = true;
-        for (int i=0; i<players.length; i++) {
-            PokerPlayer p = players[i];
-            if (!p.hasFolded()) {
-                if (p.getContribution() != contrib) {
-
-                    return false;
-                }
-            }
-        }
-        System.out.println("all players have contributed");
-        return true;
+        int i = startingPlayerIndex_;
+        int numPlayers = getNumPlayers();
+        while (players[(i % numPlayers)].hasFolded())
+            i++;
+        return players[i % numPlayers];
     }
-
-
 
     /**
      *
@@ -393,7 +425,7 @@ public class PokerController extends GameController
      */
     private PokerRound createMove(Move lastMove)
     {
-        PokerRound gmove = PokerRound.createMove((lastMove==null)?0:lastMove.moveNumber+1);
+        PokerRound gmove = PokerRound.createMove((lastMove==null)? 0 : lastMove.moveNumber+1);
         return gmove;
     }
 
@@ -403,12 +435,14 @@ public class PokerController extends GameController
      */
     private int advanceToNextPlayerIndex()
     {
+        playIndex_++;
         currentPlayerIndex_ = (currentPlayerIndex_+1) % players_.length;
         while (getPlayer(currentPlayerIndex_).hasFolded())
             currentPlayerIndex_ = (currentPlayerIndex_+1) % players_.length;
 
         return currentPlayerIndex_;
     }
+
 
     private PokerPlayer getPlayer(int index) {
         return (PokerPlayer) getPlayers()[index];
@@ -437,7 +471,6 @@ public class PokerController extends GameController
     {
         players_ = players;
         // deal cards to the players
-        System.out.println("set player dealcards");
         dealCardsToPlayers(5);
     }
 

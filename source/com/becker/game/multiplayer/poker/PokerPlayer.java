@@ -40,6 +40,7 @@ public abstract class PokerPlayer extends Player
         cash_ = money;
         contribution_ = 0;
         hasFolded_ = false;
+        outOfGame_ = false;
         piece_ = new PokerPlayerMarker(this);
     }
 
@@ -93,11 +94,6 @@ public abstract class PokerPlayer extends Player
         return hasFolded_;
     }
 
-    public void setOutOfGame(boolean out) {
-        outOfGame_ = out;
-        hasFolded_ = out;
-    }
-
     public boolean isOutOfGame() {
         return outOfGame_;
     }
@@ -112,14 +108,20 @@ public abstract class PokerPlayer extends Player
 
 
     /**
-     * have this player contribute some amount to the pot
+     * have this player contribute some amount to the pot.
      * of course the amount must be less than they have altogether.
+     * If it is greater, then he/she is out of the game.
      * @param amount
      */
     public void contributeToPot(PokerController controller, int amount) {
-        assert(amount <= cash_) : "You cannot add more to the pot than you have.";
 
-        if (amount >0) {
+        if (cash_ < amount)  {
+            // the player is out of the game if he is asked to contribute more than he has.
+            outOfGame_ = true;
+            hasFolded_ = true; // anyone out of the game is also considered folded
+            return;
+        }
+        if (amount > 0) {
             cash_ -= amount;
             contribution_ += amount;
             controller.addToPot(amount);
@@ -129,6 +131,16 @@ public abstract class PokerPlayer extends Player
     public int getCallAmount(PokerController pc) {
         int currentMaxContrib = pc.getCurrentMaxContribution();
         return (currentMaxContrib - getContribution());
+    }
+
+
+    /**
+     * start the player over fresh for a new round
+     */
+    public void resetPlayerForNewRound()  {
+        hasFolded_ = false;
+        contribution_ = 0;
+        outOfGame_ = false;
     }
 
     /**

@@ -124,14 +124,20 @@ public class PokerGameViewer extends GameBoardViewer
         PokerController pc = (PokerController) controller_;
 
         switch (robot.getAction(pc)) {
-            case FOLD : robot.setFold(true);
+            case FOLD :
+                robot.setFold(true);
                 break;
             case CALL : 
-                int callAmount =  pc.getCurrentMaxContribution() - robot.getContribution();
-                if (callAmount > 0)
+                int callAmount = pc.getCurrentMaxContribution() - robot.getContribution();
+                if (callAmount <= robot.getCash())   {
                     robot.contributeToPot(pc, callAmount);
+                } else {
+                    robot.setFold(true);
+                }
+          
                 break;
-            case RAISE : robot.contributeToPot(pc, robot.getRaise(pc));
+            case RAISE :
+                robot.contributeToPot(pc, robot.getRaise(pc));
                 break;
         }
 
