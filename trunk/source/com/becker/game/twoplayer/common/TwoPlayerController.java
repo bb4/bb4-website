@@ -133,9 +133,21 @@ public abstract class TwoPlayerController extends GameController
     protected void createPlayers()
     {
         Player[] players = new Player[2];
-        players[0] = new Player(GameContext.getLabel("PLAYER1"), null, true);
-        players[1] = new Player(GameContext.getLabel("PLAYER2"), null, false);
+        players[0] = new Player(getPlayerName(true), null, true);
+        players[1] = new Player(getPlayerName(false), null, false);
         this.setPlayers(players);
+    }
+
+    /**
+     * @param p1
+     * @return player 1's name if p1 is true else p2's name
+     */
+    protected String getPlayerName(boolean p1)
+    {
+        if (p1)
+            return GameContext.getLabel("PLAYER1");
+        else
+            return GameContext.getLabel("PLAYER2");
     }
 
     /**
@@ -416,7 +428,7 @@ public abstract class TwoPlayerController extends GameController
      */
     private TwoPlayerMove findComputerMove( boolean player1 )
     {
-        ParameterArray weights = null;
+        ParameterArray weights;
         player1sTurn_ = player1;
 
         long time = 0;
@@ -440,7 +452,9 @@ public abstract class TwoPlayerController extends GameController
         }
 
         /////////////////////// SEARCH //////////////////////////////////////////////////////
+        board_.confirm();
         strategy_ = SearchStrategy.createSearchStrategy(getSearchStrategyMethod(), this);
+        board_.confirm();
         TwoPlayerMove selectedMove = strategy_.search( p, weights, getLookAhead(), Double.MAX_VALUE, Double.MIN_VALUE, root_ );
         /////////////////////////////////////////////////////////////////////////////////////
 

@@ -215,6 +215,20 @@ public abstract class NewGameDialog extends OptionsDialog implements ActionListe
         this.setVisible( false );
     }
 
+    protected void openFile()
+    {
+       if (GUIUtil.isStandAlone())  {
+             JOptionPane.showMessageDialog(this, GameContext.getLabel("CANT_OPEN_WHEN_STANDALONE"));
+       } else {
+            JFileChooser chooser = GUIUtil.getFileChooser();
+            chooser.setCurrentDirectory( new File( HOME_DIR ) );
+            int state = chooser.showOpenDialog( null );
+            File file = chooser.getSelectedFile();
+            if ( file != null && state == JFileChooser.APPROVE_OPTION )
+                openFileField_.setText( file.getAbsolutePath() );
+        }
+    }
+
     public void actionPerformed( ActionEvent e )
     {
         Object source = e.getSource();
@@ -226,16 +240,8 @@ public abstract class NewGameDialog extends OptionsDialog implements ActionListe
             cancel();
         }
         else if ( source == openFileButton_ ) {
-            if (GUIUtil.isStandAlone())  {
-               JOptionPane.showMessageDialog(this, GameContext.getLabel("CANT_OPEN_WHEN_STANDALONE"));
-            } else {
-                JFileChooser chooser = GUIUtil.getFileChooser();
-                chooser.setCurrentDirectory( new File( HOME_DIR ) );
-                int state = chooser.showOpenDialog( null );
-                File file = chooser.getSelectedFile();
-                if ( file != null && state == JFileChooser.APPROVE_OPTION )
-                    openFileField_.setText( file.getAbsolutePath() );
-            }
+            openFile();
         }
     }
+
 }

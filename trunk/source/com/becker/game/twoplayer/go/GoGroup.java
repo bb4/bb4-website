@@ -244,6 +244,7 @@ public final class GoGroup extends GoSet
         // use a HashSet to avoid duplicate strings
         // otherwise we might try to remove the same string twice.
         HashSet hsStrings = new HashSet();
+        assert (stones.size()<=this.getNumStones()): "Can't remove "+stones+" from "+this;
 
         //clearEyes();
         Iterator it = stones.iterator();
@@ -314,7 +315,6 @@ public final class GoGroup extends GoSet
                 if ( split ) {
                     members_.remove( string );
                     string.removeAll();
-                    string = null; // should get garbage collected now
                     it = splitStrings.iterator();
                     while ( it.hasNext() ) {
                         GoString s = (GoString) it.next();
@@ -882,18 +882,18 @@ public final class GoGroup extends GoSet
      */
     private String toString( String newline )
     {
-        StringBuffer sb = new StringBuffer( " GROUP {" );
+        StringBuffer sb = new StringBuffer( " GROUP {" + newline );
         Iterator it = members_.iterator();
         // print the member strings
         if ( it.hasNext() ) {
             GoString p = (GoString) it.next();
-            sb.append( p.toString() );
+            sb.append( "    " + p.toString() );
         }
         while ( it.hasNext() ) {
             GoString p = (GoString) it.next();
-            sb.append( ',' + newline + p.toString() );
+            sb.append( ',' + newline + "    "+ p.toString() );
         }
-        sb.append( '}' + newline );
+        sb.append( newline+ '}' );
         if (eyes_!=null && !eyes_.isEmpty())
             sb.append(eyes_.toString() +newline);
         // make sure that the health and eyes are up to date

@@ -113,6 +113,15 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
         return eye_;
     }
 
+    /**
+     *
+     * @return  true if the string this stone belongs to is in atari
+     */
+    public boolean isInAtari(GoBoard b)
+    {
+       return (getString()!=null && getString().getLiberties(b).size()==1);
+    }
+
 
     public void setVisited( boolean visited )
     {

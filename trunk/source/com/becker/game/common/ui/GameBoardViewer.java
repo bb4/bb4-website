@@ -141,10 +141,11 @@ public abstract class GameBoardViewer
         if ( !f.exists() ) {
             MessageFormat formatter = new MessageFormat(GameContext.getLabel("MISSING_FILE"));
             JOptionPane.showMessageDialog( this,
-                    formatter.format(fileName),
+                    formatter.format(fileName), //MessageFormat.format(GameContext.getLabel("MISSING_FILE"), fileName), 
                     GameContext.getLabel("WARNING"),
                     JOptionPane.WARNING_MESSAGE );
         }
+
     }
 
     protected Color getDefaultGridColor()
@@ -240,6 +241,11 @@ public abstract class GameBoardViewer
     {
         controller_.reset();  //clear what's there and start over
         Board board = controller_.getBoard();
+        commonReset(board);
+    }
+
+    protected void commonReset(Board board)
+    {
         int nrows = board.getNumRows();
         int ncols = board.getNumCols();
         setSize( new Dimension( 2*BOARD_MARGIN + ncols * getCellSize(),
@@ -303,7 +309,7 @@ public abstract class GameBoardViewer
 
     /**
      *  This method gets called when the game has changed in some way.
-     *  most likely because a move has been played.
+     *  mMost likely because a move has been played.
      */
     public void sendGameChangedEvent(Move m)
     {
