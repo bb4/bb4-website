@@ -68,7 +68,7 @@ public abstract class GamePanel extends TexturedPanel
     static {
         // this image shows as the transparent background for textured panels.
         GameContext.log(2,  "get ocean image" );
-        BG_TEXTURE = GUIUtil.getIcon(CORE_IMAGE_PATH + "ocean_trans_20.png");
+        BG_TEXTURE = GUIUtil.getIcon(CORE_IMAGE_PATH + "ocean_trans_10.png");
     }
 
 

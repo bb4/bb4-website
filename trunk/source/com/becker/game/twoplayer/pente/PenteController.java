@@ -11,6 +11,9 @@ import java.util.*;
 /**
  * Defines everything the computer needs to know to play Pente
  *
+ *  @@todo:
+ *   - does not detect winning state in 2 (human) player game.
+ *
  * @author Barry Becker
  */
 public class PenteController extends TwoPlayerController
@@ -26,18 +29,21 @@ public class PenteController extends TwoPlayerController
     // these weights determine how the computer values features of the board
     // if only one computer is playing, then only one of the weights arrays is used.
     // use these weights if no others are provided
-    private static final double[] DEFAULT_WEIGHTS = {0.0,   0.0,  0.0,  0.0,  2.0,  5.0,  30.0, 31.0,   140.0,  1400.0,  1400.0,  1400.0};
+    private static final double[] DEFAULT_WEIGHTS =
+            {0.0,   0.0,  0.0,  0.0,  2.0,  5.0,  30.0, 31.0,   140.0,  1400.0,  1400.0,  1400.0};
     // don't allow the weights to exceed these maximum values
-    private static final double[] MAX_WEIGHTS = {5.0, 5.0, 5.0, 10.0, 20.0, 20.0, 100.0, 100.0, 1000.0, 10000.0, 10000.0, 20000.0};
+    private static final double[] MAX_WEIGHTS =
+            {5.0, 5.0, 5.0, 10.0, 20.0, 20.0, 100.0, 100.0, 1000.0, 10000.0, 10000.0, 20000.0};
     private static final String[] WEIGHT_SHORT_DESCRIPTIONS = {
         "1a weight", "1b weight", "1c weight", "2a weight",
         "2b weight", "3a weight", "3b weight", "4a  weight",
         "4b weight", "5 weight", "6 weight", "7 weight"};
     private static final String[] WEIGHT_DESCRIPTIONS = {
-        "1a in a row weight", "1b in a row weight", "options with 1c in a row weight", "options 2a in a row weight",
-        "options of 2b in a row weight", "open ended 3a in a row weight", "open ended 3b in a row weight", "4a in a row weight",
-        "open ended 4b in a row (with options) weight", "arrangements of 5 in a row weight", "arrangements of 6 in a row weight",
-        "arrangements of 7 in a row weight"
+        "1a in a row weight", "1b in a row weight", "options with 1c in a row weight",
+        "options 2a in a row weight", "options of 2b in a row weight",
+        "open ended 3a in a row weight", "open ended 3b in a row weight", "4a in a row weight",
+        "open ended 4b in a row (with options) weight", "arrangements of 5 in a row weight",
+        "arrangements of 6 in a row weight", "arrangements of 7 in a row weight"
     };
 
     public static final char REGULAR_PIECE = GamePiece.REGULAR_PIECE;
@@ -139,13 +145,14 @@ public class PenteController extends TwoPlayerController
         // string. Marching stops when we encounter one of the following
         // conditions:
         //  - 2 blanks in a row (@@ we may want to allow this)
-        //  - an opponents blocking piece
+        //  - an opponent's blocking piece
         //  - the end of a line.
         if ( (line.charAt( pos ) == opponent) && (pos == minpos) )
             ct++;
         else
             while ( ct > minpos && (line.charAt( ct - 1 ) != opponent)
-                    && !(line.charAt( ct ) == PentePatterns.UNOCCUPIED && line.charAt( ct - 1 ) == PentePatterns.UNOCCUPIED) )
+                    && !(line.charAt( ct ) == PentePatterns.UNOCCUPIED
+                    && line.charAt( ct - 1 ) == PentePatterns.UNOCCUPIED) )
                 ct--;
         int start = ct;
         ct = pos;
@@ -153,7 +160,8 @@ public class PenteController extends TwoPlayerController
             ct--;
         else
             while ( ct < (maxpos - 1) && (line.charAt( ct + 1 ) != opponent)
-                    && !(line.charAt( ct ) == PentePatterns.UNOCCUPIED && line.charAt( ct + 1 ) == PentePatterns.UNOCCUPIED) )
+                    && !(line.charAt( ct ) == PentePatterns.UNOCCUPIED
+                    && line.charAt( ct + 1 ) == PentePatterns.UNOCCUPIED) )
                 ct++;
         int stop = ct;
         int inthash = PentePatterns.convertPatternToInt( line, start, stop + 1 );
@@ -267,10 +275,10 @@ public class PenteController extends TwoPlayerController
         stopr = row + M;
         if ( stopc > numCols ) {
             stopr = stopr + numCols - stopc;
-            stopc = numCols;
+            //stopc = numCols;
         }
         if ( stopr > numRows ) {
-            stopc = stopc + numRows - stopr;
+            //stopc = stopc + numRows - stopr;
             stopr = numRows;
         }
         line.setLength( 0 );
@@ -299,7 +307,7 @@ public class PenteController extends TwoPlayerController
         }
         if ( stopr < 1 ) {
             stopc = stopc + stopr - 1;
-            stopr = 1;
+            //stopr = 1;
         }
         line.setLength( 0 );
         for ( i = startc; i <= stopc; i++ )

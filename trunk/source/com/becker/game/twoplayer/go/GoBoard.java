@@ -123,11 +123,19 @@ public final class GoBoard extends TwoPlayerBoard
         if (groups_!=null) {
             ((GoBoard)clone).groups_ = new HashSet();
             Set groupsCopy = ((GoBoard)clone).groups_;
+
+            // new way to interate
+            for (Object g : groups_)  {
+                groupsCopy.add(((GoGroup)g).clone());
+            }
+
+            /* old way
             Iterator it = groups_.iterator();
             while (it.hasNext()) {
                 GoGroup g = (GoGroup)it.next();
                 groupsCopy.add(g.clone());
             }
+            */
         }
 
         if (armies_!=null)  {

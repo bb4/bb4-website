@@ -127,6 +127,8 @@ public abstract class TwoPlayerController extends GameController
             catch (InterruptedException e) {}
         }
         super.reset();
+        this.getPlayer1().setWon(false);
+        this.getPlayer2().setWon(false);
         player1sTurn_ = true;
     }
 
@@ -742,25 +744,29 @@ public abstract class TwoPlayerController extends GameController
     }
 
     /**
-     * given a move determine whether the game is over.
-     * If recordWin is true then the variables for player1/2HasWon can get set.
+     * given a move, determine whether the game is over.
+     * If recordWin is true, then the variables for player1/2HasWon can get set.
      *  sometimes, like when we are looking ahead we do not want to set these.
      * @param m the move to check. If null then return true.
      * @param recordWin if true then the controller state will record wins
      */
     public boolean done( TwoPlayerMove m, boolean recordWin )
     {
-        if (m==null) {
+        if (this.getNumMoves()==0)
+            return false;
+        if (this.getNumMoves()>0 && m==null) {
             GameContext.log(0, "Game done because there are no more moves");
             return true; // because their were no more moves apparently.
         }
+        if (getPlayer1().hasWon() || getPlayer1().hasWon())
+            return true;
 
         boolean won = (Math.abs( m.value ) >= WINNING_VALUE);
         if ( won && recordWin ) {
             if ( m.value >= WINNING_VALUE )
-                getPlayer1().setWon();
+                getPlayer1().setWon(true);
             else
-                getPlayer2().setWon();
+                getPlayer2().setWon(true);
         }
         return (m.moveNumber >= board_.getMaxNumMoves() || won);
     }

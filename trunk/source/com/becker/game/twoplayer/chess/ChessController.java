@@ -17,6 +17,7 @@ import java.util.*;
 public class ChessController extends CheckersController
 {
     // @@todo:
+    //  - show indicator of invalid move while dragging piece (before placed)
     //  - don't allow moves that put the king in check.
     //  - if you are in check, then don't allow moves other than those that get you out of check.
     //  - game is over if no moves available (because of check mate usually).

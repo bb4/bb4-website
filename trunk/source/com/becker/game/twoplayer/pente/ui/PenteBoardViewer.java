@@ -48,7 +48,7 @@ public class PenteBoardViewer extends TwoPlayerBoardViewer
 
     public void mousePressed( MouseEvent e )
     {
-        if (get2PlayerController().isProcessing())   {
+        if (get2PlayerController().isProcessing() || get2PlayerController().done())   {
             return;
         }
         Location loc = createLocation(e, getCellSize());
@@ -66,7 +66,9 @@ public class PenteBoardViewer extends TwoPlayerBoardViewer
             TwoPlayerMove.createMove( loc.row, loc.col, 0, controller_.getNumMoves() + 1,
                              new GamePiece(get2PlayerController().isPlayer1sTurn()));
 
-        if ( !continuePlay( m ) )    // then game over
-            showWinnerDialog();
+
+        continuePlay( m );
+        //if ( !continuePlay( m ) )    // then game over
+        //    showWinnerDialog();
     }
 }

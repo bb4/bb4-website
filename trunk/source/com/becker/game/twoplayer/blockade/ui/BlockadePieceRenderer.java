@@ -20,7 +20,7 @@ class BlockadePieceRenderer extends GamePieceRenderer
 
     private static final Color EAST_WALL_COLOR = new Color(160, 110, 120);
     private static final Color SOUTH_WALL_COLOR = new Color(110, 160, 120);
-    private static final double WALL_WIDTH_FRAC = .1;
+    private static final double WALL_WIDTH_FRAC = .15;
 
     /**
      * private constructor because this class is a singleton.
@@ -69,7 +69,7 @@ class BlockadePieceRenderer extends GamePieceRenderer
         boolean drewWall = false;
         if (bpos.getEastWall()!=null) {
             g2.setColor(EAST_WALL_COLOR);
-            g2.fill3DRect(xpos-wallWidthD2, ypos-cellSize, wallWidth, cellSize, true);
+            g2.fill3DRect(xpos-wallWidthD2, ypos-cellSize, wallWidth, cellSize, true);       
             drewWall = true;
         }
         if (bpos.getSouthWall()!=null) {

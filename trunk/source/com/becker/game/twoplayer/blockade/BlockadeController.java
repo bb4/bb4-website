@@ -14,6 +14,7 @@ import java.util.*;
  * Defines for the computer how it should play blockade.
  *
  * Todo items
+ *   - computer moves only one space instead of two.
  *   - don't allow placing a wall such that it intersects an existing wall.
  *   - The winner should win as soon as he lands on an opponent base and not have to wait to place the wall.
  *   - only allow wall placements upto (xdim*ydim)/4 walls for each player.
@@ -584,12 +585,12 @@ public class BlockadeController extends TwoPlayerController
          // first find the NUM_HOMES shortest paths for p.
          List[] paths = board.findShortestPaths((BlockadeBoardPosition)p);
 
-         assert (paths.length == board.NUM_HOMES):
+         assert (paths.length == BlockadeBoard.NUM_HOMES):
                  "There must be at least one route to each opponent home base. Numpaths="+paths.length;
 
          // for each of these paths add possible wall positions.
          // Take the first move from each path and add the wall positions to it.
-         for (int i=0; i<board.NUM_HOMES; i++) {
+         for (int i=0; i<BlockadeBoard.NUM_HOMES; i++) {
              BlockadeMove firstStep = (BlockadeMove)paths[i].get(0);
              firstStep.moveNumber = (lastMove == null)? 0 : (lastMove.moveNumber+1);
              // make the move
@@ -626,7 +627,7 @@ public class BlockadeController extends TwoPlayerController
 
         // first find the opponents shortest paths. There must be NUM_HOMES squared of them.
         // There is one path from every piece to every opponent home (i.e. n*n)
-        int numHomes = board.NUM_HOMES;
+        int numHomes = BlockadeBoard.NUM_HOMES;
         int numShortestPaths = numHomes * numHomes;
         List[] opponentPaths = new List[numShortestPaths];
         int totalOpponentPaths = 0;

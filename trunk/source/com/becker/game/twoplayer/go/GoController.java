@@ -662,9 +662,9 @@ public final class GoController extends TwoPlayerController
 
                 if (recordWin) {
                     if (getScore(true) > getScore(false))
-                        getPlayer1().setWon();
+                        getPlayer1().setWon(true);
                     else
-                        getPlayer2().setWon();
+                        getPlayer2().setWon(true);
                 }
                 gameOver = true;
             }

@@ -115,17 +115,17 @@ public class CheckersController extends TwoPlayerController
 
         if ( won && recordWin ) {
             if ( m.player1 )
-                getPlayer1().setWon();
+                getPlayer1().setWon(true);
             else
-                getPlayer2().setWon();
+                getPlayer2().setWon(true);
         }
         if ( m.moveNumber >= board_.getMaxNumMoves() ) {
             won = true;
             if ( recordWin ) {
                 if ( Math.abs( m.value ) >= 0 )
-                    getPlayer1().setWon();
+                    getPlayer1().setWon(true);
                 else
-                    getPlayer2().setWon();
+                    getPlayer2().setWon(true);
             }
         }
         return (won);

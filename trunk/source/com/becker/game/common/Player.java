@@ -72,9 +72,9 @@ public class Player
     /**
      * once you have won you cannot return to the not-won state
      */
-    public void setWon()
+    public void setWon(boolean won)
     {
-        hasWon_ = true;
+        hasWon_ = won;
     }
 
     public String toString()
