@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.blockade.ui;
 import com.becker.game.twoplayer.blockade.BlockadeBoardPosition;
 import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GamePiece;
+import com.becker.game.common.Board;
 import com.becker.game.common.ui.GamePieceRenderer;
 import com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer;
 
@@ -38,12 +39,12 @@ class BlockadePieceRenderer extends GamePieceRenderer
     /**
      * this draws the actual piece.
      */
-    public void render( Graphics2D g2, BoardPosition position, int cellSize)
+    public void render( Graphics2D g2, BoardPosition position, int cellSize, Board b)
     {
         GamePiece piece = position.getPiece();
         if (piece != null)  {
             // render the piece as normal
-            super.render( g2, position, cellSize);
+            super.render( g2, position, cellSize, b);
         }
         // render the south and east walls if present
         BlockadeBoardPosition bpos = (BlockadeBoardPosition)position;

@@ -277,33 +277,33 @@ public final class GoController extends TwoPlayerController
     }
 
     /**
-     * get the number of captures for player1 or player2
-     * @param forPlayer1 if true, get the captures for player1, else for player2
+     * get the number of player1/player2 stones captured.
+     * @param player1Stones if true, get the captures for player1, else for player2.
      * @return num captures
      */
-    public int getNumCaptures( boolean forPlayer1 )
+    public int getNumCaptures( boolean player1Stones )
     {
         // iterate through the list of moves played so far and add up the stones
         // in the capture lists to determine the captures for each side.
-        // @@ could possible improve this by caching the number of captures in an ArrayList
+        // @@ could possibly improve this by caching the number of captures in an ArrayList
         if ( moveList_ == null || moveList_.isEmpty() )
             return 0;
         Iterator it = moveList_.iterator();
         int numCaptures = 0;
         while ( it.hasNext() ) {
             GoMove move = (GoMove) it.next();
-            if ( move.player1 == forPlayer1 ) {
+            if ( move.player1 == !player1Stones ) {
                 if ( move.captureList != null )
                     numCaptures += move.captureList.size();
             }
         }
 
-        // also add in the dead stones on the board.
+        // also add in the currently dead stones on the board.
         // there will only be dead stones on the board if the game is over.
-        if (forPlayer1)
-            numCaptures += numDeadWhiteStonesOnBoard_;
-        else
+        if (player1Stones)
             numCaptures += numDeadBlackStonesOnBoard_;
+        else
+            numCaptures += numDeadWhiteStonesOnBoard_;
 
         return numCaptures;
     }
@@ -471,7 +471,7 @@ public final class GoController extends TwoPlayerController
                 GoBoardPosition space = (GoBoardPosition) board.getPosition( row, col );
                 double badShapeScore = 0.0;
                 double posScore = 0.0;
-                if (space.getEye()!=null)  {
+                if (space.isInEye())  {
                     if (space.isOccupied())
                         space.scoreContribution = (space.getEye().isOwnedByPlayer1()? 2.0:-2.0);
                     else
@@ -678,7 +678,8 @@ public final class GoController extends TwoPlayerController
 
         if (gameOver && recordWin) {
             //we should not call tis twice
-            assert(numDeadBlackStonesOnBoard_==0 && numDeadWhiteStonesOnBoard_==0):" should not update life and death twice.";
+            //assert(numDeadBlackStonesOnBoard_==0 && numDeadWhiteStonesOnBoard_==0):" should not update life and death twice.";
+            System.out.println(" Error: should not update life and death twice.");
 
             // now that we are finally at the end of the game,
             // update the life and death of all the stones still on the board
@@ -712,11 +713,11 @@ public final class GoController extends TwoPlayerController
        // the last 2 moves were passes so we need to get the third to last move.
        List moves = this.getMoveSequence();
        if (moves.size() > 3) {
-           JOptionPane.showConfirmDialog((Component)viewer_, "before udpate territory");
+           //JOptionPane.showConfirmDialog((Component)viewer_, "before udpate territory");
            GoMove lastMove = (GoMove)moves.get(moves.size()-3);
            GoBoardPosition lastStone = (GoBoardPosition)board_.getPosition(lastMove.getToRow(), lastMove.getToCol());
            ((GoBoard)board_).updateTerritory(lastStone, lastMove.moveNumber);
-           JOptionPane.showConfirmDialog((Component)viewer_, "udpated territory");
+           //JOptionPane.showConfirmDialog((Component)viewer_, "udpated territory");
        }
 
        // should assert that this is the end of the game (how to do it? the last 2 moves should be passes)

@@ -44,7 +44,7 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
     private static final ImageIcon woodGrainImage_ =
             GUIUtil.getIcon(GameContext.GAME_ROOT + "twoplayer/go/ui/images/goBoard1.png");
 
-    private static String CAPTURES = GameContext.getLabel("CAPTURES_EQUALS");
+    private static String STONES_CAPTURED = GameContext.getLabel("CAPTURES_EQUALS");
     private static String TERRITORY = GameContext.getLabel("TERRITORY_EQUALS");
     private static String SCORE = GameContext.getLabel("SCORE_EQUALS");
 
@@ -205,7 +205,7 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
      */
     protected String getGameOverMessage()
     {
-        String message = "";
+        String message = "\n";
         GoController gm = (GoController)controller_;
 
         // show the dead stones marked as such.
@@ -217,8 +217,8 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
         String p1Name = gm.getPlayer1().getName();
         String p2Name = gm.getPlayer2().getName();
 
-        message += p1Name +" "+ CAPTURES + blackCaptures +"\n";
-        message += p2Name +" "+ CAPTURES + whiteCaptures +"\n\n";
+        message += p1Name +" "+ STONES_CAPTURED + blackCaptures +"\n";
+        message += p2Name +" "+ STONES_CAPTURED + whiteCaptures +"\n\n";
 
         int blackTerritory = gm.getTerritoryEstimate(true);
         int whiteTerritory = gm.getTerritoryEstimate(false);

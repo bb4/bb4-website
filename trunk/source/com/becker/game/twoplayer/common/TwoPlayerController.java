@@ -422,7 +422,7 @@ public abstract class TwoPlayerController extends GameController
 
     /**
      * the computer will search for and make its move.
-     * The search for the best computer move happens on a separate threa so the UI does not lock up.
+     * The search for the best computer move happens on a separate thread so the UI does not lock up.
      * @param player1 if true then the computer moving is player1
      * @return the move the computer selected (may return null if no move possible)
      */

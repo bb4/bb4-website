@@ -100,7 +100,7 @@ public class GoString extends GoSet
             addMember( stone );
         }
         // must remove these after iterating otherwise we get a ConcurrentModificationException
-        string.removeAll();
+        string.removeAll();      
     }
 
     /**
@@ -146,6 +146,16 @@ public class GoString extends GoSet
             addLiberties( stone, liberties, board );
         }
         return liberties;
+    }
+
+    /**
+     *
+     * @param board
+     * @return  true if the string is in atari
+     */
+    public boolean isInAtari(GoBoard board)
+    {
+        return (getLiberties(board).size() == 0);
     }
 
 
@@ -195,10 +205,10 @@ public class GoString extends GoSet
     protected boolean isEnemy( GoBoardPosition pos, GoBoard board )
     {
         assert (group_!=null): "group for "+this+" is null";
-        assert (pos.isOccupied()): "p="+pos;
+        assert (pos.isOccupied()): "pos not occupied: ="+pos;
         GoStone stone = (GoStone)pos.getPiece();
-        boolean withinDifferenceThreshold =
-                 (Math.abs(getGroup().getAbsoluteHealth() + stone.getHealth()) <= GoGroup.DIFFERENCE_THRESHOLD);
+        boolean withinDifferenceThreshold = !isStoneMuchWeaker(getGroup(), stone);
+
         assert (getGroup().isOwnedByPlayer1() == this.isOwnedByPlayer1()): getGroup()+" string="+this;
         return ((stone.isOwnedByPlayer1() != this.isOwnedByPlayer1() && withinDifferenceThreshold));
     }

@@ -124,7 +124,7 @@ public class GamePieceRenderer
      * @param g2 graphics context
      * @param position the position of the piece to render
      */
-    public void render( Graphics2D g2, BoardPosition position, int cellSize)
+    public void render( Graphics2D g2, BoardPosition position, int cellSize, Board b)
     {
         GamePiece piece = position.getPiece();
         // if there is no piece, then nothing to render

@@ -551,7 +551,7 @@ public abstract class GameBoardViewer
 
         // if there is a piece being dragged, draw it
         if ( draggedShowPiece_ != null ) {
-            pieceRenderer_.render(g2, draggedShowPiece_, cellSize_);
+            pieceRenderer_.render(g2, draggedShowPiece_, cellSize_, board);
         }
 
         drawLastMoveMarker(g2);
@@ -596,7 +596,7 @@ public abstract class GameBoardViewer
         Board board = getBoard();
         for ( int i = 1; i <= nrows; i++ )
             for ( int j = 1; j <= ncols; j++ ) {
-                pieceRenderer_.render(g2, board.getPosition( i, j ),  cellSize_);
+                pieceRenderer_.render(g2, board.getPosition( i, j ),  cellSize_, board);
             }
     }
 

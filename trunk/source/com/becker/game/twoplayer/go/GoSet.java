@@ -23,6 +23,13 @@ public abstract class GoSet implements GoMember
     boolean ownedByPlayer1_;
 
     /**
+     * an opponent stone must be at least this much more unhealthy to be considered part of an eye.
+     * if its not that much weaker then we don't really have an eye.
+     * @@ make this a game parameter .9 - 1.8 that can be optimized.
+     */
+    public static final float DIFFERENCE_THRESHOLD = .9f;
+
+    /**
      * constructor.
      */
     public GoSet()
@@ -65,6 +72,42 @@ public abstract class GoSet implements GoMember
     final void removeAll()
     {
         members_.clear();
+    }
+
+    /**
+     * @param group
+     * @param stone
+     * @param threshold
+     * @return return true of the stone is greater than threshold weaker than the group.
+     */
+    protected final static boolean isStoneWeaker(GoGroup group, GoStone stone, float threshold)
+    {
+        float groupHealth = group.getAbsoluteHealth();
+        float stoneHealth = stone.getHealth();
+        if (stone.isOwnedByPlayer1() == true)  {
+            assert (group.isOwnedByPlayer1() == false);
+            return (-groupHealth - stoneHealth > threshold);
+        }
+        else {
+            assert (group.isOwnedByPlayer1() == true);
+            return (groupHealth + stoneHealth > threshold);
+        }
+    }
+
+    /**
+     * @return return true of the stone is greater than threshold weaker than the group.
+     */
+    protected final static boolean isStoneWeaker(GoGroup group, GoStone stone)
+    {
+        return isStoneWeaker(group, stone, 0);
+    }
+
+    /**
+     * @return true if the stone is much weaker than the group
+     */
+    protected final static boolean isStoneMuchWeaker(GoGroup group, GoStone stone)
+    {
+        return isStoneWeaker(group, stone, DIFFERENCE_THRESHOLD);
     }
 
     /**

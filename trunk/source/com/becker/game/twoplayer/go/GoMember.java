@@ -2,7 +2,7 @@ package com.becker.game.twoplayer.go;
 
 
 /**
- * This interface must by any class which become GoSet members (or members of derived classes) .
+ * This interface must be implemented by any class which becomes GoSet members (or members of derived classes) .
  *
  * @see com.becker.game.twoplayer.go.GoSet
  *
@@ -11,4 +11,6 @@ package com.becker.game.twoplayer.go;
 public interface GoMember extends Cloneable
 {
     public Object clone() throws CloneNotSupportedException;
+
+
 }

@@ -80,8 +80,8 @@ final class GoInfoPanel extends TwoPlayerInfoPanel implements GameChangedListene
         if ( p1CapturesLabel_ == null )
             return;
 
-        p1CapturesLabel_.setText( goController.getNumCaptures( true ) + " " );
-        p2CapturesLabel_.setText( goController.getNumCaptures( false ) + " " );
+        p1CapturesLabel_.setText( goController.getNumCaptures( false ) + " " );
+        p2CapturesLabel_.setText( goController.getNumCaptures( true ) + " " );
 
         p1TerritoryLabel_.setText( goController.getTerritoryEstimate( true ) + " " );
         p2TerritoryLabel_.setText( goController.getTerritoryEstimate( false ) + " " );

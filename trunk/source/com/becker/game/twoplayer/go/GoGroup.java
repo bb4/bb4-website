@@ -62,13 +62,6 @@ public final class GoGroup extends GoSet
     private HashSet cachedEnemyNbrGroups_ = new HashSet();
 
 
-    /**
-     * an opponent stone must be at least this much more unhealthy to be considered part of an eye.
-     * if its not that much weaker then we don't really have an eye.
-     * @@ make this a game parameter 1.0 - 1.8 that can be optimized.
-     */
-    public static final float DIFFERENCE_THRESHOLD = 1.2f;
-
     public static final String UPDATE_EYES = "update eyes";
     public static final String GET_ENEMY_GROUPS_NBRS = "get enemy group nbrs";
 
@@ -98,7 +91,7 @@ public final class GoGroup extends GoSet
             //actually this is ok - sometimes happens legitimately
             //assert isFalse(stone.isVisited(), stone+" is marked visited in "+stones+" when it should not be.");
             GoString string = stone.getString();
-            assert ( string!=null );
+            assert ( string != null );
             if ( !members_.contains( string ) ) {
                 assert ( ownedByPlayer1_ == string.isOwnedByPlayer1()): string +"ownership not the same as "+this;
                 string.confirmOwnedByOnlyOnePlayer();
@@ -244,9 +237,7 @@ public final class GoGroup extends GoSet
         // use a HashSet to avoid duplicate strings
         // otherwise we might try to remove the same string twice.
         HashSet hsStrings = new HashSet();
-        assert (stones.size()<=this.getNumStones()): "Can't remove "+stones+" from "+this;
 
-        //clearEyes();
         Iterator it = stones.iterator();
         while ( it.hasNext() ) {
             GoBoardPosition s = (GoBoardPosition) it.next();
@@ -268,7 +259,13 @@ public final class GoGroup extends GoSet
     public final void remove( GoString string )
     {
         clearEyes();
-        members_.remove( string );
+        if (members_.isEmpty())
+        {
+            GameContext.log(2, "attempting to remove "+string+" from already empty group.");
+            return;
+        }
+        boolean removed = members_.remove( string );
+        assert (removed): "Unable to remove \n"+string+"\n from \n "+this;
         changed_ = true;
     }
 
@@ -280,6 +277,7 @@ public final class GoGroup extends GoSet
      */
     public final void remove( GoBoardPosition stone, GoBoard board )
     {
+        assert (this.containsStone(stone)): this + " \n does not contain "+stone;
         GoString string = stone.getString();
         if ( string != null ) {
             // if this is the only stone in the string, then remove the whole string.
@@ -377,12 +375,17 @@ public final class GoGroup extends GoSet
             }
         }
 
+        // use the number of current true eyes to help us determine current eyes
+        int numCurrentTrueEyes = getNumTrueEyes();
+
         // forget what we had computed before about the eyes
         clearEyes();
 
         // next eliminate all the stones and spaces that are in the bounding rect,
         // but not in the group. We do this by marching around the perimeter cutting out
         // the strings of empty or opponent spaces that do not belong.
+        // Note : we do not go all the way to the edge. If the border of a group includes an edge of the board,
+        // then empty spaces there are most likely eyes (but not necessarily).
         if ( cMin > 1 ) {
             for ( int r = rMin; r <= rMax; r++ )
                 excludeSeed( (GoBoardPosition) board.getPosition( r, cMin ), ownedByPlayer1_, board, lists, rMin, rMax, cMin, cMax );
@@ -403,7 +406,7 @@ public final class GoGroup extends GoSet
         // now do a paint fill on each of the empty unvisited spaces left.
         // most of these remaining empty spaces is connected to an eye of some type.
         // There will be some that fill spaces between black and white stones.
-        // Don't count these as eyes unless the stones of the opposite color are much weaker
+        // Don't count these as eyes unless the stones of the opposite color are much weaker -
         // in which case they are assumed dead and hence part of the eye.
         for ( int r = rMin; r <= rMax; r++ ) {
             for ( int c = cMin; c <= cMax; c++ ) {
@@ -416,15 +419,17 @@ public final class GoGroup extends GoSet
                     lists.add( eyeList );
                     // make sure this is a real eye.
                     // this method checks that opponent stones don't border it.
-                    if ( confirmEye( eyeList, board ) ) {
+                    if ( confirmEye( eyeList, board, numCurrentTrueEyes) ) {
                         GoEye eye =  new GoEye( eyeList, board, this );
                         eyes_.add( eye );
+                    }
+                    else {
+                        GoBoard.debugPrintList(2, "This list of stones was rejected as being an eye: ", eyeList);
                     }
                 }
             }
         }
         GoBoardUtil.unvisitPositionsInLists( lists );
-        //board.confirmAllUnvisited();
     }
 
     /**
@@ -465,6 +470,20 @@ public final class GoGroup extends GoSet
         }
     }
 
+    private int getNumTrueEyes()
+    {
+        int numTrueEyes = 0;
+        Iterator it = this.getEyes().iterator();
+        while (it.hasNext())  {
+            GoEye eye = (GoEye)it.next();
+            if (eye.getEyeType() != EyeType.FALSE_EYE)  {
+                numTrueEyes++;
+            }
+        }
+        return numTrueEyes;
+    }
+
+
     /**
      * check this list of stones to confirm that enemy stones don't border it.
      * If they do, then it is not an eye - return false.
@@ -473,20 +492,22 @@ public final class GoGroup extends GoSet
      * @param board
      * @return true if the list of stones is an eye
      */
-    private boolean confirmEye( List eyeList, GoBoard board )
+    private boolean confirmEye( List eyeList, GoBoard board, int numCurrentTrueEyes )
     {
         if ( eyeList == null )
             return false;
 
-        Iterator it = eyeList.iterator();
+        if (numCurrentTrueEyes>0)
+          return true;
 
         // each occupied stone of the eye must be very weak (ie not an enemy, but dead opponent)
         // compare it with one of the group strings
         GoString groupString = (GoString)(members_.iterator().next());
 
+        Iterator it = eyeList.iterator();
         while ( it.hasNext() ) {
-            GoBoardPosition s = (GoBoardPosition) it.next();
-            if (s.isOccupied() && groupString.isEnemy(s, board)) {
+            GoBoardPosition stone = (GoBoardPosition) it.next();
+            if (stone.isOccupied() && groupString.isEnemy(stone, board)) {
                 //GameContext.log(1, "eyeList "+eyeList+" was rejected as an eye" );
                 return false;  // not eye
             }
@@ -527,11 +548,11 @@ public final class GoGroup extends GoSet
     /**
      * Calculate the absolute health of a group.
      * All the stones in the group have the same health rating because the
-     * group lives or dies as a unit (not entirely true - strings live or die as unit).
-     * Good health of a black group is positive.
+     * group lives or dies as a unit (not entirely true - strings live or die as unit, but there is a relationship).
+     * Good health of a black group is positive; white, negative.
      * The health is a function of the number of eyes, false-eyes, liberties, and
      * the health of surrounding groups. If the health of an opponent bordering group
-     * is in worse shape than our own then we should get a boost since we can probably
+     * is in worse shape than our own then we get a boost since we can probably
      * kill that group first. See calculateRelativeHealth below.
      *
      * @@ need expert advice to make this work well.
@@ -549,7 +570,6 @@ public final class GoGroup extends GoSet
 
         cachedNumLiberties_ = numLiberties;
 
-        //int numStonesInGroup = getNumStones();
         float health = 0;
         // health based on eye shape - the most significant factor
         float eyeHealth = 0;
@@ -611,16 +631,16 @@ public final class GoGroup extends GoSet
                     eyeHealth = -side * .8f;
                     break;
                 case 2:
-                    eyeHealth = -side * .7f;
+                    eyeHealth = -side * .6f;
                     break;
                 case 3:
-                    eyeHealth = -side * .5f;
+                    eyeHealth = -side * .4f;
                     break;
                 case 4:
-                    eyeHealth = -side * .3f;
+                    eyeHealth = -side * .2f;
                     break;
                 case 5:
-                    eyeHealth = -side * .1f;
+                    eyeHealth = -side * .0f;
                     break;
                 case 6:
                     eyeHealth = side * .2f;
@@ -677,7 +697,7 @@ public final class GoGroup extends GoSet
      * This measure of the groups health should be much more accurate than the absolute health
      * because it takes into account the relative health of neighboring groups.
      * If the health of an opponent bordering group is in worse shape
-     * than our own then we should get a boost since we can probably
+     * than our own then we get a boost since we can probably
      * kill that group first.
      *
      * @return the overall health of the group.
@@ -853,8 +873,7 @@ public final class GoGroup extends GoSet
     {
         assert (pos.isOccupied());
         GoStone stone = (GoStone)pos.getPiece();
-        boolean withinDifferenceThreshold =
-                 (Math.abs(this.absoluteHealth_/*calculateAbsoluteHealth(board)*/ + stone.getHealth()) <= GoGroup.DIFFERENCE_THRESHOLD);
+        boolean withinDifferenceThreshold = !isStoneMuchWeaker(this, stone);
 
         return ( stone.isOwnedByPlayer1() != ownedByPlayer1_  && withinDifferenceThreshold);
     }
@@ -935,7 +954,7 @@ public final class GoGroup extends GoSet
      * @param stones list of stones to check if same as those in this group
      * @return true if all the strings are in this group
      */
-    private boolean contains( List stones )
+    public boolean contains( List stones )
     {
         Iterator it = stones.iterator();
         while ( it.hasNext() ) {
