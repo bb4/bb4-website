@@ -83,8 +83,8 @@ public abstract class PokerPlayer extends Player
         return cash_;
     }
 
-    public void fold() {
-        hasFolded_ = true;
+    public void setFold(boolean folded) {
+        hasFolded_ = folded;
     }
     
     public boolean hasFolded() {

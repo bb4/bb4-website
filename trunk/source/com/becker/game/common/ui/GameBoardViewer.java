@@ -183,7 +183,6 @@ public abstract class GameBoardViewer
         if (this.getGraphics() != null) {
             this.paint( this.getGraphics() );
         }
-
     }
 
     /**
@@ -476,6 +475,8 @@ public abstract class GameBoardViewer
         cellSize_ = calcCellSize( nrows, ncols );
 
         super.paintComponents( g );
+        //super.paintComponent(g);   // need?
+        
         Graphics2D g2 = (Graphics2D)g;
 
         int gridOffset = 0;

@@ -59,14 +59,15 @@ public enum PokerChip {
         int[] numChips = new int[numberOfChipTypes];
         
         for (PokerChip chipType : PokerChip.values()) {
-           if (remainder > chipType.highThresh_) {
-               int amtToConvert = remainder - (remainder % chipType.lowThresh_);
-               int nChips = amtToConvert / chipType.getValue();
-               remainder -=  nChips * chipType.getValue();
-               numChips[chipType.ordinal()] = nChips;
-           }
+            assert (remainder >= 0) : "remainder "+remainder+" is negative";
+            if (remainder >= chipType.highThresh_) {
+                int amtToConvert = remainder - (remainder % chipType.lowThresh_);
+                int nChips = amtToConvert / chipType.getValue();
+                remainder -=  nChips * chipType.getValue();
+                numChips[chipType.ordinal()] = nChips;
+            }
         }
-        assert (remainder == 0);
+        assert (remainder == 0) : "remainder was "+remainder+", not 0 as expected";
         return numChips;
     }
 

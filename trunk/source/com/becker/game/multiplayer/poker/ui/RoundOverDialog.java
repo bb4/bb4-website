@@ -7,7 +7,7 @@ import com.becker.ui.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
-import java.util.List;
+import java.text.NumberFormat;
 
 
 
@@ -22,6 +22,12 @@ import java.util.List;
  */
 public class RoundOverDialog extends OptionsDialog
 {
+    JPanel mainPanel_;
+    GradientButton closeButton_;
+
+    PokerPlayer winner_;
+    int winnings_;
+
     /**
      * constructor - create the tree dialog.
      * @param parent frame to display relative to
@@ -29,10 +35,45 @@ public class RoundOverDialog extends OptionsDialog
     public RoundOverDialog( Frame parent, PokerPlayer winner, int winnings )
     {
         super( parent );
+        winner_ = winner;
+        winnings_ = winnings;
+        initUI();
     }
 
     protected void initUI() {
+        setResizable( true );
+        mainPanel_ =  new JPanel();
+        mainPanel_.setLayout( new BorderLayout() );
+        mainPanel_.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEtchedBorder(),
+                                                               BorderFactory.createEmptyBorder(10, 10, 10, 10)));
 
+        JPanel buttonsPanel = createButtonsPanel();
+        JPanel instructions = createInstructionsPanel();
+
+        mainPanel_.add(instructions, BorderLayout.CENTER);
+        //mainPanel_.add(new JLabel(" "), BorderLayout.SOUTH);
+        mainPanel_.add(buttonsPanel, BorderLayout.SOUTH);
+
+        getContentPane().add( mainPanel_ );
+        getContentPane().repaint();
+        pack();
+    }
+
+
+    private JPanel createInstructionsPanel() {
+        JPanel panel = new JPanel(new BorderLayout());
+        JPanel playerPanel = BettingDialog.createPlayerLabel(winner_);
+
+        NumberFormat cf = BettingDialog.getCurrencyFormat();
+        String cash = cf.format(winnings_);
+        JLabel winLabel = new JLabel("You won "+cash+" from the pot!");
+        //JLabel amountToCall = new JLabel("To call, you need to add " + cf.format(callAmount_));
+
+        //panel.setPreferredSize(new Dimension(400, 100));
+        panel.add(playerPanel, BorderLayout.NORTH);
+        panel.add(winLabel, BorderLayout.CENTER);
+        //panel.add(amountToCall, BorderLayout.SOUTH);
+        return panel;
     }
 
     public String getTitle() {
@@ -40,12 +81,20 @@ public class RoundOverDialog extends OptionsDialog
     }
 
     protected JPanel createButtonsPanel(){
-        return new JPanel();
+        JPanel buttonsPanel = new JPanel( new FlowLayout() );
+
+        closeButton_ = new GradientButton();
+        initBottomButton( closeButton_, GameContext.getLabel("CLOSE"), GameContext.getLabel("CLOSE_TIP") );
+
+        buttonsPanel.add( closeButton_ );
+        return buttonsPanel;
     }
 
 
     public void actionPerformed(ActionEvent evt) {
-
+        if (evt.getSource() == closeButton_) {
+            this.setVisible(false);
+        }
     }
 
 }

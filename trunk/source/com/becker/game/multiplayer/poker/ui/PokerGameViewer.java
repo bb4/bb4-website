@@ -95,8 +95,6 @@ public class PokerGameViewer extends GameBoardViewer
       */
      protected void showWinnerDialog()
      {
-         //TallyDialog tallyDialog = new TallyDialog(parent_, (PokerController)controller_);
-         //tallyDialog.showDialog();
 
          String message = getGameOverMessage();
          JOptionPane.showMessageDialog( this, message, GameContext.getLabel("GAME_OVER"),
@@ -126,7 +124,7 @@ public class PokerGameViewer extends GameBoardViewer
         PokerController pc = (PokerController) controller_;
 
         switch (robot.getAction(pc)) {
-            case FOLD : robot.fold();
+            case FOLD : robot.setFold(true);
                 break;
             case CALL : 
                 int callAmount =  pc.getCurrentMaxContribution() - robot.getContribution();
@@ -136,14 +134,6 @@ public class PokerGameViewer extends GameBoardViewer
             case RAISE : robot.contributeToPot(pc, robot.getRaise());
                 break;
         }
-
-        /*
-        // records the result on the board.
-        Move lastMove = gc.getLastMove();
-        PokerTurn gmove = PokerTurn.createMove((lastMove==null)? 0 : lastMove.moveNumber + 1);
-        gc.makeMove(gmove);
-        */
-        this.refresh();
 
         pc.advanceToNextPlayer();
 
@@ -159,7 +149,7 @@ public class PokerGameViewer extends GameBoardViewer
     {
         if (controller_.done() && !winnerDialogShown_)  {
             winnerDialogShown_ = true;
-            this.showWinnerDialog();
+            showWinnerDialog();
         }
         else if (!winnerDialogShown_) {
              super.gameChanged(evt);
@@ -176,50 +166,34 @@ public class PokerGameViewer extends GameBoardViewer
     {
         PokerRound gmove = PokerRound.createMove((lastMove==null)? 0 : lastMove.moveNumber+1);
 
-        // for each order of each player, apply it for one year
-        // if there are battles, show them in the battle dialog and record the result in the move.
-        Player[] players = controller_.getPlayers();
-
-        /*
-        for (int i=0; i< players.length; i++) {
-            List orders = ((PokerPlayer)players[i]).getOrders();
-            Iterator orderIt = orders.iterator();
-            while (orderIt.hasNext()) {
-                Order order = (Order)orderIt.next();
-                // have we reached our destination?
-                // if so show and record the battle, and then remove the order from the list.
-                // If not adjust the distance remaining.
-                order.incrementYear();
-                if (order.hasArrived()) {
-
-                    Planet destPlanet = order.getDestination();
-                    BattleSimulation battle = new BattleSimulation(order, destPlanet);
-                    gmove.addSimulation(battle);
-
-                    //  show battle dialog if not all computers playing
-                    if (!controller_.allPlayersComputer()) {
-
-                        BattleDialog bDlg = new BattleDialog(parent_, battle, this);
-                        //bDlg.setLocationRelativeTo(this);
-
-                        Point p = this.getParent().getLocationOnScreen();
-                        // offset the dlg so the Galaxy grid is visible as a reference.
-                        bDlg.setLocation((int)(p.getX()+getParent().getWidth()), (int)(p.getY()+.6*getParent().getHeight()));
-                        bDlg.setModal(true);
-                        bDlg.setVisible(true);
-                    }
-
-                    destPlanet.setOwner( battle.getOwnerAfterAttack());
-                    destPlanet.setNumShips( battle.getNumShipsAfterAttack() );
-
-                    // remove this order as it has arrived.
-                    orderIt.remove();
-                }
-            }
-        }
-        */
         return gmove;
     }
+
+
+
+    /**
+     * show who won the round and dispurse the pot
+     */
+    public void showRoundOver(PokerPlayer winner, int winnings) {
+
+        Player[] players = controller_.getPlayers();
+        for (int i=0; i<players.length; i++) {
+            PokerPlayer player = (PokerPlayer) players[i];
+            player.getHand().setFaceUp(true);
+        }
+        //refresh();
+
+        RoundOverDialog roundOverDlg = new RoundOverDialog(null, winner, winnings);
+
+        Point p = this.getParent().getLocationOnScreen();
+
+        // offset the dlg so the board is visible as a reference
+        roundOverDlg.setLocation((int)(p.getX()+.7*getParent().getWidth()), (int)(p.getY()+getParent().getHeight()/3));
+
+        roundOverDlg.setVisible(true);
+    }
+
+
 
     public void highlightPlayer(Player player, boolean hightlighted)
     {
@@ -231,6 +205,7 @@ public class PokerGameViewer extends GameBoardViewer
 
     protected void drawBackground(Graphics g, int startPos, int rightEdgePos, int bottomEdgePos )
     {
+        super.drawBackground(g, startPos, rightEdgePos, bottomEdgePos);
         g.setColor( backgroundColor_ );
         int width = this.getWidth();
         int height = this.getHeight();

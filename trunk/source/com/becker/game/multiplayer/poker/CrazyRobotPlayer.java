@@ -26,7 +26,7 @@ public class CrazyRobotPlayer extends PokerRobotPlayer
     public Action getAction(PokerController pc) {
         if (getHand().getScore() > 10 || Math.random() > .3) {
             return Action.RAISE;
-        } else if (getHand().getScore() > 1 || Math.random() > .2) {
+        } else if (getHand().getScore() > 1 || Math.random() > .2 || allOthersFolded(pc)) {
             return Action.CALL;
         }
         return Action.FOLD;

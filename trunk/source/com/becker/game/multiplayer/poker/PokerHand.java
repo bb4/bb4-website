@@ -257,9 +257,15 @@ public class PokerHand implements Comparable {
     }
 
 
+    /**
+     *
+     * @param hand1
+     * @param hand2
+     * @return  return 1 if hand1 greater than hand 2, 0 if equal, -1 if less.
+     */
     public static int compareHandsOfEqualType(PokerHand hand1, PokerHand hand2) {
         assert(hand1.determineType() == hand2.determineType());
-        if (hand1.getRankOfLargestNofaKind().ordinal() > hand1.getRankOfLargestNofaKind().ordinal()) {
+        if (hand1.getRankOfLargestNofaKind().ordinal() > hand2.getRankOfLargestNofaKind().ordinal()) {
             return 1;
         } else {
             return -1;
