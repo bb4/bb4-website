@@ -60,10 +60,10 @@ public class PokerPlayerTable extends PlayerTable
         int nRows = model.getRowCount();
         Player[] players = new PokerPlayer[nRows];
         for (int i=0; i<nRows; i++) {
-
+            System.out.println("pokerPlayerTable cash==="+((Integer)model.getValueAt(i, CASH_INDEX)).intValue());
             players[i] = PokerPlayer.createPokerPlayer(
                                     (String)model.getValueAt(i, NAME_INDEX),
-                                    ((Integer)model.getValueAt(1, CASH_INDEX)).intValue(),
+                                    ((Integer)model.getValueAt(i, CASH_INDEX)).intValue(),
                                     (Color)model.getValueAt(i, COLOR_INDEX),
                                     ((Boolean)model.getValueAt(i, TYPE_INDEX)).booleanValue());
         }

@@ -3,6 +3,7 @@ package com.becker.game.multiplayer.poker.ui;
 import com.becker.game.common.*;
 import com.becker.game.multiplayer.galactic.*;
 import com.becker.game.multiplayer.poker.PokerPlayer;
+import com.becker.game.multiplayer.poker.PokerHand;
 import com.becker.ui.*;
 
 import javax.swing.*;
@@ -39,7 +40,6 @@ public final class BettingDialog extends OptionsDialog
     public BettingDialog(PokerPlayer player)
     {
         player_ = player;
- 
         initUI();
     }
 
@@ -53,7 +53,7 @@ public final class BettingDialog extends OptionsDialog
         mainPanel_ =  new JPanel();
         mainPanel_.setLayout( new BorderLayout() );
 
-        pokerHandPanel_ = createPokerHandPanel();
+        pokerHandPanel_ = new PokerHandPanel(player_.getHand());
         JPanel buttonsPanel = createButtonsPanel();
 
         JPanel instructions = createInstructionsPanel();
@@ -68,16 +68,13 @@ public final class BettingDialog extends OptionsDialog
         pack();
     }
 
-    private JPanel createPokerHandPanel() {
-        JPanel panel = new JPanel();
-        panel.setPreferredSize(new Dimension(400, 100));
-        return panel;
-    }
 
     private JPanel createInstructionsPanel() {
         JPanel panel = new JPanel(new BorderLayout());
         JLabel currentCash = new JLabel("You currently have "+player_.getCash());
         JLabel amountToCall = new JLabel("To call, you need to add ???");
+         //  @@ controller.getMaxContribution() - player_.getContribution();
+        
         //panel.setPreferredSize(new Dimension(400, 100));
         panel.add(currentCash, BorderLayout.NORTH);
         panel.add(amountToCall, BorderLayout.CENTER);
@@ -156,6 +153,24 @@ public final class BettingDialog extends OptionsDialog
             int raise   = raiseDialog.getRaiseAmount();
             // @@ add the raise to the pot
         }
+    }
+
+    /**
+     * this panel shows the player the contents of their hand so they can bet on it.
+     */
+    private class PokerHandPanel extends JPanel {
+        PokerHand hand_;
+
+        public PokerHandPanel(PokerHand hand) {
+            hand_ = new PokerHand(hand.getCards());
+            hand_.setFaceUp(true);
+            this.setPreferredSize(new Dimension(400, 120));
+        }
+
+        protected void paintComponent(Graphics g) {
+             PokerRenderer renderer = (PokerRenderer)PokerRenderer.getRenderer();
+             renderer.renderHand((Graphics2D)g, new Location(0, 2), hand_, 22);
+         }
     }
 
 }

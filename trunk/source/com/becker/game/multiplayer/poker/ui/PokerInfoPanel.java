@@ -4,7 +4,7 @@ import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
 import com.becker.game.multiplayer.poker.PokerController;
 import com.becker.game.multiplayer.poker.PokerPlayer;
-import com.becker.game.multiplayer.poker.PokerBoard;
+import com.becker.game.multiplayer.poker.PokerTable;
 import com.becker.ui.GradientButton;
 import com.becker.ui.GUIUtil;
 

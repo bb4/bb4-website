@@ -84,8 +84,10 @@ public abstract class NewGameDialog extends OptionsDialog implements ActionListe
 
     protected void buildMainOptionsPanel(JPanel mainOptionsPanel)
     {
-        mainOptionsPanel.add( playerPanel_ );
-        mainOptionsPanel.add( boardParamPanel_ );
+        if (playerPanel_ != null)
+            mainOptionsPanel.add( playerPanel_ );
+        if (boardParamPanel_ != null)
+            mainOptionsPanel.add( boardParamPanel_ );
         if ( customPanel_ != null )
             mainOptionsPanel.add( customPanel_ );
 
@@ -194,9 +196,11 @@ public abstract class NewGameDialog extends OptionsDialog implements ActionListe
 
     protected void ok()
     {
-        Integer r = new Integer( rowSizeField_.getText() );
-        Integer c = new Integer( colSizeField_.getText() );
-        board_.setSize( r.intValue(), c.intValue() );
+        if (boardParamPanel_ != null) {
+            Integer r = new Integer( rowSizeField_.getText() );
+            Integer c = new Integer( colSizeField_.getText() );
+            board_.setSize( r.intValue(), c.intValue() );
+        }
 
         //restore the saved file if one was specified
         String fileToOpen = openFileField_.getText();
