@@ -30,6 +30,7 @@ class GalacticInfoPanel extends GameInfoPanel implements GameChangedListener, Ac
 
     private JPanel commandPanel_;
 
+
     /**
      * Constructor
      */
@@ -111,8 +112,9 @@ class GalacticInfoPanel extends GameInfoPanel implements GameChangedListener, Ac
               gc.advanceToNextPlayer();
 
 
-
-           OrdersDialog ordersDialog = new OrdersDialog(null, currentPlayer, (Galaxy)gc.getBoard(), gc.getNumberOfYearsRemaining());
+           OrdersDialog ordersDialog =
+                   new OrdersDialog(null, currentPlayer, (Galaxy)gc.getBoard(), 
+                                    gc.getNumberOfYearsRemaining());
            //ordersDialog.setLocationRelativeTo( this );
            Point p = this.getParent().getLocationOnScreen();
 
@@ -121,7 +123,6 @@ class GalacticInfoPanel extends GameInfoPanel implements GameChangedListener, Ac
 
            boolean canceled = ordersDialog.showDialog();
            if ( !canceled ) { // newGame a game with the newly defined options
-               // boardViewer_.startNewGame();
                currentPlayer.setOrders( ordersDialog.getOrders() );
                gc.advanceToNextPlayer();
            }
@@ -172,10 +173,10 @@ class GalacticInfoPanel extends GameInfoPanel implements GameChangedListener, Ac
 
         Color pColor = player.getColor();
 
-        Border playerLabelBorder = BorderFactory.createLineBorder(pColor, 2);
-        playerLabel_.setBorder(playerLabelBorder);
+        //Border playerLabelBorder = BorderFactory.createLineBorder(pColor, 2);
+        playerLabel_.setBorder(getPlayerLabelBorder(pColor));
 
-        if (commandPanel_!=null) {
+        if (commandPanel_ != null) {
             commandPanel_.setForeground(pColor);
             setCommandPanelTitle();
         }

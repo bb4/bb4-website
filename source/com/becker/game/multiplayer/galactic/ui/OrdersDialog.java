@@ -34,7 +34,8 @@ final class OrdersDialog extends OptionsDialog implements ActionListener
      * constructor - create the tree dialog.
      * @param parent frame to display relative to
      */
-    public OrdersDialog( JFrame parent, GalacticPlayer player, Galaxy galaxy, int numYearsRemaining )
+    public OrdersDialog( JFrame parent, GalacticPlayer player, Galaxy galaxy,
+                         int numYearsRemaining)
     {
         super(parent);
         player_ = player;
@@ -83,6 +84,7 @@ final class OrdersDialog extends OptionsDialog implements ActionListener
         mainPanel.add(titlePanel, BorderLayout.NORTH);
 
         JScrollPane scrollPane = new JScrollPane(ordersTable_.getTable());
+        scrollPane.setPreferredSize(new Dimension(310,120));
         scrollPane.setBorder(
                 BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5),
                 scrollPane.getBorder()));
@@ -158,15 +160,14 @@ final class OrdersDialog extends OptionsDialog implements ActionListener
     {
         // open a dlg to get an order
         OrderDialog orderDialog =
-                new OrderDialog(player_, galaxy_, ordersTable_.getCurrentOutGoingShips(), numYearsRemaining_);
+                new OrderDialog(player_, ordersTable_.getCurrentOutGoingShips(), numYearsRemaining_);
 
-        orderDialog.setLocation((int)(this.getLocation().getX() + 300), (int)(this.getLocation().getY() +100));
+        orderDialog.setLocation((int)(this.getLocation().getX() + 40), (int)(this.getLocation().getY() +170));
 
 
         boolean canceled = orderDialog.showDialog();
 
         if ( !canceled ) { // newGame a game with the newly defined options
-            //  boardViewer_.startNewGame();
             Order order = orderDialog.getOrder();
             if (order != null)
                 ordersTable_.addRow(order);

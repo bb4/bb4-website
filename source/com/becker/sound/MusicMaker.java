@@ -131,8 +131,13 @@ public class MusicMaker
     {
         try {
             if (synthesizer == null) {
-                if ((synthesizer = MidiSystem.getSynthesizer()) == null) {
-                    System.out.println("getSynthesizer() failed!");
+                try {
+                    if ((synthesizer = MidiSystem.getSynthesizer()) == null) {
+                        System.out.println("getSynthesizer() failed!");
+                        return;
+                    }
+                } catch(MidiUnavailableException e) {
+                    System.out.println("Midi Anavailable. No Synthesizer will be present.");
                     return;
                 }
             }
@@ -264,6 +269,7 @@ public class MusicMaker
             note=127;
         }
         try {
+            if (channel_ == null) return;
             //System.out.println(note+"  "+duration);
             channel_.noteOn( note, velocity );
             Thread.sleep( duration );

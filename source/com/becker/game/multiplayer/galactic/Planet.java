@@ -20,6 +20,7 @@ public class Planet extends GamePiece implements Comparable
     // the planets never move
     private Location location_;
     private boolean underAttack_;
+    private boolean highlighted_;
 
     public static final char OCCUPIED_PLANET= 'O';
     public static final char UNOCCUPIED_PLANET= 'U';
@@ -76,6 +77,14 @@ public class Planet extends GamePiece implements Comparable
 
     public boolean isUnderAttack() {
         return underAttack_;
+    }
+
+    public boolean isHighlighted() {
+        return highlighted_;
+    }
+
+    public void setHighlighted(boolean highlighted) {
+        highlighted_ = highlighted;
     }
 
     /**
@@ -230,6 +239,7 @@ public class Planet extends GamePiece implements Comparable
         sb.append("Num ships: "+getNumShips());
         return sb.toString();
     }
+
 }
 
 

@@ -87,7 +87,7 @@ public class MazeGenerator extends JComponent
         xDim_ = (int) w; // +2
         yDim_ = (int) h; // +2
         int numCells = xDim_ * yDim_;
-        System.out.println( "initGenerator w=" + w + " h=" + h );
+        //System.out.println( "initGenerator w=" + w + " h=" + h );
         grid_ = new MazeCell[xDim_ ][yDim_];
         stopPosition_ = new Point( xDim_, yDim_ );
 
@@ -164,7 +164,7 @@ public class MazeGenerator extends JComponent
     public void generate( int thickness, int animationSpeed, double forwardProb, double leftProb, double rightProb )
     {
         Dimension dim = this.getSize();
-        System.out.println("in generate. dim="+dim+" w="+dim.width+" h="+dim.height);
+        //System.out.println("in generate. dim="+dim+" w="+dim.width+" h="+dim.height);
         if (dim.width <= 0) {
             dim = new Dimension(500, 300);
             this.setSize(dim);
@@ -517,7 +517,7 @@ public class MazeGenerator extends JComponent
     /**
      * Render the Environment on the screen
      */
-    public void paintComponent( Graphics g )
+    public synchronized void paintComponent( Graphics g )
     {
         super.paintComponent( g );
         Graphics2D g2 = (Graphics2D) g;

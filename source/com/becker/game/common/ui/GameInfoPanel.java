@@ -115,6 +115,11 @@ public abstract class GameInfoPanel extends TexturedPanel implements GameChanged
     }
 
 
+    protected Border getPlayerLabelBorder(Color pColor) {
+        return BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(0, 4, 0, 0),
+                                                  BorderFactory.createEtchedBorder(pColor, pColor.darker()));
+    }
+
     /**
      * create a row in a panel that has one or 2 components.
      */
