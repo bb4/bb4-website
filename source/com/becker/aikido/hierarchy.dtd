@@ -6,13 +6,13 @@
 
 <!ATTLIST hierarchy
     title     NMTOKENS  #REQUIRED
-    imgpath   NMTOKEN   #REQUIRED
-    date      NMTOKEN   #IMPLIED
+    imgpath   CDATA   #REQUIRED
+    date      CDATA   #IMPLIED
     author    NMTOKENS  #IMPLIED
 >
 <!ATTLIST node
     id        ID        #REQUIRED
-    label     NMTOKENS  #REQUIRED
+    label     CDATA  #REQUIRED
 >
 <!ATTLIST use
     ref       IDREF     #REQUIRED

@@ -5,14 +5,18 @@ import org.w3c.dom.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.LinkedList;
 
 /**
  *
  * Instructions for creating an Aikido technique app:
  *   1. fill in the <aikdo_technique>.xml file. Its dtd is hierarchy.dtd.  It assumes one root.
  *   2. Take pictures corresponding to nodes in hierarchy using camcorder.
- *   3. Run this program to generate becker/projects/javascript_projects/aikido_builder/technique_builder.html
- *   4. upload technique_builder.html and corresponding images to website.
+ *   3. Run this program to generate technique_builder.html
+ *     and all_techniques.html in becker/projects/javascript_projects/aikido_builder/.
+ *   4. upload technique_builder.html, alll_techniques.html and corresponding images to website.
  *
  * @author Barry Becker
  * Date: Oct 15, 2004
@@ -25,16 +29,19 @@ public class AikidoAppGenerator {
     private static int THUMB_IMG_WIDTH = 170;
     private static int THUMB_IMG_HEIGHT = 130;
 
-    //private static final String RESULT_FILE = "/home/becker/projects/java_projects/dist/technique_builder.html";
-    private static final String RESULT_FILE = "/home/becker/projects/javascript_projects/aikido_builder/technique_builder.html";
+    private static final String RESULT_PATH = "/home/becker/projects/javascript_projects/aikido_builder/";
+    // the builder DHTML application
+    private static final String RESULT_BULDER_FILE = "technique_builder.html";
+    // all the techniques in one file (for debugging mostly)
+    private static final String RESULT_ALL_FILE = "all_techniques.html";
 
-    private static String getHTMLHead() {
+    private static String getHTMLHead(String title) {
          String head =  "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n"
                 + "<html>\n"
                 + "<head>\n"
                 + "<meta content=\"text/html; charset=ISO-8859-1\""
                 + "http-equiv=\"content-type\">"
-                + "<title>Aikido Technique Builder</title>"
+                + "<title>"+title+"</title>"
                 + "\n\n";
          return head;
     }
@@ -63,17 +70,7 @@ public class AikidoAppGenerator {
         buf.append("  var img = new Array();\n");
         buf.append("  var label = new Array();\n\n");
 
-        // assume that we have a single root under the document root
-        NodeList children = document.getChildNodes();
-        assert (children.getLength() == 2): "Expected one root instead got "+children.getLength();
-        Node root = children.item(1);
-
-        //System.out.println("child 1="+children.item(0).getNodeName()+" "+children.item(0).getNodeValue());
-        //System.out.println("child 2="+children.item(1).getNodeName()+" "+children.item(1).getNodeValue());
-
-        imgPath_ = getAttribute(root, "imgpath");
-
-        buf.append( genJSForNode(root, document));
+        buf.append( genJSForNode(getRootNode(document), document));
         buf.append("\n");
 
         return buf.toString();
@@ -89,40 +86,24 @@ public class AikidoAppGenerator {
         // first print the img and label for the node, then next ptrs for all children,
         // then do the same for all its children
         StringBuffer buf = new StringBuffer();
-        NamedNodeMap attribMap = node.getAttributes();
-        String id = null;
-        String img = null;
-        String label = null;
-        if (attribMap!=null) {
-            for (int i=0; i<attribMap.getLength(); i++) {
-                Node attr = attribMap.item(i);
-                if (attr.getNodeName().equals("id")) {
-                    id = attr.getNodeValue();
-                    // the id gets reused for the image name
-                    img = imgPath_ + attr.getNodeValue() + IMG_SUFFIX;
-                }
-                else if (attr.getNodeName().equals("label"))
-                    label = attr.getNodeValue();
-            }
-        }
-        //assert (id!=null);
-        if (id==null)  {
+        NodeInfo nodeInfo = new NodeInfo(node.getAttributes());
+        if (nodeInfo.id==null)  {
             System.out.println("null id for "+node.getNodeName()+" "+node.getNodeValue());
             //return  "";
         }
 
         NodeList children = node.getChildNodes();
 
-        if (id!=null) {
-            buf.append("  img['"+id+"']='"+img+"';\n");
-            buf.append("  label['"+id+"']='"+label+"';\n\n");
+        if (nodeInfo.id!=null) {
+            buf.append("  img['"+nodeInfo.id+"']='"+nodeInfo.img+"';\n");
+            buf.append("  label['"+nodeInfo.id+"']='"+nodeInfo.label+"';\n\n");
 
             int len = children.getLength();
             if (len > 0)
-                buf.append("  next['"+id+"']= new Array();\n");
+                buf.append("  next['"+nodeInfo.id+"']= new Array();\n");
             for (int i=0; i<len; i++) {
                 Node child = children.item(i);
-                buf.append("  next['"+id+"']["+i+"]='"+getAttribute(child, "id")+"';\n");
+                buf.append("  next['"+nodeInfo.id+"']["+i+"]='"+getAttribute(child, "id")+"';\n");
             }
             if (len > 0)
                 buf.append("\n");
@@ -278,7 +259,7 @@ public class AikidoAppGenerator {
     }
 
 
-    private static String getBody() {
+    private static String getAppBody() {
         String body =
             "<body onload=\"doOnLoad()\">\n"
           + "<big><big style=\"font-weight: bold; text-decoration: underline;\">Aikido\n"
@@ -335,7 +316,124 @@ public class AikidoAppGenerator {
           +"</body> \n";
 
         return body;
+    }
 
+    private static Node getRootNode(Document document) {
+        // assume that we have a single root under the document root
+        NodeList children = document.getChildNodes();
+        assert (children.getLength() == 2): "Expected one root instead got "+children.getLength();
+        Node root = children.item(1);
+
+        imgPath_ = getAttribute(root, "imgpath");
+        return root;
+    }
+
+
+    private static String genRowForNode(Node node, Document document, List parentList) {
+
+        StringBuffer buf = new StringBuffer();
+        NodeInfo nodeInfo = new NodeInfo(node.getAttributes());
+
+        if (nodeInfo.id==null)  {
+            System.out.println("null id for "+node.getNodeName()+" "+node.getNodeValue());
+            //return  "";
+        }
+        parentList.add(nodeInfo);
+
+        NodeList children = node.getChildNodes();
+
+        if ((children.getLength()==0) && (nodeInfo.id != null)) {
+            // then we have a child node, so print a row corresponding to a technique
+
+            buf.append("  <tr nowrap> \n");
+            for (int i=1; i<parentList.size(); i++) {
+                NodeInfo info = (NodeInfo)parentList.get(i);
+                buf.append("    <td nowrap>\n");
+                buf.append("      <div style=\"height:14px; width:90px; overflow:hidden;\"\n");
+                buf.append("        <font size='-3'>");
+                buf.append(info.label);
+                buf.append("        </font>");
+                buf.append("      </div>");
+                buf.append("    </td>\n");
+            }
+            buf.append("  </tr>   \n");
+            buf.append("  <tr>   \n");
+            for (int i=1; i<parentList.size(); i++) {
+                NodeInfo info = (NodeInfo)parentList.get(i);
+                buf.append("    <td>\n");
+                //buf.append("      <img src=\""+ info.img +"\" style=\"width:50px; height:44px;\">\n");
+                buf.append("      <img src=\""+ info.img +"\" height=\"60\">\n");
+                buf.append("    </td>\n");
+            }
+            buf.append("  </tr>   \n");
+        }
+
+        for (int i=0; i<children.getLength(); i++) {
+            Node child = children.item(i);
+            buf.append( genRowForNode(child, document, parentList));
+        }
+
+        parentList.remove(parentList.size()-1);
+
+        return buf.toString();
+
+    }
+
+
+    private static String getTechniqueTable(Document document) {
+        StringBuffer buf = new StringBuffer();
+        List parentList = new LinkedList();
+
+        // recursive call
+        //buf.append("<table id='techniqueTable' width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"1\">\n");
+        buf.append("<table id='techniqueTable' width=\"100%\" border=\"0\">\n");
+
+        buf.append( genRowForNode(getRootNode(document), document, parentList));
+
+        buf.append("</table>\n\n");
+
+        return buf.toString();
+    }
+
+    /**
+     *
+     * @param document
+     * @return html body containing a table of all the techniques.
+     */
+    private static String getAllBody(Document document) {
+
+        String body =
+            "<body>\n"
+          + "<big><big style=\"font-weight: bold; text-decoration: underline;\">Aikido\n"
+          + "Techniques</big></big><br>\n"
+          + "<br>\n"
+          + "This page contains all techniques fro, katate dori.<br> If you see an error send mail to BarryBecker4@yahoo.com.<br>\n"
+          + "<font size='-1'>This application was built using XML, java and DHTML (<a href='technique_builder_desc.html'>more details</a>).</font> "
+          + "<br><br>\n\n"
+
+          + "<table id='outerTable' width=\"100%\" border=\"0\">\n"
+          + "  <tr>\n"
+          + "    <td>\n"
+          + "      <div style=\"width:100%; overflow: auto; font-family:arial; font-size:50%;\">\n\n"
+
+          + getTechniqueTable(document)
+
+          + "      </div>\n"
+          + "    </td>\n"
+          + "  </tr>\n"
+          + "  <tr>\n"
+          + "    <td>\n"
+          + "      <div id=\"bigImgDiv\">\n"
+          + "        <img id=\"big_image\" name=\"step1img\" src=\"select_m.png\" border=\"1\">\n"
+          + "      </div>\n"
+          + "    </td>\n"
+          + "  </tr>\n"
+          + "</table> \n\n"
+
+          + "<br>\n"
+          +"</body> \n";
+
+        return body;
     }
 
     /**
@@ -350,18 +448,37 @@ public class AikidoAppGenerator {
 
         FileOutputStream fos = new FileOutputStream(fileName);
 
-        fos.write(getHTMLHead().getBytes());
+        fos.write(getHTMLHead("Aikido Technique Builder").getBytes());
         fos.write(getScriptOpen().getBytes());
         fos.write(generateHierarchyStructures(document).getBytes());
         fos.write(getJSMethods().getBytes());
         fos.write(getScriptClose().getBytes());
         fos.write("</head>\n".getBytes());
-        fos.write(getBody().getBytes());
+        fos.write(getAppBody().getBytes());
         fos.write("</html>\n".getBytes());
 
         fos.close();
     }
 
+    /**
+     * Auto generate all elementsbased on the XML file.
+     *
+     * @param document
+     * @param fileName
+     * @throws IOException
+     */
+    public static void generateAllElementsFromDom( Document document, String fileName) throws IOException
+    {
+
+        FileOutputStream fos = new FileOutputStream(fileName);
+
+        fos.write(getHTMLHead("Aikido Techniques (from Katate dori)").getBytes());
+        fos.write("</head>\n".getBytes());
+        fos.write(getAllBody(document).getBytes());
+        fos.write("</html>\n".getBytes());
+
+        fos.close();
+    }
 
     // -----------------------------------------------------------------
     public static void main(String argv[])
@@ -377,10 +494,44 @@ public class AikidoAppGenerator {
 
         try {
 
-            generateHTMLAppFromDom( document, RESULT_FILE);
-        }
+            generateHTMLAppFromDom(document, RESULT_PATH + RESULT_BULDER_FILE);
+            generateAllElementsFromDom(document, RESULT_PATH + RESULT_ALL_FILE);
+         }
         catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+
+    /**
+     *  convenient inner class for storing info about the node
+     *
+     */
+    private static class  NodeInfo {
+        private String id;
+        private String img;
+        private String label;
+
+        public NodeInfo(NamedNodeMap attribMap)  {
+            if (attribMap == null)  {
+                 id = null;
+                 img = null;
+                 label = null;
+            }
+            else {
+                if (attribMap!=null) {
+                    for (int i=0; i<attribMap.getLength(); i++) {
+                        Node attr = attribMap.item(i);
+                        if (attr.getNodeName().equals("id")) {
+                            id = attr.getNodeValue();
+                            // the id gets reused for the image name
+                            img = imgPath_ + attr.getNodeValue() + IMG_SUFFIX;
+                        }
+                        else if (attr.getNodeName().equals("label"))
+                            label = attr.getNodeValue();
+                    }
+                }
+            }
         }
     }
 }
