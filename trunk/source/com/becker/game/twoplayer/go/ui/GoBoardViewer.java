@@ -178,11 +178,11 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
         }
 
         boolean notSuicidal = board.makeMove( m ); // this will fill in the captures
-        //System.out.println( "BoardViewer: groups on board (after makemove):\n "+board.getGroupsWithEyesText() );
+        //System.out.println( "BoardViewer: groups on board (after makemove):\n "+board.getGroupsText() );
 
         board.undoMove( m ); // may rejoin groups
 
-        //System.out.println( "BoardViewer: groups on board (after undo):\n "+board.getGroupsWithEyesText() );
+        //System.out.println( "BoardViewer: groups on board (after undo):\n "+board.getGroupsText() );
 
         if (notSuicidal)  {
             if ( !continuePlay( m ) )    // then game over

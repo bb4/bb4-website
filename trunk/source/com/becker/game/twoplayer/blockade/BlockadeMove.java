@@ -41,8 +41,8 @@ public class BlockadeMove extends TwoPlayerMove
      *  Constructor. This should never be called directly
      *  use the factory method createMove instead.
      */
-    private BlockadeMove( int originRow, int originCol,
-                          int destinationRow, int destinationCol,
+    private BlockadeMove( byte originRow, byte originCol,
+                          byte destinationRow, byte destinationCol,
                           double val, int mvNum, GamePiece piece, BlockadeWall w)
     {
         super( destinationRow, destinationCol, val, mvNum, piece );
@@ -63,8 +63,8 @@ public class BlockadeMove extends TwoPlayerMove
             int destinationRow, int destinationCol,
             double val, int mvNum, GamePiece piece, BlockadeWall w)
     {
-        BlockadeMove m = new BlockadeMove( originRow, originCol,
-                destinationRow, destinationCol,
+        BlockadeMove m = new BlockadeMove( (byte)originRow, (byte)originCol,
+                (byte)destinationRow, (byte)destinationCol,
                 val, mvNum, piece, w);
 
         return m;
@@ -77,7 +77,7 @@ public class BlockadeMove extends TwoPlayerMove
     public TwoPlayerMove copy()
     {
 
-        BlockadeMove cp = this.createMove( fromRow_, fromCol_, toRow_, toCol_,
+        BlockadeMove cp = createMove( fromRow_, fromCol_, toRow_, toCol_,
                                            value, moveNumber, piece, wall_);
         cp.selected = this.selected;
         cp.transparency = this.transparency;

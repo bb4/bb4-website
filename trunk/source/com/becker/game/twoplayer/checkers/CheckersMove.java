@@ -14,8 +14,8 @@ public class CheckersMove extends TwoPlayerMove
 {
 
     // the position that the piece is moving from
-    protected int fromRow_;
-    protected int fromCol_;
+    protected byte fromRow_;
+    protected byte fromCol_;
     // True if the piece just got kinged as a result of this move
     public boolean kinged;
     // a linked list of the pieces that were captured with this move
@@ -26,14 +26,14 @@ public class CheckersMove extends TwoPlayerMove
      *  Constructor. This should never be called directly
      *  use the factory method createMove instead.
      */
-    private CheckersMove( int originRow, int originCol,
-                          int destinationRow, int destinationCol,
+    private CheckersMove( byte originRow, byte originCol,
+                          byte destinationRow, byte destinationCol,
                           CaptureList captures,
                           double val, int mvNum, GamePiece piece)
     {
         super( destinationRow, destinationCol, val, mvNum, piece );
-        fromRow_ = originRow;
-        fromCol_ = originCol;
+        fromRow_ = (byte)originRow;
+        fromCol_ = (byte)originCol;
         kinged = false;
         captureList = captures;
     }
@@ -48,8 +48,8 @@ public class CheckersMove extends TwoPlayerMove
             CaptureList captures,
             double val, int mvNum, GamePiece piece )
     {
-        CheckersMove m = new CheckersMove( originRow, originCol,
-                destinationRow, destinationCol,
+        CheckersMove m = new CheckersMove( (byte)originRow, (byte)originCol,
+                (byte)destinationRow, (byte)destinationCol,
                 captures, val, mvNum, piece );
 
         if ( (piece.getType() == CheckersPiece.REGULAR_PIECE) &&
@@ -65,11 +65,11 @@ public class CheckersMove extends TwoPlayerMove
 
     public void setToRow(int toRow)
     {
-        toRow_ = toRow;
+        toRow_ = (byte)toRow;
     }
     public void setToCol(int toCol)
     {
-        toCol_ = toCol;
+        toCol_ = (byte)toCol;
     }
 
     public int getFromRow()
@@ -103,7 +103,7 @@ public class CheckersMove extends TwoPlayerMove
             // then make a deep copy
             newList = captureList.copy();
         }
-        CheckersMove cp = this.createMove( fromRow_, fromCol_, toRow_, toCol_,
+        CheckersMove cp = createMove( fromRow_, fromCol_, toRow_, toCol_,
                 newList, value, moveNumber, piece.copy());
         cp.selected = this.selected;
         cp.transparency = this.transparency;

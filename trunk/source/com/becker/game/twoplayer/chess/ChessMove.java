@@ -28,8 +28,8 @@ public class ChessMove extends TwoPlayerMove
      *  Constructor. This should never be called directly
      *  use the factory method createMove instead.
      */
-    private ChessMove( int originRow, int originCol,
-                          int destinationRow, int destinationCol,
+    private ChessMove( byte originRow, byte originCol,
+                          byte destinationRow, byte destinationCol,
                           CaptureList captures,
                           double val, int mvNum, GamePiece piece )
     {
@@ -50,8 +50,8 @@ public class ChessMove extends TwoPlayerMove
             CaptureList captures,
             double val, int mvNum, GamePiece piece )
     {
-        ChessMove m = new ChessMove( originRow, originCol,
-                destinationRow, destinationCol,
+        ChessMove m = new ChessMove( (byte)originRow, (byte)originCol,
+                (byte)destinationRow, (byte)destinationCol,
                 captures, val, mvNum, piece );
 
         return m;
@@ -77,7 +77,7 @@ public class ChessMove extends TwoPlayerMove
             // then make a deep copy
             newList = captureList.copy();
         }
-        ChessMove cp = this.createMove( fromRow_, fromCol_, toRow_, toCol_,
+        ChessMove cp = createMove( fromRow_, fromCol_, toRow_, toCol_,
                                         newList, value, moveNumber,
                                         piece);
         cp.selected = this.selected;

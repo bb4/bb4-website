@@ -28,7 +28,7 @@ public abstract class SearchStrategy
     public static final double WINNING_VALUE = 1000.0;
 
     // applies only if computer vs computer game
-    // @@ Should have a more abstract SearchOptions class that we get from the conroller.
+    // @@ Should have a more abstract SearchOptions class that we get from the controller.
     final boolean alphaBeta_;
     final boolean quiescence_;
 
@@ -37,7 +37,7 @@ public abstract class SearchStrategy
     static final int PRUNE_BETA = 2;
 
     // the interface implemented by the generic game controller that provides standard methods.
-    SearchableInterface controller_ = null;
+    Searchable controller_ = null;
 
     // keep track of the number of moves searched
     int movesConsidered_ = 0;
@@ -51,7 +51,7 @@ public abstract class SearchStrategy
      * Do not call the constructor directly.
      * @return the search method to use
      */
-    public static SearchStrategy createSearchStrategy(int method, SearchableInterface gc)
+    public static SearchStrategy createSearchStrategy(int method, Searchable gc)
     {
         switch (method) {
             case MINIMAX:
@@ -67,7 +67,7 @@ public abstract class SearchStrategy
      * Construct the strategy.
      * do not call directly. Use createSearchStrategy factory method instead.
      */
-    protected SearchStrategy( SearchableInterface controller )
+    protected SearchStrategy( Searchable controller )
     {
         controller_ = controller;
         alphaBeta_ = controller_.getAlphaBeta();

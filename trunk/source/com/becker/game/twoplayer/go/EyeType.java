@@ -1,7 +1,5 @@
 package com.becker.game.twoplayer.go;
 
-import com.becker.common.EnumeratedType;
-
 /**
  * Enum for the different possible Eye types.
  * @see GoEye

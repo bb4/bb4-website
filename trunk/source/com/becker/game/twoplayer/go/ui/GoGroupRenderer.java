@@ -120,6 +120,7 @@ final class GoGroupRenderer
         GeneralPath border = new GeneralPath();
         float celld2 = cellSize / 2.0f;
         float margin = TwoPlayerBoardViewer.BOARD_MARGIN;
+
         if ( s1.getRow() != s2.getRow() ) { //vertical
             GoBoardPosition topStone;
             GoBoardPosition bottomStone;
@@ -174,6 +175,7 @@ final class GoGroupRenderer
         GeneralPath border = new GeneralPath();
         float celld2 = cellSize / 2.0f;
         float margin = TwoPlayerBoardViewer.BOARD_MARGIN;
+
         // upper left = ul, lr = lower right, ...
         GoBoardPosition ulStone = null, lrStone = null, llStone = null, urStone = null;
         if ( s1.getRow() < s2.getRow() ) {

@@ -26,7 +26,7 @@ public final class GoMove extends TwoPlayerMove
             CaptureList captures,
             double val, int mvNum, GoStone stone )
     {
-        super( destinationRow, destinationCol, val, mvNum, stone );
+        super( (byte)destinationRow, (byte)destinationCol, val, mvNum, stone );
         captureList = captures;
     }
 
@@ -39,7 +39,7 @@ public final class GoMove extends TwoPlayerMove
             CaptureList captures,
             double val, int mvNum, GoStone stone )
     {
-        GoMove m = new GoMove( destinationRow, destinationCol,
+        GoMove m = new GoMove( (byte)destinationRow, (byte)destinationCol,
                 captures, val, mvNum, stone );
         return m;
     }
