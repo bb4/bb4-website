@@ -7,11 +7,106 @@
               <node id="sumi_otoshi_basic" label="sumi otoshi (basic)" img="sumi_otoshi_basic"/>
               <node id="sumi_otoshi_elbow" label="sumi otoshi (elbow)" img="sumi_otoshi_elbow"/>
               <node id="sumi_otoshi_inside_shoulder" label="sumi otoshi (inside shoulder)" img="sumi_otoshi_inside_shoulder"/>
-              <node id="sumi_otoshi_outside_shoulder" label="sumi otoshi (inside shoulder)" img="sumi_otoshi_outside_shoulder"/>
-              <node id="sumi_otoshi_head" label="sumi otoshi (inside shoulder)" img="sumi_otoshi_head"/>
+              <node id="sumi_otoshi_outside_shoulder" label="sumi otoshi (outside shoulder)" img="sumi_otoshi_outside_shoulder"/>
+              <node id="sumi_otoshi_head" label="sumi otoshi (head)" img="sumi_otoshi_head"/>
+              <node id="sumi_koshinage" label="sumi koshinage (morote seoinage)" img="sumi_koshinage_two_hands_on_arm">
+                  <node id="koshinage_finish" label="koshinage finish" img="koshinage_finish"/>
+              </node>
+              <node id="omote_uchi_zempo_nage" label="omote uchi zempo nage" img="omote_uchi_zempo_nage">
+                  <node id="zempo_nage_left_finish" label="zempo nage" img="zempo_nage_left_finish"/>
+              </node>
+              <node id="ikkyo_omote_entrance" label="ikkyo omote entrance" img="ikkyo_omote_entrance">
+                  <node id="ikkyo_omote" label="ikkyo omote" img="ikkyo omote">
+                      <node id="ikkyo_pin" label="ikkyo pin" img="ikkyo_pin"/>
+                  </node>
+                  <node id="nikkyo" label="nikkyo" img="nikkyo">
+                      <node id="nikkyo_ura_finish" label="nikkyo ura finish" img="nikkyo_ura_finish">
+                          <node id="nikkyo_pin" label="nikkyo pin" img="nikkyo_pin"/>
+                      </node>
+                      <node id="nikkyo_omote_finish" label="nikkyo omote finish" img="nikkyo_omote_finish">
+                          <use ref="nikkyo_pin"/>
+                      </node>
+                  </node>
+                  <node id="sankyo_omote_hand_change" label="sankyo omote hand change" img="sankyo_omote_hand_change">
+                      <node id="sankyo" label="sankyo" img="sankyo">
+                          <node id="sankyo_ura" label="sankyo ura" img="sankyo_ura">
+                              <node id="sankyo_seated_pin" label="sankyo seated pin" img="sankyo_seated_pin"/>
+                          </node>
+                      </node>
+                      <node id="sankyo_omote" label="sankyo omote" img="sankyo_omote">
+                          <node id="sankyo_standing_pin" label="sankyo standing pin" img="sankyo_standing_pin"/>
+                      </node>
+                      <node id="sankyo_zempo_nage" label="sankyo zempo nage" img="sankyo_zempo_nage">
+                          <use ref="zempo_nage_left_finish"/>
+                      </node>
+                      <node id="sankyo_bring_around" label="sankyo bring around behind" img="sankyo_bring_around">
+                          <node id="aiki_otoshi_zempo_nage" label="aiki otoshi zempo nage (?)" img="aiki_otoshi_zempo_nage">
+                              <node id="zempo_nage_right_finish" label="zempo nage (right foot?)" img="zempo_nage_right_finish"/>
+                          </node>
+                          <node id="koshinage_on_upper_arm" label="koshinage (on upper arm?)" img="koshinage_on_upper_arm"/>
+                          <node id="tai_otoshi" label="tai otoshi (over leg)" img="tai_otoshi"/>
+                      </node>
+                  </node>
+                  <node id="ikkyo_uchi" label="ikkyo uchi" img="ikkyo_uchi">
+                      <node id="direct_downward_throw" label="direct downward throw" img="direct_downward_throw"/>
+                      <use ref="shihonage_entrance"/>
+                  </node>
+              </node>
+              <node id="yonkyo_entrance" label="yonkyo entrance" img="yonkyo_entrance">
+                  <node id="yonkyo_ura" label="yonkyo ura" img="yonkyo_ura">
+                      <node id="yonkyo_pin_standing" label="yonkyo pin (standing)" img="yonkyo_pin_standing"/>
+                  </node>
+                  <node id="yonkyo_omote" label="yonkyo omote" img="yonkyo_omote">
+                      <use ref="yonkyo_pin_standing" />
+                  </node>
+              </node>
+              <node id="ikkyo_ura_entrance" label="ikkyo ura entrance" img="ikkyo_ura_entrance">
+                  <use ref="ikkyo_omote"/>
+                  <use ref="nikkyo"/>
+                  <node id="sankyo_ura_hand_change" label="sankyo ura hand change" img="sankyo_ura_hand_change">
+                      <use ref="sankyo"/>
+                  </node>
+                  <use ref="yonkyo_entrance"/>
+                  <node id="irminage_continuance" label="irminage continuance" img="irminage_continuance">
+                      <node id="iriminage throw" label="iriminage throw" img="iriminage_throw"/>
+                  </node>
+              </node>
+              <node id="gokkyo" label="gokkyo" img="gokkyo">
+                  <node id="gokkyo_omote" label="gokkyo omote" img="gokkyo_omote">
+                      <node id="gokkyo_pin" label="gokkyo pin" img="gokkyo_pin"/>
+                  </node>
+                  <node id="gokkyo_ura" label="gokkyo ura" img="gokkyo_ura">
+                      <use ref="gokkyo_pin"/>
+                  </node>
+              </node>
+              <node id="uchi_mawari_grabbed" label="uchi mawari (grabbed)" img="uchi_mawari_grabbed">
+                  <node id="zempo_nage" label="zempo nage" img="zempo_nage">
+                      <use ref="zempo_nage_left_finish"/>
+                  </node>
+                  <node id="kaiten_nage_continuance" label="kaiten nage continuance" img="kaiten_nage_continuance">
+                      <node id="kaiten_nage_omote" label="kaiten nage omote" img="kaiten_nage_omote">
+                          <node id="kaiten_nage_throw" label="kaiten nage throw" img="kaiten_nage_throw"/>
+                      </node>
+                      <node id="kaiten_nage__ura" label="kaiten nage ura" img="kaiten_nage__ura">
+                          <use ref="kaiten_nage_throw"/>
+                      </node>
+                  </node>
+                  <node id="arm_bar_continuance" label="arm bar continuance" img="arm_bar_continuance">
+                      <node id="arm_bar" label="arm bar" img="arm_bar">
+                          <node id="arm_bar_pin" label="arm bar pin" img="arm_bar_pin"/>
+                      </node>
+                  </node>
+                  <node id="koshi_nage_past_head" label="koshi nage (past head)" img="koshi_nage_past_head">
+                     <use ref="koshinage_finish"/>
+                  </node>
+              </node>
           </node>
       </node>
       <use ref="sumi_grabbed"></use>
+      <node id="shihonage_entrance" label="shihonage entrance" img="shihonage_entrance">
+         <node id="shihonage" label="shihonage" img="shihonage"/>
+      </node>
   </node>
 </hierarchy>
+
 
