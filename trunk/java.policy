@@ -2,13 +2,13 @@ grant {
     permission java.net.SocketPermission "*:1024-65535",
         "connect,accept";
     permission java.io.FilePermission
-        "d:\\becker\\projects\\java_projects\\rmi_server\\-", "read";
+        "/home/becker/projects/java_projects/rmi_server/-", "read";
     permission java.io.FilePermission
-        "d:\\becker\\projects\\java_projects\\rmi_client\\-", "read";
+        "/home/becker/projects/java_projects/rmi_client/-", "read";
 };
 
 
-// Standard extensions get all permissions by default
+// Standard extensions get all the permissions by default
 
 grant codeBase "file:${java.home}/lib/ext/*" {
 	permission java.security.AllPermission;
