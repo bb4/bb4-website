@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.common;
 
-import com.becker.game.twoplayer.common.search.SearchableInterface;
+import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.common.*;
 import com.becker.optimization.Optimizee;
 
@@ -16,7 +16,7 @@ import java.util.LinkedList;
  *   Another purpose of this interface is to limit the methods available to a
  * given client. We do not want to expose all the TwoPlayerController methods to the UI client.
  * The SearchStrategy (see com.becker.game.twoplayer.common.search package) classes call
- * SearchableInterface methods to do their search.
+ * Searchable methods to do their search.
  * The Optimizer (see com.becker.optimization package) calls Optimizee interface methods.
  *
  * @see com.becker.game.twoplayer.common.TwoPlayerController for the abstract implementation of this interface
@@ -26,7 +26,7 @@ import java.util.LinkedList;
  * @author Barry Becker
  */
 public interface TwoPlayerControllerInterface
-         extends GameControllerInterface, Optimizee, SearchableInterface
+         extends GameControllerInterface, Optimizee, Searchable
 {
 
 

@@ -19,7 +19,7 @@ public final class MiniMaxStrategy extends SearchStrategy
     private int numTopLevelMoves_;
 
     //Construct the strategy
-    public MiniMaxStrategy( SearchableInterface controller )
+    public MiniMaxStrategy( Searchable controller )
     {
         super( controller );
     }

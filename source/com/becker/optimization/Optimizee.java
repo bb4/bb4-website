@@ -17,7 +17,7 @@ public interface Optimizee
      * otherwise the reverse will be true.
      * @return return true if we evaluate the fitness by comparison
      */
-    public boolean  evaluateByComparison();
+    public boolean evaluateByComparison();
 
     /**
      *  attributes a measure of fitness to the specified set of parameters.

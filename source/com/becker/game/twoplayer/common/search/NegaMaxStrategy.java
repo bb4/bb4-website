@@ -22,7 +22,7 @@ public final class NegaMaxStrategy extends SearchStrategy
 
     /** Construct NegaMax the strategy given a controller interface.
     */
-    public NegaMaxStrategy( SearchableInterface controller )
+    public NegaMaxStrategy( Searchable controller )
     {
         super( controller );
     }

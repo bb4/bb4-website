@@ -146,6 +146,8 @@ public class ObjectSizer
    */
   public static int deepSizeOf( Object targetObj, int flags )
   {
+      return 0;
+      /*
     int arrayLength;
     int classSize = 0;    // size of individual class navigated
     int iField;           // iterator for the class fields
@@ -279,9 +281,9 @@ public class ObjectSizer
             {
               // attempt to get a method that will return fields to be excluded
               // from the memory count
-              sizeableMethod = currentClass.getDeclaredMethod("sizeableExcludedFields", (Class[])null);
+              sizeableMethod = currentClass.getDeclaredMethod("sizeableExcludedFields", null);
               sizeableMethod.setAccessible(true);
-              excludedFields = (String[]) sizeableMethod.invoke((Class)currentClass, (Class[])null);
+              excludedFields = (String[]) sizeableMethod.invoke(currentClass, null);
               sizeableMethod.setAccessible(false);
             }
             catch (Exception e)
@@ -347,5 +349,8 @@ public class ObjectSizer
       totalSize += classSize;
     }
     return(totalSize);
+    */
   }
+
 }
+

@@ -259,9 +259,9 @@ public final class GoGroup extends GoSet
     public final void remove( GoString string )
     {
         clearEyes();
-        if (string == null || string.getMembers().isEmpty()) {
-            GameContext.log(2, "attempting to remove empty "+string+" from group."+this);
-            return ;
+        if (string == null) {
+            GameContext.log(2, "attempting to remove "+string+" string from group. "+this);
+            return;
         }
         if (members_.isEmpty())
         {

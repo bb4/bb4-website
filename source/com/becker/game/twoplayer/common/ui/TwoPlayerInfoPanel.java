@@ -84,7 +84,9 @@ public class TwoPlayerInfoPanel extends GameInfoPanel implements GameChangedList
         playerLabel_.setText(" " + player + " ");
 
         Color pColor = p1sturn? renderer.getPlayer1Color() : renderer.getPlayer2Color();
-        Border playerLabelBorder = BorderFactory.createEtchedBorder(pColor, pColor.darker());
+        Border playerLabelBorder =
+                BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(0, 4, 0, 0), 
+                BorderFactory.createEtchedBorder(pColor, pColor.darker()));
         playerLabel_.setBorder(playerLabelBorder);
 
         this.repaint();

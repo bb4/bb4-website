@@ -26,8 +26,8 @@ public class TwoPlayerMove extends Move
     private static final String P2 = GameContext.getLabel("PLAYER2");
 
     // the position of the move
-    protected int toRow_;
-    protected int toCol_;
+    protected byte toRow_;
+    protected byte toCol_;
 
     /**
      * The is the more accurate evaluated value from point of view of p1
@@ -74,7 +74,7 @@ public class TwoPlayerMove extends Move
     /**
      * create a move object representing a transition on the board.
      */
-    protected TwoPlayerMove( int destinationRow, int destinationCol,
+    protected TwoPlayerMove( byte destinationRow, byte destinationCol,
                     double val, int mvNum, GamePiece p )
     {
         toRow_ = destinationRow;
@@ -96,7 +96,7 @@ public class TwoPlayerMove extends Move
     public static TwoPlayerMove createMove( int destinationRow, int destinationCol,
                                    double val, int mvNum, GamePiece piece )
     {
-        return new TwoPlayerMove( destinationRow, destinationCol, val, mvNum, piece );
+        return new TwoPlayerMove( (byte)destinationRow, (byte)destinationCol, val, mvNum, piece );
     }
 
     /**
@@ -104,7 +104,7 @@ public class TwoPlayerMove extends Move
      */
     public TwoPlayerMove copy()
     {
-        TwoPlayerMove cp = this.createMove( toRow_, toCol_, value, moveNumber, piece );
+        TwoPlayerMove cp = createMove( toRow_, toCol_, value, moveNumber, piece );
         cp.transparency = this.transparency;
         cp.selected = this.selected;
         cp.urgent = this.urgent;

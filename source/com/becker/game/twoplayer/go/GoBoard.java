@@ -422,7 +422,9 @@ public final class GoBoard extends TwoPlayerBoard
         GoMove m = (GoMove) move;
 
         // there is nothing to do if it is a pass
-        if ( m.isPassingMove() ) return;
+        if ( m.isPassingMove() ) {
+            return;
+        }
 
         GoBoardPosition stone = (GoBoardPosition) positions_[m.getToRow()][m.getToCol()];
         GoString stringThatItBelongedTo = stone.getString();
@@ -433,17 +435,18 @@ public final class GoBoard extends TwoPlayerBoard
 
         //debugPrintGroups(2, "before updateStringsAfterRemoving", false, true);
         updateStringsAfterRemoving( stone, stringThatItBelongedTo );
+
         if ( m.captureList != null ) {
             restoreCaptures( m.captureList );
-            if (GameContext.getDebugMode()>1)
-                confirmAllStonesInUniqueGroups();
             if (GameContext.getDebugMode()>1) {
+                confirmNoEmptyStrings();
                 updateAfterRestoringCaptures( m.captureList );
                 confirmStonesInValidGroups();
                 confirmAllStonesInUniqueGroups();
                 GameContext.log( 3, "GoBoard: undoMove: " + move + "  groups after restoring captures:" );
             }
         }
+
         updateGroupsAfterRemoving( stone, stringThatItBelongedTo );
 
         profiler_.stop(UNDO_MOVE);
@@ -1108,13 +1111,13 @@ public final class GoBoard extends TwoPlayerBoard
         // check for friendly groups that have been split by the removal
         updateFriendlyGroupsAfterRemoval(friendlyNbrs);
 
-
         // now check for enemy groups that have been rejoined by the removal.
         // in the most extreme case there could be 4 groups that we need to add back.
         //  eg: 4 ataried strings that are restored by the removal of this stone.
         updateEnemyGroupsAfterRemoval(enemyNbrs);
 
         if ( GameContext.getDebugMode() > 1 )  {
+            confirmNoEmptyStrings();
             confirmAllUnvisited();
         }
 
@@ -1134,9 +1137,10 @@ public final class GoBoard extends TwoPlayerBoard
         if ( friendlyNbrs.size() == 0) {
             // do nothing
         }
-        // need to search even if just 1 nbr since the removal of the stone may cause a string to no longer be
-        // in atari and rejoin a group.
         else {
+            // need to search even if just 1 nbr since the removal of the stone may cause a string to no longer be
+            // in atari and rejoin a group.
+
             Iterator friendIt = friendlyNbrs.iterator();
             //GoBoardPosition firstStone = (GoBoardPosition) friendIt.next();
             //List stones = findGroupFromInitialPosition( firstStone, false );
@@ -1166,8 +1170,9 @@ public final class GoBoard extends TwoPlayerBoard
                     lists.add( stones1 );
                 }
             }
+
             GoBoardUtil.unvisitPositionsInLists( lists );
-            if ( GameContext.getDebugMode() > 1 )   // in a state were not necessarily in valid groups?
+            if ( GameContext.getDebugMode() > 1 )
                confirmStonesInValidGroups();
         }
     }
@@ -1177,6 +1182,7 @@ public final class GoBoard extends TwoPlayerBoard
      */
     private void updateEnemyGroupsAfterRemoval(Set enemyNbrs)
     {
+
         if ( enemyNbrs.size() > 0 ) {
 
             Iterator enemyIt = enemyNbrs.iterator();
@@ -1213,16 +1219,9 @@ public final class GoBoard extends TwoPlayerBoard
 
                     restoredGroup = new GoGroup( mergedStones );
 
-                    if ( GameContext.getDebugMode() > 1 )
-                        confirmNoEmptyStrings();
-
                     groups_.add( restoredGroup );
-
-                    if (GameContext.getDebugMode() > 1)
-                        confirmStonesInOneGroup( restoredGroup );
                 }
                 if ( GameContext.getDebugMode() > 1 ) {
-                        confirmNoEmptyStrings();
                         try {
                             confirmStonesInValidGroups();
                             confirmAllUnvisited();
@@ -1900,8 +1899,8 @@ public final class GoBoard extends TwoPlayerBoard
 
         if (string != null)  {
             string.remove(pos);
-        //  GoGroup g = string.getGroup();
-        //  g.remove( pos, this );   // may cause a string to break into smaller strings
+            //GoGroup g = string.getGroup();
+            //  g.remove( pos, this );   // may cause a string to break into smaller strings
         }
         super.clear(pos);
         pos.setString(null); // no longer belongs to any string.
