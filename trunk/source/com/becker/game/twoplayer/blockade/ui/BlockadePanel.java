@@ -38,7 +38,7 @@ public class BlockadePanel extends TwoPlayerPanel
         return new BlockadeNewGameDialog( parent, viewer );
     }
 
-    protected GameInfoPanel createInfoPanel( GameController controller )
+    protected GameInfoPanel createInfoPanel(GameController controller)
     {
         return new TwoPlayerInfoPanel( controller );
     }

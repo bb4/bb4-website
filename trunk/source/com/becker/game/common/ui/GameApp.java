@@ -112,6 +112,7 @@ public class GameApp implements ActionListener
         try {
 
             gamePanel_ = (GamePanel)gameClass.newInstance();
+            gamePanel_.setParentFrame(frame_);
 
         } catch (InstantiationException e) {
             e.printStackTrace();

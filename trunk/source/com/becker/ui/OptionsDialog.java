@@ -36,11 +36,14 @@ public abstract class OptionsDialog extends JDialog implements ActionListener
     {
         super( parent );
         parent_ = parent;
+
         commonInit();
     }
 
     public OptionsDialog()
-    {}
+    {
+        commonInit();
+    }
 
     /**
      * initiallize the dialogs ui
@@ -48,9 +51,16 @@ public abstract class OptionsDialog extends JDialog implements ActionListener
     public void commonInit()
     {
         enableEvents( AWTEvent.WINDOW_EVENT_MASK );
+        //this.setLocationRelativeTo( parent_ );
+        this.setResizable(false);
         setTitle( getTitle() );
-        pack();
         this.setModal( true );
+        this.setAlwaysOnTop(true);
+        //pack();
+    }
+
+    public void setParentFrame(JFrame parent)  {
+        parent_ = parent;
     }
 
     /**
@@ -59,12 +69,13 @@ public abstract class OptionsDialog extends JDialog implements ActionListener
     public boolean showDialog()
     {
         canceled_ = false;
-        this.setLocationRelativeTo( parent_ );
-        this.pack();
-        //this.setLocationByPlatform(true);
-        this.toFront();
+        if (parent_ != null)  {
+            this.setLocationRelativeTo( parent_ );
+        }
+      
         this.setVisible( true );
         this.toFront();
+        this.pack();
 
         return canceled_;
     }

@@ -10,7 +10,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.util.*;
-import java.text.MessageFormat;
 
 /**
  * This class contains a GameController and displays the current state of the Game.
@@ -79,6 +78,7 @@ public abstract class GameBoardViewer
     protected Timer timer_ = null;
 
     protected static Cursor origCursor_ = null;
+    protected Frame parent_;
 
 
 
@@ -103,6 +103,10 @@ public abstract class GameBoardViewer
         addMouseListener( this );
         // add a listener so that we realize when the computer (or human) has finished making his move
         addGameChangedListener(this);
+    }
+
+    public void setParentFrame(Frame parent) {
+        parent_ = parent;
     }
 
     /**
@@ -176,7 +180,10 @@ public abstract class GameBoardViewer
     public void refresh()
     {
         // this will paint the component immediately
-        this.paint( this.getGraphics() );
+        if (this.getGraphics() != null) {
+            this.paint( this.getGraphics() );
+        }
+
     }
 
     /**

@@ -143,7 +143,7 @@ public abstract class GamePanel extends TexturedPanel
         // if the board is too big, allow it to be scrolled.
         boardViewerScrollPane_.setViewportView( boardViewer_ );
 
-        infoPanel_ = createInfoPanel( boardViewer_.getController());
+        infoPanel_ = createInfoPanel(boardViewer_.getController());
         infoPanel_.setTexture( BG_TEXTURE );
 
         // this allows the info to update when someone makes a move
@@ -181,7 +181,7 @@ public abstract class GamePanel extends TexturedPanel
             //SpeechSynthesizer speech = new SpeechSynthesizer();
             //speech.sayPhoneWords( GREETING );
 
-            /* @@ uncomment
+            /* @@ uncomment when sound card available
             URL url = GUIUtil.getURL("com/becker/sound/play_game_voice.wav");
             AudioClip clip = new sun.applet.AppletAudioClip(url);
             if (clip != null) {
@@ -190,7 +190,17 @@ public abstract class GamePanel extends TexturedPanel
              */
         }
         this.setDoubleBuffered(false);
+    }
 
+    /**
+     *
+     * @param parent  the frame used for relative posisitioning
+     */
+    public void setParentFrame(JFrame parent) {
+        newGameDialog_.setParentFrame(parent);
+        optionsDialog_ .setParentFrame(parent);
+        infoPanel_.setParentFrame(parent);
+        boardViewer_.setParentFrame(parent);
     }
 
     protected JPanel createBottomDecorationPanel()
@@ -220,7 +230,7 @@ public abstract class GamePanel extends TexturedPanel
     /**
      * @return the panel shown on the right hand side that displays statistics about the current game state.
      */
-    protected abstract GameInfoPanel createInfoPanel( GameController controller );
+    protected abstract GameInfoPanel createInfoPanel(GameController controller);
 
 
     /**
@@ -238,7 +248,7 @@ public abstract class GamePanel extends TexturedPanel
     protected final void showHelpDialog( String gameName, String comments, String overview )
     {
         HelpDialog dlg = new HelpDialog( null, gameName, comments, overview );
-        dlg.setLocationRelativeTo( this );
+        //dlg.setLocationRelativeTo( this );
         dlg.setModal( true );
         dlg.setVisible( true );
     }
@@ -285,7 +295,7 @@ public abstract class GamePanel extends TexturedPanel
     {
         Object source = e.getSource();
         if ( source == toolBar_.getNewGameButton() ) {
-            newGameDialog_.setLocationRelativeTo( this );
+            //newGameDialog_.setLocationRelativeTo( this );
 
             boolean canceled = newGameDialog_.showDialog();
             if ( !canceled ) { // newGame a game with the newly defined options
@@ -305,7 +315,7 @@ public abstract class GamePanel extends TexturedPanel
             toolBar_.getUndoButton().setEnabled(true);
         }
         if ( source == toolBar_.getOptionsButton() ) {
-            optionsDialog_.setLocationRelativeTo( this );
+            //optionsDialog_.setLocationRelativeTo( this );
             boolean canceled = optionsDialog_.showDialog();
         }
         else if ( source == toolBar_.getHelpButton() )

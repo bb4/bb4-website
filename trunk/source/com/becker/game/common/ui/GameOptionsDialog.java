@@ -56,7 +56,6 @@ public class GameOptionsDialog extends OptionsDialog implements ActionListener, 
 
     protected void initUI()
     {
-        setResizable( true );
         mainPanel_.setLayout( new BorderLayout() );
         // contains tabs for Algorithm, Debugging, and Look and Feel
         JTabbedPane tabbedPanel = new JTabbedPane();

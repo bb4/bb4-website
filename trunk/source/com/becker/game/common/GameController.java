@@ -245,7 +245,10 @@ public abstract class GameController
     /**
      * create a Move from an SGF token.
      */
-    protected abstract Move createMoveFromToken( MoveToken token, int moveNum );
+    protected Move createMoveFromToken( MoveToken token, int moveNum ) {
+         assert (false) : "createMoveFromToken not implemented for "+this.getClass().getName();
+        return null;
+    }
 
     /**
      * Given an SGFTree and a place to store the moves of a game, this

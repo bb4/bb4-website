@@ -43,7 +43,7 @@ public final class GoPanel extends TwoPlayerPanel
         return new GoNewGameDialog( parent, viewer );
     }
 
-    protected final GameInfoPanel createInfoPanel( GameController controller )
+    protected final GameInfoPanel createInfoPanel(GameController controller)
     {
         return new GoInfoPanel( controller );
     }

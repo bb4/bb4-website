@@ -39,7 +39,7 @@ public class ChessPanel extends TwoPlayerPanel
         return new ChessNewGameDialog( parent, viewer );
     }
 
-    protected GameInfoPanel createInfoPanel( GameController controller )
+    protected GameInfoPanel createInfoPanel(GameController controller)
     {
         return new TwoPlayerInfoPanel( controller );   // make ChessInfoPanel
     }

@@ -39,7 +39,7 @@ public class PentePanel extends TwoPlayerPanel
         return new PenteNewGameDialog( parent, viewer );
     }
 
-    protected GameInfoPanel createInfoPanel( GameController controller )
+    protected GameInfoPanel createInfoPanel(GameController controller)
     {
         return new TwoPlayerInfoPanel( controller );   // make PenteInfoPanel
     }
