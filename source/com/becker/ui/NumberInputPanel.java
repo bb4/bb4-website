@@ -20,7 +20,7 @@ public class NumberInputPanel extends JPanel
      */
     public NumberInputPanel( String labelText, final JTextField numberField )
     {
-       this( labelText,   numberField, null);
+       this( labelText, numberField, null);
     }
 
     /**
@@ -36,10 +36,13 @@ public class NumberInputPanel extends JPanel
         JLabel label = new JLabel( labelText );
         add( label );
 
-        numberField.setToolTipText( "enter a number in the suggested range" );
-        numberField.setPreferredSize( new Dimension( 60, 15 ) );
-        numberField.setMinimumSize( new Dimension( 30, 15 ) );
-        //numberField.addActionListener( parent );
+        if (toolTip == null)
+            numberField.setToolTipText( "enter a number in the suggested range" );
+        else
+            numberField.setToolTipText( toolTip );
+        numberField.setPreferredSize( new Dimension( 50, 15 ) );
+        numberField.setMinimumSize( new Dimension( 25, 15 ) );
+
         numberField.addKeyListener( new KeyAdapter()
         {
             public void keyTyped( KeyEvent key )
@@ -57,8 +60,10 @@ public class NumberInputPanel extends JPanel
                 }
             }
         } );
-        add( new JPanel());
-        add( numberField );
+        JPanel numPanel = new JPanel();
+        numPanel.setBorder(BorderFactory.createEmptyBorder(0,2,0,2));
+        numPanel.add( numberField );
+        this.add(numPanel);
 
         if (toolTip!=null)
             this.setToolTipText(toolTip);

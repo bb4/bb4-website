@@ -2,6 +2,8 @@ package com.becker.game.common;
 
 /**
  * This is the interface that all game boards should implement.
+ * We assume that the board is composed of an array of BoardPositions.
+ *
  * Providing both an interface and an abstract implementation is a pattern
  * which maximizes flexibility in a framework. The interface defines the
  * public contract. The abstract class may be package private if we don't
@@ -22,6 +24,7 @@ public interface BoardInterface
     /**
      *  Change the dimensions of this game board.
      *  Note: we must call reset after changing the size, since the original game board will now be invalid.
+     *
      *  @param numRows the new number of rows for the board to have.
      *  @param numCols the new number of cols for the board to have.
      */
@@ -56,6 +59,7 @@ public interface BoardInterface
      /**
       * given a move specification, execute it on the board
       * This places the players symbol at the position specified by move.
+      *
       * @param move the move to make, if possible.
       * @return false if the move is illegal.
       */

@@ -51,7 +51,7 @@ public final class GameContext
 
     // if greater than 0 then debug mode is on.
     // the higher the number, the more info that is printed.
-    private static final int DEBUG = 2;
+    private static final int DEBUG = 0;
 
     // now the variable forms of the above defaults
     private static int debug_ = DEBUG;

@@ -27,12 +27,12 @@ public class ColorMap
      */
     public ColorMap( double[] values, Color[] colors )
     {
-        assert values!=null : "values was null";
-        assert colors!=null : "colors was null";
+        assert(values!=null) : "values was null";
+        assert(colors!=null) : "colors was null";
         values_ = values;
         colors_ = colors;
         // should also assert that the values are increasing
-        assert (values_.length == colors_.length): "there must be as many values as colors";
+        assert(values_.length == colors_.length): "there must be as many values as colors";
     }
 
     public Color getColorForValue( double value )
