@@ -26,7 +26,12 @@ public class SnakeApplet extends JApplet
         animPanel.add( simulator_.createTopControls(), BorderLayout.NORTH );
 
         resizablePanel_ = new ResizableAppletPanel( animPanel );
-        this.getContentPane().add( resizablePanel_ );
+        Container content = this.getContentPane();
+        content.setLayout(new BorderLayout());
+
+        content.add( resizablePanel_, BorderLayout.CENTER );
+        simulator_.setVisible(true);
+        content.setPreferredSize(simulator_.getPreferredSize());
     }
 
     /**
@@ -51,6 +56,7 @@ public class SnakeApplet extends JApplet
     {
         SnakeApplet applet = new SnakeApplet();
         JFrame baseFrame = GUIUtil.showApplet( applet, "Snake Applet" );
+        baseFrame.setSize( applet.simulator_.getPreferredSize());
     }
 }
 

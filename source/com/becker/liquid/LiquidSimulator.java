@@ -66,7 +66,7 @@ public class LiquidSimulator extends AnimationComponent
         {
             public void itemStateChanged( ItemEvent ie )
             {
-                setSwitch( item, (ie.getStateChange() == ie.SELECTED) );
+                setSwitch( item, (ie.getStateChange() == ItemEvent.SELECTED) );
             }
         } );
         return check;

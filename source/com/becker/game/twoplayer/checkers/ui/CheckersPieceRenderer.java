@@ -2,6 +2,7 @@ package com.becker.game.twoplayer.checkers.ui;
 
 import com.becker.game.twoplayer.checkers.CheckersPiece;
 import com.becker.game.common.BoardPosition;
+import com.becker.game.common.Board;
 import com.becker.game.common.ui.GamePieceRenderer;
 
 import java.awt.*;
@@ -32,7 +33,7 @@ public class CheckersPieceRenderer extends GamePieceRenderer
     /**
      * this draws the actual piece.
      */
-    public void render( Graphics2D g2, BoardPosition position, int cellSize, com.becker.game.common.Board b)
+    public void render( Graphics2D g2, BoardPosition position, int cellSize, Board b)
     {
         CheckersPiece piece = (CheckersPiece)position.getPiece();
         if (piece == null)

@@ -75,7 +75,7 @@ public class SnakeSimulator extends AnimationComponent implements Optimizee
                 //System.out.println("resized");
             }
         } );
-
+        this.setPreferredSize(new Dimension( (int) (CELL_SIZE * XDIM), (int) (CELL_SIZE * YDIM)) );
     }
 
     public void doOptimization()
@@ -309,7 +309,6 @@ public class SnakeSimulator extends AnimationComponent implements Optimizee
         animPanel.add( simulator.createTopControls(), BorderLayout.NORTH );
 
         frame_ = new JFrame( "Snake Simulator" );
-        frame_.setSize( (int) (CELL_SIZE * XDIM), (int) (CELL_SIZE * YDIM) );
         frame_.getContentPane().add( animPanel );
         frame_.setVisible( true );
     }
