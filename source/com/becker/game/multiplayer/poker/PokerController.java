@@ -15,7 +15,6 @@ import java.awt.*;
  *
  * ToDo list
  * - use real faces for players
- * - add chip legend in info panel
  *
  *  - options dialog
  *     - Texas holdem
@@ -31,16 +30,12 @@ import java.awt.*;
  *      - unless really done then you can only exit
  *
  *  bugs
- *     - the all in amount is not always right. sometimes says negative
+ *     -  Raise amount not always matched! seems to happen in a multiplayer game when robots involved.
  *       this is because it should only inlcude the callAmount if the player has not aleady gone
  *     - reduce player radii
  *  possible bugs
  *    - ante getting subtracted twice
- *    - first player always going first (should rotate)
- *
-
- *  - lower high card beat higher high card   (fixed?)
- *  - asking folded player to play  (fixed?)
+ *    - asking folded player to play  (fixed?)
  *
  * @author Barry Becker
  */
@@ -117,8 +112,10 @@ public class PokerController extends GameController
             players_[0] = PokerPlayer.createPokerPlayer("Player 1",
                                        100, PokerPlayer.getNewPlayerColor(gplayers), true);
 
+
             players_[1] = PokerPlayer.createPokerPlayer("Player 2",
                                        100, PokerPlayer.getNewPlayerColor(gplayers), false);
+            players_[1].setName(players_[1].getName()+"("+((PokerRobotPlayer)players_[1]).getType()+")");
 
         }
 
@@ -197,8 +194,8 @@ public class PokerController extends GameController
         Player[] players = getPlayers();
         for (int i=0; i<players.length; i++) {
             PokerPlayer p = (PokerPlayer)players[i];
-            if (!p.hasFolded() && (p.getCash() < min)) {
-                min = p.getCash();
+            if (!p.hasFolded() && ((p.getCash() + p.getContribution()) < min)) {
+                min = p.getCash() + p.getContribution();
             }
         }
         return min;

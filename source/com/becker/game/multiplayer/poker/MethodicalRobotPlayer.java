@@ -39,7 +39,7 @@ public class MethodicalRobotPlayer extends PokerRobotPlayer
     }
 
     public int getRaise(PokerController pc) {
-        int allInAmt = pc.getAllInAmount();
+        int allInAmt = pc.getAllInAmount() - this.getContribution();
         int max = (getCash() - getCallAmount(pc));
 
         if (getHand().getScore() >100 || Math.random() > .8) {
@@ -51,6 +51,11 @@ public class MethodicalRobotPlayer extends PokerRobotPlayer
             return min(1, max, allInAmt);
         }
     }
+
+    public String getType() {
+           return "Methodical";
+       }
+
 
 }
 

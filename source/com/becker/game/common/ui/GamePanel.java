@@ -4,13 +4,16 @@ import com.becker.game.common.*;
 import com.becker.sound.SpeechSynthesizer;
 import com.becker.sound.MusicMaker;
 import com.becker.ui.*;
+import com.becker.java2d.ImageUtil;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
 import java.applet.AudioClip;
+import java.io.File;
 
 /**
  * This is an abstract base class for a Game UI.
@@ -98,6 +101,9 @@ public abstract class GamePanel extends TexturedPanel
 
         boardViewer_.saveGame();
     }
+
+
+
 
     /**
      * @return the title for the applet/application window.
@@ -260,6 +266,23 @@ public abstract class GamePanel extends TexturedPanel
     public final void setSize( int width, int height )
     {
         resizablePanel_.setSize( width, height );
+    }
+
+    public void saveSnapshot() {
+
+
+
+        JFileChooser chooser = GUIUtil.getFileChooser();
+        chooser.setCurrentDirectory( new File( GameContext.getHomeDir() ) );
+        int state = chooser.showSaveDialog( null );
+        File file = chooser.getSelectedFile();
+        if ( file != null && state == JFileChooser.APPROVE_OPTION ) {
+
+            BufferedImage img = (BufferedImage)createImage(getWidth(), getHeight());
+            this.paint(img.createGraphics());
+
+            ImageUtil.saveAsImage(file.getAbsolutePath(), img, "jpg");
+        }
     }
 
     /**

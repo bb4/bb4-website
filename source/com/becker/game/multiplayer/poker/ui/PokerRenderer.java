@@ -96,13 +96,12 @@ public class PokerRenderer extends GamePieceRenderer
             g2.fillOval( pos.x, pos.y, 3*pieceSize , 3*pieceSize );
         }
 
-
         Font font = BASE_FONT.deriveFont(Font.BOLD, cellSize/(float)GameBoardViewer.MINIMUM_CELL_SIZE  * 8);
         int offset = (pieceSize<(.6*cellSize))? -1 : cellSize/5;
         if ( playerMarker.getAnnotation() != null ) {
             g2.setColor( Color.black );
             g2.setFont( font );
-            g2.drawString( playerMarker.getAnnotation(), pos.x - 2*cellSize, pos.y - 3*offset);
+            g2.drawString( playerMarker.getAnnotation(), pos.x - cellSize, pos.y - 3*offset);
         }
 
         //System.out.println("location ="+position.getLocation());
@@ -173,6 +172,7 @@ public class PokerRenderer extends GamePieceRenderer
     private static final double CHIP_HEIGHT = .15;
     private static final int POKER_CHIP_FONT_SIZE = 6;
     private static final Font POKER_CHIP_FONT = new Font( "Sans-serif", Font.PLAIN, POKER_CHIP_FONT_SIZE );
+
 
     public void renderChips(Graphics2D g2, Location location, int amount, int cellSize) {
         int[] numChips = PokerChip.getChips(amount);

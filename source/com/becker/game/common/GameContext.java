@@ -63,9 +63,7 @@ public final class GameContext
     // fall back on this if the "user.home" property is not set.
     private static final String DEFAULT_HOME_DIR = "d:/";
 
-    // the name of the current game being played
-    // used for loading the appropriate message bundle
-    private static String gameName_ = "go"; // default
+
 
 
     /**
@@ -177,38 +175,45 @@ public final class GameContext
         return home;
     }
 
-    /**
-     * This method causes the appropriate message bundle to
-     * be loaded for the game specified.
-     * @param gameName the current game
-     */
-    public static void setGameName(String gameName)
-    {
-        gameName_ = gameName;
-        loadGameResources();
-    }
+
 
     public static LocaleType getDefaultLocaleType()
     {
         return DEFAULT_LOCALE;
     }
 
-    private static void loadGameResources()
+    private static String gameName_, className_;
+    /**
+     * This method causes the appropriate message bundle to
+     * be loaded for the game specified.
+     * @param gameName the current game
+     */
+    public static void loadGameResources(String gameName, String className)
     {
-        String suffix = gameName_+".resources."+gameName_+"Messages";
-        //@@ sloppy
+        // @@ why do I need this hack?
+        gameName_ = gameName;
+        className_ = className;
+
+        String path = className.substring(0, className.lastIndexOf(".ui."));
+
+        String resourcePath = path +".resources."+gameName+"Messages";
+        System.out.println("searching for "+ resourcePath);
+
         try {
             gameMessages_ = ResourceBundle.getBundle(
-                    MESSAGE_2PLAYER_BUNDLE_PREFIX+suffix, currentLocale_.getLocale());
+                    resourcePath, currentLocale_.getLocale());
         }
         catch (MissingResourceException e) {
-            gameMessages_ = ResourceBundle.getBundle(
-                    MESSAGE_NPLAYER_BUNDLE_PREFIX+suffix, currentLocale_.getLocale());
+               System.out.println("could not find "+resourcePath);
         }
     }
 
+    public static void loadGameResources() {
+        loadGameResources(gameName_, className_);
+    }
+
     /**
-     * set the current locale and load the labels for it.
+     * set the current locale and load the cutpoints for it.
      * @param locale
      */
     public static void setLocale(LocaleType locale)
@@ -229,14 +234,20 @@ public final class GameContext
      */
     public static String getLabel(String key)
     {
-        if (commonMessages_ == null)
+        if (commonMessages_ == null)  {
             initCommonMessages(currentLocale_);
-        if (commonMessageKeys_.contains(key))
+        }
+        if (commonMessageKeys_.contains(key))  {
             return commonMessages_.getString(key);
-
+        }
         else {
-            if (gameMessages_ == null)
-                loadGameResources();
+
+            //@@ hack!
+            if (gameMessages_ == null) loadGameResources();
+
+            assert (gameMessages_ != null) :
+                    "gameMessages_ has not yet been initialized. you need to call loadGameResources first.";
+
             String label = key; // default
             try {
                label = gameMessages_.getString(key);

@@ -7,6 +7,7 @@ import com.becker.game.multiplayer.poker.PokerPlayer;
 import com.becker.game.multiplayer.poker.PokerTable;
 import com.becker.ui.GradientButton;
 import com.becker.ui.GUIUtil;
+import com.becker.ui.DiscreteColorLegend;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -45,8 +46,11 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
 
         // the custom panel shows game specific info. In this case the command button.
         // if all the players are robots, don't even show this panel.
-        if (!controller_.allPlayersComputer())
+        if (!controller_.allPlayersComputer())   {
             this.add( createCustomInfoPanel() );
+        }
+
+        this.add( createChipLegendPanel());
     }
 
     /**
@@ -55,7 +59,6 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
      */
     protected JPanel createCustomInfoPanel()
     {
-
         commandPanel_ = createSectionPanel("");
         setCommandPanelTitle();
 
@@ -70,6 +73,29 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
         commandPanel_.add(bp);
         return commandPanel_;
     }
+
+
+    /**
+     * This panel shows a discrete color legend for the poker chip values
+     */
+    protected JPanel createChipLegendPanel()
+    {
+        JPanel legendPanel = createSectionPanel("Chip Values");
+        PokerChip[] chipTypes = PokerChip.values();
+        int n = chipTypes.length;
+        Color[] colors = new Color[n];
+        String[] values = new String[n];
+        for (int i = n; i > 0; i--) {
+            colors[n-i] = chipTypes[i-1].getColor();
+            values[n-i] = chipTypes[i-1].getLabel();
+        }
+        JPanel legend = new DiscreteColorLegend(null, colors, values);
+        legend.setPreferredSize(new Dimension(500, 100));
+        legendPanel.add(legend);
+
+        return legendPanel;
+    }
+
 
     private void setCommandPanelTitle()
     {
@@ -137,7 +163,7 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
 
         JLabel turnLabel = createLabel(GameContext.getLabel("PLAYER_TO_MOVE_COLON"));
         playerLabel_ = new JLabel();
-        playerLabel_.setOpaque(true);
+        //playerLabel_.setOpaque(true);
         playerLabel_.setFont(BOLD_FONT);
         setPlayerLabel();
 

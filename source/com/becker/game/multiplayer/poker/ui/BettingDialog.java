@@ -62,6 +62,7 @@ public final class BettingDialog extends OptionsDialog
         setResizable( true );
         mainPanel_ =  new JPanel();
         mainPanel_.setLayout( new BorderLayout() );
+        mainPanel_.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 
         pokerHandPanel_ = new PokerHandPanel(player_.getHand());
         JPanel buttonsPanel = createButtonsPanel();
@@ -80,6 +81,7 @@ public final class BettingDialog extends OptionsDialog
 
     private JPanel createInstructionsPanel() {
         JPanel panel = new JPanel(new BorderLayout());
+        panel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEtchedBorder(), BorderFactory.createEmptyBorder(5,5,5,5)));
         JPanel playerPanel = createPlayerLabel(player_);
 
         NumberFormat cf = getCurrencyFormat();
@@ -176,7 +178,7 @@ public final class BettingDialog extends OptionsDialog
     public void showRaiseDialog() {
         // open a dlg to get an order
         RaiseDialog raiseDialog =
-                new RaiseDialog(player_, callAmount_, pc_.getAllInAmount(), pc_.getMaxAbsoluteRaise());
+                new RaiseDialog(player_, callAmount_, pc_.getAllInAmount(), pc_.getMaxAbsoluteRaise(), pc_.getAnte());
 
         raiseDialog.setLocation((int)(this.getLocation().getX() + 40), (int)(this.getLocation().getY() +170));
 

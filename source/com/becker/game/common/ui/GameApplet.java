@@ -30,7 +30,7 @@ public class GameApplet extends JApplet
         LocaleType locale = GameContext.get(localeName, true);
 
         // these must be called before anything else
-        GameContext.setGameName(gameName);
+        GameContext.loadGameResources(gameName, className);
         GameContext.setLocale(locale);
 
         Class gameClass = Util.loadClass(className);
