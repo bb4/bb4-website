@@ -5,7 +5,7 @@
 
 
 <!ATTLIST hierarchy
-    title     ID        #REQUIRED
+    title     NMTOKENS  #REQUIRED
     imgpath   NMTOKEN   #REQUIRED
     date      NMTOKEN   #IMPLIED
     author    NMTOKENS  #IMPLIED
