@@ -19,11 +19,12 @@ public class Planet extends GamePiece implements Comparable
     private int productionCapacity_;
     // the planets never move
     private Location location_;
+    private boolean underAttack_;
 
     public static final char OCCUPIED_PLANET= 'O';
     public static final char UNOCCUPIED_PLANET= 'U';
 
-    private static final Color NEUTRAL_COLOR= Color.LIGHT_GRAY;
+    public static final Color NEUTRAL_COLOR = Color.LIGHT_GRAY;
 
     // hack to make sorting planets easy
     public static Planet comparatorPlanet = null;
@@ -67,6 +68,14 @@ public class Planet extends GamePiece implements Comparable
     public void setNumShips( int numShips )
     {
         numShips_ = numShips;
+    }
+
+    public void setUnderAttack(boolean underAttack) {
+        underAttack_ = underAttack;
+    }
+
+    public boolean isUnderAttack() {
+        return underAttack_;
     }
 
     /**

@@ -14,7 +14,8 @@ import java.util.List;
 public class Galaxy extends Board
 {
     private static final int DEFAULT_NUM_PLANETS = 20;
-    private static final int MAX_NUM_PLANETS = 60;
+    public static final int MAX_NUM_PLANETS = 60;
+    public static final int MIN_NUM_PLANETS = 3;
 
     private static char[] PLANET_NAMES ;
     static {

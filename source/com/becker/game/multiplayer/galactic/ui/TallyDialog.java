@@ -36,7 +36,7 @@ final class TallyDialog extends OptionsDialog
      * @param parent frame to display relative to
      * @param controller
      */
-    public TallyDialog( JFrame parent, GalacticController controller )
+    public TallyDialog( Frame parent, GalacticController controller )
     {
         super( parent );
         controller_ = controller;

@@ -17,6 +17,9 @@ public class PlanetRenderer extends GamePieceRenderer
 {
     private static GamePieceRenderer renderer_ = null;
 
+    private static final Color ATTACK_COLOR = new Color(255, 100, 0);
+
+    private static final BasicStroke ATTACK_STROKE = new BasicStroke(3);
     /**
      * private constructor because this class is a singleton.
      * Use getPieceRenderer instead
@@ -46,7 +49,7 @@ public class PlanetRenderer extends GamePieceRenderer
 
     /**
      * this draws the actual piece at this location (if there is one).
-     * Uses the RoundGradientFill from Knudsen to put a specular highlight on the stone.
+     * Uses the RoundGradientFill from Knudsen to put a specular highlight on the planet.
      *
      * @param g2 graphics context
      * @param position the position of the piece to render
@@ -70,16 +73,15 @@ public class PlanetRenderer extends GamePieceRenderer
         g2.setPaint( rgp );
         g2.fill( circle );
 
-        // only draw the outline if we are not in a debug mode.
-        /* when in debug mode we want to emphasize other annotations instead of the piece
-        if ( planet.getTransparency() == 0 && (GameContext.getDebugMode() == 0) ) {
-            g2.setColor( Color.black );
+        if ( planet.isUnderAttack() ) {
+            g2.setStroke(ATTACK_STROKE);
+            g2.setColor( ATTACK_COLOR );
             g2.drawOval( pos.x, pos.y, pieceSize + 1, pieceSize + 1 );
-        }*/
+        }
 
         int offset = (pieceSize<(.6*cellSize))? -1 : cellSize/5;
         if ( planet.getAnnotation() != null ) {
-                g2.setColor( Color.black );     // @@ use complement
+                g2.setColor( Color.black );
                 g2.setFont( BASE_FONT );
                 g2.drawString( planet.getAnnotation(), pos.x + 2*offset, pos.y + 3*offset);
         }

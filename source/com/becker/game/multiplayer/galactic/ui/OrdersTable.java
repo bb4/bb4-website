@@ -2,6 +2,7 @@ package com.becker.game.multiplayer.galactic.ui;
 
 import com.becker.game.multiplayer.galactic.*;
 import com.becker.game.common.GameContext;
+import com.becker.ui.HeaderRenderer;
 
 import javax.swing.*;
 import javax.swing.JTable;
@@ -9,6 +10,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.*;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.awt.geom.Point2D;
 
 
@@ -33,12 +35,22 @@ public class OrdersTable
     private static final String ORIGIN = GameContext.getLabel("ORIGIN");
     private static final String DESTINATION = GameContext.getLabel("DESTINATION");
     private static final String NUM_SHIPS = GameContext.getLabel("NUM_SHIPS");
-    private static final String DISTANCE = GameContext.getLabel("DISTANCE");
+    private static final String DISTANCE = GameContext.getLabel("ETA");
 
     private static String[] columnNames_ =  {ORIGIN,
                                              DESTINATION,
                                              NUM_SHIPS,
                                              DISTANCE };
+
+    private static final String ORIGIN_TIP = GameContext.getLabel("ORIGIN_TIP");
+    private static final String DESTINATION_TIP = GameContext.getLabel("DESTINATION_TIP");
+    private static final String NUM_SHIPS_TIP = GameContext.getLabel("NUM_SHIPS_TIP");
+    private static final String DISTANCE_TIP = GameContext.getLabel("ETA_TIP");
+
+    private static String[] columnTips_ =  {ORIGIN_TIP,
+                                             DESTINATION_TIP,
+                                             NUM_SHIPS_TIP,
+                                             DISTANCE_TIP };
 
     private static int NUM_COLS = columnNames_.length;
 
@@ -59,12 +71,31 @@ public class OrdersTable
                 addRow(order);
             }
         }
+        // add tooltips
+        for (int i=0; i<columnNames_.length; i++) {
+            TableCellRenderer r = new HeaderRenderer();
+            table_.getColumn(columnNames_[i]).setHeaderRenderer(r);
+            //System.out.println("r="+r);
+            JComponent c = (JComponent)r.getTableCellRendererComponent(table_, columnNames_[i], false, false, 0, 0);
+            c.setToolTipText(columnTips_[i]);
+        }
+
     }
 
     private void initializeTable()
     {
         TableModel m = new PlayerTableModel(columnNames_, 0, false);
         table_ = new JTable(m);
+
+
+    }
+
+    public int getNumRows() {
+        return table_.getRowCount();
+    }
+
+    public void removeRow(int rowIndex) {
+         getModel().removeRow(rowIndex);
     }
 
     /**
@@ -86,13 +117,12 @@ public class OrdersTable
             Planet originPlanet = Galaxy.getPlanet(origin.charAt(0));
             Planet destPlanet = Galaxy.getPlanet(dest.charAt(0));
 
-            if (i<numOldOrders) {
+            if (i < numOldOrders) {
                 Point2D currLoc = ((Order)lastOrders_.get(i)).getCurrentLocation();
                 o = new Order(originPlanet, destPlanet, numShips, currLoc);
             }
             else {
                 o = new Order(Galaxy.getPlanet(origin.charAt(0)), destPlanet, numShips);
-
                 originPlanet.deductShips(numShips);
             }
 
@@ -107,19 +137,27 @@ public class OrdersTable
      *
      * @return total outgoing ships for new orders (excluding existing)
      */
-    protected int getCurrentOutGoingShips()
+    protected HashMap getCurrentOutGoingShips()
     {
+        HashMap outgoingMap = new HashMap();
         TableModel model = table_.getModel();
         int nRows = model.getRowCount();
 
         int numOldOrders = lastOrders_.size();
 
-        int total = 0;
         for (int i=numOldOrders; i<nRows; i++) {
-            int numShips = ((Integer)model.getValueAt(i, NUM_SHIPS_INDEX)).intValue();
-            total += numShips;
+            Character s = ((Character)model.getValueAt(i, ORIGIN_INDEX));
+            Planet source = Galaxy.getPlanet(s.charValue());
+            Integer numShips = ((Integer)model.getValueAt(i, NUM_SHIPS_INDEX));
+            if (outgoingMap.get(source) != null) {
+                Integer n = (Integer)outgoingMap.get(source);
+                outgoingMap.put(source, new Integer(numShips+n));
+            }
+            else {
+                outgoingMap.put(source, new Integer(numShips));
+            }
         }
-        return total;
+        return outgoingMap;
     }
 
     public JTable getTable()
@@ -147,7 +185,7 @@ public class OrdersTable
         d[ORIGIN_INDEX] = new Character( order.getOrigin().getName());
         d[DESTINATION_INDEX ] = new Character( order.getDestination().getName());
         d[NUM_SHIPS_INDEX] = new Integer( order.getFleetSize());
-        d[DISTANCE_INDEX] = new Float(order.getOrigin().getDistanceFrom(order.getDestination()));
+        d[DISTANCE_INDEX] = new Float(order.getTimeRemaining());
 
         getModel().addRow(d);
     }

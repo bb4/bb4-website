@@ -91,13 +91,14 @@ class GalacticInfoPanel extends GameInfoPanel implements GameChangedListener, Ac
 
 
     /**
-     * The command button was pressed.
-     * open the command dialog to get the players commands
+     * The Orders button was pressed.
+     * open the Orders dialog to get the players commands
      * @param e
      */
     public void actionPerformed(ActionEvent e)
     {
         GalacticController gc = (GalacticController)controller_;
+        gameChanged(null); // update the current player in the label
 
         if (e.getSource() == commandButton_)
         {
@@ -109,8 +110,10 @@ class GalacticInfoPanel extends GameInfoPanel implements GameChangedListener, Ac
            if (Galaxy.getPlanets(currentPlayer).size() == 0)
               gc.advanceToNextPlayer();
 
-           OrdersDialog ordersDialog = new OrdersDialog(null, currentPlayer, (Galaxy)controller_.getBoard());
-           ordersDialog.setLocationRelativeTo( this );
+
+
+           OrdersDialog ordersDialog = new OrdersDialog(null, currentPlayer, (Galaxy)gc.getBoard(), gc.getNumberOfYearsRemaining());
+           //ordersDialog.setLocationRelativeTo( this );
            Point p = this.getParent().getLocationOnScreen();
 
            // offset the dlg so the Galaxy grid is visible as a reference
@@ -167,17 +170,12 @@ class GalacticInfoPanel extends GameInfoPanel implements GameChangedListener, Ac
         String playerName = player.getName();
         playerLabel_.setText(" " + playerName + " ");
 
-              Vector2d unitVec = new Vector2d(10, 20);
-        System.out.println("vec="+unitVec);
-
         Color pColor = player.getColor();
-        //playerLabel_.setForeground(pColor);
 
         Border playerLabelBorder = BorderFactory.createLineBorder(pColor, 2);
         playerLabel_.setBorder(playerLabelBorder);
 
         if (commandPanel_!=null) {
-            //commandPanel_.setBackground(bgColor);
             commandPanel_.setForeground(pColor);
             setCommandPanelTitle();
         }
@@ -191,16 +189,20 @@ class GalacticInfoPanel extends GameInfoPanel implements GameChangedListener, Ac
      */
     public void gameChanged( GameChangedEvent gce )
     {
-        GameContext.log(0,  "in GalacticInfoPanel.gameChanged" );
         if ( controller_ == null )
             return;
         //Player currentPlayer = controller_.getCurrentPlayer();
         setPlayerLabel();
         //Galaxy g = (Galaxy)controller_.getBoard();
         Move lastMove =  controller_.getLastMove();
-        if (lastMove!=null)
-            moveNumLabel_.setText( lastMove.moveNumber * controller_.getNumPlayers()
-                                   + ((GalacticController)controller_).getCurrentPlayerIndex()+" " );
+        if (lastMove != null)  {
+            //moveNumLabel_.setText( lastMove.moveNumber * controller_.getNumPlayers()
+            //                      + ((GalacticController)controller_).getCurrentPlayerIndex()+" " );
+            moveNumLabel_.setText( (lastMove.moveNumber+2) + " " );
+        }
+        else {
+            moveNumLabel_.setText( 1 + " " );
+        }
     }
 
 }

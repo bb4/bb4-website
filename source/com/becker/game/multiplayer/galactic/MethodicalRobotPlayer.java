@@ -25,20 +25,20 @@ public class MethodicalRobotPlayer extends GalacticRobotPlayer
     /**
      * @return the current list of this Robot's orders.
      */
-    public List makeOrders(Galaxy galaxy)
+    public List makeOrders(Galaxy galaxy, int numYearsRemaining)
     {
         List newOrders = new ArrayList();
 
-        List ownedPlanets = galaxy.getPlanets(this);
+        List ownedPlanets = Galaxy.getPlanets(this);
         Iterator it = ownedPlanets.iterator();
         while (it.hasNext()) {
             Planet origin = (Planet)it.next();
             if (origin.getNumShips()>200)
-                newOrders.addAll(getOrders(origin, 4, 50));
+                newOrders.addAll(getOrders(origin, 4, 50, numYearsRemaining));
             else if (origin.getNumShips()>100)
-                newOrders.addAll(getOrders(origin, 3, 30));
+                newOrders.addAll(getOrders(origin, 3, 30, numYearsRemaining));
             else if (origin.getNumShips()>50)
-                newOrders.addAll(getOrders(origin, 2, 20));
+                newOrders.addAll(getOrders(origin, 2, 20, numYearsRemaining));
             // else do nothing.
         }
         orders_.addAll(newOrders);

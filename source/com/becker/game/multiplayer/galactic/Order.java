@@ -96,6 +96,11 @@ public class Order
         return destination_.getDistanceFrom( getCurrentLocation() );
     }
 
+    public double getTimeRemaining()
+    {
+        return getDistanceRemaining() / NORMAL_SPEED;
+    }
+
     public boolean hasArrived()
     {
         return hasArrived_;
@@ -122,6 +127,10 @@ public class Order
             // the order never leaves once it has arrived. The order will be destroyed.
             hasArrived_ = true;
         }
+    }
+
+    public int getTimeNeeded() {
+        return (int)(getDistanceRemaining() / NORMAL_SPEED + 1);
     }
 
     /**

@@ -25,6 +25,7 @@ public class GalaxyViewer extends GameBoardViewer
 {
 
     private static final Color GRID_COLOR = Color.GRAY;
+    private boolean winnerDialogShown_ = false;
 
     //Construct the application
     public GalaxyViewer()
@@ -53,6 +54,9 @@ public class GalaxyViewer extends GameBoardViewer
     public final void startNewGame()
     {
         reset();
+        winnerDialogShown_ = false;
+        this.sendGameChangedEvent(null);  // get the info panel to refresh with 1st players name
+
         if (!controller_.getFirstPlayer().isHuman())
             controller_.computerMovesFirst();
     }
@@ -94,8 +98,7 @@ public class GalaxyViewer extends GameBoardViewer
      protected void showWinnerDialog()
      {
          //String message = getGameOverMessage();
-         TallyDialog tallyDialog = new TallyDialog(null, (GalacticController)controller_);
-         tallyDialog.setLocationRelativeTo( this );
+         TallyDialog tallyDialog = new TallyDialog(parent_, (GalacticController)controller_);
          tallyDialog.showDialog();
 
          //JOptionPane.showMessageDialog( this, message, GameContext.getLabel("GAME_OVER"),
@@ -122,15 +125,18 @@ public class GalaxyViewer extends GameBoardViewer
     {
         assert(!player.isHuman());
         GalacticRobotPlayer robot = (GalacticRobotPlayer)player;
-        robot.makeOrders((Galaxy)getBoard());
+        GalacticController gc = (GalacticController) controller_;
+        robot.makeOrders((Galaxy)getBoard(), gc.getNumberOfYearsRemaining());
 
+        /*
         // records the result on the board.
-        Move lastMove = controller_.getLastMove();
-        GalacticMove gmove = GalacticMove.createMove((lastMove==null)?0:lastMove.moveNumber+1);
-        controller_.makeMove(gmove);
+        Move lastMove = gc.getLastMove();
+        GalacticMove gmove = GalacticMove.createMove((lastMove==null)? 0 : lastMove.moveNumber + 1);
+        gc.makeMove(gmove);
+        */
+        this.refresh();
 
-        gameChanged(null);
-        ((GalacticController)controller_).advanceToNextPlayer();
+        gc.advanceToNextPlayer();
 
         return false;
     }
@@ -142,22 +148,24 @@ public class GalaxyViewer extends GameBoardViewer
      */
     public void gameChanged(GameChangedEvent evt)
     {
-        if (controller_.done())
+        if (controller_.done() && !winnerDialogShown_)  {
+            winnerDialogShown_ = true;
             this.showWinnerDialog();
-        else {
-            super.gameChanged(evt);
+        }
+        else if (!winnerDialogShown_) {
+             super.gameChanged(evt);
         }
     }
 
 
     /**
-     * This will run all the battle similations needed to calculate the result and put it in the new move.
+     * This will run all the battle simulations needed to calculate the result and put it in the new move.
      * Simulations may actually be a reinforcements instead of a battle.
      * @param lastMove the move to show (but now record)
      */
     public GalacticMove createMove(Move lastMove)
     {
-        GalacticMove gmove = GalacticMove.createMove((lastMove==null)?0:lastMove.moveNumber+1);
+        GalacticMove gmove = GalacticMove.createMove((lastMove==null)? 0 : lastMove.moveNumber+1);
 
         // for each order of each player, apply it for one year
         // if there are battles, show them in the battle dialog and record the result in the move.
@@ -181,8 +189,8 @@ public class GalaxyViewer extends GameBoardViewer
                     //  show battle dialog if not all computers playing
                     if (!controller_.allPlayersComputer()) {
 
-                        BattleDialog bDlg = new BattleDialog(null, battle);
-                        bDlg.setLocationRelativeTo(this);
+                        BattleDialog bDlg = new BattleDialog(parent_, battle, this);
+                        //bDlg.setLocationRelativeTo(this);
 
                         Point p = this.getParent().getLocationOnScreen();
                         // offset the dlg so the Galaxy grid is visible as a reference.
@@ -202,6 +210,12 @@ public class GalaxyViewer extends GameBoardViewer
         return gmove;
     }
 
+    public void showPlanetUnderAttack(Planet planet, boolean showAttacked)
+    {
+        // Galaxy galaxy = (Galaxy)controller_.getBoard();
+        planet.setUnderAttack(showAttacked);
+        this.refresh();
+    }
 
 
     private static final float OFFSET = .25f;
