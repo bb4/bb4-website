@@ -42,18 +42,34 @@ public final class GUIUtil
     // default font and color for the UI
     public static final Font UI_FONT = new Font( "Sans Serif", Font.PLAIN, 10 );      // standard
 
-    public static final Color UI_BLACK = new Color( 0, 10, 1 );
-    public static final Color UI_WHITE = new Color( 248, 255, 250 );
+    // Blue color theme
+    public static final Color UI_BLACK = new Color( 0, 0, 5 );
+    public static final Color UI_WHITE = new Color( 250, 250, 255 );
 
-    public static final Color UI_COLOR_PRIMARY1 = new Color( 50, 100, 80 );  // isn't used for much (bg when resizing?)
-    public static final Color UI_COLOR_PRIMARY2 = new Color( 230, 250, 223 ); // menu bgs, small square in selected buttons, progress bar fill
-    public static final Color UI_COLOR_PRIMARY3 = new Color( 255, 250, 200 );  // tooltip backgrounds, large colored areas, active titlebar, text selection
+    public static final Color UI_COLOR_PRIMARY1 = new Color( 0, 0, 51 );  // isn't used for much (bg when resizing?)
+    public static final Color UI_COLOR_PRIMARY2 = new Color( 234, 234, 255 ); // menu bgs, small square in selected buttons, progress bar fill
+    public static final Color UI_COLOR_PRIMARY3 = new Color( 255, 255, 153 );  // tooltip backgrounds, large colored areas, active titlebar, text selection
 
-    public static final Color UI_COLOR_SECONDARY1 = new Color( 4, 60, 8 );  // very dark. for tab, button and checkbox borders
-    public static final Color UI_COLOR_SECONDARY2 = new Color( 191, 212, 210 ); // deselected tab backgrounds, dimmed button borders
-    public static final Color UI_COLOR_SECONDARY3 = new Color( 237, 255, 240 );  // almost all backgrounds, active tabs.
+    public static final Color UI_COLOR_SECONDARY1 = new Color( 0, 0, 51 );  // very dark. for tab, button and checkbox borders
+    public static final Color UI_COLOR_SECONDARY2 = new Color( 153, 153, 204 ); // deselected tab backgrounds, dimmed button borders
+    public static final Color UI_COLOR_SECONDARY3 = new Color(224, 224, 245); //( 204, 204, 255 );  // almost all backgrounds, active tabs.
 
-    public static final Color UI_BUTTON_BACKGROUND = new Color( 230, 250, 223 ); //same as menu bg.
+    public static final Color UI_BUTTON_BACKGROUND = new Color( 204, 204, 255 ); // button backgrounds
+    /*
+    // Cyan color theme
+    public static final Color UI_BLACK = new Color( 0, 0, 0 );
+    public static final Color UI_WHITE = new Color( 255, 255, 255 );
+
+    public static final Color UI_COLOR_PRIMARY1 = new Color( 0, 51, 51 );  // isn't used for much (bg when resizing?)
+    public static final Color UI_COLOR_PRIMARY2 = new Color( 204, 255, 255 ); // menu bgs, small square in selected buttons, progress bar fill
+    public static final Color UI_COLOR_PRIMARY3 = new Color( 255, 255, 153 );  // tooltip backgrounds, large colored areas, active titlebar, text selection
+
+    public static final Color UI_COLOR_SECONDARY1 = new Color( 0, 51, 51 );  // very dark. for tab, button and checkbox borders
+    public static final Color UI_COLOR_SECONDARY2 = new Color( 102, 153, 153 ); // deselected tab backgrounds, dimmed button borders
+    public static final Color UI_COLOR_SECONDARY3 = new Color( 204, 255, 255 );  // almost all backgrounds, active tabs.
+
+    public static final Color UI_BUTTON_BACKGROUND = new Color( 153, 255, 255 ); // button backgrounds
+    */
 
     // get custom colors for these look and feel properties
     private static HashMap hmUIProps_ = new HashMap();
