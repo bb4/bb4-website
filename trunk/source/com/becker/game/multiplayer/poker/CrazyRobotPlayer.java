@@ -36,7 +36,7 @@ public class CrazyRobotPlayer extends PokerRobotPlayer
     public int getRaise(PokerController pc) {
         int allInAmt = pc.getAllInAmount();
         int max = (getCash() - getCallAmount(pc));
-        if (getHand().getScore() >100) {
+        if (getHand().getScore() > 100) {
             return min(10, max, allInAmt);
         }
         return min(2, max, allInAmt);

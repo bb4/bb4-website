@@ -67,6 +67,8 @@ import javax.swing.*;
  *    - consider monkey jump connections.
  *    - if the computer or player resigns, the playerWon vars should be set and the strcngth of the win should be large.
  *    - improve performance with profiling (1)
+ *    - remember good moves that have not yet been played. On a big board, they will probably remain good moves.
+ *      These good moves should be at the head of a list when possible moves are being generated.
  *
  ** Packaging issues
  *    - images on index web page should link directly to applets.

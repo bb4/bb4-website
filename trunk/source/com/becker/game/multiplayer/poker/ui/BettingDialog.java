@@ -47,7 +47,7 @@ public final class BettingDialog extends OptionsDialog
     {
         pc_ = pc;
         player_ = (PokerPlayer)pc_.getCurrentPlayer();
-        callAmount_ = (pc_.getCurrentMaxContribution() - player_.getContribution());
+        callAmount_ = player_.getCallAmount(pc_);
         contributeAmount_ = 0;
 
         initUI();
