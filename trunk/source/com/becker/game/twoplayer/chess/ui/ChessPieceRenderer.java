@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.chess.ui;
 import com.becker.game.twoplayer.chess.ChessPiece;
 import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GameContext;
+import com.becker.game.common.Board;
 import com.becker.game.common.ui.GamePieceRenderer;
 import com.becker.ui.GUIUtil;
 
@@ -87,7 +88,7 @@ public class ChessPieceRenderer  extends GamePieceRenderer
     /**
      * this draws the actual piece
      */
-    public void render( Graphics2D g2, BoardPosition position, int cellSize)
+    public void render( Graphics2D g2, BoardPosition position, int cellSize, Board b)
     {
         ChessPiece piece = (ChessPiece)position.getPiece();
         if (piece==null)

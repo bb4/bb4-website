@@ -51,7 +51,7 @@ public class PlanetRenderer extends GamePieceRenderer
      * @param g2 graphics context
      * @param position the position of the piece to render
      */
-    public void render( Graphics2D g2, BoardPosition position, int cellSize)
+    public void render( Graphics2D g2, BoardPosition position, int cellSize, Board b)
     {
         Planet planet = (Planet)position.getPiece();
         if (planet == null)
@@ -62,9 +62,10 @@ public class PlanetRenderer extends GamePieceRenderer
         Point pos = getPosition(position, cellSize, pieceSize);
         Ellipse2D circle = new Ellipse2D.Float( pos.x, pos.y, pieceSize + 1, pieceSize + 1 );
         int hlOffset = (int) (pieceSize / 2.3 + .5);  //spec highlight offset
+        Color c= planet.getColor();
 
         RoundGradientPaint rgp = new RoundGradientPaint(
-                pos.x + hlOffset, pos.y + hlOffset, Color.white, SPEC_HIGHLIGHT_RADIUS, planet.getColor() );
+                pos.x + hlOffset, pos.y + hlOffset, Color.white, SPEC_HIGHLIGHT_RADIUS, c );
 
         g2.setPaint( rgp );
         g2.fill( circle );

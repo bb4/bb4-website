@@ -87,7 +87,7 @@ public class MazeGenerator extends JComponent
         xDim_ = (int) w; // +2
         yDim_ = (int) h; // +2
         int numCells = xDim_ * yDim_;
-        //System.out.println( "initGenerator w=" + w + " h=" + h );
+        System.out.println( "initGenerator w=" + w + " h=" + h );
         grid_ = new MazeCell[xDim_ ][yDim_];
         stopPosition_ = new Point( xDim_, yDim_ );
 
@@ -164,6 +164,13 @@ public class MazeGenerator extends JComponent
     public void generate( int thickness, int animationSpeed, double forwardProb, double leftProb, double rightProb )
     {
         Dimension dim = this.getSize();
+        System.out.println("in generate. dim="+dim);
+        if (dim.width <=0) {
+            dim = new Dimension(500, 300);
+            this.setSize(dim);
+            System.out.println("in generate. take 2. dim="+dim);
+        }
+
 
         if ( thickness >= (dim.width / 4) || thickness >= (dim.height / 4) )
             thickness = Math.min( (dim.width / 5), (dim.height / 5) );

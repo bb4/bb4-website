@@ -94,6 +94,7 @@ public abstract class AnimationComponent extends Container implements Runnable
             for ( int i = 0; i < numStepsPerFrame_; i++ )
                 timeStep();
 
+
             calculateFrameRate();
         }
     }
@@ -106,7 +107,7 @@ public abstract class AnimationComponent extends Container implements Runnable
         {
             public void itemStateChanged( ItemEvent ie )
             {
-                setSwitch( item, (ie.getStateChange() == ie.SELECTED) );
+                setSwitch( item, (ie.getStateChange() == ItemEvent.SELECTED) );
             }
         } );
         return check;
@@ -114,6 +115,9 @@ public abstract class AnimationComponent extends Container implements Runnable
 
     public abstract void setSwitch( int item, boolean value );
 
+    /**
+     * render the animation component as an image
+     */
     protected void render()
     {
         Graphics g = getGraphics();

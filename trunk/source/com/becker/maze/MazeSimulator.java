@@ -81,7 +81,8 @@ public class MazeSimulator extends JApplet implements ActionListener
     public void init()
     {
         //System.out.println("in maze simulator init");
-        commonInit();
+        //commonInit();
+        resized();
     }
 
     private JPanel createMainPanel( MazeGenerator maze )
@@ -110,11 +111,12 @@ public class MazeSimulator extends JApplet implements ActionListener
         controlsPanel.add( rightProbPanel );
 
         regenerateButton_ = new GradientButton( "Generate" );
-        controlsPanel.add( regenerateButton_ );
         regenerateButton_.addActionListener( this );
+        controlsPanel.add( regenerateButton_ );
+
         solveButton_ = new GradientButton( "Solve" );
-        controlsPanel.add( solveButton_ );
         solveButton_.addActionListener( this );
+        controlsPanel.add( solveButton_ );
 
         JPanel mazePanel = new JPanel( new BorderLayout() );
         mazePanel.add( maze, BorderLayout.CENTER );
@@ -146,7 +148,7 @@ public class MazeSimulator extends JApplet implements ActionListener
 
         Object source = e.getSource();
 
-        if ( source == regenerateButton_ ) {
+        if ( source.hashCode() == regenerateButton_.hashCode() ) {
             regenerate();
         }
         if ( source == solveButton_ ) {
@@ -161,10 +163,11 @@ public class MazeSimulator extends JApplet implements ActionListener
      */
     public void regenerate()
     {
-        if ( thicknessField_ == null ) return; // not inited yet
+        if ( thicknessField_ == null )   {
+            return; // not inited yet
+        }
 
         int thickness = Integer.parseInt( thicknessField_.getText() );
-
 
         Double forwardP = new Double( forwardProbField_.getText() );
         Double leftP = new Double( leftProbField_.getText() );
@@ -190,9 +193,8 @@ public class MazeSimulator extends JApplet implements ActionListener
      */
     public void setSize( int width, int height )
     {
-        System.out.println( "in setSize w=" + width + " h=" + height );
         resizablePanel_.setSize( width, height );
-        //resized();
+        resized();
     }
 
     public void resized()

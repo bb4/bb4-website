@@ -78,7 +78,7 @@ public class Planet extends GamePiece implements Comparable
         // do this for new orders only. It was already done for old orders.
         assert (numShips_ >= numShips) :
                     "Trying to send "+numShips+" when you have only "+numShips_;
-        System.out.println( "subracting "+numShips+ " from "+numShips_ );
+        //System.out.println( "subracting "+numShips+ " from "+numShips_ );
         setNumShips(numShips_ - numShips);
     }
 
