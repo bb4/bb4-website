@@ -80,11 +80,9 @@ public class PokerPlayerTable extends PlayerTable
         PokerPlayer p = (PokerPlayer)player;
         Object d[] = new Object[getNumColumns()];
         d[NAME_INDEX] = player.getName();
-        d[COLOR_INDEX ] = player.getColor();
-        d[CASH_INDEX] = p.getCash();
+        d[COLOR_INDEX] = player.getColor();
+        d[CASH_INDEX] = DEFAULT_CASH_AMOUNT; //p.getCash();
         d[TYPE_INDEX] = new Boolean(player.isHuman());
-
-        //data[i] = d;
         getModel().addRow(d);
     }
 

@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.text.MessageFormat;
+import java.text.NumberFormat;
 import java.util.List;
 import java.util.HashMap;
 
@@ -17,8 +18,6 @@ import sun.font.TextLabel;
 
 /**
  * Allow the user to specify a single order
- * @@ should show the distance when they have both origin and dest specified.
- *
  * @author Barry Becker
  */
 public final class BettingDialog extends OptionsDialog
@@ -31,15 +30,22 @@ public final class BettingDialog extends OptionsDialog
     private GradientButton raiseButton_;
 
     private JLabel availableCash_;
+    private int callAmount_;
+    private int contributeAmount_;
 
     private JPanel pokerHandPanel_;
+    private NumberFormat currencyFormat_;
 
     /**
      * constructor - create the tree dialog.
+     * @param callAmount amount needed to call
      */
-    public BettingDialog(PokerPlayer player)
+    public BettingDialog(PokerPlayer player, int callAmount)
     {
         player_ = player;
+        callAmount_ = callAmount;
+        contributeAmount_ = 0;
+        currencyFormat_ =  NumberFormat.getCurrencyInstance(GameContext.getLocale());
         initUI();
     }
 
@@ -71,16 +77,30 @@ public final class BettingDialog extends OptionsDialog
 
     private JPanel createInstructionsPanel() {
         JPanel panel = new JPanel(new BorderLayout());
-        JLabel currentCash = new JLabel("You currently have "+player_.getCash());
-        JLabel amountToCall = new JLabel("To call, you need to add ???");
-         //  @@ controller.getMaxContribution() - player_.getContribution();
-        
+        JPanel playerPanel = createPlayerLabel();
+
+
+        String cash = currencyFormat_.format(player_.getCash());
+        JLabel currentCash = new JLabel("You currently have "+cash);
+        JLabel amountToCall = new JLabel("To call, you need to add "+currencyFormat_.format(callAmount_));
+
         //panel.setPreferredSize(new Dimension(400, 100));
-        panel.add(currentCash, BorderLayout.NORTH);
-        panel.add(amountToCall, BorderLayout.CENTER);
+        panel.add(playerPanel, BorderLayout.NORTH);
+        panel.add(currentCash, BorderLayout.CENTER);
+        panel.add(amountToCall, BorderLayout.SOUTH);
         return panel;
     }
 
+    private JPanel createPlayerLabel() {
+        JPanel p = new JPanel();
+        JPanel swatch = new JPanel();
+        swatch.setPreferredSize(new Dimension(10, 10));
+        swatch.setBackground(player_.getColor());
+        JLabel playerLabel = new JLabel(player_.getName()+":");
+        p.add(swatch);
+        p.add(playerLabel);
+        return p;
+    }
     /**
      *  create the OK/Cancel buttons that go at the bottom.
      */
@@ -125,13 +145,12 @@ public final class BettingDialog extends OptionsDialog
             this.setVisible(false);
         }
         else if ( source == callButton_ ) {
-            // @@ add the amount of money needed to call
-
+            // add the amount of money needed to call
+            contributeAmount_ = callAmount_;
             this.setVisible(false);
         }
         else if ( source == raiseButton_ ) {
             showRaiseDialog();
-
         }
         else {
            System.out.println( "actionPerformed source="+source+". not recognized" );
@@ -142,17 +161,20 @@ public final class BettingDialog extends OptionsDialog
     public void showRaiseDialog() {
               // open a dlg to get an order
         RaiseDialog raiseDialog =
-                new RaiseDialog(player_);
+                new RaiseDialog(player_, callAmount_);
 
         raiseDialog.setLocation((int)(this.getLocation().getX() + 40), (int)(this.getLocation().getY() +170));
-
 
         boolean canceled = raiseDialog.showDialog();
 
         if ( !canceled ) { // newGame a game with the newly defined options
-            int raise   = raiseDialog.getRaiseAmount();
-            // @@ add the raise to the pot
+            contributeAmount_  = callAmount_ + raiseDialog.getRaiseAmount();
+            this.setVisible(false);
         }
+    }
+
+    public int getContributeAmount() {
+        return contributeAmount_;
     }
 
     /**

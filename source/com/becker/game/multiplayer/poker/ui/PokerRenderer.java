@@ -28,8 +28,9 @@ public class PokerRenderer extends GamePieceRenderer
     private static GamePieceRenderer renderer_ = null;
 
 
-    private static final Color HIGHLIGHT_COLOR = new Color(245, 255, 0);
+    public static final Color HIGHLIGHT_COLOR = new Color(245, 255, 0, 50);
     private static final BasicStroke HIGHLIGHT_STROKE = new BasicStroke(2);
+    private static final Color FOLDED_COLOR = new Color(50, 50, 55, 30);
 
      // instead of rendering we can just show image icons which look even better.
     // @@ should we instead maintain an array of images indexed by type and player?
@@ -93,9 +94,9 @@ public class PokerRenderer extends GamePieceRenderer
         g2.fill( circle );
 
         if ( playerMarker.isHighlighted() ) {
-            g2.setStroke(HIGHLIGHT_STROKE);
+            //g2.setStroke(HIGHLIGHT_STROKE);
             g2.setColor( HIGHLIGHT_COLOR );
-            g2.drawOval( pos.x, pos.y, pieceSize + 1, pieceSize + 1 );
+            g2.fillOval( pos.x, pos.y, 3*pieceSize , 3*pieceSize );
         }
 
 
@@ -109,6 +110,12 @@ public class PokerRenderer extends GamePieceRenderer
         //System.out.println("location ="+position.getLocation());
         if (!playerMarker.getOwner().hasFolded())
             renderHand(g2, position.getLocation(), playerMarker.getOwner().getHand(), cellSize);
+        else {
+            // they have folded. Cover with a gray rectangle to indicate.
+            g2.setColor(FOLDED_COLOR);
+            g2.fillRect( pos.x, pos.y, 10*pieceSize , 10*pieceSize );
+        }
+
         renderChips(g2, position.getLocation(), playerMarker.getOwner().getCash(), cellSize);
     }
 

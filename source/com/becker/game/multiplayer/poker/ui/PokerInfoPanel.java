@@ -94,41 +94,36 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
      */
     public void actionPerformed(ActionEvent e)
     {
-        PokerController gc = (PokerController)controller_;
+        PokerController pc = (PokerController)controller_;
         gameChanged(null); // update the current player in the label
 
         if (e.getSource() == commandButton_)
         {
 
            // open the command dialog to get the players commands
-           PokerPlayer currentPlayer = (PokerPlayer)gc.getCurrentPlayer();
+           PokerPlayer currentPlayer = (PokerPlayer)pc.getCurrentPlayer();
 
            // skip the player if he has folded
 
            // if the current player does not own any planets, then advance to the next player
            if (currentPlayer.hasFolded())  {
-              gc.advanceToNextPlayer();
+              pc.advanceToNextPlayer();
            }
 
-
-           // @@ replace with betting dialog
-
            BettingDialog bettingDialog =
-                   new BettingDialog(currentPlayer);
-           //ordersDialog.setLocationRelativeTo( this );
+                   new BettingDialog(currentPlayer, (pc.getCurrentMaxContribution() - currentPlayer.getContribution()));
            Point p = this.getParent().getLocationOnScreen();
 
-           // offset the dlg so the Galaxy grid is visible as a reference
+           // offset the dlg so the board is visible as a reference
            bettingDialog.setLocation((int)(p.getX()+.7*getParent().getWidth()), (int)(p.getY()+getParent().getHeight()/3));
 
 
            boolean canceled = bettingDialog.showDialog();
            if ( !canceled ) {
                // apply the players action : fold, check, call, raise
-               //currentPlayer.setOrders( ordersDialog.getOrders() );
-               gc.advanceToNextPlayer();
+               currentPlayer.contributeToPot(pc, bettingDialog.getContributeAmount());
+               pc.advanceToNextPlayer();
            }
-
         }
     }
 

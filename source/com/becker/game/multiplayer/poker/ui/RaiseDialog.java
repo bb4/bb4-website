@@ -24,15 +24,17 @@ public final class RaiseDialog extends OptionsDialog
 
     private GradientButton okButton_;
     private JTextField raiseAmount_;
+    private int callAmount_;
 
     private static final int DEFAULT_RAISE_AMOUNT = 5; // dollars
 
     /**
      * constructor - create the tree dialog.
      */
-    public RaiseDialog(PokerPlayer player)
+    public RaiseDialog(PokerPlayer player, int callAmount)
     {
         player_ = player;
+        callAmount_ = callAmount;
 
         initUI();
     }
@@ -50,21 +52,21 @@ public final class RaiseDialog extends OptionsDialog
         JPanel buttonsPanel = createButtonsPanel();
 
         // add the form elements
-
-        String labelText = GameContext.getLabel("ORIGIN");
-
         JPanel instructionsPanel = new JPanel(new BorderLayout());
         instructionsPanel.setMinimumSize(new Dimension(30,60));
 
-        JLabel instr = new JLabel("You currently have $"+player_.getCash());
-        instructionsPanel.add(instr, BorderLayout.CENTER);
+        JLabel instr1 = new JLabel("You currently have $"+player_.getCash());
+        instructionsPanel.add(instr1, BorderLayout.CENTER);
+        if (callAmount_ > 0) {
+            JLabel instr2 = new JLabel("You first need to add $"+callAmount_+" to meet what others have added.");
+            instructionsPanel.add(instr2, BorderLayout.SOUTH);
+        }
 
         raiseAmount_ = new JTextField(DEFAULT_RAISE_AMOUNT);
         NumberInputPanel raiseInput = new NumberInputPanel(GameContext.getLabel("AMOUNT_TO_RAISE"), raiseAmount_);
 
         mainPanel_.add(instructionsPanel, BorderLayout.NORTH);
         mainPanel_.add(raiseInput, BorderLayout.CENTER);
-        //mainPanel_.add(new JLabel(" "), BorderLayout.SOUTH);
         mainPanel_.add(buttonsPanel, BorderLayout.SOUTH);
 
         getContentPane().add( mainPanel_ );
@@ -81,7 +83,7 @@ public final class RaiseDialog extends OptionsDialog
         JPanel buttonsPanel = new JPanel( new FlowLayout() );
 
         okButton_ = new GradientButton();
-        initBottomButton( okButton_, GameContext.getLabel("OK"), GameContext.getLabel("PLACE_ORDER_TIP") );
+        initBottomButton( okButton_, GameContext.getLabel("OK"), GameContext.getLabel("RAISE_TIP") );
         initBottomButton( cancelButton_, GameContext.getLabel("CANCEL"), GameContext.getLabel("CANCEL") );
 
         buttonsPanel.add( okButton_ );
@@ -104,7 +106,11 @@ public final class RaiseDialog extends OptionsDialog
     {
         Object source = e.getSource();
         if (source == okButton_) {
-            this.setVisible(false);
+            if (callAmount_ + getRaiseAmount() > player_.getCash()) {
+                JOptionPane.showMessageDialog(this, "You can't raise by more money than you have!");
+            } else {
+                this.setVisible(false);
+            }
         }
         else if ( source == cancelButton_ ) {
             cancel();
@@ -122,8 +128,6 @@ public final class RaiseDialog extends OptionsDialog
     {
          return Integer.parseInt(raiseAmount_.getText());
     }
-
-
 
 }
 

@@ -219,6 +219,10 @@ public final class GameContext
         JComponent.setDefaultLocale(currentLocale_.getLocale());
     }
 
+    public static Locale getLocale() {
+        return currentLocale_.getLocale();
+    }
+
     /**
      * @param key
      * @return  the localized message label

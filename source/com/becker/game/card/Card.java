@@ -5,7 +5,7 @@ import java.util.*;
 public class Card {
   
     public enum Suit {
-        CLUBS, DIAMONDS, HEARTS, SPADES
+        HEARTS, DIAMONDS, CLUBS, SPADES
     }
 
     private final Rank rank;
