@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE slideshow SYSTEM "technique.dtd">
+<slideshow title="Sample Slide Show" date="Date of publication" author="Yours Truly">
+<slide id="slide0" type="all">
+    <title>Wake up to WonderWidgets!</title>
+</slide>
+<slide id="slide1" type="all">
+    <title>Overview</title>
+    <item>
+       Why WonderWidgets are great
+    </item>
+    <item/>
+    <item>
+      Who buys WonderWidgets
+    </item>
+</slide>
+<use href="slide0"></use>
+<use ref="slide1"></use>
+<use ref="slide0"></use>
+<use ref="slide1"></use>
+</slideshow>
+

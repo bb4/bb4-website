@@ -1,0 +1,20 @@
+
+<!ELEMENT hierarchy   (node | use)*>
+<!ELEMENT node        (node | use)*>
+<!ELEMENT use         EMPTY>
+
+
+<!ATTLIST hierarchy
+    title     ID        #REQUIRED
+    imgpath   NMTOKEN   #REQUIRED
+    date      NMTOKEN   #IMPLIED
+    author    NMTOKENS  #IMPLIED
+>
+<!ATTLIST node
+    id        ID        #REQUIRED
+    label     NMTOKENS  #REQUIRED
+    img       NMTOKEN   #REQUIRED
+>
+<!ATTLIST use
+    ref       IDREF     #REQUIRED
+>

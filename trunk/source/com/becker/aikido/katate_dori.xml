@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hierarchy SYSTEM "hierarchy.dtd">
+<hierarchy title="Katate dori technique hierarchy" imgpath="images/katate_dori/" date="10/19/2004" author="Barry Becker">
+  <node id="katate_dori" label="katate dori" img="katate_dori">
+      <node id="tenkan_grabbed" label="tenkan entrance (grabbed)" img="tenkan_grabbed">
+          <node id="sumi_grabbed" label="sumi entrance (grabbed)" img="sumi_grabbed">
+              <node id="sumi_otoshi_basic" label="sumi otoshi (basic)" img="sumi_otoshi_basic"/>
+              <node id="sumi_otoshi_elbow" label="sumi otoshi (elbow)" img="sumi_otoshi_elbow"/>
+              <node id="sumi_otoshi_inside_shoulder" label="sumi otoshi (inside shoulder)" img="sumi_otoshi_inside_shoulder"/>
+              <node id="sumi_otoshi_outside_shoulder" label="sumi otoshi (inside shoulder)" img="sumi_otoshi_outside_shoulder"/>
+              <node id="sumi_otoshi_head" label="sumi otoshi (inside shoulder)" img="sumi_otoshi_head"/>
+          </node>
+      </node>
+      <use ref="sumi_grabbed"></use>
+  </node>
+</hierarchy>
+
