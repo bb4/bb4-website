@@ -2,11 +2,11 @@ Nr.   Classes Functions     NCSS  Javadocs Package
   1         5            63            626        54   com.becker.game.blockade
   2         4           30             316        18   com.becker.game.blockade.ui
   3         4           33             300        26   com.becker.game.checkers
-  4         4            23            154        10   com.becker.game.checkers.ui
-  5         4            46           363        38   com.becker.game.chess
+  4         4           23            154        10   com.becker.game.checkers.ui
+  5         4           46           363        38   com.becker.game.chess
   6         4           16             132           8    com.becker.game.chess.ui
   7        11          232          794       214  com.becker.game.core
-  8         3            21           291          17   com.becker.game.core.search
+  8         3           21           291          17   com.becker.game.core.search
   9        17          190         1957        129  com.becker.game.core.ui
  10        13          218        2257       190  com.becker.game.go
  11         6          44            535         30   com.becker.game.go.ui
