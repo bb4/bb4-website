@@ -25,7 +25,7 @@ public class NumberInputPanel extends JPanel
 
     /**
      * @param labelText label for the number input element
-     * @param numberField filed for the user to enter the desired number
+     * @param numberField field for the user to enter the desired number
      * @param toolTip the tooltip for the whole panel
      */
     public NumberInputPanel( String labelText, final JTextField numberField, String toolTip )

@@ -36,7 +36,7 @@ public abstract class PokerRobotPlayer extends PokerPlayer
      *
      * @return the amount that the robot raises if he raises.
      */
-    public abstract int getRaise();
+    public abstract int getRaise(PokerController pc);
 
     /**
      *
@@ -72,6 +72,10 @@ public abstract class PokerRobotPlayer extends PokerPlayer
 
         return null;
 
+    }
+
+    protected int min(int a, int b, int c) {
+        return Math.min(Math.min(a, b), c);
     }
 
     protected boolean allOthersFolded(PokerController pc) {

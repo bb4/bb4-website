@@ -20,15 +20,24 @@ import java.awt.*;
  *
  *  - options dialog
  *     - Texas holdem
- *     - n card stud
+ *     - N card stud
  *          - num cards for each
  *          - whether to use jokers
  *          - allow n exchanges
+ *          - raise limit (eg $20)
  *   - summary dlg
  *      - show who gets pot
  *      - show the pot
  *      - give option to start another round with same players
  *      - unless really done then you can only exit
+ *
+ *  possible bugs
+ *    - ante getting subtracted twice
+ *    - first player always going first (should rotate)
+ *
+
+ *  - lower high card beat higher high card   (fixed?)
+ *  - asking folded player to play  (fixed?)
  *
  * @author Barry Becker
  */
@@ -39,9 +48,11 @@ public class PokerController extends GameController
     protected static final int DEFAULT_NUM_COLS = 32;
 
     private static final int DEFAULT_ANTE = 2;
+    private static final int DEFAULT_MAX_ABS_RAISE = 50;
 
     private int currentPlayerIndex_;
     private int ante_ = DEFAULT_ANTE;
+    private int maxAbsoluteRaise_ = DEFAULT_MAX_ABS_RAISE;
     private int pot_;
     private int startingPlayerIndex_ = 0;
 
@@ -120,7 +131,7 @@ public class PokerController extends GameController
             }
             PokerPlayer player = ((PokerPlayer)players_[i]);
             player.setHand(new PokerHand(deck, numCardsToDealToEachPlayer));
-            player.setFold(false);
+            player.setOutOfGame(false);
         }
     }
 
@@ -132,7 +143,12 @@ public class PokerController extends GameController
         if (this.getPotValue() == 0) {
             for (int i=0; i<players_.length; i++)  {
                 PokerPlayer player = ((PokerPlayer)players_[i]);
-                player.contributeToPot(this, getAnte());
+                // if a player does not have enough money to ante up, he is out of the game
+                if (player.getCash() < getAnte())  {
+                    player.setOutOfGame(true);
+                } else {
+                    player.contributeToPot(this, getAnte());
+                }
             }
         }
     }
@@ -143,7 +159,6 @@ public class PokerController extends GameController
     }
 
     /**
-     *
      * @return the maximum contribution made by any player so far
      */
     public int getCurrentMaxContribution() {
@@ -158,17 +173,25 @@ public class PokerController extends GameController
         return max;
     }
 
+    public void setMaxAbsolutRaise(int maxAbsoluteRaise) {
+        maxAbsoluteRaise_ = maxAbsoluteRaise;
+    }
+
+    public int getMaxAbsoluteRaise()  {
+        return maxAbsoluteRaise_;
+    }
+
     /**
      *
      * @return the min number of chips of any player
      */
-    public int getMaxRaiseAllowed() {
+    public int getAllInAmount() {
         // loop through the players and return the min number of chips of any player
         int min = Integer.MAX_VALUE;
         Player[] players = getPlayers();
         for (int i=0; i<players.length; i++) {
             PokerPlayer p = (PokerPlayer)players[i];
-            if (p.getCash() < min) {
+            if (!p.hasFolded() && (p.getCash() < min)) {
                 min = p.getCash();
             }
         }
@@ -208,7 +231,7 @@ public class PokerController extends GameController
     }
 
     /**
-     * Game is over when everyone has called or folded.
+     * Game is over when only one player has enough money left to play
      *
      * @return true if the game is over.
      */
@@ -216,16 +239,15 @@ public class PokerController extends GameController
     {
         if (getLastMove()==null)
             return false;
-        // if one player has all the chips then the game is over
-        int numPlayersWithChips = 0;
+
+
         Player[] players = getPlayers();
         for (int i=0; i<players.length; i++) {
             PokerPlayer p = (PokerPlayer)players[i];
-            if (p.getCash() > 0) {
-                numPlayersWithChips++;
-            }
+            if (!p.isOutOfGame())
+                return false;
         }
-        return (numPlayersWithChips == 1);
+        return true;
     }
 
 
@@ -248,27 +270,14 @@ public class PokerController extends GameController
 
         int nextIndex = advanceToNextPlayerIndex();
 
-        if (allButOneFolded())  {
-             PokerPlayer winner = determineWinner();
-             int winnings = this.getPotValue();
-             winner.claimPot(this);
-             pviewer.showRoundOver(winner, winnings);
-             // start a new round deal new cards and ante
-             dealCardsToPlayers(5);
-             anteUp();
-         }
-
-        if (getCurrentPlayer() == getFirstPlayer()) {
-            // we've made a complete round.
+        if (roundOver()) {
+            // every player left in the game has called.
             PokerRound round = pviewer.createMove(getLastMove());
-
             // records the result on the board.
             makeMove(round);
-            //pviewer.refresh();
+            pviewer.refresh();
 
-            if (roundOver())  {
-                 doRoundOverBookKeeping(pviewer);
-            }
+            doRoundOverBookKeeping(pviewer);
         }
 
         if (!getCurrentPlayer().isHuman()) {
@@ -281,6 +290,7 @@ public class PokerController extends GameController
         return nextIndex;
     }
 
+
     private void doRoundOverBookKeeping(PokerGameViewer pviewer) {
         PokerPlayer winner = determineWinner();
         int winnings = this.getPotValue();
@@ -289,7 +299,8 @@ public class PokerController extends GameController
         // start a new round deal new cards and ante
         dealCardsToPlayers(5);
         anteUp();
-        startingPlayerIndex_++;
+        startingPlayerIndex_ = (startingPlayerIndex_++) % this.getNumPlayers();
+        currentPlayerIndex_ = startingPlayerIndex_;
     }
 
     private boolean allButOneFolded() {
@@ -308,26 +319,39 @@ public class PokerController extends GameController
     }
 
     /**
-     * the round is over if there is only one player left who has not folder, or
-     * everyone has called.
+     * the round is over if there is only one player left who has not folded, or
+     * everyone has had a chance to call.
      * @return true of the round is over
      */
     private boolean roundOver() {
         PokerPlayer[] players = (PokerPlayer[])getPlayers();
 
         if (allButOneFolded())  {
+            System.out.println("all but one folded");
             return true;
         }
 
+        // special case of no one raising
+        boolean nooneRaisedYet = (getAnte()*getNumPlayers() == getPotValue());
+        if ((getCurrentPlayer() == getFirstPlayer()) && nooneRaisedYet) {
+            System.out.println("no one raised");
+            return true;
+        }
+        if (nooneRaisedYet)
+            return false;
+
         int contrib = this.getCurrentMaxContribution();
+        //boolean allMetRaise = true;
         for (int i=0; i<players.length; i++) {
             PokerPlayer p = players[i];
             if (!p.hasFolded()) {
                 if (p.getContribution() != contrib) {
+
                     return false;
                 }
             }
         }
+        System.out.println("all players have contributed");
         return true;
     }
 
@@ -380,7 +404,14 @@ public class PokerController extends GameController
     private int advanceToNextPlayerIndex()
     {
         currentPlayerIndex_ = (currentPlayerIndex_+1) % players_.length;
+        while (getPlayer(currentPlayerIndex_).hasFolded())
+            currentPlayerIndex_ = (currentPlayerIndex_+1) % players_.length;
+
         return currentPlayerIndex_;
+    }
+
+    private PokerPlayer getPlayer(int index) {
+        return (PokerPlayer) getPlayers()[index];
     }
 
     /**

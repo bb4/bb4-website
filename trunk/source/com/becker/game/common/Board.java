@@ -55,10 +55,6 @@ public abstract class Board implements BoardInterface, Cloneable
         return numRows_;
     }
 
-    // by default does nothing
-    public void confirm()
-    {}
-
     /**
      * @return  retrieve the number of cols that the board has.
      */
@@ -153,6 +149,7 @@ public abstract class Board implements BoardInterface, Cloneable
        }
        return true;
     }
+
 
     public abstract boolean makeMove( Move move );
 
