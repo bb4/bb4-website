@@ -8,8 +8,17 @@ import com.becker.optimization.ParameterArray;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.List;
+
+import ca.dj.jigo.sgf.SGFGame;
+import ca.dj.jigo.sgf.SGFLoader;
+import ca.dj.jigo.sgf.SGFException;
+import ca.dj.jigo.sgf.tokens.MoveToken;
+
+import javax.swing.*;
 
 /**
  * Defines everything the computer needs to know to play Go
@@ -146,7 +155,7 @@ public final class GoController extends TwoPlayerController
     private static final int DEFAULT_NUM_ROWS = 9;
 
     // The komi can vary, but 5.5 seems most commonly used
-    //public static final float KOMI = 5.5f;
+    public static final float DEFAULT_KOMI = 5.5f;
 
     private static final int WIN_THRESHOLD = 1000;
 
@@ -160,6 +169,8 @@ public final class GoController extends TwoPlayerController
     // at the very end of the game we mark dead stones dead.
     private static int numDeadBlackStonesOnBoard_ = 0;
     private static int numDeadWhiteStonesOnBoard_ = 0;
+
+    private float komi_ = DEFAULT_KOMI;
 
 
     //Construct the Go game controller
@@ -236,6 +247,13 @@ public final class GoController extends TwoPlayerController
         ((GoBoard) board_).setHandicap( handicap );
         player1sTurn_ = false;
 
+    }
+
+
+
+    protected Move createMoveFromToken( MoveToken token, int moveNum )
+    {
+        return new GoMove( token.getY(), token.getX(), null, 0, moveNum, new GoStone(!token.isWhite()));
     }
 
     /**
@@ -375,6 +393,14 @@ public final class GoController extends TwoPlayerController
         board_.showProfileStats( totalTime );
     }
 
+    public void setKomi(float komi) {
+        komi_ = komi;
+    }
+
+    public float getKomi() {
+        return komi_;
+    }
+
     /**
      * save the current state of the go game to a file in SGF (4) format
      * @param fileName name of the file to save the state to
@@ -395,9 +421,9 @@ public final class GoController extends TwoPlayerController
             out.write( "ST[2]\n" );
             out.write( "RU[japanese]\n" );
             out.write( "SZ[9]\n" );
-            out.write( "PB[GalacticPlayer]\n" );
-            out.write( "PW[GreenGo]\n" );
-            out.write( "KM[5.5]\n" );
+            out.write( "PB["+this.getPlayer1().getName()+"]\n" );
+            out.write( "PW["+this.getPlayer2().getName()+"]\n" );
+            out.write( "KM["+getKomi()+"]\n" );
             out.write( "PC[US]\n" );
             out.write( "HA[" + ((GoBoard) board_).getHandicap() + "]\n" );
             out.write( "GN[test1]\n" );
@@ -424,6 +450,24 @@ public final class GoController extends TwoPlayerController
             out.close();
         } catch (IOException ioe) {
             ioe.printStackTrace();
+        }
+    }
+
+
+    public void restoreFromFile( String fileName ) {
+
+        try {
+            FileInputStream iStream = new FileInputStream( fileName );
+            GameContext.log( 2, "opening " + fileName );
+            SGFGame game = SGFLoader.load( iStream );
+            restoreGame( game );
+        } catch (FileNotFoundException fnfe) {
+            JOptionPane.showMessageDialog( null, "file " + fileName + " was not found" );
+        } catch (IOException ioe) {
+            JOptionPane.showMessageDialog( null, "IOException occurrred while reading " + fileName + " :" + ioe.getMessage() );
+        } catch (SGFException sgfe) {
+            JOptionPane.showMessageDialog( null, "file " + fileName + " had an SGF error while loading: " + sgfe.getMessage() );
+            sgfe.printStackTrace();
         }
     }
 

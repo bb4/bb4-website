@@ -17,10 +17,12 @@ import java.applet.AudioClip;
  * See derived classes for specific game implementations.
  *
  * It contains a dockable toolbar which shows at least 5 buttons:
- *  new game, undo, redo, options, and help.
+ * new game, undo, redo, options, and help.
+ *  @see GameToolBar
+ *
  * It puts the game board viewer in a scrollable pane on the left.
  * There is an info window on the right that gives statistics about the current game state.
- * There is a brogress bar at the bottom that shows whenever the computer is thinking.
+ * There is a progress bar at the bottom that shows whenever the computer is thinking.
  *
  * This class is the main panel in the applet or application.
  * It contains everything related to acutally playing the board game.
@@ -34,14 +36,8 @@ public abstract class GamePanel extends TexturedPanel
     // ui elements.
     // There are (at least) 5 buttons in the ToolBar. There could be more depending on the game.
     // toolbar is protected rather than private so derived classes can add buttons to it.
-    protected TexturedToolBar toolBar_ = null;
+    protected GameToolBar toolBar_ = null;
 
-    protected GradientButton newGameButton_;
-    protected GradientButton undoButton_;
-    protected GradientButton redoButton_;
-    protected GradientButton optionsButton_;
-    //protected GradientButton resignButton_;
-    protected GradientButton helpButton_;
     protected TexturedPanel statusBar_ = null;
 
     protected final JScrollPane boardViewerScrollPane_ = new JScrollPane();
@@ -53,13 +49,12 @@ public abstract class GamePanel extends TexturedPanel
     protected GameOptionsDialog optionsDialog_ = null;
     protected GameInfoPanel infoPanel_ = null;
 
-
     // for a resizable applet
     protected ResizableAppletPanel resizablePanel_ = null;
 
     // font for the undo/redo buttons
     protected static final Font STATUS_FONT = new Font( "SansSerif", Font.PLAIN, 10 );
-    protected static final Dimension MAX_BUTTON_SIZE = new Dimension( 100, 24 );
+
     // A greeting specified using allophones. See SpeechSynthesizer.
     protected static final String[] GREETING = {"w|u|d", "y|ouu", "l|ii|k", "t|ouu", "p|l|ay", "aa", "gg|AY|M"};
 
@@ -94,26 +89,30 @@ public abstract class GamePanel extends TexturedPanel
         }
     }
 
+    public void openGame() {
+
+        boardViewer_.openGame();
+    }
+
+    public void saveGame() {
+
+        boardViewer_.saveGame();
+    }
+
     /**
      * @return the title for the applet/application window.
      */
     public abstract String getTitle();
 
+    protected GameToolBar createToolbar() {
+         return new GameToolBar(BG_TEXTURE, this);
+    }
 
     /**
      *  UIComponent initialization.
      */
     protected void initGui()
     {
-
-        String dir = CORE_IMAGE_PATH;
-        ImageIcon newGameImage = GUIUtil.getIcon(dir+"newGame.gif");
-        ImageIcon helpImage = GUIUtil.getIcon(dir+"help.gif");
-        ImageIcon undoImage = GUIUtil.getIcon(dir+"undo_on.gif");
-        ImageIcon redoImage = GUIUtil.getIcon(dir+"redo_on.gif");
-        ImageIcon undoImageDisabled = GUIUtil.getIcon(dir+"undo_off.gif");
-        ImageIcon redoImageDisabled = GUIUtil.getIcon(dir+"redo_off.gif");
-        ImageIcon optionsImage = GUIUtil.getIcon(dir+"iconDesktop.gif");
 
         JPanel mainPanel = new JPanel( new BorderLayout() );
 
@@ -127,28 +126,8 @@ public abstract class GamePanel extends TexturedPanel
         statusBar_.setMaximumSize(new Dimension(1000, 16));
         statusBar_.add(statusBarLabel, BorderLayout.WEST);
 
-        newGameButton_ = createToolBarButton( GameContext.getLabel("NEW_GAME_BTN"),
-                                              GameContext.getLabel("NEW_GAME_BTN_TIP"),
-                                              newGameImage );
-        undoButton_ = createToolBarButton( "", GameContext.getLabel("UNDO_BTN_TIP"), undoImage );
-        undoButton_.setDisabledIcon(undoImageDisabled);
-        undoButton_.setEnabled(false);    // nothing to undo initially
-        redoButton_ = createToolBarButton( "", GameContext.getLabel("REDO_BTN_TIP"), redoImage );
-        redoButton_.setDisabledIcon(redoImageDisabled);
-        redoButton_.setEnabled(false);    // nothing to redo initially
-        optionsButton_ = createToolBarButton( GameContext.getLabel("OPTIONS_BTN"),
-                                              GameContext.getLabel("OPTIONS_BTN_TIP"), optionsImage );
-        helpButton_ = createToolBarButton( GameContext.getLabel("HELP_BTN"),
-                                           GameContext.getLabel("HELP_BTN_TIP"), helpImage );
+        toolBar_ = createToolbar();
 
-        toolBar_ = new TexturedToolBar(BG_TEXTURE);
-        toolBar_.add( newGameButton_ );
-        toolBar_.add( undoButton_ );
-        toolBar_.add( redoButton_ );
-        addCustomToolBarButtons();
-        toolBar_.add( optionsButton_ );
-        toolBar_.add( Box.createHorizontalGlue() );
-        toolBar_.add( helpButton_ );
 
         // the main board viewer, It displays the current state of the board.
         // the board viewer creates its own controller
@@ -191,7 +170,6 @@ public abstract class GamePanel extends TexturedPanel
 
         setLayout(new BorderLayout());
         add( resizablePanel_, BorderLayout.CENTER ); //mainPanel_ );
-        //this.setSize( new Dimension( 600, 500 ) );
 
 
         //start and initialize a new game with the default options
@@ -207,8 +185,8 @@ public abstract class GamePanel extends TexturedPanel
             URL url = GUIUtil.getURL("com/becker/sound/play_game_voice.wav");
             AudioClip clip = new sun.applet.AppletAudioClip(url);
             if (clip != null) {
-	            clip.play();
-	        }
+                clip.play();
+            }
              */
         }
         this.setDoubleBuffered(false);
@@ -220,24 +198,6 @@ public abstract class GamePanel extends TexturedPanel
         return null;
     }
 
-    /**
-     * create a toolbar button.
-     */
-    protected final GradientButton createToolBarButton( String text, String tooltip, Icon icon )
-    {
-        GradientButton button = new GradientButton( text, icon );
-        button.addActionListener( this );
-        button.setToolTipText( tooltip );
-        button.setMaximumSize( MAX_BUTTON_SIZE );
-        return button;
-    }
-
-
-    /**
-     * @return the game controller. There should only be one of these
-     *
-    protected abstract GameController createGameController();
-     */
 
     /**
      * @return the ui component used to display the current board state.
@@ -283,11 +243,6 @@ public abstract class GamePanel extends TexturedPanel
         dlg.setVisible( true );
     }
 
-    /**
-     * override to add your own game dependent buttons to the toolbar.
-     */
-    protected void addCustomToolBarButtons()
-    {}
 
     /**
      * This method allows javascript to resize the applet from the browser.
@@ -315,7 +270,7 @@ public abstract class GamePanel extends TexturedPanel
      */
     public void gameChanged( GameChangedEvent gce )
     {
-        undoButton_.setEnabled(boardViewer_.getController().getLastMove() != null);
+        toolBar_.getUndoButton().setEnabled(boardViewer_.getController().getLastMove() != null);
     }
 
 
@@ -329,7 +284,7 @@ public abstract class GamePanel extends TexturedPanel
     public void actionPerformed( ActionEvent e )
     {
         Object source = e.getSource();
-        if ( source == newGameButton_ ) {
+        if ( source == toolBar_.getNewGameButton() ) {
             newGameDialog_.setLocationRelativeTo( this );
 
             boolean canceled = newGameDialog_.showDialog();
@@ -337,23 +292,23 @@ public abstract class GamePanel extends TexturedPanel
                 boardViewer_.startNewGame();
             }
         }
-        else if ( source == undoButton_ ) {
+        else if ( source == toolBar_.getUndoButton() ) {
             GameContext.log(1,  "undo clicked" );
             // gray it if there are now no more moves to undo
-            undoButton_.setEnabled(boardViewer_.canUndoMove());
-            redoButton_.setEnabled(true);
+            toolBar_.getUndoButton().setEnabled(boardViewer_.canUndoMove());
+            toolBar_.getRedoButton().setEnabled(true);
         }
-        else if ( source == redoButton_ ) {
+        else if ( source == toolBar_.getRedoButton() ) {
             GameContext.log(1,  "redo clicked" );
             // gray it if there are now no more moves to undo
-            redoButton_.setEnabled(boardViewer_.canRedoMove());
-            undoButton_.setEnabled(true);
+            toolBar_.getRedoButton().setEnabled(boardViewer_.canRedoMove());
+            toolBar_.getUndoButton().setEnabled(true);
         }
-        if ( source == optionsButton_ ) {
+        if ( source == toolBar_.getOptionsButton() ) {
             optionsDialog_.setLocationRelativeTo( this );
             boolean canceled = optionsDialog_.showDialog();
         }
-        else if ( source == helpButton_ )
+        else if ( source == toolBar_.getHelpButton() )
             showHelpDialog();
     }
 

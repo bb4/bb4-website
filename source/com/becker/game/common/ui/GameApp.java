@@ -26,6 +26,10 @@ public class GameApp implements ActionListener
     private GamePanel gamePanel_ = null;
     private JFrame frame_ = null;
 
+    private JMenuItem openItem_;
+    private JMenuItem saveItem_;
+
+
     // provide a mapping from games to implementing panel classes
     private static final HashMap hmGameClasses_ = new HashMap();
     // provide mapping from labels to game.
@@ -125,16 +129,25 @@ public class GameApp implements ActionListener
      */
     private void addMenuBar()
     {
-        JMenu menu = new JMenu(GameContext.getLabel("GAME"));
-        menu.setBorder(BorderFactory.createEtchedBorder());
+        JMenu fileMenu = new JMenu(GameContext.getLabel("FILE"));
+        JMenu gameMenu= new JMenu(GameContext.getLabel("GAME"));
+        fileMenu.setBorder(BorderFactory.createEtchedBorder());
+        gameMenu.setBorder(BorderFactory.createEtchedBorder());
+
+        openItem_ =  createMenuItem(GameContext.getLabel("OPEN"));
+        saveItem_ =  createMenuItem(GameContext.getLabel("SAVE"));
+        fileMenu.add(openItem_);
+        fileMenu.add(saveItem_);
+
         Iterator keyIt = hmGames_.keySet().iterator();
         while (keyIt.hasNext()) {
             String sGameNameLabel = (String)keyIt.next();
-            menu.add(createMenuItem(sGameNameLabel));
+            gameMenu.add(createMenuItem(sGameNameLabel));
         }
 
         JMenuBar menubar = new JMenuBar();
-        menubar.add(menu);
+        menubar.add(fileMenu);
+        menubar.add(gameMenu);
 
         frame_.getRootPane().setJMenuBar(menubar);
     }
@@ -154,7 +167,15 @@ public class GameApp implements ActionListener
     public void actionPerformed( ActionEvent e )
     {
         JMenuItem item = (JMenuItem) e.getSource();
-        showGame( (String)hmGames_.get(item.getText()));
+        if (item == openItem_)  {
+            gamePanel_.openGame();
+        }
+        else if (item == saveItem_) {
+            gamePanel_.saveGame();
+        }
+        else {
+            showGame( (String)hmGames_.get(item.getText()));
+        }
     }
 
     /**

@@ -134,7 +134,7 @@ public abstract class TwoPlayerPanel extends GamePanel
         Object source = e.getSource();
         TwoPlayerBoardViewer v = (TwoPlayerBoardViewer)boardViewer_;
 
-        if ( source == newGameButton_ ) {
+        if ( source == toolBar_.getNewGameButton()) {
             newGameDialog_.setLocationRelativeTo( this );
             get2PlayerController().pause();
             boolean canceled = newGameDialog_.showDialog();
@@ -147,19 +147,19 @@ public abstract class TwoPlayerPanel extends GamePanel
                 v.continueProcessing();
             }
         }
-        else if ( source == undoButton_ ) {
+        else if ( source == toolBar_.getUndoButton() ) {
             v.undoLastManMove();
             // gray it if there are now no more moves to undo
-            undoButton_.setEnabled(boardViewer_.canUndoMove());
-            redoButton_.setEnabled(true);
+            toolBar_.getUndoButton().setEnabled(boardViewer_.canUndoMove());
+            toolBar_.getRedoButton().setEnabled(true);
         }
-        else if ( source == redoButton_ ) {
+        else if ( source == toolBar_.getRedoButton() ) {
             v.redoLastManMove();
             // gray it if there are now no more moves to undo
-            redoButton_.setEnabled(boardViewer_.canRedoMove());
-            undoButton_.setEnabled(true);
+            toolBar_.getRedoButton().setEnabled(boardViewer_.canRedoMove());
+            toolBar_.getUndoButton().setEnabled(true);
         }
-        if ( source == optionsButton_ ) {
+        if ( source == toolBar_.getOptionsButton() ) {
             optionsDialog_.setLocationRelativeTo( this );
             boolean canceled = optionsDialog_.showDialog();
             //System.out.println( "options selected  canceled=" + canceled );
@@ -173,7 +173,7 @@ public abstract class TwoPlayerPanel extends GamePanel
                     treeDialog_.setVisible(false);
             }
         }
-        else if ( source == helpButton_ )
+        else if ( source == toolBar_.getHelpButton() )
             showHelpDialog();
     }
 
