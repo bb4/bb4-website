@@ -1,4 +1,4 @@
-package com.becker.maze;
+package com.becker.puzzle.maze;
 
 /**
  *  A region of space bounded by walls in the maze.

@@ -33,7 +33,7 @@ public final class GiveChange
         do {
             System.out.println( "Enter a number of cents for which to compute ideal change "+
                     "[0 - "+Util.formatNumber(MAX_AMT) +"]:" );
-             long s = System.in.read(b);
+            System.in.read(b);
             String str = new String(b);
             int end = str.indexOf('\n');
             str = str.substring(0, end); // remove trailing newline
