@@ -128,7 +128,15 @@ public class PokerHand {
 
         Card.Rank rank = hand_.get(0).rank();
         int run = 1;
-        for (Card c : hand_.subList(1, size())) {
+        int start = 1;
+        // special case for when ace is the low card in a straight
+        if (hand_.get(0).rank() == Card.Rank.ACE) {          
+            if (hand_.get(1).rank() == Card.Rank.DEUCE) {
+                rank = hand_.get(1).rank();
+                run = 2;
+            }
+        }
+        for (Card c : hand_.subList(start, size())) {
             Card.Rank[] ranks = Card.Rank.values();
             int nextRank = rank.ordinal()+1;
             if (nextRank < ranks.length &&  c.rank() == ranks[nextRank]) {
