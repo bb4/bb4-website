@@ -1,4 +1,4 @@
-package com.becker.maze;
+package com.becker.puzzle.maze;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,4 +1,4 @@
-package com.becker.redpuzzle;
+package com.becker.puzzle.redpuzzle;
 
 import com.becker.ui.GUIUtil;
 
