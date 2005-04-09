@@ -197,7 +197,7 @@ public final class GameContext
         String path = className.substring(0, className.lastIndexOf(".ui."));
 
         String resourcePath = path +".resources."+gameName+"Messages";
-        System.out.println("searching for "+ resourcePath);
+        GameContext.log(2, "searching for "+ resourcePath);
 
         try {
             gameMessages_ = ResourceBundle.getBundle(
@@ -242,8 +242,9 @@ public final class GameContext
         }
         else {
 
-            //@@ hack!
-            if (gameMessages_ == null) loadGameResources();
+            if (gameMessages_ == null) {
+                loadGameResources();
+            }
 
             assert (gameMessages_ != null) :
                     "gameMessages_ has not yet been initialized. you need to call loadGameResources first.";

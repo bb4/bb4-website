@@ -586,6 +586,18 @@ public abstract class TwoPlayerController extends GameController
      */
     public boolean requestComputerMove(final boolean isPlayer1) throws AssertionError
     {
+        return requestComputerMove(isPlayer1, isAutoOptimize());
+    }
+
+    /**
+     *
+     * @param isPlayer1
+     * @param synchronous if true then the method does not return until the nest move has been found.
+     * @return true if the game is over
+     * @throws java.lang.AssertionError  if something bad happenned.
+     */
+    public boolean requestComputerMove(final boolean isPlayer1, boolean synchronous) throws AssertionError
+    {
         // launch a separate thread to do the search for the next move.
         worker_ = new Worker() {
             Move m = null;
@@ -600,14 +612,16 @@ public abstract class TwoPlayerController extends GameController
 
             public void finished() {
                 processing_ = false;
-                get2PlayerViewer().computerMoved(m);
+                if (get2PlayerViewer() != null)  {
+                    get2PlayerViewer().computerMoved(m);
+                }
             }
         };
 
         worker_.start();
 
 
-        if (isAutoOptimize()) {
+        if (synchronous) {
             // this blocks until the value is available.
             TwoPlayerMove m = (TwoPlayerMove)worker_.get();
             //refresh();

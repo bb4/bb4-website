@@ -169,7 +169,7 @@ public final class GoController extends TwoPlayerController
     private static final int BAD_SHAPE_WEIGHT_INDEX = 2;
     private static final int CAPTURE_WEIGHT_INDEX = 3;
 
-    private static final int DEFAULT_NUM_ROWS = 9;
+    private static final int DEFAULT_NUM_ROWS = 13;
 
     // The komi can vary, but 5.5 seems most commonly used
     public static final float DEFAULT_KOMI = 5.5f;

@@ -62,6 +62,8 @@ public abstract class GameBoardViewer
     // this must be initialized in the derived classes constructor.
     protected GamePieceRenderer pieceRenderer_;
 
+    protected String lastDirectoryAccessed_;
+
     // defaults for the grid and board colors.
     // The may be changed using the options panel in the ui.
     protected static final Color BACKGROUND_COLOR = GUIUtil.UI_COLOR_SECONDARY3;
@@ -136,11 +138,11 @@ public abstract class GameBoardViewer
      */
     public void openGame()
     {
-        JFileChooser chooser = GUIUtil.getFileChooser();
-        chooser.setCurrentDirectory( new File( GameContext.getHomeDir() ) );
+        JFileChooser chooser = getFileChooser();
         int state = chooser.showOpenDialog( null );
         File file = chooser.getSelectedFile();
         if ( file != null && state == JFileChooser.APPROVE_OPTION )  {
+            lastDirectoryAccessed_ = file.getAbsolutePath();
             controller_.restoreFromFile(file.getAbsolutePath());
             refresh();
         }
@@ -152,12 +154,20 @@ public abstract class GameBoardViewer
      */
     public void saveGame( AssertionError ae )
     {
-        JFileChooser chooser = GUIUtil.getFileChooser();
-        chooser.setCurrentDirectory( new File( GameContext.getHomeDir() ) );
+        JFileChooser chooser = getFileChooser();
         int state = chooser.showSaveDialog( null );
         File file = chooser.getSelectedFile();
-        if ( file != null && state == JFileChooser.APPROVE_OPTION )
+        if ( file != null && state == JFileChooser.APPROVE_OPTION ) {
+            lastDirectoryAccessed_ = file.getAbsolutePath();
             controller_.saveToFile( file.getAbsolutePath(), ae );
+        }
+    }
+
+    private JFileChooser getFileChooser() {
+        JFileChooser chooser = GUIUtil.getFileChooser();
+        String dir = (lastDirectoryAccessed_ == null) ? GameContext.getHomeDir() : lastDirectoryAccessed_;
+        chooser.setCurrentDirectory( new File( dir ) );
+        return chooser;
     }
 
     /**

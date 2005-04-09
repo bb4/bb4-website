@@ -208,7 +208,7 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
 
         try {
             // this will spawn the worker thread and return immediately
-            get2PlayerController().requestComputerMove( isPlayer1 );
+            get2PlayerController().requestComputerMove( isPlayer1);
         }
         catch  (AssertionError ae) {
             // if any errors occur during search, I want to save the state of the game to
