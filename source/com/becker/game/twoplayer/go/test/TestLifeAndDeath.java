@@ -16,14 +16,14 @@ public class TestLifeAndDeath extends GoTestCase {
 
     public void testProblem57() {
         GoMove m = getNextMove("problem_life57", true);
-        Assert.assertTrue(m.getToRow() == 6 && m.getToCol() ==5);
+        Assert.assertTrue("Was expecting 6,5, but instead got "+m,m.getToRow() == 6 && m.getToCol() ==5);
         // Assert.assertTrue(m.getToRow() == 6 && m.getToCol() == 1);
     }
 
 
      public void testProblem58() {
         GoMove m = getNextMove("problem_life58", true);
-        Assert.assertTrue(m.getToRow() == 2 && m.getToCol() == 11);
+        Assert.assertTrue(m.getToRow() == 1 && m.getToCol() == 11);
         // Assert.assertTrue(m.getToRow() == 1 && m.getToCol() == 12);
     }
 

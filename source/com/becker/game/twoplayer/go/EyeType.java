@@ -8,12 +8,13 @@ package com.becker.game.twoplayer.go;
  */
 public enum EyeType
 {
-    FALSE_EYE("Becomes true eye if you play first."),
-    TRUE_EYE("Unconditional eye."),
-    BIG_EYE("One or two eye depending on who plays first."),
-    TERRITORIAL_EYE("At least 2 eyes even if opponent plays first.");
+    FALSE_EYE("FalseEye", "Becomes true eye if you play first."),
+    TRUE_EYE("TrueEye", "Unconditional eye."),
+    BIG_EYE("BigEye", "One or two eye depending on who plays first."),
+    TERRITORIAL_EYE("Territory", "At least 2 eyes even if opponent plays first.");
 
 
+    private String label_;
     private String description_;
 
 
@@ -22,8 +23,13 @@ public enum EyeType
      *
      * @param description string name of the eye type (eg "False Eye")
      */
-    private EyeType(final String description) {
+    private EyeType(final String label, final String description) {
+        label_ = label;
         description_ = description;
+    }
+
+    public String toString() {
+        return label_;
     }
 
 

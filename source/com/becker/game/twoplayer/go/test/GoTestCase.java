@@ -9,12 +9,14 @@ import com.becker.game.twoplayer.go.GoController;
 import com.becker.game.twoplayer.go.GoMove;
 import com.becker.game.twoplayer.common.search.SearchStrategy;
 
+import java.util.List;
+
 
 public class GoTestCase extends TestCase {
 
     protected static final String TEST_CASE_DIR =
             GameContext.getHomeDir() +"/projects/java_projects/source/"  +
-            GameContext.GAME_ROOT  + "twoplayer/go/test/";
+            GameContext.GAME_ROOT  + "twoplayer/go/test/cases/";
 
     protected GoController controller_;
 
@@ -31,20 +33,35 @@ public class GoTestCase extends TestCase {
         //controller_.allPlayersComputer();
         controller_.setAlphaBeta(true);
         controller_.setLookAhead(4);
-        controller_.setPercentageBestMoves(30);
+        controller_.setPercentageBestMoves(50);
         //controller_.setQuiescence(true); // take stoo long if on
         controller_.setSearchStrategyMethod(SearchStrategy.MINIMAX);
 
     }
 
+
     protected GoMove getNextMove(String problemFile, boolean blackPlays) {
-        System.out.println("testing "+problemFile+" ...");
+
+        System.out.println("finding next move for "+problemFile+" ...");
         controller_.restoreFromFile(TEST_CASE_DIR + problemFile + ".sgf");
         controller_.requestComputerMove( true, blackPlays );
+
         GoMove m = (GoMove) controller_.getLastMove();
         System.out.println("got " + m);
         return m;
     }
+
+
+    protected void updateLifeAndDeath(String problemFile) {
+        System.out.println("finding score for "+problemFile+" ...");
+        controller_.restoreFromFile(TEST_CASE_DIR + problemFile + ".sgf");
+
+        // must check the worth of the board once to update the scoreContributions fo empty spaces.
+        List moves = controller_.getMoveSequence();
+        double w = controller_.worth((GoMove)moves.get(moves.size()-3), controller_.getDefaultWeights(), true);    
+        controller_.updateLifeAndDeath();   // this updates the groups and territory as well.
+    }
+
 
     protected void tearDown() {
 

@@ -753,7 +753,7 @@ public final class GoBoard extends TwoPlayerBoard
         int edgeOffset = 1;
         if (moveNum <= 2.0*this.getNumRows())
             return diffScore;
-        if (moveNum > rowsTimesCols_/3)
+        if (moveNum >= rowsTimesCols_/4.5)
             edgeOffset = 0;
         int min = 1+edgeOffset;
         int rMax = getNumRows()-edgeOffset;
@@ -763,7 +763,7 @@ public final class GoBoard extends TwoPlayerBoard
         for ( int i = min; i <= rMax; i++ )  {
            for ( int j = min; j <= cMax; j++ ) {
                GoBoardPosition pos = (GoBoardPosition)getPosition(i,j);
-               if (pos.getString()==null && !pos.isInEye()) {
+               if (pos.getString() == null && !pos.isInEye()) {
                    assert pos.isUnoccupied();
                    if (!pos.isVisited()) {
 
@@ -774,9 +774,9 @@ public final class GoBoard extends TwoPlayerBoard
                        emptyLists.add(empties);
                        Set nbrs = findOccupiedNeighbors(empties);
                        float avg = calcAverageScore(nbrs);
-                       float score = avg * (Math.min(1.0f, (float)nbrs.size()/empties.size()));
 
-                       assert (score<=1.0 && score >=-1.0): "score="+score+" avg="+avg;
+                       float score = avg * (Math.min(1.0f, (float)nbrs.size()/empties.size()));
+                       assert (score <= 1.0 && score >= -1.0): "score="+score+" avg="+avg;
                        Iterator it = empties.iterator();
                        while (it.hasNext()) {
                            GoBoardPosition p = (GoBoardPosition)it.next();
@@ -788,6 +788,7 @@ public final class GoBoard extends TwoPlayerBoard
                }
            }
         }
+
         GoBoardUtil.unvisitPositionsInLists(emptyLists);
         return diffScore;
     }
@@ -893,23 +894,30 @@ public final class GoBoard extends TwoPlayerBoard
      * This estimate is computed by summing all spaces in eyes + dead opponent stones that are still on the board in eyes.
      * At the end of the game this + the number of pieces captured so far should give the true score.
      */
-    public int getTerritoryEstimate( boolean forPlayer1 )
+    public int getTerritoryEstimate( boolean forPlayer1, boolean estimate)
     {
         float territoryEstimate = 0;
 
         // we should be able to just sum all the position scores now.
         for ( int i = 1; i <= getNumRows(); i++ )  {
            for ( int j = 1; j <= getNumCols(); j++ ) {
-               GoBoardPosition pos = (GoBoardPosition)getPosition(i,j);
-               if (forPlayer1 && pos.scoreContribution > 0) //GoController.LIFE_THRESHOLD)
-                   territoryEstimate += pos.scoreContribution;
-               else if (!forPlayer1 && pos.scoreContribution < 0) //-GoController.LIFE_THRESHOLD)
-                   territoryEstimate -= pos.scoreContribution;  // will be positive
+               GoBoardPosition pos = (GoBoardPosition)getPosition(i, j);
+
+               if (pos.isUnoccupied()) {
+                   double val = estimate? pos.scoreContribution : 1.0;
+                   if (forPlayer1 && pos.scoreContribution > 0) {
+                       territoryEstimate += val;
+                   }
+                   else if (!forPlayer1 && pos.scoreContribution < 0)  {
+                       territoryEstimate -= val;  // will be positive
+                   }
+               }
            }
         }
 
         return (int)territoryEstimate;
     }
+
 
     /**
      * get neighboring stones of the specified stone.

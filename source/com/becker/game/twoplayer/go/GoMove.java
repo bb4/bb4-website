@@ -80,9 +80,9 @@ public final class GoMove extends TwoPlayerMove
      */
     public final String getSGFRepresentation()
     {
-        // passes are not represented in SGF - so just skip of the piece is null.
-        if (piece==null)
-             return "";
+        // passes are not represented in SGF - so just skip it if the piece is null.
+        if (piece == null)
+             return "[]";
         StringBuffer buf = new StringBuffer("");
         char player = 'W';
         if ( piece.isOwnedByPlayer1() )

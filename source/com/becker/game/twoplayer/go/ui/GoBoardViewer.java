@@ -180,27 +180,29 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
     protected String getGameOverMessage()
     {
         String message = "\n";
-        GoController gm = (GoController)controller_;
+        GoController gc = (GoController)controller_;
 
         // show the dead stones marked as such.
         this.paint( this.getGraphics() );
 
-        int blackCaptures = gm.getNumCaptures(true);
-        int whiteCaptures = gm.getNumCaptures(false);
+        int blackCaptures = gc.getNumCaptures(true);
+        int whiteCaptures = gc.getNumCaptures(false);
 
-        String p1Name = gm.getPlayer1().getName();
-        String p2Name = gm.getPlayer2().getName();
+        String p1Name = gc.getPlayer1().getName();
+        String p2Name = gc.getPlayer2().getName();
 
         message += p1Name +" "+ STONES_CAPTURED + blackCaptures +"\n";
         message += p2Name +" "+ STONES_CAPTURED + whiteCaptures +"\n\n";
 
-        int blackTerritory = gm.getTerritoryEstimate(true);
-        int whiteTerritory = gm.getTerritoryEstimate(false);
+        int blackTerritory = gc.getTerritory(true);
+        int whiteTerritory = gc.getTerritory(false);
         message += p1Name +" "+ TERRITORY + blackTerritory +"\n";
         message += p2Name +" "+ TERRITORY + whiteTerritory +"\n\n";
 
-        message += p1Name +" "+ SCORE + gm.getScore(true) +"\n";
-        message += p2Name +" "+ SCORE + gm.getScore(false) +"\n";
+        message += p1Name +" "+ SCORE + gc.getScore(true) +"\n";
+        message += p2Name +" "+ SCORE + gc.getScore(false) +"\n";
+
+        gc.clearGameOver();
 
         return super.getGameOverMessage() +"\n"+ message;
     }
