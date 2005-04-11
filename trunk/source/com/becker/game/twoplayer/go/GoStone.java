@@ -95,9 +95,9 @@ public final class GoStone extends GamePiece implements GoMember
      * set the dead state of the stone to true.
      * It will now be rendered differently.
      */
-    public final void setDead()
+    public final void setDead(boolean dead)
     {
-        isDead_ = true;
+        isDead_ = dead;
     }
 
     /**
@@ -118,7 +118,7 @@ public final class GoStone extends GamePiece implements GoMember
         StringBuffer sb = new StringBuffer( "" );
         //sb.append( type_ );
         sb.append( ownedByPlayer1_ ? 'B' : 'W' );
-        if (GameContext.getDebugMode()>2)  {
+        if (GameContext.getDebugMode() > 2)  {
             sb.append("(pos:"+Util.formatNumber(positionalScore));
             sb.append("+shp:"+Util.formatNumber(badShapeScore)+")");
         }
