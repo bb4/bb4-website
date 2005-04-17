@@ -17,9 +17,9 @@ public final class GoArmy extends GoSet
 
     // unlike the territory of a group, moyo territory indicates the amount of space
     // mapped out by the army. It will potentially become real territory if all goes well.
-    int moyoTerritory;
+    int moyoTerritory = 0;
     // @@ compute dynamically instead
-    private int numLiberties_;
+    private int numLiberties_ = 0;
 
     /**
      * constructor. Create a new army containing the specified group
@@ -68,7 +68,7 @@ public final class GoArmy extends GoSet
         Iterator it = members_.iterator();
         while ( it.hasNext() )
             addMember( (GoGroup) it.next(), board );
-        numLiberties_ = numLiberties_ + army.getLiberties( board ).size();
+        numLiberties_ += army.getLiberties(board).size();
         if ( strongConnection )
             numLiberties_--;
     }

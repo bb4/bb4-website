@@ -2,7 +2,6 @@ package com.becker.game.twoplayer.go;
 
 import com.becker.game.common.GameContext;
 import com.becker.common.*;
-import com.becker.ui.Profiler;
 
 import java.util.*;
 
@@ -29,7 +28,7 @@ public final class GoGroup extends GoSet
      * it includes eyes of all types including false eyes
      * false-eye: any string of spaces or dead enemy stones for which one is a false eye.
      */
-    private HashSet eyes_;
+    private Set eyes_;
     /**
      * This is a number between -1 and 1 that indicates how likely the group is to live
      * independent of the health of the stones around it.
@@ -40,7 +39,7 @@ public final class GoGroup extends GoSet
      * play 2 times in a row.
      * A score of near 0 indicates it is very uncertain whether the group will live or die.
      */
-    private float absoluteHealth_;
+    private float absoluteHealth_ = 0;
     /**
      * This measure of health is also between -1 and 1 but it should be more
      * accurate because it takes into account the health of neighboring enemy groups as well.
@@ -59,7 +58,7 @@ public final class GoGroup extends GoSet
     private int cachedNumLiberties_ = 0;
 
     //
-    private HashSet cachedEnemyNbrGroups_ = new HashSet();
+    private Set cachedEnemyNbrGroups_ = new HashSet();
 
 
     public static final String UPDATE_EYES = "update eyes";
@@ -163,7 +162,7 @@ public final class GoGroup extends GoSet
      */
     public final Set getLiberties( GoBoard board )
     {
-        HashSet liberties = new HashSet();
+        Set liberties = new HashSet();
         Iterator it = members_.iterator();
         while ( it.hasNext() ) {
             GoString str = (GoString) it.next();
@@ -216,10 +215,10 @@ public final class GoGroup extends GoSet
         // we use an array rather than iterator here to avoid a ConcurrentModificationException
         // that will occur when we remove a string from the group whose strings we are iterating over.
         Object[] sa = group.getMembers().toArray();
-        for ( int i = 0; i < sa.length; i++ ) {
-            GoString string = (GoString) sa[i];
-            string.setGroup( this );
-            addMember( string, board );
+        for (final Object newVar : sa) {
+            GoString string = (GoString) newVar;
+            string.setGroup(this);
+            addMember(string, board);
         }
         group.removeAll();
         changed_ = true;
@@ -236,7 +235,7 @@ public final class GoGroup extends GoSet
     {
         // use a HashSet to avoid duplicate strings
         // otherwise we might try to remove the same string twice.
-        HashSet hsStrings = new HashSet();
+        Set hsStrings = new HashSet();
 
         Iterator it = stones.iterator();
         while ( it.hasNext() ) {
@@ -291,14 +290,14 @@ public final class GoGroup extends GoSet
                 string.remove( stone );
                 // now need to consider the creation of several smaller strings here
                 int origSize = string.size();
-                HashSet nbrs = board.getNobiNeighbors( stone, string.isOwnedByPlayer1(), NeighborType.FRIEND );
+                Set nbrs = board.getNobiNeighbors( stone, string.isOwnedByPlayer1(), NeighborType.FRIEND );
                 if (nbrs.size()==0) {
                     board.printNobiNeighborsOf(stone);
                 }
                 assert ( nbrs.size() > 0): stone +" had no friendly nbrs "+nbrs+" string="+string
                               +". These 2 must be the same: size="+string.size()+" origSize="+origSize;
                 Iterator it = nbrs.iterator();
-                LinkedList splitStrings = new LinkedList();
+                List splitStrings = new LinkedList();
                 boolean split = false;
                 while ( it.hasNext() ) {
                     GoBoardPosition nbrStone = (GoBoardPosition) it.next();
@@ -428,7 +427,7 @@ public final class GoGroup extends GoSet
                         eyes_.add( eye );
                     }
                     else {
-                        GoBoard.debugPrintList(3, "This list of stones was rejected as being an eye: ", eyeList);
+                        GoBoardUtil.debugPrintList(3, "This list of stones was rejected as being an eye: ", eyeList);
                     }
                 }
             }
@@ -523,7 +522,7 @@ public final class GoGroup extends GoSet
     /**
      * @return  set of eyes currently identified for this group.
      */
-    public HashSet getEyes()
+    public Set getEyes()
     {
         return eyes_;
     }
@@ -605,7 +604,7 @@ public final class GoGroup extends GoSet
                     break;
                 case BIG_EYE:
                     numEyes++;
-                    break;  // @@ count as 1 eye for now. maybe 1.5 would be better
+                    break; // @@ count as 1 eye for now. maybe 1.5 would be better
                 case TERRITORIAL_EYE:
                     numEyes += 2;
                     break; // counts as 2 true eyes
@@ -649,6 +648,7 @@ public final class GoGroup extends GoSet
                 case 6:
                     eyeHealth = side * .2f;
                     break;
+                // @@ default
             }
         }
         else if ( numLiberties > 5 )  // numEyes == 0
@@ -676,6 +676,7 @@ public final class GoGroup extends GoSet
                 case 5:
                     eyeHealth = side * 0.08f;
                     break;
+                // @@ add default
             }
         }
         //GameContext.log(0,"eyeHealth="+eyeHealth+" numLiberties="+numLiberties);
@@ -792,15 +793,15 @@ public final class GoGroup extends GoSet
      * @param board
      * @return a HashSet of the groups that are enemies of this group
      */
-    private HashSet getEnemyGroupNeighbors(GoBoard board)
+    private Set getEnemyGroupNeighbors(GoBoard board)
     {
-        HashSet enemyNbrs = new HashSet();
+        Set enemyNbrs = new HashSet();
         Iterator it = getStones().iterator();
 
         // for every stone in the group.
         while (it.hasNext()) {
             GoBoardPosition stone = (GoBoardPosition)it.next();
-            HashSet nbrs = board.getGroupNeighbors(stone, false);
+            Set nbrs = board.getGroupNeighbors(stone, false);
 
             // if the stone has any enemy nbrs then mark it visited.
             // later we will count how many got visited.
@@ -834,9 +835,9 @@ public final class GoGroup extends GoSet
         }
     }
 
-    private final boolean isGroupNeighbor(GoBoardPosition pos, GoBoard board)
+    private static boolean isGroupNeighbor(GoBoardPosition pos, GoBoard board)
     {
-        HashSet groupNbrs = board.getGroupNeighbors(pos, false);
+        Set groupNbrs = board.getGroupNeighbors(pos, false);
         Iterator it = groupNbrs.iterator();
         while (it.hasNext()) {
             GoBoardPosition p = (GoBoardPosition)it.next();
@@ -856,7 +857,7 @@ public final class GoGroup extends GoSet
 
         if (this.eyes_!=null)  {
             ((GoGroup)clone).eyes_ = new HashSet();
-            HashSet m = ((GoGroup)clone).eyes_;
+            Set m = ((GoGroup)clone).eyes_;
 
             Iterator it = this.eyes_.iterator();
             while (it.hasNext()) {
@@ -877,7 +878,7 @@ public final class GoGroup extends GoSet
     {
         assert (pos.isOccupied());
         GoStone stone = (GoStone)pos.getPiece();
-        boolean withinDifferenceThreshold = !isStoneMuchWeaker(this, stone);
+        boolean withinDifferenceThreshold = !GoBoardUtil.isStoneMuchWeaker(this, stone);
 
         return ( stone.isOwnedByPlayer1() != ownedByPlayer1_  && withinDifferenceThreshold);
     }
@@ -958,7 +959,7 @@ public final class GoGroup extends GoSet
      * @param stones list of stones to check if same as those in this group
      * @return true if all the strings are in this group
      */
-    public boolean contains( List stones )
+    private boolean contains( List stones )
     {
         Iterator it = stones.iterator();
         while ( it.hasNext() ) {

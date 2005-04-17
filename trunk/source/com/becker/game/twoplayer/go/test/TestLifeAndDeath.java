@@ -1,14 +1,9 @@
 package com.becker.game.twoplayer.go.test;
 
-import junit.framework.TestCase;
 import junit.framework.Assert;
 import junit.framework.TestSuite;
 import junit.framework.Test;
-import com.becker.game.twoplayer.go.GoController;
 import com.becker.game.twoplayer.go.GoMove;
-import com.becker.game.common.GameContext;
-import com.becker.game.common.Move;
-import com.becker.ui.GUIUtil;
 
 
 public class TestLifeAndDeath extends GoTestCase {

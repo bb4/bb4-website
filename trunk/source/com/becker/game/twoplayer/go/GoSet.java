@@ -17,22 +17,15 @@ public abstract class GoSet implements GoMember
 {
 
     // a set of the stones/strings/groups that are in the string/group/army
-    HashSet members_ = null;
+    protected Set members_ = null;
 
     // true if this set of stones is owned by player one (black)
-    boolean ownedByPlayer1_;
-
-    /**
-     * an opponent stone must be at least this much more unhealthy to be considered part of an eye.
-     * if its not that much weaker then we don't really have an eye.
-     * @@ make this a game parameter .9 - 1.8 that can be optimized.
-     */
-    private static final float DIFFERENCE_THRESHOLD = .9f;
+    protected boolean ownedByPlayer1_;
 
     /**
      * constructor.
      */
-    public GoSet()
+    protected GoSet()
     {
         members_ = new HashSet();
     }
@@ -61,7 +54,7 @@ public abstract class GoSet implements GoMember
     /**
      * @return  the hashSet containing the members
      */
-    public final HashSet getMembers()
+    public final Set getMembers()
     {
         return members_;
     }
@@ -75,42 +68,6 @@ public abstract class GoSet implements GoMember
     }
 
     /**
-     * @param group
-     * @param stone
-     * @param threshold
-     * @return return true of the stone is greater than threshold weaker than the group.
-     */
-    protected final static boolean isStoneWeaker(GoGroup group, GoStone stone, float threshold)
-    {
-        float groupHealth = group.getAbsoluteHealth();
-        float stoneHealth = stone.getHealth();
-        if (stone.isOwnedByPlayer1() == true)  {
-            assert (group.isOwnedByPlayer1() == false);
-            return (-groupHealth - stoneHealth > threshold);
-        }
-        else {
-            assert (group.isOwnedByPlayer1() == true);
-            return (groupHealth + stoneHealth > threshold);
-        }
-    }
-
-    /**
-     * @return return true of the stone is greater than threshold weaker than the group.
-     */
-    protected final static boolean isStoneWeaker(GoGroup group, GoStone stone)
-    {
-        return isStoneWeaker(group, stone, 0);
-    }
-
-    /**
-     * @return true if the stone is much weaker than the group
-     */
-    protected final static boolean isStoneMuchWeaker(GoGroup group, GoStone stone)
-    {
-        return isStoneWeaker(group, stone, DIFFERENCE_THRESHOLD);
-    }
-
-    /**
      * @return a deep copy of this GoSet
      * @throws CloneNotSupportedException
      */
@@ -120,7 +77,7 @@ public abstract class GoSet implements GoMember
 
         if (this.members_!=null)  {
             ((GoSet)clone).members_ = new HashSet();
-            HashSet m = ((GoSet)clone).members_;
+            Set m = ((GoSet)clone).members_;
 
             Iterator it = this.members_.iterator();
             while (it.hasNext()) {
@@ -146,11 +103,6 @@ public abstract class GoSet implements GoMember
         // default implementation. Most subclasses will override.
         return (p.isOccupied() && p.getPiece().isOwnedByPlayer1() != ownedByPlayer1_ );
     }
-
-    /**
-     * @return a String representation of this set
-     */
-    public abstract String toString();
 
 }
 

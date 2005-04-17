@@ -28,9 +28,12 @@ final class GoGroupRenderer
 
     // cache the border area, color, and cellSize in hashMaps
     // so that we don't have to recompute them if they have not changed.
-    private static final HashMap hmBorderAreaCache_ = new HashMap();
-    private static final HashMap hmBorderColorCache_ = new HashMap();
-    private static final HashMap hmCellSizeCache_ = new HashMap();
+    private static final Map hmBorderAreaCache_ = new HashMap();
+    private static final Map hmBorderColorCache_ = new HashMap();
+    private static final Map hmCellSizeCache_ = new HashMap();
+
+    private GoGroupRenderer() {
+    }
 
 
     /**
@@ -45,7 +48,7 @@ final class GoGroupRenderer
 
         if ( groupStones.size() == 1 ) {
             float margin = TwoPlayerBoardViewer.BOARD_MARGIN;
-            float offset = + GoGroupRenderer.BORDER_OFFSET +.5f;
+            float offset = + BORDER_OFFSET +.5f;
             // case where the group contains only 1 stone
             float x = margin + (firstStone.getCol() - offset) * cellSize;
             float y = margin + (firstStone.getRow() - offset) * cellSize;
@@ -54,8 +57,8 @@ final class GoGroupRenderer
 
         // to avoid adding the same stone to the queue twice we maintain a hashSet
         // which does not allow dupes.
-        ArrayList q = new ArrayList();
-        HashSet qset = new HashSet();
+        List q = new ArrayList();
+        Set qset = new HashSet();
         List visitedSet = new ArrayList();
         q.add( firstStone );
         qset.add( firstStone );
@@ -66,12 +69,12 @@ final class GoGroupRenderer
             qset.remove( stone );
             stone.setVisited( true );
             visitedSet.add(stone);
-            HashSet nbrs = board.getGroupNeighbors( stone, true );
+            Set nbrs = board.getGroupNeighbors( stone, true );
             Iterator it = nbrs.iterator();
             while ( it.hasNext() ) {
                 GoBoardPosition nbrStone = (GoBoardPosition) it.next();
                 // accumulate all the borders to arrive at the final group border
-                area.add( new Area( GoGroupRenderer.getBorderBetween( stone, nbrStone, cellSize ) ) );
+                area.add( new Area( getBorderBetween( stone, nbrStone, cellSize ) ) );
                 if ( !nbrStone.isVisited() && !qset.contains( nbrStone ) ) {
                     q.add( nbrStone );
                     qset.add( nbrStone );
@@ -121,30 +124,7 @@ final class GoGroupRenderer
         float celld2 = cellSize / 2.0f;
         float margin = TwoPlayerBoardViewer.BOARD_MARGIN;
 
-        if ( s1.getRow() != s2.getRow() ) { //vertical
-            GoBoardPosition topStone;
-            GoBoardPosition bottomStone;
-            if ( s1.getRow() < s2.getRow() ) {
-                topStone = s1;
-                bottomStone = s2;
-            }
-            else {
-                topStone = s2;
-                bottomStone = s1;
-            }
-            float xtop = margin + ((float) topStone.getCol() - BORDER_OFFSET ) * cellSize;
-            float ytop = margin + ((float) topStone.getRow() - BORDER_OFFSET) * cellSize;
-            float xbottom = margin + ((float) bottomStone.getCol() - BORDER_OFFSET) * cellSize;
-            float ybottom = margin + ((float) bottomStone.getRow() - BORDER_OFFSET) * cellSize;
-            border.moveTo( xtop - celld2, ytop );
-            border.quadTo( xtop - celld2, ytop - celld2, xtop, ytop - celld2 );
-            border.quadTo( xtop + celld2, ytop - celld2, xtop + celld2, ytop );
-            border.lineTo( xbottom + celld2, ybottom );
-            border.quadTo( xbottom + celld2, ybottom + celld2, xbottom, ybottom + celld2 );
-            border.quadTo( xbottom - celld2, ybottom + celld2, xbottom - celld2, ybottom );
-            border.closePath();
-        }
-        else { // horizontal
+        if ( s1.getRow() == s2.getRow() ) { // horizontal
             GoBoardPosition leftStone;
             GoBoardPosition rightStone;
             if ( s1.getCol() < s2.getCol() ) {
@@ -165,6 +145,29 @@ final class GoGroupRenderer
             border.lineTo( xright, yright - celld2 );
             border.quadTo( xright + celld2, yright - celld2, xright + celld2, yright );
             border.quadTo( xright + celld2, yright + celld2, xright, yright + celld2 );
+            border.closePath();
+        }
+        else { // vertical
+            GoBoardPosition topStone;
+            GoBoardPosition bottomStone;
+            if ( s1.getRow() < s2.getRow() ) {
+                topStone = s1;
+                bottomStone = s2;
+            }
+            else {
+                topStone = s2;
+                bottomStone = s1;
+            }
+            float xtop = margin + ((float) topStone.getCol() - BORDER_OFFSET ) * cellSize;
+            float ytop = margin + ((float) topStone.getRow() - BORDER_OFFSET) * cellSize;
+            float xbottom = margin + ((float) bottomStone.getCol() - BORDER_OFFSET) * cellSize;
+            float ybottom = margin + ((float) bottomStone.getRow() - BORDER_OFFSET) * cellSize;
+            border.moveTo( xtop - celld2, ytop );
+            border.quadTo( xtop - celld2, ytop - celld2, xtop, ytop - celld2 );
+            border.quadTo( xtop + celld2, ytop - celld2, xtop + celld2, ytop );
+            border.lineTo( xbottom + celld2, ybottom );
+            border.quadTo( xbottom + celld2, ybottom + celld2, xbottom, ybottom + celld2 );
+            border.quadTo( xbottom - celld2, ybottom + celld2, xbottom - celld2, ybottom );
             border.closePath();
         }
         return border;
@@ -282,7 +285,7 @@ final class GoGroupRenderer
     /**
      * draw the group's eyes (for debugging/understanding purposes)
      */
-    private static void drawEyes( float cellSize, Graphics2D g2, HashSet eyes )
+    private static void drawEyes( float cellSize, Graphics2D g2, Set eyes )
     {
         float margin = TwoPlayerBoardViewer.BOARD_MARGIN;
         if ( !eyes.isEmpty() ) {
@@ -294,7 +297,7 @@ final class GoGroupRenderer
             while ( eyeIt.hasNext() ) {
                 GoEye eye = (GoEye) eyeIt.next();
                 String eyeName = eye.getEyeTypeName();
-                HashSet eyeSet = eye.getMembers();
+                Set eyeSet = eye.getMembers();
                 Iterator it = eyeSet.iterator();
                 while ( it.hasNext() ) {
                     GoBoardPosition stone = (GoBoardPosition) it.next();
@@ -311,7 +314,7 @@ final class GoGroupRenderer
      * draw debugging information about the group like its border and eyeshapes.
      * @see com.becker.game.twoplayer.go.ui.GoGroupRenderer
      */
-    public final static void drawGroupDecoration(GoGroup group, ColorMap colormap, float cellSize, GoBoard board, Graphics2D g2)
+    public static void drawGroupDecoration(GoGroup group, ColorMap colormap, float cellSize, GoBoard board, Graphics2D g2)
     {
         Area cachedBorderArea = (Area)hmBorderAreaCache_.get(group);
         Color cachedBorderColor = (Color)hmBorderColorCache_.get(group);
@@ -325,7 +328,7 @@ final class GoGroupRenderer
             if (!group.isOwnedByPlayer1())
                 h = -h;
 
-            cachedBorderArea = GoGroupRenderer.calcGroupBorder( group.getStones(), cellSize, board );
+            cachedBorderArea = calcGroupBorder( group.getStones(), cellSize, board );
             cachedBorderColor = colormap.getColorForValue( h );
             cachedCellSize = new Float(cellSize);
 
@@ -345,7 +348,7 @@ final class GoGroupRenderer
 
         if (!group.getEyes().isEmpty())   {
             //System.out.println( "GoGroup drawDecoration: eyes:"+eyes_ );
-            GoGroupRenderer.drawEyes( cellSize, g2, group.getEyes() );
+            drawEyes( cellSize, g2, group.getEyes() );
         }
 
         //markAtariedStones(group, board, cellSize, g2);

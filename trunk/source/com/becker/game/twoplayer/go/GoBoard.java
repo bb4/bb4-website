@@ -1,10 +1,7 @@
 package com.becker.game.twoplayer.go;
 
 import com.becker.game.common.*;
-import com.becker.game.common.Move;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
-import com.becker.common.Assert;
-import com.becker.ui.Profiler;
 
 import java.util.*;
 
@@ -23,14 +20,14 @@ public final class GoBoard extends TwoPlayerBoard
     private Set groups_ = null;
     // this is a set of active armies. Armies are composed of groups.
     // @@ armies not implemented yet.
-    private Set armies_ = null;
+    private Set armies_;
 
     // The difference between the 2 player's territory.
-    // It is computed as  black-white = sum(health of stone i)
+    // It is computed as black-white = sum(health of stone i)
     private float territoryDelta_ = 0;
 
     // this is an auxilliary structure to help determine candidate moves
-    private boolean[][] candidateMoves_ = null;
+    private boolean[][] candidateMoves_;
 
     // the number of initial handicap stones to use
     private int numHandicapStones_ = 0;
@@ -40,43 +37,8 @@ public final class GoBoard extends TwoPlayerBoard
     private static final int CANDIDATE_MOVE_OFFSET = 1;
 
     // a global profiler for recording timing stats
-    private static Profiler profiler_;
-    private static final String UNDO_MOVE = "undoing move";
-    private static final String UPDATE_STRINGS_AFTER_REMOVE = "updating strings after remove";
-    private static final String UPDATE_GROUPS_AFTER_REMOVE = "updating groups after remove";
-    private static final String MAKE_MOVE = "making move";
-    private static final String UPDATE_STRINGS_AFTER_MOVE = "updating strings after move";
-    private static final String UPDATE_GROUPS_AFTER_MOVE = "updating groups after move";
-    private static final String GET_NBR_GROUPS = "getting nbr groups";
-    private static final String UPDATE_TERRITORY = "updating territory";
-    private static final String ABSOLUTE_TERRITORY = "absolute territory";
-    private static final String RELATIVE_TERRITORY = "relative territory";
-    private static final String UPDATE_EMPTY = "updating empty regions";
-    private static final String CHECK_FOR_CUTS = "checking for cuts";
-    private static final String GET_GROUP_NBRS = "getting group nbrs";
-    private static final String FIND_GROUPS = "finding groups";
-    private static final String FIND_STRINGS = "finding strings";
+    private static final GoProfiler profiler_ = new GoProfiler();
 
-    static {
-        profiler_ = new Profiler();
-        profiler_.add(UNDO_MOVE);
-          profiler_.add(UPDATE_STRINGS_AFTER_REMOVE, UNDO_MOVE);
-          profiler_.add(UPDATE_GROUPS_AFTER_REMOVE, UNDO_MOVE);
-        profiler_.add(MAKE_MOVE);
-          profiler_.add(UPDATE_STRINGS_AFTER_MOVE, MAKE_MOVE);
-          profiler_.add(UPDATE_GROUPS_AFTER_MOVE, MAKE_MOVE);
-            profiler_.add(GET_NBR_GROUPS, UPDATE_GROUPS_AFTER_MOVE);
-            profiler_.add(CHECK_FOR_CUTS, UPDATE_GROUPS_AFTER_MOVE);
-            profiler_.add(UPDATE_TERRITORY, UPDATE_GROUPS_AFTER_MOVE);
-              profiler_.add(ABSOLUTE_TERRITORY, UPDATE_TERRITORY);
-                profiler_.add(GoGroup.UPDATE_EYES, ABSOLUTE_TERRITORY);
-              profiler_.add(RELATIVE_TERRITORY, UPDATE_TERRITORY);
-                profiler_.add(GoGroup.GET_ENEMY_GROUPS_NBRS, RELATIVE_TERRITORY);
-              profiler_.add(UPDATE_EMPTY, UPDATE_TERRITORY);
-        profiler_.add(GET_GROUP_NBRS);
-        profiler_.add(FIND_GROUPS);
-        profiler_.add(FIND_STRINGS);
-    }
 
 
     /**
@@ -88,8 +50,8 @@ public final class GoBoard extends TwoPlayerBoard
     public GoBoard( int numRows, int numCols, int numHandicapStones )
     {
         // need to synchronize this to avoid concurrent modification error during search.
-        groups_ = Collections.synchronizedSet(new HashSet());
-        armies_ = new HashSet();
+        groups_ = Collections.synchronizedSet(new HashSet(10));
+        armies_ = new HashSet(0);
         setSize( numRows, numCols );
         setHandicap( numHandicapStones );
     }
@@ -121,7 +83,7 @@ public final class GoBoard extends TwoPlayerBoard
 
         // make copies of all the groups and armies
         if (groups_!=null) {
-            ((GoBoard)clone).groups_ = new HashSet();
+            ((GoBoard)clone).groups_ = new HashSet(10);
             Set groupsCopy = ((GoBoard)clone).groups_;
 
             // new way to interate
@@ -139,12 +101,10 @@ public final class GoBoard extends TwoPlayerBoard
         }
 
         if (armies_!=null)  {
-            ((GoBoard)clone).armies_ = new HashSet();
+            ((GoBoard)clone).armies_ = new HashSet(10);
             Set armiesCopy = ((GoBoard)clone).armies_;
-            Iterator it = armies_.iterator();
-            while (it.hasNext()) {
-                GoArmy a = (GoArmy)it.next();
-                armiesCopy.add(a.clone());
+            for (Object a : armies_) {
+                armiesCopy.add(((GoArmy)a).clone());
             }
         }
         return clone;
@@ -208,6 +168,7 @@ public final class GoBoard extends TwoPlayerBoard
         return numHandicapStones_;
     }
 
+    private static final float HANDICAP_STONE_HEALTH = 0.8f;
     /**
      * initialize a list of stones at the star points
      */
@@ -216,25 +177,26 @@ public final class GoBoard extends TwoPlayerBoard
         // initialize the list of handicap stones.
         // The number of these that actually get placed on the board
         // depends on the handicap
-        starPoints_ = new ArrayList();
+        starPoints_ = new ArrayList(9);
         int nRows = getNumRows();
         int min = 4;
         // on a really small board we put the corner star points at 3-3.
-        if (nRows<13)
+        if (nRows < 13)
             min = 3;
         int max = getNumRows() - (min-1);
-        int mid = getNumRows() / 2 + 1;
+        int mid = (getNumRows() >> 1) + 1;
 
         // add the star points
-        starPoints_.add( new GoBoardPosition( min, min, null, new GoStone(true, 0.8f)) );
-        starPoints_.add( new GoBoardPosition( max, max, null, new GoStone(true, 0.8f)) );
-        starPoints_.add( new GoBoardPosition( min, max, null, new GoStone(true, 0.8f)) );
-        starPoints_.add( new GoBoardPosition( max, min, null, new GoStone(true, 0.8f)) );
-        starPoints_.add( new GoBoardPosition( min, mid, null, new GoStone(true, 0.8f)) );
-        starPoints_.add( new GoBoardPosition( max, mid, null, new GoStone(true, 0.8f)) );
-        starPoints_.add( new GoBoardPosition( mid, min, null, new GoStone(true, 0.8f)) );
-        starPoints_.add( new GoBoardPosition( mid, max, null, new GoStone(true, 0.8f)) );
-        starPoints_.add( new GoBoardPosition( mid, mid, null, new GoStone(true, 0.8f)) );
+        GoStone handicapStone = new GoStone(true, HANDICAP_STONE_HEALTH);
+        starPoints_.add( new GoBoardPosition( min, min, null, (GoStone)handicapStone.copy()) );
+        starPoints_.add( new GoBoardPosition( max, max, null, (GoStone)handicapStone.copy()) );
+        starPoints_.add( new GoBoardPosition( min, max, null, (GoStone)handicapStone.copy()) );
+        starPoints_.add( new GoBoardPosition( max, min, null, (GoStone)handicapStone.copy()) );
+        starPoints_.add( new GoBoardPosition( min, mid, null, (GoStone)handicapStone.copy()) );
+        starPoints_.add( new GoBoardPosition( max, mid, null, (GoStone)handicapStone.copy()) );
+        starPoints_.add( new GoBoardPosition( mid, min, null, (GoStone)handicapStone.copy()) );
+        starPoints_.add( new GoBoardPosition( mid, max, null, (GoStone)handicapStone.copy()) );
+        starPoints_.add( new GoBoardPosition( mid, mid, null, handicapStone) );
     }
 
     public List getStarPointPositions()
@@ -267,7 +229,7 @@ public final class GoBoard extends TwoPlayerBoard
             candidateMoves_[numRows - 3][j] = true;
         }
         // also make the center space a candidate move
-        candidateMoves_[(numRows + 1) / 2][(numCols + 1) / 2] = true;
+        candidateMoves_[((numRows + 1) >> 1)][((numCols + 1) >> 1)] = true;
     }
 
     /**
@@ -288,7 +250,7 @@ public final class GoBoard extends TwoPlayerBoard
      * this method splats a footprint of trues around the specified move.
      * @param stone
      */
-    private final void addCandidateMoves( BoardPosition stone )
+    private void addCandidateMoves( BoardPosition stone )
     {
         int i,j;
         boolean[][] b = candidateMoves_;
@@ -313,11 +275,7 @@ public final class GoBoard extends TwoPlayerBoard
      */
     public final boolean isCandidateMove( int row, int col )
     {
-        if ( candidateMoves_[row][col] && positions_[row][col].isUnoccupied() ) {
-            return true;
-        }
-        else
-            return false;
+        return candidateMoves_[row][col] && positions_[row][col].isUnoccupied();
     }
 
     /**
@@ -342,11 +300,9 @@ public final class GoBoard extends TwoPlayerBoard
     /**
      * record times for these operations so we get an accurate picture of where the bottlenecks are.
      */
-    public final void initializeGobalProfilingStats()
+    public static void initializeGobalProfilingStats()
     {
-        profiler_.resetAll();
-        profiler_.setEnabled(GameContext.isProfiling());
-        profiler_.setLogger(GameContext.getLogger());
+        profiler_.initialize();
     }
 
     /**
@@ -367,7 +323,7 @@ public final class GoBoard extends TwoPlayerBoard
      */
     public final boolean makeMove( Move move )
     {
-        profiler_.start(MAKE_MOVE);
+        profiler_.startMakeMove();
 
         GoMove m = (GoMove)move;
         // if its a passing move, there is nothing to do
@@ -391,7 +347,7 @@ public final class GoBoard extends TwoPlayerBoard
             removeCaptures( m.captureList );
             updateAfterRemovingCaptures( stone );
             GameContext.log( 2, "GoBoard: makeMove: " + m + "  groups after removing captures" );
-            debugPrintGroups( 2, "Groups after removing captures", true, true );
+            GoBoardUtil.debugPrintGroups( 2, "Groups after removing captures", true, true, groups_ );
         }
 
         updateGroupsAfterMoving( stone, move.moveNumber );
@@ -405,7 +361,7 @@ public final class GoBoard extends TwoPlayerBoard
             assert ( string.getLiberties( this ).size() > 0): "ERROR: string owned by placed stone has no liberties: " + string;
             assert ( string.size() > 0): "stone has bad string: " + stone;
         }
-        profiler_.stop(MAKE_MOVE);
+        profiler_.stopMakeMove();
 
         return true;
     }
@@ -417,7 +373,7 @@ public final class GoBoard extends TwoPlayerBoard
      */
     public final void undoMove( Move move )
     {
-        profiler_.start(UNDO_MOVE);
+        profiler_.startUndoMove();
 
         GoMove m = (GoMove) move;
 
@@ -439,17 +395,17 @@ public final class GoBoard extends TwoPlayerBoard
         if ( m.captureList != null ) {
             restoreCaptures( m.captureList );
             if (GameContext.getDebugMode()>1) {
-                confirmNoEmptyStrings();
+                GoBoardUtil.confirmNoEmptyStrings(groups_);
                 updateAfterRestoringCaptures( m.captureList );
-                confirmStonesInValidGroups();
-                confirmAllStonesInUniqueGroups();
+                GoBoardUtil.confirmStonesInValidGroups(groups_, this);
+                GoBoardUtil.confirmAllStonesInUniqueGroups(groups_);
                 GameContext.log( 3, "GoBoard: undoMove: " + move + "  groups after restoring captures:" );
             }
         }
 
         updateGroupsAfterRemoving( stone, stringThatItBelongedTo );
 
-        profiler_.stop(UNDO_MOVE);
+        profiler_.stopUndoMove();
     }
 
 
@@ -459,12 +415,13 @@ public final class GoBoard extends TwoPlayerBoard
      */
     private CaptureList findCaptures( GoBoardPosition stone )
     {
+        profiler_.start(GoProfiler.FIND_CAPTURES);
         assert ( stone!=null );
-        HashSet nbrs = getNobiNeighbors( stone, NeighborType.ENEMY );
+        Set nbrs = getNobiNeighbors( stone, NeighborType.ENEMY );
         CaptureList captureList = null;
         Iterator it = nbrs.iterator();
         // keep track of the strings captured so we don't capture the same one twice
-        HashSet capturedStrings = new HashSet();
+        Set capturedStrings = new HashSet();
 
         while ( it.hasNext() ) {
             GoBoardPosition enbr = (GoBoardPosition) it.next();
@@ -481,6 +438,7 @@ public final class GoBoard extends TwoPlayerBoard
                 captureList.addAllCopied( str.getMembers() );
             }
         }
+        profiler_.stop(GoProfiler.FIND_CAPTURES);
         return captureList;
     }
 
@@ -488,7 +446,7 @@ public final class GoBoard extends TwoPlayerBoard
      * make the positions on the board represented be the captureList show up empty.
      * @param captureList list of stones to remove
      */
-    public final void removeCaptures( CaptureList captureList )
+    private void removeCaptures( CaptureList captureList )
     {
         if ( captureList == null )
             return;
@@ -496,7 +454,7 @@ public final class GoBoard extends TwoPlayerBoard
         // remove the captured strings from the owning group (there could be up to 4)
         GoString capString = ((GoBoardPosition) captureList.get( 0 )).getString();
         GoGroup group = capString.getGroup();
-        HashSet capStrings = new HashSet();
+        Set capStrings = new HashSet();
 
         Iterator it = captureList.iterator();
         while ( it.hasNext() ) {
@@ -525,7 +483,7 @@ public final class GoBoard extends TwoPlayerBoard
     /**
      * put the captures back on the board.
      */
-    public final void restoreCaptures( CaptureList captureList )
+    private void restoreCaptures( CaptureList captureList )
     {
         if ( captureList == null )
             return;
@@ -541,7 +499,7 @@ public final class GoBoard extends TwoPlayerBoard
         }
 
         // there may have been more than one string in the capturelist
-        LinkedList strings = new LinkedList();
+        List strings = new LinkedList();
         it = restoredList.iterator();
 
         while ( it.hasNext() ) {
@@ -585,8 +543,8 @@ public final class GoBoard extends TwoPlayerBoard
      */
     private void updateStringsAfterMoving( GoBoardPosition stone )
     {
-        profiler_.start(UPDATE_STRINGS_AFTER_MOVE);
-        HashSet nbrs = getNobiNeighbors( stone, NeighborType.FRIEND );
+        profiler_.startUpdateStringsAfterMove();
+        Set nbrs = getNobiNeighbors( stone, NeighborType.FRIEND );
 
         GoString str;
         if ( nbrs.size() == 0 ) {
@@ -599,7 +557,7 @@ public final class GoBoard extends TwoPlayerBoard
             GoBoardPosition nbrStone = (GoBoardPosition) nbrIt.next();
             str = nbrStone.getString();
             str.addMember( stone );
-            debugPrintGroups( 3, "groups before merging:", true, true);
+            GoBoardUtil.debugPrintGroups( 3, "groups before merging:", true, true, groups_);
 
             if ( nbrs.size() > 1 ) {
                 // then we probably need to merge the strings.
@@ -626,7 +584,7 @@ public final class GoBoard extends TwoPlayerBoard
             }
         }
         cleanupGroups();
-        profiler_.stop(UPDATE_STRINGS_AFTER_MOVE);
+        profiler_.stopUpdateStringsAfterMove();
     }
 
     /**
@@ -638,10 +596,10 @@ public final class GoBoard extends TwoPlayerBoard
      */
     private void updateGroupsAfterMoving( GoBoardPosition pos, int moveNum )
     {
-        profiler_.start(UPDATE_GROUPS_AFTER_MOVE);
+        profiler_.startUpdateGroupsAfterMove();
 
         if (GameContext.getDebugMode() > 1)
-            confirmAllStonesInUniqueGroups();
+            GoBoardUtil.confirmAllStonesInUniqueGroups(groups_);
 
         // remove all the current groups (we will then add them back)
         groups_.clear();
@@ -656,25 +614,25 @@ public final class GoBoard extends TwoPlayerBoard
                }
            }
         }
-        unvisitAll();
+        GoBoardUtil.unvisitAll(this);
 
         // this gets used when calculating the worth of the board
         territoryDelta_ = updateTerritory(pos, moveNum);
 
         if ( GameContext.getDebugMode() > 1 ) {
-            confirmNoEmptyStrings();
-            confirmStonesInValidGroups();
-            confirmAllUnvisited();
-            confirmAllStonesInUniqueGroups();
+            GoBoardUtil.confirmNoEmptyStrings(groups_);
+            GoBoardUtil.confirmStonesInValidGroups(groups_, this);
+            GoBoardUtil.confirmAllUnvisited(this);
+            GoBoardUtil.confirmAllStonesInUniqueGroups(groups_);
             try {
-                confirmAllStonesAreInGroupsTheyClaim();
+                GoBoardUtil.confirmAllStonesAreInGroupsTheyClaim(groups_, this);
             } catch (AssertionError e) {
                 System.out.println("The move was :"+pos);
                 throw e;
             }
         }
 
-        profiler_.stop(UPDATE_GROUPS_AFTER_MOVE);
+        profiler_.stopUpdateGroupsAfterMove();
     }
 
 
@@ -698,16 +656,16 @@ public final class GoBoard extends TwoPlayerBoard
      * @return the estimated difference in territory between the 2 sides.
      *  A large positive number indeicates black is winning, while a negative number indicates taht white has the edge.
      */
-    protected float updateTerritory(GoBoardPosition lastMove, int moveNum)
+    float updateTerritory(GoBoardPosition lastMove, int moveNum)
     {
-        profiler_.start(UPDATE_TERRITORY);
+        profiler_.start(GoProfiler.UPDATE_TERRITORY);
         float delta = 0;
         Iterator it = groups_.iterator();
         // first calculate the absolute health of the groups so that measure can
         // be used in the more accurate relative health computation.
 
         while ( it.hasNext() ) {
-            profiler_.start(ABSOLUTE_TERRITORY);
+            profiler_.start(GoProfiler.ABSOLUTE_TERRITORY);
             GoGroup g = (GoGroup) it.next();
 
             float health = g.calculateAbsoluteHealth( this, profiler_ );
@@ -716,10 +674,10 @@ public final class GoBoard extends TwoPlayerBoard
                 g.updateTerritory( health );
                 delta += health * g.getNumStones();
             }
-            profiler_.stop(ABSOLUTE_TERRITORY);
+            profiler_.stop(GoProfiler.ABSOLUTE_TERRITORY);
         }
         if (GoController.USE_RELATIVE_GROUP_SCORING)  {
-            profiler_.start(RELATIVE_TERRITORY);
+            profiler_.start(GoProfiler.RELATIVE_TERRITORY);
             it = groups_.iterator();
             while ( it.hasNext() ) {
                 GoGroup g = (GoGroup) it.next();
@@ -727,16 +685,16 @@ public final class GoBoard extends TwoPlayerBoard
                 g.updateTerritory( health );
                 delta += health * g.getNumStones();
             }
-            profiler_.stop(RELATIVE_TERRITORY);
+            profiler_.stop(GoProfiler.RELATIVE_TERRITORY);
         }
         // need to loop over the board and determine for each space if it is territory for the specified player.
         // We will first mark visited all the stones that are "controlled" by the specified player.
         // The unoccupied "controlled" positions will be territory.
-        profiler_.start(UPDATE_EMPTY);
+        profiler_.start(GoProfiler.UPDATE_EMPTY);
         delta += updateEmptyRegions(moveNum);
-        profiler_.stop(UPDATE_EMPTY);
+        profiler_.stop(GoProfiler.UPDATE_EMPTY);
 
-        profiler_.stop(UPDATE_TERRITORY);
+        profiler_.stop(GoProfiler.UPDATE_TERRITORY);
         return delta;
     }
 
@@ -751,7 +709,7 @@ public final class GoBoard extends TwoPlayerBoard
         float diffScore = 0;
         //only do this when the midgame starts, since early on there is alwas only one connected empty region.
         int edgeOffset = 1;
-        if (moveNum <= 2.0*this.getNumRows())
+        if (moveNum <= 2 * this.getNumRows())
             return diffScore;
         if (moveNum >= rowsTimesCols_/4.5)
             edgeOffset = 0;
@@ -797,13 +755,13 @@ public final class GoBoard extends TwoPlayerBoard
      * @param empties a list of unoccupied positions.
      * @return a list of stones bordering the set of empty board positions.
      */
-    private final Set findOccupiedNeighbors(List empties)
+    private Set findOccupiedNeighbors(List empties)
     {
         Iterator it = empties.iterator();
         Set allNbrs = new HashSet();
         while (it.hasNext()) {
             GoBoardPosition empty = (GoBoardPosition)it.next();
-            HashSet nbrs = getNobiNeighbors(empty, false, NeighborType.OCCUPIED);
+            Set nbrs = getNobiNeighbors(empty, false, NeighborType.OCCUPIED);
             // add these nbrs to the set of all nbrs
             // (dupes automatically culled because HashSets only have unique members)
             allNbrs.addAll(nbrs);
@@ -816,15 +774,6 @@ public final class GoBoard extends TwoPlayerBoard
      * determine a set of stones that are tightly connected to the specified stone.
      * This set of stones constitutes a string, but since stones cannot belong to more than
      * one string we must return a List.
-     * @param stone the stone from which to begin searching for the string
-     */
-    public final List findStringFromInitialPosition( GoBoardPosition stone )
-    {
-        return findStringFromInitialPosition( stone, true );
-    }
-
-    /**
-     * determine a set of stones that are tightly connected to the specified stone.
      * @param stone he stone from which to begin searching for the string
      * @param returnToUnvisitedState if true then the stomes will all be marked unvisited when done searching
      */
@@ -843,7 +792,7 @@ public final class GoBoard extends TwoPlayerBoard
                                                      boolean returnToUnvisitedState, NeighborType type,
                                                      int rMin, int rMax, int cMin, int cMax )
     {
-        profiler_.start(FIND_STRINGS);
+        profiler_.start(GoProfiler.FIND_STRINGS);
         List stones = new ArrayList();
         // perform a breadth first search  until all found.
         // use the visited flag to indicate that a stone has been added to the string
@@ -863,7 +812,7 @@ public final class GoBoard extends TwoPlayerBoard
         if ( returnToUnvisitedState )
             GoBoardUtil.unvisitPositionsInList( stones );
         // GoBoardUtil.confirmNoDupes( stone, stones );
-        profiler_.stop(FIND_STRINGS);
+        profiler_.stop(GoProfiler.FIND_STRINGS);
 
         return stones;
     }
@@ -874,12 +823,11 @@ public final class GoBoard extends TwoPlayerBoard
      * @param stones actually the positions containing the stones.
      * @return the average scores of the stones in the list.
      */
-    private float calcAverageScore(Set stones)
+    private static float calcAverageScore(Set stones)
     {
         float totalScore = 0;
-        Iterator it = stones.iterator();
-        while (it.hasNext()) {
-            GoBoardPosition p = (GoBoardPosition)it.next();
+        for (Object stone : stones) {
+            GoBoardPosition p = (GoBoardPosition) stone;
             if (GoController.USE_RELATIVE_GROUP_SCORING)
                 totalScore += p.getString().getGroup().getRelativeHealth();
             else
@@ -925,7 +873,7 @@ public final class GoBoard extends TwoPlayerBoard
      * @param neighborType (EYE, NOT_FRIEND etc)
      * @return a set of stones that are immediate (nobi) neighbors.
      */
-    public final HashSet getNobiNeighbors( GoBoardPosition stone, NeighborType neighborType )
+    private Set getNobiNeighbors( GoBoardPosition stone, NeighborType neighborType )
     {
        return getNobiNeighbors( stone, stone.getPiece().isOwnedByPlayer1(), neighborType);
     }
@@ -937,9 +885,9 @@ public final class GoBoard extends TwoPlayerBoard
      * @param neighborType (EYE, NOT_FRIEND etc)
      * @return a set of stones that are immediate (nobi) neighbors.
      */
-    public final HashSet getNobiNeighbors( GoBoardPosition stone, boolean friendOwnedByP1, NeighborType neighborType )
+    public final Set getNobiNeighbors( GoBoardPosition stone, boolean friendOwnedByP1, NeighborType neighborType )
     {
-        HashSet nbrs = new HashSet();
+        Set nbrs = new HashSet();
         int row = stone.getRow();
         int col = stone.getCol();
 
@@ -971,34 +919,6 @@ public final class GoBoard extends TwoPlayerBoard
     }
 
     /**
-     * get the groups that are now adjacent to this stone (not including the group
-     * to which the stone belongs (if any)
-     *
-     * @param stone find the groups that neighbor this stone
-     * @param samePlayerOnly only include groups that are owned by the same player as this stone
-     *
-    private HashSet getNeighborGroups( GoBoardPosition stone, boolean samePlayerOnly )
-    {
-        HashSet nbrGroups = new HashSet();
-        HashSet nbrStones = getGroupNeighbors( stone, stone.getPiece().isOwnedByPlayer1(), samePlayerOnly );
-        GoGroup g = stone.getGroup(); // might be null
-        Iterator nbrIt = nbrStones.iterator();
-        while ( nbrIt.hasNext() ) {
-            GoBoardPosition nbrStone = (GoBoardPosition) nbrIt.next();
-            GoString string = nbrStone.getString();
-            assert ( nbrStone!=null): "the neighboring group stone is null";
-            assert (string!=null): string+" was null";
-            if ( (string != null)
-                  && (g != string.getGroup()))
-            {
-                nbrGroups.add( string.getGroup() );
-            }
-        }
-
-        return nbrGroups;
-    }  */
-
-    /**
      * return a set of stones which are loosely connected.
      * Check the 16 purely group neighbors and 4 string neighbors
      *         ***
@@ -1010,21 +930,21 @@ public final class GoBoard extends TwoPlayerBoard
      * @param friendPlayer1 typically the isOwnedByPlayer1 value of stone unless it is blank.
      * @param samePlayerOnly if true then find group nbrs that are have same ownership as friend (Player1)
      */
-    private HashSet getGroupNeighbors( GoBoardPosition stone, boolean friendPlayer1, boolean samePlayerOnly )
+    private Set getGroupNeighbors( GoBoardPosition stone, boolean friendPlayer1, boolean samePlayerOnly )
     {
-        profiler_.start(GET_GROUP_NBRS);
+        profiler_.start(GoProfiler.GET_GROUP_NBRS);
         List stack = new LinkedList();
 
         pushGroupNeighbors( stone, friendPlayer1, stack, samePlayerOnly );
-        HashSet nbrStones = new HashSet();
+        Set nbrStones = new HashSet();
         nbrStones.addAll( stack );
 
-        profiler_.stop(GET_GROUP_NBRS);
+        profiler_.stop(GoProfiler.GET_GROUP_NBRS);
         return nbrStones;
     }
 
     // this version assumes that the stone is occupied.
-    public final HashSet getGroupNeighbors( GoBoardPosition position, boolean samePlayerOnly )
+    public final Set getGroupNeighbors( GoBoardPosition position, boolean samePlayerOnly )
     {
         assert (position.getPiece()!=null);
         return getGroupNeighbors( position, position.getPiece().isOwnedByPlayer1(), samePlayerOnly );
@@ -1039,14 +959,14 @@ public final class GoBoard extends TwoPlayerBoard
      */
     private void updateStringsAfterRemoving( GoBoardPosition stone, GoString string )
     {
-        profiler_.start(UPDATE_STRINGS_AFTER_REMOVE);
+        profiler_.startUpdateStringsAfterRemove();
 
         // avoid error when calling from treeDlg
         if (string==null) return;
         //assert notNull(string, "null string after removing stone.");
 
         GoGroup group = string.getGroup();
-        HashSet nbrs = getNobiNeighbors( stone, group.isOwnedByPlayer1(), NeighborType.FRIEND );
+        Set nbrs = getNobiNeighbors( stone, group.isOwnedByPlayer1(), NeighborType.FRIEND );
         if ( string.size() == 0 ) {
             GameContext.log( 3, "ERROR: string size = 0" );
             return;
@@ -1054,7 +974,7 @@ public final class GoBoard extends TwoPlayerBoard
         // make new string(s) if removing the stone has caused a larger string to be split.
         if ( nbrs.size() > 1 ) {
             Iterator nbrIt = nbrs.iterator();
-            List lists = new ArrayList();
+            List lists = new ArrayList(10);
             GoBoardPosition firstNbr = (GoBoardPosition) nbrIt.next();
             List stones = findStringFromInitialPosition( firstNbr, false );
             //GameContext.log( 3, firstNbr + " yields this string:" + stones );
@@ -1075,12 +995,12 @@ public final class GoBoard extends TwoPlayerBoard
         }
         //cleanupGroups();
         if ( GameContext.getDebugMode() > 1 ) {
-            confirmAllUnvisited();
-            confirmNoEmptyStrings();
-            confirmStonesInValidGroups();
-            confirmStonesInOneGroup( group );
+            GoBoardUtil.confirmAllUnvisited(this);
+            GoBoardUtil.confirmNoEmptyStrings(groups_);
+            GoBoardUtil.confirmStonesInValidGroups(groups_, this);
+            GoBoardUtil.confirmStonesInOneGroup( group, groups_ );
         }
-        profiler_.stop(UPDATE_STRINGS_AFTER_REMOVE);
+        profiler_.stopUpdateStringsAfterRemove();
     }
 
     /**
@@ -1093,20 +1013,20 @@ public final class GoBoard extends TwoPlayerBoard
      */
     private void updateGroupsAfterRemoving( GoBoardPosition stone, GoString string )
     {
-        profiler_.start(UPDATE_GROUPS_AFTER_REMOVE);
+        profiler_.startUpdateGroupsAfterRemove();
 
         if ( string == null ) {
             if ( GameContext.getDebugMode() > 1 )
-                confirmStonesInValidGroups();
+                GoBoardUtil.confirmStonesInValidGroups(groups_, this);
             return;
         }
 
         GoGroup group = string.getGroup();
-        HashSet nbrs = getGroupNeighbors( stone, group.isOwnedByPlayer1(), false );
+        Set nbrs = getGroupNeighbors( stone, group.isOwnedByPlayer1(), false );
 
         // create a set of friendly group nbrs and a separate set of enemy ones.
-        HashSet friendlyNbrs = new HashSet();
-        HashSet enemyNbrs = new HashSet();
+        Set friendlyNbrs = new HashSet(10);
+        Set enemyNbrs = new HashSet(10);
         Iterator nbrIt = nbrs.iterator();
         while ( nbrIt.hasNext() ) {
             GoBoardPosition nbrStone = (GoBoardPosition) nbrIt.next();
@@ -1125,13 +1045,13 @@ public final class GoBoard extends TwoPlayerBoard
         updateEnemyGroupsAfterRemoval(enemyNbrs);
 
         if ( GameContext.getDebugMode() > 1 )  {
-            confirmNoEmptyStrings();
-            confirmAllUnvisited();
+            GoBoardUtil.confirmNoEmptyStrings(groups_);
+            GoBoardUtil.confirmAllUnvisited(this);
         }
 
         cleanupGroups();
 
-        profiler_.stop(UPDATE_GROUPS_AFTER_REMOVE);
+        profiler_.stopUpdateGroupsAfterRemove();
     }
 
     /**
@@ -1141,7 +1061,7 @@ public final class GoBoard extends TwoPlayerBoard
     private void updateFriendlyGroupsAfterRemoval(Set friendlyNbrs) {
 
         if ( GameContext.getDebugMode() > 1 )   // in a state were not necessarily in valid groups?
-             confirmStonesInValidGroups();
+             GoBoardUtil.confirmStonesInValidGroups(groups_, this);
         if ( friendlyNbrs.size() == 0) {
             // do nothing
         }
@@ -1173,7 +1093,7 @@ public final class GoBoard extends TwoPlayerBoard
                         //group.remove( stones1 );
 
                         if ( GameContext.getDebugMode() > 1 )
-                            confirmStonesInOneGroup( newGroup );
+                            GoBoardUtil.confirmStonesInOneGroup( newGroup, groups_ );
                     }
                     lists.add( stones1 );
                 }
@@ -1181,7 +1101,7 @@ public final class GoBoard extends TwoPlayerBoard
 
             GoBoardUtil.unvisitPositionsInLists( lists );
             if ( GameContext.getDebugMode() > 1 )
-               confirmStonesInValidGroups();
+               GoBoardUtil.confirmStonesInValidGroups( groups_, this );
         }
     }
 
@@ -1231,9 +1151,9 @@ public final class GoBoard extends TwoPlayerBoard
                 }
                 if ( GameContext.getDebugMode() > 1 ) {
                         try {
-                            confirmStonesInValidGroups();
-                            confirmAllUnvisited();
-                            confirmAllStonesAreInGroupsTheyClaim();
+                            GoBoardUtil.confirmStonesInValidGroups(groups_, this);
+                            GoBoardUtil.confirmAllUnvisited(this);
+                            GoBoardUtil.confirmAllStonesAreInGroupsTheyClaim(groups_, this);
                         } catch (AssertionError e) {
                             //GameContext.log(1, "Just removed :"+stone+".\n The restored group is :"+restoredGroup);
                             //debugPrintList(1, "Friendly nbrs:", friendlyNbrs );
@@ -1253,14 +1173,6 @@ public final class GoBoard extends TwoPlayerBoard
         Iterator mIt = stones.iterator();
         while ( mIt.hasNext() ) {
             GoBoardPosition nbrStone = (GoBoardPosition) mIt.next();
-            /*
-            if (GameContext.getDebugMode()>=0) {
-                GameContext.log(3, "-- removing group:"+nbrStone.getGroup());
-                // verify that the restored group contains the stones in each group that we are removing
-                assert (confirmStoneListContains(stones, nbrStone.getGroup().getStones())):
-                        "The restored group :"
-                        +GoBoard.debugPrintListText(0, "", stones)+"\n did not contain "+nbrStone.getGroup();
-            }   */
             // In the case where the removed stone was causing an atari in a string in an enemy group,
             // there is a group that does not contain a nbrstone that also needs to be removed here.
             groups_.remove( nbrStone.getGroup() );
@@ -1332,7 +1244,7 @@ public final class GoBoard extends TwoPlayerBoard
         if (alternative != null)
            return alternative;
         assert (false) : "There was no alternative seed for "+stone;
-        return null;
+        return stone;
     }
 
     /**
@@ -1380,14 +1292,14 @@ public final class GoBoard extends TwoPlayerBoard
         if ( captures == null )
             return;
         if ( GameContext.getDebugMode() > 1 )
-             confirmStonesInValidGroups();
+             GoBoardUtil.confirmStonesInValidGroups(groups_, this);
 
-        LinkedList enemyNobiNbrs = new LinkedList();
+        List enemyNobiNbrs = new LinkedList();
         Iterator captureIt = captures.iterator();
         // find all the enemy neighbors of the stones in the captured group being restored.
         while ( captureIt.hasNext() ) {
             GoBoardPosition capture = (GoBoardPosition) captureIt.next();
-            HashSet enns = getNobiNeighbors( capture, NeighborType.ENEMY );
+            Set enns = getNobiNeighbors( capture, NeighborType.ENEMY );
             enemyNobiNbrs.addAll( enns );
         }
         // in some bizarre cases there might actually be no enemy nobi nbrs
@@ -1449,13 +1361,13 @@ public final class GoBoard extends TwoPlayerBoard
             GoBoardUtil.unvisitPositionsInList( list );
             GoGroup group = new GoGroup( list );
             if (GameContext.getDebugMode() > 1) {
-                confirmStonesInOneGroup(group);
+                GoBoardUtil.confirmStonesInOneGroup(group, groups_);
                 GameContext.log( 2, "updateAfterRestoringCaptures("+captures+"): adding sub group :" + group );
             }
             groups_.add( group );
         }
         if ( GameContext.getDebugMode() > 1 )
-             confirmStonesInValidGroups();
+             GoBoardUtil.confirmStonesInValidGroups(groups_, this);
     }
 
 
@@ -1623,7 +1535,7 @@ public final class GoBoard extends TwoPlayerBoard
      * @param stone the stone to search from for group neighbors.
      * @return the list of stones in the group that was found.
      */
-    private List findGroupFromInitialPosition( GoBoardPosition stone )
+    public List findGroupFromInitialPosition( GoBoardPosition stone )
     {
         return findGroupFromInitialPosition( stone, true );
     }
@@ -1640,7 +1552,7 @@ public final class GoBoard extends TwoPlayerBoard
      */
     private List findGroupFromInitialPosition( GoBoardPosition stone, boolean returnToUnvisitedState )
     {
-        profiler_.start(FIND_GROUPS);
+        profiler_.start(GoProfiler.FIND_GROUPS);
         List stones = new ArrayList();
         // perform a breadth first search  until all found.
         // use the visited flag to indicate that a stone has been added to the group
@@ -1660,9 +1572,9 @@ public final class GoBoard extends TwoPlayerBoard
         if ( returnToUnvisitedState ) {
             GoBoardUtil.unvisitPositionsInList( stones );
             if (GameContext.getDebugMode()>1)
-                confirmAllUnvisited();
+                GoBoardUtil.confirmAllUnvisited(this);
         }
-        profiler_.stop(FIND_GROUPS);
+        profiler_.stop(GoProfiler.FIND_GROUPS);
         return stones;
     }
 
@@ -1679,7 +1591,7 @@ public final class GoBoard extends TwoPlayerBoard
      * @param type one of REGULAR_PIECE, UNOCCUPIED, or NOT_FRIEND
      * @return  1 if this is a valid neighbor of the type that we want
      */
-    private final int checkNeighbor( int r, int c, int rowOffset, int colOffset,
+    private int checkNeighbor( int r, int c, int rowOffset, int colOffset,
                                     boolean friendOwnedByPlayer1, List stack, boolean samePlayerOnly, NeighborType type)
     {
         GoBoardPosition nbr = (GoBoardPosition) positions_[r + rowOffset][c + colOffset];
@@ -1719,7 +1631,7 @@ public final class GoBoard extends TwoPlayerBoard
      * return 1 if this is a valid neighbor according to specification
      * these are the immediately adjacent (nobi) nbrs within the specified rectangular bounds
      */
-    private final int checkNeighbor( int r, int c, int rowOffset, int colOffset,
+    private int checkNeighbor( int r, int c, int rowOffset, int colOffset,
                                boolean friendOwnedByPlayer1, List stack, boolean samePlayerOnly, NeighborType type,
                                int rMin, int rMax, int cMin, int cMax )
     {
@@ -1763,7 +1675,7 @@ public final class GoBoard extends TwoPlayerBoard
     }
 
     // only add if not completely cut (there's no enemy stone in the middle).
-    private final int checkOneSpaceNeighbor( int r, int c, int rowOffset, int colOffset,
+    private int checkOneSpaceNeighbor( int r, int c, int rowOffset, int colOffset,
                                        boolean friendPlayer1, boolean samePlayerOnly, List stack )
     {
         GoBoardPosition nbr = (GoBoardPosition) positions_[r + rowOffset][c + colOffset];
@@ -1776,12 +1688,12 @@ public final class GoBoard extends TwoPlayerBoard
             //     eg:          *|*
             boolean cut;
             if ( rowOffset == 0 ) {
-                int col = c + colOffset / 2;
+                int col = c + (colOffset >> 1);
                 cut =  (positions_[r][col].isOccupied() &&
                         (positions_[r][col].getPiece().isOwnedByPlayer1() != friendPlayer1));
             }
             else {
-                int row = r + rowOffset / 2;
+                int row = r + (rowOffset >> 1);
                 cut =   (positions_[row][c].isOccupied() &&
                         (positions_[row][c].getPiece().isOwnedByPlayer1() != friendPlayer1));
             }
@@ -1796,7 +1708,7 @@ public final class GoBoard extends TwoPlayerBoard
     /**
      * for the knight's move we consider it cut if there is an enemy stone at the base.
      */
-    private final int checkKogeimaNeighbor( int r, int c, int rowOffset, int colOffset,
+    private int checkKogeimaNeighbor( int r, int c, int rowOffset, int colOffset,
                                       boolean friendPlayer1, boolean sameSideOnly, List stack )
     {
         if ( !inBounds( r + rowOffset, c + colOffset ) )
@@ -1810,14 +1722,14 @@ public final class GoBoard extends TwoPlayerBoard
             boolean cut;
             // consider it cut if there is an opponent stone in one of the 2 spaces between.
             if ( Math.abs( rowOffset ) == 2 ) {
-                int rr = r + rowOffset / 2;
+                int rr = r + (rowOffset >> 1);
                 cut = (positions_[rr][c].isOccupied()
                         && (positions_[rr][c].getPiece().isOwnedByPlayer1() != friendPlayer1)) ||
                         (positions_[rr][c + colOffset].isOccupied()
                         && (positions_[rr][c + colOffset].getPiece().isOwnedByPlayer1() != friendPlayer1));
             }
             else {
-                int cc = c + colOffset / 2;
+                int cc = c + (colOffset >> 1);
                 cut = (positions_[r][cc].isOccupied()
                         && (positions_[r][cc].getPiece().isOwnedByPlayer1() != friendPlayer1)) ||
                         (positions_[r + rowOffset][cc].isOccupied()
@@ -1854,7 +1766,7 @@ public final class GoBoard extends TwoPlayerBoard
      * However, if you kill an enemy string by playing on your last liberty,
      * then it is legal.
      */
-    public final boolean isSuicidal( GoMove m )
+    private boolean isSuicidal( GoMove m )
     {
         GoBoardPosition stone = (GoBoardPosition) this.getPosition( m.getToRow(), m.getToCol() );
         GoString string = stone.getString();
@@ -1883,14 +1795,14 @@ public final class GoBoard extends TwoPlayerBoard
         if ( m.isPassingMove() )
             return false; // a pass cannot cause an atari
         GoBoardPosition stone = (GoBoardPosition)this.getPosition( m.getToRow(), m.getToCol() );
-        HashSet enemyNbrs =
+        Set enemyNbrs =
                 this.getNobiNeighbors( stone, NeighborType.ENEMY );
         Iterator it = enemyNbrs.iterator();
         while ( it.hasNext() ) {
             GoBoardPosition s = (GoBoardPosition) it.next();
             GoGroup g = s.getGroup();
             if ( g.getLiberties( this ).size() == 1 ) {
-                GameContext.log( 2, "ATARI:" + g + " is atari'd as a result of move " + this );
+                //GameContext.log( 2, "ATARI:" + g + " is atari'd as a result of move " + this );
                 return true;
             }
         }
@@ -1901,7 +1813,7 @@ public final class GoBoard extends TwoPlayerBoard
      * make it show an empty board position.
      * @param pos the position to clear.
      */
-    public final void clear( GoBoardPosition pos )
+    private void clear( GoBoardPosition pos )
     {
         GoString string = pos.getString();
 
@@ -1940,7 +1852,7 @@ public final class GoBoard extends TwoPlayerBoard
     /**
      * remove groups that have no stones in them.
      */
-    private final  void cleanupGroups()
+    private  void cleanupGroups()
     {
         Iterator it = groups_.iterator();
         while ( it.hasNext() ) {
@@ -1951,43 +1863,6 @@ public final class GoBoard extends TwoPlayerBoard
                 it.remove();
             }
         }
-    }
-
-    /**
-     * create a nice list of all the current groups (and the strings they contain)
-     * @return String containing the current groups
-     */
-    public final String getGroupsText()
-    {
-        return getGroupsText(true, true);
-    }
-
-    /**
-     * create a nice list of all the current groups (and the strings they contain)
-     * @return String containing the current groups
-     */
-    public final String getGroupsText(boolean showBlack, boolean showWhite)
-    {
-        StringBuffer groupText = new StringBuffer( "" );
-        StringBuffer blackGroupsText = new StringBuffer(showBlack? "The black groups are :\n" : "" );
-        StringBuffer whiteGroupsText = new StringBuffer((showBlack?"\n":"") + (showWhite? "The white groups are :\n" : ""));
-
-        Iterator it = groups_.iterator();
-        while ( it.hasNext() ) {
-            GoGroup group = (GoGroup) it.next();
-            if ( group.isOwnedByPlayer1() && (showBlack)) {
-                //blackGroupsText.append( "black group owner ="+ group.isOwnedByPlayer1());
-                blackGroupsText.append( group );
-            }
-            else if ( !group.isOwnedByPlayer1()  && showWhite) {
-                //whiteGroupsText.append( "white group owner ="+ group.isOwnedByPlayer1());
-                whiteGroupsText.append( group );
-            }
-        }
-        groupText.append( blackGroupsText );
-        groupText.append( whiteGroupsText );
-
-        return groupText.toString();
     }
 
 
@@ -2006,7 +1881,7 @@ public final class GoBoard extends TwoPlayerBoard
             }
     }
 
-       /**
+    /**
      * @return a number corresponding to the number of clumps of 4 or empty triangles that this stone is connected to.
      * returns 0 if does not form bad shape at all. Large numbers indicate worse shape.
      * Possible bad shapes are :
@@ -2038,313 +1913,15 @@ public final class GoBoard extends TwoPlayerBoard
                 BoardPosition diagonal1 = getPosition( r + inc, c - 1 );
                 if ( inBounds( r + inc, c - 1 ) &&
                      diagonal1.isOccupied() && diagonal1.getPiece().isOwnedByPlayer1() == player1) {
-                    severity += getBadShapeAux( getPosition( r, c - 1 ), player1 );
+                    severity += GoBoardUtil.getBadShapeAux( getPosition( r, c - 1 ), player1 );
                 }
                 BoardPosition diagonal2 = getPosition( r + inc, c + 1 );
                 if ( inBounds( r + inc, c + 1 ) &&
                      diagonal2.isOccupied() && diagonal2.getPiece().isOwnedByPlayer1() == player1 ) {
-                    severity += getBadShapeAux( getPosition( r, c + 1 ), player1 );
+                    severity += GoBoardUtil.getBadShapeAux( getPosition( r, c + 1 ), player1 );
                 }
             }
         }
         return severity;
-    }
-
-    private static final int getBadShapeAux( BoardPosition adjacent1, boolean player1 )
-    {
-        if ( adjacent1.isUnoccupied() || adjacent1.getPiece().isOwnedByPlayer1() == player1 )
-            return 1;
-        return 0;
-    }
-
-
-
-
-    //------------- debugging routines below this point -----------------------------------------
-
-    /**
-     * pretty print a list of all the current groups (and the strings they contain)
-     */
-    public final void debugPrintGroups( int logLevel )
-    {
-        debugPrintGroups( logLevel,  "---The groups currently on the board are:", true, true);
-    }
-
-    /**
-     * pretty print a list of all the current groups (and the strings they contain)
-     */
-    public final void debugPrintGroups( int logLevel, String title, boolean showBlack, boolean showWhite)
-    {
-        if (logLevel <= GameContext.getDebugMode())  {
-            GameContext.log( logLevel, title );
-            GameContext.log( logLevel, getGroupsText(showBlack, showWhite) );
-            GameContext.log( logLevel, "----" );
-        }
-    }
-
-      /**
-     * pretty print a list of all the current groups (and the strings they contain)
-     * @param stones list of stones to print
-     */
-    public static final void debugPrintList( int logLevel, String title, Collection stones)
-      {
-           GameContext.log(logLevel, debugPrintListText(logLevel, title, stones));
-      }
-
-    /**
-     * pretty print a list of all the current groups (and the strings they contain)
-     * @param stones list of stones to print
-     */
-    public static final String debugPrintListText( int logLevel, String title, Collection stones)
-    {
-        if (stones==null)
-            return "";
-        StringBuffer buf = new StringBuffer(title+"\n");
-        if (logLevel <= GameContext.getDebugMode())  {
-            Iterator it = stones.iterator();
-            while (it.hasNext()) {
-                GoBoardPosition stone = (GoBoardPosition)it.next();
-                buf.append( stone.toString() +", ");
-            }
-        }
-        return buf.toString();
-    }
-
-    public static final void debugPrintList( int logLevel, String title, List stones)
-    {
-        if (stones==null)
-            return;
-        StringBuffer buf = new StringBuffer(title+"\n");
-        if (logLevel <= GameContext.getDebugMode())  {
-            Iterator it = stones.iterator();
-            while (it.hasNext()) {
-                GoBoardPosition stone = (GoBoardPosition)it.next();
-                buf.append( stone.toString() +", ");
-            }
-        }
-        GameContext.log(logLevel, buf.substring(0, buf.length()-2));
-    }
-
-
-
-    //------------------- Confirmation (debugging) routines below this point ---------------------
-
-    private void confirmNoEmptyStrings()
-    {
-        Iterator it = groups_.iterator();
-        while ( it.hasNext() ) {
-            GoGroup group = (GoGroup) it.next();
-            Iterator sit = group.getMembers().iterator();
-            while ( sit.hasNext() ) {
-                GoString string = (GoString) sit.next();
-                assert (string.size() > 0): "There is an empty string in " + string.getGroup();
-            }
-        }
-    }
-
-    /*
-    private void confirmNoEmptyGroups()
-    {
-        Iterator it = groups_.iterator();
-        while ( it.hasNext() ) {
-            GoGroup group = (GoGroup) it.next();
-            if (group.getMembers().isEmpty()) {
-                debugPrintGroups(1, "confirm no Empty failed. Groups are:",
-                        group.isOwnedByPlayer1(), !group.isOwnedByPlayer1());
-                assert false: "found a group with no members. ";
-            }
-        }
-    } */
-
-    /**
-     *  confirm that all the strings in a group have nobi connections.
-     */
-    public final void confirmGroupsHaveValidStrings()
-    {
-        Iterator it = groups_.iterator();
-        while ( it.hasNext() ) {
-            GoGroup group = (GoGroup) it.next();
-            group.confirmValidStrings( this );
-        }
-    }
-
-    /**
-     * verify that all the stones on the board are in the boards member list of groups.
-     */
-    private void confirmStonesInValidGroups()
-    {
-        for ( int i = 1; i <= getNumRows(); i++ )
-            for ( int j = 1; j <= getNumCols(); j++ ) {
-                GoBoardPosition space = (GoBoardPosition) this.getPosition( i, j );
-                if ( space.isOccupied() )
-                    confirmStoneInValidGroup( space );
-            }
-    }
-
-    /**
-     * @param stone verify that this stone has a valid string and a group in the board's member list.
-     */
-    private void confirmStoneInValidGroup( GoBoardPosition stone )
-    {
-        GoString str = stone.getString();
-        //boolean b = stone.getPiece().isOwnedByPlayer1();
-        Assert.notNull( str, stone + " does not belong to any string!") ;
-        GoGroup g = str.getGroup();
-        boolean valid = false;
-        Iterator gIt = groups_.iterator();
-        GoGroup g1;
-        while ( !valid && gIt.hasNext() ) {
-            g1 = (GoGroup) gIt.next();
-            valid = (g == g1);
-        }
-        if ( !valid ) {
-            debugPrintGroups( 0, "Confirm stones in valid groups failed. The groups are:",
-                    g.isOwnedByPlayer1(), !g.isOwnedByPlayer1() );
-            Assert.exception(
-                   "Error: This " + stone + " does not belong to a valid group: " + g + " \nThe valid groups are:" + groups_);
-        }
-    }
-
-    public final boolean confirmStoneListContains(List largerGroup, List smallerGroup)
-    {
-        Iterator smallIt = smallerGroup.iterator();
-        while (smallIt.hasNext()) {
-            GoBoardPosition smallPos = (GoBoardPosition)smallIt.next();
-            boolean found = false;
-            Iterator largeIt = largerGroup.iterator();
-            while (largeIt.hasNext() && !found) {
-                GoBoardPosition largePos = (GoBoardPosition)largeIt.next();
-                if (largePos.getRow() == smallPos.getRow() && largePos.getCol() == smallPos.getCol())
-                    found = true;
-            }
-            if (!found)
-                return false;
-        }
-        return true;
-    }
-
-    private final void unvisitAll()
-    {
-        for ( int i = 1; i <= getNumRows(); i++ ) {
-            for ( int j = 1; j <= getNumCols(); j++ ) {
-                GoBoardPosition pos = (GoBoardPosition) this.getPosition( i, j );
-                pos.setVisited(false);
-            }
-        }
-    }
-
-    /**
-     * verify that all the stones are marked unvisited.
-     */
-    public final void confirmAllUnvisited()
-    {
-        GoBoardPosition stone = areAllUnvisited();
-        if (stone != null)
-           Assert.exception(stone + " is marked visited" );
-    }
-
-    /**
-     * verify that all the stones are marked unvisited.
-     */
-    private final GoBoardPosition areAllUnvisited()
-    {
-        for ( int i = 1; i <= getNumRows(); i++ ) {
-            for ( int j = 1; j <= getNumCols(); j++ ) {
-                GoBoardPosition stone = (GoBoardPosition) this.getPosition( i, j );
-                if (stone.isVisited())
-                    return stone;
-            }
-        }
-        return null;
-    }
-
-    public List getVisitedSpaces()
-     {
-        List list = new ArrayList();
-        for ( int i = 1; i <= getNumRows(); i++ ) {
-            for ( int j = 1; j <= getNumCols(); j++ ) {
-                GoBoardPosition stone = (GoBoardPosition) this.getPosition( i, j );
-                if (stone.isVisited())
-                    list.add(stone);
-            }
-        }
-         return list;
-     }
-
-    /**
-     * for every stone one the board verify that it belongs to exactly one group
-    */
-    private void confirmAllStonesInUniqueGroups()
-    {
-        Iterator grIt = groups_.iterator();
-        while ( grIt.hasNext() ) {  // for each group on the board
-            GoGroup g = (GoGroup) grIt.next();
-            confirmStonesInOneGroup( g );
-        }
-    }
-
-    /**
-     * confirm that the stones in this group are not contained in any other group.
-     */
-    private void confirmStonesInOneGroup( GoGroup group )
-    {
-        Iterator strIt = group.getMembers().iterator();
-        while ( strIt.hasNext() ) {  // foir each string in the group
-            GoString string1 = (GoString) strIt.next();
-            Iterator grIt = groups_.iterator();
-            while ( grIt.hasNext() ) {  // for each group on the board
-                GoGroup g = (GoGroup) grIt.next();
-                if ( g != group ) {
-                    Iterator it = g.getMembers().iterator();
-                    while ( it.hasNext() ) {   // fro each string in that group
-                        GoString s = (GoString) it.next();
-                        if ( string1 == s ) {
-                            debugPrintGroups( 0 );
-                            assert false: "ERROR: " + s + " contained by 2 groups" ;
-                        }
-                        //make sure that every stone in the string belongs in this group
-                        Iterator stoneIt = s.getMembers().iterator();
-                        while ( stoneIt.hasNext() ) {
-                            GoBoardPosition st1 = (GoBoardPosition) stoneIt.next();
-                            if ( g != st1.getGroup() ) {
-                                debugPrintGroups( 0, "Confirm stones in one group failed. Groups are:", true, true );
-                                assert false:
-                                       st1 + " does not just belong to " + st1.getGroup()
-                                        + " as its ancestry indicates. It also belongs to " + g;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-
-    /**
-     * For every stone in every group verify that the group determined from using that stone as a seed
-     * matches the group that is claims by ancestry.
-     * (expesnsive to check)
-     */
-    private void confirmAllStonesAreInGroupsTheyClaim()
-    {
-        Iterator grIt = groups_.iterator();
-        while ( grIt.hasNext() ) {  // for each group on the board
-            GoGroup parentGroup = (GoGroup) grIt.next();
-            // for eash stone in that group
-            List parentGroupStones = parentGroup.getStones();
-            Iterator sit = parentGroupStones.iterator();
-            while ( sit.hasNext() ) {   // fro each string in that group
-                 GoBoardPosition s = (GoBoardPosition) sit.next();
-                 // compute the group from this stone and confirm it matches the parent group
-                 List g = findGroupFromInitialPosition(s);
-                 // perhaps we should do something more than check the size.
-                if (g.size() != parentGroupStones.size())   {
-                    debugPrintGroups( 0, "Confirm stones in groups they Claim failed. Groups are:", true, true );
-                    assert (false):
-                      debugPrintListText(0,"Calculated Group (seeded by "+s+"):",g) +"\n is not equal to the expected parent group:\n"+parentGroup;
-                }
-
-            }
-        }
     }
 }

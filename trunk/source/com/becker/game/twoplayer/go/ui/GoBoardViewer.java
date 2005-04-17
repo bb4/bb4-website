@@ -1,10 +1,8 @@
 package com.becker.game.twoplayer.go.ui;
 
-import ca.dj.jigo.sgf.tokens.MoveToken;
 import com.becker.common.ColorMap;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer;
-import com.becker.game.common.Move;
 import com.becker.game.twoplayer.go.*;
 import com.becker.ui.GUIUtil;
 
@@ -42,14 +40,14 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
     private static final ImageIcon woodGrainImage_ =
             GUIUtil.getIcon(GameContext.GAME_ROOT + "twoplayer/go/ui/images/goBoard1.png");
 
-    private static String STONES_CAPTURED = GameContext.getLabel("CAPTURES_EQUALS");
-    private static String TERRITORY = GameContext.getLabel("TERRITORY_EQUALS");
-    private static String SCORE = GameContext.getLabel("SCORE_EQUALS");
+    private static final String STONES_CAPTURED = GameContext.getLabel("CAPTURES_EQUALS");
+    private static final String TERRITORY = GameContext.getLabel("TERRITORY_EQUALS");
+    private static final String SCORE = GameContext.getLabel("SCORE_EQUALS");
 
     /**
      * Construct the viewer given the controller.
      */
-    public GoBoardViewer()
+    GoBoardViewer()
     {
         pieceRenderer_ = GoStoneRenderer.getRenderer();
     }
@@ -76,7 +74,7 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
         List starpoints = board.getStarPointPositions();
         Iterator it = starpoints.iterator();
         g2.setColor(Color.black);
-        double rad = cellSize_/21.0+.1;
+        double rad = (float)cellSize_/21.0+.1;
         while (it.hasNext()) {
             GoBoardPosition p = (GoBoardPosition)it.next();
             g2.fillOval(BOARD_MARGIN+(int)(cellSize_*(p.getCol()-.5)-rad), BOARD_MARGIN+(int)(cellSize_*(p.getRow()-.5)-rad),
@@ -114,7 +112,7 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
         continuePlay( m );
     }
 
-    public ColorMap getColorMap() {
+    public static ColorMap getColorMap() {
         return colormap_;
     }
 

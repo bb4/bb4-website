@@ -1,9 +1,6 @@
 package com.becker.game.twoplayer.go.test;
 
 import junit.framework.TestCase;
-import junit.framework.Assert;
-import junit.framework.TestSuite;
-import junit.framework.Test;
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.GoController;
 import com.becker.game.twoplayer.go.GoMove;
@@ -14,11 +11,11 @@ import java.util.List;
 
 public class GoTestCase extends TestCase {
 
-    protected static final String TEST_CASE_DIR =
+    private static final String TEST_CASE_DIR =
             GameContext.getHomeDir() +"/projects/java_projects/source/"  +
             GameContext.GAME_ROOT  + "twoplayer/go/test/cases/";
 
-    protected GoController controller_;
+    GoController controller_;
 
     /**
      * common initialization for all go test cases.
@@ -40,7 +37,7 @@ public class GoTestCase extends TestCase {
     }
 
 
-    protected GoMove getNextMove(String problemFile, boolean blackPlays) {
+    GoMove getNextMove(String problemFile, boolean blackPlays) {
 
         System.out.println("finding next move for "+problemFile+" ...");
         controller_.restoreFromFile(TEST_CASE_DIR + problemFile + ".sgf");
@@ -52,7 +49,7 @@ public class GoTestCase extends TestCase {
     }
 
 
-    protected void updateLifeAndDeath(String problemFile) {
+    void updateLifeAndDeath(String problemFile) {
         System.out.println("finding score for "+problemFile+" ...");
         controller_.restoreFromFile(TEST_CASE_DIR + problemFile + ".sgf");
 

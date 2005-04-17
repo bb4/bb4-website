@@ -122,7 +122,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ActionListe
      * Subclasses use this to create their own custom board configuration options
      * Default is to have no custom panel.
      */
-    protected JPanel createCustomBoardConfigurationPanel()
+    protected JPanel createCustomBoardConfigPanel()
     {
         return null;
     }
@@ -158,8 +158,8 @@ public abstract class NewGameDialog extends OptionsDialog implements ActionListe
         p.add( rowP );
         p.add( colP );
 
-        // add a custom section if desired (override createCustomBoardConfigurationPanel in derived class)
-        JPanel customConfigPanel = createCustomBoardConfigurationPanel();
+        // add a custom section if desired (override createCustomBoardConfigPanel in derived class)
+        JPanel customConfigPanel = createCustomBoardConfigPanel();
         if ( customConfigPanel != null )
             p.add( customConfigPanel );
 
