@@ -597,10 +597,10 @@ public final class GoGroup extends GoSet
             GoEye eye = (GoEye) it.next();
             switch (eye.getEyeType()) {
                 case FALSE_EYE:
-                    numEyes++;
+                    numFalseEyes++;
                     break;
                 case TRUE_EYE:
-                    numFalseEyes++;
+                    numEyes++;
                     break;
                 case BIG_EYE:
                     numEyes++;
