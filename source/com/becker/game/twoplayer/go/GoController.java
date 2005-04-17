@@ -3,7 +3,6 @@ package com.becker.game.twoplayer.go;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.common.Move;
 import com.becker.optimization.ParameterArray;
 
 import java.io.FileWriter;
@@ -11,7 +10,6 @@ import java.io.IOException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.*;
-import java.util.List;
 
 import ca.dj.jigo.sgf.SGFGame;
 import ca.dj.jigo.sgf.SGFLoader;
@@ -179,20 +177,20 @@ public final class GoController extends TwoPlayerController
     private static final int DEFAULT_NUM_ROWS = 13;
 
     // The komi can vary, but 5.5 seems most commonly used
-    public static final float DEFAULT_KOMI = 5.5f;
+    private static final float DEFAULT_KOMI = 5.5f;
 
     private static final int WIN_THRESHOLD = 1000;
 
     // a lookup table of scores to attribute to the board positions when calculating the worth
-    private static float[][] positionalScore_ = null;
+    private float[][] positionalScore_ = null;
     // we assign a value to a stone based on the line on which it falls when calculating worth
     private static final int NUM_SCORED_LINES = 5;  // number of lines that we care about scoring
     private static final float[] LINE_VALS = {-1.0f, .0f, 2.0f, 1.8f, .2f};
     private static final float CENTER_VAL = 1.0f;
 
     // at the very end of the game we mark dead stones dead.
-    private static int numDeadBlackStonesOnBoard_ = 0;
-    private static int numDeadWhiteStonesOnBoard_ = 0;
+    private int numDeadBlackStonesOnBoard_ = 0;
+    private int numDeadWhiteStonesOnBoard_ = 0;
 
     private float komi_ = DEFAULT_KOMI;
 
@@ -259,7 +257,7 @@ public final class GoController extends TwoPlayerController
             }
         }
         // also make the center space worth something positive
-        positionalScore_[(numRows + 1) / 2][(numCols + 1) / 2] = CENTER_VAL;
+        positionalScore_[((numRows + 1) >> 1)][((numCols + 1) >> 1)] = CENTER_VAL;
     }
 
     /**
@@ -350,8 +348,8 @@ public final class GoController extends TwoPlayerController
         return numCaptures;
     }
 
-    private static int cachedBlackTerritoryEstimate_ = 0;
-    private static int cachedWhiteTerritoryEstimate_ = 0;
+    private int cachedBlackTerritoryEstimate_ = 0;
+    private int cachedWhiteTerritoryEstimate_ = 0;
     /**
      * get a territory estimate for player1 or player2
      * When the game is over, this should return a precise value for the amount of territory (not yet filled with captures).
@@ -422,7 +420,7 @@ public final class GoController extends TwoPlayerController
 
     protected void initializeGobalProfilingStats()
     {
-        board_.initializeGobalProfilingStats();
+        initializeGobalProfilingStats();
     }
 
     protected void showProfileStats( long totalTime, int numMoves )
@@ -435,7 +433,7 @@ public final class GoController extends TwoPlayerController
         komi_ = komi;
     }
 
-    public float getKomi() {
+    private float getKomi() {
         return komi_;
     }
 
@@ -475,7 +473,7 @@ public final class GoController extends TwoPlayerController
             // include error info and stack trace in the comments to help debug
             if ( ae != null ) {
                 out.write( "C[" );
-                out.write( ((GoBoard) board_).getGroupsText() );
+                out.write( GoBoardUtil.getGroupsText(((GoBoard) getBoard()).getGroups() ));
                 if ( ae.getMessage() != null ) {
                     out.write( ae.getMessage() );
                     //out would need to be a PrintWriter for this to work
@@ -499,7 +497,7 @@ public final class GoController extends TwoPlayerController
             SGFGame game = SGFLoader.load( iStream );
             restoreGame( game );
         } catch (FileNotFoundException fnfe) {
-            JOptionPane.showMessageDialog( null, "file " + fileName + " was not found" );
+            JOptionPane.showMessageDialog( null, "file " + fileName + " was not found." + fnfe.getMessage() );
         } catch (IOException ioe) {
             JOptionPane.showMessageDialog( null, "IOException occurrred while reading " + fileName + " :" + ioe.getMessage() );
         } catch (SGFException sgfe) {
@@ -542,7 +540,7 @@ public final class GoController extends TwoPlayerController
         GoBoard board = (GoBoard)board_;
         worth = weights.get(CAPTURE_WEIGHT_INDEX).value * (getNumCaptures( true ) - getNumCaptures( false ));
         int n = 2 * board.getNumRows();
-        double gameStageBoost = 1.0 + Math.max((n - lastMove.moveNumber)/n, 0.0);
+        double gameStageBoost = 1.0 + Math.max((float)(n - lastMove.moveNumber)/n, 0.0);
 
         for ( row = 1; row <= board.getNumRows(); row++ ) {    //rows
             for ( col = 1; col <= board.getNumCols(); col++ ) {  //cols
@@ -628,17 +626,17 @@ public final class GoController extends TwoPlayerController
                     GoMove m = GoMove.createMove( j, i, null, lastMove.value, moveNum, new GoStone(player1) );
                     boolean suicide = !gb.makeMove( m );
 
-                    if ( !suicide ) {
+                    if ( suicide ) {
+                        GameContext.log( 2, "The move was a suicide (can't add it to the list), we now remove it: " + m );
+                        gb.undoMove( m );
+                    }
+                    else {
                         // this value is not likely to change much except local to last move,
                         // anyway we could cache that?
                         m.value = worth( m, weights, player1sPerspective );
                         // now revert the board
                         gb.undoMove( m );
                         moveList.add( m );
-                    }
-                    else {
-                        GameContext.log( 2, "The move was a suicide (can't add it to the list), we now remove it: " + m );
-                        gb.undoMove( m );
                     }
                 }
 

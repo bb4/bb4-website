@@ -179,7 +179,7 @@ public abstract class Board implements BoardInterface, Cloneable
     /**
      * for profiling output in a log
      */
-    public void initializeGobalProfilingStats()
+    public static void initializeGobalProfilingStats()
     {
     }
 

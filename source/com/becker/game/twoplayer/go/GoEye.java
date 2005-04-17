@@ -120,7 +120,7 @@ public final class GoEye extends GoString implements GoMember
      * get number of eye-space nobi neighbors.
      * these neighbors may either be blanks or dead stones of the opponent
      */
-    private static final int getNumEyeNobiNeighbors( GoBoardPosition space, List spaces )
+    private static int getNumEyeNobiNeighbors( GoBoardPosition space, List spaces )
     {
         int numNbrs = 0;
 
@@ -128,7 +128,7 @@ public final class GoEye extends GoString implements GoMember
 
         while ( it.hasNext() ) {
             GoBoardPosition ns = (GoBoardPosition) it.next();
-            if ( space.getDistanceFrom( ns ) == 1 )
+            if ( space.getDistanceFrom( ns ) == 1.0 )
                 numNbrs++;
         }
         return numNbrs;
@@ -149,7 +149,7 @@ public final class GoEye extends GoString implements GoMember
     {
         GoGroup ourGroup = getGroup();
         boolean groupP1 = ourGroup.isOwnedByPlayer1();
-        HashSet nbrs = board.getNobiNeighbors( space, groupP1, NeighborType.FRIEND );
+        Set nbrs = board.getNobiNeighbors( space, groupP1, NeighborType.FRIEND );
         int r = space.getRow();
         int c = space.getCol();
 
@@ -218,7 +218,7 @@ public final class GoEye extends GoString implements GoMember
         GoStone stone = (GoStone)pos.getPiece();
         boolean withinDifferenceThreshold = true;
         if (stone != null)  {
-            withinDifferenceThreshold = !isStoneWeaker(getGroup(), stone);
+            withinDifferenceThreshold = !GoBoardUtil.isStoneWeaker(getGroup(), stone);
         }
         assert (getGroup().isOwnedByPlayer1() == this.isOwnedByPlayer1()):
                  getGroup()+"bad group ownership. eye="+this+". Group="+getGroup();

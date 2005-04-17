@@ -21,7 +21,7 @@ final class GoNewGameDialog extends TwoPlayerNewGameDialog implements ActionList
     private static final String WHITE_IS =GameContext.getLabel("WHITE_IS");
 
     // constructor
-    public GoNewGameDialog( JFrame parent, GameBoardViewer viewer )
+    GoNewGameDialog( JFrame parent, GameBoardViewer viewer )
     {
         super( parent, viewer );
     }
@@ -31,7 +31,7 @@ final class GoNewGameDialog extends TwoPlayerNewGameDialog implements ActionList
         return GameContext.getLabel("GO_OPTIONS");
     }
 
-    protected final JPanel createCustomBoardConfigurationPanel()
+    protected final JPanel createCustomBoardConfigPanel()
     {
         JPanel p = new JPanel();
         p.setLayout( new BoxLayout( p, BoxLayout.Y_AXIS ) );
@@ -48,7 +48,7 @@ final class GoNewGameDialog extends TwoPlayerNewGameDialog implements ActionList
         return p;
     }
 
-    private JPanel createHandicapPanel( String labelText, JTextField handicapField )
+    private static JPanel createHandicapPanel( String labelText, JTextField handicapField )
     {
         return new NumberInputPanel( labelText, handicapField );
     }

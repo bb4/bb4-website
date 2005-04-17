@@ -28,8 +28,13 @@ public enum EyeType
         description_ = description;
     }
 
+
     public String toString() {
         return label_;
+    }
+
+    public String getDescription() {
+        return description_;
     }
 
 

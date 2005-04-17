@@ -19,7 +19,7 @@ public class GoString extends GoSet
 {
 
     // the group to which this string belongs
-    GoGroup group_;
+    protected GoGroup group_;
 
     /**
      * constructor. Create a new string containing the specified stone
@@ -138,7 +138,7 @@ public class GoString extends GoSet
      */
     public final Set getLiberties( GoBoard board )
     {
-        HashSet liberties = new HashSet();
+        Set liberties = new HashSet();
 
         Iterator it = members_.iterator();
         while ( it.hasNext() ) {
@@ -162,7 +162,7 @@ public class GoString extends GoSet
     /**
      * only add liberties for this stone if they are not already in the set
      */
-    private static void addLiberties( GoBoardPosition stone, HashSet liberties, GoBoard board )
+    private static void addLiberties( GoBoardPosition stone, Set liberties, GoBoard board )
     {
         int r = stone.getRow();
         int c = stone.getCol();
@@ -176,7 +176,7 @@ public class GoString extends GoSet
             addLiberty( board.getPosition( r, c + 1 ), liberties );
     }
 
-    private static final void addLiberty( BoardPosition libertySpace, HashSet liberties )
+    private static void addLiberty( BoardPosition libertySpace, Set liberties )
     {
         // this assumes a HashSet will not allow you to add the same object twice (no dupes)
         if ( libertySpace.isUnoccupied() )
@@ -207,7 +207,7 @@ public class GoString extends GoSet
         assert (group_!=null): "group for "+this+" is null";
         assert (pos.isOccupied()): "pos not occupied: ="+pos;
         GoStone stone = (GoStone)pos.getPiece();
-        boolean withinDifferenceThreshold = !isStoneMuchWeaker(getGroup(), stone);
+        boolean withinDifferenceThreshold = !GoBoardUtil.isStoneMuchWeaker(getGroup(), stone);
 
         assert (getGroup().isOwnedByPlayer1() == this.isOwnedByPlayer1()): getGroup()+" string="+this;
         return ((stone.isOwnedByPlayer1() != this.isOwnedByPlayer1() && withinDifferenceThreshold));
