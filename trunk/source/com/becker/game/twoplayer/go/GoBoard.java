@@ -733,7 +733,7 @@ public final class GoBoard extends TwoPlayerBoard
                        Set nbrs = findOccupiedNeighbors(empties);
                        float avg = calcAverageScore(nbrs);
 
-                       float score = avg * (Math.min(1.0f, (float)nbrs.size()/empties.size()));
+                       float score = avg * (float)nbrs.size()/empties.size();
                        assert (score <= 1.0 && score >= -1.0): "score="+score+" avg="+avg;
                        Iterator it = empties.iterator();
                        while (it.hasNext()) {
@@ -826,12 +826,14 @@ public final class GoBoard extends TwoPlayerBoard
     private static float calcAverageScore(Set stones)
     {
         float totalScore = 0;
+
         for (Object stone : stones) {
             GoBoardPosition p = (GoBoardPosition) stone;
+            GoGroup group = p.getString().getGroup();
             if (GoController.USE_RELATIVE_GROUP_SCORING)
-                totalScore += p.getString().getGroup().getRelativeHealth();
+                totalScore += group.getRelativeHealth();
             else
-                totalScore += p.getString().getGroup().getAbsoluteHealth();
+                totalScore += group.getAbsoluteHealth();
         }
         return totalScore/stones.size();
     }
