@@ -27,8 +27,6 @@ public final class GameContext
     // this is a singleton. It generates the sounds
     private static MusicMaker musicMaker_ = null;
 
-    private static final String MESSAGE_2PLAYER_BUNDLE_PREFIX = "com.becker.game.twoplayer.";
-    private static final String MESSAGE_NPLAYER_BUNDLE_PREFIX = "com.becker.game.multiplayer.";
     private static final String COMMON_MESSAGE_BUNDLE = "com.becker.game.common.resources.coreMessages";
     private static ResourceBundle commonMessages_;
     private static ResourceBundle gameMessages_;
@@ -168,7 +166,7 @@ public final class GameContext
      */
     public static String getHomeDir()
     {
-        String home =  System.getProperty("user.home");
+        String home =  System.getProperty("user.home") + "/projects/java_projects";
         if (home == null)
             home = DEFAULT_HOME_DIR;
         GameContext.log(1, "home = "+home );

@@ -270,8 +270,6 @@ public abstract class GamePanel extends TexturedPanel
 
     public void saveSnapshot() {
 
-
-
         JFileChooser chooser = GUIUtil.getFileChooser();
         chooser.setCurrentDirectory( new File( GameContext.getHomeDir() ) );
         int state = chooser.showSaveDialog( null );
