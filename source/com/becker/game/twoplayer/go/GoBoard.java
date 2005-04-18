@@ -11,7 +11,7 @@ import java.util.*;
  * For example, we update strings, and groups (and eventually armies) after each move.
  * After updating we can use these structures to estimate territory for each side.
  *
- * @author Barry Becker
+ * @author Barry Becker                                                                                                      3
  */
 public final class GoBoard extends TwoPlayerBoard
 {
@@ -733,7 +733,7 @@ public final class GoBoard extends TwoPlayerBoard
                        Set nbrs = findOccupiedNeighbors(empties);
                        float avg = calcAverageScore(nbrs);
 
-                       float score = avg * (float)nbrs.size()/empties.size();
+                       float score = avg * (float)nbrs.size()/Math.max(nbrs.size(), empties.size());
                        assert (score <= 1.0 && score >= -1.0): "score="+score+" avg="+avg;
                        Iterator it = empties.iterator();
                        while (it.hasNext()) {

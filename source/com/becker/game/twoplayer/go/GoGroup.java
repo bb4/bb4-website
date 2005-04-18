@@ -615,6 +615,29 @@ public final class GoGroup extends GoSet
                     assert false: "bad eye type:" + eye.getEyeType() ;
             }
         }
+        health = determineHealth(side, numEyes, numLiberties);
+
+        //GameContext.log(0,"health="+health+" numLiberties="+numLiberties);
+        // Should there be any bonus at all for flase eyes??  no
+        // health += (side * .015 * numFalseEyes);
+
+        absoluteHealth_ = health;
+        if (Math.abs(absoluteHealth_)>1.0) {
+            GameContext.log(0,  "Warning: health exceeded 1.0: "
+                     +" health="+health+" numEyes="+numEyes+" numfalse eye="+numFalseEyes);
+            absoluteHealth_ = side;
+        }
+
+        //if (numLiberties<=1)
+        //    GameContext.log(2, "health for "+this+" = health="+health+"  + health="+health);
+        return absoluteHealth_;
+    }
+
+    /**
+     * determint the health of the group besed on the number of eyes and the number of liberties.
+     */
+    private float determineHealth(float side, int numEyes, int numLiberties)  {
+        float health = 0;
 
         if ( numEyes >= 2 )  {
             // @@ add check for unconditional life here
@@ -689,21 +712,9 @@ public final class GoGroup extends GoSet
                 default: assert false;
             }
         }
-        //GameContext.log(0,"health="+health+" numLiberties="+numLiberties);
-        // Should there be any bonus at all for flase eyes??  no
-        // health += (side * .015 * numFalseEyes);
-
-        absoluteHealth_ = health;
-        if (Math.abs(absoluteHealth_)>1.0) {
-            GameContext.log(0,  "Warning: health exceeded 1.0: "
-                     +" health="+health+" numEyes="+numEyes+" numfalse eye="+numFalseEyes);
-            absoluteHealth_ = side;
-        }
-
-        //if (numLiberties<=1)
-        //    GameContext.log(2, "health for "+this+" = health="+health+"  + health="+health);
-        return absoluteHealth_;
+        return health;
     }
+
 
     /**
      * Calculate the relative health of a group.

@@ -12,7 +12,7 @@ import java.util.List;
 public class GoTestCase extends TestCase {
 
     private static final String TEST_CASE_DIR =
-            GameContext.getHomeDir() +"/projects/java_projects/source/"  +
+            GameContext.getHomeDir() +"/source/"  +
             GameContext.GAME_ROOT  + "twoplayer/go/test/cases/";
 
     GoController controller_;
@@ -36,11 +36,14 @@ public class GoTestCase extends TestCase {
 
     }
 
+    protected void restore(String problemFile) {
+        controller_.restoreFromFile(TEST_CASE_DIR + problemFile + ".sgf");
+    }
 
     GoMove getNextMove(String problemFile, boolean blackPlays) {
 
         System.out.println("finding next move for "+problemFile+" ...");
-        controller_.restoreFromFile(TEST_CASE_DIR + problemFile + ".sgf");
+        restore(problemFile);
         controller_.requestComputerMove( true, blackPlays );
 
         GoMove m = (GoMove) controller_.getLastMove();
@@ -51,7 +54,7 @@ public class GoTestCase extends TestCase {
 
     void updateLifeAndDeath(String problemFile) {
         System.out.println("finding score for "+problemFile+" ...");
-        controller_.restoreFromFile(TEST_CASE_DIR + problemFile + ".sgf");
+        restore(problemFile);
 
         // must check the worth of the board once to update the scoreContributions fo empty spaces.
         List moves = controller_.getMoveSequence();
