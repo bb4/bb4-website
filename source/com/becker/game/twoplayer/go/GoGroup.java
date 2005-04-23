@@ -1,6 +1,7 @@
 package com.becker.game.twoplayer.go;
 
 import com.becker.game.common.GameContext;
+import com.becker.game.common.Box;
 import com.becker.common.*;
 
 import java.util.*;
@@ -348,32 +349,11 @@ public final class GoGroup extends GoSet
         if (!changed_)
             return;
 
-        int rMin = 100000; // something huge ( more than max rows)
-        int rMax = 0;
-        int cMin = 100000; // something huge ( more than max cols)
-        int cMax = 0;
-
         // list of lists of spaces to unvisit at the end
         List lists = new ArrayList();
 
-        // first determine a bounding rectangle for the group.
-        Iterator it = members_.iterator();
-        GoBoardPosition stone;
-        while ( it.hasNext() ) {
-            GoString string = (GoString) it.next();
-            Iterator it1 = string.getMembers().iterator();
-
-            while ( it1.hasNext() ) {
-                stone = (GoBoardPosition) it1.next();
-                int row = stone.getRow();
-                int col = stone.getCol();
-                if ( row < rMin ) rMin = row;
-                if ( row > rMax ) rMax = row;
-                if ( col < cMin ) cMin = col;
-                if ( col > cMax ) cMax = col;
-            }
-        }
-
+        Box box = GoBoardUtil.findBoundingBox(members_);
+        
         // use the number of current true eyes to help us determine current eyes
         int numCurrentTrueEyes = getNumTrueEyes();
 
@@ -385,25 +365,29 @@ public final class GoGroup extends GoSet
         // the strings of empty or opponent spaces that do not belong.
         // Note : we do not go all the way to the edge. If the border of a group includes an edge of the board,
         // then empty spaces there are most likely eyes (but not necessarily).
-        if ( cMin > 1 ) {
+        int rMin = box.getMinRow();
+        int rMax = box.getMaxRow();
+        int cMin = box.getMinCol();
+        int cMax = box.getMaxCol();
+        if ( box.getMinCol() > 1 ) {
             for ( int r = rMin; r <= rMax; r++ )
                 excludeSeed( (GoBoardPosition) board.getPosition( r, cMin ),
-                        ownedByPlayer1_, board, lists, rMin, rMax, cMin, cMax );
+                        ownedByPlayer1_, board, lists, box );
         }
-        if ( cMax < board.getNumCols() ) {
+        if ( box.getMaxCol() < board.getNumCols() ) {
             for ( int r = rMin; r <= rMax; r++ )
                 excludeSeed( (GoBoardPosition) board.getPosition( r, cMax ),
-                        ownedByPlayer1_, board, lists, rMin, rMax, cMin, cMax );
+                        ownedByPlayer1_, board, lists, box );
         }
         if ( rMin > 1 ) {
             for ( int c = cMin; c <= cMax; c++ )
                 excludeSeed( (GoBoardPosition) board.getPosition( rMin, c ),
-                        ownedByPlayer1_, board, lists, rMin, rMax, cMin, cMax );
+                        ownedByPlayer1_, board, lists, box );
         }
         if ( rMax < board.getNumRows() ) {
             for ( int c = cMin; c <= cMax; c++ )
                 excludeSeed( (GoBoardPosition) board.getPosition( rMax, c ),
-                        ownedByPlayer1_, board, lists, rMin, rMax, cMin, cMax );
+                        ownedByPlayer1_, board, lists, box );
         }
 
         // now do a paint fill on each of the empty unvisited spaces left.
@@ -416,19 +400,19 @@ public final class GoGroup extends GoSet
                 // if the empty space is already marked as being an eye, skip
                 GoBoardPosition space = (GoBoardPosition) board.getPosition( r, c );
                 if ( !space.isVisited() && space.isUnoccupied() && !space.isInEye() ) {
-                    List eyeList =
+                    List eyeSpaces =
                             board.findStringFromInitialPosition( space, ownedByPlayer1_,
                                                                  false, NeighborType.NOT_FRIEND,
-                                                                 rMin, rMax, cMin, cMax );
-                    lists.add( eyeList );
+                                                                 box );
+                    lists.add( eyeSpaces );
                     // make sure this is a real eye.
                     // this method checks that opponent stones don't border it.
-                    if ( confirmEye( eyeList, board, numCurrentTrueEyes) ) {
-                        GoEye eye =  new GoEye( eyeList, board, this );
+                    if ( confirmEye( eyeSpaces, board, numCurrentTrueEyes) ) {
+                        GoEye eye =  new GoEye( eyeSpaces, board, this );
                         eyes_.add( eye );
                     }
                     else {
-                        GoBoardUtil.debugPrintList(3, "This list of stones was rejected as being an eye: ", eyeList);
+                        GoBoardUtil.debugPrintList(3, "This list of stones was rejected as being an eye: ", eyeSpaces);
                     }
                 }
             }
@@ -443,14 +427,13 @@ public final class GoGroup extends GoSet
      * @param board owner
      * @param lists list of stones connected to the seed stone
      */
-    private void excludeSeed( GoBoardPosition space, boolean groupOwnership, GoBoard board, List lists,
-                                     int rmin, int rmax, int cmin, int cmax )
+    private void excludeSeed( GoBoardPosition space, boolean groupOwnership, GoBoard board, List lists, Box box)
     {
         if ( !space.isVisited()
              && (space.isUnoccupied() || space.getPiece().isOwnedByPlayer1() != isOwnedByPlayer1())) {
             // this will leave stones outside the group visited
             List list = board.findStringFromInitialPosition( space, groupOwnership, false,
-                                                             NeighborType.NOT_FRIEND, rmin, rmax, cmin, cmax );
+                                                             NeighborType.NOT_FRIEND, box );
 
             // make sure that every occupied stone in the list is a real enemy and not just a dead opponent stone.
             // compare it with one of the group strings
@@ -502,8 +485,8 @@ public final class GoGroup extends GoSet
         if ( eyeList == null )
             return false;
 
-        if (numCurrentTrueEyes>0)
-          return true;
+        //if (numCurrentTrueEyes > 0)   // why did I do this?
+        //    return true;
 
         // each occupied stone of the eye must be very weak (ie not an enemy, but dead opponent)
         // compare it with one of the group strings

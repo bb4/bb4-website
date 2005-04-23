@@ -4,6 +4,7 @@ package com.becker.game.twoplayer.go;
 import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.Board;
+import com.becker.game.common.Box;
 import com.becker.common.Assert;
 
 import java.util.*;
@@ -63,6 +64,36 @@ public final class GoBoardUtil
         }
     }
 
+    /**
+     * @param positions to find bounding box of
+     * @return boundin box of set of stones/positions passed in
+     */
+    static Box findBoundingBox(Set positions)  {
+        int rMin = 100000; // something huge ( more than max rows)
+        int rMax = 0;
+        int cMin = 100000; // something huge ( more than max cols)
+        int cMax = 0;
+
+        // first determine a bounding rectangle for the group.
+        Iterator it = positions.iterator();
+        GoBoardPosition stone;
+        while ( it.hasNext() ) {
+            GoString string = (GoString) it.next();
+            Iterator it1 = string.getMembers().iterator();
+
+            while ( it1.hasNext() ) {
+                stone = (GoBoardPosition) it1.next();
+                int row = stone.getRow();
+                int col = stone.getCol();
+                if ( row < rMin ) rMin = row;
+                if ( row > rMax ) rMax = row;
+                if ( col < cMin ) cMin = col;
+                if ( col > cMax ) cMax = col;
+            }
+        }
+
+        return new Box(rMin, cMin, rMax, cMax);
+    }
 
     /**
      * set the visited flag back to false for a list of lists of stones
@@ -98,7 +129,7 @@ public final class GoBoardUtil
         }
     }
 
-    public static List getVisitedSpaces(GoBoard board)
+    static List getVisitedSpaces(GoBoard board)
     {
         List list = new ArrayList(10);
         for ( int i = 1; i <= board.getNumRows(); i++ ) {
