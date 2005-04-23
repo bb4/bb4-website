@@ -39,6 +39,7 @@ public abstract class GameBoardViewer
     protected static final Stroke LAST_MOVE_INDICATOR_STROKE = new BasicStroke(1);
     // dont allow the cells of the game board to get smaller than this
     public static final int MINIMUM_CELL_SIZE = 8;
+    public static final String SGF_EXT = ".sgf";
 
 
     // every GameBoardViewer must contain one of these
@@ -158,8 +159,12 @@ public abstract class GameBoardViewer
         int state = chooser.showSaveDialog( null );
         File file = chooser.getSelectedFile();
         if ( file != null && state == JFileChooser.APPROVE_OPTION ) {
+            // if it does not have the .sgf extension already then add it
             lastDirectoryAccessed_ = file.getAbsolutePath();
-            controller_.saveToFile( file.getAbsolutePath(), ae );
+            if (lastDirectoryAccessed_.lastIndexOf(SGF_EXT) != (lastDirectoryAccessed_.length() - SGF_EXT.length())) {
+                lastDirectoryAccessed_ += SGF_EXT;
+            }
+            controller_.saveToFile( lastDirectoryAccessed_, ae );
         }
     }
 

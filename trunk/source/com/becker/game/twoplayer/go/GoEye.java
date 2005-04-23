@@ -99,7 +99,7 @@ public final class GoEye extends GoString implements GoMember
             }
             // check for different cases of big eyes
             if ( (size == 3)
-                    || ((size == 4) && (max == 3 && sum == 6))
+                    || ((size == 4) && ((max == 3 && sum == 6) || (max == 2 && sum == 8)))
                     || ((size == 5) && ((max == 4 && sum == 8) || (max == 3 && sum == 10)))
                     || ((size == 6) && (max == 4 && sum == 12))
                     || ((size == 7) && (max == 4 && sum == 16)) ) {
@@ -107,8 +107,9 @@ public final class GoEye extends GoString implements GoMember
                     // it has the potential to be 2 eyes depending on who plays the keypoint
                     return EyeType.BIG_EYE;
                 }
-                else
+                else {
                     return EyeType.TRUE_EYE;  // only one true eye
+                }
             }
         }
         // if none of the above cases were hit, we assume its a very large internal space
@@ -167,22 +168,22 @@ public final class GoEye extends GoString implements GoMember
             if (qualifiedOpponentDiag( 1, 1, r,c, board, groupP1))
                 numOppDiag++;
 
-            // it is also a requirement that one of the friendly nbrs be in atari
+            /* it is also a requirement that one of the friendly nbrs be in atari - No!
             boolean nbrInAtari = false;
             Iterator it = nbrs.iterator();
             while (it.hasNext() && !nbrInAtari) {
                 GoBoardPosition nbr = (GoBoardPosition)it.next();
                 if (nbr.isInAtari(board))
                     nbrInAtari = true;
-            }
+            }  */
 
             // now decide if false eye based on nbrs and proximity to edge.
-            if (nbrInAtari) {
-                if ( numOppDiag >= 2  && (nbrs.size() >= 3))
-                    return true;
-                else if (board.isOnEdge(space) && numOppDiag >=1 && nbrInAtari)
-                    return true;
-            }
+            //if (nbrInAtari) {
+            if ( numOppDiag >= 2  && (nbrs.size() >= 3))
+                return true;
+            else if (board.isOnEdge(space) && numOppDiag >=1)
+                return true;
+            //}
         }
         return false;
     }
@@ -194,7 +195,7 @@ public final class GoEye extends GoString implements GoMember
     private boolean qualifiedOpponentDiag(int rowOffset, int colOffset, int r, int c,
                                           GoBoard board, boolean groupP1)
     {
-        GoBoardPosition diagPos = (GoBoardPosition)board.getPosition( r +rowOffset, c + colOffset );
+        GoBoardPosition diagPos = (GoBoardPosition)board.getPosition( r + rowOffset, c + colOffset );
         if (diagPos == null || diagPos.isUnoccupied() || diagPos.getPiece().isOwnedByPlayer1() == groupP1 )
             return false;
 
@@ -202,8 +203,8 @@ public final class GoEye extends GoString implements GoMember
         BoardPosition pos2 = board.getPosition( r, c + colOffset );
 
         return (r > 1 && c  > 1) &&
-                pos1.isOccupied() && pos1.getPiece().isOwnedByPlayer1()==groupP1 &&
-                pos2.isOccupied() && pos2.getPiece().isOwnedByPlayer1()==groupP1 &&
+                pos1.isOccupied() && pos1.getPiece().isOwnedByPlayer1() == groupP1 &&
+                pos2.isOccupied() && pos2.getPiece().isOwnedByPlayer1() == groupP1 &&
                 isEnemy( diagPos, board );
     }
 

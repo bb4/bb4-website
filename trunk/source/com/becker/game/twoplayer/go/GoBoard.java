@@ -90,14 +90,6 @@ public final class GoBoard extends TwoPlayerBoard
             for (Object g : groups_)  {
                 groupsCopy.add(((GoGroup)g).clone());
             }
-
-            /* old way
-            Iterator it = groups_.iterator();
-            while (it.hasNext()) {
-                GoGroup g = (GoGroup)it.next();
-                groupsCopy.add(g.clone());
-            }
-            */
         }
 
         if (armies_!=null)  {
@@ -782,6 +774,14 @@ public final class GoBoard extends TwoPlayerBoard
         return findStringFromInitialPosition(
                 stone, stone.getPiece().isOwnedByPlayer1(), returnToUnvisitedState, NeighborType.OCCUPIED,
                 1, numRows_, 1, numCols_ );
+    }
+
+    public final List findStringFromInitialPosition( GoBoardPosition stone,  boolean friendOwnedByP1,
+                                                     boolean returnToUnvisitedState, NeighborType type,
+                                                     Box box) {
+         return findStringFromInitialPosition(
+                stone, friendOwnedByP1, returnToUnvisitedState, type,
+                box.getMinRow(), box.getMaxRow(), box.getMinCol(), box.getMaxCol() );
     }
 
     /**

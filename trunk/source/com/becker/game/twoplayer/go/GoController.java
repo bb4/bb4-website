@@ -74,6 +74,7 @@ import javax.swing.*;
  *  - pause/continue not working in tree dialog.
  *  - at end of game, computer plays in its own eyes instead of passing.
  *  - When the computer plays in your eye, the eye goes away. It should not.
+ *  - back up and play black, back up again and play white.
  *
  ** common algorithm improvements
  *    - cache isInAtari for better performance
