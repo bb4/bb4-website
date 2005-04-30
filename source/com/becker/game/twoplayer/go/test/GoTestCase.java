@@ -46,7 +46,7 @@ public class GoTestCase extends TestCase {
         restore(problemFile);
         controller_.requestComputerMove( true, blackPlays );
 
-        GoMove m = (GoMove) controller_.getLastMove();
+        GoMove m = (GoMove) controller_.getBoard().getLastMove();
         System.out.println("got " + m);
         return m;
     }
@@ -57,7 +57,7 @@ public class GoTestCase extends TestCase {
         restore(problemFile);
 
         // must check the worth of the board once to update the scoreContributions fo empty spaces.
-        List moves = controller_.getMoveSequence();
+        List moves = controller_.getMoveList();
         double w = controller_.worth((GoMove)moves.get(moves.size()-3), controller_.getDefaultWeights(), true);    
         controller_.updateLifeAndDeath();   // this updates the groups and territory as well.
     }
