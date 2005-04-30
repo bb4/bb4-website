@@ -11,8 +11,11 @@ public class TestAll extends TestCase {
 
     public static Test suite() {
         TestSuite suite =  new TestSuite("All Go Tests");
-        suite.addTestSuite(TestLifeAndDeath.class);
+
+        suite.addTestSuite(TestEyes.class);
         suite.addTestSuite(TestScoring.class);
+        suite.addTestSuite(TestLifeAndDeath.class);
+
         return suite;
     }
 }
