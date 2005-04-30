@@ -54,6 +54,7 @@ public class Galaxy extends Board
      */
     public void reset()
     {
+        super.reset();
         for ( int i = 1; i <= getNumRows(); i++ ) {
             for ( int j = 1; j <= getNumCols(); j++ ) {
                 positions_[i][j] = new BoardPosition( i, j, null);
@@ -191,7 +192,7 @@ public class Galaxy extends Board
      * @param move the move to make, if possible.
      * @return false if the move is illegal.
      */
-    public boolean makeMove( Move move )
+    protected boolean makeInternalMove( Move move )
     {
         // first allow all the planets to build for the year
         build();
@@ -200,7 +201,6 @@ public class Galaxy extends Board
         //GalacticTurn gmove = (GalacticTurn)move;
         //destPlanet.setOwner( battle.getOwnerAfterAttack());
         //destPlanet.setNumShips( battle.getNumShipsAfterAttack() );
-
         return true;
     }
 
@@ -220,7 +220,7 @@ public class Galaxy extends Board
      * restoring the state of the game one full turn earlier
      * @@ todo
      */
-    public void undoMove( Move move )
+    protected void undoInternalMove( Move move )
     {
         GameContext.log(0,  "undo no implemented yet." );
         //clear(positions_[move.getToRow()][move.getToCol()]);

@@ -24,9 +24,9 @@ public final class GoMove extends TwoPlayerMove
      */
     public GoMove( int destinationRow, int destinationCol,
             CaptureList captures,
-            double val, int mvNum, GoStone stone )
+            double val, GoStone stone )
     {
-        super( (byte)destinationRow, (byte)destinationCol, val, mvNum, stone );
+        super( (byte)destinationRow, (byte)destinationCol, val, stone );
         captureList = captures;
     }
 
@@ -37,19 +37,19 @@ public final class GoMove extends TwoPlayerMove
     public static GoMove createMove(
             int destinationRow, int destinationCol,
             CaptureList captures,
-            double val, int mvNum, GoStone stone )
+            double val, GoStone stone )
     {
         GoMove m = new GoMove( (byte)destinationRow, (byte)destinationCol,
-                captures, val, mvNum, stone );
+                captures, val, stone );
         return m;
     }
 
     /**
      * factory method for creating a passing move
      */
-    public static GoMove createPassMove( double val, int mvNum, boolean player1)
+    public static GoMove createPassMove( double val,  boolean player1)
     {
-        GoMove m = createMove( 0,  0, null, val, mvNum, null );
+        GoMove m = createMove( 0,  0, null, val, null );
         m.isPass_ = true;
         m.player1 = player1;
         return m;
@@ -67,7 +67,7 @@ public final class GoMove extends TwoPlayerMove
             GameContext.log( 0, "******* GoMove: this is the capturelist we are copying:" + captureList.toString() );
             newList = captureList.copy();
         }
-        GoMove cp = createMove( toRow_, toCol_,  newList, value, moveNumber, (piece==null)?null:(GoStone)piece.copy() );
+        GoMove cp = createMove( toRow_, toCol_,  newList, value, (piece == null)? null : (GoStone)piece.copy() );
         cp.player1 = player1;
         cp.selected = this.selected;
         cp.transparency = this.transparency;

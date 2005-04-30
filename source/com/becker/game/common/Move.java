@@ -27,15 +27,6 @@ public class Move implements Comparable
      */
     public double value;
 
-    /**
-     * this is the moveNumberth move made so far by all players.
-     * In some games moves are for indiciduals, in other games they may be atomic for the set of all players moving at once.
-     * this can be used to render the playing pieces with varying degrees of
-     * transparency (0 - opaque 255 - totally transparent)
-     * its up to the game board to decide how it wants to use this for rendering if at all.
-     */
-    public int moveNumber;
-
 
     /**
      * protected Constructor.

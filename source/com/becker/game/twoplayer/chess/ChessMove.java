@@ -31,9 +31,9 @@ public class ChessMove extends TwoPlayerMove
     private ChessMove( byte originRow, byte originCol,
                           byte destinationRow, byte destinationCol,
                           CaptureList captures,
-                          double val, int mvNum, GamePiece piece )
+                          double val, GamePiece piece )
     {
-        super( destinationRow, destinationCol, val, mvNum, piece );
+        super( destinationRow, destinationCol, val, piece );
         fromRow_ = originRow;
         fromCol_ = originCol;
         captureList = captures;
@@ -48,11 +48,10 @@ public class ChessMove extends TwoPlayerMove
             int originRow, int originCol,
             int destinationRow, int destinationCol,
             CaptureList captures,
-            double val, int mvNum, GamePiece piece )
+            double val, GamePiece piece )
     {
         ChessMove m = new ChessMove( (byte)originRow, (byte)originCol,
-                (byte)destinationRow, (byte)destinationCol,
-                captures, val, mvNum, piece );
+                (byte)destinationRow, (byte)destinationCol, captures, val, piece );
 
         return m;
     }
@@ -78,7 +77,7 @@ public class ChessMove extends TwoPlayerMove
             newList = captureList.copy();
         }
         ChessMove cp = createMove( fromRow_, fromCol_, toRow_, toCol_,
-                                        newList, value, moveNumber,
+                                        newList, value,
                                         piece);
         cp.selected = this.selected;
         cp.transparency = this.transparency;

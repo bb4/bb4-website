@@ -101,17 +101,16 @@ public class ChessPiece extends GamePiece
         int direction = -1;
         if ( isOwnedByPlayer1() )
             direction = 1;
-        int moveNum = (lastMove!=null)? lastMove.moveNumber+1 : 1;
 
         // if this is the first time moved, we need to consider a 2 space jump
         if (firstTimeMoved_)
-            checkPawnForward(row, col, direction, 2, moveNum, board, moveList);
+            checkPawnForward(row, col, direction, 2, board, moveList);
         // in general pawns move forward 1 space
-        checkPawnForward(row, col, direction, 1,  moveNum, board, moveList);
+        checkPawnForward(row, col, direction, 1, board, moveList);
 
         // pawns capture by moving diagonally. Check both diagonals for enemy peices we can capture.
-        checkPawnDiagonal(row, col, direction, -1, moveNum, board, moveList);
-        checkPawnDiagonal(row, col, direction,  1, moveNum, board, moveList);
+        checkPawnDiagonal(row, col, direction, -1, board, moveList);
+        checkPawnDiagonal(row, col, direction,  1, board, moveList);
 
         return moveList;
     }
@@ -120,10 +119,10 @@ public class ChessPiece extends GamePiece
      * see if its legal to move the pawn forward numSteps. If so, add it to the moveList.
      * @return moveList list of legal moves discovered so far.
      */
-    private List checkPawnForward(int row, int col, int direction, int numSteps, int moveNum, Board b, List moveList)
+    private List checkPawnForward(int row, int col, int direction, int numSteps, Board b, List moveList)
     {
         BoardPosition next =  b.getPosition( row + numSteps*direction, col );
-        checkForNonCapture(next, row, col, moveNum, moveList);
+        checkForNonCapture(next, row, col, moveList);
         return moveList;
     }
 
@@ -132,10 +131,10 @@ public class ChessPiece extends GamePiece
      * If so, add it to the moveList.
      * @return moveList list of legal moves discovered so far.
      */
-    private List checkPawnDiagonal(int row, int col, int direction, int colInc, int moveNum, Board b, List moveList)
+    private List checkPawnDiagonal(int row, int col, int direction, int colInc, Board b, List moveList)
     {
         BoardPosition diag =  b.getPosition( row + direction, col + colInc );
-        return checkForCapture(diag, row, col,  moveNum, moveList);
+        return checkForCapture(diag, row, col, moveList);
     }
 
     /**
@@ -146,13 +145,12 @@ public class ChessPiece extends GamePiece
     private List findRookMoves(Board board, int row, int col, Move lastMove)
     {
         List moveList = new LinkedList();
-        int moveNum = (lastMove!=null)? lastMove.moveNumber+1 : 1;
 
         // consider horixontal and vertical directions.
-        checkRunDirection(row, col, 1, 0, moveNum, board, moveList);
-        checkRunDirection(row, col, -1, 0, moveNum, board, moveList);
-        checkRunDirection(row, col, 0, 1, moveNum, board, moveList);
-        checkRunDirection(row, col, 0, -1, moveNum, board, moveList);
+        checkRunDirection(row, col, 1, 0,  board, moveList);
+        checkRunDirection(row, col, -1, 0, board, moveList);
+        checkRunDirection(row, col, 0, 1, board, moveList);
+        checkRunDirection(row, col, 0, -1, board, moveList);
 
         return moveList;
     }
@@ -164,13 +162,12 @@ public class ChessPiece extends GamePiece
     private List findBishopMoves(Board board, int row, int col, Move lastMove)
     {
         List moveList = new LinkedList();
-        int moveNum = (lastMove!=null)? lastMove.moveNumber+1 : 1;
 
         // consider the 4 diagonal directions.
-        checkRunDirection(row, col, 1, 1, moveNum, board, moveList);
-        checkRunDirection(row, col, 1, -1, moveNum, board, moveList);
-        checkRunDirection(row, col, -1, 1, moveNum, board, moveList);
-        checkRunDirection(row, col, -1, -1, moveNum, board, moveList);
+        checkRunDirection(row, col, 1, 1,  board, moveList);
+        checkRunDirection(row, col, 1, -1, board, moveList);
+        checkRunDirection(row, col, -1, 1,  board, moveList);
+        checkRunDirection(row, col, -1, -1,  board, moveList);
 
         return moveList;
     }
@@ -233,13 +230,12 @@ public class ChessPiece extends GamePiece
     private List getEightDirectionalMoves(Board board, int row, int col, Move lastMove, int rowOffsets[], int colOffsets[])
     {
         List moveList = new LinkedList();
-        int moveNum = (lastMove!=null)? lastMove.moveNumber+1 : 1;
 
         for (int i=0; i<8; i++) {
             BoardPosition next =
                board.getPosition( row + rowOffsets[i], col + colOffsets[i] );
-            checkForCapture(next, row, col, moveNum, moveList);
-            checkForNonCapture(next, row, col, moveNum, moveList);
+            checkForCapture(next, row, col, moveList);
+            checkForNonCapture(next, row, col, moveList);
         }
         return moveList;
     }
@@ -249,7 +245,7 @@ public class ChessPiece extends GamePiece
      * @param moveList the accumulated possible moves
      * @return moveList
      */
-    private List checkRunDirection(int curRow, int curCol, int rowDir, int colDir, int moveNum, Board board, List moveList)
+    private List checkRunDirection(int curRow, int curCol, int rowDir, int colDir, Board board, List moveList)
     {
       // loop through all spaces between this piece and the next piece or the edge of the board.
       // if the next piece encountered in the specified direction is an opponent piece, then capture it.
@@ -259,7 +255,7 @@ public class ChessPiece extends GamePiece
 
       while ((next != null) && next.isUnoccupied() )   {
           ChessMove m = ChessMove.createMove( curRow, curCol, row, col,
-                                              null, 0, moveNum, this );
+                                              null, 0,  this );
           // no need to evaluate it since there were no captures
           moveList.add( m );
           row += rowDir;
@@ -268,22 +264,21 @@ public class ChessPiece extends GamePiece
       }
 
       // if the first encountered piece is an enemy then add a move which captures it
-      checkForCapture(next, curRow, curCol, moveNum, moveList);
+      checkForCapture(next, curRow, curCol, moveList);
 
       return moveList;
     }
 
     /**
      * @param next candidate next move
-     * @param moveNum next's move number in the game
      * @param moveList current list of legal moves for this piece
      * @return all current legal moves plus the capture if there is one
      */
-    private List checkForNonCapture(BoardPosition next, int row, int col, int moveNum, List moveList)
+    private List checkForNonCapture(BoardPosition next, int row, int col, List moveList)
     {
         if ( (next != null) &&  next.isUnoccupied()) {
             ChessMove m = ChessMove.createMove(row, col, next.getRow(), next.getCol(),
-                                                null, 0.0, moveNum, this );
+                                                null, 0.0, this );
             moveList.add( m );
         }
         return moveList;
@@ -292,18 +287,17 @@ public class ChessPiece extends GamePiece
 
     /**
      * @param next candidate next move
-     * @param moveNum next's move number in the game
      * @param moveList current list of legal moves for this piece
      * @return all current legal moves plus the capture if there is one
      */
-    private List checkForCapture(BoardPosition next, int row, int col, int moveNum, List moveList)
+    private List checkForCapture(BoardPosition next, int row, int col, List moveList)
     {
         if ( (next != null) &&  next.isOccupied() && (next.getPiece().isOwnedByPlayer1() != isOwnedByPlayer1())) {
             // there can only be one capture in chess.
             CaptureList capture = new CaptureList();
             capture.add( next.copy() );
             ChessMove m = ChessMove.createMove( row, col, next.getRow(), next.getCol(),
-                                                 capture, 0, moveNum, this );
+                                                 capture, 0, this );
             moveList.add( m );
         }
         return moveList;

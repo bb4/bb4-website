@@ -34,6 +34,7 @@ public class ChessBoard extends CheckersBoard
      */
     public void reset()
     {
+        super.reset();
         assert ( positions_!=null );
         int i,j;
         int numRows = getNumRows();
@@ -90,16 +91,15 @@ public class ChessBoard extends CheckersBoard
      * This places the players symbol at the position specified by move.
      * @param move to make
      */
-    public boolean makeMove( Move move )
+    protected boolean makeInternalMove( Move move )
     {
         ChessMove m = (ChessMove) move;
-        //super.makeMove(move);
         BoardPosition oldPos = positions_[m.getFromRow()][m.getFromCol()];
         BoardPosition newPos = positions_[m.getToRow()][m.getToCol()];
 
         // remove the captures before we place the moved piece since it may be underneath.
         removeCaptures( m.captureList );
-        assert (oldPos.getPiece()!=null): "oldpos="+oldPos+" m="+m;
+        assert (oldPos.getPiece() != null): "oldpos="+oldPos+" m="+m;
         m.setFirstTimeMoved(((ChessPiece)oldPos.getPiece()).isFirstTimeMoved());
         newPos.setPiece(m.piece);
 
@@ -115,7 +115,7 @@ public class ChessBoard extends CheckersBoard
      * restoring any captures.
      * @param move to undo
      */
-    public void undoMove( Move move )
+    protected void undoInternalMove( Move move )
     {
         ChessMove m = (ChessMove) move;
         BoardPosition start = positions_[m.getFromRow()][m.getFromCol()];
@@ -160,13 +160,13 @@ public class ChessBoard extends CheckersBoard
                     checked = isKingCheckedByPosition(pos, m);
                 }
                 if (checked) {
-                    undoMove(m);
+                    undoMove();
                     return checked;
                 }
             }
         }
 
-        undoMove(m);
+        undoMove();
         return false;
     }
 }

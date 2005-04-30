@@ -69,7 +69,7 @@ public interface BoardInterface
       * Allow reverting a move so we can step backwards in time.
       * Board is returned to the exact state it was in before the last move was made.
       */
-     public void undoMove( Move move );
+     public Move undoMove();
 
      /**
       * @return true if the specified position is within the bounds of the board

@@ -297,6 +297,10 @@ public abstract class GameBoardViewer
         evtq_.postEvent( gce );
     }
 
+    public synchronized final void showMoveSequence( java.util.List moveSequence )
+    {
+        showMoveSequence( moveSequence, controller_.getNumMoves() );
+    }
 
 
     /**
@@ -306,26 +310,27 @@ public abstract class GameBoardViewer
      *
      * @param moveSequence the list of moves to make
      */
-    public synchronized final void showMoveSequence( java.util.List moveSequence )
+    public synchronized final void showMoveSequence( java.util.List moveSequence, int numMovesToBackup )
     {
         if ( moveSequence == null || moveSequence.size() == 0 )
             return;
         Move firstMove = (Move) moveSequence.get( 0 );
         // the first time we click on a row in the tree, the controller has no moves.
-        if ( firstMove.moveNumber == 1 || controller_.getLastMove() == null ) {
+        Move lastMove = getBoard().getLastMove();
+        if ( lastMove == null ) {
             reset();
         }
         else {
             // we keep the original moves and just back up to firstMove.moveNumber.
-            Move lastMove = controller_.getLastMove();
             // number of steps to backup is # of most recent real moves minus
             // the first move in the sequence.
+            int ct = 0;
             if ( lastMove != null && firstMove != null ) {
-                while ( lastMove.moveNumber >= firstMove.moveNumber ) {
+                while ( ct < numMovesToBackup ) {
                     controller_.undoLastMove();
-                    lastMove = controller_.getLastMove();
-                    assert lastMove!=null :
-                            "firstMove.moveNumber=" + firstMove.moveNumber + " moveSequence=" + moveSequence;
+                    lastMove = getBoard().getLastMove();
+                    assert lastMove != null : " moveSequence=" + moveSequence;
+                    ct++;
                 }
             }
         }
@@ -343,7 +348,7 @@ public abstract class GameBoardViewer
      */
     public final boolean canUndoMove()
      {
-         return  (controller_.getLastMove()!=null);
+         return  (getBoard().getLastMove()!=null);
      }
 
     /**

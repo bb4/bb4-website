@@ -29,9 +29,9 @@ public class CheckersMove extends TwoPlayerMove
     private CheckersMove( byte originRow, byte originCol,
                           byte destinationRow, byte destinationCol,
                           CaptureList captures,
-                          double val, int mvNum, GamePiece piece)
+                          double val, GamePiece piece)
     {
-        super( destinationRow, destinationCol, val, mvNum, piece );
+        super( destinationRow, destinationCol, val,  piece );
         fromRow_ = (byte)originRow;
         fromCol_ = (byte)originCol;
         kinged = false;
@@ -46,11 +46,10 @@ public class CheckersMove extends TwoPlayerMove
             int originRow, int originCol,
             int destinationRow, int destinationCol,
             CaptureList captures,
-            double val, int mvNum, GamePiece piece )
+            double val, GamePiece piece )
     {
         CheckersMove m = new CheckersMove( (byte)originRow, (byte)originCol,
-                (byte)destinationRow, (byte)destinationCol,
-                captures, val, mvNum, piece );
+                (byte)destinationRow, (byte)destinationCol, captures, val, piece );
 
         if ( (piece.getType() == CheckersPiece.REGULAR_PIECE) &&
             ((piece.isOwnedByPlayer1() && m.getToRow() == CheckersController.NUM_ROWS) ||
@@ -104,7 +103,7 @@ public class CheckersMove extends TwoPlayerMove
             newList = captureList.copy();
         }
         CheckersMove cp = createMove( fromRow_, fromCol_, toRow_, toCol_,
-                newList, value, moveNumber, piece.copy());
+                newList, value, piece.copy());
         cp.selected = this.selected;
         cp.transparency = this.transparency;
         cp.kinged = this.kinged;

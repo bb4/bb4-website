@@ -10,6 +10,7 @@ import com.becker.ui.GUIUtil;
 import com.becker.ui.DiscreteColorLegend;
 
 import javax.swing.*;
+import javax.swing.Box;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.Border;
 import java.text.MessageFormat;
@@ -216,11 +217,9 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
         //Player currentPlayer = controller_.getCurrentPlayer();
         setPlayerLabel();
         //Galaxy g = (Galaxy)controller_.getBoard();
-        Move lastMove =  controller_.getLastMove();
+        Move lastMove =  controller_.getBoard().getLastMove();
         if (lastMove != null)  {
-            //moveNumLabel_.setText( lastMove.moveNumber * controller_.getNumPlayers()
-            //                      + ((PokerController)controller_).getCurrentPlayerIndex()+" " );
-            moveNumLabel_.setText( (lastMove.moveNumber+2) + " " );
+            moveNumLabel_.setText( (controller_.getNumMoves() + 2) + " " );
         }
         else {
             moveNumLabel_.setText( 1 + " " );

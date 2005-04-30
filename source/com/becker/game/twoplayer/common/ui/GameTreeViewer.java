@@ -225,7 +225,7 @@ class GameTreeViewer extends JPanel implements MouseMotionListener
      * Draw the nodes and arcs in the game tree.
      * It can get quite huge.
      */
-    private void drawTree( SearchTreeNode node, Graphics2D g2)
+    private synchronized void drawTree( SearchTreeNode node, Graphics2D g2)
     {
         int oldDepth = 0;
         int depth = 0;
@@ -250,7 +250,7 @@ class GameTreeViewer extends JPanel implements MouseMotionListener
                 SearchTreeNode c = (SearchTreeNode)enumXXX.nextElement();
                 drawArc(p, c, depth, offsetAtLevel[depth],  offsetAtLevel[depth+1], g2);
                 drawNode(c, depth+1,  offsetAtLevel[depth+1], g2);
-                offsetAtLevel[depth+1] +=c.spaceAllocation;
+                offsetAtLevel[depth+1] += c.spaceAllocation;
                 q.add(c);
             }
             offsetAtLevel[depth] += p.spaceAllocation;

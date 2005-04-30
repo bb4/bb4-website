@@ -105,10 +105,8 @@ public class PenteController extends TwoPlayerController
         int delta = M - 1;
         int c = (int) (Math.random() * (board_.getNumCols() - 2 * delta) + delta + 1);
         int r = (int) (Math.random() * (board_.getNumRows() - 2 * delta) + delta + 1);
-        TwoPlayerMove m = TwoPlayerMove.createMove( r, c, 0, 1, new GamePiece(true) );
-        board_.makeMove( m );
-        moveList_.add( m );
-        player1sTurn_ = false;
+        TwoPlayerMove m = TwoPlayerMove.createMove( r, c, 0, new GamePiece(true) );
+        makeMove( m );
     }
 
     /**
@@ -135,8 +133,6 @@ public class PenteController extends TwoPlayerController
             // first check for a special case where there was a blocking move in the
             // middle. In this case we break the string into an upper and lower
             // half and evaluate each separately.
-            //StringBuffer low = new StringBuffer(line.substring(0,pos+1));
-            //StringBuffer high = new StringBuffer(line.substring(pos,len));
             return (evalLine( line, symb, opponent, pos, minpos, pos + 1, weights )
                     + evalLine( line, symb, opponent, pos, pos, maxpos, weights ));
 
@@ -307,7 +303,6 @@ public class PenteController extends TwoPlayerController
         }
         if ( stopr < 1 ) {
             stopc = stopc + stopr - 1;
-            //stopr = 1;
         }
         line.setLength( 0 );
         for ( i = startc; i <= stopc; i++ )
@@ -315,7 +310,6 @@ public class PenteController extends TwoPlayerController
 
         position = col - startc;
         diff += computeValueDifference( line, position, weights );
-        //lastMove.difference = diff;
         //worthDebug('/', line, position, diff);
 
         return lastMove.value + diff;
@@ -335,18 +329,15 @@ public class PenteController extends TwoPlayerController
         pb.determineCandidateMoves();
 
         boolean player1 = !(lastMove.player1);
-        int moveNum = lastMove.moveNumber + 1;
 
         for ( i = 1; i <= Ncols; i++ )      //cols
             for ( j = 1; j <= Nrows; j++ )    //rows
                 if ( pb.isCandidateMove( j, i ) ) {
-                    //System.out.println("adding "+lastMove.value);
-                    TwoPlayerMove m = TwoPlayerMove.createMove( j, i, lastMove.value, moveNum,
-                                              new GamePiece(player1));
+                    TwoPlayerMove m = TwoPlayerMove.createMove( j, i, lastMove.value, new GamePiece(player1));
                     pb.makeMove( m );
                     m.value = worth( m, weights, player1sPerspective );
                     // now revert the board
-                    pb.undoMove( m );
+                    pb.undoMove();
                     moveList.add( m );
                 }
 

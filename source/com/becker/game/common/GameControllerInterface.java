@@ -38,19 +38,12 @@ public interface GameControllerInterface
      */
     public Move undoLastMove();
 
-    /**
-     * this makes an arbitrary move (assumed valid) and
-     * adds it to the move list.
-     * Calling this does not keep track of weights or the search.
-     * Its most common use is for browsing the game tree.
-     *  @param m the move to play.
-     */
-    public void makeMove( Move m );
-
+    public void makeMove( Move move );
+    
     /**
      * @return the list of moves made so far.
      */
-    public LinkedList getMoveSequence();
+    public LinkedList getMoveList();
 
     /**
      * @return  the number of moves currently played.

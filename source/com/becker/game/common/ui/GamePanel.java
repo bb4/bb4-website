@@ -301,7 +301,7 @@ public abstract class GamePanel extends TexturedPanel
      */
     public void gameChanged( GameChangedEvent gce )
     {
-        toolBar_.getUndoButton().setEnabled(boardViewer_.getController().getLastMove() != null);
+        toolBar_.getUndoButton().setEnabled(boardViewer_.getBoard().getLastMove() != null);
     }
 
 

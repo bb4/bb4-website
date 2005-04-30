@@ -43,6 +43,7 @@ public class BlockadeBoard extends TwoPlayerBoard
      */
     public void reset()
     {
+        super.reset();
         assert ( positions_!=null );
         int i;
         for ( i = 1; i <= getNumRows(); i++ ) {
@@ -152,25 +153,29 @@ public class BlockadeBoard extends TwoPlayerBoard
          if (!p.isEastBlocked() && fromCol+1<=numCols ) {     // E
              eastOpen = true;
              if (!eastPos.isVisited() && (eastPos.isUnoccupied() || eastPos.isHomeBase(op1)))
-                 possibleMoveList.add( BlockadeMove.createMove(fromRow, fromCol, fromRow,fromCol+1, 0,0, p.getPiece(), null));
+                 possibleMoveList.add(
+                         BlockadeMove.createMove(fromRow, fromCol, fromRow, fromCol+1, 0, p.getPiece(), null));
          }
 
          if (!p.isSouthBlocked() && fromRow+1<=numRows) {     // S
              southOpen = true;
              if (!southPos.isVisited() && (southPos.isUnoccupied() || southPos.isHomeBase(op1)))
-                 possibleMoveList.add( BlockadeMove.createMove(fromRow, fromCol, fromRow+1,fromCol, 0,0, p.getPiece(), null));
+                 possibleMoveList.add(
+                         BlockadeMove.createMove(fromRow, fromCol, fromRow+1,fromCol, 0, p.getPiece(), null));
          }
 
          if (southPos != null ) {
              BlockadeBoardPosition southSouthPos = (BlockadeBoardPosition) getPosition(fromRow+2, fromCol);
              if (southOpen && !southPos.isSouthBlocked() && fromRow+2<=numRows &&
                   (southSouthPos.isUnoccupied()||southPos.isHomeBase(op1)) && !southSouthPos.isVisited())  // SS
-                  possibleMoveList.add( BlockadeMove.createMove(fromRow, fromCol, fromRow+2,fromCol, 0,0, p.getPiece(), null));
+                  possibleMoveList.add(
+                          BlockadeMove.createMove(fromRow, fromCol, fromRow+2,fromCol, 0, p.getPiece(), null));
              if ((southOpen && !southPos.isEastBlocked() && fromCol+1<=numCols) ||
                  (eastOpen && !eastPos.isSouthBlocked())) {                                             // SE
                   BlockadeBoardPosition southEastPos = (BlockadeBoardPosition) getPosition(fromRow+1, fromCol+1);
                   if ((southEastPos.isUnoccupied()||southEastPos.isHomeBase(op1)) && !southEastPos.isVisited())
-                    possibleMoveList.add( BlockadeMove.createMove(fromRow, fromCol, fromRow+1,fromCol+1, 0,0, p.getPiece(), null));
+                    possibleMoveList.add(
+                            BlockadeMove.createMove(fromRow, fromCol, fromRow+1,fromCol+1, 0, p.getPiece(), null));
              }
          }
          boolean westOpen = false;
@@ -179,18 +184,21 @@ public class BlockadeBoard extends TwoPlayerBoard
              if (!westPos.isEastBlocked() && fromCol-1>0 ) {   // W
                  westOpen = true;
                  if  (!westPos.isVisited() && (westPos.isUnoccupied()||westPos.isHomeBase(op1)))
-                     possibleMoveList.add(BlockadeMove.createMove(fromRow, fromCol, fromRow,fromCol-1, 0,0, p.getPiece(), null));
+                     possibleMoveList.add(
+                             BlockadeMove.createMove(fromRow, fromCol, fromRow,fromCol-1, 0, p.getPiece(), null));
              }
              if (((westOpen && !westPos.isSouthBlocked() && fromCol-1>0 && fromRow+1<=numRows) ||
                  (southOpen && southWestPos!=null && !southWestPos.isEastBlocked()))
-                  && (southWestPos.isUnoccupied()||southWestPos.isHomeBase(op1)) && !southWestPos.isVisited())    // SW
-                  possibleMoveList.add( BlockadeMove.createMove(fromRow, fromCol, fromRow+1,fromCol-1, 0,0, p.getPiece(), null));
+                  && (southWestPos.isUnoccupied()||southWestPos.isHomeBase(op1)) && !southWestPos.isVisited())   // SW
+                  possibleMoveList.add(
+                          BlockadeMove.createMove(fromRow, fromCol, fromRow+1,fromCol-1, 0, p.getPiece(), null));
          }
 
          BlockadeBoardPosition westWestPos = (BlockadeBoardPosition) getPosition(fromRow, fromCol-2);
          if (westOpen && westWestPos!=null && !westWestPos.isEastBlocked()
-              && (westWestPos.isUnoccupied()||westWestPos.isHomeBase(op1)) && !westWestPos.isVisited())           // WW
-              possibleMoveList.add( BlockadeMove.createMove(fromRow, fromCol, fromRow,fromCol-2, 0,0, p.getPiece(), null));
+              && (westWestPos.isUnoccupied()||westWestPos.isHomeBase(op1)) && !westWestPos.isVisited())          // WW
+              possibleMoveList.add(
+                      BlockadeMove.createMove(fromRow, fromCol, fromRow,fromCol-2, 0, p.getPiece(), null));
 
          boolean northOpen = false;
          if (northPos!=null) {
@@ -198,31 +206,36 @@ public class BlockadeBoard extends TwoPlayerBoard
              if (!northPos.isSouthBlocked())  {       // N
                  northOpen = true;
                  if (!northPos.isVisited() && (northPos.isUnoccupied()||northPos.isHomeBase(op1)))
-                     possibleMoveList.add(BlockadeMove.createMove(fromRow, fromCol, fromRow-1,fromCol, 0,0, p.getPiece(), null));
+                     possibleMoveList.add(
+                             BlockadeMove.createMove(fromRow, fromCol, fromRow-1,fromCol, 0, p.getPiece(), null));
 
              }
              if (((northOpen && !northPos.isEastBlocked() && fromCol+1<=numCols) ||
                  (eastOpen && !northEastPos.isSouthBlocked()))
-                  && (northEastPos.isUnoccupied()||northEastPos.isHomeBase(op1)) && !northEastPos.isVisited())      // NE
-                  possibleMoveList.add( BlockadeMove.createMove(fromRow, fromCol, fromRow-1,fromCol+1, 0,0, p.getPiece(), null));
+                  && (northEastPos.isUnoccupied()||northEastPos.isHomeBase(op1)) && !northEastPos.isVisited())    // NE
+                  possibleMoveList.add(
+                          BlockadeMove.createMove(fromRow, fromCol, fromRow-1,fromCol+1, 0, p.getPiece(), null));
          }
 
          BlockadeBoardPosition northNorthPos = (BlockadeBoardPosition) getPosition(fromRow-2, fromCol);
          if (northOpen && northNorthPos!=null && !northNorthPos.isSouthBlocked()
-              && (northNorthPos.isUnoccupied()||northNorthPos.isHomeBase(op1)) && !northNorthPos.isVisited())      // NN
-              possibleMoveList.add( BlockadeMove.createMove(fromRow, fromCol, fromRow-2,fromCol, 0,0, p.getPiece(), null));
+              && (northNorthPos.isUnoccupied()||northNorthPos.isHomeBase(op1)) && !northNorthPos.isVisited())    // NN
+              possibleMoveList.add(
+                      BlockadeMove.createMove(fromRow, fromCol, fromRow-2,fromCol, 0, p.getPiece(), null));
 
          BlockadeBoardPosition northWestPos = (BlockadeBoardPosition) getPosition(fromRow-1, fromCol-1);
          if (northWestPos!=null) {
              if (((westOpen && !northWestPos.isSouthBlocked()) ||
                  (northOpen && !northWestPos.isEastBlocked()))
-                  && (northWestPos.isUnoccupied()||northWestPos.isHomeBase(op1)) && !northWestPos.isVisited())     // NW
-                  possibleMoveList.add( BlockadeMove.createMove(fromRow, fromCol, fromRow-1,fromCol-1, 0,0, p.getPiece(), null));
+                  && (northWestPos.isUnoccupied()||northWestPos.isHomeBase(op1)) && !northWestPos.isVisited())   // NW
+                  possibleMoveList.add(
+                          BlockadeMove.createMove(fromRow, fromCol, fromRow-1,fromCol-1, 0, p.getPiece(), null));
          }
          BlockadeBoardPosition eastEastPos = (BlockadeBoardPosition) getPosition(fromRow, fromCol+2);
          if (eastOpen && eastPos!=null && !eastPos.isEastBlocked() && fromCol+2<=numCols
              && (eastEastPos.isUnoccupied()||eastEastPos.isHomeBase(op1)) && !eastEastPos.isVisited())        // EE
-              possibleMoveList.add( BlockadeMove.createMove(fromRow, fromCol, fromRow,fromCol+2, 0,0, p.getPiece(), null));
+              possibleMoveList.add(
+                      BlockadeMove.createMove(fromRow, fromCol, fromRow,fromCol+2, 0, p.getPiece(), null));
 
          return possibleMoveList;
      }
@@ -531,7 +544,7 @@ public class BlockadeBoard extends TwoPlayerBoard
      * This places the players symbol at the position specified by move,
      * and then also places a wall somewhere.
      */
-    public boolean makeMove( Move move )
+    protected boolean makeInternalMove( Move move )
     {
         BlockadeMove m = (BlockadeMove) move;
         positions_[m.getToRow()][m.getToCol()].setPiece(m.piece);
@@ -540,6 +553,7 @@ public class BlockadeBoard extends TwoPlayerBoard
         if (m.getWall() != null)
             addWall(m.getWall());
         clear(positions_[m.getFromRow()][m.getFromCol()]);
+
         return true;
     }
 
@@ -547,7 +561,7 @@ public class BlockadeBoard extends TwoPlayerBoard
      * for Blockade, undoing a move means moving the piece back and
      * restoring any captures.
      */
-    public void undoMove( Move move )
+    protected void undoInternalMove( Move move )
     {
         BlockadeMove m = (BlockadeMove) move;
         BoardPosition startPos = positions_[m.getFromRow()][m.getFromCol()];

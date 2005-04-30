@@ -240,7 +240,7 @@ public class PokerController extends GameController
      */
     public boolean done()
     {
-        if (getLastMove() == null)
+        if (getBoard().getLastMove() == null)
             return false;
 
         Player[] players = getPlayers();
@@ -274,7 +274,7 @@ public class PokerController extends GameController
 
         if (roundOver()) {
             // every player left in the game has called.
-            PokerRound round = pviewer.createMove(getLastMove());
+            PokerRound round = pviewer.createMove(getBoard().getLastMove());
             // records the result on the board.
             makeMove(round);
             pviewer.refresh();
@@ -422,7 +422,7 @@ public class PokerController extends GameController
      */
     private PokerRound createMove(Move lastMove)
     {
-        PokerRound gmove = PokerRound.createMove((lastMove==null)? 0 : lastMove.moveNumber+1);
+        PokerRound gmove = PokerRound.createMove();
         return gmove;
     }
 

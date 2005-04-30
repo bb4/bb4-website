@@ -46,8 +46,8 @@ public class ChessBoardViewer extends CheckersBoardViewer implements MouseMotion
     {
         ChessPiece piece = (ChessPiece)position.getPiece();
         List possibleMoveList =
-            piece.findPossibleMoves(controller_.getBoard(), position.getRow(), position.getCol(),
-                                    controller_.getLastMove());
+            piece.findPossibleMoves(getBoard(), position.getRow(), position.getCol(),
+                                    getBoard().getLastMove());
         ((ChessController)controller_).removeSelfCheckingMoves(possibleMoveList);
         return possibleMoveList;
     }

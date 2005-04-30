@@ -72,7 +72,7 @@ public class BlockadeController extends TwoPlayerController
     public void computerMovesFirst()
     {
         // create a bogus previous move
-        TwoPlayerMove lastMove = BlockadeMove.createMove( 2, 2, 3, 3, 0, 0, new GamePiece(false), null );
+        TwoPlayerMove lastMove = BlockadeMove.createMove( 2, 2, 3, 3, 0, new GamePiece(false), null );
 
         // determine the possible moves and choose one at random.
         List moveList = generateMoves( lastMove, weights_.getPlayer1Weights(), true );
@@ -80,9 +80,7 @@ public class BlockadeController extends TwoPlayerController
         int r = (int) (Math.random() * moveList.size());
         TwoPlayerMove m = (TwoPlayerMove) moveList.get( r );
 
-        board_.makeMove( m );
-        moveList_.add( m );
-        player1sTurn_ = false;
+        makeMove( m );
     }
 
     /**
@@ -94,7 +92,7 @@ public class BlockadeController extends TwoPlayerController
     {
         if (!getPlayer1().hasWon() && !getPlayer2().hasWon())
              return 0.0;
-        return worth(this.getLastMove(), weights_.getDefaultWeights());
+        return worth(board_.getLastMove(), weights_.getDefaultWeights());
     }
 
     protected String getPreferredTone()
@@ -556,11 +554,11 @@ public class BlockadeController extends TwoPlayerController
                    BlockadeMove m =
                            BlockadeMove.createMove(ourmove.getFromRow(), ourmove.getFromCol(),
                                                    ourmove.getToRow(), ourmove.getToCol(),
-                                                   value, ourmove.moveNumber, ourmove.piece, wall);
+                                                   value, ourmove.piece, wall);
                    // for the time being just call worth directly. Its less efficient, but simpler.
                    board_.makeMove(m);
                    m.value = worth(m, weights, m.piece.isOwnedByPlayer1());
-                   board_.undoMove(m);
+                   board_.undoMove();
                    moves.add(m);
                }
            }
@@ -592,7 +590,7 @@ public class BlockadeController extends TwoPlayerController
          // Take the first move from each path and add the wall positions to it.
          for (int i=0; i<BlockadeBoard.NUM_HOMES; i++) {
              BlockadeMove firstStep = (BlockadeMove)paths[i].get(0);
-             firstStep.moveNumber = (lastMove == null)? 0 : (lastMove.moveNumber+1);
+             //firstStep.moveNumber = (lastMove == null)? 0 : (lastMove.moveNumber+1);
              // make the move
              board.makeMove(firstStep);
 
@@ -606,7 +604,7 @@ public class BlockadeController extends TwoPlayerController
              moveList.addAll(wallMoves);
              numMovesAdded += wallMoves.size();
              // undo the move
-             board.undoMove(firstStep);
+             board.undoMove();
          }
          GameContext.log(2, "addMoves nummoves add="+numMovesAdded );
          return numMovesAdded;
