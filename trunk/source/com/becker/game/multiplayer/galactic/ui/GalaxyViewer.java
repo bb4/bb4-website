@@ -130,7 +130,7 @@ public class GalaxyViewer extends GameBoardViewer
 
         /*
         // records the result on the board.
-        Move lastMove = gc.getLastMove();
+        Move lastMove = getBoard().getLastMove();
         GalacticTurn gmove = GalacticTurn.createMove((lastMove==null)? 0 : lastMove.moveNumber + 1);
         gc.makeMove(gmove);
         */
@@ -165,7 +165,7 @@ public class GalaxyViewer extends GameBoardViewer
      */
     public GalacticTurn createMove(Move lastMove)
     {
-        GalacticTurn gmove = GalacticTurn.createMove((lastMove==null)? 0 : lastMove.moveNumber+1);
+        GalacticTurn gmove = GalacticTurn.createMove();
 
         // for each order of each player, apply it for one year
         // if there are battles, show them in the battle dialog and record the result in the move.

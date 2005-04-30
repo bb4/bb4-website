@@ -32,11 +32,9 @@ public class PokerRound extends Move
      *  factory method for getting new moves.
      *  used to use recycled objects, but did not increase performance, so I removed it.
      */
-    public static PokerRound createMove(int moveNum)
+    public static PokerRound createMove()
     {
         PokerRound m = new PokerRound();
-
-        m.moveNumber = moveNum;
         return m;
     }
 

@@ -347,11 +347,11 @@ public abstract class TwoPlayerController extends GameController
      */
     public final double getChanceOfPlayer1Winning()
     {
-        if ( getLastMove() == null )
+        if ( board_.getLastMove() == null )
             return 0.5f;
         // @@ is this right?
         // we can use this formula to estimate the outcome:
-        double inherVal = ((TwoPlayerMove)getLastMove()).inheritedValue;
+        double inherVal = ((TwoPlayerMove)board_.getLastMove()).inheritedValue;
         if ( Math.abs( inherVal ) > WINNING_VALUE )
             GameContext.log( 1, "TwoPlayerController: warning: the score for p1 is greater than WINNING_VALUE(" +
                     WINNING_VALUE + ")  inheritedVal=" + inherVal );
@@ -399,13 +399,11 @@ public abstract class TwoPlayerController extends GameController
      */
     public Move undoLastMove()
     {
-        if ( !moveList_.isEmpty() ) {
-            TwoPlayerMove m = (TwoPlayerMove) moveList_.removeLast();
-            board_.undoMove( m );
-            player1sTurn_ = !m.player1;
-            return m;
+        TwoPlayerMove m = (TwoPlayerMove) board_.undoMove();
+        if (m != null) {
+            player1sTurn_ = m.player1;
         }
-        return null;
+        return m;
     }
 
     /**
@@ -439,8 +437,8 @@ public abstract class TwoPlayerController extends GameController
             initializeGobalProfilingStats();
         }
 
-        assert (!moveList_.isEmpty()) : "Error: null before search";
-        TwoPlayerMove m = (TwoPlayerMove) moveList_.getLast();
+        assert (!getMoveList().isEmpty()) : "Error: null before search";
+        TwoPlayerMove m = (TwoPlayerMove) getMoveList().getLast();
         TwoPlayerMove p = m.copy();
 
         if ( player1 )
@@ -458,12 +456,11 @@ public abstract class TwoPlayerController extends GameController
         TwoPlayerMove selectedMove = strategy_.search( p, weights, getLookAhead(), Double.MAX_VALUE, Double.MIN_VALUE, root_ );
         /////////////////////////////////////////////////////////////////////////////////////
 
-        if ( selectedMove != null && checkMove(selectedMove)) {
-            board_.makeMove( selectedMove );
+        if ( selectedMove != null ) {
+            makeMove( selectedMove );
             GameContext.log( 2, "computer move :" + selectedMove.toString() );
-            moveList_.add( selectedMove );
-
-            player1sTurn_ = !player1;
+            //getMoveList().add( selectedMove );
+            //player1sTurn_ = !player1;
         }
 
 
@@ -474,23 +471,6 @@ public abstract class TwoPlayerController extends GameController
         return selectedMove;
     }
 
-
-
-    protected boolean checkMove(Move m)
-    {
-        // confirm that this moves number is one more that the last move
-        if (getLastMove()==null) {
-            assert (m.moveNumber==1) : "m.moveNumber ="+m.moveNumber;
-            return false;
-        }
-        int lmn = getLastMove().moveNumber;
-        if (m.moveNumber == (lmn+1))
-            return true;
-        else {
-            GameContext.log(0, "Error: m.moveNumber ="+m.moveNumber +" lastmove="+lmn);
-            return false;
-        }
-    }
 
     /**
      * Export some usefule performance profile statistics in the log.
@@ -521,18 +501,11 @@ public abstract class TwoPlayerController extends GameController
     public final Move manMoves( Move m )
     {
         // we use the default weights because we just need to know if the game is over
-        checkMove(m);
-        board_.makeMove( m );
-
-        if (getLastMove()!=null && (m.moveNumber != getLastMove().moveNumber+1))
-        {
-            m.moveNumber = getLastMove().moveNumber+1;
-            GameContext.log(0,  "Warning: The man move "+m+" moveNumber was not correct. Setting it to "+ m.moveNumber);
-        }
+        makeMove( m );
 
         m.value = worth( m, weights_.getDefaultWeights() );
-        moveList_.add( m );
-        player1sTurn_ = !((TwoPlayerMove)m).player1;
+        //getMoveList().add( m );
+        //player1sTurn_ = !((TwoPlayerMove)m).player1;
 
         return m;
     }
@@ -546,7 +519,7 @@ public abstract class TwoPlayerController extends GameController
     public void makeMove( Move m )
     {
         board_.makeMove( m );
-        moveList_.add( m );
+        //getMoveList().add( m );
         player1sTurn_ = !((TwoPlayerMove)m).player1;
     }
 
@@ -555,12 +528,14 @@ public abstract class TwoPlayerController extends GameController
      */
     public final void makeInternalMove( TwoPlayerMove m )
     {
+
+        if (getNumMoves() > 0)
+            assert(((TwoPlayerMove)board_.getLastMove()).player1 != m.player1):
+                    "can't go twice in a row m="+m+" getLastMove()="+board_.getLastMove() +" movelist = "+this.getMoveList();
+
         board_.makeMove( m );
-        if (moveList_.size()>0)
-            assert(((TwoPlayerMove)getLastMove()).player1 != m.player1): "can't go twice in a row m="+m+" getLastMove()="+getLastMove();
 
-        moveList_.add( m );
-
+        
         // should show in game tree dlg if present
         /* @@ this is not working because the gameTree dialog does not have the current search state
         if ( viewer_ != null && getShowComputerAnimation() ) {
@@ -574,8 +549,7 @@ public abstract class TwoPlayerController extends GameController
      */
     public final void undoInternalMove( TwoPlayerMove m )
     {
-        board_.undoMove( m );
-        moveList_.removeLast();
+        board_.undoMove();
     }
 
     /**
@@ -780,12 +754,12 @@ public abstract class TwoPlayerController extends GameController
             else
                 getPlayer2().setWon(true);
         }
-        return (m.moveNumber >= board_.getMaxNumMoves() || won);
+        return ( getNumMoves() >= board_.getMaxNumMoves() || won);
     }
 
     public boolean done()
     {
-        return done((TwoPlayerMove)getLastMove(), false);
+        return done((TwoPlayerMove)board_.getLastMove(), false);
     }
 
     /**

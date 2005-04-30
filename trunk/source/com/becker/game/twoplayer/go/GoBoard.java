@@ -61,6 +61,7 @@ public final class GoBoard extends TwoPlayerBoard
      */
     public final void reset()
     {
+        super.reset();
         groups_.clear();
         armies_.clear();
         for ( int i = 1; i <= getNumRows(); i++ )  {
@@ -145,7 +146,7 @@ public final class GoBoard extends TwoPlayerBoard
             GoBoardPosition hpos = (GoBoardPosition) starPoints_.get( i );
             GameContext.log( 3, "adding handicap stone:" + hpos );
 
-            GoMove m = GoMove.createMove( hpos.getRow(), hpos.getCol(), null, 0, i, (GoStone)hpos.getPiece());
+            GoMove m = GoMove.createMove( hpos.getRow(), hpos.getCol(), null, 0, (GoStone)hpos.getPiece());
                                           new GoStone(hpos.getPiece().isOwnedByPlayer1(), GamePiece.REGULAR_PIECE );
             this.makeMove( m );
         }
@@ -313,7 +314,7 @@ public final class GoBoard extends TwoPlayerBoard
      *
      * @return false if the move is suicidal
      */
-    public final boolean makeMove( Move move )
+    protected final boolean makeInternalMove( Move move )
     {
         profiler_.startMakeMove();
 
@@ -327,7 +328,7 @@ public final class GoBoard extends TwoPlayerBoard
         // first make sure that there are no references to obsolete groups.
         clearEyes();    // I think this is important
 
-        super.makeMove( m );
+        super.makeInternalMove( m );
 
         GoBoardPosition stone = (GoBoardPosition) (positions_[m.getToRow()][m.getToCol()]);
 
@@ -342,8 +343,7 @@ public final class GoBoard extends TwoPlayerBoard
             GoBoardUtil.debugPrintGroups( 2, "Groups after removing captures", true, true, groups_ );
         }
 
-        updateGroupsAfterMoving( stone, move.moveNumber );
-
+        updateGroupsAfterMoving( stone );
 
         if ( isSuicidal( m ) )
             return false;
@@ -354,7 +354,6 @@ public final class GoBoard extends TwoPlayerBoard
             assert ( string.size() > 0): "stone has bad string: " + stone;
         }
         profiler_.stopMakeMove();
-
         return true;
     }
 
@@ -363,7 +362,7 @@ public final class GoBoard extends TwoPlayerBoard
      * for Go, undoing a move means changing that space back to a blank, restoring captures, and updating groups.
      * @param move  the move to undo.
      */
-    public final void undoMove( Move move )
+    protected final void undoInternalMove( Move move )
     {
         profiler_.startUndoMove();
 
@@ -391,7 +390,7 @@ public final class GoBoard extends TwoPlayerBoard
                 updateAfterRestoringCaptures( m.captureList );
                 GoBoardUtil.confirmStonesInValidGroups(groups_, this);
                 GoBoardUtil.confirmAllStonesInUniqueGroups(groups_);
-                GameContext.log( 3, "GoBoard: undoMove: " + move + "  groups after restoring captures:" );
+                GameContext.log( 3, "GoBoard: undoInternalMove: " + move + "  groups after restoring captures:" );
             }
         }
 
@@ -586,7 +585,7 @@ public final class GoBoard extends TwoPlayerBoard
      * Then for each stone, find its group and add that new group to the board's group list.
      * Continue until all stone accounted for.
      */
-    private void updateGroupsAfterMoving( GoBoardPosition pos, int moveNum )
+    private void updateGroupsAfterMoving( GoBoardPosition pos )
     {
         profiler_.startUpdateGroupsAfterMove();
 
@@ -609,7 +608,7 @@ public final class GoBoard extends TwoPlayerBoard
         GoBoardUtil.unvisitAll(this);
 
         // this gets used when calculating the worth of the board
-        territoryDelta_ = updateTerritory(pos, moveNum);
+        territoryDelta_ = updateTerritory(pos);
 
         if ( GameContext.getDebugMode() > 1 ) {
             GoBoardUtil.confirmNoEmptyStrings(groups_);
@@ -648,7 +647,7 @@ public final class GoBoard extends TwoPlayerBoard
      * @return the estimated difference in territory between the 2 sides.
      *  A large positive number indeicates black is winning, while a negative number indicates taht white has the edge.
      */
-    float updateTerritory(GoBoardPosition lastMove, int moveNum)
+    float updateTerritory(GoBoardPosition lastMove)
     {
         profiler_.start(GoProfiler.UPDATE_TERRITORY);
         float delta = 0;
@@ -683,7 +682,7 @@ public final class GoBoard extends TwoPlayerBoard
         // We will first mark visited all the stones that are "controlled" by the specified player.
         // The unoccupied "controlled" positions will be territory.
         profiler_.start(GoProfiler.UPDATE_EMPTY);
-        delta += updateEmptyRegions(moveNum);
+        delta += updateEmptyRegions();
         profiler_.stop(GoProfiler.UPDATE_EMPTY);
 
         profiler_.stop(GoProfiler.UPDATE_TERRITORY);
@@ -696,14 +695,15 @@ public final class GoBoard extends TwoPlayerBoard
      *
      * @return the estimated difference in territory. A positive value means black is ahead.
      */
-    private float updateEmptyRegions(int moveNum)
+    private float updateEmptyRegions()
     {
         float diffScore = 0;
         //only do this when the midgame starts, since early on there is alwas only one connected empty region.
         int edgeOffset = 1;
-        if (moveNum <= 2 * this.getNumRows())
+
+        if (getNumMoves() <= 2 * this.getNumRows())
             return diffScore;
-        if (moveNum >= rowsTimesCols_/4.5)
+        if (getNumMoves() >= rowsTimesCols_ / 4.5)
             edgeOffset = 0;
         int min = 1+edgeOffset;
         int rMax = getNumRows()-edgeOffset;

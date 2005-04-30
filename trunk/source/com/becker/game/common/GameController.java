@@ -32,9 +32,6 @@ public abstract class GameController
     // sometimes we want to draw directly to the ui while thinking (for debugging purposes)
     protected ViewerCallbackInterface viewer_ = null;
 
-    // We keep a list of the moves that have been made.
-    // We can navigate forward or backward in time using this
-    protected final LinkedList moveList_ = new LinkedList();
 
     // the list of players actively playing the game, in the order that they move.
     protected Player[] players_;
@@ -63,7 +60,10 @@ public abstract class GameController
     public void reset()
     {
         board_.reset();
-        moveList_.clear();
+    }
+
+    public int getNumMoves() {
+        return board_.getNumMoves();
     }
 
     /**
@@ -74,7 +74,10 @@ public abstract class GameController
     {
         return viewer_;
     }
-    
+
+    public LinkedList getMoveList() {
+        return board_.getMoveList();
+    }
 
     /**
      * If called before the end of the game it just reutrns 0 - same as it does in the case of a tie.
@@ -98,16 +101,6 @@ public abstract class GameController
 
 
     /**
-     * @return the most recent move played on the board. Returns null if there isn't one.
-     */
-    public final Move getLastMove()
-    {
-        if ( moveList_ == null || moveList_.isEmpty() )
-            return null;
-        return (Move) moveList_.getLast();
-    }
-
-    /**
      * @return the board representation object.
      */
     public final Board getBoard()
@@ -120,70 +113,20 @@ public abstract class GameController
      */
     protected abstract void initializeData();
 
+
+    public void makeMove(Move move) {
+        board_.makeMove(move);
+    }
+
     /**
      * retract the most recently played move
      * @return  the move which was undone (null returned if no prior move)
      */
     public Move undoLastMove()
     {
-        if ( !moveList_.isEmpty() ) {
-            Move m = (Move) moveList_.removeLast();
-            board_.undoMove( m );
-            return m;
-        }
-        return null;
+        return board_.undoMove();
     }
 
-
-    protected boolean checkMove(Move m)
-    {
-        // confirm that this moves number is one more that the last move
-        if (getLastMove()==null) {
-            assert (m.moveNumber==1) : "m.moveNumber ="+m.moveNumber;
-            return false;
-        }
-        int lmn = getLastMove().moveNumber;
-        if (m.moveNumber == (lmn+1))
-            return true;
-        else {
-            GameContext.log(0, "Error: m.moveNumber ="+m.moveNumber +" lastmove="+lmn);
-            return false;
-        }
-    }
-
-
-    /**
-     * this makes an arbitrary move (assumed valid) and adds it to the move list.
-     * Calling this does not keep track of weights or the search.
-     * Its most common use is for browsing the game tree.
-     *  @param m the move to play.
-     */
-    public void makeMove( Move m )
-    {
-        board_.makeMove( m );
-        moveList_.add( m );
-    }
-
-
-    /**
-     * @return the list of moves made so far
-     */
-    public final LinkedList getMoveSequence()
-    {
-        return moveList_;
-    }
-
-    /**
-     * @return  the number of moves currently played.
-     */
-    public final int getNumMoves()
-    {
-        if ( moveList_ == null || moveList_.isEmpty() )
-            return 0; // no moves yet
-        Move m = (Move) moveList_.getLast();
-        assert (m.moveNumber == moveList_.size()): " moveList_.size()="+moveList_.size()+" "+Util.stringify(moveList_);
-        return m.moveNumber;
-    }
 
     /**
      * clean things up to avoid memory leaks.
@@ -229,7 +172,6 @@ public abstract class GameController
         java.util.List moveSequence = new LinkedList();
         extractMoveList( game.getTree(), moveSequence );
         GameContext.log( 2, "move sequence= " + moveSequence );
-        //showMoveSequence( moveSequence );
         this.reset();
 
         Iterator it = moveSequence.iterator();
@@ -245,8 +187,8 @@ public abstract class GameController
     /**
      * create a Move from an SGF token.
      */
-    protected Move createMoveFromToken( MoveToken token, int moveNum ) {
-         assert (false) : "createMoveFromToken not implemented for "+this.getClass().getName();
+    protected Move createMoveFromToken( MoveToken token ) {
+        assert (false) : "createMoveFromToken not implemented for "+this.getClass().getName();
         return null;
     }
 
@@ -273,7 +215,7 @@ public abstract class GameController
             // to the collective of moves (moveList).
             while ( (tokens != null) && tokens.hasMoreElements() && !found ) {
                 if ( (token = (SGFToken) (tokens.nextElement())) instanceof MoveToken ) {
-                    moveList.add( createMoveFromToken( (MoveToken) token, moveList.size()+1 ) );
+                    moveList.add( createMoveFromToken( (MoveToken) token ) );
                     found = true;
                 }
             }

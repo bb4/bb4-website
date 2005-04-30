@@ -63,12 +63,9 @@ public class PenteBoardViewer extends TwoPlayerBoardViewer
             return;
 
         TwoPlayerMove m =
-            TwoPlayerMove.createMove( loc.row, loc.col, 0, controller_.getNumMoves() + 1,
-                             new GamePiece(get2PlayerController().isPlayer1sTurn()));
-
+            TwoPlayerMove.createMove( loc.row, loc.col, 0,
+                                      new GamePiece(get2PlayerController().isPlayer1sTurn()));
 
         continuePlay( m );
-        //if ( !continuePlay( m ) )    // then game over
-        //    showWinnerDialog();
     }
 }

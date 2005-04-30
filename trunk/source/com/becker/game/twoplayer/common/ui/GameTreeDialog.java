@@ -5,8 +5,6 @@ import com.becker.common.Util;
 import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
 import com.becker.game.twoplayer.common.search.SearchTreeNode;
-import com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer;
-import com.becker.game.twoplayer.common.ui.GameTreeCellRenderer;
 import com.becker.game.twoplayer.common.*;
 import com.becker.ui.GUIUtil;
 import com.becker.ui.GradientButton;
@@ -44,6 +42,7 @@ public final class GameTreeDialog extends JDialog
     private GameTreeViewer treeViewer_ = null;
     private JTree textTree_ = null;
     private SearchTreeNode root_ = null;
+    private int oldChainLength_ = 0;
 
     private final GradientButton pauseButton_ = new GradientButton();
     private final GradientButton stepButton_ = new GradientButton();
@@ -257,7 +256,7 @@ public final class GameTreeDialog extends JDialog
         textTree_.addMouseMotionListener( this );
 
         // make the viewer shows the game so far
-        setMoveSequence( mainController_.getMoveSequence() );
+        setMoveList( mainController_.getMoveList() );
 
         //textTree_.setVisibleRowCount(textTree_.getRowCount());
         refresh();
@@ -271,7 +270,9 @@ public final class GameTreeDialog extends JDialog
      */
     private JTree createTree( SearchTreeNode root )
     {
+        // @@ getting ArrayIndexOutOfBounds in DefaultMutableTreeNode/Vector here. bug in jdk1.5?
         JTree tree = new JTree( root );
+
         ToolTipManager.sharedInstance().registerComponent( tree );
         GameTreeCellRenderer cellRenderer =
                 new GameTreeCellRenderer(colormap_);
@@ -327,7 +328,11 @@ public final class GameTreeDialog extends JDialog
                 moveList.add( m );
             }
             TwoPlayerBoardViewer viewer = (TwoPlayerBoardViewer)boardViewer_;
-            viewer.showMoveSequence( moveList );
+
+            viewer.showMoveSequence( moveList, oldChainLength_ );
+            // remember the old chain length so we know how much to back up next time
+            oldChainLength_ = chainLength;
+
             GamePieceRenderer renderer = viewer.getPieceRenderer();
             String entity = "Human's move";
             Color c = renderer.getPlayer2Color();
@@ -356,7 +361,7 @@ public final class GameTreeDialog extends JDialog
     /**
      *  initialize the tree previewer to show the moves made so far.
      */
-    private void setMoveSequence( java.util.List moveList )
+    private void setMoveList( java.util.List moveList )
     {
         boardViewer_.reset();
         // make sure that these are all permanent moves

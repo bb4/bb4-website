@@ -309,7 +309,7 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
     protected void drawLastMoveMarker(Graphics2D g2)
     {
         // this draws a small indicator on the last move to show where it was played
-        TwoPlayerMove last = (TwoPlayerMove)controller_.getLastMove();
+        TwoPlayerMove last = (TwoPlayerMove) getBoard().getLastMove();
         if ( last != null ) {
             g2.setColor( LAST_MOVE_INDICATOR_COLOR );
             g2.setStroke(LAST_MOVE_INDICATOR_STROKE);

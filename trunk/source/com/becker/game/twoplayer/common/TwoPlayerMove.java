@@ -75,13 +75,12 @@ public class TwoPlayerMove extends Move
      * create a move object representing a transition on the board.
      */
     protected TwoPlayerMove( byte destinationRow, byte destinationCol,
-                    double val, int mvNum, GamePiece p )
+                    double val, GamePiece p )
     {
         toRow_ = destinationRow;
         toCol_ = destinationCol;
         value = val;
         inheritedValue = value;
-        moveNumber = mvNum;
         selected = false;
         piece = p;
         if (p!=null)
@@ -94,9 +93,9 @@ public class TwoPlayerMove extends Move
      * factory method for getting new moves. It uses recycled objects if possible.
      */
     public static TwoPlayerMove createMove( int destinationRow, int destinationCol,
-                                   double val, int mvNum, GamePiece piece )
+                                   double val, GamePiece piece )
     {
-        return new TwoPlayerMove( (byte)destinationRow, (byte)destinationCol, val, mvNum, piece );
+        return new TwoPlayerMove( (byte)destinationRow, (byte)destinationCol, val, piece );
     }
 
     /**
@@ -104,7 +103,7 @@ public class TwoPlayerMove extends Move
      */
     public TwoPlayerMove copy()
     {
-        TwoPlayerMove cp = createMove( toRow_, toCol_, value, moveNumber, piece );
+        TwoPlayerMove cp = createMove( toRow_, toCol_, value,  piece );
         cp.transparency = this.transparency;
         cp.selected = this.selected;
         cp.urgent = this.urgent;
@@ -159,7 +158,6 @@ public class TwoPlayerMove extends Move
 
         s.append( " val:" + Util.formatNumber(value) );
         s.append( " inhrtd:" + Util.formatNumber(inheritedValue) );
-        s.append( " mv:" + moveNumber );
         if (piece!=null)
             s.append( " piece:" + piece.toString());
         //s.append(" sel:"+selected);

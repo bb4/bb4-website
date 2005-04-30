@@ -3,6 +3,7 @@ package com.becker.game.common.ui;
 import com.becker.game.common.*;
 import com.becker.ui.TexturedPanel;
 import javax.swing.*;
+import javax.swing.Box;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
@@ -194,9 +195,9 @@ public abstract class GameInfoPanel extends TexturedPanel implements GameChanged
     {
         if ( controller_ == null )
             return;
-        if ( controller_.getLastMove() != null ) {
+        if ( controller_.getBoard().getLastMove() != null ) {
             setPlayerLabel();
-            moveNumLabel_.setText( " "+ controller_.getLastMove().moveNumber  );
+            moveNumLabel_.setText( " "+ controller_.getNumMoves() );
         }
     }
 

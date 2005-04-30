@@ -56,7 +56,7 @@ public class CheckersBoardViewer extends TwoPlayerBoardViewer implements MouseMo
      */
     public void showLastMove()
     {
-        CheckersMove m = (CheckersMove)controller_.getLastMove();
+        CheckersMove m = (CheckersMove)getBoard().getLastMove();
         // if we have captures, then we want to show each one
         if (m.captureList != null) {
             controller_.undoLastMove();
@@ -123,7 +123,7 @@ public class CheckersBoardViewer extends TwoPlayerBoardViewer implements MouseMo
         // it doesn't matter which set of wts are pass in here since we just need
         // a list of moves so use default weights.
         ((CheckersController) controller_).addMoves( position, possibleMoveList,
-                                                    (TwoPlayerMove)controller_.getLastMove(),
+                                                    (TwoPlayerMove)getBoard().getLastMove(),
                                                     get2PlayerController().getDefaultWeights() );
         return possibleMoveList;
     }

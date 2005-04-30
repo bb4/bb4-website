@@ -62,7 +62,7 @@ public interface TwoPlayerControllerInterface
     /**
      * @return the list of moves made so far.
      */
-    public LinkedList getMoveSequence();
+    public LinkedList getMoveList();
 
     /**
      * @return  the number of moves currently played.

@@ -105,7 +105,7 @@ final class GameTreeCellRenderer extends DefaultTreeCellRenderer
             c = colormap_.getColorForValue(m.inheritedValue);
         }
         else {
-            int val = (int) (10.0 * Math.sqrt( Math.abs( m.inheritedValue ) ));
+            int val = (int) (2.0 * Math.sqrt( Math.abs( m.inheritedValue ) ));
             if ( m.inheritedValue < 0 )
                 val = -val;
             int v1 = 255 - Math.min( Math.max( val, 0 ), 255 );

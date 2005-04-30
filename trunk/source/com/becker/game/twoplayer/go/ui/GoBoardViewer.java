@@ -108,7 +108,7 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
     public void pass()
     {
         GameContext.log( 1, "passing" );
-        GoMove m = GoMove.createPassMove( 0.0, controller_.getNumMoves() + 1, get2PlayerController().isPlayer1sTurn() );
+        GoMove m = GoMove.createPassMove( 0.0, get2PlayerController().isPlayer1sTurn() );
         continuePlay( m );
     }
 
@@ -133,8 +133,7 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
         GameContext.log( 3, "GoBoardViewer: mousePressed: controller_.isPlayer1sTurn()="
                 + get2PlayerController().isPlayer1sTurn() );
 
-        GoMove m = GoMove.createMove( loc.row, loc.col, null, 0, controller.getNumMoves() + 1,
-                                      new GoStone(controller.isPlayer1sTurn()));
+        GoMove m = GoMove.createMove( loc.row, loc.col, null, 0, new GoStone(controller.isPlayer1sTurn()));
 
         // if there is already a piece where the user clicked, or its
         // out of bounds, or its a suicide move, then return without doing anything
@@ -148,15 +147,15 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
             GameContext.log( 0, "GoBoardViewer: There is already a stone there: " + stone );
             return;
         }
-        if ( GoController.isTakeBack( m.getToRow(), m.getToCol(), (GoMove) controller.getLastMove(), board ) ) {
+        if ( GoController.isTakeBack( m.getToRow(), m.getToCol(), (GoMove) getBoard().getLastMove(), board ) ) {
             JOptionPane.showMessageDialog( null, GameContext.getLabel("NO_TAKEBACKS"));
             return;
         }
 
-        boolean notSuicidal = board.makeMove( m ); // this will fill in the captures
+        boolean notSuicidal = board.makeMove( m );  // this will fill in the captures
         //System.out.println( "BoardViewer: groups on board (after makemove):\n "+board.getGroupsText() );
 
-        board.undoMove( m ); // may rejoin groups
+        board.undoMove(); // may rejoin groups
 
         //System.out.println( "BoardViewer: groups on board (after undo):\n "+board.getGroupsText() );
 

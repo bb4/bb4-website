@@ -66,7 +66,7 @@ public class CheckersController extends TwoPlayerController
     {
         // create a bogus previous move
         TwoPlayerMove lastMove = CheckersMove.createMove( 2, 2, 3, 3,
-                null, 0, 0, new CheckersPiece(false, CheckersPiece.REGULAR_PIECE) );
+                null, 0, new CheckersPiece(false, CheckersPiece.REGULAR_PIECE) );
 
         // determine the possible moves and choose one at random.
         List moveList = generateMoves( lastMove, weights_.getPlayer1Weights(), true );
@@ -75,8 +75,7 @@ public class CheckersController extends TwoPlayerController
         int r = (int) (Math.random() * moveList.size());
         TwoPlayerMove m = (TwoPlayerMove) moveList.get( r );
 
-        board_.makeMove( m );
-        moveList_.add( m );
+        makeMove( m );
 
         player1sTurn_ = false;
     }
@@ -90,7 +89,7 @@ public class CheckersController extends TwoPlayerController
     {
         if (!getPlayer1().hasWon() && !getPlayer2().hasWon())
              return 0.0;
-        return worth(this.getLastMove(), weights_.getDefaultWeights());
+        return worth(board_.getLastMove(), weights_.getDefaultWeights());
     }
 
     protected String getPreferredTone()
@@ -119,7 +118,7 @@ public class CheckersController extends TwoPlayerController
             else
                 getPlayer2().setWon(true);
         }
-        if ( m.moveNumber >= board_.getMaxNumMoves() ) {
+        if ( getNumMoves() >= board_.getMaxNumMoves() ) {
             won = true;
             if ( recordWin ) {
                 if ( Math.abs( m.value ) >= 0 )
@@ -205,7 +204,7 @@ public class CheckersController extends TwoPlayerController
             mm.setToRow(beyondNext.getRow());
             mm.setToCol(beyondNext.getCol());
             mm.captureList.add( next.copy() );
-            ////next.setPiece(null);
+            // next.setPiece(null); ?
 
             boolean justKinged = false;   // ?? may be superfluous
             GameContext.log( 2, "calling findJumpMoves on " +
@@ -271,7 +270,7 @@ public class CheckersController extends TwoPlayerController
             // we can finally add the move after we evaluate its worth
             board_.makeMove( m );
             m.value = worth( m, weights, player1sPerspective_ );
-            board_.undoMove( m );
+            board_.undoMove();
 
             jumpMoves.add( m );
 
@@ -290,7 +289,7 @@ public class CheckersController extends TwoPlayerController
     private int addMovesForDirection( BoardPosition pos, List moveList,
                                       int rowInc, int colInc, TwoPlayerMove lastMove, ParameterArray weights )
     {
-        CheckersMove m = null;
+        CheckersMove m;
         BoardPosition next = board_.getPosition( pos.getRow() + rowInc, pos.getCol() + colInc );
         if ( next!=null && next.isUnoccupied() ) {
             assert ( pos!=null): "pos is null" ;
@@ -301,7 +300,7 @@ public class CheckersController extends TwoPlayerController
             }
             m = CheckersMove.createMove( pos.getRow(), pos.getCol(),
                     (pos.getRow() + rowInc), (pos.getCol() + colInc),
-                    null, val, getNumMoves()+1, pos.getPiece().copy() );
+                    null, val, pos.getPiece().copy() );
 
             // no need to evaluate it since there were no captures
             moveList.add( m );
@@ -316,9 +315,9 @@ public class CheckersController extends TwoPlayerController
             CaptureList capture = new CaptureList();
             capture.add( next.copy() );
             // make it blank so a king doesn't loop back and take it again.
-            ////next.setPiece(null);
+            // next.setPiece(null);
             m = CheckersMove.createMove( pos.getRow(), pos.getCol(), beyondNext.getRow(), beyondNext.getCol(),
-                    capture, lastMove.value, /*lastMove.moveNumber*/this.getNumMoves() + 1, pos.getPiece().copy() );
+                    capture, lastMove.value,  pos.getPiece().copy() );
 
             LinkedList jumps = findJumpMoves( beyondNext, rowInc, m, weights );
             moveList.addAll( jumps );
@@ -357,10 +356,10 @@ public class CheckersController extends TwoPlayerController
             // we also need to verify that we are not cycling over previous moves (not allowed).
             // check moves in the list against the move 4 moves back if the same, we must remove it
             // we can skip if there were captures, since captures cannot be undone.
-            int numMoves = moveList_.size();
+            int numMoves = getNumMoves();
 
             if ( numMoves - 4 > 1 ) {
-                CheckersMove moveToCheck = (CheckersMove) moveList_.get( numMoves - 4 );
+                CheckersMove moveToCheck = (CheckersMove) getMoveList().get( numMoves - 4 );
                 if ( moveToCheck.captureList == null ) {
                     int i = 0;
 

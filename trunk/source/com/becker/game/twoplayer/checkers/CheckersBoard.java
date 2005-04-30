@@ -32,6 +32,7 @@ public class CheckersBoard extends TwoPlayerBoard
      */
     public void reset()
     {
+        super.reset();
         assert ( positions_!=null );
         int i;
         for ( i = 1; i <= getNumRows(); i++ ) {
@@ -78,7 +79,7 @@ public class CheckersBoard extends TwoPlayerBoard
      * given a move specification, execute it on the board.
      * This places the players symbol at the position specified by move.
      */
-    public boolean makeMove( Move move )
+    protected boolean makeInternalMove( Move move )
     {
         CheckersMove m = (CheckersMove) move;
         positions_[m.getToRow()][m.getToCol()].setPiece(m.piece);
@@ -86,13 +87,14 @@ public class CheckersBoard extends TwoPlayerBoard
         // we also need to remove the captures from the board
         m.removeCaptures( this );
         clear(positions_[m.getFromRow()][m.getFromCol()]);
+
         return true;
     }
 
     /**
      * for checkers, undoing a move means moving the piece back and restoring any captures.
      */
-    public void undoMove( Move move )
+    protected void undoInternalMove( Move move )
     {
         CheckersMove m = (CheckersMove) move;
         BoardPosition startPos = positions_[m.getFromRow()][m.getFromCol()];

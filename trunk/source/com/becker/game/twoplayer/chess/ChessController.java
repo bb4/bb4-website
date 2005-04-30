@@ -81,8 +81,8 @@ public class ChessController extends CheckersController
     public void computerMovesFirst()
     {
         // create a bogus previous move
-        ChessMove lastMove = ChessMove.createMove(  2,  2,  3,  3,
-                null, 0, 0, new ChessPiece(false, ChessPiece.REGULAR_PIECE));
+        ChessMove lastMove = ChessMove.createMove( 2,  2,  3,  3,
+                null, 0, new ChessPiece(false, ChessPiece.REGULAR_PIECE));
 
         // determine the possible moves and choose one at random.
         List moveList = generateMoves( lastMove, weights_.getPlayer1Weights(), true );
@@ -90,9 +90,8 @@ public class ChessController extends CheckersController
         int r = (int) (Math.random() * moveList.size());
         ChessMove m = (ChessMove) moveList.get( r );
 
-        board_.makeMove( m );
-        moveList_.add( m );
-
+        makeMove( m );
+        //getMoveList().add( m );
         player1sTurn_ = false;
     }
 
@@ -200,12 +199,11 @@ public class ChessController extends CheckersController
         Iterator it = moves.iterator();
         while (it.hasNext()) {
             ChessMove move = (ChessMove)it.next();
-                  // first apply the move
+            // first apply the move
             board_.makeMove(move);
             move.value = worth(move, weights, player1sPerspective);
-            board_.undoMove(move);
+            board_.undoMove();
         }
-        //Move.printList(moves);
         moveList.addAll( moves );
 
         return moveList.size();

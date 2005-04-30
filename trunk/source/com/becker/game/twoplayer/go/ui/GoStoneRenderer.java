@@ -93,8 +93,12 @@ final class GoStoneRenderer  extends GamePieceRenderer
             //  as a debugging aid draw the background as a function of the territorial score (-1 : 1)
             double score = ((GoBoardPosition)position).scoreContribution;
             Color pc = (score > 0? PLAYER1_STONE_COLOR : PLAYER2_STONE_COLOR);
+            int op = (int)((100 * Math.abs(score)));
+            if (op >255) {
+                System.out.println("error score too big ="+score);
+            }
             Color c = new Color(pc.getRed(), pc.getGreen(), pc.getBlue(),
-                         Math.min(255, (int)((150 * Math.abs(score)))));    // @@ should not need min
+                         Math.min(255, op));    // @@ should not need min
             g2.setColor(c);
             g2.fillRect(TwoPlayerBoardViewer.BOARD_MARGIN + cellSize*(position.getCol()-1),
                         TwoPlayerBoardViewer.BOARD_MARGIN + cellSize*(position.getRow()-1),

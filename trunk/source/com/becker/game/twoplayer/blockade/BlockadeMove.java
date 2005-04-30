@@ -43,9 +43,9 @@ public class BlockadeMove extends TwoPlayerMove
      */
     private BlockadeMove( byte originRow, byte originCol,
                           byte destinationRow, byte destinationCol,
-                          double val, int mvNum, GamePiece piece, BlockadeWall w)
+                          double val, GamePiece piece, BlockadeWall w)
     {
-        super( destinationRow, destinationCol, val, mvNum, piece );
+        super( destinationRow, destinationCol, val,  piece );
         fromRow_ = originRow;
         fromCol_ = originCol;
         wall_ = w;
@@ -61,11 +61,10 @@ public class BlockadeMove extends TwoPlayerMove
     public static BlockadeMove createMove(
             int originRow, int originCol,
             int destinationRow, int destinationCol,
-            double val, int mvNum, GamePiece piece, BlockadeWall w)
+            double val, GamePiece piece, BlockadeWall w)
     {
         BlockadeMove m = new BlockadeMove( (byte)originRow, (byte)originCol,
-                (byte)destinationRow, (byte)destinationCol,
-                val, mvNum, piece, w);
+                (byte)destinationRow, (byte)destinationCol, val,  piece, w);
 
         return m;
     }
@@ -78,7 +77,7 @@ public class BlockadeMove extends TwoPlayerMove
     {
 
         BlockadeMove cp = createMove( fromRow_, fromCol_, toRow_, toCol_,
-                                           value, moveNumber, piece, wall_);
+                                           value, piece, wall_);
         cp.selected = this.selected;
         cp.transparency = this.transparency;
         return cp;

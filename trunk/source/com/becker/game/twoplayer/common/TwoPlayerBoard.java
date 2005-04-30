@@ -13,13 +13,24 @@ import com.becker.game.common.Move;
 public abstract class TwoPlayerBoard extends Board
 {
 
+
+
+    public Move undoMove() {
+        if ( !getMoveList().isEmpty() ) {
+            TwoPlayerMove m = (TwoPlayerMove) getMoveList().removeLast();
+            undoInternalMove( m );
+            return m;
+        }
+        return null;
+    }
+
     /**
      * given a move specification, execute it on the board
      * This places the players symbol at the position specified by move.
      * @param move the move to make, if possible.
      * @return false if the move is illegal.
      */
-    public boolean makeMove( Move move )
+    protected boolean makeInternalMove( Move move )
     {
         TwoPlayerMove m = (TwoPlayerMove)move;
         if ( !m.isPassingMove() ) {
@@ -28,14 +39,13 @@ public abstract class TwoPlayerBoard extends Board
             GamePiece piece = pos.getPiece();
             assert (piece!=null):
                     "The piece was " + piece + ". Moved to " + m.getToRow() + ", " + m.getToCol();
-            //piece.setOwnedByPlayer1( move.piece.isOwnedByPlayer1() );
-            //piece.setType( move.piece.getType() );
+
             piece.setTransparency( m.transparency );
+
+            // make the moveList part of the board instead of the controller
             if ( GameContext.getDebugMode() > 0 )
-                piece.setAnnotation( Integer.toString(move.moveNumber) );
+                piece.setAnnotation( Integer.toString(this.getNumMoves()) );
         }
         return true;
     }
-
-
 }

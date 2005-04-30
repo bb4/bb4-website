@@ -28,6 +28,7 @@ public class PenteBoard extends TwoPlayerBoard
     // reset the board to its initial state
     public void reset()
     {
+        super.reset();
         for ( int i = 1; i <= getNumRows(); i++ )
             for ( int j = 1; j <= getNumCols(); j++ ) {
                 positions_[i][j] = new BoardPosition( i, j, null);
@@ -62,7 +63,7 @@ public class PenteBoard extends TwoPlayerBoard
     }
 
     // for pente, undoing a move is just changing that space back to a blank
-    public void undoMove( Move move )
+    protected void undoInternalMove( Move move )
     {
         TwoPlayerMove m = (TwoPlayerMove)move;
         clear(positions_[m.getToRow()][m.getToCol()]);

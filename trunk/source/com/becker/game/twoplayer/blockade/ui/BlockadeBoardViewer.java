@@ -152,7 +152,6 @@ class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMotionLis
         }
 
         // make sure that the piece shows while we decide where to place the wall.
-        m.moveNumber = controller_.getNumMoves() +1;
         currentMove_ = m;
         GameContext.log(1, "legal human move :"+m.toString());
         position.getPiece().setTransparency((short)0);

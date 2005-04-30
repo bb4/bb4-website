@@ -7,6 +7,7 @@ import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.ui.GUIUtil;
 
 import javax.swing.*;
+import javax.swing.Box;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -97,9 +98,9 @@ public class TwoPlayerInfoPanel extends GameInfoPanel implements GameChangedList
     {
         if ( controller_ == null )
             return;
-        if ( controller_.getLastMove() != null ) {
+        if ( controller_.getBoard().getLastMove() != null ) {
             setPlayerLabel();
-            moveNumLabel_.setText( controller_.getLastMove().moveNumber + " " );
+            moveNumLabel_.setText( controller_.getNumMoves() + " " );
         }
         chanceOfWinningLabel_.setText( Util.formatNumber(getController().getChanceOfPlayer1Winning()) + " " );
     }

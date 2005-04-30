@@ -32,11 +32,9 @@ public class GalacticTurn extends Move
      *  factory method for getting new moves.
      *  used to use recycled objects, but did not increase performance, so I removed it.
      */
-    public static GalacticTurn createMove(int moveNum)
+    public static GalacticTurn createMove()
     {
         GalacticTurn m = new GalacticTurn();
-
-        m.moveNumber = moveNum;
         return m;
     }
 

@@ -7,6 +7,7 @@ import com.becker.ui.GradientButton;
 import com.becker.ui.GUIUtil;
 
 import javax.swing.*;
+import javax.swing.Box;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.Border;
 import javax.vecmath.Vector2d;
@@ -195,11 +196,11 @@ class GalacticInfoPanel extends GameInfoPanel implements GameChangedListener, Ac
         //Player currentPlayer = controller_.getCurrentPlayer();
         setPlayerLabel();
         //Galaxy g = (Galaxy)controller_.getBoard();
-        Move lastMove =  controller_.getLastMove();
+        Move lastMove =  controller_.getBoard().getLastMove();
         if (lastMove != null)  {
             //moveNumLabel_.setText( lastMove.moveNumber * controller_.getNumPlayers()
             //                      + ((GalacticController)controller_).getCurrentPlayerIndex()+" " );
-            moveNumLabel_.setText( (lastMove.moveNumber+2) + " " );
+            moveNumLabel_.setText( (controller_.getNumPlayers() + 2) + " " );
         }
         else {
             moveNumLabel_.setText( 1 + " " );

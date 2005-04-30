@@ -1,5 +1,7 @@
 package com.becker.game.common;
 
+import java.util.LinkedList;
+
 
 /**
  *  the Board describes the physical layout of the game.
@@ -26,11 +28,17 @@ public abstract class Board implements BoardInterface, Cloneable
     protected int numCols_;
     protected int rowsTimesCols_;
 
+    // We keep a list of the moves that have been made.
+    // We can navigate forward or backward in time using this
+    protected final LinkedList moveList_ = new LinkedList();
+
 
     /**
      *  Reset the board to its initial state.
      */
-    public abstract void reset();
+    public void reset() {
+        getMoveList().clear();
+    }
 
     /**
      *  Change the dimensions of this game board.
@@ -62,6 +70,33 @@ public abstract class Board implements BoardInterface, Cloneable
     {
         return numCols_;
     }
+
+    public LinkedList getMoveList() {
+        return moveList_;
+    }
+
+
+    /**
+     * @return the most recent move played on the board. Returns null if there isn't one.
+     */
+    public final Move getLastMove()
+    {
+        if ( moveList_ == null || moveList_.isEmpty() )
+            return null;
+        return (Move) moveList_.getLast();
+    }
+
+
+    /**
+     * @return  the number of moves currently played.
+     */
+    public final int getNumMoves()
+    {
+        if ( moveList_ == null || moveList_.isEmpty() )
+            return 0; // no moves yet
+        return moveList_.size();
+    }
+
 
     /**
      *  There can be no more than this many moves in a game
@@ -151,14 +186,38 @@ public abstract class Board implements BoardInterface, Cloneable
     }
 
 
-    public abstract boolean makeMove( Move move );
+    /**
+     * @param move  to make
+     * @return false if the move is illegal
+     */
+    public final boolean makeMove( Move move ) {
+        boolean done = makeInternalMove(move);
+        getMoveList().add( move );
+        return done;
+    }
 
+
+
+    public Move undoMove() {
+        if ( !getMoveList().isEmpty() ) {
+            Move m = (Move) getMoveList().removeLast();
+            undoInternalMove( m );
+            return m;
+        }
+        return null;
+    }
+
+    /**
+     * @param move
+     * @return  false if the move is illegal
+     */
+    protected abstract boolean makeInternalMove( Move move );
 
     /**
      * Allow reverting a move so we can step backwards in time.
      * Board is returned to the exact state it was in before the last move was made.
      */
-    public abstract void undoMove( Move move );
+    protected abstract void undoInternalMove( Move move );
 
     /**
      * @return true if the specified position is within the bounds of the board
