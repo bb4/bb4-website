@@ -7,6 +7,10 @@ import com.becker.game.twoplayer.go.GoMove;
 import com.becker.game.twoplayer.common.search.SearchStrategy;
 
 import java.util.List;
+import java.util.ArrayList;
+import java.io.File;
+import java.io.FilenameFilter;
+import java.io.FileFilter;
 
 
 public class GoTestCase extends TestCase {
@@ -30,7 +34,7 @@ public class GoTestCase extends TestCase {
         //controller_.allPlayersComputer();
         controller_.setAlphaBeta(true);
         controller_.setLookAhead(4);
-        controller_.setPercentageBestMoves(50);
+        controller_.setPercentageBestMoves(40);
         //controller_.setQuiescence(true); // take stoo long if on
         controller_.setSearchStrategyMethod(SearchStrategy.MINIMAX);
 
@@ -38,6 +42,22 @@ public class GoTestCase extends TestCase {
 
     protected void restore(String problemFile) {
         controller_.restoreFromFile(TEST_CASE_DIR + problemFile + ".sgf");
+    }
+
+    /**
+     * @param pattern
+     * @return all the files matching the supplied pattern in the specified directory
+     */
+    protected String[] getFilesMatching(String directory, String pattern) {
+
+        File dir =  new File(TEST_CASE_DIR + directory);
+        assert (dir.isDirectory());
+
+        //System.out.println("pattern = "+pattern+ "dir="+dir.getAbsolutePath());
+        FilenameFilter filter = new MyFileFilter(pattern);
+        String[] list = dir.list(filter);
+
+        return list;
     }
 
     GoMove getNextMove(String problemFile, boolean blackPlays) {
@@ -65,6 +85,20 @@ public class GoTestCase extends TestCase {
 
     protected void tearDown() {
 
+    }
+
+
+    private class MyFileFilter implements FilenameFilter {
+
+        private String pattern_;
+
+        public MyFileFilter(String pattern) {
+            pattern_ = pattern;
+        }
+
+        public boolean accept(File dir, String name) {
+            return (name.contains(pattern_));
+        }
     }
 
 }
