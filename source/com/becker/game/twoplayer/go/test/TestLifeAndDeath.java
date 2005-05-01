@@ -18,16 +18,15 @@ public class TestLifeAndDeath extends GoTestCase {
 
      public void testProblem58() {
         GoMove m = getNextMove("problem_life58", true);
-        Assert.assertTrue(m.getToRow() == 1 && m.getToCol() == 11);
-        // Assert.assertTrue(m.getToRow() == 1 && m.getToCol() == 12);
+        Assert.assertTrue(m.getToRow() == 3 && m.getToCol() == 5);
+        // Assert.assertTrue(m.getToRow() == 1 && m.getToCol() == 12);  // answer from book
     }
 
      public void testProblem59() {
         GoMove m = getNextMove("problem_life59", true);
         Assert.assertTrue(m.getToRow() == 11 && m.getToCol() == 8);
-        // Assert.assertTrue(m.getToRow() == 12 && m.getToCol() == 1);
+        // Assert.assertTrue(m.getToRow() == 12 && m.getToCol() == 1);   // answer from book
     }
-
 
 
     /**
