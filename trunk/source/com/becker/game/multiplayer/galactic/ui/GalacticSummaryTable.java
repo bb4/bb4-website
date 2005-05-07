@@ -1,6 +1,8 @@
 package com.becker.game.multiplayer.galactic.ui;
 
 import com.becker.game.multiplayer.galactic.*;
+import com.becker.game.multiplayer.common.ui.PlayerTableModel;
+import com.becker.game.multiplayer.common.ui.SummaryTable;
 import com.becker.game.common.*;
 import com.becker.ui.ColorCellRenderer;
 
@@ -19,12 +21,9 @@ import java.awt.*;
  *
  * @author Barry Becker
  */
-public class SummaryTable
+public class GalacticSummaryTable extends SummaryTable
 {
-    private JTable table_;
 
-    private static final int NAME_INDEX = 0;
-    private static final int COLOR_INDEX = 1;
     private static final int NUM_PLANETS_INDEX = 2;
     private static final int SHIPS_INDEX = 3;
     private static final int PRODUCTION_INDEX = 4;   // total over all owned planets
@@ -41,60 +40,32 @@ public class SummaryTable
                                              NUM_SHIPS,
                                              PRODUCTION };
 
-    private static int NUM_COLS = columnNames_.length;
-
-
     /**
      * constructor
      * @param players to initializet the rows in the table with.
      */
-    public SummaryTable(GalacticPlayer[] players)
+    public GalacticSummaryTable(Player[] players)
     {
-        initializeTable();
-
-        for (int i=0; i<players.length; i++)  {
-            GalacticPlayer p = players[i];
-            addRow(p);
-        }
-
+        super(players, columnNames_);
     }
 
-    private void initializeTable()
-    {
-        TableModel m = new PlayerTableModel(columnNames_, 0, false);
-        table_ = new JTable(m);
-
-        TableColumn colColumn = table_.getColumn(COLOR);
-        colColumn.setCellRenderer(new ColorCellRenderer());
-    }
-
-
-    public JTable getTable()
-    {
-        return table_;
-    }
-
-
-    private PlayerTableModel getModel()
-    {
-        return (PlayerTableModel)table_.getModel();
-    }
 
     /**
      * add a row based on a player object
      * @param player to add
      */
-    private void addRow(GalacticPlayer player)
+    protected void addRow(Player player)
     {
-        Object d[] = new Object[NUM_COLS];
-        List planets = Galaxy.getPlanets(player);
+        GalacticPlayer p = (GalacticPlayer)player;
+        Object d[] = new Object[getNumColumns()];
+        List planets = Galaxy.getPlanets(p);
         // sum the num ships and productions
 
         d[NAME_INDEX] = player.getName();
         d[COLOR_INDEX ] = player.getColor();
         d[NUM_PLANETS_INDEX] = new Integer(planets.size());
-        d[SHIPS_INDEX] =  new Integer(player.getTotalNumShips());
-        d[PRODUCTION_INDEX] = new Integer(player.getTotalProductionCapacity());
+        d[SHIPS_INDEX] =  new Integer(p.getTotalNumShips());
+        d[PRODUCTION_INDEX] = new Integer(p.getTotalProductionCapacity());
         getModel().addRow(d);
     }
 }
