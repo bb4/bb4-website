@@ -7,8 +7,7 @@ import java.util.*;
 import ca.dj.jigo.sgf.SGFGame;
 import ca.dj.jigo.sgf.SGFTree;
 import ca.dj.jigo.sgf.SGFLeaf;
-import ca.dj.jigo.sgf.tokens.MoveToken;
-import ca.dj.jigo.sgf.tokens.SGFToken;
+import ca.dj.jigo.sgf.tokens.*;
 
 /**
  * This is an abstract base class for a Game Controller.
@@ -169,6 +168,8 @@ public abstract class GameController
      */
     protected void restoreGame( SGFGame game )
     {
+        parseSGFGameInfo(game);
+
         java.util.List moveSequence = new LinkedList();
         extractMoveList( game.getTree(), moveSequence );
         GameContext.log( 2, "move sequence= " + moveSequence );
@@ -183,6 +184,19 @@ public abstract class GameController
         }
     }
 
+    protected void parseSGFGameInfo( SGFGame game) {
+        Enumeration e = game.getInfoTokens();
+        int size = 13; // default unless specified
+        while (e.hasMoreElements()) {
+            InfoToken token = (InfoToken) e.nextElement();
+            if (token instanceof SizeToken) {
+                SizeToken sizeToken = (SizeToken)token;
+                //System.out.println("info token size ="+sizeToken.getSize());
+                size = sizeToken.getSize();
+            }
+        }
+        this.getBoard().setSize(size, size);
+    }
 
     /**
      * create a Move from an SGF token.
