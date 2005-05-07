@@ -1,7 +1,7 @@
-package com.becker.ui;
+package com.becker.common;
 
-import com.becker.ui.Log;
 import com.becker.common.Util;
+import com.becker.ui.Log;
 
 import java.util.*;
 import java.util.logging.Logger;

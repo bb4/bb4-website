@@ -232,7 +232,7 @@ public abstract class Board implements BoardInterface, Cloneable
      */
     public boolean isOnEdge(BoardPosition pos)
     {
-        return (pos.getRow()==1 || pos.getRow()== getNumRows() || pos.getCol()==1 || pos.getCol()==getNumCols());
+        return (pos.getRow()==1 || pos.getRow()==getNumRows() || pos.getCol()==1 || pos.getCol()==getNumCols());
     }
 
     /**
