@@ -41,12 +41,12 @@ public class GoString extends GoSet
         assert (stones != null && stones.size() > 0): "Tried to create list from empty list";
         GoStone stone =  (GoStone)((GoBoardPosition) stones.get( 0 )).getPiece();
         // GoEye constructor calls this method. For eyes the stone is null.
-        if (stone!=null)
+        if (stone != null)
             ownedByPlayer1_ = stone.isOwnedByPlayer1();
         Iterator it = stones.iterator();
         while ( it.hasNext() ) {
-            GoBoardPosition space = (GoBoardPosition) it.next();
-            addMember( space );
+            GoBoardPosition pos = (GoBoardPosition) it.next();
+            addMember( pos );
         }
     }
 
@@ -71,11 +71,18 @@ public class GoString extends GoSet
                 "stones added to a string must have like ownership";
         assert ( stone.isOccupied()): "trying to add empty space to string. stone=" + stone ;
         if ( members_.contains( stone ) ) {
-            // this case can happen sometimes. For example if the new stone completes a loop and self-joins the string to itself
+            // this case can happen sometimes.
+            // For example if the new stone completes a loop and self-joins the string to itself
             //GameContext.log( 2, "Warning: the string, " + this + ", already contains the stone " + stone );
             assert  (stone.getString() == null) || (this == stone.getString()):
                     "bad stone "+stone+" or bad owning string "+ stone.getString();
         }
+        // if the stone is already owned by another string, we need to verify that that other string has given it up.
+        if (stone.getString() != null) {
+            stone.getString().remove(stone);
+            //: stone +" is already owned by another string: "+ stone.getString();
+        }
+
         stone.setString( this );
         members_.add( stone );
     }
@@ -91,16 +98,25 @@ public class GoString extends GoSet
             return;
         }
         GoGroup g = string.getGroup();
-        g.remove( string );
+        //g.remove( string );
 
-        Iterator it = string.getMembers().iterator();
+        Set stringMembers = new HashSet();
+        stringMembers.addAll(string.getMembers());
+        // must remove these after iterating otherwise we get a ConcurrentModificationException
+        string.removeAll();
+
+        Iterator it = stringMembers.iterator();
         GoBoardPosition stone;
         while ( it.hasNext() ) {
             stone = (GoBoardPosition) it.next();
+            GoString myString = stone.getString();
+            if (myString != null && myString != string) {
+                myString.remove(stone);
+            }
+            stone.setString(null);
             addMember( stone );
         }
-        // must remove these after iterating otherwise we get a ConcurrentModificationException
-        string.removeAll();      
+        stringMembers.clear();
     }
 
     /**
@@ -110,7 +126,9 @@ public class GoString extends GoSet
      */
     public final void remove( GoBoardPosition stone )
     {
-        members_.remove( stone );
+        boolean removed = members_.remove( stone );
+        assert (removed) : "failed to remove "+stone+" from"+ this;
+        stone.setString(null);
         if ( members_.isEmpty() ) {
             group_.remove( this );
         }
@@ -127,7 +145,7 @@ public class GoString extends GoSet
         while ( it.hasNext() ) {
             GoBoardPosition stone = (GoBoardPosition) it.next();
             // hitting this from UpdateStringsAfterRemoving
-            assert ( members_.contains( stone )): "ERROR: GoString.remove: " + stone + " is not a subset of \n" + this;
+            //assert ( members_.contains( stone )): "ERROR: GoString.remove: " + stone + " is not a subset of \n" + this;
             remove( stone );
         }
         assert ( size() > 0 );

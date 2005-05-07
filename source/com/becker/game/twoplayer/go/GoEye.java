@@ -155,6 +155,7 @@ public final class GoEye extends GoString implements GoMember
         int c = space.getCol();
 
         if ( nbrs.size() >= 2 ) {
+
             int numOppDiag = 0;
             // check the diagonals for > 2 of the opponents pieces.
             // there are 2 cases: both opponent pieces on the same vert or horiz, or
@@ -178,12 +179,11 @@ public final class GoEye extends GoString implements GoMember
             }  */
 
             // now decide if false eye based on nbrs and proximity to edge.
-            //if (nbrInAtari) {
             if ( numOppDiag >= 2  && (nbrs.size() >= 3))
                 return true;
-            else if (board.isOnEdge(space) && numOppDiag >=1)
+            else if (board.isOnEdge(space) && numOppDiag >=1) {
                 return true;
-            //}
+            }
         }
         return false;
     }
@@ -202,10 +202,9 @@ public final class GoEye extends GoString implements GoMember
         BoardPosition pos1 = board.getPosition( r + rowOffset, c );
         BoardPosition pos2 = board.getPosition( r, c + colOffset );
 
-        return (r > 1 && c  > 1) &&
-                pos1.isOccupied() && pos1.getPiece().isOwnedByPlayer1() == groupP1 &&
+        return (pos1.isOccupied() && pos1.getPiece().isOwnedByPlayer1() == groupP1 &&
                 pos2.isOccupied() && pos2.getPiece().isOwnedByPlayer1() == groupP1 &&
-                isEnemy( diagPos, board );
+                isEnemy( diagPos, board ));
     }
 
     /**
@@ -233,10 +232,9 @@ public final class GoEye extends GoString implements GoMember
     {
          Iterator it = members_.iterator();
          while (it.hasNext()) {
-             GoBoardPosition p = (GoBoardPosition)it.next();
-             p.setEye(null);
-             //p.setString(null);
-             p.setVisited(false);
+             GoBoardPosition pos = (GoBoardPosition)it.next();
+             pos.setEye(null);
+             pos.setVisited(false);
          }
          // remove reference to the owning group so it can be garbage collected.
          setGroup(null);
