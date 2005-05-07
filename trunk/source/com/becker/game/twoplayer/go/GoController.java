@@ -14,7 +14,7 @@ import java.util.*;
 import ca.dj.jigo.sgf.SGFGame;
 import ca.dj.jigo.sgf.SGFLoader;
 import ca.dj.jigo.sgf.SGFException;
-import ca.dj.jigo.sgf.tokens.MoveToken;
+import ca.dj.jigo.sgf.tokens.*;
 
 import javax.swing.*;
 
@@ -454,7 +454,7 @@ public final class GoController extends TwoPlayerController
             out.write( "CA[UTF-8]\n" );
             out.write( "ST[2]\n" );
             out.write( "RU[japanese]\n" );
-            out.write( "SZ[9]\n" );
+            out.write( "SZ["+this.getBoard().getNumRows()+")]\n" );
             out.write( "PB["+this.getPlayer1().getName()+"]\n" );
             out.write( "PW["+this.getPlayer2().getName()+"]\n" );
             out.write( "KM["+getKomi()+"]\n" );
@@ -502,6 +502,39 @@ public final class GoController extends TwoPlayerController
             JOptionPane.showMessageDialog( null, "file " + fileName + " had an SGF error while loading: " + sgfe.getMessage() );
             sgfe.printStackTrace();
         }
+    }
+
+    protected void parseSGFGameInfo( SGFGame game) {
+        Enumeration e = game.getInfoTokens();
+        int size = 13; // default unless specified
+        while (e.hasMoreElements()) {
+            InfoToken token = (InfoToken) e.nextElement();
+            if (token instanceof SizeToken) {
+                SizeToken sizeToken = (SizeToken)token;
+                size = sizeToken.getSize();
+            }
+            else if (token instanceof KomiToken) {
+                KomiToken komiToken = (KomiToken) token;
+                this.setKomi(komiToken.getKomi());
+            }
+            else if (token instanceof WhiteNameToken) {
+                WhiteNameToken nameToken = (WhiteNameToken) token;
+                this.getPlayer2().setName(nameToken.getName());
+            }
+            else if (token instanceof BlackNameToken) {
+                BlackNameToken nameToken = (BlackNameToken) token;
+                this.getPlayer1().setName(nameToken.getName());
+            }
+            else if (token instanceof KomiToken) {
+                KomiToken komiToken = (KomiToken) token;
+                this.setKomi(komiToken.getKomi());
+            }
+            else if (token instanceof RuleSetToken) {
+                RuleSetToken ruleToken = (RuleSetToken) token;
+                //this.setRuleSet(ruleToken.getKomi());
+            }
+        }
+        this.getBoard().setSize(size, size);
     }
 
 

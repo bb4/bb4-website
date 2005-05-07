@@ -86,7 +86,7 @@ public final class GoGroup extends GoSet
             //actually this is ok - sometimes happens legitimately
             //assert isFalse(stone.isVisited(), stone+" is marked visited in "+stones+" when it should not be.");
             GoString string = stone.getString();
-            assert ( string != null );
+            assert ( string != null ): "There is no owning string for "+stone;
             if ( !members_.contains( string ) ) {
                 assert ( ownedByPlayer1_ == string.isOwnedByPlayer1()): string +"ownership not the same as "+this;
                 //string.confirmOwnedByOnlyOnePlayer();
@@ -256,13 +256,12 @@ public final class GoGroup extends GoSet
             GameContext.log(2, "attempting to remove "+string+" string from group. "+this);
             return;
         }
-        if (members_.isEmpty())
-        {
+        if (members_.isEmpty()) {
             GameContext.log(2, "attempting to remove "+string+" from already empty group.");
             return;
         }
         boolean removed = members_.remove( string );
-        assert (removed): "Unable to remove \n"+string+"\n from \n "+this;
+        //GameContext.log(0, "Unable to remove \n"+string+"\n from \n "+this);
         changed_ = true;
     }
 

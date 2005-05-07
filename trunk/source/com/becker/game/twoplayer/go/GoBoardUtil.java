@@ -23,7 +23,7 @@ public final class GoBoardUtil
      * if its not that much weaker then we don't really have an eye.
      * @@ make this a game parameter .9 - 1.8 that can be optimized.
      */
-    static final float DIFFERENCE_THRESHOLD = .9f;
+    static final float DIFFERENCE_THRESHOLD = 1.0f;
 
     private GoBoardUtil() {
     }
@@ -422,6 +422,16 @@ public final class GoBoardUtil
             for (Object s : ((GoGroup)g).getMembers()) {
                 GoString string = (GoString) s;
                 assert (string.size() > 0): "There is an empty string in " + string.getGroup();
+            }
+        }
+    }
+
+    static void confirmNoStringsWithEmpties(Set groups)
+    {
+        for (Object g : groups)  {
+            for (Object s : ((GoGroup)g).getMembers()) {
+                GoString string = (GoString) s;
+                assert (!string.areAnyBlank()): "There is a string with unoccupied positions: " + string;
             }
         }
     }
