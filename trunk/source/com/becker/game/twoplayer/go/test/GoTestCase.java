@@ -7,10 +7,8 @@ import com.becker.game.twoplayer.go.GoMove;
 import com.becker.game.twoplayer.common.search.SearchStrategy;
 
 import java.util.List;
-import java.util.ArrayList;
 import java.io.File;
 import java.io.FilenameFilter;
-import java.io.FileFilter;
 
 
 public class GoTestCase extends TestCase {
@@ -18,6 +16,10 @@ public class GoTestCase extends TestCase {
     private static final String TEST_CASE_DIR =
             GameContext.getHomeDir() +"/source/"  +
             GameContext.GAME_ROOT  + "twoplayer/go/test/cases/";
+
+    //@@ eventually move all test cases here so they are not included in the jar and do not need to be searched
+    private static final String EXTERNAL_TEST_CASE_DIR =
+            GameContext.getHomeDir() +"/test/go/cases/";
 
     GoController controller_;
 
@@ -43,6 +45,9 @@ public class GoTestCase extends TestCase {
     protected void restore(String problemFile) {
         controller_.restoreFromFile(TEST_CASE_DIR + problemFile + ".sgf");
     }
+    protected void restoreExternal(String problemFile) {
+        controller_.restoreFromFile(EXTERNAL_TEST_CASE_DIR + problemFile + ".sgf");
+    }
 
     /**
      * @param pattern
@@ -50,7 +55,7 @@ public class GoTestCase extends TestCase {
      */
     protected String[] getFilesMatching(String directory, String pattern) {
 
-        File dir =  new File(TEST_CASE_DIR + directory);
+        File dir =  new File(EXTERNAL_TEST_CASE_DIR + directory);
         assert (dir.isDirectory());
 
         //System.out.println("pattern = "+pattern+ "dir="+dir.getAbsolutePath());
