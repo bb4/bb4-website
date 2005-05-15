@@ -7,10 +7,7 @@ import junit.framework.Test;
 import java.util.List;
 import java.util.Set;
 
-import com.becker.game.twoplayer.go.GoMove;
-import com.becker.game.twoplayer.go.GoBoard;
-import com.becker.game.twoplayer.go.GoGroup;
-import com.becker.game.twoplayer.go.GoEye;
+import com.becker.game.twoplayer.go.*;
 
 
 public class TestEyes extends GoTestCase {
@@ -40,6 +37,12 @@ public class TestEyes extends GoTestCase {
         EyeCounts blackEyes = new EyeCounts(0, 0, 0, 0);
         EyeCounts whiteEyes = new EyeCounts(3, 0, 0, 0);
         checkEyes("problem_falseeyes_on_edge", blackEyes, whiteEyes);
+    }
+
+    public void testStoneInEye1() {
+        EyeCounts blackEyes = new EyeCounts(0, 1, 0, 0);
+        EyeCounts whiteEyes = new EyeCounts(0, 1, 0, 0);
+        checkEyes("problem_stone_in_eye1", blackEyes, whiteEyes);
     }
 
     ////////////////// test the different big eye shapes /////////////////
@@ -346,19 +349,30 @@ public class TestEyes extends GoTestCase {
 
         Set groups = ((GoBoard) controller_.getBoard()).getGroups();
 
-        Assert.assertTrue("There were not two groups. Instead there were :"+groups.size(), groups.size() == 2);
+        // consider the 2 biggest groups
+        //Assert.assertTrue("There were not two groups. Instead there were :"+groups.size(), groups.size() == 2);
 
+        GoGroup biggestBlackGroup = null;
+        GoGroup biggestWhiteGroup = null;
         for (Object g : groups) {
-            GoGroup group = (GoGroup) g;
-            EyeCounts eyeCounts = getEyeCounts(group.getEyes());
-            if (group.isOwnedByPlayer1()) {
-                Assert.assertTrue("Actual Black Eye counts were \n"+eyeCounts+" but was expecting \n"+ expectedBlackEyes,
-                                  eyeCounts.equals(expectedBlackEyes));
+            GoGroup group = (GoGroup)g;
+            if (((GoBoardPosition)group.getStones().get(0)).getPiece().isOwnedByPlayer1()) {
+                if (biggestBlackGroup == null || biggestBlackGroup.size()< group.size()) {
+                    biggestBlackGroup = group;
+                }
             } else {
-                Assert.assertTrue("Actual White Eye counts were \n"+eyeCounts+" but was expecting \n"+ expectedWhiteEyes,
-                                  eyeCounts.equals(expectedWhiteEyes));
+                if (biggestWhiteGroup == null || biggestWhiteGroup.size()< group.size()) {
+                    biggestWhiteGroup = group;
+                }
             }
         }
+
+        EyeCounts eyeCounts = getEyeCounts(biggestBlackGroup.getEyes());
+        Assert.assertTrue("Actual Black Eye counts were \n"+eyeCounts+" but was expecting \n"+ expectedBlackEyes,
+                              eyeCounts.equals(expectedBlackEyes));
+        eyeCounts = getEyeCounts(biggestWhiteGroup.getEyes());
+        Assert.assertTrue("Actual White Eye counts were \n"+eyeCounts+" but was expecting \n"+ expectedWhiteEyes,
+                              eyeCounts.equals(expectedWhiteEyes));
     }
 
 

@@ -1,6 +1,7 @@
 package com.becker.game.twoplayer.go.test;
 
 import junit.framework.TestCase;
+import junit.framework.Assert;
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.GoController;
 import com.becker.game.twoplayer.go.GoMove;
@@ -13,13 +14,16 @@ import java.io.FilenameFilter;
 
 public class GoTestCase extends TestCase {
 
-    private static final String TEST_CASE_DIR =
-            GameContext.getHomeDir() +"/source/"  +
-            GameContext.GAME_ROOT  + "twoplayer/go/test/cases/";
 
-    //@@ eventually move all test cases here so they are not included in the jar and do not need to be searched
+    // moved all test cases here so they are not included in the jar and do not need to be searched
     private static final String EXTERNAL_TEST_CASE_DIR =
             GameContext.getHomeDir() +"/test/go/cases/";
+
+    //private static final String TEST_CASE_DIR =
+    //        GameContext.getHomeDir() +"/source/"  +
+    //        GameContext.GAME_ROOT  + "twoplayer/go/test/cases/";
+
+    private static final String SGF_EXTENSION = ".sgf";
 
     GoController controller_;
 
@@ -43,11 +47,9 @@ public class GoTestCase extends TestCase {
     }
 
     protected void restore(String problemFile) {
-        controller_.restoreFromFile(TEST_CASE_DIR + problemFile + ".sgf");
+        controller_.restoreFromFile(EXTERNAL_TEST_CASE_DIR + problemFile + SGF_EXTENSION);
     }
-    protected void restoreExternal(String problemFile) {
-        controller_.restoreFromFile(EXTERNAL_TEST_CASE_DIR + problemFile + ".sgf");
-    }
+
 
     /**
      * @param pattern
@@ -65,7 +67,7 @@ public class GoTestCase extends TestCase {
         return list;
     }
 
-    GoMove getNextMove(String problemFile, boolean blackPlays) {
+    protected GoMove getNextMove(String problemFile, boolean blackPlays) {
 
         System.out.println("finding next move for "+problemFile+" ...");
         restore(problemFile);
@@ -74,6 +76,13 @@ public class GoTestCase extends TestCase {
         GoMove m = (GoMove) controller_.getBoard().getLastMove();
         System.out.println("got " + m);
         return m;
+    }
+
+    protected void checkExpected(GoMove m, int row, int col) {
+
+        Assert.assertTrue("Was expecting "+ row +", "+ col +", but instead got "+m,
+                          m.getToRow() == row && m.getToCol() == col);
+
     }
 
 

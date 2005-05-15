@@ -11,19 +11,9 @@ import com.becker.game.twoplayer.go.GoMove;
 
 public class TestKiseido2002 extends GoTestCase {
 
-    /*  I think there may be something wrong with these two
-
-    public void test2002_03_26_4() {
-        check("2002xxx-03-26-4");
-    }
-
-    public void test2002_8_19_0() {
-        check("2002xxx-08-19-0");
-    }
-    */
 
 
-/*  the rest of these work.     */
+/*  the rest of these work.    */
 
     public void testJanuary() {
         check("2002-01");
@@ -73,7 +63,7 @@ public class TestKiseido2002 extends GoTestCase {
         check("2002-12");
     }
 
-
+ 
 
     /**
      * Verify that we can load all the files with the specified pattern
@@ -87,7 +77,7 @@ public class TestKiseido2002 extends GoTestCase {
 
             String filename =  files[i].substring(0, files[i].length() - 4);
             System.out.print("about to restore :"+filename);
-            restoreExternal("games2002/" + filename);
+            restore("games2002/" + filename);
             System.out.println("     done restoring :"+filename);
         }
 
