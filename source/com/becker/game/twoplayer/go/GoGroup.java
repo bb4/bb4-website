@@ -138,9 +138,7 @@ public final class GoGroup extends GoSet
             assert ( string.getGroup() == this) :
                     "The " + this + " already contains the string, but the " + string
                     + " says its owning group is " + string.getGroup();
-            //GameContext.log( 2, "Warning: GoGroup.addMember: " + this + " already contains this :" + string );
-            //board.debugPrintGroups( 2 );
-            return;
+             return;
         }
         // remove it from the old group
         GoGroup oldGroup = string.getGroup();
@@ -215,8 +213,7 @@ public final class GoGroup extends GoSet
             addMember(string, board);
         }
         group.removeAll();
-        changed_ = true;
-        //army_.remove( group );
+        clearEyes();
     }
 
     /**
@@ -261,7 +258,6 @@ public final class GoGroup extends GoSet
             return;
         }
         boolean removed = members_.remove( string );
-        //GameContext.log(0, "Unable to remove \n"+string+"\n from \n "+this);
         changed_ = true;
     }
 
@@ -495,7 +491,6 @@ public final class GoGroup extends GoSet
         while ( it.hasNext() ) {
             GoBoardPosition stone = (GoBoardPosition) it.next();
             if (stone.isOccupied() && groupString.isEnemy(stone, board)) {
-                //GameContext.log(1, "eyeList "+eyeList+" was rejected as an eye" );
                 return false;  // not eye
             }
         }
@@ -599,14 +594,12 @@ public final class GoGroup extends GoSet
         }
         health = determineHealth(side, numEyes, numLiberties);
 
-        //GameContext.log(0,"health="+health+" numLiberties="+numLiberties);
         // Should there be any bonus at all for flase eyes??  no
         // health += (side * .015 * numFalseEyes);
 
         absoluteHealth_ = health;
         if (Math.abs(absoluteHealth_)>1.0) {
-            GameContext.log(0,  "Warning: health exceeded 1.0: "
-                     +" health="+health+" numEyes="+numEyes+" numfalse eye="+numFalseEyes);
+            GameContext.log(0,  "Warning: health exceeded 1.0: " +" health="+health+" numEyes="+numEyes+" numfalse eye="+numFalseEyes);
             absoluteHealth_ = side;
         }
 
@@ -827,7 +820,6 @@ public final class GoGroup extends GoSet
     public final void updateTerritory( float health )
     {
         Iterator it = members_.iterator();
-        //GameContext.log(0,"GoGroup updateTerr="+health);
         while ( it.hasNext() ) {
             GoString string = (GoString) it.next();
             string.updateTerritory( health );

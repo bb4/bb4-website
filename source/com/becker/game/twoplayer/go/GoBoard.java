@@ -319,20 +319,23 @@ public final class GoBoard extends TwoPlayerBoard
         profiler_.startMakeMove();
 
         GoMove m = (GoMove)move;
+
         // if its a passing move, there is nothing to do
         if ( m.isPassingMove() ) {
             GameContext.log( 2, "making passing move" );
             return true;
         }
 
+        GoBoardPosition stone = (GoBoardPosition) (positions_[m.getToRow()][m.getToCol()]);
+        assert (stone.isUnoccupied()):
+                "Position "+stone+" is already occupied. move num ="+ this.getNumMoves() +" \nBoard:\n"+this.toString();
+
         // first make sure that there are no references to obsolete groups.
         clearEyes();    // I think this is important
 
         super.makeInternalMove( m );
 
-        GoBoardPosition stone = (GoBoardPosition) (positions_[m.getToRow()][m.getToCol()]);
-        // how could a newly placed stone belong to a string already?  why hitting this?
-        assert (stone.getString()==null): stone +" already belongs to "+stone.getString();
+        assert (stone.getString() == null): stone +" already belongs to "+stone.getString();
 
         m.captureList = findCaptures( stone );
 
@@ -340,10 +343,7 @@ public final class GoBoard extends TwoPlayerBoard
 
         if ( m.captureList != null ) {
             removeCaptures( m.captureList );
-            //GoBoardUtil.confirmAllStonesInUniqueGroups(groups_);
-            //GoBoardUtil.confirmNoStringsWithEmpties(groups_);
             updateAfterRemovingCaptures( stone );
-            //GoBoardUtil.confirmNoStringsWithEmpties(groups_);
             GameContext.log( 2, "GoBoard: makeMove: " + m + "  groups after removing captures" );
             GoBoardUtil.debugPrintGroups( 2, "Groups after removing captures", true, true, groups_ );
         }
@@ -391,7 +391,7 @@ public final class GoBoard extends TwoPlayerBoard
 
         if ( m.captureList != null ) {
             restoreCaptures( m.captureList );
-            if (GameContext.getDebugMode()>1) {
+            if (GameContext.getDebugMode() > 1) {
                 GoBoardUtil.confirmNoEmptyStrings(groups_);
                 updateAfterRestoringCaptures( m.captureList );
                 GoBoardUtil.confirmStonesInValidGroups(groups_, this);
@@ -474,10 +474,6 @@ public final class GoBoard extends TwoPlayerBoard
         if ( group.getNumStones() == 0 ) {
             getGroups().remove( group );
         }
-
-        //GameContext.log( 2, "removed these captures (num stones remaining in group="
-        //        + group.getNumStones() + ") : " + captureList );
-        //group.confirmNoNullMembers();
     }
 
     /**
@@ -576,11 +572,11 @@ public final class GoBoard extends TwoPlayerBoard
             // if it is, then we need to split that ataried string off from its group and form a new group.
             if (stone.isInAtari(this)) {
                 GoGroup oldGroup = str.getGroup();
-                GameContext.log(1, "Before splitting off ataried string (due to "+stone+") containing ("+str+") we have: "+oldGroup);
+                GameContext.log(3, "Before splitting off ataried string (due to "+stone+") containing ("+str+") we have: "+oldGroup);
 
                 oldGroup.remove(str);
                 GoGroup newGroup = new GoGroup(str);
-                GameContext.log(1, "after splitting we have: "+newGroup);
+                GameContext.log(3, "after splitting we have: "+newGroup);
                 assert (!newGroup.getMembers().isEmpty()) : "The group we are trying to add is empty";
                 groups_.add(newGroup);
             }
@@ -600,8 +596,9 @@ public final class GoBoard extends TwoPlayerBoard
     {
         profiler_.startUpdateGroupsAfterMove();
 
-        if (GameContext.getDebugMode() > 1)
+        if (GameContext.getDebugMode() > 1) {
             GoBoardUtil.confirmAllStonesInUniqueGroups(groups_);
+        }
 
         // remove all the current groups (we will then add them back)
         groups_.clear();
@@ -624,7 +621,6 @@ public final class GoBoard extends TwoPlayerBoard
         if ( GameContext.getDebugMode() > 1 ) {
             GoBoardUtil.confirmNoEmptyStrings(groups_);
             GoBoardUtil.confirmStonesInValidGroups(groups_, this);
-            GoBoardUtil.confirmAllUnvisited(this);
             GoBoardUtil.confirmAllStonesInUniqueGroups(groups_);
             try {
                 GoBoardUtil.confirmAllStonesAreInGroupsTheyClaim(groups_, this);
@@ -992,7 +988,6 @@ public final class GoBoard extends TwoPlayerBoard
             List lists = new ArrayList(8);
             GoBoardPosition firstNbr = (GoBoardPosition) nbrIt.next();
             List stones = findStringFromInitialPosition( firstNbr, false );
-            //GameContext.log( 3, firstNbr + " yields this string:" + stones );
             lists.add( stones );
             while ( nbrIt.hasNext() ) {
                 GoBoardPosition nbrStone = (GoBoardPosition) nbrIt.next();
@@ -1000,9 +995,7 @@ public final class GoBoard extends TwoPlayerBoard
                     List stones1 = findStringFromInitialPosition( nbrStone, false );
                     GoString newString = new GoString( stones1 );
                     group.addMember( newString, this );
-                    //GameContext.log( 3, "mainString after removing (" + stone + ") =" + string );
-                    //GameContext.log( 3, "subString =" + newString );
-                    //string.remove( stones1, this );  // already done in the process of creating the new string.
+                    // string.remove( stones1, this );  // already done in the process of creating the new string.
                     lists.add( stones1 );
                 }
             }
@@ -1010,7 +1003,6 @@ public final class GoBoard extends TwoPlayerBoard
         }
         //cleanupGroups();
         if ( GameContext.getDebugMode() > 1 ) {
-            GoBoardUtil.confirmAllUnvisited(this);
             GoBoardUtil.confirmNoEmptyStrings(groups_);
             GoBoardUtil.confirmStonesInValidGroups(groups_, this);
             GoBoardUtil.confirmStonesInOneGroup( group, groups_ );
@@ -1061,7 +1053,6 @@ public final class GoBoard extends TwoPlayerBoard
 
         if ( GameContext.getDebugMode() > 1 )  {
             GoBoardUtil.confirmNoEmptyStrings(groups_);
-            GoBoardUtil.confirmAllUnvisited(this);
         }
 
         cleanupGroups();
@@ -1145,7 +1136,7 @@ public final class GoBoard extends TwoPlayerBoard
                 if (newList)
                     mergedGroupLists.add(mergedStones);
             }
-            if (mergedGroupLists.size()>1) {
+            if (mergedGroupLists.size() > 1) {
                 GameContext.log(2, "More than one merged group:"+mergedGroupLists.size());
             }
 
@@ -1165,17 +1156,9 @@ public final class GoBoard extends TwoPlayerBoard
                     groups_.add( restoredGroup );
                 }
                 if ( GameContext.getDebugMode() > 1 ) {
-                        try {
-                            GoBoardUtil.confirmStonesInValidGroups(groups_, this);
-                            GoBoardUtil.confirmAllUnvisited(this);
-                            GoBoardUtil.confirmAllStonesAreInGroupsTheyClaim(groups_, this);
-                        } catch (AssertionError e) {
-                            //GameContext.log(1, "Just removed :"+stone+".\n The restored group is :"+restoredGroup);
-                            //debugPrintList(1, "Friendly nbrs:", friendlyNbrs );
-                            System.out.println( " enemy nbrs = " + enemyNbrs );
-                            throw e;
-                        }
-                    }
+                    GoBoardUtil.confirmStonesInValidGroups(groups_, this);
+                    GoBoardUtil.confirmAllStonesAreInGroupsTheyClaim(groups_, this);
+                }
             }
         }
     }
@@ -1259,7 +1242,7 @@ public final class GoBoard extends TwoPlayerBoard
         alternative = getConfirmedAlternative(stone, r, c, 1, 0);
         if (alternative != null)
            return alternative;
-        assert (false) : "There was no alternative seed for "+stone;
+        assert (false) : "There was no alternative seed for "+stone +" board:\n"+this;
         return stone;
     }
 
@@ -1289,11 +1272,10 @@ public final class GoBoard extends TwoPlayerBoard
                     "unexpected ownership (e1="+enemy1.getPiece().isOwnedByPlayer1()+",e2="+enemy2.getPiece().isOwnedByPlayer1()
                         +") for "+enemy1+" and "+enemy2+" based on "+stone+". Blank="+blankPos;
             }
-            if (enemy1 != null && enemy1.isUnoccupied())
+            if (enemy1 != null && enemy1.isOccupied())
                 return (GoBoardPosition)enemy1;
-            else if (enemy2.isUnoccupied()) // this may be needed if enemy1 is null because it is off the edge.
+            else
                 return (GoBoardPosition)enemy2;
-            return null;
         }
         else
             return null;
@@ -1327,7 +1309,6 @@ public final class GoBoard extends TwoPlayerBoard
         }
         GoBoardPosition firstEnemyStone = (GoBoardPosition) enemyNobiNbrs.get( 0 );
         GoGroup bigEnemyGroup = firstEnemyStone.getGroup();
-        //GameContext.log( 3, "updateAfterRestoringCaptures: The big enemy group :" + bigEnemyGroup );
 
         // The bigEnemyGroup may not actually contain all the enemy nobi neighbors.
         // Although rare, one example where this is the case is when the restored group has a string
@@ -1355,8 +1336,7 @@ public final class GoBoard extends TwoPlayerBoard
 
         groups_.remove( bigEnemyGroup );
         if (secondaryEnemyGroup != null) {
-            GameContext.log(1, "There was a secondary enemy group before restoring (*RARE*). The 2 groups were :"
-                    +bigEnemyGroup+" and "+secondaryEnemyGroup);
+            GameContext.log(1, "There was a secondary enemy group before restoring (*RARE*). The 2 groups were :" +bigEnemyGroup+" and "+secondaryEnemyGroup);
             groups_.remove(secondaryEnemyGroup);
         }
 
@@ -1587,7 +1567,6 @@ public final class GoBoard extends TwoPlayerBoard
                 pushGroupNeighbors( s, s.getPiece().isOwnedByPlayer1(), stack );
             }
         }
-        //GameContext.log( 3, "findGroupFromInitialPosition = " + stones );
         if ( returnToUnvisitedState ) {
             GoBoardUtil.unvisitPositionsInList( stones );
             if (GameContext.getDebugMode()>1)
@@ -1789,12 +1768,13 @@ public final class GoBoard extends TwoPlayerBoard
     {
         GoBoardPosition stone = (GoBoardPosition) this.getPosition( m.getToRow(), m.getToCol() );
         GoString string = stone.getString();
-        if ( string == null )
+        if ( string == null )   {
             GameContext.log( 0, "Warning: GoMove.isSuicidal: the string is null" );
-        if ( string != null && string.size() > 0 && string.getLiberties( this ).size() == 0 ) {
-            GameContext.log( 2,
-                    "GoMove.isSuicidal: your are playing on the last liberty for this string=" + string.toString() +
-                    " captures=" + m.captureList );
+        }
+        if ( string != null && string.getLiberties( this ).size() == 0 ) {
+            //System.out.println("string size="+string.size());
+            assert (string.size() > 0);
+            GameContext.log( 2, "GoMove.isSuicidal: your are playing on the last liberty for this string=" + string.toString() + " captures=" + m.captureList );
             // if we do not have captures, then it is a suicide move and should not be allowed.
             if ( m.captureList == null )
                 return true;
@@ -1821,7 +1801,6 @@ public final class GoBoard extends TwoPlayerBoard
             GoBoardPosition s = (GoBoardPosition) it.next();
             GoGroup g = s.getGroup();
             if ( g.getLiberties( this ).size() == 1 ) {
-                //GameContext.log( 2, "ATARI:" + g + " is atari'd as a result of move " + this );
                 return true;
             }
         }
@@ -1878,7 +1857,7 @@ public final class GoBoard extends TwoPlayerBoard
             GoGroup group = (GoGroup) it.next();
             //group.confirmNoNullMembers();
             if ( group.getNumStones() == 0 )  {
-                assert (group.getEyes().isEmpty()): group+ " has eyes! It was assumed not to." + group;
+                assert (group.getEyes().isEmpty()): group+ " has eyes! It was assumed not to.\n"+this;
                 it.remove();
             }
         }
@@ -1890,14 +1869,17 @@ public final class GoBoard extends TwoPlayerBoard
      */
     private void clearEyes()
     {
-        for ( int i = 1; i <= getNumRows(); i++ )
+        for ( int i = 1; i <= getNumRows(); i++ ) {
             for ( int j = 1; j <= getNumCols(); j++ ) {
                 GoBoardPosition space = (GoBoardPosition) this.getPosition( i, j );
                 if ( space.isInEye() )     {
+                    // remove reference to the owning group so it can be garbage collected.
+                    space.getEye().getGroup().getEyes().remove(this);
                     space.getEye().clear();
                     space.setEye(null);
                 }
             }
+        }
     }
 
     /**
@@ -1942,5 +1924,38 @@ public final class GoBoard extends TwoPlayerBoard
             }
         }
         return severity;
+    }
+
+    public String toString() {
+        StringBuffer buf = new StringBuffer((getNumRows()+2) * (getNumCols()+2));
+
+        buf.append("   ");
+        for ( int j = 1; j <= getNumCols(); j++ ) {
+            buf.append(j % 10);
+        }
+        buf.append(' ');
+        buf.append("\n  ");
+        for ( int j = 1; j <= getNumCols()+2; j++ ) {
+            buf.append('-');
+        }
+        buf.append('\n');
+
+        for ( int i = 1; i <= getNumRows(); i++ ) {
+            buf.append(i / 10);
+            buf.append(i % 10);
+            buf.append('|');
+            for ( int j = 1; j <= getNumCols(); j++ ) {
+                GoBoardPosition space = (GoBoardPosition) this.getPosition( i, j );
+                if ( space.isOccupied() )     {
+                    buf.append(space.getPiece().isOwnedByPlayer1()?'X':'O');
+                }
+                else {
+                    buf.append(' ');
+                }
+            }
+            buf.append('|');
+            buf.append('\n');
+        }
+        return buf.toString();
     }
 }

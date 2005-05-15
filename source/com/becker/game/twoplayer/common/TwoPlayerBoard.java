@@ -34,7 +34,7 @@ public abstract class TwoPlayerBoard extends Board
     {
         TwoPlayerMove m = (TwoPlayerMove)move;
         if ( !m.isPassingMove() ) {
-            BoardPosition pos = positions_[m.getToRow()][m.getToCol()];
+            BoardPosition pos = positions_[m.getToRow()][m.getToCol()];           
             pos.setPiece(m.piece.copy());  // need copy?
             GamePiece piece = pos.getPiece();
             assert (piece!=null):

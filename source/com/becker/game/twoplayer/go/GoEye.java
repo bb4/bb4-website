@@ -236,7 +236,7 @@ public final class GoEye extends GoString implements GoMember
              pos.setEye(null);
              pos.setVisited(false);
          }
-         // remove reference to the owning group so it can be garbage collected.
+
          setGroup(null);
     }
 

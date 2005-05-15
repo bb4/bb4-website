@@ -14,6 +14,7 @@ import java.util.*;
 import ca.dj.jigo.sgf.SGFGame;
 import ca.dj.jigo.sgf.SGFLoader;
 import ca.dj.jigo.sgf.SGFException;
+import ca.dj.jigo.sgf.Point;
 import ca.dj.jigo.sgf.tokens.*;
 
 import javax.swing.*;
@@ -254,7 +255,6 @@ public final class GoController extends TwoPlayerController
                     positionalScore_[row][col] += LINE_VALS[rowmin - 1];
                 if ( colmin <= NUM_SCORED_LINES )
                     positionalScore_[row][col] += LINE_VALS[colmin - 1];
-                //GameContext.log(0,"  positionalScore_["+row+"]["+col+"]="+positionalScore_[row][col]);
             }
         }
         // also make the center space worth something positive
@@ -272,6 +272,48 @@ public final class GoController extends TwoPlayerController
 
     }
 
+    protected boolean processToken(SGFToken token, List moveList) {
+
+        boolean found = false;
+        if (token instanceof MoveToken ) {
+            moveList.add( createMoveFromToken( (MoveToken) token ) );
+            found = true;
+        }
+        else if (token instanceof AddBlackToken ) {
+            addMoves((PlacementListToken)token, moveList);
+            found = true;
+        }
+        else if (token instanceof AddWhiteToken ) {
+            addMoves((PlacementListToken)token, moveList);
+            found = true;
+        }
+        else if (token instanceof CharsetToken ) {
+            CharsetToken charsetToken = (CharsetToken) token;
+            //System.out.println("charset="+charsetToken.getCharset());
+        }
+        else if (token instanceof OverTimeToken ) {
+            //OverTimeToken charsetToken = (OverTimeToken) token;
+            //System.out.println("charset="+charsetToken.getCharset());
+        }
+        else if (token instanceof TextToken ) {
+            TextToken textToken = (TextToken) token;
+            System.out.println("text="+textToken.getText());
+        } else {
+            System.out.println("\nignoring token "+token.getClass().getName());
+        }
+        return found;
+    }
+
+    private void addMoves(PlacementListToken token, List moveList) {
+        Vector points = token.getPoints();
+        boolean player1 = token instanceof AddBlackToken;
+
+        for (int i=0; i<points.size(); i++)  {
+            Point point = (Point)points.get(i);
+            //System.out.println("adding at "+point.y+" "+point.x);
+            moveList.add( new GoMove( point.y, point.x, null, 0, new GoStone(player1)));
+        }
+    }
 
 
     protected Move createMoveFromToken( MoveToken token)
@@ -418,7 +460,7 @@ public final class GoController extends TwoPlayerController
 
     protected void initializeGobalProfilingStats()
     {
-        initializeGobalProfilingStats();
+        GoBoard.initializeGobalProfilingStats();
     }
 
     protected void showProfileStats( long totalTime, int numMoves )
@@ -517,6 +559,13 @@ public final class GoController extends TwoPlayerController
                 KomiToken komiToken = (KomiToken) token;
                 this.setKomi(komiToken.getKomi());
             }
+            else if (token instanceof HandicapToken) {
+                HandicapToken handicapToken = (HandicapToken) token;
+                // so we don't guess wrong on where the handicap positions are
+                // we will rely on their being an AB command to specifically tell where the handicap stones are
+                //System.out.println("***handicap ="+handicapToken.getHandicap());
+                //this.setHandicap(handicapToken.getHandicap());
+            }
             else if (token instanceof WhiteNameToken) {
                 WhiteNameToken nameToken = (WhiteNameToken) token;
                 this.getPlayer2().setName(nameToken.getName());
@@ -604,8 +653,8 @@ public final class GoController extends TwoPlayerController
                     position.scoreContribution =
                             weights.get(HEALTH_WEIGHT_INDEX).value * stone.getHealth() + posScore + badShapeScore;
 
+                    position.scoreContribution = 0; //clear it in case it was set during search.
                     if (GameContext.getDebugMode() > 0)  {
-                        position.scoreContribution = 0; //clear it in case it was set during search.
                         stone.badShapeScore = badShapeScore;
                         stone.positionalScore = posScore;
                     }
@@ -627,6 +676,7 @@ public final class GoController extends TwoPlayerController
             // then the margin is too great
             return WINNING_VALUE;
         }
+
         return worth;
     }
 
@@ -703,7 +753,7 @@ public final class GoController extends TwoPlayerController
             else
                 move.urgent = true;
         }
-        //if (moves.size()>0)
+        //if (moves.size() > 0)
         //    GameContext.log(2,"gocontroller: the number of urgent moves are:"+moves.size());
         return moves;
     }
@@ -734,7 +784,6 @@ public final class GoController extends TwoPlayerController
             CaptureList list = lastMove.captureList;
             if ( list.size() == 1 ) {
                 GoBoardPosition capture = (GoBoardPosition) list.getFirst();
-                // GameContext.log(0,  "isTakeback: row="+row+" col="+col+"  capture = "+capture);
                 if ( capture.getRow() == row && capture.getCol() == col ) {
                     GoBoardPosition lastStone = (GoBoardPosition) board.getPosition( lastMove.getToRow(), lastMove.getToCol() );
                     if ( board.getNumLiberties( lastStone ) == 1 && lastStone.getString().getMembers().size() == 1 ) {
@@ -839,9 +888,12 @@ public final class GoController extends TwoPlayerController
        // the last 2 moves must passes so
        List moves = getMoveList();
        GoMove lastMove = (GoMove)moves.get(moves.size()-1);
-       GoMove nextToLastMove = (GoMove)moves.get(moves.size()-2);
-       assert(lastMove.isPassingMove());
-       assert(nextToLastMove.isPassingMove());
+
+       // if we are loading saved games, then winner might have won by time or forfeit
+       // - in which case the last 2 moves are not passes.
+       //GoMove nextToLastMove = (GoMove)moves.get(moves.size()-2);
+       //assert(lastMove.isPassingMove());
+       //assert(nextToLastMove.isPassingMove());
        assert(moves.size() > 3);
 
        // we need to get the third to last move.
@@ -857,8 +909,7 @@ public final class GoController extends TwoPlayerController
                 if (space.isOccupied())  {
                     GoStone stone = (GoStone)space.getPiece();
                     int side = (stone.isOwnedByPlayer1() ? 1: -1);
-                    GameContext.log(1, "life & death: "+space+" health="+stone.getHealth()
-                            +" string health=" +space.getGroup().getRelativeHealth());
+                    GameContext.log(1, "life & death: "+space+" health="+stone.getHealth() +" string health=" +space.getGroup().getRelativeHealth());
                     if (side*stone.getHealth() < 0)  {
                         // then the stone is more dead than alive, so mark it so
                         GameContext.log(1, "setting "+space+" to dead");
