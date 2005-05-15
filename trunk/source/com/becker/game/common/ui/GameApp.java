@@ -30,6 +30,7 @@ public class GameApp implements ActionListener
     private JMenuItem openItem_;
     private JMenuItem saveItem_;
     private JMenuItem saveImageItem_;
+    private JMenuItem exitItem_;
 
 
     // provide a mapping from games to implementing panel classes
@@ -149,9 +150,11 @@ public class GameApp implements ActionListener
         openItem_ =  createMenuItem(GameContext.getLabel("OPEN"));
         saveItem_ =  createMenuItem(GameContext.getLabel("SAVE"));
         saveImageItem_ =  createMenuItem(GameContext.getLabel("SAVE_IMAGE"));
+        exitItem_ = createMenuItem("Exit");
         fileMenu.add(openItem_);
         fileMenu.add(saveItem_);
         fileMenu.add(saveImageItem_);
+        fileMenu.add(exitItem_);
 
         Iterator keyIt = hmGames_.keySet().iterator();
         while (keyIt.hasNext()) {
@@ -189,6 +192,9 @@ public class GameApp implements ActionListener
         }
         else if (item == saveImageItem_) {
             gamePanel_.saveSnapshot();
+        }
+        else if (item == exitItem_) {
+            System.exit(0);
         }
         else {
             showGame( (String)hmGames_.get(item.getText()));

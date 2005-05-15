@@ -4,6 +4,8 @@ import com.becker.common.Util;
 import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
 import com.becker.game.twoplayer.common.*;
+import com.becker.game.twoplayer.go.GoBoardUtil;
+import com.becker.game.twoplayer.go.GoBoard;
 import com.becker.optimization.*;
 
 import javax.swing.*;
@@ -160,7 +162,8 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
         get2PlayerController().manMoves( m );
         refresh();
         sendGameChangedEvent( m );
-        return get2PlayerController().done( m, true );
+        boolean done = get2PlayerController().done( m, true );
+        return done;
     }
 
 
@@ -345,23 +348,25 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
      protected final boolean continuePlay( TwoPlayerMove m )
      {
          boolean done = false;
-         TwoPlayerController c = get2PlayerController();
-         if (c.allPlayersComputer()) {
+         TwoPlayerController contoller = get2PlayerController();
+         if (contoller.allPlayersComputer()) {
              refresh();
              doComputerMove( !m.player1 );
          }
          else {
-             if ( c.isPlayer1sTurn() ) {
-                 assert !c.isProcessing();
+
+             if ( contoller.isPlayer1sTurn() ) {
+                 assert !contoller.isProcessing();
                  done = manMoves( m );
-                 if ( !c.getPlayer2().isHuman() && !done )
+                 if ( !contoller.getPlayer2().isHuman() && !done )
                      doComputerMove( false );
              }
              else { // player 2s turn
                  done = manMoves( m );
-                 if ( !c.getPlayer1().isHuman() && !done )
+                 if ( !contoller.getPlayer1().isHuman() && !done )
                      doComputerMove( true );
              }
+
          }
          return !done;
          // we should check the memory here

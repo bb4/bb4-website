@@ -83,7 +83,6 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
 
         Set groups = board.getGroups();
         // draw the group borders
-        long time = System.currentTimeMillis();
         if ( GameContext.getDebugMode() > 0 ) {
             it = groups.iterator();
             //System.out.println( "drawing group decor: ***The groups on the board are: ***\n"+board.getGroupsText() );
@@ -92,8 +91,8 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
                 GoGroupRenderer.drawGroupDecoration(group, colormap_, (float) cellSize_, board, g2 );
             }
         }
+
         super.drawMarkers( nrows, ncols, g2 );
-        GameContext.log( 3, "drawing groups time=" + (System.currentTimeMillis() - time) );
     }
 
     /**
@@ -129,9 +128,8 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
         Location loc = createLocation(e, getCellSize());
         GoBoard board = (GoBoard) controller_.getBoard();
         GoController controller = (GoController) controller_;
-
-        GameContext.log( 3, "GoBoardViewer: mousePressed: controller_.isPlayer1sTurn()="
-                + get2PlayerController().isPlayer1sTurn() );
+        
+        GameContext.log( 3, "GoBoardViewer: mousePressed: controller_.isPlayer1sTurn()=" + get2PlayerController().isPlayer1sTurn() );
 
         GoMove m = GoMove.createMove( loc.row, loc.col, null, 0, new GoStone(controller.isPlayer1sTurn()));
 
@@ -151,22 +149,27 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
             JOptionPane.showMessageDialog( null, GameContext.getLabel("NO_TAKEBACKS"));
             return;
         }
+        assert(!stone.isVisited());
 
         boolean notSuicidal = board.makeMove( m );  // this will fill in the captures
         //System.out.println( "BoardViewer: groups on board (after makemove):\n "+board.getGroupsText() );
 
         board.undoMove(); // may rejoin groups
 
+
         //System.out.println( "BoardViewer: groups on board (after undo):\n "+board.getGroupsText() );
 
         if (notSuicidal)  {
-            if ( !continuePlay( m ) )    // then game over
+
+            if ( !continuePlay( m ) ) {   // then game over
                 showWinnerDialog();
+            }
         }
         else {
             JOptionPane.showMessageDialog( null, GameContext.getLabel("SUICIDAL") );
             GameContext.log( 0, "GoBoardViewer: That move is suicidal (and hence illegal): " + stone );
         }
+
 
     }
 

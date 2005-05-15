@@ -1,5 +1,8 @@
 package com.becker.game.common;
 
+import com.becker.game.twoplayer.go.GoBoardUtil;
+import com.becker.game.twoplayer.go.GoBoard;
+
 import java.util.LinkedList;
 
 

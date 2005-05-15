@@ -51,9 +51,7 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
     public final BoardPosition copy()
     {
         GoBoardPosition pos = new GoBoardPosition( row_, col_, string_, (GoStone)piece_);
-        //if ( piece_ == null )
-        //    GameContext.log( 2, "copying an empty space: " + this );
-        return pos;
+         return pos;
     }
 
     /**

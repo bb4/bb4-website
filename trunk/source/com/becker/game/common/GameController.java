@@ -1,12 +1,15 @@
 package com.becker.game.common;
 
 import com.becker.common.Util;
+import com.becker.game.twoplayer.go.GoMove;
+import com.becker.game.twoplayer.go.GoStone;
 
 import java.util.*;
 
 import ca.dj.jigo.sgf.SGFGame;
 import ca.dj.jigo.sgf.SGFTree;
 import ca.dj.jigo.sgf.SGFLeaf;
+import ca.dj.jigo.sgf.Point;
 import ca.dj.jigo.sgf.tokens.*;
 
 /**
@@ -170,7 +173,7 @@ public abstract class GameController
     {
         parseSGFGameInfo(game);
 
-        java.util.List moveSequence = new LinkedList();
+        List moveSequence = new LinkedList();
         extractMoveList( game.getTree(), moveSequence );
         GameContext.log( 2, "move sequence= " + moveSequence );
         this.reset();
@@ -215,29 +218,41 @@ public abstract class GameController
      * @param moveList - The place to store the moves for the game's main
      * variation.
      */
-    private void extractMoveList( SGFTree tree, java.util.List moveList )
+    private void extractMoveList( SGFTree tree, List moveList )
     {
         Enumeration trees = tree.getTrees(), leaves = tree.getLeaves(), tokens;
 
         while ( (leaves != null) && leaves.hasMoreElements() ) {
             SGFToken token;
             tokens = ((SGFLeaf) (leaves.nextElement())).getTokens();
+
             boolean found = false;
 
             // While a move token hasn't been found, and there are more tokens to
             // examine ... try and find a move token in this tree's leaves to add
-            // to the collective of moves (moveList).
+            // to the collection of moves (moveList).
             while ( (tokens != null) && tokens.hasMoreElements() && !found ) {
-                if ( (token = (SGFToken) (tokens.nextElement())) instanceof MoveToken ) {
-                    moveList.add( createMoveFromToken( (MoveToken) token ) );
-                    found = true;
-                }
+                token = (SGFToken) (tokens.nextElement());
+                found = processToken(token, moveList);
             }
         }
         // If there are variations, use the first variation, which is
         // the entire game, without extraneous variations.
         if ( (trees != null) && trees.hasMoreElements() )
             extractMoveList( (SGFTree) (trees.nextElement()), moveList );
+    }
+
+
+    protected boolean processToken(SGFToken token, List moveList) {
+
+        boolean found = false;
+        if (token instanceof MoveToken ) {
+            moveList.add( createMoveFromToken( (MoveToken) token ) );
+            found = true;
+        } else {
+            System.out.println("ignoring token "+token.getClass().getName());
+        }
+        return found;
     }
 
 

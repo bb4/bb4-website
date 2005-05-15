@@ -3,6 +3,8 @@ package com.becker.game.twoplayer.common;
 import com.becker.common.Util;
 import com.becker.game.twoplayer.common.search.SearchStrategy;
 import com.becker.game.twoplayer.common.search.SearchTreeNode;
+import com.becker.game.twoplayer.go.GoBoardUtil;
+import com.becker.game.twoplayer.go.GoBoard;
 import com.becker.game.common.*;
 import com.becker.optimization.ParameterArray;
 import com.becker.common.Worker;
@@ -502,11 +504,7 @@ public abstract class TwoPlayerController extends GameController
     {
         // we use the default weights because we just need to know if the game is over
         makeMove( m );
-
         m.value = worth( m, weights_.getDefaultWeights() );
-        //getMoveList().add( m );
-        //player1sTurn_ = !((TwoPlayerMove)m).player1;
-
         return m;
     }
 
@@ -738,9 +736,9 @@ public abstract class TwoPlayerController extends GameController
      */
     public boolean done( TwoPlayerMove m, boolean recordWin )
     {
-        if (this.getNumMoves()==0)
+        if (this.getNumMoves() == 0)
             return false;
-        if (this.getNumMoves()>0 && m==null) {
+        if (this.getNumMoves() > 0 && m == null) {
             GameContext.log(0, "Game done because there are no more moves");
             return true; // because their were no more moves apparently.
         }

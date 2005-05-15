@@ -81,9 +81,8 @@ final class GoGroupRenderer
                 }
             }
         }
+        //if (visitedSet.size() != groupStones.size())  huh?
         // mark all the stones in the group unvisited again.
-        if (visitedSet.size() != groupStones.size())
-            System.out.println(visitedSet.size() +"!="+ groupStones.size());
         GoBoardUtil.unvisitPositionsInList( visitedSet );
         return area;
     }
