@@ -44,8 +44,9 @@ public class PlacementListToken extends PlacementToken implements MarkupToken
       // Read a point in the list of points (of which there must be at least
       // one), then add it to our internal list of points.
       //
-      if( parsePoint( st ) )
-        addPoint( getPoint() );
+      if ( parsePoint( st ) )    {
+        addPoint( getPoint().copy() );
+      }
     }
     while( st.nextToken() == (int)'[' );
 
@@ -55,6 +56,6 @@ public class PlacementListToken extends PlacementToken implements MarkupToken
   }
 
   private void addPoint( Point point ) { myPoints.addElement( point ); }
-  public Enumeration getPoints() { return myPoints.elements(); }
+  public Vector getPoints() { return myPoints; }
 }
 

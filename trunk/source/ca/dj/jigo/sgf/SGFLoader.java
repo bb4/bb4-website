@@ -272,7 +272,7 @@ public final class SGFLoader
       token = new SelectedListToken();
     else if( tokenName.equals( "VW" ) )
       token = new ViewToken();
-      
+
     // Adding black moves and white moves is typically done at the beginning
     // of a game (initial board position).
     //
@@ -280,7 +280,7 @@ public final class SGFLoader
       token = new AddBlackToken();
     else if( tokenName.equals( "AW" ) || tokenName.equals( "ADDWHITE" ) )
       token = new AddWhiteToken();
-      
+
     // Many features of SGF are rarely used (but must be present and accounted
     // for in order to make a fully-compliant API).  These follow ...
     //
@@ -366,13 +366,23 @@ public final class SGFLoader
       token = new GameNameToken();
     else if( tokenName.equals( "ID" ) )
       token = new GameIDToken();
-      
-    // If all else fails, just read it as a generic Text token (as opposed to
-    // letting the SGF parsing fail for what might be something as
-    // insignificant as an SGF token name typo).
-    //
-    else
+    else if ( tokenName.equals("HA" ) )
+      token = new HandicapToken();
+    else if ( tokenName.equals("CA" ) )
+      token = new CharsetToken();
+    else if ( tokenName.equals("OT" ) )
+      token = new OverTimeToken();
+    else if ( tokenName.equals("ST" ) )
+      token = new VariationToken();
+    else {
+      System.out.println("Unrecongized token:" + tokenName);
+      // If all else fails, just read it as a generic Text token (as opposed to
+      // letting the SGF parsing fail for what might be something as
+      // insignificant as an SGF token name typo).
+      //
+
       token = new TextToken();
+    }
 
     // Now that we know what type of token we have, ask it to parse itself.
     // Most of the parsing is done by the TextToken class.  All tokens are

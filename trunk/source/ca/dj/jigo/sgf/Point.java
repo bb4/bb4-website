@@ -33,6 +33,7 @@ public final class Point
    */
   public Point() { }
 
+
   /**
    * Constructs a new point at the given coordinates.
    *
@@ -43,6 +44,10 @@ public final class Point
   {
     x = newX;
     y = newY;
+  }
+
+  public Point copy() {
+      return new Point(x, y);
   }
 }
 
