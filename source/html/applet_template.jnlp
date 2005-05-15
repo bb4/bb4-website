@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?> 
      <!-- JNLP File for {title} --> 
      <jnlp spec="1.0+" 
-          codebase="http://tesujisoft.no-ip.com/games">
+          codebase="http://www.geocities.com/barrybecker4/games">
           <information> 
               <title>{title}</title> 
               <vendor>TesujiSoft - Barry G. Becker</vendor>
-              <homepage href="http://tesujisoft.no-ip.com/game_programs.html"/>
-              <!-- homepage href="www.geocities.com/barrybecker4//applet_index_en.html"/ -->
+              <!--homepage href="http://tesujisoft.no-ip.com/game_programs.html"/ -->
+              <homepage href="htt[://www.geocities.com/barrybecker4/applet_index_en.html"/>
               <description>{description}</description> 
               <description kind="short">{title}</description> 
               <icon href="go_icon.gif"/> 
@@ -16,10 +16,16 @@
             <j2se version="1.4+" href="http://java.sun.com/products/autodl/j2se"/>
             <jar href="common.jar" main="false"/>
             <jar href="sound.jar" main="false"/>
+            <jar href="optimization.jar" main="false"/>
+            <jar href="pente.jar" main="false"/>
+            <jar href="checkers.jar" main="false"/>
+            <jar href="chess.jar" main="false"/>
+            <jar href="go.jar" main="false"/>
+            <jar href="blockade.jar" main="false"/>
+            <jar href="galactic.jar" main="false"/>
+            <jar href="poker.jar" main="false"/>
             {jarElement1}
             {jarElement2}
-            {jarElement3}
-            {jarElement4}
        </resources>
        
        <application-desc main-class="{qualifiedAppClassName}"> 
