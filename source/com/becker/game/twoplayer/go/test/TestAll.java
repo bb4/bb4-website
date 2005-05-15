@@ -15,6 +15,8 @@ public class TestAll extends TestCase {
         suite.addTestSuite(TestEyes.class);
         suite.addTestSuite(TestScoring.class);
         suite.addTestSuite(TestLifeAndDeath.class);
+        suite.addTestSuite(TestProblemCollections.class);
+        suite.addTestSuite(TestKiseido2002.class);
 
         return suite;
     }
