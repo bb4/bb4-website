@@ -58,6 +58,7 @@
         <fileset dir="${classesDir}">
           <include name="com/becker/game/common/*.class"/>
           <include name="com/becker/game/common/ui/*.class"/>
+          <include name="com/becker/game/card/*.class"/>
           <include name="com/becker/java2d/*Gradient*.class"/>
         </fileset>
         <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
@@ -202,6 +203,8 @@
         <fileset dir="${classesDir}">
           <include name="com/becker/game/multiplayer/galactic/*.class"/>
           <include name="com/becker/game/multiplayer/galactic/ui/*.class"/>
+          <include name="com/becker/game/multiplayer/common/*.class"/>
+          <include name="com/becker/game/multiplayer/common/ui/*.class"/>
         </fileset>
         <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
       </copy>
@@ -217,10 +220,38 @@
       <sleep seconds="1" />
       <delete dir="${stagingDir}/com"/>
 
+
+      <!-- copy the class files that are needed for poker game deployment -->
+      <copy todir="${stagingDir}">
+        <fileset dir="${classesDir}">
+          <include name="com/becker/game/multiplayer/poker/*.class"/>
+          <include name="com/becker/game/multiplayer/poker/ui/*.class"/>
+          <include name="com/becker/game/multiplayer/common/*.class"/>
+          <include name="com/becker/game/multiplayer/common/ui/*.class"/>
+        </fileset>
+        <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
+      </copy>
+      <!--antcall target="copyResources">
+        <param name="path" value="game/multiplayer/poker/ui/images"/>
+        <param name="pattern" value="*.png"/>
+      </antcall -->
+      <antcall target="copyResources">
+        <param name="path" value="game/multiplayer/poker/ui/images"/>
+        <param name="pattern" value="*.gif"/>
+      </antcall>
+      <antcall target="copyResources">
+        <param name="path" value="game/multiplayer/poker/resources"/>
+        <param name="pattern" value="*.properties"/>
+      </antcall>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/poker.jar"/>
+      <sleep seconds="1" />
+      <delete dir="${stagingDir}/com"/>
+
+
       <!-- copy the class files that are needed for maze deployment -->
       <copy todir="${stagingDir}">
         <fileset dir="${classesDir}">
-          <include name="com/becker/maze/*.class"/>
+          <include name="com/becker/puzzle/maze/*.class"/>
         </fileset>
         <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve directory hierarchy -->
       </copy>
@@ -250,11 +281,22 @@
       <!-- copy the class files that are needed for redpuzzle deployment -->
       <copy todir="${stagingDir}">
         <fileset dir="${classesDir}">
-          <include name="com/becker/redpuzzle/*.class"/>
+          <include name="com/becker/puzzle/redpuzzle/*.class"/>
         </fileset>
         <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve directory hierarchy -->
       </copy>
       <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/redpuzzle.jar"/>
+      <sleep seconds="1" />
+      <delete dir="${stagingDir}/com"/>
+
+      <!-- copy the class files that are needed for redpuzzle deployment -->
+      <copy todir="${stagingDir}">
+        <fileset dir="${classesDir}">
+          <include name="com/becker/puzzle/hiq/*.class"/>
+        </fileset>
+        <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve directory hierarchy -->
+      </copy>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/hiq.jar"/>
       <sleep seconds="1" />
       <delete dir="${stagingDir}/com"/>
 
