@@ -126,7 +126,7 @@ public class InfoFrame extends Frame implements Observer
     gbc.anchor = GridBagConstraints.WEST;
     setLayout( gbl );
 
-    // Add the labels ...
+    // Add the cutpoints ...
     //
     Label label = new Label( "Place:" );
 

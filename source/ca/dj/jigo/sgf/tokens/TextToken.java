@@ -114,7 +114,7 @@ public class TextToken extends SGFToken
   /**
    * Returns the entire text between the opening '[' and closing ']'.
    */
-  protected String getText() { return myText; }
+  public String getText() { return myText; }
   private void setText( String text ) { myText = text; }
 }
 
