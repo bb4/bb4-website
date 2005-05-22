@@ -1,9 +1,9 @@
 package com.becker.game.twoplayer.checkers.ui;
 
 import com.becker.game.twoplayer.checkers.CheckersPiece;
+import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
 import com.becker.game.common.BoardPosition;
 import com.becker.game.common.Board;
-import com.becker.game.common.ui.GamePieceRenderer;
 
 import java.awt.*;
 
@@ -12,9 +12,9 @@ import java.awt.*;
  * @see com.becker.game.twoplayer.checkers.ui.CheckersBoardViewer
  * @author Barry Becker
  */
-public class CheckersPieceRenderer extends GamePieceRenderer
+public class CheckersPieceRenderer extends TwoPlayerPieceRenderer
 {
-    private static GamePieceRenderer renderer_ = null;
+    private static TwoPlayerPieceRenderer renderer_ = null;
 
     /**
      * private constructor because this class is a singleton.
@@ -23,7 +23,7 @@ public class CheckersPieceRenderer extends GamePieceRenderer
     protected CheckersPieceRenderer()
     {}
 
-    public static GamePieceRenderer getRenderer()
+    public static TwoPlayerPieceRenderer getRenderer()
     {
         if (renderer_ == null)
             renderer_ = new CheckersPieceRenderer();

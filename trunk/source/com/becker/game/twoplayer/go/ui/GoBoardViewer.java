@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.go.ui;
 import com.becker.common.ColorMap;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer;
+import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.go.*;
 import com.becker.ui.GUIUtil;
 
@@ -77,7 +78,8 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
         double rad = (float)cellSize_/21.0+.1;
         while (it.hasNext()) {
             GoBoardPosition p = (GoBoardPosition)it.next();
-            g2.fillOval(BOARD_MARGIN+(int)(cellSize_*(p.getCol()-.5)-rad), BOARD_MARGIN+(int)(cellSize_*(p.getRow()-.5)-rad),
+            g2.fillOval(BOARD_MARGIN+(int)(cellSize_*(p.getCol()-.5)-rad),
+                        BOARD_MARGIN+(int)(cellSize_*(p.getRow()-.5)-rad),
                         (int)(2.0*rad+1.7), (int)(2.0*rad+1.7));
         }
 
@@ -85,7 +87,7 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
         // draw the group borders
         if ( GameContext.getDebugMode() > 0 ) {
             it = groups.iterator();
-            //System.out.println( "drawing group decor: ***The groups on the board are: ***\n"+board.getGroupsText() );
+            //System.out.println( "drawing group decor: ***The groups on the board are: ***\n"+board.getGroupsText());
             while ( it.hasNext() ) {
                 GoGroup group = (GoGroup) it.next();
                 GoGroupRenderer.drawGroupDecoration(group, colormap_, (float) cellSize_, board, g2 );
@@ -93,6 +95,8 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
         }
 
         super.drawMarkers( nrows, ncols, g2 );
+
+        drawNextMoveMarkers(g2);
     }
 
     /**
@@ -169,7 +173,6 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
             JOptionPane.showMessageDialog( null, GameContext.getLabel("SUICIDAL") );
             GameContext.log( 0, "GoBoardViewer: That move is suicidal (and hence illegal): " + stone );
         }
-
 
     }
 

@@ -51,27 +51,12 @@ import javax.swing.*;
  *
  * high priority todo:
  *  - check performance bottleknecks
- *  - isolate reagions of code likely to have bugs
  *  - add test cases for every little thing
  *  - why don't test cases find optimal moves
  *  - why does turning quiescense on make things too slow
  *  - test inJeopardy
  * bugs
- *  - some eyes are marked true when they are clearly not (eg if one of tthe border stones is in atari.
- *  - exception after undo
- *  	at com.becker.common.Assert.exception(Assert.java:153)
-	at com.becker.game.twoplayer.go.GoBoard.confirmStoneInValidGroup(GoBoard.java:2195)
-	at com.becker.game.twoplayer.go.GoBoard.confirmStonesInValidGroups(GoBoard.java:2172)
-	at com.becker.game.twoplayer.go.GoBoard.updateAfterRestoringCaptures(GoBoard.java:1450)
-	at com.becker.game.twoplayer.go.GoBoard.undoInternalMove(GoBoard.java:443)
-	at com.becker.game.twoplayer.go.GoController.generateMoves(GoController.java:600)
-	at com.becker.game.twoplayer.common.search.MiniMaxStrategy.search(MiniMaxStrategy.java:58)
-	at com.becker.game.twoplayer.common.TwoPlayerController.findComputerMove(TwoPlayerController.java:458)
-	at com.becker.game.twoplayer.common.TwoPlayerController.access$100(TwoPlayerController.java:25)
-	at com.becker.game.twoplayer.common.TwoPlayerController$1.construct(TwoPlayerController.java:596)
-	at com.becker.common.Worker$1.run(Worker.java:111)
-	at java.lang.Thread.run(Thread.java:595)
-
+ *  - java.lang.AssertionError: The sum of the child times(23411) cannot be greater than the parent time (23296)
  *  - pause/continue not working in tree dialog.
  *  - at end of game, computer plays in its own eyes instead of passing.
  *  - When the computer plays in your eye, the eye goes away. It should not.
@@ -496,7 +481,7 @@ public final class GoController extends TwoPlayerController
             out.write( "CA[UTF-8]\n" );
             out.write( "ST[2]\n" );
             out.write( "RU[japanese]\n" );
-            out.write( "SZ["+this.getBoard().getNumRows()+")]\n" );
+            out.write( "SZ["+this.getBoard().getNumRows()+"]\n" );
             out.write( "PB["+this.getPlayer1().getName()+"]\n" );
             out.write( "PW["+this.getPlayer2().getName()+"]\n" );
             out.write( "KM["+getKomi()+"]\n" );
@@ -700,7 +685,7 @@ public final class GoController extends TwoPlayerController
 
         for ( i = 1; i <= Ncols; i++ )      //cols
             for ( j = 1; j <= Nrows; j++ )    //rows
-                    // if its a candidate move and not an immediate takeback (which would break the rule of ko)
+                // if its a candidate move and not an immediate takeback (which would break the rule of ko)
                 if ( gb.isCandidateMove( j, i ) && !isTakeBack( j, i, (GoMove) lastMove, gb ) ) {
                     GoMove m = GoMove.createMove( j, i, null, lastMove.value, new GoStone(player1) );
                     boolean suicide = !gb.makeMove( m );
@@ -726,7 +711,6 @@ public final class GoController extends TwoPlayerController
         // (which just uses the value of the current move) then we should pass
         if (getNumMoves() > Ncols+Nrows)  {
             ((LinkedList)moveList).addLast( GoMove.createPassMove(lastMove.value, player1));
-            //System.out.println( "movelist with pass (p1persp="+player1sPerspective+") \nlastMove="+lastMove+" \nmoves:\n"+moveList );
         }
         return moveList;
     }

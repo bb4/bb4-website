@@ -23,7 +23,7 @@ public final class GoBoardUtil
      * if its not that much weaker then we don't really have an eye.
      * @@ make this a game parameter .9 - 1.8 that can be optimized.
      */
-    static final float DIFFERENCE_THRESHOLD = 1.0f;
+    static final float DIFFERENCE_THRESHOLD = .8f;
 
     private GoBoardUtil() {
     }
@@ -482,7 +482,7 @@ public final class GoBoardUtil
         }
         else {
             assert (group.isOwnedByPlayer1() == true);
-            return (groupHealth + stoneHealth > threshold);
+            return ( groupHealth + stoneHealth > threshold);
         }
     }
 
@@ -499,6 +499,7 @@ public final class GoBoardUtil
      */
     static boolean isStoneMuchWeaker(GoGroup group, GoStone stone)
     {
-        return isStoneWeaker(group, stone, DIFFERENCE_THRESHOLD);
+        boolean weaker = isStoneWeaker(group, stone, DIFFERENCE_THRESHOLD);
+        return weaker;
     }
 }

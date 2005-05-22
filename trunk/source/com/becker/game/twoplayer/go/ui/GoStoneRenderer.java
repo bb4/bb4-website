@@ -3,8 +3,8 @@ package com.becker.game.twoplayer.go.ui;
 import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.Board;
-import com.becker.game.common.ui.GamePieceRenderer;
 import com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer;
+import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
 import com.becker.game.twoplayer.go.GoStone;
 import com.becker.game.twoplayer.go.GoBoardPosition;
 import com.becker.game.twoplayer.go.GoBoard;
@@ -18,9 +18,9 @@ import java.awt.*;
  * @see com.becker.game.twoplayer.chess.ui.ChessBoardViewer
  * @author Barry Becker
  */
-final class GoStoneRenderer  extends GamePieceRenderer
+final class GoStoneRenderer extends TwoPlayerPieceRenderer
 {
-    private static GamePieceRenderer renderer_ = null;
+    private static TwoPlayerPieceRenderer renderer_ = null;
 
     // if rendering the stones we use these colors
     // the stone colors ( a specular highlight is added to the stones when rendering )
@@ -45,7 +45,7 @@ final class GoStoneRenderer  extends GamePieceRenderer
     private GoStoneRenderer()
     {}
 
-    public static GamePieceRenderer getRenderer()
+    public static TwoPlayerPieceRenderer getRenderer()
     {
         if (renderer_ == null)
             renderer_ = new GoStoneRenderer();

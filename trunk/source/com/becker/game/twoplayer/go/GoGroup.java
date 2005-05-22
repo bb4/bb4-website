@@ -386,7 +386,7 @@ public final class GoGroup extends GoSet
         }
 
         // now do a paint fill on each of the empty unvisited spaces left.
-        // most of these remaining empty spaces is connected to an eye of some type.
+        // most of these remaining empty spaces are connected to an eye of some type.
         // There will be some that fill spaces between black and white stones.
         // Don't count these as eyes unless the stones of the opposite color are much weaker -
         // in which case they are assumed dead and hence part of the eye.
@@ -440,7 +440,7 @@ public final class GoGroup extends GoSet
                 GoBoardPosition p = (GoBoardPosition)it.next();
                 if (p.isOccupied()) {
                     // if its a very weak opponent (ie dead) then don't exclude it from the list
-                    if (!groupString.isEnemy(p, board))  {
+                    if (!groupString.isEnemy(p))  {
                         p.setVisited(false);
                         it.remove();  // remove it from the list
                     }
@@ -480,18 +480,28 @@ public final class GoGroup extends GoSet
         if ( eyeList == null )
             return false;
 
-        //if (numCurrentTrueEyes > 0)   // why did I do this?
-        //    return true;
-
         // each occupied stone of the eye must be very weak (ie not an enemy, but dead opponent)
         // compare it with one of the group strings
         GoString groupString = (GoString)(members_.iterator().next());
 
         Iterator it = eyeList.iterator();
         while ( it.hasNext() ) {
-            GoBoardPosition stone = (GoBoardPosition) it.next();
-            if (stone.isOccupied() && groupString.isEnemy(stone, board)) {
-                return false;  // not eye
+            GoBoardPosition position = (GoBoardPosition) it.next();
+            GoString string = position.getString();
+
+            if (position.isOccupied()) {
+                GoStone stone  = ((GoStone)position.getPiece());
+                if (string.size() == 1 && stone.getHealth() == 0) {
+                    // since its a lone stone inside an enemy eye, we assume it is more dead than alive
+
+                    //System.out.print("was "+stone.getHealth());
+                    stone.setHealth(stone.isOwnedByPlayer1() ? -0.5f : 0.5f);
+                    //System.out.println("setting to " + stone.getHealth());
+                }
+                if (groupString.isEnemy(position)) {
+                    //GameContext.log(3, (position +" was determined to be an enemy of "+this);
+                    return false;  // not eye
+                }
             }
         }
         // if we make it here, its a bonafied eye.
@@ -563,12 +573,34 @@ public final class GoGroup extends GoSet
         // we multiply by a +/- sign depending on the side
         float side = ownedByPlayer1_? 1.0f : -1.0f;
 
+        // we need to come up with some approximation for the health so update eyes can be done more accurately.
+        int numEyes = calcNumEyes();
+        absoluteHealth_ = determineHealth(side, numEyes, numLiberties);
+
         profiler.start(GoProfiler.UPDATE_EYES);
         updateEyes( board );  // expensive
         profiler.stop(GoProfiler.UPDATE_EYES);
 
         changed_ = false;  // cached until something changes
 
+        numEyes = calcNumEyes();
+        health = determineHealth(side, numEyes, numLiberties);
+
+        // Should there be any bonus at all for flase eyes??  no
+        // health += (side * .015 * numFalseEyes);
+
+        absoluteHealth_ = health;
+        if (Math.abs(absoluteHealth_)>1.0) {
+            GameContext.log(0,  "Warning: health exceeded 1.0: " +" health="+health+" numEyes="+numEyes);
+            absoluteHealth_ = side;
+        }
+
+        //if (numLiberties<=1)
+        //    GameContext.log(2, "health for "+this+" = health="+health+"  + health="+health);
+        return absoluteHealth_;
+    }
+
+    private int calcNumEyes() {
         // figure out how many of each eye type we have
         Iterator it = eyes_.iterator();
         int numEyes = 0;
@@ -592,20 +624,7 @@ public final class GoGroup extends GoSet
                     assert false: "bad eye type:" + eye.getEyeType() ;
             }
         }
-        health = determineHealth(side, numEyes, numLiberties);
-
-        // Should there be any bonus at all for flase eyes??  no
-        // health += (side * .015 * numFalseEyes);
-
-        absoluteHealth_ = health;
-        if (Math.abs(absoluteHealth_)>1.0) {
-            GameContext.log(0,  "Warning: health exceeded 1.0: " +" health="+health+" numEyes="+numEyes+" numfalse eye="+numFalseEyes);
-            absoluteHealth_ = side;
-        }
-
-        //if (numLiberties<=1)
-        //    GameContext.log(2, "health for "+this+" = health="+health+"  + health="+health);
-        return absoluteHealth_;
+        return numEyes;
     }
 
     /**
@@ -664,7 +683,7 @@ public final class GoGroup extends GoSet
                     health = -side;
                     break;
                 case 1:
-                    health = -side * .98f;
+                    health = -side * .4f;
                     break;
                 case 2:
                     // @@ consider seki situations where the adjacent enemy group also has no eyes.
@@ -673,10 +692,10 @@ public final class GoGroup extends GoSet
                     //    Xo.XXX.oX
                     //    XooooooXX
                     //    XXXXXXX
-                    health = -side * .7f;
+                    health = -side * .1f;
                     break;
                 case 3:
-                    health = -side * .2f;
+                    health = -side * .05f;
                     break;
                 case 4:
                     health = 0.0f;

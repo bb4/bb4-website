@@ -50,6 +50,11 @@ public class PlanetRenderer extends GamePieceRenderer
         return pieceSize;
     }
 
+    protected Color getPieceColor(GamePiece piece) {
+        Planet planet = (Planet)piece;
+        return planet.getColor();
+    }
+
     /**
      * this draws the actual piece at this location (if there is one).
      * Uses the RoundGradientFill from Knudsen to put a specular highlight on the planet.
@@ -68,7 +73,7 @@ public class PlanetRenderer extends GamePieceRenderer
         Point pos = getPosition(position, cellSize, pieceSize);
         Ellipse2D circle = new Ellipse2D.Float( pos.x, pos.y, pieceSize + 1, pieceSize + 1 );
         int hlOffset = (int) (pieceSize / 2.3 + .5);  //spec highlight offset
-        Color c= planet.getColor();
+        Color c = getPieceColor(planet);
 
         RoundGradientPaint rgp = new RoundGradientPaint(
                 pos.x + hlOffset, pos.y + hlOffset, Color.white, SPEC_HIGHLIGHT_RADIUS, c );

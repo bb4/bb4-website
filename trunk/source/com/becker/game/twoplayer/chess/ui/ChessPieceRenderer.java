@@ -1,10 +1,10 @@
 package com.becker.game.twoplayer.chess.ui;
 
 import com.becker.game.twoplayer.chess.ChessPiece;
+import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
 import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.Board;
-import com.becker.game.common.ui.GamePieceRenderer;
 import com.becker.ui.GUIUtil;
 
 import javax.swing.*;
@@ -15,9 +15,9 @@ import java.awt.*;
  * @see com.becker.game.twoplayer.chess.ui.ChessBoardViewer
  * @author Barry Becker
  */
-public class ChessPieceRenderer  extends GamePieceRenderer
+public class ChessPieceRenderer  extends TwoPlayerPieceRenderer
 {
-    private static GamePieceRenderer renderer_ = null;
+    private static TwoPlayerPieceRenderer renderer_ = null;
 
     private static final Color DEFAULT_PLAYER1_COLOR = new Color( 30, 170, 10); //40, 190, 90 );
     private static final Color DEFAULT_PLAYER2_COLOR = new Color( 170, 0, 180); // 210, 60, 140 );
@@ -60,7 +60,7 @@ public class ChessPieceRenderer  extends GamePieceRenderer
     protected ChessPieceRenderer()
     {}
 
-    public static GamePieceRenderer getRenderer()
+    public static TwoPlayerPieceRenderer getRenderer()
     {
         if (renderer_ == null)
             renderer_ = new ChessPieceRenderer();

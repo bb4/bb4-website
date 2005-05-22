@@ -95,7 +95,8 @@ public final class GameTreeDialog extends JDialog
      */
     private void initColormap()
     {
-        GamePieceRenderer renderer = ((TwoPlayerBoardViewer)boardViewer_).getPieceRenderer();
+        TwoPlayerBoardViewer viewer = (TwoPlayerBoardViewer)boardViewer_;
+        TwoPlayerPieceRenderer renderer = (TwoPlayerPieceRenderer)viewer.getPieceRenderer();
         // we will use this colormap for both the text tree and the graphical tree viewers so they have consistent coloring.
         final double[] values_ = {-TwoPlayerController.WINNING_VALUE, -TwoPlayerController.WINNING_VALUE/20.0,
                                               0.0,
@@ -289,7 +290,7 @@ public final class GameTreeDialog extends JDialog
 
 
     /**
-     * called when a particular move in the game tree has been selected by the user (by clicking on it).
+     * called when a particular move in the game tree has been selected by the user (by clicking on it or mouse-over).
      * @param e
      */
     private void selectCallback( MouseEvent e )
@@ -327,13 +328,18 @@ public final class GameTreeDialog extends JDialog
                 m.transparency = trans;
                 moveList.add( m );
             }
+            // also show the children of the final move in a special way (if there are any)
+            SearchTreeNode finalNode = (SearchTreeNode) nodes[chainLength-1];
+
             TwoPlayerBoardViewer viewer = (TwoPlayerBoardViewer)boardViewer_;
 
-            viewer.showMoveSequence( moveList, oldChainLength_ );
+            //viewer.showMoveSequence( moveList, oldChainLength_ );
+            viewer.showMoveSequence( moveList, oldChainLength_, finalNode.getChildMoves() );
+
             // remember the old chain length so we know how much to back up next time
             oldChainLength_ = chainLength;
 
-            GamePieceRenderer renderer = viewer.getPieceRenderer();
+            TwoPlayerPieceRenderer renderer = (TwoPlayerPieceRenderer)viewer.getPieceRenderer();
             String entity = "Human's move";
             Color c = renderer.getPlayer2Color();
             if ( m.player1 )

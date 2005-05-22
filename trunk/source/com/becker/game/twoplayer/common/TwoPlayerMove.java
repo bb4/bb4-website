@@ -150,9 +150,7 @@ public class TwoPlayerMove extends Move
 
     public String toString()
     {
-        //String s = "pos:"+row+","+ col;
         StringBuffer s = new StringBuffer();
-        //s.append("<html>");
         if (piece!=null)
             s.append( piece.isOwnedByPlayer1()? P1 : P2 );
 
@@ -164,7 +162,6 @@ public class TwoPlayerMove extends Move
         s.append( "(" + toRow_ + ", " + toCol_ + ")" );
         if (urgent)
             s.append(" urgent!");
-        //s.append("</html>");
         return s.toString();
     }
 }

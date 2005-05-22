@@ -16,12 +16,12 @@ public class GoProfiler extends Profiler {
     private static final String MAKE_MOVE = "making move";
     private static final String UPDATE_STRINGS_AFTER_MOVE = "updating strings after move";
     private static final String UPDATE_GROUPS_AFTER_MOVE = "updating groups after move";
-    private static final String GET_NBR_GROUPS = "getting nbr groups";
+    //private static final String GET_NBR_GROUPS = "getting nbr groups";
     public static final String UPDATE_TERRITORY = "updating territory";
     public static final String ABSOLUTE_TERRITORY = "absolute territory";
     public static final String RELATIVE_TERRITORY = "relative territory";
     public static final String UPDATE_EMPTY = "updating empty regions";
-    private static final String CHECK_FOR_CUTS = "checking for cuts";
+    //private static final String CHECK_FOR_CUTS = "checking for cuts";
     public static final String GET_GROUP_NBRS = "getting group nbrs";
     public static final String FIND_GROUPS = "finding groups";
     public static final String FIND_STRINGS = "finding strings";
@@ -37,8 +37,8 @@ public class GoProfiler extends Profiler {
           add(FIND_CAPTURES, MAKE_MOVE);
           add(UPDATE_STRINGS_AFTER_MOVE, MAKE_MOVE);
           add(UPDATE_GROUPS_AFTER_MOVE, MAKE_MOVE);
-            add(GET_NBR_GROUPS, UPDATE_GROUPS_AFTER_MOVE);
-            add(CHECK_FOR_CUTS, UPDATE_GROUPS_AFTER_MOVE);
+            //add(GET_NBR_GROUPS, UPDATE_GROUPS_AFTER_MOVE);
+            //add(CHECK_FOR_CUTS, UPDATE_GROUPS_AFTER_MOVE);
             add(UPDATE_TERRITORY, UPDATE_GROUPS_AFTER_MOVE);
               add(ABSOLUTE_TERRITORY, UPDATE_TERRITORY);
                 add(UPDATE_EYES, ABSOLUTE_TERRITORY);
