@@ -327,15 +327,18 @@ public final class GoBoard extends TwoPlayerBoard
         }
 
         GoBoardPosition stone = (GoBoardPosition) (positions_[m.getToRow()][m.getToCol()]);
-        assert (stone.isUnoccupied()):
-                "Position "+stone+" is already occupied. move num ="+ this.getNumMoves() +" \nBoard:\n"+this.toString();
+
+        // we hit this all the time when mousing over the game tree.
+        //assert (stone.isUnoccupied()):
+        //        "Position "+stone+" is already occupied. move num ="+ this.getNumMoves() +" \nBoard:\n"+this.toString();
 
         // first make sure that there are no references to obsolete groups.
         clearEyes();    // I think this is important
 
         super.makeInternalMove( m );
 
-        assert (stone.getString() == null): stone +" already belongs to "+stone.getString();
+        // hitting this all the time when showing game tree.
+        //assert (stone.getString() == null) : stone +" already belongs to "+stone.getString();
 
         m.captureList = findCaptures( stone );
 
@@ -355,7 +358,8 @@ public final class GoBoard extends TwoPlayerBoard
 
         if ( GameContext.getDebugMode() > 1 ) {
             GoString string = stone.getString();
-            assert ( string.getLiberties( this ).size() > 0): "ERROR: string owned by placed stone has no liberties: " + string;
+            assert ( string.getLiberties( this ).size() > 0):
+                    "ERROR: string owned by placed stone has no liberties: " + string;
             assert ( string.size() > 0): "stone has bad string: " + stone;
         }
 
@@ -628,6 +632,10 @@ public final class GoBoard extends TwoPlayerBoard
                 System.out.println("The move was :"+pos);
                 throw e;
             }
+        }
+
+        if (GameContext.getDebugMode() > 1) {
+            GoBoardUtil.confirmAllStonesInUniqueGroups(groups_);
         }
 
         profiler_.stopUpdateGroupsAfterMove();
@@ -979,7 +987,7 @@ public final class GoBoard extends TwoPlayerBoard
         GoGroup group = string.getGroup();
         Set nbrs = getNobiNeighbors( stone, group.isOwnedByPlayer1(), NeighborType.FRIEND );
         if ( string.size() == 0 ) {
-            GameContext.log( 3, "ERROR: string size = 0" );
+            //GameContext.log( 2, "ERROR: string size = 0" );  // assert?
             return;
         }
         // make new string(s) if removing the stone has caused a larger string to be split.

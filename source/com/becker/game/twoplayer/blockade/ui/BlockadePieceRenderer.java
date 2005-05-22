@@ -4,8 +4,8 @@ import com.becker.game.twoplayer.blockade.BlockadeBoardPosition;
 import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GamePiece;
 import com.becker.game.common.Board;
-import com.becker.game.common.ui.GamePieceRenderer;
 import com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer;
+import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
 
 import java.awt.*;
 
@@ -14,9 +14,9 @@ import java.awt.*;
  * @see com.becker.game.twoplayer.blockade.ui.BlockadeBoardViewer
  * @author Barry Becker
  */
-class BlockadePieceRenderer extends GamePieceRenderer
+class BlockadePieceRenderer extends TwoPlayerPieceRenderer
 {
-    private static GamePieceRenderer renderer_ = null;
+    private static TwoPlayerPieceRenderer renderer_ = null;
 
     private static final Color EAST_WALL_COLOR = new Color(160, 110, 120);
     private static final Color SOUTH_WALL_COLOR = new Color(110, 160, 120);
@@ -29,7 +29,7 @@ class BlockadePieceRenderer extends GamePieceRenderer
     protected BlockadePieceRenderer()
     {}
 
-    public static GamePieceRenderer getRenderer()
+    public static TwoPlayerPieceRenderer getRenderer()
     {
         if (renderer_ == null)
             renderer_ = new BlockadePieceRenderer();

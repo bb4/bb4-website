@@ -220,14 +220,14 @@ public class GoString extends GoSet
      *  If the difference in health between the stones is great, then they are not really enemies
      *  because one of them is dead.
      */
-    protected boolean isEnemy( GoBoardPosition pos, GoBoard board )
+    protected boolean isEnemy( GoBoardPosition pos )
     {
-        assert (group_!=null): "group for "+this+" is null";
+        assert (group_ != null): "group for "+this+" is null";
         assert (pos.isOccupied()): "pos not occupied: ="+pos;
         GoStone stone = (GoStone)pos.getPiece();
         boolean withinDifferenceThreshold = !GoBoardUtil.isStoneMuchWeaker(getGroup(), stone);
 
-        assert (getGroup().isOwnedByPlayer1() == this.isOwnedByPlayer1()): getGroup()+" string="+this;
+        assert (getGroup().isOwnedByPlayer1() == this.isOwnedByPlayer1()): getGroup()+" string=" + this;
         return ((stone.isOwnedByPlayer1() != this.isOwnedByPlayer1() && withinDifferenceThreshold));
     }
 

@@ -4,6 +4,7 @@ import ca.dj.jigo.sgf.tokens.MoveToken;
 import com.becker.game.twoplayer.blockade.*;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer;
+import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
 import com.becker.game.common.Move;
 
 import javax.swing.*;
@@ -417,7 +418,8 @@ class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMotionLis
 
         int cellSize = this.getCellSize();
         int offset = Math.round(cellSize/4.0f);
-        g.setColor(player1? pieceRenderer_.getPlayer1Color(): pieceRenderer_.getPlayer2Color());
+        TwoPlayerPieceRenderer renderer = (TwoPlayerPieceRenderer) pieceRenderer_;
+        g.setColor(player1? renderer.getPlayer1Color(): renderer.getPlayer2Color());
 
         for (int i=0; i<homes.length; i++) {
             BoardPosition home = homes[i];

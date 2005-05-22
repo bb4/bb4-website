@@ -1,6 +1,7 @@
 package com.becker.game.common.ui;
 
 import com.becker.game.common.*;
+import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.java2d.RoundGradientPaint;
 
 import java.awt.*;
@@ -15,16 +16,8 @@ import java.awt.geom.Point2D;
  * @see com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer
  * @author Barry Becker
  */
-public class GamePieceRenderer
+public abstract class GamePieceRenderer
 {
-    // there must be one of these for each derived class too.
-    private static GamePieceRenderer renderer_ = null;
-
-    private static final Color DEFAULT_PLAYER1_COLOR = new Color( 230, 100, 255);
-    private static final Color DEFAULT_PLAYER2_COLOR = new Color( 100, 220, 255);
-
-    private static final Color PLAYER1_TEXT_COLOR = new Color( 255, 250, 255 );
-    private static final Color PLAYER2_TEXT_COLOR = new Color( 0, 50, 30 );
 
     protected static final Font BASE_FONT = new Font( "Sans-serif", Font.PLAIN, 11 );
 
@@ -42,51 +35,14 @@ public class GamePieceRenderer
     protected GamePieceRenderer()
     {}
 
-    public static GamePieceRenderer getRenderer()
-    {
-        if (renderer_ == null)
-            renderer_ = new GamePieceRenderer();
-        return renderer_;
-    }
-
-    /**
-     *  determines what color the player1 pieces should be
-     *  ignored if using icons to represent the pieces.
-     */
-    public Color getPlayer1Color()
-    {
-        return DEFAULT_PLAYER1_COLOR;
-    }
-
-    /**
-     *  determines what color the player2 pieces should be
-     *  ignored if using icons to represent the pieces.
-     */
-    public Color getPlayer2Color()
-    {
-        return DEFAULT_PLAYER2_COLOR;
-    }
 
 
     /**
      * @return the game piece render color.
      */
-    protected Color getPieceColor(GamePiece piece)
-    {
-        Color playerColor = null;
-        Color c = null;
-        if ( piece.isOwnedByPlayer1() ) {
-            playerColor = getPlayer1Color();
-            c = new Color( playerColor.getRed(), playerColor.getGreen(), playerColor.getBlue(),
-                    255 - piece.getTransparency() );
-        }
-        else {
-            playerColor = getPlayer2Color();
-            c = new Color( playerColor.getRed(), playerColor.getGreen(), playerColor.getBlue(),
-                    255 - piece.getTransparency() );
-        }
-        return c;
-    }
+    protected abstract Color getPieceColor(GamePiece piece);
+  
+
 
     protected int getPieceSize(int cellSize, GamePiece piece)
     {
@@ -97,17 +53,6 @@ public class GamePieceRenderer
         return pieceSize;
     }
 
-    /**
-     * @return color for annotation text (if any).
-     */
-    private static Color getTextColor(GamePiece piece)
-    {
-        Color textColor = PLAYER2_TEXT_COLOR;
-        if ( piece.isOwnedByPlayer1() ) {
-            textColor = PLAYER1_TEXT_COLOR;
-        }
-        return textColor;
-    }
 
     protected static Point getPosition(BoardPosition position, int cellSize, int pieceSize)
     {
@@ -115,6 +60,10 @@ public class GamePieceRenderer
         position_.x = GameBoardViewer.BOARD_MARGIN + cellSize*(position.getCol()-1) + offset;
         position_.y = GameBoardViewer.BOARD_MARGIN + cellSize*(position.getRow()-1) + offset;
         return position_;
+    }
+
+    protected Color getTextColor(GamePiece piece) {
+        return Color.black;
     }
 
    /**

@@ -1,8 +1,10 @@
 package com.becker.game.twoplayer.common.search;
 
 import com.becker.common.Util;
+import com.becker.game.twoplayer.common.TwoPlayerMove;
 
 import javax.swing.tree.DefaultMutableTreeNode;
+import java.util.Enumeration;
 
 /**
  *  this class represents a move/node in the game tree.
@@ -63,6 +65,23 @@ public class SearchTreeNode extends DefaultMutableTreeNode
     {
         setUserObject(m);
         pruned = false;
+    }
+
+    public SearchTreeNode[] getChildren() {
+        return (SearchTreeNode[])this.children.toArray();
+    }
+
+    public TwoPlayerMove[] getChildMoves() {
+        if (children == null)
+            return null;
+        TwoPlayerMove[] moves = new TwoPlayerMove[children.size()];
+        Enumeration enumeration = this.children();
+        int i = 0;
+        while (enumeration.hasMoreElements()) {
+            SearchTreeNode node = (SearchTreeNode)enumeration.nextElement();
+            moves[i++] = (TwoPlayerMove)node.getUserObject();
+        }
+        return moves;
     }
 
     /**

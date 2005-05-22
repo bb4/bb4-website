@@ -15,7 +15,7 @@ public class TestScoring extends GoTestCase {
     }
 
 
-    public void testSimpleSubtract2() {
+    public void testScoring2() {
         checkScoring("problem_score2", 3, 0, 58, 57);
     }
 

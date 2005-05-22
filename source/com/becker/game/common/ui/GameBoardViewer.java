@@ -2,6 +2,7 @@ package com.becker.game.common.ui;
 
 import com.becker.game.common.*;
 import com.becker.game.common.Move;
+import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.ui.GUIUtil;
 
 import javax.swing.*;
@@ -297,50 +298,6 @@ public abstract class GameBoardViewer
         evtq_.postEvent( gce );
     }
 
-    public synchronized final void showMoveSequence( java.util.List moveSequence )
-    {
-        showMoveSequence( moveSequence, controller_.getNumMoves() );
-    }
-
-
-    /**
-     * perform a sequence of moves from somewhere in the game;
-     * not necessarily the start. We do, however,
-     * assume the moves are valid. It is for display purposes only.
-     *
-     * @param moveSequence the list of moves to make
-     */
-    public synchronized final void showMoveSequence( java.util.List moveSequence, int numMovesToBackup )
-    {
-        if ( moveSequence == null || moveSequence.size() == 0 )
-            return;
-        Move firstMove = (Move) moveSequence.get( 0 );
-        // the first time we click on a row in the tree, the controller has no moves.
-        Move lastMove = getBoard().getLastMove();
-        if ( lastMove == null ) {
-            reset();
-        }
-        else {
-            // we keep the original moves and just back up to firstMove.moveNumber.
-            // number of steps to backup is # of most recent real moves minus
-            // the first move in the sequence.
-            int ct = 0;
-            if ( lastMove != null && firstMove != null ) {
-                while ( ct < numMovesToBackup ) {
-                    controller_.undoLastMove();
-                    lastMove = getBoard().getLastMove();
-                    assert lastMove != null : " moveSequence=" + moveSequence;
-                    ct++;
-                }
-            }
-        }
-
-        for ( int i = 0; i < moveSequence.size(); i++ ) {
-            Move m =  (Move) moveSequence.get( i );
-            controller_.makeMove(m);
-        }
-        refresh();
-    }
 
 
     /**

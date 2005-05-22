@@ -204,7 +204,7 @@ public final class GoEye extends GoString implements GoMember
 
         return (pos1.isOccupied() && pos1.getPiece().isOwnedByPlayer1() == groupP1 &&
                 pos2.isOccupied() && pos2.getPiece().isOwnedByPlayer1() == groupP1 &&
-                isEnemy( diagPos, board ));
+                isEnemy( diagPos ));
     }
 
     /**

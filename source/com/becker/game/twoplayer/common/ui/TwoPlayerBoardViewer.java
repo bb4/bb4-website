@@ -63,6 +63,9 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
     // becomes true when stepping through the search
     private boolean stepping_ = false;
 
+    // we occasionally want to show the conputers considered next moves in the ui
+    protected TwoPlayerMove[] nextMoves_;
+
 
     /**
      * Construct the viewer.
@@ -322,6 +325,18 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
         }
     }
 
+    /**
+     * draw markers for the next moves (if they have been specified)
+     */
+    protected void drawNextMoveMarkers(Graphics2D g2) {
+        Board board = getBoard();
+        if (nextMoves_ != null) {
+            for (int i=0; i<nextMoves_.length; i++) {
+                TwoPlayerMove move = nextMoves_[i];
+                ((TwoPlayerPieceRenderer)pieceRenderer_).renderNextMove(g2, move,  cellSize_, board);
+            }
+        }
+    }
 
     /**
      * Implements the GameChangedListener interface.
@@ -433,6 +448,62 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
         refresh();
     }
 
+
+
+    public synchronized final void showMoveSequence( java.util.List moveSequence )
+    {
+        showMoveSequence( moveSequence, controller_.getNumMoves() );
+    }
+
+    public synchronized final void showMoveSequence( java.util.List moveSequence, int numMovesToBackup)
+    {
+        showMoveSequence( moveSequence, controller_.getNumMoves(), null);
+    }
+
+
+    /**
+     * perform a sequence of moves from somewhere in the game;
+     * not necessarily the start. We do, however,
+     * assume the moves are valid. It is for display purposes only.
+     *
+     * @param moveSequence the list of moves to make
+     * @param numMovesToBackup number of moves to undo before playing this move sequence
+     * @param nextMoves all the child moves of the final move in the sequence
+     *       (see subclass implmentations for game specific usages)
+     */
+    public synchronized final void showMoveSequence( java.util.List moveSequence,
+                                               int numMovesToBackup, TwoPlayerMove[] nextMoves )
+    {
+        if ( moveSequence == null || moveSequence.size() == 0 )
+            return;
+        Move firstMove = (Move) moveSequence.get( 0 );
+        // the first time we click on a row in the tree, the controller has no moves.
+        Move lastMove = getBoard().getLastMove();
+        if ( lastMove == null ) {
+            reset();
+        }
+        else {
+            // we keep the original moves and just back up to firstMove.moveNumber.
+            // number of steps to backup is # of most recent real moves minus
+            // the first move in the sequence.
+            int ct = 0;
+            if ( lastMove != null && firstMove != null ) {
+                while ( ct < numMovesToBackup ) {
+                    getController().undoLastMove();
+                    lastMove = getBoard().getLastMove();
+                    assert lastMove != null : " moveSequence=" + moveSequence;
+                    ct++;
+                }
+            }
+        }
+
+        for ( int i = 0; i < moveSequence.size(); i++ ) {
+            Move m =  (Move) moveSequence.get( i );
+            getController().makeMove(m);
+        }
+        nextMoves_ = nextMoves;
+        refresh();
+    }
 
 
 

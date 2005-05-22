@@ -3,9 +3,9 @@ package com.becker.game.twoplayer.pente.ui;
 import ca.dj.jigo.sgf.tokens.MoveToken;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer;
+import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.common.Move;
-import com.becker.game.common.ui.GamePieceRenderer;
 import com.becker.game.twoplayer.pente.PenteBoard;
 import com.becker.game.twoplayer.pente.PenteController;
 
@@ -24,7 +24,7 @@ public class PenteBoardViewer extends TwoPlayerBoardViewer
     //Construct the application
     public PenteBoardViewer()
     {
-        pieceRenderer_ = GamePieceRenderer.getRenderer();
+        pieceRenderer_ = TwoPlayerPieceRenderer.getRenderer();
     }
 
     protected GameController createController()
