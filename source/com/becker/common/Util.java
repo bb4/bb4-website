@@ -14,7 +14,7 @@ public final class Util
     // use this if running under windows
     public static final String PROJECT_DIR = "/home/becker/projects/java_projects/";
 
-    // @@ Should handle significant digits properly.
+   private static final DecimalFormat expFormat_ = new DecimalFormat("###,###.##E0");
     private static final DecimalFormat format_ = new DecimalFormat("###,###.##");
 
     /**
@@ -79,8 +79,7 @@ public final class Util
         }
         else {
             if (absnum>10000.0) {
-                format_.setMinimumFractionDigits(1);
-                format_.setMaximumFractionDigits(1);
+                return expFormat_.format(num);
             }
             if (absnum>100.0 || num==0.0) {
                 format_.setMinimumFractionDigits(1);

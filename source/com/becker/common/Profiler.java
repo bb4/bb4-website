@@ -173,7 +173,7 @@ public class Profiler
                 totalChildTime  += p.getTime();
                 p.print(indent+INDENT);
             }
-            assert (totalChildTime<=totalTime_): "The sum of the child times("+totalChildTime
+            assert (totalChildTime <= totalTime_ + 1): "The sum of the child times("+totalChildTime
                     +") cannot be greater than the parent time ("+totalTime_+").";
         }
 
