@@ -33,8 +33,10 @@ public abstract class SearchStrategy
     final boolean quiescence_;
 
     // prune types
-    static final int PRUNE_ALPHA = 1;
-    static final int PRUNE_BETA = 2;
+    protected static final int PRUNE_ALPHA = 1;
+    protected static final int PRUNE_BETA = 2;
+
+    protected static final int MAX_QUIESCENT_DEPTH = 12;
 
     // the interface implemented by the generic game controller that provides standard methods.
     Searchable controller_ = null;
@@ -109,8 +111,9 @@ public abstract class SearchStrategy
      * @param parent for constructing a ui tree. If null no game tree is constructed
      * @return the chosen move (ie the best move) (may be null if no next move)
      */
-    public abstract TwoPlayerMove search( TwoPlayerMove lastMove, ParameterArray weights, int depth,
-                                 double alpha, double beta, SearchTreeNode parent );
+    public abstract TwoPlayerMove search( TwoPlayerMove lastMove, ParameterArray weights,
+                                          int depth, int quiescentDepth,
+                                          double alpha, double beta, SearchTreeNode parent );
 
     /**
      * This continues the search in situations where the board position is not stable.
@@ -118,12 +121,13 @@ public abstract class SearchStrategy
      *
      * @param lastMove the most recent move made by one of the players
      * @param weights coefficient for the evaluation polunomial that indirectly determines the best move
+     * @param depth of the quiescent search
      * @param alpha same as p2best but for the other player. (alpha)
      * @param beta the maximum of the value that it inherits from above and the best move found at this level (beta)
      * @param parent for constructing a ui tree. If null no game tree is constructed
      * @return the chosen move (ie the best move) (may be null if no next move)
      */
-    protected abstract TwoPlayerMove quiescentSearch( TwoPlayerMove lastMove, ParameterArray weights,
+    protected abstract TwoPlayerMove quiescentSearch( TwoPlayerMove lastMove, ParameterArray weights, int depth,
                                              double alpha, double beta, SearchTreeNode parent );
 
     /**

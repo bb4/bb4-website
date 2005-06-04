@@ -553,7 +553,7 @@ public final class GoBoard extends TwoPlayerBoard
             new GoString( stone );  // stone points to the new string
         }
         else {
-            // there is at least one nbr so we joint to it/them
+            // there is at least one nbr so we join to it/them
             Iterator nbrIt = nbrs.iterator();
             GoBoardPosition nbrStone = (GoBoardPosition) nbrIt.next();
             str = nbrStone.getString();
@@ -1795,24 +1795,27 @@ public final class GoBoard extends TwoPlayerBoard
      * returns true if the specified move caused one or more opponent groups to be in atari
      *
      * @param m the move to check.
-     * @return true if the move m caused an atari
+     * @return a number >0 if the move m caused an atari. The number gives the number of stones in atari.
      */
-    public final boolean causedAtari( GoMove m )
+    public final int causedAtari( GoMove m )
     {
         if ( m.isPassingMove() )
-            return false; // a pass cannot cause an atari
+            return 0; // a pass cannot cause an atari
         GoBoardPosition stone = (GoBoardPosition)this.getPosition( m.getToRow(), m.getToCol() );
         Set enemyNbrs =
                 this.getNobiNeighbors( stone, NeighborType.ENEMY );
         Iterator it = enemyNbrs.iterator();
+        int numInAtari = 0;
+        Set stringSet = new HashSet();
         while ( it.hasNext() ) {
             GoBoardPosition s = (GoBoardPosition) it.next();
-            GoGroup g = s.getGroup();
-            if ( g.getLiberties( this ).size() == 1 ) {
-                return true;
+            GoString atariedString = s.getString();
+            if (!stringSet.contains(atariedString) && atariedString.getLiberties( this ).size() == 1 ) {
+                numInAtari += atariedString.size();
             }
+            stringSet.add(atariedString); // once its in the set we own't check it again.
         }
-        return false;
+        return numInAtari;
     }
 
     /**

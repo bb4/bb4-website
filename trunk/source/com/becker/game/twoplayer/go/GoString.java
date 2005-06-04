@@ -97,12 +97,11 @@ public class GoString extends GoSet
             // its a self join
             return;
         }
-        GoGroup g = string.getGroup();
-        //g.remove( string );
 
         Set stringMembers = new HashSet();
         stringMembers.addAll(string.getMembers());
         // must remove these after iterating otherwise we get a ConcurrentModificationException
+        string.getGroup().remove(string);
         string.removeAll();
 
         Iterator it = stringMembers.iterator();

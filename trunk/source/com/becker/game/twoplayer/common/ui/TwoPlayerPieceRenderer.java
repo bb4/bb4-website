@@ -5,6 +5,7 @@ import com.becker.game.common.ui.GamePieceRenderer;
 import com.becker.game.common.ui.GameBoardViewer;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.java2d.RoundGradientPaint;
+import com.becker.common.Util;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
@@ -108,6 +109,8 @@ public class TwoPlayerPieceRenderer extends GamePieceRenderer
 
 
 
+    private static final Color URGENT_COLOR = new Color(245, 10, 0);
+
     /**
      * show the next moves in a special way.
      */ 
@@ -120,7 +123,9 @@ public class TwoPlayerPieceRenderer extends GamePieceRenderer
             int pieceSize = (int)(.5* getPieceSize(cellSize, move.piece));
             Point pos = getPosition(position, cellSize, pieceSize);
         
-            g2.fillOval( pos.x, pos.y, pieceSize, pieceSize );       
+            g2.fillOval( pos.x, pos.y, pieceSize, pieceSize );
+            g2.setColor(move.urgent ? URGENT_COLOR : this.getTextColor(move.piece));
+            g2.drawString(""+Math.round(move.value), pos.x - 5 , pos.y + 2);
         } else {
             System.out.println("piece for next move is null: "+move);
         }

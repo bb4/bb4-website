@@ -56,16 +56,12 @@ import javax.swing.*;
  *  - why does turning quiescense on make things too slow
  *  - test inJeopardy
  * bugs
- *  - java.lang.AssertionError: The sum of the child times(23411) cannot be greater than the parent time (23296)
  *  - pause/continue not working in tree dialog.
- *  - at end of game, computer plays in its own eyes instead of passing.
- *  - When the computer plays in your eye, the eye goes away. It should not.
  *  - back up and play black, back up again and play white.
+ *  - java.lang.AssertionError: The sum of the child times(23411) cannot be greater than the parent time (23296)
  *
  ** common algorithm improvements
  *    - cache isInAtari for better performance
- *    - dont ever play in a way that eliminates a true eye.
- *    - Computer should pass when appropriate. (not currently working)
  *    - accurate scoring when the game is over (score what it can, and allow for player dispute of score).
  *    - implement armies (2)
  *    - use runner up caching (moves that were good in the past are likely to be still good) (2)
@@ -90,41 +86,41 @@ import javax.swing.*;
  *    - write a book about it. Targetting teens. (50)
  *
  ** Refactoring changes needed
- *    - Do not have any rendering done in anything but ui classes (mostly done) (1).
- *    - switch to using type safe enums instead of int constants (mostly done).
  *    - alpha-beta and quiescent setter/getter methods could be properties of the SearchStrategy instead of the game controller.
  *    - Bill seems to think that I should remove setSize and reset from the GameBoard api and just use the constructor.
+ *    - make client/server for multi-user play.
  *
  ** UI features
- *    - show star points. Put at 3*3 if board < 13*13.
- *    - add resign button. (Is this needed?)(1)
- *    - add colormap legend ui component for when showing color for health of groups
+ *    - add resign button. (1)
  *    - have female voice repeat all text if sound on. (1)
  *    - visualize how pruning works. Animate the game tree rendering. Use VCR like controls to control animation. (2)
- *    - option to send output log file, (console and output window done). (1)
- *    - change to using menus instead of buttons (maybe) (1)
- *    - add save button (and load in new sgf format game) (1)
  *    - show visualization of all next move values in main and debug windows (1)
  *    - allow player to ask for suggested move (1)
- *    - use kiseido for front end? (3)
+ *    - use kiseido or GoGui for front end? (3)
  *    - defaults for options should come from config/preferences file rather than hardcode (1) (see jdk1.4 preferences)
  *    - handle time limits and options (2)
  *    - allow undo/redo of moves in a computer vs. computer game.
  *    - quick keys (kbd shortcuts)
  *    - have it play automatically on Kiseido/IGS without intervention (like many faces of go does) (4)
- *    - allow playing over the net (4)
+ *    - allow playing over the net (6)
  *
  * Bugs and Verification:
  *  - after reloading an SGF file its the wrong player's turn
  *  - reading an SGF should set the state of the game params like board size
  *  - adding stones and strings to strings and groups that already contain them.
  *  - automatically run suite of regression tests. (2)
+ *  - at end of game, computer plays in its own eyes instead of passing.
  *
  * Resolved bugs (check for regressions)
  *  - confirm computing eyes correctly (and health).
  *  - verify correctness of static evaluation weights and worth function (2)
  *  - confirm can play suicidal move when if captures enemy stones (1)
  *  - sound/speech not working (in applet only? missing libs?)
+ *  - When the computer plays in your eye, the eye goes away. It should not.
+ *  - Do not have any rendering done in anything but ui classes (done) (1).
+ *  - switch to using type safe enums instead of int constants (done).
+ *
+ *
  *
  * @see GoBoard
  * @author Barry Becker
@@ -289,6 +285,12 @@ public final class GoController extends TwoPlayerController
         return found;
     }
 
+    /**
+     * add a sequence of moves all at once.
+     * Such as placing handicaps when readin gfrom an sgf file.
+     * @param token
+     * @param moveList
+     */
     private void addMoves(PlacementListToken token, List moveList) {
         Vector points = token.getPoints();
         boolean player1 = token instanceof AddBlackToken;
@@ -716,7 +718,7 @@ public final class GoController extends TwoPlayerController
     }
 
     /**
-     * return any moves that take captures.
+     * return any moves that take captures or get out of atari.
      *
      * @param lastMove
      * @param weights
@@ -726,12 +728,13 @@ public final class GoController extends TwoPlayerController
     public final List generateUrgentMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
     {
         List moves = generateMoves( lastMove, weights, player1sPerspective );
+        GoBoard gb = (GoBoard) board_;
 
         // just keep the moves that take captures
         Iterator it = moves.iterator();
         while ( it.hasNext() ) {
             GoMove move = (GoMove) it.next();
-            if ( move.captureList == null || move.captureList.isEmpty() ) {
+            if ( move.captureList == null || move.captureList.isEmpty() || (gb.causedAtari( (GoMove)lastMove ) > 0) ) {
                 it.remove();
             }
             else
@@ -746,15 +749,15 @@ public final class GoController extends TwoPlayerController
      * returns true if the specified move caused one or more opponent pieces to become jeopardized
      * For go, if the specified move caused a group to become in atari, then we return true.
      *
-     * @param m
+     * @param lastMove
      * @param weights
      * @param player1sPerspective
      * @return true if the last move created a big change in the score
      */
-    public boolean inJeopardy( TwoPlayerMove m, ParameterArray weights, boolean player1sPerspective )
+    public boolean inJeopardy( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
     {
         GoBoard gb = (GoBoard) board_;
-        return gb.causedAtari( (GoMove)m );
+        return (gb.causedAtari( (GoMove)lastMove ) > 5);
     }
 
     /**

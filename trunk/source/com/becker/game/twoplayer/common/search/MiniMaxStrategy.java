@@ -36,8 +36,9 @@ public final class MiniMaxStrategy extends SearchStrategy
      * @param parent for constructing a ui tree. If null no game tree is constructed
      * @return the chosen move (ie the best move) (may be null if no next move)
      */
-    public final TwoPlayerMove search( TwoPlayerMove lastMove, ParameterArray weights, int depth,
-                              double alpha, double beta, SearchTreeNode parent )
+    public final TwoPlayerMove search( TwoPlayerMove lastMove, ParameterArray weights,
+                                       int depth, int quiescentDepth,
+                                       double alpha, double beta, SearchTreeNode parent )
     {
         List list;   // list of moves to consider
         TwoPlayerMove selectedMove = null;  // the currently selected move
@@ -47,7 +48,7 @@ public final class MiniMaxStrategy extends SearchStrategy
 
         if ( depth == 0 || controller_.done( lastMove, false ) ) {
             if ( quiescence_ && depth == 0 )
-                return quiescentSearch( lastMove, weights, alpha, beta, parent );
+                return quiescentSearch( lastMove, weights, quiescentDepth, alpha, beta, parent );
             else {
                 lastMove.inheritedValue = lastMove.value;
                 return lastMove;
@@ -86,7 +87,7 @@ public final class MiniMaxStrategy extends SearchStrategy
             SearchTreeNode child = addNodeToTree( parent, theMove, alpha, beta, i++ );
 
             // recursive call
-            selectedMove = search( theMove, weights, depth - 1, alpha, beta, child );
+            selectedMove = search( theMove, weights, depth-1, quiescentDepth, alpha, beta, child );
 
             controller_.undoInternalMove( theMove );
 
@@ -141,13 +142,16 @@ public final class MiniMaxStrategy extends SearchStrategy
      * For example, perhaps we are in the middle of a piece exchange
      */
     protected final TwoPlayerMove quiescentSearch( TwoPlayerMove lastMove, ParameterArray weights,
-                                          double alpha, double beta, SearchTreeNode parent )
+                                          int depth, double alpha, double beta, SearchTreeNode parent )
     {
-        if ( controller_.inJeopardy( lastMove, weights, true ) ) {
-            // then search  a little deeper
-            return search( lastMove, weights, 1, alpha, beta, parent );
-        }
         lastMove.inheritedValue = lastMove.value;
+        if ( depth >= MAX_QUIESCENT_DEPTH) {
+            return lastMove;
+        }
+        if ( controller_.inJeopardy( lastMove, weights, true )) {
+            // then search  a little deeper
+            return search( lastMove, weights, 1, depth+1, alpha, beta, parent );
+        }
 
         boolean player1 = lastMove.player1;
         if ( player1 ) {
@@ -169,7 +173,6 @@ public final class MiniMaxStrategy extends SearchStrategy
         List list = controller_.generateUrgentMoves( lastMove, weights, true );
 
         if ( list == null || list.isEmpty() ) {
-            lastMove.inheritedValue = lastMove.value;
             return lastMove; // nothing to check
         }
 
@@ -184,7 +187,7 @@ public final class MiniMaxStrategy extends SearchStrategy
             controller_.makeInternalMove( theMove );
             SearchTreeNode child = addNodeToTree( parent, theMove, alpha, beta, i++ );
 
-            TwoPlayerMove selectedMove = quiescentSearch( theMove, weights, alpha, beta, child );
+            TwoPlayerMove selectedMove = quiescentSearch( theMove, weights, depth+1, alpha, beta, child );
             assert selectedMove!=null;
 
             double selectedValue = selectedMove.inheritedValue;

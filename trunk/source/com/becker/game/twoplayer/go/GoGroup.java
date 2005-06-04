@@ -239,6 +239,7 @@ public final class GoGroup extends GoSet
             // remove the string associated with the stone
             remove( str );
         }
+        clearEyes();
         changed_ = true;
     }
 
@@ -313,6 +314,7 @@ public final class GoGroup extends GoSet
                 }
             }
         }
+        clearEyes();
         changed_ = true;
     }
 
