@@ -455,7 +455,7 @@ public abstract class TwoPlayerController extends GameController
 
         /////////////////////// SEARCH //////////////////////////////////////////////////////
         strategy_ = SearchStrategy.createSearchStrategy(getSearchStrategyMethod(), this);
-        TwoPlayerMove selectedMove = strategy_.search( p, weights, getLookAhead(), Double.MAX_VALUE, Double.MIN_VALUE, root_ );
+        TwoPlayerMove selectedMove = strategy_.search( p, weights, getLookAhead(), 0, Double.MAX_VALUE, Double.MIN_VALUE, root_ );
         /////////////////////////////////////////////////////////////////////////////////////
 
         if ( selectedMove != null ) {
@@ -805,7 +805,7 @@ public abstract class TwoPlayerController extends GameController
     /**
      * returns true if the specified move caused one or more opponent pieces to become jeopardized
      */
-    public boolean inJeopardy( TwoPlayerMove m, ParameterArray weights, boolean player1sPerspective )
+    public boolean inJeopardy( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
     {
         return false;
     }

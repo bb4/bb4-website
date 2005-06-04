@@ -39,19 +39,21 @@ public final class NegaMaxStrategy extends SearchStrategy
      * @param parent for constructing a ui tree. If null no game tree is constructed
      * @return the chosen move (ie the best move) (may be null if no next move)
      */
-    public final TwoPlayerMove search( TwoPlayerMove lastMove, ParameterArray weights, int depth,
-                              double alpha, double beta, SearchTreeNode parent )
+    public final TwoPlayerMove search( TwoPlayerMove lastMove, ParameterArray weights,
+                                       int depth, int quiescentDepth,
+                                       double alpha, double beta, SearchTreeNode parent )
     {
-        return searchInternal( lastMove, weights, depth, -alpha, -beta, parent );
+        return searchInternal( lastMove, weights, depth, quiescentDepth, -alpha, -beta, parent );
     }
 
-    private TwoPlayerMove searchInternal( TwoPlayerMove lastMove, ParameterArray weights, int depth,
-                                 double alpha, double beta, SearchTreeNode parent )
+    private TwoPlayerMove searchInternal( TwoPlayerMove lastMove, ParameterArray weights,
+                                          int depth, int quiescentDepth,
+                                          double alpha, double beta, SearchTreeNode parent )
     {
 
         if ( depth == 0 || controller_.done( lastMove, false ) ) {
             if ( quiescence_ && depth == 0 )
-                return quiescentSearch( lastMove, weights, alpha, beta, parent );
+                return quiescentSearch( lastMove, weights, quiescentDepth, alpha, beta, parent );
             else {
                 lastMove.inheritedValue = -lastMove.value;     //??
                 return lastMove;
@@ -86,7 +88,7 @@ public final class NegaMaxStrategy extends SearchStrategy
             SearchTreeNode child = addNodeToTree( parent, theMove, alpha, beta, i++ );
 
             // recursive call
-            selectedMove = searchInternal( theMove, weights, depth - 1, -beta, -alpha, child );
+            selectedMove = searchInternal( theMove, weights, depth-1, quiescentDepth, -beta, -alpha, child );
 
             controller_.undoInternalMove( theMove );
 
@@ -125,14 +127,17 @@ public final class NegaMaxStrategy extends SearchStrategy
      * For example, perhaps we are in the middle of a piece exchange
      */
     protected final TwoPlayerMove quiescentSearch( TwoPlayerMove lastMove, ParameterArray weights,
-                                          double alpha, double beta, SearchTreeNode parent )
+                                          int depth, double alpha, double beta, SearchTreeNode parent )
     {
-        if ( controller_.inJeopardy( lastMove, weights, lastMove.player1 ) ) {
-            // then search  a little deeper
-            return search( lastMove, weights, 1, alpha, beta, parent );
-        }
         double val = lastMove.value;
         lastMove.inheritedValue = val;
+        if ( depth >= MAX_QUIESCENT_DEPTH) {
+            return lastMove;
+        }
+        if (controller_.inJeopardy( lastMove, weights, lastMove.player1 ) ) {
+            // then search  a little deeper
+            return search( lastMove, weights, 1, depth+1, alpha, beta, parent );
+        }
 
         if ( alphaBeta_ ) {
             if ( val >= beta )
@@ -158,10 +163,12 @@ public final class NegaMaxStrategy extends SearchStrategy
 
         while ( it.hasNext() ) {
             TwoPlayerMove theMove = (TwoPlayerMove) it.next();
+            assert theMove!=null;
+
             controller_.makeInternalMove( theMove );
             SearchTreeNode child = addNodeToTree( parent, theMove, alpha, beta, i++ );
 
-            TwoPlayerMove selectedMove = quiescentSearch( theMove, weights, -beta, -alpha, child );
+            TwoPlayerMove selectedMove = quiescentSearch( theMove, weights, depth+1, -beta, -alpha, child );
             assert selectedMove!=null;
 
             val = -selectedMove.inheritedValue;
@@ -185,6 +192,8 @@ public final class NegaMaxStrategy extends SearchStrategy
         if (bestMove != null) {
             bestMove.selected = true;
             lastMove.inheritedValue = -bestMove.inheritedValue;
+        } else {
+            bestMove = lastMove;   // avoid returning null
         }
         return bestMove;
     }

@@ -379,6 +379,7 @@ public final class GameTreeDialog extends JDialog
         }
         // show in this debug window, and not the main viewer window.
         ((TwoPlayerBoardViewer)boardViewer_).showMoveSequence( moveList );
+
     }
 
     /**

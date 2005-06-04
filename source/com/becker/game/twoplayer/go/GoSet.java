@@ -64,7 +64,7 @@ public abstract class GoSet implements GoMember
      */
     final void removeAll()
     {
-        members_.clear();
+        members_.clear();      
     }
 
     /**

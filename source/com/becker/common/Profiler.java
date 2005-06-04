@@ -167,13 +167,14 @@ public class Profiler
             else
                 System.out.println(text);
             Iterator childIt = children_.iterator();
+
             long totalChildTime = 0;
             while (childIt.hasNext()) {
                 ProfilerEntry p = (ProfilerEntry)childIt.next();
-                totalChildTime  += p.getTime();
+                totalChildTime += p.getTime();
                 p.print(indent+INDENT);
             }
-            assert (totalChildTime <= totalTime_ + 1): "The sum of the child times("+totalChildTime
+            assert (totalChildTime <= 1.1 * totalTime_ ): "The sum of the child times("+totalChildTime
                     +") cannot be greater than the parent time ("+totalTime_+").";
         }
 
