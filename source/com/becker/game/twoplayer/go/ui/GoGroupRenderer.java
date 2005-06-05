@@ -60,7 +60,7 @@ final class GoGroupRenderer
         List q = new ArrayList();
         Set qset = new HashSet();
         List visitedSet = new ArrayList();
-        q.add( firstStone );
+        q.add( firstStone.copy() );   // avoid cc mod exception?
         qset.add( firstStone );
         Area area = new Area();
 
@@ -81,7 +81,6 @@ final class GoGroupRenderer
                 }
             }
         }
-        //if (visitedSet.size() != groupStones.size())  huh?
         // mark all the stones in the group unvisited again.
         GoBoardUtil.unvisitPositionsInList( visitedSet );
         return area;
@@ -319,6 +318,7 @@ final class GoGroupRenderer
         Color cachedBorderColor = (Color)hmBorderColorCache_.get(group);
         Float cachedCellSize = (Float)hmCellSizeCache_.get(group);
 
+        /* giving cc mod error */
         if ( group.hasChanged() || cachedBorderArea == null || cellSize != cachedCellSize.floatValue() ) {
 
             // the colormap will show red if close to dead,
@@ -326,6 +326,7 @@ final class GoGroupRenderer
             double h = (GoController.USE_RELATIVE_GROUP_SCORING? group.getRelativeHealth():group.getAbsoluteHealth());
             if (!group.isOwnedByPlayer1())
                 h = -h;
+
 
             cachedBorderArea = calcGroupBorder( group.getStones(), cellSize, board );
             cachedBorderColor = colormap.getColorForValue( h );
@@ -336,6 +337,7 @@ final class GoGroupRenderer
             hmBorderColorCache_.put(group, cachedBorderColor);
             hmCellSizeCache_.put(group, cachedCellSize);
         }
+
 
         // fill in the cumulative group border
         if ( cachedBorderArea !=null ) {
@@ -349,8 +351,6 @@ final class GoGroupRenderer
             //System.out.println( "GoGroup drawDecoration: eyes:"+eyes_ );
             drawEyes( cellSize, g2, group.getEyes() );
         }
-
-        //markAtariedStones(group, board, cellSize, g2);
     }
 
 }

@@ -1900,22 +1900,74 @@ public final class GoBoard extends TwoPlayerBoard
      *  SHAPE_EMPTY_TRIANGLE :  X -   ,   SHAPE_CLUMP_OF_4 :  X X
      *                          X X                           X X
      */
-    public final int formsBadShape( GoStone stone, int r, int c )
+    public final int formsBadShape( GoBoardPosition position)
     {
+        GoStone stone = (GoStone)position.getPiece();
+        int r = position.getRow();
+        int c = position.getCol();
+
         int severity =
-                checkForBadShape( stone, r, c,  1) +
-                checkForBadShape( stone, r, c,  -1);
+             checkBadShape(stone, r, c,  1,-1, 1) +
+             checkBadShape(stone, r, c, -1,-1, 1) +
+             checkBadShape(stone, r, c,  1, 1, 1) +
+             checkBadShape(stone, r, c, -1, 1, 1) +
+
+             checkBadShape(stone, r, c,  1,-1, 2) +
+             checkBadShape(stone, r, c, -1,-1, 2) +
+             checkBadShape(stone, r, c,  1, 1, 2) +
+             checkBadShape(stone, r, c, -1, 1, 2) +
+
+             checkBadShape(stone, r, c,  1,-1, 3) +
+             checkBadShape(stone, r, c, -1,-1, 3) +
+             checkBadShape(stone, r, c,  1, 1, 3) +
+             checkBadShape(stone, r, c, -1, 1, 3);
+
         return severity;
     }
 
-    /**
+    private int checkBadShape(GoStone stone, int r, int c, int incr, int incc, int type) {
+        boolean player1 = stone.isOwnedByPlayer1();
+        if ( inBounds( r + incr, c + incc ) ) {
+            BoardPosition adjacent1 = getPosition( r + incr, c );
+            BoardPosition adjacent2 = getPosition( r , c + incc);
+            BoardPosition diagonal = getPosition( r + incr, c + incc);
+            // there are 3 cases:
+            //       a1 diag    X     XX    X
+            //        X a2      XX    X    XX
+            switch (type) {
+                case 1 :
+                    if (adjacent1.isOccupied() && adjacent2.isOccupied())  {
+                        if (   adjacent1.getPiece().isOwnedByPlayer1() == player1
+                            && adjacent2.getPiece().isOwnedByPlayer1() == player1)
+                            return GoBoardUtil.getBadShapeAux(diagonal, player1);
+                    }  break;
+                case 2 :
+                    if (adjacent1.isOccupied() && diagonal.isOccupied())  {
+                        if (   adjacent1.getPiece().isOwnedByPlayer1() == player1
+                            && diagonal.getPiece().isOwnedByPlayer1() == player1)
+                            return GoBoardUtil.getBadShapeAux(adjacent2, player1);
+                    }  break;
+                case 3 :
+                    if (adjacent2.isOccupied() && diagonal.isOccupied())  {
+                        if (   adjacent2.getPiece().isOwnedByPlayer1() == player1
+                            && diagonal.getPiece().isOwnedByPlayer1() == player1)
+                            return GoBoardUtil.getBadShapeAux(adjacent1, player1);
+                    }  break;
+               default : assert false;
+
+            }
+        }
+        return 0;
+    }
+
+
+    /*
      * @param stone the go stone.
-     * @param inc direction to increment (+/-1
+     * @param inc direction to increment (+/-1)
      * @return an integer value indicating how bad the shape is (0 being not bad at all).
-     */
+
     private int checkForBadShape(GoStone stone,  int r, int c, int inc )
     {
-
         int severity = 0;
         boolean player1 = stone.isOwnedByPlayer1();
 
@@ -1932,10 +1984,21 @@ public final class GoBoard extends TwoPlayerBoard
                      diagonal2.isOccupied() && diagonal2.getPiece().isOwnedByPlayer1() == player1 ) {
                     severity += GoBoardUtil.getBadShapeAux( getPosition( r, c + 1 ), player1 );
                 }
+                BoardPosition adjacent1 = getPosition( r, c - 1 );
+                if ( inBounds( r, c - 1 ) &&
+                     adjacent1.isOccupied() && adjacent1.getPiece().isOwnedByPlayer1() == player1) {
+                    severity += 1;
+                }
+                BoardPosition adjacent2 = getPosition( r, c + 1 );
+                if ( inBounds( r, c + 1 ) &&
+                     adjacent2.isOccupied() && adjacent2.getPiece().isOwnedByPlayer1() == player1) {
+                    severity += 1;
+                }
             }
         }
         return severity;
-    }
+    }        */
+
 
     public String toString() {
         StringBuffer buf = new StringBuffer((getNumRows()+2) * (getNumCols()+2));
