@@ -140,7 +140,7 @@ public final class GoController extends TwoPlayerController
     // polynomial evaluation function.
     // if only one computer is playing, then only one of the weights arrays is used.
     // use these if no others are provided
-    private static final double[] DEFAULT_WEIGHTS = {5.0, .1, .2, 20.0};   //10,1,3,40
+    private static final double[] DEFAULT_WEIGHTS = {1.0, .05, .1, 20.0};   //10,1,3,40
     // don't allow the weights to exceed these maximum values
     private static final double[] MAX_WEIGHTS = {5.0, 1.0, 4.0, 10.0};
     private static final String[] WEIGHT_SHORT_DESCRIPTIONS = {"Health", "Position", "Bad shape", "Captures"};
@@ -229,17 +229,20 @@ public final class GoController extends TwoPlayerController
             for ( col = 1; col <= numCols; col++ ) {  //cols
                 colmin = Math.min( col, numCols - col + 1 );
                 positionalScore_[row][col] = 0.0f; // default neutral value
-                // we intentionally count the row and column scores separately
-                // so corners get double counted
-                //  line = Math.min(rowmin, colmin);  // old way - count once
-                if ( rowmin <= NUM_SCORED_LINES )
-                    positionalScore_[row][col] += LINE_VALS[rowmin - 1];
-                if ( colmin <= NUM_SCORED_LINES )
-                    positionalScore_[row][col] += LINE_VALS[colmin - 1];
+
+
+                int lineNo = Math.min(rowmin, colmin);
+                if (lineNo < LINE_VALS.length) {
+                    if (rowmin == colmin)  {
+                        // corners get emphasized
+                        positionalScore_[row][col] = 1.5f * (LINE_VALS[lineNo - 1]);
+                    }
+                    else {
+                        positionalScore_[row][col] = LINE_VALS[lineNo - 1];
+                    }
+                }
             }
         }
-        // also make the center space worth something positive
-        positionalScore_[((numRows + 1) >> 1)][((numCols + 1) >> 1)] = CENTER_VAL;
     }
 
     /**
@@ -606,8 +609,8 @@ public final class GoController extends TwoPlayerController
 
         GoBoard board = (GoBoard)board_;
         worth = weights.get(CAPTURE_WEIGHT_INDEX).value * (getNumCaptures( true ) - getNumCaptures( false ));
-        int n = 2 * board.getNumRows();
-        double gameStageBoost = 1.0 + Math.max((float)(n - getNumMoves())/n, 0.0);
+        float n = 2.0f * board.getNumRows();
+        double gameStageBoost = 1.0 + Math.max((n - (float)getNumMoves())/n, 0.0);
 
         for ( row = 1; row <= board.getNumRows(); row++ ) {    //rows
             for ( col = 1; col <= board.getNumCols(); col++ ) {  //cols
@@ -629,7 +632,7 @@ public final class GoController extends TwoPlayerController
                     int side = position.getPiece().isOwnedByPlayer1()? 1: -1;
                     // penalize bad shape like empty triangles
                     badShapeScore =
-                         -(side * board.formsBadShape(stone, position.getRow(), position.getCol())
+                         -(side * board.formsBadShape(position)
                                 * weights.get(BAD_SHAPE_WEIGHT_INDEX).value);
 
                     // consider where the stones are played
@@ -638,9 +641,8 @@ public final class GoController extends TwoPlayerController
                         (side * gameStageBoost * weights.get(POSITIONAL_WEIGHT_INDEX).value * positionalScore_[row][col]);
 
                     position.scoreContribution =
-                            weights.get(HEALTH_WEIGHT_INDEX).value * stone.getHealth() + posScore + badShapeScore;
+                            Math.max(-1.0, Math.min(1.0, weights.get(HEALTH_WEIGHT_INDEX).value * stone.getHealth() + posScore + badShapeScore));
 
-                    position.scoreContribution = 0; //clear it in case it was set during search.
                     if (GameContext.getDebugMode() > 0)  {
                         stone.badShapeScore = badShapeScore;
                         stone.positionalScore = posScore;
@@ -649,8 +651,7 @@ public final class GoController extends TwoPlayerController
                 worth += position.scoreContribution;
 
             }
-            // @@ double counting???
-            // System.out.println( "adding "+ board.getTerritoryDelta()+" to  worth="+worth);
+            // @@ double counting??
             worth += board.getTerritoryDelta();
         }
 
