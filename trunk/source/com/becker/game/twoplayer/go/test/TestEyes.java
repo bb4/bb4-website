@@ -33,6 +33,12 @@ public class TestEyes extends GoTestCase {
         checkEyes("problem_eyes3", blackEyes, whiteEyes);
     }
 
+    public void testCornerLife() {
+        EyeCounts blackEyes = new EyeCounts(0, 2, 0, 0);
+        EyeCounts whiteEyes = new EyeCounts(0, 0, 0, 0);
+        checkEyes("problem_eyes4", blackEyes, whiteEyes);
+    }
+
     public void testFalsesOnEdge() {
         EyeCounts blackEyes = new EyeCounts(0, 0, 0, 0);
         EyeCounts whiteEyes = new EyeCounts(3, 0, 0, 0);

@@ -680,7 +680,6 @@ public final class GoController extends TwoPlayerController
         int Ncols = board_.getNumCols();
         int Nrows = board_.getNumRows();
 
-
         gb.determineCandidateMoves();
 
         boolean player1 = true;

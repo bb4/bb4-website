@@ -636,15 +636,17 @@ public final class GoGroup extends GoSet
         float health = 0;
 
         if ( numEyes >= 2 )  {
-            // @@ add check for unconditional life here
-            // if isUnconditionalLife() return side;
-            // else return .98 * side;
-            // its already the maximum (1) so return now
-            absoluteHealth_ = side;
-            return absoluteHealth_;
+            if (isUnconditionallyAlive()) {
+                health = side;
+            }
+            else {
+                // its probably alive
+                // may not be alive if the opponent has a lot of kos and gets to play lots of times in a row
+                health = .98f * side;
+            }
         }
-        else if ( (numEyes == 1) && (numLiberties > 5) )
-            health = side * (1.08f - 8.0f/(numLiberties +4.f));
+        else if ( (numEyes == 1) && (numLiberties > 6) )
+            health = side * Math.min(.9f, (1.0f - 20.0f/(numLiberties + 23.0f)));
         else if ( numEyes == 1 ) {  // numLiberties<=5
             switch (numLiberties) {
                 case 0:
@@ -664,19 +666,19 @@ public final class GoGroup extends GoSet
                     health = -side * .3f;
                     break;
                 case 4:
-                    health = -side * .1f;
+                    health = -side * .05f;
                     break;
                 case 5:
-                    health = -side * .01f;
+                    health = side * .01f;
                     break;
                 case 6:
-                    health = side * .2f;
+                    health = side * .19f;
                     break;
                 default: assert false;
             }
         }
         else if ( numLiberties > 5 )  // numEyes == 0
-            health = side * Math.min(1.0f, (1.41f - 26.f/(numLiberties+14.f)));
+            health = side * Math.min(.8f, (1.3f - 46.f/(numLiberties+40.f)));
         else {
             switch (numLiberties) { // numEyes == 0
                 case 0:
@@ -700,10 +702,10 @@ public final class GoGroup extends GoSet
                     health = -side * .05f;
                     break;
                 case 4:
-                    health = 0.0f;
+                    health = 0.01f;
                     break;
                 case 5:
-                    health = side * 0.08f;
+                    health = side * 0.1f;
                     break;
                 default: assert false;
             }
@@ -798,6 +800,11 @@ public final class GoGroup extends GoSet
     public double getRelativeHealth()
     {
         return relativeHealth_;
+    }
+
+
+    private boolean isUnconditionallyAlive() {
+         return true;
     }
 
 
