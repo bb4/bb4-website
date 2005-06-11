@@ -10,6 +10,7 @@ import com.becker.game.common.GameContext;
  */
 public class GoProfiler extends Profiler {
 
+    public static final String GENERATE_MOVES = "generating moves";
     private static final String UNDO_MOVE = "undoing move";
     private static final String UPDATE_STRINGS_AFTER_REMOVE = "updating strings after remove";
     private static final String UPDATE_GROUPS_AFTER_REMOVE = "updating groups after remove";
@@ -30,6 +31,7 @@ public class GoProfiler extends Profiler {
     public static final String GET_ENEMY_GROUPS_NBRS = "get enemy group nbrs";
 
     public GoProfiler() {
+        add(GENERATE_MOVES);
         add(UNDO_MOVE);
           add(UPDATE_STRINGS_AFTER_REMOVE, UNDO_MOVE);
           add(UPDATE_GROUPS_AFTER_REMOVE, UNDO_MOVE);
