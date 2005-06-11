@@ -673,12 +673,14 @@ public final class GoController extends TwoPlayerController
      */
     public final List generateMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
     {
+        GoBoard gb = (GoBoard) board_;
+        gb.getProfiler().start(GoProfiler.GENERATE_MOVES);
         List moveList = new LinkedList();
         int i,j;
         int Ncols = board_.getNumCols();
         int Nrows = board_.getNumRows();
 
-        GoBoard gb = (GoBoard) board_;
+
         gb.determineCandidateMoves();
 
         boolean player1 = true;
@@ -691,7 +693,10 @@ public final class GoController extends TwoPlayerController
                 // if its a candidate move and not an immediate takeback (which would break the rule of ko)
                 if ( gb.isCandidateMove( j, i ) && !isTakeBack( j, i, (GoMove) lastMove, gb ) ) {
                     GoMove m = GoMove.createMove( j, i, null, lastMove.value, new GoStone(player1) );
+
+                    gb.getProfiler().stop(GoProfiler.GENERATE_MOVES);
                     boolean suicide = !gb.makeMove( m );
+                    gb.getProfiler().start(GoProfiler.GENERATE_MOVES);
 
                     if ( suicide ) {
                         GameContext.log( 2, "The move was a suicide (can't add it to the list), we now remove it: " + m );
@@ -702,7 +707,9 @@ public final class GoController extends TwoPlayerController
                         // anyway we could cache that?
                         m.value = worth( m, weights, player1sPerspective );
                         // now revert the board
+                        gb.getProfiler().stop(GoProfiler.GENERATE_MOVES);
                         gb.undoMove();
+                        gb.getProfiler().start(GoProfiler.GENERATE_MOVES);
                         moveList.add( m );
                     }
                 }
@@ -715,6 +722,8 @@ public final class GoController extends TwoPlayerController
         if (getNumMoves() > Ncols+Nrows)  {
             ((LinkedList)moveList).addLast( GoMove.createPassMove(lastMove.value, player1));
         }
+        gb.getProfiler().stop(GoProfiler.GENERATE_MOVES);
+
         return moveList;
     }
 

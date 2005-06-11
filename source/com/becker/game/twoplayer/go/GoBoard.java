@@ -2,6 +2,7 @@ package com.becker.game.twoplayer.go;
 
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
+import com.becker.common.Profiler;
 
 import java.util.*;
 
@@ -305,6 +306,10 @@ public final class GoBoard extends TwoPlayerBoard
     public final void showProfileStats( long totalTime )
     {
         profiler_.print();
+    }
+
+    public Profiler getProfiler() {
+        return profiler_;
     }
 
     /**
