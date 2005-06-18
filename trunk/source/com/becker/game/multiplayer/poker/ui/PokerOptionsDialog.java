@@ -5,6 +5,7 @@ import com.becker.game.common.ui.GameOptionsDialog;
 import com.becker.game.multiplayer.poker.PokerController;
 
 import javax.swing.*;
+import javax.swing.Box;
 import java.awt.event.*;
 
 /**
