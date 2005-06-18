@@ -157,7 +157,7 @@ public final class NegaMaxStrategy extends SearchStrategy
         double bestVal = Double.MIN_VALUE;
         TwoPlayerMove bestMove = null;
         movesConsidered_ += list.size();
-        GameContext.log( 2, "********* urgent moves = " + list );
+        //GameContext.log( 2, "********* urgent moves = " + list );
         Iterator it = list.iterator();
         int i = 0;
 

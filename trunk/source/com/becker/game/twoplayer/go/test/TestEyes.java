@@ -10,6 +10,9 @@ import java.util.Set;
 import com.becker.game.twoplayer.go.*;
 
 
+/**
+ * @author Barry Becker
+ */
 public class TestEyes extends GoTestCase {
 
 
@@ -358,20 +361,8 @@ public class TestEyes extends GoTestCase {
         // consider the 2 biggest groups
         //Assert.assertTrue("There were not two groups. Instead there were :"+groups.size(), groups.size() == 2);
 
-        GoGroup biggestBlackGroup = null;
-        GoGroup biggestWhiteGroup = null;
-        for (Object g : groups) {
-            GoGroup group = (GoGroup)g;
-            if (((GoBoardPosition)group.getStones().get(0)).getPiece().isOwnedByPlayer1()) {
-                if (biggestBlackGroup == null || biggestBlackGroup.size()< group.size()) {
-                    biggestBlackGroup = group;
-                }
-            } else {
-                if (biggestWhiteGroup == null || biggestWhiteGroup.size()< group.size()) {
-                    biggestWhiteGroup = group;
-                }
-            }
-        }
+        GoGroup biggestBlackGroup =getBiggestGroup(true);
+        GoGroup biggestWhiteGroup = getBiggestGroup(false);      
 
         EyeCounts eyeCounts = getEyeCounts(biggestBlackGroup.getEyes());
         Assert.assertTrue("Actual Black Eye counts were \n"+eyeCounts+" but was expecting \n"+ expectedBlackEyes,

@@ -89,6 +89,7 @@ import javax.swing.*;
  *    - alpha-beta and quiescent setter/getter methods could be properties of the SearchStrategy instead of the game controller.
  *    - Bill seems to think that I should remove setSize and reset from the GameBoard api and just use the constructor.
  *    - make client/server for multi-user play.
+ *    - use InputVerifier to validate text type ins.
  *
  ** UI features
  *    - add resign button. (1)

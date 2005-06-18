@@ -8,7 +8,9 @@ import java.util.List;
 
 import com.becker.game.twoplayer.go.GoMove;
 
-
+/**
+ * @author Barry Becker
+ */
 public class TestKiseido2002 extends GoTestCase {
 
 

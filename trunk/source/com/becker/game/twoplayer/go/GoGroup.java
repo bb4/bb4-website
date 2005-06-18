@@ -404,7 +404,7 @@ public final class GoGroup extends GoSet
                     lists.add( eyeSpaces );
                     // make sure this is a real eye.
                     // this method checks that opponent stones don't border it.
-                    if ( confirmEye( eyeSpaces, board, numCurrentTrueEyes) ) {
+                    if ( confirmEye( eyeSpaces) ) {
                         GoEye eye =  new GoEye( eyeSpaces, board, this );
                         eyes_.add( eye );
                     }
@@ -474,10 +474,9 @@ public final class GoGroup extends GoSet
      * If they do, then it is not an eye - return false.
      *
      * @param eyeList the candidate string of stones to misc for eye status
-     * @param board
      * @return true if the list of stones is an eye
      */
-    private boolean confirmEye( List eyeList, GoBoard board, int numCurrentTrueEyes )
+    private boolean confirmEye( List eyeList)
     {
         if ( eyeList == null )
             return false;
@@ -577,7 +576,7 @@ public final class GoGroup extends GoSet
 
         // we need to come up with some approximation for the health so update eyes can be done more accurately.
         int numEyes = calcNumEyes();
-        absoluteHealth_ = determineHealth(side, numEyes, numLiberties);
+        absoluteHealth_ = determineHealth(side, numEyes, numLiberties, board);
 
         profiler.start(GoProfiler.UPDATE_EYES);
         updateEyes( board );  // expensive
@@ -586,7 +585,7 @@ public final class GoGroup extends GoSet
         changed_ = false;  // cached until something changes
 
         numEyes = calcNumEyes();
-        health = determineHealth(side, numEyes, numLiberties);
+        health = determineHealth(side, numEyes, numLiberties, board);
 
         // Should there be any bonus at all for flase eyes??  no
         // health += (side * .015 * numFalseEyes);
@@ -632,17 +631,19 @@ public final class GoGroup extends GoSet
     /**
      * determint the health of the group besed on the number of eyes and the number of liberties.
      */
-    private float determineHealth(float side, int numEyes, int numLiberties)  {
+    private float determineHealth(float side, int numEyes, int numLiberties, GoBoard board)  {
         float health = 0;
+        int numStones = getNumStones();
 
         if ( numEyes >= 2 )  {
-            if (isUnconditionallyAlive()) {
-                health = side;
+            if (isUnconditionallyAlive(board)) {
+                // in addition to this, the individual strings will get a score of side (ie +/- 1).
+                health = .98f * side;
             }
             else {
                 // its probably alive
                 // may not be alive if the opponent has a lot of kos and gets to play lots of times in a row
-                health = .98f * side;
+                health = .96f * side;
             }
         }
         else if ( (numEyes == 1) && (numLiberties > 6) )
@@ -680,34 +681,63 @@ public final class GoGroup extends GoSet
         else if ( numLiberties > 5 )  // numEyes == 0
             health = side * Math.min(.8f, (1.3f - 46.f/(numLiberties+40.f)));
         else {
-            switch (numLiberties) { // numEyes == 0
-                case 0:
-                    // this can't happen because the stone should already be captured.  @@Hitting this
-                    //assert false : "can't have no liberties and still be on the board! "+ this;
-                    health = -side;
-                    break;
-                case 1:
-                    health = -side * .4f;
-                    break;
-                case 2:
-                    // @@ consider seki situations where the adjacent enemy group also has no eyes.
-                    //      XXXXXXX     example of seki here.
-                    //    XXooooooX
-                    //    Xo.XXX.oX
-                    //    XooooooXX
-                    //    XXXXXXX
-                    health = -side * .1f;
-                    break;
-                case 3:
-                    health = -side * .05f;
-                    break;
-                case 4:
-                    health = 0.01f;
-                    break;
-                case 5:
-                    health = side * 0.1f;
-                    break;
-                default: assert false;
+            if (numStones == 1) {
+                switch (numLiberties) { // numEyes == 0
+                    case 0:
+                        // this can't happen because the stone should already be captured.  @@Hitting this
+                        //assert false : "can't have no liberties and still be on the board! "+ this;
+                        health = -side;
+                        break;
+                    case 1:
+                        health = -side * .3f;
+                        break;
+                    case 2:
+                        // @@ consider seki situations where the adjacent enemy group also has no eyes.
+                        //      XXXXXXX     example of seki here.
+                        //    XXooooooX
+                        //    Xo.XXX.oX
+                        //    XooooooXX
+                        //    XXXXXXX
+                        health = -side * .01f;
+                        break;
+                    case 3:
+                        health = side * .1f;
+                        break;
+                    case 4:
+                        health = side * 0.3f;
+                        break;
+                    default: assert false;
+                }
+            } else {
+                switch (numLiberties) { // numEyes == 0
+                    case 0:
+                        // this can't happen because the stone should already be captured.  @@Hitting this
+                        //assert false : "can't have no liberties and still be on the board! "+ this;
+                        health = -side;
+                        break;
+                    case 1:
+                        health = -side * .4f;
+                        break;
+                    case 2:
+                        // @@ consider seki situations where the adjacent enemy group also has no eyes.
+                        //      XXXXXXX     example of seki here.
+                        //    XXooooooX
+                        //    Xo.XXX.oX
+                        //    XooooooXX
+                        //    XXXXXXX
+                        health = -side * .1f;
+                        break;
+                    case 3:
+                        health = -side * .05f;
+                        break;
+                    case 4:
+                        health = side * 0.02f;
+                        break;
+                    case 5:
+                        health = side * 0.1f;
+                        break;
+                    default: assert false;
+                }
             }
         }
         return health;
@@ -803,8 +833,89 @@ public final class GoGroup extends GoSet
     }
 
 
-    private boolean isUnconditionallyAlive() {
-         return true;
+    /**
+     * Use Benson's algorithm (1977) to determine if a set of strings and eyes within a group
+     * is unconditionally alive
+     * @return
+     */
+    public boolean isUnconditionallyAlive(GoBoard board) {
+
+        // first find the neighbor string sets for each eye in the group
+        for (Object e : eyes_) {
+            GoEye eye = (GoEye)  e;
+            if (eye.getNbrs() == null) {
+                eye.setNbrs(new HashSet());
+            }
+            for (Object point : eye.getMembers()) {
+                GoBoardPosition pos = (GoBoardPosition) point;
+                if (pos.isUnoccupied()) {
+                    Set nbrs = board.getNobiNeighbors(pos, eye.isOwnedByPlayer1(), NeighborType.FRIEND);
+                    for (Object n : nbrs) {
+                        GoBoardPosition nbr = (GoBoardPosition) n;
+                        if (nbr.getString().getGroup() != this) {
+                            // this eye is not UA.
+                            eye.setNbrs(null);
+                            break;
+                        }
+                        else {
+                            eye.getNbrs().add(nbr.getString());
+                        }
+                    }
+                }
+            }
+        }
+
+        // now create the neighbor eye sets for each qualified string
+        Set uaStrings = new HashSet();
+        for (Object e : eyes_) {
+            GoEye eye = (GoEye)  e;
+            if (eye.getNbrs() != null)
+            for (Object s : eye.getNbrs()) {
+                GoString str = (GoString) s;
+                if (str.getNbrs() == null) {
+                    str.setNbrs(new HashSet());
+                }
+                str.getNbrs().add(eye);
+                uaStrings.add(str);
+            }
+        }
+
+        // remove qualified strings that do not have at least 2 qualified eyes associated
+        // and also remove those disqualified eyes from the stirng lists
+        // need to iterate until all qualified strings hav at least 2 qualified eyes.
+        boolean done = false;
+        while (!done) {
+            done = true;
+            for (Object s : uaStrings) {
+                GoString uaString = (GoString) s;
+                if (uaString.getNbrs().size() == 1) {
+                   GoEye eye = (GoEye) uaString.getNbrs().iterator().next() ;
+                   for (Object ss : eye.getNbrs()) {
+                       GoString string = (GoString) ss;
+                       string.getNbrs().remove(eye);
+                   }
+                   eye.setNbrs(null);
+                }
+            }
+        }
+
+        // finally we have all the information we need to determine if any poriton of this group is
+        //unconditionally alive. We also mark the corresponding strings and eyes as such as appropriate.
+        boolean unconditionallyAlive = false;
+        for (Object s : uaStrings) {
+            GoString uaString = (GoString) s;
+            if (uaString.getNbrs().size() >= 2) {
+                uaString.setUnconditionallyAlive(true);
+                // if any one of the strings in the group is UA then the group is considered UA
+                // even thought that is not really technically the case.
+                unconditionallyAlive = true;
+                for (Object e : uaString.getNbrs()) {
+                    GoEye eye = (GoEye) e;
+                    eye.setUnconditionallyAlive(true);
+                }
+            }
+        }
+        return unconditionallyAlive;
     }
 
 
@@ -850,7 +961,11 @@ public final class GoGroup extends GoSet
         Iterator it = members_.iterator();
         while ( it.hasNext() ) {
             GoString string = (GoString) it.next();
-            string.updateTerritory( health );
+            if (string.isUnconditionallyAlive()) {
+                string.updateTerritory( ownedByPlayer1_? 1.0f : -1.0f );
+            } else {
+                string.updateTerritory( health );
+            }
         }
     }
 

@@ -255,10 +255,13 @@ public final class GoBoard extends TwoPlayerBoard
         int stopcol = Math.min( stone.getCol() + CANDIDATE_MOVE_OFFSET, getNumCols() );
         // set the footprint
         for ( i = startrow; i <= stoprow; i++ )
-            for ( j = startcol; j <= stopcol; j++ )
-                if ( positions_[i][j].isUnoccupied() ) {
+            for ( j = startcol; j <= stopcol; j++ )  {
+                GoBoardPosition pos = (GoBoardPosition) positions_[i][j];
+                // never add a stone (from either side to an unconditonally alive eye. There is no advantage to it.
+                if (pos.isUnoccupied() && !(pos.getEye()!=null && pos.getEye().isUnconditionallyAlive())) {
                     b[i][j] = true;
                 }
+            }
     }
 
     /**
@@ -1042,6 +1045,23 @@ public final class GoBoard extends TwoPlayerBoard
         }
 
         GoGroup group = string.getGroup();
+
+        // if the string that the stone is being removed from was considered unconditionally alive,
+        // then we need to clear out all the unconditionally alive information for this group since it is now invalid.
+        if (string.isUnconditionallyAlive()) {
+            for (Object s : group.getMembers())  {
+                GoString str = (GoString) s;
+                str.setUnconditionallyAlive(false);
+                str.setNbrs(null);
+            }
+            for (Object e : group.getEyes())  {
+                GoEye eye = (GoEye) e;
+                eye.setUnconditionallyAlive(false);
+                eye.setNbrs(null);
+            }
+        }
+
+
         Set nbrs = getGroupNeighbors( stone, group.isOwnedByPlayer1(), false );
 
         // create a set of friendly group nbrs and a separate set of enemy ones.
@@ -1067,6 +1087,7 @@ public final class GoBoard extends TwoPlayerBoard
         if ( GameContext.getDebugMode() > 1 )  {
             GoBoardUtil.confirmNoEmptyStrings(groups_);
         }
+
 
         cleanupGroups();
 

@@ -21,6 +21,11 @@ public class GoString extends GoSet
     // the group to which this string belongs
     protected GoGroup group_;
 
+    // used by Benson's algorithm to help determine unconditional life
+    private HashSet nbrs_;
+    // if true, then we are an eye in an unconditionally alive group
+    private boolean unconditionallyAlive_;
+
     /**
      * constructor. Create a new string containing the specified stone
      */
@@ -311,6 +316,26 @@ public class GoString extends GoSet
             assert ( stone.isOwnedByPlayer1() == this.isOwnedByPlayer1()) :
                     stone + " does not have the same owner as " + this;
         }
+    }
+
+    /**
+     *
+     * @return nbr eyes if string, or nbs strings if eye
+     */
+    public HashSet getNbrs() {
+        return nbrs_;
+    }
+
+    public void setNbrs(HashSet nbrEyes) {
+        this.nbrs_ = nbrEyes;
+    }
+
+    public boolean isUnconditionallyAlive() {
+        return unconditionallyAlive_;
+    }
+
+    public void setUnconditionallyAlive(boolean unconditionallyAlive) {
+        this.unconditionallyAlive_ = unconditionallyAlive;
     }
 }
 
