@@ -41,6 +41,6 @@ public class TestProblemCollections extends GoTestCase {
      * @return all the junit test caes to run (in this class)
      */
     public static Test suite() {
-        return new TestSuite(TestLifeAndDeath.class);
+        return new TestSuite(TestProblemCollections.class);
     }
 }

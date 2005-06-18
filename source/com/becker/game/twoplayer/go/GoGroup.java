@@ -858,7 +858,9 @@ public final class GoGroup extends GoSet
                             break;
                         }
                         else {
-                            eye.getNbrs().add(nbr.getString());
+                            if (eye.getNbrs() != null) {
+                                eye.getNbrs().add(nbr.getString());
+                            }
                         }
                     }
                 }
