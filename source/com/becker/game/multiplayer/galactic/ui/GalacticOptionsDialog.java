@@ -7,6 +7,7 @@ import com.becker.game.multiplayer.galactic.Galaxy;
 import com.becker.ui.*;
 
 import javax.swing.*;
+import javax.swing.Box;
 import java.awt.*;
 import java.awt.event.*;
 
