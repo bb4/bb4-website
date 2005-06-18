@@ -91,7 +91,7 @@ public final class MiniMaxStrategy extends SearchStrategy
 
             controller_.undoInternalMove( theMove );
 
-            if (selectedMove==null) {
+            if (selectedMove == null) {
                 // if this happens it means there isn't any possible move beyond theMove.
                 continue;
             }
@@ -179,6 +179,7 @@ public final class MiniMaxStrategy extends SearchStrategy
         double bestInheritedValue = Double.MIN_VALUE;
         if ( player1 ) bestInheritedValue = Double.MAX_VALUE;
         TwoPlayerMove bestMove = (TwoPlayerMove) list.get(0);
+        movesConsidered_ += list.size();
         Iterator it = list.iterator();
         int i = 0;
 

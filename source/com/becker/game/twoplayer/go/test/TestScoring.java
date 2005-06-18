@@ -4,7 +4,9 @@ import junit.framework.Assert;
 import junit.framework.TestSuite;
 import junit.framework.Test;
 
-
+/**
+ * @author Barry Becker
+ */
 public class TestScoring extends GoTestCase {
 
     // give some leeway on the territory estimate since its a heuristic.
@@ -16,7 +18,7 @@ public class TestScoring extends GoTestCase {
 
 
     public void testScoring2() {
-        checkScoring("problem_score2", 3, 0, 58, 57);
+        checkScoring("problem_score2", 2, 0, 58, 57);
     }
 
 

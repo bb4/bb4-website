@@ -5,7 +5,9 @@ import junit.framework.TestSuite;
 import junit.framework.Test;
 import com.becker.game.twoplayer.go.GoMove;
 
-
+/**
+ * @author Barry Becker
+ */
 public class TestLifeAndDeath extends GoTestCase {
 
 

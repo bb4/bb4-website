@@ -3,15 +3,17 @@ package com.becker.game.twoplayer.go.test;
 import junit.framework.TestCase;
 import junit.framework.Assert;
 import com.becker.game.common.GameContext;
-import com.becker.game.twoplayer.go.GoController;
-import com.becker.game.twoplayer.go.GoMove;
+import com.becker.game.twoplayer.go.*;
 import com.becker.game.twoplayer.common.search.SearchStrategy;
 
 import java.util.List;
+import java.util.Set;
 import java.io.File;
 import java.io.FilenameFilter;
 
-
+/**
+ * @author Barry Becker
+ */
 public class GoTestCase extends TestCase {
 
 
@@ -82,11 +84,10 @@ public class GoTestCase extends TestCase {
 
         Assert.assertTrue("Was expecting "+ row +", "+ col +", but instead got "+m,
                           m.getToRow() == row && m.getToCol() == col);
-
     }
 
 
-    void updateLifeAndDeath(String problemFile) {
+    protected void updateLifeAndDeath(String problemFile) {
         System.out.println("finding score for "+problemFile+" ...");
         restore(problemFile);
 
@@ -97,8 +98,30 @@ public class GoTestCase extends TestCase {
     }
 
 
-    protected void tearDown() {
 
+    /**
+     * @param black
+     * @return the biggest black group if black is true else biggest white group.
+     */
+    protected  GoGroup getBiggestGroup(boolean black) {
+
+        Set groups = ((GoBoard) controller_.getBoard()).getGroups();
+        GoGroup biggestGroup = null;
+
+        for (Object g : groups) {
+            GoGroup group = (GoGroup)g;
+            if (((GoBoardPosition)group.getStones().get(0)).getPiece().isOwnedByPlayer1() == black) {
+                if (biggestGroup == null || biggestGroup.size() < group.size()) {
+                    biggestGroup = group;
+                }
+            }
+        }
+        return biggestGroup;
+    }
+
+
+
+    protected void tearDown() {
     }
 
 

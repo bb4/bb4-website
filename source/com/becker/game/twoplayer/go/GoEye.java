@@ -26,7 +26,6 @@ public final class GoEye extends GoString implements GoMember
     // the kind of eye that this is
     private final EyeType type_;
 
-
     /**
      * constructor. Create a new eye shape containing the specified list of stones/spaces
      */
@@ -244,4 +243,5 @@ public final class GoEye extends GoString implements GoMember
     {
         return " Eye: " + getEyeTypeName() + ": ";
     }
+
 }
