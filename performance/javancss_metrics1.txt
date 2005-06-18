@@ -54,7 +54,7 @@ Nr. NCSS Functions Classes Javadocs Class
  25    2         1       0        2 com.becker.game.common.ViewerCallbackInterface
  26  111        29       0       21 com.becker.game.multiplayer.galactic.GalacticController
  27    3         1       0        1 com.becker.game.multiplayer.galactic.GalacticHumanPlayer
- 28    6         2       0        3 com.becker.game.multiplayer.galactic.GalacticMove
+ 28    6         2       0        3 com.becker.game.multiplayer.galactic.GalacticTurn
  29   61        10       0        7 com.becker.game.multiplayer.galactic.GalacticPlayer
  30   40         3       0        3 com.becker.game.multiplayer.galactic.GalacticRobotPlayer
  31   90        14       0       11 com.becker.game.multiplayer.galactic.Galaxy
@@ -73,10 +73,10 @@ Nr. NCSS Functions Classes Javadocs Class
  44   10         4       0        1 com.becker.game.multiplayer.galactic.ui.OrdersTableModel
  45   34         5       0        5 com.becker.game.multiplayer.galactic.ui.PlanetDetailsDialog
  46   28         4       0        3 com.becker.game.multiplayer.galactic.ui.PlanetRenderer
- 47   70         9       0        6 com.becker.game.multiplayer.galactic.ui.PlayerTable
+ 47   70         9       0        6 com.becker.game.multiplayer.galactic.ui.GalacticPlayerTable
  48   10         4       0        1 com.becker.game.multiplayer.galactic.ui.PlayerTableModel
  49   33         4       0        4 com.becker.game.multiplayer.galactic.ui.StatsDialog
- 50   26         4       0        4 com.becker.game.multiplayer.galactic.ui.TallyDialog
+ 50   26         4       0        4 com.becker.game.multiplayer.galactic.ui.GalacticTallyDialog
  51  302        19       0       13 com.becker.game.twoplayer.blockade.BlockadeBoard
  52   48        16       0       14 com.becker.game.twoplayer.blockade.BlockadeBoardPosition
  53  359        24       1       17 com.becker.game.twoplayer.blockade.BlockadeController
@@ -104,7 +104,7 @@ Nr. NCSS Functions Classes Javadocs Class
  75   61         5       0        5 com.becker.game.twoplayer.chess.ui.ChessPieceRenderer
  76  116         3       0        3 com.becker.game.twoplayer.common.search.MiniMaxStrategy
  77   89         4       0        4 com.becker.game.twoplayer.common.search.NegaMaxStrategy
- 78   10         9       0       10 com.becker.game.twoplayer.common.search.SearchableInterface
+ 78   10         9       0       10 com.becker.game.twoplayer.common.search.Searchable
  79   67        14       0       11 com.becker.game.twoplayer.common.search.SearchStrategy
  80   23         3       0        2 com.becker.game.twoplayer.common.search.SearchTreeNode
  81  261        61       1       53 com.becker.game.twoplayer.common.TwoPlayerController
@@ -477,8 +477,8 @@ Program NCSS:                    10,558.00
  322    2   1    1 com.becker.game.multiplayer.galactic.GalacticController.inJeopardy(Move,ParameterArray,boolean)
  323   11   5    0 com.becker.game.multiplayer.galactic.GalacticController.main(String[])
  324    2   1    0 com.becker.game.multiplayer.galactic.GalacticHumanPlayer.GalacticHumanPlayer(String,Planet,Color)
- 325    1   1    1 com.becker.game.multiplayer.galactic.GalacticMove.GalacticMove()
- 326    4   1    1 com.becker.game.multiplayer.galactic.GalacticMove.createMove(int)
+ 325    1   1    1 com.becker.game.multiplayer.galactic.GalacticTurn.GalacticMove()
+ 326    4   1    1 com.becker.game.multiplayer.galactic.GalacticTurn.createMove(int)
  327    5   1    0 com.becker.game.multiplayer.galactic.GalacticPlayer.GalacticPlayer(String,Planet,Color,boolean)
  328    5   3    1 com.becker.game.multiplayer.galactic.GalacticPlayer.createGalacticPlayer(String,Planet,Color,boolean)
  329    4   1    1 com.becker.game.multiplayer.galactic.GalacticPlayer.getDefaultName(int)
@@ -631,15 +631,15 @@ Program NCSS:                    10,558.00
  476    4   2    0 com.becker.game.multiplayer.galactic.ui.PlanetRenderer.getRenderer()
  477    5   1    0 com.becker.game.multiplayer.galactic.ui.PlanetRenderer.getPieceSize(int,GamePiece)
  478   16   4    1 com.becker.game.multiplayer.galactic.ui.PlanetRenderer.render(Graphics2D,BoardPosition,int)
- 479    6   2    1 com.becker.game.multiplayer.galactic.ui.PlayerTable.PlayerTable(GalacticPlayer[])
- 480    6   1    0 com.becker.game.multiplayer.galactic.ui.PlayerTable.initializeTable()
- 481    9   2    1 com.becker.game.multiplayer.galactic.ui.PlayerTable.getPlayers()
- 482    2   1    0 com.becker.game.multiplayer.galactic.ui.PlayerTable.getTable()
- 483    2   1    0 com.becker.game.multiplayer.galactic.ui.PlayerTable.addListSelectionListener(ListSelectionListener)
- 484    2   1    0 com.becker.game.multiplayer.galactic.ui.PlayerTable.getModel()
- 485    9   1    1 com.becker.game.multiplayer.galactic.ui.PlayerTable.addRow(GalacticPlayer)
- 486   10   2    1 com.becker.game.multiplayer.galactic.ui.PlayerTable.addRow()
- 487    7   2    1 com.becker.game.multiplayer.galactic.ui.PlayerTable.removeSelectedRows()
+ 479    6   2    1 com.becker.game.multiplayer.galactic.ui.GalacticPlayerTable.PlayerTable(GalacticPlayer[])
+ 480    6   1    0 com.becker.game.multiplayer.galactic.ui.GalacticPlayerTable.initializeTable()
+ 481    9   2    1 com.becker.game.multiplayer.galactic.ui.GalacticPlayerTable.getPlayers()
+ 482    2   1    0 com.becker.game.multiplayer.galactic.ui.GalacticPlayerTable.getTable()
+ 483    2   1    0 com.becker.game.multiplayer.galactic.ui.GalacticPlayerTable.addListSelectionListener(ListSelectionListener)
+ 484    2   1    0 com.becker.game.multiplayer.galactic.ui.GalacticPlayerTable.getModel()
+ 485    9   1    1 com.becker.game.multiplayer.galactic.ui.GalacticPlayerTable.addRow(GalacticPlayer)
+ 486   10   2    1 com.becker.game.multiplayer.galactic.ui.GalacticPlayerTable.addRow()
+ 487    7   2    1 com.becker.game.multiplayer.galactic.ui.GalacticPlayerTable.removeSelectedRows()
  488    2   1    0 com.becker.game.multiplayer.galactic.ui.PlayerTableModel.PlayerTableModel(Object[][],Object[])
  489    2   1    0 com.becker.game.multiplayer.galactic.ui.PlayerTableModel.PlayerTableModel(Object[],int)
  490    3   1    0 com.becker.game.multiplayer.galactic.ui.PlayerTableModel.getColumnClass(int)
@@ -648,10 +648,10 @@ Program NCSS:                    10,558.00
  493    1   1    1 com.becker.game.multiplayer.galactic.ui.StatsDialog.initUI()
  494    4   2    0 com.becker.game.multiplayer.galactic.ui.StatsDialog.processWindowEvent(WindowEvent)
  495    2   1    1 com.becker.game.multiplayer.galactic.ui.StatsDialog.close()
- 496   13   3    1 com.becker.game.multiplayer.galactic.ui.TallyDialog.TallyDialog(JFrame,GameBoardViewer)
- 497    1   1    1 com.becker.game.multiplayer.galactic.ui.TallyDialog.initUI()
- 498    4   2    0 com.becker.game.multiplayer.galactic.ui.TallyDialog.processWindowEvent(WindowEvent)
- 499    2   1    1 com.becker.game.multiplayer.galactic.ui.TallyDialog.close()
+ 496   13   3    1 com.becker.game.multiplayer.galactic.ui.GalacticTallyDialog.TallyDialog(JFrame,GameBoardViewer)
+ 497    1   1    1 com.becker.game.multiplayer.galactic.ui.GalacticTallyDialog.initUI()
+ 498    4   2    0 com.becker.game.multiplayer.galactic.ui.GalacticTallyDialog.processWindowEvent(WindowEvent)
+ 499    2   1    1 com.becker.game.multiplayer.galactic.ui.GalacticTallyDialog.close()
  500    2   1    1 com.becker.game.twoplayer.blockade.BlockadeBoard.BlockadeBoard(int,int)
  501   20   4    1 com.becker.game.twoplayer.blockade.BlockadeBoard.reset()
  502    6   1    0 com.becker.game.twoplayer.blockade.BlockadeBoard.setSize(int,int)
@@ -890,15 +890,15 @@ Program NCSS:                    10,558.00
  735    2   1    1 com.becker.game.twoplayer.common.search.NegaMaxStrategy.search(TwoPlayerMove,ParameterArray,int,double,double,SearchTreeNode)
  736   43  17    0 com.becker.game.twoplayer.common.search.NegaMaxStrategy.searchInternal(TwoPlayerMove,ParameterArray,int,double,double,SearchTreeNode)
  737   40  15    1 com.becker.game.twoplayer.common.search.NegaMaxStrategy.quiescentSearch(TwoPlayerMove,ParameterArray,double,double,SearchTreeNode)
- 738    1   1    1 com.becker.game.twoplayer.common.search.SearchableInterface.getLookAhead()
- 739    1   1    1 com.becker.game.twoplayer.common.search.SearchableInterface.getAlphaBeta()
- 740    1   1    1 com.becker.game.twoplayer.common.search.SearchableInterface.getQuiescence()
- 741    1   1    1 com.becker.game.twoplayer.common.search.SearchableInterface.makeInternalMove(TwoPlayerMove)
- 742    1   1    1 com.becker.game.twoplayer.common.search.SearchableInterface.undoInternalMove(TwoPlayerMove)
- 743    1   1    1 com.becker.game.twoplayer.common.search.SearchableInterface.done(TwoPlayerMove,boolean)
- 744    1   1    1 com.becker.game.twoplayer.common.search.SearchableInterface.generateMoves(TwoPlayerMove,ParameterArray,boolean)
- 745    1   1    1 com.becker.game.twoplayer.common.search.SearchableInterface.generateUrgentMoves(TwoPlayerMove,ParameterArray,boolean)
- 746    1   1    1 com.becker.game.twoplayer.common.search.SearchableInterface.inJeopardy(TwoPlayerMove,ParameterArray,boolean)
+ 738    1   1    1 com.becker.game.twoplayer.common.search.Searchable.getLookAhead()
+ 739    1   1    1 com.becker.game.twoplayer.common.search.Searchable.getAlphaBeta()
+ 740    1   1    1 com.becker.game.twoplayer.common.search.Searchable.getQuiescence()
+ 741    1   1    1 com.becker.game.twoplayer.common.search.Searchable.makeInternalMove(TwoPlayerMove)
+ 742    1   1    1 com.becker.game.twoplayer.common.search.Searchable.undoInternalMove(TwoPlayerMove)
+ 743    1   1    1 com.becker.game.twoplayer.common.search.Searchable.done(TwoPlayerMove,boolean)
+ 744    1   1    1 com.becker.game.twoplayer.common.search.Searchable.generateMoves(TwoPlayerMove,ParameterArray,boolean)
+ 745    1   1    1 com.becker.game.twoplayer.common.search.Searchable.generateUrgentMoves(TwoPlayerMove,ParameterArray,boolean)
+ 746    1   1    1 com.becker.game.twoplayer.common.search.Searchable.inJeopardy(TwoPlayerMove,ParameterArray,boolean)
  747    8   5    1 com.becker.game.twoplayer.common.search.SearchStrategy.createSearchStrategy(int,SearchableInterface)
  748    5   1    1 com.becker.game.twoplayer.common.search.SearchStrategy.SearchStrategy(SearchableInterface)
  749    8   2    1 com.becker.game.twoplayer.common.search.SearchStrategy.showPrunedNodesInTree(List,SearchTreeNode,int,double,double,int)

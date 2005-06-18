@@ -4,7 +4,7 @@
   </description>
 
   <!-- enable or disable assertions when runnning. Should disable before formally releasing a new version. -->
-  <property name="assertionsFlag" value="-enableassertions"/>
+  <property name="assertionsFlag" value="-disableassertions"/>
   <!-- place where compiled classes go. images and resources also get copied here -->
   <property name="classesDir" value="../classes"/>
   <!-- place where all original source files come from. -->
