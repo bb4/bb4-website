@@ -5,7 +5,6 @@ package com.becker.game.twoplayer.go;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 import go.Point;
 import gtp.GtpServer;
@@ -35,7 +34,7 @@ import com.becker.game.twoplayer.common.search.SearchStrategy;
  *  @author Barry Becker
  */
 public class GtpTesujisoftGoServer
-    extends gtp.GtpServer
+    extends GtpServer
 {
 
     private boolean m_nextResponseFixed;
