@@ -36,7 +36,7 @@ class PokerOptionsDialog extends GameOptionsDialog implements ActionListener, It
      */
     protected JPanel createControllerParamPanel()
     {
-        JPanel p = new JPanel();
+        JPanel p = new JPanel();          
 
         p.setLayout( new BoxLayout( p, BoxLayout.Y_AXIS ) );
         p.setBorder( BorderFactory.createTitledBorder(

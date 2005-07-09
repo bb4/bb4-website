@@ -73,7 +73,7 @@ public class GoTestCase extends TestCase {
 
         System.out.println("finding next move for "+problemFile+" ...");
         restore(problemFile);
-        controller_.requestComputerMove( true, blackPlays );
+        controller_.requestComputerMove( blackPlays, true );
 
         GoMove m = (GoMove) controller_.getBoard().getLastMove();
         System.out.println("got " + m);

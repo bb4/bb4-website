@@ -189,15 +189,15 @@ public abstract class AnimationComponent extends Container implements Runnable
     }
 
     // Property change support.
-    private transient ChangeListener mChangeListener;
+    private transient AnimationChangeListener mAnimationChangeListener;
 
-    public void setChangeListener( ChangeListener af )
+    public void setChangeListener( AnimationChangeListener af )
     {
-        mChangeListener = af;
+        mAnimationChangeListener = af;
     }
 
     protected void firePropertyChange( String name, String newValue )
     {
-        mChangeListener.statusChanged( newValue );
+        mAnimationChangeListener.statusChanged( newValue );
     }
 }

@@ -74,7 +74,7 @@ public class ChessBoard extends CheckersBoard
         while (it.hasNext()) {
             ChessMove nextMove = (ChessMove)it.next();
             CaptureList cl = nextMove.captureList;
-            if (cl!=null && !cl.isEmpty()) {
+            if (null != cl && !cl.isEmpty()) {
                 GamePiece piece = ((BoardPosition)cl.getFirst()).getPiece();
                 if (piece.getType() == ChessPiece.KING) {
                     checked = true;
@@ -148,7 +148,7 @@ public class ChessBoard extends CheckersBoard
     public boolean causesSelfCheck(TwoPlayerMove m)
     {
         // need to check all opponent pieces to see if they can capture the piece after it has moved.
-        assert (m!=null);
+        assert (null != m);
         makeMove(m);
 
         int row, col;

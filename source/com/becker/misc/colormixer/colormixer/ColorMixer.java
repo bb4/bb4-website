@@ -16,10 +16,14 @@ import java.awt.*;
 import com.becker.ui.*;
 
 import javax.swing.*;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Dictionary;
+import java.util.Hashtable;
 
-public class ColorMixer extends JApplet implements ActionListener
+public class ColorMixer extends JApplet implements ActionListener, ChangeListener
 {
 
     ResizableAppletPanel resizablePanel_ = null;
@@ -30,6 +34,9 @@ public class ColorMixer extends JApplet implements ActionListener
     private JButton colorButtonB_;
     private Color colorA_ = Color.WHITE;
     private Color colorB_ = Color.BLACK;
+
+    private JSlider opacitySlider_;
+    private static final int SLIDER_TICKS = 1000;
 
     private MixedColorsScrollPane mixedColorsPanel_;
 
@@ -84,6 +91,8 @@ public class ColorMixer extends JApplet implements ActionListener
         colorButtonA_ = createColorButton(colorA_);
         colorButtonB_ = createColorButton(colorB_);
 
+        opacitySlider_ = createOpacitySlider();
+
         JPanel colorPanelA = new ColorInputPanel("Select first color : ",
                                                      "Select the first color to mix",
                                                      colorButtonA_, this);
@@ -99,12 +108,29 @@ public class ColorMixer extends JApplet implements ActionListener
         controlsPanel.add( Box.createHorizontalStrut( 15 ) );
         controlsPanel.add(colorPanelB);
         controlsPanel.add( Box.createHorizontalStrut( 15 ) );
+        controlsPanel.add(new JLabel("Opacity"));
+        controlsPanel.add(opacitySlider_);
         controlsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         mainPanel.add( controlsPanel, BorderLayout.NORTH );
         mainPanel.add( mixedColorsPanel_, BorderLayout.CENTER );
 
         return mainPanel;
+    }
+
+    private JSlider createOpacitySlider() {
+        JSlider opacitySlider = new JSlider(JSlider.HORIZONTAL, 0, SLIDER_TICKS, SLIDER_TICKS);
+        Dictionary dict = new Hashtable();
+        dict.put(new Integer(0), new JLabel("0"));
+        dict.put(new Integer(SLIDER_TICKS), new JLabel("1.0"));
+        opacitySlider.setLabelTable(dict);
+        //opacitySlider.setMajorTickSpacing(100);
+        //opacitySlider.setMinorTickSpacing(10);
+        opacitySlider.setPaintLabels(true);
+        //opacitySlider.setPaintTicks(true);
+        //opacitySlider.setPaintTrack(true);
+        opacitySlider.addChangeListener(this);
+        return opacitySlider;
     }
 
     private JButton createColorButton(Color initialColor) {
@@ -126,10 +152,19 @@ public class ColorMixer extends JApplet implements ActionListener
             System.out.println("a or b pressed");
             mixedColorsPanel_.setColorsToMix(colorButtonA_.getBackground(), 1.0f,  colorButtonB_.getBackground(), 1.0f);
             mixedColorsPanel_.invalidate();
+            resizablePanel_.repaint();
         }
-
     }
 
+
+
+    public void stateChanged(ChangeEvent ce) {
+        Object source = ce.getSource();
+        if ( source == opacitySlider_) {
+            mixedColorsPanel_.setOpacity((float)opacitySlider_.getValue()/SLIDER_TICKS);
+            resizablePanel_.repaint();
+        }
+    }
 
     /**
      * This method allow javascript to resize the applet from the browser.

@@ -2,7 +2,7 @@ package com.becker.ui;
 
 import java.awt.*;
 
-public class AnimationFrame extends ApplicationFrame implements ChangeListener
+public class AnimationFrame extends ApplicationFrame implements AnimationChangeListener
 {
 
     private Label mStatusLabel;
