@@ -187,13 +187,13 @@ public abstract class GamePanel extends TexturedPanel
             //SpeechSynthesizer speech = new SpeechSynthesizer();
             //speech.sayPhoneWords( GREETING );
 
-            /* @@ uncomment when sound card available
+            // use when sound card available
             URL url = GUIUtil.getURL("com/becker/sound/play_game_voice.wav");
             AudioClip clip = new sun.applet.AppletAudioClip(url);
             if (clip != null) {
                 clip.play();
             }
-             */
+
         }
         this.setDoubleBuffered(false);
     }

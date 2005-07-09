@@ -57,7 +57,7 @@ public abstract class TwoPlayerController extends GameController
     protected boolean player1sTurn_ = true;
 
     private boolean autoOptimize_ = false;
-    private String autoOptimizeFile_ = null;
+    private String autoOptimizeFile_;
 
     // these weights determine how the computer values each move.
     // they serve as parameters to a game dependent evaluation function
@@ -66,12 +66,12 @@ public abstract class TwoPlayerController extends GameController
     //public static int[] defaultWeights_ = null;
 
     // the method the computer will use for searching for the next move.
-    private SearchStrategy strategy_ = null;
+    private SearchStrategy strategy_;
 
     // if this becomes non-null we will fill in the game tree for display in a UI.
-    private SearchTreeNode root_ = null;
+    private SearchTreeNode root_;
 
-    private Worker worker_ = null;
+    private Worker worker_;
     // this is true while the computer thinks about its next move.
     private boolean processing_ = false;
 
@@ -116,8 +116,8 @@ public abstract class TwoPlayerController extends GameController
      */
     public void reset()
     {
-        if (this.isProcessing()) {
-            this.pause();
+        if (isProcessing()) {
+            pause();
             if (worker_!=null)
                 worker_.interrupt();
                 processing_ = false;
@@ -129,8 +129,8 @@ public abstract class TwoPlayerController extends GameController
             catch (InterruptedException e) {}
         }
         super.reset();
-        this.getPlayer1().setWon(false);
-        this.getPlayer2().setWon(false);
+        getPlayer1().setWon(false);
+        getPlayer2().setWon(false);
         player1sTurn_ = true;
     }
 
@@ -139,7 +139,7 @@ public abstract class TwoPlayerController extends GameController
         Player[] players = new Player[2];
         players[0] = new Player(getPlayerName(true), null, true);
         players[1] = new Player(getPlayerName(false), null, false);
-        this.setPlayers(players);
+        setPlayers(players);
     }
 
     /**

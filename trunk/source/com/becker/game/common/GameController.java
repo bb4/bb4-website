@@ -29,10 +29,10 @@ public abstract class GameController
     // they may be modified through the ui (see GameOptionsDialog)
 
     // the board has the layout of the pieces
-    protected Board board_ = null;
+    protected Board board_;
 
     // sometimes we want to draw directly to the ui while thinking (for debugging purposes)
-    protected ViewerCallbackInterface viewer_ = null;
+    protected ViewerCallbackInterface viewer_;
 
 
     // the list of players actively playing the game, in the order that they move.
@@ -176,7 +176,7 @@ public abstract class GameController
         List moveSequence = new LinkedList();
         extractMoveList( game.getTree(), moveSequence );
         GameContext.log( 2, "move sequence= " + moveSequence );
-        this.reset();
+        reset();
 
         Iterator it = moveSequence.iterator();
         while ( it.hasNext() ) {
@@ -198,14 +198,14 @@ public abstract class GameController
                 size = sizeToken.getSize();
             }
         }
-        this.getBoard().setSize(size, size);
+        getBoard().setSize(size, size);
     }
 
     /**
      * create a Move from an SGF token.
      */
     protected Move createMoveFromToken( MoveToken token ) {
-        assert (false) : "createMoveFromToken not implemented for "+this.getClass().getName();
+        assert false : "createMoveFromToken not implemented for "+ getClass().getName();
         return null;
     }
 
@@ -222,24 +222,24 @@ public abstract class GameController
     {
         Enumeration trees = tree.getTrees(), leaves = tree.getLeaves(), tokens;
 
-        while ( (leaves != null) && leaves.hasMoreElements() ) {
+        while ( leaves != null && leaves.hasMoreElements() ) {
             SGFToken token;
-            tokens = ((SGFLeaf) (leaves.nextElement())).getTokens();
+            tokens = ((SGFLeaf) leaves.nextElement()).getTokens();
 
             boolean found = false;
 
             // While a move token hasn't been found, and there are more tokens to
             // examine ... try and find a move token in this tree's leaves to add
             // to the collection of moves (moveList).
-            while ( (tokens != null) && tokens.hasMoreElements() && !found ) {
-                token = (SGFToken) (tokens.nextElement());
+            while ( tokens != null && tokens.hasMoreElements() && !found ) {
+                token = (SGFToken) tokens.nextElement();
                 found = processToken(token, moveList);
             }
         }
         // If there are variations, use the first variation, which is
         // the entire game, without extraneous variations.
-        if ( (trees != null) && trees.hasMoreElements() )
-            extractMoveList( (SGFTree) (trees.nextElement()), moveList );
+        if ( trees != null && trees.hasMoreElements() )
+            extractMoveList( (SGFTree) trees.nextElement(), moveList );
     }
 
 

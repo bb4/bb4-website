@@ -227,7 +227,7 @@ public class ChessPiece extends GamePiece
      * find moves for kings or knights which have 8 possible moves.
      * @return  those moves which are valid out of the eight possible that are checked.
      */
-    private List getEightDirectionalMoves(Board board, int row, int col, Move lastMove, int rowOffsets[], int colOffsets[])
+    private List getEightDirectionalMoves(Board board, int row, int col, Move lastMove, int[] rowOffsets, int[] colOffsets)
     {
         List moveList = new LinkedList();
 

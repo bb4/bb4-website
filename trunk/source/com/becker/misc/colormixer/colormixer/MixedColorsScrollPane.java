@@ -25,15 +25,22 @@ public class MixedColorsScrollPane extends JPanel {
         mixPanels_ = new ArrayList();
 
 
-        mixPanels_.add(new MixPanel(colorA, 1.0f, colorB, 1.0f, MixPanel.ADDITIVE_MIX));
-        mixPanels_.add(new MixPanel(colorA, 1.0f, colorB, 1.0f, MixPanel.SUBTRACTIVE_MIX));
-        mixPanels_.add(new MixPanel(colorA, 1.0f, colorB, 1.0f, MixPanel.OVER_MIX));
-        mixPanels_.add(new MixPanel(colorA, 1.0f, colorB, 1.0f, MixPanel.UNDER_MIX));
+        mixPanels_.add(new MixPanel(colorA, 1.0f, colorB, 1.0f, AlphaComposite.DST_ATOP, "Dest Atop"));
+        mixPanels_.add(new MixPanel(colorA, 1.0f, colorB, 1.0f, AlphaComposite.DST_IN, "Dest in"));
+        mixPanels_.add(new MixPanel(colorA, 1.0f, colorB, 1.0f, AlphaComposite.DST_OUT, "Dest out"));
+        mixPanels_.add(new MixPanel(colorA, 1.0f, colorB, 1.0f, AlphaComposite.DST_OVER, "Dest Over"));
+        mixPanels_.add(new MixPanel(colorA, 1.0f, colorB, 1.0f, AlphaComposite.SRC_ATOP, "Source Atop"));
+        mixPanels_.add(new MixPanel(colorA, 1.0f, colorB, 1.0f, AlphaComposite.SRC_IN, "Source In"));
+        mixPanels_.add(new MixPanel(colorA, 1.0f, colorB, 1.0f, AlphaComposite.SRC_OUT, "Source in"));
+        mixPanels_.add(new MixPanel(colorA, 1.0f, colorB, 1.0f, AlphaComposite.SRC_OVER, "Source over"));
+        mixPanels_.add(new MixPanel(colorA, 1.0f, colorB, 1.0f, AlphaComposite.CLEAR, "Clear"));
+        mixPanels_.add(new MixPanel(colorA, 1.0f, colorB, 1.0f, AlphaComposite.XOR, "XOR"));
+
 
 
         for (int i=0; i<mixPanels_.size(); i++) {
             MixPanel p = (MixPanel)mixPanels_.get(i);
-            p.setPreferredSize(new Dimension(200, 100));
+            p.setPreferredSize(new Dimension(200, 60));
             mainPanel_.add(p);
         }
 
@@ -46,6 +53,14 @@ public class MixedColorsScrollPane extends JPanel {
        for (int i=0; i<mixPanels_.size(); i++) {
             MixPanel p = (MixPanel)mixPanels_.get(i);
             p.setColors(colorA, opacityA, colorB, opacityB);
+       }
+       mainPanel_.invalidate();
+    }
+
+    public void setOpacity(float opacity) {
+       for (int i=0; i<mixPanels_.size(); i++) {
+            MixPanel p = (MixPanel)mixPanels_.get(i);
+            p.setOpacity(opacity);
        }
        mainPanel_.invalidate();
     }

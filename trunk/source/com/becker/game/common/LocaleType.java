@@ -14,7 +14,7 @@ public enum LocaleType
     JAPANESE ( new Locale("ja", "JP")),
     VIETNAMESE( new Locale("vi"));
 
-    private Locale locale_ = null;
+    private Locale locale_;
 
 
     /**

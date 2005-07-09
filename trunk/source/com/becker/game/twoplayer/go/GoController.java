@@ -53,8 +53,6 @@ import javax.swing.*;
  *  - check performance bottleknecks
  *  - add test cases for every little thing
  *  - why don't test cases find optimal moves
- *  - why does turning quiescense on make things too slow
- *  - test inJeopardy
  * bugs
  *  - pause/continue not working in tree dialog.
  *  - back up and play black, back up again and play white.
@@ -98,6 +96,7 @@ import javax.swing.*;
  *    - show visualization of all next move values in main and debug windows (1)
  *    - allow player to ask for suggested move (1)
  *    - use kiseido or GoGui for front end? (3)
+ *    - Investigate VASSAL framework. Moyoman. Freya Game engine.
  *    - defaults for options should come from config/preferences file rather than hardcode (1) (see jdk1.4 preferences)
  *    - handle time limits and options (2)
  *    - allow undo/redo of moves in a computer vs. computer game.
@@ -170,7 +169,7 @@ public final class GoController extends TwoPlayerController
     // we assign a value to a stone based on the line on which it falls when calculating worth
     private static final int NUM_SCORED_LINES = 5;  // number of lines that we care about scoring
     private static final float[] LINE_VALS = {-1.0f, .0f, 2.0f, 1.8f, .2f};
-    private static final float CENTER_VAL = 1.0f;
+
 
     // at the very end of the game we mark dead stones dead.
     private int numDeadBlackStonesOnBoard_ = 0;

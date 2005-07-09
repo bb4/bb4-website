@@ -22,7 +22,7 @@ public final class GameContext
     private static Log logger_ = null;
 
     // use sound effects if true
-    private static boolean useSound_ = false;
+    private static boolean useSound_ = true;
 
     // this is a singleton. It generates the sounds
     private static MusicMaker musicMaker_ = null;

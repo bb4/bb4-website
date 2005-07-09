@@ -140,7 +140,7 @@ public final class GoBoard extends TwoPlayerBoard
      */
     public final void setHandicap( int numHandicapStones )
     {
-        assert ( numHandicapStones <= starPoints_.size() );
+        assert numHandicapStones <= starPoints_.size();
 
         numHandicapStones_ = numHandicapStones;
         for ( int i = 0; i < numHandicapStones_; i++ ) {
