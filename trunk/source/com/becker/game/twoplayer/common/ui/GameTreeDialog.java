@@ -1,6 +1,5 @@
 package com.becker.game.twoplayer.common.ui;
 
-import com.becker.common.ColorMap;
 import com.becker.common.Util;
 import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
@@ -8,6 +7,7 @@ import com.becker.game.twoplayer.common.search.SearchTreeNode;
 import com.becker.game.twoplayer.common.*;
 import com.becker.ui.GUIUtil;
 import com.becker.ui.GradientButton;
+import com.becker.ui.ContinuousColorLegend;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -22,6 +22,8 @@ import java.util.LinkedList;
 
 /**
  * Draw the entire game tree using a java tree control.
+ * Contains 3 sub representations: a java text tree with nodes that can be expanded and collapsed,
+ * game viewer, and the GameTreeViewer at the bottom.
  *
  * @author Barry Becker
  */
@@ -62,7 +64,7 @@ public final class GameTreeDialog extends JDialog
     // the controller that is actually being played
     private TwoPlayerControllerInterface mainController_ = null;
 
-    private ColorMap colormap_ = null;
+    GameTreeCellRenderer cellRenderer_;
 
 
     /**
@@ -70,13 +72,13 @@ public final class GameTreeDialog extends JDialog
      * @param parent frame to display relative to
      * @param boardViewer
      */
-    public GameTreeDialog( JFrame parent, TwoPlayerBoardViewer boardViewer )
+    public GameTreeDialog( JFrame parent, TwoPlayerBoardViewer boardViewer, GameTreeCellRenderer cellRenderer )
     {
         super( parent );
         boardViewer_ = boardViewer;
         controller_ = (TwoPlayerController)boardViewer.getController();
         board_ = controller_.getBoard();
-        initColormap();
+        cellRenderer_ = cellRenderer;
 
         enableEvents( AWTEvent.WINDOW_EVENT_MASK );
         try {
@@ -88,25 +90,6 @@ public final class GameTreeDialog extends JDialog
             GameContext.log( 0, GUIUtil.getStackTrace( oom ) );
         }
         pack();
-    }
-
-    /**
-     * initialize the colormap used to color the gmae tree rows, nodes, and arcs.
-     */
-    private void initColormap()
-    {
-        TwoPlayerBoardViewer viewer = (TwoPlayerBoardViewer)boardViewer_;
-        TwoPlayerPieceRenderer renderer = (TwoPlayerPieceRenderer)viewer.getPieceRenderer();
-        // we will use this colormap for both the text tree and the graphical tree viewers so they have consistent coloring.
-        final double[] values_ = {-TwoPlayerController.WINNING_VALUE, -TwoPlayerController.WINNING_VALUE/20.0,
-                                              0.0,
-                                              TwoPlayerController.WINNING_VALUE/20.0, TwoPlayerController.WINNING_VALUE};
-        final Color[] colors_ = {renderer.getPlayer2Color().darker(),
-                                            renderer.getPlayer2Color(),
-                                            new Color( 160, 160, 160),
-                                            renderer.getPlayer1Color(),
-                                            renderer.getPlayer1Color().darker()};
-        colormap_ = new ColorMap( values_, colors_ );
     }
 
 
@@ -122,7 +105,10 @@ public final class GameTreeDialog extends JDialog
 
         root_ = new SearchTreeNode(null);
         textTree_ = createTree( root_ );
-        treeViewer_ = new GameTreeViewer( root_, controller_.getLookAhead(), colormap_);
+
+        TwoPlayerPieceRenderer pieceRenderer = (TwoPlayerPieceRenderer)((TwoPlayerBoardViewer)boardViewer_).getPieceRenderer();
+        treeViewer_ =
+                new GameTreeViewer( root_, controller_.getLookAhead(), cellRenderer_.getColorMap(), pieceRenderer);
         treeViewer_.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
         treeViewer_.setPreferredSize(new Dimension(500, 120));
 
@@ -143,13 +129,20 @@ public final class GameTreeDialog extends JDialog
         viewerPanel.setBorder(BorderFactory.createEmptyBorder(3,3,3,3));
         infoLabel_.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED),
                              BorderFactory.createEmptyBorder(5,5,5,5)));
-        infoLabel_.setVerticalAlignment(JLabel.TOP);
-        infoLabel_.setPreferredSize( new Dimension( 200, 260 ) );
+        ContinuousColorLegend colorLegend =
+                new ContinuousColorLegend("Relative Score for  player", cellRenderer_.getColorMap());
+
+        JPanel infoPanel = new JPanel();
+        infoPanel.setLayout(new BorderLayout());
+        infoPanel.add(infoLabel_, BorderLayout.CENTER);
+        infoPanel.add(colorLegend, BorderLayout.SOUTH);
+
         viewerPanel.add( (TwoPlayerBoardViewer)boardViewer_, BorderLayout.CENTER);
-        viewerPanel.add( infoLabel_, BorderLayout.SOUTH);
+        viewerPanel.add( infoPanel, BorderLayout.SOUTH);
 
 
         previewPanel_.add( viewerPanel, BorderLayout.CENTER );
+
 
         JSplitPane topSplitPane = new JSplitPane( JSplitPane.HORIZONTAL_SPLIT, true, scrollPane_, previewPanel_ );
         JSplitPane splitPane = new JSplitPane( JSplitPane.VERTICAL_SPLIT, true, topSplitPane, treeViewer_ );
@@ -271,14 +264,11 @@ public final class GameTreeDialog extends JDialog
      */
     private JTree createTree( SearchTreeNode root )
     {
-        // @@ getting ArrayIndexOutOfBounds in DefaultMutableTreeNode/Vector here. bug in jdk1.5?
         JTree tree = new JTree( root );
 
         ToolTipManager.sharedInstance().registerComponent( tree );
-        GameTreeCellRenderer cellRenderer =
-                new GameTreeCellRenderer(colormap_);
 
-        tree.setCellRenderer( cellRenderer );
+        tree.setCellRenderer( cellRenderer_ );
         tree.setPreferredSize( new Dimension( TREE_WIDTH, 900 ) );
         tree.setShowsRootHandles( true );
         tree.putClientProperty( "JTree.lineStyle", "Angled" );
@@ -352,8 +342,8 @@ public final class GameTreeDialog extends JDialog
             sBuf.append("<font size=\"+1\" color="+GUIUtil.getHTMLColorFromColor(c)+" bgcolor=#99AA99>"+entity+"</font><br>");
             sBuf.append("Static value = " + Util.formatNumber(m.value) +"<br>");
             sBuf.append("Inherited value = " + Util.formatNumber(m.inheritedValue) +"<br>");
-            sBuf.append("Alpha = "+lastNode.alpha+"<br>");
-            sBuf.append("Beta = "+lastNode.beta+"<br>");
+            sBuf.append("Alpha = "+Util.formatNumber(lastNode.alpha)+"<br>");
+            sBuf.append("Beta = "+Util.formatNumber(lastNode.beta)+"<br>");
             if (lastNode.comment!=null)
                 sBuf.append(lastNode.comment+"<br>");
             sBuf.append("Number of descendants = "+lastNode.numDescendants+"<br>");
@@ -424,13 +414,13 @@ public final class GameTreeDialog extends JDialog
     public void actionPerformed( ActionEvent e )
     {
         Object source = e.getSource();
-        if ( source == pauseButton_ ) {
+        if ( source.equals(pauseButton_) ) {
             pause();
         }
-        else if ( source == stepButton_ ) {
+        else if ( source.equals(stepButton_) ) {
             step();
         }
-        else if ( source == continueButton_ ) {
+        else if ( source.equals(continueButton_) ) {
             continueProcessing();
         }
         else {  // closeButton_

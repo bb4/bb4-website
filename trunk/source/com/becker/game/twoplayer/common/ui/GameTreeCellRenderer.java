@@ -1,9 +1,9 @@
 package com.becker.game.twoplayer.common.ui;
 
 import com.becker.common.ColorMap;
-import com.becker.game.common.Move;
 import com.becker.game.twoplayer.common.search.SearchTreeNode;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.twoplayer.common.TwoPlayerController;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultTreeCellRenderer;
@@ -14,7 +14,7 @@ import java.awt.*;
  *
  *  @author Barry Becker
  */
-final class GameTreeCellRenderer extends DefaultTreeCellRenderer
+public class GameTreeCellRenderer extends DefaultTreeCellRenderer
 {
 
     private Color p1Color_ = Color.green;
@@ -26,21 +26,42 @@ final class GameTreeCellRenderer extends DefaultTreeCellRenderer
     private final JLabel pieceLabel_ = new JLabel();
     private final JPanel cellPanel_ = new JPanel();
 
+    protected  GameTreeCellRenderer() {}
 
     // Default Constructor
-    public GameTreeCellRenderer(ColorMap cmap)
+    public GameTreeCellRenderer(TwoPlayerPieceRenderer pieceRenderer)
     {
-        colormap_ = cmap;
+        setColorMap(createColormap(pieceRenderer));
         commonInit();
     }
 
+    /**
+     * initialize the colormap used to color the gmae tree rows, nodes, and arcs.
+     */
+    protected ColorMap createColormap(TwoPlayerPieceRenderer renderer)
+    {
+        // TwoPlayerPieceRenderer renderer = (TwoPlayerPieceRenderer)viewer.getPieceRenderer();
+        // we will use this colormap for both the text tree and the graphical tree viewers so they have consistent coloring.
+        final double[] values_ = {-TwoPlayerController.WINNING_VALUE, -TwoPlayerController.WINNING_VALUE/20.0,
+                                              0.0,
+                                              TwoPlayerController.WINNING_VALUE/20.0, TwoPlayerController.WINNING_VALUE};
+        final Color[] colors_ = {renderer.getPlayer2Color().darker(),
+                                 renderer.getPlayer2Color(),
+                                 new Color( 160, 160, 160),
+                                 renderer.getPlayer1Color(),
+                                 renderer.getPlayer1Color().darker()};
+        return new ColorMap( values_, colors_ );
+    }
+
+
+    /*
     // Constructor
     public GameTreeCellRenderer( Color player1Color, Color player2Color )
     {
         p1Color_ = player1Color;
         p2Color_ = player2Color;
         commonInit();
-    }
+    }  */
 
     private void commonInit()
     {
@@ -59,7 +80,15 @@ final class GameTreeCellRenderer extends DefaultTreeCellRenderer
         cellPanel_.setVisible( true );
     }
 
-    public final Component getTreeCellRendererComponent(
+    public ColorMap getColorMap() {
+        return colormap_;
+    }
+
+    public void setColorMap(ColorMap cmap) {
+        colormap_ = cmap;
+    }
+
+    public Component getTreeCellRendererComponent(
             JTree tree, Object value,
             boolean sel, boolean expanded,
             boolean leaf, int row, boolean hasFocus )
@@ -79,7 +108,7 @@ final class GameTreeCellRenderer extends DefaultTreeCellRenderer
         return this;
     }
 
-    private static Color getFGColor( Object value )
+    protected static Color getFGColor( Object value )
     {
        SearchTreeNode node = (SearchTreeNode) value;
         TwoPlayerMove m = (TwoPlayerMove) node.getUserObject();
@@ -92,9 +121,9 @@ final class GameTreeCellRenderer extends DefaultTreeCellRenderer
         return Color.black;
     }
 
-    private Color getBGColor( Object value )
+    protected Color getBGColor( Object value )
     {
-        Color c = null;
+        Color c;
         SearchTreeNode node = (SearchTreeNode) value;
         int numChildren = node.getChildCount();
         this.setText( getText() + " kids=" + numChildren );
