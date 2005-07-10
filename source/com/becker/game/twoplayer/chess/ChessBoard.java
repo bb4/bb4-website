@@ -100,13 +100,15 @@ public class ChessBoard extends CheckersBoard
         // remove the captures before we place the moved piece since it may be underneath.
         removeCaptures( m.captureList );
         assert (oldPos.getPiece() != null): "oldpos="+oldPos+" m="+m;
-        m.setFirstTimeMoved(((ChessPiece)oldPos.getPiece()).isFirstTimeMoved());
-        newPos.setPiece(m.piece);
+        if (m != null && oldPos.getPiece() != null) {
+            m.setFirstTimeMoved(((ChessPiece)oldPos.getPiece()).isFirstTimeMoved());
+            newPos.setPiece(m.piece);
 
-        // once its been moved its no longer the first time its been moved
-        ((ChessPiece)newPos.getPiece()).setFirstTimeMoved(false);
+            // once its been moved its no longer the first time its been moved
+            ((ChessPiece)newPos.getPiece()).setFirstTimeMoved(false);
 
-        clear(positions_[m.getFromRow()][m.getFromCol()]);
+            clear(positions_[m.getFromRow()][m.getFromCol()]);
+        }
         return true;
     }
 

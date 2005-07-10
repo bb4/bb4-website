@@ -39,10 +39,7 @@ public abstract class TwoPlayerPanel extends GamePanel
     /**
      * Construct the panel.
      */
-    public TwoPlayerPanel()
-    {
-        super();
-    }
+    public TwoPlayerPanel()  {}
 
     private TwoPlayerController get2PlayerController()
     {
@@ -104,11 +101,11 @@ public abstract class TwoPlayerPanel extends GamePanel
      * but it also has its own (view only) viewer that is used to show any particular node in the game tree.
      * @return the new game tree dialog
      */
-    private GameTreeDialog createGameTreeDialog()
+    protected GameTreeDialog createGameTreeDialog()
     {
-        TwoPlayerBoardViewer v =(TwoPlayerBoardViewer)createBoardViewer();
+        TwoPlayerBoardViewer v = (TwoPlayerBoardViewer)createBoardViewer();
         v.setViewOnly( true ); // we don't want it to recieve click events
-        return new GameTreeDialog( null, v );
+        return new GameTreeDialog( null, v, new GameTreeCellRenderer((TwoPlayerPieceRenderer)v.getPieceRenderer()) );
     }
 
 

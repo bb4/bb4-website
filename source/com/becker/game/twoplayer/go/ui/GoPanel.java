@@ -3,6 +3,8 @@ package com.becker.game.twoplayer.go.ui;
 import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
 import com.becker.game.twoplayer.common.ui.TwoPlayerPanel;
+import com.becker.game.twoplayer.common.ui.GameTreeDialog;
+import com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -46,6 +48,14 @@ public final class GoPanel extends TwoPlayerPanel
     protected final GameInfoPanel createInfoPanel(GameController controller)
     {
         return new GoInfoPanel( controller );
+    }
+
+
+    protected GameTreeDialog createGameTreeDialog()
+    {
+        TwoPlayerBoardViewer v =(TwoPlayerBoardViewer)createBoardViewer();
+        v.setViewOnly( true ); // we don't want it to recieve click events
+        return new GameTreeDialog( null, v, new GoTreeCellRenderer());
     }
 
     protected GameToolBar createToolbar() {
