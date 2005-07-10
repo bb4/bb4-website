@@ -3,7 +3,6 @@ package com.becker.game.twoplayer.go;
 
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
 import go.Point;
@@ -37,8 +36,6 @@ public class GtpTesujisoftGoServer
     extends GtpServer
 {
 
-    private boolean m_nextResponseFixed;
-
     private boolean m_nextStatus;
 
     /** Delay every command (seconds) */
@@ -47,10 +44,18 @@ public class GtpTesujisoftGoServer
     private boolean[][] m_alreadyPlayed;
     private String m_nextResponse;
     private Thread m_thread;
-    private List m_commands;
 
     private GoController m_controller;
 
+    /**
+     * the allowed GTP commands (most are required, some are optional)
+     */
+    private enum Command {boardsize, clear_board, echo, echo_err, fixed_handicap,
+                         final_score, final_status_list, genmove, gogui_interrupt,
+                         list_commands, known_command, komi, name, play,
+                         protocol_version, reg_genmove, time_settings, undo, quit,
+                         tesujisoft_bwboard, tesujisoft_delay, tesujisoft_invalid,
+                         version}
 
 
     public GtpTesujisoftGoServer(InputStream in, OutputStream out, PrintStream log)
@@ -62,29 +67,6 @@ public class GtpTesujisoftGoServer
         GameContext.loadGameResources("go", "com.becker.game.twoplayer.go.ui.GoPanel");
         GameContext.setDebugMode(0);
 
-        m_commands = new ArrayList();
-        m_commands.add("boardsize");
-        m_commands.add("clear_board");
-        m_commands.add("echo");
-        m_commands.add("echo_err");
-        m_commands.add("fixed_handicap");
-        m_commands.add("final_score");
-        m_commands.add("final_status_list");
-        m_commands.add("genmove");
-        m_commands.add("gogui_interrupt");
-        m_commands.add("list_commands");
-        m_commands.add("known_command");
-        m_commands.add("komi");
-        m_commands.add("name");
-        m_commands.add("play");
-        m_commands.add("protocol_version");
-        //m_commands.add("reg_gendmove");
-        //m_commands.add("time_settings");
-        m_commands.add("undo");
-        m_commands.add("quit");
-        m_commands.add("tesujisoft_bwboard");
-        m_commands.add("version");
-
         initSize(19);
 
         m_thread = Thread.currentThread();
@@ -94,74 +76,77 @@ public class GtpTesujisoftGoServer
     public boolean handleCommand(String cmdLine, StringBuffer response)
     {
         String[] cmdArray = StringUtils.tokenize(cmdLine);
-        String cmd = cmdArray[0];
+        String cmdStr = cmdArray[0];
         boolean status = true;
-        if (m_nextResponseFixed
-            && ! (cmd.equals("dummy_next_failure")
-                  || cmd.equals("dummy_next_success")))
-        {
-            status = m_nextStatus;
-            response.append(m_nextResponse);
-            m_nextResponseFixed = false;
-        }
-        else if (cmd.equals("boardsize"))
-            status = cmdBoardsize(cmdArray, response);
-        else if (cmd.equals("clear_board"))
-            status = cmdClearBoard(response);
-        else if (cmd.equals("tesujisoft_bwboard"))
-            bwBoard(response);
-        else if (cmd.equals("tesujisoft_delay"))
-            status = cmdDelay(cmdArray, response);
-        else if (cmd.equals("tesujisoft_invalid"))
-            cmdInvalid();
-        else if (cmd.equals("tesujisoft_long_response"))
-            status = cmdLongResponse(cmdArray, response);
-        else if (cmd.equals("echo"))
-            echo(cmdLine, response);
-        else if (cmd.equals("echo_err"))
-            echoErr(cmdLine);
-        else if (cmd.equals("final_score")) {
-            status = cmdFinalScore(response);
-        }
-        else if (cmd.equals("final_status_list")) {
-            status = cmdFinalStatusList(cmd, response);
-        }
-        else if (cmd.equals("fixed_handicap")) {
-            status = cmdFixedHandicap(cmdArray, response);
-        }
-        else if (cmd.equals("genmove"))
-            status = cmdGenmove(response);
-        else if (cmd.equals("gogui_interrupt"))
-            ;
-        else if (cmd.equals("komi")) {
-            status = cmdKomi(cmdArray, response);
-        }
-        else if (cmd.equals("name"))
-            response.append("GtpTesujisoft");
-        else if (cmd.equals("play"))
-            status = cmdPlay(cmdArray, response);
-        else if (cmd.equals("protocol_version"))
-            response.append("2");
-        else if (cmd.equals("known_command")) {
-            status = cmdKnown(cmd);
-        }
-        else if (cmd.equals("list_commands")) {
-            for (int i=0; i<m_commands.size(); i++) {
-                response.append(m_commands.get(i) + "\n");
+
+        Command cmd = Command.valueOf(cmdStr);
+
+        switch (cmd) {
+            case boardsize :
+                status = cmdBoardsize(cmdArray, response);
+                break;
+            case clear_board :
+                status = cmdClearBoard(response);
+                break;
+            case echo :
+                echo(cmdLine, response);
+                break;
+            case echo_err :
+                echoErr(cmdLine);
+                break;
+            case tesujisoft_bwboard :
+                bwBoard(response);
+                break;
+            case tesujisoft_delay :
+                status = cmdDelay(cmdArray, response);
+                break;
+            case tesujisoft_invalid :
+                cmdInvalid();
+                break;
+            case final_score :
+                status = cmdFinalScore(response);
+                break;
+            case final_status_list :
+                status = cmdFinalStatusList(cmdArray[1], response);
+                break;
+            case fixed_handicap :
+                status = cmdFixedHandicap(cmdArray, response);
+                break;
+            case genmove :
+                status = cmdGenmove(response);
+                break;
+            case gogui_interrupt :
+                break;
+            case komi :
+                status = cmdKomi(cmdArray, response);
+                break;
+            case name :
+                response.append("GtpTesujisoft");
+                break;
+            case play :
+                status = cmdPlay(cmdArray, response);
+                break;
+            case protocol_version :
+                response.append("2"); break;
+            case known_command :
+                Command.valueOf(cmdArray[1]); break;
+            case list_commands :
+                for (int i=0; i<Command.values().length; i++) {
+                    response.append(Command.values()[i] + "\n");
+                }
+                break;
+            case undo :
+                cmdUndo(response); break;
+            case version :
+                response.append(Version.get()); break;
+            case quit :
+                break;
+            default :  {
+                response.append("unknown command");
+                status = false;
             }
         }
-        else if (cmd.equals("undo")) {
-            status = cmdUndo(response);
-        }
-        else if (cmd.equals("version"))
-            response.append(Version.get());
-        else if (cmd.equals("quit"))
-            ;
-        else
-        {
-            response.append("unknown command");
-            status = false;
-        }
+
         return status;
     }
 
@@ -174,9 +159,9 @@ public class GtpTesujisoftGoServer
     private void initSize(int size) {
         m_controller = new GoController(size, size, 0);
         m_controller.setAlphaBeta(true);
-        m_controller.setLookAhead(3);
-        m_controller.setPercentageBestMoves(40);
-        m_controller.setQuiescence(true); // take stoo long if on
+        m_controller.setLookAhead(2);
+        m_controller.setPercentageBestMoves(50);
+        m_controller.setQuiescence(false);
         m_controller.setSearchStrategyMethod(SearchStrategy.MINIMAX);
         m_size = size;
     }
@@ -246,7 +231,7 @@ public class GtpTesujisoftGoServer
     }
 
     /**
-     * @@ need to implment (easy)
+     * @@ need to implment
      */
     private boolean cmdFinalStatusList(String cmd, StringBuffer response) {
         assert false : "final_status_list command not yet implemented";
@@ -306,18 +291,7 @@ public class GtpTesujisoftGoServer
                              "It does not start with a status character.\n");
     }
 
-    private boolean cmdLongResponse(String[] cmdArray, StringBuffer response)
-    {
-        IntegerArgument argument = parseIntegerArgument(cmdArray, response);
-        if (argument == null)
-            return false;
-        for (int i = 1; i <= argument.m_integer; ++i)
-        {
-            response.append(i);
-            response.append("\n");
-        }
-        return true;
-    }
+
 
     private boolean cmdPlay(String[] cmdArray, StringBuffer response)
     {
@@ -336,9 +310,6 @@ public class GtpTesujisoftGoServer
         return true;
     }
 
-    private boolean cmdKnown(String cmd) {
-        return m_commands.contains(cmd);
-    }
 
     private boolean cmdKomi(String[] cmdArray, StringBuffer response) {
         DoubleArgument argument =

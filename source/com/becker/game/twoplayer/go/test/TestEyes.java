@@ -4,7 +4,6 @@ import junit.framework.Assert;
 import junit.framework.TestSuite;
 import junit.framework.Test;
 
-import java.util.List;
 import java.util.Set;
 
 import com.becker.game.twoplayer.go.*;
@@ -406,10 +405,10 @@ public class TestEyes extends GoTestCase {
 
 
     private class EyeCounts {
-        int numFalseEyes;
-        int numTrueEyes;
-        int numBigEyes;
-        int numTerritorialEyes;
+        protected int numFalseEyes;
+        protected int numTrueEyes;
+        protected int numBigEyes;
+        protected int numTerritorialEyes;
 
         public EyeCounts() {}
 
@@ -420,7 +419,8 @@ public class TestEyes extends GoTestCase {
             numTerritorialEyes = numTerritorial;
         }
 
-        public boolean equals(EyeCounts counts) {
+        public boolean equals(Object ocounts) {
+            EyeCounts counts = (EyeCounts)ocounts;
             return (counts.numFalseEyes == numFalseEyes
                     && counts.numTrueEyes == numTrueEyes
                     && counts.numBigEyes == numBigEyes

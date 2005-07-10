@@ -18,7 +18,7 @@ import java.awt.*;
  * @see com.becker.game.twoplayer.chess.ui.ChessBoardViewer
  * @author Barry Becker
  */
-final class GoStoneRenderer extends TwoPlayerPieceRenderer
+public final class GoStoneRenderer extends TwoPlayerPieceRenderer
 {
     private static TwoPlayerPieceRenderer renderer_ = null;
 
@@ -33,10 +33,10 @@ final class GoStoneRenderer extends TwoPlayerPieceRenderer
     // instead of rendering we can just show image icons which look even better.
     // gets the images from resources or the filesystem depending if we are running as an applet or application respectively.
     private static final String DIR = GameContext.GAME_ROOT+"twoplayer/go/ui/images/";
-    private static final ImageIcon blackStoneImage_ = GUIUtil.getIcon(DIR+"goStoneBlack.png");
-    private static final ImageIcon whiteStoneImage_ = GUIUtil.getIcon(DIR+"goStoneWhite.png");
-    private static final ImageIcon blackStoneDeadImage_ = GUIUtil.getIcon(DIR+"goStoneBlackDead.png");
-    private static final ImageIcon whiteStoneDeadImage_ = GUIUtil.getIcon(DIR+"goStoneWhiteDead.png");
+    public static final ImageIcon BLACK_STONE_IMG = GUIUtil.getIcon(DIR+"goStoneBlack.png");
+    public static final ImageIcon WHITE_STONE_IMG = GUIUtil.getIcon(DIR+"goStoneWhite.png");
+    private static final ImageIcon BLACK_STONE_DEAD_IMG = GUIUtil.getIcon(DIR+"goStoneBlackDead.png");
+    private static final ImageIcon WHITE_STONE_DEAD_IMG = GUIUtil.getIcon(DIR+"goStoneWhiteDead.png");
 
     /**
      * protected constructor because this class is a singleton.
@@ -74,9 +74,9 @@ final class GoStoneRenderer extends TwoPlayerPieceRenderer
     private static Image getImage(GoStone stone)
     {
         if (stone.isDead())
-            return (stone.isOwnedByPlayer1() ? blackStoneDeadImage_.getImage(): whiteStoneDeadImage_.getImage());
+            return (stone.isOwnedByPlayer1() ? BLACK_STONE_DEAD_IMG.getImage(): WHITE_STONE_DEAD_IMG.getImage());
         else
-            return (stone.isOwnedByPlayer1() ? blackStoneImage_.getImage(): whiteStoneImage_.getImage());
+            return (stone.isOwnedByPlayer1() ? BLACK_STONE_IMG.getImage(): WHITE_STONE_IMG.getImage());
     }
 
     /**
