@@ -15,12 +15,16 @@ public class TestAll extends TestCase {
     public static Test suite() {
         TestSuite suite =  new TestSuite("All Go Tests");
 
+
+        suite.addTestSuite(TestShape.class);
         suite.addTestSuite(TestEyes.class);
         suite.addTestSuite(TestScoring.class);      
         suite.addTestSuite(TestUnconditionalLife.class);
-        suite.addTestSuite(TestProblemCollections.class);
+        suite.addTest(TestProblemCollections.suite());
         suite.addTestSuite(TestLifeAndDeath.class);
         suite.addTestSuite(TestKiseido2002.class);
+
+
 
         return suite;
     }

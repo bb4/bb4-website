@@ -23,18 +23,18 @@ public class TestBlunderCollection extends GoTestCase {
     }
 
     public void test2() {
-        GoMove m = getNextMove("problems/sgf/blunder/blunder.1", true);
+        GoMove m = getNextMove("problems/sgf/blunder/blunder.2", true);
         checkExpected(m, 17, 12);  //    Q12
     }
 
     public void test13() {
-        GoMove m = getNextMove("problems/sgf/blunder/blunder.2", false);
+        GoMove m = getNextMove("problems/sgf/blunder/blunder.13", false);
         checkExpected(m, 13, 5);
     }
 
 
     public void test14() {
-        GoMove m = getNextMove("problems/sgf/blunder/blunder.2", false);
+        GoMove m = getNextMove("problems/sgf/blunder/blunder.14", false);
         checkExpected(m, 2, 12); // B12
     }
 
