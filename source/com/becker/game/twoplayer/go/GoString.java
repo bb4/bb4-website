@@ -22,7 +22,7 @@ public class GoString extends GoSet
     protected GoGroup group_;
 
     // used by Benson's algorithm to help determine unconditional life
-    private HashSet nbrs_;
+    private Set nbrs_;
     // if true, then we are an eye in an unconditionally alive group
     private boolean unconditionallyAlive_;
 
@@ -322,11 +322,11 @@ public class GoString extends GoSet
      *
      * @return nbr eyes if string, or nbs strings if eye
      */
-    public HashSet getNbrs() {
+    public Set getNbrs() {
         return nbrs_;
     }
 
-    public void setNbrs(HashSet nbrEyes) {
+    public void setNbrs(Set nbrEyes) {
         this.nbrs_ = nbrEyes;
     }
 

@@ -36,13 +36,10 @@ public class GtpTesujisoftGoServer
     extends GtpServer
 {
 
-    private boolean m_nextStatus;
-
     /** Delay every command (seconds) */
     private int m_delay;
     private int m_size;
-    private boolean[][] m_alreadyPlayed;
-    private String m_nextResponse;
+
     private Thread m_thread;
 
     private GoController m_controller;
@@ -86,7 +83,7 @@ public class GtpTesujisoftGoServer
                 status = cmdBoardsize(cmdArray, response);
                 break;
             case clear_board :
-                status = cmdClearBoard(response);
+                status = cmdClearBoard();
                 break;
             case echo :
                 echo(cmdLine, response);
@@ -192,10 +189,9 @@ public class GtpTesujisoftGoServer
         return true;
     }
 
-    private boolean cmdClearBoard(StringBuffer response)
+    private boolean cmdClearBoard()
     {
-        //initSize(m_size);
-        m_controller.reset();
+       m_controller.reset();
         return true;
     }
 
@@ -218,8 +214,8 @@ public class GtpTesujisoftGoServer
     }
 
     private boolean cmdFinalScore(StringBuffer response) {
-        double blackScore = m_controller.getScore(true);
-        double whiteScore = m_controller.getScore(false);
+        double blackScore = m_controller.getFinalScore(true);
+        double whiteScore = m_controller.getFinalScore(false);
         if (blackScore > whiteScore) {
             response.append("B+" + (blackScore - whiteScore));
         } else if (blackScore < whiteScore) {

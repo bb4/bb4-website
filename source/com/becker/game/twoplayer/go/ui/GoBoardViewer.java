@@ -3,7 +3,6 @@ package com.becker.game.twoplayer.go.ui;
 import com.becker.common.ColorMap;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer;
-import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.go.*;
 import com.becker.ui.GUIUtil;
 
@@ -160,11 +159,7 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
 
         board.undoMove(); // may rejoin groups
 
-
-        //System.out.println( "BoardViewer: groups on board (after undo):\n "+board.getGroupsText() );
-
         if (notSuicidal)  {
-
             if ( !continuePlay( m ) ) {   // then game over
                 showWinnerDialog();
             }
@@ -202,8 +197,8 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
         message += p1Name +" "+ TERRITORY + blackTerritory +"\n";
         message += p2Name +" "+ TERRITORY + whiteTerritory +"\n\n";
 
-        message += p1Name +" "+ SCORE + gc.getScore(true) +"\n";
-        message += p2Name +" "+ SCORE + gc.getScore(false) +"\n";
+        message += p1Name +" "+ SCORE + gc.getFinalScore(true) +"\n";
+        message += p2Name +" "+ SCORE + gc.getFinalScore(false) +"\n";
 
         gc.clearGameOver();
 

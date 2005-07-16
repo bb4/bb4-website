@@ -131,9 +131,8 @@ public final class GoController extends TwoPlayerController
     // initial look ahead factor.
     private static final int DEFAULT_LOOKAHEAD = 2;
     // for any given ply never consider more that BEST_PERCENTAGE of the top moves
-    private static final int BEST_PERCENTAGE = 50;
+    private static final int BEST_PERCENTAGE = 80;
     // if greater than this at the end of the game, then the stone is considered alive, else dead.
-    private static final double LIFE_THRESHOLD = 0.1;
     public static final boolean USE_RELATIVE_GROUP_SCORING = true;
 
     // these weights determine how the computer values each term of the
@@ -142,7 +141,7 @@ public final class GoController extends TwoPlayerController
     // use these if no others are provided
     private static final double[] DEFAULT_WEIGHTS = {1.0, .05, .1, 20.0};   //10,1,3,40
     // don't allow the weights to exceed these maximum values
-    private static final double[] MAX_WEIGHTS = {5.0, 1.0, 4.0, 10.0};
+    private static final double[] MAX_WEIGHTS = {4.0, 1.0, 4.0, 10.0};
     private static final String[] WEIGHT_SHORT_DESCRIPTIONS = {"Health", "Position", "Bad shape", "Captures"};
     private static final String[] WEIGHT_DESCRIPTIONS = {
         "Weight to associate with the relative health of groups",
@@ -167,7 +166,6 @@ public final class GoController extends TwoPlayerController
     // a lookup table of scores to attribute to the board positions when calculating the worth
     private float[][] positionalScore_ = null;
     // we assign a value to a stone based on the line on which it falls when calculating worth
-    private static final int NUM_SCORED_LINES = 5;  // number of lines that we care about scoring
     private static final float[] LINE_VALS = {-1.0f, .0f, 2.0f, 1.8f, .2f};
 
 
@@ -272,7 +270,7 @@ public final class GoController extends TwoPlayerController
             found = true;
         }
         else if (token instanceof CharsetToken ) {
-            CharsetToken charsetToken = (CharsetToken) token;
+            //CharsetToken charsetToken = (CharsetToken) token;
             //System.out.println("charset="+charsetToken.getCharset());
         }
         else if (token instanceof OverTimeToken ) {
@@ -295,7 +293,7 @@ public final class GoController extends TwoPlayerController
      * @param moveList
      */
     private void addMoves(PlacementListToken token, List moveList) {
-        Vector points = token.getPoints();
+        List points = token.getPoints();
         boolean player1 = token instanceof AddBlackToken;
 
         for (int i=0; i<points.size(); i++)  {
@@ -308,7 +306,7 @@ public final class GoController extends TwoPlayerController
 
     protected Move createMoveFromToken( MoveToken token)
     {
-        GoMove m;
+        //GoMove m;
         if (token.isPass()) {
             return GoMove.createPassMove(0, !token.isWhite());
         }
@@ -345,7 +343,7 @@ public final class GoController extends TwoPlayerController
      */
     public double getStrengthOfWin()
     {
-        return Math.abs(getScore(true) - getScore(false));
+        return Math.abs(getFinalScore(true) - getFinalScore(false));
     }
 
     /**
@@ -550,7 +548,7 @@ public final class GoController extends TwoPlayerController
                 this.setKomi(komiToken.getKomi());
             }
             else if (token instanceof HandicapToken) {
-                HandicapToken handicapToken = (HandicapToken) token;
+                //HandicapToken handicapToken = (HandicapToken) token;
                 // so we don't guess wrong on where the handicap positions are
                 // we will rely on their being an AB command to specifically tell where the handicap stones are
                 //System.out.println("***handicap ="+handicapToken.getHandicap());
@@ -569,7 +567,7 @@ public final class GoController extends TwoPlayerController
                 this.setKomi(komiToken.getKomi());
             }
             else if (token instanceof RuleSetToken) {
-                RuleSetToken ruleToken = (RuleSetToken) token;
+                //RuleSetToken ruleToken = (RuleSetToken) token;
                 //this.setRuleSet(ruleToken.getKomi());
             }
         }
@@ -610,7 +608,8 @@ public final class GoController extends TwoPlayerController
         GoBoard board = (GoBoard)board_;
         worth = weights.get(CAPTURE_WEIGHT_INDEX).value * (getNumCaptures( true ) - getNumCaptures( false ));
         float n = 2.0f * board.getNumRows();
-        double gameStageBoost = 1.0 + Math.max((n - (float)getNumMoves())/n, 0.0);
+        // opening = 1.99 - 1.5    middle = 1.5 - 1.01   end = 1.0
+        double gameStageBoost = 1.0 + 2.0 * Math.max((n - (float)getNumMoves())/n, 0.0);
 
         for ( row = 1; row <= board.getNumRows(); row++ ) {    //rows
             for ( col = 1; col <= board.getNumCols(); col++ ) {  //cols
@@ -640,8 +639,8 @@ public final class GoController extends TwoPlayerController
                     posScore =
                         (side * gameStageBoost * weights.get(POSITIONAL_WEIGHT_INDEX).value * positionalScore_[row][col]);
 
-                    position.scoreContribution =
-                            Math.max(-1.0, Math.min(1.0, weights.get(HEALTH_WEIGHT_INDEX).value * stone.getHealth() + posScore + badShapeScore));
+                    double s = weights.get(HEALTH_WEIGHT_INDEX).value * stone.getHealth() + posScore + badShapeScore;
+                    position.scoreContribution = Math.max(-1.0, Math.min(1.0, s));
 
                     if (GameContext.getDebugMode() > 0)  {
                         stone.badShapeScore = badShapeScore;
@@ -816,7 +815,7 @@ public final class GoController extends TwoPlayerController
                 GameContext.log( 0, "Done: The last 2 moves were passes :" + m + ", " + secondToLast );
 
                 if (recordWin) {
-                    if (getScore(true) > getScore(false))
+                    if (getFinalScore(true) > getFinalScore(false))
                         getPlayer1().setWon(true);
                     else
                         getPlayer2().setWon(true);
@@ -865,13 +864,13 @@ public final class GoController extends TwoPlayerController
      * @param player1 if true, then the score for player one is returned else player2's score is returned
      * @return the score
      */
-    public final double getScore(boolean player1)
+    public final double getFinalScore(boolean player1)
     {
         if (isProcessing()) {
             GameContext.log(0,  "Error: tried to get Score() while processing!");
             return 0;
         }
-        return getTerritoryEstimate(player1) - getNumCaptures( !player1 );
+        return getTerritory(player1) - getNumCaptures( !player1 );
     }
 
    /**
@@ -883,7 +882,7 @@ public final class GoController extends TwoPlayerController
     {
        // the last 2 moves must passes so
        List moves = getMoveList();
-       GoMove lastMove = (GoMove)moves.get(moves.size()-1);
+       GoMove lastMove; // = (GoMove)moves.get(moves.size()-1);
 
        // if we are loading saved games, then winner might have won by time or forfeit
        // - in which case the last 2 moves are not passes.

@@ -83,7 +83,7 @@ public abstract class GoSet implements GoMember
             while (it.hasNext()) {
                 Object c = null;
                 try {
-                    c = (Object)it.next();
+                    c = it.next();
                     m.add(((GoMember)c).clone());
                 } catch (ClassCastException e) {
                     GameContext.log(0,  "class "+c.getClass() +" is not a GoMember" );

@@ -8,7 +8,6 @@ import com.becker.optimization.ParameterArray;
 
 import java.util.*;
 import java.util.List;
-import java.awt.*;
 
 /**
  * Defines everything the computer needs to know to play Poker.
@@ -129,13 +128,13 @@ public class PokerController extends GameController
      */
     private void dealCardsToPlayers(int numCardsToDealToEachPlayer) {
          // give the default players some cards.
-        ArrayList<Card> deck = Card.newDeck();
-        for (int i=0; i<players_.length; i++)  {
-            if  (deck.size() < numCardsToDealToEachPlayer) {
+        List deck = Card.newDeck();
+        for (Player p : players_) {
+            if (deck.size() < numCardsToDealToEachPlayer) {
                 // ran out of cards. start a new shuffled deck.
                 deck = Card.newDeck();
             }
-            PokerPlayer player = ((PokerPlayer)players_[i]);
+            PokerPlayer player = ((PokerPlayer) p);
             player.setHand(new PokerHand(deck, numCardsToDealToEachPlayer));
             player.resetPlayerForNewRound();
         }
@@ -147,8 +146,8 @@ public class PokerController extends GameController
     public void anteUp() {
         // get players to ante up, if they have not already
         if (this.getPotValue() == 0) {
-            for (int i=0; i<players_.length; i++)  {
-                PokerPlayer player = ((PokerPlayer)players_[i]);
+            for (final Player p : players_) {
+                PokerPlayer player = ((PokerPlayer) p);
                 // if a player does not have enough money to ante up, he is out of the game
                 player.contributeToPot(this, getAnte());
 
@@ -167,10 +166,10 @@ public class PokerController extends GameController
     public int getCurrentMaxContribution() {
        int max = Integer.MIN_VALUE;
         Player[] players = getPlayers();
-        for (int i=0; i<players.length; i++) {
-            PokerPlayer p = (PokerPlayer)players[i];
-            if (p.getContribution() > max) {
-                max = p.getContribution();
+        for (final Player p : players) {
+            PokerPlayer player = (PokerPlayer) p;
+            if (player.getContribution() > max) {
+                max = player.getContribution();
             }
         }
         return max;
@@ -192,10 +191,10 @@ public class PokerController extends GameController
         // loop through the players and return the min number of chips of any player
         int min = Integer.MAX_VALUE;
         Player[] players = getPlayers();
-        for (int i=0; i<players.length; i++) {
-            PokerPlayer p = (PokerPlayer)players[i];
-            if (!p.hasFolded() && ((p.getCash() + p.getContribution()) < min)) {
-                min = p.getCash() + p.getContribution();
+        for (final Player p : players) {
+            PokerPlayer player = (PokerPlayer) p;
+            if (!player.hasFolded() && ((player.getCash() + player.getContribution()) < min)) {
+                min = player.getCash() + player.getContribution();
             }
         }
         return min;
@@ -245,9 +244,9 @@ public class PokerController extends GameController
 
         Player[] players = getPlayers();
         int numPlayersStillPlaying = 0;
-        for (int i=0; i<players.length; i++) {
-            PokerPlayer p = (PokerPlayer)players[i];
-            if (!p.isOutOfGame())
+        for (Player p : players) {
+            PokerPlayer player = (PokerPlayer) p;
+            if (!player.isOutOfGame())
                 numPlayersStillPlaying++;
         }
         return (numPlayersStillPlaying == 1);
@@ -308,8 +307,7 @@ public class PokerController extends GameController
         // special case of no one raising
         int contrib = this.getCurrentMaxContribution();
 
-        for (int i=0; i<players.length; i++) {
-            PokerPlayer p = players[i];
+        for (PokerPlayer p : players) {
             if (!p.hasFolded()) {
                 if (p.getContribution() != contrib) {
                     return false;
@@ -329,10 +327,9 @@ public class PokerController extends GameController
      public int getNumNonFoldedPlayers()
      {
         // a player is not counted as active if he is "out of the game".
-        Player[] players = getPlayers();
+        PokerPlayer[] players = (PokerPlayer[])getPlayers();
         int count = 0;
-        for (int i=0; i< players.length; i++) {
-            PokerPlayer p = (PokerPlayer)players[i];
+        for (final PokerPlayer p : players) {
             if (!p.isOutOfGame())
                 count++;
         }
@@ -366,8 +363,8 @@ public class PokerController extends GameController
         PokerPlayer[] players = (PokerPlayer[])getPlayers();
 
         int numNotFolded = 0;
-        for (int i=0; i<players.length; i++) {
-            if (!players[i].hasFolded())  {
+        for (final PokerPlayer p : players) {
+            if (!p.hasFolded()) {
                 numNotFolded++;
             }
         }
@@ -377,6 +374,7 @@ public class PokerController extends GameController
         return false;
     }
 
+    /*
     private Player getFirstNonFoldedPlayer() {
         PokerPlayer[] players = (PokerPlayer[])getPlayers();
         int i = startingPlayerIndex_;
@@ -384,7 +382,7 @@ public class PokerController extends GameController
         while (players[(i % numPlayers)].hasFolded())
             i++;
         return players[i % numPlayers];
-    }
+    }*/
 
     /**
      *
@@ -392,8 +390,8 @@ public class PokerController extends GameController
      */
     private PokerPlayer determineWinner() {
         PokerPlayer[] players = (PokerPlayer[])getPlayers();
-        PokerPlayer winner = null;
-        PokerHand bestHand = null;
+        PokerPlayer winner;
+        PokerHand bestHand;
         int first=0;
         //
         while (players[first].hasFolded() && first < players.length) {
@@ -413,17 +411,6 @@ public class PokerController extends GameController
             }
         }
         return winner;
-    }
-
-    /**
-     *
-     * @param lastMove
-     * @return
-     */
-    private PokerRound createMove(Move lastMove)
-    {
-        PokerRound gmove = PokerRound.createMove();
-        return gmove;
     }
 
     /**
@@ -498,7 +485,7 @@ public class PokerController extends GameController
      */
     public List generateMoves( Move lastMove, ParameterArray weights, boolean player1sPerspective )
     {
-        LinkedList moveList = new LinkedList();
+        List moveList = new LinkedList();
         return moveList;
     }
 

@@ -46,7 +46,7 @@ public class PokerHand implements Comparable {
 
     public List<Card> getCards() {
         // return a copy so the client cannot change our state out from under us.
-        ArrayList<Card> cards = new ArrayList<Card>(hand_);
+        List<Card> cards = new ArrayList<Card>(hand_);
         return cards;
     }
 
@@ -124,6 +124,7 @@ public class PokerHand implements Comparable {
             case TWO_PAIR: return hasPair && hasTwoPairs();
             case PAIR: return hasPair;
             case HIGH_CARD: return true;
+            default: assert false;
         }
         return false;   // never reached
     }
@@ -279,7 +280,7 @@ public class PokerHand implements Comparable {
         PokerHand hand = (PokerHand) otherHand;
         // first do a coars comparison based on the type of the hand
         // if a tie, then look more closely
-        float difference = this.determineType().odds() - hand.determineType().odds();
+        float difference = determineType().odds() - hand.determineType().odds();
         if (difference > 0) {
             return 1;
         } else if (difference < 0) {
@@ -358,7 +359,7 @@ public class PokerHand implements Comparable {
      */
      public static void main(String[] args) {
 
-        ArrayList deck = Card.newDeck();
+        List deck = Card.newDeck();
         System.out.println("deck="+deck+ "\n\n");
 
 

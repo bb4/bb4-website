@@ -476,12 +476,12 @@ public final class GoBoardUtil
     {
         float groupHealth = group.getAbsoluteHealth();
         float stoneHealth = stone.getHealth();
-        if (stone.isOwnedByPlayer1() == true)  {
-            assert (group.isOwnedByPlayer1() == false);
+        if (stone.isOwnedByPlayer1())  {
+            assert (!group.isOwnedByPlayer1());
             return (-groupHealth - stoneHealth > threshold);
         }
         else {
-            assert (group.isOwnedByPlayer1() == true);
+            assert (group.isOwnedByPlayer1());
             return ( groupHealth + stoneHealth > threshold);
         }
     }
