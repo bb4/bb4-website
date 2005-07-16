@@ -24,7 +24,7 @@ public enum Rank {
 
     private final String symbol_;
 
-    Rank(String symbol) {
+    private Rank(String symbol) {
         symbol_ = symbol;
     }
 

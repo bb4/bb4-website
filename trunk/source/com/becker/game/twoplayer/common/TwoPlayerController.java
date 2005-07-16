@@ -533,7 +533,6 @@ public abstract class TwoPlayerController extends GameController
 
         board_.makeMove( m );
 
-        
         // should show in game tree dlg if present
         /* @@ this is not working because the gameTree dialog does not have the current search state
         if ( viewer_ != null && getShowComputerAnimation() ) {
@@ -825,7 +824,7 @@ public abstract class TwoPlayerController extends GameController
 
         // reverse the order so the best move (using static board evaluation) is first
         if ( player1 == player1sPerspective )
-            Collections.reverse( moveList );
+           Collections.reverse( moveList );
 
         // We could potentially eliminate the best move doing this.
         // A move which has a low score this time might actually lead to the best move later.

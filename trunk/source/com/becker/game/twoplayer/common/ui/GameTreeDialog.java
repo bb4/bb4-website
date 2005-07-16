@@ -268,6 +268,7 @@ public final class GameTreeDialog extends JDialog
 
         ToolTipManager.sharedInstance().registerComponent( tree );
 
+        tree.setBackground(UIManager.getColor( "Tree.textBackground" ));
         tree.setCellRenderer( cellRenderer_ );
         tree.setPreferredSize( new Dimension( TREE_WIDTH, 900 ) );
         tree.setShowsRootHandles( true );

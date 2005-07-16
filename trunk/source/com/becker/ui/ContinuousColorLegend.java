@@ -6,7 +6,8 @@ import com.becker.common.NiceCutPoints;
 
 import javax.swing.*;
 import java.awt.*;
-import java.text.NumberFormat;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 /**
  * shows a discrete color legend given a list of colors and corresponding values.
@@ -14,8 +15,9 @@ import java.text.NumberFormat;
  */
 public class ContinuousColorLegend extends JPanel {
 
-    String title_;
-    ColorMap colormap_;
+    private String title_;
+    private ColorMap colormap_;
+    private JPanel legendLabels_;
 
 
 
@@ -28,21 +30,31 @@ public class ContinuousColorLegend extends JPanel {
     private void initUI() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setOpaque(false);
-        this.setPreferredSize(new Dimension(10000, 60));
 
         if (title_ != null) {
             JPanel titlePanel = new JPanel();
             titlePanel.setOpaque(false);
-            JLabel title = new JLabel(title_, JLabel.CENTER);
+            JLabel title = new JLabel(title_, JLabel.LEFT);
             title.setOpaque(false);
-            title.setBorder(BorderFactory.createEtchedBorder());
-            titlePanel.add(title);
-            add(titlePanel );
+            titlePanel.add(title, Component.LEFT_ALIGNMENT);
+            add(titlePanel);
             add(Box.createRigidArea(new Dimension(4, 4)));
+            this.setBorder(BorderFactory.createEtchedBorder());
         }
 
+        legendLabels_ = new JPanel();
+        refreshLegendLabels();
+
         add(createLegend());
-        add(createLegendLabels());
+        add(legendLabels_);
+
+        this.addComponentListener( new ComponentAdapter()
+        {
+            public void componentResized( ComponentEvent ce )
+            {
+                    refreshLegendLabels();
+            }
+        } );
     }
 
 
@@ -51,12 +63,13 @@ public class ContinuousColorLegend extends JPanel {
     }
 
 
-    private JPanel createLegendLabels() {
-        JPanel p = new JPanel();
-        p.setOpaque(false);
-        p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
+    private void refreshLegendLabels() {
 
-        int desiredTicks = this.getWidth() / 50;
+        legendLabels_.removeAll();
+        legendLabels_.setOpaque(false);
+        legendLabels_.setLayout(new BoxLayout(legendLabels_, BoxLayout.X_AXIS));
+
+        int desiredTicks = this.getWidth() / 90;
         double[] values =
                 NiceCutPoints.cutpoints(colormap_.getMinValue(), colormap_.getMaxValue(), 2+desiredTicks, true);
 
@@ -64,15 +77,14 @@ public class ContinuousColorLegend extends JPanel {
         JLabel labels[] = new JLabel[values.length];
         for (int i=0; i<values.length; i++) {
             labels[i] = new JLabel(Util.formatNumber(values[i]));
-            p.add(labels[i]);
+            legendLabels_.add(labels[i]);
             if (i < values.length-1)
-                p.add(Box.createHorizontalGlue());
+                legendLabels_.add(Box.createHorizontalGlue());
         }
-
-        return p;
     }
 
-   private class ColoredLegendLine extends JPanel {
+
+    private class ColoredLegendLine extends JPanel {
 
        ColorMap colormap_;
 
@@ -90,7 +102,7 @@ public class ContinuousColorLegend extends JPanel {
            double[] vals = colormap_.getValues();
            Color[] colors = colormap_.getColors();
            double firstVal = vals[0];
-           double rat = this.getWidth() / colormap_.getValueRange();
+           double rat = (double) this.getWidth() / colormap_.getValueRange();
 
            for (int i=1; i<vals.length; i++)  {
                double xstart = rat * (vals[i-1] - firstVal);

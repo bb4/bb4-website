@@ -258,7 +258,7 @@ public final class GoGroup extends GoSet
             GameContext.log(2, "attempting to remove "+string+" from already empty group.");
             return;
         }
-        boolean removed = members_.remove( string );
+        members_.remove( string );
         changed_ = true;
     }
 
@@ -350,9 +350,6 @@ public final class GoGroup extends GoSet
         List lists = new ArrayList();
 
         Box box = GoBoardUtil.findBoundingBox(members_);
-        
-        // use the number of current true eyes to help us determine current eyes
-        int numCurrentTrueEyes = getNumTrueEyes();
 
         // forget what we had computed before about the eyes
         clearEyes();
@@ -552,7 +549,6 @@ public final class GoGroup extends GoSet
      * This means that the group cannot be killed (or given life) no matter
      * how many times the opponent plays (see Dave Benson 1977).
      *
-     * @@ implement Benson's algorithm for determining unconditional life.
      * @@ need expert advice to make this work well.
      * @@ make the constants parameters and optimize them.
      * @@ we currently don't give any bonus for false eyes. should we?
@@ -587,7 +583,7 @@ public final class GoGroup extends GoSet
         numEyes = calcNumEyes();
         health = determineHealth(side, numEyes, numLiberties, board);
 
-        // Should there be any bonus at all for flase eyes??  no
+        // Should there be any bonus at all for false eyes??  no
         // health += (side * .015 * numFalseEyes);
 
         absoluteHealth_ = health;
@@ -621,15 +617,13 @@ public final class GoGroup extends GoSet
                 case TERRITORIAL_EYE:
                     numEyes += 1.8;
                     break; // counts as 2 true eyes
-                default:
-                    assert false: "bad eye type:" + eye.getEyeType() ;
             }
         }
         return numEyes;
     }
 
     /**
-     * determint the health of the group besed on the number of eyes and the number of liberties.
+     * determine the health of the group based on the number of eyes and the number of liberties.
      */
     private float determineHealth(float side, int numEyes, int numLiberties, GoBoard board)  {
         float health = 0;
@@ -643,7 +637,7 @@ public final class GoGroup extends GoSet
             else {
                 // its probably alive
                 // may not be alive if the opponent has a lot of kos and gets to play lots of times in a row
-                health = .96f * side;
+                health = .95f * side;
             }
         }
         else if ( (numEyes == 1) && (numLiberties > 6) )
@@ -679,13 +673,13 @@ public final class GoGroup extends GoSet
             }
         }
         else if ( numLiberties > 5 )  // numEyes == 0
-            health = side * Math.min(.8f, (1.3f - 46.f/(numLiberties+40.f)));
+            health = side * Math.min(.8f, (1.2f - 46.f/(numLiberties+40.f)));
         else {
             if (numStones == 1) {
                 switch (numLiberties) { // numEyes == 0
                     case 0:
                         // this can't happen because the stone should already be captured.  @@Hitting this
-                        //assert false : "can't have no liberties and still be on the board! "+ this;
+                        assert false : "can't have no liberties and still be on the board! "+ this;
                         health = -side;
                         break;
                     case 1:
@@ -698,7 +692,7 @@ public final class GoGroup extends GoSet
                         //    Xo.XXX.oX
                         //    XooooooXX
                         //    XXXXXXX
-                        health = -side * .01f;
+                        health = side * .02f;
                         break;
                     case 3:
                         health = side * .1f;
@@ -728,10 +722,10 @@ public final class GoGroup extends GoSet
                         health = -side * .1f;
                         break;
                     case 3:
-                        health = -side * .05f;
+                        health = side * .02f;
                         break;
                     case 4:
-                        health = side * 0.02f;
+                        health = side * 0.05f;
                         break;
                     case 5:
                         health = side * 0.1f;
@@ -746,7 +740,7 @@ public final class GoGroup extends GoSet
 
     /**
      * Calculate the relative health of a group.
-     * This method must be called only after calcutlateAbsoluteHealth has be done for all groups.
+     * This method must be called only after calculateAbsoluteHealth has be done for all groups.
      * Good health is positive for a black group.
      * This measure of the group's health should be much more accurate than the absolute health
      * because it takes into account the relative health of neighboring groups.
@@ -764,18 +758,9 @@ public final class GoGroup extends GoSet
         // the default if there is no weakest group.
         relativeHealth_ = absoluteHealth_;
 
-        if (lastMove.getGroup() == this ) {
-            profiler.start(GoProfiler.GET_ENEMY_GROUPS_NBRS);
-            cachedEnemyNbrGroups_ = getEnemyGroupNeighbors(board);
-            profiler.stop(GoProfiler.GET_ENEMY_GROUPS_NBRS);
-        }
-        else if (isGroupNeighbor(lastMove, board) && !cachedEnemyNbrGroups_.contains(lastMove.getGroup())) {
-            cachedEnemyNbrGroups_.add(lastMove.getGroup());
-        }
-        else {
-            // nothing has changed about this group or its enemy nbrs
-            return relativeHealth_;
-        }
+        profiler.start(GoProfiler.GET_ENEMY_GROUPS_NBRS);
+        cachedEnemyNbrGroups_ = getEnemyGroupNeighbors(board);
+        profiler.stop(GoProfiler.GET_ENEMY_GROUPS_NBRS);
 
         // of these enemy groups which is the weakest?
         double weakestHealth = -side;
@@ -806,20 +791,15 @@ public final class GoGroup extends GoSet
                     stone.setVisited(false); // clear the visited state.
                 }
             }
-            double proportionWithEnemyNbrs = (double)numWithEnemyNbrs / (double)groupStones.size();
+            double proportionWithEnemyNbrs = (double)numWithEnemyNbrs / ((double)groupStones.size() + 2);
 
             double diff = absoluteHealth_ + weakestGroup.getAbsoluteHealth();
             // @@ should use a weight to help determine how much to give a boost.
 
+            // must be bounded by -1 and 1
             relativeHealth_ =
-                    absoluteHealth_ +(float) (Math.min(1.0, Math.max(-1.0, diff * proportionWithEnemyNbrs/2.0)));
+                    (float) (Math.min(1.0, Math.max(-1.0, absoluteHealth_ + diff * proportionWithEnemyNbrs)));
             //System.out.println( "before abs = "+absoluteHealth_+" after (rel)="+ relativeHealth_ );
-
-            // keep it in the range -1 to 1.
-            if (relativeHealth_>1.0)
-                relativeHealth_ = 1.0f;
-            if (relativeHealth_<-1.0)
-                relativeHealth_ = -1.0f;
         }
 
         GoBoardUtil.unvisitPositionsInList(getStones());

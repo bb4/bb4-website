@@ -14,7 +14,7 @@ public final class Util
     // use this if running under windows
     public static final String PROJECT_DIR = "/home/becker/projects/java_projects/";
 
-   private static final DecimalFormat expFormat_ = new DecimalFormat("###,###.##E0");
+    private static final DecimalFormat expFormat_ = new DecimalFormat("###,###.##E0");
     private static final DecimalFormat format_ = new DecimalFormat("###,###.##");
 
     /**
@@ -72,26 +72,26 @@ public final class Util
     public static final String formatNumber(double num)
     {
         double absnum = Math.abs(num);
-        if ((num-(long)num) == 0) {
+        if ((num - (long)num) == 0.0) {
             // it is an integer
             format_.setMinimumFractionDigits(0);
             format_.setMaximumFractionDigits(0);
         }
         else {
-            if (absnum>10000.0) {
+            if (absnum > 100000.0 || absnum < .000000001) {
                 return expFormat_.format(num);
             }
-            if (absnum>100.0 || num==0.0) {
+            if (absnum > 100.0 || num == 0.0) {
+                format_.setMinimumFractionDigits(1);
+                format_.setMaximumFractionDigits(1);
+            }
+            else if (absnum > 1.0) {
                 format_.setMinimumFractionDigits(1);
                 format_.setMaximumFractionDigits(2);
             }
-            else if (absnum>1.0) {
-                format_.setMinimumFractionDigits(1);
-                format_.setMaximumFractionDigits(4);
-            }
-            else if (absnum>.0001) {
+            else if (absnum > .0001) {
                 format_.setMinimumFractionDigits(2);
-                format_.setMaximumFractionDigits(6);
+                format_.setMaximumFractionDigits(5);
             }
             else if (absnum>.000001) {
                 format_.setMinimumFractionDigits(3);

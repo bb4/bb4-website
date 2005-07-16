@@ -27,7 +27,7 @@ public class GoTestCase extends TestCase {
 
     private static final String SGF_EXTENSION = ".sgf";
 
-    GoController controller_;
+    protected GoController controller_;
 
     /**
      * common initialization for all go test cases.

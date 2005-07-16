@@ -32,15 +32,15 @@ public class Card {
                 protoDeck.add(new Card(rank, suit));
     }
 
-    public static ArrayList<Card> newDeck() {
-        ArrayList<Card> deck = new ArrayList<Card>(protoDeck); // Return copy of prototype deck
+    public static List newDeck() {
+        List deck = new ArrayList<Card>(protoDeck); // Return copy of prototype deck
         Collections.shuffle(deck);
         return deck;
     }
 
     public static void main(String[] args) {
 
-        ArrayList deck = Card.newDeck();
+        List deck = newDeck();
         System.out.println("deck="+deck);
     }
 }

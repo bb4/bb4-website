@@ -438,7 +438,7 @@ public final class GoBoard extends TwoPlayerBoard
 
             GoString str = enbr.getString();
             assert ( str.isOwnedByPlayer1() != stone.getPiece().isOwnedByPlayer1()): "The "+str+" is not an enemy of "+stone;
-            if ( str.getLiberties( this ).size() == 0 && str.size() > 0 ) {
+            if ( str.getLiberties( this ).size() == 0 && str.size() > 0 && !capturedStrings.contains(str) ) {
                 capturedStrings.add( str );
                 // we need to add copies so that when the original stones on the board are
                 // changed we don't change the captures
@@ -1805,7 +1805,11 @@ public final class GoBoard extends TwoPlayerBoard
         if ( string == null )   {
             GameContext.log( 0, "Warning: GoMove.isSuicidal: the string is null" );
         }
-        if ( string != null && string.getLiberties( this ).size() == 0 ) {
+        if (m.captureList != null && m.captureList.size() > 0) {
+            // if we have captured enemy stones, then this is not a suicide, even if we have not liberties ourselves.
+            return false;
+        }
+        if ( string != null && string.getLiberties( this ).size() == 0) {
             //System.out.println("string size="+string.size());
             assert (string.size() > 0);
             GameContext.log( 2, "GoMove.isSuicidal: your are playing on the last liberty for this string=" + string.toString() + " captures=" + m.captureList );
@@ -1987,43 +1991,25 @@ public final class GoBoard extends TwoPlayerBoard
     }
 
 
-    /*
-     * @param stone the go stone.
-     * @param inc direction to increment (+/-1)
-     * @return an integer value indicating how bad the shape is (0 being not bad at all).
-
-    private int checkForBadShape(GoStone stone,  int r, int c, int inc )
+    /**
+     * @return either the number of black or white stones.
+     */
+    public int getNumStones(boolean forPlayer1)
     {
-        int severity = 0;
-        boolean player1 = stone.isOwnedByPlayer1();
+        int numStones = 0;
 
-        if ( inBounds( r + inc, c ) ) {
-            BoardPosition adjacent = getPosition( r + inc, c );
-            if ( adjacent.isOccupied() && adjacent.getPiece().isOwnedByPlayer1() == player1 ) {
-                BoardPosition diagonal1 = getPosition( r + inc, c - 1 );
-                if ( inBounds( r + inc, c - 1 ) &&
-                     diagonal1.isOccupied() && diagonal1.getPiece().isOwnedByPlayer1() == player1) {
-                    severity += GoBoardUtil.getBadShapeAux( getPosition( r, c - 1 ), player1 );
-                }
-                BoardPosition diagonal2 = getPosition( r + inc, c + 1 );
-                if ( inBounds( r + inc, c + 1 ) &&
-                     diagonal2.isOccupied() && diagonal2.getPiece().isOwnedByPlayer1() == player1 ) {
-                    severity += GoBoardUtil.getBadShapeAux( getPosition( r, c + 1 ), player1 );
-                }
-                BoardPosition adjacent1 = getPosition( r, c - 1 );
-                if ( inBounds( r, c - 1 ) &&
-                     adjacent1.isOccupied() && adjacent1.getPiece().isOwnedByPlayer1() == player1) {
-                    severity += 1;
-                }
-                BoardPosition adjacent2 = getPosition( r, c + 1 );
-                if ( inBounds( r, c + 1 ) &&
-                     adjacent2.isOccupied() && adjacent2.getPiece().isOwnedByPlayer1() == player1) {
-                    severity += 1;
-                }
-            }
+        // we should be able to just sum all the position scores now.
+        for ( int i = 1; i <= getNumRows(); i++ )  {
+           for ( int j = 1; j <= getNumCols(); j++ ) {
+               GoBoardPosition pos = (GoBoardPosition)getPosition(i, j);
+               if (pos.isOccupied() && pos.getPiece().isOwnedByPlayer1() == forPlayer1)  {
+                  numStones++;
+               }
+           }
         }
-        return severity;
-    }        */
+        return numStones;
+    }
+
 
 
     public String toString() {

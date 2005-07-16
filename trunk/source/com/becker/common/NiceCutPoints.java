@@ -1,6 +1,7 @@
 package com.becker.common;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Calculate nicely spaced number cutpoints for an axis or legend.
@@ -48,7 +49,7 @@ public final class NiceCutPoints {
             maximum = minimum + SMALL_VALUE_CUTOFF;
         }
 
-        ArrayList positions = new ArrayList();
+        List positions = new ArrayList();
         //int numfracdigits = 0;
 
         if (Math.abs(maximum - minimum) < SMALL_VALUE_CUTOFF) {
@@ -61,15 +62,15 @@ public final class NiceCutPoints {
             //numfracdigits = (int) Math.max(-Math.floor(log10(d)), 0);
 
             if (useTightLabeling) {
-                positions.add(new Double(checkSmallNumber(min)));
+                positions.add(new Double(checkSmallNumber(minimum)));
                 // this logic is to avoid the min or max label overwriting one of the nice cutpoints.
                 double initialInc = d;
-                double pct = (min + d - min) / d;
+                double pct = (min + d - minimum) / d;
                 if (pct < LABEL_PROXIMITY_THRESH) {
                     initialInc = 2 * d;
                 }
                 double finalInc = 0.5 * d;
-                pct = (max - (max - d)) / d;
+                pct = (maximum - (max - d)) / d;
                 if (pct < LABEL_PROXIMITY_THRESH) {
                     finalInc = 1.5 * d;
                 }
@@ -78,7 +79,7 @@ public final class NiceCutPoints {
                     double val = checkSmallNumber(x);
                     positions.add(new Double(val));
                 }
-                positions.add(new Double(checkSmallNumber(max)));
+                positions.add(new Double(checkSmallNumber(maximum)));
             } else {
                 for (double x = min; x < (max + 0.5 * d); x += d) {
                     positions.add(new Double(checkSmallNumber(x)));
@@ -113,7 +114,7 @@ public final class NiceCutPoints {
         }
 
         if (Math.abs(max - min) <= SMALL_VALUE_CUTOFF) {
-            max = min + NiceCutPoints.SMALL_VALUE_CUTOFF;
+            max = min + SMALL_VALUE_CUTOFF;
         }
 
         double range = niceNumber(max - min, false);
