@@ -15,10 +15,6 @@ import junit.framework.TestSuite;
  */
 public class TestProblemCollections extends GoTestCase {
 
-
-
-
-
     /**
      * @return all the junit test caes to run (in this class)
      */

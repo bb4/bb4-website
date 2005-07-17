@@ -26,4 +26,6 @@ public class TestAllWhiteBox extends GoTestCase {
 
         return suite;
     }
+
+
 }

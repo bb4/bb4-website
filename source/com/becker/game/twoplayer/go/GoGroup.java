@@ -951,6 +951,7 @@ public final class GoGroup extends GoSet
         }
     }
 
+    /*
     private static boolean isGroupNeighbor(GoBoardPosition pos, GoBoard board)
     {
         Set groupNbrs = board.getGroupNeighbors(pos, false);
@@ -961,7 +962,7 @@ public final class GoGroup extends GoSet
                 return true;
         }
         return false;
-    }
+    }*/
 
      /**
      * @return a deep copy of this GoSet

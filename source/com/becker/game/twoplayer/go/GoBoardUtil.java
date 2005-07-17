@@ -46,6 +46,7 @@ public final class GoBoardUtil
                 correctNeighborType = true;
                 break;
             case OCCUPIED:
+                // note friendOwnedByP1 is intentionally ignored
                 correctNeighborType = nbrStone.getPiece()!=null;
                 break;
             case ENEMY: // the opposite color
