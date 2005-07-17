@@ -17,7 +17,7 @@ public class TestAll extends TestCase {
         TestSuite suite =  new TestSuite("All Go Tests");
 
 
-        suite.addTestSuite(TestAllWhiteBox.class);
+        suite.addTest(TestAllWhiteBox.suite());
         suite.addTestSuite(TestShape.class);
         suite.addTestSuite(TestEyes.class);
         suite.addTestSuite(TestScoring.class);      

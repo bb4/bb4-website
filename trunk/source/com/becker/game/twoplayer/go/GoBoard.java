@@ -452,7 +452,7 @@ public final class GoBoard extends TwoPlayerBoard
     }
 
     /**
-     * Make the positions on the board represented be the captureList show up empty.
+     * Make the positions on the board represented by the captureList show up empty.
      * Afterwards these empty spaces should not belong to any strings.
      * @param captureList list of stones to remove
      */
@@ -737,7 +737,7 @@ public final class GoBoard extends TwoPlayerBoard
         List emptyLists = new LinkedList();
         for ( int i = min; i <= rMax; i++ )  {
            for ( int j = min; j <= cMax; j++ ) {
-               GoBoardPosition pos = (GoBoardPosition)getPosition(i,j);
+               GoBoardPosition pos = (GoBoardPosition)getPosition(i, j);
                if (pos.getString() == null && !pos.isInEye()) {
                    assert pos.isUnoccupied();
                    if (!pos.isVisited()) {
@@ -772,12 +772,13 @@ public final class GoBoard extends TwoPlayerBoard
      * @param empties a list of unoccupied positions.
      * @return a list of stones bordering the set of empty board positions.
      */
-    private Set findOccupiedNeighbors(List empties)
+    public Set findOccupiedNeighbors(List empties)
     {
         Iterator it = empties.iterator();
         Set allNbrs = new HashSet();
         while (it.hasNext()) {
             GoBoardPosition empty = (GoBoardPosition)it.next();
+            assert (empty.isUnoccupied());
             Set nbrs = getNobiNeighbors(empty, false, NeighborType.OCCUPIED);
             // add these nbrs to the set of all nbrs
             // (dupes automatically culled because HashSets only have unique members)
@@ -946,7 +947,7 @@ public final class GoBoard extends TwoPlayerBoard
     }
 
     /**
-     * return a set of stones which are loosely connected.
+     * return a set of stones which are loosely connected tp stone.
      * Check the 16 purely group neighbors and 4 string neighbors
      *         ***
      *        **S**
@@ -954,8 +955,8 @@ public final class GoBoard extends TwoPlayerBoard
      *        **S**
      *         ***
      * @param stone (not necessarily occupied)
-     * @param friendPlayer1 typically the isOwnedByPlayer1 value of stone unless it is blank.
-     * @param samePlayerOnly if true then find group nbrs that are have same ownership as friend (Player1)
+     * @param friendPlayer1 typically stone.isOwnedByPlayer1 value of stone unless it is blank.
+     * @param samePlayerOnly if true then find group nbrs that are have same ownership as friendPlayer1
      */
     private Set getGroupNeighbors( GoBoardPosition stone, boolean friendPlayer1, boolean samePlayerOnly )
     {
@@ -1216,6 +1217,7 @@ public final class GoBoard extends TwoPlayerBoard
      * cohesive group(s) rather than disparate ones.
      * There can be two if, for example, the capturing stone joins a string that is
      * still in atari after the captured stones have been removed.
+     * @@ probably should add a test for this.
      * @param finalStone the stone that caused the capture.
      */
     private void updateAfterRemovingCaptures( GoBoardPosition finalStone )
@@ -1538,7 +1540,7 @@ public final class GoBoard extends TwoPlayerBoard
     /**
      * Check all 20 neighbors (including diagonals, 1-space jumps, and knights moves).
      * Make sure diagonals and 1-space jumps are not cut.
-     * Don't push a group neighbor if it is part of a string which is in ataryi
+     * Don't push a group neighbor if it is part of a string which is in atari
      *
      * @param s the position of a stone of which to check the neighbors of.
      * @param friendPlayer1 side to find group stones for.
@@ -1810,7 +1812,6 @@ public final class GoBoard extends TwoPlayerBoard
             return false;
         }
         if ( string != null && string.getLiberties( this ).size() == 0) {
-            //System.out.println("string size="+string.size());
             assert (string.size() > 0);
             GameContext.log( 2, "GoMove.isSuicidal: your are playing on the last liberty for this string=" + string.toString() + " captures=" + m.captureList );
             // if we do not have captures, then it is a suicide move and should not be allowed.
@@ -1825,21 +1826,23 @@ public final class GoBoard extends TwoPlayerBoard
      * returns true if the specified move caused one or more opponent groups to be in atari
      *
      * @param m the move to check.
-     * @return a number >0 if the move m caused an atari. The number gives the number of stones in atari.
+     * @return a number > 0 if the move m caused an atari. The number gives the number of stones in atari.
      */
     public final int causedAtari( GoMove m )
     {
         if ( m.isPassingMove() )
             return 0; // a pass cannot cause an atari
-        GoBoardPosition stone = (GoBoardPosition)this.getPosition( m.getToRow(), m.getToCol() );
-        Set enemyNbrs =
-                this.getNobiNeighbors( stone, NeighborType.ENEMY );
+
+        GoBoardPosition pos = (GoBoardPosition)this.getPosition( m.getToRow(), m.getToCol() );
+        Set enemyNbrs = getNobiNeighbors( pos, NeighborType.ENEMY );
+        System.out.println(" num enemy nbors of "+pos+" is "+enemyNbrs.size());
         Iterator it = enemyNbrs.iterator();
         int numInAtari = 0;
         Set stringSet = new HashSet();
         while ( it.hasNext() ) {
             GoBoardPosition s = (GoBoardPosition) it.next();
             GoString atariedString = s.getString();
+            System.out.println("atariedString.getLiberties( this ).size()="+atariedString.getLiberties( this ).size());
             if (!stringSet.contains(atariedString) && atariedString.getLiberties( this ).size() == 1 ) {
                 numInAtari += atariedString.size();
             }
@@ -1869,7 +1872,7 @@ public final class GoBoard extends TwoPlayerBoard
     /**
      * we must recalculate the number of liberties every time because it changes often.
      * @param pos position on the the board to get the number of liberties for
-     * @return the number of liperties the specified position has.
+     * @return the number of liberties the specified position has.
      */
     public final int getNumLiberties( GoBoardPosition pos )
     {
