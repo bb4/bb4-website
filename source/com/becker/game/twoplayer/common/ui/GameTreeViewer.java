@@ -2,6 +2,7 @@ package com.becker.game.twoplayer.common.ui;
 
 import com.becker.common.ColorMap;
 import com.becker.game.common.Move;
+import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.common.search.SearchTreeNode;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 
@@ -139,7 +140,7 @@ class GameTreeViewer extends JPanel implements MouseMotionListener
     public synchronized final void highlightPath( TreePath path )
     {
         // unhighlight the old path and highlight the new one without redrawing the whole tree.
-        //System.out.println( "about to highlight "+path );
+        //GameContext.log(2, "about to highlight "+path );
         Graphics2D g2 = (Graphics2D)getGraphics();
         g2.setXORMode(Color.WHITE);
         g2.setStroke(BRUSH_HIGHLIGHT_STROKE);

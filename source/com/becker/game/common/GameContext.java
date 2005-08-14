@@ -36,12 +36,12 @@ public final class GameContext
 
     static {
 
-        GameContext.log(1, "initing sound." );
+        log(1, "initing sound." );
 
 
         if ( useSound_ ) {
-            GameContext.getMusicMaker().stopAllSounds();
-            GameContext.getMusicMaker().startNote( MusicMaker.SEASHORE, 40, 2, 3 );
+            getMusicMaker().stopAllSounds();
+            getMusicMaker().startNote( MusicMaker.SEASHORE, 40, 2, 3 );
         }
     }
 
@@ -252,7 +252,7 @@ public final class GameContext
                label = gameMessages_.getString(key);
             }
             catch (MissingResourceException e) {
-               GameContext.log(0,  e.getMessage() );
+               log(0,  e.getMessage() );
             }
             return label;
         }
@@ -279,14 +279,14 @@ public final class GameContext
      */
     private static void verifyConsistentMessageBundles()
     {
-        GameContext.log(1,"verifying consistency of message bundles... ");
+        log(1,"verifying consistency of message bundles... ");
         // an array of hashSets of the keys for each bundle
-        ArrayList messageKeySets = new ArrayList();
+        List messageKeySets = new ArrayList();
         LocaleType[] locales = LocaleType.values();
         for (int i=0; i<locales.length; i++) {
             ResourceBundle bundle = ResourceBundle.getBundle(COMMON_MESSAGE_BUNDLE,
                                         locales[i].getLocale());
-            HashSet keySet = new HashSet();
+            Set keySet = new HashSet();
             Enumeration enumXXX = bundle.getKeys();
             while (enumXXX.hasMoreElements()) {
                 String key = (String)enumXXX.nextElement();
@@ -294,21 +294,21 @@ public final class GameContext
                 keySet.add(key);
             }
             messageKeySets.add(keySet);
-            GameContext.log(1, "keySet size for "+(locales[i]).getLocale() +"="+keySet.size());
+            log(1, "keySet size for "+(locales[i]).getLocale() +"="+keySet.size());
         }
         // now that we have the keysets report on their consistency.
         // assume that the first is the default (en)
         boolean allConsistent = true;
-        HashSet defaultKeySet = (HashSet)messageKeySets.get(0);
+        Set defaultKeySet = (HashSet)messageKeySets.get(0);
         // first check that all the non-default locales do not contain keys
         // that the default locale does not have (less common).
         for (int i=1; i<locales.length; i++) {
-            HashSet keySet = (HashSet)messageKeySets.get(i);
+            Set keySet = (HashSet)messageKeySets.get(i);
             Iterator it = keySet.iterator();
             while (it.hasNext()) {
                 String key = (String)it.next();
                 if (!defaultKeySet.contains(key)) {
-                    GameContext.log(0, COMMON_MESSAGE_BUNDLE+" for locale "+locales[i]
+                    log(0, COMMON_MESSAGE_BUNDLE+" for locale "+locales[i]
                             +" contains the key, "+key+", that is not in the default locale (en).");
                     allConsistent = false;
                 }
@@ -325,18 +325,18 @@ public final class GameContext
         while (it.hasNext())  {
             String key = (String)it.next();
             for (int i=1; i<locales.length; i++) {
-                HashSet keySet = (HashSet)messageKeySets.get(i);
+                Set keySet = (HashSet)messageKeySets.get(i);
                 if (!keySet.contains(key)) {
-                    GameContext.log(0, COMMON_MESSAGE_BUNDLE+" for locale "+locales[i]
+                    log(0, COMMON_MESSAGE_BUNDLE+" for locale "+locales[i]
                             +" does not contain the key "+key);
                     allConsistent = false;
                 }
             }
         }
         if (allConsistent)
-            GameContext.log(0, "The bundles for all the locales are consistent.");
+            log(0, "The bundles for all the locales are consistent.");
         else
-            GameContext.log(0, "Inconsistent bundles. Please correct the above items.");
+            log(0, "Inconsistent bundles. Please correct the above items.");
     }
 
     public static void main(String[] args)
@@ -348,7 +348,7 @@ public final class GameContext
      * Looks up an {@link LocaleType}
      * @throws Error if the name is not a member of the enumeration
      */
-    public static LocaleType get(final String name, final boolean finf) {
+    public static LocaleType get(String name, boolean finf) {
         LocaleType type = LocaleType.ENGLISH;  // the default
 
         try {

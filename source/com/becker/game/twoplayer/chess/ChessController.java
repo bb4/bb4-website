@@ -220,7 +220,7 @@ public class ChessController extends CheckersController
         while (it.hasNext()) {
            ChessMove move = (ChessMove)it.next();
            if (b.causesSelfCheck(move)) {
-                //System.out.println( "don't allow "+move+" because it puts the king in check." );
+                GameContext.log(2, "don't allow "+move+" because it puts the king in check." );
                 it.remove();
            }
         }

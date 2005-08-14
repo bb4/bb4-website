@@ -109,7 +109,6 @@ class EditWeightsDialog extends OptionsDialog implements ActionListener
 
     private void ok()
     {
-        //System.out.println("size: "+r.intValue()+", "+c.intValue());
         int len = weights_.size();
         String sErrors = "";
         for ( int i = 0; i < len; i++ ) {

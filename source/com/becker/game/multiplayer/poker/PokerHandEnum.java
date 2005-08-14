@@ -14,39 +14,17 @@ import java.util.List;
 public enum PokerHandEnum {
 
     // note: five of a kind can only happen if using wild cards
-    FIVE_OF_A_KIND("Five of a Kind", 749740) {
-        public int getTieBreakerScore(PokerHand hand) {return fiveOfaKindTieBreaker(hand);}
-    },
-    ROYAL_FLUSH("Royal Flush", 649740) {
-        public int getTieBreakerScore(PokerHand hand) {return highCardTieBreaker(hand);}
-    },
-    STRAIGHT_FLUSH("Straight Flush", 72192) {
-        public int getTieBreakerScore(PokerHand hand) {return highCardTieBreaker(hand);}
-    },
-    FOUR_OF_A_KIND("Four of a Kind", 4164) {
-        public int getTieBreakerScore(PokerHand hand) {return fourOfaKindTieBreaker(hand);}
-    },
-    FULL_HOUSE("Full House", 693) {
-        public int getTieBreakerScore(PokerHand hand) {return fullHouseTieBreaker(hand);}
-    },
-    FLUSH("Flush", 508) {
-        public int getTieBreakerScore(PokerHand hand) {return highCardTieBreaker(hand);}
-    },
-    STRAIGHT("Straight", 254) {
-        public int getTieBreakerScore(PokerHand hand) {return highCardTieBreaker(hand);}
-    },
-    THREE_OF_A_KIND("Three of a Kind", 40) {
-        public int getTieBreakerScore(PokerHand hand) {return threeOfaKindTieBreaker(hand);}
-    },
-    TWO_PAIR("Two Pair", 20) {
-        public int getTieBreakerScore(PokerHand hand) {return twoPairTieBreaker(hand);}
-    },
-    PAIR("Pair", 1.37f) {
-        public int getTieBreakerScore(PokerHand hand) {return pairTieBreaker(hand);}
-    },
-    HIGH_CARD("High Card", 1) {
-        public int getTieBreakerScore(PokerHand hand) {return highCardTieBreaker(hand);}
-    };
+    FIVE_OF_A_KIND("Five of a Kind", 749740),
+    ROYAL_FLUSH("Royal Flush", 649740),
+    STRAIGHT_FLUSH("Straight Flush", 72192),
+    FOUR_OF_A_KIND("Four of a Kind", 4164),
+    FULL_HOUSE("Full House", 693),
+    FLUSH("Flush", 508),
+    STRAIGHT("Straight", 254),
+    THREE_OF_A_KIND("Three of a Kind", 40),
+    TWO_PAIR("Two Pair", 20),
+    PAIR("Pair", 1.37f),
+    HIGH_CARD("High Card", 1);
 
 
     private final String label_;
@@ -69,69 +47,15 @@ public enum PokerHandEnum {
     }
 
 
-    /**
-     * @param hand hte poker hand to evaluate
-     * @return a score that allows you to differentiate among ties. higher score is better hand.
-     */
-    public abstract int getTieBreakerScore(PokerHand hand);
-
-
-
-    private static int fiveOfaKindTieBreaker(PokerHand hand) {
-        Rank r = hand.getRankOfNofaKind(5);
-        return r.ordinal();
-    }
-
-    private static int highCardTieBreaker(PokerHand hand) {
-        int score = PokerHand.getValue(hand.getHighCard());
+    public int getTieBreakerScore(PokerHand hand) {
+        int numCards = hand.size();
+        int score = 0;
+        for (int i = numCards-1; i>=0; i--) {
+            score = score * numCards + hand.getCards().get(i).rank().ordinal();
+        }
         return score;
     }
 
-    private static int fourOfaKindTieBreaker(PokerHand hand) {
-        Rank r = hand.getRankOfNofaKind(4);
-        return r.ordinal();
-    }
-
-    private static int fullHouseTieBreaker(PokerHand hand) {
-        Rank r3 = hand.getRankOfNofaKind(3);
-        Rank r2 = hand.getRankOfNofaKind(2);
-        return 100*r3.ordinal() + r2.ordinal();
-    }
-
-    private static int threeOfaKindTieBreaker(PokerHand hand) {
-        Rank r3 = hand.getRankOfNofaKind(3);
-        Card c = getHighCardNotInNofaKind(3, hand);
-        return 100*r3.ordinal() + PokerHand.getValue(c);
-    }
-
-    private static int twoPairTieBreaker(PokerHand hand) {
-        Rank rp1 = hand.getRankOfNofaKind(2);
-        Rank rp2 = hand.getRankOfNofaKind(2);
-        // @@ its exceedingly unlikely, but possible that the 2 pairs could have the same rank in each hand
-        // in this case the one card not in the pairs should be compared
-        if (rp1.ordinal() >rp2.ordinal())
-            return 100*rp1.ordinal() + rp2.ordinal();
-        else {
-            return 100*rp2.ordinal() + rp1.ordinal();
-        }
-    }
-
-    private static int pairTieBreaker(PokerHand hand) {
-        Rank r2 = hand.getRankOfNofaKind(2);
-        Card c = getHighCardNotInNofaKind(2, hand);
-        return 100*r2.ordinal() + PokerHand.getValue(c);
-    }
-
-    private static Card getHighCardNotInNofaKind(int n, PokerHand hand) {
-        Rank r = hand.getRankOfNofaKind(n);
-        // this is guaranteed to be an ordered list of cards
-        List<Card> cards =  hand.getCards();
-        int i=cards.size()-1;
-        while (cards.get(i).rank() == r && i >= 0) {
-            i--;
-        }
-        return cards.get(i);
-    }
 
 }
 

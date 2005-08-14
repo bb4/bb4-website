@@ -11,9 +11,24 @@ public class Card {
     private final Rank rank;
     private final Suit suit;
 
-    private Card(Rank rank, Suit suit) {
+    public Card(Rank rank, Suit suit) {
         this.rank = rank;
         this.suit = suit;
+    }
+
+    public Card(String cardToken) {
+        int len = cardToken.length();
+        assert (len < 3);
+
+        this.rank = Rank.getRankForSymbol(cardToken.substring(0, len-1));
+        char a_suit = cardToken.charAt(len-1);
+        switch (a_suit) {
+            case 'H' : this.suit = Suit.HEARTS; break;
+            case 'D' : this.suit = Suit.DIAMONDS; break;
+            case 'C' : this.suit = Suit.CLUBS; break;
+            case 'S' : this.suit = Suit.SPADES; break;
+            default: this.suit = null;  assert false;
+        }
     }
 
 
@@ -37,6 +52,7 @@ public class Card {
         Collections.shuffle(deck);
         return deck;
     }
+
 
     public static void main(String[] args) {
 

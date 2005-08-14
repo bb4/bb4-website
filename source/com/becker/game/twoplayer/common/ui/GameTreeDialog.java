@@ -264,17 +264,25 @@ public final class GameTreeDialog extends JDialog
      */
     private JTree createTree( SearchTreeNode root )
     {
-        JTree tree = new JTree( root );
+        JTree tree = null;
 
-        ToolTipManager.sharedInstance().registerComponent( tree );
+        try {
+            tree = new JTree( root );
 
-        tree.setBackground(UIManager.getColor( "Tree.textBackground" ));
-        tree.setCellRenderer( cellRenderer_ );
-        tree.setPreferredSize( new Dimension( TREE_WIDTH, 900 ) );
-        tree.setShowsRootHandles( true );
-        tree.putClientProperty( "JTree.lineStyle", "Angled" );
-        tree.setRowHeight( ROW_HEIGHT );
-        tree.addTreeExpansionListener( this );
+            ToolTipManager.sharedInstance().registerComponent( tree );
+
+            tree.setBackground(UIManager.getColor( "Tree.textBackground" ));
+            tree.setCellRenderer( cellRenderer_ );
+            tree.setPreferredSize( new Dimension( TREE_WIDTH, 900 ) );
+            tree.setShowsRootHandles( true );
+            tree.putClientProperty( "JTree.lineStyle", "Angled" );
+            tree.setRowHeight( ROW_HEIGHT );
+            tree.addTreeExpansionListener( this );
+        }
+        catch (ArrayIndexOutOfBoundsException e) {
+            GameContext.log(0,
+                "Error: There was an ArayIndexOutOfBounds exception when creating a JTree from this root node: "+root);
+        }
 
         return tree;
     }

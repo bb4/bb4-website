@@ -1,5 +1,8 @@
 package com.becker.game.card;
 
+import java.util.Map;
+import java.util.HashMap;
+
 /**
  * User: Barry Becker
  * Date: Mar 5, 2005
@@ -23,13 +26,25 @@ public enum Rank {
 
 
     private final String symbol_;
+    private static final Map rankFromSymbol_ = new HashMap();
+
+    static {
+        for (Rank r : values()) {
+            rankFromSymbol_.put(r.getSymbol(), r);
+        }
+    }
 
     private Rank(String symbol) {
         symbol_ = symbol;
+
     }
 
     public String getSymbol() {
         return symbol_;
+    }
+
+    public static Rank getRankForSymbol(String symbol) {
+        return (Rank) rankFromSymbol_.get(symbol);
     }
 
 }

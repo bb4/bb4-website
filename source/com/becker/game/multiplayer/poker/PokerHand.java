@@ -114,6 +114,7 @@ public class PokerHand implements Comparable {
         boolean hasPair = hasNofaKind(2);
 
         switch (handType) {
+            case FIVE_OF_A_KIND: return hasNofaKind(5);
             case ROYAL_FLUSH: return (hasStraight && hasFlush && (hand_.get(0).rank() == Rank.TEN));
             case STRAIGHT_FLUSH: return (hasStraight && hasFlush);
             case FOUR_OF_A_KIND: return hasNofaKind(4);
@@ -213,25 +214,17 @@ public class PokerHand implements Comparable {
      */
     public Card getHighCard() {
         return hand_.get(hand_.size()-1);
-        /*
-        Card highCard = hand_.get(0); // start assuming the first card is the highest
-        for (Card c : hand_) {
-            if (getValue(c) > getValue(highCard))  {
-                highCard = c;
-            }
-         }
-         return highCard;
-         */
     }
 
     /**
      * @param c  card to evaluate
      * @return the value of the card in terms of poker
      * (note value is always less than 100 because the ace of hearts is 4*12 + 3 = 51
-     */
+     *
+     * -- dont use suit to break ties - its wrong for poker
     public static int getValue(Card c)  {
          return 4 * c.rank().ordinal() + c.suit().ordinal();
-    }
+    }  */
 
     /**
      * returns true if there is exactly 2 pairs
@@ -324,10 +317,13 @@ public class PokerHand implements Comparable {
      */
     public static int compareHandsOfEqualType(PokerHand hand1, PokerHand hand2) {
         assert(hand1.determineType() == hand2.determineType());
-        if (hand1.determineType().getTieBreakerScore(hand1) > hand2.determineType().getTieBreakerScore(hand2)) {
+        int diff = hand1.determineType().getTieBreakerScore(hand1) - hand2.determineType().getTieBreakerScore(hand2);
+        if ( diff > 0) {
             return 1;
-        } else {
+        } else if (diff < 0) {
             return -1;
+        } else{
+            return 0;
         }
     }
 
