@@ -185,12 +185,14 @@ public final class GoGroup extends GoSet
         // is extremely expensive (factor of 10!)
         // That's why we only do this assert when running in debug mode.
         // now that we use java native assertions there is no more overhead when they are turned off, but
-        // when they are on I still only want to incur the overhead when the debug level is high.
-        while ( it.hasNext() ) {
-            GoString str = (GoString) it.next();
-            // debug (make sure none of the stones are blank)
-            assert ( !str.areAnyBlank()): "Error: " + this + " contains a " + str + " with blanks in it.";
-            numStones += str.size();
+        // when they are on, I still only want to incur the overhead when the debug level is high.
+        if (GameContext.getDebugMode() > 2)  {
+            while ( it.hasNext() ) {
+                GoString str = (GoString) it.next();
+                // debug (make sure none of the stones are blank)
+                assert ( !str.areAnyBlank()): "Error: " + this + " contains a " + str + " with blanks in it.";
+                numStones += str.size();
+            }
         }
         return numStones;
     }
@@ -218,7 +220,7 @@ public final class GoGroup extends GoSet
 
     /**
      * subtract the contents of a specified set of stones from this one.
-     * It is an error if the specified set of stones is not a proper subset.
+     * It is an error if the specified set of stones is not a prpper subset.
      * Really we just remove the strings that own these stones.
      * @param stones the list of stones to subtract from this one
      */
@@ -262,61 +264,6 @@ public final class GoGroup extends GoSet
         changed_ = true;
     }
 
-    /**
-     * remove a stone from this group.
-     * Note that removing a stone may cause a single string to break into several smaller ones
-     * @param stone the stone to remove from the group
-     * @param board on which the stone was played
-     */
-    public final void remove( GoBoardPosition stone, GoBoard board )
-    {
-        assert (this.containsStone(stone)): this + " \n does not contain "+stone;
-        GoString string = stone.getString();
-        if ( string != null ) {
-            // if this is the only stone in the string, then remove the whole string.
-            if ( string.size() == 1 )
-                remove( string );
-            else {
-                string.remove( stone );
-                // now need to consider the creation of several smaller strings here
-                int origSize = string.size();
-                Set nbrs = board.getNobiNeighbors( stone, string.isOwnedByPlayer1(), NeighborType.FRIEND );
-                if (nbrs.size()==0) {
-                    board.printNobiNeighborsOf(stone);
-                }
-                assert ( nbrs.size() > 0): stone +" had no friendly nbrs "+nbrs+" string="+string
-                              +". These 2 must be the same: size="+string.size()+" origSize="+origSize;
-                Iterator it = nbrs.iterator();
-                List splitStrings = new LinkedList();
-                boolean split = false;
-                while ( it.hasNext() ) {
-                    GoBoardPosition nbrStone = (GoBoardPosition) it.next();
-                    if ( !nbrStone.isVisited() ) {
-                        List splitString = board.findStringFromInitialPosition( nbrStone, false );
-                        if ( splitString.size() < origSize ) {
-                            GoString newString = new GoString( splitString );
-                            newString.setGroup( this );
-                            members_.add( newString );
-                            splitStrings.add( newString );
-                            split = true;
-                        }
-                    }
-                }
-                string.unvisit();
-                if ( split ) {
-                    members_.remove( string );
-                    string.removeAll();
-                    it = splitStrings.iterator();
-                    while ( it.hasNext() ) {
-                        GoString s = (GoString) it.next();
-                        s.unvisit();
-                    }
-                }
-            }
-        }
-        clearEyes();
-        changed_ = true;
-    }
 
 
     /**
@@ -452,6 +399,7 @@ public final class GoGroup extends GoSet
         }
     }
 
+    /*
     private int getNumTrueEyes()
     {
         int numTrueEyes = 0;
@@ -463,7 +411,7 @@ public final class GoGroup extends GoSet
             }
         }
         return numTrueEyes;
-    }
+    }  */
 
 
     /**
@@ -489,15 +437,14 @@ public final class GoGroup extends GoSet
 
             if (position.isOccupied()) {
                 GoStone stone  = ((GoStone)position.getPiece());
-                if (string.size() == 1 && stone.getHealth() == 0) {
+                if (string.size() == 1 && Math.abs(stone.getHealth()) <= 0.11) {
                     // since its a lone stone inside an enemy eye, we assume it is more dead than alive
-
-                    //System.out.print("was "+stone.getHealth());
                     stone.setHealth(stone.isOwnedByPlayer1() ? -0.5f : 0.5f);
-                    //System.out.println("setting to " + stone.getHealth());
+                    //GameContext.log(3, " setting to " + stone.getHealth());
                 }
                 if (groupString.isEnemy(position)) {
                     //GameContext.log(3, (position +" was determined to be an enemy of "+this);
+                    //GameContext.log(3, position.getString() + " was determined to be an enemy of " + this +" returning NOT EYE");
                     return false;  // not eye
                 }
             }
@@ -655,10 +602,10 @@ public final class GoGroup extends GoSet
                     health = -side * .8f;
                     break;
                 case 2:
-                    health = -side * .6f;
+                    health = -side * .3f;
                     break;
                 case 3:
-                    health = -side * .3f;
+                    health = -side * .2f;
                     break;
                 case 4:
                     health = -side * .05f;
@@ -683,7 +630,7 @@ public final class GoGroup extends GoSet
                         health = -side;
                         break;
                     case 1:
-                        health = -side * .3f;
+                        health = -side * .6f;
                         break;
                     case 2:
                         // @@ consider seki situations where the adjacent enemy group also has no eyes.
@@ -698,7 +645,7 @@ public final class GoGroup extends GoSet
                         health = side * .1f;
                         break;
                     case 4:
-                        health = side * 0.3f;
+                        health = side * 0.1f;
                         break;
                     default: assert false;
                 }
@@ -710,7 +657,7 @@ public final class GoGroup extends GoSet
                         health = -side;
                         break;
                     case 1:
-                        health = -side * .4f;
+                        health = -side * .6f;
                         break;
                     case 2:
                         // @@ consider seki situations where the adjacent enemy group also has no eyes.
@@ -719,7 +666,7 @@ public final class GoGroup extends GoSet
                         //    Xo.XXX.oX
                         //    XooooooXX
                         //    XXXXXXX
-                        health = -side * .1f;
+                        health = -side * .3f;
                         break;
                     case 3:
                         health = side * .02f;
@@ -799,7 +746,6 @@ public final class GoGroup extends GoSet
             // must be bounded by -1 and 1
             relativeHealth_ =
                     (float) (Math.min(1.0, Math.max(-1.0, absoluteHealth_ + diff * proportionWithEnemyNbrs)));
-            //System.out.println( "before abs = "+absoluteHealth_+" after (rel)="+ relativeHealth_ );
         }
 
         GoBoardUtil.unvisitPositionsInList(getStones());
@@ -816,13 +762,22 @@ public final class GoGroup extends GoSet
     /**
      * Use Benson's algorithm (1977) to determine if a set of strings and eyes within a group
      * is unconditionally alive
-     * @return
+     * @return true if unconditionally alive
      */
     public boolean isUnconditionallyAlive(GoBoard board) {
 
-        // first find the neighbor string sets for each eye in the group
+        // mark all the strings in the group as not UA
+        Set candidateStrings = new HashSet();
+        for (Object s : getMembers()) {
+            GoString str = (GoString)s;
+            str.setUnconditionallyAlive(true);
+            candidateStrings.add(str);
+        }
+
+        // first find the neighbor string sets for each true eye in the group
+        Set candidateUAStrings = new HashSet();
         for (Object e : eyes_) {
-            GoEye eye = (GoEye)  e;
+            GoEye eye = (GoEye) e;
             if (eye.getNbrs() == null) {
                 eye.setNbrs(new HashSet());
             }
@@ -838,66 +793,75 @@ public final class GoGroup extends GoSet
                             break;
                         }
                         else {
-                            if (eye.getNbrs() != null) {
+                            if (eye.getNbrs() != null ) {
                                 eye.getNbrs().add(nbr.getString());
+                                candidateUAStrings.add(nbr.getString());
                             }
                         }
                     }
                 }
             }
+            GameContext.log(2, "num string nbrs of eyes = "+eye.getNbrs().size());
         }
 
         // now create the neighbor eye sets for each qualified string
-        Set uaStrings = new HashSet();
         for (Object e : eyes_) {
-            GoEye eye = (GoEye)  e;
+            GoEye eye = (GoEye) e;
             if (eye.getNbrs() != null)
             for (Object s : eye.getNbrs()) {
                 GoString str = (GoString) s;
                 if (str.getNbrs() == null) {
                     str.setNbrs(new HashSet());
                 }
-                str.getNbrs().add(eye);
-                uaStrings.add(str);
+                // only add the eye if every unoccupied position in the eye is adjacent to the str
+                if (str.adjacentToAllUnocupiedIn(eye, board)) {
+                    str.getNbrs().add(eye);
+                }
             }
         }
 
-        // remove qualified strings that do not have at least 2 qualified eyes associated
-        // and also remove those disqualified eyes from the stirng lists
-        // need to iterate until all qualified strings hav at least 2 qualified eyes.
-        boolean done = false;
-        while (!done) {
+        boolean done = true;
+        do {
             done = true;
-            for (Object s : uaStrings) {
-                GoString uaString = (GoString) s;
-                if (uaString.getNbrs().size() == 1) {
-                   GoEye eye = (GoEye) uaString.getNbrs().iterator().next() ;
-                   for (Object ss : eye.getNbrs()) {
-                       GoString string = (GoString) ss;
-                       string.getNbrs().remove(eye);
-                   }
-                   eye.setNbrs(null);
+            for (Object e : eyes_) {
+                GoEye eye = (GoEye)e;
+                eye.setUnconditionallyAlive(true);
+                for (Object str : eye.getNbrs()) {
+                    GoString nbrStr = (GoString) str;
+                    if (!nbrStr.isUnconditionallyAlive()) {
+                        eye.setUnconditionallyAlive(false);
+                    }
                 }
             }
+            Iterator it = candidateStrings.iterator();
+            while (it.hasNext()) {
+                GoString str = (GoString) it.next();
+                // find the number of ua eyes adjacent
+                int numUAEyesAdjacent = 0;
+                if (str.getNbrs() != null) {
+                    for (Object e : str.getNbrs()) {
+                        GoEye eye = (GoEye) e;
+                        if (eye.isUnconditionallyAlive()) {
+                            numUAEyesAdjacent++;
+                        }
+                    }
+                }
+                if (numUAEyesAdjacent < 2) {
+                    str.setUnconditionallyAlive(false);
+                    it.remove();
+                    done = false; // something changed
+                }
+            }
+
+        }  while ( !(done || candidateStrings.isEmpty()));
+
+        // clear str nbrs
+        for (Object s : getMembers()) {
+            GoString str = (GoString)s;
+            str.setNbrs(null);
         }
 
-        // finally we have all the information we need to determine if any poriton of this group is
-        //unconditionally alive. We also mark the corresponding strings and eyes as such as appropriate.
-        boolean unconditionallyAlive = false;
-        for (Object s : uaStrings) {
-            GoString uaString = (GoString) s;
-            if (uaString.getNbrs().size() >= 2) {
-                uaString.setUnconditionallyAlive(true);
-                // if any one of the strings in the group is UA then the group is considered UA
-                // even thought that is not really technically the case.
-                unconditionallyAlive = true;
-                for (Object e : uaString.getNbrs()) {
-                    GoEye eye = (GoEye) e;
-                    eye.setUnconditionallyAlive(true);
-                }
-            }
-        }
-        return unconditionallyAlive;
+       return  !candidateStrings.isEmpty();
     }
 
 
@@ -991,13 +955,13 @@ public final class GoGroup extends GoSet
      *  If the difference in health between the stones is great, then they are not really enemies
      *  because one of them is dead.
      */
-    protected boolean isEnemy( GoBoardPosition pos, GoBoard board )
+    protected boolean isEnemy( GoBoardPosition pos)
     {
         assert (pos.isOccupied());
         GoStone stone = (GoStone)pos.getPiece();
-        boolean withinDifferenceThreshold = !GoBoardUtil.isStoneMuchWeaker(this, stone);
+        boolean muchWeaker = GoBoardUtil.isStoneMuchWeaker(this, stone);
 
-        return ( stone.isOwnedByPlayer1() != ownedByPlayer1_  && withinDifferenceThreshold);
+        return ( stone.isOwnedByPlayer1() != ownedByPlayer1_  && !muchWeaker);
     }
 
     /**

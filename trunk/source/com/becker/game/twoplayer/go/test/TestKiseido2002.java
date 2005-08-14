@@ -7,6 +7,7 @@ import junit.framework.Test;
 import java.util.List;
 
 import com.becker.game.twoplayer.go.GoMove;
+import com.becker.game.common.GameContext;
 
 /**
  * @author Barry Becker
@@ -78,9 +79,9 @@ public class TestKiseido2002 extends GoTestCase {
         for (int i=0; i<files.length; i++) {
 
             String filename =  files[i].substring(0, files[i].length() - 4);
-            System.out.print("about to restore :"+filename);
+            GameContext.log(1, "about to restore :"+filename);
             restore("games2002/" + filename);
-            System.out.println("     done restoring :"+filename);
+            GameContext.log(1, "    done restoring :"+filename);
         }
 
         // must check the worth of the board once to update the scoreContributions fo empty spaces.

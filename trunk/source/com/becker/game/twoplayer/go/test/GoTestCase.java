@@ -71,12 +71,12 @@ public class GoTestCase extends TestCase {
 
     protected GoMove getNextMove(String problemFile, boolean blackPlays) {
 
-        System.out.println("finding next move for "+problemFile+" ...");
+        GameContext.log(0, "finding next move for "+problemFile+" ...");
         restore(problemFile);
         controller_.requestComputerMove( blackPlays, true );
 
         GoMove m = (GoMove) controller_.getBoard().getLastMove();
-        System.out.println("got " + m);
+        GameContext.log(0, "got " + m);
         return m;
     }
 
@@ -88,7 +88,7 @@ public class GoTestCase extends TestCase {
 
 
     protected void updateLifeAndDeath(String problemFile) {
-        System.out.println("finding score for "+problemFile+" ...");
+        GameContext.log(0, "finding score for "+problemFile+" ...");
         restore(problemFile);
 
         // must check the worth of the board once to update the scoreContributions fo empty spaces.
@@ -111,7 +111,7 @@ public class GoTestCase extends TestCase {
         for (Object g : groups) {
             GoGroup group = (GoGroup)g;
             if (((GoBoardPosition)group.getStones().get(0)).getPiece().isOwnedByPlayer1() == black) {
-                if (biggestGroup == null || biggestGroup.size() < group.size()) {
+                if (biggestGroup == null || group.getNumStones() > biggestGroup.getNumStones()) {
                     biggestGroup = group;
                 }
             }
@@ -119,6 +119,10 @@ public class GoTestCase extends TestCase {
         return biggestGroup;
     }
 
+
+    protected boolean approximatelyEqual(double value, double expectedValue, double thresh) {
+        return (Math.abs(value - expectedValue) < thresh);
+    }
 
 
     protected void tearDown() {

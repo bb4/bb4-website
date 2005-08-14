@@ -139,7 +139,8 @@ public final class GoController extends TwoPlayerController
     // polynomial evaluation function.
     // if only one computer is playing, then only one of the weights arrays is used.
     // use these if no others are provided
-    private static final double[] DEFAULT_WEIGHTS = {1.0, .05, .1, 20.0};   //10,1,3,40
+    private static final double[] DEFAULT_WEIGHTS = {1.0, .5, .1, 20.0};   //10,1,3,40
+    //private static final double[] DEFAULT_WEIGHTS = {0.0, 1.0, .0, 0.0};
     // don't allow the weights to exceed these maximum values
     private static final double[] MAX_WEIGHTS = {4.0, 1.0, 4.0, 10.0};
     private static final String[] WEIGHT_SHORT_DESCRIPTIONS = {"Health", "Position", "Bad shape", "Captures"};
@@ -166,7 +167,7 @@ public final class GoController extends TwoPlayerController
     // a lookup table of scores to attribute to the board positions when calculating the worth
     private float[][] positionalScore_ = null;
     // we assign a value to a stone based on the line on which it falls when calculating worth
-    private static final float[] LINE_VALS = {-1.0f, .0f, 2.0f, 1.8f, .2f};
+    private static final float[] LINE_VALS = {-0.5f, .0f, 1.0f, .9f, .1f};
 
 
     // at the very end of the game we mark dead stones dead.
@@ -298,7 +299,6 @@ public final class GoController extends TwoPlayerController
 
         for (int i=0; i<points.size(); i++)  {
             Point point = (Point)points.get(i);
-            //System.out.println("adding at "+point.y+" "+point.x);
             moveList.add( new GoMove( point.y, point.x, null, 0, new GoStone(player1)));
         }
     }
@@ -551,7 +551,7 @@ public final class GoController extends TwoPlayerController
                 //HandicapToken handicapToken = (HandicapToken) token;
                 // so we don't guess wrong on where the handicap positions are
                 // we will rely on their being an AB command to specifically tell where the handicap stones are
-                //System.out.println("***handicap ="+handicapToken.getHandicap());
+                //GameContext.log(2,"***handicap ="+handicapToken.getHandicap());
                 //this.setHandicap(handicapToken.getHandicap());
             }
             else if (token instanceof WhiteNameToken) {
@@ -609,7 +609,7 @@ public final class GoController extends TwoPlayerController
         worth = weights.get(CAPTURE_WEIGHT_INDEX).value * (getNumCaptures( true ) - getNumCaptures( false ));
         float n = 2.0f * board.getNumRows();
         // opening = 1.99 - 1.5    middle = 1.5 - 1.01   end = 1.0
-        double gameStageBoost = 1.0 + 2.0 * Math.max((n - (float)getNumMoves())/n, 0.0);
+        double gameStageBoost = .5 + 2.0 * Math.max((n - (float)getNumMoves())/n, 0.0);
 
         for ( row = 1; row <= board.getNumRows(); row++ ) {    //rows
             for ( col = 1; col <= board.getNumCols(); col++ ) {  //cols
@@ -624,6 +624,7 @@ public final class GoController extends TwoPlayerController
                     else {
                         position.scoreContribution = (position.getEye().isOwnedByPlayer1()? 1.0:-1.0);
                     }
+                    worth += position.scoreContribution;
                 }
                 else if ( position.isOccupied() ) {
                     GoStone stone = (GoStone)position.getPiece();
@@ -646,13 +647,15 @@ public final class GoController extends TwoPlayerController
                         stone.badShapeScore = badShapeScore;
                         stone.positionalScore = posScore;
                     }
-                }
-                worth += position.scoreContribution;
-
+                    worth += position.scoreContribution;
+                } else {
+                    position.scoreContribution = 0;
+                }                
             }
-            // @@ double counting??
-            worth += board.getTerritoryDelta();
+
         }
+        // @@ double counting??
+        worth += board.getTerritoryDelta();
 
         //GameContext.log(1,"GoController.worth: worth="+worth);
         if ( worth < -WIN_THRESHOLD ) {
@@ -831,7 +834,7 @@ public final class GoController extends TwoPlayerController
         if (gameOver && recordWin) {
             //we should not call this twice
             //assert(numDeadBlackStonesOnBoard_==0 && numDeadWhiteStonesOnBoard_==0):" should not update life and death twice.";
-            System.out.println(" Error: should not update life and death twice.");
+            GameContext.log(0, " Error: should not update life and death twice.");
 
             // now that we are finally at the end of the game,
             // update the life and death of all the stones still on the board

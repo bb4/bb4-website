@@ -220,19 +220,19 @@ public class GoString extends GoSet
 
 
     /**
-     *  @return true if the piece is an enemy of the string owner
+     *  @return true if the piece at the specified position is an enemy of the string owner
      *  If the difference in health between the stones is great, then they are not really enemies
      *  because one of them is dead.
      */
-    protected boolean isEnemy( GoBoardPosition pos )
+    protected boolean isEnemy( GoBoardPosition pos)
     {
         assert (group_ != null): "group for "+this+" is null";
         assert (pos.isOccupied()): "pos not occupied: ="+pos;
         GoStone stone = (GoStone)pos.getPiece();
-        boolean withinDifferenceThreshold = !GoBoardUtil.isStoneMuchWeaker(getGroup(), stone);
+        boolean stoneMuchWeaker = GoBoardUtil.isStoneMuchWeaker(getGroup(), stone);
 
         assert (getGroup().isOwnedByPlayer1() == this.isOwnedByPlayer1()): getGroup()+" string=" + this;
-        return ((stone.isOwnedByPlayer1() != this.isOwnedByPlayer1() && withinDifferenceThreshold));
+        return ((stone.isOwnedByPlayer1() != this.isOwnedByPlayer1() && !stoneMuchWeaker));
     }
 
     /**
@@ -316,6 +316,29 @@ public class GoString extends GoSet
             assert ( stone.isOwnedByPlayer1() == this.isOwnedByPlayer1()) :
                     stone + " does not have the same owner as " + this;
         }
+    }
+
+    public boolean adjacentToAllUnocupiedIn(GoEye eye, GoBoard b)   {
+        for  (Object p : eye.getMembers()) {
+            GoBoardPosition pos = (GoBoardPosition) p;
+            if (pos.isUnoccupied()) {
+                Set nbrs = b.getNobiNeighbors(pos, eye.isOwnedByPlayer1(), NeighborType.FRIEND);
+                // verify that at least one of the nbrs is in this string
+                boolean thereIsANbr = false;
+                for  (Object nbr : nbrs) {
+                    GoBoardPosition nbrPos = (GoBoardPosition) nbr;
+                    if (getMembers().contains(nbrPos)) {
+                        thereIsANbr = true;
+                        break;
+                    }
+                }
+                if (!thereIsANbr) {
+                    GameContext.log(0, "pos:"+pos+" was found to not be adjacent to the bordering string: "+this);
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     /**

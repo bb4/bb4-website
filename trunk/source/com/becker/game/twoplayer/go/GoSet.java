@@ -98,11 +98,12 @@ public abstract class GoSet implements GoMember
     /**
      *  @return true if the piece is an enemy of the set owner
      */
-    protected boolean isEnemy( GoBoardPosition p, GoBoard board)
+    protected abstract boolean isEnemy(GoBoardPosition p);
+    /*
     {
         // default implementation. Most subclasses will override.
         return (p.isOccupied() && p.getPiece().isOwnedByPlayer1() != ownedByPlayer1_ );
-    }
+    }  */
 
 }
 
