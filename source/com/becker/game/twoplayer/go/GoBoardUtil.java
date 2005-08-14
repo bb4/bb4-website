@@ -21,15 +21,15 @@ public final class GoBoardUtil
     /**
      * an opponent stone must be at least this much more unhealthy to be considered part of an eye.
      * if its not that much weaker then we don't really have an eye.
-     * @@ make this a game parameter .9 - 1.8 that can be optimized.
+     * @@ make this a game parameter .6 - 1.8 that can be optimized.
      */
-    static final float DIFFERENCE_THRESHOLD = .8f;
+    static final float DIFFERENCE_THRESHOLD = .6f;
 
     private GoBoardUtil() {
     }
 
     /**
-     * Get an adjacent neighbor stone restricted to the desired type.
+     * Get an adjacent neighbor stones restricted to the desired type.
      *
      * @param nbrStone   the neighbor to check
      * @param friendOwnedByP1  type of the center stone (can't use center.owner since center may be unnoccupied)
@@ -232,7 +232,7 @@ public final class GoBoardUtil
      * create a nice list of all the current groups (and the strings they contain)
      * @return String containing the current groups
      */
-    private static String getGroupsText(boolean showBlack, boolean showWhite, Set groups)
+    public static String getGroupsText(boolean showBlack, boolean showWhite, Set groups)
     {
         StringBuffer groupText = new StringBuffer( "" );
         StringBuffer blackGroupsText = new StringBuffer(showBlack? "The black groups are :\n" : "" );
@@ -467,6 +467,7 @@ public final class GoBoardUtil
         return true;
     }
 
+    private static final float MIN_THRESH = .2f;
     /**
      * @param group
      * @param stone
@@ -476,6 +477,12 @@ public final class GoBoardUtil
     static boolean isStoneWeaker(GoGroup group, GoStone stone, float threshold)
     {
         float groupHealth = group.getAbsoluteHealth();
+        // for purposes of determining relative weakness. Don't allow the outer group to go out of its living range.
+        if (group.isOwnedByPlayer1() && groupHealth < MIN_THRESH) {
+            groupHealth = MIN_THRESH;
+        } else if (!group.isOwnedByPlayer1() && groupHealth > -MIN_THRESH) {
+            groupHealth = -MIN_THRESH;
+        }
         float stoneHealth = stone.getHealth();
         if (stone.isOwnedByPlayer1())  {
             assert (!group.isOwnedByPlayer1());
@@ -488,7 +495,7 @@ public final class GoBoardUtil
     }
 
     /**
-     * @return return true of the stone is greater than threshold weaker than the group.
+     * @return return true of the stone is weaker than the group.
      */
     static boolean isStoneWeaker(GoGroup group, GoStone stone)
     {

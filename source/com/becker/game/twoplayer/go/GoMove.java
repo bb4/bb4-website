@@ -64,7 +64,7 @@ public final class GoMove extends TwoPlayerMove
         CaptureList newList = null;
         if ( captureList != null ) {
             // then make a deep copy
-            GameContext.log( 0, "******* GoMove: this is the capturelist we are copying:" + captureList.toString() );
+            GameContext.log( 2, "******* GoMove: this is the capturelist we are copying:" + captureList.toString() );
             newList = captureList.copy();
         }
         GoMove cp = createMove( toRow_, toCol_,  newList, value, (piece == null)? null : (GoStone)piece.copy() );

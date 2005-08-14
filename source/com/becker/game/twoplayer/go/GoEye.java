@@ -211,17 +211,17 @@ public final class GoEye extends GoString implements GoMember
      *  If the difference in health between the stones is great, then they are not really enemies
      *  because one of them is dead.
      */
-    protected boolean isEnemy( GoBoardPosition pos, GoBoard board )
+    protected boolean isEnemy( GoBoardPosition pos)
     {
-        assert (group_!=null): "group for "+this+" is null";
+        assert (group_ != null): "group for "+this+" is null";
         GoStone stone = (GoStone)pos.getPiece();
-        boolean withinDifferenceThreshold = true;
+        boolean weaker = false;
         if (stone != null)  {
-            withinDifferenceThreshold = !GoBoardUtil.isStoneWeaker(getGroup(), stone);
+            weaker = GoBoardUtil.isStoneWeaker(getGroup(), stone);
         }
         assert (getGroup().isOwnedByPlayer1() == this.isOwnedByPlayer1()):
                  getGroup()+"bad group ownership. eye="+this+". Group="+getGroup();
-        return (pos.isOccupied() && (stone.isOwnedByPlayer1() != isOwnedByPlayer1() && withinDifferenceThreshold));
+        return (pos.isOccupied() && (stone.isOwnedByPlayer1() != isOwnedByPlayer1() && !weaker));
     }
 
     /**

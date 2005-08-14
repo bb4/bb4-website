@@ -7,6 +7,7 @@ import junit.framework.Test;
 import java.util.Set;
 
 import com.becker.game.twoplayer.go.*;
+import com.becker.game.common.GameContext;
 
 
 /**
@@ -28,7 +29,6 @@ public class TestEyes extends GoTestCase {
         checkEyes("problem_eyes2", blackEyes, whiteEyes);
     }
 
-
     public void testFalseEye1() {
         EyeCounts blackEyes = new EyeCounts(1, 1, 0, 0);
         EyeCounts whiteEyes = new EyeCounts(0, 1, 0, 0);
@@ -41,6 +41,13 @@ public class TestEyes extends GoTestCase {
         checkEyes("problem_eyes4", blackEyes, whiteEyes);
     }
 
+     public void testEyes5() {
+        EyeCounts blackEyes = new EyeCounts(0, 1, 0, 1);
+        EyeCounts whiteEyes = new EyeCounts(0, 0, 0, 0);
+        checkEyes("problem_eyes5", blackEyes, whiteEyes);
+    }
+
+
     public void testFalsesOnEdge() {
         EyeCounts blackEyes = new EyeCounts(0, 0, 0, 0);
         EyeCounts whiteEyes = new EyeCounts(3, 0, 0, 0);
@@ -52,6 +59,27 @@ public class TestEyes extends GoTestCase {
         EyeCounts whiteEyes = new EyeCounts(0, 1, 0, 0);
         checkEyes("problem_stone_in_eye1", blackEyes, whiteEyes);
     }
+
+    public void testStoneInEye2() {
+        EyeCounts blackEyes = new EyeCounts(0, 1, 0, 1);
+        EyeCounts whiteEyes = new EyeCounts(0, 0, 0, 0);
+        checkEyes("problem_stone_in_eye2", blackEyes, whiteEyes);
+    }
+
+    public void testStoneInEye3() {
+          EyeCounts blackEyes = new EyeCounts(0, 1, 0, 0);
+          EyeCounts whiteEyes = new EyeCounts(0, 0, 0, 0);
+          checkEyes("problem_stone_in_eye3", blackEyes, whiteEyes);
+    }
+
+    /*
+    public void testStoneInEye4() {
+          EyeCounts blackEyes = new EyeCounts(0, 1, 0, 1);
+          EyeCounts whiteEyes = new EyeCounts(0, 0, 0, 0);
+          checkEyes("problem_stone_in_eye4", blackEyes, whiteEyes);
+   } */
+
+
 
     ////////////////// test the different big eye shapes /////////////////
     /**
@@ -352,7 +380,7 @@ public class TestEyes extends GoTestCase {
     private void checkEyes(String eyesProblemFile,
                            EyeCounts expectedBlackEyes, EyeCounts expectedWhiteEyes) {
 
-        System.out.println("finding eyes for "+eyesProblemFile+" ...");
+        GameContext.log(0, "finding eyes for "+eyesProblemFile+" ...");
         restore(eyesProblemFile);
 
         Set groups = ((GoBoard) controller_.getBoard()).getGroups();

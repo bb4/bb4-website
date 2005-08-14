@@ -81,6 +81,13 @@ public final class GoArmy extends GoSet
         members_.remove( group );
     }
 
+    protected boolean isEnemy(GoBoardPosition p)
+    {
+        // default implementation. Most subclasses will override.
+        return (p.isOccupied() && p.getPiece().isOwnedByPlayer1() != ownedByPlayer1_ );
+    }
+
+
     public String toString()
     {
         String s = " These are the groups in this army :\n";

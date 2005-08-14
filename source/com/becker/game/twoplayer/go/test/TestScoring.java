@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.go.test;
 import junit.framework.Assert;
 import junit.framework.TestSuite;
 import junit.framework.Test;
+import com.becker.game.common.GameContext;
 
 /**
  * @author Barry Becker
@@ -41,8 +42,8 @@ public class TestScoring extends GoTestCase {
         int numBlackCaptures = controller_.getNumCaptures(true);
         int numWhiteCaptures = controller_.getNumCaptures(false);
 
-        System.out.println("Captures :          black = " + numBlackCaptures + "   white = "+ numWhiteCaptures);
-        System.out.println("Territory: black = " + blackTerrEst + "   white = "+ whiteTerrEst);
+        GameContext.log(0, "Captures :          black = " + numBlackCaptures + "   white = "+ numWhiteCaptures);
+        GameContext.log(0, "Territory: black = " + blackTerrEst + "   white = "+ whiteTerrEst);
         Assert.assertTrue(
                 "Unexpected number of black captures. Expected "+expectedBlackCaptures+" got "+numBlackCaptures,
                 numBlackCaptures == expectedBlackCaptures);

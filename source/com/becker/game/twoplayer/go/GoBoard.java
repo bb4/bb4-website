@@ -12,7 +12,7 @@ import java.util.*;
  * For example, we update strings, and groups (and eventually armies) after each move.
  * After updating we can use these structures to estimate territory for each side.
  *
- * @author Barry Becker                                                                                                      3
+ * @author Barry Becker
  */
 public final class GoBoard extends TwoPlayerBoard
 {
@@ -327,7 +327,7 @@ public final class GoBoard extends TwoPlayerBoard
         profiler_.startMakeMove();
 
         GoMove m = (GoMove)move;
-
+        
         // if its a passing move, there is nothing to do
         if ( m.isPassingMove() ) {
             GameContext.log( 2, "making passing move" );
@@ -637,7 +637,7 @@ public final class GoBoard extends TwoPlayerBoard
             try {
                 GoBoardUtil.confirmAllStonesAreInGroupsTheyClaim(groups_, this);
             } catch (AssertionError e) {
-                System.out.println("The move was :"+pos);
+                GameContext.log(1, "The move was :"+pos);
                 throw e;
             }
         }
@@ -1835,14 +1835,13 @@ public final class GoBoard extends TwoPlayerBoard
 
         GoBoardPosition pos = (GoBoardPosition)this.getPosition( m.getToRow(), m.getToCol() );
         Set enemyNbrs = getNobiNeighbors( pos, NeighborType.ENEMY );
-        System.out.println(" num enemy nbors of "+pos+" is "+enemyNbrs.size());
         Iterator it = enemyNbrs.iterator();
         int numInAtari = 0;
         Set stringSet = new HashSet();
         while ( it.hasNext() ) {
             GoBoardPosition s = (GoBoardPosition) it.next();
             GoString atariedString = s.getString();
-            System.out.println("atariedString.getLiberties( this ).size()="+atariedString.getLiberties( this ).size());
+            //System.out.println("atariedString.getLiberties( this ).size()="+atariedString.getLiberties( this ).size());
             if (!stringSet.contains(atariedString) && atariedString.getLiberties( this ).size() == 1 ) {
                 numInAtari += atariedString.size();
             }

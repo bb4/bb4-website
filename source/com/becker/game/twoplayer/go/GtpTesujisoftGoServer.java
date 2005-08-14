@@ -267,8 +267,6 @@ public class GtpTesujisoftGoServer
 
     private boolean cmdGenmove(StringBuffer response)
     {
-        //System.out.println("in genmove. response="+response);
-
         boolean blackPlays = m_controller.getCurrentPlayer().equals(m_controller.getPlayer1());
         m_controller.requestComputerMove( blackPlays, true );
 
