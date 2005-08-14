@@ -3,6 +3,7 @@ package com.becker.game.common;
 import com.becker.common.Util;
 import com.becker.game.twoplayer.go.GoMove;
 import com.becker.game.twoplayer.go.GoStone;
+import com.becker.game.twoplayer.go.GoBoardUtil;
 
 import java.util.*;
 

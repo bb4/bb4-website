@@ -37,7 +37,6 @@ public final class BettingDialog extends OptionsDialog
     private JPanel pokerHandPanel_;
     private static NumberFormat currencyFormat_;
 
-    // PokerPlayer player, int callAmount, int allInAmount)
 
     /**
      * constructor - create the tree dialog.

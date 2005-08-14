@@ -4,6 +4,7 @@ import com.becker.game.twoplayer.blockade.BlockadeBoardPosition;
 import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GamePiece;
 import com.becker.game.common.Board;
+import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer;
 import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
 
@@ -90,20 +91,20 @@ class BlockadePieceRenderer extends TwoPlayerPieceRenderer
     {
         int xpos = TwoPlayerBoardViewer.BOARD_MARGIN + cellSize*(bpos.getCol());
         int ypos = TwoPlayerBoardViewer.BOARD_MARGIN + cellSize*(bpos.getRow());
-        //System.out.println( "wall xpos="+xpos+" ypos="+ypos+" bpos="+bpos );
+        GameContext.log(2, "wall xpos="+xpos+" ypos="+ypos+" bpos="+bpos );
 
         int wallWidthD2 = (int)(WALL_WIDTH_FRAC * cellSize);
         int wallWidth =  (int)(2.1 * wallWidthD2);
 
         boolean drewWall = false;
         if (bpos.getEastWall() != null) {
-            //System.out.println( "east wall" );
+            GameContext.log(2, "east wall" );
             g2.setColor(EAST_WALL_COLOR);
             g2.fill3DRect(xpos-wallWidthD2, ypos-cellSize, wallWidth, cellSize, true);
             drewWall = true;
         }
         if (bpos.getSouthWall() != null) {
-            //System.out.println( "south wall" );
+            GameContext.log(2, "south wall" );
             g2.setColor(SOUTH_WALL_COLOR);
             g2.fill3DRect(xpos-cellSize, ypos-wallWidthD2, cellSize, wallWidth, true);
             drewWall = true;

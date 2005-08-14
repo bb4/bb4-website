@@ -127,7 +127,7 @@ public class TwoPlayerPieceRenderer extends GamePieceRenderer
             g2.setColor(move.urgent ? URGENT_COLOR : this.getTextColor(move.piece));
             g2.drawString(""+Math.round(move.value), pos.x - 5 , pos.y + 2);
         } else {
-            System.out.println("piece for next move is null: "+move);
+            GameContext.log(2, "piece for next move is null: "+move);
         }
     }
 }

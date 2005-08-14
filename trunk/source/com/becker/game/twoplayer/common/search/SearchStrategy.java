@@ -211,7 +211,7 @@ public abstract class SearchStrategy
                 Thread.sleep(100);
         } catch (InterruptedException e) {
             //e.printStackTrace();
-            System.out.println( "interrupted" );
+            GameContext.log(2, "interrupted" );
             interrupted_ = true;
             return;
         }
