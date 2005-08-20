@@ -58,7 +58,7 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
     // (to avoid concurrency problems)
     private Board cachedGameBoard_ = null;
 
-    private static Cursor origCursor_ = null;
+    private final static Cursor origCursor_ = null;
 
     // becomes true when stepping through the search
     private boolean stepping_ = false;
@@ -72,7 +72,6 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
      */
     public TwoPlayerBoardViewer()
     {
-        super();
         controller_.setViewer(this);
     }
 

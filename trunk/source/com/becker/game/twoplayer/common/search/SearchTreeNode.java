@@ -67,9 +67,6 @@ public class SearchTreeNode extends DefaultMutableTreeNode
         pruned = false;
     }
 
-    public SearchTreeNode[] getChildren() {
-        return (SearchTreeNode[])this.children.toArray();
-    }
 
     public TwoPlayerMove[] getChildMoves() {
         if (children == null)
@@ -84,14 +81,6 @@ public class SearchTreeNode extends DefaultMutableTreeNode
         return moves;
     }
 
-    /**
-     * this provides more detail than just toString.
-     * @return a details description of the node.
-     */
-    public String getDescription()
-    {
-      return null;
-    }
 
     public String toString () {
         Object m = getUserObject();

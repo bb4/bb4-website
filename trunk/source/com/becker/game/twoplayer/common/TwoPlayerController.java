@@ -3,8 +3,6 @@ package com.becker.game.twoplayer.common;
 import com.becker.common.Util;
 import com.becker.game.twoplayer.common.search.SearchStrategy;
 import com.becker.game.twoplayer.common.search.SearchTreeNode;
-import com.becker.game.twoplayer.go.GoBoardUtil;
-import com.becker.game.twoplayer.go.GoBoard;
 import com.becker.game.common.*;
 import com.becker.optimization.ParameterArray;
 import com.becker.common.Worker;
@@ -32,7 +30,7 @@ public abstract class TwoPlayerController extends GameController
     // they may be modified through the ui (see GameOptionsDialog)
 
     // -- these other constants are game type dependent and could move to subclasses
-    // anything greater than this is considered a won game
+    /** anything greater than this is considered a won game  */
     public static final double WINNING_VALUE = SearchStrategy.WINNING_VALUE;
 
     // if true then use alpha beta pruning
@@ -75,10 +73,11 @@ public abstract class TwoPlayerController extends GameController
     // this is true while the computer thinks about its next move.
     private boolean processing_ = false;
 
+    private static final double HUNDRED = 100.0;
 
 
     /**
-     * Construct the game controller
+     * Construct the game controller.
      */
     public TwoPlayerController()
     {
@@ -416,11 +415,6 @@ public abstract class TwoPlayerController extends GameController
         return !getPlayer1().isHuman();
     }
 
-    /**
-     * Have the computer make the initial move.
-     * Must be overridden because how a good first move is determined is different for every game.
-     */
-    public abstract void computerMovesFirst();
 
     /**
      * the computer will search for and make its move.
@@ -484,7 +478,7 @@ public abstract class TwoPlayerController extends GameController
         GameContext.log( 0, "----------------------------------------------------------------------------------" );
         GameContext.log( 0, "There were " + numMovesConsidered + " moves considered." );
         GameContext.log( 0, "The total time for the computer to move was : " +
-                Util.formatNumber(totalTime/1000.0) + " seconds." );
+                Util.formatNumber((float)totalTime/1000) + " seconds." );
     }
 
 
@@ -555,7 +549,7 @@ public abstract class TwoPlayerController extends GameController
      * @return true if the game is over
      * @throws java.lang.AssertionError  if something bad happenned.
      */
-    public boolean requestComputerMove(final boolean isPlayer1) throws AssertionError
+    public boolean requestComputerMove(boolean isPlayer1) throws AssertionError
     {
         return requestComputerMove(isPlayer1, isAutoOptimize());
     }
@@ -687,6 +681,8 @@ public abstract class TwoPlayerController extends GameController
      * weights and the other computer player uses the params2 weights.
      * If the player using params1 wins then a positive value proportional to the strength of the win is returned.
      *
+     * @param params1 set of weight for one of the sides
+     * @param params2 set of weights for the other side
      * @return the amount that params1 are better than params2. May be negative if params1 are better.
      */
     public double compareFitness( ParameterArray params1, ParameterArray params2 )
@@ -782,26 +778,6 @@ public abstract class TwoPlayerController extends GameController
     protected abstract double worth( Move lastMove, ParameterArray weights );
 
     /**
-     * Generate a list of candidate next moves given the last move
-     * This function is a key function that must be created for each type of game added.
-     *
-     *  @param lastMove  the last move made
-     *  @param weights  the polynomial weights to use in the polynomial evaluation function
-     *  @param player1sPerspective if true assign worth values according to p1
-     */
-    public abstract List generateMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective );
-
-    /**
-     * generate those moves that are critically urgent
-     * if you generate too many, then you run the risk of an explosion in the search tree
-     * these moves should be sorted from most to least urgent
-     *
-     *  @param lastMove  the last move made
-     *  @param weights  the polynomial weights to use in the polynomial evaluation function
-     */
-    public abstract List generateUrgentMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective );
-
-    /**
      * returns true if the specified move caused one or more opponent pieces to become jeopardized
      */
     public boolean inJeopardy( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
@@ -829,7 +805,7 @@ public abstract class TwoPlayerController extends GameController
         // We could potentially eliminate the best move doing this.
         // A move which has a low score this time might actually lead to the best move later.
         int numMoves = moveList.size();
-        int best = (int) ((float) bestPercentage_ / 100.0 * numMoves);
+        int best = (int) ((float) bestPercentage_ / HUNDRED * numMoves);
         if ( best < numMoves )
             moveList = new LinkedList( moveList.subList( 0, best ) );
 
