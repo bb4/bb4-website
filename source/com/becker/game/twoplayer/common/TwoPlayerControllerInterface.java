@@ -50,24 +50,7 @@ public interface TwoPlayerControllerInterface
      */
     public Move undoLastMove();
 
-    /**
-     * this makes an arbitrary move (assumed valid) and
-     * adds it to the move list.
-     * Calling this does not keep track of weights or the search.
-     * Its most common use is for browsing the game tree.
-     *  @param m the move to play.
-     */
-    public void makeMove( Move m );
-
-    /**
-     * @return the list of moves made so far.
-     */
-    public LinkedList getMoveList();
-
-    /**
-     * @return  the number of moves currently played.
-     */
-    public int getNumMoves();
+  
 
     /**
      *  @return true if the viewer is currently processing (i.e. searching)
@@ -95,6 +78,6 @@ public interface TwoPlayerControllerInterface
      * @return true if the game is over.
      * @throws java.lang.AssertionError thrown if something bad happened while searching.
      */
-    public boolean requestComputerMove(final boolean isPlayer1) throws AssertionError;
+    public boolean requestComputerMove(boolean isPlayer1) throws AssertionError;
 
 }

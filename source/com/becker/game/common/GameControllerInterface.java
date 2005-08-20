@@ -1,7 +1,7 @@
 package com.becker.game.common;
 
 
-import java.util.LinkedList;
+import java.util.List;
 
 /**
  * This is the interface that all game controllers should implement.
@@ -38,12 +38,20 @@ public interface GameControllerInterface
      */
     public Move undoLastMove();
 
-    public void makeMove( Move move );
+    /**
+     * this makes an arbitrary move (assumed valid) and
+     * adds it to the move list.
+     * For two player games, calling this does not keep track of weights or the search.
+     * Its most common use is for browsing the game tree.
+     *  @param m the move to play.
+     */
+    public void makeMove( Move m );
+
     
     /**
      * @return the list of moves made so far.
      */
-    public LinkedList getMoveList();
+    public List getMoveList();
 
     /**
      * @return  the number of moves currently played.
