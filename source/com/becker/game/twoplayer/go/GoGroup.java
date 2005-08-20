@@ -801,7 +801,8 @@ public final class GoGroup extends GoSet
                     }
                 }
             }
-            GameContext.log(2, "num string nbrs of eyes = "+eye.getNbrs().size());
+            GameContext.log(2, "num string nbrs of eyes = "
+                    + ((eye.getNbrs() == null)? 0 : eye.getNbrs().size()));
         }
 
         // now create the neighbor eye sets for each qualified string
