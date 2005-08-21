@@ -4,6 +4,8 @@ import com.becker.common.Util;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.twoplayer.common.TwoPlayerOptions;
+import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.common.Move;
 import com.becker.optimization.ParameterArray;
 import com.becker.sound.MusicMaker;
@@ -66,6 +68,10 @@ public class BlockadeController extends TwoPlayerController
         weights_ = new GameWeights( DEFAULT_WEIGHTS, MAX_WEIGHTS, WEIGHT_SHORT_DESCRIPTIONS, WEIGHT_DESCRIPTIONS );
     }
 
+    protected TwoPlayerOptions createOptions() {
+        return new TwoPlayerOptions(DEFAULT_LOOKAHEAD, 50, MusicMaker.APPLAUSE);
+    }
+
     /**
      * The computer makes the first move in the game
      */
@@ -75,7 +81,7 @@ public class BlockadeController extends TwoPlayerController
         TwoPlayerMove lastMove = BlockadeMove.createMove( 2, 2, 3, 3, 0, new GamePiece(false), null );
 
         // determine the possible moves and choose one at random.
-        List moveList = generateMoves( lastMove, weights_.getPlayer1Weights(), true );
+        List moveList = getSearchable().generateMoves( lastMove, weights_.getPlayer1Weights(), true );
 
         int r = (int) (Math.random() * moveList.size());
         TwoPlayerMove m = (TwoPlayerMove) moveList.get( r );
@@ -95,18 +101,7 @@ public class BlockadeController extends TwoPlayerController
         return worth(board_.getLastMove(), weights_.getDefaultWeights());
     }
 
-    protected String getPreferredTone()
-    {
-        return MusicMaker.APPLAUSE;
-    }
 
-    /**
-     *  @return the default number of levels/plys to lookahead.
-     */
-    protected int getDefaultLookAhead()
-    {
-        return DEFAULT_LOOKAHEAD;
-    }
 
     /**
      * utility class for holding the difference paths lengths.
@@ -126,13 +121,12 @@ public class BlockadeController extends TwoPlayerController
 
     private static PathLengths updatePathLengths(PathLengths pathLengths, List[] moves)
     {
-        for (int i=0; i<moves.length; i++) {
-            int len = moves[i].size();
+        for (final List newVar : moves) {
+            int len = newVar.size();
             if (len < pathLengths.shortestLength) {
                 pathLengths.secondShortestLength = pathLengths.shortestLength;
                 pathLengths.shortestLength = len;
-            }
-            else if (len < pathLengths.secondShortestLength) {
+            } else if (len < pathLengths.secondShortestLength) {
                 pathLengths.secondShortestLength = len;
             }
 
@@ -180,7 +174,7 @@ public class BlockadeController extends TwoPlayerController
                 }
             }
         }
-        double value = 0;
+        double value;
 
         // if it landed on an opponents home base, then return a winning value.
         // it has landed if any of the shortest paths are 0.
@@ -209,7 +203,7 @@ public class BlockadeController extends TwoPlayerController
      * @param wall
      * @return true if the wall is blocking the paths.
      */
-    private static final boolean isPathBlockedByWall(List path, BlockadeWall wall, BlockadeBoard b)
+    private static boolean isPathBlockedByWall(List path, BlockadeWall wall, BlockadeBoard b)
     {
         Iterator it = path.iterator();
         while (it.hasNext()) {
@@ -225,19 +219,19 @@ public class BlockadeController extends TwoPlayerController
      * @param wall
      * @return true if the wall is blocking any of the paths.
      */
-    private static final boolean arePathsBlockedByWall(List[] paths, BlockadeWall wall, BlockadeBoard b)
+    private static  boolean arePathsBlockedByWall(List[] paths, BlockadeWall wall, BlockadeBoard b)
     {
         assert (wall!=null);
-        for (int i=0; i<paths.length; i++) {
-            if (isPathBlockedByWall(paths[i], wall, b))
-               return true;
+        for (final List newVar : paths) {
+            if (isPathBlockedByWall(newVar, wall, b))
+                return true;
         }
         return false;
     }
 
-    private BlockadeWall createWall(boolean isVertical, BlockadeBoardPosition p1, BlockadeBoardPosition p2)
+    private static BlockadeWall createWall(boolean isVertical, BlockadeBoardPosition p1, BlockadeBoardPosition p2)
     {
-         HashSet hsPositions = new HashSet( 2 );
+         Set hsPositions = new HashSet( 2 );
          hsPositions.add( p1 );
          hsPositions.add( p2 );
          return new BlockadeWall( isVertical, hsPositions );
@@ -478,21 +472,29 @@ public class BlockadeController extends TwoPlayerController
         switch (move.getDirection()) {
             case BlockadeMove.EAST_EAST :
                 checkAddWallsForDirection(eastPos, paths, BlockadeMove.EAST, wallsList);
+                checkAddWallsForDirection(origPos, paths, BlockadeMove.EAST, wallsList);
+                break;
             case BlockadeMove.EAST :
                 checkAddWallsForDirection(origPos, paths, BlockadeMove.EAST, wallsList);
                 break;
             case BlockadeMove.WEST_WEST :
                 checkAddWallsForDirection(westPos, paths, BlockadeMove.WEST, wallsList);
+                checkAddWallsForDirection(origPos, paths, BlockadeMove.WEST, wallsList);
+                break;
             case BlockadeMove.WEST :
                 checkAddWallsForDirection(origPos, paths, BlockadeMove.WEST, wallsList);
                 break;
             case BlockadeMove.SOUTH_SOUTH :
                 checkAddWallsForDirection(southPos, paths, BlockadeMove.SOUTH, wallsList);
+                checkAddWallsForDirection(origPos, paths, BlockadeMove.SOUTH, wallsList);
+                break;
             case BlockadeMove.SOUTH :
                 checkAddWallsForDirection(origPos, paths, BlockadeMove.SOUTH, wallsList);
                 break;
             case BlockadeMove.NORTH_NORTH :
                 checkAddWallsForDirection(northPos, paths, BlockadeMove.NORTH, wallsList);
+                checkAddWallsForDirection(origPos, paths, BlockadeMove.NORTH, wallsList);
+                break;
             case BlockadeMove.NORTH :
                 checkAddWallsForDirection(origPos, paths, BlockadeMove.NORTH, wallsList);
                 break;
@@ -574,7 +576,7 @@ public class BlockadeController extends TwoPlayerController
       * @param weights to use.
       * @return the number of moves added.
       */
-     private int addMoves( BoardPosition p, List moveList, Move lastMove, List[] opponentPaths,
+     private int addMoves( BoardPosition p, List moveList, List[] opponentPaths,
                           ParameterArray weights )
      {
          BlockadeBoard board = (BlockadeBoard)board_;
@@ -611,81 +613,93 @@ public class BlockadeController extends TwoPlayerController
      }
 
 
-    /**
-     *  generate all possible legal and reasonable next moves.
-     *  In blockade, there are a huge amount of possible next moves because of all the possible
-     *  wall placements. So restrict wall placements to those that hinder the enemy while not hindering you.
-     */
-    public List generateMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
-    {
-        List moveList = new LinkedList();
-        int row,col;
-        boolean player1 = !(lastMove.player1);
-        BlockadeBoard board = (BlockadeBoard)board_;
 
-        // first find the opponents shortest paths. There must be NUM_HOMES squared of them.
-        // There is one path from every piece to every opponent home (i.e. n*n)
-        int numHomes = BlockadeBoard.NUM_HOMES;
-        int numShortestPaths = numHomes * numHomes;
-        List[] opponentPaths = new List[numShortestPaths];
-        int totalOpponentPaths = 0;
-        HashSet hsPawns = new HashSet();
-        for ( row = 1; row <= board.getNumRows(); row++ ) {
-            for ( col = 1; col <= board.getNumCols(); col++ ) {
-                BlockadeBoardPosition p = (BlockadeBoardPosition)board_.getPosition( row, col );
-                if ( p.isOccupied() && p.getPiece().isOwnedByPlayer1() != player1 ) {
-                    hsPawns.add(p);
-                    if (hsPawns.size() > numHomes) {
-                        GameContext.log(0, "Error: too many opponent pieces: " );   // assert?
-                        Util.printCollection(hsPawns);
+    public Searchable getSearchable() {
+        return new BlockadeSearchable();
+    }
+
+
+    public class BlockadeSearchable extends TwoPlayerSearchable {
+
+        /**
+         *  generate all possible legal and reasonable next moves.
+         *  In blockade, there are a huge amount of possible next moves because of all the possible
+         *  wall placements. So restrict wall placements to those that hinder the enemy while not hindering you.
+         */
+        public List generateMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
+        {
+            List moveList = new LinkedList();
+            int row,col;
+            boolean player1 = !(lastMove.player1);
+            BlockadeBoard board = (BlockadeBoard)board_;
+
+            // first find the opponents shortest paths. There must be NUM_HOMES squared of them.
+            // There is one path from every piece to every opponent home (i.e. n*n)
+            int numHomes = BlockadeBoard.NUM_HOMES;
+            int numShortestPaths = numHomes * numHomes;
+            List[] opponentPaths = new List[numShortestPaths];
+            int totalOpponentPaths = 0;
+            Set hsPawns = new HashSet();
+            for ( row = 1; row <= board.getNumRows(); row++ ) {
+                for ( col = 1; col <= board.getNumCols(); col++ ) {
+                    BlockadeBoardPosition p = (BlockadeBoardPosition)board_.getPosition( row, col );
+                    if ( p.isOccupied() && p.getPiece().isOwnedByPlayer1() != player1 ) {
+                        hsPawns.add(p);
+                        if (hsPawns.size() > numHomes) {
+                            GameContext.log(0, "Error: too many opponent pieces: " );   // assert?
+                            Util.printCollection(hsPawns);
+                        }
+                        List[] paths = board.findShortestPaths(p);
+                        assert (paths.length == numHomes):
+                            "There must be at least one route to each opponent home base. Numpaths="+paths.length;
+                        GameContext.log(2,
+                            "about to add "+numHomes+" more paths to "+totalOpponentPaths+" maxAllowed="+opponentPaths.length );
+                        for (int k=0; k<numHomes; k++) {
+                            opponentPaths[totalOpponentPaths + k] = paths[k];
+                        }
+                        totalOpponentPaths += numHomes;
                     }
-                    List[] paths = board.findShortestPaths(p);
-                    assert (paths.length == numHomes):
-                        "There must be at least one route to each opponent home base. Numpaths="+paths.length;
-                    GameContext.log(2,
-                        "about to add "+numHomes+" more paths to "+totalOpponentPaths+" maxAllowed="+opponentPaths.length );
-                    for (int k=0; k<numHomes; k++) {
-                        opponentPaths[totalOpponentPaths + k] = paths[k];
-                    }
-                    totalOpponentPaths += numHomes;
                 }
             }
-        }
-        // For each piece of the current player's NUM_HOME pieces, add a move that represents a step along
-        // its shortest paths to the opponent homes and all reasonable wall placements.
-        // To limit the number of wall placements we will restrict possiblities to those positions which
-        // effect one of the *opponents* shortest paths.
-        for ( row = 1; row <= board.getNumRows(); row++ ) {
-            for ( col = 1; col <= board.getNumCols(); col++ ) {
-                BoardPosition p = board_.getPosition( row, col );
-                if ( p.isOccupied() && p.getPiece().isOwnedByPlayer1() == player1 ) {
-                    addMoves( p, moveList, lastMove, opponentPaths, weights );
+            // For each piece of the current player's NUM_HOME pieces, add a move that represents a step along
+            // its shortest paths to the opponent homes and all reasonable wall placements.
+            // To limit the number of wall placements we will restrict possiblities to those positions which
+            // effect one of the *opponents* shortest paths.
+            for ( row = 1; row <= board.getNumRows(); row++ ) {
+                for ( col = 1; col <= board.getNumCols(); col++ ) {
+                    BoardPosition p = board_.getPosition( row, col );
+                    if ( p.isOccupied() && p.getPiece().isOwnedByPlayer1() == player1 ) {
+                        addMoves( p, moveList, opponentPaths, weights );
+                    }
                 }
             }
+            assert (moveList.size()>0): "There aren't any moves to consider.";
+            return getBestMoves( player1, moveList, player1sPerspective );
         }
-        assert (moveList.size()>0): "There aren't any moves to consider.";
-        return getBestMoves( player1, moveList, player1sPerspective );
+
+
+        /**
+         * @@ quiescent search not yet implemented for Blockade
+         * Probably we could return moves that result in a dratic change in value.
+         *
+         * @param lastMove
+         * @param weights
+         * @param player1sPerspective
+         * @return list of urgent moves
+         */
+        public List generateUrgentMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
+        {
+            return null;
+        }
+
+        /**
+         * returns true if the specified move caused one or more opponent pieces to become jeopardized
+         */
+        public boolean inJeopardy( TwoPlayerMove m )
+        {
+            return false;
+        }
+
     }
 
-    /**
-     * @@ quiescent search not yet implemented for Blockade
-     * Probably we could return moves that result in a dratic change in value.
-     *
-     * @param lastMove
-     * @param weights
-     * @param player1sPerspective
-     * @return list of urgent moves
-     */
-    public List generateUrgentMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
-    {
-        return null;
-    }
-
-    /**
-     * returns true if the specified move caused one or more opponent pieces to become jeopardized
-     */
-    public boolean inJeopardy( TwoPlayerMove m )
-    {
-        return false;
-    }
 }

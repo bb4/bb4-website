@@ -1,13 +1,19 @@
 package com.becker.game.twoplayer.common;
 
 import com.becker.common.Util;
+import com.becker.common.Worker;
+import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.search.SearchStrategy;
 import com.becker.game.twoplayer.common.search.SearchTreeNode;
-import com.becker.game.common.*;
+import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.optimization.ParameterArray;
-import com.becker.common.Worker;
+import com.becker.optimization.Optimizer;
+import com.becker.optimization.OptimizationType;
+import com.becker.optimization.Optimizee;
+import com.becker.sound.MusicMaker;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * This is an abstract base class for a Game Controller.
@@ -23,7 +29,6 @@ import java.util.*;
  *  @author Barry Becker
  */
 public abstract class TwoPlayerController extends GameController
-           implements TwoPlayerControllerInterface
 {
 
     // these are the default game constants
@@ -33,35 +38,13 @@ public abstract class TwoPlayerController extends GameController
     /** anything greater than this is considered a won game  */
     public static final double WINNING_VALUE = SearchStrategy.WINNING_VALUE;
 
-    // if true then use alpha beta pruning
-    private static final boolean ALPHA_BETA = true;
-    // if true then use quiescent search
-    private static final boolean QUIESCENCE = false;
+    private TwoPlayerOptions options_;
 
-    // default best percentage of moves to consider. Subclasses can override.
-    private static final int BEST_PERCENTAGE = 50;
-
-    private boolean alphaBeta_ = ALPHA_BETA;
-    private boolean quiescence_ = QUIESCENCE;
-
-    // if true then try to show a dialog visualizing the game tree.
-    private boolean showGameTree_ = false;
-    // if true then show all the moves the computer is considering when it considers them.
-    private boolean showComputerAnimation_ = false;
-
-    private int strategyMethod_ = SearchStrategy.MINIMAX;  // the defualt search method.
-    private int lookAhead_;
-    private int bestPercentage_;
     protected boolean player1sTurn_ = true;
-
-    private boolean autoOptimize_;
-    private String autoOptimizeFile_ = null;
 
     // these weights determine how the computer values each move.
     // they serve as parameters to a game dependent evaluation function
     protected GameWeights weights_;
-    // use these if no others are provided. Must be initialized.
-    //public static int[] defaultWeights_ = null;
 
     // the method the computer will use for searching for the next move.
     private SearchStrategy strategy_;
@@ -81,9 +64,20 @@ public abstract class TwoPlayerController extends GameController
      */
     public TwoPlayerController()
     {
+        options_ = createOptions();
         createPlayers();
-        lookAhead_ = getDefaultLookAhead();
-        bestPercentage_ = getDefaultBestPercentage();
+    }
+
+    /**
+     * subclasses should override with there own default options.
+     * @return two player options
+     */
+    protected TwoPlayerOptions createOptions() {
+        return new TwoPlayerOptions(4, 50, MusicMaker.TAIKO_DRUM);
+    }
+
+    public TwoPlayerOptions getOptions() {
+        return options_;
     }
 
     public TwoPlayerViewerCallbackInterface get2PlayerViewer()
@@ -91,24 +85,6 @@ public abstract class TwoPlayerController extends GameController
        return (TwoPlayerViewerCallbackInterface)viewer_;
     }
 
-    /**
-     *  @return the default number of levels/plys to lookahead.
-     *  subclasses may override
-     */
-    protected int getDefaultLookAhead()
-    {
-        return 4;
-    }
-
-    /**
-     *  @return the default top percentage of best moves to consider at each ply.
-     *  subclasses should override because different values make sense for different games.
-     *  We can save a lot of time searching if we only consider the top moves for each ply.
-     */
-    protected int getDefaultBestPercentage()
-    {
-        return BEST_PERCENTAGE;
-    }
 
     /**
      * Return the game board back to its initial openning state
@@ -136,39 +112,11 @@ public abstract class TwoPlayerController extends GameController
     private void createPlayers()
     {
         Player[] players = new Player[2];
-        players[0] = new Player(getPlayerName(true), null, true);
-        players[1] = new Player(getPlayerName(false), null, false);
+        players[0] = new Player(getOptions().getPlayerName(true), null, true);
+        players[1] = new Player(getOptions().getPlayerName(false), null, false);
         setPlayers(players);
     }
 
-    /**
-     * @param p1
-     * @return player 1's name if p1 is true else p2's name
-     */
-    protected String getPlayerName(boolean p1)
-    {
-        if (p1)
-            return GameContext.getLabel("PLAYER1");
-        else
-            return GameContext.getLabel("PLAYER2");
-    }
-
-    /**
-     * @return the strategy method currently being used.
-     */
-    public int getSearchStrategyMethod()
-    {
-        return strategyMethod_;
-    }
-
-    /**
-     * @param method the desired search strategy for evaluating the game tree.
-     * (eg MINIMAX, NEGAMAX, etc)
-     */
-    public final void setSearchStrategyMethod( int method )
-    {
-        strategyMethod_ = method;
-    }
 
     /**
      * @return the amount of progress (in precentage terms) that we have made toward finding the next computer move.
@@ -176,132 +124,6 @@ public abstract class TwoPlayerController extends GameController
     public final SearchStrategy getSearchStrategy()
     {
        return strategy_;
-    }
-
-
-    /**
-     * @return the amount of lookahead (number of plys) used by the search strategy
-     */
-    public final int getLookAhead()
-    {
-        return lookAhead_;
-    }
-
-    /**
-     * @param look the number of plys to look ahaead.
-     */
-    public final void setLookAhead( int look )
-    {
-        lookAhead_ = look;
-    }
-
-    /**
-     * @return  the percentage of top moves considered at each ply
-     */
-    public final int getPercentageBestMoves()
-    {
-        return bestPercentage_;
-    }
-
-    /**
-     * @param bestPercentage  the percentage of top moves considered at each ply
-     */
-    public final void setPercentageBestMoves( int bestPercentage )
-    {
-        bestPercentage_ = bestPercentage;
-    }
-
-
-    /**
-     * @return true if alpha-beta pruning is being employed by the search strategy.
-     */
-    public final boolean getAlphaBeta()
-    {
-        return alphaBeta_;
-    }
-
-    /**
-     * @param ab set whether of not to use alpha-beta pruning
-     */
-    public final void setAlphaBeta( boolean ab )
-    {
-        alphaBeta_ = ab;
-    }
-
-    /**
-     * @return whether or not the quiescent search option is being used by the search strategy
-     */
-    public final boolean getQuiescence()
-    {
-        return quiescence_;
-    }
-
-    public final void setQuiescence( boolean quiescence )
-    {
-        quiescence_ = quiescence;
-    }
-
-    /**
-     * @return whether or not we are showing the game tree (primarily used for debugging)
-     */
-    public final boolean getShowGameTree()
-    {
-        return showGameTree_;
-    }
-
-    public final void setShowGameTree( boolean show )
-    {
-        showGameTree_ = show;
-    }
-
-    /**
-     * @return whether we are showing an animated representation of the computers thought process for each move
-     * (takes a long time)
-     */
-    public final boolean getShowComputerAnimation()
-    {
-        return showComputerAnimation_;
-    }
-
-    public final void setShowComputerAnimation( boolean computerAnimation )
-    {
-        showComputerAnimation_ = computerAnimation;
-    }
-
-    /**
-     * Optimize the evaluation weights by running many games where the computer
-     * plays against itself.
-     * @param autoOptimize whether or not to do an optimization run when you press ok.
-     */
-    public final void setAutoOptimize(boolean autoOptimize)
-    {
-        autoOptimize_ = autoOptimize;
-    }
-
-
-    /**
-     * @return true it the controller is set to auto optimize instead of play a regular game
-     */
-    public boolean isAutoOptimize()
-    {
-        return autoOptimize_;
-    }
-
-    /**
-     * @param autoOptimizeFile the log file to write to when autp optimizing.
-     */
-    public final void setAutoOptimizeFile(String autoOptimizeFile)
-    {
-        autoOptimizeFile_ = autoOptimizeFile;
-    }
-
-    /**
-     * @return the log file to write to when autp optimizing.
-     */
-    public final String getAutoOptimizeFile()
-    {
-        assert (autoOptimizeFile_!=null) : "There is no auto optimize file";
-        return autoOptimizeFile_;
     }
 
 
@@ -337,12 +159,6 @@ public abstract class TwoPlayerController extends GameController
     {
         return players_[1];
     }
-
-    /**
-     *
-     * @return  preferred tone to use when making a move.
-     */
-    //protected abstract String getPreferredTone();
 
     /**
      * Returns a number between 0 and 1 representing the estimated probability of player 1 winning the game.
@@ -451,8 +267,10 @@ public abstract class TwoPlayerController extends GameController
         }
 
         /////////////////////// SEARCH //////////////////////////////////////////////////////
-        strategy_ = SearchStrategy.createSearchStrategy(getSearchStrategyMethod(), this);
-        TwoPlayerMove selectedMove = strategy_.search( p, weights, getLookAhead(), 0, Double.MAX_VALUE, Double.MIN_VALUE, root_ );
+        strategy_ = SearchStrategy.createSearchStrategy(getOptions().getSearchStrategyMethod(), getSearchable());
+        TwoPlayerMove selectedMove =
+                strategy_.search( p, weights, getSearchable().getLookAhead(), 0,
+                                  Double.MAX_VALUE, Double.MIN_VALUE, root_ );
         /////////////////////////////////////////////////////////////////////////////////////
 
         if ( selectedMove != null ) {
@@ -518,43 +336,19 @@ public abstract class TwoPlayerController extends GameController
         player1sTurn_ = !((TwoPlayerMove)m).player1;
     }
 
-    /**
-     * @param m the move to play.
-     */
-    public final void makeInternalMove( TwoPlayerMove m )
-    {
-
-        if (getNumMoves() > 0)
-            assert(((TwoPlayerMove)board_.getLastMove()).player1 != m.player1):
-                    "can't go twice in a row m="+m+" getLastMove()="+board_.getLastMove() +" movelist = "+getMoveList();
-
-        board_.makeMove( m );
-
-        // should show in game tree dlg if present
-        /* @@ this is not working because the gameTree dialog does not have the current search state
-        if ( viewer_ != null && getShowComputerAnimation() ) {
-            viewer_.refresh();
-        }*/
-    }
 
     /**
-     * takes back the most recent move.
-     * @param m
-     */
-    public final void undoInternalMove( TwoPlayerMove m )
-    {
-        board_.undoMove();
-    }
-
-    /**
-     *
+     * When this method is called the game controller will asynchronously search for the next move
+     * for the computer to make. It returns immediately (unless the computer is playing itself).
+     * Usually returns false, but will return true if it is a computer vs computer game, and the
+     * game is over.
      * @param isPlayer1
-     * @return true if the game is over
-     * @throws AssertionError  if something bad happenned.
+     * @return true if the game is over.
+     * @throws AssertionError thrown if something bad happened while searching.
      */
     public boolean requestComputerMove(boolean isPlayer1) throws AssertionError
     {
-        return requestComputerMove(isPlayer1, isAutoOptimize());
+        return requestComputerMove(isPlayer1, getOptions().isAutoOptimize());
     }
 
     /**
@@ -593,11 +387,21 @@ public abstract class TwoPlayerController extends GameController
             // this blocks until the value is available.
             TwoPlayerMove m = (TwoPlayerMove)worker_.get();
             //refresh();
-            return done( m, true );
+            return getSearchable().done( m, true );
         }
         return false;
     }
 
+    public ParameterArray runOptimization() {
+        Optimizer optimizer = new Optimizer( this.getOptimizee(), getOptions().getAutoOptimizeFile() );
+
+        ParameterArray optimizedParams;
+        optimizedParams =
+                optimizer.doOptimization( OptimizationType.HILL_CLIMBING,
+                                          getComputerWeights().getDefaultWeights(),
+                                          WINNING_VALUE);
+       return optimizedParams;
+    }
 
     /**
      *  @return true if the viewer is currently processing (i.e. searching)
@@ -611,7 +415,7 @@ public abstract class TwoPlayerController extends GameController
 
     public void pause()
     {
-        if (getSearchStrategy()==null) {
+        if (getSearchStrategy() == null) {
             GameContext.log(1, "There is no search to pause" );
             return;
         }
@@ -641,10 +445,10 @@ public abstract class TwoPlayerController extends GameController
         else {
             // running in a batch mode where the viewer is not available
             while ( !done ) {
-                done = done(findComputerMove( false ), true);
+                done = getSearchable().done(findComputerMove( false ), true);
                 // if done the final move was played
                 if ( !done ) {
-                    done = done(findComputerMove( true ), true);
+                    done = getSearchable().done(findComputerMove( true ), true);
                 }
             }
         }
@@ -652,57 +456,6 @@ public abstract class TwoPlayerController extends GameController
             return getStrengthOfWin();
         else
             return -getStrengthOfWin();
-    }
-
-    ////////////////// the next 3 methods implement the Optimizee interface ///////////////////////////
-    /**
-     * If true is returned, then compareFitness will be used and evaluateFitness will not
-     * otherwise the reverse will be true.
-     * @return return true if we evaluate the fitness by comparison
-     */
-    public boolean  evaluateByComparison()
-     {
-         return true;
-     }
-
-    /**
-     * Attributes a measure of fitness to the specified set of parameters.
-     * There's no good way for a game playing program to do this because it
-     * can only evaluate itself relative to another player.
-     * see compareFitness below.
-     * @param params the set of parameters to misc
-     * @return the fitness measure. The higher the better
-     */
-    public double evaluateFitness( ParameterArray params )
-   {
-       return 0.0;
-   }
-
-    /**
-     * Compares to sets of game parameters.
-     * It does this by playing the computer against itself. One computer player has the params1
-     * weights and the other computer player uses the params2 weights.
-     * If the player using params1 wins then a positive value proportional to the strength of the win is returned.
-     *
-     * @param params1 set of weight for one of the sides
-     * @param params2 set of weights for the other side
-     * @return the amount that params1 are better than params2. May be negative if params1 are better.
-     */
-    public double compareFitness( ParameterArray params1, ParameterArray params2 )
-    {
-        // to remove the advantage we get from playing first, 2 runs are done
-        // The first one where params1 plays first, and the second where params2 plays first.
-        // This should remove the bias.
-
-        weights_.setPlayer1Weights(params1);
-        weights_.setPlayer2Weights(params2);
-        double run1 = runComputerVsComputer();
-
-        weights_.setPlayer1Weights(params2);
-        weights_.setPlayer2Weights(params1);
-        double run2 = runComputerVsComputer();
-
-        return (run1 - run2);
     }
 
     /**
@@ -725,38 +478,12 @@ public abstract class TwoPlayerController extends GameController
         root_ = root;
     }
 
-    /**
-     * given a move, determine whether the game is over.
-     * If recordWin is true, then the variables for player1/2HasWon can get set.
-     *  sometimes, like when we are looking ahead we do not want to set these.
-     * @param m the move to check. If null then return true.
-     * @param recordWin if true then the controller state will record wins
-     */
-    public boolean done( TwoPlayerMove m, boolean recordWin )
-    {
-        if (getNumMoves() == 0)
-            return false;
-        if (getNumMoves() > 0 && m == null) {
-            GameContext.log(0, "Game done because there are no more moves");
-            return true; // because their were no more moves apparently.
-        }
-        if (getPlayer1().hasWon() || getPlayer1().hasWon())
-            return true;
-
-        boolean won = (Math.abs( m.value ) >= WINNING_VALUE);
-        if ( won && recordWin ) {
-            if ( m.value >= WINNING_VALUE )
-                getPlayer1().setWon(true);
-            else
-                getPlayer2().setWon(true);
-        }
-        return ( getNumMoves() >= board_.getMaxNumMoves() || won);
-    }
 
     public boolean done()
     {
-        return done((TwoPlayerMove)board_.getLastMove(), false);
+        return getSearchable().done((TwoPlayerMove)board_.getLastMove(), false);
     }
+
 
     /**
      *  Statically evaluate a boards state to compute the value of the last move
@@ -781,14 +508,6 @@ public abstract class TwoPlayerController extends GameController
     protected abstract double worth( Move lastMove, ParameterArray weights );
 
     /**
-     * returns true if the specified move caused one or more opponent pieces to become jeopardized
-     */
-    public boolean inJeopardy( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
-    {
-        return false;
-    }
-
-    /**
      * take the list of all possible next moves and return just the top bestPercentage of them
      * @param player1 true if its player one's turn
      * @param moveList the list of all generated moves
@@ -811,11 +530,163 @@ public abstract class TwoPlayerController extends GameController
         int numMoves = moveList.size();
 
         List bestMoveList = moveList;
-        int best = (int) ((float) bestPercentage_ / HUNDRED * numMoves);
+        int best = (int) ((float) getOptions().getPercentageBestMoves() / HUNDRED * numMoves);
         if ( best < numMoves )
             bestMoveList = moveList.subList( 0, best );
 
         //GameContext.log(2, "generated top moves are :  " + moveList );
         return bestMoveList;
+    }
+
+
+    public Optimizee getOptimizee() {
+        return new TwoPlayerOptimizee();
+    }
+
+
+    private class TwoPlayerOptimizee implements Optimizee {
+
+        /**
+         * If true is returned, then compareFitness will be used and evaluateFitness will not
+         * otherwise the reverse will be true.
+         * @return return true if we evaluate the fitness by comparison
+         */
+        public boolean  evaluateByComparison()
+         {
+             return true;
+         }
+
+        /**
+         * Attributes a measure of fitness to the specified set of parameters.
+         * There's no good way for a game playing program to do this because it
+         * can only evaluate itself relative to another player.
+         * see compareFitness below.
+         * @param params the set of parameters to misc
+         * @return the fitness measure. The higher the better
+         */
+        public double evaluateFitness( ParameterArray params )
+       {
+           return 0.0;
+       }
+
+        /**
+         * Compares to sets of game parameters.
+         * It does this by playing the computer against itself. One computer player has the params1
+         * weights and the other computer player uses the params2 weights.
+         * If the player using params1 wins then a positive value proportional to the strength of the win is returned.
+         *
+         * @param params1 set of weight for one of the sides
+         * @param params2 set of weights for the other side
+         * @return the amount that params1 are better than params2. May be negative if params1 are better.
+         */
+        public double compareFitness( ParameterArray params1, ParameterArray params2 )
+        {
+            // to remove the advantage we get from playing first, 2 runs are done
+            // The first one where params1 plays first, and the second where params2 plays first.
+            // This should remove the bias.
+
+            weights_.setPlayer1Weights(params1);
+            weights_.setPlayer2Weights(params2);
+            double run1 = runComputerVsComputer();
+
+            weights_.setPlayer1Weights(params2);
+            weights_.setPlayer2Weights(params1);
+            double run2 = runComputerVsComputer();
+
+            return (run1 - run2);
+        }
+    }
+
+    public abstract Searchable getSearchable();
+
+    public abstract class TwoPlayerSearchable implements Searchable {
+
+        /**
+         * @return the number of moves/plys to lookahead while searching
+         */
+        public final int getLookAhead() {
+            return getOptions().getLookAhead();
+        }
+
+        /**
+         * @return  whether to use alpha beta pruning while searching
+         */
+        public final boolean getAlphaBeta() {
+            return getOptions().getAlphaBeta();
+        }
+
+        /**
+         * @return whether or not the quiescent search option is being used by the search strategy
+         */
+        public final boolean getQuiescence()
+        {
+            return getOptions().getQuiescence();
+        }
+
+
+        /**
+         * @param m the move to play.
+         */
+        public final void makeInternalMove( TwoPlayerMove m )
+        {
+
+            if (getNumMoves() > 0)
+                assert(((TwoPlayerMove)board_.getLastMove()).player1 != m.player1):
+                        "can't go twice in a row m="+m+" getLastMove()="+board_.getLastMove() +" movelist = "+getMoveList();
+
+            board_.makeMove( m );
+
+            // should show in game tree dlg if present
+            /* @@ this is not working because the gameTree dialog does not have the current search state
+            if ( viewer_ != null && getShowComputerAnimation() ) {
+                viewer_.refresh();
+            }*/
+        }
+
+        /**
+         * takes back the most recent move.
+         * @param m
+         */
+        public final void undoInternalMove( TwoPlayerMove m )
+        {
+            board_.undoMove();
+        }
+
+        /**
+         * given a move, determine whether the game is over.
+         * If recordWin is true, then the variables for player1/2HasWon can get set.
+         *  sometimes, like when we are looking ahead we do not want to set these.
+         * @param m the move to check. If null then return true.
+         * @param recordWin if true then the controller state will record wins
+         */
+        public boolean done( TwoPlayerMove m, boolean recordWin )
+        {
+            if (getNumMoves() == 0)
+                return false;
+            if (getNumMoves() > 0 && m == null) {
+                GameContext.log(0, "Game done because there are no more moves");
+                return true; // because their were no more moves apparently.
+            }
+            if (getPlayer1().hasWon() || getPlayer1().hasWon())
+                return true;
+
+            boolean won = (Math.abs( m.value ) >= WINNING_VALUE);
+            if ( won && recordWin ) {
+                if ( m.value >= WINNING_VALUE )
+                    getPlayer1().setWon(true);
+                else
+                    getPlayer2().setWon(true);
+            }
+            return ( getNumMoves() >= board_.getMaxNumMoves() || won);
+        }
+
+        /**
+         * returns true if the specified move caused one or more opponent pieces to become jeopardized
+         */
+        public boolean inJeopardy( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
+        {
+            return false;
+        }
+
     }
 }

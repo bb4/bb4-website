@@ -3,6 +3,8 @@ package com.becker.game.twoplayer.checkers;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.twoplayer.common.TwoPlayerOptions;
+import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.common.Move;
 import com.becker.optimization.ParameterArray;
 import com.becker.sound.MusicMaker;
@@ -33,6 +35,7 @@ public class CheckersController extends TwoPlayerController
     private static final int PIECE_WEIGHT_INDEX = 0;
     private static final int KING_WEIGHT_INDEX = 1;
     private static final int ADVANCEMENT_WEIGHT_INDEX = 2;
+    private static final int DEFAULT_LOOKAHEAD = 4;
 
     // the checkers board must be 8*8
     protected static final int NUM_ROWS = 8;
@@ -59,6 +62,10 @@ public class CheckersController extends TwoPlayerController
         weights_ = new GameWeights( DEFAULT_WEIGHTS, MAX_WEIGHTS, WEIGHT_SHORT_DESCRIPTIONS, WEIGHT_DESCRIPTIONS );
     }
 
+    protected TwoPlayerOptions createOptions() {
+        return new TwoPlayerOptions(DEFAULT_LOOKAHEAD, 100, MusicMaker.SITAR);
+    }
+
     /**
      * The computer makes the first move in the game.
      */
@@ -69,7 +76,7 @@ public class CheckersController extends TwoPlayerController
                 null, 0, new CheckersPiece(false, CheckersPiece.REGULAR_PIECE) );
 
         // determine the possible moves and choose one at random.
-        List moveList = generateMoves( lastMove, weights_.getPlayer1Weights(), true );
+        List moveList = getSearchable().generateMoves( lastMove, weights_.getPlayer1Weights(), true );
 
         assert (!moveList.isEmpty());
         int r = (int) (Math.random() * moveList.size());
@@ -92,10 +99,6 @@ public class CheckersController extends TwoPlayerController
         return worth(board_.getLastMove(), weights_.getDefaultWeights());
     }
 
-    protected String getPreferredTone()
-    {
-        return MusicMaker.SITAR;
-    }
 
     /**
      * given a move determine whether the game is over.
@@ -190,7 +193,7 @@ public class CheckersController extends TwoPlayerController
      */
     private int checkJumpMove( BoardPosition current,
                                CheckersMove m, int rowInc, int colInc,
-                               LinkedList jumpMoves, ParameterArray weights )
+                               List jumpMoves, ParameterArray weights )
     {
         BoardPosition next = board_.getPosition( current.getRow() + rowInc, current.getCol() + colInc );
         BoardPosition beyondNext = board_.getPosition( current.getRow() + 2 * rowInc, current.getCol() + 2 * colInc );
@@ -220,7 +223,7 @@ public class CheckersController extends TwoPlayerController
             else
                 mm.kinged = false;
 
-            LinkedList list = null;
+            List list;
             // we cannot make more jumps if we just got kinged.
             if (!justKinged) {    // may be superfluous
                 list = findJumpMoves( beyondNext, rowInc, mm, weights );
@@ -241,11 +244,11 @@ public class CheckersController extends TwoPlayerController
      * won't be taken twice in the same move. At the end we return the captured
      * pieces to the board so the state is not change.
      */
-    private LinkedList findJumpMoves( BoardPosition current,
+    private List findJumpMoves( BoardPosition current,
                                       int rowInc, CheckersMove m,
                                       ParameterArray weights )
     {
-        LinkedList jumpMoves = new LinkedList();
+        List jumpMoves = new LinkedList();
         // if there are jumps beyond this we have to make them.
         // We have at least the current jump m.
 
@@ -319,7 +322,7 @@ public class CheckersController extends TwoPlayerController
             m = CheckersMove.createMove( pos.getRow(), pos.getCol(), beyondNext.getRow(), beyondNext.getCol(),
                     capture, lastMove.value,  pos.getPiece().copy() );
 
-            LinkedList jumps = findJumpMoves( beyondNext, rowInc, m, weights );
+            List jumps = findJumpMoves( beyondNext, rowInc, m, weights );
             moveList.addAll( jumps );
 
             return jumps.size();
@@ -391,51 +394,60 @@ public class CheckersController extends TwoPlayerController
     }
 
 
-    /**
-     *  generate all possible next moves
-     */
-    public List generateMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
-    {
-        List moveList = new LinkedList();
-        int j, row,col;
-        player1sPerspective_ = player1sPerspective;
 
-        boolean player1 = !(lastMove.player1);
+    public Searchable getSearchable() {
+        return new CheckersSearchable();
+    }
 
-        // scan through the board positions. For each each piece of the current player's,
-        // add all the moves that it can make.
-        for ( row = 1; row <= NUM_ROWS; row++ ) {
-            int odd = row % 2;
-            for ( j = 1; j <= 4; j++ ) {
-                col = 2 * j - odd;
-                BoardPosition p = board_.getPosition( row, col );
-                if ( p.isOccupied() && p.getPiece().isOwnedByPlayer1() == player1 ) {
-                    addMoves( p, moveList, lastMove, weights );
+
+    public class CheckersSearchable extends TwoPlayerSearchable {
+
+        /**
+         *  generate all possible next moves
+         */
+        public List generateMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
+        {
+            List moveList = new LinkedList();
+            int j, row,col;
+            player1sPerspective_ = player1sPerspective;
+
+            boolean player1 = !(lastMove.player1);
+
+            // scan through the board positions. For each each piece of the current player's,
+            // add all the moves that it can make.
+            for ( row = 1; row <= NUM_ROWS; row++ ) {
+                int odd = row % 2;
+                for ( j = 1; j <= 4; j++ ) {
+                    col = 2 * j - odd;
+                    BoardPosition p = board_.getPosition( row, col );
+                    if ( p.isOccupied() && p.getPiece().isOwnedByPlayer1() == player1 ) {
+                        addMoves( p, moveList, lastMove, weights );
+                    }
                 }
             }
+            return getBestMoves( player1, moveList, player1sPerspective );
         }
-        return getBestMoves( player1, moveList, player1sPerspective );
-    }
 
-    /**
-     * @@ quiescent search not yet implemented for checkers
-     * Probably we should return all moves that capture opponent pieces.
-     *
-     * @param lastMove
-     * @param weights
-     * @param player1sPerspective
-     * @return list of urgent moves
-     */
-    public List generateUrgentMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
-    {
-        return null;
-    }
+        /**
+         * @@ quiescent search not yet implemented for checkers
+         * Probably we should return all moves that capture opponent pieces.
+         *
+         * @param lastMove
+         * @param weights
+         * @param player1sPerspective
+         * @return list of urgent moves
+         */
+        public List generateUrgentMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
+        {
+            return null;
+        }
 
-    /**
-     * returns true if the specified move caused one or more opponent pieces to become jeopardized
-     */
-    public boolean inJeopardy( TwoPlayerMove m )
-    {
-        return false;
+        /**
+         * returns true if the specified move caused one or more opponent pieces to become jeopardized
+         */
+        public boolean inJeopardy( TwoPlayerMove m )
+        {
+            return false;
+        }
     }
 }

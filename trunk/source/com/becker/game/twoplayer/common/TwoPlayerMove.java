@@ -1,7 +1,9 @@
 package com.becker.game.twoplayer.common;
 
 import com.becker.common.Util;
-import com.becker.game.common.*;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.GamePiece;
+import com.becker.game.common.Move;
 
 /**
  *  This base class describes a change in state from one board

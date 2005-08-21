@@ -3,8 +3,11 @@ package com.becker.game.twoplayer.pente;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.twoplayer.common.TwoPlayerOptions;
+import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.common.Move;
 import com.becker.optimization.ParameterArray;
+import com.becker.sound.MusicMaker;
 
 import java.util.*;
 
@@ -48,6 +51,8 @@ public class PenteController extends TwoPlayerController
 
     public static final char REGULAR_PIECE = GamePiece.REGULAR_PIECE;
 
+
+    private static final int DEFAULT_LOOKAHEAD = 4;
     // for any given ply never consider more that BEST_PERCENTAGE of the top moves
     private static final int BEST_PERCENTAGE = 60;
 
@@ -83,10 +88,10 @@ public class PenteController extends TwoPlayerController
         return M;
     }
 
-    protected int getDefaultBestPercentage()
-    {
-        return BEST_PERCENTAGE;
+    protected TwoPlayerOptions createOptions() {
+        return new TwoPlayerOptions(DEFAULT_LOOKAHEAD, BEST_PERCENTAGE, MusicMaker.TAIKO_DRUM);
     }
+
 
     /**
      *  this gets the pente specific patterns and weights
@@ -315,70 +320,82 @@ public class PenteController extends TwoPlayerController
         return lastMove.value + diff;
     }
 
-    /*
-     * generate all possible next moves
-     */
-    public List generateMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
-    {
-        LinkedList moveList = new LinkedList();
-        int i,j;
-        int Ncols = board_.getNumCols();
-        int Nrows = board_.getNumRows();
 
-        PenteBoard pb = (PenteBoard) board_;
-        pb.determineCandidateMoves();
 
-        boolean player1 = !(lastMove.player1);
 
-        for ( i = 1; i <= Ncols; i++ )      //cols
-            for ( j = 1; j <= Nrows; j++ )    //rows
-                if ( pb.isCandidateMove( j, i ) ) {
-                    TwoPlayerMove m = TwoPlayerMove.createMove( j, i, lastMove.value, new GamePiece(player1));
-                    pb.makeMove( m );
-                    m.value = worth( m, weights, player1sPerspective );
-                    // now revert the board
-                    pb.undoMove();
-                    moveList.add( m );
-                }
+    public Searchable getSearchable() {
+         return new PenteSearchable();
+     }
 
-        return getBestMoves( player1, moveList, player1sPerspective );
-    }
 
-    /**
-     * return any moves that result in a win
-     */
-    public List generateUrgentMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
-    {
-        List moves = generateMoves( lastMove, weights, player1sPerspective );
+    protected class PenteSearchable extends TwoPlayerSearchable {
 
-        // now keep only those that result in a win.
-        Iterator it = moves.iterator();
-        while ( it.hasNext() ) {
-            TwoPlayerMove move = (TwoPlayerMove) it.next();
-            if ( Math.abs( move.inheritedValue ) < WINNING_VALUE )
-                it.remove();
-            else
-                move.urgent = true;
+        /*
+         * generate all possible next moves
+         */
+        public List generateMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
+        {
+            List moveList = new LinkedList();
+            int i,j;
+            int Ncols = board_.getNumCols();
+            int Nrows = board_.getNumRows();
+
+            PenteBoard pb = (PenteBoard) board_;
+            pb.determineCandidateMoves();
+
+            boolean player1 = !(lastMove.player1);
+
+            for ( i = 1; i <= Ncols; i++ )      //cols
+                for ( j = 1; j <= Nrows; j++ )    //rows
+                    if ( pb.isCandidateMove( j, i ) ) {
+                        TwoPlayerMove m = TwoPlayerMove.createMove( j, i, lastMove.value, new GamePiece(player1));
+                        pb.makeMove( m );
+                        m.value = worth( m, weights, player1sPerspective );
+                        // now revert the board
+                        pb.undoMove();
+                        moveList.add( m );
+                    }
+
+            return getBestMoves( player1, moveList, player1sPerspective );
         }
-        // ( moves.size() > 0 )
-        //    GameContext.log( 0, "pente controller: the urgent moves are :" + moves );
-        return moves;
+
+        /**
+         * return any moves that result in a win
+         */
+        public List generateUrgentMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
+        {
+            List moves = generateMoves( lastMove, weights, player1sPerspective );
+
+            // now keep only those that result in a win.
+            Iterator it = moves.iterator();
+            while ( it.hasNext() ) {
+                TwoPlayerMove move = (TwoPlayerMove) it.next();
+                if ( Math.abs( move.inheritedValue ) < WINNING_VALUE )
+                    it.remove();
+                else
+                    move.urgent = true;
+            }
+            // ( moves.size() > 0 )
+            //    GameContext.log( 0, "pente controller: the urgent moves are :" + moves );
+            return moves;
+        }
+
+        /**
+         * @param m
+         * @param weights
+         * @param player1sPerspective
+         * @return true if the last move created a big change in the score
+         */
+        public boolean inJeopardy( Move m, ParameterArray weights, boolean player1sPerspective )
+        {
+            // consider the delta big if >= w. Where w is the value of a near win.
+            double w = weights.get(8).value;
+
+            double newValue = worth( m, weights, player1sPerspective );
+            double diff = newValue - m.value;
+
+            return (diff > w);
+        }
     }
 
-    /**
-     * @param m
-     * @param weights
-     * @param player1sPerspective
-     * @return true if the last move created a big change in the score
-     */
-    public boolean inJeopardy( Move m, ParameterArray weights, boolean player1sPerspective )
-    {
-        // consider the delta big if >= w. Where w is the value of a near win.
-        double w = weights.get(8).value;
-
-        double newValue = worth( m, weights, player1sPerspective );
-        double diff = newValue - m.value;
-
-        return (diff > w);
-    }
 }

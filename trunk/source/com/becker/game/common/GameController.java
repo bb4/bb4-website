@@ -91,8 +91,6 @@ public abstract class GameController
         return 0.0;
     }
 
-    public abstract Player getCurrentPlayer();
-
 
     /**
      *  @return the player that goes first.

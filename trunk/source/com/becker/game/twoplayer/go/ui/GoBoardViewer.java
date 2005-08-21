@@ -1,7 +1,9 @@
 package com.becker.game.twoplayer.go.ui;
 
 import com.becker.common.ColorMap;
-import com.becker.game.common.*;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.GameController;
+import com.becker.game.common.Location;
 import com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer;
 import com.becker.game.twoplayer.go.*;
 import com.becker.ui.GUIUtil;
@@ -9,8 +11,9 @@ import com.becker.ui.GUIUtil;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.util.*;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /**
  *  Takes a GoController as input and displays the

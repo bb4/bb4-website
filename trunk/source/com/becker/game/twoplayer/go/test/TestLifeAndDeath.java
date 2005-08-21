@@ -1,9 +1,8 @@
 package com.becker.game.twoplayer.go.test;
 
-import junit.framework.Assert;
-import junit.framework.TestSuite;
-import junit.framework.Test;
 import com.becker.game.twoplayer.go.GoMove;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
 /**
  * @author Barry Becker

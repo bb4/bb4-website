@@ -1,10 +1,10 @@
 package com.becker.game.twoplayer.go.ui;
 
 import com.becker.game.common.GameContext;
-import com.becker.game.common.ui.*;
+import com.becker.game.common.ui.GameBoardViewer;
+import com.becker.game.twoplayer.common.ui.TwoPlayerNewGameDialog;
 import com.becker.game.twoplayer.go.GoBoard;
 import com.becker.game.twoplayer.go.GoController;
-import com.becker.game.twoplayer.common.ui.TwoPlayerNewGameDialog;
 import com.becker.ui.NumberInputPanel;
 
 import javax.swing.*;

@@ -2,7 +2,6 @@ package com.becker.game.twoplayer.common.search;
 
 import com.becker.common.Util;
 import com.becker.game.common.GameContext;
-import com.becker.game.common.Move;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.optimization.ParameterArray;
 
@@ -53,15 +52,15 @@ public abstract class SearchStrategy
      * Do not call the constructor directly.
      * @return the search method to use
      */
-    public static SearchStrategy createSearchStrategy(int method, Searchable gc)
+    public static SearchStrategy createSearchStrategy(int method, Searchable s)
     {
         switch (method) {
             case MINIMAX:
-                return new MiniMaxStrategy(gc);
+                return new MiniMaxStrategy(s);
             case NEGAMAX:
-                return new NegaMaxStrategy(gc);
+                return new NegaMaxStrategy(s);
             default:
-                return new MiniMaxStrategy(gc);
+                return new MiniMaxStrategy(s);
         }
     }
 

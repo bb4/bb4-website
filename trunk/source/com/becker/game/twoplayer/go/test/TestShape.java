@@ -1,11 +1,10 @@
 package com.becker.game.twoplayer.go.test;
 
-import junit.framework.Assert;
-import junit.framework.TestSuite;
-import junit.framework.Test;
 import com.becker.game.twoplayer.go.GoBoard;
 import com.becker.game.twoplayer.go.GoBoardPosition;
-import com.becker.game.common.BoardPosition;
+import junit.framework.Assert;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
 
 /**

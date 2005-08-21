@@ -165,7 +165,13 @@ public final class RaiseDialog extends OptionsDialog
         String sNum = raiseAmount_.getText();
         if (sNum == null || sNum.equals(""))
             return 0;
-        return Integer.parseInt(sNum);
+        int raiseAmt = 0;
+        try {
+            raiseAmt = Integer.parseInt(sNum);
+        } catch (NumberFormatException e) {
+            GameContext.log(0, sNum +" is not a valid integer. Setting raise = 0");
+        }
+        return  raiseAmt;
     }
 
 }

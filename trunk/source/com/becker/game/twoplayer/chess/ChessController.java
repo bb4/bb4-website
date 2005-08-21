@@ -2,9 +2,12 @@ package com.becker.game.twoplayer.chess;
 
 import com.becker.game.twoplayer.checkers.CheckersController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.twoplayer.common.TwoPlayerOptions;
+import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.common.Move;
 import com.becker.game.common.*;
 import com.becker.optimization.ParameterArray;
+import com.becker.sound.MusicMaker;
 
 import java.util.*;
 
@@ -75,6 +78,7 @@ public class ChessController extends CheckersController
         weights_ = new GameWeights( DEFAULT_WEIGHTS, MAX_WEIGHTS, WEIGHT_SHORT_DESCRIPTIONS, WEIGHT_DESCRIPTIONS );
     }
 
+
     /**
      * The computer makes the first move in the game.
      */
@@ -85,7 +89,7 @@ public class ChessController extends CheckersController
                 null, 0, new ChessPiece(false, ChessPiece.REGULAR_PIECE));
 
         // determine the possible moves and choose one at random.
-        List moveList = generateMoves( lastMove, weights_.getPlayer1Weights(), true );
+        List moveList = getSearchable().generateMoves( lastMove, weights_.getPlayer1Weights(), true );
 
         int r = (int) (Math.random() * moveList.size());
         ChessMove m = (ChessMove) moveList.get( r );
@@ -95,18 +99,10 @@ public class ChessController extends CheckersController
         player1sTurn_ = false;
     }
 
-    protected final int getDefaultLookAhead()
-    {
-        return DEFAULT_LOOKAHEAD;
+    protected TwoPlayerOptions createOptions() {
+        return new TwoPlayerOptions(DEFAULT_LOOKAHEAD, 100, MusicMaker.TAIKO_DRUM);
     }
 
-    /**
-     *  @return the default top percentage of best moves to consider at each ply.
-     */
-    protected int getDefaultBestPercentage()
-    {
-        return 100;
-    }
 
     /**
      *  The primary way of computing the score for Chess is to just add up the pieces
@@ -155,34 +151,6 @@ public class ChessController extends CheckersController
     }
 
 
-     /**
-     *  generate all possible next moves
-     */
-    public List generateMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
-    {
-        List moveList = new LinkedList();
-        int row,col;
-        player1sPerspective_ = player1sPerspective;
-
-        boolean player1 = !(lastMove.player1);
-
-        // scan through the board positions. For each each piece of the current player's,
-        // add all the moves that it can make.
-        for ( row = 1; row <= NUM_ROWS; row++ ) {
-            for ( col = 1; col <= NUM_COLS; col++ ) {
-                BoardPosition pos = board_.getPosition( row, col );
-                if ( pos.isOccupied() && pos.getPiece().isOwnedByPlayer1() == player1 ) {
-                    addMoves( pos, moveList, lastMove, weights,  player1sPerspective);
-                }
-            }
-        }
-
-        // remove any moves that causes the king goes into jeopardy (ie check).
-        removeSelfCheckingMoves(moveList);
-
-        return getBestMoves( player1, moveList, player1sPerspective );
-    }
-
     /**
      * Find all the moves a piece p can make and insert them into moveList.
      *
@@ -227,26 +195,42 @@ public class ChessController extends CheckersController
     }
 
 
-    /**
-     * @@ quiescent search not yet implemented for Chess
-     * Probably we should return all moves that capture opponent pieces or put the king in check.
-     *
-     * @param lastMove
-     * @param weights
-     * @param player1sPerspective
-     * @return list of urgent moves
-     */
-    public List generateUrgentMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
-    {
-        return null;
+
+
+    public Searchable getSearchable() {
+        return new CheckersSearchable();
     }
 
-    /**
-     * returns true if the specified move caused one or more opponent pieces to become jeopardized
-     */
-    public boolean inJeopardy( TwoPlayerMove m )
-    {
-        return false;
+
+    class ChessSearchable extends CheckersSearchable {
+
+         /**
+         *  generate all possible next moves
+         */
+        public List generateMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
+        {
+            List moveList = new LinkedList();
+            int row,col;
+            player1sPerspective_ = player1sPerspective;
+
+            boolean player1 = !(lastMove.player1);
+
+            // scan through the board positions. For each each piece of the current player's,
+            // add all the moves that it can make.
+            for ( row = 1; row <= NUM_ROWS; row++ ) {
+                for ( col = 1; col <= NUM_COLS; col++ ) {
+                    BoardPosition pos = board_.getPosition( row, col );
+                    if ( pos.isOccupied() && pos.getPiece().isOwnedByPlayer1() == player1 ) {
+                        addMoves( pos, moveList, lastMove, weights,  player1sPerspective);
+                    }
+                }
+            }
+
+            // remove any moves that causes the king goes into jeopardy (ie check).
+            removeSelfCheckingMoves(moveList);
+
+            return getBestMoves( player1, moveList, player1sPerspective );
+        }
     }
 
 }

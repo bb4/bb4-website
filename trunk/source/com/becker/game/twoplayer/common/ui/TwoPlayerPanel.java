@@ -1,10 +1,13 @@
 package com.becker.game.twoplayer.common.ui;
 
-import com.becker.game.common.*;
-import com.becker.game.common.ui.*;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.GameController;
+import com.becker.game.common.ui.GameChangedListener;
+import com.becker.game.common.ui.GameOptionsDialog;
+import com.becker.game.common.ui.GamePanel;
 import com.becker.game.twoplayer.common.TwoPlayerController;
-import com.becker.sound.SpeechSynthesizer;
-import com.becker.ui.*;
+import com.becker.game.twoplayer.common.TwoPlayerOptions;
+import com.becker.ui.TexturedPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -56,9 +59,11 @@ public abstract class TwoPlayerPanel extends GamePanel
         // disturbing the state of the actual game.
         treeDialog_ = createGameTreeDialog();
 
-        GameContext.log(2, "2player pane init  get2PlayerController().getShowGameTree() ="+ get2PlayerController().getShowGameTree() );
-        if ( get2PlayerController().getShowGameTree() )
-          showGameTreeDialog();
+        TwoPlayerOptions options = get2PlayerController().getOptions();
+        GameContext.log(2, "2player pane init  get2PlayerController().getShowGameTree() ="+ options.getShowGameTree() );
+        if (options.getShowGameTree()) {
+            showGameTreeDialog();
+        }
     }
 
     protected JPanel createBottomDecorationPanel()
@@ -161,8 +166,8 @@ public abstract class TwoPlayerPanel extends GamePanel
             boolean canceled = optionsDialog_.showDialog();
             GameContext.log(2, "options selected  canceled=" + canceled );
             if ( !canceled ) { // start a game with the newly defined options
-                GameContext.log(0, "options selected not canceled  show game tree=" + get2PlayerController().getShowGameTree() );
-                if ( get2PlayerController().getShowGameTree() ) {
+                GameContext.log(0, "options selected not canceled  show game tree=" + get2PlayerController().getOptions().getShowGameTree() );
+                if ( get2PlayerController().getOptions().getShowGameTree() ) {
                     showGameTreeDialog();
                 }
                 else

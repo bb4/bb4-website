@@ -1,11 +1,11 @@
 package com.becker.game.twoplayer.go;
 
 
-import com.becker.game.common.BoardPosition;
-import com.becker.game.common.GameContext;
-import com.becker.game.common.Board;
-import com.becker.game.common.Box;
 import com.becker.common.Assert;
+import com.becker.game.common.Board;
+import com.becker.game.common.BoardPosition;
+import com.becker.game.common.Box;
+import com.becker.game.common.GameContext;
 
 import java.util.*;
 

@@ -1,9 +1,11 @@
 package com.becker.game.twoplayer.go.ui;
 
-import com.becker.game.common.*;
-import com.becker.game.common.ui.*;
-import com.becker.game.twoplayer.go.GoController;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.GameController;
+import com.becker.game.common.ui.GameChangedEvent;
+import com.becker.game.common.ui.GameChangedListener;
 import com.becker.game.twoplayer.common.ui.TwoPlayerInfoPanel;
+import com.becker.game.twoplayer.go.GoController;
 import com.becker.ui.ContinuousColorLegend;
 
 import javax.swing.*;

@@ -1,8 +1,10 @@
 package com.becker.game.twoplayer.go;
 
+import static com.becker.game.twoplayer.go.GoControllerConstants.*;   // jdk 1.5 feature
+
+import com.becker.common.Profiler;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
-import com.becker.common.Profiler;
 
 import java.util.*;
 
@@ -11,6 +13,8 @@ import java.util.*;
  * There are a lot of datastructures to organize the state of the pieces.
  * For example, we update strings, and groups (and eventually armies) after each move.
  * After updating we can use these structures to estimate territory for each side.
+ *
+ * @@ pull out stuff related to candidate moves into separate class
  *
  * @author Barry Becker
  */
@@ -685,14 +689,14 @@ public final class GoBoard extends TwoPlayerBoard
 
             float health = g.calculateAbsoluteHealth( this, profiler_ );
 
-            if (!GoController.USE_RELATIVE_GROUP_SCORING)  {
+            if (!USE_RELATIVE_GROUP_SCORING)  {
                 g.updateTerritory( health );
                 delta += health * g.getNumStones();
             }
             profiler_.stop(GoProfiler.ABSOLUTE_TERRITORY);
         }
 
-        if (GoController.USE_RELATIVE_GROUP_SCORING)  {
+        if (USE_RELATIVE_GROUP_SCORING)  {
             profiler_.start(GoProfiler.RELATIVE_TERRITORY);
             it = groups_.iterator();
             while ( it.hasNext() ) {
@@ -856,7 +860,7 @@ public final class GoBoard extends TwoPlayerBoard
         for (Object stone : stones) {
             GoBoardPosition p = (GoBoardPosition) stone;
             GoGroup group = p.getString().getGroup();
-            if (GoController.USE_RELATIVE_GROUP_SCORING)
+            if (USE_RELATIVE_GROUP_SCORING)
                 totalScore += group.getRelativeHealth();
             else
                 totalScore += group.getAbsoluteHealth();
@@ -1217,7 +1221,6 @@ public final class GoBoard extends TwoPlayerBoard
      * cohesive group(s) rather than disparate ones.
      * There can be two if, for example, the capturing stone joins a string that is
      * still in atari after the captured stones have been removed.
-     * @@ probably should add a test for this.
      * @param finalStone the stone that caused the capture.
      */
     private void updateAfterRemovingCaptures( GoBoardPosition finalStone )

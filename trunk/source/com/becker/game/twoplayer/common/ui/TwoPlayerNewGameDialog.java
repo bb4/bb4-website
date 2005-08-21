@@ -1,11 +1,15 @@
 package com.becker.game.twoplayer.common.ui;
 
-import com.becker.game.common.*;
-import com.becker.game.common.ui.NewGameDialog;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.GameWeights;
+import com.becker.game.common.Player;
 import com.becker.game.common.ui.GameBoardViewer;
+import com.becker.game.common.ui.NewGameDialog;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.optimization.ParameterArray;
-import com.becker.ui.*;
+import com.becker.ui.GUIUtil;
+import com.becker.ui.GradientButton;
+import com.becker.ui.TextFileFilter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -139,7 +143,7 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
                                       JRadioButton computerButton,
                                       GradientButton editWtsButton )
     {
-        JPanel p = new JPanel(); //new FlowLayout());
+        JPanel p = new JPanel();
         p.setLayout( new BoxLayout( p, BoxLayout.X_AXIS ) );
 
         JLabel label = new JLabel( message );
@@ -174,7 +178,7 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
         Dimension dlgSize = editWtsDlg.getPreferredSize();
         Dimension frmSize = getSize();
         Point pt = getLocation();
-        editWtsDlg.setLocation( (frmSize.width - dlgSize.width) / 2
+        editWtsDlg.setLocation( (frmSize.width - dlgSize.width) >> 1
                 + pt.x, ((frmSize.height - dlgSize.height) >> 1) + pt.y );
         editWtsDlg.setModal( true );
         editWtsDlg.setVisible(true);
@@ -188,7 +192,7 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
         {
             c.getPlayer1().setHuman(false);
             c.getPlayer2().setHuman(false);
-            c.setAutoOptimize(true);
+            c.getOptions().setAutoOptimize(true);
         }
         else {
             c.getPlayer1().setHuman( human1Button_.isSelected() );
@@ -259,7 +263,7 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
                         return;
                     }
                     else
-                        get2PlayerController().setAutoOptimizeFile( file.getAbsolutePath() );
+                        get2PlayerController().getOptions().setAutoOptimizeFile( file.getAbsolutePath() );
                  }
             }
 
