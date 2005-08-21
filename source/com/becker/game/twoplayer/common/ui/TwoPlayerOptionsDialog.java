@@ -1,10 +1,12 @@
 package com.becker.game.twoplayer.common.ui;
 
-import com.becker.game.common.*;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.GameController;
 import com.becker.game.common.ui.GameOptionsDialog;
-import com.becker.game.twoplayer.common.search.SearchStrategy;
 import com.becker.game.twoplayer.common.TwoPlayerController;
-import com.becker.ui.*;
+import com.becker.game.twoplayer.common.TwoPlayerOptions;
+import com.becker.game.twoplayer.common.search.SearchStrategy;
+import com.becker.ui.NumberInputPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -48,7 +50,7 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog implements ActionL
      */
     protected JPanel createControllerParamPanel()
     {
-        TwoPlayerController c = get2PlayerController();
+        TwoPlayerOptions options = get2PlayerController().getOptions();
 
         JPanel p = new JPanel();
         p.setLayout( new BoxLayout( p, BoxLayout.Y_AXIS ) );
@@ -72,7 +74,7 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog implements ActionL
 
         p.add( createRadioButtonPanel( minimaxButton_, buttonGroup, true ) );
         p.add( createRadioButtonPanel( negamaxButton_, buttonGroup, false ) );
-        algorithm_ = c.getSearchStrategyMethod();
+        algorithm_ = options.getSearchStrategyMethod();
         switch (algorithm_) {
             case SearchStrategy.MINIMAX:
                 minimaxButton_.setSelected( true );
@@ -88,7 +90,8 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog implements ActionL
         // look ahead
         treeUpperBound_ = new JLabel();
 
-        lookAheadField_ = new JTextField( Integer.toString( c.getLookAhead() ) );
+
+        lookAheadField_ = new JTextField( Integer.toString( options.getLookAhead() ) );
         lookAheadField_.setMaximumSize( new Dimension( 30, ROW_HEIGHT ) );
         JPanel p1 =
                 new NumberInputPanel( GameContext.getLabel("MOVES_TO_LOOKAHEAD"), lookAheadField_,
@@ -96,7 +99,7 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog implements ActionL
         lookAheadField_.addKeyListener( new UpperBoundKeyListener( lookAheadField_, treeUpperBound_) );
 
         // best percentage moves
-        bestPercentageField_ = new JTextField( Integer.toString( c.getPercentageBestMoves() ) );
+        bestPercentageField_ = new JTextField( Integer.toString( options.getPercentageBestMoves() ) );
         bestPercentageField_.setMaximumSize( new Dimension( 30, ROW_HEIGHT ) );
         JPanel p2 =
                 new NumberInputPanel( GameContext.getLabel("PERCENTAGE_AT_PLY"), bestPercentageField_,
@@ -106,7 +109,7 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog implements ActionL
         JPanel p3 = new JPanel( new FlowLayout() );
         JLabel treeUpperBoundLabel = new JLabel( GameContext.getLabel("UPPER_BOUND") );
 
-        treeUpperBound_.setText( calcTreeUpperBound( c.getLookAhead(), c.getPercentageBestMoves() ) + "  " );
+        treeUpperBound_.setText( calcTreeUpperBound( options.getLookAhead(), options.getPercentageBestMoves() ) + "  " );
         p3.setAlignmentX( Component.LEFT_ALIGNMENT );
         p3.add( treeUpperBoundLabel );
         p3.add( treeUpperBound_ );
@@ -116,13 +119,13 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog implements ActionL
         p.add( p3 );
 
         // alpha-beta pruning option
-        alphabetaCheckbox_ = new JCheckBox( GameContext.getLabel("USE_PRUNING"), c.getAlphaBeta() );
+        alphabetaCheckbox_ = new JCheckBox( GameContext.getLabel("USE_PRUNING"), options.getAlphaBeta() );
         alphabetaCheckbox_.setToolTipText( GameContext.getLabel("USE_PRUNING_TIP") );
         alphabetaCheckbox_.addActionListener( this );
         p.add( alphabetaCheckbox_ );
 
         // show profile info option
-        quiescenceCheckbox_ = new JCheckBox( GameContext.getLabel("USE_QUIESCENCE"), c.getQuiescence() );
+        quiescenceCheckbox_ = new JCheckBox( GameContext.getLabel("USE_QUIESCENCE"), options.getQuiescence() );
         quiescenceCheckbox_.setToolTipText( GameContext.getLabel("USE_QUIESCENCE_TIP") );
         quiescenceCheckbox_.addActionListener( this );
         //quiescenceCheckbox_.setEnabled(false); // not currently implemented
@@ -146,7 +149,7 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog implements ActionL
 
         // show game tree option
         gameTreeCheckbox_ = new JCheckBox(GameContext.getLabel("SHOW_GAME_TREE"),
-                get2PlayerController().getShowGameTree());
+                get2PlayerController().getOptions().getShowGameTree());
         gameTreeCheckbox_.setToolTipText( GameContext.getLabel("SHOW_GAME_TREE_TIP") );
         gameTreeCheckbox_.addActionListener( this );
         gameTreeCheckbox_.setAlignmentX( Component.LEFT_ALIGNMENT );
@@ -155,7 +158,7 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog implements ActionL
         // animation option
         computerAnimationCheckbox_ =
             new JCheckBox( GameContext.getLabel("SHOW_ANIMATION"),
-                get2PlayerController().getShowComputerAnimation() );
+                get2PlayerController().getOptions().getShowComputerAnimation() );
         computerAnimationCheckbox_.setToolTipText( GameContext.getLabel("SHOW_ANIMATION_TIP") );
         computerAnimationCheckbox_.addActionListener( this );
         computerAnimationCheckbox_.setAlignmentX( Component.LEFT_ALIGNMENT );
@@ -170,20 +173,20 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog implements ActionL
     {
         TwoPlayerController c = get2PlayerController();
 
-        c.setAlphaBeta( alphabetaCheckbox_.isSelected() );
-        c.setQuiescence( quiescenceCheckbox_.isSelected() );
+        c.getOptions().setAlphaBeta( alphabetaCheckbox_.isSelected() );
+        c.getOptions().setQuiescence( quiescenceCheckbox_.isSelected() );
 
         Integer level = new Integer( lookAheadField_.getText() );
-        c.setLookAhead( level.intValue() );
+        c.getOptions().setLookAhead( level.intValue() );
 
         if ( minimaxButton_.isSelected() )
-            c.setSearchStrategyMethod( SearchStrategy.MINIMAX );
+            c.getOptions().setSearchStrategyMethod( SearchStrategy.MINIMAX );
         else if ( negamaxButton_.isSelected() )
-            c.setSearchStrategyMethod( SearchStrategy.NEGAMAX );
+            c.getOptions().setSearchStrategyMethod( SearchStrategy.NEGAMAX );
         Integer best = new Integer( bestPercentageField_.getText() );
-        c.setPercentageBestMoves( best.intValue() );
-        c.setShowGameTree( gameTreeCheckbox_.isSelected() );
-        c.setShowComputerAnimation( computerAnimationCheckbox_.isSelected() );
+        c.getOptions().setPercentageBestMoves( best.intValue() );
+        c.getOptions().setShowGameTree( gameTreeCheckbox_.isSelected() );
+        c.getOptions().setShowComputerAnimation( computerAnimationCheckbox_.isSelected() );
 
         super.ok();
     }

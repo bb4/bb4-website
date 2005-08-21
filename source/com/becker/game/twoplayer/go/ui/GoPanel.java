@@ -1,10 +1,14 @@
 package com.becker.game.twoplayer.go.ui;
 
-import com.becker.game.common.*;
-import com.becker.game.common.ui.*;
-import com.becker.game.twoplayer.common.ui.TwoPlayerPanel;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.GameController;
+import com.becker.game.common.ui.GameBoardViewer;
+import com.becker.game.common.ui.GameInfoPanel;
+import com.becker.game.common.ui.GameToolBar;
+import com.becker.game.common.ui.NewGameDialog;
 import com.becker.game.twoplayer.common.ui.GameTreeDialog;
 import com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer;
+import com.becker.game.twoplayer.common.ui.TwoPlayerPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

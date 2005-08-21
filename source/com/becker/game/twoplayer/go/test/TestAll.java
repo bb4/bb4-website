@@ -1,9 +1,9 @@
 package com.becker.game.twoplayer.go.test;
 
+import com.becker.game.twoplayer.go.test.whitebox.TestAllWhiteBox;
+import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import junit.framework.Test;
-import com.becker.game.twoplayer.go.test.whitebox.TestAllWhiteBox;
 
 /**
  * @author Barry Becker

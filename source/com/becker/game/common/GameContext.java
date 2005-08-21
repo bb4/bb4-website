@@ -5,7 +5,6 @@ import com.becker.ui.Log;
 
 import javax.swing.*;
 import java.util.*;
-import java.lang.reflect.Array;
 
 /**
  * Manage game context info such as logging, debugging, resources, and profiling.
@@ -128,7 +127,7 @@ public final class GameContext
     public static void setUseSound( boolean useSound )
     {
         if ( useSound_ )
-            GameContext.getMusicMaker().stopAllSounds();
+            getMusicMaker().stopAllSounds();
         useSound_ = useSound;
     }
 
@@ -138,16 +137,6 @@ public final class GameContext
     public static boolean getUseSound()
     {
         return useSound_;
-    }
-
-    /**
-     * @return the sound to make after each move
-     */
-    public static String getPreferredTone()
-    {
-        //return MusicMaker.TAIKO_DRUM;
-        return MusicMaker.METALLIC_SNARE;
-        //return MusicMaker.DROPS;
     }
 
     /**
@@ -169,7 +158,7 @@ public final class GameContext
         String home =  System.getProperty("user.home") + "/projects/java_projects";
         if (home == null)
             home = DEFAULT_HOME_DIR;
-        GameContext.log(1, "home = "+home );
+        log(1, "home = "+home );
         return home;
     }
 
@@ -195,7 +184,7 @@ public final class GameContext
         String path = className.substring(0, className.lastIndexOf(".ui."));
 
         String resourcePath = path +".resources."+gameName+"Messages";
-        GameContext.log(2, "searching for "+ resourcePath);
+        log(2, "searching for "+ resourcePath);
 
         try {
             gameMessages_ = ResourceBundle.getBundle(
@@ -283,18 +272,18 @@ public final class GameContext
         // an array of hashSets of the keys for each bundle
         List messageKeySets = new ArrayList();
         LocaleType[] locales = LocaleType.values();
-        for (int i=0; i<locales.length; i++) {
+        for (final LocaleType newVar : locales) {
             ResourceBundle bundle = ResourceBundle.getBundle(COMMON_MESSAGE_BUNDLE,
-                                        locales[i].getLocale());
+                    newVar.getLocale());
             Set keySet = new HashSet();
             Enumeration enumXXX = bundle.getKeys();
             while (enumXXX.hasMoreElements()) {
-                String key = (String)enumXXX.nextElement();
+                String key = (String) enumXXX.nextElement();
                 //System.out.println(locales.getValue(i).getName()+" "+key);
                 keySet.add(key);
             }
             messageKeySets.add(keySet);
-            log(1, "keySet size for "+(locales[i]).getLocale() +"="+keySet.size());
+            log(1, "keySet size for " + (newVar).getLocale() + "=" + keySet.size());
         }
         // now that we have the keysets report on their consistency.
         // assume that the first is the default (en)
@@ -346,11 +335,11 @@ public final class GameContext
 
     /**
      * Looks up an {@link LocaleType}
+     * @param finf fail if not found.
      * @throws Error if the name is not a member of the enumeration
      */
     public static LocaleType get(String name, boolean finf) {
         LocaleType type = LocaleType.ENGLISH;  // the default
-
         try {
             type = LocaleType.valueOf(name);
         }
@@ -358,10 +347,10 @@ public final class GameContext
             log(0,  "***************" );
             log(0, name +" is not a valid locale. We currently only support: ");
             LocaleType[] values = LocaleType.values();
-            for (int i=0; i<values.length; i++)
-                log(0, values[i].toString() );
+            for (final LocaleType newVar : values) log(0, newVar.toString());
             log(0,  "Defaulting to English." );
             log(0, "***************" );
+            assert (!finf);
         }
         return type;
     }

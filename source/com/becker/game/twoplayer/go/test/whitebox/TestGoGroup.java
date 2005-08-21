@@ -1,13 +1,9 @@
 package com.becker.game.twoplayer.go.test.whitebox;
 
-import junit.framework.Assert;
-import com.becker.game.twoplayer.go.test.GoTestCase;
 import com.becker.game.twoplayer.go.GoBoard;
-import com.becker.game.twoplayer.go.GoMove;
 import com.becker.game.twoplayer.go.GoGroup;
-import com.becker.game.twoplayer.go.GoBoardUtil;
-
-import java.util.Set;
+import com.becker.game.twoplayer.go.test.GoTestCase;
+import junit.framework.Assert;
 
 /**
  * Mostly test that the scoring of groups works correctly.

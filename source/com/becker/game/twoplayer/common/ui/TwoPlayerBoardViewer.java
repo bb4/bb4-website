@@ -1,16 +1,22 @@
 package com.becker.game.twoplayer.common.ui;
 
 import com.becker.common.Util;
-import com.becker.game.common.*;
-import com.becker.game.common.ui.*;
-import com.becker.game.twoplayer.common.*;
-import com.becker.game.twoplayer.go.GoBoardUtil;
-import com.becker.game.twoplayer.go.GoBoard;
-import com.becker.optimization.*;
+import com.becker.game.common.Board;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.Move;
+import com.becker.game.common.ui.GameBoardViewer;
+import com.becker.game.common.ui.GameChangedEvent;
+import com.becker.game.common.ui.GameChangedListener;
+import com.becker.game.twoplayer.common.TwoPlayerController;
+import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.twoplayer.common.TwoPlayerViewerCallbackInterface;
+import com.becker.optimization.ParameterArray;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.text.MessageFormat;
 
 /**
@@ -72,11 +78,6 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
         controller_.setViewer(this);
     }
 
-    /**
-     *
-     * @return the game specific controller for this viewer.
-     */
-    protected abstract GameController createController();
 
     /**
      * @return our game controller
@@ -85,6 +86,7 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
     {
        return (TwoPlayerController)controller_;
     }
+
     /**
      * set an optional progress bar for showing progress as the computer thinks about its next move.
      */
@@ -93,19 +95,21 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
         progressBar_ = progressBar;
     }
 
+    public TwoPlayerMove[] getNextMoves() {
+        return nextMoves_;
+    }
+
+    public void setNextMoves(TwoPlayerMove[] nextMoves) {
+        nextMoves_ = nextMoves;
+    }
+
 
     /**
      * run many games and use hill-climbing to find optimal weights.
      */
     private void runOptimization()
     {
-        Optimizer optimizer = new Optimizer( get2PlayerController(), get2PlayerController().getAutoOptimizeFile() );
-
-        ParameterArray optimizedParams;
-        optimizedParams =
-                optimizer.doOptimization( OptimizationType.HILL_CLIMBING,
-                                          get2PlayerController().getComputerWeights().getDefaultWeights(),
-                                          TwoPlayerController.WINNING_VALUE);
+        ParameterArray optimizedParams = get2PlayerController().runOptimization();
 
         JOptionPane.showMessageDialog(this, GameContext.getLabel("OPTIMIZED_WEIGHTS_TXT")+
                 optimizedParams, GameContext.getLabel("OPTIMIZED_WEIGHTS"), JOptionPane.INFORMATION_MESSAGE);
@@ -128,7 +132,7 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
     {
         reset();
         TwoPlayerController c = get2PlayerController();
-        if (get2PlayerController().isAutoOptimize())
+        if (get2PlayerController().getOptions().isAutoOptimize())
             runOptimization();
 
         if (c.allPlayersComputer() ) {
@@ -153,15 +157,16 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
     private boolean manMoves( TwoPlayerMove m )
     {
         // this method will fill in some of m's structure
+        TwoPlayerController c = get2PlayerController();
         if ( GameContext.getUseSound() ) {
-            GameContext.getMusicMaker().playNote( GameContext.getPreferredTone(), 45, 0, 200, 1000 );
+            GameContext.getMusicMaker().playNote( c.getOptions().getPreferredTone(), 45, 0, 200, 1000 );
         }
         // need to clear the cache, otherwise we may render a stale board.
         cachedGameBoard_ = null;
-        get2PlayerController().manMoves( m );
+        c.manMoves( m );
         refresh();
         sendGameChangedEvent( m );
-        boolean done = get2PlayerController().done( m, true );
+        boolean done = c.getSearchable().done( m, true );
         return done;
     }
 
@@ -289,10 +294,11 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
 
                 setCursor( origCursor_ );
                 if ( GameContext.getUseSound() )
-                    GameContext.getMusicMaker().playNote( GameContext.getPreferredTone(), 45, 0, 200, 1000 );
+                    GameContext.getMusicMaker().playNote(
+                            get2PlayerController().getOptions().getPreferredTone(), 45, 0, 200, 1000 );
                 showLastMove();
                 cachedGameBoard_ = null;
-                if (!get2PlayerController().isAutoOptimize()) {
+                if (!get2PlayerController().getOptions().isAutoOptimize()) {
                     // show a popup for certain exceptional cases.
                     // For example, in chess we warn on a checking move.
                     warnOnSpecialMoves( (TwoPlayerMove)m );
@@ -326,8 +332,8 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
      */
     protected void drawNextMoveMarkers(Graphics2D g2) {
         Board board = getBoard();
-        if (nextMoves_ != null) {
-            for (TwoPlayerMove move : nextMoves_) {
+        if (getNextMoves() != null) {
+            for (TwoPlayerMove move : getNextMoves()) {
                 ((TwoPlayerPieceRenderer) pieceRenderer_).renderNextMove(g2, move, cellSize_, board);
             }
         }
@@ -340,8 +346,9 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
      */
     public void gameChanged(GameChangedEvent evt)
     {
+        TwoPlayerController c = get2PlayerController();
         // note: we don't show the winner dialog if we are optimizing the weights.
-        if (get2PlayerController().done( (TwoPlayerMove)evt.getMove(), true) && !get2PlayerController().isAutoOptimize())
+        if (c.getSearchable().done( (TwoPlayerMove)evt.getMove(), true) && !c.getOptions().isAutoOptimize())
             showWinnerDialog();
         else {
             if (get2PlayerController().allPlayersComputer())
@@ -447,12 +454,12 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
 
     public final synchronized void showMoveSequence( java.util.List moveSequence )
     {
-        showMoveSequence( moveSequence, controller_.getNumMoves() );
+        showMoveSequence( moveSequence, getController().getNumMoves() );
     }
 
     public final synchronized void showMoveSequence( java.util.List moveSequence, int numMovesToBackup)
     {
-        showMoveSequence( moveSequence, controller_.getNumMoves(), null);
+        showMoveSequence( moveSequence, getController().getNumMoves(), null);
     }
 
 
@@ -496,7 +503,7 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
             Move m =  (Move) moveSequence.get( i );
             getController().makeMove(m);
         }
-        nextMoves_ = nextMoves;
+        setNextMoves(nextMoves);
         refresh();
     }
 
@@ -543,7 +550,7 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
                e.printStackTrace();
            }
        }
-       if (c.isProcessing() && !c.isAutoOptimize()) {
+       if (c.isProcessing() && !c.getOptions().isAutoOptimize()) {
            return cachedGameBoard_;
        }
        else {

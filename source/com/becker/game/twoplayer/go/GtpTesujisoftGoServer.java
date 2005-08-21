@@ -2,17 +2,18 @@ package com.becker.game.twoplayer.go;
 
 
 
-import java.io.*;
-import java.util.List;
-
-import go.Point;
-import gtp.GtpServer;
-import utils.StringUtils;
-import utils.Options;
-import version.Version;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.Move;
 import com.becker.game.twoplayer.common.search.SearchStrategy;
+import com.becker.game.twoplayer.common.TwoPlayerOptions;
+import go.Point;
+import gtp.GtpServer;
+import utils.Options;
+import utils.StringUtils;
+import version.Version;
+
+import java.io.*;
+import java.util.List;
 
 //----------------------------------------------------------------------------
 
@@ -155,11 +156,12 @@ public class GtpTesujisoftGoServer
 
     private void initSize(int size) {
         m_controller = new GoController(size, size, 0);
-        m_controller.setAlphaBeta(true);
-        m_controller.setLookAhead(2);
-        m_controller.setPercentageBestMoves(50);
-        m_controller.setQuiescence(false);
-        m_controller.setSearchStrategyMethod(SearchStrategy.MINIMAX);
+        TwoPlayerOptions options = m_controller.getOptions();
+        options.setAlphaBeta(true);
+        options.setLookAhead(2);
+        options.setPercentageBestMoves(50);
+        options.setQuiescence(false);
+        options.setSearchStrategyMethod(SearchStrategy.MINIMAX);
         m_size = size;
     }
 

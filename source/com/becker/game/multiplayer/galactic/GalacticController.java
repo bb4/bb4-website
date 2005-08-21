@@ -199,46 +199,6 @@ public class GalacticController extends GameController
     }
 
     /**
-     *
-     * @param lastMove
-     * @return
-     *
-    private GalacticTurn createMove(Move lastMove)
-    {
-        GalacticTurn gmove = GalacticTurn.createMove((lastMove==null)?0:lastMove.moveNumber+1);
-
-        // for each order of each player, apply it for one year
-        // if there are battles, show them in the battle dialog and record the result in the move.
-        Player[] players = this.getPlayers();
-
-        for (int i=0; i< players.length; i++) {
-            List orders = ((GalacticPlayer)players[i]).getOrders();
-            Iterator orderIt = orders.iterator();
-            while (orderIt.hasNext()) {
-                Order order = (Order)orderIt.next();
-                // have we reached our destination?
-                // if so show and record the battle, and then remove the order from the list.
-                // If not adjust the distance remaining.
-                order.incrementYear();
-                if (order.hasArrived()) {
-                    //  show battle dialog
-                    Planet destPlanet = order.getDestination();
-
-                    gmove.addSimulation(order, destPlanet);
-
-                    //destPlanet.setOwner( gmove.getOwnerAfterAttack());
-                    //destPlanet.setNumShips( gmove.getNumShipsAfterAttack() );
-
-                    // remove this order as it has arrived.
-                    orderIt.remove();
-                }
-            }
-        }
-
-        return gmove;
-    } */
-
-    /**
      * make it the next players turn
      * @return the index of the next player
      */
@@ -391,5 +351,7 @@ public class GalacticController extends GameController
     {
         return false;
     }
+
+
 
 }

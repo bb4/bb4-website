@@ -1,17 +1,16 @@
 package com.becker.game.twoplayer.common.ui;
 
 import com.becker.common.ColorMap;
-import com.becker.game.common.Move;
-import com.becker.game.common.GameContext;
-import com.becker.game.twoplayer.common.search.SearchTreeNode;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.twoplayer.common.search.SearchTreeNode;
 
 import javax.swing.*;
 import javax.swing.tree.TreePath;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
-import java.util.*;
+import java.util.Enumeration;
+import java.util.LinkedList;
 import java.util.List;
 
 /**

@@ -1,15 +1,16 @@
 package com.becker.game.twoplayer.go.test;
 
-import junit.framework.TestCase;
-import junit.framework.Assert;
 import com.becker.game.common.GameContext;
-import com.becker.game.twoplayer.go.*;
 import com.becker.game.twoplayer.common.search.SearchStrategy;
+import com.becker.game.twoplayer.common.TwoPlayerOptions;
+import com.becker.game.twoplayer.go.*;
+import junit.framework.Assert;
+import junit.framework.TestCase;
 
-import java.util.List;
-import java.util.Set;
 import java.io.File;
 import java.io.FilenameFilter;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author Barry Becker
@@ -40,11 +41,12 @@ public class GoTestCase extends TestCase {
         controller_ = new GoController(13, 13, 0);
 
         //controller_.allPlayersComputer();
-        controller_.setAlphaBeta(true);
-        controller_.setLookAhead(4);
-        controller_.setPercentageBestMoves(40);
-        //controller_.setQuiescence(true); // take stoo long if on
-        controller_.setSearchStrategyMethod(SearchStrategy.MINIMAX);
+        TwoPlayerOptions options = controller_.getOptions();
+        options.setAlphaBeta(true);
+        options.setLookAhead(4);
+        options.setPercentageBestMoves(40);
+        //opttions.setQuiescence(true); // take stoo long if on
+        options.setSearchStrategyMethod(SearchStrategy.MINIMAX);
 
     }
 
@@ -57,7 +59,7 @@ public class GoTestCase extends TestCase {
      * @param pattern
      * @return all the files matching the supplied pattern in the specified directory
      */
-    protected String[] getFilesMatching(String directory, String pattern) {
+    protected static String[] getFilesMatching(String directory, String pattern) {
 
         File dir =  new File(EXTERNAL_TEST_CASE_DIR + directory);
         assert (dir.isDirectory());
@@ -80,7 +82,7 @@ public class GoTestCase extends TestCase {
         return m;
     }
 
-    protected void checkExpected(GoMove m, int row, int col) {
+    protected static void checkExpected(GoMove m, int row, int col) {
 
         Assert.assertTrue("Was expecting "+ row +", "+ col +", but instead got "+m,
                           m.getToRow() == row && m.getToCol() == col);
@@ -93,7 +95,7 @@ public class GoTestCase extends TestCase {
 
         // must check the worth of the board once to update the scoreContributions fo empty spaces.
         List moves = controller_.getMoveList();
-        double w = controller_.worth((GoMove)moves.get(moves.size()-3), controller_.getDefaultWeights(), true);    
+        //double w = controller_.worth((GoMove)moves.get(moves.size()-3), controller_.getDefaultWeights(), true); // need?   
         controller_.updateLifeAndDeath();   // this updates the groups and territory as well.
     }
 
@@ -120,7 +122,7 @@ public class GoTestCase extends TestCase {
     }
 
 
-    protected boolean approximatelyEqual(double value, double expectedValue, double thresh) {
+    protected static boolean approximatelyEqual(double value, double expectedValue, double thresh) {
         return (Math.abs(value - expectedValue) < thresh);
     }
 
@@ -129,7 +131,7 @@ public class GoTestCase extends TestCase {
     }
 
 
-    private class MyFileFilter implements FilenameFilter {
+    private static class MyFileFilter implements FilenameFilter {
 
         private String pattern_;
 

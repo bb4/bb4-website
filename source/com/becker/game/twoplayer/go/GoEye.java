@@ -1,9 +1,11 @@
 package com.becker.game.twoplayer.go;
 
-import com.becker.game.common.GameContext;
 import com.becker.game.common.BoardPosition;
+import com.becker.game.common.GameContext;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 /**
  *  A GoEye is composed of a strongly connected set of empty spaces (and possible some dead enemy stones).

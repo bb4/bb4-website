@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.common.ui;
 
-import com.becker.game.common.GameWeights;
 import com.becker.game.common.GameContext;
+import com.becker.game.common.GameWeights;
 import com.becker.optimization.Parameter;
 import com.becker.optimization.ParameterArray;
 import com.becker.ui.GradientButton;
@@ -9,7 +9,8 @@ import com.becker.ui.OptionsDialog;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Allow for editing the polynomial weights used in the static

@@ -1,9 +1,9 @@
 package com.becker.game.twoplayer.common.ui;
 
 import com.becker.common.ColorMap;
-import com.becker.game.twoplayer.common.search.SearchTreeNode;
-import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerController;
+import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.twoplayer.common.search.SearchTreeNode;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultTreeCellRenderer;

@@ -2,9 +2,9 @@ package com.becker.game.twoplayer.go.ui;
 
 import com.becker.common.ColorMap;
 import com.becker.common.Util;
-import com.becker.game.twoplayer.common.search.SearchTreeNode;
-import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerController;
+import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.twoplayer.common.search.SearchTreeNode;
 import com.becker.game.twoplayer.common.ui.GameTreeCellRenderer;
 
 import javax.swing.*;

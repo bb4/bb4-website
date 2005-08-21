@@ -1,13 +1,14 @@
 package com.becker.game.twoplayer.go.test.whitebox;
 
+import com.becker.game.twoplayer.go.GoBoard;
+import com.becker.game.twoplayer.go.GoBoardPosition;
+import com.becker.game.twoplayer.go.GoMove;
+import com.becker.game.twoplayer.go.GoStone;
 import com.becker.game.twoplayer.go.test.GoTestCase;
-import com.becker.game.twoplayer.go.test.TestEyes;
-import com.becker.game.twoplayer.go.*;
-import com.becker.game.common.Player;
 import junit.framework.Assert;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Verify that all the methods in GoBaord work as expected

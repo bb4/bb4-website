@@ -1,15 +1,14 @@
 package com.becker.game.twoplayer.common.ui;
 
 import com.becker.common.Util;
-import com.becker.game.common.*;
-import com.becker.game.common.ui.*;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.GameController;
+import com.becker.game.common.ui.GameChangedEvent;
+import com.becker.game.common.ui.GameChangedListener;
+import com.becker.game.common.ui.GameInfoPanel;
 import com.becker.game.twoplayer.common.TwoPlayerController;
-import com.becker.ui.GUIUtil;
 
 import javax.swing.*;
-import javax.swing.Box;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.text.MessageFormat;
 

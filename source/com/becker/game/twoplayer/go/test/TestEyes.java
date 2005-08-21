@@ -1,13 +1,14 @@
 package com.becker.game.twoplayer.go.test;
 
+import com.becker.game.common.GameContext;
+import com.becker.game.twoplayer.go.GoBoard;
+import com.becker.game.twoplayer.go.GoEye;
+import com.becker.game.twoplayer.go.GoGroup;
 import junit.framework.Assert;
-import junit.framework.TestSuite;
 import junit.framework.Test;
+import junit.framework.TestSuite;
 
 import java.util.Set;
-
-import com.becker.game.twoplayer.go.*;
-import com.becker.game.common.GameContext;
 
 
 /**

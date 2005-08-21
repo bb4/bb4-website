@@ -1,11 +1,15 @@
 package com.becker.game.twoplayer.go.ui;
 
+import static com.becker.game.twoplayer.go.GoControllerConstants.*;   // jdk 1.5 feature
 import com.becker.common.ColorMap;
-import com.becker.game.twoplayer.go.*;
 import com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer;
+import com.becker.game.twoplayer.go.*;
 
 import java.awt.*;
-import java.awt.geom.*;
+import java.awt.geom.Area;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Point2D;
 import java.util.*;
 import java.util.List;
 
@@ -323,7 +327,7 @@ final class GoGroupRenderer
 
             // the colormap will show red if close to dead,
             // so reverse the health value for the other player
-            double h = (GoController.USE_RELATIVE_GROUP_SCORING? group.getRelativeHealth():group.getAbsoluteHealth());
+            double h = (USE_RELATIVE_GROUP_SCORING ? group.getRelativeHealth():group.getAbsoluteHealth());
             if (!group.isOwnedByPlayer1())
                 h = -h;
 

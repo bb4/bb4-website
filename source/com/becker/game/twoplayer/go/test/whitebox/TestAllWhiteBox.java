@@ -1,8 +1,6 @@
 package com.becker.game.twoplayer.go.test.whitebox;
 
 import com.becker.game.twoplayer.go.test.GoTestCase;
-import com.becker.game.twoplayer.go.test.TestBlunderCollection;
-import com.becker.game.twoplayer.go.test.TestEscapeCaptureCollection;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

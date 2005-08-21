@@ -1,13 +1,17 @@
 package com.becker.game.twoplayer.common.ui;
 
 import com.becker.common.Util;
-import com.becker.game.common.*;
-import com.becker.game.common.ui.*;
+import com.becker.game.common.Board;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.ui.GameChangedEvent;
+import com.becker.game.common.ui.GameChangedListener;
+import com.becker.game.twoplayer.common.TwoPlayerController;
+import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.twoplayer.common.TwoPlayerViewerCallbackInterface;
 import com.becker.game.twoplayer.common.search.SearchTreeNode;
-import com.becker.game.twoplayer.common.*;
+import com.becker.ui.ContinuousColorLegend;
 import com.becker.ui.GUIUtil;
 import com.becker.ui.GradientButton;
-import com.becker.ui.ContinuousColorLegend;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -62,7 +66,7 @@ public final class GameTreeDialog extends JDialog
     private TwoPlayerViewerCallbackInterface boardViewer_ = null;
 
     // the controller that is actually being played
-    private TwoPlayerControllerInterface mainController_ = null;
+    private TwoPlayerController mainController_ = null;
 
     GameTreeCellRenderer cellRenderer_;
 
@@ -83,8 +87,6 @@ public final class GameTreeDialog extends JDialog
         enableEvents( AWTEvent.WINDOW_EVENT_MASK );
         try {
             initUI();
-        } catch (Exception e) {
-            e.printStackTrace();
         } catch (OutOfMemoryError oom) {
             GameContext.log( 0, "we ran out of memory!" );
             GameContext.log( 0, GUIUtil.getStackTrace( oom ) );
@@ -108,7 +110,7 @@ public final class GameTreeDialog extends JDialog
 
         TwoPlayerPieceRenderer pieceRenderer = (TwoPlayerPieceRenderer)((TwoPlayerBoardViewer)boardViewer_).getPieceRenderer();
         treeViewer_ =
-                new GameTreeViewer( root_, controller_.getLookAhead(), cellRenderer_.getColorMap(), pieceRenderer);
+                new GameTreeViewer( root_, controller_.getOptions().getLookAhead(), cellRenderer_.getColorMap(), pieceRenderer);
         treeViewer_.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
         treeViewer_.setPreferredSize(new Dimension(500, 120));
 
@@ -242,7 +244,7 @@ public final class GameTreeDialog extends JDialog
         textTree_ = createTree( root_ );
         scrollPane_.setViewportView( textTree_ );
 
-        treeViewer_.setRoot(root_, mainController_.getLookAhead());
+        treeViewer_.setRoot(root_, mainController_.getOptions().getLookAhead());
 
         textTree_.expandRow( 0 );
 

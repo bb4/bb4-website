@@ -2,7 +2,9 @@ package com.becker.game.twoplayer.go;
 
 import com.becker.game.common.GameContext;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  *  A GoSet is an abstract class representing a set of go entities
