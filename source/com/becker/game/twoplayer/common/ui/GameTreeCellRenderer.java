@@ -18,7 +18,6 @@ public class GameTreeCellRenderer extends DefaultTreeCellRenderer
 {
 
     private Color p1Color_ = Color.green;
-    private Color p2Color_ = Color.blue;
     private ColorMap colormap_ = null;
 
     private static final Color SELECTED_COLOR = new Color( 200, 50, 0 );
@@ -38,7 +37,7 @@ public class GameTreeCellRenderer extends DefaultTreeCellRenderer
     /**
      * initialize the colormap used to color the gmae tree rows, nodes, and arcs.
      */
-    protected ColorMap createColormap(TwoPlayerPieceRenderer renderer)
+    protected static ColorMap createColormap(TwoPlayerPieceRenderer renderer)
     {
         // TwoPlayerPieceRenderer renderer = (TwoPlayerPieceRenderer)viewer.getPieceRenderer();
         // we will use this colormap for both the text tree and the graphical tree viewers so they have consistent coloring.
@@ -99,10 +98,10 @@ public class GameTreeCellRenderer extends DefaultTreeCellRenderer
         Color bg = getBGColor( value );
         Color fg = getFGColor( value );
 
-        this.setBackground( bg );
-        this.setForeground( fg );
-        this.setBackgroundNonSelectionColor( bg );
-        this.setBackgroundSelectionColor( Color.orange );
+        setBackground( bg );
+        setForeground( fg );
+        setBackgroundNonSelectionColor( bg );
+        setBackgroundSelectionColor( Color.orange );
         // for some reason this doesn't work right
         //return cellPanel_;
         return this;
@@ -126,7 +125,7 @@ public class GameTreeCellRenderer extends DefaultTreeCellRenderer
         Color c;
         SearchTreeNode node = (SearchTreeNode) value;
         int numChildren = node.getChildCount();
-        this.setText( getText() + " kids=" + numChildren );
+        setText( getText() + " kids=" + numChildren );
         TwoPlayerMove m = (TwoPlayerMove) node.getUserObject();
         if ( m == null ) return Color.blue;
 
@@ -145,13 +144,4 @@ public class GameTreeCellRenderer extends DefaultTreeCellRenderer
         return c;
     }
 
-    protected final Color getPieceColor( Object value )
-    {
-        SearchTreeNode node = (SearchTreeNode) value;
-        TwoPlayerMove m = (TwoPlayerMove) node.getUserObject();
-        if ( m == null )
-            return Color.gray;
-
-        return (m.player1) ? p1Color_ : p2Color_;
-    }
 }

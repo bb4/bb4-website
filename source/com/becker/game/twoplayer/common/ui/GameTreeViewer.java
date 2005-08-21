@@ -137,7 +137,7 @@ class GameTreeViewer extends JPanel implements MouseMotionListener
      *
      * @param path path corresponding to a the list of moves to make
      */
-    public synchronized final void highlightPath( TreePath path )
+    public final synchronized void highlightPath( TreePath path )
     {
         // unhighlight the old path and highlight the new one without redrawing the whole tree.
         //GameContext.log(2, "about to highlight "+path );
@@ -159,7 +159,7 @@ class GameTreeViewer extends JPanel implements MouseMotionListener
     {
         Object[] pathNodes = path.getPath();
         SearchTreeNode lastNode = (SearchTreeNode)pathNodes[0];
-        g2.drawOval(lastNode.x-HL_NODE_RADIUS, lastNode.y-HL_NODE_RADIUS, HL_NODE_DIAMETER, HL_NODE_DIAMETER);
+        g2.drawOval(lastNode.x-HL_NODE_RADIUS, lastNode.y - HL_NODE_RADIUS, HL_NODE_DIAMETER, HL_NODE_DIAMETER);
         for (int i=1; i<pathNodes.length; i++) {
             SearchTreeNode node = (SearchTreeNode)pathNodes[i];
             TwoPlayerMove m = (TwoPlayerMove)node.getUserObject();
@@ -181,7 +181,7 @@ class GameTreeViewer extends JPanel implements MouseMotionListener
     {
         TwoPlayerMove m = (TwoPlayerMove)node.getUserObject();
         g2.setColor( colormap_.getColorForValue(m.value));
-        int x = MARGIN + width_*(offset+node.spaceAllocation/2)/totalAtLevel_[depth];
+        int x = MARGIN + width_*(offset+node.spaceAllocation >> 1)/totalAtLevel_[depth];
         int y = MARGIN + depth*levelHeight_;
         node.x = x;
         node.y = y;
@@ -218,8 +218,8 @@ class GameTreeViewer extends JPanel implements MouseMotionListener
         if (highlighted)
             g2.setStroke(HIGHLIGHT_STROKE);
         g2.setColor( colormap_.getColorForValue(m.inheritedValue));
-        g2.drawLine(MARGIN + width_*(offset1+parent.spaceAllocation/2)/totalAtLevel_[depth], MARGIN + depth*levelHeight_,
-                    MARGIN + width_*(offset2+child.spaceAllocation/2)/totalAtLevel_[depth+1], MARGIN + (depth+1)*levelHeight_);
+        g2.drawLine(MARGIN + width_*(offset1+parent.spaceAllocation >> 1)/totalAtLevel_[depth], MARGIN + depth*levelHeight_,
+                    MARGIN + width_*(offset2+child.spaceAllocation >> 1)/totalAtLevel_[depth+1], MARGIN + (depth+1)*levelHeight_);
         if (highlighted)
             g2.setStroke(THIN_STROKE);
 
@@ -276,19 +276,10 @@ class GameTreeViewer extends JPanel implements MouseMotionListener
         Color p1Color = new Color(c.getRed(), c.getGreen(), c.getBlue(), BACKGROUND_BAND_OPACITY);
         c = pieceRenderer_.getPlayer2Color();  //colormap_.getMinColor();
         Color p2Color = new Color(c.getRed(), c.getGreen(), c.getBlue(), BACKGROUND_BAND_OPACITY);
-        GradientPaint gp = new GradientPaint(0, (float)levelHeight_/4.f, p2Color, 0, 5.f*levelHeight_/4.f, p1Color, true);
+        GradientPaint gp = new GradientPaint(0, (float)levelHeight_/4.0f, p2Color, 0, 5.0f*levelHeight_/4.f, p1Color, true);
         g2.setPaint(gp);
 
         g2.fillRect( 0, 0, getWidth(), getHeight() );
-        /*
-        for (int i=0; i<=depth_; i++) {
-            // if even use p2 color
-            Color c = (i%2 == 0)? colormap_.getMinColor(): colormap_.getMaxColor();
-            c = new Color(c.getRed(), c.getGreen(), c.getBlue(), BACKGROUND_BAND_OPACITY);
-            g2.setColor(c);
-            g2.fillRect(0, (int)(MARGIN+(i-.6)*levelHeight_), this.getWidth(), levelHeight_);
-        }
-        */
     }
 
     /**

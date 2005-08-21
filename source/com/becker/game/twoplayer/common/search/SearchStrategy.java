@@ -57,11 +57,11 @@ public abstract class SearchStrategy
     {
         switch (method) {
             case MINIMAX:
-                return new MiniMaxStrategy( gc );
+                return new MiniMaxStrategy(gc);
             case NEGAMAX:
-                return new NegaMaxStrategy( gc );
-            default :
-                return new MiniMaxStrategy( gc );
+                return new NegaMaxStrategy(gc);
+            default:
+                return new MiniMaxStrategy(gc);
         }
     }
 
@@ -114,21 +114,6 @@ public abstract class SearchStrategy
     public abstract TwoPlayerMove search( TwoPlayerMove lastMove, ParameterArray weights,
                                           int depth, int quiescentDepth,
                                           double alpha, double beta, SearchTreeNode parent );
-
-    /**
-     * This continues the search in situations where the board position is not stable.
-     * For example, perhaps we are in the middle of a piece exchange
-     *
-     * @param lastMove the most recent move made by one of the players
-     * @param weights coefficient for the evaluation polunomial that indirectly determines the best move
-     * @param depth of the quiescent search
-     * @param alpha same as p2best but for the other player. (alpha)
-     * @param beta the maximum of the value that it inherits from above and the best move found at this level (beta)
-     * @param parent for constructing a ui tree. If null no game tree is constructed
-     * @return the chosen move (ie the best move) (may be null if no next move)
-     */
-    protected abstract TwoPlayerMove quiescentSearch( TwoPlayerMove lastMove, ParameterArray weights, int depth,
-                                             double alpha, double beta, SearchTreeNode parent );
 
     /**
      * return true if the move list is empty.
@@ -193,10 +178,8 @@ public abstract class SearchStrategy
     {
         return paused_;
     }
-    public final void step()
-    {}
 
-    public final void continueProcessing()
+    public void continueProcessing()
     {
         paused_ = false;
     }

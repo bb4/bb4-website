@@ -88,7 +88,7 @@ public class TwoPlayerInfoPanel extends GameInfoPanel implements GameChangedList
         Color pColor = p1sturn? renderer.getPlayer1Color() : renderer.getPlayer2Color();
         playerLabel_.setBorder(getPlayerLabelBorder(pColor));
 
-        this.repaint();
+        repaint();
     }
 
     /**

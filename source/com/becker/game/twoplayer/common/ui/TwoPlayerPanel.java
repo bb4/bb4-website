@@ -2,7 +2,6 @@ package com.becker.game.twoplayer.common.ui;
 
 import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
-import com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.sound.SpeechSynthesizer;
 import com.becker.ui.*;
@@ -162,7 +161,7 @@ public abstract class TwoPlayerPanel extends GamePanel
             boolean canceled = optionsDialog_.showDialog();
             GameContext.log(2, "options selected  canceled=" + canceled );
             if ( !canceled ) { // start a game with the newly defined options
-                System.out.println( "options selected not canceled  show game tree=" + get2PlayerController().getShowGameTree() );
+                GameContext.log(0, "options selected not canceled  show game tree=" + get2PlayerController().getShowGameTree() );
                 if ( get2PlayerController().getShowGameTree() ) {
                     showGameTreeDialog();
                 }

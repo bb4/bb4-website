@@ -33,7 +33,7 @@ class EditWeightsDialog extends OptionsDialog implements ActionListener
     private static final Dimension WEIGHT_PANEL_DIM = new Dimension( 900, 25 );
 
     // constructor
-    public EditWeightsDialog( Frame parent, ParameterArray weights, GameWeights gameWeights )
+    EditWeightsDialog( Frame parent, ParameterArray weights, GameWeights gameWeights )
     {
         super( parent );
 
@@ -49,7 +49,7 @@ class EditWeightsDialog extends OptionsDialog implements ActionListener
         return GameContext.getLabel("EDIT_WEIGHTS");
     }
 
-    protected void initUI()
+    private void initUI()
     {
         mainPanel_.setLayout( new BoxLayout( mainPanel_, BoxLayout.Y_AXIS ) );
 
@@ -61,7 +61,7 @@ class EditWeightsDialog extends OptionsDialog implements ActionListener
         mainPanel_.add( scrollPane_ );
         mainPanel_.add( createButtonsPanel() );
 
-        this.getContentPane().add( mainPanel_ );
+        getContentPane().add( mainPanel_ );
         pack();
     }
 
@@ -87,8 +87,9 @@ class EditWeightsDialog extends OptionsDialog implements ActionListener
         int len = weights.size();
         weightFields_ = new JTextField[len];
 
+        final FlowLayout fl = new FlowLayout();
         for ( int i = 0; i < len; i++ ) {
-            JPanel weightPanel = new JPanel( new FlowLayout() );
+            JPanel weightPanel = new JPanel( fl );
             weightPanel.setAlignmentX( Component.LEFT_ALIGNMENT );
             weightPanel.setMaximumSize( WEIGHT_PANEL_DIM );
             JLabel lab = new JLabel( gameWeights_.getName( i )+" [0.0 - "+gameWeights_.getMaxWeight(i)+"]");
