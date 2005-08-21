@@ -126,7 +126,7 @@ public final class NegaMaxStrategy extends SearchStrategy
      * This continues the search in situations where the board position is not stable.
      * For example, perhaps we are in the middle of a piece exchange
      */
-    protected final TwoPlayerMove quiescentSearch( TwoPlayerMove lastMove, ParameterArray weights,
+    private TwoPlayerMove quiescentSearch( TwoPlayerMove lastMove, ParameterArray weights,
                                           int depth, double alpha, double beta, SearchTreeNode parent )
     {
         double val = lastMove.value;

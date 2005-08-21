@@ -1,7 +1,6 @@
 package com.becker.game.twoplayer.common;
 
 import com.becker.game.common.*;
-import com.becker.game.common.Move;
 
 
 /**
@@ -12,8 +11,6 @@ import com.becker.game.common.Move;
  */
 public abstract class TwoPlayerBoard extends Board
 {
-
-
 
     public Move undoMove() {
         if ( !getMoveList().isEmpty() ) {
@@ -43,8 +40,9 @@ public abstract class TwoPlayerBoard extends Board
             piece.setTransparency( m.transparency );
 
             // make the moveList part of the board instead of the controller
-            if ( GameContext.getDebugMode() > 0 )
-                piece.setAnnotation( Integer.toString(this.getNumMoves()) );
+            if ( GameContext.getDebugMode() > 0 ) {
+                piece.setAnnotation( Integer.toString(getNumMoves()) );
+            }
         }
         return true;
     }

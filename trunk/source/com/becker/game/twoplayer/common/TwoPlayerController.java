@@ -54,8 +54,8 @@ public abstract class TwoPlayerController extends GameController
     private int bestPercentage_;
     protected boolean player1sTurn_ = true;
 
-    private boolean autoOptimize_ = false;
-    private String autoOptimizeFile_;
+    private boolean autoOptimize_;
+    private String autoOptimizeFile_ = null;
 
     // these weights determine how the computer values each move.
     // they serve as parameters to a game dependent evaluation function
@@ -133,7 +133,7 @@ public abstract class TwoPlayerController extends GameController
         player1sTurn_ = true;
     }
 
-    protected void createPlayers()
+    private void createPlayers()
     {
         Player[] players = new Player[2];
         players[0] = new Player(getPlayerName(true), null, true);
@@ -305,8 +305,6 @@ public abstract class TwoPlayerController extends GameController
     }
 
 
-
-
     /**
      * @return true if it is currently player1's turn.
      */
@@ -340,6 +338,11 @@ public abstract class TwoPlayerController extends GameController
         return players_[1];
     }
 
+    /**
+     *
+     * @return  preferred tone to use when making a move.
+     */
+    //protected abstract String getPreferredTone();
 
     /**
      * Returns a number between 0 and 1 representing the estimated probability of player 1 winning the game.
@@ -523,7 +526,7 @@ public abstract class TwoPlayerController extends GameController
 
         if (getNumMoves() > 0)
             assert(((TwoPlayerMove)board_.getLastMove()).player1 != m.player1):
-                    "can't go twice in a row m="+m+" getLastMove()="+board_.getLastMove() +" movelist = "+this.getMoveList();
+                    "can't go twice in a row m="+m+" getLastMove()="+board_.getLastMove() +" movelist = "+getMoveList();
 
         board_.makeMove( m );
 
@@ -547,7 +550,7 @@ public abstract class TwoPlayerController extends GameController
      *
      * @param isPlayer1
      * @return true if the game is over
-     * @throws java.lang.AssertionError  if something bad happenned.
+     * @throws AssertionError  if something bad happenned.
      */
     public boolean requestComputerMove(boolean isPlayer1) throws AssertionError
     {
@@ -559,7 +562,7 @@ public abstract class TwoPlayerController extends GameController
      * @param isPlayer1
      * @param synchronous if true then the method does not return until the nest move has been found.
      * @return true if the game is over
-     * @throws java.lang.AssertionError  if something bad happenned.
+     * @throws AssertionError  if something bad happenned.
      */
     public boolean requestComputerMove(final boolean isPlayer1, boolean synchronous) throws AssertionError
     {
@@ -731,9 +734,9 @@ public abstract class TwoPlayerController extends GameController
      */
     public boolean done( TwoPlayerMove m, boolean recordWin )
     {
-        if (this.getNumMoves() == 0)
+        if (getNumMoves() == 0)
             return false;
-        if (this.getNumMoves() > 0 && m == null) {
+        if (getNumMoves() > 0 && m == null) {
             GameContext.log(0, "Game done because there are no more moves");
             return true; // because their were no more moves apparently.
         }
@@ -791,8 +794,9 @@ public abstract class TwoPlayerController extends GameController
      * @param moveList the list of all generated moves
      * @param player1sPerspective if true than bestMoves are from player1s perspective
      */
-    public final List getBestMoves( boolean player1, List moveList, boolean player1sPerspective )
+    protected final List getBestMoves( boolean player1, List moveList, boolean player1sPerspective )
     {
+
         // sort the list so the better moves appear first.
         // This is a terrific improvement when used in conjunction with
         // alpha-beta pruning
@@ -805,11 +809,13 @@ public abstract class TwoPlayerController extends GameController
         // We could potentially eliminate the best move doing this.
         // A move which has a low score this time might actually lead to the best move later.
         int numMoves = moveList.size();
+
+        List bestMoveList = moveList;
         int best = (int) ((float) bestPercentage_ / HUNDRED * numMoves);
         if ( best < numMoves )
-            moveList = new LinkedList( moveList.subList( 0, best ) );
+            bestMoveList = moveList.subList( 0, best );
 
         //GameContext.log(2, "generated top moves are :  " + moveList );
-        return moveList;
+        return bestMoveList;
     }
 }

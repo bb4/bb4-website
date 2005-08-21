@@ -72,7 +72,7 @@ public class SearchTreeNode extends DefaultMutableTreeNode
         if (children == null)
             return null;
         TwoPlayerMove[] moves = new TwoPlayerMove[children.size()];
-        Enumeration enumeration = this.children();
+        Enumeration enumeration = children();
         int i = 0;
         while (enumeration.hasMoreElements()) {
             SearchTreeNode node = (SearchTreeNode)enumeration.nextElement();

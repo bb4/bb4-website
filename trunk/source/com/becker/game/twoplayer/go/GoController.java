@@ -58,6 +58,8 @@ import javax.swing.*;
  *  - back up and play black, back up again and play white.
  *  - java.lang.AssertionError: The sum of the child times(23411) cannot be greater than the parent time (23296)
  *
+ * -  encapsulate game options in separate class to reduce complexity of controllers.
+ *
  ** common algorithm improvements
  *    - cache isInAtari for better performance
  *    - accurate scoring when the game is over (score what it can, and allow for player dispute of score).
@@ -721,7 +723,7 @@ public final class GoController extends TwoPlayerController
         // if none of the generated moves have an inherited value better than the passing move
         // (which just uses the value of the current move) then we should pass
         if (getNumMoves() > Ncols+Nrows)  {
-            ((LinkedList)moveList).addLast( GoMove.createPassMove(lastMove.value, player1));
+            moveList.add(moveList.size(), GoMove.createPassMove(lastMove.value, player1));
         }
         gb.getProfiler().stop(GoProfiler.GENERATE_MOVES);
 

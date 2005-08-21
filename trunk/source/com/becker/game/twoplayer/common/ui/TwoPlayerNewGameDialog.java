@@ -175,7 +175,7 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
         Dimension frmSize = getSize();
         Point pt = getLocation();
         editWtsDlg.setLocation( (frmSize.width - dlgSize.width) / 2
-                + pt.x, (frmSize.height - dlgSize.height) / 2 + pt.y );
+                + pt.x, ((frmSize.height - dlgSize.height) >> 1) + pt.y );
         editWtsDlg.setModal( true );
         editWtsDlg.setVisible(true);
         return false; // how to cancel?
@@ -206,7 +206,7 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
         }
         else
             canceled_ = false;
-        this.setVisible( false );
+        setVisible( false );
     }
 
     public void actionPerformed( ActionEvent e )

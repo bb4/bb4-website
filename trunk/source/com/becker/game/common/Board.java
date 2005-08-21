@@ -102,15 +102,6 @@ public abstract class Board implements BoardInterface, Cloneable
 
 
     /**
-     *  There can be no more than this many moves in a game
-     * In many games, it is not just the number of squares.
-     * the main purpose of this function is to avoid cases where
-     * a game can go on forever by making repeat moves.
-     * @return upper limit on the number of moves that the board can support
-     */
-    public abstract int getMaxNumMoves();
-
-    /**
      * returns null if there is no game piece at the position specified.
      * @return the piece at the specified location. Returns null if there is no piece there.
      */

@@ -98,7 +98,7 @@ public final class GameTreeDialog extends JDialog
      */
     private void initUI()
     {
-        this.setTitle( "Game Tree" );
+        setTitle( "Game Tree" );
 
         setResizable( true );
         mainPanel_.setLayout( new BorderLayout() );
@@ -175,7 +175,7 @@ public final class GameTreeDialog extends JDialog
         buttonsPanel.add( closeButton_ );
         mainPanel_.add( buttonsPanel, BorderLayout.SOUTH );
 
-        this.getContentPane().add( mainPanel_ );
+        getContentPane().add( mainPanel_ );
     }
 
     /**
@@ -458,7 +458,7 @@ public final class GameTreeDialog extends JDialog
     protected final void processWindowEvent( WindowEvent e )
     {
         if ( e.getID() == WindowEvent.WINDOW_CLOSING ) {
-            this.dispose();
+            dispose();
         }
         super.processWindowEvent( e );
     }
@@ -471,7 +471,7 @@ public final class GameTreeDialog extends JDialog
     {
         // if we set the root to null, then it doesnt have to build the tree
         controller_.setGameTreeRoot( null );
-        this.setVisible(false);
+        setVisible(false);
     }
 
 }

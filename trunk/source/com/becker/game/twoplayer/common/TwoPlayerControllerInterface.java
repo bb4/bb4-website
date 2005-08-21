@@ -19,7 +19,7 @@ import java.util.LinkedList;
  * Searchable methods to do their search.
  * The Optimizer (see com.becker.optimization package) calls Optimizee interface methods.
  *
- * @see com.becker.game.twoplayer.common.TwoPlayerController for the abstract implementation of this interface
+ * @see TwoPlayerController for the abstract implementation of this interface
  * @see com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer
  * @see com.becker.game.common.Board
  *
@@ -44,13 +44,6 @@ public interface TwoPlayerControllerInterface
      */
     public TwoPlayerViewerCallbackInterface get2PlayerViewer();
 
-    /**
-     * retract the most recently played move
-     * @return  the move which was undone (null returned if no prior move)
-     */
-    public Move undoLastMove();
-
-  
 
     /**
      *  @return true if the viewer is currently processing (i.e. searching)
@@ -76,7 +69,7 @@ public interface TwoPlayerControllerInterface
      * game is over.
      * @param isPlayer1
      * @return true if the game is over.
-     * @throws java.lang.AssertionError thrown if something bad happened while searching.
+     * @throws AssertionError thrown if something bad happened while searching.
      */
     public boolean requestComputerMove(boolean isPlayer1) throws AssertionError;
 

@@ -84,11 +84,6 @@ public abstract class OptionsDialog extends JDialog implements ActionListener
     }
 
     /**
-     * initialize the user interface
-     */
-    protected abstract void initUI();
-
-    /**
      * set the title for the dialog
      */
     public abstract String getTitle();

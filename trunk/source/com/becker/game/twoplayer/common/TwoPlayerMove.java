@@ -46,6 +46,7 @@ public class TwoPlayerMove extends Move
     public GamePiece piece;
     /**
      * true if this move was generated during quiescent search.
+     * @@ should not be in this class.
      */
     public boolean urgent;
     /**
@@ -104,9 +105,9 @@ public class TwoPlayerMove extends Move
     public TwoPlayerMove copy()
     {
         TwoPlayerMove cp = createMove( toRow_, toCol_, value,  piece );
-        cp.transparency = this.transparency;
-        cp.selected = this.selected;
-        cp.urgent = this.urgent;
+        cp.transparency = transparency;
+        cp.selected = selected;
+        cp.urgent = urgent;
         return cp;
     }
 
@@ -122,7 +123,7 @@ public class TwoPlayerMove extends Move
 
     /**
      * @param mv  the move to compare to.
-     * @return  true if equal.
+     * @return  true if values are equal.
      */
     public final boolean equals( Object mv )
     {

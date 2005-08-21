@@ -9,7 +9,6 @@ import com.becker.game.twoplayer.go.GoBoard;
 import com.becker.optimization.*;
 
 import javax.swing.*;
-import javax.swing.Timer;
 import java.awt.*;
 import java.awt.event.*;
 import java.text.MessageFormat;
@@ -58,13 +57,11 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
     // (to avoid concurrency problems)
     private Board cachedGameBoard_ = null;
 
-    private final static Cursor origCursor_ = null;
-
     // becomes true when stepping through the search
     private boolean stepping_ = false;
 
     // we occasionally want to show the conputers considered next moves in the ui
-    protected TwoPlayerMove[] nextMoves_;
+    private TwoPlayerMove[] nextMoves_;
 
 
     /**
@@ -195,7 +192,7 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
      * @param isPlayer1 if the computer player now moving is player 1.
      * @return done always returns false unless auto optimizing
      */
-    protected boolean doComputerMove( final boolean isPlayer1 )
+    protected boolean doComputerMove( boolean isPlayer1 )
     {
         setCursor( waitCursor_ );
 
@@ -330,9 +327,8 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
     protected void drawNextMoveMarkers(Graphics2D g2) {
         Board board = getBoard();
         if (nextMoves_ != null) {
-            for (int i=0; i<nextMoves_.length; i++) {
-                TwoPlayerMove move = nextMoves_[i];
-                ((TwoPlayerPieceRenderer)pieceRenderer_).renderNextMove(g2, move,  cellSize_, board);
+            for (TwoPlayerMove move : nextMoves_) {
+                ((TwoPlayerPieceRenderer) pieceRenderer_).renderNextMove(g2, move, cellSize_, board);
             }
         }
     }
@@ -346,7 +342,7 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
     {
         // note: we don't show the winner dialog if we are optimizing the weights.
         if (get2PlayerController().done( (TwoPlayerMove)evt.getMove(), true) && !get2PlayerController().isAutoOptimize())
-            this.showWinnerDialog();
+            showWinnerDialog();
         else {
             if (get2PlayerController().allPlayersComputer())
               continuePlay((TwoPlayerMove)evt.getMove());
@@ -449,12 +445,12 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
 
 
 
-    public synchronized final void showMoveSequence( java.util.List moveSequence )
+    public final synchronized void showMoveSequence( java.util.List moveSequence )
     {
         showMoveSequence( moveSequence, controller_.getNumMoves() );
     }
 
-    public synchronized final void showMoveSequence( java.util.List moveSequence, int numMovesToBackup)
+    public final synchronized void showMoveSequence( java.util.List moveSequence, int numMovesToBackup)
     {
         showMoveSequence( moveSequence, controller_.getNumMoves(), null);
     }
@@ -470,7 +466,7 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
      * @param nextMoves all the child moves of the final move in the sequence
      *       (see subclass implmentations for game specific usages)
      */
-    public synchronized final void showMoveSequence( java.util.List moveSequence,
+    public final synchronized void showMoveSequence( java.util.List moveSequence,
                                                int numMovesToBackup, TwoPlayerMove[] nextMoves )
     {
         if ( moveSequence == null || moveSequence.size() == 0 )

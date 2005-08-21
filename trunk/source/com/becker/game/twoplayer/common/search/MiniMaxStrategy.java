@@ -41,7 +41,7 @@ public final class MiniMaxStrategy extends SearchStrategy
                                        double alpha, double beta, SearchTreeNode parent )
     {
         List list;   // list of moves to consider
-        TwoPlayerMove selectedMove = null;  // the currently selected move
+        TwoPlayerMove selectedMove;  // the currently selected move
 
         // if player 1, then search for a high score, else seach for a low score
         boolean player1 = lastMove.player1;
@@ -141,7 +141,7 @@ public final class MiniMaxStrategy extends SearchStrategy
      * This continues the search in situations where the board position is not stable.
      * For example, perhaps we are in the middle of a piece exchange
      */
-    protected final TwoPlayerMove quiescentSearch( TwoPlayerMove lastMove, ParameterArray weights,
+    private TwoPlayerMove quiescentSearch( TwoPlayerMove lastMove, ParameterArray weights,
                                           int depth, double alpha, double beta, SearchTreeNode parent )
     {
         lastMove.inheritedValue = lastMove.value;

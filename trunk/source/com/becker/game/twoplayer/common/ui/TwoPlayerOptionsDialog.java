@@ -18,12 +18,8 @@ import java.awt.event.*;
  */
 public class TwoPlayerOptionsDialog extends GameOptionsDialog implements ActionListener, ItemListener
 {
-
-    // controller params/ algorithm
-    protected final JTextField algorithmField_ = null;
     private JRadioButton minimaxButton_;  // alg radio button group
     private JRadioButton negamaxButton_;  // alg radio button group
-    protected final GradientButton algorithmButton_ = null;
     private int algorithm_;
     private JTextField lookAheadField_;
     private JTextField bestPercentageField_;
@@ -237,7 +233,7 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog implements ActionL
 
         // constructor
         // field the field to check for changed text
-        public UpperBoundKeyListener( JTextField field, JLabel treeBound )
+        UpperBoundKeyListener( JTextField field, JLabel treeBound )
         {
             field_ = field;
             treeBound_ = treeBound;
