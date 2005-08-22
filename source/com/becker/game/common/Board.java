@@ -233,16 +233,7 @@ public abstract class Board implements BoardInterface, Cloneable
      * for profiling output in a log
      */
     public static void initializeGobalProfilingStats()
-    {
-    }
-
-
-    /**
-     * @param totalTime it took for the computer to compute the current move.
-     */
-    public void showProfileStats( long totalTime )
-    {
-    }
+    {}
 
     /**
      * Explicitly clean things up to avoid memory leaks.

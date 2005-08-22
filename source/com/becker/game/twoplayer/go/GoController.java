@@ -415,7 +415,7 @@ public final class GoController extends TwoPlayerController
     protected void showProfileStats( long totalTime, int numMoves )
     {
         super.showProfileStats( totalTime, numMoves );
-        board_.showProfileStats( totalTime );
+        ((GoBoard) board_).getProfiler().print();
     }
 
     public void setKomi(float komi) {

@@ -31,15 +31,14 @@ public final class GoBoard extends TwoPlayerBoard
     // It is computed as black-white = sum(health of stone i)
     private float territoryDelta_ = 0;
 
-    // this is an auxilliary structure to help determine candidate moves
-    private boolean[][] candidateMoves_;
+    private CandidateMoves candidateMoves_;
+
 
     // the number of initial handicap stones to use
     private int numHandicapStones_ = 0;
     // typically there are at most 9 handicap stones in an uneven game
     private List starPoints_ = null;
 
-    private static final int CANDIDATE_MOVE_OFFSET = 1;
 
     // a global profiler for recording timing stats
     private static final GoProfiler profiler_ = new GoProfiler();
@@ -77,7 +76,8 @@ public final class GoBoard extends TwoPlayerBoard
         // first time through we need to initialize the starpoint positions
         initStarPoints();
         setHandicap( numHandicapStones_ );
-        initCandidateMoves();
+        candidateMoves_.reset();
+
     }
 
     /**
@@ -133,7 +133,8 @@ public final class GoBoard extends TwoPlayerBoard
         rowsTimesCols_ = numRows_ * numCols_;
         // we don't use the 0 edges of the board
         positions_ = new BoardPosition[numRows_ + 1][numCols_ + 1];
-        candidateMoves_ = new boolean[numRows_ + 1][numCols_ + 1];
+
+        candidateMoves_ = new CandidateMoves(numRows);
         reset();
     }
 
@@ -202,70 +203,8 @@ public final class GoBoard extends TwoPlayerBoard
         return starPoints_;
     }
 
-    /**
-     * we start with a default list of good starting moves, and
-     * add to it all moves within 2 spaces of those that are played.
-     */
-    private void initCandidateMoves()
-    {
-        int numRows = getNumRows();
-        int numCols = getNumCols();
-        int i,j;
-
-        // this will fill a 2 stone wide strip on the 3rd and 4rth lines of the board.
-        // this includes the star points and many others as candidates to consider
-        for ( i = 3; i <= numRows - 2; i++ ) {
-            candidateMoves_[i][3] = true;
-            candidateMoves_[i][4] = true;
-            candidateMoves_[i][numCols - 2] = true;
-            candidateMoves_[i][numCols - 3] = true;
-        }
-        for ( j = 5; j <= numCols - 4; j++ ) {
-            candidateMoves_[3][j] = true;
-            candidateMoves_[4][j] = true;
-            candidateMoves_[numRows - 2][j] = true;
-            candidateMoves_[numRows - 3][j] = true;
-        }
-        // also make the center space a candidate move
-        candidateMoves_[((numRows + 1) >> 1)][((numCols + 1) >> 1)] = true;
-    }
-
-    /**
-     * this method splats a footprint of trues around the current moves.
-     * later we look for empty spots that are true for candidate moves
-     */
-    public final void determineCandidateMoves()
-    {
-        //  set the footprints
-        int i,j;
-        for ( i = 1; i <= getNumRows(); i++ )
-            for ( j = 1; j <= getNumCols(); j++ )
-                if ( !positions_[i][j].isUnoccupied() )
-                    addCandidateMoves( positions_[i][j] );
-    }
-
-    /**
-     * this method splats a footprint of trues around the specified move.
-     * @param stone
-     */
-    private void addCandidateMoves( BoardPosition stone )
-    {
-        int i,j;
-        boolean[][] b = candidateMoves_;
-
-        int startrow = Math.max( stone.getRow() - CANDIDATE_MOVE_OFFSET, 1 );
-        int stoprow = Math.min( stone.getRow() + CANDIDATE_MOVE_OFFSET, getNumRows() );
-        int startcol = Math.max( stone.getCol() - CANDIDATE_MOVE_OFFSET, 1 );
-        int stopcol = Math.min( stone.getCol() + CANDIDATE_MOVE_OFFSET, getNumCols() );
-        // set the footprint
-        for ( i = startrow; i <= stoprow; i++ )
-            for ( j = startcol; j <= stopcol; j++ )  {
-                GoBoardPosition pos = (GoBoardPosition) positions_[i][j];
-                // never add a stone (from either side to an unconditonally alive eye. There is no advantage to it.
-                if (pos.isUnoccupied() && !(pos.getEye()!=null && pos.getEye().isUnconditionallyAlive())) {
-                    b[i][j] = true;
-                }
-            }
+    public final void determineCandidateMoves() {
+        candidateMoves_.determineCandidateMoves(positions_);
     }
 
     /**
@@ -276,8 +215,9 @@ public final class GoBoard extends TwoPlayerBoard
      */
     public final boolean isCandidateMove( int row, int col )
     {
-        return candidateMoves_[row][col] && positions_[row][col].isUnoccupied();
+        return candidateMoves_.isCandidateMove(row,col) && positions_[row][col].isUnoccupied();
     }
+
 
     /**
      *in go there is not really a theoretical limit to the number of moves,
@@ -306,16 +246,8 @@ public final class GoBoard extends TwoPlayerBoard
         profiler_.initialize();
     }
 
-    /**
-     * show useful performance profiling statistics so we know where the bottleknecks are.
-     * @param totalTime the total time taken to compute the next move
-     */
-    public final void showProfileStats( long totalTime )
-    {
-        profiler_.print();
-    }
 
-    public Profiler getProfiler() {
+    public static Profiler getProfiler() {
         return profiler_;
     }
 
@@ -836,7 +768,7 @@ public final class GoBoard extends TwoPlayerBoard
             if ( !s.isVisited() ) {
                 s.setVisited( true );
                 stones.add( s );
-                pushStringNeighbors( s, friendOwnedByP1, stack, true, type, rMin, rMax, cMin, cMax );
+                pushStringNeighbors(s, friendOwnedByP1, stack, true, type,  new Box(rMin, cMin, rMax, cMax));
             }
         }
         if ( returnToUnvisitedState )
@@ -1415,20 +1347,21 @@ public final class GoBoard extends TwoPlayerBoard
      */
     private int pushStringNeighbors( GoBoardPosition s, boolean friendPlayer1, List stack,
                                      boolean samePlayerOnly, NeighborType type,
-                                     int rMin, int rMax, int cMin, int cMax )
+                                     Box bbox )
     {
         int r = s.getRow();
         int c = s.getCol();
         int numPushed = 0;
+        Location loc = new Location(r, c);
 
         if ( r > 1 )
-            numPushed += checkNeighbor( r, c, -1, 0, friendPlayer1, stack, samePlayerOnly, type, rMin, rMax, cMin, cMax );
+            numPushed += checkNeighbor( loc, -1, 0, friendPlayer1, stack, samePlayerOnly, type, bbox );
         if ( c > 1 )
-            numPushed += checkNeighbor( r, c, 0, -1, friendPlayer1, stack, samePlayerOnly, type, rMin, rMax, cMin, cMax );
+            numPushed += checkNeighbor( loc, 0, -1, friendPlayer1, stack, samePlayerOnly, type, bbox );
         if ( r + 1 <= numRows_ )
-            numPushed += checkNeighbor( r, c, 1, 0, friendPlayer1, stack, samePlayerOnly, type, rMin, rMax, cMin, cMax );
+            numPushed += checkNeighbor( loc, 1, 0, friendPlayer1, stack, samePlayerOnly, type, bbox );
         if ( c + 1 <= numCols_ )
-            numPushed += checkNeighbor( r, c, 0, 1, friendPlayer1, stack, samePlayerOnly, type, rMin, rMax, cMin, cMax );
+            numPushed += checkNeighbor( loc, 0, 1, friendPlayer1, stack, samePlayerOnly, type, bbox );
 
         return numPushed;
     }
@@ -1436,7 +1369,7 @@ public final class GoBoard extends TwoPlayerBoard
     private int pushStringNeighbors( GoBoardPosition s, boolean friendPlayer1, List stack, boolean samePlayerOnly )
     {
         return pushStringNeighbors( s, friendPlayer1, stack, samePlayerOnly,
-                                    NeighborType.OCCUPIED, 1, numRows_, 1, numCols_ );
+                                    NeighborType.OCCUPIED, new Box(1, 1, numRows_, numCols_));
     }
 
     /**
@@ -1668,12 +1601,15 @@ public final class GoBoard extends TwoPlayerBoard
      * return 1 if this is a valid neighbor according to specification
      * these are the immediately adjacent (nobi) nbrs within the specified rectangular bounds
      */
-    private int checkNeighbor( int r, int c, int rowOffset, int colOffset,
+    private int checkNeighbor( Location loc, int rowOffset, int colOffset,
                                boolean friendOwnedByPlayer1, List stack, boolean samePlayerOnly, NeighborType type,
-                               int rMin, int rMax, int cMin, int cMax )
+                               Box bbox )
     {
+        int r = loc.row;
+        int c = loc.col;
         GoBoardPosition nbr = (GoBoardPosition) positions_[r + rowOffset][c + colOffset];
-        if ( nbr.getRow() >= rMin && nbr.getRow() <= rMax && nbr.getCol() >= cMin && nbr.getCol() <= cMax ) {
+        if ( nbr.getRow() >= bbox.getBottomRightCorner().row && nbr.getRow() <= bbox.getTopLeftCorner().row
+          && nbr.getCol() >= bbox.getBottomRightCorner().col && nbr.getCol() <= bbox.getTopLeftCorner().col ) {
             return checkNeighbor( r, c, rowOffset, colOffset, friendOwnedByPlayer1, stack, samePlayerOnly, type );
         }
         else
