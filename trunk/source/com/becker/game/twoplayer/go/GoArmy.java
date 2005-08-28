@@ -17,7 +17,8 @@ public final class GoArmy extends GoSet
 
     // unlike the territory of a group, moyo territory indicates the amount of space
     // mapped out by the army. It will potentially become real territory if all goes well.
-    int moyoTerritory = 0;
+    int moyoTerritory_ = 0;
+
     // @@ compute dynamically instead
     private int numLiberties_ = 0;
 
@@ -46,7 +47,7 @@ public final class GoArmy extends GoSet
     /**
      * calculate the number of liberties
      */
-    public final Set getLiberties( GoBoard board )
+    public Set getLiberties( GoBoard board )
     {
         return null; //@@
     }
@@ -57,7 +58,7 @@ public final class GoArmy extends GoSet
      * @param strongConnection true if not a diagonal connection - ie directly adjacent
      * @param board
      */
-    public final void merge( GoArmy army, boolean strongConnection, GoBoard board )
+    public void merge( GoArmy army, boolean strongConnection, GoBoard board )
     {
         if ( this == army ) {
             // its a self join
@@ -94,7 +95,7 @@ public final class GoArmy extends GoSet
         Iterator it = members_.iterator();
         while ( it.hasNext() ) {
             GoGroup p = (GoGroup) it.next();
-            s += "(" + p.toString() + "),";
+            s += '(' + p.toString() + "),";
         }
         return s;
     }

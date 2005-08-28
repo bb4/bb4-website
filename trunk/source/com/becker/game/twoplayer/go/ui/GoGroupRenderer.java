@@ -19,9 +19,9 @@ import java.util.List;
  *  A GoArmy is a loosely coupled set of Groups
  *  Groups may be connected by diagonals or one space jumps, or uncut knights moves, but not nikken tobi
  *
- *  @see com.becker.game.twoplayer.go.GoString
- *  @see com.becker.game.twoplayer.go.GoArmy
- *  @see com.becker.game.twoplayer.go.GoBoard
+ *  @see GoString
+ *  @see GoArmy
+ *  @see GoBoard
  *  @author Barry Becker
  */
 final class GoGroupRenderer
@@ -52,7 +52,7 @@ final class GoGroupRenderer
 
         if ( groupStones.size() == 1 ) {
             float margin = TwoPlayerBoardViewer.BOARD_MARGIN;
-            float offset = + BORDER_OFFSET +.5f;
+            float offset = + BORDER_OFFSET + 0.5f;
             // case where the group contains only 1 stone
             float x = margin + (firstStone.getCol() - offset) * cellSize;
             float y = margin + (firstStone.getRow() - offset) * cellSize;
@@ -303,8 +303,8 @@ final class GoGroupRenderer
                 Iterator it = eyeSet.iterator();
                 while ( it.hasNext() ) {
                     GoBoardPosition stone = (GoBoardPosition) it.next();
-                    float x = margin + ((float) stone.getCol() - BORDER_OFFSET - .5f) * cellSize;
-                    float y = margin + ((float) stone.getRow() - BORDER_OFFSET + .1f) * cellSize;
+                    float x = margin + ((float) stone.getCol() - BORDER_OFFSET - 0.5f) * cellSize;
+                    float y = margin + ((float) stone.getRow() - BORDER_OFFSET + 0.1f) * cellSize;
                     g2.drawString( eyeName, x, y );
                 }
             }
@@ -314,7 +314,7 @@ final class GoGroupRenderer
 
     /**
      * draw debugging information about the group like its border and eyeshapes.
-     * @see com.becker.game.twoplayer.go.ui.GoGroupRenderer
+     * @see GoGroupRenderer
      */
     public static void drawGroupDecoration(GoGroup group, ColorMap colormap, float cellSize, GoBoard board, Graphics2D g2)
     {
@@ -323,7 +323,7 @@ final class GoGroupRenderer
         Float cachedCellSize = (Float)hmCellSizeCache_.get(group);
 
         /* giving cc mod error */
-        if ( group.hasChanged() || cachedBorderArea == null || cellSize != cachedCellSize.floatValue() ) {
+        if ( group.hasChanged() || cachedBorderArea == null || cellSize != cachedCellSize ) {
 
             // the colormap will show red if close to dead,
             // so reverse the health value for the other player
@@ -334,7 +334,7 @@ final class GoGroupRenderer
 
             cachedBorderArea = calcGroupBorder( group.getStones(), cellSize, board );
             cachedBorderColor = colormap.getColorForValue( h );
-            cachedCellSize = new Float(cellSize);
+            cachedCellSize = cellSize;
 
             // cache these new values (until something changes again)
             hmBorderAreaCache_.put(group, cachedBorderArea);

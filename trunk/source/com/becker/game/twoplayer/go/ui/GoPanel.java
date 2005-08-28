@@ -39,17 +39,17 @@ public final class GoPanel extends TwoPlayerPanel
      * creates a board viewer of the appropriate type given a game controller
      * @return the game board viewer
      */
-    protected final GameBoardViewer createBoardViewer()
+    protected GameBoardViewer createBoardViewer()
     {
         return new GoBoardViewer();
     }
 
-    protected final NewGameDialog createNewGameDialog( JFrame parent, GameBoardViewer viewer )
+    protected NewGameDialog createNewGameDialog( JFrame parent, GameBoardViewer viewer )
     {
         return new GoNewGameDialog( parent, viewer );
     }
 
-    protected final GameInfoPanel createInfoPanel(GameController controller)
+    protected GameInfoPanel createInfoPanel(GameController controller)
     {
         return new GoInfoPanel( controller );
     }
@@ -69,7 +69,7 @@ public final class GoPanel extends TwoPlayerPanel
     /**
      * Display the help dialog to give instructions
      */
-    protected final void showHelpDialog()
+    protected void showHelpDialog()
     {
         String name = getTitle();
         String comments = GameContext.getLabel("GO_COMMENTS");

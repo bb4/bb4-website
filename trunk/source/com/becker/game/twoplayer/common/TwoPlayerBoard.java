@@ -2,6 +2,8 @@ package com.becker.game.twoplayer.common;
 
 import com.becker.game.common.*;
 
+import java.util.*;
+
 
 /**
  * Defines the structure of the blockade board and the pieces on it.
@@ -31,7 +33,7 @@ public abstract class TwoPlayerBoard extends Board
     {
         TwoPlayerMove m = (TwoPlayerMove)move;
         if ( !m.isPassingMove() ) {
-            BoardPosition pos = positions_[m.getToRow()][m.getToCol()];           
+            BoardPosition pos = positions_[m.getToRow()][m.getToCol()];
             pos.setPiece(m.piece.copy());  // need copy?
             GamePiece piece = pos.getPiece();
             assert (piece!=null):
@@ -46,4 +48,13 @@ public abstract class TwoPlayerBoard extends Board
         }
         return true;
     }
+
+
+    public void makeMoves(List moves) {
+        for (Object m : moves) {
+             Move move = (Move) m;
+            makeMove(move);
+        }
+    }
+
 }

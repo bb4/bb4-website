@@ -1,6 +1,7 @@
 package com.becker.game.common;
 
 
+
 /**
  *  the BoardPosition describes the physical marker at a location on the board.
  *  It may be empty if there is no piece there.
@@ -130,6 +131,16 @@ public class BoardPosition
         return Math.sqrt( deltaX * deltaX + deltaY * deltaY );
     }
 
+
+    /**
+     * make it show an empty board position.
+     */
+    public void clear()
+    {
+        setPiece( null );
+    }
+
+  
 
     /**
      * @return a string representation of the board position

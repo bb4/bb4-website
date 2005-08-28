@@ -7,10 +7,10 @@ import java.util.*;
  *  It provides convenience methods for removing and restoring those
  *  pieces to a game board.
  *
- *  @see com.becker.game.common.Board
+ *  @see Board
  *  @author Barry Becker
  */
-public final class CaptureList extends LinkedList
+public class CaptureList extends LinkedList
 {
 
     /**
@@ -105,7 +105,7 @@ public final class CaptureList extends LinkedList
         Iterator it = this.iterator();
         while ( it.hasNext() ) {
             BoardPosition p = (BoardPosition) it.next();
-            s += "(" + p.toString() + "),";
+            s += '(' + p.toString() + "),";
         }
         return s;
     }

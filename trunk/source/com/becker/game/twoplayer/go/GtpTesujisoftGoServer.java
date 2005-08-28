@@ -61,7 +61,7 @@ public class GtpTesujisoftGoServer
     {
         super(in, out, log);
 
-              // this will load the resources for the specified game.
+        // this will load the resources for the specified game.
         GameContext.loadGameResources("go", "com.becker.game.twoplayer.go.ui.GoPanel");
         GameContext.setDebugMode(0);
 
@@ -193,7 +193,7 @@ public class GtpTesujisoftGoServer
 
     private boolean cmdClearBoard()
     {
-       m_controller.reset();
+        m_controller.reset();
         return true;
     }
 
@@ -231,7 +231,7 @@ public class GtpTesujisoftGoServer
     /**
      * @@ need to implment
      */
-    private boolean cmdFinalStatusList(String cmd, StringBuffer response) {
+    private static boolean cmdFinalStatusList(String cmd, StringBuffer response) {
         assert false : "final_status_list command not yet implemented";
         return true;
     }
@@ -300,7 +300,7 @@ public class GtpTesujisoftGoServer
 
         if (point != null)  {
             boolean isBlack = m_controller.getCurrentPlayer().equals(m_controller.getPlayer1());
-            GoMove move = new GoMove(point.getX(), point.getY(), null, 0, new GoStone(isBlack));
+            GoMove move = new GoMove(point.getX(), point.getY(), 0, new GoStone(isBlack));
             m_controller.manMoves(move);
         }
         return true;
@@ -327,7 +327,7 @@ public class GtpTesujisoftGoServer
         return true;
     }
 
-    private void echo(String cmdLine, StringBuffer response)
+    private static void echo(String cmdLine, StringBuffer response)
     {
         int index = cmdLine.indexOf(" ");
         if (index < 0)
@@ -335,7 +335,7 @@ public class GtpTesujisoftGoServer
         response.append(cmdLine.substring(index + 1));
     }
 
-    private void echoErr(String cmdLine)
+    private static void echoErr(String cmdLine)
     {
         int index = cmdLine.indexOf(" ");
         if (index < 0)

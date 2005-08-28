@@ -1,14 +1,10 @@
 package com.becker.game.twoplayer.go.test.whitebox;
 
-import com.becker.game.twoplayer.go.GoBoard;
-import com.becker.game.twoplayer.go.GoBoardPosition;
-import com.becker.game.twoplayer.go.GoMove;
-import com.becker.game.twoplayer.go.GoStone;
-import com.becker.game.twoplayer.go.test.GoTestCase;
-import junit.framework.Assert;
+import com.becker.game.twoplayer.go.*;
+import com.becker.game.twoplayer.go.test.*;
+import junit.framework.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Verify that all the methods in GoBaord work as expected
@@ -41,7 +37,7 @@ public class TestGoBoard extends GoTestCase {
 
         restore(file);
 
-        GoMove move = new GoMove(row, col, null, 0, new GoStone(true));
+        GoMove move = new GoMove(row, col, 0, new GoStone(true));
 
         GoBoard board = (GoBoard)controller_.getBoard();
 
@@ -51,17 +47,18 @@ public class TestGoBoard extends GoTestCase {
 
         int numWhiteStonesAfter = board.getNumStones(false);
 
-        Assert.assertTrue(move.captureList != null);
-        if (move.captureList!=null) {
-            Assert.assertTrue("move.captureList.size()="+move.captureList.size()+" expected "+numCaptures,
-                              move.captureList.size() == numCaptures);
-            Assert.assertTrue(numWhiteStonesBefore - numWhiteStonesAfter == numCaptures);
-        }
+        int actualNumCaptures = move.getNumCaptures();
+
+        Assert.assertTrue("move.captures=" + actualNumCaptures + " expected "+numCaptures,
+                              actualNumCaptures == numCaptures);
+        int diffWhite = numWhiteStonesBefore - numWhiteStonesAfter;
+        Assert.assertTrue("diff in num white stones ("+ diffWhite + ") not = numcaptures ("+numCaptures+')', diffWhite == numCaptures);
 
         controller_.undoLastMove();
         // verify that all the captured stones get restored to the board
         numWhiteStonesAfter = board.getNumStones(false);
-        Assert.assertTrue(numWhiteStonesBefore == numWhiteStonesAfter );
+        Assert.assertTrue("numWhiteStonesBefore="+numWhiteStonesBefore +" not equal numWhiteStonesAfter="+numWhiteStonesAfter,
+                          numWhiteStonesBefore == numWhiteStonesAfter );
     }
 
 
@@ -153,8 +150,8 @@ public class TestGoBoard extends GoTestCase {
         restore("whitebox/causedAtari1");
         GoBoard board = (GoBoard)controller_.getBoard();
 
-        GoMove m = new GoMove(4, 4, null, 0, new GoStone(false));
-        int numInAtari = board.causedAtari(m);
+        GoMove m = new GoMove(4, 4, 0, new GoStone(false));
+        int numInAtari = m.causesAtari(board);
         Assert.assertTrue("numInAtri="+numInAtari+" expected="+4, numInAtari == 4);
     }
 
@@ -171,10 +168,10 @@ public class TestGoBoard extends GoTestCase {
     public void testCausedAtari2() {
         restore("whitebox/causedAtari2");
 
-        GoMove m = new GoMove(2, 12, null, 0, new GoStone(true));
+        GoMove m = new GoMove(2, 12,  0, new GoStone(true));
         controller_.makeMove(m);
         GoBoard board = (GoBoard)controller_.getBoard();
-        int numInAtari = board.causedAtari(m);
+        int numInAtari = m.causesAtari(board);
         Assert.assertTrue("numInAtri="+numInAtari+" expected="+12, numInAtari == 12);
     }
 
@@ -191,17 +188,17 @@ public class TestGoBoard extends GoTestCase {
 
 
     private void verifyGroupLiberties(String file,
-                                      int b_row, int b_col, int expectedBlackLiberties,
-                                      int w_row, int w_col, int expectedWhiteLiberties)   {
+                                      int bRow, int bCol, int expectedBlackLiberties,
+                                      int wRow, int wCol, int expectedWhiteLiberties)   {
         restore(file);
 
         GoBoard board = (GoBoard)controller_.getBoard();
 
-        GoBoardPosition pos = (GoBoardPosition)board.getPosition(b_row, b_col);
+        GoBoardPosition pos = (GoBoardPosition)board.getPosition(bRow, bCol);
         int numGroupLiberties = pos.getGroup().getLiberties(board).size();
         Assert.assertTrue("numGroupLiberties="+numGroupLiberties+" expected="+expectedBlackLiberties, numGroupLiberties == expectedBlackLiberties);
 
-        pos = (GoBoardPosition)board.getPosition(w_row, w_col);
+        pos = (GoBoardPosition)board.getPosition(wRow, wCol);
         numGroupLiberties = pos.getGroup().getLiberties(board).size();
         Assert.assertTrue("numGroupLiberties="+numGroupLiberties+" expected="+expectedWhiteLiberties, numGroupLiberties == expectedWhiteLiberties);
     }

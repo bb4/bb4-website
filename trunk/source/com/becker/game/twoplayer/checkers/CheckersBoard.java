@@ -86,7 +86,7 @@ public class CheckersBoard extends TwoPlayerBoard
 
         // we also need to remove the captures from the board
         m.removeCaptures( this );
-        clear(positions_[m.getFromRow()][m.getFromCol()]);
+        positions_[m.getFromRow()][m.getFromCol()].clear();
 
         return true;
     }
@@ -105,7 +105,7 @@ public class CheckersBoard extends TwoPlayerBoard
         // restore the captured pieces to the board
         m.restoreCaptures( this );
 
-        clear(positions_[m.getToRow()][m.getToCol()]);
+        positions_[m.getToRow()][m.getToCol()].clear();
     }
 
 }

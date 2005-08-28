@@ -29,7 +29,7 @@ final class GoTreeCellRenderer extends GameTreeCellRenderer
 
 
     // Default Constructor
-    public GoTreeCellRenderer()
+    GoTreeCellRenderer()
     {
         setColorMap(createColormap());
     }
@@ -41,7 +41,7 @@ final class GoTreeCellRenderer extends GameTreeCellRenderer
     protected ColorMap createColormap()
     {
         // we will use this colormap for both the text tree and the graphical tree viewers so they have consistent coloring.
-        final double[] values_ = {-TwoPlayerController.WINNING_VALUE,
+        final double[] values = {-TwoPlayerController.WINNING_VALUE,
                                   -TwoPlayerController.WINNING_VALUE/2.0,
                                   -TwoPlayerController.WINNING_VALUE/10.0,
                                   -TwoPlayerController.WINNING_VALUE/40.0,
@@ -52,7 +52,7 @@ final class GoTreeCellRenderer extends GameTreeCellRenderer
                                    TwoPlayerController.WINNING_VALUE/10.0,
                                    TwoPlayerController.WINNING_VALUE/2.0,
                                    TwoPlayerController.WINNING_VALUE};
-        final Color[] colors_ = { new Color(140, 0, 0),
+        final Color[] colors = { new Color(140, 0, 0),
                                   new Color(255, 10, 10),
                                   new Color(240, 200, 0),
                                   new Color(255, 255, 80),
@@ -64,16 +64,16 @@ final class GoTreeCellRenderer extends GameTreeCellRenderer
                                   new Color(10, 10, 255),
                                   new Color(0, 0, 140)
                                 };
-        return new ColorMap( values_, colors_ );
+        return new ColorMap( values, colors);
     }
 
     public Component getTreeCellRendererComponent(
             JTree tree, Object value,
             boolean sel, boolean expanded,
-            boolean leaf, int row, boolean hasFocus )
+            boolean leaf, int row, boolean hasFocus1 )
     {
         super.getTreeCellRendererComponent( tree, value, sel,
-                expanded, leaf, row, hasFocus );
+                expanded, leaf, row, hasFocus1 );
 
         node_ = (SearchTreeNode) value;
 
@@ -128,7 +128,7 @@ final class GoTreeCellRenderer extends GameTreeCellRenderer
         if (move == null) {
             return;
         }
-        
+
         double inheritedValue = move.inheritedValue;
         double value = move.value;
         if (move.player1)  {
@@ -138,8 +138,8 @@ final class GoTreeCellRenderer extends GameTreeCellRenderer
             inheritedValue = -inheritedValue;
             value = -value;
         }
-    
-        
+
+
         Color c = getColorMap().getColorForValue(inheritedValue);
         g2.setColor(c);
         g2.fillRect(TEXT_MARGIN + STONE_IMG_SIZE, 1, SWATCH_WIDTH, 9);

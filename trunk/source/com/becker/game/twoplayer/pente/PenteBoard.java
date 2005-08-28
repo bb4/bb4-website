@@ -66,7 +66,7 @@ public class PenteBoard extends TwoPlayerBoard
     protected void undoInternalMove( Move move )
     {
         TwoPlayerMove m = (TwoPlayerMove)move;
-        clear(positions_[m.getToRow()][m.getToCol()]);
+        positions_[m.getToRow()][m.getToCol()].clear();
     }
 
     /**

@@ -552,7 +552,7 @@ public class BlockadeBoard extends TwoPlayerBoard
         // we also need to place a wall.
         if (m.getWall() != null)
             addWall(m.getWall());
-        clear(positions_[m.getFromRow()][m.getFromCol()]);
+        positions_[m.getFromRow()][m.getFromCol()].clear();
 
         return true;
     }
@@ -566,7 +566,7 @@ public class BlockadeBoard extends TwoPlayerBoard
         BlockadeMove m = (BlockadeMove) move;
         BoardPosition startPos = positions_[m.getFromRow()][m.getFromCol()];
         startPos.setPiece( m.piece );
-        clear(positions_[m.getToRow()][m.getToCol()]);
+        positions_[m.getToRow()][m.getToCol()].clear();
 
         // remove the wall that was placed by this move.
         if (m.getWall()!=null)

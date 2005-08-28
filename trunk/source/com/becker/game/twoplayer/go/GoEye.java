@@ -39,12 +39,12 @@ public final class GoEye extends GoString implements GoMember
         type_ = determineEyeType( spaces, board );
     }
 
-    public final EyeType getEyeType()
+    public EyeType getEyeType()
     {
         return type_;
     }
 
-    public final String getEyeTypeName()
+    public String getEyeTypeName()
     {
         if (type_==null)
             return "unknown eye type";
@@ -99,11 +99,16 @@ public final class GoEye extends GoString implements GoMember
                 }
             }
             // check for different cases of big eyes
+            boolean farmersHatOrClump =  ((size == 4) && ((max == 3 && sum == 6) || (max == 2 && sum == 8)));
+            boolean bulkyOrCrossedFive = ((size == 5) && ((max == 4 && sum == 8) || (max == 3 && sum == 10)));
+            boolean rabbitySix = ((size == 6) && (max == 4 && sum == 12));
+            boolean butterflySeven = ((size == 7) && (max == 4 && sum == 16));
+
             if ( (size == 3)
-                    || ((size == 4) && ((max == 3 && sum == 6) || (max == 2 && sum == 8)))
-                    || ((size == 5) && ((max == 4 && sum == 8) || (max == 3 && sum == 10)))
-                    || ((size == 6) && (max == 4 && sum == 12))
-                    || ((size == 7) && (max == 4 && sum == 16)) ) {
+                    || farmersHatOrClump
+                    || bulkyOrCrossedFive
+                    || rabbitySix
+                    || butterflySeven) {
                 if ( keyPoint_.isUnoccupied() ) {
                     // it has the potential to be 2 eyes depending on who plays the keypoint
                     return EyeType.BIG_EYE;
@@ -182,7 +187,7 @@ public final class GoEye extends GoString implements GoMember
             // now decide if false eye based on nbrs and proximity to edge.
             if ( numOppDiag >= 2  && (nbrs.size() >= 3))
                 return true;
-            else if (board.isOnEdge(space) && numOppDiag >=1) {
+            else if (space.isOnEdge(board) && numOppDiag >=1) {
                 return true;
             }
         }
@@ -226,10 +231,37 @@ public final class GoEye extends GoString implements GoMember
         return (pos.isOccupied() && (stone.isOwnedByPlayer1() != isOwnedByPlayer1() && !weaker));
     }
 
+
+    /**
+     * @return true if all the empty spaces in this eye are touching the specified string.
+     */
+    public boolean allUnocupiedAdjacentToString(GoString string, GoBoard b)   {
+        for (Object p : this.getMembers()) {
+            GoBoardPosition pos = (GoBoardPosition) p;
+            if (pos.isUnoccupied()) {
+                Set nbrs = b.getNobiNeighbors(pos, this.isOwnedByPlayer1(), NeighborType.FRIEND);
+                // verify that at least one of the nbrs is in this string
+                boolean thereIsANbr = false;
+                for  (Object nbr : nbrs) {
+                    GoBoardPosition nbrPos = (GoBoardPosition) nbr;
+                    if (string.getMembers().contains(nbrPos)) {
+                        thereIsANbr = true;
+                        break;
+                    }
+                }
+                if (!thereIsANbr) {
+                    //GameContext.log(2, "pos:"+pos+" was found to not be adjacent to the bordering string : "+this);
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     /**
      * empty the positions from the eye.
      */
-    public final void clear()
+    public void clear()
     {
          Iterator it = members_.iterator();
          while (it.hasNext()) {
@@ -241,7 +273,7 @@ public final class GoEye extends GoString implements GoMember
          setGroup(null);
     }
 
-    protected final String getPrintPrefix()
+    protected String getPrintPrefix()
     {
         return " Eye: " + getEyeTypeName() + ": ";
     }

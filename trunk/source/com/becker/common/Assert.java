@@ -2,8 +2,7 @@ package com.becker.common;
 
 //import com.becker.sound.SpeechSynthesizer;
 
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * Provide support for asserts.<P>
@@ -21,11 +20,13 @@ import java.util.Iterator;
  * even though asserts are off.
  */
 
-public class Assert
+public final class Assert
 {
 
+    private Assert() {};
+
     // call this if an assertion oiccurs
-    private static ArrayList handlers_ = new ArrayList();
+    private static List handlers_ = new ArrayList();
 
     /**
      * Check that the object is not null
@@ -192,7 +193,7 @@ public class Assert
 
     /**
      * Call the error handler if there is one.
-     * @param
+     * @param rte
      */
     public static void callHandler( RuntimeException rte )
     {

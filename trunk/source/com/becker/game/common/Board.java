@@ -1,9 +1,6 @@
 package com.becker.game.common;
 
-import com.becker.game.twoplayer.go.GoBoardUtil;
-import com.becker.game.twoplayer.go.GoBoard;
-
-import java.util.LinkedList;
+import java.util.*;
 
 
 /**
@@ -86,7 +83,7 @@ public abstract class Board implements BoardInterface, Cloneable
     {
         if ( moveList_ == null || moveList_.isEmpty() )
             return null;
-        return (Move) moveList_.getLast();
+        return (Move) moveList_.get(moveList_.size()-1);
     }
 
 
@@ -141,15 +138,6 @@ public abstract class Board implements BoardInterface, Cloneable
     }
 
     /**
-     * make it show an empty board position.
-     * @param pos the position to clear.
-     */
-    public void clear( BoardPosition pos )
-    {
-        pos.setPiece( null );
-    }
-
-    /**
      * Two boards are considered equal if all the pieces are in the same spot and have like ownership.
      * @param b
      * @return true if all the pieces in board b in the same spot and have like ownership as this.
@@ -191,7 +179,10 @@ public abstract class Board implements BoardInterface, Cloneable
     }
 
 
-
+    /**
+     * undo the last move made.
+     * @return  the move that got undone
+     */
     public Move undoMove() {
         if ( !getMoveList().isEmpty() ) {
             Move m = (Move) getMoveList().removeLast();
@@ -222,17 +213,9 @@ public abstract class Board implements BoardInterface, Cloneable
     }
 
     /**
-     * @return true if the specified BoardPosition is on the edge of the board
-     */
-    public boolean isOnEdge(BoardPosition pos)
-    {
-        return (pos.getRow()==1 || pos.getRow()==getNumRows() || pos.getCol()==1 || pos.getCol()==getNumCols());
-    }
-
-    /**
      * for profiling output in a log
      */
-    public static void initializeGobalProfilingStats()
+    public void initializeGobalProfilingStats()
     {}
 
     /**

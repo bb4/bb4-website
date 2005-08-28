@@ -54,7 +54,7 @@ public final class GoStone extends GamePiece implements GoMember
     /**
      * create a deep copy of this stone
      */
-    public final GamePiece copy()
+    public GamePiece copy()
     {
         GoStone stone = new GoStone( ownedByPlayer1_, health_);
         stone.setTransparency( (short) 0 );
@@ -65,7 +65,7 @@ public final class GoStone extends GamePiece implements GoMember
     /**
      * copy all fields from another stone to this one.
      */
-    public final void copy( GoStone stone )
+    public void copy( GoStone stone )
     {
         ownedByPlayer1_ = stone.isOwnedByPlayer1();
         type_ =  REGULAR_PIECE;
@@ -77,7 +77,7 @@ public final class GoStone extends GamePiece implements GoMember
         health_ = health;
     }
 
-    public final float getHealth()
+    public float getHealth()
     {
         return health_;
     }
@@ -95,7 +95,7 @@ public final class GoStone extends GamePiece implements GoMember
      * set the dead state of the stone to true.
      * It will now be rendered differently.
      */
-    public final void setDead(boolean dead)
+    public void setDead(boolean dead)
     {
         isDead_ = dead;
     }
@@ -120,7 +120,7 @@ public final class GoStone extends GamePiece implements GoMember
         sb.append( ownedByPlayer1_ ? 'B' : 'W' );
         if (GameContext.getDebugMode() > 2)  {
             sb.append("(pos:"+Util.formatNumber(positionalScore));
-            sb.append("+shp:"+Util.formatNumber(badShapeScore)+")");
+            sb.append("+shp:"+Util.formatNumber(badShapeScore)+')');
         }
         return sb.toString();
     }
