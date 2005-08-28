@@ -224,7 +224,7 @@ public final class GoEye extends GoString implements GoMember
         GoStone stone = (GoStone)pos.getPiece();
         boolean weaker = false;
         if (stone != null)  {
-            weaker = GoBoardUtil.isStoneWeaker(getGroup(), stone);
+            weaker = GoBoardUtil.isStoneMuchWeaker(getGroup(), stone);
         }
         assert (getGroup().isOwnedByPlayer1() == this.isOwnedByPlayer1()):
                  getGroup()+"bad group ownership. eye="+this+". Group="+getGroup();

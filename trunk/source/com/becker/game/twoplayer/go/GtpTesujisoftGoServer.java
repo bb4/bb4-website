@@ -38,12 +38,12 @@ public class GtpTesujisoftGoServer
 {
 
     /** Delay every command (seconds) */
-    private int m_delay;
-    private int m_size;
+    private int delay_;
+    private int size_;
 
-    private Thread m_thread;
+    private Thread thread_;
 
-    private GoController m_controller;
+    private GoController controller_;
 
     /**
      * the allowed GTP commands (most are required, some are optional)
@@ -67,7 +67,7 @@ public class GtpTesujisoftGoServer
 
         initSize(19);
 
-        m_thread = Thread.currentThread();
+        thread_ = Thread.currentThread();
     }
 
 
@@ -125,7 +125,7 @@ public class GtpTesujisoftGoServer
                 status = cmdPlay(cmdArray, response);
                 break;
             case protocol_version :
-                response.append("2"); break;
+                response.append('2'); break;
             case known_command :
                 Command.valueOf(cmdArray[1]); break;
             case list_commands :
@@ -137,42 +137,40 @@ public class GtpTesujisoftGoServer
                 cmdUndo(response); break;
             case version :
                 response.append(Version.get()); break;
-            case quit :
-                break;
-            default :  {
+            case quit : break;
+            default : {
                 response.append("unknown command");
                 status = false;
             }
         }
-
         return status;
     }
 
 
     public void interruptCommand()
     {
-        m_thread.interrupt();
+        thread_.interrupt();
     }
 
     private void initSize(int size) {
-        m_controller = new GoController(size, size, 0);
-        TwoPlayerOptions options = m_controller.getOptions();
+        controller_ = new GoController(size, size, 0);
+        TwoPlayerOptions options = controller_.getOptions();
         options.setAlphaBeta(true);
         options.setLookAhead(2);
         options.setPercentageBestMoves(50);
         options.setQuiescence(false);
         options.setSearchStrategyMethod(SearchStrategy.MINIMAX);
-        m_size = size;
+        size_ = size;
     }
 
     private void bwBoard(StringBuffer response)
     {
-        response.append("\n");
-        for (int x = 0; x < m_size; ++x)
+        response.append('\n');
+        for (int x = 0; x < size_; ++x)
         {
-            for (int y = 0; y < m_size; ++y)
+            for (int y = 0; y < size_; ++y)
                 response.append(Math.random() > 0.5 ? "B " : "W ");
-            response.append("\n");
+            response.append('\n');
         }
     }
 
@@ -193,7 +191,7 @@ public class GtpTesujisoftGoServer
 
     private boolean cmdClearBoard()
     {
-        m_controller.reset();
+        controller_.reset();
         return true;
     }
 
@@ -203,7 +201,7 @@ public class GtpTesujisoftGoServer
         if (argument == null)
         {
             response.delete(0, response.length());
-            response.append(m_delay);
+            response.append(delay_);
             return true;
         }
         if (argument.m_integer < 0)
@@ -211,19 +209,19 @@ public class GtpTesujisoftGoServer
             response.append("Argument must be positive");
             return false;
         }
-        m_delay = argument.m_integer;
+        delay_ = argument.m_integer;
         return true;
     }
 
     private boolean cmdFinalScore(StringBuffer response) {
-        double blackScore = m_controller.getFinalScore(true);
-        double whiteScore = m_controller.getFinalScore(false);
+        double blackScore = controller_.getFinalScore(true);
+        double whiteScore = controller_.getFinalScore(false);
         if (blackScore > whiteScore) {
             response.append("B+" + (blackScore - whiteScore));
         } else if (blackScore < whiteScore) {
             response.append("W+" + (whiteScore - blackScore));
         } else {
-            response.append("0");
+            response.append('0');
         }
         return true;
     }
@@ -244,9 +242,9 @@ public class GtpTesujisoftGoServer
              return false;
 
         int numHandicapStones = argument.m_integer;
-        m_controller.setHandicap(numHandicapStones);
+        controller_.setHandicap(numHandicapStones);
 
-        List moves = m_controller.getMoveList();
+        List moves = controller_.getMoveList();
 
         if  (moves == null || moves.size() == 0)
         {
@@ -257,9 +255,9 @@ public class GtpTesujisoftGoServer
         for (int i = 0; i < moves.size(); ++i)
         {
             GoMove pos = (GoMove) moves.get(i);
-            go.Point point = new go.Point(pos.getToCol(), pos.getToRow());
+            Point point = new Point(pos.getToCol(), pos.getToRow());
             if (pointList.length() > 0)
-                pointList.append(" ");
+                pointList.append(' ');
             pointList.append(point);
         }
         response.append(pointList);
@@ -269,10 +267,10 @@ public class GtpTesujisoftGoServer
 
     private boolean cmdGenmove(StringBuffer response)
     {
-        boolean blackPlays = m_controller.getCurrentPlayer().equals(m_controller.getPlayer1());
-        m_controller.requestComputerMove( blackPlays, true );
+        boolean blackPlays = controller_.getCurrentPlayer().equals(controller_.getPlayer1());
+        controller_.requestComputerMove( blackPlays, true );
 
-        GoMove m = (GoMove) m_controller.getBoard().getLastMove();
+        GoMove m = (GoMove) controller_.getBoard().getLastMove();
         //System.out.println("got " + m);
 
         Point  point = new Point(m.getToRow()-1, m.getToCol()-1);
@@ -292,16 +290,16 @@ public class GtpTesujisoftGoServer
     private boolean cmdPlay(String[] cmdArray, StringBuffer response)
     {
         ColorPointArgument argument =
-            parseColorPointArgument(cmdArray, response, m_size);
+            parseColorPointArgument(cmdArray, response, size_);
         if (argument == null)
             return false;
 
         Point point = argument.m_point;
 
         if (point != null)  {
-            boolean isBlack = m_controller.getCurrentPlayer().equals(m_controller.getPlayer1());
+            boolean isBlack = controller_.getCurrentPlayer().equals(controller_.getPlayer1());
             GoMove move = new GoMove(point.getX(), point.getY(), 0, new GoStone(isBlack));
-            m_controller.manMoves(move);
+            controller_.manMoves(move);
         }
         return true;
     }
@@ -314,12 +312,12 @@ public class GtpTesujisoftGoServer
              return false;
 
         float komi = (float)argument.m_double;
-        m_controller.setKomi(komi);
+        controller_.setKomi(komi);
         return true;
     }
 
     private boolean cmdUndo(StringBuffer response) {
-        Move m = m_controller.undoLastMove();
+        Move m = controller_.undoLastMove();
         if (m==null) {
             response.append("cannot undo");
             return false;
@@ -348,11 +346,11 @@ public class GtpTesujisoftGoServer
 
 //----------------------------------------------------------------------------
 
-    public static final void main(String[] args)
+    public static void main(String[] args)
     {
         try
         {
-            String options[] = {
+            String[] options = {
                 "config:",
                 "help",
                 "log:",
@@ -363,7 +361,7 @@ public class GtpTesujisoftGoServer
             {
                 String helpText =
                     "Usage: java -classpath /home/becker/projects/java_projects/classes com.becker.game.twoplayer.go.GtpTesujisoftGoServer [options]\n" +
-                    "\n" +
+                        '\n' +
                     "-config       config file\n" +
                     "-help         display this help and exit\n" +
                     "-log file     log GTP stream to file\n" +
