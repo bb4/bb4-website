@@ -21,41 +21,42 @@ public class SearchTreeNode extends DefaultMutableTreeNode
     /**
      *  true if this move is the leaf of a pruned path in the game tree.
      */
-    public boolean pruned;
+    private boolean pruned_;
 
     /**
      *  store the alpha value(for debug printing).
      */
-    public double alpha = 0;
+    private double alpha_ = 0;
 
     /**
      *  store the beta value(for debug printing).
      */
-    public double beta = 0;
+    private double beta_ = 0;
 
     /**
      * num descendants including itself (never 0).
      * initialized by GameTreeViewer.
      */
-    public int numDescendants = 0;
+    private int numDescendants_ = 0;
 
     /**
      * Used to layout the tree
      * roughly based on the num descendants.
      * initialized by GameTreeViewer.
      */
-    public int spaceAllocation = 0;
+    private int spaceAllocation_ = 0;
 
 
     /**
      * provide some useful info about the node, like why it was pruned.
      */
-    public String comment = null;
+    private String comment_ = null;
 
     /**
      * location in the boardviewer
      */
-    public int x,y;
+    private int x_;
+    private int y_;
 
     // @@ also contain visisbility info here
 
@@ -64,7 +65,7 @@ public class SearchTreeNode extends DefaultMutableTreeNode
     public SearchTreeNode(Object m)
     {
         setUserObject(m);
-        pruned = false;
+        pruned_ = false;
     }
 
 
@@ -88,12 +89,75 @@ public class SearchTreeNode extends DefaultMutableTreeNode
 
         StringBuffer s = new StringBuffer(m.toString());
 
-        if ( pruned )
+        if ( pruned_ )
             s.append( " *PRUNED*" );
         else
-            s.append( " a=" + Util.formatNumber(alpha) + " b=" + Util.formatNumber(beta) );
+            s.append( " a=" + Util.formatNumber(alpha_) + " b=" + Util.formatNumber(beta_) );
 
         return s.toString();
     }
 
+    public boolean isPruned() {
+        return pruned_;
+    }
+
+    public void setPruned(boolean pruned) {
+        this.pruned_ = pruned;
+    }
+
+    public double getAlpha() {
+        return alpha_;
+    }
+
+    public void setAlpha(double alpha) {
+        this.alpha_ = alpha;
+    }
+
+    public double getBeta() {
+        return beta_;
+    }
+
+    public void setBeta(double beta) {
+        this.beta_ = beta;
+    }
+
+    public int getNumDescendants() {
+        return numDescendants_;
+    }
+
+    public void setNumDescendants(int numDescendants) {
+        this.numDescendants_ = numDescendants;
+    }
+
+    public int getSpaceAllocation() {
+        return spaceAllocation_;
+    }
+
+    public void setSpaceAllocation(int spaceAllocation) {
+        this.spaceAllocation_ = spaceAllocation;
+    }
+
+    public String getComment() {
+        return comment_;
+    }
+
+    public void setComment(String comment) {
+        this.comment_ = comment;
+    }
+
+    public int getX() {
+        return x_;
+    }
+
+    public void setX(int x) {
+        this.x_ = x;
+    }
+
+    public int getY() {
+        return y_;
+    }
+
+    public void setY(int y) {
+        this.y_ = y;
+    }
 }

@@ -234,7 +234,6 @@ public final class GoBoard extends TwoPlayerBoard
         m.updateBoardAfterMoving(this);
 
 
-
         if ( m.isSuicidal(this) )
             return false;
 
@@ -260,12 +259,10 @@ public final class GoBoard extends TwoPlayerBoard
         }
 
 
-
         // first make sure that there are no references to obsolete groups.
         clearEyes();
 
         m.updateBoardAfterRemoving(this);
-
 
 
         profiler_.stopUndoMove();
@@ -371,7 +368,7 @@ public final class GoBoard extends TwoPlayerBoard
                                                                     min, rMax,  min, cMax);
                        emptyLists.add(empties);
                        Set nbrs = findOccupiedNeighbors(empties);
-                       float avg = calcAverageScore(nbrs);
+                       float avg = GoBoardUtil.calcAverageScore(nbrs);
 
                        float score = avg * (float)nbrs.size()/Math.max(nbrs.size(), empties.size());
                        assert (score <= 1.0 && score >= -1.0): "score="+score+" avg="+avg;
@@ -379,7 +376,7 @@ public final class GoBoard extends TwoPlayerBoard
                        while (it.hasNext()) {
                            GoBoardPosition p = (GoBoardPosition)it.next();
 
-                           p.scoreContribution = score;
+                           p.setScoreContribution(score);
                            diffScore += score;
                        }
                    }
@@ -468,25 +465,6 @@ public final class GoBoard extends TwoPlayerBoard
 
 
 
-    /**
-     * @param stones actually the positions containing the stones.
-     * @return the average scores of the stones in the list.
-     */
-    private static float calcAverageScore(Set stones)
-    {
-        float totalScore = 0;
-
-        for (Object stone : stones) {
-            GoBoardPosition p = (GoBoardPosition) stone;
-            GoGroup group = p.getString().getGroup();
-            if (USE_RELATIVE_GROUP_SCORING)
-                totalScore += group.getRelativeHealth();
-            else
-                totalScore += group.getAbsoluteHealth();
-        }
-        return totalScore/stones.size();
-    }
-
 
     /**
      * get an estimate of the territory for the specified player.
@@ -503,11 +481,11 @@ public final class GoBoard extends TwoPlayerBoard
                GoBoardPosition pos = (GoBoardPosition)getPosition(i, j);
 
                if (pos.isUnoccupied()) {
-                   double val = estimate? pos.scoreContribution : 1.0;
-                   if (forPlayer1 && pos.scoreContribution > 0) {
+                   double val = estimate? pos.getScoreContribution() : 1.0;
+                   if (forPlayer1 && pos.getScoreContribution() > 0) {
                        territoryEstimate += val;
                    }
-                   else if (!forPlayer1 && pos.scoreContribution < 0)  {
+                   else if (!forPlayer1 && pos.getScoreContribution() < 0)  {
                        territoryEstimate -= val;  // will be positive
                    }
                }
@@ -883,8 +861,8 @@ public final class GoBoard extends TwoPlayerBoard
                                boolean friendOwnedByPlayer1, List stack, boolean samePlayerOnly, NeighborType type,
                                Box bbox )
     {
-        int r = loc.row;
-        int c = loc.col;
+        int r = loc.getRow();
+        int c = loc.getCol();
         GoBoardPosition nbr = (GoBoardPosition) positions_[r + rowOffset][c + colOffset];
         if ( nbr.getRow() >= bbox.getMinRow() && nbr.getRow() <= bbox.getMaxRow()
           && nbr.getCol() >= bbox.getMinCol() && nbr.getCol() <= bbox.getMaxCol() ) {

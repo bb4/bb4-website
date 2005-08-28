@@ -91,7 +91,7 @@ public final class GoStoneRenderer extends TwoPlayerPieceRenderer
         GoBoardPosition stonePos = (GoBoardPosition)position;
         if (GameContext.getDebugMode() > 0)  {
             //  as a debugging aid draw the background as a function of the territorial score (-1 : 1)
-            double score = ((GoBoardPosition)position).scoreContribution;
+            double score = ((GoBoardPosition)position).getScoreContribution();
             Color pc = (score > 0? PLAYER1_STONE_COLOR : PLAYER2_STONE_COLOR);
             int op = (int)((100 * Math.abs(score)));
             if (op >255) {

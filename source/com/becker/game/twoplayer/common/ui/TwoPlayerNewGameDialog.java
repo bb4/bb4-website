@@ -200,7 +200,7 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
         }
         Integer row = new Integer( rowSizeField_.getText() );
         Integer col = new Integer( colSizeField_.getText() );
-        board_.setSize( row.intValue(), col.intValue() );
+        board_.setSize( row, col );
 
         //restore the saved file if one was specified
         String fileToOpen = openFileField_.getText();

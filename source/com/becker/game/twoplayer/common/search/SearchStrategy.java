@@ -87,14 +87,16 @@ public abstract class SearchStrategy
      */
     static void showPrunedNodesInTree( List list, SearchTreeNode parent, int i, double val, double thresh, int type)
     {
+        int index = i;
         while ( !list.isEmpty() ) {
             TwoPlayerMove theMove = (TwoPlayerMove) (list.remove(0));
             SearchTreeNode child = new SearchTreeNode( theMove );
-            child.pruned = true;
+            child.setPruned(true);
             String sComp = (type==PRUNE_ALPHA)?" is less than ":" is greater than ";
-            child.comment = "Children of this node were pruned because " +
-                            Util.formatNumber(val) + sComp + Util.formatNumber(thresh) + ".";
-            parent.insert( child, i++ );
+            child.setComment("Children of this node were pruned because " +
+                            Util.formatNumber(val) + sComp + Util.formatNumber(thresh) + '.');
+            parent.insert( child, index );
+            index++;
         }
     }
 
@@ -122,10 +124,10 @@ public abstract class SearchStrategy
         if ( !list.isEmpty() ) return false;
 
         //If there are no next moves, the game is over and the last player to move won
-        if ( lastMove.player1 )
-            lastMove.inheritedValue = WINNING_VALUE;
+        if ( lastMove.isPlayer1() )
+            lastMove.setInheritedValue(WINNING_VALUE);
         else
-            lastMove.inheritedValue = -WINNING_VALUE;
+            lastMove.setInheritedValue(-WINNING_VALUE);
 
         return true;
     }
@@ -139,8 +141,8 @@ public abstract class SearchStrategy
         SearchTreeNode child = null;
         if ( parent != null ) {
             child = new SearchTreeNode( theMove );
-            child.alpha = alpha;
-            child.beta = beta;
+            child.setAlpha(alpha);
+            child.setBeta(beta);
             parent.insert( child, i );
         }
         return child;
@@ -189,12 +191,14 @@ public abstract class SearchStrategy
      */
     void checkPause() {
         try {
-            while (paused_)
+            while (paused_) {
                 Thread.sleep(100);
+            }
         } catch (InterruptedException e) {
             //e.printStackTrace();
             GameContext.log(2, "interrupted" );
             interrupted_ = true;
+            e.printStackTrace();
             return;
         }
     }

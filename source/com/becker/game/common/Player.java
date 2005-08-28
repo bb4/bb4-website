@@ -28,7 +28,7 @@ public class Player
     {
         name_ = name;
         color_ = color;
-        setHuman(isHuman);
+        type_ = (isHuman) ? HUMAN_PLAYER : COMPUTER_PLAYER;
     }
 
     public String getName()
@@ -61,7 +61,7 @@ public class Player
 
     public void setHuman( boolean human )
     {
-        type_ =  (human)? HUMAN_PLAYER : COMPUTER_PLAYER;
+        type_ =  (human) ? HUMAN_PLAYER : COMPUTER_PLAYER;
     }
 
     public boolean hasWon()

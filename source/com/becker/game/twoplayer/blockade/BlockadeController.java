@@ -556,10 +556,10 @@ public class BlockadeController extends TwoPlayerController
                    BlockadeMove m =
                            BlockadeMove.createMove(ourmove.getFromRow(), ourmove.getFromCol(),
                                                    ourmove.getToRow(), ourmove.getToCol(),
-                                                   value, ourmove.piece, wall);
+                                                   value, ourmove.getPiece(), wall);
                    // for the time being just call worth directly. Its less efficient, but simpler.
                    board_.makeMove(m);
-                   m.value = worth(m, weights, m.piece.isOwnedByPlayer1());
+                   m.setValue(worth(m, weights, m.getPiece().isOwnedByPlayer1()));
                    board_.undoMove();
                    moves.add(m);
                }
@@ -630,7 +630,7 @@ public class BlockadeController extends TwoPlayerController
         {
             List moveList = new LinkedList();
             int row,col;
-            boolean player1 = !(lastMove.player1);
+            boolean player1 = !(lastMove.isPlayer1());
             BlockadeBoard board = (BlockadeBoard)board_;
 
             // first find the opponents shortest paths. There must be NUM_HOMES squared of them.

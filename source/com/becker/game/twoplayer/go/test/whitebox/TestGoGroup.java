@@ -1,7 +1,6 @@
 package com.becker.game.twoplayer.go.test.whitebox;
 
-import com.becker.game.twoplayer.go.GoBoard;
-import com.becker.game.twoplayer.go.GoGroup;
+import com.becker.game.twoplayer.go.*;
 import com.becker.game.twoplayer.go.test.GoTestCase;
 import junit.framework.Assert;
 
@@ -156,7 +155,7 @@ public class TestGoGroup extends GoTestCase {
                 +" but instead it was "+ size,
                 size == expectedSizeOfGroup);
 
-        boolean unconditionallyAlive = group.isUnconditionallyAlive((GoBoard) controller_.getBoard());
+        boolean unconditionallyAlive = GoGroupUtil.isUnconditionallyAlive(group, (GoBoard) controller_.getBoard());
 
         if (expectedUnconditionalyAlive) {
             Assert.assertTrue("Expected this group be unconditionally alive, but its not. group=" + group,

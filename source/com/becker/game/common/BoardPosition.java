@@ -6,7 +6,7 @@ package com.becker.game.common;
  *  the BoardPosition describes the physical marker at a location on the board.
  *  It may be empty if there is no piece there.
  *
- * @see com.becker.game.common.Board
+ * @see Board
  * @author Barry Becker
  */
 public class BoardPosition
@@ -87,8 +87,8 @@ public class BoardPosition
 
      public final void setLocation( Location loc )
     {
-        row_ = loc.row;
-        col_ = loc.col;
+        row_ = loc.getRow();
+        col_ = loc.getCol();
     }
 
     public final Location getLocation()
@@ -140,7 +140,7 @@ public class BoardPosition
         setPiece( null );
     }
 
-  
+
 
     /**
      * @return a string representation of the board position
@@ -150,7 +150,7 @@ public class BoardPosition
         StringBuffer sb = new StringBuffer( "" );
         if (piece_ != null)
             sb.append(piece_.toString());
-        sb.append( " (" + row_ + ", " + col_ + ")" );
+        sb.append( " (" + row_ + ", " + col_ + ')' );
         return sb.toString();
     }
 }

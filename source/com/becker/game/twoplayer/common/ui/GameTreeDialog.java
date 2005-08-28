@@ -42,8 +42,6 @@ public final class GameTreeDialog extends JDialog
      */
     private TwoPlayerController controller_;
 
-    private final JPanel mainPanel_ = new JPanel();
-    private final JPanel previewPanel_ = new JPanel();
     private JScrollPane scrollPane_ = null;
     private GameTreeViewer treeViewer_ = null;
     private JTree textTree_ = null;
@@ -90,6 +88,7 @@ public final class GameTreeDialog extends JDialog
         } catch (OutOfMemoryError oom) {
             GameContext.log( 0, "we ran out of memory!" );
             GameContext.log( 0, GUIUtil.getStackTrace( oom ) );
+            throw oom;
         }
         pack();
     }
@@ -100,10 +99,13 @@ public final class GameTreeDialog extends JDialog
      */
     private void initUI()
     {
+        JPanel mainPanel = new JPanel();
+        JPanel previewPanel = new JPanel();
+
         setTitle( "Game Tree" );
 
         setResizable( true );
-        mainPanel_.setLayout( new BorderLayout() );
+        mainPanel.setLayout( new BorderLayout() );
 
         root_ = new SearchTreeNode(null);
         textTree_ = createTree( root_ );
@@ -120,7 +122,7 @@ public final class GameTreeDialog extends JDialog
         scrollPane_.setPreferredSize( new Dimension( 400, 600 ) );
         scrollPane_.setMinimumSize(new Dimension(200, 120));
 
-        previewPanel_.setLayout( new BorderLayout() );
+        previewPanel.setLayout( new BorderLayout() );
 
         ((TwoPlayerBoardViewer)boardViewer_).setPreferredSize( new Dimension( 200, 500 ) );
         //previewPanel_.setPreferredSize( new Dimension( 200, 600 ) );
@@ -143,13 +145,13 @@ public final class GameTreeDialog extends JDialog
         viewerPanel.add( infoPanel, BorderLayout.SOUTH);
 
 
-        previewPanel_.add( viewerPanel, BorderLayout.CENTER );
+        previewPanel.add( viewerPanel, BorderLayout.CENTER );
 
 
-        JSplitPane topSplitPane = new JSplitPane( JSplitPane.HORIZONTAL_SPLIT, true, scrollPane_, previewPanel_ );
+        JSplitPane topSplitPane = new JSplitPane( JSplitPane.HORIZONTAL_SPLIT, true, scrollPane_, previewPanel );
         JSplitPane splitPane = new JSplitPane( JSplitPane.VERTICAL_SPLIT, true, topSplitPane, treeViewer_ );
 
-        mainPanel_.add( splitPane, BorderLayout.CENTER );
+        mainPanel.add( splitPane, BorderLayout.CENTER );
 
         JPanel buttonsPanel = new JPanel( new FlowLayout() );
 
@@ -175,15 +177,15 @@ public final class GameTreeDialog extends JDialog
         buttonsPanel.add( stepButton_ );
         buttonsPanel.add( continueButton_ );
         buttonsPanel.add( closeButton_ );
-        mainPanel_.add( buttonsPanel, BorderLayout.SOUTH );
+        mainPanel.add( buttonsPanel, BorderLayout.SOUTH );
 
-        getContentPane().add( mainPanel_ );
+        getContentPane().add( mainPanel );
     }
 
     /**
      * start over from scratch.
      */
-    public final void reset()
+    public void reset()
     {
         if (textTree_!=null) {
             textTree_.removeMouseMotionListener(this);
@@ -195,19 +197,19 @@ public final class GameTreeDialog extends JDialog
         treeViewer_.setRoot(root_, 0);
     }
 
-    public final SearchTreeNode getRootNode()
+    public SearchTreeNode getRootNode()
     {
         return root_;
     }
 
-    public final void treeExpanded( TreeExpansionEvent e )
+    public void treeExpanded( TreeExpansionEvent e )
     {
         refresh();
         treeViewer_.refresh();
         //treeViewer_.setRoot(root_, controller_.getLookAhead());
     }
 
-    public final void treeCollapsed( TreeExpansionEvent e )
+    public void treeCollapsed( TreeExpansionEvent e )
     {
         refresh();
         treeViewer_.refresh();
@@ -218,7 +220,7 @@ public final class GameTreeDialog extends JDialog
      * called when the game has changed.
      * @param gce the event spawned when the game changed.
      */
-    public final void gameChanged( GameChangedEvent gce )
+    public void gameChanged( GameChangedEvent gce )
     {
         mainController_ = (TwoPlayerController)gce.getController();
         // it is possible that the size of the game has changed since the game tree controller
@@ -284,6 +286,7 @@ public final class GameTreeDialog extends JDialog
         catch (ArrayIndexOutOfBoundsException e) {
             GameContext.log(0,
                 "Error: There was an ArayIndexOutOfBounds exception when creating a JTree from this root node: "+root);
+            e.printStackTrace();
         }
 
         return tree;
@@ -326,7 +329,7 @@ public final class GameTreeDialog extends JDialog
                 if ( trans > 240 )
                     trans = 240;
 
-                m.transparency = trans;
+                m.setTransparency(trans);
                 moveList.add( m );
             }
             // also show the children of the final move in a special way (if there are any)
@@ -343,22 +346,22 @@ public final class GameTreeDialog extends JDialog
             TwoPlayerPieceRenderer renderer = (TwoPlayerPieceRenderer)viewer.getPieceRenderer();
             String entity = "Human's move";
             Color c = renderer.getPlayer2Color();
-            if ( m.player1 )
+            if ( m.isPlayer1() )
                 c = renderer.getPlayer1Color();
-            if ( (m.player1 && !controller_.getPlayer1().isHuman()) ||
-                 (!m.player1 && !controller_.getPlayer2().isHuman()) )
+            if ( (m.isPlayer1() && !controller_.getPlayer1().isHuman()) ||
+                 (!m.isPlayer1() && !controller_.getPlayer2().isHuman()) )
                 entity = "Computer's move";
 
             StringBuffer sBuf = new StringBuffer("<html>");
             sBuf.append("<font size=\"+1\" color="+GUIUtil.getHTMLColorFromColor(c)+" bgcolor=#99AA99>"+entity+"</font><br>");
-            sBuf.append("Static value = " + Util.formatNumber(m.value) +"<br>");
-            sBuf.append("Inherited value = " + Util.formatNumber(m.inheritedValue) +"<br>");
-            sBuf.append("Alpha = "+Util.formatNumber(lastNode.alpha)+"<br>");
-            sBuf.append("Beta = "+Util.formatNumber(lastNode.beta)+"<br>");
-            if (lastNode.comment!=null)
-                sBuf.append(lastNode.comment+"<br>");
-            sBuf.append("Number of descendants = "+lastNode.numDescendants+"<br>");
-            if (m.urgent)
+            sBuf.append("Static value = " + Util.formatNumber(m.getValue()) +"<br>");
+            sBuf.append("Inherited value = " + Util.formatNumber(m.getInheritedValue()) +"<br>");
+            sBuf.append("Alpha = "+Util.formatNumber(lastNode.getAlpha())+"<br>");
+            sBuf.append("Beta = "+Util.formatNumber(lastNode.getBeta())+"<br>");
+            if (lastNode.getComment()!=null)
+                sBuf.append(lastNode.getComment()+"<br>");
+            sBuf.append("Number of descendants = "+lastNode.getNumDescendants()+"<br>");
+            if (m.isUrgent())
                 sBuf.append( "<font color=#FF6611>Urgent move!</font>");
             sBuf.append("</html>");
             infoLabel_.setText(sBuf.toString());
@@ -376,7 +379,7 @@ public final class GameTreeDialog extends JDialog
         while ( it.hasNext() ) {
             TwoPlayerMove m = (TwoPlayerMove) it.next();
             // make the last one permanent looking.
-            m.transparency = 0;
+            m.setTransparency((short) 0);
         }
         // show in this debug window, and not the main viewer window.
         ((TwoPlayerBoardViewer)boardViewer_).showMoveSequence( moveList );
@@ -457,7 +460,7 @@ public final class GameTreeDialog extends JDialog
     }
 
 
-    protected final void processWindowEvent( WindowEvent e )
+    protected void processWindowEvent( WindowEvent e )
     {
         if ( e.getID() == WindowEvent.WINDOW_CLOSING ) {
             dispose();

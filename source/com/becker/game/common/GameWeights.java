@@ -93,7 +93,7 @@ public class GameWeights
        p1Weights_ = p2Weights;
     }
 
-    private static final void verify( ParameterArray wts)
+    private static void verify( ParameterArray wts)
     {
        assert wts.size() == numWeights_:
                "Incorrect number of weights: "+ wts.size()+" you need "+ numWeights_;

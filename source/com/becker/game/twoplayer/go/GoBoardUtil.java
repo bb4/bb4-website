@@ -1,6 +1,7 @@
 package com.becker.game.twoplayer.go;
 
 
+import static com.becker.game.twoplayer.go.GoControllerConstants.USE_RELATIVE_GROUP_SCORING;
 import com.becker.common.Assert;
 import com.becker.game.common.Board;
 import com.becker.game.common.BoardPosition;
@@ -267,7 +268,7 @@ public final class GoBoardUtil
         // first find the group that contains the stones
         while ( gIt.hasNext() ) {
             GoGroup g = (GoGroup) gIt.next();
-            if ( g.exactlyContains( stones ) )
+            if ( GoGroupUtil.exactlyContains(g, stones) )
                 return true;
         }
         return false;
@@ -468,7 +469,7 @@ public final class GoBoardUtil
         Iterator it = groups.iterator();
         while ( it.hasNext() ) {
             GoGroup group = (GoGroup) it.next();
-            group.confirmValidStrings( board );
+            GoGroupUtil.confirmValidStrings(group, board);
         }
     }
 
@@ -532,5 +533,26 @@ public final class GoBoardUtil
     {
         boolean weaker = isStoneWeaker(group, stone, DIFFERENCE_THRESHOLD);
         return weaker;
+    }
+
+
+
+    /**
+     * @param stones actually the positions containing the stones.
+     * @return the average scores of the stones in the list.
+     */
+    public static float calcAverageScore(Set stones)
+    {
+        float totalScore = 0;
+
+        for (Object stone : stones) {
+            GoBoardPosition p = (GoBoardPosition) stone;
+            GoGroup group = p.getString().getGroup();
+            if (USE_RELATIVE_GROUP_SCORING)
+                totalScore += group.getRelativeHealth();
+            else
+                totalScore += group.getAbsoluteHealth();
+        }
+        return totalScore/stones.size();
     }
 }

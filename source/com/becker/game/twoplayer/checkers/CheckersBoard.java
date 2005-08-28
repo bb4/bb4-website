@@ -82,7 +82,7 @@ public class CheckersBoard extends TwoPlayerBoard
     protected boolean makeInternalMove( Move move )
     {
         CheckersMove m = (CheckersMove) move;
-        positions_[m.getToRow()][m.getToCol()].setPiece(m.piece);
+        positions_[m.getToRow()][m.getToCol()].setPiece(m.getPiece());
 
         // we also need to remove the captures from the board
         m.removeCaptures( this );
@@ -98,7 +98,7 @@ public class CheckersBoard extends TwoPlayerBoard
     {
         CheckersMove m = (CheckersMove) move;
         BoardPosition startPos = positions_[m.getFromRow()][m.getFromCol()];
-        startPos.setPiece( m.piece.copy() );     // @@ set to a copy of the piece ??
+        startPos.setPiece( m.getPiece().copy() );     // @@ set to a copy of the piece ??
         if ( m.kinged ) { // then it was just kinged and we need to undo it
             startPos.getPiece().setType( CheckersPiece.REGULAR_PIECE );
         }

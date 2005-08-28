@@ -25,24 +25,24 @@ public class Box {
      *  make sure corner 1 is the top left and corner 2 is the bottom right
      */
     private void verify() {
-       if (corner1_.row > corner2_.row) {
-            int temp = corner1_.row;
-            corner1_.row = corner2_.row;
-            corner2_.row = temp;
+       if (corner1_.getRow() > corner2_.getRow()) {
+            int temp = corner1_.getRow();
+            corner1_.setRow(corner2_.getRow());
+            corner2_.setRow(temp);
         }
-        if (corner1_.col > corner2_.col) {
-            int temp = corner1_.col;
-            corner1_.col = corner2_.col;
-            corner2_.col = temp;
+        if (corner1_.getCol() > corner2_.getCol()) {
+            int temp = corner1_.getCol();
+            corner1_.setCol(corner2_.getCol());
+            corner2_.setCol(temp);
         }
     }
 
     public int getWidth() {
-        return Math.abs(corner2_.col - corner1_.col);
+        return Math.abs(corner2_.getCol() - corner1_.getCol());
     }
 
     public int getHeight() {
-        return Math.abs(corner2_.row - corner1_.row);
+        return Math.abs(corner2_.getRow() - corner1_.getRow());
     }
 
     public Location getTopLeftCorner() {
@@ -54,19 +54,19 @@ public class Box {
     }
 
     public int getMinRow() {
-        return corner1_.row;
+        return corner1_.getRow();
     }
 
     public int getMinCol() {
-        return corner1_.col;
+        return corner1_.getCol();
     }
 
     public int getMaxRow() {
-        return corner2_.row;
+        return corner2_.getRow();
     }
 
     public int getMaxCol() {
-        return corner2_.col;
+        return corner2_.getCol();
     }
 
     public int getArea()  {
@@ -74,17 +74,17 @@ public class Box {
     }
 
     public void expandBy(Location loc) {
-        if (loc.row < corner1_.row) {
-            corner1_.row = loc.row;
+        if (loc.getRow() < corner1_.getRow()) {
+            corner1_.setRow(loc.getRow());
         }
-        else if (loc.row > corner2_.row) {
-            corner2_.row = loc.row;
+        else if (loc.getRow() > corner2_.getRow()) {
+            corner2_.setRow(loc.getRow());
         }
-        if (loc.col < corner1_.col)  {
-            corner1_.col = loc.col;
+        if (loc.getCol() < corner1_.getCol())  {
+            corner1_.setCol(loc.getCol());
         }
-        else if (loc.col > corner2_.col) {
-            corner2_.col = loc.col;
+        else if (loc.getCol() > corner2_.getCol()) {
+            corner2_.setCol(loc.getCol());
         }
     }
 

@@ -31,26 +31,28 @@ public final class MiniMaxStrategy extends SearchStrategy
      * @param lastMove the most recent move made by one of the players
      * @param weights coefficient for the evaluation polunomial that indirectly determines the best move
      * @param depth how deep in this local game tree that we are to search
-     * @param alpha same as p2best but for the other player. (alpha)
-     * @param beta the maximum of the value that it inherits from above and the best move found at this level (beta)
+     * @param oldAlpha same as p2best but for the other player. (alpha)
+     * @param oldBeta the maximum of the value that it inherits from above and the best move found at this level (beta)
      * @param parent for constructing a ui tree. If null no game tree is constructed
      * @return the chosen move (ie the best move) (may be null if no next move)
      */
-    public final TwoPlayerMove search( TwoPlayerMove lastMove, ParameterArray weights,
+    public TwoPlayerMove search( TwoPlayerMove lastMove, ParameterArray weights,
                                        int depth, int quiescentDepth,
-                                       double alpha, double beta, SearchTreeNode parent )
+                                       double oldAlpha, double oldBeta, SearchTreeNode parent )
     {
         List list;   // list of moves to consider
         TwoPlayerMove selectedMove;  // the currently selected move
+        double alpha = oldAlpha;
+        double beta = oldBeta;
 
         // if player 1, then search for a high score, else seach for a low score
-        boolean player1 = lastMove.player1;
+        boolean player1 = lastMove.isPlayer1();
 
         if ( depth == 0 || controller_.done( lastMove, false ) ) {
             if ( quiescence_ && depth == 0 )
                 return quiescentSearch( lastMove, weights, quiescentDepth, alpha, beta, parent );
             else {
-                lastMove.inheritedValue = lastMove.value;
+                lastMove.setInheritedValue(lastMove.getValue());
                 return lastMove;
             }
         }
@@ -96,16 +98,16 @@ public final class MiniMaxStrategy extends SearchStrategy
                 continue;
             }
 
-            selectedValue = selectedMove.inheritedValue;
+            selectedValue = selectedMove.getInheritedValue();
             if ( player1 ) {
                 if ( selectedValue < bestInheritedValue ) {
                     bestMove = theMove;
-                    bestInheritedValue = bestMove.inheritedValue;
+                    bestInheritedValue = bestMove.getInheritedValue();
                 }
             }
             else if ( selectedValue > bestInheritedValue ) {
                 bestMove = theMove;
-                bestInheritedValue = bestMove.inheritedValue;
+                bestInheritedValue = bestMove.getInheritedValue();
             }
 
             //********* alpha beta pruning ********
@@ -132,8 +134,8 @@ public final class MiniMaxStrategy extends SearchStrategy
             //********* end alpha beta pruning *****
         }
 
-        bestMove.selected = true;
-        lastMove.inheritedValue = bestMove.inheritedValue;
+        bestMove.setSelected(true);
+        lastMove.setInheritedValue(bestMove.getInheritedValue());
         return bestMove;
     }
 
@@ -142,9 +144,11 @@ public final class MiniMaxStrategy extends SearchStrategy
      * For example, perhaps we are in the middle of a piece exchange
      */
     private TwoPlayerMove quiescentSearch( TwoPlayerMove lastMove, ParameterArray weights,
-                                          int depth, double alpha, double beta, SearchTreeNode parent )
+                                          int depth, double oldAlpha, double oldBeta, SearchTreeNode parent )
     {
-        lastMove.inheritedValue = lastMove.value;
+        double alpha = oldAlpha;
+        double beta = oldBeta;
+        lastMove.setInheritedValue(lastMove.getValue());
         if ( depth >= MAX_QUIESCENT_DEPTH) {
             return lastMove;
         }
@@ -153,18 +157,18 @@ public final class MiniMaxStrategy extends SearchStrategy
             return search( lastMove, weights, 1, depth+1, alpha, beta, parent );
         }
 
-        boolean player1 = lastMove.player1;
+        boolean player1 = lastMove.isPlayer1();
         if ( player1 ) {
-            if ( lastMove.value >= beta )
+            if ( lastMove.getValue() >= beta )
                 return lastMove; // prune
-            if ( lastMove.value > alpha )
-                alpha = lastMove.value;
+            if ( lastMove.getValue() > alpha )
+                alpha = lastMove.getValue();
         }
         else {
-            if ( lastMove.value >= alpha )
+            if ( lastMove.getValue() >= alpha )
                 return lastMove; // prune
-            if ( lastMove.value > beta )
-                beta = lastMove.value;
+            if ( lastMove.getValue() > beta )
+                beta = lastMove.getValue();
         }
 
         // generate those moves that are critically urgent
@@ -191,30 +195,30 @@ public final class MiniMaxStrategy extends SearchStrategy
             TwoPlayerMove selectedMove = quiescentSearch( theMove, weights, depth+1, alpha, beta, child );
             assert selectedMove!=null;
 
-            double selectedValue = selectedMove.inheritedValue;
+            double selectedValue = selectedMove.getInheritedValue();
             if ( player1 ) {
                 if ( selectedValue < bestInheritedValue ) {
                     bestMove = theMove;
-                    bestInheritedValue = bestMove.inheritedValue;
+                    bestInheritedValue = bestMove.getInheritedValue();
                 }
             }
             else if ( selectedValue > bestInheritedValue ) {
                 bestMove = theMove;
-                bestInheritedValue = bestMove.inheritedValue;
+                bestInheritedValue = bestMove.getInheritedValue();
             }
 
             controller_.undoInternalMove( theMove );
             if ( player1 ) {
-                if ( bestMove.inheritedValue >= beta )
+                if ( bestMove.getInheritedValue() >= beta )
                     return bestMove;  // prune
-                if ( bestMove.inheritedValue > alpha )
-                    alpha = bestMove.inheritedValue;
+                if ( bestMove.getInheritedValue() > alpha )
+                    alpha = bestMove.getInheritedValue();
             }
             else {
-                if ( bestMove.inheritedValue >= alpha )
+                if ( bestMove.getInheritedValue() >= alpha )
                     return bestMove;  // prune
-                if ( bestMove.inheritedValue > beta )
-                    beta = bestMove.inheritedValue;
+                if ( bestMove.getInheritedValue() > beta )
+                    beta = bestMove.getInheritedValue();
             }
         }
         return bestMove;

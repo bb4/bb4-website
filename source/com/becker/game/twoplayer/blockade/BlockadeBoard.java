@@ -547,7 +547,7 @@ public class BlockadeBoard extends TwoPlayerBoard
     protected boolean makeInternalMove( Move move )
     {
         BlockadeMove m = (BlockadeMove) move;
-        positions_[m.getToRow()][m.getToCol()].setPiece(m.piece);
+        positions_[m.getToRow()][m.getToCol()].setPiece(m.getPiece());
 
         // we also need to place a wall.
         if (m.getWall() != null)
@@ -565,7 +565,7 @@ public class BlockadeBoard extends TwoPlayerBoard
     {
         BlockadeMove m = (BlockadeMove) move;
         BoardPosition startPos = positions_[m.getFromRow()][m.getFromCol()];
-        startPos.setPiece( m.piece );
+        startPos.setPiece( m.getPiece() );
         positions_[m.getToRow()][m.getToCol()].clear();
 
         // remove the wall that was placed by this move.

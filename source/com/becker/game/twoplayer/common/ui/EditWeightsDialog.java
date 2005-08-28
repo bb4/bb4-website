@@ -93,7 +93,7 @@ class EditWeightsDialog extends OptionsDialog implements ActionListener
             JPanel weightPanel = new JPanel( fl );
             weightPanel.setAlignmentX( Component.LEFT_ALIGNMENT );
             weightPanel.setMaximumSize( WEIGHT_PANEL_DIM );
-            JLabel lab = new JLabel( gameWeights_.getName( i )+" [0.0 - "+gameWeights_.getMaxWeight(i)+"]");
+            JLabel lab = new JLabel( gameWeights_.getName( i )+" [0.0 - "+gameWeights_.getMaxWeight(i)+']');
             lab.setToolTipText( gameWeights_.getDescription( i ) );
             lab.setAlignmentX( Component.LEFT_ALIGNMENT );
             lab.setPreferredSize( LABEL_DIM );

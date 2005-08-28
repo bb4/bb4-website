@@ -13,5 +13,5 @@ public interface ViewerCallbackInterface
     /**
      * return the game to its original state.
      */
-    public void reset();
+   void reset();
 }

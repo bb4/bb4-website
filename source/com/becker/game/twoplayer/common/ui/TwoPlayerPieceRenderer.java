@@ -70,16 +70,16 @@ public class TwoPlayerPieceRenderer extends GamePieceRenderer
      */
     protected Color getPieceColor(GamePiece piece)
     {
-        return getPieceColor(piece.isOwnedByPlayer1(), piece.getTransparency());       
+        return getPieceColor(piece.isOwnedByPlayer1(), piece.getTransparency());
     }
-    
+
        /**
      * @return the game piece render color.
      */
     private Color getPieceColor(boolean player1, int transparency)
     {
-        Color playerColor = null;
-        Color c = null;
+        Color playerColor;
+        Color c;
         if ( player1 ) {
             playerColor = getPlayer1Color();
             c = new Color( playerColor.getRed(), playerColor.getGreen(), playerColor.getBlue(),
@@ -111,19 +111,19 @@ public class TwoPlayerPieceRenderer extends GamePieceRenderer
 
     /**
      * show the next moves in a special way.
-     */ 
+     */
     public void renderNextMove( Graphics2D g2, TwoPlayerMove move, int cellSize, Board b) {
 
-        if (move.piece != null)  {
-            g2.setColor(getPieceColor(move.piece));
-        
+        if (move.getPiece() != null)  {
+            g2.setColor(getPieceColor(move.getPiece()));
+
             BoardPosition position = b.getPosition(move.getToRow(), move.getToCol());
-            int pieceSize = (int)(.5* getPieceSize(cellSize, move.piece));
+            int pieceSize = (int)(0.5* getPieceSize(cellSize, move.getPiece()));
             Point pos = getPosition(position, cellSize, pieceSize);
-        
+
             g2.fillOval( pos.x, pos.y, pieceSize, pieceSize );
-            g2.setColor(move.urgent ? URGENT_COLOR : getTextColor(move.piece));
-            g2.drawString(""+Math.round(move.value), pos.x - 5 , pos.y + 2);
+            g2.setColor(move.isUrgent() ? URGENT_COLOR : getTextColor(move.getPiece()));
+            g2.drawString(""+Math.round(move.getValue()), pos.x - 5 , pos.y + 2);
         } else {
             GameContext.log(2, "piece for next move is null: "+move);
         }

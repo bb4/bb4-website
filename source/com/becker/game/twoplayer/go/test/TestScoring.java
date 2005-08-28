@@ -50,8 +50,10 @@ public class TestScoring extends GoTestCase {
         Assert.assertTrue(
                 "Unexpected number of white captures. Expected "+expectedWhiteCaptures+" got "+numWhiteCaptures,
                 numWhiteCaptures == expectedWhiteCaptures);
-        Assert.assertTrue( withinBounds(blackTerrEst, expectedBlackTerr));
-        Assert.assertTrue( withinBounds(-whiteTerrEst, expectedWhiteTerr));
+        Assert.assertTrue("The black territory estimate ("+ blackTerrEst +") was not close to "+ expectedBlackTerr,
+                          withinBounds(blackTerrEst, expectedBlackTerr));
+        Assert.assertTrue("The white territory estimate ("+ blackTerrEst +") was not close to "+ expectedBlackTerr,
+                          withinBounds(-whiteTerrEst, expectedWhiteTerr));
         // see if a given move is in jeopardy
         //controller_.inJeopardy();
     }

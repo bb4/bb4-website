@@ -34,7 +34,7 @@ public class GamePiece
     public GamePiece()
     {
         ownedByPlayer1_ = false;
-        type_ = GamePiece.REGULAR_PIECE;
+        type_ = REGULAR_PIECE;
         transparency_ = 0;
     }
 
@@ -46,7 +46,7 @@ public class GamePiece
     public GamePiece( boolean player1)
     {
         ownedByPlayer1_ = player1;
-        type_ = GamePiece.REGULAR_PIECE;
+        type_ = REGULAR_PIECE;
         transparency_ = 0;
     }
 

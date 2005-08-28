@@ -317,7 +317,7 @@ public class PenteController extends TwoPlayerController
         diff += computeValueDifference( line, position, weights );
         //worthDebug('/', line, position, diff);
 
-        return lastMove.value + diff;
+        return lastMove.getValue() + diff;
     }
 
 
@@ -343,14 +343,14 @@ public class PenteController extends TwoPlayerController
             PenteBoard pb = (PenteBoard) board_;
             pb.determineCandidateMoves();
 
-            boolean player1 = !(lastMove.player1);
+            boolean player1 = !(lastMove.isPlayer1());
 
             for ( i = 1; i <= Ncols; i++ )      //cols
                 for ( j = 1; j <= Nrows; j++ )    //rows
                     if ( pb.isCandidateMove( j, i ) ) {
-                        TwoPlayerMove m = TwoPlayerMove.createMove( j, i, lastMove.value, new GamePiece(player1));
+                        TwoPlayerMove m = TwoPlayerMove.createMove( j, i, lastMove.getValue(), new GamePiece(player1));
                         pb.makeMove( m );
-                        m.value = worth( m, weights, player1sPerspective );
+                        m.setValue(worth( m, weights, player1sPerspective ));
                         // now revert the board
                         pb.undoMove();
                         moveList.add( m );
@@ -370,10 +370,10 @@ public class PenteController extends TwoPlayerController
             Iterator it = moves.iterator();
             while ( it.hasNext() ) {
                 TwoPlayerMove move = (TwoPlayerMove) it.next();
-                if ( Math.abs( move.inheritedValue ) < WINNING_VALUE )
+                if ( Math.abs( move.getInheritedValue() ) < WINNING_VALUE )
                     it.remove();
                 else
-                    move.urgent = true;
+                    move.setUrgent(true);
             }
             // ( moves.size() > 0 )
             //    GameContext.log( 0, "pente controller: the urgent moves are :" + moves );
@@ -392,7 +392,7 @@ public class PenteController extends TwoPlayerController
             double w = weights.get(8).value;
 
             double newValue = worth( m, weights, player1sPerspective );
-            double diff = newValue - m.value;
+            double diff = newValue - m.getValue();
 
             return (diff > w);
         }

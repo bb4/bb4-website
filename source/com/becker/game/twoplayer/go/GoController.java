@@ -323,7 +323,7 @@ public final class GoController extends TwoPlayerController
         int numCaptures = 0;
         while ( it.hasNext() ) {
             GoMove move = (GoMove) it.next();
-            if ( move.player1 == !player1sStones ) {
+            if ( move.isPlayer1() == !player1sStones ) {
                 numCaptures += move.getNumCaptures();
 
             }
@@ -580,12 +580,12 @@ public final class GoController extends TwoPlayerController
                 if (position.isInEye())  {
                     if (position.isOccupied()) {
                         // a dead enemy stone in the eye
-                        position.scoreContribution = (position.getEye().isOwnedByPlayer1()? 2.0:-2.0);
+                        position.setScoreContribution((position.getEye().isOwnedByPlayer1()? 2.0:-2.0));
                     }
                     else {
-                        position.scoreContribution = (position.getEye().isOwnedByPlayer1()? 1.0:-1.0);
+                        position.setScoreContribution((position.getEye().isOwnedByPlayer1()? 1.0:-1.0));
                     }
-                    worth += position.scoreContribution;
+                    worth += position.getScoreContribution();
                 }
                 else if ( position.isOccupied() ) {
                     GoStone stone = (GoStone)position.getPiece();
@@ -602,15 +602,15 @@ public final class GoController extends TwoPlayerController
                         (side * gameStageBoost * weights.get(POSITIONAL_WEIGHT_INDEX).value * positionalScore_[row][col]);
 
                     double s = weights.get(HEALTH_WEIGHT_INDEX).value * stone.getHealth() + posScore + badShapeScore;
-                    position.scoreContribution = Math.max(-1.0, Math.min(1.0, s));
+                    position.setScoreContribution(Math.max(-1.0, Math.min(1.0, s)));
 
                     if (GameContext.getDebugMode() > 0)  {
                         stone.badShapeScore = badShapeScore;
                         stone.positionalScore = posScore;
                     }
-                    worth += position.scoreContribution;
+                    worth += position.getScoreContribution();
                 } else {
-                    position.scoreContribution = 0;
+                    position.setScoreContribution(0);
                 }
             }
 
@@ -811,7 +811,7 @@ public final class GoController extends TwoPlayerController
                     it.remove();
                 }
                 else {
-                    move.urgent = true;
+                    move.setUrgent(true);
                 }
             }
             //if (moves.size() > 0)
@@ -851,14 +851,14 @@ public final class GoController extends TwoPlayerController
 
             boolean player1 = true;
             if ( lastMove != null ) {
-                player1 = !(lastMove.player1);
+                player1 = !(lastMove.isPlayer1());
             }
 
             for ( i = 1; i <= nCols; i++ )      //cols
                 for ( j = 1; j <= nRows; j++ )    //rows
                     // if its a candidate move and not an immediate takeback (which would break the rule of ko)
                     if ( gb.isCandidateMove( j, i ) && !isTakeBack( j, i, (GoMove) lastMove, gb ) ) {
-                        GoMove m = GoMove.createGoMove( j, i, lastMove.value, new GoStone(player1) );
+                        GoMove m = GoMove.createGoMove( j, i, lastMove.getValue(), new GoStone(player1) );
 
                         GoBoard.getProfiler().stop(GoProfiler.GENERATE_MOVES);
                         boolean suicide = !gb.makeMove( m );
@@ -871,7 +871,7 @@ public final class GoController extends TwoPlayerController
                         else {
                             // this value is not likely to change much except local to last move,
                             // anyway we could cache that?
-                            m.value = worth( m, weights, player1sPerspective );
+                            m.setValue(worth( m, weights, player1sPerspective ));
                             // now revert the board
                             GoBoard.getProfiler().stop(GoProfiler.GENERATE_MOVES);
                             gb.undoMove();
@@ -886,7 +886,7 @@ public final class GoController extends TwoPlayerController
             // if none of the generated moves have an inherited value better than the passing move
             // (which just uses the value of the current move) then we should pass
             if (getNumMoves() > nCols+nRows)  {
-                moveList.add(moveList.size(), GoMove.createPassMove(lastMove.value, player1));
+                moveList.add(moveList.size(), GoMove.createPassMove(lastMove.getValue(), player1));
             }
             GoBoard.getProfiler().stop(GoProfiler.GENERATE_MOVES);
 

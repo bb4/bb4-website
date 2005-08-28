@@ -127,7 +127,7 @@ public class PokerGameViewer extends GameBoardViewer
             case FOLD :
                 robot.setFold(true);
                 break;
-            case CALL : 
+            case CALL :
                 int callAmount = pc.getCurrentMaxContribution() - robot.getContribution();
                 System.out.println("PGV: robot call amount = currentMaxContrib - robot.getContrib) = "+pc.getCurrentMaxContribution()+" - "+robot.getContribution());
                 if (callAmount <= robot.getCash())   {
@@ -135,7 +135,7 @@ public class PokerGameViewer extends GameBoardViewer
                 } else {
                     robot.setFold(true);
                 }
-          
+
                 break;
             case RAISE :
                 robot.contributeToPot(pc, robot.getRaise(pc));
@@ -244,7 +244,7 @@ public class PokerGameViewer extends GameBoardViewer
         PokerPlayer player = (PokerPlayer)controller_.getCurrentPlayer();
         PokerPlayerMarker m = player.getPiece();
         g2.setColor(PokerRenderer.HIGHLIGHT_COLOR);
-        g2.fillOval(cellSize_*(m.getLocation().col-2), cellSize_*(m.getLocation().row-2), 10*cellSize_, 10*cellSize_);
+        g2.fillOval(cellSize_*(m.getLocation().getCol()-2), cellSize_*(m.getLocation().getRow()-2), 10*cellSize_, 10*cellSize_);
 
         // now draw the players and their stuff (face, anme, chips, cards, etc)
         super.drawMarkers(nrows, ncols, g2);

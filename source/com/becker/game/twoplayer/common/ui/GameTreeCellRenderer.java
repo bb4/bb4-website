@@ -41,31 +41,19 @@ public class GameTreeCellRenderer extends DefaultTreeCellRenderer
     {
         // TwoPlayerPieceRenderer renderer = (TwoPlayerPieceRenderer)viewer.getPieceRenderer();
         // we will use this colormap for both the text tree and the graphical tree viewers so they have consistent coloring.
-        final double[] values_ = {-TwoPlayerController.WINNING_VALUE, -TwoPlayerController.WINNING_VALUE/20.0,
+        final double[] values = {-TwoPlayerController.WINNING_VALUE, -TwoPlayerController.WINNING_VALUE/20.0,
                                               0.0,
                                               TwoPlayerController.WINNING_VALUE/20.0, TwoPlayerController.WINNING_VALUE};
-        final Color[] colors_ = {renderer.getPlayer2Color().darker(),
+        final Color[] colors = {renderer.getPlayer2Color().darker(),
                                  renderer.getPlayer2Color(),
                                  new Color( 160, 160, 160),
                                  renderer.getPlayer1Color(),
                                  renderer.getPlayer1Color().darker()};
-        return new ColorMap( values_, colors_ );
+        return new ColorMap( values, colors);
     }
-
-
-    /*
-    // Constructor
-    public GameTreeCellRenderer( Color player1Color, Color player2Color )
-    {
-        p1Color_ = player1Color;
-        p2Color_ = player2Color;
-        commonInit();
-    }  */
 
     private void commonInit()
     {
-        // @@ I want to show the piece color in each row in addition to everything else,
-        // but this isn't working right
         cellPanel_.setBackground( UIManager.getColor( "Tree.textBackground" ) );
         setOpaque( false );
         pieceLabel_.setOpaque( true );
@@ -90,10 +78,10 @@ public class GameTreeCellRenderer extends DefaultTreeCellRenderer
     public Component getTreeCellRendererComponent(
             JTree tree, Object value,
             boolean sel, boolean expanded,
-            boolean leaf, int row, boolean hasFocus )
+            boolean leaf, int row, boolean hasFocus1 )
     {
         super.getTreeCellRendererComponent( tree, value, sel,
-                expanded, leaf, row, hasFocus );
+                expanded, leaf, row, hasFocus1 );
 
         Color bg = getBGColor( value );
         Color fg = getFGColor( value );
@@ -114,7 +102,7 @@ public class GameTreeCellRenderer extends DefaultTreeCellRenderer
         if ( m == null )
             return Color.gray;
 
-        if ( m.selected )
+        if ( m.isSelected() )
             return SELECTED_COLOR;
 
         return Color.black;
@@ -130,11 +118,11 @@ public class GameTreeCellRenderer extends DefaultTreeCellRenderer
         if ( m == null ) return Color.blue;
 
         if (colormap_!=null) {
-            c = colormap_.getColorForValue(m.inheritedValue);
+            c = colormap_.getColorForValue(m.getInheritedValue());
         }
         else {
-            int val = (int) (2.0 * Math.sqrt( Math.abs( m.inheritedValue ) ));
-            if ( m.inheritedValue < 0 )
+            int val = (int) (2.0 * Math.sqrt( Math.abs( m.getInheritedValue() ) ));
+            if ( m.getInheritedValue() < 0 )
                 val = -val;
             int v1 = 255 - Math.min( Math.max( val, 0 ), 255 );
             int v2 = 255 - Math.min( Math.max( -val, 0 ), 255 );

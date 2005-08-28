@@ -137,7 +137,7 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
 
         GameContext.log( 3, "GoBoardViewer: mousePressed: controller_.isPlayer1sTurn()=" + get2PlayerController().isPlayer1sTurn() );
 
-        GoMove m = GoMove.createGoMove( loc.row, loc.col, 0, new GoStone(controller.isPlayer1sTurn()));
+        GoMove m = GoMove.createGoMove( loc.getRow(), loc.getCol(), 0, new GoStone(controller.isPlayer1sTurn()));
 
         // if there is already a piece where the user clicked, or its
         // out of bounds, or its a suicide move, then return without doing anything

@@ -10,25 +10,42 @@ import java.awt.geom.Point2D;
  */
 public final class Location
 {
-  public int row = 0;
-  public int col = 0;
+    private int row_ = 0;
+    private int col_ = 0;
 
-  /**
-   * Constructs a new point at (0, 0).
-   */
-  public Location() { }
+    /**
+     * Constructs a new point at (0, 0).
+     */
+    public Location() { }
 
-  /**
-   * Constructs a new Location at the given coordinates.
-   *
-   * @param r  the row  coordinate.
-   * @param c  the column coordinate.
-   */
-  public Location( int r, int c )
-  {
-      row = r;
-      col = c;
-  }
+    /**
+     * Constructs a new Location at the given coordinates.
+     *
+     * @param r  the row  coordinate.
+     * @param c  the column coordinate.
+     */
+    public Location( int r, int c )
+    {
+        row_ = r;
+        col_ = c;
+    }
+
+
+    public int getRow() {
+        return row_;
+    }
+
+    public void setRow(int row) {
+        this.row_ = row;
+    }
+
+    public int getCol() {
+        return col_;
+    }
+
+    public void setCol(int col) {
+        this.col_ = col;
+    }
 
   /**
    * Checks to see if the given location has the same coordinates as this
@@ -37,9 +54,10 @@ public final class Location
    * @param location  The location whose coordinates are to be compared.
    * @return true  The location's coordinates exactly equal this location's.
    */
-  public boolean equals( Location location )
+  public boolean equals( Object location )
   {
-      return (location.row == row) && (location.col == col);
+      Location loc = (Location) location;
+      return (loc.getRow() == row_) && (loc.getCol() == col_);
   }
 
   /**
@@ -48,8 +66,8 @@ public final class Location
    */
   public double getDistanceFrom(Location loc)
   {
-      float xDif = Math.abs(col - loc.col);
-      float yDif = Math.abs(row - loc.row);
+      float xDif = Math.abs(col_ - loc.getCol());
+      float yDif = Math.abs(row_ - loc.getRow());
       double dist = Math.sqrt( xDif*xDif + yDif*yDif);
       return dist;
   }
@@ -60,8 +78,8 @@ public final class Location
    */
   public double getDistanceFrom(Point2D loc)
   {
-      double xDif = Math.abs(col - loc.getX());
-      double yDif = Math.abs(row - loc.getY());
+      double xDif = Math.abs(col_ - loc.getX());
+      double yDif = Math.abs(row_ - loc.getY());
       double dist = Math.sqrt( xDif*xDif + yDif*yDif);
       return dist;
   }
@@ -71,7 +89,8 @@ public final class Location
    */
   public String toString()
   {
-      return "row=" + row + ", colum=" + col;
+      return "row=" + row_ + ", colum=" + col_;
   }
+
 }
 

@@ -243,7 +243,7 @@ public class GalaxyViewer extends GameBoardViewer
                 g2.setColor(order.getOwner().getColor());
                 int endX = (int)(cellSize_*(end.getX()-OFFSET ));
                 int endY = (int)(cellSize_*(end.getY()-OFFSET ));
-                g2.drawLine((int)(cellSize_*(begin.col-OFFSET )), (int)(cellSize_*begin.row-OFFSET ),  endX, endY);
+                g2.drawLine((int)(cellSize_*(begin.getCol()-OFFSET )), (int)(cellSize_*begin.getRow()-OFFSET ),  endX, endY);
                 // the triangle at the end of the line representing the fleet
                 int rad = (int)Math.sqrt(order.getFleetSize());
                 g2.drawOval((int)(endX-rad/2.0), (int)(endY-rad/2.0), rad, rad);

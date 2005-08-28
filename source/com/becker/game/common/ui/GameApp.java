@@ -222,7 +222,7 @@ public class GameApp implements ActionListener
          if (args.length>1) {
              // then a locale has been specified
              String localeName = args[1];
-             LocaleType locale = GameContext.get(localeName, true);
+             LocaleType locale = GameContext.getLocale(localeName, true);
              GameContext.setLocale(locale);
          }
 
