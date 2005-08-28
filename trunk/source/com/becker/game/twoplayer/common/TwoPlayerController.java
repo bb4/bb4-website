@@ -101,7 +101,9 @@ public abstract class TwoPlayerController extends GameController
             try {
                Thread.sleep(100);
             }
-            catch (InterruptedException e) {}
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
         super.reset();
         getPlayer1().setWon(false);
@@ -171,7 +173,7 @@ public abstract class TwoPlayerController extends GameController
             return 0.5f;
         // @@ is this right?
         // we can use this formula to estimate the outcome:
-        double inherVal = ((TwoPlayerMove)board_.getLastMove()).inheritedValue;
+        double inherVal = ((TwoPlayerMove)board_.getLastMove()).getInheritedValue();
         if ( Math.abs( inherVal ) > WINNING_VALUE )
             GameContext.log( 1, "TwoPlayerController: warning: the score for p1 is greater than WINNING_VALUE(" +
                     WINNING_VALUE + ")  inheritedVal=" + inherVal );
@@ -221,7 +223,7 @@ public abstract class TwoPlayerController extends GameController
     {
         TwoPlayerMove m = (TwoPlayerMove) board_.undoMove();
         if (m != null) {
-            player1sTurn_ = m.player1;
+            player1sTurn_ = m.isPlayer1();
         }
         return m;
     }
@@ -262,7 +264,7 @@ public abstract class TwoPlayerController extends GameController
             weights = weights_.getPlayer2Weights();
         if ( root_ != null ) {
             root_.removeAllChildren(); // clear it out
-            p.selected = true;
+            p.setSelected(true);
             root_.setUserObject( p );
         }
 
@@ -319,7 +321,7 @@ public abstract class TwoPlayerController extends GameController
     {
         // we use the default weights because we just need to know if the game is over
         makeMove( m );
-        m.value = worth( m, weights_.getDefaultWeights() );
+        m.setValue(worth( m, weights_.getDefaultWeights() ));
         return m;
     }
 
@@ -333,7 +335,7 @@ public abstract class TwoPlayerController extends GameController
     {
         board_.makeMove( m );
         //getMoveList().add( m );
-        player1sTurn_ = !((TwoPlayerMove)m).player1;
+        player1sTurn_ = !((TwoPlayerMove)m).isPlayer1();
     }
 
 
@@ -362,20 +364,21 @@ public abstract class TwoPlayerController extends GameController
     {
         // launch a separate thread to do the search for the next move.
         worker_ = new Worker() {
-            Move m = null;
+
+            private Move move_ = null;
 
             public Object construct() {
                 processing_ = true;
 
-                m = findComputerMove( isPlayer1 );
+                move_ = findComputerMove( isPlayer1 );
 
-                return m;
+                return move_;
             }
 
             public void finished() {
                 processing_ = false;
                 if (get2PlayerViewer() != null)  {
-                    get2PlayerViewer().computerMoved(m);
+                    get2PlayerViewer().computerMoved(move_);
                 }
             }
         };
@@ -631,7 +634,7 @@ public abstract class TwoPlayerController extends GameController
         {
 
             if (getNumMoves() > 0)
-                assert(((TwoPlayerMove)board_.getLastMove()).player1 != m.player1):
+                assert(((TwoPlayerMove)board_.getLastMove()).isPlayer1() != m.isPlayer1()):
                         "can't go twice in a row m="+m+" getLastMove()="+board_.getLastMove() +" movelist = "+getMoveList();
 
             board_.makeMove( m );
@@ -670,9 +673,9 @@ public abstract class TwoPlayerController extends GameController
             if (getPlayer1().hasWon() || getPlayer1().hasWon())
                 return true;
 
-            boolean won = (Math.abs( m.value ) >= WINNING_VALUE);
+            boolean won = (Math.abs( m.getValue() ) >= WINNING_VALUE);
             if ( won && recordWin ) {
-                if ( m.value >= WINNING_VALUE )
+                if ( m.getValue() >= WINNING_VALUE )
                     getPlayer1().setWon(true);
                 else
                     getPlayer2().setWon(true);

@@ -50,7 +50,7 @@ public final class GoMove extends TwoPlayerMove
     {
         GoMove m = createGoMove( 0,  0, val, null );
         m.isPass_ = true;
-        m.player1 = player1;
+        m.setPlayer1(player1);
         return m;
     }
 
@@ -136,11 +136,11 @@ public final class GoMove extends TwoPlayerMove
             GameContext.log( 2, "******* GoMove: this is the capturelist we are copying:" + captureList_.toString() );
             newList = captureList_.copy();
         }
-        GoMove cp = createGoMove( toRow_, toCol_, value, (piece == null)? null : (GoStone)piece.copy() );
+        GoMove cp = createGoMove( toRow_, toCol_, getValue(), (getPiece() == null)? null : (GoStone)getPiece().copy() );
         cp.captureList_ = newList;
-        cp.player1 = player1;
-        cp.selected = this.selected;
-        cp.transparency = this.transparency;
+        cp.setPlayer1(isPlayer1());
+        cp.setSelected(this.isSelected());
+        cp.setTransparency(this.getTransparency());
         return cp;
     }
 
@@ -891,11 +891,11 @@ public final class GoMove extends TwoPlayerMove
     public String getSGFRepresentation()
     {
         // passes are not represented in SGF - so just skip it if the piece is null.
-        if (piece == null)
+        if (getPiece() == null)
              return "[]";
         StringBuffer buf = new StringBuffer("");
         char player = 'W';
-        if ( piece.isOwnedByPlayer1() )
+        if ( getPiece().isOwnedByPlayer1() )
             player = 'B';
         buf.append( ';' );
         buf.append( player );

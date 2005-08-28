@@ -77,10 +77,10 @@ public class ChessMove extends TwoPlayerMove
             newList = captureList.copy();
         }
         ChessMove cp = createMove( fromRow_, fromCol_, toRow_, toCol_,
-                                        newList, value,
-                                        piece);
-        cp.selected = this.selected;
-        cp.transparency = this.transparency;
+                                        newList, getValue(),
+                                   getPiece());
+        cp.setSelected(this.isSelected());
+        cp.setTransparency(this.getTransparency());
         cp.firstTimeMoved_ = this.firstTimeMoved_;
         return cp;
     }

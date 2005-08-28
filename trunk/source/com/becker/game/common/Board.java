@@ -116,7 +116,7 @@ public abstract class Board implements BoardInterface, Cloneable
      */
     public final BoardPosition getPosition( Location loc )
     {
-        return getPosition(loc.row, loc.col);
+        return getPosition(loc.getRow(), loc.getCol());
     }
 
     /**

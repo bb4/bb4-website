@@ -73,7 +73,7 @@ public class ChessBoardViewer extends CheckersBoardViewer implements MouseMotion
         for ( row = 1; row <= b.getNumRows(); row++ ) {
             for ( col = 1; col <= b.getNumCols(); col++ ) {
                 BoardPosition pos = b.getPosition( row, col );
-                if ( pos.isOccupied() && pos.getPiece().isOwnedByPlayer1() == m.player1 ) {
+                if ( pos.isOccupied() && pos.getPiece().isOwnedByPlayer1() == m.isPlayer1() ) {
                     // @@ second arg is not technically correct. it should be last move, but I don't think it matters.
                     checked = b.isKingCheckedByPosition(pos, m);
                 }

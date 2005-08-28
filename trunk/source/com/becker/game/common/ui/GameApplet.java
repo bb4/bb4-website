@@ -27,7 +27,7 @@ public class GameApplet extends JApplet
         String className = getParameter("panel_class");
         String gameName = getParameter("program_name");
         String localeName = getParameter("locale");
-        LocaleType locale = GameContext.get(localeName, true);
+        LocaleType locale = GameContext.getLocale(localeName, true);
 
         // these must be called before anything else
         GameContext.loadGameResources(gameName, className);
@@ -36,7 +36,7 @@ public class GameApplet extends JApplet
         Class gameClass = Util.loadClass(className);
 
         try {
-            
+
             gamePanel_ = (GamePanel)gameClass.newInstance();
 
         } catch (InstantiationException e) {

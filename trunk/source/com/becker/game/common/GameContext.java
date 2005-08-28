@@ -15,7 +15,7 @@ import java.util.*;
  */
 public final class GameContext
 {
-    private static Set commonMessageKeys_;
+    private static Set commonMessageKeys_ = new HashSet();;
 
     // logger object
     private static Log logger_ = null;
@@ -27,8 +27,8 @@ public final class GameContext
     private static MusicMaker musicMaker_ = null;
 
     private static final String COMMON_MESSAGE_BUNDLE = "com.becker.game.common.resources.coreMessages";
-    private static ResourceBundle commonMessages_;
-    private static ResourceBundle gameMessages_;
+    private static ResourceBundle commonMessages_ = null;
+    private static ResourceBundle gameMessages_ = null;
 
     private static final LocaleType DEFAULT_LOCALE = LocaleType.ENGLISH;
     private static LocaleType currentLocale_ = DEFAULT_LOCALE;
@@ -62,6 +62,7 @@ public final class GameContext
 
 
 
+    private GameContext() {};
 
     /**
      * @return the level of debugging in effect
@@ -169,7 +170,9 @@ public final class GameContext
         return DEFAULT_LOCALE;
     }
 
-    private static String gameName_, className_;
+    private static String gameName_ = null ;
+    private static String className_ = null;
+
     /**
      * This method causes the appropriate message bundle to
      * be loaded for the game specified.
@@ -191,7 +194,8 @@ public final class GameContext
                     resourcePath, currentLocale_.getLocale());
         }
         catch (MissingResourceException e) {
-               System.out.println("could not find "+resourcePath);
+            System.out.println("could not find "+resourcePath);
+            e.printStackTrace();
         }
     }
 
@@ -252,7 +256,7 @@ public final class GameContext
         // load the common resources at startup
         commonMessages_ =
             ResourceBundle.getBundle(COMMON_MESSAGE_BUNDLE, locale.getLocale());
-        commonMessageKeys_ = new HashSet();
+        //commonMessageKeys_ =
         Enumeration enumXXX = commonMessages_.getKeys();
         while (enumXXX.hasMoreElements()) {
             commonMessageKeys_.add(enumXXX.nextElement());
@@ -283,7 +287,7 @@ public final class GameContext
                 keySet.add(key);
             }
             messageKeySets.add(keySet);
-            log(1, "keySet size for " + (newVar).getLocale() + "=" + keySet.size());
+            log(1, "keySet size for " + (newVar).getLocale() + '=' + keySet.size());
         }
         // now that we have the keysets report on their consistency.
         // assume that the first is the default (en)
@@ -334,16 +338,16 @@ public final class GameContext
     }
 
     /**
-     * Looks up an {@link LocaleType}
+     * Looks up an {@link LocaleType} for a given locale name.
      * @param finf fail if not found.
      * @throws Error if the name is not a member of the enumeration
      */
-    public static LocaleType get(String name, boolean finf) {
-        LocaleType type = LocaleType.ENGLISH;  // the default
+    public static LocaleType getLocale(String name, boolean finf) {
+        LocaleType type; // english is the default
         try {
             type = LocaleType.valueOf(name);
         }
-        catch (Error e) {
+        catch (IllegalAccessError e) {
             log(0,  "***************" );
             log(0, name +" is not a valid locale. We currently only support: ");
             LocaleType[] values = LocaleType.values();
@@ -351,6 +355,7 @@ public final class GameContext
             log(0,  "Defaulting to English." );
             log(0, "***************" );
             assert (!finf);
+            throw e;
         }
         return type;
     }

@@ -169,7 +169,7 @@ public class ChessController extends CheckersController
             ChessMove move = (ChessMove)it.next();
             // first apply the move
             board_.makeMove(move);
-            move.value = worth(move, weights, player1sPerspective);
+            move.setValue(worth(move, weights, player1sPerspective));
             board_.undoMove();
         }
         moveList.addAll( moves );
@@ -213,7 +213,7 @@ public class ChessController extends CheckersController
             int row,col;
             player1sPerspective_ = player1sPerspective;
 
-            boolean player1 = !(lastMove.player1);
+            boolean player1 = !(lastMove.isPlayer1());
 
             // scan through the board positions. For each each piece of the current player's,
             // add all the moves that it can make.

@@ -129,9 +129,9 @@ final class GoTreeCellRenderer extends GameTreeCellRenderer
             return;
         }
 
-        double inheritedValue = move.inheritedValue;
-        double value = move.value;
-        if (move.player1)  {
+        double inheritedValue = move.getInheritedValue();
+        double value = move.getValue();
+        if (move.isPlayer1())  {
             g2.drawImage(GoStoneRenderer.BLACK_STONE_IMG.getImage(), 1, 0, STONE_IMG_SIZE, STONE_IMG_SIZE, null);
         } else {
             g2.drawImage(GoStoneRenderer.WHITE_STONE_IMG.getImage(), 1, 0, STONE_IMG_SIZE, STONE_IMG_SIZE, null);
@@ -150,14 +150,14 @@ final class GoTreeCellRenderer extends GameTreeCellRenderer
 
         g2.setColor(this.getForeground());
         g2.setFont(FONT);
-        String inhrtdValText = "inhrtd=" + Util.formatNumber(move.inheritedValue);
-        String valText = "val=" + Util.formatNumber(move.value) ;
+        String inhrtdValText = "inhrtd=" + Util.formatNumber(move.getInheritedValue());
+        String valText = "val=" + Util.formatNumber(move.getValue()) ;
         String text = "";
-        if (node_.pruned) {
+        if (node_.isPruned()) {
             text += " *PRUNED";
         }  else {
-            text += " kids="+node_.numDescendants;
-            text += " a="+Util.formatNumber(node_.alpha)+" b="+ Util.formatNumber(node_.beta);
+            text += " kids="+node_.getNumDescendants();
+            text += " a="+Util.formatNumber(node_.getAlpha())+" b="+ Util.formatNumber(node_.getBeta());
         }
 
         g2.drawString(inhrtdValText, TEXT_MARGIN + STONE_IMG_SIZE + 2, 8);

@@ -260,7 +260,7 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
      * The actionPerformed method in this class
      * is called each time the Timer "goes off".
      */
-    class TimerListener implements ActionListener
+    private class TimerListener implements ActionListener
     {
         public void actionPerformed(ActionEvent evt) {
             int percentDone = get2PlayerController().getSearchStrategy().getPercentDone();
@@ -368,7 +368,7 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
          TwoPlayerController contoller = get2PlayerController();
          if (contoller.allPlayersComputer()) {
              refresh();
-             doComputerMove( !m.player1 );
+             doComputerMove( !m.isPlayer1() );
          }
          else {
 

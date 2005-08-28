@@ -135,8 +135,8 @@ public class PokerRenderer extends GamePieceRenderer
     public void renderHand(Graphics2D g2, Location location, PokerHand hand, int cellSize) {
 
         assert (hand!=null): "Did you forget to deal cards to one of the players?";
-        int x = (int) ((location.col-1) * cellSize);
-        int y = (int) ((location.row + 1.6) * cellSize);
+        int x = (int) ((location.getCol()-1) * cellSize);
+        int y = (int) ((location.getRow() + 1.6) * cellSize);
         int cardArc = (int)(cellSize * CARD_ARC);
         Font font = POKER_CHIP_FONT.deriveFont(cellSize/(float)GameBoardViewer.MINIMUM_CELL_SIZE  * POKER_CARD_FONT_SIZE);
 
@@ -182,7 +182,7 @@ public class PokerRenderer extends GamePieceRenderer
     public void renderChips(Graphics2D g2, Location location, int amount, int cellSize) {
         int[] numChips = PokerChip.getChips(amount);
         int i,x=0, width=0, height=0, firstNonZeroPile=0;
-        int y = (int)(cellSize * (location.row));
+        int y = (int)(cellSize * (location.getRow()));
         //System.out.println("chips stacks = "+numChips[1]+" "+numChips[2] + " "+numChips[3] + " "+numChips[4]);
         for (i=0; i<numChips.length; i++) {
 
@@ -193,14 +193,14 @@ public class PokerRenderer extends GamePieceRenderer
                 height = (int)(cellSize * numChips[i] * CHIP_HEIGHT);
                 width = (int)(CHIP_PILE_WIDTH * cellSize);
                 g2.setColor(PokerChip.values()[i].getColor());
-                x = (int)(((float)i*CHIP_PILE_WIDTH + location.col +1) * cellSize);
-                y = location.row * cellSize - height;
+                x = (int)(((float)i*CHIP_PILE_WIDTH + location.getCol() +1) * cellSize);
+                y = location.getRow() * cellSize - height;
                 //System.out.println("x="+x+"  y="+y+"   w="+width+" ht="+height);
                 g2.fillRect(x, y, width, height);
                 g2.setColor(BLACK_COLOR);
                 g2.drawRect(x, y, width, height);
                 for (int j=1; j<numChips[i]; j++) {
-                     y = (int)(cellSize * (location.row - j * CHIP_HEIGHT));
+                     y = (int)(cellSize * (location.getRow() - j * CHIP_HEIGHT));
                      g2.drawLine(x, y, (int)(x + cellSize*CHIP_PILE_WIDTH), y);
                 }
             }
@@ -210,7 +210,7 @@ public class PokerRenderer extends GamePieceRenderer
         g2.setColor(BLACK_COLOR);
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(GameContext.getDefaultLocaleType().getLocale());
         String cashAmount = currencyFormat.format(amount);
-        x = (int)((location.col +1 +firstNonZeroPile*CHIP_PILE_WIDTH) * cellSize);
+        x = (int)((location.getCol() +1 +firstNonZeroPile*CHIP_PILE_WIDTH) * cellSize);
         Font f = POKER_CHIP_FONT.deriveFont(cellSize/(float)GameBoardViewer.MINIMUM_CELL_SIZE*POKER_CHIP_FONT_SIZE);
         g2.setFont(f);
         g2.drawString(cashAmount, x , (int)(y + height + cellSize/1.2));

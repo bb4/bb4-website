@@ -177,14 +177,14 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog implements ActionL
         c.getOptions().setQuiescence( quiescenceCheckbox_.isSelected() );
 
         Integer level = new Integer( lookAheadField_.getText() );
-        c.getOptions().setLookAhead( level.intValue() );
+        c.getOptions().setLookAhead( level );
 
         if ( minimaxButton_.isSelected() )
             c.getOptions().setSearchStrategyMethod( SearchStrategy.MINIMAX );
         else if ( negamaxButton_.isSelected() )
             c.getOptions().setSearchStrategyMethod( SearchStrategy.NEGAMAX );
         Integer best = new Integer( bestPercentageField_.getText() );
-        c.getOptions().setPercentageBestMoves( best.intValue() );
+        c.getOptions().setPercentageBestMoves( best );
         c.getOptions().setShowGameTree( gameTreeCheckbox_.isSelected() );
         c.getOptions().setShowComputerAnimation( computerAnimationCheckbox_.isSelected() );
 

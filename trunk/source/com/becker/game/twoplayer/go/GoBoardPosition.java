@@ -26,7 +26,7 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
     private boolean visited_;
 
     // the amount this position contributes to the overall score.
-    public double scoreContribution = 0.0;
+    private double scoreContribution_ = 0.0;
 
 
     /**
@@ -57,12 +57,13 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
     /**
      * copy all fields from another stone to this one.
      */
-    public void copy( GoBoardPosition pos )
+    public void copy( BoardPosition pos )
     {
         super.copy(pos);
-        setString( pos.getString() );
-        setEye(pos.getEye());
-        setVisited(pos.isVisited()); //??
+        GoBoardPosition position = (GoBoardPosition) pos;
+        setString( position.getString() );
+        setEye(position.getEye());
+        setVisited(position.isVisited()); //??
     }
 
     /**
@@ -198,7 +199,15 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
      */
     public String toString()
     {
-        return super.toString()+ " s:"+Util.formatNumber(scoreContribution);
+        return super.toString()+ " s:"+Util.formatNumber(scoreContribution_);
+    }
+
+    public double getScoreContribution() {
+        return scoreContribution_;
+    }
+
+    public void setScoreContribution(double scoreContribution) {
+        this.scoreContribution_ = scoreContribution;
     }
 }
 

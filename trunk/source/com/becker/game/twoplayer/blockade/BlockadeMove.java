@@ -77,9 +77,9 @@ public class BlockadeMove extends TwoPlayerMove
     {
 
         BlockadeMove cp = createMove( fromRow_, fromCol_, toRow_, toCol_,
-                                           value, piece, wall_);
-        cp.selected = this.selected;
-        cp.transparency = this.transparency;
+                                      getValue(), getPiece(), wall_);
+        cp.setSelected(this.isSelected());
+        cp.setTransparency(this.getTransparency());
         return cp;
     }
 

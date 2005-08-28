@@ -22,7 +22,7 @@ import java.util.*;
  *  - after click on fight, it should change immediately to close
  *  - remove selected source planet from dest list.
  *  - summary dialog should show number of years.
- * 
+ *
  * at java.lang.Integer.parseInt(Integer.java:468)
 	at java.lang.Integer.parseInt(Integer.java:497)
 	at com.becker.game.multiplayer.galactic.ui.OrderDialog.getFleetSize(OrderDialog.java:228)
@@ -320,7 +320,7 @@ public class GalacticController extends GameController
      */
     protected double worth( Move lastMove, ParameterArray weights )
     {
-        return lastMove.value;
+        return lastMove.getValue();
     }
 
     /*

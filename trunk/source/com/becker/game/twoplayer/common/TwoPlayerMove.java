@@ -36,21 +36,21 @@ public class TwoPlayerMove extends Move
      * It gets inherited from its descendants. It would be the real (perfect)
      * value of the position if the game tree is complete (which rarely happens in practice)
      */
-    public double inheritedValue;
+    private double inheritedValue_;
 
     /**
      * true if player1 made the move
      */
-    public boolean player1;
+    private boolean player1_;
     /**
      * this is the piece to use on the board. Some games only have one kind of piece .
      */
-    public GamePiece piece;
+    private GamePiece piece_;
     /**
      * true if this move was generated during quiescent search.
      * @@ should not be in this class.
      */
-    public boolean urgent;
+    private boolean urgent_;
     /**
      *  if true then this move is a passing move.
      */
@@ -58,11 +58,11 @@ public class TwoPlayerMove extends Move
     /**
      * make the piece represented by the move see through.
      */
-    public short transparency;
+    private short transparency_;
     /**
      * if true then in path to selected move.
      */
-    public boolean selected;
+    private boolean selected_;
 
 
 
@@ -82,13 +82,13 @@ public class TwoPlayerMove extends Move
     {
         toRow_ = destinationRow;
         toCol_ = destinationCol;
-        value = val;
-        inheritedValue = value;
-        selected = false;
-        piece = p;
+        setValue(val);
+        inheritedValue_ = getValue();
+        selected_ = false;
+        piece_ = p;
         if (p!=null)
-            player1 = p.isOwnedByPlayer1();
-        transparency = 0; // default
+            player1_ = p.isOwnedByPlayer1();
+        transparency_ = 0; // default
         isPass_ = false;
     }
 
@@ -106,10 +106,10 @@ public class TwoPlayerMove extends Move
      */
     public TwoPlayerMove copy()
     {
-        TwoPlayerMove cp = createMove( toRow_, toCol_, value,  piece );
-        cp.transparency = transparency;
-        cp.selected = selected;
-        cp.urgent = urgent;
+        TwoPlayerMove cp = createMove( toRow_, toCol_, getValue(),  piece_ );
+        cp.transparency_ = transparency_;
+        cp.selected_ = selected_;
+        cp.urgent_ = urgent_;
         return cp;
     }
 
@@ -129,7 +129,7 @@ public class TwoPlayerMove extends Move
      */
     public final boolean equals( Object mv )
     {
-        return (value == ((TwoPlayerMove) mv).value);
+        return (getValue() == ((TwoPlayerMove) mv).getValue());
     }
 
     /**
@@ -154,18 +154,66 @@ public class TwoPlayerMove extends Move
     public String toString()
     {
         StringBuffer s = new StringBuffer();
-        if (piece!=null)
-            s.append( piece.isOwnedByPlayer1()? P1 : P2 );
+        if (piece_!=null)
+            s.append( piece_.isOwnedByPlayer1()? P1 : P2 );
 
-        s.append( " val:" + Util.formatNumber(value) );
-        s.append( " inhrtd:" + Util.formatNumber(inheritedValue) );
-        if (piece!=null)
-            s.append( " piece:" + piece.toString());
+        s.append( " val:" + Util.formatNumber(getValue()) );
+        s.append( " inhrtd:" + Util.formatNumber(inheritedValue_) );
+        if (piece_!=null)
+            s.append( " piece:" + piece_.toString());
         //s.append(" sel:"+selected);
-        s.append( "(" + toRow_ + ", " + toCol_ + ")" );
-        if (urgent)
+        s.append( "(" + toRow_ + ", " + toCol_ + ')' );
+        if (urgent_)
             s.append(" urgent!");
         return s.toString();
+    }
+
+    public double getInheritedValue() {
+        return inheritedValue_;
+    }
+
+    public void setInheritedValue(double inheritedValue) {
+        this.inheritedValue_ = inheritedValue;
+    }
+
+    public boolean isPlayer1() {
+        return player1_;
+    }
+
+    public void setPlayer1(boolean player1) {
+        this.player1_ = player1;
+    }
+
+    public GamePiece getPiece() {
+        return piece_;
+    }
+
+    public void setPiece(GamePiece piece) {
+        this.piece_ = piece;
+    }
+
+    public boolean isUrgent() {
+        return urgent_;
+    }
+
+    public void setUrgent(boolean urgent) {
+        this.urgent_ = urgent;
+    }
+
+    public short getTransparency() {
+        return transparency_;
+    }
+
+    public void setTransparency(short transparency) {
+        this.transparency_ = transparency;
+    }
+
+    public boolean isSelected() {
+        return selected_;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected_ = selected;
     }
 }
 

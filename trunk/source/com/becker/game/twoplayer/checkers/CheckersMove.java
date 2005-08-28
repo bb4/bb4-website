@@ -56,7 +56,7 @@ public class CheckersMove extends TwoPlayerMove
              (!piece.isOwnedByPlayer1() && m.getToRow() == 1)) ) {
             m.kinged = true;
             piece.setType(CheckersPiece.KING);
-            m.piece = piece;
+            m.setPiece(piece);
 
         }
         return m;
@@ -103,9 +103,9 @@ public class CheckersMove extends TwoPlayerMove
             newList = captureList.copy();
         }
         CheckersMove cp = createMove( fromRow_, fromCol_, toRow_, toCol_,
-                newList, value, piece.copy());
-        cp.selected = this.selected;
-        cp.transparency = this.transparency;
+                newList, getValue(), getPiece().copy());
+        cp.setSelected(this.isSelected());
+        cp.setTransparency(this.getTransparency());
         cp.kinged = this.kinged;
         return cp;
     }

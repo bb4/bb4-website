@@ -102,7 +102,7 @@ public class ChessBoard extends CheckersBoard
         assert (oldPos.getPiece() != null): "oldpos="+oldPos+" m="+m;
         if (m != null && oldPos.getPiece() != null) {
             m.setFirstTimeMoved(((ChessPiece)oldPos.getPiece()).isFirstTimeMoved());
-            newPos.setPiece(m.piece);
+            newPos.setPiece(m.getPiece());
 
             // once its been moved its no longer the first time its been moved
             ((ChessPiece)newPos.getPiece()).setFirstTimeMoved(false);
@@ -121,7 +121,7 @@ public class ChessBoard extends CheckersBoard
     {
         ChessMove m = (ChessMove) move;
         BoardPosition start = positions_[m.getFromRow()][m.getFromCol()];
-        start.setPiece(m.piece);
+        start.setPiece(m.getPiece());
 
         positions_[m.getToRow()][m.getToCol()].clear();
         // restore the firstTimeMoved status of the piece since we
@@ -158,7 +158,7 @@ public class ChessBoard extends CheckersBoard
         for ( row = 1; row <= getNumRows(); row++ ) {
             for ( col = 1; col <= getNumCols(); col++ ) {
                 BoardPosition pos = getPosition( row, col );
-                if ( pos.isOccupied() && pos.getPiece().isOwnedByPlayer1() == !m.player1 ) {
+                if ( pos.isOccupied() && pos.getPiece().isOwnedByPlayer1() == !m.isPlayer1() ) {
                     checked = isKingCheckedByPosition(pos, m);
                 }
                 if (checked) {

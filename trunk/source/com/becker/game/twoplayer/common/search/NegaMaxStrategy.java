@@ -38,7 +38,7 @@ public final class NegaMaxStrategy extends SearchStrategy
      * @param parent for constructing a ui tree. If null no game tree is constructed
      * @return the chosen move (ie the best move) (may be null if no next move)
      */
-    public final TwoPlayerMove search( TwoPlayerMove lastMove, ParameterArray weights,
+    public TwoPlayerMove search( TwoPlayerMove lastMove, ParameterArray weights,
                                        int depth, int quiescentDepth,
                                        double alpha, double beta, SearchTreeNode parent )
     {
@@ -47,20 +47,20 @@ public final class NegaMaxStrategy extends SearchStrategy
 
     private TwoPlayerMove searchInternal( TwoPlayerMove lastMove, ParameterArray weights,
                                           int depth, int quiescentDepth,
-                                          double alpha, double beta, SearchTreeNode parent )
+                                          double oldAlpha, double beta, SearchTreeNode parent )
     {
-
+        double alpha = oldAlpha;
         if ( depth == 0 || controller_.done( lastMove, false ) ) {
             if ( quiescence_ && depth == 0 )
                 return quiescentSearch( lastMove, weights, quiescentDepth, alpha, beta, parent );
             else {
-                lastMove.inheritedValue = -lastMove.value;     //??
+                lastMove.setInheritedValue(-lastMove.getValue());     //??
                 return lastMove;
             }
         }
 
         // generate a list of all candidate next moves, and pick the best one
-        List list = controller_.generateMoves( lastMove, weights, lastMove.player1 );
+        List list = controller_.generateMoves( lastMove, weights, lastMove.isPlayer1() );
         movesConsidered_ += list.size();
         if (depth == controller_.getLookAhead())
             numTopLevelMoves_ = list.size();
@@ -96,8 +96,8 @@ public final class NegaMaxStrategy extends SearchStrategy
                 continue;
             }
 
-            double val = -selectedMove.inheritedValue;
-            theMove.inheritedValue = val;
+            double val = -selectedMove.getInheritedValue();
+            theMove.setInheritedValue(val);
 
             if ( val > bestVal ) {
                 bestMove = theMove;
@@ -116,8 +116,8 @@ public final class NegaMaxStrategy extends SearchStrategy
             }
         }
 
-        bestMove.selected = true;
-        lastMove.inheritedValue = -bestMove.inheritedValue;
+        bestMove.setSelected(true);
+        lastMove.setInheritedValue(-bestMove.getInheritedValue());
         return bestMove;
     }
 
@@ -126,14 +126,15 @@ public final class NegaMaxStrategy extends SearchStrategy
      * For example, perhaps we are in the middle of a piece exchange
      */
     private TwoPlayerMove quiescentSearch( TwoPlayerMove lastMove, ParameterArray weights,
-                                          int depth, double alpha, double beta, SearchTreeNode parent )
+                                          int depth, double oldAlpha, double beta, SearchTreeNode parent )
     {
-        double val = lastMove.value;
-        lastMove.inheritedValue = val;
+        double alpha = oldAlpha;
+        double val = lastMove.getValue();
+        lastMove.setInheritedValue(val);
         if ( depth >= MAX_QUIESCENT_DEPTH) {
             return lastMove;
         }
-        if (controller_.inJeopardy( lastMove, weights, lastMove.player1 ) ) {
+        if (controller_.inJeopardy( lastMove, weights, lastMove.isPlayer1() ) ) {
             // then search  a little deeper
             return search( lastMove, weights, 1, depth+1, alpha, beta, parent );
         }
@@ -148,7 +149,7 @@ public final class NegaMaxStrategy extends SearchStrategy
         // generate those moves that are critically urgent
         // if you generate too many, then you run the risk of an explosion in the search tree
         // these moves should be sorted from most to least urgent
-        List list = controller_.generateUrgentMoves( lastMove, weights, lastMove.player1 );
+        List list = controller_.generateUrgentMoves( lastMove, weights, lastMove.isPlayer1() );
 
         if ( list == null || list.isEmpty() )
             return lastMove; // nothing to check
@@ -170,8 +171,8 @@ public final class NegaMaxStrategy extends SearchStrategy
             TwoPlayerMove selectedMove = quiescentSearch( theMove, weights, depth+1, -beta, -alpha, child );
             assert selectedMove!=null;
 
-            val = -selectedMove.inheritedValue;
-            theMove.inheritedValue = val;
+            val = -selectedMove.getInheritedValue();
+            theMove.setInheritedValue(val);
 
             controller_.undoInternalMove( theMove );
             if ( val > bestVal ) {
@@ -189,8 +190,8 @@ public final class NegaMaxStrategy extends SearchStrategy
             }
         }
         if (bestMove != null) {
-            bestMove.selected = true;
-            lastMove.inheritedValue = -bestMove.inheritedValue;
+            bestMove.setSelected(true);
+            lastMove.setInheritedValue(-bestMove.getInheritedValue());
         } else {
             bestMove = lastMove;   // avoid returning null
         }

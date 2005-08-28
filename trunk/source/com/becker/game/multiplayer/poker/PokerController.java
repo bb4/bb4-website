@@ -476,7 +476,7 @@ public class PokerController extends GameController
      */
     protected double worth( Move lastMove, ParameterArray weights )
     {
-        return lastMove.value;
+        return lastMove.getValue();
     }
 
     /*

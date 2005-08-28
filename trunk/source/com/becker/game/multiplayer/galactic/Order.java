@@ -36,7 +36,7 @@ public class Order
     public Order(Planet origin, Planet target, int fleetSize)
     {
        commonInit(origin, target, fleetSize);
-       currentLocation_ = new Point2D.Double(origin.getLocation().col, origin.getLocation().row);
+       currentLocation_ = new Point2D.Double(origin.getLocation().getCol(), origin.getLocation().getRow());
     }
 
     private void commonInit(Planet origin, Planet target, int fleetSize)
@@ -122,8 +122,8 @@ public class Order
         // then we overshot. set the currentLocation to the dest planet location.
         Line2D.Double line = new Line2D.Double(oldLocation, currentLocation_);
         Location dLoc = destination_.getLocation();
-        if (line.intersects(dLoc.col,  dLoc.row, INTERSECT_TOLERANCE, INTERSECT_TOLERANCE)) {
-            currentLocation_.setLocation(dLoc.col, dLoc.row);
+        if (line.intersects(dLoc.getCol(),  dLoc.getRow(), INTERSECT_TOLERANCE, INTERSECT_TOLERANCE)) {
+            currentLocation_.setLocation(dLoc.getCol(), dLoc.getRow());
             // the order never leaves once it has arrived. The order will be destroyed.
             hasArrived_ = true;
         }
@@ -139,7 +139,7 @@ public class Order
     private Vector2d getUnitDirection()
     {
         Location dLoc = destination_.getLocation();
-        Vector2d unitVec = new Vector2d(dLoc.col - currentLocation_.getX(), dLoc.row - currentLocation_.getY());
+        Vector2d unitVec = new Vector2d(dLoc.getCol() - currentLocation_.getX(), dLoc.getRow() - currentLocation_.getY());
         unitVec.normalize();
         return unitVec;
     }

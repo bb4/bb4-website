@@ -82,7 +82,7 @@ public class TwoPlayerInfoPanel extends GameInfoPanel implements GameChangedList
         TwoPlayerPieceRenderer renderer = (TwoPlayerPieceRenderer)viewer.getPieceRenderer();
         boolean p1sturn = getController().isPlayer1sTurn();
         String player = p1sturn? getController().getPlayer1().getName() : getController().getPlayer2().getName();
-        playerLabel_.setText(" " + player + " ");
+        playerLabel_.setText(' ' + player + ' ');
 
         Color pColor = p1sturn? renderer.getPlayer1Color() : renderer.getPlayer2Color();
         playerLabel_.setBorder(getPlayerLabelBorder(pColor));
@@ -102,7 +102,7 @@ public class TwoPlayerInfoPanel extends GameInfoPanel implements GameChangedList
             setPlayerLabel();
             moveNumLabel_.setText( controller_.getNumMoves() + " " );
         }
-        chanceOfWinningLabel_.setText( Util.formatNumber(getController().getChanceOfPlayer1Winning()) + " " );
+        chanceOfWinningLabel_.setText( Util.formatNumber(getController().getChanceOfPlayer1Winning()) + ' ' );
     }
 
 }

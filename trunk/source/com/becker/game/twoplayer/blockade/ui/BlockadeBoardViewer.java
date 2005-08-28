@@ -195,7 +195,7 @@ class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMotionLis
         BlockadeBoard board = (BlockadeBoard)controller_.getBoard();
 
         // @@ check wall intersection and overlaps.
-        String sError = board.checkLegalWallPlacement(draggedWall_, loc, m.piece);
+        String sError = board.checkLegalWallPlacement(draggedWall_, loc, m.getPiece());
 
         if (sError!=null) {
             JOptionPane.showMessageDialog( this, sError);
@@ -249,51 +249,51 @@ class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMotionLis
                 case 0 : {
                     isVertical = true;
                     positions.add(board.getPosition(loc));
-                    positions.add(board.getPosition(loc.row+1, loc.col));
+                    positions.add(board.getPosition(loc.getRow()+1, loc.getCol()));
                     break;
                 }
                 case 1 : {
                     isVertical = true;
                     assert (board.getPosition(loc)!=null);
-                    assert (board.getPosition(loc.row-1, loc.col)!=null);
+                    assert (board.getPosition(loc.getRow()-1, loc.getCol())!=null);
                     positions.add(board.getPosition(loc));
-                    positions.add(board.getPosition(loc.row-1, loc.col));
+                    positions.add(board.getPosition(loc.getRow()-1, loc.getCol()));
                     break;
                 }
                 case 2 : {
                     isVertical = false;
-                    positions.add(board.getPosition(loc.row-1, loc.col));
-                    positions.add(board.getPosition(loc.row-1, loc.col+1));
+                    positions.add(board.getPosition(loc.getRow()-1, loc.getCol()));
+                    positions.add(board.getPosition(loc.getRow()-1, loc.getCol()+1));
                     break;
                 }
                 case 3 : {
                     isVertical = false;
-                    positions.add(board.getPosition(loc.row-1, loc.col));
-                    positions.add(board.getPosition(loc.row-1, loc.col-1));
+                    positions.add(board.getPosition(loc.getRow()-1, loc.getCol()));
+                    positions.add(board.getPosition(loc.getRow()-1, loc.getCol()-1));
                     break;
                 }
                 case 4 : {
                     isVertical = true;
-                    positions.add(board.getPosition(loc.row, loc.col-1));
-                    positions.add(board.getPosition(loc.row-1, loc.col-1));
+                    positions.add(board.getPosition(loc.getRow(), loc.getCol()-1));
+                    positions.add(board.getPosition(loc.getRow()-1, loc.getCol()-1));
                     break;
                 }
                 case 5 : {
                     isVertical = true;
-                    positions.add(board.getPosition(loc.row, loc.col-1));
-                    positions.add(board.getPosition(loc.row+1, loc.col-1));
+                    positions.add(board.getPosition(loc.getRow(), loc.getCol()-1));
+                    positions.add(board.getPosition(loc.getRow()+1, loc.getCol()-1));
                     break;
                 }
                 case 6 : {
                     isVertical = false;
                     positions.add(board.getPosition(loc));
-                    positions.add(board.getPosition(loc.row, loc.col-1));
+                    positions.add(board.getPosition(loc.getRow(), loc.getCol()-1));
                     break;
                 }
                 case 7 : {
                     isVertical = false;
                     positions.add(board.getPosition(loc));
-                    positions.add(board.getPosition(loc.row, loc.col+1));
+                    positions.add(board.getPosition(loc.getRow(), loc.getCol()+1));
                     break;
                 }
                 default : assert false:("bad index="+index);
@@ -326,13 +326,13 @@ class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMotionLis
         float x = (float)xp/cellSize_ - (xp / cellSize_);
         float y = (float)yp/cellSize_ - (yp / cellSize_);
 
-        if (loc.col >= numCols)
+        if (loc.getCol() >= numCols)
            x = Math.min(.499f, x);
-        if (loc.col <= 1)
+        if (loc.getCol() <= 1)
            x = Math.max(.501f, x);
-        if (loc.row >= numRows)
+        if (loc.getRow() >= numRows)
            y = Math.min(.499f, y);
-        if (loc.row <=1 )
+        if (loc.getRow() <=1 )
            y = Math.max(.501f, y);
 
         if (x <= .5f) {
