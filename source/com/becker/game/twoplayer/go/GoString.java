@@ -268,7 +268,7 @@ public class GoString extends GoSet
             sb.append( ", " );
             sb.append( p.toString() );
         }
-        sb.append( ")" );
+        sb.append( ')' );
         return sb.toString();
     }
 
@@ -318,28 +318,6 @@ public class GoString extends GoSet
         }
     }
 
-    public boolean adjacentToAllUnocupiedIn(GoEye eye, GoBoard b)   {
-        for  (Object p : eye.getMembers()) {
-            GoBoardPosition pos = (GoBoardPosition) p;
-            if (pos.isUnoccupied()) {
-                Set nbrs = b.getNobiNeighbors(pos, eye.isOwnedByPlayer1(), NeighborType.FRIEND);
-                // verify that at least one of the nbrs is in this string
-                boolean thereIsANbr = false;
-                for  (Object nbr : nbrs) {
-                    GoBoardPosition nbrPos = (GoBoardPosition) nbr;
-                    if (getMembers().contains(nbrPos)) {
-                        thereIsANbr = true;
-                        break;
-                    }
-                }
-                if (!thereIsANbr) {
-                    GameContext.log(0, "pos:"+pos+" was found to not be adjacent to the bordering string: "+this);
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
 
     /**
      *
@@ -350,7 +328,7 @@ public class GoString extends GoSet
     }
 
     public void setNbrs(Set nbrEyes) {
-        this.nbrs_ = nbrEyes;
+        nbrs_ = nbrEyes;
     }
 
     public boolean isUnconditionallyAlive() {

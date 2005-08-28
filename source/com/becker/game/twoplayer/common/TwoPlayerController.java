@@ -539,7 +539,7 @@ public abstract class TwoPlayerController extends GameController
     }
 
 
-    public Optimizee getOptimizee() {
+    public final Optimizee getOptimizee() {
         return new TwoPlayerOptimizee();
     }
 

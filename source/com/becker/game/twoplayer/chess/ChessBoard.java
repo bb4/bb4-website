@@ -107,7 +107,7 @@ public class ChessBoard extends CheckersBoard
             // once its been moved its no longer the first time its been moved
             ((ChessPiece)newPos.getPiece()).setFirstTimeMoved(false);
 
-            clear(positions_[m.getFromRow()][m.getFromCol()]);
+            positions_[m.getFromRow()][m.getFromCol()].clear();
         }
         return true;
     }
@@ -123,7 +123,7 @@ public class ChessBoard extends CheckersBoard
         BoardPosition start = positions_[m.getFromRow()][m.getFromCol()];
         start.setPiece(m.piece);
 
-        clear(positions_[m.getToRow()][m.getToCol()]);
+        positions_[m.getToRow()][m.getToCol()].clear();
         // restore the firstTimeMoved status of the piece since we
         // may be moving it back to its original position.
         ((ChessPiece)start.getPiece()).setFirstTimeMoved(m.isFirstTimeMoved());

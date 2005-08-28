@@ -112,7 +112,7 @@ public final class GoGroup extends GoSet
      * set/get the army
      * @param army the owning army
      */
-    public final void setArmy( GoArmy army )
+    public void setArmy( GoArmy army )
     {
         army_ = army;
     }
@@ -121,7 +121,7 @@ public final class GoGroup extends GoSet
      * get the owning army for this group
      * @return the owning army
      */
-    public final GoArmy getArmy()
+    public GoArmy getArmy()
     {
         return army_;
     }
@@ -131,7 +131,7 @@ public final class GoGroup extends GoSet
      * @param string the string to add
      * @param board the owning board
      */
-    public final void addMember( GoString string, GoBoard board )
+    public void addMember( GoString string, GoBoard board )
     {
         assert ( string.isOwnedByPlayer1() == ownedByPlayer1_):
                 "strings added to a group must have like ownership. String="+string
@@ -157,7 +157,7 @@ public final class GoGroup extends GoSet
      * @return the number of liberties that the group has
      * @param board owner
      */
-    public final Set getLiberties( GoBoard board )
+    public Set getLiberties( GoBoard board )
     {
         Set liberties = new HashSet();
         for (Object str : members_) {
@@ -171,7 +171,7 @@ public final class GoGroup extends GoSet
      * calculate the number of stones in the group
      * @return number of stones in the group
      */
-    public final int getNumStones()
+    public int getNumStones()
     {
         int numStones = 0;
         Iterator it = members_.iterator();
@@ -204,7 +204,7 @@ public final class GoGroup extends GoSet
      * @param group the group to merge into this one
      * @param board owning board
      */
-    public final void merge( GoGroup group, GoBoard board )
+    public void merge( GoGroup group, GoBoard board )
     {
         if ( this == group ) {
             // its a self join
@@ -251,7 +251,7 @@ public final class GoGroup extends GoSet
      * remove a string from this group
      * @param string the string to remove from the group
      */
-    public final void remove( GoString string )
+    public void remove( GoString string )
     {
         clearEyes();
         if (string == null) {
@@ -271,7 +271,7 @@ public final class GoGroup extends GoSet
     /**
      * @return a list of the stones in this group
      */
-    public final List getStones()
+    public List getStones()
     {
         List stones = new ArrayList();
         Iterator it = members_.iterator();
@@ -504,7 +504,7 @@ public final class GoGroup extends GoSet
      *
      * @return the overall health of the group independent of nbr groups.
      */
-    final float calculateAbsoluteHealth( GoBoard board, GoProfiler profiler )
+    float calculateAbsoluteHealth( GoBoard board, GoProfiler profiler )
     {
         // if nothing has changed about the group, then we can return the cached value
         int numLiberties = getLiberties( board ).size();
@@ -546,6 +546,7 @@ public final class GoGroup extends GoSet
         return absoluteHealth_;
     }
 
+
     private int calcNumEyes() {
         // figure out how many of each eye type we have
         Iterator it = eyes_.iterator();
@@ -581,16 +582,16 @@ public final class GoGroup extends GoSet
         if ( numEyes >= 2 )  {
             if (isUnconditionallyAlive(board)) {
                 // in addition to this, the individual strings will get a score of side (ie +/- 1).
-                health = .98f * side;
+                health = 0.98f * side;
             }
             else {
                 // its probably alive
                 // may not be alive if the opponent has a lot of kos and gets to play lots of times in a row
-                health = .95f * side;
+                health = 0.95f * side;
             }
         }
         else if ( (numEyes == 1) && (numLiberties > 6) )
-            health = side * Math.min(.9f, (1.0f - 20.0f/(numLiberties + 23.0f)));
+            health = side * Math.min(0.9f, (1.0f - 20.0f/(numLiberties + 23.0f)));
         else if ( numEyes == 1 ) {  // numLiberties<=5
             switch (numLiberties) {
                 case 0:
@@ -601,28 +602,28 @@ public final class GoGroup extends GoSet
                     // @@ we need to consider a seki here.
                     // what if the neighboring enemy group also has one or zero eyes?
                     // one eye beats no eyes.
-                    health = -side * .8f;
+                    health = -side * 0.8f;
                     break;
                 case 2:
-                    health = -side * .3f;
+                    health = -side * 0.3f;
                     break;
                 case 3:
-                    health = -side * .2f;
+                    health = -side * 0.2f;
                     break;
                 case 4:
-                    health = -side * .05f;
+                    health = -side * 0.05f;
                     break;
                 case 5:
-                    health = side * .01f;
+                    health = side * 0.01f;
                     break;
                 case 6:
-                    health = side * .19f;
+                    health = side * 0.19f;
                     break;
                 default: assert false;
             }
         }
         else if ( numLiberties > 5 )  // numEyes == 0
-            health = side * Math.min(.8f, (1.2f - 46.f/(numLiberties+40.f)));
+            health = side * Math.min(0.8f, (1.2f - 46.0f/(numLiberties+40.0f)));
         else {
             if (numStones == 1) {
                 switch (numLiberties) { // numEyes == 0
@@ -632,7 +633,7 @@ public final class GoGroup extends GoSet
                         health = -side;
                         break;
                     case 1:
-                        health = -side * .6f;
+                        health = -side * 0.6f;
                         break;
                     case 2:
                         // @@ consider seki situations where the adjacent enemy group also has no eyes.
@@ -641,10 +642,10 @@ public final class GoGroup extends GoSet
                         //    Xo.XXX.oX
                         //    XooooooXX
                         //    XXXXXXX
-                        health = side * .02f;
+                        health = side * 0.02f;
                         break;
                     case 3:
-                        health = side * .1f;
+                        health = side * 0.1f;
                         break;
                     case 4:
                         health = side * 0.1f;
@@ -659,7 +660,7 @@ public final class GoGroup extends GoSet
                         health = -side;
                         break;
                     case 1:
-                        health = -side * .6f;
+                        health = -side * 0.6f;
                         break;
                     case 2:
                         // @@ consider seki situations where the adjacent enemy group also has no eyes.
@@ -668,10 +669,10 @@ public final class GoGroup extends GoSet
                         //    Xo.XXX.oX
                         //    XooooooXX
                         //    XXXXXXX
-                        health = -side * .3f;
+                        health = -side * 0.3f;
                         break;
                     case 3:
-                        health = side * .02f;
+                        health = side * 0.02f;
                         break;
                     case 4:
                         health = side * 0.05f;
@@ -699,7 +700,7 @@ public final class GoGroup extends GoSet
      *
      * @return the overall health of the group.
      */
-    final float calculateRelativeHealth( GoBoard board, GoBoardPosition lastMove, Profiler profiler )
+    float calculateRelativeHealth( GoBoard board, GoBoardPosition lastMove, Profiler profiler )
     {
         // we multiply by a +/- sign depending on the side
         float side = ownedByPlayer1_? 1.0f : -1.0f;
@@ -776,63 +777,37 @@ public final class GoGroup extends GoSet
             candidateStrings.add(str);
         }
 
-        // first find the neighbor string sets for each true eye in the group
-        Set candidateUAStrings = new HashSet();
-        for (Object e : eyes_) {
-            GoEye eye = (GoEye) e;
-            if (eye.getNbrs() == null) {
-                eye.setNbrs(new HashSet());
-            }
-            for (Object point : eye.getMembers()) {
-                GoBoardPosition pos = (GoBoardPosition) point;
-                if (pos.isUnoccupied()) {
-                    Set nbrs = board.getNobiNeighbors(pos, eye.isOwnedByPlayer1(), NeighborType.FRIEND);
-                    for (Object n : nbrs) {
-                        GoBoardPosition nbr = (GoBoardPosition) n;
-                        if (nbr.getString().getGroup() != this) {
-                            // this eye is not UA.
-                            eye.setNbrs(null);
-                            break;
-                        }
-                        else {
-                            if (eye.getNbrs() != null ) {
-                                eye.getNbrs().add(nbr.getString());
-                                candidateUAStrings.add(nbr.getString());
-                            }
-                        }
-                    }
-                }
-            }
-            GameContext.log(2, "num string nbrs of eyes = "
-                    + ((eye.getNbrs() == null)? 0 : eye.getNbrs().size()));
-        }
+        findNeighborStringSets(board);
 
         // now create the neighbor eye sets for each qualified string
         for (Object e : eyes_) {
             GoEye eye = (GoEye) e;
-            if (eye.getNbrs() != null)
-            for (Object s : eye.getNbrs()) {
-                GoString str = (GoString) s;
-                if (str.getNbrs() == null) {
-                    str.setNbrs(new HashSet());
-                }
-                // only add the eye if every unoccupied position in the eye is adjacent to the str
-                if (str.adjacentToAllUnocupiedIn(eye, board)) {
-                    str.getNbrs().add(eye);
+            if (eye.getNbrs() != null) {
+                for (Object s : eye.getNbrs()) {
+                    GoString str = (GoString) s;
+                    if (str.getNbrs() == null) {
+                        str.setNbrs(new HashSet());
+                    }
+                    // only add the eye if every unoccupied position in the eye is adjacent to the str
+                    if  (eye.allUnocupiedAdjacentToString(str, board)) {
+                        str.getNbrs().add(eye);
+                    }
                 }
             }
         }
 
-        boolean done = true;
+        boolean done;
         do {
             done = true;
             for (Object e : eyes_) {
                 GoEye eye = (GoEye)e;
                 eye.setUnconditionallyAlive(true);
-                for (Object str : eye.getNbrs()) {
-                    GoString nbrStr = (GoString) str;
-                    if (!nbrStr.isUnconditionallyAlive()) {
-                        eye.setUnconditionallyAlive(false);
+                if (eye.getNbrs() != null) {
+                    for (Object str : eye.getNbrs()) {
+                        GoString nbrStr = (GoString) str;
+                        if (!nbrStr.isUnconditionallyAlive()) {
+                            eye.setUnconditionallyAlive(false);
+                        }
                     }
                 }
             }
@@ -867,6 +842,39 @@ public final class GoGroup extends GoSet
        return  !candidateStrings.isEmpty();
     }
 
+
+    private void findNeighborStringSets(GoBoard board) {
+        // first find the neighbor string sets for each true eye in the group
+        Set candidateUAStrings = new HashSet();
+        for (Object e : eyes_) {
+            GoEye eye = (GoEye) e;
+            if (eye.getNbrs() == null) {
+                eye.setNbrs(new HashSet());
+            }
+            for (Object point : eye.getMembers()) {
+                GoBoardPosition pos = (GoBoardPosition) point;
+                if (pos.isUnoccupied()) {
+                    Set nbrs = board.getNobiNeighbors(pos, eye.isOwnedByPlayer1(), NeighborType.FRIEND);
+                    for (Object n : nbrs) {
+                        GoBoardPosition nbr = (GoBoardPosition) n;
+                        if (nbr.getString().getGroup() != this) {
+                            // this eye is not UA.
+                            eye.setNbrs(null);
+                            break;
+                        }
+                        else {
+                            if (eye.getNbrs() != null ) {
+                                eye.getNbrs().add(nbr.getString());
+                                candidateUAStrings.add(nbr.getString());
+                            }
+                        }
+                    }
+                }
+            }
+            GameContext.log(2, "num string nbrs of eyes = "
+                    + ((eye.getNbrs() == null)? 0 : eye.getNbrs().size()));
+        }
+    }
 
     /**
      * @@ may need to make this n^2 method more efficient.
@@ -905,7 +913,7 @@ public final class GoGroup extends GoSet
      * set the health of strings in this group
      * @param health the health of the group
      */
-    public final void updateTerritory( float health )
+    public void updateTerritory( float health )
     {
         Iterator it = members_.iterator();
         while ( it.hasNext() ) {
@@ -980,7 +988,7 @@ public final class GoGroup extends GoSet
      * get the html representation of the group.
      * @return html form
      */
-    public final String toHtml()
+    public String toHtml()
     {
         return toString( "<br>" );
     }
@@ -1008,7 +1016,7 @@ public final class GoGroup extends GoSet
         //calculateHealth();
         sb.append( "abs health=" + Util.formatNumber(absoluteHealth_) );
         sb.append( " rel health=" + Util.formatNumber(relativeHealth_));
-        sb.append( " group Liberties=" + cachedNumLiberties_ + "\n" );
+        sb.append( " group Liberties=" + cachedNumLiberties_ + '\n' );
         return sb.toString();
     }
 
@@ -1028,7 +1036,7 @@ public final class GoGroup extends GoSet
      * @param stone the stone to check for containment of
      * @return true if the stone is in this group
      */
-    public final boolean containsStone( GoBoardPosition stone )
+    public boolean containsStone( GoBoardPosition stone )
     {
         Iterator it = members_.iterator();
         while ( it.hasNext() ) {
@@ -1058,7 +1066,7 @@ public final class GoGroup extends GoSet
      * @param stones list of stones to check if same as those in this group
      * @return true if this group exacly contains the list of stones and no others
      */
-    public final boolean exactlyContains( List stones )
+    public boolean exactlyContains( List stones )
     {
         if ( !contains( stones ) )
             return false;
@@ -1076,7 +1084,7 @@ public final class GoGroup extends GoSet
     /**
      * go through the groups strings and verify that they are valid (have all nobi connections)
      */
-    public final void confirmValidStrings( GoBoard b )
+    public void confirmValidStrings( GoBoard b )
     {
         Iterator it = members_.iterator();
         while ( it.hasNext() ) {
@@ -1085,7 +1093,7 @@ public final class GoGroup extends GoSet
         }
     }
 
-    public final void confirmNoNullMembers()
+    public void confirmNoNullMembers()
     {
         Iterator it = getStones().iterator();
         boolean failed = false;

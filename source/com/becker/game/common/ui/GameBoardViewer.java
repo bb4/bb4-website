@@ -1,16 +1,15 @@
 package com.becker.game.common.ui;
 
 import com.becker.game.common.*;
-import com.becker.game.common.Move;
-import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.ui.GUIUtil;
+import com.becker.ui.*;
 
 import javax.swing.*;
 import javax.swing.Timer;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
+import java.io.*;
 import java.util.*;
+import java.util.List;
 
 /**
  * This class contains a GameController and displays the current state of the Game.
@@ -62,9 +61,9 @@ public abstract class GameBoardViewer
     // we use a separate piece rendering class to avoid having ui in the piece class itself.
     // This allows us to more cleanly separate the client pieces from the server.
     // this must be initialized in the derived classes constructor.
-    protected GamePieceRenderer pieceRenderer_;
+    protected GamePieceRenderer pieceRenderer_ = null;
 
-    protected String lastDirectoryAccessed_;
+    protected String lastDirectoryAccessed_ = null;
 
     // defaults for the grid and board colors.
     // The may be changed using the options panel in the ui.
@@ -76,13 +75,13 @@ public abstract class GameBoardViewer
 
     // for firing events
     private EventQueue evtq_;
-    private ArrayList gameListeners_ = new ArrayList();
+    private List gameListeners_ = new ArrayList();
 
     protected JProgressBar progressBar_ = null;
     protected Timer timer_ = null;
 
     protected static Cursor origCursor_ = null;
-    protected Frame parent_;
+    protected Frame parent_ = null;
 
 
 
@@ -453,7 +452,7 @@ public abstract class GameBoardViewer
 
         super.paintComponents( g );
         //super.paintComponent(g);   // need?
-        
+
         Graphics2D g2 = (Graphics2D)g;
 
         int gridOffset = 0;
@@ -461,7 +460,7 @@ public abstract class GameBoardViewer
         int nrows1 = nrows;
         int ncols1 = ncols;
         if ( offsetGrid() ) {
-            gridOffset = cellSize_ / 2;
+            gridOffset = cellSize_ >> 1;
             nrows1 = nrows - 1;
             ncols1 = ncols - 1;
         }

@@ -23,7 +23,7 @@ public final class GoBoardUtil
      * if its not that much weaker then we don't really have an eye.
      * @@ make this a game parameter .6 - 1.8 that can be optimized.
      */
-    static final float DIFFERENCE_THRESHOLD = .6f;
+    static final float DIFFERENCE_THRESHOLD = 0.6f;
 
     private GoBoardUtil() {
     }
@@ -160,6 +160,7 @@ public final class GoBoardUtil
     }
 
 
+
     // ------------------ Debugging methods below this point ------------------------
 
     /**
@@ -187,7 +188,7 @@ public final class GoBoardUtil
                 buf.append( stone.toString() +", ");
             }
         }
-        return buf.substring(0, buf.length()-2).toString();
+        return buf.substring(0, buf.length() - 2);
     }
 
     public static void debugPrintList( int logLevel, String title, List stones)
@@ -255,6 +256,23 @@ public final class GoBoardUtil
 
         return groupText.toString();
     }
+
+
+    /**
+     * return true if the stones in this list exactly match those in an existing group
+     */
+    public static boolean groupAlreadyExists( List stones, GoBoard board )
+    {
+        Iterator gIt = board.getGroups().iterator();
+        // first find the group that contains the stones
+        while ( gIt.hasNext() ) {
+            GoGroup g = (GoGroup) gIt.next();
+            if ( g.exactlyContains( stones ) )
+                return true;
+        }
+        return false;
+    }
+
 
 
     // ------------------ Confirmation (debug) methods below this point -------------
@@ -372,19 +390,24 @@ public final class GoBoardUtil
                             debugPrintGroups( 0, groups );
                             assert false: "ERROR: " + s + " contained by 2 groups" ;
                         }
-                        //make sure that every stone in the string belongs in this group
-                        Iterator stoneIt = s.getMembers().iterator();
-                        while ( stoneIt.hasNext() ) {
-                            GoBoardPosition st1 = (GoBoardPosition) stoneIt.next();
-                            if ( !g.equals(st1.getGroup()) ) {
-                                debugPrintGroups( 0, "Confirm stones in one group failed. Groups are:", true, true, groups );
-                                assert false:
-                                       st1 + " does not just belong to " + st1.getGroup()
-                                        + " as its ancestry indicates. It also belongs to " + g;
-                            }
-                        }
+                        confirmStoneInStringAlsoInGroup(s, g, groups);
+
                     }
                 }
+            }
+        }
+    }
+
+    private static void confirmStoneInStringAlsoInGroup(GoString str, GoGroup group, Set groups) {
+        //make sure that every stone in the string belongs in this group
+        Iterator stoneIt = str.getMembers().iterator();
+        while ( stoneIt.hasNext() ) {
+            GoBoardPosition st1 = (GoBoardPosition) stoneIt.next();
+            if ( !group.equals(st1.getGroup()) ) {
+                debugPrintGroups( 0, "Confirm stones in one group failed. Groups are:", true, true, groups );
+                assert false:
+                       st1 + " does not just belong to " + st1.getGroup()
+                        + " as its ancestry indicates. It also belongs to " + group;
             }
         }
     }
@@ -395,7 +418,7 @@ public final class GoBoardUtil
      * matches the group that is claims by ancestry.
      * (expesnsive to check)
      */
-    public static void confirmAllStonesAreInGroupsTheyClaim(Set groups, GoBoard board)
+    public static void confirmAllStonesInGroupsClaimed(Set groups, GoBoard board)
     {
         Iterator grIt = groups.iterator();
         while ( grIt.hasNext() ) {  // for each group on the board
@@ -467,7 +490,7 @@ public final class GoBoardUtil
         return true;
     }
 
-    private static final float MIN_THRESH = .2f;
+    private static final float MIN_THRESH = 0.2f;
     /**
      * @param group
      * @param stone

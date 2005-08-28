@@ -28,7 +28,7 @@ public class GalacticNewGameDialog extends NewGameDialog implements ActionListen
     }
 
 
-    public final String getTitle()
+    public String getTitle()
     {
         return GameContext.getLabel("GALACTIC_OPTIONS");
     }
@@ -74,7 +74,7 @@ public class GalacticNewGameDialog extends NewGameDialog implements ActionListen
 
         GalacticController c = (GalacticController)controller_;
 
-        galacticPlayerTable_ = new GalacticPlayerTable((GalacticPlayer[])c.getPlayers());
+        galacticPlayerTable_ = new GalacticPlayerTable(c.getPlayers());
         galacticPlayerTable_.addListSelectionListener(this);
 
         p.add(new JScrollPane(galacticPlayerTable_.getTable()), BorderLayout.CENTER);

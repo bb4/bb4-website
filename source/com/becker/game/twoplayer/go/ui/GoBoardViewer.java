@@ -27,9 +27,9 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
 
     // a colormap for coloring the groups according to how healthy they are
     // blue will be healthy, while red will be near dead
-    private static final double[] values_ = {-1.1, -1.0, -0.2, .1, -.05,
+    private static final double[] values_ = {-1.1, -1.0, -0.2, 0.1, -0.05,
                                              0.0,
-                                             .05, .1, .2, 1.0, 1.1};
+                                             0.05, 0.1, 0.2, 1.0, 1.1};
     private static final int CM_TRANS = 50;
     // this colormap is used to show a spectrum of colors representing a groups health status.
     private static final Color[] colors_ = {new Color( 200, 0, 0, CM_TRANS + 40 ),
@@ -74,14 +74,14 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
         GoBoard board = (GoBoard)getBoard();
 
         // draw the starpoint markers
-        List starpoints = board.getStarPointPositions();
+        List starpoints = board.getHandicapPositions();
         Iterator it = starpoints.iterator();
         g2.setColor(Color.black);
-        double rad = (float)cellSize_/21.0+.1;
+        double rad = (float)cellSize_/21.0+0.1;
         while (it.hasNext()) {
             GoBoardPosition p = (GoBoardPosition)it.next();
-            g2.fillOval(BOARD_MARGIN+(int)(cellSize_*(p.getCol()-.5)-rad),
-                        BOARD_MARGIN+(int)(cellSize_*(p.getRow()-.5)-rad),
+            g2.fillOval(BOARD_MARGIN+(int)(cellSize_*(p.getCol()-0.5)-rad),
+                        BOARD_MARGIN+(int)(cellSize_*(p.getRow()-0.5)-rad),
                         (int)(2.0*rad+1.7), (int)(2.0*rad+1.7));
         }
 
@@ -134,10 +134,10 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
         Location loc = createLocation(e, getCellSize());
         GoBoard board = (GoBoard) controller_.getBoard();
         GoController controller = (GoController) controller_;
-        
+
         GameContext.log( 3, "GoBoardViewer: mousePressed: controller_.isPlayer1sTurn()=" + get2PlayerController().isPlayer1sTurn() );
 
-        GoMove m = GoMove.createMove( loc.row, loc.col, null, 0, new GoStone(controller.isPlayer1sTurn()));
+        GoMove m = GoMove.createGoMove( loc.row, loc.col, 0, new GoStone(controller.isPlayer1sTurn()));
 
         // if there is already a piece where the user clicked, or its
         // out of bounds, or its a suicide move, then return without doing anything
@@ -192,20 +192,20 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
         String p1Name = gc.getPlayer1().getName();
         String p2Name = gc.getPlayer2().getName();
 
-        message += p1Name +" "+ STONES_CAPTURED + blackCaptures +"\n";
-        message += p2Name +" "+ STONES_CAPTURED + whiteCaptures +"\n\n";
+        message += p1Name +' '+ STONES_CAPTURED + blackCaptures +'\n';
+        message += p2Name +' '+ STONES_CAPTURED + whiteCaptures +"\n\n";
 
         int blackTerritory = gc.getTerritory(true);
         int whiteTerritory = gc.getTerritory(false);
-        message += p1Name +" "+ TERRITORY + blackTerritory +"\n";
-        message += p2Name +" "+ TERRITORY + whiteTerritory +"\n\n";
+        message += p1Name +' '+ TERRITORY + blackTerritory +'\n';
+        message += p2Name +' '+ TERRITORY + whiteTerritory +"\n\n";
 
-        message += p1Name +" "+ SCORE + gc.getFinalScore(true) +"\n";
-        message += p2Name +" "+ SCORE + gc.getFinalScore(false) +"\n";
+        message += p1Name +' '+ SCORE + gc.getFinalScore(true) +'\n';
+        message += p2Name +' '+ SCORE + gc.getFinalScore(false) +'\n';
 
         gc.clearGameOver();
 
-        return super.getGameOverMessage() +"\n"+ message;
+        return super.getGameOverMessage() +'\n'+ message;
     }
 
     /**

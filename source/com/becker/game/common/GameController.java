@@ -1,17 +1,9 @@
 package com.becker.game.common;
 
-import com.becker.common.Util;
-import com.becker.game.twoplayer.go.GoMove;
-import com.becker.game.twoplayer.go.GoStone;
-import com.becker.game.twoplayer.go.GoBoardUtil;
+import ca.dj.jigo.sgf.*;
+import ca.dj.jigo.sgf.tokens.*;
 
 import java.util.*;
-
-import ca.dj.jigo.sgf.SGFGame;
-import ca.dj.jigo.sgf.SGFTree;
-import ca.dj.jigo.sgf.SGFLeaf;
-import ca.dj.jigo.sgf.Point;
-import ca.dj.jigo.sgf.tokens.*;
 
 /**
  * This is an abstract base class for a Game Controller.
@@ -265,6 +257,7 @@ public abstract class GameController
     }
 
     /**
+     * @@ use list of players rather than array.
      * @param players  the players currently playing the game
      */
     public void setPlayers( Player[] players )

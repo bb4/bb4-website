@@ -26,12 +26,12 @@ final class GoNewGameDialog extends TwoPlayerNewGameDialog implements ActionList
         super( parent, viewer );
     }
 
-    public final String getTitle()
+    public String getTitle()
     {
         return GameContext.getLabel("GO_OPTIONS");
     }
 
-    protected final JPanel createCustomBoardConfigPanel()
+    protected JPanel createCustomBoardConfigPanel()
     {
         JPanel p = new JPanel();
         p.setLayout( new BoxLayout( p, BoxLayout.Y_AXIS ) );
@@ -53,23 +53,23 @@ final class GoNewGameDialog extends TwoPlayerNewGameDialog implements ActionList
         return new NumberInputPanel( labelText, handicapField );
     }
 
-    protected final String getPlayer1Label()
+    protected String getPlayer1Label()
     {
         return BLACK_IS;
     }
 
-    protected final String getPlayer2Label()
+    protected String getPlayer2Label()
     {
         return WHITE_IS;
     }
 
-    protected final void ok()
+    protected void ok()
     {
         GoController gcontroller = (GoController) controller_;
 
         assert ( handicapField_!=null );
         Integer handicap = new Integer( handicapField_.getText() );
-        gcontroller.setHandicap( handicap.intValue() );
+        gcontroller.setHandicap( handicap );
 
         GameContext.log( 2, "GoOptionsDlg: the handicap is:" + handicap );
         super.ok();

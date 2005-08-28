@@ -48,7 +48,7 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
     /**
      * create a deep copy of this position.
      */
-    public final BoardPosition copy()
+    public BoardPosition copy()
     {
         GoBoardPosition pos = new GoBoardPosition( row_, col_, string_, (GoStone)piece_);
          return pos;
@@ -57,7 +57,7 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
     /**
      * copy all fields from another stone to this one.
      */
-    public final void copy( GoBoardPosition pos )
+    public void copy( GoBoardPosition pos )
     {
         super.copy(pos);
         setString( pos.getString() );
@@ -77,7 +77,7 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
      * @return  the string owner for this stone.
      * There may be none if its blank and part of an eye, in that case null is returned.
      */
-    public final GoString getString()
+    public GoString getString()
     {
         return string_;
     }
@@ -87,7 +87,7 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
      * There is only one group owner that has the same ownership (color) as this stone.
      * The stone may also belong to to an eye in an opponent group, however.
      */
-    public final GoGroup getGroup()
+    public GoGroup getGroup()
     {
        if (string_ != null)
            return string_.getGroup();
@@ -106,7 +106,7 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
     /**
      * @return  the eye that this space belongs to. May be null if no eye owner.
      */
-    public final GoEye getEye()
+    public GoEye getEye()
     {
         return eye_;
     }
@@ -117,7 +117,7 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
      */
     public boolean isInAtari(GoBoard b)
     {
-       return (getString()!=null && getString().getLiberties(b).size()==1);
+       return (getString() != null && getString().getLiberties(b).size() == 1);
     }
 
 
@@ -126,7 +126,7 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
         visited_ = visited;
     }
 
-    public final boolean isVisited()
+    public boolean isVisited()
     {
         return visited_;
     }
@@ -140,9 +140,57 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
     /**
      * @return  true if this position is part of an eye.
      */
-    public final boolean isInEye()
+    public boolean isInEye()
     {
         return eye_!=null;
+    }
+
+
+    /**
+     * we must recalculate the number of liberties every time because it changes often.
+     * @return the number of liberties the specified position has.
+     */
+    public int getNumLiberties( GoBoard board )
+    {
+        int numLiberties = 0;
+        int row = getRow();
+        int col = getCol();
+        if ( row > 1 && board.getPosition( row - 1, col ).isUnoccupied() )
+            numLiberties++;
+        if ( row < board.getNumRows() && board.getPosition( row + 1, col ).isUnoccupied() )
+            numLiberties++;
+        if ( col > 1 && board.getPosition( row, col - 1 ).isUnoccupied() )
+            numLiberties++;
+        if ( col < board.getNumCols() && board.getPosition( row, col + 1 ).isUnoccupied() )
+            numLiberties++;
+
+        return numLiberties;
+    }
+
+
+    /**
+     * @return true if the specified BoardPosition is on the edge of the board
+     */
+    public boolean isOnEdge(GoBoard board)
+    {
+        return (getRow()==1 || getRow()==board.getNumRows() || getCol()==1 || getCol()==board.getNumCols());
+    }
+
+    /**
+     * make it show an empty board position.
+     */
+    public void clear()
+    {
+        GoString string = getString();
+
+        if (string != null)  {
+            string.remove(this);
+            super.clear();
+        } else {
+            assert isUnoccupied();
+        }
+        setString(null);
+        setVisited(false);
     }
 
     /**

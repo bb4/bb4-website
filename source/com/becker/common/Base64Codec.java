@@ -19,7 +19,8 @@ import java.util.zip.InflaterInputStream;
  */
 public final class Base64Codec {
 
-    
+
+    private Base64Codec() {}
 
     // for character codec
     private static BASE64Encoder charEncoder_ = null;

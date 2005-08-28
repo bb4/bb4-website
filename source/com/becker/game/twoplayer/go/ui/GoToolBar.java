@@ -16,7 +16,7 @@ class GoToolBar extends GameToolBar {
     // do not initiallize to null or it will not work because of the way initialization happens
     private GradientButton passButton_;
 
-    public GoToolBar(ImageIcon texture, ActionListener listener) {
+    GoToolBar(ImageIcon texture, ActionListener listener) {
         super(texture, listener);
     }
 
