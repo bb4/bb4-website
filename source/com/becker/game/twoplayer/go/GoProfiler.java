@@ -8,7 +8,7 @@ import com.becker.game.common.GameContext;
  * Date: Apr 16, 2005
  * Time: 6:20:14 AM
  */
-public class GoProfiler extends Profiler {
+public final class GoProfiler extends Profiler {
 
     public static final String GENERATE_MOVES = "generating moves";
     private static final String UNDO_MOVE = "undoing move";
@@ -58,52 +58,52 @@ public class GoProfiler extends Profiler {
         setLogger(GameContext.getLogger());
     }
 
-    public final void startUndoMove() {
+    public void startUndoMove() {
         this.start(UNDO_MOVE);
     }
 
-    public final void stopUndoMove() {
+    public void stopUndoMove() {
         this.stop(UNDO_MOVE);
     }
 
-    public final void startMakeMove() {
+    public void startMakeMove() {
         this.start(MAKE_MOVE);
     }
 
-    public final void stopMakeMove() {
+    public void stopMakeMove() {
         this.stop(MAKE_MOVE);
     }
 
-    public final void startUpdateStringsAfterRemove() {
+    public void startUpdateStringsAfterRemove() {
         this.start(UPDATE_STRINGS_AFTER_REMOVE);
     }
 
-    public final void stopUpdateStringsAfterRemove() {
+    public void stopUpdateStringsAfterRemove() {
         this.stop(UPDATE_STRINGS_AFTER_REMOVE);
     }
 
-    public final void startUpdateGroupsAfterRemove() {
+    public void startUpdateGroupsAfterRemove() {
         this.start(UPDATE_GROUPS_AFTER_REMOVE);
     }
 
-    public final void stopUpdateGroupsAfterRemove() {
+    public void stopUpdateGroupsAfterRemove() {
         this.stop(UPDATE_GROUPS_AFTER_REMOVE);
     }
 
 
-    public final void startUpdateStringsAfterMove() {
+    public void startUpdateStringsAfterMove() {
         this.start(UPDATE_STRINGS_AFTER_MOVE);
     }
 
-    public final void stopUpdateStringsAfterMove() {
+    public void stopUpdateStringsAfterMove() {
         this.stop(UPDATE_STRINGS_AFTER_MOVE);
     }
 
-    public final void startUpdateGroupsAfterMove() {
+    public void startUpdateGroupsAfterMove() {
         this.start(UPDATE_GROUPS_AFTER_MOVE);
     }
 
-    public final void stopUpdateGroupsAfterMove() {
+    public void stopUpdateGroupsAfterMove() {
         this.stop(UPDATE_GROUPS_AFTER_MOVE);
     }
 
