@@ -118,7 +118,7 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
      */
     public boolean isInAtari(GoBoard b)
     {
-       return (getString() != null && getString().getLiberties(b).size() == 1);
+       return (getString() != null && getString().getNumLiberties(b) == 1);
     }
 
 
@@ -177,21 +177,30 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
         return (getRow()==1 || getRow()==board.getNumRows() || getCol()==1 || getCol()==board.getNumCols());
     }
 
-    /**
+     /**
      * make it show an empty board position.
      */
-    public void clear()
+    public void clear(GoBoard board)
     {
+
         GoString string = getString();
 
         if (string != null)  {
-            string.remove(this);
+            string.remove(this, board);
             super.clear();
         } else {
             assert isUnoccupied();
         }
         setString(null);
         setVisited(false);
+    }
+
+    /**
+     * make it show an empty board position.
+     */
+    public void clear()
+    {
+        assert false : "must use clear(board) instead";
     }
 
     /**

@@ -240,7 +240,7 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
             GoEye eye = space.getEye();
             if ( string != null ) {
                 sb.append( "<br>" );
-                sb.append( "string liberties = " + string.getLiberties( (GoBoard) controller_.getBoard() ).size() );
+                sb.append( "string liberties = " + string.getNumLiberties((GoBoard)controller_.getBoard()) );
                 String stringText = string.toString();
                 if ( string.getGroup() != null ) {
                     sb.append( "<br>" );

@@ -41,13 +41,14 @@ public final class GoArmy extends GoSet
         assert (!members_.contains( group )): "the army already contains this group";
         group.setArmy( this );
         members_.add( group );
-        numLiberties_ = numLiberties_ - 1 + group.getLiberties( board ).size();
+        numLiberties_ = numLiberties_ - 1 + group.getLiberties(board).size();
     }
 
     /**
      * calculate the number of liberties
+     * @param board
      */
-    public Set getLiberties( GoBoard board )
+    public Set getLiberties(GoBoard board)
     {
         return null; //@@
     }

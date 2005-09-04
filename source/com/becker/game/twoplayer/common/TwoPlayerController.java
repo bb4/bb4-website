@@ -540,6 +540,7 @@ public abstract class TwoPlayerController extends GameController
         //GameContext.log(2, "generated top moves are :  " + moveList );
         return bestMoveList;
     }
+    
 
 
     public final Optimizee getOptimizee() {
@@ -599,6 +600,8 @@ public abstract class TwoPlayerController extends GameController
             return (run1 - run2);
         }
     }
+
+
 
     public abstract Searchable getSearchable();
 

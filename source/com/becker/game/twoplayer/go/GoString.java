@@ -25,23 +25,26 @@ public class GoString extends GoSet
     private Set nbrs_;
     // if true, then we are an eye in an unconditionally alive group
     private boolean unconditionallyAlive_;
+    // keep track of number of liberties instead of computing each time (for performance)
+    private Set liberties_;
 
     /**
      * constructor. Create a new string containing the specified stone
      */
-    public GoString( GoBoardPosition stone )
+    public GoString( GoBoardPosition stone, GoBoard board )
     {
         assert ( stone.isOccupied() );
         ownedByPlayer1_ = stone.getPiece().isOwnedByPlayer1();
         members_.add( stone );
         stone.setString( this );
         group_ = null;
+        initializeLiberties(board);
     }
 
     /**
      * constructor. Create a new string containing the specified list of stones
      */
-    public GoString( List stones )
+    public GoString( List stones, GoBoard board )
     {
         assert (stones != null && stones.size() > 0): "Tried to create list from empty list";
         GoStone stone =  (GoStone)((GoBoardPosition) stones.get( 0 )).getPiece();
@@ -51,8 +54,9 @@ public class GoString extends GoSet
         Iterator it = stones.iterator();
         while ( it.hasNext() ) {
             GoBoardPosition pos = (GoBoardPosition) it.next();
-            addMember( pos );
+            addMemberInternal( pos, board);
         }
+        initializeLiberties(board);
     }
 
 
@@ -70,11 +74,20 @@ public class GoString extends GoSet
     /**
      * add a stone to the string
      */
-    public void addMember( GoBoardPosition stone )
+    public void addMember( GoBoardPosition stone, GoBoard board)
     {
+        addMemberInternal(stone, board);
+        initializeLiberties(board);
+    }
+
+    /**
+     * add a stone to the string
+     */
+    protected void addMemberInternal(GoBoardPosition stone, GoBoard board)
+    {
+        assert ( stone.isOccupied()): "trying to add empty space to string. stone=" + stone ;
         assert ( stone.getPiece().isOwnedByPlayer1() == ownedByPlayer1_):
                 "stones added to a string must have like ownership";
-        assert ( stone.isOccupied()): "trying to add empty space to string. stone=" + stone ;
         if ( members_.contains( stone ) ) {
             // this case can happen sometimes.
             // For example if the new stone completes a loop and self-joins the string to itself
@@ -84,7 +97,7 @@ public class GoString extends GoSet
         }
         // if the stone is already owned by another string, we need to verify that that other string has given it up.
         if (stone.getString() != null) {
-            stone.getString().remove(stone);
+            stone.getString().remove(stone, board);
             //: stone +" is already owned by another string: "+ stone.getString();
         }
 
@@ -95,7 +108,7 @@ public class GoString extends GoSet
     /**
      * merge a string into this one
      */
-    public final void merge( GoString string )
+    public final void merge( GoString string, GoBoard board )
     {
         if ( this == string ) {
             GameContext.log( 1, "Warning: merging " + string + " into itself" );
@@ -115,12 +128,13 @@ public class GoString extends GoSet
             stone = (GoBoardPosition) it.next();
             GoString myString = stone.getString();
             if (myString != null && myString != string) {
-                myString.remove(stone);
+                myString.remove(stone, board);
             }
             stone.setString(null);
-            addMember( stone );
+            addMemberInternal( stone, board);
         }
         stringMembers.clear();
+        initializeLiberties(board);
     }
 
     /**
@@ -128,14 +142,15 @@ public class GoString extends GoSet
      * What happens if the string gets split as a result?
      * The caller should handle this case since we cannot create new strings here.
      */
-    public final void remove( GoBoardPosition stone )
+    public final void remove( GoBoardPosition stone, GoBoard board )
     {
         boolean removed = members_.remove( stone );
         assert (removed) : "failed to remove "+stone+" from"+ this;
         stone.setString(null);
-        if ( members_.isEmpty() ) {
+        if ( members_.isEmpty()) {
             group_.remove( this );
         }
+        initializeLiberties(board);
     }
 
     /**
@@ -150,24 +165,53 @@ public class GoString extends GoSet
             GoBoardPosition stone = (GoBoardPosition) it.next();
             // hitting this from UpdateStringsAfterRemoving
             //assert ( members_.contains( stone )): "ERROR: GoString.remove: " + stone + " is not a subset of \n" + this;
-            remove( stone );
+            remove( stone, board );
         }
+        initializeLiberties(board);
         assert ( size() > 0 );
+    }
+
+
+    public int getNumLiberties(GoBoard board) {
+        return getLiberties(board).size();
     }
 
     /**
      * return the set of liberty positions that the string has
+     * @param board
      */
-    public final Set getLiberties( GoBoard board )
+    public final Set getLiberties(GoBoard board)
     {
-        Set liberties = new HashSet();
+        return liberties_;
+    }
+
+
+
+    private Set initializeLiberties(GoBoard board) {
+        liberties_ = new HashSet();
 
         Iterator it = members_.iterator();
         while ( it.hasNext() ) {
             GoBoardPosition stone = (GoBoardPosition) it.next();
-            addLiberties( stone, liberties, board );
+            addLiberties( stone, liberties_, board );
         }
-        return liberties;
+        return liberties_;
+    }
+
+    /**
+     * if the libertyPos is occupied, then we subract this liberty, else add it
+     * @param libertyPos
+     */
+    public void changedLiberty(GoBoardPosition libertyPos) {
+         if (libertyPos.isOccupied()) {
+             boolean removed = liberties_.remove(libertyPos);
+             assert removed : "could not remove "+libertyPos +" from "+liberties_;
+         } else {
+             assert (!liberties_.contains(libertyPos));
+             liberties_.add(libertyPos);
+             if (members_.size() == 1)
+                 assert(liberties_.size() <= 4) :this +" has too many liberties for one stone :"+ liberties_ +  " just added :"+libertyPos;
+         }
     }
 
     /**
@@ -177,7 +221,7 @@ public class GoString extends GoSet
      */
     public boolean isInAtari(GoBoard board)
     {
-        return (getLiberties(board).size() == 0);
+        return (getNumLiberties(board) == 0);
     }
 
 

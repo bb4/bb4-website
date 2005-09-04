@@ -1,14 +1,12 @@
 package com.becker.game.twoplayer.go;
 
 
-import static com.becker.game.twoplayer.go.GoControllerConstants.USE_RELATIVE_GROUP_SCORING;
-import com.becker.common.Assert;
-import com.becker.game.common.Board;
-import com.becker.game.common.BoardPosition;
-import com.becker.game.common.Box;
-import com.becker.game.common.GameContext;
+import com.becker.common.*;
+import com.becker.game.common.*;
 
 import java.util.*;
+
+import static com.becker.game.twoplayer.go.GoControllerConstants.USE_RELATIVE_GROUP_SCORING;
 
 
 /**
@@ -119,47 +117,6 @@ public final class GoBoardUtil
             s.setVisited( false );
         }
     }
-
-
-    public static void unvisitAll(Board board)
-    {
-        for ( int i = 1; i <= board.getNumRows(); i++ ) {
-            for ( int j = 1; j <= board.getNumCols(); j++ ) {
-                GoBoardPosition pos = (GoBoardPosition) board.getPosition( i, j );
-                pos.setVisited(false);
-            }
-        }
-    }
-
-    static List getVisitedSpaces(GoBoard board)
-    {
-        List list = new ArrayList(10);
-        for ( int i = 1; i <= board.getNumRows(); i++ ) {
-            for ( int j = 1; j <= board.getNumCols(); j++ ) {
-                GoBoardPosition stone = (GoBoardPosition) board.getPosition( i, j );
-                if (stone.isVisited())
-                    list.add(stone);
-            }
-        }
-         return list;
-     }
-
-
-    /**
-     * verify that all the stones are marked unvisited.
-     */
-    private static GoBoardPosition areAllUnvisited(GoBoard board)
-    {
-        for ( int i = 1; i <= board.getNumRows(); i++ ) {
-            for ( int j = 1; j <= board.getNumCols(); j++ ) {
-                GoBoardPosition stone = (GoBoardPosition) board.getPosition( i, j );
-                if (stone.isVisited())
-                    return stone;
-            }
-        }
-        return null;
-    }
-
 
 
     // ------------------ Debugging methods below this point ------------------------
@@ -357,6 +314,22 @@ public final class GoBoardUtil
         GoBoardPosition stone = areAllUnvisited(board);
         if (stone != null)
            Assert.exception(stone + " is marked visited" );
+    }
+
+
+    /**
+     * verify that all the stones are marked unvisited.
+     */
+    private static GoBoardPosition areAllUnvisited(GoBoard board)
+    {
+        for ( int i = 1; i <= board.getNumRows(); i++ ) {
+            for ( int j = 1; j <= board.getNumCols(); j++ ) {
+                GoBoardPosition stone = (GoBoardPosition) board.getPosition( i, j );
+                if (stone.isVisited())
+                    return stone;
+            }
+        }
+        return null;
     }
 
 

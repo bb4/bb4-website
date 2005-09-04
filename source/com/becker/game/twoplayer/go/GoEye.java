@@ -33,7 +33,7 @@ public final class GoEye extends GoString implements GoMember
      */
     public GoEye( List spaces, GoBoard board, GoGroup g )
     {
-        super( spaces );
+        super( spaces, board );
         group_ = g;
         ownedByPlayer1_ = g.isOwnedByPlayer1();
         type_ = determineEyeType( spaces, board );
@@ -55,7 +55,7 @@ public final class GoEye extends GoString implements GoMember
      * Add a space to the eye string.
      * The space is either blank or a dead enemy stone.
      */
-    public void addMember( GoBoardPosition space )
+    @Override protected void addMemberInternal(GoBoardPosition space, GoBoard board)
     {
         if ( members_.contains( space ) ) {
             GameContext.log( 1, "Warning: the eye, " + this + ", already contains " + space );

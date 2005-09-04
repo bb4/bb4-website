@@ -90,7 +90,6 @@ public final class GoProfiler extends Profiler {
         this.stop(UPDATE_GROUPS_AFTER_REMOVE);
     }
 
-
     public void startUpdateStringsAfterMove() {
         this.start(UPDATE_STRINGS_AFTER_MOVE);
     }

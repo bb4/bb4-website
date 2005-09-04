@@ -16,6 +16,15 @@ public class TestLifeAndDeath extends GoTestCase {
     }
 
 
+    /**
+     * originally took 250 seconds
+     * - reduced calls to GoGroup.getStones()  to improve to 214 seconds.  14.4% improvement
+     * - avoided boundary check in getBoardPostion by acessing positions_ array directly 197 seconds or   8%
+     * - don't calculate the liberties everytime in GoString.getLiberties(),
+     *     but instead update them incrementally. 75 seconds or 62%
+     *
+     * overall= 250 -> 75    70%
+     */
     public void testProblem58() {
         GoMove m = getNextMove("problem_life58", true);
         checkExpected(m, 1, 12);

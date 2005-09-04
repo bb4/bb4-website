@@ -230,9 +230,7 @@ public final class GoBoard extends TwoPlayerBoard
 
         super.makeInternalMove( m );
 
-
         m.updateBoardAfterMoving(this);
-
 
         if ( m.isSuicidal(this) )
             return false;
@@ -263,7 +261,6 @@ public final class GoBoard extends TwoPlayerBoard
         clearEyes();
 
         m.updateBoardAfterRemoving(this);
-
 
         profiler_.stopUndoMove();
     }
@@ -357,7 +354,7 @@ public final class GoBoard extends TwoPlayerBoard
         List emptyLists = new LinkedList();
         for ( int i = min; i <= rMax; i++ )  {
            for ( int j = min; j <= cMax; j++ ) {
-               GoBoardPosition pos = (GoBoardPosition)getPosition(i, j);
+               GoBoardPosition pos = (GoBoardPosition)positions_[i][j];
                if (pos.getString() == null && !pos.isInEye()) {
                    assert pos.isUnoccupied();
                    if (!pos.isVisited()) {
@@ -478,7 +475,7 @@ public final class GoBoard extends TwoPlayerBoard
         // we should be able to just sum all the position scores now.
         for ( int i = 1; i <= getNumRows(); i++ )  {
            for ( int j = 1; j <= getNumCols(); j++ ) {
-               GoBoardPosition pos = (GoBoardPosition)getPosition(i, j);
+               GoBoardPosition pos = (GoBoardPosition)positions_[i][j];
 
                if (pos.isUnoccupied()) {
                    double val = estimate? pos.getScoreContribution() : 1.0;
@@ -548,7 +545,7 @@ public final class GoBoard extends TwoPlayerBoard
     }
 
     /**
-     * return a set of stones which are loosely connected tp stone.
+     * return a set of stones which are loosely connected to this stone.
      * Check the 16 purely group neighbors and 4 string neighbors
      *         ***
      *        **S**
@@ -594,6 +591,19 @@ public final class GoBoard extends TwoPlayerBoard
         }
     }
 
+
+    public Set findStringNeighbors(GoBoardPosition stone ) {
+        Set stringNbrs = new HashSet();
+        List nobiNbrs = new LinkedList();
+        pushStringNeighbors(stone, false, nobiNbrs, false);
+
+        // add strings only once
+        for (Object nn : nobiNbrs) {
+            GoBoardPosition nbr = (GoBoardPosition)nn;
+            stringNbrs.add(nbr.getString());
+        }
+        return stringNbrs;
+    }
 
     /**
      * Check all nobi neighbors (at most 4).
@@ -653,20 +663,20 @@ public final class GoBoard extends TwoPlayerBoard
 
     /**
      * Check all non-nobi group neighbors.
-     * @param s the stone of which to check the neighbors of
+     * @param pos the stone of which to check the neighbors of
      * @param stack the stack to add unvisited neighbors
      * @param sameSideOnly if true push pure group nbrs of the same side only.
      * @return number of stones added to the stack
      */
-    private int pushPureGroupNeighbors( GoBoardPosition s, boolean friendPlayer1, boolean sameSideOnly, List stack )
+    private int pushPureGroupNeighbors( GoBoardPosition pos, boolean friendPlayer1, boolean sameSideOnly, List stack )
     {
-        int r = s.getRow();
-        int c = s.getCol();
+        int r = pos.getRow();
+        int c = pos.getCol();
         int numPushed = 0;
 
         // if the stone of which we are checking nbrs is in atari, then there are no pure group nbrs because an
         // atari counts as a cut
-        if (s.isInAtari(this))
+        if (pos.isInAtari(this))
           return 0;
 
 
@@ -984,7 +994,7 @@ public final class GoBoard extends TwoPlayerBoard
     {
         for ( int i = 1; i <= getNumRows(); i++ ) {
             for ( int j = 1; j <= getNumCols(); j++ ) {
-                GoBoardPosition space = (GoBoardPosition) this.getPosition( i, j );
+                GoBoardPosition space = (GoBoardPosition)positions_[i][j];
                 if ( space.isInEye() )     {
                     // remove reference to the owning group so it can be garbage collected.
                     space.getEye().getGroup().getEyes().remove(this);
@@ -1002,7 +1012,7 @@ public final class GoBoard extends TwoPlayerBoard
      *  SHAPE_EMPTY_TRIANGLE :  X -   ,   SHAPE_CLUMP_OF_4 :  X X
      *                          X X                           X X
      */
-    public int formsBadShape( GoBoardPosition position)
+    public int formsBadShape(GoBoardPosition position)
     {
         GoStone stone = (GoStone)position.getPiece();
         int r = position.getRow();
@@ -1030,9 +1040,9 @@ public final class GoBoard extends TwoPlayerBoard
     private int checkBadShape(GoStone stone, int r, int c, int incr, int incc, int type) {
         boolean player1 = stone.isOwnedByPlayer1();
         if ( inBounds( r + incr, c + incc ) ) {
-            BoardPosition adjacent1 = getPosition( r + incr, c );
-            BoardPosition adjacent2 = getPosition( r , c + incc);
-            BoardPosition diagonal = getPosition( r + incr, c + incc);
+            BoardPosition adjacent1 = positions_[r+incr][c]; //getPosition( r + incr, c );
+            BoardPosition adjacent2 = positions_[r][c+incc]; //getPosition( r , c + incc);
+            BoardPosition diagonal = positions_[r+incr][c+incc]; //getPosition( r + incr, c + incc);
             // there are 3 cases:
             //       a1 diag    X     XX    X
             //        X a2      XX    X    XX
@@ -1073,7 +1083,7 @@ public final class GoBoard extends TwoPlayerBoard
         // we should be able to just sum all the position scores now.
         for ( int i = 1; i <= getNumRows(); i++ )  {
            for ( int j = 1; j <= getNumCols(); j++ ) {
-               GoBoardPosition pos = (GoBoardPosition)getPosition(i, j);
+               GoBoardPosition pos = (GoBoardPosition)positions_[i][j];
                if (pos.isOccupied() && pos.getPiece().isOwnedByPlayer1() == forPlayer1)  {
                   numStones++;
                }
@@ -1106,7 +1116,7 @@ public final class GoBoard extends TwoPlayerBoard
             buf.append(i % 10);
             buf.append('|');
             for ( int j = 1; j <= getNumCols(); j++ ) {
-                GoBoardPosition space = (GoBoardPosition) this.getPosition( i, j );
+                GoBoardPosition space = (GoBoardPosition) positions_[i][j];
                 if ( space.isOccupied() )     {
                     buf.append(space.getPiece().isOwnedByPlayer1()?'X':'O');
                 }
