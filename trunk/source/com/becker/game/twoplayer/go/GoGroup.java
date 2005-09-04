@@ -149,12 +149,13 @@ public final class GoGroup extends GoSet
         changed_ = true;
     }
 
+
     /**
      * get the number of liberties that the group has.
      * @return the number of liberties that the group has
-     * @param board owner
+     * @param board
      */
-    public Set getLiberties( GoBoard board )
+    public Set getLiberties(GoBoard board)
     {
         Set liberties = new HashSet();
         for (Object str : members_) {
@@ -172,26 +173,9 @@ public final class GoGroup extends GoSet
     {
         int numStones = 0;
         Iterator it = members_.iterator();
-        if ( GameContext.getDebugMode() <= 2 ) {
-            while ( it.hasNext() ) {
-                GoString str = (GoString) it.next();
-                numStones += str.size();
-            }
-            return numStones;
-        }
-
-        // The evaluation of this and str in the second argument of the Assert
-        // is extremely expensive (factor of 10!)
-        // That's why we only do this assert when running in debug mode.
-        // now that we use java native assertions there is no more overhead when they are turned off, but
-        // when they are on, I still only want to incur the overhead when the debug level is high.
-        if (GameContext.getDebugMode() > 2)  {
-            while ( it.hasNext() ) {
-                GoString str = (GoString) it.next();
-                // debug (make sure none of the stones are blank)
-                assert ( !str.areAnyBlank()): "Error: " + this + " contains a " + str + " with blanks in it.";
-                numStones += str.size();
-            }
+        while ( it.hasNext() ) {
+            GoString str = (GoString) it.next();
+            numStones += str.size();
         }
         return numStones;
     }
@@ -270,7 +254,7 @@ public final class GoGroup extends GoSet
      */
     public List getStones()
     {
-        List stones = new ArrayList();
+        List stones = new ArrayList(10);
         Iterator it = members_.iterator();
         while ( it.hasNext() ) {
             GoString string = (GoString) it.next();
@@ -377,8 +361,7 @@ public final class GoGroup extends GoSet
 
             // make sure that every occupied stone in the list is a real enemy and not just a dead opponent stone.
             // compare it with one of the group strings
-            GoString groupString = ((GoBoardPosition)this.getStones().get(0)).getString();
-            assert (groupString!=null): "stones = "+this.getStones();    // hitting this 7/14/03
+            GoString groupString = ((GoString)this.getMembers().iterator().next());
 
             Iterator it = list.iterator();
             while (it.hasNext()) {
@@ -397,6 +380,7 @@ public final class GoGroup extends GoSet
             }
         }
     }
+
 
     /**
      * check this list of stones to confirm that enemy stones don't border it.
@@ -424,11 +408,8 @@ public final class GoGroup extends GoSet
                 if (string.size() == 1 && Math.abs(stone.getHealth()) <= 0.11) {
                     // since its a lone stone inside an enemy eye, we assume it is more dead than alive
                     stone.setHealth(stone.isOwnedByPlayer1() ? -0.5f : 0.5f);
-                    //GameContext.log(3, " setting to " + stone.getHealth());
                 }
                 if (groupString.isEnemy(position)) {
-                    //GameContext.log(3, (position +" was determined to be an enemy of "+this);
-                    //GameContext.log(3, position.getString() + " was determined to be an enemy of " + this +" returning NOT EYE");
                     return false;  // not eye
                 }
             }
@@ -489,7 +470,7 @@ public final class GoGroup extends GoSet
     float calculateAbsoluteHealth( GoBoard board, GoProfiler profiler )
     {
         // if nothing has changed about the group, then we can return the cached value
-        int numLiberties = getLiberties( board ).size();
+        int numLiberties = getLiberties(board).size();
         if ( !changed_ && cachedNumLiberties_ == numLiberties)
             return absoluteHealth_;
 
@@ -635,7 +616,8 @@ public final class GoGroup extends GoSet
             switch (numLiberties) { // numEyes == 0
                 case 0:
                     // this can't happen because the stone should already be captured.
-                    assert false : "can't have no liberties and still be on the board! "+ this;
+                    GameContext.log(0, "Error: can't have no liberties and still be on the board! "+ this);
+                    //assert false : "can't have no liberties and still be on the board! "+ this;
                     health = -side;
                     break;
                 case 1:
@@ -656,7 +638,7 @@ public final class GoGroup extends GoSet
                 case 4:
                     health = side * 0.1f;
                     break;
-                default: assert false;
+                default: assert false : "there were too many liberties for a single stone: "+numLiberties;
             }
         } else {
             switch (numLiberties) { // numEyes == 0
@@ -711,9 +693,10 @@ public final class GoGroup extends GoSet
 
         // the default if there is no weakest group.
         relativeHealth_ = absoluteHealth_;
+        List groupStones = getStones();
 
         profiler.start(GoProfiler.GET_ENEMY_GROUPS_NBRS);
-        cachedEnemyNbrGroups_ = getEnemyGroupNeighbors(board);
+        cachedEnemyNbrGroups_ = getEnemyGroupNeighbors(board, groupStones);
         profiler.stop(GoProfiler.GET_ENEMY_GROUPS_NBRS);
 
         // of these enemy groups which is the weakest?
@@ -736,7 +719,6 @@ public final class GoGroup extends GoSet
             // If we are very surrounded then we give a big boost for being stronger or weaker than a nbr.
             // If we are not very surrounded then we don't give much of a boost because there are other
             // ways to make life (i.e. run out/away).
-            List groupStones = getStones();
             int numWithEnemyNbrs = 0;
             for (Object p : groupStones) {
                 GoBoardPosition stone = (GoBoardPosition)p;
@@ -755,7 +737,7 @@ public final class GoGroup extends GoSet
                     (float) (Math.min(1.0, Math.max(-1.0, absoluteHealth_ + diff * proportionWithEnemyNbrs)));
         }
 
-        GoBoardUtil.unvisitPositionsInList(getStones());
+        GoBoardUtil.unvisitPositionsInList(groupStones);
 
         return relativeHealth_;
     }
@@ -771,12 +753,12 @@ public final class GoGroup extends GoSet
      * @param board
      * @return a HashSet of the groups that are enemies of this group
      */
-    private Set getEnemyGroupNeighbors(GoBoard board)
+    private Set getEnemyGroupNeighbors(GoBoard board, List groupStones)
     {
         Set enemyNbrs = new HashSet();
 
         // for every stone in the group.
-        for (Object s : getStones()) {
+        for (Object s : groupStones) {
             GoBoardPosition stone = (GoBoardPosition)s;
             Set nbrs = board.getGroupNeighbors(stone, false);
 

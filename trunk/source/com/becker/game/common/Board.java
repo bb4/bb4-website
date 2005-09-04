@@ -104,7 +104,7 @@ public abstract class Board implements BoardInterface, Cloneable
      */
     public final BoardPosition getPosition( int row, int col )
     {
-        if ( (row < 1 || row > numRows_) || (col < 1 || col > numCols_) ) {
+        if ( row < 1 || row > numRows_ || col < 1 || col > numCols_) {
             return null;
         }
         return positions_[row][col];

@@ -34,8 +34,9 @@ public abstract class GoSet implements GoMember
 
     /**
      *  get the number of liberties (open surrounding spaces)
+     * @param board
      */
-    public abstract Set getLiberties( GoBoard board );
+    public abstract Set getLiberties(GoBoard board);
 
     /**
      * @return  true if set is owned by player one
@@ -66,7 +67,7 @@ public abstract class GoSet implements GoMember
      */
     final void removeAll()
     {
-        members_.clear();      
+        members_.clear();
     }
 
     /**

@@ -73,12 +73,16 @@ public class GoTestCase extends TestCase {
 
     protected GoMove getNextMove(String problemFile, boolean blackPlays) {
 
-        GameContext.log(0, "finding next move for "+problemFile+" ...");
+
+        System.out.println("finding next move for "+problemFile+" ...");
+        long time = System.currentTimeMillis();
         restore(problemFile);
         controller_.requestComputerMove( blackPlays, true );
 
         GoMove m = (GoMove) controller_.getBoard().getLastMove();
-        GameContext.log(0, "got " + m);
+
+        long elapsedTime = (System.currentTimeMillis() - time) / 1000;
+        System.out.println("got " + m + " in " + elapsedTime + " seconds.");
         return m;
     }
 
@@ -95,7 +99,7 @@ public class GoTestCase extends TestCase {
 
         // must check the worth of the board once to update the scoreContributions fo empty spaces.
         List moves = controller_.getMoveList();
-        //double w = controller_.worth((GoMove)moves.get(moves.size()-3), controller_.getDefaultWeights(), true); // need?   
+        //double w = controller_.worth((GoMove)moves.get(moves.size()-3), controller_.getDefaultWeights(), true); // need?
         controller_.updateLifeAndDeath();   // this updates the groups and territory as well.
     }
 

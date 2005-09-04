@@ -14,6 +14,7 @@ import java.util.*;
 public abstract class TwoPlayerBoard extends Board
 {
 
+      /*
     public Move undoMove() {
         if ( !getMoveList().isEmpty() ) {
             TwoPlayerMove m = (TwoPlayerMove) getMoveList().removeLast();
@@ -22,6 +23,7 @@ public abstract class TwoPlayerBoard extends Board
         }
         return null;
     }
+    */
 
     /**
      * given a move specification, execute it on the board
@@ -52,7 +54,7 @@ public abstract class TwoPlayerBoard extends Board
 
     public void makeMoves(List moves) {
         for (Object m : moves) {
-             Move move = (Move) m;
+            Move move = (Move) m;
             makeMove(move);
         }
     }
