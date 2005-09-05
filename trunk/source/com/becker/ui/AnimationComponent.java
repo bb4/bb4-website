@@ -1,12 +1,10 @@
 package com.becker.ui;
 
-import com.becker.java2d.ImageUtil;
-import com.becker.common.Util;
+import com.becker.common.*;
+import com.becker.java2d.*;
 
 import java.awt.*;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.text.NumberFormat;
+import java.awt.event.*;
 
 public abstract class AnimationComponent extends Container implements Runnable
 {
@@ -20,7 +18,7 @@ public abstract class AnimationComponent extends Container implements Runnable
     protected Image mImage;
 
     // incremented for every frame
-    private int frameCount_ = 0;
+    protected int frameCount_ = 0;
 
     // if true it will save all the animation steps to files
     private boolean recordAnimation_ = false;

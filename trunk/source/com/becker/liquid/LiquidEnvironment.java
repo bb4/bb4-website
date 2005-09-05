@@ -25,17 +25,17 @@ public class LiquidEnvironment
 {
 
     // the dimensions of the space
-    private int X_DIM = 30;
-    private int Y_DIM = 40;
+    private int xDim_ = 30;
+    private int yDim_ = 40;
 
     // the grid of cells that make up the environment
     // in x,y (col, row) order
     private Cell[][] grid_ = null;
 
     // the set of particles in this simulation
-    private HashSet particles_ = new HashSet();
+    private Set particles_ = new HashSet();
     // keep the walls globally because we need to draw them each frame
-    private Vector walls_ = new Vector();
+    private List walls_ = new ArrayList();
 
     private static final double EPSILON = 0.0000001;
     private static final double MAX_INC = 0.1;
@@ -45,21 +45,21 @@ public class LiquidEnvironment
     private double time_ = 0.0;
 
     // gravity in mm/s^2
-    protected double GRAVITY = 0.980;
+    protected static final double GRAVITY = 0.980;
 
     // physical constants.
     // cell width and height in mm.
     private static final double CELL_SIZE = 10.0;
     // atmospheric pressure = 1e5 N/m^2 or .1 g /(mm s^2)
-    private static final double ATMOSPHERIC_PRESSURE = .10;
+    private static final double ATMOSPHERIC_PRESSURE = 0.10;
     // density of the liquid in grams per mm^3
     // water = 1000 kg/m^3 or .001 g/mm^2
-    private static final double DENSITY = .001;
+    private static final double DENSITY = 0.001;
     // viscosity of the liquid. Larger for molasses (.3), smaller for kerosine (.0001)
     // Water is about .001 Ns/m^2 or .01 g/s mm
-    private static final double VISCOSITY = .001; //0.001;
+    private static final double VISCOSITY = 0.001; //0.001;
     //private static final double JITTERING = .1;
-    private static final double b0 = 1.7;  // used in mass conservation (how?)
+    private static final double B0 = 1.7;  // used in mass conservation (how?)
     private static final double SPIGOT_VELOCITY = 30.0;
     private static final int NUM_RAND_PARTS = 5;
 
@@ -67,7 +67,7 @@ public class LiquidEnvironment
     // temp var used throughout for efficency. avoids creating objects
     private static Vector2d v_ = new Vector2d( 0, 0 );
 
-    private static Log logger_;
+    private static Log logger_ = null;
     public static final int LOG_LEVEL = 0;
 
     //Constructor
@@ -80,20 +80,20 @@ public class LiquidEnvironment
     //Constructor
     public LiquidEnvironment( int w, int h )
     {
-        X_DIM = w + 2;
-        Y_DIM = h + 2;
-        grid_ = new Cell[X_DIM][Y_DIM];
+        xDim_ = w + 2;
+        yDim_ = h + 2;
+        grid_ = new Cell[xDim_][yDim_];
         initEnvironment( walls_ );
     }
 
-    private void initEnvironment( Vector walls )
+    private void initEnvironment( List walls )
     {
         int i, j;
         logger_ = new Log( new OutputWindow( "Log", null ) );
         logger_.setDestination( Log.LOG_TO_WINDOW );
 
-        for ( j = 0; j < Y_DIM; j++ ) {
-            for ( i = 0; i < X_DIM; i++ ) {
+        for ( j = 0; j < yDim_; j++ ) {
+            for ( i = 0; i < xDim_; i++ ) {
                 grid_[i][j] = new Cell( i, j );
             }
         }
@@ -103,11 +103,11 @@ public class LiquidEnvironment
 
     public int getXDim()
     {
-        return X_DIM;
+        return xDim_;
     }
     public int getYDim()
     {
-        return Y_DIM;
+        return yDim_;
     }
 
     public Cell[][] getGrid()
@@ -115,7 +115,7 @@ public class LiquidEnvironment
         return grid_;
     }
 
-    public HashSet getParticles()
+    public Set getParticles()
     {
         return particles_;
     }
@@ -163,8 +163,8 @@ public class LiquidEnvironment
     private void updateCellStatus()
     {
         int i, j;
-        for ( j = 1; j < Y_DIM - 1; j++ ) {
-            for ( i = 1; i < X_DIM - 1; i++ ) {
+        for ( j = 1; j < yDim_ - 1; j++ ) {
+            for ( i = 1; i < xDim_ - 1; i++ ) {
                 grid_[i][j].updateStatus(
                         grid_[i + 1][j], grid_[i - 1][j], grid_[i][j + 1], grid_[i][j - 1] );
             }
@@ -180,29 +180,29 @@ public class LiquidEnvironment
         Cell n;
 
         // right and left
-        for ( j = 0; j < Y_DIM; j++ ) {
+        for ( j = 0; j < yDim_; j++ ) {
             // left
             n = grid_[1][j];
             grid_[0][j].setPressure( n.getPressure() );
             grid_[0][j].setVelocity_p( 0, -n.getVjp() );
             // right
-            n = grid_[X_DIM - 2][j];
-            grid_[X_DIM - 1][j].setPressure( n.getPressure() );
-            grid_[X_DIM - 1][j].setVelocity_p( 0, -n.getVjp() );
-            grid_[X_DIM - 2][j].setUip( 0 );
+            n = grid_[xDim_ - 2][j];
+            grid_[xDim_ - 1][j].setPressure( n.getPressure() );
+            grid_[xDim_ - 1][j].setVelocity_p( 0, -n.getVjp() );
+            grid_[xDim_ - 2][j].setUip( 0 );
         }
 
         // top and bottom
-        for ( i = 0; i < X_DIM; i++ ) {
+        for ( i = 0; i < xDim_; i++ ) {
             // bottom
             n = grid_[i][1];
             grid_[i][0].setPressure( n.getPressure() );
             grid_[i][0].setVelocity_p( -n.getUip(), 0 );
             // top
-            n = grid_[i][Y_DIM - 2];
-            grid_[i][Y_DIM - 1].setPressure( n.getPressure() );
-            grid_[i][Y_DIM - 1].setVelocity_p( -n.getUip(), 0 );
-            grid_[i][Y_DIM - 2].setVjp( 0 );
+            n = grid_[i][yDim_ - 2];
+            grid_[i][yDim_ - 1].setPressure( n.getPressure() );
+            grid_[i][yDim_ - 1].setVelocity_p( -n.getUip(), 0 );
+            grid_[i][yDim_ - 2].setVjp( 0 );
         }
 
         //add a spigot of liquid
@@ -223,13 +223,13 @@ public class LiquidEnvironment
      */
     private void updateVelocity( double timeStep )
     {
-        log( 1, "stepForward: about to update the velocity field (timeStep=" + timeStep + ")" );
+        log( 1, "stepForward: about to update the velocity field (timeStep=" + timeStep + ')' );
         int i, j;
         double fx = 0;
         double fy = GRAVITY;
 
-        for ( j = 1; j < Y_DIM - 1; j++ ) {
-            for ( i = 1; i < X_DIM - 1; i++ ) {
+        for ( j = 1; j < yDim_ - 1; j++ ) {
+            for ( i = 1; i < xDim_ - 1; i++ ) {
                 grid_[i][j].updateTildeVelocities(
                         grid_[i + 1][j], grid_[i - 1][j],
                         grid_[i][j + 1], grid_[i][j - 1],
@@ -253,10 +253,10 @@ public class LiquidEnvironment
         do {
             // adjust tilde velocities to satisfy mass conservation
             maxDivergence = 0;
-            for ( j = 1; j < Y_DIM - 1; j++ ) {
-                for ( i = 1; i < X_DIM - 1; i++ ) {
+            for ( j = 1; j < yDim_ - 1; j++ ) {
+                for ( i = 1; i < xDim_ - 1; i++ ) {
                     divergence =
-                            grid_[i][j].updateMassConservation( b0, timeStep,
+                            grid_[i][j].updateMassConservation( B0, timeStep,
                                     grid_[i + 1][j], grid_[i - 1][j],
                                     grid_[i][j + 1], grid_[i][j - 1] );
                     if ( divergence > maxDivergence )
@@ -275,8 +275,8 @@ public class LiquidEnvironment
     private void updateSurfaceVelocity()
     {
         int i, j;
-        for ( j = 1; j < Y_DIM - 1; j++ ) {
-            for ( i = 1; i < X_DIM - 1; i++ ) {
+        for ( j = 1; j < yDim_ - 1; j++ ) {
+            for ( i = 1; i < xDim_ - 1; i++ ) {
                 // I think the last arg is atmospheric pressure
                 grid_[i][j].updateSurfaceVelocities(
                         grid_[i + 1][j], grid_[i - 1][j], grid_[i][j + 1], grid_[i][j - 1], ATMOSPHERIC_PRESSURE );
@@ -342,8 +342,8 @@ public class LiquidEnvironment
 
                 Assert.isTrue( particle.x >= 1, "particle.x=" + particle.x );
                 Assert.isTrue( particle.y >= 1, "particle.x=" + particle.y );
-                Assert.isTrue( particle.x < X_DIM - 1, "particle.x=" + particle.x );
-                Assert.isTrue( particle.y < Y_DIM - 1, "particle.y=" + particle.y ); // <=?
+                Assert.isTrue( particle.x < xDim_ - 1, "particle.x=" + particle.x );
+                Assert.isTrue( particle.y < yDim_ - 1, "particle.y=" + particle.y ); // <=?
 
                 // adjust # particles as they cross cell boundaries
                 grid_[ii][jj].incParticles(); // increment new cell
@@ -381,14 +381,14 @@ public class LiquidEnvironment
     {
         int i, j;
         // right and left
-        for ( j = 0; j < Y_DIM; j++ ) {
+        for ( j = 0; j < yDim_; j++ ) {
             grid_[0][j].setStatus( Cell.OBSTACLE );
-            grid_[X_DIM - 1][j].setStatus( Cell.OBSTACLE );
+            grid_[xDim_ - 1][j].setStatus( Cell.OBSTACLE );
         }
         // top and bottom
-        for ( i = 0; i < X_DIM; i++ ) {
+        for ( i = 0; i < xDim_; i++ ) {
             grid_[i][0].setStatus( Cell.OBSTACLE );
-            grid_[i][Y_DIM - 1].setStatus( Cell.OBSTACLE );
+            grid_[i][yDim_ - 1].setStatus( Cell.OBSTACLE );
         }
     }
 

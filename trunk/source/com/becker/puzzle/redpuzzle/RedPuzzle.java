@@ -14,31 +14,25 @@ import java.util.*;
 public final class RedPuzzle extends JApplet
 {
 
-    private static JFrame baseFrame_ = null;
-
     // global counter;
     private static int numIterations_ = 0;
 
     private Solution solution_;
 
     // create the pieces and add them to a list
-    private ArrayList pieces_;
+    private List pieces_;
 
     //Construct the application
     public RedPuzzle()
     {
-        try {
             GUIUtil.setCustomLookAndFeel();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     /**
      * create and initialize the puzzle
      * (init required for applet)
      */
-    public final void init()
+    public void init()
     {
         numIterations_ = 0;
         solution_ = new Solution();
@@ -70,7 +64,7 @@ public final class RedPuzzle extends JApplet
      * start solving the puzzle.
      * called by the browser after init(), if running as an applet
      */
-    public final void start()
+    public void start()
     {
         // this does all the heavy work of solving it
         boolean solved = solvePuzzle( solution_, pieces_ );
@@ -85,9 +79,8 @@ public final class RedPuzzle extends JApplet
     /**
      * stop and cleanup.
      */
-    public final void stop()
-    {
-    }
+    public  void stop()
+    {}
 
     public static int getNumIterations()
     {
@@ -147,7 +140,7 @@ public final class RedPuzzle extends JApplet
         RedPuzzle applet = new RedPuzzle();
 
         // this will call applet.init() and start() methods instead of the browser
-        baseFrame_ = GUIUtil.showApplet( applet, "Red Puzzle Solver" );
+        GUIUtil.showApplet( applet, "Red Puzzle Solver" );
 
     }
 }

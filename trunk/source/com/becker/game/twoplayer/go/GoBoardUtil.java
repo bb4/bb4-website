@@ -102,13 +102,13 @@ public final class GoBoardUtil
     {
         Iterator it = lists.iterator();
         while ( it.hasNext() )
-            unvisitPositionsInList( (List) it.next() );
+            unvisitPositions( (List) it.next() );
     }
 
     /**
      * set the visited flag back to false for a set of stones
      */
-    public static void unvisitPositionsInList( List positions )
+    public static void unvisitPositions( Collection positions )
     {
         Iterator it = positions.iterator();
         // return the stone to the unvisited state
@@ -398,7 +398,7 @@ public final class GoBoardUtil
         while ( grIt.hasNext() ) {  // for each group on the board
             GoGroup parentGroup = (GoGroup) grIt.next();
             // for eash stone in that group
-            List parentGroupStones = parentGroup.getStones();
+            Set parentGroupStones = parentGroup.getStones();
             Iterator sit = parentGroupStones.iterator();
             while ( sit.hasNext() ) {   // fro each string in that group
                  GoBoardPosition s = (GoBoardPosition) sit.next();

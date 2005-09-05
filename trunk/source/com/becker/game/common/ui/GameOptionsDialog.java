@@ -21,11 +21,6 @@ public class GameOptionsDialog extends OptionsDialog implements ActionListener, 
      */
     protected final GameController controller_;
 
-    protected JPanel controllerParamPanel_ = null;
-    protected JPanel debugParamPanel_ = null;
-    protected JPanel lookAndFeelParamPanel_ = null;
-    protected JPanel localePanel_ = null;
-
     // debug params
     protected JTextField dbgLevelField_ = null;
     protected final JTextField logFileField_ = null;
@@ -56,22 +51,24 @@ public class GameOptionsDialog extends OptionsDialog implements ActionListener, 
 
     protected void initUI()
     {
+
+
         mainPanel_.setLayout( new BorderLayout() );
         // contains tabs for Algorithm, Debugging, and Look and Feel
         JTabbedPane tabbedPanel = new JTabbedPane();
 
-        controllerParamPanel_ = createControllerParamPanel();
-        debugParamPanel_ = createDebugParamPanel();
-        lookAndFeelParamPanel_ = createLookAndFeelParamPanel();
-        localePanel_ = createLocalePanel();
+        JPanel controllerParamPanel = createControllerParamPanel();
+        JPanel debugParamPanel = createDebugParamPanel();
+        JPanel lookAndFeelParamPanel = createLookAndFeelParamPanel();
+        JPanel localePanel =  createLocalePanel();
 
         JPanel buttonsPanel = createButtonsPanel();
 
-        if (controllerParamPanel_!=null)
-            tabbedPanel.add( controllerParamPanel_.getName(), controllerParamPanel_ );
-        tabbedPanel.add( GameContext.getLabel("DEBUG"), debugParamPanel_ );
-        tabbedPanel.add( GameContext.getLabel("LOOK_AND_FEEL"), lookAndFeelParamPanel_ );
-        tabbedPanel.add( GameContext.getLabel("LOCALE"), localePanel_ );
+        if (controllerParamPanel!=null)
+            tabbedPanel.add( controllerParamPanel.getName(), controllerParamPanel );
+        tabbedPanel.add( GameContext.getLabel("DEBUG"), debugParamPanel );
+        tabbedPanel.add( GameContext.getLabel("LOOK_AND_FEEL"), lookAndFeelParamPanel );
+        tabbedPanel.add( GameContext.getLabel("LOCALE"), localePanel );
 
 
         mainPanel_.add( tabbedPanel, BorderLayout.CENTER );
@@ -177,6 +174,7 @@ public class GameOptionsDialog extends OptionsDialog implements ActionListener, 
             case Log.LOG_TO_FILE:
                 fileOutputButton_.setSelected( true );
                 break;
+            default : assert false : "invalid destination : " + logDestination_;
         }
     }
 
@@ -276,10 +274,10 @@ public class GameOptionsDialog extends OptionsDialog implements ActionListener, 
 
          // add the available locales to the dropdown
          LocaleType[] locales = LocaleType.values();
-         for (int i=0; i<locales.length; i++) {
-             String item = GameContext.getLabel(locales[i].toString());
-             localeComboBox_.addItem(item);
-         }
+        for (final LocaleType newVar : locales) {
+            String item = GameContext.getLabel(newVar.toString());
+            localeComboBox_.addItem(item);
+        }
          localeComboBox_.setSelectedItem(GameContext.getDefaultLocaleType());
          localeComboBox_.addActionListener( this );
          localeComboBox_.setAlignmentX( Component.LEFT_ALIGNMENT );
@@ -297,8 +295,8 @@ public class GameOptionsDialog extends OptionsDialog implements ActionListener, 
     protected void ok()
     {
         Integer dbgLevel = new Integer( dbgLevelField_.getText() );
-        if ( dbgLevel.intValue() >= 0 )
-            GameContext.setDebugMode( dbgLevel.intValue() );
+        if ( dbgLevel >= 0 )
+            GameContext.setDebugMode( dbgLevel );
         GameContext.setProfiling( profileCheckbox_.isSelected() );
         GameContext.getLogger().setDestination( logDestination_ );
 

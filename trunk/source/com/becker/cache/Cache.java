@@ -3,8 +3,8 @@ package com.becker.cache;
 import java.util.Calendar;
 
 /**
- * Interface for creating cache classes.  Each class implements its own
- * storage mechanism.
+ * Interface for creating cache classes.
+ * Each class implements its own storage mechanism.
  */
 public interface Cache
 {
@@ -13,21 +13,19 @@ public interface Cache
      * Set whether or not the cache is enabled.  When disabled, all successive
      * data placed in the cache will be ignored.  Data already existing in the
      * cache may still be retrieved and removed.
-     *
-     * @param  enabled  whether or not the cache is enabled
      */
-    public void setEnabled( boolean enabled );
+     void setEnabled( boolean enabled );
 
     /**
      * Set whether the objects in the cache are to be considered read only.
      * Each implementation may use this flag in a different manner.
      */
-    public void setReadOnly();
+     void setReadOnly();
 
     /**
      * Remove all of my entries.
      */
-    public void clear();
+     void clear();
 
 
     /**
@@ -38,7 +36,7 @@ public interface Cache
      *
      * @return  <B>true</B> if the cache contains the entry, otherwise <B>false</B>
      */
-    public boolean containsKey( Object key );
+     boolean containsKey( Object key );
 
     /**
      * Does the cache contain a null entry associated with the give key.  Used
@@ -48,7 +46,7 @@ public interface Cache
      *
      * @return  <B>true</B> if the cache contains a null entry, otherwise <B>false</B>
      */
-    public boolean containsNull( Object key );
+     boolean containsNull( Object key );
 
     /**
      * Put an object in the cache associated with the given key.
@@ -56,7 +54,7 @@ public interface Cache
      * @param  key  key used to store the object
      * @param  object  object to store
      */
-    public void put( Object key, Object object );
+     void put( Object key, Object object );
 
     /**
      * Put an object in the cache associated with the given key.  Expire
@@ -66,7 +64,7 @@ public interface Cache
      * @param  object  object to store
      * @param  expire  date after which to expire the entry (<B>null</B> may be passed for no expiration)
      */
-    public void put( Object key, Object object, Calendar expire );
+     void put( Object key, Object object, Calendar expire );
 
     /**
      * Put an object in the cache associated with the given key.  Expire
@@ -76,7 +74,7 @@ public interface Cache
      * @param  object  object to store
      * @param  expireTime  date after which to expire the entry. Expressed in milliseconds from the Epoch. 0 means no expiration.
      */
-    public void put( Object key, Object object, long expireTime );
+     void put( Object key, Object object, long expireTime );
 
     /**
      * Get an object from the cache associated with the given key.
@@ -85,7 +83,7 @@ public interface Cache
      *
      * @return  the associated object, or <B>null</B> if not found or is expired
      */
-    public Object get( Object key );
+     Object get( Object key );
 
     /**
      * Remove an object from the cache associated with the given key.
@@ -94,12 +92,12 @@ public interface Cache
      *
      * @return  the associated object, or <B>null</B> if not found or is expired
      */
-    public Object remove( Object key );
+     Object remove( Object key );
 
     /**
      * Called prior to destroying a cache.
      */
-    public void destroy();
+     void destroy();
 
     /**
      * Return the number of entries in the cache.
@@ -107,12 +105,12 @@ public interface Cache
      * @return  the cache size
      */
 
-    public int size();
+     int size();
 
     /**
      * Return statistics info.
      */
-    public String getStats();
+     String getStats();
 
     /**
      * Return a shallow copy of the cache.  Cache keys and values should be the
@@ -121,5 +119,5 @@ public interface Cache
      * If not implement, just call super.clone(), which will throw an exception
      * as long as you don't implement the Cloneable interface (which is not recommended).
      */
-    public Object clone() throws CloneNotSupportedException;
+     Object clone() throws CloneNotSupportedException;
 }

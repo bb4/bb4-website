@@ -18,10 +18,10 @@ public class LiquidSimulator extends AnimationComponent
     LiquidEnvironment environment_ = null;
 
     // Tweakable variables
-    private boolean bPause = false;
+    private boolean bPause_ = false;
 
     // constants. See setSwitch().
-    public static final int PAUSE = 0;
+
     // if true it will save all the animation steps to files
     public static final boolean RECORD_ANIMATION = false;
 
@@ -31,8 +31,6 @@ public class LiquidSimulator extends AnimationComponent
     private static final Color BG_COLOR = Color.white;
 
     private static final String FILE_NAME_BASE = "e:/becker/animation/frame";
-    // incremented for every frame
-    private int frameCount_ = 0;
 
     public LiquidSimulator( LiquidEnvironment environment )
     {
@@ -52,7 +50,7 @@ public class LiquidSimulator extends AnimationComponent
     {
         switch (item) {
             case PAUSE:
-                bPause = value;
+                bPause_ = value;
                 break;
             default:
                 break;
@@ -77,11 +75,10 @@ public class LiquidSimulator extends AnimationComponent
      */
     public double timeStep()
     {
-        if ( !bPause ) {
+        if ( !bPause_ ) {
             timeStep_ = environment_.stepForward( timeStep_);
 
             if ( RECORD_ANIMATION ) {
-                Dimension d = this.getSize();
                 //BufferedImage bi = ImageUtil.makeBufferedImage(this.mImage);
 
                 String fname = getFileNameBase() + Integer.toString( 1000000 + frameCount_ );
@@ -109,7 +106,7 @@ public class LiquidSimulator extends AnimationComponent
 
     protected void setPause( Graphics2D g2 )
     {
-        if ( bPause == false ) return;
+        if ( !bPause_ ) return;
         // do something to pause the animation
     }
 

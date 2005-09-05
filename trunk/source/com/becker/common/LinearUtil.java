@@ -1,9 +1,6 @@
 package com.becker.common;
 
-import javax.vecmath.GMatrix;
-import javax.vecmath.GVector;
-import java.io.*;
-import java.text.DecimalFormat;
+import javax.vecmath.*;
 
 /**
  * This class implements a number of static utility functions that are useful for math.
@@ -13,6 +10,7 @@ import java.text.DecimalFormat;
  */
 public final class LinearUtil
 {
+    private LinearUtil() {};
 
     /**
      * A conjugate-Gradient solver for Ax=b
@@ -21,7 +19,7 @@ public final class LinearUtil
      * @param initialGuess the initial guess for the solution x, x0
      * @param eps the tolerable error (eg .0000001)
      */
-    public static GVector CGSolve( GMatrix A, GVector b, GVector initialGuess, double eps )
+    public static GVector conjugateGradientSolve( GMatrix A, GVector b, GVector initialGuess, double eps )
     {
         GVector x = new GVector( initialGuess );
         GVector tempv = new GVector( initialGuess );
@@ -73,7 +71,7 @@ public final class LinearUtil
                 if ( a == 0 )
                     System.out.print( "  0  " );
                 else
-                    System.out.print( Util.formatNumber( a ) + " " );
+                    System.out.print( Util.formatNumber( a ) + ' ' );
             }
             System.out.println( "" );
         }

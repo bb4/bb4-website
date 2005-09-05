@@ -33,23 +33,14 @@ public abstract class GameBoardViewer
            implements ViewerCallbackInterface, MouseListener, GameChangedListener
 {
 
-    protected static final Font VIEWER_FONT = new Font( "SansSerif", Font.PLAIN, 8 );
-
-    protected static final Color LAST_MOVE_INDICATOR_COLOR = new Color( 250, 150, 0 );
-    protected static final Stroke LAST_MOVE_INDICATOR_STROKE = new BasicStroke(1);
-    // dont allow the cells of the game board to get smaller than this
-    public static final int MINIMUM_CELL_SIZE = 8;
-    public static final String SGF_EXT = ".sgf";
-
 
     // every GameBoardViewer must contain one of these
     protected GameController  controller_ = null;
 
     // the size of a game board cell where the pieces go
     protected int cellSize_;
-    protected final Cursor waitCursor_ = new Cursor( Cursor.WAIT_CURSOR );
     // for restoring undone moves
-    protected final LinkedList undoneMoves_ = new LinkedList();
+    protected final List undoneMoves_ = new LinkedList();
 
     // to move pieces you drag them (if the move is valid)
     protected BoardPosition draggedPiece_ = null;
@@ -65,13 +56,6 @@ public abstract class GameBoardViewer
 
     protected String lastDirectoryAccessed_ = null;
 
-    // defaults for the grid and board colors.
-    // The may be changed using the options panel in the ui.
-    protected static final Color BACKGROUND_COLOR = GUIUtil.UI_COLOR_SECONDARY3;
-    protected static final Color GRID_COLOR = GUIUtil.UI_COLOR_SECONDARY1;
-    public static final int BOARD_MARGIN = 6;
-    protected Color backgroundColor_ = BACKGROUND_COLOR;
-    protected Color gridColor_;
 
     // for firing events
     private EventQueue evtq_;
@@ -80,10 +64,26 @@ public abstract class GameBoardViewer
     protected JProgressBar progressBar_ = null;
     protected Timer timer_ = null;
 
+    protected final Cursor waitCursor_ = new Cursor( Cursor.WAIT_CURSOR );
     protected static Cursor origCursor_ = null;
     protected Frame parent_ = null;
 
 
+
+    // defaults for the grid and board colors.
+    // The may be changed using the options panel in the ui.
+    protected static final Color BACKGROUND_COLOR = GUIUtil.UI_COLOR_SECONDARY3;
+    protected static final Color GRID_COLOR = GUIUtil.UI_COLOR_SECONDARY1;
+    public static final int BOARD_MARGIN = 6;
+    protected Color backgroundColor_ = BACKGROUND_COLOR;
+    protected Color gridColor_;
+
+    protected static final Font VIEWER_FONT = new Font( "SansSerif", Font.PLAIN, 8 );
+    protected static final Color LAST_MOVE_INDICATOR_COLOR = new Color( 250, 150, 0 );
+    protected static final Stroke LAST_MOVE_INDICATOR_STROKE = new BasicStroke(1);
+    // dont allow the cells of the game board to get smaller than this
+    public static final int MINIMUM_CELL_SIZE = 8;
+    public static final String SGF_EXT = ".sgf";
 
     /**
      * Construct the viewer.

@@ -1,8 +1,10 @@
 package com.becker.client;
 
-import java.rmi.*;
+import com.becker.common.*;
+
 import java.math.*;
-import com.becker.common.Compute;
+import java.rmi.*;
+import java.net.*;
 
 /**
  * This client side rmi program to compute Pi to n digits accepts 3 arguments
@@ -11,6 +13,14 @@ import com.becker.common.Compute;
  * arg[2] - n the number of digits to compute Pi to.
  */
 public class ComputePi {
+
+    private ComputePi() {};
+
+    private static void handleException(Exception e) {
+         System.err.println("ComputePi exception: " + e.getMessage());
+            e.printStackTrace();
+    }
+
     public static void main(String args[]) {
         if (System.getSecurityManager() == null) {
             System.setSecurityManager(new RMISecurityManager());
@@ -18,15 +28,21 @@ public class ComputePi {
         try {
             String hostname = args[0];
             int port = Integer.parseInt(args[1]);
-            String name = "//" + hostname + ":" + port + "/ComputeEngine";
+            String name = "//" + hostname + ':' + port + "/ComputeEngine";
             Compute comp = (Compute) Naming.lookup(name);
             int numDigits = Integer.parseInt(args[2]);
             Pi task = new Pi( numDigits );
             BigDecimal pi = (BigDecimal) (comp.executeTask( task ));
             System.out.println("Here is Pi computed to "+numDigits+" digits of precision"+pi);
-        } catch (Exception e) {
-            System.err.println("ComputePi exception: " + e.getMessage());
-            e.printStackTrace();
+        } catch (NumberFormatException e) {
+            handleException(e);
+        } catch (NotBoundException e) {
+            handleException(e);
+        } catch (MalformedURLException e) {
+            handleException(e);
+        } catch (RemoteException e) {
+           handleException(e);
         }
-    }    
+
+    }
 }

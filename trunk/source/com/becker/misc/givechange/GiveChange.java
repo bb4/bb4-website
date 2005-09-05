@@ -20,6 +20,9 @@ public final class GiveChange
     private static String[] COINS_NAME = { "pennies", "nickels", "dimes", "quarters"};
     private static int[]    VALUE     = {       1,        5,     10,       25 };
 
+
+    private GiveChange() {};
+
     /**
      * @return a number of cents between 0 and MAX_AMT
      * @throws java.io.IOException
@@ -49,7 +52,7 @@ public final class GiveChange
                     valid = false;
                 }
             } catch  (NumberFormatException nfe)  {
-                System.out.println( "Hey! What kind of number is that?" );
+                System.out.println( "Hey! What kind of number is that? " +nfe.getMessage());
                 valid = false;
             }
 
@@ -62,14 +65,14 @@ public final class GiveChange
      * Displays the amount of change to the user.
      * @param cents  number of cents between 0 and MAX_AMT
      */
-    public static final void showChangeFor(long cents) {
+    public static void showChangeFor(long cents) {
         System.out.println( "Your change is ..." );
         long remainingCents = cents;
         for (int i=COIN_NAME.length-1; i>=0; i--) {
             long num = remainingCents / VALUE[i];
             if (num != 0)  {
                // put an s at the end if there are 0 or >1 coins of this type
-                System.out.println("  "+ Util.formatNumber(num) + " " + (num==1?COIN_NAME[i]:COINS_NAME[i]) );
+                System.out.println("  "+ Util.formatNumber(num) + ' ' + (num==1?COIN_NAME[i]:COINS_NAME[i]) );
                 remainingCents -= num*VALUE[i];  // shorthand for remainingCents = remainingCents num * VALUE[i];
             }
             // or equivalently, you could say

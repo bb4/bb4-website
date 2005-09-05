@@ -7,9 +7,7 @@ import com.becker.game.common.LocaleType;
 
 import javax.swing.*;
 import java.awt.event.*;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
+import java.util.*;
 
 /**
  * This is the application frame wrapper for the game programs.
@@ -34,9 +32,9 @@ public class GameApp implements ActionListener
 
 
     // provide a mapping from games to implementing panel classes
-    private HashMap hmGameClasses_;
+    private Map hmGameClasses_;
     // provide mapping from cutpoints to game.
-    private HashMap hmGames_;
+    private Map hmGames_;
 
     static {
         GameContext.log(3, "GameApp static init." );
@@ -64,6 +62,13 @@ public class GameApp implements ActionListener
     }
 
 
+    private static final String CHECKERS_LABEL = GameContext.getLabel("CHECKERS");
+    private static final String CHESS_LABEL = GameContext.getLabel("CHESS");
+    private static final String PENTE_LABEL = GameContext.getLabel("PENTE");
+    private static final String BLOCKADE_LABEL = GameContext.getLabel("BLOCKADE");
+    private static final String GO_LABEL = GameContext.getLabel("GO");
+    private static final String GALACTIC_LABEL = GameContext.getLabel("GALACTIC");
+    private static final String POKER_LABEL = GameContext.getLabel("POKER");
     /**
      * must do this initialization after we know the locale
      * (in other words it cannot be done statically)
@@ -84,14 +89,6 @@ public class GameApp implements ActionListener
         hmGameClasses_.put("galactic", "com.becker.game.multiplayer.galactic.ui.GalacticPanel");
         hmGameClasses_.put("poker", "com.becker.game.multiplayer.poker.ui.PokerPanel");
 
-        String CHECKERS_LABEL = GameContext.getLabel("CHECKERS");
-        String CHESS_LABEL = GameContext.getLabel("CHESS");
-        String PENTE_LABEL = GameContext.getLabel("PENTE");
-        String BLOCKADE_LABEL = GameContext.getLabel("BLOCKADE");
-        String GO_LABEL = GameContext.getLabel("GO");
-        String GALACTIC_LABEL = GameContext.getLabel("GALACTIC");
-        String POKER_LABEL = GameContext.getLabel("POKER");
-
         hmGames_.put(CHECKERS_LABEL, "checkers");
         hmGames_.put(CHESS_LABEL, "chess");
         hmGames_.put(PENTE_LABEL, "pente");
@@ -107,8 +104,6 @@ public class GameApp implements ActionListener
      */
     private void showGame(String gameName)
     {
-
-
         String className = (String)hmGameClasses_.get(gameName);
         Class gameClass = Util.loadClass(className);
 

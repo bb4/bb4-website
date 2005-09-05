@@ -12,7 +12,7 @@ import java.util.*;
 public class CacheManager implements Cache, Serializable {
     // Serialize the sizing information but not the actual data.
 
-    private transient HashMap ht_ = null;
+    private transient Map entries_ = null;
     // pivot_.next_ is MRU, pivot_.prev_ is LRU
     private transient CacheEntry pivot_ = null;
     private int max_ = 0;
@@ -22,6 +22,7 @@ public class CacheManager implements Cache, Serializable {
     private boolean isEnabled_ = true;
     private boolean isReadOnly_ = false;
     private boolean isSized_ = false;
+    private static final String serialVersionUID = "uidForSerializable";
 
     /**
      * Default constructor.  Create a cache with no limit on the number
@@ -29,7 +30,6 @@ public class CacheManager implements Cache, Serializable {
      */
     public CacheManager() {
         this(0, 0);
-        return;
     }
 
     /**
@@ -41,7 +41,6 @@ public class CacheManager implements Cache, Serializable {
      */
     public CacheManager(int max) {
         this(max, false);
-        return;
     }
 
     /**
@@ -55,7 +54,6 @@ public class CacheManager implements Cache, Serializable {
      */
     public CacheManager(int max, boolean sized) {
         this(max, 0, sized);
-        return;
     }
 
     /**
@@ -68,7 +66,6 @@ public class CacheManager implements Cache, Serializable {
      */
     public CacheManager(int max, int checkSeconds) {
         this(max, checkSeconds, false);
-        return;
     }
 
     /**
@@ -86,7 +83,6 @@ public class CacheManager implements Cache, Serializable {
         max_ = max;
         checkSeconds_ = checkSeconds;
         isSized_ = sized;
-        return;
     }
 
     /**
@@ -98,7 +94,6 @@ public class CacheManager implements Cache, Serializable {
      */
     public void setEnabled(boolean enabled) {
         isEnabled_ = enabled;
-        return;
     }
 
     /**
@@ -108,11 +103,8 @@ public class CacheManager implements Cache, Serializable {
      */
     public synchronized void setMax(int max) {
         // Resize the cache if necessary.
-
         max_ = max;
         resize(null);
-
-        return;
     }
 
     /**
@@ -127,8 +119,6 @@ public class CacheManager implements Cache, Serializable {
         } else {
             checkSeconds_ = checkSeconds;
         }
-
-        return;
     }
 
     /**
@@ -136,17 +126,15 @@ public class CacheManager implements Cache, Serializable {
      */
     public void setReadOnly() {
         isReadOnly_ = true;
-        return;
     }
 
     /**
      * Remove all of my entries.
      */
     public synchronized void clear() {
-        ht_.clear();
+        getEntries().clear();
         pivot_ = new CacheEntry();
         checkExpiration_ = false;
-        return;
     }
 
 
@@ -159,9 +147,9 @@ public class CacheManager implements Cache, Serializable {
      * @return  <B>true</B> if the cache contains the entry, otherwise <B>false</B>
      */
     public synchronized boolean containsKey(Object key) {
-        // Attempt to get the entry, then check whether or not it has expired.
 
-        CacheEntry entry = (CacheEntry) ht_.get(key);
+        // Attempt to get the entry, then check whether or not it has expired.
+        CacheEntry entry = (CacheEntry) getEntries().get(key);
         if (entry == null) {
             return false;
         } else {
@@ -180,11 +168,11 @@ public class CacheManager implements Cache, Serializable {
     public synchronized boolean containsNull(Object key) {
         // Attempt to get the entry, then check whether or not it has expired.
 
-        CacheEntry entry = (CacheEntry) ht_.get(key);
+        CacheEntry entry = (CacheEntry) getEntries().get(key);
         if (entry == null) {
             return false;
         } else {
-            return (checkCacheEntry(entry, true) && entry.value_ == null);
+            return (checkCacheEntry(entry, true) && entry.getValue() == null);
         }
     }
 
@@ -206,8 +194,6 @@ public class CacheManager implements Cache, Serializable {
         } else {
             put(key, object, null);
         }
-
-        return;
     }
 
     /**
@@ -242,7 +228,6 @@ public class CacheManager implements Cache, Serializable {
 
         // Do not allow null keys.  This will cause the hash table and the
         // linked list to get out of synch.
-
         if (key == null) {
             ByteArrayOutputStream bos = new ByteArrayOutputStream(1000);
            (new Exception()).printStackTrace(new PrintWriter(bos, true));
@@ -251,15 +236,14 @@ public class CacheManager implements Cache, Serializable {
         }
 
         // Put the new one in the lookup table.
-
-        CacheEntry entry = null;
+        CacheEntry entry;
         if (expireTime != 0) {
-            entry = new CacheExpireEntry(key, object, expireTime, pivot_, pivot_.next_);
+            entry = new CacheExpireEntry(key, object, expireTime, pivot_, pivot_.getNext());
             checkExpiration_ = true;
         } else {
-            entry = new CacheEntry(key, object, pivot_, pivot_.next_);
+            entry = new CacheEntry(key, object, pivot_, pivot_.getNext());
         }
-        CacheEntry former = (CacheEntry) ht_.put(key, entry);
+        CacheEntry former = (CacheEntry) getEntries().put(key, entry);
 
         // If a former entry existed, remove it from the used list.
 
@@ -268,10 +252,7 @@ public class CacheManager implements Cache, Serializable {
         }
 
         // If the max is reached, remove the least recently used.
-
         resize(object);
-
-        return;
     }
 
     /**
@@ -284,17 +265,16 @@ public class CacheManager implements Cache, Serializable {
     public synchronized Object get(Object key) {
         // Attempt to get the entry, then check whether or not it has expired.
 
-        CacheEntry entry = (CacheEntry) ht_.get(key);
+        CacheEntry entry = (CacheEntry) getEntries().get(key);
         if (entry == null) {
             return null;
         } else {
             if (checkCacheEntry(entry, true)) {
                 // Make the entry the most recently used.
-
                 entry.remove();
-                entry.insert(pivot_, pivot_.next_);
+                entry.insert(pivot_, pivot_.getNext());
 
-                return entry.value_;
+                return entry.getValue();
             } else {
                 return null;
             }
@@ -307,7 +287,7 @@ public class CacheManager implements Cache, Serializable {
      * @return  key for the least recently used cache member
      */
     public synchronized Object getLRUKey() {
-        return pivot_.prev_.key_;
+        return pivot_.getPrevious().getKey();
     }
 
     /**
@@ -320,24 +300,26 @@ public class CacheManager implements Cache, Serializable {
     public synchronized Object remove(Object key) {
         // Attempt to remove the entry, then check whether or not it has expired.
 
-        CacheEntry entry = (CacheEntry) ht_.remove(key);
+        CacheEntry entry = (CacheEntry) getEntries().remove(key);
         if (entry == null) {
             return null;
         } else {
             entry.remove();
-            Object object = checkCacheEntry(entry, false) ? entry.value_ : null;
-            if (ht_.size() == 0) checkExpiration_ = false;
+            Object object = checkCacheEntry(entry, false) ? entry.getValue() : null;
+            if (getEntries().size() == 0) checkExpiration_ = false;
 
             return object;
         }
     }
 
+    private synchronized Map getEntries() {
+        return entries_;
+    }
+
     /**
      * Called prior to destroying a cache.
      */
-    public void destroy() {
-        return;
-    }
+    public void destroy() {}
 
     /**
      * Get the number of entries in the cache.
@@ -345,7 +327,7 @@ public class CacheManager implements Cache, Serializable {
      * @return  the number of cache entries
      */
     public int size() {
-        return ht_.size();
+        return getEntries().size();
     }
 
     /**
@@ -368,6 +350,7 @@ public class CacheManager implements Cache, Serializable {
 
 
     private void resize(Object value) {
+        Map entries = getEntries();
         if (max_ > 0) {
             if (isSized_) {
                 if (value != null) {
@@ -375,9 +358,9 @@ public class CacheManager implements Cache, Serializable {
                     // objects.  Default is to use total object size.
 
                     if (value instanceof String) {
-                        byteSize_ += (((String) value).length() * 2);
+                        byteSize_ += (((String) value).length() << 1);
                     } else if (value instanceof char[]) {
-                        byteSize_ += (((char[]) value).length * 2);
+                        byteSize_ += (((char[]) value).length << 1);
                     } else if (value instanceof byte[]) {
                         byteSize_ += ((byte[]) value).length;
                     } else {
@@ -389,8 +372,8 @@ public class CacheManager implements Cache, Serializable {
                 // longer exceeded.
 
                 while (byteSize_ > max_) {
-                    CacheEntry lru = pivot_.prev_;
-                    ht_.remove(lru.key_);
+                    CacheEntry lru = pivot_.previous_;
+                    entries.remove(lru.key_);
                     lru.remove();
 
                     // Decrement the total cache size.  Special case for simple
@@ -398,9 +381,9 @@ public class CacheManager implements Cache, Serializable {
 
                     Object lruValue = lru.value_;
                     if (lruValue instanceof String) {
-                        byteSize_ -= (((String) lruValue).length() * 2);
+                        byteSize_ -= (((String) lruValue).length() << 1);
                     } else if (lruValue instanceof char[]) {
-                        byteSize_ -= (((char[]) lruValue).length * 2);
+                        byteSize_ -= (((char[]) lruValue).length << 1);
                     } else if (lruValue instanceof byte[]) {
                         byteSize_ -= ((byte[]) lruValue).length;
                     } else {
@@ -411,8 +394,8 @@ public class CacheManager implements Cache, Serializable {
                 // Continue removing objects until the maximum number of
                 // elements is no longer exceeded.
 
-                while (ht_.size() > max_) {
-                    CacheEntry lru = pivot_.prev_;
+                while (entries.size() > max_) {
+                    CacheEntry lru = pivot_.previous_;
 
                     if (lru.key_ == null) {
                         // This should never happen.  Workaround is to
@@ -421,23 +404,19 @@ public class CacheManager implements Cache, Serializable {
                         // at this point.
 
                         CacheEntry current = pivot_.next_;
-                        int lruNextSize = 0;
                         while ((current != null) && (current != pivot_)) {
-                            ++lruNextSize;
-                            current = current.next_;
+                           current = current.next_;
                         }
-                        current = pivot_.prev_;
-                        int lruPrevSize = 0;
+                        current = pivot_.previous_;
                         while ((current != null) && (current != pivot_)) {
-                            ++lruPrevSize;
-                            current = current.prev_;
+                            current = current.previous_;
                         }
 
                         init();
 
                         break;
                     } else {
-                        ht_.remove(lru.key_);
+                        entries.remove(lru.key_);
                         lru.remove();
                     }
                 }
@@ -463,7 +442,7 @@ public class CacheManager implements Cache, Serializable {
         long now = System.currentTimeMillis();
         if (now > date) {
             if (remove) {
-                ht_.remove(entry.key_);
+                getEntries().remove(entry.key_);
                 entry.remove();
             }
             return false;
@@ -473,41 +452,40 @@ public class CacheManager implements Cache, Serializable {
     }
 
     public synchronized Iterator iterator() {
-        return ht_.keySet().iterator();
+        return getEntries().keySet().iterator();
     }
 
     public synchronized String getStats() {
-        String stats = "size" + ht_.size() +"\n";
+        String stats = "size" + getEntries().size() +'\n';
         stats += "maxSize"+ max_;
         return stats;
     }
 
-    private void readObject(java.io.ObjectInputStream in)
+    private void readObject(ObjectInputStream in)
         throws IOException, ClassNotFoundException {
         init();
         in.defaultReadObject();
-        return;
     }
 
     private synchronized void init() {
-        ht_ = new HashMap();
+        entries_ = new HashMap();
         pivot_ = new CacheEntry();
-        return;
     }
 
     /**
      * Creates a shallow copy of the cache.
      */
     public synchronized Object clone() throws CloneNotSupportedException {
+        super.clone();
         CacheManager cache = new CacheManager(max_, checkSeconds_, isSized_);
 
         // Put entries in reverse order so LRU order is right
-        CacheEntry entry_ = pivot_.prev_;
-        while (entry_ != pivot_) {
-            if (entry_.getType() == CacheExpireEntry.TYPE_LRU_EXPIRE) {
-                cache.put(entry_.key_, entry_.value_, ((CacheExpireEntry)entry_).expire_);
+        CacheEntry entry = pivot_.getPrevious();
+        while (entry != pivot_) {
+            if (entry.getType() == CacheExpireEntry.TYPE_LRU_EXPIRE) {
+                cache.put(entry.getKey(), entry.getValue(), ((CacheExpireEntry)entry).getExpiration());
             } else {
-                cache.put(entry_.key_, entry_.value_);
+                cache.put(entry.getKey(), entry.getValue());
             }
         }
         if (isReadOnly_) cache.setReadOnly();

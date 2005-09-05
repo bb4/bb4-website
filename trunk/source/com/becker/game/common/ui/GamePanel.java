@@ -1,19 +1,17 @@
 package com.becker.game.common.ui;
 
 import com.becker.game.common.*;
-import com.becker.sound.SpeechSynthesizer;
-import com.becker.sound.MusicMaker;
+import com.becker.java2d.*;
 import com.becker.ui.*;
-import com.becker.java2d.ImageUtil;
+import sun.applet.*;
 
 import javax.swing.*;
+import java.applet.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.net.URL;
-import java.applet.AudioClip;
-import java.io.File;
+import java.awt.event.*;
+import java.awt.image.*;
+import java.io.*;
+import java.net.*;
 
 /**
  * This is an abstract base class for a Game UI.
@@ -85,11 +83,7 @@ public abstract class GamePanel extends TexturedPanel
     protected void commonInit()
     {
         enableEvents( AWTEvent.WINDOW_EVENT_MASK );
-        try {
-            initGui();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        initGui();
     }
 
     public void openGame() {
@@ -189,7 +183,7 @@ public abstract class GamePanel extends TexturedPanel
 
             // use when sound card available
             URL url = GUIUtil.getURL("com/becker/sound/play_game_voice.wav");
-            AudioClip clip = new sun.applet.AppletAudioClip(url);
+            AudioClip clip = new AppletAudioClip(url);
             if (clip != null) {
                 clip.play();
             }
@@ -337,7 +331,7 @@ public abstract class GamePanel extends TexturedPanel
         }
         if ( source == toolBar_.getOptionsButton() ) {
             //optionsDialog_.setLocationRelativeTo( this );
-            boolean canceled = optionsDialog_.showDialog();
+            optionsDialog_.showDialog();
         }
         else if ( source == toolBar_.getHelpButton() )
             showHelpDialog();

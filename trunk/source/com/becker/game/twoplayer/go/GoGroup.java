@@ -55,7 +55,9 @@ public final class GoGroup extends GoSet
 
     // this is the cached number of liberties
     // updates whenever something has changed
-    private int cachedNumLiberties_ = 0;
+    private Set cachedLiberties_;
+    //private Set cachedStonesInGroup_;
+    private int cachedNumStonesInGroup_;
     private Set cachedEnemyNbrGroups_ = new HashSet();
 
 
@@ -150,35 +152,6 @@ public final class GoGroup extends GoSet
     }
 
 
-    /**
-     * get the number of liberties that the group has.
-     * @return the number of liberties that the group has
-     * @param board
-     */
-    public Set getLiberties(GoBoard board)
-    {
-        Set liberties = new HashSet();
-        for (Object str : members_) {
-            GoString string = (GoString) str;
-            liberties.addAll(string.getLiberties(board));
-        }
-        return liberties;
-    }
-
-    /**
-     * calculate the number of stones in the group
-     * @return number of stones in the group
-     */
-    public int getNumStones()
-    {
-        int numStones = 0;
-        Iterator it = members_.iterator();
-        while ( it.hasNext() ) {
-            GoString str = (GoString) it.next();
-            numStones += str.size();
-        }
-        return numStones;
-    }
 
     /**
      * merge another group into this one.
@@ -250,11 +223,50 @@ public final class GoGroup extends GoSet
 
 
     /**
+     * get the number of liberties that the group has.
+     * @return the number of liberties that the group has
+     * @param board
+     */
+    public Set getLiberties(GoBoard board)
+    {
+        if (!changed_) {
+             return cachedLiberties_;
+        }
+        Set liberties = new HashSet();
+        for (Object str : members_) {
+            GoString string = (GoString) str;
+            liberties.addAll(string.getLiberties(board));
+        }
+        cachedLiberties_ = liberties;
+        return liberties;
+    }
+
+    /**
+     * calculate the number of stones in the group
+     * @return number of stones in the group
+     */
+    public int getNumStones()
+    {
+
+        if (!changed_) {
+            return cachedNumStonesInGroup_;
+        }
+        int numStones = 0;
+        Iterator it = members_.iterator();
+        while ( it.hasNext() ) {
+            GoString str = (GoString) it.next();
+            numStones += str.size();
+        }
+        cachedNumStonesInGroup_ = numStones;
+        return numStones;
+    }
+
+    /**
      * @return a list of the stones in this group
      */
-    public List getStones()
+    public Set getStones()
     {
-        List stones = new ArrayList(10);
+        Set stones = new HashSet(10);
         Iterator it = members_.iterator();
         while ( it.hasNext() ) {
             GoString string = (GoString) it.next();
@@ -469,12 +481,12 @@ public final class GoGroup extends GoSet
      */
     float calculateAbsoluteHealth( GoBoard board, GoProfiler profiler )
     {
-        // if nothing has changed about the group, then we can return the cached value
-        int numLiberties = getLiberties(board).size();
-        if ( !changed_ && cachedNumLiberties_ == numLiberties)
+
+        if ( !changed_ )
             return absoluteHealth_;
 
-        cachedNumLiberties_ = numLiberties;
+        // if nothing has changed about the group, then we can return the cached value
+        int numLiberties = getLiberties(board).size();
 
         // we multiply by a +/- sign depending on the side
         float side = ownedByPlayer1_? 1.0f : -1.0f;
@@ -487,7 +499,6 @@ public final class GoGroup extends GoSet
         updateEyes( board );  // expensive
         profiler.stop(GoProfiler.UPDATE_EYES);
 
-        changed_ = false;  // cached until something changes
 
         numEyes = calcNumEyes();
 
@@ -498,10 +509,13 @@ public final class GoGroup extends GoSet
         // health += (side * .015 * numFalseEyes);
 
         absoluteHealth_ = health;
-        if (Math.abs(absoluteHealth_)>1.0) {
+        if (Math.abs(absoluteHealth_) > 1.0) {
             GameContext.log(0,  "Warning: health exceeded 1.0: " +" health="+health+" numEyes="+numEyes);
             absoluteHealth_ = side;
         }
+
+        changed_ = false;  // cached until something changes
+
 
         //if (numLiberties<=1)
         //    GameContext.log(2, "health for "+this+" = health="+health+"  + health="+health);
@@ -693,7 +707,7 @@ public final class GoGroup extends GoSet
 
         // the default if there is no weakest group.
         relativeHealth_ = absoluteHealth_;
-        List groupStones = getStones();
+        Set groupStones = getStones();
 
         profiler.start(GoProfiler.GET_ENEMY_GROUPS_NBRS);
         cachedEnemyNbrGroups_ = getEnemyGroupNeighbors(board, groupStones);
@@ -737,7 +751,7 @@ public final class GoGroup extends GoSet
                     (float) (Math.min(1.0, Math.max(-1.0, absoluteHealth_ + diff * proportionWithEnemyNbrs)));
         }
 
-        GoBoardUtil.unvisitPositionsInList(groupStones);
+        GoBoardUtil.unvisitPositions(groupStones);
 
         return relativeHealth_;
     }
@@ -753,7 +767,7 @@ public final class GoGroup extends GoSet
      * @param board
      * @return a HashSet of the groups that are enemies of this group
      */
-    private Set getEnemyGroupNeighbors(GoBoard board, List groupStones)
+    private Set getEnemyGroupNeighbors(GoBoard board, Set groupStones)
     {
         Set enemyNbrs = new HashSet();
 
@@ -897,7 +911,7 @@ public final class GoGroup extends GoSet
         //calculateHealth();
         sb.append( "abs health=" + Util.formatNumber(absoluteHealth_) );
         sb.append( " rel health=" + Util.formatNumber(relativeHealth_));
-        sb.append( " group Liberties=" + cachedNumLiberties_ + '\n' );
+        sb.append( " group Liberties=" + (cachedLiberties_==null? 0:cachedLiberties_.size()) + '\n' );
         return sb.toString();
     }
 

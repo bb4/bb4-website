@@ -9,5 +9,5 @@ package com.becker.common;
 
 public interface AssertHandler
 {
-    public void assertFailed( RuntimeException rte );
+    void assertFailed( RuntimeException rte );
 }

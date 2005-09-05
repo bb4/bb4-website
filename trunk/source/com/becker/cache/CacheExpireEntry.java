@@ -9,20 +9,19 @@ class CacheExpireEntry extends CacheEntry {
     long expire_ = -1;
 
     CacheExpireEntry() {
-        super();
-        return;
     }
 
     CacheExpireEntry(long e) {
-        super();
         expire_ = e;
-        return;
+    }
+
+    long getExpiration() {
+       return expire_; 
     }
 
     CacheExpireEntry(Object k, Object v, long e, CacheEntry before, CacheEntry after) {
         super(k, v, before, after);
         expire_ = e;
-        return;
     }
 
     int getType() {
