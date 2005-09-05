@@ -26,14 +26,14 @@ public class GameToolBar extends TexturedToolBar {
 
     protected static final Dimension MAX_BUTTON_SIZE = new Dimension( 100, 24 );
 
-    private String dir = CORE_IMAGE_PATH;
-    private ImageIcon newGameImage = GUIUtil.getIcon(dir+"newGame.gif");
-    private ImageIcon helpImage = GUIUtil.getIcon(dir+"help.gif");
-    private ImageIcon undoImage = GUIUtil.getIcon(dir+"undo_on.gif");
-    private ImageIcon redoImage = GUIUtil.getIcon(dir+"redo_on.gif");
-    private ImageIcon undoImageDisabled = GUIUtil.getIcon(dir+"undo_off.gif");
-    private ImageIcon redoImageDisabled = GUIUtil.getIcon(dir+"redo_off.gif");
-    private ImageIcon optionsImage = GUIUtil.getIcon(dir+"iconDesktop.gif");
+    private static final String DIR = CORE_IMAGE_PATH;
+    private static final ImageIcon newGameImage = GUIUtil.getIcon(DIR+"newGame.gif");
+    private static final ImageIcon helpImage = GUIUtil.getIcon(DIR+"help.gif");
+    private static final ImageIcon undoImage = GUIUtil.getIcon(DIR+"undo_on.gif");
+    private static final ImageIcon redoImage = GUIUtil.getIcon(DIR+"redo_on.gif");
+    private static final ImageIcon undoImageDisabled = GUIUtil.getIcon(DIR+"undo_off.gif");
+    private static final ImageIcon redoImageDisabled = GUIUtil.getIcon(DIR+"redo_off.gif");
+    private static final ImageIcon optionsImage = GUIUtil.getIcon(DIR+"iconDesktop.gif");
 
     // the thing that processes the toolbar button presses.
     private ActionListener listener_;

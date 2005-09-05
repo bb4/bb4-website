@@ -453,7 +453,7 @@ public final class GoBoard extends TwoPlayerBoard
             }
         }
         if ( returnToUnvisitedState )
-            GoBoardUtil.unvisitPositionsInList( stones );
+            GoBoardUtil.unvisitPositions( stones );
         // GoBoardUtil.confirmNoDupes( stone, stones );
         profiler_.stop(GoProfiler.FIND_STRINGS);
 
@@ -806,8 +806,8 @@ public final class GoBoard extends TwoPlayerBoard
             }
         }
         if ( returnToUnvisitedState ) {
-            GoBoardUtil.unvisitPositionsInList( stones );
-            if (GameContext.getDebugMode()>1)
+            GoBoardUtil.unvisitPositions( stones );
+            if (GameContext.getDebugMode() > 1)
                 GoBoardUtil.confirmAllUnvisited(this);
         }
         profiler_.stop(GoProfiler.FIND_GROUPS);

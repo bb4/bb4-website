@@ -28,7 +28,7 @@ class GalacticOptionsDialog extends GameOptionsDialog implements ActionListener,
 
 
     // constructor
-    public GalacticOptionsDialog( JFrame parent, GameController controller )
+    GalacticOptionsDialog( JFrame parent, GameController controller )
     {
         super( parent, controller);
     }
@@ -102,13 +102,13 @@ class GalacticOptionsDialog extends GameOptionsDialog implements ActionListener,
             return;
         }
 
-        c.setNumPlanets(numPlanets.intValue());
+        c.setNumPlanets(numPlanets);
 
         Integer planetProductionRate = new Integer(planetProductionRate_.getText());
-        c.setPlanetProductionRate(planetProductionRate.intValue());
+        c.setPlanetProductionRate(planetProductionRate);
 
         Integer maxYearsToPlay = new Integer(maxYearsToPlay_.getText());
-        c.setMaxYearsToPlay(maxYearsToPlay.intValue());
+        c.setMaxYearsToPlay(maxYearsToPlay);
 
         c.setNeutralsBuild(neutralsBuild_.isSelected());
 

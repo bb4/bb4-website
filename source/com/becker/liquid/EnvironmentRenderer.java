@@ -16,9 +16,9 @@ public final class EnvironmentRenderer
     private static final Color GRID_COLOR = new Color( 20, 20, 20, 15 );
     private static final Color PARTICLE_COLOR = new Color( 120, 0, 30, 80 );
     private static final Color VECTOR_COLOR = new Color( 205, 90, 25, 40 );
-    private static final Color WALL_COLOR = new Color( 100, 210, 170, 150 );
+    //private static final Color WALL_COLOR = new Color( 100, 210, 170, 150 );
     private static final Color TEXT_COLOR = new Color( 10, 10, 170, 200 );
-    private static final float PRESSURE_COL_OPACITY = .01f;
+    //private static final float PRESSURE_COL_OPACITY = 0.01f;
     private static final double RENDER_RAT = 20;
     private static final int WALL_LINE_WIDTH = (int) (RENDER_RAT / 5.0) + 1;
     private static final int OFFSET = 10;
@@ -34,6 +34,8 @@ public final class EnvironmentRenderer
     private static double[] a_ = new double[2]; // temp point var
 
    private static final Font BASE_FONT = new Font( "Sans-serif", Font.PLAIN, 12 );
+
+   private EnvironmentRenderer() {};
 
     /**
      * Render the Environment on the screen.
@@ -80,22 +82,8 @@ public final class EnvironmentRenderer
         // outer boundary
         g.drawRect( OFFSET, OFFSET, (int) (env.getXDim() * rat), (int) (env.getYDim() * rat) );
 
-        g.setColor( PARTICLE_COLOR );
-        // draw the ---particles--- of liquid
-        Iterator it = env.getParticles().iterator();
-        while ( it.hasNext() ) {
-            Particle p = (Particle) it.next();
-            p.get( a_ );
-            //Cell c = p.getCell();
-            //int[] pos = c.getPos();
-            //if (pos[0] == 2  &&  pos[1] == 2)
-            int comp = (int) (256.0 * p.getAge() / 10.0);
-            comp = (comp > 255) ? 255 : comp;
-            g.setColor( new Color( comp, 100, 255 - comp, 60 ) );
-            //System.out.println("pos = "+a_[0]+", "+a_[0]);
-            g.fillOval( (int) (rat * a_[0] + OFFSET), (int) (rat * a_[1] + OFFSET), PARTICLE_SIZE, PARTICLE_SIZE );
-            g.setColor( PARTICLE_COLOR );
-        }
+        drawParticles(env, rat, g);
+
 
         // draw text representing internal state for debug purposes.
         if ( LiquidEnvironment.LOG_LEVEL >= 2 ) {
@@ -136,6 +124,26 @@ public final class EnvironmentRenderer
 
         double duration = (System.currentTimeMillis() - time) / 100.0;
         env.log( 1, "time to render:  (" + duration + ") " );
+    }
+
+
+    private static void drawParticles(LiquidEnvironment env, double rat, Graphics2D g) {
+        g.setColor( PARTICLE_COLOR );
+        // draw the ---particles--- of liquid
+        Iterator it = env.getParticles().iterator();
+        while ( it.hasNext() ) {
+            Particle p = (Particle) it.next();
+            p.get( a_ );
+            //Cell c = p.getCell();
+            //int[] pos = c.getPos();
+            //if (pos[0] == 2  &&  pos[1] == 2)
+            int comp = (int) (256.0 * p.getAge() / 10.0);
+            comp = (comp > 255) ? 255 : comp;
+            g.setColor( new Color( comp, 100, 255 - comp, 60 ) );
+            //System.out.println("pos = "+a_[0]+", "+a_[0]);
+            g.fillOval( (int) (rat * a_[0] + OFFSET), (int) (rat * a_[1] + OFFSET), PARTICLE_SIZE, PARTICLE_SIZE );
+            g.setColor( PARTICLE_COLOR );
+        }
     }
 
     private static void drawVectors(LiquidEnvironment env, Graphics2D g, double rat )

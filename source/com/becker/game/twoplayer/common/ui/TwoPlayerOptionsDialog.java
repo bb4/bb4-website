@@ -229,7 +229,7 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog implements ActionL
     }
 
 
-    class UpperBoundKeyListener extends KeyAdapter
+    private class UpperBoundKeyListener extends KeyAdapter
     {
         JTextField field_ = null;
         JLabel treeBound_ = null;
@@ -247,7 +247,7 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog implements ActionL
             if ( field_.getText().length() > 0 ) {
                 Integer level = new Integer( lookAheadField_.getText() );
                 Integer best = new Integer( bestPercentageField_.getText() );
-                treeBound_.setText( "" + calcTreeUpperBound( level.intValue(), best.intValue() ) );
+                treeBound_.setText( "" + calcTreeUpperBound( level, best ) );
             }
         }
     }

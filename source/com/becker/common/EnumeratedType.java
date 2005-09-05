@@ -1,7 +1,6 @@
 package com.becker.common;
 
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * <code>EnumeratedType</code> is a helper class for declaring a set of
@@ -47,8 +46,8 @@ public class EnumeratedType implements Cloneable
      */
     public EnumeratedType( Value[] values )
     {
-        for ( int i = 0; i < values.length; i++ ) {
-            register( values[i] );
+        for (final Value newVar : values) {
+            register(newVar);
         }
         makeImmutable();
     }
@@ -125,7 +124,7 @@ public class EnumeratedType implements Cloneable
         public final String description_;
 
         /**
-         * @pre name != null
+         * pre: name != null
          */
         public BasicValue( String name, int ordinal, String description )
         {
@@ -183,7 +182,7 @@ public class EnumeratedType implements Cloneable
          *   <code>value.name_.equals(s)</code> rather than
          *   <code>value.equals(s)</code>, didn't you?
          */
-        public boolean equals( String s )
+        public boolean equals( Object s )
         {
             return super.equals( s );
         }
@@ -194,7 +193,7 @@ public class EnumeratedType implements Cloneable
         }
     }
 
-    protected Object clone()
+    protected Object clone()  throws CloneNotSupportedException
     {
         EnumeratedType clone = null;
         try {
@@ -211,7 +210,7 @@ public class EnumeratedType implements Cloneable
      * Creates a mutable enumeration from an existing enumeration, which may
      * already be immutable.
      */
-    public EnumeratedType getMutableClone()
+    public EnumeratedType getMutableClone() throws CloneNotSupportedException
     {
         return (EnumeratedType) clone();
     }
@@ -219,15 +218,15 @@ public class EnumeratedType implements Cloneable
     /**
      * Associates a symbolic name with an ordinal value.
      *
-     * @pre !isImmutable()
-     * @pre value.getName() != null
+     * pre: !isImmutable()
+     * pre: value.getName() != null
      */
     public void register( Value value )
     {
         assert !isImmutable(): "!isImmutable()" ;
         assert (value.getName() != null) : "value.getName() != null";
         Value old = (Value) valuesByName_.put( value.getName(), value );
-        assert (old==null) : "Enumeration already contained a value '" + old.getName() + "'";
+        assert (old==null) : "Enumeration already contained a value '" + old.getName() + '\'';
 
         min_ = Math.min( min_, value.getOrdinal() );
         max_ = Math.max( max_, value.getOrdinal() );
@@ -239,11 +238,10 @@ public class EnumeratedType implements Cloneable
     public void makeImmutable()
     {
         ordinalToValueMap_ = new Value[1 + max_ - min_];
-        for ( Iterator values = valuesByName_.values().iterator();
-              values.hasNext(); ) {
-            Value value = (Value) values.next();
+        for (final Object newVar : valuesByName_.values()) {
+            Value value = (Value) newVar;
             final int index = value.getOrdinal() - min_;
-            assert (ordinalToValueMap_[index]==null): "Enumeration has more than one value with ordinal " + value.getOrdinal();
+            assert (ordinalToValueMap_[index] == null): "Enumeration has more than one value with ordinal " + value.getOrdinal();
             ordinalToValueMap_[index] = value;
         }
     }
@@ -256,7 +254,7 @@ public class EnumeratedType implements Cloneable
     /**
      * Returns the smallest ordinal defined by this enumeration.
      */
-    public final int getMin_()
+    public final int getMin()
     {
         return min_;
     }
@@ -264,7 +262,7 @@ public class EnumeratedType implements Cloneable
     /**
      * Returns the largest ordinal defined by this enumeration.
      */
-    public final int getMax_()
+    public final int getMax()
     {
         return max_;
     }
@@ -290,7 +288,7 @@ public class EnumeratedType implements Cloneable
      * Returns the name associated with an ordinal; the return value
      * is null if the ordinal is not a member of the enumeration.
      *
-     * @pre isImmutable()
+     * pre: isImmutable()
      */
     public final String getName( int ordinal )
     {
@@ -307,7 +305,7 @@ public class EnumeratedType implements Cloneable
      * Returns the description associated with an ordinal; the return value
      * is null if the ordinal is not a member of the enumeration.
      *
-     * @pre isImmutable()
+     * pre: isImmutable()
      */
     public final String getDescription( int ordinal )
     {
@@ -334,7 +332,7 @@ public class EnumeratedType implements Cloneable
      * Returns the value associated with an ordinal; the return value
      * is null if the ordinal is not a member of the enumeration.
      *
-     * @pre isImmutable()
+     * pre: isImmutable()
      */
     public Value getValue( int ordinal )
     {
@@ -351,14 +349,12 @@ public class EnumeratedType implements Cloneable
      * @param finf Whether to fail if no value has this name
      * @throws Error if the name is not a member of the enumeration <em>and</em>
      *   <code>finf</code> is <code>true</code>
-     * @post !(finf && return == null)
+     * post: !(finf && return == null)
      */
     public Value getValue( String name, boolean finf )
     {
         final Value value = (Value) valuesByName_.get( name );
-        if ( value == null && finf ) {
-            throw new Error( "Unknown enum name:  " + name );
-        }
+        assert !( value == null && finf ) :  "Unknown enum name:  " + name ;
         return value;
     }
 
@@ -377,7 +373,7 @@ public class EnumeratedType implements Cloneable
     public void badValue( int ordinal )
     {
         assert false: "bad value " + ordinal + " (" +
-                getName( ordinal ) + ") for enumeration '" + getClass().getName() + "'" ;
+                getName( ordinal ) + ") for enumeration '" + getClass().getName() + '\'' ;
     }
 
     /**
@@ -392,7 +388,7 @@ public class EnumeratedType implements Cloneable
 
     private class MyBasicValue extends BasicValue
     {
-        public MyBasicValue( String name, int ordinal, String description )
+        private MyBasicValue( String name, int ordinal, String description )
         {
             super( name, ordinal, description );
         }

@@ -230,7 +230,7 @@ public final class GoMove extends TwoPlayerMove
 
                 oldGroup.remove(str);
                 GoGroup newGroup = new GoGroup(str);
-                GameContext.log(3, "after splitting we have: "+newGroup);
+                //GameContext.log(3, "after splitting we have: "+newGroup);
                 assert (!newGroup.getMembers().isEmpty()) : "The group we are trying to add is empty";
                 board.getGroups().add(newGroup);
             }
@@ -497,8 +497,8 @@ public final class GoMove extends TwoPlayerMove
         if ( getCaptures() != null ) {
             removeCapturesOnBoard( board );
             updateAfterRemovingCaptures( board );
-            GameContext.log( 2, "GoBoard: makeMove: " + this + "  groups after removing captures" );
-            GoBoardUtil.debugPrintGroups( 2, "Groups after removing captures", true, true, board.getGroups());
+            //GameContext.log( 2, "GoBoard: makeMove: " + this + "  groups after removing captures" );
+            //GoBoardUtil.debugPrintGroups( 2, "Groups after removing captures", true, true, board.getGroups());
         }
     }
 
@@ -790,7 +790,7 @@ public final class GoMove extends TwoPlayerMove
             }
             else {
                 group.addMember( string, board );
-                GameContext.log( 2, "GoMove: restoring ----------------" + string );
+                //GameContext.log( 2, "GoMove: restoring ----------------" + string );
             }
             string.unvisit();
         }
@@ -850,7 +850,7 @@ public final class GoMove extends TwoPlayerMove
         // now replace the bigEnemyGroup (and secondaryEnemyGroup if it exists)
         // by the potentially disparate smaller ones.
         List listsToUnvisit = new ArrayList();
-        List gStones = bigEnemyGroup.getStones();
+        Set gStones = bigEnemyGroup.getStones();
 
         board.getGroups().remove( bigEnemyGroup );
         if (secondaryEnemyGroup != null) {
@@ -873,7 +873,7 @@ public final class GoMove extends TwoPlayerMove
         Iterator it = listsToUnvisit.iterator();
         while ( it.hasNext() ) {
             List list = (List) it.next();
-            GoBoardUtil.unvisitPositionsInList( list );
+            GoBoardUtil.unvisitPositions( list );
             GoGroup group = new GoGroup( list );
             if (GameContext.getDebugMode() > 1) {
                 GoBoardUtil.confirmStonesInOneGroup(group, board.getGroups());

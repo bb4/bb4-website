@@ -1,16 +1,13 @@
 package com.becker.game.twoplayer.go.test;
 
-import com.becker.game.common.GameContext;
-import com.becker.game.twoplayer.common.search.SearchStrategy;
-import com.becker.game.twoplayer.common.TwoPlayerOptions;
+import com.becker.game.common.*;
+import com.becker.game.twoplayer.common.*;
+import com.becker.game.twoplayer.common.search.*;
 import com.becker.game.twoplayer.go.*;
-import junit.framework.Assert;
-import junit.framework.TestCase;
+import junit.framework.*;
 
-import java.io.File;
-import java.io.FilenameFilter;
-import java.util.List;
-import java.util.Set;
+import java.io.*;
+import java.util.*;
 
 /**
  * @author Barry Becker
@@ -33,7 +30,8 @@ public class GoTestCase extends TestCase {
     /**
      * common initialization for all go test cases.
      */
-    protected void setUp() {
+    protected void setUp() throws Exception {
+        super.setUp();
         // this will load the resources for the specified game.
         GameContext.loadGameResources("go", "com.becker.game.twoplayer.go.ui.GoPanel");
         GameContext.setDebugMode(0);
@@ -98,7 +96,8 @@ public class GoTestCase extends TestCase {
         restore(problemFile);
 
         // must check the worth of the board once to update the scoreContributions fo empty spaces.
-        List moves = controller_.getMoveList();
+        //List moves =
+        controller_.getMoveList();
         //double w = controller_.worth((GoMove)moves.get(moves.size()-3), controller_.getDefaultWeights(), true); // need?
         controller_.updateLifeAndDeath();   // this updates the groups and territory as well.
     }
@@ -116,7 +115,7 @@ public class GoTestCase extends TestCase {
 
         for (Object g : groups) {
             GoGroup group = (GoGroup)g;
-            if (((GoBoardPosition)group.getStones().get(0)).getPiece().isOwnedByPlayer1() == black) {
+            if (((GoBoardPosition)group.getStones().iterator().next()).getPiece().isOwnedByPlayer1() == black) {
                 if (biggestGroup == null || group.getNumStones() > biggestGroup.getNumStones()) {
                     biggestGroup = group;
                 }
@@ -131,7 +130,8 @@ public class GoTestCase extends TestCase {
     }
 
 
-    protected void tearDown() {
+    protected void tearDown() throws Exception {
+        super.tearDown();
     }
 
 
@@ -139,7 +139,7 @@ public class GoTestCase extends TestCase {
 
         private String pattern_;
 
-        public MyFileFilter(String pattern) {
+        private MyFileFilter(String pattern) {
             pattern_ = pattern;
         }
 

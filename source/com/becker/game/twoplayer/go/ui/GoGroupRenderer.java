@@ -43,12 +43,12 @@ final class GoGroupRenderer
     /**
      * accumulate an area geometry that can be rendered to show the group border.
      */
-    private static Area calcGroupBorder( List groupStones, float cellSize, GoBoard board )
+    private static Area calcGroupBorder( Set groupStones, float cellSize, GoBoard board )
     {
         if (groupStones == null || groupStones.isEmpty())
           return null;  // nothing to draw an area for.
 
-        GoBoardPosition firstStone = (GoBoardPosition) groupStones.get( 0 );
+        GoBoardPosition firstStone = (GoBoardPosition) groupStones.iterator().next();
 
         if ( groupStones.size() == 1 ) {
             float margin = TwoPlayerBoardViewer.BOARD_MARGIN;
@@ -86,7 +86,7 @@ final class GoGroupRenderer
             }
         }
         // mark all the stones in the group unvisited again.
-        GoBoardUtil.unvisitPositionsInList( visitedSet );
+        GoBoardUtil.unvisitPositions( visitedSet );
         return area;
     }
 

@@ -8,36 +8,49 @@ class CacheEntry {
     static final int TYPE_LRU = 1;
 
     CacheEntry next_;
-    CacheEntry prev_;
+    CacheEntry previous_;
     Object key_;
     Object value_;
 
     CacheEntry() {
-        next_ = prev_ = this;
-        return;
+        next_ = this;
+        previous_ = this;
     }
 
     CacheEntry(Object k, Object v, CacheEntry before, CacheEntry after) {
         key_ = k;
         value_ = v;
         insert(before, after);
-        return;
+    }
+
+    CacheEntry getNext() {
+        return next_;
+    }
+
+    CacheEntry getPrevious() {
+        return previous_;
+    }
+
+    Object getKey() {
+        return key_;
+    }
+
+    Object getValue() {
+        return value_;
     }
 
     final void remove() {
-        next_.prev_ = prev_;
-        prev_.next_ = next_;
-        prev_ = null;
+        next_.previous_ = previous_;
+        previous_.next_ = next_;
+        previous_ = null;
         next_ = null;
-        return;
     }
 
     final void insert(CacheEntry before, CacheEntry after) {
         before.next_ = this;
-        prev_ = before;
+        previous_ = before;
         next_ = after;
-        after.prev_ = this;
-        return;
+        after.previous_ = this;
     }
 
     int getType() {

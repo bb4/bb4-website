@@ -11,5 +11,5 @@ import java.util.EventListener;
  */
 public interface GameChangedListener extends EventListener
 {
-    public void gameChanged( GameChangedEvent evt );
+    void gameChanged( GameChangedEvent evt );
 }

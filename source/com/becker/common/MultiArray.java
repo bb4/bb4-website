@@ -157,7 +157,7 @@ public class MultiArray
         for ( int i = 0; i < numDims_; i++ ) {
             key.append( Integer.toString( index[i] ) );
             if ( i < numDims_ - 1 )
-                key.append( "," );
+                key.append( ',' );
         }
         return key.toString();
     }

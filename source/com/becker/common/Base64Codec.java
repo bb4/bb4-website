@@ -1,16 +1,10 @@
 package com.becker.common;
 
-import sun.misc.BASE64Encoder;
-import sun.misc.BASE64Decoder;
+import sun.misc.*;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ByteArrayInputStream;
-import java.io.InputStreamReader;
-import java.util.zip.Deflater;
-import java.util.zip.DeflaterOutputStream;
-import java.util.zip.Inflater;
-import java.util.zip.InflaterInputStream;
+import java.io.*;
+import java.util.zip.*;
+import static com.becker.common.EncodingConstants.*;
 
 /**
  * Utility methods for Base64 compression and decompression.
@@ -41,13 +35,16 @@ public final class Base64Codec {
         DeflaterOutputStream oStream = new DeflaterOutputStream( byteOut, deflater );
 
         try {
-            oStream.write( data.getBytes( EncodingConstants.CONVERTER_UTF8 ) );
+            oStream.write( data.getBytes( CONVERTER_UTF8 ) );
             oStream.flush();
             oStream.close();
+        } catch (UnsupportedEncodingException e) {
+            System.out.println( "Unsupported encoding exceptin :" + e.getMessage() );
         } catch (IOException e) {
             System.out.println( "io error :" + e.getMessage() );
             e.printStackTrace();
         }
+
 
         return charEncoder_.encode( byteOut.toByteArray() );
     }
@@ -75,7 +72,7 @@ public final class Base64Codec {
         StringBuffer sBuf = new StringBuffer();
         try {
             InputStreamReader iReader =
-                    new InputStreamReader( iStream, EncodingConstants.CONVERTER_UTF8 );
+                    new InputStreamReader( iStream, CONVERTER_UTF8 );
             while ( true ) {
                 int numRead = iReader.read( cBuffer );
                 if ( numRead == -1 ) {
@@ -83,10 +80,13 @@ public final class Base64Codec {
                 }
                 sBuf.append( cBuffer, 0, numRead );
             }
+        } catch (UnsupportedEncodingException e) {
+            System.out.println( "Unsupported encoding exceptin :" + e.getMessage() );
         } catch (IOException e) {
-            System.out.println( "IO error:" + e.getMessage() );
+            System.out.println( "io error :" + e.getMessage() );
             e.printStackTrace();
         }
+
         String uncompressedString = sBuf.toString();
         return uncompressedString;
     }

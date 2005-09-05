@@ -5,7 +5,7 @@ package com.becker.common;
  * Worker is an abstract class that you subclass to
  * perform (usually gui related) work in a dedicated thread.  For
  * instructions on and examples of using this class, see:
- * 
+ *
  * http://java.sun.com/docs/books/tutorial/uiswing/misc/threads.html
  *
  * You must invoke start() on the Worker after
@@ -18,38 +18,40 @@ package com.becker.common;
  *   -Barry
  */
 public abstract class Worker {
-    private Object returnValue = null;  // see getValue(), setValue()
+    private Object returnValue_ = null;  // see getValue(), setValue()
 
-    /** 
+    private ThreadVar threadVar_;
+
+    /**
      * Class to maintain reference to current worker thread
      * under separate synchronization control.
      */
     private static class ThreadVar {
-        private Thread thread;
-        ThreadVar(Thread t) { thread = t; }
-        synchronized Thread get() { return thread; }
-        synchronized void clear() { thread = null; }
+        private Thread thread_;
+        ThreadVar(Thread t) { thread_ = t; }
+        synchronized Thread get() { return thread_; }
+        synchronized void clear() { thread_ = null; }
     }
 
-    private ThreadVar threadVar;
 
-    /** 
-     * Get the value produced by the worker thread, or null if it 
+
+    /**
+     * Get the value produced by the worker thread, or null if it
      * hasn't been constructed yet.
      */
     protected synchronized Object getValue() {
-        return returnValue;
+        return returnValue_;
     }
 
-    /** 
-     * Set the value produced by worker thread 
+    /**
+     * Set the value produced by worker thread
      */
     private synchronized void setValue(Object x) {
-        returnValue = x;
+        returnValue_ = x;
     }
 
-    /** 
-     * Compute the value to be returned by the <code>get</code> method. 
+    /**
+     * Compute the value to be returned by the <code>get</code> method.
      */
     public abstract Object construct();
 
@@ -65,23 +67,23 @@ public abstract class Worker {
      * to force the worker to stop what it's doing.
      */
     public void interrupt() {
-        Thread t = threadVar.get();
+        Thread t = threadVar_.get();
         if (t != null) {
             t.interrupt();
         }
-        threadVar.clear();
+        threadVar_.clear();
     }
 
     /**
-     * Return the value created by the <code>construct</code> method.  
+     * Return the value created by the <code>construct</code> method.
      * Returns null if either the constructing thread or the current
      * thread was interrupted before a value was produced.
-     * 
+     *
      * @return the value created by the <code>construct</code> method
      */
     public Object get() {
-        while (true) {  
-            Thread t = threadVar.get();
+        while (true) {
+            Thread t = threadVar_.get();
             if (t == null) {
                 return getValue();
             }
@@ -111,7 +113,7 @@ public abstract class Worker {
                     setValue(construct());
                 }
                 finally {
-                    threadVar.clear();
+                    threadVar_.clear();
                 }
 
                 // old: SwingUtilities.invokeLater(doFinished);
@@ -123,14 +125,14 @@ public abstract class Worker {
         };
 
         Thread t = new Thread(doConstruct);
-        threadVar = new ThreadVar(t);
+        threadVar_ = new ThreadVar(t);
     }
 
     /**
      * Start the worker thread.
      */
     public void start() {
-        Thread t = threadVar.get();
+        Thread t = threadVar_.get();
         if (t != null) {
             t.start();
         }

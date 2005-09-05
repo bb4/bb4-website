@@ -1,12 +1,11 @@
 package com.becker.game.common.ui;
 
 import com.becker.game.common.*;
-import com.becker.ui.TexturedPanel;
+import com.becker.ui.*;
+
 import javax.swing.*;
 import javax.swing.Box;
-import javax.swing.border.TitledBorder;
-import javax.swing.border.Border;
-import javax.swing.border.EtchedBorder;
+import javax.swing.border.*;
 import java.awt.*;
 
 /**

@@ -17,6 +17,8 @@ public final class Util
     private static final DecimalFormat expFormat_ = new DecimalFormat("###,###.##E0");
     private static final DecimalFormat format_ = new DecimalFormat("###,###.##");
 
+    private Util() {};
+
     /**
      * Copy source file to destination file.
      *
@@ -69,7 +71,7 @@ public final class Util
      * @param num the number to format.
      * @return a nicely formatted string representation of the number.
      */
-    public static final String formatNumber(double num)
+    public static String formatNumber(double num)
     {
         double absnum = Math.abs(num);
         if ((num - (long)num) == 0.0) {
@@ -78,7 +80,7 @@ public final class Util
             format_.setMaximumFractionDigits(0);
         }
         else {
-            if (absnum > 100000.0 || absnum < .000000001) {
+            if (absnum > 100000.0 || absnum < 0.000000001) {
                 return expFormat_.format(num);
             }
             if (absnum > 100.0 || num == 0.0) {
@@ -89,11 +91,11 @@ public final class Util
                 format_.setMinimumFractionDigits(1);
                 format_.setMaximumFractionDigits(2);
             }
-            else if (absnum > .0001) {
+            else if (absnum > 0.0001) {
                 format_.setMinimumFractionDigits(2);
                 format_.setMaximumFractionDigits(5);
             }
-            else if (absnum>.000001) {
+            else if (absnum>0.000001) {
                 format_.setMinimumFractionDigits(3);
                 format_.setMaximumFractionDigits(8);
             }
@@ -110,17 +112,17 @@ public final class Util
      * @param className  the class to load.
      * @return  the loaded class.
      */
-    public static final Class loadClass(String className)
+    public static Class loadClass(String className)
     {
         return loadClass(className, null);
     }
 
     /**
      * @param className  the class to load.
-     * @param DefaultClassName  the backup class to load if className does not exist.
+     * @param defaultClassName  the backup class to load if className does not exist.
      * @return  the loaded class.
      */
-    public static final Class loadClass(String className, String DefaultClassName)
+    public static Class loadClass(String className, String defaultClassName)
     {
         Class theClass = null;
         try {
@@ -130,13 +132,13 @@ public final class Util
         catch (ClassNotFoundException e) {
             System.out.println("Unable to find the class "+ className+". Check your classpath.");
             System.out.println("The current classpath is :"+System.getProperty("java.class.path"));
-            if (DefaultClassName==null) {
+            if (defaultClassName==null) {
                 e.printStackTrace();
                 return null;
             }
-            System.out.println("Attempting to load "+DefaultClassName+" instead.");
+            System.out.println("Attempting to load "+defaultClassName+" instead.");
             try {
-                theClass = Class.forName(DefaultClassName);
+                theClass = Class.forName(defaultClassName);
             } catch (ClassNotFoundException cne) {
                  cne.printStackTrace();
             }
@@ -149,7 +151,7 @@ public final class Util
      * print a generic set of objects (like a set or list).
      * @param c the set to print.
      */
-    public static final void printCollection(Collection c)
+    public static void printCollection(Collection c)
     {
        System.out.println( stringify(c) );
     }
@@ -158,7 +160,7 @@ public final class Util
      * get string form of a generic set of objects (like a set or list).
      * @param c the set to print.
      */
-    public static final String stringify(Collection c)
+    public static String stringify(Collection c)
     {
         StringBuffer sBuf = new StringBuffer();
         Iterator it = c.iterator();

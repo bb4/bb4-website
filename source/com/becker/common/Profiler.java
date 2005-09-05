@@ -1,10 +1,8 @@
 package com.becker.common;
 
-import com.becker.common.Util;
-import com.becker.ui.Log;
+import com.becker.ui.*;
 
 import java.util.*;
-import java.util.logging.Logger;
 
 /**
  * Use this class to get performance numbers for your application
@@ -17,7 +15,7 @@ public class Profiler
 
     private static final String INDENT = "    ";
 
-    private HashMap hmEntries = new HashMap();
+    private Map hmEntries_ = new HashMap();
     private List topLevelEntries_ = new LinkedList();
     private boolean enabled_ = true;
     protected Log logger_ = null;
@@ -31,9 +29,9 @@ public class Profiler
      */
     public void add(String name)
     {
-        ProfilerEntry e = new ProfilerEntry(name, null);
+        ProfilerEntry e = new ProfilerEntry(name);
         topLevelEntries_.add(e);
-        hmEntries.put(name, e);
+        hmEntries_.put(name, e);
     }
 
     /**
@@ -43,11 +41,11 @@ public class Profiler
      */
     public void add(String name, String parent)
     {
-        ProfilerEntry par = (ProfilerEntry)hmEntries.get(parent);
+        ProfilerEntry par = (ProfilerEntry)hmEntries_.get(parent);
         assert par!=null : "invalid parent: "+parent;
-        ProfilerEntry e = new ProfilerEntry(name, par);
+        ProfilerEntry e = new ProfilerEntry(name);
         par.addChild(e);
-        hmEntries.put(name, e);
+        hmEntries_.put(name, e);
     }
 
     /**
@@ -56,7 +54,7 @@ public class Profiler
     public void start(String name)
      {
          if (!enabled_) return;
-         ProfilerEntry p = (ProfilerEntry)hmEntries.get(name);
+         ProfilerEntry p = (ProfilerEntry)hmEntries_.get(name);
          p.start();
      }
 
@@ -66,7 +64,7 @@ public class Profiler
      public void stop(String name)
      {
          if (!enabled_) return;
-         ProfilerEntry p = (ProfilerEntry)hmEntries.get(name);
+         ProfilerEntry p = (ProfilerEntry)hmEntries_.get(name);
          p.stop();
      }
 
@@ -118,13 +116,10 @@ public class Profiler
         // the total time used by this named code section while the app was running
         private long totalTime_ = 0;
         private List children_ = new LinkedList();
-        private ProfilerEntry parent_ = null;
 
-        protected ProfilerEntry(String name, ProfilerEntry parent)
+        protected ProfilerEntry(String name)
         {
             name_ = name;
-            parent_ = parent;
-
         }
 
         protected void addChild(ProfilerEntry child)

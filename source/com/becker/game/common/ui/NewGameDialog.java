@@ -199,7 +199,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ActionListe
         if (boardParamPanel_ != null) {
             Integer r = new Integer( rowSizeField_.getText() );
             Integer c = new Integer( colSizeField_.getText() );
-            board_.setSize( r.intValue(), c.intValue() );
+            board_.setSize( r, c );
         }
 
         //restore the saved file if one was specified

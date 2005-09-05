@@ -1,8 +1,12 @@
 package com.becker.puzzle.redpuzzle;
 
+import com.becker.common.*;
+
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.*;
+import java.util.List;
+//import java.awt.*;
 
 /**
  *  Describes the current best solution to the puzzle
@@ -24,10 +28,10 @@ final class Solution extends JPanel
 
     // these are the pieces that fit together so far
     // when there are 9 of them we are done and the puzzle is solved
-    private final ArrayList pieces_ = new ArrayList();
+    private final List pieces_ = new ArrayList();
 
     // Constructor.
-    public Solution()
+    Solution()
     {
         this.setPreferredSize( new Dimension( 14 * INC, 14 * INC ) );
     }
@@ -35,7 +39,7 @@ final class Solution extends JPanel
     // try the piece
     // we rotate it until it fits.
     // if it does not fit after all rotations have been tried we return false
-    public final boolean fits( Piece p )
+    public  boolean fits( Piece p )
     {
         // assume fits until proven otherwise
         boolean fits = true;
@@ -74,7 +78,7 @@ final class Solution extends JPanel
         return fits;
     }
 
-    public final void push( Piece p )
+    public void push( Piece p )
     {
         if ( !fits( p ) )
             System.out.println( "Error: the piece must fit for it to be pushed" );
@@ -82,7 +86,7 @@ final class Solution extends JPanel
         numSolved_++;
     }
 
-    public final Piece pop()
+    public Piece pop()
     {
         Piece p = (Piece) pieces_.get( numSolved_ - 1 );
         pieces_.remove( p );
@@ -91,7 +95,7 @@ final class Solution extends JPanel
     }
 
     // This renders the current state of the Solution to the screen
-    protected final void paintComponent( Graphics g )
+    protected void paintComponent( Graphics g )
     {
         int i, xpos, ypos;
 
@@ -164,8 +168,8 @@ final class Solution extends JPanel
 
             // draw the number in the middle
             g.setColor( Color.gray );
-            Integer num = new Integer( p.getNumber() );
-            g.drawString( num.toString(), xpos + INC, ypos + INC );
+            Integer num = p.getNumber();
+            g.drawString( Util.formatNumber(num), xpos + INC, ypos + INC );
         }
     }
 }

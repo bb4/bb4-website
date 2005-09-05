@@ -19,19 +19,15 @@ import java.text.MessageFormat;
 final class HelpDialog extends JDialog implements ActionListener
 {
 
-    private final JPanel overviewPanel = new JPanel();
 
-    private final JPanel bottomButtonPanel = new JPanel();
-    private final GradientButton okButton = new GradientButton();
-    private final JLabel logo = new JLabel();
-
-    private final GridLayout gridLayout1 = new GridLayout();
+    private final GradientButton okButton_ = new GradientButton();
+    private JLabel logo_ = null;
 
     // these get replaced
     private static String gameName_ = GameContext.getLabel("GAME_TUTORIAL");
     private static String comments_ = GameContext.getLabel("AUTHOR");
-    private static final String version_ = GameContext.getLabel("VERSION");
-    private static final String copyright_ = GameContext.getLabel("COPYRIGHT");
+    private static final String VERSION = GameContext.getLabel("VERSION");
+    private static final String COPYRIGHT = GameContext.getLabel("COPYRIGHT");
 
     private String overviewText_ = null;
 
@@ -42,7 +38,7 @@ final class HelpDialog extends JDialog implements ActionListener
      * @param comments supplementary info
      * @param text game specific instructions to display.
      */
-    public HelpDialog( Frame parent, String gameName, String comments, String text)
+    HelpDialog( Frame parent, String gameName, String comments, String text)
     {
         super( parent );
 
@@ -50,12 +46,10 @@ final class HelpDialog extends JDialog implements ActionListener
         comments_ = comments;
         overviewText_ = text;
         enableEvents( AWTEvent.WINDOW_EVENT_MASK );
-        try {
-            initGUI();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        logo.setIcon(GUIUtil.getIcon(GameContext.GAME_ROOT+"common/ui/images/help.gif"));
+        initGUI();
+
+        logo_ = new JLabel();
+        logo_.setIcon(GUIUtil.getIcon(GameContext.GAME_ROOT+"common/ui/images/help.gif"));
         this.setLocationRelativeTo( parent );
         pack();
     }
@@ -69,33 +63,34 @@ final class HelpDialog extends JDialog implements ActionListener
         this.setTitle( MessageFormat.format(GameContext.getLabel("ABOUT"), arg));
 
         setResizable( false );
+        JPanel overviewPanel = new JPanel();
         overviewPanel.setLayout( new BorderLayout() );
 
         FlowLayout flowLayout1 = new FlowLayout();
+        JPanel bottomButtonPanel = new JPanel();
         bottomButtonPanel.setLayout( flowLayout1 );
 
         JPanel logoInsetsPanel = new JPanel();
         logoInsetsPanel.setLayout( flowLayout1 );
         logoInsetsPanel.setBorder( new EmptyBorder( 10, 10, 10, 10 ) );
-        gridLayout1.setRows( 4 );
-        gridLayout1.setColumns( 1 );
 
-        okButton.setText( GameContext.getLabel("OK") );
-        okButton.addActionListener( this );
+
+        okButton_.setText( GameContext.getLabel("OK") );
+        okButton_.addActionListener( this );
 
         JTextArea overviewTextArea = createOverviewTextArea();
 
         JPanel summaryPanel = createSummaryPanel();
 
-        logo.setForeground(Color.GREEN);
+        logo_.setForeground(Color.GREEN);
 
-        logoInsetsPanel.add( logo, null );
+        logoInsetsPanel.add( logo_, null );
         summaryPanel.add( logoInsetsPanel, BorderLayout.WEST );
         this.getContentPane().add( overviewPanel, null );
 
         overviewPanel.add( overviewTextArea, BorderLayout.CENTER );
 
-        bottomButtonPanel.add( okButton, null );
+        bottomButtonPanel.add( okButton_, null );
         overviewPanel.add( bottomButtonPanel, BorderLayout.SOUTH );
         overviewPanel.add( summaryPanel, BorderLayout.NORTH );
         //overviewPanel.setMaximumSize(new Dimension(500,800));
@@ -134,8 +129,8 @@ final class HelpDialog extends JDialog implements ActionListener
         final JLabel label3 = new JLabel();
         final JLabel label4 = new JLabel();
         label1.setText( gameName_ );
-        label2.setText( version_ );
-        label3.setText( copyright_ );
+        label2.setText( VERSION );
+        label3.setText( COPYRIGHT );
         label4.setText( comments_ );
 
         summaryInsetsPanel.add( label1, null );
@@ -143,7 +138,7 @@ final class HelpDialog extends JDialog implements ActionListener
         summaryInsetsPanel.add( label3, null );
         summaryInsetsPanel.add( label4, null );
 
-        summaryInsetsPanel.setLayout( gridLayout1 );
+        summaryInsetsPanel.setLayout( new GridLayout(4, 1) );
         summaryInsetsPanel.setBorder( new EmptyBorder( 10, 60, 10, 10 ) );
 
         summaryPanel.add( summaryInsetsPanel, BorderLayout.CENTER );
@@ -167,7 +162,7 @@ final class HelpDialog extends JDialog implements ActionListener
 
     public void actionPerformed( ActionEvent e )
     {
-        if ( e.getSource() == okButton ) {
+        if ( e.getSource() == okButton_ ) {
             cancel();
         }
     }

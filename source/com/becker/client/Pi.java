@@ -11,25 +11,24 @@ public class Pi implements Task {
     private static final BigDecimal FOUR = BigDecimal.valueOf(4);
 
     /** rounding mode to use during pi computation */
-    private static final int roundingMode =
-        BigDecimal.ROUND_HALF_EVEN;
+    private static final int ROUNDING_MODE = BigDecimal.ROUND_HALF_EVEN;
 
     /** digits of precision after the decimal point */
-    private int digits;
+    private int digits_;
 
     /**
      * Construct a task to calculate pi to the specified
      * precision.
      */
     public Pi(int digits) {
-        this.digits = digits;
+        this.digits_ = digits;
     }
 
     /**
      * Calculate pi.
      */
     public Object execute() {
-        return computePi(digits);
+        return computePi(digits_);
     }
 
     /**
@@ -44,10 +43,10 @@ public class Pi implements Task {
      */
     public static BigDecimal computePi(int digits) {
         int scale = digits + 5;
-        BigDecimal arctan1_5 = arctan(5, scale);
-        BigDecimal arctan1_239 = arctan(239, scale);
-        BigDecimal pi = arctan1_5.multiply(FOUR).subtract(
-                                  arctan1_239).multiply(FOUR);
+        BigDecimal arctan5 = arctan(5, scale);
+        BigDecimal arctan239 = arctan(239, scale);
+        BigDecimal pi = arctan5.multiply(FOUR).subtract(
+                                  arctan239).multiply(FOUR);
         return pi.setScale(digits,
                            BigDecimal.ROUND_HALF_UP);
     }
@@ -69,17 +68,17 @@ public class Pi implements Task {
         BigDecimal invX2 =
             BigDecimal.valueOf(inverseX * inverseX);
 
-        numer = ONE.divide(invX, scale, roundingMode);
+        numer = ONE.divide(invX, scale, ROUNDING_MODE);
 
         result = numer;
         int i = 1;
         do {
             numer =
-                numer.divide(invX2, scale, roundingMode);
+                numer.divide(invX2, scale, ROUNDING_MODE);
             int denom = 2 * i + 1;
             term =
                 numer.divide(BigDecimal.valueOf(denom),
-                             scale, roundingMode);
+                             scale, ROUNDING_MODE);
             if ((i % 2) != 0) {
                 result = result.subtract(term);
             } else {
