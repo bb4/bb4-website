@@ -133,13 +133,13 @@ public class TestGoBoard extends GoTestCase {
         restore("whitebox/occupiedNbrs1");
         GoBoard board = (GoBoard)controller_.getBoard();
 
-        List empties = new ArrayList(5);
+        List empties = new ArrayList(4);
         empties.add(board.getPosition(3, 3));
         empties.add(board.getPosition(3, 4));
         empties.add(board.getPosition(4, 3));
         empties.add(board.getPosition(4, 4));
         int numNbrs = board.findOccupiedNeighbors(empties).size();
-        Assert.assertTrue("numNbrs="+numNbrs+" expected "+ 9, numNbrs == 6);
+        Assert.assertTrue("numNbrs="+numNbrs+" expected "+ 6, numNbrs == 6);
         //verifyOccupiedNbrs("whitebox/occupiedNbrs1", empties, 9);
     }
 

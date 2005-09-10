@@ -60,25 +60,26 @@ import java.util.List;
  * In reality, I'll probably never finish. That's ok, I'm not sure I want to. I enjoy doing it.
  *
  * high priority todo:
- *  - check performance bottleknecks
- *  - add test cases for every little thing
- *  - why don't test cases find optimal moves
+ *
+ *  - add test cases for every little method of every class
+ *  - why don't test cases find optimal moves?
  * bugs
- *  - pause/continue not working in tree dialog.
+ *  - Error: can't have no liberties and still be on the board!
+ *  - don't play in territory at end of game.
  *  - back up and play black, back up again and play white.
  *  - java.lang.AssertionError: The sum of the child times(23411) cannot be greater than the parent time (23296)
+ *  - pause/continue not working in tree dialog.
  *
  *
  ** common algorithm improvements
- *    - cache isInAtari for better performance
+ *
  *    - accurate scoring when the game is over (score what it can, and allow for player dispute of score).
  *    - implement armies (2)
  *    - use runner up caching (moves that were good in the past are likely to be still good) (2)
- *    - add randomness to computer moves ( have option since sometimes its undesirable) (1)
+ *    - add randomness to computer moves (have option since sometimes its undesirable) (1)
  *    - adhere to chinese rules, add other rulesets as options. (4)
  *    - consider monkey jump connections.
  *    - if the computer or player resigns, the playerWon vars should be set and the strcngth of the win should be large.
- *    - improve performance with profiling (1)
  *    - remember good moves that have not yet been played. On a big board, they will probably remain good moves.
  *      These good moves should be at the head of a list when possible moves are being generated.
  *
@@ -89,17 +90,19 @@ import java.util.List;
  *    - maintain on website as applet and webstart (yahoo does not yet support webstart. See hostway) (1)
  *    - add high level descriptions of class interactions to package level javadoc (i.e. the architecture) (1).
  *    - cleanup all java doc (1)
- *    - remove all circular dependencies (use pasta) (1)
+ *    - remove all circular dependencies (use pasta from optimalJ) (1)
  *    - put game defaults in a config file rather than having as constants in controller classes.
  *    - make opensource (3)
  *    - write a book about it. Targetting teens. (50)
  *
- ** Refactoring changes needed
+ ** Performance issues
+ *    - check performance bottleknecks with profilers like Yourkit and JProfiler.
+ *    - cache isInAtari for better performance
  *
- *    - GoBoard: pull out stuff related to candidate moves into separate class
+ ** Refactoring changes needed
  *    - alpha-beta and quiescent setter/getter methods could be properties of the SearchStrategy instead of the game controller.
  *    - Bill seems to think that I should remove setSize and reset from the GameBoard api and just use the constructor.
- *    - make client/server for multi-user play.
+ *    - make client/server for multi-user play. Mostly done. try on IGS.
  *    - use InputVerifier to validate text type ins.
  *
  ** UI features
@@ -127,7 +130,7 @@ import java.util.List;
  * Resolved bugs (check for regressions)
  *  - confirm computing eyes correctly (and health).
  *  - verify correctness of static evaluation weights and worth function (2)
- *  - confirm can play suicidal move when if captures enemy stones (1)
+ *  - confirm can play suicidal move when capturing enemy stones (1)
  *  - sound/speech not working (in applet only? missing libs?)
  *  - When the computer plays in your eye, the eye goes away. It should not.
  *  - Do not have any rendering done in anything but ui classes (done) (1).
@@ -170,7 +173,7 @@ public final class GoController extends TwoPlayerController
 
     protected TwoPlayerOptions createOptions() {
 
-        TwoPlayerOptions options = new TwoPlayerOptions(DEFAULT_LOOKAHEAD, BEST_PERCENTAGE, MusicMaker.SHAMISEN /*TAIKO_DRUM*/);
+        TwoPlayerOptions options = new TwoPlayerOptions(DEFAULT_LOOKAHEAD, BEST_PERCENTAGE, MusicMaker.SHAMISEN);
         options.setPlayerName(true, GameContext.getLabel("BLACK"));
         options.setPlayerName(false, GameContext.getLabel("WHITE"));
         return options;
@@ -188,6 +191,7 @@ public final class GoController extends TwoPlayerController
 
     /**
      * initialize the lookup table of scores to attribute to the board positions when calculating the worth.
+     * These weights are counted more heavily at te beggiing of the game.
      */
     private void initializePositionalScoreArray()
     {
@@ -225,8 +229,8 @@ public final class GoController extends TwoPlayerController
     {
         ((GoBoard) board_).setHandicap( handicap );
         player1sTurn_ = false;
-
     }
+
 
     protected boolean processToken(SGFToken token, List moveList) {
 
@@ -279,7 +283,6 @@ public final class GoController extends TwoPlayerController
 
     protected Move createMoveFromToken( MoveToken token)
     {
-        //GoMove m;
         if (token.isPass()) {
             return GoMove.createPassMove(0, !token.isWhite());
         }
@@ -314,29 +317,7 @@ public final class GoController extends TwoPlayerController
      */
     public int getNumCaptures( boolean player1sStones )
     {
-        // iterate through the list of moves played so far and add up the stones
-        // in the capture lists to determine the captures for each side.
-        // @@ could possibly improve this by caching the number of captures in an ArrayList
-        if ( getMoveList() == null || getMoveList().isEmpty() )
-            return 0;
-        Iterator it = getMoveList().iterator();
-        int numCaptures = 0;
-        while ( it.hasNext() ) {
-            GoMove move = (GoMove) it.next();
-            if ( move.isPlayer1() == !player1sStones ) {
-                numCaptures += move.getNumCaptures();
-
-            }
-        }
-
-        // also add in the currently dead stones on the board.
-        // there will only be dead stones on the board if the game is over.
-        if (player1sStones)
-            numCaptures += numDeadBlackStonesOnBoard_;
-        else
-            numCaptures += numDeadWhiteStonesOnBoard_;
-
-        return numCaptures;
+        return ((GoBoard) getBoard()).getNumCaptures(player1sStones);
     }
 
     private int cachedBlackTerritoryEstimate_ = 0;
@@ -680,7 +661,8 @@ public final class GoController extends TwoPlayerController
             GameContext.log(0,  "Error: tried to get Score() while processing!");
             return 0;
         }
-        return getTerritory(player1) - getNumCaptures( !player1 );
+        int captures = getNumCaptures(!player1) + (player1 ? numDeadWhiteStonesOnBoard_ : numDeadBlackStonesOnBoard_);
+        return getTerritory(player1) - captures;
     }
 
    /**
@@ -840,14 +822,14 @@ public final class GoController extends TwoPlayerController
          */
         public final List generateMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
         {
-            GoBoard gb = (GoBoard) board_;
+            GoBoard board = (GoBoard) board_;
             GoBoard.getProfiler().start(GoProfiler.GENERATE_MOVES);
             List moveList = new LinkedList();
             int i,j;
-            int nCols = board_.getNumCols();
-            int nRows = board_.getNumRows();
+            int nCols = board.getNumCols();
+            int nRows = board.getNumRows();
 
-            gb.determineCandidateMoves();
+            board.determineCandidateMoves();
 
             boolean player1 = true;
             if ( lastMove != null ) {
@@ -857,24 +839,24 @@ public final class GoController extends TwoPlayerController
             for ( i = 1; i <= nCols; i++ )      //cols
                 for ( j = 1; j <= nRows; j++ )    //rows
                     // if its a candidate move and not an immediate takeback (which would break the rule of ko)
-                    if ( gb.isCandidateMove( j, i ) && !isTakeBack( j, i, (GoMove) lastMove, gb ) ) {
+                    if ( board.isCandidateMove( j, i ) && !isTakeBack( j, i, (GoMove) lastMove, board ) ) {
                         GoMove m = GoMove.createGoMove( j, i, lastMove.getValue(), new GoStone(player1) );
 
-                        GoBoard.getProfiler().stop(GoProfiler.GENERATE_MOVES);
-                        boolean suicide = !gb.makeMove( m );
-                        GoBoard.getProfiler().start(GoProfiler.GENERATE_MOVES);
-
-                        if ( suicide ) {
-                            GameContext.log( 2, "The move was a suicide (can't add it to the list), we now remove it: " + m );
-                            gb.undoMove();
+                        if ( m.isSuicidal(board) ) {
+                            GameContext.log( 2, "The move was a suicide (can't add it to the list): " + m );
                         }
                         else {
+                            GoBoard.getProfiler().stop(GoProfiler.GENERATE_MOVES);
+                            board.makeMove( m );
+                            GoBoard.getProfiler().start(GoProfiler.GENERATE_MOVES);
                             // this value is not likely to change much except local to last move,
                             // anyway we could cache that?
+                            GoBoard.getProfiler().start(GoProfiler.CALC_WORTH);
                             m.setValue(worth( m, weights, player1sPerspective ));
+                            GoBoard.getProfiler().stop(GoProfiler.CALC_WORTH);
                             // now revert the board
                             GoBoard.getProfiler().stop(GoProfiler.GENERATE_MOVES);
-                            gb.undoMove();
+                            board.undoMove();
                             GoBoard.getProfiler().start(GoProfiler.GENERATE_MOVES);
                             moveList.add( m );
                         }
@@ -892,7 +874,6 @@ public final class GoController extends TwoPlayerController
 
             return moveList;
         }
-
     }
 
 

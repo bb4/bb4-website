@@ -62,23 +62,61 @@ public final class GoMove extends TwoPlayerMove
     public boolean isSuicidal( GoBoard board )
     {
         GoBoardPosition stone = (GoBoardPosition) board.getPosition( getToRow(), getToCol() );
+
+        //Set nobiNbrs = board.getNobiNeighbors(stone, false, NeighborType.OCCUPIED);
+        Set nobiNbrs = board.getNobiNeighbors(stone, false, NeighborType.ANY);
+        Set occupiedNbrs = new HashSet();
+        for (Object n : nobiNbrs) {
+            GoBoardPosition pos = (GoBoardPosition) n;
+            if (pos.isOccupied()) {
+                occupiedNbrs.add(pos);
+            }
+        }
+
+        if (occupiedNbrs.size() < nobiNbrs.size()) {
+            // can't be suicidal if we have a liberty
+            return false;
+        }
+
+        for (Object n : occupiedNbrs)  {
+            GoBoardPosition nbr = (GoBoardPosition) n;
+            if (nbr.getPiece().isOwnedByPlayer1() == this.isPlayer1()) {
+                // friendly string
+                if (nbr.getString().getNumLiberties(board) > 1) {
+                    // can't be suicidal if a neighboring friendly string has > 1 liberty
+                    return false;
+                }
+            }
+            else {
+               if (nbr.getString().getNumLiberties(board) == 1) {
+                   // can't be suicidal if by playing we capture an opponent string.
+                   return false;
+                }
+            }
+        }
+        return true;
+
+        /*
         GoString string = stone.getString();
         if ( string == null )   {
             GameContext.log( 0, "Warning: GoMove.isSuicidal: the string is null" );
         }
-        CaptureList captures = getCaptures();
+
+        //CaptureList captures = getCaptures();
+        // instead check to see if any of our neighbors have only 1 liberty. if so then return false
+
         if (captures != null && captures.size() > 0) {
-            // if we have captured enemy stones, then this is not a suicide, even if we have not liberties ourselves.
+            // if we have captured enemy stones, then this is not a suicide, even if we have no liberties ourselves.
             return false;
         }
         if ( string != null && string.getNumLiberties(board) == 0) {
             assert (string.size() > 0);
             GameContext.log( 2, "GoMove.isSuicidal: your are playing on the last liberty for this string=" + string.toString() + " captures=" + captures );
-            // if we do not have captures, then it is a suicide move and should not be allowed.
-            if ( captures == null )
-                return true;
+            // if we do not have captures, then it is a suicide move and should not be allowed
+            return true;
         }
         return false;
+        */
     }
 
 
@@ -582,6 +620,9 @@ public final class GoMove extends TwoPlayerMove
         }
         unvisitAll(board);
 
+        // verify that the string to which we added the stone has at least one liberty
+        //assert (pos.getString().getNumLiberties(board) > 0): "The placed stone "+pos+" has no liberties "+pos.getGroup();
+
         // this gets used when calculating the worth of the board
         board.updateTerritory(pos);
 
@@ -595,10 +636,6 @@ public final class GoMove extends TwoPlayerMove
                 GameContext.log(1, "The move was :"+pos);
                 throw e;
             }
-        }
-
-        if (GameContext.getDebugMode() > 1) {
-            GoBoardUtil.confirmAllStonesInUniqueGroups(board.getGroups());
         }
 
         GoBoard.getProfiler().stopUpdateGroupsAfterMove();

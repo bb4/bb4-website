@@ -13,7 +13,6 @@ import static com.becker.game.twoplayer.go.GoControllerConstants.*;
  * For example, we update strings, and groups (and eventually armies) after each move.
  * After updating we can use these structures to estimate territory for each side.
  *
- * @@ pull out stuff related to candidate moves into separate class
  *
  * @author Barry Becker
  */
@@ -23,7 +22,7 @@ public final class GoBoard extends TwoPlayerBoard
     // this is a set of active groups. Groups are composed of strings.
     private Set groups_ = null;
     // this is a set of active armies. Armies are composed of groups.
-    // @@ armies not implemented yet.
+    // armies not implemented yet.
     //private Set armies_;
 
     // The difference between the 2 player's territory.
@@ -33,6 +32,9 @@ public final class GoBoard extends TwoPlayerBoard
     private CandidateMoves candidateMoves_;
 
     private HandicapStones handicap_ = null;
+
+    private int numWhiteStonesCaptured_ = 0;
+    private int numBlackStonesCaptured_ = 0;
 
     // a global profiler for recording timing stats
     private static final GoProfiler profiler_ = new GoProfiler();
@@ -206,7 +208,7 @@ public final class GoBoard extends TwoPlayerBoard
      * This places the players symbol at the position specified by move, and updates groups,
      * removes captures, and counts territory.
      *
-     * @return false if the move is suicidal
+     * @return false if the move is somehow invalid
      */
     protected boolean makeInternalMove( Move move )
     {
@@ -232,13 +234,15 @@ public final class GoBoard extends TwoPlayerBoard
 
         m.updateBoardAfterMoving(this);
 
-        if ( m.isSuicidal(this) )
-            return false;
+        updateCaptures(m, true);
 
+        //if ( m.isSuicidal(this) )  now checked beforehand
+        //    return false;
 
         profiler_.stopMakeMove();
         return true;
     }
+
 
 
     /**
@@ -262,9 +266,27 @@ public final class GoBoard extends TwoPlayerBoard
 
         m.updateBoardAfterRemoving(this);
 
+        updateCaptures(m, false);
+
         profiler_.stopUndoMove();
     }
 
+    private void updateCaptures(GoMove move, boolean increment) {
+
+        int num = increment ? move.getNumCaptures() : -move.getNumCaptures();
+        if (move.getNumCaptures() > 0) {
+            if (move.isPlayer1()) {
+                numWhiteStonesCaptured_ += move.getNumCaptures();
+            } else {
+                numBlackStonesCaptured_ += move.getNumCaptures();
+            }
+        }
+    }
+
+
+    public int getNumCaptures(boolean player1StonesCaptured) {
+        return player1StonesCaptured ? numBlackStonesCaptured_ : numWhiteStonesCaptured_ ;
+    }
 
 
     public float getTerritoryDelta()
@@ -367,7 +389,7 @@ public final class GoBoard extends TwoPlayerBoard
                        Set nbrs = findOccupiedNeighbors(empties);
                        float avg = GoBoardUtil.calcAverageScore(nbrs);
 
-                       float score = avg * (float)nbrs.size()/Math.max(nbrs.size(), empties.size());
+                       float score = avg * (float)nbrs.size()/Math.max(1, Math.max(nbrs.size(), empties.size()));
                        assert (score <= 1.0 && score >= -1.0): "score="+score+" avg="+avg;
                        Iterator it = empties.iterator();
                        while (it.hasNext()) {

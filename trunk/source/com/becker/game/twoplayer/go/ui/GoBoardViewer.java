@@ -145,7 +145,6 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
         if ( stone == null )
             return;      // user clicked out of bounds
 
-        // need to see if there are captures so the suicidal check can be computed accurately
         if ( stone.isOccupied() ) {
             JOptionPane.showMessageDialog( null, GameContext.getLabel("CANT_PLAY_ON_STONE") );
             GameContext.log( 0, "GoBoardViewer: There is already a stone there: " + stone );
@@ -157,21 +156,18 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
         }
         assert(!stone.isVisited());
 
-        boolean notSuicidal = board.makeMove( m );  // this will fill in the captures
-        //System.out.println( "BoardViewer: groups on board (after makemove):\n "+board.getGroupsText() );
-
-        board.undoMove(); // may rejoin groups
-
-        if (notSuicidal)  {
-            if ( !continuePlay( m ) ) {   // then game over
-                showWinnerDialog();
-            }
-        }
-        else {
-            JOptionPane.showMessageDialog( null, GameContext.getLabel("SUICIDAL") );
-            GameContext.log( 0, "GoBoardViewer: That move is suicidal (and hence illegal): " + stone );
+        if (m.isSuicidal(board)) {
+           JOptionPane.showMessageDialog( null, GameContext.getLabel("SUICIDAL") );
+            GameContext.log( 1, "GoBoardViewer: That move is suicidal (and hence illegal): " + stone );
+            return;
         }
 
+        //board.makeMove( m );
+
+
+        if ( !continuePlay( m ) ) {   // then game over
+            showWinnerDialog();
+        }
     }
 
 
