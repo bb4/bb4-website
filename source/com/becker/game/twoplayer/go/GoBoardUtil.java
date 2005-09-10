@@ -37,7 +37,6 @@ public final class GoBoardUtil
      */
     static void getNobiNeighbor( GoBoardPosition nbrStone, boolean friendOwnedByP1, Set nbrs, NeighborType neighborType )
     {
-        if (nbrStone.isUnoccupied()) return;
 
         boolean correctNeighborType = true;
         switch (neighborType) {
@@ -46,20 +45,22 @@ public final class GoBoardUtil
                 break;
             case OCCUPIED:
                 // note friendOwnedByP1 is intentionally ignored
-                correctNeighborType = nbrStone.getPiece()!=null;
+                correctNeighborType = nbrStone.isOccupied();
                 break;
             case ENEMY: // the opposite color
+                if (nbrStone.isUnoccupied())
+                    return;
                 GoStone st = (GoStone)nbrStone.getPiece();
-                correctNeighborType = st.isOwnedByPlayer1() != friendOwnedByP1;
+                correctNeighborType =  st.isOwnedByPlayer1() != friendOwnedByP1;
                 break;
             case FRIEND: // the same color
+                if (nbrStone.isUnoccupied())
+                    return;
                 correctNeighborType = (nbrStone.getPiece().isOwnedByPlayer1() == friendOwnedByP1);
                 break;
             default : assert false: "unknown or unsupported neighbor type:"+neighborType;
         }
         if (correctNeighborType ) {
-            // might happen if the stone belongs to an eye instead of a string.
-            assert  nbrStone.getString() != null: "this stone does not belong to a string:" + nbrStone;
             nbrs.add( nbrStone );
         }
     }

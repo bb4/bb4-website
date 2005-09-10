@@ -371,7 +371,6 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
              doComputerMove( !m.isPlayer1() );
          }
          else {
-
              if ( contoller.isPlayer1sTurn() ) {
                  assert !contoller.isProcessing();
                  done = manMoves( m );

@@ -176,7 +176,7 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
     {
         return (getRow()==1 || getRow()==board.getNumRows() || getCol()==1 || getCol()==board.getNumCols());
     }
-
+  
      /**
      * make it show an empty board position.
      */

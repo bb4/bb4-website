@@ -630,8 +630,8 @@ public final class GoGroup extends GoSet
             switch (numLiberties) { // numEyes == 0
                 case 0:
                     // this can't happen because the stone should already be captured.
-                    GameContext.log(0, "Error: can't have no liberties and still be on the board! "+ this);
-                    //assert false : "can't have no liberties and still be on the board! "+ this;
+                    //GameContext.log(0, "Error: can't have no liberties and still be on the board! "+ this);
+                    assert false : "can't have no liberties and still be on the board! "+ this;
                     health = -side;
                     break;
                 case 1:

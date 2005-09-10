@@ -17,6 +17,7 @@ public final class GoProfiler extends Profiler {
     private static final String MAKE_MOVE = "making move";
     private static final String UPDATE_STRINGS_AFTER_MOVE = "updating strings after move";
     private static final String UPDATE_GROUPS_AFTER_MOVE = "updating groups after move";
+    public static final String CALC_WORTH = "calculating worth";
     //private static final String GET_NBR_GROUPS = "getting nbr groups";
     public static final String UPDATE_TERRITORY = "updating territory";
     public static final String ABSOLUTE_TERRITORY = "absolute territory";
@@ -32,6 +33,7 @@ public final class GoProfiler extends Profiler {
 
     public GoProfiler() {
         add(GENERATE_MOVES);
+          add(CALC_WORTH);
         add(UNDO_MOVE);
           add(UPDATE_STRINGS_AFTER_REMOVE, UNDO_MOVE);
           add(UPDATE_GROUPS_AFTER_REMOVE, UNDO_MOVE);
