@@ -273,12 +273,14 @@ public final class GoBoard extends TwoPlayerBoard
 
     private void updateCaptures(GoMove move, boolean increment) {
 
+        int numCaptures = move.getNumCaptures();
         int num = increment ? move.getNumCaptures() : -move.getNumCaptures();
-        if (move.getNumCaptures() > 0) {
+
+        if (numCaptures > 0) {
             if (move.isPlayer1()) {
-                numWhiteStonesCaptured_ += move.getNumCaptures();
+                numWhiteStonesCaptured_ += num;
             } else {
-                numBlackStonesCaptured_ += move.getNumCaptures();
+                numBlackStonesCaptured_ += num;
             }
         }
     }
