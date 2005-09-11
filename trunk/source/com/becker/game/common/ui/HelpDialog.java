@@ -1,15 +1,13 @@
 package com.becker.game.common.ui;
 
-import com.becker.ui.GUIUtil;
-import com.becker.ui.GradientButton;
-import com.becker.game.common.GameContext;
+import com.becker.game.common.*;
+import com.becker.ui.*;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.EtchedBorder;
+import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.text.MessageFormat;
+import java.text.*;
 
 /**
  * A dialog to show version information and instructions on how to play the game.
@@ -21,7 +19,6 @@ final class HelpDialog extends JDialog implements ActionListener
 
 
     private final GradientButton okButton_ = new GradientButton();
-    private JLabel logo_ = null;
 
     // these get replaced
     private static String gameName_ = GameContext.getLabel("GAME_TUTORIAL");
@@ -45,11 +42,12 @@ final class HelpDialog extends JDialog implements ActionListener
         gameName_ = gameName;
         comments_ = comments;
         overviewText_ = text;
+
+
         enableEvents( AWTEvent.WINDOW_EVENT_MASK );
         initGUI();
 
-        logo_ = new JLabel();
-        logo_.setIcon(GUIUtil.getIcon(GameContext.GAME_ROOT+"common/ui/images/help.gif"));
+
         this.setLocationRelativeTo( parent );
         pack();
     }
@@ -82,9 +80,11 @@ final class HelpDialog extends JDialog implements ActionListener
 
         JPanel summaryPanel = createSummaryPanel();
 
-        logo_.setForeground(Color.GREEN);
+        JLabel logo = new JLabel();
+        logo.setIcon(GUIUtil.getIcon(GameContext.GAME_ROOT+"common/ui/images/help.gif"));
+        logo.setForeground(Color.GREEN);
 
-        logoInsetsPanel.add( logo_, null );
+        logoInsetsPanel.add( logo, null );
         summaryPanel.add( logoInsetsPanel, BorderLayout.WEST );
         this.getContentPane().add( overviewPanel, null );
 

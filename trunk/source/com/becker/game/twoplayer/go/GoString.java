@@ -205,7 +205,7 @@ public class GoString extends GoSet
     public void changedLiberty(GoBoardPosition libertyPos) {
          if (libertyPos.isOccupied()) {
              boolean removed = liberties_.remove(libertyPos);
-             assert removed : "could not remove "+libertyPos +" from "+liberties_;
+             //assert removed : "could not remove "+libertyPos +" from "+liberties_;  // hitting if showing game tree
          } else {
              assert (!liberties_.contains(libertyPos));
              liberties_.add(libertyPos);

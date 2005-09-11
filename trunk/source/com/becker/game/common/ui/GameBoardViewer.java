@@ -40,7 +40,7 @@ public abstract class GameBoardViewer
     // the size of a game board cell where the pieces go
     protected int cellSize_;
     // for restoring undone moves
-    protected final List undoneMoves_ = new LinkedList();
+    protected final LinkedList undoneMoves_ = new LinkedList();
 
     // to move pieces you drag them (if the move is valid)
     protected BoardPosition draggedPiece_ = null;
