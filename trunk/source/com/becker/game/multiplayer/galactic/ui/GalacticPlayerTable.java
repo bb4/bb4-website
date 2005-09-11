@@ -59,13 +59,13 @@ public class GalacticPlayerTable extends PlayerTable
         for (int i=0; i<nRows; i++) {
             char planetName = ((Character)model.getValueAt(i,PLANET_INDEX)).charValue();
             Planet planet = Galaxy.getPlanet(planetName);
-            planet.setProductionCapacity( ((Integer)model.getValueAt(i, PRODUCTION_INDEX)).intValue());
-            planet.setNumShips(((Integer)model.getValueAt(i, SHIPS_INDEX)).intValue());
+            planet.setProductionCapacity((Integer) model.getValueAt(i, PRODUCTION_INDEX));
+            planet.setNumShips((Integer) (model.getValueAt(i, SHIPS_INDEX)));
             players[i] = GalacticPlayer.createGalacticPlayer(
                                     (String)model.getValueAt(i, NAME_INDEX),
                                     planet,
                                     (Color)model.getValueAt(i, COLOR_INDEX),
-                                    ((Boolean)model.getValueAt(i, TYPE_INDEX)).booleanValue());
+                                    ((Boolean)model.getValueAt(i, TYPE_INDEX)));
         }
         return players;
     }
@@ -82,9 +82,9 @@ public class GalacticPlayerTable extends PlayerTable
         d[NAME_INDEX] = player.getName();
         d[COLOR_INDEX ] = player.getColor();
         d[PLANET_INDEX] = new Character(p.getHomePlanet().getName());
-        d[SHIPS_INDEX] = new Integer(p.getHomePlanet().getNumShips());
-        d[PRODUCTION_INDEX] = new Integer(p.getHomePlanet().getProductionCapacity());
-        d[TYPE_INDEX] = new Boolean(player.isHuman());
+        d[SHIPS_INDEX] = p.getHomePlanet().getNumShips();
+        d[PRODUCTION_INDEX] = p.getHomePlanet().getProductionCapacity();
+        d[TYPE_INDEX] = player.isHuman();
         //data[i] = d;
         getModel().addRow(d);
     }

@@ -17,7 +17,7 @@ public abstract class GalacticRobotPlayer extends GalacticPlayer
 
     private static final int CRAZY_ROBOT = 0;
     private static final int METHODICAL_ROBOT = 1;
-    private static int NUM_ROBOT_TYPES = 2;
+    private static final int NUM_ROBOT_TYPES = 2;
 
 
     public GalacticRobotPlayer(String name, Planet homePlanet, Color color)
@@ -50,7 +50,7 @@ public abstract class GalacticRobotPlayer extends GalacticPlayer
         Collections.sort(planets);
 
         // find the numAttack closest planets
-        List closestEnemies = new ArrayList();
+        List<Planet> closestEnemies = new ArrayList<Planet>();
         Iterator it = planets.iterator();
         int ct = 0;
         while (it.hasNext() && ct<numAttacks) {
@@ -107,6 +107,7 @@ public abstract class GalacticRobotPlayer extends GalacticPlayer
          switch (type) {
             case CRAZY_ROBOT: return new CrazyRobotPlayer(name, homePlanet, color);
             case METHODICAL_ROBOT: return new MethodicalRobotPlayer(name, homePlanet, color);
+            default : assert false;
         }
         assert (false):"bad type="+type;
         return null;

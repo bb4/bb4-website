@@ -10,8 +10,9 @@ import java.util.*;
  *  @see Board
  *  @author Barry Becker
  */
-public class CaptureList extends LinkedList
+public class CaptureList extends LinkedList<BoardPosition>
 {
+    private static final long serialVersionUID = 0L;
 
     /**
      * remove the captured pieces from the board.

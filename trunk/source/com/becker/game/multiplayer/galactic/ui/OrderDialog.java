@@ -8,8 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.text.MessageFormat;
+import java.util.*;
 import java.util.List;
-import java.util.HashMap;
 
 /**
  * Allow the user to specify a single order
@@ -32,7 +32,7 @@ public final class OrderDialog extends OptionsDialog
 
     private int numYearsRemaining_;
 
-    HashMap totalOutgoing_;
+    Map totalOutgoing_;
 
     private static final String DEFAULT_FLEET_SIZE = "10";
 
@@ -40,12 +40,12 @@ public final class OrderDialog extends OptionsDialog
     /**
      * constructor - create the tree dialog.
      */
-    public OrderDialog(GalacticPlayer player, HashMap totalOutgoing, int numYearsRemaining)
+    public OrderDialog(GalacticPlayer player, Map totalOutgoing, int numYearsRemaining)
     {
         player_ = player;
         totalOutgoing_ = totalOutgoing;
         numYearsRemaining_ = numYearsRemaining;
- 
+
         initUI();
     }
 
@@ -95,7 +95,7 @@ public final class OrderDialog extends OptionsDialog
         pack();
     }
 
-    private JComboBox createPlanetSelect(GalacticPlayer player) {
+    private static JComboBox createPlanetSelect(GalacticPlayer player) {
         // if player is null return a combo with all planets
 
         List planets =  Galaxy.getPlanets(player);

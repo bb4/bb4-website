@@ -34,9 +34,9 @@ public class Galaxy extends Board
 
     // the list of planets on the board.
     // Does not change during the game.
-    private static List planets_;
+    private static List<Planet> planets_;
 
-    private static HashMap hmPlanets_ = new HashMap();
+    private static Map<Character,Planet> hmPlanets_ = new HashMap<Character,Planet>();
 
 
     /** constructor
@@ -67,7 +67,7 @@ public class Galaxy extends Board
         hmPlanets_.clear();
 
         if (planets_ == null)  {
-            planets_ = new ArrayList();
+            planets_ = new ArrayList<Planet>();
         }
 
         planets_.clear();
@@ -75,14 +75,14 @@ public class Galaxy extends Board
         {
 
             // find a random position
-            int rand_row;
-            int rand_col;
+            int randRow;
+            int randCol;
             BoardPosition position;
             // find an unoccupied position to place the new planet
             do {
-                rand_row = (int)(Math.random() * getNumRows())+1;
-                rand_col = (int)(Math.random() * getNumCols())+1;
-                position = this.getPosition(rand_row, rand_col);
+                randRow = (int)(Math.random() * getNumRows())+1;
+                randCol = (int)(Math.random() * getNumCols())+1;
+                position = this.getPosition(randRow, randCol);
             } while (position.isOccupied());
 
             // initial ships and production factor
@@ -91,17 +91,17 @@ public class Galaxy extends Board
             position.setPiece(planet);
 
             // substitute in the players home planets that have already been created.
-            for (int j=0; j<players.length; j++) {
-                if (planet.getName() == players[j].getHomePlanet().getName()) {
-                    Planet home = players[j].getHomePlanet();
+            for (final GalacticPlayer newVar : players) {
+                if (planet.getName() == newVar.getHomePlanet().getName()) {
+                    Planet home = newVar.getHomePlanet();
                     position.setPiece(home);    // replace
                     home.setLocation(position.getLocation());
                 }
             }
             // add the planet to our list
-            planets_.add(position.getPiece());
+            planets_.add((Planet)position.getPiece());
 
-            hmPlanets_.put(new Character(planet.getName()), position.getPiece());
+            hmPlanets_.put(new Character(planet.getName()), (Planet)position.getPiece());
         }
     }
 
@@ -109,9 +109,9 @@ public class Galaxy extends Board
      * This method returns a copy of the planet list
      * @return an array of all the planets in the galaxy.
      */
-    public static List getPlanets()
+    public static List<Planet> getPlanets()
     {
-        List newPlanetList = new ArrayList(planets_.size());
+        List<Planet> newPlanetList = new ArrayList<Planet>(planets_.size());
         newPlanetList.addAll(planets_);
         return newPlanetList;
     }
@@ -204,10 +204,10 @@ public class Galaxy extends Board
         return true;
     }
 
-    private void build()
+    private static void build()
     {
         for (int i=0; i<planets_.size(); i++)
-            ((Planet)planets_.get(i)).incrementYear();
+            planets_.get(i).incrementYear();
     }
 
 
@@ -232,7 +232,7 @@ public class Galaxy extends Board
     public static boolean allPlanetsOwnedByOnePlayer()
     {
         Iterator it = planets_.iterator();
-        Player player = ((Planet)planets_.get(0)).getOwner();
+        Player player = planets_.get(0).getOwner();
         while (it.hasNext()) {
             Planet p = (Planet)it.next();
             if (p.getOwner() != player)

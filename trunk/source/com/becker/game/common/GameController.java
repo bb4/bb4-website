@@ -70,7 +70,7 @@ public abstract class GameController
         return viewer_;
     }
 
-    public LinkedList getMoveList() {
+    public LinkedList<Move> getMoveList() {
         return board_.getMoveList();
     }
 
@@ -164,7 +164,7 @@ public abstract class GameController
     {
         parseSGFGameInfo(game);
 
-        List moveSequence = new LinkedList();
+        List<Move> moveSequence = new LinkedList<Move>();
         extractMoveList( game.getTree(), moveSequence );
         GameContext.log( 2, "move sequence= " + moveSequence );
         reset();
@@ -209,7 +209,7 @@ public abstract class GameController
      * @param moveList - The place to store the moves for the game's main
      * variation.
      */
-    private void extractMoveList( SGFTree tree, List moveList )
+    private void extractMoveList( SGFTree tree, List<Move> moveList )
     {
         Enumeration trees = tree.getTrees(), leaves = tree.getLeaves(), tokens;
 
@@ -234,7 +234,7 @@ public abstract class GameController
     }
 
 
-    protected boolean processToken(SGFToken token, List moveList) {
+    protected boolean processToken(SGFToken token, List<Move> moveList) {
 
         boolean found = false;
         if (token instanceof MoveToken ) {

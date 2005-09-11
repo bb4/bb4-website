@@ -13,19 +13,19 @@ import java.text.MessageFormat;
  *
  * @author Barry Becker
  */
-public abstract class GalacticPlayer extends Player
+public class GalacticPlayer extends Player
 {
     // this player's home planet. (like earth is for humans)
     private Planet homePlanet_;
 
 
     // a list of outstanding Orders
-    List orders_;
+    List<Order> orders_;
 
     // ? have list of planets owned?
 
-    private static final float SATURATION = .8f;
-    private static final float BRIGHTNESS = .999f;
+    private static final float SATURATION = 0.8f;
+    private static final float BRIGHTNESS = 0.999f;
 
     public static final int DEFAULT_NUM_SHIPS = 100;
 
@@ -34,7 +34,7 @@ public abstract class GalacticPlayer extends Player
         super(name, color, isHuman);
         homePlanet_ = homePlanet;
         homePlanet_.setOwner(this);
-        orders_ = new LinkedList();
+        orders_ = new LinkedList<Order>();
     }
 
     /**
@@ -80,10 +80,10 @@ public abstract class GalacticPlayer extends Player
      * try to give a unique color based on the name
      * and knowing what the current player colors are.
      */
-    public static final Color getNewPlayerColor(GalacticPlayer[] players)
+    public static Color getNewPlayerColor(GalacticPlayer[] players)
     {
 
-        boolean uniqueEnough = false;
+        boolean uniqueEnough;
         float candidateHue;
 
         do {
@@ -96,7 +96,7 @@ public abstract class GalacticPlayer extends Player
     }
 
     /**
-     * @@ this method could use some improvment
+     * @@ this method could use some improvement
      * @param hue to check for uniqueness compared to other players.
      * @param players
      * @return
@@ -120,20 +120,20 @@ public abstract class GalacticPlayer extends Player
     /**
      * @param orders set the current list of orders for the player
      */
-    public void setOrders(List orders)
+    public void setOrders(List<Order> orders)
     {
         if (orders==null)
             return;
         orders_.clear();
         for (int i=0; i<orders.size(); i++) {
-            orders_.add(orders.get(i));
+            orders_.add((Order)orders.get(i));
         }
     }
 
     /**
      * @return get the current list of orders for the player
      */
-    public List getOrders()
+    public List<Order> getOrders()
     {
         GameContext.log(1,  "orders_="+orders_ );
         return orders_;

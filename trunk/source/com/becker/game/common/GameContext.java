@@ -15,7 +15,7 @@ import java.util.*;
  */
 public final class GameContext
 {
-    private static Set commonMessageKeys_ = new HashSet();;
+    private static Set<String> commonMessageKeys_ = new HashSet<String>();;
 
     // logger object
     private static Log logger_ = null;
@@ -259,7 +259,7 @@ public final class GameContext
         //commonMessageKeys_ =
         Enumeration enumXXX = commonMessages_.getKeys();
         while (enumXXX.hasMoreElements()) {
-            commonMessageKeys_.add(enumXXX.nextElement());
+            commonMessageKeys_.add((String)enumXXX.nextElement());
         }
         JComponent.setDefaultLocale(locale.getLocale());
     }
@@ -274,12 +274,12 @@ public final class GameContext
     {
         log(1,"verifying consistency of message bundles... ");
         // an array of hashSets of the keys for each bundle
-        List messageKeySets = new ArrayList();
+        List<Set> messageKeySets = new ArrayList<Set>();
         LocaleType[] locales = LocaleType.values();
         for (final LocaleType newVar : locales) {
             ResourceBundle bundle = ResourceBundle.getBundle(COMMON_MESSAGE_BUNDLE,
                     newVar.getLocale());
-            Set keySet = new HashSet();
+            Set<String> keySet = new HashSet<String>();
             Enumeration enumXXX = bundle.getKeys();
             while (enumXXX.hasMoreElements()) {
                 String key = (String) enumXXX.nextElement();

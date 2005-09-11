@@ -2,17 +2,10 @@ package com.becker.game.multiplayer.poker.ui;
 
 
 import com.becker.game.common.*;
-import com.becker.game.multiplayer.poker.PokerPlayer;
 import com.becker.game.multiplayer.common.ui.*;
-import com.becker.ui.ColorCellEditor;
-import com.becker.ui.ColorCellRenderer;
+import com.becker.game.multiplayer.poker.*;
 
-import javax.swing.*;
-import javax.swing.JTable;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.*;
-import java.util.*;
-import java.util.List;
 import java.awt.*;
 
 
@@ -62,9 +55,9 @@ public class PokerPlayerTable extends PlayerTable
         for (int i=0; i<nRows; i++) {
             players[i] = PokerPlayer.createPokerPlayer(
                                     (String)model.getValueAt(i, NAME_INDEX),
-                                    ((Integer)model.getValueAt(i, CASH_INDEX)).intValue(),
+                                    ((Integer)model.getValueAt(i, CASH_INDEX)),
                                     (Color)model.getValueAt(i, COLOR_INDEX),
-                                    ((Boolean)model.getValueAt(i, TYPE_INDEX)).booleanValue());
+                                    ((Boolean)model.getValueAt(i, TYPE_INDEX)));
         }
         return players;
     }
@@ -76,12 +69,11 @@ public class PokerPlayerTable extends PlayerTable
      */
     protected void addRow(Player player)
     {
-        PokerPlayer p = (PokerPlayer)player;
         Object d[] = new Object[getNumColumns()];
         d[NAME_INDEX] = player.getName();
         d[COLOR_INDEX] = player.getColor();
         d[CASH_INDEX] = DEFAULT_CASH_AMOUNT; //p.getCash();
-        d[TYPE_INDEX] = new Boolean(player.isHuman());
+        d[TYPE_INDEX] = player.isHuman();
         getModel().addRow(d);
     }
 
@@ -104,7 +96,7 @@ public class PokerPlayerTable extends PlayerTable
         int[] selectedRows = table_.getSelectedRows();
         for (int i=nSelected-1; i>=0; i--) {
             int selRow = selectedRows[i];
-            deletedRows_.add(getModel().getDataVector().elementAt(selRow));
+            deletedRows_.add((Object[]) getModel().getDataVector().elementAt(selRow));
             getModel().removeRow(selRow);
         }
     }

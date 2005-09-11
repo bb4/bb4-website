@@ -5,11 +5,9 @@ import com.becker.ui.ColorCellEditor;
 import com.becker.ui.ColorCellRenderer;
 
 import javax.swing.*;
-import javax.swing.JTable;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.*;
 import java.util.*;
-import java.util.List;
 
 
 /**
@@ -24,7 +22,7 @@ public abstract class PlayerTable
     protected JTable table_;
 
     // remember the deleted rows, so we can add them back when the user clicks add again
-    protected List deletedRows_;
+    protected List<Object[]> deletedRows_;
 
     protected static final int NAME_INDEX = 0;
     protected static final int COLOR_INDEX = 1;
@@ -34,7 +32,7 @@ public abstract class PlayerTable
     protected static final String COLOR = GameContext.getLabel("COLOR");
     protected static final String HUMAN = GameContext.getLabel("HUMAN");
 
-    protected static String[] columnNames_;
+    protected String[] columnNames_;
 
     /**
      * constructor
@@ -42,16 +40,14 @@ public abstract class PlayerTable
      */
     public PlayerTable(Player[] players, String[] columnNames)
     {
-        deletedRows_ = new ArrayList();
+        deletedRows_ = new ArrayList<Object[]>();
         columnNames_ = columnNames;
 
         initializeTable();
 
-        for (int i=0; i<players.length; i++)  {
-            Player p = players[i];
+        for (Player p : players) {
             addRow(p);
         }
-
     }
 
     protected void initializeTable()
@@ -100,7 +96,7 @@ public abstract class PlayerTable
             addRow(player);
         }
         else
-            getModel().addRow((Vector)deletedRows_.remove(0));
+            getModel().addRow(deletedRows_.remove(0));
     }
 
     protected abstract Player createPlayer();
@@ -114,7 +110,7 @@ public abstract class PlayerTable
         int[] selectedRows = table_.getSelectedRows();
         for (int i=nSelected-1; i>=0; i--) {
             int selRow = selectedRows[i];
-            deletedRows_.add(getModel().getDataVector().elementAt(selRow));
+            deletedRows_.add((Object[])getModel().getDataVector().elementAt(selRow));
             getModel().removeRow(selRow);
         }
     }

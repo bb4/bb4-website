@@ -48,7 +48,7 @@ public final class NiceCutPoints {
             maximum = minimum + SMALL_VALUE_CUTOFF;
         }
 
-        List positions = new ArrayList();
+        List<Double> positions = new ArrayList<Double>();
         //int numfracdigits = 0;
 
         if (Math.abs(maximum - minimum) < SMALL_VALUE_CUTOFF) {

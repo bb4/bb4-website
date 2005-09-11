@@ -7,7 +7,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import java.util.Enumeration;
 
 /**
- *  this class represents a move/node in the game tree.
+ *  Represents a move/node in the game tree.
  *  Each SearchTreeNode contains a Move as its userObject.
  *  When showing the game tree graphicall, these variables can take a lot of space
  *  since they are in every node in the tree. Still it is better to have them here than

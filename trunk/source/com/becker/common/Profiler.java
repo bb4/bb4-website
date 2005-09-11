@@ -15,8 +15,8 @@ public class Profiler
 
     private static final String INDENT = "    ";
 
-    private Map hmEntries_ = new HashMap();
-    private List topLevelEntries_ = new LinkedList();
+    private Map<String,ProfilerEntry> hmEntries_ = new HashMap<String,ProfilerEntry>();
+    private List<ProfilerEntry> topLevelEntries_ = new LinkedList<ProfilerEntry>();
     private boolean enabled_ = true;
     protected Log logger_ = null;
 
@@ -115,7 +115,7 @@ public class Profiler
         private long startTime_ = 0;
         // the total time used by this named code section while the app was running
         private long totalTime_ = 0;
-        private List children_ = new LinkedList();
+        private List<ProfilerEntry> children_ = new LinkedList<ProfilerEntry>();
 
         protected ProfilerEntry(String name)
         {

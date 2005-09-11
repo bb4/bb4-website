@@ -17,6 +17,7 @@ import javax.swing.*;
 public class GameApplet extends JApplet
 {
     private GamePanel gamePanel_ = null;
+    private static final long serialVersionUID = 0L;
 
     public void init() {
         GUIUtil.setCustomLookAndFeel();

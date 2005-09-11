@@ -20,6 +20,7 @@ public class GameOptionsDialog extends OptionsDialog implements ActionListener, 
      * the options get set directly on the game controller that is passed in.
      */
     protected final GameController controller_;
+    private static final long serialVersionUID = 0L;
 
     // debug params
     protected JTextField dbgLevelField_ = null;

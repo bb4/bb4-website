@@ -10,6 +10,7 @@ import java.awt.*;
 public class TexturedToolBar extends JToolBar
 {
     private ImageIcon texture_ = null;
+    private static final long serialVersionUID = 0L;
 
 
     public TexturedToolBar( ImageIcon texture )

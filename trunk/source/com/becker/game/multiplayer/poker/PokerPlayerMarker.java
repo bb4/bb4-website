@@ -1,11 +1,8 @@
 package com.becker.game.multiplayer.poker;
 
 import com.becker.game.common.*;
-import com.becker.game.multiplayer.galactic.GalacticPlayer;
-import com.becker.game.multiplayer.galactic.Planet;
 
 import java.awt.*;
-import java.awt.geom.Point2D;
 
 /**
  * Represents a Poker player in the viewer.

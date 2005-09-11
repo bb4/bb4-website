@@ -33,6 +33,7 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
     // circle around highlighted node
     private static final int HL_NODE_RADIUS = 3;
     private static final int HL_NODE_DIAMETER = 8;
+    private static final long serialVersionUID = 0L;
 
 
 
@@ -71,7 +72,6 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
         // it might be simpler to just use the depth from the controller, but that would
         // not account for those times when we drill deeper using quiescent search.
         depth_ = root_.getDepth();
-        System.out.println("tree depth="+depth_);
 
         totalAtLevel_ = new int[depth_+2];
         oldHighlightPath_ = null;
@@ -114,6 +114,10 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
             return;
         }
 
+
+
+        //System.out.println("num children="+node.getChildCount());
+        //
         Enumeration it = node.children();
         while (it.hasMoreElements()) {
             SearchTreeNode child = (SearchTreeNode)it.nextElement();
@@ -183,7 +187,7 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
     {
         TwoPlayerMove m = (TwoPlayerMove)node.getUserObject();
         g2.setColor( colormap_.getColorForValue(m.getValue()));
-        int x = MARGIN + width_*(offset+node.getSpaceAllocation() >> 1)/totalAtLevel_[depth];
+        int x = MARGIN + (int) (width_*(offset + node.getSpaceAllocation() / 2.0)/totalAtLevel_[depth]);
         int y = MARGIN + depth*levelHeight_;
         node.setX(x);
         node.setY(y);
@@ -220,8 +224,8 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
         if (highlighted)
             g2.setStroke(HIGHLIGHT_STROKE);
         g2.setColor( colormap_.getColorForValue(m.getInheritedValue()));
-        g2.drawLine(MARGIN + width_*(offset1+parent.getSpaceAllocation() >> 1)/totalAtLevel_[depth], MARGIN + depth*levelHeight_,
-                    MARGIN + width_*(offset2+child.getSpaceAllocation() >> 1)/totalAtLevel_[depth+1], MARGIN + (depth+1)*levelHeight_);
+        g2.drawLine(MARGIN + (int) (width_*(offset1 + parent.getSpaceAllocation() / 2.0)/totalAtLevel_[depth]), MARGIN + depth*levelHeight_,
+                    MARGIN + (int) (width_*(offset2 + child.getSpaceAllocation() / 2.0)/totalAtLevel_[depth+1]), MARGIN + (depth+1)*levelHeight_);
         if (highlighted)
             g2.setStroke(THIN_STROKE);
 
@@ -235,11 +239,10 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
     {
         int oldDepth = 0;
         int depth;
-        // used to position nodes during rendering (see drawTree)
         int[] offsetAtLevel = new int[depth_+2];
 
-        drawNode(node, 0, 0 , g2);     // draw last?
-        List q = new LinkedList();    // @@ see how perf changes if we use a ArrayList
+        drawNode(node, 0, 0, g2);    // draw last?
+        List<SearchTreeNode> q = new LinkedList<SearchTreeNode>();
         q.add(node);
 
         while (q.size() > 0) {
@@ -253,7 +256,6 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
             Enumeration enumXXX = p.children();
             while (enumXXX.hasMoreElements()) {
                 SearchTreeNode c = (SearchTreeNode)enumXXX.nextElement();
-                // @@ getting array out of bound here.
                 drawArc(p, c, depth, offsetAtLevel[depth],  offsetAtLevel[depth+1], g2);
                 drawNode(c, depth+1,  offsetAtLevel[depth+1], g2);
                 offsetAtLevel[depth+1] += c.getSpaceAllocation();

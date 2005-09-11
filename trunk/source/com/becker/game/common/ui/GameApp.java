@@ -32,9 +32,9 @@ public class GameApp implements ActionListener
 
 
     // provide a mapping from games to implementing panel classes
-    private Map hmGameClasses_;
+    private Map<String,String> hmGameClasses_;
     // provide mapping from cutpoints to game.
-    private Map hmGames_;
+    private Map<String,String> hmGames_;
 
     static {
         GameContext.log(3, "GameApp static init." );
@@ -76,8 +76,8 @@ public class GameApp implements ActionListener
      */
     private void init()
     {
-        hmGameClasses_ = new HashMap();
-        hmGames_ = new LinkedHashMap();
+        hmGameClasses_ = new HashMap<String,String>();
+        hmGames_ = new LinkedHashMap<String,String>();
 
         // these should get initialized from a text file resource so someone
         // adding a new game does not need to modify this file.
@@ -104,7 +104,7 @@ public class GameApp implements ActionListener
      */
     private void showGame(String gameName)
     {
-        String className = (String)hmGameClasses_.get(gameName);
+        String className = hmGameClasses_.get(gameName);
         Class gameClass = Util.loadClass(className);
 
         // this will load the resources for the specified game.

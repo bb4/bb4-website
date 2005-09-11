@@ -9,6 +9,7 @@ import java.awt.*;
  */
 public class TexturedPanel extends JPanel
 {
+    private static final long serialVersionUID = 0L;
 
     private ImageIcon texture_ = null;
 
