@@ -22,7 +22,6 @@ import java.util.List;
 final class GameTreeViewer extends JPanel implements MouseMotionListener
 {
 
-
     private static final Color BACKGROUND_COLOR = Color.white;
     private static final int BACKGROUND_BAND_OPACITY = 60;
     private static final int MARGIN = 8;
@@ -72,11 +71,12 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
         // it might be simpler to just use the depth from the controller, but that would
         // not account for those times when we drill deeper using quiescent search.
         depth_ = root_.getDepth();
+        System.out.println("tree depth="+depth_);
 
-        totalAtLevel_ = new int[depth_+1];
+        totalAtLevel_ = new int[depth_+2];
         oldHighlightPath_ = null;
 
-        if (root_!=null && root_.getUserObject()!=null)
+        if (root_ != null && root_.getUserObject() != null)
             initializeTreeStats(root_, 0);
     }
 
@@ -236,7 +236,7 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
         int oldDepth = 0;
         int depth;
         // used to position nodes during rendering (see drawTree)
-        int[] offsetAtLevel = new int[depth_+1];
+        int[] offsetAtLevel = new int[depth_+2];
 
         drawNode(node, 0, 0 , g2);     // draw last?
         List q = new LinkedList();    // @@ see how perf changes if we use a ArrayList
@@ -253,6 +253,7 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
             Enumeration enumXXX = p.children();
             while (enumXXX.hasMoreElements()) {
                 SearchTreeNode c = (SearchTreeNode)enumXXX.nextElement();
+                // @@ getting array out of bound here.
                 drawArc(p, c, depth, offsetAtLevel[depth],  offsetAtLevel[depth+1], g2);
                 drawNode(c, depth+1,  offsetAtLevel[depth+1], g2);
                 offsetAtLevel[depth+1] += c.getSpaceAllocation();
@@ -300,7 +301,7 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
 
         width_ = getWidth()-2*MARGIN;
         height_ = getHeight()-2*MARGIN;
-        if (depth_==0)
+        if (depth_ == 0)
             return; // tree not ready to be painted.
         levelHeight_ = height_/depth_;
 

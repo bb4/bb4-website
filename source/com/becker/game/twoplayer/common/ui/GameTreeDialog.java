@@ -125,10 +125,8 @@ public final class GameTreeDialog extends JDialog
         previewPanel.setLayout( new BorderLayout() );
 
         ((TwoPlayerBoardViewer)boardViewer_).setPreferredSize( new Dimension( 200, 500 ) );
-        //previewPanel_.setPreferredSize( new Dimension( 200, 600 ) );
 
         JPanel viewerPanel = new JPanel();
-        //JPanel filler = new JPanel();
         viewerPanel.setLayout(new BorderLayout());
         viewerPanel.setBorder(BorderFactory.createEmptyBorder(3,3,3,3));
         infoLabel_.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED),

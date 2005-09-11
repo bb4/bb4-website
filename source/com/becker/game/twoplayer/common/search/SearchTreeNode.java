@@ -55,8 +55,8 @@ public class SearchTreeNode extends DefaultMutableTreeNode
     /**
      * location in the boardviewer
      */
-    private int x_;
-    private int y_;
+    private int xLocation_;
+    private int yLocation_;
 
     // @@ also contain visisbility info here
 
@@ -146,18 +146,18 @@ public class SearchTreeNode extends DefaultMutableTreeNode
     }
 
     public int getX() {
-        return x_;
+        return xLocation_;
     }
 
     public void setX(int x) {
-        this.x_ = x;
+        this.xLocation_ = x;
     }
 
     public int getY() {
-        return y_;
+        return yLocation_;
     }
 
     public void setY(int y) {
-        this.y_ = y;
+        this.yLocation_ = y;
     }
 }
