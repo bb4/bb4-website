@@ -30,7 +30,7 @@ public abstract class Board implements BoardInterface, Cloneable
 
     // We keep a list of the moves that have been made.
     // We can navigate forward or backward in time using this
-    protected final LinkedList moveList_ = new LinkedList();
+    protected final LinkedList<Move> moveList_ = new LinkedList<Move>();
 
 
     /**
@@ -71,7 +71,7 @@ public abstract class Board implements BoardInterface, Cloneable
         return numCols_;
     }
 
-    public LinkedList getMoveList() {
+    public LinkedList<Move> getMoveList() {
         return moveList_;
     }
 

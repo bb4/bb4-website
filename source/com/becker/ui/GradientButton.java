@@ -22,8 +22,9 @@ public class GradientButton extends JButton
     private Color gradientStartColor_ = null;
     //  color at the bottom of the button
     private Color gradientEndColor_ = null;
+    private static final long serialVersionUID = 0L;
 
-    private CustomUI myUI = new CustomUI();
+    private CustomUI myUI_ = new CustomUI();
 
     /**
      * Constructor
@@ -31,7 +32,6 @@ public class GradientButton extends JButton
      */
     public GradientButton()
     {
-        super();
         commonDefaultInit();
     }
 
@@ -41,7 +41,6 @@ public class GradientButton extends JButton
      */
     public GradientButton( String text )
     {
-        super();
         commonDefaultInit();
         this.setText( text );
     }
@@ -52,7 +51,6 @@ public class GradientButton extends JButton
      */
     public GradientButton( String text, Icon icon )
     {
-        super();
         commonDefaultInit();
         this.setText( text );
         this.setIcon( icon );
@@ -65,10 +63,9 @@ public class GradientButton extends JButton
      */
     public GradientButton( Color startColor, Color endColor )
     {
-        super();
         gradientStartColor_ = startColor;
         gradientEndColor_ = endColor;
-        setUI( myUI );
+        setUI( myUI_ );
     }
 
     private void commonDefaultInit()
@@ -76,7 +73,7 @@ public class GradientButton extends JButton
         Color c = UIManager.getColor( "Button.background" );
         gradientStartColor_ = c.brighter();
         gradientEndColor_ = c;
-        setUI( myUI );
+        setUI( myUI_ );
     }
 
     /**
@@ -84,7 +81,7 @@ public class GradientButton extends JButton
      */
     public void setUI( ButtonUI b )
     {
-        super.setUI( myUI );
+        super.setUI( myUI_ );
     }
 
     /**

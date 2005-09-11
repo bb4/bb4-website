@@ -14,6 +14,7 @@ public class ResizableAppletPanel extends JPanel
 
     // holds what would normally be put in the applet contentpane
     private JPanel mainPanel_ = null;
+    private static final long serialVersionUID = 0L;
 
     // these buffer panels allows the applet to be resized
     private JPanel resizeHorizontalPanel_ = new JPanel();

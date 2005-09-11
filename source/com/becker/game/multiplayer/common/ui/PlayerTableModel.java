@@ -1,13 +1,6 @@
 package com.becker.game.multiplayer.common.ui;
 
-import com.becker.game.multiplayer.galactic.GalacticPlayer;
-import com.becker.game.multiplayer.galactic.Planet;
-import com.becker.game.common.GameContext;
-import com.becker.game.common.Location;
-
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
+import javax.swing.table.*;
 import java.util.*;
 
 
@@ -20,6 +13,7 @@ import java.util.*;
 public class PlayerTableModel extends DefaultTableModel
 {
     boolean editable_;
+    private static final long serialVersionUID = 0;
 
     public PlayerTableModel(Object[][] data, Object[] columnNames, boolean editable)
     {

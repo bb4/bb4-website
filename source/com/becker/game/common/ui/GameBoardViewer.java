@@ -40,7 +40,7 @@ public abstract class GameBoardViewer
     // the size of a game board cell where the pieces go
     protected int cellSize_;
     // for restoring undone moves
-    protected final LinkedList undoneMoves_ = new LinkedList();
+    protected final LinkedList<Move> undoneMoves_ = new LinkedList<Move>();
 
     // to move pieces you drag them (if the move is valid)
     protected BoardPosition draggedPiece_ = null;
@@ -59,7 +59,7 @@ public abstract class GameBoardViewer
 
     // for firing events
     private EventQueue evtq_;
-    private List gameListeners_ = new ArrayList();
+    private List<GameChangedListener> gameListeners_ = new ArrayList<GameChangedListener>();
 
     protected JProgressBar progressBar_ = null;
     protected Timer timer_ = null;

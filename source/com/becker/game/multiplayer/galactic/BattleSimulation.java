@@ -13,7 +13,7 @@ import java.util.*;
 public class BattleSimulation
 {
 
-    private List hits_;
+    private List<Player> hits_;
     private int numShipsAfterAttack_ = 0;
     GalacticPlayer ownerAfterAttack_;
     GalacticPlayer ownerBeforeAttack_;
@@ -77,14 +77,14 @@ public class BattleSimulation
      */
     public void createSimulation(Order order, Planet destPlanet)
     {
-        hits_ = new LinkedList();
+        hits_ = new LinkedList<Player>();
 
         int numAttackShips = order.getFleetSize();
         int numDefendShips = destPlanet.getNumShips();
         Player attacker = order.getOwner();
         Player defender = destPlanet.getOwner();
 
-        String sDefender = (destPlanet.getOwner()==null)? "Neutral" : destPlanet.getOwner().getName();
+        //String sDefender = (destPlanet.getOwner()==null)? "Neutral" : destPlanet.getOwner().getName();
 
         if (order.getOwner()==destPlanet.getOwner()) {
             // reinforcements have arrived.
@@ -94,9 +94,9 @@ public class BattleSimulation
         else {
             // create hit sequence
             while (numAttackShips>0 && numDefendShips>0) {
-                int total = numAttackShips + numDefendShips;
+                // int total = numAttackShips + numDefendShips;
 
-                double ratio = (.5+ (double)numDefendShips/((double)(numAttackShips + numDefendShips)))/2.0;
+                double ratio = (0.5+ (double)numDefendShips/((double)(numAttackShips + numDefendShips)))/2.0;
                 if (Math.random() > ratio) {
                     numAttackShips--;
                     hits_.add(attacker);

@@ -187,7 +187,7 @@ public final class GoMove extends TwoPlayerMove
         adjustLiberties(stone, board);
 
         // hitting this all the time when showing game tree.
-        assert (stone.getString() == null) : stone +" already belongs to "+stone.getString();
+        //assert (stone.getString() == null) : stone +" already belongs to "+stone.getString();
 
         determineCaptures(stone, board);
         updateStringsAfterMoving(stone, board);

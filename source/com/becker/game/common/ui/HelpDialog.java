@@ -19,6 +19,7 @@ final class HelpDialog extends JDialog implements ActionListener
 
 
     private final GradientButton okButton_ = new GradientButton();
+    private static final long serialVersionUID = 0L;
 
     // these get replaced
     private static String gameName_ = GameContext.getLabel("GAME_TUTORIAL");

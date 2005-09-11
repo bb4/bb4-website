@@ -1,3 +1,4 @@
+package com.becker.game.multiplayer.poker.test;
 
 import java.io.*;
 import java.util.*;
@@ -35,6 +36,7 @@ class PokerHands110202 {
         }
         catch (IOException e)
         {
+            e.printStackTrace();
             return (null);
         }
 
@@ -87,9 +89,7 @@ class PokerHands110202 {
         String line;
 
         while ((line = readLine(stream)) != null) {
-
             evaluateLine(line);
-
         }
     }
 
@@ -131,7 +131,7 @@ class PokerHands110202 {
 
 
         private final String symbol_;
-        private static final Map rankFromSymbol_ = new HashMap();
+        private static final Map<String,Rank> rankFromSymbol_ = new HashMap<String,Rank>();
 
         static {
             for (Rank r : values()) {
@@ -479,12 +479,12 @@ class PokerHands110202 {
          * @return a map which has an entry for each card rank represented in the hand and its associated count.
          */
         private Map computeMatchMap() {
-            Map map = new HashMap();
+            Map<Rank,Integer> map = new HashMap<Rank,Integer>();
 
             for (Card c : hand_) {
                 Integer num = (Integer)map.get(c.rank());
                 if (num != null)  {
-                   map.put(c.rank(), num.intValue()+1);
+                   map.put(c.rank(), num+1);
                 }
                 else
                    map.put(c.rank(), 1);
@@ -541,12 +541,11 @@ class PokerHands110202 {
         /**
          * inner class used to define a sord order on cards in a poker hane.
          */
-        private class CardComparator implements Comparator {
+        private class CardComparator implements Comparator<Card> {
 
-            public int compare(Object c1, Object c2) {
+            public int compare(Card card1, Card card2) {
 
-                Card card1 = (Card)c1;
-                Card card2 = (Card)c2;
+
 
                 if (card1.rank() == card2.rank())   {
                     return card1.suit().ordinal() - card2.suit().ordinal();

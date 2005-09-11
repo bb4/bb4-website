@@ -3,18 +3,14 @@ package com.becker.game.multiplayer.galactic.ui;
 import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
 import com.becker.game.multiplayer.galactic.*;
-import com.becker.ui.GradientButton;
-import com.becker.ui.GUIUtil;
+import com.becker.ui.*;
 
-import javax.swing.*;
 import javax.swing.Box;
-import javax.swing.border.TitledBorder;
-import javax.swing.border.Border;
-import javax.vecmath.Vector2d;
-import java.text.MessageFormat;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.*;
+import javax.swing.border.*;
 import java.awt.*;
+import java.awt.event.*;
+import java.text.*;
 
 
 /**
@@ -35,7 +31,7 @@ class GalacticInfoPanel extends GameInfoPanel implements GameChangedListener, Ac
     /**
      * Constructor
      */
-    public GalacticInfoPanel( GameController controller )
+    GalacticInfoPanel( GameController controller )
     {
         super(controller);
     }
@@ -114,13 +110,13 @@ class GalacticInfoPanel extends GameInfoPanel implements GameChangedListener, Ac
 
 
            OrdersDialog ordersDialog =
-                   new OrdersDialog(null, currentPlayer, (Galaxy)gc.getBoard(), 
+                   new OrdersDialog(null, currentPlayer, (Galaxy)gc.getBoard(),
                                     gc.getNumberOfYearsRemaining());
            //ordersDialog.setLocationRelativeTo( this );
            Point p = this.getParent().getLocationOnScreen();
 
            // offset the dlg so the Galaxy grid is visible as a reference
-           ordersDialog.setLocation((int)(p.getX()+.7*getParent().getWidth()), (int)(p.getY()+getParent().getHeight()/3));
+           ordersDialog.setLocation((int)(p.getX()+0.7*getParent().getWidth()), (int)(p.getY()+getParent().getHeight()/3));
 
            boolean canceled = ordersDialog.showDialog();
            if ( !canceled ) { // newGame a game with the newly defined options

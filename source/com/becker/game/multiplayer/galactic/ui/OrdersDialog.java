@@ -29,12 +29,14 @@ final class OrdersDialog extends OptionsDialog implements ActionListener
     private int numPreExistingOrders_;
     private int numYearsRemaining_;
 
+    private static final long serialVersionUID = 0L;
+
 
     /**
      * constructor - create the tree dialog.
      * @param parent frame to display relative to
      */
-    public OrdersDialog( JFrame parent, GalacticPlayer player, Galaxy galaxy,
+    OrdersDialog( JFrame parent, GalacticPlayer player, Galaxy galaxy,
                          int numYearsRemaining)
     {
         super(parent);
@@ -124,7 +126,7 @@ final class OrdersDialog extends OptionsDialog implements ActionListener
      *
      * @return  the orders in the table
      */
-    public List getOrders()
+    public List<Order> getOrders()
     {
         return ordersTable_.getOrders();
     }

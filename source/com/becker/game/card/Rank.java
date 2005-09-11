@@ -26,7 +26,7 @@ public enum Rank {
 
 
     private final String symbol_;
-    private static final Map rankFromSymbol_ = new HashMap();
+    private static final Map<String,Rank> rankFromSymbol_ = new HashMap<String,Rank>();
 
     static {
         for (Rank r : values()) {

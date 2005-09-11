@@ -22,7 +22,7 @@ public class CacheManager implements Cache, Serializable {
     private boolean isEnabled_ = true;
     private boolean isReadOnly_ = false;
     private boolean isSized_ = false;
-    private static final String serialVersionUID = "uidForSerializable";
+    private static final long serialVersionUID = 12345L;
 
     /**
      * Default constructor.  Create a cache with no limit on the number

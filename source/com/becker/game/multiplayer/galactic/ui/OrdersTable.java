@@ -6,12 +6,9 @@ import com.becker.game.common.GameContext;
 import com.becker.ui.HeaderRenderer;
 
 import javax.swing.*;
-import javax.swing.JTable;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.*;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.awt.geom.Point2D;
 
 
@@ -26,7 +23,7 @@ import java.awt.geom.Point2D;
 public class OrdersTable
 {
     private JTable table_;
-    private List lastOrders_;
+    private List<Order> lastOrders_;
 
     private static final int ORIGIN_INDEX = 0;
     private static final int DESTINATION_INDEX = 1;
@@ -38,7 +35,7 @@ public class OrdersTable
     private static final String NUM_SHIPS = GameContext.getLabel("NUM_SHIPS");
     private static final String DISTANCE = GameContext.getLabel("ETA");
 
-    private static String[] columnNames_ =  {ORIGIN,
+    private static final String[] columnNames_ =  {ORIGIN,
                                              DESTINATION,
                                              NUM_SHIPS,
                                              DISTANCE };
@@ -48,12 +45,12 @@ public class OrdersTable
     private static final String NUM_SHIPS_TIP = GameContext.getLabel("NUM_SHIPS_TIP");
     private static final String DISTANCE_TIP = GameContext.getLabel("ETA_TIP");
 
-    private static String[] columnTips_ =  {ORIGIN_TIP,
+    private static final String[] columnTips_ =  {ORIGIN_TIP,
                                              DESTINATION_TIP,
                                              NUM_SHIPS_TIP,
                                              DISTANCE_TIP };
 
-    private static int NUM_COLS = columnNames_.length;
+    private static final int NUM_COLS = columnNames_.length;
 
 
 
@@ -61,14 +58,14 @@ public class OrdersTable
      * constructor
      * @param orders to initialize the rows in the table with.
      */
-    public OrdersTable(List orders)
+    public OrdersTable(List<Order> orders)
     {
         initializeTable();
         lastOrders_ = orders;
 
         if (orders!=null) {
             for (int i=0; i<orders.size(); i++)  {
-                Order order = (Order)orders.get(i);
+                Order order = orders.get(i);
                 addRow(order);
             }
         }
@@ -102,24 +99,24 @@ public class OrdersTable
     /**
      * @return  the players represented by rows in the table
      */
-    public List getOrders()
+    public List<Order> getOrders()
     {
         TableModel model = table_.getModel();
         int nRows = model.getRowCount();
-        List orders = new ArrayList(nRows);
+        List<Order> orders = new ArrayList<Order>(nRows);
         int numOldOrders = lastOrders_.size();
 
         for (int i=0; i<nRows; i++) {
             String origin = model.getValueAt(i,ORIGIN_INDEX).toString();
             String dest = model.getValueAt(i,DESTINATION_INDEX).toString();
-            int numShips = ((Integer)model.getValueAt(i, NUM_SHIPS_INDEX)).intValue();
+            int numShips = ((Integer)model.getValueAt(i, NUM_SHIPS_INDEX));
 
             Order o;
             Planet originPlanet = Galaxy.getPlanet(origin.charAt(0));
             Planet destPlanet = Galaxy.getPlanet(dest.charAt(0));
 
             if (i < numOldOrders) {
-                Point2D currLoc = ((Order)lastOrders_.get(i)).getCurrentLocation();
+                Point2D currLoc = (lastOrders_.get(i)).getCurrentLocation();
                 o = new Order(originPlanet, destPlanet, numShips, currLoc);
             }
             else {
@@ -138,9 +135,9 @@ public class OrdersTable
      *
      * @return total outgoing ships for new orders (excluding existing)
      */
-    protected HashMap getCurrentOutGoingShips()
+    protected Map getCurrentOutGoingShips()
     {
-        HashMap outgoingMap = new HashMap();
+        Map<Planet,Integer> outgoingMap = new HashMap<Planet,Integer>();
         TableModel model = table_.getModel();
         int nRows = model.getRowCount();
 
@@ -152,10 +149,10 @@ public class OrdersTable
             Integer numShips = ((Integer)model.getValueAt(i, NUM_SHIPS_INDEX));
             if (outgoingMap.get(source) != null) {
                 Integer n = (Integer)outgoingMap.get(source);
-                outgoingMap.put(source, new Integer(numShips+n));
+                outgoingMap.put(source, numShips+n);
             }
             else {
-                outgoingMap.put(source, new Integer(numShips));
+                outgoingMap.put(source, numShips);
             }
         }
         return outgoingMap;
@@ -185,7 +182,7 @@ public class OrdersTable
         Object d[] = new Object[NUM_COLS];
         d[ORIGIN_INDEX] = new Character( order.getOrigin().getName());
         d[DESTINATION_INDEX ] = new Character( order.getDestination().getName());
-        d[NUM_SHIPS_INDEX] = new Integer( order.getFleetSize());
+        d[NUM_SHIPS_INDEX] = order.getFleetSize();
         d[DISTANCE_INDEX] = new Float(order.getTimeRemaining());
 
         getModel().addRow(d);
