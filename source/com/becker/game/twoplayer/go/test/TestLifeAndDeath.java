@@ -23,9 +23,9 @@ public class TestLifeAndDeath extends GoTestCase {
      * - don't calculate the liberties everytime in GoString.getLiberties(),
      *     but instead update them incrementally. 75 seconds or 62%
      * - Don't play the move to determine if a suicide and then undo it. Instead infer suicide from looking at the nobi nbrs.
-     *     75 -> 35
+     *     75 -> 74
      *
-     * overall= 250 -> 35    factor of 7 speedup!
+     * overall= 250 -> 74    factor of 3 speedup!
      */
     public void testProblem58() {
         GoMove m = getNextMove("problem_life58", true);

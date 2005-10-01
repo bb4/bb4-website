@@ -8,22 +8,22 @@ public abstract class AnimationDebugComponent
         extends AnimationComponent
         implements ActionListener
 {
-    private boolean runNextStep = false;
-    protected Button stepButton = new Button( "advance to next frame" );
+    private boolean runNextStep_ = false;
+    protected Button stepButton_ = new Button( "advance to next frame" );
 
     public AnimationDebugComponent()
     {
-        stepButton.addActionListener( this );
+        stepButton_.addActionListener( this );
     }
 
     public void run()
     {
-        while ( mTrucking ) {
-            if ( runNextStep ) {
+        while ( animating_ ) {
+            if ( runNextStep_ ) {
                 render();
                 timeStep();
                 calculateFrameRate();
-                runNextStep = false;
+                runNextStep_ = false;
                 repaint();
             }
         }
@@ -31,13 +31,13 @@ public abstract class AnimationDebugComponent
 
     public Button getStepButton()
     {
-        return stepButton;
+        return stepButton_;
     }
 
     public void actionPerformed( ActionEvent event )
     {
-        if ( event.getSource() == stepButton )
-            runNextStep = true;
+        if ( event.getSource() == stepButton_ )
+            runNextStep_ = true;
     }
 
 }

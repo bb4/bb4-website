@@ -1,7 +1,9 @@
-package com.becker.snake;
+package com.becker.simulation.snake;
 
-import javax.vecmath.Vector2d;
+import javax.vecmath.*;
 import java.awt.*;
+
+import static com.becker.simulation.snake.SnakeConstants.*;
 
 /**
  *  A segment of a snakes body. It is composed of edges and particles
@@ -21,7 +23,7 @@ import java.awt.*;
  *
  *  @author Barry Becker
  */
-class Segment
+public class Segment
 {
 
     // number of edges per segment (1 of which is shared with next semgent)
@@ -38,10 +40,10 @@ class Segment
     private static final Color VELOCITY_COLOR = new Color( 80, 100, 250, 100 );
 
     private static final double VECTOR_SIZE = 130.0;
-    private static final BasicStroke EDGE_STROKE = new BasicStroke( 3 );
+    //private static final BasicStroke EDGE_STROKE = new BasicStroke( 3 );
     private static final BasicStroke VECTOR_STROKE = new BasicStroke( 1 );
 
-    private static final double EPS = .00001;
+    private static final double EPS = 0.00001;
     private static final double MASS_SCALE = 1.0;
 
     private double halfLength_ = 0;
@@ -67,7 +69,7 @@ class Segment
     private Vector2d direction_ = new Vector2d( 0, 0 );
 
     // temp vector to aid in calculations (saves creating a lot of new vector objects)
-    private Vector2d v_ = new Vector2d( 0, 0 );
+    private Vector2d vel_ = new Vector2d( 0, 0 );
     private Vector2d change_ = new Vector2d( 0, 0 );
 
     /**
@@ -77,15 +79,15 @@ class Segment
      * @param xpos position of the center of the segment
      * @param ypos
      */
-    public Segment( double width1, double width2, double length, double xpos, double ypos, int segmentIndex, Snake snake )
+    protected Segment( double width1, double width2, double length, double xpos, double ypos, int segmentIndex, Snake snake )
     {
         //length_ = Snake.SCALE * Math.max(width1, width2);
         length_ = length;
         halfLength_ = length_ / 2.0;
         commonInit( width1, width2, xpos, ypos, segmentIndex, snake );
 
-        particle_[1] = new Particle( xpos + halfLength_, ypos + Snake.SCALE * width1 / 2.0, particleMass_ );
-        particle_[2] = new Particle( xpos + halfLength_, ypos - Snake.SCALE * width1 / 2.0, particleMass_ );
+        particle_[1] = new Particle( xpos + halfLength_, ypos + SCALE * width1 / 2.0, particleMass_ );
+        particle_[2] = new Particle( xpos + halfLength_, ypos - SCALE * width1 / 2.0, particleMass_ );
 
         initCommonEdges();
         edge_[1] = new Edge( particle_[1], particle_[2] ); // front
@@ -97,7 +99,7 @@ class Segment
      * @param width2 the width of the segment nearest the tail
      * @param segmentInFront the segment in front of this one
      */
-    public Segment( double width1, double width2, double length, Segment segmentInFront, int segmentIndex, Snake snake )
+    protected Segment( double width1, double width2, double length, Segment segmentInFront, int segmentIndex, Snake snake )
     {
         Particle center = segmentInFront.getCenterParticle();
         //length_ = Snake.SCALE * Math.max(width1, width2);
@@ -127,8 +129,8 @@ class Segment
         segmentMass_ = (width1 + width2) * halfLength_;
         particleMass_ = MASS_SCALE * segmentMass_ / 3;
 
-        particle_[0] = new Particle( xpos - halfLength_, ypos + Snake.SCALE * width2 / 2.0, particleMass_ );
-        particle_[3] = new Particle( xpos - halfLength_, ypos - Snake.SCALE * width2 / 2.0, particleMass_ );
+        particle_[0] = new Particle( xpos - halfLength_, ypos + SCALE * width2 / 2.0, particleMass_ );
+        particle_[3] = new Particle( xpos - halfLength_, ypos - SCALE * width2 / 2.0, particleMass_ );
         particle_[CENTER_INDEX] = new Particle( xpos, ypos, particleMass_ );
     }
 
@@ -239,12 +241,13 @@ class Segment
             double theta = (double) segmentIndex_ / period - waveSpeed * time;
             double offset = 0;
             switch (Snake.waveType_) {
-                case Snake.SINE_WAVE:
+                case SINE_WAVE:
                     offset = amplitude * (Math.sin( theta ));
                     break;
-                case Snake.SQUARE_WAVE:
+                case SQUARE_WAVE:
                     offset = (Math.sin( theta ) > 0.0) ? amplitude : -amplitude;
                     break;
+                default : assert false;
             }
             double contractionLeft = 1.0 + offset;
             double contractionRight = 1.0 - offset;
@@ -327,8 +330,8 @@ class Segment
     public void updateFrictionalForce( double timeStep )
     {
         int i = CENTER_INDEX;
-        v_.set( particle_[i].force );
-        double forceMag = v_.length();
+        vel_.set( particle_[i].force );
+        double forceMag = vel_.length();
         // the frictional force is the weight of the segment (partical mass *3) * coefficient of friction
         double frictionalForce;
 
@@ -346,9 +349,9 @@ class Segment
             if ( dot < 0 ) {
                 // then the velocity vector is going at least partially backwards
                 // remove the backwards component.
-                v_.set( spineDir );
-                v_.scale( dot );
-                change_.sub( v_ );
+                vel_.set( spineDir );
+                vel_.scale( dot );
+                change_.sub( vel_ );
             }
         }
         else if ( velMag <= EPS && forceMag > EPS ) {
@@ -377,10 +380,10 @@ class Segment
     {
         for ( int i = 0; i < NUM_PARTICLES; i++ ) {
             if ( (i != 3 && i != 0) || isTail() ) {
-                v_.set( particle_[i].force );
-                v_.add( particle_[i].frictionalForce );
-                v_.scale( (1.0 / particle_[i].mass) );
-                particle_[i].acceleration.set( v_ );
+                vel_.set( particle_[i].force );
+                vel_.add( particle_[i].frictionalForce );
+                vel_.scale( (1.0 / particle_[i].mass) );
+                particle_[i].acceleration.set( vel_ );
             }
         }
     }
@@ -401,7 +404,7 @@ class Segment
         for ( int i = 0; i < NUM_PARTICLES; i++ ) {
             if ( (i != 3 && i != 0) || isTail() ) {
                 // the current velocity v0
-                v_.set( particle_[i].velocity );
+                vel_.set( particle_[i].velocity );
                 change_.set( particle_[i].acceleration );
                 change_.scale( timeStep );
 
@@ -409,8 +412,8 @@ class Segment
                     //System.out.println("becoming unstable vel mag="+change_.length());
                     unstable = true;
                 }
-                v_.add( change_ );
-                particle_[i].velocity.set( v_ );
+                vel_.add( change_ );
+                particle_[i].velocity.set( vel_ );
                 /*
                 if (i==CENTER_INDEX) {
                     Vector2d spineDir = this.getSpinalDirection();
@@ -440,11 +443,11 @@ class Segment
         for ( int i = 0; i < NUM_PARTICLES; i++ ) {
             if ( (i != 3 && i != 0) || isTail() ) {
                 // the current velocity v0
-                v_.set( particle_[i].x, particle_[i].y );
+                vel_.set( particle_[i].x, particle_[i].y );
                 change_.set( particle_[i].velocity );
                 change_.scale( timeStep );
-                v_.add( change_ );
-                particle_[i].set( v_.x, v_.y );
+                vel_.add( change_ );
+                particle_[i].set( vel_.x, vel_.y );
             }
         }
     }
@@ -453,9 +456,9 @@ class Segment
     {
         for ( int i = 0; i < NUM_PARTICLES; i++ ) {
             if ( (i != 3 && i != 0) || isTail() ) {
-                v_.set( particle_[i].x, particle_[i].y );
-                v_.add( vec );
-                particle_[i].set( v_.x, v_.y );
+                vel_.set( particle_[i].x, particle_[i].y );
+                vel_.add( vec );
+                particle_[i].set( vel_.x, vel_.y );
             }
         }
     }
@@ -524,7 +527,7 @@ class Segment
     {
         StringBuffer str = new StringBuffer( "Segment particles:\n" );
         for ( int i = 0; i < 5; i++ )
-            str.append( " p" + i + "=" + particle_[i] + " \n" );
+            str.append( " p" + i + '=' + particle_[i] + " \n" );
         return str.toString();
     }
 

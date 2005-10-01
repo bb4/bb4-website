@@ -1,6 +1,6 @@
-package com.becker.liquid;
+package com.becker.simulation.liquid;
 
-import javax.vecmath.Point2d;
+import javax.vecmath.*;
 
 /**
  *  the Particle is the base entity in the liquid simulation.

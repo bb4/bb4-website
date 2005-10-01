@@ -75,7 +75,7 @@ public abstract class OptionsDialog extends JDialog implements ActionListener
         if (parent_ != null)  {
             this.setLocationRelativeTo( parent_ );
         }
-      
+
         this.setVisible( true );
         this.toFront();
         this.pack();
@@ -83,10 +83,6 @@ public abstract class OptionsDialog extends JDialog implements ActionListener
         return canceled_;
     }
 
-    /**
-     * set the title for the dialog
-     */
-    public abstract String getTitle();
 
     /**
      * initialize one of the buttons that go at the bottom of the dialog

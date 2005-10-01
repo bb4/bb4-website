@@ -211,15 +211,15 @@ public class GameApp implements ActionListener
         GUIUtil.setStandAlone((GUIUtil.getBasicService() != null));
 
         // create a game panel of the appropriate type based on the name of the class passed in.
-         // if no game is specified as an argument, then we show a menu for selecting a game
-         String gameName = (args.length>0)? args[0] : DEFAULT_GAME;
+        // if no game is specified as an argument, then we show a menu for selecting a game
+        String gameName = (args.length>0)? args[0] : DEFAULT_GAME;
 
-         if (args.length>1) {
-             // then a locale has been specified
-             String localeName = args[1];
-             LocaleType locale = GameContext.getLocale(localeName, true);
-             GameContext.setLocale(locale);
-         }
+        if (args.length>1) {
+            // then a locale has been specified
+            String localeName = args[1];
+            LocaleType locale = GameContext.getLocale(localeName, true);
+            GameContext.setLocale(locale);
+        }
 
         GameApp gameApp = new GameApp();
 

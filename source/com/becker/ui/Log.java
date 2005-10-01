@@ -1,8 +1,5 @@
 package com.becker.ui;
 
-import com.becker.ui.OutputWindow;
-import com.becker.common.Assert;
-
 import java.io.*;
 
 /**

@@ -1,4 +1,4 @@
-package com.becker.snake;
+package com.becker.simulation.snake;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
