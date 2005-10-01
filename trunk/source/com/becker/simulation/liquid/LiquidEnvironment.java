@@ -1,12 +1,11 @@
-package com.becker.liquid;
+package com.becker.simulation.liquid;
 
 import com.becker.common.*;
-import com.becker.ui.OutputWindow;
-import com.becker.ui.Log;
+import com.becker.ui.*;
 
-import javax.vecmath.Point2d;
-import javax.vecmath.Vector2d;
+import javax.vecmath.*;
 import java.util.*;
+import static com.becker.simulation.common.PhysicsConstants.*;
 
 /**
  *  this is the global space containing all the cells, walls, and particles
@@ -44,14 +43,11 @@ public class LiquidEnvironment
     // the time since the start of the simulation
     private double time_ = 0.0;
 
-    // gravity in mm/s^2
-    protected static final double GRAVITY = 0.980;
 
     // physical constants.
     // cell width and height in mm.
     private static final double CELL_SIZE = 10.0;
-    // atmospheric pressure = 1e5 N/m^2 or .1 g /(mm s^2)
-    private static final double ATMOSPHERIC_PRESSURE = 0.10;
+
     // density of the liquid in grams per mm^3
     // water = 1000 kg/m^3 or .001 g/mm^2
     private static final double DENSITY = 0.001;
@@ -101,22 +97,26 @@ public class LiquidEnvironment
         setInitialConditions();
     }
 
-    public int getXDim()
-    {
+    public int getWidth() {
+        return (int) ((xDim_ + 2 ) * EnvironmentRenderer.RENDER_RAT);
+    }
+
+    public int getHeight() {
+        return (int) ((yDim_ + 2) * EnvironmentRenderer.RENDER_RAT);
+    }
+
+    public int getXDim() {
         return xDim_;
     }
-    public int getYDim()
-    {
+    public int getYDim()  {
         return yDim_;
     }
 
-    public Cell[][] getGrid()
-    {
+    public Cell[][] getGrid() {
         return grid_;
     }
 
-    public Set getParticles()
-    {
+    public Set getParticles() {
         return particles_;
     }
 
@@ -226,7 +226,7 @@ public class LiquidEnvironment
         log( 1, "stepForward: about to update the velocity field (timeStep=" + timeStep + ')' );
         int i, j;
         double fx = 0;
-        double fy = GRAVITY;
+        double fy = GRAVITY / 1000.0;
 
         for ( j = 1; j < yDim_ - 1; j++ ) {
             for ( i = 1; i < xDim_ - 1; i++ ) {
@@ -356,6 +356,7 @@ public class LiquidEnvironment
             }
         }
 
+
         double increment = (timeStep * maxLength);
         if (increment > MAX_INC) {
             timeStep /= 2.0;
@@ -365,6 +366,7 @@ public class LiquidEnvironment
             timeStep *= 2.0;
             log(0, "updateParticlePosition: DOUBLED dt=" + timeStep +" increment="+increment );
         }
+
 
         return timeStep;
     }

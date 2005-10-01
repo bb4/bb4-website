@@ -1,4 +1,4 @@
-package com.becker.liquid;
+package com.becker.simulation.liquid;
 
 import java.awt.geom.*;
 

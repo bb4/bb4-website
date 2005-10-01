@@ -29,9 +29,9 @@ public class MazeSimulator extends JApplet implements ActionListener
     protected GradientButton regenerateButton_ = null;
     protected GradientButton solveButton_ = null;
 
-    protected Dimension oldSize = null;
+    protected Dimension oldSize_ = null;
 
-    public boolean isStandalone = false;
+    public boolean isStandalone_ = false;
     // the frame is only created if we run as an application
     protected JFrame baseFrame_ = null;
 
@@ -64,11 +64,11 @@ public class MazeSimulator extends JApplet implements ActionListener
             {
                 // only resize if the dimensions have changed
                 Dimension newSize = maze_.getSize();
-                if ( oldSize == null ||
-                        oldSize.getWidth() != newSize.getWidth() ||
-                        oldSize.getHeight() != newSize.getHeight() ) {
+                if ( oldSize_ == null ||
+                        oldSize_.getWidth() != newSize.getWidth() ||
+                        oldSize_.getHeight() != newSize.getHeight() ) {
                     //System.out.println( "oldSize=" + oldSize + "  maze_.getSize()=" + maze_.getSize() );
-                    oldSize = newSize;
+                    oldSize_ = newSize;
                     resized();
                 }
             }
@@ -96,9 +96,9 @@ public class MazeSimulator extends JApplet implements ActionListener
         NumberInputPanel thicknessPanel = new NumberInputPanel("Thickness", thicknessField_, "The passage thickness");
         NumberInputPanel animationSpeedPanel = new NumberInputPanel("Speed", animationSpeedField_, "The animation speed (large number is slow).");
 
-        forwardProbField_ = createTextField( Double.toString( .34 ) );
-        leftProbField_ = createTextField( Double.toString( .33 ) );
-        rightProbField_ = createTextField( Double.toString( .33 ) );
+        forwardProbField_ = createTextField( Double.toString( 0.34 ) );
+        leftProbField_ = createTextField( Double.toString( 0.33 ) );
+        rightProbField_ = createTextField( Double.toString( 0.33 ) );
         NumberInputPanel forwardProbPanel = new NumberInputPanel("Forward", forwardProbField_, "The probability of moving straight forward");
         NumberInputPanel leftProbPanel = new NumberInputPanel("Left", leftProbField_, "The probability of moving left");
         NumberInputPanel rightProbPanel = new NumberInputPanel("Right", rightProbField_, "The probability of moving right");
@@ -132,7 +132,7 @@ public class MazeSimulator extends JApplet implements ActionListener
         return mainPanel;
     }
 
-    private JTextField createTextField( String initialVal )
+    private static JTextField createTextField( String initialVal )
     {
         JTextField tf = new JTextField( initialVal );
         Dimension mind = new Dimension( 30, 18 );
@@ -173,9 +173,9 @@ public class MazeSimulator extends JApplet implements ActionListener
         Double leftP = new Double( leftProbField_.getText() );
         Double rightP = new Double( rightProbField_.getText() );
 
-        double sum = forwardP.doubleValue() + leftP.doubleValue() + rightP.doubleValue();
+        double sum = forwardP + leftP + rightP;
         maze_.generate( thickness, getAnimationSpeed(),
-                forwardP.doubleValue() / sum, leftP.doubleValue() / sum, rightP.doubleValue() / sum );
+                forwardP / sum, leftP / sum, rightP / sum );
     }
 
     public void solve()
@@ -204,7 +204,7 @@ public class MazeSimulator extends JApplet implements ActionListener
 
     public void start()
     {
-        resized(); 
+        resized();
     }
 
     //------ Main method --------------------------------------------------------

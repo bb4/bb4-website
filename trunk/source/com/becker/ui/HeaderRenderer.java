@@ -7,6 +7,8 @@ import java.awt.*;
 
 /**
  * Use this for a TableHeader Renderer instead of the DefaultTableCellRenderer
+ * 
+ * @author Barry Becker
  */
 public class HeaderRenderer extends DefaultTableCellRenderer
 {

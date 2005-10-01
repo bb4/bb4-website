@@ -1,9 +1,9 @@
-package com.becker.liquid;
+package com.becker.simulation.liquid;
 
-import com.becker.common.ColorMap;
+import com.becker.common.*;
 
 import java.awt.*;
-import java.util.Iterator;
+import java.util.*;
 
 /**
  *  Renders a specified liquid environment
@@ -19,7 +19,7 @@ public final class EnvironmentRenderer
     //private static final Color WALL_COLOR = new Color( 100, 210, 170, 150 );
     private static final Color TEXT_COLOR = new Color( 10, 10, 170, 200 );
     //private static final float PRESSURE_COL_OPACITY = 0.01f;
-    private static final double RENDER_RAT = 20;
+    public static final double RENDER_RAT = 20;
     private static final int WALL_LINE_WIDTH = (int) (RENDER_RAT / 5.0) + 1;
     private static final int OFFSET = 10;
     private static final int PARTICLE_SIZE = (int) (RENDER_RAT / 8.0) + 1;

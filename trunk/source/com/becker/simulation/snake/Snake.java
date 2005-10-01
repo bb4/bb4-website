@@ -1,11 +1,12 @@
-package com.becker.snake;
+package com.becker.simulation.snake;
 
-import com.becker.ui.Log;
+import com.becker.ui.*;
 
-import javax.vecmath.Point2d;
-import javax.vecmath.Vector2d;
+import javax.vecmath.*;
 import java.awt.*;
 import java.io.*;
+
+import static com.becker.simulation.snake.SnakeConstants.*;
 
 /**
  *  Data structure and methods for representing a single dynamic snake
@@ -24,36 +25,20 @@ import java.io.*;
  *
  *  @author Barry Becker
  */
-public class Snake
-{
+public class Snake {
 
-    // scales the size of the snakes geometry
-    public static final double SCALE = .9;
     protected static final Font BASE_FONT = new Font( "Sans-serif", Font.PLAIN, 12 );
     protected static final int LOG_LEVEL = 1;
     private static final boolean USE_FRICTION = true;
 
-    // snake locomotion constants see below for more info
-    // I used simulated annealing to come up with these optimal parameter values
-    // When I originally started the snake speed was about .21 using my best guess.
-    // After optimization the snakes speed is about .33
-    public static double WAVE_SPEED = .00478;  // .04  before optimization
-    public static double WAVE_AMPLITUDE = .026877; // .04
-    public static double WAVE_PERIOD = 3.6346; // 3.0
+    private static final double MASS_SCALE = 1.5;
+    private static final double SPRING_K = 0.6;
+    private static final double SPRING_DAMPING = 1.2;
+    private static final double STATIC_FRICTION = 0.01;
+    private static final double DYNAMIC_FRICTION = 0.01;
+    protected static final double MIN_EDGE_ANGLE = 0.3;
 
-    private static double MASS_SCALE = 1.5;
-    private static double SPRING_K = 0.6;
-    private static double SPRING_DAMPING = 1.2;
-    private static double STATIC_FRICTION = .01;
-    private static double DYNAMIC_FRICTION = .01;
-    protected static final double MIN_EDGE_ANGLE = .3;
-
-    // debug level of 0 means no debug info, 3 is all debug info
-    protected static final int DEBUG_LEVEL = 0;
-
-    public static final int SINE_WAVE = 0;
-    public static final int SQUARE_WAVE = 1;
-    static int waveType_ = SINE_WAVE;
+    protected static int waveType_ = SINE_WAVE;
 
     // the length of the snake
     private int numSegments_ = 0;
@@ -64,12 +49,16 @@ public class Snake
 
     // the time since the start of the simulation
     private double time_ = 0.0;
-    private static Log logger_;
+    private static Log logger_ = null;
 
-    // tweekable renderint parameters
+    // tweekable rendering parameters
     private boolean showVelocityVectors_ = false;
     private boolean showForceVectors_ = false;
     private boolean drawMesh_ = false;
+    private double scale_ = SCALE;
+    private double staticFriction_ = STATIC_FRICTION;
+    private double dynamicFriction_ = DYNAMIC_FRICTION;
+
 
     ///////// tweekable snake parameters tha define locamotion/////////////
     // the speed at which the muscular contraction wave travels down the body of the snake
@@ -86,9 +75,6 @@ public class Snake
     // this corresponds to how quickly the amplitude of the spring goes to 0
     private double springDamping_ = SPRING_DAMPING;
     // scales the geometry of the snake
-    private double scale_ = SCALE;
-    private double staticFriction_ = STATIC_FRICTION;
-    private double dynamicFriction_ = DYNAMIC_FRICTION;
 
     //Constructor
     // use a harcoded static data interface to initialize
@@ -161,11 +147,12 @@ public class Snake
         FileInputStream configStream = null;
 
         //byte wtIndex = 0;
+        logger_.print("reading config file "+ configFile);
 
         try {
             configStream = new FileInputStream( file );
         } catch (FileNotFoundException e) {
-            System.out.println( "file " + configFile + " not found" );
+            System.out.println( "file " + configFile + " not found" + e.getMessage());
         }
         InputStreamReader iStreamReader = new InputStreamReader( configStream );
         BufferedReader inData = new BufferedReader( iStreamReader );
@@ -211,7 +198,7 @@ public class Snake
             }
             iStreamReader.close();
         } catch (IOException e) {
-            System.out.println( "error occurred while reading " + configFile );
+            System.out.println( "error occurred while reading " + configFile +' '+ e.getMessage());
         }
     }
 
@@ -245,7 +232,7 @@ public class Snake
      */
     public Point2d getCenter()
     {
-        Point2d center = new Point2d( 0., 0. );
+        Point2d center = new Point2d( 0.0, 0.0 );
         int ct = 0;
         for ( int i = 0; i < numSegments_; i += 2 ) {
             ct++;
@@ -305,6 +292,27 @@ public class Snake
     public boolean getDrawMesh()
     {
         return drawMesh_;
+    }
+
+
+    public void setStaticFriction( double staticFriction )
+    {
+        staticFriction_ = staticFriction;
+    }
+
+    public double getStaticFriction()
+    {
+        return staticFriction_;
+    }
+
+    public void setDynamicFriction( double dynamicFriction )
+    {
+        dynamicFriction_ = dynamicFriction;
+    }
+
+    public double getDynamicFriction()
+    {
+        return dynamicFriction_;
     }
 
     /**
@@ -372,26 +380,6 @@ public class Snake
     public double getSpringDamping()
     {
         return springDamping_;
-    }
-
-    public void setStaticFriction( double staticFriction )
-    {
-        staticFriction_ = staticFriction;
-    }
-
-    public double getStaticFriction()
-    {
-        return staticFriction_;
-    }
-
-    public void setDynamicFriction( double dynamicFriction )
-    {
-        dynamicFriction_ = dynamicFriction;
-    }
-
-    public double getDynamicFriction()
-    {
-        return dynamicFriction_;
     }
 
     public void setWaveType( int waveType )
@@ -478,7 +466,7 @@ public class Snake
     public void render( Graphics2D g )
     {
         //double time = System.currentTimeMillis();
-        int i,j;
+        int i;
 
         g.setColor( Color.black ); // default
 

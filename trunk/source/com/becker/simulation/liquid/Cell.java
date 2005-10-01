@@ -1,4 +1,4 @@
-package com.becker.liquid;
+package com.becker.simulation.liquid;
 
 import com.becker.common.Assert;
 

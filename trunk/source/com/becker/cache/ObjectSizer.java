@@ -10,34 +10,37 @@ import java.util.*;
  */
 public class ObjectSizer
 {
-  public final static int EXCLUDE_INTERN = 0x0001;
+  public static final int EXCLUDE_INTERN = 0x0001;
 
   //
   // Every object starts with a header.
   //
-  private final static int OBJECT_HEADER_SIZE = 8;
+  private static final int OBJECT_HEADER_SIZE = 8;
 
   //
   // Size of word and double word data types when represented as a field in
   // an object. Expressed in bytes.
   //
-  private final static int DOUBLE_WORD_SIZE = 8;
-  private final static int WORD_SIZE        = 4;
-  private final static int OBJECT_REF_SIZE  = WORD_SIZE;
+  private static final int DOUBLE_WORD_SIZE = 8;
+  private static final int WORD_SIZE        = 4;
+  private static final int OBJECT_REF_SIZE  = WORD_SIZE;
 
   //
   // Size of the individual primitive data types when reprsented as an element
   // of an array. Expressed in bytes.
   //
-  private final static int BOOLEAN_ARRAY_SIZE   = 1;
-  private final static int BYTE_ARRAY_SIZE      = 1;
-  private final static int CHAR_ARRAY_SIZE      = 2;
-  private final static int SHORT_ARRAY_SIZE     = 2;
-  private final static int FLOAT_ARRAY_SIZE     = 4;
-  private final static int INT_ARRAY_SIZE       = 4;
-  private final static int REF_ARRAY_SIZE       = 4;
-  private final static int LONG_ARRAY_SIZE      = 8;
-  private final static int DOUBLE_ARRAY_SIZE    = 8;
+  private static final int BOOLEAN_ARRAY_SIZE   = 1;
+  private static final int BYTE_ARRAY_SIZE      = 1;
+  private static final int CHAR_ARRAY_SIZE      = 2;
+  private static final int SHORT_ARRAY_SIZE     = 2;
+  private static final int FLOAT_ARRAY_SIZE     = 4;
+  private static final int INT_ARRAY_SIZE       = 4;
+  private static final int REF_ARRAY_SIZE       = 4;
+  private static final int LONG_ARRAY_SIZE      = 8;
+  private static final int DOUBLE_ARRAY_SIZE    = 8;
+
+
+  private ObjectSizer() {};
 
   /**
    * computes the size of a given object. does not follow the references that
@@ -146,10 +149,8 @@ public class ObjectSizer
    */
   public static int deepSizeOf( Object targetObj, int flags )
   {
-      return 0;
-      /*
     int arrayLength;
-    int classSize = 0;    // size of individual class navigated
+    int classSize;    // size of individual class navigated
     int iField;           // iterator for the class fields
     int iArray;           // iterator for the array elements
     int totalSize = 0;
@@ -163,8 +164,8 @@ public class ObjectSizer
     Field[] classFields;  // all the fields in the current class hiearchy
     Object currentObject; // current node in object graph
     Object fieldValue;
-    Stack objectStack;    // stack used to traverse the object graph
-    ArrayList nodeHistory;   // stores all the nodes navigated
+    LinkedList objectStack;    // stack used to traverse the object graph
+    List nodeHistory;   // stores all the nodes navigated
     Method sizeableMethod;
     String[] excludedFields;
 
@@ -176,14 +177,14 @@ public class ObjectSizer
     boolean printIntern = false;
 
     // Seed object stack
-    objectStack = new Stack();
-    objectStack.push(targetObj);
+    objectStack = new LinkedList();
+    objectStack.add(targetObj);
     nodeHistory = new ArrayList();
 
     // traverse the object graph
-    while( !objectStack.empty() )
+    while( !objectStack.isEmpty() )
     {
-      currentObject = objectStack.pop();
+      currentObject = objectStack.removeLast();
       if( currentObject == null )
         continue;
 
@@ -199,10 +200,11 @@ public class ObjectSizer
         }
       }
 
-      if (nodeFound)
-        continue;
-      else
-        nodeHistory.add(currentObject);
+      if (nodeFound) {
+          continue;
+      }
+      nodeHistory.add(currentObject);
+
 
       currentClass = currentObject.getClass();
 
@@ -262,7 +264,7 @@ public class ObjectSizer
           // Push all element of the array on to the stack so that they will
           // be navigated
           for( iArray = 0; iArray < arrayLength; iArray++ )
-            objectStack.push(Array.get(currentObject, iArray));
+            objectStack.add(Array.get(currentObject, iArray));
 
           classSize += (REF_ARRAY_SIZE * arrayLength);
         }
@@ -272,7 +274,7 @@ public class ObjectSizer
         //
         // traverse the class hiearchy of the current node
         //
-        for( ;currentClass != null; currentClass = currentClass.getSuperclass() )
+        for ( ;currentClass != null; currentClass = currentClass.getSuperclass() )
         {
           // determine if this class implements the Sizeable interface
           excludedFields = null;
@@ -281,14 +283,14 @@ public class ObjectSizer
             {
               // attempt to get a method that will return fields to be excluded
               // from the memory count
-              sizeableMethod = currentClass.getDeclaredMethod("sizeableExcludedFields", null);
+              Class[] paramTypes = null;
+              sizeableMethod = currentClass.getDeclaredMethod("sizeableExcludedFields", paramTypes);
               sizeableMethod.setAccessible(true);
               excludedFields = (String[]) sizeableMethod.invoke(currentClass, null);
               sizeableMethod.setAccessible(false);
             }
-            catch (Exception e)
-            {
-              // will happen if the interface is defined, but the method isn't
+            catch (Exception e) {
+              assert false : "interface defined but method is not";
             }
           }
 
@@ -334,7 +336,7 @@ public class ObjectSizer
                 if (fieldValue == null)
                     continue;
 
-                objectStack.push(fieldValue);
+                objectStack.add(fieldValue);
               }
               catch( IllegalAccessException e )
               {
@@ -349,7 +351,6 @@ public class ObjectSizer
       totalSize += classSize;
     }
     return(totalSize);
-    */
   }
 
 }

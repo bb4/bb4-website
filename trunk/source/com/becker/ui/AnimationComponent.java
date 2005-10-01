@@ -9,13 +9,13 @@ import java.awt.event.*;
 public abstract class AnimationComponent extends Container implements Runnable
 {
 
-    protected boolean mTrucking = true;
+    protected boolean animating_ = true;
     protected int numStepsPerFrame_ = 1; // default
-    protected long[] mPreviousTimes; // milliseconds
-    protected int mPreviousIndex;
-    protected boolean mPreviousFilled;
-    protected double mFrameRate; // frames per second
-    protected Image mImage;
+    protected long[] previousTimes_; // milliseconds
+    protected int previousIndex_;
+    protected boolean previousFilled_;
+    protected double frameRate_; // frames per second
+    protected Image image_;
 
     // incremented for every frame
     protected int frameCount_ = 0;
@@ -23,15 +23,17 @@ public abstract class AnimationComponent extends Container implements Runnable
     // if true it will save all the animation steps to files
     private boolean recordAnimation_ = false;
 
+    private boolean bPaused_ = true;
+
     // constants. See setSwitch().
     public static final int PAUSE = 0;
 
     public AnimationComponent()
     {
-        mPreviousTimes = new long[128];
-        mPreviousTimes[0] = System.currentTimeMillis();
-        mPreviousIndex = 1;
-        mPreviousFilled = false;
+        previousTimes_ = new long[128];
+        previousTimes_[0] = System.currentTimeMillis();
+        previousIndex_ = 1;
+        previousFilled_ = false;
     }
 
     /**
@@ -66,36 +68,41 @@ public abstract class AnimationComponent extends Container implements Runnable
     public abstract double timeStep();
 
     // the base filename when recording
-    protected String getFileNameBase()
-    {
-        return "D:/XXX";
-    }
+    protected abstract String getFileNameBase();
 
     public void run()
     {
-        while ( mTrucking ) {
+        while ( animating_ ) {
+
             render();
             frameCount_++;
 
+
             if ( recordAnimation_ ) {
-                Dimension d = this.getSize();
+                //Dimension d = this.getSize();
                 //BufferedImage bi = ImageUtil.makeBufferedImage(this.mImage);
 
                 String fname = getFileNameBase() + Integer.toString( 1000000 + frameCount_ );
-                if ( mImage != null ) {
+                if ( image_ != null ) {
                     //JOptionPane.showMessageDialog(this, "mImage("+fname+") width ="+mImage.getWidth(null));
                     //System.out.println("mImage width ="+mImage.getWidth(null));
-                    ImageUtil.saveAsImage( fname, this.mImage, "png" );
+                    ImageUtil.saveAsImage( fname, this.image_, "png" );
                 }
             }
 
-            for ( int i = 0; i < numStepsPerFrame_; i++ )
-                timeStep();
-
-
-            calculateFrameRate();
+            if (isPaused()) {
+                try {
+                   Thread.sleep(1000);
+                } catch (InterruptedException e) {e.printStackTrace();};
+            } else {
+                for ( int i = 0; i < numStepsPerFrame_; i++ )  {
+                    timeStep();
+                }
+                calculateFrameRate();
+            }
         }
     }
+
 
     // create ui checkbox
     protected Checkbox createCheckbox( String label, final int item, boolean checked )
@@ -122,15 +129,15 @@ public abstract class AnimationComponent extends Container implements Runnable
         if ( g != null ) {
             Dimension d = getSize();
             if ( checkImage( d ) ) {
-                Graphics imageGraphics = mImage.getGraphics();
+                Graphics imageGraphics = image_.getGraphics();
                 // Clear the image background.
-                imageGraphics.setColor( getBackground() );
+                                       imageGraphics.setColor( getBackground() );
                 imageGraphics.fillRect( 0, 0, d.width, d.height );
                 imageGraphics.setColor( getForeground() );
                 // Draw this component offscreen.
                 paint( imageGraphics );
                 // Now put the offscreen image on the screen.
-                g.drawImage( mImage, 0, 0, null );
+                g.drawImage( image_, 0, 0, null );
                 // Clean up.
                 imageGraphics.dispose();
             }
@@ -141,10 +148,10 @@ public abstract class AnimationComponent extends Container implements Runnable
     // Offscreen image.
     protected boolean checkImage( Dimension d )
     {
-        if ( d.width == 0 || d.height == 0 ) return false;
-        if ( mImage == null || mImage.getWidth( null ) != d.width
-                || mImage.getHeight( null ) != d.height ) {
-            mImage = createImage( d.width, d.height );
+        if ( d.width <= 0 || d.height <= 0 ) return false;
+        if ( image_ == null || image_.getWidth( null ) != d.width
+                || image_.getHeight( null ) != d.height ) {
+            image_ = createImage( d.width, d.height );
         }
         return true;
     }
@@ -153,26 +160,26 @@ public abstract class AnimationComponent extends Container implements Runnable
     {
         // Measure the frame rate
         long now = System.currentTimeMillis();
-        int numberOfFrames = mPreviousTimes.length;
+        int numberOfFrames = previousTimes_.length;
         double newRate;
         // Use the more stable method if a history is available.
-        if ( mPreviousFilled )
+        if ( previousFilled_ )
             newRate = (double) numberOfFrames /
-                    (double) (now - mPreviousTimes[mPreviousIndex]) *
+                    (double) (now - previousTimes_[previousIndex_]) *
                     1000.0;
         else
             newRate = 1000.0 /
-                    (double) (now - mPreviousTimes[numberOfFrames - 1]);
-        mFrameRate = newRate;
+                    (double) (now - previousTimes_[numberOfFrames - 1]);
+        frameRate_ = newRate;
 
         firePropertyChange( "statusChanged", getStatusMessage() );
 
         // Update the history.
-        mPreviousTimes[mPreviousIndex] = now;
-        mPreviousIndex++;
-        if ( mPreviousIndex >= numberOfFrames ) {
-            mPreviousIndex = 0;
-            mPreviousFilled = true;
+        previousTimes_[previousIndex_] = now;
+        previousIndex_++;
+        if ( previousIndex_ >= numberOfFrames ) {
+            previousIndex_ = 0;
+            previousFilled_ = true;
         }
     }
 
@@ -183,19 +190,32 @@ public abstract class AnimationComponent extends Container implements Runnable
 
     public double getFrameRate()
     {
-        return mFrameRate;
+        return frameRate_;
     }
 
+
+    // if paused is true the animation is stopped
+    public void setPaused( boolean bPaused )
+    {
+        bPaused_ = bPaused;
+    }
+
+    public boolean isPaused()
+    {
+        return bPaused_;
+    }
+
+
     // Property change support.
-    private transient AnimationChangeListener mAnimationChangeListener;
+    private transient AnimationChangeListener animationChangeListener_;
 
     public void setChangeListener( AnimationChangeListener af )
     {
-        mAnimationChangeListener = af;
+        animationChangeListener_ = af;
     }
 
     protected void firePropertyChange( String name, String newValue )
     {
-        mAnimationChangeListener.statusChanged( newValue );
+        animationChangeListener_.statusChanged( newValue );
     }
 }

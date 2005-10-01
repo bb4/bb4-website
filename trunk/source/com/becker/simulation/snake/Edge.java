@@ -1,14 +1,10 @@
-package com.becker.snake;
+package com.becker.simulation.snake;
 
-import com.becker.common.Assert;
-import com.becker.common.ColorMap;
+import com.becker.common.*;
 
-import javax.vecmath.Vector2d;
+import javax.vecmath.*;
 import java.awt.*;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
-
-import sun.dc.pr.PRException;
+import java.awt.geom.*;
 
 /**
  *  A snake edge (line geometry) is modeled as a spring to simulate muscles.
@@ -25,15 +21,15 @@ final class Edge
     private Line2D.Double segment_ = null;
 
     // constants related the the spring for this edge segment
-    private static final double K = .8; // default  .6
+    private static final double K = 0.8; // default  .6
     // the damping coefficient
     private static final double D = 1.2; // default
 
-    private static final double EPS = .00000017287893433;
+    private static final double EPS = 0.00000017287893433;
     private static final double EDGE_SCALE = 3.0;
 
     // show the edge different colors depending on percentage stretched  ( one being 100% stretched)
-    private static final double stretchVals_[] = {.3, .9, 1.0, 1.1, 3.0};
+    private static final double stretchVals_[] = {0.3, 0.9, 1.0, 1.1, 3.0};
     private static final Color stretchColors_[] = {
         new Color( 255, 0, 0, 200 ), new Color( 230, 120, 57, 250 ), new Color( 50, 90, 60, 250 ), new Color( 70, 120, 210, 200 ), new Color( 10, 10, 255, 100 )
     };
@@ -63,7 +59,7 @@ final class Edge
      *  @param p1 particle that anchors one end of the
      *  @param p2 particle that anchors the other end of the edge
      */
-    public Edge( Particle p1, Particle p2 )
+    protected Edge( Particle p1, Particle p2 )
     {
         commonInit( p1, p2, K, D );
     }
@@ -71,7 +67,7 @@ final class Edge
     /**
      *  Constructor - everything defined explicitly
      */
-    public Edge( Particle p1, Particle p2, double k, double d )
+    protected Edge( Particle p1, Particle p2, double k, double d )
     {
         commonInit( p1, p2, k, d );
     }
@@ -181,7 +177,7 @@ final class Edge
         //g.setColor(EDGE_COLOR);
         g.setColor( stretchColorMap_.getColorForValue( l_ / L_ ) );
 
-        BasicStroke stroke = new BasicStroke( (float) (EDGE_SCALE * (.1 + L_) / (l_ + EPS)) );
+        BasicStroke stroke = new BasicStroke( (float) (EDGE_SCALE * (0.1 + L_) / (l_ + EPS)) );
         g.setStroke( stroke );
         try {
             g.drawLine( (int) firstParticle_.x, (int) firstParticle_.y, (int) secondParticle_.x, (int) secondParticle_.y );
