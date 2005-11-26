@@ -102,6 +102,10 @@ public class TextBouncer
         } );
     }
 
+    public String getFileNameBase() {
+        return null;
+    }
+    
     public void setSwitch( int item, boolean value )
     {
         switch (item) {
