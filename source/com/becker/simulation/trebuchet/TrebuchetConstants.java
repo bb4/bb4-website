@@ -12,22 +12,21 @@ public final class TrebuchetConstants {
 
 
     // all distances are in meters, mass in Kilograms
-    public static final double HEIGHT = 2;
+    public static final double HEIGHT = 2.0;
     public static final double RAMP_HEIGHT = 0.0;
     // coefficient of dynamic friction on the ramp
     public static final double RAMP_FRICTION = 0.4;
-    // amount of mass per meter length of the level
-    public static final double LEVER_MASS = 2;
+
 
     // the allowable ranges for these things will be .2*<default> to 4*<default>
     public static final double MIN_FACTOR = 0.2;
     public static final double MAX_FACTOR = 4.0;
 
     // defaults for parameters
-    public static final double DEFAULT_COUNTER_WEIGHT_MASS = 20; // Kg
+    public static final double DEFAULT_COUNTER_WEIGHT_MASS = 10.0; // Kg
     public static final double DEFAULT_CW_LEVER_LENGTH = 1; // M
     public static final double DEFAULT_SLING_LEVER_LENGTH = 2.4;  // M
-    public static final double DEFAULT_SLING_LENGTH = 0.5;  // M
+    public static final double DEFAULT_SLING_LENGTH = .8;  // M
     public static final double DEFAULT_PROJECTILE_MASS = 1;
     public static final double DEFAULT_SLING_RELEASE_ANGLE = Math.PI / 8;
 

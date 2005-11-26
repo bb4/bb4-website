@@ -5,6 +5,8 @@ import com.becker.optimization.*;
 import com.becker.simulation.common.*;
 import com.becker.ui.*;
 
+import javax.swing.*;
+import javax.swing.event.*;
 import java.awt.*;
 
 /**
@@ -13,17 +15,18 @@ import java.awt.*;
  *  @@ Try simulating using Breve.
  *  Currently can't get working because of seg fault (because need to recompile for 64 bit?)
  */
-public class TrebuchetSimulator extends Simulator implements Optimizee
+public class TrebuchetSimulator extends Simulator implements Optimizee, ChangeListener
 {
 
     private Trebuchet trebuchet_ = null;
 
-    public static final String CONFIG_FILE = "com/becker/trebuchet/trebuchetGeom.data";
+    JSlider zoomSlider_;
+
     private static final String FILE_NAME_BASE = ANIMATION_FRAME_FILE_NAME_PREFIX + "trebuchet/trebuchetFrame";
 
 
     // the amount to advance the animation in time for each frame in seconds
-    private static final double TIME_STEP = 0.4;
+    private static final double TIME_STEP = 0.002;
 
     private static final Color BACKGROUND_COLOR = new Color(253, 250, 253);
 
@@ -32,8 +35,8 @@ public class TrebuchetSimulator extends Simulator implements Optimizee
     public TrebuchetSimulator()
     {
         super("Trebuchet");
-        //final trebuchet trebuchet = new trebuchet(CONFIG_FILE);
         final Trebuchet trebuchet = new Trebuchet();
+        this.setPreferredSize(new Dimension( 800, 900));
         commonInit( trebuchet );
     }
 
@@ -46,10 +49,33 @@ public class TrebuchetSimulator extends Simulator implements Optimizee
     private void commonInit( Trebuchet trebuchet )
     {
         trebuchet_ = trebuchet;
-        numStepsPerFrame_ = NUM_STEPS_PER_FRAME;
+        numStepsPerFrame_ = 4;
         initCommonUI();
-        this.setPreferredSize(new Dimension( 800, 500));
-        this.setBackground(BACKGROUND_COLOR);
+
+
+
+        //this.setBackground(BACKGROUND_COLOR);
+    }
+
+    public JPanel createTopControls()
+    {
+        JPanel controls = new JPanel();
+        controls.add( createCheckbox( "Pause", PAUSE, true ) );
+
+        controls.add( createOptionsButton() );
+
+        JPanel zoomPanel = new JPanel();
+        zoomPanel.setLayout(new FlowLayout());
+        JLabel zoomLabel = new JLabel( " Zoom" );
+        zoomSlider_ = new JSlider( JSlider.HORIZONTAL, 15, 255, 200 );
+        zoomSlider_.addChangeListener( this );
+        zoomPanel.add(zoomLabel);
+        zoomPanel .add(zoomSlider_);
+        this.add(zoomPanel);
+
+        controls.add(zoomLabel);
+        controls.add(zoomSlider_);
+        return controls;
     }
 
     public void doOptimization()
@@ -96,42 +122,38 @@ public class TrebuchetSimulator extends Simulator implements Optimizee
                 useAntialiasing_ ? RenderingHints.VALUE_ANTIALIAS_ON : RenderingHints.VALUE_ANTIALIAS_OFF );
 
 
-        // draw the trebuchet on the gri
+        // draw the trebuchet in its current position
         trebuchet_.render( g2 );
-
     }
 
 
 
     public void setScale( double scale ) {
-        //snake_.setScale(scale);
+        trebuchet_.setScale(scale);
     }
     public double getScale() {
-        //return snake_.getScale();
-        return 1.0;
+        return trebuchet_.getScale();
     }
 
     public void setShowVelocityVectors( boolean show ) {
-        //snake_.setShowVelocityVectors(show);
+        RenderablePart.setShowVelocityVectors(show);
     }
     public boolean getShowVelocityVectors() {
-        //return snake_.getShowVelocityVectors();
-        return false;
+        return RenderablePart.getShowVelocityVectors();
     }
 
     public void setShowForceVectors( boolean show ) {
-        //snake_.setShowForceVectors(show);
+        RenderablePart.setShowForceVectors(show);
     }
     public boolean getShowForceVectors() {
-        //return snake_.getShowForceVectors();
-        return false;
+        return RenderablePart.getShowForceVectors();
     }
 
     public void setDrawMesh( boolean use ) {
-        //snake_.setDrawMesh(use);
+        //trebuchet_.setDrawMesh(use);
     }
     public boolean getDrawMesh() {
-        //return snake_.getDrawMesh();
+        //return trebuchet_.getDrawMesh();
         return false;
     }
 
@@ -165,6 +187,14 @@ public class TrebuchetSimulator extends Simulator implements Optimizee
         return FILE_NAME_BASE;
     }
 
+    public void stateChanged(ChangeEvent event) {
+        Object src = event.getSource();
+        if (src == zoomSlider_) {
+            double v = (double) zoomSlider_.getValue() / 200.0;
+            trebuchet_.setScale(v);
+            this.repaint();
+        }
+    }
 
 
     /////////////// the next methods implement the Optimizee interface  /////////////////////////
