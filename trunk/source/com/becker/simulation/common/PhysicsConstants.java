@@ -4,7 +4,7 @@ package com.becker.simulation.common;
  * @author Barry Becker Date: Sep 18, 2005
  */
 public class PhysicsConstants {
-    
+
 
     // gravity in m/s^2
     public static final double GRAVITY = 9.80;

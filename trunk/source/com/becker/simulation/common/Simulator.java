@@ -6,8 +6,8 @@ import com.becker.ui.*;
 
 import javax.swing.*;
 import javax.vecmath.*;
-import java.awt.event.*;
 import java.awt.*;
+import java.awt.event.*;
 
 /**
  * @author Barry Becker Date: Sep 17, 2005
@@ -42,6 +42,10 @@ public abstract class Simulator extends AnimationComponent implements Optimizee 
 
     protected void initCommonUI() {
         GUIUtil.setCustomLookAndFeel();
+
+
+
+
 
         //@@ need this?
         addComponentListener( new ComponentAdapter()

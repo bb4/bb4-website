@@ -2,9 +2,12 @@ package com.becker.simulation.trebuchet;
 
 import com.becker.ui.*;
 
+import javax.vecmath.*;
 import java.awt.*;
 
 import static com.becker.simulation.trebuchet.TrebuchetConstants.*;
+import static com.becker.simulation.common.PhysicsConstants.*;
+import static java.lang.Math.*;
 
 /**
  *  Data structure and methods for representing a single dynamic trebuchet (advanced form of a catapult)
@@ -20,17 +23,10 @@ public class Trebuchet {
     protected static final Font BASE_FONT = new Font( "Sans-serif", Font.PLAIN, 12 );
     protected static final int LOG_LEVEL = 1;
 
-    private static final double MASS_SCALE = 1.5;
-    private static final double STATIC_FRICTION = 0.01;
-    private static final double DYNAMIC_FRICTION = 0.01;
     protected static final double MIN_EDGE_ANGLE = 0.3;
+    protected static final Vector2d GRAVITY_VEC = new Vector2d(0, GRAVITY);
+    protected static final double MAX_LEVER_ANGLE = PI - 0.1;
 
-
-    private double counterWeightLeverLength_ = DEFAULT_CW_LEVER_LENGTH;
-    private double slingLeverLength_ = DEFAULT_SLING_LEVER_LENGTH;
-    private double counterWeightMass_ = DEFAULT_COUNTER_WEIGHT_MASS;
-    private double slingLength_ = DEFAULT_SLING_LENGTH;
-    private double slingReleaseAngle_ = DEFAULT_SLING_RELEASE_ANGLE;
 
     // the parts
     private Base base_;
@@ -39,12 +35,13 @@ public class Trebuchet {
     private Sling sling_;
     private Projectile projectile_;
 
+    private Vector2d forceFromHook_ = new Vector2d(0, 0);
+
 
     protected static final int NUM_PARTS = 5;
     private RenderablePart[] part_;
 
     // the time since the start of the simulation
-    private double time_ = 0.0;
     private static Log logger_ = null;
 
     // tweekable rendering parameters
@@ -71,16 +68,17 @@ public class Trebuchet {
 
         part_ = new RenderablePart[NUM_PARTS];
 
-        double angle = - Math.asin(HEIGHT / slingLeverLength_);
+        double angle = PI/2.0 - asin(HEIGHT / DEFAULT_SLING_LEVER_LENGTH);
         RenderablePart.setAngle(angle);
         base_ = new Base();
         part_[0] = base_;
-        lever_ = new Lever(counterWeightLeverLength_, slingLeverLength_);
+        lever_ = new Lever(DEFAULT_CW_LEVER_LENGTH, DEFAULT_SLING_LEVER_LENGTH);
         part_[1] = lever_;
-        counterWeight_ = new CounterWeight(counterWeightLeverLength_, counterWeightMass_);
+        System.out.println("cw mass="+DEFAULT_COUNTER_WEIGHT_MASS);
+        counterWeight_ = new CounterWeight(lever_, DEFAULT_COUNTER_WEIGHT_MASS);
         part_[2] = counterWeight_;
-        projectile_ = new Projectile(HEIGHT);
-        sling_ = new Sling(slingLength_, slingLeverLength_, slingReleaseAngle_, projectile_);
+        projectile_ = new Projectile(DEFAULT_PROJECTILE_MASS);
+        sling_ = new Sling(DEFAULT_SLING_LENGTH, DEFAULT_SLING_RELEASE_ANGLE, lever_, projectile_);
         part_[3] = sling_;
         part_[4] = projectile_;
     }
@@ -89,26 +87,98 @@ public class Trebuchet {
 
     /**
      * steps the simulation forward in time
-     * if the timestep is too big inaccuracy and instability will result.
+     * if the timestep is too big inaccuracy and instability may result.
      * @return the new timestep
      */
     public double stepForward( double timeStep )
     {
-        // Compute u, v for all full cells
-        //logger_.println(1, LOG_LEVEL, "stepForward: about to update the velocity field (timeStep="+timeStep+")");
+        //logger_.println(1, LOG_LEVEL, "stepForward: about to update (timeStep="+timeStep+')');
 
-        updateParticleForces( timeStep );
-        updateFrictionalForces( timeStep );
-        updateParticleAccelerations( timeStep );
-        boolean unstable = updateParticleVelocities( timeStep );
-        updateParticlePositions( timeStep );
+        double angle = RenderablePart.getAngle();
+        double angularVelocity = RenderablePart.getAngularVelocity();
+        double slingAngle = sling_.getAngleWithLever();
+        double torque = calculateTorque(angle, slingAngle);
+        double inertia = calculateInertia();
 
-        time_ += timeStep;
-        //logger_.println(1, LOG_LEVEL, "Time= "+time_);
-        if ( unstable )
-            return timeStep / 2;
-        else
-            return 1.0 * timeStep;
+        double angularAcceleration = 0;
+        if (angle < MAX_LEVER_ANGLE) {
+            angularAcceleration = inertia / torque; // in radians per second squared
+            angularVelocity += timeStep * angularAcceleration;
+            angle += timeStep * angularVelocity;
+        }
+        else {
+            angularVelocity = 0;
+            angle = MAX_LEVER_ANGLE;
+        }
+
+        RenderablePart.setAngle(angle);
+        RenderablePart.setAngularVelocity(angularVelocity);
+        //System.out.println("angle="+angle+"  angularVelocity_="
+        //  +angularVelocity +" angularAcceleration="+angularAcceleration);
+
+        // calculate the forces acting on the projectile.
+        // the magnitude of the tangential force at the hook
+        if (!projectile_.isReleased()) {
+            double tangentialForceAtHook = torque / lever_.getSlingLeverLength();
+            double slingAngleWithHorz = sling_.getAngleWithHorz();
+
+            forceFromHook_.set(-cos(slingAngleWithHorz), sin(slingAngleWithHorz));  //sin(PI - angle), -cos(PI + angle));
+            forceFromHook_.scale(tangentialForceAtHook * sin(slingAngle));
+            Vector2d gravityForce = new Vector2d(GRAVITY_VEC);
+            gravityForce.scale(projectile_.getMass());
+            forceFromHook_.add(gravityForce);
+            // also add a restoring force which is proportional to the distnace from the attachpoint on the sling
+            // if we hve not yet been released.
+
+            Vector2d restoreForce = sling_.getProjectileAttachPoint();
+            restoreForce.sub(projectile_.getPosition());
+            restoreForce.scale(100.0);
+            forceFromHook_.add(restoreForce);
+            projectile_.setForce(forceFromHook_, timeStep);
+        }  else {
+            Vector2d gravityForce = new Vector2d(GRAVITY_VEC);
+            gravityForce.scale(projectile_.getMass());
+            projectile_.setForce(gravityForce, timeStep);
+        }
+
+
+        // at the time when it is released, the only force acting on it will be gravity.
+        if (!projectile_.isReleased() && slingAngle >= (PI + sling_.getReleaseAngle())) {
+            System.out.println("##########################################################################");
+            System.out.println("released!  slingAngle = "+slingAngle +" sling release angle = "+sling_.getReleaseAngle());
+            System.out.println("##########################################################################");
+            projectile_.setReleased(true);
+        }
+
+        return timeStep;
+    }
+
+    private double calculateTorque(double angle, double slingAngle) {
+        double primaryTorque = 0;
+        if ( angle < MAX_LEVER_ANGLE) {
+            primaryTorque = lever_.getCounterWeightLeverLength() * sin(angle) * GRAVITY * counterWeight_.getMass();
+        }
+        double dragTorque = 0;
+        if (projectile_.isOnRamp()) {
+            // case when the projectile is still on the ramp
+            dragTorque = -lever_.getSlingLeverLength() * projectile_.getMass() * GRAVITY * RAMP_FRICTION * sin(slingAngle);
+        } else {
+            // case when the projectile is no longer on the ramp
+            double r = projectile_.getDistanceFrom(lever_.getFulcrumPosition());
+            dragTorque = r * projectile_.getMass() * GRAVITY * cos(PI - angle - slingAngle) * sin(angle) ;
+        }
+        //System.out.println("torque= primaryTorque("+primaryTorque+")" +
+        //                   " + dragTorque("+dragTorque+")= "+(primaryTorque+dragTorque));
+        return primaryTorque + dragTorque;
+    }
+
+    /**
+     * got this from a physics text
+     * I = LEVER_MASS / 3  (b^3 + c^3) + projectileMass/3 * r^2
+     * @return
+     */
+    private double calculateInertia() {
+        return lever_.getInertia() + projectile_.getInertia(lever_.getFulcrumPosition());
     }
 
 
@@ -147,57 +217,55 @@ public class Trebuchet {
 
 
 
-    ///////////////////////////////////////////////////
-
-    /**
-     * update forces
-     */
-    private void updateParticleForces( double timeStep )
-    {
-        // update forces based on surrounding contracted springs
-        //for ( int i = 0; i < parts_; i++ )
-        //    part_[i].updateForces( timeStep );
+    public double getCounterWeightLeverLength() {
+        return lever_.getCounterWeightLeverLength();
     }
 
-    /**
-     * update accelerations
-     */
-    private void updateFrictionalForces( double timeStep )
-    {
-        //for ( int i = 0; i < numSegments_; i++ )
-        //    segment_[i].updateFrictionalForce( timeStep );
+    public void setCounterWeightLeverLength(double counterWeightLeverLength) {
+        lever_.setCounterWeightLeverLength(counterWeightLeverLength);
     }
 
-    /**
-     * update accelerations
-     */
-    private void updateParticleAccelerations( double timeStep )
-    {
-        //for ( int i = 0; i < numSegments_; i++ )
-        //    segment_[i].updateAccelerations( timeStep );
+    public double getSlingLeverLength() {
+        return lever_.getCounterWeightLeverLength();
     }
 
-    /**
-     * update velocities
-     * @return unstable if velocity changes are getting too big
-     */
-    private boolean updateParticleVelocities( double timeStep )
-    {
-        boolean unstable = false;
-        //for ( int i = 0; i < numSegments_; i++ )
-        //    if ( segment_[i].updateVelocities( timeStep ) )
-        //        unstable = true;
-        return unstable;
+    public void setSlingLeverLength(double slingLeverLength) {
+        lever_.setCounterWeightLeverLength(slingLeverLength);
     }
 
-    /**
-     * move particles according to vector field
-     */
-    private void updateParticlePositions( double timeStep )
-    {
-        //for ( int i = 0; i < numSegments_; i++ )
-        //    segment_[i].updatePositions( timeStep );
+    public double getCounterWeightMass() {
+        return counterWeight_.getMass();
     }
+
+    public void setCounterWeightMass(double counterWeightMass) {
+        this.counterWeight_.setMass(counterWeightMass);
+    }
+
+    public double getSlingLength() {
+        return sling_.getLength();
+    }
+
+    public void setSlingLength(double slingLength) {
+        this.sling_.setLength(slingLength);
+    }
+
+    public double getProjectileMass() {
+        return projectile_.getMass();
+    }
+
+    public void setProjectileMass(double projectileMass) {
+        this.projectile_.setMass(projectileMass);
+    }
+
+
+    public double getSlingReleaseAngle() {
+        return sling_.getReleaseAngle();
+    }
+
+    public void setSlingReleaseAngle(double slingReleaseAngle) {
+        this.sling_.setReleaseAngle(slingReleaseAngle);
+    }
+
 
     /**
      * Render the Environment on the screen
@@ -212,8 +280,17 @@ public class Trebuchet {
         // render each part
         for ( i = 0; i < NUM_PARTS; i++ ) {
             if (part_[i] != null)
-                part_[i].render( g );
+                part_[i].render( g, getScale() );
         }
+    }
 
+    public static void main(String args[]) {
+        System.out.println("atan(0.4)="+ atan(0.4));
+        System.out.println("atan(1)="+ atan(1.0));
+        System.out.println("atan(2)="+ atan(2));
+        System.out.println("atan(20)="+ atan(20));
+        System.out.println("atan(-20)="+ atan(-20));
+        System.out.println("atan(-2)="+ atan(-2));
+        System.out.println("atan(-1)="+ atan(-1));
     }
 }

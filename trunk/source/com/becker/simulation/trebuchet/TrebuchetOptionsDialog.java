@@ -1,7 +1,6 @@
 package com.becker.simulation.trebuchet;
 
 import com.becker.simulation.common.*;
-import com.becker.simulation.liquid.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -65,7 +64,7 @@ class TrebuchetOptionsDialog extends SimulatorOptionsDialog implements ActionLis
         super.ok();
 
         // set the snake params
-        LiquidSimulator simulator = (LiquidSimulator) getSimulator();
+        TrebuchetSimulator simulator = (TrebuchetSimulator) getSimulator();
 
         //Double waveSpeed = new Double( waveSpeedField_.getText() );
         //simulator.getSnake().setWaveSpeed( waveSpeed );

@@ -10,18 +10,26 @@ import static com.becker.simulation.trebuchet.TrebuchetConstants.*;
  */
 public abstract class RenderablePart {
 
-    protected static final double SCALE_FACTOR = 100;
+    public static final int BASE_Y = 750;
+    public static final double SCALE_FACTOR = 70;
 
-    protected static final int BASE_X = 40;
+    protected static final int BASE_X = 80;
     protected static final int STRUT_BASE_X = 300;
+
+    protected static final BasicStroke VELOCITY_VECTOR_STROKE = new BasicStroke(1.0f);
+    protected static final BasicStroke FORCE_VECTOR_STROKE = new BasicStroke(0.3f);
+    protected static final Color VELOCITY_VECTOR_COLOR = new Color(70, 10, 255, 200);
+    protected static final Color FORCE_VECTOR_COLOR = new Color(200, 0, 80, 200);
 
     protected static double height_ = HEIGHT;
     protected static double angle_;
+    protected static double angularVelocity_ = 0;
 
-    public RenderablePart() {
-        //height_ = height;
-        //angle_ = angle;
-    }
+    protected static boolean showVelocityVectors_ = true;
+    protected static boolean showForceVectors_ = true;
+
+
+    public RenderablePart() {}
 
 
     public static double getHieght() {
@@ -32,6 +40,25 @@ public abstract class RenderablePart {
         height_ = height;
     }
 
+
+    public static boolean getShowVelocityVectors() {
+        return showVelocityVectors_;
+    }
+
+    public static void setShowVelocityVectors(boolean showVelocityVectors) {
+        showVelocityVectors_ = showVelocityVectors;
+    }
+
+
+    public static boolean getShowForceVectors() {
+        return showForceVectors_;
+    }
+
+    public static void setShowForceVectors(boolean showForceVectors) {
+        showForceVectors_ = showForceVectors;
+    }
+
+
     public static double getAngle() {
         return angle_;
     }
@@ -41,6 +68,15 @@ public abstract class RenderablePart {
     }
 
 
-    protected abstract void render(Graphics2D g2);
+    public static double getAngularVelocity() {
+        return angularVelocity_;
+    }
+
+    public static void setAngularVelocity(double angularVelocity) {
+        angularVelocity_ = angularVelocity;
+    }
+
+
+    protected abstract void render(Graphics2D g2, double scale);
 
 }
