@@ -72,11 +72,10 @@ public abstract class AnimationComponent extends Container implements Runnable
 
     public void run()
     {
+        render();
         while ( animating_ ) {
 
-            render();
             frameCount_++;
-
 
             if ( recordAnimation_ ) {
                 //Dimension d = this.getSize();
@@ -92,9 +91,11 @@ public abstract class AnimationComponent extends Container implements Runnable
 
             if (isPaused()) {
                 try {
-                   Thread.sleep(1000);
+                   Thread.sleep(100);
                 } catch (InterruptedException e) {e.printStackTrace();};
             } else {
+                render();
+
                 for ( int i = 0; i < numStepsPerFrame_; i++ )  {
                     timeStep();
                 }

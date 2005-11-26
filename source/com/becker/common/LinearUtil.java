@@ -77,5 +77,13 @@ public final class LinearUtil
         }
     }
 
+    /**
+     * @return the distance between two points
+     */
+    public static double distance(Vector2d p1, Vector2d p2) {
+        double dx = p2.x - p1.x;
+        double dy = p2.y - p1.y;
+        return Math.sqrt(dx * dx + dy * dy);
+    }
 }
 

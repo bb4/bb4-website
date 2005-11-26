@@ -1,13 +1,13 @@
 /*
  * Copyright (c) 1996, 1996, 1997 Sun Microsystems, Inc. All Rights Reserved.
- * 
+ *
  * SUN MAKES NO REPRESENTATIONS OR WARRANTIES ABOUT THE SUITABILITY OF THE
  * SOFTWARE, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
  * PURPOSE, OR NON-INFRINGEMENT. SUN SHALL NOT BE LIABLE FOR ANY DAMAGES
  * SUFFERED BY LICENSEE AS A RESULT OF USING, MODIFYING OR DISTRIBUTING
  * THIS SOFTWARE OR ITS DERIVATIVES.
- * 
+ *
  * CopyrightVersion 1.1_beta
  */
 
@@ -66,7 +66,7 @@ public abstract class ClassServer implements Runnable {
      */
     public abstract byte[] getBytes(String path)
 	throws IOException, ClassNotFoundException;
-    
+
     /**
      * The "listen" thread that accepts a connection to the
      * server, parses the header to obtain the class file name
@@ -110,20 +110,20 @@ public abstract class ClassServer implements Runnable {
 		} catch (IOException ie) {
 		    return;
 		}
-		
+
 	    } catch (Exception e) {
 		// write out error response
 		out.writeBytes("HTTP/1.0 400 " + e.getMessage() + "\r\n");
 		out.writeBytes("Content-Type: text/html\r\n\r\n");
 		out.flush();
 	    }
-		
+
 	} catch (IOException ex) {
 	    // eat exception (could log error to log file, but
 	    // write out to stdout for now).
 	    System.out.println("error writing response: " + ex.getMessage());
 	    ex.printStackTrace();
-	    
+
 	} finally {
 	    try {
 		socket.close();
@@ -135,7 +135,7 @@ public abstract class ClassServer implements Runnable {
     /**
      * Create a new thread to listen.
      */
-    private void newListener() 
+    private void newListener()
     {
 	(new Thread(this)).start();
     }
@@ -147,29 +147,30 @@ public abstract class ClassServer implements Runnable {
     private static String getPath(DataInputStream in)
 	throws IOException
     {
-	String line = in.readLine();
-	String path = "";
-	
-	// extract class from GET line
-	if (line.startsWith("GET /")) {
-	    line = line.substring(5, line.length()-1).trim();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        String line = reader.readLine();
+        String path = "";
 
-	    int index = line.indexOf(".class ");
-	    if (index != -1) {
-		path = line.substring(0, index).replace('/', '.');
-	    }
-	}
+        // extract class from GET line
+        if (line.startsWith("GET /")) {
+            line = line.substring(5, line.length()-1).trim();
 
-	// eat the rest of header
-	do {
-	    line = in.readLine();
-	} while ((line.length() != 0) &&
-	         (line.charAt(0) != '\r') && (line.charAt(0) != '\n'));
+            int index = line.indexOf(".class ");
+            if (index != -1) {
+                path = line.substring(0, index).replace('/', '.');
+            }
+        }
 
-	if (path.length() != 0) {
-	    return path;
-	} else {
-	    throw new IOException("Malformed Header");
-	}
+        // eat the rest of header
+        do {
+            reader.readLine();
+        } while ((line.length() != 0) &&
+             (line.charAt(0) != '\r') && (line.charAt(0) != '\n'));
+
+        if (path.length() != 0) {
+            return path;
+        } else {
+            throw new IOException("Malformed Header");
+        }
     }
 }

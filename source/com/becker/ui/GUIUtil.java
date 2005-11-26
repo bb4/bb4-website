@@ -1,24 +1,17 @@
 package com.becker.ui;
 
-import com.becker.common.ClassLoaderSingleton;
-import com.becker.common.Util;
-//import com.oyoaha.swing.plaf.oyoaha.OyoahaLookAndFeel;
+import com.becker.common.*;
 
+import javax.jnlp.*;
 import javax.swing.*;
-import javax.swing.plaf.ColorUIResource;
-import javax.swing.plaf.metal.MetalLookAndFeel;
-import javax.jnlp.BasicService;
-import javax.jnlp.ServiceManager;
+import javax.swing.plaf.*;
+import javax.swing.plaf.metal.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
-import java.net.URL;
-import java.net.MalformedURLException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.io.File;
-import java.text.NumberFormat;
+import java.awt.event.*;
+import java.awt.image.*;
+import java.io.*;
+import java.net.*;
+import java.util.*;
 
 
 /**
@@ -38,7 +31,7 @@ public final class GUIUtil
     // don't create this here or applets using this class will have a security exception
     // instead we create a singleton when needed.
     private static JFileChooser fileChooser_ = null;
-   
+
 
     // default font and color for the UI
     public static final Font UI_FONT = new Font( "Sans Serif", Font.PLAIN, 10 );      // standard
@@ -59,7 +52,7 @@ public final class GUIUtil
     // deselected tab backgrounds, dimmed button borders
     public static final Color UI_COLOR_SECONDARY2 = new Color( 153, 153, 204 );
     //( 204, 204, 255 );  // almost all backgrounds, active tabs.
-    public static final Color UI_COLOR_SECONDARY3 = new Color(214, 214, 245); 
+    public static final Color UI_COLOR_SECONDARY3 = new Color(214, 214, 245);
 
     // button backgrounds
     public static final Color UI_BUTTON_BACKGROUND = new Color( 204, 204, 255 );
@@ -341,7 +334,7 @@ public final class GUIUtil
 
         // call the applet's start method
         //baseFrame.setVisible( true );
-        applet.start();       
+        applet.start();
         return baseFrame;
     }
 
