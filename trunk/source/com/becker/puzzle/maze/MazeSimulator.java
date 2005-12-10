@@ -17,14 +17,13 @@ public class MazeSimulator extends JApplet implements ActionListener
     protected static final int PASSAGE_THICKNESS = 60;
     protected static final int ANIMATION_SPEED = 10;
 
-    protected JTextField thicknessField_ = null;
+    protected NumberInput thicknessField_ = null;
 
     // ui for entering the direction probablilities
-    protected JTextField forwardProbField_ = null;
-    protected JTextField leftProbField_ = null;
-    protected JTextField rightProbField_ = null;
-    protected JTextField animationSpeedField_ = null;
-
+    protected NumberInput forwardProbField_ = null;
+    protected NumberInput leftProbField_ = null;
+    protected NumberInput rightProbField_ = null;
+    protected NumberInput animationSpeedField_ = null;
 
     protected GradientButton regenerateButton_ = null;
     protected GradientButton solveButton_ = null;
@@ -91,24 +90,19 @@ public class MazeSimulator extends JApplet implements ActionListener
         mainPanel.setLayout( new BorderLayout() );
 
         JPanel controlsPanel = new JPanel();
-        thicknessField_ = createTextField( Integer.toString( PASSAGE_THICKNESS ) );
-        animationSpeedField_ = createTextField( Integer.toString( ANIMATION_SPEED ) );
-        NumberInputPanel thicknessPanel = new NumberInputPanel("Thickness", thicknessField_, "The passage thickness");
-        NumberInputPanel animationSpeedPanel = new NumberInputPanel("Speed", animationSpeedField_, "The animation speed (large number is slow).");
+        thicknessField_ = new NumberInput("Thickness", PASSAGE_THICKNESS, "The passage thickness", 2, 200, true);
+        animationSpeedField_ = new NumberInput("Speed", ANIMATION_SPEED, "The animation speed (large number is slow).", 1, 200, true);
 
-        forwardProbField_ = createTextField( Double.toString( 0.34 ) );
-        leftProbField_ = createTextField( Double.toString( 0.33 ) );
-        rightProbField_ = createTextField( Double.toString( 0.33 ) );
-        NumberInputPanel forwardProbPanel = new NumberInputPanel("Forward", forwardProbField_, "The probability of moving straight forward");
-        NumberInputPanel leftProbPanel = new NumberInputPanel("Left", leftProbField_, "The probability of moving left");
-        NumberInputPanel rightProbPanel = new NumberInputPanel("Right", rightProbField_, "The probability of moving right");
+        forwardProbField_ = new NumberInput("Forward", 0.34, "The probability of moving straight forward", 0, 1.0, false);
+        leftProbField_ = new NumberInput("Left", 0.33, "The probability of moving left", 0, 1.0, false);
+        rightProbField_ = new NumberInput("Right", 0.33, "The probability of moving right", 0, 1.0, false);
 
-        controlsPanel.add( thicknessPanel );
-        controlsPanel.add( animationSpeedPanel );
+        controlsPanel.add( thicknessField_ );
+        controlsPanel.add( animationSpeedField_ );
         controlsPanel.add( Box.createHorizontalStrut( 15 ) );
-        controlsPanel.add( forwardProbPanel );
-        controlsPanel.add( leftProbPanel );
-        controlsPanel.add( rightProbPanel );
+        controlsPanel.add( forwardProbField_ );
+        controlsPanel.add( leftProbField_ );
+        controlsPanel.add( rightProbField_ );
 
         regenerateButton_ = new GradientButton( "Generate" );
         regenerateButton_.addActionListener( this );
@@ -132,13 +126,14 @@ public class MazeSimulator extends JApplet implements ActionListener
         return mainPanel;
     }
 
+    /*
     private static JTextField createTextField( String initialVal )
     {
         JTextField tf = new JTextField( initialVal );
         Dimension mind = new Dimension( 30, 18 );
         tf.setPreferredSize( mind );
         return tf;
-    }
+    }  */
 
     /**
      * called when a button is pressed
@@ -167,11 +162,11 @@ public class MazeSimulator extends JApplet implements ActionListener
             return; // not inited yet
         }
 
-        int thickness = Integer.parseInt( thicknessField_.getText() );
+        int thickness = thicknessField_.getIntValue();
 
-        Double forwardP = new Double( forwardProbField_.getText() );
-        Double leftP = new Double( leftProbField_.getText() );
-        Double rightP = new Double( rightProbField_.getText() );
+        double forwardP =forwardProbField_.getValue();
+        double leftP = leftProbField_.getValue();
+        double rightP = rightProbField_.getValue();
 
         double sum = forwardP + leftP + rightP;
         maze_.generate( thickness, getAnimationSpeed(),
@@ -185,7 +180,7 @@ public class MazeSimulator extends JApplet implements ActionListener
 
     private int getAnimationSpeed()
     {
-        return Integer.parseInt(animationSpeedField_.getText());
+        return animationSpeedField_.getIntValue();
     }
 
     /**

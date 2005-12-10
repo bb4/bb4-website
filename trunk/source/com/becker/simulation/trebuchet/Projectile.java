@@ -11,7 +11,7 @@ import java.awt.*;
 public class Projectile extends RenderablePart {
 
 
-    private double mass_;
+    private double mass_ = 1.0;
     private double radius_;
     private Vector2d position_ = new Vector2d();
     private boolean isOnRamp_ = true;
@@ -100,7 +100,7 @@ public class Projectile extends RenderablePart {
             force.y = 0;
         }
         force_.set(force);
-
+        
         acceleration_.set(force);
         acceleration_.scale( 1.0 / getMass());
         Vector2d deltaVelocity = new Vector2d(acceleration_);
@@ -145,7 +145,7 @@ public class Projectile extends RenderablePart {
             g2.setStroke(FORCE_VECTOR_STROKE);
             g2.setColor(FORCE_VECTOR_COLOR);
             g2.drawLine((int) (scale * position_.x), (int) (BASE_Y + scale * position_.y),
-                        (int) (scale * (position_.x + force_.x)), (int) (BASE_Y * scale *(position_.y + force_.y)));
+                        (int) (scale * (position_.x + force_.x)), (int) (BASE_Y + scale *(position_.y + force_.y)));
         }
     }
 

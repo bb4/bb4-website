@@ -1,6 +1,7 @@
 package com.becker.simulation.trebuchet;
 
 import com.becker.simulation.common.*;
+import com.becker.ui.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,12 +17,12 @@ class TrebuchetOptionsDialog extends SimulatorOptionsDialog implements ActionLis
 {
 
     // snake param options controls
-    private JTextField waveSpeedField_;
-    private JTextField waveAmplitudeField_;
-    private JTextField wavePeriodField_;
-    private JTextField massScaleField_;
-    private JTextField springKField_;
-    private JTextField springDampingField_;
+    private NumberInput counterWeightLeverlLengthField_;
+    private NumberInput projectileMassField_;
+    private NumberInput slingLengthField_;
+    private NumberInput slingLeverLengthField_;
+    private NumberInput counterWeightMassField_;
+    private NumberInput slingReleaseAngleField_;
 
 
 
@@ -37,24 +38,65 @@ class TrebuchetOptionsDialog extends SimulatorOptionsDialog implements ActionLis
         JPanel customParamPanel = new JPanel();
         customParamPanel.setLayout( new BorderLayout() );
 
-        JPanel liquidParamPanel = new JPanel();
-        liquidParamPanel.setLayout( new BoxLayout(liquidParamPanel, BoxLayout.Y_AXIS ) );
-        liquidParamPanel.setBorder(
-                BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), "Liquid Parameters" ) );
+        JPanel trebParamPanel = new JPanel();
+        trebParamPanel.setLayout( new BoxLayout(trebParamPanel, BoxLayout.Y_AXIS ) );
+        trebParamPanel.setBorder(
+                BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), "Trebuchet Parameters" ) );
 
 
         TrebuchetSimulator simulator = (TrebuchetSimulator) getSimulator();
+        Trebuchet treb = simulator.getTrebuchet();
 
-        /*
-        waveSpeedField_ = new JTextField( Double.toString( simulator.getSnake().getWaveSpeed() ) );
-        waveSpeedField_.setMaximumSize( TEXT_FIELD_DIM );
-        JPanel p1 =
-                new NumberInputPanel( "Wave Speed (.001 slow - .9 fast):  ", waveSpeedField_ );
-        p1.setToolTipText( "This controls the speed at which the force function that travels down the body of the snake" );
-        liquidParamPanel.add( p1 );
-        */
 
-        customParamPanel.add(liquidParamPanel, BorderLayout.NORTH);
+        counterWeightLeverlLengthField_ =
+                new NumberInput( "Counter Weight Lever Length (1.0 short - 3.0 long):  ",
+                                 treb.getCounterWeightLeverLength(),
+                                 "This controls the distance from the fulcrum point to the point "
+                                 + "where the counter weight is attached to the the end of the arm.",
+                                 1.0, 3.0, false);
+
+        counterWeightMassField_ =
+                new NumberInput( "Counter Weight Mass  (2.0 light - 60.0 heavy):  ",
+                                 treb.getCounterWeightMass(),
+                                 "This controls mass of main counterweight on the right ",
+                                 2.0, 60.0, false);
+
+        projectileMassField_ =
+                new NumberInput( "Projectile Mass  (0.2 light - 5.0 heavy):  ",
+                                 treb.getProjectileMass(),
+                                 "This controls mass of the projectile thrown.",
+                                 0.2, 5.0, false);
+
+        slingLengthField_ =
+                new NumberInput( "Sling Length  (0.2 short - 3.0 long):  ",
+                                 treb.getSlingLength(),
+                                 "This controls the length of the sling.",
+                                 0.2, 3.0, false);
+
+        slingLeverLengthField_ =
+                new NumberInput( "Sling Lever Length  (1.0 short - 5.0 long):  ",
+                                 treb.getSlingLeverLength(),
+                                 "This controls length of the lever arm from the fulcrum to the sling attachment point.",
+                                 1.0, 5.0, false);
+
+
+
+        slingReleaseAngleField_ =
+                new NumberInput( "Sling Release Angle  (0.0 small - PI/2 large):  ",
+                                 treb.getSlingReleaseAngle(),
+                                 "The angle between the sling and the lever arm when the projectile will be released. ",
+                                 0, Math.PI / 2, false);
+
+        trebParamPanel.add( counterWeightLeverlLengthField_ );
+        trebParamPanel.add( counterWeightMassField_ );
+        trebParamPanel.add( projectileMassField_ );
+        trebParamPanel.add( slingLengthField_ );
+        trebParamPanel.add( slingLeverLengthField_ );
+        trebParamPanel.add( slingReleaseAngleField_ );
+        customParamPanel.add(trebParamPanel, BorderLayout.NORTH);
+
+        // start over
+        treb.reset();
 
         return customParamPanel;
     }
@@ -62,12 +104,21 @@ class TrebuchetOptionsDialog extends SimulatorOptionsDialog implements ActionLis
     protected void ok() {
 
         super.ok();
-
+  
         // set the snake params
         TrebuchetSimulator simulator = (TrebuchetSimulator) getSimulator();
+        Trebuchet treb = simulator.getTrebuchet();
+        treb.reset();
 
-        //Double waveSpeed = new Double( waveSpeedField_.getText() );
-        //simulator.getSnake().setWaveSpeed( waveSpeed );
+        treb.setCounterWeightLeverLength(counterWeightLeverlLengthField_.getValue());
+
+        treb.setCounterWeightMass(counterWeightMassField_.getValue());
+        treb.setProjectileMass(projectileMassField_.getValue());
+        treb.setSlingLength(slingLengthField_.getValue());
+        treb.setSlingLeverLength(slingLeverLengthField_.getValue());
+        treb.setSlingReleaseAngle(counterWeightMassField_.getValue());
+        treb.setSlingReleaseAngle(slingReleaseAngleField_.getValue());
+
     }
 
 }

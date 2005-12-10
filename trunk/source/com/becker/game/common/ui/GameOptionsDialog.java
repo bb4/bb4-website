@@ -23,7 +23,7 @@ public class GameOptionsDialog extends OptionsDialog implements ActionListener, 
     private static final long serialVersionUID = 0L;
 
     // debug params
-    protected JTextField dbgLevelField_ = null;
+    protected NumberInput dbgLevelField_ = null;
     protected final JTextField logFileField_ = null;
     protected JRadioButton consoleOutputButton_ = null;  // output radio button group
     protected JRadioButton windowOutputButton_ = null;  // output radio button group
@@ -135,14 +135,10 @@ public class GameOptionsDialog extends OptionsDialog implements ActionListener, 
 
     protected void addDebugLevel(JPanel p)
     {
-        // debug level
-        dbgLevelField_ = new JTextField( Integer.toString( GameContext.getDebugMode() ) );
-        dbgLevelField_.setMaximumSize( new Dimension( 30, ROW_HEIGHT ) );
-        //dbgLevelField_.addActionListener(this);
-        JPanel p1 =
-                new NumberInputPanel( GameContext.getLabel("DEBUG_LEVEL"), dbgLevelField_,
-                                      GameContext.getLabel("DEBUG_LEVEL_TIP") );
-        p.add( p1 );
+        dbgLevelField_ =
+                new NumberInput( GameContext.getLabel("DEBUG_LEVEL"), GameContext.getDebugMode(),
+                                 GameContext.getLabel("DEBUG_LEVEL_TIP"), 0, 3, true);
+        p.add( dbgLevelField_ );
     }
 
     /**
@@ -295,9 +291,8 @@ public class GameOptionsDialog extends OptionsDialog implements ActionListener, 
      */
     protected void ok()
     {
-        Integer dbgLevel = new Integer( dbgLevelField_.getText() );
-        if ( dbgLevel >= 0 )
-            GameContext.setDebugMode( dbgLevel );
+
+        GameContext.setDebugMode( dbgLevelField_.getIntValue() );
         GameContext.setProfiling( profileCheckbox_.isSelected() );
         GameContext.getLogger().setDestination( logDestination_ );
 

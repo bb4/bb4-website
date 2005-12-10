@@ -1,15 +1,12 @@
 package com.becker.game.multiplayer.poker.ui;
 
 import com.becker.game.common.*;
-import com.becker.game.multiplayer.poker.PokerPlayer;
+import com.becker.game.multiplayer.poker.*;
 import com.becker.ui.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.text.MessageFormat;
-import java.util.List;
-import java.util.HashMap;
 
 /**
  * Allow the user to specify a single order
@@ -23,7 +20,7 @@ public final class RaiseDialog extends OptionsDialog
     private PokerPlayer player_;
 
     private GradientButton okButton_;
-    private JTextField raiseAmount_;
+    private NumberInput raiseAmount_;
     private int callAmount_;
     private int allInAmount_;
     private int maxRaiseAllowed_;
@@ -75,22 +72,20 @@ public final class RaiseDialog extends OptionsDialog
             JLabel instr2 = new JLabel("You first need to add $"+callAmount_+" to meet what others have added.");
             instructionsPanel.add(instr2, BorderLayout.CENTER);
         }
-        raiseAmount_ = new JTextField(DEFAULT_RAISE_AMOUNT);
-        NumberInputPanel raiseInput = null;
         if ((player_.getCash() > allInAmount_ - player_.getContribution()) && allInAmount_ < maxRaiseAllowed_) {
 
             JLabel instr3 = new JLabel("If you want, you can \"all in\" one of the players by raising $"+(allInAmount_ - callAmount_ - ante_));
             instructionsPanel.add(instr3, BorderLayout.SOUTH);
         }
         if (callAmount_ > 0) {
-            raiseInput = new NumberInputPanel(GameContext.getLabel("AMOUNT_TO_RAISE1"), raiseAmount_);
+            raiseAmount_ = new NumberInput(GameContext.getLabel("AMOUNT_TO_RAISE1"), DEFAULT_RAISE_AMOUNT);
         }
         else {
-            raiseInput = new NumberInputPanel(GameContext.getLabel("AMOUNT_TO_RAISE2"), raiseAmount_);
+            raiseAmount_ = new NumberInput(GameContext.getLabel("AMOUNT_TO_RAISE2"), DEFAULT_RAISE_AMOUNT);
         }
 
         primaryPanel.add(instructionsPanel, BorderLayout.NORTH);
-        primaryPanel.add(raiseInput, BorderLayout.CENTER);
+        primaryPanel.add(raiseAmount_, BorderLayout.CENTER);
         mainPanel_.add(primaryPanel, BorderLayout.CENTER);
         mainPanel_.add(buttonsPanel, BorderLayout.SOUTH);
 
@@ -162,16 +157,7 @@ public final class RaiseDialog extends OptionsDialog
      */
     public int getRaiseAmount()
     {
-        String sNum = raiseAmount_.getText();
-        if (sNum == null || sNum.equals(""))
-            return 0;
-        int raiseAmt = 0;
-        try {
-            raiseAmt = Integer.parseInt(sNum);
-        } catch (NumberFormatException e) {
-            GameContext.log(0, sNum +" is not a valid integer. Setting raise = 0");
-        }
-        return  raiseAmt;
+        return raiseAmount_.getIntValue();
     }
 
 }

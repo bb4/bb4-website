@@ -6,7 +6,7 @@ import com.becker.game.common.ui.GameOptionsDialog;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.SearchStrategy;
-import com.becker.ui.NumberInputPanel;
+import com.becker.ui.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,8 +23,8 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog implements ActionL
     private JRadioButton minimaxButton_;  // alg radio button group
     private JRadioButton negamaxButton_;  // alg radio button group
     private int algorithm_;
-    private JTextField lookAheadField_;
-    private JTextField bestPercentageField_;
+    private NumberInput lookAheadField_;
+    private NumberInput bestPercentageField_;
     private JLabel treeUpperBound_ = null;
     private JCheckBox alphabetaCheckbox_;
     private JCheckBox quiescenceCheckbox_;
@@ -89,21 +89,15 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog implements ActionL
 
         // look ahead
         treeUpperBound_ = new JLabel();
-
-
-        lookAheadField_ = new JTextField( Integer.toString( options.getLookAhead() ) );
-        lookAheadField_.setMaximumSize( new Dimension( 30, ROW_HEIGHT ) );
-        JPanel p1 =
-                new NumberInputPanel( GameContext.getLabel("MOVES_TO_LOOKAHEAD"), lookAheadField_,
-                                      GameContext.getLabel("MOVES_TO_LOOKAHEAD_TIP"));
+        lookAheadField_ =
+                new NumberInput( GameContext.getLabel("MOVES_TO_LOOKAHEAD"), options.getLookAhead(),
+                                 GameContext.getLabel("MOVES_TO_LOOKAHEAD_TIP"), 1, 16, true);
         lookAheadField_.addKeyListener( new UpperBoundKeyListener( lookAheadField_, treeUpperBound_) );
 
         // best percentage moves
-        bestPercentageField_ = new JTextField( Integer.toString( options.getPercentageBestMoves() ) );
-        bestPercentageField_.setMaximumSize( new Dimension( 30, ROW_HEIGHT ) );
-        JPanel p2 =
-                new NumberInputPanel( GameContext.getLabel("PERCENTAGE_AT_PLY"), bestPercentageField_,
-                                      GameContext.getLabel("PERCENTAGE_AT_PLY_TIP"));
+        bestPercentageField_ =
+                new NumberInput( GameContext.getLabel("PERCENTAGE_AT_PLY"), options.getPercentageBestMoves(),
+                                 GameContext.getLabel("PERCENTAGE_AT_PLY_TIP"), 0, 100, true);
         bestPercentageField_.addKeyListener( new UpperBoundKeyListener( bestPercentageField_, treeUpperBound_) );
 
         JPanel p3 = new JPanel( new FlowLayout() );
@@ -114,8 +108,8 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog implements ActionL
         p3.add( treeUpperBoundLabel );
         p3.add( treeUpperBound_ );
 
-        p.add( p1 );
-        p.add( p2 );
+        p.add( lookAheadField_ );
+        p.add( bestPercentageField_ );
         p.add( p3 );
 
         // alpha-beta pruning option
@@ -175,16 +169,13 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog implements ActionL
 
         c.getOptions().setAlphaBeta( alphabetaCheckbox_.isSelected() );
         c.getOptions().setQuiescence( quiescenceCheckbox_.isSelected() );
-
-        Integer level = new Integer( lookAheadField_.getText() );
-        c.getOptions().setLookAhead( level );
+        c.getOptions().setLookAhead( lookAheadField_.getIntValue() );
 
         if ( minimaxButton_.isSelected() )
             c.getOptions().setSearchStrategyMethod( SearchStrategy.MINIMAX );
         else if ( negamaxButton_.isSelected() )
             c.getOptions().setSearchStrategyMethod( SearchStrategy.NEGAMAX );
-        Integer best = new Integer( bestPercentageField_.getText() );
-        c.getOptions().setPercentageBestMoves( best );
+        c.getOptions().setPercentageBestMoves(bestPercentageField_.getIntValue() );
         c.getOptions().setShowGameTree( gameTreeCheckbox_.isSelected() );
         c.getOptions().setShowComputerAnimation( computerAnimationCheckbox_.isSelected() );
 
@@ -231,12 +222,12 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog implements ActionL
 
     private class UpperBoundKeyListener extends KeyAdapter
     {
-        JTextField field_ = null;
+        NumberInput field_ = null;
         JLabel treeBound_ = null;
 
         // constructor
         // field the field to check for changed text
-        UpperBoundKeyListener( JTextField field, JLabel treeBound )
+        UpperBoundKeyListener( NumberInput field, JLabel treeBound )
         {
             field_ = field;
             treeBound_ = treeBound;
@@ -244,11 +235,7 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog implements ActionL
 
         public void keyPressed( KeyEvent evt )
         {
-            if ( field_.getText().length() > 0 ) {
-                Integer level = new Integer( lookAheadField_.getText() );
-                Integer best = new Integer( bestPercentageField_.getText() );
-                treeBound_.setText( "" + calcTreeUpperBound( level, best ) );
-            }
+            treeBound_.setText( "" + calcTreeUpperBound( lookAheadField_.getIntValue(),  bestPercentageField_.getIntValue()) );
         }
     }
 

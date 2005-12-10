@@ -3,6 +3,7 @@ package com.becker.puzzle.maze;
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 /**
  *  Program to automatically generate a Maze.
@@ -23,38 +24,24 @@ public class MazeGenerator extends JComponent
 
     // the grid of cells that make up the environment
     // in x,y (col, row) order
-    private MazeCell[][] grid_ = null;
+    private MazeCell[][] grid_;
 
     // the default size of each square cell in millimeters
     private double cellSize_ = 40.0;
     private static Random RANDOM = new Random();
 
     // a list of 3 directions : FORWARD, LEFT,  and RIGHT
-    private ArrayList directions_ = null;
+    private List directions_;
 
     // the start and stop positions
-    private Point startPosition_ = null;
-    private Point stopPosition_ = null;
-    private Point currentPosition_ = null;
+    private Point startPosition_;
+    private Point stopPosition_;
+    private Point currentPosition_;
     // put the stop point at the maximum search depth
     private static int maxDepth_ = 0;
 
-    // possible directions as we traverse
-    private static final Integer FORWARD = new Integer( 1 );
-    private static final Integer LEFT = new Integer( 2 );
-    private static final Integer RIGHT = new Integer( 3 );
-
-    // vary the probability that each direction occurs for interesting effects
-    // the sum of these probabilities must sum to 1
-    private static final double FORWARD_PROB = .6;
-    private static final double LEFT_PROB = .39;
-    private static final double RIGHT_PROB = .01;
-
-    // default probs
-    private double forwardProb_ = FORWARD_PROB;
-    private double leftProb_ = LEFT_PROB;
-    private double rightProb_ = RIGHT_PROB;
     private double animationSpeed_;
+    private Direction direction_ = new Direction();
 
     // rending attributes
     //private static final Color GRID_COLOR = new Color(20,20,20);
@@ -68,7 +55,7 @@ public class MazeGenerator extends JComponent
     private static final int WALL_LINE_WIDTH = 3;
     private static final int PATH_LINE_WIDTH = 6;
 
-    private Font textFont_ = null;
+    private Font textFont_;
     //Log logger_ = null;
 
 
@@ -87,7 +74,7 @@ public class MazeGenerator extends JComponent
         xDim_ = (int) w; // +2
         yDim_ = (int) h; // +2
         int numCells = xDim_ * yDim_;
-        //System.out.println( "initGenerator w=" + w + " h=" + h );
+        System.out.println( "initGenerator w=" + w + " h=" + h +" xDim="+xDim_+" yDim="+yDim_);
         grid_ = new MazeCell[xDim_ ][yDim_];
         stopPosition_ = new Point( xDim_, yDim_ );
 
@@ -108,9 +95,9 @@ public class MazeGenerator extends JComponent
 
         directions_ = new ArrayList();
 
-        directions_.add( FORWARD );
-        directions_.add( LEFT );
-        directions_.add( RIGHT );
+        directions_.add( Direction.FORWARD );
+        directions_.add( Direction.LEFT );
+        directions_.add( Direction.RIGHT );
         // Collections.shuffle(directions_);
 
         // a border around the whole maze
@@ -155,7 +142,10 @@ public class MazeGenerator extends JComponent
      */
     public void generate( int thickness, int animationSpeed )
     {
-        generate( thickness, animationSpeed, FORWARD_PROB, LEFT_PROB, RIGHT_PROB );
+        generate( thickness, animationSpeed,
+                  Direction.DEFAULT_FORWARD_PROB,
+                  Direction.DEFAULT_LEFT_PROB,
+                  Direction.DEFAULT_RIGHT_PROB );
     }
 
     /**
@@ -172,7 +162,7 @@ public class MazeGenerator extends JComponent
         }
 
 
-        if ( thickness >= (dim.width / 4) || thickness >= (dim.height / 4) )
+        if ( thickness >= (dim.width >> 2) || thickness >= (dim.height >> 2) )
             thickness = Math.min( (dim.width / 5), (dim.height / 5) );
 
         // thickness must be divisible by 2;
@@ -187,9 +177,9 @@ public class MazeGenerator extends JComponent
         initGenerator( w, h );
         // the second argument is a dummy direction
         maxDepth_ = 0;
-        forwardProb_ = forwardProb;
-        leftProb_ = leftProb;
-        rightProb_ = rightProb;
+        direction_.setForwardProb(forwardProb);
+        direction_.setLeftProb(leftProb);
+        direction_.setRightProb(rightProb);
         animationSpeed_ = (double)animationSpeed;
 
         search();
@@ -383,14 +373,14 @@ public class MazeGenerator extends JComponent
         int ypos = (int)(pt.getY() * cellSize_);
         if (animationSpeed_ > 20)  {
             // this paints just the cell immediately (sorta slow)
-            this.paintImmediately( xpos-csized2, ypos-csized2, (int)(2.*cellSize_), (int)(2.*cellSize_));
+            this.paintImmediately( xpos-csized2, ypos-csized2, (int)(2.0*cellSize_), (int)(2.0*cellSize_));
         }
         else  {
-            if (RANDOM.nextDouble() < (animationSpeed_/200.))  {
+            if (RANDOM.nextDouble() < (animationSpeed_/200.0))  {
               paintAll();
             }
             else
-              this.repaint(xpos-csized2, ypos-csized2, (int)(2.*cellSize_), (int)(2.*cellSize_));
+              this.repaint(xpos-csized2, ypos-csized2, (int)(2.0*cellSize_), (int)(2.0*cellSize_));
         }
     }
 
@@ -421,16 +411,16 @@ public class MazeGenerator extends JComponent
     {
         // from this point try each direction in a random order
         // assigning probabilities to the order in which we check these directions can give interesting effects
-        ArrayList directions = getShuffledDirections();
+        List directions = getShuffledDirections();
 
         // check all the directions except the one we came from
         for ( int i = 0; i < 3; i++ ) {
             Integer direction = (Integer) directions.get( i );
             Point dir = fromDir; // init with FORWARD
-            if ( direction == LEFT ) {
+            if ( direction == Direction.LEFT ) {
                 dir = leftOf( fromDir );
             }
-            else if ( direction == RIGHT ) {
+            else if ( direction == Direction.RIGHT ) {
                 dir = rightOf( fromDir );
             }
             stack.addFirst( new GenState( currentPosition, dir, depth ) );
@@ -442,29 +432,30 @@ public class MazeGenerator extends JComponent
      * return a shuffled list of directions
      * they are ordered given the potentially skewed probablilities at the top
      */
-    protected ArrayList getShuffledDirections()
+    protected List getShuffledDirections()
     {
         double rnd = RANDOM.nextDouble(); //Math.random();
-        ArrayList directions = new ArrayList();
-        ArrayList originalDirections = (ArrayList) directions_.clone();
-        if ( rnd < forwardProb_ ) {
+        List directions = new ArrayList();
+        List originalDirections = new ArrayList(directions_.size());
+        originalDirections.addAll(directions_);
+        if ( rnd < direction_.getForwardProb()) {
             directions.add( originalDirections.remove( 0 ) );
-            directions.add( getSecondDir( originalDirections, leftProb_, rightProb_ ) );
+            directions.add( getSecondDir( originalDirections,  direction_.getLeftProb(),  direction_.getRightProb()));
         }
-        else if ( rnd >= forwardProb_ && rnd < (forwardProb_ + leftProb_) ) {
+        else if ( rnd >=  direction_.getForwardProb() && rnd < ( direction_.getForwardProb() + direction_.getLeftProb()) ) {
             directions.add( originalDirections.remove( 1 ) );
-            directions.add( getSecondDir( originalDirections, forwardProb_, rightProb_ ) );
+            directions.add( getSecondDir( originalDirections,  direction_.getForwardProb(),  direction_.getRightProb() ) );
         }
         else {
             directions.add( originalDirections.remove( 2 ) );
-            directions.add( getSecondDir( originalDirections, forwardProb_, leftProb_ ) );
+            directions.add( getSecondDir( originalDirections,  direction_.getForwardProb(),  direction_.getLeftProb() ) );
         }
         // the third direction is whatever remains
         directions.add( originalDirections.remove( 0 ) );
         return directions;
     }
 
-    protected Integer getSecondDir( ArrayList twoDirections, double p1, double p2 )
+    protected Integer getSecondDir( List twoDirections, double p1, double p2 )
     {
         double rnd = RANDOM.nextDouble(); //Math.random();
         //double prob1 = p1 / (p1+p2);
@@ -498,7 +489,7 @@ public class MazeGenerator extends JComponent
     */
     protected Point rightOf( Point dir )
     {
-        Point newDir = null;
+        Point newDir ;
         if ( dir.x == 0 ) {
             if ( dir.y > 0 )
                 newDir = new Point( 1, 0 );
@@ -517,7 +508,7 @@ public class MazeGenerator extends JComponent
     /**
      * Render the Environment on the screen
      */
-    public synchronized void paintComponent( Graphics g )
+    public void paintComponent( Graphics g )
     {
         super.paintComponent( g );
         Graphics2D g2 = (Graphics2D) g;
@@ -561,7 +552,7 @@ public class MazeGenerator extends JComponent
                 int xpos = i * cellSize;
                 int ypos = j * cellSize;
 
-                if ( c.visited ) {
+                if ( c!=null && c.visited ) {
                     g2.setColor( VISITED_COLOR );
                     g2.fillRect( xpos + 1, ypos + 1, cellSize, cellSize );
                     //g2.setColor(Color.black);
@@ -617,10 +608,10 @@ public class MazeGenerator extends JComponent
         drawChar("*", currentPosition_, cellSize, g2);
     }
 
-    private void drawChar(String c, Point pos,  int cellSize, Graphics2D g2)
+    private static void drawChar(String c, Point pos,  int cellSize, Graphics2D g2)
     {
         if (pos != null)
-          g2.drawString( c, (int) ((pos.x + .32) * cellSize), (int) ((pos.y + .76) * cellSize) );
+          g2.drawString( c, (int) ((pos.x + 0.32) * cellSize), (int) ((pos.y + 0.76) * cellSize) );
     }
 
 }

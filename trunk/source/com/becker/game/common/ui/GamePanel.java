@@ -3,15 +3,12 @@ package com.becker.game.common.ui;
 import com.becker.game.common.*;
 import com.becker.java2d.*;
 import com.becker.ui.*;
-import sun.applet.*;
 
 import javax.swing.*;
-import java.applet.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.*;
 import java.io.*;
-import java.net.*;
 
 /**
  * This is an abstract base class for a Game UI.
@@ -182,12 +179,13 @@ public abstract class GamePanel extends TexturedPanel
             //speech.sayPhoneWords( GREETING );
 
             // use when sound card available
+            /*   @@ causing security exceptin in applet.
             URL url = GUIUtil.getURL("com/becker/sound/play_game_voice.wav");
             AudioClip clip = new AppletAudioClip(url);
             if (clip != null) {
                 clip.play();
             }
-
+            */
         }
         this.setDoubleBuffered(false);
     }

@@ -1,21 +1,19 @@
 package com.becker.game.twoplayer.go.ui;
 
-import com.becker.game.common.GameContext;
-import com.becker.game.common.ui.GameBoardViewer;
-import com.becker.game.twoplayer.common.ui.TwoPlayerNewGameDialog;
-import com.becker.game.twoplayer.go.GoBoard;
-import com.becker.game.twoplayer.go.GoController;
-import com.becker.ui.NumberInputPanel;
+import com.becker.game.common.*;
+import com.becker.game.common.ui.*;
+import com.becker.game.twoplayer.common.ui.*;
+import com.becker.game.twoplayer.go.*;
+import com.becker.ui.*;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 final class GoNewGameDialog extends TwoPlayerNewGameDialog implements ActionListener
 {
 
     // must not initialialize to null
-    private JTextField handicapField_;
+    private NumberInput handicapField_;
 
     private static final String BLACK_IS =GameContext.getLabel("BLACK_IS");
     private static final String WHITE_IS =GameContext.getLabel("WHITE_IS");
@@ -35,22 +33,13 @@ final class GoNewGameDialog extends TwoPlayerNewGameDialog implements ActionList
     {
         JPanel p = new JPanel();
         p.setLayout( new BoxLayout( p, BoxLayout.Y_AXIS ) );
-        //p.setBorder(BorderFactory.createEtchedBorder());
-        //JLabel label = new JLabel("GO SPECIFIC OPTIONS:");
 
-        handicapField_ = new JTextField( Integer.toString( ((GoBoard) board_).getHandicap() ) );
-        handicapField_.setMaximumSize( new Dimension( 30, ROW_HEIGHT ) );
-        JPanel handicapOption =
-                createHandicapPanel( GameContext.getLabel("HANDICAP_LABEL"), handicapField_ );
+        handicapField_ =
+           new NumberInput(GameContext.getLabel("HANDICAP_LABEL"), ((GoBoard) board_).getHandicap() );
 
-        p.add( handicapOption );
+        p.add( handicapField_ );
         assert ( handicapField_!=null );
         return p;
-    }
-
-    private static JPanel createHandicapPanel( String labelText, JTextField handicapField )
-    {
-        return new NumberInputPanel( labelText, handicapField );
     }
 
     protected String getPlayer1Label()
@@ -68,10 +57,9 @@ final class GoNewGameDialog extends TwoPlayerNewGameDialog implements ActionList
         GoController gcontroller = (GoController) controller_;
 
         assert ( handicapField_!=null );
-        Integer handicap = new Integer( handicapField_.getText() );
-        gcontroller.setHandicap( handicap );
+        gcontroller.setHandicap( handicapField_.getIntValue() );
 
-        GameContext.log( 2, "GoOptionsDlg: the handicap is:" + handicap );
+        GameContext.log( 2, "GoOptionsDlg: the handicap is:" + handicapField_.getIntValue());
         super.ok();
     }
 

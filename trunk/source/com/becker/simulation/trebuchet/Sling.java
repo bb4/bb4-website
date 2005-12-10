@@ -19,6 +19,7 @@ public class Sling extends RenderablePart {
 
     private static final BasicStroke STROKE = new BasicStroke(2.0f);
     private static final Color COLOR = new Color(0, 30, 0);
+    private static final Color ARC_COLOR = new Color(60, 90, 70, 150);
 
     public Sling(double slingLength,  double releaseAngle, Lever lever, Projectile p) {
         length_ = slingLength;
@@ -112,6 +113,7 @@ public class Sling extends RenderablePart {
         int diameter = (int) (SCALE_FACTOR * 2 * length_);
 
         double rad = diameter >> 1;
+        g2.setColor(ARC_COLOR);
         g2.drawArc((int) (scale * (attachPt.x - rad)), (int) (BASE_Y + scale *(attachPt.y - rad)),
                    (int)(scale * diameter), (int)(scale * diameter), startAngle, angle);
         //g2.drawString("start = "+ startAngle, (int)(attachPt.x + rad), (int)(attachPt.y));

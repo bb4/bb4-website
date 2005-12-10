@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.chess;
 
-import com.becker.game.twoplayer.checkers.CheckersBoard;
+import com.becker.game.twoplayer.checkers.*;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.common.Move;
 import com.becker.game.common.*;
@@ -113,7 +113,7 @@ public class ChessBoard extends CheckersBoard
     }
 
     /**
-     * for checkers, undoing a move means moving the piece back and
+     * for chess, undoing a move means moving the piece back and
      * restoring any captures.
      * @param move to undo
      */

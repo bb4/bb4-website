@@ -198,9 +198,7 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
             c.getPlayer1().setHuman( human1Button_.isSelected() );
             c.getPlayer2().setHuman( human2Button_.isSelected() );
         }
-        Integer row = new Integer( rowSizeField_.getText() );
-        Integer col = new Integer( colSizeField_.getText() );
-        board_.setSize( row, col );
+        board_.setSize( rowSizeField_.getIntValue(), colSizeField_.getIntValue() );
 
         //restore the saved file if one was specified
         String fileToOpen = openFileField_.getText();

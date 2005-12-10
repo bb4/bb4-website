@@ -1,27 +1,12 @@
 package com.becker.misc.colormixer.colormixer;
 
-import com.becker.ui.ResizableAppletPanel;
-import com.becker.ui.GradientButton;
-import com.becker.ui.GUIUtil;
-import com.becker.ui.NumberInputPanel;
-
-import javax.swing.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ActionEvent;
-import java.awt.*;
-
-
 import com.becker.ui.*;
 
 import javax.swing.*;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
+import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Dictionary;
-import java.util.Hashtable;
+import java.util.*;
 
 public class ColorMixer extends JApplet implements ActionListener, ChangeListener
 {
@@ -41,7 +26,7 @@ public class ColorMixer extends JApplet implements ActionListener, ChangeListene
     private MixedColorsScrollPane mixedColorsPanel_;
 
 
-    public boolean isStandalone = false;
+    public boolean isStandalone_ = false;
     // the frame is only created if we run as an application
     protected JFrame baseFrame_ = null;
 

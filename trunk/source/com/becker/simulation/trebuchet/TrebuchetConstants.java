@@ -22,11 +22,11 @@ public final class TrebuchetConstants {
     public static final double MIN_FACTOR = 0.2;
     public static final double MAX_FACTOR = 4.0;
 
-    // defaults for parameters
+    // defaults for parameters                                                                                                                                                              _
     public static final double DEFAULT_COUNTER_WEIGHT_MASS = 10.0; // Kg
-    public static final double DEFAULT_CW_LEVER_LENGTH = 1; // M
+    public static final double DEFAULT_CW_LEVER_LENGTH = 1.0; // M
     public static final double DEFAULT_SLING_LEVER_LENGTH = 2.4;  // M
-    public static final double DEFAULT_SLING_LENGTH = .8;  // M
+    public static final double DEFAULT_SLING_LENGTH = 0.8;  // M
     public static final double DEFAULT_PROJECTILE_MASS = 1;
     public static final double DEFAULT_SLING_RELEASE_ANGLE = Math.PI / 8;
 

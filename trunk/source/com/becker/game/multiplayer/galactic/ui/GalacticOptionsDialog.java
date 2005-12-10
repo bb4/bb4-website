@@ -1,14 +1,12 @@
 package com.becker.game.multiplayer.galactic.ui;
 
 import com.becker.game.common.*;
-import com.becker.game.common.ui.GameOptionsDialog;
-import com.becker.game.multiplayer.galactic.GalacticController;
-import com.becker.game.multiplayer.galactic.Galaxy;
+import com.becker.game.common.ui.*;
+import com.becker.game.multiplayer.galactic.*;
 import com.becker.ui.*;
 
 import javax.swing.*;
 import javax.swing.Box;
-import java.awt.*;
 import java.awt.event.*;
 
 /**
@@ -21,9 +19,9 @@ class GalacticOptionsDialog extends GameOptionsDialog implements ActionListener,
 {
 
     // game params
-    private JTextField numPlanets_;
-    private JTextField planetProductionRate_;
-    private JTextField maxYearsToPlay_;
+    private NumberInput numPlanets_;
+    private NumberInput planetProductionRate_;
+    private NumberInput maxYearsToPlay_;
     private JCheckBox neutralsBuild_;
 
 
@@ -48,34 +46,21 @@ class GalacticOptionsDialog extends GameOptionsDialog implements ActionListener,
 
         GalacticController c = (GalacticController)controller_;
 
-        // num Planets
-        numPlanets_ = new JTextField( Integer.toString( c.getNumPlanets() ) );
-        numPlanets_.setMaximumSize( new Dimension( 30, ROW_HEIGHT ) );
-        JPanel p1 =
-                new NumberInputPanel( GameContext.getLabel("NUMBER_OF_PLANETS"), numPlanets_,
-                                      GameContext.getLabel("NUMBER_OF_PLANETS_TIP"));
-        p.add( p1 );
-
-        // production level
-        planetProductionRate_ = new JTextField( Integer.toString( c.getPlanetProductionRate() ) );
-        planetProductionRate_.setMaximumSize( new Dimension( 30, ROW_HEIGHT ) );
-        JPanel p2 =
-                new NumberInputPanel( GameContext.getLabel("PLANETS_PRODUCTION_RATE"), planetProductionRate_,
-                                      GameContext.getLabel("PLANETS_PRODUCTION_RATE_TIP"));
-        p.add( p2 );
-
-        // should neutrals build?
+        numPlanets_ =  new NumberInput( GameContext.getLabel("NUMBER_OF_PLANETS"), c.getNumPlanets(),
+                                               GameContext.getLabel("NUMBER_OF_PLANETS_TIP"), Galaxy.MIN_NUM_PLANETS, Galaxy.MAX_NUM_PLANETS, true);
+        planetProductionRate_ =
+                new NumberInput( GameContext.getLabel("PLANETS_PRODUCTION_RATE"), c.getPlanetProductionRate(),
+                                      GameContext.getLabel("PLANETS_PRODUCTION_RATE_TIP"), 0, 10, true);
         neutralsBuild_ = new JCheckBox( GameContext.getLabel("SHOULD_NEUTRALS_BUILD"), c.getNeutralsBuild() );
         neutralsBuild_.setToolTipText(GameContext.getLabel("SHOULD_NEUTRALS_BUILD_TIP"));
-        p.add( neutralsBuild_ );
 
-        // max years to play
-        maxYearsToPlay_ = new JTextField(Integer.toString(c.getMaxYearsToPlay()) );
-        maxYearsToPlay_.setMaximumSize( new Dimension( 30, ROW_HEIGHT ) );
-        JPanel p4 =
-                new NumberInputPanel( GameContext.getLabel("MAX_YEARS_TO_PLAY"), maxYearsToPlay_,
-                                      GameContext.getLabel("MAX_YEARS_TO_PLAY_TIP"));
-        p.add( p4 );
+        maxYearsToPlay_ =  new NumberInput( GameContext.getLabel("MAX_YEARS_TO_PLAY"), c.getMaxYearsToPlay(),
+                                            GameContext.getLabel("MAX_YEARS_TO_PLAY_TIP"), 1, 100, true);
+
+        p.add( numPlanets_ );
+        p.add( planetProductionRate_ );
+        p.add( neutralsBuild_ );
+        p.add( maxYearsToPlay_ );
 
         p.add(Box.createVerticalGlue());
 
@@ -84,32 +69,13 @@ class GalacticOptionsDialog extends GameOptionsDialog implements ActionListener,
     }
 
 
-    protected void ok()
+   protected void ok()
     {
         GalacticController c = (GalacticController)controller_;
 
-        Integer numPlanets = new Integer(numPlanets_.getText());
-        // make sure the # of planets entered is in an acceptable range.
-        if (numPlanets > Galaxy.MAX_NUM_PLANETS || numPlanets < Galaxy.MIN_NUM_PLANETS) {
-            String msg;
-            if (numPlanets > Galaxy.MAX_NUM_PLANETS)  {
-                msg = "You cannot have more than "+ Galaxy.MAX_NUM_PLANETS +" planets on the board";
-            }
-            else {
-                msg = "You cannot have fewer than "+ Galaxy.MIN_NUM_PLANETS +" planets";
-            }
-            JOptionPane.showMessageDialog(this, msg, "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        c.setNumPlanets(numPlanets);
-
-        Integer planetProductionRate = new Integer(planetProductionRate_.getText());
-        c.setPlanetProductionRate(planetProductionRate);
-
-        Integer maxYearsToPlay = new Integer(maxYearsToPlay_.getText());
-        c.setMaxYearsToPlay(maxYearsToPlay);
-
+        c.setNumPlanets(numPlanets_.getIntValue());
+        c.setPlanetProductionRate(planetProductionRate_.getIntValue());
+        c.setMaxYearsToPlay(maxYearsToPlay_.getIntValue());
         c.setNeutralsBuild(neutralsBuild_.isSelected());
 
         super.ok();

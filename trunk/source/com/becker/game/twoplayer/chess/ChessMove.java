@@ -76,9 +76,9 @@ public class ChessMove extends TwoPlayerMove
             // then make a deep copy
             newList = captureList.copy();
         }
-        ChessMove cp = createMove( fromRow_, fromCol_, toRow_, toCol_,
-                                        newList, getValue(),
-                                   getPiece());
+        ChessMove cp =
+                createMove( fromRow_, fromCol_, toRow_, toCol_,
+                            newList, getValue(), getPiece());
         cp.setSelected(this.isSelected());
         cp.setTransparency(this.getTransparency());
         cp.firstTimeMoved_ = this.firstTimeMoved_;
@@ -104,7 +104,7 @@ public class ChessMove extends TwoPlayerMove
         if ( captureList != null ) {
             sb.append( captureList.toString() );
         }
-        sb.append( " (" + fromRow_ + ", " + fromCol_ + ")->(" + toRow_+ ", " + toCol_ + ")" );
+        sb.append( " (" + fromRow_ + ", " + fromCol_ + ")->(" + toRow_+ ", " + toCol_ + ')' );
         return sb.toString();
     }
 }

@@ -36,8 +36,8 @@ public class TrebuchetSimulator extends Simulator implements Optimizee, ChangeLi
     {
         super("Trebuchet");
         final Trebuchet trebuchet = new Trebuchet();
-        this.setPreferredSize(new Dimension( 800, 900));
         commonInit( trebuchet );
+        this.setPreferredSize(new Dimension( 800, 900));
     }
 
     public TrebuchetSimulator( Trebuchet trebuchet )
@@ -50,11 +50,14 @@ public class TrebuchetSimulator extends Simulator implements Optimizee, ChangeLi
     {
         trebuchet_ = trebuchet;
         numStepsPerFrame_ = 4;
+        this.setBackground(BACKGROUND_COLOR);
         initCommonUI();
+        this.render();
+    }
 
-
-
-        //this.setBackground(BACKGROUND_COLOR);
+    public Color getBackground()
+    {
+        return BACKGROUND_COLOR;
     }
 
     public JPanel createTopControls()
@@ -116,6 +119,9 @@ public class TrebuchetSimulator extends Simulator implements Optimizee, ChangeLi
     public void paint( Graphics g )
     {
         Graphics2D g2 = (Graphics2D) g;
+
+        g2.setColor( BACKGROUND_COLOR );
+        g2.fillRect( 0, 0, (int) getSize().getWidth(), (int)  getSize().getHeight() );
 
         g2.setRenderingHint(
                 RenderingHints.KEY_ANTIALIASING,
