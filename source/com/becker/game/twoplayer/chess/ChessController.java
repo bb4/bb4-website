@@ -198,11 +198,11 @@ public class ChessController extends CheckersController
 
 
     public Searchable getSearchable() {
-        return new CheckersSearchable();
+        return new ChessSearchable();
     }
 
 
-    class ChessSearchable extends CheckersSearchable {
+    public class ChessSearchable extends CheckersSearchable {
 
          /**
          *  generate all possible next moves

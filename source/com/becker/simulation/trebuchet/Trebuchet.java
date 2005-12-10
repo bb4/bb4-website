@@ -61,6 +61,10 @@ public class Trebuchet {
         commonInit();
     }
 
+    public void reset() {    
+        RenderablePart.setAngularVelocity(0);
+        commonInit();
+    }
 
     private void commonInit()
     {
@@ -74,7 +78,7 @@ public class Trebuchet {
         part_[0] = base_;
         lever_ = new Lever(DEFAULT_CW_LEVER_LENGTH, DEFAULT_SLING_LEVER_LENGTH);
         part_[1] = lever_;
-        System.out.println("cw mass="+DEFAULT_COUNTER_WEIGHT_MASS);
+        //System.out.println("cw mass="+DEFAULT_COUNTER_WEIGHT_MASS);
         counterWeight_ = new CounterWeight(lever_, DEFAULT_COUNTER_WEIGHT_MASS);
         part_[2] = counterWeight_;
         projectile_ = new Projectile(DEFAULT_PROJECTILE_MASS);
@@ -120,15 +124,16 @@ public class Trebuchet {
         // the magnitude of the tangential force at the hook
         if (!projectile_.isReleased()) {
             double tangentialForceAtHook = torque / lever_.getSlingLeverLength();
+            //System.out.println("tangentialForceAtHook="+tangentialForceAtHook);
             double slingAngleWithHorz = sling_.getAngleWithHorz();
 
             forceFromHook_.set(-cos(slingAngleWithHorz), sin(slingAngleWithHorz));  //sin(PI - angle), -cos(PI + angle));
-            forceFromHook_.scale(tangentialForceAtHook * sin(slingAngle));
+            forceFromHook_.scale( tangentialForceAtHook * sin(slingAngle));
             Vector2d gravityForce = new Vector2d(GRAVITY_VEC);
             gravityForce.scale(projectile_.getMass());
             forceFromHook_.add(gravityForce);
             // also add a restoring force which is proportional to the distnace from the attachpoint on the sling
-            // if we hve not yet been released.
+            // if we have not yet been released.
 
             Vector2d restoreForce = sling_.getProjectileAttachPoint();
             restoreForce.sub(projectile_.getPosition());
@@ -226,11 +231,11 @@ public class Trebuchet {
     }
 
     public double getSlingLeverLength() {
-        return lever_.getCounterWeightLeverLength();
+        return lever_.getSlingLeverLength();
     }
 
     public void setSlingLeverLength(double slingLeverLength) {
-        lever_.setCounterWeightLeverLength(slingLeverLength);
+        lever_.setSlingLeverLength(slingLeverLength);
     }
 
     public double getCounterWeightMass() {
@@ -272,7 +277,6 @@ public class Trebuchet {
      */
     public void render( Graphics2D g )
     {
-        //double time = System.currentTimeMillis();
         int i;
 
         g.setColor( Color.black ); // default
@@ -284,13 +288,4 @@ public class Trebuchet {
         }
     }
 
-    public static void main(String args[]) {
-        System.out.println("atan(0.4)="+ atan(0.4));
-        System.out.println("atan(1)="+ atan(1.0));
-        System.out.println("atan(2)="+ atan(2));
-        System.out.println("atan(20)="+ atan(20));
-        System.out.println("atan(-20)="+ atan(-20));
-        System.out.println("atan(-2)="+ atan(-2));
-        System.out.println("atan(-1)="+ atan(-1));
-    }
 }

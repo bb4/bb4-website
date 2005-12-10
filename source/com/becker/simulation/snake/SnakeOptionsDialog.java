@@ -17,13 +17,12 @@ class SnakeOptionsDialog extends SimulatorOptionsDialog implements ActionListene
 {
 
     // snake param options controls
-    private JTextField waveSpeedField_;
-    private JTextField waveAmplitudeField_;
-    private JTextField wavePeriodField_;
-    private JTextField massScaleField_;
-    private JTextField springKField_;
-    private JTextField springDampingField_;
-
+    private NumberInput waveSpeedField_;
+    private NumberInput waveAmplitudeField_;
+    private NumberInput wavePeriodField_;
+    private NumberInput massScaleField_;
+    private NumberInput springKField_;
+    private NumberInput springDampingField_;
 
 
     // constructor
@@ -46,50 +45,43 @@ class SnakeOptionsDialog extends SimulatorOptionsDialog implements ActionListene
 
         SnakeSimulator simulator = (SnakeSimulator) getSimulator();
 
-        waveSpeedField_ = new JTextField( Double.toString( simulator.getSnake().getWaveSpeed() ) );
-        waveSpeedField_.setMaximumSize( TEXT_FIELD_DIM );
-        JPanel p1 =
-                new NumberInputPanel( "Wave Speed (.001 slow - .9 fast):  ", waveSpeedField_ );
-        p1.setToolTipText( "This controls the speed at which the force function that travels down the body of the snake" );
-        snakeParamPanel.add( p1 );
-
-        waveAmplitudeField_ = new JTextField( Double.toString( simulator.getSnake().getWaveAmplitude() ) );
-        waveAmplitudeField_.setMaximumSize( TEXT_FIELD_DIM );
-        JPanel p2 =
-                new NumberInputPanel( "Wave Amplitude (.001 small - 2.0 large):  ", waveAmplitudeField_ );
-        p2.setToolTipText( "This controls the amplitude of the force function that travels down the body of the snake" );
-        snakeParamPanel.add( p2 );
-
-        wavePeriodField_ = new JTextField( Double.toString( simulator.getSnake().getWavePeriod() ) );
-        wavePeriodField_.setMaximumSize( TEXT_FIELD_DIM );
-        JPanel p3 =
-                new NumberInputPanel( "Wave Period (1.0 small - 4.0 large):  ", wavePeriodField_ );
-        p3.setToolTipText( "This controls the period (in number of PI radians) of the force function that travels down the body of the snake" );
-        snakeParamPanel.add( p3 );
-
-        massScaleField_ = new JTextField( Double.toString( simulator.getSnake().getMassScale() ) );
-        massScaleField_.setMaximumSize( TEXT_FIELD_DIM );
+        waveSpeedField_ =
+                new NumberInput("Wave Speed (.001 slow - .9 fast):  ", simulator.getSnake().getWaveSpeed(),
+                     "This controls the speed at which the force function that travels down the body of the snake",
+                     0.001, 0.9, false);
+        waveAmplitudeField_ =
+                new NumberInput("Wave Amplitude (.001 small - 2.0 large):  ", simulator.getSnake().getWaveAmplitude(),
+                    "This controls the amplitude of the force function that travels down the body of the snake",
+                    0.001, 0.9, false);
+        wavePeriodField_ =
+                new NumberInput("Wave Period (1.0 small - 4.0 large):  ", simulator.getSnake().getWavePeriod(),
+                    "This controls the period (in number of PI radians) of the force function "
+                    + "that travels down the body of the snake", 1.0, 4.0, false);
+        massScaleField_ =
+                new NumberInput("Mass Scale (.3 small - 2.0 large):  ", simulator.getSnake().getMassScale() ,
+                    "This controls the overall mass of the snake. A high number indicates that the snake weighs a lot.",
+                    0.3, 2.0, false);
         massScaleField_.setEnabled( false );
-        JPanel p4 =
-                new NumberInputPanel( "Mass Scale (.3 small - 2.0 large):  ", massScaleField_ );
-        p4.setToolTipText( "This controls the overall mass of the snake. A high number indicates that the snake weighs a lot." );
-        snakeParamPanel.add( p4 );
 
-        springKField_ = new JTextField( Double.toString( simulator.getSnake().getSpringK() ) );
-        springKField_.setMaximumSize( TEXT_FIELD_DIM );
+        springKField_ =
+                new NumberInput("Spring Stiffness  (1.0 small - 2.0 large):  ", simulator.getSnake().getSpringK() ,
+                    "This controls the stiffness of the springs used to make up the snake's body.",
+                    1.0, 2.0, false);
         springKField_.setEnabled( false );
-        JPanel p5 =
-                new NumberInputPanel( "Spring Stiffness  (1.0 small - 2.0 large):  ", springKField_ );
-        p5.setToolTipText( "This controls the stiffness of the springs used to make up the snake's body." );
-        snakeParamPanel.add( p5 );
 
-        springDampingField_ = new JTextField( Double.toString( simulator.getSnake().getSpringDamping() ) );
-        springDampingField_.setMaximumSize( TEXT_FIELD_DIM );
-        springDampingField_.setEnabled( false );
-        JPanel p6 =
-                new NumberInputPanel( "Spring Damping (.1 small - 3.0 large):  ", springDampingField_ );
-        p6.setToolTipText( "This controls how quickly the spring returns to rest once released." );
-        snakeParamPanel.add( p6 );
+
+        springDampingField_ =
+                new NumberInput("Spring Damping (.1 small - 3.0 large):  ", simulator.getSnake().getSpringDamping(),
+                    "This controls how quickly the spring returns to rest once released.",
+                    0.1, 3.0, false);
+        springDampingField_.setEnabled( false );     
+
+        snakeParamPanel.add( waveSpeedField_ );
+        snakeParamPanel.add( waveAmplitudeField_ );
+        snakeParamPanel.add( wavePeriodField_ );
+        snakeParamPanel.add( massScaleField_ );
+        snakeParamPanel.add( springKField_ );
+        snakeParamPanel.add( springDampingField_ );
 
         customParamPanel.add(snakeParamPanel, BorderLayout.NORTH);
         customParamPanel.add(Box.createGlue(), BorderLayout.CENTER);
@@ -104,23 +96,12 @@ class SnakeOptionsDialog extends SimulatorOptionsDialog implements ActionListene
         // set the snake params
         SnakeSimulator simulator = (SnakeSimulator) getSimulator();
 
-        Double waveSpeed = new Double( waveSpeedField_.getText() );
-        simulator.getSnake().setWaveSpeed( waveSpeed );
-
-        Double waveAmplitude = new Double( waveAmplitudeField_.getText() );
-        simulator.getSnake().setWaveAmplitude( waveAmplitude );
-
-        Double wavePeriod = new Double( wavePeriodField_.getText() );
-        simulator.getSnake().setWavePeriod( wavePeriod );
-
-        Double massScale = new Double( massScaleField_.getText() );
-        simulator.getSnake().setMassScale( massScale );
-
-        Double springK = new Double( springKField_.getText() );
-        simulator.getSnake().setSpringK( springK );
-
-        Double springDamping = new Double( springDampingField_.getText() );
-        simulator.getSnake().setSpringDamping( springDamping );
+        simulator.getSnake().setWaveSpeed(waveSpeedField_.getValue());
+        simulator.getSnake().setWaveAmplitude( waveAmplitudeField_.getValue() );
+        simulator.getSnake().setWavePeriod( wavePeriodField_.getValue() );
+        simulator.getSnake().setMassScale( massScaleField_.getValue()  );
+        simulator.getSnake().setSpringK( springKField_.getValue() );
+        simulator.getSnake().setSpringDamping( springDampingField_.getValue() );
     }
 
 }

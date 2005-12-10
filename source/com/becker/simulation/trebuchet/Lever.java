@@ -16,7 +16,7 @@ public class Lever extends RenderablePart {
     public static final double LEVER_MASS_PER_METER = 2.0;
 
     private static final BasicStroke LEVER_STROKE = new BasicStroke(10.0f);
-    private static final Color LEVER_COLOR = new Color(240, 220, 170);
+    private static final Color LEVER_COLOR = new Color(80, 60, 180);
 
 
     public Lever(double counterWightLeverLength, double slingLeverLength) {

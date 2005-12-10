@@ -28,13 +28,13 @@ public final class OrderDialog extends OptionsDialog
     private JComboBox destinationCombo_;
 
     private JLabel availableShips_;
-    private JTextField numShips_;
+    private NumberInput numShips_;
 
     private int numYearsRemaining_;
 
     Map totalOutgoing_;
 
-    private static final String DEFAULT_FLEET_SIZE = "10";
+    private static final int DEFAULT_FLEET_SIZE = 10;
 
 
     /**
@@ -82,11 +82,10 @@ public final class OrderDialog extends OptionsDialog
         routePanel.add(destPanel, BorderLayout.CENTER);
         routePanel.add(availableShips_, BorderLayout.SOUTH);
 
-        numShips_ = new JTextField(DEFAULT_FLEET_SIZE);
-        NumberInputPanel numShipsInput = new NumberInputPanel(GameContext.getLabel("NUMBER_OF_SHIPS_TO_SEND"), numShips_);
+        numShips_ = new NumberInput(GameContext.getLabel("NUMBER_OF_SHIPS_TO_SEND"), DEFAULT_FLEET_SIZE);
 
         mainPanel_.add(routePanel, BorderLayout.NORTH);
-        mainPanel_.add(numShipsInput, BorderLayout.CENTER);
+        mainPanel_.add(numShips_, BorderLayout.CENTER);
         //mainPanel_.add(new JLabel(" "), BorderLayout.SOUTH);
         mainPanel_.add(buttonsPanel, BorderLayout.SOUTH);
 
@@ -149,7 +148,7 @@ public final class OrderDialog extends OptionsDialog
     {
          int outgoing = 0;
         if (totalOutgoing_.get(planet)!=null)  {
-           outgoing = ((Integer)totalOutgoing_.get(planet)).intValue();
+           outgoing = (Integer) totalOutgoing_.get(planet);
         }
         return outgoing;
     }
@@ -223,7 +222,7 @@ public final class OrderDialog extends OptionsDialog
     }
 
     private int getFleetSize() {
-        return Integer.parseInt(numShips_.getText());
+        return numShips_.getIntValue();
     }
 
     /**

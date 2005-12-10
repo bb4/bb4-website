@@ -43,10 +43,6 @@ public abstract class Simulator extends AnimationComponent implements Optimizee 
     protected void initCommonUI() {
         GUIUtil.setCustomLookAndFeel();
 
-
-
-
-
         //@@ need this?
         addComponentListener( new ComponentAdapter()
         {

@@ -132,7 +132,7 @@ public abstract class AnimationComponent extends Container implements Runnable
             if ( checkImage( d ) ) {
                 Graphics imageGraphics = image_.getGraphics();
                 // Clear the image background.
-                                       imageGraphics.setColor( getBackground() );
+                imageGraphics.setColor( getBackground() );
                 imageGraphics.fillRect( 0, 0, d.width, d.height );
                 imageGraphics.setColor( getForeground() );
                 // Draw this component offscreen.
@@ -151,7 +151,7 @@ public abstract class AnimationComponent extends Container implements Runnable
     {
         if ( d.width <= 0 || d.height <= 0 ) return false;
         if ( image_ == null || image_.getWidth( null ) != d.width
-                || image_.getHeight( null ) != d.height ) {
+                || image_.getHeight( null ) != d.height) {
             image_ = createImage( d.width, d.height );
         }
         return true;

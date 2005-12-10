@@ -23,20 +23,16 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog implements Ac
     private JCheckBox recordAnimationCheckbox_ = null;
 
     // aniumation param options controls
-    private JTextField timeStepField_;
-    private JTextField numStepsPerFrameField_;
-    private JTextField scaleField_;
+    private NumberInput timeStepField_;
+    private NumberInput numStepsPerFrameField_;
+    private NumberInput scaleField_;
 
     // physics param options controls
-    private JTextField staticFrictionField_;
-    private JTextField dynamicFrictionField_;
+    private NumberInput staticFrictionField_;
+    private NumberInput dynamicFrictionField_;
 
     // bottom buttons
     private GradientButton startButton_ = new GradientButton();
-
-
-    protected static final int TEXT_FIELD_WIDTH = 50;
-    protected static final Dimension TEXT_FIELD_DIM = new Dimension( TEXT_FIELD_WIDTH, ROW_HEIGHT );
 
     // constructor
     public SimulatorOptionsDialog( Frame parent, Simulator simulator )
@@ -69,7 +65,7 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog implements Ac
         tabbedPanel.setToolTipTextAt( 0, "change the rendering options for the " + simulator_.getName() + " simulation" );
         tabbedPanel.add( "Animation", globalPhysicalParamPanel );
         tabbedPanel.setToolTipTextAt( 0, "change the animation and physical constants controlling the " + simulator_.getName() + " in the simulation" );
-        tabbedPanel.add( simulator_.getName() + "Specific", customParamPanel );
+        tabbedPanel.add( simulator_.getName() + " Specific", customParamPanel );
         tabbedPanel.setToolTipTextAt( 0, "change the custom options for the " + simulator_.getName() + " simulation" );
 
         mainPanel_.add( tabbedPanel, BorderLayout.CENTER );
@@ -138,34 +134,31 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog implements Ac
         recordAnimationCheckbox_.addActionListener( this );
         togglesPanel.add( recordAnimationCheckbox_ );
 
-        timeStepField_ = new JTextField( Double.toString( simulator_.getTimeStep() ) );
-        timeStepField_.setMaximumSize( TEXT_FIELD_DIM );
-        JPanel p1 =
-                new NumberInputPanel( "Time Step (.001 slow - .9 fast but unstable):  ", timeStepField_ );
-        p1.setToolTipText( "This controls the size of the numerical intergration steps" );
-        textInputsPanel.add( p1 );
+        timeStepField_ =
+                new NumberInput("Time Step (.001 slow - .9 fast but unstable):  ",  simulator_.getTimeStep(),
+                                "This controls the size of the numerical intergration steps",
+                                0.001, 0.9, false);
+        numStepsPerFrameField_ =
+                new NumberInput("Num Steps Per Frame (1 slow but smooth - 1000 (fast but choppy):  ", simulator_.getNumStepsPerFrame(),
+                               "This controls the number of the numerical intergration steps per animation frame",
+                               1, 1000, true);
 
-        numStepsPerFrameField_ = new JTextField( Integer.toString( simulator_.getNumStepsPerFrame() ) );
-        numStepsPerFrameField_.setMaximumSize( TEXT_FIELD_DIM );
-        JPanel p2 =
-                new NumberInputPanel( "Num Steps Per Frame (1 slow but smooth - 1000 (fast but choppy):  ", numStepsPerFrameField_ );
-        p2.setToolTipText( "This controls the number of the numerical intergration steps per animation frame" );
-        textInputsPanel.add( p2 );
+        textInputsPanel.add( timeStepField_ );
+        textInputsPanel.add( numStepsPerFrameField_ );
 
-        scaleField_ = new JTextField( Double.toString( simulator_.getScale() ) );
-        scaleField_.setMaximumSize( TEXT_FIELD_DIM );
-        JPanel p3 =
-                new NumberInputPanel( "Geometry Scale (1.0 = standard size):  ", scaleField_ );
-        p3.setToolTipText( "This controls the size of the " + simulator_.getName() );
+        scaleField_ =
+                new NumberInput( "Geometry Scale (1.0 = standard size):  ", simulator_.getScale(),
+                                 "This controls the size of the " + simulator_.getName(),
+                                 0.01, 1000, false);
         scaleField_.setEnabled( false );
-        textInputsPanel.add( p3 );
+        textInputsPanel.add( scaleField_ );
 
         paramPanel.add( togglesPanel, BorderLayout.CENTER );
         paramPanel.add( textInputsPanel, BorderLayout.SOUTH );
 
         return paramPanel;
     }
-    
+
 
     private JPanel createGlobalPhysicalParamPanel()
     {
@@ -177,21 +170,16 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog implements Ac
         frictionPanel.setBorder(
                 BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), "Friction" ) );
 
-        staticFrictionField_ = new JTextField( Double.toString( simulator_.getStaticFriction() ) );
-        staticFrictionField_.setMaximumSize( TEXT_FIELD_DIM );
-        staticFrictionField_.setEnabled( true );
-        JPanel p7 =
-                new NumberInputPanel( "static Friction (.0 small - .4 large):  ", staticFrictionField_ );
-        p7.setToolTipText( "This controls amount of static surface friction." );
-        frictionPanel.add( p7 );
 
-        dynamicFrictionField_ = new JTextField( Double.toString( simulator_.getDynamicFriction() ) );
-        dynamicFrictionField_.setMaximumSize( TEXT_FIELD_DIM );
-        dynamicFrictionField_.setEnabled( true );
-        JPanel p8 =
-                new NumberInputPanel( "dynamic friction (.0 small - .4 large):  ", dynamicFrictionField_ );
-        p8.setToolTipText( "This controls amount of dynamic surface friction." );
-        frictionPanel.add( p8 );
+        staticFrictionField_ =
+                new NumberInput( "static Friction (.0 small - 0.4 large):  ", simulator_.getStaticFriction(),
+                                 "This controls amount of static surface friction.", 0.0, 0.4, false);
+        dynamicFrictionField_ =
+                new NumberInput( "dynamic friction (.0 small - .4 large):  ", simulator_.getDynamicFriction() ,
+                                  "This controls amount of dynamic surface friction.", 0.0, 0.4, false);
+
+        frictionPanel.add( staticFrictionField_ );
+        frictionPanel.add( dynamicFrictionField_ );
 
         globalParamPanel.add(frictionPanel, BorderLayout.NORTH);
 
@@ -210,19 +198,14 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog implements Ac
         simulator_.setShowForceVectors( showForcesCheckbox_.isSelected() );
         simulator_.setRecordAnimation( recordAnimationCheckbox_.isSelected() );
 
-        Double timeStep = new Double( timeStepField_.getText() );
-        simulator_.setTimeStep( timeStep );
+        simulator_.setTimeStep( timeStepField_.getValue() );
+        simulator_.setNumStepsPerFrame( numStepsPerFrameField_.getIntValue() );
+        simulator_.setScale( scaleField_.getValue() );
 
-        Integer numSteps = new Integer( numStepsPerFrameField_.getText() );
-        simulator_.setNumStepsPerFrame( numSteps );
-
-        Double scale = new Double( scaleField_.getText() );
-        simulator_.setScale( scale );
-
-        Double staticFriction = new Double( staticFrictionField_.getText() );
-        Double dynamicFriction = new Double( dynamicFrictionField_.getText() );
+        double staticFriction = staticFrictionField_.getValue();
+        double dynamicFriction =  dynamicFrictionField_.getValue();
         assert(staticFriction >= dynamicFriction);
-        simulator_.setStaticFriction( staticFriction );
+        simulator_.setStaticFriction( staticFriction);
         simulator_.setDynamicFriction( dynamicFriction );
 
         this.setVisible( false );

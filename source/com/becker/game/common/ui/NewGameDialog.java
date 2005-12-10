@@ -31,8 +31,8 @@ public abstract class NewGameDialog extends OptionsDialog implements ActionListe
 
     protected GradientButton openFileButton_;
 
-    protected JTextField rowSizeField_;
-    protected JTextField colSizeField_;
+    protected NumberInput rowSizeField_;
+    protected NumberInput colSizeField_;
     protected JTextField openFileField_;
 
     protected final GradientButton startButton_ = new GradientButton();
@@ -145,18 +145,13 @@ public abstract class NewGameDialog extends OptionsDialog implements ActionListe
         p.add( label );
 
         assert (board_!=null);
-        rowSizeField_ = new JTextField( Integer.toString( board_.getNumRows() ) );
-        rowSizeField_.setMaximumSize( new Dimension( 30, ROW_HEIGHT ) );
-        JPanel rowP =
-                new NumberInputPanel( GameContext.getLabel("NUMBER_OF_ROWS"), rowSizeField_ );
-        colSizeField_ = new JTextField( Integer.toString( board_.getNumCols() ) );
-        colSizeField_.setMaximumSize( new Dimension( 30, ROW_HEIGHT ) );
-        JPanel colP =
-                new NumberInputPanel( GameContext.getLabel("NUMBER_OF_COLS"), colSizeField_ );
-        rowP.setAlignmentX( Component.LEFT_ALIGNMENT );
-        colP.setAlignmentX( Component.LEFT_ALIGNMENT );
-        p.add( rowP );
-        p.add( colP );
+        rowSizeField_ = new NumberInput(GameContext.getLabel("NUMBER_OF_ROWS"), board_.getNumRows());
+        colSizeField_ = new NumberInput( GameContext.getLabel("NUMBER_OF_COLS"), board_.getNumCols());
+
+        rowSizeField_.setAlignmentX( Component.LEFT_ALIGNMENT );
+        colSizeField_.setAlignmentX( Component.LEFT_ALIGNMENT );
+        p.add( rowSizeField_ );
+        p.add( colSizeField_ );
 
         // add a custom section if desired (override createCustomBoardConfigPanel in derived class)
         JPanel customConfigPanel = createCustomBoardConfigPanel();
@@ -197,9 +192,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ActionListe
     protected void ok()
     {
         if (boardParamPanel_ != null) {
-            Integer r = new Integer( rowSizeField_.getText() );
-            Integer c = new Integer( colSizeField_.getText() );
-            board_.setSize( r, c );
+            board_.setSize( rowSizeField_.getIntValue(), colSizeField_.getIntValue() );
         }
 
         //restore the saved file if one was specified
