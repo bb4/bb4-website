@@ -26,7 +26,7 @@ public class CheckersController extends TwoPlayerController
     private static final double[] DEFAULT_WEIGHTS = {10.0, 19.0, 1.0};
     // don't allow the weights to exceed these maximum values
     private static final double[] MAX_WEIGHTS = {50.0, 100.0, 10.0};
-    private static final String[] WEIGHT_SHORT_DESCRIPTIONS = {"Peg weight", "King weight", "Advancement weight"};
+    private static final String[] WEIGHT_SHORT_DESCRIPTIONS = {"PegMove weight", "King weight", "Advancement weight"};
     private static final String[] WEIGHT_DESCRIPTIONS = {
         "Weight to associate with the number of remaining pieces",
         "Weight to associate with the number of kings that a side has",
