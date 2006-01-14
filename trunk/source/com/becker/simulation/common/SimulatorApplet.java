@@ -36,7 +36,8 @@ public class SimulatorApplet extends JApplet {
 
         this.getParameterInfo();
         if (simulator_ == null) {
-            String className = getParameter("simulator_class");
+
+            String className = getParameter("panel_class");
             className = className == null ? DEFAULT_SIMULATOR : className;
             simulator_ = createSimulationFromClassName(className);
         }

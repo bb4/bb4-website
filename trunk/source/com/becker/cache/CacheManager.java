@@ -5,7 +5,7 @@ import java.util.*;
 
 /**
  * Class for storing cached data.  The cache may be created with a maximum
- * number of members.  When this maximum is reached, the least recently used
+ * number of members.  When this maximum is reached, the least recently used (LRU)
  * member is removed to make room for the new member.
  */
 
@@ -460,6 +460,10 @@ public class CacheManager implements Cache, Serializable {
         stats += "maxSize"+ max_;
         return stats;
     }
+
+    private void writeObject(ObjectOutputStream out)
+      throws IOException {};
+
 
     private void readObject(ObjectInputStream in)
         throws IOException, ClassNotFoundException {
