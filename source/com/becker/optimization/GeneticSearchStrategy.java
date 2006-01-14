@@ -22,8 +22,8 @@ public class GeneticSearchStrategy extends OptimizationStrategy
 
     // the amount to decimate the parent population by on each iteration
     private static final double CULL_FACTOR = 0.9;
-    private static final double NBR_RADIUS = .02;
-    private static final double NBR_RADIUS_SHRINK_FACTOR = .9;
+    private static final double NBR_RADIUS = 0.02;
+    private static final double NBR_RADIUS_SHRINK_FACTOR = 0.9;
     private static final double NBR_RADIUS_SOFTENER = 5.0;
 
 
@@ -31,7 +31,7 @@ public class GeneticSearchStrategy extends OptimizationStrategy
     private static final int MAX_ITERATIONS = 100;
 
     // stop when the avg population score does not improve by better than this
-    private double improvementEps_ = .000000000001;
+    private double improvementEps_ = 0.000000000001;
     //
     private double nbrRadius_ = NBR_RADIUS;
 
@@ -58,7 +58,7 @@ public class GeneticSearchStrategy extends OptimizationStrategy
      * @param optimizee the thing to be optimized.
      * @param optimizationLogFile the file that will record the results
      */
-    public  GeneticSearchStrategy( Optimizee optimizee, String optimizationLogFile )
+    public GeneticSearchStrategy( Optimizee optimizee, String optimizationLogFile )
     {
         super(optimizee, optimizationLogFile);
     }
@@ -195,7 +195,7 @@ public class GeneticSearchStrategy extends OptimizationStrategy
         return bestFitness;
     }
 
-    private static final void printPopulation(List population)
+    private static void printPopulation(List population)
     {
         for (int i=0; i<population.size(); i++)
             System.out.println( i+": "+ population.get(i).toString());

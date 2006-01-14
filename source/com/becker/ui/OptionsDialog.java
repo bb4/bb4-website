@@ -57,8 +57,8 @@ public abstract class OptionsDialog extends JDialog implements ActionListener
 
         this.setModal( true );
 
-        if (!GUIUtil.isStandAlone())
-            this.setAlwaysOnTop(true);
+        //if (!GUIUtil.isStandAlone())
+        //    this.setAlwaysOnTop(true);
         //pack();
     }
 

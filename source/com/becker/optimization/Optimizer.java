@@ -13,7 +13,7 @@ import java.io.*;
  * classes in their own package, they can be used by a variety of projects to do
  * optimization. Also it abstracts the concept of optimization and as a result
  * makes it easy to work on independently. For example, I use this package to
- * optimize the motion of the snake in com.becker.snake.
+ * optimize the motion of the snake in com.becker.snake and the trebuchet simulation.
  *
  * This class also acts as a facade to the optimization package. The use of this package
  * really does not need to direclty construct or use the different optimization strategy classes.
