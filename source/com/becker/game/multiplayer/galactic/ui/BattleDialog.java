@@ -52,8 +52,8 @@ final class BattleDialog extends OptionsDialog
     {
         super( parent );
         this.setResizable(false);
-        if (!GUIUtil.isStandAlone())
-            this.setAlwaysOnTop(true);   // causes access control exception in applet
+        //if (!GUIUtil.isStandAlone())
+        //    this.setAlwaysOnTop(true);   // causes access control exception in applet
         battle_ = battle;
         viewer_ = viewer;
         initUI();

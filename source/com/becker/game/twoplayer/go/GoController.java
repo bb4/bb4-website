@@ -137,6 +137,20 @@ import java.util.List;
  *  - switch to using type safe enums instead of int constants (done).
  *
  *
+ * Deployment notes:
+ *
+ *     copy contents of /dist to webserver docroot: /var/www/html
+ *
+        cd /var/www/html
+
+ 
+
+       upload to geocities: ftp ftp.geocities.com
+       bin, prompt
+ *
+ *     start apache webserver /varsbin/apachect1 start
+ *     contact URL to test: http://192.168.1.100 (or 101 or 102)
+ *     use no-ip to get static ip?
  *
  * @see GoBoard
  * @author Barry Becker
@@ -271,11 +285,11 @@ public final class GoController extends TwoPlayerController
      * @param moveList
      */
     private static void addMoves(PlacementListToken token, List moveList) {
-        List points = token.getPoints();
+        Enumeration points = token.getPoints();
         boolean player1 = token instanceof AddBlackToken;
 
-        for (int i=0; i<points.size(); i++)  {
-            Point point = (Point)points.get(i);
+        while (points.hasMoreElements()) {
+            Point point = (Point)points.nextElement();
             moveList.add( new GoMove( point.y, point.x, 0, new GoStone(player1)));
         }
     }

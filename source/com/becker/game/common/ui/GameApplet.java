@@ -24,7 +24,7 @@ public class GameApplet extends JApplet
         GUIUtil.setStandAlone(true);
 
         // these parameters are specified in the html page that embeds the applet.
-        // They determing the game to play, and the locale to run it.
+        // They determine the game to play, and the locale to run it.
         String className = getParameter("panel_class");
         String gameName = getParameter("program_name");
         String localeName = getParameter("locale");
