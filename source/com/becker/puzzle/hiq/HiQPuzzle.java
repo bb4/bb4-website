@@ -4,29 +4,64 @@ import com.becker.ui.GUIUtil;
 
 import javax.swing.*;
 import java.util.*;
+import java.awt.BorderLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.io.IOException;
 
 /**
- *  Red Puzzle
- *  This program solves a 9 piece puzzle that has nubs on all 4 sides.
- *  Its virtually impossible to solve by hand because of all the possible permutations.
- *  This program can usually solve it by trying between 10,000 and 50,000 combinations.
+ * HiQ Puzzle.
+ * This program soles a very difficult classic solitaire puzzle
+ * where you jump pegs to remove them in a cross shaped peg-board.
+ * The fewer pegs you have remaining at the end, the better.
+ * A perfect solution is to have only one peg in the center square
+ * at the end.
+ *  Assuming an average of 7 different options on each move, there are
+ *   7 ^ 32 = 10,000,000,000,000,000,000,000,000,000,000
+ *  (10 decillion combinations)
+ * Actually this calculation is not correct since many paths lead
+ * to the same board positions.
+ * There are actually only 23.4 million unique board positions
+ * see http://www.durangobill.com/Peg33.html for analysis.
+ *    A brute force solution will run for years on todays fastest
+ * computers.
+ * See http://homepage.sunrise.ch/homepage/pglaus/Solitaire/solitaire.htm
+ * for a solution that uses a genetic algorithm to find a solution quickly.
+ *
+ * My initial approach was to apply a kind of tunnel method.
+ * I tried to solve the problem from both ends.
+ * First, I work backwards for 32-FORWARD_MOVE's and build a
+ * hashmap of all the possible board positions - storing a path to the solution
+ * at each hashmap location. Then I traverse forward from the initial position
+ * for BACK_MOVE's until I reach one of these positions that I know
+ * leads to the solution. Finally I combine the 2 paths to see the sequence
+ * that will lead to the solution.
+ *   Finally, I found that it was enough to search entirely from the beginning
+ * and just prune when I reach states I've encountered before.
  */
-public final class HiQPuzzle extends JApplet
+public final class HiQPuzzle extends JApplet implements ActionListener
 {
+    private List<PegMove> path_;
+
+    // create the pieces and add them to a list
+    private PegBoard board_;
+    private PegBoardViewer pegBoardViewer_;
+
+    JButton backButton_;
+    JButton forwardButton_;
+    JLabel title_;
+
+    Set visited_;
 
     private static JFrame baseFrame_ = null;
 
     // global counter;
-    private static int numIterations_ = 0;
+    private static long numIterations_ = 0;
 
-    private Solution solution_;
-
-    // create the pieces and add them to a list
-    private ArrayList pegs_;
-
-    //Construct the application
-    public HiQPuzzle()
-    {
+    /**
+     * Construct the application
+     */
+    public HiQPuzzle() {
         try {
             GUIUtil.setCustomLookAndFeel();
         } catch (Exception e) {
@@ -38,116 +73,164 @@ public final class HiQPuzzle extends JApplet
      * create and initialize the puzzle
      * (init required for applet)
      */
-    public final void init()
-    {
+    public void init() {
         numIterations_ = 0;
-        solution_ = new Solution();
-        pegs_ = new ArrayList();
+        path_ = new LinkedList<PegMove>();
+        board_ = new PegBoard();
+        pegBoardViewer_ = new PegBoardViewer(board_);
+        visited_ = new HashSet<BoardHashKey>(1000);
 
-        this.getContentPane().add( solution_ );
+        title_ = new JLabel("32 PegMove Solitaire (HiQ)");
+        backButton_ = new JButton("Back");
+        forwardButton_ = new JButton("Forward");
+        backButton_.addActionListener(this);
+        forwardButton_.addActionListener(this);
+        backButton_.setEnabled(false);
+        forwardButton_.setEnabled(false);
 
-        // these are the Pegs.
-        pegs_.add( new Peg( 'S', 'H', 'S', 'D', false, false, true, true, 1 ) );
-        pegs_.add( new Peg( 'H', 'S', 'S', 'C', true, true, false, false, 2 ) );
-        pegs_.add( new Peg( 'H', 'D', 'D', 'H', true, true, false, false, 3 ) );
-        pegs_.add( new Peg( 'H', 'D', 'C', 'C', true, true, false, false, 4 ) );
-        pegs_.add( new Peg( 'C', 'H', 'S', 'H', true, true, false, false, 5 ) );
-        pegs_.add( new Peg( 'C', 'H', 'D', 'C', true, true, false, false, 6 ) );
-        pegs_.add( new Peg( 'S', 'D', 'H', 'D', true, true, false, false, 7 ) );
-        pegs_.add( new Peg( 'D', 'C', 'C', 'D', true, true, false, false, 8 ) );
-        pegs_.add( new Peg( 'S', 'S', 'H', 'C', true, true, false, false, 9 ) );
+        JPanel buttonPanel = new JPanel(new BorderLayout());
+        buttonPanel.add(backButton_, BorderLayout.WEST);
+        buttonPanel.add(forwardButton_, BorderLayout.EAST);
 
-        // shuffle the pieces so we get difference solutions -
-        // or at least different approaches to the solution if there is only one.
-        Collections.shuffle( pegs_ );
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.add(title_, BorderLayout.NORTH);
+        mainPanel.add(pegBoardViewer_, BorderLayout.CENTER);
+        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
-        solution_.setDoubleBuffered( true );
-        this.setVisible( true );
-        solution_.repaint();
+        this.getContentPane().add(mainPanel);
+
+        this.setVisible(true);
+        pegBoardViewer_.repaint();
     }
 
     /**
      * start solving the puzzle.
      * called by the browser after init(), if running as an applet
      */
-    public final void start()
-    {
-        // this does all the heavy work of solving it
-        boolean solved = solvePuzzle( solution_, pegs_ );
+    public void start() {
 
-        if ( solved )
-            System.out.println( "The final solution is shown. the number of iterations was:" + numIterations_ );
-        else
-            System.out.println( "This puzzle is not solvable!" ); // guaranteed not to happen
-        solution_.repaint();
+        board_.setToInitialState();
+        numIterations_ = 0;
+        visited_.clear();
+        visited_ = new HashSet<BoardHashKey>(1000);
+        path_ = new LinkedList<PegMove>();
+        path_.add(board_.getFirstMove());
+        refresh();
+
+        // this does all the heavy work of solving it.
+        boolean solved = solvePuzzle(board_, path_);
+        System.out.println("solved = "+solved);
     }
 
     /**
      * stop and cleanup.
      */
-    public final void stop()
-    {
+    public void stop() {
     }
 
-    public static int getNumIterations()
-    {
-        return numIterations_;
-    }
 
-    private static boolean solvePuzzle( Solution solution, List pieces )
-    {
-        boolean solved = false;
-        int numPiecesRemaining = pieces.size();
 
-        if ( numPiecesRemaining == 0 )
+   private static void printPath(List<PegMove> path) {
+       for (PegMove m : path) {
+           System.out.println(m + ", ");
+       }
+   }
+
+
+   private boolean solvePuzzle(PegBoard board, List<PegMove> path) {
+        List<PegMove> moves = board.generateMoves(false);
+        numIterations_++;
+
+        if (board.isSolved()) {
+            List<PegMove> finalPath = new LinkedList<PegMove>();
+            finalPath.addAll(path);
+            showPath(path, board);
+            refresh();
             return true;
+        }
 
-        int k = 0;
-        while ( !solved && (k < numPiecesRemaining) ) {
-            Peg p = (Peg) pieces.get( k );
-            if ( solution.fits( p ) ) {
-                solution.push( p );
-                pieces.remove( p );
-                solved = solvePuzzle( solution, pieces );
-                if ( !solved ) {
-                    // then we still need to try the remaining rotations for
-                    // that first piece
-                    p = solution.pop();
-                    if ( solution.fits( p ) ) { // checks remaining rotations
-                        solution.push( p );
-                        solved = solvePuzzle( solution, pieces );
-                    }
-                    if ( !solved ) {
-                        // if still not solved we need to back track
-                        p = solution.pop();
-                        p.reset(); // restore to unrotated state
-                        pieces.add( k, p );  // put it back where it came from
-                        solution.paintAll( solution.getGraphics() );
-                    }
+        boolean solved = false;
+        while (moves.size() > 0 && !solved) {
+            PegMove move =  moves.remove(0);
+            path.add(move);
+            board.makeMove(move);
+            BoardHashKey key =  board.hashKey();
+            // if we arrived at the board state before (or one of its symmetries), prune the search
+            boolean visited = false;
+            for (int i = 0; i < 8; i++) {
+                if (visited_.contains(key.symmetry(i))) {
+                    visited = true;
+                    break;
                 }
             }
 
-            k++;
-            numIterations_++;
+
+            if (!visited) {
+                visited_.add(key);
+                //pegBoardViewer_.setNumTries(numIterations_);
+                solved = solvePuzzle(board, path);
+            } else {
+                //System.out.println("already visited " + key + " pruned at " + path.size() + " steps.");
+                PegMove last = path.remove(path.size() - 1);
+                board_.undoMove(last);
+                pegBoardViewer_.setNumTries(numIterations_);
+                refresh();
+            }
         }
-        solution.invalidate();
-        solution.revalidate();
-        // if we get here and solved is not true, we did not find a solution
+        // undo the last move and return
+        PegMove last = (PegMove) path.remove(path.size() - 1);
+        board_.undoMove(last);
         return solved;
     }
 
+    private void refresh() {
+        pegBoardViewer_.invalidate();
+        pegBoardViewer_.revalidate();
+        pegBoardViewer_.repaint();
+    }
+
+    public void showPath(List<PegMove> path, PegBoard board) {
+        System.out.println();
+        printPath(path);
+        List<PegMove> p = new LinkedList<PegMove>();
+        p.addAll(path);
+        pegBoardViewer_.showPath(p, board.copy(), numIterations_);
+        backButton_.setEnabled(true);
+        forwardButton_.setEnabled(false);
+    }
+
+    private void pause() {
+        try {
+            System.in.read(); // pause till keypressed
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == backButton_) {
+            pegBoardViewer_.moveInPath(-1);
+            backButton_.setEnabled((pegBoardViewer_.getCurrentStep() > 0));
+            forwardButton_.setEnabled(true);
+        }
+        else if (e.getSource() == forwardButton_) {
+            pegBoardViewer_.moveInPath(1);
+            boolean enable = (pegBoardViewer_.getCurrentStep() < pegBoardViewer_.getPath().size()-1);
+            forwardButton_.setEnabled(enable);
+            backButton_.setEnabled(true);
+        }
+    }
 
     //------ Main method --------------------------------------------------------
     /**
      *use this to run as an application instead of an applet
      */
-    public static void main( String[] args )
-    {
+    public static void main(String[] args) {
 
         HiQPuzzle applet = new HiQPuzzle();
 
         // this will call applet.init() and start() methods instead of the browser
-        baseFrame_ = GUIUtil.showApplet( applet, "Red Puzzle Solver" );
-
+        baseFrame_ = GUIUtil.showApplet(applet, "HiQ Puzzle Solver");
     }
 }
+
