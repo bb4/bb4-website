@@ -19,8 +19,7 @@ public final class PegMove
      * protected Constructor.
      * use the factory method createMove instead.
      */
-    protected PegMove()
-    { }
+    protected PegMove() {}
 
     /**
      * create a move object representing a transition on the board.

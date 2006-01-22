@@ -10,10 +10,11 @@ import java.util.*;
 public class PegBoard {
 
     static final byte SIZE = 7;  // this must be odd
-    private static final byte CENTER = SIZE >> 1;
+    private static final byte CENTER = 3;
     private static final byte CORNER_SIZE = 2;
 
     private boolean[][] positions_;
+    private int numPegsLeft_;
 
     public PegBoard() {
         initializeBoard();
@@ -25,12 +26,17 @@ public class PegBoard {
     }
 
     public void setToInitialState() {
+       numPegsLeft_ = 0;
        for (int i = 0; i<SIZE; i++) {
            for (int j = 0; j<SIZE; j++) {
-               positions_[i][j] = true;
+               if (isValidPosition(i, j)) {
+                   positions_[i][j] = true;
+                   numPegsLeft_++;
+               }
            }
        }
        positions_[CENTER][CENTER] = false;
+       numPegsLeft_--;
    }
 
 
@@ -66,13 +72,10 @@ public class PegBoard {
 
     public PegBoard copy() {
         PegBoard newBoard = new PegBoard();
-        System.arraycopy(positions_, 0, newBoard.positions_,  0, SIZE * SIZE);
-        /*
+
         for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                newBoard.positions_[i][j] = positions_[i][j];
-            }
-        }    */
+            System.arraycopy(positions_[i], 0, newBoard.positions_[i],  0, SIZE);
+        }
         return newBoard;
     }
 
@@ -89,19 +92,12 @@ public class PegBoard {
     }
 
     public boolean isSolved() {
+        //return  (getNumPegsLeft() < 2);
         return (getNumPegsLeft() == 1 && positions_[CENTER][CENTER]);
     }
 
     public int getNumPegsLeft() {
-        int num = 0;
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                if (isValidPosition(i, j) && positions_[i][j]) {
-                    num++;
-                }
-            }
-        }
-        return num;
+        return numPegsLeft_;
     }
 
     public void makeMove(PegMove move) {
@@ -121,6 +117,8 @@ public class PegBoard {
         positions_[fromRow][fromCol] = undo;
         positions_[(fromRow + toRow) >> 1][(fromCol + toCol) >> 1] = undo;
         positions_[toRow][toCol] = !undo;
+
+        numPegsLeft_ += undo? 1 : -1;
     }
 
     /**
@@ -163,25 +161,25 @@ public class PegBoard {
     /**
      *
      * @param pegged boolean if true get pegged locations, else empty locations
-     * @return List of pagged or empty locations
+     * @return List of pegged or empty locations
      */
     public List<Location> getLocations(boolean pegged) {
-        List<Location> emptyList = new LinkedList<Location>();
+
+        List<Location> list = new LinkedList<Location>();
         for (int i = 0; i<SIZE; i++) {
             for (int j = 0; j<SIZE; j++) {
                 if (isValidPosition(i, j) && positions_[i][j] == pegged) {
-                    emptyList.add(new Location(i, j));
+                    list.add(new Location(i, j));
                 }
             }
         }
-        return emptyList;
+        return list;
     }
 
     /**
-     * @param sort - whether to sort by how well the moves bring the pegs together in a cluster
      * @return List of all valid jumps for the current board state
      */
-    public List<PegMove> generateMoves(boolean sort) {
+    public List<PegMove> generateMoves() {
        List<PegMove> moves = new LinkedList<PegMove>();
        List<Location> emptyLocations = getLocations(false);
        if (emptyLocations.size() == 0) {
@@ -193,6 +191,7 @@ public class PegBoard {
                moves.addAll(findMovesForLocation(pos, false));
            }
        }
+       //Collections.shuffle(moves);
        return moves;
     }
 

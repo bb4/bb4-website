@@ -34,7 +34,7 @@ import java.io.IOException;
  * hashmap of all the possible board positions - storing a path to the solution
  * at each hashmap location. Then I traverse forward from the initial position
  * for BACK_MOVE's until I reach one of these positions that I know
- * leads to the solution. Finally I combine the 2 paths to see the sequence
+ * leads to the solution. Then I combined the 2 paths to see the sequence
  * that will lead to the solution.
  *   Finally, I found that it was enough to search entirely from the beginning
  * and just prune when I reach states I've encountered before.
@@ -62,11 +62,7 @@ public final class HiQPuzzle extends JApplet implements ActionListener
      * Construct the application
      */
     public HiQPuzzle() {
-        try {
-            GUIUtil.setCustomLookAndFeel();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        GUIUtil.setCustomLookAndFeel();
     }
 
     /**
@@ -74,11 +70,11 @@ public final class HiQPuzzle extends JApplet implements ActionListener
      * (init required for applet)
      */
     public void init() {
-        numIterations_ = 0;
-        path_ = new LinkedList<PegMove>();
+
         board_ = new PegBoard();
         pegBoardViewer_ = new PegBoardViewer(board_);
-        visited_ = new HashSet<BoardHashKey>(1000);
+
+        commonInit();
 
         title_ = new JLabel("32 PegMove Solitaire (HiQ)");
         backButton_ = new JButton("Back");
@@ -103,6 +99,12 @@ public final class HiQPuzzle extends JApplet implements ActionListener
         pegBoardViewer_.repaint();
     }
 
+    private void commonInit() {
+        numIterations_ = 0;
+        path_ = new LinkedList<PegMove>();
+        visited_ = new HashSet<BoardHashKey>(10000);
+    }
+
     /**
      * start solving the puzzle.
      * called by the browser after init(), if running as an applet
@@ -110,10 +112,6 @@ public final class HiQPuzzle extends JApplet implements ActionListener
     public void start() {
 
         board_.setToInitialState();
-        numIterations_ = 0;
-        visited_.clear();
-        visited_ = new HashSet<BoardHashKey>(1000);
-        path_ = new LinkedList<PegMove>();
         path_.add(board_.getFirstMove());
         refresh();
 
@@ -138,8 +136,7 @@ public final class HiQPuzzle extends JApplet implements ActionListener
 
 
    private boolean solvePuzzle(PegBoard board, List<PegMove> path) {
-        List<PegMove> moves = board.generateMoves(false);
-        numIterations_++;
+        List<PegMove> moves = board.generateMoves();
 
         if (board.isSolved()) {
             List<PegMove> finalPath = new LinkedList<PegMove>();
@@ -151,11 +148,11 @@ public final class HiQPuzzle extends JApplet implements ActionListener
 
         boolean solved = false;
         while (moves.size() > 0 && !solved) {
-            PegMove move =  moves.remove(0);
+            PegMove move = moves.remove(0);
             path.add(move);
             board.makeMove(move);
-            BoardHashKey key =  board.hashKey();
-            // if we arrived at the board state before (or one of its symmetries), prune the search
+            BoardHashKey key = board.hashKey();
+            // if we arrived at the board state before (or one of its symmetries), prune the search.
             boolean visited = false;
             for (int i = 0; i < 8; i++) {
                 if (visited_.contains(key.symmetry(i))) {
@@ -163,10 +160,12 @@ public final class HiQPuzzle extends JApplet implements ActionListener
                     break;
                 }
             }
-
+            numIterations_++;
 
             if (!visited) {
                 visited_.add(key);
+                if (visited_.size() % 100000 == 0)
+                    System.out.println("visited size = "+ visited_.size() + " path size = "+ path.size() + " num iterations = " + numIterations_);
                 //pegBoardViewer_.setNumTries(numIterations_);
                 solved = solvePuzzle(board, path);
             } else {
@@ -199,7 +198,7 @@ public final class HiQPuzzle extends JApplet implements ActionListener
         forwardButton_.setEnabled(false);
     }
 
-    private void pause() {
+    private static void pause() {
         try {
             System.in.read(); // pause till keypressed
         } catch (IOException e) {
