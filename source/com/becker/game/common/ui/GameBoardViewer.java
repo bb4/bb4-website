@@ -324,6 +324,7 @@ public abstract class GameBoardViewer
         String message = getGameOverMessage();
         JOptionPane.showMessageDialog( this, message, GameContext.getLabel("GAME_OVER"),
                 JOptionPane.INFORMATION_MESSAGE );
+
     }
 
     /**

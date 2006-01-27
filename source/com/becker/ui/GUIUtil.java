@@ -1,6 +1,7 @@
 package com.becker.ui;
 
 import com.becker.common.*;
+import com.sun.java.swing.plaf.windows.*;
 
 import javax.jnlp.*;
 import javax.swing.*;
@@ -21,6 +22,8 @@ import java.util.*;
  */
 public final class GUIUtil
 {
+    private GUIUtil() {}
+
     // if true then running as an applet or webstart. if false, then running as an application
     private static boolean isStandAlone_ = true;
 
@@ -60,7 +63,7 @@ public final class GUIUtil
 
 
     // get custom colors for these look and feel properties
-    private static HashMap hmUIProps_ = new HashMap();
+    private static Map hmUIProps_ = new HashMap();
 
     // webstart services
     private static BasicService basicService_ = null;
@@ -132,16 +135,15 @@ public final class GUIUtil
     }
 
     /**
-     * return a stack trace given and exception.
+     * return a stack trace given an exception.
      */
     public static String getStackTrace( Throwable e )
     {
-        //  why stopped working?
         StackTraceElement el[] = e.getStackTrace();
         String trace = "stack trace:\n";
-        for ( int i = 0; i < el.length; i++ ) {
-            trace += el[i].getClassName() + "." + el[i].getMethodName();
-            trace += " line=" + el[i].getLineNumber() + "\n";
+        for (final StackTraceElement newVar : el) {
+            trace += newVar.getClassName() + '.' + newVar.getMethodName();
+            trace += " line=" + newVar.getLineNumber() + '\n';
         }
         return trace;
     }
@@ -201,7 +203,7 @@ public final class GUIUtil
 
             // turn on auditory cues.
             // @@ can't do this under linux until I upgrade java or get the right soundcard driver.
-            ////UIManager.put("AuditoryCues.playList", UIManager.get("AuditoryCues.allAuditoryCues"));
+            UIManager.put("AuditoryCues.playList", UIManager.get("AuditoryCues.allAuditoryCues"));
 
             setUIManagerProperties( hmUIProps_ );
         } catch (Exception e) {
@@ -215,9 +217,9 @@ public final class GUIUtil
     public static void setStandardLookAndFeel()
     {
         try {
-            UIManager.setLookAndFeel( new com.sun.java.swing.plaf.windows.WindowsLookAndFeel() );
+            UIManager.setLookAndFeel( new WindowsLookAndFeel() );
             //UIManager.setLookAndFeel( new javax.swing.plaf.multi.MultiLookAndFeel() );
-        } catch (Exception e) {
+        } catch (UnsupportedLookAndFeelException e) {
             System.out.println( "setting the look and feel for the applet failed" );
         }
     }
@@ -226,7 +228,7 @@ public final class GUIUtil
      * set my own personal look and feel
      * set custom UI colors and icons
      */
-    private static void setUIManagerProperties( HashMap uiProps )
+    private static void setUIManagerProperties( Map uiProps )
     {
         // first set all the custom colors for properties
         Iterator keyIt = uiProps.keySet().iterator();
@@ -323,8 +325,8 @@ public final class GUIUtil
         baseFrame.setSize( applet.getSize() );
 
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-        baseFrame.setLocation( (d.width - baseFrame.getSize().width) / 4, (d.height - baseFrame.getSize().height) / 4 );
-        int height = (int) d.getHeight() / 2 ;
+        baseFrame.setLocation( (d.width - baseFrame.getSize().width) >> 2, (d.height - baseFrame.getSize().height) >> 2 );
+        int height = (int) d.getHeight() >> 1 ;
         int width = (int) Math.min(height*1.5, d.getWidth() / 2);
         baseFrame.setSize( width, height);
 
@@ -348,25 +350,26 @@ public final class GUIUtil
      * @param defaultColor  color to use if sColor has a problem
      * @return the color object
      */
-    public static final Color getColorFromHTMLColor(String sColor, Color defaultColor)
+    public static Color getColorFromHTMLColor(String sColor, Color defaultColor)
     {
         if (sColor==null || sColor.length()<6 || sColor.length()>8)
             return defaultColor;
 
         long intColor;
         try {
-            intColor = Long.decode("0x"+sColor).longValue();
+            intColor = Long.decode("0x" + sColor);
         }
         catch (NumberFormatException e) {
             System.out.println("bad color format: "+sColor);
+            System.out.println(e.getMessage());
             return defaultColor;
         }
         int blue =  (int)(intColor % 256);
-        int green = (int)((intColor / 256 ) % 256);
-        int red = (int)((intColor / 65536 ) % 256);
+        int green = (int)((intColor >> 8 ) % 256);
+        int red = (int)((intColor >> 16 ) % 256);
         int opacity = 255;
         if (sColor.length()>6) {
-           opacity = (int)(intColor / 16777216);
+           opacity = (int)(intColor >> 24);
         }
         return new Color(red, green, blue, opacity);
     }
@@ -375,15 +378,15 @@ public final class GUIUtil
      * returns a hexadecimal string representation of the color - eg "AABBCC" or "DDAABBCC"
      * The DD in this case gives the opacity value
      */
-    public static final String getHTMLColorFromColor(Color color)
+    public static String getHTMLColorFromColor(Color color)
     {
         int intval = color.getRGB();
         intval -= 0xFF000000;
         //System.out.println("NodePres getString from Color = "+Integer.toHexString(intval).toUpperCase());
-        return "#"+Integer.toHexString(intval).toUpperCase();
+        return '#'+Integer.toHexString(intval).toUpperCase();
     }
 
-    public static final void paintComponentWithTexture(ImageIcon texture, Component c, Graphics g)
+    public static void paintComponentWithTexture(ImageIcon texture, Component c, Graphics g)
     {
         if (texture==null) {
             System.out.println( "warning no texture to tile with" );
