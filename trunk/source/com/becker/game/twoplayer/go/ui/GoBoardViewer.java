@@ -170,6 +170,16 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
         }
     }
 
+     /**
+     * display a dialog at the end of the game showing who won and other relevant
+     * game specific information.
+     */
+    protected void showWinnerDialog()
+    {
+         super.showWinnerDialog();
+         ((GoController)controller_).clearGameOver();
+    }
+
 
     /**
      * @return   the message to display at the completion of the game.
@@ -199,7 +209,6 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
         message += p1Name +' '+ SCORE + gc.getFinalScore(true) +'\n';
         message += p2Name +' '+ SCORE + gc.getFinalScore(false) +'\n';
 
-        gc.clearGameOver();
 
         return super.getGameOverMessage() +'\n'+ message;
     }

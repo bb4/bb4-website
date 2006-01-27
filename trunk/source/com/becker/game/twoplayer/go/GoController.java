@@ -143,7 +143,7 @@ import java.util.List;
  *
         cd /var/www/html
 
- 
+
 
        upload to geocities: ftp ftp.geocities.com
        bin, prompt
@@ -370,12 +370,7 @@ public final class GoController extends TwoPlayerController
      */
     public int getTerritory( boolean forPlayer1 )
     {
-        if (forPlayer1)  {
-            return((GoBoard)board_).getTerritoryEstimate(forPlayer1, false);
-        }
-        else  {
-            return ((GoBoard)board_).getTerritoryEstimate(forPlayer1, false);
-        }
+        return((GoBoard) board_).getTerritoryEstimate(forPlayer1, false);
     }
 
     // return the game board back to its initial openning state
@@ -675,7 +670,18 @@ public final class GoController extends TwoPlayerController
             GameContext.log(0,  "Error: tried to get Score() while processing!");
             return 0;
         }
-        int captures = getNumCaptures(!player1) + (player1 ? numDeadWhiteStonesOnBoard_ : numDeadBlackStonesOnBoard_);
+        int captures = getNumCaptures(player1); // + (player1 ? numDeadWhiteStonesOnBoard_ : numDeadBlackStonesOnBoard_);
+
+        String side = (player1? "black":"white");
+        System.out.println("----");
+        System.out.println("final score for "+ side);
+        System.out.println("getNumCaptures("+side+")="+ getNumCaptures(player1));
+        //System.out.println("num dead "+side+" stones on board= "+ (player1 ? numDeadWhiteStonesOnBoard_ : numDeadBlackStonesOnBoard_));
+
+        System.out.println("getTerritory("+side+")="+getTerritory(player1));
+        System.out.println("captures="+captures);
+        System.out.println("final = terr - captures="+ (getTerritory(player1) - captures));
+        // the dead stones on the board at the end are accounted for in the getTerritory value.
         return getTerritory(player1) - captures;
     }
 
