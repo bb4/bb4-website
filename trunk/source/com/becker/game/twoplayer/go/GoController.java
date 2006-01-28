@@ -336,6 +336,7 @@ public final class GoController extends TwoPlayerController
 
     private int cachedBlackTerritoryEstimate_ = 0;
     private int cachedWhiteTerritoryEstimate_ = 0;
+
     /**
      * get a territory estimate for player1 or player2
      * When the game is over, this should return a precise value for the amount of territory (not yet filled with captures).
@@ -592,6 +593,8 @@ public final class GoController extends TwoPlayerController
                         (side * gameStageBoost * weights.get(POSITIONAL_WEIGHT_INDEX).value * positionalScore_[row][col]);
 
                     double s = weights.get(HEALTH_WEIGHT_INDEX).value * stone.getHealth() + posScore + badShapeScore;
+
+                    
                     position.setScoreContribution(Math.max(-1.0, Math.min(1.0, s)));
 
                     if (GameContext.getDebugMode() > 0)  {
@@ -670,19 +673,22 @@ public final class GoController extends TwoPlayerController
             GameContext.log(0,  "Error: tried to get Score() while processing!");
             return 0;
         }
-        int captures = getNumCaptures(player1); // + (player1 ? numDeadWhiteStonesOnBoard_ : numDeadBlackStonesOnBoard_);
+        int captures = getNumCaptures(player1) + (player1 ? numDeadWhiteStonesOnBoard_ : numDeadBlackStonesOnBoard_);
 
         String side = (player1? "black":"white");
         System.out.println("----");
         System.out.println("final score for "+ side);
         System.out.println("getNumCaptures("+side+")="+ getNumCaptures(player1));
-        //System.out.println("num dead "+side+" stones on board= "+ (player1 ? numDeadWhiteStonesOnBoard_ : numDeadBlackStonesOnBoard_));
+        System.out.println("num dead "+side+" stones on board= "+ (player1 ? numDeadWhiteStonesOnBoard_ : numDeadBlackStonesOnBoard_));
 
         System.out.println("getTerritory("+side+")="+getTerritory(player1));
         System.out.println("captures="+captures);
         System.out.println("final = terr - captures="+ (getTerritory(player1) - captures));
-        // the dead stones on the board at the end are accounted for in the getTerritory value.
         return getTerritory(player1) - captures;
+    }
+
+    public int getNumDeadStonesOnBoard(boolean black) {
+        return black ?  numDeadBlackStonesOnBoard_ : numDeadWhiteStonesOnBoard_;
     }
 
    /**

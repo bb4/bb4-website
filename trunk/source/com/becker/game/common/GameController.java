@@ -173,8 +173,6 @@ public abstract class GameController
         while ( it.hasNext() ) {
             Move m = (Move) it.next();
             makeMove( m );
-            //sendGameChangedEvent( m );
-            //refresh();
         }
     }
 
