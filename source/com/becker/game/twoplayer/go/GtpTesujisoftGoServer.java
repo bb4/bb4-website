@@ -298,7 +298,7 @@ public class GtpTesujisoftGoServer
 
         if (point != null)  {
             boolean isBlack = controller_.getCurrentPlayer().equals(controller_.getPlayer1());
-            GoMove move = new GoMove(point.getX(), point.getY(), 0, new GoStone(isBlack));
+            GoMove move = new GoMove(point.getY(), point.getX(),  0, new GoStone(isBlack));
             controller_.manMoves(move);
         }
         return true;

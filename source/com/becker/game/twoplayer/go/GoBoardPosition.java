@@ -92,8 +92,10 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
     {
        if (string_ != null)
            return string_.getGroup();
-       else
-           return null;
+       else if (eye_ != null) {
+           return eye_.getGroup();
+       }
+       return null;
     }
 
     /**
@@ -176,7 +178,7 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
     {
         return (getRow()==1 || getRow()==board.getNumRows() || getCol()==1 || getCol()==board.getNumCols());
     }
-  
+
      /**
      * make it show an empty board position.
      */

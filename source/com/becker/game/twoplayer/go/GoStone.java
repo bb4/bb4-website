@@ -64,13 +64,13 @@ public final class GoStone extends GamePiece implements GoMember
 
     /**
      * copy all fields from another stone to this one.
-     */
+     *
     public void copy( GoStone stone )
     {
         ownedByPlayer1_ = stone.isOwnedByPlayer1();
         type_ =  REGULAR_PIECE;
         health_ = stone.getHealth();
-    }
+    }  */
 
     public void setHealth( float health )
     {
@@ -82,6 +82,9 @@ public final class GoStone extends GamePiece implements GoMember
         return health_;
     }
 
+    public String getLabel() {
+        return this.isOwnedByPlayer1() ? "B" : "W";
+    }
 
     /**
      * @return true if the stone is dead.

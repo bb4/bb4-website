@@ -227,8 +227,7 @@ public final class GoBoard extends TwoPlayerBoard
         //assert (stone.isUnoccupied()):
         //        "Position "+stone+" is already occupied. move num ="+ this.getNumMoves() +" \nBoard:\n"+this.toString();
 
-        // first make sure that there are no references to obsolete groups.
-        clearEyes();    // I think this is important
+        clearEyes();
 
         super.makeInternalMove( m );
 
@@ -259,7 +258,6 @@ public final class GoBoard extends TwoPlayerBoard
         if ( m.isPassingMove() ) {
             return;
         }
-
 
         // first make sure that there are no references to obsolete groups.
         clearEyes();
@@ -308,7 +306,7 @@ public final class GoBoard extends TwoPlayerBoard
      * This method and the methods it calls are the crux of this go playing program.
      *
      * @return the estimated difference in territory between the 2 sides.
-     *  A large positive number indeicates black is winning, while a negative number indicates taht white has the edge.
+     *  A large positive number indicates black is winning, while a negative number indicates that white has the edge.
      */
     float updateTerritory(GoBoardPosition lastMove)
     {
@@ -364,7 +362,7 @@ public final class GoBoard extends TwoPlayerBoard
     private float updateEmptyRegions()
     {
         float diffScore = 0;
-        //only do this when the midgame starts, since early on there is alwas only one connected empty region.
+        //only do this when the midgame starts, since early on there is always only one connected empty region.
         int edgeOffset = 1;
 
         if (getNumMoves() <= 2 * this.getNumRows())
@@ -391,16 +389,19 @@ public final class GoBoard extends TwoPlayerBoard
                        Set nbrs = findOccupiedNeighbors(empties);
                        float avg = GoBoardUtil.calcAverageScore(nbrs);
 
-                       float score = avg * (float)nbrs.size()/Math.max(1, Math.max(nbrs.size(), empties.size()));
+                       float score = avg * (float)nbrs.size() / Math.max(1, Math.max(nbrs.size(), empties.size()));
                        assert (score <= 1.0 && score >= -1.0): "score="+score+" avg="+avg;
                        Iterator it = empties.iterator();
+                       int numEmpties = empties.size();
                        while (it.hasNext()) {
                            GoBoardPosition p = (GoBoardPosition)it.next();
-
                            p.setScoreContribution(score);
                            diffScore += score;
                        }
                    }
+               }
+               else if (pos.isInEye()) {
+                   pos.setScoreContribution(pos.getGroup().isOwnedByPlayer1()? 0.1 : -0.1);
                }
            }
         }
@@ -500,14 +501,22 @@ public final class GoBoard extends TwoPlayerBoard
         for ( int i = 1; i <= getNumRows(); i++ )  {
            for ( int j = 1; j <= getNumCols(); j++ ) {
                GoBoardPosition pos = (GoBoardPosition)positions_[i][j];
+               double val = estimate? pos.getScoreContribution() : (forPlayer1? 1.0 : -1.0);
 
                if (pos.isUnoccupied()) {
-                   double val = estimate? pos.getScoreContribution() : 1.0;
                    if (forPlayer1 && pos.getScoreContribution() > 0) {
                        territoryEstimate += val;
                    }
                    else if (!forPlayer1 && pos.getScoreContribution() < 0)  {
                        territoryEstimate -= val;  // will be positive
+                   }
+               }
+               else { // occupied
+                   if (forPlayer1 && !pos.getPiece().isOwnedByPlayer1() && pos.getGroup().getRelativeHealth() >= 0) {
+                       territoryEstimate += val;
+                   }
+                   else if (!forPlayer1 && pos.getPiece().isOwnedByPlayer1() && pos.getGroup().getRelativeHealth() <= 0)  {
+                       territoryEstimate -= val;
                    }
                }
            }
