@@ -5,12 +5,12 @@
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
@@ -19,9 +19,10 @@
 
 package ca.dj.jigo.sgf;
 
+import ca.dj.jigo.sgf.tokens.*;
+
 import java.io.*;
 import java.util.*;
-import ca.dj.jigo.sgf.tokens.*;
 
 /**
  * A way to load SGF files.  This class handles SGF File Formats 3 and 4.
@@ -69,7 +70,7 @@ public final class SGFLoader
     resetTokenizer( st );
 
     SGFGame sgfGame = readGame( st );
-    
+
     is.close();
 
     return sgfGame;
@@ -90,16 +91,16 @@ public final class SGFLoader
     throws IOException, SGFException
   {
     // Reset the game information tokens so they have a place to stay.
-    //    
+    //
     myGameInfoTokens.setSize( 0 );
-    
+
     // Read the game tree, and return a new SGFGame coupling
     // them like lovers.
     //
     SGFTree rootTree = readTree( st );
 
     SGFGame sgfGame = new SGFGame( rootTree );
-    
+
     // Get the the game info tokens read from the SGF file and add them
     // to the game.  This way we guarantee that all tokens related to
     // the game are in the SGFGame class.
@@ -111,7 +112,7 @@ public final class SGFLoader
 
     return sgfGame;
   }
-  
+
   /**
    * Reads the contents of an SGFTree, provided a StreamTokenizer to help
    * with parsing the textual tokens into SGFTokens.
@@ -156,7 +157,7 @@ public final class SGFLoader
         //
         case (int)')':
           return tree;
-          
+
         // A major parsing error has occured.  Return whatever was parsed to
         // this point.
         //
@@ -272,7 +273,7 @@ public final class SGFLoader
       token = new SelectedListToken();
     else if( tokenName.equals( "VW" ) )
       token = new ViewToken();
-      
+
     // Adding black moves and white moves is typically done at the beginning
     // of a game (initial board position).
     //
@@ -280,7 +281,7 @@ public final class SGFLoader
       token = new AddBlackToken();
     else if( tokenName.equals( "AW" ) || tokenName.equals( "ADDWHITE" ) )
       token = new AddWhiteToken();
-      
+
     // Many features of SGF are rarely used (but must be present and accounted
     // for in order to make a fully-compliant API).  These follow ...
     //
@@ -366,7 +367,7 @@ public final class SGFLoader
       token = new GameNameToken();
     else if( tokenName.equals( "ID" ) )
       token = new GameIDToken();
-      
+
     // If all else fails, just read it as a generic Text token (as opposed to
     // letting the SGF parsing fail for what might be something as
     // insignificant as an SGF token name typo).

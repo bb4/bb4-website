@@ -5,12 +5,12 @@
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
@@ -19,10 +19,9 @@
 
 package ca.dj.jigo.sgf.tokens;
 
-import java.io.StreamTokenizer;
-import java.io.IOException;
+import ca.dj.jigo.sgf.*;
 
-import ca.dj.jigo.sgf.SGFException;
+import java.io.*;
 
 /**
  * A generic token.  This class is responsible for parsing simple text --
@@ -114,7 +113,7 @@ public class TextToken extends SGFToken
   /**
    * Returns the entire text between the opening '[' and closing ']'.
    */
-  protected String getText() { return myText; }
+  public String getText() { return myText; }
   private void setText( String text ) { myText = text; }
 }
 
