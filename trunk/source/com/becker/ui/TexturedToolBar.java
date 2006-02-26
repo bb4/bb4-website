@@ -2,6 +2,7 @@ package com.becker.ui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
 /**
  * a panel with a textured background.
@@ -12,9 +13,15 @@ public class TexturedToolBar extends JToolBar
     private ImageIcon texture_ = null;
     private static final long serialVersionUID = 0L;
 
+    protected static final Dimension MAX_BUTTON_SIZE = new Dimension( 100, 24 );
 
-    public TexturedToolBar( ImageIcon texture )
+    // the thing that processes the toolbar button presses.
+    protected ActionListener listener_;
+
+
+    public TexturedToolBar( ImageIcon texture, ActionListener listener )
     {
+        listener_ = listener;
         setTexture(texture);
     }
 
@@ -22,6 +29,19 @@ public class TexturedToolBar extends JToolBar
     {
         texture_ = texture;
     }
+
+    /**
+     * create a toolbar button.
+     */
+    public GradientButton createToolBarButton( String text, String tooltip, Icon icon )
+    {
+        GradientButton button = new GradientButton( text, icon );
+        button.addActionListener( listener_ );
+        button.setToolTipText( tooltip );
+        button.setMaximumSize( MAX_BUTTON_SIZE );
+        return button;
+    }
+
 
     public void paintComponent(Graphics g)
     {

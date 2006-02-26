@@ -303,11 +303,12 @@ public class MazeGenerator extends JComponent
 
 
             MazeCell nextCell = grid_[nextPosition.x][nextPosition.y];
+            boolean eastBlocked = dir.x ==  1 && currentCell.eastWall;
+            boolean westBlocked =  dir.x == -1 && nextCell.eastWall;
+            boolean southBlocked = dir.y ==  1 && currentCell.southWall;
+            boolean northBlocked = dir.y == -1 && nextCell.southWall;
 
-            boolean pathBlocked = (( dir.x ==  1 && currentCell.eastWall ) ||
-                                   ( dir.x == -1 && nextCell.eastWall ) ||
-                                   ( dir.y ==  1 && currentCell.southWall ) ||
-                                   ( dir.y == -1 && nextCell.southWall ) );
+            boolean pathBlocked = eastBlocked || westBlocked || southBlocked || northBlocked;
 
             if (!pathBlocked)  {
                 if ( dir.x == 1 ) {// east

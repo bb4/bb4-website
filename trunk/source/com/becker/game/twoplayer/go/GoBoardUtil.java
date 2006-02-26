@@ -509,6 +509,120 @@ public final class GoBoardUtil
         return weaker;
     }
 
+    static float updateEmptyRegions(GoBoard board) {
+        float diffScore = 0;
+        //only do this when the midgame starts, since early on there is always only one connected empty region.
+        int edgeOffset = 1;
+
+        if (board.getNumMoves() <= 2 * board.getNumRows())
+            return diffScore;
+        if (board.getNumMoves() >= board.getTypicalNumMoves() / 4.3)
+            edgeOffset = 0;
+        int min = 1+edgeOffset;
+        int rMax = board.getNumRows()-edgeOffset;
+        int cMax = board.getNumCols()-edgeOffset;
+
+        List emptyLists = new LinkedList();
+        for ( int i = min; i <= rMax; i++ )  {
+           for ( int j = min; j <= cMax; j++ ) {
+               GoBoardPosition pos = (GoBoardPosition)board.getPosition(i, j);
+               if (pos.getString() == null && !pos.isInEye()) {
+                   assert pos.isUnoccupied();
+                   if (!pos.isVisited()) {
+
+                       // don't go all the way to the borders (until the end of the game),
+                       // since otherwise we will likely get only one big empty region.
+                       List empties = board.findStringFromInitialPosition(pos, false, false, NeighborType.UNOCCUPIED,
+                                                                    min, rMax,  min, cMax);
+                       emptyLists.add(empties);
+                       Set nbrs = findOccupiedNeighbors(empties, board);
+                       float avg = calcAverageScore(nbrs);
+
+                       float score = avg * (float)nbrs.size() / Math.max(1, Math.max(nbrs.size(), empties.size()));
+                       assert (score <= 1.0 && score >= -1.0): "score="+score+" avg="+avg;
+                       Iterator it = empties.iterator();
+                       while (it.hasNext()) {
+                           GoBoardPosition p = (GoBoardPosition)it.next();
+                           p.setScoreContribution(score);
+                           diffScore += score;
+                       }
+                   }
+               }
+               else if (pos.isInEye()) {
+                   pos.setScoreContribution(pos.getGroup().isOwnedByPlayer1()? 0.1 : -0.1);
+               }
+           }
+        }
+
+        unvisitPositionsInLists(emptyLists);
+        return diffScore;
+    }
+
+
+    /**
+     * @param empties a list of unoccupied positions.
+     * @return a list of stones bordering the set of empty board positions.
+     */
+    public static Set findOccupiedNeighbors(List empties, GoBoard board)
+    {
+        Iterator it = empties.iterator();
+        Set allNbrs = new HashSet();
+        while (it.hasNext()) {
+            GoBoardPosition empty = (GoBoardPosition)it.next();
+            assert (empty.isUnoccupied());
+            Set nbrs = board.getNobiNeighbors(empty, false, NeighborType.OCCUPIED);
+            // add these nbrs to the set of all nbrs
+            // (dupes automatically culled because HashSets only have unique members)
+            allNbrs.addAll(nbrs);
+        }
+        return allNbrs;
+    }
+
+
+    /**
+     * Remove all the groups in groups_ corresponding to the specified list of stones.
+     * @param stones
+     */
+    public static void removeGroupsForListOfStones(List stones, GoBoard board) {
+        Iterator mIt = stones.iterator();
+        while ( mIt.hasNext() ) {
+            GoBoardPosition nbrStone = (GoBoardPosition) mIt.next();
+            // In the case where the removed stone was causing an atari in a string in an enemy group,
+            // there is a group that does not contain a nbrstone that also needs to be removed here.
+            board.getGroups().remove( nbrStone.getGroup() );
+        }
+    }
+
+
+    public static Set findStringNeighbors(GoBoardPosition stone, GoBoard board ) {
+        Set stringNbrs = new HashSet();
+        List nobiNbrs = new LinkedList();
+        board.pushStringNeighbors(stone, false, nobiNbrs, false);
+
+        // add strings only once
+        for (Object nn : nobiNbrs) {
+            GoBoardPosition nbr = (GoBoardPosition)nn;
+            stringNbrs.add(nbr.getString());
+        }
+        return stringNbrs;
+    }
+
+
+    static void printNobiNeighborsOf(GoBoardPosition stone, GoBoard board)
+    {
+        int row = stone.getRow();
+        int col = stone.getCol();
+        GameContext.log(0,  "Nobi Neigbors of "+stone+" are : " );
+        if ( row > 1 )
+            System.out.println( board.getPosition(row - 1, col ) );
+        if ( row + 1 <= board.getNumRows() )
+            System.out.println( board.getPosition(row + 1, col) );
+        if ( col > 1 )
+            System.out.println( board.getPosition(row, col-1) );
+        if ( col + 1 <= board.getNumCols() )
+            System.out.println( board.getPosition(row, col+1) );
+    }
+
 
 
     /**
@@ -529,4 +643,109 @@ public final class GoBoardUtil
         }
         return totalScore/stones.size();
     }
+
+
+    /**
+     * @return a number corresponding to the number of clumps of 4 or empty triangles that this stone is connected to.
+     * returns 0 if does not form bad shape at all. Large numbers indicate worse shape.
+     * Possible bad shapes are :
+     *  SHAPE_EMPTY_TRIANGLE :  X -   ,   SHAPE_CLUMP_OF_4 :  X X
+     *                          X X                           X X
+     */
+    public static int formsBadShape(GoBoardPosition position, GoBoard board)
+    {
+        GoStone stone = (GoStone)position.getPiece();
+        int r = position.getRow();
+        int c = position.getCol();
+
+        int severity =
+             checkBadShape(stone, r, c,  1,-1, 1, board) +
+             checkBadShape(stone, r, c, -1,-1, 1, board) +
+             checkBadShape(stone, r, c,  1, 1, 1, board) +
+             checkBadShape(stone, r, c, -1, 1, 1, board) +
+
+             checkBadShape(stone, r, c,  1,-1, 2, board) +
+             checkBadShape(stone, r, c, -1,-1, 2, board) +
+             checkBadShape(stone, r, c,  1, 1, 2, board) +
+             checkBadShape(stone, r, c, -1, 1, 2, board) +
+
+             checkBadShape(stone, r, c,  1,-1, 3, board) +
+             checkBadShape(stone, r, c, -1,-1, 3, board) +
+             checkBadShape(stone, r, c,  1, 1, 3, board) +
+             checkBadShape(stone, r, c, -1, 1, 3, board);
+
+        return severity;
+    }
+
+    private static int checkBadShape(GoStone stone, int r, int c, int incr, int incc, int type, GoBoard board) {
+        boolean player1 = stone.isOwnedByPlayer1();
+        if ( board.inBounds( r + incr, c + incc ) ) {
+            BoardPosition adjacent1 = board.getPosition( r + incr, c );
+            BoardPosition adjacent2 = board.getPosition( r , c + incc);
+            BoardPosition diagonal = board.getPosition( r + incr, c + incc);
+            // there are 3 cases:
+            //       a1 diag    X     XX    X
+            //        X a2      XX    X    XX
+            switch (type) {
+                case 1 :
+                    if (adjacent1.isOccupied() && adjacent2.isOccupied())  {
+                        if (   adjacent1.getPiece().isOwnedByPlayer1() == player1
+                            && adjacent2.getPiece().isOwnedByPlayer1() == player1)
+                            return getBadShapeAux(diagonal, player1);
+                    }  break;
+                case 2 :
+                    if (adjacent1.isOccupied() && diagonal.isOccupied())  {
+                        if (   adjacent1.getPiece().isOwnedByPlayer1() == player1
+                            && diagonal.getPiece().isOwnedByPlayer1() == player1)
+                            return getBadShapeAux(adjacent2, player1);
+                    }  break;
+                case 3 :
+                    if (adjacent2.isOccupied() && diagonal.isOccupied())  {
+                        if (   adjacent2.getPiece().isOwnedByPlayer1() == player1
+                            && diagonal.getPiece().isOwnedByPlayer1() == player1)
+                            return getBadShapeAux(adjacent1, player1);
+                    }  break;
+               default : assert false;
+
+            }
+        }
+        return 0;
+    }
+
+    public static String toString(GoBoard board) {
+
+        int rows = board.getNumRows();
+        int cols = board.getNumCols();
+        StringBuffer buf = new StringBuffer((rows + 2) * (cols + 2));
+
+        buf.append("   ");
+        for ( int j = 1; j <= board.getNumCols(); j++ ) {
+            buf.append(j % 10);
+        }
+        buf.append(' ');
+        buf.append("\n  ");
+        for ( int j = 1; j <= cols + 2; j++ ) {
+            buf.append('-');
+        }
+        buf.append('\n');
+
+        for ( int i = 1; i <= rows; i++ ) {
+            buf.append(i / 10);
+            buf.append(i % 10);
+            buf.append('|');
+            for ( int j = 1; j <= cols; j++ ) {
+                GoBoardPosition space = (GoBoardPosition) board.getPosition(i, j);
+                if ( space.isOccupied() )     {
+                    buf.append(space.getPiece().isOwnedByPlayer1()?'X':'O');
+                }
+                else {
+                    buf.append(' ');
+                }
+            }
+            buf.append('|');
+            buf.append('\n');
+        }
+        return buf.toString();
+    }
+
 }

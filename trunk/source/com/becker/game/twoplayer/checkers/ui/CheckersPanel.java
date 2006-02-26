@@ -2,9 +2,7 @@ package com.becker.game.twoplayer.checkers.ui;
 
 import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
-import com.becker.game.twoplayer.checkers.CheckersController;
-import com.becker.game.twoplayer.common.ui.TwoPlayerInfoPanel;
-import com.becker.game.twoplayer.common.ui.TwoPlayerPanel;
+import com.becker.game.twoplayer.common.ui.*;
 
 import javax.swing.*;
 

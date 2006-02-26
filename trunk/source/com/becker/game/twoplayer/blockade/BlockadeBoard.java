@@ -22,7 +22,7 @@ public class BlockadeBoard extends TwoPlayerBoard
     public static final int NUM_HOMES = 2;
 
     // the percentage away from the players closest edge to place the bases.
-    private static final float HOME_BASE_POSITION_PERCENT = .3f;
+    private static final float HOME_BASE_POSITION_PERCENT = 0.3f;
 
     private BoardPosition[] p1Homes_ = null;
     private BoardPosition[] p2Homes_ = null;
@@ -112,6 +112,13 @@ public class BlockadeBoard extends TwoPlayerBoard
     }
 
     /**
+     * @return typical number of moves in a go game.
+     */
+    public int getTypicalNumMoves() {
+        return rowsTimesCols_;
+    }
+
+    /**
       * Blockade pieces can move 1 or 2 spaces in any direction.
       * However, only in rare cases would you ever want to move only 1 space.
       * For example, move 1 space to land on a home base, or in preparation to jump an oppponent piece.
@@ -187,8 +194,8 @@ public class BlockadeBoard extends TwoPlayerBoard
                      possibleMoveList.add(
                              BlockadeMove.createMove(fromRow, fromCol, fromRow,fromCol-1, 0, p.getPiece(), null));
              }
-             if (((westOpen && !westPos.isSouthBlocked() && fromCol-1>0 && fromRow+1<=numRows) ||
-                 (southOpen && southWestPos!=null && !southWestPos.isEastBlocked()))
+             boolean test1 = (westOpen && !westPos.isSouthBlocked() && fromCol-1>0 && fromRow+1<=numRows);
+             if (test1 || ((southOpen && southWestPos!=null && !southWestPos.isEastBlocked()))
                   && (southWestPos.isUnoccupied()||southWestPos.isHomeBase(op1)) && !southWestPos.isVisited())   // SW
                   possibleMoveList.add(
                           BlockadeMove.createMove(fromRow, fromCol, fromRow+1,fromCol-1, 0, p.getPiece(), null));
@@ -210,8 +217,8 @@ public class BlockadeBoard extends TwoPlayerBoard
                              BlockadeMove.createMove(fromRow, fromCol, fromRow-1,fromCol, 0, p.getPiece(), null));
 
              }
-             if (((northOpen && !northPos.isEastBlocked() && fromCol+1<=numCols) ||
-                 (eastOpen && !northEastPos.isSouthBlocked()))
+             boolean test1 = (northOpen && !northPos.isEastBlocked() && fromCol+1<=numCols);
+             if ((test1 || (eastOpen && !northEastPos.isSouthBlocked()))
                   && (northEastPos.isUnoccupied()||northEastPos.isHomeBase(op1)) && !northEastPos.isVisited())    // NE
                   possibleMoveList.add(
                           BlockadeMove.createMove(fromRow, fromCol, fromRow-1,fromCol+1, 0, p.getPiece(), null));
@@ -225,15 +232,15 @@ public class BlockadeBoard extends TwoPlayerBoard
 
          BlockadeBoardPosition northWestPos = (BlockadeBoardPosition) getPosition(fromRow-1, fromCol-1);
          if (northWestPos!=null) {
-             if (((westOpen && !northWestPos.isSouthBlocked()) ||
-                 (northOpen && !northWestPos.isEastBlocked()))
-                  && (northWestPos.isUnoccupied()||northWestPos.isHomeBase(op1)) && !northWestPos.isVisited())   // NW
+             boolean test1 = ((westOpen && !northWestPos.isSouthBlocked()) ||
+                              (northOpen && !northWestPos.isEastBlocked()));
+             if (test1 && (northWestPos.isUnoccupied()||northWestPos.isHomeBase(op1)) && !northWestPos.isVisited())  // NW
                   possibleMoveList.add(
                           BlockadeMove.createMove(fromRow, fromCol, fromRow-1,fromCol-1, 0, p.getPiece(), null));
          }
          BlockadeBoardPosition eastEastPos = (BlockadeBoardPosition) getPosition(fromRow, fromCol+2);
-         if (eastOpen && eastPos!=null && !eastPos.isEastBlocked() && fromCol+2<=numCols
-             && (eastEastPos.isUnoccupied()||eastEastPos.isHomeBase(op1)) && !eastEastPos.isVisited())        // EE
+         boolean test1 = eastOpen && eastPos!=null && !eastPos.isEastBlocked() && fromCol+2<=numCols;
+         if (test1 && (eastEastPos.isUnoccupied()||eastEastPos.isHomeBase(op1)) && !eastEastPos.isVisited())       // EE
               possibleMoveList.add(
                       BlockadeMove.createMove(fromRow, fromCol, fromRow,fromCol+2, 0, p.getPiece(), null));
 
@@ -278,7 +285,7 @@ public class BlockadeBoard extends TwoPlayerBoard
         // mark pos visited so we don't circle back to it.
         pos.setVisited(true);
 
-        LinkedList q = new LinkedList();
+        List q = new LinkedList();
         // the user object at the root is null, because there is no move there.
         MutableTreeNode root = new DefaultMutableTreeNode(null);
         // if we are sitting on a home, then need to add it to the homeBase set.
@@ -318,7 +325,7 @@ public class BlockadeBoard extends TwoPlayerBoard
         while (it.hasNext()) {
             DefaultMutableTreeNode n = (DefaultMutableTreeNode)it.next();
             Object[] ps = n.getUserObjectPath();
-            LinkedList path = new LinkedList();
+            List path = new LinkedList();
             if (ps.length>1)  {
                 // skip the first null move.
                 for (int k=1; k<ps.length; k++) {
@@ -439,7 +446,7 @@ public class BlockadeBoard extends TwoPlayerBoard
         boolean vertical = wall.isVertical();
         Set hsPositions = wall.getPositions();
         Iterator it = hsPositions.iterator();
-        HashMap oldWalls = new HashMap();
+        Map oldWalls = new HashMap();
         BlockadeBoardPosition pos;
         while (it.hasNext())  {
             pos = (BlockadeBoardPosition)it.next();
@@ -462,7 +469,7 @@ public class BlockadeBoard extends TwoPlayerBoard
             return "INVALID_WALL_PLACEMENT"; //GameContext.getLabel("INVALID_WALL_PLACEMENT");
         p.setPiece(piece);
         List paths[] = findShortestPaths(p);
-        if (paths.length != BlockadeBoard.NUM_HOMES)
+        if (paths.length != NUM_HOMES)
             sError = GameContext.getLabel("MUST_HAVE_ONE_PATH");
         p.setPiece(null);
 
@@ -526,7 +533,7 @@ public class BlockadeBoard extends TwoPlayerBoard
     private void confirmAllVisited()
         {
             boolean allVisited = true;
-            ArrayList unvisitedList = new ArrayList();
+            List unvisitedList = new ArrayList();
             for ( int i = 1; i <= getNumRows(); i++ ) {
                 for ( int j = 1; j <= getNumCols(); j++ ) {
                     if (!((BlockadeBoardPosition)positions_[i][j]).isVisited())   {
@@ -582,9 +589,9 @@ public class BlockadeBoard extends TwoPlayerBoard
             for ( int j = 1; j <= getNumCols(); j++ ) {
                BlockadeBoardPosition pos = ((BlockadeBoardPosition)positions_[i][j]);
                if (pos.getEastWall()!=null)
-                   buf.append("East wall at: "+i+" "+j+"\n");
+                   buf.append("East wall at: "+i+' '+j+'\n');
                if (pos.getSouthWall()!=null)
-                   buf.append("South wall at: "+i+" "+j+"\n");
+                   buf.append("South wall at: "+i+' '+j+'\n');
 
             }
         }

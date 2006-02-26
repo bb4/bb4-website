@@ -59,4 +59,6 @@ public abstract class TwoPlayerBoard extends Board
         }
     }
 
+    public abstract int getTypicalNumMoves();
+
 }

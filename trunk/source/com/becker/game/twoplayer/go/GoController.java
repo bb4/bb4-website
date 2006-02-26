@@ -584,7 +584,7 @@ public final class GoController extends TwoPlayerController
                     int side = position.getPiece().isOwnedByPlayer1()? 1: -1;
                     // penalize bad shape like empty triangles
                     badShapeScore =
-                         -(side * board.formsBadShape(position)
+                         -(side * GoBoardUtil.formsBadShape(position, board)
                                 * weights.get(BAD_SHAPE_WEIGHT_INDEX).value);
 
                     // consider where the stones are played
@@ -594,7 +594,7 @@ public final class GoController extends TwoPlayerController
 
                     double s = weights.get(HEALTH_WEIGHT_INDEX).value * stone.getHealth() + posScore + badShapeScore;
 
-                    
+
                     position.setScoreContribution(Math.max(-1.0, Math.min(1.0, s)));
 
                     if (GameContext.getDebugMode() > 0)  {

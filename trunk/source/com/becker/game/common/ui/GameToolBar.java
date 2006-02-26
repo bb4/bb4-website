@@ -1,13 +1,11 @@
 package com.becker.game.common.ui;
 
-import com.becker.ui.TexturedToolBar;
-import com.becker.ui.GradientButton;
-import com.becker.ui.GUIUtil;
-import com.becker.game.common.GameContext;
+import com.becker.game.common.*;
+import com.becker.ui.*;
 
+import javax.swing.Box;
 import javax.swing.*;
-import java.awt.event.ActionListener;
-import java.awt.*;
+import java.awt.event.*;
 
 /**
  *
@@ -25,8 +23,6 @@ public class GameToolBar extends TexturedToolBar {
     //protected GradientButton resignButton_;
     private GradientButton helpButton_;
 
-    protected static final Dimension MAX_BUTTON_SIZE = new Dimension( 100, 24 );
-
     private static final String DIR = CORE_IMAGE_PATH;
     private static final ImageIcon newGameImage = GUIUtil.getIcon(DIR+"newGame.gif");
     private static final ImageIcon helpImage = GUIUtil.getIcon(DIR+"help.gif");
@@ -36,12 +32,8 @@ public class GameToolBar extends TexturedToolBar {
     private static final ImageIcon redoImageDisabled = GUIUtil.getIcon(DIR+"redo_off.gif");
     private static final ImageIcon optionsImage = GUIUtil.getIcon(DIR+"iconDesktop.gif");
 
-    // the thing that processes the toolbar button presses.
-    private ActionListener listener_;
-
     public GameToolBar(ImageIcon texture, ActionListener listener) {
-        super(texture);
-        listener_ = listener;
+        super(texture, listener);
         init();
 
     }
@@ -61,7 +53,6 @@ public class GameToolBar extends TexturedToolBar {
         helpButton_ = createToolBarButton( GameContext.getLabel("HELP_BTN"),
                                            GameContext.getLabel("HELP_BTN_TIP"), helpImage );
 
-
         add( newGameButton_ );
         add( undoButton_ );
         add( redoButton_ );
@@ -69,18 +60,6 @@ public class GameToolBar extends TexturedToolBar {
         add( optionsButton_ );
         add( Box.createHorizontalGlue() );
         add( helpButton_ );
-    }
-
-    /**
-     * create a toolbar button.
-     */
-    public final GradientButton createToolBarButton( String text, String tooltip, Icon icon )
-    {
-        GradientButton button = new GradientButton( text, icon );
-        button.addActionListener( listener_ );
-        button.setToolTipText( tooltip );
-        button.setMaximumSize( MAX_BUTTON_SIZE );
-        return button;
     }
 
     /**
