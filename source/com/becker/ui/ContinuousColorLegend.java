@@ -2,7 +2,7 @@ package com.becker.ui;
 
 import com.becker.common.ColorMap;
 import com.becker.common.Util;
-import com.becker.common.NiceCutPoints;
+import com.becker.common.RoundCutPoints;
 
 import javax.swing.*;
 import java.awt.*;
@@ -71,7 +71,7 @@ public class ContinuousColorLegend extends JPanel {
 
         int desiredTicks = this.getWidth() / 90;
         double[] values =
-                NiceCutPoints.cutpoints(colormap_.getMinValue(), colormap_.getMaxValue(), 2+desiredTicks, true);
+                RoundCutPoints.cutpoints(colormap_.getMinValue(), colormap_.getMaxValue(), 2+desiredTicks, true);
 
 
         JLabel labels[] = new JLabel[values.length];

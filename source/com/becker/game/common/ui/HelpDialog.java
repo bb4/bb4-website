@@ -14,7 +14,7 @@ import java.text.*;
  *
  * @author Barry Becker
  */
-final class HelpDialog extends JDialog implements ActionListener
+public final class HelpDialog extends JDialog implements ActionListener
 {
 
 
@@ -36,14 +36,13 @@ final class HelpDialog extends JDialog implements ActionListener
      * @param comments supplementary info
      * @param text game specific instructions to display.
      */
-    HelpDialog( Frame parent, String gameName, String comments, String text)
+    public HelpDialog( Frame parent, String gameName, String comments, String text)
     {
         super( parent );
 
         gameName_ = gameName;
         comments_ = comments;
         overviewText_ = text;
-
 
         enableEvents( AWTEvent.WINDOW_EVENT_MASK );
         initGUI();

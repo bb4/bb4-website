@@ -21,7 +21,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ActionListe
      */
     protected GameController controller_;
 
-    // contains the two tabls : options for creating a new game, or loading a saved game
+    // contains the two tabs : options for creating a new game, or loading a saved game
     protected final JTabbedPane tabbedPanel_ = new JTabbedPane();
 
     protected JPanel playerPanel_ = null;

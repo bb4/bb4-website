@@ -1,7 +1,8 @@
 package com.becker.java2d;
 
-import com.sun.image.codec.jpeg.JPEGCodec;
+import com.sun.image.codec.jpeg.*;
 import com.sun.media.jai.codec.*;
+import com.becker.ui.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -58,7 +59,7 @@ public final class ImageUtil
     {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         BufferedOutputStream os = new BufferedOutputStream( bos );
-        ImageUtil.writeImage( img, os, type );
+        writeImage( img, os, type );
 
         return bos.toByteArray();
     }
@@ -72,10 +73,10 @@ public final class ImageUtil
     public static void writeImage( Image img, BufferedOutputStream os, String type )
     {
         //long time = System.currentTimeMillis();
-        BufferedImage bi = ImageUtil.makeBufferedImage( img );
+        BufferedImage bi = makeBufferedImage( img );
 
         if ( "jpg".equals( type ) ) {
-            com.sun.image.codec.jpeg.JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder( os );
+            JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder( os );
             com.sun.image.codec.jpeg.JPEGEncodeParam param = encoder.getDefaultJPEGEncodeParam( bi );
             // this makes the images near perfect - very little compression
             param.setQuality( JPG_QUALITY, false );
@@ -84,7 +85,7 @@ public final class ImageUtil
             try {
                 encoder.encode( bi );  // this writes it to a file as a .jpg
             } catch (IOException fne) {
-                System.out.println( "IOException error" );
+                System.out.println( "IOException error:" + fne.getMessage());
             }
         }
         else { // PNG is the default
@@ -97,7 +98,7 @@ public final class ImageUtil
             try {
                 encoder.encode( bi );  // this writes it to a file as a .png
             } catch (IOException fne) {
-                System.out.println( "IOException error" );
+                System.out.println( "IOException error:" +  fne.getMessage());
             }
         }
 
@@ -105,7 +106,7 @@ public final class ImageUtil
             os.flush();
             os.close();
         } catch (IOException fne) {
-            System.out.println( "IOException error" );
+            System.out.println( "IOException error:" + fne.getMessage());
         }
         //System.out.println("VizUtil: createImage time = "+(System.currentTimeMillis()-time));
     }
@@ -131,10 +132,26 @@ public final class ImageUtil
             System.out.println("saving as "+  fileName + extension );
             os = new BufferedOutputStream( new FileOutputStream( fileName + extension ) );
         } catch (FileNotFoundException fne) {
-            System.out.println( "File " + fileName + " not found" );
+            System.out.println( "File " + fileName + " not found: " + fne.getMessage());
         }
 
         writeImage( img, os, type );
+    }
+
+
+    public static void saveSnapshot(JComponent component, String directory) {
+
+        JFileChooser chooser = GUIUtil.getFileChooser();
+        chooser.setCurrentDirectory( new File( directory ) );
+        int state = chooser.showSaveDialog( null );
+        File file = chooser.getSelectedFile();
+        if ( file != null && state == JFileChooser.APPROVE_OPTION ) {
+
+            BufferedImage img = (BufferedImage) component.createImage(component.getWidth(), component.getHeight());
+            component.paint(img.createGraphics());
+
+            saveAsImage(file.getAbsolutePath(), img, "jpg");
+        }
     }
 
 }

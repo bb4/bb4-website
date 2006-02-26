@@ -126,14 +126,6 @@ public class MazeSimulator extends JApplet implements ActionListener
         return mainPanel;
     }
 
-    /*
-    private static JTextField createTextField( String initialVal )
-    {
-        JTextField tf = new JTextField( initialVal );
-        Dimension mind = new Dimension( 30, 18 );
-        tf.setPreferredSize( mind );
-        return tf;
-    }  */
 
     /**
      * called when a button is pressed

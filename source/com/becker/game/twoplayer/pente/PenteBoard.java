@@ -62,6 +62,13 @@ public class PenteBoard extends TwoPlayerBoard
         return rowsTimesCols_;
     }
 
+    /**
+     * @return typical number of moves in a go game.
+     */
+    public int getTypicalNumMoves() {
+        return rowsTimesCols_ / 3;
+    }
+
     // for pente, undoing a move is just changing that space back to a blank
     protected void undoInternalMove( Move move )
     {

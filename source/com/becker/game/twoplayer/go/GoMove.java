@@ -215,7 +215,7 @@ public final class GoMove extends TwoPlayerMove
      */
     private static void adjustLiberties(GoBoardPosition liberty, GoBoard board) {
 
-         Set stringNbrs = board.findStringNeighbors( liberty );
+         Set stringNbrs = GoBoardUtil.findStringNeighbors( liberty, board );
          for (Object sn : stringNbrs) {
              GoString s = (GoString) sn;
              s.changedLiberty(liberty);
@@ -418,7 +418,7 @@ public final class GoMove extends TwoPlayerMove
 
                 if ( !nbrStone.isVisited() ) {
                     List stones1 = board.findGroupFromInitialPosition( nbrStone, false );
-                    board.removeGroupsForListOfStones(stones1);
+                    GoBoardUtil.removeGroupsForListOfStones(stones1, board);
 
                     if ( !GoBoardUtil.groupAlreadyExists( stones1, board) ) {
                         // this is not necessarily the case.
@@ -482,7 +482,7 @@ public final class GoMove extends TwoPlayerMove
                     List mergedStones = (List)mgIt.next();
 
                     // remove all the old groups and replace them with the big ones
-                    board.removeGroupsForListOfStones(mergedStones);
+                    GoBoardUtil.removeGroupsForListOfStones(mergedStones, board);
 
                     restoredGroup = new GoGroup( mergedStones );
 
@@ -680,12 +680,11 @@ public final class GoMove extends TwoPlayerMove
         List bigGroup = board.findGroupFromInitialPosition( seedStone );
         assert ( bigGroup.size() > 0 );
 
-        board.removeGroupsForListOfStones(bigGroup);
+        GoBoardUtil.removeGroupsForListOfStones(bigGroup, board);
 
         GoGroup newBigGroup = new GoGroup( bigGroup );
         board.getGroups().add( newBigGroup );
     }
-
 
 
     /**

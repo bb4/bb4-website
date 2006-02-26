@@ -21,6 +21,7 @@ public final class GoBoard extends TwoPlayerBoard
 
     // this is a set of active groups. Groups are composed of strings.
     private Set groups_ = null;
+
     // this is a set of active armies. Armies are composed of groups.
     // armies not implemented yet.
     //private Set armies_;
@@ -99,15 +100,6 @@ public final class GoBoard extends TwoPlayerBoard
             }
         }
 
-        /*
-        if (armies_!=null)  {
-            ((GoBoard)clone).armies_ = new HashSet(10);
-            Set armiesCopy = ((GoBoard)clone).armies_;
-            for (Object a : armies_) {
-                armiesCopy.add(((GoArmy)a).clone());
-            }
-        }
-        */
         return clone;
      }
 
@@ -118,7 +110,7 @@ public final class GoBoard extends TwoPlayerBoard
      * @param numRows number of rows
      * @param numCols number of columns
      *
-     * @@ just create new board instead of calling reset or resize
+     * @@ Bill says just create new board instead of calling reset or resize
      */
     public void setSize( int numRows, int numCols )
     {
@@ -182,6 +174,13 @@ public final class GoBoard extends TwoPlayerBoard
     }
 
     /**
+     * @return typical number of moves in a go game.
+     */
+    public int getTypicalNumMoves() {
+        return rowsTimesCols_ - getNumRows();
+    }
+
+    /**
      * get the current set of active groups
      * @return all the valid groups on the board (for both sides)
      */
@@ -222,26 +221,18 @@ public final class GoBoard extends TwoPlayerBoard
             return true;
         }
 
-
         // we hit this all the time when mousing over the game tree.
         //assert (stone.isUnoccupied()):
         //        "Position "+stone+" is already occupied. move num ="+ this.getNumMoves() +" \nBoard:\n"+this.toString();
 
         clearEyes();
-
         super.makeInternalMove( m );
-
         m.updateBoardAfterMoving(this);
-
         updateCaptures(m, true);
-
-        //if ( m.isSuicidal(this) )  now checked beforehand
-        //    return false;
 
         profiler_.stopMakeMove();
         return true;
     }
-
 
 
     /**
@@ -261,9 +252,7 @@ public final class GoBoard extends TwoPlayerBoard
 
         // first make sure that there are no references to obsolete groups.
         clearEyes();
-
         m.updateBoardAfterRemoving(this);
-
         updateCaptures(m, false);
 
         profiler_.stopUndoMove();
@@ -361,72 +350,7 @@ public final class GoBoard extends TwoPlayerBoard
      */
     private float updateEmptyRegions()
     {
-        float diffScore = 0;
-        //only do this when the midgame starts, since early on there is always only one connected empty region.
-        int edgeOffset = 1;
-
-        if (getNumMoves() <= 2 * this.getNumRows())
-            return diffScore;
-        if (getNumMoves() >= rowsTimesCols_ / 4.5)
-            edgeOffset = 0;
-        int min = 1+edgeOffset;
-        int rMax = getNumRows()-edgeOffset;
-        int cMax = getNumCols()-edgeOffset;
-
-        List emptyLists = new LinkedList();
-        for ( int i = min; i <= rMax; i++ )  {
-           for ( int j = min; j <= cMax; j++ ) {
-               GoBoardPosition pos = (GoBoardPosition)positions_[i][j];
-               if (pos.getString() == null && !pos.isInEye()) {
-                   assert pos.isUnoccupied();
-                   if (!pos.isVisited()) {
-
-                       // don't go all the way to the borders (until the end of the game),
-                       // since otherwise we will likely get only one big empty region.
-                       List empties = findStringFromInitialPosition(pos, false, false, NeighborType.UNOCCUPIED,
-                                                                    min, rMax,  min, cMax);
-                       emptyLists.add(empties);
-                       Set nbrs = findOccupiedNeighbors(empties);
-                       float avg = GoBoardUtil.calcAverageScore(nbrs);
-
-                       float score = avg * (float)nbrs.size() / Math.max(1, Math.max(nbrs.size(), empties.size()));
-                       assert (score <= 1.0 && score >= -1.0): "score="+score+" avg="+avg;
-                       Iterator it = empties.iterator();
-                       int numEmpties = empties.size();
-                       while (it.hasNext()) {
-                           GoBoardPosition p = (GoBoardPosition)it.next();
-                           p.setScoreContribution(score);
-                           diffScore += score;
-                       }
-                   }
-               }
-               else if (pos.isInEye()) {
-                   pos.setScoreContribution(pos.getGroup().isOwnedByPlayer1()? 0.1 : -0.1);
-               }
-           }
-        }
-
-        GoBoardUtil.unvisitPositionsInLists(emptyLists);
-        return diffScore;
-    }
-
-    /**
-     * @param empties a list of unoccupied positions.
-     * @return a list of stones bordering the set of empty board positions.
-     */
-    public Set findOccupiedNeighbors(List empties)
-    {
-        Iterator it = empties.iterator();
-        Set allNbrs = new HashSet();
-        while (it.hasNext()) {
-            GoBoardPosition empty = (GoBoardPosition)it.next();
-            assert (empty.isUnoccupied());
-            Set nbrs = getNobiNeighbors(empty, false, NeighborType.OCCUPIED);
-            // add these nbrs to the set of all nbrs
-            // (dupes automatically culled because HashSets only have unique members)
-            allNbrs.addAll(nbrs);
-        }
-        return allNbrs;
+        return GoBoardUtil.updateEmptyRegions(this);
     }
 
 
@@ -484,8 +408,6 @@ public final class GoBoard extends TwoPlayerBoard
 
         return stones;
     }
-
-
 
 
     /**
@@ -562,21 +484,6 @@ public final class GoBoard extends TwoPlayerBoard
         return nbrs;
     }
 
-    public void printNobiNeighborsOf(GoBoardPosition stone)
-    {
-        int row = stone.getRow();
-        int col = stone.getCol();
-        GameContext.log(0,  "Nobi Neigbors of "+stone+" are : " );
-        if ( row > 1 )
-            System.out.println( positions_[row - 1][col] );
-        if ( row + 1 <= numRows_ )
-            System.out.println( positions_[row + 1][col] );
-        if ( col > 1 )
-            System.out.println( positions_[row][col-1] );
-        if ( col + 1 <= numCols_ )
-            System.out.println( positions_[row][col+1] );
-    }
-
     /**
      * return a set of stones which are loosely connected to this stone.
      * Check the 16 purely group neighbors and 4 string neighbors
@@ -611,34 +518,6 @@ public final class GoBoard extends TwoPlayerBoard
 
 
     /**
-     * Remove all the groups in groups_ corresponding to the specified list of stones.
-     * @param stones
-     */
-    public void removeGroupsForListOfStones(List stones) {
-        Iterator mIt = stones.iterator();
-        while ( mIt.hasNext() ) {
-            GoBoardPosition nbrStone = (GoBoardPosition) mIt.next();
-            // In the case where the removed stone was causing an atari in a string in an enemy group,
-            // there is a group that does not contain a nbrstone that also needs to be removed here.
-            groups_.remove( nbrStone.getGroup() );
-        }
-    }
-
-
-    public Set findStringNeighbors(GoBoardPosition stone ) {
-        Set stringNbrs = new HashSet();
-        List nobiNbrs = new LinkedList();
-        pushStringNeighbors(stone, false, nobiNbrs, false);
-
-        // add strings only once
-        for (Object nn : nobiNbrs) {
-            GoBoardPosition nbr = (GoBoardPosition)nn;
-            stringNbrs.add(nbr.getString());
-        }
-        return stringNbrs;
-    }
-
-    /**
      * Check all nobi neighbors (at most 4).
      * @param s the stone of which to check the neighbors of
      * @param stack the stack to add unvisited neighbors
@@ -646,8 +525,7 @@ public final class GoBoard extends TwoPlayerBoard
      */
     private int pushStringNeighbors( GoBoardPosition s, boolean friendPlayer1, List stack,
                                      boolean samePlayerOnly, NeighborType type,
-                                     Box bbox )
-    {
+                                     Box bbox )  {
         int r = s.getRow();
         int c = s.getCol();
         int numPushed = 0;
@@ -665,7 +543,7 @@ public final class GoBoard extends TwoPlayerBoard
         return numPushed;
     }
 
-    private int pushStringNeighbors( GoBoardPosition s, boolean friendPlayer1, List stack, boolean samePlayerOnly )
+    int pushStringNeighbors( GoBoardPosition s, boolean friendPlayer1, List stack, boolean samePlayerOnly )
     {
         return pushStringNeighbors( s, friendPlayer1, stack, samePlayerOnly,
                                     NeighborType.OCCUPIED, new Box(1, 1, numRows_, numCols_));
@@ -1019,7 +897,6 @@ public final class GoBoard extends TwoPlayerBoard
     }
 
 
-
     /**
      * clear all the eyes from all the stones on the board
      */
@@ -1036,73 +913,6 @@ public final class GoBoard extends TwoPlayerBoard
                 }
             }
         }
-    }
-
-    /**
-     * @return a number corresponding to the number of clumps of 4 or empty triangles that this stone is connected to.
-     * returns 0 if does not form bad shape at all. Large numbers indicate worse shape.
-     * Possible bad shapes are :
-     *  SHAPE_EMPTY_TRIANGLE :  X -   ,   SHAPE_CLUMP_OF_4 :  X X
-     *                          X X                           X X
-     */
-    public int formsBadShape(GoBoardPosition position)
-    {
-        GoStone stone = (GoStone)position.getPiece();
-        int r = position.getRow();
-        int c = position.getCol();
-
-        int severity =
-             checkBadShape(stone, r, c,  1,-1, 1) +
-             checkBadShape(stone, r, c, -1,-1, 1) +
-             checkBadShape(stone, r, c,  1, 1, 1) +
-             checkBadShape(stone, r, c, -1, 1, 1) +
-
-             checkBadShape(stone, r, c,  1,-1, 2) +
-             checkBadShape(stone, r, c, -1,-1, 2) +
-             checkBadShape(stone, r, c,  1, 1, 2) +
-             checkBadShape(stone, r, c, -1, 1, 2) +
-
-             checkBadShape(stone, r, c,  1,-1, 3) +
-             checkBadShape(stone, r, c, -1,-1, 3) +
-             checkBadShape(stone, r, c,  1, 1, 3) +
-             checkBadShape(stone, r, c, -1, 1, 3);
-
-        return severity;
-    }
-
-    private int checkBadShape(GoStone stone, int r, int c, int incr, int incc, int type) {
-        boolean player1 = stone.isOwnedByPlayer1();
-        if ( inBounds( r + incr, c + incc ) ) {
-            BoardPosition adjacent1 = positions_[r+incr][c]; //getPosition( r + incr, c );
-            BoardPosition adjacent2 = positions_[r][c+incc]; //getPosition( r , c + incc);
-            BoardPosition diagonal = positions_[r+incr][c+incc]; //getPosition( r + incr, c + incc);
-            // there are 3 cases:
-            //       a1 diag    X     XX    X
-            //        X a2      XX    X    XX
-            switch (type) {
-                case 1 :
-                    if (adjacent1.isOccupied() && adjacent2.isOccupied())  {
-                        if (   adjacent1.getPiece().isOwnedByPlayer1() == player1
-                            && adjacent2.getPiece().isOwnedByPlayer1() == player1)
-                            return GoBoardUtil.getBadShapeAux(diagonal, player1);
-                    }  break;
-                case 2 :
-                    if (adjacent1.isOccupied() && diagonal.isOccupied())  {
-                        if (   adjacent1.getPiece().isOwnedByPlayer1() == player1
-                            && diagonal.getPiece().isOwnedByPlayer1() == player1)
-                            return GoBoardUtil.getBadShapeAux(adjacent2, player1);
-                    }  break;
-                case 3 :
-                    if (adjacent2.isOccupied() && diagonal.isOccupied())  {
-                        if (   adjacent2.getPiece().isOwnedByPlayer1() == player1
-                            && diagonal.getPiece().isOwnedByPlayer1() == player1)
-                            return GoBoardUtil.getBadShapeAux(adjacent1, player1);
-                    }  break;
-               default : assert false;
-
-            }
-        }
-        return 0;
     }
 
 
@@ -1131,38 +941,9 @@ public final class GoBoard extends TwoPlayerBoard
     }
 
     public String toString() {
-        StringBuffer buf = new StringBuffer((getNumRows()+2) * (getNumCols()+2));
+        return GoBoardUtil.toString(this);
 
-        buf.append("   ");
-        for ( int j = 1; j <= getNumCols(); j++ ) {
-            buf.append(j % 10);
-        }
-        buf.append(' ');
-        buf.append("\n  ");
-        for ( int j = 1; j <= getNumCols()+2; j++ ) {
-            buf.append('-');
-        }
-        buf.append('\n');
-
-        for ( int i = 1; i <= getNumRows(); i++ ) {
-            buf.append(i / 10);
-            buf.append(i % 10);
-            buf.append('|');
-            for ( int j = 1; j <= getNumCols(); j++ ) {
-                GoBoardPosition space = (GoBoardPosition) positions_[i][j];
-                if ( space.isOccupied() )     {
-                    buf.append(space.getPiece().isOwnedByPlayer1()?'X':'O');
-                }
-                else {
-                    buf.append(' ');
-                }
-            }
-            buf.append('|');
-            buf.append('\n');
-        }
-        return buf.toString();
     }
-
 
 
 

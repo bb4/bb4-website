@@ -128,7 +128,6 @@ public class TestGoBoard extends GoTestCase {
     }
 
 
-
     public void testFindOccupiedNbrs() {
         restore("whitebox/occupiedNbrs1");
         GoBoard board = (GoBoard)controller_.getBoard();
@@ -138,12 +137,10 @@ public class TestGoBoard extends GoTestCase {
         empties.add(board.getPosition(3, 4));
         empties.add(board.getPosition(4, 3));
         empties.add(board.getPosition(4, 4));
-        int numNbrs = board.findOccupiedNeighbors(empties).size();
+        int numNbrs = GoBoardUtil.findOccupiedNeighbors(empties, board).size();
         Assert.assertTrue("numNbrs="+numNbrs+" expected "+ 6, numNbrs == 6);
         //verifyOccupiedNbrs("whitebox/occupiedNbrs1", empties, 9);
     }
-
-
 
 
     public void testCausedAtari1() {
@@ -160,7 +157,7 @@ public class TestGoBoard extends GoTestCase {
         restore(file);
 
         GoBoard board = (GoBoard)controller_.getBoard();
-        int numNbrs = board.findOccupiedNeighbors(empties).size();
+        int numNbrs = GoBoardUtil.findOccupiedNeighbors(empties, board).size();
 
         Assert.assertTrue("numNbrs="+numNbrs+" expected "+ expectedNumNbrs, numNbrs == expectedNumNbrs);
     }
@@ -174,8 +171,6 @@ public class TestGoBoard extends GoTestCase {
         int numInAtari = m.causesAtari(board);
         Assert.assertTrue("numInAtri="+numInAtari+" expected="+12, numInAtari == 12);
     }
-
-
 
 
     public void testNumLiberties1() {
@@ -221,9 +216,8 @@ public class TestGoBoard extends GoTestCase {
 
         GoBoard board = (GoBoard)controller_.getBoard();
         GoBoardPosition pos = (GoBoardPosition)board.getPosition(row, col);
-        int badShapeScore = board.formsBadShape(pos);
+        int badShapeScore = GoBoardUtil.formsBadShape(pos, board);
         Assert.assertTrue("badShapeScore="+badShapeScore+" expected="+expected, badShapeScore == expected);
     }
-
 
 }
