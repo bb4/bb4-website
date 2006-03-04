@@ -19,7 +19,7 @@ import java.awt.*;
  *  @author Barry Becker
  */
 public class SetPanel extends TexturedPanel
-                                implements ActionListener
+                      implements ActionListener
 {
 
     // ui elements.
@@ -101,7 +101,6 @@ public class SetPanel extends TexturedPanel
         // the board viewer creates its own controller
         setGameViewer_ = new SetGameViewer();
 
-
         OutputWindow logWindow = new OutputWindow( GameContext.getLabel("LOG_OUTPUT"), null);
         GameContext.setLogger( new Log( logWindow ) );
 
@@ -112,7 +111,10 @@ public class SetPanel extends TexturedPanel
 
         JPanel viewerPanel = new JPanel();
         viewerPanel.setLayout(new BorderLayout());
-        viewerPanel.add( setGameViewer_, BorderLayout.CENTER );
+
+        JScrollPane scrollPane = new JScrollPane(setGameViewer_);
+
+        viewerPanel.add( scrollPane, BorderLayout.CENTER );
 
         mainPanel.setBorder( BorderFactory.createRaisedBevelBorder() );
         mainPanel.add( toolBar_, BorderLayout.NORTH );
@@ -216,8 +218,23 @@ public class SetPanel extends TexturedPanel
                 setGameViewer_.startNewGame();
             }
         }
-        else if ( source == toolBar_.getHelpButton() )
+        else if ( source == toolBar_.getAddButton()) {
+            setGameViewer_.addCard();
+        }
+        else if ( source == toolBar_.getRemoveButton()) {
+            setGameViewer_.removeCard();
+
+        }
+        else if ( source == toolBar_.getSolveButton()) {
+             JOptionPane.showMessageDialog(this, "Solution Requested");
+        }
+        else if ( source == toolBar_.getHelpButton() )    {
             showHelpDialog();
+        }
+
+        toolBar_.getRemoveButton().setEnabled(setGameViewer_.canRemoveCards());
+        toolBar_.getAddButton().setEnabled(setGameViewer_.hasCardsToAdd());
+        setGameViewer_.repaint();
     }
 
 }

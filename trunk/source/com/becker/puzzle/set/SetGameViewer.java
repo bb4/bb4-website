@@ -9,18 +9,17 @@ import java.text.*;
 import java.util.List;
 
 /**
- *  Shows the current cards in the Set Game.
+ *  Shows the current cards in the Set Game in a canvas.
  *
+ * @author Barry Becker
  */
 final class SetGameViewer extends JPanel
 {
 
-    private static final int INC = 10;
-
     private static final int LEFT_MARGIN = 10;
     private static final int TOP_MARGIN = 10;
 
-    private static final Color BACKGROUND_COLOR = new Color(180, 170, 200);
+    private static final Color BACKGROUND_COLOR = new Color(200, 200, 210);
     private static final float CARD_HEIGHT_RAT = 1.5f;
 
     private NumberFormat formatter_;
@@ -38,12 +37,39 @@ final class SetGameViewer extends JPanel
         formatter_.setMaximumFractionDigits(0);
     }
 
+    /*
+    public Dimension getPreferredSize() {
+        return new Dimension(150, 10000);
+    }*/
+
     public void startNewGame() {
+    }
+
+
+    public void addCard() {
+        if (hasCardsToAdd()) {
+            numCardsShown_++;
+        }
+    }
+
+    public void removeCard() {
+        if (canRemoveCards()) {
+            numCardsShown_--;
+        }
+    }
+
+    public boolean canRemoveCards() {
+        return (numCardsShown_ > 3);
+    }
+
+    public boolean hasCardsToAdd() {
+        return (numCardsShown_ < deck_.size() && numCardsShown_ < 20);
     }
 
     public int getCanvasWidth() {
         return getWidth() - 2 * LEFT_MARGIN;
     }
+
     public int getNumColumns() {
         float rat = (float) getCanvasWidth() / (getHeight() - 2 * TOP_MARGIN);
         //System.out.println("rat=" + rat);
@@ -63,7 +89,7 @@ final class SetGameViewer extends JPanel
             numColumns = 6;
         } else if (rat < 2.0) {
             numColumns = 7;
-        }else if (rat < 3.4) {
+        } else if (rat < 3.4) {
             numColumns = 10;
         }
         return numColumns;
