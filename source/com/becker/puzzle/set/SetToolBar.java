@@ -19,6 +19,7 @@ public class SetToolBar extends TexturedToolBar {
     private GradientButton newGameButton_;
 
     private GradientButton addButton_;
+    private GradientButton removeButton_;
     private GradientButton solveButton_;
     private GradientButton helpButton_;
 
@@ -26,6 +27,7 @@ public class SetToolBar extends TexturedToolBar {
     private static final String DIR = CORE_IMAGE_PATH;
     private static final ImageIcon newGameImage = GUIUtil.getIcon(DIR+"newGame.gif");
     private static final ImageIcon addImage = GUIUtil.getIcon(DIR+"plus.gif");
+    private static final ImageIcon removeImage = GUIUtil.getIcon(DIR+"minus.gif");
     private static final ImageIcon solveImage = GUIUtil.getIcon(DIR+"greenFlag.gif");
     private static final ImageIcon helpImage = GUIUtil.getIcon(DIR+"help.gif");
 
@@ -42,6 +44,7 @@ public class SetToolBar extends TexturedToolBar {
                                                       newGameImage );
 
         addButton_ = createToolBarButton( "Add Card", "Add another card to those shown", addImage );
+        removeButton_ = createToolBarButton( "Remove Card", "Remove a card from those shown", addImage );
         solveButton_ = createToolBarButton( "Show Sets",
                                             "Have the computer determine all the sets present and show them in a separate window.", solveImage );
         helpButton_ = createToolBarButton( GameContext.getLabel("HELP_BTN"),
@@ -49,6 +52,7 @@ public class SetToolBar extends TexturedToolBar {
 
         add( newGameButton_ );
         add( addButton_ );
+        add( removeButton_ );
         add( solveButton_ );
         add( javax.swing.Box.createHorizontalGlue() );
         add( helpButton_ );
@@ -56,8 +60,9 @@ public class SetToolBar extends TexturedToolBar {
 
 
     public JButton getNewGameButton() { return newGameButton_; }
-    public JButton getUndoButton() { return addButton_; }
-    public JButton getRedoButton() { return solveButton_; }
+    public JButton getAddButton() { return addButton_; }
+    public JButton getRemoveButton() { return removeButton_; }
+    public JButton getSolveButton() { return solveButton_; }
     public JButton getHelpButton() { return helpButton_; }
 
 }
