@@ -17,9 +17,11 @@ public final class CardRenderer {
     protected static final Font BASE_FONT = new Font( "Sans-serif", Font.PLAIN, 11 );
     private static final Color BACKGROUND_COLOR = new Color(250, 250, 255);
 
-    private static final Color HIGHLIGHT_COLOR = new Color(255, 250, 55);
-    private static final Color BORDER_COLOR = new Color(60, 60, 65);
-    private static final float MARGIN_RAT = 0.03f;
+    private static final Color BORDER_COLOR = new Color(45, 45, 55);
+    private static final Color HIGHLIGHTED_BORDER_COLOR = new Color(155, 155, 0);
+    private static final Color SELECTED_BORDER_COLOR = new Color(255, 255, 0);
+
+    private static final float MARGIN_RAT = 0.06f;
     private static final Stroke SHAPE_BORDER_STROKE = new BasicStroke(4.0f);
 
     private static final float SHAPE_SIZE_FRAC = 0.88f;
@@ -29,14 +31,14 @@ public final class CardRenderer {
     private static final float SHAPE_HEIGHT_FRAC = 0.25f;
 
     private enum ColorType {
-        SOLID, BORDER, HATCHED
+        SOLID, BORDER, HATCHED, HIGHLIGHT
     }
 
     private static final Color[][] symbolColors = {
-        //   solid                  border                   hatched
-        {new Color(255, 32, 1),  new Color(200, 5, 0),  new Color(255, 42, 22)},  // FIRST
-        {new Color(0, 250, 0),  new Color(0, 180, 0),  new Color(0, 243, 1)},     // SECOND
-        {new Color(85, 85, 255), new Color(0, 0, 210), new Color(75, 75, 255)}    // THIRD
+        //   solid                  border                 hatched                highlight
+        {new Color(255, 32, 1), new Color(200, 5, 0), new Color(255, 42, 22), new Color(255, 102, 12)},  // FIRST
+        {new Color(0, 250, 0), new Color(0, 180, 0), new Color(0, 243, 1), new Color(20, 252, 2)},     // SECOND
+        {new Color(85, 85, 255), new Color(0, 0, 210), new Color(75, 75, 255), new Color(35, 20, 255)}    // THIRD
     };
 
     // rounded edge
@@ -64,7 +66,7 @@ public final class CardRenderer {
 
     protected static Color getBorderCardColor(Card card)
     {
-        return getColorForValue(card.color(), ColorType.BORDER);
+        return getColorForValue(card.color(),  card.isHighlighted() ? ColorType.HIGHLIGHT: ColorType.BORDER);
     }
 
     protected static Paint getCardTexture(Card card)
@@ -137,7 +139,14 @@ public final class CardRenderer {
        g2.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
 
-       g2.setColor(BORDER_COLOR);
+       if (card.isSelected()) {
+           g2.setColor(SELECTED_BORDER_COLOR);
+       }
+       else if (card.isHighlighted())  {
+           g2.setColor(HIGHLIGHTED_BORDER_COLOR);
+       } else {
+           g2.setColor(BORDER_COLOR);
+       }
        g2.fillRoundRect(x + margin, y + margin, width - margin, height - margin, cardArc, cardArc);
        g2.setColor(BACKGROUND_COLOR);
        g2.fillRoundRect(x + 2*margin, y + 2*margin, width - 3 * margin, height - 3 * margin, cardArc, cardArc);
