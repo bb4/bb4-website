@@ -85,19 +85,4 @@ public class PokerPlayerTable extends PlayerTable
 
         return player;
     }
-
-
-    /**
-     * remove the selected rows from the table
-     */
-    public void removeSelectedRows()
-    {
-        int nSelected = table_.getSelectedRowCount();
-        int[] selectedRows = table_.getSelectedRows();
-        for (int i=nSelected-1; i>=0; i--) {
-            int selRow = selectedRows[i];
-            deletedRows_.add((Object[]) getModel().getDataVector().elementAt(selRow));
-            getModel().removeRow(selRow);
-        }
-    }
 }

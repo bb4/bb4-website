@@ -25,7 +25,7 @@ public abstract class GameInfoPanel extends TexturedPanel implements GameChanged
 
     protected static final Font SECTION_TITLE_FONT = new Font( "SansSerif", Font.BOLD, 11 );
     protected static final Font BOLD_FONT = new Font( "SansSerif", Font.BOLD, 12 );
-    protected static final int MIN_WIDTH = 200;
+    protected static final int DEFAULT_MIN_WIDTH = 200;
 
     /**
      * Constructor
@@ -37,14 +37,14 @@ public abstract class GameInfoPanel extends TexturedPanel implements GameChanged
 
         this.setBorder( BorderFactory.createLoweredBevelBorder() );
         this.setToolTipText( getTitleText() );
-        this.setPreferredSize( new Dimension( MIN_WIDTH, 1000 ) );
+        this.setPreferredSize( new Dimension( getMinWidth(), 1000 ) );
         this.setLayout( new BoxLayout( this, BoxLayout.Y_AXIS ) );
 
         createSubPanels();
 
         // this pushes everything to the top
         JPanel filler = createPanel();
-        filler.setPreferredSize(new Dimension( MIN_WIDTH, 1000));
+        filler.setPreferredSize(new Dimension( getMinWidth(), 1000));
         this.add( filler );
     }
 
@@ -63,6 +63,10 @@ public abstract class GameInfoPanel extends TexturedPanel implements GameChanged
             this.add( customPanel );
 
         this.add( createGeneralInfoPanel() );
+    }
+
+    protected int getMinWidth() {
+        return DEFAULT_MIN_WIDTH;
     }
 
     /**

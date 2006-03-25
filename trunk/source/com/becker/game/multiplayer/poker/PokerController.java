@@ -1,13 +1,12 @@
 package com.becker.game.multiplayer.poker;
 
+import com.becker.game.card.*;
 import com.becker.game.common.*;
-import com.becker.game.common.Move;
-import com.becker.game.multiplayer.poker.ui.PokerGameViewer;
-import com.becker.game.card.Card;
-import com.becker.optimization.ParameterArray;
+import com.becker.game.multiplayer.common.*;
+import com.becker.game.multiplayer.poker.ui.*;
+import com.becker.optimization.*;
 
 import java.util.*;
-import java.util.List;
 
 /**
  * Defines everything the computer needs to know to play Poker.
@@ -109,7 +108,7 @@ public class PokerController extends GameController
             PokerPlayer[] gplayers = (PokerPlayer[])players_;
             //PokerHand hand = new PokerHand(null);
             players_[0] = PokerPlayer.createPokerPlayer("Player 1",
-                                       100, PokerPlayer.getNewPlayerColor(gplayers), true);
+                                       100, MultiGamePlayer.getNewPlayerColor(gplayers), true);
 
 
             players_[1] = PokerPlayer.createPokerPlayer("Player 2",

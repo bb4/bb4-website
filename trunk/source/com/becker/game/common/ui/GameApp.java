@@ -15,6 +15,8 @@ import java.util.*;
  * It contains a GamePanel corresponding to the game you have selected to play.
  * If you specify a game class as an argument, then you do not get a menu of all possible games to play.
  *
+ * @@ use plugin architecutre where a file gives the names of the games and their associated classes.
+ *
  * @see com.becker.game.common.ui.GamePanel
  * @author Barry Becker
  */
@@ -70,6 +72,8 @@ public class GameApp implements ActionListener
     private static final String GO_LABEL = GameContext.getLabel("GO");
     private static final String GALACTIC_LABEL = GameContext.getLabel("GALACTIC");
     private static final String POKER_LABEL = GameContext.getLabel("POKER");
+    private static final String SET_LABEL = GameContext.getLabel("SET");
+
     /**
      * must do this initialization after we know the locale
      * (in other words it cannot be done statically)
@@ -89,6 +93,7 @@ public class GameApp implements ActionListener
         hmGameClasses_.put("go", "com.becker.game.twoplayer.go.ui.GoPanel");
         hmGameClasses_.put("galactic", "com.becker.game.multiplayer.galactic.ui.GalacticPanel");
         hmGameClasses_.put("poker", "com.becker.game.multiplayer.poker.ui.PokerPanel");
+        hmGameClasses_.put("set", "com.becker.game.multiplayer.set.ui.SetPanel");
 
         hmGames_.put(CHECKERS_LABEL, "checkers");
         hmGames_.put(CHESS_LABEL, "chess");
@@ -97,6 +102,7 @@ public class GameApp implements ActionListener
         hmGames_.put(GO_LABEL, "go");
         hmGames_.put(GALACTIC_LABEL, "galactic");
         hmGames_.put(POKER_LABEL, "poker");
+        hmGames_.put(SET_LABEL, "set");
     }
 
     /**
@@ -105,6 +111,7 @@ public class GameApp implements ActionListener
      */
     private void showGame(String gameName)
     {
+        System.out.println("gameName===="+gameName);
         String className = hmGameClasses_.get(gameName);
         Class gameClass = Util.loadClass(className);
 

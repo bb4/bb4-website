@@ -1,9 +1,8 @@
 package com.becker.ui;
 
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.*;
+import javax.swing.table.*;
 import java.awt.*;
-import java.awt.event.*;
 
 /**
  * ColorCellRenderer renders a cell in a table that reperesents a color
@@ -25,7 +24,7 @@ public class ColorCellRenderer extends DefaultTableCellRenderer
         // we know the value is a Color
         Color color = (Color)value;
         setBackground(color);
+
         return this;
     }
-
 }

@@ -1,19 +1,17 @@
 package com.becker.game.multiplayer.poker;
 
 import com.becker.game.common.*;
-import com.becker.ui.GUIUtil;
+import com.becker.game.multiplayer.common.*;
 
-import java.util.*;
-import java.util.List;
 import java.awt.*;
-import java.text.MessageFormat;
+import java.text.*;
 
 /**
  * Represents a Player in a poker game
  *
  * @author Barry Becker
  */
-public abstract class PokerPlayer extends Player
+public abstract class PokerPlayer extends MultiGamePlayer
 {
     // this player's home planet. (like earth is for humans)
     private PokerHand hand_;
@@ -31,8 +29,6 @@ public abstract class PokerPlayer extends Player
 
     public static final int DEFAULT_CASH = 100;
 
-    private static final float SATURATION = .8f;
-    private static final float BRIGHTNESS = .999f;
 
     protected PokerPlayer(String name,  int money, Color color, boolean isHuman)
     {
@@ -89,7 +85,7 @@ public abstract class PokerPlayer extends Player
     public void setFold(boolean folded) {
         hasFolded_ = folded;
     }
-    
+
     public boolean hasFolded() {
         return hasFolded_;
     }
@@ -157,48 +153,6 @@ public abstract class PokerPlayer extends Player
         cash_ += controller.getPotValue();
         controller.setPotValue(0);
     }
-
-    /**
-     * try to give a unique color based on the name
-     * and knowing what the current player colors are.
-     */
-    public static final Color getNewPlayerColor(PokerPlayer[] players)
-    {
-
-        boolean uniqueEnough = false;
-        float candidateHue;
-
-        do {
-            // keep trying hues until we find one that is not within tolerance distance from another
-            candidateHue = (float)Math.random();
-            uniqueEnough = isHueUniqueEnough(candidateHue, players);
-        } while (!uniqueEnough);
-
-        return Color.getHSBColor(candidateHue, SATURATION, BRIGHTNESS);
-    }
-
-    /**
-     * @@ this method could use some improvment
-     * @param hue to check for uniqueness compared to other players.
-     * @param players
-     * @return
-     */
-    private static boolean isHueUniqueEnough(float hue, PokerPlayer[] players)
-    {
-        int ct=0;
-        float tolerance = 1.0f/(1.0f+1.8f*players.length);
-        while ( ct < players.length) {
-            if (players[ct] == null)
-                ct++;
-            else if (Math.abs(GUIUtil.getColorHue(players[ct].getColor()) - hue) > tolerance)
-                ct++;
-            else break;
-        }
-        if (ct == players.length)
-            return true;
-        return false;
-    }
-
 
     public String toString()
     {

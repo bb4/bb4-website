@@ -1,13 +1,9 @@
 package com.becker.game.multiplayer.galactic.ui;
 
 import com.becker.game.common.*;
+import com.becker.game.multiplayer.common.ui.*;
 import com.becker.game.multiplayer.galactic.*;
-import com.becker.game.multiplayer.common.ui.TallyDialog;
-import com.becker.game.multiplayer.common.ui.SummaryTable;
-import com.becker.ui.*;
 
-import javax.swing.*;
-import java.awt.event.*;
 import java.awt.*;
 import java.util.List;
 
@@ -29,7 +25,7 @@ final class GalacticTallyDialog extends TallyDialog
      * @param parent frame to display relative to
      * @param controller
      */
-    public GalacticTallyDialog( Frame parent, GalacticController controller )
+    GalacticTallyDialog( Frame parent, GalacticController controller )
     {
         super( parent, controller );
     }
@@ -42,10 +38,10 @@ final class GalacticTallyDialog extends TallyDialog
     {
         String winner ="nobody";
         double maxCriteria = -1.0;
-        for (int i=0; i<players.length; i++) {
-            GalacticPlayer player = (GalacticPlayer)players[i];
+        for (final Player newVar : players) {
+            GalacticPlayer player = (GalacticPlayer) newVar;
             List planets = Galaxy.getPlanets(player);
-            double criteria = planets.size() + player.getTotalNumShips()/1000000000000.0;
+            double criteria = planets.size() + (double) player.getTotalNumShips() / 100000000000.0;
 
             if (criteria > maxCriteria) {
                 maxCriteria = criteria;

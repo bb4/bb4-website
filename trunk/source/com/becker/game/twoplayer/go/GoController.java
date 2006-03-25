@@ -854,6 +854,7 @@ public final class GoController extends TwoPlayerController
             int i,j;
             int nCols = board.getNumCols();
             int nRows = board.getNumRows();
+            assert (nRows == nCols) : " rows and cols must be the same in go";
 
             board.determineCandidateMoves();
 

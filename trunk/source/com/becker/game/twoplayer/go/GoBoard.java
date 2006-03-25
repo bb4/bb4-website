@@ -115,7 +115,7 @@ public final class GoBoard extends TwoPlayerBoard
     public void setSize( int numRows, int numCols )
     {
         numRows_ = numRows;
-        numCols_ = numCols;
+        numCols_ = numRows; // intentionally same as numRows
         if ( numRows_ != numCols_ )  {
             GameContext.log(0,  "The board must be square and have an odd edge length" );
             if (numRows < numCols)

@@ -125,6 +125,7 @@ public abstract class GameBoardViewer
     {
        return controller_;
     }
+
     /**
      * set an optional progress bar for showing progress as the computer thinks about its next move.
      */

@@ -1,16 +1,13 @@
 package com.becker.game.multiplayer.galactic.ui;
 
-import ca.dj.jigo.sgf.tokens.MoveToken;
+import ca.dj.jigo.sgf.tokens.*;
 import com.becker.game.common.*;
-import com.becker.game.common.ui.GameBoardViewer;
-import com.becker.game.common.ui.GameChangedEvent;
+import com.becker.game.common.ui.*;
 import com.becker.game.multiplayer.galactic.*;
-import com.becker.game.common.Move;
 
-import javax.swing.*;
-import java.awt.event.MouseEvent;
 import java.awt.*;
-import java.awt.geom.Point2D;
+import java.awt.event.*;
+import java.awt.geom.*;
 import java.util.*;
 import java.util.List;
 

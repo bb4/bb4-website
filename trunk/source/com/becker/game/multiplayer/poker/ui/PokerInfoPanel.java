@@ -2,21 +2,15 @@ package com.becker.game.multiplayer.poker.ui;
 
 import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
-import com.becker.game.multiplayer.poker.PokerController;
-import com.becker.game.multiplayer.poker.PokerPlayer;
-import com.becker.game.multiplayer.poker.PokerTable;
-import com.becker.ui.GradientButton;
-import com.becker.ui.GUIUtil;
-import com.becker.ui.DiscreteColorLegend;
+import com.becker.game.multiplayer.poker.*;
+import com.becker.ui.*;
 
-import javax.swing.*;
 import javax.swing.Box;
-import javax.swing.border.TitledBorder;
-import javax.swing.border.Border;
-import java.text.MessageFormat;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.*;
+import javax.swing.border.*;
 import java.awt.*;
+import java.awt.event.*;
+import java.text.*;
 
 
 /**
@@ -36,7 +30,7 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
     /**
      * Constructor
      */
-    public PokerInfoPanel( GameController controller )
+    PokerInfoPanel( GameController controller )
     {
         super(controller);
     }
@@ -191,7 +185,7 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
         Player player = controller_.getCurrentPlayer();
 
         String playerName = player.getName();
-        playerLabel_.setText(" " + playerName + " ");
+        playerLabel_.setText(' ' + playerName + ' ');
 
         Color pColor = player.getColor();
 

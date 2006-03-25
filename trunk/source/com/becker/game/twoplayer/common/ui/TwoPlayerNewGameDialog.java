@@ -1,21 +1,15 @@
 package com.becker.game.twoplayer.common.ui;
 
-import com.becker.game.common.GameContext;
-import com.becker.game.common.GameWeights;
-import com.becker.game.common.Player;
-import com.becker.game.common.ui.GameBoardViewer;
-import com.becker.game.common.ui.NewGameDialog;
-import com.becker.game.twoplayer.common.TwoPlayerController;
-import com.becker.optimization.ParameterArray;
-import com.becker.ui.GUIUtil;
-import com.becker.ui.GradientButton;
-import com.becker.ui.TextFileFilter;
+import com.becker.game.common.*;
+import com.becker.game.common.ui.*;
+import com.becker.game.twoplayer.common.*;
+import com.becker.optimization.*;
+import com.becker.ui.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
+import java.awt.event.*;
+import java.io.*;
 
 /**
  * Use this modal dialog to initialize the required game parameters that
@@ -43,7 +37,7 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
 
 
     // constructor
-    public TwoPlayerNewGameDialog( JFrame parent, GameBoardViewer viewer )
+    public TwoPlayerNewGameDialog( JFrame parent, ViewerCallbackInterface viewer )
     {
         super( parent, viewer );
         gameWeights_ = get2PlayerController().getComputerWeights();  // gets the actual weights
