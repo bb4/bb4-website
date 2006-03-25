@@ -1,7 +1,6 @@
 package com.becker.game.twoplayer.go.ui;
 
 import com.becker.game.common.*;
-import com.becker.game.common.ui.*;
 import com.becker.game.twoplayer.common.ui.*;
 import com.becker.game.twoplayer.go.*;
 import com.becker.ui.*;
@@ -19,7 +18,7 @@ final class GoNewGameDialog extends TwoPlayerNewGameDialog implements ActionList
     private static final String WHITE_IS =GameContext.getLabel("WHITE_IS");
 
     // constructor
-    GoNewGameDialog( JFrame parent, GameBoardViewer viewer )
+    GoNewGameDialog( JFrame parent, ViewerCallbackInterface viewer )
     {
         super( parent, viewer );
     }

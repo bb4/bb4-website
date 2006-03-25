@@ -1,7 +1,6 @@
 package com.becker.game.twoplayer.go.ui;
 
-import com.becker.game.common.GameContext;
-import com.becker.game.common.GameController;
+import com.becker.game.common.*;
 import com.becker.game.common.ui.GameBoardViewer;
 import com.becker.game.common.ui.GameInfoPanel;
 import com.becker.game.common.ui.GameToolBar;
@@ -44,7 +43,7 @@ public final class GoPanel extends TwoPlayerPanel
         return new GoBoardViewer();
     }
 
-    protected NewGameDialog createNewGameDialog( JFrame parent, GameBoardViewer viewer )
+    protected NewGameDialog createNewGameDialog( JFrame parent, ViewerCallbackInterface viewer )
     {
         return new GoNewGameDialog( parent, viewer );
     }

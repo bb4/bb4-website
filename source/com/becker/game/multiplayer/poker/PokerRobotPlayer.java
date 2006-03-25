@@ -1,8 +1,6 @@
 package com.becker.game.multiplayer.poker;
 
 
-import java.util.*;
-import java.util.List;
 import java.awt.*;
 
 /**
@@ -15,9 +13,7 @@ import java.awt.*;
 public abstract class PokerRobotPlayer extends PokerPlayer
 {
 
-    private static final int CRAZY_ROBOT = 0;
-    private static final int METHODICAL_ROBOT = 1;
-    private static int NUM_ROBOT_TYPES = 2;
+    public enum RobotType { CRAZY_ROBOT, METHODICAL_ROBOT };
 
 
     public PokerRobotPlayer(String name, int money, Color color)
@@ -46,8 +42,8 @@ public abstract class PokerRobotPlayer extends PokerPlayer
      */
     public static PokerRobotPlayer getRandomRobotPlayer(String name, int money, Color color)
     {
-        int r = (int)(NUM_ROBOT_TYPES * Math.random());
-        return getRobotPlayer(r, name, money, color);
+        int r = (int)(RobotType.values().length * Math.random());
+        return getRobotPlayer(RobotType.values()[r], name, money, color);
     }
 
 
@@ -58,22 +54,18 @@ public abstract class PokerRobotPlayer extends PokerPlayer
      */
     public static PokerRobotPlayer getSequencedRobotPlayer(String name, int money, Color color)
     {
-        int r = seq_++ % NUM_ROBOT_TYPES;
-        return getRobotPlayer(r, name, money, color);
+        int r = seq_++ % RobotType.values().length;
+        return getRobotPlayer(RobotType.values()[r], name, money, color);
     }
 
 
-    private static PokerRobotPlayer getRobotPlayer(int type, String name, int money, Color color)
+    private static PokerRobotPlayer getRobotPlayer(RobotType type, String name, int money, Color color)
     {
-
          switch (type) {
             case CRAZY_ROBOT: return new CrazyRobotPlayer(name, money, color);
             case METHODICAL_ROBOT: return new MethodicalRobotPlayer(name, money, color);
         }
-        assert (false):"bad type="+type;
-
         return null;
-
     }
 
 
@@ -84,8 +76,8 @@ public abstract class PokerRobotPlayer extends PokerPlayer
 
     protected boolean allOthersFolded(PokerController pc) {
         PokerPlayer[] players = (PokerPlayer[]) pc.getPlayers();
-        for (int i=0; i<players.length; i++) {
-            if (!players[i].hasFolded() && (players[i] != this))  {
+        for (final PokerPlayer newVar : players) {
+            if (!newVar.hasFolded() && (newVar != this)) {
                 return false;
             }
         }

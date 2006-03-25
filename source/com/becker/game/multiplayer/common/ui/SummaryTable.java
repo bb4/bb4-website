@@ -4,13 +4,13 @@ import com.becker.game.common.*;
 import com.becker.ui.*;
 
 import javax.swing.*;
+import javax.swing.event.*;
 import javax.swing.table.*;
 
 
 /**
  * Shows a list of th remaining players stats at the end of the game.
  * None of the cells are editable.
- * @see com.becker.game.multiplayer.galactic.GalacticPlayer
  *
  * @author Barry Becker
  */
@@ -27,6 +27,7 @@ public abstract class SummaryTable
 
 
     protected String[] columnNames_;
+
     /**
      * constructor
      * @param players to initializet the rows in the table with.
@@ -35,8 +36,7 @@ public abstract class SummaryTable
     {
         initializeTable(columnNames);
 
-        for (int i=0; i<players.length; i++)  {
-            Player p = players[i];
+        for (Player p : players) {
             addRow(p);
         }
     }
@@ -49,12 +49,24 @@ public abstract class SummaryTable
 
         TableColumn colColumn = table_.getColumn(COLOR);
         colColumn.setCellRenderer(new ColorCellRenderer());
+        colColumn.setCellEditor(new ColorCellEditor(GameContext.getLabel("SELECT_PLAYER_COLOR")));
+        colColumn.setPreferredWidth(25);
+        colColumn.setWidth(20);
+        colColumn.setMaxWidth(25);
+
+        TableColumn nameColumn = table_.getColumn(NAME);
+        nameColumn.setPreferredWidth(100);
     }
 
 
     public JTable getTable()
     {
         return table_;
+    }
+
+    public void addListSelectionListener(ListSelectionListener l)
+    {
+        table_.getSelectionModel().addListSelectionListener(l);
     }
 
 

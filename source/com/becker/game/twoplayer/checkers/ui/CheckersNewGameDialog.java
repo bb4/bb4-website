@@ -1,11 +1,10 @@
 package com.becker.game.twoplayer.checkers.ui;
 
-import com.becker.game.common.GameContext;
-import com.becker.game.common.ui.*;
-import com.becker.game.twoplayer.common.ui.TwoPlayerNewGameDialog;
+import com.becker.game.common.*;
+import com.becker.game.twoplayer.common.ui.*;
 
 import javax.swing.*;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 /**
  *  Any special options that are needed for Checkers
@@ -16,7 +15,7 @@ public class CheckersNewGameDialog extends TwoPlayerNewGameDialog implements Act
 {
 
     // constructor
-    public CheckersNewGameDialog( JFrame parent, GameBoardViewer viewer )
+    public CheckersNewGameDialog( JFrame parent, ViewerCallbackInterface viewer )
     {
         super( parent, viewer );
     }

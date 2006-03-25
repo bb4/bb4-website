@@ -24,10 +24,10 @@ public abstract class NewGameDialog extends OptionsDialog implements ActionListe
     // contains the two tabs : options for creating a new game, or loading a saved game
     protected final JTabbedPane tabbedPanel_ = new JTabbedPane();
 
-    protected JPanel playerPanel_ = null;
-    protected JPanel boardParamPanel_ = null;
-    protected JPanel customPanel_ = null;
-    protected JPanel loadFilePanel_ = null;
+    protected JPanel playerPanel_;
+    protected JPanel boardParamPanel_;
+    protected JPanel customPanel_ ;
+    protected JPanel loadFilePanel_;
 
     protected GradientButton openFileButton_;
 
@@ -39,15 +39,14 @@ public abstract class NewGameDialog extends OptionsDialog implements ActionListe
 
     // the options get set directly on the game controller and viewer that are passed in
     protected final Board board_;
-    protected final GameBoardViewer viewer_;
+    protected final ViewerCallbackInterface viewer_;
 
     // constructor
-    public NewGameDialog( JFrame parent, GameBoardViewer viewer )
+    public NewGameDialog( JFrame parent, ViewerCallbackInterface viewer )
     {
         super( parent );
         controller_ = viewer.getController();
         board_ = controller_.getBoard();
-        assert (board_!=null);
         viewer_ = viewer;
     }
 
@@ -88,7 +87,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ActionListe
             mainOptionsPanel.add( playerPanel_ );
         if (boardParamPanel_ != null)
             mainOptionsPanel.add( boardParamPanel_ );
-        if ( customPanel_ != null )
+        if (customPanel_ != null )
             mainOptionsPanel.add( customPanel_ );
 
     }
@@ -144,14 +143,15 @@ public abstract class NewGameDialog extends OptionsDialog implements ActionListe
         label.setAlignmentX( Component.LEFT_ALIGNMENT );
         p.add( label );
 
-        assert (board_!=null);
-        rowSizeField_ = new NumberInput(GameContext.getLabel("NUMBER_OF_ROWS"), board_.getNumRows());
-        colSizeField_ = new NumberInput( GameContext.getLabel("NUMBER_OF_COLS"), board_.getNumCols());
+        if (board_!=null) {
+            rowSizeField_ = new NumberInput(GameContext.getLabel("NUMBER_OF_ROWS"), board_.getNumRows());
+            colSizeField_ = new NumberInput( GameContext.getLabel("NUMBER_OF_COLS"), board_.getNumCols());
 
-        rowSizeField_.setAlignmentX( Component.LEFT_ALIGNMENT );
-        colSizeField_.setAlignmentX( Component.LEFT_ALIGNMENT );
-        p.add( rowSizeField_ );
-        p.add( colSizeField_ );
+            rowSizeField_.setAlignmentX( Component.LEFT_ALIGNMENT );
+            colSizeField_.setAlignmentX( Component.LEFT_ALIGNMENT );
+            p.add( rowSizeField_ );
+            p.add( colSizeField_ );
+        }
 
         // add a custom section if desired (override createCustomBoardConfigPanel in derived class)
         JPanel customConfigPanel = createCustomBoardConfigPanel();
@@ -191,7 +191,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ActionListe
 
     protected void ok()
     {
-        if (boardParamPanel_ != null) {
+        if (boardParamPanel_ != null && board_!= null) {
             board_.setSize( rowSizeField_.getIntValue(), colSizeField_.getIntValue() );
         }
 

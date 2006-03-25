@@ -13,5 +13,10 @@ public interface ViewerCallbackInterface
     /**
      * return the game to its original state.
      */
-   void reset();
+    void reset();
+
+   /**
+     * @return our game controller
+     */
+    GameController getController();
 }

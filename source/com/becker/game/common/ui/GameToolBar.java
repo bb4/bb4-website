@@ -23,7 +23,7 @@ public class GameToolBar extends TexturedToolBar {
     //protected GradientButton resignButton_;
     private GradientButton helpButton_;
 
-    private static final String DIR = CORE_IMAGE_PATH;
+    protected static final String DIR = CORE_IMAGE_PATH;
     private static final ImageIcon newGameImage = GUIUtil.getIcon(DIR+"newGame.gif");
     private static final ImageIcon helpImage = GUIUtil.getIcon(DIR+"help.gif");
     private static final ImageIcon undoImage = GUIUtil.getIcon(DIR+"undo_on.gif");
@@ -54,8 +54,10 @@ public class GameToolBar extends TexturedToolBar {
                                            GameContext.getLabel("HELP_BTN_TIP"), helpImage );
 
         add( newGameButton_ );
-        add( undoButton_ );
-        add( redoButton_ );
+        if (hasUndoRedo()) {
+            add( undoButton_ );
+            add( redoButton_ );
+        }
         addCustomToolBarButtons();
         add( optionsButton_ );
         add( Box.createHorizontalGlue() );
@@ -74,5 +76,9 @@ public class GameToolBar extends TexturedToolBar {
     public JButton getOptionsButton() { return optionsButton_; }
     //public JButton getResignButton() { return resignButton_; }
     public JButton getHelpButton() { return helpButton_; }
+
+    protected boolean hasUndoRedo() {
+        return true;
+    }
 
 }

@@ -1,11 +1,10 @@
 package com.becker.game.twoplayer.chess.ui;
 
-import com.becker.game.common.GameContext;
-import com.becker.game.common.ui.*;
-import com.becker.game.twoplayer.common.ui.TwoPlayerNewGameDialog;
+import com.becker.game.common.*;
+import com.becker.game.twoplayer.common.ui.*;
 
 import javax.swing.*;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 /**
  *  Any special options that are needed for Chess
@@ -16,7 +15,7 @@ public class ChessNewGameDialog extends TwoPlayerNewGameDialog implements Action
 {
 
     // constructor
-    public ChessNewGameDialog( JFrame parent, GameBoardViewer viewer )
+    public ChessNewGameDialog( JFrame parent, ViewerCallbackInterface viewer )
     {
         super( parent, viewer );
     }

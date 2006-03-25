@@ -33,7 +33,7 @@ public class PokerPanel extends GamePanel
         return new PokerGameViewer();
     }
 
-    protected NewGameDialog createNewGameDialog( JFrame parent, GameBoardViewer viewer )
+    protected NewGameDialog createNewGameDialog( JFrame parent, ViewerCallbackInterface viewer )
     {
         return new PokerNewGameDialog( parent, viewer );
     }

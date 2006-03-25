@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.blockade.ui;
 
-import com.becker.game.common.GameContext;
+import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
 import com.becker.game.twoplayer.common.ui.TwoPlayerNewGameDialog;
 
@@ -16,7 +16,7 @@ class BlockadeNewGameDialog extends TwoPlayerNewGameDialog implements ActionList
 {
 
     // constructor
-    public BlockadeNewGameDialog( JFrame parent, GameBoardViewer viewer )
+    public BlockadeNewGameDialog( JFrame parent, ViewerCallbackInterface viewer )
     {
         super( parent, viewer );
     }

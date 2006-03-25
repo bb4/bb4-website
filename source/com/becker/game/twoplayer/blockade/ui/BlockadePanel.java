@@ -33,7 +33,7 @@ public class BlockadePanel extends TwoPlayerPanel
         return new BlockadeBoardViewer();
     }
 
-    protected NewGameDialog createNewGameDialog( JFrame parent, GameBoardViewer viewer )
+    protected NewGameDialog createNewGameDialog( JFrame parent, ViewerCallbackInterface viewer )
     {
         return new BlockadeNewGameDialog( parent, viewer );
     }

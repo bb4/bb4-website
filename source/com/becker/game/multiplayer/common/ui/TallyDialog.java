@@ -4,18 +4,13 @@ import com.becker.game.common.*;
 import com.becker.ui.*;
 
 import javax.swing.*;
-import java.awt.event.*;
 import java.awt.*;
-import java.util.List;
-
-
+import java.awt.event.*;
 
 /**
  * Show a summary of the final results.
- * We will show how many planets and how many ships each remaining player has.
- * The winner is the player with the most planets.
- * If there are more than one player with the same number of planets,
- * then the number of ships will be used to break ties.
+ * We will show how stats about each player.
+ * The winner is determined by some metric applied to these stats.
  *
  * @author Barry Becker
  */
@@ -40,12 +35,9 @@ public abstract class TallyDialog extends OptionsDialog
         super( parent );
         controller_ = controller;
 
-
         enableEvents( AWTEvent.WINDOW_EVENT_MASK );
         try {
             initUI();
-        } catch (Exception e) {
-            e.printStackTrace();
         } catch (OutOfMemoryError oom) {
             GameContext.log( 0, "we ran out of memory!" );
             GameContext.log( 0, GUIUtil.getStackTrace( oom ) );
@@ -71,7 +63,8 @@ public abstract class TallyDialog extends OptionsDialog
 
         // show a label at the top with who the winner is
         JLabel winnerLabel = new JLabel();
-        winnerLabel.setText("<html>"+GameContext.getLabel("GAME_OVER")+"<br>"+GameContext.getLabel("WINNER_IS")+"<br>"+winningPlayer+"</html>");
+        winnerLabel.setText("<html>" + GameContext.getLabel("GAME_OVER") + "<br>"
+                            + GameContext.getLabel("WINNER_IS")+"<br>" + winningPlayer + "</html>");
         winnerLabel.setBorder(BorderFactory.createEmptyBorder(6,6,6,6));
         mainPanel_.add(winnerLabel, BorderLayout.NORTH);
 
