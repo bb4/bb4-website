@@ -113,7 +113,7 @@ public class PokerController extends GameController
 
             players_[1] = PokerPlayer.createPokerPlayer("Player 2",
                                        100, PokerPlayer.getNewPlayerColor(gplayers), false);
-            players_[1].setName(players_[1].getName()+"("+((PokerRobotPlayer)players_[1]).getType()+")");
+            players_[1].setName(players_[1].getName()+'('+((PokerRobotPlayer)players_[1]).getType()+')');
 
         }
 
@@ -373,16 +373,6 @@ public class PokerController extends GameController
         return false;
     }
 
-    /*
-    private Player getFirstNonFoldedPlayer() {
-        PokerPlayer[] players = (PokerPlayer[])getPlayers();
-        int i = startingPlayerIndex_;
-        int numPlayers = getNumPlayers();
-        while (players[(i % numPlayers)].hasFolded())
-            i++;
-        return players[i % numPlayers];
-    }*/
-
     /**
      *
      * @return the player with the best poker hand
@@ -440,14 +430,6 @@ public class PokerController extends GameController
     }
 
     /**
-     * @return  the players currently playing the game
-     */
-    public Player[] getPlayers()
-    {
-        return players_;
-    }
-
-    /**
      * @param players  the players currently playing the game
      */
     public void setPlayers( Player[] players )
@@ -456,17 +438,6 @@ public class PokerController extends GameController
         // deal cards to the players
         dealCardsToPlayers(5);
     }
-
-
-    /**
-     * @return index of current player that is to give orders
-     */
-    public int getCurrentPlayerIndex()
-    {
-        return currentPlayerIndex_;
-    }
-
-
 
     /**
      *  Statically evaluate the board position

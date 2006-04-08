@@ -437,6 +437,7 @@ public final class GoBoard extends TwoPlayerBoard
                    if (forPlayer1 && !pos.getPiece().isOwnedByPlayer1() && pos.getGroup().getRelativeHealth() >= 0) {
                        territoryEstimate += val;
                    }
+                   // Getting npe here
                    else if (!forPlayer1 && pos.getPiece().isOwnedByPlayer1() && pos.getGroup().getRelativeHealth() <= 0)  {
                        territoryEstimate -= val;
                    }
