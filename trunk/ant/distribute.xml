@@ -53,6 +53,16 @@
       <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/sound.jar"/>
       <delete dir="${stagingDir}/com"/>
 
+      <!-- copy the class files that are needed for simulation programs . Produces simulation.jar-->
+      <copy todir="${stagingDir}">
+        <fileset dir="${classesDir}">
+          <include name="com/becker/simulation/common/*.class"/>
+        </fileset>
+        <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
+      </copy>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/simulation.jar"/>
+      <delete dir="${stagingDir}/com"/>
+
       <!-- copy just the core class files that are needed for all the games. Produces gameCommon.jar -->
       <copy todir="${stagingDir}">
         <fileset dir="${classesDir}">
@@ -220,6 +230,28 @@
       <sleep seconds="1" />
       <delete dir="${stagingDir}/com"/>
 
+      <!-- copy the class files that are needed for galactic empire deployment -->
+      <copy todir="${stagingDir}">
+        <fileset dir="${classesDir}">
+          <include name="com/becker/game/multiplayer/set/*.class"/>
+          <include name="com/becker/game/multiplayer/set/ui/*.class"/>
+          <include name="com/becker/game/multiplayer/common/*.class"/>
+          <include name="com/becker/game/multiplayer/common/ui/*.class"/>
+        </fileset>
+        <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
+      </copy>
+      <!--antcall target="copyResources">
+        <param name="path" value="game/multiplayer/set/ui/images"/>
+        <param name="pattern" value="*.png"/>
+      </antcall -->
+      <antcall target="copyResources">
+        <param name="path" value="game/multiplayer/set/resources"/>
+        <param name="pattern" value="*.properties"/>
+      </antcall>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/set.jar"/>
+      <sleep seconds="1" />
+      <delete dir="${stagingDir}/com"/>
+
 
       <!-- copy the class files that are needed for poker game deployment -->
       <copy todir="${stagingDir}">
@@ -261,11 +293,21 @@
       <!-- copy the class files that are needed for snake deployment -->
       <copy todir="${stagingDir}">
         <fileset dir="${classesDir}">
-          <include name="com/becker/snake/*.class"/>
+          <include name="com/becker/simulation/snake/*.class"/>
         </fileset>
         <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve directory hierarchy -->
       </copy>
       <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/snake.jar"/>
+      <delete dir="${stagingDir}/com"/>
+
+      <!-- copy the class files that are needed for trebuchet deployment -->
+      <copy todir="${stagingDir}">
+        <fileset dir="${classesDir}">
+          <include name="com/becker/simulation/trebuchet/*.class"/>
+        </fileset>
+        <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve directory hierarchy -->
+      </copy>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/trebuchet.jar"/>
       <delete dir="${stagingDir}/com"/>
 
       <!-- copy the class files that are needed for spirograph deployment -->

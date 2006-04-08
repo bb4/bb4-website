@@ -4,7 +4,7 @@
   </description>
 
   <!-- enable or disable assertions when runnning. Should disable before formally releasing a new version. -->
-  <property name="assertionsFlag" value="-disableassertions"/>
+  <property name="assertionsFlag" value="-enableassertions"/>
   <!-- place where compiled classes go. images and resources also get copied here -->
   <property name="classesDir" value="../classes"/>
   <!-- place where all original source files come from. -->
@@ -16,12 +16,12 @@
   <property name="libDir" value="../lib"/>
   <!-- place to put .class files, images and resources, so they can be jar'd up -->
   <property name="stagingDir" value="../temp/classes"/>
-  <!-- root dir for auxillieary ant libraries -->
-  <property name="antlibRoot" value="/usr/share"/>
+  <!-- root dir for auxillieary ant libraries. standby is "/usr/share" or "/usr/local/Intellij/idea-2253/lib/ant/lib"-->
+  <property name="antlibRoot" value="/usr/share/ant"/>
   <!-- the base game applicaiton class -->
   <property name="gameAppClass" value="com.becker.game.common.ui.GameApp"/>
   <!-- the jvm to use when executing -->
-  <property name="java_home" value="/usr/java/jdk1.5.0"/>
+  <property name="java_home" value="/usr/java/jdk1.5.0_05"/>
   <property name="java14" value="/usr/java/jdk1.4.2/bin/java"/>
   <property name="java15" value="${java_home}/bin/java"/>
 
@@ -34,8 +34,8 @@
   </taskdef>
 
   <!-- source metrics
-  <taskdef name="javancss" classname="javancss.JavancssAntTask" classpath="${antlibRoot}/javaNCSS/javancss21.41/lib"/>
-   -->
+  <taskdef name="javancss" classname="javancss.JavancssAntTask" classpath="${antlibRoot}/javancss21.41/lib"/>
+  -->
 
 
   <path id="compile.classpath">
@@ -60,18 +60,23 @@
     <pathelement location="${libDir}/batik-transcoder.jar"/>
     <pathelement location="${libDir}/batik-util.jar"/>
     <pathelement location="${libDir}/batik-xml.jar"/>
+    <pathelement location="${libDir}/jigo.jar"/>
+    <pathelement location="${libDir}/gogui7.1.jar"/>
+    <pathelement location="${libDir}/gtpserver.jar"/>
   </path>
 
 
   <target name="compile" depends="init" description="Compiles the source code">
-    <javac debug="yes" deprecation="on" destdir="${classesDir}"
+    <javac debug="yes" deprecation="yes" destdir="${classesDir}"
         nowarn="no" optimize="yes" srcdir="${sourceDir}" verbose="true"
-        executable="${java_home}/bin/javac" compiler="modern" source="1.5">  
+        executable="${java_home}/bin/javac" compiler="modern" source="1.5">
+       <!-- compilerarg value="-Xlint" /   this is nice but adding support for generics is a bit of a rathole.-->
        <classpath refid="compile.classpath"/>
     </javac>
     <!-- use ant deploy to copy the resources to the classes dir -->
 
   </target>
+
 
   <target name="game metrics" depends="compile" description="calculate metrics (eg lines of code) for all the source files in the project">
     <javancss srcdir="${sourceDir}/com/becker/game" generateReport="true" outputfile="../performance/javancss_metrics1.txt" format="plain">
@@ -151,7 +156,7 @@
     </antcall>
   </target>
 
-  <target name="executePoker" depends="compile" description=" run poker card game app">
+  <target name="executePoker" depends="compile" description=" Run poker card game app">
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
@@ -159,17 +164,25 @@
     </antcall>
   </target>
 
+  <target name="executeSetGame" description="Run the Set Game app">
+    <antcall target="executeProgram">
+      <param name="className" value="${gameAppClass}"/>  <!-- com.becker.game.multiplayer.set.SetApplet -->
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
+      <param name="arg1" value="set"/>
+    </antcall>
+  </target>
+
   <target name="executeGo" description="Run the go program">
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;${libDir}/jigo.jar;${libDir}/gtpserver.jar;"/>
       <param name="arg1" value="go"/>
     </antcall>
   </target>
 
   <target name="executeColorMixer" description="Run the color mixer tool">
     <antcall target="executeProgram">
-      <param name="className" value="com.becker.misc.colormixer.colormixer.ColorMixer"/>
+      <param name="className" value="com.becker.misc.colormixer.ColorMixer"/>
     </antcall>
   </target>
 
@@ -181,8 +194,9 @@
 
   <target name="executeSnake" description="Run the Snake simulation program">
     <antcall target="executeProgram">
-      <param name="className" value="com.becker.snake.SnakeApplet"/>
+      <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
+      <param name="arg1" value="com.becker.simulation.snake.SnakeSimulator"/>
     </antcall>
   </target>
 
@@ -195,8 +209,17 @@
 
   <target name="executeLiquid" description="Run the Liquid simulator">
     <antcall target="executeProgram">
-      <param name="className" value="com.becker.liquid.LiquidSimulator"/>
+      <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
       <param name="libPath" value="${libDir}/vecmath.jar"/>
+      <param name="arg1" value="com.becker.simulation.liquid.LiquidSimulator"/>
+    </antcall>
+  </target>
+
+   <target name="executeTrebuchet" description="Run the Trebuchet simulator">
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
+      <param name="libPath" value="${libDir}/vecmath.jar"/>
+      <param name="arg1" value="com.becker.simulation.trebuchet.TrebuchetSimulator"/>
     </antcall>
   </target>
 
@@ -207,7 +230,7 @@
 
   <target name="executeHiQPuzzle" depends="compile" description=" run the Hi-Q Puzzle simulator">
     <echo message="now executing Hi-Q"/>
-    <java classname="com.becker.puzzle.hiq.HiQPuzzle" classpath="${classesDir}" fork="true" jvm="${java15}" maxmemory="128M"/>
+    <java classname="com.becker.puzzle.hiq.HiQPuzzle" classpath="${classesDir}" fork="true" jvm="${java15}" maxmemory="800M"/>
   </target>
 
   <target name="XMLViewer" depends="compile" description=" run the XML Viewer app">
@@ -231,441 +254,37 @@
     <java classname="com.becker.java2d.examples.ShowFonts" classpath="${classesDir}"/>
   </target>
 
+  <target name="GoGui" depends="compile">
+    <java classname="gogui.Main" classpath="${classesDir}"/>
+    <antcall target="executeProgram2">
+      <param name="className" value="gogui.Main"/>
+      <param name="libPath" value="${libDir}/gogui7.1.jar"/>
+      <param name="arg1" value="-program"/>
+      <param name="arg2" value="${java15} -ea -classpath ${classesDir}:${libDir}/gogui7.1.jar:${libDir}/jigo.jar com.becker.game.twoplayer.go.GtpTesujisoftGoServer"/>
+    </antcall>
+  </target>
 
-  <!-- call this to run java programs -->
+
+  <!-- call this to run java programs  -->
   <target name="executeProgram" depends="compile" description="Run a program">
     <java classname="${className}" classpath="${classesDir};${libPath}" fork="true" jvm="${java15}">
         <arg value="${arg1}"/>
+        <!-- jvmarg value="-agentlib:yjpagent"/  use this if running Yourkit profiler -->
+        <jvmarg value="-Xms128M"/>
+        <jvmarg value="-Xmx256M"/>
+        <jvmarg value="${assertionsFlag}"/>
+    </java>
+  </target>
+  <target name="executeProgram2" depends="compile" description="Run a program">
+    <java classname="${className}" classpath="${classesDir};${libPath}" fork="true" jvm="${java15}">
+        <arg value="${arg1}"/>
+        <arg value="${arg2}"/>
         <jvmarg value="-Xms128M"/>
         <jvmarg value="-Xmx256M"/>
         <jvmarg value="${assertionsFlag}"/>
     </java>
   </target>
 
-
-
-
-
-
-
-    <!-- this is from the threads book and should be deleted -->
-
-    <target name="compile_threads">
-        <javac compiler="javac1.5" source="1.5"
-	    srcdir="${sourceDir}" destdir="${classesDir}"/>
-    </target>
-
-
-    <!-- Chapter 2 properties -->
-    <property name="FactorialArg" value="10"/>
-
-    <!-- Chapter 5 properties -->
-    <property name="CalcThreadCount" value="10"/>
-
-    <!-- Chapter 6 properties -->
-    <property name="DeadlockTestNumber" value="2"/>
-
-    <!-- Chapter 8 properties -->
-    <property name="nConsumers" value="1"/>
-
-    <!-- Chapter 9 properties -->
-    <property name="nThreads" value="10"/>
-    <property name="FibCalcValue" value="20"/>
-
-    <!-- Chapter 10 properties -->
-    <property name="ThreadPoolSize" value="5"/>
-
-    <!-- Chapter 11 properties -->
-    <property name="hostlist" value="http://www.ora.com/"/>
-
-    <!-- Chapter 12 properties -->
-    <property name="TypeServerHost" value="localhost"/>
-    <property name="TypeServerPort" value="8003"/>
-    <property name="TypeServerNThreads" value="10"/>
-    <property name="CalcServerNThreads" value="5"/>
-    <property name="CalcClientNThreads" value="10"/>
-    <property name="CalcServerFibNumber" value="20"/>
-    <property name="CalcServerHost" value="localhost"/>
-    <property name="CalcServerPort" value="8003"/>
-
-    <!-- Chapter 14 properties -->
-    <!-- also uses nThreads -->
-    <property name="nLoops" value="100000"/>
-
-    <!-- Chapter 15 properties -->
-    <!-- Also uses nThreads -->
-    <property name="scaleLoops" value="200"/>
-    <property name="nRows" value="1500"/>
-    <property name="nCols" value="2000"/>
-    <property name="classname" value="javathreads.examples.ch15.example10.Basic"/>
-
-    <target name="ch2-ex1" depends="compile_threads">
-        <java classpath="${classesDir}" classname="javathreads.examples.ch02.example1.Factorial">
-            <arg value="${FactorialArg}"/>
-        </java>
-    </target>
-
-    <target name="ch2-ex2" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch02.example2.SwingTypeTester">
-        </java>
-    </target>
-
-    <target name="ch2-ex3" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch02.example3.SwingTypeTester">
-        </java>
-    </target>
-
-    <target name="ch2-ex4" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch02.example4.SwingTypeTester">
-        </java>
-    </target>
-
-
-    <target name="ch2-ex5" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch02.example5.SwingTypeTester">
-        </java>
-    </target>
-
-    <target name="ch2-ex6" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch02.example6.SwingTypeTester">
-        </java>
-    </target>
-
-    <target name="ch2-ex7" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch02.example7.SwingTypeTester">
-        </java>
-    </target>
-
-    <target name="ch3-ex1" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch03.example1.SwingTypeTester">
-        </java>
-    </target>
-
-    <target name="ch3-ex2" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch03.example2.SwingTypeTester">
-        </java>
-    </target>
-
-    <target name="ch3-ex3" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch03.example3.SwingTypeTester">
-        </java>
-    </target>
-
-    <target name="ch3-ex4" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch03.example4.SwingTypeTester">
-        </java>
-    </target>
-
-    <target name="ch3-ex5" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch03.example5.SwingTypeTester">
-        </java>
-    </target>
-
-    <target name="ch3-ex6" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch03.example6.SwingTypeTester">
-        </java>
-    </target>
-
-    <target name="ch3-ex7" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch03.example7.SwingTypeTester">
-        </java>
-    </target>
-
-    <target name="ch3-ex8" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch03.example8.SwingTypeTester">
-        </java>
-    </target>
-
-    <target name="ch3-ex9" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch03.example9.SwingTypeTester">
-        </java>
-    </target>
-
-    <target name="ch4-ex1" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch04.example1.SwingTypeTester">
-        </java>
-    </target>
-
-    <target name="ch4-ex2" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch04.example2.SwingTypeTester">
-        </java>
-    </target>
-
-    <target name="ch4-ex3" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch04.example3.SwingTypeTester">
-        </java>
-    </target>
-
-    <target name="ch5-ex1" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch05.example1.SwingTypeTester">
-        </java>
-    </target>
-
-    <target name="ch5-ex2" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch05.example2.SwingTypeTester">
-        </java>
-    </target>
-
-    <target name="ch5-ex3" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch05.example3.SwingTypeTester">
-        </java>
-    </target>
-
-    <target name="ch5-ex4" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch05.example4.CalculatorTest">
-            <arg value="${CalcThreadCount}"/>
-        </java>
-    </target>
-
-    <target name="ch6-ex1" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch06.DeadlockDetectingLock">
-	    <arg value="${DeadlockTestNumber}"/>
-        </java>
-    </target>
-
-    <target name="ch6-ex2" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch06.AlternateDeadlockDetectingLock">
-	    <arg value="${DeadlockTestNumber}"/>
-        </java>
-    </target>
-
-    <target name="ch7-ex1" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch07.example1.SwingTypeTester">
-        </java>
-    </target>
-
-    <target name="ch7-ex2" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch07.example2.SwingTypeTester">
-        </java>
-    </target>
-
-    <target name="ch7-ex3" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch07.example3.SwingTypeTester">
-        </java>
-    </target>
-
-    <target name="ch8-ex1" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch08.example1.SwingTypeTester">
-        </java>
-    </target>
-
-    <target name="ch8-ex2" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch08.example2.SwingTypeTester">
-        </java>
-    </target>
-
-    <target name="ch8-ex3" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch08.example3.SwingTypeTester">
-        </java>
-    </target>
-
-    <target name="ch8-ex4" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch08.example4.SwingTypeTester">
-        </java>
-    </target>
-
-    <target name="ch8-ex5" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch08.example5.SwingTypeTester">
-        </java>
-    </target>
-
-    <target name="ch8-ex6" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch08.example6.FibonacciTest">
-            <arg value="${nConsumers}"/>
-        </java>
-    </target>
-
-    <target name="ch9-ex1" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch09.example1.ThreadTest">
-            <arg value="${nThreads}"/>
-            <arg value="${FibCalcValue}"/>
-        </java>
-    </target>
-
-    <target name="ch10-ex1" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch10.example1.ThreadPoolTest">
-            <arg value="${nThreads}"/>
-            <arg value="${FibCalcValue}"/>
-            <arg value="${ThreadPoolSize}"/>
-        </java>
-    </target>
-
-    <target name="ch10-ex2" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch10.example2.SingleThreadTest">
-            <arg value="${nThreads}"/>
-            <arg value="${FibCalcValue}"/>
-        </java>
-    </target>
-
-    <target name="ch11-ex1" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch11.example1.URLMonitorPanel">
-            <arg value="${hostlist}"/>
-        </java>
-    </target>
-
-    <target name="ch11-ex2" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch11.example2.SwingTypeTester">
-        </java>
-    </target>
-
-    <target name="ch11-ex3" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch11.example3.URLMonitorPanel">
-            <arg value="${hostlist}"/>
-        </java>
-    </target>
-
-    <target name="ch11-ex4" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch11.example4.URLMonitorPanel">
-            <arg value="${hostlist}"/>
-        </java>
-    </target>
-
-    <target name="ch12-ex1-server" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch12.example1.TypeServer">
-            <arg value="${TypeServerPort}"/>
-        </java>
-    </target>
-
-    <target name="ch12-ex1-client" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch12.example1.SwingTypeTester">
-            <arg value="${TypeServerHost}"/>
-            <arg value="${TypeServerPort}"/>
-        </java>
-    </target>
-
-    <target name="ch12-ex2-server" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch12.example2.TypeServer">
-            <arg value="${TypeServerPort}"/>
-            <arg value="${TypeServerNThreads}"/>
-        </java>
-    </target>
-
-    <target name="ch12-ex2-client" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch12.example2.SwingTypeTester">
-            <arg value="${TypeServerHost}"/>
-            <arg value="${TypeServerPort}"/>
-        </java>
-    </target>
-
-    <target name="ch12-ex3-server" depends="compile_threads">
-        <java fork="no" classpath="${classesDir}" classname="javathreads.examples.ch12.example3.TypeServer">
-            <arg value="${TypeServerPort}"/>
-        </java>
-    </target>
-
-    <target name="ch12-ex4-client" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch12.example4.CalcClient">
-            <arg value="${CalcClientNThreads}"/>
-            <arg value="${CalcServerFibNumber}"/>
-            <arg value="${CalcServerHost}"/>
-            <arg value="${CalcServerPort}"/>
-        </java>
-    </target>
-
-    <target name="ch12-ex4-server" depends="compile_threads">
-        <java fork="no" classpath="${classesDir}" classname="javathreads.examples.ch12.example4.CalcServer">
-            <arg value="${CalcServerPort}"/>
-            <arg value="${CalcServerNThreads}"/>
-        </java>
-    </target>
-
-    <target name="ch12-ex5-client" depends="compile_threads">
-        <java fork="no" classpath="${classesDir}" classname="javathreads.examples.ch12.example5.InterruptibleClient">
-            <arg value="${TypeServerHost}"/>
-            <arg value="${TypeServerPort}"/>
-        </java>
-    </target>
-
-    <target name="ch13-ex1" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch13.TestOverride">
-        </java>
-    </target>
-
-    <target name="ch13-ex2" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch13.TestOverrideThread">
-        </java>
-    </target>
-
-    <target name="ch14-ex1" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch14.CollectionTest">
-            <arg value="${nLoops}"/>
-        </java>
-    </target>
-
-    <target name="ch14-ex2" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch14.AtomicTest">
-            <arg value="${nLoops}"/>
-            <arg value="${nThreads}"/>
-        </java>
-    </target>
-
-    <target name="ch14-ex3" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch14.HashTest">
-            <arg value="${nLoops}"/>
-            <arg value="${nThreads}"/>
-        </java>
-    </target>
-
-    <target name="ch14-ex4" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch14.CreateTest">
-            <arg value="${nLoops}"/>
-        </java>
-    </target>
-
-    <target name="ch15-ex1" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch15.example1.SinTable">
-        </java>
-    </target>
-
-    <target name="ch15-ex2" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch15.example2.SinTable">
-        </java>
-    </target>
-
-    <target name="ch15-ex3" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch15.example3.SinTable">
-        </java>
-    </target>
-
-    <target name="ch15-ex4" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch15.example4.SinTable">
-        </java>
-    </target>
-
-    <target name="ch15-ex5" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch15.example5.SinTable">
-        </java>
-    </target>
-
-    <target name="ch15-ex6" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch15.example6.SinTable">
-        </java>
-    </target>
-
-    <target name="ch15-ex7" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch15.example7.SinTable">
-        </java>
-    </target>
-
-    <target name="ch15-ex8" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch15.example8.SinTable">
-        </java>
-    </target>
-
-    <target name="ch15-ex9" depends="compile_threads">
-        <java fork="yes" classpath="${classesDir}" classname="javathreads.examples.ch15.example9.SinTable">
-        </java>
-    </target>
-
-    <target name="ch15-scale" depends="compile_threads">
-        <java fork="no" classpath="${classesDir}" classname="javathreads.examples.ch15.ScaleTest">
-            <arg value="${scaleLoops}"/>
-            <arg value="${nRows}"/>
-            <arg value="${nCols}"/>
-            <arg value="${nThreads}"/>
-            <arg value="${classname}"/>
-        </java>
-    </target>
 
 </project>
 
