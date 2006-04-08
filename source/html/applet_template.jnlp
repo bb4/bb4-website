@@ -24,6 +24,7 @@
             <jar href="blockade.jar" main="false"/>
             <jar href="galactic.jar" main="false"/>
             <jar href="poker.jar" main="false"/>
+            <jar href="set.jar" main="false"/>
             <jar href="vecmath.jar" main="false"/>
             {jarElement1}
             {jarElement2}
