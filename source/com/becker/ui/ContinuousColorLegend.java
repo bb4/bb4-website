@@ -1,8 +1,6 @@
 package com.becker.ui;
 
-import com.becker.common.ColorMap;
-import com.becker.common.Util;
-import com.becker.common.RoundCutPoints;
+import com.becker.common.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -75,8 +73,10 @@ public class ContinuousColorLegend extends JPanel {
 
         int desiredTicks = this.getWidth() / 90;
         double[] values =
-                RoundCutPoints.cutpoints(getMin(), getMax(), 2 + desiredTicks, true);
+                NiceNumbers.getCutPoints(getMin(), getMax(), 2 + desiredTicks, true);
 
+
+        // bug: inaccurate spacing for labels when wight labeling is used.
         JLabel labels[] = new JLabel[values.length];
         for (int i=0; i<values.length; i++) {
             labels[i] = new JLabel(Util.formatNumber(values[i]));
@@ -92,7 +92,7 @@ public class ContinuousColorLegend extends JPanel {
     }
 
     public void setMin(double min) {
-        assert(min < max_);
+        assert(min < max_) : "Min=\"+min+\" cannot be greater than the max=\"+max_;";
         min_ = min;
     }
 
@@ -101,7 +101,7 @@ public class ContinuousColorLegend extends JPanel {
     }
 
     public void setMax(double max) {
-        assert(max > min_);
+        assert(max > min_) :"Max="+max+" cannot be less than the min="+min_;
         max_ = max;
     }
 
@@ -117,24 +117,32 @@ public class ContinuousColorLegend extends JPanel {
             return;
         }
 
-        double leg1Prop = legend1.getMin() / (legend1.getMax() + legend1.getMin());
-        double leg2Prop = legend2.getMin() / (legend2.getMax() + legend2.getMin());
-        double meanProp = (leg1Prop + leg2Prop) / 2.0;
+        double leg1Min = legend1.getMin();
+        double leg2Min = legend2.getMin();
+        double leg1Length = Math.abs(legend1.getMax()) + Math.abs(leg1Min);
+        double leg2Length = Math.abs(legend2.getMax()) + Math.abs(leg2Min);
+        double leg1Prop = Math.abs(leg1Min) / leg1Length;
+        double leg2Prop = Math.abs(leg2Min) / leg2Length;
+        //double meanProp = Math.sqrt(leg1Prop * leg2Prop);
+        double meanProp =(leg1Prop + leg2Prop) / 2.0;
+        System.out.println("leg1Prop="+leg1Prop+" leg2Prop="+leg2Prop+" meanProp="+meanProp);
 
         if (leg1Prop < meanProp)  {
-            legend1.setMin( leg1Prop * legend1.getMax() / (leg1Prop - 1.0));
+            // double newMin = legend1.getMin() -(leg2Prop * leg1Length - Math.abs(legend1.getMin())) / (1.0 - leg2Prop);
+            legend1.setMin( -meanProp * legend1.getMax() / (1.0 - meanProp));
+            legend2.setMax( -leg2Min * ( 1.0 - meanProp) / meanProp);
         } else {
-            legend1.setMax(-legend1.getMin() * ( 1.0 - leg1Prop) / leg1Prop);
+            legend1.setMax( -leg1Min * ( 1.0 - meanProp) / meanProp);
+            legend2.setMin( -meanProp * legend2.getMax() / (1.0 - meanProp));
         }
 
-        if (leg2Prop < meanProp)  {
 
-            legend2.setMin( leg2Prop * legend2.getMax() / (leg2Prop - 1.0));
-        } else {
-            legend2.setMax(-legend2.getMin() * ( 1.0 - leg2Prop) / leg2Prop);
-        }
+        leg1Length = Math.abs(legend1.getMax()) + Math.abs(legend1.getMin());
+        leg2Length = Math.abs(legend2.getMax()) + Math.abs(legend2.getMin());
+        System.out.println("leg1Prop="+ legend1.getMin()/leg1Length);
+        System.out.println("leg2Prop="+ legend2.getMin()/leg2Length);
+
     }
-
 
 
     private static class ColoredLegendLine extends JPanel {

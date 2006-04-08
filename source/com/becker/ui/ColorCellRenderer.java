@@ -23,7 +23,7 @@ public class ColorCellRenderer extends DefaultTableCellRenderer
     {
         // we know the value is a Color
         Color color = (Color)value;
-        setBackground(color);
+        setBackground(color);       
 
         return this;
     }
