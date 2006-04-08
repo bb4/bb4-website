@@ -47,13 +47,14 @@ public abstract class SummaryTable
         TableModel m = new PlayerTableModel(columnNames, 0, false);
         table_ = new JTable(m);
 
+
         TableColumn colColumn = table_.getColumn(COLOR);
         colColumn.setCellRenderer(new ColorCellRenderer());
         colColumn.setCellEditor(new ColorCellEditor(GameContext.getLabel("SELECT_PLAYER_COLOR")));
         colColumn.setPreferredWidth(25);
         colColumn.setWidth(20);
         colColumn.setMaxWidth(25);
-
+        
         TableColumn nameColumn = table_.getColumn(NAME);
         nameColumn.setPreferredWidth(100);
     }

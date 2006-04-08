@@ -216,32 +216,6 @@ public class GalacticController extends GameController
         return players_[0];
     }
 
-    /**
-     * @return  the players currently playing the game
-     */
-    public Player[] getPlayers()
-    {
-        return players_;
-    }
-
-    /**
-     * @param players  the players currently playing the game
-     */
-    public void setPlayers( Player[] players )
-    {
-         players_ = players;
-    }
-
-
-    /**
-     * @return index of current player that is to give orders
-     */
-    public int getCurrentPlayerIndex()
-    {
-        return currentPlayerIndex_;
-    }
-
-
 
     ////////// some Galactic specific methods ///////////////////
 
