@@ -1,117 +1,81 @@
 package com.becker.puzzle.redpuzzle;
 
-
 /**
- *  One of the 9 board pieces in the Red Puzzle
+ * One of the 9 board pieces in the Red Puzzle.
+ * @author Barry Becker
  */
 public final class Piece
 {
 
-    private static final int NUM_SIDES = 4;
+    // the suits of the edges.
+    private Nub[] nubs_;
 
-    // This number (0-3) indicates which way the piece is rotated.
-    // It is at 0 initially and after a reset. 1,2,3 represent increments of
-    // 90 degree rotations clockwise.
-    private int rotation_ = 0;
+    // Indicates which way the piece is oriented/rotated.
+    private Direction orientation_ = Direction.TOP;
 
-    // the suits of the edges
-    private char[] suit_ = null;
-
-    // whether or not the suit on the edge is outward facing
-    private boolean[] out_ = null;
-
-    // the number of the piece (1-9)
+    // the number of the piece (1-9).
     private int pieceNumber_;
 
-    // Constructor. This should never be called directly
-    // instead call the factory method so we recycle objects.
-    // use createMove to get moves, and dispose to recycle them
-    public Piece( char s1, char s2, char s3, char s4,
-                  boolean out1, boolean out2, boolean out3, boolean out4,
-                  int pieceNumber )
-    {
-        suit_ = new char[4];
-        out_ = new boolean[4];
+    /**
+     * Constructor.
+     */
+    public Piece( Nub topNub, Nub rightNub, Nub bottomNub, Nub leftNub,
+                  int pieceNumber ) {
+        nubs_ = new Nub[4];
 
-        suit_[0] = s1;
-        suit_[1] = s2;
-        suit_[2] = s3;
-        suit_[3] = s4;
+        nubs_[Direction.TOP.ordinal()] = topNub;
+        nubs_[Direction.RIGHT.ordinal()] = rightNub;
+        nubs_[Direction.BOTTOM.ordinal()] = bottomNub;
+        nubs_[Direction.LEFT.ordinal()] = leftNub;
 
-        out_[0] = out1;
-        out_[1] = out2;
-        out_[2] = out3;
-        out_[3] = out4;
-
-        if ( pieceNumber < 1 || pieceNumber > 9 )
-            System.out.println( "the piece number is not valid : " + pieceNumber );
+        assert ( pieceNumber >= 1 && pieceNumber <= 9 ) : "the piece number is not valid : " + pieceNumber;
         pieceNumber_ = pieceNumber;
-
-        rotation_ = 0;
+        orientation_ = Direction.TOP;
     }
 
-    public void reset()
-    {
-        rotation_ = 0;
+    /**
+     * @param dir
+     * @return the suit of the nub fot the specified direction.
+     */
+    public Nub getNub(Direction dir) {
+        return nubs_[getDirectionIndex(dir)];
     }
 
-    // this rotates the piece 90 degrees clockwise
-    public void rotate()
-    {
-        rotation_ = (rotation_ + 1);
-        if ( rotation_ > 4 )
-            System.out.println( "Error: rotation >4" );
+    /**
+     *  This rotates the piece 90 degrees clockwise.
+     */
+    public void rotate() {
+        Direction[] values = Direction.values();
+        orientation_ = values[(orientation_.ordinal() + 1) % values.length];
     }
 
-    public int getRotation()
-    {
-        return rotation_;
+    /**
+     * @return the way in which this piece is oriented.
+     */
+    public Direction getRotation() {
+        return orientation_;
     }
 
-    public int getNumber()
-    {
+    public boolean isFullyRotated() {
+        return (orientation_ == Direction.LEFT);
+    }
+
+    /**
+     * initial unrotated state.
+     */
+    public void resetOrientation() {
+        orientation_ = Direction.TOP;
+    }
+    /**
+     * @return the unique number assigned to this piece.
+     */
+    public int getNumber() {
         return pieceNumber_;
     }
 
-    public char topSuit()
-    {
-        return suit_[rotation_ % NUM_SIDES];
-    }
 
-    public boolean topOut()
-    {
-        return out_[rotation_ % NUM_SIDES];
+    private int getDirectionIndex(Direction dir)  {
+       return (orientation_.ordinal() + dir.ordinal()) % Direction.values().length;
     }
-
-    public char rightSuit()
-    {
-        return suit_[(rotation_ + 1) % NUM_SIDES];
-    }
-
-    public boolean rightOut()
-    {
-        return out_[(rotation_ + 1) % NUM_SIDES];
-    }
-
-    public char bottomSuit()
-    {
-        return suit_[(rotation_ + 2) % NUM_SIDES];
-    }
-
-    public boolean bottomOut()
-    {
-        return out_[(rotation_ + 2) % NUM_SIDES];
-    }
-
-    public char leftSuit()
-    {
-        return suit_[(rotation_ + 3) % NUM_SIDES];
-    }
-
-    public boolean leftOut()
-    {
-        return out_[(rotation_ + 3) % NUM_SIDES];
-    }
-
 }
 

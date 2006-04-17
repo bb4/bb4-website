@@ -5,7 +5,6 @@ package com.becker.puzzle.maze;
  */
 public class Direction {
 
-
     // possible directions as we traverse
     public static final Integer FORWARD = 1 ;
     public static final Integer LEFT = 2 ;
