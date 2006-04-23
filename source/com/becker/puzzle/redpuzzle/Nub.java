@@ -34,9 +34,16 @@ public class Nub {
     }
 
     /**
+     * @return the char symbol used to represent this nub's suit.
+     */
+    public char getSuitSymbol() {
+       return getSuit().getSymbol();
+    }
+
+    /**
      * @return the suit shape of the nub.
      */
-    public Suit getSuit() {
+    private Suit getSuit() {
         return suit_;
     }
 
@@ -55,5 +62,37 @@ public class Nub {
         boolean suitMatch = this.getSuit() == nub.getSuit();
         boolean nubMatch =  this.isOuty() != nub.isOuty();
         return suitMatch && nubMatch;
+    }
+
+    /**
+     * @return nice readable string representation of a nub
+     */
+    public String toString() {
+       return "Nub: "+ (isOuty()?"outy":"inny") + ' ' +getSuit();
+    }
+
+
+    /**
+     * Determines the shape of the nub.
+     */
+    private enum Suit {
+
+        SPADE('S'),
+        CLUB('C'),
+        HEART('H'),
+        DIAMOND('D');
+
+        private final char symbol_;
+
+        private Suit(char symbol) {
+            symbol_ = symbol;
+        }
+
+        /**
+         * @return the character symbol associated with this Suit
+         */
+        public char getSymbol() {
+            return symbol_;
+        }
     }
 }

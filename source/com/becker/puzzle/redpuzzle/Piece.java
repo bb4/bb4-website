@@ -16,6 +16,8 @@ public final class Piece
     // the number of the piece (1-9).
     private int pieceNumber_;
 
+    private enum Direction {TOP, RIGHT, BOTTOM, LEFT};
+
     /**
      * Constructor.
      */
@@ -33,11 +35,25 @@ public final class Piece
         orientation_ = Direction.TOP;
     }
 
+
+    public Nub getTopNub() {
+        return  getNub(Direction.TOP);
+    }
+    public Nub getRightNub() {
+        return  getNub(Direction.RIGHT);
+    }
+    public Nub getBottomNub() {
+        return  getNub(Direction.BOTTOM);
+    }
+    public Nub getLeftNub() {
+        return  getNub(Direction.LEFT);
+    }
+
     /**
      * @param dir
      * @return the suit of the nub fot the specified direction.
      */
-    public Nub getNub(Direction dir) {
+    private Nub getNub(Direction dir) {
         return nubs_[getDirectionIndex(dir)];
     }
 
@@ -47,13 +63,6 @@ public final class Piece
     public void rotate() {
         Direction[] values = Direction.values();
         orientation_ = values[(orientation_.ordinal() + 1) % values.length];
-    }
-
-    /**
-     * @return the way in which this piece is oriented.
-     */
-    public Direction getRotation() {
-        return orientation_;
     }
 
     public boolean isFullyRotated() {
@@ -75,7 +84,19 @@ public final class Piece
 
 
     private int getDirectionIndex(Direction dir)  {
-       return (orientation_.ordinal() + dir.ordinal()) % Direction.values().length;
+        return (orientation_.ordinal() + dir.ordinal()) % Direction.values().length;
+    }
+
+    /**
+     * @return a nice readable string representation for debugging.
+     */
+    public String toString() {
+        StringBuffer buf = new StringBuffer("Piece "+ getNumber() + '\n');
+        for (Direction d : Direction.values()) {
+            Nub n = getNub(d);
+            buf.append(d +" " + n.toString() + '\n');
+        }
+        return buf.toString();
     }
 }
 

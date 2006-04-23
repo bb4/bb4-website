@@ -78,8 +78,7 @@ public class PieceList {
      */
     public void add(Piece p) {
         pieces_.add(p);
-
-        assert pieces_.size() < NUM_PIECES : "there are only 9 pieces.";
+        assert pieces_.size() <= NUM_PIECES : "there are only 9 pieces.";
     }
 
     /**
@@ -105,6 +104,14 @@ public class PieceList {
      */
     public int size() {
         return pieces_.size();
+    }
+
+    public String toString() {
+        StringBuffer buf = new StringBuffer("PieceList:");
+        for (Piece p : pieces_) {
+            buf.append(" " + p);
+        }
+        return buf.toString();
     }
 
 }
