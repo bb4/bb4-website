@@ -129,6 +129,9 @@ public class NumberInput extends JPanel
     }
 
 
+    /**
+     * Handle number input. Give dynamic feedback if invalid.
+     */
     private class NumberKeyAdapter extends KeyAdapter {
 
         boolean integerOnly_;

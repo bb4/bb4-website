@@ -1,12 +1,12 @@
 package com.becker.ui;
 
-import java.awt.*;
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
 import javax.swing.tree.*;
-import java.awt.event.MouseEvent;
-import java.util.EventObject;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
 
 /**
  * taken from Geary Swing book.

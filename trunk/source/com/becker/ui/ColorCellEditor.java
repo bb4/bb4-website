@@ -1,10 +1,6 @@
 package com.becker.ui;
 
-import com.becker.ui.AbstractCellEditor;
-
 import javax.swing.*;
-import javax.swing.JColorChooser;
-import javax.swing.JTable;
 import java.awt.*;
 
 /**

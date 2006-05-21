@@ -59,6 +59,9 @@ public class Optimizer
         sLogFile_ = optimizationLogFile;
     }
 
+    public Optimizee getOptimizee() {
+        return optimizee_;
+    }
     /**
      * This method will construct an optimization strategy object of the specified type and run it.
      *
@@ -102,13 +105,15 @@ public class Optimizer
                 break;
             case STATE_SPACE:
                 break;
-            default:
-                assert false:  "bad optimization type:" + optimizationType ;
         }
 
-        return optStrategy.doOptimization(params);
+        if (optStrategy == null) {
+            System.out.println("Optimization strategy not implemented yet: " + optimizationType);
+            return params;
+        } else {
+            return optStrategy.doOptimization(params);
+        }
     }
-
 
 
     /**

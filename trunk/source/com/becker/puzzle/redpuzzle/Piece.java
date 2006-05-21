@@ -64,24 +64,12 @@ public final class Piece
         Direction[] values = Direction.values();
         orientation_ = values[(orientation_.ordinal() + 1) % values.length];
     }
-
-    public boolean isFullyRotated() {
-        return (orientation_ == Direction.LEFT);
-    }
-
-    /**
-     * initial unrotated state.
-     */
-    public void resetOrientation() {
-        orientation_ = Direction.TOP;
-    }
     /**
      * @return the unique number assigned to this piece.
      */
     public int getNumber() {
         return pieceNumber_;
     }
-
 
     private int getDirectionIndex(Direction dir)  {
         return (orientation_.ordinal() + dir.ordinal()) % Direction.values().length;

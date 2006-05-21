@@ -102,5 +102,4 @@ public class GlobalSampleStrategy extends OptimizationStrategy
         return bestParams;
     }
 
-
 }

@@ -6,7 +6,8 @@ import java.awt.*;
 import java.awt.event.*;
 
 /**
- * Use this modal dialog as an abstract base for other option dialogs.
+ * Use this modal dialog as an abstract base for other modal option dialogs.
+ * It shows itself relative to a parent, and has support for a group of buttons at the buttom.
  *
  * @author Barry Becker
  */
@@ -59,7 +60,7 @@ public abstract class OptionsDialog extends JDialog implements ActionListener
 
         if (!GUIUtil.isStandAlone())
             this.setAlwaysOnTop(true);
-        pack();  
+        pack();
     }
 
     public void setParentFrame(JFrame parent)  {
