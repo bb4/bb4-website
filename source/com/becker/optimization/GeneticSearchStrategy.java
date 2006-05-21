@@ -111,7 +111,6 @@ public class GeneticSearchStrategy extends OptimizationStrategy
          // EVALUATE POPULATION
          lastBestParams = evaluatePopulation(population, params);
 
-
          // each iteration represents a new generation of the population
          do {
              // sort the population according to the fitness of members.
@@ -145,7 +144,6 @@ public class GeneticSearchStrategy extends OptimizationStrategy
                  k++;
              }
              nbrRadius_ *= NBR_RADIUS_SHRINK_FACTOR;
-
 
              // EVALUATE POPULATION
              currentBestParams = evaluatePopulation(population, lastBestParams);

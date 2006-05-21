@@ -17,7 +17,7 @@ public interface Optimizee
      * otherwise the reverse will be true.
      * @return return true if we evaluate the fitness by comparison
      */
-    public boolean evaluateByComparison();
+    boolean evaluateByComparison();
 
     /**
      *  attributes a measure of fitness to the specified set of parameters.
@@ -26,12 +26,12 @@ public interface Optimizee
      *  @param params the set of parameters to misc
      *  @return the fitness measure. The higher the better
      */
-    public double evaluateFitness( ParameterArray params );
+    double evaluateFitness( ParameterArray params );
 
     /**
      * Compares two sets of parameters.  Used if evaluateByCompariuson returns true.
      * @return the amount that params1 are better than params2. May be negative if params2 are better than params1.
      */
-    public double compareFitness( ParameterArray params1, ParameterArray params2 );
+    double compareFitness( ParameterArray params1, ParameterArray params2 );
 
 }

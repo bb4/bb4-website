@@ -56,9 +56,9 @@ public abstract class OptimizationStrategy
     /**
      * Write a row to the file and close it again.
      * That way if we terminate, we still have something in the file.
-     * @param iteration the current iteraction.
+     * @param iteration the current iteration.
      * @param fitness the current fitness level. Or increase if fitness if in comparison mode.
-     * @param jumpSize the distance we moved in parameter space since the last iteraction.
+     * @param jumpSize the distance we moved in parameter space since the last iteration.
      * @param params the params to write.
      */
     protected final void writeToLog(int iteration, double fitness, double jumpSize, double distance,

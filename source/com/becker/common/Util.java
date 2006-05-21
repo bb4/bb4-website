@@ -131,7 +131,7 @@ public final class Util
         }
         catch (ClassNotFoundException e) {
             System.out.println("Unable to find the class "+ className+". Check your classpath.");
-            System.out.println("The current classpath is :"+System.getProperty("java.class.path"));
+            //System.out.println("The current classpath is :"+System.getProperty("java.class.path"));
             if (defaultClassName==null) {
                 e.printStackTrace();
                 return null;

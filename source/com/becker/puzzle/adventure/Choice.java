@@ -11,6 +11,11 @@ public class Choice {
     private String description_;
     private String destination_;
 
+
+    public static final String QUIT = "Quit";
+
+    public static final String PREVIOUS_SCENE = "last scene";
+
     public Choice(String desc, String dest) {
         description_ = desc;
         destination_ = dest;

@@ -28,7 +28,7 @@ public class Nub {
     private Suit suit_;
     private boolean isOuty_;
 
-    public Nub(Suit suit, boolean isOuty) {
+    private Nub(Suit suit, boolean isOuty) {
         suit_ = suit;
         isOuty_ = isOuty;
     }
@@ -75,7 +75,7 @@ public class Nub {
     /**
      * Determines the shape of the nub.
      */
-    private enum Suit {
+    private static enum Suit {
 
         SPADE('S'),
         CLUB('C'),

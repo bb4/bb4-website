@@ -179,7 +179,7 @@ public class Cell
             }
             return;
         }
-        Assert.isTrue( dt > .0000001, "dt got too small" );
+        Assert.isTrue( dt > 0.0000001, "dt got too small" );
 
         // u
         // u(i, j) = 0.5*(u(i+0.5, j) + u(i-0.5, j))

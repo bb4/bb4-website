@@ -280,18 +280,25 @@ public final class GUIUtil
         return url;
      }
 
+     /**
+     * displays a splash screen while the application is busy starting up.
+     */
+    public static JWindow showSplashScreen( int waitMillis )
+    {
+        return showSplashScreen(waitMillis, "config/images/splash.gif"); 
+    }
 
 
     /**
      * displays a splash screen while the application is busy starting up.
      */
-    public static JWindow showSplashScreen( int waitMillis )
+    public static JWindow showSplashScreen( int waitMillis, String imagePath)
     {
         // show a splash screen initially (if we are running through web start)
         // so the user knows something is happenning
         ImageIcon splash;
-        URL url = ClassLoaderSingleton.getClassLoader().getResource("config/images/splash.gif");
-        if (url==null) // then use a default
+        URL url = ClassLoaderSingleton.getClassLoader().getResource(imagePath);
+        if (url == null) // then use a default
             splash = new ImageIcon( new BufferedImage( 300, 300, BufferedImage.TYPE_INT_RGB ) );
         else
             splash = new ImageIcon( url );
@@ -307,7 +314,7 @@ public final class GUIUtil
     public static JFrame showApplet( JApplet applet, String title )
     {
         isStandAlone_ = false;
-        //Assert.isFalse(isStandAlone_, "You must be running as an application if you are calling this method.");
+        assert !isStandAlone_: "You must be running as an application if you are calling this method.";
 
         JFrame baseFrame = new JFrame();
 
@@ -325,12 +332,15 @@ public final class GUIUtil
         baseFrame.setSize( applet.getSize() );
 
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-        baseFrame.setLocation( (d.width - baseFrame.getSize().width) >> 2, (d.height - baseFrame.getSize().height) >> 2 );
+        baseFrame.setLocation( (d.width - baseFrame.getSize().width) >> 2,
+                               (d.height - baseFrame.getSize().height) >> 2 );
         int height = (int) d.getHeight() >> 1 ;
-        int width = (int) Math.min(height*1.5, d.getWidth() / 2);
-        baseFrame.setSize( width, height);
+        int width = (int) Math.min(height * 1.5, d.getWidth() / 2);
+
 
         baseFrame.setVisible( true );
+        baseFrame.setSize( width, height);
+
 
         // call the applet's init method
         applet.init();
@@ -338,6 +348,7 @@ public final class GUIUtil
         // call the applet's start method
         //baseFrame.setVisible( true );
         applet.start();
+
         return baseFrame;
     }
 

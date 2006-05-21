@@ -37,6 +37,7 @@ public class PuzzleSolver {
      * @return true if a solution is found.
      */
     public boolean solvePuzzle( PuzzlePanel puzzlePanel)  {
+        refresh(puzzlePanel);
         return solvePuzzle(puzzlePanel, pieces_);
     }
 
@@ -65,22 +66,21 @@ public class PuzzleSolver {
                 if ( fits(p) ) {
                     solution_.add( p );
                     pieces.remove( p );
-                    refresh(puzzlePanel);
+                    //refresh(puzzlePanel);
                     // call solvePuzzle with a simpler case (one less piece to solve)
                     solved = solvePuzzle( puzzlePanel, pieces );
                 }
-                if (!solved)
+                if (!solved) {
                     p.rotate();
+                }
                 r++;
             }
             k++;
         }
 
         if (!solved && solution_.size() > 0) {
-            // back track.
+            // backtrack.
             Piece p = solution_.removeLast();
-            //p.resetOrientation(); // restore to unrotated state
-            // put it back where it came from on the original piece list.
             pieces.add(p);
         }
 
@@ -118,45 +118,6 @@ public class PuzzleSolver {
     }
 
     /**
-     * Try the piece. We rotate it until it fits.
-     * if it does not fit after all rotations have been tried, we return false
-     *
-    public boolean fits( Piece p ) {
-        // assume fits until proven otherwise
-        boolean fits = true;
-
-        // it needs to match the piece to the left and above (if present)
-        do {
-            if ( !fits )
-                p.rotate();
-            fits = true;
-
-            int numSolved = solution_.size();
-            int row = numSolved / NROWS;
-            int col = numSolved % NCOLS;
-            if ( col > 0 ) {
-                // if other than a left edge piece, then we need to match to the left side nub.
-                Piece leftPiece = solution_.getLast();
-                if (!leftPiece.getRightNub().fitsWith(p.getLeftNub()))
-                    fits = false;
-            }
-            if ( row > 0 ) {
-                // then we need to match with the top one
-                Piece topPiece = solution_.get( numSolved - NCOLS );
-                if (!topPiece.getBottomNub().fitsWith(p.getTopNub()) )
-                    fits = false;
-            }
-        } while ( !fits && !p.isFullyRotated());
-
-        // its been fully rotate, so return to original orientation
-        if (!fits) {
-            p.rotate();
-        }
-
-        return fits;
-    }  */
-
-    /**
      * the number of successfully placed pieces so far.
      * @return
      */
@@ -172,10 +133,12 @@ public class PuzzleSolver {
     }
 
 
-    private void refresh(PuzzlePanel puzzlePanel) {
+    private static void refresh(PuzzlePanel puzzlePanel) {
         puzzlePanel.repaint();
         try {
            Thread.sleep(20);
-        } catch (InterruptedException e) {}
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

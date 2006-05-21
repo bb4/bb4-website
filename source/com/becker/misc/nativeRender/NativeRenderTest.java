@@ -1,9 +1,9 @@
 package com.becker.misc.nativeRender;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.*;
-import javax.swing.*;
-import java.util.Random;
+import java.util.*;
 
 public class NativeRenderTest {
 

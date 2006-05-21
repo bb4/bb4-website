@@ -3,12 +3,11 @@
  */
 package com.becker.sound;
 
-import com.becker.common.Assert;
-import com.becker.ui.GUIUtil;
+import com.becker.ui.*;
 
 import javax.sound.sampled.*;
-import java.net.URL;
-import java.util.StringTokenizer;
+import java.net.*;
+import java.util.*;
 
 public class SpeechSynthesizer
 {
@@ -29,8 +28,8 @@ public class SpeechSynthesizer
      */
     public void sayPhoneWords( String[] words )
     {
-        for ( int i = 0; i < words.length; i++ ) {
-            sayPhoneWord( words[i] );
+        for (final String newVar : words) {
+            sayPhoneWord(newVar);
         }
     }
 
@@ -52,7 +51,7 @@ public class SpeechSynthesizer
 
             // -- get the data from the file --
             byte[] thisSound = getSound( thisPhoneFile );
-            //Assert.isTrue(thisSound.length>0, "Invalid sound file: "+thisPhoneFile);
+            assert (thisSound.length > 0) : "Invalid sound file: "+thisPhoneFile;
 
             if ( previousSound != null ) {
                 // -- merge the previous allophone with this one if we can --
@@ -119,9 +118,9 @@ public class SpeechSynthesizer
                 AudioFormat tmpFormat = new AudioFormat(
                         AudioFormat.Encoding.PCM_SIGNED,
                         format.getSampleRate(),
-                        format.getSampleSizeInBits() * 2,
+                        format.getSampleSizeInBits() << 1,
                         format.getChannels(),
-                        format.getFrameSize() * 2,
+                        format.getFrameSize() << 1,
                         format.getFrameRate(),
                         true );
 
@@ -151,7 +150,7 @@ public class SpeechSynthesizer
 
             // -- some size calculations --
             int frameSizeInBytes = format.getFrameSize();
-            int bufferLengthInFrames = line.getBufferSize() / 8;
+            int bufferLengthInFrames = line.getBufferSize() >> 3;
             int bufferLengthInBytes = bufferLengthInFrames * frameSizeInBytes;
 
             byte[] data = new byte[bufferLengthInBytes];

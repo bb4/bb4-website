@@ -1,9 +1,8 @@
 package com.becker.optimization;
 
-import com.becker.common.Util;
+import com.becker.common.*;
 
-import java.util.Random;
-import java.util.Comparator;
+import java.util.*;
 
 /**
  *  represents a 1 dimensional array of parameters
@@ -198,8 +197,8 @@ public class ParameterArray implements Comparable
     public static double length( double vec[] )
     {
         double sumSq = 0;
-        for ( int i = 0; i < vec.length; i++ ) {
-            sumSq += vec[i] * vec[i];
+        for (final double newVar : vec) {
+            sumSq += newVar * newVar;
         }
         return Math.sqrt( sumSq );
 
@@ -211,7 +210,7 @@ public class ParameterArray implements Comparable
      */
     public static double[] normalize( double vec[] )
     {
-        double len = ParameterArray.length( vec );
+        double len = length( vec );
         for ( int i = 0; i < vec.length; i++ ) {
             vec[i] /= len;
         }
@@ -243,10 +242,10 @@ public class ParameterArray implements Comparable
 
     public String toString()
     {
-        StringBuffer sb = new StringBuffer("fitness="+this.getFitness()+"\n");
-        sb.append( "parameter[" + 0 + "] = " + params_[0].toString() );
+        StringBuffer sb = new StringBuffer("fitness="+this.getFitness()+'\n');
+        sb.append( "parameter[0] = " + params_[0].toString() );
         for ( int i = 1; i < params_.length; i++ ) {
-            sb.append( "\n" );
+            sb.append( '\n' );
             sb.append( "parameter[" + i + "] = " + params_[i].toString() + "; " );
         }
         return sb.toString();
@@ -288,6 +287,5 @@ public class ParameterArray implements Comparable
     public int compareTo(Object obj) {
         return compareTo((ParameterArray)obj);
     }
-
 
 }

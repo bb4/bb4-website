@@ -37,8 +37,8 @@ public class PolynomialTestProblem implements Optimizee
      * @return
      */
     public double evaluateFitness(ParameterArray a) {
-        return (1.0 - Math.pow(1.0-a.get(0).value, 2)
-                    - Math.pow(2.0-a.get(1).value, 2)
+        return Math.max(0.0,
+                       10000 + ((1.0 - Math.pow(1.0-a.get(0).value, 2) - Math.pow(2.0-a.get(1).value, 2)))
                 );
     }
 
@@ -48,6 +48,16 @@ public class PolynomialTestProblem implements Optimizee
     private static final double[] minVals = {-30.0, -20.0};
     private static final double[] maxVals = {30.0,   20.0};
     private static final String[] names   = {"p1",   "p2"};
+
+    private static void doTest(OptimizationType optType, ParameterArray initialGuess, Optimizer optimizer) {
+
+        ParameterArray solution = optimizer.doOptimization(optType, initialGuess, 8000.0);
+
+        System.out.println( "\n************************************************************************" );
+        System.out.println( "The solution to the Polynomial Test Problem using "+optType+" is :\n"+solution );
+        System.out.println( "Which evaluates to: "+ optimizer.getOptimizee().evaluateFitness(solution));
+        System.out.println( "We expected to get exactly p1 = 1.0 and p2 = 2.0. " );
+    }
 
     /**
      * This finds the solution for the above optimization problem.
@@ -60,12 +70,11 @@ public class PolynomialTestProblem implements Optimizee
 
         ParameterArray initialGuess = new ParameterArray(vals, minVals, maxVals, names);
 
-        ParameterArray solution = optimizer.doOptimization(OptimizationType.GENETIC_SEARCH, initialGuess, 200.0);
 
-        System.out.println( "\n************************************************************************" );
-        System.out.println( "The solution to the Polynomial Test Problem is :\n"+solution );
-        System.out.println( "Which evaluates to: "+ polynomialProblem.evaluateFitness(solution));
-        System.out.println( "We expected to get exactly p1 = 1.0 and p2 = 2.0. " );
+        doTest(OptimizationType.HILL_CLIMBING, initialGuess, optimizer);
+        //for (OptimizationType type : OptimizationType.values()) {
+        //    doTest(type, initialGuess, optimizer);
+        //}
 
     }
 }

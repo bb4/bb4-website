@@ -10,17 +10,17 @@ import com.becker.common.Util;
 public class HillClimbingStrategy extends OptimizationStrategy
 {
 
-    private static final double INITIAL_JUMP_SIZE = .7;
-    private static final double MIN_DOT_PRODUCT = .3;
-    private static final double MAX_DOT_PRODUCT = .98;
+    private static final double INITIAL_JUMP_SIZE = 0.7;
+    private static final double MIN_DOT_PRODUCT = 0.3;
+    private static final double MAX_DOT_PRODUCT = 0.98;
 
 
     // continue optimization iteration until the improvement in fitness is less than this.
-    private static final double FITNESS_EPS = .000001;
-    private static final double JUMP_SIZE_EPS = .00001;
+    private static final double FITNESS_EPS = 0.000001;
+    private static final double JUMP_SIZE_EPS = 0.00001;
 
     private static final double JUMP_SIZE_INC_FACTOR = 1.4;
-    private static final double JUMP_SIZE_DEC_FACTOR = .5;
+    private static final double JUMP_SIZE_DEC_FACTOR = 0.5;
 
 
 
@@ -91,15 +91,15 @@ public class HillClimbingStrategy extends OptimizationStrategy
                 // this does the increment and returns the amount incremented
                 delta[i] = p.increment( numSteps, 1 );
 
-                double fwdFitness = 0.0;
-                double bwdFitness = 0.0;
+                double fwdFitness;
+                double bwdFitness;
                 if (optimizee_.evaluateByComparison())
                     fwdFitness = optimizee_.compareFitness( testParams, params );
                 else
                     fwdFitness = optimizee_.evaluateFitness( testParams );
 
                 p.increment( numSteps, -1 );
-                p.increment( numSteps, -1 );
+                //p.increment( numSteps, -1 );
                 if (optimizee_.evaluateByComparison())
                     bwdFitness = optimizee_.compareFitness( testParams, params );
                 else
@@ -110,11 +110,11 @@ public class HillClimbingStrategy extends OptimizationStrategy
 
             }
             double gradLength = Math.sqrt(sumOfSqs);
+
             // now compute the gradient vector that will allow us
             // to make a quantum leap in the direction of greatest improvement.
-
-            boolean improved = true;
-            double newFitness = 0.0;
+            boolean improved;
+            double newFitness;
             do {
                 improved = true;
                 ParameterArray oldParams = params.copy();
@@ -150,13 +150,13 @@ public class HillClimbingStrategy extends OptimizationStrategy
                 }
             } while (!improved && (jumpSize > JUMP_SIZE_EPS) );
 
-            double dotProduct = params.dot( gradient, oldGradient );
-            double divisor = (params.length( gradient ) * params.length( oldGradient ));
+            double dotProduct = ParameterArray.dot( gradient, oldGradient );
+            double divisor = (ParameterArray.length( gradient ) * ParameterArray.length( oldGradient ));
             dotProduct = (divisor==0.0) ? 1.0 : dotProduct/divisor;
             numIterations++;
             writeToLog(numIterations, newFitness, jumpSize, dotProduct, params, Util.formatNumber(improvement));
 
-            // if we are headed in pretty much the same direction as last time, then we increase the sumpSize.
+            // if we are headed in pretty much the same direction as last time, then we increase the jumpSize.
             // if we are headed off in a completely new direction, reduce the jumpsize until we start to stabilize.
             if ( dotProduct > MAX_DOT_PRODUCT )
                 jumpSize *= JUMP_SIZE_INC_FACTOR;
@@ -164,16 +164,14 @@ public class HillClimbingStrategy extends OptimizationStrategy
                 jumpSize *= JUMP_SIZE_DEC_FACTOR;
             System.out.println( "new jumpsize = " + jumpSize );
 
-            for ( int i = 0; i < len; i++ ) {
-                oldGradient[i] = gradient[i];
-            }
+            System.arraycopy(gradient, 0, oldGradient, 0, len);
 
             if (!optimizee_.evaluateByComparison())
                 oldFitness = newFitness;
 
         } while ( (improvement > FITNESS_EPS) && (jumpSize > JUMP_SIZE_EPS) );
 
-        System.out.println( "The optimized parameters after " + numIterations + " iteractions are " + params );
+        System.out.println( "The optimized parameters after " + numIterations + " iterations are " + params );
         return params;
     }
 

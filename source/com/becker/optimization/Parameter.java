@@ -68,7 +68,7 @@ public class Parameter
         sa.append( Util.formatNumber(minValue) );
         sa.append( ", " );
         sa.append( Util.formatNumber(maxValue) );
-        sa.append( "]" );
+        sa.append( ']' );
         return sa.toString();
     }
 }
