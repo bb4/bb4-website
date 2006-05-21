@@ -1,5 +1,7 @@
 package com.becker.game.common;
 
+import java.io.*;
+
 
 /**
  *  the BoardPosition describes the physical marker at a location on the board.
@@ -8,8 +10,9 @@ package com.becker.game.common;
  * @see Board
  * @author Barry Becker
  */
-public class GamePiece
+public class GamePiece implements Serializable
 {
+    private static final long serialVersionUID = 1;
 
     // Subclasses should add more types if needed.
     public static final char REGULAR_PIECE = 'x';

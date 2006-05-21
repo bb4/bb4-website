@@ -1,9 +1,7 @@
 package com.becker.game.twoplayer.go;
 
-
-
-import com.becker.game.common.GameContext;
-import com.becker.game.common.Move;
+import com.becker.game.common.*;
+import com.becker.game.common.online.*;
 import com.becker.game.twoplayer.common.search.SearchStrategy;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import go.Point;
@@ -17,7 +15,9 @@ import java.util.List;
 
 //----------------------------------------------------------------------------
 
-/**  Wrapper for testing GTP controlling programs (like GoGui for example).
+/**
+ * Wrapper for testing GTP controlling programs (like GoGui for example).
+ * Inherits the ability to connect a Go program supporting GTP to a socket from GtpServer.
  *
  * The key commands are:
  *   boardSize
@@ -28,13 +28,14 @@ import java.util.List;
  * This class wraps the GoController and provides an interface to a GTP based controller (front end ui).
  * GoGui is typically the controller I have used, but it could be any GTP based UI.
  *
- * @@ add time settings in controller. implement time_settings comand
+ * @@ add time settings in controller. implement time_settings command
  * @@ implement reg_genmove
+ * @@ implement final_status_list
  *
  *  @author Barry Becker
  */
 public class GtpTesujisoftGoServer
-    extends GtpServer
+    extends GtpServer implements OnlineGameServerInterface
 {
 
     /** Delay every command (seconds) */
@@ -70,6 +71,11 @@ public class GtpTesujisoftGoServer
         thread_ = Thread.currentThread();
     }
 
+    /** where does this get set?
+    public int getPort() {
+        assert false; // dont call
+        return 0;
+    } */
 
     public boolean handleCommand(String cmdLine, StringBuffer response)
     {
@@ -129,19 +135,17 @@ public class GtpTesujisoftGoServer
             case known_command :
                 Command.valueOf(cmdArray[1]); break;
             case list_commands :
-                for (int i=0; i<Command.values().length; i++) {
-                    response.append(Command.values()[i] + "\n");
-                }
+                listCommands(response);
                 break;
             case undo :
                 cmdUndo(response); break;
             case version :
                 response.append(Version.get()); break;
             case quit : break;
-            default : {
+            default :
                 response.append("unknown command");
                 status = false;
-            }
+                break;
         }
         return status;
     }
@@ -213,6 +217,12 @@ public class GtpTesujisoftGoServer
         return true;
     }
 
+    private static void listCommands(StringBuffer response) {
+        for (int i=0; i<Command.values().length; i++) {
+           response.append(Command.values()[i] + "\n");
+        }
+    }
+
     private boolean cmdFinalScore(StringBuffer response) {
         double blackScore = controller_.getFinalScore(true);
         double whiteScore = controller_.getFinalScore(false);
@@ -227,7 +237,7 @@ public class GtpTesujisoftGoServer
     }
 
     /**
-     * @@ need to implment
+     * @@ need to implement
      */
     private static boolean cmdFinalStatusList(String cmd, StringBuffer response) {
         assert false : "final_status_list command not yet implemented";
@@ -284,7 +294,6 @@ public class GtpTesujisoftGoServer
         printInvalidResponse("This is an invalid GTP response.\n" +
                              "It does not start with a status character.\n");
     }
-
 
 
     private boolean cmdPlay(String[] cmdArray, StringBuffer response)

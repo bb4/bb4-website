@@ -23,11 +23,6 @@ final class GoNewGameDialog extends TwoPlayerNewGameDialog implements ActionList
         super( parent, viewer );
     }
 
-    public String getTitle()
-    {
-        return GameContext.getLabel("GO_OPTIONS");
-    }
-
     protected JPanel createCustomBoardConfigPanel()
     {
         JPanel p = new JPanel();

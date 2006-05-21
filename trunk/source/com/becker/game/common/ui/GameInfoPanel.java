@@ -70,6 +70,11 @@ public abstract class GameInfoPanel extends TexturedPanel implements GameChanged
     }
 
     /**
+     * restore to new game state.
+     */
+    public void reset() {};
+
+    /**
      * @return title to display at the top of the game info window.
      */
     protected String getTitleText()

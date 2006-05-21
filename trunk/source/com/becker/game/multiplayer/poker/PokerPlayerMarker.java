@@ -14,6 +14,8 @@ import java.awt.*;
 public class PokerPlayerMarker extends GamePiece
 {
 
+    private static final long serialVersionUID = 1;
+
     private PokerPlayer owner_;
     private Location location_;
     private boolean highlighted_;
@@ -38,13 +40,7 @@ public class PokerPlayerMarker extends GamePiece
     {
         return owner_;
     }
-
-    /*
-    public void setOwner( PokerPlayer owner )
-    {
-        owner_ = owner;
-    }    */
-
+    
 
     public boolean isHighlighted() {
         return highlighted_;

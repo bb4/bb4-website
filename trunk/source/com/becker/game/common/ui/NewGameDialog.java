@@ -10,7 +10,8 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 /**
- * Use this modal dialog to let the user choose from among the different game options.
+ * Use this modal dialog to let the user to configure a new local game.
+ * The have a choice of a new player vs player game or combinations of player vs computer or all computer.
  *
  * @author Barry Becker
  */
@@ -21,13 +22,11 @@ public abstract class NewGameDialog extends OptionsDialog implements ActionListe
      */
     protected GameController controller_;
 
-    // contains the two tabs : options for creating a new game, or loading a saved game
+    // contains the two or three tabs : options for creating a new game, playing online, or loading a saved game
     protected final JTabbedPane tabbedPanel_ = new JTabbedPane();
 
-    protected JPanel playerPanel_;
-    protected JPanel boardParamPanel_;
-    protected JPanel customPanel_ ;
-    protected JPanel loadFilePanel_;
+    protected JPanel playLocalPanel_;
+    protected JPanel loadGamePanel_;
 
     protected GradientButton openFileButton_;
 
@@ -41,8 +40,9 @@ public abstract class NewGameDialog extends OptionsDialog implements ActionListe
     protected final Board board_;
     protected final ViewerCallbackInterface viewer_;
 
+
     // constructor
-    public NewGameDialog( JFrame parent, ViewerCallbackInterface viewer )
+    public NewGameDialog( JFrame parent, ViewerCallbackInterface viewer)
     {
         super( parent );
         controller_ = viewer.getController();
@@ -54,25 +54,16 @@ public abstract class NewGameDialog extends OptionsDialog implements ActionListe
     {
         mainPanel_.setLayout( new BorderLayout() );
 
-        playerPanel_ = createPlayerPanel();
-        boardParamPanel_ = createBoardParamPanel();
-        customPanel_ = createCustomPanel();
-        loadFilePanel_ = createLoadFilePanel();
-
-        JPanel mainOptionsPanel = new JPanel();  // "new game" panel
-        mainOptionsPanel.setLayout( new BoxLayout( mainOptionsPanel, BoxLayout.Y_AXIS ) );
-        JPanel mainLoadGamePanel = new JPanel();  // "load game" panel
-        mainLoadGamePanel.setLayout( new BoxLayout( mainLoadGamePanel, BoxLayout.Y_AXIS ) );
-
-        buildMainOptionsPanel(mainOptionsPanel);
-
-        mainLoadGamePanel.add( loadFilePanel_ );
+        playLocalPanel_ = createPlayLocalPanel();
+        loadGamePanel_ = createLoadGamePanel();
 
         JPanel buttonsPanel = createButtonsPanel();
 
-        tabbedPanel_.add( GameContext.getLabel("NEW_GAME"), mainOptionsPanel );
+        // add the tabs
+        tabbedPanel_.add( GameContext.getLabel("NEW_GAME"), playLocalPanel_ );
         tabbedPanel_.setToolTipTextAt( 0, GameContext.getLabel("NEW_GAME_TIP") );
-        tabbedPanel_.add( GameContext.getLabel("LOAD_GAME"), mainLoadGamePanel );
+
+        tabbedPanel_.add( GameContext.getLabel("LOAD_GAME"), loadGamePanel_ );
         tabbedPanel_.setToolTipTextAt( 1, GameContext.getLabel("LOAD_GAME_TIP") );
         mainPanel_.add( tabbedPanel_, BorderLayout.CENTER );
         mainPanel_.add( buttonsPanel, BorderLayout.SOUTH );
@@ -81,15 +72,22 @@ public abstract class NewGameDialog extends OptionsDialog implements ActionListe
         this.pack();
     }
 
-    protected void buildMainOptionsPanel(JPanel mainOptionsPanel)
+    protected JPanel createPlayLocalPanel()
     {
-        if (playerPanel_ != null)
-            mainOptionsPanel.add( playerPanel_ );
-        if (boardParamPanel_ != null)
-            mainOptionsPanel.add( boardParamPanel_ );
-        if (customPanel_ != null )
-            mainOptionsPanel.add( customPanel_ );
+        JPanel playLocalPanel = new JPanel();
+        playLocalPanel.setLayout( new BoxLayout( playLocalPanel, BoxLayout.Y_AXIS ) );
+        JPanel playerPanel = createPlayerPanel();
+        JPanel boardParamPanel = createBoardParamPanel();
+        JPanel customPanel = createCustomPanel();
 
+        if (playerPanel != null)
+            playLocalPanel.add( playerPanel );
+        if (boardParamPanel != null)
+            playLocalPanel.add( boardParamPanel );
+        if (customPanel != null )
+            playLocalPanel.add( customPanel );
+
+        return playLocalPanel;
     }
 
     protected abstract JPanel createPlayerPanel();
@@ -163,8 +161,12 @@ public abstract class NewGameDialog extends OptionsDialog implements ActionListe
         return outerPanel;
     }
 
-    protected JPanel createLoadFilePanel()
+
+    protected JPanel createLoadGamePanel()
     {
+        JPanel loadGamePanel = new JPanel();
+        loadGamePanel.setLayout( new BoxLayout( loadGamePanel, BoxLayout.Y_AXIS ) );
+
         JPanel p = new JPanel();
         p.setLayout( new BoxLayout( p, BoxLayout.X_AXIS ) );
         p.setBorder( BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(),
@@ -186,12 +188,14 @@ public abstract class NewGameDialog extends OptionsDialog implements ActionListe
         p.add( openFileField_ );
         p.add( openFileButton_ );
 
-        return p;
+        loadGamePanel.add( p);
+
+        return loadGamePanel;
     }
 
     protected void ok()
     {
-        if (boardParamPanel_ != null && board_!= null) {
+        if (board_ != null && rowSizeField_!= null) {
             board_.setSize( rowSizeField_.getIntValue(), colSizeField_.getIntValue() );
         }
 

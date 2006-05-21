@@ -34,21 +34,22 @@ public abstract class GamePanel extends TexturedPanel
     // ui elements.
     // There are (at least) 5 buttons in the ToolBar. There could be more depending on the game.
     // toolbar is protected rather than private so derived classes can add buttons to it.
-    protected GameToolBar toolBar_ = null;
+    protected GameToolBar toolBar_;
 
-    protected TexturedPanel statusBar_ = null;
+    protected TexturedPanel statusBar_;
 
     protected final JScrollPane boardViewerScrollPane_ = new JScrollPane();
 
     // must contain a GameBoardViewer to graphically represent the status of the board.
-    protected GameBoardViewer boardViewer_ = null;
+    protected GameBoardViewer boardViewer_;
 
-    protected NewGameDialog newGameDialog_ = null;
-    protected GameOptionsDialog optionsDialog_ = null;
-    protected GameInfoPanel infoPanel_ = null;
+    protected NewGameDialog newGameDialog_;
+    protected OnlineGameDialog onlineGameDialog_;
+    protected GameOptionsDialog optionsDialog_;
+    protected GameInfoPanel infoPanel_;
 
     // for a resizable applet
-    protected ResizableAppletPanel resizablePanel_ = null;
+    protected ResizableAppletPanel resizablePanel_;
 
     // font for the undo/redo buttons
     protected static final Font STATUS_FONT = new Font( "SansSerif", Font.PLAIN, 10 );
@@ -104,6 +105,15 @@ public abstract class GamePanel extends TexturedPanel
     }
 
     /**
+     * Currently most games do not support online play (see poker)
+     * @return true if the game supports online play and there is a server available
+     */
+    protected boolean isOnlinePlayAvailable()
+    {
+        return false;
+    }
+
+    /**
      *  UIComponent initialization.
      */
     protected void initGui()
@@ -133,6 +143,7 @@ public abstract class GamePanel extends TexturedPanel
         GameContext.setLogger( new Log( logWindow ) );
 
         newGameDialog_ = createNewGameDialog( null, boardViewer_ );
+        onlineGameDialog_ = createOnlineGameDialog(null, boardViewer_);
         optionsDialog_ = createOptionsDialog( null, boardViewer_.getController() );
 
         // if the board is too big, allow it to be scrolled.
@@ -177,7 +188,7 @@ public abstract class GamePanel extends TexturedPanel
             //speech.sayPhoneWords( GREETING );
 
             // use when sound card available
-            /*   @@ causing security exceptin in applet.
+            /* @@ causing security exception in applet.
             URL url = GUIUtil.getURL("com/becker/sound/play_game_voice.wav");
             AudioClip clip = new AppletAudioClip(url);
             if (clip != null) {
@@ -194,6 +205,8 @@ public abstract class GamePanel extends TexturedPanel
      */
     public void setParentFrame(JFrame parent) {
         newGameDialog_.setParentFrame(parent);
+        if (onlineGameDialog_!=null)
+            onlineGameDialog_.setParentFrame(parent);
         optionsDialog_ .setParentFrame(parent);
         infoPanel_.setParentFrame(parent);
         boardViewer_.setParentFrame(parent);
@@ -214,6 +227,14 @@ public abstract class GamePanel extends TexturedPanel
      * @return the dialog used for configuring a new game to play.
      */
     protected abstract NewGameDialog createNewGameDialog( JFrame parent, ViewerCallbackInterface viewer );
+
+    /**
+     * Only need to return something non-null if the game supports online play.
+     * @return the dialog used for configuring online game play.
+     */
+    protected OnlineGameDialog createOnlineGameDialog( JFrame parent, ViewerCallbackInterface viewer ) {
+        return null;
+    }
 
     /**
      * @return  the dialog used to specify various game options and parameters.
@@ -295,7 +316,6 @@ public abstract class GamePanel extends TexturedPanel
     }
 
 
-
     /**
      * handle button click actions.
      * If you add your own custom buttons, you should override this, but be sure the first line is
@@ -308,9 +328,14 @@ public abstract class GamePanel extends TexturedPanel
         if ( source == toolBar_.getNewGameButton() ) {
             //newGameDialog_.setLocationRelativeTo( this );
 
-            boolean canceled = newGameDialog_.showDialog();
-            if ( !canceled ) { // newGame a game with the newly defined options
-                boardViewer_.startNewGame();
+            if (isOnlinePlayAvailable())  {
+                onlineGameDialog_.showDialog();
+            } else {
+                boolean canceled = newGameDialog_.showDialog();
+                if ( !canceled ) { // newGame a game with the newly defined options
+                    boardViewer_.startNewGame();
+                    infoPanel_.reset();
+                }
             }
         }
         else if ( source == toolBar_.getUndoButton() ) {

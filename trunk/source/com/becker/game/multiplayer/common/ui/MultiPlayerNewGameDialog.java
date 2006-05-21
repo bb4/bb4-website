@@ -9,18 +9,25 @@ import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public abstract class MultiPlayerNewGameDialog extends NewGameDialog implements ActionListener, ListSelectionListener
+/**
+ * Manager players for new local game.
+ *
+ * @author Barry Becker
+ */
+public abstract class MultiPlayerNewGameDialog extends NewGameDialog
+                                               implements ActionListener, ListSelectionListener
 {
 
+    // add / remove players
     private GradientButton addButton_;
     private GradientButton removeButton_;
-
-    // list of players that will be admirals in the game.
+    // list of players in the local game.
     private PlayerTable playerTable_;
 
-    public MultiPlayerNewGameDialog( JFrame parent, ViewerCallbackInterface viewer )
+
+    public MultiPlayerNewGameDialog( JFrame parent, ViewerCallbackInterface viewer)
     {
-        super( parent, viewer );
+        super( parent, viewer);
         initUI();
     }
 
@@ -30,17 +37,15 @@ public abstract class MultiPlayerNewGameDialog extends NewGameDialog implements 
      */
     protected JPanel createPlayerPanel()
     {
-        JPanel p = new JPanel();
-        p.setLayout( new BorderLayout() );
-        p.setBorder(
+        JPanel playerPanel = new JPanel(new BorderLayout());
+        playerPanel.setBorder(
                 BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(),
-                                                  GameContext.getLabel("PLAYERS") ) );
+                                                  "Add Players for a new local game") );
 
-        JPanel headerPanel = new JPanel();
-        headerPanel.setLayout( new BorderLayout() );
+        JPanel headerPanel = new JPanel(new BorderLayout());
         JLabel titleLabel = new JLabel(GameContext.getLabel("PLAYERS"));
-        JPanel buttonsPanel = new JPanel();
-        buttonsPanel.setLayout( new BorderLayout() );
+        JPanel buttonsPanel = new JPanel(new BorderLayout());
+
         addButton_ = new GradientButton(GameContext.getLabel("ADD"));
         addButton_.setToolTipText( GameContext.getLabel("ADD_TIP") );
         addButton_.addActionListener(this);
@@ -53,22 +58,25 @@ public abstract class MultiPlayerNewGameDialog extends NewGameDialog implements 
 
         headerPanel.add(titleLabel, BorderLayout.CENTER);
         headerPanel.add(buttonsPanel, BorderLayout.EAST);
-        p.add(headerPanel, BorderLayout.NORTH);
+        playerPanel.add(headerPanel, BorderLayout.NORTH);
 
         playerTable_ = createPlayerTable();
-        //pokerPlayerTable_ = new PokerPlayerTable((PokerPlayer[])c.getPlayers());
-
         playerTable_.addListSelectionListener(this);
 
-        p.add(new JScrollPane(playerTable_.getTable()), BorderLayout.CENTER);
-        p.setPreferredSize(new Dimension(500,300));
-        return p;
+        playerPanel.add(new JScrollPane(playerTable_.getTable()), BorderLayout.CENTER);
+        playerPanel.setPreferredSize(new Dimension(500,300));
+        return playerPanel;
     }
 
-    protected abstract PlayerTable createPlayerTable();
 
     /**
-     * we don't allow them to change the dimensions of the board in poker since its not played on a grid.
+     * @return  shows the list of local playes that will play this local game
+     */
+    protected abstract PlayerTable createPlayerTable();
+
+
+    /**
+     * panel which allows changin board specific properties.
      */
     protected JPanel createBoardParamPanel()
     {
@@ -81,7 +89,10 @@ public abstract class MultiPlayerNewGameDialog extends NewGameDialog implements 
      */
     protected void ok()
     {
-        controller_.setPlayers(playerTable_.getPlayers());
+        Component selectedTab = tabbedPanel_.getSelectedComponent();
+        if (selectedTab == playLocalPanel_)  {
+            controller_.setPlayers(playerTable_.getPlayers());
+        }
         super.ok();
     }
 

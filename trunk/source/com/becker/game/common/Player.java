@@ -1,14 +1,17 @@
 package com.becker.game.common;
 
 import java.awt.*;
+import java.io.*;
 
 /**
  * Represents a player in a game (either human or computer).
  *
  * @author Barry Becker
  */
-public class Player
+public class Player implements Serializable
 {
+    private static final long serialVersionUID = 1;
+
     public static final int HUMAN_PLAYER = 1;
     public static final int COMPUTER_PLAYER = 2;
 
