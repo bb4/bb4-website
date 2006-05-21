@@ -1,6 +1,7 @@
 package com.becker.game.multiplayer.galactic.ui;
 
 import com.becker.game.common.*;
+import com.becker.game.common.ui.*;
 import com.becker.game.multiplayer.common.ui.*;
 
 import javax.swing.*;
@@ -15,14 +16,19 @@ public class GalacticNewGameDialog extends MultiPlayerNewGameDialog
     }
 
 
-    public String getTitle()
-    {
-        return GameContext.getLabel("GALACTIC_OPTIONS");
-    }
-
     protected PlayerTable createPlayerTable() {
         return  new GalacticPlayerTable( controller_.getPlayers());
     }
+
+
+    protected MultiPlayerOnlineGamesTable createOnlineGamesTable(String name) {
+        return null;
+    }
+
+    protected GameOptionsDialog createNewGameTableDialog() {
+        return null;
+    }
+
 
 }
 

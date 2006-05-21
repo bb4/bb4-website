@@ -21,6 +21,9 @@ public class ChessController extends CheckersController
 {
     // @@todo:
     //  - show indicator of invalid move while dragging piece (before placed)
+    //        Should show piece grayed our or transparent until in a valid position
+    //        If you drop the piece in an invlid position, instead of showing an error messagem
+    //        animate the piece back to its original position.
     //  - don't allow moves that put the king in check.
     //  - if you are in check, then don't allow moves other than those that get you out of check.
     //  - game is over if no moves available (because of check mate usually).
@@ -34,13 +37,13 @@ public class ChessController extends CheckersController
     // these weights determine how the computer values features of the board
     // if only one computer is playing, then only one of the weights arrays is used.
     // use these weights if no others are provided
-    private static final double[] DEFAULT_WEIGHTS = {1.1, 7.0, 10.0, 10.0, 14.0, 2.*WINNING_VALUE, .5};
+    private static final double[] DEFAULT_CHESS_WEIGHTS = {1.1, 7.0, 10.0, 10.0, 14.0, 2.0 * WINNING_VALUE, 0.5};
     // don't allow the weights to exceed these maximum values
-    private static final double[] MAX_WEIGHTS = {10.0, 100.0, 100.0, 100.0, 100.0, 2.*WINNING_VALUE+1.0, 10.0 };
-    private static final String[] WEIGHT_SHORT_DESCRIPTIONS = {"Pawn weight", "Knight weight", "Rook weight",
+    private static final double[] MAX_CHESS_WEIGHTS = {10.0, 100.0, 100.0, 100.0, 100.0, 2.0 * WINNING_VALUE+1.0, 10.0 };
+    private static final String[] CHESS_WEIGHT_SHORT_DESCRIPTIONS = {"Pawn weight", "Knight weight", "Rook weight",
                                                                "Bishop weight", "queen weight", "King weight",
                                                                "Pawn Advancement weight"};
-    private static final String[] WEIGHT_DESCRIPTIONS = {
+    private static final String[] CHESS_WEIGHT_DESCRIPTIONS = {
         "Weight to associate with each remaining pawn",
         "Weight to associate with Knights",
         "Weight to associate with Rooks",
@@ -58,7 +61,7 @@ public class ChessController extends CheckersController
     private static final int PAWN_ADVANCEMENT_WEIGHT_INDEX = 6;
 
     // initial look ahead factor.
-    private static final int DEFAULT_LOOKAHEAD = 3;
+    private static final int DEFAULT_CHESS_LOOKAHEAD = 3;
 
 
     /**
@@ -75,7 +78,7 @@ public class ChessController extends CheckersController
      */
     protected void initializeData()
     {
-        weights_ = new GameWeights( DEFAULT_WEIGHTS, MAX_WEIGHTS, WEIGHT_SHORT_DESCRIPTIONS, WEIGHT_DESCRIPTIONS );
+        weights_ = new GameWeights( DEFAULT_CHESS_WEIGHTS, MAX_CHESS_WEIGHTS, CHESS_WEIGHT_SHORT_DESCRIPTIONS, CHESS_WEIGHT_DESCRIPTIONS );
     }
 
 
@@ -100,7 +103,7 @@ public class ChessController extends CheckersController
     }
 
     protected TwoPlayerOptions createOptions() {
-        return new TwoPlayerOptions(DEFAULT_LOOKAHEAD, 100, MusicMaker.TAIKO_DRUM);
+        return new TwoPlayerOptions(DEFAULT_CHESS_LOOKAHEAD, 100, MusicMaker.TAIKO_DRUM);
     }
 
 

@@ -27,6 +27,16 @@ public class PokerPanel extends GamePanel
         return  GameContext.getLabel("POKER_TITLE");
     }
 
+    /**
+     * Poker supports online play if the server is available
+     * @return true if the game supports online play and there is a server available
+     */
+    protected boolean isOnlinePlayAvailable()
+    {
+
+        return onlineGameDialog_.isServerAvailable();
+    }
+
 
     protected GameBoardViewer createBoardViewer()
     {
@@ -36,6 +46,10 @@ public class PokerPanel extends GamePanel
     protected NewGameDialog createNewGameDialog( JFrame parent, ViewerCallbackInterface viewer )
     {
         return new PokerNewGameDialog( parent, viewer );
+    }
+
+    protected OnlineGameDialog createOnlineGameDialog( JFrame parent, ViewerCallbackInterface viewer ) {
+        return new OnlinePokerDialog( parent, viewer );
     }
 
     protected GameOptionsDialog createOptionsDialog( JFrame parent, GameController controller )

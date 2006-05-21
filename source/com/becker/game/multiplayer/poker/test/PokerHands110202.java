@@ -10,6 +10,11 @@ import java.util.*;
  *
  * Note: when I submitted this it did not compile because they require 1.2 or before, but I am using 1.5....
  *
+ * When running, enter 2 poker hands to be compared. There are exactly 5 cards in a hand.
+ * Each card has the form <rank><suit>, so for example enter
+ *  QC 3H 4D 5H 6H 3S 4C JC 6C 7C
+ * The first 5 cards are for the first hand, then last five for the second.
+ *
  * author Barry Becker
  */
 class PokerHands110202 {
@@ -19,6 +24,9 @@ class PokerHands110202 {
 
     /**
      *  for reading from stdin for the programmnig contests
+     *
+     * expects input to be somehting like   2H 3H 4H 5H 6H 3C 4C 5C 6C 7C
+     *
      */
     static String readLine(InputStream stream)  // utility function to read from stdin
     {
@@ -51,7 +59,7 @@ class PokerHands110202 {
         }
 
         List<Card> blackCards = new ArrayList<Card>(5);
-        List<Card> whiteCards = new ArrayList<Card>(5);
+            List<Card> whiteCards = new ArrayList<Card>(5);
 
         StringTokenizer tokenizer = new StringTokenizer(line, " ");
 
@@ -82,8 +90,6 @@ class PokerHands110202 {
     }
 
 
-
-
     public void evaluate(InputStream stream) throws IOException {
 
         String line;
@@ -94,6 +100,10 @@ class PokerHands110202 {
     }
 
 
+    /**
+     *  entry point.
+     * @param args
+     */
     public static void main(String args[])  {
 
         PokerHands110202 app = new PokerHands110202();
@@ -106,8 +116,6 @@ class PokerHands110202 {
         }
 
     }
-
-
 
 
 
@@ -162,7 +170,7 @@ class PokerHands110202 {
         HEARTS, DIAMONDS, CLUBS, SPADES
     }
 
-    class Card {
+    private static class Card {
 
 
         private final Rank rank;
@@ -244,7 +252,6 @@ class PokerHands110202 {
             }
             return score;
         }
-
     }
 
 
@@ -419,7 +426,7 @@ class PokerHands110202 {
 
             Collection values = matchMap_.values();
             for (Object value : values) {
-                if (((Integer)value).intValue() == num)
+                if (value.equals(num))
                     return true;
             }
             return false;
@@ -436,7 +443,7 @@ class PokerHands110202 {
             Rank highestRank = null;
             for (Object entry : entries) {
                 Map.Entry e = (Map.Entry) entry;
-                if (((Integer)e.getValue()).intValue() == num) {
+                if (e.getValue().equals(num)) {
                     Rank r = (Rank)e.getKey();
                     if (highestRank == null || (r.ordinal() > highestRank.ordinal())) {
                         highestRank = r;
@@ -445,13 +452,6 @@ class PokerHands110202 {
             }
 
             return highestRank;
-        }
-
-        /**
-         * @return  the highest valued card in this hand
-         */
-        public Card getHighCard() {
-            return hand_.get(hand_.size()-1);
         }
 
 
@@ -464,7 +464,7 @@ class PokerHands110202 {
             Collection values = matchMap_.values();
             int numPairs = 0;
             for (Object value : values) {
-                if (((Integer)value).intValue() == 2)
+                if (value.equals(2))
                     numPairs++;
             }
             return (numPairs == 2);
@@ -482,7 +482,7 @@ class PokerHands110202 {
             Map<Rank,Integer> map = new HashMap<Rank,Integer>();
 
             for (Card c : hand_) {
-                Integer num = (Integer)map.get(c.rank());
+                Integer num = map.get(c.rank());
                 if (num != null)  {
                    map.put(c.rank(), num+1);
                 }
@@ -536,7 +536,7 @@ class PokerHands110202 {
             }
         }
 
-        public String toString() { return "[" + hand_ + "]"; }
+        public String toString() { return "[" + hand_ + ']'; }
 
         /**
          * inner class used to define a sord order on cards in a poker hane.

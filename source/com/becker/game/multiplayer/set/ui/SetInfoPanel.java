@@ -101,6 +101,15 @@ class SetInfoPanel extends GameInfoPanel
     }
 
     /**
+     * restore to new game state.
+     */
+    public void reset() {
+        insertPlayerTable();
+        invalidate();
+        repaint();
+    };
+
+    /**
      * implements the GameChangedListener interface.
      * This method called whenever something on th eboard has changed.
      */
@@ -121,9 +130,8 @@ class SetInfoPanel extends GameInfoPanel
             playerTable_.getTable().getModel().setValueAt(""+player.getNumSetsFound(), r, 2);
             playerTable_.getTable().clearSelection();
         }
-
-
     }
+
 
     /**
      * @return null if no current player

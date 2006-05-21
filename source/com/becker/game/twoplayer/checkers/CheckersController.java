@@ -5,7 +5,6 @@ import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
-import com.becker.game.common.Move;
 import com.becker.optimization.ParameterArray;
 import com.becker.sound.MusicMaker;
 
@@ -33,7 +32,7 @@ public class CheckersController extends TwoPlayerController
         "Weight to give associate with piece advancement"
     };
     private static final int PIECE_WEIGHT_INDEX = 0;
-    private static final int KING_WEIGHT_INDEX = 1;
+    private static final int KINGED_WEIGHT_INDEX = 1;
     private static final int ADVANCEMENT_WEIGHT_INDEX = 2;
     private static final int DEFAULT_LOOKAHEAD = 4;
 
@@ -158,9 +157,9 @@ public class CheckersController extends TwoPlayerController
                     GamePiece piece = p.getPiece();
                     if ( piece.getType() == CheckersPiece.KING ) {
                         if ( piece.isOwnedByPlayer1() )
-                            posScore += weights.get(KING_WEIGHT_INDEX).value;
+                            posScore += weights.get(KINGED_WEIGHT_INDEX).value;
                         else
-                            negScore -= weights.get(KING_WEIGHT_INDEX).value;
+                            negScore -= weights.get(KINGED_WEIGHT_INDEX).value;
                     }
                     else { // REGULAR_PIECE
                         if ( piece.isOwnedByPlayer1() ) {
@@ -197,9 +196,11 @@ public class CheckersController extends TwoPlayerController
     {
         BoardPosition next = board_.getPosition( current.getRow() + rowInc, current.getCol() + colInc );
         BoardPosition beyondNext = board_.getPosition( current.getRow() + 2 * rowInc, current.getCol() + 2 * colInc );
-        // if the adjacent square is an opponents piece and the space beyond it
-        // is empty and we have not already capture this peice, then take another jump.
-        if ( next!=null && next.isOccupied() && (next.getPiece().isOwnedByPlayer1() != m.isPlayer1())
+        // if the adjacent square is an opponent's piece, and the space beyond it
+        // is empty, and we have not already capture this peice, then take another jump.
+        boolean opponentAdjacent =
+                next!=null && next.isOccupied() && (next.getPiece().isOwnedByPlayer1() != m.isPlayer1());
+        if ( opponentAdjacent
               && beyondNext!=null && beyondNext.isUnoccupied()
               && (m.captureList != null) && (!m.captureList.alreadyCaptured( next )) ) {
             // then there is another jump. We must take it.

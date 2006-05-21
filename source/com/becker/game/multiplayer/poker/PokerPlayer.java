@@ -157,8 +157,8 @@ public abstract class PokerPlayer extends MultiGamePlayer
     public String toString()
     {
         StringBuffer sb = new StringBuffer( super.toString() );
-        sb.append("Hand: "+getHand());
-        sb.append("Money: "+cash_);
+        sb.append(" Hand: "+getHand());
+        sb.append(" Money: "+cash_);
         return sb.toString();
     }
 

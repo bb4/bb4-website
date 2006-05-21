@@ -184,7 +184,6 @@ public final class GameContext
         gameName_ = gameName;
         className_ = className;
 
-        System.out.println("gameName="+gameName+ "  className="+className);
         String path = className.substring(0, className.lastIndexOf(".ui."));
 
         String resourcePath = path +".resources."+gameName+"Messages";

@@ -111,7 +111,6 @@ public class GameApp implements ActionListener
      */
     private void showGame(String gameName)
     {
-        System.out.println("gameName===="+gameName);
         String className = hmGameClasses_.get(gameName);
         Class gameClass = Util.loadClass(className);
 

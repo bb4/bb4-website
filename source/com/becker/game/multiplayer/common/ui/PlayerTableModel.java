@@ -29,8 +29,8 @@ public class PlayerTableModel extends DefaultTableModel
 
     public Class getColumnClass(int col)
     {
-        Vector v = (Vector)dataVector.elementAt(0);
-        return v.elementAt(col).getClass();
+        List v = (Vector)dataVector.elementAt(0);
+        return v.get(col).getClass();
     }
 
     public boolean isCellEditable(int row, int column)

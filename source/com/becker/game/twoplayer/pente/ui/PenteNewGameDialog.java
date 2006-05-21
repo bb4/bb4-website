@@ -14,10 +14,5 @@ public class PenteNewGameDialog extends TwoPlayerNewGameDialog implements Action
         super( parent, viewer );
     }
 
-    public final String getTitle()
-    {
-        return GameContext.getLabel("PENTE_OPTIONS");
-    }
-
 }
 

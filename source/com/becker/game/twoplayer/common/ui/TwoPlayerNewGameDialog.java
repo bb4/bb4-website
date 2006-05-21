@@ -19,9 +19,6 @@ import java.io.*;
  */
 public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListener
 {
-
-    private JPanel optimizationPanel_ = null;
-
     // radio buttons for selecting 1st and second players
     private JRadioButton human1Button_;
     private JRadioButton computer1Button_;
@@ -42,7 +39,6 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
         super( parent, viewer );
         gameWeights_ = get2PlayerController().getComputerWeights();  // gets the actual weights
 
-        optimizationPanel_ = createOptimizationPanel();
         initUI();
     }
 
@@ -51,13 +47,21 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
         return (TwoPlayerController)controller_;
     }
 
-    protected void buildMainOptionsPanel(JPanel mainOptionsPanel)
+    protected JPanel createPlayLocalPanel()
     {
-        mainOptionsPanel.add( playerPanel_ );
-        mainOptionsPanel.add( optimizationPanel_ );
-        mainOptionsPanel.add( boardParamPanel_ );
-        if ( customPanel_ != null )
-            mainOptionsPanel.add( customPanel_ );
+        JPanel playLocalPanel = new JPanel();
+        playLocalPanel.setLayout( new BoxLayout( playLocalPanel, BoxLayout.Y_AXIS ) );
+        JPanel playerPanel = createPlayerPanel();
+        JPanel boardParamPanel = createBoardParamPanel();
+        JPanel optimizationPanel = createOptimizationPanel();
+        JPanel customPanel = createCustomPanel();
+
+        playLocalPanel.add( playerPanel );
+        playLocalPanel.add( optimizationPanel );
+        playLocalPanel.add( boardParamPanel );
+        if ( customPanel != null )
+            playLocalPanel.add( customPanel );
+        return playLocalPanel;
     }
 
 
@@ -259,7 +263,7 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
                  }
             }
 
-            playerPanel_.setEnabled(checked);
+            //playerPanel_.setEnabled(checked);
             computer1Button_.setSelected(checked);
             computer2Button_.setSelected(checked);
             editWts1Button_.setEnabled( !checked );

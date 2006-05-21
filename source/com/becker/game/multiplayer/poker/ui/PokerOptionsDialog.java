@@ -12,6 +12,11 @@ import java.awt.event.*;
  * Use this modal dialog to let the user choose from among the
  * different game options.
  *
+ * todo: add options
+ *  -for starting chips for each player
+ *  - bet limit
+ *  - player limit
+ *
  * @author Barry Becker
  */
 class PokerOptionsDialog extends GameOptionsDialog implements ActionListener, ItemListener

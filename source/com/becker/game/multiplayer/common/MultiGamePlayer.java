@@ -11,6 +11,7 @@ import java.awt.*;
  */
 public class MultiGamePlayer extends Player {
 
+    private static final long serialVersionUID = 1;
 
     private static final float SATURATION = 0.8f;
     private static final float BRIGHTNESS = 0.999f;
@@ -42,7 +43,7 @@ public class MultiGamePlayer extends Player {
 
 
     /**
-     * @@ this method could use some improvment
+     * @@ this method could use some improvement
      * @param hue to check for uniqueness compared to other players.
      * @param players
      * @return

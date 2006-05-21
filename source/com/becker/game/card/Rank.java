@@ -4,9 +4,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 /**
- * User: Barry Becker
- * Date: Mar 5, 2005
- * Time: 8:36:01 AM
+ * @author Barry Becker  Date: Mar 5, 2005
  */
 public enum Rank {
 

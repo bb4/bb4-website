@@ -20,10 +20,5 @@ public class CheckersNewGameDialog extends TwoPlayerNewGameDialog implements Act
         super( parent, viewer );
     }
 
-    public final String getTitle()
-    {
-        return GameContext.getLabel("CHECKERS_OPTIONS");
-    }
-
 }
 

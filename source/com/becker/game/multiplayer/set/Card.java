@@ -71,8 +71,7 @@ public class Card {
 
     // Initialize prototype deck
     static {
-        //for (AttributeValue color : AttributeValue.values())
-        AttributeValue color = AttributeValue.THIRD;
+        for (AttributeValue color : AttributeValue.values())
             for (AttributeValue shape : AttributeValue.values())
                  for (AttributeValue number : AttributeValue.values())
                      for (AttributeValue texture : AttributeValue.values())
