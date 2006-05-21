@@ -1,0 +1,117 @@
+package com.becker.game.common.ui;
+
+import com.becker.ui.*;
+import com.becker.game.common.*;
+import com.becker.game.common.online.*;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+/**
+ * Manage the online game tables.
+ * Allows a player to join exactly one virtual table and begin playing against other players online.
+ * If the player creates a table, he sets the options for it.
+ *
+ * @author Barry Becker Date: May 14, 2006
+ */
+public abstract class OnlineGameDialog extends JDialog implements ActionListener {
+
+    // this allows us to talk with the game server (if it is available).
+    protected ServerConnection serverConnection_;
+
+    /**
+     * the options get set directly on the game controller that is passed in.
+     */
+    protected GameController controller_;
+
+    // cache a pointer to this in case we have children
+    protected Frame parent_ = null;
+
+    protected ViewerCallbackInterface viewer_;
+
+
+
+    public OnlineGameDialog(Frame parent, ViewerCallbackInterface viewer) {
+        parent_ = parent;
+        viewer_ = viewer;
+        controller_ = viewer.getController();
+        serverConnection_ = createServerConnection();
+
+        enableEvents( AWTEvent.WINDOW_EVENT_MASK );
+        setTitle( "Manage Online Games" );
+
+        this.setModal( false );
+
+        if (!GUIUtil.isStandAlone())
+            this.setAlwaysOnTop(true);
+
+        initGUI();
+        pack();
+    }
+
+    protected void initGUI() {
+
+        JPanel playOnlinePanel = createPlayOnlinePanel();
+        this.getContentPane().add( playOnlinePanel );
+    }
+
+    public boolean isServerAvailable() {
+        return serverConnection_ != null && serverConnection_.isConnected();
+    }
+
+    /**
+     * Subclasses need to provide a more interesting implementation of this if they
+     * want to support online play.
+     */
+    protected JPanel createPlayOnlinePanel()
+    {
+        JPanel playOnlinePanel = new JPanel();
+        playOnlinePanel.setLayout( new BoxLayout( playOnlinePanel, BoxLayout.Y_AXIS ) );
+
+
+        JPanel p = new JPanel();
+        p.setLayout( new BorderLayout() );
+        p.setBorder( BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(),
+                     "Play Online" ) );
+        p.setMaximumSize( new Dimension( 400, 60 ) );
+
+        JLabel label = new JLabel("Join an existing table with other online players.");
+        label.setAlignmentX( Component.LEFT_ALIGNMENT );
+        p.add( label );
+
+        playOnlinePanel.add( p );
+
+        return playOnlinePanel;
+    }
+
+    protected abstract ServerConnection createServerConnection();
+
+    public boolean isConnected() {
+        return serverConnection_.isConnected();
+    }
+    public void setParentFrame(Frame parent) {
+        parent_ = parent;
+    }
+
+    public void showDialog()
+    {
+        if (parent_ != null)  {
+            this.setLocationRelativeTo( parent_ );
+        }
+
+        this.setVisible( true );
+        this.toFront();
+        this.pack();
+    }
+
+    public void actionPerformed( ActionEvent e )
+    {
+        Object source = e.getSource();
+
+        //if ( source == joinButton_ ) {
+        //    join();
+        //}
+    }
+
+}
