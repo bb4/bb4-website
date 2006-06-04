@@ -1,8 +1,8 @@
 package com.becker.game.common.ui;
 
-import com.becker.ui.*;
 import com.becker.game.common.*;
 import com.becker.game.common.online.*;
+import com.becker.ui.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +15,7 @@ import java.awt.event.*;
  *
  * @author Barry Becker Date: May 14, 2006
  */
-public abstract class OnlineGameDialog extends JDialog implements ActionListener {
+public abstract class OnlineGameDialog extends JDialog implements OnlineChangeListener, ActionListener {
 
     // this allows us to talk with the game server (if it is available).
     protected ServerConnection serverConnection_;
@@ -36,7 +36,7 @@ public abstract class OnlineGameDialog extends JDialog implements ActionListener
         parent_ = parent;
         viewer_ = viewer;
         controller_ = viewer.getController();
-        serverConnection_ = createServerConnection();
+        serverConnection_ = createServerConnection(this);
 
         enableEvents( AWTEvent.WINDOW_EVENT_MASK );
         setTitle( "Manage Online Games" );
@@ -58,6 +58,12 @@ public abstract class OnlineGameDialog extends JDialog implements ActionListener
 
     public boolean isServerAvailable() {
         return serverConnection_ != null && serverConnection_.isConnected();
+    }
+
+    public void handleServerUpdate(GameCommand cmd) {
+
+        //
+        System.out.println("got an update of the table from the server:\n" + cmd);
     }
 
     /**
@@ -85,7 +91,7 @@ public abstract class OnlineGameDialog extends JDialog implements ActionListener
         return playOnlinePanel;
     }
 
-    protected abstract ServerConnection createServerConnection();
+    protected abstract ServerConnection createServerConnection(OnlineChangeListener listener);
 
     public boolean isConnected() {
         return serverConnection_.isConnected();
@@ -103,15 +109,6 @@ public abstract class OnlineGameDialog extends JDialog implements ActionListener
         this.setVisible( true );
         this.toFront();
         this.pack();
-    }
-
-    public void actionPerformed( ActionEvent e )
-    {
-        Object source = e.getSource();
-
-        //if ( source == joinButton_ ) {
-        //    join();
-        //}
     }
 
 }

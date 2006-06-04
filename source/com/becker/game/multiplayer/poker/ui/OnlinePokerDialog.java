@@ -31,8 +31,8 @@ public class OnlinePokerDialog extends MultiPlayerOnlineGameDialog {
         return new PokerOptionsDialog(null, controller_);
     }
 
-    protected ServerConnection createServerConnection() {
-         return new ServerConnection(OnlinePokerServer.PORT);
+    protected ServerConnection createServerConnection(OnlineChangeListener l) {
+         return new ServerConnection(OnlinePokerServer.PORT, l);
      }
 
 }

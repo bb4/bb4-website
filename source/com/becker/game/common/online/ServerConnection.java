@@ -21,11 +21,14 @@ public class ServerConnection {
 
     private boolean isConnected_ = false;
 
+    private OnlineChangeListener changeListener_;
+
     /**
      * @param port to open the connection on.
      */
-    public ServerConnection(int port) {
-        createListenSocket(port);
+    public ServerConnection(int port, OnlineChangeListener listener) {
+         changeListener_ = listener;
+         createListenSocket(port);
     }
 
     /**
@@ -42,18 +45,19 @@ public class ServerConnection {
 
         try {
             // Send data over socket
-             oStream_.writeObject(cmd);
+            oStream_.writeObject(cmd);
+            oStream_.flush();
 
             // Receive obj from server
-            GameCommand receivedCmd = (GameCommand) iStream_.readObject();
-            System.out.println("Received:" + receivedCmd);
+            //GameCommand receivedCmd = (GameCommand) iStream_.readObject();
+            //System.out.println("Received:" + receivedCmd);
         }
         catch (IOException e) {
             exceptionOccurred("Read failed.", e);
         }
-        catch (ClassNotFoundException e) {
-            exceptionOccurred("No Such Class.", e);
-        }
+        //catch (ClassNotFoundException e) {
+        //    exceptionOccurred("No Such Class.", e);
+        //}
 
     }
 
@@ -61,10 +65,14 @@ public class ServerConnection {
         try {
             System.out.println("Attempting to connect to Server="+DEFAULT_HOST + " port="+port);
             socket_ = new Socket(DEFAULT_HOST, port);
-            //out_ = new PrintWriter(socket_.getOutputStream(), true);
-            //in_ = new BufferedReader(new InputStreamReader(socket_.getInputStream()));
             oStream_ = new ObjectOutputStream(socket_.getOutputStream());
             iStream_ = new ObjectInputStream(socket_.getInputStream());
+
+            // create a thread to listen for updates from the server.
+            UpdateWorker w = new UpdateWorker(iStream_);
+            Thread t = new Thread(w);
+            t.start();
+
             isConnected_ = true;
         }
         catch (ConnectException e) {
@@ -90,5 +98,41 @@ public class ServerConnection {
         t.printStackTrace();
         System.exit(1);
     }
+
+
+    /**
+     * A client worker is created for each client player connection to this server.
+     */
+    private class UpdateWorker implements Runnable {
+
+        private ObjectInputStream inputStream_;
+
+        UpdateWorker(ObjectInputStream input) {
+            this.inputStream_ = input;
+        }
+
+        public void run() {
+
+
+            while (true) {
+                try {
+                    GameCommand cmd = (GameCommand) inputStream_.readObject();
+
+                    // we got a change to the tables, update our listener
+                    changeListener_.handleServerUpdate(cmd);
+
+                }
+                catch (IOException e) {
+                    System.out.println("Read failed.");
+                    e.printStackTrace();
+                    break;
+                }
+                catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
 
 }
