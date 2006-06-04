@@ -91,6 +91,18 @@ public abstract class MultiPlayerOnlineGamesTable implements ActionListener {
      */
     protected abstract void addRow(OnlineGameTable onlineTable);
 
+
+    /**
+     * clear out all the rows in the table.
+     */
+    public void removeAllRows() {
+
+        PlayerTableModel m = this.getModel();
+        for (int i = m.getRowCount() -1; i >= 0; i--) {
+            m.removeRow(i);
+        }
+    }
+
     /**
      *
      * @param initialPlayerName

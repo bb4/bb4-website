@@ -29,7 +29,8 @@ public class OnlineActionCellRenderer implements TableCellRenderer {
                                                    boolean isSelected, boolean hasFocus,
                                                    int row, int col)
     {
-        joinButton_.setEnabled((Boolean) value);
+        if (value != null)
+            joinButton_.setEnabled((Boolean) value);
 
         joinButton_.setRow(row);
         return joinButton_;

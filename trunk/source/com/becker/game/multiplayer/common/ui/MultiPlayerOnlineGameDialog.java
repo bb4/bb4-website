@@ -99,9 +99,26 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog imple
         controller_.setPlayers(onlineGamesTable_.getSelectedTable().getPlayers());
     }
 
+    public void handleServerUpdate(GameCommand cmd) {
+
+
+        System.out.println("got an update of the multiplayer table list from the server:\n" + cmd);
+
+        if ("update".equals(cmd.getName())) {
+            OnlineGameTableList tableList = (OnlineGameTableList) cmd.getArgument();
+            System.out.println("There were "+ tableList.size()+" tables returned from server.");
+
+            onlineGamesTable_.removeAllRows();
+
+            for (int i=0; i<tableList.size(); i++) {
+                onlineGamesTable_.addRow(tableList.get(i));
+            }
+        }
+    }
+
     public void actionPerformed( ActionEvent e )
     {
-        super.actionPerformed(e);
+        //super.actionPerformed(e);
         Object source = e.getSource();
 
         if (source == createTableButton_) {
@@ -109,7 +126,7 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog imple
             OnlineGameTable newTable = onlineGamesTable_.createOnlineTable(localPlayerName_.getText());
 
             // now add it to this list as a new row and tell the server to add it.
-            onlineGamesTable_.addRow(newTable);
+            //onlineGamesTable_.addRow(newTable);
             serverConnection_.addGameTable(newTable);
         }
 
