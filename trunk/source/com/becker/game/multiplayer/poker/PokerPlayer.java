@@ -91,7 +91,7 @@ public abstract class PokerPlayer extends MultiGamePlayer
     }
 
     public boolean isOutOfGame() {
-        return outOfGame_;
+        return outOfGame_ || (cash_ <= 0);
     }
 
     public PokerPlayerMarker getPiece() {

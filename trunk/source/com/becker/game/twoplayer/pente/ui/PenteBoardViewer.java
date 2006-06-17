@@ -48,7 +48,7 @@ public class PenteBoardViewer extends TwoPlayerBoardViewer
 
     public void mousePressed( MouseEvent e )
     {
-        if (get2PlayerController().isProcessing() || get2PlayerController().done())   {
+        if (get2PlayerController().isProcessing() || get2PlayerController().isDone())   {
             return;
         }
         Location loc = createLocation(e, getCellSize());

@@ -1,4 +1,4 @@
-package com.becker.game.common.ui;
+package com.becker.game.online.ui;
 
 import com.becker.game.common.*;
 

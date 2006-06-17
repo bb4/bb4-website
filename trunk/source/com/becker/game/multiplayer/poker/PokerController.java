@@ -28,7 +28,7 @@ import java.util.*;
  *      - unless really done then you can only exit
  *
  *  bugs
- *     -  Raise amount not always matched! seems to happen in a multiplayer game when robots involved.
+ *     - Raise amount not always matched! seems to happen in a multiplayer game when robots involved.
  *       this is because it should only inlcude the callAmount if the player has not aleady gone
  *     - reduce player radii
  *  possible bugs
@@ -95,7 +95,7 @@ public class PokerController extends GameController
         ((PokerTable)board_).initPlayers((PokerPlayer[])players_, this);
     }
 
-     /**
+    /**
      * by default we start with one human and one robot player.
      */
     private void initPlayers()
@@ -114,7 +114,6 @@ public class PokerController extends GameController
             players_[1] = PokerPlayer.createPokerPlayer("Player 2",
                                        100, PokerPlayer.getNewPlayerColor(gplayers), false);
             players_[1].setName(players_[1].getName()+'('+((PokerRobotPlayer)players_[1]).getType()+')');
-
         }
 
         dealCardsToPlayers(5);
@@ -236,7 +235,7 @@ public class PokerController extends GameController
      *
      * @return true if the game is over.
      */
-    public boolean done()
+    public boolean isDone()
     {
         if (getBoard().getLastMove() == null)
             return false;
@@ -258,11 +257,11 @@ public class PokerController extends GameController
      */
     public int advanceToNextPlayer()
     {
-        PokerGameViewer pviewer  = (PokerGameViewer)this.getViewer();
+        PokerGameViewer pviewer  = (PokerGameViewer) getViewer();
         pviewer.refresh();
 
         // show message when done.
-        if (done()) {
+        if (isDone()) {
             pviewer.sendGameChangedEvent(null);
             return 0;
         }
@@ -280,7 +279,7 @@ public class PokerController extends GameController
             doRoundOverBookKeeping(pviewer);
         }
 
-        if (!getCurrentPlayer().isHuman()) {
+        if (!getCurrentPlayer().isHuman() && !isDone()) {
             pviewer.doComputerMove(getCurrentPlayer());
         }
 
@@ -346,16 +345,20 @@ public class PokerController extends GameController
         winner.claimPot(this);
         pviewer.showRoundOver(winner, winnings);
         // start a new round deal new cards and ante
-        dealCardsToPlayers(5);
-        anteUp();
-        // the player to start the betting in the next round is the next player who still has some money left.
-        do {
-           startingPlayerIndex_ = (++startingPlayerIndex_) % this.getNumPlayers();
-        }
-        while (this.getPlayer(startingPlayerIndex_).isOutOfGame());
 
-        currentPlayerIndex_ = startingPlayerIndex_;
-        playIndex_ = 0;
+        // if the game is over, we don't want to continue.
+        if (!isDone()) {
+            dealCardsToPlayers(5);
+            anteUp();
+            // the player to start the betting in the next round is the next player who still has some money left.
+            do {
+               startingPlayerIndex_ = (++startingPlayerIndex_) % this.getNumPlayers();
+            }
+            while (this.getPlayer(startingPlayerIndex_).isOutOfGame());
+
+            currentPlayerIndex_ = startingPlayerIndex_;
+            playIndex_ = 0;
+        }
     }
 
     private boolean allButOneFolded() {

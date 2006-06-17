@@ -1,4 +1,4 @@
-package com.becker.game.common.online;
+package com.becker.game.online;
 
 /**
  * @author Barry Becker Date: May 14, 2006

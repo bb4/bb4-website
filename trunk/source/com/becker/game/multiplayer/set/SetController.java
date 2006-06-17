@@ -197,7 +197,7 @@ public class SetController extends GameController
      *
      * @return true if the game is over.
      */
-    public boolean done()
+    public boolean isDone()
     {
         return !Card.hasSet(deck_);
     }

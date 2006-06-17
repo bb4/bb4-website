@@ -1,6 +1,6 @@
 package com.becker.game.multiplayer.poker.online;
 
-import com.becker.game.common.online.*;
+import com.becker.game.online.*;
 
 /**
  * @author Barry Becker Date: May 14, 2006

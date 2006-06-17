@@ -1,4 +1,4 @@
-package com.becker.game.common.online;
+package com.becker.game.online;
 
 import java.io.*;
 
@@ -14,8 +14,17 @@ public class GameCommand implements Serializable {
 
     private static final long serialVersionUID = 1;
 
+    public enum Name {
+        ENTER_ROOM,
+        ADD_TABLE,
+        JOIN_TABLE,
+        CHANGE_NAME,
+        UPDATE_TABLES;
+    }
+
+
     // name of the command
-    String name_;
+    Name name_;
 
     // corresponding argument. Null if none.
     Object argument_;
@@ -25,12 +34,12 @@ public class GameCommand implements Serializable {
      * @param name of the comman
      * @param arg serializable argument. null if none.
      */
-    public GameCommand(String name, Serializable arg) {
+    public GameCommand(Name name, Serializable arg) {
         name_ = name;
         argument_ = arg;
     }
 
-    public String getName() {
+    public Name getName() {
         return name_;
     }
 

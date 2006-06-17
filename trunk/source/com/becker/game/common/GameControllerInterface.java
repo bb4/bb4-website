@@ -96,5 +96,5 @@ public interface GameControllerInterface
      *
      * @return true if the game is over.
      */
-    boolean done();
+    boolean isDone();
 }

@@ -482,7 +482,7 @@ public abstract class TwoPlayerController extends GameController
     }
 
 
-    public boolean done()
+    public boolean isDone()
     {
         return getSearchable().done((TwoPlayerMove)board_.getLastMove(), false);
     }
@@ -540,7 +540,7 @@ public abstract class TwoPlayerController extends GameController
         //GameContext.log(2, "generated top moves are :  " + moveList );
         return bestMoveList;
     }
-    
+
 
 
     public final Optimizee getOptimizee() {
