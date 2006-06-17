@@ -1,4 +1,4 @@
-package com.becker.game.common.online;
+package com.becker.game.online;
 
 
 import java.io.*;
@@ -6,7 +6,7 @@ import java.net.*;
 
 /**
  * Opens a socket to the Game server so we can talk to it.
- * We pass data using object seriealization over the input and output streams.
+ * We pass data using object serialization over the input and output streams.
  *
  * @author Barry Becker Date: May 14, 2006
  */
@@ -14,8 +14,7 @@ public class ServerConnection {
 
     private static final String DEFAULT_HOST = "127.0.0.1"; // localhost // "192.168.1.100";
     private Socket socket_;
-    //private PrintWriter out_;
-    //private BufferedReader in_;
+
     private ObjectOutputStream oStream_;
     private ObjectInputStream iStream_;
 
@@ -39,7 +38,7 @@ public class ServerConnection {
     }
 
     /**
-     * @param cmd object to seriealize over the wire.
+     * @param cmd object to serialize over the wire.
      */
     public void sendCommand(GameCommand cmd)  {
 
@@ -48,37 +47,40 @@ public class ServerConnection {
             oStream_.writeObject(cmd);
             oStream_.flush();
 
-            // Receive obj from server
-            //GameCommand receivedCmd = (GameCommand) iStream_.readObject();
-            //System.out.println("Received:" + receivedCmd);
+            // Receive obj from server. Should response have success or error condition?
+            // GameCommand receivedCmd = (GameCommand) iStream_.readObject();
+            // System.out.println("Received:" + receivedCmd);
         }
         catch (IOException e) {
             exceptionOccurred("Read failed.", e);
         }
-        //catch (ClassNotFoundException e) {
-        //    exceptionOccurred("No Such Class.", e);
-        //}
-
     }
 
+    /**
+     * Open a socket to the server to listen for, and send information.
+     * @param port to open the connection on.
+     */
     public void createListenSocket(int port) {
         try {
-            System.out.println("Attempting to connect to Server="+DEFAULT_HOST + " port="+port);
+            System.out.println("Attempting to connect to Server=" + DEFAULT_HOST + " port="+port);
             socket_ = new Socket(DEFAULT_HOST, port);
             oStream_ = new ObjectOutputStream(socket_.getOutputStream());
             iStream_ = new ObjectInputStream(socket_.getInputStream());
 
             // create a thread to listen for updates from the server.
             UpdateWorker w = new UpdateWorker(iStream_);
+            System.out.println(" .....");
             Thread t = new Thread(w);
             t.start();
 
+            System.out.println("connected.");
             isConnected_ = true;
         }
         catch (ConnectException e) {
              System.out.println("failed to get connection. " +
                                 "Probably because the server is not running or accessable. " +
                                 "Play local game.");
+            //e.printStackTrace();
             isConnected_ = false;
         }
         catch (UnknownHostException e) {
@@ -89,8 +91,12 @@ public class ServerConnection {
         }
     }
 
+    /**
+     * Tell the server to add another game table to the list that is available.
+     * @param newTable  to add.
+     */
     public void addGameTable(OnlineGameTable newTable) {
-        sendCommand(new GameCommand("add_table" , newTable));
+        sendCommand(new GameCommand(GameCommand.Name.ADD_TABLE , newTable));
     }
 
     private static void exceptionOccurred(String msg, Throwable t) {
@@ -113,12 +119,11 @@ public class ServerConnection {
 
         public void run() {
 
-
             while (true) {
                 try {
                     GameCommand cmd = (GameCommand) inputStream_.readObject();
 
-                    // we got a change to the tables, update our listener
+                    // we got a change to the tables on the server, update our client listener
                     changeListener_.handleServerUpdate(cmd);
 
                 }

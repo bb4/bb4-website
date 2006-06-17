@@ -107,7 +107,22 @@ public class PokerGameViewer extends GameBoardViewer
      */
     protected String getGameOverMessage()
     {
-        return "Game Over";
+        StringBuffer buf = new StringBuffer("Game Over\n");
+
+        // find the player with the most money. That's the winner.
+        Player[] players = controller_.getPlayers();
+        int max = -1;
+        PokerPlayer winner = null;
+        for (final Player p : players) {
+            PokerPlayer pp = (PokerPlayer) p;
+            if (pp.getCash() > max) {
+                max = pp.getCash();
+                winner = pp;
+            }
+        }
+
+        buf.append(winner.getName() + " won the game with $"+winner.getCash() +'.');
+        return buf.toString();
     }
 
 
@@ -154,7 +169,7 @@ public class PokerGameViewer extends GameBoardViewer
      */
     public void gameChanged(GameChangedEvent evt)
     {
-        if (controller_.done() && !winnerDialogShown_)  {
+        if (controller_.isDone() && !winnerDialogShown_)  {
             winnerDialogShown_ = true;
             showWinnerDialog();
         }

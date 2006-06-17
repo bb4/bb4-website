@@ -1,4 +1,4 @@
-package com.becker.game.common.online;
+package com.becker.game.online;
 
 import com.becker.game.common.*;
 
@@ -39,8 +39,12 @@ public class OnlineGameTable implements Serializable {
         return name_;
     }
 
+    public void setName(String name) {
+        name_ = name;
+    }
+
     public Player[] getPlayers() {
-        return (Player[]) players_.toArray(new Player[players_.size()]);
+        return players_.toArray(new Player[players_.size()]);
     }
 
     /**

@@ -142,7 +142,7 @@ public class GalacticController extends GameController
      *
      * @return true if the game is over.
      */
-    public boolean done()
+    public boolean isDone()
     {
         if (board_.getLastMove()==null)
             return false;
@@ -164,7 +164,7 @@ public class GalacticController extends GameController
         GalaxyViewer gviewer  = (GalaxyViewer)this.getViewer();
 
         // show message when done.
-        if (done()) {
+        if (isDone()) {
             System.out.println( "advanceToNextPlayer done" );
             ((GameBoardViewer)getViewer()).sendGameChangedEvent(null);
             return 0;

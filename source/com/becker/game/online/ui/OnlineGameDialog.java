@@ -1,7 +1,7 @@
-package com.becker.game.common.ui;
+package com.becker.game.online.ui;
 
 import com.becker.game.common.*;
-import com.becker.game.common.online.*;
+import com.becker.game.online.*;
 import com.becker.ui.*;
 
 import javax.swing.*;
@@ -13,9 +13,14 @@ import java.awt.event.*;
  * Allows a player to join exactly one virtual table and begin playing against other players online.
  * If the player creates a table, he sets the options for it.
  *
+ *
+ * The server maintains the global state.
+ * Any time something changes, the server broadcasts the global state to the online clients.
+ *
  * @author Barry Becker Date: May 14, 2006
  */
-public abstract class OnlineGameDialog extends JDialog implements OnlineChangeListener, ActionListener {
+public abstract class OnlineGameDialog extends JDialog
+                                       implements OnlineChangeListener, ActionListener {
 
     // this allows us to talk with the game server (if it is available).
     protected ServerConnection serverConnection_;
@@ -25,7 +30,7 @@ public abstract class OnlineGameDialog extends JDialog implements OnlineChangeLi
      */
     protected GameController controller_;
 
-    // cache a pointer to this in case we have children
+    // cache a pointer to this in case we have children.
     protected Frame parent_ = null;
 
     protected ViewerCallbackInterface viewer_;
@@ -93,9 +98,16 @@ public abstract class OnlineGameDialog extends JDialog implements OnlineChangeLi
 
     protected abstract ServerConnection createServerConnection(OnlineChangeListener listener);
 
+    /**
+     * @return true if there is a live connection to the game server.
+     */
     public boolean isConnected() {
         return serverConnection_.isConnected();
     }
+
+    /**
+     * @param parent frame.
+     */
     public void setParentFrame(Frame parent) {
         parent_ = parent;
     }

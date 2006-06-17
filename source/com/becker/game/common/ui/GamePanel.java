@@ -1,6 +1,7 @@
 package com.becker.game.common.ui;
 
 import com.becker.game.common.*;
+import com.becker.game.online.ui.*;
 import com.becker.java2d.*;
 import com.becker.ui.*;
 
@@ -142,7 +143,7 @@ public abstract class GamePanel extends TexturedPanel
         OutputWindow logWindow = new OutputWindow( GameContext.getLabel("LOG_OUTPUT"), null);
         GameContext.setLogger( new Log( logWindow ) );
 
-        newGameDialog_ = createNewGameDialog( null, boardViewer_ );
+        newGameDialog_ = createNewGameDialog( null, boardViewer_ );      
         onlineGameDialog_ = createOnlineGameDialog(null, boardViewer_);
         optionsDialog_ = createOptionsDialog( null, boardViewer_.getController() );
 
@@ -328,6 +329,8 @@ public abstract class GamePanel extends TexturedPanel
         if ( source == toolBar_.getNewGameButton() ) {
             //newGameDialog_.setLocationRelativeTo( this );
 
+            // if there is an active server and the game supports online play then show the online game dialog
+            // instead of the normal new (local) game dialog to allow them to play with others online.
             if (isOnlinePlayAvailable())  {
                 onlineGameDialog_.showDialog();
             } else {

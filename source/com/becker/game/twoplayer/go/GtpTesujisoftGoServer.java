@@ -1,9 +1,9 @@
 package com.becker.game.twoplayer.go;
 
 import com.becker.game.common.*;
-import com.becker.game.common.online.*;
 import com.becker.game.twoplayer.common.search.SearchStrategy;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
+import com.becker.game.online.*;
 import go.Point;
 import gtp.GtpServer;
 import utils.Options;

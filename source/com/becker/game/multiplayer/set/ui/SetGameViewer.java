@@ -125,7 +125,7 @@ public final class SetGameViewer extends GameBoardViewer
      */
     public void gameChanged(GameChangedEvent evt)
     {
-        if (controller_.done() && !winnerDialogShown_)  {
+        if (controller_.isDone() && !winnerDialogShown_)  {
             winnerDialogShown_ = true;
             this.showWinnerDialog();
         }

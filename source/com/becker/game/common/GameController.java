@@ -255,8 +255,8 @@ public abstract class GameController
     }
 
     /**
-     * @@ use list of players rather than array.
-     * @param players  the players currently playing the game
+     * Maybe use list of players rather than array.
+     * @param players the players currently playing the game
      */
     public void setPlayers( Player[] players )
     {

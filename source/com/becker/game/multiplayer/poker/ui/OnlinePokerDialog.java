@@ -1,10 +1,10 @@
 package com.becker.game.multiplayer.poker.ui;
 
 import com.becker.game.common.*;
-import com.becker.game.common.online.*;
 import com.becker.game.common.ui.*;
-import com.becker.game.multiplayer.common.ui.*;
+import com.becker.game.multiplayer.online.ui.*;
 import com.becker.game.multiplayer.poker.online.*;
+import com.becker.game.online.*;
 
 import java.awt.*;
 
