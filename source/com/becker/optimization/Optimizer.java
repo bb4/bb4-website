@@ -1,5 +1,7 @@
 package com.becker.optimization;
 
+import com.becker.optimization.strategy.*;
+
 import java.io.*;
 
 /**
@@ -31,11 +33,11 @@ public class Optimizer
 
     // debug level of 0 means no debug info, 3 is all debug info.
     protected static final int DEBUG_LEVEL = 0;
-    protected static final int DEFAULT_SAMPLING_RATE = 3;
-    protected int samplingRate_ = DEFAULT_SAMPLING_RATE;
 
     protected String sLogFile_ = null;
     public static final String SEPARATOR = ",\t";
+
+    protected OptimizationListener listener_;
 
 
     /**
@@ -81,14 +83,17 @@ public class Optimizer
             case GLOBAL_SAMPLING:
                 optStrategy = new GlobalSampleStrategy(optimizee_, sLogFile_);
                 // 10 sample points in each dim. 1000 evaluations if 3 dimensions.
-                ((GlobalSampleStrategy)optStrategy).setSamplingRate(10);
+                ((GlobalSampleStrategy)optStrategy).setSamplingRate(120 / optimizee_.getNumParameters());
                 break;
             case GLOBAL_HILL_CLIMBING:
                 optStrategy = new GlobalSampleStrategy(optimizee_, sLogFile_);
                 // 3 sample points along each dimensiont
-                ((GlobalSampleStrategy)optStrategy).setSamplingRate(3);
+                ((GlobalSampleStrategy)optStrategy).setSamplingRate(12 / optimizee_.getNumParameters());
                 // first find a good place to start
-                params = optStrategy.doOptimization(params);
+                // @@ perhaps we should try several of the better results from global samling.
+                params = optStrategy.doOptimization(params, fitnessRange);
+                optStrategy = new HillClimbingStrategy(optimizee_, sLogFile_);
+                break;
             case HILL_CLIMBING:
                 optStrategy = new HillClimbingStrategy(optimizee_, sLogFile_);
                 break;
@@ -111,8 +116,17 @@ public class Optimizer
             System.out.println("Optimization strategy not implemented yet: " + optimizationType);
             return params;
         } else {
-            return optStrategy.doOptimization(params);
+            optStrategy.setListener(listener_);
+            return optStrategy.doOptimization(params, fitnessRange);
         }
+    }
+
+    public void setListener(OptimizationListener l) {
+        listener_ = l;
+    }
+
+    public void removeListener() {
+        listener_ = null;
     }
 
 
@@ -131,7 +145,7 @@ public class Optimizer
             logFile.write( "jumpSize"+SEPARATOR );
             logFile.write( "dotprod"+SEPARATOR );
             for (int i=0; i<params.size(); i++) {
-                logFile.write( params.get(i).name +SEPARATOR );
+                logFile.write( params.get(i).getName() +SEPARATOR );
             }
             logFile.write( "comment " );
             logFile.write( '\n' );

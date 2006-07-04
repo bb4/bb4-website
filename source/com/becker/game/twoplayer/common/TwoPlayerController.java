@@ -556,9 +556,9 @@ public abstract class TwoPlayerController extends GameController
          * @return return true if we evaluate the fitness by comparison
          */
         public boolean  evaluateByComparison()
-         {
-             return true;
-         }
+        {
+            return true;
+        }
 
         /**
          * Attributes a measure of fitness to the specified set of parameters.
@@ -569,9 +569,16 @@ public abstract class TwoPlayerController extends GameController
          * @return the fitness measure. The higher the better
          */
         public double evaluateFitness( ParameterArray params )
-       {
+        {
            return 0.0;
-       }
+        }
+
+        /**
+         * @return the number of factors we take into consideration when optimizing.
+         */
+        public int getNumParameters() {
+            return weights_.getDefaultWeights().size();
+        }
 
         /**
          * Compares to sets of game parameters.

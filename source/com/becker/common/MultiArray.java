@@ -35,7 +35,7 @@ public class MultiArray
         dims_ = dims;
         numDims_ = dims_.length;
         numVals_ = getDimensionProduct( numDims_ );
-        assert (numDims_ > 0): "You must have >0 dimansion to use this class" ;
+        assert (numDims_ > 0): "You must have > 0 dimansion to use this class" ;
 
         arrayData_ = new double[numVals_];
     }

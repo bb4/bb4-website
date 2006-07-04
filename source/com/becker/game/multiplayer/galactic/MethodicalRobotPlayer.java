@@ -7,7 +7,7 @@ import java.awt.*;
 
 /**
  * Represents a Robot Admiral commanding an intergalactic fleet of starships.
- * These Robot Admirals have there own unique strategies for playing.
+ * These Robot Admirals have there own unique strategy for playing.
  * @@ for now there is only one type, but in the future this should be an abstract base class for other types.
  *
  * @author Barry Becker

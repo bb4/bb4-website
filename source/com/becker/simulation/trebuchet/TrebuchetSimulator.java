@@ -30,6 +30,7 @@ public class TrebuchetSimulator extends Simulator implements Optimizee, ChangeLi
 
     private static final Color BACKGROUND_COLOR = new Color(253, 250, 253);
 
+    private static final int NUM_PARAMS = 3;
 
 
     public TrebuchetSimulator()
@@ -88,7 +89,7 @@ public class TrebuchetSimulator extends Simulator implements Optimizee, ChangeLi
             optimizer = new Optimizer( this );
         else
             optimizer = new Optimizer( this, Util.PROJECT_DIR+"performance/trebuchet/trebuchet_optimization.txt" );
-        Parameter[] params = new Parameter[3];
+        Parameter[] params = new Parameter[NUM_PARAMS];
         //params[0] = new Parameter( WAVE_SPEED, 0.0001, 0.02, "wave speed" );
         //params[1] = new Parameter( WAVE_AMPLITUDE, 0.001, 0.2, "wave amplitude" );
         //params[2] = new Parameter( WAVE_PERIOD, 0.5, 9.0, "wave period" );
@@ -96,6 +97,10 @@ public class TrebuchetSimulator extends Simulator implements Optimizee, ChangeLi
 
         setPaused(false);
         optimizer.doOptimization(  OptimizationType.GENETIC_SEARCH, paramArray, 0.3);
+    }
+
+    public int getNumParameters() {
+        return NUM_PARAMS;
     }
 
     protected double getInitialTimeStep() {

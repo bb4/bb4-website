@@ -169,9 +169,9 @@ public class PenteController extends TwoPlayerController
         int index = PentePatterns.weightIndexTable_[inthash];
 
         if ( symb == P1_SYMB )
-            return weights.get(index).value;
+            return weights.get(index).getValue();
         else
-            return -weights.get(index).value;
+            return -weights.get(index).getValue();
     }
 
     /**
@@ -389,7 +389,7 @@ public class PenteController extends TwoPlayerController
         public boolean inJeopardy( Move m, ParameterArray weights, boolean player1sPerspective )
         {
             // consider the delta big if >= w. Where w is the value of a near win.
-            double w = weights.get(8).value;
+            double w = weights.get(8).getValue();
 
             double newValue = worth( m, weights, player1sPerspective );
             double diff = newValue - m.getValue();

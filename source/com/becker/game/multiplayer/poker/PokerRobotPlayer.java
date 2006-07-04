@@ -5,7 +5,7 @@ import java.awt.*;
 
 /**
  * Represents a Robot poker player.
- * These Robot Admirals have there own unique strategies for playing.
+ * These Robot Admirals have there own unique strategy for playing.
  * Abstract base class for other robot player types.
  *
  * @author Barry Becker

@@ -13,7 +13,7 @@ import java.util.*;
  * @@ todo:
  *  - mousing over menu item should highlight planet in the viewer
  *  - mouse over should still work when entering orders (non-modal?)
- *  - have robot players with different strategies.
+ *  - have robot players with different strategy.
  *  - have button to show stats dialog (basically same as tally dialog) on toolbar.
  *  - in addition to order dialog should be able to directly click on source, then dest planet,
  *    then enter number of ships.

@@ -10,11 +10,12 @@ import com.becker.common.Util;
 public class Parameter
 {
 
-    public double value = 0.0;
-    public double minValue = 0.0;
-    public double maxValue = 0.0;
-    public double range = 0.0;
-    public String name = null;
+    private double value_ = 0.0;
+    private double minValue_ = 0.0;
+    private double maxValue_ = 0.0;
+    private double range_ = 0.0;
+    private String name_ = null;
+    private boolean integerOnly_ = false;
 
     /**
      *  Constructor
@@ -25,17 +26,33 @@ public class Parameter
      */
     public Parameter( double val, double minVal, double maxVal, String paramName )
     {
-        value = val;
-        minValue = minVal;
-        maxValue = maxVal;
-        range = maxVal - minVal;
-        name = paramName;
+        setValue(val);
+        setMinValue(minVal);
+        setMaxValue(maxVal);
+        setRange(maxVal - minVal);
+        setName(paramName);
+        integerOnly_ = false;
     }
+
+    public Parameter( double val, double minVal, double maxVal, String paramName, boolean intOnly )
+    {
+        this(val, minVal, maxVal, paramName);
+        integerOnly_ = intOnly;
+    }
+
 
     public Parameter copy()
     {
-        Parameter p = new Parameter( this.value, this.minValue, this.maxValue, this.name );
+        Parameter p = new Parameter( this.getValue(), this.getMinValue(), this.getMaxValue(), this.getName() );
         return p;
+    }
+
+    public void setIntegerOnly(boolean intOnly)  {
+        integerOnly_ = intOnly;
+    }
+
+    public boolean isIntegerOnly() {
+        return integerOnly_;
     }
 
     /**
@@ -47,13 +64,16 @@ public class Parameter
      */
     public double increment( int numSteps, int direction )
     {
-        double increment = direction * (maxValue - minValue) / numSteps;
-        if ( (value+increment > maxValue) || (value+increment < minValue) ) {
-            value -= increment;
+        double increment = direction * (getMaxValue() - getMinValue()) / numSteps;
+        if (isIntegerOnly()) {
+            increment = Math.max((int) increment, 1);
+        }
+        if ( (getValue()+increment > getMaxValue()) || (getValue()+increment < getMinValue()) ) {
+            setValue(getValue() - increment);
             return -increment;
         }
         else {
-            value += increment;
+            setValue(getValue() + increment);
             return increment;
         }
     }
@@ -61,14 +81,57 @@ public class Parameter
 
     public String toString()
     {
-        StringBuffer sa = new StringBuffer( name );
+        StringBuffer sa = new StringBuffer( getName() );
         sa.append( " =" );
-        sa.append( Util.formatNumber(value) );
+        sa.append( Util.formatNumber(getValue()) );
         sa.append( " [" );
-        sa.append( Util.formatNumber(minValue) );
+        sa.append( Util.formatNumber(getMinValue()) );
         sa.append( ", " );
-        sa.append( Util.formatNumber(maxValue) );
+        sa.append( Util.formatNumber(getMaxValue()) );
         sa.append( ']' );
         return sa.toString();
+    }
+
+    public double getValue() {
+        if (isIntegerOnly())  {
+            return Math.round(value_);
+        }
+        return value_;
+    }
+
+    public void setValue(double value) {
+        this.value_ = value;
+    }
+
+    public double getMinValue() {
+        return minValue_;
+    }
+
+    public void setMinValue(double minValue) {
+        this.minValue_ = minValue;
+    }
+
+    public double getMaxValue() {
+        return maxValue_;
+    }
+
+    public void setMaxValue(double maxValue) {
+        this.maxValue_ = maxValue;
+    }
+
+    public double getRange() {
+        return range_;
+    }
+
+    public void setRange(double range) {
+        this.range_ = range;
+    }
+
+    public String getName() {
+        return name_;
+    }
+
+    public void setName(String name) {
+        this.name_ = name;
     }
 }

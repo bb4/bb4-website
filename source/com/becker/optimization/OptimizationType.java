@@ -7,7 +7,7 @@ package com.becker.optimization;
  * Detailed explanations for many of these algorithms can be found in
  *  How To Solve It: Modern Heuristics  by Michaelwics and Fogel
  *
- * @see OptimizationStrategy
+ * @see com.becker.optimization.strategy.OptimizationStrategy
  * @see Optimizer
  *
  * @author Barry Becker
@@ -22,15 +22,15 @@ public enum OptimizationType
     GENETIC_SEARCH ("Uses a genetic algorithm to search for the best solution."),
     STATE_SPACE ("Searches the state space to find an optima.");
 
-    
+
     private String description_;
- 
+
     /**
      * constructor for optimizatrion type enum
      *
      * @param description string description of the optimization strategy.
      */
-    private OptimizationType(final String description) {
+    private OptimizationType(String description) {
        description_ = description;
     }
 

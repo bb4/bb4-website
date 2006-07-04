@@ -17,6 +17,14 @@ public class SnakeSimulator extends Simulator
     public static final String CONFIG_FILE = CONFIG_FILE_PATH_PREFIX + "snake/snakeGeomNormal.data";
     private static final String FILE_NAME_BASE = ANIMATION_FRAME_FILE_NAME_PREFIX + "snake/snakeFrame";
 
+
+    private static final Parameter[] PARAMS = {
+            new Parameter( WAVE_SPEED, 0.0001, 0.02, "wave speed" ),
+            new Parameter( WAVE_AMPLITUDE, 0.001, 0.2, "wave amplitude" ),
+            new Parameter( WAVE_PERIOD, 0.5, 9.0, "wave period" ),
+    };
+    private static final ParameterArray INITIAL_PARAMS = new ParameterArray( PARAMS);
+
     private Snake snake_ = null;
 
 
@@ -121,14 +129,13 @@ public class SnakeSimulator extends Simulator
             optimizer = new Optimizer( this );
         else
             optimizer = new Optimizer( this, Util.PROJECT_DIR+"performance/snake/snake_optimization.txt" );
-        Parameter[] params = new Parameter[3];
-        params[0] = new Parameter( WAVE_SPEED, 0.0001, 0.02, "wave speed" );
-        params[1] = new Parameter( WAVE_AMPLITUDE, 0.001, 0.2, "wave amplitude" );
-        params[2] = new Parameter( WAVE_PERIOD, 0.5, 9.0, "wave period" );
-        ParameterArray paramArray = new ParameterArray( params );
 
         setPaused(false);
-        optimizer.doOptimization(  OptimizationType.GENETIC_SEARCH, paramArray, 0.3);
+        optimizer.doOptimization(  OptimizationType.GENETIC_SEARCH, INITIAL_PARAMS, 0.3);
+    }
+
+    public int getNumParameters() {
+        return INITIAL_PARAMS.size();
     }
 
 
@@ -207,9 +214,9 @@ public class SnakeSimulator extends Simulator
      */
     public double evaluateFitness( ParameterArray params )
     {
-        snake_.setWaveSpeed( params.get( 0 ).value );
-        snake_.setWaveAmplitude( params.get( 1 ).value );
-        snake_.setWavePeriod( params.get( 2 ).value );
+        snake_.setWaveSpeed( params.get( 0 ).getValue() );
+        snake_.setWaveAmplitude( params.get( 1 ).getValue() );
+        snake_.setWavePeriod( params.get( 2 ).getValue() );
 
         boolean stable = true;
         boolean improved = true;

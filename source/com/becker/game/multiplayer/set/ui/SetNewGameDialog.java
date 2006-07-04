@@ -28,7 +28,7 @@ public class SetNewGameDialog extends MultiPlayerNewGameDialog
 
 
 
-    protected MultiPlayerOnlineGamesTable createOnlineGamesTable(String name) {
+    protected MultiPlayerOnlineGameTablesTable createOnlineGamesTable(String name) {
         return null;
     }
 

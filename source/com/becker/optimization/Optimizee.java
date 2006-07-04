@@ -23,6 +23,7 @@ public interface Optimizee
      *  attributes a measure of fitness to the specified set of parameters.
      *  This method must return a value greater than or equal to 0.
      *  This method is used if evalueateByComparison returns false.
+     *  Higher values imply better fitness.
      *  @param params the set of parameters to misc
      *  @return the fitness measure. The higher the better
      */
@@ -34,4 +35,9 @@ public interface Optimizee
      */
     double compareFitness( ParameterArray params1, ParameterArray params2 );
 
+    /**
+     *
+     * @return the number of parameters in the search space.
+     */
+    int getNumParameters();
 }
