@@ -18,10 +18,10 @@ import java.util.List;
 public abstract class SearchStrategy
 {
 
-    // currently supported search method strategies
+    // currently supported search method strategy
     public static final int MINIMAX = 1;
     public static final int NEGAMAX = 2;
-    //public static final int CUSTOM = 3; // @@ should have a way to add pluggable strategies.
+    //public static final int CUSTOM = 3; // @@ should have a way to add pluggable strategy.
 
     // anything greater than this is considered a won game
     public static final double WINNING_VALUE = 1000.0;

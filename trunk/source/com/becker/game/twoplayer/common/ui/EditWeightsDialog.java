@@ -97,7 +97,7 @@ class EditWeightsDialog extends OptionsDialog implements ActionListener
             lab.setToolTipText( gameWeights_.getDescription( i ) );
             lab.setAlignmentX( Component.LEFT_ALIGNMENT );
             lab.setPreferredSize( LABEL_DIM );
-            weightFields_[i] = new JTextField( Double.toString( weights_.get(i).value ) );
+            weightFields_[i] = new JTextField( Double.toString( weights_.get(i).getValue() ) );
             weightFields_[i].setAlignmentX( Component.LEFT_ALIGNMENT );
             weightFields_[i].setPreferredSize( FIELD_DIM );
             weightPanel.add( lab );
@@ -116,12 +116,12 @@ class EditWeightsDialog extends OptionsDialog implements ActionListener
         for ( int i = 0; i < len; i++ ) {
             double v = Double.parseDouble( weightFields_[i].getText() );
             Parameter p = weights_.get(i);
-            if ( v<p.minValue)
-                sErrors += v+" is too small for "+p.name+". The min vlaue of "+p.minValue+" will be used.\n";
-            else if (v>p.maxValue)
-                sErrors += v+" is too big for "+p.name+". The max value of "+p.maxValue+" will be used.\n";
+            if ( v<p.getMinValue())
+                sErrors += v+" is too small for "+p.getName()+". The min vlaue of "+p.getMinValue()+" will be used.\n";
+            else if (v>p.getMaxValue())
+                sErrors += v+" is too big for "+p.getName()+". The max value of "+p.getMaxValue()+" will be used.\n";
             else
-                weights_.get(i).value = v;
+                weights_.get(i).setValue(v);
         }
         if (sErrors.length() >1)
             JOptionPane.showMessageDialog(this, sErrors, "Parameters Out of Range", JOptionPane.WARNING_MESSAGE);

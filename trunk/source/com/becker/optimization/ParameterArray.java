@@ -17,7 +17,7 @@ public class ParameterArray implements Comparable
     // default number of steps to go from the min to the max
     private static final int STEPS = 10;
     private int numSteps_ = STEPS;
-    private static Random RANDOM = new Random();
+    private static Random RANDOM = new Random(123);
 
     // assign a fitness (evaluation value) to this set of parameters
     private double fitness_ = 0;
@@ -76,7 +76,9 @@ public class ParameterArray implements Comparable
             newParams[k] = params_[k].copy();
         }
 
-        return new ParameterArray( newParams );
+        ParameterArray pa = new ParameterArray( newParams );
+        pa.setFitness(fitness_);
+        return pa;
     }
 
     /**
@@ -96,7 +98,7 @@ public class ParameterArray implements Comparable
         assert ( params_.length == pa.size() );
         double sumOfSq = 0.0;
         for ( int k = 0; k < params_.length; k++ ) {
-            double dif = pa.get( k ).value - params_[k].value;
+            double dif = pa.get( k ).getValue() - params_[k].getValue();
             sumOfSq += dif * dif;
         }
         return Math.sqrt( sumOfSq );
@@ -110,16 +112,16 @@ public class ParameterArray implements Comparable
     {
         assert ( vec.length == params_.length): "Parameter vec has length " + vec.length + ", expecting " + params_.length ;
         for ( int i = 0; i < params_.length; i++ ) {
-            params_[i].value += vec[i];
-            if ( params_[i].value > params_[i].maxValue ) {
-                System.out.println( "Warning param " + params_[i].name +
-                        " is exceeding is maximum value. It is being pegged to that maximum of " + params_[i].maxValue );
-                params_[i].value = params_[i].maxValue;
+            params_[i].setValue(params_[i].getValue() + vec[i]);
+            if ( params_[i].getValue() > params_[i].getMaxValue() ) {
+                System.out.println( "Warning param " + params_[i].getName() +
+                        " is exceeding is maximum value. It is being pegged to that maximum of " + params_[i].getMaxValue() );
+                params_[i].setValue(params_[i].getMaxValue());
             }
-            if ( params_[i].value < params_[i].minValue ) {
-                System.out.println( "Warning param " + params_[i].name +
-                        " is exceeding is minimum value. It is being pegged to that minimum of " + params_[i].minValue );
-                params_[i].value = params_[i].minValue;
+            if ( params_[i].getValue() < params_[i].getMinValue() ) {
+                System.out.println( "Warning param " + params_[i].getName() +
+                        " is exceeding is minimum value. It is being pegged to that minimum of " + params_[i].getMinValue() );
+                params_[i].setValue(params_[i].getMinValue());
             }
         }
     }
@@ -136,11 +138,11 @@ public class ParameterArray implements Comparable
          for ( int k = 0; k < params_.length; k++ ) {
              Parameter newPar = nbr.get(k);
              Parameter currentPar = this.get(k);
-             newPar.value = currentPar.value + RANDOM.nextGaussian() * r * currentPar.range;
-             if (newPar.value > newPar.maxValue)
-                 newPar.value = newPar.maxValue;
-             else if (newPar.value < newPar.minValue)
-                 newPar.value = newPar.minValue;
+             newPar.setValue(currentPar.getValue() + RANDOM.nextGaussian() * r * currentPar.getRange());
+             if (newPar.getValue() > newPar.getMaxValue())
+                 newPar.setValue(newPar.getMaxValue());
+             else if (newPar.getValue() < newPar.getMinValue())
+                 newPar.setValue(newPar.getMinValue());
          }
          //System.out.println( " The random nbr of  \n"+this );
          //System.out.println( "is :\n"+nbr );
@@ -156,9 +158,9 @@ public class ParameterArray implements Comparable
          ParameterArray nbr = this.copy();
          for ( int k = 0; k < params_.length; k++ ) {
              Parameter newPar = nbr.get(k);
-             newPar.value = newPar.minValue + RANDOM.nextDouble() * newPar.range;
-             assert (newPar.value < newPar.maxValue && newPar.value > newPar.minValue):
-                     "newPar "+newPar.value+" not between "+newPar.minValue+" and  "+newPar.maxValue;
+             newPar.setValue(newPar.getMinValue() + RANDOM.nextDouble() * newPar.getRange());
+             assert (newPar.getValue() < newPar.getMaxValue() && newPar.getValue() > newPar.getMinValue()):
+                     "newPar "+newPar.getValue()+" not between "+newPar.getMinValue()+" and  "+newPar.getMaxValue();
          }
 
          return nbr;
@@ -258,9 +260,9 @@ public class ParameterArray implements Comparable
     {
         StringBuffer sb = new StringBuffer("");
         for ( int i = 0; i < params_.length-1; i++ ) {
-            sb.append(  Util.formatNumber(params_[i].value) + ", " );
+            sb.append(  Util.formatNumber(params_[i].getValue()) + ", " );
         }
-        sb.append(Util.formatNumber(params_[params_.length-1].value) );
+        sb.append(Util.formatNumber(params_[params_.length-1].getValue()) );
         return sb.toString();
     }
 

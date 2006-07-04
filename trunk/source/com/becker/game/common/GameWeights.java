@@ -128,7 +128,7 @@ public class GameWeights
      */
     public final double getMaxWeight( int i )
     {
-        return defaultWeights_.get(i).maxValue;
+        return defaultWeights_.get(i).getMaxValue();
     }
 
     /**

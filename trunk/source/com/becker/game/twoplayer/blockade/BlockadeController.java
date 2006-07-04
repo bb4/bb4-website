@@ -183,11 +183,11 @@ public class BlockadeController extends TwoPlayerController
         else if ( pathLengths[P2].shortestLength == 0 )
             value = -WINNING_VALUE;
         else {
-            value =  weights.get(CLOSEST_WEIGHT_INDEX).value *
+            value =  weights.get(CLOSEST_WEIGHT_INDEX).getValue() *
                     (pathLengths[P2].shortestLength - pathLengths[P1].shortestLength)
-                   + weights.get(SECOND_CLOSEST_WEIGHT_INDEX).value *
+                   + weights.get(SECOND_CLOSEST_WEIGHT_INDEX).getValue() *
                      (pathLengths[P2].secondShortestLength - pathLengths[P1].secondShortestLength)
-                   + weights.get(FURTHEST_WEIGHT_INDEX).value *
+                   + weights.get(FURTHEST_WEIGHT_INDEX).getValue() *
                      (pathLengths[P2].furthestLength - pathLengths[P1].furthestLength);
         }
         return value;

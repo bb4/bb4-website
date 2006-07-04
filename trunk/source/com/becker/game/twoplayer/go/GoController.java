@@ -558,7 +558,7 @@ public final class GoController extends TwoPlayerController
         double worth;
 
         GoBoard board = (GoBoard)board_;
-        worth = weights.get(CAPTURE_WEIGHT_INDEX).value * (getNumCaptures( true ) - getNumCaptures( false ));
+        worth = weights.get(CAPTURE_WEIGHT_INDEX).getValue() * (getNumCaptures( true ) - getNumCaptures( false ));
         float n = 2.0f * board.getNumRows();
         // opening = 1.99 - 1.5    middle = 1.5 - 1.01   end = 1.0
         double gameStageBoost = 0.5 + 2.0 * Math.max((n - (float)getNumMoves())/n, 0.0);
@@ -585,14 +585,14 @@ public final class GoController extends TwoPlayerController
                     // penalize bad shape like empty triangles
                     badShapeScore =
                          -(side * GoBoardUtil.formsBadShape(position, board)
-                                * weights.get(BAD_SHAPE_WEIGHT_INDEX).value);
+                                * weights.get(BAD_SHAPE_WEIGHT_INDEX).getValue());
 
                     // consider where the stones are played
                     // (usually a very low weight is assigned to this unless we are at the start of the game)
                     posScore =
-                        (side * gameStageBoost * weights.get(POSITIONAL_WEIGHT_INDEX).value * positionalScore_[row][col]);
+                        (side * gameStageBoost * weights.get(POSITIONAL_WEIGHT_INDEX).getValue() * positionalScore_[row][col]);
 
-                    double s = weights.get(HEALTH_WEIGHT_INDEX).value * stone.getHealth() + posScore + badShapeScore;
+                    double s = weights.get(HEALTH_WEIGHT_INDEX).getValue() * stone.getHealth() + posScore + badShapeScore;
 
 
                     position.setScoreContribution(Math.max(-1.0, Math.min(1.0, s)));

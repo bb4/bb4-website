@@ -20,8 +20,8 @@ public class OnlinePokerDialog extends MultiPlayerOnlineGameDialog {
         super(parent, viewer);
     }
 
-    protected MultiPlayerOnlineGamesTable createOnlineGamesTable(String playersName) {
-        return new PokerOnlineGamesTable(null);
+    protected MultiPlayerOnlineGameTablesTable createOnlineGamesTable(String playersName) {
+        return new PokerOnlineGameTablesTable(null);
     }
 
     /**

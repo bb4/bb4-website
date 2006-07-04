@@ -27,7 +27,7 @@ public class LiquidSimulator extends Simulator
 
     private static final Color BG_COLOR = Color.white;
 
-
+    private static final int NUM_OPT_PARAMS = 3;
 
 
     public LiquidSimulator() {
@@ -144,7 +144,11 @@ public class LiquidSimulator extends Simulator
         ParameterArray paramArray = new ParameterArray( params );
 
         setPaused(false);
-        optimizer.doOptimization(  OptimizationType.GENETIC_SEARCH, paramArray, 0.3);
+        optimizer.doOptimization(OptimizationType.GENETIC_SEARCH, paramArray, 0.3);
+    }
+
+    public int getNumParameters() {
+        return NUM_OPT_PARAMS;
     }
 
 

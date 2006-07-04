@@ -133,18 +133,18 @@ public class ChessController extends CheckersController
                         case ChessPiece.PAWN :
                             //  pawn advancemnt
                             int advance = (piece.isOwnedByPlayer1()? pos.getRow()-1: (NUM_ROWS-pos.getRow()-1));
-                            score += side * advance * weights.get(PAWN_ADVANCEMENT_WEIGHT_INDEX).value;
-                            score += side * weights.get(PAWN_WEIGHT_INDEX).value; break;
+                            score += side * advance * weights.get(PAWN_ADVANCEMENT_WEIGHT_INDEX).getValue();
+                            score += side * weights.get(PAWN_WEIGHT_INDEX).getValue(); break;
                         case ChessPiece.KNIGHT :
-                            score += side * weights.get(KNIGHT_WEIGHT_INDEX).value; break;
+                            score += side * weights.get(KNIGHT_WEIGHT_INDEX).getValue(); break;
                         case ChessPiece.ROOK :
-                            score += side * weights.get(ROOK_WEIGHT_INDEX).value; break;
+                            score += side * weights.get(ROOK_WEIGHT_INDEX).getValue(); break;
                         case ChessPiece.BISHOP :
-                            score += side * weights.get(BISHOP_WEIGHT_INDEX).value; break;
+                            score += side * weights.get(BISHOP_WEIGHT_INDEX).getValue(); break;
                         case ChessPiece.QUEEN :
-                            score += side * weights.get(QUEEN_WEIGHT_INDEX).value; break;
+                            score += side * weights.get(QUEEN_WEIGHT_INDEX).getValue(); break;
                         case ChessPiece.KING :
-                            score += side * weights.get(KING_WEIGHT_INDEX).value; break;
+                            score += side * weights.get(KING_WEIGHT_INDEX).getValue(); break;
                         default : assert false:("bad chess piece type:"+ piece.getType());
                     }
                 }

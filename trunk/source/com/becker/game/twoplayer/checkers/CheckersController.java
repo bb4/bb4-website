@@ -157,18 +157,18 @@ public class CheckersController extends TwoPlayerController
                     GamePiece piece = p.getPiece();
                     if ( piece.getType() == CheckersPiece.KING ) {
                         if ( piece.isOwnedByPlayer1() )
-                            posScore += weights.get(KINGED_WEIGHT_INDEX).value;
+                            posScore += weights.get(KINGED_WEIGHT_INDEX).getValue();
                         else
-                            negScore -= weights.get(KINGED_WEIGHT_INDEX).value;
+                            negScore -= weights.get(KINGED_WEIGHT_INDEX).getValue();
                     }
                     else { // REGULAR_PIECE
                         if ( piece.isOwnedByPlayer1() ) {
-                            posScore += weights.get(PIECE_WEIGHT_INDEX).value;
-                            posScore += weights.get(ADVANCEMENT_WEIGHT_INDEX).value * row;
+                            posScore += weights.get(PIECE_WEIGHT_INDEX).getValue();
+                            posScore += weights.get(ADVANCEMENT_WEIGHT_INDEX).getValue() * row;
                         }
                         else {
-                            negScore -= weights.get(PIECE_WEIGHT_INDEX).value;
-                            negScore -= weights.get(ADVANCEMENT_WEIGHT_INDEX).value * (9 - row);
+                            negScore -= weights.get(PIECE_WEIGHT_INDEX).getValue();
+                            negScore -= weights.get(ADVANCEMENT_WEIGHT_INDEX).getValue() * (9 - row);
                         }
                     }
                 }
