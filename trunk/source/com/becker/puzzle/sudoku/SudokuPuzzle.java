@@ -1,21 +1,35 @@
 package com.becker.puzzle.sudoku;
 
-import com.becker.ui.*;
+import com.becker.common.*;
 import com.becker.puzzle.sudoku.test.*;
+import com.becker.ui.*;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
 /**
- * Sudoku Puzzle
+ * Sudoku Puzzle UI.
  * This program solves a Sudoku puzzle.
  * Its difficult to solve by hand because of all the possible permutations.
  *
  * @author Barry becker
  */
-public final class SudokuPuzzle extends JApplet
+public final class SudokuPuzzle extends JApplet implements ActionListener, ItemListener
 {
 
     private PuzzlePanel puzzlePanel_;
+    // buttons
+    private JButton generateButton_;
+    private JButton solveButton_;
+    // size dropdown
+    private Choice sizeChoice_;
+    private String[] boardSizeMenuItems_ = {
+        "4 cells on a side",
+        "9 cells on a side",
+        "16 cells on a side",
+        "25 cells (prepare to wait)"
+    };
 
     /**
      * Construct the application and set the look and feel.
@@ -31,7 +45,11 @@ public final class SudokuPuzzle extends JApplet
     public void init() {
         puzzlePanel_ = new PuzzlePanel(Data.SAMPLE1);
 
-        this.getContentPane().add( puzzlePanel_ );
+        JPanel panel = new JPanel(new BorderLayout());
+
+        panel.add(createButtonPanel(), BorderLayout.NORTH);
+        panel.add(puzzlePanel_, BorderLayout.CENTER);
+        this.getContentPane().add( panel);
     }
 
     /**
@@ -42,7 +60,6 @@ public final class SudokuPuzzle extends JApplet
 
         puzzlePanel_.repaint();
         puzzlePanel_.setSize(this.getSize());
-        puzzlePanel_.startSolving();
     }
 
     /**
@@ -50,6 +67,32 @@ public final class SudokuPuzzle extends JApplet
      */
     public void stop() {}
 
+    /**
+     * solve and generate button at the top.
+     */
+    public JPanel createButtonPanel() {
+        JPanel panel = new JPanel();
+        generateButton_ = new GradientButton("Generate");
+        generateButton_.addActionListener(this);
+        solveButton_ = new GradientButton("Solve");
+        solveButton_.addActionListener(this);
+
+        panel.add(solveButton_);
+        panel.add(generateButton_);
+        panel.add(createSizeDropdown());
+
+        return panel;
+    }
+
+    private Choice createSizeDropdown() {
+        sizeChoice_ = new Choice();
+        sizeChoice_.addItemListener(this);
+        for (final String item : boardSizeMenuItems_) {
+            sizeChoice_.add(item);
+        }
+        sizeChoice_.select(1);
+        return sizeChoice_;
+    }
 
     /**
      * use this to run as an application instead of an applet.
@@ -60,5 +103,60 @@ public final class SudokuPuzzle extends JApplet
 
         // this will call applet.init() and start() methods instead of the browser
         GUIUtil.showApplet( applet, "Sudoku Puzzle Solver" );
+    }
+
+    public void actionPerformed(ActionEvent e) {
+
+        // must execute long tasks in a separate thread,
+        // otherwise you don't see the steps of the animation.
+        Worker worker = null;
+        Object src = e.getSource();
+
+        if (src == generateButton_)  {
+            worker = new Worker() {
+
+                public Object construct() {
+                    puzzlePanel_.generateNewPuzzle();
+                    return null;
+                }
+
+                public void finished() {
+                    puzzlePanel_.repaint();
+                }
+            };
+        }
+        else if (src == solveButton_)  {
+
+            worker = new Worker() {
+
+                public Object construct() {
+                    puzzlePanel_.startSolving();
+                    return null;
+                }
+
+                public void finished() {
+                    puzzlePanel_.repaint();
+                }
+            };
+        }
+
+        worker.start();
+    }
+
+    /**
+     * size choice selected.
+     * @param e
+     */
+    public void itemStateChanged(ItemEvent e) {
+
+        int selected = sizeChoice_.getSelectedIndex();
+
+        // this formula must change if the menu items change.
+        int size = (selected + 2) ;
+        System.out.println("selected = "+ selected+" size ="+size);
+        PuzzleGenerator generator = new PuzzleGenerator(size);
+        Board b = generator.generatePuzzleBoard(null);
+        puzzlePanel_.setBoard(b);
+        puzzlePanel_.repaint();
     }
 }

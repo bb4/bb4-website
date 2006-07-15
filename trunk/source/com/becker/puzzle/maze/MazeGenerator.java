@@ -56,7 +56,6 @@ public class MazeGenerator extends JComponent
     private static final int PATH_LINE_WIDTH = 6;
 
     private Font textFont_;
-    //Log logger_ = null;
 
 
     //Constructor
@@ -160,7 +159,6 @@ public class MazeGenerator extends JComponent
             this.setSize(dim);
             System.out.println("in generate. take 2. dim="+dim);
         }
-
 
         if ( thickness >= (dim.width >> 2) || thickness >= (dim.height >> 2) )
             thickness = Math.min( (dim.width / 5), (dim.height / 5) );

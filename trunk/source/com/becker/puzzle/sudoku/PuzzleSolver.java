@@ -1,8 +1,5 @@
 package com.becker.puzzle.sudoku;
 
-
-import java.io.*;
-
 /**
  * This does the hard work of actually solving the puzzle.
  * Controller in the model-view-controller pattern.
@@ -11,15 +8,13 @@ import java.io.*;
  */
 public class PuzzleSolver {
 
-
-    // count the number of times we have tried to place a piece.
-    private int numIterations_ = 0;
-
+    private int delay_;
 
     /**
      * Constructor
      */
     public PuzzleSolver() {
+        delay_ = 0;
     }
 
     /**
@@ -28,8 +23,12 @@ public class PuzzleSolver {
      * @param board
      * @return
      */
-    public  boolean solvePuzzle( Board board) {
+    public boolean solvePuzzle( Board board) {
         return solvePuzzle(board, null);
+    }
+
+    public void setDelay(int delay)  {
+        delay_ = delay;
     }
 
     /**
@@ -48,23 +47,24 @@ public class PuzzleSolver {
      * @param board
      * @return
      */
-    private boolean solvePuzzle( Board board, PuzzlePanel puzzlePanel) {
+    protected boolean solvePuzzle( Board board, PuzzlePanel puzzlePanel) {
         boolean solved = false;
+        int ct = 0;
+        int maxIterations = 2* board.getEdgeLength();  // @@ not sure what this should be.
 
         do {
             // find missing row and column numbers
             board.updateCellCandidates();
             refresh(puzzlePanel);
-            pause(500);
+            pause(delay_);
             board.checkAndSetUniqueValues();
 
             refresh(puzzlePanel);
-            pause(1000);
-            numIterations_++;
+            pause(2*delay_);
+            board.setNumIterations(++ct);
             solved = board.solved();
 
-        } while (!solved && numIterations_ < 100);
-
+        } while (!solved && ct < maxIterations);
 
         refresh(puzzlePanel);
 
@@ -72,34 +72,14 @@ public class PuzzleSolver {
         return solved;
     }
 
-    private static void pause() {
-        System.out.println("in pause");
-
-        //Scanner scanner = new Scanner(System.in);
-        //String nextString = scanner.next();
-
-        try {
-            int c = System.in.read(); // pause till keypressed
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println("done pause");
-    }
-
     private static void pause(int millis) {
+        if (millis > 0) {
             try {
                 Thread.sleep(millis);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-      }
-
-
-    /**
-     * @return  the number of pieces we have tried to fit so far.
-     */
-    public int getNumIterations() {
-        return numIterations_;
+        }
     }
 
 

@@ -25,6 +25,7 @@ public class Data {
     };
 
     // simple test of a 9*9 puzzle
+    // (inconsistent. use only for testing)
     //
     public static int[][] SAMPLE2 = {
         {0, 0, 3,  7, 0, 0,  0, 2, 0},
@@ -35,9 +36,9 @@ public class Data {
         {0, 0, 6,  1, 0, 9,  7, 0, 0},
         {8, 0, 0,  0, 6, 0,  3, 1, 0},
 
-        {5, 3, 0,  2, 4, 0,  0, 8, 2},
+        {5, 3, 0,  0, 4, 0,  0, 8, 2},
         {9, 0, 7,  0, 0, 3,  0, 5, 0},
-        {4, 0, 3,  7, 0, 5,  1, 0, 0}
+        {4, 0, 0,  7, 0, 5,  1, 0, 0}
     };
 
 
