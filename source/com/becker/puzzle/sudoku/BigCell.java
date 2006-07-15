@@ -8,7 +8,6 @@ import java.util.*;
  */
 public class BigCell {
 
-
     // the internal data structures representing the game board
     protected Cell cells_[][] = null;
 
@@ -51,7 +50,7 @@ public class BigCell {
     public void updateCandidates() {
         bigCellCandidates_.clear();
         // assume all of them, then remove those that are represented.
-        bigCellCandidates_.addAll(board_.getValueSet());
+        bigCellCandidates_.addAll(board_.getValuesList());
         for (int i = 0; i < n_; i++) {
            for (int j = 0; j < n_; j++) {
                int v = cells_[i][j].getValue();
@@ -88,10 +87,6 @@ public class BigCell {
             // if there is only one candidate, then that is the value for this cell.
             return (Integer) cellCandidates.get(0);
         }
-        //for (Object candidate : cellCandidates) {
-        //    if (isUnique(candidate, cell))
-        //        return (Integer) candidate;
-        //}
         return 0;   // the value is not unique
     }
 
@@ -117,6 +112,4 @@ public class BigCell {
     {
         cells_ = null;
     }
-
-
 }

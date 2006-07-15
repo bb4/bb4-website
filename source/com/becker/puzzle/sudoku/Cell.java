@@ -44,6 +44,12 @@ public class Cell {
         original_ = false;
     }
 
+    public void clearValue() {
+        value_ = 0;
+        original_ = false;
+        candidates_ = new LinkedList();
+    }
+
     /**
      * once the puzzle is started, you can only assign positive values to values of cells.
      * @param value
@@ -55,11 +61,11 @@ public class Cell {
         // if set to 0 initially, then it is a value that needs to be filled in.
         original_ = value > 0;
 
-        if (!original_)  {
-            candidates_ = new LinkedList();
+        if (original_)  {
+            candidates_ = null;
         }
         else {
-            candidates_ = null;
+            candidates_ = new LinkedList();
         }
     }
 
@@ -85,7 +91,8 @@ public class Cell {
     }
 
     /**
-     * @@ should make a separate pass for setting all the cells that only have one value in candidate list first.
+     * @@ Perhaps make a separate pass for setting all the cells that only have one value in candidate list first.
+     * This should improve performance.
      */
     public void checkAndSetUniqueValues(List rowCandidates, List colCandidates) {
 
@@ -106,9 +113,10 @@ public class Cell {
             boolean removed2 = rowCandidates.remove((Integer) unique);
             boolean removed3 = colCandidates.remove((Integer) unique);
 
-            assert (removed1 && removed2 && removed3);
+            assert (removed1) : "Invalid Puzzle: Could not remove " + unique + " from " + parent_.getCandidates();
+            assert (removed2) : "Invalid Puzzle: Could not remove " + unique + " from " + rowCandidates;
+            assert (removed3) : "Invalid Puzzle: Could not remove " + unique + " from " + colCandidates;
         }
-
     }
 
 }
