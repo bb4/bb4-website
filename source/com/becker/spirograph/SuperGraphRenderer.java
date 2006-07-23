@@ -1,7 +1,6 @@
 package com.becker.spirograph;
 
-import java.awt.*;
-import java.awt.geom.Point2D;
+
 
 /**
  * Program to simulate a super SpiroGraph
@@ -9,7 +8,7 @@ import java.awt.geom.Point2D;
  * we have an aribtrary number with different radii.
  *
  * @author Barry Becker
- */
+ *
 
 public class SuperGraphRenderer extends GraphRenderer
 {
@@ -21,8 +20,9 @@ public class SuperGraphRenderer extends GraphRenderer
     protected Point2D.Double oldp;
     protected Point2D.Double newp;
 
-    SuperGraphRenderer()
+    SuperGraphRenderer(GraphState state)
     {
+        super(state);
         rad[0] = 70.0;
         rad[1] = 41.0;
         rad[2] = 30.0;
@@ -48,8 +48,8 @@ public class SuperGraphRenderer extends GraphRenderer
         //int revs = (int)(sign*R2)/gcd((int)R1,(int)(sign*R2));
 
         Stroke thinStroke = new BasicStroke( 1 );
-        offg.setPaintMode();
-        offg.setColor( SpiroGraph.COLOR );
+        offlineGraphics.setPaintMode();
+        offlineGraphics.setColor( state_.getColor() );
 
         //n = 1.0 + 50.0*(Math.abs(p/R2));
         n = ITS_PER_REV * (Math.abs( ro / rad[NUM_CIRCLES - 1] ));
@@ -69,13 +69,13 @@ public class SuperGraphRenderer extends GraphRenderer
             refresh = (count % v == 0) && (v != VELOCITY_MAX);
 
             Stroke stroke = new BasicStroke( width / 3 );
-            offg.setStroke( stroke );
+            offlineGraphics.setStroke( stroke );
 
             newp = computePos( theta, 0 );
             newp.x += OX;
             newp.y += OY;
             //System.out.println("theta="+theta+"  coord="+newp.x+", "+newp.y);
-            offg.drawLine( (int) oldp.x, (int) oldp.y, (int) newp.x, (int) newp.y );
+            offlineGraphics.drawLine( (int) oldp.x, (int) oldp.y, (int) newp.x, (int) newp.y );
             oldp = newp;
 
             if ( refresh ) {
@@ -124,4 +124,4 @@ public class SuperGraphRenderer extends GraphRenderer
             return newp;
         }
     }
-}
+}           */

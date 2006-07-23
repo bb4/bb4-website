@@ -41,7 +41,7 @@ public class Profiler
      */
     public void add(String name, String parent)
     {
-        ProfilerEntry par = (ProfilerEntry)hmEntries_.get(parent);
+        ProfilerEntry par = hmEntries_.get(parent);
         assert par!=null : "invalid parent: "+parent;
         ProfilerEntry e = new ProfilerEntry(name);
         par.addChild(e);
@@ -54,7 +54,7 @@ public class Profiler
     public void start(String name)
      {
          if (!enabled_) return;
-         ProfilerEntry p = (ProfilerEntry)hmEntries_.get(name);
+         ProfilerEntry p = hmEntries_.get(name);
          p.start();
      }
 
@@ -64,7 +64,7 @@ public class Profiler
      public void stop(String name)
      {
          if (!enabled_) return;
-         ProfilerEntry p = (ProfilerEntry)hmEntries_.get(name);
+         ProfilerEntry p = hmEntries_.get(name);
          p.stop();
      }
 
