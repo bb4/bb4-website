@@ -1,65 +1,80 @@
 package com.becker.spirograph;
 
+import com.becker.java2d.*;
+import com.becker.common.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /**
- * Program to simulate a SpiroGraph
- * Adapted from Divid Little's original work
+ * Program to simulate a SpiroGraph.
+ * Adapted from Divid Little's original work.
  *
  *  to do:
  *   - convert to polar coords
- *   - create a super spirograph with 2 nested circles
  *   - search the space of images using a genetic algorithm
  *
  * @author David Little
  * @author Barry Becker
- * @version drawGraph1.1
  */
 
 public class GraphRenderer extends JPanel implements Runnable
 {
-    public static final int H = 1000, W = 1200;
-    public static final int OX = W / 2, OY = H / 2;
-    public static final int VELOCITY_MAX = 100;
-    public static final int INITIAL_LINE_WIDTH = 3;
-    protected double n = 270;
-    protected int v = 2;
-    protected int count;
-    protected int width = INITIAL_LINE_WIDTH;
-    protected BufferedImage offImage;
-    protected Graphics2D offg;
-    protected double[] center;
-    //                   0      1     2        3        4        5     6     7
-    protected double R1,    R2,    p,    sign,   theta,     phi,    x,    y;
-    protected double oldR1, oldR2, oldp, oldSign, oldTheta, oldPhi, oldx, oldy;
+    public static final int HT = 1000, WD = 1200;
+
+    private static final Color AXES_COLOR = new Color(120, 120, 200);
+    private static final Color CIRCLE_COLOR = new Color(90, 90, 150);
+    private static final Stroke AXES_STROKE = new BasicStroke( 1 );
+    private static final int DOT_RAD = 7;
+    private static final int HALF_DOT_RAD = 3;
+
+    public static volatile Thread thread_ = null;
+
+    private static volatile boolean requestClear_ = false;
+    private static volatile boolean isRendering_ = false;
+
+    private BufferedImage offImage_;
+    private Graphics2D offlineGraphics_;
+    private float[] center_;
 
     // set this var instead of using Thread.stop (see
     // http://java.sun.com/products/jdk/1.2/docs/guide/misc/threadPrimitiveDeprecation.html )
-    public static volatile Thread thread;
-    protected boolean paused = false;
-    protected final Object pauseLock = new Object(); // monitor
+    private boolean paused_ = false;
+    private final Object pauseLock_ = new Object(); // monitor
 
-    GraphRenderer()
+    private GraphState state_;
+    private JButton drawButton_;
+
+    GraphRenderer(GraphState state, JButton drawButton)
     {
-        super();
-        commonConstructor();
+        drawButton_ = drawButton;
+        commonConstructor(state);
     }
 
-    protected void commonConstructor()
+    private void commonConstructor(GraphState state)
     {
+        state_ = state;
         setBackground( Color.white );
-        center = new double[2];
-        R1 = 60.0;
-        R2 = 60.0;
-        p = 60.0;
-        sign = 1.0;
-        theta = 0.0;
-        phi = 0.0;
-        x = W / 2 + R1 + (R2 + sign) + p;	//point.x
-        y = H / 2;		//point.y
-        recordValues();
+        center_ = new float[2];
+        state_.setX((WD >> 1) + state_.getR1() + (state_.getR2() + state_.getSign()) + state_.getPos());
+        state_.setY(HT >> 1);
+        state_.recordValues();
+
+        offImage_ = ImageUtil.createCompatibleImage( WD, HT );
+        if ( offImage_ != null ) {
+            offlineGraphics_ = offImage_.createGraphics();
+            offlineGraphics_.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
+                    RenderingHints.VALUE_ANTIALIAS_ON );
+            offlineGraphics_.setRenderingHint( RenderingHints.KEY_RENDERING,
+                    RenderingHints.VALUE_RENDER_QUALITY );
+            offlineGraphics_.setRenderingHint( RenderingHints.KEY_COLOR_RENDERING,
+                    RenderingHints.VALUE_COLOR_RENDER_QUALITY );
+        }
+        else {
+            System.out.println( "error the offImage is null!" );
+        }
+        clear();
     }
 
     /**
@@ -68,93 +83,130 @@ public class GraphRenderer extends JPanel implements Runnable
     public void run()
     {
         Thread thisThread = Thread.currentThread();
-        while ( thread == thisThread ) {
-            doRendering( thisThread );
+        while ( thread_ == thisThread ) {
+            doRendering();
         }
     }
 
-    protected synchronized void doRendering( Thread thisThread )
+    /**
+     * Animate the rendering of the spirograph.
+     */
+    private synchronized void doRendering()
     {
-        count = 0;
+        int count = 0;
         initializeValues();
         boolean refresh = false;
-        if ( R2 == 0 ) return; // avoid degenerate case - div by 0
+        isRendering_ = true;
 
-        int revs = (int) (sign * R2) / gcd( (int) R1, (int) (sign * R2) );
+        float r1 = state_.getR1();
+        float r2 = state_.getR2();
+        float p = state_.getPos();
+        float sign = state_.getSign();
 
-        Stroke thinStroke = new BasicStroke( 1 );
-        offg.setPaintMode();
-        offg.setColor( SpiroGraph.COLOR );
+        if ( r2 == 0 ) return; // avoid degenerate case - div by 0
 
-        n = 1.0 + 50.0 * (Math.abs( p / R2 ));
-        while ( count++ < (int) (n * revs + .5) ) {
+        int revs = (int) (sign * r2) / MathUtil.gcd( (int) r1, (int) (sign * r2) );
 
-            if ( count == (int) (n * revs + .5) )
-                theta = 0.0;
+        offlineGraphics_.setPaintMode();
+
+        float n = 1.0f + state_.getNumSegmentsPerRev() * (Math.abs( p / r2 ));
+
+        while ( count++ < (int) (n * revs + 0.5) && isRendering_) {
+            r1 = state_.getR1();
+            r2 = state_.getR2();
+            p = state_.getPos();
+            offlineGraphics_.setColor( state_.getColor() );
+
+            if ( count == (int) (n * revs + 0.5) )
+                state_.setTheta(0.0f);
             else
-                theta = 2.0 * Math.PI * count / n;
-            phi = theta * (1 + R1 / R2);
-            setPoint();
+                state_.setTheta((float)(2.0f * Math.PI * count / n));
+            float theta = state_.getTheta();
+            state_.setPhi(theta * (1.0f + r1 / r2));
+            float phi = state_.getPhi();
+            setPoint(p, phi);
 
-            if ( SpiroGraph.hide.getText().equals( "Hide" ) && refresh ) {
+            float oldx = state_.getOldX();
+            float oldy = state_.getOldY();
+
+            if (state_.showAxes() && refresh ) {
                 // erase the old indicators
-                offg.setStroke( thinStroke );
+                float oldR1 = state_.getOldR1();
+                float oldR2 = state_.getOldR2();
+                float oldSign = state_.getOldSign();
+                float oldPhi = state_.getOldPhi();
+                float oldTheta = state_.getOldTheta();
+
+                offlineGraphics_.setColor( CIRCLE_COLOR );
+                offlineGraphics_.setStroke( AXES_STROKE );
+                //System.out.println("erase r1="+oldR1+" r2="+oldR2 +" theta="+oldTheta);
                 drawCircle2( oldR1, oldR2, oldSign, oldTheta );
-                drawDot( oldR1, oldR2, oldSign, oldTheta, oldp, oldPhi );
-                drawLineToDot( oldR1, oldR2, oldSign, oldp, oldTheta, oldPhi, oldx, oldy );
-                offg.setPaintMode();
-                offg.setColor( SpiroGraph.COLOR );
+                drawDot( oldR1, oldR2, oldSign, oldTheta, state_.getOldPos(), oldPhi );
+                // @@ this will set x and y in state to oldx and oldy (how did this work before?)
+                float x = state_.getX();
+                float y = state_.getY();
+                drawLineToDot( oldR1, oldR2, oldSign, state_.getOldPos(), oldTheta, oldPhi, oldx, oldy );
+                state_.setX(x);
+                state_.setY(y);
+                offlineGraphics_.setPaintMode();
+                offlineGraphics_.setColor( state_.getColor() );
             }
             waitIfPaused();
-            refresh = (count % (v) == 0) && (v != VELOCITY_MAX);
+            int velocity = state_.getVelocity();
+            refresh =  (velocity != GraphState.VELOCITY_MAX); // (count % velocity == 0) &&
 
-            Stroke stroke = new BasicStroke( width / 3 );
-            offg.setStroke( stroke );
-            offg.drawLine( (int) oldx, (int) oldy, (int) x, (int) y );
+            Stroke stroke = new BasicStroke( (float)state_.getWidth() / (float)GraphState.INITIAL_LINE_WIDTH );
+            offlineGraphics_.setStroke( stroke );
+            offlineGraphics_.drawLine( (int) oldx, (int) oldy, (int) state_.getX(), (int) state_.getY() );
 
-            if ( SpiroGraph.hide.getText().equals( "Hide" ) && refresh ) {
-                offg.setXORMode( getBackground() );
-                offg.setColor( Color.black );
-                offg.setStroke( thinStroke );
-                drawCircle2( R1, R2, sign, theta );
-                drawDot( R1, R2, sign, theta, p, phi );
-                drawLineToDot( R1, R2, sign, p, theta, phi, x, y );
+            if ( state_.showAxes() && refresh ) {
+                offlineGraphics_.setXORMode( getBackground() );
+                offlineGraphics_.setColor( CIRCLE_COLOR );
+                offlineGraphics_.setStroke( AXES_STROKE );
+                //System.out.println("draw r1="+r1+" r2="+r2 +" theta="+theta);
+                drawCircle2( r1, r2, sign, theta );
+                drawDot( r1, r2, sign, theta, p, phi );
+                drawLineToDot( r1, r2, sign, p, theta, phi, state_.getX(), state_.getY() );
             }
             if ( refresh ) {
                 //System.out.println("ct="+count+" v="+v);
-                if ( v < 2 ) {
-                    try {
-                        Thread.sleep( 100 );
-                    } catch (InterruptedException e) {
-                    }
-                }
                 repaint();
+                if ( velocity < 20 ) {
+                    try {
+                        Thread.sleep( 200 / velocity );
+                    } catch (InterruptedException e) {}
+                }
+                if (requestClear_) {
+                    doClear();
+                    requestClear_ = false;
+                }
             }
+            state_.recordValues();
 
-            recordValues();
         }
         repaint();
-        SpiroGraph.draw.setText( "Draw" );
-        GraphRenderer.thread = new Thread( this );
+        drawButton_.setText( SpiroGraph.DRAW_LABEL );
+        isRendering_= false;
+        thread_ = new Thread( this );
     }
 
     public void setPaused( boolean newPauseState )
     {
-        synchronized (pauseLock) {
-            if ( paused != newPauseState ) {
-                paused = newPauseState;
-                pauseLock.notifyAll();
+        synchronized (pauseLock_) {
+            if ( paused_ != newPauseState ) {
+                paused_ = newPauseState;
+                pauseLock_.notifyAll();
             }
         }
     }
 
-    protected void waitIfPaused()
+    private synchronized void waitIfPaused()
     {
-        if ( !paused ) return;
+        if ( !paused_ ) return;
         // pause if we get suspended
         try {
-            synchronized (pauseLock) {
-                while ( paused ) pauseLock.wait();
+            synchronized (pauseLock_) {
+                while ( paused_ ) pauseLock_.wait();
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -168,152 +220,173 @@ public class GraphRenderer extends JPanel implements Runnable
 
     public void paint( Graphics g )
     {
-        g.drawImage( offImage, (this.getSize().width - W) / 2, (this.getSize().height - H) / 2, this );
+        g.drawImage( offImage_, (getSize().width - WD) >> 1, (getSize().height - HT) >> 1, this );
     }
 
     public void initializeValues()
     {
-        R1 = SpiroGraph.RAD1.getValue();
-        R2 = SpiroGraph.RAD2.getValue();
-        p = SpiroGraph.POS.getValue();
-        if ( R2 < 0 )
-            sign = -1.0;
-        else
-            sign = 1.0;
-        theta = 0.0;
-        phi = 0.0;
-        x = W / 2 + R1 + R2 + sign + p;
-        y = H / 2;
-        recordValues();
+        state_.setSign(state_.getR2() < 0 ? -1:1);
+        state_.setTheta(0.0f);
+        state_.setPhi(0.0f);
+        state_.setX((WD >> 1) + state_.getR1() + state_.getR2() + state_.getSign() + state_.getPos());
+        state_.setY(HT >> 1);
+        state_.recordValues();
     }
 
-    public void setPoint()
+    /**
+     * @@ has side effect of setting x and y in state.
+     * @param p
+     * @param phi
+     */
+    public void setPoint(float p, float phi)
     {
-        setCenter( R1, R2, sign, theta );
-        x = center[0] + p * Math.cos( phi );
-        y = center[1] - p * Math.sin( phi );
+        setCenter( state_.getR1(), state_.getR2(), state_.getSign(), state_.getTheta() );
+        state_.setX((float)(center_[0] + p * Math.cos( phi )));
+        state_.setY((float)(center_[1] - p * Math.sin( phi )));
     }
 
-    public void setCenter( double R1, double R2, double sign, double theta )
+    public void setCenter( float r1, float r2, float sign, float theta )
     {
-        center[0] = W / 2 + (R1 + R2 + sign) * Math.cos( theta );  // + sign?
-        center[1] = H / 2 - (R1 + R2 + sign) * Math.sin( theta );
+        center_[0] = (float)((WD >> 1) + (r1 + r2 * sign) * Math.cos( theta ));
+        center_[1] = (float)((HT >> 1) - (r1 + r2 * sign) * Math.sin( theta ));
     }
 
     public void clear()
     {
-        if ( offg == null ) return;
-        offg.setPaintMode();
-        offg.setColor( getBackground() );
-        offg.fillRect( 0, 0, W, H );
+        if (isRendering_) {
+            requestClear_ = true;
+        } else {
+            doClear();
+        }
+    }
+
+    public void doClear() {
+        if ( offlineGraphics_ == null )
+            return;
+        offlineGraphics_.setPaintMode();
+        offlineGraphics_.setColor( getBackground() );
+            offlineGraphics_.fillRect( 0, 0, WD, HT );
         drawAxes();
     }
 
     public void drawAxes()
     {
-        if ( SpiroGraph.hide.getText().equals( "Hide" ) ) {
-            offg.setXORMode( getBackground() );
-            offg.setColor( Color.gray );
-            offg.drawLine( W / 2, 0, W / 2, H );
-            offg.drawLine( 0, H / 2, W, H / 2 );
-            offg.setColor( Color.black );
-            drawCircle1( R1 );
-            drawCircle2( R1, R2, sign, theta );
-            drawDot( R1, R2, sign, theta, p, phi );
-            drawLineToDot( R1, R2, sign, p, theta, phi, x, y );
+        if ( state_.showAxes() ) {
+
+            offlineGraphics_.setXORMode( getBackground() );
+            offlineGraphics_.setColor( AXES_COLOR );
+            offlineGraphics_.drawLine( WD >> 1, 0, WD >> 1, HT );
+            offlineGraphics_.drawLine( 0, HT >> 1, WD, HT >> 1 );
+            offlineGraphics_.setColor( CIRCLE_COLOR );
+            float r1 = state_.getR1();
+            float r2 = state_.getR2();
+            //float p = state_.getPos();
+            float sign = state_.getSign();
+            float theta = state_.getTheta();
+            //float phi = state_.getPhi();
+
+            drawCircle1( r1 );
+            drawCircle2( r1, r2, sign, theta );
+            //drawDot( r1, r2, sign, theta, p, phi );
+            //drawLineToDot( r1, r2, sign, p, theta, phi, state_.getX(), state_.getY() );
         }
         repaint();
     }
 
-    // find the greatest common divisor of 2 numbers
-    public int gcd( int x, int y )
-    {
-        if ( x % y == 0 ) return y;
-        return gcd( y, x % y );
-    }
 
     public void adjustCircle1()
     {
-        if ( SpiroGraph.hide.getText().equals( "Hide" ) ) {
-            drawCircle1( oldR1 );
-            drawCircle1( R1 );
+        if ( state_.showAxes() ) {
+            drawCircle1( state_.getOldR1() );
+            drawCircle1( state_.getR1() );
             adjustCircle2();
         }
         else
-            recordValues();
+            state_.recordValues();
     }
 
     public void adjustCircle2()
     {
-        if ( SpiroGraph.hide.getText().equals( "Hide" ) ) {
-            drawCircle2( oldR1, oldR2, oldSign, oldTheta );
-            drawCircle2( R1, R2, sign, theta );
+        if ( state_.showAxes() ) {
+            drawCircle2( state_.getOldR1(), state_.getOldR2(), state_.getOldSign(), state_.getOldTheta() );
+            drawCircle2( state_.getR1(), state_.getR2(), state_.getSign(), state_.getTheta() );
             adjustDot();
         }
         else
-            recordValues();
+            state_.recordValues();
     }
 
     public void adjustDot()
     {
-        if ( SpiroGraph.hide.getText().equals( "Hide" ) ) {
-            drawDot( oldR1, oldR2, oldSign, oldTheta, oldp, oldPhi );
-            drawDot( R1, R2, sign, theta, p, phi );
+        if ( state_.showAxes() ) {
+            drawDot( state_.getOldR1(), state_.getOldR2(),
+                     state_.getOldSign(), state_.getOldTheta(), state_.getOldPos(), state_.getOldPhi() );
+            drawDot( state_.getR1(), state_.getR2(),
+                     state_.getSign(), state_.getTheta(), state_.getPos(), state_.getPhi() );
             adjustLineToDot();
         }
-        else
-            recordValues();
+        else {
+            state_.recordValues();
+        }
     }
 
     public void adjustLineToDot()
     {
-        drawLineToDot( oldR1, oldR2, oldSign, oldp, oldTheta, oldPhi, oldx, oldy );
-        drawLineToDot( R1, R2, sign, p, theta, phi, x, y );
-        recordValues();
+        /*
+        drawLineToDot( state_.getOldR1(), state_.getOldR2(),
+                       state_.getOldSign(), state_.getOldPos(), state_.getOldTheta(), state_.getOldPhi(),
+                       state_.getOldX(), state_.getOldY() );
+        drawLineToDot( state_.getR1(), state_.getR2(),
+                       state_.getSign(), state_.getPos(), state_.getTheta(), state_.getPhi(),
+                       state_.getX(), state_.getY() );
+        */
+        state_.recordValues();
         repaint();
     }
 
-    public void drawCircle1( double R1 )
+    private void drawCircle1( float r1 )
     {
-        offg.drawOval( (int) (W / 2 - R1), (int) (H / 2 - R1), (int) (2 * R1), (int) (2 * R1) );
+        offlineGraphics_.drawOval( (int) ((WD >> 1) - r1), (int) ((HT >> 1) - r1), (int) (2 * r1), (int) (2 * r1) );
     }
 
-    public void drawCircle2( double R1, double R2, double sign, double theta )
+    private void drawCircle2( float r1, float r2, float sign, float theta )
     {
-        setCenter( R1, R2, sign, theta );
-        offg.drawOval( (int) (center[0] - sign * R2), (int) (center[1] - sign * R2),
-                       (int) (2 * sign * R2), (int) (2 * sign * R2) );
+        setCenter( r1, r2, sign, theta );
+        offlineGraphics_.drawOval( (int) (center_[0] - sign * r2), (int) (center_[1] - sign * r2),
+                       (int) (2 * sign * r2), (int) (2 * sign * r2) );
     }
 
-    public void drawDot( double R1, double R2, double sign, double theta, double p, double phi )
+    private void drawDot( float r1, float r2, float sign, float theta, float p, float phi )
     {
-        setCenter( R1, R2, sign, theta );
-        offg.fillOval( (int) (center[0] + p * Math.cos( phi )) - 2,
-                (int) (center[1] - p * Math.sin( phi )) - 2,
-                5, 5 );
+        setCenter( r1, r2, sign, theta );
+        //System.out.println("r1="+r1+" r2="+r2 + " p="+p + " phi="+phi+" theta="+theta+ " center="+center_[0] + " "+center_[1]);
+        offlineGraphics_.fillOval( (int) (center_[0] + p * Math.cos( phi )) - HALF_DOT_RAD,
+                (int) (center_[1] - p * Math.sin( phi )) - HALF_DOT_RAD,
+                DOT_RAD, DOT_RAD );
     }
 
-    public void drawLineToDot( double R1, double R2, double sign, double p, double theta, double phi, double x, double y )
+
+    private void drawLineToDot( float r1, float r2, float sign, float p, float theta, float phi, float x, float y )
     {
-        setCenter( R1, R2, sign, theta );
-        double side = sign;
+        setCenter( r1, r2, sign, theta );
+        float side = sign;
         if ( p < 0 ) side = -sign;
 
-        offg.drawLine( (int) (center[0] + side * R2 * Math.cos( phi )),
-                (int) (center[1] - side * R2 * Math.sin( phi )),
+        offlineGraphics_.drawLine( (int) (center_[0] + side * r2 * Math.cos( phi )),
+                (int) (center_[1] - side * r2 * Math.sin( phi )),
                 (int) x, (int) y );
-        setPoint();
+        setPoint(p, phi);
     }
 
-    public void recordValues()
-    {
-        oldR1 = R1;
-        oldR2 = R2;
-        oldp = p;
-        oldSign = sign;
-        oldTheta = theta;
-        oldPhi = phi;
-        oldx = x;
-        oldy = y;
+    public void reset() {
+        // stop the thread
+        clear();
+        thread_ = null;
+        isRendering_ = false;
+        state_.reset();        
+
+        setPoint(state_.getPos(), 0);
+        adjustCircle2();
     }
+
 }

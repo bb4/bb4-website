@@ -53,6 +53,7 @@ public abstract class TwoPlayerController extends GameController
     private SearchTreeNode root_;
 
     private Worker worker_;
+
     // this is true while the computer thinks about its next move.
     private boolean processing_ = false;
 
@@ -356,7 +357,7 @@ public abstract class TwoPlayerController extends GameController
     /**
      *
      * @param isPlayer1
-     * @param synchronous if true then the method does not return until the nest move has been found.
+     * @param synchronous if true then the method does not return until the next move has been found.
      * @return true if the game is over
      * @throws AssertionError  if something bad happenned.
      */

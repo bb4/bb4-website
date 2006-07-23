@@ -46,14 +46,14 @@ public class MazeGenerator extends JComponent
     // rending attributes
     //private static final Color GRID_COLOR = new Color(20,20,20);
     private static final Color WALL_COLOR = new Color( 80, 0, 150 );
-    private static final Color PATH_COLOR = new Color( 190, 40, 20 );
+    private static final Color PATH_COLOR = new Color( 255, 230, 120);
 
     private static final Color TEXT_COLOR = new Color( 250, 0, 100 );
     private static final Color BG_COLOR = new Color( 225, 240, 250 );
     private static final Color VISITED_COLOR = new Color( 255, 255, 255 );
 
     private static final int WALL_LINE_WIDTH = 3;
-    private static final int PATH_LINE_WIDTH = 6;
+    private static final int PATH_LINE_WIDTH = 14;
 
     private Font textFont_;
 
@@ -299,7 +299,6 @@ public class MazeGenerator extends JComponent
             currentCell = grid_[currentPosition.x][currentPosition.y];
             Point nextPosition = getNextPosition(currentPosition, currentCell, dir);
 
-
             MazeCell nextCell = grid_[nextPosition.x][nextPosition.y];
             boolean eastBlocked = dir.x ==  1 && currentCell.eastWall;
             boolean westBlocked =  dir.x == -1 && nextCell.eastWall;
@@ -523,20 +522,9 @@ public class MazeGenerator extends JComponent
         // draw the walls
         //Stroke oldStroke = g2.getStroke();
 
-        int lineWidth = WALL_LINE_WIDTH;
-        int pathWidth = PATH_LINE_WIDTH;
-        if ( cellSize_ < 30 ) {
-            lineWidth = Math.min(3, WALL_LINE_WIDTH);
-            pathWidth = Math.min(4, PATH_LINE_WIDTH);
-        }
-        if ( cellSize_ < 20 ) {
-            lineWidth = 2;
-            pathWidth = 3;
-        }
-        if ( cellSize_ < 8 ) {
-            lineWidth = 1;
-            pathWidth = 1;
-        }
+        int lineWidth = (int) (WALL_LINE_WIDTH * cellSize_ / 30.0);
+        int pathWidth = (int) (PATH_LINE_WIDTH * cellSize_ / 30.0);
+
         Stroke wallStroke = new BasicStroke( lineWidth );
         Stroke pathStroke = new BasicStroke( pathWidth );
 
@@ -586,18 +574,19 @@ public class MazeGenerator extends JComponent
                int xpos = i * cellSize;
                int ypos = j * cellSize;
 
-                if ( c.eastPath )  {
+               if (c==null) return;
+               if ( c.eastPath )  {
                     g2.drawLine( xpos + halfCellSize, ypos + halfCellSize, xpos + cellSize, ypos + halfCellSize );
-                }
-                if ( c.westPath )  {
+               }
+               if ( c.westPath )  {
                     g2.drawLine( xpos, ypos + halfCellSize, xpos + halfCellSize, ypos + halfCellSize );
-                }
-                if ( c.northPath )  {
+               }
+               if ( c.northPath )  {
                     g2.drawLine( xpos + halfCellSize, ypos + halfCellSize, xpos + halfCellSize, ypos );
-                }
-                if ( c.southPath )  {
+               }
+               if ( c.southPath )  {
                     g2.drawLine( xpos + halfCellSize, ypos + cellSize, xpos + halfCellSize, ypos + halfCellSize );
-                }
+               }
             }
         }
 

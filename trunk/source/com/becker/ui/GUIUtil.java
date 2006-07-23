@@ -285,7 +285,7 @@ public final class GUIUtil
      */
     public static JWindow showSplashScreen( int waitMillis )
     {
-        return showSplashScreen(waitMillis, "config/images/splash.gif"); 
+        return showSplashScreen(waitMillis, "config/images/splash.gif");
     }
 
 
@@ -337,16 +337,16 @@ public final class GUIUtil
         int height = (int) d.getHeight() >> 1 ;
         int width = (int) Math.min(height * 1.5, d.getWidth() / 2);
 
-
         baseFrame.setVisible( true );
         baseFrame.setSize( width, height);
-
 
         // call the applet's init method
         applet.init();
 
+        baseFrame.repaint();
+        baseFrame.setVisible( true );
+
         // call the applet's start method
-        //baseFrame.setVisible( true );
         applet.start();
 
         return baseFrame;

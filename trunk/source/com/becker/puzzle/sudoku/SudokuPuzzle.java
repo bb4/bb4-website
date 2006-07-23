@@ -58,7 +58,7 @@ public final class SudokuPuzzle extends JApplet implements ActionListener, ItemL
      */
     public void start() {
 
-        puzzlePanel_.repaint();
+        //puzzlePanel_.repaint();
         puzzlePanel_.setSize(this.getSize());
     }
 
@@ -72,14 +72,16 @@ public final class SudokuPuzzle extends JApplet implements ActionListener, ItemL
      */
     public JPanel createButtonPanel() {
         JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         generateButton_ = new GradientButton("Generate");
         generateButton_.addActionListener(this);
         solveButton_ = new GradientButton("Solve");
         solveButton_.addActionListener(this);
 
-        panel.add(solveButton_);
         panel.add(generateButton_);
+        panel.add(solveButton_);
         panel.add(createSizeDropdown());
+        panel.add(Box.createHorizontalGlue());
 
         return panel;
     }
@@ -94,16 +96,6 @@ public final class SudokuPuzzle extends JApplet implements ActionListener, ItemL
         return sizeChoice_;
     }
 
-    /**
-     * use this to run as an application instead of an applet.
-     */
-    public static void main( String[] args )  {
-
-        SudokuPuzzle applet = new SudokuPuzzle();
-
-        // this will call applet.init() and start() methods instead of the browser
-        GUIUtil.showApplet( applet, "Sudoku Puzzle Solver" );
-    }
 
     public void actionPerformed(ActionEvent e) {
 
@@ -158,5 +150,17 @@ public final class SudokuPuzzle extends JApplet implements ActionListener, ItemL
         Board b = generator.generatePuzzleBoard(null);
         puzzlePanel_.setBoard(b);
         puzzlePanel_.repaint();
+    }
+
+
+    /**
+     * use this to run as an application instead of an applet.
+     */
+    public static void main( String[] args )  {
+
+        SudokuPuzzle applet = new SudokuPuzzle();
+
+        // this will call applet.init() and start() methods instead of the browser
+        GUIUtil.showApplet( applet, "Sudoku Puzzle Solver" );
     }
 }

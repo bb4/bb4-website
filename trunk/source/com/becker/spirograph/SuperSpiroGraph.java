@@ -2,7 +2,7 @@ package com.becker.spirograph;
 
 /**
  * @author Barry Becker
- */
+ *
 
 import com.becker.ui.GUIUtil;
 
@@ -14,13 +14,15 @@ public class SuperSpiroGraph extends SpiroGraph
     // rat is the ratio of the angular velocity of R3 to R2
     protected static JLabel rad3, rat;
     protected static JSlider RAD3, RAT;
+    GraphState state_ = new GraphState();
 
     public void init()
     {
         System.out.println( "in init SuperSpiroGraph.init" );
         this.getContentPane().setLayout( new BorderLayout() );
-        SuperGraphRenderer sgr = new SuperGraphRenderer();
-        graphRenderer = sgr;
+
+        SuperGraphRenderer sgr = new SuperGraphRenderer(state_);
+        graphRenderer_ = sgr;
         System.out.println( "done init SuperGRenderer" );
 
         initComponents();
@@ -32,7 +34,7 @@ public class SuperSpiroGraph extends SpiroGraph
         RAT = new JSlider( JSlider.HORIZONTAL, 0, 5, 1 );
         RAT.addChangeListener( this );
 
-        p1 = new JPanel();
+        JPanel p1 = new JPanel();
         p1.setLayout( new GridLayout( 28, 1 ) );
         p1.add( rad1 );
         p1.add( RAD1 );
@@ -50,13 +52,13 @@ public class SuperSpiroGraph extends SpiroGraph
         p1.add( RAT );
 
         addButtons( p1 );
-        initializeRenderer();
+        initializeRenderer(p1);
     }
 
     protected void checkSlider( JSlider src, int v )
     {
         super.checkSlider( src, v );
-        SuperGraphRenderer sgr = (SuperGraphRenderer) graphRenderer;
+        SuperGraphRenderer sgr = (SuperGraphRenderer) graphRenderer_;
         if ( src == RAD3 ) {
             rad3.setText( "Radius3: " + RAD3.getValue() );
             //sgr.R3 = RAD3.getValue();
@@ -84,5 +86,5 @@ public class SuperSpiroGraph extends SpiroGraph
         SpiroGraph applet = new SuperSpiroGraph();
         JFrame baseFrame_ = GUIUtil.showApplet( applet, "SuperSpiroGraph Applet" );
     }
-}
+}    */
 

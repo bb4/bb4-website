@@ -1,32 +1,55 @@
 package com.becker.spirograph;
 
-import com.becker.java2d.ImageUtil;
 import com.becker.ui.*;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+import javax.swing.border.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 /**
  * That old spirograph game from the 70's brought into the computer age
  * Based on work originially done by David Little.
  *
  * @author Barry Becker
- * @version SpiroGraph1.1
  */
 public class SpiroGraph extends JApplet
-        implements ChangeListener, ActionListener
+        implements ActionListener, SliderChangeListener
 {
-    protected static JPanel p1,q1;
-    protected static BorderLayout p0, q0;
-    protected GraphRenderer graphRenderer;
-    protected static Color COLOR;
-    protected static JLabel rad1, rad2, pos, vel, width, X, Y, swatch, red, green, blue;
-    protected static JSlider RAD1, RAD2, POS, VEL, WIDTH, RED, GREEN, BLUE;
-    protected static GradientButton hide, clear, draw, reset;
+    public static final String HIDE_LABEL = "Hide Axes";
+    private static final String SHOW_LABEL = "Show Axes";
+    private static final String CLEAR_LABEL = "Clear Graph";
+    private static final String RESET_LABEL = "Reset";
+    public static final String DRAW_LABEL = "Draw Graph";
+    private static final String PAUSE_LABEL = "Pause";
+    private static final String RESUME_LABEL = "Resume Drawing";
+
+    GraphState state_;
+    SliderGroup sliderGroup_;
+    protected GraphRenderer graphRenderer_;
+
+    private static final int RAD1 = 0;
+    private static final int RAD2 = 1;
+    private static final int POS = 2;
+    private static final int VEL = 3;
+    private static final int WIDTH = 4;
+    private static final int SEGMENTS = 5;
+
+    private static final String[] SLIDER_NAMES = {
+        "Radius1", "Radius2", "Position", "Speed", "Line Width", "Num Segments/Revolution"
+    };
+    private static final int[] SLIDER_MIN = {
+        5,          -59,      -300,                     1,                1,    GraphState.DEFAULT_NUM_SEGMENTS/10
+    };
+    private static final int[] SLIDER_MAX = {
+        255,        200,       300, GraphState.VELOCITY_MAX,              50,       4*GraphState.DEFAULT_NUM_SEGMENTS
+    };
+    private static final int[] SLIDER_INITIAL = {
+        60,         60,        60,                     3, GraphState.INITIAL_LINE_WIDTH, GraphState.DEFAULT_NUM_SEGMENTS
+    };
+
+    protected JLabel xFunction_, yFunction_;
+    protected GradientButton hide_, clear_, draw_, reset_;
 
     ResizableAppletPanel resizablePanel_ = null;
 
@@ -35,298 +58,243 @@ public class SpiroGraph extends JApplet
         GUIUtil.setCustomLookAndFeel();
 
         //setLayout(new BorderLayout());
-        System.out.println( "in init SpiroGraph.init" );
-        this.getContentPane().setLayout( new BorderLayout() );
-        graphRenderer = new GraphRenderer();
+        getContentPane().setLayout( new BorderLayout() );
 
-        initComponents();
+        state_ = new GraphState();
 
+        state_.setR1(SLIDER_INITIAL[RAD1]);
+        state_.setR2(SLIDER_INITIAL[RAD2]);
+        state_.setPos(SLIDER_INITIAL[POS]);
+        state_.setVelocity(SLIDER_INITIAL[VEL]);
+        state_.setWidth(SLIDER_INITIAL[WIDTH]);
+        state_.setNumSegmentsPerRev(SLIDER_INITIAL[SEGMENTS]);
+
+        JPanel p1;
         p1 = new JPanel();
-        p1.setLayout( new GridLayout( 24, 1 ) );
-        p1.add( rad1 );
-        p1.add( RAD1 );
-        p1.add( rad2 );
-        p1.add( RAD2 );
-        p1.add( pos );
-        p1.add( POS );
-        p1.add( vel );
-        p1.add( VEL );
-        p1.add( width );
-        p1.add( WIDTH );
-        addButtons( p1 );
+        p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS) );
 
-        initializeRenderer();
+        sliderGroup_ = new SliderGroup(SLIDER_NAMES, SLIDER_MIN, SLIDER_MAX, SLIDER_INITIAL);
+        sliderGroup_.addSliderChangeListener(this);
+        p1.add(sliderGroup_);
+
+        p1.add(createButtonGroup());
+
+        ColorSliderGroup colorSelector = new ColorSliderGroup();
+        colorSelector.setColorChangeListener(state_);
+        p1.add(colorSelector);
+
+        JPanel fill = new JPanel();
+        fill.setPreferredSize(new Dimension(100, 1000));
+        p1.add(fill);
+
+        graphRenderer_ = new GraphRenderer(state_, draw_);
+
+        initializeRenderer(p1);
+        setSize(getContentPane().getWidth(), getContentPane().getHeight());
     }
 
-    protected void addButtons( JPanel p1 )
+
+    private JPanel createButtonGroup()
     {
-        p1.add( new Label( " " ) );
-        p1.add( hide );
-        p1.add( clear );
-        p1.add( reset );
-        p1.add( draw );
-        p1.add( new JLabel( " " ) );
-        p1.add( swatch );
-        p1.add( red );
-        p1.add( RED );
-        p1.add( green );
-        p1.add( GREEN );
-        p1.add( blue );
-        p1.add( BLUE );
-        updateSwatch();
+        JPanel bp = new JPanel(new BorderLayout());
+        JPanel p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS) );
+        //p.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+        p.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5),
+                                                       BorderFactory.createEtchedBorder(EtchedBorder.RAISED)));
+
+        hide_ = createButton( HIDE_LABEL );
+        clear_ = createButton( CLEAR_LABEL );
+        reset_ = createButton( RESET_LABEL );
+        draw_ = createButton( DRAW_LABEL );
+
+        JPanel bl= new JPanel(new BorderLayout());
+        bl.add(hide_, BorderLayout.CENTER);
+        p.add( createButtonPanel(hide_) );
+        p.add( createButtonPanel(clear_) );
+        p.add( createButtonPanel(reset_) );
+        p.add( createButtonPanel(draw_) );
+
+        bp.add(p, BorderLayout.CENTER);
+        return bp;
     }
 
-    protected void initComponents()
-    {
-        rad1 = new JLabel( "Radius1: 60" );
-        RAD1 = new JSlider( JSlider.HORIZONTAL, 5, 255, 60 );
-        RAD1.addChangeListener( this );
-        rad2 = new JLabel( "Radius2: 60" );
-        RAD2 = new JSlider( JSlider.HORIZONTAL, -59, 200, 60 );
-        RAD2.addChangeListener( this );
-        pos = new JLabel( "Position: 60" );
-        POS = new JSlider( JSlider.HORIZONTAL, -300, 300, 60 );
-        POS.addChangeListener( this );
-        vel = new JLabel( "Velocity: " + 3 );
-        VEL = new JSlider( JSlider.HORIZONTAL, 1, GraphRenderer.VELOCITY_MAX, 3 );
-        VEL.addChangeListener( this );
-        width = new JLabel( "Line Width: " + GraphRenderer.INITIAL_LINE_WIDTH );
-        WIDTH = new JSlider( JSlider.HORIZONTAL, 1, 50, GraphRenderer.INITIAL_LINE_WIDTH );
-        WIDTH.addChangeListener( this );
-        red = new JLabel( "Red: 0" );
-        RED = new JSlider( JSlider.HORIZONTAL, 0, 255, 0 );
-        RED.addChangeListener( this );
-        green = new JLabel( "Green: 0" );
-        GREEN = new JSlider( JSlider.HORIZONTAL, 0, 255, 0 );
-        GREEN.addChangeListener( this );
-        blue = new JLabel( "Blue: 0" );
-        BLUE = new JSlider( JSlider.HORIZONTAL, 0, 255, 0 );
-        BLUE.addChangeListener( this );
-
-        // buttons for controlling the animation
-        hide = new GradientButton( "Hide" );
-        hide.addActionListener( this );
-        clear = new GradientButton( "Clear" );
-        clear.addActionListener( this );
-        reset = new GradientButton( "Reset" );
-        reset.addActionListener( this );
-        draw = new GradientButton( "Draw" );
-        draw.addActionListener( this );
-        swatch = new JLabel();
-        swatch.setBackground( Color.white );
+    private GradientButton createButton( String label) {
+        GradientButton button = new GradientButton( label );
+        button.addActionListener( this );
+        return button;
     }
 
-    public void initializeRenderer()
-    {
+    private JPanel createButtonPanel(GradientButton button) {
+        JPanel bp= new JPanel(new BorderLayout());
+        bp.add(button, BorderLayout.CENTER);
+        return bp;
+    }
 
+    public void initializeRenderer(JPanel p1)
+    {
         JPanel mainPanel = new JPanel( new BorderLayout() );
 
-        q1 = new JPanel();
+        JPanel q1 = new JPanel();
         q1.setLayout( new GridLayout( 1, 2, 0, 0 ) );
-        q1.add( X = new JLabel( "", JLabel.CENTER ) );
-        q1.add( Y = new JLabel( "", JLabel.CENTER ) );
+        q1.add( xFunction_ = new JLabel( "", JLabel.CENTER ) );
+        q1.add( yFunction_ = new JLabel( "", JLabel.CENTER ) );
         updateEqn();
 
         mainPanel.add( "East", p1 );
-        mainPanel.add( "Center", graphRenderer );
+        mainPanel.add( "Center", graphRenderer_ );
         mainPanel.add( "South", q1 );
 
         resizablePanel_ = new ResizableAppletPanel( mainPanel );
         this.getContentPane().add( resizablePanel_ );
-
-        System.out.println( "the image w =" + graphRenderer.W + " h=" + graphRenderer.H );
-
-        graphRenderer.offImage = ImageUtil.createCompatibleImage( graphRenderer.W, graphRenderer.H );
-        if ( graphRenderer.offImage != null ) {
-            graphRenderer.offg = graphRenderer.offImage.createGraphics();
-            graphRenderer.offg.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
-                    RenderingHints.VALUE_ANTIALIAS_ON );
-        }
-        else
-            System.out.println( "error the offg is null!" );
-        graphRenderer.clear();
     }
 
     public void updateEqn()
     {
-        int r = RAD2.getValue();
-        int Rr = RAD1.getValue() + r;
-        int p = POS.getValue();
+        int rad = sliderGroup_.getSliderValue(RAD2);
+        int combinedRad = sliderGroup_.getSliderValue(RAD1) + rad;
+        int p = sliderGroup_.getSliderValue(POS);
         String s1 = "-", s2 = "-";
 
-        if ( r == 0 ) {
-            X.setText( "x(t)=undefined" );
-            Y.setText( "y(t)=undefined" );
+        if ( rad == 0 ) {
+            xFunction_.setText( "x(t)=undefined" );
+            yFunction_.setText( "y(t)=undefined" );
         }
         else if ( p == 0 ) {
-            X.setText( "x(t)=" + Rr + "cos(t)" );
-            Y.setText( "y(t)=" + Rr + "sin(t)" );
+            xFunction_.setText( "x(t)=" + combinedRad + "cos(t)" );
+            yFunction_.setText( "y(t)=" + combinedRad + "sin(t)" );
         }
         else {
-            if ( p < 0 && r < 0 ) {
+            if ( p < 0 && rad < 0 ) {
                 p *= -1;
-                r *= -1;
+                rad *= -1;
                 s1 = "+";
             }
-            else if ( p < 0 && r > 0 ) {
+            else if ( p < 0 && rad > 0 ) {
                 p *= -1;
                 s1 = "+";
                 s2 = "+";
             }
-            else if ( p > 0 && r < 0 ) {
-                r *= -1;
+            else if ( p > 0 && rad < 0 ) {
+                rad *= -1;
                 s2 = "+";
             }
-            X.setText( "x(t)=" + Rr + "cos(t)" + s1 + p + "cos(" + Rr + "t/" + r + ")" );
-            Y.setText( "y(t)=" + Rr + "sin(t)" + s2 + p + "sin(" + Rr + "t/" + r + ")" );
+            xFunction_.setText( "x(t)=" + combinedRad + "cos(t)" + s1 + p + "cos(" + combinedRad + "t/" + rad + ')' );
+            yFunction_.setText( "y(t)=" + combinedRad + "sin(t)" + s2 + p + "sin(" + combinedRad + "t/" + rad + ')' );
         }
     }
 
-    public void updateSwatch()
-    {
-        COLOR = new Color( RED.getValue(), GREEN.getValue(), BLUE.getValue() );
-        System.out.println( "swatch color = " + COLOR );
-        swatch.setBackground( COLOR );
-        swatch.setOpaque( true );
-        swatch.repaint();
-    }
 
-    protected void checkSlider( JSlider src, int v )
+    /**
+     * Implements SliderChangeListener interface.
+     * See SliderGroup
+     * Maintains constraints between sliders.
+     */
+    public void sliderChanged(int src, String sliderName, int value )
     {
+        //System.out.println(sliderName+ ' ' + value);
+        int velocity = sliderGroup_.getSliderValue(VEL);
+
         if ( src == RAD1 ) {
-            rad1.setText( "Radius1: " + RAD1.getValue() );
-            int n = RAD2.getValue();
-            int m = RAD1.getValue();
-            if ( n < 2 - m ) {
-                n = 1 - m;
-                RAD2.setValue( n );
-                rad2.setText( "Radius2: " + n );
-                graphRenderer.R2 = n;
+            int n = sliderGroup_.getSliderValue(RAD2);
+            if ( n < 2 - value ) {
+                n = 1 - value;
+                sliderGroup_.setSliderValue(RAD2, n);
+                state_.setR2(n);
             }
-            RAD2.setMinimum( 2 - m );
-            graphRenderer.R1 = RAD1.getValue();
-            graphRenderer.adjustCircle1();
-            if ( v == GraphRenderer.VELOCITY_MAX )
+            sliderGroup_.setSliderMinimum(RAD2, ( 2 - value ));
+            state_.setR1(value);
+            graphRenderer_.adjustCircle1();
+            if ( velocity == GraphState.VELOCITY_MAX )
                 autoUpdate();
         }
         else if ( src == RAD2 ) {
-            rad2.setText( "Radius2: " + RAD2.getValue() );
-            graphRenderer.R2 = RAD2.getValue();
-            if ( RAD2.getValue() < 0 )
-                graphRenderer.sign = -1.0;
-            else
-                graphRenderer.sign = 1.0;
-            graphRenderer.adjustCircle2();
-            if ( v == GraphRenderer.VELOCITY_MAX )
+            state_.setR2(value);
+            state_.setSign( value < 0 ? -1 : 1);
+            graphRenderer_.adjustCircle2();
+            if ( velocity == GraphState.VELOCITY_MAX )
                 autoUpdate();
         }
         else if ( src == POS ) {
-            pos.setText( "Position: " + POS.getValue() );
-            graphRenderer.p = POS.getValue();
-            graphRenderer.adjustDot();
-            if ( v == GraphRenderer.VELOCITY_MAX )
+            state_.setPos( value);
+            graphRenderer_.adjustDot();
+            if ( velocity == GraphState.VELOCITY_MAX )
                 autoUpdate();
         }
         else if ( src == VEL ) {
-            vel.setText( "Velocity: " + v );
-            graphRenderer.v = v;
+            state_.setVelocity(value);
         }
         else if ( src == WIDTH ) {
-            width.setText( "Line Width: " + WIDTH.getValue() );
-            graphRenderer.width = WIDTH.getValue();
+            state_.setWidth(value);
         }
-        else if ( src == RED ) {
-            red.setText( "Red: " + RED.getValue() );
-            updateSwatch();
+        else if ( src == SEGMENTS ) {
+            state_.setNumSegmentsPerRev(value);
         }
-        else if ( src == GREEN ) {
-            green.setText( "Green: " + GREEN.getValue() );
-            updateSwatch();
-        }
-        else if ( src == BLUE ) {
-            blue.setText( "Blue: " + BLUE.getValue() );
-            updateSwatch();
-        }
+        updateEqn();
     }
 
-    public void stateChanged( ChangeEvent e )
-    {
-        //System.out.println( "ChangeEvent :" + e.getSource().toString() );
-        Object src = e.getSource();
-        if ( src instanceof JSlider ) {
-            int velocity = VEL.getValue();
-            checkSlider( (JSlider) src, velocity );
-            updateEqn();
-        }
-    }
-
+    /**
+     * a button was pressed.
+     * @param e
+     */
     public void actionPerformed( ActionEvent e )
     {
         Object source = e.getSource();
 
         if ( source instanceof GradientButton ) {
             String obj = ((GradientButton) source).getText();
-            if ( RAD2.getValue() != 0 ) {
-                if ( obj.equals( "Draw" ) ) {
-                    draw.setText( "Pause" );
-                    graphRenderer.n = (double) WIDTH.getValue();
-                    GraphRenderer.thread = new Thread( graphRenderer );
-                    GraphRenderer.thread.start();
+            if ( sliderGroup_.getSliderValue(RAD2) != 0 ) {
+                if ( DRAW_LABEL.equals(obj) ) {
+                    draw_.setText( PAUSE_LABEL );
+                    GraphRenderer.thread_ = new Thread( graphRenderer_ );
+                    GraphRenderer.thread_.start();
                 }
-                else if ( obj.equals( "Pause" ) ) {
-                    graphRenderer.setPaused( true );
-                    draw.setText( "Resume" );
+                else if ( PAUSE_LABEL.equals(obj) ) {
+                    graphRenderer_.setPaused( true );
+                    draw_.setText( RESUME_LABEL );
                 }
-                else if ( obj.equals( "Resume" ) ) {
-                    graphRenderer.setPaused( false );
-                    draw.setText( "Pause" );
+                else if ( RESUME_LABEL.equals(obj) ) {
+                    graphRenderer_.setPaused( false );
+                    draw_.setText( PAUSE_LABEL );   // WAS DRAW
                 }
             }
 
-            if ( obj.equals( "Reset" ) ) {
-                resetRenderer();
+            if ( RESET_LABEL.equals(obj) ) {
+                graphRenderer_.reset();
+                draw_.setText( DRAW_LABEL );
             }
-            else if ( obj.equals( "Hide" ) ) {
-                graphRenderer.drawAxes();
-                hide.setText( "Show" );
+            else if ( HIDE_LABEL.equals(obj) ) {
+                // hides axes by drawing in XOR mode
+                graphRenderer_.drawAxes();
+                state_.setShowAxes(false);
+                hide_.setText( SHOW_LABEL );
             }
-            else if ( obj.equals( "Show" ) ) {
-                hide.setText( "Hide" );
-                graphRenderer.drawAxes();
+            else if ( SHOW_LABEL.equals(obj) ) {
+                hide_.setText( HIDE_LABEL );
+                state_.setShowAxes(true);
+                graphRenderer_.drawAxes();
             }
-            else if ( obj.equals( "Clear" ) ) {
-                graphRenderer.clear();
+            else if ( CLEAR_LABEL.equals(obj) ) {
+                graphRenderer_.clear();
             }
         }
     }
 
     protected void autoUpdate()
     {
-        graphRenderer.clear();
-        resetRenderer();
-        GraphRenderer.thread = new Thread( graphRenderer );
-        GraphRenderer.thread.start();
-    }
-
-    protected void resetRenderer()
-    {
-        // stop the thread
-        GraphRenderer.thread = null;
-
-        //GraphRenderer.thread = new Thread(graphRenderer);
-        graphRenderer.theta = 0.0;
-        graphRenderer.phi = 0.0;
-        graphRenderer.setPoint();
-        graphRenderer.adjustCircle2();
-        draw.setText( "Draw" );
+        graphRenderer_.clear();
+        graphRenderer_.reset();
+        draw_.setText( DRAW_LABEL );
+        GraphRenderer.thread_ = new Thread( graphRenderer_ );
+        GraphRenderer.thread_.start();
     }
 
     /**
-     * This method allow javascript to resize the applet from the browser.
+     * This method allows javascript to resize the applet from the browser.
      */
     public void setSize( int width, int height )
     {
-        //System.out.println("in setSize w="+width+" h="+height);
+        System.out.println("in setSize w="+width+" h="+height);
         resizablePanel_.setSize( width, height );
     }
 
@@ -334,7 +302,7 @@ public class SpiroGraph extends JApplet
     public static void main( String[] args )
     {
         SpiroGraph applet = new SpiroGraph();
-        JFrame baseFrame_ = GUIUtil.showApplet( applet, "SpiroGraph Applet" );
+        GUIUtil.showApplet( applet, "SpiroGraph Applet" );
     }
 }
 
