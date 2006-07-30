@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+  <head>
+    <title>Screen Saver Applet</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta name="author" content="Barry Becker">
+    <meta name="description" content="screen saver applet">
+
+    <script>
+      var applet = null;
+
+      // called when page done loading
+      //
+      function doInit()
+      {
+        if (document.applets == null || document.applets[0] == null)
+        {
+          var errorMsg = "You must have the java plugin for this page to work. \n";
+          errorMsg += "You can get it from http://java.sun.com/products/plugin/";
+          alert(errorMsg);
+          return;
+        }
+
+        applet = document.applets[0];
+
+        // resize the applet
+        resizeApplet(true);
+      }
+
+
+      // This sets the size of the applet based on the available space in the browser window
+      // if doIt is false, then this method does nothing
+      //
+      function resizeApplet(doIt)
+      {
+        if (!doIt) return;
+
+        // allow for a huge double width screen because that's what I have
+        var nWidthMax = 2000;
+        var nHeightMax = 1400;
+
+        var nWidthNew = document.body.clientWidth;
+        var nHeightNew = document.body.clientHeight;
+
+        if (nWidthNew > nWidthMax)
+          nWidthNew = nWidthMax;
+        if (nHeightNew > nHeightMax)
+          nHeightNew = nHeightMax;
+
+        applet.setSize(nWidthNew, nHeightNew-90);
+        window.scroll(0, 0);
+      }
+    </script>
+
+
+  </head>
+  <body bgcolor="#FFFFFF" onload="doInit();" onresize="resizeApplet(true);" style="overflow-y: hidden; overflow-x: hidden;" topmargin="0" leftmargin="0">
+
+   <div>
+    <applet width="400" height="400" align="Baseline">
+      <param name="code" value="com.becker.misc.eatest.maze.MazeScreenSaver">
+      <param name="codebase" value=".">
+      <param name="cache_option" value="Plugin">
+      <param name="name" value="ScreenSaver">
+      <param name="type" value="application/x-java-applet;version=1.4">
+      <param name="scriptable" value="true">
+    </applet>
+   </div>
+
+  </body>
+</html>
+<noembed><xmp>
