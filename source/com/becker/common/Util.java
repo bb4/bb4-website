@@ -6,7 +6,8 @@ import java.util.Collection;
 import java.util.Iterator;
 
 /**
- * commonly used static utility methods
+ * Miscelaneous commonly used static utility methods.
+ * May want to break this up into FileUtil, etc.
  */
 public final class Util
 {
@@ -132,7 +133,7 @@ public final class Util
         catch (ClassNotFoundException e) {
             System.out.println("Unable to find the class "+ className+". Check your classpath.");
             //System.out.println("The current classpath is :"+System.getProperty("java.class.path"));
-            if (defaultClassName==null) {
+            if (defaultClassName == null) {
                 e.printStackTrace();
                 return null;
             }
@@ -169,6 +170,17 @@ public final class Util
             sBuf.append('\n');
         }
         return sBuf.toString();
+    }
+
+
+    public static void sleep(int millis) {
+        if (millis > 0) {
+            try {
+                Thread.sleep(millis);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            };
+        }
     }
 
 }
