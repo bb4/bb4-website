@@ -307,49 +307,61 @@ public final class GUIUtil
         return w;
     }
 
-    /**
-     * this method is useful for turning Applets into applications
-     * @return the base frame which holds the applet content
+   /**
+     * Create the GUI and show it.  For thread safety,
+     * this method should be invoked from the event-dispatching thread.
      */
-    public static JFrame showApplet( JApplet applet, String title )
+    private static void createAndShowAppletFrame(JApplet applet, String title) {
+       JFrame baseFrame = new JFrame();
+
+       baseFrame.setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
+       baseFrame.addWindowListener( new WindowAdapter()
+       {
+           public void windowClosed( WindowEvent e )
+           {
+               System.exit( 0 );
+           }
+       } );
+       baseFrame.setTitle( title );
+       baseFrame.setContentPane( applet.getContentPane() );
+
+       baseFrame.setSize( applet.getSize() );
+
+       Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+       baseFrame.setLocation( (d.width - baseFrame.getSize().width) >> 2,
+                              (d.height - baseFrame.getSize().height) >> 2 );
+       int height = (int) d.getHeight() >> 1 ;
+       int width = (int) Math.min(height * 1.5, d.getWidth() / 2);
+
+       baseFrame.setVisible( true );
+       baseFrame.setSize( width, height);
+
+       // call the applet's init method
+       applet.init();
+
+       baseFrame.repaint();
+       baseFrame.setVisible( true );
+
+       // call the applet's start method
+       applet.start();
+   }
+
+    /**
+     * this method is useful for turning Applets into applications.
+     */
+    public static void showApplet( final JApplet applet, final String title )
     {
         isStandAlone_ = false;
         assert !isStandAlone_: "You must be running as an application if you are calling this method.";
 
-        JFrame baseFrame = new JFrame();
-
-        baseFrame.setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
-        baseFrame.addWindowListener( new WindowAdapter()
-        {
-            public void windowClosed( WindowEvent e )
-            {
-                System.exit( 0 );
+        //Schedule a job for the event-dispatching thread:
+        //creating and showing this application's GUI.
+        // follows patter from http://java.sun.com/docs/books/tutorial/uiswing/misc/threads.html
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                createAndShowAppletFrame(applet, title);
             }
-        } );
-        baseFrame.setTitle( title );
-        baseFrame.setContentPane( applet.getContentPane() );
-
-        baseFrame.setSize( applet.getSize() );
-
-        Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-        baseFrame.setLocation( (d.width - baseFrame.getSize().width) >> 2,
-                               (d.height - baseFrame.getSize().height) >> 2 );
-        int height = (int) d.getHeight() >> 1 ;
-        int width = (int) Math.min(height * 1.5, d.getWidth() / 2);
-
-        baseFrame.setVisible( true );
-        baseFrame.setSize( width, height);
-
-        // call the applet's init method
-        applet.init();
-
-        baseFrame.repaint();
-        baseFrame.setVisible( true );
-
-        // call the applet's start method
-        applet.start();
-
-        return baseFrame;
+        });
     }
 
 

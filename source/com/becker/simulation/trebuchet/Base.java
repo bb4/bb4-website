@@ -23,7 +23,9 @@ public class Base extends RenderablePart {
         g2.setColor(BASE_COLOR);
 
         g2.draw3DRect((int) (scale * BASE_X), BASE_Y, (int) (scale * BASE_WIDTH), (int) (scale * 10.0), false);
-        g2.drawLine((int) (scale * (STRUT_BASE_X - STRUT_BASE_HALF_WIDTH)),  BASE_Y, (int) (scale * STRUT_BASE_X), (int) (BASE_Y - scale * SCALE_FACTOR * height_));
-        g2.drawLine((int) (scale * (STRUT_BASE_X + STRUT_BASE_HALF_WIDTH)),  BASE_Y, (int) (scale * STRUT_BASE_X), (int) (BASE_Y - scale * SCALE_FACTOR * height_));
+        g2.drawLine((int) (scale * (STRUT_BASE_X - STRUT_BASE_HALF_WIDTH)),  BASE_Y,
+                    (int) (scale * STRUT_BASE_X), (int) (BASE_Y - scale * SCALE_FACTOR * height_));
+        g2.drawLine((int) (scale * (STRUT_BASE_X + STRUT_BASE_HALF_WIDTH)),  BASE_Y,
+                    (int) (scale * STRUT_BASE_X), (int) (BASE_Y - scale * SCALE_FACTOR * height_));
     }
 }

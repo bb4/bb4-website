@@ -227,12 +227,8 @@ public class TrebuchetSimulator extends Simulator implements Optimizee, ChangeLi
         int ct = 0;
 
         while ( stable && improved ) {
-            try {
-                // let the trebuchet run for a while
-                Thread.sleep( 1000 + (int) (3000 / (1.0 + 0.2 * ct)) );
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            // let it run for a while
+            Util.sleep( 1000 + (int) (3000 / (1.0 + 0.2 * ct)));
 
             ct++;
             //stable = trebuchet_.isStable();

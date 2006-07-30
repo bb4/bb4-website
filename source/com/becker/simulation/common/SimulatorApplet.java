@@ -21,10 +21,8 @@ public class SimulatorApplet extends JApplet {
     public SimulatorApplet() {}
 
     public SimulatorApplet(String simulatorClassName) {
-         simulator_ = createSimulationFromClassName(simulatorClassName);
 
-        JFrame baseFrame = GUIUtil.showApplet( this, "Simulation Applet" );
-        baseFrame.setSize( simulator_.getPreferredSize());
+         simulator_ = createSimulationFromClassName(simulatorClassName);
     }
 
 
@@ -33,7 +31,6 @@ public class SimulatorApplet extends JApplet {
      */
     public void init()
     {
-
         this.getParameterInfo();
         if (simulator_ == null) {
 
@@ -101,6 +98,8 @@ public class SimulatorApplet extends JApplet {
         String simulatorClassName = (args.length > 0)? args[0] : DEFAULT_SIMULATOR;
 
         SimulatorApplet applet = new SimulatorApplet(simulatorClassName);
+        GUIUtil.showApplet( applet, "Simulation Applet" );
+        //baseFrame.setSize( simulator_.getPreferredSize());
     }
 
 }

@@ -10,7 +10,7 @@ import static com.becker.simulation.trebuchet.TrebuchetConstants.*;
  */
 public abstract class RenderablePart {
 
-    public static final int BASE_Y = 750;
+    public static final int BASE_Y = 450;
     public static final double SCALE_FACTOR = 70;
 
     protected static final int BASE_X = 80;
