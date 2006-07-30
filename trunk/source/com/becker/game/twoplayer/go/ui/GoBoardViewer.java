@@ -1,9 +1,9 @@
 package com.becker.game.twoplayer.go.ui;
 
-import com.becker.common.ColorMap;
+import com.becker.common.*;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameController;
-import com.becker.game.common.Location;
+import com.becker.common.Location;
 import com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer;
 import com.becker.game.twoplayer.go.*;
 import com.becker.ui.GUIUtil;

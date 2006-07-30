@@ -24,10 +24,9 @@ public class ChessController extends CheckersController
     //        Should show piece grayed our or transparent until in a valid position
     //        If you drop the piece in an invlid position, instead of showing an error messagem
     //        animate the piece back to its original position.
-    //  - don't allow moves that put the king in check.
+    //  - exchange pawn for best piece when it reaches the other side.
     //  - if you are in check, then don't allow moves other than those that get you out of check.
-    //  - game is over if no moves available (because of check mate usually).
-    //  - exchange pawn for best peice when it reaches the other side.
+    //  - game is over if no moves available (because of check mate usually).    
     //  - there is a tendancy to get into an infinite cycle at the end of a computer vs computer game.
     //  - castling.
     //  - account for amount of king endangerment in worth.

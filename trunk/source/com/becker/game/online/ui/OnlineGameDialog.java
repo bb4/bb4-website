@@ -38,6 +38,7 @@ public abstract class OnlineGameDialog extends JDialog
 
 
     public OnlineGameDialog(Frame parent, ViewerCallbackInterface viewer) {
+        System.out.println("In OnlineGameDlg constructor");
         parent_ = parent;
         viewer_ = viewer;
         controller_ = viewer.getController();
@@ -67,7 +68,6 @@ public abstract class OnlineGameDialog extends JDialog
 
     public void handleServerUpdate(GameCommand cmd) {
 
-        //
         System.out.println("got an update of the table from the server:\n" + cmd);
     }
 

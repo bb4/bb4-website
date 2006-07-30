@@ -6,6 +6,7 @@ import com.becker.game.common.GameContext;
 import com.becker.game.common.LocaleType;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * This is the applet wrapper for the game programs.
@@ -18,6 +19,7 @@ public class GameApplet extends JApplet
 {
     private GamePanel gamePanel_ = null;
     private static final long serialVersionUID = 0L;
+    private static final Dimension INITIAL_SIZE =  new Dimension(600, 500);
 
     public void init() {
         GUIUtil.setCustomLookAndFeel();
@@ -37,7 +39,6 @@ public class GameApplet extends JApplet
         Class gameClass = Util.loadClass(className);
 
         try {
-
             gamePanel_ = (GamePanel)gameClass.newInstance();
 
         } catch (InstantiationException e) {
@@ -46,7 +47,7 @@ public class GameApplet extends JApplet
             e.printStackTrace();
         }
 
-        gamePanel_.setSize(600,500);
+        gamePanel_.setSize(INITIAL_SIZE);
         this.getContentPane().add(gamePanel_);
     }
 

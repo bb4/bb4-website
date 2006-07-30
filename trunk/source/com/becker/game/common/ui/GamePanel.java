@@ -143,7 +143,7 @@ public abstract class GamePanel extends TexturedPanel
         OutputWindow logWindow = new OutputWindow( GameContext.getLabel("LOG_OUTPUT"), null);
         GameContext.setLogger( new Log( logWindow ) );
 
-        newGameDialog_ = createNewGameDialog( null, boardViewer_ );      
+        newGameDialog_ = createNewGameDialog( null, boardViewer_ );
         onlineGameDialog_ = createOnlineGameDialog(null, boardViewer_);
         optionsDialog_ = createOptionsDialog( null, boardViewer_.getController() );
 
@@ -185,8 +185,10 @@ public abstract class GamePanel extends TexturedPanel
         // misc speech
         if ( GameContext.getUseSound() ) {
             // This works for arbitrary strings, but is not as nice sounding as the pre-generated wav file.
-            //SpeechSynthesizer speech = new SpeechSynthesizer();
-            //speech.sayPhoneWords( GREETING );
+            /* npe in applet (why?)
+            SpeechSynthesizer speech = new SpeechSynthesizer();
+            speech.sayPhoneWords( GREETING );
+            */
 
             // use when sound card available
             /* @@ causing security exception in applet.

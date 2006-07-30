@@ -4,6 +4,7 @@ import ca.dj.jigo.sgf.tokens.*;
 import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
 import com.becker.game.multiplayer.galactic.*;
+import com.becker.common.*;
 
 import java.awt.*;
 import java.awt.event.*;

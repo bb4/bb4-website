@@ -1,6 +1,7 @@
 package com.becker.game.multiplayer.poker;
 
 import com.becker.game.common.*;
+import com.becker.common.*;
 
 import java.awt.*;
 
@@ -40,7 +41,7 @@ public class PokerPlayerMarker extends GamePiece
     {
         return owner_;
     }
-    
+
 
     public boolean isHighlighted() {
         return highlighted_;

@@ -1,6 +1,7 @@
 package com.becker.game.multiplayer.galactic;
 
 import com.becker.game.common.*;
+import com.becker.common.*;
 
 import javax.vecmath.Vector2d;
 import java.awt.geom.Point2D;
