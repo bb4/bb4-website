@@ -6,6 +6,7 @@ import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer;
 import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
 import com.becker.game.common.Move;
+import com.becker.common.*;
 
 import javax.swing.*;
 import java.awt.*;

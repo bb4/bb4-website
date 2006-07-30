@@ -2,6 +2,7 @@ package com.becker.game.common.ui;
 
 import com.becker.game.common.*;
 import com.becker.ui.*;
+import com.becker.common.*;
 
 import javax.swing.*;
 import javax.swing.Timer;

@@ -3,6 +3,7 @@ package com.becker.game.online;
 
 import java.io.*;
 import java.net.*;
+import java.security.*;
 
 /**
  * Opens a socket to the Game server so we can talk to it.
@@ -26,8 +27,9 @@ public class ServerConnection {
      * @param port to open the connection on.
      */
     public ServerConnection(int port, OnlineChangeListener listener) {
-         changeListener_ = listener;
-         createListenSocket(port);
+        System.out.println("in ServerConnection constructor");
+        changeListener_ = listener;
+        createListenSocket(port);
     }
 
     /**
@@ -62,6 +64,7 @@ public class ServerConnection {
      */
     public void createListenSocket(int port) {
         try {
+            isConnected_ = false;
             System.out.println("Attempting to connect to Server=" + DEFAULT_HOST + " port="+port);
             socket_ = new Socket(DEFAULT_HOST, port);
             oStream_ = new ObjectOutputStream(socket_.getOutputStream());
@@ -89,6 +92,12 @@ public class ServerConnection {
         catch (IOException e) {
             exceptionOccurred("No I/O", e);
         }
+        catch (AccessControlException e) {
+            System.out.println("Failed to craetListenSocket. \n"
+                               +"You don't have permission to open a socket to "
+                               + DEFAULT_HOST + " in the current context.");
+            isConnected_ = false;
+        }
     }
 
     /**
@@ -99,7 +108,8 @@ public class ServerConnection {
         sendCommand(new GameCommand(GameCommand.Name.ADD_TABLE , newTable));
     }
 
-    private static void exceptionOccurred(String msg, Throwable t) {
+    private void exceptionOccurred(String msg, Throwable t) {
+        isConnected_ = false;
         System.out.println(msg);
         t.printStackTrace();
         System.exit(1);

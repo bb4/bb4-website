@@ -8,6 +8,7 @@ import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.common.Move;
 import com.becker.game.twoplayer.pente.PenteBoard;
 import com.becker.game.twoplayer.pente.PenteController;
+import com.becker.common.*;
 
 import java.awt.event.MouseEvent;
 

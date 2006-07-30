@@ -6,6 +6,7 @@ import com.becker.game.common.ui.*;
 import com.becker.game.multiplayer.poker.*;
 import com.becker.java2d.*;
 import com.becker.ui.*;
+import com.becker.common.*;
 
 import javax.swing.*;
 import java.awt.*;

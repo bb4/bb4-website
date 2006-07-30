@@ -2,6 +2,7 @@ package com.becker.game.twoplayer.go;
 
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.*;
+import com.becker.common.*;
 
 import java.util.*;
 

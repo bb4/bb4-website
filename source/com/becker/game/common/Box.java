@@ -1,5 +1,7 @@
 package com.becker.game.common;
 
+import com.becker.common.*;
+
 /**
  * A box defined by 2 locations
  * @ Barry Becker

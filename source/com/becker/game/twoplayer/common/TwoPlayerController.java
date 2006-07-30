@@ -94,17 +94,13 @@ public abstract class TwoPlayerController extends GameController
     {
         if (isProcessing()) {
             pause();
-            if (worker_!=null)
+            if (worker_!=null) {
                 worker_.interrupt();
                 processing_ = false;
                 // make the move even though we did not finish computing it
                 get2PlayerViewer().computerMoved((Move)worker_.get());
-            try {
-               Thread.sleep(100);
             }
-            catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            Util.sleep(100);
         }
         super.reset();
         getPlayer1().setWon(false);
