@@ -1,51 +1,117 @@
 package com.becker.puzzle.maze;
 
+import java.util.*;
+import java.util.List;
+import java.awt.*;
+
 /**
+ * Possible directions that we can go.
+ * Vary the probability that each direction occurs for interesting effects.
+ * the sum of these probabilities must sum to 1.
+ *
  * @author Barry Becker Date: Nov 27, 2005
  */
-public class Direction {
+public enum Direction {
 
-    // possible directions as we traverse
-    public static final Integer FORWARD = 1 ;
-    public static final Integer LEFT = 2 ;
-    public static final Integer RIGHT = 3 ;
+    FORWARD(0.5) {public Point apply(Point p) { return p; }},
+    LEFT(0.28) {public Point apply(Point p) { return leftOf(p); }},
+    RIGHT(0.22) {public Point apply(Point p) { return rightOf(p); }};
 
-    // vary the probability that each direction occurs for interesting effects
-    // the sum of these probabilities must sum to 1
-    public static final double DEFAULT_FORWARD_PROB = 0.6;
-    public static final double DEFAULT_LEFT_PROB = 0.39;
-    public static final double DEFAULT_RIGHT_PROB = 0.01;
+    private double probability_;
 
+    private static Random RANDOM = new Random(1);
 
-    // default probs
-    private double forwardProb_ = DEFAULT_FORWARD_PROB;
-    private double leftProb_ = DEFAULT_LEFT_PROB;
-    private double rightProb_ = DEFAULT_RIGHT_PROB;
-
-
-    public double getForwardProb() {
-        return forwardProb_;
+    private Direction(double probability) {
+        probability_ = probability;
     }
 
-    public void setForwardProb(double forwardProb) {
-        this.forwardProb_ = forwardProb;
+    public double getProbability() {
+        return probability_;
     }
 
-    public double getLeftProb() {
-        return leftProb_;
+    public void setProbability(double probability) {
+        probability_ = probability;
     }
 
-    public void setLeftProb(double leftProb) {
-        this.leftProb_ = leftProb_;
+    public abstract Point apply(Point dir);
+
+    /**
+     * return a shuffled list of directions
+     * they are ordered given the potentially skewed probablilities at the top
+     */
+    public static List getShuffledDirections()
+    {
+        double rnd = RANDOM.nextDouble(); //Math.random();
+        List directions = new ArrayList();
+        List originalDirections = new ArrayList();
+        for (Direction d : values()) {
+            originalDirections.add(d);
+        }
+
+        double fwdProb = FORWARD.getProbability();
+        double leftProb = LEFT.getProbability();
+        double rightProb = RIGHT.getProbability();
+        double sum = fwdProb + leftProb + rightProb;
+        fwdProb /= sum;
+        leftProb /= sum;
+        rightProb /= sum;
+
+        if ( rnd < fwdProb) {
+            directions.add( originalDirections.remove( 0 ) );
+            directions.add( getSecondDir( originalDirections,  leftProb, rightProb));
+        }
+        else if ( rnd >= fwdProb && rnd < ( fwdProb + leftProb) ) {
+            directions.add( originalDirections.remove( 1 ) );
+            directions.add( getSecondDir( originalDirections,  fwdProb, rightProb) );
+        }
+        else {
+            directions.add( originalDirections.remove( 2 ) );
+            directions.add( getSecondDir( originalDirections,  fwdProb, leftProb) );
+        }
+        // the third direction is whatever remains
+        directions.add( originalDirections.remove( 0 ) );
+        return directions;
     }
 
-    public double getRightProb() {
-        return rightProb_;
+
+    private static Direction getSecondDir( List twoDirections, double p1, double p2 )
+    {
+        double rnd = RANDOM.nextDouble();
+        if ( rnd < p1 )
+            return (Direction) twoDirections.remove( 0 );
+        else
+            return (Direction) twoDirections.remove( 1 );
     }
 
-    public void setRightProb(double rightProb) {
-        this.rightProb_ = rightProb_;
+
+    /**
+     *  find the direction which is counterclockwise 90 to the left of the specified dir.
+     */
+    private static Point leftOf( Point dir )
+    {
+        Point newDir = null;
+        if ( dir.x == 0 ) {
+            newDir = new Point((dir.y > 0)? -1 : 1, 0 );
+        }
+        else {  // assumed dir.y == 0
+            newDir = new Point( 0, ( dir.x > 0)? 1 : -1);
+        }
+        return newDir;
     }
 
+    /**
+     * find the direction which is clockwise 90 to the right of the specified dir.
+     */
+    private static Point rightOf( Point dir )
+    {
+        Point newDir ;
+        if ( dir.x == 0 ) {
+            newDir = new Point( (dir.y > 0)? 1 : -1, 0 );
+        }
+        else {  // assumed dir.y == 0
+            newDir = new Point( 0, (dir.x > 0)? -1 : 1);
+        }
+        return newDir;
+    }
 
 }

@@ -3,25 +3,36 @@ package com.becker.puzzle.maze;
 import java.awt.*;
 
 /**
- *  the state space position, depth, and direction while searching
+ *  The state space position, depth, and direction while searching.
+ *  Immutable.
  *
  *  @author Barry Becker
  */
 public class GenState
 {
 
-    // 4 if 2d 6 if 3d 12 if 4d
-    //public static final int NUM_CELL_FACES = 4;
-
-    Point position;
-    Point direction;
-    int depth;
+    private Point position_;
+    private Point direction_;
+    private int depth_;
 
     public GenState( Point pos, Point dir, int d )
     {
-        position = pos;
-        direction = dir;
-        depth = d;
+        position_ = pos;
+        direction_ = dir;
+        depth_ = d;
+    }
+
+
+    public Point getPosition() {
+        return position_;
+    }
+
+    public Point getDirection() {
+        return direction_;
+    }
+
+    public int getDepth() {
+        return depth_;
     }
 
 }

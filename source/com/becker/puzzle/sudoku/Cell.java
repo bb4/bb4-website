@@ -47,7 +47,7 @@ public class Cell {
     public void clearValue() {
         value_ = 0;
         original_ = false;
-        candidates_ = new LinkedList();
+        candidates_ = Collections.synchronizedList(new LinkedList());
     }
 
     /**

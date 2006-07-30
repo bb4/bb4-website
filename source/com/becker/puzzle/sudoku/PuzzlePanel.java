@@ -22,8 +22,6 @@ final class PuzzlePanel extends JPanel
     private static final Color GRID_COLOR = new Color(10, 0, 100);
     private static final Color TEXT_COLOR = new Color(0, 10, 10);
     private static final Color BACKGROUND_COLOR = new Color(220, 220, 240);
-    //private static final Font FONT = new Font("Sans Serif", Font.PLAIN, 24);
-    //private static final Font CANDIDATE_FONT = new Font("Sans Serif", Font.PLAIN, 12);
     private static final Color CANDIDATE_TEXT_COLOR = new Color(160, 160, 210);
 
 
@@ -128,7 +126,7 @@ final class PuzzlePanel extends JPanel
     /**
      * Draw a cell at the specified location.
      */
-    private static void drawCell(Graphics g, Cell cell, int xpos, int ypos, int pieceSize) {
+    private static synchronized void drawCell(Graphics g, Cell cell, int xpos, int ypos, int pieceSize) {
 
         int s = (int) (pieceSize * 0.4);
 
@@ -164,7 +162,7 @@ final class PuzzlePanel extends JPanel
 
     private static void drawHintNumber(Graphics g, int cellNum, int size, List cands,
                                        int x, int y) {
-        if (cellNum < cands.size()) {
+        if (cellNum < cands.size() && !cands.isEmpty()) {
             g.drawString(cands.get(cellNum).toString(), x, y);
         }
     }

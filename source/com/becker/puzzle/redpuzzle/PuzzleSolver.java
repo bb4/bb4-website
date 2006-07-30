@@ -1,5 +1,7 @@
 package com.becker.puzzle.redpuzzle;
 
+import com.becker.common.*;
+
 
 /**
  * This does the hard work of actually solving the puzzle.
@@ -135,10 +137,6 @@ public class PuzzleSolver {
 
     private static void refresh(PuzzlePanel puzzlePanel) {
         puzzlePanel.repaint();
-        try {
-           Thread.sleep(20);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Util.sleep(30); // give it a chance to repaint.
     }
 }

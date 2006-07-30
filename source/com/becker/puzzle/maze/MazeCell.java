@@ -1,5 +1,7 @@
 package com.becker.puzzle.maze;
 
+import java.awt.*;
+
 /**
  *  A region of space bounded by walls in the maze.
  *
@@ -26,6 +28,17 @@ public class MazeCell
     public boolean southPath = false;
 
     public int depth = 0;
+
+
+    public Point getNextPosition(Point currentPosition, Point dir)
+    {
+        visited = true;
+
+        Point nextPosition = (Point) currentPosition.clone();
+        nextPosition.translate( dir.x, dir.y );
+        return nextPosition;
+    }
+
 }
 
 

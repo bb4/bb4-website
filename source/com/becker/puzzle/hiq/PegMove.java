@@ -1,6 +1,7 @@
 package com.becker.puzzle.hiq;
 
 import com.becker.game.common.*;
+import com.becker.common.*;
 
 
 /**

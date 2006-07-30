@@ -9,17 +9,17 @@ import java.awt.event.*;
 public class MazeSimulator extends JApplet implements ActionListener
 {
 
-    MazeGenerator maze_ = null;
+    MazePanel mazePanel_;
 
     ResizableAppletPanel resizablePanel_ = null;
 
     // the passage thickness in pixels
     protected static final int PASSAGE_THICKNESS = 60;
-    protected static final int ANIMATION_SPEED = 10;
+    protected static final int INITIAL_ANIMATION_SPEED = 20;
 
     protected NumberInput thicknessField_ = null;
 
-    // ui for entering the direction probablilities
+    // ui for entering the direction probablilities.
     protected NumberInput forwardProbField_ = null;
     protected NumberInput leftProbField_ = null;
     protected NumberInput rightProbField_ = null;
@@ -37,14 +37,12 @@ public class MazeSimulator extends JApplet implements ActionListener
     // constructor
     public MazeSimulator()
     {
-        maze_ = new MazeGenerator();
+        mazePanel_ = new MazePanel();
         commonInit();
     }
 
-    // constructor
     public void commonInit()
     {
-
         GUIUtil.setCustomLookAndFeel();
 
         System.out.println( "creating maze simulator" );
@@ -52,50 +50,57 @@ public class MazeSimulator extends JApplet implements ActionListener
 
         setFont( new Font( "Serif", Font.PLAIN, 14 ) );
 
-        JPanel mainPanel = createMainPanel( maze_ );
+        JPanel mainPanel = createMainPanel( mazePanel_ );
 
         resizablePanel_ = new ResizableAppletPanel( mainPanel );
         this.getContentPane().add( resizablePanel_ );
 
-        maze_.addComponentListener( new ComponentAdapter()
+        mazePanel_.addComponentListener( new ComponentAdapter()
         {
             public void componentResized( ComponentEvent ce )
             {
                 // only resize if the dimensions have changed
-                Dimension newSize = maze_.getSize();
+                Dimension newSize = mazePanel_.getSize();
                 if ( oldSize_ == null ||
                         oldSize_.getWidth() != newSize.getWidth() ||
                         oldSize_.getHeight() != newSize.getHeight() ) {
-                    //System.out.println( "oldSize=" + oldSize + "  maze_.getSize()=" + maze_.getSize() );
                     oldSize_ = newSize;
-                    resized();
+                    //System.out.println( "compResized: oldSize=" + oldSize_ + " maze_.getSize()=" + maze_.getSize() );
+                    if (newSize.getWidth() > 0) {
+                        //System.out.println("compResized: call regen");
+                        resized();
+                    }
                 }
             }
         } );
     }
 
     /**
-     *  Overrides the applet init() method
+     *  Overrides the applet init() method.
      */
     public void init()
-    {
-        //System.out.println("in maze simulator init");
-        //commonInit();
-        resized();
-    }
+    {}
 
-    private JPanel createMainPanel( MazeGenerator maze )
+    /**
+     * Build the user interface with parameter input controls at the top.
+     */
+    private JPanel createMainPanel( MazePanel maze )
     {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout( new BorderLayout() );
 
         JPanel controlsPanel = new JPanel();
-        thicknessField_ = new NumberInput("Thickness", PASSAGE_THICKNESS, "The passage thickness", 2, 200, true);
-        animationSpeedField_ = new NumberInput("Speed", ANIMATION_SPEED, "The animation speed (large number is slow).", 1, 200, true);
+        thicknessField_ = new NumberInput("Thickness", PASSAGE_THICKNESS,
+                                          "The passage thickness", 2, 200, true);
+        animationSpeedField_ = new NumberInput("Speed", INITIAL_ANIMATION_SPEED,
+                                               "The animation speed (large number is slow).", 1, 100, true);
 
-        forwardProbField_ = new NumberInput("Forward", 0.34, "The probability of moving straight forward", 0, 1.0, false);
-        leftProbField_ = new NumberInput("Left", 0.33, "The probability of moving left", 0, 1.0, false);
-        rightProbField_ = new NumberInput("Right", 0.33, "The probability of moving right", 0, 1.0, false);
+        forwardProbField_ = new NumberInput("Forward", 0.34,
+                                            "The probability of moving straight forward", 0, 1.0, false);
+        leftProbField_ = new NumberInput("Left", 0.33,
+                                         "The probability of moving left", 0, 1.0, false);
+        rightProbField_ = new NumberInput("Right", 0.33,
+                                          "The probability of moving right", 0, 1.0, false);
 
         controlsPanel.add( thicknessField_ );
         controlsPanel.add( animationSpeedField_ );
@@ -128,7 +133,7 @@ public class MazeSimulator extends JApplet implements ActionListener
 
 
     /**
-     * called when a button is pressed
+     * called when a button is pressed.
      */
     public void actionPerformed( ActionEvent e )
     {
@@ -141,7 +146,6 @@ public class MazeSimulator extends JApplet implements ActionListener
         if ( source == solveButton_ ) {
             solve();
         }
-
     }
 
     /**
@@ -161,13 +165,15 @@ public class MazeSimulator extends JApplet implements ActionListener
         double rightP = rightProbField_.getValue();
 
         double sum = forwardP + leftP + rightP;
-        maze_.generate( thickness, getAnimationSpeed(),
-                forwardP / sum, leftP / sum, rightP / sum );
+        mazePanel_.setAnimationSpeed( getAnimationSpeed());
+        mazePanel_.setThickness(thickness);
+        mazePanel_.generate(thickness, forwardP / sum, leftP / sum, rightP / sum );
     }
 
     public void solve()
     {
-        maze_.solve(getAnimationSpeed());
+        mazePanel_.setAnimationSpeed(getAnimationSpeed());
+        mazePanel_.solve();
     }
 
     private int getAnimationSpeed()
@@ -181,6 +187,7 @@ public class MazeSimulator extends JApplet implements ActionListener
     public void setSize( int width, int height )
     {
         resizablePanel_.setSize( width, height );
+        //System.out.println("setSize: call regen ("+ width+", "+height + ")");
         resized();
     }
 
@@ -197,9 +204,7 @@ public class MazeSimulator extends JApplet implements ActionListener
     //------ Main method --------------------------------------------------------
     public static void main( String[] args )
     {
-
         MazeSimulator simulator = new MazeSimulator();
-
-        GUIUtil.showApplet( simulator, "Maze Generator" );
+        GUIUtil.showApplet( simulator, "Maze Generator");
     }
 }
