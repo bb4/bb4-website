@@ -30,8 +30,8 @@ public final class RedPuzzle extends JApplet
      */
     public void init() {
         puzzlePanel_ = new PuzzlePanel();
-
-        this.getContentPane().add( puzzlePanel_ );
+        getContentPane().add( puzzlePanel_ );
+        //repaint();
     }
 
     /**
@@ -41,7 +41,15 @@ public final class RedPuzzle extends JApplet
     public void start() {
 
         puzzlePanel_.setSize(this.getSize());
-        puzzlePanel_.startSolving();
+
+        // if we don't solve in a separate thread the panel may not refresh initially.
+        Thread thread = new Thread(new Runnable() {
+            public void run() {
+                puzzlePanel_.startSolving();
+            }
+        });
+
+        thread.start();
     }
 
     /**
@@ -58,6 +66,6 @@ public final class RedPuzzle extends JApplet
         RedPuzzle applet = new RedPuzzle();
 
         // this will call applet.init() and start() methods instead of the browser
-        GUIUtil.showApplet( applet, "Red Puzzle Solver" );
+        GUIUtil.showApplet( applet, "Red Puzzle Solver");
     }
 }

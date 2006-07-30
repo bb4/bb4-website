@@ -49,7 +49,7 @@ public final class SudokuPuzzle extends JApplet implements ActionListener, ItemL
 
         panel.add(createButtonPanel(), BorderLayout.NORTH);
         panel.add(puzzlePanel_, BorderLayout.CENTER);
-        this.getContentPane().add( panel);
+        getContentPane().add( panel);
     }
 
     /**
@@ -57,9 +57,8 @@ public final class SudokuPuzzle extends JApplet implements ActionListener, ItemL
      * called by the browser after init(), if running as an applet
      */
     public void start() {
-
-        //puzzlePanel_.repaint();
         puzzlePanel_.setSize(this.getSize());
+        //puzzlePanel_.repaint();
     }
 
     /**

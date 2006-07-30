@@ -1,13 +1,12 @@
 package com.becker.puzzle.hiq;
 
-import com.becker.ui.GUIUtil;
+import com.becker.ui.*;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 import java.util.*;
-import java.awt.BorderLayout;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.io.IOException;
+import java.util.List;
 
 /**
  * HiQ Puzzle.
@@ -53,8 +52,6 @@ public final class HiQPuzzle extends JApplet implements ActionListener
 
     Set visited_;
 
-    private static JFrame baseFrame_ = null;
-
     // global counter;
     private static long numIterations_ = 0;
 
@@ -96,7 +93,7 @@ public final class HiQPuzzle extends JApplet implements ActionListener
         this.getContentPane().add(mainPanel);
 
         this.setVisible(true);
-        pegBoardViewer_.repaint();
+        //pegBoardViewer_.repaint();
     }
 
     private void commonInit() {
@@ -113,7 +110,7 @@ public final class HiQPuzzle extends JApplet implements ActionListener
 
         board_.setToInitialState();
         path_.add(board_.getFirstMove());
-        refresh();
+        //refresh();
 
         // this does all the heavy work of solving it.
         boolean solved = solvePuzzle(board_, path_);
@@ -183,8 +180,8 @@ public final class HiQPuzzle extends JApplet implements ActionListener
     }
 
     private void refresh() {
-        pegBoardViewer_.invalidate();
-        pegBoardViewer_.revalidate();
+        //pegBoardViewer_.invalidate();
+        //pegBoardViewer_.revalidate();
         pegBoardViewer_.repaint();
     }
 
@@ -196,14 +193,6 @@ public final class HiQPuzzle extends JApplet implements ActionListener
         pegBoardViewer_.showPath(p, board.copy(), numIterations_);
         backButton_.setEnabled(true);
         forwardButton_.setEnabled(false);
-    }
-
-    private static void pause() {
-        try {
-            System.in.read(); // pause till keypressed
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -229,7 +218,7 @@ public final class HiQPuzzle extends JApplet implements ActionListener
         HiQPuzzle applet = new HiQPuzzle();
 
         // this will call applet.init() and start() methods instead of the browser
-        baseFrame_ = GUIUtil.showApplet(applet, "HiQ Puzzle Solver");
+        GUIUtil.showApplet(applet, "HiQ Puzzle Solver");
     }
 }
 

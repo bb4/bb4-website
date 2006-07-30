@@ -1,5 +1,7 @@
 package com.becker.puzzle.sudoku;
 
+import com.becker.common.*;
+
 /**
  * This does the hard work of actually solving the puzzle.
  * Controller in the model-view-controller pattern.
@@ -50,17 +52,17 @@ public class PuzzleSolver {
     protected boolean solvePuzzle( Board board, PuzzlePanel puzzlePanel) {
         boolean solved = false;
         int ct = 0;
-        int maxIterations = 2* board.getEdgeLength();  // @@ not sure what this should be.
+        int maxIterations = 2 * board.getEdgeLength();  // @@ not sure what this should be.
 
         do {
             // find missing row and column numbers
             board.updateCellCandidates();
             refresh(puzzlePanel);
-            pause(delay_);
+            Util.sleep(delay_);
             board.checkAndSetUniqueValues();
 
             refresh(puzzlePanel);
-            pause(2*delay_);
+            Util.sleep(2*delay_);
             board.setNumIterations(++ct);
             solved = board.solved();
 
@@ -72,25 +74,12 @@ public class PuzzleSolver {
         return solved;
     }
 
-    private static void pause(int millis) {
-        if (millis > 0) {
-            try {
-                Thread.sleep(millis);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
 
     private static void refresh(PuzzlePanel puzzlePanel) {
         if (puzzlePanel == null)
             return;
         puzzlePanel.repaint();
-        try {
-           Thread.sleep(20);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Util.sleep(20);  // give it a chance to repaint.
     }
 }
