@@ -3,6 +3,8 @@ package com.becker.puzzle.redpuzzle;
 import com.becker.ui.*;
 
 import javax.swing.*;
+import javax.swing.event.*;
+import java.awt.*;
 
 /**
  * Red Puzzle
@@ -12,10 +14,14 @@ import javax.swing.*;
  *
  * @author Barry becker
  */
-public final class RedPuzzle extends JApplet
+public final class RedPuzzle extends JApplet implements ChangeListener
 {
 
+    // shows the puzzle.
     private PuzzlePanel puzzlePanel_;
+    // allows you to change the animation speed.
+    private JSlider animSpeedSlider_;
+    private static final int INITIAL_ANIM_SPEED = 20; // max = 100
 
     /**
      * Construct the application and set the look and feel.
@@ -29,9 +35,17 @@ public final class RedPuzzle extends JApplet
      * (init required for applet)
      */
     public void init() {
-        puzzlePanel_ = new PuzzlePanel();
-        getContentPane().add( puzzlePanel_ );
-        //repaint();
+        puzzlePanel_ = new PuzzlePanel(9);
+
+        animSpeedSlider_ = new JSlider(1, PuzzleSolver.MAX_ANIM_SPEED, INITIAL_ANIM_SPEED);
+        animSpeedSlider_.addChangeListener(this);
+        puzzlePanel_.setAnimationSpeed(animSpeedSlider_.getValue());
+
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.add(puzzlePanel_, BorderLayout.CENTER);
+        panel.add(animSpeedSlider_, BorderLayout.SOUTH);
+
+        getContentPane().add( panel );
     }
 
     /**
@@ -67,5 +81,9 @@ public final class RedPuzzle extends JApplet
 
         // this will call applet.init() and start() methods instead of the browser
         GUIUtil.showApplet( applet, "Red Puzzle Solver");
+    }
+
+    public void stateChanged(ChangeEvent e) {
+        puzzlePanel_.setAnimationSpeed(animSpeedSlider_.getValue());
     }
 }

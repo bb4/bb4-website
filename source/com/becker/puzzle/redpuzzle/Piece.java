@@ -16,7 +16,7 @@ public final class Piece
     // the number of the piece (1-9).
     private int pieceNumber_;
 
-    private enum Direction {TOP, RIGHT, BOTTOM, LEFT};
+    public enum Direction {TOP, RIGHT, BOTTOM, LEFT};
 
     /**
      * Constructor.
@@ -64,6 +64,15 @@ public final class Piece
         Direction[] values = Direction.values();
         orientation_ = values[(orientation_.ordinal() + 1) % values.length];
     }
+
+    public void resetOrientation() {
+        orientation_ = Direction.TOP;
+    }
+
+    public Direction getOrientation() {
+        return orientation_;
+    }
+
     /**
      * @return the unique number assigned to this piece.
      */
@@ -79,10 +88,10 @@ public final class Piece
      * @return a nice readable string representation for debugging.
      */
     public String toString() {
-        StringBuffer buf = new StringBuffer("Piece "+ getNumber() + '\n');
+        StringBuffer buf = new StringBuffer("Piece "+ getNumber() + " (orientation="+orientation_+"): ");
         for (Direction d : Direction.values()) {
             Nub n = getNub(d);
-            buf.append(d +" " + n.toString() + '\n');
+            buf.append(d.toString() + ':' + n.toString() + '\t');
         }
         return buf.toString();
     }

@@ -68,7 +68,7 @@ public class Nub {
      * @return nice readable string representation of a nub
      */
     public String toString() {
-       return "Nub: "+ (isOuty()?"outy":"inny") + ' ' +getSuit();
+       return  (isOuty()?"outy":"inny") + ' ' +getSuit();
     }
 
 
