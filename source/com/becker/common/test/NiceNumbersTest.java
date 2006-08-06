@@ -12,7 +12,6 @@ import java.util.*;
 public class NiceNumbersTest extends TestCase {
 
 
-
     /**
      * common initialization for all go test cases.
      */
@@ -80,7 +79,5 @@ public class NiceNumbersTest extends TestCase {
         Assert.assertTrue("Expecteing f= 4.0, but got " + f,
                                   (f == 4.0));
     }
-
-
 
 }

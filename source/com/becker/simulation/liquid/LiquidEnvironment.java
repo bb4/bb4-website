@@ -1,10 +1,10 @@
 package com.becker.simulation.liquid;
 
-import com.becker.common.*;
 import com.becker.ui.*;
 
 import javax.vecmath.*;
 import java.util.*;
+
 import static com.becker.simulation.common.PhysicsConstants.*;
 
 /**
@@ -340,19 +340,17 @@ public class LiquidEnvironment
                 ii = (int) particle.x;
                 jj = (int) particle.y;
 
-                Assert.isTrue( particle.x >= 1, "particle.x=" + particle.x );
-                Assert.isTrue( particle.y >= 1, "particle.x=" + particle.y );
-                Assert.isTrue( particle.x < xDim_ - 1, "particle.x=" + particle.x );
-                Assert.isTrue( particle.y < yDim_ - 1, "particle.y=" + particle.y ); // <=?
+                assert ( particle.x >= 1 && particle.y >= 1 && particle.x < xDim_ - 1 && particle.y < yDim_ - 1) :
+                        "particle.x=" + particle.x + "particle.y=" + particle.y ;
 
                 // adjust # particles as they cross cell boundaries
                 grid_[ii][jj].incParticles(); // increment new cell
                 grid_[i][j].decParticles();   // decrement last cell
                 particle.setCell( grid_[ii][jj] );
 
-                Assert.isTrue( grid_[i][j].getNumParticles() >= 0, // hitting this
-                        "The number of particles in grid[" + i + "][" + j + "] is " + grid_[i][j].getNumParticles() );
-                Assert.isTrue( grid_[ii][jj].getNumParticles() >= 0 );
+                assert ( grid_[i][j].getNumParticles() >= 0): // hitting this
+                        "The number of particles in grid[" + i + "][" + j + "] is " + grid_[i][j].getNumParticles();
+                assert ( grid_[ii][jj].getNumParticles() >= 0 );
             }
         }
 

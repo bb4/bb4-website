@@ -3,7 +3,7 @@ package com.becker.misc.brian;
 
 
 /**
- * Brian's First Program
+ * Brian's First Program.
  */
 
 public final class FirstProgram
@@ -19,14 +19,9 @@ public final class FirstProgram
         do {
 
 
-            System.out.print("Brian ("+count+")  ");
+            System.out.println("Brian ("+count+")  ");
 
             count = count + 1;
-
-            if (count % 25 == 0) {
-                System.out.println();
-            }
-
 
         }  while (count <= 10000);
 

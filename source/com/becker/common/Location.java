@@ -46,50 +46,50 @@ public final class Location
         this.col_ = col;
     }
 
-  /**
-   * Checks to see if the given location has the same coordinates as this
-   * one.
-   *
-   * @param location  The location whose coordinates are to be compared.
-   * @return true  The location's coordinates exactly equal this location's.
-   */
-  public boolean equals( Object location )
-  {
-      Location loc = (Location) location;
-      return (loc.getRow() == row_) && (loc.getCol() == col_);
-  }
+    /**
+     * Checks to see if the given location has the same coordinates as this
+     * one.
+     *
+     * @param location  The location whose coordinates are to be compared.
+     * @return true  The location's coordinates exactly equal this location's.
+     */
+    public boolean equals( Object location )
+    {
+        Location loc = (Location) location;
+        return (loc.getRow() == row_) && (loc.getCol() == col_);
+    }
 
-  /**
-   * @param loc another location to measure distance from.
-   * @return the euclidean distance from this location to another.
-   */
-  public double getDistanceFrom(Location loc)
-  {
-      float xDif = Math.abs(col_ - loc.getCol());
-      float yDif = Math.abs(row_ - loc.getRow());
-      double dist = Math.sqrt( xDif*xDif + yDif*yDif);
-      return dist;
-  }
+    /**
+     * @param loc another location to measure distance from.
+     * @return the euclidean distance from this location to another.
+     */
+    public double getDistanceFrom(Location loc)
+    {
+        float xDif = Math.abs(col_ - loc.getCol());
+        float yDif = Math.abs(row_ - loc.getRow());
+        double dist = Math.sqrt( xDif*xDif + yDif*yDif);
+        return dist;
+    }
 
-  /**
-   * @param loc another arbitrary floating point location to measure distance from.
-   * @return the euclidean distance from this location to another.
-   */
-  public double getDistanceFrom(Point2D loc)
-  {
-      double xDif = Math.abs(col_ - loc.getX());
-      double yDif = Math.abs(row_ - loc.getY());
-      double dist = Math.sqrt( xDif*xDif + yDif*yDif);
-      return dist;
-  }
+    /**
+     * @param loc another arbitrary floating point location to measure distance from.
+     * @return the euclidean distance from this location to another.
+     */
+    public double getDistanceFrom(Point2D loc)
+    {
+        double xDif = Math.abs(col_ - loc.getX());
+        double yDif = Math.abs(row_ - loc.getY());
+        double dist = Math.sqrt( xDif*xDif + yDif*yDif);
+        return dist;
+    }
 
-  /**
-   * @return the string form
-   */
-  public String toString()
-  {
-      return "row=" + row_ + ", colum=" + col_;
-  }
+    /**
+     * @return the string form
+     */
+    public String toString()
+    {
+        return "row=" + row_ + ", colum=" + col_;
+    }
 
 }
 
