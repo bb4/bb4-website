@@ -1,7 +1,6 @@
 package com.becker.game.twoplayer.go;
 
 import com.becker.game.common.*;
-import com.becker.common.*;
 
 import java.util.*;
 
@@ -189,7 +188,7 @@ public final class GoGroupUtil {
             if (s.getPiece()==null) failed = true;
         }
         if (failed) {
-            Assert.exception("Group contains an empty position: "+group.toString());
+            assert false : "Group contains an empty position: "+group.toString();
         }
     }
 }

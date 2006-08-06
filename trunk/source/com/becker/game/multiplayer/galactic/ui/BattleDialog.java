@@ -178,10 +178,10 @@ final class BattleDialog extends OptionsDialog
      */
     private class BattleCanvas extends Canvas implements Runnable
     {
-        int attackers_;
-        int defenders_;
+        private int attackers_;
+        private int defenders_;
 
-        public BattleCanvas()
+        private BattleCanvas()
         {
             //this.setDoubleBuffered(false);
         }

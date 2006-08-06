@@ -13,7 +13,7 @@ public enum NeighborType
     // Ordinals
     // these constants represent the types of possible neigbors that can be searched for
 
-    // has a steon
+    // has a stene
     OCCUPIED,
     // no stone at the nbr position
     UNOCCUPIED,

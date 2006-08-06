@@ -1,7 +1,6 @@
 package com.becker.game.twoplayer.go;
 
 
-import com.becker.common.*;
 import com.becker.game.common.*;
 
 import java.util.*;
@@ -288,7 +287,7 @@ public final class GoBoardUtil
     {
         GoString str = stone.getString();
         //boolean b = stone.getPiece().isOwnedByPlayer1();
-        Assert.notNull( str, stone + " does not belong to any string!") ;
+        assert ( str!=null) : stone + " does not belong to any string!" ;
         GoGroup g = str.getGroup();
         boolean valid = false;
         Iterator gIt = groups.iterator();
@@ -300,8 +299,9 @@ public final class GoBoardUtil
         if ( !valid ) {
             debugPrintGroups( 0, "Confirm stones in valid groups failed. The groups are:",
                     g.isOwnedByPlayer1(), !g.isOwnedByPlayer1(), groups);
-            Assert.exception(
-                   "Error: This " + stone + " does not belong to a valid group: " + g + " \nThe valid groups are:" + groups);
+            assert false :
+                   "Error: This " + stone + " does not belong to a valid group: " +
+                    g + " \nThe valid groups are:" + groups;
         }
     }
 
@@ -314,7 +314,7 @@ public final class GoBoardUtil
     {
         GoBoardPosition stone = areAllUnvisited(board);
         if (stone != null)
-           Assert.exception(stone + " is marked visited" );
+           assert false : stone + " is marked visited";
     }
 
 

@@ -13,7 +13,6 @@ import static com.becker.common.EncodingConstants.*;
  */
 public final class Base64Codec {
 
-
     private Base64Codec() {}
 
     // for character codec
@@ -44,7 +43,6 @@ public final class Base64Codec {
             System.out.println( "io error :" + e.getMessage() );
             e.printStackTrace();
         }
-
 
         return charEncoder_.encode( byteOut.toByteArray() );
     }

@@ -1,9 +1,6 @@
 package com.becker.simulation.liquid;
 
-import com.becker.common.Assert;
-
-import javax.vecmath.Point2d;
-import javax.vecmath.Vector2d;
+import javax.vecmath.*;
 
 /**
  *  A region of space containing particles, walls, or liquid.
@@ -139,13 +136,13 @@ public class Cell
      */
     public void updateStatus( Cell c_xp1, Cell c_xm1, Cell c_yp1, Cell c_ym1 )
     {
-        if ( numParticles_ < 0 )
-            Assert.exception( "num particles less than 0" );
-        else if ( status_ == OBSTACLE )
+        if ( numParticles_ < 0 ) {
+            assert false : "num particles less than 0";
+        } else if ( status_ == OBSTACLE ) {
             return;
-        else if ( numParticles_ == 0 )
+        } else if ( numParticles_ == 0 ) {
             status_ = EMPTY;
-        else {
+        } else {
             if ( c_xp1.getNumParticles() > 0 && c_xm1.getNumParticles() > 0 &&
                     c_yp1.getNumParticles() > 0 && c_ym1.getNumParticles() > 0 )
                 status_ = FULL;
@@ -179,7 +176,7 @@ public class Cell
             }
             return;
         }
-        Assert.isTrue( dt > 0.0000001, "dt got too small" );
+        assert  (dt > 0.0000001) : "dt got too small";
 
         // u
         // u(i, j) = 0.5*(u(i+0.5, j) + u(i-0.5, j))

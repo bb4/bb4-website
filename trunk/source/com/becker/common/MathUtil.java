@@ -1,9 +1,9 @@
 package com.becker.common;
 
 
-
 /**
  * Some supplemental mathematics routines.
+ * Static util class.
  *
  * @author Barry Becker Date: Jan 7, 2006
  */

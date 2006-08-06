@@ -12,9 +12,7 @@ import javax.sound.midi.*;
 public class MusicMaker
 {
 
-    private Sequencer sequencer;
-    private Sequence sequence;
-    private Synthesizer synthesizer;
+    private Synthesizer synthesizer_;
     private Instrument instruments_[];
     private MidiChannel midiChannels_[];
     private MidiChannel channel_;    // current channel
@@ -110,10 +108,6 @@ public class MusicMaker
             for (int j=1; j<10; j++)
                 m.playNote(10+j*10, 50, 2000);
         }
-
-
-
-
     }
 
     //Construct the application
@@ -130,72 +124,36 @@ public class MusicMaker
     protected void initSynthesizer()
     {
         try {
-            if (synthesizer == null) {
-                try {
-                    if ((synthesizer = MidiSystem.getSynthesizer()) == null) {
-                        System.out.println("getSynthesizer() failed!");
-                        return;
-                    }
-                } catch(MidiUnavailableException e) {
-                    System.out.println("Midi Anavailable. No Synthesizer will be present.");
+            if (synthesizer_ == null) {
+                if ((synthesizer_ = MidiSystem.getSynthesizer()) == null) {
+                    System.out.println("getSynthesizer() failed!");
                     return;
                 }
             }
-            synthesizer.open();
-            sequencer = MidiSystem.getSequencer();
-            sequence = new Sequence(Sequence.PPQ, 10);
+            synthesizer_.open();
+
+            //Sequencer sequencer = MidiSystem.getSequencer();
+            //Sequence sequence = new Sequence(Sequence.PPQ, 10);
         }
-        catch (Exception ex)
+        catch (MidiUnavailableException ex)
         {
+             System.out.println("Midi Anavailable. No Synthesizer will be present.");
             ex.printStackTrace();
             return;
         }
 
-        Soundbank sb = synthesizer.getDefaultSoundbank();
-
-
-        /*
-        try {
-            if ( synthesizer == null ) {
-                try {
-                    MidiDevice.Info info[] = MidiSystem.getMidiDeviceInfo();
-                    if ( info.length == 0 ) {
-                        System.out.println( "no midi info available" );
-                        return;
-                    }
-                    System.out.println( "Midi info for this computer=" + info[0] );
-                    MidiDevice device = MidiSystem.getMidiDevice( info[0] );
-                } catch (MidiUnavailableException e) {
-                    e.printStackTrace();
-                    return;
-                }
-
-                if ( (synthesizer = MidiSystem.getSynthesizer()) == null ) {
-                    System.out.println( "getSynthesizer() failed!" );
-                    return;
-                }
-            }
-            synthesizer.open();
-            //sequencer = MidiSystem.getSequencer();
-            //sequence = new Sequence(Sequence.PPQ, 10);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return;
-        }
-
-        Soundbank sb = synthesizer.getDefaultSoundbank();
-        */
+        Soundbank sb = synthesizer_.getDefaultSoundbank();
 
         if ( sb != null ) {
-            instruments_ = synthesizer.getDefaultSoundbank().getInstruments();
-            synthesizer.loadInstrument( instruments_[0] );
+            instruments_ = synthesizer_.getDefaultSoundbank().getInstruments();
+            synthesizer_.loadInstrument( instruments_[0] );
         }
         else {
             System.out.println( "Error: no sound bank present on this system" );
             //Assert.exception( "no sound bank" );
         }
 
-        midiChannels_ = synthesizer.getChannels();
+        midiChannels_ = synthesizer_.getChannels();
         //System.out.println("num midi channels = "+midiChannels_.length);
         channel_ = midiChannels_[0];
 
@@ -228,7 +186,7 @@ public class MusicMaker
     {
         int i = getInstrumentIndex( instrument );
         if ( i >= 0 )
-            startNote( i / 8, i % 8, note, channelIndex, velocity );
+            startNote( i >> 3, i % 8, note, channelIndex, velocity );
     }
 
     /**
@@ -299,7 +257,7 @@ public class MusicMaker
         int instrument = 8 * instrumentType + instrumentSubType;
         //System.out.println(instruments_[instrument].getName());
 
-        synthesizer.loadInstrument( instruments_[instrument] );
+        synthesizer_.loadInstrument( instruments_[instrument] );
         channel_ = midiChannels_[channelIndex];
         channel_.programChange( instrument );
     }
