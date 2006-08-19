@@ -43,7 +43,7 @@ public class Nub {
     /**
      * @return the suit shape of the nub.
      */
-    private Suit getSuit() {
+    public Suit getSuit() {
         return suit_;
     }
 
@@ -68,14 +68,14 @@ public class Nub {
      * @return nice readable string representation of a nub
      */
     public String toString() {
-       return  (isOuty()?"outy":"inny") + ' ' +getSuit();
+       return  (isOuty() ? "outy" : "inny") + ' ' +getSuit();
     }
 
 
     /**
      * Determines the shape of the nub.
      */
-    private static enum Suit {
+    public static enum Suit {
 
         SPADE('S'),
         CLUB('C'),
