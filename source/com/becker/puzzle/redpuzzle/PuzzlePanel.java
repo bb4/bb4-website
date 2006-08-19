@@ -22,7 +22,7 @@ final class PuzzlePanel extends JPanel
     private static final int ARROW_HEAD_RAD = 2;
 
     private static final Color PIECE_TEXT_COLOR = new Color(200, 0, 0);
-    private static final Color PIECE_BACKGROUND_COLOR = new Color(255, 215, 225);
+    private static final Color PIECE_BACKGROUND_COLOR = new Color(255, 205, 215, 200);
     private static final Color GRID_COLOR = new Color(10, 0, 100);
     private static final Color TEXT_COLOR = new Color(0, 0, 0);
     private static final Color BACKGROUND_COLOR = new Color(220, 220, 240);
@@ -42,7 +42,7 @@ final class PuzzlePanel extends JPanel
      */
     PuzzlePanel(int numPieces) {
         // this does all the heavy work of solving it.
-        solver_ = new PuzzleSolver( PieceList.getInitialPuzlePieces(numPieces) );
+        solver_ = new GeneticSearchSolver( PieceList.getInitialPuzzlePieces(numPieces) );
         solver_.setAnimationSpeed(1);
 
         this.setPreferredSize( new Dimension( 4 * PIECE_SIZE, 4 * PIECE_SIZE ) );

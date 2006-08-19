@@ -65,6 +65,14 @@ public final class Piece
         orientation_ = values[(orientation_.ordinal() + 1) % values.length];
     }
 
+    /**
+     *  This rotates the piece the specified number of 90 degree inrements.
+     */
+    public void rotate(int num) {
+        Direction[] values = Direction.values();
+        orientation_ = values[(orientation_.ordinal() + num) % values.length];
+    }
+
     public void resetOrientation() {
         orientation_ = Direction.TOP;
     }

@@ -17,11 +17,11 @@ public class PieceList {
 
     // use the same seed for repeatable results.
     // 0 solves in 25,797 tries.
-    // 1 solves in  7,275
-    // 2 solves in 12,349
-    // 3 solves in  8,187
-    // 4 solves in 14,150
-    // 5 solves in  1,157
+    // 1 solves in  7,275     // 15,444
+    // 2 solves in 12,349     // 22,293
+    // 3 solves in  8,187     // 21,588
+    // 4 solves in 14,150     // 4,005
+    // 5 solves in  1,157     // 5,319
     private static final Random R = new Random(5);
 
     private List<Piece> pieces_;
@@ -64,15 +64,26 @@ public class PieceList {
         pieces_ = new LinkedList<Piece>();
     }
 
-    public static PieceList getInitialPuzlePieces() {
-        return getInitialPuzlePieces(DEFUALT_NUM_PIECES);
+    /**
+     * copy constructor
+     * @param pieces
+     */
+    public PieceList(PieceList pieces) {
+        this(pieces.size());
+        for (Piece p : pieces.pieces_) {
+            pieces_.add(p);
+        }
+    }
+
+    public static PieceList getInitialPuzzlePieces() {
+        return getInitialPuzzlePieces(DEFUALT_NUM_PIECES);
     }
 
     /**
      * Factory method for creating the initial puzzle pieces.
      * @return the initial 9 pieces (in random order) to use when solving.
      */
-    public static PieceList getInitialPuzlePieces(int numPieces) {
+    public static PieceList getInitialPuzzlePieces(int numPieces) {
 
         PieceList pieces = new PieceList();
         Piece[] initialPieces = null;
@@ -98,8 +109,8 @@ public class PieceList {
      * @return the i'th piece.
      */
     public Piece get(int i)  {
-        assert i < maxNumPieces_ : "there are only " + maxNumPieces_ + " pieces.";
-
+        assert i < maxNumPieces_ :
+                "there are only " + maxNumPieces_ + " pieces, but you tried to get the "+(i+1)+"th";
         return pieces_.get(i);
     }
 
@@ -137,6 +148,10 @@ public class PieceList {
         return pieces_.remove(p);
     }
 
+    public Piece remove(int index) {
+        return pieces_.remove(index);
+    }
+
     public Piece removeLast() {
         Piece p = pieces_.get(pieces_.size() - 1);
         pieces_.remove( p );
@@ -144,6 +159,10 @@ public class PieceList {
     }
 
     public void shuffle() {
+        // randomly rotate all the pieces
+        for (Piece p : pieces_) {
+            p.rotate(R.nextInt(4));
+        }
         Collections.shuffle(pieces_, R);
     }
 
@@ -152,6 +171,49 @@ public class PieceList {
      */
     public int size() {
         return pieces_.size();
+    }
+
+    /**
+     *
+     * @return the number of matches for the nubs on this piece
+     */
+    public int getNumFits(int i) {
+
+        assert(i<9);
+        // it needs to match the piece to the left and above (if present)
+        int numFits = 0;
+        int dim = 3;
+        int row = i / dim;
+        int col = i % dim;
+        Piece piece = get(i);
+
+        if ( col > 0 ) {
+            // if other than a left edge piece, then we need to match to the left side nub.
+            Piece leftPiece = get( i - 1 );
+            if (leftPiece.getRightNub().fitsWith(piece.getLeftNub()))
+                numFits++;
+        }
+        if ( row > 0 ) {
+            // then we need to match with the top one
+            Piece topPiece = get( i - dim );
+            if (topPiece.getBottomNub().fitsWith(piece.getTopNub()))
+                numFits++;
+        }
+
+        if ( col < (dim-1) ) {
+            // if other than a right edge piece, then we need to match to the right side nub.
+            Piece rightPiece = get( i + 1 );
+            if (rightPiece.getLeftNub().fitsWith(piece.getRightNub()))
+                numFits++;
+        }
+        if ( row < (dim-1) ) {
+            // then we need to match with the bottom one
+            Piece bottomPiece = get( i + dim );
+            if (bottomPiece.getTopNub().fitsWith(piece.getBottomNub()))
+                numFits++;
+        }
+
+        return numFits;
     }
 
     public String toString() {
