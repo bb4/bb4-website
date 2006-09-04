@@ -15,8 +15,8 @@ public class NumberInput extends JPanel
 
     private JTextField numberField_;
     private double initialValue_;
-    double min_;
-    double max_;
+    private double min_;
+    private double max_;
 
     protected static final int TEXT_FIELD_WIDTH = 50;
     protected static final Dimension TEXT_FIELD_DIM = new Dimension( TEXT_FIELD_WIDTH, OptionsDialog.ROW_HEIGHT );
@@ -46,8 +46,8 @@ public class NumberInput extends JPanel
     {
 
         initialValue_ = initialValue;
-        min_ = minAllowed;
-        max_ = maxAllowed;
+        setMin(minAllowed);
+        setMax(maxAllowed);
         String initialVal = integerOnly? Integer.toString((int) initialValue) : Double.toString(initialValue);
         numberField_ = new JTextField(initialVal);
         numberField_.setMaximumSize( TEXT_FIELD_DIM );
@@ -89,11 +89,11 @@ public class NumberInput extends JPanel
             return 0;
         }
         double v = Double.parseDouble(text);
-        if (v < min_) {
-            numberField_.setText(""+ min_);
+        if (v < getMin()) {
+            numberField_.setText(""+ getMin());
         }
-        else  if (v > max_) {
-            numberField_.setText(""+ max_);
+        else  if (v > getMax()) {
+            numberField_.setText(""+ getMax());
         }
         return v;
     }
@@ -106,11 +106,11 @@ public class NumberInput extends JPanel
             return 0;
         }
         int v = Integer.parseInt(text);
-        if (v < min_) {
-            numberField_.setText(Integer.toString((int) min_));
+        if (v < getMin()) {
+            numberField_.setText(Integer.toString((int) getMin()));
         }
-        else  if (v > max_) {
-            numberField_.setText(Integer.toString((int) max_));
+        else  if (v > getMax()) {
+            numberField_.setText(Integer.toString((int) getMax()));
         }
         return v;
     }
@@ -126,6 +126,22 @@ public class NumberInput extends JPanel
 
     public synchronized void addKeyListener(KeyListener keyListener) {
         getNumberField().addKeyListener(keyListener);
+    }
+
+    public double getMin() {
+        return min_;
+    }
+
+    public void setMin(double min) {
+        this.min_ = min;
+    }
+
+    public double getMax() {
+        return max_;
+    }
+
+    public void setMax(double max) {
+        this.max_ = max;
     }
 
 
@@ -150,7 +166,7 @@ public class NumberInput extends JPanel
                 numberField_.setText( "" );
                 key.consume(); // don't let it get entered
             }
-            else if ((integerOnly_ && c == '.') || (min_ >= 0 && c == '-')) {
+            else if ((integerOnly_ && c == '.') || (getMin() >= 0 && c == '-')) {
                 JOptionPane.showMessageDialog( null,
                         "unexpected character: " + c, "Error", JOptionPane.ERROR_MESSAGE);
                 key.consume();
