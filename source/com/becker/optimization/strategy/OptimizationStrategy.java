@@ -26,6 +26,8 @@ public abstract class OptimizationStrategy
     // listen for optimization changed events. useful for debugging.
     protected OptimizationListener listener_;
 
+
+
     /**
      * Constructor
      * No log file specified in this constructor. (use this version if running in unsigned applet).
@@ -55,7 +57,7 @@ public abstract class OptimizationStrategy
      */
     public abstract ParameterArray doOptimization(ParameterArray initialParams, double fitnessRange);
 
-    
+
     public void setListener(OptimizationListener l) {
         listener_ = l;
     }
@@ -64,6 +66,17 @@ public abstract class OptimizationStrategy
         listener_ = null;
     }
 
+    /**
+     * @param currentBest
+     * @return true if the optimal fitness has been reached.
+     */
+    protected boolean isOptimalFitnessReached(ParameterArray currentBest) {
+        boolean optimalFitnessReached = false;
+        if (optimizee_.getOptimalFitness() > 0 && !optimizee_.evaluateByComparison()) {
+             optimalFitnessReached = currentBest.getFitness() >= optimizee_.getOptimalFitness();
+        }
+        return optimalFitnessReached;
+    }
 
     /**
      * Write a row to the file and close it again.

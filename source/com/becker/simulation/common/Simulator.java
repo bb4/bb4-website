@@ -12,7 +12,8 @@ import java.awt.event.*;
 /**
  * @author Barry Becker Date: Sep 17, 2005
  */
-public abstract class Simulator extends AnimationComponent implements Optimizee {
+public abstract class Simulator extends AnimationComponent
+                                implements Optimizee {
 
 
     protected static final String CONFIG_FILE_PATH_PREFIX = Util.PROJECT_DIR + "source/com/becker/simulation/";
@@ -43,7 +44,7 @@ public abstract class Simulator extends AnimationComponent implements Optimizee 
     protected void initCommonUI() {
         GUIUtil.setCustomLookAndFeel();
 
-        //@@ need this?
+        // need this?
         addComponentListener( new ComponentAdapter()
         {
             public void componentResized( ComponentEvent ce )
@@ -125,23 +126,10 @@ public abstract class Simulator extends AnimationComponent implements Optimizee 
     protected abstract SimulatorOptionsDialog createOptionsDialog();
 
 
-    public void setSwitch( int item, boolean value )
-    {
-        System.out.println( "item=" + item + " value=" + value );
-        switch (item) {
-            case PAUSE:
-                setPaused(value);
-                break;
-            default:
-                break;
-        }
-    }
-
-
     public JPanel createTopControls()
     {
         JPanel controls = new JPanel();
-        controls.add( createCheckbox( "Pause", PAUSE, true ) );
+        controls.add( createStartButton() );
 
         controls.add( createOptionsButton() );
         //controls.add(simulator.getStepButton());
@@ -174,7 +162,8 @@ public abstract class Simulator extends AnimationComponent implements Optimizee 
 
 
 
-    ///////// the next 2 methods implement the unused methods of the optimizee interface. Simulators must implement evaluateFitness //////
+    // the next 2 methods implement the unused methods of the optimizee interface.
+    // Simulators must implement evaluateFitness //////
 
     /**
      * If true is returned then compareFitness will be used and evaluateFitness will not
@@ -189,5 +178,9 @@ public abstract class Simulator extends AnimationComponent implements Optimizee 
     public double compareFitness( ParameterArray params1, ParameterArray params2 )
     {
         return 0.0;
+    }
+
+    public double getOptimalFitness() {
+        return 0;
     }
 }

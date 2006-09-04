@@ -135,7 +135,7 @@ public class SimulatedAnnealingStrategy extends OptimizationStrategy
                  writeToLog(ct, currentFitness, r, dist, params, Util.formatNumber(temperature));
 
                  ct++;
-             } while (ct < N * params.size());
+             } while (ct < N * params.size() && !isOptimalFitnessReached(params));
              ct = 0;
              // keep halving the temperature until it reaches tempMin
              temperature *= TEMP_DROP_FACTOR;

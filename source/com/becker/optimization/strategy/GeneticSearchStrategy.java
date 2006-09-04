@@ -7,7 +7,7 @@ import java.util.*;
 
 /**
  * Genetic Algorithm (evolutionary) optimization strategy.
- * Many different strategy are possible to alter the population for each successive iteration.
+ * Many different strategies are possible to alter the population for each successive iteration.
  * The 2 primary ones that I use here are unary mutation and cross-over.
  * See Chapter 6 in "How to Solve it: Modern Heuristics" for more info.
  *
@@ -16,23 +16,25 @@ import java.util.*;
 public class GeneticSearchStrategy extends OptimizationStrategy
 {
 
-    // The population size will be this number raised to the number of dimensions power.
+    // The population size will be this number raised to the number of dimensions power (up to POP_MAX).
     private static final int POPULATION_SIZE_PER_DIM = 4;
     // but never exceed this amount
-    private static final int POPULATION_MAX = 100;
+    private static final int POPULATION_MAX = 4000;
 
     // the amount to decimate the parent population by on each iteration
     private static final double CULL_FACTOR = 0.9;
-    private static final double NBR_RADIUS = 0.02;
+    private static final double NBR_RADIUS = 0.03;
     private static final double NBR_RADIUS_SHRINK_FACTOR = 0.9;
     private static final double NBR_RADIUS_SOFTENER = 5.0;
+    private static final double INITIAL_RADIUS = 1.7;
 
 
     // this prevents us from running forever.
     private static final int MAX_ITERATIONS = 100;
 
     // stop when the avg population score does not improve by better than this
-    private double improvementEps_ = 0.000000000001;
+    private static final double DEFAULT_IMPROVEMENT_EPS = 0.000000000001;
+
     //
     private double nbrRadius_ = NBR_RADIUS;
 
@@ -40,6 +42,9 @@ public class GeneticSearchStrategy extends OptimizationStrategy
     private int populationSize_;
 
     private boolean useCrossOver_ = false;
+
+    // if we don't improve by at least this amount between iterations, terminate.
+    protected double improvementEpsilon_ = DEFAULT_IMPROVEMENT_EPS;
 
 
     /**
@@ -74,15 +79,10 @@ public class GeneticSearchStrategy extends OptimizationStrategy
          useCrossOver_ = useCrossOver;
     }
 
-
-    /**
-     *
-     * @param eps stop when things don't improve by more than this on successive iterations.
-     */
-    public void setImprovementEpsilon(double eps)
-    {
-        improvementEps_ = eps;
+    public void setImprovementEpsilon(double eps) {
+        improvementEpsilon_ = eps;
     }
+
 
     /**
      * finds a local maxima using a genetic algorithm (evolutionary) search.
@@ -96,22 +96,22 @@ public class GeneticSearchStrategy extends OptimizationStrategy
      public ParameterArray doOptimization( ParameterArray params, double fitnessRange)
      {
          int ct = 0;
-         ParameterArray currentBestParams;
-         ParameterArray lastBestParams;
+         ParameterArray currentBest;
+         ParameterArray lastBest;
          double deltaFitness = 0;
+         boolean optimalFitnessReached = false;
 
          populationSize_ = Math.min(POPULATION_MAX, (int)Math.pow(POPULATION_SIZE_PER_DIM, params.size()));
 
-         // create an initial population based on params and POPULATION_SIZE-1 other random solutions.
+         // create an initial population based on params and POPULATION_SIZE-1 other random candidate solutions.
          List population = new LinkedList();
-
          population.add(params);
          for (int i=1; i<populationSize_; i++) {
-             population.add(i, params.getRandomNeighbor(1.6));
+             population.add(i, params.getRandomNeighbor(INITIAL_RADIUS));
          }
 
          // EVALUATE POPULATION
-         lastBestParams = evaluatePopulation(population, params);
+         lastBest = evaluatePopulation(population, params);
 
          // each iteration represents a new generation of the population
          do {
@@ -119,12 +119,13 @@ public class GeneticSearchStrategy extends OptimizationStrategy
              Collections.sort(population);
              Collections.reverse(population);
 
-             printPopulation(population);
-
              // throw out the bottom CULL_FACTOR*populationSize_ members - keeping the cream of the crop.
              // then replace those culled with unary variations of those (now parents) that remain.
              // @@ add option to do cross-over variations too.
              int keepSize = Math.max(1,  (int)(populationSize_*(1.0 - CULL_FACTOR)));
+
+             //printPopulation(population, 10);
+             //System.out.println("iter "+ct+" best fitness="+lastBest.getFitness());
              for (int j=populationSize_-1; j>=keepSize; j--) {
                  population.remove( j );
              }
@@ -134,36 +135,55 @@ public class GeneticSearchStrategy extends OptimizationStrategy
              while ( k < populationSize_ ) {
                  // loop over the keepers until all replacements found
                  m = k % keepSize;
-                 // do the best one 2wice to avoid  terminating
-                 // too quickly in the event that we got a very good fitness score on an early iteration
-                 if (m==keepSize-1)
+                 // do the best one 2wice to avoid terminating too
+                 // quickly in the event that we got a very good fitness score on an early iteration.
+                 if (m == keepSize-1)
                      m=0;
-                 ParameterArray p = (ParameterArray)population.get(m);
-                 // add a permutaion of one of the keepers
-                 // we multiply the radius by k because we want the worse ones to have
+                 ParameterArray p = (ParameterArray) population.get(m);
+                 // add a permutation of one of the keepers
+                 // we multiply the radius by m because we want the worse ones to have
                  // higher variability.
-                 population.add(k, p.getRandomNeighbor((m+NBR_RADIUS_SOFTENER)/NBR_RADIUS_SOFTENER * nbrRadius_));
+                 population.add(p.getRandomNeighbor((m+NBR_RADIUS_SOFTENER)/NBR_RADIUS_SOFTENER * nbrRadius_));
                  k++;
              }
              nbrRadius_ *= NBR_RADIUS_SHRINK_FACTOR;
 
              // EVALUATE POPULATION
-             currentBestParams = evaluatePopulation(population, lastBestParams);
+             currentBest = evaluatePopulation(population, lastBest);
 
-             deltaFitness = (currentBestParams.getFitness() - lastBestParams.getFitness());
+             deltaFitness = (currentBest.getFitness() - lastBest.getFitness());
+             assert (deltaFitness >=0) : "We must never get worse in a new generation.";
 
-             System.out.println(" ct="+ct+"  nbrRadius_="+nbrRadius_+" deltaFitness="+deltaFitness+"  currentFitness = "+ currentBestParams.getFitness());
-             writeToLog(ct, currentBestParams.getFitness(), nbrRadius_, deltaFitness, params, "---");
-             lastBestParams = currentBestParams;
+             System.out.println(" ct="+ct+"  nbrRadius_="+nbrRadius_ +" population size=" + populationSize_
+                                +" deltaFitness="+deltaFitness+"  currentBest = "+ currentBest.getFitness()
+                                +"  lastBest="+ lastBest.getFitness());
+             writeToLog(ct, currentBest.getFitness(), nbrRadius_, deltaFitness, params, "---");
+             lastBest = currentBest.copy();
+
+             if (listener_ != null) {
+                 // notify of our best candidate in this generation
+                 listener_.optimizerChanged(currentBest);
+             }
+
 
              ct++;
 
-         } while ( (deltaFitness > improvementEps_) && (ct < MAX_ITERATIONS));
+         } while ( (deltaFitness > improvementEpsilon_ || optimizee_.getOptimalFitness() > 0 )
+                 && !isOptimalFitnessReached(currentBest)
+                 && (ct < MAX_ITERATIONS));
 
-         writeToLog(ct, currentBestParams.getFitness(), 0, 0, currentBestParams, Util.formatNumber(ct));
+         if (isOptimalFitnessReached(currentBest)) {
+             System.out.println("stopped because we found the optimal fitness.");
+         }
+         else if (deltaFitness <= improvementEpsilon_) {
+             System.out.println("stopped because we made no IMPROVEMENT");
+         }
+         System.out.println("----------------------- done -------------------");
+         writeToLog(ct, currentBest.getFitness(), 0, 0, currentBest, Util.formatNumber(ct));
 
-         return currentBestParams;
+         return currentBest;
      }
+
 
 
     /**
@@ -180,7 +200,7 @@ public class GeneticSearchStrategy extends OptimizationStrategy
         // now evaluate the members of the population - either directly, or by
         // comparing them against the initial params value passed in (including params).
         for (int i=0; i<population.size(); i++) {
-            ParameterArray p = (ParameterArray)population.get(i);
+            ParameterArray p = (ParameterArray) population.get(i);
 
             double fitness = 0;
             if (optimizee_.evaluateByComparison())
@@ -189,16 +209,21 @@ public class GeneticSearchStrategy extends OptimizationStrategy
                 fitness =  optimizee_.evaluateFitness(p);
 
             p.setFitness(fitness);
-            if (p.getFitness() > bestFitness.getFitness())
+            if (fitness > bestFitness.getFitness())
                 bestFitness = p;
         }
-        return bestFitness;
+        return bestFitness.copy();
     }
 
     private static void printPopulation(List population)
     {
-        for (int i=0; i<population.size(); i++)
-            System.out.println( i+": "+ population.get(i).toString());
+        printPopulation(population, population.size());
+    }
+
+    private static void printPopulation(List population, int limit)
+    {
+        for (int i=0; i<population.size() && i<limit; i++)
+            System.out.println( i+": "+ ((ParameterArray) population.get(i)));
         System.out.println( "" );
     }
 }

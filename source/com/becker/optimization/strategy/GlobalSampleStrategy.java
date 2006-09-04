@@ -54,7 +54,6 @@ public class GlobalSampleStrategy extends OptimizationStrategy
     }
 
 
-
     /**
      * Sparsely sample the global space and return the best of the samples.
      * If the number of dimensions is large, you must use a very small number of samples per dimension
@@ -104,6 +103,8 @@ public class GlobalSampleStrategy extends OptimizationStrategy
                 System.out.println("new best = "+fitness);
                 bestParams = testParams.copy();
             }
+            if (isOptimalFitnessReached(bestParams))
+                break;
         }
         return bestParams;
     }

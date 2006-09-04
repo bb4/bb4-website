@@ -12,7 +12,8 @@ import java.awt.event.*;
  *
  * @author Bary Becker
  */
-class LiquidOptionsDialog extends SimulatorOptionsDialog implements ActionListener
+class LiquidOptionsDialog extends SimulatorOptionsDialog
+                          implements ActionListener
 {
 
     // snake param options controls

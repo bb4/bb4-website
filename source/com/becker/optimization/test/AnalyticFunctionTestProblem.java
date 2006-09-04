@@ -67,6 +67,10 @@ public class AnalyticFunctionTestProblem extends OptimizeeTestProblem
         return 0.0;
     }
 
+    public double getOptimalFitness() {
+        return 0;
+    }
+
     /**
      * @param a the position on the parabolic surface given the specified values of p1 and p2
      * @return fitness value

@@ -90,19 +90,20 @@ public class LiquidEnvironment
 
         for ( j = 0; j < yDim_; j++ ) {
             for ( i = 0; i < xDim_; i++ ) {
-                grid_[i][j] = new Cell( i, j );
+                grid_[i][j] = new Cell();
             }
         }
         //pressureColorMap_.setOpacity(PRESSURE_COL_OPACITY);
         setInitialConditions();
+        setConstraints();
     }
 
     public int getWidth() {
-        return (int) ((xDim_ + 2 ) * EnvironmentRenderer.RENDER_RAT);
+        return ((xDim_ + 2 ) );
     }
 
     public int getHeight() {
-        return (int) ((yDim_ + 2) * EnvironmentRenderer.RENDER_RAT);
+        return ((yDim_ + 2) );
     }
 
     public int getXDim() {
@@ -184,11 +185,11 @@ public class LiquidEnvironment
             // left
             n = grid_[1][j];
             grid_[0][j].setPressure( n.getPressure() );
-            grid_[0][j].setVelocity_p( 0, -n.getVjp() );
+            grid_[0][j].setVelocityP( 0, -n.getVjp() );
             // right
             n = grid_[xDim_ - 2][j];
             grid_[xDim_ - 1][j].setPressure( n.getPressure() );
-            grid_[xDim_ - 1][j].setVelocity_p( 0, -n.getVjp() );
+            grid_[xDim_ - 1][j].setVelocityP( 0, -n.getVjp() );
             grid_[xDim_ - 2][j].setUip( 0 );
         }
 
@@ -197,11 +198,11 @@ public class LiquidEnvironment
             // bottom
             n = grid_[i][1];
             grid_[i][0].setPressure( n.getPressure() );
-            grid_[i][0].setVelocity_p( -n.getUip(), 0 );
+            grid_[i][0].setVelocityP( -n.getUip(), 0 );
             // top
             n = grid_[i][yDim_ - 2];
             grid_[i][yDim_ - 1].setPressure( n.getPressure() );
-            grid_[i][yDim_ - 1].setVelocity_p( -n.getUip(), 0 );
+            grid_[i][yDim_ - 1].setVelocityP( -n.getUip(), 0 );
             grid_[i][yDim_ - 2].setVjp( 0 );
         }
 
@@ -226,7 +227,7 @@ public class LiquidEnvironment
         log( 1, "stepForward: about to update the velocity field (timeStep=" + timeStep + ')' );
         int i, j;
         double fx = 0;
-        double fy = GRAVITY / 1000.0;
+        double fy = GRAVITY / 1.0;   // how do we need to scale gravity?
 
         for ( j = 1; j < yDim_ - 1; j++ ) {
             for ( i = 1; i < xDim_ - 1; i++ ) {
@@ -300,9 +301,9 @@ public class LiquidEnvironment
             // velocity of a particle : determined using area weighting interpolation
             int i = (int) particle.x;
             int j = (int) particle.y;
-            int c = grid_[i][j].getStatus();
+            CellStatus status = grid_[i][j].getStatus();
 
-            if ( c == Cell.FULL || c == Cell.SURFACE || c == Cell.ISOLATED ) {
+            if ( status == CellStatus.FULL || status == CellStatus.SURFACE || status == CellStatus.ISOLATED ) {
                 int ii = ((particle.x - i) > 0.5) ? (i + 1) : (i - 1);
                 int jj = ((particle.y - j) > 0.5) ? (j + 1) : (j - 1);
 
@@ -327,7 +328,7 @@ public class LiquidEnvironment
                 jj = (int) particle.y;
 
                 // move outside the obstacle if we find ouselves in one
-                if ( grid_[ii][jj].getStatus() == Cell.OBSTACLE ) {
+                if ( grid_[ii][jj].getStatus() == CellStatus.OBSTACLE ) {
                     if ( ii > i )
                         particle.set( ii - EPSILON, particle.y );
                     else if ( ii < i )
@@ -382,13 +383,13 @@ public class LiquidEnvironment
         int i, j;
         // right and left
         for ( j = 0; j < yDim_; j++ ) {
-            grid_[0][j].setStatus( Cell.OBSTACLE );
-            grid_[xDim_ - 1][j].setStatus( Cell.OBSTACLE );
+            grid_[0][j].setStatus( CellStatus.OBSTACLE );
+            grid_[xDim_ - 1][j].setStatus( CellStatus.OBSTACLE );
         }
         // top and bottom
         for ( i = 0; i < xDim_; i++ ) {
-            grid_[i][0].setStatus( Cell.OBSTACLE );
-            grid_[i][yDim_ - 1].setStatus( Cell.OBSTACLE );
+            grid_[i][0].setStatus( CellStatus.OBSTACLE );
+            grid_[i][yDim_ - 1].setStatus( CellStatus.OBSTACLE );
         }
     }
 

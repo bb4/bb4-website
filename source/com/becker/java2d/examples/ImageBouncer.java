@@ -112,21 +112,21 @@ public class ImageBouncer
     public void setImageType( String s )
     {
         int type = BufferedImage.TYPE_CUSTOM;
-        if ( s.equals( "TYPE_INT_RGB" ) )
+        if ( "TYPE_INT_RGB".equals(s) )
             type = BufferedImage.TYPE_INT_RGB;
-        else if ( s.equals( "TYPE_INT_ARGB" ) )
+        else if ( "TYPE_INT_ARGB".equals(s) )
             type = BufferedImage.TYPE_INT_ARGB;
-        else if ( s.equals( "TYPE_INT_ARGB_PRE" ) )
+        else if ( "TYPE_INT_ARGB_PRE".equals(s) )
             type = BufferedImage.TYPE_INT_ARGB_PRE;
-        else if ( s.equals( "TYPE_3BYTE_BGR" ) )
+        else if ( "TYPE_3BYTE_BGR".equals(s) )
             type = BufferedImage.TYPE_3BYTE_BGR;
-        else if ( s.equals( "TYPE_BYTE_GRAY" ) )
+        else if ( "TYPE_BYTE_GRAY".equals(s) )
             type = BufferedImage.TYPE_BYTE_GRAY;
-        else if ( s.equals( "TYPE_USHORT_GRAY" ) )
+        else if ( "TYPE_USHORT_GRAY".equals(s) )
             type = BufferedImage.TYPE_USHORT_GRAY;
-        else if ( s.equals( "TYPE_USHORT_555_RGB" ) )
+        else if ( "TYPE_USHORT_555_RGB".equals(s) )
             type = BufferedImage.TYPE_USHORT_565_RGB;
-        else if ( s.equals( "TYPE_USHORT_565_RGB" ) )
+        else if ( "TYPE_USHORT_565_RGB".equals(s) )
             type = BufferedImage.TYPE_USHORT_565_RGB;
         else {
             System.out.println( "Unrecognized type." );
@@ -142,7 +142,7 @@ public class ImageBouncer
         {
             public void itemStateChanged( ItemEvent ie )
             {
-                setSwitch( item, (ie.getStateChange() == ie.SELECTED) );
+                setSwitch( item, (ie.getStateChange() == ItemEvent.SELECTED) );
             }
         } );
         return check;

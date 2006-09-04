@@ -12,12 +12,12 @@ import java.util.*;
 public class ParameterArray implements Comparable
 {
 
-    private Parameter[] params_ = null;
+    protected Parameter[] params_ = null;
 
     // default number of steps to go from the min to the max
     private static final int STEPS = 10;
     private int numSteps_ = STEPS;
-    private static Random RANDOM = new Random(123);
+    protected static Random RANDOM = new Random(123);
 
     // assign a fitness (evaluation value) to this set of parameters
     private double fitness_ = 0;
@@ -48,8 +48,10 @@ public class ParameterArray implements Comparable
         }
     }
 
+    protected ParameterArray() {}
+
     /**
-     * @return the number of parameteres in the array.
+     * @return the number of parameters in the array.
      */
     public int size()
     {
@@ -144,8 +146,6 @@ public class ParameterArray implements Comparable
              else if (newPar.getValue() < newPar.getMinValue())
                  newPar.setValue(newPar.getMinValue());
          }
-         //System.out.println( " The random nbr of  \n"+this );
-         //System.out.println( "is :\n"+nbr );
 
          return nbr;
      }
@@ -167,7 +167,7 @@ public class ParameterArray implements Comparable
      }
 
 
-    // ------------------ these methods deal with 1 dimensional double vectors that match the lengh of the params array ----
+    // ------------ these methods deal with 1 dimensional double vectors that match the length of the params array ----
     /**
      *
      * @return a new double array the same length as the parameter list
@@ -208,7 +208,7 @@ public class ParameterArray implements Comparable
 
     /**
      * @param vec
-     * @return a vector in the same direction as viec, but with unit length.
+     * @return a vector in the same direction as vec, but with unit length.
      */
     public static double[] normalize( double vec[] )
     {
@@ -273,9 +273,9 @@ public class ParameterArray implements Comparable
      */
     public int compareTo(ParameterArray p) {
         double diff = this.getFitness() - p.getFitness();
-        if (diff<0)
+        if (diff < 0)
             return -1;
-        if (diff>0)
+        if (diff > 0)
             return 1;
         else
             return 0;

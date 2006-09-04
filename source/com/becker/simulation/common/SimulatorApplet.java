@@ -8,10 +8,11 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
+ * Resizable applet for showing simulations.
+ *
  * @author Barry Becker Date: Sep 17, 2005
  */
 public class SimulatorApplet extends JApplet {
-
 
     private static Simulator simulator_ = null;
     private ResizableAppletPanel resizablePanel_ = null;

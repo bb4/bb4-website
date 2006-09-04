@@ -64,7 +64,7 @@ public class TrebuchetSimulator extends Simulator implements Optimizee, ChangeLi
     public JPanel createTopControls()
     {
         JPanel controls = new JPanel();
-        controls.add( createCheckbox( "Pause", PAUSE, true ) );
+        controls.add( createStartButton() );
 
         controls.add( createOptionsButton() );
 

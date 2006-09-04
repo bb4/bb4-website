@@ -5,8 +5,8 @@ import com.becker.optimization.strategy.*;
 import java.io.*;
 
 /**
- *  This class (the optimizer) uses a specified optimization strategy to optimize something (the optimizee).
- *  @see OptimizationType for a list of the possible algorithms.
+ * This class (the optimizer) uses a specified optimization strategy to optimize something (the optimizee).
+ * @see OptimizationType for a list of the possible algorithms.
  *
  *  This class uses the delegation design pattern rather than inheritance
  * so that it can be reused across many classes. For example, I could have
@@ -23,6 +23,8 @@ import java.io.*;
  * Details of the optimization algorithms can be found in
  *  How To Solve It: Modern Heuristics  by Michaelwics and Fogel
  *
+ * Optimization is nearly the same thing as search. In the redpuzzle package, I use optimization
+ * to search for a solution using the genetic algorithm strategy.
  *
  * @author Barry Becker
  */
@@ -90,7 +92,7 @@ public class Optimizer
                 // 3 sample points along each dimensiont
                 ((GlobalSampleStrategy)optStrategy).setSamplingRate(12 / optimizee_.getNumParameters());
                 // first find a good place to start
-                // @@ perhaps we should try several of the better results from global samling.
+                // @@ perhaps we should try several of the better results from global sampling.
                 params = optStrategy.doOptimization(params, fitnessRange);
                 optStrategy = new HillClimbingStrategy(optimizee_, sLogFile_);
                 break;

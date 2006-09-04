@@ -15,17 +15,16 @@ public class Particle extends Point2d
     // the cell that the particle belongs to
     private Cell cell_;
 
-    // the position of the particle in mm.
-    public Point2d position;
     // the velocity vector of the particle in mm/s
     //public Vector2d velocity;
     // the mass of the particle in grams
-    public double age_;
+    private double age_;
     // radius of influence of this particle
-    public double radius_;
+    private double radius_;
     // we may want to mix different liquids and uyse this for coloration
     // what about mixing oil and water?
-    public int materialType_;
+    private int materialType_;
+
     // @@ add member for texture coordinates?
 
 

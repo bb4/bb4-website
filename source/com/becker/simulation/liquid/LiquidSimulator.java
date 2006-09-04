@@ -16,13 +16,13 @@ public class LiquidSimulator extends Simulator
     public static final String CONFIG_FILE = "com/becker/liquid/initialStateTest.data";
     private static final String FILE_NAME_BASE = ANIMATION_FRAME_FILE_NAME_PREFIX + "liquid/liquidFrame";
 
-
-    LiquidEnvironment environment_ = null;
+    LiquidEnvironment environment_;
+    EnvironmentRenderer envRenderer_;
 
     // if true it will save all the animation steps to files
     public static final boolean RECORD_ANIMATION = false;
 
-    protected static final double TIME_STEP = 0.04;  // initial time step
+    protected static final double TIME_STEP = 0.08;  // initial time step
 
 
     private static final Color BG_COLOR = Color.white;
@@ -33,17 +33,23 @@ public class LiquidSimulator extends Simulator
     public LiquidSimulator() {
         super("Liquid");
         environment_ =  new LiquidEnvironment( 20, 15 );
-        initCommonUI();
-        this.setPreferredSize(new Dimension( environment_.getWidth(), environment_.getHeight()) );
+        commonInit();
     }
 
     public LiquidSimulator( LiquidEnvironment environment )
     {
         super("Liquid");
         environment_ = environment;
+        commonInit();
+    }
+
+    private void commonInit() {
         initCommonUI();
-        System.out.println("environment_.getWidth() = "+environment_.getWidth()+ " environment_.getHeight()="+environment_.getHeight());
-        this.setPreferredSize(new Dimension( environment_.getWidth(), environment_.getHeight()) );
+        envRenderer_ = new EnvironmentRenderer();
+        System.out.println("environment_.getWidth() = "
+                           +environment_.getWidth()+ " environment_.getHeight()="+environment_.getHeight());
+        int s = (int) envRenderer_.getScale();
+        setPreferredSize(new Dimension( environment_.getWidth() * s, environment_.getHeight() * s));
     }
 
     protected SimulatorOptionsDialog createOptionsDialog() {
@@ -80,29 +86,26 @@ public class LiquidSimulator extends Simulator
     }
 
 
-
     public void setScale( double scale ) {
-        //snake_.setScale(scale);
+        envRenderer_.setScale(scale);
+
     }
     public double getScale() {
-        //return snake_.getScale();
-        return 1.0;
+        return envRenderer_.getScale();
     }
 
     public void setShowVelocityVectors( boolean show ) {
-        //snake_.setShowVelocityVectors(show);
+        envRenderer_.setShowVelocities(show);
     }
     public boolean getShowVelocityVectors() {
-        //return snake_.getShowVelocityVectors();
-        return false;
+        return envRenderer_.getShowVelocities();
     }
 
     public void setShowForceVectors( boolean show ) {
-        //snake_.setShowForceVectors(show);
+        envRenderer_.setShowPressures(show);
     }
     public boolean getShowForceVectors() {
-        //return snake_.getShowForceVectors();
-        return false;
+        return envRenderer_.getShowPressures();
     }
 
     public void setDrawMesh( boolean use ) {
@@ -165,6 +168,9 @@ public class LiquidSimulator extends Simulator
         return 0.0;
     }
 
+    public double getOptimalFitness() {
+        return 0;
+    }
 
     public Color getBackground()
     {
@@ -174,7 +180,7 @@ public class LiquidSimulator extends Simulator
     public void paint( Graphics g )
     {
         Graphics2D g2 = (Graphics2D) g;
-        EnvironmentRenderer.render(environment_, g2 );
+        envRenderer_.render(environment_, g2 );
     }
 
     protected String getFileNameBase()
@@ -182,7 +188,8 @@ public class LiquidSimulator extends Simulator
         return FILE_NAME_BASE;
     }
 
-    // *************** main *****************************
+
+    // ****************** main ******************************
     public static void main( String[] args )
     {
 

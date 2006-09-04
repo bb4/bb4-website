@@ -36,6 +36,11 @@ public interface Optimizee
     double compareFitness( ParameterArray params1, ParameterArray params2 );
 
     /**
+     * if non-0, then we terminate when the fitness reaches this value.
+     */
+    double getOptimalFitness();
+
+    /**
      *
      * @return the number of parameters in the search space.
      */

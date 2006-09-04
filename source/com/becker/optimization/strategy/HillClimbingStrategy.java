@@ -15,9 +15,8 @@ public class HillClimbingStrategy extends OptimizationStrategy
     private static final double MIN_DOT_PRODUCT = 0.3;
     private static final double MAX_DOT_PRODUCT = 0.98;
 
-
     // continue optimization iteration until the improvement in fitness is less than this.
-    private static final double FITNESS_EPS_PERCENT   = 0.0000001;
+    private static final double FITNESS_EPS_PERCENT = 0.0000001;
     private static final double JUMP_SIZE_EPS = 0.000001;
 
     private static final double JUMP_SIZE_INC_FACTOR = 1.3;
@@ -156,7 +155,9 @@ public class HillClimbingStrategy extends OptimizationStrategy
             if (!evalByComparison)
                 oldFitness = params.getFitness();
 
-        } while ( (improvement > fitnessEps) && (jumpSize > JUMP_SIZE_EPS) );
+        } while ( (improvement > fitnessEps)
+                && (jumpSize > JUMP_SIZE_EPS)
+                && !isOptimalFitnessReached(params));
 
         System.out.println( "The optimized parameters after " + numIterations + " iterations are " + params );
         return params;
