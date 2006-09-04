@@ -12,8 +12,11 @@ public class GeneticSearchSolver extends PuzzleSolver
 
     public static final int SOLVED_THRESH = 1000;
 
+    public static final double THREE_FIT_BOOST = 0.1;
+    public static final double FOUR_FIT_BOOST = 0.6;
+
     // the max number of fitting nubs that we can have. The puzzle is solved if this happens.
-    public static final int MAX_FITS = 24;
+    public static final double MAX_FITS = 24 + 4 * THREE_FIT_BOOST + FOUR_FIT_BOOST;
 
     private PuzzlePanel puzzlePanel_;
 
@@ -32,6 +35,7 @@ public class GeneticSearchSolver extends PuzzleSolver
         solution_ = pieces_;
 
         Optimizer optimizer = new Optimizer(this);
+
         optimizer.setListener(this);
 
         ParameterArray solution =
@@ -45,6 +49,12 @@ public class GeneticSearchSolver extends PuzzleSolver
     }
 
 
+    /**
+     * terminate the solver if we find a solution with this fitness.
+     */
+    public double getOptimalFitness() {
+        return SOLVED_THRESH;
+    }
 
     public boolean evaluateByComparison() {
 
@@ -60,9 +70,8 @@ public class GeneticSearchSolver extends PuzzleSolver
      */
     public double evaluateFitness(ParameterArray params) {
         PieceList pieces = ((PieceParameterArray) params).getPieceList();
-        int fitness = getNumFits(pieces);
-        if (fitness > 10)
-          System.out.println("nf="+fitness);
+        double fitness = getNumFits(pieces);
+        params.setFitness(fitness);
         // there are 24 fits when the puzzle is solved.
         if (fitness >= MAX_FITS) {
             return SOLVED_THRESH;
@@ -80,12 +89,20 @@ public class GeneticSearchSolver extends PuzzleSolver
     }
 
     /**
-     * @return the number of matches for all the nubs
+     * @return the number of matches for all the nubs.
      */
-    private static int getNumFits(PieceList pieces) {
-        int totalFits = 0;
+    private static double getNumFits(PieceList pieces) {
+        double totalFits = 0;
         for (int i=0; i< pieces.size(); i++) {
-            totalFits += pieces.getNumFits(i);
+            double nFits = pieces.getNumFits(i);
+            totalFits += nFits;
+            // give a boost if a give piece has 3 or 4 fits.
+            if (nFits == 3) {
+                totalFits += THREE_FIT_BOOST;
+            } else if (nFits == 4) {
+                // center piece
+                totalFits += FOUR_FIT_BOOST;
+            }
         }
         assert(totalFits <= MAX_FITS) :
                 "fits exceeded " + MAX_FITS +". Fits="+totalFits +" pieces="+pieces;
@@ -100,6 +117,7 @@ public class GeneticSearchSolver extends PuzzleSolver
     public void optimizerChanged(ParameterArray params) {
         // update our current best guess at the solution.
         solution_ = ((PieceParameterArray) params).getPieceList();
+        numIterations_ += 1;
         refresh(puzzlePanel_);
     }
 }

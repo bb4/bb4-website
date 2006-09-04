@@ -16,6 +16,7 @@ final class PuzzlePanel extends JPanel
 {
     /** size of piece in pixels. */
     private static final int PIECE_SIZE = 90;
+    private int numPieces_;
 
     private static final int MARGIN = 50;
     private static final int ORIENT_ARROW_LEN = PIECE_SIZE >> 2;
@@ -36,18 +37,39 @@ final class PuzzlePanel extends JPanel
     // play a sound effect when a piece goes into place.
     private MusicMaker musicMaker_ = new MusicMaker();
 
+    public enum Algorithm { BRUTE_FORCE, GENETIC_SEARCH };
+
 
     /**
      * Constructor.
      */
     PuzzlePanel(int numPieces) {
         // this does all the heavy work of solving it.
-        solver_ = new GeneticSearchSolver( PieceList.getInitialPuzzlePieces(numPieces) );
-        solver_.setAnimationSpeed(1);
-
+        numPieces_ = numPieces;
+        setAlgorithm(Algorithm.BRUTE_FORCE); // default
         this.setPreferredSize( new Dimension( 4 * PIECE_SIZE, 4 * PIECE_SIZE ) );
     }
 
+    /**
+     * There are different approaches we can take to solving the red puzzle.
+     *
+     * @param alg
+     */
+    public void setAlgorithm(Algorithm alg) {
+        switch (alg) {
+            case BRUTE_FORCE :
+                solver_ = new BruteForceSolver( PieceList.getInitialPuzzlePieces(numPieces_));
+                break;
+            case GENETIC_SEARCH :
+               solver_ = new GeneticSearchSolver( PieceList.getInitialPuzzlePieces(numPieces_));
+                break;
+        }
+        solver_.setAnimationSpeed(1);
+    }
+
+    /**
+     * solve using the algorithm set in setAlgorithm.
+     */
     public void startSolving() {
         // better would be to run in a different thread?
         boolean solved = solver_.solvePuzzle(this);

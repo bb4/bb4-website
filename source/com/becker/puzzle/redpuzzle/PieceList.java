@@ -71,7 +71,7 @@ public class PieceList {
     public PieceList(PieceList pieces) {
         this(pieces.size());
         for (Piece p : pieces.pieces_) {
-            pieces_.add(p);
+            pieces_.add(new Piece(p));
         }
     }
 
@@ -171,6 +171,14 @@ public class PieceList {
      */
     public int size() {
         return pieces_.size();
+    }
+
+    public int getNumFits() {
+        int totalFits = 0;
+        for (int i=0; i<pieces_.size(); i++) {
+            totalFits += this.getNumFits(i);
+        }
+        return totalFits;
     }
 
     /**
