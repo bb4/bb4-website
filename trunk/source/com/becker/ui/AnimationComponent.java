@@ -3,9 +3,13 @@ package com.becker.ui;
 import com.becker.common.*;
 import com.becker.java2d.*;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * A ui conponent for showing animations.
+ */
 public abstract class AnimationComponent extends Container implements Runnable
 {
 
@@ -26,7 +30,7 @@ public abstract class AnimationComponent extends Container implements Runnable
     private boolean bPaused_ = true;
 
     // constants. See setSwitch().
-    public static final int PAUSE = 0;
+    //public static final int PAUSE = 0;
 
     public AnimationComponent()
     {
@@ -105,21 +109,27 @@ public abstract class AnimationComponent extends Container implements Runnable
     }
 
 
-    // create ui checkbox
-    protected Checkbox createCheckbox( String label, final int item, boolean checked )
+    /**
+     *
+     * @return  a start button that says Pause or Resume once started.
+     */
+    protected JToggleButton createStartButton()
     {
-        Checkbox check = new Checkbox( label, checked );
-        check.addItemListener( new ItemListener()
+        final JToggleButton toggleButton = new JToggleButton( "Start", true);
+        toggleButton.addItemListener( new ItemListener()
         {
             public void itemStateChanged( ItemEvent ie )
             {
-                setSwitch( item, (ie.getStateChange() == ItemEvent.SELECTED) );
+                //setSwitch( PAUSE, (ie.getStateChange() == ItemEvent.SELECTED) );
+                boolean paused = ie.getStateChange() == ItemEvent.SELECTED;
+                toggleButton.setText(paused ? "Resume" : "Pause");
+                setPaused(paused);
             }
         } );
-        return check;
+        return toggleButton;
     }
 
-    public abstract void setSwitch( int item, boolean value );
+    //public abstract void setSwitch( int item, boolean value );
 
     /**
      * render the animation component as an image
