@@ -33,6 +33,10 @@ public abstract class OptimizeeTestProblem implements Optimizee {
         return 100.0 * sol.distance(getExactSolution()) / getFitnessRange();
     }
 
+    public double getOptimalFitness() {
+        return 0;
+    }
+
     /**
      *
      * @return  approximate range of fitness values (usually 0 to this number).

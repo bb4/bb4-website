@@ -80,7 +80,7 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog implements Ac
     {
         JPanel buttonsPanel = new JPanel( new FlowLayout() );
 
-        initBottomButton( startButton_, "Start Simulation", "Start a " + simulator_.getName() + " simulation based on above selections" );
+        initBottomButton( startButton_, "Done", "Use these selections when running " + simulator_.getName() + '.' );
         initBottomButton( cancelButton_, "Cancel", "Resume the current simulation without changing the options" );
 
         buttonsPanel.add( startButton_ );

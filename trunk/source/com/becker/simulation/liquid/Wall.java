@@ -13,10 +13,11 @@ public class Wall
 {
 
     // the 2 endpoints defining the wall
-    protected Line2D.Double segment_;
+    private Line2D.Double segment_;
 
-    // the thickness of the wall. @@ should it have other properties?
-    protected float thickness_;
+    // the thickness of the wall.
+    // @@ should it have other properties?
+    private float thickness_;
 
     //Constructor
     public Wall( double x1, double y1, double x2, double y2 )

@@ -6,67 +6,103 @@ import java.awt.*;
 import java.util.*;
 
 /**
- *  Renders a specified liquid environment
+ *  Renders a specified liquid environment.
+ *
  *  @author Barry Becker
  */
 public final class EnvironmentRenderer
 {
-
     // rendering attributes
     private static final Color GRID_COLOR = new Color( 20, 20, 20, 15 );
     private static final Color PARTICLE_COLOR = new Color( 120, 0, 30, 80 );
     private static final Color VECTOR_COLOR = new Color( 205, 90, 25, 40 );
-    //private static final Color WALL_COLOR = new Color( 100, 210, 170, 150 );
+    private static final Color WALL_COLOR = new Color( 100, 210, 170, 150 );
     private static final Color TEXT_COLOR = new Color( 10, 10, 170, 200 );
     //private static final float PRESSURE_COL_OPACITY = 0.01f;
-    public static final double RENDER_RAT = 20;
-    private static final int WALL_LINE_WIDTH = (int) (RENDER_RAT / 5.0) + 1;
+    // scales the size of everything
+    public static final double DEFAULT_SCALE = 30;
+
     private static final int OFFSET = 10;
-    private static final int PARTICLE_SIZE = (int) (RENDER_RAT / 8.0) + 1;
+
     private static final double pressureVals_[] = {-100.0, -5.0, 0.0, 5.0, 100.0};
     private static final Color pressureColors_[] = {
-        new Color( 0, 0, 255, 20 ), new Color( 70, 120, 240, 20 ), new Color( 250, 250, 250, 20 ), new Color( 240, 120, 57, 20 ), new Color( 255, 0, 0, 20 )
+        new Color( 0, 0, 255, 20 ),
+        new Color( 70, 120, 240, 20 ),
+        new Color( 250, 250, 250, 20 ),
+        new Color( 240, 120, 57, 20 ),
+        new Color( 255, 0, 0, 20 )
     };
     private static final ColorMap pressureColorMap_ =
             new ColorMap( pressureVals_, pressureColors_ );
 
     // temp var used throughout for efficency. avoids creating objects
     private static double[] a_ = new double[2]; // temp point var
+    private static final Font BASE_FONT = new Font( "Sans-serif", Font.PLAIN, 12 );
 
-   private static final Font BASE_FONT = new Font( "Sans-serif", Font.PLAIN, 12 );
+    private double scale_ = DEFAULT_SCALE;
+    private float wallLineWidth_;
+    private int particleSize_;
 
-   private EnvironmentRenderer() {};
+    private boolean showVelocities_ = false;
+    private boolean showPressures_ = false;
+
+
+    public EnvironmentRenderer() {
+       setScale(DEFAULT_SCALE);
+    };
+
+    public void setScale(double scale) {
+        scale_ = DEFAULT_SCALE;
+        wallLineWidth_ = (float) (scale / 5.0) + 1;
+        particleSize_ = (int) (scale / 8.0) + 1;
+    }
+
+    public double getScale() {
+        return scale_;
+    }
+
+    public void setShowVelocities(boolean show) {
+        showVelocities_ = show;
+    }
+
+    public boolean getShowVelocities() {
+        return showVelocities_;
+    }
+
+    public void setShowPressures(boolean show) {
+        showPressures_ = show;
+    }
+
+    public boolean getShowPressures() {
+        return showPressures_;
+    }
+
 
     /**
      * Render the Environment on the screen.
      */
-   public static void render(LiquidEnvironment env, Graphics2D g)
+   public void render(LiquidEnvironment env, Graphics2D g)
     {
-        double rat = RENDER_RAT;
-        //double ratD2 = rat/2.0;
-        //double scale = rat / cellSize_;
-        //double scaleD2 = scale/2.0;
+
         double time = System.currentTimeMillis();
 
         int i,j;
-        int rightEdgePos = (int) (rat * env.getXDim());
-        int bottomEdgePos = (int) (rat * env.getYDim());
+        int rightEdgePos = (int) (scale_ * env.getXDim());
+        int bottomEdgePos = (int) (scale_ * env.getYDim());
         Cell[][] grid = env.getGrid();
 
         // draw the cells colored by ---pressure--- val
-        for ( j = 0; j < env.getYDim(); j++ ) {
-            for ( i = 0; i < env.getXDim(); i++ ) {
-                g.setColor( pressureColorMap_.getColorForValue( grid[i][j].getPressure() ) );
-                g.fillRect( (int) (rat * (i)) + OFFSET, (int) (rat * (j)) + OFFSET, (int) (rat), (int) (rat) );
-            }
-        }
+        if (showPressures_)
+            renderPressure(g, env);
+
 
         // draw the ---walls---
         Stroke oldStroke = g.getStroke();
-        Stroke wallStroke = new BasicStroke( WALL_LINE_WIDTH );
+        Stroke wallStroke = new BasicStroke( wallLineWidth_ );
         g.setStroke( wallStroke );
-        /*
+
         g.setColor(WALL_COLOR);
+        /*
         //Stroke stroke = new BasicStroke(wall.getThickness(), BasicStroke.CAP_BUTT,
         //                                BasicStroke.JOIN_ROUND, 10);
         for (i=0; i<walls_.size(); i++)  {
@@ -80,9 +116,9 @@ public final class EnvironmentRenderer
         */
 
         // outer boundary
-        g.drawRect( OFFSET, OFFSET, (int) (env.getXDim() * rat), (int) (env.getYDim() * rat) );
+        g.drawRect( OFFSET, OFFSET, (int) (env.getXDim() * scale_), (int) (env.getYDim() * scale_) );
 
-        drawParticles(env, rat, g);
+        drawParticles(g, env);
 
 
         // draw text representing internal state for debug purposes.
@@ -92,9 +128,9 @@ public final class EnvironmentRenderer
             StringBuffer strBuf = new StringBuffer( "12" );
             for ( j = 0; j < env.getYDim(); j++ ) {
                 for ( i = 0; i < env.getXDim(); i++ ) {
-                    int x = (int) (rat * i) + OFFSET;
-                    int y = (int) (rat * j) + OFFSET;
-                    strBuf.setCharAt( 0, grid[i][j].getStatus() );
+                    int x = (int) (scale_ * i) + OFFSET;
+                    int y = (int) (scale_ * j) + OFFSET;
+                    strBuf.setCharAt( 0, grid[i][j].getStatus().getSymbol() );
                     strBuf.setLength( 1 );
                     int nump = grid[i][j].getNumParticles();
                     if ( nump > 0 )
@@ -105,20 +141,20 @@ public final class EnvironmentRenderer
         }
 
         // draw the ---velocity--- field (and status)
-        g.setColor( VECTOR_COLOR );
-        drawVectors(env, g, rat );
+        if (showVelocities_)
+            drawVectors(g, env);
 
         // draw the cells/grid_
         g.setStroke( oldStroke );
         g.setColor( GRID_COLOR );
         for ( j = 0; j < env.getYDim(); j++ )   //  -----
         {
-            int ypos = (int) (j * rat);
+            int ypos = (int) (j * scale_);
             g.drawLine( OFFSET, ypos + OFFSET, rightEdgePos + OFFSET, ypos + OFFSET );
         }
         for ( i = 0; i < env.getXDim(); i++ )    //  ||||
         {
-            int xpos = (int) (i * rat);
+            int xpos = (int) (i * scale_);
             g.drawLine( xpos + OFFSET, OFFSET, xpos + OFFSET, bottomEdgePos + OFFSET );
         }
 
@@ -127,7 +163,7 @@ public final class EnvironmentRenderer
     }
 
 
-    private static void drawParticles(LiquidEnvironment env, double rat, Graphics2D g) {
+    private void drawParticles(Graphics2D g, LiquidEnvironment env) {
         g.setColor( PARTICLE_COLOR );
         // draw the ---particles--- of liquid
         Iterator it = env.getParticles().iterator();
@@ -141,24 +177,35 @@ public final class EnvironmentRenderer
             comp = (comp > 255) ? 255 : comp;
             g.setColor( new Color( comp, 100, 255 - comp, 60 ) );
             //System.out.println("pos = "+a_[0]+", "+a_[0]);
-            g.fillOval( (int) (rat * a_[0] + OFFSET), (int) (rat * a_[1] + OFFSET), PARTICLE_SIZE, PARTICLE_SIZE );
+            g.fillOval( (int) (scale_ * a_[0] + OFFSET), (int) (scale_ * a_[1] + OFFSET), particleSize_, particleSize_ );
             g.setColor( PARTICLE_COLOR );
         }
     }
 
-    private static void drawVectors(LiquidEnvironment env, Graphics2D g, double rat )
-    {
+    private void renderPressure(Graphics2D g, LiquidEnvironment env) {
+        Cell[][] grid = env.getGrid();
+        for (int j = 0; j < env.getYDim(); j++ ) {
+            for (int i = 0; i < env.getXDim(); i++ ) {
+                g.setColor( pressureColorMap_.getColorForValue( grid[i][j].getPressure() ) );
+                g.fillRect( (int) (scale_ * (i)) + OFFSET, (int) (scale_ * (j)) + OFFSET,
+                            (int) scale_, (int) scale_ );
+            }
+        }
+    }
+
+    private void drawVectors(Graphics2D g, LiquidEnvironment env) {
+        g.setColor( VECTOR_COLOR );
         Cell[][] grid = env.getGrid();
         for ( int j = 0; j < env.getYDim(); j++ ) {
             for ( int i = 0; i < env.getXDim(); i++ ) {
                 double u = grid[i][j].getUip();
                 double v = grid[i][j].getVjp();
-                int x = (int) (rat * i) + OFFSET;
-                int y = (int) (rat * j) + OFFSET;
-                g.drawLine( (int) (rat * (i + 0.5)) + OFFSET, y,
-                        (int) (rat * (i + 0.5)) + OFFSET, (int) (rat * j + 8.0 * v) + OFFSET );
-                g.drawLine( x, (int) (rat * (j + 0.5)) + OFFSET,
-                        (int) (rat * i + 8.0 * u) + OFFSET, (int) (rat * (j + 0.5)) + OFFSET );
+                int x = (int) (scale_ * i) + OFFSET;
+                int y = (int) (scale_ * j) + OFFSET;
+                g.drawLine( (int) (scale_ * (i + 0.5)) + OFFSET, y,
+                        (int) (scale_ * (i + 0.5)) + OFFSET, (int) (scale_ * j + 8.0 * v) + OFFSET );
+                g.drawLine( x, (int) (scale_ * (j + 0.5)) + OFFSET,
+                        (int) (scale_ * i + 8.0 * u) + OFFSET, (int) (scale_ * (j + 0.5)) + OFFSET );
             }
         }
     }
