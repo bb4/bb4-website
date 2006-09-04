@@ -1,10 +1,12 @@
 package com.becker.puzzle.redpuzzle;
 
 import com.becker.ui.*;
+import com.becker.common.*;
 
 import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.*;
+import java.awt.event.*;
 
 /**
  * Red Puzzle
@@ -14,7 +16,7 @@ import java.awt.*;
  *
  * @author Barry becker
  */
-public final class RedPuzzle extends JApplet implements ChangeListener
+public final class RedPuzzle extends JApplet implements ChangeListener, ActionListener, ItemListener
 {
 
     // shows the puzzle.
@@ -22,6 +24,14 @@ public final class RedPuzzle extends JApplet implements ChangeListener
     // allows you to change the animation speed.
     private JSlider animSpeedSlider_;
     private static final int INITIAL_ANIM_SPEED = 20; // max = 100
+
+    private JButton solveButton_;
+    // size dropdown
+    private Choice algorithmChoice_;
+    private String[] boardSizeMenuItems_ = {
+        "using brute force",
+        "using genetic algorithm search",
+    };
 
     /**
      * Construct the application and set the look and feel.
@@ -42,10 +52,38 @@ public final class RedPuzzle extends JApplet implements ChangeListener
         puzzlePanel_.setAnimationSpeed(animSpeedSlider_.getValue());
 
         JPanel panel = new JPanel(new BorderLayout());
+        panel.add(createButtonPanel(), BorderLayout.NORTH);
         panel.add(puzzlePanel_, BorderLayout.CENTER);
         panel.add(animSpeedSlider_, BorderLayout.SOUTH);
 
         getContentPane().add( panel );
+    }
+
+
+    /**
+     * solve and generate button at the top.
+     */
+    public JPanel createButtonPanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        solveButton_ = new GradientButton("Solve");
+        solveButton_.addActionListener(this);
+
+        panel.add(solveButton_);
+        panel.add(createAlgorithmDropdown());
+        panel.add(Box.createHorizontalGlue());
+
+        return panel;
+    }
+
+    private Choice createAlgorithmDropdown() {
+        algorithmChoice_ = new Choice();
+        algorithmChoice_.addItemListener(this);
+        for (final String item : boardSizeMenuItems_) {
+            algorithmChoice_.add(item);
+        }
+        algorithmChoice_.select(0);
+        return algorithmChoice_;
     }
 
     /**
@@ -56,6 +94,7 @@ public final class RedPuzzle extends JApplet implements ChangeListener
 
         puzzlePanel_.setSize(this.getSize());
 
+        /*
         // if we don't solve in a separate thread the panel may not refresh initially.
         Thread thread = new Thread(new Runnable() {
             public void run() {
@@ -64,6 +103,7 @@ public final class RedPuzzle extends JApplet implements ChangeListener
         });
 
         thread.start();
+        */
     }
 
     /**
@@ -85,5 +125,49 @@ public final class RedPuzzle extends JApplet implements ChangeListener
 
     public void stateChanged(ChangeEvent e) {
         puzzlePanel_.setAnimationSpeed(animSpeedSlider_.getValue());
+    }
+
+    /**
+     * size choice selected.
+     * @param e
+     */
+    public void itemStateChanged(ItemEvent e) {
+
+        int selected = algorithmChoice_.getSelectedIndex();
+
+        PuzzlePanel.Algorithm alg = PuzzlePanel.Algorithm.BRUTE_FORCE;
+        switch (selected) {
+            case 0 : alg = PuzzlePanel.Algorithm.BRUTE_FORCE; break;
+            case 1 : alg = PuzzlePanel.Algorithm.GENETIC_SEARCH; break;
+            default : alg = PuzzlePanel.Algorithm.BRUTE_FORCE; break;
+        }
+
+        puzzlePanel_.setAlgorithm(alg);
+        puzzlePanel_.repaint();
+    }
+
+    public void actionPerformed(ActionEvent e) {
+         // must execute long tasks in a separate thread,
+        // otherwise you don't see the steps of the animation.
+        Worker worker = null;
+        Object src = e.getSource();
+        if (src == solveButton_)  {
+
+            worker = new Worker() {
+
+                public Object construct() {
+                    puzzlePanel_.setAnimationSpeed(animSpeedSlider_.getValue());
+                    puzzlePanel_.startSolving();
+
+                    return null;
+                }
+
+                public void finished() {
+                    puzzlePanel_.repaint();
+                }
+            };
+        }
+
+        worker.start();
     }
 }

@@ -8,15 +8,15 @@ public final class Piece
 {
 
     // the suits of the edges.
-    private Nub[] nubs_;
+    private Nub[] nubs_ = null;
 
     // Indicates which way the piece is oriented/rotated.
     private Direction orientation_ = Direction.TOP;
 
     // the number of the piece (1-9).
-    private int pieceNumber_;
+    private int pieceNumber_ = 0;
 
-    public enum Direction {TOP, RIGHT, BOTTOM, LEFT};
+    public static enum Direction {TOP, RIGHT, BOTTOM, LEFT};
 
     /**
      * Constructor.
@@ -35,6 +35,15 @@ public final class Piece
         orientation_ = Direction.TOP;
     }
 
+    /**
+     * Copy constructor.
+     * @param p
+     */
+    public Piece(Piece p) {
+        this(p.nubs_[0], p.nubs_[1], p.nubs_[2], p.nubs_[3], p.getNumber());
+        this.orientation_ = p.getOrientation();
+        //assert(p.equals(this)) : p + " not equal to " + this;
+    }
 
     public Nub getTopNub() {
         return  getNub(Direction.TOP);
@@ -90,6 +99,22 @@ public final class Piece
 
     private int getDirectionIndex(Direction dir)  {
         return (orientation_.ordinal() + dir.ordinal()) % Direction.values().length;
+    }
+
+    /**
+     * @param piece to compare to
+     * @return true if logically equal.
+     */
+    public boolean equals(Object piece) {
+        Piece p = (Piece) piece;
+        return (
+               p.getTopNub() == this.getTopNub() &&
+               p.getRightNub() == this.getRightNub() &&
+               p.getBottomNub() == this.getBottomNub() &&
+               p.getLeftNub() == this.getLeftNub() &&
+               p.getNumber() == this.getNumber() &&
+               p.getOrientation() == this.getOrientation()
+        );
     }
 
     /**
