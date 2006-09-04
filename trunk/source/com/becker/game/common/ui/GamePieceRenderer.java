@@ -25,15 +25,12 @@ public abstract class GamePieceRenderer
     private static Point position_ = new Point(0,0);
 
 
-
     /**
      * private constructor because this class is a singleton.
      * Use getPieceRenderer instead
      */
     protected GamePieceRenderer()
     {}
-
-
 
     /**
      * @return the game piece render color.
@@ -52,7 +49,7 @@ public abstract class GamePieceRenderer
     }
 
 
-    protected static Point getPosition(BoardPosition position, int cellSize, int pieceSize)
+    public static Point getPosition(BoardPosition position, int cellSize, int pieceSize)
     {
         int offset = (cellSize - pieceSize) >> 1;
         position_.x = GameBoardViewer.BOARD_MARGIN + cellSize*(position.getCol()-1) + offset;

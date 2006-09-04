@@ -1,12 +1,13 @@
 package com.becker.game.multiplayer.galactic;
 
 import com.becker.game.common.*;
-import com.becker.ui.GUIUtil;
+import com.becker.ui.*;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.*;
 import java.util.List;
-import java.awt.*;
-import java.text.MessageFormat;
+import java.text.*;
 
 /**
  * Represents an Admiral commanding an intergalactic fleet of starships.
@@ -15,12 +16,17 @@ import java.text.MessageFormat;
  */
 public class GalacticPlayer extends Player
 {
+    protected static final String GALACTIC_IMAGE_DIR = GameContext.GAME_ROOT+"multiplayer/galactic/images/";
+
     // this player's home planet. (like earth is for humans)
     private Planet homePlanet_;
 
-
     // a list of outstanding Orders
-    List<Order> orders_;
+    protected List<Order> orders_;
+
+    protected ImageIcon icon_;
+    protected String iconBaseName_;
+    protected int iconIndex_;
 
     // ? have list of planets owned?
 
@@ -28,6 +34,16 @@ public class GalacticPlayer extends Player
     private static final float BRIGHTNESS = 0.999f;
 
     public static final int DEFAULT_NUM_SHIPS = 100;
+
+
+    /**
+     * use this constructor if you already have an icon for the palyer.
+     */
+    protected GalacticPlayer(String name, Planet homePlanet, Color color, boolean isHuman, ImageIcon icon) {
+        this(name, homePlanet, color, isHuman);
+        icon_ = icon;
+    }
+
 
     protected GalacticPlayer(String name, Planet homePlanet, Color color, boolean isHuman)
     {
@@ -39,10 +55,6 @@ public class GalacticPlayer extends Player
 
     /**
      * Factory method for creating Galactic players of the appropriate type.
-     * @param name
-     * @param homePlanet
-     * @param color
-     * @param isHuman
      * @return
      */
     public static GalacticPlayer createGalacticPlayer(String name, Planet homePlanet, Color color, boolean isHuman)
@@ -51,6 +63,15 @@ public class GalacticPlayer extends Player
            return new GalacticHumanPlayer(name, homePlanet, color);
         else
            return GalacticRobotPlayer.getSequencedRobotPlayer(name, homePlanet, color);
+    }
+
+    public static GalacticPlayer createGalacticPlayer(String name, Planet homePlanet, Color color,
+                                                      boolean isHuman, ImageIcon icon)
+    {
+       if (isHuman)
+           return new GalacticHumanPlayer(name, homePlanet, color, icon);
+        else
+           return GalacticRobotPlayer.getSequencedRobotPlayer(name, homePlanet, color, icon);
     }
 
     /**
@@ -73,6 +94,13 @@ public class GalacticPlayer extends Player
     public void setHomePlanet( Planet homePlanet )
     {
         this.homePlanet_ = homePlanet;
+    }
+
+    public ImageIcon getIcon() {
+        if (icon_ == null) {
+            icon_ = GUIUtil.getIcon(GALACTIC_IMAGE_DIR + iconBaseName_ + (iconIndex_ + 1) + ".png");
+        }
+        return icon_;
     }
 
 

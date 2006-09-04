@@ -1,9 +1,10 @@
 package com.becker.game.multiplayer.galactic;
 
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.*;
 import java.util.List;
-import java.awt.*;
 
 /**
  * Represents a Robot Admiral commanding an intergalactic fleet of starships.
@@ -15,10 +16,19 @@ import java.awt.*;
 public class CrazyRobotPlayer extends GalacticRobotPlayer
 {
 
+    private static final int NUM_ICONS = 6;
+    private static int iconIndexCounter_ = 0;
 
-    public CrazyRobotPlayer(String name, Planet homePlanet, Color color)
+
+    public CrazyRobotPlayer(String name, Planet homePlanet, Color color, ImageIcon icon)
     {
         super(name, homePlanet, color);
+        if (icon != null) {
+            icon_ = icon;
+        } else {
+            iconBaseName_ = "crazy_robot_icon";
+            iconIndex_ = iconIndexCounter_++ % NUM_ICONS;
+        }
     }
 
 
@@ -27,7 +37,7 @@ public class CrazyRobotPlayer extends GalacticRobotPlayer
      */
     public List makeOrders(Galaxy galaxy, int numYearsRemaining)
     {
-        List newOrders = new ArrayList();
+        List<Order> newOrders = new ArrayList<Order>();
 
         List ownedPlanets = Galaxy.getPlanets(this);
         Iterator it = ownedPlanets.iterator();

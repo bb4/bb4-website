@@ -148,7 +148,7 @@ public class OrdersTable
             Planet source = Galaxy.getPlanet(s.charValue());
             Integer numShips = ((Integer)model.getValueAt(i, NUM_SHIPS_INDEX));
             if (outgoingMap.get(source) != null) {
-                Integer n = (Integer)outgoingMap.get(source);
+                Integer n = outgoingMap.get(source);
                 outgoingMap.put(source, numShips+n);
             }
             else {

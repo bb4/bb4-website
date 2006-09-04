@@ -132,7 +132,7 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
     {
         reset();
         TwoPlayerController c = get2PlayerController();
-        if (get2PlayerController().getOptions().isAutoOptimize())
+        if (get2PlayerController().getTwoPlayerOptions().isAutoOptimize())
             runOptimization();
 
         if (c.allPlayersComputer() ) {
@@ -159,7 +159,7 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
         // this method will fill in some of m's structure
         TwoPlayerController c = get2PlayerController();
         if ( GameContext.getUseSound() ) {
-            GameContext.getMusicMaker().playNote( c.getOptions().getPreferredTone(), 45, 0, 200, 1000 );
+            GameContext.getMusicMaker().playNote( c.getTwoPlayerOptions().getPreferredTone(), 45, 0, 200, 1000 );
         }
         // need to clear the cache, otherwise we may render a stale board.
         cachedGameBoard_ = null;
@@ -295,10 +295,10 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
                 setCursor( origCursor_ );
                 if ( GameContext.getUseSound() )
                     GameContext.getMusicMaker().playNote(
-                            get2PlayerController().getOptions().getPreferredTone(), 45, 0, 200, 1000 );
+                            get2PlayerController().getTwoPlayerOptions().getPreferredTone(), 45, 0, 200, 1000 );
                 showLastMove();
                 cachedGameBoard_ = null;
-                if (!get2PlayerController().getOptions().isAutoOptimize()) {
+                if (!get2PlayerController().getTwoPlayerOptions().isAutoOptimize()) {
                     // show a popup for certain exceptional cases.
                     // For example, in chess we warn on a checking move.
                     warnOnSpecialMoves( (TwoPlayerMove)m );
@@ -348,7 +348,7 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
     {
         TwoPlayerController c = get2PlayerController();
         // note: we don't show the winner dialog if we are optimizing the weights.
-        if (c.getSearchable().done( (TwoPlayerMove)evt.getMove(), true) && !c.getOptions().isAutoOptimize())
+        if (c.getSearchable().done( (TwoPlayerMove)evt.getMove(), true) && !c.getTwoPlayerOptions().isAutoOptimize())
             showWinnerDialog();
         else {
             if (get2PlayerController().allPlayersComputer())
@@ -549,7 +549,7 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
                e.printStackTrace();
            }
        }
-       if (c.isProcessing() && !c.getOptions().isAutoOptimize()) {
+       if (c.isProcessing() && !c.getTwoPlayerOptions().isAutoOptimize()) {
            return cachedGameBoard_;
        }
        else {

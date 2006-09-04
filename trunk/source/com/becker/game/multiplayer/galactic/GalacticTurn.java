@@ -1,8 +1,6 @@
 package com.becker.game.multiplayer.galactic;
 
 import com.becker.game.common.*;
-import com.becker.game.common.Move;
-import com.becker.sound.MusicMaker;
 
 import java.util.*;
 
@@ -76,7 +74,7 @@ public class GalacticTurn extends Move
         int numShipsDestroyed;
         Player playerHit;
 
-        public Hit(Player p, int numDestroyed)
+        Hit(Player p, int numDestroyed)
         {
             playerHit = p;
             numShipsDestroyed = numDestroyed;

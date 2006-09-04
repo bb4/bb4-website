@@ -1,10 +1,8 @@
 package com.becker.game.multiplayer.galactic;
 
 import com.becker.game.common.*;
-import com.becker.game.common.Move;
 
 import java.util.*;
-import java.util.List;
 
 /**
  * Representation of a Galaxy as a Game Board
@@ -16,6 +14,7 @@ public class Galaxy extends Board
     private static final int DEFAULT_NUM_PLANETS = 20;
     public static final int MAX_NUM_PLANETS = 80;
     public static final int MIN_NUM_PLANETS = 3;
+    private static final Random RANDOM = new Random(0);
 
     private static char[] PLANET_NAMES ;
     static {
@@ -34,7 +33,7 @@ public class Galaxy extends Board
 
     // the list of planets on the board.
     // Does not change during the game.
-    private static List<Planet> planets_;
+    private static List<Planet> planets_ = null;
 
     private static Map<Character,Planet> hmPlanets_ = new HashMap<Character,Planet>();
 
@@ -86,8 +85,12 @@ public class Galaxy extends Board
             } while (position.isOccupied());
 
             // initial ships and production factor
-            int production = (int)( 1 + 2*Math.random() * controller.getPlanetProductionRate());
-            Planet planet = new Planet(PLANET_NAMES[i], controller.getInitialFleetSize(), production, position.getLocation());
+            GalacticOptions options = (GalacticOptions)controller.getOptions();
+
+            int production = (int)( 1 + Math.max(0, RANDOM.nextGaussian()) * options.getPlanetProductionRate());
+            int initialFleet = (int)( 1 + Math.max(0, RANDOM.nextGaussian()) * options.getInitialFleetSize());
+            Planet planet = new Planet(PLANET_NAMES[i], initialFleet,
+                                       production, position.getLocation());
             position.setPiece(planet);
 
             // substitute in the players home planets that have already been created.
@@ -111,9 +114,7 @@ public class Galaxy extends Board
      */
     public static List<Planet> getPlanets()
     {
-        List<Planet> newPlanetList = new ArrayList<Planet>(planets_.size());
-        newPlanetList.addAll(planets_);
-        return newPlanetList;
+        return Collections.unmodifiableList(planets_);
     }
 
     /**
@@ -163,7 +164,7 @@ public class Galaxy extends Board
     public static Planet getPlanet(char name)
     {
         Character c = new Character(name);
-        Planet p = (Planet)hmPlanets_.get(c);
+        Planet p = hmPlanets_.get(c);
         assert(p!=null);
         return p;
     }

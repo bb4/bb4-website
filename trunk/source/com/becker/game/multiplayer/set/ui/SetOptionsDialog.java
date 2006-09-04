@@ -1,11 +1,11 @@
 package com.becker.game.multiplayer.set.ui;
 
 import com.becker.game.common.*;
-import com.becker.game.common.ui.GameOptionsDialog;
+import com.becker.game.common.ui.*;
 import com.becker.game.multiplayer.set.*;
+import com.becker.ui.*;
 
 import javax.swing.*;
-import javax.swing.Box;
 import java.awt.event.*;
 
 /**
@@ -17,6 +17,8 @@ import java.awt.event.*;
 class SetOptionsDialog extends GameOptionsDialog implements ActionListener, ItemListener
 {
 
+    NumberInput initialNumCards_;
+
     // constructor
     SetOptionsDialog( JFrame parent, GameController controller )
     {
@@ -27,28 +29,21 @@ class SetOptionsDialog extends GameOptionsDialog implements ActionListener, Item
     /**
      * @return Set game options tab panel.
      */
-    protected JPanel createControllerParamPanel()
+    protected JComponent[] getControllerParamComponents()
     {
-        JPanel p = new JPanel();
+        SetOptions options = (SetOptions) controller_.getOptions();
 
-        p.setLayout( new BoxLayout( p, BoxLayout.Y_AXIS ) );
-        p.setBorder( BorderFactory.createTitledBorder(
-                       BorderFactory.createEtchedBorder(),
-                         GameContext.getLabel("GAME_OPTIONS")) );
+        initialNumCards_ =
+                new NumberInput(GameContext.getLabel("INITIAL_NUM_CARDS"), options.getInitialNumCardsShown(),
+                                GameContext.getLabel("INITIAL_NUM_CARDS_TIP"), 8, 16, true);
 
-        SetController c = (SetController)controller_;
-
-        p.add(Box.createVerticalGlue());
-
-        p.setName(GameContext.getLabel("GAME"));
-        return p;
+        return new JComponent[] {initialNumCards_};
     }
 
 
-    protected void ok()
-    {
-        SetController c = (SetController)controller_;
-        super.ok();
+    protected GameOptions getOptions() {
+        return new SetOptions(initialNumCards_.getIntValue());
     }
+
 
 }

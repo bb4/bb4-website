@@ -26,8 +26,6 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
 
     /**
      * Constructor
-     * @param parent
-     * @param viewer
      */
     public  MultiPlayerOnlineGameDialog(Frame parent, ViewerCallbackInterface viewer) {
         super(parent, viewer);
@@ -39,7 +37,8 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
      *
      * The play online table as a row for each virtual table that an online player can join.
      * There is a join button next to each row in the table.
-     * The player must join exactly one table before the start button gets enabled.
+     * The player must never be seated at more than one table.
+     * When the requisite number of players are at a table the game begins.
      * Join button, changes to "leave", after joining a table.
      * If you join a different table, you leave the last one that you joined.
      * A table (row) is removed if everyone leaves it.
@@ -51,7 +50,7 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
         JPanel playOnlinePanel = new JPanel(new BorderLayout());
         playOnlinePanel.setBorder(
                 BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(),
-                                                  "Join a table to play others online") );
+                                                  GameContext.getLabel("ONLINE_DLG_TITLE")));
 
         JPanel headerPanel = new JPanel(new BorderLayout());
         JLabel titleLabel = new JLabel(GameContext.getLabel("ONLINE_TABLES"));
@@ -82,6 +81,7 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
         playOnlinePanel.setPreferredSize( new Dimension(500, 300) );
         playOnlinePanel.add( new JScrollPane(onlineGameTablesTable_.getTable()) , BorderLayout.CENTER );
 
+        serverConnection_.enterRoom();
         return playOnlinePanel;
     }
 
@@ -131,16 +131,19 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
      */
     public void actionPerformed( ActionEvent e )
     {
-        //super.actionPerformed(e);
         Object source = e.getSource();
 
         if (source == createTableButton_) {
-            createGameTableDialog_.showDialog();
-            OnlineGameTable newTable = onlineGameTablesTable_.createOnlineTable(localPlayerName_.getText());
+            boolean canceled = createGameTableDialog_.showDialog();
 
-            // now add it to this list as a new row and tell the server to add it.
-            //onlineGameTablesTable_.addRow(newTable);
-            serverConnection_.addGameTable(newTable);
+            if (!canceled)  {
+                OnlineGameTable newTable =
+                    onlineGameTablesTable_.createOnlineTable(localPlayerName_.getText());
+
+                // now add it to this list as a new row and tell the server to add it.
+                //onlineGameTablesTable_.addRow(newTable);
+                serverConnection_.addGameTable(newTable);
+            }
         }
     }
 

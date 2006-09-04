@@ -19,7 +19,7 @@ import java.text.MessageFormat;
 final class OrdersDialog extends OptionsDialog implements ActionListener
 {
     private GalacticPlayer player_;
-    private Galaxy galaxy_;
+    //private Galaxy galaxy_;
     private GradientButton addOrderButton_;
     private GradientButton removeOrderButton_;
 
@@ -36,12 +36,11 @@ final class OrdersDialog extends OptionsDialog implements ActionListener
      * constructor - create the tree dialog.
      * @param parent frame to display relative to
      */
-    OrdersDialog( JFrame parent, GalacticPlayer player, Galaxy galaxy,
-                         int numYearsRemaining)
+    OrdersDialog( JFrame parent, GalacticPlayer player, int numYearsRemaining)
     {
         super(parent);
         player_ = player;
-        galaxy_ = galaxy;
+        //galaxy_ = galaxy;
         ordersTable_ = new OrdersTable(player.getOrders());
         numPreExistingOrders_ = ordersTable_.getNumRows();
         numYearsRemaining_ = numYearsRemaining;
@@ -50,6 +49,7 @@ final class OrdersDialog extends OptionsDialog implements ActionListener
         commonInit();
 
         initUI();
+        toFront();
     }
 
     protected void initUI()
@@ -62,11 +62,12 @@ final class OrdersDialog extends OptionsDialog implements ActionListener
         JPanel titlePanel = new JPanel(new BorderLayout());
         titlePanel.setBorder(createMarginBorder());
 
-        String[] arg = {player_.getName()};
-        String title =  MessageFormat.format(GameContext.getLabel("CURRENT_ORDERS"), (java.lang.Object[])arg);
+        //String[] arg = {player_.getName()};
+        String title =  MessageFormat.format(GameContext.getLabel("CURRENT_ORDERS"), player_.getName());
 
         JLabel titleLabel = new JLabel(title);
         titleLabel.setForeground(player_.getColor().darker());
+        titleLabel.setIcon(player_.getIcon());
         titlePanel.add(titleLabel, BorderLayout.WEST);
 
         JPanel addremoveButtonsPanel = new JPanel();
@@ -86,7 +87,7 @@ final class OrdersDialog extends OptionsDialog implements ActionListener
         mainPanel.add(titlePanel, BorderLayout.NORTH);
 
         JScrollPane scrollPane = new JScrollPane(ordersTable_.getTable());
-        scrollPane.setPreferredSize(new Dimension(310,120));
+        scrollPane.setPreferredSize(new Dimension(360,120));
         scrollPane.setBorder(
                 BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5),
                 scrollPane.getBorder()));

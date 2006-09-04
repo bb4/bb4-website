@@ -50,7 +50,7 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog implements ActionL
      */
     protected JPanel createControllerParamPanel()
     {
-        TwoPlayerOptions options = get2PlayerController().getOptions();
+        TwoPlayerOptions options = get2PlayerController().getTwoPlayerOptions();
 
         JPanel p = new JPanel();
         p.setLayout( new BoxLayout( p, BoxLayout.Y_AXIS ) );
@@ -103,7 +103,7 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog implements ActionL
         JPanel p3 = new JPanel( new FlowLayout() );
         JLabel treeUpperBoundLabel = new JLabel( GameContext.getLabel("UPPER_BOUND") );
 
-        treeUpperBound_.setText( calcTreeUpperBound( options.getLookAhead(), options.getPercentageBestMoves() ) + "  " );
+        treeUpperBound_.setText(calcTreeUpperBound(options.getLookAhead(), options.getPercentageBestMoves() ) + "  ");
         p3.setAlignmentX( Component.LEFT_ALIGNMENT );
         p3.add( treeUpperBoundLabel );
         p3.add( treeUpperBound_ );
@@ -142,8 +142,8 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog implements ActionL
         addProfileCheckBox(p);
 
         // show game tree option
-        gameTreeCheckbox_ = new JCheckBox(GameContext.getLabel("SHOW_GAME_TREE"),
-                get2PlayerController().getOptions().getShowGameTree());
+        TwoPlayerOptions options = get2PlayerController().getTwoPlayerOptions();
+        gameTreeCheckbox_ = new JCheckBox(GameContext.getLabel("SHOW_GAME_TREE"), options.getShowGameTree());
         gameTreeCheckbox_.setToolTipText( GameContext.getLabel("SHOW_GAME_TREE_TIP") );
         gameTreeCheckbox_.addActionListener( this );
         gameTreeCheckbox_.setAlignmentX( Component.LEFT_ALIGNMENT );
@@ -151,8 +151,7 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog implements ActionL
 
         // animation option
         computerAnimationCheckbox_ =
-            new JCheckBox( GameContext.getLabel("SHOW_ANIMATION"),
-                get2PlayerController().getOptions().getShowComputerAnimation() );
+            new JCheckBox( GameContext.getLabel("SHOW_ANIMATION"), options.getShowComputerAnimation() );
         computerAnimationCheckbox_.setToolTipText( GameContext.getLabel("SHOW_ANIMATION_TIP") );
         computerAnimationCheckbox_.addActionListener( this );
         computerAnimationCheckbox_.setAlignmentX( Component.LEFT_ALIGNMENT );
@@ -166,18 +165,19 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog implements ActionL
     protected void ok()
     {
         TwoPlayerController c = get2PlayerController();
+        TwoPlayerOptions options = c.getTwoPlayerOptions();
 
-        c.getOptions().setAlphaBeta( alphabetaCheckbox_.isSelected() );
-        c.getOptions().setQuiescence( quiescenceCheckbox_.isSelected() );
-        c.getOptions().setLookAhead( lookAheadField_.getIntValue() );
+        options.setAlphaBeta( alphabetaCheckbox_.isSelected() );
+        options.setQuiescence( quiescenceCheckbox_.isSelected() );
+        options.setLookAhead( lookAheadField_.getIntValue() );
 
         if ( minimaxButton_.isSelected() )
-            c.getOptions().setSearchStrategyMethod( SearchStrategy.MINIMAX );
+            options.setSearchStrategyMethod( SearchStrategy.MINIMAX );
         else if ( negamaxButton_.isSelected() )
-            c.getOptions().setSearchStrategyMethod( SearchStrategy.NEGAMAX );
-        c.getOptions().setPercentageBestMoves(bestPercentageField_.getIntValue() );
-        c.getOptions().setShowGameTree( gameTreeCheckbox_.isSelected() );
-        c.getOptions().setShowComputerAnimation( computerAnimationCheckbox_.isSelected() );
+            options.setSearchStrategyMethod( SearchStrategy.NEGAMAX );
+        options.setPercentageBestMoves(bestPercentageField_.getIntValue() );
+        options.setShowGameTree( gameTreeCheckbox_.isSelected() );
+        options.setShowComputerAnimation( computerAnimationCheckbox_.isSelected() );
 
         super.ok();
     }

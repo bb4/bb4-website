@@ -13,7 +13,7 @@ import java.awt.geom.Point2D;
  * @see Galaxy
  * @author Barry Becker
  */
-public class Planet extends GamePiece implements Comparable
+public class Planet extends GamePiece
 {
 
     private GalacticPlayer owner_;
@@ -29,8 +29,6 @@ public class Planet extends GamePiece implements Comparable
 
     public static final Color NEUTRAL_COLOR = Color.LIGHT_GRAY;
 
-    // hack to make sorting planets easy
-    public static Planet comparatorPlanet = null;
 
 
     public Planet( char name, int initialNumShips, int productionCapacity, Location pos)
@@ -171,45 +169,14 @@ public class Planet extends GamePiece implements Comparable
         return location_.getDistanceFrom(loc);
     }
 
-
-
     /**
-     *  we sort based on the relative distance to the comparatorPlanet
-     *  @return  >0 if we are greater distance, <0 if less, =0 if equal
+     * if the production capacity is proportional to the volume, then the radius
+     * should be proportional to the cube root of the production capacity.
+     * Normallize by some average production.
+     * @return planet radius.
      */
-    public final int compareTo( Object planet )
-    {
-        assert(comparatorPlanet!=null):"you must set the comparator planet before trying to sort";
-
-        double ourDist = this.getDistanceFrom(comparatorPlanet);
-        double theirDist = ((Planet)planet).getDistanceFrom(comparatorPlanet);
-
-        if (ourDist  < theirDist )
-            return -1;
-        else if ( ourDist > theirDist )
-            return 1;
-        else
-            return 0;
-    }
-
-    /**
-     * Compare 2 moves to see which has a higher value.
-     * This allows you to sort movesby this metric.
-     * @return  >0 if planet2 greater distance, <0 if less, =0 if equal.
-     */
-    public final int compare( Object planet1, Object planet2 )
-    {
-        assert(comparatorPlanet!=null):"you must set the comparator planet before trying to sort";
-
-        double p1Dist = ((Planet)planet1).getDistanceFrom(comparatorPlanet);
-        double p2Dist = ((Planet)planet2).getDistanceFrom(comparatorPlanet);
-
-        if (p1Dist  < p2Dist )
-            return -1;
-        else if ( p1Dist > p2Dist )
-            return 1;
-        else
-            return 0;
+    public double getRadius() {
+        return 0.85 * Math.pow(getProductionCapacity(), 0.333)/2.1;
     }
 
     /**

@@ -110,8 +110,7 @@ class GalacticInfoPanel extends GameInfoPanel implements GameChangedListener, Ac
 
 
            OrdersDialog ordersDialog =
-                   new OrdersDialog(null, currentPlayer, (Galaxy)gc.getBoard(),
-                                    gc.getNumberOfYearsRemaining());
+                   new OrdersDialog(null, currentPlayer, gc.getNumberOfYearsRemaining());
            //ordersDialog.setLocationRelativeTo( this );
            Point p = this.getParent().getLocationOnScreen();
 

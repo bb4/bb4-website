@@ -12,20 +12,20 @@ import java.util.*;
  */
 class OrdersTableModel extends DefaultTableModel
 {
-    public OrdersTableModel(Object[][] data, Object[] columnNames)
+    OrdersTableModel(Object[][] data, Object[] columnNames)
     {
         super(data, columnNames);
     }
 
-    public OrdersTableModel(Object[] columnNames, int rowCount)
+    OrdersTableModel(Object[] columnNames, int rowCount)
     {
         super(columnNames, rowCount);
     }
 
     public Class getColumnClass(int col)
     {
-        Vector v = (Vector)dataVector.elementAt(0);
-        return v.elementAt(col).getClass();
+        List v = (Vector)dataVector.elementAt(0);
+        return v.get(col).getClass();
     }
 
     public boolean isCellEditable()

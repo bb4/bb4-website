@@ -1,11 +1,9 @@
 package com.becker.game.multiplayer.galactic;
 
-import com.becker.game.common.*;
 import com.becker.common.*;
 
-import javax.vecmath.Vector2d;
-import java.awt.geom.Point2D;
-import java.awt.geom.Line2D;
+import javax.vecmath.*;
+import java.awt.geom.*;
 
 
 
@@ -26,9 +24,9 @@ public class Order
     private boolean hasArrived_ = false;
 
     private static final int NORMAL_SPEED = 2;
-    private static final double INTERSECT_TOLERANCE = .2;
+    private static final double INTERSECT_TOLERANCE = 0.2;
 
-     public Order(Planet origin, Planet target, int fleetSize, Point2D loc)
+    public Order(Planet origin, Planet target, int fleetSize, Point2D loc)
     {
         commonInit(origin, target, fleetSize);
         currentLocation_ = loc;
@@ -152,11 +150,11 @@ public class Order
 
     public String toString()
     {
-        StringBuffer sb = new StringBuffer( "" );
-        sb.append("Target: "+destination_+"\n");
-        sb.append("Fleet size: "+fleetSize_+"\n");
-        sb.append("Location: "+currentLocation_+"\n");
-        sb.append("Owner: "+owner_+"\n");
+        StringBuffer sb = new StringBuffer();
+        sb.append("Target: "+destination_+'\n');
+        sb.append("Fleet size: "+fleetSize_+'\n');
+        sb.append("Location: "+currentLocation_+'\n');
+        sb.append("Owner: "+owner_+'\n');
         return sb.toString();
     }
 }

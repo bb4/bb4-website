@@ -12,7 +12,7 @@ import java.awt.event.*;
 
 
 /**
- * 
+ * Show summary information about all planets (or maybe just the ones that you own).
  *
  * @author Barry Becker
  */
@@ -81,12 +81,12 @@ final class PlanetDetailsDialog extends JDialog
     /**
      * start over from scratch.
      */
-    public final void reset()
+    public void reset()
     {    }
 
 
 
-    protected final void processWindowEvent( WindowEvent e )
+    protected void processWindowEvent( WindowEvent e )
     {
         if ( e.getID() == WindowEvent.WINDOW_CLOSING ) {
             this.dispose();

@@ -4,12 +4,15 @@ import com.becker.game.common.*;
 import com.becker.game.online.ui.*;
 import com.becker.java2d.*;
 import com.becker.ui.*;
+import sun.applet.*;
 
 import javax.swing.*;
+import java.applet.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.*;
 import java.io.*;
+import java.net.*;
 
 /**
  * This is an abstract base class for a Game UI.
@@ -73,16 +76,16 @@ public abstract class GamePanel extends TexturedPanel
     public GamePanel()
     {
         super(BG_TEXTURE);
-        commonInit();
+        //init();
     }
 
     /**
      * common initialization in the event that there are multiple constructors.
      */
-    protected void commonInit()
+    protected void init(JFrame parent)
     {
         enableEvents( AWTEvent.WINDOW_EVENT_MASK );
-        initGui();
+        initGui(parent);
     }
 
     public void openGame() {
@@ -117,7 +120,7 @@ public abstract class GamePanel extends TexturedPanel
     /**
      *  UIComponent initialization.
      */
-    protected void initGui()
+    protected void initGui(JFrame parent)
     {
 
         JPanel mainPanel = new JPanel( new BorderLayout() );
@@ -134,18 +137,16 @@ public abstract class GamePanel extends TexturedPanel
 
         toolBar_ = createToolbar();
 
-
         // the main board viewer, It displays the current state of the board.
         // the board viewer creates its own controller
         boardViewer_ = createBoardViewer();
 
-
         OutputWindow logWindow = new OutputWindow( GameContext.getLabel("LOG_OUTPUT"), null);
         GameContext.setLogger( new Log( logWindow ) );
 
-        newGameDialog_ = createNewGameDialog( null, boardViewer_ );
-        onlineGameDialog_ = createOnlineGameDialog(null, boardViewer_);
-        optionsDialog_ = createOptionsDialog( null, boardViewer_.getController() );
+        newGameDialog_ = createNewGameDialog( parent, boardViewer_ );
+        onlineGameDialog_ = createOnlineGameDialog(parent, boardViewer_);
+        optionsDialog_ = createOptionsDialog( parent, boardViewer_.getController() );
 
         // if the board is too big, allow it to be scrolled.
         boardViewerScrollPane_.setViewportView( boardViewer_ );
@@ -191,28 +192,15 @@ public abstract class GamePanel extends TexturedPanel
             */
 
             // use when sound card available
-            /* @@ causing security exception in applet.
+            /* causing security exception in applet? */
             URL url = GUIUtil.getURL("com/becker/sound/play_game_voice.wav");
             AudioClip clip = new AppletAudioClip(url);
             if (clip != null) {
                 clip.play();
             }
-            */
+
         }
         this.setDoubleBuffered(false);
-    }
-
-    /**
-     *
-     * @param parent  the frame used for relative posisitioning
-     */
-    public void setParentFrame(JFrame parent) {
-        newGameDialog_.setParentFrame(parent);
-        if (onlineGameDialog_!=null)
-            onlineGameDialog_.setParentFrame(parent);
-        optionsDialog_ .setParentFrame(parent);
-        infoPanel_.setParentFrame(parent);
-        boardViewer_.setParentFrame(parent);
     }
 
     protected JPanel createBottomDecorationPanel()
@@ -250,7 +238,7 @@ public abstract class GamePanel extends TexturedPanel
     /**
      * @return the panel shown on the right hand side that displays statistics about the current game state.
      */
-    protected abstract GameInfoPanel createInfoPanel(GameController controller);
+    protected abstract GameInfoPanel createInfoPanel( GameController controller);
 
 
     /**

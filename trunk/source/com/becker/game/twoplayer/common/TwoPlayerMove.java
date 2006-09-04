@@ -24,8 +24,8 @@ import com.becker.game.common.Move;
  */
 public class TwoPlayerMove extends Move
 {
-    private static final String P1 = GameContext.getLabel("PLAYER1");
-    private static final String P2 = GameContext.getLabel("PLAYER2");
+    private static final String P1 = "Player1"; // @@GameContext.getLabel("PLAYER1");
+    private static final String P2 = "Player2"; //GameContext.getLabel("PLAYER2");
 
     // the position of the move
     protected byte toRow_;

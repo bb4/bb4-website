@@ -36,7 +36,7 @@ public abstract class GameBoardViewer
 
 
     // every GameBoardViewer must contain one of these
-    protected GameController  controller_ = null;
+    protected GameController controller_ = null;
 
     // the size of a game board cell where the pieces go
     protected int cellSize_;
@@ -393,7 +393,7 @@ public abstract class GameBoardViewer
     {
         if ( evt instanceof GameChangedEvent ) {
             for (int i=0; i < gameListeners_.size(); i++ ) {
-                GameChangedListener gcl = (GameChangedListener)gameListeners_.get(i);
+                GameChangedListener gcl = gameListeners_.get(i);
                 gcl.gameChanged( (GameChangedEvent) evt );
             }
         }

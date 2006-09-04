@@ -1,17 +1,15 @@
 package com.becker.game.multiplayer.galactic.ui;
 
-import com.becker.common.ColorMap;
+import com.becker.common.*;
 import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
-import com.becker.ui.GUIUtil;
-import com.becker.ui.GradientButton;
+import com.becker.ui.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 
 /**
- * Draw stats about the palerys and planet ownership in the Galaxy
+ * Draw stats about the palerys and planet ownership in the Galaxy.
  *
  * @author Barry Becker
  */
@@ -46,7 +44,7 @@ final class StatsDialog extends JDialog
 
 
     /**
-     * constructor - create the tree dialog.
+     * constructor.
      * @param parent frame to display relative to
      * @param boardViewer
      */

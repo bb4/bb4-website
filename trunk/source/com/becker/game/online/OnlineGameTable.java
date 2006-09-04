@@ -7,6 +7,7 @@ import java.io.*;
 
 /**
  * Some number of players sitting around a virtual game table online.
+ * Each table has a name, set of Players and other game specific properties.
  *
  * @author Barry Becker Date: May 13, 2006
  */
@@ -18,6 +19,10 @@ public class OnlineGameTable implements Serializable {
     // the name of the virtual online table.
     private String name_;
 
+    // the player who created this table, even if they are not sitting here anymore.
+    private Player owner_;
+
+    // list of players currently sitting at the table.
     private List<Player> players_;
 
     // @@ also pass in game options
@@ -35,6 +40,9 @@ public class OnlineGameTable implements Serializable {
         }
     }
 
+    /**
+     * @return the name of the table.
+     */
     public String getName() {
         return name_;
     }

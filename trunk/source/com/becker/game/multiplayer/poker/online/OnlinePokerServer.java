@@ -8,7 +8,7 @@ import com.becker.game.online.*;
 public class OnlinePokerServer extends OnlineGameServer {
 
 
-    // must be unique for each game server, so that multiple servers can be used simultaneously.
+    /** must be unique for each game server, so that multiple servers can be used simultaneously. */
     public static final int PORT = 4443;
 
 
@@ -16,6 +16,10 @@ public class OnlinePokerServer extends OnlineGameServer {
 
     public int getPort() {
         return PORT;
+    }
+
+    public String getTitle() {
+        return "Poker Game Server";
     }
 
     public static void main(String[] args) {

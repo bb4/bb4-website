@@ -9,7 +9,7 @@ import java.util.*;
 import java.util.List;
 
 /**
- * The abstract server for online gmaes.
+ * The abstract server for online games.
  * Long term this should probably not have a UI.
  *
  * Manages the tables for the game room.
@@ -17,20 +17,19 @@ import java.util.List;
  *
  * @author Barry Becker Date: May 14, 2006
  */
-public abstract class OnlineGameServer extends JFrame
-                                       implements OnlineGameServerInterface {
+public abstract class OnlineGameServer extends JFrame {
 
     protected JTextArea textArea_;
     protected ServerSocket server_;
 
-    // maintain a list of game tables
+    // maintain a list of game tables.
     OnlineGameTableList tables_;
 
-    // keap a list of the threads that we have for each client connection.
+    // keep a list of the threads that we have for each client connection.
     List<ClientWorker> clientConnections_;
 
     /**
-     * Create the online game server to serve all online clinets.
+     * Create the online game server to serve all online clients.
      */
     public OnlineGameServer() {
         initUI();
@@ -38,15 +37,6 @@ public abstract class OnlineGameServer extends JFrame
         tables_ = new OnlineGameTableList();
         clientConnections_ = new LinkedList<ClientWorker>();
 
-        setTitle("Server Program");
-        WindowListener l = new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        };
-        addWindowListener(l);
-        pack();
-        setVisible(true);
         openListenSocket();
     }
 
@@ -59,18 +49,29 @@ public abstract class OnlineGameServer extends JFrame
         panel.setBackground(Color.white);
         panel.add("North", label);
         panel.add("Center", new JScrollPane(textArea_));
+        setTitle(getTitle());
 
         getContentPane().add(panel);
+
+        WindowListener l = new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+        };
+        addWindowListener(l);
+        pack();
+        setVisible(true);
     }
 
     public abstract int getPort();
 
+    public abstract String getTitle();
 
     /**
      * open a server socket to listen on our assigned port for
      * requests from clients. Updates will be broadcast on this socket.
-     * Maintain a list of clientConnections that we need to broadcast to
-     * when something changes.
+     * Maintain a list of clientConnections corresponding to the players
+     * that we need to broadcast to when something changes.
      */
     public void openListenSocket() {
         int port = getPort();
@@ -85,6 +86,7 @@ public abstract class OnlineGameServer extends JFrame
         while (true) {
             OnlineGameServer.ClientWorker w;
             try {
+                // accept new connections from players wanting to join.
                 w = new ClientWorker(server_.accept(), textArea_);
                 Thread t = new Thread(w);
                 clientConnections_.add(w);
@@ -97,6 +99,8 @@ public abstract class OnlineGameServer extends JFrame
             }
         }
     }
+
+
 
     /**
      * Objects created in run method are finalized when
@@ -117,16 +121,6 @@ public abstract class OnlineGameServer extends JFrame
         }
     }
 
-
-    /**
-     * Subclasses should override
-     * @param cmdLine
-     * @param response
-     * @return true if successful
-     */
-    public boolean handleCommand(String cmdLine, StringBuffer response) {
-        return false;
-    }
 
 
     /**
@@ -163,6 +157,7 @@ public abstract class OnlineGameServer extends JFrame
 
                 while (true) {
 
+                    // recieve the serielzed commands that are sent and process them.
                     GameCommand cmd = (GameCommand) iStream_.readObject();
 
                     // we got a change to the tables, update internal structure and broadcast new list.
@@ -192,14 +187,28 @@ public abstract class OnlineGameServer extends JFrame
 
         /**
          * Update our internal game table list given the cmd from the client.
-         * @param cmd to process.
+         * @param cmd to process. The command that the player has issued.
+         * @return true if successful
          */
-        private void processCmd(GameCommand cmd) throws IOException {
+        private boolean processCmd(GameCommand cmd) {
             switch (cmd.getName()) {
+                case ENTER_ROOM :
+                    System.out.println("Entering room.");
+                    break;
                 case ADD_TABLE :
                     addTable((OnlineGameTable) cmd.getArgument());
                     break;
+                case JOIN_TABLE :
+                    System.out.println("Attempting to join table.");
+                    break;
+                case CHANGE_NAME :
+                    System.out.println("Attempting to change name.");
+                    break;
+                case UPDATE_TABLES :
+                    System.out.println("updating tables.");
+                    break;
             }
+            return true;
         }
 
         private void addTable(OnlineGameTable table) {
@@ -240,4 +249,20 @@ public abstract class OnlineGameServer extends JFrame
         }
     }
 
+
+     /**
+      * Implements OnlineGameServerInterface which is also implmented by GtpTesujiSoftGoServer.
+      * not currently used, but I'm trying to have a consistent game server interface.
+      * @param cmdLine command and its arguments in a form that can be parsed.
+      * @param response the response from the server to be interpreted by the client.
+      * @return true if successfully handled.
+      *
+     public boolean handleCommand(String cmdLine, StringBuffer response) {
+         String[] cmdArray = StringUtils.tokenize(cmdLine);
+         String cmdStr = cmdArray[0];
+         boolean status = true;
+
+         GameCommand cmd = new GameCommand(GameCommand.Name.valueOf(cmdStr), cmdStr);
+         return processCmd(cmd);
+     } */
 }

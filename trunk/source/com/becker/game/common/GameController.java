@@ -31,6 +31,8 @@ public abstract class GameController
     // the list of players actively playing the game, in the order that they move.
     protected Player[] players_;
 
+    // collections of game specific options.
+    protected GameOptions gameOptions_;
 
     /**
      * Construct the game controller
@@ -292,5 +294,12 @@ public abstract class GameController
        }
        return true;
     }
+
+    public void setOptions(GameOptions options) {
+        gameOptions_ = options;
+    }
+
+    public abstract GameOptions getOptions();
+
 
 }

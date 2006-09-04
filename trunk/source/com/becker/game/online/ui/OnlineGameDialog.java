@@ -36,7 +36,6 @@ public abstract class OnlineGameDialog extends JDialog
     protected ViewerCallbackInterface viewer_;
 
 
-
     public OnlineGameDialog(Frame parent, ViewerCallbackInterface viewer) {
         System.out.println("In OnlineGameDlg constructor");
         parent_ = parent;

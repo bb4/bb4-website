@@ -112,7 +112,7 @@ public final class GameTreeDialog extends JDialog
 
         TwoPlayerPieceRenderer pieceRenderer = (TwoPlayerPieceRenderer)((TwoPlayerBoardViewer)boardViewer_).getPieceRenderer();
         treeViewer_ =
-                new GameTreeViewer( root_, controller_.getOptions().getLookAhead(), cellRenderer_.getColorMap(), pieceRenderer);
+                new GameTreeViewer( root_, controller_.getTwoPlayerOptions().getLookAhead(), cellRenderer_.getColorMap(), pieceRenderer);
         treeViewer_.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
         treeViewer_.setPreferredSize(new Dimension(500, 120));
 
@@ -244,7 +244,7 @@ public final class GameTreeDialog extends JDialog
         textTree_ = createTree( root_ );
         scrollPane_.setViewportView( textTree_ );
 
-        treeViewer_.setRoot(root_, mainController_.getOptions().getLookAhead());
+        treeViewer_.setRoot(root_, mainController_.getTwoPlayerOptions().getLookAhead());
 
         textTree_.expandRow( 0 );
 

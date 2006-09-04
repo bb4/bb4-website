@@ -51,15 +51,15 @@ public abstract class TwoPlayerPanel extends GamePanel
     /**
      *  UIComponent initialization.
      */
-    protected void initGui()
+    protected void initGui(JFrame parent)
     {
-        super.initGui();
+        super.initGui(parent);
 
         // we create a separate controller for the TreeDialog so it can browse without
         // disturbing the state of the actual game.
         treeDialog_ = createGameTreeDialog();
 
-        TwoPlayerOptions options = get2PlayerController().getOptions();
+        TwoPlayerOptions options = get2PlayerController().getTwoPlayerOptions();
         GameContext.log(2, "2player pane init  get2PlayerController().getShowGameTree() ="+ options.getShowGameTree() );
         if (options.getShowGameTree()) {
             showGameTreeDialog();
@@ -166,8 +166,8 @@ public abstract class TwoPlayerPanel extends GamePanel
             boolean canceled = optionsDialog_.showDialog();
             GameContext.log(2, "options selected  canceled=" + canceled );
             if ( !canceled ) { // start a game with the newly defined options
-                GameContext.log(0, "options selected not canceled  show game tree=" + get2PlayerController().getOptions().getShowGameTree() );
-                if ( get2PlayerController().getOptions().getShowGameTree() ) {
+                GameContext.log(0, "options selected not canceled  show game tree=" + get2PlayerController().getTwoPlayerOptions().getShowGameTree() );
+                if ( get2PlayerController().getTwoPlayerOptions().getShowGameTree() ) {
                     showGameTreeDialog();
                 }
                 else

@@ -49,7 +49,7 @@ public class SetPlayerTable extends PlayerTable
             players[i] = SetPlayer.createSetPlayer(
                                  (String)model.getValueAt(i, NAME_INDEX),
                                  (Color)model.getValueAt(i, COLOR_INDEX),
-                                 ((Boolean)model.getValueAt(i, TYPE_INDEX)));
+                                 ((Boolean)model.getValueAt(i, HUMAN_INDEX)));
         }
         return players;
     }
@@ -64,7 +64,7 @@ public class SetPlayerTable extends PlayerTable
         Object d[] = new Object[getNumColumns()];
         d[NAME_INDEX] = player.getName();
         d[COLOR_INDEX] = player.getColor();
-        d[TYPE_INDEX] = player.isHuman();
+        d[HUMAN_INDEX] = player.isHuman();
         getModel().addRow(d);
     }
 

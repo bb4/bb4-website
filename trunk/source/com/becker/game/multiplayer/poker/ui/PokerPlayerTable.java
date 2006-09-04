@@ -57,7 +57,7 @@ public class PokerPlayerTable extends PlayerTable
                                     (String)model.getValueAt(i, NAME_INDEX),
                                     ((Integer)model.getValueAt(i, CASH_INDEX)),
                                     (Color)model.getValueAt(i, COLOR_INDEX),
-                                    ((Boolean)model.getValueAt(i, TYPE_INDEX)));
+                                    ((Boolean)model.getValueAt(i, HUMAN_INDEX)));
         }
         return players;
     }
@@ -73,7 +73,7 @@ public class PokerPlayerTable extends PlayerTable
         d[NAME_INDEX] = player.getName();
         d[COLOR_INDEX] = player.getColor();
         d[CASH_INDEX] = DEFAULT_CASH_AMOUNT; //p.getCash();
-        d[TYPE_INDEX] = player.isHuman();
+        d[HUMAN_INDEX] = player.isHuman();
         getModel().addRow(d);
     }
 

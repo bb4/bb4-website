@@ -33,13 +33,13 @@ public class GoTestCase extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
         // this will load the resources for the specified game.
-        GameContext.loadGameResources("go", "com.becker.game.twoplayer.go.ui.GoPanel");
+        //GameContext.verifyGameResources("go", "com.becker.game.twoplayer.go.ui.GoPanel");
         GameContext.setDebugMode(0);
 
         controller_ = new GoController(13, 13, 0);
 
         //controller_.allPlayersComputer();
-        TwoPlayerOptions options = controller_.getOptions();
+        TwoPlayerOptions options = controller_.getTwoPlayerOptions();
         options.setAlphaBeta(true);
         options.setLookAhead(4);
         options.setPercentageBestMoves(40);

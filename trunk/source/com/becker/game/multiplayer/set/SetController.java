@@ -29,9 +29,6 @@ public class SetController extends GameController
     // currently selected player. -1 if none selected
     int currentPlayerIndex_ = NO_PLAYER_SELECTED;
 
-    // initial number of cards shown face up on the board.
-    private static final int INITIAL_NUM_CARDS_SHOWN = 12;
-
     // the maximum number of cards you can have and still not have a set (exceedingly rare).
     private static final int MAX_CARDS_BEFORE_SET = 20;
 
@@ -56,7 +53,7 @@ public class SetController extends GameController
     protected void initializeData()
     {
         deck_ = Card.newDeck();
-        numCardsShown_ = INITIAL_NUM_CARDS_SHOWN;
+        numCardsShown_ = ((SetOptions)getOptions()).getInitialNumCardsShown();
 
         initPlayers();
         gameChanged();
@@ -68,6 +65,13 @@ public class SetController extends GameController
      */
     public List<Card> getDeck()  {
         return deck_;
+    }
+
+    public GameOptions getOptions() {
+        if (gameOptions_ == null) {
+            gameOptions_ = new SetOptions();
+        }
+        return gameOptions_;
     }
 
     /**

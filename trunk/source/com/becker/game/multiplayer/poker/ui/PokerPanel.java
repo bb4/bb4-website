@@ -23,8 +23,7 @@ public class PokerPanel extends GamePanel
     {}
 
 
-    public String getTitle()
-    {
+    public String getTitle() {
         return  GameContext.getLabel("POKER_TITLE");
     }
 
@@ -32,20 +31,16 @@ public class PokerPanel extends GamePanel
      * Poker supports online play if the server is available
      * @return true if the game supports online play and there is a server available
      */
-    protected boolean isOnlinePlayAvailable()
-    {
-
+    protected boolean isOnlinePlayAvailable() {
         return onlineGameDialog_.isServerAvailable();
     }
 
 
-    protected GameBoardViewer createBoardViewer()
-    {
+    protected GameBoardViewer createBoardViewer() {
         return new PokerGameViewer();
     }
 
-    protected NewGameDialog createNewGameDialog( JFrame parent, ViewerCallbackInterface viewer )
-    {
+    protected NewGameDialog createNewGameDialog( JFrame parent, ViewerCallbackInterface viewer ) {
         return new PokerNewGameDialog( parent, viewer );
     }
 
@@ -53,19 +48,16 @@ public class PokerPanel extends GamePanel
         return new OnlinePokerDialog( parent, viewer );
     }
 
-    protected GameOptionsDialog createOptionsDialog( JFrame parent, GameController controller )
-    {
+    protected GameOptionsDialog createOptionsDialog( JFrame parent, GameController controller ) {
         return new PokerOptionsDialog( parent, controller );
     }
 
-    protected GameInfoPanel createInfoPanel(GameController controller)
-    {
+    protected GameInfoPanel createInfoPanel(GameController controller) {
         return new PokerInfoPanel( controller);
     }
 
     // Display the help dialog to give instructions
-    protected void showHelpDialog()
-    {
+    protected void showHelpDialog()  {
         String name = getTitle();
         String comments = GameContext.getLabel("POKER_TITLE");
         String overview = GameContext.getLabel("POKER_OVERVIEW");

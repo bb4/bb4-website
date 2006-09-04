@@ -1,6 +1,7 @@
 package com.becker.game.multiplayer.galactic;
 
 
+import javax.swing.*;
 import java.util.*;
 import java.util.List;
 import java.awt.*;
@@ -15,16 +16,11 @@ import java.awt.*;
 public abstract class GalacticRobotPlayer extends GalacticPlayer
 {
 
-    private static final int CRAZY_ROBOT = 0;
-    private static final int METHODICAL_ROBOT = 1;
-    private static final int NUM_ROBOT_TYPES = 2;
+    private enum RobotType {CRAZY_ROBOT, METHODICAL_ROBOT};
 
-
-    public GalacticRobotPlayer(String name, Planet homePlanet, Color color)
-    {
+    public GalacticRobotPlayer(String name, Planet homePlanet, Color color) {
         super(name, homePlanet, color, false);
     }
-
 
     /**
      * @return the current list of this Robot's orders.
@@ -38,16 +34,15 @@ public abstract class GalacticRobotPlayer extends GalacticPlayer
      * @param numAttacks
      * @return list of orders
      */
-    protected List getOrders(Planet origin, int numAttacks, int numShipsToLeaveBehind, int numYearsRemaining)
+    protected List<Order> getOrders(Planet origin, int numAttacks, int numShipsToLeaveBehind, int numYearsRemaining)
     {
-        List orders = new ArrayList();
+        List<Order> orders = new ArrayList<Order>();
 
         int numShipsToSend = origin.getNumShips() - numShipsToLeaveBehind;
 
         List planets = Galaxy.getPlanets();
         // we must set a comparator to sort all the planets relative to.
-        Planet.comparatorPlanet = origin;
-        Collections.sort(planets);
+        Collections.sort(planets, new PlanetComparator(origin));
 
         // find the numAttack closest planets
         List<Planet> closestEnemies = new ArrayList<Planet>();
@@ -61,6 +56,7 @@ public abstract class GalacticRobotPlayer extends GalacticPlayer
                 ct++;
             }
         }
+
         // now create the orders that will send numShipsToSend/numAttacks ships to each of these planets
         int attackFleetSize = numShipsToSend/numAttacks;
         it = closestEnemies.iterator();
@@ -84,12 +80,13 @@ public abstract class GalacticRobotPlayer extends GalacticPlayer
      */
     public static GalacticRobotPlayer getRandomRobotPlayer(String name, Planet homePlanet, Color color)
     {
-        int r = (int)(NUM_ROBOT_TYPES * Math.random());
-        return getRobotPlayer(r, name, homePlanet, color);
+        int r = (int)(RobotType.values().length * Math.random());
+        return getRobotPlayer(RobotType.values()[r], name, homePlanet, color, null);
     }
 
 
     private static int seq_ = 0;
+
     /**
      *
      * @return  robot players in round robin order (not randomly)
@@ -97,17 +94,29 @@ public abstract class GalacticRobotPlayer extends GalacticPlayer
     public static GalacticRobotPlayer getSequencedRobotPlayer(String name, Planet homePlanet, Color color)
     {
 
-        int r = seq_++ % NUM_ROBOT_TYPES;
-        return getRobotPlayer(r, name, homePlanet, color);
+        int r = seq_++ % RobotType.values().length;
+        return getRobotPlayer(RobotType.values()[r], name, homePlanet, color, null);
+    }
+
+    /**
+     *
+     * @return  robot players in round robin order (not randomly)
+     */
+    public static GalacticRobotPlayer getSequencedRobotPlayer(String name, Planet homePlanet,
+                                                              Color color, ImageIcon icon)
+    {
+
+        int r = seq_++ % RobotType.values().length;
+        return getRobotPlayer(RobotType.values()[r], name, homePlanet, color, icon);
     }
 
 
-    private static GalacticRobotPlayer getRobotPlayer(int type, String name, Planet homePlanet, Color color)
+    private static GalacticRobotPlayer getRobotPlayer(RobotType type, String name, Planet homePlanet,
+                                                      Color color, ImageIcon icon)
     {
          switch (type) {
-            case CRAZY_ROBOT: return new CrazyRobotPlayer(name, homePlanet, color);
-            case METHODICAL_ROBOT: return new MethodicalRobotPlayer(name, homePlanet, color);
-            default : assert false;
+            case CRAZY_ROBOT: return new CrazyRobotPlayer(name, homePlanet, color, icon);
+            case METHODICAL_ROBOT: return new MethodicalRobotPlayer(name, homePlanet, color, icon);
         }
         assert (false):"bad type="+type;
         return null;

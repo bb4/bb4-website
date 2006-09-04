@@ -4,6 +4,7 @@ import com.becker.game.common.*;
 import com.becker.ui.*;
 
 import javax.swing.*;
+import javax.swing.Box;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -45,14 +46,13 @@ public class GameOptionsDialog extends OptionsDialog implements ActionListener, 
     // constructor
     public GameOptionsDialog( JFrame parent, GameController controller )
     {
-        super( parent);
+        super(parent);
         controller_ = controller;
         initUI();
     }
 
     protected void initUI()
     {
-
 
         mainPanel_.setLayout( new BorderLayout() );
         // contains tabs for Algorithm, Debugging, and Look and Feel
@@ -71,19 +71,55 @@ public class GameOptionsDialog extends OptionsDialog implements ActionListener, 
         tabbedPanel.add( GameContext.getLabel("LOOK_AND_FEEL"), lookAndFeelParamPanel );
         tabbedPanel.add( GameContext.getLabel("LOCALE"), localePanel );
 
-
         mainPanel_.add( tabbedPanel, BorderLayout.CENTER );
         mainPanel_.add( buttonsPanel, BorderLayout.SOUTH );
 
         this.getContentPane().add( mainPanel_ );
         this.getContentPane().repaint();
         this.pack();
+
+        this.setLocationRelativeTo(parent_);
     }
 
     public String getTitle()
     {
         return GameContext.getLabel("GAME_OPTIONS");
     }
+
+
+    /**
+     * @return game options tab panel.
+     */
+    protected JPanel createControllerParamPanel()
+    {
+        JComponent[] comps = getControllerParamComponents();
+        if (comps == null)
+            return null;
+
+        JPanel p = new JPanel();
+
+        p.setLayout( new BoxLayout( p, BoxLayout.Y_AXIS ) );
+        p.setBorder( BorderFactory.createTitledBorder(
+                       BorderFactory.createEtchedBorder(),
+                         GameContext.getLabel("GAME_OPTIONS")) );
+
+        for (JComponent c : comps) {
+            p.add(c);
+        }
+        p.add(Box.createVerticalGlue());
+
+        p.setName(GameContext.getLabel("GAME"));
+        return p;
+    }
+
+
+    /**
+     * @return general game options tab panel.
+     */
+    protected JComponent[] getControllerParamComponents() {
+        return null;
+    }
+
 
     // create the OK Cancel buttons that go at the botton
     protected JPanel createButtonsPanel()
@@ -99,13 +135,6 @@ public class GameOptionsDialog extends OptionsDialog implements ActionListener, 
         return buttonsPanel;
     }
 
-    /**
-     * @return general game options tab panel.
-     */
-    protected JPanel createControllerParamPanel()
-    {
-        return null;
-    }
 
     /**
      * @return debug params tab panel
@@ -219,7 +248,7 @@ public class GameOptionsDialog extends OptionsDialog implements ActionListener, 
         p.add( label );
 
         // sound option
-        soundCheckbox_ = new JCheckBox( GameContext.getLabel("USE_SOUND"), GameContext.getUseSound() );
+        soundCheckbox_ = new JCheckBox( GameContext.getLabel("USE_SOUND"),  GameContext.getUseSound());
         soundCheckbox_.setToolTipText( GameContext.getLabel("USE_SOUND_TIP") );
         soundCheckbox_.addActionListener( this );
         soundCheckbox_.setAlignmentX( Component.LEFT_ALIGNMENT );
@@ -253,6 +282,7 @@ public class GameOptionsDialog extends OptionsDialog implements ActionListener, 
 
     /**
      *  This panel allows the user to set the desired locale through the ui.
+     * Perhaps we should not allow this. It does not really make sense.
      * @return locale tab panel.
      */
      protected JPanel createLocalePanel()
@@ -300,11 +330,18 @@ public class GameOptionsDialog extends OptionsDialog implements ActionListener, 
         v.setBackground( boardColorButton_.getBackground() );
         v.setGridColor( gridColorButton_.getBackground() );
 
-        GameContext.setUseSound( soundCheckbox_.isSelected() );
-
         LocaleType[] locales = LocaleType.values();
         GameContext.setLocale(locales[localeComboBox_.getSelectedIndex()]);
+
+        // game specific options
+        GameOptions options = getOptions();
+        controller_.setOptions(options);
+
         this.setVisible( false );
+    }
+
+    protected GameOptions getOptions() {
+        return new GameOptions();
     }
 
     /**

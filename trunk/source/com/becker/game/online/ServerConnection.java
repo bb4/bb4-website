@@ -93,11 +93,18 @@ public class ServerConnection {
             exceptionOccurred("No I/O", e);
         }
         catch (AccessControlException e) {
-            System.out.println("Failed to craetListenSocket. \n"
+            System.out.println("Failed to createListenSocket. \n"
                                +"You don't have permission to open a socket to "
                                + DEFAULT_HOST + " in the current context.");
             isConnected_ = false;
         }
+    }
+
+    /**
+     * Request an initial update when we enter the room with the game tables
+     */
+    public void enterRoom() {
+        sendCommand(new GameCommand(GameCommand.Name.ENTER_ROOM, ""));
     }
 
     /**

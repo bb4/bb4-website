@@ -43,12 +43,7 @@ public class PokerController extends GameController
     private static final int DEFAULT_NUM_ROWS = 32;
     protected static final int DEFAULT_NUM_COLS = 32;
 
-    private static final int DEFAULT_ANTE = 2;
-    private static final int DEFAULT_MAX_ABS_RAISE = 50;
-
     private int currentPlayerIndex_;
-    private int ante_ = DEFAULT_ANTE;
-    private int maxAbsoluteRaise_ = DEFAULT_MAX_ABS_RAISE;
     private int pot_;
     // there is a different starting player each round
     private int startingPlayerIndex_ = 0;
@@ -93,6 +88,13 @@ public class PokerController extends GameController
 
         initPlayers();
         ((PokerTable)board_).initPlayers((PokerPlayer[])players_, this);
+    }
+
+    public GameOptions getOptions() {
+        if (gameOptions_ == null) {
+            gameOptions_ = new PokerOptions();
+        }
+        return gameOptions_;
     }
 
     /**
@@ -147,7 +149,7 @@ public class PokerController extends GameController
             for (final Player p : players_) {
                 PokerPlayer player = ((PokerPlayer) p);
                 // if a player does not have enough money to ante up, he is out of the game
-                player.contributeToPot(this, getAnte());
+                player.contributeToPot(this, ((PokerOptions)getOptions()).getAnte());
 
             }
         }
@@ -173,13 +175,6 @@ public class PokerController extends GameController
         return max;
     }
 
-    public void setMaxAbsolutRaise(int maxAbsoluteRaise) {
-        maxAbsoluteRaise_ = maxAbsoluteRaise;
-    }
-
-    public int getMaxAbsoluteRaise()  {
-        return maxAbsoluteRaise_;
-    }
 
     /**
      *
@@ -196,14 +191,6 @@ public class PokerController extends GameController
             }
         }
         return min;
-    }
-
-    public void setAnte(int amount) {
-        ante_ = amount;
-    }
-
-    public int getAnte() {
-        return ante_;
     }
 
     /**

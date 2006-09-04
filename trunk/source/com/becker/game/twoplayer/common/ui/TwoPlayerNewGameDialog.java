@@ -190,7 +190,7 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
         {
             c.getPlayer1().setHuman(false);
             c.getPlayer2().setHuman(false);
-            c.getOptions().setAutoOptimize(true);
+            c.getTwoPlayerOptions().setAutoOptimize(true);
         }
         else {
             c.getPlayer1().setHuman( human1Button_.isSelected() );
@@ -259,7 +259,7 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
                         return;
                     }
                     else
-                        get2PlayerController().getOptions().setAutoOptimizeFile( file.getAbsolutePath() );
+                        get2PlayerController().getTwoPlayerOptions().setAutoOptimizeFile( file.getAbsolutePath() );
                  }
             }
 
