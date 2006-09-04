@@ -17,23 +17,23 @@ public interface TwoPlayerViewerCallbackInterface  extends ViewerCallbackInterfa
      * Called when the controller has found the next computer move and needs to make the viewer aware of it.
      * @param m the computers move
      */
-    public void computerMoved(Move m);
+    void computerMoved(Move m);
 
     /**
      * Used when the computer is playing against itself, and you want the game to show up in the viewer.
      */
-    public void showComputerVsComputerGame();
+    void showComputerVsComputerGame();
 
 
     /**
      * Currently this does not actually step forward just one search step, but instead
      * stops after PROGRESS_STEP_DELAY more milliseconds of seaching.
      */
-    public void step();
+    void step();
 
     /**
      * resume searching for the next move at full speed.
      */
-    public void continueProcessing();
+    void continueProcessing();
 
 }

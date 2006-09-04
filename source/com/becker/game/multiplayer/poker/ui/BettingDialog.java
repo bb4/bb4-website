@@ -1,22 +1,14 @@
 package com.becker.game.multiplayer.poker.ui;
 
-import com.becker.game.common.*;
-import com.becker.game.multiplayer.galactic.*;
-import com.becker.game.multiplayer.poker.PokerPlayer;
-import com.becker.game.multiplayer.poker.PokerHand;
-import com.becker.game.multiplayer.poker.PokerController;
-import com.becker.ui.*;
 import com.becker.common.*;
+import com.becker.game.common.*;
+import com.becker.game.multiplayer.poker.*;
+import com.becker.ui.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.text.MessageFormat;
-import java.text.NumberFormat;
-import java.util.List;
-import java.util.HashMap;
-
-import sun.font.TextLabel;
+import java.text.*;
 
 /**
  * Allow the user to specify a single order
@@ -36,8 +28,6 @@ public final class BettingDialog extends OptionsDialog
     private int contributeAmount_;
 
     private JPanel pokerHandPanel_;
-    private static NumberFormat currencyFormat_;
-
 
     /**
      * constructor - create the tree dialog.
@@ -137,10 +127,10 @@ public final class BettingDialog extends OptionsDialog
 
 
     public static NumberFormat getCurrencyFormat() {
-        if (currencyFormat_ == null) {
-            currencyFormat_ =  NumberFormat.getCurrencyInstance(GameContext.getLocale());
-        }
-        return currencyFormat_;
+
+        //@@ fix i18n
+        return NumberFormat.getCurrencyInstance(GameContext.getDefaultLocaleType().getLocale());
+
     }
 
     public String getTitle()
@@ -177,8 +167,10 @@ public final class BettingDialog extends OptionsDialog
 
     public void showRaiseDialog() {
         // open a dlg to get an order
+        PokerOptions options = (PokerOptions)pc_.getOptions();
         RaiseDialog raiseDialog =
-                new RaiseDialog(player_, callAmount_, pc_.getAllInAmount(), pc_.getMaxAbsoluteRaise(), pc_.getAnte());
+                new RaiseDialog(player_, callAmount_, pc_.getAllInAmount(),
+                                options.getMaxAbsoluteRaise(), options.getAnte());
 
         raiseDialog.setLocation((int)(this.getLocation().getX() + 40), (int)(this.getLocation().getY() +170));
 

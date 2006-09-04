@@ -25,7 +25,7 @@ public abstract class PlayerTable
 
     protected static final int NAME_INDEX = 0;
     protected static final int COLOR_INDEX = 1;
-    protected static final int TYPE_INDEX = 2;
+    protected static final int HUMAN_INDEX = 2;
 
     protected static final String NAME = GameContext.getLabel("NAME");
     protected static final String COLOR = GameContext.getLabel("COLOR");
@@ -55,17 +55,16 @@ public abstract class PlayerTable
         TableModel m = new PlayerTableModel(columnNames_, 0, true);
         table_ = new JTable(m);
 
-        TableColumn nameColumn = table_.getColumn(NAME);
-        nameColumn.setPreferredWidth(130);
+        table_.getColumn(NAME).setPreferredWidth(130);
+        table_.getColumn(HUMAN).setPreferredWidth(80);
 
         TableColumn colColumn = table_.getColumn(COLOR);
         colColumn.setCellRenderer(new ColorCellRenderer());
         colColumn.setCellEditor(new ColorCellEditor(GameContext.getLabel("SELECT_PLAYER_COLOR")));
-        colColumn.setPreferredWidth(25);
+        colColumn.setPreferredWidth(40);
         colColumn.setWidth(20);
-        colColumn.setMaxWidth(25);
-
-        table_.sizeColumnsToFit(0);
+        colColumn.setMaxWidth(40);       
+        table_.doLayout();
     }
 
     /**
@@ -127,8 +126,6 @@ public abstract class PlayerTable
             getModel().removeRow(selRow);
         }
     }
-
-
 
     protected int getNumColumns() {
         return columnNames_.length;

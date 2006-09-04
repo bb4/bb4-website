@@ -65,7 +65,7 @@ public class CaptureList extends LinkedList<BoardPosition>
     }
 
     /**
-     * @return a deep copy of the capture list
+     * @return a deep copy of the capture list.
      */
     public CaptureList copy()
     {

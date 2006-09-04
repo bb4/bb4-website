@@ -8,7 +8,7 @@ import java.util.*;
 
 /**
  * Manage game context info such as logging, debugging, resources, and profiling.
- * @@ we could also use this class to manage cofiguration information from a config file.
+ * @@ we could also use this class to manage configuration information from a config file.
  * @@ Move more things here. Pehaps use java properties?
  *
  * @author Barry Becker
@@ -257,9 +257,9 @@ public final class GameContext
         commonMessages_ =
             ResourceBundle.getBundle(COMMON_MESSAGE_BUNDLE, locale.getLocale());
         //commonMessageKeys_ =
-        Enumeration enumXXX = commonMessages_.getKeys();
-        while (enumXXX.hasMoreElements()) {
-            commonMessageKeys_.add((String)enumXXX.nextElement());
+        Enumeration enum1 = commonMessages_.getKeys();
+        while (enum1.hasMoreElements()) {
+            commonMessageKeys_.add((String)enum1.nextElement());
         }
         JComponent.setDefaultLocale(locale.getLocale());
     }

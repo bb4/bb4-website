@@ -16,19 +16,19 @@ import java.util.*;
  *  - mouse over should still work when entering orders (non-modal?)
  *  - have robot players with different strategy.
  *  - have button to show stats dialog (basically same as tally dialog) on toolbar.
+ *    See PlanetDetailsDialog, StatsDialog.
  *  - in addition to order dialog should be able to directly click on source, then dest planet,
  *    then enter number of ships.
  *
+ *  - Brian's wishlist
+ *    - show pictures of humans and aliens in battle.
+ *    -
+ *
  * @@ bugs
  *  - after click on fight, it should change immediately to close
+ *  - lines showing armada trajectories do not always line up with panet centers
  *  - remove selected source planet from dest list.
  *  - summary dialog should show number of years.
- *
- * at java.lang.Integer.parseInt(Integer.java:468)
-	at java.lang.Integer.parseInt(Integer.java:497)
-	at com.becker.game.multiplayer.galactic.ui.OrderDialog.getFleetSize(OrderDialog.java:228)
-	at com.becker.game.multiplayer.galactic.ui.OrderDialog.getOrder(OrderDialog.java:210)
-	at com.becker.game.multiplayer.galactic.ui.OrderDialog.actionPerformed(OrderDialog.java:169)
  *
  * fixed:
  *    don't allow computer or players to send ships to distant planets if they will not arrive before end of the game.
@@ -45,15 +45,6 @@ public class GalacticController extends GameController
 
     private static final int DEFAULT_NUM_ROWS = 16;
     protected static final int DEFAULT_NUM_COLS = 16;
-
-    private static final int DEFAULT_PLANET_PRODUCTION_RATE = 2;
-    private static final int DEFAULT_PLANET_FLEET_SIZE = 10;
-    private static final int DEFAULT_MAX_YEARS = 10;
-
-    private int planetProductionRate_ = DEFAULT_PLANET_PRODUCTION_RATE;
-    private int initialFleetSize_ = DEFAULT_PLANET_FLEET_SIZE;
-    private int maxYearsToPlay_ = DEFAULT_MAX_YEARS;
-    private boolean neutralsBuild_ = false;
 
     private int currentPlayerIndex_;
 
@@ -136,7 +127,7 @@ public class GalacticController extends GameController
      */
     public int getNumberOfYearsRemaining() {
         Move m = board_.getLastMove();
-        int years = maxYearsToPlay_ - ((m != null)? this.getNumMoves() : 0) - 2;
+        int years = ((GalacticOptions)getOptions()).getMaxYearsToPlay() - ((m != null)? this.getNumMoves() : 0) - 2;
         return years;
     }
     /**
@@ -148,7 +139,7 @@ public class GalacticController extends GameController
         if (board_.getLastMove()==null)
             return false;
         // add one so indexed by 1 instead of 0, add 1 because its the "last" move
-        if ((this.getNumMoves() + 2) >= maxYearsToPlay_)
+        if ((this.getNumMoves() + 2) >= ((GalacticOptions)getOptions()).getMaxYearsToPlay())
             return true; // done
         if (Galaxy.allPlanetsOwnedByOnePlayer())
             return true;
@@ -217,6 +208,12 @@ public class GalacticController extends GameController
         return players_[0];
     }
 
+    public GameOptions getOptions() {
+        if (gameOptions_ == null) {
+            gameOptions_ = new GalacticOptions();
+        }
+        return gameOptions_;
+    }
 
     ////////// some Galactic specific methods ///////////////////
 
@@ -232,60 +229,6 @@ public class GalacticController extends GameController
     {
         ((Galaxy)board_).setNumPlanets(numPlanets);
     }
-
-    /**
-     * @return base production rate for planets
-     */
-    public int getPlanetProductionRate()
-    {
-        return planetProductionRate_;
-    }
-
-    public void setPlanetProductionRate( int planetProductionRate )
-    {
-        this.planetProductionRate_ = planetProductionRate;
-    }
-
-    /**
-     * @return base fleet size for planets
-     */
-    public int getInitialFleetSize()
-    {
-        return initialFleetSize_;
-    }
-
-    public void setInitialFleetSize( int initialFleetSize )
-    {
-        this.initialFleetSize_ = initialFleetSize;
-    }
-
-    /**
-     * @return upper limit on years (turns) to play.
-     * The game could be over sooner if only one player exists at some point.
-     */
-    public int getMaxYearsToPlay()
-    {
-        return maxYearsToPlay_;
-    }
-
-    public void setMaxYearsToPlay( int maxYearsToPlay )
-    {
-        maxYearsToPlay_ = maxYearsToPlay;
-    }
-
-    /**
-     * @return true if neutral planets are allowed to build up their defending fleets
-     */
-    public boolean getNeutralsBuild()
-    {
-        return neutralsBuild_;
-    }
-
-    public void setNeutralsBuild(boolean build)
-    {
-        neutralsBuild_ = build;
-    }
-
 
 
     /**
@@ -326,7 +269,5 @@ public class GalacticController extends GameController
     {
         return false;
     }
-
-
 
 }

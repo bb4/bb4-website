@@ -29,7 +29,7 @@ import java.util.List;
  * GoGui is typically the controller I have used, but it could be any GTP based UI.
  *
  * @@ add time settings in controller. implement time_settings command
- * @@ implement reg_genmove
+ * @@ implement req_genmove
  * @@ implement final_status_list
  *
  *  @author Barry Becker
@@ -51,7 +51,7 @@ public class GtpTesujisoftGoServer
      */
     private enum Command {boardsize, clear_board, echo, echo_err, fixed_handicap,
                          final_score, final_status_list, genmove, gogui_interrupt,
-                         list_commands, known_command, komi, name, play,
+                         list_commands, known_command, komi, server_name, play,
                          protocol_version, reg_genmove, time_settings, undo, quit,
                          tesujisoft_bwboard, tesujisoft_delay, tesujisoft_invalid,
                          version}
@@ -63,7 +63,7 @@ public class GtpTesujisoftGoServer
         super(in, out, log);
 
         // this will load the resources for the specified game.
-        GameContext.loadGameResources("go", "com.becker.game.twoplayer.go.ui.GoPanel");
+        //GameContext.verifyGameResources("go", "com.becker.game.twoplayer.go.ui.GoPanel");
         GameContext.setDebugMode(0);
 
         initSize(19);
@@ -124,7 +124,7 @@ public class GtpTesujisoftGoServer
             case komi :
                 status = cmdKomi(cmdArray, response);
                 break;
-            case name :
+            case server_name :
                 response.append("GtpTesujisoft");
                 break;
             case play :
@@ -158,7 +158,7 @@ public class GtpTesujisoftGoServer
 
     private void initSize(int size) {
         controller_ = new GoController(size, size, 0);
-        TwoPlayerOptions options = controller_.getOptions();
+        TwoPlayerOptions options = controller_.getTwoPlayerOptions();
         options.setAlphaBeta(true);
         options.setLookAhead(2);
         options.setPercentageBestMoves(50);

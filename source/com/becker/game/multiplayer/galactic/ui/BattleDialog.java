@@ -23,9 +23,18 @@ final class BattleDialog extends OptionsDialog
 {
     // smaller number means faster battle sequence
     private static final int BATTLE_SPEED = 2000;
-    private static final int WIDTH = 250;
+    private static final int WIDTH = 300;
+    private static final int LEFT_MARGIN = 7;
+    // where the test and bar start. to the left of this is the icon.
+    private static final int LEFT_IMAGE_MARGIN = 60;
+    private static final int ATTACKER_Y = 20;
+    private static final int DEFENDER_Y = 70;
 
-    private final JPanel mainPanel_ = new JPanel();
+    private static final int IMAGE_WIDTH = LEFT_IMAGE_MARGIN - 2 * LEFT_MARGIN;
+    private static final int IMAGE_HEIGHT = DEFENDER_Y - ATTACKER_Y - 10;
+
+    private static final int BAR_THICKNESS = 20;
+
     private final JEditorPane descriptionLabel_ = new JEditorPane();
     private final BattleCanvas canvas_ = new BattleCanvas();
 
@@ -33,10 +42,7 @@ final class BattleDialog extends OptionsDialog
     private final GradientButton closeButton_ = new GradientButton();
     private JPanel buttonsPanel_;
 
-
     private final JLabel infoLabel_ = new JLabel();
-    //private boolean paused_ = false;
-    //private float scale_ = 1.0f;
 
     private BattleSimulation battle_;
     private GalaxyViewer viewer_;
@@ -48,7 +54,7 @@ final class BattleDialog extends OptionsDialog
      * @param battle the simulation
      * @param viewer send in the viewer so we can give feedbak about the battle while it is occurring
      */
-    public BattleDialog( Frame parent, BattleSimulation battle, GalaxyViewer viewer )
+    BattleDialog( Frame parent, BattleSimulation battle, GalaxyViewer viewer )
     {
         super( parent );
         this.setResizable(false);
@@ -80,7 +86,7 @@ final class BattleDialog extends OptionsDialog
         infoLabel_.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED),
                              BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         infoLabel_.setVerticalAlignment(JLabel.TOP);
-        infoLabel_.setPreferredSize( new Dimension( WIDTH, 260 ) );
+        infoLabel_.setPreferredSize( new Dimension( WIDTH, 200 ) );
         infoLabel_.setBackground(new Color(180, 100, 255));
 
         viewerPanel.add( infoLabel_, BorderLayout.SOUTH);
@@ -95,7 +101,7 @@ final class BattleDialog extends OptionsDialog
         descriptionLabel_.setContentType("text/html");
         descriptionLabel_.setText(text);
 
-        canvas_.setPreferredSize(new Dimension(WIDTH, 100));
+        canvas_.setPreferredSize(new Dimension(WIDTH, 120));
         JPanel canvasPanel = new JPanel();
         canvasPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(5,5,5,5),
                               BorderFactory.createLineBorder(Color.black, 1)));
@@ -133,7 +139,7 @@ final class BattleDialog extends OptionsDialog
 
 
     /**
-     * called when one of the buttons at the bottom have been pressed.
+     * called when one of the buttons at the bottom has been pressed.
      * @param e
      */
     public void actionPerformed( ActionEvent e )
@@ -142,18 +148,15 @@ final class BattleDialog extends OptionsDialog
         Object source = e.getSource();
         if (source == closeButton_) {
             this.setVisible(false);
+
         }
         else if (source == startButton_) {
 
-            //buttonsPanel_.remove(startButton_);
-            //buttonsPanel_.add(closeButton_, BorderLayout.CENTER);
             startButton_.setEnabled(false);
             closeButton_.setEnabled(true);
             this.invalidate();
             this.paint(this.getGraphics());
 
-
-            //SwingUtilities.invokeLater(doAnimation);
             Thread battle =  new Thread(canvas_);
             SwingUtilities.invokeLater(battle);
 
@@ -169,7 +172,6 @@ final class BattleDialog extends OptionsDialog
     {
         canvas_.setFleetSizes(attackers, defenders);
     }
-
 
 
 
@@ -210,8 +212,9 @@ final class BattleDialog extends OptionsDialog
                  descriptionLabel_.setText("Planet "+destPlanet.getName()+" has been reinforced.");
              }
              else {
+                 boolean useSound = GameContext.getUseSound();
                  Iterator it = sequence.iterator();
-                 if (GameContext.getUseSound())
+                 if (useSound)
                      GameContext.getMusicMaker().playNote( MusicMaker.GUNSHOT, 45, 0, 200, 1000 );
 
                  while (it.hasNext()) {
@@ -219,12 +222,12 @@ final class BattleDialog extends OptionsDialog
                      int total = numAttackShips + numDefendShips;
                      int time = 1 + BATTLE_SPEED / (1+total);
                      if (p == battle_.getOrder().getOwner()) {
-                         if (GameContext.getUseSound())
+                         if (useSound)
                              GameContext.getMusicMaker().playNote(100, time, 800);
                          numAttackShips--;
                      }
                      else {
-                         if (GameContext.getUseSound())
+                         if (useSound)
                              GameContext.getMusicMaker().playNote(80, time, 800);
                          numDefendShips--;
                      }
@@ -233,7 +236,9 @@ final class BattleDialog extends OptionsDialog
 
                      try {
                          Thread.sleep(time);
-                     } catch (InterruptedException e) { e.printStackTrace(); }
+                     } catch (InterruptedException e) {
+                         e.printStackTrace();
+                     }
                  }
                  assert(numAttackShips == 0 || numDefendShips == 0):
                          "numAttackShips="+numAttackShips+" numDefendShips="+numDefendShips;
@@ -250,51 +255,50 @@ final class BattleDialog extends OptionsDialog
              //closeButton_.setEnabled(true);
 
              canvas_.repaint();
-
          }
 
 
-        public synchronized void paint(Graphics g) {
+        public void paint(Graphics g) {
 
             if (g == null)
                 return;
 
-            Graphics2D g2 = (Graphics2D)canvas_.getGraphics();
+            Graphics2D g2 = (Graphics2D) canvas_.getGraphics();
 
-            // background
+            // clear background
             g2.setColor( Color.white );
             g2.fillRect( 0, 0, this.getWidth(), this.getHeight() );
 
-            Color attackerColor =  battle_.getOrder().getOwner().getColor();
-            g2.setColor(attackerColor);
-            g2.fillRect(10, 25, attackers_, 20);
+            GalacticPlayer attacker = battle_.getOrder().getOwner();
+            String title = "Attacker : " + attacker.getName();
+            drawPlayerRep(g2, attacker, attacker.getColor(), attackers_, title,
+                          LEFT_MARGIN, LEFT_IMAGE_MARGIN, ATTACKER_Y);
 
-            g2.setColor(attackerColor.darker());
-            String attackerString = "Attacker :"+battle_.getOrder().getOwner().getName();
-            g2.drawString(attackerString, 10, 20);
-            g2.drawString(Integer.toString(attackers_), attackers_+15, 42);
-            if (attackers_ > 0)  {
-                g2.drawRect(10,25, attackers_, 20);
-            }
-
-
-            Color defenderColor;
-            if (battle_.getPlanet().getOwner() == null)
-                defenderColor = Planet.NEUTRAL_COLOR;
-            else
-                defenderColor = battle_.getPlanet().getOwner().getColor();
-
-            g2.setColor(defenderColor);
-            g2.fillRect(10,75, defenders_, 20);
-
-            g2.setColor(defenderColor.darker());
-            String defenderString = "Defender :"+ battle_.getPlanet().getName();
-            g2.drawString(defenderString, 10, 70);
-            g2.drawString(Integer.toString(defenders_), defenders_+15, 90);
-            if (defenders_ > 0) {
-                g2.drawRect(10,75, defenders_, 20);
-            }
+            GalacticPlayer defender = battle_.getPlanet().getOwner(); // null if nuetral
+            Color defenderColor = (defender == null) ? Planet.NEUTRAL_COLOR : defender.getColor();
+            String planetName = battle_.getPlanet().getName() + "";
+            title = "Defender :"+ ( defender== null ? planetName : defender.getName() + " at "+ planetName);
+            drawPlayerRep(g2, defender, defenderColor, defenders_, title,
+                          LEFT_MARGIN, LEFT_IMAGE_MARGIN, DEFENDER_Y);
         }
+
+        private void drawPlayerRep(Graphics2D g2, GalacticPlayer player, Color color, int numShips, String title,
+                                   int margin, int imageMargin, int yPos) {
+
+            if (player != null)
+                g2.drawImage(player.getIcon().getImage(), margin, yPos - 10, IMAGE_WIDTH, IMAGE_HEIGHT, this);
+
+            g2.setColor(color);
+            g2.fillRect(imageMargin, yPos + 5, numShips, BAR_THICKNESS);
+
+            g2.setColor(color.darker());
+            g2.drawString(title, LEFT_IMAGE_MARGIN, yPos);
+            g2.drawString(Integer.toString(numShips), LEFT_IMAGE_MARGIN  + numShips + 15, yPos+22);
+            if (numShips > 0)
+                g2.drawRect(LEFT_IMAGE_MARGIN, yPos + 5, numShips, BAR_THICKNESS);
+
+        }
+
     }
 
 }

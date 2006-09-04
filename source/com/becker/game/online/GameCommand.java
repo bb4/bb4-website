@@ -14,6 +14,9 @@ public class GameCommand implements Serializable {
 
     private static final long serialVersionUID = 1;
 
+    /**
+     * list of possible commands that the player can issue.
+     */
     public enum Name {
         ENTER_ROOM,
         ADD_TABLE,

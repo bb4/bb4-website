@@ -22,7 +22,6 @@ import java.util.List;
 public class GalaxyViewer extends GameBoardViewer
 {
 
-    private static final Color GRID_COLOR = Color.GRAY;
     private boolean winnerDialogShown_ = false;
 
     //Construct the application
@@ -169,11 +168,11 @@ public class GalaxyViewer extends GameBoardViewer
         // if there are battles, show them in the battle dialog and record the result in the move.
         Player[] players = controller_.getPlayers();
 
-        for (int i=0; i< players.length; i++) {
-            List orders = ((GalacticPlayer)players[i]).getOrders();
+        for (final Player player : players) {
+            List orders = ((GalacticPlayer) player).getOrders();
             Iterator orderIt = orders.iterator();
             while (orderIt.hasNext()) {
-                Order order = (Order)orderIt.next();
+                Order order = (Order) orderIt.next();
                 // have we reached our destination?
                 // if so show and record the battle, and then remove the order from the list.
                 // If not adjust the distance remaining.
@@ -192,13 +191,14 @@ public class GalaxyViewer extends GameBoardViewer
 
                         Point p = this.getParent().getLocationOnScreen();
                         // offset the dlg so the Galaxy grid is visible as a reference.
-                        bDlg.setLocation((int)(p.getX()+getParent().getWidth()), (int)(p.getY()+.6*getParent().getHeight()));
+                        bDlg.setLocation((int) (p.getX() + getParent().getWidth()),
+                                         (int) (p.getY() + 0.65 * getParent().getHeight()));
                         bDlg.setModal(true);
                         bDlg.setVisible(true);
                     }
 
-                    destPlanet.setOwner( battle.getOwnerAfterAttack());
-                    destPlanet.setNumShips( battle.getNumShipsAfterAttack() );
+                    destPlanet.setOwner(battle.getOwnerAfterAttack());
+                    destPlanet.setNumShips(battle.getNumShipsAfterAttack());
 
                     // remove this order as it has arrived.
                     orderIt.remove();
@@ -220,7 +220,6 @@ public class GalaxyViewer extends GameBoardViewer
         this.refresh();
     }
 
-    private static final float OFFSET = .25f;
     /**
      * Draw the pieces and possibly other game markers for both players.
      */
@@ -229,22 +228,27 @@ public class GalaxyViewer extends GameBoardViewer
 
         // before we draw the planets, draw the fleets and their paths
         Player[] players = controller_.getPlayers();
-        for (int i=0; i< players.length; i++) {
-            List orders = ((GalacticPlayer)players[i]).getOrders();
+        for (final Player player : players) {
+            List orders = ((GalacticPlayer) player).getOrders();
             Iterator orderIt = orders.iterator();
             while (orderIt.hasNext()) {
-                Order order = (Order)orderIt.next();
+                Order order = (Order) orderIt.next();
+                int margin = GameBoardViewer.BOARD_MARGIN;
 
                 Location begin = order.getOrigin().getLocation();
                 Point2D end = order.getCurrentLocation();
 
                 g2.setColor(order.getOwner().getColor());
-                int endX = (int)(cellSize_*(end.getX()-OFFSET ));
-                int endY = (int)(cellSize_*(end.getY()-OFFSET ));
-                g2.drawLine((int)(cellSize_*(begin.getCol()-OFFSET )), (int)(cellSize_*begin.getRow()-OFFSET ),  endX, endY);
-                // the triangle at the end of the line representing the fleet
-                int rad = (int)Math.sqrt(order.getFleetSize());
-                g2.drawOval((int)(endX-rad/2.0), (int)(endY-rad/2.0), rad, rad);
+                int beginX = (int) (margin + cellSize_ * (begin.getCol() - 0.5));
+                int beginY = (int) (margin + cellSize_ * begin.getRow() - 0.5);
+                int endX = (int) (margin + cellSize_ * (end.getX() - 0.5));
+                int endY = (int) (margin + cellSize_ * (end.getY() - 0.5));
+
+                g2.drawLine(beginX, beginY,  endX, endY);
+
+                // the glyph at the end of the line representing the fleet
+                int rad = (int) Math.round(Math.sqrt(order.getFleetSize()));
+                g2.drawOval((int) (endX - rad / 2.0), (int) (endY - rad / 2.0), rad, rad);
             }
         }
 

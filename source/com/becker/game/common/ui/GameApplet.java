@@ -33,13 +33,14 @@ public class GameApplet extends JApplet
         LocaleType locale = GameContext.getLocale(localeName, true);
 
         // these must be called before anything else
-        GameContext.loadGameResources(gameName, className);
-        GameContext.setLocale(locale);
+        //GameContext.verifyGameResources(gameName, className);
+        //GameContext.setLocale(locale);
 
         Class gameClass = Util.loadClass(className);
 
         try {
             gamePanel_ = (GamePanel)gameClass.newInstance();
+            gamePanel_.init(null);   // applet has not frame.
 
         } catch (InstantiationException e) {
             e.printStackTrace();

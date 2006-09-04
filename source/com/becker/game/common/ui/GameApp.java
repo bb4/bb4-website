@@ -126,7 +126,7 @@ public class GameApp implements ActionListener
         try {
 
             gamePanel_ = (GamePanel)gameClass.newInstance();
-            gamePanel_.setParentFrame(frame_);
+            gamePanel_.init(frame_);
 
         } catch (InstantiationException e) {
             e.printStackTrace();
@@ -199,7 +199,7 @@ public class GameApp implements ActionListener
             System.exit(0);
         }
         else {
-            showGame( (String)hmGames_.get(item.getText()));
+            showGame( hmGames_.get(item.getText()));
         }
     }
 

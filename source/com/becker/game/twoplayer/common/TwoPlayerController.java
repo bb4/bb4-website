@@ -38,8 +38,6 @@ public abstract class TwoPlayerController extends GameController
     /** anything greater than this is considered a won game  */
     public static final double WINNING_VALUE = SearchStrategy.WINNING_VALUE;
 
-    private TwoPlayerOptions options_;
-
     protected boolean player1sTurn_ = true;
 
     // these weights determine how the computer values each move.
@@ -65,20 +63,21 @@ public abstract class TwoPlayerController extends GameController
      */
     public TwoPlayerController()
     {
-        options_ = createOptions();
+        //options_ = createOptions();
         createPlayers();
     }
 
-    /**
-     * subclasses should override with there own default options.
-     * @return two player options
-     */
-    protected TwoPlayerOptions createOptions() {
-        return new TwoPlayerOptions(4, 50, MusicMaker.TAIKO_DRUM);
+
+    public GameOptions getOptions() {
+        if (gameOptions_ == null) {
+            gameOptions_ = new TwoPlayerOptions(4, 50, MusicMaker.TAIKO_DRUM);
+        }
+        return gameOptions_;
     }
 
-    public TwoPlayerOptions getOptions() {
-        return options_;
+    public TwoPlayerOptions getTwoPlayerOptions() {
+
+        return (TwoPlayerOptions) getOptions();
     }
 
     public TwoPlayerViewerCallbackInterface get2PlayerViewer()
@@ -111,8 +110,8 @@ public abstract class TwoPlayerController extends GameController
     private void createPlayers()
     {
         Player[] players = new Player[2];
-        players[0] = new Player(getOptions().getPlayerName(true), null, true);
-        players[1] = new Player(getOptions().getPlayerName(false), null, false);
+        players[0] = new Player(getTwoPlayerOptions().getPlayerName(true), null, true);
+        players[1] = new Player(getTwoPlayerOptions().getPlayerName(false), null, false);
         setPlayers(players);
     }
 
@@ -266,7 +265,7 @@ public abstract class TwoPlayerController extends GameController
         }
 
         /////////////////////// SEARCH //////////////////////////////////////////////////////
-        strategy_ = SearchStrategy.createSearchStrategy(getOptions().getSearchStrategyMethod(), getSearchable());
+        strategy_ = SearchStrategy.createSearchStrategy(getTwoPlayerOptions().getSearchStrategyMethod(), getSearchable());
         TwoPlayerMove selectedMove =
                 strategy_.search( p, weights, getSearchable().getLookAhead(), 0,
                                   Double.MAX_VALUE, Double.MIN_VALUE, root_ );
@@ -347,7 +346,7 @@ public abstract class TwoPlayerController extends GameController
      */
     public boolean requestComputerMove(boolean isPlayer1) throws AssertionError
     {
-        return requestComputerMove(isPlayer1, getOptions().isAutoOptimize());
+        return requestComputerMove(isPlayer1, getTwoPlayerOptions().isAutoOptimize());
     }
 
     /**
@@ -393,7 +392,7 @@ public abstract class TwoPlayerController extends GameController
     }
 
     public ParameterArray runOptimization() {
-        Optimizer optimizer = new Optimizer( this.getOptimizee(), getOptions().getAutoOptimizeFile() );
+        Optimizer optimizer = new Optimizer( this.getOptimizee(), getTwoPlayerOptions().getAutoOptimizeFile() );
 
         ParameterArray optimizedParams;
         optimizedParams =
@@ -530,7 +529,7 @@ public abstract class TwoPlayerController extends GameController
         int numMoves = moveList.size();
 
         List bestMoveList = moveList;
-        int best = (int) ((float) getOptions().getPercentageBestMoves() / HUNDRED * numMoves);
+        int best = (int) ((float) getTwoPlayerOptions().getPercentageBestMoves() / HUNDRED * numMoves);
         if ( best < numMoves )
             bestMoveList = moveList.subList( 0, best );
 
@@ -568,6 +567,10 @@ public abstract class TwoPlayerController extends GameController
         public double evaluateFitness( ParameterArray params )
         {
            return 0.0;
+        }
+
+        public double getOptimalFitness() {
+            return 0;
         }
 
         /**
@@ -615,14 +618,14 @@ public abstract class TwoPlayerController extends GameController
          * @return the number of moves/plys to lookahead while searching
          */
         public final int getLookAhead() {
-            return getOptions().getLookAhead();
+            return getTwoPlayerOptions().getLookAhead();
         }
 
         /**
          * @return  whether to use alpha beta pruning while searching
          */
         public final boolean getAlphaBeta() {
-            return getOptions().getAlphaBeta();
+            return getTwoPlayerOptions().getAlphaBeta();
         }
 
         /**
@@ -630,7 +633,7 @@ public abstract class TwoPlayerController extends GameController
          */
         public final boolean getQuiescence()
         {
-            return getOptions().getQuiescence();
+            return getTwoPlayerOptions().getQuiescence();
         }
 
 

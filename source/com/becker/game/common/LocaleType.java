@@ -9,6 +9,7 @@ import java.util.Locale;
  */
 public enum LocaleType
 {
+    // currently supported locales
     ENGLISH ( new Locale("en", "US")),
     GERMAN ( new Locale("de", "DE")),
     JAPANESE ( new Locale("ja", "JP")),

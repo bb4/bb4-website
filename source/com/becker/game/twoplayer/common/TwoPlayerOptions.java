@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.common;
 
 import com.becker.game.twoplayer.common.search.SearchStrategy;
-import com.becker.game.common.GameContext;
+import com.becker.game.common.*;
 
 /**
  * Encapsulate two player options here to keep the TwoPlayerController class mush simpler.
@@ -9,8 +9,8 @@ import com.becker.game.common.GameContext;
  * @author Barry Becker
  * Date: Aug 20, 2005
  */
-public class TwoPlayerOptions {
-
+public class TwoPlayerOptions extends GameOptions
+ {
 
     // if true then use alpha beta pruning
     private static final boolean ALPHA_BETA = true;

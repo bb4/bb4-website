@@ -23,6 +23,8 @@ public class PlanetRenderer extends GamePieceRenderer
     private static final Color HIGHLIGHT_COLOR = new Color(245, 255, 0);
     private static final BasicStroke HIGHLIGHT_STROKE = new BasicStroke(2);
 
+    protected static final Font PLANET_FONT = new Font( "Serif", Font.PLAIN, 11 );
+
     /**
      * private constructor because this class is a singleton.
      * Use getPieceRenderer instead
@@ -41,12 +43,8 @@ public class PlanetRenderer extends GamePieceRenderer
     {
         Planet planet = (Planet)piece;
 
-        // if the production capacity is proportional to the volume, then the radius
-        // should be proprotional to the cube root of the production capacity.
-        // Normallize by an avg production of 10.
-        double rad = Math.pow(planet.getProductionCapacity(), .333)/2.1;
-        int pieceSize = (int) (.85f * cellSize * rad);
-
+        double rad = planet.getRadius();
+        int pieceSize = (int) (cellSize * rad);
         return pieceSize;
     }
 
@@ -54,6 +52,7 @@ public class PlanetRenderer extends GamePieceRenderer
         Planet planet = (Planet)piece;
         return planet.getColor();
     }
+
 
     /**
      * this draws the actual piece at this location (if there is one).
@@ -72,7 +71,7 @@ public class PlanetRenderer extends GamePieceRenderer
         int pieceSize = getPieceSize(cellSize, planet);
         Point pos = getPosition(position, cellSize, pieceSize);
         Ellipse2D circle = new Ellipse2D.Float( pos.x, pos.y, pieceSize + 1, pieceSize + 1 );
-        int hlOffset = (int) (pieceSize / 2.3 + .5);  //spec highlight offset
+        int hlOffset = (int) (pieceSize / 2.3 + 0.5);  //spec highlight offset
         Color c = getPieceColor(planet);
 
         RoundGradientPaint rgp = new RoundGradientPaint(
@@ -94,10 +93,10 @@ public class PlanetRenderer extends GamePieceRenderer
             }
 
 
-        int offset = (pieceSize<(.6*cellSize))? -1 : cellSize/5;
+        int offset = (pieceSize<(0.6*cellSize))? -1 : cellSize/5;
         if ( planet.getAnnotation() != null ) {
                 g2.setColor( Color.black );
-                g2.setFont( BASE_FONT );
+                g2.setFont( PLANET_FONT );
                 g2.drawString( planet.getAnnotation(), pos.x + 2*offset, pos.y + 3*offset);
         }
     }

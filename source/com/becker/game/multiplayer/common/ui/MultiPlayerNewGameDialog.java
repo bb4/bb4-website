@@ -29,6 +29,7 @@ public abstract class MultiPlayerNewGameDialog extends NewGameDialog
     {
         super( parent, viewer);
         initUI();
+        this.setResizable(true);                
     }
 
     /**

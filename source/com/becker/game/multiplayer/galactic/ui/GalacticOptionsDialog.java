@@ -6,7 +6,6 @@ import com.becker.game.multiplayer.galactic.*;
 import com.becker.ui.*;
 
 import javax.swing.*;
-import javax.swing.Box;
 import java.awt.event.*;
 
 /**
@@ -22,6 +21,7 @@ class GalacticOptionsDialog extends GameOptionsDialog implements ActionListener,
     private NumberInput numPlanets_;
     private NumberInput planetProductionRate_;
     private NumberInput maxYearsToPlay_;
+    private NumberInput initialFleetSize_;
     private JCheckBox neutralsBuild_;
 
 
@@ -35,50 +35,36 @@ class GalacticOptionsDialog extends GameOptionsDialog implements ActionListener,
     /**
      * @return galactic game optiosn tab panel.
      */
-    protected JPanel createControllerParamPanel()
+    protected JComponent[] getControllerParamComponents()
     {
-        JPanel p = new JPanel();
+        GalacticOptions options = (GalacticOptions)controller_.getOptions();
 
-        p.setLayout( new BoxLayout( p, BoxLayout.Y_AXIS ) );
-        p.setBorder( BorderFactory.createTitledBorder(
-                       BorderFactory.createEtchedBorder(),
-                         GameContext.getLabel("GAME_OPTIONS")) );
-
-        GalacticController c = (GalacticController)controller_;
-
-        numPlanets_ =  new NumberInput( GameContext.getLabel("NUMBER_OF_PLANETS"), c.getNumPlanets(),
-                                               GameContext.getLabel("NUMBER_OF_PLANETS_TIP"), Galaxy.MIN_NUM_PLANETS, Galaxy.MAX_NUM_PLANETS, true);
+        numPlanets_ =  new NumberInput( GameContext.getLabel("NUMBER_OF_PLANETS"), options.getNumPlanets(),
+                                        GameContext.getLabel("NUMBER_OF_PLANETS_TIP"),
+                                        Galaxy.MIN_NUM_PLANETS, Galaxy.MAX_NUM_PLANETS, true);
         planetProductionRate_ =
-                new NumberInput( GameContext.getLabel("PLANETS_PRODUCTION_RATE"), c.getPlanetProductionRate(),
-                                      GameContext.getLabel("PLANETS_PRODUCTION_RATE_TIP"), 0, 10, true);
-        neutralsBuild_ = new JCheckBox( GameContext.getLabel("SHOULD_NEUTRALS_BUILD"), c.getNeutralsBuild() );
+                new NumberInput(GameContext.getLabel("PLANETS_PRODUCTION_RATE"), options.getPlanetProductionRate(),
+                                GameContext.getLabel("PLANETS_PRODUCTION_RATE_TIP"), 0, 10, true);
+        initialFleetSize_ = new NumberInput(GameContext.getLabel("INITIAL_FLEET_SIZE"), options.getInitialFleetSize(),
+                                            GameContext.getLabel("INITIAL_FLEET_SIZE_TIP"), 1, 100, true);
+        neutralsBuild_ = new JCheckBox( GameContext.getLabel("SHOULD_NEUTRALS_BUILD"), options.doNeutralsBuild() );
         neutralsBuild_.setToolTipText(GameContext.getLabel("SHOULD_NEUTRALS_BUILD_TIP"));
+        maxYearsToPlay_ =  new NumberInput(GameContext.getLabel("MAX_YEARS_TO_PLAY"), options.getMaxYearsToPlay(),
+                                           GameContext.getLabel("MAX_YEARS_TO_PLAY_TIP"), 1, 100, true);
 
-        maxYearsToPlay_ =  new NumberInput( GameContext.getLabel("MAX_YEARS_TO_PLAY"), c.getMaxYearsToPlay(),
-                                            GameContext.getLabel("MAX_YEARS_TO_PLAY_TIP"), 1, 100, true);
-
-        p.add( numPlanets_ );
-        p.add( planetProductionRate_ );
-        p.add( neutralsBuild_ );
-        p.add( maxYearsToPlay_ );
-
-        p.add(Box.createVerticalGlue());
-
-        p.setName(GameContext.getLabel("GAME"));
-        return p;
+        return new JComponent[] {
+            numPlanets_, planetProductionRate_, initialFleetSize_, neutralsBuild_, maxYearsToPlay_
+        };
     }
 
 
-   protected void ok()
-    {
-        GalacticController c = (GalacticController)controller_;
-
-        c.setNumPlanets(numPlanets_.getIntValue());
-        c.setPlanetProductionRate(planetProductionRate_.getIntValue());
-        c.setMaxYearsToPlay(maxYearsToPlay_.getIntValue());
-        c.setNeutralsBuild(neutralsBuild_.isSelected());
-
-        super.ok();
+    protected GameOptions getOptions() {
+        return new GalacticOptions(
+                                   numPlanets_.getIntValue(),
+                                   planetProductionRate_.getIntValue(),
+                                   maxYearsToPlay_.getIntValue(),
+                                   initialFleetSize_.getIntValue(),
+                                   neutralsBuild_.isSelected());
     }
 
 }

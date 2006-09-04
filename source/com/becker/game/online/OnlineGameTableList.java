@@ -1,7 +1,5 @@
 package com.becker.game.online;
 
-import com.becker.game.online.*;
-
 import java.io.*;
 import java.util.*;
 
