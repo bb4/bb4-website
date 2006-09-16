@@ -6,6 +6,7 @@ import com.becker.game.common.ui.GameBoardViewer;
 import com.becker.game.common.ui.GameChangedEvent;
 import com.becker.game.common.Move;
 import com.becker.game.multiplayer.poker.*;
+import com.becker.game.multiplayer.poker.player.*;
 import com.becker.common.*;
 
 import javax.swing.*;
@@ -22,7 +23,7 @@ import java.awt.*;
 public class PokerGameViewer extends GameBoardViewer
 {
 
-    private static final Color GRID_COLOR = Color.GRAY;
+    private static final Color DEFAULT_GRID_COLOR = Color.GRAY;
     private static final Color TABLE_COLOR = new Color(190, 160, 110);
     private boolean winnerDialogShown_ = false;
 
@@ -44,7 +45,7 @@ public class PokerGameViewer extends GameBoardViewer
 
     protected Color getDefaultGridColor()
     {
-        return GRID_COLOR;
+        return DEFAULT_GRID_COLOR;
     }
 
     /**
@@ -82,25 +83,19 @@ public class PokerGameViewer extends GameBoardViewer
     }
 
     public void mousePressed( MouseEvent e )
-    {
-        //Location loc = createLocation(e, getCellSize());
-        //Galaxy board = (Galaxy) controller_.getBoard();
-        // nothing to do here really for this kind of game
-    }
-
-
+    {}
 
      /**
       * display a dialog at the end of the game showing who won and other relevant
       * game specific information.
       */
-     protected void showWinnerDialog()
-     {
+    protected void showWinnerDialog()
+    {
 
-         String message = getGameOverMessage();
-         JOptionPane.showMessageDialog( this, message, GameContext.getLabel("GAME_OVER"),
+        String message = getGameOverMessage();
+        JOptionPane.showMessageDialog( this, message, GameContext.getLabel("GAME_OVER"),
                    JOptionPane.INFORMATION_MESSAGE );
-     }
+    }
 
 
     /**
@@ -122,7 +117,7 @@ public class PokerGameViewer extends GameBoardViewer
             }
         }
 
-        buf.append(winner.getName() + " won the game with $"+winner.getCash() +'.');
+        buf.append(winner.getName() + " won the game with $"+ winner.getCash() +'.');
         return buf.toString();
     }
 
@@ -139,25 +134,35 @@ public class PokerGameViewer extends GameBoardViewer
         PokerRobotPlayer robot = (PokerRobotPlayer)player;
         PokerController pc = (PokerController) controller_;
 
+        String msg = null;
+        int callAmount = pc.getCurrentMaxContribution() - robot.getContribution();
         switch (robot.getAction(pc)) {
             case FOLD :
                 robot.setFold(true);
+                msg = robot.getName() + " folded.";
                 break;
             case CALL :
-                int callAmount = pc.getCurrentMaxContribution() - robot.getContribution();
-                System.out.println("PGV: robot call amount = currentMaxContrib - robot.getContrib) = "+pc.getCurrentMaxContribution()+" - "+robot.getContribution());
+
+                System.out.println("PGV: robot call amount = currentMaxContrib - robot.getContrib) = "
+                                   + pc.getCurrentMaxContribution()+" - "+robot.getContribution());
                 if (callAmount <= robot.getCash())   {
                     robot.contributeToPot(pc, callAmount);
+                    msg = robot.getName() + " has called by adding "+ callAmount + " to the pot.";
                 } else {
                     robot.setFold(true);
+                    msg = robot.getName() + " folded.";
                 }
-
                 break;
             case RAISE :
-                robot.contributeToPot(pc, robot.getRaise(pc));
+                robot.contributeToPot(pc, callAmount);
+                int raise = robot.getRaise(pc, callAmount);
+                robot.contributeToPot(pc, raise);
+                msg = robot.getName() + " has met the "+callAmount + ", and rasied the pot by " + raise;
                 break;
         }
 
+        JOptionPane.showMessageDialog(parent_, msg, "Robot Action", JOptionPane.INFORMATION_MESSAGE);
+        refresh();
         pc.advanceToNextPlayer();
 
         return false;
@@ -200,8 +205,8 @@ public class PokerGameViewer extends GameBoardViewer
     public void showRoundOver(PokerPlayer winner, int winnings) {
 
         Player[] players = controller_.getPlayers();
-        for (int i=0; i<players.length; i++) {
-            PokerPlayer player = (PokerPlayer) players[i];
+        for (final Player p : players) {
+            PokerPlayer player = (PokerPlayer) p;
             player.getHand().setFaceUp(true);
         }
         refresh();
@@ -211,7 +216,8 @@ public class PokerGameViewer extends GameBoardViewer
         Point p = this.getParent().getLocationOnScreen();
 
         // offset the dlg so the board is visible as a reference
-        roundOverDlg.setLocation((int)(p.getX()+.9*getParent().getWidth()), (int)(p.getY()+getParent().getHeight()/3));
+        roundOverDlg.setLocation((int)(p.getX()+ 0.9*getParent().getWidth()),
+                                 (int)(p.getY()+getParent().getHeight()/3));
 
         roundOverDlg.setVisible(true);
     }
@@ -233,7 +239,7 @@ public class PokerGameViewer extends GameBoardViewer
         int width = this.getBoard().getNumCols() * this.getCellSize();
         int height = this.getBoard().getNumRows() * this.getCellSize();
         g.setColor(TABLE_COLOR);
-        g.fillOval((int)(.05*width), (int)(0.05*height), (int)(.9*width), (int)(0.9*height));
+        g.fillOval((int)(0.05*width), (int)(0.05*height), (int)(0.9*width), (int)(0.9*height));
     }
 
     /**
@@ -243,16 +249,13 @@ public class PokerGameViewer extends GameBoardViewer
                             int nrows1, int ncols1, int gridOffset) {
     }
 
-
-    private static final float OFFSET = .25f;
-
     /**
      * Draw the pieces and possibly other game markers for both players.
      */
     protected void drawMarkers( int nrows, int ncols, Graphics2D g2 )
     {
         // draw the pot in the middle
-        Location loc = new Location(getBoard().getNumRows()/2, getBoard().getNumCols()/2-3);
+        Location loc = new Location(getBoard().getNumRows() >> 1, (getBoard().getNumCols() >> 1) - 3);
         int pot = ((PokerController)controller_).getPotValue();
         ((PokerRenderer)pieceRenderer_).renderChips(g2, loc, pot, this.getCellSize());
 

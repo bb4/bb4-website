@@ -1,7 +1,7 @@
 package com.becker.game.multiplayer.galactic.ui;
 
 import com.becker.game.common.*;
-import com.becker.game.common.ui.*;
+import com.becker.game.multiplayer.common.ui.*;
 import com.becker.game.multiplayer.galactic.*;
 import com.becker.ui.*;
 
@@ -14,7 +14,8 @@ import java.awt.event.*;
  *
  * @author Barry Becker
  */
-class GalacticOptionsDialog extends GameOptionsDialog implements ActionListener, ItemListener
+class GalacticOptionsDialog extends MultiGameOptionsDialog
+                            implements ActionListener, ItemListener
 {
 
     // game params
@@ -52,14 +53,17 @@ class GalacticOptionsDialog extends GameOptionsDialog implements ActionListener,
         maxYearsToPlay_ =  new NumberInput(GameContext.getLabel("MAX_YEARS_TO_PLAY"), options.getMaxYearsToPlay(),
                                            GameContext.getLabel("MAX_YEARS_TO_PLAY_TIP"), 1, 100, true);
 
+        initMultiControllerParamComponents(options);
         return new JComponent[] {
-            numPlanets_, planetProductionRate_, initialFleetSize_, neutralsBuild_, maxYearsToPlay_
+            numPlanets_, planetProductionRate_, initialFleetSize_, neutralsBuild_, maxYearsToPlay_,
+            maxNumPlayers_, numRobotPlayers_
         };
     }
 
 
-    protected GameOptions getOptions() {
-        return new GalacticOptions(
+    public GameOptions getOptions() {
+        return new GalacticOptions(maxNumPlayers_.getIntValue(),
+                                   numRobotPlayers_.getIntValue(),
                                    numPlanets_.getIntValue(),
                                    planetProductionRate_.getIntValue(),
                                    maxYearsToPlay_.getIntValue(),

@@ -2,6 +2,8 @@ package com.becker.game.multiplayer.online.ui;
 
 import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
+import com.becker.game.multiplayer.common.*;
+import com.becker.game.multiplayer.common.ui.*;
 import com.becker.game.online.*;
 import com.becker.game.online.ui.*;
 import com.becker.ui.*;
@@ -16,13 +18,17 @@ import java.awt.event.*;
  * @author Barry Becker Date: May 14, 2006
  */
 public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
-                                                  implements ActionListener {
+                                                  implements ActionListener, KeyListener {
+
+    private static final String DEFAULT_NAME = "<name>";
 
     // new table in play online tab                                                                                                                                           3
     private JTextField localPlayerName_;
     private GradientButton createTableButton_;
     private MultiPlayerOnlineGameTablesTable onlineGameTablesTable_;
     private GameOptionsDialog createGameTableDialog_;
+    private String currentName_;
+    private String oldName_;
 
     /**
      * Constructor
@@ -63,8 +69,11 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
 
         JPanel namePanel = new JPanel(new BorderLayout());
         JLabel nameLabel = new JLabel("Your Name: ");
-        localPlayerName_ = new JTextField("<name>");
+        currentName_ = DEFAULT_NAME;
+        localPlayerName_ = new JTextField(DEFAULT_NAME);
+        localPlayerName_.addKeyListener(this);
         //localPlayerName_.setPreferredSize(new Dimension(180, 14));
+
         namePanel.add(nameLabel, BorderLayout.WEST);
         namePanel.add(localPlayerName_, BorderLayout.CENTER);
         JPanel fill = new JPanel();
@@ -76,17 +85,20 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
         headerPanel.add(buttonsPanel, BorderLayout.EAST);
         playOnlinePanel.add(headerPanel, BorderLayout.NORTH);
 
-        onlineGameTablesTable_ = createOnlineGamesTable(localPlayerName_.getText());
+        onlineGameTablesTable_ = createOnlineGamesTable(localPlayerName_.getText(), this);
 
-        playOnlinePanel.setPreferredSize( new Dimension(500, 300) );
+        playOnlinePanel.setPreferredSize( new Dimension(600, 300) );
         playOnlinePanel.add( new JScrollPane(onlineGameTablesTable_.getTable()) , BorderLayout.CENTER );
 
-        serverConnection_.enterRoom();
+        if (serverConnection_.isConnected()) {
+            serverConnection_.enterRoom();
+        }
         return playOnlinePanel;
     }
 
 
-    protected abstract MultiPlayerOnlineGameTablesTable createOnlineGamesTable(String name);
+    protected abstract MultiPlayerOnlineGameTablesTable createOnlineGamesTable(String name,
+                                                                               ActionListener listener);
 
     /**
      * You are free to set your own options for the table that you are creating.
@@ -98,27 +110,26 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
      */
     protected void startGame()
     {
-        controller_.setPlayers(onlineGameTablesTable_.getSelectedTable().getPlayers());
+        controller_.setPlayers(onlineGameTablesTable_.getSelectedTable().getPlayersAsArray());
     }
 
     public void handleServerUpdate(GameCommand cmd) {
 
-        System.out.println("got an update of the multiplayer table list from the server:\n" + cmd);
+        //System.out.println("got an update of the multiplayer table list from the server:\n" + cmd);
 
         switch (cmd.getName())  {
             case UPDATE_TABLES :
                 OnlineGameTableList tableList = (OnlineGameTableList) cmd.getArgument();
-                System.out.println("There were "+ tableList.size()+" tables returned from server.");
+                //System.out.println("There were "+ tableList.size()+" tables returned from server.");
 
                 if (onlineGameTablesTable_ != null) {
                     onlineGameTablesTable_.removeAllRows();
 
                     for (int i=0; i<tableList.size(); i++) {
-                        onlineGameTablesTable_.addRow(tableList.get(i));
+                        OnlineGameTable table = tableList.get(i);
+                        onlineGameTablesTable_.addRow(table, table.hasPlayer(currentName_));
                     }
                 }
-                break;
-           case CHANGE_NAME :
                 break;
            default : assert false : "Unexpected command name :"+ cmd.getName();
         }
@@ -134,16 +145,73 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
         Object source = e.getSource();
 
         if (source == createTableButton_) {
-            boolean canceled = createGameTableDialog_.showDialog();
+            createNewGameTable();
+        }
+        else {
+            joinDifferentTable((OnlineActionCellRenderer.JoinButton) source);
+        }
+    }
 
-            if (!canceled)  {
-                OnlineGameTable newTable =
-                    onlineGameTablesTable_.createOnlineTable(localPlayerName_.getText());
+    /**
+     * The create new table button at the top was clicked.
+     */
+    public void createNewGameTable() {
+        if (currentName_.equals(DEFAULT_NAME)) {
+            JOptionPane.showMessageDialog(this, "You need to select a name for yourself first.",
+                                          "Information", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        // if the name has changed, make sure it is updated on the server
+        if (!currentName_.equals(oldName_)) {
+            serverConnection_.nameChanged(oldName_, currentName_);
+            oldName_ = currentName_;
+        }
 
-                // now add it to this list as a new row and tell the server to add it.
-                //onlineGameTablesTable_.addRow(newTable);
-                serverConnection_.addGameTable(newTable);
-            }
+        boolean canceled = createGameTableDialog_.showDialog();
+
+        if (!canceled)  {
+
+            MultiGameOptions options = (MultiGameOptions)createGameTableDialog_.getOptions();
+            OnlineGameTable newTable =
+                onlineGameTablesTable_.createOnlineTable(currentName_, options);
+
+            // now add it to this list as a new row and tell the server to add it.
+            //onlineGameTablesTable_.addRow(newTable);
+            serverConnection_.addGameTable(newTable);
+        }
+    }
+
+    /**
+     * The local user has clikced  ajoin button on a different table
+     * indicating that they want to join that table.
+     */
+    private void joinDifferentTable(OnlineActionCellRenderer.JoinButton b) {
+
+        int joinRow = b.getRow();
+        PlayerTableModel m = onlineGameTablesTable_.getModel();
+
+        for (int i=0; i<m.getRowCount(); i++) {
+            m.setValueAt(Boolean.valueOf(i != joinRow), i, 0);
+        }
+        serverConnection_.joinTable(onlineGameTablesTable_.createPlayerForName(currentName_),
+                                    onlineGameTablesTable_.getGameTable(joinRow));
+
+        onlineGameTablesTable_.getTable().removeEditor();
+    }
+
+
+    /**
+     * Implement keyListener interface.
+     * @param key
+     */
+    public void keyTyped( KeyEvent key )  {}
+    public void keyPressed(KeyEvent key) {}
+    public void keyReleased(KeyEvent key) {
+        char c = key.getKeyChar();
+        currentName_ = localPlayerName_.getText();
+        if ( c == '\n' ) {
+            serverConnection_.nameChanged(oldName_, currentName_);
+            oldName_ = currentName_;
         }
     }
 

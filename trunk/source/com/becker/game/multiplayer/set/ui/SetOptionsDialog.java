@@ -1,7 +1,7 @@
 package com.becker.game.multiplayer.set.ui;
 
 import com.becker.game.common.*;
-import com.becker.game.common.ui.*;
+import com.becker.game.multiplayer.common.ui.*;
 import com.becker.game.multiplayer.set.*;
 import com.becker.ui.*;
 
@@ -14,7 +14,8 @@ import java.awt.event.*;
  *
  * @author Barry Becker
  */
-class SetOptionsDialog extends GameOptionsDialog implements ActionListener, ItemListener
+class SetOptionsDialog extends MultiGameOptionsDialog
+        implements ActionListener, ItemListener
 {
 
     NumberInput initialNumCards_;
@@ -37,12 +38,16 @@ class SetOptionsDialog extends GameOptionsDialog implements ActionListener, Item
                 new NumberInput(GameContext.getLabel("INITIAL_NUM_CARDS"), options.getInitialNumCardsShown(),
                                 GameContext.getLabel("INITIAL_NUM_CARDS_TIP"), 8, 16, true);
 
-        return new JComponent[] {initialNumCards_};
+        initMultiControllerParamComponents(options);
+        
+        return new JComponent[] {initialNumCards_, maxNumPlayers_, numRobotPlayers_};
     }
 
 
-    protected GameOptions getOptions() {
-        return new SetOptions(initialNumCards_.getIntValue());
+    public GameOptions getOptions() {
+        return new SetOptions(maxNumPlayers_.getIntValue(),
+                              numRobotPlayers_.getIntValue(),
+                              initialNumCards_.getIntValue());
     }
 
 

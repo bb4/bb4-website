@@ -8,8 +8,8 @@ import com.becker.game.online.*;
  */
 public class OnlinePokerTable extends OnlineGameTable {
 
-    public OnlinePokerTable(String name, Player initialPlayer) {
-        super(name, initialPlayer);
+    public OnlinePokerTable(String name, Player initialPlayer, GameOptions options) {
+        super(name, initialPlayer, options);
     }
 
 

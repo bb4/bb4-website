@@ -4,6 +4,7 @@ import com.becker.game.card.*;
 import com.becker.game.common.*;
 import com.becker.game.multiplayer.common.*;
 import com.becker.game.multiplayer.poker.ui.*;
+import com.becker.game.multiplayer.poker.player.*;
 import com.becker.optimization.*;
 
 import java.util.*;
@@ -25,15 +26,16 @@ import java.util.*;
  *      - show who gets pot
  *      - show the pot
  *      - give option to start another round with same players
- *      - unless really done then you can only exit
+ *      - unless really done, onmly then can you exit.
  *
  *  bugs
+ *     - at end of game the winning players winnings are not added to his cash.
+ *     - robot player keeps adding last raise amount even though competitor is calling.
  *     - Raise amount not always matched! seems to happen in a multiplayer game when robots involved.
- *       this is because it should only inlcude the callAmount if the player has not aleady gone
+ *       this is because it should only inlcude the callAmount if the player has not aleady gone.
  *     - reduce player radii
  *  possible bugs
  *    - ante getting subtracted twice
- *    - asking folded player to play  (fixed?)
  *
  * @author Barry Becker
  */
@@ -244,15 +246,8 @@ public class PokerController extends GameController
      */
     public int advanceToNextPlayer()
     {
-        PokerGameViewer pviewer  = (PokerGameViewer) getViewer();
+        PokerGameViewer pviewer = (PokerGameViewer) getViewer();
         pviewer.refresh();
-
-        // show message when done.
-        if (isDone()) {
-            pviewer.sendGameChangedEvent(null);
-            return 0;
-        }
-
 
         int nextIndex = advanceToNextPlayerIndex();
 
@@ -264,6 +259,13 @@ public class PokerController extends GameController
             pviewer.refresh();
 
             doRoundOverBookKeeping(pviewer);
+        }
+
+        // show message when done.
+        // moved from above.
+        if (isDone()) {
+            pviewer.sendGameChangedEvent(null);
+            return 0;
         }
 
         if (!getCurrentPlayer().isHuman() && !isDone()) {
@@ -291,9 +293,12 @@ public class PokerController extends GameController
 
         // special case of no one raising
         int contrib = this.getCurrentMaxContribution();
+        System.out.println("in roundover check max contrib="+contrib);
 
         for (PokerPlayer p : players) {
             if (!p.hasFolded()) {
+                assert(p.getContribution() <= contrib) :
+                       "contrib was supposed to be the max, but " + p + " contradicats that.";
                 if (p.getContribution() != contrib) {
                     return false;
                 }
@@ -323,7 +328,7 @@ public class PokerController extends GameController
 
 
     /**
-     * take care of distrbuting the pot, dealing, anteing.
+     * take care of distributing the pot, dealing, anteing.
      * @param pviewer
      */
     private void doRoundOverBookKeeping(PokerGameViewer pviewer) {
@@ -341,7 +346,7 @@ public class PokerController extends GameController
             do {
                startingPlayerIndex_ = (++startingPlayerIndex_) % this.getNumPlayers();
             }
-            while (this.getPlayer(startingPlayerIndex_).isOutOfGame());
+            while (getPlayer(startingPlayerIndex_).isOutOfGame());
 
             currentPlayerIndex_ = startingPlayerIndex_;
             playIndex_ = 0;

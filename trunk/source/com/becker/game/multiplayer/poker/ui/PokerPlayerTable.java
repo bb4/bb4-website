@@ -4,6 +4,7 @@ package com.becker.game.multiplayer.poker.ui;
 import com.becker.game.common.*;
 import com.becker.game.multiplayer.common.ui.*;
 import com.becker.game.multiplayer.poker.*;
+import com.becker.game.multiplayer.poker.player.*;
 
 import javax.swing.table.*;
 import java.awt.*;
@@ -13,7 +14,7 @@ import java.awt.*;
  * GalacticPlayerTable contains a list of players.
  * All the cells are editable.
  * It is initialized with a list of Players and returns a list of Players.
- * @see com.becker.game.multiplayer.poker.PokerPlayer
+ * @see com.becker.game.multiplayer.poker.player.PokerPlayer
  *
  * @author Barry Becker
  */
