@@ -1,13 +1,13 @@
 package com.becker.game.multiplayer.galactic;
 
-import com.becker.game.common.*;
+import com.becker.game.multiplayer.common.*;
 
 /**
  * Container for the different Galactic Game options.
  *
  * @author Barry Becker Date: Sep 2, 2006
  */
-public class GalacticOptions extends GameOptions {
+public class GalacticOptions extends MultiGameOptions {
 
 
     private static final int DEFAULT_PLANET_PRODUCTION_RATE = 2;
@@ -31,15 +31,15 @@ public class GalacticOptions extends GameOptions {
     /**
      * User specified valeus for options.
      */
-    public GalacticOptions(int numPlanets, int planetProductionRate,
+    public GalacticOptions(int maxNumPlayers, int numRobotPlayers, int numPlanets, int planetProductionRate,
                            int maxYearsToPlay, int initialFleetSize, boolean neutralsBuild) {
+        super(maxNumPlayers, numRobotPlayers);
         setNumPlanets(numPlanets);
         setPlanetProductionRate(planetProductionRate);
         setMaxYearsToPlay(maxYearsToPlay);
         setInitialFleetSize(initialFleetSize);
         setNeutralsBuild(neutralsBuild);
     }
-
 
     public int getNumPlanets() {
         return numPlanets_;
@@ -72,7 +72,7 @@ public class GalacticOptions extends GameOptions {
         neutralsBuild_ = neutralsBuild;
     }
 
-    
+
     public int getInitialFleetSize() {
         return initialFleetSize_;
     }

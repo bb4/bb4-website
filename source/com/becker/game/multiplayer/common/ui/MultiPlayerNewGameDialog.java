@@ -2,6 +2,7 @@ package com.becker.game.multiplayer.common.ui;
 
 import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
+import com.becker.game.multiplayer.common.*;
 import com.becker.ui.*;
 
 import javax.swing.*;
@@ -29,7 +30,7 @@ public abstract class MultiPlayerNewGameDialog extends NewGameDialog
     {
         super( parent, viewer);
         initUI();
-        this.setResizable(true);                
+        this.setResizable(true);
     }
 
     /**
@@ -104,6 +105,8 @@ public abstract class MultiPlayerNewGameDialog extends NewGameDialog
 
         if ( source == addButton_ ) {
             playerTable_.addRow();
+            MultiGameOptions options = (MultiGameOptions) controller_.getOptions();
+            addButton_.setEnabled(playerTable_.getModel().getRowCount() < options.getMaxNumPlayers());
         }
         else if ( source == removeButton_ ) {
             playerTable_.removeSelectedRows();
@@ -111,12 +114,14 @@ public abstract class MultiPlayerNewGameDialog extends NewGameDialog
     }
 
     /**
-     * called when rows are selected/deselected in the player table
+     * Called when rows are selected/deselected in the player table.
      * @param event
      */
     public void valueChanged(ListSelectionEvent event)
     {
-        removeButton_.setEnabled(playerTable_.getTable().getSelectedRowCount()>0);
+        boolean enabled = playerTable_.getTable().getSelectedRowCount() > 0
+                          && playerTable_.getModel().getRowCount() > 1;
+        removeButton_.setEnabled(enabled);
     }
 }
 

@@ -11,7 +11,7 @@ import java.util.*;
 
 /**
  * PlayerTable contains a list of players.
- * All the cells are editable.
+ * All of the cells are editable.
  * It is initialized with a list of Players and returns a list of Players.
  *
  * @author Barry Becker
@@ -30,7 +30,6 @@ public abstract class PlayerTable
     protected static final String NAME = GameContext.getLabel("NAME");
     protected static final String COLOR = GameContext.getLabel("COLOR");
     protected static final String HUMAN = GameContext.getLabel("HUMAN");
-
 
     protected String[] columnNames_;
 
@@ -63,7 +62,7 @@ public abstract class PlayerTable
         colColumn.setCellEditor(new ColorCellEditor(GameContext.getLabel("SELECT_PLAYER_COLOR")));
         colColumn.setPreferredWidth(40);
         colColumn.setWidth(20);
-        colColumn.setMaxWidth(40);       
+        colColumn.setMaxWidth(40);
         table_.doLayout();
     }
 

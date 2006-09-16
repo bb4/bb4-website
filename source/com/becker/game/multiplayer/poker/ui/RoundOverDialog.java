@@ -1,7 +1,8 @@
 package com.becker.game.multiplayer.poker.ui;
 
 import com.becker.game.common.*;
-import com.becker.game.multiplayer.poker.PokerPlayer;
+import com.becker.game.multiplayer.poker.player.PokerPlayer;
+import com.becker.game.multiplayer.poker.player.*;
 import com.becker.ui.*;
 
 import javax.swing.*;
@@ -46,12 +47,10 @@ public class RoundOverDialog extends OptionsDialog
         mainPanel_.setLayout( new BorderLayout() );
         mainPanel_.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEtchedBorder(),
                                                                BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-
         JPanel buttonsPanel = createButtonsPanel();
         JPanel instructions = createInstructionsPanel();
 
         mainPanel_.add(instructions, BorderLayout.CENTER);
-        //mainPanel_.add(new JLabel(" "), BorderLayout.SOUTH);
         mainPanel_.add(buttonsPanel, BorderLayout.SOUTH);
 
         getContentPane().add( mainPanel_ );
@@ -66,7 +65,7 @@ public class RoundOverDialog extends OptionsDialog
 
         NumberFormat cf = BettingDialog.getCurrencyFormat();
         String cash = cf.format(winnings_);
-        JLabel winLabel = new JLabel("You won "+cash+" from the pot!");
+        JLabel winLabel = new JLabel("won " + cash + " from the pot!");
         //JLabel amountToCall = new JLabel("To call, you need to add " + cf.format(callAmount_));
 
         //panel.setPreferredSize(new Dimension(400, 100));

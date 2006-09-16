@@ -1,6 +1,6 @@
 package com.becker.game.multiplayer.set;
 
-import com.becker.game.common.*;
+import com.becker.game.multiplayer.common.*;
 
 /**
  * Set Game options
@@ -10,7 +10,7 @@ import com.becker.game.common.*;
  *
  * @author Barry Becker Date: Sep 2, 2006
  */
-public class SetOptions extends GameOptions {
+public class SetOptions extends MultiGameOptions {
 
 
     // initial number of cards shown face up on the board.
@@ -18,12 +18,13 @@ public class SetOptions extends GameOptions {
 
     private int initialNumCardsShown_ = INITIAL_NUM_CARDS_SHOWN;
 
-    public SetOptions() {}
-    
-    public SetOptions(int initialNumCards) {
-         setInitialNumCardsShown(initialNumCards);
+    public SetOptions() {
     }
 
+    public SetOptions(int maxNumPlayers, int numRobotPlayers, int initialNumCards) {
+        super(maxNumPlayers, numRobotPlayers);
+        setInitialNumCardsShown(initialNumCards);
+    }
 
     public int getInitialNumCardsShown() {
         return initialNumCardsShown_;

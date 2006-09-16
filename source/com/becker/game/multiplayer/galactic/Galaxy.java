@@ -61,9 +61,11 @@ public class Galaxy extends Board
         }
     }
 
-    public void initPlanets(GalacticPlayer[] players, GalacticController controller)
+    public void initPlanets(GalacticPlayer[] players, GalacticOptions options)
     {
         hmPlanets_.clear();
+
+        numPlanets_ = options.getNumPlanets();
 
         if (planets_ == null)  {
             planets_ = new ArrayList<Planet>();
@@ -85,8 +87,6 @@ public class Galaxy extends Board
             } while (position.isOccupied());
 
             // initial ships and production factor
-            GalacticOptions options = (GalacticOptions)controller.getOptions();
-
             int production = (int)( 1 + Math.max(0, RANDOM.nextGaussian()) * options.getPlanetProductionRate());
             int initialFleet = (int)( 1 + Math.max(0, RANDOM.nextGaussian()) * options.getInitialFleetSize());
             Planet planet = new Planet(PLANET_NAMES[i], initialFleet,
@@ -114,7 +114,8 @@ public class Galaxy extends Board
      */
     public static List<Planet> getPlanets()
     {
-        return Collections.unmodifiableList(planets_);
+        List<Planet> newList = new ArrayList<Planet>(planets_);
+        return newList;
     }
 
     /**

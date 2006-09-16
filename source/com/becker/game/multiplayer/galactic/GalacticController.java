@@ -79,7 +79,7 @@ public class GalacticController extends GameController
     protected void initializeData()
     {
         initPlayers();
-        ((Galaxy)board_).initPlanets((GalacticPlayer[])players_, this);
+        ((Galaxy)board_).initPlanets((GalacticPlayer[])players_, (GalacticOptions)getOptions());
     }
 
      /**

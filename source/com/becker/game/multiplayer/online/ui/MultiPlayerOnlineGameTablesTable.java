@@ -1,6 +1,7 @@
 package com.becker.game.multiplayer.online.ui;
 
 import com.becker.game.common.*;
+import com.becker.game.multiplayer.common.*;
 import com.becker.game.multiplayer.common.ui.*;
 import com.becker.game.online.*;
 import com.becker.game.online.ui.*;
@@ -9,71 +10,81 @@ import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
 import java.awt.event.*;
+import java.util.*;
 
 /**
  * A table that has a row for each virtual online game table.
  *
  * @author Barry Becker
  */
-public abstract class MultiPlayerOnlineGameTablesTable implements ActionListener {
+public abstract class MultiPlayerOnlineGameTablesTable {
 
 
     protected JTable table_;
 
     protected static final int JOIN_INDEX = 0;
     protected static final int TABLE_NAME_INDEX = 1;
-    protected static final int PLAYER_NAMES_INDEX = 2;
+    protected static final int NUM_PLAYERS_INDEX = 2;
+    protected static final int PLAYER_NAMES_INDEX = 3;
+    protected static final int NUM_BASE_COLUMNS = 4;
 
-    protected static final String ACTION = GameContext.getLabel("ACTION");
+    protected static final String JOIN = GameContext.getLabel("ACTION");
     protected static final String TABLE_NAME = GameContext.getLabel("TABLE_NAME");
+    protected static final String MAX_NUM_PLAYERS = GameContext.getLabel("MAX_NUM_PLAYERS");
     protected static final String PLAYER_NAMES = GameContext.getLabel("PLAYER_NAMES");
 
     protected OnlineGameTable selectedTable_;
-
-    private static final String[] COLUMN_NAMES = {ACTION, TABLE_NAME, PLAYER_NAMES };
-
+    protected List<OnlineGameTable> tableList_;
     private static int counter_;
+
+    ActionListener actionListener_;
+
 
     /**
      * constructor
+     * @param actionListener called when join button clicked.
      */
-    public MultiPlayerOnlineGameTablesTable(OnlineGameTable[] tables)
+    public MultiPlayerOnlineGameTablesTable(ActionListener actionListener)
     {
         selectedTable_ = null;
-
-        initializeTable(tables);
+        initializeTable();
+        actionListener_ = actionListener;
+        tableList_ = new ArrayList<OnlineGameTable>();
     }
 
     /***
      * int the table of tables.
-     * @@ something odd here. Why are we passing in tables?
-     * @param tables initial list (may be null)
      */
-    protected void initializeTable(OnlineGameTable[] tables)
+    protected void initializeTable()
     {
-        TableModel m = new PlayerTableModel(COLUMN_NAMES, 0, true);
+        TableModel m = new PlayerTableModel(getColumnNames(), 0, true);
         table_ = new JTable(m);
 
-        TableColumn nameColumn = table_.getColumn(TABLE_NAME);
-        nameColumn.setPreferredWidth(130);
+        // more space needed for the names list.
+        TableColumn nameColumn = table_.getColumn(PLAYER_NAMES);
+        nameColumn.setPreferredWidth(200);
 
-        TableColumn actionColumn = table_.getColumn(ACTION);
-        actionColumn.setCellRenderer(new OnlineActionCellRenderer(this));
-        actionColumn.setCellEditor(new OnlineActionCellEditor(this));
+        TableColumn actionColumn = table_.getColumn(JOIN);
+        actionColumn.setCellRenderer(new OnlineActionCellRenderer(actionListener_));
+        actionColumn.setCellEditor(new OnlineActionCellEditor(actionListener_));
         actionColumn.setPreferredWidth(55);
-        //table_.sizeColumnsToFit(0);
+
+        TableColumn tableNameColumn = table_.getColumn(TABLE_NAME);
+        tableNameColumn.setPreferredWidth(0);
     }
 
-    /**
-     * @return  the players represented by rows in the table
-     */
-    //public abstract OnlineGameTable[] getOnlineGameTables();
+    protected String[] getColumnNames() {
+        return new String[] {JOIN, TABLE_NAME, MAX_NUM_PLAYERS, PLAYER_NAMES};
+    }
 
     public JTable getTable()
     {
         return table_;
     }
 
+    public OnlineGameTable getGameTable(int i) {
+        return tableList_.get(i);
+    }
     /**
      *
      * @return the table that the player has chosen to sit at if any (at most 1.) return null is not sitting.
@@ -93,13 +104,6 @@ public abstract class MultiPlayerOnlineGameTablesTable implements ActionListener
     }
 
     /**
-     * add a row based on a player object
-     * @param onlineTable to add
-     */
-    protected abstract void addRow(OnlineGameTable onlineTable);
-
-
-    /**
      * clear out all the rows in the table.
      */
     public void removeAllRows() {
@@ -108,6 +112,7 @@ public abstract class MultiPlayerOnlineGameTablesTable implements ActionListener
         for (int i = m.getRowCount() -1; i >= 0; i--) {
             m.removeRow(i);
         }
+        tableList_.clear();
     }
 
     /**
@@ -115,40 +120,43 @@ public abstract class MultiPlayerOnlineGameTablesTable implements ActionListener
      * @param initialPlayerName
      * @return the new online table to add as a new row.
      */
-    public abstract OnlineGameTable createOnlineTable(String initialPlayerName);
+    public abstract OnlineGameTable createOnlineTable(String initialPlayerName, MultiGameOptions options);
 
+    public abstract Player createPlayerForName(String playerName);
+
+    /**
+     * add a row based on a player object
+     * @param onlineTable to add
+     * @param localPlayerAtTable you cannot join a table you are already at.
+     */
+    protected void addRow(OnlineGameTable onlineTable, boolean localPlayerAtTable) {
+
+        getModel().addRow(getRowObject(onlineTable, localPlayerAtTable));
+        tableList_.add(onlineTable);
+        selectedTable_ = onlineTable;
+    }
+
+    /**
+     * @return  the object array to create a row from.
+     */
+    protected abstract Object[] getRowObject(OnlineGameTable onlineTable, boolean localPlayerAtTable);
 
     /**
      * add another row to the end of the table.
      */
-    public void addRow(String playersName)
+    public void addRow(String playersName, MultiGameOptions options)
     {
-        OnlineGameTable onlineTable = createOnlineTable(playersName);
-        addRow(onlineTable);
+        OnlineGameTable onlineTable = createOnlineTable(playersName, options);
+        addRow(onlineTable, true);
     }
 
 
     protected int getNumColumns() {
-        return COLUMN_NAMES.length;
+        return getColumnNames().length;
     }
 
     protected static synchronized String getUniqueName() {
           return "Table "+ counter_++;
-    }
-
-    public void actionPerformed(ActionEvent event) {
-
-        OnlineActionCellRenderer.JoinButton b =
-                (OnlineActionCellRenderer.JoinButton) event.getSource();
-
-        final int joinRow = b.getRow();
-        final PlayerTableModel m = getModel();
-
-        for (int i=0; i<m.getRowCount(); i++) {
-            m.setValueAt(Boolean.valueOf(i != joinRow), i, 0);
-        }
-
-        table_.removeEditor();
     }
 
 }

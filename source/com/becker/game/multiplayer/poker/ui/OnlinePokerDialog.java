@@ -7,6 +7,7 @@ import com.becker.game.multiplayer.poker.online.*;
 import com.becker.game.online.*;
 
 import java.awt.*;
+import java.awt.event.*;
 
 /**
  * Manage online player games.
@@ -20,8 +21,9 @@ public class OnlinePokerDialog extends MultiPlayerOnlineGameDialog {
         super(parent, viewer);
     }
 
-    protected MultiPlayerOnlineGameTablesTable createOnlineGamesTable(String playersName) {
-        return new PokerOnlineGameTablesTable(null);
+    protected MultiPlayerOnlineGameTablesTable createOnlineGamesTable(String playersName,
+                                                                      ActionListener listener) {
+        return new PokerOnlineGameTablesTable(listener);
     }
 
     /**
@@ -33,6 +35,6 @@ public class OnlinePokerDialog extends MultiPlayerOnlineGameDialog {
 
     protected ServerConnection createServerConnection(OnlineChangeListener l) {
          return new ServerConnection(OnlinePokerServer.PORT, l);
-     }
+    }
 
 }
