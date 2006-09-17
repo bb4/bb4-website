@@ -1,5 +1,7 @@
 package com.becker.game.online;
 
+import com.becker.game.common.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -22,8 +24,8 @@ public abstract class OnlineGameServer extends JFrame {
     protected JTextArea textArea_;
     protected ServerSocket server_;
 
-    // maintain a list of game tables.
-    OnlineGameTableList tables_;
+    // processes server commands. May someday need sublassing.
+    private ServerCommandProcessor cmdProcessor_;
 
     // keep a list of the threads that we have for each client connection.
     List<ClientWorker> clientConnections_;
@@ -31,10 +33,10 @@ public abstract class OnlineGameServer extends JFrame {
     /**
      * Create the online game server to serve all online clients.
      */
-    public OnlineGameServer() {
+    protected OnlineGameServer() {
         initUI();
 
-        tables_ = new OnlineGameTableList();
+        cmdProcessor_ = new ServerCommandProcessor();
         clientConnections_ = new LinkedList<ClientWorker>();
 
         openListenSocket();
@@ -65,7 +67,6 @@ public abstract class OnlineGameServer extends JFrame {
 
     public abstract int getPort();
 
-    public abstract String getTitle();
 
     /**
      * open a server socket to listen on our assigned port for
@@ -79,7 +80,7 @@ public abstract class OnlineGameServer extends JFrame {
             server_ = new ServerSocket(port);
         }
         catch (IOException e) {
-            System.out.println("Could not listen on port " + port);
+            GameContext.log(0, "Could not listen on port " + port);
             e.printStackTrace();
             System.exit(-1);
         }
@@ -93,13 +94,12 @@ public abstract class OnlineGameServer extends JFrame {
                 t.start();
             }
             catch (IOException e) {
-                System.out.println("Accept failed: " + port);
+                GameContext.log(0, "Accept failed: " + port);
                 e.printStackTrace();
                 break;
             }
         }
     }
-
 
 
     /**
@@ -112,7 +112,7 @@ public abstract class OnlineGameServer extends JFrame {
             server_.close();
         }
         catch (IOException e) {
-            System.out.println("Could not close socket");
+            GameContext.log(0, "Could not close socket");
             e.printStackTrace();
             System.exit(-1);
         }
@@ -122,7 +122,6 @@ public abstract class OnlineGameServer extends JFrame {
     }
 
 
-
     /**
      * A client worker is created for each client player connection to this server.
      */
@@ -130,12 +129,12 @@ public abstract class OnlineGameServer extends JFrame {
         private Socket clientConnection_;
         private JTextArea text_;
 
-        private ObjectInputStream iStream_ = null;
-        private ObjectOutputStream oStream_ = null;
+        private ObjectInputStream iStream_;
+        private ObjectOutputStream oStream_;
 
         ClientWorker(Socket client, JTextArea textArea) {
-            this.clientConnection_ = client;
-            this.text_ = textArea;
+            clientConnection_ = client;
+            text_ = textArea;
         }
 
         public void run() {
@@ -145,11 +144,10 @@ public abstract class OnlineGameServer extends JFrame {
                 oStream_ = new ObjectOutputStream(clientConnection_.getOutputStream());
             }
             catch (IOException e) {
-                System.out.println("in or out stream creation failed.");
+                GameContext.log(0, "in or out stream creation failed.");
                 e.printStackTrace();
                 System.exit(-1);
             }
-
 
             try {
                 // initial update to the game tables for someone entering the room.
@@ -161,7 +159,7 @@ public abstract class OnlineGameServer extends JFrame {
                     GameCommand cmd = (GameCommand) iStream_.readObject();
 
                     // we got a change to the tables, update internal structure and broadcast new list.
-                    processCmd(cmd);
+                    cmdProcessor_.processCmd(cmd);
 
                     for (ClientWorker w : clientConnections_) {
                         w.update();
@@ -177,62 +175,12 @@ public abstract class OnlineGameServer extends JFrame {
                 e.printStackTrace();
             }
             catch (IOException e) {
-                System.out.println("Read failed.");
+                GameContext.log(0, "Read failed.");
                 e.printStackTrace();
             }
 
-            System.out.println("Connection closed removing thread");
+            GameContext.log(1, "Connection closed removing thread");
             clientConnections_.remove(this);
-        }
-
-        /**
-         * Update our internal game table list given the cmd from the client.
-         * @param cmd to process. The command that the player has issued.
-         * @return true if successful
-         */
-        private boolean processCmd(GameCommand cmd) {
-            switch (cmd.getName()) {
-                case ENTER_ROOM :
-                    System.out.println("Entering room.");
-                    break;
-                case ADD_TABLE :
-                    addTable((OnlineGameTable) cmd.getArgument());
-                    break;
-                case JOIN_TABLE :
-                    System.out.println("Attempting to join table.");
-                    break;
-                case CHANGE_NAME :
-                    System.out.println("Attempting to change name.");
-                    break;
-                case UPDATE_TABLES :
-                    System.out.println("updating tables.");
-                    break;
-            }
-            return true;
-        }
-
-        private void addTable(OnlineGameTable table) {
-
-            // if the table we are adding has the same name as an existing table change it to something unique
-            String uniqueName = verifyUniqueName(table.getName());
-            table.setName(uniqueName);
-
-            tables_.add(table);
-        }
-
-        /**
-         * @param name
-         * @return a unique name if not unique already
-         */
-        private String verifyUniqueName(String name) {
-
-            int ct = 0;
-            for (OnlineGameTable t : tables_) {
-                if (t.getName().indexOf(name + '_') == 0) {
-                    ct++;
-                }
-            }
-            return name + '_' + ct;
         }
 
         /**
@@ -240,18 +188,17 @@ public abstract class OnlineGameServer extends JFrame {
          */
         public void update() throws IOException {
 
-            System.out.println("In OnlineGameServer: sending:"+tables_);
+            GameContext.log(1, "OnlineGameServer: sending:"+cmdProcessor_.getTables());
 
             // must reset the stream first, otherwise tables_ will always be the same as first sent.
             oStream_.reset();
-            oStream_.writeObject(new GameCommand(GameCommand.Name.UPDATE_TABLES, tables_));
+            oStream_.writeObject(new GameCommand(GameCommand.Name.UPDATE_TABLES, cmdProcessor_.getTables()));
             oStream_.flush();
         }
     }
 
-
      /**
-      * Implements OnlineGameServerInterface which is also implmented by GtpTesujiSoftGoServer.
+      * Implements OnlineGameServerInterface which is also implemented by GtpTesujiSoftGoServer.
       * not currently used, but I'm trying to have a consistent game server interface.
       * @param cmdLine command and its arguments in a form that can be parsed.
       * @param response the response from the server to be interpreted by the client.

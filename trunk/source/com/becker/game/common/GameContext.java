@@ -280,9 +280,9 @@ public final class GameContext
             ResourceBundle bundle = ResourceBundle.getBundle(COMMON_MESSAGE_BUNDLE,
                     newVar.getLocale());
             Set<String> keySet = new HashSet<String>();
-            Enumeration enumXXX = bundle.getKeys();
-            while (enumXXX.hasMoreElements()) {
-                String key = (String) enumXXX.nextElement();
+            Enumeration enum1 = bundle.getKeys();
+            while (enum1.hasMoreElements()) {
+                String key = (String) enum1.nextElement();
                 //System.out.println(locales.getValue(i).getName()+" "+key);
                 keySet.add(key);
             }

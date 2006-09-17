@@ -1,16 +1,31 @@
 package com.becker.game.common;
 
+import java.io.*;
 
 
 /**
- * Options sp[ecified on a per game basis.
+ * Options specified on a per game basis.
  *
  * @author Barry Becker Date: Sep 2, 2006
  */
-public class GameOptions {
+public abstract class GameOptions implements Serializable {
 
-    public GameOptions() {
+    private static final long serialVersionUID = 1L;
 
+
+    public GameOptions() {}
+
+
+    /**
+     * @return Limit on the number of players allowed to join the game.
+     */
+    public abstract int getMaxNumPlayers();
+
+    /**
+     * Check constraints on options to verify validity.
+     * @return  null if no errors, return error messages if constraints violated.
+     */
+    public String testValidity() {
+        return null;
     }
-
 }

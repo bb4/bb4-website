@@ -14,11 +14,14 @@ public class GameCommand implements Serializable {
 
     private static final long serialVersionUID = 1;
 
+    public static final String CHANGE_TO = "!:!";
+
     /**
      * list of possible commands that the player can issue.
      */
     public enum Name {
         ENTER_ROOM,
+        LEAVE_ROOM,
         ADD_TABLE,
         JOIN_TABLE,
         CHANGE_NAME,
@@ -27,10 +30,10 @@ public class GameCommand implements Serializable {
 
 
     // name of the command
-    Name name_;
+    private Name name_;
 
     // corresponding argument. Null if none.
-    Object argument_;
+    private Object argument_;
 
     /**
      *
@@ -40,6 +43,7 @@ public class GameCommand implements Serializable {
     public GameCommand(Name name, Serializable arg) {
         name_ = name;
         argument_ = arg;
+        assert(argument_ != null): "The argument must be serializable";
     }
 
     public Name getName() {

@@ -1,7 +1,6 @@
 package com.becker.game.twoplayer.common.ui;
 
-import com.becker.game.common.GameContext;
-import com.becker.game.common.GameController;
+import com.becker.game.common.*;
 import com.becker.game.common.ui.GameOptionsDialog;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
@@ -18,7 +17,8 @@ import java.awt.event.*;
  *
  * @author Barry Becker
  */
-public class TwoPlayerOptionsDialog extends GameOptionsDialog implements ActionListener, ItemListener
+public class TwoPlayerOptionsDialog extends GameOptionsDialog
+                                    implements ActionListener, ItemListener
 {
     private JRadioButton minimaxButton_;  // alg radio button group
     private JRadioButton negamaxButton_;  // alg radio button group
@@ -44,6 +44,23 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog implements ActionL
         return (TwoPlayerController)controller_;
     }
 
+    public GameOptions getOptions() {
+
+        TwoPlayerOptions options = (TwoPlayerOptions) get2PlayerController().getOptions();
+
+        options.setAlphaBeta(alphabetaCheckbox_.isSelected());
+        options.setQuiescence( quiescenceCheckbox_.isSelected() );
+        options.setLookAhead( lookAheadField_.getIntValue() );
+
+        if ( minimaxButton_.isSelected() )
+            options.setSearchStrategyMethod( SearchStrategy.MINIMAX );
+        else if ( negamaxButton_.isSelected() )
+            options.setSearchStrategyMethod( SearchStrategy.NEGAMAX );
+        options.setPercentageBestMoves(bestPercentageField_.getIntValue() );
+        options.setShowGameTree( gameTreeCheckbox_.isSelected() );
+        options.setShowComputerAnimation( computerAnimationCheckbox_.isSelected() );
+        return options;
+    }
 
     /**
      * @return algorithm tab panel.
@@ -162,25 +179,6 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog implements ActionL
     }
 
 
-    protected void ok()
-    {
-        TwoPlayerController c = get2PlayerController();
-        TwoPlayerOptions options = c.getTwoPlayerOptions();
-
-        options.setAlphaBeta( alphabetaCheckbox_.isSelected() );
-        options.setQuiescence( quiescenceCheckbox_.isSelected() );
-        options.setLookAhead( lookAheadField_.getIntValue() );
-
-        if ( minimaxButton_.isSelected() )
-            options.setSearchStrategyMethod( SearchStrategy.MINIMAX );
-        else if ( negamaxButton_.isSelected() )
-            options.setSearchStrategyMethod( SearchStrategy.NEGAMAX );
-        options.setPercentageBestMoves(bestPercentageField_.getIntValue() );
-        options.setShowGameTree( gameTreeCheckbox_.isSelected() );
-        options.setShowComputerAnimation( computerAnimationCheckbox_.isSelected() );
-
-        super.ok();
-    }
 
     /**
      * called when a button has been pressed

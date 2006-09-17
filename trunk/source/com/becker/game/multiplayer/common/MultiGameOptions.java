@@ -7,7 +7,7 @@ import com.becker.game.common.*;
  */
 public class MultiGameOptions extends GameOptions {
 
-    private static final int DEFAULT_PLAYER_LIMIT = 6;
+    private static final int DEFAULT_PLAYER_LIMIT = 3;
     private static final int DEFAULT_NUM_ROBOT_PLAYERS = 1;
 
     // no more than this many allowed at the table.
@@ -42,5 +42,17 @@ public class MultiGameOptions extends GameOptions {
 
     public void setNumRobotPlayers(int numRobotPlayers) {
         numRobotPlayers_ = numRobotPlayers;
+    }
+
+    /**
+     * Check constraints on options to verify validity.
+     * @return  null if no errors, return error messages if constraints violated.
+     */
+    public String testValidity() {
+        String msgs = "";
+        if (getNumRobotPlayers() > getMaxNumPlayers())  {
+            msgs += "The number of robot players cannot can exceed the total number of players.";
+        }
+        return (msgs.length() > 0)? msgs : null;
     }
 }

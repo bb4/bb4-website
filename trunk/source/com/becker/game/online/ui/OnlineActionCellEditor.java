@@ -12,7 +12,7 @@ import java.awt.event.*;
  */
 public class OnlineActionCellEditor extends AbstractCellEditor {
 
-    OnlineActionCellRenderer cellRenderer_;
+    private OnlineActionCellRenderer cellRenderer_;
 
 
     public OnlineActionCellEditor(ActionListener listener)

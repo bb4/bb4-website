@@ -137,8 +137,8 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
     }
 
     /**
-     * The user has done something to change the table list (e.g. add a new game table).
-     * @param e
+     * The user has done something to change the table list
+     * (e.g. add a new game table or join a different table).
      */
     public void actionPerformed( ActionEvent e )
     {
@@ -148,7 +148,7 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
             createNewGameTable();
         }
         else {
-            joinDifferentTable((OnlineActionCellRenderer.JoinButton) source);
+            joinDifferentTable((JoinButton) source);
         }
     }
 
@@ -185,9 +185,10 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
      * The local user has clikced  ajoin button on a different table
      * indicating that they want to join that table.
      */
-    private void joinDifferentTable(OnlineActionCellRenderer.JoinButton b) {
+    private void joinDifferentTable(JoinButton b) {
 
         int joinRow = b.getRow();
+        System.out.println("attempting to join table "+ joinRow);
         PlayerTableModel m = onlineGameTablesTable_.getModel();
 
         for (int i=0; i<m.getRowCount(); i++) {
@@ -199,6 +200,13 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
         onlineGameTablesTable_.getTable().removeEditor();
     }
 
+    /**
+     * called when the user closes the online game dialog.
+     * We remove them form the active tables.
+     */
+    public void closing() {
+        serverConnection_.leaveRoom(currentName_);
+    }
 
     /**
      * Implement keyListener interface.

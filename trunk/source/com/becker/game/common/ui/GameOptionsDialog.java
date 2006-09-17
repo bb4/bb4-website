@@ -14,7 +14,8 @@ import java.awt.event.*;
  *
  * @author Barry Becker
  */
-public class GameOptionsDialog extends OptionsDialog implements ActionListener, ItemListener
+public abstract class GameOptionsDialog extends OptionsDialog
+                                        implements ActionListener, ItemListener
 {
 
     /**
@@ -321,7 +322,6 @@ public class GameOptionsDialog extends OptionsDialog implements ActionListener, 
      */
     protected void ok()
     {
-
         GameContext.setDebugMode( dbgLevelField_.getIntValue() );
         GameContext.setProfiling( profileCheckbox_.isSelected() );
         GameContext.getLogger().setDestination( logDestination_ );
@@ -335,14 +335,18 @@ public class GameOptionsDialog extends OptionsDialog implements ActionListener, 
 
         // game specific options
         GameOptions options = getOptions();
-        controller_.setOptions(options);
-
-        this.setVisible( false );
+        String msgs = options.testValidity();
+        if (msgs == null) {
+            controller_.setOptions(options);
+            this.setVisible( false );
+        }
+        else {
+            JOptionPane.showMessageDialog(this, msgs, "Invalid Options", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
-    protected GameOptions getOptions() {
-        return new GameOptions();
-    }
+    public abstract GameOptions getOptions();
+
 
     /**
      * called when a button has been pressed
@@ -374,6 +378,5 @@ public class GameOptionsDialog extends OptionsDialog implements ActionListener, 
         else if ( fileOutputButton_ != null && fileOutputButton_.isSelected() )
             logDestination_ = Log.LOG_TO_FILE;
     }
-
 
 }

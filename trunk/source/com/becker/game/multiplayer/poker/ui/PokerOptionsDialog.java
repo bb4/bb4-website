@@ -36,8 +36,8 @@ class PokerOptionsDialog extends MultiGameOptionsDialog
         ante_ = new NumberInput( GameContext.getLabel("ANTE"), options.getAnte(),
                                          GameContext.getLabel("ANTE_TIP"), 1, 100, true);
         initialChips_ =
-                new NumberInput(GameContext.getLabel("INITIAL_CHIPS"), options.getInitialCash(),
-                                GameContext.getLabel("INITIAL_CHIPS_TIP"), 0, 10, true);
+                new NumberInput(GameContext.getLabel("INITIAL_CASH"), options.getInitialCash(),
+                                GameContext.getLabel("INITIAL_CASH_TIP"), 0, 10, true);
         maxAbsoluteRaise_ =
                 new NumberInput(GameContext.getLabel("MAX_RAISE"), options.getMaxAbsoluteRaise(),
                                 GameContext.getLabel("MAX_RAISE_TIP"), 1, 100, true);

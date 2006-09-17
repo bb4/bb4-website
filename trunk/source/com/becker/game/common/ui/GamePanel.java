@@ -230,10 +230,7 @@ public abstract class GamePanel extends TexturedPanel
     /**
      * @return  the dialog used to specify various game options and parameters.
      */
-    protected GameOptionsDialog createOptionsDialog( JFrame parent, GameController controller )
-    {
-        return new GameOptionsDialog( parent, controller );
-    }
+    protected abstract GameOptionsDialog createOptionsDialog( JFrame parent, GameController controller );
 
     /**
      * @return the panel shown on the right hand side that displays statistics about the current game state.

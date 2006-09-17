@@ -1,12 +1,14 @@
 package com.becker.game.online;
 
 
+import com.becker.game.common.*;
+
 import java.io.*;
 import java.net.*;
 import java.security.*;
 
 /**
- * Opens a socket to the Game server so we can talk to it.
+ * Opens a socket to the Game server from the client so we can talk to it.
  * We pass data using object serialization over the input and output streams.
  *
  * @author Barry Becker Date: May 14, 2006
@@ -27,7 +29,6 @@ public class ServerConnection {
      * @param port to open the connection on.
      */
     public ServerConnection(int port, OnlineChangeListener listener) {
-        System.out.println("in ServerConnection constructor");
         changeListener_ = listener;
         createListenSocket(port);
     }
@@ -46,6 +47,7 @@ public class ServerConnection {
 
         try {
             // Send data over socket
+            assert(oStream_!=null && cmd!=null): "oStream="+ oStream_ +" cmd=" + cmd;
             oStream_.writeObject(cmd);
             oStream_.flush();
 
@@ -65,14 +67,13 @@ public class ServerConnection {
     public void createListenSocket(int port) {
         try {
             isConnected_ = false;
-            System.out.println("Attempting to connect to Server=" + DEFAULT_HOST + " port="+port);
+            GameContext.log(1, "Attempting to connect to Server=" + DEFAULT_HOST + " port="+port);
             socket_ = new Socket(DEFAULT_HOST, port);
             oStream_ = new ObjectOutputStream(socket_.getOutputStream());
             iStream_ = new ObjectInputStream(socket_.getInputStream());
 
             // create a thread to listen for updates from the server.
             UpdateWorker w = new UpdateWorker(iStream_);
-            System.out.println(" .....");
             Thread t = new Thread(w);
             t.start();
 
@@ -80,9 +81,9 @@ public class ServerConnection {
             isConnected_ = true;
         }
         catch (ConnectException e) {
-             System.out.println("failed to get connection. " +
+             GameContext.log(0, "failed to get connection. " +
                                 "Probably because the server is not running or accessable. " +
-                                "Play local game.");
+                                "Playing a local game instead.");
             //e.printStackTrace();
             isConnected_ = false;
         }
@@ -93,7 +94,7 @@ public class ServerConnection {
             exceptionOccurred("No I/O", e);
         }
         catch (AccessControlException e) {
-            System.out.println("Failed to createListenSocket. \n"
+            GameContext.log(0, "Failed to createListenSocket. \n"
                                +"You don't have permission to open a socket to "
                                + DEFAULT_HOST + " in the current context.");
             isConnected_ = false;
@@ -112,12 +113,31 @@ public class ServerConnection {
      * @param newTable  to add.
      */
     public void addGameTable(OnlineGameTable newTable) {
-        sendCommand(new GameCommand(GameCommand.Name.ADD_TABLE , newTable));
+        sendCommand(new GameCommand(GameCommand.Name.ADD_TABLE, newTable));
+    }
+
+    public void nameChanged(String oldName, String newName) {
+        String changer = oldName + GameCommand.CHANGE_TO + newName;
+        sendCommand(new GameCommand(GameCommand.Name.CHANGE_NAME, changer))   ;
+    }
+
+    /**
+     * Tell the server to add player p to this table.
+     * The server will look at the most recently added player to this table to
+     * determine who was added.
+     */
+    public void joinTable(Player p, OnlineGameTable table) {
+        table.addPlayer(p);
+        sendCommand(new GameCommand(GameCommand.Name.JOIN_TABLE, table));
+    }
+
+    public void leaveRoom(String playerName) {
+        sendCommand(new GameCommand(GameCommand.Name.LEAVE_ROOM, playerName));
     }
 
     private void exceptionOccurred(String msg, Throwable t) {
         isConnected_ = false;
-        System.out.println(msg);
+        GameContext.log(0, msg);
         t.printStackTrace();
         System.exit(1);
     }
@@ -145,7 +165,7 @@ public class ServerConnection {
 
                 }
                 catch (IOException e) {
-                    System.out.println("Read failed.");
+                    GameContext.log(0, "Read failed.");
                     e.printStackTrace();
                     break;
                 }
