@@ -29,14 +29,32 @@ public class PokerOptions extends MultiGameOptions {
      * User specified values for options.
      */
     public PokerOptions(int maxNumPlayers, int numRobotPlayers,
-                        int ante, int maxAbsoluteRaise, int initialChips) {
+                        int ante, int maxAbsoluteRaise, int initialCash) {
         super(maxNumPlayers, numRobotPlayers);
         setAnte(ante);
         setMaxAbsoluteRaise(maxAbsoluteRaise);
-        setInitialChips(initialChips);
-
+        setInitialChips(initialCash);
     }
 
+    /**
+     * Verify poker option constraints satisfied.
+     * @return error messages to show in a dlg.
+     */
+    public String testValidity() {
+        String superMsgs = super.testValidity();
+        String msgs = "" + (superMsgs != null ? superMsgs : "");
+        if (getAnte() > getMaxAbsoluteRaise()) {
+            msgs += "The ante cannot be larger than the maximum raise amount\n";
+        }
+        if (getAnte() > getInitialCash() >> 1) {
+            msgs += "The initial cash for a player cannot be less than twice the ante.";
+        }
+        if (getInitialCash() < getMaxAbsoluteRaise()) {
+            msgs += "The initial cash for a player cannot be less than the maximum raise amount.";
+        }
+
+        return (msgs.length() > 0) ? msgs : null;
+    }
 
     public int getAnte() {
         return ante_;

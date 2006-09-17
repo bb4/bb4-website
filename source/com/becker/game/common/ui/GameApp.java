@@ -40,8 +40,10 @@ public class GameApp implements ActionListener
     private Map<String,String> hmGames_;
 
     static {
-        GameContext.log(3, "GameApp static init." );
-        GUIUtil.setStandAlone((GUIUtil.getBasicService() != null));
+        if (GameContext.getUseSound()) {
+            GameContext.log(3, "GameApp static init." );
+            GUIUtil.setStandAlone((GUIUtil.getBasicService() != null));
+        }
     }
 
     /**

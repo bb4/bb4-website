@@ -48,6 +48,13 @@ public class TwoPlayerOptions extends GameOptions
         preferredTone_ = preferredTone;
     }
 
+    /**
+     * Two player games can never have more than 2 players. Duh.
+     * @return 2
+     */
+    public int getMaxNumPlayers() {
+        return 2;
+    }
 
     /**
      * @return the strategy method currently being used.

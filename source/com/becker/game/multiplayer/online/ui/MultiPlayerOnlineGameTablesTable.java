@@ -19,7 +19,7 @@ import java.util.*;
  */
 public abstract class MultiPlayerOnlineGameTablesTable {
 
-
+    /** table of tables that the player can join. */
     protected JTable table_;
 
     protected static final int JOIN_INDEX = 0;
@@ -37,8 +37,6 @@ public abstract class MultiPlayerOnlineGameTablesTable {
     protected List<OnlineGameTable> tableList_;
     private static int counter_;
 
-    ActionListener actionListener_;
-
 
     /**
      * constructor
@@ -47,15 +45,14 @@ public abstract class MultiPlayerOnlineGameTablesTable {
     public MultiPlayerOnlineGameTablesTable(ActionListener actionListener)
     {
         selectedTable_ = null;
-        initializeTable();
-        actionListener_ = actionListener;
+        initializeTable(actionListener);
         tableList_ = new ArrayList<OnlineGameTable>();
     }
 
     /***
-     * int the table of tables.
+     * init the table of tables.
      */
-    protected void initializeTable()
+    protected void initializeTable(ActionListener actionListener)
     {
         TableModel m = new PlayerTableModel(getColumnNames(), 0, true);
         table_ = new JTable(m);
@@ -65,8 +62,8 @@ public abstract class MultiPlayerOnlineGameTablesTable {
         nameColumn.setPreferredWidth(200);
 
         TableColumn actionColumn = table_.getColumn(JOIN);
-        actionColumn.setCellRenderer(new OnlineActionCellRenderer(actionListener_));
-        actionColumn.setCellEditor(new OnlineActionCellEditor(actionListener_));
+        actionColumn.setCellRenderer(new OnlineActionCellRenderer(actionListener));
+        actionColumn.setCellEditor(new OnlineActionCellEditor(actionListener));
         actionColumn.setPreferredWidth(55);
 
         TableColumn tableNameColumn = table_.getColumn(TABLE_NAME);

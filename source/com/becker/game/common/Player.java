@@ -80,6 +80,14 @@ public class Player implements Serializable
         hasWon_ = won;
     }
 
+    /**
+     * Two players are considered equal if their name and type are the same.
+     */
+    public boolean equals(Object p) {
+        Player p1 = (Player) p;
+        return (name_.equals(p1.getName()) && isHuman() == p1.isHuman());
+    }
+
     public String toString()
     {
         StringBuffer sb = new StringBuffer( "" );

@@ -19,10 +19,6 @@ public class GoTestCase extends TestCase {
     private static final String EXTERNAL_TEST_CASE_DIR =
             GameContext.getHomeDir() +"/test/go/cases/";
 
-    //private static final String TEST_CASE_DIR =
-    //        GameContext.getHomeDir() +"/source/"  +
-    //        GameContext.GAME_ROOT  + "twoplayer/go/test/cases/";
-
     private static final String SGF_EXTENSION = ".sgf";
 
     protected GoController controller_;

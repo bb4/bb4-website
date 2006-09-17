@@ -36,8 +36,7 @@ public abstract class OnlineGameDialog extends JDialog
     protected ViewerCallbackInterface viewer_;
 
 
-    public OnlineGameDialog(Frame parent, ViewerCallbackInterface viewer) {
-        System.out.println("In OnlineGameDlg constructor");
+    protected OnlineGameDialog(Frame parent, ViewerCallbackInterface viewer) {
         parent_ = parent;
         viewer_ = viewer;
         controller_ = viewer.getController();
@@ -59,7 +58,17 @@ public abstract class OnlineGameDialog extends JDialog
 
         JPanel playOnlinePanel = createPlayOnlinePanel();
         this.getContentPane().add( playOnlinePanel );
+
+        this.addWindowListener( new WindowAdapter()
+        {
+            public void windowClosing( WindowEvent e ) {
+               closing();
+            }
+        } );
+
     }
+
+    public abstract void closing();
 
     public boolean isServerAvailable() {
         return serverConnection_ != null && serverConnection_.isConnected();
@@ -67,7 +76,7 @@ public abstract class OnlineGameDialog extends JDialog
 
     public void handleServerUpdate(GameCommand cmd) {
 
-        System.out.println("got an update of the table from the server:\n" + cmd);
+        GameContext.log(1, "got an update of the table from the server:\n" + cmd);
     }
 
     /**
