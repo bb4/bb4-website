@@ -7,9 +7,9 @@ import com.becker.game.multiplayer.common.*;
  */
 public class PokerOptions extends MultiGameOptions {
 
-    private static final int DEFAULT_ANTE = 2;
-    private static final int DEFAULT_MAX_ABS_RAISE = 50;
-    private static final int DEFAULT_INITIAL_CASH = 100;
+    public static final int DEFAULT_ANTE = 2;
+    public static final int DEFAULT_MAX_ABS_RAISE = 50;
+    public static final int DEFAULT_INITIAL_CASH = 100;
 
 
     // starting bid

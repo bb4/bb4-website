@@ -33,10 +33,10 @@ public class ServerCommandProcessor {
     public boolean processCmd(GameCommand cmd) {
         switch (cmd.getName()) {
             case ENTER_ROOM :
-                System.out.println("Entering room.");                
+                //System.out.println("Entering room.");
                 break;
             case LEAVE_ROOM :
-                System.out.println("Leaving room.");
+                //System.out.println("Leaving room.");
                 tables_.removePlayer((String) cmd.getArgument());
                 break;
             case ADD_TABLE :
@@ -51,21 +51,29 @@ public class ServerCommandProcessor {
                     changeName(names[0], names[1]);
                 }
                 break;
+            case START_GAME :
+                startGame((OnlineGameTable) cmd.getArgument());
+                break;
             case UPDATE_TABLES :
                 break;
         }
         return true;
     }
 
+    /**
+     *
+     * @param table
+     */
     private void addTable(OnlineGameTable table) {
 
         // if the table we are adding has the same name as an existing table change it to something unique
         String uniqueName = verifyUniqueName(table.getName());
         table.setName(uniqueName);
         // if the player at this new table is already sitting at another table,
-        // remove him from the other tables(s) and delete those other tables (if no one else is there).
-        assert(table.getPlayers().size() == 1):
-            "It is expected that when you add a new table there is exactly one player at it - the table owner";
+        // remove him from the other tables, and delete those other tables if no one else is there.
+        assert(table.getPlayers().size() >= 1):
+            "It is expected that when you add a new table there is at least one player at it" +
+            " (exactly one human owner and 0 or more robots).";
         tables_.removePlayer(table.getOwner());
         tables_.add(table);
     }
@@ -75,11 +83,10 @@ public class ServerCommandProcessor {
      */
     private void joinTable(OnlineGameTable table) {
 
-
         // if the player at this new table is already sitting at another table,
         // remove him from the other tables(s) and delete those other tables (if no one else is there).
-        Player p = table.getNewestPlayer();
-        System.out.println("in join table on the server p="+p);
+        Player p = table.getNewestHumanPlayer();
+        //System.out.println("in join table on the server p="+p);
         tables_.removePlayer(p);
         tables_.join(table.getName(), p);
     }
@@ -87,6 +94,11 @@ public class ServerCommandProcessor {
     private void changeName(String oldName, String newName) {
 
         tables_.changeName(oldName, newName);
+    }
+
+    private void startGame(OnlineGameTable table) {
+        //
+        System.out.println("NOW starting game on Server. "+ table);
     }
 
     /**

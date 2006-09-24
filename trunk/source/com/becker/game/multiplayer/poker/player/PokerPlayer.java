@@ -14,6 +14,8 @@ import java.text.*;
  */
 public abstract class PokerPlayer extends MultiGamePlayer
 {
+    private static final long serialVersionUID = 1;
+    
     // this player's home planet. (like earth is for humans)
     private PokerHand hand_;
     private PokerPlayerMarker piece_;

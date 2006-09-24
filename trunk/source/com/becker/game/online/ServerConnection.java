@@ -50,13 +50,9 @@ public class ServerConnection {
             assert(oStream_!=null && cmd!=null): "oStream="+ oStream_ +" cmd=" + cmd;
             oStream_.writeObject(cmd);
             oStream_.flush();
-
-            // Receive obj from server. Should response have success or error condition?
-            // GameCommand receivedCmd = (GameCommand) iStream_.readObject();
-            // System.out.println("Received:" + receivedCmd);
         }
         catch (IOException e) {
-            exceptionOccurred("Read failed.", e);
+            exceptionOccurred("Send failed.", e);
         }
     }
 

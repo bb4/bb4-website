@@ -13,7 +13,6 @@ import java.awt.event.*;
  * Allows a player to join exactly one virtual table and begin playing against other players online.
  * If the player creates a table, he sets the options for it.
  *
- *
  * The server maintains the global state.
  * Any time something changes, the server broadcasts the global state to the online clients.
  *

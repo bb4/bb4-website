@@ -381,7 +381,6 @@ public abstract class TwoPlayerController extends GameController
 
         worker_.start();
 
-
         if (synchronous) {
             // this blocks until the value is available.
             TwoPlayerMove m = (TwoPlayerMove)worker_.get();
@@ -391,6 +390,10 @@ public abstract class TwoPlayerController extends GameController
         return false;
     }
 
+    /**
+     * Let the computer play against itself for a long time as it optimizes its parameters.
+     * @return the resulting optimized parameters.
+     */
     public ParameterArray runOptimization() {
         Optimizer optimizer = new Optimizer( this.getOptimizee(), getTwoPlayerOptions().getAutoOptimizeFile() );
 

@@ -34,13 +34,16 @@ class PokerOptionsDialog extends MultiGameOptionsDialog
 
         PokerOptions options = (PokerOptions)controller_.getOptions();
         ante_ = new NumberInput( GameContext.getLabel("ANTE"), options.getAnte(),
-                                         GameContext.getLabel("ANTE_TIP"), 1, 100, true);
+                                 GameContext.getLabel("ANTE_TIP"),
+                                 1, 100 * PokerOptions.DEFAULT_ANTE, true);
         initialChips_ =
                 new NumberInput(GameContext.getLabel("INITIAL_CASH"), options.getInitialCash(),
-                                GameContext.getLabel("INITIAL_CASH_TIP"), 0, 10, true);
+                                GameContext.getLabel("INITIAL_CASH_TIP"),
+                                1, 1000 * PokerOptions.DEFAULT_INITIAL_CASH, true);
         maxAbsoluteRaise_ =
                 new NumberInput(GameContext.getLabel("MAX_RAISE"), options.getMaxAbsoluteRaise(),
-                                GameContext.getLabel("MAX_RAISE_TIP"), 1, 100, true);
+                                GameContext.getLabel("MAX_RAISE_TIP"),
+                                1, 100 * PokerOptions.DEFAULT_MAX_ABS_RAISE, true);
 
         initMultiControllerParamComponents(options);
 

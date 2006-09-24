@@ -59,12 +59,48 @@ public class OnlineGameTableList extends ArrayList<OnlineGameTable>
             }
             if (table.getPlayers().isEmpty())  {
                 it.remove(); // remove table if now empty.
-                // and abort nhere since the player can not be at more than one table.
+                // and abort here since the player can not be at more than one table.
                 break;
             }
         }
     }
 
+    public boolean hasTableReadyToPlay() {
+        Iterator<OnlineGameTable> it = this.iterator();
+        while (it.hasNext()) {
+            OnlineGameTable table = it.next();
+            if (table.isReadyToPlay())
+                return true;
+        }
+        return false;
+    }
+
+
+
+    public List<OnlineGameTable> getTablesReadyToPlay() {
+        List<OnlineGameTable> readyTables = new ArrayList<OnlineGameTable>();
+        Iterator<OnlineGameTable> it = this.iterator();
+        while (it.hasNext()) {
+            OnlineGameTable table = it.next();
+            if (table.isReadyToPlay())
+                readyTables.add(table);
+        }
+        return readyTables;
+    }
+
+    /**
+     * @return the table which is ready to play and has playerName, otherwise return null of no tables like that.
+     */
+    public OnlineGameTable getTableReadyToPlay(String playerName) {
+        Iterator<OnlineGameTable> it = this.iterator();
+        while (it.hasNext()) {
+            OnlineGameTable table = it.next();
+            if (table.isReadyToPlay() && table.hasPlayer(playerName)) {
+                return table;
+            }
+        }
+        return null;
+    }
 
     /**
      * Add a new player to specified table.

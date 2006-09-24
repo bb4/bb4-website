@@ -27,7 +27,7 @@ public class OnlineGameTable implements Serializable {
     private GameOptions gameOptions_;
 
     // most recent player to join the table.
-    private Player newestPlayer_;
+    private Player newestHumanPlayer_;
 
 
     public OnlineGameTable(String name, Player initialPlayer, GameOptions options) {
@@ -37,12 +37,19 @@ public class OnlineGameTable implements Serializable {
     public OnlineGameTable(String name, Player owner, Player[] initialPlayers, GameOptions options) {
         name_ = name;
         owner_ = owner;
-        newestPlayer_ = owner;
+        newestHumanPlayer_ = owner;
         players_ = new LinkedList<Player>();
         gameOptions_ = options;
         for (Player p : initialPlayers) {
             players_.add(p);
         }
+    }
+
+    /**
+     * @return true if all the required players are seated.
+     */
+    public boolean isReadyToPlay() {
+        return players_.size() == getGameOptions().getMaxNumPlayers();
     }
 
     /**
@@ -68,8 +75,8 @@ public class OnlineGameTable implements Serializable {
         return owner_;
     }
 
-    public Player getNewestPlayer() {
-        return newestPlayer_;
+    public Player getNewestHumanPlayer() {
+        return newestHumanPlayer_;
     }
 
     public int getNumPlayersNeeded() {
@@ -96,7 +103,7 @@ public class OnlineGameTable implements Serializable {
 
     public void changeName(String oldName, String newName) {
         for (Player p : players_) {
-            if (p.getName().equals(oldName)) {                
+            if (p.getName().equals(oldName)) {
                 p.setName(newName);
             }
         }
@@ -104,13 +111,14 @@ public class OnlineGameTable implements Serializable {
 
     public void addPlayer(Player player) {
         players_.add(player);
-        newestPlayer_ = player;
+        if (player.isHuman())
+            newestHumanPlayer_ = player;
     }
 
     public void removePlayer(Player player) {
         players_.remove(player);
-        if (player.equals(newestPlayer_))
-            newestPlayer_ = null;
+        if (player.equals(newestHumanPlayer_))
+            newestHumanPlayer_ = null;
     }
 
     public boolean hasPlayer(String playerName) {
@@ -122,11 +130,20 @@ public class OnlineGameTable implements Serializable {
         return false;
     }
 
+
+    /**
+     *
+     * @return the names of the players in a comma delimited list.
+     */
+    public String getPlayersString() {
+        return players_.toString();
+    }
+
     public String toString()
     {
         StringBuilder buf = new StringBuilder(20);
         buf.append("Name: " + name_ + '\n');
-        buf.append("Players:\n"+ players_ + '\n');
+        buf.append("Players:\n"+ getPlayersString() + '\n');
         return buf.toString();
     }
 
