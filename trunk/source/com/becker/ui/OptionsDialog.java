@@ -118,7 +118,7 @@ public abstract class OptionsDialog extends JDialog implements ActionListener
 
     protected static Border createMarginBorder()
     {
-        return BorderFactory.createEmptyBorder(3,3,3,3);
+        return BorderFactory.createEmptyBorder(3, 3, 3, 3);
     }
     /**
      * cancel button pressed
