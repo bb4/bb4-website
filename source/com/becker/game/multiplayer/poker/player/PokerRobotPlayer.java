@@ -14,6 +14,8 @@ import java.awt.*;
  */
 public abstract class PokerRobotPlayer extends PokerPlayer
 {
+    private static final long serialVersionUID = 1;
+    
     RobotType robotType_;
 
     public PokerRobotPlayer(String name, int money, Color color, RobotType rType)

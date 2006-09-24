@@ -115,20 +115,31 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
 
     public void handleServerUpdate(GameCommand cmd) {
 
-        //System.out.println("got an update of the multiplayer table list from the server:\n" + cmd);
+        if (onlineGameTablesTable_ == null)
+            return; // not initialized yet.
 
+        //System.out.println("got an update of the multiplayer table list from the server:\n" + cmd);
         switch (cmd.getName())  {
             case UPDATE_TABLES :
                 OnlineGameTableList tableList = (OnlineGameTableList) cmd.getArgument();
-                //System.out.println("There were "+ tableList.size()+" tables returned from server.");
+                onlineGameTablesTable_.removeAllRows();
 
-                if (onlineGameTablesTable_ != null) {
-                    onlineGameTablesTable_.removeAllRows();
+                for (int i=0; i<tableList.size(); i++) {
+                    OnlineGameTable table = tableList.get(i);
+                    onlineGameTablesTable_.addRow(table, table.hasPlayer(currentName_));
+                }
 
-                    for (int i=0; i<tableList.size(); i++) {
-                        OnlineGameTable table = tableList.get(i);
-                        onlineGameTablesTable_.addRow(table, table.hasPlayer(currentName_));
-                    }
+                OnlineGameTable readyTable = tableList.getTableReadyToPlay(currentName_);
+                if (readyTable != null) {
+                    // then the table the player is sitting at is ready to begin play.
+                    JOptionPane.showMessageDialog(this,
+                         "Ready to Start", "All the players required ("
+                                           + readyTable.getPlayersString()
+                                           + ") have joined this table. Play will now begin. ",
+                         JOptionPane.INFORMATION_MESSAGE);
+                    // close the dlg and tell the server to start a thread to play the game
+                    this.setVisible( false );
+                    serverConnection_.sendCommand(new GameCommand(GameCommand.Name.START_GAME, readyTable));
                 }
                 break;
            default : assert false : "Unexpected command name :"+ cmd.getName();
@@ -172,11 +183,12 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
         if (!canceled)  {
 
             MultiGameOptions options = (MultiGameOptions)createGameTableDialog_.getOptions();
+
             OnlineGameTable newTable =
                 onlineGameTablesTable_.createOnlineTable(currentName_, options);
 
             // now add it to this list as a new row and tell the server to add it.
-            //onlineGameTablesTable_.addRow(newTable);
+            // onlineGameTablesTable_.addRow(newTable);
             serverConnection_.addGameTable(newTable);
         }
     }
@@ -188,11 +200,12 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
     private void joinDifferentTable(JoinButton b) {
 
         int joinRow = b.getRow();
-        System.out.println("attempting to join table "+ joinRow);
         PlayerTableModel m = onlineGameTablesTable_.getModel();
 
         for (int i=0; i<m.getRowCount(); i++) {
-            m.setValueAt(Boolean.valueOf(i != joinRow), i, 0);
+            // you can join tables other than the one you are at as long as they are not already playing.
+            boolean enableJoin = (i != joinRow) && !onlineGameTablesTable_.getGameTable(i).isReadyToPlay();
+            m.setValueAt(enableJoin, i, 0);
         }
         serverConnection_.joinTable(onlineGameTablesTable_.createPlayerForName(currentName_),
                                     onlineGameTablesTable_.getGameTable(joinRow));

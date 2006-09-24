@@ -13,7 +13,6 @@ import java.util.*;
  * Defines everything the computer needs to know to play Poker.
  *
  * ToDo list
- * - If a player quits he should be removed from a tables player list
  * - add host and port to game options
  * - use real faces for players
  *

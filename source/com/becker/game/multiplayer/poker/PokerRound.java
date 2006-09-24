@@ -3,17 +3,18 @@ package com.becker.game.multiplayer.poker;
 import com.becker.game.common.*;
 
 /**
- *  Captures the delta state change of everything that happened during one tround of the poker game.
- *  This should include the amount that each player has contributed to the pot.
+ * Captures the delta state change of everything that happened during one tround of the poker game.
+ * This should include the amount that each player has contributed to the pot.
+ * Allows for undo.
  *
- *  @see com.becker.game.multiplayer.poker.PokerTable
- *  @author Barry Becker
+ * @see com.becker.game.multiplayer.poker.PokerTable
+ * @author Barry Becker
  */
 public class PokerRound extends Move
 {
 
-    // a list of battle simulations
-    //private List contributions_;
+    // a list of player chip contributions to the pot.
+    // private List contributions_;
 
 
     /**

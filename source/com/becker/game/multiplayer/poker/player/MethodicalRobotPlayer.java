@@ -12,6 +12,7 @@ import java.awt.*;
  */
 public class MethodicalRobotPlayer extends PokerRobotPlayer
 {
+    private static final long serialVersionUID = 1;
 
     public MethodicalRobotPlayer(String name, int cash, Color color, RobotType rType)
     {

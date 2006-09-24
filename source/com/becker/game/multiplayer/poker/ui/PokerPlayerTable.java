@@ -3,7 +3,6 @@ package com.becker.game.multiplayer.poker.ui;
 
 import com.becker.game.common.*;
 import com.becker.game.multiplayer.common.ui.*;
-import com.becker.game.multiplayer.poker.*;
 import com.becker.game.multiplayer.poker.player.*;
 
 import javax.swing.table.*;
@@ -80,9 +79,9 @@ public class PokerPlayerTable extends PlayerTable
 
     protected Player createPlayer() {
         int ct = table_.getRowCount();
-        Color newColor = PokerPlayer.getNewPlayerColor((PokerPlayer[])getPlayers());
+        Color newColor = PokerPlayer.getNewPlayerColor(getPlayers());
         PokerPlayer player = PokerPlayer.createPokerPlayer(
-                                             "Player "+(ct+1), DEFAULT_CASH_AMOUNT, newColor, true);
+                                             "Robot "+(ct+1), DEFAULT_CASH_AMOUNT, newColor, true);
 
         return player;
     }

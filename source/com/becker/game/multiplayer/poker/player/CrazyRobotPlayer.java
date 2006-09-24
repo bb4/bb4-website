@@ -12,6 +12,8 @@ import java.awt.*;
  */
 public class CrazyRobotPlayer extends PokerRobotPlayer
 {
+    private static final long serialVersionUID = 1;
+    
     private static final int DESIRED_RAISE = 20;
 
     public CrazyRobotPlayer(String name, int cash, Color color, RobotType rType)
@@ -34,7 +36,7 @@ public class CrazyRobotPlayer extends PokerRobotPlayer
     }
 
     public int getRaise(PokerController pc, int callAmount) {
-        int allInAmt = pc.getAllInAmount() - getContribution();       
+        int allInAmt = pc.getAllInAmount() - getContribution();
         if (getHand().getScore() > 100) {
             return min(DESIRED_RAISE, getCash(), allInAmt);
         }
