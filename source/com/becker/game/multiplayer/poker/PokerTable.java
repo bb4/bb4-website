@@ -12,7 +12,6 @@ import com.becker.game.multiplayer.poker.player.*;
 public class PokerTable extends Board
 {
 
-
     /** constructor
      *  @param numRows num rows
      *  @param numCols num cols
@@ -37,7 +36,6 @@ public class PokerTable extends Board
     }
 
 
-    // must call reset() after changing the size
     public void setSize( int numRows, int numCols )
     {
         numRows_ = numRows;
@@ -53,7 +51,7 @@ public class PokerTable extends Board
         return rowsTimesCols_;
     }
 
-    private static final double RADIUS = .65;
+    private static final double RADIUS = 0.65;
     /**
      * place the players around the poker table
      * @param players
@@ -62,17 +60,17 @@ public class PokerTable extends Board
     public void initPlayers(PokerPlayer[] players, PokerController controller) {
         double angle = 0.6 * Math.PI;
         double angleIncrement = 2.0 * Math.PI / (players.length);
-        double rowRad = getNumRows()/2.0;
-        double colRad = getNumCols()/2.0;
+        double rowRad = getNumRows() >> 1;
+        double colRad = getNumCols() >> 1;
 
-        for (int i=0; i<players.length; i++) {
+        for (final PokerPlayer p : players) {
 
-            int row =  (int)(.93*rowRad + (RADIUS*rowRad) * (Math.sin(angle)));
-            int col =  (int)(.9*colRad + (RADIUS*colRad) * (Math.cos(angle)));
+            int row = (int) (0.93 * rowRad + (RADIUS * rowRad) * (Math.sin(angle)));
+            int col = (int) (0.9 * colRad + (RADIUS * colRad) * (Math.cos(angle)));
 
             BoardPosition position = getPosition(row, col);
-            position.setPiece(players[i].getPiece());
-            players[i].getPiece().setLocation(position.getLocation());
+            position.setPiece(p.getPiece());
+            p.getPiece().setLocation(position.getLocation());
             angle += angleIncrement;
         }
     }
@@ -91,18 +89,14 @@ public class PokerTable extends Board
     }
 
 
-    public void higlightPlanet() {
-
-    }
-
     /**
-     * For Poker, undoing a move means turning time back a year and
-     * restoring the state of the game one full turn earlier
+     * For Poker, undoing a move means turning time back a round and
+     * restoring the state of the game one full round earlier
      * @@ todo
      */
     protected void undoInternalMove( Move move )
     {
-        GameContext.log(0,  "undo no implemented yet." );
+        GameContext.log(0,  "undo no implemented yet for poker." );
         //clear(positions_[move.getToRow()][move.getToCol()]);
     }
 

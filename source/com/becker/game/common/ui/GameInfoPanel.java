@@ -16,6 +16,8 @@ import java.awt.*;
 public abstract class GameInfoPanel extends TexturedPanel implements GameChangedListener
 {
 
+    protected static final String COLON = ' ' + GameContext.getLabel("COLON")+ ' ';
+
     protected GameController controller_ = null;
 
     protected JFrame parent_;
@@ -23,9 +25,10 @@ public abstract class GameInfoPanel extends TexturedPanel implements GameChanged
     protected JLabel moveNumLabel_;
     protected JLabel playerLabel_;
 
-    protected static final Font SECTION_TITLE_FONT = new Font( "SansSerif", Font.BOLD, 11 );
-    protected static final Font BOLD_FONT = new Font( "SansSerif", Font.BOLD, 12 );
-    protected static final int DEFAULT_MIN_WIDTH = 200;
+    protected static final Font SECTION_TITLE_FONT = new Font( "SansSerif", Font.BOLD, 12 );
+    private static final Font PLAYER_FONT = new Font( "SansSerif", Font.BOLD, 12 );
+    protected static final Font LABEL_FONT = new Font( "SansSerif", Font.PLAIN, 12 );
+    protected static final int DEFAULT_MIN_WIDTH = 210;
 
     /**
      * Constructor
@@ -69,6 +72,13 @@ public abstract class GameInfoPanel extends TexturedPanel implements GameChanged
         return DEFAULT_MIN_WIDTH;
     }
 
+    protected void initPlayerLabel() {
+        playerLabel_ = new JLabel();
+        playerLabel_.setOpaque(true);
+        playerLabel_.setFont(PLAYER_FONT);
+        setPlayerLabel();
+    }
+
     /**
      * restore to new game state.
      */
@@ -97,12 +107,8 @@ public abstract class GameInfoPanel extends TexturedPanel implements GameChanged
     {
         JPanel generalPanel = createSectionPanel(GameContext.getLabel("GENERAL_INFO"));
 
-        JLabel turnLabel = createLabel(GameContext.getLabel("PLAYER_TO_MOVE_COLON"));
-        playerLabel_ = new JLabel();
-
-        playerLabel_.setOpaque(true);
-        playerLabel_.setFont(BOLD_FONT);
-        setPlayerLabel();
+        JLabel turnLabel = createLabel(GameContext.getLabel("PLAYER_TO_MOVE") + COLON);
+        initPlayerLabel();
 
         JLabel moveNumTextLabel = createLabel( getMoveNumLabel());
         moveNumTextLabel.setHorizontalAlignment(JLabel.LEFT);
@@ -120,7 +126,7 @@ public abstract class GameInfoPanel extends TexturedPanel implements GameChanged
 
     protected String getMoveNumLabel()
     {
-        return GameContext.getLabel("CURRENT_MOVE_NUM_COLON");
+        return GameContext.getLabel("CURRENT_MOVE_NUM" + COLON);
     }
 
 
@@ -181,6 +187,7 @@ public abstract class GameInfoPanel extends TexturedPanel implements GameChanged
     protected final JLabel createLabel(String s)
     {
         JLabel l = new JLabel(s);
+        l.setFont(LABEL_FONT);
         l.setOpaque(false);
         return l;
     }

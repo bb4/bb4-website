@@ -157,7 +157,6 @@ public abstract class OnlineGameServer extends JFrame {
 
                     // recieve the serielzed commands that are sent and process them.
                     GameCommand cmd = (GameCommand) iStream_.readObject();
-                    System.out.println("RECEIVED: "+cmd.getName());
 
                     // we got a change to the tables, update internal structure and broadcast new list.
                     cmdProcessor_.processCmd(cmd);
@@ -168,7 +167,7 @@ public abstract class OnlineGameServer extends JFrame {
 
                     //Send acknowledgment back to client
                     //oStream.writeObject(new GameCommand("received", cmd));
-                    text_.append("--- " + cmd.toString() + '\n');
+                    text_.append(cmd.toString() + '\n');
                 }
 
             }

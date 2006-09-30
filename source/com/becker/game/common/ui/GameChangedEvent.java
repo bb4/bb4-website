@@ -5,7 +5,7 @@ import com.becker.game.common.*;
 import java.awt.*;
 
 /**
- * This event gets fired whenever the Game state changes
+ * This event gets fired whenever the Game state changes.
  *
  * @see com.becker.game.common.ui.GameChangedListener
  *
@@ -39,7 +39,7 @@ public final class GameChangedEvent extends AWTEvent
     }
 
     /**
-     * @return the move that just caused the game changed event to fire
+     * @return the move that just caused the game changed event to fire.
      */
     public Move getMove()
     {

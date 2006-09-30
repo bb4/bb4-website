@@ -15,7 +15,7 @@ import java.text.*;
 public abstract class PokerPlayer extends MultiGamePlayer
 {
     private static final long serialVersionUID = 1;
-    
+
     // this player's home planet. (like earth is for humans)
     private PokerHand hand_;
     private PokerPlayerMarker piece_;
@@ -27,8 +27,6 @@ public abstract class PokerPlayer extends MultiGamePlayer
     private boolean outOfGame_;
     // the maount that this player has contributed to the pot
     private int contribution_;
-
-    public enum Action { FOLD, CALL, RAISE };
 
     public static final int DEFAULT_CASH = 100;
 

@@ -17,6 +17,7 @@ public final class Util
 
     private static final DecimalFormat expFormat_ = new DecimalFormat("###,###.##E0");
     private static final DecimalFormat format_ = new DecimalFormat("###,###.##");
+    private static final DecimalFormat intFormat_ = new DecimalFormat("#,###");
 
     private Util() {};
 
@@ -108,6 +109,16 @@ public final class Util
 
         return format_.format(num);
     }
+
+    /**
+     * @param num the number to format.
+     * @return a nicely formatted string representation of the number.
+     */
+    public static String formatNumber(int num)
+    {
+        return intFormat_.format(num);
+    }
+
 
     /**
      * @param className  the class to load.

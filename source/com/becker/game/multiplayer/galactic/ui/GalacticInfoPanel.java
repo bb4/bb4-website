@@ -84,7 +84,7 @@ class GalacticInfoPanel extends GameInfoPanel implements GameChangedListener, Ac
 
     protected String getMoveNumLabel()
     {
-        return GameContext.getLabel("CURRENT_YEAR_COLON");
+        return GameContext.getLabel("CURRENT_YEAR" + COLON);
     }
 
 
@@ -136,13 +136,10 @@ class GalacticInfoPanel extends GameInfoPanel implements GameChangedListener, Ac
     {
         JPanel generalPanel = createSectionPanel(GameContext.getLabel("GENERAL_INFO"));
 
-        JLabel turnLabel = createLabel(GameContext.getLabel("PLAYER_TO_MOVE_COLON"));
-        playerLabel_ = new JLabel();
-        playerLabel_.setOpaque(true);
-        playerLabel_.setFont(BOLD_FONT);
-        setPlayerLabel();
+        JLabel turnLabel = createLabel(GameContext.getLabel("PLAYER_TO_MOVE") + COLON);
+        initPlayerLabel();
 
-        JLabel moveNumTextLabel = createLabel( GameContext.getLabel("CURRENT_MOVE_NUM_COLON"));
+        JLabel moveNumTextLabel = createLabel( GameContext.getLabel("CURRENT_MOVE_NUM") + COLON);
         moveNumTextLabel.setHorizontalAlignment(JLabel.LEFT);
         moveNumLabel_ = createLabel( "  " );
 

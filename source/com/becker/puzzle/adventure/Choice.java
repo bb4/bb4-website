@@ -1,5 +1,8 @@
 package com.becker.puzzle.adventure;
 
+import org.w3c.dom.*;
+import com.becker.xml.*;
+
 /**
  * A choice that you can make in a scene.
  * Immutable.
@@ -15,6 +18,11 @@ public class Choice {
     public static final String QUIT = "Quit";
 
     public static final String PREVIOUS_SCENE = "last scene";
+
+    public Choice(Node choiceNode) {
+        this(DomUtil.getAttribute(choiceNode, "description"),
+             DomUtil.getAttribute(choiceNode, "resultScene"));
+    }
 
     public Choice(String desc, String dest) {
         description_ = desc;

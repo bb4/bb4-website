@@ -69,8 +69,6 @@ public abstract class GameBoardViewer
     protected static Cursor origCursor_ = null;
     protected Frame parent_ = null;
 
-
-
     // defaults for the grid and board colors.
     // The may be changed using the options panel in the ui.
     protected static final Color BACKGROUND_COLOR = GUIUtil.UI_COLOR_SECONDARY3;

@@ -23,19 +23,23 @@ public class MethodicalRobotPlayer extends PokerRobotPlayer
      *
      * @return an appropriate action based on the situation
      */
-    public Action getAction(PokerController pc) {
+    public PokerAction getAction(PokerController pc) {
         boolean othersFolded = allOthersFolded(pc);
 
+        PokerAction.Name action;
+        int raise = 0;
         if (getHand().getScore() >= 10 || Math.random() > 0.1 || othersFolded) {
-            return Action.CALL;
+            action = PokerAction.Name.CALL;
         } else if (getCash() > getCallAmount(pc) && Math.random() > 0.1) {
-            return Action.RAISE;
+            action = PokerAction.Name.RAISE;
+            raise = getRaise(pc);
         } else {
-            return Action.FOLD;
+            action = PokerAction.Name.FOLD;
         }
+        return new PokerAction(getName(), action, raise);
     }
 
-    public int getRaise(PokerController pc, int callAmount) {
+    protected int getRaise(PokerController pc) {
         int allInAmt = pc.getAllInAmount() - this.getContribution();
         int max = getCash();
 

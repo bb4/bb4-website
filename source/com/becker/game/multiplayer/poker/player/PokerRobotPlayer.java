@@ -15,7 +15,7 @@ import java.awt.*;
 public abstract class PokerRobotPlayer extends PokerPlayer
 {
     private static final long serialVersionUID = 1;
-    
+
     RobotType robotType_;
 
     public PokerRobotPlayer(String name, int money, Color color, RobotType rType)
@@ -26,20 +26,20 @@ public abstract class PokerRobotPlayer extends PokerPlayer
 
 
     public String getType() {
-            return  robotType_.getName();
+        return  robotType_.getName();
     }
 
     /**
      *
      * @return an appropriate action based on the situation
      */
-    public abstract Action getAction(PokerController pc);
+    public abstract PokerAction getAction(PokerController pc);
 
     /**
      *
      * @return the amount that the robot raises if he raises.
      */
-    public abstract int getRaise(PokerController pc, int callAmount);
+    protected abstract int getRaise(PokerController pc);
 
     /**
      *
