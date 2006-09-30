@@ -1,5 +1,7 @@
 package com.becker.puzzle.adventure;
 
+import org.w3c.dom.*;
+import com.becker.xml.*;
 
 
 /**
@@ -16,11 +18,25 @@ public class Scene {
     private boolean isFirst_;
 
 
+    public Scene(Node sceneNode) {
+        System.out.println("sceneNode.getFirstChild()="+sceneNode.getFirstChild());
+        System.out.println("text="+sceneNode.getFirstChild().getTextContent());
+        String description = sceneNode.getFirstChild().getTextContent();
+        commonInit(DomUtil.getAttribute(sceneNode, "name"),
+                  description,
+                  getChoices(sceneNode));
+    }
+
     public Scene(String name, String text, Choice[] choices) {
+        commonInit(name, text, choices);
+    }
+
+    private void commonInit(String name, String text, Choice[] choices) {
         name_ = name;
         text_ = text;
         choices_ = choices;
     }
+
 
     /**
      * use this constructor if this is a terminal scene. (i.e. no choices)
@@ -32,6 +48,20 @@ public class Scene {
     }
 
 
+    private static Choice[] getChoices(Node sceneNode) {
+        Choice[] choices = null;
+        // if there are choices they will be the second element (right after description).
+        NodeList children = sceneNode.getChildNodes();
+        if (children.getLength() > 1) {
+            Node choicesNode = children.item(1);
+            NodeList choiceList = choicesNode.getChildNodes();
+            choices = new Choice[choiceList.getLength()];
+            for (int i=0; i<choiceList.getLength(); i++) {
+                choices[i] = new Choice(choiceList.item(i));
+            }
+        }
+        return choices;
+    }
     /**
      * @return the name of the scene
      */

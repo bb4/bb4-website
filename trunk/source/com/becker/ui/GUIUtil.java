@@ -44,14 +44,14 @@ public final class GUIUtil
     public static final Color UI_WHITE = new Color( 250, 250, 255 );
 
     // isn't used for much (bg when resizing?)
-    public static final Color UI_COLOR_PRIMARY1 = new Color( 0, 0, 51 );
+    public static final Color UI_COLOR_PRIMARY1 = new Color( 7, 2, 71 );  //51
     // menu bgs, selected item in dropdown menu, small square in selected buttons, progress bar fill
     public static final Color UI_COLOR_PRIMARY2 = new Color( 234, 234, 255 );
     // tooltip backgrounds, large colored areas, active titlebar, text selection
     public static final Color UI_COLOR_PRIMARY3 = new Color( 255, 255, 153 );
 
     // very dark. for tab, button and checkbox borders
-    public static final Color UI_COLOR_SECONDARY1 = new Color( 0, 0, 51 );
+    public static final Color UI_COLOR_SECONDARY1 = new Color( 7, 2, 71 ); //51
     // deselected tab backgrounds, dimmed button borders
     public static final Color UI_COLOR_SECONDARY2 = new Color( 153, 153, 204 );
     //( 204, 204, 255 );  // almost all backgrounds, active tabs.

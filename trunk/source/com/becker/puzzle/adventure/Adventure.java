@@ -1,5 +1,8 @@
 package com.becker.puzzle.adventure;
 
+import com.becker.xml.*;
+import org.w3c.dom.*;
+
 import java.io.*;
 import java.util.*;
 
@@ -17,7 +20,7 @@ import java.util.*;
  *  It should be a simple matter to have the compat automatically carried out in order to determine the winner and
  *  supbract hit point losses as appropriate. We can also take into other effects like disease or healing effects.
  *  The player should also be given the option to flee, or instigate other action during the melee.
- * 3) Add a graphicsal User Interface so that the text will wrap nicely in a text area and we can show pictures
+ * 3) Add a graphical User Interface so that the text will wrap nicely in a text area and we can show pictures
  *  for each scene. Furthermore we could have windows that pop up to show the players stats or item inventory.
  * 4) Make multi-player (hard)
  *
@@ -36,11 +39,26 @@ public class Adventure {
     public static final Scene TERMINAL_SCENE = new Scene(Choice.QUIT, "Goodbye", null);
 
 
+    public Adventure(Document document) {
+        Node root = DomUtil.getRootNode(document);
+        NodeList children = root.getChildNodes();
+        Scene[] scenes = new Scene[children.getLength()];
+        for (int i=0; i < children.getLength(); i++) {
+            //if (children.item(i).hasChildNodes())
+            scenes[i] = new Scene(children.item(i));
+        }
+        initFromScenes(scenes);
+    }
+
     /**
      * Construct an adventure given a list of scenes.
      * @param scenes
      */
     public Adventure(Scene[] scenes) {
+        initFromScenes(scenes);
+    }
+
+    public void initFromScenes(Scene[] scenes)  {
         scenes_ = scenes;
         sceneSet_ = new HashMap(scenes_.length);
         for (final Scene scene : scenes) {
@@ -112,7 +130,16 @@ public class Adventure {
      */
     public static void main( String[] args ) throws IOException {
 
-        Adventure story = new Adventure(SceneData.getScenes());
+        //assert(args.length == 1) : "You must specify a script file as an argument (e.g. ludlowScript.xml).";
+        File file = new File("/home/becker/projects/java_projects/source/com/becker/puzzle/adventure/ludlowScript.xml");
+        if (args.length == 1)
+            file = new File(args[0]);
+
+        Document document = DomUtil.parseXMLFile(file);
+        DomUtil.printTree(document, 0);
+
+        //Adventure story = new Adventure(SceneData.getScenes());
+        Adventure story = new Adventure(document);
 
         Scanner scanner = new Scanner(System.in);
         do {

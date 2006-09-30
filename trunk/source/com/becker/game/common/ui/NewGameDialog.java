@@ -137,7 +137,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ActionListe
         JPanel p = new JPanel();
         p.setLayout( new BoxLayout( p, BoxLayout.Y_AXIS ) );
         p.setBorder( BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), "Board Configuration" ) );
-        JLabel label = new JLabel( GameContext.getLabel("BOARD_SIZE_COLON") );
+        JLabel label = new JLabel( GameContext.getLabel("BOARD_SIZE") + COLON );
         label.setAlignmentX( Component.LEFT_ALIGNMENT );
         p.add( label );
 
@@ -181,7 +181,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ActionListe
         openFileButton_.addActionListener( this );
         openFileButton_.setAlignmentX( Component.LEFT_ALIGNMENT );
 
-        JLabel label = new JLabel(GameContext.getLabel("FILE_NAME_COLON") );
+        JLabel label = new JLabel(GameContext.getLabel("FILE_NAME") + COLON);
         label.setAlignmentX( Component.LEFT_ALIGNMENT );
         p.add( label );
 

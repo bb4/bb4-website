@@ -165,8 +165,10 @@ public abstract class TwoPlayerController extends GameController
      */
     public final double getChanceOfPlayer1Winning()
     {
-        if ( board_.getLastMove() == null )
+        // if true then too early in the game to tell.
+        if ( board_.getMoveList().size() < 4 )
             return 0.5f;
+
         // @@ is this right?
         // we can use this formula to estimate the outcome:
         double inherVal = ((TwoPlayerMove)board_.getLastMove()).getInheritedValue();

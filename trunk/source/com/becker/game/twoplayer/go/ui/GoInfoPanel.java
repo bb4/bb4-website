@@ -27,7 +27,6 @@ final class GoInfoPanel extends TwoPlayerInfoPanel implements GameChangedListene
     private JLabel p1TerritoryLabel_;
     private JLabel p2TerritoryLabel_;
 
-    private static final String COLON = " " + GameContext.getLabel("COLON")+ " ";
 
     private JPanel legendPanel_;
 
@@ -37,7 +36,7 @@ final class GoInfoPanel extends TwoPlayerInfoPanel implements GameChangedListene
         super( controller );
     }
 
-    protected final String getTitleText()
+    protected String getTitleText()
     {
         return GameContext.getLabel("GO_INFO");
     }
@@ -57,7 +56,7 @@ final class GoInfoPanel extends TwoPlayerInfoPanel implements GameChangedListene
      * This panel shows information that is specific to go - specifically
      * captures and territory estimates
      */
-    protected final JPanel createCustomInfoPanel()
+    protected JPanel createCustomInfoPanel()
     {
         JPanel customPanel = createPanel();
         customPanel.setLayout( new BoxLayout( customPanel, BoxLayout.Y_AXIS ) );
@@ -69,14 +68,16 @@ final class GoInfoPanel extends TwoPlayerInfoPanel implements GameChangedListene
         p2TerritoryLabel_ = createLabel();
 
         JPanel capturesPanel = createSectionPanel(GameContext.getLabel("NUMBER_OF_CAPTURES"));
-        capturesPanel.add( createRowEntryPanel( createLabel( getController().getPlayer1().getName()+COLON ), p1CapturesLabel_ ) );
-        capturesPanel.add( createRowEntryPanel( createLabel( getController().getPlayer2().getName()+COLON ), p2CapturesLabel_ ) );
+        JLabel p1 = createLabel( getController().getPlayer1().getName() + COLON );
+        JLabel p2 = createLabel( getController().getPlayer2().getName() + COLON );
+        capturesPanel.add(createRowEntryPanel( p1, p1CapturesLabel_ ));
+        capturesPanel.add(createRowEntryPanel( p2, p2CapturesLabel_ ));
 
         JPanel territoryPanel = createSectionPanel(GameContext.getLabel("EST_TERRITORY"));
-        territoryPanel.add(
-                createRowEntryPanel( createLabel( GameContext.getLabel("EST_BLACK_TERR_COLON") ), p1TerritoryLabel_ ) );
-        territoryPanel.add(
-                createRowEntryPanel( createLabel( GameContext.getLabel("EST_WHITE_TERR_COLON") ), p2TerritoryLabel_ ) );
+        JLabel blackTerr = createLabel( GameContext.getLabel("EST_BLACK_TERR") + COLON );
+        JLabel whiteTerr = createLabel( GameContext.getLabel("EST_WHITE_TERR") + COLON );
+        territoryPanel.add(createRowEntryPanel( blackTerr, p1TerritoryLabel_ ));
+        territoryPanel.add(createRowEntryPanel( whiteTerr, p2TerritoryLabel_ ));
 
         customPanel.add( capturesPanel );
         customPanel.add( territoryPanel );
@@ -93,7 +94,7 @@ final class GoInfoPanel extends TwoPlayerInfoPanel implements GameChangedListene
     /**
      * update the info with controller stats when the game changes.
      */
-    public final void gameChanged( GameChangedEvent gce )
+    public void gameChanged( GameChangedEvent gce )
     {
         super.gameChanged( gce );
         GoController goController = (GoController) controller_;

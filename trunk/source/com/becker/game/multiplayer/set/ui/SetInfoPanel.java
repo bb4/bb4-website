@@ -72,10 +72,10 @@ class SetInfoPanel extends GameInfoPanel
     {
         JPanel generalPanel = createSectionPanel(GameContext.getLabel("GENERAL_INFO"));
 
-        JLabel numSetsOnBoardText = createLabel(GameContext.getLabel("NUMBER_OF_SETS_ON_BOARD_COLON"));
+        JLabel numSetsOnBoardText = createLabel(GameContext.getLabel("NUMBER_OF_SETS_ON_BOARD") + COLON);
         numSetsOnBoardLabel_ = createLabel( " " );
 
-        JLabel numCardsRemainingText = createLabel( GameContext.getLabel("NUMBER_OF_CARDS_REMAINING_COLON"));
+        JLabel numCardsRemainingText = createLabel( GameContext.getLabel("NUMBER_OF_CARDS_REMAINING") + COLON);
         numCardsRemainingLabel_ = createLabel( " " );
         numCardsRemainingLabel_.setHorizontalAlignment(JLabel.LEFT);
 

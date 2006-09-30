@@ -44,18 +44,15 @@ public class TwoPlayerInfoPanel extends GameInfoPanel implements GameChangedList
     {
         JPanel generalPanel = createSectionPanel(GameContext.getLabel("GENERAL_INFO"));
 
-        JLabel turnLabel = createLabel(GameContext.getLabel("PLAYER_TO_MOVE_COLON"));
-        playerLabel_ = new JLabel();
-        playerLabel_.setOpaque(true);
-        playerLabel_.setFont(BOLD_FONT);
-        setPlayerLabel();
+        JLabel turnLabel = createLabel(GameContext.getLabel("PLAYER_TO_MOVE") + COLON);
+        initPlayerLabel();
 
-        JLabel moveNumTextLabel = createLabel( GameContext.getLabel("CURRENT_MOVE_NUM_COLON"));
+        JLabel moveNumTextLabel = createLabel( GameContext.getLabel("CURRENT_MOVE_NUM") + COLON);
         moveNumTextLabel.setHorizontalAlignment(JLabel.LEFT);
         moveNumLabel_ = createLabel( "  " );
 
         Object[] args = {getController().getPlayer1().getName()};
-        String m = MessageFormat.format(GameContext.getLabel("CHANCE_OF_WINNING"), args );
+        String m = MessageFormat.format(GameContext.getLabel("CHANCE_OF_WINNING") + COLON, args );
         JLabel chanceOfWinningTextLabel = createLabel( m );
         chanceOfWinningTextLabel.setHorizontalAlignment(JLabel.LEFT);
         chanceOfWinningLabel_ = createLabel( "   " );

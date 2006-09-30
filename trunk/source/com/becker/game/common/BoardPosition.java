@@ -141,8 +141,6 @@ public class BoardPosition
         setPiece( null );
     }
 
-
-
     /**
      * @return a string representation of the board position
      */

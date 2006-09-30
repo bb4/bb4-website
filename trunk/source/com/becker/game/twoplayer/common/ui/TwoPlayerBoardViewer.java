@@ -265,9 +265,9 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
         public void actionPerformed(ActionEvent evt) {
             int percentDone = get2PlayerController().getSearchStrategy().getPercentDone();
             progressBar_.setValue( percentDone );
-            String note = GameContext.getLabel("MOVES_CONSIDERED")
-                   + get2PlayerController().getSearchStrategy().getNumMovesConsidered()
-                   + "  ("+ percentDone +"%)";
+            String numMoves = Util.formatNumber(get2PlayerController().getSearchStrategy().getNumMovesConsidered());
+            String note = GameContext.getLabel("MOVES_CONSIDERED") + ' '
+                   + numMoves + "  ("+ percentDone +"%)";
 
             progressBar_.setToolTipText(note);
             progressBar_.setString(note);

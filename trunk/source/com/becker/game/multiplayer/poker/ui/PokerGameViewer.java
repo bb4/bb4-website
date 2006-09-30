@@ -136,15 +136,17 @@ public class PokerGameViewer extends GameBoardViewer
 
         String msg = null;
         int callAmount = pc.getCurrentMaxContribution() - robot.getContribution();
-        switch (robot.getAction(pc)) {
+
+        PokerAction action = robot.getAction(pc);
+
+        switch (action.getActionName()) {
             case FOLD :
                 robot.setFold(true);
                 msg = robot.getName() + " folded.";
                 break;
             case CALL :
-
-                System.out.println("PGV: robot call amount = currentMaxContrib - robot.getContrib) = "
-                                   + pc.getCurrentMaxContribution()+" - "+robot.getContribution());
+                // System.out.println("PGV: robot call amount = currentMaxContrib - robot.getContrib) = "
+                //                   + pc.getCurrentMaxContribution()+" - "+robot.getContribution());
                 if (callAmount <= robot.getCash())   {
                     robot.contributeToPot(pc, callAmount);
                     msg = robot.getName() + " has called by adding "+ callAmount + " to the pot.";
@@ -155,13 +157,13 @@ public class PokerGameViewer extends GameBoardViewer
                 break;
             case RAISE :
                 robot.contributeToPot(pc, callAmount);
-                int raise = robot.getRaise(pc, callAmount);
+                int raise = action.getRaiseAmount();
                 robot.contributeToPot(pc, raise);
                 msg = robot.getName() + " has met the "+callAmount + ", and rasied the pot by " + raise;
                 break;
         }
 
-        JOptionPane.showMessageDialog(parent_, msg, "Robot Action", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(parent_, msg, "Robot Name", JOptionPane.INFORMATION_MESSAGE);
         refresh();
         pc.advanceToNextPlayer();
 
@@ -198,7 +200,6 @@ public class PokerGameViewer extends GameBoardViewer
     }
 
 
-
     /**
      * show who won the round and dispurse the pot
      */
@@ -223,13 +224,11 @@ public class PokerGameViewer extends GameBoardViewer
     }
 
 
-
     public void highlightPlayer(Player player, boolean hightlighted)
     {
         // player.setHighlighted(hightlighted);
         this.refresh();
     }
-
 
 
     protected void drawBackground(Graphics g, int startPos, int rightEdgePos, int bottomEdgePos )
