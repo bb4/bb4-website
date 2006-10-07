@@ -1,6 +1,8 @@
 package com.becker.puzzle.adventure;
 
 /**
+ * @@ NOW obsolete. delete. Use xml (e.g. ludlowScript.xml) to define scripts instead.
+ *
  * @author Barry Becker Date: Apr 22, 2006
  */
 public final class SceneData {

@@ -199,19 +199,19 @@ many of the tables that display database objects be sortable, filterable,
 searchable, and pageable. We considered several approaches for this:</p>
 
 <p style='margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 lfo3;
-tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol'>·<span
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol'>ï¿½<span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span><![endif]>Interactive applet &#8211; rejected because of long load
 time.<o:p></o:p></p>
 
 <p style='margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 lfo3;
-tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol'>·<span
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol'>ï¿½<span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span><![endif]>Interactive javascript object &#8211; rejected because it
 would not scale to millions of rows (and would not be pageable).<o:p></o:p></p>
 
 <p style='margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 lfo3;
-tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol'>·<span
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol'>ï¿½<span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span><![endif]>Use existing java HTMLTable class that is used
 extensively in contact center. &#8211; Rejected for the following reasons. Layout of
@@ -222,7 +222,7 @@ supported, because all rows are loaded in memory. All rows are returned and
 then paged through. Filtering is not supported.<o:p></o:p></p>
 
 <p style='margin-left:.5in;text-indent:-.25in;mso-list:l0 level1 lfo3;
-tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol'>·<span
+tab-stops:list .5in'><![if !supportLists]><span style='font-family:Symbol'>ï¿½<span
 style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span><![endif]>Create a new HTMLUI component (table) which has java
 backend and jsp front end &#8211; This is the approach we selected because it offered

@@ -19,8 +19,6 @@ public class Scene {
 
 
     public Scene(Node sceneNode) {
-        System.out.println("sceneNode.getFirstChild()="+sceneNode.getFirstChild());
-        System.out.println("text="+sceneNode.getFirstChild().getTextContent());
         String description = sceneNode.getFirstChild().getTextContent();
         commonInit(DomUtil.getAttribute(sceneNode, "name"),
                   description,

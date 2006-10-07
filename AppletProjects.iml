@@ -7,9 +7,14 @@
     <output-test url="file://$MODULE_DIR$/classes" />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/lib" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/lib/oalnf" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/source" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/thirdparty/gogui-0.7pre2/src" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/packageDependencies" />
+      <excludeFolder url="file://$MODULE_DIR$/pasta" />
+      <excludeFolder url="file://$MODULE_DIR$/performance" />
+      <excludeFolder url="file://$MODULE_DIR$/temp" />
+      <excludeFolder url="file://$MODULE_DIR$/test" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
@@ -234,6 +239,24 @@
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/junit.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/jigo.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/gogui7.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

@@ -40,7 +40,7 @@ public class Adventure {
 
 
     public Adventure(Document document) {
-        Node root = DomUtil.getRootNode(document);
+        Node root = document.getDocumentElement();  //DomUtil.getRootNode(document);
         NodeList children = root.getChildNodes();
         Scene[] scenes = new Scene[children.getLength()];
         for (int i=0; i < children.getLength(); i++) {
@@ -136,7 +136,7 @@ public class Adventure {
             file = new File(args[0]);
 
         Document document = DomUtil.parseXMLFile(file);
-        DomUtil.printTree(document, 0);
+        //DomUtil.printTree(document, 0);
 
         //Adventure story = new Adventure(SceneData.getScenes());
         Adventure story = new Adventure(document);
@@ -146,6 +146,7 @@ public class Adventure {
             System.out.println(story.getCurrentScene());
 
             int c = -1;
+
             if (story.getCurrentScene().hasChoices())  {
                 int nextInt = scanner.nextInt();
                 c = nextInt - 1;

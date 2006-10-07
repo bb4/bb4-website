@@ -69,6 +69,8 @@
           <include name="com/becker/game/common/*.class"/>
           <include name="com/becker/game/common/ui/*.class"/>
           <include name="com/becker/game/card/*.class"/>
+          <include name="com/becker/game/online/*.class"/>
+          <include name="com/becker/game/online/ui/*.class"/>
           <include name="com/becker/java2d/*Gradient*.class"/>
         </fileset>
         <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
@@ -215,6 +217,8 @@
           <include name="com/becker/game/multiplayer/galactic/ui/*.class"/>
           <include name="com/becker/game/multiplayer/common/*.class"/>
           <include name="com/becker/game/multiplayer/common/ui/*.class"/>
+          <include name="com/becker/game/multiplayer/online/*.class"/>
+          <include name="com/becker/game/multiplayer/online/ui/*.class"/>
         </fileset>
         <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
       </copy>
@@ -223,6 +227,10 @@
         <param name="pattern" value="*.png"/>
       </antcall -->
       <antcall target="copyResources">
+        <param name="path" value="game/multiplayer/galactic/images"/>
+        <param name="pattern" value="*.gif"/>
+      </antcall>
+      <antcall target="copyResources">
         <param name="path" value="game/multiplayer/galactic/resources"/>
         <param name="pattern" value="*.properties"/>
       </antcall>
@@ -230,7 +238,7 @@
       <sleep seconds="1" />
       <delete dir="${stagingDir}/com"/>
 
-      <!-- copy the class files that are needed for galactic empire deployment -->
+      <!-- copy the class files that are needed for Set deployment -->
       <copy todir="${stagingDir}">
         <fileset dir="${classesDir}">
           <include name="com/becker/game/multiplayer/set/*.class"/>
@@ -240,10 +248,6 @@
         </fileset>
         <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
       </copy>
-      <!--antcall target="copyResources">
-        <param name="path" value="game/multiplayer/set/ui/images"/>
-        <param name="pattern" value="*.png"/>
-      </antcall -->
       <antcall target="copyResources">
         <param name="path" value="game/multiplayer/set/resources"/>
         <param name="pattern" value="*.properties"/>
@@ -258,15 +262,13 @@
         <fileset dir="${classesDir}">
           <include name="com/becker/game/multiplayer/poker/*.class"/>
           <include name="com/becker/game/multiplayer/poker/ui/*.class"/>
+          <include name="com/becker/game/multiplayer/poker/online/*.class"/>
+          <include name="com/becker/game/multiplayer/poker/online/ui/*.class"/>
           <include name="com/becker/game/multiplayer/common/*.class"/>
           <include name="com/becker/game/multiplayer/common/ui/*.class"/>
         </fileset>
         <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
       </copy>
-      <!--antcall target="copyResources">
-        <param name="path" value="game/multiplayer/poker/ui/images"/>
-        <param name="pattern" value="*.png"/>
-      </antcall -->
       <antcall target="copyResources">
         <param name="path" value="game/multiplayer/poker/ui/images"/>
         <param name="pattern" value="*.gif"/>
@@ -331,7 +333,19 @@
       <sleep seconds="1" />
       <delete dir="${stagingDir}/com"/>
 
-      <!-- copy the class files that are needed for redpuzzle deployment -->
+      <!-- copy the class files that are needed for sudoku deployment -->
+      <copy todir="${stagingDir}">
+        <fileset dir="${classesDir}">
+          <include name="com/becker/puzzle/sudoku/*.class"/>
+          <include name="com/becker/puzzle/sudoku/test/*.class"/>
+        </fileset>
+        <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve directory hierarchy -->
+      </copy>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/sudoku.jar"/>
+      <sleep seconds="1" />
+      <delete dir="${stagingDir}/com"/>
+
+      <!-- copy the class files that are needed for hiq deployment -->
       <copy todir="${stagingDir}">
         <fileset dir="${classesDir}">
           <include name="com/becker/puzzle/hiq/*.class"/>
