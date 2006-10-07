@@ -156,6 +156,13 @@
     </antcall>
   </target>
 
+  <target name="executePokerServer" depends="compile" description=" Run online poker server">
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.game.multiplayer.poker.online.OnlinePokerServer"/>
+      <param name="libPath" value="${libDir}/jai_codec.jar;"/>
+    </antcall>
+  </target>
+
   <target name="executePoker" depends="compile" description=" Run poker card game app">
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
@@ -207,7 +214,7 @@
     </antcall>
   </target>
 
-  <target name="executeLiquid" description="Run the Liquid simulator">
+  <target name="executeLiquid" description="Run the Liquid screenSaver">
     <antcall target="executeProgram">
       <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
       <param name="libPath" value="${libDir}/vecmath.jar"/>
@@ -215,22 +222,41 @@
     </antcall>
   </target>
 
-   <target name="executeTrebuchet" description="Run the Trebuchet simulator">
+   <target name="executeTrebuchet" depends="compile" description="Run the Trebuchet simulator">
+     <antcall target="executeProgram">
+       <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
+       <param name="libPath" value="${libDir}/vecmath.jar"/>
+       <param name="arg1" value="com.becker.simulation.trebuchet.TrebuchetSimulator"/>
+     </antcall>
+  </target>
+
+  <target name="executeAdventure" depends="compile" description="An Exciting text based adventure game">
+    <echo message="now executing Adventure"/>
     <antcall target="executeProgram">
-      <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
-      <param name="libPath" value="${libDir}/vecmath.jar"/>
-      <param name="arg1" value="com.becker.simulation.trebuchet.TrebuchetSimulator"/>
+      <param name="className" value="com.becker.puzzle.adventure.Adventure"/>
+      <param name="arg1" value="/home/becker/projects/java_projects/source/com/becker/puzzle/adventure/ludlowScript.xml"/>
     </antcall>
   </target>
 
-  <target name="executeRedPuzzle" depends="compile" description=" run the Red Puzzle simulator">
+  <target name="executeRedPuzzle" depends="compile" description=" run the Red Puzzle screenSaver">
     <echo message="now executing red puzzle"/>
-    <java classname="com.becker.puzzle.redpuzzle.RedPuzzle" classpath="${classesDir}" fork="true" jvm="${java15}" maxmemory="128M"/>
+    <java classname="com.becker.puzzle.redpuzzle.RedPuzzle" classpath="${classesDir}" fork="true" jvm="${java15}" maxmemory="128M">
+        <jvmarg value="${assertionsFlag}"/>
+    </java>
   </target>
 
-  <target name="executeHiQPuzzle" depends="compile" description=" run the Hi-Q Puzzle simulator">
+  <target name="executeSudoku" depends="compile" description=" run the Sudoku solver">
+    <echo message="now executing Sudoku"/>
+    <java classname="com.becker.puzzle.sudoku.SudokuPuzzle" classpath="${classesDir}" fork="true" jvm="${java15}" maxmemory="128M">
+        <jvmarg value="${assertionsFlag}"/>
+    </java>
+  </target>
+
+  <target name="executeHiQPuzzle" depends="compile" description=" run the Hi-Q Puzzle screenSaver">
     <echo message="now executing Hi-Q"/>
-    <java classname="com.becker.puzzle.hiq.HiQPuzzle" classpath="${classesDir}" fork="true" jvm="${java15}" maxmemory="800M"/>
+    <java classname="com.becker.puzzle.hiq.HiQPuzzle" classpath="${classesDir}" fork="true" jvm="${java15}" maxmemory="800M">
+        <jvmarg value="${assertionsFlag}"/>
+    </java>
   </target>
 
   <target name="XMLViewer" depends="compile" description=" run the XML Viewer app">
@@ -275,6 +301,7 @@
         <jvmarg value="${assertionsFlag}"/>
     </java>
   </target>
+
   <target name="executeProgram2" depends="compile" description="Run a program">
     <java classname="${className}" classpath="${classesDir};${libPath}" fork="true" jvm="${java15}">
         <arg value="${arg1}"/>

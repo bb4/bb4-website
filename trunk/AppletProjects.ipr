@@ -6,7 +6,7 @@
       <additionalClassPath />
       <antReference projectDefault="true" />
       <customJdkName value="" />
-      <maximumHeapSize value="128" />
+      <maximumHeapSize value="255" />
       <properties />
     </buildFile>
   </component>
@@ -15,8 +15,27 @@
     <option name="CODE_STYLE_SCHEME" value="" />
   </component>
   <component name="CodeStyleSettingsManager">
-    <option name="PER_PROJECT_SETTINGS" />
-    <option name="USE_PER_PROJECT_SETTINGS" value="false" />
+    <option name="PER_PROJECT_SETTINGS">
+      <value>
+        <option name="ELSE_ON_NEW_LINE" value="true" />
+        <option name="CATCH_ON_NEW_LINE" value="true" />
+        <option name="FINALLY_ON_NEW_LINE" value="true" />
+        <option name="ALIGN_MULTILINE_PARAMETERS_IN_CALLS" value="true" />
+        <option name="ALIGN_MULTILINE_THROWS_LIST" value="true" />
+        <option name="USE_SINGLE_CLASS_IMPORTS" value="false" />
+        <option name="CLASS_COUNT_TO_USE_IMPORT_ON_DEMAND" value="3" />
+        <option name="CALL_PARAMETERS_WRAP" value="1" />
+        <option name="METHOD_PARAMETERS_WRAP" value="1" />
+        <option name="EXTENDS_KEYWORD_WRAP" value="1" />
+        <option name="THROWS_KEYWORD_WRAP" value="1" />
+        <option name="WRAP_COMMENTS" value="true" />
+        <option name="DOWHILE_BRACE_FORCE" value="3" />
+        <option name="WHILE_BRACE_FORCE" value="3" />
+        <option name="FOR_BRACE_FORCE" value="3" />
+        <option name="JD_KEEP_EMPTY_EXCEPTION" value="false" />
+      </value>
+    </option>
+    <option name="USE_PER_PROJECT_SETTINGS" value="true" />
   </component>
   <component name="CompilerConfiguration">
     <option name="DEFAULT_COMPILER" value="Javac" />
@@ -198,7 +217,7 @@
       <module fileurl="file://$PROJECT_DIR$/AppletProjects.iml" filepath="$PROJECT_DIR$/AppletProjects.iml" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" assert-keyword="true" jdk-15="true" project-jdk-name="java version &quot;1.5.0.2&quot;" />
+  <component name="ProjectRootManager" version="2" assert-keyword="true" jdk-15="true" project-jdk-name="java version &quot;1.5.0_05&quot;" />
   <component name="RmicSettings">
     <option name="IS_EANABLED" value="false" />
     <option name="DEBUGGING_INFO" value="true" />
@@ -210,6 +229,10 @@
     <option enabled="false" />
   </component>
   <component name="WebRootContainer" />
+  <component name="com.siyeh.metrics.MetricsReloaded">
+    <option name="selectedProfile" value="LineOfCode" />
+    <option name="autoscroll" value="false" />
+  </component>
   <component name="libraryTable">
     <library name="appletLibs">
       <CLASSES>
