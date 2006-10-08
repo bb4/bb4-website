@@ -163,21 +163,21 @@
     <first-group selected-file="file://$PROJECT_DIR$/source/com/becker/puzzle/adventure/ludlowScript.xml">
       <entry file="file://$PROJECT_DIR$/source/com/becker/game/common/resources/coreMessages_vi.properties" pinned="false">
         <provider selected="true" editor-type-id="text-editor">
-          <state line="137" column="21" selection-start="5328" selection-end="5328" vertical-scroll-proportion="0.6941986">
+          <state line="137" column="21" selection-start="5328" selection-end="5328" vertical-scroll-proportion="0.71091443">
             <folding />
           </state>
         </provider>
       </entry>
       <entry file="file://$PROJECT_DIR$/source/com/becker/game/multiplayer/galactic/resources/galacticMessages.properties" pinned="false">
         <provider selected="true" editor-type-id="text-editor">
-          <state line="56" column="27" selection-start="2711" selection-end="2711" vertical-scroll-proportion="0.71583086">
+          <state line="56" column="27" selection-start="2711" selection-end="2711" vertical-scroll-proportion="0.73353">
             <folding />
           </state>
         </provider>
       </entry>
       <entry file="file://$PROJECT_DIR$/source/com/becker/game/common/ui/GameInfoPanel.java" pinned="false">
         <provider selected="true" editor-type-id="text-editor">
-          <state line="15" column="22" selection-start="299" selection-end="299" vertical-scroll-proportion="0.022286821">
+          <state line="15" column="22" selection-start="299" selection-end="299" vertical-scroll-proportion="0.023255814">
             <folding />
           </state>
         </provider>
@@ -191,14 +191,14 @@
       </entry>
       <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/adventure/ludlowScript.xml" pinned="false">
         <provider selected="true" editor-type-id="text-editor">
-          <state line="176" column="95" selection-start="8508" selection-end="8508" vertical-scroll-proportion="0.48279253">
+          <state line="174" column="74" selection-start="8388" selection-end="8388" vertical-scroll-proportion="0.4582104">
             <folding />
           </state>
         </provider>
       </entry>
       <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/adventure/Adventure.java" pinned="false">
         <provider selected="true" editor-type-id="text-editor">
-          <state line="141" column="122" selection-start="5063" selection-end="5063" vertical-scroll-proportion="0.44573644">
+          <state line="141" column="122" selection-start="5063" selection-end="5063" vertical-scroll-proportion="0.46899223">
             <folding />
           </state>
         </provider>
@@ -212,21 +212,21 @@
       </entry>
       <entry file="jar:///usr/java/jdk1.5.0_05/src.zip!/java/util/Scanner.java" pinned="false">
         <provider selected="true" editor-type-id="text-editor">
-          <state line="1999" column="0" selection-start="76249" selection-end="76249" vertical-scroll-proportion="0.34108528">
+          <state line="1999" column="0" selection-start="76249" selection-end="76249" vertical-scroll-proportion="0.3498062">
             <folding />
           </state>
         </provider>
       </entry>
       <entry file="file://$PROJECT_DIR$/source/com/becker/xml/AikidoAppGenerator.java" pinned="false">
         <provider selected="true" editor-type-id="text-editor">
-          <state line="78" column="49" selection-start="2898" selection-end="2898" vertical-scroll-proportion="0.3411996">
+          <state line="78" column="49" selection-start="2898" selection-end="2898" vertical-scroll-proportion="0.35004917">
             <folding />
           </state>
         </provider>
       </entry>
       <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/adventure/Scene.java" pinned="false">
         <provider selected="true" editor-type-id="text-editor">
-          <state line="20" column="133" selection-start="536" selection-end="536" vertical-scroll-proportion="0.3120155">
+          <state line="20" column="133" selection-start="536" selection-end="536" vertical-scroll-proportion="0.31976745">
             <folding>
               <element signature="imports" expanded="true" />
             </folding>
@@ -242,42 +242,42 @@
       </entry>
       <entry file="file://$PROJECT_DIR$/source/com/becker/xml/DomUtil.java" pinned="false">
         <provider selected="true" editor-type-id="text-editor">
-          <state line="168" column="6" selection-start="5571" selection-end="5571" vertical-scroll-proportion="0.72868216">
+          <state line="168" column="6" selection-start="5571" selection-end="5571" vertical-scroll-proportion="0.746124">
             <folding />
           </state>
         </provider>
       </entry>
       <entry file="jar:///usr/java/jdk1.5.0_05/src.zip!/org/w3c/dom/Document.java" pinned="false">
         <provider selected="true" editor-type-id="text-editor">
-          <state line="59" column="19" selection-start="3031" selection-end="3031" vertical-scroll-proportion="0.3411996">
+          <state line="59" column="19" selection-start="3031" selection-end="3031" vertical-scroll-proportion="0.35004917">
             <folding />
           </state>
         </provider>
       </entry>
       <entry file="file://$PROJECT_DIR$/source/com/becker/xml/DomEcho.java" pinned="false">
         <provider selected="true" editor-type-id="text-editor">
-          <state line="120" column="31" selection-start="4035" selection-end="4035" vertical-scroll-proportion="0.61821705">
+          <state line="120" column="31" selection-start="4035" selection-end="4035" vertical-scroll-proportion="0.63275194">
             <folding />
           </state>
         </provider>
       </entry>
       <entry file="file://$PROJECT_DIR$/ant/build.xml" pinned="false">
         <provider selected="true" editor-type-id="text-editor">
-          <state line="236" column="46" selection-start="10453" selection-end="10453" vertical-scroll-proportion="0.74139625">
+          <state line="236" column="46" selection-start="10453" selection-end="10453" vertical-scroll-proportion="0.7590954">
             <folding />
           </state>
         </provider>
       </entry>
       <entry file="file://$PROJECT_DIR$/source/com/becker/game/twoplayer/go/GoBoard.java" pinned="false">
         <provider selected="true" editor-type-id="text-editor">
-          <state line="438" column="41" selection-start="15291" selection-end="15291" vertical-scroll-proportion="0.66085273">
+          <state line="438" column="41" selection-start="15291" selection-end="15291" vertical-scroll-proportion="0.6763566">
             <folding />
           </state>
         </provider>
       </entry>
       <entry file="file://$PROJECT_DIR$/source/com/becker/game/twoplayer/common/TwoPlayerController.java" pinned="false">
         <provider selected="true" editor-type-id="text-editor">
-          <state line="171" column="31" selection-start="5073" selection-end="5073" vertical-scroll-proportion="0.5503876">
+          <state line="171" column="31" selection-start="5073" selection-end="5073" vertical-scroll-proportion="0.56395346">
             <folding />
           </state>
         </provider>
@@ -291,14 +291,14 @@
       </entry>
       <entry file="file://$PROJECT_DIR$/source/com/becker/game/multiplayer/galactic/ui/GalacticInfoPanel.java" pinned="false">
         <provider selected="true" editor-type-id="text-editor">
-          <state line="139" column="26" selection-start="4260" selection-end="4260" vertical-scroll-proportion="0.30523255">
+          <state line="139" column="26" selection-start="4260" selection-end="4260" vertical-scroll-proportion="0.3129845">
             <folding />
           </state>
         </provider>
       </entry>
       <entry file="file://$PROJECT_DIR$/source/com/becker/game/multiplayer/poker/ui/PokerInfoPanel.java" pinned="false">
         <provider selected="true" editor-type-id="text-editor">
-          <state line="160" column="26" selection-start="4797" selection-end="4797" vertical-scroll-proportion="0.30523255">
+          <state line="160" column="26" selection-start="4797" selection-end="4797" vertical-scroll-proportion="0.3129845">
             <folding />
           </state>
         </provider>
@@ -353,26 +353,26 @@
   </component>
   <component name="NamedScopeManager" />
   <component name="PackagesPane">
-    <expanded_node url="com.becker" module="AppletProjects" type="package" />
     <expanded_node url="com" module="AppletProjects" type="package" />
     <expanded_node url="java" module="AppletProjects" type="package" />
     <expanded_node url="html" module="AppletProjects" type="package" />
+    <expanded_node url="com.becker" module="AppletProjects" type="package" />
     <expanded_node url="" module="AppletProjects" type="module" />
   </component>
   <component name="ProjectPane">
-    <expanded_node url="file://$PROJECT_DIR$/source/com/becker/game" module="AppletProjects" type="directory" />
-    <expanded_node url="file://$PROJECT_DIR$" module="AppletProjects" type="directory" />
-    <expanded_node url="file://$PROJECT_DIR$/source/com/becker/puzzle" module="AppletProjects" type="directory" />
+    <expanded_node url="file://$PROJECT_DIR$/source/com/becker/misc" module="AppletProjects" type="directory" />
     <expanded_node url="" module="AppletProjects" type="module" />
     <expanded_node url="file://$PROJECT_DIR$/source/com" module="AppletProjects" type="directory" />
-    <expanded_node url="file://$PROJECT_DIR$/ant" module="AppletProjects" type="directory" />
-    <expanded_node url="file://$PROJECT_DIR$/source/com/becker/misc/brian" module="AppletProjects" type="directory" />
-    <expanded_node url="file://$PROJECT_DIR$/source/com/becker/misc" module="AppletProjects" type="directory" />
-    <expanded_node url="file://$PROJECT_DIR$/source/com/becker/puzzle/adventure" module="AppletProjects" type="directory" />
-    <expanded_node url="file://$PROJECT_DIR$/source/com/becker/xml" module="AppletProjects" type="directory" />
-    <expanded_node url="file://$PROJECT_DIR$/source/com/becker/misc/givechange" module="AppletProjects" type="directory" />
     <expanded_node url="file://$PROJECT_DIR$/source/com/becker" module="AppletProjects" type="directory" />
+    <expanded_node url="file://$PROJECT_DIR$/source/com/becker/puzzle/adventure" module="AppletProjects" type="directory" />
+    <expanded_node url="file://$PROJECT_DIR$/ant" module="AppletProjects" type="directory" />
+    <expanded_node url="file://$PROJECT_DIR$/source/com/becker/game" module="AppletProjects" type="directory" />
+    <expanded_node url="file://$PROJECT_DIR$/source/com/becker/misc/givechange" module="AppletProjects" type="directory" />
+    <expanded_node url="file://$PROJECT_DIR$/source/com/becker/puzzle" module="AppletProjects" type="directory" />
     <expanded_node url="file://$PROJECT_DIR$/source" module="AppletProjects" type="directory" />
+    <expanded_node url="file://$PROJECT_DIR$/source/com/becker/xml" module="AppletProjects" type="directory" />
+    <expanded_node url="file://$PROJECT_DIR$" module="AppletProjects" type="directory" />
+    <expanded_node url="file://$PROJECT_DIR$/source/com/becker/misc/brian" module="AppletProjects" type="directory" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" splitterProportion="0.5">
@@ -421,20 +421,6 @@
       <option name="SERVER_NAME" value="myserver" />
       <option name="DOMAIN_NAME" value="mydomain" />
     </configuration>
-    <configuration selected="false" default="true" type="Remote" factoryName="Remote">
-      <option name="USE_SOCKET_TRANSPORT" value="true" />
-      <option name="SERVER_MODE" value="false" />
-      <option name="SHMEM_ADDRESS" value="javadebug" />
-      <option name="HOST" value="localhost" />
-      <option name="PORT" value="5005" />
-    </configuration>
-    <configuration selected="false" default="true" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
-      <module name="" />
-    </configuration>
     <configuration selected="false" default="true" type="JUnit" factoryName="JUnit">
       <module name="" />
       <option name="PACKAGE_NAME" />
@@ -458,6 +444,20 @@
       <option name="HEIGHT" value="300" />
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <option name="VM_PARAMETERS" />
+    </configuration>
+    <configuration selected="false" default="true" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <module name="" />
+    </configuration>
+    <configuration selected="false" default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
     </configuration>
     <configuration selected="false" default="false" name="game appProfile" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.becker.game.common.ui.GameApp" />
@@ -567,10 +567,10 @@
     <layout>
       <window_info id="CVS" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.33" order="7" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.33024117" order="6" />
-      <window_info id="Project" active="false" anchor="right" auto_hide="false" internal_type="docked" type="docked" visible="true" weight="0.18872017" order="3" x="2839" y="44" width="322" height="1078" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="sliding" type="floating" visible="true" weight="0.38397017" order="9" x="2197" y="624" width="1002" height="571" />
+      <window_info id="Project" active="false" anchor="right" auto_hide="false" internal_type="docked" type="docked" visible="true" weight="0.18655097" order="3" x="2839" y="44" width="322" height="1078" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="sliding" type="floating" visible="false" weight="0.38397017" order="9" x="2197" y="624" width="1002" height="571" />
       <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.24989173" order="4" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="floating" visible="true" weight="0.27317554" order="8" x="2337" y="586" width="1411" height="491" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="floating" visible="true" weight="0.27317554" order="8" x="1807" y="705" width="1411" height="491" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="floating" visible="false" weight="0.40093023" order="5" x="1941" y="51" width="1236" height="1001" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="floating" visible="false" weight="0.33024117" order="8" x="702" y="128" width="2246" height="850" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="docked" type="floating" visible="true" weight="0.2503268" order="1" x="2676" y="0" width="368" height="953" />
@@ -794,21 +794,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/source/com/becker/game/common/resources/coreMessages_vi.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="137" column="21" selection-start="5328" selection-end="5328" vertical-scroll-proportion="0.6941986">
+        <state line="137" column="21" selection-start="5328" selection-end="5328" vertical-scroll-proportion="0.71091443">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/source/com/becker/game/multiplayer/galactic/resources/galacticMessages.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="27" selection-start="2711" selection-end="2711" vertical-scroll-proportion="0.71583086">
+        <state line="56" column="27" selection-start="2711" selection-end="2711" vertical-scroll-proportion="0.73353">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/source/com/becker/game/common/ui/GameInfoPanel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="22" selection-start="299" selection-end="299" vertical-scroll-proportion="0.022286821">
+        <state line="15" column="22" selection-start="299" selection-end="299" vertical-scroll-proportion="0.023255814">
           <folding />
         </state>
       </provider>
@@ -822,22 +822,45 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/adventure/ludlowScript.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="176" column="95" selection-start="8508" selection-end="8508" vertical-scroll-proportion="0.48279253">
+        <state line="174" column="74" selection-start="8388" selection-end="8388" vertical-scroll-proportion="0.4582104">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/adventure/Adventure.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="141" column="122" selection-start="5063" selection-end="5063" vertical-scroll-proportion="0.46899223">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/adventure/SceneData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="99" selection-start="1289" selection-end="1289" vertical-scroll-proportion="0.4975418">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="jar:///usr/java/jdk1.5.0_05/src.zip!/java/util/Scanner.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1999" column="0" selection-start="76249" selection-end="76249" vertical-scroll-proportion="0.34108528">
+        <state line="1999" column="0" selection-start="76249" selection-end="76249" vertical-scroll-proportion="0.3498062">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/source/com/becker/xml/AikidoAppGenerator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="78" column="49" selection-start="2898" selection-end="2898" vertical-scroll-proportion="0.3411996">
+        <state line="78" column="49" selection-start="2898" selection-end="2898" vertical-scroll-proportion="0.35004917">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/adventure/Scene.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="133" selection-start="536" selection-end="536" vertical-scroll-proportion="0.31976745">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -848,44 +871,44 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar:///usr/java/jdk1.5.0_05/src.zip!/org/w3c/dom/Document.java">
+    <entry file="file://$PROJECT_DIR$/source/com/becker/xml/DomUtil.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="19" selection-start="3031" selection-end="3031" vertical-scroll-proportion="0.3411996">
+        <state line="168" column="6" selection-start="5571" selection-end="5571" vertical-scroll-proportion="0.746124">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/xml/DomUtil.java">
+    <entry file="jar:///usr/java/jdk1.5.0_05/src.zip!/org/w3c/dom/Document.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="168" column="6" selection-start="5571" selection-end="5571" vertical-scroll-proportion="0.72868216">
+        <state line="59" column="19" selection-start="3031" selection-end="3031" vertical-scroll-proportion="0.35004917">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/source/com/becker/xml/DomEcho.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="120" column="31" selection-start="4035" selection-end="4035" vertical-scroll-proportion="0.61821705">
+        <state line="120" column="31" selection-start="4035" selection-end="4035" vertical-scroll-proportion="0.63275194">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ant/build.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="236" column="46" selection-start="10453" selection-end="10453" vertical-scroll-proportion="0.74139625">
+        <state line="236" column="46" selection-start="10453" selection-end="10453" vertical-scroll-proportion="0.7590954">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/source/com/becker/game/twoplayer/go/GoBoard.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="438" column="41" selection-start="15291" selection-end="15291" vertical-scroll-proportion="0.66085273">
+        <state line="438" column="41" selection-start="15291" selection-end="15291" vertical-scroll-proportion="0.6763566">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/source/com/becker/game/twoplayer/common/TwoPlayerController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="171" column="31" selection-start="5073" selection-end="5073" vertical-scroll-proportion="0.5503876">
+        <state line="171" column="31" selection-start="5073" selection-end="5073" vertical-scroll-proportion="0.56395346">
           <folding />
         </state>
       </provider>
@@ -899,37 +922,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/source/com/becker/game/multiplayer/galactic/ui/GalacticInfoPanel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="139" column="26" selection-start="4260" selection-end="4260" vertical-scroll-proportion="0.30523255">
+        <state line="139" column="26" selection-start="4260" selection-end="4260" vertical-scroll-proportion="0.3129845">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/source/com/becker/game/multiplayer/poker/ui/PokerInfoPanel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="160" column="26" selection-start="4797" selection-end="4797" vertical-scroll-proportion="0.30523255">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/adventure/SceneData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="99" selection-start="1289" selection-end="1289" vertical-scroll-proportion="0.4975418">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/adventure/Scene.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="133" selection-start="536" selection-end="536" vertical-scroll-proportion="0.3120155">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/adventure/Adventure.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="141" column="122" selection-start="5063" selection-end="5063" vertical-scroll-proportion="0.44573644">
+        <state line="160" column="26" selection-start="4797" selection-end="4797" vertical-scroll-proportion="0.3129845">
           <folding />
         </state>
       </provider>
