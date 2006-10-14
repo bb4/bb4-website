@@ -4,6 +4,7 @@ import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.search.SearchStrategy;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.online.*;
+import com.becker.common.*;
 import go.Point;
 import gtp.GtpServer;
 import utils.Options;
@@ -369,7 +370,9 @@ public class GtpTesujisoftGoServer
             if (opt.isSet("help"))
             {
                 String helpText =
-                    "Usage: java -classpath /home/becker/projects/java_projects/classes com.becker.game.twoplayer.go.GtpTesujisoftGoServer [options]\n" +
+                    "Usage: java -classpath "+
+                        Util.PROJECT_DIR + 
+                        "/classes com.becker.game.twoplayer.go.GtpTesujisoftGoServer [options]\n" +
                         '\n' +
                     "-config       config file\n" +
                     "-help         display this help and exit\n" +
