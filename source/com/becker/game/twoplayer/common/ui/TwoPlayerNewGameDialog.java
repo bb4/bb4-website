@@ -128,12 +128,12 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
 
     protected String getPlayer1Label()
     {
-        return GameContext.getLabel("FIRST_PLAYER" + COLON);
+        return GameContext.getLabel("FIRST_PLAYER" ) + COLON;
     }
 
     protected String getPlayer2Label()
     {
-        return GameContext.getLabel("SECOND_PLAYER" + COLON);
+        return GameContext.getLabel("SECOND_PLAYER") + COLON;
     }
 
     private JPanel createPlayerEntry( String message,

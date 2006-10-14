@@ -204,7 +204,7 @@ public class PenteController extends TwoPlayerController
     protected static void worthDebug( char c, StringBuffer line, int pos, int diff )
     {
         GameContext.log( 2,
-                "Direction: " + c + " " + line + "Pos: " + pos + "  difference:" + diff );
+                "Direction: " + c + ' ' + line + "Pos: " + pos + "  difference:" + diff );
     }
 
     private static void lineAppend( BoardPosition pos, StringBuffer line )
@@ -321,8 +321,6 @@ public class PenteController extends TwoPlayerController
     }
 
 
-
-
     public Searchable getSearchable() {
          return new PenteSearchable();
      }
@@ -337,16 +335,16 @@ public class PenteController extends TwoPlayerController
         {
             List moveList = new LinkedList();
             int i,j;
-            int Ncols = board_.getNumCols();
-            int Nrows = board_.getNumRows();
+            int ncols = board_.getNumCols();
+            int nrows = board_.getNumRows();
 
             PenteBoard pb = (PenteBoard) board_;
             pb.determineCandidateMoves();
 
             boolean player1 = !(lastMove.isPlayer1());
 
-            for ( i = 1; i <= Ncols; i++ )      //cols
-                for ( j = 1; j <= Nrows; j++ )    //rows
+            for ( i = 1; i <= ncols; i++ )      //cols
+                for ( j = 1; j <= nrows; j++ )    //rows
                     if ( pb.isCandidateMove( j, i ) ) {
                         TwoPlayerMove m = TwoPlayerMove.createMove( j, i, lastMove.getValue(), new GamePiece(player1));
                         pb.makeMove( m );
