@@ -3,7 +3,12 @@
   <component name="AntConfiguration">
     <defaultAnt bundledAnt="true" />
     <buildFile url="file://$PROJECT_DIR$/ant/build.xml">
-      <additionalClassPath />
+      <additionalClassPath>
+        <entry path="file:///usr/share/ant/lib/javancss2ant.jar" />
+        <entry path="file:///usr/share/ant/lib/ccl.jar" />
+        <entry path="file:///usr/share/ant/lib/javancss.jar" />
+        <entry path="file:///usr/share/ant/lib/jhbasic.jar" />
+      </additionalClassPath>
       <antReference projectDefault="true" />
       <customJdkName value="" />
       <maximumHeapSize value="255" />
@@ -230,7 +235,7 @@
   </component>
   <component name="WebRootContainer" />
   <component name="com.siyeh.metrics.MetricsReloaded">
-    <option name="selectedProfile" value="LineOfCode" />
+    <option name="selectedProfile" value="intellijGameMetrics06" />
     <option name="autoscroll" value="false" />
   </component>
   <component name="libraryTable">

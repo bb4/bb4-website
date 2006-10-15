@@ -16,8 +16,8 @@
   <property name="libDir" value="../lib"/>
   <!-- place to put .class files, images and resources, so they can be jar'd up -->
   <property name="stagingDir" value="../temp/classes"/>
-  <!-- root dir for auxillieary ant libraries. standby is "/usr/share" or "/usr/local/Intellij/idea-2253/lib/ant/lib"-->
-  <property name="antlibRoot" value="/usr/share/ant"/>
+  <!-- root dir for auxillieary ant libraries. standby is "/usr/share/ant" or "/usr/local/Intellij/idea-2253/lib/ant"-->
+  <property name="antHome" value="/usr/share/ant"/>
   <!-- the base game applicaiton class -->
   <property name="gameAppClass" value="com.becker.game.common.ui.GameApp"/>
   <!-- the jvm to use when executing -->
@@ -29,13 +29,14 @@
   <!-- Load additional tasks -->
   <taskdef resource="net/sf/antcontrib/antcontrib.properties">
     <classpath>
-      <pathelement location="${antlibRoot}/ant/lib/ant-contrib-0.6.jar"/>
+      <pathelement location="${antHome}/lib/ant-contrib-0.6.jar"/>
     </classpath>
   </taskdef>
 
-  <!-- source metrics
-  <taskdef name="javancss" classname="javancss.JavancssAntTask" classpath="${antlibRoot}/javancss21.41/lib"/>
-  -->
+  <!-- source metrics -->
+  <taskdef name="javancss"
+           classname="javancss.JavancssAntTask"
+           classpath="${antHome}/lib"/>    <!-- old: javancss.JavancssAntTask net.jernigan.javancss2ant.JavaNCSS -->
 
 
   <path id="compile.classpath">
@@ -78,14 +79,20 @@
   </target>
 
 
-  <target name="game metrics" depends="compile" description="calculate metrics (eg lines of code) for all the source files in the project">
-    <javancss srcdir="${sourceDir}/com/becker/game" generateReport="true" outputfile="../performance/javancss_metrics1.txt" format="plain">
+  <target name="game metrics" depends="compile"
+      description="calculate metrics (e.g. lines of code) for all the source files in the project">
+    <javancss srcdir="${sourceDir}/com/becker/game"
+         generateReport="true"
+         packageMetrics="true"
+         classMetrics="false"
+         functionMetrics="false"
+         outputfile="../performance/javancss_metrics.txt"
+         format="plain">
       <include name="**/*.java"/>
     </javancss>
   </target>
 
-
-  <target name="clean" depends="init" description="Cleans out all the existing compiled classes and $(distributionDir}">
+  <target name="clean" depends="init" description="Cleans out all the existing compiled classes and ${distributionDir}">
     <delete dir="${classesDir}"/>
     <delete dir="${distributionDir}"/>
     <ant antfile="rmi.xml" inheritall="true" target="rmi_clean"/>
