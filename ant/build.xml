@@ -170,7 +170,7 @@
     </antcall>
   </target>
 
-  <target name="executePoker" depends="compile" description=" Run poker card game app">
+  <target name="executePoker" depends="compile" description="Run poker card game app">
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>

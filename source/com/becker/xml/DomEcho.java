@@ -64,7 +64,7 @@ public class DomEcho  extends JPanel
              if (p != null) {
                  AdapterNode adpNode =
                     (AdapterNode) p.getLastPathComponent();
-                 NamedNodeMap attribMap = adpNode.domNode.getAttributes();
+                 NamedNodeMap attribMap = adpNode.getDomNode().getAttributes();
                  String attribs = DomUtil.getAttributeList(attribMap);
 
                  htmlPane.setText(attribs);
