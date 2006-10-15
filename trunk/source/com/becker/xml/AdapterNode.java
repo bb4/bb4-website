@@ -1,5 +1,7 @@
 package com.becker.xml;
 
+import org.w3c.dom.*;
+
 /**
  *  This class wraps a DOM node and returns the text we want to
  *  display in the tree. It also returns children, index values,
@@ -7,13 +9,13 @@ package com.becker.xml;
  */
     public class AdapterNode
     {
-        org.w3c.dom.Node domNode;
+        private Node domNode_;
 
-        boolean compress = false;
+        private boolean compress_ = false;
 
         // An array of names for DOM node-types
         // (Array indexes = nodeType() values.)
-        static final String[] typeName = {
+        private static final String[] typeName = {
             "none",
             "Element",
             "Attr",
@@ -30,48 +32,48 @@ package com.becker.xml;
             "Use"
         };
 
-        static final int ELEMENT_TYPE =   1;
-        static final int ATTR_TYPE =      2;
-        static final int TEXT_TYPE =      3;
-        static final int CDATA_TYPE =     4;
-        static final int ENTITYREF_TYPE = 5;
-        static final int ENTITY_TYPE =    6;
-        static final int PROCINSTR_TYPE = 7;
-        static final int COMMENT_TYPE =   8;
-        static final int DOCUMENT_TYPE =  9;
-        static final int DOCTYPE_TYPE =  10;
-        static final int DOCFRAG_TYPE =  11;
-        static final int NOTATION_TYPE = 12;
-        static final int USE_TYPE = 13;
+        private static final int ELEMENT_TYPE =   1;
+        private static final int ATTR_TYPE =      2;
+        private static final int TEXT_TYPE =      3;
+        private static final int CDATA_TYPE =     4;
+        private static final int ENTITYREF_TYPE = 5;
+        private static final int ENTITY_TYPE =    6;
+        private static final int PROCINSTR_TYPE = 7;
+        private static final int COMMENT_TYPE =   8;
+        private static final int DOCUMENT_TYPE =  9;
+        private static final int DOCTYPE_TYPE =  10;
+        private static final int DOCFRAG_TYPE =  11;
+        private static final int NOTATION_TYPE = 12;
+        private static final int USE_TYPE = 13;
 
 
       // Construct an Adapter node from a DOM node
-      public AdapterNode(org.w3c.dom.Node node) {
-        domNode = node;
+      public AdapterNode(Node node) {
+        domNode_ = node;
       }
 
       // Return a string that identifies this node in the tree
       // *** Refer to table at top of org.w3c.dom.Node ***
       public String toString() {
-        String s = typeName[domNode.getNodeType()];
-        String nodeName = domNode.getNodeName();
-        if (! nodeName.startsWith("#")) {
+        String s = typeName[domNode_.getNodeType()];
+        String nodeName = domNode_.getNodeName();
+        if (! "#".startsWith(nodeName)) {
            s += ": " + nodeName;
         }
-        if (compress) {
+        if (compress_) {
            String t = content().trim();
            int x = t.indexOf("\n");
            if (x >= 0) t = t.substring(0, x);
-           s += " " + t;
+           s += ' ' + t;
            return s;
         }
-        if (domNode.getNodeValue() != null) {
+        if (domNode_.getNodeValue() != null) {
            if (s.startsWith("ProcInstr"))
               s += ", ";
            else
               s += ": ";
            // Trim the value to get rid of NL's at the front
-           String t = domNode.getNodeValue().trim();
+           String t = domNode_.getNodeValue().trim();
            int x = t.indexOf("\n");
            if (x >= 0) t = t.substring(0, x);
            s += t;
@@ -81,9 +83,9 @@ package com.becker.xml;
 
       public String content() {
         String s = "";
-        org.w3c.dom.NodeList nodeList = domNode.getChildNodes();
+        NodeList nodeList = domNode_.getChildNodes();
         for (int i=0; i<nodeList.getLength(); i++) {
-          org.w3c.dom.Node node = nodeList.item(i);
+          Node node = nodeList.item(i);
           int type = node.getNodeType();
           AdapterNode adpNode = new AdapterNode(node); //inefficient, but works
           if (type == ELEMENT_TYPE) {
@@ -98,9 +100,9 @@ package com.becker.xml;
             //   Convert ITEM elements to html lists using
             //   <ul>, <li>, </ul> tags
 
-            s += "<" + node.getNodeName() + ">";
+            s += '<' + node.getNodeName() + '>';
             s += adpNode.content();
-            s += "</" + node.getNodeName() + ">";
+            s += "</" + node.getNodeName() + '>';
           } else if (type == TEXT_TYPE) {
             s += node.getNodeValue();
           } else if (type == ENTITYREF_TYPE) {
@@ -112,7 +114,8 @@ package com.becker.xml;
             //   (because EntityRef can contain multiple subelements)
             // Convert angle brackets and ampersands for display
             StringBuffer sb = new StringBuffer( node.getNodeValue() );
-            for (int j=0; j<sb.length(); j++) {
+            int j=0;
+            while (j<sb.length()) {
               if (sb.charAt(j) == '<') {
                 sb.setCharAt(j, '&');
                 sb.insert(j+1, "lt;");
@@ -122,6 +125,7 @@ package com.becker.xml;
                 sb.insert(j+1, "amp;");
                 j += 4;
               }
+              j++;
             }
             s += "<pre>" + sb + "\n</pre>";
           }
@@ -146,20 +150,20 @@ package com.becker.xml;
         int count = childCount();
         for (int i=0; i<count; i++) {
           AdapterNode n = this.child(i);
-          if (child.domNode == n.domNode) return i;
+          if (child.domNode_ == n.domNode_) return i;
         }
         return -1; // Should never get here.
       }
 
       public AdapterNode child(int searchIndex) {
         //Note: JTree index is zero-based.
-        org.w3c.dom.Node node =
-             domNode.getChildNodes().item(searchIndex);
-        if (compress) {
+        Node node =
+             domNode_.getChildNodes().item(searchIndex);
+        if (compress_) {
           // Return Nth displayable node
           int elementNodeIndex = 0;
-          for (int i=0; i<domNode.getChildNodes().getLength(); i++) {
-            node = domNode.getChildNodes().item(i);
+          for (int i=0; i<domNode_.getChildNodes().getLength(); i++) {
+            node = domNode_.getChildNodes().item(i);
             if (node.getNodeType() == ELEMENT_TYPE
             && treeElement( node.getNodeName() )
             && elementNodeIndex++ == searchIndex) {
@@ -171,13 +175,13 @@ package com.becker.xml;
       }
 
       public int childCount() {
-        if (!compress) {
+        if (!compress_) {
           // Indent this
-          return domNode.getChildNodes().getLength();
+          return domNode_.getChildNodes().getLength();
         }
         int count = 0;
-        for (int i=0; i<domNode.getChildNodes().getLength(); i++) {
-           org.w3c.dom.Node node = domNode.getChildNodes().item(i);
+        for (int i=0; i<domNode_.getChildNodes().getLength(); i++) {
+           Node node = domNode_.getChildNodes().item(i);
            if (node.getNodeType() == ELEMENT_TYPE
            && treeElement( node.getNodeName() ))
            {
@@ -196,7 +200,7 @@ package com.becker.xml;
     // has to be defined internally.
     // Extra credit: Read the list from a file
     // Super-extra credit: Process a DTD and build the list.
-   static String[] treeElementNames = {
+   private static String[] treeElementNames = {
         "slideshow",
         "slide",
         "title",         // For slideshow #1
@@ -205,10 +209,14 @@ package com.becker.xml;
     };
 
     boolean treeElement(String elementName) {
-      for (int i=0; i<treeElementNames.length; i++) {
-        if ( elementName.equals(treeElementNames[i]) ) return true;
-      }
+        for (final String n : treeElementNames) {
+            if (elementName.equals(n)) return true;
+        }
       return false;
+    }
+
+    public Node getDomNode() {
+        return domNode_;
     }
 
 }
