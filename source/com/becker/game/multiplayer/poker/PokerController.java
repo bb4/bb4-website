@@ -306,10 +306,7 @@ public class PokerController extends GameController
             }
         }
 
-        if ((playIndex_ < getNumNonFoldedPlayers()) ) {
-            return false;
-        }
-        return true;
+        return ((playIndex_ >= getNumNonFoldedPlayers()) );
     }
 
     /**
@@ -363,10 +360,7 @@ public class PokerController extends GameController
                 numNotFolded++;
             }
         }
-        if (numNotFolded == 1) {
-            return true;
-        }
-        return false;
+        return (numNotFolded == 1);
     }
 
     /**
@@ -451,8 +445,7 @@ public class PokerController extends GameController
      */
     public List generateMoves( Move lastMove, ParameterArray weights, boolean player1sPerspective )
     {
-        List moveList = new LinkedList();
-        return moveList;
+        return new LinkedList();
     }
 
     /**

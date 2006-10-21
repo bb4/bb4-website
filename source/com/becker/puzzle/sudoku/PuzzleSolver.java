@@ -22,8 +22,8 @@ public class PuzzleSolver {
     /**
      * Solves the puzzle.
      * This implements the main algorithm for solving the red puzzle.
-     * @param board
-     * @return
+     * @param board board to show solution on.
+     * @return true if solved.
      */
     public boolean solvePuzzle( Board board) {
         return solvePuzzle(board, null);
@@ -36,8 +36,8 @@ public class PuzzleSolver {
     /**
      * Solves the puzzle.
      * This implements the main algorithm for solving the red puzzle.
-     * @param puzzlePanel
-     * @return
+     * @param puzzlePanel the viewer
+     * @return true if solved.
      */
     protected  boolean solvePuzzle(PuzzlePanel puzzlePanel) {
         return solvePuzzle(puzzlePanel.getBoard(), puzzlePanel);
@@ -46,11 +46,12 @@ public class PuzzleSolver {
     /**
      * Solves the puzzle.
      * This implements the main algorithm for solving the red puzzle.
-     * @param board
-     * @return
+     * @param board the board to show the solution on.
+     * @param puzzlePanel the viewer
+     * @return true if solved.
      */
     protected boolean solvePuzzle( Board board, PuzzlePanel puzzlePanel) {
-        boolean solved = false;
+        boolean solved;
         int ct = 0;
         int maxIterations = 2 * board.getEdgeLength();  // @@ not sure what this should be.
 

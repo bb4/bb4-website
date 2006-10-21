@@ -135,9 +135,7 @@ public final class HiQPuzzle extends JApplet implements ActionListener
    private boolean solvePuzzle(PegBoard board, List<PegMove> path) {
         List<PegMove> moves = board.generateMoves();
 
-        if (board.isSolved()) {
-            List<PegMove> finalPath = new LinkedList<PegMove>();
-            finalPath.addAll(path);
+        if (board.isSolved()) {            
             showPath(path, board);
             refresh();
             return true;

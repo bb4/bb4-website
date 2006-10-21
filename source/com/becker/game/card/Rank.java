@@ -42,7 +42,7 @@ public enum Rank {
     }
 
     public static Rank getRankForSymbol(String symbol) {
-        return (Rank) rankFromSymbol_.get(symbol);
+        return rankFromSymbol_.get(symbol);
     }
 
 }

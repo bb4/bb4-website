@@ -155,8 +155,7 @@ public class PegBoard {
     }
 
     public BoardHashKey hashKey() {
-        BoardHashKey key = new BoardHashKey(this);
-        return key;
+        return new BoardHashKey(this);
     }
 
     /**

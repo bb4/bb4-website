@@ -109,8 +109,7 @@ public final class GoStone extends GamePiece implements GoMember
      */
     public Object clone() throws CloneNotSupportedException
     {
-        Object clone = super.clone();
-        return clone;
+        return super.clone();
     }
 
     /**

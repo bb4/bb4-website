@@ -29,7 +29,7 @@ public class MultiGamePlayer extends Player {
     public static Color getNewPlayerColor(Player[] players)
     {
 
-        boolean uniqueEnough = false;
+        boolean uniqueEnough;
         float candidateHue;
 
         do {
@@ -46,7 +46,7 @@ public class MultiGamePlayer extends Player {
      * @@ this method could use some improvement
      * @param hue to check for uniqueness compared to other players.
      * @param players
-     * @return
+     * @return true if hue is different enough from the others.
      */
     private static boolean isHueUniqueEnough(float hue, Player[] players)
     {
@@ -59,9 +59,7 @@ public class MultiGamePlayer extends Player {
                 ct++;
             else break;
         }
-        if (ct == players.length)
-            return true;
-        return false;
+        return (ct == players.length);
     }
 
 }

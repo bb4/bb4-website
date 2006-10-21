@@ -967,7 +967,7 @@ public final class GoBoard extends TwoPlayerBoard
         private int numHandicapStones_ = 0;
 
         // typically there are at most 9 handicap stones in an uneven game
-        private List starPoints_ = null;
+        private List<GoBoardPosition> starPoints_ = null;
 
 
         HandicapStones(int num, int boardSize) {
@@ -1013,7 +1013,7 @@ public final class GoBoard extends TwoPlayerBoard
             // initialize the list of handicap stones.
             // The number of these that actually get placed on the board
             // depends on the handicap
-            starPoints_ = new ArrayList(9);
+            starPoints_ = new ArrayList<GoBoardPosition>(9);
             int nRows = boardSize;
             int min = 4;
             // on a really small board we put the corner star points at 3-3.

@@ -16,7 +16,7 @@ import java.awt.*;
 public abstract class GalacticRobotPlayer extends GalacticPlayer
 {
 
-    private enum RobotType {CRAZY_ROBOT, METHODICAL_ROBOT};
+    private enum RobotType {CRAZY_ROBOT, METHODICAL_ROBOT}
 
     public GalacticRobotPlayer(String name, Planet homePlanet, Color color) {
         super(name, homePlanet, color, false);
@@ -118,7 +118,6 @@ public abstract class GalacticRobotPlayer extends GalacticPlayer
             case CRAZY_ROBOT: return new CrazyRobotPlayer(name, homePlanet, color, icon);
             case METHODICAL_ROBOT: return new MethodicalRobotPlayer(name, homePlanet, color, icon);
         }
-        assert (false):"bad type="+type;
         return null;
     }
 }

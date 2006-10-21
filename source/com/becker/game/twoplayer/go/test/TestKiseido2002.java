@@ -73,7 +73,7 @@ public class TestKiseido2002 extends GoTestCase {
      */
     private void check(String problemPattern) {
 
-        String[] files = this.getFilesMatching("games2002/", problemPattern);
+        String[] files = getFilesMatching("games2002/", problemPattern);
 
         for (int i=0; i<files.length; i++) {
 
@@ -85,7 +85,7 @@ public class TestKiseido2002 extends GoTestCase {
 
         // must check the worth of the board once to update the scoreContributions fo empty spaces.
         List moves = controller_.getMoveList();
-        double w = controller_.worth((GoMove)moves.get(moves.size()-3), controller_.getDefaultWeights(), true);
+        //double w = controller_.worth((GoMove)moves.get(moves.size()-3), controller_.getDefaultWeights(), true);
         controller_.updateLifeAndDeath();   // this updates the groups and territory as well.
 
         Assert.assertTrue(true);

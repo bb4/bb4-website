@@ -24,7 +24,7 @@ public enum NeighborType
     // enemy or unoccupied
     NOT_FRIEND,
     // any kind of nbr.
-    ANY;
+    ANY
 
 }
 

@@ -113,7 +113,7 @@ public abstract class PuzzleSolver {
 
     protected void quickRefresh(PuzzlePanel puzzlePanel, Piece p) {
 
-        if ((puzzlePanel == null) && (animationSpeed_ < MAX_ANIM_SPEED-1)) {
+        if ((puzzlePanel != null) && (animationSpeed_ < MAX_ANIM_SPEED-1)) {
             solution_.add( p );
             puzzlePanel.repaint();
             Util.sleep(9*MAX_ANIM_SPEED / animationSpeed_); // give it a chance to repaint.

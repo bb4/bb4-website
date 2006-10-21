@@ -12,7 +12,7 @@ import java.util.*;
 public final class GoGroupUtil {
 
 
-     private GoGroupUtil() {};
+     private GoGroupUtil() {}
 
     /**
      * Use Benson's algorithm (1977) to determine if a set of strings and eyes within a group
@@ -97,7 +97,7 @@ public final class GoGroupUtil {
 
     private static void findNeighborStringSets(GoGroup group, GoBoard board) {
         // first find the neighbor string sets for each true eye in the group
-        Set candidateUAStrings = new HashSet();
+        //Set candidateUAStrings = new HashSet();
         for (Object e : group.getEyes()) {
             GoEye eye = (GoEye) e;
             if (eye.getNbrs() == null) {
@@ -117,7 +117,7 @@ public final class GoGroupUtil {
                         else {
                             if (eye.getNbrs() != null ) {
                                 eye.getNbrs().add(nbr.getString());
-                                candidateUAStrings.add(nbr.getString());
+                                //candidateUAStrings.add(nbr.getString());
                             }
                         }
                     }

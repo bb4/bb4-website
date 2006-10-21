@@ -31,8 +31,7 @@ public class PokerRound extends Move
      */
     public static PokerRound createMove()
     {
-        PokerRound m = new PokerRound();
-        return m;
+        return new PokerRound();
     }
 
 }

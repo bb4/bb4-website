@@ -28,8 +28,6 @@ public final class BettingDialog extends OptionsDialog
     private int callAmount_;
     private int contributeAmount_;
 
-    private JPanel pokerHandPanel_;
-
     /**
      * constructor - create the tree dialog.
      * @param pc pokerController
@@ -55,7 +53,7 @@ public final class BettingDialog extends OptionsDialog
         mainPanel_.setLayout( new BorderLayout() );
         mainPanel_.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 
-        pokerHandPanel_ = new PokerHandPanel(player_.getHand());
+        JPanel pokerHandPanel_=new PokerHandPanel(player_.getHand());
         JPanel buttonsPanel = createButtonsPanel();
 
         JPanel instructions = createInstructionsPanel();

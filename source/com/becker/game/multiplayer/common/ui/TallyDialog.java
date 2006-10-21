@@ -21,14 +21,11 @@ public abstract class TallyDialog extends OptionsDialog
 
     private GradientButton okButton_;
 
-    // list of players that will be admirals in the game.
-    private SummaryTable summaryTable_;
-
 
     /**
      * constructor - create the tree dialog.
      * @param parent frame to display relative to
-     * @param controller
+     * @param controller pass in game controller.
      */
     public TallyDialog( Frame parent, GameController controller )
     {
@@ -58,7 +55,7 @@ public abstract class TallyDialog extends OptionsDialog
     {
         mainPanel_.setLayout(new BorderLayout());
 
-        Player[] players = (Player[])controller_.getPlayers();
+        Player[] players = controller_.getPlayers();
         String winningPlayer = findWinner(players);
 
         // show a label at the top with who the winner is
@@ -68,7 +65,7 @@ public abstract class TallyDialog extends OptionsDialog
         winnerLabel.setBorder(BorderFactory.createEmptyBorder(6,6,6,6));
         mainPanel_.add(winnerLabel, BorderLayout.NORTH);
 
-        summaryTable_ = createSummaryTable(players);
+        SummaryTable summaryTable_= createSummaryTable(players);
         JPanel tablePanel = new JPanel();
         tablePanel.setBorder(BorderFactory.createEmptyBorder(6,6,6,6));
         tablePanel.add(new JScrollPane(summaryTable_.getTable()), BorderLayout.CENTER);

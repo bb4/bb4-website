@@ -89,7 +89,7 @@ public enum Direction {
      */
     private static Point leftOf( Point dir )
     {
-        Point newDir = null;
+        Point newDir;
         if ( dir.x == 0 ) {
             newDir = new Point((dir.y > 0)? -1 : 1, 0 );
         }

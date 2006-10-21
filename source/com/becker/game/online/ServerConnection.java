@@ -16,10 +16,8 @@ import java.security.*;
 public class ServerConnection {
 
     private static final String DEFAULT_HOST = "127.0.0.1"; // localhost // "192.168.1.100";
-    private Socket socket_;
 
     private ObjectOutputStream oStream_;
-    private ObjectInputStream iStream_;
 
     private boolean isConnected_ = false;
 
@@ -64,9 +62,9 @@ public class ServerConnection {
         try {
             isConnected_ = false;
             GameContext.log(1, "Attempting to connect to Server=" + DEFAULT_HOST + " port="+port);
-            socket_ = new Socket(DEFAULT_HOST, port);
+            Socket socket_=new Socket(DEFAULT_HOST, port);
             oStream_ = new ObjectOutputStream(socket_.getOutputStream());
-            iStream_ = new ObjectInputStream(socket_.getInputStream());
+            ObjectInputStream iStream_=new ObjectInputStream(socket_.getInputStream());
 
             // create a thread to listen for updates from the server.
             UpdateWorker w = new UpdateWorker(iStream_);

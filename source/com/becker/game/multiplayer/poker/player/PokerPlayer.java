@@ -64,8 +64,7 @@ public abstract class PokerPlayer extends MultiGamePlayer
     public String getDefaultName(int i)
     {
         Object[] args = {Integer.toString(i)};
-        String dname = MessageFormat.format(GameContext.getLabel("POKER_DEFAULT_NAME"), args );
-        return dname;
+        return MessageFormat.format(GameContext.getLabel("POKER_DEFAULT_NAME"), args );
     }
 
     public PokerHand getHand()

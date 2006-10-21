@@ -82,8 +82,7 @@ public class GalacticPlayer extends Player
     public String getDefaultName(int i)
     {
         Object[] args = {Integer.toString(i)};
-        String dname = MessageFormat.format(GameContext.getLabel("GALACTIC_DEFAULT_NAME"), args );
-        return dname;
+        return MessageFormat.format(GameContext.getLabel("GALACTIC_DEFAULT_NAME"), args );
     }
 
     public Planet getHomePlanet()
@@ -140,9 +139,7 @@ public class GalacticPlayer extends Player
                 ct++;
             else break;
         }
-        if (ct == players.length)
-            return true;
-        return false;
+        return (ct == players.length);
     }
 
     /**
@@ -154,7 +151,7 @@ public class GalacticPlayer extends Player
             return;
         orders_.clear();
         for (int i=0; i<orders.size(); i++) {
-            orders_.add((Order)orders.get(i));
+            orders_.add(orders.get(i));
         }
     }
 

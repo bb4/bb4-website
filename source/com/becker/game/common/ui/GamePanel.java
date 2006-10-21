@@ -195,9 +195,7 @@ public abstract class GamePanel extends TexturedPanel
             /* causing security exception in applet? */
             URL url = GUIUtil.getURL("com/becker/sound/play_game_voice.wav");
             AudioClip clip = new AppletAudioClip(url);
-            if (clip != null) {
-                clip.play();
-            }
+            clip.play();
 
         }
         this.setDoubleBuffered(false);

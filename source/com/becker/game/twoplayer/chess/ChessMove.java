@@ -50,10 +50,8 @@ public class ChessMove extends TwoPlayerMove
             CaptureList captures,
             double val, GamePiece piece )
     {
-        ChessMove m = new ChessMove( (byte)originRow, (byte)originCol,
+        return new ChessMove( (byte)originRow, (byte)originCol,
                 (byte)destinationRow, (byte)destinationCol, captures, val, piece );
-
-        return m;
     }
 
     public int getFromRow()

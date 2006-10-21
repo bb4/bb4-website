@@ -104,7 +104,7 @@ public class Galaxy extends Board
             // add the planet to our list
             planets_.add((Planet)position.getPiece());
 
-            hmPlanets_.put(new Character(planet.getName()), (Planet)position.getPiece());
+            hmPlanets_.put(planet.getName(), (Planet)position.getPiece());
         }
     }
 
@@ -114,8 +114,7 @@ public class Galaxy extends Board
      */
     public static List<Planet> getPlanets()
     {
-        List<Planet> newList = new ArrayList<Planet>(planets_);
-        return newList;
+        return new ArrayList<Planet>(planets_);
     }
 
     /**
@@ -164,7 +163,7 @@ public class Galaxy extends Board
      */
     public static Planet getPlanet(char name)
     {
-        Character c = new Character(name);
+        Character c = name;
         Planet p = hmPlanets_.get(c);
         assert(p!=null);
         return p;

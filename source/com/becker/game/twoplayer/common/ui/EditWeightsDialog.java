@@ -20,8 +20,6 @@ import java.awt.event.ActionListener;
  */
 class EditWeightsDialog extends OptionsDialog implements ActionListener
 {
-    private JScrollPane scrollPane_ = null;
-    private JPanel weightsPanel_ = null;
 
     private final ParameterArray weights_;
     private final GameWeights gameWeights_;
@@ -55,8 +53,8 @@ class EditWeightsDialog extends OptionsDialog implements ActionListener
         mainPanel_.setLayout( new BoxLayout( mainPanel_, BoxLayout.Y_AXIS ) );
 
         JLabel instructLabel = new JLabel( GameContext.getLabel("EDIT_WTS_BELOW") );
-        weightsPanel_ = createWeightsPanel( weights_ );
-        scrollPane_ = new JScrollPane( weightsPanel_ );
+        JPanel weightsPanel_=createWeightsPanel( weights_ );
+        JScrollPane scrollPane_=new JScrollPane( weightsPanel_ );
 
         mainPanel_.add( instructLabel );
         mainPanel_.add( scrollPane_ );

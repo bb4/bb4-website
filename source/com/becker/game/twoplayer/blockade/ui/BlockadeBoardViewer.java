@@ -149,7 +149,7 @@ class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMotionLis
                 found = true;
         }
 
-        if ( !found || m == null ) {
+        if ( !found ) {
             return false; // it was not valid
         }
 
@@ -178,7 +178,7 @@ class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMotionLis
         BlockadeBoardPosition destpos = (BlockadeBoardPosition)destp;
         if (destpos.isOccupied())
             GameContext.log(0, destpos + "is occupied by "+destp.getPiece() );
-        return  ( (position == null) || (destpos == null) || (destpos.isOccupied() && !destpos.isHomeBase()) );
+        return  ( (position == null) || (destpos.isOccupied() && !destpos.isHomeBase()) );
     }
 
     /**

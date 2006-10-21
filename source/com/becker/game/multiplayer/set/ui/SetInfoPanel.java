@@ -107,7 +107,7 @@ class SetInfoPanel extends GameInfoPanel
         insertPlayerTable();
         invalidate();
         repaint();
-    };
+    }
 
     /**
      * implements the GameChangedListener interface.

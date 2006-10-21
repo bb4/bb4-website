@@ -32,8 +32,8 @@ public class CheckersMove extends TwoPlayerMove
                           double val, GamePiece piece)
     {
         super( destinationRow, destinationCol, val,  piece );
-        fromRow_ = (byte)originRow;
-        fromCol_ = (byte)originCol;
+        fromRow_ = originRow;
+        fromCol_ = originCol;
         kinged = false;
         captureList = captures;
     }

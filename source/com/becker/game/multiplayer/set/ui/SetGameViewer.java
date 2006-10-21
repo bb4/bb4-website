@@ -22,7 +22,6 @@ public final class SetGameViewer extends GameBoardViewer
                                  implements MouseMotionListener
 {
 
-    private NumberFormat formatter_;
     private Card currentlyHighlightedCard_ = null;
     private boolean winnerDialogShown_ = false;
 
@@ -30,7 +29,7 @@ public final class SetGameViewer extends GameBoardViewer
     // Constructor.
     SetGameViewer()
     {
-        formatter_ = new DecimalFormat();
+        NumberFormat formatter_=new DecimalFormat();
         formatter_.setGroupingUsed(true);
         formatter_.setMaximumFractionDigits(0);
 

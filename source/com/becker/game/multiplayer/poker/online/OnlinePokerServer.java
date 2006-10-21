@@ -23,7 +23,7 @@ public class OnlinePokerServer extends OnlineGameServer {
     }
 
     public static void main(String[] args) {
-        OnlineGameServer frame = new OnlinePokerServer();
+        //OnlineGameServer frame = new OnlinePokerServer();
 
     }
 }

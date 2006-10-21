@@ -46,8 +46,8 @@ public class PokerHand implements Comparable {
 
     public List<Card> getCards() {
         // return a copy so the client cannot change our state out from under us.
-        List<Card> cards = new ArrayList<Card>(hand_);
-        return cards;
+        return new ArrayList<Card>(hand_);
+
     }
 
     /**
@@ -82,8 +82,7 @@ public class PokerHand implements Comparable {
      */
     public float getScore() {
         // need to take into account the suit and rank when determining the score to break ties if 2 hands are the same
-        float score = determineType().odds() * 1000 + this.determineType().getTieBreakerScore(this);
-        return score;
+        return determineType().odds() * 1000 + this.determineType().getTieBreakerScore(this);
     }
 
     private void sort() {
@@ -181,7 +180,7 @@ public class PokerHand implements Comparable {
 
         Collection values = matchMap_.values();
         for (Object value : values) {
-            if (((Integer)value).intValue() == num)
+            if ((Integer) value == num)
                 return true;
         }
         return false;
@@ -235,7 +234,7 @@ public class PokerHand implements Comparable {
         Collection values = matchMap_.values();
         int numPairs = 0;
         for (Object value : values) {
-            if (((Integer)value).intValue() == 2)
+            if ((Integer) value == 2)
                 numPairs++;
         }
         return (numPairs == 2);

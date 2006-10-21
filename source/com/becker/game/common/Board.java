@@ -85,7 +85,7 @@ public abstract class Board implements BoardInterface, Cloneable
     {
         if ( moveList_ == null || moveList_.isEmpty() )
             return null;
-        return (Move) moveList_.get(moveList_.size()-1);
+        return moveList_.get(moveList_.size()-1);
     }
 
 
@@ -187,7 +187,7 @@ public abstract class Board implements BoardInterface, Cloneable
      */
     public Move undoMove() {
         if ( !getMoveList().isEmpty() ) {
-            Move m = (Move) getMoveList().removeLast();
+            Move m = getMoveList().removeLast();
             undoInternalMove( m );
             return m;
         }

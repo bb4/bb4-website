@@ -47,7 +47,6 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
     private int[] totalAtLevel_;
 
     private int width_;
-    private int height_;
     private int levelHeight_;
 
     // most recently highlighted path
@@ -246,7 +245,7 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
         q.add(node);
 
         while (q.size() > 0) {
-            SearchTreeNode p = (SearchTreeNode)q.remove(0);
+            SearchTreeNode p = q.remove(0);
             depth = p.getLevel();
             // draw the arc and child node for each child c of p
             if (depth > oldDepth) {
@@ -302,10 +301,10 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
         if (root_==null || root_.getUserObject()==null) return;
 
         width_ = getWidth()-2*MARGIN;
-        height_ = getHeight()-2*MARGIN;
+        int height_= getHeight()-2*MARGIN;
         if (depth_ == 0)
             return; // tree not ready to be painted.
-        levelHeight_ = height_/depth_;
+        levelHeight_ = height_ /depth_;
 
         g2.setStroke(THIN_STROKE);
         drawTree(root_, g2);

@@ -55,7 +55,7 @@ public abstract class GameBoardViewer
     // this must be initialized in the derived classes constructor.
     protected GamePieceRenderer pieceRenderer_ = null;
 
-    protected String lastDirectoryAccessed_ = null;
+    private String lastDirectoryAccessed_ = null;
 
 
     // for firing events
@@ -390,9 +390,8 @@ public abstract class GameBoardViewer
     public void processEvent( AWTEvent evt )
     {
         if ( evt instanceof GameChangedEvent ) {
-            for (int i=0; i < gameListeners_.size(); i++ ) {
-                GameChangedListener gcl = gameListeners_.get(i);
-                gcl.gameChanged( (GameChangedEvent) evt );
+            for (GameChangedListener gcl : gameListeners_) {
+                gcl.gameChanged((GameChangedEvent) evt);
             }
         }
         else

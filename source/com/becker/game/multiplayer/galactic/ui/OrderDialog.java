@@ -103,8 +103,7 @@ public final class OrderDialog extends OptionsDialog
             Planet planet = (Planet)planets.get(i);
             sPlanets[i] = Character.toString(planet.getName());
         }
-        JComboBox cbox = new JComboBox(sPlanets);
-        return cbox;
+        return new JComboBox(sPlanets);
     }
 
     /**

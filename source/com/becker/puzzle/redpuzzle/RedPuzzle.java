@@ -135,7 +135,7 @@ public final class RedPuzzle extends JApplet implements ChangeListener, ActionLi
 
         int selected = algorithmChoice_.getSelectedIndex();
 
-        PuzzlePanel.Algorithm alg = PuzzlePanel.Algorithm.BRUTE_FORCE;
+        PuzzlePanel.Algorithm alg;
         switch (selected) {
             case 0 : alg = PuzzlePanel.Algorithm.BRUTE_FORCE; break;
             case 1 : alg = PuzzlePanel.Algorithm.GENETIC_SEARCH; break;
@@ -166,8 +166,8 @@ public final class RedPuzzle extends JApplet implements ChangeListener, ActionLi
                     puzzlePanel_.repaint();
                 }
             };
-        }
 
-        worker.start();
+            worker.start();
+        }
     }
 }

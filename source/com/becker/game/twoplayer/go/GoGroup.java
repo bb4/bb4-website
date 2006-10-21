@@ -58,7 +58,6 @@ public final class GoGroup extends GoSet
     private Set cachedLiberties_;
     //private Set cachedStonesInGroup_;
     private int cachedNumStonesInGroup_;
-    private Set cachedEnemyNbrGroups_ = new HashSet();
 
 
     /** constructor. Create a new group containing the specified string
@@ -710,7 +709,7 @@ public final class GoGroup extends GoSet
         Set groupStones = getStones();
 
         profiler.start(GoProfiler.GET_ENEMY_GROUPS_NBRS);
-        cachedEnemyNbrGroups_ = getEnemyGroupNeighbors(board, groupStones);
+        Set cachedEnemyNbrGroups_=getEnemyGroupNeighbors(board, groupStones);
         profiler.stop(GoProfiler.GET_ENEMY_GROUPS_NBRS);
 
         // of these enemy groups which is the weakest?
