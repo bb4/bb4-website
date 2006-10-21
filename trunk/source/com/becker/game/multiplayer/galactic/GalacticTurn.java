@@ -32,8 +32,7 @@ public class GalacticTurn extends Move
      */
     public static GalacticTurn createMove()
     {
-        GalacticTurn m = new GalacticTurn();
-        return m;
+        return new GalacticTurn();
     }
 
 

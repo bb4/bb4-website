@@ -25,7 +25,6 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
     private int algorithm_;
     private NumberInput lookAheadField_;
     private NumberInput bestPercentageField_;
-    private JLabel treeUpperBound_ = null;
     private JCheckBox alphabetaCheckbox_;
     private JCheckBox quiescenceCheckbox_;
     private JCheckBox gameTreeCheckbox_;
@@ -105,25 +104,25 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
         }
 
         // look ahead
-        treeUpperBound_ = new JLabel();
+        JLabel treeUpperBound = new JLabel();
         lookAheadField_ =
                 new NumberInput( GameContext.getLabel("MOVES_TO_LOOKAHEAD"), options.getLookAhead(),
                                  GameContext.getLabel("MOVES_TO_LOOKAHEAD_TIP"), 1, 16, true);
-        lookAheadField_.addKeyListener( new UpperBoundKeyListener( lookAheadField_, treeUpperBound_) );
+        lookAheadField_.addKeyListener( new UpperBoundKeyListener( lookAheadField_, treeUpperBound) );
 
         // best percentage moves
         bestPercentageField_ =
                 new NumberInput( GameContext.getLabel("PERCENTAGE_AT_PLY"), options.getPercentageBestMoves(),
                                  GameContext.getLabel("PERCENTAGE_AT_PLY_TIP"), 0, 100, true);
-        bestPercentageField_.addKeyListener( new UpperBoundKeyListener( bestPercentageField_, treeUpperBound_) );
+        bestPercentageField_.addKeyListener( new UpperBoundKeyListener( bestPercentageField_, treeUpperBound) );
 
         JPanel p3 = new JPanel( new FlowLayout() );
         JLabel treeUpperBoundLabel = new JLabel( GameContext.getLabel("UPPER_BOUND") );
 
-        treeUpperBound_.setText(calcTreeUpperBound(options.getLookAhead(), options.getPercentageBestMoves() ) + "  ");
+        treeUpperBound.setText(calcTreeUpperBound(options.getLookAhead(), options.getPercentageBestMoves() ) + "  ");
         p3.setAlignmentX( Component.LEFT_ALIGNMENT );
         p3.add( treeUpperBoundLabel );
-        p3.add( treeUpperBound_ );
+        p3.add( treeUpperBound );
 
         p.add( lookAheadField_ );
         p.add( bestPercentageField_ );

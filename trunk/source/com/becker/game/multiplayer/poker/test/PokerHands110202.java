@@ -157,7 +157,7 @@ class PokerHands110202 {
         }
 
         public static Rank getRankForSymbol(String symbol) {
-            return (Rank) rankFromSymbol_.get(symbol);
+            return rankFromSymbol_.get(symbol);
         }
 
     }
@@ -292,8 +292,7 @@ class PokerHands110202 {
 
         public List<Card> getCards() {
             // return a copy so the client cannot change our state out from under us.
-            List<Card> cards = new ArrayList<Card>(hand_);
-            return cards;
+            return new ArrayList<Card>(hand_);
         }
 
         /**
@@ -328,8 +327,7 @@ class PokerHands110202 {
          */
         public float getScore() {
             // need to take into account the suit and rank when determining the score to break ties if 2 hands are the same
-            float score = determineType().odds() * 1000 + this.determineType().getTieBreakerScore(this);
-            return score;
+            return determineType().odds() * 1000 + this.determineType().getTieBreakerScore(this);
         }
 
         private void sort() {

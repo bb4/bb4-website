@@ -127,8 +127,7 @@ public class GalacticController extends GameController
      */
     public int getNumberOfYearsRemaining() {
         Move m = board_.getLastMove();
-        int years = ((GalacticOptions)getOptions()).getMaxYearsToPlay() - ((m != null)? this.getNumMoves() : 0) - 2;
-        return years;
+        return ((GalacticOptions)getOptions()).getMaxYearsToPlay() - ((m != null)? this.getNumMoves() : 0) - 2;
     }
     /**
      *
@@ -141,9 +140,7 @@ public class GalacticController extends GameController
         // add one so indexed by 1 instead of 0, add 1 because its the "last" move
         if ((this.getNumMoves() + 2) >= ((GalacticOptions)getOptions()).getMaxYearsToPlay())
             return true; // done
-        if (Galaxy.allPlanetsOwnedByOnePlayer())
-            return true;
-        return false;
+        return (Galaxy.allPlanetsOwnedByOnePlayer());
     }
 
 
@@ -247,8 +244,7 @@ public class GalacticController extends GameController
      */
     public List generateMoves( Move lastMove, ParameterArray weights, boolean player1sPerspective )
     {
-        LinkedList moveList = new LinkedList();
-        return moveList;
+        return new LinkedList();
     }
 
     /**

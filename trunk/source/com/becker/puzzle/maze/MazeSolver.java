@@ -31,7 +31,7 @@ public class MazeSolver {
 
         // push the initial moves
         MazeModel.pushMoves( currentPosition, new Point( 1, 0 ), 1, stack );
-        Point dir = null;
+        Point dir;
         int depth = 1;
         boolean solved = false;
         panel_.paintAll();

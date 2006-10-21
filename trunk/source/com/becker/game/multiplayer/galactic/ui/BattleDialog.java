@@ -40,7 +40,6 @@ final class BattleDialog extends OptionsDialog
 
     private final GradientButton startButton_ = new GradientButton();
     private final GradientButton closeButton_ = new GradientButton();
-    private JPanel buttonsPanel_;
 
     private final JLabel infoLabel_ = new JLabel();
 
@@ -123,7 +122,7 @@ final class BattleDialog extends OptionsDialog
 
     protected JPanel createButtonsPanel()
     {
-        buttonsPanel_ = new JPanel( new BorderLayout());
+        JPanel buttonsPanel_=new JPanel( new BorderLayout());
         buttonsPanel_.setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 5));
 
         initBottomButton( startButton_, "Fight!", "Begin the battle sequence");

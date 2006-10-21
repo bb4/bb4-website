@@ -10,7 +10,7 @@ import java.awt.*;
 public class SetRobotPlayer extends SetPlayer
 {
 
-    public enum RobotType { SLOW_ROBOT, AVERAGE_ROBOT, EXPERT_ROBOT };
+    public enum RobotType { SLOW_ROBOT, AVERAGE_ROBOT, EXPERT_ROBOT }
 
     RobotType robotType_;
 

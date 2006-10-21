@@ -16,7 +16,7 @@ public final class Piece
     // the number of the piece (1-9).
     private int pieceNumber_ = 0;
 
-    public static enum Direction {TOP, RIGHT, BOTTOM, LEFT};
+    public static enum Direction {TOP, RIGHT, BOTTOM, LEFT}
 
     /**
      * Constructor.

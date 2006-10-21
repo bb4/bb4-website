@@ -46,8 +46,7 @@ public final class PegMove
      */
     public PegMove copy()
     {
-        PegMove cp = new PegMove( fromRow_, fromCol_, toRow_, toCol_);
-        return cp;
+        return new PegMove( fromRow_, fromCol_, toRow_, toCol_);
     }
 
     public int getFromRow()

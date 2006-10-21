@@ -49,7 +49,7 @@ public class GameApp implements ActionListener
     /**
      * Game application constructor
      */
-    public GameApp()
+    private GameApp()
     {
         init(); // must call after setting locale on GameContext
         GUIUtil.setCustomLookAndFeel();

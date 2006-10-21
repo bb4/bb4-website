@@ -654,9 +654,7 @@ public class BlockadeController extends TwoPlayerController
                             "There must be at least one route to each opponent home base. Numpaths="+paths.length;
                         GameContext.log(2,
                             "about to add "+numHomes+" more paths to "+totalOpponentPaths+" maxAllowed="+opponentPaths.length );
-                        for (int k=0; k<numHomes; k++) {
-                            opponentPaths[totalOpponentPaths + k] = paths[k];
-                        }
+                        System.arraycopy(paths, 0, opponentPaths, totalOpponentPaths, numHomes);
                         totalOpponentPaths += numHomes;
                     }
                 }

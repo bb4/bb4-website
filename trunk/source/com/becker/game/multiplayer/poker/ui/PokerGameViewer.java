@@ -194,9 +194,7 @@ public class PokerGameViewer extends GameBoardViewer
      */
     public PokerRound createMove(Move lastMove)
     {
-        PokerRound gmove = PokerRound.createMove();
-
-        return gmove;
+        return PokerRound.createMove();
     }
 
 

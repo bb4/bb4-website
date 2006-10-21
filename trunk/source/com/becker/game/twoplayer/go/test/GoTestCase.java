@@ -60,9 +60,7 @@ public class GoTestCase extends TestCase {
 
         //System.out.println("pattern = "+pattern+ "dir="+dir.getAbsolutePath());
         FilenameFilter filter = new MyFileFilter(pattern);
-        String[] list = dir.list(filter);
-
-        return list;
+        return dir.list(filter);
     }
 
     protected GoMove getNextMove(String problemFile, boolean blackPlays) {

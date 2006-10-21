@@ -98,16 +98,15 @@ public class BoardPosition
     }
 
     /**
-     * create a deep copy.
+     * @return a deep copy.
      */
     public BoardPosition copy()
     {
-        BoardPosition p = new BoardPosition( row_, col_, (piece_==null)?null:piece_.copy());
-        return p;
+        return new BoardPosition( row_, col_, (piece_==null)?null:piece_.copy());
     }
 
     /**
-     * copy data from another position into me.
+     * @return copy data from another position into me.
      */
     public void copy(BoardPosition p)
     {
@@ -149,7 +148,7 @@ public class BoardPosition
         StringBuffer sb = new StringBuffer( "" );
         if (piece_ != null)
             sb.append(piece_.toString());
-        sb.append( " (" + row_ + ", " + col_ + ')' );
+        sb.append(" (").append(row_).append(", ").append(col_).append(')');
         return sb.toString();
     }
 }

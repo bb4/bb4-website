@@ -334,9 +334,6 @@ public final class GoController extends TwoPlayerController
         return ((GoBoard) getBoard()).getNumCaptures(player1sStones);
     }
 
-    private int cachedBlackTerritoryEstimate_ = 0;
-    private int cachedWhiteTerritoryEstimate_ = 0;
-
     /**
      * get a territory estimate for player1 or player2
      * When the game is over, this should return a precise value for the amount of territory (not yet filled with captures).
@@ -355,11 +352,11 @@ public final class GoController extends TwoPlayerController
             return 0;
 
         if (forPlayer1)  {
-            cachedBlackTerritoryEstimate_ = ((GoBoard)board_).getTerritoryEstimate(forPlayer1, true);
+            int cachedBlackTerritoryEstimate_=((GoBoard)board_).getTerritoryEstimate(forPlayer1, true);
             return cachedBlackTerritoryEstimate_;
         }
         else  {
-            cachedWhiteTerritoryEstimate_ = ((GoBoard)board_).getTerritoryEstimate(forPlayer1, true);
+            int cachedWhiteTerritoryEstimate_=((GoBoard)board_).getTerritoryEstimate(forPlayer1, true);
             return cachedWhiteTerritoryEstimate_;
         }
     }

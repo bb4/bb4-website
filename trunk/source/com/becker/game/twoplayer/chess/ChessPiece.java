@@ -218,8 +218,7 @@ public class ChessPiece extends GamePiece
      */
     private List findKingMoves(Board board, int row, int col, Move lastMove)
     {
-        List moveList = getEightDirectionalMoves(board, row, col, lastMove, kingMoveRow_, kingMoveCol_);
-        return moveList;
+        return getEightDirectionalMoves(board, row, col, lastMove, kingMoveRow_, kingMoveCol_);
     }
 
 

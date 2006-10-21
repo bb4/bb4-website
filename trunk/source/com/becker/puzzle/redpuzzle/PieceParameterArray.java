@@ -41,7 +41,7 @@ public class PieceParameterArray extends ParameterArray {
 
         int numSwaps = 1; //Math.max(1, (int) (rad * 2.0));
         int startFits = pieces.getNumFits();
-        int improvement = 0;
+        //int improvement = 0;
         int endFits = 0;
         int ct = 0;
         //do {
@@ -71,8 +71,8 @@ public class PieceParameterArray extends ParameterArray {
                 pieces.get(k).rotate(bestRot);
             }
             endFits = pieces.getNumFits();
-            improvement = endFits - startFits;
-            ct++;
+            //improvement = endFits - startFits;
+            //ct++;
         //} while ((improvement < 1 || endFits == MAX_FITS) && ct < MAX_TRIES);
 
         return new PieceParameterArray(pieces);

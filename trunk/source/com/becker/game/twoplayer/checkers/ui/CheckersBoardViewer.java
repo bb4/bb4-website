@@ -186,7 +186,7 @@ public class CheckersBoardViewer extends TwoPlayerBoardViewer implements MouseMo
                 found = true;
         }
 
-        if ( !found || m == null ) {
+        if ( !found ) {
             invalidMove();
             return; // it was not valid
         }

@@ -115,6 +115,7 @@ public final class SudokuPuzzle extends JApplet implements ActionListener, ItemL
                     puzzlePanel_.repaint();
                 }
             };
+             worker.start();
         }
         else if (src == solveButton_)  {
 
@@ -128,15 +129,16 @@ public final class SudokuPuzzle extends JApplet implements ActionListener, ItemL
                 public void finished() {
                     puzzlePanel_.repaint();
                 }
+
             };
+             worker.start();
         }
 
-        worker.start();
     }
 
     /**
      * size choice selected.
-     * @param e
+     * @param e  item event.
      */
     public void itemStateChanged(ItemEvent e) {
 

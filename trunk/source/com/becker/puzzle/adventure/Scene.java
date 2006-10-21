@@ -104,7 +104,7 @@ public class Scene {
         if (choice == choices_.length) {
             return Choice.PREVIOUS_SCENE;
         }
-        if (choices_ == null || choice < 0 || choice > choices_.length-1)
+        if (choice < 0 || choice > choices_.length-1)
             return null;
         return choices_[choice].getDestination();
     }

@@ -44,8 +44,7 @@ public class PlanetRenderer extends GamePieceRenderer
         Planet planet = (Planet)piece;
 
         double rad = planet.getRadius();
-        int pieceSize = (int) (cellSize * rad);
-        return pieceSize;
+        return (int) (cellSize * rad);
     }
 
     protected Color getPieceColor(GamePiece piece) {

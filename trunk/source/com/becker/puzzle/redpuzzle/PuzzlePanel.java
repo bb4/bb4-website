@@ -37,7 +37,7 @@ final class PuzzlePanel extends JPanel
     // play a sound effect when a piece goes into place.
     private MusicMaker musicMaker_ = new MusicMaker();
 
-    public enum Algorithm { BRUTE_FORCE, GENETIC_SEARCH };
+    public enum Algorithm { BRUTE_FORCE, GENETIC_SEARCH }
 
 
     /**

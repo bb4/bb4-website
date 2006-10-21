@@ -92,7 +92,7 @@ public class Player implements Serializable
     {
         StringBuffer sb = new StringBuffer( "" );
 
-        sb.append("Name : "+name_);
+        sb.append("Name : ").append(name_);
         if (!isHuman())
             sb.append(" (computer)");
         return sb.toString();

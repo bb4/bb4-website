@@ -532,19 +532,19 @@ public class BlockadeBoard extends TwoPlayerBoard
     }
 
     private void confirmAllVisited()
-        {
-            boolean allVisited = true;
-            List unvisitedList = new ArrayList();
-            for ( int i = 1; i <= getNumRows(); i++ ) {
-                for ( int j = 1; j <= getNumCols(); j++ ) {
-                    if (!((BlockadeBoardPosition)positions_[i][j]).isVisited())   {
-                        allVisited = false;
-                        unvisitedList.add(positions_[i][j]);
-                    }
+    {
+        boolean allVisited = true;
+        List unvisitedList = new ArrayList();
+        for ( int i = 1; i <= getNumRows(); i++ ) {
+            for ( int j = 1; j <= getNumCols(); j++ ) {
+                if (!((BlockadeBoardPosition)positions_[i][j]).isVisited())   {
+                    allVisited = false;
+                    unvisitedList.add(positions_[i][j]);
                 }
             }
-            assert allVisited: "not all the positions are visited! unvisted= "+unvisitedList;
         }
+        assert allVisited: "not all the positions are visited! unvisted= "+unvisitedList;
+    }
 
 
     /**

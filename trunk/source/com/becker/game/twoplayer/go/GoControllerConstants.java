@@ -6,7 +6,7 @@ package com.becker.game.twoplayer.go;
  */
 public final class GoControllerConstants {
 
-    private GoControllerConstants() {};
+    private GoControllerConstants() {}
 
     // initial look ahead factor.
     static final int DEFAULT_LOOKAHEAD = 2;

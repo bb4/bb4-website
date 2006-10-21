@@ -28,9 +28,9 @@ public class GameApplet extends JApplet
         // these parameters are specified in the html page that embeds the applet.
         // They determine the game to play, and the locale to run it.
         String className = getParameter("panel_class");
-        String gameName = getParameter("program_name");
+        //String gameName = getParameter("program_name");
         String localeName = getParameter("locale");
-        LocaleType locale = GameContext.getLocale(localeName, true);
+        //LocaleType locale = GameContext.getLocale(localeName, true);
 
         // these must be called before anything else
         //GameContext.verifyGameResources(gameName, className);

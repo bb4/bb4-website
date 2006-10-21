@@ -166,8 +166,7 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
         c.manMoves( m );
         refresh();
         sendGameChangedEvent( m );
-        boolean done = c.getSearchable().done( m, true );
-        return done;
+        return c.getSearchable().done( m, true );
     }
 
 
@@ -442,9 +441,9 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
         }
         if ( c.allPlayersComputer() )
             return;
-        c.makeMove( (Move) undoneMoves_.removeLast() );
+        c.makeMove(undoneMoves_.removeLast());
         if ( !c.allPlayersHuman() ) {
-            c.makeMove( (Move) undoneMoves_.removeLast() );
+            c.makeMove(undoneMoves_.removeLast());
         }
         refresh();
     }

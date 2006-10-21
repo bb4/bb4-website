@@ -75,7 +75,7 @@ public class ChessBoard extends CheckersBoard
             ChessMove nextMove = (ChessMove)it.next();
             CaptureList cl = nextMove.captureList;
             if (null != cl && !cl.isEmpty()) {
-                GamePiece piece = ((BoardPosition)cl.getFirst()).getPiece();
+                GamePiece piece = cl.getFirst().getPiece();
                 if (piece.getType() == ChessPiece.KING) {
                     checked = true;
                     break;

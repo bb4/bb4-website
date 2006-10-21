@@ -53,12 +53,11 @@ public class CaptureList extends LinkedList<BoardPosition>
      */
     public boolean alreadyCaptured( BoardPosition p )
     {
-        Iterator it = this.iterator();
-        while ( it.hasNext() ) {
-            BoardPosition capture = (BoardPosition) it.next();
-            if ( capture.getRow() == p.getRow() &&
+        for (Object o : this) {
+            BoardPosition capture = (BoardPosition) o;
+            if (capture.getRow() == p.getRow() &&
                     capture.getCol() == p.getCol() &&
-                    capture.getPiece().getType() == p.getPiece().getType() )
+                    capture.getPiece().getType() == p.getPiece().getType())
                 return true;
         }
         return false;

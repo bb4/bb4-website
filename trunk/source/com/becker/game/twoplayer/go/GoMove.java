@@ -36,8 +36,7 @@ public final class GoMove extends TwoPlayerMove
             int destinationRow, int destinationCol,
             double val, GoStone stone )
     {
-        GoMove m = new GoMove( (byte)destinationRow, (byte)destinationCol, val, stone );
-        return m;
+        return new GoMove( (byte)destinationRow, (byte)destinationCol, val, stone );
     }
 
     /**

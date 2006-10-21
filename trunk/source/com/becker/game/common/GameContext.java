@@ -15,7 +15,7 @@ import java.util.*;
  */
 public final class GameContext
 {
-    private static Set<String> commonMessageKeys_ = new HashSet<String>();;
+    private static Set<String> commonMessageKeys_ = new HashSet<String>();
 
     // logger object
     private static Log logger_ = null;
@@ -62,7 +62,7 @@ public final class GameContext
 
 
 
-    private GameContext() {};
+    private GameContext() {}
 
     /**
      * @return the level of debugging in effect
@@ -292,11 +292,11 @@ public final class GameContext
         // now that we have the keysets report on their consistency.
         // assume that the first is the default (en)
         boolean allConsistent = true;
-        Set defaultKeySet = (HashSet)messageKeySets.get(0);
+        Set defaultKeySet = messageKeySets.get(0);
         // first check that all the non-default locales do not contain keys
         // that the default locale does not have (less common).
         for (int i=1; i<locales.length; i++) {
-            Set keySet = (HashSet)messageKeySets.get(i);
+            Set keySet = messageKeySets.get(i);
             Iterator it = keySet.iterator();
             while (it.hasNext()) {
                 String key = (String)it.next();
@@ -318,7 +318,7 @@ public final class GameContext
         while (it.hasNext())  {
             String key = (String)it.next();
             for (int i=1; i<locales.length; i++) {
-                Set keySet = (HashSet)messageKeySets.get(i);
+                Set keySet = messageKeySets.get(i);
                 if (!keySet.contains(key)) {
                     log(0, COMMON_MESSAGE_BUNDLE+" for locale "+locales[i]
                             +" does not contain the key "+key);

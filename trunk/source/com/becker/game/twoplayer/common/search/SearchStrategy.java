@@ -199,7 +199,6 @@ public abstract class SearchStrategy
             GameContext.log(2, "interrupted" );
             interrupted_ = true;
             e.printStackTrace();
-            return;
         }
     }
 

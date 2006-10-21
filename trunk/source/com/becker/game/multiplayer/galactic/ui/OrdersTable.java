@@ -145,7 +145,7 @@ public class OrdersTable
 
         for (int i=numOldOrders; i<nRows; i++) {
             Character s = ((Character)model.getValueAt(i, ORIGIN_INDEX));
-            Planet source = Galaxy.getPlanet(s.charValue());
+            Planet source = Galaxy.getPlanet(s);
             Integer numShips = ((Integer)model.getValueAt(i, NUM_SHIPS_INDEX));
             if (outgoingMap.get(source) != null) {
                 Integer n = outgoingMap.get(source);
@@ -180,8 +180,8 @@ public class OrdersTable
     public void addRow(Order order)
     {
         Object d[] = new Object[NUM_COLS];
-        d[ORIGIN_INDEX] = new Character( order.getOrigin().getName());
-        d[DESTINATION_INDEX ] = new Character( order.getDestination().getName());
+        d[ORIGIN_INDEX] = order.getOrigin().getName();
+        d[DESTINATION_INDEX ] = order.getDestination().getName();
         d[NUM_SHIPS_INDEX] = order.getFleetSize();
         d[DISTANCE_INDEX] = new Float(order.getTimeRemaining());
 

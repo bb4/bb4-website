@@ -175,19 +175,19 @@ public final class PentePatterns
 
         try {
             // the first entry in the file should be the number of patterns
-            token = inStream.nextToken();
+            //token = inStream.nextToken();
             int numPatterns = (int) (inStream.nval);
             patterns_ = new String[numPatterns];
             String pattern;
             for ( int i = 0; i < numPatterns; i++ ) {
                 token = inStream.nextToken(); // must be TT_WORD
-                if ( token == inStream.TT_WORD ) {
+                if ( token == StreamTokenizer.TT_WORD ) {
                     patterns_[i] = inStream.sval;
                 }
                 else
                     GameContext.log(0,  "unexpected token type = " + token + "   nval = " + inStream.nval );
                 token = inStream.nextToken(); // must be TT_NUMBER
-                if ( token == inStream.TT_NUMBER ) {
+                if ( token == StreamTokenizer.TT_NUMBER ) {
                     wtIndex = (int) (inStream.nval);
                 }
                 else

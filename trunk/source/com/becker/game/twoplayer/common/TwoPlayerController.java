@@ -177,9 +177,7 @@ public abstract class TwoPlayerController extends GameController
                     WINNING_VALUE + ")  inheritedVal=" + inherVal );
 
         double val = Math.min( Math.abs( inherVal ), WINNING_VALUE );
-        double prob = (val) / (WINNING_VALUE);
-
-        return prob;
+        return val / WINNING_VALUE;
     }
 
     /**

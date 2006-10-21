@@ -17,12 +17,7 @@ import java.awt.event.*;
  * @author Barry Becker
  */
 final class PlanetDetailsDialog extends JDialog
-
 {
-    /**
-     * the options get set directly on the game controller that is passed in.
-     */
-    private GameController controller_;
 
     private final JPanel mainPanel_ = new JPanel();
     private final JPanel previewPanel_ = new JPanel();
@@ -34,11 +29,6 @@ final class PlanetDetailsDialog extends JDialog
 
     private static final int ROW_HEIGHT = 11;
     private static final int TREE_WIDTH = 420;
-
-    private Board board_ = null;
-
-    // the viewer in the debug window
-    private GameBoardViewer boardViewer_ = null;
 
     // the controller that is actually being played
     private GameControllerInterface mainController_ = null;
@@ -54,9 +44,9 @@ final class PlanetDetailsDialog extends JDialog
     public PlanetDetailsDialog( JFrame parent, GameBoardViewer boardViewer )
     {
         super( parent );
-        boardViewer_ = boardViewer;
-        controller_ = boardViewer.getController();
-        board_ = controller_.getBoard();
+        GameBoardViewer boardViewer_=boardViewer;
+        GameController controller_=boardViewer.getController();
+        Board board_=controller_.getBoard();
 
         enableEvents( AWTEvent.WINDOW_EVENT_MASK );
         try {

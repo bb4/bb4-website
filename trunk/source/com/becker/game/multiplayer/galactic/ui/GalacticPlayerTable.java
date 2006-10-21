@@ -77,7 +77,7 @@ public class GalacticPlayerTable extends PlayerTable implements TableModelListen
         int nRows = model.getRowCount();
         Player[] players = new GalacticPlayer[nRows];
         for (int i=0; i<nRows; i++) {
-            char planetName = ((Character)model.getValueAt(i,PLANET_INDEX)).charValue();
+            char planetName = (Character) model.getValueAt(i, PLANET_INDEX);
             Planet planet = Galaxy.getPlanet(planetName);
             planet.setProductionCapacity((Integer) model.getValueAt(i, PRODUCTION_INDEX));
             planet.setNumShips((Integer) (model.getValueAt(i, SHIPS_INDEX)));
@@ -103,7 +103,7 @@ public class GalacticPlayerTable extends PlayerTable implements TableModelListen
         d[NAME_INDEX] = player.getName();
         d[COLOR_INDEX ] = player.getColor();
         d[ICON_INDEX] = p.getIcon();
-        d[PLANET_INDEX] = new Character(p.getHomePlanet().getName());
+        d[PLANET_INDEX] = p.getHomePlanet().getName();
         d[SHIPS_INDEX] = p.getHomePlanet().getNumShips();
         d[PRODUCTION_INDEX] = p.getHomePlanet().getProductionCapacity();
         d[HUMAN_INDEX] = player.isHuman();

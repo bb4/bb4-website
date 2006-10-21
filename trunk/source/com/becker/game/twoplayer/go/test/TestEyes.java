@@ -384,7 +384,7 @@ public class TestEyes extends GoTestCase {
         GameContext.log(0, "finding eyes for "+eyesProblemFile+" ...");
         restore(eyesProblemFile);
 
-        Set groups = ((GoBoard) controller_.getBoard()).getGroups();
+        //Set groups = ((GoBoard) controller_.getBoard()).getGroups();
 
         // consider the 2 biggest groups
         //Assert.assertTrue("There were not two groups. Instead there were :"+groups.size(), groups.size() == 2);
@@ -408,7 +408,7 @@ public class TestEyes extends GoTestCase {
     private EyeCounts getEyeCounts(Set eyes)  {
         EyeCounts counts = new EyeCounts();
 
-        int numFalseEyes = 0;
+        // int numFalseEyes = 0;
         for (Object e : eyes) {
 
             GoEye eye = (GoEye) e;
