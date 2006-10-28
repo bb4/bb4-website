@@ -709,13 +709,13 @@ public final class GoGroup extends GoSet
         Set groupStones = getStones();
 
         profiler.start(GoProfiler.GET_ENEMY_GROUPS_NBRS);
-        Set cachedEnemyNbrGroups_=getEnemyGroupNeighbors(board, groupStones);
+        Set cachedEnemyNbrGroups = getEnemyGroupNeighbors(board, groupStones);
         profiler.stop(GoProfiler.GET_ENEMY_GROUPS_NBRS);
 
         // of these enemy groups which is the weakest?
         double weakestHealth = -side;
         GoGroup weakestGroup = null;
-        for (Object egroup : cachedEnemyNbrGroups_) {
+        for (Object egroup : cachedEnemyNbrGroups) {
             GoGroup enemyGroup = (GoGroup)egroup;
             double h = enemyGroup.getAbsoluteHealth();
             if ((side * h) > (side * weakestHealth)) {

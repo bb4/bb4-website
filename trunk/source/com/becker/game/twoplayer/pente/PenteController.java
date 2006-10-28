@@ -5,7 +5,6 @@ import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
-import com.becker.game.common.Move;
 import com.becker.optimization.ParameterArray;
 import com.becker.sound.MusicMaker;
 
@@ -21,10 +20,6 @@ import java.util.*;
  */
 public class PenteController extends TwoPlayerController
 {
-
-    // This is how many in a row are needed to win
-    // if M is five, then the game is pente
-    private static final int M = PentePatterns.M;
 
     // these weights determine how the computer values each pattern
     // if only one computer is playing, then only one of the weights arrays is used.
@@ -85,7 +80,7 @@ public class PenteController extends TwoPlayerController
      */
     public static int getNInARow()
     {
-        return M;
+        return PentePatterns.M;
     }
 
     protected TwoPlayerOptions createOptions() {
@@ -107,7 +102,7 @@ public class PenteController extends TwoPlayerController
      */
     public void computerMovesFirst()
     {
-        int delta = M - 1;
+        int delta = PentePatterns.M - 1;
         int c = (int) (Math.random() * (board_.getNumCols() - 2 * delta) + delta + 1);
         int r = (int) (Math.random() * (board_.getNumRows() - 2 * delta) + delta + 1);
         TwoPlayerMove m = TwoPlayerMove.createMove( r, c, 0, new GamePiece(true) );
@@ -239,9 +234,9 @@ public class PenteController extends TwoPlayerController
         // to see how the value is affected.
         // there are 4 directions: - | \ /
 
-        startc = col - M;   //  -
+        startc = col - PentePatterns.M;   //  -
         if ( startc < 1 ) startc = 1;
-        stopc = col + M;
+        stopc = col + PentePatterns.M;
         if ( stopc > numCols ) stopc = numCols;
         for ( i = startc; i <= stopc; i++ )
             lineAppend( board_.getPosition( row, i ), line );
@@ -250,9 +245,9 @@ public class PenteController extends TwoPlayerController
         diff = computeValueDifference( line, position, weights );
         //worthDebug('-', line, position, diff);
 
-        startr = row - M;      //  |
+        startr = row - PentePatterns.M;      //  |
         if ( startr < 1 ) startr = 1;
-        stopr = row + M;
+        stopr = row + PentePatterns.M;
         if ( stopr > numRows ) stopr = numRows;
         line.setLength( 0 );
         for ( i = startr; i <= stopr; i++ )
@@ -262,8 +257,8 @@ public class PenteController extends TwoPlayerController
         diff += computeValueDifference( line, position, weights );
         //worthDebug('|', line, position, diff);
 
-        startc = col - M;      //  \
-        startr = row - M;
+        startc = col - PentePatterns.M;      //  \
+        startr = row - PentePatterns.M;
         if ( startc < 1 ) {
             startr = startr + 1 - startc;
             startc = 1;
@@ -272,8 +267,8 @@ public class PenteController extends TwoPlayerController
             startc = startc + 1 - startr;
             startr = 1;
         }
-        stopc = col + M;
-        stopr = row + M;
+        stopc = col + PentePatterns.M;
+        stopr = row + PentePatterns.M;
         if ( stopc > numCols ) {
             stopr = stopr + numCols - stopc;
             //stopc = numCols;
@@ -290,8 +285,8 @@ public class PenteController extends TwoPlayerController
         diff += computeValueDifference( line, position, weights );
         //worthDebug('\\', line, position, diff);
 
-        startc = col - M;     //  /
-        startr = row + M;
+        startc = col - PentePatterns.M;     //  /
+        startr = row + PentePatterns.M;
         if ( startc < 1 ) {
             startr = startr + startc - 1;
             startc = 1;
@@ -300,8 +295,8 @@ public class PenteController extends TwoPlayerController
             startc = startc - numRows + startr;
             startr = numRows;
         }
-        stopc = col + M;
-        stopr = row - M;
+        stopc = col + PentePatterns.M;
+        stopr = row - PentePatterns.M;
         if ( stopc > numCols ) {
             stopr = stopr - numCols + stopc;
             stopc = numCols;
@@ -343,8 +338,8 @@ public class PenteController extends TwoPlayerController
 
             boolean player1 = !(lastMove.isPlayer1());
 
-            for ( i = 1; i <= ncols; i++ )      //cols
-                for ( j = 1; j <= nrows; j++ )    //rows
+            for ( i = 1; i <= ncols; i++ )
+                for ( j = 1; j <= nrows; j++ )
                     if ( pb.isCandidateMove( j, i ) ) {
                         TwoPlayerMove m = TwoPlayerMove.createMove( j, i, lastMove.getValue(), new GamePiece(player1));
                         pb.makeMove( m );

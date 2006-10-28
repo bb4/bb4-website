@@ -1,8 +1,5 @@
 package com.becker.game.common;
 
-import ca.dj.jigo.sgf.*;
-import ca.dj.jigo.sgf.tokens.*;
-
 import java.util.*;
 
 /**
@@ -153,97 +150,13 @@ public abstract class GameController
         GameContext.log(0,  "Error: saveToFile("+fileName+") not implemented yet" );
     }
 
+    /**
+     * Restore the current state of the game from a file.
+     * @param fileName
+     */
     public void restoreFromFile( String fileName)
     {
         GameContext.log(0,  "Error: restoreFromFile("+fileName+") not implemented yet" );
-    }
-
-
-    /**
-     * This will retore a game from an SGF structure
-     */
-    protected void restoreGame( SGFGame game )
-    {
-        parseSGFGameInfo(game);
-
-        List<Move> moveSequence = new LinkedList<Move>();
-        extractMoveList( game.getTree(), moveSequence );
-        GameContext.log( 2, "move sequence= " + moveSequence );
-        reset();
-
-        Iterator it = moveSequence.iterator();
-        while ( it.hasNext() ) {
-            Move m = (Move) it.next();
-            makeMove( m );
-        }
-    }
-
-    protected void parseSGFGameInfo( SGFGame game) {
-        Enumeration e = game.getInfoTokens();
-        int size = 13; // default unless specified
-        while (e.hasMoreElements()) {
-            InfoToken token = (InfoToken) e.nextElement();
-            if (token instanceof SizeToken) {
-                SizeToken sizeToken = (SizeToken)token;
-                //System.out.println("info token size ="+sizeToken.getSize());
-                size = sizeToken.getSize();
-            }
-        }
-        getBoard().setSize(size, size);
-    }
-
-    /**
-     * create a Move from an SGF token.
-     */
-    protected Move createMoveFromToken( MoveToken token ) {
-        assert false : "createMoveFromToken not implemented for "+ getClass().getName();
-        return null;
-    }
-
-    /**
-     * Given an SGFTree and a place to store the moves of a game, this
-     * method weeds out all the moves from the given SGFTree into a single
-     * Vector of moves.  Variations are discarded.
-     *
-     * @param tree - The SGFTree containing an SGF variation tree.
-     * @param moveList - The place to store the moves for the game's main
-     * variation.
-     */
-    private void extractMoveList( SGFTree tree, List<Move> moveList )
-    {
-        Enumeration trees = tree.getTrees(), leaves = tree.getLeaves(), tokens;
-
-        while ( leaves != null && leaves.hasMoreElements() ) {
-            SGFToken token;
-            tokens = ((SGFLeaf) leaves.nextElement()).getTokens();
-
-            boolean found = false;
-
-            // While a move token hasn't been found, and there are more tokens to
-            // examine ... try and find a move token in this tree's leaves to add
-            // to the collection of moves (moveList).
-            while ( tokens != null && tokens.hasMoreElements() && !found ) {
-                token = (SGFToken) tokens.nextElement();
-                found = processToken(token, moveList);
-            }
-        }
-        // If there are variations, use the first variation, which is
-        // the entire game, without extraneous variations.
-        if ( trees != null && trees.hasMoreElements() )
-            extractMoveList( (SGFTree) trees.nextElement(), moveList );
-    }
-
-
-    protected boolean processToken(SGFToken token, List<Move> moveList) {
-
-        boolean found = false;
-        if (token instanceof MoveToken ) {
-            moveList.add( createMoveFromToken( (MoveToken) token ) );
-            found = true;
-        } else {
-            System.out.println("ignoring token "+token.getClass().getName());
-        }
-        return found;
     }
 
 
@@ -300,6 +213,5 @@ public abstract class GameController
     }
 
     public abstract GameOptions getOptions();
-
 
 }

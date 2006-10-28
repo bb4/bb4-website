@@ -1,10 +1,9 @@
 package com.becker.game.multiplayer.galactic.ui;
 
-import ca.dj.jigo.sgf.tokens.*;
+import com.becker.common.*;
 import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
 import com.becker.game.multiplayer.galactic.*;
-import com.becker.common.*;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -69,15 +68,6 @@ public class GalaxyViewer extends GameBoardViewer
     protected void drawLastMoveMarker(Graphics2D g2)
     {}
 
-
-    /**
-     * This will create a move from an SGF token
-     */
-    protected Move createMoveFromToken( MoveToken token, int moveNum )
-    {
-        GameContext.log(0, "not implemented yet" );
-        return null;
-    }
 
     public void mousePressed( MouseEvent e )
     {

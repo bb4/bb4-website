@@ -1,18 +1,14 @@
 package com.becker.game.twoplayer.checkers.ui;
 
-import ca.dj.jigo.sgf.tokens.MoveToken;
-import com.becker.game.twoplayer.checkers.CheckersController;
-import com.becker.game.twoplayer.checkers.CheckersMove;
-import com.becker.game.common.*;
-import com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer;
-import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.common.Move;
 import com.becker.common.*;
+import com.becker.game.common.*;
+import com.becker.game.twoplayer.checkers.*;
+import com.becker.game.twoplayer.common.*;
+import com.becker.game.twoplayer.common.ui.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.*;
 import java.util.*;
 import java.util.List;
 
@@ -85,15 +81,6 @@ public class CheckersBoardViewer extends TwoPlayerBoardViewer implements MouseMo
         refresh();
     }
 
-
-    /**
-     * @return a move created from an SGF token
-     */
-    protected Move createMoveFromToken( MoveToken token, int moveNum )
-    {
-        GameContext.log(0,  "not implemented yet" );
-        return null;
-    }
 
     protected void drawBackground( Graphics g, int startPos, int rightEdgePos, int bottomEdgePos )
     {

@@ -50,7 +50,6 @@ public final class GoMove extends TwoPlayerMove
         return m;
     }
 
-
     /**
      * check if the current move is suicidal.
      * suicidal moves (ones that kill your own pieces) are illegal.
@@ -94,28 +93,6 @@ public final class GoMove extends TwoPlayerMove
             }
         }
         return true;
-
-        /*
-        GoString string = stone.getString();
-        if ( string == null )   {
-            GameContext.log( 0, "Warning: GoMove.isSuicidal: the string is null" );
-        }
-
-        //CaptureList captures = getCaptures();
-        // instead check to see if any of our neighbors have only 1 liberty. if so then return false
-
-        if (captures != null && captures.size() > 0) {
-            // if we have captured enemy stones, then this is not a suicide, even if we have no liberties ourselves.
-            return false;
-        }
-        if ( string != null && string.getNumLiberties(board) == 0) {
-            assert (string.size() > 0);
-            GameContext.log( 2, "GoMove.isSuicidal: your are playing on the last liberty for this string=" + string.toString() + " captures=" + captures );
-            // if we do not have captures, then it is a suicide move and should not be allowed
-            return true;
-        }
-        return false;
-        */
     }
 
 
@@ -277,7 +254,6 @@ public final class GoMove extends TwoPlayerMove
     }
 
 
-
     /**
      * update the strings after a stone has been removed.
      * Some friendly strings may have been split by the removal.
@@ -325,7 +301,6 @@ public final class GoMove extends TwoPlayerMove
         }
         GoBoard.getProfiler().stopUpdateStringsAfterRemove();
     }
-
 
 
     /**
@@ -393,7 +368,6 @@ public final class GoMove extends TwoPlayerMove
 
         GoBoard.getProfiler().stopUpdateGroupsAfterRemove();
     }
-
 
 
     /**
@@ -530,6 +504,9 @@ public final class GoMove extends TwoPlayerMove
     }
 
 
+    /** 
+     * Remove all thecaptures on the board.
+     */
     private void removeCaptures(GoBoard board) {
         if ( getCaptures() != null ) {
             removeCapturesOnBoard( board );
@@ -938,31 +915,10 @@ public final class GoMove extends TwoPlayerMove
         }
     }
 
-
-
     /**
-     * return the SGF (4) representation of the move
-     * SGF stands for Smart Game Format and is commonly used for Go
+     *
+     * @return stringified form.
      */
-    public String getSGFRepresentation()
-    {
-        // passes are not represented in SGF - so just skip it if the piece is null.
-        if (getPiece() == null)
-             return "[]";
-        StringBuffer buf = new StringBuffer("");
-        char player = 'W';
-        if ( getPiece().isOwnedByPlayer1() )
-            player = 'B';
-        buf.append( ';' );
-        buf.append( player );
-        buf.append( '[' );
-        buf.append( (char) ('a' + toCol_ - 1) );
-        buf.append( (char) ('a' + toRow_ - 1) );
-        buf.append( ']' );
-        buf.append( '\n' );
-        return buf.toString();
-    }
-
     public String toString()
     {
         String s = super.toString();
