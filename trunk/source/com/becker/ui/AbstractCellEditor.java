@@ -9,95 +9,93 @@ import java.awt.event.*;
 import java.util.*;
 
 /**
- * taken from Geary Swing book.
+ * Copied with modification from from Graphic Java (Swing) book (by David Geary).
+ * 
  */
 public abstract class AbstractCellEditor
-				implements TableCellEditor, TreeCellEditor {
+                implements TableCellEditor, TreeCellEditor {
 
-	protected EventListenerList listenerList =
-										new EventListenerList();
-	protected Object value;
-	protected ChangeEvent changeEvent = null;
-	protected int clickCountToStart = 1;
+    protected EventListenerList listenerList_ =
+                                        new EventListenerList();
+    protected Object value_;
+    protected ChangeEvent changeEvent_ = null;
+    protected int clickCountToStart_ = 1;
 
-	public Object getCellEditorValue() {
-		return value;
-	}
+    public Object getCellEditorValue() {
+        return value_;
+    }
 
-	public void setCellEditorValue(Object value) {
-		this.value = value;
-	}
+    public void setCellEditorValue(Object value) {
+        this.value_ = value;
+    }
 
-	public void setClickCountToStart(int count) {
-		clickCountToStart = count;
-	}
+    public void setClickCountToStart(int count) {
+        clickCountToStart_ = count;
+    }
 
-	public int getClickCountToStart() {
-		return clickCountToStart;
-	}
+    public int getClickCountToStart() {
+        return clickCountToStart_;
+    }
 
-	public boolean isCellEditable(EventObject anEvent) {
-		if (anEvent instanceof MouseEvent) {
-			if (((MouseEvent)anEvent).getClickCount() <
-												clickCountToStart)
-				return false;
-		}
-		return true;
-	}
+    public boolean isCellEditable(EventObject anEvent) {
+        if (anEvent instanceof MouseEvent) {
+            if (((MouseEvent)anEvent).getClickCount() <
+                                                clickCountToStart_)
+                return false;
+        }
+        return true;
+    }
 
-	public boolean shouldSelectCell(EventObject anEvent) {
-		return true;
-	}
+    public boolean shouldSelectCell(EventObject anEvent) {
+        return true;
+    }
 
-	public boolean stopCellEditing() {
-		fireEditingStopped();
-		return true;
-	}
+    public boolean stopCellEditing() {
+        fireEditingStopped();
+        return true;
+    }
 
-	public void cancelCellEditing() {
-		fireEditingCanceled();
-	}
+    public void cancelCellEditing() {
+        fireEditingCanceled();
+    }
 
-	public void addCellEditorListener(CellEditorListener l) {
-		listenerList.add(CellEditorListener.class, l);
-	}
+    public void addCellEditorListener(CellEditorListener l) {
+        listenerList_.add(CellEditorListener.class, l);
+    }
 
-	public void removeCellEditorListener(CellEditorListener l) {
-		listenerList.remove(CellEditorListener.class, l);
-	}
+    public void removeCellEditorListener(CellEditorListener l) {
+        listenerList_.remove(CellEditorListener.class, l);
+    }
 
-	public Component getTreeCellEditorComponent(
-						JTree tree, Object value,
-						boolean isSelected, boolean expanded,
-						boolean leaf, int row) {
-		return null;
-	}
-	public abstract Component getTableCellEditorComponent(
-									JTable table, Object value,
-									boolean isSelected,
-									int row, int column);
+    public Component getTreeCellEditorComponent(
+                        JTree tree, Object value,
+                        boolean isSelected, boolean expanded,
+                        boolean leaf, int row) {
+        return null;
+    }
 
-	protected void fireEditingStopped() {
-		Object[] listeners = listenerList.getListenerList();
-		for (int i = listeners.length-2; i>=0; i-=2) {
-			if (listeners[i] == CellEditorListener.class) {
-				if (changeEvent == null)
-					changeEvent = new ChangeEvent(this);
-				((CellEditorListener)
-				listeners[i+1]).editingStopped(changeEvent);
-			}
-		}
-	}
 
-	protected void fireEditingCanceled() {
-		Object[] listeners = listenerList.getListenerList();
-		for (int i = listeners.length-2; i>=0; i-=2) {
-			if (listeners[i]==CellEditorListener.class) {
-				if (changeEvent == null)
-					changeEvent = new ChangeEvent(this);
-				((CellEditorListener)
-				listeners[i+1]).editingCanceled(changeEvent);
-			}
-		}
-	}
+    protected void fireEditingStopped() {
+        Object[] listeners = listenerList_.getListenerList();
+        for (int i = listeners.length-2; i>=0; i-=2) {
+            if (listeners[i] == CellEditorListener.class) {
+                if (changeEvent_ == null)
+                    changeEvent_ = new ChangeEvent(this);
+                ((CellEditorListener)
+                listeners[i+1]).editingStopped(changeEvent_);
+            }
+        }
+    }
+
+    protected void fireEditingCanceled() {
+        Object[] listeners = listenerList_.getListenerList();
+        for (int i = listeners.length-2; i>=0; i-=2) {
+            if (listeners[i]==CellEditorListener.class) {
+                if (changeEvent_ == null)
+                    changeEvent_ = new ChangeEvent(this);
+                ((CellEditorListener)
+                listeners[i+1]).editingCanceled(changeEvent_);
+            }
+        }
+    }
 }

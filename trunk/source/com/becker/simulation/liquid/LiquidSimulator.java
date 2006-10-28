@@ -1,10 +1,10 @@
 package com.becker.simulation.liquid;
 
 import com.becker.common.*;
-import com.becker.java2d.*;
 import com.becker.optimization.*;
 import com.becker.simulation.common.*;
 import com.becker.ui.*;
+import com.becker.ui.animation.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -77,7 +77,7 @@ public class LiquidSimulator extends Simulator
                 if ( image_ != null ) {
                     //JOptionPane.showMessageDialog(this, "mImage("+fname+") width ="+mImage.getWidth(null));
                     //System.out.println("mImage width ="+mImage.getWidth(null));
-                    ImageUtil.saveAsImage( fname, this.image_, "png" );
+                    ImageUtil.saveAsImage( fname, this.image_, ImageUtil.ImageType.PNG );
                 }
             }
             frameCount_++;

@@ -3,6 +3,8 @@ package com.becker.puzzle.maze;
 import java.awt.*;
 
 /**
+ * The model part of the model view controller pattern for the maze.
+ *
  * @author Barry Becker Date: Jul 29, 2006
  */
 public class MazeModel {
@@ -10,7 +12,7 @@ public class MazeModel {
     private int width_;
     private int height_;
 
-    // the grid of cells that make up the environment
+    // the grid of cells that make up the maze paths
     // in x,y (col, row) order
     private MazeCell[][] grid_;
 

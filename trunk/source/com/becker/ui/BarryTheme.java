@@ -1,8 +1,7 @@
 package com.becker.ui;
 
-import javax.swing.plaf.ColorUIResource;
-import javax.swing.plaf.FontUIResource;
-import javax.swing.plaf.metal.DefaultMetalTheme;
+import javax.swing.plaf.*;
+import javax.swing.plaf.metal.*;
 import java.awt.*;
 
 /**

@@ -1,11 +1,10 @@
 package com.becker.spirograph;
 
-import com.becker.java2d.*;
 import com.becker.common.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
+import java.awt.image.*;
 
 /**
  * Program to simulate a SpiroGraph.
@@ -383,7 +382,7 @@ public class GraphRenderer extends JPanel implements Runnable
         clear();
         thread_ = null;
         isRendering_ = false;
-        state_.reset();        
+        state_.reset();
 
         setPoint(state_.getPos(), 0);
         adjustCircle2();

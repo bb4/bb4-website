@@ -30,8 +30,8 @@ public class SplashScreen extends JWindow
         Dimension screenSize =
                 Toolkit.getDefaultToolkit().getScreenSize();
         Dimension labelSize = label.getPreferredSize();
-        setLocation( screenSize.width / 2 - (labelSize.width / 2),
-                screenSize.height / 2 - (labelSize.height / 2) );
+        setLocation( (screenSize.width >> 1) - (labelSize.width >> 1),
+                (screenSize.height >> 1) - (labelSize.height >> 1) );
         addMouseListener( new MouseAdapter()
         {
             public void mousePressed( MouseEvent e )

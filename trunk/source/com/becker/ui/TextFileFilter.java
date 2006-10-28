@@ -1,5 +1,6 @@
 package com.becker.ui;
 
+import javax.swing.filechooser.*;
 import java.io.File;
 
 /**
@@ -9,9 +10,9 @@ import java.io.File;
  * @author Barry Becker
  */
 
-public class TextFileFilter extends javax.swing.filechooser.FileFilter {
+public class TextFileFilter extends FileFilter {
 
-  public final String TEXT_EXT = "txt";
+  public static final String TEXT_EXT = "txt";
 
 
   public boolean accept(File f)

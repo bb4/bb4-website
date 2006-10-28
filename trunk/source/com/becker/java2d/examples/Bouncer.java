@@ -1,7 +1,7 @@
 package com.becker.java2d.examples;
 
-import com.becker.ui.AnimationComponent;
-import com.becker.ui.AnimationFrame;
+import com.becker.ui.animation.AnimationComponent;
+import com.becker.ui.animation.AnimationFrame;
 
 import javax.swing.*;
 import java.awt.*;

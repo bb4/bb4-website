@@ -2,6 +2,7 @@ package com.becker.rmi.server;
 
 import com.becker.common.*;
 import com.becker.rmi.server.*;
+import com.becker.rmi.common.*;
 
 import java.rmi.*;
 import java.rmi.server.*;
