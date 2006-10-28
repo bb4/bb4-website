@@ -1,10 +1,8 @@
 package com.becker.game.common.ui;
 
-import com.becker.common.Util;
-import com.becker.ui.GUIUtil;
-import com.becker.game.common.GameContext;
-import com.becker.game.common.LocaleType;
-import com.becker.java2d.*;
+import com.becker.common.*;
+import com.becker.game.common.*;
+import com.becker.ui.*;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -195,7 +193,7 @@ public class GameApp implements ActionListener
             gamePanel_.saveGame();
         }
         else if (item == saveImageItem_) {
-            ImageUtil.saveSnapshot(gamePanel_, GameContext.getHomeDir());
+            GUIUtil.saveSnapshot(gamePanel_, GameContext.getHomeDir());
         }
         else if (item == exitItem_) {
             System.exit(0);

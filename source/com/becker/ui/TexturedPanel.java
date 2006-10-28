@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * a panel with a textured background.
+ * A panel with a textured background.
  * The background gets tiled with the image that is passed in.
  */
 public class TexturedPanel extends JPanel

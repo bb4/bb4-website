@@ -7,21 +7,20 @@ import java.awt.image.*;
 public class RoundGradientContext
         implements PaintContext
 {
-    protected Point2D mPoint;
-    protected Point2D mRadius;
-    protected Color mC1, mC2;
+    protected Point2D mPoint_;
+    protected Point2D mRadius_;
+    protected Color mC1_, mC2_;
 
     public RoundGradientContext( Point2D p, Color c1, Point2D r, Color c2 )
     {
-        mPoint = p;
-        mC1 = c1;
-        mRadius = r;
-        mC2 = c2;
+        mPoint_ = p;
+        mC1_ = c1;
+        mRadius_ = r;
+        mC2_ = c2;
     }
 
     public void dispose()
-    {
-    }
+    {}
 
     public ColorModel getColorModel()
     {
@@ -33,24 +32,24 @@ public class RoundGradientContext
         WritableRaster raster =
                 getColorModel().createCompatibleWritableRaster( w, h );
 
-        int[] data = new int[w * h * 4];
-        double radius = mRadius.distance( 0, 0 );
+        int[] data = new int[w * h << 2];
+        double radius = mRadius_.distance( 0, 0 );
         for ( int j = 0; j < h; j++ ) {
             for ( int i = 0; i < w; i++ ) {
-                double distance = mPoint.distance( x + i, y + j );
+                double distance = mPoint_.distance( x + i, y + j );
                 double ratio = distance / radius;
                 if ( ratio > 1.0 )
                     ratio = 1.0;
 
-                int base = (j * w + i) * 4;
-                data[base + 0] = (int) (mC1.getRed() + ratio *
-                        (mC2.getRed() - mC1.getRed()));
-                data[base + 1] = (int) (mC1.getGreen() + ratio *
-                        (mC2.getGreen() - mC1.getGreen()));
-                data[base + 2] = (int) (mC1.getBlue() + ratio *
-                        (mC2.getBlue() - mC1.getBlue()));
-                data[base + 3] = (int) (mC1.getAlpha() + ratio *
-                        (mC2.getAlpha() - mC1.getAlpha()));
+                int base = (j * w + i) << 2;
+                data[base] = (int) (mC1_.getRed() + ratio *
+                        (mC2_.getRed() - mC1_.getRed()));
+                data[base + 1] = (int) (mC1_.getGreen() + ratio *
+                        (mC2_.getGreen() - mC1_.getGreen()));
+                data[base + 2] = (int) (mC1_.getBlue() + ratio *
+                        (mC2_.getBlue() - mC1_.getBlue()));
+                data[base + 3] = (int) (mC1_.getAlpha() + ratio *
+                        (mC2_.getAlpha() - mC1_.getAlpha()));
             }
         }
         raster.setPixels( 0, 0, w, h, data );

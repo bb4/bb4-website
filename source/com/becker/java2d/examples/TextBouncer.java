@@ -1,7 +1,8 @@
 package com.becker.java2d.examples;
 
-import com.becker.ui.AnimationComponent;
-import com.becker.ui.AnimationFrame;
+import com.becker.ui.animation.AnimationComponent;
+import com.becker.ui.animation.AnimationFrame;
+import com.becker.ui.animation.*;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -105,7 +106,7 @@ public class TextBouncer
     public String getFileNameBase() {
         return null;
     }
-    
+
     public void setSwitch( int item, boolean value )
     {
         switch (item) {

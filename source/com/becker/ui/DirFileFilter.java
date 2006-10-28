@@ -1,5 +1,6 @@
 package com.becker.ui;
 
+import javax.swing.filechooser.*;
 import java.io.File;
 
 /**
@@ -9,9 +10,9 @@ import java.io.File;
  * @author Barry Becker
  */
 
-public class DirFileFilter extends javax.swing.filechooser.FileFilter {
+public class DirFileFilter extends FileFilter {
 
-   protected static String DIRECTORY_DESC = "dir";
+   protected static final String DIRECTORY_DESC = "dir";
 
    public boolean accept(File f)
    {

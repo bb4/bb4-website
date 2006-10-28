@@ -4,6 +4,7 @@ import com.becker.common.*;
 import com.becker.optimization.*;
 import com.becker.simulation.common.*;
 import com.becker.ui.*;
+import com.becker.ui.animation.*;
 
 import javax.swing.*;
 import javax.vecmath.*;

@@ -449,6 +449,24 @@ public final class GUIUtil
         return hsv[0];
     }
 
+
+
+    public static void saveSnapshot(JComponent component, String directory) {
+
+        JFileChooser chooser = getFileChooser();
+        chooser.setCurrentDirectory( new File( directory ) );
+        int state = chooser.showSaveDialog( null );
+        File file = chooser.getSelectedFile();
+        if ( file != null && state == JFileChooser.APPROVE_OPTION ) {
+
+            BufferedImage img = (BufferedImage) component.createImage(component.getWidth(), component.getHeight());
+            component.paint(img.createGraphics());
+
+            ImageUtil.saveAsImage(file.getAbsolutePath(), img, ImageUtil.ImageType.PNG);
+        }
+    }
+
+
     /**
      * Get the suffix of a file name.
      * The part after the "." typically used by FileFilters.
@@ -477,7 +495,7 @@ public final class GUIUtil
                 return null;
             }
             catch (NoClassDefFoundError ncde) {
-                //System.out.println( "jnlp BasicService not available: "+ncde.getMessage() );
+                System.out.println( "jnlp BasicService not available: "+ncde.getMessage() );
                 return null;
             }
         }

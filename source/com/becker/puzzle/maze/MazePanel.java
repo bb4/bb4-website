@@ -4,10 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
+ * This panel is responsible for drawing the Maze (see MazeModel).
  * @author Barry Becker Date: Jul 29, 2006
  */
 public class MazePanel extends JComponent {
 
+    // represents the maze that we need to render.
     private MazeModel maze_;
 
     // the default size of each square cell in millimeters
@@ -15,7 +17,7 @@ public class MazePanel extends JComponent {
 
     private int animationSpeed_;
 
-    // rending attributes
+    // rendering attributes
     private static final Color WALL_COLOR = new Color( 80, 0, 150 );
     private static final Color PATH_COLOR = new Color( 255, 230, 120);
 
@@ -47,16 +49,12 @@ public class MazePanel extends JComponent {
     public void setThickness(int thickness) {
 
         Dimension dim = getSize();
-        //System.out.println("in generate. dim="+dim+" w="+dim.width+" h="+dim.height);
         if (dim.width <= 0 || dim.height < 0)
             return;
 
         cellSize_ = thickness;
-
         int w = dim.width / thickness;
         int h = dim.height / thickness;
-        //System.out.println("x="+w+" y="+h+ "  xDim="+(w*thickness)+" yDim="+(h*thickness));
-
 
         int fontSize = 2 + ((int) cellSize_ >> 1);
         textFont_ = new Font("Serif", Font.BOLD, fontSize);

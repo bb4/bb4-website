@@ -1,8 +1,8 @@
 package com.becker.game.common.ui;
 
+import com.becker.common.*;
 import com.becker.game.common.*;
 import com.becker.game.online.ui.*;
-import com.becker.java2d.*;
 import com.becker.ui.*;
 import sun.applet.*;
 
@@ -276,7 +276,7 @@ public abstract class GamePanel extends TexturedPanel
             BufferedImage img = (BufferedImage)createImage(getWidth(), getHeight());
             this.paint(img.createGraphics());
 
-            ImageUtil.saveAsImage(file.getAbsolutePath(), img, "jpg");
+            ImageUtil.saveAsImage(file.getAbsolutePath(), img, ImageUtil.ImageType.JPG);
         }
     }
 

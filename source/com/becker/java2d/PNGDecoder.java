@@ -9,12 +9,14 @@ import java.util.zip.CRC32;
 
 public class PNGDecoder
 {
+    private PNGDecoder() {}
+
     public static void main( String[] args ) throws Exception
     {
         String name = "basn3p08.png";
         if ( args.length > 0 ) name = args[0];
         InputStream in = PNGDecoder.class.getResourceAsStream( name );
-        final BufferedImage image = PNGDecoder.decode( in );
+        final BufferedImage image = decode( in );
         in.close();
 
         // Create a Frame to display the image.
@@ -43,8 +45,6 @@ public class PNGDecoder
         long heightLong = chunks.getHeight();
         if ( widthLong > Integer.MAX_VALUE || heightLong > Integer.MAX_VALUE )
             throw new IOException( "That image is too wide or tall." );
-        int width = (int) widthLong;
-        int height = (int) heightLong;
 
         ColorModel cm = chunks.getColorModel();
         WritableRaster raster = chunks.getRaster();
@@ -82,7 +82,7 @@ public class PNGDecoder
                 in.readFully( data );
                 // Read the CRC.
                 long crc = in.readInt() & 0x00000000ffffffffL; // Make it unsigned.
-                if ( verifyCRC( typeBytes, data, crc ) == false )
+                if ( !verifyCRC(typeBytes, data, crc) )
                     throw new IOException( "That file appears to be corrupted." );
 
                 PNGChunk chunk = new PNGChunk( typeBytes, data );

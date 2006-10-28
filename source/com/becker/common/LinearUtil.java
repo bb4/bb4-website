@@ -73,7 +73,7 @@ public final class LinearUtil
                 else
                     System.out.print( Util.formatNumber( a ) + ' ' );
             }
-            System.out.println( "" );
+            System.out.println();
         }
     }
 

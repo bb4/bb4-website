@@ -1,6 +1,8 @@
 package com.becker.rmi.client;
 
-import com.becker.common.Task;
+import com.becker.rmi.common.Task;
+import com.becker.rmi.common.*;
+
 import java.math.BigDecimal;
 
 public class Pi implements Task {

@@ -207,24 +207,4 @@ public class ContinuousColorLegend extends JPanel {
     }
 
 
-    /*
-    private void refreshLegendLabels() {
-
-        int desiredTicks = this.getWidth() / 90;
-        double[] values =
-                NiceNumbers.getCutPoints(getMin(), getMax(), 2 + desiredTicks, true);
-
-
-        // bug: inaccurate spacing for labels when wight labeling is used.
-        JLabel labels[] = new JLabel[values.length];
-        for (int i=0; i<values.length; i++) {
-            labels[i] = new JLabel(Util.formatNumber(values[i]));
-            legendLabels_.add(labels[i]);
-            if (i < values.length-1)
-                legendLabels_.add(Box.createHorizontalGlue());
-        }
-    }   */
-
-
-
 }

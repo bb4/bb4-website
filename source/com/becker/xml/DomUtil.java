@@ -157,18 +157,6 @@ public class DomUtil {
          }
      }
 
-    /*
-    public static Node getRootNode(Document document) {
-        // assume that we have a single root under the document root
-        NodeList children = document.getChildNodes();
-        assert (children.getLength() == 2): "Expected one root instead got "+(children.getLength() - 1);
-        Node root = children.item(1);
-
-        return root;
-    }
-    */
-
-
     /**
      * parse an xml file and return a cleaned up Document object.
      * Set replaceUseWithDeepCopy to false if you are in a debug mode and don't want to see a lot of redundant subtrees.

@@ -40,8 +40,8 @@ public class ApplicationFrame extends JFrame
     {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize = getSize();
-        int x = (screenSize.width - frameSize.width) / 2;
-        int y = (screenSize.height - frameSize.height) / 2;
+        int x = (screenSize.width - frameSize.width) >> 1;
+        int y = (screenSize.height - frameSize.height) >> 1;
         setLocation( x, y );
     }
 }

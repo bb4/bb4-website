@@ -70,6 +70,8 @@ public class MazeSimulator extends JApplet implements ActionListener
                         //System.out.println("compResized: call regen");
                         resized();
                     }
+                }  else {
+                    System.out.println("The dims did not change "+oldSize_.getWidth()+' ' + newSize.getWidth());
                 }
             }
         } );
@@ -150,7 +152,7 @@ public class MazeSimulator extends JApplet implements ActionListener
 
     /**
      * regenerate the maze based on the current UI parameter settings
-     * and current size of the panel
+     * and current size of the panel.
      */
     public void regenerate()
     {
