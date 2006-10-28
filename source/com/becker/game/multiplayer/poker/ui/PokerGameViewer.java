@@ -1,17 +1,14 @@
 package com.becker.game.multiplayer.poker.ui;
 
-import ca.dj.jigo.sgf.tokens.MoveToken;
+import com.becker.common.*;
 import com.becker.game.common.*;
-import com.becker.game.common.ui.GameBoardViewer;
-import com.becker.game.common.ui.GameChangedEvent;
-import com.becker.game.common.Move;
+import com.becker.game.common.ui.*;
 import com.becker.game.multiplayer.poker.*;
 import com.becker.game.multiplayer.poker.player.*;
-import com.becker.common.*;
 
 import javax.swing.*;
-import java.awt.event.MouseEvent;
 import java.awt.*;
+import java.awt.event.*;
 
 /**
  *  Takes a PokerController as input and displays the
@@ -72,15 +69,6 @@ public class PokerGameViewer extends GameBoardViewer
     protected void drawLastMoveMarker(Graphics2D g2)
     {}
 
-
-    /**
-     * This will create a move from an SGF token
-     */
-    protected Move createMoveFromToken( MoveToken token, int moveNum )
-    {
-        GameContext.log(0, "not implemented yet" );
-        return null;
-    }
 
     public void mousePressed( MouseEvent e )
     {}

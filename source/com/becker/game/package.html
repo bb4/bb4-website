@@ -5,9 +5,38 @@
    <meta name="GENERATOR" content="Mozilla/4.79 [en] (Windows NT 5.0; U) [Netscape]">
 </head>
 <body>
-This package is meant to provide a framework for creating and exprimenting with 2 player games with perfect information. You can use it to create new games or improve on old ones. Even if you do not add new games, there are a variety of ways that you can extend and improve all of the exisisting games by enhancing the shared core package. For example, you can add new search strategies (see the game.core.search package) or you can enhance the ui (see game.core.ui).
+<p>
+This package was originally meant to provide a framework for creating and exprimenting with 2 player games with perfect information.
+However, it has expended to include multi-player games, and games other than those with perfect information.
+You can use it to create new games or improve on old ones.
+Even if you do not add new games, there are a variety of ways that you can extend and improve
+all of the exisisting games by enhancing the shared core package.
+For example, you can add new search strategies (see the game.twoplayer.common.search package)
+or you can enhance the ui (see game.core.ui).
+</p>
+<h2>
+Some Ideas for Future Enhancments
+</h2>
+<p>
+    Other Games to implement :  battleship, boggle
+</p>
+<pre>
+  Deployment notes:
+
+      copy contents of /dist to webserver docroot: /var/www/html
+
+         cd /var/www/html
+
+      upload to geocities: ftp ftp.geocities.com
+      bin, prompt
+
+      Start apache webserver /varsbin/apachect1 start
+      contact URL to test: http://192.168.1.100 (or 101 or 102)
+      use no-ip to get static ip?
+
+</pre>
 <br>
 Here is a package dependency diagram
-<img src="package.png"/> 
+<img src="package.png"/>
 </body>
 </html>

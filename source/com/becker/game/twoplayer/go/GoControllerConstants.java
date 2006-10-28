@@ -9,7 +9,7 @@ public final class GoControllerConstants {
     private GoControllerConstants() {}
 
     // initial look ahead factor.
-    static final int DEFAULT_LOOKAHEAD = 2;
+    static final int DEFAULT_LOOKAHEAD = 3;
     // for any given ply never consider more that BEST_PERCENTAGE of the top moves
     static final int BEST_PERCENTAGE = 80;
 

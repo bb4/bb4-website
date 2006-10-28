@@ -1,33 +1,14 @@
 package com.becker.game.twoplayer.go;
 
+import com.becker.game.common.*;
+import com.becker.game.twoplayer.common.*;
+import com.becker.game.twoplayer.common.search.*;
+import com.becker.optimization.*;
+import com.becker.sound.*;
 
-import static com.becker.game.twoplayer.go.GoControllerConstants.*;   // jdk 1.5 feature
+import java.util.*;
 
-import ca.dj.jigo.sgf.Point;
-import ca.dj.jigo.sgf.SGFException;
-import ca.dj.jigo.sgf.SGFGame;
-import ca.dj.jigo.sgf.SGFLoader;
-import ca.dj.jigo.sgf.tokens.*;
-import com.becker.game.common.CaptureList;
-import com.becker.game.common.GameContext;
-import com.becker.game.common.GameWeights;
-import com.becker.game.common.Move;
-import com.becker.game.twoplayer.common.TwoPlayerController;
-import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.common.TwoPlayerOptions;
-import com.becker.game.twoplayer.common.search.Searchable;
-import com.becker.optimization.ParameterArray;
-import com.becker.sound.MusicMaker;
-
-import javax.swing.*;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import static com.becker.game.twoplayer.go.GoControllerConstants.*;
 
 /**
  * Defines everything the computer needs to know to play Go
@@ -39,12 +20,14 @@ import java.util.List;
  *
  * I will try to adhere to Modern Chinese rules.
  * Here are the unique aspects of Chinese rules that differ from other common rulesets:
- *  1) any suicide move is considered illegal
+ *  1) Any suicide move is considered illegal.
  *  2) When you pass, your opponent gets a point.
  *     For computer go, this is useful because it forces
- *     decision/completion of groups to help determine life and death and a proper score.
- *  3) the game terminates when the 2 players pass consecutively
- *  4) score = komi (5.5) + stones on board of player + player territory (note: captures not counted)
+ *     decision/completion of groups to help determine life and
+ *     death and a proper score.
+ *  3) The game terminates when the 2 players pass consecutively.
+ *  4) score = komi (5.5) + stones on board of player + player territory
+ *     (note: captures not counted)
  *
  * The computer keeps track of hierachies of stones. The pecking order is:
  *   stones - individual spaces. They can be empty or occupied.
@@ -55,11 +38,9 @@ import java.util.List;
  * Things still to do:
  * Estimated days to implement are in ()'s after each item. I have about 4 hours in a day on the weekend.
  * This lists only grows. As I complete one task, I typically add 2 more.
- * If the list grows no more, it will take me 8 months until I'm finished at my current rate.
- * If I were to become unemployed, I would probably complete in one-third the time.
  * In reality, I'll probably never finish. That's ok, I'm not sure I want to. I enjoy doing it.
  *
- * high priority todo:
+ * High priority todo:
  *
  *  - add test cases for every little method of every class
  *  - why don't test cases find optimal moves?
@@ -136,22 +117,6 @@ import java.util.List;
  *  - Do not have any rendering done in anything but ui classes (done) (1).
  *  - switch to using type safe enums instead of int constants (done).
  *
- *
- * Deployment notes:
- *
- *     copy contents of /dist to webserver docroot: /var/www/html
- *
-        cd /var/www/html
-
-
-
-       upload to geocities: ftp ftp.geocities.com
-       bin, prompt
- *
- *     start apache webserver /varsbin/apachect1 start
- *     contact URL to test: http://192.168.1.100 (or 101 or 102)
- *     use no-ip to get static ip?
- *
  * @see GoBoard
  * @author Barry Becker
  */
@@ -185,12 +150,16 @@ public final class GoController extends TwoPlayerController
         initializeData();
     }
 
-    protected TwoPlayerOptions createOptions() {
 
-        TwoPlayerOptions options = new TwoPlayerOptions(DEFAULT_LOOKAHEAD, BEST_PERCENTAGE, MusicMaker.SHAMISEN);
-        options.setPlayerName(true, GameContext.getLabel("BLACK"));
-        options.setPlayerName(false, GameContext.getLabel("WHITE"));
-        return options;
+    public GameOptions getOptions() {
+        if (gameOptions_ == null) {
+            TwoPlayerOptions options = new TwoPlayerOptions(DEFAULT_LOOKAHEAD, BEST_PERCENTAGE, MusicMaker.SHAMISEN);
+            options.setPlayerName(true, GameContext.getLabel("BLACK"));
+            options.setPlayerName(false, GameContext.getLabel("WHITE"));
+            gameOptions_ = options;
+        }
+
+        return gameOptions_;
     }
 
     /**
@@ -245,65 +214,6 @@ public final class GoController extends TwoPlayerController
         player1sTurn_ = false;
     }
 
-
-    protected boolean processToken(SGFToken token, List moveList) {
-
-        boolean found = false;
-        if (token instanceof MoveToken ) {
-            moveList.add( createMoveFromToken( (MoveToken) token ) );
-            found = true;
-        }
-        else if (token instanceof AddBlackToken ) {
-            addMoves((PlacementListToken)token, moveList);
-            found = true;
-        }
-        else if (token instanceof AddWhiteToken ) {
-            addMoves((PlacementListToken)token, moveList);
-            found = true;
-        }
-        else if (token instanceof CharsetToken ) {
-            //CharsetToken charsetToken = (CharsetToken) token;
-            //System.out.println("charset="+charsetToken.getCharset());
-        }
-        else if (token instanceof OverTimeToken ) {
-            //OverTimeToken charsetToken = (OverTimeToken) token;
-            //System.out.println("charset="+charsetToken.getCharset());
-        }
-        else if (token instanceof TextToken ) {
-            TextToken textToken = (TextToken) token;
-            System.out.println("text="+textToken.getText());
-        } else {
-            System.out.println("\nignoring token "+token.getClass().getName());
-        }
-        return found;
-    }
-
-    /**
-     * add a sequence of moves all at once.
-     * Such as placing handicaps when readin gfrom an sgf file.
-     * @param token
-     * @param moveList
-     */
-    private static void addMoves(PlacementListToken token, List moveList) {
-        Enumeration points = token.getPoints();
-        boolean player1 = token instanceof AddBlackToken;
-
-        while (points.hasMoreElements()) {
-            Point point = (Point)points.nextElement();
-            moveList.add( new GoMove( point.y, point.x, 0, new GoStone(player1)));
-        }
-    }
-
-
-    protected Move createMoveFromToken( MoveToken token)
-    {
-        if (token.isPass()) {
-            return GoMove.createPassMove(0, !token.isWhite());
-        }
-        return new GoMove( token.getY(), token.getX(), 0, new GoStone(!token.isWhite()));
-    }
-
-
     /**
      * @return true if the computer is to make the first move.
      */
@@ -352,12 +262,10 @@ public final class GoController extends TwoPlayerController
             return 0;
 
         if (forPlayer1)  {
-            int cachedBlackTerritoryEstimate_=((GoBoard)board_).getTerritoryEstimate(forPlayer1, true);
-            return cachedBlackTerritoryEstimate_;
+            return ((GoBoard)board_).getTerritoryEstimate(forPlayer1, true); // black est
         }
         else  {
-            int cachedWhiteTerritoryEstimate_=((GoBoard)board_).getTerritoryEstimate(forPlayer1, true);
-            return cachedWhiteTerritoryEstimate_;
+            return ((GoBoard)board_).getTerritoryEstimate(forPlayer1, true); // white est
         }
     }
 
@@ -410,7 +318,7 @@ public final class GoController extends TwoPlayerController
         komi_ = komi;
     }
 
-    private float getKomi() {
+    float getKomi() {
         return komi_;
     }
 
@@ -421,106 +329,14 @@ public final class GoController extends TwoPlayerController
      */
     public void saveToFile( String fileName, AssertionError ae )
     {
-        GameContext.log( 1, "saving state to :" + fileName );
-
-        try {
-            FileWriter out = new FileWriter( fileName );
-            //PrintWriter foo;
-            // SGF header info
-            out.write( "(;\n" );
-            out.write( "FF[4]\n" );
-            out.write( "GM[1]\n" );
-            out.write( "CA[UTF-8]\n" );
-            out.write( "ST[2]\n" );
-            out.write( "RU[japanese]\n" );
-            out.write( "SZ["+this.getBoard().getNumRows()+"]\n" );
-            out.write( "PB["+this.getPlayer1().getName()+"]\n" );
-            out.write( "PW["+this.getPlayer2().getName()+"]\n" );
-            out.write( "KM["+getKomi()+"]\n" );
-            out.write( "PC[US]\n" );
-            out.write( "HA[" + ((GoBoard) board_).getHandicap() + "]\n" );
-            out.write( "GN[test1]\n" );
-            // out.write("PC[US]"); ?? add the handicap stones if present
-            Iterator it = getMoveList().iterator();
-            GameContext.log( 2, "movelist size= " + getMoveList().size() );
-            while ( it.hasNext() ) {
-                GoMove move = (GoMove) it.next();
-                out.write( move.getSGFRepresentation() );
-            }
-            // include error info and stack trace in the comments to help debug
-            if ( ae != null ) {
-                out.write( "C[" );
-                out.write( GoBoardUtil.getGroupsText(((GoBoard) getBoard()).getGroups() ));
-                if ( ae.getMessage() != null ) {
-                    out.write( ae.getMessage() );
-                    //out would need to be a PrintWriter for this to work
-                    //rte.printStackTrace(out);
-                }
-                out.write( "]\n" );
-            }
-            out.write( ')' );
-            out.close();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
+        GoGameExporter exporter = new GoGameExporter(this);
+        exporter.saveToFile(fileName, ae);
     }
 
 
     public void restoreFromFile( String fileName ) {
-
-        try {
-            FileInputStream iStream = new FileInputStream( fileName );
-            GameContext.log( 2, "opening " + fileName );
-            SGFGame game = SGFLoader.load( iStream );
-            restoreGame( game );
-        } catch (FileNotFoundException fnfe) {
-            JOptionPane.showMessageDialog( null, "file " + fileName + " was not found." + fnfe.getMessage() );
-        } catch (IOException ioe) {
-            JOptionPane.showMessageDialog( null, "IOException occurrred while reading " + fileName + " :" + ioe.getMessage() );
-        } catch (SGFException sgfe) {
-            JOptionPane.showMessageDialog( null, "file " + fileName + " had an SGF error while loading: " + sgfe.getMessage() );
-            sgfe.printStackTrace();
-        }
-    }
-
-    protected void parseSGFGameInfo( SGFGame game) {
-        Enumeration e = game.getInfoTokens();
-        int size = 13; // default unless specified
-        while (e.hasMoreElements()) {
-            InfoToken token = (InfoToken) e.nextElement();
-            if (token instanceof SizeToken) {
-                SizeToken sizeToken = (SizeToken)token;
-                size = sizeToken.getSize();
-            }
-            else if (token instanceof KomiToken) {
-                KomiToken komiToken = (KomiToken) token;
-                this.setKomi(komiToken.getKomi());
-            }
-            else if (token instanceof HandicapToken) {
-                //HandicapToken handicapToken = (HandicapToken) token;
-                // so we don't guess wrong on where the handicap positions are
-                // we will rely on their being an AB command to specifically tell where the handicap stones are
-                //GameContext.log(2,"***handicap ="+handicapToken.getHandicap());
-                //this.setHandicap(handicapToken.getHandicap());
-            }
-            else if (token instanceof WhiteNameToken) {
-                WhiteNameToken nameToken = (WhiteNameToken) token;
-                this.getPlayer2().setName(nameToken.getName());
-            }
-            else if (token instanceof BlackNameToken) {
-                BlackNameToken nameToken = (BlackNameToken) token;
-                this.getPlayer1().setName(nameToken.getName());
-            }
-            else if (token instanceof KomiToken) {
-                KomiToken komiToken = (KomiToken) token;
-                this.setKomi(komiToken.getKomi());
-            }
-            else if (token instanceof RuleSetToken) {
-                //RuleSetToken ruleToken = (RuleSetToken) token;
-                //this.setRuleSet(ruleToken.getKomi());
-            }
-        }
-        this.getBoard().setSize(size, size);
+        GoGameImporter importer = new GoGameImporter(this);
+        importer.restoreFromFile(fileName);
     }
 
 
@@ -899,6 +715,5 @@ public final class GoController extends TwoPlayerController
             return moveList;
         }
     }
-
 
 }

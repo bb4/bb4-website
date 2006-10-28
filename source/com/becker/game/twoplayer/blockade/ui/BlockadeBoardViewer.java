@@ -1,17 +1,13 @@
 package com.becker.game.twoplayer.blockade.ui;
 
-import ca.dj.jigo.sgf.tokens.MoveToken;
-import com.becker.game.twoplayer.blockade.*;
-import com.becker.game.common.*;
-import com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer;
-import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
-import com.becker.game.common.Move;
 import com.becker.common.*;
+import com.becker.game.common.*;
+import com.becker.game.twoplayer.blockade.*;
+import com.becker.game.twoplayer.common.ui.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.*;
 import java.util.*;
 import java.util.List;
 
@@ -49,15 +45,6 @@ class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMotionLis
     protected int getDefaultCellSize()
     {
         return 24;
-    }
-
-    /**
-     * This will create a move from an SGF token.
-     */
-    protected Move createMoveFromToken( MoveToken token, int moveNum )
-    {
-        GameContext.log(0, "not implemented yet" );
-        return null;
     }
 
 

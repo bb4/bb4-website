@@ -1,16 +1,12 @@
 package com.becker.game.twoplayer.pente.ui;
 
-import ca.dj.jigo.sgf.tokens.MoveToken;
-import com.becker.game.common.*;
-import com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer;
-import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
-import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.common.Move;
-import com.becker.game.twoplayer.pente.PenteBoard;
-import com.becker.game.twoplayer.pente.PenteController;
 import com.becker.common.*;
+import com.becker.game.common.*;
+import com.becker.game.twoplayer.common.*;
+import com.becker.game.twoplayer.common.ui.*;
+import com.becker.game.twoplayer.pente.*;
 
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 
 /**
  *  Takes a PenteController as input and displays the
@@ -38,14 +34,6 @@ public class PenteBoardViewer extends TwoPlayerBoardViewer
         return 16;
     }
 
-    /**
-     * This will create a move from an SGF token
-     */
-    protected Move createMoveFromToken( MoveToken token, int moveNum )
-    {
-        GameContext.log(0,  "not implemented yet" );
-        return null;
-    }
 
     public void mousePressed( MouseEvent e )
     {

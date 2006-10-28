@@ -33,26 +33,26 @@ public abstract class TwoPlayerController extends GameController
 
     // these are the default game constants
     // they may be modified through the ui (see GameOptionsDialog)
-
     // -- these other constants are game type dependent and could move to subclasses
+
     /** anything greater than this is considered a won game  */
     public static final double WINNING_VALUE = SearchStrategy.WINNING_VALUE;
 
     protected boolean player1sTurn_ = true;
 
-    // these weights determine how the computer values each move.
-    // they serve as parameters to a game dependent evaluation function
+    /** these weights determine how the computer values each move.
+     * they serve as parameters to a game dependent evaluation function. */
     protected GameWeights weights_;
 
-    // the method the computer will use for searching for the next move.
+    /** the method the computer will use for searching for the next move.  */
     private SearchStrategy strategy_;
 
-    // if this becomes non-null we will fill in the game tree for display in a UI.
+    /** if this becomes non-null we will fill in the game tree for display in a UI. */
     private SearchTreeNode root_;
 
     private Worker worker_;
 
-    // this is true while the computer thinks about its next move.
+    /** this is true while the computer thinks about its next move. */
     private boolean processing_ = false;
 
     private static final double HUNDRED = 100.0;
@@ -63,7 +63,6 @@ public abstract class TwoPlayerController extends GameController
      */
     public TwoPlayerController()
     {
-        //options_ = createOptions();
         createPlayers();
     }
 
@@ -107,6 +106,9 @@ public abstract class TwoPlayerController extends GameController
         player1sTurn_ = true;
     }
 
+    /**
+     * create the 2 players.
+     */
     private void createPlayers()
     {
         Player[] players = new Player[2];
@@ -190,7 +192,6 @@ public abstract class TwoPlayerController extends GameController
             return 0.0;
         return 50.0 / (float)getNumMoves();
     }
-
 
 
     /**

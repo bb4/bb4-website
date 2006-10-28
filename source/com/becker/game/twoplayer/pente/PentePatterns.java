@@ -87,13 +87,18 @@ public final class PentePatterns
     };
     public static final char UNOCCUPIED = '_';
 
+    private PentePatterns() {}
+
+    /**
+     * Initialize all the pente patterns.
+     */
     public static void initialize()
     {
         weightIndexTable_ = new int[TABLE_SIZE];
         for ( int i = 0; i < TABLE_SIZE; i++ )
             weightIndexTable_[i] = 0;
 
-        // since applets cannot read files, I've moved the pattern data into the class Patterns.
+        // since applets cannot read files, I've moved the pattern data into the class PentePatterns.
         // only use this method if you need to read the data from a file.
         //readPatternFile();
         // only use this when changing the format
@@ -101,8 +106,8 @@ public final class PentePatterns
 
         // use this initialization code if not reading from a file using the above
         //System.out.println("there are "+Patterns.patternString.length+" patterns. ("+Patterns.NUM_PATTERNS+")");
-        for ( int i = 0; i < PentePatterns.NUM_PATTERNS; i++ ) {
-            setPatternWeightInTable( PentePatterns.patternString[i], PentePatterns.weightIndex[i] );
+        for ( int i = 0; i < NUM_PATTERNS; i++ ) {
+            setPatternWeightInTable( patternString[i], weightIndex[i] );
         }
     }
 
@@ -221,6 +226,7 @@ public final class PentePatterns
             patternFile = new FileOutputStream( file );
         } catch (FileNotFoundException e) {
             System.out.println( "can't open " + exportFile + " for write" );
+            e.printStackTrace();
         }
         OutputStreamWriter oStreamWriter = new OutputStreamWriter( patternFile );
         BufferedWriter outData = new BufferedWriter( oStreamWriter );
@@ -228,7 +234,7 @@ public final class PentePatterns
 
         try {
 
-            int numPatterns = PentePatterns.NUM_PATTERNS;
+            int numPatterns = NUM_PATTERNS;
             System.out.println( "there are " + numPatterns + " patterns. " );
             for ( i = 0; i < numPatterns; i++ ) {
                 outData.write( '\"' + patterns_[i] + "\", " );
@@ -245,6 +251,7 @@ public final class PentePatterns
             patternFile.close();
         } catch (IOException e) {
             System.out.println( "error occurred while reading " + PATTERN_FILE );
+            e.printStackTrace();
         }
     }
 }

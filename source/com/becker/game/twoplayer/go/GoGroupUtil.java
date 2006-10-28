@@ -11,7 +11,6 @@ import java.util.*;
  */
 public final class GoGroupUtil {
 
-
      private GoGroupUtil() {}
 
     /**
