@@ -91,7 +91,7 @@ final class GoGroupRenderer
     }
 
     /**
-     * return a path marking the border between the 2 specified stones
+     * return a path marking the border between the 2 specified stones.
      */
     private static GeneralPath getBorderBetween( GoBoardPosition s1, GoBoardPosition s2, float cellSize )
     {
@@ -120,6 +120,9 @@ final class GoGroupRenderer
         return border;
     }
 
+    /**
+     * @return  path corresponding to a linear neighbor border.
+     */
     private static GeneralPath getLinearNbrBorder( GoBoardPosition s1, GoBoardPosition s2, float cellSize )
     {
         GeneralPath border = new GeneralPath();
@@ -175,6 +178,9 @@ final class GoGroupRenderer
         return border;
     }
 
+    /**
+     * @return a path correspodning to a diagonal neighbor border.
+     */
     private static GeneralPath getDiagonalNbrBorder( GoBoardPosition s1, GoBoardPosition s2, float cellSize )
     {
         GeneralPath border = new GeneralPath();
@@ -239,6 +245,9 @@ final class GoGroupRenderer
         return border;
     }
 
+    /**
+     * @return a border corresponding to a kogeima (nights move) neighbor border.
+     */
     private static GeneralPath getKogeimaNbrBorder( GoBoardPosition s1Stone, GoBoardPosition s2Stone, float cellSize )
     {
         GeneralPath border = new GeneralPath();
@@ -285,7 +294,7 @@ final class GoGroupRenderer
     }
 
     /**
-     * draw the group's eyes (for debugging/understanding purposes)
+     * draw the group's eyes (for debugging/understanding purposes).
      */
     private static void drawEyes( float cellSize, Graphics2D g2, Set eyes )
     {

@@ -46,22 +46,27 @@ public final class GoGroup extends GoSet
      * accurate because it takes into account the health of neighboring enemy groups as well.
      * it uses the absolute health as a base and exaggerates it base on the relative strength of the
      * weakest enemy nbr group.
-     */
+      */
     private float relativeHealth_;
 
-    // Set this to true when the eyes need to be recalculated.
-    // It must be set to true if the group has changed in any way.
+    /**
+     * Set this to true when the eyes need to be recalculated.
+     * It must be set to true if the group has changed in any way.
+      */
     private boolean changed_ = true;
 
-    // this is the cached number of liberties
-    // updates whenever something has changed
+    /**
+     * This is the cached number of liberties.
+     * It updates whenever something has changed.
+     */
     private Set cachedLiberties_;
-    //private Set cachedStonesInGroup_;
+
     private int cachedNumStonesInGroup_;
 
 
-    /** constructor. Create a new group containing the specified string
-     * @param string make the group from this string
+    /**
+     * constructor. Create a new group containing the specified string.
+     * @param string make the group from this string.
      */
     public GoGroup( GoString string )
     {
@@ -75,7 +80,7 @@ public final class GoGroup extends GoSet
      * constructor. Create a new group containing the specified list of stones
      * Every stone in the list passed in must say that it is owned by this new group,
      * and every string must be wholy owned by this new group.
-     * @param stones list of stones to create a group from
+     * @param stones list of stones to create a group from.
      */
     public GoGroup( List stones )
     {
@@ -222,9 +227,8 @@ public final class GoGroup extends GoSet
 
 
     /**
-     * get the number of liberties that the group has.
+     * Get the number of liberties that the group has.
      * @return the number of liberties that the group has
-     * @param board
      */
     public Set getLiberties(GoBoard board)
     {
@@ -241,8 +245,8 @@ public final class GoGroup extends GoSet
     }
 
     /**
-     * calculate the number of stones in the group
-     * @return number of stones in the group
+     * Calculate the number of stones in the group.
+     * @return number of stones in the group.
      */
     public int getNumStones()
     {
@@ -261,7 +265,7 @@ public final class GoGroup extends GoSet
     }
 
     /**
-     * @return a list of the stones in this group
+     * @return a list of the stones in this group.
      */
     public Set getStones()
     {

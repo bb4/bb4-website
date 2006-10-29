@@ -27,11 +27,16 @@ public class GoGameImporter extends GameImporter {
             SGFGame game = SGFLoader.load( iStream );
             restoreGame( game );
         } catch (FileNotFoundException fnfe) {
-            JOptionPane.showMessageDialog( null, "file " + fileName + " was not found." + fnfe.getMessage() );
+            JOptionPane.showMessageDialog( null,
+                                           "file " + fileName + " was not found." + fnfe.getMessage() );
         } catch (IOException ioe) {
-            JOptionPane.showMessageDialog( null, "IOException occurrred while reading " + fileName + " :" + ioe.getMessage() );
+            JOptionPane.showMessageDialog( null,
+                                           "IOException occurrred while reading " +
+                                           fileName + " :" + ioe.getMessage() );
         } catch (SGFException sgfe) {
-            JOptionPane.showMessageDialog( null, "file " + fileName + " had an SGF error while loading: " + sgfe.getMessage() );
+            JOptionPane.showMessageDialog( null,
+                                           "file " + fileName + " had an SGF error while loading: " +
+                                           sgfe.getMessage() );
             sgfe.printStackTrace();
         }
     }

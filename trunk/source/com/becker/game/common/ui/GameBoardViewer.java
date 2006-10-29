@@ -1,8 +1,8 @@
 package com.becker.game.common.ui;
 
+import com.becker.common.*;
 import com.becker.game.common.*;
 import com.becker.ui.*;
-import com.becker.common.*;
 
 import javax.swing.*;
 import javax.swing.Timer;
@@ -55,7 +55,7 @@ public abstract class GameBoardViewer
     // this must be initialized in the derived classes constructor.
     protected GamePieceRenderer pieceRenderer_ = null;
 
-    private String lastDirectoryAccessed_ = null;
+    private static JFileChooser chooser_ = null;
 
 
     // for firing events
@@ -82,7 +82,6 @@ public abstract class GameBoardViewer
     protected static final Stroke LAST_MOVE_INDICATOR_STROKE = new BasicStroke(1);
     // dont allow the cells of the game board to get smaller than this
     public static final int MINIMUM_CELL_SIZE = 8;
-    public static final String SGF_EXT = ".sgf";
 
     /**
      * Construct the viewer.
@@ -143,7 +142,7 @@ public abstract class GameBoardViewer
         int state = chooser.showOpenDialog( null );
         File file = chooser.getSelectedFile();
         if ( file != null && state == JFileChooser.APPROVE_OPTION )  {
-            lastDirectoryAccessed_ = file.getAbsolutePath();
+            //lastDirectoryAccessed_ = file.getAbsolutePath();
             controller_.restoreFromFile(file.getAbsolutePath());
             refresh();
         }
@@ -160,19 +159,21 @@ public abstract class GameBoardViewer
         File file = chooser.getSelectedFile();
         if ( file != null && state == JFileChooser.APPROVE_OPTION ) {
             // if it does not have the .sgf extension already then add it
-            lastDirectoryAccessed_ = file.getAbsolutePath();
-            if (lastDirectoryAccessed_.lastIndexOf(SGF_EXT) != (lastDirectoryAccessed_.length() - SGF_EXT.length())) {
-                lastDirectoryAccessed_ += SGF_EXT;
-            }
-            controller_.saveToFile( lastDirectoryAccessed_, ae );
+            String fPath = file.getAbsolutePath();
+            fPath = SgfFileFilter.addExtIfNeeded(fPath, SgfFileFilter.SGF_EXTENSION);
+            //if (!fPath.endsWith('.' + SgfFileFilter.SGF_EXTENSION))
+            //    fPath += '.' + SgfFileFilter.SGF_EXTENSION;
+            controller_.saveToFile( fPath, ae );
         }
     }
 
-    private JFileChooser getFileChooser() {
-        JFileChooser chooser = GUIUtil.getFileChooser();
-        String dir = (lastDirectoryAccessed_ == null) ? GameContext.getHomeDir() : lastDirectoryAccessed_;
-        chooser.setCurrentDirectory( new File( dir ) );
-        return chooser;
+    private static JFileChooser getFileChooser() {
+        if (chooser_ == null) {
+            chooser_ = GUIUtil.getFileChooser();
+            chooser_.setCurrentDirectory( new File( GameContext.getHomeDir() ) );
+            chooser_.setFileFilter(new SgfFileFilter());
+        }
+        return chooser_;
     }
 
     /**

@@ -2,9 +2,9 @@ package com.becker.game.twoplayer.go;
 
 
 /**
- * This interface must be implemented by any class which becomes GoSet members (or members of derived classes) .
+ * This interface must be implemented by any class which becomes GoSet members (or members of derived classes).
  *
- * @see GoSet
+ * @see GoSet, GoGroup, GoStone
  *
  * @author Barry Becker
  */

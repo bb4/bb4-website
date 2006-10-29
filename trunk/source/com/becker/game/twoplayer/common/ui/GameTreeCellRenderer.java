@@ -39,16 +39,17 @@ public class GameTreeCellRenderer extends DefaultTreeCellRenderer
      */
     protected static ColorMap createColormap(TwoPlayerPieceRenderer renderer)
     {
-        // TwoPlayerPieceRenderer renderer = (TwoPlayerPieceRenderer)viewer.getPieceRenderer();
         // we will use this colormap for both the text tree and the graphical tree viewers so they have consistent coloring.
-        final double[] values = {-TwoPlayerController.WINNING_VALUE, -TwoPlayerController.WINNING_VALUE/20.0,
-                                              0.0,
-                                              TwoPlayerController.WINNING_VALUE/20.0, TwoPlayerController.WINNING_VALUE};
+        final double[] values = {-TwoPlayerController.WINNING_VALUE,
+                                 -TwoPlayerController.WINNING_VALUE/20.0,
+                                 0.0,
+                                 TwoPlayerController.WINNING_VALUE/20.0,
+                                 TwoPlayerController.WINNING_VALUE};
         final Color[] colors = {renderer.getPlayer2Color().darker(),
-                                 renderer.getPlayer2Color(),
-                                 new Color( 160, 160, 160),
-                                 renderer.getPlayer1Color(),
-                                 renderer.getPlayer1Color().darker()};
+                                renderer.getPlayer2Color(),
+                                new Color( 160, 160, 160),
+                                renderer.getPlayer1Color(),
+                                renderer.getPlayer1Color().darker()};
         return new ColorMap( values, colors);
     }
 

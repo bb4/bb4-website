@@ -156,7 +156,8 @@ public final class GameContext
      */
     public static String getHomeDir()
     {
-        String home =  System.getProperty("user.home") + "/projects/java_projects";
+        String userHome = "/windows";    // System.getProperty("user.home")
+        String home =  userHome + "/projects/java_projects/trunk";
         if (home == null)
             home = DEFAULT_HOME_DIR;
         log(1, "home = "+home );
@@ -184,6 +185,7 @@ public final class GameContext
         gameName_ = gameName;
         className_ = className;
 
+        System.out.println("loadGameResource gameName_="+gameName_+" className_="+className_);
         String path = className.substring(0, className.lastIndexOf(".ui."));
 
         String resourcePath = path +".resources."+gameName+"Messages";
@@ -236,9 +238,6 @@ public final class GameContext
             if (gameMessages_ == null) {
                 loadGameResources();
             }
-
-            assert (gameMessages_ != null) :
-                    "gameMessages_ has not yet been initialized. you need to call loadGameResources first.";
 
             String label = key; // default
             try {

@@ -25,27 +25,15 @@ import java.util.Set;
 final class GoBoardViewer extends TwoPlayerBoardViewer
 {
 
-    // a colormap for coloring the groups according to how healthy they are
-    // blue will be healthy, while red will be near dead
-    private static final double[] values_ = {-1.1, -1.0, -0.2, 0.1, -0.05,
-                                             0.0,
-                                             0.05, 0.1, 0.2, 1.0, 1.1};
-    private static final int CM_TRANS = 50;
-    // this colormap is used to show a spectrum of colors representing a groups health status.
-    private static final Color[] colors_ = {new Color( 200, 0, 0, CM_TRANS + 40 ),
-                                            new Color( 255, 20, 0, CM_TRANS ), new Color( 250, 130, 0, CM_TRANS ), new Color( 250, 255, 0, CM_TRANS ), new Color( 200, 200, 90, CM_TRANS ),
-                                            new Color( 220, 220, 220, 0 ),
-                                            new Color( 30, 220, 20, CM_TRANS ), new Color( 0, 255, 0, CM_TRANS ), new Color( 0, 255, 255, CM_TRANS ), new Color( 0, 0, 255, CM_TRANS ),
-                                            new Color( 150, 0, 250, CM_TRANS + 40 )};
-    private static final ColorMap colormap_ = new ColorMap( values_, colors_ );
-
-    // the image for the wouden board.
+    // the image for the wooden board.
     private static final ImageIcon woodGrainImage_ =
             GUIUtil.getIcon(GameContext.GAME_ROOT + "twoplayer/go/ui/images/goBoard1.png");
 
     private static final String STONES_CAPTURED = GameContext.getLabel("CAPTURES_EQUALS");
     private static final String TERRITORY = GameContext.getLabel("TERRITORY_EQUALS");
     private static final String SCORE = GameContext.getLabel("SCORE_EQUALS");
+
+    public static final ColorMap COLORMAP = new GoColorMap();
 
     /**
      * Construct the viewer given the controller.
@@ -64,7 +52,6 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
     {
         return 16;
     }
-
 
     /**
      * first draw borders for the groups in the appropriate color, then draw the pieces for both players.
@@ -92,7 +79,7 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
             //System.out.println( "drawing group decor: ***The groups on the board are: ***\n"+board.getGroupsText());
             while ( it.hasNext() ) {
                 GoGroup group = (GoGroup) it.next();
-                GoGroupRenderer.drawGroupDecoration(group, colormap_, (float) cellSize_, board, g2 );
+                GoGroupRenderer.drawGroupDecoration(group, COLORMAP, (float) cellSize_, board, g2 );
             }
         }
 
@@ -102,23 +89,21 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
     }
 
     /**
-     * whether to draw the pieces on cell centers or vertices (like go)
+     * whether to draw the pieces on cell centers or vertices (like go).
      */
     protected boolean offsetGrid()
     {
         return true;
     }
 
-
+    /**
+     * perform a pass for the current player.
+     */
     public void pass()
     {
         GameContext.log( 1, "passing" );
         GoMove m = GoMove.createPassMove( 0.0, get2PlayerController().isPlayer1sTurn() );
         continuePlay( m );
-    }
-
-    public static ColorMap getColorMap() {
-        return colormap_;
     }
 
 
@@ -135,7 +120,8 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
         GoBoard board = (GoBoard) controller_.getBoard();
         GoController controller = (GoController) controller_;
 
-        GameContext.log( 3, "GoBoardViewer: mousePressed: controller_.isPlayer1sTurn()=" + get2PlayerController().isPlayer1sTurn() );
+        GameContext.log( 3, "GoBoardViewer: mousePressed: controller_.isPlayer1sTurn()="
+                            + get2PlayerController().isPlayer1sTurn());
 
         GoMove m = GoMove.createGoMove( loc.getRow(), loc.getCol(), 0, new GoStone(controller.isPlayer1sTurn()));
 
@@ -162,15 +148,12 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
             return;
         }
 
-        //board.makeMove( m );
-
-
         if ( !continuePlay( m ) ) {   // then game over
             showWinnerDialog();
         }
     }
 
-     /**
+    /**
      * display a dialog at the end of the game showing who won and other relevant
      * game specific information.
      */

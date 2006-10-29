@@ -1,9 +1,7 @@
 package com.becker.game.twoplayer.common;
 
-import com.becker.common.Util;
-import com.becker.game.common.GameContext;
-import com.becker.game.common.GamePiece;
-import com.becker.game.common.Move;
+import com.becker.game.common.*;
+import com.becker.common.*;
 
 /**
  *  This base class describes a change in state from one board
@@ -24,8 +22,8 @@ import com.becker.game.common.Move;
  */
 public class TwoPlayerMove extends Move
 {
-    private static final String P1 = "Player1"; // @@GameContext.getLabel("PLAYER1");
-    private static final String P2 = "Player2"; //GameContext.getLabel("PLAYER2");
+    private static final String P1 = GameContext.getLabel("PLAYER1");
+    private static final String P2 = GameContext.getLabel("PLAYER2");
 
     // the position of the move
     protected byte toRow_;
@@ -65,14 +63,12 @@ public class TwoPlayerMove extends Move
     private boolean selected_;
 
 
-
     /**
      * protected Constructor.
      * use the factory method createMove instead.
      */
     protected TwoPlayerMove()
-    {
-    }
+    {}
 
     /**
      * create a move object representing a transition on the board.
@@ -117,6 +113,7 @@ public class TwoPlayerMove extends Move
     {
         return toRow_;
     }
+
     public final int getToCol()
     {
         return toCol_;
@@ -138,34 +135,6 @@ public class TwoPlayerMove extends Move
     public final boolean isPassingMove()
     {
         return isPass_;
-    }
-
-    /**
-     * return the SGF representation of the move.
-     * SGF is a file format that can be used to represent most 2 player games.
-     * @@ make this abstract and force adding to subclasses.
-     */
-    public String getSGFRepresentation()
-    {
-        GameContext.log(0, "error: not implemented yet" );
-        return "";
-    }
-
-    public String toString()
-    {
-        StringBuffer s = new StringBuffer();
-        if (piece_!=null)
-            s.append( piece_.isOwnedByPlayer1()? P1 : P2 );
-
-        s.append( " val:" + Util.formatNumber(getValue()) );
-        s.append( " inhrtd:" + Util.formatNumber(inheritedValue_) );
-        if (piece_!=null)
-            s.append( " piece:" + piece_.toString());
-        //s.append(" sel:"+selected);
-        s.append( "(" + toRow_ + ", " + toCol_ + ')' );
-        if (urgent_)
-            s.append(" urgent!");
-        return s.toString();
     }
 
     public double getInheritedValue() {
@@ -214,6 +183,23 @@ public class TwoPlayerMove extends Move
 
     public void setSelected(boolean selected) {
         this.selected_ = selected;
+    }
+
+
+    public String toString() {
+        StringBuffer s = new StringBuffer();
+        if (piece_!=null)
+            s.append( piece_.isOwnedByPlayer1()? P1 : P2 );
+
+        s.append( " val:" + Util.formatNumber(getValue()) );
+        s.append( " inhrtd:" + Util.formatNumber(inheritedValue_) );
+        if (piece_!=null)
+            s.append( " piece:" + piece_.toString());
+        //s.append(" sel:"+selected);
+        s.append( "(" + toRow_ + ", " + toCol_ + ')' );
+        if (urgent_)
+            s.append(" urgent!");
+        return s.toString();
     }
 }
 

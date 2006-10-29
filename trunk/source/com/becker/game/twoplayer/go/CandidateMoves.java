@@ -27,8 +27,6 @@ class CandidateMoves {
      */
     public void reset()
     {
-        //int numRows = getNumRows();
-        //int numCols = getNumCols();
         int i,j;
 
         // this will fill a 2 stone wide strip on the 3rd and 4rth lines of the board.

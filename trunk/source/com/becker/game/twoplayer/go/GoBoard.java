@@ -44,7 +44,7 @@ public final class GoBoard extends TwoPlayerBoard
 
 
     /**
-     *  constructor.
+     *  Constructor.
      *  @param numRows num rows
      *  @param numCols num cols
      *  @param numHandicapStones number of black handicap stones to initialize with.
@@ -435,13 +435,15 @@ public final class GoBoard extends TwoPlayerBoard
                    }
                }
                else { // occupied
-                   assert(pos.getPiece() != null);
-                   assert(pos.getGroup() != null);
-                   if (forPlayer1 && !pos.getPiece().isOwnedByPlayer1() && pos.getGroup().getRelativeHealth() >= 0) {
+                   GamePiece p = pos.getPiece();
+                   GoGroup group = pos.getGroup();
+                   assert(p != null);
+                   assert(group != null);
+                   if (forPlayer1 && !p.isOwnedByPlayer1() && group.getRelativeHealth() >= 0) {
                        territoryEstimate += val;
                    }
                    // Getting npe here
-                   else if (!forPlayer1 && pos.getPiece().isOwnedByPlayer1() && pos.getGroup().getRelativeHealth() <= 0)  {
+                   else if (!forPlayer1 && p.isOwnedByPlayer1() && group.getRelativeHealth() <= 0)  {
                        territoryEstimate -= val;
                    }
                }
@@ -477,13 +479,17 @@ public final class GoBoard extends TwoPlayerBoard
         int col = stone.getCol();
 
         if ( row > 1 )
-            GoBoardUtil.getNobiNeighbor( (GoBoardPosition) positions_[row - 1][col], friendOwnedByP1, nbrs, neighborType );
+            GoBoardUtil.getNobiNeighbor( (GoBoardPosition) positions_[row - 1][col],
+                                         friendOwnedByP1, nbrs, neighborType );
         if ( row + 1 <= numRows_ )
-            GoBoardUtil.getNobiNeighbor( (GoBoardPosition) positions_[row + 1][col], friendOwnedByP1, nbrs, neighborType );
+            GoBoardUtil.getNobiNeighbor( (GoBoardPosition) positions_[row + 1][col],
+                                         friendOwnedByP1, nbrs, neighborType );
         if ( col > 1 )
-            GoBoardUtil.getNobiNeighbor( (GoBoardPosition) positions_[row][col - 1], friendOwnedByP1, nbrs, neighborType );
+            GoBoardUtil.getNobiNeighbor( (GoBoardPosition) positions_[row][col - 1],
+                                         friendOwnedByP1, nbrs, neighborType );
         if ( col + 1 <= numCols_ )
-            GoBoardUtil.getNobiNeighbor( (GoBoardPosition) positions_[row][col + 1], friendOwnedByP1, nbrs, neighborType );
+            GoBoardUtil.getNobiNeighbor( (GoBoardPosition) positions_[row][col + 1],
+                                         friendOwnedByP1, nbrs, neighborType );
 
         return nbrs;
     }
@@ -507,13 +513,15 @@ public final class GoBoard extends TwoPlayerBoard
 
         pushGroupNeighbors( stone, friendPlayer1, stack, samePlayerOnly );
         Set nbrStones = new HashSet();
-        nbrStones.addAll( stack );
+         nbrStones.addAll( stack );
 
         profiler_.stop(GoProfiler.GET_GROUP_NBRS);
         return nbrStones;
     }
 
-    // this version assumes that the stone is occupied.
+    /**
+     * This version assumes that the stone is occupied.
+     */
     public Set getGroupNeighbors( GoBoardPosition position, boolean samePlayerOnly )
     {
         assert (position.getPiece() != null);
@@ -779,8 +787,8 @@ public final class GoBoard extends TwoPlayerBoard
 
 
     /**
-     * return 1 if this is a valid neighbor according to specification
-     * these are the immediately adjacent (nobi) nbrs within the specified rectangular bounds
+     * return 1 if this is a valid neighbor according to specification.
+     * These are the immediately adjacent (nobi) nbrs within the specified rectangular bounds
      */
     private int checkNeighbor( Location loc, int rowOffset, int colOffset,
                                boolean friendOwnedByPlayer1, List stack, boolean samePlayerOnly, NeighborType type,
@@ -793,12 +801,13 @@ public final class GoBoard extends TwoPlayerBoard
           && nbr.getCol() >= bbox.getMinCol() && nbr.getCol() <= bbox.getMaxCol() ) {
             return checkNeighbor( r, c, rowOffset, colOffset, friendOwnedByPlayer1, stack, samePlayerOnly, type );
         }
-        else
+        else {
             return 0;
+        }
     }
 
     /**
-     *  We allow these as long as the diagonal has not been fully cut
+     *  We allow these connections as long as the diagonal has not been fully cut.
      *  i.e. not an opponent stone on both sides of the cut (or the diag stone is not in atari).
      *
      *  @param sameSideOnly if true then push nbrs on the same side, else push enemy nbrs
@@ -819,17 +828,20 @@ public final class GoBoard extends TwoPlayerBoard
         boolean sideTest = sameSideOnly ? friendPlayer1 : !friendPlayer1;
         if ( (nbr.getPiece().isOwnedByPlayer1() == sideTest) && !nbr.isVisited()) {
             if (!((positions_[r + rowOffset][c].isOccupied() &&
-                positions_[r + rowOffset][c].getPiece().isOwnedByPlayer1() != sideTest) &&
-                (positions_[r][c + colOffset].isOccupied() &&
-                positions_[r][c + colOffset].getPiece().isOwnedByPlayer1() != sideTest)) )  { // then not cut
-                stack.add( 0, nbr );
+                   positions_[r + rowOffset][c].getPiece().isOwnedByPlayer1() != sideTest) &&
+                   (positions_[r][c + colOffset].isOccupied() &&
+                   positions_[r][c + colOffset].getPiece().isOwnedByPlayer1() != sideTest)) )  {
+                // then not cut
+                 stack.add( 0, nbr );
                 return 1;
             }
         }
         return 0;
     }
 
-    // only add if not completely cut (there's no enemy stone in the middle).
+    /**
+     * Connected only add if not completely cut (there's no enemy stone in the middle).
+     */
     private int checkOneSpaceNeighbor( int r, int c, int rowOffset, int colOffset,
                                        boolean friendPlayer1, boolean samePlayerOnly, List stack )
     {
@@ -950,13 +962,9 @@ public final class GoBoard extends TwoPlayerBoard
     }
 
 
-
     /**
      * The number of star points used for handicap stones on the board
      * There may be none.
-     *
-     * @author Barry Becker
-     * Date: Aug 27, 2005
      */
     private static class HandicapStones {
 
@@ -994,7 +1002,7 @@ public final class GoBoard extends TwoPlayerBoard
             List handicapMoves = new ArrayList(numHandicapStones_);
 
             for ( int i = 0; i < numHandicapStones_; i++ ) {
-                GoBoardPosition hpos = (GoBoardPosition) starPoints_.get( i );
+                GoBoardPosition hpos = starPoints_.get( i );
 
                 GoMove m = GoMove.createGoMove( hpos.getRow(), hpos.getCol(), 0, (GoStone)hpos.getPiece());
                                               new GoStone(hpos.getPiece().isOwnedByPlayer1(), GamePiece.REGULAR_PIECE );

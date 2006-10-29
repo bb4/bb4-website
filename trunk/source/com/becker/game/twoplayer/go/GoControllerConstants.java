@@ -1,8 +1,9 @@
 package com.becker.game.twoplayer.go;
 
 /**
- * @author Barry Becker
- *         Date: Aug 21, 2005
+ * Go constraint parameters that can be optimized.
+ * 
+ * @author Barry Becker    Date: Aug 21, 2005
  */
 public final class GoControllerConstants {
 
