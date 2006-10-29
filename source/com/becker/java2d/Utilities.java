@@ -37,14 +37,14 @@ public class Utilities
     public static Image blockingLoad( String path )
     {
         Image image = Toolkit.getDefaultToolkit().getImage( path );
-        if ( waitForImage( image ) == false ) return null;
+        if ( !waitForImage(image) ) return null;
         return image;
     }
 
     public static Image blockingLoad( URL url )
     {
         Image image = Toolkit.getDefaultToolkit().getImage( url );
-        if ( waitForImage( image ) == false ) return null;
+        if ( !waitForImage(image) ) return null;
         return image;
     }
 
@@ -61,7 +61,7 @@ public class Utilities
 
     public static BufferedImage makeBufferedImage( Image image, int imageType )
     {
-        if ( waitForImage( image ) == false ) return null;
+        if ( !waitForImage(image) ) return null;
 
         BufferedImage bufferedImage = new BufferedImage(
                 image.getWidth( null ), image.getHeight( null ),
@@ -97,7 +97,7 @@ public class Utilities
     public static void sizeContainerToComponent( Container container,
                                                  Component component )
     {
-        if ( container.isDisplayable() == false ) container.addNotify();
+        if ( !container.isDisplayable() ) container.addNotify();
         Insets insets = container.getInsets();
         Dimension size = component.getPreferredSize();
         int width = insets.left + insets.right + size.width;
@@ -109,8 +109,8 @@ public class Utilities
     {
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension d = f.getSize();
-        int x = (screen.width - d.width) / 2;
-        int y = (screen.height - d.height) / 2;
+        int x = (screen.width - d.width) >> 1;
+        int y = (screen.height - d.height) >> 1;
         f.setLocation( x, y );
     }
 }

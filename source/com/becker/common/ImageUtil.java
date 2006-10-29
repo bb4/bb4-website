@@ -119,10 +119,15 @@ public final class ImageUtil
     {
         BufferedOutputStream os = null;
         try {
-            String extension = type.toString().toLowerCase() + '.';
+            String extension = '.' +type.toString().toLowerCase();
+            String fn = fileName;
+            if (!fn.endsWith(extension))  {
+                // if it does not already have the appropriate extension add it.
+                fn += extension;
+            }
 
             //System.out.println("saving as "+  fileName + extension );
-            os = new BufferedOutputStream( new FileOutputStream( fileName + extension ) );
+            os = new BufferedOutputStream( new FileOutputStream( fn ) );
         } catch (FileNotFoundException fne) {
             System.out.println( "File " + fileName + " not found: " + fne.getMessage());
         }

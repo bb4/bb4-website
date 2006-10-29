@@ -150,7 +150,9 @@ public final class GoController extends TwoPlayerController
         initializeData();
     }
 
-
+    /**
+     * @return go game options (uses lazy construction).
+     */
     public GameOptions getOptions() {
         if (gameOptions_ == null) {
             TwoPlayerOptions options = new TwoPlayerOptions(DEFAULT_LOOKAHEAD, BEST_PERCENTAGE, MusicMaker.SHAMISEN);
@@ -411,8 +413,8 @@ public final class GoController extends TwoPlayerController
                     position.setScoreContribution(Math.max(-1.0, Math.min(1.0, s)));
 
                     if (GameContext.getDebugMode() > 0)  {
-                        stone.badShapeScore = badShapeScore;
-                        stone.positionalScore = posScore;
+                        stone.setBadShapeScore(badShapeScore);
+                        stone.setPositionalScore(posScore);
                     }
                     worth += position.getScoreContribution();
                 } else {
@@ -472,8 +474,8 @@ public final class GoController extends TwoPlayerController
                 }
             }
         }
-         numDeadBlackStonesOnBoard_ = 0;
-         numDeadWhiteStonesOnBoard_ = 0;
+        numDeadBlackStonesOnBoard_ = 0;
+        numDeadWhiteStonesOnBoard_ = 0;
     }
 
     /**

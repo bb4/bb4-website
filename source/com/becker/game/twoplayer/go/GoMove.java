@@ -114,7 +114,7 @@ public final class GoMove extends TwoPlayerMove
         while ( it.hasNext() ) {
             GoBoardPosition s = (GoBoardPosition) it.next();
             GoString atariedString = s.getString();
-            //System.out.println("atariedString.getLiberties( this ).size()="+atariedString.getLiberties( this ).size());
+            //System.out.println("atariedString.getLiberties( this ).size()="+atariedString.getLiberties( this ).size())
             if (!stringSet.contains(atariedString) && atariedString.getNumLiberties(board) == 1 ) {
                 numInAtari += atariedString.size();
             }
@@ -240,7 +240,8 @@ public final class GoMove extends TwoPlayerMove
             // if it is, then we need to split that ataried string off from its group and form a new group.
             if (stone.isInAtari(board)) {
                 GoGroup oldGroup = str.getGroup();
-                GameContext.log(3, "Before splitting off ataried string (due to "+stone+") containing ("+str+") we have: "+oldGroup);
+                GameContext.log(3, "Before splitting off ataried string (due to " + stone + ") containing (" +
+                                   str + ") we have: " + oldGroup);
 
                 oldGroup.remove(str);
                 GoGroup newGroup = new GoGroup(str);
@@ -446,7 +447,8 @@ public final class GoMove extends TwoPlayerMove
                 GameContext.log(2, "More than one merged group:"+mergedGroupLists.size());
             }
 
-            //GameContext.log( 0, "The enemy group *MERGED* by removing ("+stone+") and seeded by ("+firstStone+") is " + mergedStones );
+            // GameContext.log( 0, "The enemy group *MERGED* by removing ("+
+            // stone+") and seeded by ("+firstStone+") is " + mergedStones );
 
             GoGroup restoredGroup;
             if (mergedGroupLists.size() > 0)  {
@@ -504,7 +506,7 @@ public final class GoMove extends TwoPlayerMove
     }
 
 
-    /** 
+    /**
      * Remove all thecaptures on the board.
      */
     private void removeCaptures(GoBoard board) {
@@ -789,7 +791,7 @@ public final class GoMove extends TwoPlayerMove
         adjustStringLiberties(captureList, board);
 
 
-        // ?? form new group, or check group nbrs to see if we can add to an existing one
+        // ?? form new group, or check group nbrs to see if we can add to an existing one.
         boolean firstString = true;
         it = strings.iterator();
         GoGroup group = null;
@@ -866,11 +868,12 @@ public final class GoMove extends TwoPlayerMove
 
         board.getGroups().remove( bigEnemyGroup );
         if (secondaryEnemyGroup != null) {
-            GameContext.log(1, "There was a secondary enemy group before restoring (*RARE*). The 2 groups were :" +bigEnemyGroup+" and "+secondaryEnemyGroup);
+            GameContext.log(1, "There was a secondary enemy group before restoring (*RARE*). The 2 groups were :" +
+                               bigEnemyGroup+" and "+secondaryEnemyGroup);
             board.getGroups().remove(secondaryEnemyGroup);
         }
 
-        // compine all the enmey nobi nbrs with the stones from the bigEnemyGroup when trying to find the new groups.
+        // Combine all the eneme nobi nbrs with the stones from the bigEnemyGroup when trying to find the new groups.
         List enemyNbrs = new ArrayList(enemyNobiNbrs);
         enemyNbrs.addAll(gStones);
         ennIt = enemyNbrs.iterator();

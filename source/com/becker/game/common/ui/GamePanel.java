@@ -76,7 +76,6 @@ public abstract class GamePanel extends TexturedPanel
     public GamePanel()
     {
         super(BG_TEXTURE);
-        //init();
     }
 
     /**
@@ -125,7 +124,6 @@ public abstract class GamePanel extends TexturedPanel
 
         JPanel mainPanel = new JPanel( new BorderLayout() );
 
-        //this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         JLabel statusBarLabel = new JLabel();
         statusBarLabel.setFont(STATUS_FONT);
         statusBarLabel.setOpaque(false);

@@ -26,9 +26,9 @@ public final class GoStone extends GamePiece implements GoMember
 
     // these vars are for storing debug information about this stone contribution to the overall board state worth value
     // package protected.
-    double totalScoreContribution = 0.0;
-    double positionalScore = 0.0;
-    double badShapeScore = 0.0;
+    //private double totalScoreContribution_ = 0.0;
+    private double positionalScore_ = 0.0;
+    private double badShapeScore_ = 0.0;
 
     /**
      * create a new go stone.
@@ -62,15 +62,28 @@ public final class GoStone extends GamePiece implements GoMember
         return stone;
     }
 
+    public void setPositionalScore(double s) {
+        positionalScore_ = s;
+    }
+
     /**
-     * copy all fields from another stone to this one.
+     * return score corresponding to how good this position is relative to the edge.
      *
-    public void copy( GoStone stone )
-    {
-        ownedByPlayer1_ = stone.isOwnedByPlayer1();
-        type_ =  REGULAR_PIECE;
-        health_ = stone.getHealth();
-    }  */
+    public double getPositionalScore() {
+        return positionalScore_;
+    } */
+
+    public void setBadShapeScore(double s) {
+       badShapeScore_ = s;
+    }
+
+    /**
+     * return score corresponding to the bad shapiness of this position.
+     *
+    public double getBadShapeScore() {
+        return badShapeScore_;
+    } */
+
 
     public void setHealth( float health )
     {
@@ -113,7 +126,7 @@ public final class GoStone extends GamePiece implements GoMember
     }
 
     /**
-     *  print more compactly than super class
+     *  print more compactly than super class.
      */
     public String toString()
     {
@@ -121,8 +134,8 @@ public final class GoStone extends GamePiece implements GoMember
         //sb.append( type_ );
         sb.append( ownedByPlayer1_ ? 'B' : 'W' );
         if (GameContext.getDebugMode() > 2)  {
-            sb.append("(pos:"+Util.formatNumber(positionalScore));
-            sb.append("+shp:"+Util.formatNumber(badShapeScore)+')');
+            sb.append("(pos:"+Util.formatNumber(positionalScore_));
+            sb.append("+shp:"+Util.formatNumber(badShapeScore_)+')');
         }
         return sb.toString();
     }

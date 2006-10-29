@@ -7,9 +7,9 @@ import java.awt.*;
 import java.awt.geom.*;
 
 /**
- * a singleton class that takes a game piece and renders it for the TwoPlayerBoardViewer.
+ * Singleton class that takes a game piece and renders it for the TwoPlayerBoardViewer.
  * We use a separate piece rendering class to avoid having ui in the piece class itself.
- * This allows us to more cleanly separate the client pieces from the server.
+ * This allows us to more cleanly separate the client and server code.
  *
  * @see com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer
  * @author Barry Becker
@@ -38,7 +38,9 @@ public abstract class GamePieceRenderer
     protected abstract Color getPieceColor(GamePiece piece);
 
 
-
+    /**
+     * @return  the diameter of the piece on the board.
+     */
     protected int getPieceSize(int cellSize, GamePiece piece)
     {
         int pieceSize = (int) (0.85f * cellSize);

@@ -5,6 +5,7 @@ import com.becker.game.common.ui.*;
 import com.becker.game.twoplayer.common.*;
 import com.becker.optimization.*;
 import com.becker.ui.*;
+import com.becker.ui.filefilter.*;
 
 import javax.swing.*;
 import java.awt.*;

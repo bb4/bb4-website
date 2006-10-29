@@ -14,17 +14,6 @@ import java.util.*;
 public abstract class TwoPlayerBoard extends Board
 {
 
-      /*
-    public Move undoMove() {
-        if ( !getMoveList().isEmpty() ) {
-            TwoPlayerMove m = (TwoPlayerMove) getMoveList().removeLast();
-            undoInternalMove( m );
-            return m;
-        }
-        return null;
-    }
-    */
-
     /**
      * given a move specification, execute it on the board
      * This places the players symbol at the position specified by move.
@@ -52,6 +41,9 @@ public abstract class TwoPlayerBoard extends Board
     }
 
 
+    /**
+     * @param moves list of moves to make all at once.
+     */
     public void makeMoves(List moves) {
         for (Object m : moves) {
             Move move = (Move) m;
@@ -59,6 +51,20 @@ public abstract class TwoPlayerBoard extends Board
         }
     }
 
+    /**
+     * @return the average number of moves played in a typical game.
+     */
     public abstract int getTypicalNumMoves();
+
+    /*
+    public Move undoMove() {
+        if ( !getMoveList().isEmpty() ) {
+            TwoPlayerMove m = (TwoPlayerMove) getMoveList().removeLast();
+            undoInternalMove( m );
+            return m;
+        }
+        return null;
+    }
+    */
 
 }

@@ -185,8 +185,6 @@ public class GoString extends GoSet
         return liberties_;
     }
 
-
-
     private Set initializeLiberties(GoBoard board) {
         liberties_ = new HashSet();
 
@@ -364,7 +362,6 @@ public class GoString extends GoSet
 
 
     /**
-     *
      * @return nbr eyes if string, or nbs strings if eye
      */
     public Set getNbrs() {

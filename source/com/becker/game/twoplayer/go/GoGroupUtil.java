@@ -11,7 +11,7 @@ import java.util.*;
  */
 public final class GoGroupUtil {
 
-     private GoGroupUtil() {}
+    private GoGroupUtil() {}
 
     /**
      * Use Benson's algorithm (1977) to determine if a set of strings and eyes within a group

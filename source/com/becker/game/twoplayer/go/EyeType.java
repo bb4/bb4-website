@@ -13,7 +13,6 @@ public enum EyeType
     BIG_EYE("BigEye", "One or two eye depending on who plays first."),
     TERRITORIAL_EYE("Territory", "At least 2 eyes even if opponent plays first.");
 
-
     private String label_;
     private String description_;
 

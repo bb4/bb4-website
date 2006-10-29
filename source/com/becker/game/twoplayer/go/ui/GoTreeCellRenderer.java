@@ -1,11 +1,9 @@
 package com.becker.game.twoplayer.go.ui;
 
-import com.becker.common.ColorMap;
-import com.becker.common.Util;
-import com.becker.game.twoplayer.common.TwoPlayerController;
-import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.common.search.SearchTreeNode;
-import com.becker.game.twoplayer.common.ui.GameTreeCellRenderer;
+import com.becker.common.*;
+import com.becker.game.twoplayer.common.*;
+import com.becker.game.twoplayer.common.search.*;
+import com.becker.game.twoplayer.common.ui.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,46 +23,17 @@ final class GoTreeCellRenderer extends GameTreeCellRenderer
     private static final int TEXT_MARGIN = 4;
     private static final Font FONT = new Font("Sans Serif", Font.PLAIN, 9);
 
+    /** the node we are going to render */
     private SearchTreeNode node_;
 
-
-    // Default Constructor
-    GoTreeCellRenderer()
-    {
-        setColorMap(createColormap());
-    }
-
+    private static final ColorMap COLORMAP = new GoTreeColorMap();
 
     /**
-     * initialize the colormap used to color the gmae tree rows, nodes, and arcs.
+     *  Default Constructor
      */
-    protected ColorMap createColormap()
+    GoTreeCellRenderer()
     {
-        // we will use this colormap for both the text tree and the graphical tree viewers so they have consistent coloring.
-        final double[] values = {-TwoPlayerController.WINNING_VALUE,
-                                  -TwoPlayerController.WINNING_VALUE/2.0,
-                                  -TwoPlayerController.WINNING_VALUE/10.0,
-                                  -TwoPlayerController.WINNING_VALUE/40.0,
-                                  -TwoPlayerController.WINNING_VALUE/100.0,
-                                   0.0,
-                                   TwoPlayerController.WINNING_VALUE/100.0,
-                                   TwoPlayerController.WINNING_VALUE/40.0,
-                                   TwoPlayerController.WINNING_VALUE/10.0,
-                                   TwoPlayerController.WINNING_VALUE/2.0,
-                                   TwoPlayerController.WINNING_VALUE};
-        final Color[] colors = { new Color(140, 0, 0),
-                                  new Color(255, 10, 10),
-                                  new Color(240, 200, 0),
-                                  new Color(255, 255, 80),
-                                  new Color(200, 200, 100),
-                                  new Color(240, 240, 240, 120),
-                                  new Color(100, 200, 200),
-                                  new Color(70, 255, 200),
-                                  new Color(0, 190, 255),
-                                  new Color(10, 10, 255),
-                                  new Color(0, 0, 140)
-                                };
-        return new ColorMap( values, colors);
+        setColorMap(COLORMAP);
     }
 
     public Component getTreeCellRendererComponent(
@@ -90,8 +59,6 @@ final class GoTreeCellRenderer extends GameTreeCellRenderer
     {
         return ROW_BG_COLOR;
     }
-
-
 
 
     /**
@@ -163,8 +130,6 @@ final class GoTreeCellRenderer extends GameTreeCellRenderer
         g2.drawString(inhrtdValText, TEXT_MARGIN + STONE_IMG_SIZE + 2, 8);
         g2.drawString(valText, 2 * TEXT_MARGIN + STONE_IMG_SIZE + SWATCH_WIDTH + 2, 8);
         g2.drawString(text, 3 * TEXT_MARGIN + STONE_IMG_SIZE + 2 * SWATCH_WIDTH, 8);
-
-
         //super.paint(g);
     }
 
