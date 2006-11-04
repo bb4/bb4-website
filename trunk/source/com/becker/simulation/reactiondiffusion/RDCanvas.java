@@ -91,7 +91,7 @@ final class RDCanvas extends Canvas implements Runnable {
       }
       repaint();
       try {
-        Thread.sleep(50);
+        Thread.sleep(5);
       }
       catch (InterruptedException e) {
       }
