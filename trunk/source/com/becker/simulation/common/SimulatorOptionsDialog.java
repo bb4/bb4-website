@@ -17,9 +17,6 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog implements Ac
 
     // rendering option controls
     private JCheckBox antialiasingCheckbox_ = null;
-    private JCheckBox drawMeshCheckbox_ = null;
-    private JCheckBox showVelocitiesCheckbox_ = null;
-    private JCheckBox showForcesCheckbox_ = null;
     private JCheckBox recordAnimationCheckbox_ = null;
 
     // aniumation param options controls
@@ -27,9 +24,6 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog implements Ac
     private NumberInput numStepsPerFrameField_;
     private NumberInput scaleField_;
 
-    // physics param options controls
-    private NumberInput staticFrictionField_;
-    private NumberInput dynamicFrictionField_;
 
     // bottom buttons
     private GradientButton startButton_ = new GradientButton();
@@ -62,9 +56,13 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog implements Ac
         // contains the two tabls : options for creating a new game, or loading a saved game
         JTabbedPane tabbedPanel = new JTabbedPane();
         tabbedPanel.add( "Rendering", renderingParamPanel );
-        tabbedPanel.setToolTipTextAt( 0, "change the rendering options for the " + simulator_.getName() + " simulation" );
-        tabbedPanel.add( "Animation", globalPhysicalParamPanel );
-        tabbedPanel.setToolTipTextAt( 0, "change the animation and physical constants controlling the " + simulator_.getName() + " in the simulation" );
+        tabbedPanel.setToolTipTextAt( 0, "change the rendering options for the " +
+                                         simulator_.getName() + " simulation" );
+        if (globalPhysicalParamPanel != null) {
+            tabbedPanel.add( "Animation", globalPhysicalParamPanel );
+        }
+        tabbedPanel.setToolTipTextAt( 0, "change the animation and physical constants controlling the " +
+                                         simulator_.getName() + " in the simulation" );
         tabbedPanel.add( simulator_.getName() + " Specific", customParamPanel );
         tabbedPanel.setToolTipTextAt( 0, "change the custom options for the " + simulator_.getName() + " simulation" );
 
@@ -114,20 +112,7 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog implements Ac
         antialiasingCheckbox_.addActionListener( this );
         togglesPanel.add( antialiasingCheckbox_ );
 
-        drawMeshCheckbox_ = new JCheckBox( "Show Wireframe", simulator_.getDrawMesh() );
-        drawMeshCheckbox_.setToolTipText( "draw the "+ simulator_.getName() + " showing the underlying wireframe mesh");
-        drawMeshCheckbox_.addActionListener( this );
-        togglesPanel.add( drawMeshCheckbox_ );
-
-        showVelocitiesCheckbox_ = new JCheckBox( "Show Velocity Vectors", simulator_.getShowVelocityVectors() );
-        showVelocitiesCheckbox_.setToolTipText( "show lines representing velocity vectors on each partical mass" );
-        showVelocitiesCheckbox_.addActionListener( this );
-        togglesPanel.add( showVelocitiesCheckbox_ );
-
-        showForcesCheckbox_ = new JCheckBox( "Show Force Vectors", simulator_.getShowForceVectors() );
-        showForcesCheckbox_.setToolTipText( "show lines representing force vectors on each partical mass" );
-        showForcesCheckbox_.addActionListener( this );
-        togglesPanel.add( showForcesCheckbox_ );
+        addAdditionalToggles(togglesPanel) ;
 
         recordAnimationCheckbox_ = new JCheckBox( "Record Animation Frames", simulator_.getRecordAnimation() );
         recordAnimationCheckbox_.setToolTipText( "Record each animation frame to a unique file" );
@@ -139,7 +124,8 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog implements Ac
                                 "This controls the size of the numerical intergration steps",
                                 0.001, 0.9, false);
         numStepsPerFrameField_ =
-                new NumberInput("Num Steps Per Frame (1 slow but smooth - 1000 (fast but choppy):  ", simulator_.getNumStepsPerFrame(),
+                new NumberInput("Num Steps Per Frame (1 slow but smooth - 1000 (fast but choppy):  ",
+                                simulator_.getNumStepsPerFrame(),
                                "This controls the number of the numerical intergration steps per animation frame",
                                1, 1000, true);
 
@@ -159,54 +145,35 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog implements Ac
         return paramPanel;
     }
 
-
-    private JPanel createGlobalPhysicalParamPanel()
-    {
-        JPanel globalParamPanel = new JPanel();
-        globalParamPanel.setLayout( new BorderLayout() );
-
-        JPanel frictionPanel = new JPanel();
-        frictionPanel.setLayout( new BoxLayout(frictionPanel, BoxLayout.Y_AXIS ) );
-        frictionPanel.setBorder(
-                BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), "Friction" ) );
-
-
-        staticFrictionField_ =
-                new NumberInput( "static Friction (.0 small - 0.4 large):  ", simulator_.getStaticFriction(),
-                                 "This controls amount of static surface friction.", 0.0, 0.4, false);
-        dynamicFrictionField_ =
-                new NumberInput( "dynamic friction (.0 small - .4 large):  ", simulator_.getDynamicFriction() ,
-                                  "This controls amount of dynamic surface friction.", 0.0, 0.4, false);
-
-        frictionPanel.add( staticFrictionField_ );
-        frictionPanel.add( dynamicFrictionField_ );
-
-        globalParamPanel.add(frictionPanel, BorderLayout.NORTH);
-
-        return globalParamPanel;
+    /**
+     * override if you want to add more toggles.
+     */
+    protected void addAdditionalToggles(JPanel togglesPanel) {
     }
 
+    /**
+     * override if you want this panel of options for your simulation.
+     */
+    protected JPanel createGlobalPhysicalParamPanel()
+    {
+        return null;
+    }
+
+    /**
+     * For custom parameters that don't fall in other categories.
+     */
     protected abstract JPanel createCustomParamPanel();
 
 
     protected void ok()
     {
-        // set the common rendering and global physics options
+        // set the common rendering and global options
         simulator_.setAntialiasing( antialiasingCheckbox_.isSelected() );
-        simulator_.setDrawMesh( drawMeshCheckbox_.isSelected() );
-        simulator_.setShowVelocityVectors( showVelocitiesCheckbox_.isSelected() );
-        simulator_.setShowForceVectors( showForcesCheckbox_.isSelected() );
         simulator_.setRecordAnimation( recordAnimationCheckbox_.isSelected() );
 
         simulator_.setTimeStep( timeStepField_.getValue() );
         simulator_.setNumStepsPerFrame( numStepsPerFrameField_.getIntValue() );
         simulator_.setScale( scaleField_.getValue() );
-
-        double staticFriction = staticFrictionField_.getValue();
-        double dynamicFriction =  dynamicFrictionField_.getValue();
-        assert(staticFriction >= dynamicFriction);
-        simulator_.setStaticFriction( staticFriction);
-        simulator_.setDynamicFriction( dynamicFriction );
 
         this.setVisible( false );
     }

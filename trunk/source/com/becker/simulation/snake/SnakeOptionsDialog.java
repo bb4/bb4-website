@@ -13,7 +13,7 @@ import java.awt.event.*;
  *
  * @author Bary Becker
  */
-class SnakeOptionsDialog extends SimulatorOptionsDialog implements ActionListener
+class SnakeOptionsDialog extends NewtonianSimOptionsDialog implements ActionListener
 {
 
     // snake param options controls
@@ -29,7 +29,6 @@ class SnakeOptionsDialog extends SimulatorOptionsDialog implements ActionListene
     SnakeOptionsDialog( Frame parent, SnakeSimulator simulator ) {
         super( parent, simulator );
     }
-
 
 
     protected JPanel createCustomParamPanel() {
@@ -74,7 +73,7 @@ class SnakeOptionsDialog extends SimulatorOptionsDialog implements ActionListene
                 new NumberInput("Spring Damping (.1 small - 3.0 large):  ", simulator.getSnake().getSpringDamping(),
                     "This controls how quickly the spring returns to rest once released.",
                     0.1, 3.0, false);
-        springDampingField_.setEnabled( false );     
+        springDampingField_.setEnabled( false );
 
         snakeParamPanel.add( waveSpeedField_ );
         snakeParamPanel.add( waveAmplitudeField_ );

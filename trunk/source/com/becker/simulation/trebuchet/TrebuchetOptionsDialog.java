@@ -13,7 +13,7 @@ import java.awt.event.*;
  *
  * @author Bary Becker
  */
-class TrebuchetOptionsDialog extends SimulatorOptionsDialog implements ActionListener
+class TrebuchetOptionsDialog extends NewtonianSimOptionsDialog implements ActionListener
 {
 
     // snake param options controls
@@ -25,12 +25,10 @@ class TrebuchetOptionsDialog extends SimulatorOptionsDialog implements ActionLis
     private NumberInput slingReleaseAngleField_;
 
 
-
     // constructor
     TrebuchetOptionsDialog( Frame parent, TrebuchetSimulator simulator ) {
         super( parent, simulator );
     }
-
 
 
     protected JPanel createCustomParamPanel() {
@@ -104,7 +102,7 @@ class TrebuchetOptionsDialog extends SimulatorOptionsDialog implements ActionLis
     protected void ok() {
 
         super.ok();
-  
+
         // set the snake params
         TrebuchetSimulator simulator = (TrebuchetSimulator) getSimulator();
         Trebuchet treb = simulator.getTrebuchet();
