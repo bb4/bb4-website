@@ -6,11 +6,12 @@ import com.becker.ui.*;
 import com.becker.ui.animation.*;
 
 import javax.swing.*;
-import javax.vecmath.*;
 import java.awt.*;
 import java.awt.event.*;
 
 /**
+ * Base class for all simulations.
+ *
  * @author Barry Becker Date: Sep 17, 2005
  */
 public abstract class Simulator extends AnimationComponent
@@ -23,8 +24,6 @@ public abstract class Simulator extends AnimationComponent
     // debug level of 0 means no debug info, 3 is all debug info
     public static final int DEBUG_LEVEL = 0;
 
-    // the amount to advance the animation in time for each frame in seconds
-    protected static final int NUM_STEPS_PER_FRAME = 200;
 
     protected SimulatorOptionsDialog optionsDialog_ = null;
     protected static JFrame frame_ = null;
@@ -55,6 +54,7 @@ public abstract class Simulator extends AnimationComponent
         } );
     }
 
+
     protected abstract double getInitialTimeStep();
 
 
@@ -82,21 +82,6 @@ public abstract class Simulator extends AnimationComponent
     public abstract void setScale( double scale );
     public abstract double getScale();
 
-    public abstract void setShowVelocityVectors( boolean show );
-    public abstract boolean getShowVelocityVectors();
-
-    public abstract void setShowForceVectors( boolean show );
-    public abstract boolean getShowForceVectors();
-
-    public abstract void setDrawMesh( boolean use );
-    public abstract boolean getDrawMesh();
-
-    public abstract void setStaticFriction( double staticFriction );
-    public abstract double getStaticFriction();
-
-    public abstract void setDynamicFriction( double dynamicFriction );
-    public abstract double getDynamicFriction();
-
 
     protected GradientButton createOptionsButton()
     {
@@ -117,7 +102,7 @@ public abstract class Simulator extends AnimationComponent
                 simulator.setPaused( true );
                 final boolean canceled = optionsDialog_.showDialog();
                 simulator.setPaused( oldPauseVal );
-                System.out.println( "options selected  canceled=" + canceled );
+                //System.out.println( "options selected  canceled=" + canceled );
             }
         } );
         return button;
@@ -137,34 +122,21 @@ public abstract class Simulator extends AnimationComponent
         return controls;
     }
 
+    /**
+     * Override this to return ui elements that can be used to modify the simulation as it is running.
+     */
+    public JPanel createDynamicControls() {
+        return null;
+    }
+
     protected String getStatusMessage()
     {
         return "frames/second=" + Util.formatNumber( getFrameRate() );
     }
 
-    public static void drawGridBackground(Graphics2D g2, Color gridColor, double cellSize,
-                                          int xDim, int yDim, Vector2d offset) {
-        // draw the grid background
-        g2.setColor( gridColor );
-        int xMax = (int) (cellSize * xDim) - 1;
-        int yMax = (int) (cellSize * yDim) - 1;
-        int j;
-        double pos = offset.y % cellSize;
-        for ( j = 0; j <= yDim; j++ ) {
-            int ht = (int) (pos + j * cellSize);
-            g2.drawLine( 1, ht, xMax, ht );
-        }
-        pos = offset.x % cellSize;
-        for ( j = 0; j <= xDim; j++ ) {
-            int w = (int) (pos + j * cellSize);
-            g2.drawLine( w, 1, w, yMax );
-        }
-    }
-
-
 
     // the next 2 methods implement the unused methods of the optimizee interface.
-    // Simulators must implement evaluateFitness //////
+    // Simulators must implement evaluateFitness ///
 
     /**
      * If true is returned then compareFitness will be used and evaluateFitness will not

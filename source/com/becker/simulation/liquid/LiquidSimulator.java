@@ -4,12 +4,10 @@ import com.becker.common.*;
 import com.becker.optimization.*;
 import com.becker.simulation.common.*;
 import com.becker.ui.*;
-import com.becker.ui.animation.*;
 
-import javax.swing.*;
 import java.awt.*;
 
-public class LiquidSimulator extends Simulator
+public class LiquidSimulator extends NewtonianSimulator
 {
 
     //public static final String CONFIG_FILE = "com/becker/liquid/initialState.data";
@@ -158,9 +156,7 @@ public class LiquidSimulator extends Simulator
     /**
      * *** implements the key method of the Optimizee interface
      *
-     * evaluates the snake's fitness.
-     * The measure is purely based on its velocity.
-     * If the snake becomes unstable, then 0.0 is returned.
+     * evaluates the liquids fitness.
      */
     public double evaluateFitness( ParameterArray params )
     {
@@ -188,23 +184,4 @@ public class LiquidSimulator extends Simulator
         return FILE_NAME_BASE;
     }
 
-
-    // ****************** main ******************************
-    public static void main( String[] args )
-    {
-
-        final LiquidEnvironment environment =
-                new LiquidEnvironment( 20, 15 );
-        //new LiquidEnvironment(CONFIG_FILE);
-
-        final LiquidSimulator simulator = new LiquidSimulator( environment );
-        JPanel animPanel = new AnimationPanel( simulator );
-
-        animPanel.add( simulator.createTopControls(), BorderLayout.NORTH );
-
-        frame_ = new JFrame( "Liquid Simulator" );
-        frame_.getContentPane().add( animPanel );
-        frame_.pack();
-        frame_.setVisible( true );
-    }
 }

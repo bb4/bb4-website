@@ -27,6 +27,9 @@ public class SimulatorApplet extends JApplet {
          simulator_ = createSimulationFromClassName(simulatorClassName);
     }
 
+    public String getTitle() {
+        return simulator_.getName();
+    }
 
     /**
      * the applet's init method
@@ -43,6 +46,10 @@ public class SimulatorApplet extends JApplet {
 
         JPanel animPanel = new AnimationPanel( simulator_ );
         animPanel.add( simulator_.createTopControls(), BorderLayout.NORTH );
+        JPanel dynamicControls = simulator_.createDynamicControls();
+        if (dynamicControls != null) {
+            animPanel.add( dynamicControls, BorderLayout.EAST );
+        }
 
         resizablePanel_ = new ResizableAppletPanel( animPanel );
         Container content = this.getContentPane();
@@ -100,8 +107,7 @@ public class SimulatorApplet extends JApplet {
         String simulatorClassName = (args.length > 0)? args[0] : DEFAULT_SIMULATOR;
 
         SimulatorApplet applet = new SimulatorApplet(simulatorClassName);
-        GUIUtil.showApplet( applet, "Simulation Applet" );
-        //baseFrame.setSize( simulator_.getPreferredSize());
+        GUIUtil.showApplet( applet, applet.getTitle() );
     }
 
 }

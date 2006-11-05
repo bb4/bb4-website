@@ -12,7 +12,7 @@ import java.awt.event.*;
  *
  * @author Bary Becker
  */
-class LiquidOptionsDialog extends SimulatorOptionsDialog
+class LiquidOptionsDialog extends NewtonianSimOptionsDialog
                           implements ActionListener
 {
 

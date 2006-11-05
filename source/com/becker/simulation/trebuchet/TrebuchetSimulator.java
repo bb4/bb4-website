@@ -15,7 +15,8 @@ import java.awt.*;
  *  @@ Try simulating using Breve.
  *  Currently can't get working because of seg fault (because need to recompile for 64 bit?)
  */
-public class TrebuchetSimulator extends Simulator implements Optimizee, ChangeListener
+public class TrebuchetSimulator extends NewtonianSimulator
+                                implements ChangeListener
 {
 
     private Trebuchet trebuchet_ = null;
@@ -50,7 +51,7 @@ public class TrebuchetSimulator extends Simulator implements Optimizee, ChangeLi
     private void commonInit( Trebuchet trebuchet )
     {
         trebuchet_ = trebuchet;
-        numStepsPerFrame_ = 4;
+        setNumStepsPerFrame(4);
         this.setBackground(BACKGROUND_COLOR);
         initCommonUI();
         this.render();

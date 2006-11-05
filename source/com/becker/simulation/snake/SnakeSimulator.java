@@ -4,20 +4,20 @@ import com.becker.common.*;
 import com.becker.optimization.*;
 import com.becker.simulation.common.*;
 import com.becker.ui.*;
-import com.becker.ui.animation.*;
 
-import javax.swing.*;
 import javax.vecmath.*;
 import java.awt.*;
 
 import static com.becker.simulation.snake.SnakeConstants.*;
 
-public class SnakeSimulator extends Simulator
+public class SnakeSimulator extends NewtonianSimulator
 {
 
     public static final String CONFIG_FILE = CONFIG_FILE_PATH_PREFIX + "snake/snakeGeomNormal.data";
     private static final String FILE_NAME_BASE = ANIMATION_FRAME_FILE_NAME_PREFIX + "snake/snakeFrame";
 
+    /** the amount to advance the animation in time for each frame in seconds. */
+    protected static final int NUM_STEPS_PER_FRAME = 200;
 
     private static final Parameter[] PARAMS = {
             new Parameter( WAVE_SPEED, 0.0001, 0.02, "wave speed" ),
@@ -68,7 +68,7 @@ public class SnakeSimulator extends Simulator
     {
         snake_ = snake;
         oldCenter_ = snake_.getCenter();
-        numStepsPerFrame_ = NUM_STEPS_PER_FRAME;
+        setNumStepsPerFrame(NUM_STEPS_PER_FRAME);
 
         initCommonUI();
         this.setPreferredSize(new Dimension( (int) (CELL_SIZE * XDIM), (int) (CELL_SIZE * YDIM)) );
@@ -158,7 +158,7 @@ public class SnakeSimulator extends Simulator
 
         newCenter_ = snake_.getCenter();
         Vector2d distanceDelta = new Vector2d( oldCenter_.x - newCenter_.x, 0/*oldCenter_.y - newCenter_.y*/ );
-        velocity_ = distanceDelta.length() / (numStepsPerFrame_ * timeStep_);
+        velocity_ = distanceDelta.length() / (getNumStepsPerFrame() * timeStep_);
         distance_.add( distanceDelta );
 
         drawGridBackground(g2, gridColor_, CELL_SIZE, XDIM, YDIM, distance_);
@@ -249,10 +249,11 @@ public class SnakeSimulator extends Simulator
 
 
     // *************** main *****************************
+    /*
     public static void main( String[] args )
     {
 
-        final SnakeSimulator simulator = new SnakeSimulator();
+        Simulator simulator = new SnakeSimulator();
         JPanel animPanel = new AnimationPanel( simulator );
 
         animPanel.add( simulator.createTopControls(), BorderLayout.NORTH );
@@ -261,4 +262,5 @@ public class SnakeSimulator extends Simulator
         frame_.getContentPane().add( animPanel );
         frame_.setVisible( true );
     }
+    */
 }
