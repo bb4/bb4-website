@@ -4,6 +4,7 @@
     <defaultAnt bundledAnt="true" />
     <buildFile url="file://$PROJECT_DIR$/ant/build.xml">
       <additionalClassPath>
+        <entry path="file:///usr/share/ant/lib/ant-contrib-0.6.jar" />
         <entry path="file:///usr/share/ant/lib/javancss2ant.jar" />
         <entry path="file:///usr/share/ant/lib/ccl.jar" />
         <entry path="file:///usr/share/ant/lib/javancss.jar" />

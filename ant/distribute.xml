@@ -22,6 +22,8 @@
         <fileset dir="${classesDir}">
           <include name="com/becker/common/*.class"/>
           <include name="com/becker/ui/*.class"/>
+          <include name="com/becker/ui/animation/*.class"/>
+          <include name="com/becker/ui/filefilter/*.class"/>
           <include name="com/becker/java2d/ImageUtil.class"/>
         </fileset>
         <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
@@ -300,6 +302,16 @@
         <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve directory hierarchy -->
       </copy>
       <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/snake.jar"/>
+      <delete dir="${stagingDir}/com"/>
+
+      <!-- copy the class files that are needed for reaction diffusion deployment -->
+      <copy todir="${stagingDir}">
+        <fileset dir="${classesDir}">
+          <include name="com/becker/simulation/reactiondiffusion/*.class"/>
+        </fileset>
+        <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve directory hierarchy -->
+      </copy>
+      <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/reactiondiffusion.jar"/>
       <delete dir="${stagingDir}/com"/>
 
       <!-- copy the class files that are needed for trebuchet deployment -->

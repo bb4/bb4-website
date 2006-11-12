@@ -16,7 +16,7 @@
   <property name="libDir" value="../lib"/>
   <!-- place to put .class files, images and resources, so they can be jar'd up -->
   <property name="stagingDir" value="../temp/classes"/>
-  <!-- root dir for auxillieary ant libraries. standby is "/usr/share/ant" or "/usr/local/Intellij/idea-2253/lib/ant"-->
+  <!-- root dir for auxilliary ant libraries. standby is "/usr/share/ant" or "/usr/local/Intellij/idea-2253/lib/ant"-->
   <property name="antHome" value="/usr/share/ant"/>
   <!-- the base game applicaiton class -->
   <property name="gameAppClass" value="com.becker.game.common.ui.GameApp"/>
@@ -26,17 +26,18 @@
   <property name="java15" value="${java_home}/bin/java"/>
 
 
-  <!-- Load additional tasks -->
+  <!-- Load additional tasks   -->
   <taskdef resource="net/sf/antcontrib/antcontrib.properties">
     <classpath>
       <pathelement location="${antHome}/lib/ant-contrib-0.6.jar"/>
     </classpath>
   </taskdef>
 
-  <!-- source metrics -->
+  <!-- source metrics
   <taskdef name="javancss"
            classname="javancss.JavancssAntTask"
-           classpath="${antHome}/lib"/>    <!-- old: javancss.JavancssAntTask net.jernigan.javancss2ant.JavaNCSS -->
+           classpath="${antHome}/lib"/>
+   -->
 
 
   <path id="compile.classpath">
@@ -206,13 +207,6 @@
     </antcall>
   </target>
 
-  <target name="executeSnake" description="Run the Snake simulation program">
-    <antcall target="executeProgram">
-      <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
-      <param name="arg1" value="com.becker.simulation.snake.SnakeSimulator"/>
-    </antcall>
-  </target>
 
   <target name="executeSpirograph" description="Run the SpiroGraph program">
     <antcall target="executeProgram">
@@ -221,7 +215,23 @@
     </antcall>
   </target>
 
-  <target name="executeLiquid" description="Run the Liquid screenSaver">
+  <target name="executeSnake" description="Run the Snake simulator">
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
+      <param name="arg1" value="com.becker.simulation.snake.SnakeSimulator"/>
+    </antcall>
+  </target>
+
+  <target name="executeReactionDiffusion" description="Run the Reaction Diffusion simulator">
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
+      <param name="arg1" value="com.becker.simulation.reactiondiffusion.RDSimulator"/>
+    </antcall>
+  </target>
+
+  <target name="executeLiquid" description="Run the Liquid simulator">
     <antcall target="executeProgram">
       <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
       <param name="libPath" value="${libDir}/vecmath.jar"/>

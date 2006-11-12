@@ -160,46 +160,144 @@
     <option name="HIDE_WARNINGS" value="false" />
   </component>
   <component name="FileEditorManager" split-orientation="horizontal" split-proportion="0.5153798">
-    <first-group selected-file="file://$PROJECT_DIR$/ant/build.xml">
+    <first-group selected-file="file://$PROJECT_DIR$/source/com/becker/simulation/reactiondiffusion/GrayScott.java">
+      <entry file="file://$PROJECT_DIR$/ant/distribute.xml" pinned="false">
+        <provider selected="true" editor-type-id="text-editor">
+          <state line="27" column="119" selection-start="1295" selection-end="1295" vertical-scroll-proportion="0.56842107">
+            <folding />
+          </state>
+        </provider>
+      </entry>
+      <entry file="file://$PROJECT_DIR$/source/com/becker/game/common/ui/GamePanel.java" pinned="false">
+        <provider selected="true" editor-type-id="text-editor">
+          <state line="191" column="54" selection-start="6651" selection-end="6651" vertical-scroll-proportion="0.33301887">
+            <folding />
+          </state>
+        </provider>
+      </entry>
+      <entry file="file://$PROJECT_DIR$/ant/appletHtml_en.properties" pinned="false">
+        <provider selected="true" editor-type-id="text-editor">
+          <state line="404" column="92" selection-start="21719" selection-end="21719" vertical-scroll-proportion="0.6056604">
+            <folding />
+          </state>
+        </provider>
+      </entry>
+      <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/reactiondiffusion/RDRenderer.java" pinned="false">
+        <provider selected="true" editor-type-id="text-editor">
+          <state line="14" column="107" selection-start="290" selection-end="290" vertical-scroll-proportion="0.29056603">
+            <folding>
+              <element signature="imports" expanded="true" />
+            </folding>
+          </state>
+        </provider>
+      </entry>
+      <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/snake/SnakeOptionsDialog.java" pinned="false">
+        <provider selected="true" editor-type-id="text-editor">
+          <state line="85" column="45" selection-start="3602" selection-end="3618" vertical-scroll-proportion="0.49433962">
+            <folding />
+          </state>
+        </provider>
+      </entry>
+      <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/reactiondiffusion/RDSimulator.java" pinned="false">
+        <provider selected="true" editor-type-id="text-editor">
+          <state line="40" column="29" selection-start="1013" selection-end="1013" vertical-scroll-proportion="0.8179245">
+            <folding>
+              <element signature="imports" expanded="true" />
+            </folding>
+          </state>
+        </provider>
+      </entry>
+      <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/reactiondiffusion/RDOptionsDialog.java" pinned="false">
+        <provider selected="true" editor-type-id="text-editor">
+          <state line="18" column="61" selection-start="442" selection-end="442" vertical-scroll-proportion="0.3735849">
+            <folding>
+              <element signature="imports" expanded="true" />
+            </folding>
+          </state>
+        </provider>
+      </entry>
+      <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/reactiondiffusion/RDDynamicOptions.java" pinned="false">
+        <provider selected="true" editor-type-id="text-editor">
+          <state line="98" column="91" selection-start="3105" selection-end="3105" vertical-scroll-proportion="0.6264151">
+            <folding>
+              <element signature="imports" expanded="true" />
+            </folding>
+          </state>
+        </provider>
+      </entry>
+      <entry file="jar:///usr/java/jdk1.5.0_05/src.zip!/javax/swing/BoxLayout.java" pinned="false">
+        <provider selected="true" editor-type-id="text-editor">
+          <state line="122" column="66" selection-start="5400" selection-end="5400" vertical-scroll-proportion="0.021698114">
+            <folding />
+          </state>
+        </provider>
+      </entry>
+      <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/reactiondiffusion/LabeledSlider.java" pinned="false">
+        <provider selected="true" editor-type-id="text-editor">
+          <state line="54" column="32" selection-start="1598" selection-end="1614" vertical-scroll-proportion="0.61132073">
+            <folding>
+              <element signature="imports" expanded="true" />
+            </folding>
+          </state>
+        </provider>
+      </entry>
+      <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/reactiondiffusion/GrayScott.java" pinned="false">
+        <provider selected="true" editor-type-id="text-editor">
+          <state line="6" column="12" selection-start="338" selection-end="338" vertical-scroll-proportion="-3.2547169">
+            <folding />
+          </state>
+        </provider>
+      </entry>
       <entry file="file://$PROJECT_DIR$/ant/build.xml" pinned="false">
         <provider selected="true" editor-type-id="text-editor">
-          <state line="172" column="61" selection-start="7478" selection-end="7478" vertical-scroll-proportion="0.15098242">
+          <state line="217" column="66" selection-start="9177" selection-end="9177" vertical-scroll-proportion="0.32248804">
             <folding />
           </state>
         </provider>
       </entry>
-      <entry file="file://$PROJECT_DIR$/source/com/becker/java2d/DescribePath.java" pinned="false">
+      <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/common/Simulator.java" pinned="false">
         <provider selected="true" editor-type-id="text-editor">
-          <state line="6" column="13" selection-start="130" selection-end="130" vertical-scroll-proportion="0.089613035">
+          <state line="130" column="10" selection-start="3446" selection-end="3517" vertical-scroll-proportion="0.83396226">
             <folding />
           </state>
         </provider>
       </entry>
-      <entry file="file://$PROJECT_DIR$/source/com/becker/java2d/ComponentPrintable.java" pinned="false">
+      <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/common/NewtonianSimulator.java" pinned="false">
         <provider selected="true" editor-type-id="text-editor">
-          <state line="7" column="13" selection-start="150" selection-end="150" vertical-scroll-proportion="0.089613035">
+          <state line="10" column="52" selection-start="241" selection-end="241" vertical-scroll-proportion="0.20754717">
+            <folding>
+              <element signature="imports" expanded="true" />
+            </folding>
+          </state>
+        </provider>
+      </entry>
+      <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/common/SimulatorApplet.java" pinned="false">
+        <provider selected="true" editor-type-id="text-editor">
+          <state line="47" column="37" selection-start="1280" selection-end="1280" vertical-scroll-proportion="0.5613208">
             <folding />
           </state>
         </provider>
       </entry>
-      <entry file="file://$PROJECT_DIR$/source/com/becker/xml/AdapterNode.java" pinned="false">
+      <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/common/SimulatorOptionsDialog.java" pinned="false">
         <provider selected="true" editor-type-id="text-editor">
-          <state line="18" column="104" selection-start="484" selection-end="484" vertical-scroll-proportion="0.35437882">
+          <state line="11" column="56" selection-start="238" selection-end="238" vertical-scroll-proportion="0.14528301">
             <folding />
           </state>
         </provider>
       </entry>
-      <entry file="file://$PROJECT_DIR$/source/com/becker/xml/DomEcho.java" pinned="false">
+      <entry file="file://$PROJECT_DIR$/source/com/becker/ui/OptionsDialog.java" pinned="false">
         <provider selected="true" editor-type-id="text-editor">
-          <state line="66" column="56" selection-start="2315" selection-end="2315" vertical-scroll-proportion="0.3329939">
+          <state line="21" column="86" selection-start="648" selection-end="648" vertical-scroll-proportion="0.3735849">
             <folding />
           </state>
         </provider>
       </entry>
-      <entry file="file://$PROJECT_DIR$/source/com/becker/xml/AikidoAppGenerator.java" pinned="false">
+      <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/common/NewtonianSimOptionsDialog.java" pinned="false">
         <provider selected="true" editor-type-id="text-editor">
-          <state line="38" column="69" selection-start="1555" selection-end="1555" vertical-scroll-proportion="0.55946225">
-            <folding />
+          <state line="35" column="39" selection-start="794" selection-end="814" vertical-scroll-proportion="0.45754716">
+            <folding>
+              <element signature="imports" expanded="true" />
+            </folding>
           </state>
         </provider>
       </entry>
@@ -255,19 +353,20 @@
   <component name="PackagesPane">
     <expanded_node url="com.becker" module="AppletProjects" type="package" />
     <expanded_node url="" module="AppletProjects" type="module" />
+    <expanded_node url="html" module="AppletProjects" type="package" />
     <expanded_node url="com" module="AppletProjects" type="package" />
     <expanded_node url="java" module="AppletProjects" type="package" />
-    <expanded_node url="html" module="AppletProjects" type="package" />
   </component>
   <component name="ProjectPane">
-    <expanded_node url="file://$PROJECT_DIR$/source/com" module="AppletProjects" type="directory" />
-    <expanded_node url="" module="AppletProjects" type="module" />
-    <expanded_node url="file://$PROJECT_DIR$/source" module="AppletProjects" type="directory" />
-    <expanded_node url="file://$PROJECT_DIR$/source/com/becker" module="AppletProjects" type="directory" />
     <expanded_node url="file://$PROJECT_DIR$/source/com/becker/game" module="AppletProjects" type="directory" />
-    <expanded_node url="file://$PROJECT_DIR$/ant" module="AppletProjects" type="directory" />
+    <expanded_node url="file://$PROJECT_DIR$/source" module="AppletProjects" type="directory" />
+    <expanded_node url="file://$PROJECT_DIR$/source/com/becker/simulation" module="AppletProjects" type="directory" />
+    <expanded_node url="" module="AppletProjects" type="module" />
     <expanded_node url="file://$PROJECT_DIR$" module="AppletProjects" type="directory" />
-    <expanded_node url="file://$PROJECT_DIR$/source/com/becker/xml" module="AppletProjects" type="directory" />
+    <expanded_node url="file://$PROJECT_DIR$/source/com/becker" module="AppletProjects" type="directory" />
+    <expanded_node url="file://$PROJECT_DIR$/source/com" module="AppletProjects" type="directory" />
+    <expanded_node url="file://$PROJECT_DIR$/ant" module="AppletProjects" type="directory" />
+    <expanded_node url="file://$PROJECT_DIR$/source/com/becker/simulation/reactiondiffusion" module="AppletProjects" type="directory" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" splitterProportion="0.5">
@@ -278,7 +377,7 @@
       <hideEmptyPackages />
       <showStructure PackagesPane="false" ProjectPane="false" />
       <autoscrollToSource ProjectPane="true" />
-      <autoscrollFromSource PackagesPane="true" ProjectPane="true" />
+      <autoscrollFromSource PackagesPane="true" ProjectPane="false" />
     </navigator>
   </component>
   <component name="PropertiesComponent">
@@ -293,8 +392,8 @@
   </component>
   <component name="RunManager">
     <activeType name="Application" />
-    <tempConfiguration selected="true" default="false" name="AikidoAppGenerator" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="com.becker.xml.AikidoAppGenerator" />
+    <tempConfiguration selected="true" default="false" name="RDSimulator" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.becker.simulation.reactiondiffusion.RDSimulator" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
@@ -302,13 +401,6 @@
       <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Run" />
     </tempConfiguration>
-    <configuration selected="false" default="true" type="Remote" factoryName="Remote">
-      <option name="USE_SOCKET_TRANSPORT" value="true" />
-      <option name="SERVER_MODE" value="false" />
-      <option name="SHMEM_ADDRESS" value="javadebug" />
-      <option name="HOST" value="localhost" />
-      <option name="PORT" value="5005" />
-    </configuration>
     <configuration selected="false" default="true" type="JUnit" factoryName="JUnit">
       <module name="" />
       <option name="PACKAGE_NAME" />
@@ -322,6 +414,23 @@
       <option name="TEST_SEARCH_SCOPE">
         <value defaultName="wholeProject" />
       </option>
+    </configuration>
+    <configuration selected="false" default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+    </configuration>
+    <configuration selected="false" default="true" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <module name="" />
     </configuration>
     <configuration selected="false" default="true" type="WebLogic Instance" factoryName="Local">
       <option name="WORKING_DIRECTORY" />
@@ -337,22 +446,12 @@
       <option name="SERVER_NAME" value="myserver" />
       <option name="DOMAIN_NAME" value="mydomain" />
     </configuration>
-    <configuration selected="false" default="true" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
-      <module name="" />
-    </configuration>
-    <configuration selected="false" default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
+    <configuration selected="false" default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
     </configuration>
     <configuration selected="false" default="false" name="game appProfile" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.becker.game.common.ui.GameApp" />
@@ -360,14 +459,14 @@
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <module name="AppletProjects" />
-      <RunnerSettings RunnerId="Run" />
       <RunnerSettings RunnerId="Debug">
         <option name="DEBUG_PORT" value="32860" />
         <option name="TRANSPORT" value="0" />
         <option name="LOCAL" value="false" />
       </RunnerSettings>
-      <ConfigurationWrapper RunnerId="Run" />
+      <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Debug" />
+      <ConfigurationWrapper RunnerId="Run" />
     </configuration>
     <configuration selected="false" default="false" name="game app" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.becker.game.common.ui.GameApp" />
@@ -457,19 +556,19 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="18" width="2337" height="1118" extended-state="0" />
+    <frame x="0" y="4" width="2329" height="1196" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="CVS" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.33" order="7" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.33024117" order="6" />
-      <window_info id="Project" active="false" anchor="right" auto_hide="false" internal_type="docked" type="docked" visible="true" weight="0.1813449" order="3" x="2839" y="44" width="322" height="1078" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="sliding" type="floating" visible="true" weight="0.38397017" order="9" x="2319" y="786" width="1002" height="571" />
-      <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.24989173" order="4" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="floating" visible="true" weight="0.27317554" order="8" x="1752" y="925" width="1601" height="271" />
+      <window_info id="Project" active="false" anchor="right" auto_hide="false" internal_type="docked" type="docked" visible="true" weight="0.16804528" order="3" x="2839" y="44" width="322" height="1078" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="sliding" type="floating" visible="false" weight="0.38397017" order="9" x="2379" y="456" width="1002" height="627" />
+      <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.24967033" order="4" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="floating" visible="true" weight="0.27317554" order="8" x="2346" y="574" width="1251" height="571" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="floating" visible="false" weight="0.40093023" order="5" x="1941" y="51" width="1236" height="1001" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="floating" visible="false" weight="0.33024117" order="8" x="702" y="128" width="2246" height="850" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="docked" type="floating" visible="true" weight="0.2503268" order="1" x="2784" y="0" width="368" height="953" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="floating" visible="false" weight="0.33038348" order="1" x="2059" y="163" width="1366" height="631" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="docked" type="floating" visible="true" weight="0.2503268" order="1" x="2670" y="0" width="273" height="953" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="floating" visible="false" weight="0.33038348" order="1" x="1720" y="696" width="1473" height="480" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.24978429" order="2" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="floating" visible="false" weight="0.2650376" order="3" x="1836" y="566" width="1246" height="531" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="sliding" type="sliding" visible="false" weight="0.30427632" order="0" />
@@ -579,8 +678,8 @@
         <filter targetName="executeTrebuchet" isVisible="false" />
         <filter targetName="executeAdventure" isVisible="false" />
         <filter targetName="executePokerServer" isVisible="false" />
-        <filter targetName="executeSetGame" isVisible="false" />
-        <filter targetName="executeSudoku" isVisible="false" />
+        <filter targetName="executeSetGame" isVisible="true" />
+        <filter targetName="executeSudoku" isVisible="true" />
       </targetFilters>
       <treeView value="false" />
       <verbose value="false" />
@@ -588,180 +687,192 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/source/com/becker/game/common/resources/coreMessages.properties">
+    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/liquid/LiquidSimulator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="146" column="9" selection-start="5625" selection-end="5625" vertical-scroll-proportion="0.48914167">
+        <state line="155" column="125" selection-start="4620" selection-end="4620" vertical-scroll-proportion="0.35849056">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/game/multiplayer/set/resources/setMessages.properties">
+    <entry file="file://$PROJECT_DIR$/source/com/becker/spirograph/SliderGroup.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="60" selection-start="662" selection-end="662" vertical-scroll-proportion="0.3867632">
+        <state line="101" column="36" selection-start="3076" selection-end="3076" vertical-scroll-proportion="0.31320754">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/game/common/ui/GameInfoPanel.java">
+    <entry file="file://$PROJECT_DIR$/source/com/becker/common/ColorMap.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="22" selection-start="299" selection-end="299" vertical-scroll-proportion="0.026476579">
+        <state line="42" column="40" selection-start="1364" selection-end="1364" vertical-scroll-proportion="0.43679246">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/adventure/ludlowScript.xml">
+    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/snake/SnakeSimulator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="174" column="74" selection-start="8388" selection-end="8388" vertical-scroll-proportion="0.49389002">
+        <state line="160" column="67" selection-start="4768" selection-end="4768" vertical-scroll-proportion="0.3490566">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/adventure/Adventure.java">
+    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/snake/SnakeOptionsDialog.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="142" column="122" selection-start="5081" selection-end="5081" vertical-scroll-proportion="0.50509167">
+        <state line="85" column="45" selection-start="3602" selection-end="3618" vertical-scroll-proportion="0.49433962">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/adventure/SceneData.java">
+    <entry file="file://$PROJECT_DIR$/source/com/becker/ui/animation/AnimationComponent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="99" selection-start="1289" selection-end="1289" vertical-scroll-proportion="0.52326787">
+        <state line="60" column="16" selection-start="1624" selection-end="1624" vertical-scroll-proportion="0.34056604">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar:///usr/java/jdk1.5.0_05/src.zip!/java/util/Scanner.java">
+    <entry file="jar:///usr/java/jdk1.5.0_05/src.zip!/javax/swing/BoxLayout.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1999" column="0" selection-start="76249" selection-end="76249" vertical-scroll-proportion="0.3767821">
+        <state line="122" column="66" selection-start="5400" selection-end="5400" vertical-scroll-proportion="0.021698114">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/puzzle/adventure/Scene.java">
+    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/reactiondiffusion/LabeledSlider.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="133" selection-start="536" selection-end="536" vertical-scroll-proportion="0.34521386">
+        <state line="54" column="32" selection-start="1598" selection-end="1614" vertical-scroll-proportion="0.61132073">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="jar:///usr/java/jdk1.5.0_05/src.zip!/org/w3c/dom/Node.java">
+    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/trebuchet/TrebuchetSimulator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="677" column="18" selection-start="31864" selection-end="31864" vertical-scroll-proportion="0.9793175">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/xml/DomUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="168" column="6" selection-start="5571" selection-end="5571" vertical-scroll-proportion="0.8034623">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///usr/java/jdk1.5.0_05/src.zip!/org/w3c/dom/Document.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="19" selection-start="3031" selection-end="3031" vertical-scroll-proportion="0.37745604">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/game/card/Card.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="22" selection-start="95" selection-end="95" vertical-scroll-proportion="0.13441955">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/game/twoplayer/go/GoBoard.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="438" column="41" selection-start="15291" selection-end="15291" vertical-scroll-proportion="0.72912425">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/game/twoplayer/common/TwoPlayerController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="171" column="31" selection-start="5073" selection-end="5073" vertical-scroll-proportion="0.607943">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/ui/OptionsDialog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="13" selection-start="460" selection-end="460" vertical-scroll-proportion="0.29124236">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/game/multiplayer/galactic/ui/GalacticInfoPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="139" column="26" selection-start="4260" selection-end="4260" vertical-scroll-proportion="0.33706722">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/game/multiplayer/poker/ui/PokerInfoPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="160" column="26" selection-start="4797" selection-end="4797" vertical-scroll-proportion="0.33706722">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/game/common/Board.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="15" selection-start="1297" selection-end="1297" vertical-scroll-proportion="0.5570265">
+        <state line="53" column="28" selection-start="1433" selection-end="1453" vertical-scroll-proportion="0.3490566">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ant/build.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="172" column="61" selection-start="7478" selection-end="7478" vertical-scroll-proportion="0.15098242">
+        <state line="217" column="66" selection-start="9177" selection-end="9177" vertical-scroll-proportion="0.32248804">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/trebuchet/TrebuchetOptionsDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="95" column="124" selection-start="3926" selection-end="3926" vertical-scroll-proportion="0.36698112">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/common/Simulator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="130" column="10" selection-start="3446" selection-end="3517" vertical-scroll-proportion="0.83396226">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/common/NewtonianSimulator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="52" selection-start="241" selection-end="241" vertical-scroll-proportion="0.20754717">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/common/SimulatorApplet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="37" selection-start="1280" selection-end="1280" vertical-scroll-proportion="0.5613208">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/common/NewtonianSimOptionsDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="39" selection-start="794" selection-end="814" vertical-scroll-proportion="0.45754716">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ant/appletHtml_en.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="404" column="92" selection-start="21719" selection-end="21719" vertical-scroll-proportion="0.6056604">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/com/becker/game/common/ui/GamePanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="191" column="54" selection-start="6651" selection-end="6651" vertical-scroll-proportion="0.33301887">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ant/distribute.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="103" selection-start="1155" selection-end="1155" vertical-scroll-proportion="0.5460186">
+        <state line="27" column="119" selection-start="1295" selection-end="1295" vertical-scroll-proportion="0.56842107">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/java2d/DescribePath.java">
+    <entry file="file://$PROJECT_DIR$/source/com/becker/ui/OptionsDialog.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="13" selection-start="130" selection-end="130" vertical-scroll-proportion="0.089613035">
+        <state line="21" column="86" selection-start="648" selection-end="648" vertical-scroll-proportion="0.3735849">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/xml/AdapterNode.java">
+    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/common/SimulatorOptionsDialog.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="104" selection-start="484" selection-end="484" vertical-scroll-proportion="0.35437882">
+        <state line="11" column="56" selection-start="238" selection-end="238" vertical-scroll-proportion="0.14528301">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/java2d/ComponentPrintable.java">
+    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/reactiondiffusion/RDSimulator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="13" selection-start="150" selection-end="150" vertical-scroll-proportion="0.089613035">
+        <state line="40" column="29" selection-start="1013" selection-end="1013" vertical-scroll-proportion="0.8179245">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/reactiondiffusion/GrayScott.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="12" selection-start="338" selection-end="338" vertical-scroll-proportion="-3.2547169">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/xml/DomEcho.java">
+    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/reactiondiffusion/RDDynamicOptions.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="66" column="56" selection-start="2315" selection-end="2315" vertical-scroll-proportion="0.3329939">
-          <folding />
+        <state line="98" column="91" selection-start="3105" selection-end="3105" vertical-scroll-proportion="0.6264151">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/com/becker/xml/AikidoAppGenerator.java">
+    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/reactiondiffusion/RDOptionsDialog.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="69" selection-start="1555" selection-end="1555" vertical-scroll-proportion="0.55946225">
-          <folding />
+        <state line="18" column="61" selection-start="442" selection-end="442" vertical-scroll-proportion="0.3735849">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/com/becker/simulation/reactiondiffusion/RDRenderer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="107" selection-start="290" selection-end="290" vertical-scroll-proportion="0.29056603">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
