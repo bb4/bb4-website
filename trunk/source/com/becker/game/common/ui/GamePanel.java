@@ -4,15 +4,12 @@ import com.becker.common.*;
 import com.becker.game.common.*;
 import com.becker.game.online.ui.*;
 import com.becker.ui.*;
-import sun.applet.*;
 
 import javax.swing.*;
-import java.applet.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.*;
 import java.io.*;
-import java.net.*;
 
 /**
  * This is an abstract base class for a Game UI.
@@ -190,10 +187,11 @@ public abstract class GamePanel extends TexturedPanel
             */
 
             // use when sound card available
-            /* causing security exception in applet? */
+            /* causing security exception in applet?
             URL url = GUIUtil.getURL("com/becker/sound/play_game_voice.wav");
-            AudioClip clip = new AppletAudioClip(url);
+            AudioClip clip = new AppletAudioClip(url);           
             clip.play();
+            */
 
         }
         this.setDoubleBuffered(false);

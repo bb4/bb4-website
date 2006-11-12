@@ -66,7 +66,7 @@ public class RDSimulator extends Simulator {
 
     public JPanel createDynamicControls() {
 
-        return new RDDynamicOptions(grayScott_, renderer_);
+        return new RDDynamicOptions(grayScott_, this);
     }
 
 
@@ -106,4 +106,7 @@ public class RDSimulator extends Simulator {
         return FILE_NAME_BASE;
     }
 
+    public RDRenderer getRenderer() {
+        return renderer_;
+    }
 }

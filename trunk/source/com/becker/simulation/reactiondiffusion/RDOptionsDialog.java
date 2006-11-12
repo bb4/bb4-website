@@ -15,6 +15,6 @@ public class RDOptionsDialog extends SimulatorOptionsDialog {
     }
 
     protected JPanel createCustomParamPanel() {
-        return null;
+        return new JPanel();        
     }
 }
