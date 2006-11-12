@@ -98,11 +98,11 @@ public class SliderGroup extends JPanel implements ChangeListener {
     }
 
     private JPanel createLabelPanel(JLabel label) {
-            JPanel p = new JPanel(new BorderLayout());
-            p.add(label, BorderLayout.WEST);
-            p.add(new JPanel(), BorderLayout.CENTER);
-            return p;
-        }
+        JPanel p = new JPanel(new BorderLayout());
+        p.add(label, BorderLayout.WEST);
+        p.add(new JPanel(), BorderLayout.CENTER);
+        return p;
+    }
 
     public void setSliderListener(SliderChangeListener listener) {
         sliderListener_ = listener;

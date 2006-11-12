@@ -38,7 +38,7 @@ public class ColorMap
     public Color getColorForValue( double value )
     {
         int len = values_.length;
-        if ( value <= values_[0] )
+        if ( value <= values_[0])
             return colors_[0];
         else if (value >= values_[len-1])
             return colors_[len-1];

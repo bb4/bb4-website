@@ -1,6 +1,6 @@
 package com.becker.simulation.reactiondiffusion;
 
-/**
+/**                                                                                                                               
  * This is the core of the Gray-Scott reaction diffusion simulation.
  * based on implmentation by Joakim Linde and modified by Barry Becker.
  */

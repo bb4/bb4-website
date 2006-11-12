@@ -1,9 +1,7 @@
 package com.becker.ui;
 
-import com.becker.game.common.*;
-
 import javax.swing.*;
-import javax.swing.border.Border;
+import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -16,7 +14,7 @@ import java.awt.event.*;
 public abstract class OptionsDialog extends JDialog implements ActionListener
 {
 
-    protected static final String COLON = ' ' + GameContext.getLabel("COLON")+ ' ';
+    protected static final String COLON = " : ";
 
     // contains all the options ui except for the action buttons at the bottom
     protected JPanel mainPanel_ = new JPanel();
