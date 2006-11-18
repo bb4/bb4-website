@@ -1,7 +1,7 @@
 package com.becker.misc.axes;
 
 import com.becker.common.*;
-import com.becker.ui.*;
+import com.becker.ui.legend.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,7 +21,7 @@ public class AxesPanel extends JPanel implements ActionListener {
     private static final double[] values1_ = {-30.1,  -0.5, 1101.1};
 
 
-    private static final double[] values2_ = {-1.1, 0.5, 1.1};                                            
+    private static final double[] values2_ = {-1.1, 0.5, 1.1};
 
     private static final int CM_TRANS = 150;
     // this colormap is used to show a spectrum of colors representing a groups health status.

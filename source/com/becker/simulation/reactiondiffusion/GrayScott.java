@@ -1,6 +1,6 @@
 package com.becker.simulation.reactiondiffusion;
 
-/**                                                                                                                               
+/**
  * This is the core of the Gray-Scott reaction diffusion simulation.
  * based on implmentation by Joakim Linde and modified by Barry Becker.
  */
@@ -12,7 +12,7 @@ final class GrayScott {
     public static final double H0 = 0.01;
 
     private static final double DU = 2.0e-5;
-    private static final double DV = 1.0e-5;
+    private static final double DV = 1.0e-5; 
 
     /** concentrations of the 2 chemicals. */
     double[][] u_;

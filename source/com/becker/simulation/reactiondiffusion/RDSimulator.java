@@ -31,7 +31,7 @@ public class RDSimulator extends Simulator {
     private void commonInit() {
         initCommonUI();
 
-        grayScott_ = new GrayScott(200, 200);
+        grayScott_ = new GrayScott(250, 250);
         renderer_ = new RDRenderer(grayScott_);
 
         setNumStepsPerFrame(DEFAULT_STEPS_PER_FRAME);

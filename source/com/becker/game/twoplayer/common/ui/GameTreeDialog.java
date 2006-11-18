@@ -9,7 +9,7 @@ import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerViewerCallbackInterface;
 import com.becker.game.twoplayer.common.search.SearchTreeNode;
-import com.becker.ui.ContinuousColorLegend;
+import com.becker.ui.legend.ContinuousColorLegend;
 import com.becker.ui.GUIUtil;
 import com.becker.ui.GradientButton;
 

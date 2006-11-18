@@ -5,6 +5,7 @@ import com.becker.game.common.ui.*;
 import com.becker.game.multiplayer.poker.*;
 import com.becker.game.multiplayer.poker.player.*;
 import com.becker.ui.*;
+import com.becker.ui.legend.*;
 
 import javax.swing.Box;
 import javax.swing.*;
