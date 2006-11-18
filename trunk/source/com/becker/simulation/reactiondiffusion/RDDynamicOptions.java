@@ -1,5 +1,7 @@
 package com.becker.simulation.reactiondiffusion;
 
+import com.becker.ui.legend.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -22,6 +24,8 @@ public class RDDynamicOptions extends JPanel
 
     private JCheckBox showU_;
     private JCheckBox showV_;
+
+    private ContinuousColorLegend legend_;
 
 
     public RDDynamicOptions(GrayScott gs, RDSimulator simulator) {
@@ -56,6 +60,8 @@ public class RDDynamicOptions extends JPanel
         showV_ = new JCheckBox("Show V Value", r.isShowingV());
         showV_.addActionListener(this);
 
+        legend_ = new ContinuousColorLegend(null, r.getColorMap(), true);
+
         add(fSlider_);
         add(kSlider_);
         add(hSlider_);
@@ -66,6 +72,8 @@ public class RDDynamicOptions extends JPanel
         add(showV_);
         add(Box.createVerticalStrut(20));
         add(restartButton_);
+        add(Box.createVerticalStrut(30));
+        add(legend_);
     }
 
 
@@ -86,6 +94,8 @@ public class RDDynamicOptions extends JPanel
         }
         else if (e.getSource() == showV_) {
             r.setShowingV(!r.isShowingV());
+            legend_.setEditable(!legend_.isEditable());
+            repaint();
         }
     }
 

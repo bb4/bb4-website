@@ -19,9 +19,6 @@ import java.util.List;
  *  A GoArmy is a loosely coupled set of Groups
  *  Groups may be connected by diagonals or one space jumps, or uncut knights moves, but not nikken tobi
  *
- *  @see GoString
- *  @see GoArmy
- *  @see GoBoard
  *  @author Barry Becker
  */
 final class GoGroupRenderer
@@ -339,7 +336,6 @@ final class GoGroupRenderer
             double h = (USE_RELATIVE_GROUP_SCORING ? group.getRelativeHealth():group.getAbsoluteHealth());
             if (!group.isOwnedByPlayer1())
                 h = -h;
-
 
             cachedBorderArea = calcGroupBorder( group.getStones(), cellSize, board );
             cachedBorderColor = colormap.getColorForValue( h );
