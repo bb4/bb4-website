@@ -1,4 +1,4 @@
-package com.becker.ui;
+package com.becker.ui.legend;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +12,6 @@ public class DiscreteColorLegend extends JPanel {
     String title_;
     Color[] colors_;
     String[] values_;
-
 
 
     public DiscreteColorLegend(String title, Color[] colors, String[] values)  {
