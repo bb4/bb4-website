@@ -4,7 +4,6 @@ import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.*;
 import com.becker.game.twoplayer.common.search.*;
 import com.becker.optimization.*;
-import com.becker.sound.*;
 
 import java.util.*;
 
@@ -131,8 +130,6 @@ public final class GoController extends TwoPlayerController
     private int numDeadBlackStonesOnBoard_ = 0;
     private int numDeadWhiteStonesOnBoard_ = 0;
 
-    private float komi_ = DEFAULT_KOMI;
-
 
     //Construct the Go game controller
     public GoController()
@@ -155,7 +152,7 @@ public final class GoController extends TwoPlayerController
      */
     public GameOptions getOptions() {
         if (gameOptions_ == null) {
-            TwoPlayerOptions options = new TwoPlayerOptions(DEFAULT_LOOKAHEAD, BEST_PERCENTAGE, MusicMaker.SHAMISEN);
+            TwoPlayerOptions options = new GoOptions();
             options.setPlayerName(true, GameContext.getLabel("BLACK"));
             options.setPlayerName(false, GameContext.getLabel("WHITE"));
             gameOptions_ = options;
@@ -314,14 +311,6 @@ public final class GoController extends TwoPlayerController
     {
         super.showProfileStats( totalTime, numMoves );
         GoBoard.getProfiler().print();
-    }
-
-    public void setKomi(float komi) {
-        komi_ = komi;
-    }
-
-    float getKomi() {
-        return komi_;
     }
 
     /**
@@ -509,7 +498,8 @@ public final class GoController extends TwoPlayerController
    /**
     * Update the final life and death status of all the stones still on the board.
     * This method must only be called at the end of the game or stones will get prematurely marked as dead.
-    * @@ should do in 2 passes. The first can update the health of groups and perhaps remove obviously dead stones.
+    * @@ should do in 2 passes.
+    * The first can update the health of groups and perhaps remove obviously dead stones.
     */
     public void updateLifeAndDeath()
     {

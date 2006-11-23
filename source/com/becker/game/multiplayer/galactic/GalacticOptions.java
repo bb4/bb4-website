@@ -15,6 +15,7 @@ public class GalacticOptions extends MultiGameOptions {
     private static final int DEFAULT_MAX_YEARS = 10;
     private static final boolean DEFAULT_NEUTRALS_BUILD = false;
     private static final int DEFAULT_NUM_PLANETS = 30;
+    private static final int GALACTIC_PLAYER_LIMIT = 12;
 
     private int planetProductionRate_ = DEFAULT_PLANET_PRODUCTION_RATE;
     private int initialFleetSize_ = DEFAULT_NEUTRAL_FLEET_SIZE;
@@ -26,7 +27,9 @@ public class GalacticOptions extends MultiGameOptions {
     /**
      * this constructor uses all default values.
      */
-    public GalacticOptions() {}
+    public GalacticOptions() {
+        setMaxNumPlayers(GALACTIC_PLAYER_LIMIT);
+    }
 
     /**
      * User specified valeus for options.
@@ -39,6 +42,7 @@ public class GalacticOptions extends MultiGameOptions {
         setMaxYearsToPlay(maxYearsToPlay);
         setInitialFleetSize(initialFleetSize);
         setNeutralsBuild(neutralsBuild);
+        setMaxNumPlayers(maxNumPlayers);
     }
 
     public int getNumPlanets() {

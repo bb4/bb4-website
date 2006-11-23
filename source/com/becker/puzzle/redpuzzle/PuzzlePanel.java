@@ -16,6 +16,7 @@ final class PuzzlePanel extends JPanel
 {
     /** size of piece in pixels. */
     private static final int PIECE_SIZE = 90;
+    private static final int THIRD_SIZE = PIECE_SIZE / 3;
     private int numPieces_;
 
     private static final int MARGIN = 50;
@@ -23,13 +24,15 @@ final class PuzzlePanel extends JPanel
     private static final int ARROW_HEAD_RAD = 2;
 
     private static final Color PIECE_TEXT_COLOR = new Color(200, 0, 0);
-    private static final Color PIECE_BACKGROUND_COLOR = new Color(255, 205, 215, 200);
+    private static final Color PIECE_BACKGROUND_COLOR = new Color(255, 205, 215, 55);
     private static final Color GRID_COLOR = new Color(10, 0, 100);
     private static final Color TEXT_COLOR = new Color(0, 0, 0);
     private static final Color BACKGROUND_COLOR = new Color(220, 220, 240);
 
     private static final Font NUB_FONT = new Font("SansSerif", Font.PLAIN, 12);
     private static final Font TEXT_FONT = new Font("SansSerif", Font.BOLD, 18);
+    // put this here to avoid reallocation during rendering.
+    private static char[] symb_ = new char[1];
 
     // the controller that does the work of finding the solution.
     private PuzzleSolver solver_;
@@ -113,19 +116,17 @@ final class PuzzlePanel extends JPanel
 
         PieceList pieces = solver_.getSolvedPieces();
 
-        int i, xpos, ypos;
-
+        int i;
+        // use this to determine of there is a nub mismatch a a given location
+        // allocates a littel more space tha we actually use, but simpler this way.
+        char[][] nubChecks = new char[7][7];
 
         for ( i = 0; i < pieces.size(); i++ ) {
             Piece p = pieces.get( i );
             int row = i / dim;
             int col = i % dim;
 
-            xpos = MARGIN + col * PIECE_SIZE + PIECE_SIZE / 9;
-            ypos = MARGIN + row * PIECE_SIZE + 2 * PIECE_SIZE / 9;
-
-
-            drawPiece(g, p, xpos, ypos);
+            drawPiece(g, p, col, row, nubChecks);
         }
     }
 
@@ -156,50 +157,21 @@ final class PuzzlePanel extends JPanel
     /**
      * Draw a puzzle piece at the specified location.
      */
-    private static void drawPiece(Graphics g, Piece p, int xpos, int ypos) {
+    private static void drawPiece(Graphics g, Piece p, int col, int row, char[][] nubChecks) {
+
+        int xpos = MARGIN + col * PIECE_SIZE + PIECE_SIZE / 9;
+        int ypos = MARGIN + row * PIECE_SIZE + 2 * PIECE_SIZE / 9;
 
         g.setColor( PIECE_BACKGROUND_COLOR );
         g.fillRect( xpos - PIECE_SIZE / 9 + 2, ypos - 2 * PIECE_SIZE / 9 + 1, PIECE_SIZE - 3, PIECE_SIZE - 2 );
-
         g.setColor( PIECE_TEXT_COLOR );
         g.setFont( NUB_FONT );
 
         // now draw the pieces that we have so far.
-        Nub nub;
-        char[] symb = new char[1];
-        int oneThirdSize = PIECE_SIZE / 3;
-
-        // draw the topSuit
-        nub = p.getTopNub();
-        symb[0] = nub.getSuitSymbol();
-        if ( nub.isOuty() )
-            g.drawChars( symb, 0, 1, xpos + oneThirdSize, ypos - oneThirdSize );
-        else
-            g.drawChars( symb, 0, 1, xpos + oneThirdSize, ypos );
-
-        // draw the rightSuit
-        nub = p.getRightNub();
-        symb[0] = nub.getSuitSymbol();
-        if ( nub.isOuty() )
-            g.drawChars( symb, 0, 1, xpos + PIECE_SIZE, ypos + oneThirdSize );
-        else
-            g.drawChars( symb, 0, 1, xpos + 2 * oneThirdSize, ypos + oneThirdSize );
-
-        // draw the bottomSuit
-        nub = p.getBottomNub();
-        symb[0] = nub.getSuitSymbol();
-        if ( nub.isOuty() )
-            g.drawChars( symb, 0, 1, xpos + oneThirdSize, ypos + PIECE_SIZE );
-        else
-            g.drawChars( symb, 0, 1, xpos + oneThirdSize, ypos + 2 * oneThirdSize );
-
-        // draw the leftSuit
-        nub = p.getLeftNub();
-        symb[0] = nub.getSuitSymbol();
-        if ( nub.isOuty() )
-            g.drawChars( symb, 0, 1, xpos - oneThirdSize, ypos + oneThirdSize );
-        else
-            g.drawChars( symb, 0, 1, xpos, ypos + oneThirdSize );
+        drawNub(g, p.getTopNub(), xpos, ypos, Piece.Direction.TOP, col, row, nubChecks);
+        drawNub(g, p.getRightNub(), xpos, ypos, Piece.Direction.RIGHT, col, row, nubChecks);
+        drawNub(g, p.getBottomNub(), xpos, ypos, Piece.Direction.BOTTOM, col, row, nubChecks);
+        drawNub(g, p.getLeftNub(), xpos, ypos, Piece.Direction.LEFT, col, row, nubChecks);
 
         drawOrientationMarker(g, p, xpos, ypos);
 
@@ -207,10 +179,69 @@ final class PuzzlePanel extends JPanel
         g.setColor( TEXT_COLOR );
         g.setFont( TEXT_FONT );
         Integer num = p.getNumber();
-        g.drawString( Util.formatNumber(num), xpos + oneThirdSize, ypos + oneThirdSize );
-
+        g.drawString( Util.formatNumber(num), xpos + THIRD_SIZE, ypos + THIRD_SIZE );
     }
 
+
+    private static void drawNub(Graphics g, Nub nub, int xpos, int ypos, Piece.Direction dir,
+                                int col, int row, char[][] nubChecks) {
+
+        int x = 0;
+        int y = 0;
+        boolean outy = nub.isOuty();
+        symb_[0] = nub.getSuitSymbol();
+        int ncx = 0;
+        int ncy = 0;
+        int cx = 0;
+        int cy = 0;
+
+        switch (dir) {
+            case TOP:
+                x = xpos + THIRD_SIZE;
+                y = outy? ypos - THIRD_SIZE : ypos;
+                ncx = 2 * col + 1;
+                ncy = 2 * row;
+                cx = xpos + THIRD_SIZE + 2;
+                cy = ypos - 2 * PIECE_SIZE / 9;
+                break;
+            case RIGHT:
+                x = outy? xpos + PIECE_SIZE : xpos + 2 * THIRD_SIZE;
+                y = ypos + THIRD_SIZE;
+                ncx = 2 * col + 2;
+                ncy = 2 * row + 1;
+                cx = xpos + 8 * PIECE_SIZE / 9;
+                cy = ypos + 2 * PIECE_SIZE / 9;
+                break;
+            case BOTTOM:
+                x = xpos + THIRD_SIZE;
+                y = outy? ypos + PIECE_SIZE : ypos + 2 * THIRD_SIZE;
+                ncx = 2 * col + 1;
+                ncy = 2 * row + 2;
+                cx = xpos + THIRD_SIZE + 2;
+                cy = ypos + PIECE_SIZE;
+                break;
+            case LEFT:
+                x = outy? xpos - THIRD_SIZE : xpos;
+                y = ypos + THIRD_SIZE;
+                ncx = 2 * col;
+                ncy = 2 * row + 1;
+                cx = xpos - PIECE_SIZE / 9;
+                cy = ypos + 2 * PIECE_SIZE / 9;
+                break;
+        }
+
+        if (nubChecks[ncx][ncy] == 0)
+            nubChecks[ncx][ncy] = symb_[0];
+
+        g.drawChars( symb_, 0, 1, x, y );
+
+        // draw a circle around nubs that are in conflict.
+        if (nubChecks[ncx][ncy] != symb_[0]) {
+            int diameter = PIECE_SIZE >> 1;
+            int rad = diameter >> 1;
+            g.drawOval(cx - rad, cy - rad, diameter, diameter);
+        }
+    }
     /**
      *  draw a marker line to indicate the orientation.
      */

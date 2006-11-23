@@ -12,7 +12,7 @@ final class GrayScott {
     public static final double H0 = 0.01;
 
     private static final double DU = 2.0e-5;
-    private static final double DV = 1.0e-5; 
+    private static final double DV = 1.0e-5;
 
     /** concentrations of the 2 chemicals. */
     double[][] u_;
@@ -185,7 +185,13 @@ final class GrayScott {
                         :  uv2 - k_ * txy;
 
         double newVal = txy + dt * (dDivh2 * sum  + c);
-        return (newVal < 0) ? 0 : newVal;
+        if (newVal < 0) {
+            return 0;
+        } else if (newVal > 1.0 || Double.isInfinite(newVal)) {
+            return 1.0;
+        } else {
+            return newVal;
+        }
     }
 
     /**

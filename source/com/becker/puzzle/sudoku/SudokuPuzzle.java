@@ -115,7 +115,8 @@ public final class SudokuPuzzle extends JApplet implements ActionListener, ItemL
                     puzzlePanel_.repaint();
                 }
             };
-             worker.start();
+            worker.start();
+            solveButton_.setEnabled(true);
         }
         else if (src == solveButton_)  {
 
@@ -131,7 +132,8 @@ public final class SudokuPuzzle extends JApplet implements ActionListener, ItemL
                 }
 
             };
-             worker.start();
+            worker.start();
+            solveButton_.setEnabled(false);
         }
 
     }

@@ -55,7 +55,7 @@ public class GoGameImporter extends GameImporter {
             }
             else if (token instanceof KomiToken) {
                 KomiToken komiToken = (KomiToken) token;
-                gc.setKomi(komiToken.getKomi());
+                ((GoOptions)gc.getOptions()).setKomi(komiToken.getKomi());
             }
             else if (token instanceof HandicapToken) {
                 //HandicapToken handicapToken = (HandicapToken) token;
@@ -74,7 +74,7 @@ public class GoGameImporter extends GameImporter {
             }
             else if (token instanceof KomiToken) {
                 KomiToken komiToken = (KomiToken) token;
-                gc.setKomi(komiToken.getKomi());
+                ((GoOptions)gc.getOptions()).setKomi(komiToken.getKomi());
             }
             else if (token instanceof RuleSetToken) {
                 //RuleSetToken ruleToken = (RuleSetToken) token;
