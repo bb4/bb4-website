@@ -84,7 +84,8 @@ public class ContinuousColorLegend extends JPanel {
 
         this.addComponentListener( new ComponentAdapter()  {
             public void componentResized( ComponentEvent ce )
-            {}
+            {
+            }
         } );
     }
 
@@ -273,11 +274,11 @@ public class ContinuousColorLegend extends JPanel {
         }
 
         private double getValueForPosition(int x) {
-            return ((double)x - MARGIN) / ratio_;
+            return ((double)x - MARGIN) / ratio_ + cmap_.getMinValue();
         }
 
         private int getPositionForValue(double v) {
-             return (int) (MARGIN + ratio_ * (v - cmap_.getValue(0)));
+             return (int) (MARGIN + ratio_ * (v - cmap_.getMinValue()));
         }
 
         /**
@@ -287,7 +288,8 @@ public class ContinuousColorLegend extends JPanel {
 
             double v = getValueForPosition(xpos);
             int i = cmap_.getClosestIndexForValue(v);
-            if (Math.abs(xpos - getPositionForValue(cmap_.getValue(i))) <= MARKER_HALF_SIZE+1)
+            int diff = Math.abs(xpos - getPositionForValue(cmap_.getValue(i)));
+            if (diff <= MARKER_HALF_SIZE + 1)
                 return i;
             else
                 return -1;
@@ -400,8 +402,7 @@ public class ContinuousColorLegend extends JPanel {
             int numVals = values.length;
 
             double rat = (double) (width - 20) / getRangeExtent();
-            //System.out.println("rat="+rat+ "cmap_.getValueRange()="+cmap_.getValueRange());
-
+            
             g2.setColor(Color.black);
             g2.setFont(LABEL_FONT);
             g2.drawString(Util.formatNumber(getMin()), 2, 10);
