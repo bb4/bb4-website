@@ -378,7 +378,7 @@ public final class GoBoardUtil
         Iterator stoneIt = str.getMembers().iterator();
         while ( stoneIt.hasNext() ) {
             GoBoardPosition st1 = (GoBoardPosition) stoneIt.next();
-            if ( !group.equals(st1.getGroup()) ) {
+            if ( st1.getGroup() != null && !group.equals(st1.getGroup()) ) {
                 debugPrintGroups( 0, "Confirm stones in one group failed. Groups are:", true, true, groups );
                 assert false:
                        st1 + " does not just belong to " + st1.getGroup()

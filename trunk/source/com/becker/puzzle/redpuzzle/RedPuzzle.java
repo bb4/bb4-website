@@ -1,7 +1,7 @@
 package com.becker.puzzle.redpuzzle;
 
-import com.becker.ui.*;
 import com.becker.common.*;
+import com.becker.ui.*;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -22,7 +22,7 @@ public final class RedPuzzle extends JApplet implements ChangeListener, ActionLi
     // shows the puzzle.
     private PuzzlePanel puzzlePanel_;
     // allows you to change the animation speed.
-    private JSlider animSpeedSlider_;
+    private LabeledSlider animSpeedSlider_;
     private static final int INITIAL_ANIM_SPEED = 20; // max = 100
 
     private JButton solveButton_;
@@ -47,9 +47,11 @@ public final class RedPuzzle extends JApplet implements ChangeListener, ActionLi
     public void init() {
         puzzlePanel_ = new PuzzlePanel(9);
 
-        animSpeedSlider_ = new JSlider(1, PuzzleSolver.MAX_ANIM_SPEED, INITIAL_ANIM_SPEED);
+        animSpeedSlider_ = new LabeledSlider("Speed", INITIAL_ANIM_SPEED, 1, PuzzleSolver.MAX_ANIM_SPEED);
+        animSpeedSlider_.setResolution(PuzzleSolver.MAX_ANIM_SPEED - 1);
+        animSpeedSlider_.setShowAsInteger(true);
         animSpeedSlider_.addChangeListener(this);
-        puzzlePanel_.setAnimationSpeed(animSpeedSlider_.getValue());
+        puzzlePanel_.setAnimationSpeed(INITIAL_ANIM_SPEED);
 
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(createButtonPanel(), BorderLayout.NORTH);
@@ -93,17 +95,6 @@ public final class RedPuzzle extends JApplet implements ChangeListener, ActionLi
     public void start() {
 
         puzzlePanel_.setSize(this.getSize());
-
-        /*
-        // if we don't solve in a separate thread the panel may not refresh initially.
-        Thread thread = new Thread(new Runnable() {
-            public void run() {
-                puzzlePanel_.startSolving();
-            }
-        });
-
-        thread.start();
-        */
     }
 
     /**
@@ -112,19 +103,8 @@ public final class RedPuzzle extends JApplet implements ChangeListener, ActionLi
     public void stop() {}
 
 
-    /**
-     * use this to run as an application instead of an applet.
-     */
-    public static void main( String[] args )  {
-
-        RedPuzzle applet = new RedPuzzle();
-
-        // this will call applet.init() and start() methods instead of the browser
-        GUIUtil.showApplet( applet, "Red Puzzle Solver");
-    }
-
     public void stateChanged(ChangeEvent e) {
-        puzzlePanel_.setAnimationSpeed(animSpeedSlider_.getValue());
+        puzzlePanel_.setAnimationSpeed((int) animSpeedSlider_.getValue());
     }
 
     /**
@@ -147,16 +127,16 @@ public final class RedPuzzle extends JApplet implements ChangeListener, ActionLi
     }
 
     public void actionPerformed(ActionEvent e) {
-         // must execute long tasks in a separate thread,
+        // must execute long tasks in a separate thread,
         // otherwise you don't see the steps of the animation.
-        Worker worker = null;
+        Worker worker;
         Object src = e.getSource();
         if (src == solveButton_)  {
 
             worker = new Worker() {
 
                 public Object construct() {
-                    puzzlePanel_.setAnimationSpeed(animSpeedSlider_.getValue());
+                    puzzlePanel_.setAnimationSpeed((int) animSpeedSlider_.getValue());
                     puzzlePanel_.startSolving();
 
                     return null;
@@ -170,4 +150,17 @@ public final class RedPuzzle extends JApplet implements ChangeListener, ActionLi
             worker.start();
         }
     }
+
+
+    /**
+     * use this to run as an application instead of an applet.
+     */
+    public static void main( String[] args )  {
+
+        RedPuzzle applet = new RedPuzzle();
+
+        // this will call applet.init() and start() methods instead of the browser
+        GUIUtil.showApplet( applet, "Red Puzzle Solver");
+    }
+
 }

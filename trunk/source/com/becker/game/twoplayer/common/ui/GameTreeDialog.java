@@ -110,9 +110,11 @@ public final class GameTreeDialog extends JDialog
         root_ = new SearchTreeNode(null);
         textTree_ = createTree( root_ );
 
-        TwoPlayerPieceRenderer pieceRenderer = (TwoPlayerPieceRenderer)((TwoPlayerBoardViewer)boardViewer_).getPieceRenderer();
+        TwoPlayerPieceRenderer pieceRenderer =
+                (TwoPlayerPieceRenderer)((TwoPlayerBoardViewer)boardViewer_).getPieceRenderer();
         treeViewer_ =
-                new GameTreeViewer( root_, controller_.getTwoPlayerOptions().getLookAhead(), cellRenderer_.getColorMap(), pieceRenderer);
+                new GameTreeViewer( root_, controller_.getTwoPlayerOptions().getLookAhead(),
+                                    cellRenderer_.getColorMap(), pieceRenderer);
         treeViewer_.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
         treeViewer_.setPreferredSize(new Dimension(500, 120));
 
@@ -132,7 +134,7 @@ public final class GameTreeDialog extends JDialog
         infoLabel_.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED),
                              BorderFactory.createEmptyBorder(5,5,5,5)));
         ContinuousColorLegend colorLegend =
-                new ContinuousColorLegend("Relative Score for  player", cellRenderer_.getColorMap());
+                new ContinuousColorLegend("Relative Score for Player", cellRenderer_.getColorMap(), true);
 
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BorderLayout());
@@ -351,7 +353,8 @@ public final class GameTreeDialog extends JDialog
                 entity = "Computer's move";
 
             StringBuffer sBuf = new StringBuffer("<html>");
-            sBuf.append("<font size=\"+1\" color="+GUIUtil.getHTMLColorFromColor(c)+" bgcolor=#99AA99>"+entity+"</font><br>");
+            sBuf.append("<font size=\"+1\" color="+GUIUtil.getHTMLColorFromColor(c) +
+                        " bgcolor=#99AA99>"+entity+"</font><br>");
             sBuf.append("Static value = " + Util.formatNumber(m.getValue()) +"<br>");
             sBuf.append("Inherited value = " + Util.formatNumber(m.getInheritedValue()) +"<br>");
             sBuf.append("Alpha = "+Util.formatNumber(lastNode.getAlpha())+"<br>");

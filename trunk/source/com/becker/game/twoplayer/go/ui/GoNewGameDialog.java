@@ -14,8 +14,8 @@ final class GoNewGameDialog extends TwoPlayerNewGameDialog implements ActionList
     // must not initialialize to null
     private NumberInput handicapField_;
 
-    private static final String BLACK_IS = "Black is "; // @@ GameContext.getLabel("BLACK_IS");
-    private static final String WHITE_IS = "White is "; // GameContext.getLabel("WHITE_IS");
+    private static final String BLACK_IS = GameContext.getLabel("BLACK_IS");
+    private static final String WHITE_IS = GameContext.getLabel("WHITE_IS");
 
     // constructor
     GoNewGameDialog( JFrame parent, ViewerCallbackInterface viewer )

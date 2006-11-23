@@ -322,7 +322,7 @@ public class GtpTesujisoftGoServer
              return false;
 
         float komi = (float)argument.m_double;
-        controller_.setKomi(komi);
+        ((GoOptions)controller_.getOptions()).setKomi(komi);
         return true;
     }
 
@@ -371,7 +371,7 @@ public class GtpTesujisoftGoServer
             {
                 String helpText =
                     "Usage: java -classpath "+
-                        Util.PROJECT_DIR + 
+                        Util.PROJECT_DIR +
                         "/classes com.becker.game.twoplayer.go.GtpTesujisoftGoServer [options]\n" +
                         '\n' +
                     "-config       config file\n" +

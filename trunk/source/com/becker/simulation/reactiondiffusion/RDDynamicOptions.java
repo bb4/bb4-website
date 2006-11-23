@@ -1,8 +1,10 @@
 package com.becker.simulation.reactiondiffusion;
 
 import com.becker.ui.legend.*;
+import com.becker.ui.*;
 
 import javax.swing.*;
+import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -11,7 +13,7 @@ import java.awt.event.*;
  * @author Barry Becker Date: Nov 5, 2006
  */
 public class RDDynamicOptions extends JPanel
-                              implements ActionListener, AdjustmentListener {
+                              implements ActionListener, ChangeListener {
 
     private GrayScott gs_;
     private RDSimulator simulator_;
@@ -42,17 +44,17 @@ public class RDDynamicOptions extends JPanel
         restartButton_.addActionListener(this);
 
         kSlider_ = new LabeledSlider("K = ", GrayScott.K0, 0.0, 0.3);
-        kSlider_.addAdjustmentListener(this);
+        kSlider_.addChangeListener(this);
 
         fSlider_ = new LabeledSlider("F = ", GrayScott.F0, 0.0, 0.3);
-        fSlider_.addAdjustmentListener(this);
+        fSlider_.addChangeListener(this);
 
         hSlider_ = new LabeledSlider("H = ", GrayScott.H0, 0.008, 0.048);
-        hSlider_.addAdjustmentListener(this);
+        hSlider_.addChangeListener(this);
 
         numStepsSlider_ = new LabeledSlider("Num Steps per Frame = ", RDSimulator.DEFAULT_STEPS_PER_FRAME, 1, 100);
         numStepsSlider_.setShowAsInteger(true);
-        numStepsSlider_.addAdjustmentListener(this);
+        numStepsSlider_.addChangeListener(this);
 
         RDRenderer r = simulator_.getRenderer();
         showU_ = new JCheckBox("Show U Value", r.isShowingU());
@@ -94,7 +96,6 @@ public class RDDynamicOptions extends JPanel
         }
         else if (e.getSource() == showV_) {
             r.setShowingV(!r.isShowingV());
-            legend_.setEditable(!legend_.isEditable());
             repaint();
         }
     }
@@ -102,17 +103,17 @@ public class RDDynamicOptions extends JPanel
     /**
      * one of the sliders was moved.
      */
-    public void adjustmentValueChanged(AdjustmentEvent e) {
-        if (e.getAdjustable() == fSlider_.getSlider()) {
+    public void stateChanged(ChangeEvent e) {
+        if (e.getSource() == fSlider_.getSlider()) {
             gs_.setF(fSlider_.getValue());
         }
-        else if (e.getAdjustable() == kSlider_.getSlider()) {
+        else if (e.getSource() == kSlider_.getSlider()) {
             gs_.setK(kSlider_.getValue());
         }
-        else if (e.getAdjustable() == hSlider_.getSlider()) {
+        else if (e.getSource() == hSlider_.getSlider()) {
             gs_.setH(hSlider_.getValue());
         }
-        else if (e.getAdjustable() == numStepsSlider_.getSlider()) {
+        else if (e.getSource() == numStepsSlider_.getSlider()) {
             simulator_.setNumStepsPerFrame((int) numStepsSlider_.getValue());
         }
     }

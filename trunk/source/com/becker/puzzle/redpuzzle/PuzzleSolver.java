@@ -116,7 +116,7 @@ public abstract class PuzzleSolver {
         if ((puzzlePanel != null) && (animationSpeed_ < MAX_ANIM_SPEED-1)) {
             solution_.add( p );
             puzzlePanel.repaint();
-            Util.sleep(9*MAX_ANIM_SPEED / animationSpeed_); // give it a chance to repaint.
+            Util.sleep(9 * MAX_ANIM_SPEED / animationSpeed_); // give it a chance to repaint.
             solution_.remove( p );
         }
     }
@@ -126,7 +126,7 @@ public abstract class PuzzleSolver {
             return;
         puzzlePanel.repaint();
         if (animationSpeed_ < MAX_ANIM_SPEED-1) {
-            Util.sleep(10*MAX_ANIM_SPEED / animationSpeed_);
+            Util.sleep(10 * MAX_ANIM_SPEED / animationSpeed_);
         }
         else {
             Util.sleep(20);

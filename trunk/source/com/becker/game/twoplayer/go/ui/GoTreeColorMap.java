@@ -35,7 +35,7 @@ public class GoTreeColorMap extends ColorMap {
                                   new Color(240, 200, 0),
                                   new Color(255, 255, 80),
                                   new Color(200, 200, 100),
-                                  new Color(240, 240, 240, 120),
+                                  new Color(255, 255, 255),    // new Color(240, 240, 240, 120)
                                   new Color(100, 200, 200),
                                   new Color(70, 255, 200),
                                   new Color(0, 190, 255),

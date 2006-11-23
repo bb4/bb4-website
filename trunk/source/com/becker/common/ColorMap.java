@@ -100,7 +100,7 @@ public class ColorMap
     public synchronized double getValue(int index) {
         return values_.get(index);
     }
-    
+
     public synchronized void setValue(int index, double value) {
         if (index > 0)
             assert(value >= values_.get(index - 1)):
@@ -138,7 +138,8 @@ public class ColorMap
      * Given a value, return the closest control index.
      */
     public synchronized int getClosestIndexForValue(double value) {
-       int len = getNumValues();
+        
+        int len = getNumValues();
         if ( value <= values_.get(0))
             return 0;
         else if (value >= values_.get(len-1))
