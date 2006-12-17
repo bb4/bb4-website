@@ -241,7 +241,7 @@ public final class GameTreeDialog extends JDialog
     /**
      * show whatever portion of the game tree that has been searched so far
      */
-    private void showCurrentGameTree()
+    private synchronized void showCurrentGameTree()
     {
         textTree_ = createTree( root_ );
         scrollPane_.setViewportView( textTree_ );
@@ -344,6 +344,7 @@ public final class GameTreeDialog extends JDialog
             oldChainLength_ = chainLength;
 
             TwoPlayerPieceRenderer renderer = (TwoPlayerPieceRenderer)viewer.getPieceRenderer();
+            String passSuffix = m.isPassingMove() ? " (Pass)" : "";
             String entity = "Human's move";
             Color c = renderer.getPlayer2Color();
             if ( m.isPlayer1() )
@@ -354,7 +355,7 @@ public final class GameTreeDialog extends JDialog
 
             StringBuffer sBuf = new StringBuffer("<html>");
             sBuf.append("<font size=\"+1\" color="+GUIUtil.getHTMLColorFromColor(c) +
-                        " bgcolor=#99AA99>"+entity+"</font><br>");
+                        " bgcolor=#99AA99>" + entity + passSuffix + "</font><br>");
             sBuf.append("Static value = " + Util.formatNumber(m.getValue()) +"<br>");
             sBuf.append("Inherited value = " + Util.formatNumber(m.getInheritedValue()) +"<br>");
             sBuf.append("Alpha = "+Util.formatNumber(lastNode.getAlpha())+"<br>");

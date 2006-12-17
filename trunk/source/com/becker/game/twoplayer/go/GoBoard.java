@@ -438,13 +438,14 @@ public final class GoBoard extends TwoPlayerBoard
                    GamePiece p = pos.getPiece();
                    GoGroup group = pos.getGroup();
                    assert(p != null);
-                   assert(group != null);
-                   if (forPlayer1 && !p.isOwnedByPlayer1() && group.getRelativeHealth() >= 0) {
-                       territoryEstimate += val;
-                   }
-                   // Getting npe here
-                   else if (!forPlayer1 && p.isOwnedByPlayer1() && group.getRelativeHealth() <= 0)  {
-                       territoryEstimate -= val;
+                   if (group != null) {
+                       if (forPlayer1 && !p.isOwnedByPlayer1() && group.getRelativeHealth() >= 0) {
+                           territoryEstimate += val;
+                       }
+                       // Getting npe here
+                       else if (!forPlayer1 && p.isOwnedByPlayer1() && group.getRelativeHealth() <= 0)  {
+                           territoryEstimate -= val;
+                       }
                    }
                }
            }
@@ -968,7 +969,6 @@ public final class GoBoard extends TwoPlayerBoard
      */
     private static class HandicapStones {
 
-
         private static final float HANDICAP_STONE_HEALTH = 0.8f;
 
         // the number of initial handicap stones to use
@@ -982,7 +982,6 @@ public final class GoBoard extends TwoPlayerBoard
             initStarPoints(boardSize);
             numHandicapStones_ = num;
         }
-
 
         public int getNumber() {
             return numHandicapStones_;

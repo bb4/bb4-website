@@ -37,11 +37,11 @@ public enum Direction {
 
     /**
      * return a shuffled list of directions
-     * they are ordered given the potentially skewed probablilities at the top
+     * they are ordered given the potentially skewed probablilities at the top.
      */
     public static List getShuffledDirections()
     {
-        double rnd = RANDOM.nextDouble(); //Math.random();
+        double rnd = RANDOM.nextDouble();
         List directions = new ArrayList();
         List originalDirections = new ArrayList();
         for (Direction d : values()) {
@@ -56,25 +56,28 @@ public enum Direction {
         leftProb /= sum;
         rightProb /= sum;
 
-        if ( rnd < fwdProb) {
+        if (rnd < fwdProb) {
             directions.add( originalDirections.remove( 0 ) );
-            directions.add( getSecondDir( originalDirections,  leftProb, rightProb));
+            directions.add( getSecondDir( originalDirections,  leftProb));
         }
         else if ( rnd >= fwdProb && rnd < ( fwdProb + leftProb) ) {
             directions.add( originalDirections.remove( 1 ) );
-            directions.add( getSecondDir( originalDirections,  fwdProb, rightProb) );
+            directions.add( getSecondDir( originalDirections,  fwdProb));
         }
         else {
             directions.add( originalDirections.remove( 2 ) );
-            directions.add( getSecondDir( originalDirections,  fwdProb, leftProb) );
+            directions.add( getSecondDir( originalDirections,  fwdProb));
         }
         // the third direction is whatever remains
         directions.add( originalDirections.remove( 0 ) );
         return directions;
     }
 
-
-    private static Direction getSecondDir( List twoDirections, double p1, double p2 )
+    /**
+     * Determine the second direction in the list given a probabilit
+     * @return  the second direction.
+     */
+    private static Direction getSecondDir( List twoDirections, double p1)
     {
         double rnd = RANDOM.nextDouble();
         if ( rnd < p1 )

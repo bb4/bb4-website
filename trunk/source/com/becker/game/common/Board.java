@@ -23,15 +23,17 @@ import java.util.*;
 public abstract class Board implements BoardInterface, Cloneable
 {
 
-    // the internal data structures representing the game board
+    /** the internal data structures representing the game board and the positions on it. */
     protected BoardPosition positions_[][] = null;
 
     protected int numRows_;
     protected int numCols_;
-    protected int rowsTimesCols_;
+     protected int rowsTimesCols_;
 
-    // We keep a list of the moves that have been made.
-    // We can navigate forward or backward in time using this
+    /**
+     * We keep a list of the moves that have been made.
+     * We can navigate forward or backward in time using this
+     */
     protected final LinkedList<Move> moveList_ = new LinkedList<Move>();
 
 

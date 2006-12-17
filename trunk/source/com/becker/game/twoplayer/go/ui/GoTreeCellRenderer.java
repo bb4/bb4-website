@@ -23,13 +23,13 @@ final class GoTreeCellRenderer extends GameTreeCellRenderer
     private static final int TEXT_MARGIN = 4;
     private static final Font FONT = new Font("Sans Serif", Font.PLAIN, 9);
 
-    /** the node we are going to render */
+    /** the node we are going to render. */
     private SearchTreeNode node_;
 
     private static final ColorMap COLORMAP = new GoTreeColorMap();
 
     /**
-     *  Default Constructor
+     *  Default Constructor.
      */
     GoTreeCellRenderer()
     {
@@ -102,22 +102,21 @@ final class GoTreeCellRenderer extends GameTreeCellRenderer
             g2.drawImage(GoStoneRenderer.BLACK_STONE_IMG.getImage(), 1, 0, STONE_IMG_SIZE, STONE_IMG_SIZE, null);
         } else {
             g2.drawImage(GoStoneRenderer.WHITE_STONE_IMG.getImage(), 1, 0, STONE_IMG_SIZE, STONE_IMG_SIZE, null);
-            inheritedValue = -inheritedValue;
-            value = -value;
+            //inheritedValue = -inheritedValue;
+            //value = -value;
         }
 
-
         Color c = getColorMap().getColorForValue(inheritedValue);
+
         g2.setColor(c);
         g2.fillRect(TEXT_MARGIN + STONE_IMG_SIZE, 1, SWATCH_WIDTH, 9);
-
         c = getColorMap().getColorForValue(value);
         g2.setColor(c);
         g2.fillRect(2 * TEXT_MARGIN + STONE_IMG_SIZE + SWATCH_WIDTH, 1, SWATCH_WIDTH, 9);
 
         g2.setColor(this.getForeground());
         g2.setFont(FONT);
-        String inhrtdValText = "inhrtd=" + Util.formatNumber(move.getInheritedValue());
+        String inhrtdValText = "inhrtd=" + Util.formatNumber(inheritedValue);
         String valText = "val=" + Util.formatNumber(move.getValue()) ;
         String text = "";
         if (node_.isPruned()) {

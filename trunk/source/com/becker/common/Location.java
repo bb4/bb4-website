@@ -15,7 +15,7 @@ public final class Location
     /**
      * Constructs a new point at (0, 0).
      */
-    public Location() { }
+    public Location() {}
 
     /**
      * Constructs a new Location at the given coordinates.

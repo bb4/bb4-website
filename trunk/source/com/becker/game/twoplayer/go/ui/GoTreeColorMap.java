@@ -20,27 +20,23 @@ public class GoTreeColorMap extends ColorMap {
                                   -TwoPlayerController.WINNING_VALUE,
                                   -TwoPlayerController.WINNING_VALUE/2.0,
                                   -TwoPlayerController.WINNING_VALUE/10.0,
-                                  -TwoPlayerController.WINNING_VALUE/40.0,
                                   -TwoPlayerController.WINNING_VALUE/100.0,
                                    0.0,
                                    TwoPlayerController.WINNING_VALUE/100.0,
-                                   TwoPlayerController.WINNING_VALUE/40.0,
                                    TwoPlayerController.WINNING_VALUE/10.0,
                                    TwoPlayerController.WINNING_VALUE/2.0,
                                    TwoPlayerController.WINNING_VALUE};
 
         private static final Color[] myColors_ = {
-                                  new Color(140, 0, 0),
-                                  new Color(255, 10, 10),
-                                  new Color(240, 200, 0),
-                                  new Color(255, 255, 80),
-                                  new Color(200, 200, 100),
+                                  new Color(180, 0, 20),
+                                  new Color(255, 0, 00),
+                                  new Color(255, 190, 0),
+                                  new Color(255, 255, 0),
                                   new Color(255, 255, 255),    // new Color(240, 240, 240, 120)
-                                  new Color(100, 200, 200),
-                                  new Color(70, 255, 200),
-                                  new Color(0, 190, 255),
-                                  new Color(10, 10, 255),
-                                  new Color(0, 0, 140)
+                                  new Color(0, 255, 100),
+                                  new Color(0, 200, 255),
+                                  new Color(0, 0, 255),
+                                  new Color(0, 1, 180)
                                 };
 
     /**

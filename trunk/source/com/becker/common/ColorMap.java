@@ -34,8 +34,8 @@ public class ColorMap
         assert(colors!=null) : "colors was null";
         // should also assert that the values are increasing
         assert(values.length == colors.length): "there must be as many values as colors";
-        values_ = new ArrayList<Double>(); //Collections.synchronizedList(new ArrayList<Double>());
-        colors_ = new ArrayList<Color>(); //Collections.synchronizedList(new ArrayList<Color>());
+        values_ = new ArrayList<Double>();
+        colors_ = new ArrayList<Color>();
         for (int i=0; i<values.length; i++) {
             values_.add(values[i]);
             colors_.add(colors[i]);
@@ -138,7 +138,7 @@ public class ColorMap
      * Given a value, return the closest control index.
      */
     public synchronized int getClosestIndexForValue(double value) {
-        
+
         int len = getNumValues();
         if ( value <= values_.get(0))
             return 0;

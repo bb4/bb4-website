@@ -63,12 +63,18 @@ public class MazePanel extends JComponent {
     }
 
 
+    /**
+     * Generate the maze.
+     */
     public void generate(int thickness,
                          double forwardProb, double leftProb, double rightProb) {
         MazeGenerator generator = new MazeGenerator(this);
         generator.generate(forwardProb, leftProb, rightProb);
     }
 
+    /**
+     * solve the maze.
+     */
     public void solve() {
         MazeSolver solver= new MazeSolver(this);
         solver.solve();
@@ -94,9 +100,17 @@ public class MazePanel extends JComponent {
         if (animationSpeed_ <= 10)  {
             // this paints just the cell immediately (sorta slow)
             this.paintImmediately( xpos-csized2, ypos-csized2, (int)(2.0*cellSize_), (int)(2.0*cellSize_));
+            if (animationSpeed_ < 9) {
+                try {
+                    Thread.sleep(200 / animationSpeed_ - 15);
+                }
+                catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         else  {
-            if (Math.random() < (10/(animationSpeed_ + 1)))  {
+            if (Math.random() < (8.0/(double)(animationSpeed_ * animationSpeed_)))  {
               paintAll();
             }
             else {
@@ -106,7 +120,7 @@ public class MazePanel extends JComponent {
     }
 
     /**
-     * Render the Environment on the screen
+     * Render the Environment on the screen.
      */
     public void paintComponent( Graphics g )
     {

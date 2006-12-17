@@ -39,6 +39,18 @@ public class MazeCell
         return nextPosition;
     }
 
+    /**
+     * return to initial state.
+     */
+    public void clear() {
+        eastPath = false;
+        westPath = false;
+        northPath = false;
+        southPath = false;        
+        visited = false;
+        depth = 0;
+    }
+
 }
 
 

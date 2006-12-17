@@ -3,6 +3,8 @@ package com.becker.game.twoplayer.go;
 import com.becker.game.common.BoardPosition;
 
 /**
+ * Creates a set of reasonal next moves for a given player.
+ *
  * @author Barry Becker
  *         Date: Aug 21, 2005
  */
@@ -12,7 +14,7 @@ class CandidateMoves {
 
     private int size_;
 
-    // this is an auxilliary structure to help determine candidate moves
+    /** this is an auxilliary structure to help determine candidate moves. */
     private boolean[][] candidateMoves_;
 
     CandidateMoves(int size) {
@@ -58,7 +60,7 @@ class CandidateMoves {
         int i,j;
         for ( i = 1; i <= size_; i++ )
             for ( j = 1; j <= size_; j++ )
-                if ( !positions[i][j].isUnoccupied() )
+                if ( positions[i][j].isOccupied() )
                     addCandidateMoves( positions[i][j], positions);
     }
 
