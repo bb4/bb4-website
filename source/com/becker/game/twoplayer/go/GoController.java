@@ -43,6 +43,7 @@ import static com.becker.game.twoplayer.go.GoControllerConstants.*;
  *
  *  - add test cases for every little method of every class
  *  - why don't test cases find optimal moves?
+ *  - Game tree shold show expected follow up moves.
  * bugs
  *  - Error: can't have no liberties and still be on the board!
  *  - don't play in territory at end of game.
@@ -59,7 +60,8 @@ import static com.becker.game.twoplayer.go.GoControllerConstants.*;
  *    - add randomness to computer moves (have option since sometimes its undesirable) (1)
  *    - adhere to chinese rules, add other rulesets as options. (4)
  *    - consider monkey jump connections.
- *    - if the computer or player resigns, the playerWon vars should be set and the strcngth of the win should be large.
+ *    - if the computer or player resigns, the playerWon vars should be set and the strcngth of
+ *      the win should be large.
  *    - remember good moves that have not yet been played. On a big board, they will probably remain good moves.
  *      These good moves should be at the head of a list when possible moves are being generated.
  *
@@ -80,7 +82,8 @@ import static com.becker.game.twoplayer.go.GoControllerConstants.*;
  *    - cache isInAtari for better performance
  *
  ** Refactoring changes needed
- *    - alpha-beta and quiescent setter/getter methods could be properties of the SearchStrategy instead of the game controller.
+ *    - alpha-beta and quiescent setter/getter methods could be properties of the SearchStrategy
+ *      instead of the game controller.
  *    - Bill seems to think that I should remove setSize and reset from the GameBoard api and just use the constructor.
  *    - make client/server for multi-user play. Mostly done. try on IGS.
  *    - use InputVerifier to validate text type ins.
@@ -245,7 +248,8 @@ public final class GoController extends TwoPlayerController
 
     /**
      * get a territory estimate for player1 or player2
-     * When the game is over, this should return a precise value for the amount of territory (not yet filled with captures).
+     * When the game is over, this should return a precise value for the amount of territory
+     * (not yet filled with captures).
      * So the estimate will be very rough at the beginning of the game, but should get better as more pieces are played.
      *
      * Since this can be called white we are processing, we return cached values in
@@ -393,10 +397,12 @@ public final class GoController extends TwoPlayerController
 
                     // consider where the stones are played
                     // (usually a very low weight is assigned to this unless we are at the start of the game)
+                    double wt = weights.get(POSITIONAL_WEIGHT_INDEX).getValue();
                     posScore =
-                        (side * gameStageBoost * weights.get(POSITIONAL_WEIGHT_INDEX).getValue() * positionalScore_[row][col]);
+                        (side * gameStageBoost * wt * positionalScore_[row][col]);
 
-                    double s = weights.get(HEALTH_WEIGHT_INDEX).getValue() * stone.getHealth() + posScore + badShapeScore;
+                    double s = weights.get(HEALTH_WEIGHT_INDEX).getValue() * stone.getHealth()
+                            + posScore + badShapeScore;
 
 
                     position.setScoreContribution(Math.max(-1.0, Math.min(1.0, s)));
@@ -413,6 +419,9 @@ public final class GoController extends TwoPlayerController
 
         }
         worth += board.getTerritoryDelta();
+
+        // scale up smaller scale boards so worth values are comparable to 19x19 = 361 boards
+        worth *= (19.0 / board.getNumRows());
 
         //GameContext.log(1,"GoController.worth: worth="+worth);
         if ( worth < -WIN_THRESHOLD ) {
@@ -527,7 +536,8 @@ public final class GoController extends TwoPlayerController
                 if (space.isOccupied())  {
                     GoStone stone = (GoStone)space.getPiece();
                     int side = (stone.isOwnedByPlayer1() ? 1: -1);
-                    GameContext.log(1, "life & death: "+space+" health="+stone.getHealth() +" string health=" +space.getGroup().getRelativeHealth());
+                    GameContext.log(1, "life & death: "+space+" health="+stone.getHealth()
+                                       +" string health=" +space.getGroup().getRelativeHealth());
                     if (side*stone.getHealth() < 0)  {
                         // then the stone is more dead than alive, so mark it so
                         GameContext.log(1, "setting "+space+" to dead");

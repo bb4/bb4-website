@@ -23,7 +23,7 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
 {
 
     private static final Color BACKGROUND_COLOR = Color.white;
-    private static final int BACKGROUND_BAND_OPACITY = 60;
+    private static final int BACKGROUND_BAND_OPACITY = 100;
     private static final int MARGIN = 8;
 
     private static final BasicStroke THIN_STROKE = new BasicStroke(0.4f);
@@ -34,8 +34,6 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
     private static final int HL_NODE_RADIUS = 3;
     private static final int HL_NODE_DIAMETER = 8;
     private static final long serialVersionUID = 0L;
-
-
 
     private Color backgroundColor_ = BACKGROUND_COLOR;
     private ColorMap colormap_;
@@ -57,7 +55,7 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
      * Construct the viewer
      * @param root root of text tree to base tree graph on.
      */
-    GameTreeViewer( SearchTreeNode root, int depth, ColorMap cmap, TwoPlayerPieceRenderer pieceRenderer )
+    GameTreeViewer( SearchTreeNode root, int depth, ColorMap cmap, TwoPlayerPieceRenderer pieceRenderer)
     {
         colormap_ = cmap;
         pieceRenderer_ = pieceRenderer;
@@ -75,8 +73,9 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
         totalAtLevel_ = new int[depth_+2];
         oldHighlightPath_ = null;
 
-        if (root_ != null && root_.getUserObject() != null)
+        if (root_ != null && root_.getUserObject() != null) {
             initializeTreeStats(root_, 0);
+        }
     }
 
     /**
@@ -103,7 +102,9 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
         if (node.isLeaf())  {
             if (node.isPruned()) {
                 // give pruned nodes a little more space
-                node.setSpaceAllocation(node.getSpaceAllocation() + Math.max(1, 4*PRUNE_SPACING - PRUNE_SPACING*depth));
+                int pruneSpace =
+                        node.getSpaceAllocation() + Math.max(1, 4*PRUNE_SPACING - PRUNE_SPACING*depth);
+                node.setSpaceAllocation(pruneSpace);
             }
             else {
                 node.setNumDescendants(0);
@@ -112,8 +113,6 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
             totalAtLevel_[depth] += node.getSpaceAllocation();
             return;
         }
-
-
 
         //System.out.println("num children="+node.getChildCount());
         //
@@ -164,17 +163,54 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
     {
         Object[] pathNodes = path.getPath();
         SearchTreeNode lastNode = (SearchTreeNode)pathNodes[0];
-        g2.drawOval(lastNode.getX()-HL_NODE_RADIUS, lastNode.getY() - HL_NODE_RADIUS, HL_NODE_DIAMETER, HL_NODE_DIAMETER);
+        int diameter = HL_NODE_DIAMETER;
+        g2.drawOval(lastNode.getX() - HL_NODE_RADIUS, lastNode.getY() - HL_NODE_RADIUS, diameter, diameter);
         for (int i=1; i<pathNodes.length; i++) {
             SearchTreeNode node = (SearchTreeNode)pathNodes[i];
             TwoPlayerMove m = (TwoPlayerMove)node.getUserObject();
             g2.setColor(colormap_.getColorForValue(m.getInheritedValue()));
             g2.drawLine(lastNode.getX(),lastNode.getY(), node.getX(), node.getY());
             g2.setColor(colormap_.getColorForValue(m.getValue()));
-            g2.drawOval(node.getX()-HL_NODE_RADIUS, node.getY()-HL_NODE_RADIUS, HL_NODE_DIAMETER, HL_NODE_DIAMETER);
+            g2.drawOval(node.getX()-HL_NODE_RADIUS, node.getY()-HL_NODE_RADIUS, diameter, diameter);
             lastNode = node;
         }
     }
+
+    /**
+     * Draw the nodes and arcs in the game tree.
+     * It can get quite huge.
+     */
+    private synchronized void drawTree( SearchTreeNode root, Graphics2D g2)
+    {
+        int oldDepth = 0;
+        int depth;
+        int[] offsetAtLevel = new int[depth_+2];
+
+        drawNode(root, 0, 0, g2);
+        List<SearchTreeNode> q = new LinkedList<SearchTreeNode>();
+        q.add(root);
+
+        while (q.size() > 0) {
+            SearchTreeNode p = q.remove(0);
+            depth = p.getLevel();
+            // draw the arc and child root for each child c of p
+            if (depth > oldDepth) {
+                oldDepth = depth;
+                offsetAtLevel[depth] = 0;
+            }
+            Enumeration enumeration = p.children();
+            while (enumeration.hasMoreElements()) {
+                SearchTreeNode c = (SearchTreeNode)enumeration.nextElement();
+                drawArc(p, c, depth, offsetAtLevel[depth], offsetAtLevel[depth+1], g2);
+                drawNode(c, depth+1, offsetAtLevel[depth+1], g2);
+                offsetAtLevel[depth+1] += c.getSpaceAllocation();
+                q.add(c);
+            }
+            offsetAtLevel[depth] += p.getSpaceAllocation();
+        }
+        // initialize offsets
+    }
+
 
     /**
      * @param node
@@ -186,7 +222,7 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
     {
         TwoPlayerMove m = (TwoPlayerMove)node.getUserObject();
         g2.setColor( colormap_.getColorForValue(m.getValue()));
-        int x = MARGIN + (int) (width_*(offset + node.getSpaceAllocation() / 2.0)/totalAtLevel_[depth]);
+        int x = MARGIN + (int) (width_ * (offset + node.getSpaceAllocation() / 2.0) / totalAtLevel_[depth]);
         int y = MARGIN + depth*levelHeight_;
         node.setX(x);
         node.setY(y);
@@ -194,10 +230,10 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
         int width = 2;
         if (m.isSelected()) {
             width = 3;
-            g2.fillRect(x, y, width, 2);
+            g2.fillRect(x, y, width, 3);
         }
         else {
-            g2.fillRect(x, y, width, 2);
+            g2.fillRect(x, y, width, 3);
         }
         if (node.isPruned())  {
            // draw a marker to show that it has been pruned
@@ -216,54 +252,23 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
      * @param offset2 offset at child level in the tree.
      * @param g2
      */
-    private synchronized void drawArc( SearchTreeNode parent, SearchTreeNode child, int depth, int offset1, int offset2, Graphics2D g2)
+    private synchronized void drawArc( SearchTreeNode parent, SearchTreeNode child,
+                                       int depth, int offset1, int offset2, Graphics2D g2)
     {
         TwoPlayerMove m = (TwoPlayerMove)child.getUserObject();
         boolean highlighted = m.isSelected() && ((TwoPlayerMove)parent.getUserObject()).isSelected();
         if (highlighted)
             g2.setStroke(HIGHLIGHT_STROKE);
         g2.setColor( colormap_.getColorForValue(m.getInheritedValue()));
-        g2.drawLine(MARGIN + (int) (width_*(offset1 + parent.getSpaceAllocation() / 2.0)/totalAtLevel_[depth]), MARGIN + depth*levelHeight_,
-                    MARGIN + (int) (width_*(offset2 + child.getSpaceAllocation() / 2.0)/totalAtLevel_[depth+1]), MARGIN + (depth+1)*levelHeight_);
-        if (highlighted)
+        g2.drawLine(MARGIN + (int) (width_*(offset1 + parent.getSpaceAllocation() / 2.0) / totalAtLevel_[depth]),
+                    MARGIN + depth*levelHeight_,
+                    MARGIN + (int) (width_*(offset2 + child.getSpaceAllocation() / 2.0) / totalAtLevel_[depth+1]),
+                    MARGIN + (depth+1)*levelHeight_);
+        if (highlighted) {
             g2.setStroke(THIN_STROKE);
-
-    }
-
-    /**
-     * Draw the nodes and arcs in the game tree.
-     * It can get quite huge.
-     */
-    private synchronized void drawTree( SearchTreeNode node, Graphics2D g2)
-    {
-        int oldDepth = 0;
-        int depth;
-        int[] offsetAtLevel = new int[depth_+2];
-
-        drawNode(node, 0, 0, g2);    // draw last?
-        List<SearchTreeNode> q = new LinkedList<SearchTreeNode>();
-        q.add(node);
-
-        while (q.size() > 0) {
-            SearchTreeNode p = q.remove(0);
-            depth = p.getLevel();
-            // draw the arc and child node for each child c of p
-            if (depth > oldDepth) {
-                oldDepth = depth;
-                offsetAtLevel[depth] = 0;
-            }
-            Enumeration enumXXX = p.children();
-            while (enumXXX.hasMoreElements()) {
-                SearchTreeNode c = (SearchTreeNode)enumXXX.nextElement();
-                drawArc(p, c, depth, offsetAtLevel[depth],  offsetAtLevel[depth+1], g2);
-                drawNode(c, depth+1,  offsetAtLevel[depth+1], g2);
-                offsetAtLevel[depth+1] += c.getSpaceAllocation();
-                q.add(c);
-            }
-            offsetAtLevel[depth] += p.getSpaceAllocation();
         }
-        // initialize offsets
     }
+
 
     /**
      * draw colored bands to give an indication of who is moving on each ply.
@@ -301,10 +306,10 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
         if (root_==null || root_.getUserObject()==null) return;
 
         width_ = getWidth()-2*MARGIN;
-        int height_= getHeight()-2*MARGIN;
+        int height= getHeight()-2*MARGIN;
         if (depth_ == 0)
             return; // tree not ready to be painted.
-        levelHeight_ = height_ /depth_;
+        levelHeight_ = height /depth_;
 
         g2.setStroke(THIN_STROKE);
         drawTree(root_, g2);

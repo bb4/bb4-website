@@ -25,11 +25,12 @@ public class GameTreeCellRenderer extends DefaultTreeCellRenderer
     private final JLabel pieceLabel_ = new JLabel();
     private final JPanel cellPanel_ = new JPanel();
 
-    protected  GameTreeCellRenderer() {}
+    protected  GameTreeCellRenderer() {
+        commonInit();
+    }
 
     // Default Constructor
-    public GameTreeCellRenderer(TwoPlayerPieceRenderer pieceRenderer)
-    {
+    public GameTreeCellRenderer(TwoPlayerPieceRenderer pieceRenderer) {
         setColorMap(createColormap(pieceRenderer));
         commonInit();
     }
@@ -37,9 +38,9 @@ public class GameTreeCellRenderer extends DefaultTreeCellRenderer
     /**
      * initialize the colormap used to color the gmae tree rows, nodes, and arcs.
      */
-    protected static ColorMap createColormap(TwoPlayerPieceRenderer renderer)
-    {
-        // we will use this colormap for both the text tree and the graphical tree viewers so they have consistent coloring.
+    protected static ColorMap createColormap(TwoPlayerPieceRenderer renderer) {
+        // we will use this colormap for both the text tree and the graphical
+        // tree viewers so they have consistent coloring.
         final double[] values = {-TwoPlayerController.WINNING_VALUE,
                                  -TwoPlayerController.WINNING_VALUE/20.0,
                                  0.0,
@@ -53,8 +54,8 @@ public class GameTreeCellRenderer extends DefaultTreeCellRenderer
         return new ColorMap( values, colors);
     }
 
-    private void commonInit()
-    {
+    private void commonInit()  {
+
         cellPanel_.setBackground( UIManager.getColor( "Tree.textBackground" ) );
         setOpaque( false );
         pieceLabel_.setOpaque( true );
@@ -79,8 +80,8 @@ public class GameTreeCellRenderer extends DefaultTreeCellRenderer
     public Component getTreeCellRendererComponent(
             JTree tree, Object value,
             boolean sel, boolean expanded,
-            boolean leaf, int row, boolean hasFocus1 )
-    {
+            boolean leaf, int row, boolean hasFocus1 ) {
+
         super.getTreeCellRendererComponent( tree, value, sel,
                 expanded, leaf, row, hasFocus1 );
 
@@ -96,9 +97,9 @@ public class GameTreeCellRenderer extends DefaultTreeCellRenderer
         return this;
     }
 
-    protected static Color getFGColor( Object value )
-    {
-       SearchTreeNode node = (SearchTreeNode) value;
+    protected static Color getFGColor( Object value ) {
+
+        SearchTreeNode node = (SearchTreeNode) value;
         TwoPlayerMove m = (TwoPlayerMove) node.getUserObject();
         if ( m == null )
             return Color.gray;
@@ -109,16 +110,16 @@ public class GameTreeCellRenderer extends DefaultTreeCellRenderer
         return Color.black;
     }
 
-    protected Color getBGColor( Object value )
-    {
-        Color c;
+    protected Color getBGColor( Object value )  {
+
+        Color c = null;
         SearchTreeNode node = (SearchTreeNode) value;
         int numChildren = node.getChildCount();
         setText( getText() + " kids=" + numChildren );
         TwoPlayerMove m = (TwoPlayerMove) node.getUserObject();
-        if ( m == null ) return Color.blue;
+        if ( m == null ) return Color.gray;    // passing move?
 
-        if (colormap_!=null) {
+        if (colormap_ != null) {
             c = colormap_.getColorForValue(m.getInheritedValue());
         }
         else {

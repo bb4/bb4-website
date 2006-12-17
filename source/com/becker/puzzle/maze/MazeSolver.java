@@ -9,39 +9,40 @@ import java.awt.*;
  */
 public class MazeSolver {
 
-    private MazeModel maze_;
+
     private MazePanel panel_;
 
     public MazeSolver(MazePanel panel) {
         panel_ = panel;
-        maze_ = panel.getMaze();
     }
 
     /**
      * do a depth first search (without recursion) of the grid space to determine the solution to the maze.
-     * very similar to search above, but now we are solving
+     * very similar to search (see MazeGenerator), but now we are solving it.
      */
     public void solve()
     {
-        maze_.unvisitAll();
+        MazeModel maze =  panel_.getMaze();
+        maze.unvisitAll();
         List stack = new LinkedList();
 
-        Point currentPosition = maze_.getStartPosition();
-        MazeCell currentCell = maze_.getCell(currentPosition);
+        Point currentPosition = maze.getStartPosition();
+        MazeCell currentCell = maze.getCell(currentPosition);
 
         // push the initial moves
         MazeModel.pushMoves( currentPosition, new Point( 1, 0 ), 1, stack );
         Point dir;
-        int depth = 1;
+        int depth;
         boolean solved = false;
         panel_.paintAll();
+
 
         while ( !stack.isEmpty() && !solved ) {
 
             GenState state = (GenState) stack.remove(0);  // pop
 
             currentPosition = state.getPosition();
-            if (currentPosition.equals(maze_.getStopPosition()))
+            if (currentPosition.equals(maze.getStopPosition()))
               solved = true;
 
             dir = state.getDirection();
@@ -49,10 +50,10 @@ public class MazeSolver {
             if ( depth > currentCell.depth )
                 currentCell.depth = depth;
 
-            currentCell = maze_.getCell(currentPosition);
+            currentCell = maze.getCell(currentPosition);
             Point nextPosition = currentCell.getNextPosition(currentPosition,  dir);
 
-            MazeCell nextCell = maze_.getCell(nextPosition);
+            MazeCell nextCell = maze.getCell(nextPosition);
             boolean eastBlocked = dir.x ==  1 && currentCell.eastWall;
             boolean westBlocked =  dir.x == -1 && nextCell.eastWall;
             boolean southBlocked = dir.y ==  1 && currentCell.southWall;

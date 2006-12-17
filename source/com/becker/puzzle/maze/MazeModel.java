@@ -16,10 +16,13 @@ public class MazeModel {
     // in x,y (col, row) order
     private MazeCell[][] grid_;
 
-        // the start and stop positions
+    // the start and stop positions
     private Point startPosition_;
     private Point stopPosition_;
 
+    /**
+     * Constructs a maze with specified width and height.
+     */
     public MazeModel(int width, int height)  {
         width_ = width;
         height_ = height;
@@ -99,7 +102,7 @@ public class MazeModel {
             for (int i = 0; i < width_; i++ ) {
                 //g.drawLine(OFFSET, ypos+OFFSET, rightEdgePos+OFFSET, ypos+OFFSET);
                 MazeCell c = grid_[i][j];
-                c.visited = false;
+                c.clear();
             }
         }
     }

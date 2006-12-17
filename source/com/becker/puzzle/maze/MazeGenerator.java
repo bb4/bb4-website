@@ -7,10 +7,10 @@ import java.util.List;
 /**
  *  Program to automatically generate a Maze.
  *  Motivation: Get my son, Brian, to excel at Kumon by trying these mazes with a pencil.
- *  this is the global space containing all the cells, walls, and particles
- *  Assumes an M*N grid of cells
- *  X axis increases to the left
- *  Y axis increases downwards to be consistent with java graphics
+ *  this is the global space containing all the cells, walls, and particles.
+ *  Assumes an M*N grid of cells.
+ *  X axis increases to the left.
+ *  Y axis increases downwards to be consistent with java graphics.
  *
  *  @author Barry Becker
  */
