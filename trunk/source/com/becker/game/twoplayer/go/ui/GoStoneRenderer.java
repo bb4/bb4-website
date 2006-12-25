@@ -9,9 +9,11 @@ import com.becker.game.twoplayer.go.GoBoard;
 import com.becker.game.twoplayer.go.GoBoardPosition;
 import com.becker.game.twoplayer.go.GoStone;
 import com.becker.ui.GUIUtil;
+import com.becker.common.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.*;
 
 /**
  * Singleton class that takes a checkers piece and renders it for the ChessBoardViewer.
@@ -37,6 +39,10 @@ public final class GoStoneRenderer extends TwoPlayerPieceRenderer
     public static final ImageIcon WHITE_STONE_IMG = GUIUtil.getIcon(DIR+"goStoneWhite.png");
     private static final ImageIcon BLACK_STONE_DEAD_IMG = GUIUtil.getIcon(DIR+"goStoneBlackDead.png");
     private static final ImageIcon WHITE_STONE_DEAD_IMG = GUIUtil.getIcon(DIR+"goStoneWhiteDead.png");
+
+    private static float[] scaleFactors_ = {1.0f, 1.0f, 1.0f, 1.0f};
+    private static final float[] OFFSETS = {0.0f, 0.0f, 0.0f, 0.0f};
+    protected static final Font ANNOTATION_FONT = new Font( "Sans-serif", Font.BOLD, 14 );
 
     /**
      * protected constructor because this class is a singleton.
@@ -79,9 +85,11 @@ public final class GoStoneRenderer extends TwoPlayerPieceRenderer
             return (stone.isOwnedByPlayer1() ? BLACK_STONE_IMG.getImage(): WHITE_STONE_IMG.getImage());
     }
 
+
     /**
      * this draws the actual piece
-     * Uses the RoundGradientFill from Knudsen to put a specular highlight on the stone
+     * Draws the go stone as an image.
+     * Apply a RescalOp filter to adjust the transparency if need be.
      *
      * @param g2 graphics context
      * @param position of the piece to render
@@ -110,10 +118,26 @@ public final class GoStoneRenderer extends TwoPlayerPieceRenderer
             return; // nothing to render
         int pieceSize = getPieceSize(cellSize, stone);
         Point pos = getPosition(position, cellSize, pieceSize);
-        g2.drawImage(getImage(stone), pos.x, pos.y, pieceSize, pieceSize , null);
+        float transp = stone.getTransparency();
+        Image img = getImage(stone);
+        if (transp > 0) {
+            scaleFactors_[3] = (255 - transp)/255;
+            RescaleOp transparencyOp = new RescaleOp(scaleFactors_, OFFSETS, null);
+            BufferedImage bufImg = ImageUtil.makeBufferedImage(getImage(stone));
+            //System.out.println("transp="+transp+" scaleFactors_[3]="+scaleFactors_[3]);
+            img = transparencyOp.filter(bufImg, null);
+        }
+        g2.drawImage(img, pos.x, pos.y, pieceSize, pieceSize , null);
+
         if (GameContext.getDebugMode() > 0 && stonePos.isInAtari((GoBoard)board)) {
             g2.setColor(ATARI_COLOR);
             g2.fillOval(pos.x, pos.y, ATARI_MARKER_RADIUS, ATARI_MARKER_RADIUS);
+        }
+        if ( stone.getAnnotation() != null ) {
+            int offset = (cellSize - pieceSize) >> 1;
+            g2.setColor( Color.BLACK );
+            g2.setFont( ANNOTATION_FONT );
+            g2.drawString( stone.getAnnotation(), pos.x + 2*offset, pos.y + 4*offset);
         }
     }
 

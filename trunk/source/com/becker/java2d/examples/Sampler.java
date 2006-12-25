@@ -2,6 +2,7 @@ package com.becker.java2d.examples;
 
 import com.becker.java2d.SplitImageComponent;
 import com.becker.java2d.Utilities;
+import com.becker.common.*;
 
 import java.awt.*;
 import java.awt.color.ColorSpace;
@@ -17,9 +18,12 @@ public class Sampler
     private SplitImageComponent mSplitImageComponent;
     private Hashtable mOps;
 
+    private static float[] scaleFactors_ = {1.0f, 1.0f, 1.0f, 1.0f};
+    private static final float[] OFFSETS = {0.0f, 0.0f, 0.0f, 0.0f};
+
     public static void main( String[] args )
     {
-        String imageFile = "images/Ethol with Roses.small.jpg";
+        String imageFile = Util.PROJECT_DIR + "classes/com/becker/java2d/images/Ethol with Roses.small.jpg";
         if ( args.length > 0 ) imageFile = args[0];
         new Sampler( imageFile );
     }
@@ -141,7 +145,10 @@ public class Sampler
         mOps.put( "Rescale .5, 0", new RescaleOp( .5f, 0, null ) );
         mOps.put( "Rescale .5, 64", new RescaleOp( .5f, 64, null ) );
         mOps.put( "Rescale 1.2, 0", new RescaleOp( 1.2f, 0, null ) );
-        mOps.put( "Rescale 1.5, 0", new RescaleOp( 1.5f, 0, null ) );
+        //mOps.put( "Rescale 1.5, 0", new RescaleOp( 1.5f, 0, null ) );
+        scaleFactors_[3] = 0.5f;
+        BufferedImageOp transparencyOp = new MyRescaleOp(scaleFactors_, OFFSETS, null);
+        mOps.put( "Rescale 1.5, 0", transparencyOp);
     }
 
     private void createColorOps()
@@ -154,9 +161,11 @@ public class Sampler
     {
         // Create the image frame.
         mSplitImageComponent = new SplitImageComponent( imageFile );
+        mSplitImageComponent.setPreferredSize(new Dimension(600, 700));
         mImageFrame = new Frame( imageFile );
         mImageFrame.setLayout( new BorderLayout() );
         mImageFrame.add( mSplitImageComponent, BorderLayout.CENTER );
+
         Utilities.sizeContainerToComponent( mImageFrame, mSplitImageComponent );
         Utilities.centerFrame( mImageFrame );
         mImageFrame.setVisible( true );

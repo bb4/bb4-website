@@ -93,7 +93,7 @@ public abstract class SearchStrategy
             SearchTreeNode child = new SearchTreeNode( theMove );
             child.setPruned(true);
             String sComp = (type==PRUNE_ALPHA)?" is less than ":" is greater than ";
-            child.setComment("Children of this node were pruned because " +
+            child.setComment("Children pruned because " +
                             Util.formatNumber(val) + sComp + Util.formatNumber(thresh) + '.');
             parent.insert( child, index );
             index++;

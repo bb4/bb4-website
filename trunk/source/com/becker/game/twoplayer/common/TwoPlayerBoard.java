@@ -30,9 +30,6 @@ public abstract class TwoPlayerBoard extends Board
             GamePiece piece = pos.getPiece();
             assert (piece!=null):
                     "The piece was " + piece + ". Moved to " + m.getToRow() + ", " + m.getToCol();
-
-            piece.setTransparency( m.getTransparency() );
-
             // make the moveList part of the board instead of the controller
             if ( GameContext.getDebugMode() > 0 ) {
                 piece.setAnnotation( Integer.toString(getNumMoves()) );

@@ -7,7 +7,7 @@ import java.util.*;
 
 /**
  * Exports the state of a Go game to a file.
- * 
+ *
  * @author Barry Becker Date: Oct 28, 2006
  */
 public class GoGameExporter extends GameExporter {
@@ -43,7 +43,7 @@ public class GoGameExporter extends GameExporter {
             out.write( "SZ[" + gc.getBoard().getNumRows() + "]\n" );
             out.write( "PB[" + gc.getPlayer1().getName() + "]\n" );
             out.write( "PW[" + gc.getPlayer2().getName() + "]\n" );
-            out.write( "KM[" + gc.getKomi() + "]\n" );
+            out.write( "KM[" + ((GoOptions) gc.getOptions()).getKomi() + "]\n" );
             out.write( "PC[US]\n" );
             out.write( "HA[" + board.getHandicap() + "]\n" );
             out.write( "GN[test1]\n" );

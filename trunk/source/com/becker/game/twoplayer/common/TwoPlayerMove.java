@@ -39,10 +39,12 @@ public class TwoPlayerMove extends Move
     /**
      * true if player1 made the move
      */
+
     private boolean player1_;
     /**
      * this is the piece to use on the board. Some games only have one kind of piece .
      */
+
     private GamePiece piece_;
     /**
      * true if this move was generated during quiescent search.
@@ -53,15 +55,14 @@ public class TwoPlayerMove extends Move
      *  if true then this move is a passing move.
      */
     protected boolean isPass_ = false;
-    /**
-     * make the piece represented by the move see through.
-     */
-    private short transparency_;
+
     /**
      * if true then in path to selected move.
      */
     private boolean selected_;
 
+    /** This is a move that we anticipate will be made in the future. Will be rendered differently. */
+    private boolean isFuture_;
 
     /**
      * protected Constructor.
@@ -84,7 +85,6 @@ public class TwoPlayerMove extends Move
         piece_ = p;
         if (p!=null)
             player1_ = p.isOwnedByPlayer1();
-        transparency_ = 0; // default
         isPass_ = false;
     }
 
@@ -103,7 +103,6 @@ public class TwoPlayerMove extends Move
     public TwoPlayerMove copy()
     {
         TwoPlayerMove cp = createMove( toRow_, toCol_, getValue(),  piece_ );
-        cp.transparency_ = transparency_;
         cp.selected_ = selected_;
         cp.urgent_ = urgent_;
         return cp;
@@ -169,14 +168,6 @@ public class TwoPlayerMove extends Move
         this.urgent_ = urgent;
     }
 
-    public short getTransparency() {
-        return transparency_;
-    }
-
-    public void setTransparency(short transparency) {
-        this.transparency_ = transparency;
-    }
-
     public boolean isSelected() {
         return selected_;
     }
@@ -185,6 +176,13 @@ public class TwoPlayerMove extends Move
         this.selected_ = selected;
     }
 
+    public boolean isFuture() {
+        return isFuture_;
+    }
+
+    public void setFuture(boolean future) {
+        isFuture_ = future;
+    }
 
     public String toString() {
         StringBuffer s = new StringBuffer();

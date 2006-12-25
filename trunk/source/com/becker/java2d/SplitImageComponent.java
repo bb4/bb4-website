@@ -106,8 +106,12 @@ public class SplitImageComponent
 
     public Dimension getPreferredSize()
     {
-        int width = getImage().getWidth();
-        int height = getImage().getHeight();
+        int width = 100;
+        int height = 100;
+        if (getImage() != null) {
+            width = getImage().getWidth();
+            height = getImage().getHeight();
+        }
         if ( mSecondImage != null ) {
             width = Math.max( width, mSecondImage.getWidth() );
             height = Math.max( height, mSecondImage.getHeight() );

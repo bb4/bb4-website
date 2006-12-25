@@ -56,7 +56,7 @@ public class Utilities
             return null;
         }
 
-        return makeBufferedImage( image, BufferedImage.TYPE_INT_RGB );
+        return makeBufferedImage( image, BufferedImage.TYPE_INT_ARGB );
     }
 
     public static BufferedImage makeBufferedImage( Image image, int imageType )

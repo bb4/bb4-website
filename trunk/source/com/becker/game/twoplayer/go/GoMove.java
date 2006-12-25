@@ -151,7 +151,6 @@ public final class GoMove extends TwoPlayerMove
         cp.captureList_ = newList;
         cp.setPlayer1(isPlayer1());
         cp.setSelected(this.isSelected());
-        cp.setTransparency(this.getTransparency());
         return cp;
     }
 

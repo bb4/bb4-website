@@ -93,11 +93,12 @@ public abstract class GamePieceRenderer
             g2.setColor( Color.black );
             g2.drawOval( pos.x, pos.y, pieceSize + 1, pieceSize + 1 );
         }
-        int offset = (cellSize - pieceSize) >> 1;
+
         if ( piece.getAnnotation() != null ) {
-                g2.setColor( getTextColor(piece) );
-                g2.setFont( BASE_FONT );
-                g2.drawString( piece.getAnnotation(), pos.x + 2*offset, pos.y + 3*offset);
+            int offset = (cellSize - pieceSize) >> 1;
+            g2.setColor( getTextColor(piece) );
+            g2.setFont( BASE_FONT );
+            g2.drawString( piece.getAnnotation(), pos.x + 2*offset, pos.y + 3*offset);
         }
     }
 

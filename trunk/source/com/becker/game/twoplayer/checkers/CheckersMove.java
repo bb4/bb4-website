@@ -105,7 +105,6 @@ public class CheckersMove extends TwoPlayerMove
         CheckersMove cp = createMove( fromRow_, fromCol_, toRow_, toCol_,
                 newList, getValue(), getPiece().copy());
         cp.setSelected(this.isSelected());
-        cp.setTransparency(this.getTransparency());
         cp.kinged = this.kinged;
         return cp;
     }
