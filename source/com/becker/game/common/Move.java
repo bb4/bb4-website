@@ -1,7 +1,5 @@
 package com.becker.game.common;
 
-
-
 /**
  *  This base class describes a change in state from one board
  *  position to the next in a game.

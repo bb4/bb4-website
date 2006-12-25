@@ -28,7 +28,7 @@ public final class ImageUtil
     public static BufferedImage makeBufferedImage( Image image )
     {
         BufferedImage bImg = new BufferedImage( image.getWidth(null), image.getHeight(null),
-                BufferedImage.TYPE_INT_RGB );
+                BufferedImage.TYPE_INT_ARGB );
         Graphics2D g2 = bImg.createGraphics();
         g2.drawImage( image, null, null );
         g2.dispose();

@@ -1,8 +1,7 @@
 package com.becker.game.twoplayer.blockade;
 
-import com.becker.game.common.GamePiece;
-import com.becker.game.common.Move;
-import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.common.*;
+import com.becker.game.twoplayer.common.*;
 
 /**
  *  Describes a change in state from one board
@@ -78,8 +77,7 @@ public class BlockadeMove extends TwoPlayerMove
 
         BlockadeMove cp = createMove( fromRow_, fromCol_, toRow_, toCol_,
                                       getValue(), getPiece(), wall_);
-        cp.setSelected(this.isSelected());
-        cp.setTransparency(this.getTransparency());
+        cp.setSelected(this.isSelected());     
         return cp;
     }
 

@@ -1,13 +1,11 @@
 package com.becker.game.twoplayer.common.ui;
 
-import com.becker.game.common.Board;
-import com.becker.game.common.BoardPosition;
-import com.becker.game.common.GameContext;
-import com.becker.game.common.GamePiece;
-import com.becker.game.common.ui.GamePieceRenderer;
-import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.common.*;
+import com.becker.game.common.ui.*;
+import com.becker.game.twoplayer.common.*;
 
 import java.awt.*;
+import java.text.*;
 
 /**
  * a singleton class that takes a game piece and renders it for the TwoPlayerBoardViewer.
@@ -69,28 +67,11 @@ public class TwoPlayerPieceRenderer extends GamePieceRenderer
      */
     protected Color getPieceColor(GamePiece piece)
     {
-        return getPieceColor(piece.isOwnedByPlayer1(), piece.getTransparency());
+        Color playerColor = piece.isOwnedByPlayer1() ? getPlayer1Color() : getPlayer2Color();
+         return  new Color( playerColor.getRed(), playerColor.getGreen(), playerColor.getBlue(),
+                           255 - piece.getTransparency() );
     }
 
-       /**
-     * @return the game piece render color.
-     */
-    private Color getPieceColor(boolean player1, int transparency)
-    {
-        Color playerColor;
-        Color c;
-        if ( player1 ) {
-            playerColor = getPlayer1Color();
-            c = new Color( playerColor.getRed(), playerColor.getGreen(), playerColor.getBlue(),
-                    255 - transparency );
-        }
-        else {
-            playerColor = getPlayer2Color();
-            c = new Color( playerColor.getRed(), playerColor.getGreen(), playerColor.getBlue(),
-                    255 - transparency  );
-        }
-        return c;
-    }
 
     /**
      * @return color for annotation text (if any).
@@ -105,8 +86,9 @@ public class TwoPlayerPieceRenderer extends GamePieceRenderer
     }
 
 
-
     private static final Color URGENT_COLOR = new Color(245, 10, 0);
+    private static final DecimalFormat format_ = new DecimalFormat("###,###.#");
+    private static final double NEXT_MOVE_SIZE_FRAC = 0.2;
 
     /**
      * show the next moves in a special way.
@@ -117,12 +99,12 @@ public class TwoPlayerPieceRenderer extends GamePieceRenderer
             g2.setColor(getPieceColor(move.getPiece()));
 
             BoardPosition position = b.getPosition(move.getToRow(), move.getToCol());
-            int pieceSize = (int)(0.5* getPieceSize(cellSize, move.getPiece()));
+            int pieceSize = (int)(NEXT_MOVE_SIZE_FRAC * getPieceSize(cellSize, move.getPiece()));
             Point pos = getPosition(position, cellSize, pieceSize);
-
+            g2.setFont(BASE_FONT);
             g2.fillOval( pos.x, pos.y, pieceSize, pieceSize );
-            g2.setColor(move.isUrgent() ? URGENT_COLOR : getTextColor(move.getPiece()));
-            g2.drawString(""+Math.round(move.getValue()), pos.x - 5 , pos.y + 2);
+            g2.setColor(move.isUrgent() ? URGENT_COLOR : Color.DARK_GRAY);
+            g2.drawString(""+format_.format(move.getValue()), pos.x - 3 , pos.y + 2);
         } else {
             GameContext.log(2, "piece for next move is null: "+move);
         }

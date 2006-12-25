@@ -82,6 +82,24 @@ public class SearchTreeNode extends DefaultMutableTreeNode
         return moves;
     }
 
+    /**
+     *
+     * @return the move that the computer expects will be played next
+     */
+    public SearchTreeNode getExpectedNextNode() {
+        if (children == null)
+            return null;
+        Enumeration enumeration = children();
+        int i = 0;
+        while (enumeration.hasMoreElements()) {
+            SearchTreeNode node = (SearchTreeNode)enumeration.nextElement();
+            TwoPlayerMove m = (TwoPlayerMove)node.getUserObject();
+            if (m.isSelected())
+                return node;
+        }
+        return null;
+    }
+
 
     public String toString () {
         Object m = getUserObject();

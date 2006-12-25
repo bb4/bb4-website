@@ -57,6 +57,7 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
 
     private static final int PROGRESS_UPDATE_DELAY = 700;
     private static final int PROGRESS_STEP_DELAY = 100;
+    private static final short FUTURE_MOVE_TRANSP = 190;
 
 
     // show this cached board if we are in the middle of processing the next one
@@ -262,6 +263,7 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
     private class TimerListener implements ActionListener
     {
         public void actionPerformed(ActionEvent evt) {
+            if (get2PlayerController().getSearchStrategy() == null) return;
             int percentDone = get2PlayerController().getSearchStrategy().getPercentDone();
             progressBar_.setValue( percentDone );
             String numMoves = Util.formatNumber(get2PlayerController().getSearchStrategy().getNumMovesConsidered());
@@ -469,7 +471,7 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
      * @param moveSequence the list of moves to make
      * @param numMovesToBackup number of moves to undo before playing this move sequence
      * @param nextMoves all the child moves of the final move in the sequence
-     *       (see subclass implmentations for game specific usages)
+     *       (see subclass implementations for game specific usages)
      */
     public final synchronized void showMoveSequence( java.util.List moveSequence,
                                                int numMovesToBackup, TwoPlayerMove[] nextMoves )
@@ -490,15 +492,25 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
             if ( lastMove != null && firstMove != null ) {
                 while ( ct < numMovesToBackup ) {
                     getController().undoLastMove();
-                    lastMove = getBoard().getLastMove();
-                    assert lastMove != null : " moveSequence=" + moveSequence;
+                    // I suppose this is possible
+                    assert getBoard().getLastMove() != null :
+                            "Reached the end after backing up "+ct+" out of "+numMovesToBackup+" steps." +
+                            "\n moveSequence=" + moveSequence;
                     ct++;
                 }
             }
         }
 
+        int firstFuture = 0;
         for ( int i = 0; i < moveSequence.size(); i++ ) {
-            Move m =  (Move) moveSequence.get( i );
+            TwoPlayerMove m =  (TwoPlayerMove) moveSequence.get( i );
+            if (m.isFuture()) {
+                if (firstFuture == 0) {
+                    firstFuture = i;
+                }
+                m.getPiece().setAnnotation(Integer.toString(i - firstFuture + 1));
+                m.getPiece().setTransparency(FUTURE_MOVE_TRANSP);
+            }
             getController().makeMove(m);
         }
         setNextMoves(nextMoves);

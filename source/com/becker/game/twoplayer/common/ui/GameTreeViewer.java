@@ -55,14 +55,14 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
      * Construct the viewer
      * @param root root of text tree to base tree graph on.
      */
-    GameTreeViewer( SearchTreeNode root, int depth, ColorMap cmap, TwoPlayerPieceRenderer pieceRenderer)
+    GameTreeViewer( SearchTreeNode root, ColorMap cmap, TwoPlayerPieceRenderer pieceRenderer)
     {
         colormap_ = cmap;
         pieceRenderer_ = pieceRenderer;
-        setRoot(root, depth);
+        setRoot(root);
     }
 
-    public synchronized void setRoot( SearchTreeNode root, int depth )
+    public synchronized void setRoot( SearchTreeNode root)
     {
         root_ = root;
         // this is very expensive because it traverses the whole tree.
