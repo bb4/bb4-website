@@ -1,10 +1,10 @@
-package com.becker.simulation.reactiondiffusion;
+package com.becker.ui;
 
 import com.becker.common.*;
 
 import javax.swing.*;
+import javax.swing.event.*;
 import java.awt.*;
-import java.awt.event.*;
 
 /**
  * Draws a horizontal slider with a label on top.
@@ -12,12 +12,12 @@ import java.awt.event.*;
  *
  * @author Barry Becker Date: Nov 5, 2006
  */
-public class LabeledSlider extends JPanel implements AdjustmentListener {
+public class LabeledSlider extends JPanel implements ChangeListener {
 
     private static final int DEFAULT_SLIDER_RESOLUTION = 2000;
     private JLabel label_;
     private String labelText_;
-    private Scrollbar slider_;
+    private JSlider slider_;
 
     private double min_, max_;
     private int resolution_ = DEFAULT_SLIDER_RESOLUTION;
@@ -28,7 +28,7 @@ public class LabeledSlider extends JPanel implements AdjustmentListener {
 
         assert(initialValue < max && initialValue > min);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setMaximumSize(new Dimension(1000, 34));
+        setMaximumSize(new Dimension(1000, 42));
 
         min_ = min;
         max_ = max;
@@ -40,15 +40,20 @@ public class LabeledSlider extends JPanel implements AdjustmentListener {
         label_.setAlignmentY(JLabel.RIGHT_ALIGNMENT);
         int pos = getPositionFromValue(initialValue);
 
-        slider_ = new Scrollbar(Scrollbar.HORIZONTAL, pos, 1, 0, resolution_);
-        slider_.addAdjustmentListener(this);
+        slider_ = new JSlider(JSlider.HORIZONTAL, 0, resolution_, pos);
+        slider_.setPaintTicks(true);
+        slider_.setMajorTickSpacing(10);
+        slider_.setMinorTickSpacing(2);
+        //slider_.setPaintLabels(true);
+        slider_.setPaintTrack(true);
+        slider_.addChangeListener(this);
 
         add(createLabelPanel(label_));
         add(slider_);
         setBorder(BorderFactory.createEtchedBorder());
     }
 
-    public Scrollbar getSlider() {
+    public JSlider getSlider() {
         return slider_;
     }
 
@@ -57,13 +62,15 @@ public class LabeledSlider extends JPanel implements AdjustmentListener {
     }
 
     public void setResolution(int resolution) {
+        double v = this.getValue();
         resolution_ = resolution;
         slider_.setMaximum(resolution_);
         ratio_ = (max_ - min_)/resolution_;
+        slider_.setValue(getPositionFromValue(v));
     }
 
-    public void addAdjustmentListener(AdjustmentListener l) {
-        slider_.addAdjustmentListener(l);
+    public void addChangeListener(ChangeListener l) {
+        slider_.addChangeListener(l);
     }
 
     public double getValue() {
@@ -93,7 +100,7 @@ public class LabeledSlider extends JPanel implements AdjustmentListener {
     /**
      * one of the sliders was moved.
      */
-    public void adjustmentValueChanged(AdjustmentEvent e) {
+    public void stateChanged(ChangeEvent e) {
 
         String val = showAsInteger_? Integer.toString((int) getValue()) : Util.formatNumber(getValue());
         label_.setText(labelText_ + val);
