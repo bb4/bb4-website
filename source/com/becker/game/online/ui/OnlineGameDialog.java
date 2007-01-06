@@ -61,7 +61,7 @@ public abstract class OnlineGameDialog extends JDialog
         this.addWindowListener( new WindowAdapter()
         {
             public void windowClosing( WindowEvent e ) {
-               closing();
+               // closing();    // @@ should we leave our table if closing this dlg?
             }
         } );
 
@@ -112,6 +112,7 @@ public abstract class OnlineGameDialog extends JDialog
         return serverConnection_.isConnected();
     }
 
+
     /**
      * @param parent frame.
      */
@@ -129,5 +130,6 @@ public abstract class OnlineGameDialog extends JDialog
         this.toFront();
         this.pack();
     }
+
 
 }

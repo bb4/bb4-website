@@ -64,11 +64,11 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
         List starpoints = board.getHandicapPositions();
         Iterator it = starpoints.iterator();
         g2.setColor(Color.black);
-        double rad = (float)cellSize_/21.0+0.1;
+        double rad = (float)cellSize_/21.0 + 0.46;
         while (it.hasNext()) {
             GoBoardPosition p = (GoBoardPosition)it.next();
-            g2.fillOval(BOARD_MARGIN+(int)(cellSize_*(p.getCol()-0.5)-rad),
-                        BOARD_MARGIN+(int)(cellSize_*(p.getRow()-0.5)-rad),
+            g2.fillOval(BOARD_MARGIN+(int)(cellSize_*(p.getCol()-0.505)-rad),
+                        BOARD_MARGIN+(int)(cellSize_*(p.getRow()-0.505)-rad),
                         (int)(2.0*rad+1.7), (int)(2.0*rad+1.7));
         }
 
@@ -222,7 +222,7 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
 
         GoBoardPosition space = (GoBoardPosition) controller_.getBoard().getPosition( loc );
         if ( space != null && GameContext.getDebugMode() > 0 ) {
-            String spaceText = space.toString();
+            String spaceText = space.getDescription();
             sb.append( spaceText);
             GoString string = space.getString();
             GoEye eye = space.getEye();

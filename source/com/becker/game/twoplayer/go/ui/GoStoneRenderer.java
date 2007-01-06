@@ -135,7 +135,7 @@ public final class GoStoneRenderer extends TwoPlayerPieceRenderer
         }
         if ( stone.getAnnotation() != null ) {
             int offset = (cellSize - pieceSize) >> 1;
-            g2.setColor( Color.BLACK );
+            g2.setColor( stone.isOwnedByPlayer1()? Color.WHITE : Color.BLACK );
             g2.setFont( ANNOTATION_FONT );
             g2.drawString( stone.getAnnotation(), pos.x + 2*offset, pos.y + 4*offset);
         }

@@ -39,8 +39,8 @@ public class TwoPlayerMove extends Move
     /**
      * true if player1 made the move
      */
-
     private boolean player1_;
+    
     /**
      * this is the piece to use on the board. Some games only have one kind of piece .
      */
@@ -63,6 +63,10 @@ public class TwoPlayerMove extends Move
 
     /** This is a move that we anticipate will be made in the future. Will be rendered differently. */
     private boolean isFuture_;
+
+    /** Some coments about how the score wwas computed. Used for debugging. */
+    private String scoreDescription_ = null;
+
 
     /**
      * protected Constructor.
@@ -182,6 +186,14 @@ public class TwoPlayerMove extends Move
 
     public void setFuture(boolean future) {
         isFuture_ = future;
+    }
+
+    public String getScoreDescription() {
+        return scoreDescription_;
+    }
+
+    public void setScoreDescription(String desc) {
+        scoreDescription_ = desc;
     }
 
     public String toString() {

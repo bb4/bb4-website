@@ -92,7 +92,7 @@ public abstract class SearchStrategy
             TwoPlayerMove theMove = (TwoPlayerMove) (list.remove(0));
             SearchTreeNode child = new SearchTreeNode( theMove );
             child.setPruned(true);
-            String sComp = (type==PRUNE_ALPHA)?" is less than ":" is greater than ";
+            String sComp = (type==PRUNE_ALPHA)?" < ":" > ";
             child.setComment("Children pruned because " +
                             Util.formatNumber(val) + sComp + Util.formatNumber(thresh) + '.');
             parent.insert( child, index );

@@ -122,7 +122,8 @@ final class GoTreeCellRenderer extends GameTreeCellRenderer
         if (node_.isPruned()) {
             text += " *PRUNED";
         }  else {
-            text += " kids="+node_.getNumDescendants();
+            int numKids = node_.getChildMoves()==null? 0 : node_.getChildMoves().length;
+            text += " kids="+ numKids;
             text += " a="+Util.formatNumber(node_.getAlpha())+" b="+ Util.formatNumber(node_.getBeta());
         }
 

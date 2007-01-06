@@ -130,6 +130,18 @@ public class OnlineGameTable implements Serializable {
         return false;
     }
 
+    /**
+     *
+     * @return true if no players or only robots
+     */
+    public boolean hasNoHumanPlayers() {
+        for (Player p : players_) {
+            if (p.isHuman()) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     /**
      *

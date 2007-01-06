@@ -85,10 +85,10 @@ public class TestCell extends TestCase {
                            (cell.getUip() == expectedU) && (cell.getVjp() == expectedV));
     }
 
-    public void testMassConsrvation() {
+    public void testMassConservation() {
 
         CellBlock cb = new CellBlock();
-        Cell cell = cb.get(0,0);
+        Cell cell = cb.get(0, 0);
         double b = 1.7;
 
         cell.setVelocityP(1.0, 0);

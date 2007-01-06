@@ -26,7 +26,7 @@ public class LabeledSlider extends JPanel implements ChangeListener {
 
     public LabeledSlider(String labelText, double initialValue, double min, double max) {
 
-        assert(initialValue < max && initialValue > min);
+        assert(initialValue <= max && initialValue >= min);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setMaximumSize(new Dimension(1000, 42));
 
@@ -81,6 +81,10 @@ public class LabeledSlider extends JPanel implements ChangeListener {
         slider_.setValue(getPositionFromValue(v));
     }
 
+    public void setEnabled(boolean enable) {
+        slider_.setEnabled(enable);
+    }
+
     private double getValueFromPosition(int pos) {
         return  (double)pos * ratio_ + min_;
     }
@@ -95,7 +99,6 @@ public class LabeledSlider extends JPanel implements ChangeListener {
         p.add(new JPanel(), BorderLayout.CENTER);
         return p;
     }
-
 
     /**
      * one of the sliders was moved.

@@ -18,7 +18,7 @@ public class OnlineGameTableList extends ArrayList<OnlineGameTable>
     /**
      * Change all occurrences of oldName to newName in the table list.
      */
-    public void changeName(String oldName, String newName){
+    public void changeName(String oldName, String newName) {
         for (OnlineGameTable table : this)  {
             table.changeName(oldName, newName);
         }
@@ -34,14 +34,16 @@ public class OnlineGameTableList extends ArrayList<OnlineGameTable>
         while (it.hasNext()) {
             OnlineGameTable table = it.next();
             table.getPlayers().remove(player);
-            if (table.getPlayers().isEmpty())  {
+            if (table.hasNoHumanPlayers())  {
                 it.remove(); // remove table if now empty.
+                // and abort here since the player can not be at more than one table.
+                break;
             }
         }
     }
 
     /**
-     * Remove this player from all tables. If last player at a table, remove the table too.
+     * Remove this player from all tables. If last human player at a table, remove the table too.
      * @param playerName to remove from all tables.
      */
     public void removePlayer(String playerName) {
@@ -57,7 +59,7 @@ public class OnlineGameTableList extends ArrayList<OnlineGameTable>
                     break;
                 }
             }
-            if (table.getPlayers().isEmpty())  {
+            if (table.hasNoHumanPlayers())  {
                 it.remove(); // remove table if now empty.
                 // and abort here since the player can not be at more than one table.
                 break;

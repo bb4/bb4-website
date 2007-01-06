@@ -56,9 +56,7 @@ public class PokerPlayerMarker extends GamePiece
     public Color getColor()
     {
         return getOwner().getColor();
-
     }
-
 
     public Location getLocation()
     {
@@ -74,28 +72,16 @@ public class PokerPlayerMarker extends GamePiece
     }
 
     /**
-     * @return more detail that toString()
-     */
-    public String getDescription()
-    {
-        StringBuffer sb = new StringBuffer( this.toString() );
-
-        sb.append("Player: "+owner_.getName());
-        return sb.toString();
-    }
-
-
-    /**
       * get the textual representation of the poker marker.
       * @return string form
       */
      public String toString()
      {
-         return getDescription();
+         return toString("\n");
      }
 
      /**
-      * get the html representation of the group.
+      * get the html representation of the poker marker.
       * @return html form
       */
      public String toHtml()

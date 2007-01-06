@@ -23,7 +23,7 @@ public class TestBlunderCollection extends GoTestCase {
 
     public void test2() {
         GoMove m = getNextMove("problems/sgf/blunder/blunder.2", true);
-        checkExpected(m, 17, 12);  //    Q12
+        checkExpected(m, 17, 12);  // Q12
     }
 
     public void test13() {

@@ -36,7 +36,7 @@ public class ServerCommandProcessor {
                 //System.out.println("Entering room.");
                 break;
             case LEAVE_ROOM :
-                //System.out.println("Leaving room.");
+                System.out.println("Player "+cmd.getArgument()+" is Leaving the room.");
                 tables_.removePlayer((String) cmd.getArgument());
                 break;
             case ADD_TABLE :
@@ -51,9 +51,9 @@ public class ServerCommandProcessor {
                     changeName(names[0], names[1]);
                 }
                 break;
-            case START_GAME :
-                startGame((OnlineGameTable) cmd.getArgument());
-                break;
+            //case START_GAME :
+            //    startGame((OnlineGameTable) cmd.getArgument());
+            //    break;
             case UPDATE_TABLES :
                 break;
         }
@@ -89,6 +89,10 @@ public class ServerCommandProcessor {
         //System.out.println("in join table on the server p="+p);
         tables_.removePlayer(p);
         tables_.join(table.getName(), p);
+        OnlineGameTable tableToStart = tables_.getTableReadyToPlay(p.getName());
+        if (tableToStart != null) {
+            startGame(tableToStart);
+        }
     }
 
     private void changeName(String oldName, String newName) {
@@ -96,9 +100,11 @@ public class ServerCommandProcessor {
         tables_.changeName(oldName, newName);
     }
 
+
     private void startGame(OnlineGameTable table) {
-        //
-        System.out.println("NOW starting game on Server. "+ table);
+
+        System.out.println("NOW starting game on Server! "+ table);
+
     }
 
     /**
