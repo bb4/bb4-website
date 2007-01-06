@@ -122,8 +122,8 @@ public class LiquidEnvironment
     }
 
     /**
-     * steps the simulation forward in time
-     * if the timestep is too big, inaccuracy and instability will result.
+     * Steps the simulation forward in time.
+     * If the timestep is too big, inaccuracy and instability will result.
      * To prevent the instability we halve the timestep until the
      * Courant-Friedrichs-Levy condition is met.
      * In other words a particle should not be able to move more than a single cell
@@ -147,11 +147,11 @@ public class LiquidEnvironment
         updateSurfaceVelocity();
 
         // Update the position of the surface and objects
-        timeStep = updateParticlePosition( timeStep );
+        double newTimeStep = updateParticlePosition( timeStep );
 
-        time_ += timeStep;
+        time_ += newTimeStep;
         log( 1, " the Time= " + time_ );
-        return timeStep;
+        return newTimeStep;
     }
 
     /**
@@ -357,17 +357,18 @@ public class LiquidEnvironment
 
 
         double increment = (timeStep * maxLength);
+        double newTimeStep = timeStep;
         if (increment > MAX_INC) {
-            timeStep /= 2.0;
+            newTimeStep /= 2.0;
             log(0, "updateParticlePosition: HALVED dt=" + timeStep +" increment="+increment );
         }
         else if (increment < MIN_INC) {
-            timeStep *= 2.0;
+            newTimeStep *= 2.0;
             log(0, "updateParticlePosition: DOUBLED dt=" + timeStep +" increment="+increment );
         }
 
 
-        return timeStep;
+        return newTimeStep;
     }
 
     public int numParticles()

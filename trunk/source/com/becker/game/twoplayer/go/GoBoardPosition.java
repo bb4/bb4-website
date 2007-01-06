@@ -208,6 +208,15 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
     /**
      * @return a string representation of the go board position
      */
+    public String getDescription()
+    {
+        return super.getDescription()+ " score:"+Util.formatNumber(scoreContribution_);
+    }
+
+
+    /**
+     * @return a string representation of the go board position
+     */
     public String toString()
     {
         return super.toString()+ " s:"+Util.formatNumber(scoreContribution_);

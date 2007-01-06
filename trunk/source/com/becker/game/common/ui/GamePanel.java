@@ -82,6 +82,15 @@ public abstract class GamePanel extends TexturedPanel
     {
         enableEvents( AWTEvent.WINDOW_EVENT_MASK );
         initGui(parent);
+
+        addComponentListener( new ComponentAdapter()
+        {
+
+            public void componentResized( ComponentEvent ce )
+            {
+                //System.out.println("resized");
+            }
+        } );
     }
 
     public void openGame() {
@@ -189,7 +198,7 @@ public abstract class GamePanel extends TexturedPanel
             // use when sound card available
             /* causing security exception in applet?
             URL url = GUIUtil.getURL("com/becker/sound/play_game_voice.wav");
-            AudioClip clip = new AppletAudioClip(url);           
+            AudioClip clip = new AppletAudioClip(url);
             clip.play();
             */
 
@@ -342,4 +351,19 @@ public abstract class GamePanel extends TexturedPanel
             showHelpDialog();
     }
 
+
+    /**
+     * If the window gets closed, then the player has stood up from his table if online.
+     */
+    protected void processWindowEvent( WindowEvent e )
+    {
+        if ( e.getID() == WindowEvent.WINDOW_CLOSING ) {
+
+            System.out.println("Window clsing!");
+            if (isOnlinePlayAvailable()) {
+                onlineGameDialog_.closing();
+            }
+        }
+
+    }
 }

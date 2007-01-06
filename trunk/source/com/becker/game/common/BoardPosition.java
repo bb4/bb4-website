@@ -106,7 +106,7 @@ public class BoardPosition
     }
 
     /**
-     * @return copy data from another position into me.
+     * copy data from another position into me.
      */
     public void copy(BoardPosition p)
     {
@@ -143,11 +143,23 @@ public class BoardPosition
     /**
      * @return a string representation of the board position
      */
+    public String getDescription()
+    {
+        return toString(true);
+    }
+
+    /**
+     * @return a string representation of the board position
+     */
     public String toString()
     {
+        return toString(false);
+    }
+
+    private String toString(boolean longForm) {
         StringBuffer sb = new StringBuffer( "" );
         if (piece_ != null)
-            sb.append(piece_.toString());
+            sb.append(longForm? piece_.getDescription() : piece_.toString());
         sb.append(" (").append(row_).append(", ").append(col_).append(')');
         return sb.toString();
     }

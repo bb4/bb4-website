@@ -364,77 +364,84 @@ public final class GoController extends TwoPlayerController
     {
         int row, col;
         double worth;
-
         GoBoard board = (GoBoard)board_;
-        worth = weights.get(CAPTURE_WEIGHT_INDEX).getValue() * (getNumCaptures( true ) - getNumCaptures( false ));
+        // adjust for board size - so worth will be comparable regardless of board size.
+        double scaleFactor = 361.0 / Math.pow(board.getNumRows(), 2);
+        double captureWt = weights.get(CAPTURE_WEIGHT_INDEX).getValue();
+        double captureScore = captureWt * (getNumCaptures( true ) - getNumCaptures( false ));
         float n = 2.0f * board.getNumRows();
-        // opening = 1.99 - 1.5    middle = 1.5 - 1.01   end = 1.0
+        // opening = 1.99 - 1.5;   middle = 1.5 - 1.01;    end = 1.0
         double gameStageBoost = 0.5 + 2.0 * Math.max((n - (float)getNumMoves())/n, 0.0);
 
+        PositionalScore totalScore = new PositionalScore();
         for ( row = 1; row <= board.getNumRows(); row++ ) {    //rows
             for ( col = 1; col <= board.getNumCols(); col++ ) {  //cols
+
                 GoBoardPosition position = (GoBoardPosition) board.getPosition( row, col );
-                double badShapeScore;
-                double posScore;
-                if (position.isInEye())  {
-                    if (position.isOccupied()) {
-                        // a dead enemy stone in the eye
-                        position.setScoreContribution((position.getEye().isOwnedByPlayer1()? 2.0:-2.0));
-                    }
-                    else {
-                        position.setScoreContribution((position.getEye().isOwnedByPlayer1()? 1.0:-1.0));
-                    }
-                    worth += position.getScoreContribution();
-                }
-                else if ( position.isOccupied() ) {
-                    GoStone stone = (GoStone)position.getPiece();
-
-                    int side = position.getPiece().isOwnedByPlayer1()? 1: -1;
-                    // penalize bad shape like empty triangles
-                    badShapeScore =
-                         -(side * GoBoardUtil.formsBadShape(position, board)
-                                * weights.get(BAD_SHAPE_WEIGHT_INDEX).getValue());
-
-                    // consider where the stones are played
-                    // (usually a very low weight is assigned to this unless we are at the start of the game)
-                    double wt = weights.get(POSITIONAL_WEIGHT_INDEX).getValue();
-                    posScore =
-                        (side * gameStageBoost * wt * positionalScore_[row][col]);
-
-                    double s = weights.get(HEALTH_WEIGHT_INDEX).getValue() * stone.getHealth()
-                            + posScore + badShapeScore;
-
-
-                    position.setScoreContribution(Math.max(-1.0, Math.min(1.0, s)));
-
-                    if (GameContext.getDebugMode() > 0)  {
-                        stone.setBadShapeScore(badShapeScore);
-                        stone.setPositionalScore(posScore);
-                    }
-                    worth += position.getScoreContribution();
-                } else {
-                    position.setScoreContribution(0);
-                }
+                double positionalScore = gameStageBoost * positionalScore_[row][col];
+                PositionalScore score = calcPositionalScore(position, weights, positionalScore, board);
+                totalScore.incrementBy(score);
+                position.setScoreContribution(score.getPositionScore());
             }
-
         }
-        worth += board.getTerritoryDelta();
+        double territoryDelta = board.getTerritoryDelta();
+        worth = scaleFactor * (totalScore.getPositionScore() + captureScore + territoryDelta);
 
-        // scale up smaller scale boards so worth values are comparable to 19x19 = 361 boards
-        worth *= (19.0 / board.getNumRows());
+        if (GameContext.getDebugMode() > 0)  {
+            String desc = totalScore.getDescription(worth, captureScore, territoryDelta, scaleFactor);
+            ((TwoPlayerMove) lastMove).setScoreDescription(desc);
+        }
 
         //GameContext.log(1,"GoController.worth: worth="+worth);
         if ( worth < -WIN_THRESHOLD ) {
             // then the margin is too great
             return -WINNING_VALUE;
         }
-        if ( worth > WIN_THRESHOLD ) {
+        else if ( worth > WIN_THRESHOLD ) {
             // then the margin is too great
             return WINNING_VALUE;
         }
-
         return worth;
     }
+
+    /**
+     * @return the score contribution from a single point on the board
+     */
+    private static PositionalScore calcPositionalScore(GoBoardPosition position, ParameterArray weights,
+                                                       double positionalScore, GoBoard board) {
+
+        PositionalScore score = new PositionalScore();
+
+        if (position.isInEye())  {
+            if (position.isOccupied()) {
+                // a dead enemy stone in the eye
+                score.deadStoneScore = position.getEye().isOwnedByPlayer1()? 2.0:-2.0;
+            }
+            else {
+                score.eyeSpaceScore = position.getEye().isOwnedByPlayer1()? 1.0:-1.0;
+            }
+        }
+        else if ( position.isOccupied() ) {
+            GoStone stone = (GoStone)position.getPiece();
+
+            int side = position.getPiece().isOwnedByPlayer1()? 1: -1;
+            // penalize bad shape like empty triangles
+            score.badShapeScore = -(side * GoBoardUtil.formsBadShape(position, board)
+                                   * weights.get(BAD_SHAPE_WEIGHT_INDEX).getValue());
+
+            // Usually a very low weight is assigned to where stone is played unless we are at the start of the game.
+            score.posScore = side * weights.get(POSITIONAL_WEIGHT_INDEX).getValue() * positionalScore;
+            score.healthScore =  weights.get(HEALTH_WEIGHT_INDEX).getValue() * stone.getHealth();
+
+            if (GameContext.getDebugMode() > 1)  {
+                stone.setPositionalScore(score);
+            }
+        }
+
+        score.calcPositionScore();
+        return score;
+    }
+
 
     /**
      * it is a takeback move if the proposed move position (row,col) would immdiately replace the last captured piece

@@ -37,7 +37,7 @@ public final class GameTreeDialog extends JDialog
     private int oldChainLength_ = 0;
     private GameTreeButtons gameTreeButtons_;
 
-    private GameTreeInfoLabel infoLabel_;
+    private GameTreeInfoPanel infoPanel_;
 
     private static final int ROW_HEIGHT = 11;
     private static final int TREE_WIDTH = 420;
@@ -127,14 +127,14 @@ public final class GameTreeDialog extends JDialog
         JPanel viewerPanel = new JPanel();
         viewerPanel.setLayout(new BorderLayout());
         viewerPanel.setBorder(BorderFactory.createEmptyBorder(3,3,3,3));
-        infoLabel_ = new GameTreeInfoLabel();
+        infoPanel_ = new GameTreeInfoPanel();
 
         ContinuousColorLegend colorLegend =
                 new ContinuousColorLegend("Relative Score for Player", cellRenderer_.getColorMap(), true);
 
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BorderLayout());
-        infoPanel.add(infoLabel_, BorderLayout.CENTER);
+        infoPanel.add(infoPanel_, BorderLayout.CENTER);
         infoPanel.add(colorLegend, BorderLayout.SOUTH);
 
         // this goes to the right of the test tree view
@@ -286,22 +286,20 @@ public final class GameTreeDialog extends JDialog
                 return; // no node here
             moveList.add( m );
         }
-        // also show the children of the final move in a special way (if there are any)
-        SearchTreeNode finalNode = (SearchTreeNode) nodes[chainLength-1];
 
         TwoPlayerBoardViewer viewer = (TwoPlayerBoardViewer)boardViewer_;
         if (SHOW_SUCCESSIVE_MOVES) {
             // add expected successive moves to show likely outcome.
-            moveList = addSuccessiveMoves(moveList, finalNode);
+            moveList = addSuccessiveMoves(moveList, lastNode);
         }
         //System.out.println("chainlen before="+chainLength+" after="+moveList.size());
         chainLength = moveList.size();
-        viewer.showMoveSequence( moveList, oldChainLength_, finalNode.getChildMoves() );
+        viewer.showMoveSequence( moveList, oldChainLength_, lastNode.getChildMoves() );
 
         // remember the old chain length so we know how much to back up next time
         oldChainLength_ = chainLength;
 
-        infoLabel_.setText(viewer, m, lastNode);
+        infoPanel_.setText(viewer, m, lastNode);
     }
 
     /**

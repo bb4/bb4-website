@@ -128,6 +128,12 @@ public class GamePiece implements Serializable
         annotation_ = p.annotation_;
     }
 
+    /**
+     * @return Possibly give mroe detail that you would get with just toString().
+     */
+    public String getDescription() {
+        return toString();
+    }
 
     /**
      * @return a string representation of the board position

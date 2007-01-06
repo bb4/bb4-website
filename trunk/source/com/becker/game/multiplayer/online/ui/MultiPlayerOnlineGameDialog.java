@@ -18,7 +18,7 @@ import java.awt.event.*;
  * @author Barry Becker Date: May 14, 2006
  */
 public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
-                                                  implements ActionListener, KeyListener {
+                                                  implements ActionListener, MouseListener, KeyListener {
 
     private static final String DEFAULT_NAME = "<name>";
 
@@ -71,7 +71,9 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
         JLabel nameLabel = new JLabel("Your Name: ");
         currentName_ = DEFAULT_NAME;
         localPlayerName_ = new JTextField(DEFAULT_NAME);
+        localPlayerName_.addMouseListener(this);
         localPlayerName_.addKeyListener(this);
+
         //localPlayerName_.setPreferredSize(new Dimension(180, 14));
 
         namePanel.add(nameLabel, BorderLayout.WEST);
@@ -79,9 +81,12 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
         JPanel fill = new JPanel();
         fill.setPreferredSize(new Dimension(180, 20));
         namePanel.add(fill, BorderLayout.EAST);
+        JPanel bottomFill = new JPanel();
+        bottomFill.setPreferredSize(new Dimension(100, 10));
 
         headerPanel.add(namePanel, BorderLayout.NORTH);
         headerPanel.add(titleLabel, BorderLayout.CENTER);
+        headerPanel.add(bottomFill, BorderLayout.SOUTH);
         headerPanel.add(buttonsPanel, BorderLayout.EAST);
         playOnlinePanel.add(headerPanel, BorderLayout.NORTH);
 
@@ -113,6 +118,10 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
         controller_.setPlayers(onlineGameTablesTable_.getSelectedTable().getPlayersAsArray());
     }
 
+    /**
+     * The server has sent out a message to all the clients.
+     * @param cmd the command to handle.
+     */
     public void handleServerUpdate(GameCommand cmd) {
 
         if (onlineGameTablesTable_ == null)
@@ -133,13 +142,12 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
                 if (readyTable != null) {
                     // then the table the player is sitting at is ready to begin play.
                     JOptionPane.showMessageDialog(this,
-                         "Ready to Start", "All the players required ("
-                                           + readyTable.getPlayersString()
-                                           + ") have joined this table. Play will now begin. ",
-                         JOptionPane.INFORMATION_MESSAGE);
+                              "All the players required \n(" + readyTable.getPlayersString()
+                              + ")\n have joined this table. Play will now begin. ",
+                              "Ready to Start", JOptionPane.INFORMATION_MESSAGE);
                     // close the dlg and tell the server to start a thread to play the game
                     this.setVisible( false );
-                    serverConnection_.sendCommand(new GameCommand(GameCommand.Name.START_GAME, readyTable));
+                    //serverConnection_.sendCommand(new GameCommand(GameCommand.Name.START_GAME, readyTable));
                 }
                 break;
            default : assert false : "Unexpected command name :"+ cmd.getName();
@@ -148,18 +156,28 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
     }
 
     /**
+     * Implements actionlistener.
      * The user has done something to change the table list
      * (e.g. add a new game table or join a different table).
      */
-    public void actionPerformed( ActionEvent e )
-    {
+    public void actionPerformed( ActionEvent e ) {
         Object source = e.getSource();
 
+
         if (source == createTableButton_) {
+            checkName();
             createNewGameTable();
         }
         else {
+            checkName();
             joinDifferentTable((JoinButton) source);
+        }
+    }
+
+    private void checkName() {
+         if (localPlayerName_.getText().equals(DEFAULT_NAME)) {
+            JOptionPane.showMessageDialog(this, "You must enter your name at the top first.", "Warning",
+                                          JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -221,6 +239,7 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
         serverConnection_.leaveRoom(currentName_);
     }
 
+
     /**
      * Implement keyListener interface.
      * @param key
@@ -235,5 +254,17 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
             oldName_ = currentName_;
         }
     }
+
+    /**
+     * Implement moustListener interface.
+     */
+    public void mouseClicked(MouseEvent e) {}
+    public void mousePressed(MouseEvent e) {
+            localPlayerName_.setText("");
+    }
+    public void mouseReleased(MouseEvent e) {}
+    public void mouseEntered(MouseEvent e) {}
+    public void mouseExited(MouseEvent e) {}
+
 
 }

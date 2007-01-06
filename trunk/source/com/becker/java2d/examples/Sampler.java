@@ -142,13 +142,10 @@ public class Sampler
 
     private void createRescales()
     {
-        mOps.put( "Rescale .5, 0", new RescaleOp( .5f, 0, null ) );
-        mOps.put( "Rescale .5, 64", new RescaleOp( .5f, 64, null ) );
+        mOps.put( "Rescale .5, 0", new RescaleOp( 0.5f, 0, null ) );
+        mOps.put( "Rescale .5, 64", new RescaleOp( 0.5f, 64, null ) );
         mOps.put( "Rescale 1.2, 0", new RescaleOp( 1.2f, 0, null ) );
-        //mOps.put( "Rescale 1.5, 0", new RescaleOp( 1.5f, 0, null ) );
-        scaleFactors_[3] = 0.5f;
-        BufferedImageOp transparencyOp = new MyRescaleOp(scaleFactors_, OFFSETS, null);
-        mOps.put( "Rescale 1.5, 0", transparencyOp);
+        mOps.put( "Rescale 1.5, 0", new RescaleOp( 1.5f, 0, null ) );
     }
 
     private void createColorOps()

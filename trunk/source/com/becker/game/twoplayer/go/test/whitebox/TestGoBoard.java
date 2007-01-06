@@ -75,14 +75,16 @@ public class TestGoBoard extends GoTestCase {
 
     public void testGetGroupNbrs3() {
         verifyGroupNbrs("whitebox/groupNbr3", 5, 4, 1, 1);
-    }
+     }
 
     public void testGetGroupNbrs4() {
         verifyGroupNbrs("whitebox/groupNbr4", 4, 4, 5, 5);
     }
 
-    // note that only nobi and diagonal enemy nbrs are considered group neighbors
-    // while all 20 possible group nbs are considered for friendly stones.
+    /**
+     * Note that only nobi and diagonal enemy nbrs are considered group neighbors
+     * while all 20 possible group nbrs are considered for friendly stones.
+     */
     public void testGetGroupNbrs5() {
         verifyGroupNbrs("whitebox/groupNbr5", 4, 4, 0, 1);
     }

@@ -41,7 +41,7 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
 
     private SearchTreeNode root_;
     private int depth_ = 0;
-    // sum of the number of descendents of all nodes at the level
+    // sum of the number of descendants of all nodes at the level
     private int[] totalAtLevel_;
 
     private int width_;
@@ -107,7 +107,6 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
                 node.setSpaceAllocation(pruneSpace);
             }
             else {
-                node.setNumDescendants(0);
                 node.setSpaceAllocation(1);  // never 0;
             }
             totalAtLevel_[depth] += node.getSpaceAllocation();
@@ -121,7 +120,6 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
             SearchTreeNode child = (SearchTreeNode)it.nextElement();
             initializeTreeStats( child, depth+1 );
             node.setSpaceAllocation(node.getSpaceAllocation() + child.getSpaceAllocation());
-            node.setNumDescendants(node.getNumDescendants() + child.getNumDescendants());
         }
         // count the node as a descendant
         node.setSpaceAllocation(node.getSpaceAllocation() + 1);

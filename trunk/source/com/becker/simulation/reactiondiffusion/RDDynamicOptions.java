@@ -21,6 +21,8 @@ public class RDDynamicOptions extends JPanel
     private LabeledSlider kSlider_;
     private LabeledSlider fSlider_;
     private LabeledSlider hSlider_;
+    private LabeledSlider heightSlider_;
+    private LabeledSlider specularSlider_;
     private LabeledSlider numStepsSlider_;
     private Button restartButton_;
 
@@ -52,6 +54,13 @@ public class RDDynamicOptions extends JPanel
         hSlider_ = new LabeledSlider("H = ", GrayScott.H0, 0.008, 0.048);
         hSlider_.addChangeListener(this);
 
+        heightSlider_ = new LabeledSlider("Bump Height = ", 0.0, 0.0, 30.0);
+        heightSlider_.addChangeListener(this);
+
+        specularSlider_ = new LabeledSlider("Specular Higlight = ", 0.0, 0.0, 1.0);
+        specularSlider_.addChangeListener(this);
+        specularSlider_.setEnabled(false);
+
         numStepsSlider_ = new LabeledSlider("Num Steps per Frame = ", RDSimulator.DEFAULT_STEPS_PER_FRAME, 1, 100);
         numStepsSlider_.setShowAsInteger(true);
         numStepsSlider_.addChangeListener(this);
@@ -67,6 +76,9 @@ public class RDDynamicOptions extends JPanel
         add(fSlider_);
         add(kSlider_);
         add(hSlider_);
+        add(Box.createVerticalStrut(10));
+        add(heightSlider_);
+        add(specularSlider_);
         add(Box.createVerticalStrut(10));
         add(numStepsSlider_);
         add(Box.createVerticalStrut(20));
@@ -112,6 +124,13 @@ public class RDDynamicOptions extends JPanel
         }
         else if (e.getSource() == hSlider_.getSlider()) {
             gs_.setH(hSlider_.getValue());
+        }
+        else if (e.getSource() == heightSlider_.getSlider()) {
+            simulator_.getRenderer().setHeightScale(heightSlider_.getValue());
+            specularSlider_.setEnabled(heightSlider_.getValue() > 0);
+        }
+        else if (e.getSource() == specularSlider_.getSlider()) {
+            simulator_.getRenderer().setSpecular(specularSlider_.getValue());
         }
         else if (e.getSource() == numStepsSlider_.getSlider()) {
             simulator_.setNumStepsPerFrame((int) numStepsSlider_.getValue());

@@ -22,8 +22,10 @@ public class OnlinePokerServer extends OnlineGameServer {
         return "Poker Game Server";
     }
 
+    /**
+     * create and show the server.
+     */
     public static void main(String[] args) {
-        //OnlineGameServer frame = new OnlinePokerServer();
-
+        OnlineGameServer frame = new OnlinePokerServer();
     }
 }

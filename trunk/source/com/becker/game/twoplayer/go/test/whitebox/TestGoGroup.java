@@ -14,28 +14,28 @@ public class TestGoGroup extends GoTestCase {
     // test
     public void testAbsHealth1() {
         controller_.reset();
-        verifyHealthDifferences("whitebox/groupHealth1", .0, .2, .2);
+        verifyHealthDifferences("whitebox/groupHealth1", 0.0, 0.2, 0.2);
     }
 
 
     public void testAbsHealth2() {
-        verifyHealthDifferences("whitebox/groupHealth2", .1, .8, .7);
+        verifyHealthDifferences("whitebox/groupHealth2", 0.1, 0.8, 0.7);
     }
 
     public void testAbsHealth3() {
-        verifyHealthDifferences("whitebox/groupHealth3", .8, 1.1, 1.1);
+        verifyHealthDifferences("whitebox/groupHealth3", 0.8, 1.1, 1.1);
     }
 
     public void testAbsHealth4() {
-        verifyHealthDifferences("whitebox/groupHealth4", .2, 1.1, 1.0);
+        verifyHealthDifferences("whitebox/groupHealth4", 0.2, 1.1, 1.0);
     }
 
     public void testAbsHealth5() {
-        verifyHealthDifferences("whitebox/groupHealth5", -.1, .2, .2);
+        verifyHealthDifferences("whitebox/groupHealth5", -0.1, 0.2, 0.2);
     }
 
     public void testAbsHealth6() {
-        verifyHealthDifferences("whitebox/groupHealth6", .0, -.6, -.6);
+        verifyHealthDifferences("whitebox/groupHealth6", 0.0, -0.6, -0.6);
     }
 
 
@@ -97,9 +97,7 @@ public class TestGoGroup extends GoTestCase {
 
 
 
-
-
-    private static final double THRESH = .11;
+    private static final double THRESH = 0.11;
 
     /**
      * verify the black - white goup health differences for
@@ -141,6 +139,9 @@ public class TestGoGroup extends GoTestCase {
     }
 
 
+    /**
+     * Use Benson's algorithm for detecting unconditionally alive groups.
+     */
     private void verifyUnconditionalLife(String file,
                                          boolean forBlackGroup, int expectedSizeOfGroup, boolean expectedUnconditionalyAlive) {
         restore(file);

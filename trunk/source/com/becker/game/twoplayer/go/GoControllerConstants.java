@@ -46,5 +46,5 @@ public final class GoControllerConstants {
     static final int WIN_THRESHOLD = 1000;
 
     // we assign a value to a stone based on the line on which it falls when calculating worth
-    static final float[] LINE_VALS = {-0.5f, 0.0f, 1.0f, 0.9f, 0.1f};
+    static final float[] LINE_VALS = {-0.5f, 0.1f, 1.0f, 0.9f, 0.1f};
 }

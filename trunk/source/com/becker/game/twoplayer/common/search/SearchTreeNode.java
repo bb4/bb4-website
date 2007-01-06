@@ -34,12 +34,6 @@ public class SearchTreeNode extends DefaultMutableTreeNode
     private double beta_ = 0;
 
     /**
-     * num descendants including itself (never 0).
-     * initialized by GameTreeViewer.
-     */
-    private int numDescendants_ = 0;
-
-    /**
      * Used to layout the tree
      * roughly based on the num descendants.
      * initialized by GameTreeViewer.
@@ -58,7 +52,6 @@ public class SearchTreeNode extends DefaultMutableTreeNode
     private int xLocation_;
     private int yLocation_;
 
-    // @@ also contain visisbility info here
 
 
     // Default Constructor
@@ -137,14 +130,6 @@ public class SearchTreeNode extends DefaultMutableTreeNode
 
     public void setBeta(double beta) {
         this.beta_ = beta;
-    }
-
-    public int getNumDescendants() {
-        return numDescendants_;
-    }
-
-    public void setNumDescendants(int numDescendants) {
-        this.numDescendants_ = numDescendants;
     }
 
     public int getSpaceAllocation() {

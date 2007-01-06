@@ -1,8 +1,7 @@
 package com.becker.game.twoplayer.go;
 
-import com.becker.common.Util;
-import com.becker.game.common.GameContext;
-import com.becker.game.common.GamePiece;
+import com.becker.common.*;
+import com.becker.game.common.*;
 
 /**
  * A GoStone describes the physical marker at a location on the board.
@@ -24,11 +23,9 @@ public final class GoStone extends GamePiece implements GoMember
     // this can only get set to true at the very end of the game when both players have passed.
     private boolean isDead_;
 
-    // these vars are for storing debug information about this stone contribution to the overall board state worth value
-    // package protected.
-    //private double totalScoreContribution_ = 0.0;
-    private double positionalScore_ = 0.0;
-    private double badShapeScore_ = 0.0;
+    // This structure is used to store a detailed breakdown of this stones score. (for debugging).
+    private PositionalScore positionalScore_ = null;
+
 
     /**
      * create a new go stone.
@@ -62,27 +59,9 @@ public final class GoStone extends GamePiece implements GoMember
         return stone;
     }
 
-    public void setPositionalScore(double s) {
+    public void setPositionalScore(PositionalScore s) {
         positionalScore_ = s;
     }
-
-    /**
-     * return score corresponding to how good this position is relative to the edge.
-     *
-    public double getPositionalScore() {
-        return positionalScore_;
-    } */
-
-    public void setBadShapeScore(double s) {
-       badShapeScore_ = s;
-    }
-
-    /**
-     * return score corresponding to the bad shapiness of this position.
-     *
-    public double getBadShapeScore() {
-        return badShapeScore_;
-    } */
 
 
     public void setHealth( float health )
@@ -125,18 +104,31 @@ public final class GoStone extends GamePiece implements GoMember
         return super.clone();
     }
 
+    public String getDescription() {
+        StringBuffer sb = new StringBuffer( "" );
+        //sb.append( type_ );
+        sb.append( (ownedByPlayer1_ ? "Black" : "White") + "stone");
+        if (positionalScore_ != null)  {
+            sb.append(" (<br>  overall score for stone:"+Util.formatNumber(positionalScore_.getPositionScore()) +" = ");
+            sb.append("<br>    deadStone:" + Util.formatNumber(positionalScore_.deadStoneScore));
+            sb.append("<br>    eyeSpace: "+Util.formatNumber(positionalScore_.eyeSpaceScore));
+            sb.append("<br>    badShape: "+Util.formatNumber(positionalScore_.badShapeScore));
+            sb.append("<br>    position: "+Util.formatNumber(positionalScore_.posScore));
+            sb.append("<br>    health:  "+Util.formatNumber(positionalScore_.healthScore) + " ) <br>");
+        }
+
+        return sb.toString();
+    }
+
     /**
-     *  print more compactly than super class.
+     *  Print more compactly than super class.
      */
     public String toString()
     {
         StringBuffer sb = new StringBuffer( "" );
         //sb.append( type_ );
         sb.append( ownedByPlayer1_ ? 'B' : 'W' );
-        if (GameContext.getDebugMode() > 2)  {
-            sb.append("(pos:"+Util.formatNumber(positionalScore_));
-            sb.append("+shp:"+Util.formatNumber(badShapeScore_)+')');
-        }
+
         return sb.toString();
     }
 }

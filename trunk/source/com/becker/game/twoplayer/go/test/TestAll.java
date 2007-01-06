@@ -14,10 +14,9 @@ import junit.framework.TestSuite;
 public class TestAll extends TestCase {
 
 
-
     public static Test suite() {
-        TestSuite suite =  new TestSuite("All Go Tests");
 
+        TestSuite suite =  new TestSuite("All Go Tests");
 
         suite.addTest(TestAllWhiteBox.suite());
         suite.addTestSuite(TestShape.class);
@@ -26,7 +25,6 @@ public class TestAll extends TestCase {
         suite.addTest(TestProblemCollections.suite());
         suite.addTestSuite(TestLifeAndDeath.class);
         suite.addTestSuite(TestKiseido2002.class);
-
 
         return suite;
     }
