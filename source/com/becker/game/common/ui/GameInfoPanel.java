@@ -1,6 +1,7 @@
 package com.becker.game.common.ui;
 
 import com.becker.game.common.*;
+import com.becker.game.online.ui.*;
 import com.becker.ui.*;
 
 import javax.swing.*;
@@ -45,10 +46,17 @@ public abstract class GameInfoPanel extends TexturedPanel implements GameChanged
 
         createSubPanels();
 
-        // this pushes everything to the top
-        JPanel filler = createPanel();
-        filler.setPreferredSize(new Dimension( getMinWidth(), 1000));
-        this.add( filler );
+        if (controller_.isOnlinePlayAvailable())  {
+            ChatWindow chat = new ChatWindow(controller_.getServerConnection());
+            chat.setPreferredSize(new Dimension( getMinWidth(), 1000));
+            add( chat );
+        }
+        else {
+            // this pushes everything to the top
+            JPanel filler = createPanel();
+            filler.setPreferredSize(new Dimension( getMinWidth(), 1000));
+            add( filler );
+        }
     }
 
     public void setParentFrame(JFrame parent) {

@@ -5,6 +5,8 @@ import com.becker.game.common.*;
 import com.becker.game.multiplayer.common.*;
 import com.becker.game.multiplayer.poker.ui.*;
 import com.becker.game.multiplayer.poker.player.*;
+import com.becker.game.multiplayer.poker.online.*;
+import com.becker.game.online.*;
 import com.becker.optimization.*;
 
 import java.util.*;
@@ -218,6 +220,21 @@ public class PokerController extends GameController
 
     public void setPotValue(int potValue) {
         pot_ = potValue;
+    }
+
+
+    /**
+     * @return the server connection.
+     */
+    protected ServerConnection createServerConnection() {
+
+        ServerConnection sc =  new ServerConnection(OnlinePokerServer.PORT);
+        sc.addOnlineChangeListener(this);
+        return sc;
+    }
+
+    public boolean isOnlinePlayAvailable() {
+        return getServerConnection().isConnected();
     }
 
     /**

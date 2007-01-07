@@ -74,6 +74,8 @@ public class SetController extends GameController
         return gameOptions_;
     }
 
+    public boolean isOnlinePlayAvailable() {return false; }
+
     /**
      * @return the number of face up cards on the board.
      */

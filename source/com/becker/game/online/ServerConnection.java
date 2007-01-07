@@ -6,6 +6,7 @@ import com.becker.game.common.*;
 import java.io.*;
 import java.net.*;
 import java.security.*;
+import java.util.*;
 
 /**
  * Opens a socket to the Game server from the client so we can talk to it.
@@ -21,13 +22,13 @@ public class ServerConnection {
 
     private boolean isConnected_ = false;
 
-    private OnlineChangeListener changeListener_;
+    private List<OnlineChangeListener> changeListeners_;
 
     /**
      * @param port to open the connection on.
      */
-    public ServerConnection(int port, OnlineChangeListener listener) {
-        changeListener_ = listener;
+    public ServerConnection(int port) {
+        changeListeners_ = new ArrayList<OnlineChangeListener>();
         createListenSocket(port);
     }
 
@@ -36,6 +37,10 @@ public class ServerConnection {
      */
     public boolean isConnected() {
         return isConnected_;
+    }
+
+    public void addOnlineChangeListener(OnlineChangeListener listener) {
+        changeListeners_.add(listener);
     }
 
     /**
@@ -62,12 +67,12 @@ public class ServerConnection {
         try {
             isConnected_ = false;
             GameContext.log(1, "Attempting to connect to Server=" + DEFAULT_HOST + " port="+port);
-            Socket socket_=new Socket(DEFAULT_HOST, port);
-            oStream_ = new ObjectOutputStream(socket_.getOutputStream());
-            ObjectInputStream iStream_=new ObjectInputStream(socket_.getInputStream());
+            Socket socket = new Socket(DEFAULT_HOST, port);
+            oStream_ = new ObjectOutputStream(socket.getOutputStream());
+            ObjectInputStream iStream =new ObjectInputStream(socket.getInputStream());
 
             // create a thread to listen for updates from the server.
-            UpdateWorker w = new UpdateWorker(iStream_);
+            UpdateWorker w = new UpdateWorker(iStream);
             Thread t = new Thread(w);
             t.start();
 
@@ -77,7 +82,7 @@ public class ServerConnection {
         catch (ConnectException e) {
              GameContext.log(0, "failed to get connection. " +
                                 "Probably because the server is not running or accessable. " +
-                                "Playing a local game instead.");
+                                "Playing a local game instead. " + e.getMessage());
             //e.printStackTrace();
             isConnected_ = false;
         }
@@ -90,7 +95,7 @@ public class ServerConnection {
         catch (AccessControlException e) {
             GameContext.log(0, "Failed to createListenSocket. \n"
                                +"You don't have permission to open a socket to "
-                               + DEFAULT_HOST + " in the current context.");
+                               + DEFAULT_HOST + " in the current context." + e.getMessage());
             isConnected_ = false;
         }
     }
@@ -154,9 +159,9 @@ public class ServerConnection {
                 try {
                     GameCommand cmd = (GameCommand) inputStream_.readObject();
 
-                    // we got a change to the tables on the server, update our client listener
-                    changeListener_.handleServerUpdate(cmd);
-
+                    // we got a change to the tables on the server, update our client listeners.
+                    for (OnlineChangeListener listener : changeListeners_)
+                        listener.handleServerUpdate(cmd);
                 }
                 catch (IOException e) {
                     GameContext.log(0, "Read failed.");

@@ -25,7 +25,6 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
 
     //  buttons to either give comands or pass
     private JButton commandButton_;
-
     private JPanel commandPanel_;
 
 
@@ -39,15 +38,19 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
 
     protected void createSubPanels()
     {
-        this.add( createGeneralInfoPanel() );
+        //JPanel panel = new JPanel(new BorderLayout());
+        //JPanel boxPanel = new JPanel();
+        // boxPanel.setLayout(new BoxLayout(boxPanel, BoxLayout.X_AXIS)) ;
 
-        // the custom panel shows game specific info. In this case the command button.
+        add( createGeneralInfoPanel() );
+
+        // the custom panel shows game specific info. In this case, the command button.
         // if all the players are robots, don't even show this panel.
         if (!controller_.allPlayersComputer())   {
-            this.add( createCustomInfoPanel() );
+            add( createCustomInfoPanel() );
         }
 
-        this.add( createChipLegendPanel());
+        add( createChipLegendPanel());
     }
 
     /**
@@ -139,8 +142,8 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
            Point p = this.getParent().getLocationOnScreen();
 
            // offset the dlg so the board is visible as a reference
-           bettingDialog.setLocation((int)(p.getX()+.7*getParent().getWidth()), (int)(p.getY()+getParent().getHeight()/3));
-
+           bettingDialog.setLocation((int)(p.getX() + 0.7*getParent().getWidth()),
+                                     (int)(p.getY() + getParent().getHeight()/3));
 
            boolean canceled = bettingDialog.showDialog();
            if ( !canceled ) {

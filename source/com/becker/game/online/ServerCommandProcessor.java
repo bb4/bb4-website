@@ -28,9 +28,11 @@ public class ServerCommandProcessor {
     /**
      * Update our internal game table list given the cmd from the client.
      * @param cmd to process. The command that the player has issued.
-     * @return true if successful
+     * @return the response command to send to all the clients.
      */
-    public boolean processCmd(GameCommand cmd) {
+    public GameCommand processCmd(GameCommand cmd) {
+        GameCommand response = new GameCommand(GameCommand.Name.UPDATE_TABLES, getTables());
+
         switch (cmd.getName()) {
             case ENTER_ROOM :
                 //System.out.println("Entering room.");
@@ -51,13 +53,14 @@ public class ServerCommandProcessor {
                     changeName(names[0], names[1]);
                 }
                 break;
-            //case START_GAME :
-            //    startGame((OnlineGameTable) cmd.getArgument());
-            //    break;
             case UPDATE_TABLES :
                 break;
+             case CHAT_MESSAGE :
+                //System.out.println("chat message=" + cmd.getArgument());
+                response = cmd;
+                break;
         }
-        return true;
+        return response;
     }
 
     /**

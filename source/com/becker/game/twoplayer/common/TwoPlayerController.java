@@ -233,6 +233,13 @@ public abstract class TwoPlayerController extends GameController
         return !getPlayer1().isHuman();
     }
 
+    /**
+     * Currently online play not available for 2 player games - coming soon!
+     * @return false
+     */
+    public boolean isOnlinePlayAvailable() {
+        return false;
+    }
 
     /**
      * the computer will search for and make its move.
