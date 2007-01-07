@@ -14,8 +14,6 @@ import version.Version;
 import java.io.*;
 import java.util.List;
 
-//----------------------------------------------------------------------------
-
 /**
  * Wrapper for testing GTP controlling programs (like GoGui for example).
  * Inherits the ability to connect a Go program supporting GTP to a socket from GtpServer.

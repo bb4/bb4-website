@@ -129,6 +129,9 @@ public class GalacticController extends GameController
         Move m = board_.getLastMove();
         return ((GalacticOptions)getOptions()).getMaxYearsToPlay() - ((m != null)? this.getNumMoves() : 0) - 2;
     }
+
+    public boolean isOnlinePlayAvailable() {return false; }
+
     /**
      *
      * @return true if the game is over.

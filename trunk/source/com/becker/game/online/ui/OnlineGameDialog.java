@@ -21,12 +21,8 @@ import java.awt.event.*;
 public abstract class OnlineGameDialog extends JDialog
                                        implements OnlineChangeListener, ActionListener {
 
-    // this allows us to talk with the game server (if it is available).
-    protected ServerConnection serverConnection_;
 
-    /**
-     * the options get set directly on the game controller that is passed in.
-     */
+    /** the options get set directly on the game controller that is passed in. */
     protected GameController controller_;
 
     // cache a pointer to this in case we have children.
@@ -39,7 +35,10 @@ public abstract class OnlineGameDialog extends JDialog
         parent_ = parent;
         viewer_ = viewer;
         controller_ = viewer.getController();
-        serverConnection_ = createServerConnection(this);
+
+        assert controller_.getServerConnection()!=null :
+                "You should not create this dlg without first verifying that online play is available.";
+        controller_.getServerConnection().addOnlineChangeListener(this);
 
         enableEvents( AWTEvent.WINDOW_EVENT_MASK );
         setTitle( "Manage Online Games" );
@@ -70,7 +69,8 @@ public abstract class OnlineGameDialog extends JDialog
     public abstract void closing();
 
     public boolean isServerAvailable() {
-        return serverConnection_ != null && serverConnection_.isConnected();
+        return (controller_.getServerConnection()!=null && controller_.getServerConnection().isConnected());
+        //return serverConnection_ != null && serverConnection_.isConnected();
     }
 
     public void handleServerUpdate(GameCommand cmd) {
@@ -102,16 +102,6 @@ public abstract class OnlineGameDialog extends JDialog
 
         return playOnlinePanel;
     }
-
-    protected abstract ServerConnection createServerConnection(OnlineChangeListener listener);
-
-    /**
-     * @return true if there is a live connection to the game server.
-     */
-    public boolean isConnected() {
-        return serverConnection_.isConnected();
-    }
-
 
     /**
      * @param parent frame.

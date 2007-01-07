@@ -95,8 +95,8 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
         playOnlinePanel.setPreferredSize( new Dimension(600, 300) );
         playOnlinePanel.add( new JScrollPane(onlineGameTablesTable_.getTable()) , BorderLayout.CENTER );
 
-        if (serverConnection_.isConnected()) {
-            serverConnection_.enterRoom();
+        if (controller_.getServerConnection().isConnected()) {
+            controller_.getServerConnection().enterRoom();
         }
         return playOnlinePanel;
     }
@@ -150,6 +150,7 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
                     //serverConnection_.sendCommand(new GameCommand(GameCommand.Name.START_GAME, readyTable));
                 }
                 break;
+           case CHAT_MESSAGE : break;
            default : assert false : "Unexpected command name :"+ cmd.getName();
         }
 
@@ -192,7 +193,7 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
         }
         // if the name has changed, make sure it is updated on the server
         if (!currentName_.equals(oldName_)) {
-            serverConnection_.nameChanged(oldName_, currentName_);
+            controller_.getServerConnection().nameChanged(oldName_, currentName_);
             oldName_ = currentName_;
         }
 
@@ -207,7 +208,7 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
 
             // now add it to this list as a new row and tell the server to add it.
             // onlineGameTablesTable_.addRow(newTable);
-            serverConnection_.addGameTable(newTable);
+            controller_.getServerConnection().addGameTable(newTable);
         }
     }
 
@@ -225,8 +226,9 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
             boolean enableJoin = (i != joinRow) && !onlineGameTablesTable_.getGameTable(i).isReadyToPlay();
             m.setValueAt(enableJoin, i, 0);
         }
-        serverConnection_.joinTable(onlineGameTablesTable_.createPlayerForName(currentName_),
-                                    onlineGameTablesTable_.getGameTable(joinRow));
+        controller_.getServerConnection().joinTable(
+                          onlineGameTablesTable_.createPlayerForName(currentName_),
+                          onlineGameTablesTable_.getGameTable(joinRow));
 
         onlineGameTablesTable_.getTable().removeEditor();
     }
@@ -236,7 +238,7 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
      * We remove them form the active tables.
      */
     public void closing() {
-        serverConnection_.leaveRoom(currentName_);
+        controller_.getServerConnection().leaveRoom(currentName_);
     }
 
 
@@ -250,7 +252,7 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
         char c = key.getKeyChar();
         currentName_ = localPlayerName_.getText();
         if ( c == '\n' ) {
-            serverConnection_.nameChanged(oldName_, currentName_);
+            controller_.getServerConnection().nameChanged(oldName_, currentName_);
             oldName_ = currentName_;
         }
     }

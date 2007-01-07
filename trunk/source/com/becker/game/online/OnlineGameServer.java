@@ -151,18 +151,18 @@ public abstract class OnlineGameServer extends JFrame {
 
             try {
                 // initial update to the game tables for someone entering the room.
-                update();
+                update(new GameCommand(GameCommand.Name.UPDATE_TABLES, cmdProcessor_.getTables()));
 
                 while (true) {
 
-                    // recieve the serielzed commands that are sent and process them.
+                    // recieve the serialized commands that are sent and process them.
                     GameCommand cmd = (GameCommand) iStream_.readObject();
 
                     // we got a change to the tables, update internal structure and broadcast new list.
-                    cmdProcessor_.processCmd(cmd);
+                    GameCommand response = cmdProcessor_.processCmd(cmd);
 
                     for (ClientWorker w : clientConnections_) {
-                        w.update();
+                        w.update(response);
                     }
 
                     //Send acknowledgment back to client
@@ -186,13 +186,14 @@ public abstract class OnlineGameServer extends JFrame {
         /**
          * broadcast the current list of tables to all the online clients.
          */
-        public void update() throws IOException {
+        public void update(GameCommand response) throws IOException {
 
             GameContext.log(1, "OnlineGameServer: sending:"+cmdProcessor_.getTables());
 
             // must reset the stream first, otherwise tables_ will always be the same as first sent.
             oStream_.reset();
-            oStream_.writeObject(new GameCommand(GameCommand.Name.UPDATE_TABLES, cmdProcessor_.getTables()));
+            //oStream_.writeObject(new GameCommand(GameCommand.Name.UPDATE_TABLES, cmdProcessor_.getTables()));
+            oStream_.writeObject(response);
             oStream_.flush();
         }
     }

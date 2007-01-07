@@ -3,8 +3,6 @@ package com.becker.game.multiplayer.poker.ui;
 import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
 import com.becker.game.multiplayer.online.ui.*;
-import com.becker.game.multiplayer.poker.online.*;
-import com.becker.game.online.*;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -33,8 +31,5 @@ public class OnlinePokerDialog extends MultiPlayerOnlineGameDialog {
         return new PokerOptionsDialog(null, controller_);
     }
 
-    protected ServerConnection createServerConnection(OnlineChangeListener l) {
-         return new ServerConnection(OnlinePokerServer.PORT, l);
-    }
 
 }

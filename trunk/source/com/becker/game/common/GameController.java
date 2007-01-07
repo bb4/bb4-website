@@ -1,5 +1,7 @@
 package com.becker.game.common;
 
+import com.becker.game.online.*;
+
 import java.util.*;
 
 /**
@@ -12,24 +14,31 @@ import java.util.*;
  *  @author Barry Becker
  */
 public abstract class GameController
-           implements GameControllerInterface
+           implements GameControllerInterface, OnlineChangeListener
 {
 
     // these are the default game constants
     // they may be modified through the ui (see GameOptionsDialog)
 
-    // the board has the layout of the pieces
+    /** the board has the layout of the pieces. */
     protected Board board_;
 
-    // sometimes we want to draw directly to the ui while thinking (for debugging purposes)
+    /** sometimes we want to draw directly to the ui while thinking (for debugging purposes) . */
     protected ViewerCallbackInterface viewer_;
 
 
-    // the list of players actively playing the game, in the order that they move.
+    /** the list of players actively playing the game, in the order that they move. */
     protected Player[] players_;
 
-    // collections of game specific options.
+    /** collections of game specific options. */
     protected GameOptions gameOptions_;
+
+    /**
+     * Optional. Only present if we are online
+     * this allows us to talk with the game server (if it is available). null if not
+     */
+    protected ServerConnection serverConnection_;
+
 
     /**
      * Construct the game controller
@@ -213,5 +222,39 @@ public abstract class GameController
     }
 
     public abstract GameOptions getOptions();
+
+    /**
+     * You should probably check to see if online play is available before calling this.
+     * @return a server connection if it is possible to get one.
+     */
+    public ServerConnection getServerConnection() {
+
+        if (serverConnection_ == null) {
+            serverConnection_ = createServerConnection();
+        }
+        return serverConnection_;
+    }
+
+
+    /**
+     * Most games do not support online play so returning null is the default
+     * @return the server connection if one can be created, else null.
+     */
+    protected ServerConnection createServerConnection() {
+        System.out.println("Cannot create a server connection for "+ this.getClass().getName()
+                           +". Online play not supported");
+        return null;
+    }
+
+    public void handleServerUpdate(GameCommand cmd) {
+        // @@ need to put something here for. 
+        //System.out.println("Need controller implmentation for handleServerUpdate");
+    }
+
+    /**
+     *
+     * @return true if online pay is supported, and the server is available.
+     */
+    public abstract boolean isOnlinePlayAvailable();
 
 }
