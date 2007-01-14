@@ -1,4 +1,4 @@
-package com.becker.ui;
+package com.becker.ui.table;
 
 import javax.swing.*;
 import javax.swing.table.*;
@@ -6,7 +6,7 @@ import java.awt.*;
 
 /**
  * ColorCellRenderer renders a cell in a table that reperesents a color
- * @see com.becker.ui.ColorCellEditor
+ * @see com.becker.ui.table.ColorCellEditor
  *
  * @author Barry Becker
  */
@@ -23,7 +23,7 @@ public class ColorCellRenderer extends DefaultTableCellRenderer
     {
         // we know the value is a Color
         Color color = (Color)value;
-        setBackground(color);       
+        setBackground(color);
 
         return this;
     }

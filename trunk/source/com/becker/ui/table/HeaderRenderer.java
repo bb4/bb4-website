@@ -1,4 +1,4 @@
-package com.becker.ui;
+package com.becker.ui.table;
 
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
@@ -7,7 +7,7 @@ import java.awt.*;
 
 /**
  * Use this for a TableHeader Renderer instead of the DefaultTableCellRenderer
- * 
+ *
  * @author Barry Becker
  */
 public class HeaderRenderer extends DefaultTableCellRenderer

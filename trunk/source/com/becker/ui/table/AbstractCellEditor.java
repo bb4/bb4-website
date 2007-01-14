@@ -1,4 +1,4 @@
-package com.becker.ui;
+package com.becker.ui.table;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -10,7 +10,7 @@ import java.util.*;
 
 /**
  * Copied with modification from from Graphic Java (Swing) book (by David Geary).
- * 
+ *
  */
 public abstract class AbstractCellEditor
                 implements TableCellEditor, TreeCellEditor {
