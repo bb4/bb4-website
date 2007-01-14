@@ -4,6 +4,7 @@ import com.becker.game.common.*;
 import com.becker.game.multiplayer.online.ui.*;
 import com.becker.game.multiplayer.poker.player.*;
 import com.becker.game.multiplayer.poker.*;
+import com.becker.game.multiplayer.common.online.ui.*;
 
 import java.awt.*;
 
@@ -18,7 +19,7 @@ public class OnlinePokerTable extends MultiPlayerOnlineTable {
 
     /**
      * add robot player i to the table.
-     */ 
+     */
     protected void addRobotPlayer(int i) {
 
         int size = getPlayers().size();
