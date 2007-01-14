@@ -1,6 +1,7 @@
 package com.becker.game.multiplayer.online.ui;
 
 import com.becker.game.common.*;
+import com.becker.game.common.online.ui.*;
 import com.becker.game.multiplayer.common.*;
 import com.becker.game.multiplayer.common.ui.*;
 import com.becker.game.online.*;
