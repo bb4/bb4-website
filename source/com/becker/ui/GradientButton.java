@@ -10,19 +10,21 @@ import javax.swing.*;
 import javax.swing.plaf.ButtonUI;
 import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
+import java.awt.event.*;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 /**
  * GradientButton with a gradient background
  */
-public class GradientButton extends JButton
+public class GradientButton extends JButton implements MouseListener
 {
     // color at the top of the button
     private Color gradientStartColor_ = null;
     //  color at the bottom of the button
     private Color gradientEndColor_ = null;
     private static final long serialVersionUID = 0L;
+    private boolean mousedOver_ = false;
 
     private CustomUI myUI_ = new CustomUI();
 
@@ -73,6 +75,7 @@ public class GradientButton extends JButton
         Color c = UIManager.getColor( "Button.background" );
         gradientStartColor_ = c.brighter();
         gradientEndColor_ = c;
+        addMouseListener(this);
         setUI( myUI_ );
     }
 
@@ -101,7 +104,7 @@ public class GradientButton extends JButton
     }
 
     /**
-     * does the work of actually drawing th gradient background
+     * Does the work of actually drawing the gradient background.
      */
     private void addGradientBackground( Graphics g )
     {
@@ -113,23 +116,42 @@ public class GradientButton extends JButton
         Point2D.Double origin = new Point2D.Double( 0.0, 0.0 );
         Point2D.Double end = new Point2D.Double( 0.0, height );
 
+        Color startColor = gradientStartColor_;
+        Color endColor = gradientEndColor_;
+        startColor = mousedOver_ ?  startColor.brighter() : startColor;
+        //endColor = mousedOver_ ? endColor.brighter() : endColor;
+
         GradientPaint rtow;
         if ( isSelected() ) {
-            rtow = new GradientPaint( origin, gradientEndColor_,
-                    end, gradientStartColor_ );
+            rtow = new GradientPaint( origin, endColor, end, startColor );
         }
         else {
-            rtow = new GradientPaint( origin, gradientStartColor_,
-                    end, gradientEndColor_ );
+            rtow = new GradientPaint( origin, startColor, end, endColor );
         }
 
-        //int type = AlphaComposite.SRC_OVER;
-
-        // 1.0F = no transparency
-        g2D.setComposite(
-                AlphaComposite.getInstance( AlphaComposite.SRC_OVER, 1.0F ) );
+        float opacity = mousedOver_ ? 1.0f : 0.75f;
+        if (!isEnabled()) {
+            opacity = 0.6f;
+        }
+        g2D.setComposite(           // SRC_OVER
+                AlphaComposite.getInstance( AlphaComposite.SRC_OVER, opacity ));
         g2D.setPaint( rtow );
         g2D.fill( new Rectangle2D.Double( 0, 0, width, height ) );
+    }
+
+
+    public void mouseClicked(MouseEvent e) {}
+    public void mousePressed(MouseEvent e) {}
+    public void mouseReleased(MouseEvent e) {}
+
+    public void mouseEntered(MouseEvent e) {
+        mousedOver_ = true;
+        this.repaint();
+    }
+
+    public void mouseExited(MouseEvent e) {
+        mousedOver_ = false;
+        this.repaint();
     }
 
     /**
@@ -141,7 +163,7 @@ public class GradientButton extends JButton
         protected void paintText( Graphics g, JComponent c, Rectangle textRect, String text )
         {
             //if the button has no icon, add the gradient background
-            if ( c instanceof GradientButton && (((GradientButton) c).getIcon() == null) ) {
+            if ( c instanceof GradientButton && (((GradientButton) c).getIcon() == null)) {
                 addGradientBackground( g );
             }
             super.paintText( g, c, textRect, text );
@@ -150,7 +172,7 @@ public class GradientButton extends JButton
         protected void paintIcon( Graphics g, JComponent c, Rectangle iconRect )
         {
             //if the button has an icon, add the gradient background
-            if ( c instanceof GradientButton && (((GradientButton) c).getIcon() != null) ) {
+            if ( c instanceof GradientButton && (((GradientButton) c).getIcon() != null)) {
                 addGradientBackground( g );
             }
             super.paintIcon( g, c, iconRect );

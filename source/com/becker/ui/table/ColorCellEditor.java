@@ -1,15 +1,15 @@
-package com.becker.ui;
+package com.becker.ui.table;
 
 import javax.swing.*;
 import java.awt.*;
 
 /**
  * ColorCellRenderer renders a cell in a table that reperesents a color
- * @see com.becker.ui.ColorCellRenderer
+ * @see com.becker.ui.table.ColorCellRenderer
  *
  * @author Barry Becker
  */
-public class ColorCellEditor extends AbstractCellEditor
+public class ColorCellEditor extends com.becker.ui.table.AbstractCellEditor
 {
 
     ColorCellRenderer cellRenderer_ = new ColorCellRenderer();
