@@ -155,7 +155,6 @@ public class PokerController extends GameController
                 PokerPlayer player = ((PokerPlayer) p);
                 // if a player does not have enough money to ante up, he is out of the game
                 player.contributeToPot(this, ((PokerOptions)getOptions()).getAnte());
-
             }
         }
     }
@@ -264,6 +263,7 @@ public class PokerController extends GameController
      */
     public int advanceToNextPlayer()
     {
+
         PokerGameViewer pviewer = (PokerGameViewer) getViewer();
         pviewer.refresh();
 

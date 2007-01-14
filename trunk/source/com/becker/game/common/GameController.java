@@ -247,7 +247,7 @@ public abstract class GameController
     }
 
     public void handleServerUpdate(GameCommand cmd) {
-        // @@ need to put something here for. 
+        // @@ need to put something here for.
         //System.out.println("Need controller implmentation for handleServerUpdate");
     }
 

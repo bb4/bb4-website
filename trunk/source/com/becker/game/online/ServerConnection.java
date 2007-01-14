@@ -43,6 +43,10 @@ public class ServerConnection {
         changeListeners_.add(listener);
     }
 
+    public void removeOnlineChangeListener(OnlineChangeListener listener) {
+        changeListeners_.remove(listener);
+    }
+
     /**
      * @param cmd object to serialize over the wire.
      */
@@ -160,8 +164,10 @@ public class ServerConnection {
                     GameCommand cmd = (GameCommand) inputStream_.readObject();
 
                     // we got a change to the tables on the server, update our client listeners.
-                    for (OnlineChangeListener listener : changeListeners_)
-                        listener.handleServerUpdate(cmd);
+                    int num = changeListeners_.size();
+                    for (int i=0; i<num; i++)
+                        changeListeners_.get(i).handleServerUpdate(cmd);
+
                 }
                 catch (IOException e) {
                     GameContext.log(0, "Read failed.");
@@ -174,6 +180,5 @@ public class ServerConnection {
             }
         }
     }
-
 
 }

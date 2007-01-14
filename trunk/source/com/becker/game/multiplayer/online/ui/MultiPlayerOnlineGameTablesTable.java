@@ -5,9 +5,8 @@ import com.becker.game.multiplayer.common.*;
 import com.becker.game.multiplayer.common.ui.*;
 import com.becker.game.online.*;
 import com.becker.game.online.ui.*;
+import com.becker.ui.table.*;
 
-import javax.swing.*;
-import javax.swing.event.*;
 import javax.swing.table.*;
 import java.awt.event.*;
 import java.util.*;
@@ -17,25 +16,29 @@ import java.util.*;
  *
  * @author Barry Becker
  */
-public abstract class MultiPlayerOnlineGameTablesTable {
+public abstract class MultiPlayerOnlineGameTablesTable extends TableBase {
 
-    /** table of tables that the player can join. */
-    protected JTable table_;
 
     protected static final int JOIN_INDEX = 0;
-    protected static final int TABLE_NAME_INDEX = 1;
-    protected static final int NUM_PLAYERS_INDEX = 2;
-    protected static final int PLAYER_NAMES_INDEX = 3;
-    protected static final int NUM_BASE_COLUMNS = 4;
+    protected static final int NUM_PLAYERS_INDEX = 1;
+    protected static final int PLAYER_NAMES_INDEX = 2;
+    protected static final int NUM_BASE_COLUMNS = 3;
 
     protected static final String JOIN = GameContext.getLabel("ACTION");
-    protected static final String TABLE_NAME = GameContext.getLabel("TABLE_NAME");
     protected static final String MAX_NUM_PLAYERS = GameContext.getLabel("MAX_NUM_PLAYERS");
     protected static final String PLAYER_NAMES = GameContext.getLabel("PLAYER_NAMES");
+
+    protected static final String JOIN_TIP = GameContext.getLabel("ACTION_TIP");
+    protected static final String MAX_NUM_PLAYERS_TIP = GameContext.getLabel("MAX_NUM_PLAYERS_TIP");
+    protected static final String PLAYER_NAMES_TIP = GameContext.getLabel("PLAYER_NAMES_TIP");
+
+    private static final String[] COLUMN_NAMES = {JOIN, MAX_NUM_PLAYERS, PLAYER_NAMES};
 
     protected OnlineGameTable selectedTable_;
     protected List<OnlineGameTable> tableList_;
     private static int counter_;
+
+    private ActionListener actionListener_;
 
 
     /**
@@ -44,39 +47,39 @@ public abstract class MultiPlayerOnlineGameTablesTable {
      */
     public MultiPlayerOnlineGameTablesTable(ActionListener actionListener)
     {
+        this(COLUMN_NAMES, actionListener);
+    }
+
+    public MultiPlayerOnlineGameTablesTable(String[] colNames, ActionListener actionListener) {
+
+        initColumnMeta(colNames);
+
+        assert(actionListener != null);
+        actionListener_ = actionListener;
         selectedTable_ = null;
-        initializeTable(actionListener);
         tableList_ = new ArrayList<OnlineGameTable>();
+
+        initializeTable(null);              
     }
 
     /***
      * init the table of tables.
      */
-    protected void initializeTable(ActionListener actionListener)
-    {
-        TableModel m = new PlayerTableModel(getColumnNames(), 0, true);
-        table_ = new JTable(m);
+    protected void updateColumnMeta(TableColumnMeta[] columnMeta) {
+
+        columnMeta[NUM_PLAYERS_INDEX].setTooltip(MAX_NUM_PLAYERS_TIP);
 
         // more space needed for the names list.
-        TableColumn nameColumn = table_.getColumn(PLAYER_NAMES);
-        nameColumn.setPreferredWidth(200);
+        columnMeta[PLAYER_NAMES_INDEX].setPreferredWidth(200);
 
-        TableColumn actionColumn = table_.getColumn(JOIN);
-        actionColumn.setCellRenderer(new OnlineActionCellRenderer(actionListener));
-        actionColumn.setCellEditor(new OnlineActionCellEditor(actionListener));
-        actionColumn.setPreferredWidth(55);
-
-        TableColumn tableNameColumn = table_.getColumn(TABLE_NAME);
-        tableNameColumn.setPreferredWidth(0);
+        TableColumnMeta actionCol = columnMeta[JOIN_INDEX];
+        actionCol.setCellRenderer(new OnlineActionCellRenderer(actionListener_));
+        actionCol.setCellEditor(new OnlineActionCellEditor(actionListener_));
+        actionCol.setPreferredWidth(55);
     }
 
-    protected String[] getColumnNames() {
-        return new String[] {JOIN, TABLE_NAME, MAX_NUM_PLAYERS, PLAYER_NAMES};
-    }
-
-    public JTable getTable()
-    {
-        return table_;
+    protected TableModel createTableModel(String[] columnNames) {
+        return new PlayerTableModel(columnNames, 0, true);
     }
 
     public OnlineGameTable getGameTable(int i) {
@@ -90,14 +93,10 @@ public abstract class MultiPlayerOnlineGameTablesTable {
         return selectedTable_;
     }
 
-    public void addListSelectionListener(ListSelectionListener l)
-    {
-        table_.getSelectionModel().addListSelectionListener(l);
-    }
 
-    protected PlayerTableModel getModel()
+    protected PlayerTableModel getPlayerModel()
     {
-        return (PlayerTableModel)table_.getModel();
+        return (PlayerTableModel)getModel();
     }
 
     /**
@@ -105,7 +104,7 @@ public abstract class MultiPlayerOnlineGameTablesTable {
      */
     public void removeAllRows() {
 
-        PlayerTableModel m = this.getModel();
+        PlayerTableModel m = this.getPlayerModel();
         for (int i = m.getRowCount() -1; i >= 0; i--) {
             m.removeRow(i);
         }
@@ -121,6 +120,10 @@ public abstract class MultiPlayerOnlineGameTablesTable {
 
     public abstract Player createPlayerForName(String playerName);
 
+    protected void addRow(Object onlineTable) {
+        this.addRow((OnlineGameTable) onlineTable, true);
+    }
+
     /**
      * add a row based on a player object
      * @param onlineTable to add
@@ -128,7 +131,7 @@ public abstract class MultiPlayerOnlineGameTablesTable {
      */
     protected void addRow(OnlineGameTable onlineTable, boolean localPlayerAtTable) {
 
-        getModel().addRow(getRowObject(onlineTable, localPlayerAtTable));
+        getPlayerModel().addRow(getRowObject(onlineTable, localPlayerAtTable));
         tableList_.add(onlineTable);
         selectedTable_ = onlineTable;
     }
@@ -147,10 +150,6 @@ public abstract class MultiPlayerOnlineGameTablesTable {
         addRow(onlineTable, true);
     }
 
-
-    protected int getNumColumns() {
-        return getColumnNames().length;
-    }
 
     protected static synchronized String getUniqueName() {
           return "Table "+ counter_++;

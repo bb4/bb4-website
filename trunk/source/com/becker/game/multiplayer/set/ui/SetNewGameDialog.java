@@ -21,11 +21,9 @@ public class SetNewGameDialog extends MultiPlayerNewGameDialog
     }
 
 
-
     protected PlayerTable createPlayerTable() {
         return  new SetPlayerTable((SetPlayer[]) controller_.getPlayers());
     }
-
 
 
     protected MultiPlayerOnlineGameTablesTable createOnlineGamesTable(String name) {

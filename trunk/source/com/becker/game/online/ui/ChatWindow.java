@@ -8,7 +8,6 @@ import java.awt.event.*;
 
 /**
  * Allows IM chatting with other online players.
- * @@ shoudl word wrap instead of have horx scrollbar
  *
  * @author Barry Becker Date: Jan 7, 2007
  */
@@ -26,8 +25,10 @@ public class ChatWindow extends JPanel implements OnlineChangeListener, KeyListe
 
         textArea_ = new JTextArea();
         textArea_.setBackground(getBackground());
+        textArea_.setWrapStyleWord(true);
+        textArea_.setLineWrap(true);
         scrollPane_ = new JScrollPane(textArea_);
-
+        scrollPane_.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         messageField_ = new JTextField();
         messageField_.addKeyListener(this);
@@ -39,23 +40,29 @@ public class ChatWindow extends JPanel implements OnlineChangeListener, KeyListe
         add(messagePanel, BorderLayout.SOUTH);
     }
 
+    /**
+     * Post messages from other players.
+     */
     public void handleServerUpdate(GameCommand cmd) {
         if (cmd.getName() == GameCommand.Name.CHAT_MESSAGE)  {
             textArea_.append(cmd.getArgument().toString());
             // if a scrollbar is showing, then make sure it is scrolled to the bottom to see the latest message.
-
-            JViewport vp = scrollPane_.getViewport();
-            vp.setViewPosition(new Point(0, vp.getHeight()));
+            scrollPane_.getVerticalScrollBar().setValue(scrollPane_.getVerticalScrollBar().getMaximum());
             textArea_.append("\n");
         }
     }
 
 
+    /**
+     * Send the message when you press enter.
+     */
     public void keyTyped(KeyEvent e) {
         if (e.getKeyChar() == '\n') {
             String txt = messageField_.getText();
-            messageField_.setText("");
-            connection_.sendCommand(new GameCommand(GameCommand.Name.CHAT_MESSAGE, txt));
+            if (txt.trim().length() > 0) {
+                messageField_.setText("");
+                connection_.sendCommand(new GameCommand(GameCommand.Name.CHAT_MESSAGE, txt));
+            }
         }
     }
 

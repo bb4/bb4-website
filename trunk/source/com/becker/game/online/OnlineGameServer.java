@@ -38,10 +38,12 @@ public abstract class OnlineGameServer extends JFrame {
 
         cmdProcessor_ = new ServerCommandProcessor();
         clientConnections_ = new LinkedList<ClientWorker>();
-
         openListenSocket();
     }
 
+    /**
+     * In the long term there will not be a UI, that is why this class is not itn the ui subpackage.
+     */
     private void initUI() {
         JPanel panel = new JPanel();
         JLabel label = new JLabel("Commands received over the socket:");

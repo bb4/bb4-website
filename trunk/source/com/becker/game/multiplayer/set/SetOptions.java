@@ -16,9 +16,12 @@ public class SetOptions extends MultiGameOptions {
     // initial number of cards shown face up on the board.
     private static final int INITIAL_NUM_CARDS_SHOWN = 12;
 
+    private static final int DEFAULT_SET_PLAYER_LIMIT = 5;
+
     private int initialNumCardsShown_ = INITIAL_NUM_CARDS_SHOWN;
 
     public SetOptions() {
+        setMaxNumPlayers(DEFAULT_SET_PLAYER_LIMIT);
     }
 
     public SetOptions(int maxNumPlayers, int numRobotPlayers, int initialNumCards) {

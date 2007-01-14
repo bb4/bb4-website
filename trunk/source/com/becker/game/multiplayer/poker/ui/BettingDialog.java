@@ -32,13 +32,17 @@ public final class BettingDialog extends OptionsDialog
      * constructor - create the tree dialog.
      * @param pc pokerController
      */
-    public BettingDialog(PokerController pc)
+    public BettingDialog(PokerController pc, Component parent)
     {
         pc_ = pc;
         player_ = (PokerPlayer)pc_.getCurrentPlayer();
         callAmount_ = player_.getCallAmount(pc_);
         contributeAmount_ = 0;
 
+        Point p = parent.getLocationOnScreen();
+        // offset the dlg so the board is visible as a reference
+        setLocation((int)(p.getX() + 0.7*getParent().getWidth()),
+                                 (int)(p.getY() + getParent().getHeight()/3));
         initUI();
     }
 
@@ -53,12 +57,12 @@ public final class BettingDialog extends OptionsDialog
         mainPanel_.setLayout( new BorderLayout() );
         mainPanel_.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 
-        JPanel pokerHandPanel_=new PokerHandPanel(player_.getHand());
+        JPanel pokerHandPanel =new PokerHandPanel(player_.getHand());
         JPanel buttonsPanel = createButtonsPanel();
 
         JPanel instructions = createInstructionsPanel();
 
-        mainPanel_.add(pokerHandPanel_, BorderLayout.NORTH);
+        mainPanel_.add(pokerHandPanel , BorderLayout.NORTH);
         mainPanel_.add(instructions, BorderLayout.CENTER);
         mainPanel_.add(buttonsPanel, BorderLayout.SOUTH);
 

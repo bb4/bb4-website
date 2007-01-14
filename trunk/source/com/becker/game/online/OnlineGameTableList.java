@@ -6,6 +6,8 @@ import java.io.*;
 import java.util.*;
 
 /**
+ * A list of tables that players can sit down at in rder to play a game in an online environment.
+ * 
  * @author Barry Becker Date: May 21, 2006
  */
 public class OnlineGameTableList extends ArrayList<OnlineGameTable>

@@ -28,7 +28,7 @@ public class SetPlayerTable extends PlayerTable
 
 
     /**
-     * constructor
+     * constructor                                                                           
      * @param players to initializet the rows in the table with.
      */
     public SetPlayerTable(SetPlayer[] players)
@@ -59,13 +59,14 @@ public class SetPlayerTable extends PlayerTable
      * add a row based on a player object
      * @param player to add
      */
-    protected void addRow(Player player)
+    protected void addRow(Object player)
     {
+        Player p = (Player) player;
         Object d[] = new Object[getNumColumns()];
-        d[NAME_INDEX] = player.getName();
-        d[COLOR_INDEX] = player.getColor();
-        d[HUMAN_INDEX] = player.isHuman();
-        getModel().addRow(d);
+        d[NAME_INDEX] = p.getName();
+        d[COLOR_INDEX] = p.getColor();
+        d[HUMAN_INDEX] = p.isHuman();
+        getPlayerModel().addRow(d);
     }
 
     protected Player createPlayer() {
@@ -74,6 +75,5 @@ public class SetPlayerTable extends PlayerTable
         SetPlayer player = SetPlayer.createSetPlayer("Player "+(ct+1), newColor, true);
         return player;
     }
-
 
 }

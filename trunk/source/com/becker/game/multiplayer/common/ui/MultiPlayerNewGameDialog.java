@@ -104,13 +104,13 @@ public abstract class MultiPlayerNewGameDialog extends NewGameDialog
         Object source = e.getSource();
 
         if ( source == addButton_ ) {
-            playerTable_.addRow();
-            MultiGameOptions options = (MultiGameOptions) controller_.getOptions();
-            addButton_.setEnabled(playerTable_.getModel().getRowCount() < options.getMaxNumPlayers());
+            playerTable_.addRow();                     
         }
         else if ( source == removeButton_ ) {
             playerTable_.removeSelectedRows();
         }
+        MultiGameOptions options = (MultiGameOptions) controller_.getOptions();
+        addButton_.setEnabled(playerTable_.getModel().getRowCount() < options.getMaxNumPlayers());
     }
 
     /**

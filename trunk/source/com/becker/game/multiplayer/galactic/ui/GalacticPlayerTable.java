@@ -4,6 +4,7 @@ import com.becker.common.*;
 import com.becker.game.common.*;
 import com.becker.game.multiplayer.common.ui.*;
 import com.becker.game.multiplayer.galactic.*;
+import com.becker.ui.table.*;
 
 import javax.swing.table.*;
 import javax.swing.event.*;
@@ -23,8 +24,8 @@ public class GalacticPlayerTable extends PlayerTable implements TableModelListen
 {
 
     private static final int ICON_INDEX = 3;
-    private static final int PLANET_INDEX = 4;
-    private static final int SHIPS_INDEX = 5;
+    private static final int HOME_PLANET_INDEX = 4;
+    private static final int NUM_SHIPS_INDEX = 5;
     private static final int PRODUCTION_INDEX = 6;
 
     private static final String ICON = GameContext.getLabel("ICON");
@@ -32,7 +33,7 @@ public class GalacticPlayerTable extends PlayerTable implements TableModelListen
     private static final String NUM_SHIPS = GameContext.getLabel("NUM_SHIPS");
     private static final String PRODUCTION = GameContext.getLabel("PRODUCTION");
 
-    /** hight enought o accommodate the icon. */
+    /** hight enought to accommodate the icon. */
     private static final int ROW_HEIGHT = 30;
 
 
@@ -55,18 +56,18 @@ public class GalacticPlayerTable extends PlayerTable implements TableModelListen
     {
         super(players, galacticColumnNames_);
         table_.getModel().addTableModelListener(this);
+
+        setRowHeight(ROW_HEIGHT);
     }
 
-    protected void initializeTable() {
-        super.initializeTable();
-        table_.getColumn(ICON).setPreferredWidth(48);
-        table_.getColumn(HOME_PLANET).setPreferredWidth(100);
-        table_.getColumn(NUM_SHIPS).setPreferredWidth(100);
-        table_.getColumn(PRODUCTION).setPreferredWidth(100);
-        table_.setRowHeight(ROW_HEIGHT);
-        table_.doLayout();
-    }
+    protected void updateColumnMeta(TableColumnMeta[] columnMeta) {
 
+        columnMeta[ICON_INDEX].setPreferredWidth(48);
+        columnMeta[HOME_PLANET_INDEX].setPreferredWidth(100);
+        columnMeta[NUM_SHIPS_INDEX].setPreferredWidth(100);
+        columnMeta[PRODUCTION_INDEX].setPreferredWidth(100);
+        super.updateColumnMeta(columnMeta);
+    }
 
     /**
      * @return  the players represented by rows in the table
@@ -77,10 +78,10 @@ public class GalacticPlayerTable extends PlayerTable implements TableModelListen
         int nRows = model.getRowCount();
         Player[] players = new GalacticPlayer[nRows];
         for (int i=0; i<nRows; i++) {
-            char planetName = (Character) model.getValueAt(i, PLANET_INDEX);
+            char planetName = (Character) model.getValueAt(i, HOME_PLANET_INDEX);
             Planet planet = Galaxy.getPlanet(planetName);
             planet.setProductionCapacity((Integer) model.getValueAt(i, PRODUCTION_INDEX));
-            planet.setNumShips((Integer) (model.getValueAt(i, SHIPS_INDEX)));
+            planet.setNumShips((Integer) (model.getValueAt(i, NUM_SHIPS_INDEX)));
             ImageIcon icon = (ImageIcon) (model.getValueAt(i, ICON_INDEX));
             players[i] = GalacticPlayer.createGalacticPlayer(
                                     (String)model.getValueAt(i, NAME_INDEX),
@@ -96,19 +97,19 @@ public class GalacticPlayerTable extends PlayerTable implements TableModelListen
      * add a row based on a player object
      * @param player to add
      */
-    protected void addRow(Player player)
+    protected void addRow(Object player)
     {
         GalacticPlayer p = (GalacticPlayer) player;
         Object d[] = new Object[getNumColumns()];
-        d[NAME_INDEX] = player.getName();
-        d[COLOR_INDEX ] = player.getColor();
+        d[NAME_INDEX] = p.getName();
+        d[COLOR_INDEX ] = p.getColor();
         d[ICON_INDEX] = p.getIcon();
-        d[PLANET_INDEX] = p.getHomePlanet().getName();
-        d[SHIPS_INDEX] = p.getHomePlanet().getNumShips();
+        d[HOME_PLANET_INDEX] = p.getHomePlanet().getName();
+        d[NUM_SHIPS_INDEX] = p.getHomePlanet().getNumShips();
         d[PRODUCTION_INDEX] = p.getHomePlanet().getProductionCapacity();
-        d[HUMAN_INDEX] = player.isHuman();
+        d[HUMAN_INDEX] = p.isHuman();
         //data[i] = d;
-        getModel().addRow(d);
+        getPlayerModel().addRow(d);
     }
 
     protected Player createPlayer() {
@@ -132,7 +133,7 @@ public class GalacticPlayerTable extends PlayerTable implements TableModelListen
             int row = e.getFirstRow();
             TableModel m = table_.getModel();
             boolean isHuman = (Boolean) m.getValueAt(row, HUMAN_INDEX);
-            char c = (Character) m.getValueAt(row, PLANET_INDEX);
+            char c = (Character) m.getValueAt(row, HOME_PLANET_INDEX);
             Planet p = Galaxy.getPlanet(c);
             //Color color = (Color) m.getValueAt(row, COLOR_INDEX);
             // create a dummy player of the correct type and get the image icon.

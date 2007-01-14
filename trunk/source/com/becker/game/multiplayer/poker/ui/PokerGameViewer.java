@@ -176,8 +176,7 @@ public class PokerGameViewer extends GameBoardViewer
 
 
     /**
-     * This will run all the battle simulations needed to calculate the result and put it in the new move.
-     * Simulations may actually be a reinforcements instead of a battle.
+     *
      * @param lastMove the move to show (but now record)
      */
     public PokerRound createMove(Move lastMove)

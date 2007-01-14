@@ -32,7 +32,7 @@ public class SetSummaryTable extends SummaryTable
     public SetSummaryTable(Player[] players)
     {
         super(players, COLUMN_NAMES);
-        table_.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        getTable().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
 
@@ -40,15 +40,15 @@ public class SetSummaryTable extends SummaryTable
      * add a row based on a player object
      * @param player to add
      */
-    protected void addRow(Player player)
+    protected void addRow(Object player)
     {
         SetPlayer p = (SetPlayer)player;
         Object d[] = new Object[getNumColumns()];
 
-        d[NAME_INDEX] = player.getName();
-        d[COLOR_INDEX ] = player.getColor();
+        d[NAME_INDEX] = p.getName();
+        d[COLOR_INDEX ] = p.getColor();
         d[NUM_SETS_INDEX] = "" + p.getNumSetsFound();
 
-        getModel().addRow(d);
+        getPlayerModel().addRow(d);
     }
 }

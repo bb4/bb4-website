@@ -22,7 +22,6 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
 
     private static final String DEFAULT_NAME = "<name>";
 
-    // new table in play online tab                                                                                                                                           3
     private JTextField localPlayerName_;
     private GradientButton createTableButton_;
     private MultiPlayerOnlineGameTablesTable onlineGameTablesTable_;
@@ -33,7 +32,7 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
     /**
      * Constructor
      */
-    public  MultiPlayerOnlineGameDialog(Frame parent, ViewerCallbackInterface viewer) {
+    public MultiPlayerOnlineGameDialog(Frame parent, ViewerCallbackInterface viewer) {
         super(parent, viewer);
     }
 
@@ -67,25 +66,16 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
         createTableButton_.addActionListener(this);
         buttonsPanel.add(createTableButton_, BorderLayout.EAST);
 
-        JPanel namePanel = new JPanel(new BorderLayout());
-        JLabel nameLabel = new JLabel("Your Name: ");
-        currentName_ = DEFAULT_NAME;
-        localPlayerName_ = new JTextField(DEFAULT_NAME);
-        localPlayerName_.addMouseListener(this);
-        localPlayerName_.addKeyListener(this);
+        JPanel namePanel = createNamePanel();
 
-        //localPlayerName_.setPreferredSize(new Dimension(180, 14));
-
-        namePanel.add(nameLabel, BorderLayout.WEST);
-        namePanel.add(localPlayerName_, BorderLayout.CENTER);
         JPanel fill = new JPanel();
         fill.setPreferredSize(new Dimension(180, 20));
         namePanel.add(fill, BorderLayout.EAST);
         JPanel bottomFill = new JPanel();
         bottomFill.setPreferredSize(new Dimension(100, 10));
 
-        headerPanel.add(namePanel, BorderLayout.NORTH);
-        headerPanel.add(titleLabel, BorderLayout.CENTER);
+        headerPanel.add(namePanel, BorderLayout.CENTER);
+        //headerPanel.add(titleLabel, BorderLayout.CENTER);
         headerPanel.add(bottomFill, BorderLayout.SOUTH);
         headerPanel.add(buttonsPanel, BorderLayout.EAST);
         playOnlinePanel.add(headerPanel, BorderLayout.NORTH);
@@ -99,6 +89,19 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
             controller_.getServerConnection().enterRoom();
         }
         return playOnlinePanel;
+    }
+
+    private JPanel createNamePanel() {
+        JPanel namePanel = new JPanel(new BorderLayout());
+        JLabel nameLabel = new JLabel("Your Name: ");
+        currentName_ = DEFAULT_NAME;
+        localPlayerName_ = new JTextField(DEFAULT_NAME);
+        localPlayerName_.addMouseListener(this);
+        localPlayerName_.addKeyListener(this);
+
+        namePanel.add(nameLabel, BorderLayout.WEST);
+        namePanel.add(localPlayerName_, BorderLayout.CENTER);
+        return namePanel;
     }
 
 
@@ -164,12 +167,12 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
     public void actionPerformed( ActionEvent e ) {
         Object source = e.getSource();
 
-
         if (source == createTableButton_) {
             checkName();
             createNewGameTable();
         }
         else {
+            System.out.println("about to join diff table");
             checkName();
             joinDifferentTable((JoinButton) source);
         }
@@ -219,9 +222,10 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
     private void joinDifferentTable(JoinButton b) {
 
         int joinRow = b.getRow();
-        PlayerTableModel m = onlineGameTablesTable_.getModel();
+        System.out.println("in join diff table. row="+ joinRow);
+        PlayerTableModel m = onlineGameTablesTable_.getPlayerModel();
 
-        for (int i=0; i<m.getRowCount(); i++) {
+        for (int i=0; i < m.getRowCount(); i++) {
             // you can join tables other than the one you are at as long as they are not already playing.
             boolean enableJoin = (i != joinRow) && !onlineGameTablesTable_.getGameTable(i).isReadyToPlay();
             m.setValueAt(enableJoin, i, 0);
@@ -262,6 +266,7 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
      */
     public void mouseClicked(MouseEvent e) {}
     public void mousePressed(MouseEvent e) {
+        if (localPlayerName_.getText().equals(DEFAULT_NAME))
             localPlayerName_.setText("");
     }
     public void mouseReleased(MouseEvent e) {}
