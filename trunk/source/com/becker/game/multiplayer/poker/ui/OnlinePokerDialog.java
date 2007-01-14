@@ -3,6 +3,7 @@ package com.becker.game.multiplayer.poker.ui;
 import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
 import com.becker.game.multiplayer.online.ui.*;
+import com.becker.game.multiplayer.common.online.ui.*;
 
 import java.awt.*;
 import java.awt.event.*;
