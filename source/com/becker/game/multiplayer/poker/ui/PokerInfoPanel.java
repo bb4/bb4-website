@@ -125,25 +125,17 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
 
         if (e.getSource() == commandButton_)
         {
-
            // open the command dialog to get the players commands
            PokerPlayer currentPlayer = (PokerPlayer)pc.getCurrentPlayer();
 
            // skip the player if he has folded
 
-           // if the current player does not own any planets, then advance to the next player
+           // if the current player has folded, then advance to the next player.
            if (currentPlayer.hasFolded())  {
               pc.advanceToNextPlayer();
            }
 
-
-           BettingDialog bettingDialog =
-                   new BettingDialog(pc); //currentPlayer, callAmount, allInAmount);
-           Point p = this.getParent().getLocationOnScreen();
-
-           // offset the dlg so the board is visible as a reference
-           bettingDialog.setLocation((int)(p.getX() + 0.7*getParent().getWidth()),
-                                     (int)(p.getY() + getParent().getHeight()/3));
+           BettingDialog bettingDialog = new BettingDialog(pc, getParent());
 
            boolean canceled = bettingDialog.showDialog();
            if ( !canceled ) {

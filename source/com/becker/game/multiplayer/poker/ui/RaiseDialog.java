@@ -1,7 +1,6 @@
 package com.becker.game.multiplayer.poker.ui;
 
 import com.becker.game.common.*;
-import com.becker.game.multiplayer.poker.*;
 import com.becker.game.multiplayer.poker.player.*;
 import com.becker.ui.*;
 
@@ -10,8 +9,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 /**
- * Allow the user to specify a single order
- * @@ should show the distance when they have both origin and dest specified.
+ * Allow the user to specify amount to raise the pot.
  *
  * @author Barry Becker
  */

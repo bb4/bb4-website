@@ -30,6 +30,7 @@ public abstract class GameInfoPanel extends TexturedPanel implements GameChanged
     private static final Font PLAYER_FONT = new Font( "SansSerif", Font.BOLD, 12 );
     protected static final Font LABEL_FONT = new Font( "SansSerif", Font.PLAIN, 12 );
     protected static final int DEFAULT_MIN_WIDTH = 210;
+    protected static final int MAX_HEIGHT = 1000;
 
     /**
      * Constructor
@@ -41,20 +42,20 @@ public abstract class GameInfoPanel extends TexturedPanel implements GameChanged
 
         this.setBorder( BorderFactory.createLoweredBevelBorder() );
         this.setToolTipText( getTitleText() );
-        this.setPreferredSize( new Dimension( getMinWidth(), 1000 ) );
+        this.setPreferredSize( new Dimension( getMinWidth(), MAX_HEIGHT ) );
         this.setLayout( new BoxLayout( this, BoxLayout.Y_AXIS ) );
 
         createSubPanels();
 
         if (controller_.isOnlinePlayAvailable())  {
             ChatWindow chat = new ChatWindow(controller_.getServerConnection());
-            chat.setPreferredSize(new Dimension( getMinWidth(), 1000));
+            chat.setPreferredSize(new Dimension( getMinWidth(), MAX_HEIGHT));
             add( chat );
         }
         else {
             // this pushes everything to the top
             JPanel filler = createPanel();
-            filler.setPreferredSize(new Dimension( getMinWidth(), 1000));
+            filler.setPreferredSize(new Dimension( getMinWidth(), MAX_HEIGHT));
             add( filler );
         }
     }

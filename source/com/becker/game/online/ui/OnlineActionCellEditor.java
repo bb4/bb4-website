@@ -1,7 +1,8 @@
 package com.becker.game.online.ui;
 
 import com.becker.ui.*;
-import com.becker.ui.AbstractCellEditor;
+import com.becker.ui.table.AbstractCellEditor;
+import com.becker.ui.table.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +11,7 @@ import java.awt.event.*;
 /**
  * @author Barry Becker Date: May 20, 2006
  */
-public class OnlineActionCellEditor extends AbstractCellEditor {
+public class OnlineActionCellEditor extends com.becker.ui.table.AbstractCellEditor {
 
     private OnlineActionCellRenderer cellRenderer_;
 

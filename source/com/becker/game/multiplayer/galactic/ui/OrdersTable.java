@@ -1,15 +1,13 @@
 package com.becker.game.multiplayer.galactic.ui;
 
+import com.becker.game.common.*;
+import com.becker.game.multiplayer.common.ui.*;
 import com.becker.game.multiplayer.galactic.*;
-import com.becker.game.multiplayer.common.ui.PlayerTableModel;
-import com.becker.game.common.GameContext;
-import com.becker.ui.HeaderRenderer;
+import com.becker.ui.table.*;
 
-import javax.swing.*;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.*;
+import java.awt.geom.*;
 import java.util.*;
-import java.awt.geom.Point2D;
 
 
 /**
@@ -20,9 +18,8 @@ import java.awt.geom.Point2D;
  *
  * @author Barry Becker
  */
-public class OrdersTable
+public class OrdersTable extends TableBase
 {
-    private JTable table_;
     private List<Order> lastOrders_;
 
     private static final int ORIGIN_INDEX = 0;
@@ -60,40 +57,24 @@ public class OrdersTable
      */
     public OrdersTable(List<Order> orders)
     {
-        initializeTable();
+        super(orders.toArray(), columnNames_);
+
         lastOrders_ = orders;
-
-        if (orders!=null) {
-            for (int i=0; i<orders.size(); i++)  {
-                Order order = orders.get(i);
-                addRow(order);
-            }
-        }
-        // add tooltips
-        for (int i=0; i<columnNames_.length; i++) {
-            TableCellRenderer r = new HeaderRenderer();
-            table_.getColumn(columnNames_[i]).setHeaderRenderer(r);
-            //System.out.println("r="+r);
-            JComponent c = (JComponent)r.getTableCellRendererComponent(table_, columnNames_[i], false, false, 0, 0);
-            c.setToolTipText(columnTips_[i]);
-        }
-
     }
 
-    private void initializeTable()
-    {
-        TableModel m = new PlayerTableModel(columnNames_, 0, false);
-        table_ = new JTable(m);
+    protected void updateColumnMeta(TableColumnMeta[] columnMeta) {
 
-
+        for (int i = 0; i < getNumColumns(); i++) {
+            columnMeta[i].setTooltip(columnTips_[i]);
+        }
     }
 
-    public int getNumRows() {
-        return table_.getRowCount();
+    protected TableModel createTableModel(String[] columnNames) {
+        return  new PlayerTableModel(columnNames_, 0, false);
     }
 
     public void removeRow(int rowIndex) {
-         getModel().removeRow(rowIndex);
+         getPlayerModel().removeRow(rowIndex);
     }
 
     /**
@@ -158,34 +139,25 @@ public class OrdersTable
         return outgoingMap;
     }
 
-    public JTable getTable()
+    private PlayerTableModel getPlayerModel()
     {
-        return table_;
-    }
-
-    public void addListSelectionListener(ListSelectionListener l)
-    {
-        table_.getSelectionModel().addListSelectionListener(l);
-    }
-
-    private PlayerTableModel getModel()
-    {
-        return (PlayerTableModel)table_.getModel();
+        return (PlayerTableModel)getModel();
     }
 
     /**
      * add a row based on a player object
      * @param order to add
      */
-    public void addRow(Order order)
+    public void addRow(Object order)
     {
+        Order o = (Order)order;
         Object d[] = new Object[NUM_COLS];
-        d[ORIGIN_INDEX] = order.getOrigin().getName();
-        d[DESTINATION_INDEX ] = order.getDestination().getName();
-        d[NUM_SHIPS_INDEX] = order.getFleetSize();
-        d[DISTANCE_INDEX] = new Float(order.getTimeRemaining());
+        d[ORIGIN_INDEX] = o.getOrigin().getName();
+        d[DESTINATION_INDEX ] = o.getDestination().getName();
+        d[NUM_SHIPS_INDEX] = o.getFleetSize();
+        d[DISTANCE_INDEX] = new Float(o.getTimeRemaining());
 
-        getModel().addRow(d);
+        getPlayerModel().addRow(d);
     }
 
 }

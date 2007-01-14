@@ -183,7 +183,6 @@ class GalacticInfoPanel extends GameInfoPanel implements GameChangedListener, Ac
      */
     public void gameChanged( GameChangedEvent gce )
     {
-        System.out.println("in GalacticInfoPanel game changed c="+ controller_);
         if ( controller_ == null )
             return;
         //Player currentPlayer = controller_.getCurrentPlayer();

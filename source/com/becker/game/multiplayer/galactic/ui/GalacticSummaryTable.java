@@ -45,18 +45,18 @@ public class GalacticSummaryTable extends SummaryTable
      * add a row based on a player object
      * @param player to add
      */
-    protected void addRow(Player player)
+    protected void addRow(Object player)
     {
         GalacticPlayer p = (GalacticPlayer)player;
         Object d[] = new Object[getNumColumns()];
         List planets = Galaxy.getPlanets(p);
         // sum the num ships and productions
 
-        d[NAME_INDEX] = player.getName();
-        d[COLOR_INDEX ] = player.getColor();
+        d[NAME_INDEX] = p.getName();
+        d[COLOR_INDEX ] = p.getColor();
         d[NUM_PLANETS_INDEX] = planets.size();
         d[SHIPS_INDEX] =  p.getTotalNumShips();
         d[PRODUCTION_INDEX] = p.getTotalProductionCapacity();
-        getModel().addRow(d);
+        getPlayerModel().addRow(d);
     }
 }

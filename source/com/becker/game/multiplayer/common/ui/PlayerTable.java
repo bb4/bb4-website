@@ -1,10 +1,9 @@
 package com.becker.game.multiplayer.common.ui;
 
 import com.becker.game.common.*;
-import com.becker.ui.*;
+import com.becker.ui.table.*;
 
 import javax.swing.*;
-import javax.swing.event.*;
 import javax.swing.table.*;
 import java.util.*;
 
@@ -16,9 +15,8 @@ import java.util.*;
  *
  * @author Barry Becker
  */
-public abstract class PlayerTable
+public abstract class PlayerTable extends TableBase
 {
-    protected JTable table_;
 
     // remember the deleted rows, so we can add them back when the user clicks add again
     protected List<Vector> deletedRows_;
@@ -31,7 +29,6 @@ public abstract class PlayerTable
     protected static final String COLOR = GameContext.getLabel("COLOR");
     protected static final String HUMAN = GameContext.getLabel("HUMAN");
 
-    protected String[] columnNames_;
 
     /**
      * constructor
@@ -39,58 +36,27 @@ public abstract class PlayerTable
      */
     public PlayerTable(Player[] players, String[] columnNames)
     {
+        super(players, columnNames);
+
         deletedRows_ = new ArrayList<Vector>();
-        columnNames_ = columnNames;
-
-        initializeTable();
-
-        for (Player p : players) {
-            addRow(p);
-        }
     }
 
-    protected void initializeTable()
-    {
-        TableModel m = new PlayerTableModel(columnNames_, 0, true);
-        table_ = new JTable(m);
+    protected void updateColumnMeta(TableColumnMeta[] columnMeta) {
 
-        table_.getColumn(NAME).setPreferredWidth(130);
-        table_.getColumn(HUMAN).setPreferredWidth(80);
-
-        TableColumn colColumn = table_.getColumn(COLOR);
-        colColumn.setCellRenderer(new ColorCellRenderer());
-        colColumn.setCellEditor(new ColorCellEditor(GameContext.getLabel("SELECT_PLAYER_COLOR")));
-        colColumn.setPreferredWidth(40);
-        colColumn.setWidth(20);
-        colColumn.setMaxWidth(40);
-        table_.doLayout();
+        columnMeta[NAME_INDEX].setPreferredWidth(130);
+        columnMeta[HUMAN_INDEX].setPreferredWidth(80);
+        TableColumnMeta colorColumnMeta = new TableColumnMeta(COLOR, null, 20, 40, 40);
+        colorColumnMeta.setCellRenderer(new ColorCellRenderer());
+        colorColumnMeta.setCellEditor(new ColorCellEditor(GameContext.getLabel("SELECT_PLAYER_COLOR")));
+        columnMeta[COLOR_INDEX] = colorColumnMeta;
     }
+
 
     /**
      * @return  the players represented by rows in the table
      */
     public abstract Player[] getPlayers();
 
-    public JTable getTable()
-    {
-        return table_;
-    }
-
-    public void addListSelectionListener(ListSelectionListener l)
-    {
-        table_.getSelectionModel().addListSelectionListener(l);
-    }
-
-    protected PlayerTableModel getModel()
-    {
-        return (PlayerTableModel)table_.getModel();
-    }
-
-    /**
-     * add a row based on a player object
-     * @param player to add
-     */
-    protected abstract void addRow(Player player);
 
     /**
      * add another row to the end of the table.
@@ -102,7 +68,7 @@ public abstract class PlayerTable
             addRow(player);
         }
         else
-            getModel().addRow(deletedRows_.remove(0));
+            getPlayerModel().addRow(deletedRows_.remove(0));
     }
 
     protected abstract Player createPlayer();
@@ -118,16 +84,23 @@ public abstract class PlayerTable
             JOptionPane.showMessageDialog(null, "You are not allowed to delete all the players!");
             return;
         }
+        PlayerTableModel model = (PlayerTableModel)getModel();
         for (int i=nSelected-1; i>=0; i--) {
             int selRow = selectedRows[i];
-            System.out.println("adding this to delete list:"+ getModel().getDataVector().elementAt(selRow).getClass().getName());
-            deletedRows_.add((Vector)getModel().getDataVector().elementAt(selRow));
-            getModel().removeRow(selRow);
+            System.out.println("adding this to delete list:"+ model.getDataVector().elementAt(selRow).getClass().getName());
+            deletedRows_.add((Vector)model.getDataVector().elementAt(selRow));
+            model.removeRow(selRow);
         }
     }
 
-    protected int getNumColumns() {
-        return columnNames_.length;
+    protected PlayerTableModel getPlayerModel() {
+        return (PlayerTableModel) getModel();
+    }
+
+
+    protected TableModel createTableModel(String[] columnNames) {
+        TableModel m = new PlayerTableModel(columnNames, 0, true);
+        return m;
     }
 
 }

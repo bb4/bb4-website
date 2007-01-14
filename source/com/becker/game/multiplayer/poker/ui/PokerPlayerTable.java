@@ -67,15 +67,17 @@ public class PokerPlayerTable extends PlayerTable
      * add a row based on a player object
      * @param player to add
      */
-    protected void addRow(Player player)
+    protected void addRow(Object player)
     {
+        Player p = (Player) player;
         Object d[] = new Object[getNumColumns()];
-        d[NAME_INDEX] = player.getName();
-        d[COLOR_INDEX] = player.getColor();
+        d[NAME_INDEX] = p.getName();
+        d[COLOR_INDEX] = p.getColor();
         d[CASH_INDEX] = DEFAULT_CASH_AMOUNT; //p.getCash();
-        d[HUMAN_INDEX] = player.isHuman();
-        getModel().addRow(d);
+        d[HUMAN_INDEX] = p.isHuman();
+        getPlayerModel().addRow(d);
     }
+
 
     protected Player createPlayer() {
         int ct = table_.getRowCount();

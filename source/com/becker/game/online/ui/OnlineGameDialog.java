@@ -69,7 +69,7 @@ public abstract class OnlineGameDialog extends JDialog
     public abstract void closing();
 
     public boolean isServerAvailable() {
-        return (controller_.getServerConnection()!=null && controller_.getServerConnection().isConnected());
+        return (controller_.getServerConnection() != null && controller_.getServerConnection().isConnected());
         //return serverConnection_ != null && serverConnection_.isConnected();
     }
 
@@ -94,7 +94,7 @@ public abstract class OnlineGameDialog extends JDialog
                      "Play Online" ) );
         p.setMaximumSize( new Dimension( 400, 60 ) );
 
-        JLabel label = new JLabel("Join an existing table with other online players.");
+        JLabel label = new JLabel("Join an Existing Table or Create a New one.");
         label.setAlignmentX( Component.LEFT_ALIGNMENT );
         p.add( label );
 

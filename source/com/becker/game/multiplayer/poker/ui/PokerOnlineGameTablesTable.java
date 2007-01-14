@@ -29,13 +29,14 @@ import java.util.*;
     private static final String MAX_RAISE = GameContext.getLabel("MAX_RAISE");
     private static final String INITIAL_CASH = GameContext.getLabel("INITIAL_CASH");
 
+    private static final String[] POKER_COLUMN_NAMES = {JOIN, MAX_NUM_PLAYERS, PLAYER_NAMES, ANTE, MAX_RAISE, INITIAL_CASH};
 
     /**
      *
      * @param actionListener  that gets called when the player selects a different table to join.
      */
     public PokerOnlineGameTablesTable(ActionListener actionListener) {
-         super(actionListener);
+         super(POKER_COLUMN_NAMES, actionListener);
     }
 
 
@@ -44,8 +45,7 @@ import java.util.*;
         Object d[] = new Object[getNumColumns()];
         // false if active player is in this table.
         // You cannot join a table you are already at
-        d[JOIN_INDEX] = !localPlayerAtTable;
-        d[TABLE_NAME_INDEX] = onlineTable.getName();
+        d[JOIN_INDEX] = !(localPlayerAtTable);
         d[NUM_PLAYERS_INDEX] = onlineTable.getNumPlayersNeeded();
         d[PLAYER_NAMES_INDEX] = onlineTable.getPlayerNames();
         PokerOptions options = (PokerOptions) onlineTable.getGameOptions();
@@ -54,7 +54,6 @@ import java.util.*;
         d[INITIAL_CASH_INDEX] = options.getInitialCash();
         return d;
     }
-
 
     public OnlineGameTable createOnlineTable(String ownerPlayerName, MultiGameOptions options) {
         Player player = createPlayerForName(ownerPlayerName);
@@ -70,14 +69,6 @@ import java.util.*;
 
         int r = RANDOM.nextInt(256);
         return new Color(r, 255 - r, RANDOM.nextInt(256));
-    }
-
-    protected String[] getColumnNames() {
-        return new String[] {JOIN, TABLE_NAME, MAX_NUM_PLAYERS, PLAYER_NAMES, ANTE, MAX_RAISE, INITIAL_CASH};
-    }
-
-    protected int getNumColumns() {
-        return NUM_BASE_COLUMNS + 3;
     }
 
 }
