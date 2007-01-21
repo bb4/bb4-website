@@ -23,7 +23,8 @@
   <!-- the jvm to use when executing -->
   <property name="java_home" value="/usr/java/jdk1.5.0_05"/>
   <property name="java14" value="/usr/java/jdk1.4.2/bin/java"/>
-  <property name="java15" value="${java_home}/bin/java"/>
+  <property name="java15" value="${java_home}/bin/amd64/java"/>
+  <property name="project_home" value="/windows/projects/java_projects/trunk"/>
 
 
   <!-- Load additional tasks   -->
@@ -76,7 +77,6 @@
        <classpath refid="compile.classpath"/>
     </javac>
     <!-- use ant deploy to copy the resources to the classes dir -->
-
   </target>
 
 
@@ -128,7 +128,7 @@
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
-      <param name="arg1" value="galactic"/>
+      <param name="args" value="-game galactic -locale ENGLISH"/>
     </antcall>
   </target>
 
@@ -136,7 +136,7 @@
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
-      <param name="arg1" value="pente"/>
+      <param name="args" value="-game pente"/>
     </antcall>
   </target>
 
@@ -144,7 +144,7 @@
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
-      <param name="arg1" value="blockade"/>
+      <param name="args" value="-game blockade"/>
     </antcall>
   </target>
 
@@ -152,7 +152,7 @@
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
-      <param name="arg1" value="checkers"/>
+      <param name="args" value="-game checkers"/>
     </antcall>
   </target>
 
@@ -160,14 +160,15 @@
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
-      <param name="arg1" value="chess"/>
+      <param name="args" value="-game chess"/>
     </antcall>
   </target>
 
-  <target name="executePokerServer" depends="compile" description=" Run online poker server">
+  <target name="executePokerServer" depends="compile" description="Run online poker server">
     <antcall target="executeProgram">
-      <param name="className" value="com.becker.game.multiplayer.poker.online.OnlinePokerServer"/>
+      <param name="className" value="com.becker.game.common.online.ui.OnlineGameServerFrame"/>
       <param name="libPath" value="${libDir}/jai_codec.jar;"/>
+      <param name="args" value="-port 4443 -game poker"/>
     </antcall>
   </target>
 
@@ -175,7 +176,7 @@
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
-      <param name="arg1" value="poker"/>
+      <param name="args" value="-game poker"/>
     </antcall>
   </target>
 
@@ -183,7 +184,7 @@
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>  <!-- com.becker.game.multiplayer.set.SetApplet -->
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
-      <param name="arg1" value="set"/>
+      <param name="args" value="-game set"/>
     </antcall>
   </target>
 
@@ -191,7 +192,7 @@
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;${libDir}/jigo.jar;${libDir}/gtpserver.jar;"/>
-      <param name="arg1" value="go"/>
+      <param name="args" value="-game go"/>
     </antcall>
   </target>
 
@@ -219,7 +220,7 @@
     <antcall target="executeProgram">
       <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
-      <param name="arg1" value="com.becker.simulation.snake.SnakeSimulator"/>
+      <param name="args" value="com.becker.simulation.snake.SnakeSimulator"/>
     </antcall>
   </target>
 
@@ -227,7 +228,7 @@
     <antcall target="executeProgram">
       <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
-      <param name="arg1" value="com.becker.simulation.reactiondiffusion.RDSimulator"/>
+      <param name="args" value="com.becker.simulation.reactiondiffusion.RDSimulator"/>
     </antcall>
   </target>
 
@@ -235,7 +236,7 @@
     <antcall target="executeProgram">
       <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
       <param name="libPath" value="${libDir}/vecmath.jar"/>
-      <param name="arg1" value="com.becker.simulation.liquid.LiquidSimulator"/>
+      <param name="args" value="com.becker.simulation.liquid.LiquidSimulator"/>
     </antcall>
   </target>
 
@@ -243,7 +244,7 @@
      <antcall target="executeProgram">
        <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
        <param name="libPath" value="${libDir}/vecmath.jar"/>
-       <param name="arg1" value="com.becker.simulation.trebuchet.TrebuchetSimulator"/>
+       <param name="args" value="com.becker.simulation.trebuchet.TrebuchetSimulator"/>
      </antcall>
   </target>
 
@@ -251,7 +252,7 @@
     <echo message="now executing Adventure"/>
     <antcall target="executeProgram">
       <param name="className" value="com.becker.puzzle.adventure.Adventure"/>
-      <param name="arg1" value="/home/becker/projects/java_projects/source/com/becker/puzzle/adventure/ludlowScript.xml"/>
+      <param name="args" value="${project_home}/source/com/becker/puzzle/adventure/ludlowScript.xml"/>
     </antcall>
   </target>
 
@@ -280,15 +281,14 @@
     <antcall target="executeProgram">
       <param name="className" value="com.becker.xml.DomEcho"/>
       <param name="libPath" value="${libDir}/vecmath.jar"/>
-      <!--param name="arg1" value="/home/becker/projects/svg/svg_cagle_book/StopSign2.svg"/-->
-      <param name="arg1" value="/home/becker/projects/java_projects/source/com/becker/xml/katate_dori.xml"/>
+      <param name="args" value="${project_home}/source/com/becker/xml/katate_dori.xml"/>
     </antcall>
   </target>
 
   <target name="XMLAppGenerator" depends="compile" description=" run the XML App Generator">
     <antcall target="executeProgram">
       <param name="className" value="com.becker.xml.AikidoAppGenerator"/>
-      <param name="arg1" value="/home/becker/projects/java_projects/source/com/becker/xml/katate_dori.xml"/>
+      <param name="args" value="${project_home}/source/com/becker/xml/katate_dori.xml"/>
     </antcall>
   </target>
 
@@ -311,13 +311,14 @@
   <!-- call this to run java programs  -->
   <target name="executeProgram" depends="compile" description="Run a program">
     <java classname="${className}" classpath="${classesDir};${libPath}" fork="true" jvm="${java15}">
-        <arg value="${arg1}"/>
+        <arg line="${args}"/>
         <!-- jvmarg value="-agentlib:yjpagent"/  use this if running Yourkit profiler -->
         <jvmarg value="-Xms128M"/>
         <jvmarg value="-Xmx256M"/>
         <jvmarg value="${assertionsFlag}"/>
     </java>
   </target>
+
 
   <target name="executeProgram2" depends="compile" description="Run a program">
     <java classname="${className}" classpath="${classesDir};${libPath}" fork="true" jvm="${java15}">
@@ -328,6 +329,7 @@
         <jvmarg value="${assertionsFlag}"/>
     </java>
   </target>
+
 
 
 </project>

@@ -22,8 +22,7 @@
         <fileset dir="${classesDir}">
           <include name="com/becker/common/*.class"/>
           <include name="com/becker/ui/*.class"/>
-          <include name="com/becker/ui/animation/*.class"/>
-          <include name="com/becker/ui/filefilter/*.class"/>
+          <include name="com/becker/ui/*/*.class"/> <!-- all ui subpackages -->
           <include name="com/becker/java2d/ImageUtil.class"/>
         </fileset>
         <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
@@ -35,6 +34,7 @@
       <copy todir="${stagingDir}">
         <fileset dir="${classesDir}">
           <include name="com/becker/optimization/*.class"/>
+          <include name="com/becker/optimization/strategy/*.class"/>
         </fileset>
         <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
       </copy>
@@ -88,6 +88,10 @@
       <antcall target="copyResources">
         <param name="path" value="game/common/resources"/>
         <param name="pattern" value="*.properties"/>
+      </antcall>
+      <antcall target="copyResources">
+        <param name="path" value="game"/>
+        <param name="pattern" value="*.xml"/>
       </antcall>
       <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/gameCommon.jar"/>
       <delete dir="${stagingDir}/com"/>
@@ -216,11 +220,11 @@
       <copy todir="${stagingDir}">
         <fileset dir="${classesDir}">
           <include name="com/becker/game/multiplayer/galactic/*.class"/>
-          <include name="com/becker/game/multiplayer/galactic/ui/*.class"/>
+          <include name="com/becker/game/multiplayer/galactic/*/*.class"/>
           <include name="com/becker/game/multiplayer/common/*.class"/>
-          <include name="com/becker/game/multiplayer/common/ui/*.class"/>
+          <include name="com/becker/game/multiplayer/common/*/*.class"/>
           <include name="com/becker/game/multiplayer/online/*.class"/>
-          <include name="com/becker/game/multiplayer/online/ui/*.class"/>
+          <include name="com/becker/game/multiplayer/online/*/*.class"/>
         </fileset>
         <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
       </copy>
@@ -230,7 +234,7 @@
       </antcall -->
       <antcall target="copyResources">
         <param name="path" value="game/multiplayer/galactic/images"/>
-        <param name="pattern" value="*.gif"/>
+        <param name="pattern" value="*.png"/>
       </antcall>
       <antcall target="copyResources">
         <param name="path" value="game/multiplayer/galactic/resources"/>
@@ -263,11 +267,9 @@
       <copy todir="${stagingDir}">
         <fileset dir="${classesDir}">
           <include name="com/becker/game/multiplayer/poker/*.class"/>
-          <include name="com/becker/game/multiplayer/poker/ui/*.class"/>
-          <include name="com/becker/game/multiplayer/poker/online/*.class"/>
-          <include name="com/becker/game/multiplayer/poker/online/ui/*.class"/>
+          <include name="com/becker/game/multiplayer/poker/*/*.class"/>
           <include name="com/becker/game/multiplayer/common/*.class"/>
-          <include name="com/becker/game/multiplayer/common/ui/*.class"/>
+          <include name="com/becker/game/multiplayer/common/*/*.class"/>
         </fileset>
         <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
       </copy>
@@ -349,7 +351,7 @@
       <copy todir="${stagingDir}">
         <fileset dir="${classesDir}">
           <include name="com/becker/puzzle/sudoku/*.class"/>
-          <include name="com/becker/puzzle/sudoku/test/*.class"/>
+          <include name="com/becker/puzzle/sudoku/*/*.class"/>
         </fileset>
         <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve directory hierarchy -->
       </copy>
@@ -492,7 +494,7 @@
     <propertycopy from="appletIndexFile.${locale}" name="appletIndexFileForLocale"/>
     <property name="appName" value="${token}"/>
     <property name="TRTemplate"
-        value="${TRTemplate1}${appName}.title${TRTemplate2}${appName}.longDescription${TRTemplate3}${appName}${TRTemplate4}${locale}${TRTemplate4a}${appName}.title${TRTemplate5}${appName}${TRTemplate6}${locale}${TRTemplate6a}${appName}.title${TRTemplate7}${appName}${TRTemplate8}${appName}.title${TRTemplate9}${appName}.title${TRTemplate10}"/>
+        value="${TRTemplate1}${appName}.title${TRTemplate2}${appName}.longDescription${TRTemplate3}${appName}${TRTemplate4}${locale}${TRTemplate4a}${appName}.title${TRTemplate5}${appName}${TRTemplate6}${locale}${TRTemplate6a}${appName}.title${TRTemplate7}${appName}${TRTemplate7a}${locale}${TRTemplate7b}${appName}${TRTemplate8}${appName}.title${TRTemplate9}${appName}.title${TRTemplate10}"/>
     <!--echo message="****** TR Substitute ${TRTemplate} in file ${appletIndexFileForLocale}"/-->
     <replace file="${distributionDir}/${appletIndexFileForLocale}" token="{${token}TR}" value="${TRTemplate}"/>
   </target>
