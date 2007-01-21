@@ -2,6 +2,7 @@ package com.becker.game.multiplayer.galactic.ui;
 
 import com.becker.game.common.*;
 import com.becker.game.multiplayer.galactic.*;
+import com.becker.game.multiplayer.galactic.player.*;
 import com.becker.ui.*;
 import com.becker.sound.MusicMaker;
 

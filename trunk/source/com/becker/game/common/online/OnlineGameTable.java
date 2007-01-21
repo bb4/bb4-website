@@ -1,4 +1,4 @@
-package com.becker.game.online;
+package com.becker.game.common.online;
 
 import com.becker.game.common.*;
 
@@ -15,18 +15,18 @@ public class OnlineGameTable implements Serializable {
 
     private static final int serialVersionUID = 1;
 
-    // the name of the virtual online table.
+    /** the name of the virtual online table.  */
     private String name_;
 
-    // the player who created this table, even if they are not sitting here anymore.
+    /** the player who created this table, even if they are not sitting here anymore.  */
     private Player owner_;
 
-    // list of players currently sitting at the table.
+    /** list of players currently sitting at the table.  */
     private List<Player> players_;
 
     private GameOptions gameOptions_;
 
-    // most recent player to join the table.
+    /** most recent player to join the table.   */
     private Player newestHumanPlayer_;
 
 

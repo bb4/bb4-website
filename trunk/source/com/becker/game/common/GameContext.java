@@ -37,7 +37,6 @@ public final class GameContext
 
         log(1, "initing sound." );
 
-
         if ( useSound_ ) {
             getMusicMaker().stopAllSounds();
             getMusicMaker().startNote( MusicMaker.SEASHORE, 40, 2, 3 );
@@ -59,8 +58,6 @@ public final class GameContext
 
     // fall back on this if the "user.home" property is not set.
     private static final String DEFAULT_HOME_DIR = "d:/";
-
-
 
     private GameContext() {}
 
@@ -185,7 +182,6 @@ public final class GameContext
         gameName_ = gameName;
         className_ = className;
 
-        System.out.println("loadGameResource gameName_="+gameName_+" className_="+className_);
         String path = className.substring(0, className.lastIndexOf(".ui."));
 
         String resourcePath = path +".resources."+gameName+"Messages";
@@ -268,6 +264,7 @@ public final class GameContext
      * bundles for all locales and verify that they all have the
      * same keys. If any are missing for a given locale they need to be added.
      * @@ currently we only check the common common bundle, but we should do all.
+     * @@ This could be moved to a JUnit test.
      */
     private static void verifyConsistentMessageBundles()
     {

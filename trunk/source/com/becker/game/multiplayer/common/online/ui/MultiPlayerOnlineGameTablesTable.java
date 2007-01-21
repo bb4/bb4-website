@@ -2,10 +2,9 @@ package com.becker.game.multiplayer.common.online.ui;
 
 import com.becker.game.common.*;
 import com.becker.game.common.online.ui.*;
+import com.becker.game.common.online.*;
 import com.becker.game.multiplayer.common.*;
 import com.becker.game.multiplayer.common.ui.*;
-import com.becker.game.online.*;
-import com.becker.game.online.ui.*;
 import com.becker.ui.table.*;
 
 import javax.swing.table.*;
@@ -18,7 +17,6 @@ import java.util.*;
  * @author Barry Becker
  */
 public abstract class MultiPlayerOnlineGameTablesTable extends TableBase {
-
 
     protected static final int JOIN_INDEX = 0;
     protected static final int NUM_PLAYERS_INDEX = 1;
@@ -60,7 +58,7 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase {
         selectedTable_ = null;
         tableList_ = new ArrayList<OnlineGameTable>();
 
-        initializeTable(null);              
+        initializeTable(null);
     }
 
     /***

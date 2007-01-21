@@ -24,6 +24,7 @@ import java.util.List;
  * things such as whether the user's move was legal or not, and also tells the GameViewer
  * what the computer's move is.
  *
+ * @@ should split out rendering into a separate GameBoardRenderer class (and for all dericved classes).
  *
  *  note: subclasses must override paintComponent to have the board show up.
  *
@@ -283,7 +284,7 @@ public abstract class GameBoardViewer
      */
     public void gameChanged(GameChangedEvent evt)
     {
-        GameContext.log(1,  "game changed" );
+        GameContext.log(1, "game changed" );
         this.refresh();
     }
 
@@ -299,14 +300,13 @@ public abstract class GameBoardViewer
     }
 
 
-
     /**
      * @return true if there is a move to undo.
      */
     public final boolean canUndoMove()
-     {
-         return  (getBoard().getLastMove()!=null);
-     }
+    {
+        return  (getBoard().getLastMove()!=null);
+    }
 
     /**
      * @return true if there is a move to redo.
@@ -325,7 +325,6 @@ public abstract class GameBoardViewer
         String message = getGameOverMessage();
         JOptionPane.showMessageDialog( this, message, GameContext.getLabel("GAME_OVER"),
                 JOptionPane.INFORMATION_MESSAGE );
-
     }
 
     /**
@@ -359,6 +358,7 @@ public abstract class GameBoardViewer
         gridColor_ = c;
         refresh();
     }
+
     /**
      * @return c  the new color of the board's grid.
      */

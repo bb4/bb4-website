@@ -3,6 +3,7 @@ package com.becker.game.multiplayer.galactic.ui;
 import com.becker.game.common.*;
 import com.becker.game.multiplayer.common.ui.*;
 import com.becker.game.multiplayer.galactic.*;
+import com.becker.game.multiplayer.galactic.player.*;
 
 import java.util.*;
 
@@ -10,7 +11,7 @@ import java.util.*;
 /**
  * Shows a list of the players stats at the end of the game.
  * None of the cells are editable.
- * @see GalacticPlayer
+ * @see com.becker.game.multiplayer.galactic.player.GalacticPlayer
  *
  * @author Barry Becker
  */

@@ -14,7 +14,7 @@ import java.awt.event.*;
  *
  * @author Barry Becker
  */
-class PokerOptionsDialog extends MultiGameOptionsDialog
+public class PokerOptionsDialog extends MultiGameOptionsDialog
                          implements ActionListener, ItemListener
 {
     private NumberInput ante_;
@@ -22,7 +22,7 @@ class PokerOptionsDialog extends MultiGameOptionsDialog
     private NumberInput maxAbsoluteRaise_;
 
     // constructor
-    PokerOptionsDialog( JFrame parent, GameController controller )
+    public PokerOptionsDialog( JFrame parent, GameController controller )
     {
         super( parent, controller);
     }

@@ -104,13 +104,14 @@ public abstract class MultiPlayerNewGameDialog extends NewGameDialog
         Object source = e.getSource();
 
         if ( source == addButton_ ) {
-            playerTable_.addRow();                     
+            playerTable_.addRow();
         }
         else if ( source == removeButton_ ) {
             playerTable_.removeSelectedRows();
         }
         MultiGameOptions options = (MultiGameOptions) controller_.getOptions();
         addButton_.setEnabled(playerTable_.getModel().getRowCount() < options.getMaxNumPlayers());
+
     }
 
     /**
@@ -119,8 +120,9 @@ public abstract class MultiPlayerNewGameDialog extends NewGameDialog
      */
     public void valueChanged(ListSelectionEvent event)
     {
+        MultiGameOptions options = (MultiGameOptions) controller_.getOptions();
         boolean enabled = playerTable_.getTable().getSelectedRowCount() > 0
-                          && playerTable_.getModel().getRowCount() > 1;
+                          && playerTable_.getModel().getRowCount() > options.getMinNumPlayers();
         removeButton_.setEnabled(enabled);
     }
 }

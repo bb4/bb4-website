@@ -1,9 +1,9 @@
 package com.becker.game.twoplayer.go;
 
 import com.becker.game.common.*;
+import com.becker.game.common.online.*;
 import com.becker.game.twoplayer.common.search.SearchStrategy;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
-import com.becker.game.online.*;
 import com.becker.common.*;
 import go.Point;
 import gtp.GtpServer;
@@ -50,7 +50,7 @@ public class GtpTesujisoftGoServer
      */
     private enum Command {boardsize, clear_board, echo, echo_err, fixed_handicap,
                          final_score, final_status_list, genmove, gogui_interrupt,
-                         list_commands, known_command, komi, server_name, play,
+                         list_commands, known_command, komi, name, play,
                          protocol_version, reg_genmove, time_settings, undo, quit,
                          tesujisoft_bwboard, tesujisoft_delay, tesujisoft_invalid,
                          version}
@@ -62,7 +62,8 @@ public class GtpTesujisoftGoServer
         super(in, out, log);
 
         // this will load the resources for the specified game.
-        //GameContext.verifyGameResources("go", "com.becker.game.twoplayer.go.ui.GoPanel");
+        GameContext.loadGameResources("go", "com.becker.game.twoplayer.go.ui.GoPanel");
+        //GameContext.loadGameResources("go", PluginManager.getInstance().getPlugin("go").getPanelClass());
         GameContext.setDebugMode(0);
 
         initSize(19);
@@ -123,7 +124,7 @@ public class GtpTesujisoftGoServer
             case komi :
                 status = cmdKomi(cmdArray, response);
                 break;
-            case server_name :
+            case name :
                 response.append("GtpTesujisoft");
                 break;
             case play :

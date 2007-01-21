@@ -33,7 +33,7 @@ public class AikidoAppGenerator {
     private static final int THUMB_IMG_WIDTH = 170;
     private static final int THUMB_IMG_HEIGHT = 130;
 
-    private static final String RESULT_PATH = "/home/becker/projects/javascript_projects/aikido_builder/";
+    private static final String RESULT_PATH = "/windows/projects/javascript_projects/aikido_builder/";
     // the builder DHTML application
     private static final String RESULT_BULDER_FILE = "technique_builder.html";
     // all the techniques in one file (for debugging mostly)
@@ -477,28 +477,6 @@ public class AikidoAppGenerator {
         fos.close();
     }
 
-    // -----------------------------------------------------------------
-    public static void main(String argv[])
-    {
-        Document document;
-        if (argv.length != 1) {
-            //document = DomUtil.buildDom();
-            return;
-        }
-
-        File file = new File(argv[0]);
-        document = DomUtil.parseXMLFile(file, !DEBUG_MODE);
-
-        try {
-
-            generateHTMLAppFromDom(document, RESULT_PATH + RESULT_BULDER_FILE);
-            generateAllElementsFromDom(document, RESULT_PATH + RESULT_ALL_FILE);
-         }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 
     /**
      *  convenient inner class for storing info about the node
@@ -531,4 +509,28 @@ public class AikidoAppGenerator {
             }
         }
     }
+
+
+    // -----------------------------------------------------------------------------------------------
+    public static void main(String argv[])
+    {
+        Document document;
+        if (argv.length != 1) {
+            //document = DomUtil.buildDom();
+            System.out.println("Usage: <xml file containing data>");
+            return;
+        }
+
+        File file = new File(argv[0]);
+        document = DomUtil.parseXMLFile(file, !DEBUG_MODE);
+
+        try {
+            generateHTMLAppFromDom(document, RESULT_PATH + RESULT_BULDER_FILE);
+            generateAllElementsFromDom(document, RESULT_PATH + RESULT_ALL_FILE);
+         }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

@@ -2,11 +2,10 @@ package com.becker.game.multiplayer.poker;
 
 import com.becker.game.card.*;
 import com.becker.game.common.*;
+import com.becker.game.common.online.*;
 import com.becker.game.multiplayer.common.*;
-import com.becker.game.multiplayer.poker.ui.*;
 import com.becker.game.multiplayer.poker.player.*;
-import com.becker.game.multiplayer.poker.online.*;
-import com.becker.game.online.*;
+import com.becker.game.multiplayer.poker.ui.*;
 import com.becker.optimization.*;
 
 import java.util.*;
@@ -227,7 +226,7 @@ public class PokerController extends GameController
      */
     protected ServerConnection createServerConnection() {
 
-        ServerConnection sc =  new ServerConnection(OnlinePokerServer.PORT);
+        ServerConnection sc =  new ServerConnection(4443 ); // OnlinePokerServer.PORT);  @@ replace with controller.getServerPort()
         sc.addOnlineChangeListener(this);
         return sc;
     }

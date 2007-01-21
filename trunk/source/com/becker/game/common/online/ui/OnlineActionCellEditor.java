@@ -1,9 +1,5 @@
 package com.becker.game.common.online.ui;
 
-import com.becker.ui.*;
-import com.becker.ui.table.AbstractCellEditor;
-import com.becker.ui.table.*;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;

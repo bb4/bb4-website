@@ -1,6 +1,7 @@
-package com.becker.game.online;
+package com.becker.game.common.online;
 
 import com.becker.game.common.*;
+import com.becker.common.*;
 
 /**
  * Handles the processing of all commands send to the online game server.
@@ -12,12 +13,15 @@ public class ServerCommandProcessor {
     // maintain a list of game tables.
     private OnlineGameTableList tables_;
 
+    private GameController controller_;
+    private String gameName_;
 
     /**
      * Create the online game server to serve all online clients.
      */
-    public ServerCommandProcessor() {
+    public ServerCommandProcessor(String gameName) {
 
+        gameName_ = gameName;
         tables_ = new OnlineGameTableList();
     }
 
@@ -55,7 +59,7 @@ public class ServerCommandProcessor {
                 break;
             case UPDATE_TABLES :
                 break;
-             case CHAT_MESSAGE :
+            case CHAT_MESSAGE :
                 //System.out.println("chat message=" + cmd.getArgument());
                 response = cmd;
                 break;
@@ -104,9 +108,24 @@ public class ServerCommandProcessor {
     }
 
 
+    /**
+     * When all the conditions are met for starting a new game, we create a new game controller of the
+     * appropriate type andstart the game.
+     * @param table
+     */
     private void startGame(OnlineGameTable table) {
 
         System.out.println("NOW starting game on Server! "+ table);
+
+        String controllerClass = PluginManager.getInstance().getPlugin(gameName_).getControllerClass();
+        Class c = Util.loadClass(controllerClass);
+        try {
+            controller_ = (GameController) c.newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
 
     }
 

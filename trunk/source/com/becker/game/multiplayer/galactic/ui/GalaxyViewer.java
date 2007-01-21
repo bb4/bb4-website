@@ -4,6 +4,7 @@ import com.becker.common.*;
 import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
 import com.becker.game.multiplayer.galactic.*;
+import com.becker.game.multiplayer.galactic.player.*;
 
 import java.awt.*;
 import java.awt.event.*;

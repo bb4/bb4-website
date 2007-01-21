@@ -3,6 +3,7 @@ package com.becker.game.multiplayer.galactic.ui;
 import com.becker.game.common.*;
 import com.becker.game.multiplayer.common.ui.*;
 import com.becker.game.multiplayer.galactic.*;
+import com.becker.game.multiplayer.galactic.player.*;
 
 import java.awt.*;
 import java.util.List;

@@ -254,7 +254,7 @@ public final class GUIUtil
         else {
              icon = new ImageIcon(resourceRoot_ + sPath);
         }
-        assert (icon!=null) : "failed to find image:"+sPath;
+        assert (icon != null) : "failed to find image:"+sPath;
         return icon;
     }
 
@@ -279,6 +279,7 @@ public final class GUIUtil
         }
         return url;
      }
+
 
      /**
      * displays a splash screen while the application is busy starting up.

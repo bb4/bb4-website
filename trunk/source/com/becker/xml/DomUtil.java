@@ -2,13 +2,12 @@ package com.becker.xml;
 
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
-
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
 import java.util.*;
-import java.io.IOException;
-import java.io.File;
+import java.io.*;
+import java.net.*;
 
 /**
  * User: Barry Becker
@@ -100,8 +99,20 @@ public class DomUtil {
 
     /**
      * get the value for an attribute.
+     * Error if the attribute does not exist.
      */
     public static String getAttribute(Node node, String attribName) {
+
+        String attributeVal = getAttribute(node, attribName, null);
+        assert (attributeVal != null):
+                "no attribute named '"+attribName+"' for node '"+node.getNodeName()+"' val="+node.getNodeValue();
+        return attributeVal;
+    }
+
+     /**
+     * get the value for an attribute. If not found, defaultValue is used.
+     */
+    public static String getAttribute(Node node, String attribName, String defaultValue) {
         NamedNodeMap attribMap = node.getAttributes();
         String attributeVal = null;
         if (attribMap == null)
@@ -113,8 +124,9 @@ public class DomUtil {
             if (attr.getNodeName().equals(attribName))
                 attributeVal = attr.getNodeValue();
         }
-        assert (attributeVal!=null):
-                "no attribute named '"+attribName+"' for node '"+node.getNodeName()+"' val="+node.getNodeValue();
+        if (attributeVal == null)
+           attributeVal = defaultValue;
+
         return attributeVal;
     }
 
@@ -160,11 +172,11 @@ public class DomUtil {
     /**
      * parse an xml file and return a cleaned up Document object.
      * Set replaceUseWithDeepCopy to false if you are in a debug mode and don't want to see a lot of redundant subtrees.
-     * @param file
+     * @param stream some input stream.
      * @param replaceUseWithDeepCopy if true then replace each instance of a use node with a deep copy of what it refers to
      * @return the parsed file as a Document
      */
-    public static Document parseXMLFile(File file, boolean replaceUseWithDeepCopy)
+    public static Document parseXMLFile(InputStream stream, boolean replaceUseWithDeepCopy)
     {
         Document document = null;
         DocumentBuilderFactory factory =
@@ -173,7 +185,7 @@ public class DomUtil {
         //factory.setNamespaceAware(true);
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();
-            document = builder.parse( file );
+            document = builder.parse( stream );
 
             postProcessDocument(document, document, replaceUseWithDeepCopy);
             //printTree(document, 0);
@@ -196,8 +208,34 @@ public class DomUtil {
         return document;
     }
 
+
+    public static Document parseXMLFile(URL url)
+    {
+        try {
+
+            URLConnection urlc = url.openConnection();
+            InputStream is = urlc.getInputStream();
+            return parseXMLFile(is, true);
+        } catch  (IOException e) {
+            System.out.println("Failed ");
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static Document parseXMLFile(File file)
     {
-       return parseXMLFile(file, true);
+        return parseXMLFile(file, true);
+    }
+
+    public static Document parseXMLFile(File file, boolean replaceUseWithDeepCopy)
+    {
+        try {
+            FileInputStream str = new FileInputStream(file);
+            return parseXMLFile(str, replaceUseWithDeepCopy);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
