@@ -10,16 +10,18 @@ public class GamePlugin {
 
     private String name_;
     private String label_;
+    private String msgBundleBase_;
     private int port_;
     private String panelClass_;
     private String controllerClass_;
     private boolean isDefault_;
 
-    public GamePlugin(String name, String label, int port,
+    public GamePlugin(String name, String label, String msgBundleBase, int port,
                       String panelClass, String controllerClass,
                       boolean isDefault) {
         name_ = name;
         label_ = label;
+        msgBundleBase_ = msgBundleBase;
         port_ = port;
         panelClass_ = panelClass;
         controllerClass_ = controllerClass;
@@ -33,6 +35,10 @@ public class GamePlugin {
 
     public String getLabel() {
         return label_;
+    }
+
+    public String getMsgBundleBase() {
+        return msgBundleBase_;
     }
 
     public String getMsgKey() {

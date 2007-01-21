@@ -62,8 +62,7 @@ public class GtpTesujisoftGoServer
         super(in, out, log);
 
         // this will load the resources for the specified game.
-        GameContext.loadGameResources("go", "com.becker.game.twoplayer.go.ui.GoPanel");
-        //GameContext.loadGameResources("go", PluginManager.getInstance().getPlugin("go").getPanelClass());
+        GameContext.loadGameResources("go");
         GameContext.setDebugMode(0);
 
         initSize(19);
