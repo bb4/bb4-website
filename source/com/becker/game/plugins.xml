@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE games SYSTEM "../source/com/becker/game/plugins.dtd">
+<plugins date="10/19/2004" author="Barry Becker">
+    <!-- whenever you add a new game to the framework, you need to add an extry here -->
+    <!-- here are the 2 player games -->
+
+    <game name="pente"
+          msgKey="PENTE"
+          serverPort="-1"
+          panelClass="com.becker.game.twoplayer.pente.ui.PentePanel"
+          controllerClass="com.becker.game.twoplayer.pente.PenteController" />
+    <game name="checkers"
+          msgKey="CHECKERS"
+          serverPort="-1"
+          panelClass="com.becker.game.twoplayer.checkers.ui.CheckersPanel"
+          controllerClass="com.becker.game.twoplayer.checkers.CheckersController" />
+    <game name="chess"
+          msgKey="CHESS"
+          serverPort="-1"
+          panelClass="com.becker.game.twoplayer.chess.ui.ChessPanel"
+          controllerClass="com.becker.game.twoplayer.chess.ChessController" />
+    <game name="blockade"
+          msgKey="BLOCKADE"
+          serverPort="-1"
+          panelClass="com.becker.game.twoplayer.blockade.ui.BlockadePanel"
+          controllerClass="com.becker.game.twoplayer.blockade.BlockadeController" />
+    <game name="go"
+          msgKey="GO"
+          serverPort="-1"
+          panelClass="com.becker.game.twoplayer.go.ui.GoPanel"
+          controllerClass="com.becker.game.twoplayer.go.GoController"
+          default="true"/>
+
+    <!-- these are the multiplayer games -->
+    <game name="galactic"
+          msgKey="GALACTIC"
+          serverPort="-1"
+          panelClass="com.becker.game.multiplayer.galactic.ui.GalacticPanel"
+          controllerClass="com.becker.game.multiplayer.galactic.GalacticController" />
+    <game name="poker"
+          msgKey="POKER"
+          serverPort="4443"
+          panelClass="com.becker.game.multiplayer.poker.ui.PokerPanel"
+          controllerClass="com.becker.game.multiplayer.poker.PokerController" />
+    <game name="set"
+          msgKey="SET"
+          serverPort="-1"
+          panelClass="com.becker.game.multiplayer.set.ui.SetPanel"
+          controllerClass="com.becker.game.multiplayer.set.SetController" />
+
+</plugins>

@@ -1,11 +1,11 @@
-package com.becker.game.multiplayer.poker.ui;
+package com.becker.game.multiplayer.poker.online.ui;
 
 import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
-import com.becker.game.multiplayer.online.ui.*;
 import com.becker.game.multiplayer.common.online.ui.*;
+import com.becker.game.multiplayer.poker.ui.*;
 
-import java.awt.*;
+import javax.swing.event.*;
 import java.awt.event.*;
 
 /**
@@ -14,10 +14,10 @@ import java.awt.event.*;
  *
  * @author Barry Becker Date: May 14, 2006
  */
-public class OnlinePokerDialog extends MultiPlayerOnlineGameDialog {
+public class OnlinePokerManagerPanel extends MultiPlayerOnlineManagerPanel {
 
-    public OnlinePokerDialog(Frame parent, ViewerCallbackInterface viewer) {
-        super(parent, viewer);
+    public OnlinePokerManagerPanel(ViewerCallbackInterface viewer, ChangeListener dlg) {
+        super(viewer, dlg);
     }
 
     protected MultiPlayerOnlineGameTablesTable createOnlineGamesTable(String playersName,
