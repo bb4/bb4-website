@@ -65,7 +65,7 @@ public class GameApp implements ActionListener
         Class gameClass = Util.loadClass(className);
 
         // this will load the resources for the specified game.
-        GameContext.loadGameResources(gameName, className);
+        GameContext.loadGameResources(gameName);
 
         if (gamePanel_ != null) {
             frame_.getContentPane().remove(gamePanel_);

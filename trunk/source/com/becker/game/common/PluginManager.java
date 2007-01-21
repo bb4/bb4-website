@@ -9,7 +9,7 @@ import java.util.*;
 
 /**
  * Singleton class for loading and managing the GamePlugins.
- * 
+ *
  * @author Barry Becker Date: Jan 20, 2007
  */
 public class PluginManager {
@@ -71,13 +71,14 @@ public class PluginManager {
                 continue;     // skip comment nodes
             String name = DomUtil.getAttribute(n, "name");
             String msgKey = DomUtil.getAttribute(n, "msgKey");
+            String msgBundleBase = DomUtil.getAttribute(n, "msgBundleBase");
             String label = GameContext.getLabel(msgKey);
             int port = Integer.parseInt(DomUtil.getAttribute(n, "serverPort"));
             String panelClass =  DomUtil.getAttribute(n, "panelClass");
             String controllerClass =  DomUtil.getAttribute(n, "controllerClass");
             String def = DomUtil.getAttribute(n, "default", "false");
             boolean isDefault = Boolean.parseBoolean(def);
-            GamePlugin plugin = new GamePlugin(name, label, port, panelClass, controllerClass, isDefault);
+            GamePlugin plugin = new GamePlugin(name, label, msgBundleBase, port, panelClass, controllerClass, isDefault);
             plugins_.add(plugin);
             hmNameToPlugin_.put(plugin.getName(), plugin);
             hmLabelToPlugin_.put(plugin.getLabel(), plugin);

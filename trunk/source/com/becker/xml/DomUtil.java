@@ -1,7 +1,8 @@
 package com.becker.xml;
 
 import org.w3c.dom.*;
-import org.xml.sax.SAXException;
+import org.xml.sax.*;
+
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
@@ -182,9 +183,11 @@ public class DomUtil {
         DocumentBuilderFactory factory =
             DocumentBuilderFactory.newInstance();
         factory.setValidating(true);
+
         //factory.setNamespaceAware(true);
         try {
-            DocumentBuilder builder = factory.newDocumentBuilder();
+            DocumentBuilder builder = factory.newDocumentBuilder();          
+            builder.setErrorHandler(new XmlErrorHandler());
             document = builder.parse( stream );
 
             postProcessDocument(document, document, replaceUseWithDeepCopy);

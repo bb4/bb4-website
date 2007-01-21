@@ -169,22 +169,16 @@ public final class GameContext
     }
 
     private static String gameName_ = null ;
-    private static String className_ = null;
 
     /**
      * This method causes the appropriate message bundle to
      * be loaded for the game specified.
      * @param gameName the current game
      */
-    public static void loadGameResources(String gameName, String className)
+    public static void loadGameResources(String gameName)
     {
-        // @@ why do I need this hack?
         gameName_ = gameName;
-        className_ = className;
-
-        String path = className.substring(0, className.lastIndexOf(".ui."));
-
-        String resourcePath = path +".resources."+gameName+"Messages";
+        String resourcePath = PluginManager.getInstance().getPlugin(gameName).getMsgBundleBase();
         log(2, "searching for "+ resourcePath);
 
         try {
@@ -198,7 +192,7 @@ public final class GameContext
     }
 
     public static void loadGameResources() {
-        loadGameResources(gameName_, className_);
+        loadGameResources(gameName_);
     }
 
     /**
