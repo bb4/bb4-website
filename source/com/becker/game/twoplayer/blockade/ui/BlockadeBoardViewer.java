@@ -18,7 +18,7 @@ import java.util.List;
  *
  *  @author Barry Becker
  */
-class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMotionListener
+public class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMotionListener
 {
     // this becomes true when the player needs to place a wall instead of a piece during his turn.
     private boolean wallPlacingMode_ = false;
@@ -158,7 +158,7 @@ class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMotionLis
      * @param destp position to move to.
      * @return true if this is not a valie move.
      */
-    private boolean customCheckFails(BoardPosition position, BoardPosition destp)
+    private static boolean customCheckFails(BoardPosition position, BoardPosition destp)
     {
         // if there is a piece at the destination already, or destination is out of bounds,
         // then return without doing anything
@@ -229,61 +229,53 @@ class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMotionLis
                 return;  // out of bounds
             int index = getWallIndexForPosition(e.getX(), e.getY(), loc, board);
 
-            HashSet positions = new HashSet();
+            Set positions = new HashSet();
 
             boolean isVertical = false;
 
             switch (index) {
-                case 0 : {
+                case 0 :
                     isVertical = true;
                     positions.add(board.getPosition(loc));
                     positions.add(board.getPosition(loc.getRow()+1, loc.getCol()));
                     break;
-                }
-                case 1 : {
+                case 1 :
                     isVertical = true;
                     assert (board.getPosition(loc)!=null);
                     assert (board.getPosition(loc.getRow()-1, loc.getCol())!=null);
                     positions.add(board.getPosition(loc));
                     positions.add(board.getPosition(loc.getRow()-1, loc.getCol()));
                     break;
-                }
-                case 2 : {
+                case 2 :
                     isVertical = false;
                     positions.add(board.getPosition(loc.getRow()-1, loc.getCol()));
                     positions.add(board.getPosition(loc.getRow()-1, loc.getCol()+1));
                     break;
-                }
-                case 3 : {
+                case 3 :
                     isVertical = false;
                     positions.add(board.getPosition(loc.getRow()-1, loc.getCol()));
                     positions.add(board.getPosition(loc.getRow()-1, loc.getCol()-1));
                     break;
-                }
-                case 4 : {
+                case 4 :
                     isVertical = true;
                     positions.add(board.getPosition(loc.getRow(), loc.getCol()-1));
                     positions.add(board.getPosition(loc.getRow()-1, loc.getCol()-1));
                     break;
-                }
-                case 5 : {
+                case 5 :
                     isVertical = true;
                     positions.add(board.getPosition(loc.getRow(), loc.getCol()-1));
                     positions.add(board.getPosition(loc.getRow()+1, loc.getCol()-1));
                     break;
-                }
-                case 6 : {
+                case 6 :
                     isVertical = false;
                     positions.add(board.getPosition(loc));
                     positions.add(board.getPosition(loc.getRow(), loc.getCol()-1));
                     break;
-                }
-                case 7 : {
+                case 7 :
                     isVertical = false;
                     positions.add(board.getPosition(loc));
                     positions.add(board.getPosition(loc.getRow(), loc.getCol()+1));
                     break;
-                }
                 default : assert false:("bad index="+index);
             }
 
@@ -311,28 +303,28 @@ class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMotionLis
     {
         int numRows = b.getNumRows();
         int numCols = b.getNumCols();
-        float x = (float)xp/cellSize_ - (xp / cellSize_);
-        float y = (float)yp/cellSize_ - (yp / cellSize_);
+        float x = (float)xp/cellSize_ - ((float)xp / cellSize_);
+        float y = (float)yp/cellSize_ - ((float)yp / cellSize_);
 
         if (loc.getCol() >= numCols)
-           x = Math.min(.499f, x);
+           x = Math.min(0.499f, x);
         if (loc.getCol() <= 1)
-           x = Math.max(.501f, x);
+           x = Math.max(0.501f, x);
         if (loc.getRow() >= numRows)
-           y = Math.min(.499f, y);
+           y = Math.min(0.499f, y);
         if (loc.getRow() <=1 )
-           y = Math.max(.501f, y);
+           y = Math.max(0.501f, y);
 
-        if (x <= .5f) {
-            if (y <= .5f) {    // upper left
+        if (x <= 0.5f) {
+            if (y <= 0.5f) {    // upper left
                 return (y > x)? 4 : 3;
             }
             else {  // y > .5  // lower left
-                return ((y-.5f) > (.5f-x))?  6 : 5;
+                return ((y - 0.5f) > (0.5f - x))?  6 : 5;
             }
         }
         else { // x>.5
-            if (y <= .5f) {    // upper right
+            if (y <= 0.5f) {    // upper right
                 return (y < (1.0f-x))? 2 : 1;
             }
             else {  // y > .5  // lower right
@@ -405,15 +397,14 @@ class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMotionLis
         BoardPosition[] homes = player1? board.getPlayer1Homes() : board.getPlayer2Homes();
 
         int cellSize = this.getCellSize();
-        int offset = Math.round(cellSize/4.0f);
+        int offset = Math.round((float)cellSize / 4.0f);
         TwoPlayerPieceRenderer renderer = (TwoPlayerPieceRenderer) pieceRenderer_;
         g.setColor(player1? renderer.getPlayer1Color(): renderer.getPlayer2Color());
 
-        for (int i=0; i<homes.length; i++) {
-            BoardPosition home = homes[i];
-            g.drawOval(BOARD_MARGIN+(home.getCol()-1)*cellSize+offset,
-                       BOARD_MARGIN+(home.getRow()-1)*cellSize+offset,
-                       2*offset, 2*offset);
+        for (BoardPosition home : homes) {
+            g.drawOval(BOARD_MARGIN + (home.getCol() - 1) * cellSize + offset,
+                       BOARD_MARGIN + (home.getRow() - 1) * cellSize + offset,
+                       2 * offset, 2 * offset);
         }
     }
 
@@ -426,14 +417,14 @@ class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMotionLis
      */
     private static void drawShortestPaths(Graphics2D g2, BlockadeBoardPosition pos, BlockadeBoard b, int cellSize)
     {
-        BasicStroke pathStroke = new BasicStroke(cellSize/3,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+        BasicStroke pathStroke = new BasicStroke((float)cellSize / 3,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
         g2.setStroke(pathStroke);
         List[] paths = b.findShortestPaths(pos);
-        // @@@@ npe happenning here !!
+        // @@ npe happenning here !!
         boolean p1 = pos.getPiece().isOwnedByPlayer1();
-        for (int i=0; i<paths.length; i++) {
-            g2.setColor(new Color((p1?120:180), (p1?160:90), 140, Math.max(5, 60)));
-            drawPath(g2, paths[i], cellSize);
+        for (final List newVar : paths) {
+            g2.setColor(new Color((p1 ? 120 : 180), (p1 ? 160 : 90), 140, Math.max(5, 60)));
+            drawPath(g2, newVar, cellSize);
         }
     }
 

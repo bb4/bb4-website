@@ -1,4 +1,4 @@
-package com.becker.game.online;
+package com.becker.game.common.online;
 
 
 import com.becker.game.common.*;
@@ -22,6 +22,7 @@ public class ServerConnection {
 
     private boolean isConnected_ = false;
 
+    /** a list of things that want to hear about broad casts form the server about changed game state. */
     private List<OnlineChangeListener> changeListeners_;
 
     /**
@@ -170,7 +171,8 @@ public class ServerConnection {
 
                 }
                 catch (IOException e) {
-                    GameContext.log(0, "Read failed.");
+                    GameContext.log(0, "Read failed. Breaking connection.");
+                    isConnected_ = false;
                     e.printStackTrace();
                     break;
                 }

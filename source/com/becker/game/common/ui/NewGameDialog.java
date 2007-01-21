@@ -1,12 +1,13 @@
 package com.becker.game.common.ui;
 
 import com.becker.game.common.*;
+import com.becker.game.common.online.ui.*;
 import com.becker.ui.*;
 
 import javax.swing.*;
+import javax.swing.event.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.File;
 
 /**
@@ -15,7 +16,7 @@ import java.io.File;
  *
  * @author Barry Becker
  */
-public abstract class NewGameDialog extends OptionsDialog implements ActionListener
+public abstract class NewGameDialog extends OptionsDialog implements ActionListener, ChangeListener
 {
     /**
      * the options get set directly on the game controller that is passed in.
@@ -27,6 +28,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ActionListe
 
     protected JPanel playLocalPanel_;
     protected JPanel loadGamePanel_;
+    protected OnlineGameManagerPanel playOnlinePanel_;
 
     protected GradientButton openFileButton_;
 
@@ -62,14 +64,20 @@ public abstract class NewGameDialog extends OptionsDialog implements ActionListe
         // add the tabs
         tabbedPanel_.add( GameContext.getLabel("NEW_GAME"), playLocalPanel_ );
         tabbedPanel_.setToolTipTextAt( 0, GameContext.getLabel("NEW_GAME_TIP") );
-
         tabbedPanel_.add( GameContext.getLabel("LOAD_GAME"), loadGamePanel_ );
         tabbedPanel_.setToolTipTextAt( 1, GameContext.getLabel("LOAD_GAME_TIP") );
+        tabbedPanel_.addChangeListener(this);
+
         mainPanel_.add( tabbedPanel_, BorderLayout.CENTER );
         mainPanel_.add( buttonsPanel, BorderLayout.SOUTH );
 
         this.getContentPane().add( mainPanel_ );
         this.pack();
+    }
+
+    protected OnlineGameManagerPanel createPlayOnlinePanel() {
+        return null; // nothing if no online play supported
+        //return new OnlineGameManagerPanel(viewer_);
     }
 
     protected JPanel createPlayLocalPanel()
@@ -224,6 +232,30 @@ public abstract class NewGameDialog extends OptionsDialog implements ActionListe
         }
     }
 
+    public boolean showDialog() {
+
+        boolean serverAvailable =  controller_.isOnlinePlayAvailable();
+        if (serverAvailable) {
+             if (playOnlinePanel_ == null) {
+                 playOnlinePanel_ = createPlayOnlinePanel();
+                 tabbedPanel_.add(playOnlinePanel_, 0);
+                 tabbedPanel_.setTitleAt(0, "Play Online");
+                 tabbedPanel_.setSelectedIndex(0);
+                 pack();
+             }
+             tabbedPanel_.setEnabledAt(0, true);
+        }
+        else {
+            if (playOnlinePanel_ != null) {
+                tabbedPanel_.setEnabledAt(0, false);
+            }
+        }
+        return super.showDialog();
+    }
+
+    /**
+     * Called when one of the buttons at the bottom pressed
+     */
     public void actionPerformed( ActionEvent e )
     {
         Object source = e.getSource();
@@ -238,5 +270,38 @@ public abstract class NewGameDialog extends OptionsDialog implements ActionListe
             openFile();
         }
     }
+
+    /**
+     * Called when the selected tab changes
+     * @param e
+     */
+    public void stateChanged( ChangeEvent e) {
+        if (e.getSource() == tabbedPanel_) {
+            if (tabbedPanel_.getSelectedComponent() == playOnlinePanel_) {
+                startButton_.setVisible(false);
+            }
+            else {
+                startButton_.setVisible(true);
+            }
+        }
+        else if (e.getSource() == playOnlinePanel_) {
+            this.setVisible(false);
+        }
+    }
+
+
+    /**
+     * If the window gets closed, then the player has stood up from his table if online.
+     *
+    protected void processWindowEvent( WindowEvent e )
+    {
+        if ( e.getID() == WindowEvent.WINDOW_CLOSING ) {
+
+            System.out.println("Window clsing!");
+            if (controller_.isOnlinePlayAvailable()) {
+                playOnlinePanel_.closing();
+            }
+        }
+    }   */
 
 }

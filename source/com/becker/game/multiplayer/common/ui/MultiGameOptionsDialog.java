@@ -17,6 +17,8 @@ public abstract class MultiGameOptionsDialog extends GameOptionsDialog
     protected NumberInput maxNumPlayers_;
     protected NumberInput numRobotPlayers_;
 
+    private static final int ABS_MAX_NUM_PLAYERS = 30;
+
     public MultiGameOptionsDialog(JFrame parent, GameController controller ) {
         super(parent, controller);
     }
@@ -24,12 +26,12 @@ public abstract class MultiGameOptionsDialog extends GameOptionsDialog
     protected void initMultiControllerParamComponents(MultiGameOptions options) {
         maxNumPlayers_ =
             new NumberInput(GameContext.getLabel("MAX_NUM_PLAYERS"), options.getMaxNumPlayers(),
-                                GameContext.getLabel("MAX_NUM_PLAYERS_TIP"), 2, 20, true);
+                                GameContext.getLabel("MAX_NUM_PLAYERS_TIP"), options.getMinNumPlayers(), ABS_MAX_NUM_PLAYERS, true);
         maxNumPlayers_.addKeyListener(this);
 
         numRobotPlayers_ =
                 new NumberInput(GameContext.getLabel("NUM_ROBOTS"), options.getNumRobotPlayers(),
-                                GameContext.getLabel("NUM_ROBOTS_TIP"), 0, 20, true);
+                                GameContext.getLabel("NUM_ROBOTS_TIP"), 0, ABS_MAX_NUM_PLAYERS, true);
     }
 
 

@@ -8,7 +8,8 @@ import javax.swing.*;
 import java.awt.event.*;
 
 /**
- *
+ * Toolbar that appears a the top of the game application window.
+ * Offers standard actions for all games, but can be given game specific buttons too.
  * @author Barry Becker
  */
 public class GameToolBar extends TexturedToolBar {

@@ -1,9 +1,9 @@
-package com.becker.game.online;
+package com.becker.game.common.online;
 
 import java.io.*;
 
 /**
- * These game commands are passed over the wire betwween client and server
+ * These game commands are passed over the wire between client and server
  * as a means fo communication between the two.
  * Implements command pattern.
  * Immutable.
@@ -25,7 +25,6 @@ public class GameCommand implements Serializable {
         ADD_TABLE,
         JOIN_TABLE,
         CHANGE_NAME,
-        //START_GAME,
         UPDATE_TABLES,
         CHAT_MESSAGE
     }

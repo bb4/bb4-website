@@ -4,6 +4,7 @@ import com.becker.common.*;
 import com.becker.game.common.*;
 import com.becker.game.multiplayer.common.ui.*;
 import com.becker.game.multiplayer.galactic.*;
+import com.becker.game.multiplayer.galactic.player.*;
 import com.becker.ui.table.*;
 
 import javax.swing.table.*;
@@ -16,7 +17,7 @@ import java.awt.*;
  * GalacticPlayerTable contains a list of players.
  * All the cells are editable.
  * It is initialized with a list of Players and returns a list of Players.
- * @see com.becker.game.multiplayer.galactic.GalacticPlayer
+ * @see com.becker.game.multiplayer.galactic.player.GalacticPlayer
  *
  * @author Barry Becker
  */

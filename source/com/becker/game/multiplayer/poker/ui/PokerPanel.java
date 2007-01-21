@@ -1,10 +1,7 @@
 package com.becker.game.multiplayer.poker.ui;
 
 import com.becker.game.common.*;
-import com.becker.game.common.online.ui.*;
 import com.becker.game.common.ui.*;
-import com.becker.game.online.ui.*;
-
 
 import javax.swing.*;
 
@@ -28,14 +25,6 @@ public class PokerPanel extends GamePanel
         return  GameContext.getLabel("POKER_TITLE");
     }
 
-    /**
-     * Poker supports online play if the server is available
-     * @return true if the game supports online play and there is a server available
-     */
-    protected boolean isOnlinePlayAvailable() {
-        return onlineGameDialog_.isServerAvailable();
-    }
-
 
     protected GameBoardViewer createBoardViewer() {
         return new PokerGameViewer();
@@ -43,10 +32,6 @@ public class PokerPanel extends GamePanel
 
     protected NewGameDialog createNewGameDialog( JFrame parent, ViewerCallbackInterface viewer ) {
         return new PokerNewGameDialog( parent, viewer );
-    }
-
-    protected OnlineGameDialog createOnlineGameDialog( JFrame parent, ViewerCallbackInterface viewer ) {
-        return new OnlinePokerDialog( parent, viewer );
     }
 
     protected GameOptionsDialog createOptionsDialog( JFrame parent, GameController controller ) {

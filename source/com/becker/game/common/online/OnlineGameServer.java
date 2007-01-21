@@ -1,73 +1,57 @@
-package com.becker.game.online;
+package com.becker.game.common.online;
 
+import com.becker.common.*;
 import com.becker.game.common.*;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
 import java.io.*;
 import java.net.*;
 import java.util.*;
-import java.util.List;
 
 /**
  * The abstract server for online games.
- * Long term this should probably not have a UI.
+ * This can be run from within a ui or from a command line.
+ * If running from the command line use:
+ *       java OnlineGameServer -p <port> -game <gameName>
+ * e.g.  java OnlineGameServer -9 4443 -game poker
+ *
+ * If running from the UI, see
+ *   OnlineGameServerFrame
  *
  * Manages the tables for the game room.
  * Has a GameController for each table.
  *
  * @author Barry Becker Date: May 14, 2006
  */
-public abstract class OnlineGameServer extends JFrame {
+public class OnlineGameServer  {
+
+    public static final String GAME_OPTION = "game";
+    public static final String PORT_OPTION = "port";
 
     protected JTextArea textArea_;
     protected ServerSocket server_;
+    private int port_;
 
-    // processes server commands. May someday need sublassing.
+    /** processes server commands. May someday need sublassing.  */
     private ServerCommandProcessor cmdProcessor_;
 
-    // keep a list of the threads that we have for each client connection.
+    /** keep a list of the threads that we have for each client connection.  */
     List<ClientWorker> clientConnections_;
 
     /**
      * Create the online game server to serve all online clients.
+     * @param port - should be unique for each gameServer that is runningon a given server.
+     * @param gameType - one of the supported games (see plugin file)
+     * @param textArea - may be null if not running in UI, elese shows traffic messages.
      */
-    protected OnlineGameServer() {
-        initUI();
+    public OnlineGameServer(int port, String gameType, JTextArea textArea) {
 
-        cmdProcessor_ = new ServerCommandProcessor();
+        port_ = port;
+        textArea_ = textArea;
+        cmdProcessor_ = new ServerCommandProcessor(gameType);
         clientConnections_ = new LinkedList<ClientWorker>();
         openListenSocket();
     }
-
-    /**
-     * In the long term there will not be a UI, that is why this class is not itn the ui subpackage.
-     */
-    private void initUI() {
-        JPanel panel = new JPanel();
-        JLabel label = new JLabel("Commands received over the socket:");
-        textArea_ = new JTextArea(20, 40);
-
-        panel.setLayout(new BorderLayout());
-        panel.setBackground(Color.white);
-        panel.add("North", label);
-        panel.add("Center", new JScrollPane(textArea_));
-        setTitle(getTitle());
-
-        getContentPane().add(panel);
-
-        WindowListener l = new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        };
-        addWindowListener(l);
-        pack();
-        setVisible(true);
-    }
-
-    public abstract int getPort();
 
 
     /**
@@ -77,12 +61,12 @@ public abstract class OnlineGameServer extends JFrame {
      * that we need to broadcast to when something changes.
      */
     public void openListenSocket() {
-        int port = getPort();
+
         try {
-            server_ = new ServerSocket(port);
+            server_ = new ServerSocket(port_);
         }
         catch (IOException e) {
-            GameContext.log(0, "Could not listen on port " + port);
+            GameContext.log(0, "Could not listen on port " + port_);
             e.printStackTrace();
             System.exit(-1);
         }
@@ -96,7 +80,7 @@ public abstract class OnlineGameServer extends JFrame {
                 t.start();
             }
             catch (IOException e) {
-                GameContext.log(0, "Accept failed: " + port);
+                GameContext.log(0, "Accept failed: " + port_);
                 e.printStackTrace();
                 break;
             }
@@ -169,7 +153,12 @@ public abstract class OnlineGameServer extends JFrame {
 
                     //Send acknowledgment back to client
                     //oStream.writeObject(new GameCommand("received", cmd));
-                    text_.append(cmd.toString() + '\n');
+                    if (text_ == null)  {
+                       System.out.println(cmd.toString());
+                    }  else {
+                       text_.append(cmd.toString() + '\n');
+                    }
+
                 }
 
             }
@@ -200,19 +189,59 @@ public abstract class OnlineGameServer extends JFrame {
         }
     }
 
+    /**
+     * @param options
+     * @return true if valid.
+     */
+    public static boolean verifyCmdLineOptions(CommandLineOptions options) {
+        if (options.contains("help") || !options.contains(PORT_OPTION) || !options.contains(GAME_OPTION)) {
+            System.out.println("Usage: -port <port number> -game <game name>\n");
+            return false;
+        }
+        if (options.getValueForOption(PORT_OPTION) != null) {
+            String p = options.getValueForOption(PORT_OPTION);
+            try {
+               Integer.parseInt(p);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid port number : "+p);
+                return false;
+            }
+        }
+        else {
+            System.out.println("You must specify a port number.");
+            return false;
+        }
+        if (options.getValueForOption(GAME_OPTION) == null) {
+            System.out.println("You must specify a valid game. See plugins.xml for list of available games.");
+            return false;
+        }
+        return true;
+    }
+
      /**
       * Implements OnlineGameServerInterface which is also implemented by GtpTesujiSoftGoServer.
       * not currently used, but I'm trying to have a consistent game server interface.
-      * @param cmdLine command and its arguments in a form that can be parsed.
-      * @param response the response from the server to be interpreted by the client.
-      * @return true if successfully handled.
       *
      public boolean handleCommand(String cmdLine, StringBuffer response) {
          String[] cmdArray = StringUtils.tokenize(cmdLine);
          String cmdStr = cmdArray[0];
          boolean status = true;
-
          GameCommand cmd = new GameCommand(GameCommand.Name.valueOf(cmdStr), cmdStr);
          return processCmd(cmd);
      } */
+
+
+    /**
+     * create and show the server.
+     */
+    public static void main(String[] args) {
+
+        CommandLineOptions options = new CommandLineOptions(args);
+
+        if (verifyCmdLineOptions(options))  {
+            int port = Integer.parseInt(options.getValueForOption(PORT_OPTION));
+            String gameName = options.getValueForOption(GAME_OPTION);
+            OnlineGameServer server = new OnlineGameServer(port, gameName, null);
+        }
+    }
 }

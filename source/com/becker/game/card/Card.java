@@ -8,8 +8,20 @@ public class Card {
         HEARTS, DIAMONDS, CLUBS, SPADES
     }
 
+    /** The cards rank: 2,3,4,...,10,J,Q,K,A */
     private final Rank rank_;
     private final Suit suit_;
+
+    /* A prototype deck that gets statically initialized. */
+    private static final List<Card> protoDeck = new ArrayList<Card>();
+
+    static {
+        for (Suit suit : Suit.values())
+            for (Rank rank : Rank.values())
+                protoDeck.add(new Card(rank, suit));
+    }
+
+
 
     public Card(Rank rank, Suit suit) {
         this.rank_ = rank;
@@ -38,14 +50,7 @@ public class Card {
 
     public String toString() { return rank_ + " of " + suit_; }
 
-    private static final List<Card> protoDeck = new ArrayList<Card>();
 
-    // Initialize prototype deck
-    static {
-        for (Suit suit : Suit.values())
-            for (Rank rank : Rank.values())
-                protoDeck.add(new Card(rank, suit));
-    }
 
     public static List newDeck() {
         List deck = new ArrayList<Card>(protoDeck); // Return copy of prototype deck

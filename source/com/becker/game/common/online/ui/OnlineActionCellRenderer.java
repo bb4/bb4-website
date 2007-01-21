@@ -1,7 +1,5 @@
 package com.becker.game.common.online.ui;
 
-import com.becker.game.common.online.ui.*;
-
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;

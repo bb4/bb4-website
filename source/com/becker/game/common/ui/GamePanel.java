@@ -3,7 +3,6 @@ package com.becker.game.common.ui;
 import com.becker.common.*;
 import com.becker.game.common.*;
 import com.becker.game.common.online.ui.*;
-import com.becker.game.online.ui.*;
 import com.becker.ui.*;
 
 import javax.swing.*;
@@ -46,7 +45,7 @@ public abstract class GamePanel extends TexturedPanel
     protected GameBoardViewer boardViewer_;
 
     protected NewGameDialog newGameDialog_;
-    protected OnlineGameDialog onlineGameDialog_;
+    //protected OnlineGameManagerPanel onlineGameDialog_;
     protected GameOptionsDialog optionsDialog_;
     protected GameInfoPanel infoPanel_;
 
@@ -150,7 +149,7 @@ public abstract class GamePanel extends TexturedPanel
         GameContext.setLogger( new Log( logWindow ) );
 
         newGameDialog_ = createNewGameDialog( parent, boardViewer_ );
-        onlineGameDialog_ = createOnlineGameDialog(parent, boardViewer_);
+       // onlineGameDialog_ = createOnlineGameDialog(parent, boardViewer_);
         optionsDialog_ = createOptionsDialog( parent, boardViewer_.getController() );
 
         // if the board is too big, allow it to be scrolled.
@@ -227,7 +226,7 @@ public abstract class GamePanel extends TexturedPanel
      * Only need to return something non-null if the game supports online play.
      * @return the dialog used for configuring online game play.
      */
-    protected OnlineGameDialog createOnlineGameDialog( JFrame parent, ViewerCallbackInterface viewer ) {
+    protected OnlineGameManagerPanel createOnlineGameDialog( JFrame parent, ViewerCallbackInterface viewer ) {
         return null;
     }
 
@@ -320,16 +319,12 @@ public abstract class GamePanel extends TexturedPanel
         if ( source == toolBar_.getNewGameButton() ) {
             //newGameDialog_.setLocationRelativeTo( this );
 
-            // if there is an active server and the game supports online play then show the online game dialog
-            // instead of the normal new (local) game dialog to allow them to play with others online.
-            if (isOnlinePlayAvailable())  {
-                onlineGameDialog_.showDialog();
-            } else {
-                boolean canceled = newGameDialog_.showDialog();
-                if ( !canceled ) { // newGame a game with the newly defined options
-                    boardViewer_.startNewGame();
-                    infoPanel_.reset();
-                }
+            // if there is an active server and the game supports online play then there will be a tab for online games
+            // otherwise user can only create a local game.
+            boolean canceled = newGameDialog_.showDialog();
+            if ( !canceled ) { // newGame a game with the newly defined options
+                boardViewer_.startNewGame();
+                infoPanel_.reset();
             }
         }
         else if ( source == toolBar_.getUndoButton() ) {
@@ -352,19 +347,4 @@ public abstract class GamePanel extends TexturedPanel
             showHelpDialog();
     }
 
-
-    /**
-     * If the window gets closed, then the player has stood up from his table if online.
-     */
-    protected void processWindowEvent( WindowEvent e )
-    {
-        if ( e.getID() == WindowEvent.WINDOW_CLOSING ) {
-
-            System.out.println("Window clsing!");
-            if (isOnlinePlayAvailable()) {
-                onlineGameDialog_.closing();
-            }
-        }
-
-    }
 }

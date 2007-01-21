@@ -17,7 +17,6 @@ import java.text.*;
 public final class HelpDialog extends JDialog implements ActionListener
 {
 
-
     private final GradientButton okButton_ = new GradientButton();
     private static final long serialVersionUID = 0L;
 
@@ -46,7 +45,6 @@ public final class HelpDialog extends JDialog implements ActionListener
 
         enableEvents( AWTEvent.WINDOW_EVENT_MASK );
         initGUI();
-
 
         this.setLocationRelativeTo( parent );
         pack();

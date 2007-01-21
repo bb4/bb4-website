@@ -41,9 +41,12 @@ import static com.becker.game.twoplayer.go.GoControllerConstants.*;
  *
  * High priority todo:
  *
- *  - add test cases for every little method of every class
- *  - why don't test cases find optimal moves?
- *  - Game tree shold show expected follow up moves.
+ *  - Break out GameBoardRenderer from GameBoarddViewer for each game package.
+ *  - Add test cases for every little method of every class
+ *  - Why don't test cases find optimal moves?
+ *  - fix scoring (allow for different types of rule systems
+ *  - parallelize minimax (http://www.cs.vu.nl/~aske/mtdf.html#abmem)
+ *
  * bugs
  *  - Error: can't have no liberties and still be on the board!
  *  - don't play in territory at end of game.
@@ -118,6 +121,7 @@ import static com.becker.game.twoplayer.go.GoControllerConstants.*;
  *  - When the computer plays in your eye, the eye goes away. It should not.
  *  - Do not have any rendering done in anything but ui classes (done) (1).
  *  - switch to using type safe enums instead of int constants (done).
+ *  - Game tree shold show expected follow up moves.
  *
  * @see GoBoard
  * @author Barry Becker
