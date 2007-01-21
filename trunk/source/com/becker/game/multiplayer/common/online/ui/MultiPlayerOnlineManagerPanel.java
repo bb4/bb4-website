@@ -2,14 +2,14 @@ package com.becker.game.multiplayer.common.online.ui;
 
 import com.becker.game.common.*;
 import com.becker.game.common.online.ui.*;
+import com.becker.game.common.online.*;
 import com.becker.game.common.ui.*;
 import com.becker.game.multiplayer.common.*;
 import com.becker.game.multiplayer.common.ui.*;
-import com.becker.game.online.*;
-import com.becker.game.online.ui.*;
 import com.becker.ui.*;
 
 import javax.swing.*;
+import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -18,7 +18,7 @@ import java.awt.event.*;
  *
  * @author Barry Becker Date: May 14, 2006
  */
-public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
+public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPanel
                                                   implements ActionListener, MouseListener, KeyListener {
 
     private static final String DEFAULT_NAME = "<name>";
@@ -30,11 +30,12 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
     private String currentName_;
     private String oldName_;
 
+
     /**
      * Constructor
      */
-    public MultiPlayerOnlineGameDialog(Frame parent, ViewerCallbackInterface viewer) {
-        super(parent, viewer);
+    public MultiPlayerOnlineManagerPanel(ViewerCallbackInterface viewer, ChangeListener dlg) {
+        super(viewer, dlg);
     }
 
 
@@ -59,7 +60,7 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
                                                   GameContext.getLabel("ONLINE_DLG_TITLE")));
 
         JPanel headerPanel = new JPanel(new BorderLayout());
-        JLabel titleLabel = new JLabel(GameContext.getLabel("ONLINE_TABLES"));
+        //JLabel titleLabel = new JLabel(GameContext.getLabel("ONLINE_TABLES"));
         JPanel buttonsPanel = new JPanel(new BorderLayout());
 
         createTableButton_ = new GradientButton(GameContext.getLabel("CREATE_TABLE"));
@@ -150,14 +151,16 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
                               + ")\n have joined this table. Play will now begin. ",
                               "Ready to Start", JOptionPane.INFORMATION_MESSAGE);
                     // close the dlg and tell the server to start a thread to play the game
-                    this.setVisible( false );
+
+
+                    ChangeEvent event = new ChangeEvent(this);
+                    gameStartedListener_.stateChanged(event);
                     //serverConnection_.sendCommand(new GameCommand(GameCommand.Name.START_GAME, readyTable));
                 }
                 break;
            case CHAT_MESSAGE : break;
            default : assert false : "Unexpected command name :"+ cmd.getName();
         }
-
     }
 
     /**
@@ -273,6 +276,5 @@ public abstract class MultiPlayerOnlineGameDialog extends OnlineGameDialog
     public void mouseReleased(MouseEvent e) {}
     public void mouseEntered(MouseEvent e) {}
     public void mouseExited(MouseEvent e) {}
-
 
 }
