@@ -10,7 +10,6 @@
     name             ID       #REQUIRED
     msgKey           NMTOKENS #REQUIRED
     msgBundleBase    CDATA    #REQUIRED
-    serverPort       CDATA    #REQUIRED
     panelClass       CDATA    #REQUIRED
     controllerClass  CDATA    #REQUIRED
     default          NMTOKENS #IMPLIED

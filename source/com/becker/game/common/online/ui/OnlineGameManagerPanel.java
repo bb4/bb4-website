@@ -35,7 +35,7 @@ public abstract class OnlineGameManagerPanel extends JPanel
         controller_ = viewer.getController();
         gameStartedListener_ = dlg;
 
-        assert controller_.getServerConnection()!=null :
+        assert (controller_.getServerConnection() != null) :
                 "You should not create this dlg without first verifying that online play is available.";
         controller_.getServerConnection().addOnlineChangeListener(this);
 

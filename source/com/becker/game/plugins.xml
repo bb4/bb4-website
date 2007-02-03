@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plugins SYSTEM "../source/com/becker/game/plugins.dtd">
+<!DOCTYPE plugins SYSTEM "http://www.geocities.com/BarryBecker4/schema/plugins.dtd">
 <plugins date="10/19/2004" author="Barry Becker">
     <!-- whenever you add a new game to the framework, you need to add an extry here -->
     <!-- here are the 2 player games -->
@@ -7,31 +7,26 @@
     <game name="pente"
           msgKey="PENTE"
           msgBundleBase="com.becker.game.twoplayer.pente.resources.penteMessages"
-          serverPort="-1"
           panelClass="com.becker.game.twoplayer.pente.ui.PentePanel"
           controllerClass="com.becker.game.twoplayer.pente.PenteController" />
     <game name="checkers"
           msgKey="CHECKERS"
           msgBundleBase="com.becker.game.twoplayer.checkers.resources.checkersMessages"
-          serverPort="-1"
           panelClass="com.becker.game.twoplayer.checkers.ui.CheckersPanel"
           controllerClass="com.becker.game.twoplayer.checkers.CheckersController" />
     <game name="chess"
           msgKey="CHESS"
           msgBundleBase="com.becker.game.twoplayer.chess.resources.chessMessages"
-          serverPort="-1"
           panelClass="com.becker.game.twoplayer.chess.ui.ChessPanel"
           controllerClass="com.becker.game.twoplayer.chess.ChessController" />
     <game name="blockade"
           msgKey="BLOCKADE"
           msgBundleBase="com.becker.game.twoplayer.blockade.resources.blockadeMessages"
-          serverPort="-1"
           panelClass="com.becker.game.twoplayer.blockade.ui.BlockadePanel"
           controllerClass="com.becker.game.twoplayer.blockade.BlockadeController" />
     <game name="go"
           msgKey="GO"
           msgBundleBase="com.becker.game.twoplayer.go.resources.goMessages"
-          serverPort="-1"
           panelClass="com.becker.game.twoplayer.go.ui.GoPanel"
           controllerClass="com.becker.game.twoplayer.go.GoController"
           default="true"/>
@@ -40,19 +35,16 @@
     <game name="galactic"
           msgKey="GALACTIC"
           msgBundleBase="com.becker.game.multiplayer.galactic.resources.galacticMessages"
-          serverPort="-1"
           panelClass="com.becker.game.multiplayer.galactic.ui.GalacticPanel"
           controllerClass="com.becker.game.multiplayer.galactic.GalacticController" />
     <game name="poker"
           msgKey="POKER"
           msgBundleBase="com.becker.game.multiplayer.poker.resources.pokerMessages"
-          serverPort="4443"
           panelClass="com.becker.game.multiplayer.poker.ui.PokerPanel"
           controllerClass="com.becker.game.multiplayer.poker.PokerController" />
     <game name="set"
           msgKey="SET"
           msgBundleBase="com.becker.game.multiplayer.set.resources.setMessages"
-          serverPort="-1"
           panelClass="com.becker.game.multiplayer.set.ui.SetPanel"
           controllerClass="com.becker.game.multiplayer.set.SetController" />
 

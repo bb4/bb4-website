@@ -120,11 +120,12 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
      */
     public void actionPerformed(ActionEvent e)
     {
-        PokerController pc = (PokerController)controller_;
-        gameChanged(null); // update the current player in the label
 
         if (e.getSource() == commandButton_)
         {
+            PokerController pc = (PokerController)controller_;
+            gameChanged(null); // update the current player in the label
+
            // open the command dialog to get the players commands
            PokerPlayer currentPlayer = (PokerPlayer)pc.getCurrentPlayer();
 
@@ -202,6 +203,7 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
     {
         if ( controller_ == null )
             return;
+
         //Player currentPlayer = controller_.getCurrentPlayer();
         setPlayerLabel();
         //Galaxy g = (Galaxy)controller_.getBoard();
@@ -212,6 +214,9 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
         else {
             moveNumLabel_.setText( 1 + " " );
         }
+
+        // don't allow any more actions when the game is done.
+        commandButton_.setEnabled(!controller_.isDone());
     }
 
 }

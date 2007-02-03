@@ -291,7 +291,7 @@ public abstract class GameBoardViewer
 
     /**
      *  This method gets called when the game has changed in some way.
-     *  mMost likely because a move has been played.
+     *  Most likely because a move has been played.
      */
     public void sendGameChangedEvent(Move m)
     {

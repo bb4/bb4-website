@@ -257,4 +257,12 @@ public abstract class GameController
      */
     public abstract boolean isOnlinePlayAvailable();
 
+    /**
+     * If a derived class supports online play it must override this.
+     * @return server port number
+     */
+    public int getServerPort() {
+        return -1;
+    }
+
 }

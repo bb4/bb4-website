@@ -1,3 +1,7 @@
+# DTD for hierarchy of stuff
+# if you change this doc, you must also update it on http://www.geocities.com/BarryBecker4
+#
+# @author Barry Becker  1/2006
 
 <!ELEMENT hierarchy   (node | use)*>
 <!ELEMENT node        (node | use)*>

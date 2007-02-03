@@ -3,15 +3,15 @@ package com.becker.xml;
 import org.w3c.dom.*;
 import org.xml.sax.*;
 
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.ParserConfigurationException;
-import java.util.*;
+import javax.xml.parsers.*;
 import java.io.*;
 import java.net.*;
+import java.util.*;
 
 /**
- * User: Barry Becker
+ * Static utility methods for manipulating an XML dom.
+ *
+ * @author Barry Becker
  * Date: Oct 17, 2004
  */
 public class DomUtil {
@@ -170,6 +170,8 @@ public class DomUtil {
          }
      }
 
+
+
     /**
      * parse an xml file and return a cleaned up Document object.
      * Set replaceUseWithDeepCopy to false if you are in a debug mode and don't want to see a lot of redundant subtrees.
@@ -177,17 +179,25 @@ public class DomUtil {
      * @param replaceUseWithDeepCopy if true then replace each instance of a use node with a deep copy of what it refers to
      * @return the parsed file as a Document
      */
-    public static Document parseXMLFile(InputStream stream, boolean replaceUseWithDeepCopy)
+    private static Document parseXML(InputStream stream, boolean replaceUseWithDeepCopy, String xsdUri)
     {
         Document document = null;
-        DocumentBuilderFactory factory =
-            DocumentBuilderFactory.newInstance();
-        factory.setValidating(true);
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
-        //factory.setNamespaceAware(true);
         try {
-            DocumentBuilder builder = factory.newDocumentBuilder();          
+            factory.setNamespaceAware(true);
+            factory.setValidating(true);
+            if (xsdUri != null)  {
+                factory.setAttribute( "http://java.sun.com/xml/jaxp/properties/schemaLanguage",
+                                       "http://www.w3.org/2001/XMLSchema");
+
+                //URI schemaURI = new URI("http://www.geocities.com/BarryBecker4/schema/yugioh.xsd");
+                factory.setAttribute("http://java.sun.com/xml/jaxp/properties/schemaSource", xsdUri);
+            }
+
+            DocumentBuilder builder = factory.newDocumentBuilder();
             builder.setErrorHandler(new XmlErrorHandler());
+
             document = builder.parse( stream );
 
             postProcessDocument(document, document, replaceUseWithDeepCopy);
@@ -199,7 +209,6 @@ public class DomUtil {
            if (sxe.getException() != null)
                x = sxe.getException();
            x.printStackTrace();
-
         } catch (ParserConfigurationException pce) {
             // Parser with specified options can't be built
             pce.printStackTrace();
@@ -212,13 +221,13 @@ public class DomUtil {
     }
 
 
-    public static Document parseXMLFile(URL url)
+    public static Document parseXML(URL url)
     {
         try {
 
             URLConnection urlc = url.openConnection();
             InputStream is = urlc.getInputStream();
-            return parseXMLFile(is, true);
+            return parseXML(is, true, null);
         } catch  (IOException e) {
             System.out.println("Failed ");
             e.printStackTrace();
@@ -235,7 +244,7 @@ public class DomUtil {
     {
         try {
             FileInputStream str = new FileInputStream(file);
-            return parseXMLFile(str, replaceUseWithDeepCopy);
+            return parseXML(str, replaceUseWithDeepCopy, null);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

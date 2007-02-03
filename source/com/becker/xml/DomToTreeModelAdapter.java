@@ -2,20 +2,22 @@ package com.becker.xml;
 
 import org.w3c.dom.Document;
 
-import javax.swing.tree.TreePath;
+import javax.swing.tree.*;
 import javax.swing.event.TreeModelListener;
 import javax.swing.event.TreeModelEvent;
-import java.util.Vector;
-import java.util.Enumeration;
+import java.util.*;
 
     /**
      * This adapter converts the current Document (a DOM) into
      * a JTree model.
      */
-    public class DomToTreeModelAdapter implements javax.swing.tree.TreeModel
+    public class DomToTreeModelAdapter implements TreeModel
     {
 
       private Document document_;
+
+      private List<TreeModelListener> listenerList_ = new LinkedList<TreeModelListener>();
+
 
       public DomToTreeModelAdapter(Document document) {
           document_ = document;
@@ -60,30 +62,19 @@ import java.util.Enumeration;
        * Use these methods to add and remove event listeners.
        * (Needed to satisfy TreeModel interface, but not used.)
        */
-      private Vector listenerList = new Vector();
+
       public void addTreeModelListener(TreeModelListener listener) {
         if ( listener != null
-        && ! listenerList.contains( listener ) ) {
-           listenerList.addElement( listener );
+        && ! listenerList_.contains( listener ) ) {
+           listenerList_.add( listener );
         }
       }
 
       public void removeTreeModelListener(TreeModelListener listener) {
         if ( listener != null ) {
-           listenerList.removeElement( listener );
+           listenerList_.remove( listener );
         }
       }
-
-      // Note: Since XML works with 1.1, this example uses Vector.
-      // If coding for 1.2 or later, though, I'd use this instead:
-      //   private List listenerList = new LinkedList();
-      // The operations on the List are then add(), remove() and
-      // iteration, via:
-      //  Iterator it = listenerList.iterator();
-      //  while ( it.hasNext() ) {
-      //    TreeModelListener listener = (TreeModelListener) it.next();
-      //    ...
-      //  }
 
       /*
        * Invoke these methods to inform listeners of changes.
@@ -95,37 +86,25 @@ import java.util.Enumeration;
        * immediately at hand.
        */
       public void fireTreeNodesChanged( TreeModelEvent e ) {
-        Enumeration listeners = listenerList.elements();
-        while ( listeners.hasMoreElements() ) {
-          TreeModelListener listener =
-            (TreeModelListener) listeners.nextElement();
+        for ( TreeModelListener listener : listenerList_ ) {
           listener.treeNodesChanged( e );
         }
       }
 
       public void fireTreeNodesInserted( TreeModelEvent e ) {
-        Enumeration listeners = listenerList.elements();
-        while ( listeners.hasMoreElements() ) {
-           TreeModelListener listener =
-             (TreeModelListener) listeners.nextElement();
-           listener.treeNodesInserted( e );
+        for ( TreeModelListener listener : listenerList_ ) {
+          listener.treeNodesInserted( e );
         }
       }
 
       public void fireTreeNodesRemoved( TreeModelEvent e ) {
-        Enumeration listeners = listenerList.elements();
-        while ( listeners.hasMoreElements() ) {
-          TreeModelListener listener =
-            (TreeModelListener) listeners.nextElement();
+        for ( TreeModelListener listener : listenerList_ ) {
           listener.treeNodesRemoved( e );
         }
       }
 
       public void fireTreeStructureChanged( TreeModelEvent e ) {
-        Enumeration listeners = listenerList.elements();
-        while ( listeners.hasMoreElements() ) {
-          TreeModelListener listener =
-            (TreeModelListener) listeners.nextElement();
+        for ( TreeModelListener listener : listenerList_ ) {
           listener.treeStructureChanged( e );
         }
       }

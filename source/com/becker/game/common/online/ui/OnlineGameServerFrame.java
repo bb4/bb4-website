@@ -12,9 +12,9 @@ import java.awt.event.*;
  * UI Frame to show what the GameServer is doing.
  * There is nothing game specific about the server it just accepts commands and delegates to the controller
  * Invoke with
- *   java OnlineGameServer -p <port> -game <game>
+ *   java OnlineGameServer -game <game>
  * for example:
- *   java OnlineGameServer -p 4443 -game poker
+ *   java OnlineGameServer -game poker
  *
  * @author Barry Becker Date: Jan 20, 2007
  */
@@ -27,9 +27,9 @@ public class OnlineGameServerFrame  extends JFrame {
     /**
      * Create the online game server to serve all online clients.
      */
-    public OnlineGameServerFrame(int port, String gameName) {
+    public OnlineGameServerFrame(String gameName) {
         initUI(gameName);
-        server_ = new OnlineGameServer(port, gameName, textArea_);
+        server_ = new OnlineGameServer(gameName, textArea_);
     }
 
     /**
@@ -62,7 +62,7 @@ public class OnlineGameServerFrame  extends JFrame {
 
     /**
      * Objects created in run method are finalized when
-     * program terminates and thread exits
+     * program terminates and thread exits.
      */
     protected void finalize() throws Throwable {
         super.finalize();
@@ -77,9 +77,8 @@ public class OnlineGameServerFrame  extends JFrame {
         CommandLineOptions options = new CommandLineOptions(args);
 
         if (OnlineGameServer.verifyCmdLineOptions(options)) {
-            int port = Integer.parseInt(options.getValueForOption(OnlineGameServer.PORT_OPTION));
             String gameName = options.getValueForOption(OnlineGameServer.GAME_OPTION);
-            OnlineGameServerFrame frame = new OnlineGameServerFrame(port, gameName);
+            OnlineGameServerFrame frame = new OnlineGameServerFrame(gameName);
         }
     }
 
