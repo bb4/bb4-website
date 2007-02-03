@@ -54,7 +54,7 @@ public class PluginManager {
     private void initialize()  {
         // load plugin games from plugins.xml
         URL url = GUIUtil.getURL(PLUGINS_FILE);
-        Document document = DomUtil.parseXMLFile(url);
+        Document document = DomUtil.parseXML(url);
 
         Node root = document.getDocumentElement();    // games element
         NodeList children = root.getChildNodes();
@@ -62,7 +62,6 @@ public class PluginManager {
         hmNameToPlugin_ = new HashMap<String, GamePlugin>();
         hmLabelToPlugin_ = new HashMap<String, GamePlugin>();
 
-        List<GamePlugin> pluginGames = new ArrayList<GamePlugin>();
         int num = children.getLength();
         for (int i=0; i < num; i++) {
 
@@ -73,12 +72,11 @@ public class PluginManager {
             String msgKey = DomUtil.getAttribute(n, "msgKey");
             String msgBundleBase = DomUtil.getAttribute(n, "msgBundleBase");
             String label = GameContext.getLabel(msgKey);
-            int port = Integer.parseInt(DomUtil.getAttribute(n, "serverPort"));
             String panelClass =  DomUtil.getAttribute(n, "panelClass");
             String controllerClass =  DomUtil.getAttribute(n, "controllerClass");
             String def = DomUtil.getAttribute(n, "default", "false");
             boolean isDefault = Boolean.parseBoolean(def);
-            GamePlugin plugin = new GamePlugin(name, label, msgBundleBase, port, panelClass, controllerClass, isDefault);
+            GamePlugin plugin = new GamePlugin(name, label, msgBundleBase, panelClass, controllerClass, isDefault);
             plugins_.add(plugin);
             hmNameToPlugin_.put(plugin.getName(), plugin);
             hmLabelToPlugin_.put(plugin.getLabel(), plugin);

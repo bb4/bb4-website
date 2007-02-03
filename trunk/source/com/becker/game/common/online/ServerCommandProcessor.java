@@ -14,19 +14,34 @@ public class ServerCommandProcessor {
     private OnlineGameTableList tables_;
 
     private GameController controller_;
-    private String gameName_;
 
     /**
      * Create the online game server to serve all online clients.
      */
     public ServerCommandProcessor(String gameName) {
 
-        gameName_ = gameName;
+        createController(gameName);
         tables_ = new OnlineGameTableList();
     }
 
     public OnlineGameTableList getTables() {
         return tables_;
+    }
+
+    private void createController(String gameName) {
+        String controllerClass = PluginManager.getInstance().getPlugin(gameName).getControllerClass();
+        Class c = Util.loadClass(controllerClass);
+        try {
+            controller_ = (GameController) c.newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int getPort() {
+        return controller_.getServerPort();
     }
 
     /**
@@ -110,22 +125,12 @@ public class ServerCommandProcessor {
 
     /**
      * When all the conditions are met for starting a new game, we create a new game controller of the
-     * appropriate type andstart the game.
+     * appropriate type and start the game.
      * @param table
      */
     private void startGame(OnlineGameTable table) {
 
         System.out.println("NOW starting game on Server! "+ table);
-
-        String controllerClass = PluginManager.getInstance().getPlugin(gameName_).getControllerClass();
-        Class c = Util.loadClass(controllerClass);
-        try {
-            controller_ = (GameController) c.newInstance();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
 
     }
 

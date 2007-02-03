@@ -45,7 +45,9 @@ public class PokerController extends GameController
 {
 
     private static final int DEFAULT_NUM_ROWS = 32;
-    protected static final int DEFAULT_NUM_COLS = 32;
+    private static final int DEFAULT_NUM_COLS = 32;
+
+    private static final int POKER_SERVER_PORT = 4443;
 
     private int currentPlayerIndex_;
     private int pot_;
@@ -53,6 +55,8 @@ public class PokerController extends GameController
     private int startingPlayerIndex_ = 0;
     // the ith play in a given round
     private int playIndex_ = 0;
+
+
 
     /**
      *  Construct the Poker game controller
@@ -226,13 +230,17 @@ public class PokerController extends GameController
      */
     protected ServerConnection createServerConnection() {
 
-        ServerConnection sc =  new ServerConnection(4443 ); // OnlinePokerServer.PORT);  @@ replace with controller.getServerPort()
+        ServerConnection sc =  new ServerConnection(getServerPort());
         sc.addOnlineChangeListener(this);
         return sc;
     }
 
     public boolean isOnlinePlayAvailable() {
         return getServerConnection().isConnected();
+    }
+
+    public int getServerPort() {
+        return POKER_SERVER_PORT;
     }
 
     /**

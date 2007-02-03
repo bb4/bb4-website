@@ -15,17 +15,17 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 
 
+/**
+ * Graphically view some XML document in a swing UI.
+ */
 public class DomEcho  extends JPanel
 {
-    // Global value so it can be ref'd by the tree-adapter
-    static Document document;
+    private static final int WINDOW_HEIGHT = 460;
+    private static final int LEFT_WIDTH = 300;
+    private static final int RIGHT_WIDTH = 340;
+    private static final int WINDOW_WIDTH = LEFT_WIDTH + RIGHT_WIDTH;
 
-    static final int windowHeight = 460;
-    static final int leftWidth = 300;
-    static final int rightWidth = 340;
-    static final int windowWidth = leftWidth + rightWidth;
-
-    public DomEcho()
+    public DomEcho(Document document)
     {
        // Make a nice border
        EmptyBorder eb = new EmptyBorder(5,5,5,5);
@@ -44,7 +44,7 @@ public class DomEcho  extends JPanel
        // Build left-side view
        JScrollPane treeView = new JScrollPane(tree);
        treeView.setPreferredSize(
-           new Dimension( leftWidth, windowHeight ));
+           new Dimension( LEFT_WIDTH, WINDOW_HEIGHT ));
 
        // Build right-side view
        // (must be final to be referenced in inner class)
@@ -53,7 +53,7 @@ public class DomEcho  extends JPanel
        htmlPane.setEditable(false);
        JScrollPane htmlView = new JScrollPane(htmlPane);
        htmlView.setPreferredSize(
-           new Dimension( rightWidth, windowHeight ));
+           new Dimension( RIGHT_WIDTH, WINDOW_HEIGHT ));
 
        // Wire the two views together. Use a selection listener
        // created with an anonymous inner-class adapter.
@@ -79,9 +79,9 @@ public class DomEcho  extends JPanel
                           treeView,
                           htmlView );
        splitPane.setContinuousLayout( true );
-       splitPane.setDividerLocation( leftWidth );
+       splitPane.setDividerLocation( LEFT_WIDTH );
        splitPane.setPreferredSize(
-            new Dimension( windowWidth + 10, windowHeight+10 ));
+            new Dimension( WINDOW_WIDTH + 10, WINDOW_HEIGHT+10 ));
 
        // Add GUI components
        this.setLayout(new BorderLayout());
@@ -89,7 +89,7 @@ public class DomEcho  extends JPanel
     } // constructor
 
 
-    public static void makeFrame() {
+    public static void makeFrame(Document document) {
         // Set up a GUI framework
         JFrame frame = new JFrame("DOM Echo");
         frame.addWindowListener(
@@ -99,16 +99,16 @@ public class DomEcho  extends JPanel
         );
 
         // Set up the tree, the views, and display it all
-        final DomEcho echoPanel =
-           new DomEcho();
+        final DomEcho echoPanel = new DomEcho(document);
+
         frame.getContentPane().add("Center", echoPanel );
         frame.pack();
         Dimension screenSize =
            Toolkit.getDefaultToolkit().getScreenSize();
-        int w = windowWidth + 10;
-        int h = windowHeight + 10;
-        frame.setLocation(screenSize.width/3 - w/2,
-                          screenSize.height/2 - h/2);
+        int w = WINDOW_WIDTH + 10;
+        int h = WINDOW_HEIGHT + 10;
+        frame.setLocation(screenSize.width/3 - (w >> 1),
+                          (screenSize.height >> 1) - (h >> 1));
         frame.setSize(w, h);
         frame.setVisible(true);
     } // makeFrame
@@ -117,17 +117,15 @@ public class DomEcho  extends JPanel
     // -------------------------------------------------------------------------
     public static void main(String argv[])
     {
-        if (argv.length != 1) {
+        Document document = null;
+        if (argv.length < 1) {
             document = DomUtil.buildDom();
-            makeFrame();
-            return;
         }
-
-        File file = new File(argv[0]);
-
-        document = DomUtil.parseXMLFile(file);
-
-        makeFrame();
+        else {
+            File file = new File(argv[0]);
+            document = DomUtil.parseXMLFile(file);
+        }
+        makeFrame(document);
     } // main
 
 }

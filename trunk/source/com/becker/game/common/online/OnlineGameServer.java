@@ -12,8 +12,8 @@ import java.util.*;
  * The abstract server for online games.
  * This can be run from within a ui or from a command line.
  * If running from the command line use:
- *       java OnlineGameServer -p <port> -game <gameName>
- * e.g.  java OnlineGameServer -9 4443 -game poker
+ *       java OnlineGameServer -game <gameName>
+ * e.g.  java OnlineGameServer -game poker
  *
  * If running from the UI, see
  *   OnlineGameServerFrame
@@ -26,7 +26,6 @@ import java.util.*;
 public class OnlineGameServer  {
 
     public static final String GAME_OPTION = "game";
-    public static final String PORT_OPTION = "port";
 
     protected JTextArea textArea_;
     protected ServerSocket server_;
@@ -40,15 +39,15 @@ public class OnlineGameServer  {
 
     /**
      * Create the online game server to serve all online clients.
-     * @param port - should be unique for each gameServer that is runningon a given server.
      * @param gameType - one of the supported games (see plugin file)
      * @param textArea - may be null if not running in UI, elese shows traffic messages.
      */
-    public OnlineGameServer(int port, String gameType, JTextArea textArea) {
+    public OnlineGameServer(String gameType, JTextArea textArea) {
 
-        port_ = port;
+        //port_ = PluginManager.getInstance().getPlugin(gameType).getPort();;
         textArea_ = textArea;
         cmdProcessor_ = new ServerCommandProcessor(gameType);
+        port_ = cmdProcessor_.getPort();
         clientConnections_ = new LinkedList<ClientWorker>();
         openListenSocket();
     }
@@ -194,21 +193,8 @@ public class OnlineGameServer  {
      * @return true if valid.
      */
     public static boolean verifyCmdLineOptions(CommandLineOptions options) {
-        if (options.contains("help") || !options.contains(PORT_OPTION) || !options.contains(GAME_OPTION)) {
-            System.out.println("Usage: -port <port number> -game <game name>\n");
-            return false;
-        }
-        if (options.getValueForOption(PORT_OPTION) != null) {
-            String p = options.getValueForOption(PORT_OPTION);
-            try {
-               Integer.parseInt(p);
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid port number : "+p);
-                return false;
-            }
-        }
-        else {
-            System.out.println("You must specify a port number.");
+        if (options.contains("help") || !options.contains(GAME_OPTION)) {
+            System.out.println("Usage: -game <game name>\n");
             return false;
         }
         if (options.getValueForOption(GAME_OPTION) == null) {
@@ -239,9 +225,8 @@ public class OnlineGameServer  {
         CommandLineOptions options = new CommandLineOptions(args);
 
         if (verifyCmdLineOptions(options))  {
-            int port = Integer.parseInt(options.getValueForOption(PORT_OPTION));
             String gameName = options.getValueForOption(GAME_OPTION);
-            OnlineGameServer server = new OnlineGameServer(port, gameName, null);
+            OnlineGameServer server = new OnlineGameServer(gameName, null);
         }
     }
 }

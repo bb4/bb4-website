@@ -31,7 +31,7 @@ public abstract class PokerPlayer extends MultiGamePlayer
     public static final int DEFAULT_CASH = 100;
 
 
-    protected PokerPlayer(String name,  int money, Color color, boolean isHuman)
+    protected PokerPlayer(String name, int money, Color color, boolean isHuman)
     {
         super(name, color, isHuman);
         cash_ = money;

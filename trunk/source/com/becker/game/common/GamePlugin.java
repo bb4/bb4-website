@@ -11,18 +11,16 @@ public class GamePlugin {
     private String name_;
     private String label_;
     private String msgBundleBase_;
-    private int port_;
     private String panelClass_;
     private String controllerClass_;
     private boolean isDefault_;
 
-    public GamePlugin(String name, String label, String msgBundleBase, int port,
+    public GamePlugin(String name, String label, String msgBundleBase,
                       String panelClass, String controllerClass,
                       boolean isDefault) {
         name_ = name;
         label_ = label;
         msgBundleBase_ = msgBundleBase;
-        port_ = port;
         panelClass_ = panelClass;
         controllerClass_ = controllerClass;
         isDefault_ = isDefault;
@@ -45,10 +43,6 @@ public class GamePlugin {
         return label_;
     }
 
-    public int getPort() {
-        return port_;
-    }
-
     public String getPanelClass() {
         //return Util.loadClass(panelClass_);
         return panelClass_;
@@ -66,7 +60,6 @@ public class GamePlugin {
     public String toString() {
         StringBuilder bldr = new StringBuilder(name_);
         bldr.append('('+ getLabel());
-        bldr.append("port="+port_+' ');
         bldr.append("panelClass="+panelClass_+' ');
         bldr.append("controllerClass="+controllerClass_+")\n");
         return bldr.toString();
