@@ -67,18 +67,6 @@ public class LiquidSimulator extends NewtonianSimulator
     {
         if ( !isPaused() ) {
             timeStep_ = environment_.stepForward( timeStep_);
-
-            if ( RECORD_ANIMATION ) {
-                //BufferedImage bi = ImageUtil.makeBufferedImage(this.mImage);
-
-                String fname = getFileNameBase() + Integer.toString( 1000000 + frameCount_ );
-                if ( image_ != null ) {
-                    //JOptionPane.showMessageDialog(this, "mImage("+fname+") width ="+mImage.getWidth(null));
-                    //System.out.println("mImage width ="+mImage.getWidth(null));
-                    ImageUtil.saveAsImage( fname, this.image_, ImageUtil.ImageType.PNG );
-                }
-            }
-            frameCount_++;
         }
         return timeStep_;
     }

@@ -50,10 +50,11 @@ public class NumberInput extends JPanel
         setMax(maxAllowed);
         String initialVal = integerOnly? Integer.toString((int) initialValue) : Double.toString(initialValue);
         numberField_ = new JTextField(initialVal);
-        numberField_.setMaximumSize( TEXT_FIELD_DIM );
 
         setLayout( new BoxLayout( this, BoxLayout.X_AXIS ) );
+
         setAlignmentX( Component.LEFT_ALIGNMENT );
+
         JLabel label = new JLabel( labelText );
         add( label );
 
@@ -69,7 +70,7 @@ public class NumberInput extends JPanel
         JPanel numPanel = new JPanel();
         numPanel.setBorder(BorderFactory.createEmptyBorder(0,2,0,2));
         numPanel.add( numberField_ );
-        this.add(numPanel);
+        add(numPanel);
 
         if (toolTip!=null)
             this.setToolTipText(toolTip);

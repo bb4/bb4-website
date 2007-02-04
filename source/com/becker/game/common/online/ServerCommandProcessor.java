@@ -132,6 +132,11 @@ public class ServerCommandProcessor {
 
         System.out.println("NOW starting game on Server! "+ table);
 
+        // create players from the table.
+        Player[] players = null;
+        controller_.setPlayers(players);
+        controller_.reset();
+
     }
 
     /**

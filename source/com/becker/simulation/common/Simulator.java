@@ -58,10 +58,6 @@ public abstract class Simulator extends AnimationComponent
     protected abstract double getInitialTimeStep();
 
 
-    public abstract void doOptimization();
-
-
-
     public void setTimeStep( double timeStep )
     {
         timeStep_ = timeStep;
@@ -79,8 +75,10 @@ public abstract class Simulator extends AnimationComponent
         return useAntialiasing_;
     }
 
-    public abstract void setScale( double scale );
-    public abstract double getScale();
+    public void setScale( double scale ) {};
+    public double getScale() {
+        return 1;
+    }
 
 
     protected GradientButton createOptionsButton()
@@ -156,4 +154,27 @@ public abstract class Simulator extends AnimationComponent
     public double getOptimalFitness() {
         return 0;
     }
+
+
+    public void doOptimization()
+    {
+       System.out.println("not implemented for this simulator");
+    }
+
+    public int getNumParameters() {
+        return 0;
+    }
+
+    /**
+     * *** implements the key method of the Optimizee interface
+     *
+     * evaluates the fitness.
+     */
+    public double evaluateFitness( ParameterArray params )
+    {
+        assert false : "not implemented yet";
+        return 0.0;
+    }
+
+
 }
