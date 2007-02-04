@@ -32,8 +32,6 @@ public final class RDRenderer {
     }
     private double specularConst_ = 0;
 
-
-
     private static final int MARGIN = 20;
 
     private ColorMap cmap_;

@@ -65,6 +65,7 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog implements Ac
                                          simulator_.getName() + " in the simulation" );
         tabbedPanel.add( simulator_.getName() + " Specific", customParamPanel );
         tabbedPanel.setToolTipTextAt( 0, "change the custom options for the " + simulator_.getName() + " simulation" );
+        tabbedPanel.setSelectedComponent(customParamPanel);
 
         mainPanel_.add( tabbedPanel, BorderLayout.CENTER );
         mainPanel_.add( buttonsPanel, BorderLayout.SOUTH );
