@@ -69,9 +69,13 @@ public abstract class TwoPlayerController extends GameController
 
     public GameOptions getOptions() {
         if (gameOptions_ == null) {
-            gameOptions_ = new TwoPlayerOptions(4, 50, MusicMaker.TAIKO_DRUM);
+            gameOptions_ = createOptions();
         }
         return gameOptions_;
+    }
+
+    protected TwoPlayerOptions createOptions() {
+        return new TwoPlayerOptions(4, 50, MusicMaker.TAIKO_DRUM);
     }
 
     public TwoPlayerOptions getTwoPlayerOptions() {

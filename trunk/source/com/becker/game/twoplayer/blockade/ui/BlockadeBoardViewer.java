@@ -20,12 +20,11 @@ import java.util.List;
  */
 public class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMotionListener
 {
-    // this becomes true when the player needs to place a wall instead of a piece during his turn.
+    /** this becomes true when the player needs to place a wall instead of a piece during his turn.  */
     private boolean wallPlacingMode_ = false;
-    // wall that gets dragged around until the player places it.
+    /** wall that gets dragged around until the player places it.   */
     private BlockadeWall draggedWall_;
     private BlockadeMove currentMove_ = null;
-    //private Location mousePressLocation_ = null;
 
     /**
      * Construct the viewer.
@@ -89,11 +88,11 @@ public class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMo
             }
             return;
         }
-        else {
-            boolean wallPlaced = placeWall(loc, currentMove_);
-            if (!wallPlaced)
-                return;
-        }
+
+        boolean wallPlaced = placeWall(loc, currentMove_);
+        if (!wallPlaced)
+            return;
+
 
         continuePlay( currentMove_ );
     }
@@ -303,8 +302,8 @@ public class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMo
     {
         int numRows = b.getNumRows();
         int numCols = b.getNumCols();
-        float x = (float)xp/cellSize_ - ((float)xp / cellSize_);
-        float y = (float)yp/cellSize_ - ((float)yp / cellSize_);
+        float x = (float)xp/cellSize_ - (int)(xp / cellSize_);
+        float y = (float)yp/cellSize_ - (int)(yp / cellSize_);
 
         if (loc.getCol() >= numCols)
            x = Math.min(0.499f, x);

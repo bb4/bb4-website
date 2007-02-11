@@ -11,41 +11,14 @@ import com.becker.sound.MusicMaker;
 import java.util.*;
 
 /**
- * Defines everything the computer needs to know to play Pente
- *
- *  @@todo:
- *   - does not detect winning state in 2 (human) player game.
+ * Defines everything the computer needs to know to play Pente.
  *
  * @author Barry Becker
  */
 public class PenteController extends TwoPlayerController
 {
 
-    // these weights determine how the computer values each pattern
-    // if only one computer is playing, then only one of the weights arrays is used.
-
-    // these weights determine how the computer values features of the board
-    // if only one computer is playing, then only one of the weights arrays is used.
-    // use these weights if no others are provided
-    private static final double[] DEFAULT_WEIGHTS =
-            {0.0,   0.0,  0.0,  0.0,  2.0,  5.0,  30.0, 31.0,   140.0,  1400.0,  1400.0,  1400.0};
-    // don't allow the weights to exceed these maximum values
-    private static final double[] MAX_WEIGHTS =
-            {5.0, 5.0, 5.0, 10.0, 20.0, 20.0, 100.0, 100.0, 1000.0, 10000.0, 10000.0, 20000.0};
-    private static final String[] WEIGHT_SHORT_DESCRIPTIONS = {
-        "1a weight", "1b weight", "1c weight", "2a weight",
-        "2b weight", "3a weight", "3b weight", "4a  weight",
-        "4b weight", "5 weight", "6 weight", "7 weight"};
-    private static final String[] WEIGHT_DESCRIPTIONS = {
-        "1a in a row weight", "1b in a row weight", "options with 1c in a row weight",
-        "options 2a in a row weight", "options of 2b in a row weight",
-        "open ended 3a in a row weight", "open ended 3b in a row weight", "4a in a row weight",
-        "open ended 4b in a row (with options) weight", "arrangements of 5 in a row weight",
-        "arrangements of 6 in a row weight", "arrangements of 7 in a row weight"
-    };
-
     public static final char REGULAR_PIECE = GamePiece.REGULAR_PIECE;
-
 
     private static final int DEFAULT_LOOKAHEAD = 4;
     // for any given ply never consider more that BEST_PERCENTAGE of the top moves
@@ -93,7 +66,7 @@ public class PenteController extends TwoPlayerController
      */
     protected void initializeData()
     {
-        weights_ = new GameWeights( DEFAULT_WEIGHTS, MAX_WEIGHTS, WEIGHT_SHORT_DESCRIPTIONS, WEIGHT_DESCRIPTIONS );
+        weights_ = new PenteWeights();
         PentePatterns.initialize();
     }
 
@@ -137,7 +110,7 @@ public class PenteController extends TwoPlayerController
                     + evalLine( line, symb, opponent, pos, pos, maxpos, weights ));
 
         }
-        // In general we march from position in the middle towards the ends of the
+        // In general, we march from position in the middle towards the ends of the
         // string. Marching stops when we encounter one of the following
         // conditions:
         //  - 2 blanks in a row (@@ we may want to allow this)
@@ -231,8 +204,9 @@ public class PenteController extends TwoPlayerController
         StringBuffer line = new StringBuffer( "" );
 
         // look at every string that passes through this new move
-        // to see how the value is affected.
+        // to see how the value is effected.
         // there are 4 directions: - | \ /
+
 
         startc = col - PentePatterns.M;   //  -
         if ( startc < 1 ) startc = 1;
@@ -245,6 +219,7 @@ public class PenteController extends TwoPlayerController
         diff = computeValueDifference( line, position, weights );
         //worthDebug('-', line, position, diff);
 
+
         startr = row - PentePatterns.M;      //  |
         if ( startr < 1 ) startr = 1;
         stopr = row + PentePatterns.M;
@@ -256,6 +231,7 @@ public class PenteController extends TwoPlayerController
         position = row - startr;
         diff += computeValueDifference( line, position, weights );
         //worthDebug('|', line, position, diff);
+
 
         startc = col - PentePatterns.M;      //  \
         startr = row - PentePatterns.M;
@@ -285,6 +261,7 @@ public class PenteController extends TwoPlayerController
         diff += computeValueDifference( line, position, weights );
         //worthDebug('\\', line, position, diff);
 
+
         startc = col - PentePatterns.M;     //  /
         startr = row + PentePatterns.M;
         if ( startc < 1 ) {
@@ -312,6 +289,7 @@ public class PenteController extends TwoPlayerController
         diff += computeValueDifference( line, position, weights );
         //worthDebug('/', line, position, diff);
 
+
         return lastMove.getValue() + diff;
     }
 
@@ -319,6 +297,7 @@ public class PenteController extends TwoPlayerController
     public Searchable getSearchable() {
          return new PenteSearchable();
      }
+
 
 
     protected class PenteSearchable extends TwoPlayerSearchable {
@@ -382,7 +361,7 @@ public class PenteController extends TwoPlayerController
         public boolean inJeopardy( Move m, ParameterArray weights, boolean player1sPerspective )
         {
             // consider the delta big if >= w. Where w is the value of a near win.
-            double w = weights.get(8).getValue();
+            double w = weights.get(PenteWeights.JEOPARDY_WEIGHT).getValue();
 
             double newValue = worth( m, weights, player1sPerspective );
             double diff = newValue - m.getValue();

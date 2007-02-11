@@ -13,8 +13,7 @@ public class RightSizer
 
     public static void main( String[] args ) throws Exception
     {
-        String url = "http://java.oreilly.com/" +
-                "news/knudsen/graphics/bite-size_banner.gif";
+        String url = "http://www.geocities.com/barrybecker4/family_portrait_s.JPG";
         if ( args.length > 0 ) url = args[0];
         new RightSizer( new URL( url ) );
     }

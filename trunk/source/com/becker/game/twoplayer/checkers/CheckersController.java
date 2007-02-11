@@ -19,21 +19,6 @@ import java.util.List;
 public class CheckersController extends TwoPlayerController
 {
 
-    // these weights determine how the computer values features of the board
-    // if only one computer is playing, then only one of the weights arrays is used.
-    // use these weights if no others are provided
-    private static final double[] DEFAULT_WEIGHTS = {10.0, 19.0, 1.0};
-    // don't allow the weights to exceed these maximum values
-    private static final double[] MAX_WEIGHTS = {50.0, 100.0, 10.0};
-    private static final String[] WEIGHT_SHORT_DESCRIPTIONS = {"PegMove weight", "King weight", "Advancement weight"};
-    private static final String[] WEIGHT_DESCRIPTIONS = {
-        "Weight to associate with the number of remaining pieces",
-        "Weight to associate with the number of kings that a side has",
-        "Weight to give associate with piece advancement"
-    };
-    private static final int PIECE_WEIGHT_INDEX = 0;
-    private static final int KINGED_WEIGHT_INDEX = 1;
-    private static final int ADVANCEMENT_WEIGHT_INDEX = 2;
     private static final int DEFAULT_LOOKAHEAD = 4;
 
     // the checkers board must be 8*8
@@ -58,7 +43,7 @@ public class CheckersController extends TwoPlayerController
      */
     protected void initializeData()
     {
-        weights_ = new GameWeights( DEFAULT_WEIGHTS, MAX_WEIGHTS, WEIGHT_SHORT_DESCRIPTIONS, WEIGHT_DESCRIPTIONS );
+        weights_ = new CheckersWeights();
     }
 
     protected TwoPlayerOptions createOptions() {
@@ -157,18 +142,18 @@ public class CheckersController extends TwoPlayerController
                     GamePiece piece = p.getPiece();
                     if ( piece.getType() == CheckersPiece.KING ) {
                         if ( piece.isOwnedByPlayer1() )
-                            posScore += weights.get(KINGED_WEIGHT_INDEX).getValue();
+                            posScore += weights.get(CheckersWeights.KINGED_WEIGHT_INDEX).getValue();
                         else
-                            negScore -= weights.get(KINGED_WEIGHT_INDEX).getValue();
+                            negScore -= weights.get(CheckersWeights.KINGED_WEIGHT_INDEX).getValue();
                     }
                     else { // REGULAR_PIECE
                         if ( piece.isOwnedByPlayer1() ) {
-                            posScore += weights.get(PIECE_WEIGHT_INDEX).getValue();
-                            posScore += weights.get(ADVANCEMENT_WEIGHT_INDEX).getValue() * row;
+                            posScore += weights.get(CheckersWeights.PIECE_WEIGHT_INDEX).getValue();
+                            posScore += weights.get(CheckersWeights.ADVANCEMENT_WEIGHT_INDEX).getValue() * row;
                         }
                         else {
-                            negScore -= weights.get(PIECE_WEIGHT_INDEX).getValue();
-                            negScore -= weights.get(ADVANCEMENT_WEIGHT_INDEX).getValue() * (9 - row);
+                            negScore -= weights.get(CheckersWeights.PIECE_WEIGHT_INDEX).getValue();
+                            negScore -= weights.get(CheckersWeights.ADVANCEMENT_WEIGHT_INDEX).getValue() * (9 - row);
                         }
                     }
                 }
