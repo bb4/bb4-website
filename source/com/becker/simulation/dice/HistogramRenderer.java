@@ -5,6 +5,7 @@ import com.becker.common.*;
 import java.awt.*;
 
 /**
+ * This class renders the histogram
  * @author Barry Becker Date: Feb 4, 2007
  */
 public class HistogramRenderer {
@@ -42,7 +43,6 @@ public class HistogramRenderer {
 
         Graphics2D g2 = (Graphics2D) g;
 
-
         int numBars = data_.length;
         int maxHeight = getMaxHeight();
         int sum = getSum();
@@ -57,8 +57,7 @@ public class HistogramRenderer {
         float barWidth = (float)((width_ - 2.0*MARGIN) / numBars);
         //barWidth = Math.max(1, barWidth);
         //System.out.println("bw="+barWidth);
-
-
+        
         int ct = 0;
         int maxNumLabels = width_/20;
         for (int v : data_) {
@@ -81,7 +80,7 @@ public class HistogramRenderer {
         // left axis
         g2.drawLine(MARGIN, height_ - MARGIN, MARGIN, MARGIN);
         g2.drawString("Height = "+ Util.formatNumber(maxHeight), MARGIN, MARGIN);
-        g2.drawString("Number of Rolls = " + Util.formatNumber(sum), width_ - 200, MARGIN >> 1);       
+        g2.drawString("Number of Rolls = " + Util.formatNumber(sum), width_ - 200, MARGIN >> 1);
     }
 
     private int getMaxHeight() {

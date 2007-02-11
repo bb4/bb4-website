@@ -1,10 +1,9 @@
 package com.becker.simulation.dice;
 
-import com.becker.optimization.*;
 import com.becker.simulation.common.*;
 
-import java.util.*;
 import java.awt.*;
+import java.util.*;
 
 /**
  * @author Barry Becker Date: Feb 4, 2007
@@ -26,7 +25,7 @@ public class DiceSimulator extends Simulator {
 
 
     public DiceSimulator() {
-        super("Dice HistogramRenderer");
+        super("Dice Histogram");
         commonInit();
         initHistogram();
     }

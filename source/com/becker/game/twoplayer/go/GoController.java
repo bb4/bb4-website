@@ -175,7 +175,7 @@ public final class GoController extends TwoPlayerController
     {
         numDeadBlackStonesOnBoard_ = 0;
         numDeadWhiteStonesOnBoard_ = 0;
-        weights_ = new GameWeights( DEFAULT_WEIGHTS, MAX_WEIGHTS, WEIGHT_SHORT_DESCRIPTIONS, WEIGHT_DESCRIPTIONS );
+        weights_ = new GoWeights();
     }
 
     /**
@@ -371,7 +371,7 @@ public final class GoController extends TwoPlayerController
         GoBoard board = (GoBoard)board_;
         // adjust for board size - so worth will be comparable regardless of board size.
         double scaleFactor = 361.0 / Math.pow(board.getNumRows(), 2);
-        double captureWt = weights.get(CAPTURE_WEIGHT_INDEX).getValue();
+        double captureWt = weights.get(GoWeights.CAPTURE_WEIGHT_INDEX).getValue();
         double captureScore = captureWt * (getNumCaptures( true ) - getNumCaptures( false ));
         float n = 2.0f * board.getNumRows();
         // opening = 1.99 - 1.5;   middle = 1.5 - 1.01;    end = 1.0
@@ -431,11 +431,11 @@ public final class GoController extends TwoPlayerController
             int side = position.getPiece().isOwnedByPlayer1()? 1: -1;
             // penalize bad shape like empty triangles
             score.badShapeScore = -(side * GoBoardUtil.formsBadShape(position, board)
-                                   * weights.get(BAD_SHAPE_WEIGHT_INDEX).getValue());
+                                   * weights.get(GoWeights.BAD_SHAPE_WEIGHT_INDEX).getValue());
 
             // Usually a very low weight is assigned to where stone is played unless we are at the start of the game.
-            score.posScore = side * weights.get(POSITIONAL_WEIGHT_INDEX).getValue() * positionalScore;
-            score.healthScore =  weights.get(HEALTH_WEIGHT_INDEX).getValue() * stone.getHealth();
+            score.posScore = side * weights.get(GoWeights.POSITIONAL_WEIGHT_INDEX).getValue() * positionalScore;
+            score.healthScore =  weights.get(GoWeights.HEALTH_WEIGHT_INDEX).getValue() * stone.getHealth();
 
             if (GameContext.getDebugMode() > 1)  {
                 stone.setPositionalScore(score);

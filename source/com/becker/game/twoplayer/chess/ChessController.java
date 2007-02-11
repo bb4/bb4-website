@@ -26,38 +26,12 @@ public class ChessController extends CheckersController
     //        animate the piece back to its original position.
     //  - exchange pawn for best piece when it reaches the other side.
     //  - if you are in check, then don't allow moves other than those that get you out of check.
-    //  - game is over if no moves available (because of check mate usually).    
+    //  - game is over if no moves available (because of check mate usually).
     //  - there is a tendancy to get into an infinite cycle at the end of a computer vs computer game.
     //  - castling.
     //  - account for amount of king endangerment in worth.
     //  - Checkers and Chess should probably have a common abstract base class, but I can't think of a good
     //    name for it, so currently Chess just derives from Checkers.
-
-    // these weights determine how the computer values features of the board
-    // if only one computer is playing, then only one of the weights arrays is used.
-    // use these weights if no others are provided
-    private static final double[] DEFAULT_CHESS_WEIGHTS = {1.1, 7.0, 10.0, 10.0, 14.0, 2.0 * WINNING_VALUE, 0.5};
-    // don't allow the weights to exceed these maximum values
-    private static final double[] MAX_CHESS_WEIGHTS = {10.0, 100.0, 100.0, 100.0, 100.0, 2.0 * WINNING_VALUE+1.0, 10.0 };
-    private static final String[] CHESS_WEIGHT_SHORT_DESCRIPTIONS = {"Pawn weight", "Knight weight", "Rook weight",
-                                                               "Bishop weight", "queen weight", "King weight",
-                                                               "Pawn Advancement weight"};
-    private static final String[] CHESS_WEIGHT_DESCRIPTIONS = {
-        "Weight to associate with each remaining pawn",
-        "Weight to associate with Knights",
-        "Weight to associate with Rooks",
-        "Weight to associate with Bishops",
-        "Weight to associate with the Queen",
-        "Weight to associate with the King",
-        "Weight to associate with pawn advancement"
-    };
-    private static final int PAWN_WEIGHT_INDEX = 0;
-    private static final int KNIGHT_WEIGHT_INDEX = 1;
-    private static final int ROOK_WEIGHT_INDEX = 2;
-    private static final int BISHOP_WEIGHT_INDEX = 3;
-    private static final int QUEEN_WEIGHT_INDEX = 4;
-    private static final int KING_WEIGHT_INDEX = 5;
-    private static final int PAWN_ADVANCEMENT_WEIGHT_INDEX = 6;
 
     // initial look ahead factor.
     private static final int DEFAULT_CHESS_LOOKAHEAD = 3;
@@ -77,7 +51,7 @@ public class ChessController extends CheckersController
      */
     protected void initializeData()
     {
-        weights_ = new GameWeights( DEFAULT_CHESS_WEIGHTS, MAX_CHESS_WEIGHTS, CHESS_WEIGHT_SHORT_DESCRIPTIONS, CHESS_WEIGHT_DESCRIPTIONS );
+        weights_ = new ChessWeights();
     }
 
 
@@ -132,18 +106,18 @@ public class ChessController extends CheckersController
                         case ChessPiece.PAWN :
                             //  pawn advancemnt
                             int advance = (piece.isOwnedByPlayer1()? pos.getRow()-1: (NUM_ROWS-pos.getRow()-1));
-                            score += side * advance * weights.get(PAWN_ADVANCEMENT_WEIGHT_INDEX).getValue();
-                            score += side * weights.get(PAWN_WEIGHT_INDEX).getValue(); break;
+                            score += side * advance * weights.get(ChessWeights.PAWN_ADVANCEMENT_WEIGHT_INDEX).getValue();
+                            score += side * weights.get(ChessWeights.PAWN_WEIGHT_INDEX).getValue(); break;
                         case ChessPiece.KNIGHT :
-                            score += side * weights.get(KNIGHT_WEIGHT_INDEX).getValue(); break;
+                            score += side * weights.get(ChessWeights.KNIGHT_WEIGHT_INDEX).getValue(); break;
                         case ChessPiece.ROOK :
-                            score += side * weights.get(ROOK_WEIGHT_INDEX).getValue(); break;
+                            score += side * weights.get(ChessWeights.ROOK_WEIGHT_INDEX).getValue(); break;
                         case ChessPiece.BISHOP :
-                            score += side * weights.get(BISHOP_WEIGHT_INDEX).getValue(); break;
+                            score += side * weights.get(ChessWeights.BISHOP_WEIGHT_INDEX).getValue(); break;
                         case ChessPiece.QUEEN :
-                            score += side * weights.get(QUEEN_WEIGHT_INDEX).getValue(); break;
+                            score += side * weights.get(ChessWeights.QUEEN_WEIGHT_INDEX).getValue(); break;
                         case ChessPiece.KING :
-                            score += side * weights.get(KING_WEIGHT_INDEX).getValue(); break;
+                            score += side * weights.get(ChessWeights.KING_WEIGHT_INDEX).getValue(); break;
                         default : assert false:("bad chess piece type:"+ piece.getType());
                     }
                 }
@@ -195,7 +169,6 @@ public class ChessController extends CheckersController
            }
         }
     }
-
 
 
 
