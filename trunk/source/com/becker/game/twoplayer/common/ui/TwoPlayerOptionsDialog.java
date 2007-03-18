@@ -4,7 +4,7 @@ import com.becker.game.common.*;
 import com.becker.game.common.ui.GameOptionsDialog;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
-import com.becker.game.twoplayer.common.search.SearchStrategy;
+import com.becker.game.twoplayer.common.search.*;
 import com.becker.ui.*;
 
 import javax.swing.*;
@@ -20,9 +20,8 @@ import java.awt.event.*;
 public class TwoPlayerOptionsDialog extends GameOptionsDialog
                                     implements ActionListener, ItemListener
 {
-    private JRadioButton minimaxButton_;  // alg radio button group
-    private JRadioButton negamaxButton_;  // alg radio button group
-    private int algorithm_;
+    private JRadioButton[] strategyButtons_;  // search alg radio button group
+    private SearchStrategyType algorithm_;
     private NumberInput lookAheadField_;
     private NumberInput bestPercentageField_;
     private JCheckBox alphabetaCheckbox_;
@@ -51,10 +50,7 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
         options.setQuiescence( quiescenceCheckbox_.isSelected() );
         options.setLookAhead( lookAheadField_.getIntValue() );
 
-        if ( minimaxButton_.isSelected() )
-            options.setSearchStrategyMethod( SearchStrategy.MINIMAX );
-        else if ( negamaxButton_.isSelected() )
-            options.setSearchStrategyMethod( SearchStrategy.NEGAMAX );
+        options.setSearchStrategyMethod(getSelectedStrategy());
         options.setPercentageBestMoves(bestPercentageField_.getIntValue() );
         options.setShowGameTree( gameTreeCheckbox_.isSelected() );
         options.setShowComputerAnimation( computerAnimationCheckbox_.isSelected() );
@@ -85,22 +81,13 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
         p.add( algorithmLabel );
 
         ButtonGroup buttonGroup = new ButtonGroup();
-        minimaxButton_ = new JRadioButton( GameContext.getLabel("MINIMAX_SEARCH") );
-        negamaxButton_ = new JRadioButton( GameContext.getLabel("NEGAMAX_SEARCH") );
-
-        p.add( createRadioButtonPanel( minimaxButton_, buttonGroup, true ) );
-        p.add( createRadioButtonPanel( negamaxButton_, buttonGroup, false ) );
+        int numStrategies = SearchStrategyType.values().length;
+        strategyButtons_ = new JRadioButton[numStrategies];
         algorithm_ = options.getSearchStrategyMethod();
-        switch (algorithm_) {
-            case SearchStrategy.MINIMAX:
-                minimaxButton_.setSelected( true );
-                break;
-            case SearchStrategy.NEGAMAX:
-                negamaxButton_.setSelected( true );
-                break;
-            default :
-                negamaxButton_.setSelected( true );
-                break;
+        for (int i=0; i<numStrategies; i++) {
+            SearchStrategyType alg = SearchStrategyType.values()[i];
+            strategyButtons_[i] = new JRadioButton( alg.getLabel());
+            p.add( createRadioButtonPanel( strategyButtons_[i], buttonGroup, algorithm_ == alg ) );
         }
 
         // look ahead
@@ -210,10 +197,17 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
     public void itemStateChanged( ItemEvent e )
     {
         super.itemStateChanged(e);
-        if ( minimaxButton_ != null && minimaxButton_.isSelected() )
-            algorithm_ = SearchStrategy.MINIMAX;
-        else if ( negamaxButton_ != null && negamaxButton_.isSelected() )
-            algorithm_ = SearchStrategy.NEGAMAX;
+        algorithm_ = getSelectedStrategy();
+    }
+
+    private SearchStrategyType getSelectedStrategy() {
+        int numStrategies = SearchStrategyType.values().length;
+        for (int i=0; i<numStrategies; i++) {
+            if (strategyButtons_[i].isSelected()) {
+                return SearchStrategyType.values()[i];
+            }
+        }
+        return SearchStrategyType.MINIMAX; // default
     }
 
 

@@ -2,7 +2,7 @@ package com.becker.game.twoplayer.go;
 
 import com.becker.game.common.*;
 import com.becker.game.common.online.*;
-import com.becker.game.twoplayer.common.search.SearchStrategy;
+import com.becker.game.twoplayer.common.search.*;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.common.*;
 import go.Point;
@@ -162,7 +162,7 @@ public class GtpTesujisoftGoServer
         options.setLookAhead(2);
         options.setPercentageBestMoves(50);
         options.setQuiescence(false);
-        options.setSearchStrategyMethod(SearchStrategy.MINIMAX);
+        options.setSearchStrategyMethod(SearchStrategyType.MINIMAX);
         size_ = size;
     }
 

@@ -21,6 +21,13 @@ public class CheckersPiece extends GamePiece
     }
 
     /**
+     * @return true if the piece has been kinged.
+     */
+    public boolean isKing() {
+        return getType() == KING;
+    }
+
+    /**
      *   create a deep copy of the position
      */
     public GamePiece copy()

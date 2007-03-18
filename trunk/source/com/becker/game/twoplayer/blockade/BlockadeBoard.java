@@ -581,6 +581,24 @@ public class BlockadeBoard extends TwoPlayerBoard
     }
 
 
+    /**
+     * Num different states.
+     * There are 12 unique states for a position. 4 ways the walls can be arranged around the position.
+     * @return number of different states this position can have.
+     */
+    public int getNumPositionStates() {
+         return 12;
+    }
+
+    /**
+     * The index of the state for this position.
+     * @return The index of the state for tihs position.
+     */
+    public  int getStateIndex(BoardPosition pos) {
+        return ((BlockadeBoardPosition) pos).getStateIndex();
+    }
+    
+
     public String toString()
     {
         StringBuffer buf = new StringBuffer();

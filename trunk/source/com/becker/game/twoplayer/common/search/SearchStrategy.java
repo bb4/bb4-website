@@ -18,13 +18,8 @@ import java.util.List;
 public abstract class SearchStrategy
 {
 
-    // currently supported search method strategy
-    public static final int MINIMAX = 1;
-    public static final int NEGAMAX = 2;
-    //public static final int CUSTOM = 3; // @@ should have a way to add pluggable strategy.
-
     // anything greater than this is considered a won game
-    public static final double WINNING_VALUE = 1000.0;
+    public static final int WINNING_VALUE = 1000;
 
     // applies only if computer vs computer game
     // @@ Should have a more abstract SearchOptions class that we get from the controller.
@@ -52,16 +47,21 @@ public abstract class SearchStrategy
      * Do not call the constructor directly.
      * @return the search method to use
      */
-    public static SearchStrategy createSearchStrategy(int method, Searchable s)
+    public static SearchStrategy createSearchStrategy(SearchStrategyType method, Searchable s)
     {
         switch (method) {
             case MINIMAX:
                 return new MiniMaxStrategy(s);
             case NEGAMAX:
                 return new NegaMaxStrategy(s);
-            default:
-                return new MiniMaxStrategy(s);
+            case NEGASCOUT:
+                return new NegaScoutStrategy(s);
+            case NEGASCOUT_W_MEMORY:
+                return new NegaScoutMemoryStrategy(s);
+            case MTD:
+                return new MtdStrategy(s);
         }
+        return null;
     }
 
     /**
@@ -83,16 +83,19 @@ public abstract class SearchStrategy
      *
      * @param list
      * @param parent the tree node entry above the current position.
+     * @param val the worth of the node/move
+     * @param thresh the alpha or beta threshold compared to.
+     * @param type either PRUNE_ALPHA or PRUNE_BETA - pruned by comparison with Alpha or Beta.
      * @param i th child.
      */
-    static void showPrunedNodesInTree( List list, SearchTreeNode parent, int i, double val, double thresh, int type)
+    static void showPrunedNodesInTree( List list, SearchTreeNode parent, int i, int val, int thresh, int type)
     {
         int index = i;
         while ( !list.isEmpty() ) {
             TwoPlayerMove theMove = (TwoPlayerMove) (list.remove(0));
             SearchTreeNode child = new SearchTreeNode( theMove );
             child.setPruned(true);
-            String sComp = (type==PRUNE_ALPHA)?" < ":" > ";
+            String sComp = (type == PRUNE_ALPHA) ? " < " : " > ";
             child.setComment("Children pruned because " +
                             Util.formatNumber(val) + sComp + Util.formatNumber(thresh) + '.');
             parent.insert( child, index );
@@ -114,7 +117,7 @@ public abstract class SearchStrategy
      */
     public abstract TwoPlayerMove search( TwoPlayerMove lastMove, ParameterArray weights,
                                           int depth, int quiescentDepth,
-                                          double alpha, double beta, SearchTreeNode parent );
+                                          int alpha, int beta, SearchTreeNode parent );
 
     /**
      * return true if the move list is empty.
@@ -136,7 +139,7 @@ public abstract class SearchStrategy
      * add a move to the visual game tree (if parent not null).
      */
     static SearchTreeNode addNodeToTree( SearchTreeNode parent, TwoPlayerMove theMove,
-                                                 double alpha, double beta, int i )
+                                         int alpha, int beta, int i )
     {
         SearchTreeNode child = null;
         if ( parent != null ) {

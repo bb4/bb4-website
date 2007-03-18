@@ -139,8 +139,8 @@ public class CheckersController extends TwoPlayerController
                 col = 2 * j - odd;
                 BoardPosition p = board_.getPosition( row, col );
                 if ( p.isOccupied() ) {
-                    GamePiece piece = p.getPiece();
-                    if ( piece.getType() == CheckersPiece.KING ) {
+                    CheckersPiece piece = (CheckersPiece) p.getPiece();
+                    if ( piece.isKing()) {
                         if ( piece.isOwnedByPlayer1() )
                             posScore += weights.get(CheckersWeights.KINGED_WEIGHT_INDEX).getValue();
                         else
@@ -337,7 +337,8 @@ public class CheckersController extends TwoPlayerController
         numMovesAdded += addMovesForDirection( p, moveList, direction, 1, lastMove, weights );
 
         // if its a KING we need to check the other direction too
-        if ( p.getPiece().getType() == CheckersPiece.KING ) {
+        CheckersPiece piece = (CheckersPiece) p.getPiece();
+        if ( piece.isKing() ) {
             int numKingMoves = 0;
             numKingMoves += addMovesForDirection( p, moveList, -direction, -1, lastMove, weights );
             numKingMoves += addMovesForDirection( p, moveList, -direction, 1, lastMove, weights );
@@ -369,8 +370,9 @@ public class CheckersController extends TwoPlayerController
                             numKingMoves--;
                             break;
                         }
-                        else
+                        else {
                             i++;
+                        }
                     }
                 }
             }

@@ -47,7 +47,7 @@ public final class BlockadeBoardPosition extends BoardPosition
     /**
      * create a deep copy of this position.
      */
-    public final BoardPosition copy()
+    public BoardPosition copy()
     {
         BlockadeBoardPosition pos =
             new BlockadeBoardPosition( row_, col_, (piece_==null)?null:piece_.copy(),
@@ -61,7 +61,7 @@ public final class BlockadeBoardPosition extends BoardPosition
     /**
      * copy all fields from another stone to this one.
      */
-    public final void copy( BlockadeBoardPosition pos )
+    public void copy( BlockadeBoardPosition pos )
     {
         super.copy(pos);
         southWall_ = (pos.getSouthWall()!=null)?pos.getSouthWall():null;
@@ -166,6 +166,15 @@ public final class BlockadeBoardPosition extends BoardPosition
     public boolean isHomeBase(boolean player1)
     {
         return (player1? isPlayer1Home_: isPlayer2Home_);
+    }
+
+    /**
+     * There are 12 unique states for a position. 4 ways the walls can be arranged around the position.
+     * @return state index
+     */
+    public int getStateIndex() {
+        int ownerState = (isOccupied()? (getPiece().isOwnedByPlayer1()? 2:3) : 1);
+        return ownerState * (1 + ((southWall_==null? 0:2) + (eastWall_==null? 0:1))) - 1;
     }
 }
 
