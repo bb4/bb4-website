@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.common;
 
-import com.becker.game.twoplayer.common.search.SearchStrategy;
+import com.becker.game.twoplayer.common.search.*;
 import com.becker.game.common.*;
 
 /**
@@ -25,7 +25,8 @@ public class TwoPlayerOptions extends GameOptions
     // if true then show all the moves the computer is considering when it considers them.
     private boolean showComputerAnimation_ = false;
 
-    private int strategyMethod_ = SearchStrategy.MINIMAX;  // the defualt search method.
+    // the defualt search method.
+    private SearchStrategyType strategyMethod_ = SearchStrategyType.MINIMAX;
     private int lookAhead_;
     private int bestPercentage_;
 
@@ -59,7 +60,7 @@ public class TwoPlayerOptions extends GameOptions
     /**
      * @return the strategy method currently being used.
      */
-    public int getSearchStrategyMethod()
+    public SearchStrategyType getSearchStrategyMethod()
     {
         return strategyMethod_;
     }
@@ -68,7 +69,7 @@ public class TwoPlayerOptions extends GameOptions
      * @param method the desired search strategy for evaluating the game tree.
      * (eg MINIMAX, NEGAMAX, etc)
      */
-    public final void setSearchStrategyMethod( int method )
+    public final void setSearchStrategyMethod(SearchStrategyType method )
     {
         strategyMethod_ = method;
     }
@@ -225,6 +226,16 @@ public class TwoPlayerOptions extends GameOptions
         else {
             return player2Name_;
         }
+    }
+
+    /**
+     *
+     * @param searchable
+     * @return the search strategy to use given a searchable object.
+     */
+    public SearchStrategy getSearchStrategy(Searchable searchable) {
+
+        return SearchStrategy.createSearchStrategy(getSearchStrategyMethod(), searchable);
     }
 
 }

@@ -171,4 +171,26 @@ public class ChessBoard extends CheckersBoard
         undoMove();
         return false;
     }
+
+
+    /**
+     * Num different states. E.g. black queen.
+     * This is used primarily for the Zobrist hash. You do not need to override if yo udo not use it.
+     * @return number of different states this position can have.
+     */
+    public int getNumPositionStates() {
+        return 12;
+    }
+
+
+    /**
+     * The index of the state for tihs position.
+     * Perhaps this would be better abstract.
+     * @return The index of the state for tihs position.
+     */
+    public int getStateIndex(BoardPosition pos) {
+        assert false: " not implemented";
+        return 0;
+    }
+
 }

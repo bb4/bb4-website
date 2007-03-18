@@ -953,6 +953,17 @@ public final class GoBoard extends TwoPlayerBoard
     }
 
 
+    /**
+     * Num different states. 
+     * This is used primarily for the Zobrist hash. You do not need to override if yo udo not use it.
+     * @return number of different states this position can have.
+     */
+    public int getNumPositionStates() {
+        return 3;
+    }
+
+
+
     public List getHandicapPositions() {
         return handicap_.getStarPoints();
     }

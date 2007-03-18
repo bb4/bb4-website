@@ -38,12 +38,12 @@ public final class MiniMaxStrategy extends SearchStrategy
      */
     public TwoPlayerMove search( TwoPlayerMove lastMove, ParameterArray weights,
                                        int depth, int quiescentDepth,
-                                       double oldAlpha, double oldBeta, SearchTreeNode parent )
+                                       int oldAlpha, int oldBeta, SearchTreeNode parent )
     {
         List list;   // list of moves to consider
         TwoPlayerMove selectedMove;  // the currently selected move
-        double alpha = oldAlpha;
-        double beta = oldBeta;
+        int alpha = oldAlpha;
+        int beta = oldBeta;
 
         // if player 1, then search for a high score, else seach for a low score
         boolean player1 = lastMove.isPlayer1();
@@ -71,8 +71,8 @@ public final class MiniMaxStrategy extends SearchStrategy
         }
 
         int i = 0;
-        double selectedValue, bestInheritedValue = Double.MIN_VALUE;
-        if ( player1 ) bestInheritedValue = Double.MAX_VALUE;
+        int selectedValue, bestInheritedValue = Integer.MIN_VALUE;
+        if ( player1 ) bestInheritedValue = Integer.MAX_VALUE;
 
         TwoPlayerMove bestMove = (TwoPlayerMove) (list.get( 0 ));
         while ( !list.isEmpty() ) {
@@ -98,16 +98,16 @@ public final class MiniMaxStrategy extends SearchStrategy
                 continue;
             }
 
-            selectedValue = selectedMove.getInheritedValue();
+            selectedValue = (int) selectedMove.getInheritedValue();
             if ( player1 ) {
                 if ( selectedValue < bestInheritedValue ) {
                     bestMove = theMove;
-                    bestInheritedValue = bestMove.getInheritedValue();
+                    bestInheritedValue = (int) bestMove.getInheritedValue();
                 }
             }
             else if ( selectedValue > bestInheritedValue ) {
                 bestMove = theMove;
-                bestInheritedValue = bestMove.getInheritedValue();
+                bestInheritedValue = (int) bestMove.getInheritedValue();
             }
 
             //********* alpha beta pruning ********
@@ -144,10 +144,10 @@ public final class MiniMaxStrategy extends SearchStrategy
      * For example, perhaps we are in the middle of a piece exchange
      */
     private TwoPlayerMove quiescentSearch( TwoPlayerMove lastMove, ParameterArray weights,
-                                          int depth, double oldAlpha, double oldBeta, SearchTreeNode parent )
+                                          int depth, int oldAlpha, int oldBeta, SearchTreeNode parent )
     {
-        double alpha = oldAlpha;
-        double beta = oldBeta;
+        int alpha = oldAlpha;
+        int beta = oldBeta;
         lastMove.setInheritedValue(lastMove.getValue());
         if ( depth >= MAX_QUIESCENT_DEPTH) {
             return lastMove;
@@ -162,13 +162,13 @@ public final class MiniMaxStrategy extends SearchStrategy
             if ( lastMove.getValue() >= beta )
                 return lastMove; // prune
             if ( lastMove.getValue() > alpha )
-                alpha = lastMove.getValue();
+                alpha = (int) lastMove.getValue();
         }
         else {
             if ( lastMove.getValue() >= alpha )
                 return lastMove; // prune
             if ( lastMove.getValue() > beta )
-                beta = lastMove.getValue();
+                beta = (int) lastMove.getValue();
         }
 
         // generate those moves that are critically urgent
@@ -180,8 +180,8 @@ public final class MiniMaxStrategy extends SearchStrategy
             return lastMove; // nothing to check
         }
 
-        double bestInheritedValue = Double.MIN_VALUE;
-        if ( player1 ) bestInheritedValue = Double.MAX_VALUE;
+        double bestInheritedValue = Integer.MIN_VALUE;
+        if ( player1 ) bestInheritedValue = Integer.MAX_VALUE;
         TwoPlayerMove bestMove = (TwoPlayerMove) list.get(0);
         movesConsidered_ += list.size();
         Iterator it = list.iterator();
@@ -195,11 +195,11 @@ public final class MiniMaxStrategy extends SearchStrategy
             TwoPlayerMove selectedMove = quiescentSearch( theMove, weights, depth+1, alpha, beta, child );
             assert selectedMove!=null;
 
-            double selectedValue = selectedMove.getInheritedValue();
+            int selectedValue = (int) selectedMove.getInheritedValue();
             if ( player1 ) {
                 if ( selectedValue < bestInheritedValue ) {
                     bestMove = theMove;
-                    bestInheritedValue = bestMove.getInheritedValue();
+                    bestInheritedValue = (int) bestMove.getInheritedValue();
                 }
             }
             else if ( selectedValue > bestInheritedValue ) {
@@ -212,13 +212,13 @@ public final class MiniMaxStrategy extends SearchStrategy
                 if ( bestMove.getInheritedValue() >= beta )
                     return bestMove;  // prune
                 if ( bestMove.getInheritedValue() > alpha )
-                    alpha = bestMove.getInheritedValue();
+                    alpha = (int) bestMove.getInheritedValue();
             }
             else {
                 if ( bestMove.getInheritedValue() >= alpha )
                     return bestMove;  // prune
                 if ( bestMove.getInheritedValue() > beta )
-                    beta = bestMove.getInheritedValue();
+                    beta = (int) bestMove.getInheritedValue();
             }
         }
         return bestMove;

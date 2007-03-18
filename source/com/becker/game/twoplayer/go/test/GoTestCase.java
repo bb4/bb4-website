@@ -40,7 +40,7 @@ public class GoTestCase extends TestCase {
         options.setLookAhead(4);
         options.setPercentageBestMoves(40);
         //opttions.setQuiescence(true); // take stoo long if on
-        options.setSearchStrategyMethod(SearchStrategy.MINIMAX);
+        options.setSearchStrategyMethod(SearchStrategyType.MINIMAX);
 
     }
 
@@ -102,7 +102,7 @@ public class GoTestCase extends TestCase {
      * @param black
      * @return the biggest black group if black is true else biggest white group.
      */
-    protected  GoGroup getBiggestGroup(boolean black) {
+    protected GoGroup getBiggestGroup(boolean black) {
 
         Set groups = ((GoBoard) controller_.getBoard()).getGroups();
         GoGroup biggestGroup = null;

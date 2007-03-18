@@ -40,21 +40,21 @@ public final class NegaMaxStrategy extends SearchStrategy
      */
     public TwoPlayerMove search( TwoPlayerMove lastMove, ParameterArray weights,
                                        int depth, int quiescentDepth,
-                                       double alpha, double beta, SearchTreeNode parent )
+                                       int alpha, int beta, SearchTreeNode parent )
     {
         return searchInternal( lastMove, weights, depth, quiescentDepth, -alpha, -beta, parent );
     }
 
     private TwoPlayerMove searchInternal( TwoPlayerMove lastMove, ParameterArray weights,
                                           int depth, int quiescentDepth,
-                                          double oldAlpha, double beta, SearchTreeNode parent )
+                                          int oldAlpha, int beta, SearchTreeNode parent )
     {
-        double alpha = oldAlpha;
+        int alpha = oldAlpha;
         if ( depth == 0 || controller_.done( lastMove, false ) ) {
             if ( quiescence_ && depth == 0 )
                 return quiescentSearch( lastMove, weights, quiescentDepth, alpha, beta, parent );
             else {
-                lastMove.setInheritedValue(-lastMove.getValue());     //??
+                lastMove.setInheritedValue( -lastMove.getValue());     //??  negate value?
                 return lastMove;
             }
         }
@@ -71,7 +71,7 @@ public final class NegaMaxStrategy extends SearchStrategy
         }
 
         int i = 0;
-        double bestVal = Double.MIN_VALUE;
+        int bestVal = Integer.MIN_VALUE;
         TwoPlayerMove selectedMove, bestMove = (TwoPlayerMove) (list.get( 0 ));
         while ( !list.isEmpty() ) {
             checkPause();
@@ -96,7 +96,7 @@ public final class NegaMaxStrategy extends SearchStrategy
                 continue;
             }
 
-            double val = -selectedMove.getInheritedValue();
+            int val = - (int) selectedMove.getInheritedValue();
             theMove.setInheritedValue(val);
 
             if ( val > bestVal ) {
@@ -107,6 +107,7 @@ public final class NegaMaxStrategy extends SearchStrategy
                 if ( val >= beta ) {
                     if ( parent != null && !list.isEmpty() )
                         showPrunedNodesInTree( list, parent, i, val, beta, PRUNE_BETA);
+                    bestMove.setSelected(true);
                     return bestMove;
                 }
                 if ( val > alpha ) {
@@ -126,10 +127,10 @@ public final class NegaMaxStrategy extends SearchStrategy
      * For example, perhaps we are in the middle of a piece exchange
      */
     private TwoPlayerMove quiescentSearch( TwoPlayerMove lastMove, ParameterArray weights,
-                                          int depth, double oldAlpha, double beta, SearchTreeNode parent )
+                                          int depth, int oldAlpha, int beta, SearchTreeNode parent )
     {
-        double alpha = oldAlpha;
-        double val = lastMove.getValue();
+        int alpha = oldAlpha;
+        int val = (int) lastMove.getValue();
         lastMove.setInheritedValue(val);
         if ( depth >= MAX_QUIESCENT_DEPTH) {
             return lastMove;
@@ -171,7 +172,7 @@ public final class NegaMaxStrategy extends SearchStrategy
             TwoPlayerMove selectedMove = quiescentSearch( theMove, weights, depth+1, -beta, -alpha, child );
             assert selectedMove!=null;
 
-            val = -selectedMove.getInheritedValue();
+            val = -(int)selectedMove.getInheritedValue();
             theMove.setInheritedValue(val);
 
             controller_.undoInternalMove( theMove );

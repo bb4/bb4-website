@@ -18,7 +18,7 @@ public class BlockadeWall
     // whether the wall is VERTICAL or HORIZONTAL
     private boolean isVertical_;
 
-    // the BlockadeBoardPosition that contain the wall (on thir the south or east faces depending on the orientation).
+    // the BlockadeBoardPosition that contain the wall (on the south or east faces depending on the orientation).
     private Set positions_;
 
     /**

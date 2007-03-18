@@ -81,7 +81,7 @@ public class CheckersBoard extends TwoPlayerBoard
     public int getTypicalNumMoves() {
         return rowsTimesCols_;
     }
-    
+
     /**
      * given a move specification, execute it on the board.
      * This places the players symbol at the position specified by move.
@@ -113,6 +113,29 @@ public class CheckersBoard extends TwoPlayerBoard
         m.restoreCaptures( this );
 
         positions_[m.getToRow()][m.getToCol()].clear();
+    }
+
+
+    /**
+     * Num different states. E.g. regulare piece or king or no pieces at the position.
+     * This is used primarily for the Zobrist hash. You do not need to override if yo udo not use it.
+     * @return number of different states this position can have.
+     */
+    public int getNumPositionStates() {
+        return  5;
+    }
+
+    /**
+     * The index of the state for tihs position.
+     * @return The index of the state for tihs position.
+     */
+    public int getStateIndex(BoardPosition pos) {
+        if (pos.isOccupied()) {
+            CheckersPiece p = (CheckersPiece) pos.getPiece();
+            return (p.isOwnedByPlayer1()? 1:2) + (p.isKing()? 0:2);
+        } else {
+            return 0;
+        }
     }
 
 }

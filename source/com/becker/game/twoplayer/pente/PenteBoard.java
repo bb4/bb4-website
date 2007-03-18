@@ -115,4 +115,13 @@ public class PenteBoard extends TwoPlayerBoard
         //System.out.println("boolb="+candidateMoves_[row][col] +"b="+positions_[row][col]);
         return (candidateMoves_[row][col] && positions_[row][col].isUnoccupied());
     }
+
+    /**
+     * Num different states.
+     * This is used primarily for the Zobrist hash. You do not need to override if yo udo not use it.
+     * @return number of different states this position can have.
+     */
+    public int getNumPositionStates() {
+        return 3;
+    }
 }

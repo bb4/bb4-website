@@ -277,10 +277,11 @@ public abstract class TwoPlayerController extends GameController
         }
 
         /////////////////////// SEARCH //////////////////////////////////////////////////////
-        strategy_ = SearchStrategy.createSearchStrategy(getTwoPlayerOptions().getSearchStrategyMethod(), getSearchable());
+        strategy_ = getTwoPlayerOptions().getSearchStrategy(getSearchable());
+
         TwoPlayerMove selectedMove =
                 strategy_.search( p, weights, getSearchable().getLookAhead(), 0,
-                                  Double.MAX_VALUE, Double.MIN_VALUE, root_ );
+                                  Integer.MAX_VALUE, Integer.MIN_VALUE, root_ );
         /////////////////////////////////////////////////////////////////////////////////////
 
         if ( selectedMove != null ) {

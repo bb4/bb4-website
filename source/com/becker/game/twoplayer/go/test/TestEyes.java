@@ -1,14 +1,10 @@
 package com.becker.game.twoplayer.go.test;
 
-import com.becker.game.common.GameContext;
-import com.becker.game.twoplayer.go.GoBoard;
-import com.becker.game.twoplayer.go.GoEye;
-import com.becker.game.twoplayer.go.GoGroup;
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import com.becker.game.common.*;
+import com.becker.game.twoplayer.go.*;
+import junit.framework.*;
 
-import java.util.Set;
+import java.util.*;
 
 
 /**
@@ -390,7 +386,7 @@ public class TestEyes extends GoTestCase {
         //Assert.assertTrue("There were not two groups. Instead there were :"+groups.size(), groups.size() == 2);
 
         GoGroup biggestBlackGroup =getBiggestGroup(true);
-        GoGroup biggestWhiteGroup = getBiggestGroup(false);      
+        GoGroup biggestWhiteGroup = getBiggestGroup(false);
 
         EyeCounts eyeCounts = getEyeCounts(biggestBlackGroup.getEyes());
         Assert.assertTrue("Actual Black Eye counts were \n"+eyeCounts+" but was expecting \n"+ expectedBlackEyes,
