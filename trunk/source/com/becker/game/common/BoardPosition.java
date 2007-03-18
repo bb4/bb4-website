@@ -102,7 +102,7 @@ public class BoardPosition
      */
     public BoardPosition copy()
     {
-        return new BoardPosition( row_, col_, (piece_==null)?null:piece_.copy());
+        return new BoardPosition( row_, col_, (piece_==null) ? null : piece_.copy());
     }
 
     /**
@@ -163,5 +163,6 @@ public class BoardPosition
         sb.append(" (").append(row_).append(", ").append(col_).append(')');
         return sb.toString();
     }
+
 }
 
