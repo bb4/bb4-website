@@ -176,7 +176,6 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
             createNewGameTable();
         }
         else {
-            System.out.println("about to join diff table");
             checkName();
             joinDifferentTable((JoinButton) source);
         }
@@ -220,7 +219,7 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
     }
 
     /**
-     * The local user has clikced  ajoin button on a different table
+     * The local user has clicked  ajoin button on a different table
      * indicating that they want to join that table.
      */
     private void joinDifferentTable(JoinButton b) {
