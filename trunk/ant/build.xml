@@ -12,6 +12,7 @@
   <!-- place where all process files for distribution go. -->
   <property name="distributionDir" value="../dist"/>
   <property name="distributionGameDir" value="${distributionDir}/games"/>
+  <property name="distributionSchemaDir" value="${distributionDir}/schema"/>
   <!-- place where all thirdparty libraries are located. -->
   <property name="libDir" value="../lib"/>
   <!-- place to put .class files, images and resources, so they can be jar'd up -->
@@ -168,7 +169,7 @@
     <antcall target="executeProgram">
       <param name="className" value="com.becker.game.common.online.ui.OnlineGameServerFrame"/>
       <param name="libPath" value="${libDir}/jai_codec.jar;"/>
-      <param name="args" value="-port 4443 -game poker"/>
+      <param name="args" value="-game poker"/>
     </antcall>
   </target>
 
@@ -199,6 +200,14 @@
   <target name="executeColorMixer" description="Run the color mixer tool">
     <antcall target="executeProgram">
       <param name="className" value="com.becker.misc.colormixer.ColorMixer"/>
+    </antcall>
+  </target>
+
+  <target name="executeDice" description="Run the Dice simulator">
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
+      <param name="args" value="com.becker.simulation.dice.DiceSimulator"/>
     </antcall>
   </target>
 
@@ -281,7 +290,8 @@
     <antcall target="executeProgram">
       <param name="className" value="com.becker.xml.DomEcho"/>
       <param name="libPath" value="${libDir}/vecmath.jar"/>
-      <param name="args" value="${project_home}/source/com/becker/xml/katate_dori.xml"/>
+      <!--param name="args" value="${project_home}/source/com/becker/xml/katate_dori.xml"/ -->
+      <param name="args" value="${project_home}/source/com/becker/misc/yugioh/yugiohCards.xml"/>
     </antcall>
   </target>
 
