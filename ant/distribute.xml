@@ -11,7 +11,7 @@
   <property file="appletHtml_jp.properties"/>
 
 
-  <target name="distribute"
+  <target name="distribute"  depends="distributeImages,distributeSchemas"
         description="deploys the built jar files and generated html pages to the ${distributionGameDir} dir so they can be bulk copied to a website">
       <mkdir dir="${stagingDir}"/>
 
@@ -25,7 +25,7 @@
           <include name="com/becker/ui/*/*.class"/> <!-- all ui subpackages -->
           <include name="com/becker/java2d/ImageUtil.class"/>
         </fileset>
-        <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
+        <!--mapper from="*.class" to="*.class" type="glob"/--> <!-- preserve hierarchy -->
       </copy>
       <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/common.jar"/>
       <delete dir="${stagingDir}/com"/>
@@ -36,7 +36,7 @@
           <include name="com/becker/optimization/*.class"/>
           <include name="com/becker/optimization/strategy/*.class"/>
         </fileset>
-        <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
+        <!--mapper from="*.class" to="*.class" type="glob"/--> <!-- preserve hierarchy -->
       </copy>
       <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/optimization.jar"/>
       <delete dir="${stagingDir}/com"/>
@@ -374,16 +374,6 @@
       <copy file="${libDir}/sun.jar" tofile="${distributionGameDir}/sun.jar"/>
       <copy file="${libDir}/jai_codec.jar" tofile="${distributionGameDir}/jai_codec.jar"/>
 
-      <!-- copy image files to distrib dir -->
-      <mkdir dir="${distributionGameDir}"/>
-      <copy todir="${distributionGameDir}">
-        <fileset dir="${sourceDir}/images">
-          <include name="*.jpg"/>
-          <include name="*.png"/>
-          <include name="*.gif"/>
-        </fileset>
-      </copy>
-
 
       <!--//////////////// auto generate the html based on the properties files ///////////////////-->
       <!-- there needs to be a separate set of html files for each locale. -->
@@ -397,6 +387,28 @@
 
   </target>
 
+
+  <target name="distributeImages" description="Copy image files to distrib dir">
+    <mkdir dir="${distributionGameDir}"/>
+      <copy todir="${distributionGameDir}">
+        <fileset dir="${sourceDir}/images">
+          <include name="*.jpg"/>
+          <include name="*.png"/>
+          <include name="*.gif"/>
+        </fileset>
+      </copy>
+  </target>
+
+  <target name="distributeSchemas" description="Copy xml schema (dtd, xsd) files to distrib dir">
+      <mkdir dir="${distributionSchemaDir}"/>
+      <copy todir="${distributionSchemaDir}">
+        <fileset dir="${sourceDir}">
+          <include name="**/*.dtd"/>
+          <include name="**/*.xsd"/>
+        </fileset>
+        <mapper type="flatten"/>
+      </copy>
+  </target>
 
 
   <!-- /////////////////////////// helper tasks /////////////////////////////////// -->
