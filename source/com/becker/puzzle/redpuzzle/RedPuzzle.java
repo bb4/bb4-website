@@ -128,12 +128,12 @@ public final class RedPuzzle extends JApplet implements ChangeListener, ActionLi
 
     public void actionPerformed(ActionEvent e) {
         // must execute long tasks in a separate thread,
-        // otherwise you don't see the steps of the animation.
-        Worker worker;
+        // otherwise you don't see the steps of the animation.        
         Object src = e.getSource();
+        
         if (src == solveButton_)  {
 
-            worker = new Worker() {
+            Worker worker = new Worker() {
 
                 public Object construct() {
                     puzzlePanel_.setAnimationSpeed((int) animSpeedSlider_.getValue());

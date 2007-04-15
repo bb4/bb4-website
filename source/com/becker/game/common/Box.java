@@ -16,7 +16,6 @@ public class Box {
         verify();
     }
 
-
     public Box(int rowMin, int colMin, int rowMax, int colMax) {
         corner1_ = new Location(rowMin, colMin);
         corner2_ = new Location(rowMax, colMax);

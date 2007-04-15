@@ -13,7 +13,11 @@ public final class Util
 {
     // This path should be changed if you run the application form of the applets on a different machine.
     // use this if running under windows
-    public static final String PROJECT_DIR = "/windows/projects/java_projects/trunk/";
+    public static final String USER_HOME = "G:";
+    // use this running under Linux
+    //public static final String USER_HOME = "/windows"; 
+    public static final String PROJECT_DIR = USER_HOME + "/projects/java_projects/trunk/";
+    
 
     private static final DecimalFormat expFormat_ = new DecimalFormat("###,###.##E0");
     private static final DecimalFormat format_ = new DecimalFormat("###,###.##");

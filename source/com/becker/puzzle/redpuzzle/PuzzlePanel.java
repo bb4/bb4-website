@@ -74,7 +74,7 @@ final class PuzzlePanel extends JPanel
      * solve using the algorithm set in setAlgorithm.
      */
     public void startSolving() {
-        // better would be to run in a different thread?
+      
         boolean solved = solver_.solvePuzzle(this);
 
         if ( solved )

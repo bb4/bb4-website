@@ -18,8 +18,8 @@ final class PegBoardViewer extends JPanel
     private static final int LEFT_MARGIN = 40;
     private static final int TOP_MARGIN = 50;
 
-    private static final Color FILLED_HOLE_COLOR = new Color(180, 0, 180);
-    private static final Color EMPTY_HOLE_COLOR = new Color(55, 55, 55, 150);
+    private static final Color FILLED_HOLE_COLOR = new Color(120, 0, 190);
+    private static final Color EMPTY_HOLE_COLOR = new Color(55, 55, 65, 150);
     private static final int FILLED_HOLE_RAD = 16;
     private static final int EMPTY_HOLE_RAD = 9;
 
