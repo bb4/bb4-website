@@ -18,20 +18,25 @@
   <!-- place to put .class files, images and resources, so they can be jar'd up -->
   <property name="stagingDir" value="../temp/classes"/>
   <!-- root dir for auxilliary ant libraries. standby is "/usr/share/ant" or "/usr/local/Intellij/idea-2253/lib/ant"-->
-  <property name="antHome" value="/usr/share/ant"/>
+  <property name="antHome" value="D:/apps/java/netbeans-5.5/ide7/ant"/>    <!-- "/usr/share/ant" -->
   <!-- the base game applicaiton class -->
   <property name="gameAppClass" value="com.becker.game.common.ui.GameApp"/>
   <!-- the jvm to use when executing -->
-  <property name="java_home" value="/usr/java/jdk1.5.0_05"/>
-  <property name="java14" value="/usr/java/jdk1.4.2/bin/java"/>
-  <property name="java15" value="${java_home}/bin/amd64/java"/>
-  <property name="project_home" value="/windows/projects/java_projects/trunk"/>
+  <!-- property name="java_home" value="/usr/java/jdk1.5.0_05"/
+       property name="java14" value="/usr/java/jdk1.4.2/bin/java"/
+       property name="java15" value="${java_home}/bin/amd64/java"/ -->
+  <property name="java_home" value="D:/apps/java"/>
+  <property name="java15" value="${java_home}/java1.5_10/jdk/bin/java"/>
+  <property name="java16" value="${java_home}/jdk1.6.0_01/bin/java"/>
+  <property name="java_compiler" value="${java16}"/>
+
+  <property name="project_home" value="G:/projects/java_projects/trunk"/> <!-- value="/windows/projects/java_projects/trunk"/ -->
 
 
   <!-- Load additional tasks   -->
   <taskdef resource="net/sf/antcontrib/antcontrib.properties">
     <classpath>
-      <pathelement location="${antHome}/lib/ant-contrib-0.6.jar"/>
+      <pathelement location="${antHome}/lib/ant-contrib-1.0b3.jar"/>
     </classpath>
   </taskdef>
 
@@ -267,21 +272,21 @@
 
   <target name="executeRedPuzzle" depends="compile" description=" run the Red Puzzle screenSaver">
     <echo message="now executing red puzzle"/>
-    <java classname="com.becker.puzzle.redpuzzle.RedPuzzle" classpath="${classesDir}" fork="true" jvm="${java15}" maxmemory="128M">
+    <java classname="com.becker.puzzle.redpuzzle.RedPuzzle" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="128M">
         <jvmarg value="${assertionsFlag}"/>
     </java>
   </target>
 
   <target name="executeSudoku" depends="compile" description=" run the Sudoku solver">
     <echo message="now executing Sudoku"/>
-    <java classname="com.becker.puzzle.sudoku.SudokuPuzzle" classpath="${classesDir}" fork="true" jvm="${java15}" maxmemory="128M">
+    <java classname="com.becker.puzzle.sudoku.SudokuPuzzle" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="128M">
         <jvmarg value="${assertionsFlag}"/>
     </java>
   </target>
 
   <target name="executeHiQPuzzle" depends="compile" description=" run the Hi-Q Puzzle screenSaver">
     <echo message="now executing Hi-Q"/>
-    <java classname="com.becker.puzzle.hiq.HiQPuzzle" classpath="${classesDir}" fork="true" jvm="${java15}" maxmemory="800M">
+    <java classname="com.becker.puzzle.hiq.HiQPuzzle" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="800M">
         <jvmarg value="${assertionsFlag}"/>
     </java>
   </target>
@@ -313,14 +318,14 @@
       <param name="className" value="gogui.Main"/>
       <param name="libPath" value="${libDir}/gogui7.1.jar"/>
       <param name="arg1" value="-program"/>
-      <param name="arg2" value="${java15} -ea -classpath ${classesDir}:${libDir}/gogui7.1.jar:${libDir}/jigo.jar com.becker.game.twoplayer.go.GtpTesujisoftGoServer"/>
+      <param name="arg2" value="${java_compiler} -ea -classpath ${classesDir}:${libDir}/gogui7.1.jar:${libDir}/jigo.jar com.becker.game.twoplayer.go.GtpTesujisoftGoServer"/>
     </antcall>
   </target>
 
 
   <!-- call this to run java programs  -->
   <target name="executeProgram" depends="compile" description="Run a program">
-    <java classname="${className}" classpath="${classesDir};${libPath}" fork="true" jvm="${java15}">
+    <java classname="${className}" classpath="${classesDir};${libPath}" fork="true" jvm="${java_compiler}">
         <arg line="${args}"/>
         <!-- jvmarg value="-agentlib:yjpagent"/  use this if running Yourkit profiler -->
         <jvmarg value="-Xms128M"/>
@@ -331,7 +336,7 @@
 
 
   <target name="executeProgram2" depends="compile" description="Run a program">
-    <java classname="${className}" classpath="${classesDir};${libPath}" fork="true" jvm="${java15}">
+    <java classname="${className}" classpath="${classesDir};${libPath}" fork="true" jvm="${java_compiler}">
         <arg value="${arg1}"/>
         <arg value="${arg2}"/>
         <jvmarg value="-Xms128M"/>
