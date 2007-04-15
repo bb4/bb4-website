@@ -28,7 +28,8 @@ public class AnimationPanel extends JPanel implements AnimationChangeListener
 
     public void statusChanged( String message )
     {
-        mStatusLabel.setText( message );
+        if (message != null)
+            mStatusLabel.setText( message );
     }
 
 }

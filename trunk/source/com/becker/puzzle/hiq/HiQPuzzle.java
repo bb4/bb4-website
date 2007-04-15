@@ -1,5 +1,6 @@
 package com.becker.puzzle.hiq;
 
+import com.becker.common.Worker;
 import com.becker.ui.*;
 
 import javax.swing.*;
@@ -10,7 +11,7 @@ import java.util.List;
 
 /**
  * HiQ Puzzle.
- * This program soles a very difficult classic solitaire puzzle
+ * This program solves a very difficult classic solitaire puzzle
  * where you jump pegs to remove them in a cross shaped peg-board.
  * The fewer pegs you have remaining at the end, the better.
  * A perfect solution is to have only one peg in the center square
@@ -103,18 +104,35 @@ public final class HiQPuzzle extends JApplet implements ActionListener
     }
 
     /**
-     * start solving the puzzle.
+     * start solving the puzzle in a sepearate thread so the panel has a chance to refresh.
      * called by the browser after init(), if running as an applet
      */
     public void start() {
 
         board_.setToInitialState();
-        path_.add(board_.getFirstMove());
-        //refresh();
+        path_.add(board_.getFirstMove());       
 
-        // this does all the heavy work of solving it.
-        boolean solved = solvePuzzle(board_, path_);
-        System.out.println("solved = "+solved);
+        Worker worker = new Worker()  {
+     
+            public Object construct() {
+                
+                 long t = System.currentTimeMillis(); 
+                 
+                 // this does all the heavy work of solving it.
+                boolean solved = solvePuzzle(board_, path_);
+
+                int time = (int)((System.currentTimeMillis() - t) / 1000);
+                System.out.println("solved = "+solved + " in " + time + " seconds.");
+
+                return null;
+            }
+
+            public void finished() {
+                refresh();
+            }
+        };
+
+        worker.start();       
     }
 
     /**
@@ -178,8 +196,6 @@ public final class HiQPuzzle extends JApplet implements ActionListener
     }
 
     private void refresh() {
-        //pegBoardViewer_.invalidate();
-        //pegBoardViewer_.revalidate();
         pegBoardViewer_.repaint();
     }
 

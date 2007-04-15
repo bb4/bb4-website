@@ -1,5 +1,6 @@
 package com.becker.game.common;
 
+import com.becker.common.Util;
 import com.becker.sound.MusicMaker;
 import com.becker.ui.Log;
 
@@ -56,8 +57,6 @@ public final class GameContext
     private static final boolean PROFILING = false;
     private static boolean profiling_ = PROFILING;
 
-    // fall back on this if the "user.home" property is not set.
-    private static final String DEFAULT_HOME_DIR = "d:/";
 
     private GameContext() {}
 
@@ -153,11 +152,10 @@ public final class GameContext
      */
     public static String getHomeDir()
     {
-        String userHome = "/windows";    // System.getProperty("user.home")
+        String userHome = Util.USER_HOME;   // System.getProperty("user.home")
+        
         String home =  userHome + "/projects/java_projects/trunk";
-        if (home == null)
-            home = DEFAULT_HOME_DIR;
-        log(1, "home = "+home );
+        log(1, "home = " + home );
         return home;
     }
 

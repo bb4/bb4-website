@@ -25,7 +25,7 @@ public class BruteForceSolver extends PuzzleSolver {
 
     /**
      * Solves the puzzle.
-     * This implements the main algorithm for solving the red puzzle.
+     * This implements the main recursive algorithm for solving the red puzzle.
      * @param puzzlePanel
      * @param pieces the pieces that have yet to be fitted.
      * @param i insdex of last placed piece. If we have to backtrack, we put it back where we got it.

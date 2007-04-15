@@ -1,5 +1,6 @@
 package com.becker.xml;
 
+import com.becker.common.Util;
 import org.w3c.dom.*;
 
 import java.io.File;
@@ -33,7 +34,7 @@ public class AikidoAppGenerator {
     private static final int THUMB_IMG_WIDTH = 170;
     private static final int THUMB_IMG_HEIGHT = 130;
 
-    private static final String RESULT_PATH = "/windows/projects/javascript_projects/aikido_builder/";
+    private static final String RESULT_PATH = Util.USER_HOME + "/projects/javascript_projects/aikido_builder/";
     // the builder DHTML application
     private static final String RESULT_BULDER_FILE = "technique_builder.html";
     // all the techniques in one file (for debugging mostly)

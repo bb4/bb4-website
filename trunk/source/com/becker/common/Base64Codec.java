@@ -1,7 +1,8 @@
 package com.becker.common;
 
-import sun.misc.*;
 
+
+import com.sun.jndi.toolkit.chars.*;
 import java.io.*;
 import java.util.zip.*;
 import static com.becker.common.EncodingConstants.*;
@@ -28,7 +29,9 @@ public final class Base64Codec {
     public static String compress( String data )
     {
         if (charEncoder_==null)
+            
             charEncoder_ = new BASE64Encoder();
+        
         ByteArrayOutputStream byteOut = new ByteArrayOutputStream( 512 );
         Deflater deflater = new Deflater();
         DeflaterOutputStream oStream = new DeflaterOutputStream( byteOut, deflater );
