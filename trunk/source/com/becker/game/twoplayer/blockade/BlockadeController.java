@@ -84,46 +84,13 @@ public class BlockadeController extends TwoPlayerController
     }
 
 
-    /**
-     * utility class for holding the difference paths lengths.
-     */
-    private static class PathLengths {
-        int shortestLength = Integer.MAX_VALUE;
-        int secondShortestLength = Integer.MAX_VALUE;
-        int furthestLength = 0;
-        public PathLengths() {}
-
-        public String toString() {
-           return "shortestLength="+shortestLength+
-                   " secondShortestLength ="+secondShortestLength+
-                   " furthestLength="+furthestLength;
-        }
-    }
-
-    private static PathLengths updatePathLengths(PathLengths pathLengths, List[] moves)
-    {
-        for (final List newVar : moves) {
-            int len = newVar.size();
-            if (len < pathLengths.shortestLength) {
-                pathLengths.secondShortestLength = pathLengths.shortestLength;
-                pathLengths.shortestLength = len;
-            } else if (len < pathLengths.secondShortestLength) {
-                pathLengths.secondShortestLength = len;
-            }
-
-            if (len > pathLengths.furthestLength) {
-                pathLengths.furthestLength = len;
-            }
-        }
-        return pathLengths;
-    }
 
     /**
      * The primary way of computing the score for Blockade is to
      * weight the difference of the 2 shortest minimum paths plus the
      * weighted difference of the 2 furthest minimum paths.
      * An alternative method might be to weight the sum of the our shortest paths
-     * and diference it with the weight the sum of the oppoenent shortest paths.
+     * and diference it with the weight the sum of the opponent shortest paths.
      * The minimum path for a piece is the distance to its closest enemy home position.
      * @@ It can be expensive to compute these paths. Consider caching them.
      * We can use the wall in lastMove to determine which paths might have changed.
@@ -151,7 +118,7 @@ public class BlockadeController extends TwoPlayerController
                     List moves[] = board.findShortestPaths(pos);
                     if (moves.length != BlockadeBoard.NUM_HOMES)
                         GameContext.log(1, "Too few paths = "+moves.length+" != "+BlockadeBoard.NUM_HOMES);
-                    updatePathLengths(pathLengths[pInd], moves);
+                    pathLengths[pInd].updatePathLengths(moves);
                 }
             }
         }
@@ -515,7 +482,8 @@ public class BlockadeController extends TwoPlayerController
         BlockadeMove ourmove = firstStep;
         for (int i=0; i<opponentPaths.length; i++) {
            List opponentPath = opponentPaths[i];
-           assert (opponentPath!=null): "Opponent path "+i+" was null. There are "+opponentPaths.length+" oppenent paths.";
+           assert (opponentPath!=null): 
+               "Opponent path "+i+" was null. There are "+opponentPaths.length+" oppenent paths.";
            for (int j=0; j<opponentPath.size(); j++) {
                // if there is no wall currently interfering with this wall placement,
                // and it does not impact a friendly path,

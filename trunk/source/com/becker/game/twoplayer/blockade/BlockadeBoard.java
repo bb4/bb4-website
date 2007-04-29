@@ -17,19 +17,19 @@ import java.util.*;
 public class BlockadeBoard extends TwoPlayerBoard
 {
 
-    // The number of home bases for each player.
-    // Traditional rules call for 2.
+    /** The number of home bases for each player.  Traditional rules call for 2. */
     public static final int NUM_HOMES = 2;
 
-    // the percentage away from the players closest edge to place the bases.
+    /** The percentage away from the players closest edge to place the bases. */
     private static final float HOME_BASE_POSITION_PERCENT = 0.3f;
 
+    /** Home base positions for both players. */
     private BoardPosition[] p1Homes_ = null;
     private BoardPosition[] p2Homes_ = null;
 
 
     /**
-     *   constructor.
+     * Constructor.
      * @param numRows number of rows in the board grid.
      * @param numCols number of rows in the board grid.
      */
@@ -73,7 +73,7 @@ public class BlockadeBoard extends TwoPlayerBoard
 
 
     // can't change the size of a Blockade board
-    public void setSize( int numRows, int numCols )
+    public final void setSize( int numRows, int numCols )
     {
         numRows_ = numRows;
         numCols_ = numCols;
@@ -124,17 +124,16 @@ public class BlockadeBoard extends TwoPlayerBoard
       * For example, move 1 space to land on a home base, or in preparation to jump an oppponent piece.
       * They may jump over opponent pieces that are in the way (but they do not capture it).
       * The wall is ignored for the purposed of this method.
-      *   Moves are only allowed if the candidate position is unoccupied (unless a home base) and if
+      *     Moves are only allowed if the candidate position is unoccupied (unless a home base) and if
       * it has not been visited already. The visited part is only significant when we are doing a traversal
       * such as when we are finding the shortest paths to home bases.
       * <pre>
-      *     #     There are at most 12 moves from this position
-      *    #*#    (some of course may be blocked by walls.)
+      *       #     There are at most 12 moves from this position
+      *     #*#    (some of course may be blocked by walls)
       *   #*O*#    The most common being marked with #'s.
-      *    #*#
-      *     #
+      *     #*#
+      *       #
       * </pre>
-      *  @@ there should be a way to simplify this method by calling separate addIfLegal method for the 12 cases.
       *
       * @param position
       * @param op1 true if opposing player is player1; false if player2.
@@ -149,104 +148,156 @@ public class BlockadeBoard extends TwoPlayerBoard
          int fromCol = p.getCol();
          int numRows = getNumRows();
          int numCols = getNumCols();
-         boolean southOpen = false;
-         boolean eastOpen = false;
-
+       
          BlockadeBoardPosition southPos = (BlockadeBoardPosition) getPosition(fromRow+1, fromCol);
          BlockadeBoardPosition westPos = (BlockadeBoardPosition) getPosition(fromRow, fromCol-1);
          BlockadeBoardPosition northPos = (BlockadeBoardPosition) getPosition(fromRow-1, fromCol);
          BlockadeBoardPosition eastPos = (BlockadeBoardPosition) getPosition(fromRow, fromCol+1);
 
-         if (!p.isEastBlocked() && fromCol+1<=numCols ) {     // E
-             eastOpen = true;
-             if (!eastPos.isVisited() && (eastPos.isUnoccupied() || eastPos.isHomeBase(op1)))
-                 possibleMoveList.add(
-                         BlockadeMove.createMove(fromRow, fromCol, fromRow, fromCol+1, 0, p.getPiece(), null));
-         }
+         boolean eastOpen = (!p.isEastBlocked() && fromCol+1 <= numCols);                  // E
+         addIf1HopLegal(p, eastOpen, eastPos, fromRow, fromCol, fromRow, fromCol + 1, op1, possibleMoveList);
 
-         if (!p.isSouthBlocked() && fromRow+1<=numRows) {     // S
-             southOpen = true;
-             if (!southPos.isVisited() && (southPos.isUnoccupied() || southPos.isHomeBase(op1)))
-                 possibleMoveList.add(
-                         BlockadeMove.createMove(fromRow, fromCol, fromRow+1,fromCol, 0, p.getPiece(), null));
-         }
+         boolean southOpen = (!p.isSouthBlocked() && fromRow+1 <= numRows);           // S
+         addIf1HopLegal(p, southOpen, southPos, fromRow, fromCol, fromRow + 1, fromCol, op1, possibleMoveList); 
 
-         if (southPos != null ) {
-             BlockadeBoardPosition southSouthPos = (BlockadeBoardPosition) getPosition(fromRow+2, fromCol);
-             if (southOpen && !southPos.isSouthBlocked() && fromRow+2<=numRows &&
-                  (southSouthPos.isUnoccupied()||southPos.isHomeBase(op1)) && !southSouthPos.isVisited())  // SS
-                  possibleMoveList.add(
-                          BlockadeMove.createMove(fromRow, fromCol, fromRow+2,fromCol, 0, p.getPiece(), null));
-             if ((southOpen && !southPos.isEastBlocked() && fromCol+1<=numCols) ||
-                 (eastOpen && !eastPos.isSouthBlocked())) {                                             // SE
-                  BlockadeBoardPosition southEastPos = (BlockadeBoardPosition) getPosition(fromRow+1, fromCol+1);
-                  if ((southEastPos.isUnoccupied()||southEastPos.isHomeBase(op1)) && !southEastPos.isVisited())
-                    possibleMoveList.add(
-                            BlockadeMove.createMove(fromRow, fromCol, fromRow+1,fromCol+1, 0, p.getPiece(), null));
-             }
+         if (southPos != null ) {             
+             addIf2HopLegal(p, southOpen, southPos.isSouthBlocked(),                                   // SS
+                                         fromRow, fromCol, fromRow+2, fromCol, op1,  possibleMoveList);
+                                       
+             BlockadeBoardPosition southEastPos = (BlockadeBoardPosition) getPosition(fromRow+1, fromCol+1);
+             addIfDiagonalLegal(p, southEastPos, southOpen && !southPos.isEastBlocked(), eastOpen && !eastPos.isSouthBlocked(), 
+                                                          fromRow, fromCol,  op1,  possibleMoveList);                  // SE       
          }
          boolean westOpen = false;
-         if (westPos != null)  {
+         if (westPos != null)  {             
              BlockadeBoardPosition southWestPos = (BlockadeBoardPosition) getPosition(fromRow+1, fromCol-1);
-             if (!westPos.isEastBlocked() && fromCol-1>0 ) {   // W
-                 westOpen = true;
-                 if  (!westPos.isVisited() && (westPos.isUnoccupied()||westPos.isHomeBase(op1)))
-                     possibleMoveList.add(
-                             BlockadeMove.createMove(fromRow, fromCol, fromRow,fromCol-1, 0, p.getPiece(), null));
-             }
-             boolean test1 = (westOpen && !westPos.isSouthBlocked() && fromCol-1>0 && fromRow+1<=numRows);
-             if (test1 || ((southOpen && southWestPos!=null && !southWestPos.isEastBlocked()))
-                  && (southWestPos.isUnoccupied()||southWestPos.isHomeBase(op1)) && !southWestPos.isVisited())   // SW
-                  possibleMoveList.add(
-                          BlockadeMove.createMove(fromRow, fromCol, fromRow+1,fromCol-1, 0, p.getPiece(), null));
+             westOpen = (!westPos.isEastBlocked() && fromCol-1 > 0 );                                         // W
+             addIf1HopLegal(p, westOpen, westPos, fromRow, fromCol, fromRow, fromCol - 1, op1, possibleMoveList); 
+                      
+             addIfDiagonalLegal(p, southWestPos, westOpen && !westPos.isSouthBlocked(), southOpen && !southWestPos.isEastBlocked(), 
+                                                          fromRow, fromCol,  op1,  possibleMoveList);                                   // SW
          }
-
-         BlockadeBoardPosition westWestPos = (BlockadeBoardPosition) getPosition(fromRow, fromCol-2);
-         if (westOpen && westWestPos!=null && !westWestPos.isEastBlocked()
-              && (westWestPos.isUnoccupied()||westWestPos.isHomeBase(op1)) && !westWestPos.isVisited())          // WW
-              possibleMoveList.add(
-                      BlockadeMove.createMove(fromRow, fromCol, fromRow,fromCol-2, 0, p.getPiece(), null));
+         
+         BlockadeBoardPosition westWestPos = (BlockadeBoardPosition) getPosition(fromRow, fromCol-2);     // WW
+         if (westWestPos != null) {
+            addIf2HopLegal(p, westOpen,  westWestPos.isEastBlocked(),
+                                       fromRow, fromCol, fromRow, fromCol-2, op1,  possibleMoveList);
+         }      
 
          boolean northOpen = false;
-         if (northPos!=null) {
-             BlockadeBoardPosition northEastPos = (BlockadeBoardPosition) getPosition(fromRow-1, fromCol+1);
-             if (!northPos.isSouthBlocked())  {       // N
-                 northOpen = true;
-                 if (!northPos.isVisited() && (northPos.isUnoccupied()||northPos.isHomeBase(op1)))
-                     possibleMoveList.add(
-                             BlockadeMove.createMove(fromRow, fromCol, fromRow-1,fromCol, 0, p.getPiece(), null));
-
-             }
-             boolean test1 = (northOpen && !northPos.isEastBlocked() && fromCol+1<=numCols);
-             if ((test1 || (eastOpen && !northEastPos.isSouthBlocked()))
-                  && (northEastPos.isUnoccupied()||northEastPos.isHomeBase(op1)) && !northEastPos.isVisited())    // NE
-                  possibleMoveList.add(
-                          BlockadeMove.createMove(fromRow, fromCol, fromRow-1,fromCol+1, 0, p.getPiece(), null));
+         if (northPos != null) {
+             BlockadeBoardPosition northEastPos = (BlockadeBoardPosition) getPosition(fromRow-1, fromCol+1);           
+             northOpen = (!northPos.isSouthBlocked()) ;                                                                              // N
+             addIf1HopLegal(p, northOpen, northPos, fromRow, fromCol, fromRow - 1, fromCol, op1, possibleMoveList); 
+             
+             addIfDiagonalLegal(p, northEastPos, northOpen && !northPos.isEastBlocked(), eastOpen && !northEastPos.isSouthBlocked(), 
+                                                          fromRow, fromCol,  op1,  possibleMoveList);                                    // NE  
          }
-
-         BlockadeBoardPosition northNorthPos = (BlockadeBoardPosition) getPosition(fromRow-2, fromCol);
-         if (northOpen && northNorthPos!=null && !northNorthPos.isSouthBlocked()
-              && (northNorthPos.isUnoccupied()||northNorthPos.isHomeBase(op1)) && !northNorthPos.isVisited())    // NN
-              possibleMoveList.add(
-                      BlockadeMove.createMove(fromRow, fromCol, fromRow-2,fromCol, 0, p.getPiece(), null));
+         
+         BlockadeBoardPosition northNorthPos = (BlockadeBoardPosition) getPosition(fromRow-2, fromCol);     
+         if (northNorthPos != null) {             
+             addIf2HopLegal(p, northOpen,  northNorthPos.isSouthBlocked(),                                                // NN
+                                         fromRow, fromCol, fromRow-2, fromCol, op1,  possibleMoveList);          
+         }
 
          BlockadeBoardPosition northWestPos = (BlockadeBoardPosition) getPosition(fromRow-1, fromCol-1);
-         if (northWestPos!=null) {
-             boolean test1 = ((westOpen && !northWestPos.isSouthBlocked()) ||
-                              (northOpen && !northWestPos.isEastBlocked()));
-             if (test1 && (northWestPos.isUnoccupied()||northWestPos.isHomeBase(op1)) && !northWestPos.isVisited())  // NW
-                  possibleMoveList.add(
-                          BlockadeMove.createMove(fromRow, fromCol, fromRow-1,fromCol-1, 0, p.getPiece(), null));
+         if (northWestPos != null) {
+             addIfDiagonalLegal(p, northWestPos, westOpen && !northWestPos.isSouthBlocked(), northOpen && !northWestPos.isEastBlocked(), 
+                                              fromRow, fromCol,  op1,  possibleMoveList);                                              // NW
          }
-         BlockadeBoardPosition eastEastPos = (BlockadeBoardPosition) getPosition(fromRow, fromCol+2);
-         boolean test1 = eastOpen && eastPos!=null && !eastPos.isEastBlocked() && fromCol+2<=numCols;
-         if (test1 && (eastEastPos.isUnoccupied()||eastEastPos.isHomeBase(op1)) && !eastEastPos.isVisited())       // EE
-              possibleMoveList.add(
-                      BlockadeMove.createMove(fromRow, fromCol, fromRow,fromCol+2, 0, p.getPiece(), null));
-
+         
+         if (eastPos != null) {
+             addIf2HopLegal(p, eastOpen,  eastPos.isEastBlocked(),                                                               // EE
+                                         fromRow, fromCol, fromRow, fromCol+2, op1,  possibleMoveList);    
+         }
+             
          return possibleMoveList;
      }
 
+     /**
+      * Check for legal 1 space moves (4 cases).
+      */
+     private void addIf1HopLegal(BlockadeBoardPosition pos, boolean directionOpen, BlockadeBoardPosition dirPosition, 
+                                                     int fromRow, int fromCol, int toRow, int toCol, boolean op1, 
+                                                     List possibleMoveList) {      
+          if (directionOpen) {
+              if (!dirPosition.isVisited() && (dirPosition.isUnoccupied() || dirPosition.isHomeBase(op1)))
+                  possibleMoveList.add( 
+                          BlockadeMove.createMove(fromRow, fromCol, toRow, toCol, 0, pos.getPiece(), null));
+          }
+     }
+     
+     /**
+      * Check for 2 space moves (4 cases).
+      */
+     private void addIf2HopLegal(BlockadeBoardPosition pos, boolean directionOpen, boolean blocked,
+                                                     int fromRow, int fromCol, int toRow, int toCol, boolean op1, List possibleMoveList) {
+         
+         BlockadeBoardPosition dirDirPosition =  (BlockadeBoardPosition) getPosition(toRow, toCol);
+         if (directionOpen && (dirDirPosition != null) && !blocked
+              && (dirDirPosition.isUnoccupied() || dirDirPosition.isHomeBase(op1) && !dirDirPosition.isVisited())) {     //DD
+               possibleMoveList.add(
+                       BlockadeMove.createMove(fromRow, fromCol, toRow, toCol, 0, pos.getPiece(), null));    
+         }
+     }
+     
+     /**
+      * Check for diagonal moves (4 cases).
+      */
+     private void addIfDiagonalLegal(BlockadeBoardPosition pos, BlockadeBoardPosition diagonalPos, boolean path1Open, boolean path2Open,  
+                                                           int fromRow, int fromCol, boolean op1, List possibleMoveList) {
+         
+         if (diagonalPos != null) {
+             // check the 2 alternative paths to this diagonal position to see if either are clear.
+             if (path1Open || path2Open) {
+                   if  (diagonalPos.isUnoccupied() || diagonalPos.isHomeBase(op1) && !diagonalPos.isVisited()) {                  //Diag
+                        possibleMoveList.add(
+                               BlockadeMove.createMove(fromRow, fromCol, diagonalPos.getRow(), diagonalPos.getCol(), 0, pos.getPiece(), null));    
+                   }
+              }                 
+         }
+         
+          
+         /*
+         BlockadeBoardPosition southEastPos = (BlockadeBoardPosition) getPosition(fromRow+1, fromCol+1);
+         if ((southOpen && (southEastPos !=null) && !southPos.isEastBlocked() &&  (eastOpen && !eastPos.isSouthBlocked())) {  // SE                 
+                  if ((southEastPos.isUnoccupied() || southEastPos.isHomeBase(op1)) && !southEastPos.isVisited())
+                    possibleMoveList.add(
+                            BlockadeMove.createMove(fromRow, fromCol, fromRow+1, fromCol+1, 0, p.getPiece(), null));
+         }
+         
+         if ((southOpen && !southPos.isEastBlocked() && fromCol+1<=numCols) ||
+                 (eastOpen && !eastPos.isSouthBlocked())) {                                                // SE
+                  BlockadeBoardPosition southEastPos = (BlockadeBoardPosition) getPosition(fromRow+1, fromCol+1);
+                  if ((southEastPos.isUnoccupied()||southEastPos.isHomeBase(op1)) && !southEastPos.isVisited())
+                    possibleMoveList.add(
+                            BlockadeMove.createMove(fromRow, fromCol, fromRow+1, fromCol+1, 0, p.getPiece(), null));
+             }
+                  
+         
+           if (westOpen && !westPos.isSouthBlocked() && fromCol-1>0 && fromRow+1<=numRows || (southOpen && southWestPos!=null && !southWestPos.isEastBlocked())) {                      
+               if ((southWestPos.isUnoccupied() || southWestPos.isHomeBase(op1)) && !southWestPos.isVisited())      // SW
+                possibleMoveList.add(
+                        BlockadeMove.createMove(fromRow, fromCol, fromRow+1,fromCol-1, 0, p.getPiece(), null));
+           }
+         
+           if ((northOpen && !northPos.isEastBlocked() && fromCol+1<=numCols || (eastOpen && !northEastPos.isSouthBlocked())) {
+                if (northEastPos.isUnoccupied()||northEastPos.isHomeBase(op1)) && !northEastPos.isVisited())    // NE
+                   possibleMoveList.add(
+                            BlockadeMove.createMove(fromRow, fromCol, fromRow-1,fromCol+1, 0, p.getPiece(), null));
+           }
+         
+         BlockadeBoardPosition northWestPos = (BlockadeBoardPosition) getPosition(fromRow-1, fromCol-1);
+         if (northWestPos != null) {
+             if ((westOpen && !northWestPos.isSouthBlocked()) || (northOpen && !northWestPos.isEastBlocked())) {
+                 if ((northWestPos.isUnoccupied()||northWestPos.isHomeBase(op1)) && !northWestPos.isVisited())  // NW
+                  possibleMoveList.add(
+                          BlockadeMove.createMove(fromRow, fromCol, fromRow-1,fromCol-1, 0, p.getPiece(), null));
+             }
+         }
+          */
+     }
+     
 
     /**
      * @param pos the place we are moving from.
