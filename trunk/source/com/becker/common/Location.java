@@ -14,8 +14,10 @@ public final class Location
 
     /**
      * Constructs a new point at (0, 0).
+     * Default empty constructor
      */
-    public Location() {}
+    public Location() {
+    }
 
     /**
      * Constructs a new Location at the given coordinates.
@@ -58,6 +60,13 @@ public final class Location
         Location loc = (Location) location;
         return (loc.getRow() == row_) && (loc.getCol() == col_);
     }
+    
+    /**
+     * If override euals, should also override hashCode
+     */
+    public int hashCode() {
+        return (100 * row_ + col_);
+    }
 
     /**
      * @param loc another location to measure distance from.
@@ -67,8 +76,7 @@ public final class Location
     {
         float xDif = Math.abs(col_ - loc.getCol());
         float yDif = Math.abs(row_ - loc.getRow());
-        double dist = Math.sqrt( xDif*xDif + yDif*yDif);
-        return dist;
+        return Math.sqrt( xDif*xDif + yDif*yDif);
     }
 
     /**
@@ -79,8 +87,7 @@ public final class Location
     {
         double xDif = Math.abs(col_ - loc.getX());
         double yDif = Math.abs(row_ - loc.getY());
-        double dist = Math.sqrt( xDif*xDif + yDif*yDif);
-        return dist;
+        return Math.sqrt( xDif*xDif + yDif*yDif);
     }
 
     /**

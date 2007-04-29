@@ -15,11 +15,14 @@ public class Profiler
 
     private static final String INDENT = "    ";
 
-    private Map<String,ProfilerEntry> hmEntries_ = new HashMap<String,ProfilerEntry>();
-    private List<ProfilerEntry> topLevelEntries_ = new LinkedList<ProfilerEntry>();
+    private final Map<String,ProfilerEntry> hmEntries_ = new HashMap<String,ProfilerEntry>();
+    private final List<ProfilerEntry> topLevelEntries_ = new LinkedList<ProfilerEntry>();
     private boolean enabled_ = true;
-    protected Log logger_ = null;
+    protected static Log logger_ = null;
 
+    /**
+     * Default constructor.
+     */
     public Profiler()
     {}
 
@@ -111,11 +114,11 @@ public class Profiler
     protected class ProfilerEntry {
 
         // the name of this profiler entry
-        private String name_;
+        private final String name_;
         private long startTime_ = 0;
         // the total time used by this named code section while the app was running
         private long totalTime_ = 0;
-        private List<ProfilerEntry> children_ = new LinkedList<ProfilerEntry>();
+        private final List<ProfilerEntry> children_ = new LinkedList<ProfilerEntry>();
 
         protected ProfilerEntry(String name)
         {
@@ -157,10 +160,10 @@ public class Profiler
         {
             double seconds = (double)totalTime_/1000.0;
             String text = indent+ "Time for "+name_+" : "+ Util.formatNumber(seconds) +" seconds";
-            if (logger_!=null)
-                logger_.println(text);
-            else
+            if (logger_==null)
                 System.out.println(text);
+            else                
+                 logger_.println(text);
             Iterator childIt = children_.iterator();
 
             long totalChildTime = 0;

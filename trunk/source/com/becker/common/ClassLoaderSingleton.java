@@ -7,19 +7,20 @@ package com.becker.common;
  */
 
 public class ClassLoaderSingleton {
-    private static ClassLoaderSingleton cls_ = null;
-    private static ClassLoader loader_ = null;
+    private static ClassLoaderSingleton cls_;
+    private static ClassLoader loader_;
 
     // private constructor
     private ClassLoaderSingleton()
     {
-        loader_ = this.getClass().getClassLoader();
+        loader_ = Thread.currentThread().getContextClassLoader();
     }
 
-    public static ClassLoader getClassLoader()
+    public static synchronized ClassLoader getClassLoader()
     {
-        if (cls_==null)
+        if (cls_==null) {
             cls_ = new ClassLoaderSingleton();
+        }
         return loader_;
     }
 }

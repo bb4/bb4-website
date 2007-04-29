@@ -10,7 +10,7 @@ import java.util.*;
  */
 public class CommandLineOptions  {
 
-    private Map<String, String> optionsMap_ = new HashMap<String, String>();
+    private final Map<String, String> optionsMap_ = new HashMap<String, String>();
 
     /**
      * Constructor

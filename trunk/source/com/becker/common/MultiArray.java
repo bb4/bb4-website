@@ -14,25 +14,24 @@ package com.becker.common;
 public class MultiArray
 {
 
-    // the number of dimensions. May be any number  >= 0.
-    int numDims_ = 0;
-    // product of number of dimensions. All dimensions multiplied together.
-    int numVals_ = 0;
-    // the size of each dimension in the multi-dim array
-    int dims_[] = null;
+    /** the number of dimensions. May be any number  >= 0. */
+    private final int numDims_;
+    
+    /** product of number of dimensions. All dimensions multiplied together. */
+    private final int numVals_;
+    
+    /** the size of each dimension in the multi-dim array. */
+    private final int dims_[];
 
-    // this will hold all the data for this array class
-    double[] arrayData_ = null;
-
-    // in the future this should be a parameter to the constructor
-    String type_ = null;
+    /** this will hold all the data for this array class. */
+    private double[] arrayData_ = null;
 
     /**
      * Constructor
      */
     public MultiArray( int[] dims )
     {
-        dims_ = dims;
+        dims_ = dims.clone();
         numDims_ = dims_.length;
         numVals_ = getDimensionProduct( numDims_ );
         assert (numDims_ > 0): "You must have > 0 dimansion to use this class" ;
@@ -53,15 +52,16 @@ public class MultiArray
     /**
      * @return the product of the first n dimensions. returns 1 if n is 0
      */
-    public int getDimensionProduct( int n )
+    public final int getDimensionProduct( int n )
     {
         assert ( n <= numDims_):n + " must be less than " + numDims_ ;
         int prod = 1;
         if ( n == 0 )
             return prod;
 
-        for ( int j = 0; j < n; j++ )
+        for ( int j = 0; j < n; j++ ) {
             prod *= dims_[j];
+        }
         return prod;
     }
 

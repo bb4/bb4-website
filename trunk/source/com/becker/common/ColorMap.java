@@ -1,8 +1,7 @@
 package com.becker.common;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.*;
-import java.util.List;
 
 /**
  * This class maps numbers to colors.
@@ -13,8 +12,8 @@ import java.util.List;
 public class ColorMap
 {
 
-    private List<Double> values_;
-    private List<Color> colors_;
+    final private List<Double> values_;
+    final private List<Color> colors_;
 
     // temp vars for interpolation
     private static float[] rgba_ = new float[4];
@@ -42,18 +41,22 @@ public class ColorMap
         }
     }
 
-    public synchronized Color getColorForValue( double value )
+    public synchronized Color getColorForValue( final double value )
     {
         int len = getNumValues();
-        if ( value <= values_.get(0))
+        if ( value <= values_.get(0)) {
             return colors_.get(0);
-        else if (value >= values_.get(len-1))
+        }
+        else if (value >= values_.get(len-1)) {
             return colors_.get(len-1);
+        }
         int i = 1;
-        while ( i < len && value > values_.get(i) )
+        while ( i < len && value > values_.get(i) ) {
             i++;
-        if ( i == len )
+        }
+        if ( i == len ) {
             return colors_.get(len - 1);
+        }
 
         double x = (double) i - 1.0 + (value - values_.get(i - 1)) / (values_.get(i) - values_.get(i - 1));
         return interpolate( x );
@@ -102,12 +105,14 @@ public class ColorMap
     }
 
     public synchronized void setValue(int index, double value) {
-        if (index > 0)
+        if (index > 0) {
             assert(value >= values_.get(index - 1)):
                     "Can't set value="+value+" that is less than "+ values_.get(index - 1);
-        if (index < getNumValues() -1)
+        }
+        if (index < getNumValues() -1) {
             assert(value <= values_.get(index + 1)):
                     "Can't set value="+value+" that is greater than "+ values_.get(index + 1);
+        }
         values_.set(index, value);
     }
 
@@ -145,15 +150,18 @@ public class ColorMap
         else if (value >= values_.get(len-1))
             return len-1;
         int i = 1;
-        while ( i < len && value > values_.get(i) )
+        while ( i < len && value > values_.get(i) ) {
             i++;
-        if ( i == len )
+        }
+        if ( i == len ) {
             return len - 1;
-
-        if (value - values_.get(i - 1) > values_.get(i) - value)
-           return i;
-        else
+        }
+        if (value - values_.get(i - 1) > values_.get(i) - value) {
+            return i;
+        }
+        else {
            return i - 1;
+        }
     }
 
     /**
@@ -165,8 +173,9 @@ public class ColorMap
         if (value >= values_.get(len-2))
             return len-2;
         int i = 1;
-        while ( value > values_.get(i) )
+        while ( value > values_.get(i) ) {
             i++;
+        }
         return i - 1;
     }
 }

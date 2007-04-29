@@ -20,7 +20,7 @@ package com.becker.common;
 public abstract class Worker {
     private Object returnValue_ = null;  // see getValue(), setValue()
 
-    private ThreadVar threadVar_;
+    private final ThreadVar threadVar_;
 
     /**
      * Class to maintain reference to current worker thread
@@ -28,9 +28,15 @@ public abstract class Worker {
      */
     private static class ThreadVar {
         private Thread thread_;
-        ThreadVar(Thread t) { thread_ = t; }
-        synchronized Thread get() { return thread_; }
-        synchronized void clear() { thread_ = null; }
+        ThreadVar(Thread t) { 
+            thread_ = t; 
+        }
+        private synchronized Thread get() { 
+            return thread_; 
+        }
+        private synchronized void clear() {
+            thread_ = null; 
+        }
     }
 
 
@@ -60,6 +66,7 @@ public abstract class Worker {
      * after the <code>construct</code> method has returned.
      */
     public void finished() {
+        // intentionally empty
     }
 
     /**
