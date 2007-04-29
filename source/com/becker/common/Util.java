@@ -40,7 +40,7 @@ public final class Util
         BufferedInputStream input = new BufferedInputStream( new FileInputStream( srcfile ) );
         BufferedOutputStream output = new BufferedOutputStream( new FileOutputStream( destfile ) );
         try {
-            while ( (len = input.read( bytearr )) != -1 ) {
+            while ( (len = input.read( bytearr )) != -1 ) {                
                 output.write( bytearr, 0, len );
             }
         } catch (FileNotFoundException exc) {
@@ -194,7 +194,7 @@ public final class Util
                 Thread.sleep(millis);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            };
+            }
         }
     }
 

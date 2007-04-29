@@ -16,7 +16,7 @@ public final class ImageUtil
 {
 
     // print quality for JPGs 1 is no compression
-    protected static final float JPG_QUALITY = 0.9f;
+    private static final float JPG_QUALITY = 0.9f;
 
     public enum ImageType { PNG, JPG };
 
@@ -25,7 +25,7 @@ public final class ImageUtil
     /**
      * create a BufferedImage from an Image
      */
-    public static BufferedImage makeBufferedImage( Image image )
+    public static BufferedImage makeBufferedImage( final Image image )
     {
         BufferedImage bImg = new BufferedImage( image.getWidth(null), image.getHeight(null),
                 BufferedImage.TYPE_INT_ARGB );
@@ -95,6 +95,9 @@ public final class ImageUtil
                 encoder.encode( bi );  // this writes it to a file as a .png
             } catch (IOException fne) {
                 System.out.println( "IOException error:" +  fne.getMessage());
+            } catch (NullPointerException npe) {
+                System.out.println("bi="+bi);
+                throw npe;
             }
         }
 

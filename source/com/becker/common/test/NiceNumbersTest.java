@@ -1,7 +1,6 @@
 package com.becker.common.test;
 
 import junit.framework.*;
-import junit.framework.Assert;
 import com.becker.common.*;
 
 import java.util.*;
@@ -11,7 +10,8 @@ import java.util.*;
  */
 public class NiceNumbersTest extends TestCase {
 
-
+    private static final String LOOSE = "loose ";
+    
     /**
      * common initialization for all go test cases.
      */
@@ -29,9 +29,11 @@ public class NiceNumbersTest extends TestCase {
     public void testNiceNumbers1() {
         String[] resultLoose = NiceNumbers.getCutPointLabels(11.0, 101.0, 5, false);
         String[] resultTight = NiceNumbers.getCutPointLabels(11.0, 101.0, 5, true);
-        Assert.assertTrue("loose "+ Arrays.toString(resultLoose),
+        assertNotNull("resultLoose should not be null", resultLoose);
+        assertNotNull("resultTight should not be null", resultTight);
+        Assert.assertTrue(LOOSE + Arrays.toString(resultLoose),
                               Arrays.equals(resultLoose, EXPECTED_LOOSE_CUTS));
-        Assert.assertTrue("loose "+ Arrays.toString(resultTight),
+        Assert.assertTrue(LOOSE + Arrays.toString(resultTight),
                               Arrays.equals(resultTight, EXPECTED_TIGHT_CUTS));
     }
 
@@ -41,9 +43,9 @@ public class NiceNumbersTest extends TestCase {
     public void testNiceNumbers2() {
              String[] resultLoose = NiceNumbers.getCutPointLabels(11.1, 11.23, 5, false);
         String[] resultTight = NiceNumbers.getCutPointLabels(11.1, 11.23, 5, true);
-        Assert.assertTrue("loose "+ Arrays.toString(resultLoose),
+        Assert.assertTrue(LOOSE + Arrays.toString(resultLoose),
                               Arrays.equals(resultLoose, EXPECTED_LOOSE_CUTS2));
-        Assert.assertTrue("loose "+ Arrays.toString(resultTight),
+        Assert.assertTrue(LOOSE + Arrays.toString(resultTight),
                               Arrays.equals(resultTight, EXPECTED_TIGHT_CUTS2));
     }
 
