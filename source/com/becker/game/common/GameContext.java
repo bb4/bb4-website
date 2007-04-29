@@ -139,7 +139,7 @@ public final class GameContext
     /**
      * @return use this to add cute sound effects.
      */
-    public static MusicMaker getMusicMaker()
+    public static synchronized MusicMaker getMusicMaker()
     {
         if ( musicMaker_ == null ) {
             musicMaker_ = new MusicMaker();
