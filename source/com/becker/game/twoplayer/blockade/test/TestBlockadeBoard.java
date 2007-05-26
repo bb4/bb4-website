@@ -16,7 +16,7 @@ public class TestBlockadeBoard extends TestCase {
 
     public void testPositionStates() {
 
-        BlockadeBoardPosition p = new BlockadeBoardPosition(1,1, null, null, null, false, false);
+        BlockadeBoardPosition p = new BlockadeBoardPosition(1, 1, null, null, null, false, false);
 
         Assert.assertTrue("no piece or walls", p.getStateIndex() == 0);
         p.setPiece(new GamePiece(true));
@@ -32,7 +32,7 @@ public class TestBlockadeBoard extends TestCase {
 
         p.setPiece(new GamePiece(false));
         Assert.assertTrue("p2 piece and both wals", p.getStateIndex() == 11);
-
     }
+    
 
 }

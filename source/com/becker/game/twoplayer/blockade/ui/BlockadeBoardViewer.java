@@ -93,7 +93,6 @@ public class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMo
         if (!wallPlaced)
             return;
 
-
         continuePlay( currentMove_ );
     }
 
@@ -181,7 +180,7 @@ public class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMo
         // first check to see if its a legal placement
         BlockadeBoard board = (BlockadeBoard)controller_.getBoard();
 
-        // @@ check wall intersection and overlaps.
+        // check wall intersection and overlaps.
         String sError = board.checkLegalWallPlacement(draggedWall_, loc, m.getPiece());
 
         if (sError!=null) {
@@ -342,7 +341,7 @@ public class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMo
             for ( int j = 1; j <= ncols; j++ ) {
                 BlockadeBoardPosition pos = (BlockadeBoardPosition)board.getPosition( i, j );
                 drewWall = drewWall || BlockadePieceRenderer.renderWallAtPosition( g2,  pos, cellSize );
-                if (pos.isOccupied() && GameContext.getDebugMode()>0)
+                if (pos.isOccupied() && GameContext.getDebugMode() > 0)
                    drawShortestPaths(g2, pos, board, cellSize_);
             }
         }
@@ -406,54 +405,74 @@ public class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMo
                        2 * offset, 2 * offset);
         }
     }
+    
+    private static final float PATH_WIDTH_RATIO = .16f;
+    private static final float POINT_WIDTH_RATIO = .22f;
+    private static final int ALPHA_CONST = 25;
 
     /**
      * Draw all the shortest paths from the specified position pos going to all the opponent homes.
      * Draw the shorter paths darker or thicker (or something).
-     * @param g2
+     * @param g2 graphics object 
      * @param pos the starting position of the current pawn.
-     * @param b
+     * @param b game board
      */
-    private static void drawShortestPaths(Graphics2D g2, BlockadeBoardPosition pos, BlockadeBoard b, int cellSize)
+    private static void drawShortestPaths(Graphics2D g2, BlockadeBoardPosition pos, BlockadeBoard b, int cellSize)    
     {
-        BasicStroke pathStroke = new BasicStroke((float)cellSize / 3,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+        BasicStroke pathStroke = 
+                new BasicStroke((float)cellSize * PATH_WIDTH_RATIO, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
         g2.setStroke(pathStroke);
-        List[] paths = b.findShortestPaths(pos);
-        // @@ npe happenning here !!
+        Path[] paths = b.findShortestPaths(pos);
+  
         boolean p1 = pos.getPiece().isOwnedByPlayer1();
-        for (final List newVar : paths) {
-            g2.setColor(new Color((p1 ? 120 : 180), (p1 ? 160 : 90), 140, Math.max(5, 60)));
-            drawPath(g2, newVar, cellSize);
+        Color pathColor = p1? BlockadePieceRenderer.getRenderer().getPlayer1Color() :
+                                            BlockadePieceRenderer.getRenderer().getPlayer2Color();
+        pathColor = pathColor.darker();
+        
+        for (final Path path : paths) {
+            int alpha = 5 + (20 * ALPHA_CONST) / Math.min(ALPHA_CONST, (path.getLength() + 1));
+            Color c = new Color(pathColor.getRed(), pathColor.getGreen(), pathColor.getBlue(), alpha);
+            g2.setColor(c);
+            drawPath(g2, path, cellSize);
         }
     }
 
-    private static final float PATH_OFFSET = 0.3f;
+    /** offset the players path a little so they are not right on top of each other. */
+    private static final float PLAYER1_PATH_OFFSET = 0.8f;
+    private static final float PLAYER2_PATH_OFFSET = 0.1f;
+    
     /**
      * Draws the specified path in the board viewer window.
      * @param g2
      * @param path
      * @param cellSize
      */
-    private static void drawPath(Graphics2D g2, List path, int cellSize)
+    private static void drawPath(Graphics2D g2, Path path, int cellSize)
     {
         Iterator it = path.iterator();
-        int len = path.size()+1;
+        int len = path.getLength() + 1;
         int x[] = new int[len];
         int y[] = new int[len];
         int ct = 0;
         BlockadeMove m = null;
+        float offset = 0;
         while (it.hasNext()) {
-            m = (BlockadeMove)it.next();
-            assert (m!=null);
-            x[ct]= (int)((m.getFromCol()-PATH_OFFSET)*cellSize);
-            y[ct]= (int)((m.getFromRow()-PATH_OFFSET)*cellSize);
+            m = (BlockadeMove)it.next();            
+            offset = (m.isPlayer1() ?  PLAYER1_PATH_OFFSET :  PLAYER2_PATH_OFFSET) ;            
+            x[ct] = (int)(((float)m.getFromCol() - offset) * cellSize);
+            y[ct] = (int)(((float)m.getFromRow() - offset) * cellSize);
             ct++;
         }
-        if (m!=null) {
-            x[ct]= (int)((m.getToCol()-PATH_OFFSET)*cellSize);
-            y[ct]= (int)((m.getToRow()-PATH_OFFSET)*cellSize);
+        if (m != null) {
+            x[ct] = (int)((m.getToCol() - offset) * cellSize);
+            y[ct] = (int)((m.getToRow() - offset) * cellSize);
             ct++;
-            g2.drawPolyline(x,y,ct);
+            g2.drawPolyline(x, y , ct);
+            int diameter = (int)(cellSize * POINT_WIDTH_RATIO);
+            int radius = diameter / 2;
+            for (int i=0; i < ct; i++) {
+                g2.drawOval(x[i] - radius, y[i] - radius, diameter, diameter);
+            }
         }
     }
 

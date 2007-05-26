@@ -25,7 +25,19 @@ public abstract class GameExporter {
     /**
      *
      * @param move
-     * @return the sgf representation for the move.
+     * @return the sgf (smart game format) representation for the move.
      */
     protected abstract String getSgfForMove(Move move);
+    
+    
+    /**
+     * append the board position to the buffer in the form [<c><r>]
+     * Where c and r are the column and row letters whose range depends on the game.
+     */
+    protected void serializePosition(BoardPosition pos, StringBuffer buf) {
+        buf.append( '[' );
+        buf.append( (char) ('a' + pos.getCol() - 1) );
+        buf.append( (char) ('a' + pos.getRow() - 1) );
+        buf.append( ']' );
+    }
 }

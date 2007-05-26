@@ -24,7 +24,11 @@ public class MazeSolver {
     {
         MazeModel maze =  panel_.getMaze();
         maze.unvisitAll();
-        List stack = new LinkedList();
+        // stack of paths we did not try yet.
+        List<GenState> stack = new LinkedList<GenState>();
+        
+        // Keep track of our current path. We may need to backtrack along it if we encounter a dead end.
+        List<Point> solutionPath = new LinkedList<Point>();
 
         Point currentPosition = maze.getStartPosition();
         MazeCell currentCell = maze.getCell(currentPosition);
@@ -36,12 +40,14 @@ public class MazeSolver {
         boolean solved = false;
         panel_.paintAll();
 
-
+        // while there are still paths to try and we have not yet encountered the finish
         while ( !stack.isEmpty() && !solved ) {
 
             GenState state = (GenState) stack.remove(0);  // pop
 
             currentPosition = state.getPosition();
+            solutionPath.add(0, currentPosition);
+            
             if (currentPosition.equals(maze.getStopPosition()))
               solved = true;
 
@@ -85,6 +91,17 @@ public class MazeSolver {
                 // now at a new location
                 MazeModel.pushMoves( currentPosition, dir, ++depth, stack );
                 panel_.paintCell(currentPosition);
+            }
+            else {
+                // need to back up to the next path we will try
+                GenState lastState = (GenState) stack.get(0); 
+                
+                Point pos;
+                do {
+                   pos =  solutionPath.remove(0);
+                   MazeCell cell = maze.getCell(pos);
+                   cell.clearPath();
+                } while ( pos != lastState.getPosition());
             }
         }
         panel_.paintAll();

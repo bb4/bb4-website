@@ -3,7 +3,7 @@ package com.becker.game.twoplayer.blockade;
 import java.util.List;
 
 /**
- * Utility class for holding the difference paths lengths.
+ * Utility class for holding the different paths lengths.
  *
  * @author Barry Becker
  */
@@ -15,17 +15,22 @@ class PathLengths {
 
     public PathLengths() {}
 
+    /**
+     *
+     */
     public String toString() {
        return "shortestLength=" + shortestLength+
                " secondShortestLength =" + secondShortestLength+
                " furthestLength=" + furthestLength;
     }
 
-
-    public void updatePathLengths(List[] moves)
+    /**
+     *
+     */
+    public void updatePathLengths(Path[] paths)
     {
-        for (final List newVar : moves) {
-            int len = newVar.size();
+        for (final Path p : paths) {
+            int len = p.getLength();
             if (len < shortestLength) {
                 secondShortestLength = shortestLength;
                 shortestLength = len;

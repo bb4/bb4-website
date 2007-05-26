@@ -36,6 +36,5 @@ public enum EyeType
         return description_;
     }
 
-
 }
 
