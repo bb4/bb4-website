@@ -4,6 +4,8 @@ import java.util.*;
 
 
 /**
+ * Generate a Sudoku puzzle.
+ *
  * @author Barry Becker Date: Jul 8, 2006
  */
 public class PuzzleGenerator {
@@ -116,8 +118,7 @@ public class PuzzleGenerator {
             if (ppanel != null)
                 ppanel.repaint();
         }
-        //System.out.println("Num givens =" + givens);
-
+      
         return solution;
     }
 

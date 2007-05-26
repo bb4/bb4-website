@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.blockade;
 
+import com.becker.common.Location;
 import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GamePiece;
 
@@ -15,9 +16,7 @@ import com.becker.game.common.GamePiece;
 public final class BlockadeBoardPosition extends BoardPosition
 {
 
-    // the walls
-    // to find if the north or west sides are blocked we must examine the north and west bordering positions respectively.
-    //private HashSet walls_;
+    /** the walls to find if the north or west sides are blocked we must examine the north and west bordering positions respectively. */
     private BlockadeWall southWall_ = null;
     private BlockadeWall eastWall_ = null;
 
@@ -168,6 +167,13 @@ public final class BlockadeBoardPosition extends BoardPosition
         return (player1? isPlayer1Home_: isPlayer2Home_);
     }
 
+    public BlockadeBoardPosition getNeighbor(Direction d, BlockadeBoard board) {
+        int row = getRow();
+        int col = getCol();
+        Location offset = d.getOffset();
+        return (BlockadeBoardPosition) board.getPosition(row + offset.getRow(), col + offset.getCol());
+    }
+    
     /**
      * There are 12 unique states for a position. 4 ways the walls can be arranged around the position.
      * @return state index

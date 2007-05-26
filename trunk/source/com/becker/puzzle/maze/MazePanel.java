@@ -19,7 +19,7 @@ public class MazePanel extends JComponent {
 
     // rendering attributes
     private static final Color WALL_COLOR = new Color( 80, 0, 150 );
-    private static final Color PATH_COLOR = new Color( 255, 230, 120);
+    private static final Color PATH_COLOR = new Color( 255, 220, 50);
 
     private static final Color TEXT_COLOR = new Color( 250, 0, 100 );
     private static final Color BG_COLOR = new Color( 225, 240, 250 );
@@ -30,9 +30,7 @@ public class MazePanel extends JComponent {
 
     private Font textFont_;
 
-    public MazePanel() {
-
-    }
+    public MazePanel() {}
 
     public MazeModel getMaze() {
         return maze_;
@@ -189,11 +187,11 @@ public class MazePanel extends JComponent {
        g2.setColor( PATH_COLOR );
        for ( j = 0; j < height; j++ ) {
            for ( i = 0; i < width; i++ ) {
-               MazeCell c = maze_.getCell(i, j);
+               MazeCell c = maze_.getCell(i,  j);
                int xpos = i * cellSize;
                int ypos = j * cellSize;
 
-               if (c==null) return;
+               if (c == null) return;
                if ( c.eastPath )  {
                     g2.drawLine( xpos + halfCellSize, ypos + halfCellSize, xpos + cellSize, ypos + halfCellSize );
                }

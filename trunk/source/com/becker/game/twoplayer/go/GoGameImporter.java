@@ -41,6 +41,9 @@ public class GoGameImporter extends GameImporter {
         }
     }
 
+    /**
+     * Initialize the board based on the SGF game.
+     */
     protected void parseSGFGameInfo( SGFGame game) {
 
         GoController gc = (GoController) controller_;
