@@ -9,6 +9,8 @@
   <property name="classesDir" value="../classes"/>
   <!-- place where all original source files come from. -->
   <property name="sourceDir" value="../source"/>
+  <!-- put test results here -->
+   <property name="testOutput" value="../temp"/>
   <!-- place where all process files for distribution go. -->
   <property name="distributionDir" value="../dist"/>
   <property name="distributionGameDir" value="${distributionDir}/games"/>
@@ -290,6 +292,23 @@
         <jvmarg value="${assertionsFlag}"/>
     </java>
   </target>
+  
+  
+   <target name="testBlockade" depends="compile" description=" blockade game tests">
+       <echo message="now running BLOCKADE tests"/>
+       <junit  printsummary="yes"  haltonfailure="yes">
+           <classpath path="${classesDir}"/>
+           <formatter type="plain"/>
+           <!--formatter type="brief" usefile="false" /-->
+           <batchtest todir="${testOutput}">
+               <fileset dir="${sourceDir}">
+                   <include name="com/becker/game/twoplayer/blockade/test/*.java"/>           
+               </fileset>
+           </batchtest>   
+       </junit>
+  </target>
+  
+  
 
   <target name="XMLViewer" depends="compile" description=" run the XML Viewer app">
     <antcall target="executeProgram">
