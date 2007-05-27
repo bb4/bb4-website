@@ -1,6 +1,9 @@
-package com.becker.game.twoplayer.go;
+package com.becker.game.twoplayer.go.persistence;
 
-import com.becker.game.common.*;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.Move;
+import com.becker.game.common.persistence.GameExporter;
+import com.becker.game.twoplayer.go.*;
 
 import java.io.*;
 import java.util.*;

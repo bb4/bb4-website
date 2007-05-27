@@ -356,7 +356,7 @@ public class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMo
         // if there is a wall being dragged, draw it
         if ( draggedWall_ != null ) {
             // first remember the walls currently there (if any) so they can be restored.
-            Set hsPositions = draggedWall_.getPositions();
+            Set<BlockadeBoardPosition> hsPositions = draggedWall_.getPositions();
             Iterator it = hsPositions.iterator();
             while (it.hasNext())  {
                 BlockadeBoardPosition pos = (BlockadeBoardPosition)it.next();

@@ -46,9 +46,10 @@ public class BlockadeBoard extends TwoPlayerBoard
         super.reset();
         assert ( positions_!=null );
         int i;
+        System.out.println("Blockade Board reset rows="+ getNumRows() +" cols="+getNumCols());
         for ( i = 1; i <= getNumRows(); i++ ) {
             for ( int j = 1; j <= getNumCols(); j++ ) {
-                positions_[i][j] = new BlockadeBoardPosition( i, j, null, null, null, false, false );
+                positions_[i][j] = new BlockadeBoardPosition( i, j);
             }
         }
         p1Homes_ = new BlockadeBoardPosition[NUM_HOMES];

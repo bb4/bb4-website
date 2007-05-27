@@ -1,8 +1,10 @@
-package com.becker.game.twoplayer.go;
+package com.becker.game.twoplayer.go.persistence;
 
 import com.becker.game.common.*;
 import ca.dj.jigo.sgf.tokens.*;
 import ca.dj.jigo.sgf.*;
+import com.becker.game.common.persistence.GameImporter;
+import com.becker.game.twoplayer.go.*;
 
 import javax.swing.*;
 import java.util.*;
@@ -24,7 +26,8 @@ public class GoGameImporter extends GameImporter {
         try {
             FileInputStream iStream = new FileInputStream( fileName );
             GameContext.log( 2, "opening " + fileName );
-            SGFGame game = SGFLoader.load( iStream );
+            SGFLoader gameLoader = new SGFGoLoader();
+            SGFGame game = gameLoader.load( iStream );
             restoreGame( game );
         } catch (FileNotFoundException fnfe) {
             JOptionPane.showMessageDialog( null,
@@ -136,12 +139,13 @@ public class GoGameImporter extends GameImporter {
     }
 
 
-    protected Move createMoveFromToken( MoveToken token)
-    {
-        if (token.isPass()) {
-            return GoMove.createPassMove(0, !token.isWhite());
-        }
-        return new GoMove( token.getY(), token.getX(), 0, new GoStone(!token.isWhite()));
+    protected Move createMoveFromToken( SGFToken token)
+    {        
+          MoveToken mvToken = (MoveToken) token;
+          if (mvToken.isPass()) {
+              return GoMove.createPassMove(0, !mvToken.isWhite());
+          }
+          return new GoMove( mvToken.getY(), mvToken.getX(), 0, new GoStone(!mvToken.isWhite()));
     }
 
 }

@@ -16,7 +16,7 @@ public class TestBlockadeBoard extends TestCase {
 
     public void testPositionStates() {
 
-        BlockadeBoardPosition p = new BlockadeBoardPosition(1, 1, null, null, null, false, false);
+        BlockadeBoardPosition p = new BlockadeBoardPosition(1, 1);
 
         Assert.assertTrue("no piece or walls", p.getStateIndex() == 0);
         p.setPiece(new GamePiece(true));
