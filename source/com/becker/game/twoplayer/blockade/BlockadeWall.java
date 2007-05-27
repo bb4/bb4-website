@@ -42,12 +42,12 @@ public class BlockadeWall
     /**
      * Create a new wall between p1 and p2 and vertical is isVertical is true.
      */
-    public BlockadeWall(boolean isVertical, BlockadeBoardPosition p1, BlockadeBoardPosition p2)
+    public BlockadeWall(BlockadeBoardPosition p1, BlockadeBoardPosition p2)
     {
          Set hsPositions = new HashSet( 2 );
          hsPositions.add( p1 );
          hsPositions.add( p2 );
-         isVertical_ = isVertical;
+         isVertical_ = p1.getCol() == p2.getCol();
          positions_ = hsPositions;  
     }
 
@@ -74,7 +74,7 @@ public class BlockadeWall
     /**
      * @return  the positions bordered by this wall.
      */
-    public Set getPositions()
+    public Set<BlockadeBoardPosition> getPositions()
     {
         return positions_;
     }

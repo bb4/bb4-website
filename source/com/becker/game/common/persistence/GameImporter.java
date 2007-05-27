@@ -1,7 +1,8 @@
-package com.becker.game.common;
+package com.becker.game.common.persistence;
 
 import ca.dj.jigo.sgf.*;
 import ca.dj.jigo.sgf.tokens.*;
+import com.becker.game.common.*;
 
 import java.util.*;
 
@@ -64,7 +65,7 @@ public abstract class GameImporter {
     /**
      * create a Move from an SGF token.
      */
-    protected abstract Move createMoveFromToken( MoveToken token );
+    protected abstract Move createMoveFromToken( SGFToken token );
 
     /**
      * Given an SGFTree and a place to store the moves of a game, this
@@ -109,7 +110,7 @@ public abstract class GameImporter {
 
         boolean found = false;
         if (token instanceof MoveToken ) {
-            moveList.add( createMoveFromToken( (MoveToken) token ) );
+            moveList.add( createMoveFromToken( token ) );
             found = true;
         } else {
             System.out.println("ignoring token "+token.getClass().getName());

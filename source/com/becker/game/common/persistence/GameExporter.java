@@ -1,4 +1,6 @@
-package com.becker.game.common;
+package com.becker.game.common.persistence;
+
+import com.becker.game.common.*;
 
 
 
@@ -23,8 +25,8 @@ public abstract class GameExporter {
     public abstract void saveToFile( String fileName, AssertionError ae);
 
     /**
-     *
-     * @param move
+     * Convert a moew to SGF format
+     * @param move the move to format
      * @return the sgf (smart game format) representation for the move.
      */
     protected abstract String getSgfForMove(Move move);

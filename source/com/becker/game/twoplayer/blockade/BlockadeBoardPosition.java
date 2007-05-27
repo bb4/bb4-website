@@ -27,7 +27,7 @@ public final class BlockadeBoardPosition extends BoardPosition
 
 
     /**
-     * create a new go stone.
+     * create a new blockade position.
      * @param row location.
      * @param col location.
      * @param piece the piece at this position if there is one (use null if no stone).
@@ -41,6 +41,17 @@ public final class BlockadeBoardPosition extends BoardPosition
         eastWall_ = eastWall;
         isPlayer1Home_ = isP1Home;
         isPlayer2Home_ = isP2Home;
+    }
+    
+    /**
+     * create a new blockade position.
+     * Simple version of the above constructor for when we just want a generic position based on the row and column.
+     * @param row location.
+     * @param col location.
+     */
+    public BlockadeBoardPosition( int row, int col)
+    {
+        this( row, col, null, null, null, false, false);
     }
 
     /**

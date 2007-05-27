@@ -147,7 +147,7 @@ public abstract class GameController
      */
     public void saveToFile( String fileName, AssertionError rte )
     {
-        GameContext.log(0,  "Error: saveToFile(name, rte) not implemented yet" );
+        GameContext.log(0,  "Error: saveToFile(name, rte) not implemented yet for " + getClass().getName());
     }
 
     /**

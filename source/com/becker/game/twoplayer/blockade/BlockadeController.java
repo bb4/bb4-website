@@ -2,6 +2,8 @@ package com.becker.game.twoplayer.blockade;
 
 import com.becker.common.Util;
 import com.becker.game.common.*;
+import com.becker.game.twoplayer.blockade.persistence.BlockadeGameExporter;
+import com.becker.game.twoplayer.blockade.persistence.BlockadeGameImporter;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
@@ -80,6 +82,25 @@ public class BlockadeController extends TwoPlayerController
         if (!getPlayer1().hasWon() && !getPlayer2().hasWon())
              return 0.0;
         return worth(board_.getLastMove(), weights_.getDefaultWeights());
+    }
+
+    
+    /**
+     * save the current state of the blockade game to a file in SGF (4) format (standard game format).
+     *This should some day be xml (xgf)
+     * @param fileName name of the file to save the state to
+     * @param ae the exception that occurred causing us to want to save state
+     */
+    public void saveToFile( String fileName, AssertionError ae )
+    {
+        BlockadeGameExporter exporter = new BlockadeGameExporter(this);
+        exporter.saveToFile(fileName, ae);
+    }
+
+
+    public void restoreFromFile( String fileName ) {
+        BlockadeGameImporter importer = new BlockadeGameImporter(this);
+        importer.restoreFromFile(fileName);
     }
 
 
@@ -176,8 +197,8 @@ public class BlockadeController extends TwoPlayerController
 
         // now check and add walls based on the nine possible cases
         if (!(leftWall || rightWall || topWall || bottomWall)) {
-            wallsToCheck.add( new BlockadeWall(false, topLeft, topRight) );
-            wallsToCheck.add( new BlockadeWall(true, topLeft, bottomLeft) );
+            wallsToCheck.add( new BlockadeWall(topLeft, topRight) );
+            wallsToCheck.add( new BlockadeWall(topLeft, bottomLeft) );
         }
        else if (leftWall && bottomWall) {
             wallsToCheck = handleDirectionCase(topRight, 0, 1, wallsToCheck);
@@ -196,19 +217,19 @@ public class BlockadeController extends TwoPlayerController
             wallsToCheck = handleDirectionCase(topLeft, 0, -1, wallsToCheck);
         }
         else if (leftWall) {
-            wallsToCheck.add( new BlockadeWall(true, topLeft, bottomLeft) );
+            wallsToCheck.add( new BlockadeWall( topLeft, bottomLeft) );
             wallsToCheck = handleDirectionCase(topRight, 0, 1, wallsToCheck);
         }
         else if (rightWall) {
-            wallsToCheck.add( new BlockadeWall(true, topLeft, bottomLeft) );
+            wallsToCheck.add( new BlockadeWall( topLeft, bottomLeft) );
             wallsToCheck = handleDirectionCase(topLeft, 0, -1, wallsToCheck);
         }
         else if (topWall) {
-            wallsToCheck.add( new BlockadeWall(false, topLeft, topRight) );
+            wallsToCheck.add( new BlockadeWall(topLeft, topRight) );
             wallsToCheck = handleDirectionCase(bottomLeft, 1, 0, wallsToCheck);
         }
         else if (bottomWall) {
-            wallsToCheck.add( new BlockadeWall(false, topLeft, topRight) );
+            wallsToCheck.add( new BlockadeWall(topLeft, topRight) );
             wallsToCheck = handleDirectionCase(topLeft, -1, 0, wallsToCheck);
         }
         return wallsToCheck;
@@ -229,7 +250,7 @@ public class BlockadeController extends TwoPlayerController
         if (offsetPos != null) {
             boolean dirOpen = isVertical? offsetPos.isEastOpen() : offsetPos.isSouthOpen();
             if (dirOpen)
-               wallsToCheck.add( new BlockadeWall(isVertical, pos, offsetPos));
+               wallsToCheck.add( new BlockadeWall(pos, offsetPos));
         }  
         return wallsToCheck;
     }
@@ -296,10 +317,10 @@ public class BlockadeController extends TwoPlayerController
             BlockadeBoardPosition northPos = pos.getNeighbor(Direction.NORTH, b);  
             BlockadeBoardPosition southPos = pos.getNeighbor(Direction.SOUTH, b); 
             if (northPos != null && !northPos.isEastBlocked()) {
-                wallsToCheck.add( new BlockadeWall(true, pos, northPos) );
+                wallsToCheck.add( new BlockadeWall(pos, northPos) );
             }
             if (southPos != null && !southPos.isEastBlocked()) {
-                    wallsToCheck.add( new BlockadeWall(true, pos, southPos) );
+                    wallsToCheck.add( new BlockadeWall( pos, southPos) );
             }
         }
     }
@@ -312,11 +333,11 @@ public class BlockadeController extends TwoPlayerController
             BlockadeBoardPosition southPos = pos.getNeighbor(Direction.SOUTH, b); 
             BlockadeBoardPosition northWestPos = pos.getNeighbor(Direction.NORTH_WEST, b);
             if (northPos !=  null && !northWestPos.isEastBlocked()) {
-                wallsToCheck.add( new BlockadeWall(true, westPos, northWestPos) );
+                wallsToCheck.add( new BlockadeWall(westPos, northWestPos) );
             }
             BlockadeBoardPosition southWestPos = pos.getNeighbor(Direction.SOUTH_WEST, b); 
             if (southPos != null && !southWestPos.isEastBlocked()) {
-                wallsToCheck.add( new BlockadeWall(true, westPos, southWestPos) );
+                wallsToCheck.add( new BlockadeWall(westPos, southWestPos) );
             }
         }
     }
@@ -329,11 +350,11 @@ public class BlockadeController extends TwoPlayerController
             BlockadeBoardPosition eastPos = pos.getNeighbor(Direction.EAST, b); 
             BlockadeBoardPosition northWestPos = pos.getNeighbor(Direction.NORTH_WEST, b);          
             if (westPos != null && !northWestPos.isSouthBlocked()) {
-                wallsToCheck.add( new BlockadeWall(false, northPos, northWestPos) );
+                wallsToCheck.add( new BlockadeWall( northPos, northWestPos) );
             }                    
             BlockadeBoardPosition northEastPos = pos.getNeighbor(Direction.NORTH_EAST, b);
             if (eastPos != null && !northEastPos.isSouthBlocked()) {
-                wallsToCheck.add( new BlockadeWall(false, northPos, northEastPos) );
+                wallsToCheck.add( new BlockadeWall(northPos, northEastPos) );
             }
         }
     }
@@ -345,10 +366,10 @@ public class BlockadeController extends TwoPlayerController
             BlockadeBoardPosition westPos = pos.getNeighbor(Direction.WEST, b);
             BlockadeBoardPosition eastPos = pos.getNeighbor(Direction.EAST, b);
             if (eastPos != null && !eastPos.isSouthBlocked()) {
-                wallsToCheck.add( new BlockadeWall(false, pos, eastPos) );
+                wallsToCheck.add( new BlockadeWall(pos, eastPos) );
             }               
             if (westPos!=null && !westPos.isSouthBlocked()) {
-                wallsToCheck.add( new BlockadeWall(false, pos, westPos) );
+                wallsToCheck.add( new BlockadeWall(pos, westPos) );
             }
          }
     }
