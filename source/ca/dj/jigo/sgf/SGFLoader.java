@@ -29,7 +29,7 @@ import java.util.*;
  * The API is extremely simple, so subclassing to handle different file
  * formats shouldn't be difficult.
  */
-public final class SGFLoader
+public abstract class SGFLoader
 {
   private final static String INVALID_SGF_FILE =
     "Invalid SGF File.";
@@ -39,7 +39,7 @@ public final class SGFLoader
   /**
    * No instances allowed.
    */
-  private SGFLoader() { }
+  protected SGFLoader() { }
 
   /**
    * Returns a new SGFGame, provided a valid (and open) InputStream.
@@ -56,7 +56,7 @@ public final class SGFLoader
    *
    * @return A complete SGFGame, or null on unrecoverable errors.
    */
-  public static synchronized SGFGame load( InputStream is )
+  public  synchronized SGFGame load( InputStream is )
     throws IOException, SGFException
   {
     SGFToken token = null;
@@ -87,7 +87,7 @@ public final class SGFLoader
    *
    * @return A fully parsed SGFGame, or null on unrecoverable errors.
    */
-  private static SGFGame readGame( StreamTokenizer st )
+  private SGFGame readGame( StreamTokenizer st )
     throws IOException, SGFException
   {
     // Reset the game information tokens so they have a place to stay.
@@ -125,7 +125,7 @@ public final class SGFLoader
    *
    * @return An SGFTree representing the contents of the given stream.
    */
-  private static SGFTree readTree( StreamTokenizer st )
+  private SGFTree readTree( StreamTokenizer st )
     throws IOException, SGFException
   {
     SGFTree tree = new SGFTree();
@@ -180,7 +180,7 @@ public final class SGFLoader
    *
    * @return An SGFLeaf representing the contents of the node.
    */
-  private static SGFLeaf readLeaf( StreamTokenizer st )
+  private SGFLeaf readLeaf( StreamTokenizer st )
     throws IOException, SGFException
   {
     SGFLeaf leaf = null;
@@ -222,15 +222,30 @@ public final class SGFLoader
     return leaf;
   }
 
+   /**
+    * Reads an SGF token, provided a StreamTokenizer to help with parsing the
+    * text into SGFTokens.
+    *
+    *In order to support importing of game types other than go, I have made this 
+    *method abstract. See implementations in derived classes. (Barry 2007)
+    *
+    * <P>
+    * @param st - The StreamTokenizer from which to read an SGF token.
+    *
+    * @return An SGFToken representing a piece of information about the game.
+    */
+  protected abstract SGFToken readToken( StreamTokenizer st )  throws IOException, SGFException;
+    
   /**
    * Reads an SGF token, provided a StreamTokenizer to help with parsing the
    * text into SGFTokens.
+   *This method has moved to SGFGoLoader
    * <P>
    * @param st - The StreamTokenizer from which to read an SGF token.
    *
    * @return An SGFToken representing a piece of information about the game.
-   */
-  private static SGFToken readToken( StreamTokenizer st )
+   *
+  protected SGFToken readToken( StreamTokenizer st )
     throws IOException, SGFException
   {
     SGFToken token = null;
@@ -382,7 +397,7 @@ public final class SGFLoader
     token.parse( st );
 
     return token;
-  }
+  }*/
 
   /**
    * Changes the settings of the given StreamTokenizer to make parsing the
