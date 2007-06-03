@@ -63,10 +63,7 @@ public class CheckersController extends TwoPlayerController
         List moveList = getSearchable().generateMoves( lastMove, weights_.getPlayer1Weights(), true );
 
         assert (!moveList.isEmpty());
-        int r = (int) (Math.random() * moveList.size());
-        TwoPlayerMove m = (TwoPlayerMove) moveList.get( r );
-
-        makeMove( m );
+        makeMove( getRandomMove(moveList) );
 
         player1sTurn_ = false;
     }

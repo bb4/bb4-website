@@ -67,11 +67,7 @@ public class ChessController extends CheckersController
         // determine the possible moves and choose one at random.
         List moveList = getSearchable().generateMoves( lastMove, weights_.getPlayer1Weights(), true );
 
-        int r = (int) (Math.random() * moveList.size());
-        ChessMove m = (ChessMove) moveList.get( r );
-
-        makeMove( m );
-        //getMoveList().add( m );
+        makeMove( getRandomMove(moveList) );
         player1sTurn_ = false;
     }
 

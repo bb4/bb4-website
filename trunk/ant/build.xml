@@ -152,8 +152,18 @@
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
-      <param name="args" value="-game blockade"/>
+      <param name="args" value="-game blockade"/>       
     </antcall>
+  </target> 
+  
+   <target name="testBlockade" depends="compile" description=" blockade game tests">
+       <echo message="now running BLOCKADE tests"/>
+       <junit  printsummary="yes"  haltonfailure="no" showoutput="yes">
+           <classpath path="${classesDir}"/>
+           <formatter type="plain"/>
+           <!--formatter type="brief" usefile="false" /-->
+           <test name="com.becker.game.twoplayer.blockade.test.TestAll" outfile="../test/blockade/blockadeTestResults"/>
+       </junit>
   </target>
 
   <target name="executeCheckers" description="Run the checkers program">
@@ -202,6 +212,15 @@
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;${libDir}/jigo.jar;${libDir}/gtpserver.jar;"/>
       <param name="args" value="-game go"/>
     </antcall>
+  </target>
+  
+  <target name="testGo" depends="compile" description=" go game tests">
+       <echo message="now running GO tests"/>
+       <junit  printsummary="yes"  haltonfailure="no" showoutput="yes">
+           <classpath path="${classesDir}"/>
+           <formatter type="plain"/>
+           <test name="com.becker.game.twoplayer.go.test.TestAll" outfile="../test/go/goTestResults"/>
+       </junit>
   </target>
 
   <target name="executeColorMixer" description="Run the color mixer tool">
@@ -293,22 +312,6 @@
     </java>
   </target>
   
-  
-   <target name="testBlockade" depends="compile" description=" blockade game tests">
-       <echo message="now running BLOCKADE tests"/>
-       <junit  printsummary="yes"  haltonfailure="yes">
-           <classpath path="${classesDir}"/>
-           <formatter type="plain"/>
-           <!--formatter type="brief" usefile="false" /-->
-           <batchtest todir="${testOutput}">
-               <fileset dir="${sourceDir}">
-                   <include name="com/becker/game/twoplayer/blockade/test/*.java"/>           
-               </fileset>
-           </batchtest>   
-       </junit>
-  </target>
-  
-  
 
   <target name="XMLViewer" depends="compile" description=" run the XML Viewer app">
     <antcall target="executeProgram">
@@ -346,7 +349,10 @@
   <target name="executeProgram" depends="compile" description="Run a program">
     <java classname="${className}" classpath="${classesDir};${libPath}" fork="true" jvm="${java_compiler}">
         <arg line="${args}"/>
-        <!-- jvmarg value="-agentlib:yjpagent"/  use this if running Yourkit profiler -->
+        <!-- use this if running Yourkit profiler -->
+        <!-- jvmarg value="-agentlib:yjpagent"/  -->
+        <!-- use this if running netbeans profiler -->
+        <!--jvmarg value="-agentpath:D:\apps\java\netbeans-5.5\profiler1\lib\deployed\jdk15\windows\profilerinterface.dll=D:\apps\java\netbeans-5.5\profiler1\lib,5140"/-->
         <jvmarg value="-Xms128M"/>
         <jvmarg value="-Xmx256M"/>
         <jvmarg value="${assertionsFlag}"/>

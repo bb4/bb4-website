@@ -50,6 +50,21 @@ public class BlockadeWall
          isVertical_ = p1.getCol() == p2.getCol();
          positions_ = hsPositions;  
     }
+    
+        
+    /**
+     * @param wall  the wall to compare to.
+     * @return  true if values are equal.
+     */
+    public boolean equals( Object wall )
+    {
+         BlockadeWall comparisonWall = (BlockadeWall) wall;
+         for (BlockadeBoardPosition pos: positions_) {
+             if (!comparisonWall.getPositions().contains(pos))
+                 return false;
+         }
+         return true;
+    }
 
     /**
      *

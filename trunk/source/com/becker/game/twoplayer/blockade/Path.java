@@ -47,9 +47,7 @@ public class Path {
      */
     public boolean isBlockedByWall(BlockadeWall wall, BlockadeBoard b)
     {
-        Iterator<BlockadeMove> it = iterator();
-        while (it.hasNext()) {
-            BlockadeMove move = it.next();
+       for (BlockadeMove move: elements_) {          
             if (b.isMoveBlockedByWall(move, wall) )
                 return true;
         }
@@ -73,6 +71,37 @@ public class Path {
      */
     public int getLength() {
         return elements_.size();
+    }
+    
+    /**
+     *return true if the 2 paths are equal.
+     */
+    public boolean equals(Object path) {
+        Path comparisonPath = (Path) path;
+        if (comparisonPath.getLength() != this.getLength())
+            return false;
+        int i = 0;
+        for (BlockadeMove move : elements_) {
+            if (!move.equals(comparisonPath.get(i++)))
+                return false;
+        } 
+        return true;
+    }
+    
+    /**
+     *Stringify list path.
+     */
+    public String toString() {
+        if (elements_.isEmpty()) return "";
+        
+        StringBuilder bldr = new StringBuilder(32);
+        for (BlockadeMove move: elements_) {
+            bldr.append('[' + move.toString() +"],");
+        }
+        // remove trailing comma
+        bldr.deleteCharAt(bldr.length() -1);
+        bldr.append("\n");       
+        return bldr.toString();
     }
     
 }

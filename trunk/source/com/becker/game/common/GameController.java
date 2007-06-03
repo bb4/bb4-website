@@ -38,6 +38,9 @@ public abstract class GameController
      * this allows us to talk with the game server (if it is available). null if not
      */
     protected ServerConnection serverConnection_;
+    
+    /** Make sure that the program runs in a reproducible way by always starting from the same random seed. */
+    protected static final Random RANDOM = new Random(1);
 
 
     /**

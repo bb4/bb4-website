@@ -163,6 +163,12 @@ public abstract class TwoPlayerController extends GameController
     {
         return players_[1];
     }
+    
+    protected TwoPlayerMove getRandomMove(List moveList) {
+       
+        int r = (int) (RANDOM.nextFloat() * moveList.size());
+        return (TwoPlayerMove) moveList.get( r );
+    }
 
     /**
      * Returns a number between 0 and 1 representing the estimated probability of player 1 winning the game.

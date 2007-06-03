@@ -34,6 +34,25 @@ public class BoardPosition
         piece_ = piece;
     }
 
+            
+    /**
+     * @param wall  the wall to compare to.
+     * @return  true if values are equal.
+     */
+    public boolean equals( Object pos )
+    {
+         BoardPosition comparisonPos = (BoardPosition) pos;
+         boolean sameSide = true;
+         if (getPiece()!=null && comparisonPos.getPiece()!=null)   {
+             sameSide = (getPiece().isOwnedByPlayer1() == comparisonPos.getPiece().isOwnedByPlayer1());
+         }  
+         else {
+             sameSide = (getPiece() == null && comparisonPos.getPiece() == null);
+         }
+         return (getRow() == comparisonPos.getRow()) &&
+                     (getCol() == comparisonPos.getCol()) && (sameSide);
+    }
+    
     /**
      * @return the piece at this position if there is one.
      */
@@ -130,7 +149,27 @@ public class BoardPosition
         double deltaY = this.getRow() - position.getRow();
         return Math.sqrt( deltaX * deltaX + deltaY * deltaY );
     }
+    
+    
+    /**
+     * @return true if the specified BoardPosition is on the edge of the board
+     */
+    public boolean isOnEdge(Board board)
+    {
+        return (getRow()==1 || getRow()==board.getNumRows() || getCol()==1 || getCol()==board.getNumCols());
+    }
 
+    /**
+     * @return true if the specified BoardPosition is on the corder of the board
+     */
+    public boolean isInCorner(Board board)
+    {
+        // check the 4 corners
+        return ((getRow()==1 && getCol()==1) || 
+                     (getRow()==board.getNumRows() && getCol()==board.getNumCols()) || 
+                     (getRow()==board.getNumRows()  && getCol()==1) || 
+                     (getRow()==1 && getCol()==board.getNumCols()));
+    }
 
     /**
      * make it show an empty board position.

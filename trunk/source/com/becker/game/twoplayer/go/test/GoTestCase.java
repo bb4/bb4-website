@@ -4,12 +4,16 @@ import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.*;
 import com.becker.game.twoplayer.common.search.*;
 import com.becker.game.twoplayer.go.*;
+import com.becker.ui.filefilter.GenericFileFilter;
 import junit.framework.*;
 
 import java.io.*;
 import java.util.*;
 
 /**
+ *Base class for all Go test cases.
+ *@@ merge with BlockadeTestCase.
+ *
  * @author Barry Becker
  */
 public class GoTestCase extends TestCase {
@@ -55,12 +59,7 @@ public class GoTestCase extends TestCase {
      */
     protected static String[] getFilesMatching(String directory, String pattern) {
 
-        File dir =  new File(EXTERNAL_TEST_CASE_DIR + directory);
-        assert (dir.isDirectory());
-
-        //System.out.println("pattern = "+pattern+ "dir="+dir.getAbsolutePath());
-        FilenameFilter filter = new MyFileFilter(pattern);
-        return dir.list(filter);
+        return GenericFileFilter.getFilesMatching(EXTERNAL_TEST_CASE_DIR + directory, pattern);
     }
 
     protected GoMove getNextMove(String problemFile, boolean blackPlays) {
@@ -126,20 +125,6 @@ public class GoTestCase extends TestCase {
 
     protected void tearDown() throws Exception {
         super.tearDown();
-    }
-
-
-    private static class MyFileFilter implements FilenameFilter {
-
-        private String pattern_;
-
-        private MyFileFilter(String pattern) {
-            pattern_ = pattern;
-        }
-
-        public boolean accept(File dir, String name) {
-            return (name.contains(pattern_));
-        }
     }
 
 }
