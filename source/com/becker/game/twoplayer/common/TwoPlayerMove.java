@@ -127,7 +127,7 @@ public class TwoPlayerMove extends Move
      * @param mv  the move to compare to.
      * @return  true if values are equal.
      */
-    public final boolean equals( Object mv )
+    public boolean equals( Object mv )
     {
         return (getValue() == ((TwoPlayerMove) mv).getValue());
     }

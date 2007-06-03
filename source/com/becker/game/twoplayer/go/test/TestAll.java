@@ -10,7 +10,6 @@ import junit.framework.TestSuite;
  *
  * @author Barry Becker
  */
-
 public class TestAll extends TestCase {
 
 

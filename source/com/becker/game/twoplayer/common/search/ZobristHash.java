@@ -24,6 +24,7 @@ public final class ZobristHash {
      * are allowed at a given position) times the number of players (always 2?).
      */
     private int numStatesPerPosition_;
+    /** Get random numbers with a seed so things are predictable. */
     private static final Random RANDOM = new Random(0);
 
     /**

@@ -165,9 +165,15 @@ public class SGFGoLoader extends SGFLoader {
       token = new GameNameToken();
     else if( tokenName.equals( "ID" ) )
       token = new GameIDToken();
-    else if( tokenName.equals( "CA" ) )
-    //  token = new CharsetToken();   // where did this token class go?
+    else if( tokenName.equals( "CA" ) ) {
+     //  token = new CharsetToken();   // where did this token class go?
          token = new TextToken();
+    }
+    // these token names appear in the IGS test files, but I don't know what they are for.
+    else if (tokenName.equals("ST") || tokenName.equals("OT") || tokenName.equals("HA") 
+               || tokenName.equals("AP") || tokenName.equals("PP") || tokenName.equals("RG")) {
+        token = new TextToken();
+    }
 
     // If all else fails, fail.
     else

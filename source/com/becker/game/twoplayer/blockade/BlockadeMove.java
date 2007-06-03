@@ -66,6 +66,22 @@ public class BlockadeMove extends TwoPlayerMove
         cp.setSelected(this.isSelected());     
         return cp;
     }
+    
+    
+    /**
+     * @param mv  the move to compare to.
+     * @return  true if values are equal.
+     */
+    public boolean equals( Object mv )
+    {
+         BlockadeMove comparisonMove = (BlockadeMove) mv;
+         return (fromRow_ == comparisonMove.getFromRow()) &&
+                    (fromCol_ == comparisonMove.getFromCol()) &&
+                    (toRow_ == comparisonMove.getToRow()) &&
+                    (toCol_ == comparisonMove.getToCol()) &&
+                    (wall_.equals(comparisonMove.getWall())) &&
+                    (isPlayer1() == comparisonMove.isPlayer1());
+    }
 
     public int getFromRow()
     {

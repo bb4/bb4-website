@@ -14,7 +14,7 @@ import java.util.*;
  * Defines everything the computer needs to know to play Pente.
  *
  * @author Barry Becker
- */
+*/
 public class PenteController extends TwoPlayerController
 {
 
@@ -76,8 +76,8 @@ public class PenteController extends TwoPlayerController
     public void computerMovesFirst()
     {
         int delta = PentePatterns.M - 1;
-        int c = (int) (Math.random() * (board_.getNumCols() - 2 * delta) + delta + 1);
-        int r = (int) (Math.random() * (board_.getNumRows() - 2 * delta) + delta + 1);
+        int c = (int) (RANDOM.nextFloat() * (board_.getNumCols() - 2 * delta) + delta + 1);
+        int r = (int) (RANDOM.nextFloat() * (board_.getNumRows() - 2 * delta) + delta + 1);
         TwoPlayerMove m = TwoPlayerMove.createMove( r, c, 0, new GamePiece(true) );
         makeMove( m );
     }
