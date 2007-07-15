@@ -1,6 +1,11 @@
 <?xml version="1.0"?>
 <!DOCTYPE hierarchy SYSTEM "http://www.geocities.com/BarryBecker4/schema/hierarchy.dtd">
-<hierarchy title="Katate dori technique hierarchy" imgpath="images/katate_dori/" date="10/19/2004" author="Barry Becker">
+<hierarchy title="Akido Technique Hierarchy" imgpath="images/katate_dori/" date="10/19/2004" author="Barry Becker">
+   <!-- Todo:
+      - Add more attacks: shomen, yokomen, ryote dori, morote dori, kata dori, ushiro ryote dori, ushiro tekubi tori, ai dori, ushiro tori (high/low)
+      - bait and swith to fingers, extend to shoulder, sankyo, variations (inlcuding kaitenage)
+      - angle hand up, then down, kaitenage
+   -->
   <node id="katate_dori" label="katate dori">
       <node id="tenkan_grabbed" label="tenkan entrance (grabbed)">
           <node id="sumi_grabbed" label="sumi entrance (grabbed)">

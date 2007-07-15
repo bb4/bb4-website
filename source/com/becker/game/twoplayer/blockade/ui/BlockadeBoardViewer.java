@@ -22,9 +22,12 @@ public class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMo
 {
     /** this becomes true when the player needs to place a wall instead of a piece during his turn.  */
     private boolean wallPlacingMode_ = false;
+    
     /** wall that gets dragged around until the player places it.   */
     private BlockadeWall draggedWall_;
     private BlockadeMove currentMove_ = null;
+    // becomes true if the player has placed his pawn on an opponent base.
+    private boolean hasWon_ = false;
     
     private static final short DRAG_TRANSPARENCY = 170;
 
@@ -58,7 +61,8 @@ public class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMo
         Board board = controller_.getBoard();
         Location loc = createLocation(e, getCellSize());
         BoardPosition position = board.getPosition( loc );
-        // if there is no piece or out of bounds, then return without doing anything
+        
+        // if there is no piece, or out of bounds, then return without doing anything
         if ( (position == null) || (position.isUnoccupied()) ) {
             return;
         }
@@ -88,19 +92,22 @@ public class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMo
                 draggedPiece_ = null;
                 draggedShowPiece_ = null;
             }
+            if (hasWon_) {
+                continuePlay( currentMove_ );
+            }
             return;
         }
-
+     
         boolean wallPlaced = placeWall(loc, currentMove_);
         if (!wallPlaced)
             return;
-
+  
         continuePlay( currentMove_ );
     }
-
+    
     /**
      *
-     * @param loc
+     * @param loc location where the piece was placed.
      * @return true if a piece is successfully moved.
      */
     private boolean placePiece(Location loc)
@@ -111,7 +118,7 @@ public class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMo
 
         Board board = controller_.getBoard();
         // get the original position.
-        BoardPosition position =  board.getPosition( draggedPiece_.getLocation() );
+        BlockadeBoardPosition position =  (BlockadeBoardPosition)board.getPosition( draggedPiece_.getLocation() );
 
         // valid or not, we won't show the dragged piece after releasing the mouse.
         draggedPiece_ = null;
@@ -144,14 +151,24 @@ public class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMo
         currentMove_ = m;
         GameContext.log(1, "legal human move :"+m.toString());
         position.getPiece().setTransparency((short)0);
-        board.getPosition(currentMove_.getToRow(), currentMove_.getToCol()).setPiece(position.getPiece());
+        boolean isPlayer1 = position.getPiece().isOwnedByPlayer1();
+        BlockadeBoardPosition newPosition = 
+                (BlockadeBoardPosition) board.getPosition(currentMove_.getToRow(), currentMove_.getToCol());
+        newPosition.setPiece(position.getPiece());
         position.setPiece(null);
         refresh();
-
-        // piece moved! now a wall needs to be placed.
-        wallPlacingMode_ = true;
+        
+        if (newPosition.isHomeBase( !isPlayer1 )) {
+            hasWon_ = true;
+        }
+        else {
+            // piece moved! now a wall needs to be placed.
+            wallPlacingMode_ = true;
+        }
         return true;
     }
+    
+    
 
     /**
      * @param position orig position.
@@ -174,7 +191,7 @@ public class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMo
      * or intersects another wall, or if the wall prevents one of the pawns from reaching an
      * opponent home.
      *
-     * @param loc
+     * @param loc location where the wall was placed.
      * @return true if a wall is successfully placed.
      */
     private boolean placeWall(Location loc, BlockadeMove m)

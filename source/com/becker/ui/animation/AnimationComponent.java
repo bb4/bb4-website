@@ -7,7 +7,9 @@ import java.awt.*;
 import java.awt.event.*;
 
 /**
- * A ui conponent for showing animations.
+ * A ui component for showing animations.
+ * The calculation and animation rendering are done in a separate thread
+ * So the rest of the ui does not lock up.
  */
 public abstract class AnimationComponent extends Container implements Runnable
 {
@@ -28,12 +30,9 @@ public abstract class AnimationComponent extends Container implements Runnable
 
     private boolean bPaused_ = true;
 
-    // constants. See setSwitch().
-    //public static final int PAUSE = 0;
-
     public AnimationComponent()
     {
-        previousTimes_ = new long[128];
+        previousTimes_ = new long[64];
         previousTimes_[0] = System.currentTimeMillis();
         previousIndex_ = 1;
         previousFilled_ = false;
@@ -73,6 +72,10 @@ public abstract class AnimationComponent extends Container implements Runnable
     // the base filename when recording
     protected abstract String getFileNameBase();
 
+    /**
+     * Do the timeStepping and rendering in a separate thread
+     *so the rest of the GUI does not freeze and can still handle events.
+     */
     public void run()
     {
         render();
@@ -80,22 +83,17 @@ public abstract class AnimationComponent extends Container implements Runnable
 
             frameCount_++;
 
-            if ( recordAnimation_ ) {
-                //Dimension d = this.getSize();
-                //BufferedImage bi = ImageUtil.makeBufferedImage(this.mImage);
-
-                String fname = getFileNameBase() + Integer.toString( 1000000 + frameCount_ );
-                if ( image_ != null ) {
-                    //JOptionPane.showMessageDialog(this, "mImage("+fname+") width ="+mImage.getWidth(null));
-                    //System.out.println("mImage width ="+mImage.getWidth(null));
+            if ( recordAnimation_ &&  image_ != null ) {             
+                    String fname = getFileNameBase() + Integer.toString( 1000000 + frameCount_ );
                     ImageUtil.saveAsImage( fname, this.image_, ImageUtil.ImageType.PNG );
-                }
             }
 
             if (isPaused()) {
                 try {
-                   Thread.sleep(100);
-                } catch (InterruptedException e) {e.printStackTrace();};
+                   Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             } else {
                 render();
 
@@ -166,6 +164,9 @@ public abstract class AnimationComponent extends Container implements Runnable
         return true;
     }
 
+    /**
+     *determine the number of frames per second as a moving average.
+     */
     protected void calculateFrameRate()
     {
         // Measure the frame rate
@@ -173,13 +174,15 @@ public abstract class AnimationComponent extends Container implements Runnable
         int numberOfFrames = previousTimes_.length;
         double newRate;
         // Use the more stable method if a history is available.
-        if ( previousFilled_ )
+        if ( previousFilled_ ) {
             newRate = (double) numberOfFrames /
                     (double) (now - previousTimes_[previousIndex_]) *
                     1000.0;
-        else
+        }
+        else {
             newRate = 1000.0 /
                     (double) (now - previousTimes_[numberOfFrames - 1]);
+        }
         frameRate_ = newRate;
 
         firePropertyChange( "statusChanged", getStatusMessage() );
@@ -193,6 +196,9 @@ public abstract class AnimationComponent extends Container implements Runnable
         }
     }
 
+    /**
+     *message to show in the status bar at the bottom
+     */
     protected String getStatusMessage()
     {
         return Util.formatNumber( getFrameRate() ) + " fps";

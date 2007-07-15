@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.blockade;
 import com.becker.common.Location;
 import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GamePiece;
+import java.util.List;
 
 
 /**
@@ -24,6 +25,9 @@ public final class BlockadeBoardPosition extends BoardPosition
     private boolean visited_;
     private boolean isPlayer1Home_ = false;
     private boolean isPlayer2Home_ = false;
+    
+    /** Cache the most recent shortest paths to opponent homes so we do not have to keep recomputing them. */
+    private List<Path> cachedPaths_ = null;
 
 
     /**
@@ -53,16 +57,73 @@ public final class BlockadeBoardPosition extends BoardPosition
     {
         this( row, col, null, null, null, false, false);
     }
+    
+    /**
+     *reuse previously computed shortest paths if they are still valid.
+     *Caching can cause a subtle problem were it is invalid, so I turned it off.
+     *@param wall the most recently placed wall
+     */
+    public List<Path>  findShortestPaths(BlockadeBoard board, BlockadeWall wall) {
+   
+        List<Path> paths = cachedPaths_;
+        // Why didn't caching work like I hoped? 
+        // Seems that walls have a more subtle influence on the path than I thought.
+        paths = board.findShortestPaths(this);           
+        /*
+        if (isPathCacheBroken(wall, board)) {  
+            paths = board.findShortestPaths(this);   
+            cachedPaths_ = paths;
+        }  else {
+            paths = board.findShortestPaths(this);   
+            for (int i=0; i<paths.length; i++) {
+                Path p = paths[i];
+                Path cp = cachedPaths_[i];
+                assert (p.equals(cp)) : p +" was not equal to "+cp +" wall placed was "+ wall;
+            }                
+        }    
+        */
+        return paths;
+    }
+    
+    /**
+     * make it show an empty board position.
+     */
+    public void clear()
+    {
+        super.clear();
+        cachedPaths_ =null;
+    }
 
+    /**
+     * The cache is broken if there the wall blocks one of our cached paths.
+     */
+    public boolean isPathCacheBroken(BlockadeWall wall, BlockadeBoard board) {
+        // If there was no wall placed last move, the paths must still be valid.
+        if (wall == null) {
+            return false;
+        }
+        // if nothing cached, we need to create the cache.
+        if (cachedPaths_ == null) {
+            return true;
+        }
+        // broken if any of the paths to opponent home is blocked by the recent wall.
+        for (Path path : cachedPaths_) {
+            if (path.isBlockedByWall(wall, board)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     /**
      * create a deep copy of this position.
      */
     public BoardPosition copy()
     {
         BlockadeBoardPosition pos =
-            new BlockadeBoardPosition( row_, col_, (piece_==null)?null:piece_.copy(),
-                                      (southWall_!=null)?southWall_.copy():null,
-                                      (eastWall_!=null)? eastWall_.copy() :null,
+            new BlockadeBoardPosition( row_, col_, (piece_ == null) ? null:piece_.copy(),
+                                      (southWall_ != null) ? southWall_.copy():null,
+                                      (eastWall_ != null) ? eastWall_.copy() :null,
                                       isPlayer1Home_, isPlayer2Home_);
         return pos;
     }
@@ -117,15 +178,9 @@ public final class BlockadeBoardPosition extends BoardPosition
         visited_ = visited;
     }
 
-    public final boolean isVisited()
+    public boolean isVisited()
     {
         return visited_;
-    }
-
-    public Object clone() throws CloneNotSupportedException
-    {
-        Object clone = super.clone();
-        return clone;
     }
 
     /**

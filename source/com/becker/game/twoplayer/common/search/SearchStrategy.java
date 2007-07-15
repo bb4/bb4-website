@@ -33,7 +33,7 @@ public abstract class SearchStrategy
     protected static final int MAX_QUIESCENT_DEPTH = 12;
 
     // the interface implemented by the generic game controller that provides standard methods.
-    Searchable controller_ = null;
+    Searchable searchable_ = null;
 
     // keep track of the number of moves searched
     int movesConsidered_ = 0;
@@ -70,9 +70,9 @@ public abstract class SearchStrategy
      */
     protected SearchStrategy( Searchable controller )
     {
-        controller_ = controller;
-        alphaBeta_ = controller_.getAlphaBeta();
-        quiescence_ = controller_.getQuiescence();
+        searchable_ = controller;
+        alphaBeta_ = searchable_.getAlphaBeta();
+        quiescence_ = searchable_.getQuiescence();
         GameContext.log( 2, "alpha beta=" + alphaBeta_ + " quiescence=" + quiescence_ );
     }
 

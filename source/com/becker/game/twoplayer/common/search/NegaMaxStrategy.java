@@ -50,7 +50,7 @@ public final class NegaMaxStrategy extends SearchStrategy
                                           int oldAlpha, int beta, SearchTreeNode parent )
     {
         int alpha = oldAlpha;
-        if ( depth == 0 || controller_.done( lastMove, false ) ) {
+        if ( depth == 0 || searchable_.done( lastMove, false ) ) {
             if ( quiescence_ && depth == 0 )
                 return quiescentSearch( lastMove, weights, quiescentDepth, alpha, beta, parent );
             else {
@@ -60,9 +60,9 @@ public final class NegaMaxStrategy extends SearchStrategy
         }
 
         // generate a list of all candidate next moves, and pick the best one
-        List list = controller_.generateMoves( lastMove, weights, lastMove.isPlayer1() );
+        List list = searchable_.generateMoves( lastMove, weights, lastMove.isPlayer1() );
         movesConsidered_ += list.size();
-        if (depth == controller_.getLookAhead())
+        if (depth == searchable_.getLookAhead())
             numTopLevelMoves_ = list.size();
 
         if ( emptyMoveList( list, lastMove ) ) {
@@ -79,17 +79,17 @@ public final class NegaMaxStrategy extends SearchStrategy
                 return lastMove;
 
             TwoPlayerMove theMove = (TwoPlayerMove) (list.remove(0));
-            if (depth == controller_.getLookAhead())   {
+            if (depth == searchable_.getLookAhead())   {
                 percentDone_ = 100 * (numTopLevelMoves_-list.size()) / numTopLevelMoves_;
             }
 
-            controller_.makeInternalMove( theMove );
+            searchable_.makeInternalMove( theMove );
             SearchTreeNode child = addNodeToTree( parent, theMove, alpha, beta, i++ );
 
             // recursive call
             selectedMove = searchInternal( theMove, weights, depth-1, quiescentDepth, -beta, -alpha, child );
 
-            controller_.undoInternalMove( theMove );
+            searchable_.undoInternalMove( theMove );
 
             if (selectedMove == null) {
                 // if this happens it means there isn't any possible move beyond theMove.
@@ -135,7 +135,7 @@ public final class NegaMaxStrategy extends SearchStrategy
         if ( depth >= MAX_QUIESCENT_DEPTH) {
             return lastMove;
         }
-        if (controller_.inJeopardy( lastMove, weights, lastMove.isPlayer1() ) ) {
+        if (searchable_.inJeopardy( lastMove, weights, lastMove.isPlayer1() ) ) {
             // then search  a little deeper
             return search( lastMove, weights, 1, depth+1, alpha, beta, parent );
         }
@@ -150,7 +150,7 @@ public final class NegaMaxStrategy extends SearchStrategy
         // generate those moves that are critically urgent
         // if you generate too many, then you run the risk of an explosion in the search tree
         // these moves should be sorted from most to least urgent
-        List list = controller_.generateUrgentMoves( lastMove, weights, lastMove.isPlayer1() );
+        List list = searchable_.generateUrgentMoves( lastMove, weights, lastMove.isPlayer1() );
 
         if ( list == null || list.isEmpty() )
             return lastMove; // nothing to check
@@ -166,7 +166,7 @@ public final class NegaMaxStrategy extends SearchStrategy
             TwoPlayerMove theMove = (TwoPlayerMove) it.next();
             assert theMove!=null;
 
-            controller_.makeInternalMove( theMove );
+            searchable_.makeInternalMove( theMove );
             SearchTreeNode child = addNodeToTree( parent, theMove, alpha, beta, i++ );
 
             TwoPlayerMove selectedMove = quiescentSearch( theMove, weights, depth+1, -beta, -alpha, child );
@@ -175,7 +175,7 @@ public final class NegaMaxStrategy extends SearchStrategy
             val = -(int)selectedMove.getInheritedValue();
             theMove.setInheritedValue(val);
 
-            controller_.undoInternalMove( theMove );
+            searchable_.undoInternalMove( theMove );
             if ( val > bestVal ) {
                 bestMove = theMove;
                 bestVal = val;

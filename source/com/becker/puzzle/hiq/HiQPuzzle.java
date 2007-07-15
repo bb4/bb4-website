@@ -38,6 +38,8 @@ import java.util.List;
  * that will lead to the solution.
  *   Finally, I found that it was enough to search entirely from the beginning
  * and just prune when I reach states I've encountered before.
+ *When I first ran this successfully, it took about 1 hour to run on an AMD 64bit 3200.
+ *After optimization it now run in under 3 minutes on a Core2Duo.
  */
 public final class HiQPuzzle extends JApplet implements ActionListener
 {
@@ -149,7 +151,11 @@ public final class HiQPuzzle extends JApplet implements ActionListener
        }
    }
 
-
+   /**
+    * This is the main algorithm.
+    * Recursively called with the current board stat and current moves made so far.
+    * If at any time we reach a position that we have visted before, we prune the tree.
+    */
    private boolean solvePuzzle(PegBoard board, List<PegMove> path) {
         List<PegMove> moves = board.generateMoves();
 
@@ -167,7 +173,7 @@ public final class HiQPuzzle extends JApplet implements ActionListener
             BoardHashKey key = board.hashKey();
             // if we arrived at the board state before (or one of its symmetries), prune the search.
             boolean visited = false;
-            for (int i = 0; i < 8; i++) {
+            for (int i = 0; i < BoardHashKey.SYMMETRIES; i++) {
                 if (visited_.contains(key.symmetry(i))) {
                     visited = true;
                     break;

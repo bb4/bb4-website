@@ -1,40 +1,49 @@
 package com.becker.puzzle.hiq;
 
 /**
+ * A 33 bit hashkey representing a board position.
+ *We can almost (but not quite) fit the key into a single 32 bit int.
+ *
  * @author Barry Becker Date: Jan 1, 2006
  */
 public class BoardHashKey {
-    //private final boolean bits_[];
+    
+    /**
+     * the number of symmetries the board has.
+     *  Each odd and even pair are mirror images of a 90 degree rotation.
+     */
+    public static final int SYMMETRIES = 8;
+    
+    
+    /** 
+     *The 8 fold symmetry of the board.
+     */
+    private static final byte[][] SYMMETRY = {
+            { /* placeholder for 0 index */},
+            {2, 1, 0, 5, 4, 3, 12, 11, 10, 9, 8, 7, 6, 19, 18, 17, 16, 15, 14, 13, 26, 25, 24, 23, 22, 21, 20, 29, 28, 27, 32, 31, 30},
+            {12, 19, 26, 11, 18, 25, 2, 5, 10, 17, 24, 29, 32, 1, 4, 9, 16, 23, 28, 31, 0, 3, 8, 15, 22, 27, 30, 7, 14, 21, 6, 13, 20},
+            {26, 19, 12, 25, 18, 11, 32, 29, 24, 17, 10, 5, 2, 31, 28, 23, 16, 9, 4, 1, 30, 27, 22, 15, 8, 3, 0, 21, 14, 7, 20, 13, 6},
+            {32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0},
+            {30, 31, 32, 27, 28, 29, 20, 21, 22, 23, 24, 25, 26, 13, 14, 15, 16, 17, 18, 19, 6, 7, 8, 9, 10, 11, 12, 3, 4, 5, 0, 1, 2},
+            {20, 13, 6, 21, 14, 7, 30, 27, 22, 15, 8, 3, 0, 31, 28, 23, 16, 9, 4, 1, 32, 29, 24, 17, 10, 5, 2, 25, 18, 11, 26, 19, 12},
+            {6, 13, 20, 7, 14, 21, 0, 3, 8, 15, 22, 27, 30, 1, 4, 9, 16, 23, 28, 31, 2, 5, 10, 17, 24, 29, 32, 11, 18, 25, 12, 19, 26}
+    };
+
     private int bits_;      // the first 32 positions
     private boolean finalBit_; // the final, 33rd position
     private boolean nextToFinalBit_; // the final, 32rd position
 
     private static final int NUM_PEGS = 33;
     private static final int RIGHT_SHIFT = 16;
-
-    private static final byte[] ROTATE1 =
-            {2, 1, 0, 5, 4, 3, 12, 11, 10, 9, 8, 7, 6, 19, 18, 17, 16, 15, 14, 13, 26, 25, 24, 23, 22, 21, 20, 29, 28, 27, 32, 31, 30};
-
-    private static final byte[] ROTATE2 =
-            {12, 19, 26, 11, 18, 25, 2, 5, 10, 17, 24, 29, 32, 1, 4, 9, 16, 23, 28, 31, 0, 3, 8, 15, 22, 27, 30, 7, 14, 21, 6, 13, 20};
-    private static final byte[] ROTATE3 =
-            {26, 19, 12, 25, 18, 11, 32, 29, 24, 17, 10, 5, 2, 31, 28, 23, 16, 9, 4, 1, 30, 27, 22, 15, 8, 3, 0, 21, 14, 7, 20, 13, 6};
-
-    private static final byte[] ROTATE4 =
-            {32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
-    private static final byte[] ROTATE5 =
-            {30, 31, 32, 27, 28, 29, 20, 21, 22, 23, 24, 25, 26, 13, 14, 15, 16, 17, 18, 19, 6, 7, 8, 9, 10, 11, 12, 3, 4, 5, 0, 1, 2};
-
-    private static final byte[] ROTATE6 =
-            {20, 13, 6, 21, 14, 7, 30, 27, 22, 15, 8, 3, 0, 31, 28, 23, 16, 9, 4, 1, 32, 29, 24, 17, 10, 5, 2, 25, 18, 11, 26, 19, 12};
-    private static final byte[] ROTATE7 =
-            {6, 13, 20, 7, 14, 21, 0, 3, 8, 15, 22, 27, 30, 1, 4, 9, 16, 23, 28, 31, 2, 5, 10, 17, 24, 29, 32, 11, 18, 25, 12, 19, 26};
-
-
+    
+    
     public BoardHashKey() {
     }
 
 
+    /**
+     * Create a hashkey given a board configuration.
+     */
     public BoardHashKey(PegBoard board) {
 
         long place = 1;
@@ -85,20 +94,22 @@ public class BoardHashKey {
     }
 
     /**
-     * rotate in increments of 90 degrees
+     * Check all 8 symmetries
      * if rotateIndex = 0 then no rotation
-     * if rotatnIndex = 1 then 90 degrees, etc
+     * if rotateIndex = 1 mirror image of this,
+     * if rotateIndex = 2 then 90 degree rotation of this,
+     * if rotateIndex = 3 then mirror image of 2, etc
      */
     public BoardHashKey symmetry(int symmIndex) {
         switch (symmIndex) {
             case 0: return this;
-            case 1: return rotate(ROTATE1);
-            case 2: return rotate(ROTATE2);
-            case 3: return rotate(ROTATE3);
-            case 4: return rotate(ROTATE4);
-            case 5: return rotate(ROTATE5);
-            case 6: return rotate(ROTATE6);
-            case 7: return rotate(ROTATE7);
+            case 1:
+            case 2: 
+            case 3: 
+            case 4:
+            case 5:
+            case 6: 
+            case 7: return rotate(SYMMETRY[symmIndex]);
             default: assert false;
         }
         return null;
@@ -109,11 +120,11 @@ public class BoardHashKey {
         return (bits_ == key.bits_ && finalBit_ == key.finalBit_ && nextToFinalBit_ == key.nextToFinalBit_);
     }
 
+    /**
+     *all but one bit accounted for in the hash
+     */
     public int hashCode() {
-        //System.out.println("hashCode for "+toString()+" ="+ Math.abs((int) bits_));
-        //return Math.abs((int) bits_);
         return nextToFinalBit_ ? -bits_ : bits_;
-
     }
 
     private BoardHashKey rotate(byte[] rotateIndices) {

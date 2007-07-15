@@ -7,7 +7,7 @@ import java.text.*;
 import java.util.List;
 
 /**
- *  Describes the current best solution to the puzzle
+ *  UI for drawing the current best solution to the puzzle.
  *
  */
 final class PegBoardViewer extends JPanel

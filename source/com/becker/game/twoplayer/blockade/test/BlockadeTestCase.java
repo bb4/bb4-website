@@ -2,9 +2,9 @@ package com.becker.game.twoplayer.blockade.test;
 
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.blockade.BlockadeController;
+import com.becker.game.twoplayer.blockade.BlockadeMove;
 import com.becker.game.twoplayer.common.*;
 import com.becker.game.twoplayer.common.search.*;
-import com.becker.game.twoplayer.go.*;
 import com.becker.ui.filefilter.GenericFileFilter;
 import junit.framework.*;
 
@@ -37,7 +37,7 @@ public class BlockadeTestCase extends TestCase {
         TwoPlayerOptions options = controller_.getTwoPlayerOptions();
         options.setAlphaBeta(true);
         options.setLookAhead(3);
-        options.setPercentageBestMoves(80);
+        options.setPercentageBestMoves(100);
         //options.setQuiescence(true); // take stoo long if on
         options.setSearchStrategyMethod(SearchStrategyType.MINIMAX);
 
@@ -73,7 +73,7 @@ public class BlockadeTestCase extends TestCase {
         return m;
     }
 
-    protected static void checkExpected(GoMove m, int row, int col) {
+    protected static void checkExpected(BlockadeMove m, int row, int col) {
 
         Assert.assertTrue("Was expecting "+ row +", "+ col +", but instead got "+m,
                           m.getToRow() == row && m.getToCol() == col);

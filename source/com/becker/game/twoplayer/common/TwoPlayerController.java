@@ -529,7 +529,9 @@ public abstract class TwoPlayerController extends GameController
     protected abstract double worth( Move lastMove, ParameterArray weights );
 
     /**
-     * take the list of all possible next moves and return just the top bestPercentage of them
+     * Take the list of all possible next moves and return just the top bestPercentage of them 
+     * (or 10 moves, whichever is greater).
+     *
      * @param player1 true if its player one's turn
      * @param moveList the list of all generated moves
      * @param player1sPerspective if true than bestMoves are from player1s perspective
@@ -552,7 +554,7 @@ public abstract class TwoPlayerController extends GameController
 
         List bestMoveList = moveList;
         int best = (int) ((float) getTwoPlayerOptions().getPercentageBestMoves() / HUNDRED * numMoves);
-        if ( best < numMoves )
+        if ( best < numMoves && numMoves >10 )
             bestMoveList = moveList.subList( 0, best );
 
         //GameContext.log(2, "generated top moves are :  " + moveList );
@@ -696,11 +698,13 @@ public abstract class TwoPlayerController extends GameController
          */
         public boolean done( TwoPlayerMove m, boolean recordWin )
         {
-            if (getNumMoves() == 0)
+            // the game can't be over if no moves have been made yet.
+            if (getNumMoves() == 0) {
                 return false;
+            }
             if (getNumMoves() > 0 && m == null) {
-                GameContext.log(0, "Game done because there are no more moves");
-                return true; // because their were no more moves apparently.
+                GameContext.log(0, "Game is over because there are no more moves");
+                return true;
             }
             if (getPlayer1().hasWon() || getPlayer1().hasWon())
                 return true;

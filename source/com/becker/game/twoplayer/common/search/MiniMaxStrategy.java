@@ -48,7 +48,7 @@ public final class MiniMaxStrategy extends SearchStrategy
         // if player 1, then search for a high score, else seach for a low score
         boolean player1 = lastMove.isPlayer1();
 
-        if ( depth == 0 || controller_.done( lastMove, false ) ) {
+        if ( depth == 0 || searchable_.done( lastMove, false ) ) {
             if ( quiescence_ && depth == 0 )
                 return quiescentSearch( lastMove, weights, quiescentDepth, alpha, beta, parent );
             else {
@@ -58,9 +58,9 @@ public final class MiniMaxStrategy extends SearchStrategy
         }
 
         // generate a list of all candidate next moves, and pick the best one
-        list = controller_.generateMoves( lastMove, weights, true );
+        list = searchable_.generateMoves( lastMove, weights, true );
         movesConsidered_ += list.size();
-        if (depth == controller_.getLookAhead())
+        if (depth == searchable_.getLookAhead())
             numTopLevelMoves_ = list.size();
 
         GameContext.log( 3, "there were " + list.size() + " moves generated." );
@@ -81,17 +81,17 @@ public final class MiniMaxStrategy extends SearchStrategy
                 return lastMove;
 
             TwoPlayerMove theMove = (TwoPlayerMove) (list.remove(0));
-            if (depth == controller_.getLookAhead())   {
+            if (depth == searchable_.getLookAhead())   {
                 percentDone_ = 100 * (numTopLevelMoves_-list.size()) / numTopLevelMoves_;
             }
 
-            controller_.makeInternalMove( theMove );
+            searchable_.makeInternalMove( theMove );
             SearchTreeNode child = addNodeToTree( parent, theMove, alpha, beta, i++ );
 
             // recursive call
             selectedMove = search( theMove, weights, depth-1, quiescentDepth, alpha, beta, child );
 
-            controller_.undoInternalMove( theMove );
+            searchable_.undoInternalMove( theMove );
 
             if (selectedMove == null) {
                 // if this happens it means there isn't any possible move beyond theMove.
@@ -152,7 +152,7 @@ public final class MiniMaxStrategy extends SearchStrategy
         if ( depth >= MAX_QUIESCENT_DEPTH) {
             return lastMove;
         }
-        if ( controller_.inJeopardy( lastMove, weights, true )) {
+        if ( searchable_.inJeopardy( lastMove, weights, true )) {
             // then search  a little deeper
             return search( lastMove, weights, 1, depth+1, alpha, beta, parent );
         }
@@ -174,7 +174,7 @@ public final class MiniMaxStrategy extends SearchStrategy
         // generate those moves that are critically urgent
         // if you generate too many, then you run the risk of an explosion in the search tree
         // these moves should be sorted from most to least urgent
-        List list = controller_.generateUrgentMoves( lastMove, weights, true );
+        List list = searchable_.generateUrgentMoves( lastMove, weights, true );
 
         if ( list == null || list.isEmpty() ) {
             return lastMove; // nothing to check
@@ -189,7 +189,7 @@ public final class MiniMaxStrategy extends SearchStrategy
 
         while ( it.hasNext() ) {
             TwoPlayerMove theMove = (TwoPlayerMove) it.next();
-            controller_.makeInternalMove( theMove );
+            searchable_.makeInternalMove( theMove );
             SearchTreeNode child = addNodeToTree( parent, theMove, alpha, beta, i++ );
 
             TwoPlayerMove selectedMove = quiescentSearch( theMove, weights, depth+1, alpha, beta, child );
@@ -207,7 +207,7 @@ public final class MiniMaxStrategy extends SearchStrategy
                 bestInheritedValue = bestMove.getInheritedValue();
             }
 
-            controller_.undoInternalMove( theMove );
+            searchable_.undoInternalMove( theMove );
             if ( player1 ) {
                 if ( bestMove.getInheritedValue() >= beta )
                     return bestMove;  // prune
