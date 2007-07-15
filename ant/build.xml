@@ -290,6 +290,20 @@
       <param name="args" value="${project_home}/source/com/becker/puzzle/adventure/ludlowScript.xml"/>
     </antcall>
   </target>
+  
+  <target name="executeGiveChange" depends="compile" description="A simple educational program for computing change.">
+    <echo message="now executing GiveChange"/>
+    <java classname="com.becker.misc.givechange.GiveChange" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="128M">
+        <jvmarg value="${assertionsFlag}"/>
+    </java>
+  </target>
+  
+  <target name="executeNativeRender" depends="compile" description="A simple educational program for computing change.">
+      <echo message="now executing NativeRender"/>
+      <java classname="com.becker.misc.nativeRender.NativeRenderTest" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="128M">
+          <jvmarg value="${assertionsFlag}"/>
+      </java>
+  </target>
 
   <target name="executeRedPuzzle" depends="compile" description=" run the Red Puzzle screenSaver">
     <echo message="now executing red puzzle"/>
@@ -343,7 +357,13 @@
       <param name="arg2" value="${java_compiler} -ea -classpath ${classesDir}:${libDir}/gogui7.1.jar:${libDir}/jigo.jar com.becker.game.twoplayer.go.GtpTesujisoftGoServer"/>
     </antcall>
   </target>
-
+  
+   <target name="concurrencyExample_SingleThreadWebServer" depends="compile" description="concurrency example.">
+    <echo message="now executing concurrency example"/>
+    <java classname="net.jcip.examples.SingleThreadWebServer" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="128M">
+        <jvmarg value="${assertionsFlag}"/>
+    </java>
+  </target>
 
   <!-- call this to run java programs  -->
   <target name="executeProgram" depends="compile" description="Run a program">
