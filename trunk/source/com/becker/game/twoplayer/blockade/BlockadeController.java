@@ -1,6 +1,5 @@
 package com.becker.game.twoplayer.blockade;
 
-import com.becker.common.Util;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.blockade.persistence.BlockadeGameExporter;
 import com.becker.game.twoplayer.blockade.persistence.BlockadeGameImporter;
@@ -17,21 +16,24 @@ import java.util.*;
  * Defines for the computer how it should play blockade.
  *
  * Todo items
- *   - in debug mode, show the shortest paths to the opponent base.
- *   - computer moves only one space instead of two.
+ *   - Restrict to N vertical and N horizontal walls, or allow not to place a wall.
+ *     (perhaps only allow wall placements up to (xdim*ydim)/4 walls for each player)
+ *   - computer moves only one space instead of two. Computer not winning at end whne one space more required.
  *   - The winner should win as soon as he lands on an opponent base and not have to wait to place the wall.
- *   - only allow wall placements up to (xdim*ydim)/4 walls for each player
  *
  * @author Barry Becker
  */
 public class BlockadeController extends TwoPlayerController
 {
 
-    public static final int DEFAULT_LOOKAHEAD = 2;
+    public static final int DEFAULT_LOOKAHEAD = 1;  // shoudl be 2 or 3    
+    
+    /** For any given ply never consider more that BEST_PERCENTAGE of the top moves. */
+    private static final int BEST_PERCENTAGE = 100;
 
-    // the desfault Blockade board is 14 by 11
-    private static final int NUM_ROWS = 14;
-    private static final int NUM_COLS = 11;
+    /** the default Blockade board is 14 by 11 */
+    private static final int NUM_ROWS = 8;
+    private static final int NUM_COLS = 7;
 
 
     /**
@@ -52,7 +54,7 @@ public class BlockadeController extends TwoPlayerController
     }
 
     protected TwoPlayerOptions createOptions() {
-        return new TwoPlayerOptions(DEFAULT_LOOKAHEAD, 50, MusicMaker.APPLAUSE);
+        return new TwoPlayerOptions(DEFAULT_LOOKAHEAD, BEST_PERCENTAGE, MusicMaker.APPLAUSE);
     }
 
     /**
@@ -106,10 +108,8 @@ public class BlockadeController extends TwoPlayerController
      * weight the difference of the 2 shortest minimum paths plus the
      * weighted difference of the 2 furthest minimum paths.
      * An alternative method might be to weight the sum of the our shortest paths
-     * and difference it with the weighte sum of the opponent shortest paths.
+     * and difference it with the weighted sum of the opponent shortest paths.
      * The minimum path for a piece is the distance to its closest enemy home position.
-     * @@ It can be expensive to compute these paths. Consider caching them.
-     * We can use the wall in lastMove to determine which paths might have changed.
      *
      * @return the value of the current board position
      *   a positive value means that player1 has the advantage.
@@ -117,44 +117,11 @@ public class BlockadeController extends TwoPlayerController
      */
     protected double worth( Move lastMove, ParameterArray weights )
     {
-        int row, col;
-        final int p1 = 0;
-        final int p2 = 1;
-        BlockadeBoard board = (BlockadeBoard)board_;
-        PathLengths[] pathLengths = new PathLengths[2];
-        pathLengths[p1] = new PathLengths();
-        pathLengths[p2] = new PathLengths();
-
-        for ( row = 1; row <= board.getNumRows(); row++ ) {   
-            for ( col = 1; col <= board.getNumCols(); col++ ) { 
-                BlockadeBoardPosition pos = (BlockadeBoardPosition)board.getPosition( row, col );
-                if ( pos.isOccupied() ) {
-                    GamePiece piece = pos.getPiece();
-                    int pInd = piece.isOwnedByPlayer1()? p1 : p2;
-                    Path paths[] = board.findShortestPaths(pos);                    
-                    pathLengths[pInd].updatePathLengths(paths);
-                }
-            }
-        }
-        double value;
-
-        // if it landed on an opponents home base, then return a winning value.
-        // it has landed if any of the shortest paths are 0.
-        if ( pathLengths[p1].shortestLength == 0 )
-            value = WINNING_VALUE;
-        else if ( pathLengths[p2].shortestLength == 0 )
-            value = -WINNING_VALUE;
-        else {
-            int shortestLengthDiff = pathLengths[p2].shortestLength - pathLengths[p1].shortestLength;
-            int secondShortestDiff = pathLengths[p2].secondShortestLength - pathLengths[p1].secondShortestLength;
-            int furthestLengthDiff = pathLengths[p2].furthestLength - pathLengths[p1].furthestLength;
-
-            value =  weights.get(BlockadeWeights.CLOSEST_WEIGHT_INDEX).getValue() *  shortestLengthDiff
-                   + weights.get(BlockadeWeights.SECOND_CLOSEST_WEIGHT_INDEX).getValue() * secondShortestDiff
-                   + weights.get(BlockadeWeights.FURTHEST_WEIGHT_INDEX).getValue() * furthestLengthDiff;
-        }
-        return value;
+        BlockadeBoard board = (BlockadeBoard)board_;        
+        PlayerPathLengths pathLengths = board.findPlayerPathLengths((BlockadeMove)lastMove);        
+        return pathLengths.determineWorth(WINNING_VALUE, weights);
     }
+    
 
     public List<BlockadeMove> getPossibleMoveList(BoardPosition position)
     {
@@ -166,7 +133,7 @@ public class BlockadeController extends TwoPlayerController
      * @param wall that we check to see if blocking any paths
      * @return true if the wall is blocking any of the paths.
      */
-    private static  boolean arePathsBlockedByWall(Path[] paths, BlockadeWall wall, BlockadeBoard b)
+    private static  boolean arePathsBlockedByWall(List<Path> paths, BlockadeWall wall, BlockadeBoard b)
     {
         assert (wall!=null);
         for (final Path path : paths) {
@@ -252,7 +219,207 @@ public class BlockadeController extends TwoPlayerController
         return wallsToCheck;
     }
 
+    
+    /**
+      * Find all the moves a piece can make from position p, and insert them into moveList.
+      *
+      * @param p the piece to check.
+      * @param moveList add the potential moves to this existing list.
+      * @param weights to use.
+      * @return the number of moves added.
+      */
+     private int addMoves( BoardPosition p, List moveList, List<Path> opponentPaths,
+                                          ParameterArray weights )
+     {
+         BlockadeBoard board = (BlockadeBoard)board_;
+         int numMovesAdded = 0;
 
+         // first find the NUM_HOMES shortest paths for p.
+         List<Path> paths = board.findShortestPaths((BlockadeBoardPosition)p);
+
+         assert (paths.size() == BlockadeBoard.NUM_HOMES):
+                 "There must be at least one route to each opponent home base. Expected "+
+                 BlockadeBoard.NUM_HOMES+" but got "+paths.size() +". They were:" + paths;
+
+         // for each of these paths, add possible wall positions.
+         // Take the first move from each shortest path and add the wall positions to it.
+         List nMovesAtEachStep = new LinkedList();
+         for (int i = 0; i < BlockadeBoard.NUM_HOMES; i++) {
+             BlockadeMove firstStep = paths.get(i).get(0);
+             // make the move
+             board.makeMove(firstStep);
+
+             // after making the first move, the shortest paths may have changed somewhat.
+             // unfortunately, I think we need to recalculate them.
+             BlockadeBoardPosition newPos = 
+                     (BlockadeBoardPosition) board.getPosition(firstStep.getToRow(), firstStep.getToCol());
+             List<Path> ourPaths = board.findShortestPaths(newPos);
+
+             List wallMoves = findWallPlacementsForMove(firstStep, ourPaths, opponentPaths, weights);
+             GameContext.log(2, "num wall placements for Move = " +wallMoves.size());
+             moveList.addAll(wallMoves);
+             nMovesAtEachStep.add(wallMoves.size());
+             numMovesAdded += wallMoves.size();
+             // undo the move
+             board.undoMove();
+         }
+         // GameContext.log(0, "addMoves nummoves add="+numMovesAdded );
+         assert (numMovesAdded > 0): "No moves added for position p="+ p
+                 + " moves={"+nMovesAtEachStep +"} and shortest paths: " + paths
+                 + " \n Opponent shortest paths ="+opponentPaths;
+         return numMovesAdded;
+    }
+
+    /**
+     * Find variations for move firstStep based on all the possible valid wall placements that make the opponent
+     * shortest paths longer, while not adversely affecting our own shortest paths.
+     *@@ optimize
+     * @param firstStep the move to find wall placements for.
+     * @param paths our shortest paths.
+     * @param opponentPaths the opponent shortest paths.
+     * @return all move variations on firstStep based on different wall placements.
+     */
+    private List<BlockadeMove> findWallPlacementsForMove(BlockadeMove firstStep, 
+                                                                                                  List<Path> paths, List<Path> opponentPaths,
+                                                                                                  ParameterArray weights)
+    {
+        List<BlockadeMove> moves = new LinkedList<BlockadeMove>();               
+        BlockadeMove ourmove = firstStep;
+        
+        // is it true that the set of walls we could add for any constant set of opponent paths is always the same regardless of firstStep?
+        // I think its only true as long as firstStep is not touching any of those opponent paths
+        System.out.print(firstStep+"\nopaths="+opponentPaths+"\n [[");
+        for (Path opponentPath: opponentPaths) {
+            assert (opponentPath != null): 
+                "Opponent path was null. There are "+opponentPaths.size()+" oppenent paths.";
+            for (int j = 0; j < opponentPath.getLength(); j++) {
+                // if there is no wall currently interfering with this wall placement,
+                // and it does not impact a friendly path,
+                // then consider this (and/or its twin) a candidate placement.
+                // by twin I mean the other wall placement that also intersects this opponent path
+                // (there are always N for walls of size N where N is the number of spaces spanned by a wall).
+                BlockadeMove move = opponentPath.get(j);
+
+                // get all the possible legal and reasonable wall placements for this move along the opponent path that do not interfere with our own paths.
+                List<BlockadeWall> walls = getWallsForMove(move, paths);
+                GameContext.log(2, "num walls for move "+move+"  = "+walls.size() );
+                
+                if  (walls.isEmpty()) {
+                    GameContext.log(0, "***No walls for move "+move+" at step j=" + j + " along opponentPath="+opponentPath +" that do not interfere with our path");
+                }
+
+                // typically 0-4 walls
+                assert walls.size() <=4:"num walls = " + walls.size();
+                for (BlockadeWall wall: walls) {                 
+                    addMoveWithWallPlacement(ourmove, wall, weights, moves);
+               }
+           }
+           // System.out.print(" "+ moves.size()); 
+           if (moves.isEmpty()) {
+               System.out.println("No opponent moves found for "+firstStep +" along opponentPath="+opponentPath);
+           }
+           //assert (!moves.isEmpty()) : "No opponent moves found for "+firstStep +" along opponentPath="+opponentPath;
+       }
+       System.out.println("]]");
+         
+        // if no move was added add the more with no wall placement
+        if (moves.isEmpty()) {
+           addMoveWithWallPlacement(ourmove, null, weights, moves);
+        }
+        
+        return moves;
+    }
+    
+    /**
+     * Add a new move to movelist.
+     * The move is based on ourmove and the specified wall (the wall may be null is none placed).
+     */
+    private void addMoveWithWallPlacement(BlockadeMove ourmove, BlockadeWall wall, 
+                                                                         ParameterArray weights, List<BlockadeMove> moves) {
+        double value = 0.0;
+        BlockadeBoard board = (BlockadeBoard)board_; 
+        // @@ we should provide the value here since we have all the path info.
+        // we do not want to compute the path info again by calling findPlayerPathLengths.
+        // The value will change based on how much we shorten our paths while lengthening the opponents.
+        BlockadeMove m =
+               BlockadeMove.createMove(ourmove.getFromRow(), ourmove.getFromCol(),
+                                       ourmove.getToRow(), ourmove.getToCol(),
+                                       value, ourmove.getPiece(), wall);
+        // for the time being just call worth directly. Its less efficient, but simpler.                   
+        board_.makeMove(m);
+        PlayerPathLengths pathLengths = board.findPlayerPathLengths(m);            
+        board_.undoMove();
+
+        if (pathLengths.isValid()) {
+            m.setValue(pathLengths.determineWorth(WINNING_VALUE, weights));                    
+            moves.add(m);
+        }      
+        else {
+            System.out.println("Did not add "+ m+ " because it was invalid.");
+        }
+    }
+    
+    /**
+     * Find all the possible and legal wall placements for this given step along the opponent path
+     * that do not adversely affecting our own shortest paths.
+     * Public so it can be tested.
+     * @param move move along an opponent path.
+     * @param paths our friendly paths.
+     * @return the walls for a specific move along an opponent path.
+     */
+    public List<BlockadeWall> getWallsForMove(BlockadeMove move, List<Path> paths)
+    {
+        List<BlockadeWall> wallsList = new LinkedList<BlockadeWall>();
+
+        // 12 cases
+        int fromRow = move.getFromRow();
+        int fromCol = move.getFromCol();
+        BlockadeBoard b = (BlockadeBoard)board_;
+        BlockadeBoardPosition origPos =  (BlockadeBoardPosition)board_.getPosition(fromRow, fromCol);
+        BlockadeBoardPosition westPos = origPos.getNeighbor(Direction.WEST, b); 
+        BlockadeBoardPosition eastPos = origPos.getNeighbor(Direction.EAST, b);  
+        BlockadeBoardPosition northPos = origPos.getNeighbor(Direction.NORTH, b); 
+        BlockadeBoardPosition southPos = origPos.getNeighbor(Direction.SOUTH, b); 
+        switch (move.getDirection()) {
+            case EAST_EAST :
+                checkAddWallsForDirection(eastPos, paths, Direction.EAST, wallsList);
+            case EAST :
+                checkAddWallsForDirection(origPos, paths, Direction.EAST, wallsList);
+                break;
+            case WEST_WEST :
+                checkAddWallsForDirection(westPos, paths, Direction.WEST, wallsList);
+            case WEST :
+                checkAddWallsForDirection(origPos, paths, Direction.WEST, wallsList);
+                break;
+            case SOUTH_SOUTH :
+                checkAddWallsForDirection(southPos, paths, Direction.SOUTH, wallsList);
+            case SOUTH :
+                checkAddWallsForDirection(origPos, paths, Direction.SOUTH, wallsList);
+                break;
+            case NORTH_NORTH :
+                checkAddWallsForDirection(northPos, paths, Direction.NORTH, wallsList);
+            case NORTH :
+                checkAddWallsForDirection(origPos, paths, Direction.NORTH, wallsList);
+                break;
+            case NORTH_WEST :
+                checkAddWallsForDirection(origPos, paths, Direction.NORTH_WEST, wallsList);
+                break;
+            case NORTH_EAST :
+                checkAddWallsForDirection(origPos, paths, Direction.NORTH_EAST, wallsList);
+                break;
+            case SOUTH_WEST :
+                checkAddWallsForDirection(origPos, paths, Direction.SOUTH_WEST, wallsList);
+                break;
+            case SOUTH_EAST:
+                checkAddWallsForDirection(origPos, paths, Direction.SOUTH_EAST, wallsList);
+                break;
+            default : assert false:("Invalid direction "+move.getDirection());
+        }
+
+        return wallsList;
+    }
+    
+    
     /**
      * Add the walls that don't block your own paths, but do block the opponent shortest paths.
      * @param pos to start from.
@@ -260,14 +427,10 @@ public class BlockadeController extends TwoPlayerController
      * @param direction to move one space (one of EAST, WEST, NORTH, SOUTH).
      * @return the accumulated list of walls.
      */
-    private List<BlockadeWall> checkAddWallsForDirection(BlockadeBoardPosition pos, Path[] paths, 
+    private List<BlockadeWall> checkAddWallsForDirection(BlockadeBoardPosition pos, List<Path> paths, 
                                                                                                Direction direction, List<BlockadeWall> wallsList)
     {
-        int row = pos.getRow();
-        int col = pos.getCol();
         BlockadeBoard b = (BlockadeBoard)board_;
-        int numRows = b.getNumRows();
-        int numCols = b.getNumCols();
         List<BlockadeWall> wallsToCheck = new LinkedList<BlockadeWall>();
         BlockadeBoardPosition westPos = pos.getNeighbor(Direction.WEST, b); 
         BlockadeBoardPosition eastPos = pos.getNeighbor(Direction.EAST, b);  
@@ -307,6 +470,25 @@ public class BlockadeController extends TwoPlayerController
 
         return getBlockedWalls(wallsToCheck, paths, wallsList);
     }
+    
+       
+    /**
+     * @param wallsToCheck
+     * @param paths
+     * @return wallsList list of walls that are blocking paths.
+     */
+    private List getBlockedWalls(List<BlockadeWall> wallsToCheck, List<Path> paths, List wallsList)  {
+        BlockadeBoard board = (BlockadeBoard)board_;
+        Iterator it = wallsToCheck.iterator();
+        while (it.hasNext()) {
+            BlockadeWall w = (BlockadeWall)it.next();
+            if (w != null && !arePathsBlockedByWall(paths, w, board))
+              wallsList.add(w);
+        }
+
+        return wallsList;
+    }
+    
     
     /**
      *Add valid wall placements to the east.
@@ -393,180 +575,6 @@ public class BlockadeController extends TwoPlayerController
             }
          }
     }
-    
-    /**
-     * @param wallsToCheck
-     * @param paths
-     * @return wallsList list of walls that are blocking paths.
-     */
-    private List getBlockedWalls(List<BlockadeWall> wallsToCheck, Path[] paths, List wallsList)  {
-        BlockadeBoard board = (BlockadeBoard)board_;
-        Iterator it = wallsToCheck.iterator();
-        while (it.hasNext()) {
-            BlockadeWall w = (BlockadeWall)it.next();
-            if (w != null && !arePathsBlockedByWall(paths, w, board))
-              wallsList.add(w);
-        }
-
-        return wallsList;
-    }
-
-    /**
-     * Find all the possible and legal wall placements for this given step along the opponent path
-     * that do not adversely affecting our own shortest paths.
-     * Public so it can be tested.
-     * @param move move along an opponent path.
-     * @param paths our friendly paths.
-     * @return the walls for a specific move along an opponent path.
-     */
-    public List<BlockadeWall> getWallsForMove(BlockadeMove move, Path[] paths)
-    {
-        List<BlockadeWall> wallsList = new LinkedList<BlockadeWall>();
-
-        // 12 cases
-        int fromRow = move.getFromRow();
-        int fromCol = move.getFromCol();
-        BlockadeBoard b = (BlockadeBoard)board_;
-        BlockadeBoardPosition origPos =  (BlockadeBoardPosition)board_.getPosition(fromRow, fromCol);
-        BlockadeBoardPosition westPos = origPos.getNeighbor(Direction.WEST, b); 
-        BlockadeBoardPosition eastPos = origPos.getNeighbor(Direction.EAST, b);  
-        BlockadeBoardPosition northPos = origPos.getNeighbor(Direction.NORTH, b); 
-        BlockadeBoardPosition southPos = origPos.getNeighbor(Direction.SOUTH, b); 
-        switch (move.getDirection()) {
-            case EAST_EAST :
-                checkAddWallsForDirection(eastPos, paths, Direction.EAST, wallsList);
-            case EAST :
-                checkAddWallsForDirection(origPos, paths, Direction.EAST, wallsList);
-                break;
-            case WEST_WEST :
-                checkAddWallsForDirection(westPos, paths, Direction.WEST, wallsList);
-            case WEST :
-                checkAddWallsForDirection(origPos, paths, Direction.WEST, wallsList);
-                break;
-            case SOUTH_SOUTH :
-                checkAddWallsForDirection(southPos, paths, Direction.SOUTH, wallsList);
-            case SOUTH :
-                checkAddWallsForDirection(origPos, paths, Direction.SOUTH, wallsList);
-                break;
-            case NORTH_NORTH :
-                checkAddWallsForDirection(northPos, paths, Direction.NORTH, wallsList);
-            case NORTH :
-                checkAddWallsForDirection(origPos, paths, Direction.NORTH, wallsList);
-                break;
-            case NORTH_WEST :
-                checkAddWallsForDirection(origPos, paths, Direction.NORTH_WEST, wallsList);
-                break;
-            case NORTH_EAST :
-                checkAddWallsForDirection(origPos, paths, Direction.NORTH_EAST, wallsList);
-                break;
-            case SOUTH_WEST :
-                checkAddWallsForDirection(origPos, paths, Direction.SOUTH_WEST, wallsList);
-                break;
-            case SOUTH_EAST:
-                checkAddWallsForDirection(origPos, paths, Direction.SOUTH_EAST, wallsList);
-                break;
-            default : assert false:("Invalid direction "+move.getDirection());
-        }
-
-        return wallsList;
-    }
-
-    /**
-     * Find variations for move firstStep based on all the possible wall placements that make the opponent
-     * shortest paths longer, while not adversely affecting our own shortest paths.
-     * @param firstStep the move to find wall placements for.
-     * @param paths our shortest paths.
-     * @param opponentPaths the opponent shortest paths.
-     * @return all move variations on firstStep based on different wall placements.
-     */
-    private List<BlockadeMove> findWallPlacementsForMove(BlockadeMove firstStep, Path[] paths, Path[] opponentPaths,
-                                           ParameterArray weights)
-    {
-        List<BlockadeMove> moves = new LinkedList<BlockadeMove>();
-        BlockadeMove ourmove = firstStep;
-        for (int i=0; i<opponentPaths.length; i++) {
-           Path opponentPath = opponentPaths[i];
-           assert (opponentPath != null): 
-               "Opponent path "+i+" was null. There are "+opponentPaths.length+" oppenent paths.";
-           for (int j = 0; j < opponentPath.getLength(); j++) {
-               // if there is no wall currently interfering with this wall placement,
-               // and it does not impact a friendly path,
-               // then consider this (and/or its twin) a candidate placement.
-               // by twin I mean the other wall placement that also intersects this opponent path
-               // (there are always N for walls of size N where N is the number of spaces spanned by a wall).
-               BlockadeMove move = opponentPath.get(j);
-
-               // get all the possible legal and reasonable wall placements for this move along the opponent path.
-               List<BlockadeWall> walls = getWallsForMove(move, paths);
-               GameContext.log(2, "num walls for move "+move+"  = "+walls.size() );
-
-               Iterator it = walls.iterator();
-               while (it.hasNext()) {
-                   BlockadeWall wall = (BlockadeWall)it.next();
-                   //GameContext.log(0, "wallplacement="+wall);
-
-                   // @@ we should provide the value here since we have all the path info.
-                   // we do not want to compute the path info again by calling worth.
-                   // The value will change based on how much we shorten our paths while lengthening the opponents.
-                   double value = 0.0;
-                   BlockadeMove m =
-                           BlockadeMove.createMove(ourmove.getFromRow(), ourmove.getFromCol(),
-                                                   ourmove.getToRow(), ourmove.getToCol(),
-                                                   value, ourmove.getPiece(), wall);
-                   // for the time being just call worth directly. Its less efficient, but simpler.
-                   board_.makeMove(m);
-                   m.setValue(worth(m, weights, m.getPiece().isOwnedByPlayer1()));
-                   board_.undoMove();
-                   moves.add(m);
-               }
-           }
-       }
-       return moves;
-    }
-
-    /**
-      * Find all the moves a piece can make from position p, and insert them into moveList.
-      *
-      * @param p the piece to check.
-      * @param moveList add the potential moves to this existing list.
-      * @param weights to use.
-      * @return the number of moves added.
-      */
-     private int addMoves( BoardPosition p, List moveList, Path[] opponentPaths,
-                          ParameterArray weights )
-     {
-         BlockadeBoard board = (BlockadeBoard)board_;
-         int numMovesAdded = 0;
-
-         // first find the NUM_HOMES shortest paths for p.
-         Path[] paths = board.findShortestPaths((BlockadeBoardPosition)p);
-
-         assert (paths.length == BlockadeBoard.NUM_HOMES):
-                 "There must be at least one route to each opponent home base. Numpaths="+paths.length;
-
-         // for each of these paths add possible wall positions.
-         // Take the first move from each path and add the wall positions to it.
-         for (int i = 0; i < BlockadeBoard.NUM_HOMES; i++) {
-             BlockadeMove firstStep = paths[i].get(0);
-             //firstStep.moveNumber = (lastMove == null)? 0 : (lastMove.moveNumber+1);
-             // make the move
-             board.makeMove(firstStep);
-
-             // after making the first move, the shortest paths may have changed somewhat.
-             // unfortunately, I think we need to recalculate them.
-             BlockadeBoardPosition newPos = (BlockadeBoardPosition)board.getPosition(firstStep.getToRow(), firstStep.getToCol());
-             Path[] ourPaths = board.findShortestPaths(newPos);
-
-             List wallMoves = findWallPlacementsForMove(firstStep, ourPaths, opponentPaths, weights);
-             //GameContext.log(1, "num wall placements for Move = " +wallMoves.size());
-             moveList.addAll(wallMoves);
-             numMovesAdded += wallMoves.size();
-             // undo the move
-             board.undoMove();
-         }
-         GameContext.log(2, "addMoves nummoves add="+numMovesAdded );
-         return numMovesAdded;
-    }
 
 
     public Searchable getSearchable() {
@@ -587,23 +595,26 @@ public class BlockadeController extends TwoPlayerController
             boolean player1 = !(lastMove.isPlayer1());
             BlockadeBoard board = (BlockadeBoard)board_;
 
-            // first find the opponent's shortest paths. There must be NUM_HOMES squared of them.
+            // first find the opponent's shortest paths. There must be NUM_HOMES squared of them (unless the player won).
             // There is one path from every piece to every opponent home (i.e. n*n)            
-            Path[] opponentPaths = board.findAllOpponentShortestPaths(player1);            
+            List<Path> opponentPaths = board.findAllOpponentShortestPaths(player1);    
             
             // For each piece of the current player's NUM_HOME pieces, add a move that represents a step along
             // its shortest paths to the opponent homes and all reasonable wall placements.
             // To limit the number of wall placements we will restrict possiblities to those positions which
             // effect one of the *opponents* shortest paths.
+            List<BoardPosition> pawnLocations = new LinkedList<BoardPosition>();
             for ( int row = 1; row <= board.getNumRows(); row++ ) {
                 for ( int col = 1; col <= board.getNumCols(); col++ ) {
-                    BoardPosition p = board_.getPosition( row, col );
-                    if ( p.isOccupied() && p.getPiece().isOwnedByPlayer1() == player1 ) {
-                        addMoves( p, moveList, opponentPaths, weights );
+                    BoardPosition p = board_.getPosition( row, col );                  
+                    if ( p.isOccupied() && p.getPiece().isOwnedByPlayer1() == player1 ) {   
+                        pawnLocations.add(p);
+                        addMoves( p, moveList, opponentPaths, weights );                     
                     }
                 }
             }
-            assert (!moveList.isEmpty()): "There aren't any moves to consider.";
+            assert (!moveList.isEmpty()): "There aren't any moves to consider for lastMove="+lastMove
+                    +" p1Perspective="+player1sPerspective+". Complete movelist ="+board_.getMoveList() + " \nThe pieces are at:" + pawnLocations;
             return getBestMoves( player1, moveList, player1sPerspective );
         }
 

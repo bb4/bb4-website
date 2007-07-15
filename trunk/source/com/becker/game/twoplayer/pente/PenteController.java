@@ -22,7 +22,7 @@ public class PenteController extends TwoPlayerController
 
     private static final int DEFAULT_LOOKAHEAD = 4;
     // for any given ply never consider more that BEST_PERCENTAGE of the top moves
-    private static final int BEST_PERCENTAGE = 60;
+    private static final int BEST_PERCENTAGE = 70;
 
     private static final int DEFAULT_NUM_ROWS = 20;
     protected static final int DEFAULT_NUM_COLS = 20;

@@ -25,7 +25,7 @@ public class TwoPlayerOptions extends GameOptions
     // if true then show all the moves the computer is considering when it considers them.
     private boolean showComputerAnimation_ = false;
 
-    // the defualt search method.
+    // the default search method.
     private SearchStrategyType strategyMethod_ = SearchStrategyType.MINIMAX;
     private int lookAhead_;
     private int bestPercentage_;

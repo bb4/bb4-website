@@ -41,7 +41,7 @@ public final class MtdStrategy extends SearchStrategy
                                        int alpha, int beta, SearchTreeNode parent )
     {
 
-        searchWithMemory_ =  new NegaScoutMemoryStrategy(controller_);
+        searchWithMemory_ =  new NegaScoutMemoryStrategy(searchable_);
 
         TwoPlayerMove selectedMove = searchInternal( lastMove, weights, depth, quiescentDepth, alpha, parent);
         return (selectedMove != null)? selectedMove : lastMove;

@@ -65,6 +65,14 @@ public class BlockadeWall
          }
          return true;
     }
+    
+    public int hashCode() {
+         int hashcode = 0;
+         for (BlockadeBoardPosition p: positions_) {
+             hashcode += p.hashCode();
+         }
+         return hashcode;
+    }
 
     /**
      *

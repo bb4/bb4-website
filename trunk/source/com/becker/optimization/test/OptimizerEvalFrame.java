@@ -22,7 +22,6 @@ public class OptimizerEvalFrame extends JFrame {
 
         this.setTitle("Optimization Animation");
         this.setSize(OptimizerEvalPanel.SIZE);
-        this.resize(OptimizerEvalPanel.SIZE);
 
         OptimizerEvalPanel evalPanel = new OptimizerEvalPanel(solutionPosition);
         optimizer.setListener(evalPanel);

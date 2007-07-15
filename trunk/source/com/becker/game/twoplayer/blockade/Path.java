@@ -48,7 +48,7 @@ public class Path {
     public boolean isBlockedByWall(BlockadeWall wall, BlockadeBoard b)
     {
        for (BlockadeMove move: elements_) {          
-            if (b.isMoveBlockedByWall(move, wall) )
+            if (move.isMoveBlockedByWall(wall, b) )
                 return true;
         }
         return false;
@@ -87,6 +87,7 @@ public class Path {
         } 
         return true;
     }
+    
     
     /**
      *Stringify list path.

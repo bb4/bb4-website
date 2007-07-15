@@ -120,7 +120,7 @@ public class BlockadeBoard extends TwoPlayerBoard
     public int getTypicalNumMoves() {
         return rowsTimesCols_;
     }
-
+    
     /**
       * Blockade pieces can move 1 or 2 spaces in any direction.
       * However, only in rare cases would you ever want to move only 1 space.
@@ -257,28 +257,30 @@ public class BlockadeBoard extends TwoPlayerBoard
       * Check for diagonal moves (4 cases).
       * In some rare cases we may add 1 space moves if the diagonal is occupied by another pawn.
       */
-     private void addIfDiagonalLegal(BlockadeBoardPosition pos, BlockadeBoardPosition diagonalPos, boolean horizontalPathOpen, boolean verticalPathOpen,  
+     private void addIfDiagonalLegal(BlockadeBoardPosition pos, BlockadeBoardPosition diagonalPos, 
+                                                           boolean horizontalPathOpen, boolean verticalPathOpen,  
                                                            int fromRow, int fromCol, boolean op1, List possibleMoveList) {
          
-          if (diagonalPos != null) {
-              // check the 2 alternative paths to this diagonal position to see if either are clear.
-              if ((horizontalPathOpen || verticalPathOpen) &&  (diagonalPos.isUnoccupied() || diagonalPos.isHomeBase(op1) && !diagonalPos.isVisited())) {       //Diag
-                         possibleMoveList.add(
-                                  BlockadeMove.createMove(fromRow, fromCol, diagonalPos.getRow(), diagonalPos.getCol(), 0, pos.getPiece(), null));    
-              }
-              else if (diagonalPos.isOccupied()) {
-                  // if the diagonal position that we want to move to is occupied, we try to add the 1 space moves
-                  BlockadeBoardPosition horzPos = (BlockadeBoardPosition) getPosition(fromRow, diagonalPos.getCol());
-                  BlockadeBoardPosition vertPos = (BlockadeBoardPosition) getPosition(diagonalPos.getRow(), fromCol);
-                 
-                  if (horizontalPathOpen && horzPos.isUnoccupied() && !horzPos.isVisited()) {
-                       possibleMoveList.add(
-                                  BlockadeMove.createMove(fromRow, fromCol, fromRow, diagonalPos.getCol(), 0, pos.getPiece(), null));    
-                  } 
-                  if (verticalPathOpen && vertPos.isUnoccupied() && !vertPos.isVisited()) {
-                       possibleMoveList.add(
-                                  BlockadeMove.createMove(fromRow, fromCol, diagonalPos.getRow(), fromCol, 0, pos.getPiece(), null));    
-                  }
+          if (diagonalPos == null)
+              return;
+
+          // check the 2 alternative paths to this diagonal position to see if either are clear.
+          if ((horizontalPathOpen || verticalPathOpen) &&  (diagonalPos.isUnoccupied() || diagonalPos.isHomeBase(op1) && !diagonalPos.isVisited())) {       //Diag
+                     possibleMoveList.add(
+                              BlockadeMove.createMove(fromRow, fromCol, diagonalPos.getRow(), diagonalPos.getCol(), 0, pos.getPiece(), null));    
+          }
+          else if (diagonalPos.isOccupied()) {
+              // if the diagonal position that we want to move to is occupied, we try to add the 1 space moves
+              BlockadeBoardPosition horzPos = (BlockadeBoardPosition) getPosition(fromRow, diagonalPos.getCol());
+              BlockadeBoardPosition vertPos = (BlockadeBoardPosition) getPosition(diagonalPos.getRow(), fromCol);
+
+              if (horizontalPathOpen && horzPos.isUnoccupied() && !horzPos.isVisited()) {
+                   possibleMoveList.add(
+                              BlockadeMove.createMove(fromRow, fromCol, fromRow, diagonalPos.getCol(), 0, pos.getPiece(), null));    
+              } 
+              if (verticalPathOpen && vertPos.isUnoccupied() && !vertPos.isVisited()) {
+                   possibleMoveList.add(
+                              BlockadeMove.createMove(fromRow, fromCol, diagonalPos.getRow(), fromCol, 0, pos.getPiece(), null));    
               }
           }
      }
@@ -288,29 +290,27 @@ public class BlockadeBoard extends TwoPlayerBoard
      * @param player1 the last player to make a move.
      * @return all the opponent's shortest paths to your home bases.
      */
-    public Path[]  findAllOpponentShortestPaths(boolean player1) {
+    public List<Path>  findAllOpponentShortestPaths(boolean player1) {
 
-        int numHomes = BlockadeBoard.NUM_HOMES;
-        int numShortestPaths = numHomes * numHomes;
-        Path[] opponentPaths = new Path[numShortestPaths];
-        int totalOpponentPaths = 0;
+        int numShortestPaths = NUM_HOMES * NUM_HOMES;
+        List<Path> opponentPaths = new LinkedList<Path>();
         Set hsPawns = new LinkedHashSet();
         for ( int row = 1; row <= getNumRows(); row++ ) {
             for ( int col = 1; col <= getNumCols(); col++ ) {
-                BlockadeBoardPosition p = (BlockadeBoardPosition) getPosition( row, col );
-                if ( p.isOccupied() && p.getPiece().isOwnedByPlayer1() != player1 ) {
-                    hsPawns.add(p);
-                    assert (hsPawns.size() <= numHomes) : "Error: too many opponent pieces: " + hsPawns ;                     
-                    Path[] paths = findShortestPaths(p);
-                    assert (paths.length == numHomes):
-                        "There must be at least one route to each opponent home base. Numpaths="+paths.length;
+                BlockadeBoardPosition pos = (BlockadeBoardPosition) getPosition( row, col );
+                if ( pos.isOccupied() && pos.getPiece().isOwnedByPlayer1() != player1 ) {
+                    hsPawns.add(pos);
+                    assert (hsPawns.size() <= NUM_HOMES) : "Error: too many opponent pieces: " + hsPawns ;                     
+                    List<Path> paths = findShortestPaths(pos);
                     GameContext.log(2,
-                        "about to add "+numHomes+" more paths to "+totalOpponentPaths+" maxAllowed="+opponentPaths.length );
-                    System.arraycopy(paths, 0, opponentPaths, totalOpponentPaths, numHomes);
-                    totalOpponentPaths += numHomes;
+                        "about to add "+ paths.size() +" more paths to "+opponentPaths.size()+" maxAllowed="+ numShortestPaths);
+                    for (Path p: paths) {
+                        opponentPaths.add(p);
+                    }         
                 }
             }
         }
+        //assert (opponentPaths.size() == numShortestPaths) : "Too few opponent paths:"+ opponentPaths;
         return opponentPaths;
     }
      
@@ -345,7 +345,7 @@ public class BlockadeBoard extends TwoPlayerBoard
      * @param position position to check shortest paths for.
      * @return the NUM_HOMES shortest paths from toPosition.
      */
-    public Path[] findShortestPaths( BlockadeBoardPosition position )
+    public List<Path> findShortestPaths( BlockadeBoardPosition position ) 
     {
         boolean opponentIsPlayer1 = !position.getPiece().isOwnedByPlayer1();
         // set of home bases
@@ -361,40 +361,37 @@ public class BlockadeBoard extends TwoPlayerBoard
         if (position.isHomeBase(opponentIsPlayer1)) {
            homeSet.add(root);
         }
-        else {
-            q.addAll( findPathChildren(position, root, opponentIsPlayer1) );
+      
+        q.addAll( findPathChildren(position, root, opponentIsPlayer1) );
 
-            // do a breadth first search until you have spanned/visited all opponent homes.
-            while (homeSet.size() < NUM_HOMES && !q.isEmpty()) {
-                // pop the next move from the head of the queue.
-                DefaultMutableTreeNode node = q.remove(0);
-                BlockadeMove nodeMove = (BlockadeMove)node.getUserObject();
-                BlockadeBoardPosition toPosition = (BlockadeBoardPosition)getPosition(nodeMove.getToRow(), nodeMove.getToCol());
-                if (!toPosition.isVisited()) {
-                    toPosition.setVisited(true);
-                    MutableTreeNode parentNode = (MutableTreeNode)node.getParent();
-                    node.setParent(null);
-                    parentNode.insert(node, parentNode.getChildCount());
-                    if (toPosition.isHomeBase(opponentIsPlayer1)) {
-                        homeSet.add(node);
-                        // also add the home base pos to the path
-                        //DefaultMutableTreeNode homeNode = new DefaultMutableTreeNode(toPosition);
-                        //node.insert(homeNode, node.getChildCount());
-                    }
-                    List children =  findPathChildren(toPosition, node, opponentIsPlayer1);
-                    q.addAll(children);
+        // do a breadth first search until you have spanned/visited all opponent homes.
+        while (homeSet.size() < NUM_HOMES && !q.isEmpty()) {
+            // pop the next move from the head of the queue.
+            DefaultMutableTreeNode node = q.remove(0);
+            BlockadeMove nodeMove = (BlockadeMove)node.getUserObject();
+            BlockadeBoardPosition toPosition = (BlockadeBoardPosition)getPosition(nodeMove.getToRow(), nodeMove.getToCol());
+            if (!toPosition.isVisited()) {
+                toPosition.setVisited(true);
+                MutableTreeNode parentNode = (MutableTreeNode)node.getParent();
+                node.setParent(null);
+                parentNode.insert(node, parentNode.getChildCount());
+                if (toPosition.isHomeBase(opponentIsPlayer1)) {
+                    homeSet.add(node);
                 }
+                List children =  findPathChildren(toPosition, node, opponentIsPlayer1);
+                q.addAll(children);
             }
-         
-            assert (homeSet.size() == NUM_HOMES) : "We did not find all the homes. Only : "+ homeSet; // hitting this.
-            // we better have searched all positions looking for the opp homes            
         }
+
        
         // extract the paths by working backwards to the root from the homes.
-        Path[] paths = extractPaths(homeSet);   
+        List<Path> paths = extractPaths(homeSet);   
         
          if (!position.isHomeBase(opponentIsPlayer1)) {
-             assert (paths.length == BlockadeBoard.NUM_HOMES) : "Too few paths:  "+paths.length+" != "+BlockadeBoard.NUM_HOMES;
+             // this could happen, but it should be rare.
+             if (paths.size() < BlockadeBoard.NUM_HOMES) 
+                 GameContext.log(0, "Too few paths:  "+paths.size()+" != "+BlockadeBoard.NUM_HOMES 
+                         +" found for pos="+position+". The paths were :"+paths);
          }
         
         // return everything to an unvisted state.
@@ -407,109 +404,21 @@ public class BlockadeBoard extends TwoPlayerBoard
      * Extract the paths by working backwards to the root from the homes.
      *@param homeSet set of home base positions.
      */
-    private Path[] extractPaths(Set<MutableTreeNode> homeSet) {
-        Path[] paths = new Path[homeSet.size()];
+    private List<Path> extractPaths(Set<MutableTreeNode> homeSet) {
+        List<Path> paths = new ArrayList<Path>(homeSet.size());
         
         Iterator it = homeSet.iterator();
         int ct = 0;
         while (it.hasNext()) {
             DefaultMutableTreeNode n = (DefaultMutableTreeNode)it.next();
-            Path path = new Path(n);            
-            paths[ct++] = path;
+            Path path = new Path(n); 
+            // if the path is not > 0 then then pawn is own the homeBase and the game has been won.
+            if (path.getLength() == 0) {
+                GameContext.log(0, "found 0 length path ="+path);
+            }
+            paths.add(path);
         }
         return paths;
-    }
-
-    /**
-     * Check to see if a given wall blocks the move.
-     * We assume the move is valid (eg does not move off the board or anything like that).
-     * @param move to check
-     * @param wall to see if blocking our move.
-     * @return  true if the wall blocks this move.
-     */
-    public boolean isMoveBlockedByWall( BlockadeMove move,  BlockadeWall wall)
-    {
-        // we temporarily place the wall.
-        // We assume that this wall does not interfere with other walls as that would be invalid.
-
-        // temporarily place the wall
-        addWall(wall);
-        boolean blocked = false;
-
-        int fromRow = move.getFromRow();
-        int fromCol = move.getFromCol();
-        BlockadeBoardPosition start = (BlockadeBoardPosition)getPosition(fromRow, fromCol);        
-        BlockadeBoardPosition west = start.getNeighbor(Direction.WEST, this); 
-        BlockadeBoardPosition north = start.getNeighbor(Direction.NORTH, this); 
-        BlockadeBoardPosition south, east;
-
-        switch (move.getDirection()) {
-            case NORTH_NORTH :
-                BlockadeBoardPosition northNorth = start.getNeighbor(Direction.NORTH_NORTH, this); 
-                if (northNorth.isSouthBlocked())
-                    blocked = true;
-            case NORTH :
-                if (north.isSouthBlocked() )
-                    blocked = true;
-                break;
-            case WEST_WEST :
-                BlockadeBoardPosition westWest = start.getNeighbor(Direction.WEST_WEST, this); 
-                if (westWest.isEastBlocked() )
-                    blocked = true;
-            case WEST :
-                if (west.isEastBlocked())
-                    blocked = true;
-                break;
-            case EAST_EAST :
-                east = start.getNeighbor(Direction.EAST, this); 
-                if (east.isEastBlocked())
-                    blocked = true;
-            case EAST :
-                if (start.isEastBlocked())
-                    blocked = true;
-                break;
-            case SOUTH_SOUTH :
-                south = start.getNeighbor(Direction.SOUTH, this); 
-                if (south.isSouthBlocked())
-                    blocked = true;
-            case SOUTH :
-                if (start.isSouthBlocked())
-                    blocked = true;
-                break;
-            case NORTH_WEST :
-                BlockadeBoardPosition northWest = start.getNeighbor(Direction.NORTH_WEST, this); 
-                if (!((west.isEastOpen() && northWest.isSouthOpen()) ||
-                     (north.isSouthOpen() && northWest.isEastOpen()) ) )  {
-                    blocked = true;
-                }
-                break;
-            case NORTH_EAST :
-                BlockadeBoardPosition northEast = start.getNeighbor(Direction.NORTH_EAST, this); 
-                if (!((start.isEastOpen() && northEast.isSouthOpen()) ||
-                     (north.isSouthOpen() && north.isEastOpen()) ) )  {
-                    blocked = true;
-                }
-                break;
-            case SOUTH_WEST :
-                BlockadeBoardPosition southWest = start.getNeighbor(Direction.SOUTH_WEST, this); 
-                if (!((west.isEastOpen() && west.isSouthOpen()) ||
-                     (start.isSouthOpen() && southWest.isEastOpen()) ) )  {
-                    blocked = true;
-                }
-                break;
-            case SOUTH_EAST :
-                south = start.getNeighbor(Direction.SOUTH, this); 
-                east = start.getNeighbor(Direction.EAST, this); 
-                if (!((start.isEastOpen() && east.isSouthOpen()) ||
-                     (start.isSouthOpen() && south.isEastOpen()) ) )  {
-                    blocked = true;
-                }
-                break;
-        }
-
-        removeWall(wall);
-
-        return blocked;
     }
 
     /*
@@ -527,12 +436,9 @@ public class BlockadeBoard extends TwoPlayerBoard
         boolean vertical = wall.isVertical();
         
         Map<BlockadeBoardPosition, BlockadeWall> oldWalls = new HashMap<BlockadeBoardPosition, BlockadeWall>();
-        BlockadeBoardPosition pos;
         
         // iterate over the 2 positions covered by the wall.
-        Iterator<BlockadeBoardPosition> it = wall.getPositions().iterator();
-        while (it.hasNext())  {
-            pos = it.next();
+        for (BlockadeBoardPosition pos: wall.getPositions())  {
             BlockadeWall origWall = vertical? pos.getEastWall() : pos.getSouthWall() ;
 
             if (sError==null  && ((vertical && pos.isEastBlocked()) || (!vertical && pos.isSouthBlocked()))) {
@@ -554,14 +460,12 @@ public class BlockadeBoard extends TwoPlayerBoard
         else if (sError==null && p == null) {
             sError = GameContext.getLabel("INVALID_WALL_PLACEMENT");
         }        
-        else if (sError==null && hasNoPath(p, piece)) {
+        else if (sError==null && missingPath()) {
             sError = GameContext.getLabel("MUST_HAVE_ONE_PATH");
         }
 
-        // now restore the original walls
-        it = wall.getPositions().iterator();
-        while (it.hasNext())  {
-            pos = it.next();
+       // now restore the original walls
+       for (BlockadeBoardPosition pos: wall.getPositions())  { 
             BlockadeWall origWall = oldWalls.get(pos);
             if (vertical)
                 pos.setEastWall(origWall);
@@ -569,6 +473,36 @@ public class BlockadeBoard extends TwoPlayerBoard
                 pos.setSouthWall(origWall);
         }
         return sError;
+    }
+    
+    /**
+     * find all the paths from each player's pawn to each opponent base.
+     *@param lastMove last move made
+     */
+    public PlayerPathLengths findPlayerPathLengths(BlockadeMove lastMove) {
+        PlayerPathLengths playerPaths = new PlayerPathLengths();
+        
+        for ( int row = 1; row <= getNumRows(); row++ ) {   
+            for ( int col = 1; col <= getNumCols(); col++ ) { 
+                BlockadeBoardPosition pos = (BlockadeBoardPosition)getPosition( row, col );
+                if ( pos.isOccupied() ) {
+                    GamePiece piece = pos.getPiece();
+                  
+                    BlockadeWall wall = ((BlockadeMove) lastMove).getWall();
+                                                          
+                    if (!pos.isHomeBase(!piece.isOwnedByPlayer1())) {
+                        // should reuse cached path if still valid.
+                        List<Path> paths = pos.findShortestPaths(this, wall);     
+                        
+                        playerPaths.getPathLengthsForPlayer(piece.isOwnedByPlayer1()).updatePathLengths(paths);
+                    } 
+                    if (!playerPaths.isValid()) {
+                        GameContext.log(1, "We tried, but could not find a path from " + pos + " to all bases because of the placement of "+ wall);
+                    }
+                }
+            }
+        }
+        return playerPaths;
     }
 
     
@@ -593,15 +527,14 @@ public class BlockadeBoard extends TwoPlayerBoard
     /**
      * @return error message if no path exists from this position to an opponent home.
      */
-    private boolean hasNoPath( BlockadeBoardPosition p, GamePiece piece)
+    private boolean missingPath()
     {
-        p.setPiece(piece);
-        Path paths[] = findShortestPaths(p);
-        if (paths.length != NUM_HOMES) {
-            return true;
-        }
-        p.setPiece(null);
-        return false;
+        List<Path> paths1 = findAllOpponentShortestPaths(true);  
+        List<Path> paths2 = findAllOpponentShortestPaths(false);    
+        System.out.println("paths1.length="+paths1.size()+" paths2.length ="+paths2.size() );
+        
+        int expectedNumPaths = NUM_HOMES*NUM_HOMES;
+        return  (paths1.size() < expectedNumPaths || paths2.size() <expectedNumPaths );      
     }
     
     public void addWall(BlockadeWall wall)
@@ -648,27 +581,6 @@ public class BlockadeBoard extends TwoPlayerBoard
     }
 
     /**
-     * If this throws an assertion, it means that one or more pieces are 
-     * prevented from reaching all the spaces on the board.
-     */
-    private void confirmAllVisited()
-    {
-        boolean allVisited = true;
-        List unvisitedList = new ArrayList();
-        for ( int i = 1; i <= getNumRows(); i++ ) {
-            for ( int j = 1; j <= getNumCols(); j++ ) {
-                if (!((BlockadeBoardPosition)positions_[i][j]).isVisited())   {
-                    allVisited = false;
-                    unvisitedList.add(positions_[i][j]);
-                }
-            }
-        }
-        // hitting this
-        assert allVisited: "not all the positions are visited! unvisted= "+unvisitedList;
-    }
-
-
-    /**
      * Given a move specification, execute it on the board.
      * This places the players symbol at the position specified by move,
      * and then also places a wall somewhere.
@@ -686,7 +598,8 @@ public class BlockadeBoard extends TwoPlayerBoard
 
         return true;
     }
-
+    
+ 
     /**
      * for Blockade, undoing a move means moving the piece back and
      * restoring any captures.

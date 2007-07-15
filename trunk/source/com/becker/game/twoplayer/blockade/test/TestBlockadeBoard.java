@@ -1,10 +1,9 @@
 package com.becker.game.twoplayer.blockade.test;
 
-import com.becker.common.Location;
-import com.becker.common.Util;
+import com.becker.common.*;
 import junit.framework.*;
-import com.becker.game.twoplayer.blockade.*;
 import com.becker.game.common.*;
+import com.becker.game.twoplayer.blockade.*;
 import java.util.HashMap;
 import java.util.*;
 
@@ -30,11 +29,11 @@ public class TestBlockadeBoard extends BlockadeTestCase {
         Assert.assertTrue("p1 piece and both walls", p.getStateIndex() == 7);
 
         p.setPiece(new GamePiece(false));
-        Assert.assertTrue("p2 piece and both wals", p.getStateIndex() == 11);
+        Assert.assertTrue("p2 piece and both walls", p.getStateIndex() == 11);
     }
     
     /** 
-     * Wxpected results for possible next move list.
+     * Expected results for possible next move list.
      * For certain locations we expect other than the default.
      * We make a hashMap for these special locations
      * map from location to expected number of moves.
@@ -153,39 +152,102 @@ public class TestBlockadeBoard extends BlockadeTestCase {
 
     
     private static final String p1PathsExpected = 
-            "[[Player 2 val:0 inhrtd:0 piece:p2 x(8, 4) (6, 4)->(8, 4)],[ val:0 inhrtd:0(10, 4) (8, 4)->(10, 4)],[ val:0 inhrtd:0(11, 5) (10, 4)->(11, 5)],[ val:0 inhrtd:0(11, 7) (11, 5)->(11, 7)],[ val:0 inhrtd:0(11, 8) (11, 7)->(11, 8)]\n" +            
-            ", [Player 2 val:0 inhrtd:0 piece:p2 x(8, 4) (6, 4)->(8, 4)],[ val:0 inhrtd:0(10, 4) (8, 4)->(10, 4)],[ val:0 inhrtd:0(10, 2) (10, 4)->(10, 2)],[ val:0 inhrtd:0(11, 3) (10, 2)->(11, 3)],[ val:0 inhrtd:0(11, 4) (11, 3)->(11, 4)]\n" +                        
-            ", [Player 2 val:0 inhrtd:0 piece:p2 x(10, 8) (8, 8)->(10, 8)],[ val:0 inhrtd:0(11, 9) (10, 8)->(11, 9)],[ val:0 inhrtd:0(11, 8) (11, 9)->(11, 8)]\n" +
-            ", [Player 2 val:0 inhrtd:0 piece:p2 x(10, 8) (8, 8)->(10, 8)],[ val:0 inhrtd:0(10, 6) (10, 8)->(10, 6)],[ val:0 inhrtd:0(12, 6) (10, 6)->(12, 6)],[ val:0 inhrtd:0(13, 5) (12, 6)->(13, 5)],[ val:0 inhrtd:0(12, 4) (13, 5)->(12, 4)],[ val:0 inhrtd:0(11, 4) (12, 4)->(11, 4)]\n" +              
-            "]";
-    
-    private static final String p2PathsExpected = 
-            "[[Player 1 val:0 inhrtd:0 piece:p1 x(6, 3) (8, 3)->(6, 3)],[ val:0 inhrtd:0(5, 4) (6, 3)->(5, 4)],[ val:0 inhrtd:0(4, 4) (5, 4)->(4, 4)]\n" +
-            ", [Player 1 val:0 inhrtd:0 piece:p1 x(6, 3) (8, 3)->(6, 3)],[ val:0 inhrtd:0(5, 4) (6, 3)->(5, 4)],[ val:0 inhrtd:0(4, 4) (5, 4)->(4, 4)],[ val:0 inhrtd:0(4, 6) (4, 4)->(4, 6)],[ val:0 inhrtd:0(4, 8) (4, 6)->(4, 8)]\n" +            
-            ", [Player 1 val:0 inhrtd:0 piece:p1 x(8, 9) (9, 8)->(8, 9)],[ val:0 inhrtd:0(6, 9) (8, 9)->(6, 9)],[ val:0 inhrtd:0(4, 9) (6, 9)->(4, 9)],[ val:0 inhrtd:0(4, 8) (4, 9)->(4, 8)]\n" +
-            ", [Player 1 val:0 inhrtd:0 piece:p1 x(7, 8) (9, 8)->(7, 8)],[ val:0 inhrtd:0(7, 6) (7, 8)->(7, 6)],[ val:0 inhrtd:0(7, 4) (7, 6)->(7, 4)],[ val:0 inhrtd:0(5, 4) (7, 4)->(5, 4)],[ val:0 inhrtd:0(4, 4) (5, 4)->(4, 4)]\n" +
-            "]";
+        "[[Player 2 val:0 inhrtd:0 piece:p2 x(8, 4) (no wall placed) (6, 4)->(8, 4)],[ val:0 inhrtd:0(10, 4) (no wall placed) (8, 4)->(10, 4)],[ val:0 inhrtd:0(11, 5) (no wall placed) (10, 4)->(11, 5)],[ val:0 inhrtd:0(11, 7) (no wall placed) (11, 5)->(11, 7)],[ val:0 inhrtd:0(11, 8) (no wall placed) (11, 7)->(11, 8)]\n"+
+        ", [Player 2 val:0 inhrtd:0 piece:p2 x(8, 4) (no wall placed) (6, 4)->(8, 4)],[ val:0 inhrtd:0(10, 4) (no wall placed) (8, 4)->(10, 4)],[ val:0 inhrtd:0(10, 2) (no wall placed) (10, 4)->(10, 2)],[ val:0 inhrtd:0(11, 3) (no wall placed) (10, 2)->(11, 3)],[ val:0 inhrtd:0(11, 4) (no wall placed) (11, 3)->(11, 4)]\n" + 
+        ", [Player 2 val:0 inhrtd:0 piece:p2 x(10, 8) (no wall placed) (8, 8)->(10, 8)],[ val:0 inhrtd:0(11, 9) (no wall placed) (10, 8)->(11, 9)],[ val:0 inhrtd:0(11, 8) (no wall placed) (11, 9)->(11, 8)]\n" +
+        ", [Player 2 val:0 inhrtd:0 piece:p2 x(10, 8) (no wall placed) (8, 8)->(10, 8)],[ val:0 inhrtd:0(10, 6) (no wall placed) (10, 8)->(10, 6)],[ val:0 inhrtd:0(12, 6) (no wall placed) (10, 6)->(12, 6)],[ val:0 inhrtd:0(13, 5) (no wall placed) (12, 6)->(13, 5)],[ val:0 inhrtd:0(12, 4) (no wall placed) (13, 5)->(12, 4)],[ val:0 inhrtd:0(11, 4) (no wall placed) (12, 4)->(11, 4)]\n" + 
+        "]"; 
+ 
+    private static final String p2PathsExpected =
+          "[[Player 1 val:0 inhrtd:0 piece:p1 x(6, 3) (no wall placed) (8, 3)->(6, 3)],[ val:0 inhrtd:0(5, 4) (no wall placed) (6, 3)->(5, 4)],[ val:0 inhrtd:0(4, 4) (no wall placed) (5, 4)->(4, 4)]\n"+
+          ", [Player 1 val:0 inhrtd:0 piece:p1 x(6, 3) (no wall placed) (8, 3)->(6, 3)],[ val:0 inhrtd:0(5, 4) (no wall placed) (6, 3)->(5, 4)],[ val:0 inhrtd:0(4, 4) (no wall placed) (5, 4)->(4, 4)],[ val:0 inhrtd:0(4, 6) (no wall placed) (4, 4)->(4, 6)],[ val:0 inhrtd:0(4, 8) (no wall placed) (4, 6)->(4, 8)]\n"+
+          ", [Player 1 val:0 inhrtd:0 piece:p1 x(8, 9) (no wall placed) (9, 8)->(8, 9)],[ val:0 inhrtd:0(6, 9) (no wall placed) (8, 9)->(6, 9)],[ val:0 inhrtd:0(4, 9) (no wall placed) (6, 9)->(4, 9)],[ val:0 inhrtd:0(4, 8) (no wall placed) (4, 9)->(4, 8)]\n"+
+          ", [Player 1 val:0 inhrtd:0 piece:p1 x(7, 8) (no wall placed) (9, 8)->(7, 8)],[ val:0 inhrtd:0(7, 6) (no wall placed) (7, 8)->(7, 6)],[ val:0 inhrtd:0(7, 4) (no wall placed) (7, 6)->(7, 4)],[ val:0 inhrtd:0(5, 4) (no wall placed) (7, 4)->(5, 4)],[ val:0 inhrtd:0(4, 4) (no wall placed) (5, 4)->(4, 4)]\n"+
+          "]";
 
+    
     /**
      * Test that we can accurately determine all the opponent shortest paths.
-     */    
+     */  
     public void testFindOpponentShortestPaths() {
          restore("whitebox/shortestPaths1");
          BlockadeBoard board = (BlockadeBoard)controller_.getBoard();
                     
          BlockadeController c = (BlockadeController) controller_;
-         Path[] p1Paths = board.findAllOpponentShortestPaths(true);
-         Path[] p2Paths = board.findAllOpponentShortestPaths(false);
+         List<Path> p1Paths = board.findAllOpponentShortestPaths(true);
+         List<Path> p2Paths = board.findAllOpponentShortestPaths(false);
           
-         String sP1Paths = Arrays.toString(p1Paths);
-         String sP2Paths = Arrays.toString(p2Paths);
+         String sP1Paths = p1Paths.toString();
+         String sP2Paths =p2Paths.toString();
          
          // verify that the list of walls is what we expect.
-         System.out.println("p1Paths="+sP1Paths.length() +" actual len="+p1PathsExpected.length());
-         System.out.println("p2Paths="+sP2Paths.length() +" actual len="+p2PathsExpected.length());
+         //System.out.println("p1Paths="+sP1Paths.length() +" actual len="+p1PathsExpected.length());
+         //System.out.println("p2Paths="+sP2Paths.length() +" actual len="+p2PathsExpected.length());
          
          Assert.assertTrue("Expected \n"+ p1PathsExpected +"\n but got \n" + sP1Paths,  sP1Paths.equals(p1PathsExpected));
          Assert.assertTrue("Expected \n"+ p2PathsExpected +"\n but got \n" + sP2Paths,  sP2Paths.equals(p2PathsExpected));
     }
     
+    
+    public void testShortestPathLength() {
+         restore("whitebox/noMoves2");
+         BlockadeBoard board = (BlockadeBoard)controller_.getBoard();
+         BlockadeMove lastMove = (BlockadeMove) controller_.getMoveList().getLast(); 
+         
+         PlayerPathLengths pLengths = board.findPlayerPathLengths( lastMove);
+         System.out.println(pLengths);
+         Assert.assertTrue("Player Path lengths were not valid - "+ pLengths, pLengths.isValid());
+    }
+    
+     public void testShortedPaths2() {
+        
+        restore("whitebox/noMoves2");
+         BlockadeBoard board = (BlockadeBoard)controller_.getBoard();
+        
+        GamePiece piece1 = new GamePiece(true); // player 1
+        GamePiece piece2 = new GamePiece(false);  // player 2
+        BlockadeWall wall1 = new BlockadeWall((BlockadeBoardPosition) board.getPosition(8, 10), (BlockadeBoardPosition) board.getPosition(9, 10));
+        BlockadeWall wall2 = new BlockadeWall((BlockadeBoardPosition) board.getPosition(12, 6), (BlockadeBoardPosition) board.getPosition(12, 7));
+        
+        BlockadeMove move1 = BlockadeMove.createMove(8, 11, 6, 11, 0.1, piece2, wall2);
+        BlockadeMove move2 = BlockadeMove.createMove(12,6, 10, 6, 0.1, piece1, wall1);
+        
+        controller_.makeMove(move1);
+        controller_.makeMove(move2);
+        
+         PlayerPathLengths pLengths = board.findPlayerPathLengths(move2);
+         System.out.println(pLengths);
+         Assert.assertTrue("Player Path lengths were not valid - "+ pLengths, pLengths.isValid());
+    }
+     
+     
+     private static final int[] EXPECTED_PATHS_LENGTHS = { 0,  1,  11, 12};
+     
+     public void testFindShortestPaths() {
+         restore("whitebox/shortestPathsCheck");
+         BlockadeBoard board = (BlockadeBoard)controller_.getBoard();
+         BlockadeMove lastMove = (BlockadeMove) controller_.getMoveList().getLast(); 
+         
+         BlockadeBoardPosition pos1 = (BlockadeBoardPosition) board.getPosition(2, 2);
+         BlockadeBoardPosition pos2 = (BlockadeBoardPosition) board.getPosition(5, 2);
+                 
+         List<Path> pLengths1 = board.findShortestPaths(pos1);
+         List<Path> pLengths2 = board.findShortestPaths(pos2);
+         //System.out.println("paths for "+pos1+ " are = "+ pLengths1);
+         //System.out.println("pLengths2 = "+ pLengths2);
+         
+         int size = 4;
+         int[] lengths = new int[size];
+         Assert.assertTrue(pLengths1.size() == 2);
+         Assert.assertTrue(pLengths2.size() == 2);
+         
+         lengths[0] = pLengths1.get(0).getLength();
+         lengths[1] = pLengths1.get(1).getLength();
+         lengths[2] = pLengths2.get(0).getLength();
+         lengths[3] = pLengths2.get(1).getLength();
+         
+         for (int i=0; i<size; i++) {
+             Assert.assertTrue("Expected len "+  EXPECTED_PATHS_LENGTHS[i] + " but got  "+ lengths[i] ,  lengths[i] == EXPECTED_PATHS_LENGTHS[i]);
+         }
+    }
 }

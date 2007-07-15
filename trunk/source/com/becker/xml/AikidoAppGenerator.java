@@ -13,8 +13,9 @@ import java.util.LinkedList;
  *
  * Instructions for creating an Aikido technique app:
  *   1. fill in the <aikdo_technique>.xml file. Its dtd is hierarchy.dtd.  It assumes one root.
- *   2. Take pictures corresponding to nodes in hierarchy using camcorder.
- *   3. Run this program to generate technique_builder.html
+ *   2. Take pictures corresponding to nodes in hierarchy using camcorder or other digital camera.
+ *      Store the images in /projects/javascript_projects/aikido_builder/images/katate_dori (or whichever attack)
+ *   3. Run this program on the xml file to generate technique_builder.html
  *     and all_techniques.html in becker/projects/javascript_projects/aikido_builder/.
  *   4. upload technique_builder.html, all_techniques.html and corresponding images to website.
  *
@@ -24,7 +25,7 @@ import java.util.LinkedList;
 public class AikidoAppGenerator {
 
     // if in debug mode then we do the following things differently
-    // 1) in the all techniques page, show the ids instead of the cutpoints, and make theimages bigger.
+    // 1) in the all techniques page, show the ids instead of the cutpoints, and make the images bigger.
     // 2) when replacing refs, don't substitute the whole subtree, just the subtree root node.
     private static final boolean DEBUG_MODE = false;
 
@@ -129,12 +130,14 @@ public class AikidoAppGenerator {
     private static String getJSMethods() {
 
         String copyRight = "Author: Barry G Becker\n"
-         + " Copyright 2004\n";
+         + " Copyright 2004-2007\n";
 
         String getTableMethod = "  function getTable() {\n"
           + "    return document.getElementById(\"techniqueTable\");\n  }\n\n";
 
-        String showValsMethod =  "  function showVals(selectedVal, valuesList)\n"
+        String showValsMethod =  
+             " // for debugging"
+          + "  function showVals(selectedVal, valuesList)\n"
           + "  {\n"
           + "    var textList = \"selectedVal=\"+selectedVal+\"\\n\";\n"
           + "    for (var i=0; i<valuesList.length; i++) {\n"
@@ -143,7 +146,7 @@ public class AikidoAppGenerator {
           + "    alert(textList);\n"
           + "  }\n\n";
 
-
+        // @@ make ----- a constant
         String selectChanged =
             "  // When called, we delete all future selects (and corresponding img) and create a single next one. \n"
           + "  // \n"
@@ -183,12 +186,12 @@ public class AikidoAppGenerator {
           + "    \n"
           + "    var nextSelectOptions = next[selectedVal];\n"
           + "    //alert(\"nextSelectOptions=\"+nextSelectOptions);\n"
-          + "    var onlyOneChild = false;"
+          + "    var onlyOneChild = false;\n"
           + "    if (nextSelectOptions) {\n"
-          + "      onlyOneChild = true;"
+          + "      onlyOneChild = true;\n"
           + "      if (nextSelectOptions.length > 1) {\n;"
           + "        onlyOneChild = false;\n"
-          + "        // the first one is -----\n;"
+          + "        // the first one is -----;\n"
           + "        option = document.createElement(\"option\");\n"
           + "        var nextOpt = \"-----\";\n"
           + "        option.value = nextOpt;\n"
@@ -227,14 +230,14 @@ public class AikidoAppGenerator {
           + "    selectRow.insertBefore(tdSelect, selectRow.childNodes[stepNum+1]);\n"
           + "    imageRow.insertBefore(tdImage, imageRow.childNodes[stepNum+1]);\n"
           + "    if (onlyOneChild) { // add the next one too \n"
-          + "       selectChanged(newSelectId); "
+          + "       selectChanged(newSelectId);\n"
           + "    }\n"
-          + "  }\n";
+          + "  }\n\n";
 
 
         String mousedOnThumbnail =
-          "  // show a big image when mousing over the thumbnail\n"
-        + "  //\n\n"
+           "  // show a big image when mousing over the thumbnail\n"
+        + "  //\n"
         + "  function mousedOnThumbnail(imgId) {\n"
         + "    var elImg = document.getElementById(imgId);\n"
         + "    var bigImg = document.getElementById('big_image');\n"

@@ -37,7 +37,7 @@ public abstract class TwoPlayerBoard extends Board
         }
         return true;
     }
-
+    
 
     /**
      * @param moves list of moves to make all at once.
