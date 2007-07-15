@@ -39,7 +39,8 @@ public class GameLoader
     {
       // Loads up the SGF file, given a particular file name.
       //
-      SGFGame game = SGFLoader.load(
+      SGFLoader gameLoader = new SGFLoader();
+      SGFGame game = gameLoader.load(
         new FileInputStream( new File( fileName ) ) );
 
       showInfoTokens( game );
