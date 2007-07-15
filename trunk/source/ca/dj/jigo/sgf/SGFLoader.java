@@ -29,7 +29,7 @@ import java.util.*;
  * The API is extremely simple, so subclassing to handle different file
  * formats shouldn't be difficult.
  */
-public abstract class SGFLoader
+public class SGFLoader
 {
   private final static String INVALID_SGF_FILE =
     "Invalid SGF File.";
@@ -37,9 +37,10 @@ public abstract class SGFLoader
   private static Vector myGameInfoTokens = new Vector( 10 );
 
   /**
-   * No instances allowed.
+   * constructor.
+   * Barry: I would really like this class to be abstract and this method protected, but jigo classes use it.
    */
-  protected SGFLoader() { }
+  public SGFLoader() { }
 
   /**
    * Returns a new SGFGame, provided a valid (and open) InputStream.
@@ -229,24 +230,13 @@ public abstract class SGFLoader
     *In order to support importing of game types other than go, I have made this 
     *method abstract. See implementations in derived classes. (Barry 2007)
     *
+    * Barry: I would really like this method to be Abstract, but jigo classes need to use this
     * <P>
     * @param st - The StreamTokenizer from which to read an SGF token.
     *
     * @return An SGFToken representing a piece of information about the game.
     */
-  protected abstract SGFToken readToken( StreamTokenizer st )  throws IOException, SGFException;
-    
-  /**
-   * Reads an SGF token, provided a StreamTokenizer to help with parsing the
-   * text into SGFTokens.
-   *This method has moved to SGFGoLoader
-   * <P>
-   * @param st - The StreamTokenizer from which to read an SGF token.
-   *
-   * @return An SGFToken representing a piece of information about the game.
-   *
-  protected SGFToken readToken( StreamTokenizer st )
-    throws IOException, SGFException
+  protected SGFToken readToken( StreamTokenizer st )  throws IOException, SGFException
   {
     SGFToken token = null;
     String tokenName = st.sval.toUpperCase();
@@ -397,7 +387,7 @@ public abstract class SGFLoader
     token.parse( st );
 
     return token;
-  }*/
+  }
 
   /**
    * Changes the settings of the given StreamTokenizer to make parsing the

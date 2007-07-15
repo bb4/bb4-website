@@ -142,13 +142,13 @@ public class GuesserFrame extends GobanFrame
     URL url = getJiGoApplet().getCodeBase();
 
     InputStream is = url.openStream();
-    try {
-        SGFGame game = SGFLoader.load( is );
+    try {       
+        SGFLoader gameLoader = new SGFLoader();  // modified by Barry
+        SGFGame game = gameLoader.load( is);
     }
     catch (SGFException e) {
         e.printStackTrace();
     }
-
     is.close();
   }
 

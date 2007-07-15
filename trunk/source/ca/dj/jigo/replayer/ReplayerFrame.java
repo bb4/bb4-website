@@ -202,8 +202,8 @@ public class ReplayerFrame extends GobanFrame
           url = new URL( "http", getHostName(), fileName );
       else 
           url = new URL( fileName ); // running locally
-
-      setSGFGame( SGFLoader.load( url.openStream() ) );
+      SGFLoader loader = new SGFLoader();
+      setSGFGame( loader.load( url.openStream() ) );
 
       // Clear the current game only after a successful load.
       //
