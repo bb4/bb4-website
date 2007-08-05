@@ -1,13 +1,12 @@
 package com.becker.puzzle.hiq;
 
-import com.becker.common.Worker;
+import com.becker.puzzle.common.Refreshable;
 import com.becker.ui.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
-import java.util.List;
 
 /**
  * HiQ Puzzle.
@@ -39,24 +38,19 @@ import java.util.List;
  *   Finally, I found that it was enough to search entirely from the beginning
  * and just prune when I reach states I've encountered before.
  *When I first ran this successfully, it took about 1 hour to run on an AMD 64bit 3200.
- *After optimization it now run in under 3 minutes on a Core2Duo.
+ *After optimization it now run in about 3 minutes on a Core2Duo (189 seconds).
+ *After parallelizing the algorithm using ConcurrrentPuzzleSolver it is down to 93 seconds on the CoreDuo.
  */
-public final class HiQPuzzle extends JApplet implements ActionListener
+public final class HiQPuzzle extends JApplet implements ActionListener, Refreshable<PegBoard, PegMove>
 {
-    private List<PegMove> path_;
 
     // create the pieces and add them to a list
-    private PegBoard board_;
+    private HiQController controller_;
     private PegBoardViewer pegBoardViewer_;
 
-    JButton backButton_;
-    JButton forwardButton_;
-    JLabel title_;
-
-    Set visited_;
-
-    // global counter;
-    private static long numIterations_ = 0;
+    private JButton backButton_;
+    private JButton forwardButton_;
+ 
 
     /**
      * Construct the application
@@ -71,12 +65,11 @@ public final class HiQPuzzle extends JApplet implements ActionListener
      */
     public void init() {
 
-        board_ = new PegBoard();
-        pegBoardViewer_ = new PegBoardViewer(board_);
-
-        commonInit();
-
-        title_ = new JLabel("32 PegMove Solitaire (HiQ)");
+        controller_ = new HiQController(this);        
+        
+        pegBoardViewer_ = new PegBoardViewer(PegBoard.INITIAL_BOARD_POSITION);
+        
+        JLabel title = new JLabel("32 PegMove Solitaire (HiQ)");
         backButton_ = new JButton("Back");
         forwardButton_ = new JButton("Forward");
         backButton_.addActionListener(this);
@@ -89,52 +82,22 @@ public final class HiQPuzzle extends JApplet implements ActionListener
         buttonPanel.add(forwardButton_, BorderLayout.EAST);
 
         JPanel mainPanel = new JPanel(new BorderLayout());
-        mainPanel.add(title_, BorderLayout.NORTH);
+        mainPanel.add(title, BorderLayout.NORTH);
         mainPanel.add(pegBoardViewer_, BorderLayout.CENTER);
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
         this.getContentPane().add(mainPanel);
 
         this.setVisible(true);
-        //pegBoardViewer_.repaint();
     }
 
-    private void commonInit() {
-        numIterations_ = 0;
-        path_ = new LinkedList<PegMove>();
-        visited_ = new HashSet<BoardHashKey>(10000);
-    }
 
     /**
      * start solving the puzzle in a sepearate thread so the panel has a chance to refresh.
      * called by the browser after init(), if running as an applet
      */
     public void start() {
-
-        board_.setToInitialState();
-        path_.add(board_.getFirstMove());       
-
-        Worker worker = new Worker()  {
-     
-            public Object construct() {
-                
-                 long t = System.currentTimeMillis(); 
-                 
-                 // this does all the heavy work of solving it.
-                boolean solved = solvePuzzle(board_, path_);
-
-                int time = (int)((System.currentTimeMillis() - t) / 1000);
-                System.out.println("solved = "+solved + " in " + time + " seconds.");
-
-                return null;
-            }
-
-            public void finished() {
-                refresh();
-            }
-        };
-
-        worker.start();       
+        controller_.startSolving();        
     }
 
     /**
@@ -142,75 +105,36 @@ public final class HiQPuzzle extends JApplet implements ActionListener
      */
     public void stop() {
     }
+    
 
-
-
-   private static void printPath(List<PegMove> path) {
+   private static void printPath(java.util.List<PegMove> path) {
+       System.out.println("Path:");
        for (PegMove m : path) {
            System.out.println(m + ", ");
        }
+       System.out.flush();
    }
 
-   /**
-    * This is the main algorithm.
-    * Recursively called with the current board stat and current moves made so far.
-    * If at any time we reach a position that we have visted before, we prune the tree.
-    */
-   private boolean solvePuzzle(PegBoard board, List<PegMove> path) {
-        List<PegMove> moves = board.generateMoves();
-
-        if (board.isSolved()) {            
-            showPath(path, board);
-            refresh();
-            return true;
-        }
-
-        boolean solved = false;
-        while (moves.size() > 0 && !solved) {
-            PegMove move = moves.remove(0);
-            path.add(move);
-            board.makeMove(move);
-            BoardHashKey key = board.hashKey();
-            // if we arrived at the board state before (or one of its symmetries), prune the search.
-            boolean visited = false;
-            for (int i = 0; i < BoardHashKey.SYMMETRIES; i++) {
-                if (visited_.contains(key.symmetry(i))) {
-                    visited = true;
-                    break;
-                }
-            }
-            numIterations_++;
-
-            if (!visited) {
-                visited_.add(key);
-                if (visited_.size() % 100000 == 0)
-                    System.out.println("visited size = "+ visited_.size() + " path size = "+ path.size() + " num iterations = " + numIterations_);
-                //pegBoardViewer_.setNumTries(numIterations_);
-                solved = solvePuzzle(board, path);
-            } else {
-                //System.out.println("already visited " + key + " pruned at " + path.size() + " steps.");
-                PegMove last = path.remove(path.size() - 1);
-                board_.undoMove(last);
-                pegBoardViewer_.setNumTries(numIterations_);
-                refresh();
-            }
-        }
-        // undo the last move and return
-        PegMove last = (PegMove) path.remove(path.size() - 1);
-        board_.undoMove(last);
-        return solved;
-    }
-
-    private void refresh() {
+    public void refresh(PegBoard board, long numTries) {   
+        if (numTries % 5000 == 0)
+        pegBoardViewer_.setNumTries(numTries);
+        pegBoardViewer_.setBoard(board);
         pegBoardViewer_.repaint();
+        //System.out.println("num pegs left ="+board.getNumPegsLeft() + " " + numTries );
+    }
+    
+    public void finalRefresh(java.util.List<PegMove> path, PegBoard board, long numTries) { 
+        refresh(board, numTries);
+        showPath(path, board, numTries);                 
     }
 
-    public void showPath(List<PegMove> path, PegBoard board) {
+
+    public void showPath(java.util.List<PegMove> path, PegBoard board, long numTries) {
         System.out.println();
-        printPath(path);
-        List<PegMove> p = new LinkedList<PegMove>();
+        //printPath(path);        
+        java.util.List<PegMove> p = new LinkedList<PegMove>();
         p.addAll(path);
-        pegBoardViewer_.showPath(p, board.copy(), numIterations_);
+        pegBoardViewer_.showPath(p, new PegBoard(board), numTries);
         backButton_.setEnabled(true);
         forwardButton_.setEnabled(false);
     }

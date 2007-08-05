@@ -18,7 +18,7 @@ import java.awt.event.*;
 public final class SudokuPuzzle extends JApplet implements ActionListener, ItemListener
 {
 
-    private PuzzlePanel puzzlePanel_;
+    private SudokuPanel puzzlePanel_;
     // buttons
     private JButton generateButton_;
     private JButton solveButton_;
@@ -43,7 +43,7 @@ public final class SudokuPuzzle extends JApplet implements ActionListener, ItemL
      * (init required for applet)
      */
     public void init() {
-        puzzlePanel_ = new PuzzlePanel(Data.SAMPLE1);
+        puzzlePanel_ = new SudokuPanel(Data.SAMPLE1);
 
         JPanel panel = new JPanel(new BorderLayout());
 
@@ -149,7 +149,7 @@ public final class SudokuPuzzle extends JApplet implements ActionListener, ItemL
         // this formula must change if the menu items change.
         int size = (selected + 2) ;
         System.out.println("selected = "+ selected+" size ="+size);
-        PuzzleGenerator generator = new PuzzleGenerator(size);
+        SudokuGenerator generator = new SudokuGenerator(size);
         Board b = generator.generatePuzzleBoard(null);
         puzzlePanel_.setBoard(b);
         puzzlePanel_.repaint();

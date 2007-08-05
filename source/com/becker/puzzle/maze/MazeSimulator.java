@@ -6,6 +6,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * A maze generator and solver
+ *@author Barry Becker
+ */
 public class MazeSimulator extends JApplet implements ActionListener
 {
 

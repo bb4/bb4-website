@@ -164,8 +164,6 @@ public class GeneticSearchStrategy extends OptimizationStrategy
                  // notify of our best candidate in this generation
                  listener_.optimizerChanged(currentBest);
              }
-
-
              ct++;
 
          } while ( (deltaFitness > improvementEpsilon_ || optimizee_.getOptimalFitness() > 0 )

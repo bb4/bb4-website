@@ -6,62 +6,109 @@ import com.becker.common.*;
 import java.util.*;
 
 /**
+ * Immutable representation of a PegBoard.
  * @author Barry Becker
  */
 public class PegBoard {
 
-    static final byte SIZE = 7;  // this must be odd
+    public static final byte SIZE = 7;  // this must be odd
+    
+    /**
+     *  The number of symmetries the board has.
+     *  Each odd and even pair are mirror images of a 90 degree rotation.
+     */
+    public static final int SYMMETRIES = 8;
+    
+    /** maintains the compressed peg position infomation for the board. */
+    private int bits_;                    // the first 32 positions
+    private boolean finalBit_;          // the final, 33rd position
+    private boolean nextToFinalBit_;  // the final, 32rd position
+    
+    /** 
+     *The 8 fold symmetry of the board.
+     */
+    private static final byte[][] BOARD_SYMMETRY = {
+            { /* placeholder for 0 index. i.e. 0-31 */},
+            {2, 1, 0, 5, 4, 3, 12, 11, 10, 9, 8, 7, 6, 19, 18, 17, 16, 15, 14, 13, 26, 25, 24, 23, 22, 21, 20, 29, 28, 27, 32, 31, 30},
+            {12, 19, 26, 11, 18, 25, 2, 5, 10, 17, 24, 29, 32, 1, 4, 9, 16, 23, 28, 31, 0, 3, 8, 15, 22, 27, 30, 7, 14, 21, 6, 13, 20},
+            {26, 19, 12, 25, 18, 11, 32, 29, 24, 17, 10, 5, 2, 31, 28, 23, 16, 9, 4, 1, 30, 27, 22, 15, 8, 3, 0, 21, 14, 7, 20, 13, 6},
+            {32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0},
+            {30, 31, 32, 27, 28, 29, 20, 21, 22, 23, 24, 25, 26, 13, 14, 15, 16, 17, 18, 19, 6, 7, 8, 9, 10, 11, 12, 3, 4, 5, 0, 1, 2},
+            {20, 13, 6, 21, 14, 7, 30, 27, 22, 15, 8, 3, 0, 31, 28, 23, 16, 9, 4, 1, 32, 29, 24, 17, 10, 5, 2, 25, 18, 11, 26, 19, 12},
+            {6, 13, 20, 7, 14, 21, 0, 3, 8, 15, 22, 27, 30, 1, 4, 9, 16, 23, 28, 31, 2, 5, 10, 17, 24, 29, 32, 11, 18, 25, 12, 19, 26}
+    };
+
+    private static final byte NUM_PEG_HOLES = 33;   
     private static final byte CENTER = 3;
     private static final byte CORNER_SIZE = 2;
-
-    private boolean[][] positions_;
-    private int numPegsLeft_;
-
-    public PegBoard() {
-        initializeBoard();
-    }
-
-    private void initializeBoard() {
-        positions_ = new boolean[SIZE][SIZE];
-        setToInitialState();
-    }
-
-    public void setToInitialState() {
-       numPegsLeft_ = 0;
-       for (int i = 0; i<SIZE; i++) {
-           for (int j = 0; j<SIZE; j++) {
-               if (isValidPosition(i, j)) {
-                   positions_[i][j] = true;
-                   numPegsLeft_++;
+   
+      
+    /** The initial board position constant */  
+    public static final PegBoard INITIAL_BOARD_POSITION = new PegBoard();
+    static {
+       for (byte i = 0; i<SIZE; i++) {
+           for (byte j = 0; j<SIZE; j++) {
+               if (PegBoard.isValidPosition(i, j)) {
+                    INITIAL_BOARD_POSITION.setPosition(i, j, true);              
                }
            }
        }
-       positions_[CENTER][CENTER] = false;
-       numPegsLeft_--;
-   }
-
-
-    public void setToSolvedState() {
-        for (int i = 0; i<SIZE; i++) {
-            for (int j = 0; j<SIZE; j++) {
-                positions_[i][j] = false;
-            }
-        }
-        positions_[CENTER][CENTER] = true;
+       INITIAL_BOARD_POSITION.setPosition(PegBoard.CENTER, PegBoard.CENTER, false);
     }
-
+    
+    /** 
+     * Do not use this constructor since outsders cannot create mutable boards.
+     */
+    private PegBoard() {
+    }
+    
+    /**
+     * Copy constructor.
+     */
+    public PegBoard(PegBoard board) {
+        bits_ = board.bits_;
+        finalBit_ = board.finalBit_;
+        nextToFinalBit_ = board.nextToFinalBit_;
+    }
+    
+    /**
+     *Constructor
+     *create a new BoardPosition by applying a move to another BoardPosition.
+     */
+    public PegBoard(PegBoard pos, PegMove move, boolean undo) {
+        this(pos);
+        
+        byte fromRow = move.getFromRow();
+        byte fromCol = move.getFromCol();
+        byte toRow = move.getToRow();
+        byte toCol = move.getToCol();
+        
+        setPosition(fromRow, fromCol,  undo);
+        // Remove or replace the piece that was jumped as appropriate
+        setPosition((byte)((fromRow + toRow) >> 1), (byte)((fromCol + toCol) >> 1),   undo);
+        setPosition(toRow, toCol,   !undo);
+    }
+        
     public int getSize() {
         return SIZE;
     }
-    public int getCornerSize() {
-        return CORNER_SIZE;
+             
+    public boolean getPosition(byte row, byte col) {               
+        return get(getIndexForPosition(row, col));        
     }
-
-    boolean getPosition(int row, int col) {
-        return positions_[row][col];
+    
+    /**
+     * Private so others can not modify our immutable state after construction.
+     */
+    private void setPosition(byte row, byte col, boolean val) {
+        set(getIndexForPosition(row, col), val);
     }
+ 
 
-    boolean isValidPosition(int row , int col) {
+    /**
+     *@return true if the coordinates refer to one of the 33 board positions that can hold a peg.
+     */
+    public static boolean isValidPosition(int row , int col) {
         if (row < 0 || row  >= SIZE || col < 0 || col >= SIZE) {
             return false;
         }
@@ -71,17 +118,8 @@ public class PegBoard {
         else return col >= CORNER_SIZE && col < SIZE - CORNER_SIZE;
     }
 
-    public PegBoard copy() {
-        PegBoard newBoard = new PegBoard();
-
-        for (int i = 0; i < SIZE; i++) {
-            System.arraycopy(positions_[i], 0, newBoard.positions_[i],  0, SIZE);
-        }
-        return newBoard;
-    }
-
-    public boolean isEmpty(int row, int col) {
-        return !positions_[row][col];
+    public boolean isEmpty(byte row, byte col) {
+        return !getPosition(row, col);
     }
 
     /**
@@ -93,33 +131,23 @@ public class PegBoard {
     }
 
     public boolean isSolved() {
-        //return  (getNumPegsLeft() < 2);
-        return (getNumPegsLeft() == 1 && positions_[CENTER][CENTER]);
+        return (getNumPegsLeft() == 1 && getPosition(CENTER, CENTER));
     }
 
-    public int getNumPegsLeft() {
-        return numPegsLeft_;
+    public PegBoard makeMove(PegMove move) {
+        return doMove(move, false);
     }
 
-    public void makeMove(PegMove move) {
-        doMove(move, false);
+    public PegBoard undoMove(PegMove move) {
+        return doMove(move, true);
     }
 
-    public void undoMove(PegMove move) {
-        doMove(move, true);
-    }
-
-    public void doMove(PegMove move, boolean undo) {
-        int fromRow = move.getFromRow();
-        int fromCol = move.getFromCol();
-        int toRow = move.getToRow();
-        int toCol = move.getToCol();
-
-        positions_[fromRow][fromCol] = undo;
-        positions_[(fromRow + toRow) >> 1][(fromCol + toCol) >> 1] = undo;
-        positions_[toRow][toCol] = !undo;
-
-        numPegsLeft_ += undo? 1 : -1;
+    /**
+     *Creates a new board with the move applied.
+     *Does not violate immutability.
+     */
+    public PegBoard doMove(PegMove move, boolean undo) {              
+        return new PegBoard(this, move, undo);
     }
 
     /**
@@ -132,43 +160,52 @@ public class PegBoard {
         List<PegMove> moves = new LinkedList<PegMove>();
         byte r = (byte) location.getRow();
         byte c = (byte) location.getCol();
-        Location destination = new Location(r, c);
 
         // 4 cases to consider: NEWS
-        if (isValidPosition(r, c-2) && positions_[r][c-2]!=undo && positions_[r][c-1]!=undo) {
+        checkMoveForDirection(r, c, 0, -2, undo, moves);
+        checkMoveForDirection(r, c, 0, 2, undo, moves);
+        checkMoveForDirection(r, c, -2, 0, undo, moves);
+        checkMoveForDirection(r, c, 2, 0, undo, moves);
+        /*
+        if (isValidPosition(r, (byte)(c-2)) && getPosition(r, (byte)(c-2))!=undo && getPosition(r, (byte)(c-1))!=undo) {
             Location from = new Location(r, c - 2);
             moves.add(new PegMove(from, destination));
         }
-        if (isValidPosition(r, c+2) && positions_[r][c+2]!=undo && positions_[r][c+1]!=undo) {
+        if (isValidPosition(r, (byte)(c+2)) && getPosition(r, (byte)(c+2))!=undo && getPosition(r, (byte)(c+1))!=undo) {
             Location from = new Location(r, c + 2);
             moves.add(new PegMove(from, destination));
         }
-        if (isValidPosition(r-2, c) && positions_[r-2][c]!=undo && positions_[r-1][c]!=undo) {
+        if (isValidPosition((byte)(r-2), c) && getPosition((byte)(r-2), c)!=undo && getPosition((byte)(r-1), c)!=undo) {
             Location from = new Location(r-2, c);
             moves.add(new PegMove(from, destination));
         }
-        if (isValidPosition(r+2, c) && positions_[r+2][c]!=undo && positions_[r+1][c]!=undo) {
+        if (isValidPosition((byte)(r+2), c) && getPosition((byte)(r+2), c)!=undo && getPosition((byte)(r+1), c)!=undo) {
             Location from = new Location(r+2, c);
             moves.add(new PegMove(from, destination));
-        }
+        }  */
         return moves;
     }
-
-    public BoardHashKey hashKey() {
-        return new BoardHashKey(this);
+    
+    private void checkMoveForDirection(byte r, byte c, int rowOffset, int colOffset, boolean undo, List<PegMove> moves) {
+        byte fromRow = (byte)(r + rowOffset);
+        byte fromCol = (byte)(c + colOffset);
+        if (isValidPosition(fromRow, fromCol) 
+               && getPosition(fromRow, fromCol)!=undo 
+               && getPosition((byte)(r + rowOffset/2), (byte)(c + colOffset/2))!=undo) {
+            moves.add(new PegMove(fromRow, fromCol, r, c));
+        }
     }
-
+    
     /**
-     *
      * @param pegged boolean if true get pegged locations, else empty locations
      * @return List of pegged or empty locations
      */
     public List<Location> getLocations(boolean pegged) {
 
         List<Location> list = new LinkedList<Location>();
-        for (int i = 0; i<SIZE; i++) {
-            for (int j = 0; j<SIZE; j++) {
-                if (isValidPosition(i, j) && positions_[i][j] == pegged) {
+        for (byte i = 0; i<SIZE; i++) {
+            for (byte j = 0; j<SIZE; j++) {
+                if (isValidPosition(i, j) && getPosition(i, j) == pegged) {
                     list.add(new Location(i, j));
                 }
             }
@@ -182,7 +219,7 @@ public class PegBoard {
     public List<PegMove> generateMoves() {
        List<PegMove> moves = new LinkedList<PegMove>();
        List<Location> emptyLocations = getLocations(false);
-       if (emptyLocations.size() == 0) {
+       if (emptyLocations.isEmpty()) {
            moves.add(getFirstMove());
        } else {
            Iterator it = emptyLocations.iterator();
@@ -195,19 +232,116 @@ public class PegBoard {
        return moves;
     }
 
-      /**
-       * @return List of possible undo moves
-       */
-      public List<PegMove> generateUndoMoves() {
-         List<PegMove> moves = new LinkedList<PegMove>();
-         List<Location> pegLocations = getLocations(true);
-
-         Iterator it = pegLocations.iterator();
-         while (it.hasNext()) {
-             Location pos = (Location) it.next();
-             moves.addAll(findMovesForLocation(pos, true));
-         }
-         return moves;
+    /**
+     *Map the coordinate location into our memory conserving hash.
+     */
+    private int getIndexForPosition(int row, int col) {
+        int p = row * 10 + col;
+        int index = -1;
+        if (p>19 && p<47) {
+            // this crazy formula gives the index for the middle 3 rows in the board. 
+            return p % 10 + (p / 10 - 1) * 7 - 1;
+        }
+        switch (p) {
+            case   2: index = 0; break;
+            case   3: index = 1; break;
+            case   4: index = 2; break;
+            case 12: index = 3; break;
+            case 13: index = 4; break;    
+            case 14: index = 5; break;       
+            case 52: index = 27; break;
+            case 53: index = 28; break;
+            case 54: index = 29; break;
+            case 62: index = 30; break;
+            case 63: index = 31; break;
+            case 64: index = 32; break;    
+            default: assert false: "invalid position row="+row +" col="+col;
+        }            
+        return index;
+    }
+    
+    /**
+     * Set value of position in internal compress data structure.
+     */
+    private void set(int i, boolean val) {
+        if (i == NUM_PEG_HOLES - 1) {
+            finalBit_ = val;
+        } else if (i == NUM_PEG_HOLES - 2)  {
+            nextToFinalBit_ = val;
+        }
+        else {
+            long place = 1 << i;
+            bits_ -= get(i) ? place : 0;
+            bits_ += val ? place : 0;
+        }
+    }
+    
+    /**
+     *Extract the value of the ith bit.
+     */
+    private boolean get(int i)  {
+        if (i == NUM_PEG_HOLES - 1) {
+            return finalBit_;
+        } else if (i == NUM_PEG_HOLES - 2) {
+            return nextToFinalBit_;
+        }
+        long place = 1 << i;
+        return ((bits_ & place) != 0);
+    }
+    
+    /**
+     * Number of pegs left on the board.
+     */
+    public int getNumPegsLeft() {
+        int nPegsLeft = 0;        
+        for (int i=0; i<NUM_PEG_HOLES; i++) {
+            if (get(i)) {
+                nPegsLeft++;
+            }
+        }
+        return nPegsLeft;
     }
 
+    /**
+     * Check all 8 symmetries
+     * if rotateIndex = 0 then no rotation
+     * if rotateIndex = 1 mirror image of this,
+     * if rotateIndex = 2 then 90 degree rotation of this,
+     * if rotateIndex = 3 then mirror image of 2, etc
+     */
+    public PegBoard symmetry(int symmIndex) {
+        return (symmIndex==0) ? this : rotate(BOARD_SYMMETRY[symmIndex]);   
+    }
+
+    public boolean equals(Object b) {
+        PegBoard board = (PegBoard) b;
+        return (bits_ == board.bits_ && finalBit_ == board.finalBit_ && nextToFinalBit_ == board.nextToFinalBit_);
+    }
+
+    /**
+     * All but one bit accounted for in the hash.
+     */
+    public int hashCode() {
+        return nextToFinalBit_ ? -bits_ : bits_;
+    }
+
+    /**
+     * Rotate the board according to symmetry.
+     * Not all are rotational symmetries, but you get the idea....
+     */
+    private PegBoard rotate(byte[] rotateIndices) {
+        PegBoard rotatedBoard = new PegBoard();
+        for (int i = 0; i < NUM_PEG_HOLES; i++)  {
+            rotatedBoard.set(i, get(rotateIndices[i]));
+        }
+        return rotatedBoard;
+    }
+
+    public String toString() {      
+        StringBuffer buf= new StringBuffer(finalBit_?"1":"0");
+        buf.append(nextToFinalBit_?"1":"0");
+        buf.append(Integer.toBinaryString(bits_));
+        return buf.toString();
+    }    
+    
 }

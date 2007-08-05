@@ -80,7 +80,7 @@ public class RDSimulator extends Simulator {
     }
 
     /**
-     * *** implements the key method of the Optimizee interface
+     * *** implements the key method of the Optimizee interface ***
      *
      * evaluates the fitness.
      */

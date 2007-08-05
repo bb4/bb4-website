@@ -120,9 +120,9 @@ public final class RDRenderer {
     }
 
     public double getConcentration(int x, int y) {
-        double concentration = isShowingU() ? gs_.u_[x][y] : 0.0;
+        double concentration = isShowingU() ? gs_.getU(x, y): 0.0;
         if (isShowingV()) {
-            concentration += gs_.v_[x][y];
+            concentration += gs_.getV(x, y);
         }
         return concentration;
     }
