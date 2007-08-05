@@ -321,7 +321,7 @@
 
   <target name="executeHiQPuzzle" depends="compile" description=" run the Hi-Q Puzzle screenSaver">
     <echo message="now executing Hi-Q"/>
-    <java classname="com.becker.puzzle.hiq.HiQPuzzle" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="800M">
+    <java classname="com.becker.puzzle.hiq.HiQPuzzle" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="600M">
         <jvmarg value="${assertionsFlag}"/>
     </java>
   </target>
