@@ -58,6 +58,8 @@ public class HillClimbingStrategy extends OptimizationStrategy
      * that we can be quaranteed to improve my some amount on every iteration until the incremental improvement
      * is less than the threshold fitness_eps.
      *
+     *@@ this method should be parallized.
+     *
      * @param params the initial value for the parameters to optimize.
      * @param fitnessRange the approximate absolute value of the fitnessRange.
      * @return the optimized params.

@@ -5,25 +5,33 @@ import com.becker.common.*;
 
 
 /**
- *  Definition for a peg jumping another peg.
+ * Definition for a peg jumping another peg.
+ * Immutable.
+ *@author Barry Becker
  */
 public final class PegMove
 {
     // the position of the move
-    protected byte toRow_;
-    protected byte toCol_;
+    private byte toRow_;
+    private byte toCol_;
 
-    protected byte fromRow_;
-    protected byte fromCol_;
+    private byte fromRow_;
+    private byte fromCol_;
 
     /**
      * protected Constructor.
-     * use the factory method createMove instead.
+     * use one of the other constructors.
      */
-    protected PegMove() {}
+    private PegMove() {}
 
     /**
      * create a move object representing a transition on the board.
+     * A naive implmentation might use 4 four  byte integers to store the from and two values.
+     * This would use 16 bytes of memory per move.
+     * If we do this, we will quickly run out of memory because fo the vast numbers of moves that must be stored.
+     * I will use just 1 byte to store the move information. 
+     * All we need to know is the from position (which can be stored in 6 bits) and the to direction (which can be stored in 2 bits)
+     *I know that a jump is always 2 spaces.
      */
     protected PegMove( byte fromRow, byte fromCol,
                        byte destinationRow, byte destinationCol)
@@ -46,23 +54,23 @@ public final class PegMove
      */
     public PegMove copy()
     {
-        return new PegMove( fromRow_, fromCol_, toRow_, toCol_);
+        return new PegMove(fromRow_, fromCol_, toRow_, toCol_);
     }
 
-    public int getFromRow()
+    public byte getFromRow()
     {
         return fromRow_;
     }
-    public int getFromCol()
+    public byte getFromCol()
     {
         return fromCol_;
     }
 
-    public int getToRow()
+    public byte getToRow()
     {
         return toRow_;
     }
-    public int getToCol()
+    public byte getToCol()
     {
         return toCol_;
     }
@@ -70,7 +78,6 @@ public final class PegMove
     public String toString()
     {
         StringBuffer s = new StringBuffer();
-        //s.append(" sel:"+selected);
         s.append( "from("+fromRow_+", "+fromCol_+") to (" + toRow_ + ", " + toCol_ + ')' );
         return s.toString();
     }

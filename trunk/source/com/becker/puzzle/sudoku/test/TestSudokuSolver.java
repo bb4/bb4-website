@@ -10,7 +10,7 @@ public class TestSudokuSolver extends TestCase {
 
     public void testCase1() {
 
-        PuzzleSolver solver = new PuzzleSolver();
+        SudokuSolver solver = new SudokuSolver();
         boolean solved = solver.solvePuzzle(new Board(Data.SAMPLE1));
 
         Assert.assertTrue( "Did not solve SAMPLE1 successfully", solved);
@@ -18,7 +18,7 @@ public class TestSudokuSolver extends TestCase {
 
     public void testNegativeCase1() {
 
-        PuzzleSolver solver = new PuzzleSolver();
+        SudokuSolver solver = new SudokuSolver();
         boolean solved = solver.solvePuzzle(new Board(Data.SAMPLE2));
 
         Assert.assertFalse( "Solved impossible SAMPLE1 puzzle. Should not have.", solved);
@@ -40,14 +40,14 @@ public class TestSudokuSolver extends TestCase {
     }
 
     public void generateAndSolve(int baseSize, int seed) {
-        PuzzleGenerator generator = new PuzzleGenerator(baseSize);
+        SudokuGenerator generator = new SudokuGenerator(baseSize);
         generator.setRandomSeed(2);    // make repeatable, not random.
 
         long start = System.currentTimeMillis();
         Board b = generator.generatePuzzleBoard(null);
         System.out.println("Time to generate size="+baseSize +" was "+ (System.currentTimeMillis() - start));
 
-        PuzzleSolver solver = new PuzzleSolver();
+        SudokuSolver solver = new SudokuSolver();
         start = System.currentTimeMillis();
         boolean solved = solver.solvePuzzle(b);
         System.out.println("Time to solve size="+baseSize +" was "+ (System.currentTimeMillis() - start));

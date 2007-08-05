@@ -42,7 +42,7 @@ public class RDDynamicOptions extends JPanel
         simulator_ = simulator;
 
         restartButton_ = new Button("Restart");
-        restartButton_.setMaximumSize(new Dimension(60, 22));
+        restartButton_.setMaximumSize(new Dimension(60, 20));
         restartButton_.addActionListener(this);
 
         kSlider_ = new LabeledSlider("K = ", GrayScott.K0, 0.0, 0.3);
@@ -65,13 +65,9 @@ public class RDDynamicOptions extends JPanel
         numStepsSlider_.setShowAsInteger(true);
         numStepsSlider_.addChangeListener(this);
 
-        RDRenderer r = simulator_.getRenderer();
-        showU_ = new JCheckBox("Show U Value", r.isShowingU());
-        showU_.addActionListener(this);
-        showV_ = new JCheckBox("Show V Value", r.isShowingV());
-        showV_.addActionListener(this);
-
-        legend_ = new ContinuousColorLegend(null, r.getColorMap(), true);
+        JPanel uvCheckBoxes = createUVCheckBoxes();
+        
+        legend_ = new ContinuousColorLegend(null, simulator_.getRenderer().getColorMap(), true);
 
         add(fSlider_);
         add(kSlider_);
@@ -81,13 +77,29 @@ public class RDDynamicOptions extends JPanel
         add(specularSlider_);
         add(Box.createVerticalStrut(10));
         add(numStepsSlider_);
-        add(Box.createVerticalStrut(20));
-        add(showU_);
-        add(showV_);
-        add(Box.createVerticalStrut(20));
+        add(Box.createVerticalStrut(10));
+        add(uvCheckBoxes);
+        add(Box.createVerticalStrut(10));
         add(restartButton_);
-        add(Box.createVerticalStrut(30));
+        add(Box.createVerticalStrut(10));
         add(legend_);
+    }
+    
+    private JPanel createUVCheckBoxes() {
+        
+        JPanel uvCheckBoxes = new JPanel(new FlowLayout());
+        
+        //.setPreferredSize(new Dimension(300, 30));
+        RDRenderer r = simulator_.getRenderer();
+        showU_ = new JCheckBox("Show U Value", r.isShowingU());
+        showU_.addActionListener(this);
+        showV_ = new JCheckBox("Show V Value", r.isShowingV());
+        showV_.addActionListener(this);
+        uvCheckBoxes.add(showU_); //, BorderLayout.EAST);
+        uvCheckBoxes.add(Box.createHorizontalGlue());
+        uvCheckBoxes.add(showV_); //, BorderLayout.CENTER);
+        uvCheckBoxes.setBorder(BorderFactory.createEtchedBorder());
+        return uvCheckBoxes;
     }
 
 

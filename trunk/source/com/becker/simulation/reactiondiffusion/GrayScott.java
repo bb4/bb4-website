@@ -1,8 +1,20 @@
 package com.becker.simulation.reactiondiffusion;
 
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 /**
  * This is the core of the Gray-Scott reaction diffusion simulation.
  * based on implmentation by Joakim Linde and modified by Barry Becker.
+ *
+ *Here are some parallelism results using my Core2Duo 6400.
+ * Without parallelism  8.62 fps
+ * With parallelism (but not borders) 10.16 fps
+ * With parallelism (and borders in sep thread) 10.36 fps
  */
 final class GrayScott {
 
@@ -13,10 +25,27 @@ final class GrayScott {
 
     private static final double DU = 2.0e-5;
     private static final double DV = 1.0e-5;
-
+    
+    /** 
+     * set this to true if you want to run the version
+     *that will particiton the task of computing the next timeStop 
+     *into smaller pieces that can be run on different threads.
+     *This should speed thinks up on a multi-core computer.
+     */
+    private static final boolean PARALLELIZED = true;
+    
+    /** the number of processors available on this computer */
+    private static final int NUM_PROCESSORS = Runtime.getRuntime().availableProcessors();
+    
+    /** Recycle threads so we do not create thousands and eventually run out of memory. */
+    private Executor exec = Executors.newFixedThreadPool(NUM_PROCESSORS + 1);
+    
+    /** Force concurrent threads to pause until they are all complete. */
+    private CountDownLatch latch_;
+   
     /** concentrations of the 2 chemicals. */
-    double[][] u_;
-    double[][] v_;
+    private double[][] u_;
+    private double[][] v_;
     private double[][] tmpU_;
     private double[][] tmpV_;
 
@@ -27,6 +56,7 @@ final class GrayScott {
     private double duDivh2_;
     private double dvDivh2_;
     int width_, height_;
+       
 
     /**
      * constructor
@@ -46,6 +76,14 @@ final class GrayScott {
 
         initialState(f, k, h);
     }
+    
+    public double getU(int x, int y) {
+        return u_[x][y];
+    }
+    
+    public double getV(int x, int y) {
+        return v_[x][y];
+    }
 
     public void reset() {
         initialState(F0, K0, H0);
@@ -53,6 +91,8 @@ final class GrayScott {
 
     public void initialState(double f, double k, double h) {
 
+        System.out.println("NUM_PROCESSORS="+NUM_PROCESSORS);
+  
         this.f_ = f;
         this.k_ = k;
         setH(h);
@@ -113,37 +153,116 @@ final class GrayScott {
 
     /**
      * Advance one time step increment.
+     *u_ and v_ are calculated based on tmpU and tmpV, then the result is committed to tmpU and tmpV.
+     *
      * @param dt time step in seconds.
      */
     public void timeStep(double dt) {
 
-        double uv2;
-        /*center*/
-        for (int x = 1; x < width_ - 1; x++) {
-            for (int y = 1; y < height_ - 1; y++) {
-                uv2 = tmpU_[x][y] * tmpV_[x][y] * tmpV_[x][y];
-                u_[x][y] = calcNewCenter(tmpU_, x, y, duDivh2_, true, uv2, dt);
-                v_[x][y] = calcNewCenter(tmpV_, x, y, dvDivh2_, false, uv2, dt);
+        if (PARALLELIZED) {
+            concurrentTimeStep(dt);
+        } else {                   
+          
+            /*center*/
+            double uv2;
+            for (int x = 1; x < width_ - 1; x++) {
+                for (int y = 1; y < height_ - 1; y++) {
+                    uv2 = tmpU_[x][y] * tmpV_[x][y] * tmpV_[x][y];
+                    u_[x][y] = calcNewCenter(tmpU_, x, y, duDivh2_, true, uv2, dt);
+                    v_[x][y] = calcNewCenter(tmpV_, x, y, dvDivh2_, false, uv2, dt);
+                }
             }
+            computeNewEdgeValues(dt);
+            commitChanges();    
         }
-
-        /*edges*/
-        int x, y;
-        for (x = 0; x < width_; x++) {
-            calcEdge(x, 0, dt);
-            calcEdge(x, height_ - 1, dt);
+    }
+    
+    /**
+     * Break task into chunks and run on seperate tasks.
+     * Once all the separate threads have completed there assigned work, commit the results
+     * into tmpU and tmpV to prepare for the next iteration.
+     * The CyclicBarrier prevents the commit from happening until all threads are done.
+     */
+    public void concurrentTimeStep(final double dt) {
+       
+        latch_ = new CountDownLatch(NUM_PROCESSORS + 1);
+                 
+        /* calc center concurrently with multiple threads */
+        Runnable[] workers = new Runnable[NUM_PROCESSORS + 1];
+        int range = width_ / NUM_PROCESSORS;
+        for (int i = 0; i < (NUM_PROCESSORS - 1); i++) {
+            int offset =  i*range;
+            workers[i] = new Worker(1 + offset, offset + range, dt);      
         }
-
-        for (y = 0; y < height_; y++) {
-            calcEdge(0, y, dt);
-            calcEdge(width_ - 1, y, dt);
+         workers[NUM_PROCESSORS-1] = new Worker(range * (NUM_PROCESSORS - 1) + 1, width_-2, dt);    
+                  
+         // also add the border calculations in a separate thread.
+         workers[NUM_PROCESSORS] = new Runnable() {
+             public void run() {
+                 computeNewEdgeValues(dt);
+                 latch_.countDown();   
+             }
+         };
+         for (int i = 0; i <= NUM_PROCESSORS; i++) {
+             exec.execute((workers[i]));          
+         }
+           
+         // wait until that latch has counted down to 0.         
+         try {
+             latch_.await();
+         } catch (InterruptedException e) {
+             System.out.println("Interrupted "+ e.getCause());
+         }
+                  
+         commitChanges();      
+    }
+    
+    /**
+     * Runs one of the chunks.
+     */
+    private class Worker implements Runnable {
+        private int minX_, maxX_;
+        private double dt_;
+        
+        public Worker(int minX, int maxX, double dt) {
+            minX_ = minX;
+            maxX_ = maxX;
+            dt_ = dt;
         }
-
-        for (x = 0; x < width_; x++) {
-            for (y = 0; y < height_; y++) {
+        
+        public void run() {
+            double uv2;
+            for (int x = minX_; x <= maxX_; x++) {
+                for (int y = 1; y < height_ - 1; y++) {
+                    uv2 = tmpU_[x][y] * tmpV_[x][y] * tmpV_[x][y];
+                    u_[x][y] = calcNewCenter(tmpU_, x, y, duDivh2_, true, uv2, dt_);
+                    v_[x][y] = calcNewCenter(tmpV_, x, y, dvDivh2_, false, uv2, dt_);
+                }
+            }         
+            latch_.countDown();   
+        }
+    }
+    
+    private void commitChanges() {
+         for (int x = 0; x < width_; x++) {
+            for (int y = 0; y < height_; y++) {
                 tmpU_[x][y] = u_[x][y];
                 tmpV_[x][y] = v_[x][y];
             }
+        }
+    }
+    
+    private void computeNewEdgeValues(double dt) {
+        /* top and bottom edges*/       
+        for (int x = 0; x < width_; x++) {
+            calcEdge(x, 0, dt);
+            calcEdge(x, height_ - 1, dt);
+        }
+       
+         /* left and right edges*/
+        for (int y = 0; y < height_; y++) {
+            calcEdge(0, y, dt);
+            calcEdge(width_ - 1, y, dt);
         }
     }
 
@@ -169,7 +288,7 @@ final class GrayScott {
     }
 
 
-    private double calcNewCenter(double[][] tmp, int x, int y,
+    private final double calcNewCenter(double[][] tmp, int x, int y,
                                  double dDivh2, boolean useF, double uv2, double dt) {
 
         double sum = tmp[x + 1][y] + tmp[x - 1][y] +

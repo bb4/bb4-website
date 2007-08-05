@@ -29,7 +29,7 @@ public class Board
 
     static final int MAX_SIZE = 9;
 
-    // lists of row and col candiddates for every row and col.
+    // lists of row and col candidates for every row and col.
     protected List[] rowCandidates_;
     protected List[] colCandidates_;
 

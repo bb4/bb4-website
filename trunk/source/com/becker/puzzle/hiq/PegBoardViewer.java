@@ -23,12 +23,12 @@ final class PegBoardViewer extends JPanel
     private static final int FILLED_HOLE_RAD = 16;
     private static final int EMPTY_HOLE_RAD = 9;
 
-    private NumberFormat formatter_;
+    private final NumberFormat formatter_;
 
-    PegBoard pegBoard_;
-    List<PegMove> path_;
-    int currentStep_;
-    long numTries_;
+    private PegBoard pegBoard_;
+    private List<PegMove> path_;
+    private int currentStep_;
+    private long numTries_;
 
 
     // Constructor.
@@ -41,10 +41,19 @@ final class PegBoardViewer extends JPanel
         formatter_.setMaximumFractionDigits(0);
     }
 
+    public void setBoard(PegBoard board) {
+        pegBoard_ = board;
+    }
+    
+    public PegBoard getBoard() {
+        return pegBoard_;
+    }
 
     public void showPath(List<PegMove> path, PegBoard board, long numTries) {
         path_ = path;
         pegBoard_ = board;
+        System.out.println("path size="+ path.size());
+        System.out.println("path="+ path);
         currentStep_ = path.size() - 1;
         numTries_ = numTries;
     }
@@ -70,10 +79,9 @@ final class PegBoardViewer extends JPanel
         int inc = stepSize > 0 ? 1 : -1;
         int toStep = currentStep_ + stepSize;
         do {
-            pegBoard_.doMove((PegMove)path_.get(currentStep_), (inc < 0));
+            pegBoard_ = pegBoard_.doMove((PegMove)path_.get(currentStep_), (inc < 0));
             currentStep_ += inc;
         } while (currentStep_ != toStep);
-        //pegBoard_.doMove((PegMove)path_.get(currentStep_), (inc < 0));
         repaint();
     }
 
@@ -114,10 +122,10 @@ final class PegBoardViewer extends JPanel
         }
 
         // now draw the pieces that we have so far
-        for (int row = 0; row < size; row++) {
-            for (int col = 0; col < size; col++) {
+        for (byte row = 0; row < size; row++) {
+            for (byte col = 0; col < size; col++) {
 
-                if (pegBoard_.isValidPosition(row, col)) {
+                if (PegBoard.isValidPosition(row, col)) {
 
                     xpos = LEFT_MARGIN + col * 3 * INC + INC / 3;
                     ypos = TOP_MARGIN + row * 3 * INC + 2 * INC / 3;

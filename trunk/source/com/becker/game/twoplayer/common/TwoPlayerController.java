@@ -369,6 +369,7 @@ public abstract class TwoPlayerController extends GameController
     }
 
     /**
+     * Request the next computer move. It will be the best move that the computer can find.
      *
      * @param isPlayer1
      * @param synchronous if true then the method does not return until the next move has been found.
