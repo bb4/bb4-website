@@ -78,10 +78,12 @@ public class PegBoard {
     public PegBoard(PegBoard pos, PegMove move, boolean undo) {
         this(pos);
         
-        byte fromRow = move.getFromRow();
-        byte fromCol = move.getFromCol();
-        byte toRow = move.getToRow();
-        byte toCol = move.getToCol();
+        //Location fromLocation = move.getFrom();
+        //Location toLocation = move.getTo();
+        byte fromRow = (byte) move.getFromRow();
+        byte fromCol = (byte) move.getFromCol();
+        byte toRow = (byte) move.getToRow();
+        byte toCol = (byte) move.getToCol();
         
         setPosition(fromRow, fromCol,  undo);
         // Remove or replace the piece that was jumped as appropriate
@@ -166,23 +168,6 @@ public class PegBoard {
         checkMoveForDirection(r, c, 0, 2, undo, moves);
         checkMoveForDirection(r, c, -2, 0, undo, moves);
         checkMoveForDirection(r, c, 2, 0, undo, moves);
-        /*
-        if (isValidPosition(r, (byte)(c-2)) && getPosition(r, (byte)(c-2))!=undo && getPosition(r, (byte)(c-1))!=undo) {
-            Location from = new Location(r, c - 2);
-            moves.add(new PegMove(from, destination));
-        }
-        if (isValidPosition(r, (byte)(c+2)) && getPosition(r, (byte)(c+2))!=undo && getPosition(r, (byte)(c+1))!=undo) {
-            Location from = new Location(r, c + 2);
-            moves.add(new PegMove(from, destination));
-        }
-        if (isValidPosition((byte)(r-2), c) && getPosition((byte)(r-2), c)!=undo && getPosition((byte)(r-1), c)!=undo) {
-            Location from = new Location(r-2, c);
-            moves.add(new PegMove(from, destination));
-        }
-        if (isValidPosition((byte)(r+2), c) && getPosition((byte)(r+2), c)!=undo && getPosition((byte)(r+1), c)!=undo) {
-            Location from = new Location(r+2, c);
-            moves.add(new PegMove(from, destination));
-        }  */
         return moves;
     }
     
