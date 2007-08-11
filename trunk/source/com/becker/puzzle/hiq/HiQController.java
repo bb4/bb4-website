@@ -13,8 +13,9 @@ import java.util.Set;
 
 /**
  * HiQ Puzzle Controller.
+ *See puzzle.common for puzzle framework classes.
  *
- * Created on July 28, 2007, 6:28 AM
+ * Created on July 28, 2007
  * @author becker
  */
 public class HiQController implements PuzzleController<PegBoard, PegMove> {
@@ -73,7 +74,7 @@ public class HiQController implements PuzzleController<PegBoard, PegMove> {
         // Use either concurrent or sequential solver strategy
         final PuzzleSolver<PegBoard, PegMove> solver = 
                 USE_CONCURRENT ? 
-                    new ConcurrentPuzzleSolver(this, .4f, ui_) :
+                    new ConcurrentPuzzleSolver(this, .2f, ui_) :
                     new SequentialPuzzleSolver(this, ui_);        
 
         Worker worker = new Worker()  {
@@ -89,9 +90,9 @@ public class HiQController implements PuzzleController<PegBoard, PegMove> {
                     assert false: "Thread interrupted. " + e.getMessage();
                 }
 
-                int time = (int)((System.currentTimeMillis() - t));
-                System.out.println("solved in " + time + " milliseconds.");
-
+                float time = (float)((System.currentTimeMillis() - t))/1000.0f;
+                System.out.println("solved in " + time + " seconds.");
+                System.out.flush();
                 return null;
             }
 

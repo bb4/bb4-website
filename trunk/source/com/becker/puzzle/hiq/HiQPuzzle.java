@@ -116,7 +116,7 @@ public final class HiQPuzzle extends JApplet implements ActionListener, Refresha
    }
 
     public void refresh(PegBoard board, long numTries) {   
-        if (numTries % 5000 == 0)
+        if (numTries % 6000 == 0)
         pegBoardViewer_.setNumTries(numTries);
         pegBoardViewer_.setBoard(board);
         pegBoardViewer_.repaint();
@@ -127,7 +127,6 @@ public final class HiQPuzzle extends JApplet implements ActionListener, Refresha
         refresh(board, numTries);
         showPath(path, board, numTries);                 
     }
-
 
     public void showPath(java.util.List<PegMove> path, PegBoard board, long numTries) {
         System.out.println();

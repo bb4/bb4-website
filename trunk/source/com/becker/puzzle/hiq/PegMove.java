@@ -55,7 +55,7 @@ public final class PegMove
     public PegMove copy()
     {
         return new PegMove(fromRow_, fromCol_, toRow_, toCol_);
-    }
+    }    
 
     public byte getFromRow()
     {
