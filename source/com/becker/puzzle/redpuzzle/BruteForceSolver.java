@@ -1,16 +1,20 @@
 package com.becker.puzzle.redpuzzle;
 
+import com.becker.puzzle.common.Refreshable;
+
 /**
  * Works really well in spite of being brute force.
  * @see GeneticSearchSolver
  * for a potentially better alternative.
+ *
+ *Solves the puzzle in  17 seconds on Core2Duo sequentially.
  *
  * @author Barry Becker Date: Aug 6, 2006
  */
 public class BruteForceSolver extends PuzzleSolver {
 
 
-    public BruteForceSolver(PieceList pieces) {
+    public BruteForceSolver(PieceList pieces, boolean concurrent) {
         super(pieces);
     }
 
@@ -18,8 +22,10 @@ public class BruteForceSolver extends PuzzleSolver {
      * @param puzzlePanel will show the pieces as we arrange them.
      * @return true if a solution is found.
      */
-    public boolean solvePuzzle( PuzzlePanel puzzlePanel)  {
-        refresh(puzzlePanel);
+    public boolean solvePuzzle( Refreshable puzzlePanel)  {
+        assert (puzzlePanel!= null): "for now we require a puzzle panel.";
+        puzzlePanel.refresh(pieces_, 0);
+
         return solvePuzzle(puzzlePanel, pieces_, 0);
     }
 
@@ -31,7 +37,7 @@ public class BruteForceSolver extends PuzzleSolver {
      * @param i insdex of last placed piece. If we have to backtrack, we put it back where we got it.
      * @return true if successfully solved, false if no solution.
      */
-    protected  boolean solvePuzzle( PuzzlePanel puzzlePanel, PieceList pieces, int i ) {
+    protected  boolean solvePuzzle( Refreshable puzzlePanel, PieceList pieces, int i ) {
         boolean solved = false;
 
         // base case of the recursion. If reached, the puzzle has been solved.
@@ -44,13 +50,13 @@ public class BruteForceSolver extends PuzzleSolver {
             int r = 0;
             // try the 4 rotations
             while (!solved && r < 4) {
-                numIterations_++;
-                quickRefresh(puzzlePanel, p);
+                numTries_++;
+                 puzzlePanel.refresh(pieces, numTries_);  // may need to add p 
 
                 if ( fits(p) ) {
                     solution_.add( p );
                     pieces.remove( p );
-                    click(puzzlePanel);
+                    puzzlePanel.makeSound();
 
                     // call solvePuzzle with a simpler case (one less piece to solve)
                     solved = solvePuzzle( puzzlePanel, pieces, k);
@@ -71,7 +77,7 @@ public class BruteForceSolver extends PuzzleSolver {
             pieces.add(i, p);
         }
 
-        refresh(puzzlePanel);
+        puzzlePanel.finalRefresh(null, solution_, numTries_);
 
         // if we get here and solved is not true, we did not find a puzzlePanel
         return solved;

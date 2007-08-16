@@ -197,6 +197,8 @@ public class GeneticSearchStrategy extends OptimizationStrategy
 
         // now evaluate the members of the population - either directly, or by
         // comparing them against the initial params value passed in (including params).
+        // @@ this would be a lot better if it were made concurrent.
+        //  Create a thread for each evaluation and don't continue until they are all done (countDown latch or gate);
         for (int i=0; i<population.size(); i++) {
             ParameterArray p = (ParameterArray) population.get(i);
 

@@ -20,4 +20,9 @@ public interface Refreshable <P, M> {
      *show the path to the solution at the end.
      */
     void finalRefresh(List<M> path, P pos, long numTries);
+    
+    /**
+     *Make a sound of some sort
+     */
+    void makeSound();
 }

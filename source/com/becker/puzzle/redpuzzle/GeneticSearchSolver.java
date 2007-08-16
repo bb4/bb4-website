@@ -1,9 +1,11 @@
 package com.becker.puzzle.redpuzzle;
 
 import com.becker.optimization.*;
+import com.becker.puzzle.common.Refreshable;
 
 /**
  * Solve the red puzzle using a genetic search algorithm.
+ * Solves the puzzle in 3.5 seconds on Core2 duo system (6 generations).
  *
  * @author Barry Becker Date: Aug 6, 2006
  */
@@ -12,13 +14,14 @@ public class GeneticSearchSolver extends PuzzleSolver
 
     public static final int SOLVED_THRESH = 1000;
 
+    /** these boosters are bonuses we give to the scoring algorithm if 3 or four nubs on a side fit. */
     public static final double THREE_FIT_BOOST = 0.1;
     public static final double FOUR_FIT_BOOST = 0.6;
 
     // the max number of fitting nubs that we can have. The puzzle is solved if this happens.
     public static final double MAX_FITS = 24 + 4 * THREE_FIT_BOOST + FOUR_FIT_BOOST;
 
-    private PuzzlePanel puzzlePanel_;
+    private Refreshable puzzlePanel_;
 
     public GeneticSearchSolver(PieceList pieces) {
         super(pieces);
@@ -28,7 +31,7 @@ public class GeneticSearchSolver extends PuzzleSolver
      * @param puzzlePanel will show the pieces as we arrange them.
      * @return true if a solution is found.
      */
-    public boolean solvePuzzle( PuzzlePanel puzzlePanel)  {
+    public boolean solvePuzzle( Refreshable puzzlePanel)  {
 
         ParameterArray initialGuess = new PieceParameterArray(pieces_);
         puzzlePanel_ = puzzlePanel;
@@ -43,7 +46,7 @@ public class GeneticSearchSolver extends PuzzleSolver
                                      initialGuess, SOLVED_THRESH);
 
         solution_ = ((PieceParameterArray)solution).getPieceList();
-        refresh(puzzlePanel);
+        puzzlePanel.finalRefresh(null, solution_, numTries_);
 
         return (evaluateFitness(solution) >= SOLVED_THRESH);
     }
@@ -117,7 +120,7 @@ public class GeneticSearchSolver extends PuzzleSolver
     public void optimizerChanged(ParameterArray params) {
         // update our current best guess at the solution.
         solution_ = ((PieceParameterArray) params).getPieceList();
-        numIterations_ += 1;
-        refresh(puzzlePanel_);
+        numTries_ ++;
+        puzzlePanel_.refresh(solution_, numTries_);
     }
 }

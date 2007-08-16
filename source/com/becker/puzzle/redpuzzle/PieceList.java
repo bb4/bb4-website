@@ -3,7 +3,7 @@ package com.becker.puzzle.redpuzzle;
 import java.util.*;
 
 /**
- * The pieces that sre in the red puzzle.
+ * The pieces that are in the red puzzle.
  * In no particular order.
  * model in the model-view-controller pattern.
  *
@@ -12,17 +12,19 @@ import java.util.*;
 public class PieceList {
 
     /** the real game has 9 pieces, but I might experiment with 4 or 16 for testing. */
-    private static final int DEFUALT_NUM_PIECES = 9;
-    private int maxNumPieces_ = DEFUALT_NUM_PIECES;
+    static final int NUM_PIECES = 9;
 
+    private int EDGE_LENGTH = (int)Math.sqrt(NUM_PIECES);
+
+    private static final int SEED = 5;
     // use the same seed for repeatable results.
     // 0 solves in 25,797 tries.
-    // 1 solves in  7,275     // 15,444
-    // 2 solves in 12,349     // 22,293
-    // 3 solves in  8,187     // 21,588
-    // 4 solves in 14,150     // 4,005
-    // 5 solves in  1,157     // 5,319
-    private static final Random R = new Random(5);
+    // 1 solves in 15,444
+    // 2 solves in 22,293
+    // 3 solves in 21,588
+    // 4 solves in  4,005
+    // 5 solves in  5,319
+    private static final Random R = new Random(SEED);
 
     private List<Piece> pieces_;
 
@@ -39,7 +41,7 @@ public class PieceList {
         new Piece( Nub.OUTY_SPADE,  Nub.OUTY_SPADE,  Nub.INNY_HEART, Nub.INNY_CLUB, 9),
      };
 
-    /** this defines the puzzle pieces for the standard 9x9 puzzle. */
+    /** this defines the puzzle pieces for a simpler 4x4 puzzle. */
     private static final Piece[] INITIAL_PIECES_4 = {
          INITIAL_PIECES_9[0], INITIAL_PIECES_9[1], INITIAL_PIECES_9[2], INITIAL_PIECES_9[3]
      };
@@ -50,17 +52,15 @@ public class PieceList {
      */
     public PieceList() {
 
-        this(DEFUALT_NUM_PIECES);
+        this(NUM_PIECES);
     }
 
     /**
      * a list of puzzle pieces.
      */
-    public PieceList(int numPieces) {
+    private PieceList(int numPieces) {
 
-        maxNumPieces_ = numPieces;
         assert(numPieces==4 || numPieces == 9);
-
         pieces_ = new LinkedList<Piece>();
     }
 
@@ -76,14 +76,14 @@ public class PieceList {
     }
 
     public static PieceList getInitialPuzzlePieces() {
-        return getInitialPuzzlePieces(DEFUALT_NUM_PIECES);
+        return getInitialPuzzlePieces(NUM_PIECES);
     }
 
     /**
      * Factory method for creating the initial puzzle pieces.
      * @return the initial 9 pieces (in random order) to use when solving.
      */
-    public static PieceList getInitialPuzzlePieces(int numPieces) {
+    private static PieceList getInitialPuzzlePieces(int numPieces) {
 
         PieceList pieces = new PieceList();
         Piece[] initialPieces = null;
@@ -109,8 +109,8 @@ public class PieceList {
      * @return the i'th piece.
      */
     public Piece get(int i)  {
-        assert i < maxNumPieces_ :
-                "there are only " + maxNumPieces_ + " pieces, but you tried to get the "+(i+1)+"th";
+        assert i < NUM_PIECES :
+                "there are only " +NUM_PIECES + " pieces, but you tried to get the "+(i+1)+"th";
         return pieces_.get(i);
     }
 
@@ -127,8 +127,8 @@ public class PieceList {
      */
     public void add(Piece p) {
         pieces_.add(p);
-        assert pieces_.size() <= maxNumPieces_ :
-                "there can only be at most " + maxNumPieces_ + " pieces.";
+        assert pieces_.size() <= NUM_PIECES :
+                "there can only be at most " + NUM_PIECES + " pieces.";
     }
 
     /**
@@ -136,8 +136,8 @@ public class PieceList {
       */
      public void add(int i, Piece p) {
         pieces_.add(i, p);
-        assert pieces_.size() <= maxNumPieces_ :
-                "there can only be at most " + maxNumPieces_ + " pieces.";
+        assert pieces_.size() <= NUM_PIECES :
+                "there can only be at most " + NUM_PIECES + " pieces.";
     }
 
     /**
@@ -182,10 +182,9 @@ public class PieceList {
     }
 
     /**
-     *
      * @return the number of matches for the nubs on this piece
      */
-    public int getNumFits(int i) {
+    public  int getNumFits(int i) {
 
         assert(i<9);
         // it needs to match the piece to the left and above (if present)
