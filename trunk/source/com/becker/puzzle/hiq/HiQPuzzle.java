@@ -43,8 +43,7 @@ import java.util.*;
  */
 public final class HiQPuzzle extends JApplet implements ActionListener, Refreshable<PegBoard, PegMove>
 {
-
-    // create the pieces and add them to a list
+    
     private HiQController controller_;
     private PegBoardViewer pegBoardViewer_;
 
@@ -116,16 +115,24 @@ public final class HiQPuzzle extends JApplet implements ActionListener, Refresha
    }
 
     public void refresh(PegBoard board, long numTries) {   
-        if (numTries % 6000 == 0)
-        pegBoardViewer_.setNumTries(numTries);
-        pegBoardViewer_.setBoard(board);
-        pegBoardViewer_.repaint();
-        //System.out.println("num pegs left ="+board.getNumPegsLeft() + " " + numTries );
+        if (numTries % 6000 == 0) {
+            refresh1(board, numTries);  
+        }
     }
     
     public void finalRefresh(java.util.List<PegMove> path, PegBoard board, long numTries) { 
-        refresh(board, numTries);
-        showPath(path, board, numTries);                 
+          refresh1(board, numTries);
+          showPath(path, board, numTries);                 
+    }
+    
+    public void refresh1(PegBoard board, long numTries) {   
+            pegBoardViewer_.setNumTries(numTries);
+            pegBoardViewer_.setBoard(board);
+            pegBoardViewer_.repaint();
+    }
+   
+    public void makeSound() {
+        // add sound
     }
 
     public void showPath(java.util.List<PegMove> path, PegBoard board, long numTries) {

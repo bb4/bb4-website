@@ -3,10 +3,10 @@ package com.becker.puzzle.redpuzzle;
 import com.becker.optimization.*;
 
 /**
- * The parameter array to use when searching to find a red puzzle solution.
+ * The parameter array to use when searching (using optimization) to find a red puzzle solution.
  * It has some unique properties.
  * For example, when finding a random neighbor, we consider rotations of
- * non-fitting pieces rather than just ofsetting the number by some random amount.
+ * non-fitting pieces rather than just offsetting the number by some random amount.
  *
  * @author Barry Becker Date: Aug 6, 2006
  */
@@ -29,8 +29,8 @@ public class PieceParameterArray extends ParameterArray {
     }
 
     /**
-     * We want to find a potential solution close to the one that we have, disturbing the
-     * pieces that are already fitted correctly as little as possible.
+     * We want to find a potential solution close to the one that we have, 
+     * with minimal disturbance of the pieces that are already fit.
      *
      * @param rad proportional to the number of pieces that you want to vary.
      * @return the random nbr (potential solution).

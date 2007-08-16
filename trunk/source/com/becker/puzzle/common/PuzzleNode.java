@@ -7,7 +7,7 @@ import net.jcip.annotations.*;
  * PuzzleNode
  * <p/>
  * Link node for the puzzle solving framework.
- * Contains a puzzle position (state) and a move (transition that got us to that position from the previous state.
+ * Contains a puzzle position (immutable state) and a move (transition that got us to that position from the previous state).
  *
  * @author Brian Goetz and Tim Peierls
  */

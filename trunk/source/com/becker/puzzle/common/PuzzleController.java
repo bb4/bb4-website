@@ -22,12 +22,12 @@ public interface PuzzleController<P, M> {
     boolean isGoal(P position);
 
     /**
-     *@return a list of legal next moves.
+     *@return a list of legal next immutable moves.
      */
     List<M> legalMoves(P position);
 
     /**
-     * @return the position that you get after applying the specified move.
+     * @return the position (immutable) that you get after applying the specified move.
      */
     P move(P position, M move);
     

@@ -1,6 +1,7 @@
 package com.becker.puzzle.redpuzzle;
 
 import com.becker.common.*;
+import com.becker.puzzle.common.Refreshable;
 import com.becker.ui.*;
 
 import javax.swing.*;
@@ -16,22 +17,20 @@ import java.awt.event.*;
  *
  * @author Barry becker
  */
-public final class RedPuzzle extends JApplet implements ChangeListener, ActionListener, ItemListener
+public final class RedPuzzle extends JApplet 
+                                             implements ChangeListener, ActionListener, ItemListener
+                                                                 
 {
-
     // shows the puzzle.
-    private PuzzlePanel puzzlePanel_;
+    private RedPuzzleViewer puzzleViewer_;
+    private RedPuzzleController controller_;
+    
     // allows you to change the animation speed.
     private LabeledSlider animSpeedSlider_;
-    private static final int INITIAL_ANIM_SPEED = 20; // max = 100
-
+    
     private JButton solveButton_;
     // size dropdown
     private Choice algorithmChoice_;
-    private String[] boardSizeMenuItems_ = {
-        "using brute force",
-        "using genetic algorithm search",
-    };
 
     /**
      * Construct the application and set the look and feel.
@@ -45,17 +44,18 @@ public final class RedPuzzle extends JApplet implements ChangeListener, ActionLi
      * (init required for applet)
      */
     public void init() {
-        puzzlePanel_ = new PuzzlePanel(9);
+        puzzleViewer_ = new RedPuzzleViewer();
+        controller_ = new RedPuzzleController(puzzleViewer_);   
 
-        animSpeedSlider_ = new LabeledSlider("Speed", INITIAL_ANIM_SPEED, 1, PuzzleSolver.MAX_ANIM_SPEED);
-        animSpeedSlider_.setResolution(PuzzleSolver.MAX_ANIM_SPEED - 1);
+        animSpeedSlider_ = new LabeledSlider("Speed", RedPuzzleViewer.INITIAL_ANIM_SPEED, 1, RedPuzzleViewer.MAX_ANIM_SPEED);
+        animSpeedSlider_.setResolution(RedPuzzleViewer.MAX_ANIM_SPEED - 1);
         animSpeedSlider_.setShowAsInteger(true);
         animSpeedSlider_.addChangeListener(this);
-        puzzlePanel_.setAnimationSpeed(INITIAL_ANIM_SPEED);
+        //puzzleViewer_.setAnimationSpeed(INITIAL_ANIM_SPEED);
 
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(createButtonPanel(), BorderLayout.NORTH);
-        panel.add(puzzlePanel_, BorderLayout.CENTER);
+        panel.add(puzzleViewer_, BorderLayout.CENTER);
         panel.add(animSpeedSlider_, BorderLayout.SOUTH);
 
         getContentPane().add( panel );
@@ -78,11 +78,14 @@ public final class RedPuzzle extends JApplet implements ChangeListener, ActionLi
         return panel;
     }
 
+    /**
+     *The dropdown menu at the top for selecting an algorithm for solving the puzzle.
+     */
     private Choice createAlgorithmDropdown() {
         algorithmChoice_ = new Choice();
         algorithmChoice_.addItemListener(this);
-        for (final String item : boardSizeMenuItems_) {
-            algorithmChoice_.add(item);
+        for (Algorithm a: Algorithm.values()) {
+            algorithmChoice_.add(a.getLabel());
         }
         algorithmChoice_.select(0);
         return algorithmChoice_;
@@ -93,8 +96,7 @@ public final class RedPuzzle extends JApplet implements ChangeListener, ActionLi
      * called by the browser after init(), if running as an applet
      */
     public void start() {
-
-        puzzlePanel_.setSize(this.getSize());
+        puzzleViewer_.setSize(this.getSize());
     }
 
     /**
@@ -104,7 +106,7 @@ public final class RedPuzzle extends JApplet implements ChangeListener, ActionLi
 
 
     public void stateChanged(ChangeEvent e) {
-        puzzlePanel_.setAnimationSpeed((int) animSpeedSlider_.getValue());
+        puzzleViewer_.setAnimationSpeed((int) animSpeedSlider_.getValue());
     }
 
     /**
@@ -114,16 +116,14 @@ public final class RedPuzzle extends JApplet implements ChangeListener, ActionLi
     public void itemStateChanged(ItemEvent e) {
 
         int selected = algorithmChoice_.getSelectedIndex();
-
-        PuzzlePanel.Algorithm alg;
-        switch (selected) {
-            case 0 : alg = PuzzlePanel.Algorithm.BRUTE_FORCE; break;
-            case 1 : alg = PuzzlePanel.Algorithm.GENETIC_SEARCH; break;
-            default : alg = PuzzlePanel.Algorithm.BRUTE_FORCE; break;
-        }
-
-        puzzlePanel_.setAlgorithm(alg);
-        puzzlePanel_.repaint();
+        controller_.setAlgorithm(Algorithm.values()[selected]);
+        puzzleViewer_.setAnimationSpeed(1);
+        puzzleViewer_.repaint();
+    }
+    
+    private void enableSolveButton(boolean enable) {
+        solveButton_.setEnabled(enable);
+        algorithmChoice_.setEnabled(enable);
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -136,14 +136,17 @@ public final class RedPuzzle extends JApplet implements ChangeListener, ActionLi
             Worker worker = new Worker() {
 
                 public Object construct() {
-                    puzzlePanel_.setAnimationSpeed((int) animSpeedSlider_.getValue());
-                    puzzlePanel_.startSolving();
-
+                    // we could run into state problems if you start again while running.
+                    enableSolveButton(false);
+                    puzzleViewer_.setAnimationSpeed((int) animSpeedSlider_.getValue());
+                    controller_.startSolving();                    
+                   
                     return null;
                 }
 
                 public void finished() {
-                    puzzlePanel_.repaint();
+                    puzzleViewer_.repaint();
+                    enableSolveButton(true);                 
                 }
             };
 

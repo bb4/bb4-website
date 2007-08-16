@@ -1,6 +1,7 @@
 package com.becker.puzzle.redpuzzle;
 
 import com.becker.common.*;
+import com.becker.puzzle.common.Refreshable;
 
 
 /**
@@ -12,22 +13,17 @@ import com.becker.common.*;
  */
 public abstract class PuzzleSolver {
 
-    // I don't have the data for other than a 3*3 or 2*2 puzzle.
-    protected int dim_ = 3;
-
     // the unsorted pieces that we draw from and place in the solvedPieces list.
     protected PieceList pieces_;
 
     // the pieces we have correctly fitted so far.
     protected PieceList solution_;
 
+    // I don't have the data for other than a 3*3 or 2*2 puzzle.
+    protected int dim_;
+    
     // some measure of the number of iterations the solver needs to solve the puzzle.
-    protected int numIterations_ = 0;
-
-    public static final int MAX_ANIM_SPEED = 100;
-    // slows down the animation.
-    private int animationSpeed_ = MAX_ANIM_SPEED;
-
+    protected int numTries_ = 0;
 
     /**
      * Constructor
@@ -44,7 +40,7 @@ public abstract class PuzzleSolver {
      * @param puzzlePanel will show the pieces as we arrange them.
      * @return true if a solution is found.
      */
-    public abstract boolean solvePuzzle( PuzzlePanel puzzlePanel);
+    public abstract boolean solvePuzzle(Refreshable puzzlePanel);
 
 
     /**
@@ -82,14 +78,6 @@ public abstract class PuzzleSolver {
     }
 
     /**
-     * @param speed higher the faster up to MAX_ANIM_SPEED.
-     */
-    public void setAnimationSpeed(int speed) {
-        assert (speed > 0 && speed <= MAX_ANIM_SPEED);
-        animationSpeed_ = speed;
-    }
-
-    /**
      * the number of successfully placed pieces so far.
      * @return
      */
@@ -101,35 +89,7 @@ public abstract class PuzzleSolver {
      * @return  the number of pieces we have tried to fit so far.
      */
     public int getNumIterations() {
-        return numIterations_;
+        return numTries_;
     }
 
-    protected void click(PuzzlePanel puzzlePanel) {
-        if (puzzlePanel != null)  {
-             puzzlePanel.clicked();
-        }
-    }
-
-
-    protected void quickRefresh(PuzzlePanel puzzlePanel, Piece p) {
-
-        if ((puzzlePanel != null) && (animationSpeed_ < MAX_ANIM_SPEED-1)) {
-            solution_.add( p );
-            puzzlePanel.repaint();
-            Util.sleep(9 * MAX_ANIM_SPEED / animationSpeed_); // give it a chance to repaint.
-            solution_.remove( p );
-        }
-    }
-
-    protected void refresh(PuzzlePanel puzzlePanel) {
-        if (puzzlePanel == null)
-            return;
-        puzzlePanel.repaint();
-        if (animationSpeed_ < MAX_ANIM_SPEED-1) {
-            Util.sleep(10 * MAX_ANIM_SPEED / animationSpeed_);
-        }
-        else {
-            Util.sleep(20);
-        }
-    }
 }
