@@ -13,19 +13,19 @@ import net.jcip.annotations.*;
  */
 @Immutable
 public class PuzzleNode<P, M> {
-    final P pos;
+    final P position;
     final M move;
-    PuzzleNode<P, M> prev;
+    PuzzleNode<P, M> previous;
 
     public PuzzleNode(P pos, M move, PuzzleNode<P, M> prev) {
-        this.pos = pos;
+        this.position = pos;
         this.move = move;
-        this.prev = prev;
+        this.previous = prev;
     }
 
     List<M> asMoveList() {
         List<M> solution = new LinkedList<M>();
-        for (PuzzleNode<P, M> n = this; n.move != null; n = n.prev) {
+        for (PuzzleNode<P, M> n = this; n.move != null; n = n.previous) {
             solution.add(0, n.move);
         }
         return solution;
