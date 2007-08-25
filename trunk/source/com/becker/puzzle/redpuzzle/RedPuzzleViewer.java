@@ -58,7 +58,7 @@ final class RedPuzzleViewer extends JPanel implements Refreshable<PieceList, Pie
      * Constructor.
      */
     RedPuzzleViewer() {
-        this.setPreferredSize( new Dimension( 4 * PIECE_SIZE, 4 * PIECE_SIZE ) );
+        setPreferredSize( new Dimension( 4 * PIECE_SIZE, 4 * PIECE_SIZE ) );
     }
     
     /**
@@ -73,15 +73,13 @@ final class RedPuzzleViewer extends JPanel implements Refreshable<PieceList, Pie
      * make a little click noise when the piece fits into place.
      */
     public void makeSound() {
-        musicMaker_.playNote(60, 40, 940);
+        musicMaker_.playNote(60, 10, 940);
     }
 
     public void refresh(PieceList pieces, long numTries) {  
         if ((animationSpeed_ < MAX_ANIM_SPEED-1)) {
-            //solution_.add( p );
             refresh1(pieces, numTries);
             Util.sleep(9 * MAX_ANIM_SPEED / animationSpeed_); // give it a chance to repaint.
-            //solution_.remove( p );
         }
     }
 
@@ -99,7 +97,6 @@ final class RedPuzzleViewer extends JPanel implements Refreshable<PieceList, Pie
         pieces_ = pieces;
         numTries_ = numTries;
         repaint();
-        //this.paintImmediately(0, 0,  this.getWidth(), this.getHeight());
     }
 
     /**

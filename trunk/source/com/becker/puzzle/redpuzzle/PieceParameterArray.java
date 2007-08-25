@@ -39,7 +39,7 @@ public class PieceParameterArray extends ParameterArray {
     {
         PieceList pieces = new PieceList(pieces_);
 
-        int numSwaps = 1; //Math.max(1, (int) (rad * 2.0));
+        int numSwaps = 1;   //Math.max(1, (int) (rad * 2.0));
         int startFits = pieces.getNumFits();
         //int improvement = 0;
         int endFits = 0;
@@ -59,16 +59,16 @@ public class PieceParameterArray extends ParameterArray {
                 int bestNumFits = numFits;
                 int bestRot = 1;
                 for (int i=0; i<3; i++) {
-                    pieces.get(k).rotate();
+         
+                    pieces.rotate(k, 1);  // fix
                     numFits = pieces.getNumFits(k);
                     if (numFits > bestNumFits) {
                         bestNumFits = numFits;
                         bestRot = 2 + i;
                     }
-
                 }
                 // rotate the piece to position of best fit.
-                pieces.get(k).rotate(bestRot);
+                pieces.rotate(k, bestRot); // fix
             }
             endFits = pieces.getNumFits();
             //improvement = endFits - startFits;
@@ -96,12 +96,8 @@ public class PieceParameterArray extends ParameterArray {
         do {
             p2 = getPieceFromProb(totalProb * RANDOM.nextDouble(), swapProbabilities);
         } while (p2 == p1);
-
-        Piece piece2 = pieces.get(p2);
-        Piece piece1 = pieces.remove(p1);
-        pieces.add(p1, piece2);
-        pieces.remove(piece2);
-        pieces.add(p2, piece1);
+     
+        pieces.doSwap(p1, p2);
     }
 
     private static double[] findSwapProbabilities(PieceList pieces) {
@@ -132,8 +128,8 @@ public class PieceParameterArray extends ParameterArray {
     public ParameterArray getRandomSolution()
     {
        PieceList pl = new PieceList(pieces_);
-       pl.shuffle();
-       return new PieceParameterArray(pl);
+       PieceList shuffledPieces = pl.shuffle();
+       return new PieceParameterArray(shuffledPieces);
     }
 
     /**

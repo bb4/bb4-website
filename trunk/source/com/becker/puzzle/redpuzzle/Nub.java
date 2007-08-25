@@ -55,6 +55,7 @@ public class Nub {
     }
 
     /**
+     * Check to see if this nub fits with another one.
      * @param nub other nub to try and fit with.
      * @return true if the nubs fit together.
      */

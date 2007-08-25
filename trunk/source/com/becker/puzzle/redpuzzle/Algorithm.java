@@ -1,6 +1,9 @@
 package com.becker.puzzle.redpuzzle;
 
-import net.jcip.examples.ThisEscape;
+import com.becker.puzzle.common.ConcurrentPuzzleSolver;
+import com.becker.puzzle.common.PuzzleSolver;
+import com.becker.puzzle.common.Refreshable;
+import com.becker.puzzle.common.SequentialPuzzleSolver;
 
 /**
  *
@@ -9,8 +12,9 @@ import net.jcip.examples.ThisEscape;
  */
 public enum Algorithm {
     
+    BRUTE_FORCE_ORIGINAL("Brute force (hand crafted)"),  
     BRUTE_FORCE_SEQUENTIAL("Brute force (sequential)"), 
-    //BRUTE_FORCE_CONCURRENT("Brute force (concurrent)"), 
+    BRUTE_FORCE_CONCURRENT("Brute force (concurrent)"), 
     GENETIC_SEARCH("Genetic search");
     
     private String label;
@@ -27,16 +31,21 @@ public enum Algorithm {
         return label;
     }
     
-    public PuzzleSolver createSolver() {
+    /**
+     * Create an instance of the algorithm given the controller and a refreshable.
+     */
+    public PuzzleSolver createSolver(RedPuzzleController controller, Refreshable ui) {
+        PieceList pieces =  PieceList.getInitialPuzzlePieces();
         switch (this) {
+            case BRUTE_FORCE_ORIGINAL :
+                return new BruteForceSolver(pieces, ui);
             case BRUTE_FORCE_SEQUENTIAL :
-                return new BruteForceSolver( PieceList.getInitialPuzzlePieces(), false);
-            //case BRUTE_FORCE_CONCURRENT :
-            //    return new BruteForceSolver( PieceList.getInitialPuzzlePieces(), true);
+                return new SequentialPuzzleSolver(controller, ui);
+            case BRUTE_FORCE_CONCURRENT :
+                return new ConcurrentPuzzleSolver(controller, 0.2f, ui);
             case GENETIC_SEARCH :
-                return new GeneticSearchSolver( PieceList.getInitialPuzzlePieces());
+                return new GeneticSearchSolver( pieces, ui);
         }
         return null; //never reached
     }
-    
 }

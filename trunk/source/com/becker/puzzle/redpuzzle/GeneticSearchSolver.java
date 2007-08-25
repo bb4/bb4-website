@@ -2,6 +2,7 @@ package com.becker.puzzle.redpuzzle;
 
 import com.becker.optimization.*;
 import com.becker.puzzle.common.Refreshable;
+import java.util.List;
 
 /**
  * Solve the red puzzle using a genetic search algorithm.
@@ -9,7 +10,7 @@ import com.becker.puzzle.common.Refreshable;
  *
  * @author Barry Becker Date: Aug 6, 2006
  */
-public class GeneticSearchSolver extends PuzzleSolver
+public class GeneticSearchSolver extends RedPuzzleSolver
                                  implements Optimizee, OptimizationListener {
 
     public static final int SOLVED_THRESH = 1000;
@@ -21,20 +22,19 @@ public class GeneticSearchSolver extends PuzzleSolver
     // the max number of fitting nubs that we can have. The puzzle is solved if this happens.
     public static final double MAX_FITS = 24 + 4 * THREE_FIT_BOOST + FOUR_FIT_BOOST;
 
-    private Refreshable puzzlePanel_;
 
-    public GeneticSearchSolver(PieceList pieces) {
+    public GeneticSearchSolver(PieceList pieces,  Refreshable puzzlePanel) {
         super(pieces);
+        puzzlePanel_ = puzzlePanel;
     }
 
     /**
      * @param puzzlePanel will show the pieces as we arrange them.
      * @return true if a solution is found.
      */
-    public boolean solvePuzzle( Refreshable puzzlePanel)  {
+    public List<Piece> solve()  {
 
-        ParameterArray initialGuess = new PieceParameterArray(pieces_);
-        puzzlePanel_ = puzzlePanel;
+        ParameterArray initialGuess = new PieceParameterArray(pieces_);        
         solution_ = pieces_;
 
         Optimizer optimizer = new Optimizer(this);
@@ -46,9 +46,13 @@ public class GeneticSearchSolver extends PuzzleSolver
                                      initialGuess, SOLVED_THRESH);
 
         solution_ = ((PieceParameterArray)solution).getPieceList();
-        puzzlePanel.finalRefresh(null, solution_, numTries_);
+        puzzlePanel_.finalRefresh(null, solution_, numTries_);
 
-        return (evaluateFitness(solution) >= SOLVED_THRESH);
+        if (evaluateFitness(solution) >= SOLVED_THRESH) {
+            return solution_.getPieces();
+        } else {
+            return null;
+        }                  
     }
 
 
