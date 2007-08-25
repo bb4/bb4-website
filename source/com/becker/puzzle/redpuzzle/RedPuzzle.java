@@ -13,7 +13,10 @@ import java.awt.event.*;
  * Red Puzzle
  * This program solves a 9 piece puzzle that has nubs on all 4 sides of every piece.
  * Its virtually impossible to solve by hand because of all the possible permutations.
- * This program can usually solve it by trying between 10,000 and 50,000 combinations.
+ * This program can usually solve it by trying between 6,000 and 20,000 combinations.
+ *
+ * For random number seed =5 and mutable piece objects it takes
+ *BruteForce = 7.0s and Genetic= 3.18s
  *
  * @author Barry becker
  */
@@ -47,12 +50,11 @@ public final class RedPuzzle extends JApplet
         puzzleViewer_ = new RedPuzzleViewer();
         controller_ = new RedPuzzleController(puzzleViewer_);   
 
-        animSpeedSlider_ = new LabeledSlider("Speed", RedPuzzleViewer.INITIAL_ANIM_SPEED, 1, RedPuzzleViewer.MAX_ANIM_SPEED);
+        animSpeedSlider_ = new LabeledSlider("Speed ", RedPuzzleViewer.INITIAL_ANIM_SPEED, 1, RedPuzzleViewer.MAX_ANIM_SPEED);
         animSpeedSlider_.setResolution(RedPuzzleViewer.MAX_ANIM_SPEED - 1);
         animSpeedSlider_.setShowAsInteger(true);
         animSpeedSlider_.addChangeListener(this);
-        //puzzleViewer_.setAnimationSpeed(INITIAL_ANIM_SPEED);
-
+ 
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(createButtonPanel(), BorderLayout.NORTH);
         panel.add(puzzleViewer_, BorderLayout.CENTER);
@@ -116,8 +118,9 @@ public final class RedPuzzle extends JApplet
     public void itemStateChanged(ItemEvent e) {
 
         int selected = algorithmChoice_.getSelectedIndex();
-        controller_.setAlgorithm(Algorithm.values()[selected]);
+        controller_.setAlgorithm(Algorithm.values()[selected]);        
         puzzleViewer_.setAnimationSpeed(1);
+        puzzleViewer_.refresh(null, 0);
         puzzleViewer_.repaint();
     }
     
