@@ -5,12 +5,12 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Puzzle
+ * PuzzleController constructor.
  * <p/>
  * Abstraction for puzzles like the 'sliding blocks puzzle'
  *The type parameters P and M correspond to a position (state) and a move (transition from one state to the next).
  *
- * @author Brian Goetz and Tim Peierls
+ * @author Brian Goetz, and Tim Peierls
  */
 public interface PuzzleController<P, M> {
     
@@ -32,7 +32,7 @@ public interface PuzzleController<P, M> {
     P move(P position, M move);
     
     /**
-     *Add the position to the seen set of position if not already seen.
+     * Add the position to the seen set of position if not already seen.
      *
      * @param position to check
      * @param seen Map of seen positions. 

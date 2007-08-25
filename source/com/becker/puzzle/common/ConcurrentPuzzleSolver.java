@@ -15,6 +15,11 @@ public class ConcurrentPuzzleSolver <P,M> extends BaseConcurrentPuzzleSolver<P, 
         super(puzzle, ui);
     }
     
+    /**
+     * @param puzzle the puzzle to solve
+     * @param depthBreadthFactor the ratio of depth first to breadth first searching to use. May have significant performance impact.
+     * @param refreshable something that can show the current state visually.
+     */
     public ConcurrentPuzzleSolver(PuzzleController<P, M> puzzle, float  depthBreadthFactor, Refreshable<P, M> ui) {
         super(puzzle, ui);
         setDepthBreadthFactor(depthBreadthFactor);

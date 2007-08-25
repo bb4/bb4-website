@@ -7,9 +7,10 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * SequentialPuzzleSolver
  * <p/>
- * Sequential puzzle solver
+ * Sequential puzzle solver.
+ * Performs a depth first search on the state space.
  *
- * @author Brian Goetz and Tim Peierls
+ * @author Brian Goetz, Tim Peierls, Barry Becker
  */
 public class SequentialPuzzleSolver <P, M> implements PuzzleSolver<P, M> {
     private final PuzzleController<P, M> puzzle;
@@ -28,20 +29,21 @@ public class SequentialPuzzleSolver <P, M> implements PuzzleSolver<P, M> {
     }
 
     private List<M> search(PuzzleNode<P, M> node) {
-        if (!puzzle.alreadySeen(node.pos, seen)) {       
-            if (puzzle.isGoal(node.pos)) {  
+        if (!puzzle.alreadySeen(node.position, seen)) {       
+            if (puzzle.isGoal(node.position)) {  
                 List<M> path = node.asMoveList();
-                ui.finalRefresh(path, node.pos, numTries);
+                ui.finalRefresh(path, node.position, numTries);
                 return path;
             }
-            for (M move : puzzle.legalMoves(node.pos)) {
-                P pos = puzzle.move(node.pos, move);
+            List<M> moves = puzzle.legalMoves(node.position);
+            for (M move : moves) {
+                P position = puzzle.move(node.position, move);
                 
-                // don't refresh everytime as that would put too much load on the processor'
-                if ( ui!=null)                  
-                    ui.refresh(pos, numTries);             
+                // don't necessarily refresh everytime as that would put too much load on the processor
+                if (ui != null)                  
+                    ui.refresh(position, numTries);             
                 
-                PuzzleNode<P, M> child = new PuzzleNode<P, M>(pos, move, node);
+                PuzzleNode<P, M> child = new PuzzleNode<P, M>(position, move, node);
                 numTries++;
                 List<M> result = search(child);
                 if (result != null)

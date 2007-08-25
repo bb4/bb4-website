@@ -59,7 +59,7 @@ public class BaseConcurrentPuzzleSolver <P, M>  implements PuzzleSolver<P, M> {
             PuzzleNode<P, M> solnPuzzleNode = solution.getValue();
             List<M> path = (solnPuzzleNode == null) ? null: solnPuzzleNode.asMoveList();
             if (ui != null) {                
-                ui.finalRefresh(path, solnPuzzleNode.pos, numTries);
+                ui.finalRefresh(path, solnPuzzleNode.position, numTries);
             } 
             return path;
         } finally {
@@ -77,19 +77,19 @@ public class BaseConcurrentPuzzleSolver <P, M>  implements PuzzleSolver<P, M> {
         }
 
         public void run() {
-            if (solution.isSet() || puzzle.alreadySeen(pos, seen)) {
+            if (solution.isSet() || puzzle.alreadySeen(position, seen)) {
                 numTries++;
                 if (ui!=null && !solution.isSet()) {                    
-                     ui.refresh(pos, numTries);                    
+                     ui.refresh(position, numTries);                    
                 }                
                 return; // already solved or seen this position
             }
-            if (puzzle.isGoal(pos)) {                
+            if (puzzle.isGoal(position)) {                
                 solution.setValue(this);
             }
             else {
-                for (M m : puzzle.legalMoves(pos)) {
-                    Runnable task = newTask(puzzle.move(pos, m), m, this);
+                for (M m : puzzle.legalMoves(position)) {
+                    Runnable task = newTask(puzzle.move(position, m), m, this);
                     // either process the children sequentially or concurrently based on  depthBreadthFactor               
                     if (RANDOM.nextFloat() > depthBreadthFactor) 
                         task.run();
