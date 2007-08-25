@@ -56,7 +56,7 @@ public class HiQController implements PuzzleController<PegBoard, PegMove> {
     public synchronized boolean alreadySeen(PegBoard position, Set<PegBoard> seen) {
        
         boolean visited = false;
-        for (int i = 0; i < BoardHashKey.SYMMETRIES; i++) {
+        for (int i = 0; i < PegBoard.SYMMETRIES; i++) {
               if (seen.contains(position.symmetry(i))) {
                   visited = true;
                   break;
