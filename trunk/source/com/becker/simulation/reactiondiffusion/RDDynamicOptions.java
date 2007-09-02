@@ -28,6 +28,7 @@ public class RDDynamicOptions extends JPanel
 
     private JCheckBox showU_;
     private JCheckBox showV_;
+    private JCheckBox useConcurrency_;
 
     private ContinuousColorLegend legend_;
 
@@ -65,7 +66,7 @@ public class RDDynamicOptions extends JPanel
         numStepsSlider_.setShowAsInteger(true);
         numStepsSlider_.addChangeListener(this);
 
-        JPanel uvCheckBoxes = createUVCheckBoxes();
+        JPanel uvCheckBoxes = createCheckBoxes();
         
         legend_ = new ContinuousColorLegend(null, simulator_.getRenderer().getColorMap(), true);
 
@@ -85,21 +86,26 @@ public class RDDynamicOptions extends JPanel
         add(legend_);
     }
     
-    private JPanel createUVCheckBoxes() {
+    private JPanel createCheckBoxes() {
         
-        JPanel uvCheckBoxes = new JPanel(new FlowLayout());
+        JPanel checkBoxes = new JPanel(new FlowLayout());
         
-        //.setPreferredSize(new Dimension(300, 30));
         RDRenderer r = simulator_.getRenderer();
         showU_ = new JCheckBox("Show U Value", r.isShowingU());
         showU_.addActionListener(this);
         showV_ = new JCheckBox("Show V Value", r.isShowingV());
         showV_.addActionListener(this);
-        uvCheckBoxes.add(showU_); //, BorderLayout.EAST);
-        uvCheckBoxes.add(Box.createHorizontalGlue());
-        uvCheckBoxes.add(showV_); //, BorderLayout.CENTER);
-        uvCheckBoxes.setBorder(BorderFactory.createEtchedBorder());
-        return uvCheckBoxes;
+        useConcurrency_ = new JCheckBox("Parallelize", gs_.isParallelized());
+        useConcurrency_.setToolTipText("Will take advantage of multiple processors if present.");
+        useConcurrency_.addActionListener(this);
+        checkBoxes.add(showU_); //, BorderLayout.EAST);
+        checkBoxes.add(Box.createHorizontalGlue());
+        checkBoxes.add(showV_); //, BorderLayout.CENTER);
+        checkBoxes.add(Box.createHorizontalGlue());
+        checkBoxes.add(useConcurrency_);
+        
+        checkBoxes.setBorder(BorderFactory.createEtchedBorder());
+        return checkBoxes;
     }
 
 
@@ -121,6 +127,8 @@ public class RDDynamicOptions extends JPanel
         else if (e.getSource() == showV_) {
             r.setShowingV(!r.isShowingV());
             repaint();
+        } else if (e.getSource() == useConcurrency_) {
+            gs_.setParallelized(!gs_.isParallelized());
         }
     }
 
