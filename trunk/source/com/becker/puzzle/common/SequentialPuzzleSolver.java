@@ -17,6 +17,7 @@ public class SequentialPuzzleSolver <P, M> implements PuzzleSolver<P, M> {
     private final Set<P> seen = new HashSet<P>();
     private final Refreshable<P, M> ui;
     private long numTries = 0;
+    private long startTime;
 
     public SequentialPuzzleSolver(PuzzleController<P, M> puzzle, Refreshable<P, M> ui) {
         this.puzzle = puzzle;
@@ -25,6 +26,7 @@ public class SequentialPuzzleSolver <P, M> implements PuzzleSolver<P, M> {
 
     public List<M> solve() {
         P pos = puzzle.initialPosition();
+        startTime =  System.currentTimeMillis(); 
         return search(new PuzzleNode<P, M>(pos, null, null));
     }
 
@@ -32,7 +34,8 @@ public class SequentialPuzzleSolver <P, M> implements PuzzleSolver<P, M> {
         if (!puzzle.alreadySeen(node.position, seen)) {       
             if (puzzle.isGoal(node.position)) {  
                 List<M> path = node.asMoveList();
-                ui.finalRefresh(path, node.position, numTries);
+                long elapsedTime = System.currentTimeMillis() - startTime;             
+                ui.finalRefresh(path, node.position, numTries, elapsedTime);
                 return path;
             }
             List<M> moves = puzzle.legalMoves(node.position);

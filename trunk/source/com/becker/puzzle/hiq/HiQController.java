@@ -1,6 +1,8 @@
 package com.becker.puzzle.hiq;
 
 import com.becker.common.Worker;
+import com.becker.puzzle.common.AbstractPuzzleController;
+import com.becker.puzzle.common.AlgorithmEnum;
 import com.becker.puzzle.common.BaseConcurrentPuzzleSolver;
 import com.becker.puzzle.common.ConcurrentPuzzleSolver;
 import com.becker.puzzle.common.PuzzleController;
@@ -18,18 +20,11 @@ import java.util.Set;
  * Created on July 28, 2007
  * @author becker
  */
-public class HiQController implements PuzzleController<PegBoard, PegMove> {
-    
-    private final Refreshable ui_;
-    
-    /** if true we will try to take advantage of multiple procesors and run with concurrent threads. */
-    private static final boolean USE_CONCURRENT = true;
-    
-    /**
-     * Creates a new instance of RedPuzzleController
-     */
+public class HiQController extends AbstractPuzzleController<PegBoard, PegMove> {    
+
     public HiQController(Refreshable ui) {        
-        ui_ = ui;
+        super(ui);
+        algorithm_ = Algorithm.SEQUENTIAL; 
     }
 
     public PegBoard initialPosition() {
@@ -67,39 +62,5 @@ public class HiQController implements PuzzleController<PegBoard, PegMove> {
         }
         return visited;
     }
-    
-    
-    public void startSolving() {             
-
-        // Use either concurrent or sequential solver strategy
-        final PuzzleSolver<PegBoard, PegMove> solver = 
-                USE_CONCURRENT ? 
-                    new ConcurrentPuzzleSolver(this, .2f, ui_) :
-                    new SequentialPuzzleSolver(this, ui_);        
-
-        Worker worker = new Worker()  {
-     
-            public Object construct()  {
-                
-                long t = System.currentTimeMillis(); 
-                 
-                // this does all the heavy work of solving it.   
-                try {
-                    List<PegMove> path = solver.solve();            
-                } catch (InterruptedException e) {
-                    assert false: "Thread interrupted. " + e.getMessage();
-                }
-
-                float time = (float)((System.currentTimeMillis() - t))/1000.0f;
-                System.out.println("solved in " + time + " seconds.");
-                System.out.flush();
-                return null;
-            }
-
-            public void finished() {}
-        };
-
-        worker.start();  
-    }    
-
+  
 }

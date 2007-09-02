@@ -39,4 +39,14 @@ public interface PuzzleController<P, M> {
      * @return true if the specified position was already seen (possibly taking into account symmetries).
      */
     boolean alreadySeen(P position, Set<P> seen);
+    
+    /**
+     *specify the algorithm to use.
+     */
+    void setAlgorithm(AlgorithmEnum algorithm);
+    
+    /**
+     *begin the search to find a solution to the puzzle.
+     */
+    void startSolving();          
 }

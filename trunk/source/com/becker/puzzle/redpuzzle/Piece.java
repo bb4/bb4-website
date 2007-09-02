@@ -10,13 +10,13 @@ package com.becker.puzzle.redpuzzle;
 public final class Piece
 {
 
-    // the suits of the edges.
+    /** The suits of the edges. */
     private Nub[] nubs_ = null;
 
-    // Indicates which way the piece is oriented/rotated.
+    /** Indicates which way the piece is oriented/rotated. */
     private Direction orientation_;
 
-    // the number of the piece (1-9).
+    /** the number of the piece (1-9). */
     private byte pieceNumber_ = 0;
 
     public static enum Direction {TOP, RIGHT, BOTTOM, LEFT}

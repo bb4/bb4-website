@@ -26,13 +26,18 @@ public class BruteForceSolver extends RedPuzzleSolver {
      * @param puzzlePanel will show the pieces as we arrange them.
      * @return true if a solution is found.
      */
-    public List<Piece> solve()  {        
+    public List<Piece> solve()  {    
+        List<Piece> moves = null;
+        long startTime = System.currentTimeMillis();
+        
         if  (solvePuzzle(puzzlePanel_, pieces_, 0).size() ==0) {
-            return solution_.getPieces();
+            moves = solution_.getPieces();
         }
-        else {
-            return null;
-        }
+           
+        long elapsedTime = System.currentTimeMillis() - startTime;
+        puzzlePanel_.finalRefresh(moves , solution_, numTries_, elapsedTime);
+        
+        return moves;
     }
 
     /**
@@ -56,12 +61,11 @@ public class BruteForceSolver extends RedPuzzleSolver {
             int r = 0;
             // try the 4 rotations
             while (!solved && r < 4) {
-                 numTries_++;
-                 puzzlePanel.refresh(pieces, numTries_);  
-
+                 numTries_++;                 
                  if ( solution_.fits(p) ) {                    
-                    solution_ = solution_.add( p );
+                    solution_ = solution_.add( p );                   
                     pieces = pieces.remove( p );
+                    puzzlePanel.refresh(solution_, numTries_);  
                     puzzlePanel.makeSound();
 
                     // call solvePuzzle with a simpler case (one less piece to solve)
@@ -85,9 +89,7 @@ public class BruteForceSolver extends RedPuzzleSolver {
             pieces = pieces.add(i, p);
         }
 
-        puzzlePanel.finalRefresh(null, solution_, numTries_);
-
-        // if we get here and solved is not true, we did not find a puzzlePanel
+        // if we get here and pieces is empty, we did not find a puzzlePanel.
         return pieces;
     }
 }

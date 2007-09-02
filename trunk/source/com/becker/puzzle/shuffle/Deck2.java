@@ -16,8 +16,6 @@ public class Deck2 {
         return MathUtil.lcm(deck.getCycles());
     }
 
-
-
     public Deck2(int count) {
 
         if (count < 1) {
@@ -31,8 +29,6 @@ public class Deck2 {
             cards[i] = i;
         }
     }
-
-
 
     public void shuffle(int cut) {
 
@@ -84,10 +80,7 @@ public class Deck2 {
         }
 
         return cycles;
-
     }
-
-
 
     public String toString() {
 
@@ -104,10 +97,8 @@ public class Deck2 {
         return buffer.toString();
     }
 
-
     private int[] cards;
     private int count;
-
 
     public static void main(String[] args) {
 
