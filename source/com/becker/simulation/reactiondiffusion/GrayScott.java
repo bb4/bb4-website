@@ -32,7 +32,7 @@ final class GrayScott {
      *into smaller pieces that can be run on different threads.
      *This should speed thinks up on a multi-core computer.
      */
-    private static final boolean PARALLELIZED = true;
+    private boolean parallelized_ = true;
     
     /** the number of processors available on this computer */
     private static final int NUM_PROCESSORS = Runtime.getRuntime().availableProcessors();
@@ -150,7 +150,14 @@ final class GrayScott {
         dvDivh2_ = DV / h2;
     }
 
-
+    public void setParallelized(boolean parallelized) {
+        parallelized_ = parallelized;
+    }
+ 
+    public boolean isParallelized() {
+        return parallelized_;
+    }
+    
     /**
      * Advance one time step increment.
      *u_ and v_ are calculated based on tmpU and tmpV, then the result is committed to tmpU and tmpV.
@@ -159,7 +166,7 @@ final class GrayScott {
      */
     public void timeStep(double dt) {
 
-        if (PARALLELIZED) {
+        if (parallelized_) {
             concurrentTimeStep(dt);
         } else {                   
           
