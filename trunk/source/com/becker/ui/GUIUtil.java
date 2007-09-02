@@ -341,7 +341,7 @@ public final class GUIUtil
        applet.init();
 
        baseFrame.repaint();
-       baseFrame.setVisible( true );
+       baseFrame.setVisible( true );       
 
        // call the applet's start method
        applet.start();
