@@ -1,6 +1,7 @@
 package com.becker.puzzle.redpuzzle;
 
 import com.becker.common.*;
+import com.becker.puzzle.common.PuzzleViewer;
 import com.becker.puzzle.common.Refreshable;
 import com.becker.sound.*;
 import java.awt.Color;
@@ -19,7 +20,8 @@ import net.jcip.examples.ThisEscape;
  *
  *  @author Barry Becker
  */
-final class RedPuzzleViewer extends JPanel implements Refreshable<PieceList, Piece>
+final class RedPuzzleViewer extends PuzzleViewer<PieceList, Piece> 
+                                              implements Refreshable<PieceList, Piece>
 {
     /** size of piece in pixels. */
     private static final int PIECE_SIZE = 90;
@@ -30,7 +32,7 @@ final class RedPuzzleViewer extends JPanel implements Refreshable<PieceList, Pie
     // slows down the animation.
     private int animationSpeed_ = INITIAL_ANIM_SPEED;
     
-    private static final int MARGIN = 50;
+    private static final int MARGIN = 40;
     private static final int ORIENT_ARROW_LEN = PIECE_SIZE >> 2;
     private static final int ARROW_HEAD_RAD = 2;
 
@@ -47,9 +49,6 @@ final class RedPuzzleViewer extends JPanel implements Refreshable<PieceList, Pie
 
     // play a sound effect when a piece goes into place.
     private MusicMaker musicMaker_ = new MusicMaker();    
-
-    private PieceList pieces_;
-    private long numTries_;
     
     // num pieces on edge
     private static final int DIM = (int) Math.sqrt(PieceList.NUM_PIECES);
@@ -69,22 +68,15 @@ final class RedPuzzleViewer extends JPanel implements Refreshable<PieceList, Pie
         animationSpeed_ = speed;
     }
 
-    /**
-     * make a little click noise when the piece fits into place.
-     */
-    public void makeSound() {
-        musicMaker_.playNote(60, 10, 940);
-    }
-
     public void refresh(PieceList pieces, long numTries) {  
-        if ((animationSpeed_ < MAX_ANIM_SPEED-1)) {
-            refresh1(pieces, numTries);
-            Util.sleep(9 * MAX_ANIM_SPEED / animationSpeed_); // give it a chance to repaint.
+        super.refresh(pieces, numTries);
+        if ((animationSpeed_ < MAX_ANIM_SPEED)) {            
+            Util.sleep(8 * MAX_ANIM_SPEED / animationSpeed_); // give it a chance to repaint.
         }
     }
 
-    public void finalRefresh(List<Piece> path, PieceList pieces, long numTries) {     
-        refresh1(pieces, numTries);
+    public void finalRefresh(List<Piece> path, PieceList pieces, long numTries, long millis) {  
+        super.finalRefresh(path, pieces, numTries, millis);
         if (animationSpeed_ < MAX_ANIM_SPEED-1) {
             Util.sleep(10 * MAX_ANIM_SPEED / animationSpeed_);
         }
@@ -93,11 +85,13 @@ final class RedPuzzleViewer extends JPanel implements Refreshable<PieceList, Pie
         }
     }    
     
-    private void refresh1(PieceList pieces, long numTries) {
-        pieces_ = pieces;
-        numTries_ = numTries;
-        repaint();
+    /**
+     * make a little click noise when the piece fits into place.
+     */
+    public void makeSound() {
+        musicMaker_.playNote(60, 20, 940);
     }
+    
 
     /**
      *  This renders the current state of the PuzzlePanel to the screen.
@@ -105,13 +99,14 @@ final class RedPuzzleViewer extends JPanel implements Refreshable<PieceList, Pie
      */
     protected void paintComponent( Graphics g ) {
         super.paintComponents( g );
+        System.out.println("painting pieces_="+board_);
 
         // erase what's there and redraw.
         g.setColor( BACKGROUND_COLOR );
         g.fillRect( 0, 0, this.getWidth(), this.getHeight() );
 
         g.setColor( TEXT_COLOR );
-        g.drawString( "Number of tries: " + numTries_, MARGIN, MARGIN - 24 );
+        g.drawString( status_, MARGIN, MARGIN - 24 );
 
         drawPieceBoundaryGrid((Graphics2D)g, DIM);
 
@@ -120,9 +115,9 @@ final class RedPuzzleViewer extends JPanel implements Refreshable<PieceList, Pie
         // allocates a littel more space tha we actually use, but simpler this way.
         char[][] nubChecks = new char[7][7];
 
-        if (pieces_== null) return;
-        for ( i = 0; i < pieces_.size(); i++ ) {
-            Piece p = pieces_.get( i );
+        if (board_== null) return;
+        for ( i = 0; i < board_.size(); i++ ) {
+            Piece p = board_.get( i );
             int row = i / DIM;
             int col = i % DIM;
             drawPiece(g, p, col, row, nubChecks);

@@ -19,7 +19,7 @@ public class BaseConcurrentPuzzleSolver <P, M>  implements PuzzleSolver<P, M> {
     protected final ValueLatch<PuzzleNode<P, M>> solution = new ValueLatch<PuzzleNode<P, M>>();
     private final Refreshable<P, M> ui;
     private volatile int numTries;
-    /** default is a mixture between depth (sequential) and breadth (concurrent) first search. */
+    /** default is a mixture between depth (0) (sequential) and breadth (1.0) (concurrent) first search. */
     private float depthBreadthFactor = 0.4f;
     private static final Random RANDOM = new Random(1);
 
@@ -53,13 +53,14 @@ public class BaseConcurrentPuzzleSolver <P, M>  implements PuzzleSolver<P, M> {
     public List<M> solve() throws InterruptedException {
         try {
             P p = puzzle.initialPosition();
-            System.out.println("initial="+p);
+            long startTime = System.currentTimeMillis();          
             exec.execute(newTask(p, null, null));
             // block until solution found
             PuzzleNode<P, M> solnPuzzleNode = solution.getValue();
             List<M> path = (solnPuzzleNode == null) ? null: solnPuzzleNode.asMoveList();
-            if (ui != null) {                
-                ui.finalRefresh(path, solnPuzzleNode.position, numTries);
+            if (ui != null) {      
+                long elapsedTime = System.currentTimeMillis() - startTime;
+                ui.finalRefresh(path, solnPuzzleNode.position, numTries, elapsedTime);
             } 
             return path;
         } finally {
@@ -77,13 +78,14 @@ public class BaseConcurrentPuzzleSolver <P, M>  implements PuzzleSolver<P, M> {
         }
 
         public void run() {
-            if (solution.isSet() || puzzle.alreadySeen(position, seen)) {
-                numTries++;
-                if (ui!=null && !solution.isSet()) {                    
-                     ui.refresh(position, numTries);                    
-                }                
+            numTries++;             
+            if (solution.isSet() || puzzle.alreadySeen(position, seen)) {                         
                 return; // already solved or seen this position
             }
+            if (ui!=null && !solution.isSet()) {     
+          
+                ui.refresh(position, numTries);                    
+            }     
             if (puzzle.isGoal(position)) {                
                 solution.setValue(this);
             }

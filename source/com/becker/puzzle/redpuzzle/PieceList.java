@@ -300,10 +300,16 @@ public class PieceList {
         return numFits;
     }
     
+    /**
+     *@return as unmodifiable list so there can be no malicious modifcation of our immutable state.
+     */
     public List<Piece> getPieces() {
         return Collections.unmodifiableList(pieces_);
     }
     
+    /**
+     *@return true if we contain p
+     */
     public boolean contains(Piece p) {
         return pieces_.contains(p);
     }
@@ -315,13 +321,9 @@ public class PieceList {
         }
         return buf.toString();
     }
-    
-    public String toRawString() {
-        StringBuffer buf = new StringBuffer("PieceList: ("+size()+" pieces)\n");
-        for (Piece p : pieces_) {
-            buf.append(p.toRawString() + '\n');
-        }
-        return buf.toString();
+
+    public int getEDGE_LENGTH() {
+        return EDGE_LENGTH;
     }
 
 }

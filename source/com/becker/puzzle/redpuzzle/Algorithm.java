@@ -1,16 +1,18 @@
 package com.becker.puzzle.redpuzzle;
 
+import com.becker.puzzle.common.AlgorithmEnum;
 import com.becker.puzzle.common.ConcurrentPuzzleSolver;
+import com.becker.puzzle.common.PuzzleController;
 import com.becker.puzzle.common.PuzzleSolver;
 import com.becker.puzzle.common.Refreshable;
 import com.becker.puzzle.common.SequentialPuzzleSolver;
 
 /**
- *
- * Created on August 16, 2007, 5:54 AM
- * @author becker
+ * Enum for type of solver to employ when solving the puzzle.
+ * 
+ * @author Barry Becker
  */
-public enum Algorithm {
+public enum Algorithm  implements AlgorithmEnum {
     
     BRUTE_FORCE_ORIGINAL("Brute force (hand crafted)"),  
     BRUTE_FORCE_SEQUENTIAL("Brute force (sequential)"), 
@@ -34,7 +36,7 @@ public enum Algorithm {
     /**
      * Create an instance of the algorithm given the controller and a refreshable.
      */
-    public PuzzleSolver createSolver(RedPuzzleController controller, Refreshable ui) {
+    public PuzzleSolver createSolver(PuzzleController controller, Refreshable ui) {
         PieceList pieces =  PieceList.getInitialPuzzlePieces();
         switch (this) {
             case BRUTE_FORCE_ORIGINAL :

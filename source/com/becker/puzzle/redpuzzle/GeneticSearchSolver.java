@@ -33,10 +33,11 @@ public class GeneticSearchSolver extends RedPuzzleSolver
      * @return true if a solution is found.
      */
     public List<Piece> solve()  {
-
+        
         ParameterArray initialGuess = new PieceParameterArray(pieces_);        
         solution_ = pieces_;
-
+        long startTime = System.currentTimeMillis();
+        
         Optimizer optimizer = new Optimizer(this);
 
         optimizer.setListener(this);
@@ -46,13 +47,16 @@ public class GeneticSearchSolver extends RedPuzzleSolver
                                      initialGuess, SOLVED_THRESH);
 
         solution_ = ((PieceParameterArray)solution).getPieceList();
-        puzzlePanel_.finalRefresh(null, solution_, numTries_);
-
+        List<Piece> moves = null;
         if (evaluateFitness(solution) >= SOLVED_THRESH) {
-            return solution_.getPieces();
+            moves = solution_.getPieces();
         } else {
-            return null;
-        }                  
+            moves = null;
+        }    
+        long elapsedTime = System.currentTimeMillis() - startTime;       
+        puzzlePanel_.finalRefresh(moves, solution_, numTries_, elapsedTime);
+        
+        return moves;
     }
 
 
