@@ -138,4 +138,26 @@ public final class ImageUtil
         writeImage( img, os, type );
     }
 
+           
+    // temp vars for interpolation
+    private static float[] rgbaL = new float[4];
+    private static float[] rgbaU = new float[4];
+    
+    public static Color interpolate( double x, double y, float[]  colorLL, float[] colorLR, float[] colorUL, float[]  colorUR )
+    {      
+         rgbaL[0] = (float) (colorLL[0] + x * (colorLR[0] - colorLL[0]));
+         rgbaL[1] = (float) (colorLL[1] + x * (colorLR[1] - colorLL[1]));
+         rgbaL[2] = (float) (colorLL[2] + x * (colorLR[2] - colorLL[2]));
+         rgbaL[3] = (float) (colorLL[3] + x * (colorLR[3] - colorLL[3]));
+         
+         rgbaU[0] = (float) (colorUL[0] + x * (colorUR[0] - colorUL[0]));
+         rgbaU[1] = (float) (colorUL[1] + x * (colorUR[1] - colorUL[1]));
+         rgbaU[2] = (float) (colorUL[2] + x * (colorUR[2] - colorUL[2]));
+         rgbaU[3] = (float) (colorUL[3] + x * (colorUR[3] - colorUL[3]));
+                  
+        return new Color( (float) (rgbaL[0] + y * (rgbaU[0] - rgbaL[0])),
+                                      (float) (rgbaL[1] + y * (rgbaU[1] - rgbaL[1])),
+                                      (float) (rgbaL[2] + y * (rgbaU[2] - rgbaL[2])),
+                                      (float) (rgbaL[3] + y * (rgbaU[3] - rgbaL[3])));
+    }
 }

@@ -42,7 +42,7 @@ public final class LinearUtil
             double lambda = (r.dot( p ) / p.dot( matrixMultp ));
             xnew.scaleAdd( lambda, p, x );
             rnew.scaleAdd( -lambda, matrixMultp, r );
-            double alpha = -(rnew.dot( matrixMultp ) / p.dot( matrixMultp ));
+            double alpha = -(rnew.dot( matrixMultp ) / p.dot( matrixMultp));
             pnew.scaleAdd( alpha, p, rnew );
             p.set( pnew );
             r.set( rnew );
@@ -63,6 +63,9 @@ public final class LinearUtil
         return xnew;
     }
 
+    /**
+     *Pretty print the matrix for debugging.
+     */
     public static void printMatrix( GMatrix matrix )
     {
         for ( int i = 0; i < matrix.getNumRow(); i++ ) {

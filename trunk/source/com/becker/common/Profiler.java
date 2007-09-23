@@ -18,7 +18,7 @@ public class Profiler
     private final Map<String,ProfilerEntry> hmEntries_ = new HashMap<String,ProfilerEntry>();
     private final List<ProfilerEntry> topLevelEntries_ = new LinkedList<ProfilerEntry>();
     private boolean enabled_ = true;
-    protected static Log logger_ = null;
+    private static Log logger_ = null;
 
     /**
      * Default constructor.

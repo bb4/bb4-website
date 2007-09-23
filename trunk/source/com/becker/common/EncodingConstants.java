@@ -5,11 +5,11 @@ package com.becker.common;
  *
  * @author Barry Becker
  */
-public interface EncodingConstants
+public class EncodingConstants
 {
     // Java Encoding Converter Names
-    String CONVERTER_UTF8 = "UTF8";
-    String CONVERTER_ASCII = "ASCII";
-    String CONVERTER_LATIN_1 = "ISO8859_1";  // latin-1
-    String CONVERTER_WINDOWS_LATIN = "Cp1252";
+    public static final String CONVERTER_UTF8 = "UTF8";
+    public static final String CONVERTER_ASCII = "ASCII";
+    public static final String CONVERTER_LATIN_1 = "ISO8859_1";  // latin-1
+    public static final String CONVERTER_WINDOWS_LATIN = "Cp1252";
 }

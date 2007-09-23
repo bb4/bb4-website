@@ -130,7 +130,6 @@ public final class NiceNumbers {
         double range = roundNumber(max1 - min, false);
         double d = roundNumber(range / (maxTicks - 1), true);
         return (int) Math.max(-Math.floor(log10(d)), 0);
-
     }
 
     /**
