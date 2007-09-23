@@ -47,7 +47,7 @@ public class BaseConcurrentPuzzleSolver <P, M>  implements PuzzleSolver<P, M> {
 
     private ExecutorService initThreadPool() {
         //return Executors.newCachedThreadPool();
-        return Executors.newFixedThreadPool(1000);
+        return Executors.newFixedThreadPool(100);
     }
 
     public List<M> solve() throws InterruptedException {

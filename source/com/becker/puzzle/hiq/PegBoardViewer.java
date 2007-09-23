@@ -22,8 +22,8 @@ final class PegBoardViewer extends PuzzleViewer<PegBoard, PegMove>
 
     private static final int INC = 10;
 
-    private static final int LEFT_MARGIN = 40;
-    private static final int TOP_MARGIN = 50;
+    private static final int LEFT_MARGIN = 50;
+    private static final int TOP_MARGIN = 55;
 
     private static final Color FILLED_HOLE_COLOR = new Color(120, 0, 190);
     private static final Color EMPTY_HOLE_COLOR = new Color(55, 55, 65, 150);
@@ -156,7 +156,7 @@ final class PegBoardViewer extends PuzzleViewer<PegBoard, PegMove>
             int bottomEdgePos = TOP_MARGIN + 3 * INC * size;
 
             g.setColor( Color.black );
-            g.drawString( status_, LEFT_MARGIN, TOP_MARGIN - 26 );           
+            drawStatus(g,  LEFT_MARGIN, TOP_MARGIN - 36 );     
 
             // draw the hatches which deliniate the cells
             g.setColor( Color.darkGray );
