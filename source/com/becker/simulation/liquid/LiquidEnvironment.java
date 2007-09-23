@@ -43,7 +43,6 @@ public class LiquidEnvironment
     // the time since the start of the simulation
     private double time_ = 0.0;
 
-
     // physical constants.
     // cell width and height in mm.
     private static final double CELL_SIZE = 10.0;
@@ -58,10 +57,9 @@ public class LiquidEnvironment
     private static final double B0 = 1.7;  // used in mass conservation (how?)
     private static final double SPIGOT_VELOCITY = 30.0;
     private static final int NUM_RAND_PARTS = 5;
-
-
-    // temp var used throughout for efficency. avoids creating objects
-    private static Vector2d v_ = new Vector2d( 0, 0 );
+    
+    // ensure that the runs are the same
+    private static final Random RANDOM = new Random(1);
 
     private static Log logger_ = null;
     public static final int LOG_LEVEL = 0;
@@ -295,6 +293,8 @@ public class LiquidEnvironment
         // keep track of the biggest velocity magnitude so we can adjust the timestep appropriately.
         double maxLength = Double.MIN_VALUE;
         double invCellSize = 1.0/CELL_SIZE;
+        // max distance to go in one step. Beyond this, we apply the governer.
+        double maxDistance = CELL_SIZE/20.0;
 
         while ( it.hasNext() ) {
             Particle particle = (Particle) it.next();
@@ -307,37 +307,55 @@ public class LiquidEnvironment
                 int ii = ((particle.x - i) > 0.5) ? (i + 1) : (i - 1);
                 int jj = ((particle.y - j) > 0.5) ? (j + 1) : (j - 1);
 
-                v_ = grid_[i][j].interpolateVelocity( particle,
-                        grid_[ii][j], grid_[i][jj],
-                        grid_[i - 1][j], grid_[i - 1][jj], // u
-                        grid_[i][j - 1], grid_[ii][j - 1], // v
-                        v_);
+                Vector2d vel = 
+                        grid_[i][j].interpolateVelocity( particle,
+                            grid_[ii][j], grid_[i][jj],
+                            grid_[i - 1][j], grid_[i - 1][jj], // u
+                            grid_[i][j - 1], grid_[ii][j - 1]);  // v
 
                 // scale the velocity by the cell size so we can assume the cells have unit dims
-                v_.scale(invCellSize);
+                vel.scale(invCellSize);
 
-                double magnitude = v_.length();
-                if (magnitude > maxLength)
-                    maxLength = magnitude;
+                double magnitude = vel.length();
+                if (magnitude > maxLength) {
+                    maxLength = magnitude;                    
+                }
+                /*
+                double dist = magnitude * timeStep;
+                if (dist > maxDistance) {
+                        logger_.print("b_vmag="+magnitude + " i="+i+" j="+j + "   " );
+                        double factor =  .001 + maxDistance / dist;
+                        vel.scale(factor);
+                        logger_.println("a_vmag="+vel.length());
+                }*/
 
-                particle.set( particle.x + timeStep * v_.x, particle.y + timeStep * v_.y );
+                particle.set( particle.x + timeStep * vel.x, particle.y + timeStep * vel.y );
                 particle.incAge( timeStep );
 
                 // to ensure the liquid does not enter an OBSTACLE
                 ii = (int) particle.x;
                 jj = (int) particle.y;
 
+            
+                if (ii<0 || jj<0) {
+                     logger_.println( " i="+i+" j="+j +"   ii="+ii+ "  jj="+jj + " v.len="+vel.length());   
+                }
                 // move outside the obstacle if we find ouselves in one
                 if ( grid_[ii][jj].getStatus() == CellStatus.OBSTACLE ) {
-                    if ( ii > i )
+                    if ( ii > i ) {
                         particle.set( ii - EPSILON, particle.y );
-                    else if ( ii < i )
+                    }
+                    else if ( ii < i ) {
                         particle.set( ii + 1.0 + EPSILON, particle.y );
-                    if ( jj > j )
+                    }
+                    if ( jj > j ) {
                         particle.set( particle.x, jj - EPSILON );
-                    else if ( jj < j )
+                    }
+                    else if ( jj < j ) {
                         particle.set( particle.x, jj + 1.0 + EPSILON );
+                    }
                 }
+ 
                 ii = (int) particle.x;
                 jj = (int) particle.y;
 
@@ -355,7 +373,7 @@ public class LiquidEnvironment
             }
         }
 
-
+        /*
         double increment = (timeStep * maxLength);
         double newTimeStep = timeStep;
         if (increment > MAX_INC) {
@@ -365,10 +383,10 @@ public class LiquidEnvironment
         else if (increment < MIN_INC) {
             newTimeStep *= 2.0;
             log(0, "updateParticlePosition: DOUBLED dt=" + timeStep +" increment="+increment );
-        }
+        }*/
 
 
-        return newTimeStep;
+        return timeStep;
     }
 
     public int numParticles()
@@ -404,7 +422,7 @@ public class LiquidEnvironment
     private void addRandomParticles( double x, double y )
     {
         for ( int i = 0; i < NUM_RAND_PARTS; i++ ) {
-            Particle p = new Particle( x + Math.random(), y + Math.random(), grid_[(int) x][(int) y] );
+            Particle p = new Particle( x + RANDOM.nextDouble(), y + RANDOM.nextDouble(), grid_[(int) x][(int) y] );
             particles_.add( p );
             grid_[(int) x][(int) y].incParticles();
         }

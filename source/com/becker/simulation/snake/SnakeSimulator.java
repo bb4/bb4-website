@@ -70,8 +70,8 @@ public class SnakeSimulator extends NewtonianSimulator
         oldCenter_ = snake_.getCenter();
         setNumStepsPerFrame(NUM_STEPS_PER_FRAME);
 
-        initCommonUI();
         this.setPreferredSize(new Dimension( (int) (CELL_SIZE * XDIM), (int) (CELL_SIZE * YDIM)) );
+        initCommonUI();      
     }
 
 
@@ -120,7 +120,6 @@ public class SnakeSimulator extends NewtonianSimulator
     public double getDynamicFriction() {
         return snake_.getDynamicFriction();
     }
-
 
 
     public void doOptimization()
@@ -247,20 +246,4 @@ public class SnakeSimulator extends NewtonianSimulator
             return oldVelocity;
     }
 
-
-    // *************** main *****************************
-    /*
-    public static void main( String[] args )
-    {
-
-        Simulator simulator = new SnakeSimulator();
-        JPanel animPanel = new AnimationPanel( simulator );
-
-        animPanel.add( simulator.createTopControls(), BorderLayout.NORTH );
-
-        frame_ = new JFrame( "Snake Simulator" );
-        frame_.getContentPane().add( animPanel );
-        frame_.setVisible( true );
-    }
-    */
 }

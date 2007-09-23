@@ -23,17 +23,28 @@ public class CellBlock {
     }
 
     /**
+     *Gets a relative cell. Relative from center
      * e.g. get(0,0) returns the center cell.
      * @return cell relative to center of the block
      */
     public Cell get(int offsetX, int offsetY) {
         return block_[offsetX + 1][offsetY + 1];
     }
+    
+    public Cell getAbsolute(int x, int y) {
+        return block_[x][y];
+    }
 
-    public void setPressure(double p) {
+    public void setPressures(double p) {
         for (int i = 0; i<DIM; i++)
            for (int j = 0; j<DIM; j++)
                block_[i][j].setPressure(p);
+    }
+    
+    public void setVelocities(double u, double v) {
+        for (int i = 0; i<DIM; i++)
+           for (int j = 0; j<DIM; j++)
+               block_[i][j].setVelocityP(u, v);
     }
 
     public void setCellParticles(int numParticlesPerCell) {
