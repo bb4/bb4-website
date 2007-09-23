@@ -23,8 +23,10 @@ public class CommandLineOptions  {
      */
     public CommandLineOptions(String[] args) {
         int ct = 0;
+         System.out.println("creating cmd line options from  s= "+  args.length);
         while (ct < args.length) {
             String arg = args[ct];
+            System.out.println("arg="+arg);
 
             assert (arg.charAt(0)=='-') :
                     "Command line Options must start with - and then be followed by an optional value";
@@ -62,6 +64,7 @@ public class CommandLineOptions  {
      * @return value for the arg (may be null if no value for the arg)
      */
     public String getValueForOption(String option, String defaultValue) {
+        System.out.println("getting option named " + option + " from " + optionsMap_);
         return optionsMap_.get(option);
     }
 

@@ -11,17 +11,6 @@ import java.util.*;
 public class NiceNumbersTest extends TestCase {
 
     private static final String LOOSE = "loose ";
-    
-    /**
-     * common initialization for all go test cases.
-     */
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
 
     private static final String[] EXPECTED_LOOSE_CUTS = {"0", "20", "40", "60", "80", "100", "120"};
     private static final String[] EXPECTED_TIGHT_CUTS = {"11", "20", "40", "60", "80", "101"};
