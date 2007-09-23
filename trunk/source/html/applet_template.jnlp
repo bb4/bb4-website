@@ -13,10 +13,13 @@
               <offline-allowed/>
         </information>
         <resources>
-            <j2se version="1.4+" initial-heap-size="64m" max-heap-size="900m" href="http://java.sun.com/products/autodl/j2se"/>
+            <j2se version="1.5+" initial-heap-size="64m" max-heap-size="900m" href="http://java.sun.com/products/autodl/j2se"/>
             <jar href="common.jar" main="false"/>
+            <jar href="game2Common.jar" main="false"/>
+            <jar href="gameMultiCommon.jar" main="false"/>
+            <jar href="puzzle.jar" main="false"/>
             <jar href="sound.jar" main="false"/>
-            <jar href="optimization.jar" main="false"/>
+            <jar href="optimization.jar" main="false"/>            
             <jar href="pente.jar" main="false"/>
             <jar href="checkers.jar" main="false"/>
             <jar href="chess.jar" main="false"/>
@@ -31,7 +34,7 @@
        </resources>
 
        <application-desc main-class="{qualifiedAppClassName}">
-           <argument>{name}</argument>
+          <argument>{name}</argument>
        </application-desc>
  </jnlp>
 
