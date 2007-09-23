@@ -1,7 +1,7 @@
 package com.becker.puzzle.common;
 import java.util.*;
 
-import net.jcip.annotations.*;
+//import net.jcip.annotations.*;
 
 /**
  * PuzzleNode
@@ -11,7 +11,7 @@ import net.jcip.annotations.*;
  *
  * @author Brian Goetz and Tim Peierls
  */
-@Immutable
+//@Immutable
 public class PuzzleNode<P, M> {
     final P position;
     final M move;

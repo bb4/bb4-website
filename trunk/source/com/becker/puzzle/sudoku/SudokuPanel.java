@@ -44,11 +44,7 @@ final class SudokuPanel extends JPanel
      * Constructor.
      */
     SudokuPanel(Board b) {
-        // this does all the heavy work of solving it.
         board_ = b;
-
-        //int edgeLen = board_.getBaseSize() * board_.getBaseSize();
-        //this.setPreferredSize( new Dimension( edgeLen * PIECE_SIZE, edgeLen * PIECE_SIZE ));
     }
 
     /**

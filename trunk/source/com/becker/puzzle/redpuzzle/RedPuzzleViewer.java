@@ -12,7 +12,6 @@ import java.awt.Graphics2D;
 import java.util.List;
 
 import javax.swing.*;
-import net.jcip.examples.ThisEscape;
 
 /**
  * Draws the current best solution to the puzzle in a panel.
@@ -32,7 +31,7 @@ final class RedPuzzleViewer extends PuzzleViewer<PieceList, Piece>
     // slows down the animation.
     private int animationSpeed_ = INITIAL_ANIM_SPEED;
     
-    private static final int MARGIN = 40;
+    private static final int MARGIN = 65;
     private static final int ORIENT_ARROW_LEN = PIECE_SIZE >> 2;
     private static final int ARROW_HEAD_RAD = 2;
 
@@ -57,7 +56,7 @@ final class RedPuzzleViewer extends PuzzleViewer<PieceList, Piece>
      * Constructor.
      */
     RedPuzzleViewer() {
-        setPreferredSize( new Dimension( 4 * PIECE_SIZE, 4 * PIECE_SIZE ) );
+        setPreferredSize( new Dimension( 5 * PIECE_SIZE + 200, 5 * PIECE_SIZE + 100 ) );
     }
     
     /**
@@ -99,14 +98,13 @@ final class RedPuzzleViewer extends PuzzleViewer<PieceList, Piece>
      */
     protected void paintComponent( Graphics g ) {
         super.paintComponents( g );
-        System.out.println("painting pieces_="+board_);
 
         // erase what's there and redraw.
         g.setColor( BACKGROUND_COLOR );
         g.fillRect( 0, 0, this.getWidth(), this.getHeight() );
 
         g.setColor( TEXT_COLOR );
-        g.drawString( status_, MARGIN, MARGIN - 24 );
+        drawStatus(g,  MARGIN, MARGIN - 50 );     
 
         drawPieceBoundaryGrid((Graphics2D)g, DIM);
 
