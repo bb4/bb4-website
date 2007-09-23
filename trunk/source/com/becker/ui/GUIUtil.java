@@ -270,7 +270,7 @@ public final class GUIUtil
                 //System.out.println("About to load URL: "+url);
             }
             else {
-                String spec = "file:"+resourceRoot_+sPath;
+                String spec = "file:" + resourceRoot_ + sPath;
                 url = new URL(spec);
             }
         } catch (MalformedURLException e) {
@@ -329,11 +329,10 @@ public final class GUIUtil
        baseFrame.setSize( applet.getSize() );
 
        Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-       baseFrame.setLocation( (d.width - baseFrame.getSize().width) >> 2,
-                              (d.height - baseFrame.getSize().height) >> 2 );
-       int height = (int) d.getHeight() >> 1 ;
-       int width = (int) Math.min(height * 1.5, d.getWidth() / 2);
-
+       int height = (int) (2.0 * d.getHeight()  / 3.0) ;
+       int width = (int) Math.min(height * 1.5, 2.0 * d.getWidth() / 3);      
+       baseFrame.setLocation( (d.width - width) >> 2, (d.height - height) >> 2 );
+       
        baseFrame.setVisible( true );
        baseFrame.setSize( width, height);
 
