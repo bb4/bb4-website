@@ -14,7 +14,7 @@ import java.awt.*;
 public final class GameChangedEvent extends AWTEvent
 {
     private static final int GAME_CHANGED_EVENT = AWTEvent.RESERVED_ID_MAX + 4003;
-    private Move move_ = null;
+    private final Move move_;
     private final GameControllerInterface controller_;
     private static final long serialVersionUID = 0L;
 

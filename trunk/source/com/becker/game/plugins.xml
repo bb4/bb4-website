@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plugins SYSTEM "http://www.geocities.com/BarryBecker4/schema/plugins.dtd">
 <plugins date="10/19/2004" author="Barry Becker">
-    <!-- whenever you add a new game to the framework, you need to add an extry here -->
+    
+    <!-- whenever you add a new game to the framework, you need to add an extra entry here -->    
     <!-- here are the 2 player games -->
-
     <game name="pente"
           msgKey="PENTE"
           msgBundleBase="com.becker.game.twoplayer.pente.resources.penteMessages"

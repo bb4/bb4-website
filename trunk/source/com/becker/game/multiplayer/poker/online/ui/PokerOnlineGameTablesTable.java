@@ -57,8 +57,7 @@ import java.util.*;
 
     public OnlineGameTable createOnlineTable(String ownerPlayerName, MultiGameOptions options) {
         Player player = createPlayerForName(ownerPlayerName);
-        OnlinePokerTable gameTable = new OnlinePokerTable(getUniqueName(), player, options);
-        return gameTable;
+        return new OnlinePokerTable(getUniqueName(), player, options);
     }
 
     public Player createPlayerForName(String playerName) {

@@ -176,6 +176,8 @@ public final class GameContext
     public static void loadGameResources(String gameName)
     {
         gameName_ = gameName;
+        //System.out.println("loadGameResources gameName="+ gameName);
+        //System.out.println("plugin = " + PluginManager.getInstance().getPlugin(gameName));
         String resourcePath = PluginManager.getInstance().getPlugin(gameName).getMsgBundleBase();
         log(2, "searching for "+ resourcePath);
 
@@ -339,7 +341,9 @@ public final class GameContext
             log(0,  "***************" );
             log(0, name +" is not a valid locale. We currently only support: ");
             LocaleType[] values = LocaleType.values();
-            for (final LocaleType newVar : values) log(0, newVar.toString());
+            for (final LocaleType newVar : values) {
+                log(0, newVar.toString());
+            }
             log(0,  "Defaulting to English." );
             log(0, "***************" );
             assert (!finf);

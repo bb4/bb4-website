@@ -24,7 +24,7 @@ import java.util.List;
  * things such as whether the user's move was legal or not, and also tells the GameViewer
  * what the computer's move is.
  *
- * @@ should split out rendering into a separate GameBoardRenderer class (and for all dericved classes).
+ * @@ should split out rendering into a separate GameBoardRenderer class (and for all derived classes).
  *
  *  note: subclasses must override paintComponent to have the board show up.
  *
@@ -32,10 +32,9 @@ import java.util.List;
  */
 public abstract class GameBoardViewer
               extends JPanel
-           implements ViewerCallbackInterface, MouseListener, GameChangedListener
+              implements ViewerCallbackInterface, MouseListener, GameChangedListener
 {
-
-
+    
     // every GameBoardViewer must contain one of these
     protected GameController controller_ = null;
 
@@ -48,7 +47,6 @@ public abstract class GameBoardViewer
     protected BoardPosition draggedPiece_ = null;
     // this copy of the dragged piece is only for show
     protected BoardPosition draggedShowPiece_ = null;
-    // the color of the board (would be better to use an image)
 
     // singleton class for rendering the game pieces
     // we use a separate piece rendering class to avoid having ui in the piece class itself.
@@ -58,10 +56,9 @@ public abstract class GameBoardViewer
 
     private static JFileChooser chooser_ = null;
 
-
     // for firing events
-    private EventQueue evtq_;
-    private List<GameChangedListener> gameListeners_ = new ArrayList<GameChangedListener>();
+    private final EventQueue evtq_;
+    private final List<GameChangedListener> gameListeners_ = new ArrayList<GameChangedListener>();
 
     protected JProgressBar progressBar_ = null;
     protected Timer timer_ = null;
@@ -539,10 +536,11 @@ public abstract class GameBoardViewer
     protected void drawMarkers( int nrows, int ncols, Graphics2D g2 )
     {
         Board board = getBoard();
-        for ( int i = 1; i <= nrows; i++ )
+        for ( int i = 1; i <= nrows; i++ ) {
             for ( int j = 1; j <= ncols; j++ ) {
                 pieceRenderer_.render(g2, board.getPosition( i, j ),  cellSize_, board);
             }
+        }
     }
 
     /**

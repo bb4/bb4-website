@@ -14,9 +14,9 @@ public class GoOptions extends TwoPlayerOptions {
 
 
     // initial look ahead factor.
-    static final int DEFAULT_LOOKAHEAD = 3;
+    static final int DEFAULT_LOOKAHEAD = 2;
     // for any given ply never consider more that BEST_PERCENTAGE of the top moves
-    static final int BEST_PERCENTAGE = 80;
+    static final int BEST_PERCENTAGE = 70;
 
 
     // additional score given to black or white to bring things into balance.

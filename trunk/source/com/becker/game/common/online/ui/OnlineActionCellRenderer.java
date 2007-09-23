@@ -12,7 +12,7 @@ import java.awt.event.*;
  */
 public class OnlineActionCellRenderer implements TableCellRenderer {
 
-    private JoinButton joinButton_;
+    private final JoinButton joinButton_;
 
 
 

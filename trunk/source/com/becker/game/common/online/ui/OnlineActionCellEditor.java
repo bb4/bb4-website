@@ -9,7 +9,7 @@ import java.awt.event.*;
  */
 public class OnlineActionCellEditor extends com.becker.ui.table.AbstractCellEditor {
 
-    private OnlineActionCellRenderer cellRenderer_;
+    private final OnlineActionCellRenderer cellRenderer_;
 
 
     public OnlineActionCellEditor(ActionListener listener)

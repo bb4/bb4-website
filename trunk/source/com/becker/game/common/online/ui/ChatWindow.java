@@ -14,8 +14,8 @@ import java.awt.event.*;
 public class ChatWindow extends JPanel implements OnlineChangeListener, KeyListener {
 
     private ServerConnection connection_;
-    private JTextArea textArea_;
-    private JScrollPane scrollPane_;
+    private final JTextArea textArea_;
+    private final JScrollPane scrollPane_;
     private JTextField messageField_;
 
     public ChatWindow(ServerConnection connection) {
@@ -59,7 +59,8 @@ public class ChatWindow extends JPanel implements OnlineChangeListener, KeyListe
     public void keyTyped(KeyEvent e) {
         if (e.getKeyChar() == '\n') {
             String txt = messageField_.getText();
-            if (txt.trim().length() > 0) {
+            txt = txt.trim();
+            if (txt.length() > 0) {
                 messageField_.setText("");
                 connection_.sendCommand(new GameCommand(GameCommand.Name.CHAT_MESSAGE, txt));
             }

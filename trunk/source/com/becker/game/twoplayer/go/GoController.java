@@ -71,7 +71,8 @@ import static com.becker.game.twoplayer.go.GoControllerConstants.*;
  *      These good moves should be at the head of a list when possible moves are being generated.
  *
  ** Packaging issues
- *    - images on index web page should link directly to applets.
+ *    - ant deploy could use significant cleanup.
+ *    - images on index web page should link directly to applets (or webstart).
  *    - auto generate images for index page.
  *    - make this text a web page and add a link to it.
  *    - maintain on website as applet and webstart (yahoo does not yet support webstart. See hostway) (1)

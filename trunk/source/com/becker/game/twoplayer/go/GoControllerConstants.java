@@ -20,7 +20,7 @@ public final class GoControllerConstants {
 
 
     /** default num row and columns for a default square go board.   */
-    static final int DEFAULT_NUM_ROWS = 5;
+    static final int DEFAULT_NUM_ROWS = 13; 
 
     /** if difference greater than this, then consider a win. */
     static final int WIN_THRESHOLD = 1000;

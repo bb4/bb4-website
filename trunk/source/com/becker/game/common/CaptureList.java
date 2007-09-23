@@ -93,7 +93,7 @@ public class CaptureList extends LinkedList<BoardPosition>
             assert capture.isOccupied();
             this.add( capture.copy() );
         }
-        return (list.size() > 0);
+        return (!list.isEmpty());
     }
 
     /**

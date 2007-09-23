@@ -14,12 +14,12 @@ public class GameWeights
 
     private static int numWeights_;
 
-    private ParameterArray defaultWeights_ = null;
-    private ParameterArray p1Weights_ = null;
-    private ParameterArray p2Weights_ = null;
+    private final ParameterArray defaultWeights_;
+    private ParameterArray p1Weights_;
+    private ParameterArray p2Weights_;
 
-    private String[] names_ = null;
-    private String[] descriptions_ = null;
+    private final String[] names_;
+    private final String[] descriptions_;
 
     public GameWeights( ParameterArray defaultWeights )
     {
