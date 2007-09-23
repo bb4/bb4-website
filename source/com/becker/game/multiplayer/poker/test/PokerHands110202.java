@@ -45,10 +45,12 @@ class PokerHands110202 {
         catch (IOException e)
         {
             e.printStackTrace();
-            return (null);
+            return null;
         }
 
-        if ((car < 0) && (lg == 0)) return (null);  // eof
+        if ((car < 0) && (lg == 0)) {
+            return null;  // eof
+        }
         return (new String (lin, 0, lg));
     }
 

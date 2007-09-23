@@ -16,11 +16,11 @@ public class BattleSimulation
 
     private List<Player> hits_;
     private int numShipsAfterAttack_ = 0;
-    GalacticPlayer ownerAfterAttack_;
-    GalacticPlayer ownerBeforeAttack_;
+    private GalacticPlayer ownerAfterAttack_;
+    private GalacticPlayer ownerBeforeAttack_;
 
-    Order order_;
-    Planet destPlanet_;
+    private Order order_;
+    private Planet destPlanet_;
 
 
     /**

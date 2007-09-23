@@ -54,6 +54,17 @@ public class BoardPosition
     }
     
     /**
+     *override hashcode if you override equals
+     */
+    public int hashCode() {
+        int hash = getRow() * 10000 * this.getCol() * 10;
+        if (piece_ != null) {
+            hash += piece_.getType();
+        }
+        return hash;
+    }
+        
+    /**
      * @return the piece at this position if there is one.
      */
     public GamePiece getPiece()

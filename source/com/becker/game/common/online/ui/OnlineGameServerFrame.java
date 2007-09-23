@@ -67,6 +67,7 @@ public class OnlineGameServerFrame  extends JFrame {
     protected void finalize() throws Throwable {
         super.finalize();
         server_ = null;
+        super.finalize();
     }
 
     /**
@@ -79,7 +80,8 @@ public class OnlineGameServerFrame  extends JFrame {
         if (OnlineGameServer.verifyCmdLineOptions(options)) {
             String gameName = options.getValueForOption(OnlineGameServer.GAME_OPTION);
             OnlineGameServerFrame frame = new OnlineGameServerFrame(gameName);
-        }
+            frame.setVisible(true);
+        }        
     }
 
 }

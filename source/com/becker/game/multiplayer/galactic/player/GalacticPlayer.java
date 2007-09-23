@@ -18,7 +18,7 @@ import java.text.*;
  */
 public class GalacticPlayer extends Player
 {
-    protected static final String GALACTIC_IMAGE_DIR = GameContext.GAME_ROOT+"multiplayer/galactic/images/";
+    protected static final String GALACTIC_IMAGE_DIR = GameContext.GAME_ROOT+"multiplayer/galactic/ui/images/";
 
     // this player's home planet. (like earth is for humans)
     private Planet homePlanet_;

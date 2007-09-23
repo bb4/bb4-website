@@ -171,6 +171,21 @@ public abstract class Board implements BoardInterface, Cloneable
        return true;
     }
 
+    public int hashCode() {        
+        int hash = 0;
+        int nRows = getNumRows();
+        int nCols = getNumCols();
+        for ( int i = 1; i <= nRows; i++ )   {           
+          int pos = (i-1) * nCols;
+          for ( int j = 1; j <= nCols; j++ ) {
+              BoardPosition p1 = this.getPosition(i,j);  
+              if (p1.isOccupied()) {          
+                  hash += 2 *(pos + j) + (p1.getPiece().isOwnedByPlayer1()? 1: 2);                  
+              }
+           }
+        }
+        return hash;
+    }
 
     /**
      * @param move  to make

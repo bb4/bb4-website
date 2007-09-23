@@ -152,11 +152,9 @@ public class PokerHand implements Comparable {
         int run = 1;
         int start = 1;
         // special case for when ace is the low card in a straight
-        if (hand_.get(0).rank() == Rank.ACE) {
-            if (hand_.get(1).rank() == Rank.DEUCE) {
-                rank = hand_.get(1).rank();
-                run = 2;
-            }
+        if ((hand_.get(0).rank() == Rank.ACE) &&  (hand_.get(1).rank() == Rank.DEUCE)) {
+            rank = hand_.get(1).rank();
+            run = 2;
         }
         for (Card c : hand_.subList(start, size())) {
             Rank[] ranks = Rank.values();

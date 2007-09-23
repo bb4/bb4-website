@@ -24,22 +24,21 @@ public class GameApplet extends JApplet
         GUIUtil.setCustomLookAndFeel();
         GUIUtil.setStandAlone(true);
 
-        // these parameters are specified in the html page that embeds the applet.
-        // They determine the game to play, and the locale to run it.
-        String className = getParameter("panel_class");
-        //String gameName = getParameter("program_name");
+        String gameName = getParameter("program_name");
+        // these values can now be retrieved from plugins.xml instead from applet 
+        String className = PluginManager.getInstance().getPlugin(gameName).getPanelClass();
+                
+        //String className = getParameter("panel_class");       
         String localeName = getParameter("locale");
-        //LocaleType locale = GameContext.getLocale(localeName, true);
-
-        // these must be called before anything else
-        //GameContext.verifyGameResources(gameName, className);
-        //GameContext.setLocale(locale);
-
-        Class gameClass = Util.loadClass(className);
+   
+        // this will load the resources for the specified game.        
+        GameContext.loadGameResources(gameName);
+        
+        Class gameClass = Util.loadClass(className);            
 
         try {
             gamePanel_ = (GamePanel)gameClass.newInstance();
-            gamePanel_.init(null);   // applet has not frame.
+            gamePanel_.init(null);   // applet has no frame.
 
         } catch (InstantiationException e) {
             e.printStackTrace();

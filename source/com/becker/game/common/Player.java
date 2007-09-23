@@ -90,7 +90,7 @@ public class Player implements Serializable
 
     public String toString()
     {
-        StringBuffer sb = new StringBuffer( "" );
+        StringBuffer sb = new StringBuffer( 100 );
 
         sb.append("Name : ").append(name_);
         if (!isHuman())

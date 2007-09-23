@@ -9,7 +9,7 @@ import java.awt.*;
  */
 public class SurrogatePlayer extends PokerPlayer implements OnlineChangeListener {
 
-    private ServerConnection connection_;
+    protected ServerConnection connection_;
 
     public SurrogatePlayer(String name, int money, Color color, boolean isHuman, ServerConnection connection) {
         super(name, money, color, isHuman);

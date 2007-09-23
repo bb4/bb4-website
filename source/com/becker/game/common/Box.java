@@ -7,8 +7,8 @@ import com.becker.common.*;
  * @ Barry Becker
  */
 public class Box {
-    Location corner1_;
-    Location corner2_;
+    private final Location corner1_;
+    private final Location corner2_;
 
     public Box(Location corner1, Location corner2) {
         corner1_ = corner1;

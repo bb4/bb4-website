@@ -46,7 +46,6 @@ import java.text.MessageFormat;
  * things such as whether the user's move was legal or not, and also tells the GameViewer
  * what the computer's move is.
  *
- *
  *  note: subclasses must override paintComponent to have the board show up.
  *
  *  @author Barry Becker
@@ -58,7 +57,6 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
     private static final int PROGRESS_UPDATE_DELAY = 700;
     private static final int PROGRESS_STEP_DELAY = 100;
     private static final short FUTURE_MOVE_TRANSP = 190;
-
 
     // show this cached board if we are in the middle of processing the next one
     // (to avoid concurrency problems)
@@ -78,7 +76,6 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
     {
         controller_.setViewer(this);
     }
-
 
     /**
      * @return our game controller
@@ -148,7 +145,6 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
         // for all other cases a human moves first
         // see the mouseClicked callback method for details
     }
-
 
 
     /**

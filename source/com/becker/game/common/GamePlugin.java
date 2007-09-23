@@ -8,12 +8,12 @@ package com.becker.game.common;
  */
 public class GamePlugin {
 
-    private String name_;
-    private String label_;
-    private String msgBundleBase_;
-    private String panelClass_;
-    private String controllerClass_;
-    private boolean isDefault_;
+    private final String name_;
+    private final String label_;
+    private final String msgBundleBase_;
+    private final String panelClass_;
+    private final String controllerClass_;
+    private final boolean isDefault_;
 
     public GamePlugin(String name, String label, String msgBundleBase,
                       String panelClass, String controllerClass,

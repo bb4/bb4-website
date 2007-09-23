@@ -21,12 +21,15 @@ public class Galaxy extends Board
     static {
         PLANET_NAMES = new char[60];
         int ct=0;
-        for (int c='A'; c<='Z'; c++)
+        for (int c='A'; c<='Z'; c++) {
             PLANET_NAMES[ct++]=(char)c;
-        for (int c='a'; c<='z'; c++)
+        }
+        for (int c='a'; c<='z'; c++) {
             PLANET_NAMES[ct++]=(char)c;
-        for (int c='1'; c<='8'; c++)
+        }
+        for (int c='1'; c<='8'; c++) {
             PLANET_NAMES[ct++]=(char)c;
+        }
     }
 
 

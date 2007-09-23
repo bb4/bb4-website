@@ -16,9 +16,11 @@ public class Card {
     private static final List<Card> protoDeck = new ArrayList<Card>();
 
     static {
-        for (Suit suit : Suit.values())
-            for (Rank rank : Rank.values())
+        for (Suit suit : Suit.values()) {
+            for (Rank rank : Rank.values()) {
                 protoDeck.add(new Card(rank, suit));
+            }
+        }
     }
 
 
