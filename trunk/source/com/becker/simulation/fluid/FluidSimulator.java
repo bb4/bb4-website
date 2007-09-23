@@ -1,4 +1,4 @@
-package com.becker.simulation.liquid;
+package com.becker.simulation.fluid;
 
 import com.becker.common.*;
 import com.becker.optimization.*;
@@ -6,35 +6,51 @@ import com.becker.simulation.common.*;
 import com.becker.ui.*;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
-public class LiquidSimulator extends NewtonianSimulator
+/**
+ *Simulate deep water.
+ *Based on work by Jos Stam
+ *http://www.dgp.toronto.edu/people/stam/reality/Research/pdf/GDC03.pdf
+ *
+ *
+ *TODO
+ *  change measning of foxce vectors checlbox
+ *  need reset button (for all simulations)
+ *  Liquid specific parameters 
+ *   - number of cells (x,y) - autocalculate the scale size based on the window size.
+ *   - diffusion
+ *   - viscosity
+ *   - force factor
+ *   - source_ink factor
+ *   - 
+ */
+public class FluidSimulator extends NewtonianSimulator 
 {
 
-    //public static final String CONFIG_FILE = "com/becker/liquid/initialState.data";
     public static final String CONFIG_FILE = "com/becker/liquid/initialStateTest.data";
     private static final String FILE_NAME_BASE = ANIMATION_FRAME_FILE_NAME_PREFIX + "liquid/liquidFrame";
 
-    LiquidEnvironment environment_;
+    FluidEnvironment environment_;
     EnvironmentRenderer envRenderer_;
 
     // if true it will save all the animation steps to files
     public static final boolean RECORD_ANIMATION = false;
-
-    protected static final double TIME_STEP = 0.01;  // initial time step
-
-
+    protected static final double TIME_STEP = 0.05;  // initial time step
+    protected static final int DEFAULT_STEPS_PER_FRAME = 2;
     private static final Color BG_COLOR = Color.white;
-
     private static final int NUM_OPT_PARAMS = 3;
 
 
-    public LiquidSimulator() {
+    public FluidSimulator() {
         super("Liquid");
-        environment_ =  new LiquidEnvironment( 20, 15 );
+        environment_ =  new FluidEnvironment( 80, 80 );
         commonInit();
     }
 
-    public LiquidSimulator( LiquidEnvironment environment )
+    public FluidSimulator( FluidEnvironment environment )
     {
         super("Liquid");
         environment_ = environment;
@@ -48,12 +64,16 @@ public class LiquidSimulator extends NewtonianSimulator
                            +environment_.getWidth()+ " environment_.getHeight()="+environment_.getHeight());
         int s = (int) envRenderer_.getScale();
         setPreferredSize(new Dimension( environment_.getWidth() * s, environment_.getHeight() * s));
+        setNumStepsPerFrame(DEFAULT_STEPS_PER_FRAME);
+        
+        InteractionHandler handler = new InteractionHandler(environment_.getGrid(), envRenderer_.getScale());
+        this.addMouseListener(handler);
+        this.addMouseMotionListener(handler);
     }
 
     protected SimulatorOptionsDialog createOptionsDialog() {
-         return new LiquidOptionsDialog( frame_, this );
+         return new FluidOptionsDialog( frame_, this );
     }
-
 
     protected double getInitialTimeStep() {
         return TIME_STEP;

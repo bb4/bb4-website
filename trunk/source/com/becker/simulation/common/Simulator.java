@@ -43,15 +43,6 @@ public abstract class Simulator extends AnimationComponent
 
     protected void initCommonUI() {
         GUIUtil.setCustomLookAndFeel();
-
-        // need this?
-        addComponentListener( new ComponentAdapter()
-        {
-            public void componentResized( ComponentEvent ce )
-            {
-                //System.out.println("resized");
-            }
-        } );
     }
 
 
@@ -175,6 +166,5 @@ public abstract class Simulator extends AnimationComponent
         assert false : "not implemented yet";
         return 0.0;
     }
-
-
+    
 }

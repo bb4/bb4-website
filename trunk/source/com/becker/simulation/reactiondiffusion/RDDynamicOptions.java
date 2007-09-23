@@ -91,11 +91,11 @@ public class RDDynamicOptions extends JPanel
         JPanel checkBoxes = new JPanel(new FlowLayout());
         
         RDRenderer r = simulator_.getRenderer();
-        showU_ = new JCheckBox("Show U Value", r.isShowingU());
+        showU_ = new JCheckBox("U Value", r.isShowingU());
         showU_.addActionListener(this);
-        showV_ = new JCheckBox("Show V Value", r.isShowingV());
+        showV_ = new JCheckBox("V Value", r.isShowingV());
         showV_.addActionListener(this);
-        useConcurrency_ = new JCheckBox("Parallelize", gs_.isParallelized());
+        useConcurrency_ = new JCheckBox("Parallel", gs_.isParallelized());
         useConcurrency_.setToolTipText("Will take advantage of multiple processors if present.");
         useConcurrency_.addActionListener(this);
         checkBoxes.add(showU_); //, BorderLayout.EAST);

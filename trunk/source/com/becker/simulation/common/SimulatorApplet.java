@@ -57,9 +57,11 @@ public class SimulatorApplet extends JApplet {
 
         content.add( resizablePanel_, BorderLayout.CENTER );
         simulator_.setVisible(true);
+        System.out.println("size="+simulator_.getPreferredSize());
         content.setPreferredSize(simulator_.getPreferredSize());
         content.repaint();
-
+        setSize(simulator_.getPreferredSize());
+     
     }
 
     private static  Simulator createSimulationFromClassName(String className) {
