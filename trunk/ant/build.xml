@@ -27,10 +27,11 @@
   <!-- property name="java_home" value="/usr/java/jdk1.5.0_05"/
        property name="java14" value="/usr/java/jdk1.4.2/bin/java"/
        property name="java15" value="${java_home}/bin/amd64/java"/ -->
-  <property name="java_home" value="D:/apps/java"/>
-  <property name="java15" value="${java_home}/java1.5_10/jdk/bin/java"/>
-  <property name="java16" value="${java_home}/jdk1.6.0_01/bin/java"/>
+  <property name="java_home" value="D:/apps/Java"/>
+  <property name="java15" value="${java_home}/java1.5.0_12/jre/bin/java"/>
+  <property name="java16" value="${java_home}/jdk1.6.0_02/bin/java"/>
   <property name="java_compiler" value="${java16}"/>
+  <property name="sleepTime" value="100"/>
 
   <property name="project_home" value="G:/projects/java_projects/trunk"/> <!-- value="/windows/projects/java_projects/trunk"/ -->
 
@@ -56,7 +57,7 @@
     <pathelement location="${libDir}/jai_codec.jar"/>
     <pathelement location="${libDir}/jnlp.jar"/>
     <pathelement location="${libDir}/junit.jar"/>
-    <pathelement location="${libDir}/batik-awt-util.jar"/>
+    <!--pathelement location="${libDir}/batik-awt-util.jar"/>
     <pathelement location="${libDir}/batik-bridge.jar"/>
     <pathelement location="${libDir}/batik-css.jar"/>
     <pathelement location="${libDir}/batik-dom.jar"/>
@@ -70,7 +71,7 @@
     <pathelement location="${libDir}/batik-swing.jar"/>
     <pathelement location="${libDir}/batik-transcoder.jar"/>
     <pathelement location="${libDir}/batik-util.jar"/>
-    <pathelement location="${libDir}/batik-xml.jar"/>
+    <pathelement location="${libDir}/batik-xml.jar-->
     <pathelement location="${libDir}/jigo.jar"/>
     <pathelement location="${libDir}/gogui7.1.jar"/>
     <pathelement location="${libDir}/gtpserver.jar"/>
@@ -240,6 +241,8 @@
   <target name="executeMaze" description="Run the maze generation program">
     <antcall target="executeProgram">
       <param name="className" value="com.becker.puzzle.maze.MazeSimulator"/>
+      <param name="libPath" value="${libDir}/vecmath.jar"/>
+      <param name="args" value=""/>
     </antcall>
   </target>
 
@@ -274,6 +277,24 @@
       <param name="args" value="com.becker.simulation.liquid.LiquidSimulator"/>
     </antcall>
   </target>
+  
+  <target name="executeFluid" description="Run the Fluid simulator">
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
+      <param name="libPath" value="${libDir}/vecmath.jar"/>
+      <param name="args" value="com.becker.simulation.fluid.FluidSimulator"/>
+    </antcall>
+  </target>
+  
+  <target name="testLiquid" depends="compile" description=" liquid tests" >
+       <echo message="now running LIQUID tests"/>
+       <junit  printsummary="yes"  haltonfailure="no" showoutput="yes" >
+           <classpath path="${classesDir};${libDir}/vecmath.jar"/>
+           <formatter type="plain"/>
+           <!--formatter type="brief" usefile="false" /-->
+           <test name="com.becker.simulation.liquid.test.TestCell" outfile="../test/liquid/liquidTestResults"/>
+       </junit>
+  </target>
 
    <target name="executeTrebuchet" depends="compile" description="Run the Trebuchet simulator">
      <antcall target="executeProgram">
@@ -298,7 +319,7 @@
     </java>
   </target>
   
-  <target name="executeNativeRender" depends="compile" description="A simple educational program for computing change.">
+  <target name="executeNativeRender" depends="compile" description="A simple test of the native graphics renderer.">
       <echo message="now executing NativeRender"/>
       <java classname="com.becker.misc.nativeRender.NativeRenderTest" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="128M">
           <jvmarg value="${assertionsFlag}"/>
@@ -321,7 +342,7 @@
 
   <target name="executeHiQPuzzle" depends="compile" description=" run the Hi-Q Puzzle screenSaver">
     <echo message="now executing Hi-Q"/>
-    <java classname="com.becker.puzzle.hiq.HiQPuzzle" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="600M">
+    <java classname="com.becker.puzzle.hiq.HiQPuzzle" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="400M">
         <jvmarg value="${assertionsFlag}"/>
     </java>
   </target>
@@ -368,6 +389,7 @@
   <!-- call this to run java programs  -->
   <target name="executeProgram" depends="compile" description="Run a program">
     <java classname="${className}" classpath="${classesDir};${libPath}" fork="true" jvm="${java_compiler}">
+        <sysproperty key="DEBUG" value="true"/>
         <arg line="${args}"/>
         <!-- use this if running Yourkit profiler -->
         <!-- jvmarg value="-agentlib:yjpagent"/  -->
@@ -382,6 +404,7 @@
 
   <target name="executeProgram2" depends="compile" description="Run a program">
     <java classname="${className}" classpath="${classesDir};${libPath}" fork="true" jvm="${java_compiler}">
+        <sysproperty key="DEBUG" value="true"/>
         <arg value="${arg1}"/>
         <arg value="${arg2}"/>
         <jvmarg value="-Xms128M"/>
