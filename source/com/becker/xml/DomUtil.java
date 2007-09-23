@@ -177,6 +177,7 @@ public class DomUtil {
      * Set replaceUseWithDeepCopy to false if you are in a debug mode and don't want to see a lot of redundant subtrees.
      * @param stream some input stream.
      * @param replaceUseWithDeepCopy if true then replace each instance of a use node with a deep copy of what it refers to
+     * @param xsdURI location of the schema to use for validation.
      * @return the parsed file as a Document
      */
     private static Document parseXML(InputStream stream, boolean replaceUseWithDeepCopy, String xsdUri)
@@ -237,6 +238,7 @@ public class DomUtil {
 
     public static Document parseXMLFile(File file)
     {
+        System.out.println("about to parse "+ file.getAbsolutePath());
         return parseXMLFile(file, true);
     }
 
