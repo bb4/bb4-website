@@ -43,7 +43,7 @@ import static com.becker.game.twoplayer.go.GoControllerConstants.*;
  *
  * High priority todo:
  *
- *  - Break out GameBoardRenderer from GameBoarddViewer for each game package.
+ *  - Break out GameBoardRenderer from GameBoardViewer for each game package.
  *  - Add test cases for every little method of every class
  *  - Why don't test cases find optimal moves?
  *  - fix scoring (allow for different types of rule systems

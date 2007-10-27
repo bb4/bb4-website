@@ -26,7 +26,8 @@ public class GameCommand implements Serializable {
         JOIN_TABLE,
         CHANGE_NAME,
         UPDATE_TABLES,
-        CHAT_MESSAGE
+        CHAT_MESSAGE,
+         START_GAME
     }
 
 

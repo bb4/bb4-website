@@ -56,9 +56,10 @@ public final class OrderDialog extends OptionsDialog
      */
     protected void initUI()
     {
+        JPanel mainPanel = new JPanel();
         setResizable( true );
-        mainPanel_ =  new JPanel();
-        mainPanel_.setLayout( new BorderLayout() );
+        mainPanel =  new JPanel();
+        mainPanel.setLayout( new BorderLayout() );
 
         JPanel buttonsPanel = createButtonsPanel();
 
@@ -85,12 +86,12 @@ public final class OrderDialog extends OptionsDialog
 
         numShips_ = new NumberInput(GameContext.getLabel("NUMBER_OF_SHIPS_TO_SEND"), DEFAULT_FLEET_SIZE);
 
-        mainPanel_.add(routePanel, BorderLayout.NORTH);
-        mainPanel_.add(numShips_, BorderLayout.CENTER);
+        mainPanel.add(routePanel, BorderLayout.NORTH);
+        mainPanel.add(numShips_, BorderLayout.CENTER);
         //mainPanel_.add(new JLabel(" "), BorderLayout.SOUTH);
-        mainPanel_.add(buttonsPanel, BorderLayout.SOUTH);
+        mainPanel.add(buttonsPanel, BorderLayout.SOUTH);
 
-        getContentPane().add( mainPanel_ );
+        getContentPane().add( mainPanel );
         getContentPane().repaint();
         pack();
     }

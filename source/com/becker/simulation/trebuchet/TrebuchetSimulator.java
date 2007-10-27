@@ -37,8 +37,7 @@ public class TrebuchetSimulator extends NewtonianSimulator
     public TrebuchetSimulator()
     {
         super("Trebuchet");
-        final Trebuchet trebuchet = new Trebuchet();
-        commonInit( trebuchet );
+        reset();        
         this.setPreferredSize(new Dimension( 800, 900));
     }
 
@@ -56,6 +55,11 @@ public class TrebuchetSimulator extends NewtonianSimulator
         initCommonUI();
         this.render();
     }
+    
+    protected void reset() {
+        final Trebuchet trebuchet = new Trebuchet();
+        commonInit( trebuchet );
+    }
 
     public Color getBackground()
     {
@@ -63,12 +67,9 @@ public class TrebuchetSimulator extends NewtonianSimulator
     }
 
     public JPanel createTopControls()
-    {
-        JPanel controls = new JPanel();
-        controls.add( createStartButton() );
-
-        controls.add( createOptionsButton() );
-
+    {                 
+         JPanel controls = super.createTopControls();     
+        
         JPanel zoomPanel = new JPanel();
         zoomPanel.setLayout(new FlowLayout());
         JLabel zoomLabel = new JLabel( " Zoom" );

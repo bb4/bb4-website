@@ -203,7 +203,7 @@ public class PokerGameViewer extends GameBoardViewer
 
         // offset the dlg so the board is visible as a reference
         roundOverDlg.setLocation((int)(p.getX()+ 0.9*getParent().getWidth()),
-                                 (int)(p.getY()+getParent().getHeight()/3));
+                                 (int)(p.getY()+getParent().getHeight()/3.0));
 
         roundOverDlg.setVisible(true);
     }

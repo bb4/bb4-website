@@ -16,6 +16,7 @@ import java.util.*;
  */
 public class ServerConnection {
 
+    /** Hardcoded for now, but should be configurable. */
     private static final String DEFAULT_HOST = "127.0.0.1"; // localhost // "192.168.1.100";
 
     private ObjectOutputStream oStream_;
@@ -143,7 +144,7 @@ public class ServerConnection {
         isConnected_ = false;
         GameContext.log(0, msg);
         t.printStackTrace();
-        System.exit(1);
+        throw new RuntimeException(t);
     }
 
 

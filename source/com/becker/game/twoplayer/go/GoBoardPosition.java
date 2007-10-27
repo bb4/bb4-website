@@ -2,6 +2,7 @@ package com.becker.game.twoplayer.go;
 
 import com.becker.common.Util;
 import com.becker.game.common.BoardPosition;
+import com.becker.game.common.GameContext;
 
 
 /**
@@ -184,7 +185,6 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
      */
     public void clear(GoBoard board)
     {
-
         GoString string = getString();
 
         if (string != null)  {
@@ -205,6 +205,7 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
         assert false : "must use clear(board) instead";
     }
 
+    
     /**
      * @return a string representation of the go board position
      */
@@ -219,7 +220,7 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
      */
     public String toString()
     {
-        return super.toString()+ " s:"+Util.formatNumber(scoreContribution_);
+        return super.toString()+ " s:"+Util.formatNumber(scoreContribution_) + " hc:"+hashCode();
     }
 
     public double getScoreContribution() {

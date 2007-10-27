@@ -117,7 +117,7 @@ public class DomEcho  extends JPanel
     // -------------------------------------------------------------------------
     public static void main(String argv[])
     {
-        Document document = null;
+        Document document;
         if (argv.length < 1) {
             document = DomUtil.buildDom();
         }

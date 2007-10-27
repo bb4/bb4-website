@@ -89,6 +89,7 @@ public class SpeechSynthesizer
         try {
             Thread.sleep( 100 );
         } catch (Exception e) {
+            e.printStackTrace();            
         }
     }
 

@@ -12,11 +12,10 @@ import java.awt.event.*;
 import java.text.*;
 
 /**
- * Allow the user to specify a single order
+ * Allow the user to specify a poker action
  * @author Barry Becker
  */
 public final class BettingDialog extends OptionsDialog
-                               implements ActionListener
 {
     private PokerPlayer player_;
 
@@ -27,6 +26,7 @@ public final class BettingDialog extends OptionsDialog
     private PokerController pc_;
     private int callAmount_;
     private int contributeAmount_;
+    private int raiseAmount_ = 0;
 
     /**
      * constructor - create the tree dialog.
@@ -42,7 +42,7 @@ public final class BettingDialog extends OptionsDialog
         Point p = parent.getLocationOnScreen();
         // offset the dlg so the board is visible as a reference
         setLocation((int)(p.getX() + 0.7*getParent().getWidth()),
-                                 (int)(p.getY() + getParent().getHeight()/3));
+                                 (int)(p.getY() + getParent().getHeight()/3.0));
         initUI();
     }
 
@@ -53,20 +53,21 @@ public final class BettingDialog extends OptionsDialog
     protected void initUI()
     {
         setResizable( true );
-        mainPanel_ =  new JPanel();
-        mainPanel_.setLayout( new BorderLayout() );
-        mainPanel_.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+        JPanel mainPanel = new JPanel();
+        mainPanel =  new JPanel();
+        mainPanel.setLayout( new BorderLayout() );
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 
         JPanel pokerHandPanel =new PokerHandPanel(player_.getHand());
         JPanel buttonsPanel = createButtonsPanel();
 
         JPanel instructions = createInstructionsPanel();
 
-        mainPanel_.add(pokerHandPanel , BorderLayout.NORTH);
-        mainPanel_.add(instructions, BorderLayout.CENTER);
-        mainPanel_.add(buttonsPanel, BorderLayout.SOUTH);
+        mainPanel.add(pokerHandPanel , BorderLayout.NORTH);
+        mainPanel.add(instructions, BorderLayout.CENTER);
+        mainPanel.add(buttonsPanel, BorderLayout.SOUTH);
 
-        getContentPane().add( mainPanel_ );
+        getContentPane().add( mainPanel );
         getContentPane().repaint();
         pack();
     }
@@ -150,21 +151,27 @@ public final class BettingDialog extends OptionsDialog
     public void actionPerformed( ActionEvent e )
     {
         Object source = e.getSource();
+        PokerAction.Name actionName = null;
         if (source == foldButton_) {
+            actionName = PokerAction.Name.FOLD;
             player_.setFold(true);
             this.setVisible(false);
         }
         else if ( source == callButton_ ) {
+            actionName = PokerAction.Name.CALL;
             // add the amount of money needed to call
             contributeAmount_ = callAmount_;
             this.setVisible(false);
         }
         else if ( source == raiseButton_ ) {
+            actionName = PokerAction.Name.RAISE;
             showRaiseDialog();
         }
         else {
-           System.out.println( "actionPerformed source="+source+". not recognized" );
+            assert false :"actionPerformed source="+source+". not recognized";
         }
+        
+        ((PokerHumanPlayer)player_).setAction(new PokerAction(player_.getName(), actionName, raiseAmount_));
     }
 
 
@@ -179,8 +186,9 @@ public final class BettingDialog extends OptionsDialog
 
         boolean canceled = raiseDialog.showDialog();
 
-        if ( !canceled ) { // newGame a game with the newly defined options
-            contributeAmount_  = callAmount_ + raiseDialog.getRaiseAmount();
+        if ( !canceled ) { 
+            raiseAmount_ = raiseDialog.getRaiseAmount();
+            contributeAmount_  = callAmount_ + raiseAmount_;
             this.setVisible(false);
         }
     }
@@ -192,7 +200,7 @@ public final class BettingDialog extends OptionsDialog
     /**
      * this panel shows the player the contents of their hand so they can bet on it.
      */
-    private class PokerHandPanel extends JPanel {
+    private static class PokerHandPanel extends JPanel {
         PokerHand hand_;
 
         public PokerHandPanel(PokerHand hand) {

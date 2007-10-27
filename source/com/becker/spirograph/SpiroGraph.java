@@ -1,6 +1,9 @@
 package com.becker.spirograph;
 
 import com.becker.ui.*;
+import com.becker.ui.sliders.ColorSliderGroup;
+import com.becker.ui.sliders.SliderChangeListener;
+import com.becker.ui.sliders.SliderGroup;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -10,6 +13,9 @@ import java.awt.event.*;
 /**
  * That old spirograph game from the 70's brought into the computer age
  * Based on work originially done by David Little.
+ *
+ *TODO:
+ *  Move to simulation.spirograph package
  *
  * @author Barry Becker
  */
@@ -42,7 +48,7 @@ public class SpiroGraph extends JApplet
         5,          -59,      -300,                     1,                1,    GraphState.DEFAULT_NUM_SEGMENTS/10
     };
     private static final int[] SLIDER_MAX = {
-        255,        200,       300, GraphState.VELOCITY_MAX,              50,       4*GraphState.DEFAULT_NUM_SEGMENTS
+        255,       200,       300, GraphState.VELOCITY_MAX,          50,       4*GraphState.DEFAULT_NUM_SEGMENTS
     };
     private static final int[] SLIDER_INITIAL = {
         60,         60,        60,                     3, GraphState.INITIAL_LINE_WIDTH, GraphState.DEFAULT_NUM_SEGMENTS
@@ -151,9 +157,9 @@ public class SpiroGraph extends JApplet
 
     public void updateEqn()
     {
-        int rad = sliderGroup_.getSliderValue(RAD2);
-        int combinedRad = sliderGroup_.getSliderValue(RAD1) + rad;
-        int p = sliderGroup_.getSliderValue(POS);
+        int rad = sliderGroup_.getSliderValueAsInt(RAD2);
+        int combinedRad = sliderGroup_.getSliderValueAsInt(RAD1) + rad;
+        int p = sliderGroup_.getSliderValueAsInt(POS);
         String s1 = "-", s2 = "-";
 
         if ( rad == 0 ) {
@@ -190,13 +196,16 @@ public class SpiroGraph extends JApplet
      * See SliderGroup
      * Maintains constraints between sliders.
      */
-    public void sliderChanged(int src, String sliderName, int value )
+    public void sliderChanged(int src, String sliderName, double sliderValue )
     {
+        // I know that all the sliders are integer based.
+        int value = (int)sliderValue;
+        
         //System.out.println(sliderName+ ' ' + value);
-        int velocity = sliderGroup_.getSliderValue(VEL);
+        int velocity = sliderGroup_.getSliderValueAsInt(VEL);
 
         if ( src == RAD1 ) {
-            int n = sliderGroup_.getSliderValue(RAD2);
+            int n = sliderGroup_.getSliderValueAsInt(RAD2);
             if ( n < 2 - value ) {
                 n = 1 - value;
                 sliderGroup_.setSliderValue(RAD2, n);

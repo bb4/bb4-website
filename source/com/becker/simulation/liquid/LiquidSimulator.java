@@ -40,12 +40,16 @@ public class LiquidSimulator extends NewtonianSimulator
         environment_ = environment;
         commonInit();
     }
+    
+    protected void reset() {
+        environment_ =  new LiquidEnvironment( 20, 15 );
+        commonInit();
+    }
 
     private void commonInit() {
         initCommonUI();
         envRenderer_ = new EnvironmentRenderer();
-        System.out.println("environment_.getWidth() = "
-                           +environment_.getWidth()+ " environment_.getHeight()="+environment_.getHeight());
+   
         int s = (int) envRenderer_.getScale();
         setPreferredSize(new Dimension( environment_.getWidth() * s, environment_.getHeight() * s));
     }

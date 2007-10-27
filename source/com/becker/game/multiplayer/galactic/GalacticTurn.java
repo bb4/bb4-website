@@ -68,7 +68,7 @@ public class GalacticTurn extends Move
     /**
      * private class representing a single melee round result
      */
-    private class Hit
+    private static class Hit
     {
         int numShipsDestroyed;
         Player playerHit;

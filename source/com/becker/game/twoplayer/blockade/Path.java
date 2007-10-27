@@ -88,6 +88,13 @@ public class Path {
         return true;
     }
     
+    public int hashCode() {
+        int hash =  this.getLength() * 100000;
+        for (BlockadeMove move : elements_) {
+            hash += move.hashCode() / 20;            
+        } 
+        return hash; 
+    }
     
     /**
      *Stringify list path.

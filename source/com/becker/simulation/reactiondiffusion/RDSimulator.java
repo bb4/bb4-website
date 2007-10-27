@@ -17,10 +17,11 @@ public class RDSimulator extends Simulator {
 
     private GrayScott grayScott_;
     private RDRenderer renderer_;
+    private RDDynamicOptions rdOptions_;
 
     protected static final double TIME_STEP = 1.0;
     protected static final int DEFAULT_STEPS_PER_FRAME = 10;
-
+   
 
     public RDSimulator() {
         super("Reaction Diffusion");
@@ -35,6 +36,11 @@ public class RDSimulator extends Simulator {
         renderer_ = new RDRenderer(grayScott_);
 
         setNumStepsPerFrame(DEFAULT_STEPS_PER_FRAME);
+    }
+    
+    protected void reset() {
+         grayScott_.reset();
+         rdOptions_.reset();
     }
 
     protected SimulatorOptionsDialog createOptionsDialog() {
@@ -65,8 +71,8 @@ public class RDSimulator extends Simulator {
     }
 
     public JPanel createDynamicControls() {
-
-        return new RDDynamicOptions(grayScott_, this);
+        rdOptions_ = new RDDynamicOptions(grayScott_, this);
+        return rdOptions_;
     }
 
 

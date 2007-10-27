@@ -20,18 +20,24 @@ public final class EnvironmentRenderer
     //private static final float PRESSURE_COL_OPACITY = 0.01f;
     
     // scales the size of everything
-    public static final double DEFAULT_SCALE = 8;
+    public static final double DEFAULT_SCALE = 4;
     private static final int OFFSET = 10;
     
     public static final boolean USE_LINEAR_INTERPOLATION = false;
 
-    private static final double pressureVals_[] = {0.0, 0.1, 1.0, 4.0, 100.0};
+    private static final double pressureVals_[] = {0.0, 0.00001, 0.0001, 0.001, 0.005, 0.01, 0.02, 0.05, .1, 0.5, 2.0};
     private static final Color pressureColors_[] = {
-        new Color( 0, 0, 235, 90 ),
-        new Color( 0, 200, 190, 150 ),
+        new Color( 110, 110, 140, 20 ),
+        new Color( 205, 10, 255, 55 ),        
+        new Color( 50, 50, 255, 80 ),
+        new Color( 0, 0, 255, 100 ),
+        new Color( 0, 200, 190, 130 ),
+        new Color( 0, 255, 0, 140 ),
         new Color( 150, 255, 0, 190 ),
-        new Color( 250, 190, 0, 220 ),
-        new Color( 255, 0, 0, 255 )
+        new Color( 250, 230, 0, 230 ),        
+        new Color( 255, 100, 0, 230 ),
+        new Color( 205, 1, 255, 240 ),
+        new Color( 250, 0, 0, 255 )
     };
     private static final ColorMap pressureColorMap_ =
             new ColorMap( pressureVals_, pressureColors_ );
@@ -41,21 +47,21 @@ public final class EnvironmentRenderer
     private static final Font BASE_FONT = new Font( "Sans-serif", Font.PLAIN, 12 );
 
     private double scale_ = DEFAULT_SCALE;
-    private float wallLineWidth_;
-    private int particleSize_;
 
     private boolean showVelocities_ = false;
-    private boolean showPressures_ = false;
+    private boolean showPressures_ = true;
 
 
     public EnvironmentRenderer() {
        setScale(DEFAULT_SCALE);
     };
+    
+    public ColorMap getColorMap() {
+        return pressureColorMap_;
+    }
 
     public void setScale(double scale) {
         scale_ = DEFAULT_SCALE;
-        wallLineWidth_ = (float) (scale / 5.0) + 1;
-        particleSize_ = (int) (scale / 8.0) + 1;
     }
 
     public double getScale() {
@@ -97,25 +103,6 @@ public final class EnvironmentRenderer
             renderPressure(g, env);
 
 
-        // draw the ---walls---
-        Stroke oldStroke = g.getStroke();
-        Stroke wallStroke = new BasicStroke( wallLineWidth_ );
-        g.setStroke( wallStroke );
-
-        g.setColor(WALL_COLOR);
-        /*
-        //Stroke stroke = new BasicStroke(wall.getThickness(), BasicStroke.CAP_BUTT,
-        //                                BasicStroke.JOIN_ROUND, 10);
-        for (i=0; i<walls_.size(); i++)  {
-            Wall wall = (Wall)walls_.elementAt(i);
-            //System.out.println("wall "+i+" = "+wall.getStartPoint().getX()+" "+wall.getStartPoint().getY());
-            g.drawLine( (int)(wall.getStartPoint().getX()*rat+OFFSET),
-                        (int)(wall.getStartPoint().getY()*rat+OFFSET),
-                        (int)(wall.getStopPoint().getX()*rat+OFFSET),
-                        (int)(wall.getStopPoint().getY()*rat+OFFSET) );
-        }
-        */
-
         // outer boundary
         g.drawRect( OFFSET, OFFSET, (int) (env.getXDim() * scale_), (int) (env.getYDim() * scale_) );
 
@@ -124,7 +111,6 @@ public final class EnvironmentRenderer
             drawVectors(g, env);
 
         // draw the cells/grid_
-        g.setStroke( oldStroke );
         g.setColor( GRID_COLOR );
         for ( j = 0; j < env.getYDim(); j++ )   //  -----
         {
@@ -155,6 +141,7 @@ public final class EnvironmentRenderer
         int yStart =  (int) ((scale_ * j) + OFFSET);
         int scale = (int) scale_;
         
+        // linear interpolation turns out to be too slow on java 2d (or at least my impl of it)
         if (USE_LINEAR_INTERPOLATION) {
        
             float[] colorLL = new float[4];
@@ -183,6 +170,7 @@ public final class EnvironmentRenderer
         }
     }
 
+    private static final double  VECTOR_SCALE = 10.0;
 
     private void drawVectors(Graphics2D g, FluidEnvironment env) {
         g.setColor( VECTOR_COLOR );
@@ -194,9 +182,9 @@ public final class EnvironmentRenderer
                 int x = (int) (scale_ * i) + OFFSET;
                 int y = (int) (scale_ * j) + OFFSET;
                 g.drawLine( (int) (scale_ * (i + 0.5)) + OFFSET, y,
-                        (int) (scale_ * (i + 0.5)) + OFFSET, (int) (scale_ * j + 8.0 * v) + OFFSET );
+                        (int) (scale_ * (i + 0.5)) + OFFSET, (int) (scale_ * j + VECTOR_SCALE * v) + OFFSET );
                 g.drawLine( x, (int) (scale_ * (j + 0.5)) + OFFSET,
-                        (int) (scale_ * i + 8.0 * u) + OFFSET, (int) (scale_ * (j + 0.5)) + OFFSET );
+                        (int) (scale_ * i + VECTOR_SCALE  * u) + OFFSET, (int) (scale_ * (j + 0.5)) + OFFSET );
             }
         }
     }

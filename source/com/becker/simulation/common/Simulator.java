@@ -45,9 +45,7 @@ public abstract class Simulator extends AnimationComponent
         GUIUtil.setCustomLookAndFeel();
     }
 
-
     protected abstract double getInitialTimeStep();
-
 
     public void setTimeStep( double timeStep )
     {
@@ -70,7 +68,6 @@ public abstract class Simulator extends AnimationComponent
     public double getScale() {
         return 1;
     }
-
 
     protected GradientButton createOptionsButton()
     {
@@ -99,18 +96,43 @@ public abstract class Simulator extends AnimationComponent
 
 
     protected abstract SimulatorOptionsDialog createOptionsDialog();
+    
+    /**
+     *return to the initial state.
+     */
+    protected abstract void reset();
 
 
     public JPanel createTopControls()
     {
         JPanel controls = new JPanel();
         controls.add( createStartButton() );
+        
+        controls.add( createResetButton() );
 
         controls.add( createOptionsButton() );
         //controls.add(simulator.getStepButton());
         return controls;
     }
 
+    
+    /**
+     *
+     * @return  a reset button that allows you to restore the initial condition of the simulation.
+     */
+    protected JButton createResetButton()
+    {
+        final JButton resetButton = new JButton( "Reset");
+        resetButton.addActionListener( new ActionListener()  {
+            public void actionPerformed( ActionEvent e )
+            {    
+                reset();
+            }
+        });
+        return resetButton;
+    }
+    
+    
     /**
      * Override this to return ui elements that can be used to modify the simulation as it is running.
      */

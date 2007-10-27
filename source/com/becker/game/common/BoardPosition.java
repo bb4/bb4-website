@@ -39,29 +39,32 @@ public class BoardPosition
      * @param wall  the wall to compare to.
      * @return  true if values are equal.
      */
-    public boolean equals( Object pos )
-    {
+    public boolean equals( Object pos )  {   
+         if ((pos == null) || !(pos.getClass().equals(this.getClass()))) 
+             return false;
+
          BoardPosition comparisonPos = (BoardPosition) pos;
          boolean sameSide = true;
-         if (getPiece()!=null && comparisonPos.getPiece()!=null)   {
+         if (getPiece() != null && comparisonPos.getPiece() != null)   {
              sameSide = (getPiece().isOwnedByPlayer1() == comparisonPos.getPiece().isOwnedByPlayer1());
          }  
          else {
              sameSide = (getPiece() == null && comparisonPos.getPiece() == null);
          }
-         return (getRow() == comparisonPos.getRow()) &&
+         boolean equal = (getRow() == comparisonPos.getRow()) &&
                      (getCol() == comparisonPos.getCol()) && (sameSide);
+   
+         if (!equal) {
+                GameContext.log(0, "eq="+equal);
+         }
+         return equal;
     }
     
     /**
      *override hashcode if you override equals
      */
     public int hashCode() {
-        int hash = getRow() * 10000 * this.getCol() * 10;
-        if (piece_ != null) {
-            hash += piece_.getType();
-        }
-        return hash;
+        return getRow() * 200 + getCol() ;
     }
         
     /**

@@ -287,7 +287,7 @@ public class FileDialog
     // If we're not at the root directory, we need to provide a way for the
     // user to go back a level.
     //
-    if( getCurrentDir() != "" )
+    if( !"".equals(getCurrentDir()) )
       dirList.add( getPreviousDirectory(), 0 );
 
     reader.close();

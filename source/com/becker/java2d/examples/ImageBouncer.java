@@ -68,13 +68,10 @@ public class ImageBouncer
         mOriginalImage = image;
         setImageType( "TYPE_INT_RGB" );
 
-        Random random = new Random();
-        mX = random.nextFloat() * 500;
-        mY = random.nextFloat() * 500;
+        reset();
+        
         mWidth = mImage.getWidth();
         mHeight = mImage.getHeight();
-        mDeltaX = random.nextFloat() * 3;
-        mDeltaY = random.nextFloat() * 3;
         // Make sure points are within range.
         addComponentListener( new ComponentAdapter()
         {
@@ -89,6 +86,14 @@ public class ImageBouncer
                 else if ( mY + mHeight >= d.height ) mY = d.height - mHeight - 1;
             }
         } );
+    }
+    
+    protected void reset() {
+        Random random = new Random();
+        mX = random.nextFloat() * 500;
+        mY = random.nextFloat() * 500;    
+        mDeltaX = random.nextFloat() * 3;
+        mDeltaY = random.nextFloat() * 3;
     }
 
     public String getFileNameBase()

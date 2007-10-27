@@ -17,7 +17,7 @@ public class BattleSimulation
     private List<Player> hits_;
     private int numShipsAfterAttack_ = 0;
     private GalacticPlayer ownerAfterAttack_;
-    private GalacticPlayer ownerBeforeAttack_;
+    //private GalacticPlayer ownerBeforeAttack_;
 
     private Order order_;
     private Planet destPlanet_;
@@ -34,10 +34,11 @@ public class BattleSimulation
         createSimulation(order, destPlanet);
     }
 
+    /*
     public GalacticPlayer getOwnerBeforeAttack()
     {
         return ownerBeforeAttack_;
-    }
+    }*/
 
     public GalacticPlayer getOwnerAfterAttack()
     {

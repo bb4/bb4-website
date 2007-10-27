@@ -10,7 +10,7 @@ public class Data {
 
     // simple test of a 9*9 puzzle
     //
-    public static int[][] SAMPLE1 = {
+    public static final int[][] SAMPLE1 = {
         {0, 0, 9,  0, 0, 0,  0, 0, 7},
         {2, 8, 6,  4, 7, 3,  0, 0, 0},
         {0, 0, 0,  5, 9, 0,  0, 0, 0},
@@ -27,7 +27,7 @@ public class Data {
     // simple test of a 9*9 puzzle
     // (inconsistent. use only for testing)
     //
-    public static int[][] SAMPLE2 = {
+    public static final  int[][] SAMPLE2 = {
         {0, 0, 3,  7, 0, 0,  0, 2, 0},
         {0, 8, 0,  9, 0, 0,  4, 0, 1},
         {0, 9, 0,  0, 2, 1,  0, 6, 3},

@@ -760,8 +760,6 @@ public final class GoBoard extends TwoPlayerBoard
             case OCCUPIED:  // occupied black or white
                 if ( !nbr.isVisited() && nbr.isOccupied() &&
                      (!samePlayerOnly || nbr.getPiece().isOwnedByPlayer1() == friendOwnedByPlayer1)) {
-                    //if (samePlayerOnly && nbr.getPiece().isOwnedByPlayer1()!=s.getPiece().isOwnedByPlayer1())
-                    //  System.out.println(nbr +" s="+s+" friendOwnedByPlayer="+friendOwnedByPlayer1 );
                     stack.add( 0, nbr );
                     return 1;
                 }

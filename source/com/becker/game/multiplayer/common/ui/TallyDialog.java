@@ -15,7 +15,6 @@ import java.awt.event.*;
  * @author Barry Becker
  */
 public abstract class TallyDialog extends OptionsDialog
-
 {
     private GameController controller_;
 
@@ -53,7 +52,8 @@ public abstract class TallyDialog extends OptionsDialog
      */
     protected void initUI()
     {
-        mainPanel_.setLayout(new BorderLayout());
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout());
 
         Player[] players = controller_.getPlayers();
         String winningPlayer = findWinner(players);
@@ -63,18 +63,18 @@ public abstract class TallyDialog extends OptionsDialog
         winnerLabel.setText("<html>" + GameContext.getLabel("GAME_OVER") + "<br>"
                             + GameContext.getLabel("WINNER_IS")+"<br>" + winningPlayer + "</html>");
         winnerLabel.setBorder(BorderFactory.createEmptyBorder(6,6,6,6));
-        mainPanel_.add(winnerLabel, BorderLayout.NORTH);
+        mainPanel.add(winnerLabel, BorderLayout.NORTH);
 
         SummaryTable summaryTable_= createSummaryTable(players);
         JPanel tablePanel = new JPanel();
         tablePanel.setBorder(BorderFactory.createEmptyBorder(6,6,6,6));
         tablePanel.add(new JScrollPane(summaryTable_.getTable()), BorderLayout.CENTER);
 
-        mainPanel_.add(tablePanel, BorderLayout.CENTER);
-        mainPanel_.add(createButtonsPanel(), BorderLayout.SOUTH);
+        mainPanel.add(tablePanel, BorderLayout.CENTER);
+        mainPanel.add(createButtonsPanel(), BorderLayout.SOUTH);
 
 
-        this.getContentPane().add(mainPanel_);
+        this.getContentPane().add(mainPanel);
         //this.setPreferredSize(new Dimension(500,300));
     }
 

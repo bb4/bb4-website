@@ -75,14 +75,7 @@ public class TextBouncer
     {
         mString = s;
         setFont( f );
-        Random random = new Random();
-        mX = random.nextFloat() * 500;
-        mY = random.nextFloat() * 500;
-        mDeltaX = random.nextFloat() * 3;
-        mDeltaY = random.nextFloat() * 3;
-        mShearX = random.nextFloat() / 2;
-        mShearY = random.nextFloat() / 2;
-        mShearDeltaX = mShearDeltaY = .05f;
+        reset();
         FontRenderContext frc = new FontRenderContext( null, true, false );
         Rectangle2D bounds = getFont().getStringBounds( mString, frc );
         mWidth = (float) bounds.getWidth();
@@ -103,6 +96,17 @@ public class TextBouncer
         } );
     }
 
+    protected void reset() {
+        Random random = new Random();
+        mX = random.nextFloat() * 500;
+        mY = random.nextFloat() * 500;
+        mDeltaX = random.nextFloat() * 3;
+        mDeltaY = random.nextFloat() * 3;
+        mShearX = random.nextFloat() / 2;
+        mShearY = random.nextFloat() / 2;
+        mShearDeltaX = mShearDeltaY = .05f;
+    }
+    
     public String getFileNameBase() {
         return null;
     }

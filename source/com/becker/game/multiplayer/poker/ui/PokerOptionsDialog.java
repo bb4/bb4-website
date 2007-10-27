@@ -4,6 +4,7 @@ import com.becker.game.common.*;
 import com.becker.game.multiplayer.common.ui.*;
 import com.becker.game.multiplayer.poker.*;
 import com.becker.ui.*;
+import java.awt.Dimension;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -21,7 +22,9 @@ public class PokerOptionsDialog extends MultiGameOptionsDialog
     private NumberInput initialChips_;
     private NumberInput maxAbsoluteRaise_;
 
-    // constructor
+    /**
+     * Constructor
+     */
     public PokerOptionsDialog( JFrame parent, GameController controller )
     {
         super( parent, controller);
@@ -46,8 +49,10 @@ public class PokerOptionsDialog extends MultiGameOptionsDialog
                                 1, 100 * PokerOptions.DEFAULT_MAX_ABS_RAISE, true);
 
         initMultiControllerParamComponents(options);
+        
+        JPanel spacer = new JPanel();     
 
-        return new JComponent[] {ante_, initialChips_, maxAbsoluteRaise_, maxNumPlayers_, numRobotPlayers_};
+        return new JComponent[] {ante_, initialChips_, maxAbsoluteRaise_, maxNumPlayers_, numRobotPlayers_, spacer};
     }
 
 

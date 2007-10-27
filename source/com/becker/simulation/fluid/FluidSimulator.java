@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import javax.swing.JPanel;
 
 /**
  *Simulate deep water.
@@ -18,7 +19,8 @@ import java.awt.event.MouseMotionListener;
  *
  *TODO
  *  change measning of foxce vectors checlbox
- *  need reset button (for all simulations)
+ *  Shouyld not need to check the show force vector check to see things.
+ *  Have the grid resize as the panel resizes
  *  Liquid specific parameters 
  *   - number of cells (x,y) - autocalculate the scale size based on the window size.
  *   - diffusion
@@ -30,23 +32,25 @@ import java.awt.event.MouseMotionListener;
 public class FluidSimulator extends NewtonianSimulator 
 {
 
-    public static final String CONFIG_FILE = "com/becker/liquid/initialStateTest.data";
-    private static final String FILE_NAME_BASE = ANIMATION_FRAME_FILE_NAME_PREFIX + "liquid/liquidFrame";
+    public static final String CONFIG_FILE = "com/becker/fluid/initialStateTest.data";
+    private static final String FILE_NAME_BASE = ANIMATION_FRAME_FILE_NAME_PREFIX + "fluid/fluidFrame";
 
     FluidEnvironment environment_;
     EnvironmentRenderer envRenderer_;
+    InteractionHandler handler_;
+    FluidDynamicOptions fluidOptions_;
 
     // if true it will save all the animation steps to files
     public static final boolean RECORD_ANIMATION = false;
-    protected static final double TIME_STEP = 0.05;  // initial time step
-    protected static final int DEFAULT_STEPS_PER_FRAME = 2;
+    protected static final double TIME_STEP = 0.03;  // initial time step
+    protected static final int DEFAULT_STEPS_PER_FRAME = 1;
     private static final Color BG_COLOR = Color.white;
     private static final int NUM_OPT_PARAMS = 3;
 
 
     public FluidSimulator() {
         super("Liquid");
-        environment_ =  new FluidEnvironment( 80, 80 );
+        environment_ =  new FluidEnvironment( 110, 140 );
         commonInit();
     }
 
@@ -60,19 +64,43 @@ public class FluidSimulator extends NewtonianSimulator
     private void commonInit() {
         initCommonUI();
         envRenderer_ = new EnvironmentRenderer();
-        System.out.println("environment_.getWidth() = "
-                           +environment_.getWidth()+ " environment_.getHeight()="+environment_.getHeight());
         int s = (int) envRenderer_.getScale();
         setPreferredSize(new Dimension( environment_.getWidth() * s, environment_.getHeight() * s));
         setNumStepsPerFrame(DEFAULT_STEPS_PER_FRAME);
         
-        InteractionHandler handler = new InteractionHandler(environment_.getGrid(), envRenderer_.getScale());
-        this.addMouseListener(handler);
-        this.addMouseMotionListener(handler);
+        handler_ = new InteractionHandler(environment_.getGrid(), envRenderer_.getScale());
+        this.addMouseListener(handler_);
+        this.addMouseMotionListener(handler_);
     }
 
     protected SimulatorOptionsDialog createOptionsDialog() {
          return new FluidOptionsDialog( frame_, this );
+    }    
+    
+    public JPanel createDynamicControls() {
+        fluidOptions_ = new FluidDynamicOptions(this);
+        return fluidOptions_;
+    }
+
+    
+    public EnvironmentRenderer getRenderer() {
+            return envRenderer_;
+    }
+    
+    public FluidEnvironment getEnvironment() {
+        return environment_;
+    }
+    
+    public InteractionHandler getInteractionHandler() {
+        return handler_;
+    }
+    
+    protected void reset() {
+        // remove the listeners in order to prevent a memory leak.
+        this.removeMouseListener(handler_);      
+        this.removeMouseListener(handler_);
+        environment_.reset();        
+        commonInit();
     }
 
     protected double getInitialTimeStep() {
@@ -107,18 +135,17 @@ public class FluidSimulator extends NewtonianSimulator
         return envRenderer_.getShowVelocities();
     }
 
-    public void setShowForceVectors( boolean show ) {
-        envRenderer_.setShowPressures(show);
+    public void setShowForceVectors( boolean show ) {  
     }
+    
     public boolean getShowForceVectors() {
-        return envRenderer_.getShowPressures();
+         return envRenderer_.getShowPressures();
     }
 
     public void setDrawMesh( boolean use ) {
-        //snake_.setDrawMesh(use);
     }
+    
     public boolean getDrawMesh() {
-        //return snake_.getDrawMesh();
         return false;
     }
 

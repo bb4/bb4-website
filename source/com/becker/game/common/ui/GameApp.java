@@ -123,9 +123,9 @@ public class GameApp implements ActionListener
     }
 
 
-    private JMenuItem createMenuItem(String gameName)
+    private JMenuItem createMenuItem(String name)
     {
-        JMenuItem item = new JMenuItem(gameName);
+        JMenuItem item = new JMenuItem(name);
         item.addActionListener(this);
         return item;
     }

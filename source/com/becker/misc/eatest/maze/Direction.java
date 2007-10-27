@@ -6,9 +6,9 @@ package com.becker.misc.eatest.maze;
 public class Direction {
 
     // possible directions as we traverse
-    public static final Integer FORWARD = 1 ;
-    public static final Integer LEFT = 2 ;
-    public static final Integer RIGHT = 3 ;
+    public static final int FORWARD = 1 ;
+    public static final int LEFT = 2 ;
+    public static final int RIGHT = 3 ;
 
     // vary the probability that each direction occurs for interesting effects
     // the sum of these probabilities must sum to 1
@@ -36,7 +36,7 @@ public class Direction {
     }
 
     public void setLeftProb(double leftProb) {
-        this.leftProb_ = leftProb_;
+        this.leftProb_ = leftProb;
     }
 
     public double getRightProb() {
@@ -44,7 +44,7 @@ public class Direction {
     }
 
     public void setRightProb(double rightProb) {
-        this.rightProb_ = rightProb_;
+        this.rightProb_ = rightProb;
     }
 
 

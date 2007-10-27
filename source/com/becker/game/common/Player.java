@@ -88,6 +88,14 @@ public class Player implements Serializable
         return (name_.equals(p1.getName()) && isHuman() == p1.isHuman());
     }
 
+    public int hashCode() {
+        int hash = (isHuman() ? 100000000: 0);
+        for (int i = 0; i<name_.length(); i++) {
+            hash += 10*i + name_.charAt(i);
+        }
+        return hash;
+    }
+    
     public String toString()
     {
         StringBuffer sb = new StringBuffer( 100 );

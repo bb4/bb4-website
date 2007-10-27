@@ -23,14 +23,14 @@ public final class PentePatterns
     public static final int M = 5;
 
     // max length of the pattern to match. long patterns should be very rare
-    protected static final int MAX_LINE_LENGTH = 2 * M + 1;
+    private static final int MAX_LINE_LENGTH = 2 * M + 1;
 
     // this table provides a quick way to look up a weight for a pattern.
     // it acts as a hashmap to a weight index. The pattern can be converted to
     // a lookup index using convertPatternToInt.There is a leadin 1 in from of
     // the binary hash - that's why we need 2^12 rather than 2^11.
     private static final int TABLE_SIZE = 4096; //2048;  2^11 or 2^12
-    public static int weightIndexTable_[] = null;
+    static int weightIndexTable_[] = null;
 
     // use these only if reading from a file
     private static final String PATTERN_FILE =
@@ -169,7 +169,7 @@ public final class PentePatterns
         try {
             patternFile = new FileInputStream( file );
         } catch (FileNotFoundException e) {
-            System.out.println( "file " + PATTERN_FILE + " not found" );
+            System.out.println( "file " + PATTERN_FILE + " not found." + e.getMessage() );
         }
         InputStreamReader iStreamReader = new InputStreamReader( patternFile );
         BufferedReader inData = new BufferedReader( iStreamReader );
@@ -252,6 +252,6 @@ public final class PentePatterns
         } catch (IOException e) {
             System.out.println( "error occurred while reading " + PATTERN_FILE );
             e.printStackTrace();
-        }
+        } 
     }
 }

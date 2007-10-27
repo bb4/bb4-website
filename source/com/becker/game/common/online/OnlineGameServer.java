@@ -2,6 +2,7 @@ package com.becker.game.common.online;
 
 import com.becker.common.*;
 import com.becker.game.common.*;
+import java.awt.ScrollPane;
 
 import javax.swing.*;
 import java.io.*;
@@ -64,11 +65,16 @@ public class OnlineGameServer  {
         try {
             server_ = new ServerSocket(port_);
         }
-        catch (IOException e) {
-            GameContext.log(0, "Could not listen on port " + port_);
-            e.printStackTrace();
-            System.exit(-1);
+        catch (BindException e) {
+            System.out.println("Address already in use! Perhaps there is already another game server sunning on this port:" + port_);
+            throw new RuntimeException(e);
         }
+        catch (IOException e) {
+            System.out.println("Could not listen on port " + port_);
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+  
         while (true) {
             OnlineGameServer.ClientWorker w;
             try {
@@ -99,7 +105,7 @@ public class OnlineGameServer  {
         catch (IOException e) {
             GameContext.log(0, "Could not close socket");
             e.printStackTrace();
-            System.exit(-1);
+            throw new RuntimeException(e);
         }
         catch (Throwable t) {
             t.printStackTrace();
@@ -131,7 +137,7 @@ public class OnlineGameServer  {
             catch (IOException e) {
                 GameContext.log(0, "in or out stream creation failed.");
                 e.printStackTrace();
-                System.exit(-1);
+                throw new RuntimeException(e);
             }
 
             try {
@@ -144,10 +150,12 @@ public class OnlineGameServer  {
                     GameCommand cmd = (GameCommand) iStream_.readObject();
 
                     // we got a change to the tables, update internal structure and broadcast new list.
-                    GameCommand response = cmdProcessor_.processCmd(cmd);
+                    List<GameCommand> responses = cmdProcessor_.processCommand(cmd);
 
-                    for (ClientWorker w : clientConnections_) {
-                        w.update(response);
+                    for (GameCommand response: responses) {
+                        for (ClientWorker w : clientConnections_) {
+                            w.update(response);
+                        }
                     }
 
                     //Send acknowledgment back to client
@@ -155,7 +163,9 @@ public class OnlineGameServer  {
                     if (text_ == null)  {
                        System.out.println(cmd.toString());
                     }  else {
-                       text_.append(cmd.toString() + '\n');
+                       text_.append(cmd.toString() + '\n'); 
+                       JScrollPane spane = ((JScrollPane)text_.getParent().getParent());
+                       spane.getVerticalScrollBar().setValue(spane.getVerticalScrollBar().getMaximum());
                     }
 
                 }

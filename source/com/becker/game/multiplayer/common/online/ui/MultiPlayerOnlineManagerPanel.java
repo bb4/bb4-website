@@ -15,6 +15,7 @@ import java.awt.event.*;
 
 /**
  * Manage multiplayer online game tables.
+ * Shows a list of the currently active tables to the user in a table.
  *
  * @author Barry Becker Date: May 14, 2006
  */
@@ -116,14 +117,6 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
     protected abstract GameOptionsDialog createNewGameTableDialog();
 
     /**
-     * An online table has filled with players and is ready to start.
-     */
-    protected void startGame()
-    {
-        controller_.setPlayers(onlineGameTablesTable_.getSelectedTable().getPlayersAsArray());
-    }
-
-    /**
      * The server has sent out a message to all the clients.
      * @param cmd the command to handle.
      */
@@ -135,57 +128,77 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
         //System.out.println("got an update of the multiplayer table list from the server:\n" + cmd);
         switch (cmd.getName())  {
             case UPDATE_TABLES :
-                OnlineGameTableList tableList = (OnlineGameTableList) cmd.getArgument();
-                onlineGameTablesTable_.removeAllRows();
-
-                for (int i=0; i<tableList.size(); i++) {
-                    OnlineGameTable table = tableList.get(i);
-                    onlineGameTablesTable_.addRow(table, table.hasPlayer(currentName_));
-                }
-
-                OnlineGameTable readyTable = tableList.getTableReadyToPlay(currentName_);
-                if (readyTable != null) {
-                    // then the table the player is sitting at is ready to begin play.
-                    JOptionPane.showMessageDialog(this,
-                              "All the players required \n(" + readyTable.getPlayersString()
-                              + ")\n have joined this table. Play will now begin. ",
-                              "Ready to Start", JOptionPane.INFORMATION_MESSAGE);
-                    // close the dlg and tell the server to start a thread to play the game
-
-
-                    ChangeEvent event = new ChangeEvent(this);
-                    gameStartedListener_.stateChanged(event);
-                    //serverConnection_.sendCommand(new GameCommand(GameCommand.Name.START_GAME, readyTable));
-                }
+                updateTables( (OnlineGameTableList) cmd.getArgument());                               
+                break;
+           case START_GAME :
+                startGame();
                 break;
            case CHAT_MESSAGE : break;
            default : assert false : "Unexpected command name :"+ cmd.getName();
         }
     }
 
+    public void updateTables(OnlineGameTableList tableList) {  
+        onlineGameTablesTable_.removeAllRows();
+
+        for (int i = 0; i < tableList.size(); i++) {
+            OnlineGameTable table = tableList.get(i);
+            onlineGameTablesTable_.addRow(table, table.hasPlayer(currentName_));
+        }
+
+        OnlineGameTable readyTable = tableList.getTableReadyToPlay(currentName_);
+        if (readyTable != null) {
+            // then the table the player is sitting at is ready to begin play.
+            JOptionPane.showMessageDialog(this,
+                      "All the players required \n(" + readyTable.getPlayersString()
+                      + ")\n have joined this table. Play will now begin. ",
+                      "Ready to Start", JOptionPane.INFORMATION_MESSAGE);
+            // close the dlg and tell the server to start a thread to play the game
+
+            // send an event to close the new player window. (perhaps we could know its a dialog and close it directly?)
+            ChangeEvent event = new ChangeEvent(this);
+            gameStartedListener_.stateChanged(event);
+
+            //GameCommand startCmd = new GameCommand(GameCommand.Name.START_GAME, readyTable);
+            //controller_.getServerConnection().sendCommand(startCmd);
+        }
+    }
+    
+    
+    /**
+     * An online table has filled with players and is ready to start.
+     */
+    protected void startGame()
+    {
+        System.out.println("Start the game for player:" + currentName_);
+        //controller_.setPlayers(onlineGameTablesTable_.getSelectedTable().getPlayersAsArray());
+    }
+
     /**
      * Implements actionlistener.
      * The user has done something to change the table list
-     * (e.g. add a new game table or join a different table).
+     * (e.g. added a new game table or joined a different table).
      */
     public void actionPerformed( ActionEvent e ) {
         Object source = e.getSource();
 
-        if (source == createTableButton_) {
-            checkName();
-            createNewGameTable();
-        }
-        else {
-            checkName();
-            joinDifferentTable((JoinButton) source);
+        if (nameChecksOut()) {
+            if (source == createTableButton_) {        
+                createNewGameTable();            
+            }
+            else {         
+                joinDifferentTable((JoinButton) source);
+            }
         }
     }
 
-    private void checkName() {
-         if (localPlayerName_.getText().equals(DEFAULT_NAME)) {
+    private boolean nameChecksOut() {
+        boolean checksOut = !localPlayerName_.getText().equals(DEFAULT_NAME);
+         if (!checksOut) {
             JOptionPane.showMessageDialog(this, "You must enter your name at the top first.", "Warning",
                                           JOptionPane.INFORMATION_MESSAGE);
         }
+        return checksOut;
     }
 
     /**
@@ -219,13 +232,13 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
     }
 
     /**
-     * The local user has clicked  ajoin button on a different table
+     * The local user has clicked  a join button on a different table
      * indicating that they want to join that table.
      */
     private void joinDifferentTable(JoinButton b) {
 
         int joinRow = b.getRow();
-        System.out.println("in join diff table. row="+ joinRow);
+        System.out.println("in join different table. row="+ joinRow);
         PlayerTableModel m = onlineGameTablesTable_.getPlayerModel();
 
         for (int i=0; i < m.getRowCount(); i++) {
@@ -245,6 +258,7 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
      * We remove them form the active tables.
      */
     public void closing() {
+        System.out.println(currentName_+ " is now leaving the room ");
         controller_.getServerConnection().leaveRoom(currentName_);
     }
 

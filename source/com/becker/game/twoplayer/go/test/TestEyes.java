@@ -429,7 +429,7 @@ public class TestEyes extends GoTestCase {
     }
 
 
-    private class EyeCounts {
+    private static class EyeCounts {
         protected int numFalseEyes;
         protected int numTrueEyes;
         protected int numBigEyes;
@@ -452,6 +452,11 @@ public class TestEyes extends GoTestCase {
                     && counts.numTerritorialEyes == numTerritorialEyes);
         }
 
+        public int hashCode() {
+            return 1000000*numTerritorialEyes + 10000 * numBigEyes + 100 * numTrueEyes + numFalseEyes;
+        }
+
+        
         public String toString() {
             StringBuffer buf = new StringBuffer('\n');
             buf.append("False Eyes: "+numFalseEyes+'\n');

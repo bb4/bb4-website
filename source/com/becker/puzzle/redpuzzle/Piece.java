@@ -128,6 +128,11 @@ public final class Piece
         );
     }
 
+    public int hashCode() {
+        assert false : "hashCode not designed";
+        return 42; // any arbitrary constant will do 
+    }
+    
     /**
      * @return a nice readable string representation for debugging.
      */

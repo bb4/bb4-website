@@ -95,7 +95,7 @@ final class GoGroupRenderer
         // we can tell which case we have by how far apart the two stones are
         double dist = s1.getDistanceFrom( s2 );
         GeneralPath border = null;
-        //System.out.println("dist="+dist);
+  
         if ( dist == 1.0 || dist == 2.0 ) {
             // **  or *_*
             border = getLinearNbrBorder( s1, s2, cellSize );
@@ -357,7 +357,6 @@ final class GoGroupRenderer
         }
 
         if (!group.getEyes().isEmpty())   {
-            //System.out.println( "GoGroup drawDecoration: eyes:"+eyes_ );
             drawEyes( cellSize, g2, group.getEyes() );
         }
     }

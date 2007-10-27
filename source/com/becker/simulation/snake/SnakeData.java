@@ -19,7 +19,7 @@ public final class SnakeData
     private SnakeData() {};
 
     // now the widths starting at the nose and edging at the tip of the tail
-    public static double[] widths = {
+    public static final double[] WIDTHS = {
         9.0, 18.0, 12.0, 13.0, 15.0, 17.0, 18.0, 19.0,
         20.0, 20.5, 21.0, 21.0, 21.0, 21.0, 21.0, 21.0,
         21.0, 21.0, 21.0, 21.0, 21.0, 20.0, 19.5, 19.0,

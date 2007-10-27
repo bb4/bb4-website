@@ -181,7 +181,7 @@ public class Card {
     /**
      * @return  int unique per type of card that can exist.
      */
-    public int hasCode() {
+    public int hashCode() {
         return color().ordinal() * 1000 + number().ordinal() * 100 + texture().ordinal() * 10 + shape().ordinal();
     }
 

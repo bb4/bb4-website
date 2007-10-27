@@ -50,6 +50,7 @@ public class OnlineGameTableList extends ArrayList<OnlineGameTable>
      */
     public void removePlayer(String playerName) {
         Iterator<OnlineGameTable> it = this.iterator();
+        System.out.println("OnlineGameTableList.removePlayer "+ playerName +" is leaving.");
         while (it.hasNext()) {
             OnlineGameTable table = it.next();
             // loop through the list of players and remove the player if the name matches
@@ -69,6 +70,9 @@ public class OnlineGameTableList extends ArrayList<OnlineGameTable>
         }
     }
 
+    /**
+     * @return true if there is at least one table in the list that is ready to start playing.
+     */
     public boolean hasTableReadyToPlay() {
         Iterator<OnlineGameTable> it = this.iterator();
         while (it.hasNext()) {
@@ -81,6 +85,9 @@ public class OnlineGameTableList extends ArrayList<OnlineGameTable>
 
 
 
+    /**
+     * @return a list of all the tables that are currently ready to begin playing.
+     */
     public List<OnlineGameTable> getTablesReadyToPlay() {
         List<OnlineGameTable> readyTables = new ArrayList<OnlineGameTable>();
         Iterator<OnlineGameTable> it = this.iterator();

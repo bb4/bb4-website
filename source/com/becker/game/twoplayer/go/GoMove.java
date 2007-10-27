@@ -114,7 +114,6 @@ public final class GoMove extends TwoPlayerMove
         while ( it.hasNext() ) {
             GoBoardPosition s = (GoBoardPosition) it.next();
             GoString atariedString = s.getString();
-            //System.out.println("atariedString.getLiberties( this ).size()="+atariedString.getLiberties( this ).size())
             if (!stringSet.contains(atariedString) && atariedString.getNumLiberties(board) == 1 ) {
                 numInAtari += atariedString.size();
             }
@@ -158,7 +157,7 @@ public final class GoMove extends TwoPlayerMove
     public void updateBoardAfterMoving(GoBoard board) {
 
         GoBoardPosition stone = (GoBoardPosition) (board.getPosition(getToRow(), getToCol()));
-
+    
         adjustLiberties(stone, board);
 
         // hitting this all the time when showing game tree.
@@ -192,7 +191,7 @@ public final class GoMove extends TwoPlayerMove
 
          Set stringNbrs = GoBoardUtil.findStringNeighbors( liberty, board );
          for (Object sn : stringNbrs) {
-             GoString s = (GoString) sn;
+             GoString s = (GoString) sn;    
              s.changedLiberty(liberty);
          }
     }

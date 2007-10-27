@@ -103,7 +103,7 @@ public class SwingPrinter
         }
     }
 
-    public class FileQuitAction
+    public static class FileQuitAction
             extends AbstractAction
     {
         public FileQuitAction()

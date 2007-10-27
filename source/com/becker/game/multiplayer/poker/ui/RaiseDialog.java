@@ -14,7 +14,6 @@ import java.awt.event.*;
  * @author Barry Becker
  */
 public final class RaiseDialog extends OptionsDialog
-                               implements ActionListener
 {
     private PokerPlayer player_;
 
@@ -49,9 +48,9 @@ public final class RaiseDialog extends OptionsDialog
      */
     protected void initUI()
     {
-        setResizable( true );
-        mainPanel_ =  new JPanel();
-        mainPanel_.setLayout( new BorderLayout() );
+        setResizable( true );        
+        JPanel mainPanel =  new JPanel();
+        mainPanel.setLayout( new BorderLayout() );
 
         JPanel primaryPanel = new JPanel();
         primaryPanel.setLayout( new BorderLayout() );
@@ -85,10 +84,10 @@ public final class RaiseDialog extends OptionsDialog
 
         primaryPanel.add(instructionsPanel, BorderLayout.NORTH);
         primaryPanel.add(raiseAmount_, BorderLayout.CENTER);
-        mainPanel_.add(primaryPanel, BorderLayout.CENTER);
-        mainPanel_.add(buttonsPanel, BorderLayout.SOUTH);
+        mainPanel.add(primaryPanel, BorderLayout.CENTER);
+        mainPanel.add(buttonsPanel, BorderLayout.SOUTH);
 
-        getContentPane().add( mainPanel_ );
+        getContentPane().add( mainPanel );
         getContentPane().repaint();
         pack();
     }

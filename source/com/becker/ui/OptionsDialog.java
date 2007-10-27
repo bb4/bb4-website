@@ -16,8 +16,6 @@ public abstract class OptionsDialog extends JDialog implements ActionListener
 
     protected static final String COLON = " : ";
 
-    // contains all the options ui except for the action buttons at the bottom
-    protected JPanel mainPanel_ = new JPanel();
 
     // there is always a cancel button so it is included here.
     protected GradientButton cancelButton_ = new GradientButton();
@@ -122,6 +120,7 @@ public abstract class OptionsDialog extends JDialog implements ActionListener
     {
         return BorderFactory.createEmptyBorder(3, 3, 3, 3);
     }
+    
     /**
      * cancel button pressed
      */

@@ -329,7 +329,7 @@ public class PokerHand implements Comparable {
     /**
      * inner class used to define a sord order on cards in a poker hane.
      */
-    private class CardComparator implements Comparator {
+    private static class CardComparator implements Comparator {
 
         public int compare(Object c1, Object c2) {
 

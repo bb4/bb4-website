@@ -223,14 +223,6 @@ public abstract class GamePanel extends TexturedPanel
     protected abstract NewGameDialog createNewGameDialog( JFrame parent, ViewerCallbackInterface viewer );
 
     /**
-     * Only need to return something non-null if the game supports online play.
-     * @return the dialog used for configuring online game play.
-     */
-    protected OnlineGameManagerPanel createOnlineGameDialog( JFrame parent, ViewerCallbackInterface viewer ) {
-        return null;
-    }
-
-    /**
      * @return  the dialog used to specify various game options and parameters.
      */
     protected abstract GameOptionsDialog createOptionsDialog( JFrame parent, GameController controller );

@@ -16,7 +16,7 @@ import java.io.File;
  *
  * @author Barry Becker
  */
-public abstract class NewGameDialog extends OptionsDialog implements ActionListener, ChangeListener
+public abstract class NewGameDialog extends OptionsDialog implements ChangeListener
 {
     /**
      * the options get set directly on the game controller that is passed in.
@@ -54,7 +54,8 @@ public abstract class NewGameDialog extends OptionsDialog implements ActionListe
 
     protected void initUI()
     {
-        mainPanel_.setLayout( new BorderLayout() );
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout( new BorderLayout() );
 
         playLocalPanel_ = createPlayLocalPanel();
         loadGamePanel_ = createLoadGamePanel();
@@ -68,10 +69,10 @@ public abstract class NewGameDialog extends OptionsDialog implements ActionListe
         tabbedPanel_.setToolTipTextAt( 1, GameContext.getLabel("LOAD_GAME_TIP") );
         tabbedPanel_.addChangeListener(this);
 
-        mainPanel_.add( tabbedPanel_, BorderLayout.CENTER );
-        mainPanel_.add( buttonsPanel, BorderLayout.SOUTH );
+        mainPanel.add( tabbedPanel_, BorderLayout.CENTER );
+        mainPanel.add( buttonsPanel, BorderLayout.SOUTH );
 
-        this.getContentPane().add( mainPanel_ );
+        this.getContentPane().add( mainPanel );
         this.pack();
     }
 
@@ -270,9 +271,23 @@ public abstract class NewGameDialog extends OptionsDialog implements ActionListe
             openFile();
         }
     }
+    
+    /**
+     * cancel button pressed
+     */
+    protected void cancel()
+    {
+        // You are only allowed to participate in only games when the dialog is open.
+        if (playOnlinePanel_ != null) {
+            playOnlinePanel_.closing();
+        }
+        super.cancel();
+    }
 
     /**
-     * Called when the selected tab changes
+     * Called when the selected tab changes,
+     * Or in the case of online play when the player has joined a table that is now ready to play.
+     * I that case the dialog will close and play will begin.
      * @param e
      */
     public void stateChanged( ChangeEvent e) {
@@ -292,16 +307,17 @@ public abstract class NewGameDialog extends OptionsDialog implements ActionListe
 
     /**
      * If the window gets closed, then the player has stood up from his table if online.
-     *
+     */
     protected void processWindowEvent( WindowEvent e )
     {
         if ( e.getID() == WindowEvent.WINDOW_CLOSING ) {
 
-            System.out.println("Window clsing!");
+            System.out.println("Window closing!");
             if (controller_.isOnlinePlayAvailable()) {
+                System.out.println("Standing up from table.");
                 playOnlinePanel_.closing();
             }
         }
-    }   */
+    }   
 
 }

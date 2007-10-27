@@ -220,7 +220,7 @@ public final class GUIUtil
             UIManager.setLookAndFeel( new WindowsLookAndFeel() );
             //UIManager.setLookAndFeel( new javax.swing.plaf.multi.MultiLookAndFeel() );
         } catch (UnsupportedLookAndFeelException e) {
-            System.out.println( "setting the look and feel for the applet failed" );
+            System.out.println( "setting the look and feel for the applet failed."+ e.getMessage() );
         }
     }
 

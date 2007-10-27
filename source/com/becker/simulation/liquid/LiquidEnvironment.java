@@ -83,8 +83,10 @@ public class LiquidEnvironment
     private void initEnvironment( List walls )
     {
         int i, j;
-        logger_ = new Log( new OutputWindow( "Log", null ) );
-        logger_.setDestination( Log.LOG_TO_WINDOW );
+        if (logger_ == null) {
+            logger_ = new Log( new OutputWindow( "Log", null ) );
+            logger_.setDestination( Log.LOG_TO_WINDOW );
+        }
 
         for ( j = 0; j < yDim_; j++ ) {
             for ( i = 0; i < xDim_; i++ ) {
