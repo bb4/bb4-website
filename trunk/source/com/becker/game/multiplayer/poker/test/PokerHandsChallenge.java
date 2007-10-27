@@ -104,6 +104,7 @@ public class PokerHandsChallenge {
             evaluateLine(line);
 
         }
+        breader.close();
     }
 
 

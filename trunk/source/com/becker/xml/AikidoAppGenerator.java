@@ -457,7 +457,6 @@ public class AikidoAppGenerator {
         fos.write("</head>\n".getBytes());
         fos.write(getAppBody().getBytes());
         fos.write("</html>\n".getBytes());
-
         fos.close();
     }
 
@@ -477,7 +476,6 @@ public class AikidoAppGenerator {
         fos.write("</head>\n".getBytes());
         fos.write(getAllBody(document).getBytes());
         fos.write("</html>\n".getBytes());
-
         fos.close();
     }
 

@@ -111,7 +111,7 @@ public class Profiler
     /**
      * internal calss that represents the timing numbers for a names region of the code.
      */
-    protected class ProfilerEntry {
+    protected static class ProfilerEntry {
 
         // the name of this profiler entry
         private final String name_;

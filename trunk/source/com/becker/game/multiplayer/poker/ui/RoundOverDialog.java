@@ -23,7 +23,6 @@ import java.text.NumberFormat;
  */
 public class RoundOverDialog extends OptionsDialog
 {
-    JPanel mainPanel_;
     GradientButton closeButton_;
 
     PokerPlayer winner_;
@@ -43,17 +42,17 @@ public class RoundOverDialog extends OptionsDialog
 
     protected void initUI() {
         setResizable( true );
-        mainPanel_ =  new JPanel();
-        mainPanel_.setLayout( new BorderLayout() );
-        mainPanel_.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEtchedBorder(),
+        JPanel mainPanel =  new JPanel();
+        mainPanel.setLayout( new BorderLayout() );
+        mainPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEtchedBorder(),
                                                                BorderFactory.createEmptyBorder(10, 10, 10, 10)));
         JPanel buttonsPanel = createButtonsPanel();
         JPanel instructions = createInstructionsPanel();
 
-        mainPanel_.add(instructions, BorderLayout.CENTER);
-        mainPanel_.add(buttonsPanel, BorderLayout.SOUTH);
+        mainPanel.add(instructions, BorderLayout.CENTER);
+        mainPanel.add(buttonsPanel, BorderLayout.SOUTH);
 
-        getContentPane().add( mainPanel_ );
+        getContentPane().add( mainPanel );
         getContentPane().repaint();
         pack();
     }

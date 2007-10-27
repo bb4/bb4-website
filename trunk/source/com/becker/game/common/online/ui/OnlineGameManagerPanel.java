@@ -19,13 +19,13 @@ import java.awt.event.*;
  * @author Barry Becker Date: May 14, 2006
  */
 public abstract class OnlineGameManagerPanel extends JPanel
-                                             implements OnlineChangeListener, ActionListener {
+                                                                             implements OnlineChangeListener, ActionListener {
 
 
     /** the options get set directly on the game controller that is passed in. */
     protected GameController controller_;
     protected ViewerCallbackInterface viewer_;
-    // typically the dlg that wi live in.
+    // typically the dlg that we live in. Called when table ready to play.
     protected ChangeListener gameStartedListener_;
 
 
@@ -47,16 +47,7 @@ public abstract class OnlineGameManagerPanel extends JPanel
     protected void initGUI() {
 
         JPanel playOnlinePanel = createPlayOnlinePanel();
-        add( playOnlinePanel );
-
-        /*
-        addWindowListener( new WindowAdapter()
-        {
-            public void windowClosing( WindowEvent e ) {
-               // closing();    // @@ should we leave our table if closing this dlg?
-            }
-        } );
-       */
+        add( playOnlinePanel );       
     }
 
 
@@ -64,7 +55,6 @@ public abstract class OnlineGameManagerPanel extends JPanel
 
     public boolean isServerAvailable() {
         return (controller_.getServerConnection() != null && controller_.getServerConnection().isConnected());
-        //return serverConnection_ != null && serverConnection_.isConnected();
     }
 
     public void handleServerUpdate(GameCommand cmd) {

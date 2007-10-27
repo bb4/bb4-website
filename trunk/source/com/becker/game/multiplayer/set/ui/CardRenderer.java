@@ -22,7 +22,7 @@ public final class CardRenderer {
     public static final float CARD_HEIGHT_RAT = 1.5f;
 
 
-    protected static final Font BASE_FONT = new Font( "Sans-serif", Font.PLAIN, 11 );
+    private static final Font BASE_FONT = new Font( "Sans-serif", Font.PLAIN, 11 );
     private static final Color BACKGROUND_COLOR = new Color(250, 250, 255);
 
     private static final Color BORDER_COLOR = new Color(45, 45, 55);

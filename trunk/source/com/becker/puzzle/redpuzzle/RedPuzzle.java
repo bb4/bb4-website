@@ -7,6 +7,7 @@ import com.becker.puzzle.common.PuzzleController;
 import com.becker.puzzle.common.PuzzleViewer;
 import com.becker.puzzle.common.Refreshable;
 import com.becker.ui.*;
+import com.becker.ui.sliders.LabeledSlider;
 
 import javax.swing.*;
 import javax.swing.event.*;

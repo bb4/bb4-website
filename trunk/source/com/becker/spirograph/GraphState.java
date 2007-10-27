@@ -1,5 +1,6 @@
 package com.becker.spirograph;
 
+import com.becker.ui.sliders.ColorChangeListener;
 import java.awt.*;
 
 /**
@@ -129,7 +130,6 @@ public class GraphState implements ColorChangeListener {
     }
 
     public boolean showAxes() {
-        //return false;
         return showAxes_;
     }
 

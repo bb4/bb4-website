@@ -77,8 +77,8 @@ final class BattleDialog extends OptionsDialog
      */
     protected void initUI()
     {
-        mainPanel_.setLayout( new BorderLayout() );
-
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout( new BorderLayout() );
 
         JPanel viewerPanel = new JPanel();
         viewerPanel.setLayout(new BorderLayout());
@@ -107,10 +107,10 @@ final class BattleDialog extends OptionsDialog
                               BorderFactory.createLineBorder(Color.black, 1)));
         canvasPanel.add(canvas_);
 
-        mainPanel_.add(descriptionLabel_, BorderLayout.NORTH);
-        mainPanel_.add(canvasPanel, BorderLayout.CENTER);
-        mainPanel_.add( buttonsPanel, BorderLayout.SOUTH );
-        getContentPane().add( mainPanel_ );
+        mainPanel.add(descriptionLabel_, BorderLayout.NORTH);
+        mainPanel.add(canvasPanel, BorderLayout.CENTER);
+        mainPanel.add( buttonsPanel, BorderLayout.SOUTH );
+        getContentPane().add( mainPanel );
 
         viewer_.showPlanetUnderAttack(battle_.getPlanet(), true);
 

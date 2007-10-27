@@ -38,11 +38,14 @@ public class OnlineGameServerFrame  extends JFrame {
     private void initUI(String gameName) {
         JPanel panel = new JPanel();
         JLabel label = new JLabel("Commands received over the socket:");
-        textArea_ = new JTextArea(20, 40);
-
+        textArea_ = new JTextArea(20, 44);
+        textArea_.setLineWrap(true);
+        textArea_.setWrapStyleWord(true);
+   
         panel.setLayout(new BorderLayout());
         panel.setBackground(Color.white);
         panel.add("North", label);
+        
         panel.add("Center", new JScrollPane(textArea_));
         String gameLabel = PluginManager.getInstance().getPlugin(gameName).getLabel();
         setTitle(gameLabel + " Server");
@@ -67,7 +70,6 @@ public class OnlineGameServerFrame  extends JFrame {
     protected void finalize() throws Throwable {
         super.finalize();
         server_ = null;
-        super.finalize();
     }
 
     /**

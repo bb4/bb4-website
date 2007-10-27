@@ -108,7 +108,6 @@ public class GoGameImporter extends GameImporter {
         }
         else if (token instanceof CharsetToken ) {
             //CharsetToken charsetToken = (CharsetToken) token;
-            //System.out.println("charset="+charsetToken.getCharset());
         }
         else if (token instanceof OverTimeToken ) {
             //OverTimeToken charsetToken = (OverTimeToken) token;

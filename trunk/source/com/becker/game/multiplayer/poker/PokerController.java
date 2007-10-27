@@ -14,6 +14,10 @@ import java.util.*;
  * Defines everything the computer needs to know to play Poker.
  *
  * ToDo list
+ * - change GameController.setPlayer and getPlayers to use Lists rather than Arrays (refactor)
+ * - Make PokerHumanPlayer return a PokerAction
+ * - SurrogatePokerPlayer should wait (block) on an Action from the client or server.
+ *
  * - add host and port to game options
  * - use real faces for players
  *
@@ -137,6 +141,7 @@ public class PokerController extends GameController
     private void dealCardsToPlayers(int numCardsToDealToEachPlayer) {
          // give the default players some cards.
         List deck = Card.newDeck();
+        assert (players_ != null) : "No players! (players_ is null)";
         for (Player p : players_) {
             if (deck.size() < numCardsToDealToEachPlayer) {
                 // ran out of cards. start a new shuffled deck.

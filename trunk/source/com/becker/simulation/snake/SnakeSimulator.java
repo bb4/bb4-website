@@ -54,7 +54,8 @@ public class SnakeSimulator extends NewtonianSimulator
     {
         super("Snake");
         //final Snake snake = new Snake(CONFIG_FILE);
-        final Snake snake = new Snake();
+ 
+        Snake snake = new Snake();
         commonInit( snake );
     }
 
@@ -74,7 +75,10 @@ public class SnakeSimulator extends NewtonianSimulator
         initCommonUI();      
     }
 
-
+    protected void reset() {
+        snake_.reset();
+    }
+    
     protected double getInitialTimeStep() {
         return TIME_STEP;
     }

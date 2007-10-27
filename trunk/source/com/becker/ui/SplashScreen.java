@@ -12,7 +12,7 @@ import java.awt.event.MouseEvent;
  *
  * @author Barry Becker
  */
-public class SplashScreen extends JWindow
+public final class SplashScreen extends JWindow
 {
 
     /** Constructor

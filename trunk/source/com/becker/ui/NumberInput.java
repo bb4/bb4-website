@@ -51,26 +51,34 @@ public class NumberInput extends JPanel
         String initialVal = integerOnly? Integer.toString((int) initialValue) : Double.toString(initialValue);
         numberField_ = new JTextField(initialVal);
 
-        setLayout( new BoxLayout( this, BoxLayout.X_AXIS ) );
+        //setLayout( new BoxLayout( this, BoxLayout.X_AXIS ) );
+        setLayout( new BorderLayout());
 
-        setAlignmentX( Component.LEFT_ALIGNMENT );
+        setAlignmentX( Component.LEFT_ALIGNMENT );        
+        //setPreferredSize(new Dimension(240, 20));
 
-        JLabel label = new JLabel( labelText );
-        add( label );
+        JLabel label = new JLabel( labelText );        
+        add( label, BorderLayout.WEST );
 
         if (toolTip == null)
             numberField_.setToolTipText( "enter a number in the suggested range" );
         else
             numberField_.setToolTipText( toolTip );
-        numberField_.setPreferredSize( new Dimension( 50, 15 ) );
-        numberField_.setMinimumSize( new Dimension( 25, 15 ) );
+        numberField_.setPreferredSize( new Dimension( 50, 20 ) );
+        //numberField_.setBorder(BorderFactory.createLineBorder(Color.RED));
 
         numberField_.addKeyListener( new NumberKeyAdapter(integerOnly));
 
         JPanel numPanel = new JPanel();
-        numPanel.setBorder(BorderFactory.createEmptyBorder(0,2,0,2));
-        numPanel.add( numberField_ );
-        add(numPanel);
+        numPanel.setBorder(BorderFactory.createEmptyBorder(0, 2, 0, 2));
+        
+        numPanel.add( numberField_ );        
+        //numPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+        
+        // JPanel spacer = new JPanel();
+        //spacer.setPreferredSize(new Dimension(1000, 10));
+        //add(spacer, BorderLayout.CENTER);
+        add(numPanel, BorderLayout.EAST); //add(numPanel);
 
         if (toolTip!=null)
             this.setToolTipText(toolTip);

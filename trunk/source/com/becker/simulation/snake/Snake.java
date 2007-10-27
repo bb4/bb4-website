@@ -91,6 +91,10 @@ public class Snake {
         readConfigFile( configFile );
         commonInit();
     }
+        
+    public synchronized void reset() {
+        resetFromData();
+    }
 
     // Constructor - not currently supported
     public Snake( int numSegments )
@@ -119,8 +123,8 @@ public class Snake {
     private void resetFromData()
     {
 
-        double width1 = SnakeData.widths[0];
-        double width2 = SnakeData.widths[1];
+        double width1 = SnakeData.WIDTHS[0];
+        double width2 = SnakeData.WIDTHS[1];
 
         Segment segment = new Segment( width1, width2, segmentLength_, 80 + numSegments_ * segmentLength_ * scale_, 320.0, 0, this );
         segment_[0] = segment; // nose
@@ -128,7 +132,7 @@ public class Snake {
         width1 = width2;
 
         for ( int i = 1; i < numSegments_; i++ ) {
-            width2 = SnakeData.widths[i];
+            width2 = SnakeData.WIDTHS[i];
 
             segment = new Segment( width1, width2, segmentLength_, segmentInFront, i, this );
             segment_[i] = segment;
@@ -207,7 +211,7 @@ public class Snake {
      * if the timestep is too big inaccuracy and instability will result.
      * @return the new timestep
      */
-    public double stepForward( double timeStep )
+    public synchronized double stepForward( double timeStep )
     {
         // Compute u, v for all full cells
         //logger_.println(1, LOG_LEVEL, "stepForward: about to update the velocity field (timeStep="+timeStep+")");

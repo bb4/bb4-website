@@ -341,11 +341,9 @@ public class MazeGenerator extends JComponent
 
     private Point getNextPosition(Point currentPosition, MazeCell currentCell, Point dir)
     {
-
-            if (currentCell == null) {
-                System.out.println( " currentPosition="+currentPosition);
-                System.out.println( " grid_["+currentPosition.x+"].length="+grid_[currentPosition.x].length);
-            }
+            assert (currentCell != null) :
+                " currentPosition="+currentPosition + " grid_["+currentPosition.x+"].length="+grid_[currentPosition.x].length;
+            
             currentCell.visited = true;
 
             Point nextPosition = (Point) currentPosition.clone();
@@ -564,8 +562,7 @@ public class MazeGenerator extends JComponent
         for ( j = 0; j < yDim_; j++ ) {
             for ( i = 0; i < xDim_; i++ ) {
                 MazeCell c = grid_[i][j];
-                if ( c == null )
-                    System.out.println( "Error2 pos i=" + i + " j=" + j + " is out of bounds. xDim=" + xDim_ + " yDim=" + yDim_ );
+                assert (c!=null) :"Error2 pos i=" + i + " j=" + j + " is out of bounds. xDim=" + xDim_ + " yDim=" + yDim_;
                 int xpos = i * cellSize;
                 int ypos = j * cellSize;
 

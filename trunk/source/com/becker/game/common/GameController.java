@@ -174,7 +174,7 @@ public abstract class GameController
 
     /**
      *
-     * @return an array of the players playing the game (in the order that they move).
+     * @return a list of the players playing the game (in the order that they move).
      */
     public Player[] getPlayers()
     {

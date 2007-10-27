@@ -20,7 +20,6 @@ import javax.swing.*;
  *  @author Barry Becker
  */
 final class RedPuzzleViewer extends PuzzleViewer<PieceList, Piece> 
-                                              implements Refreshable<PieceList, Piece>
 {
     /** size of piece in pixels. */
     private static final int PIECE_SIZE = 90;

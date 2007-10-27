@@ -168,9 +168,8 @@ public class MazePanel extends JComponent {
         for ( j = 0; j < height; j++ ) {
             for ( i = 0; i < width; i++ ) {
                 MazeCell c = maze_.getCell(i, j);
-                if ( c == null )
-                    System.out.println( "Error2 pos i=" + i + " j=" + j
-                                        + " is out of bounds. xDim=" + width + " yDim=" + height );
+                assert ( c != null ) :  "Error2 pos i=" + i + " j=" + j  + " is out of bounds. xDim=" + width + " yDim=" + height;
+       
                 int xpos = i * cellSize;
                 int ypos = j * cellSize;
 

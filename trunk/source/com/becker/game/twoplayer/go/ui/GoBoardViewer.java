@@ -75,7 +75,6 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
         // draw the group borders
         if ( GameContext.getDebugMode() > 0 ) {
             it = groups.iterator();
-            //System.out.println( "drawing group decor: ***The groups on the board are: ***\n"+board.getGroupsText());
             while ( it.hasNext() ) {
                 GoGroup group = (GoGroup) it.next();
                 GoGroupRenderer.drawGroupDecoration(group, COLORMAP, (float) cellSize_, board, g2 );

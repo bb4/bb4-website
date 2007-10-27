@@ -50,12 +50,12 @@ import java.io.IOException;
  */
 public class MidiSynth extends JPanel {
 
-    final int PROGRAM = 192;
-    final int NOTEON = 144;
-    final int NOTEOFF = 128;
-    final int SUSTAIN = 64;
-    final int REVERB = 91;
-    final int ON = 0, OFF = 1;
+    final static int PROGRAM = 192;
+    final static  int NOTEON = 144;
+    final static int NOTEOFF = 128;
+    final static int SUSTAIN = 64;
+    final static int REVERB = 91;
+    final static int ON = 0, OFF = 1;
     final Color jfcBlue = new Color(204, 204, 255);
     final Color pink = new Color(255, 175, 175);
     Sequencer sequencer;
@@ -720,7 +720,7 @@ public class MidiSynth extends JPanel {
                     playB.setEnabled(false);
                     saveB.setEnabled(false);
                 } else {
-                    String name = null;
+                    String name;
                     if (instruments != null) {
                         name = instruments[cc.col*8+cc.row].getName();
                     } else {
@@ -801,7 +801,7 @@ public class MidiSynth extends JPanel {
         class TrackData extends Object {
             Integer chanNum; String name; Track track;
             public TrackData(int chanNum, String name, Track track) {
-                this.chanNum = new Integer(chanNum);
+                this.chanNum = Integer.valueOf(chanNum);
                 this.name = name;
                 this.track = track;
             }

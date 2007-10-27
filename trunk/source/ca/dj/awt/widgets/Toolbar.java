@@ -87,7 +87,7 @@ public class Toolbar extends Frame
     myPanel.addActionListener( al );
   }
 
-  public class ToolbarPanel extends Panel
+  public static class ToolbarPanel extends Panel
   {
     public ToolbarPanel()
     {

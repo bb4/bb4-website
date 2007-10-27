@@ -131,6 +131,12 @@ public class TwoPlayerMove extends Move
     {
         return (getValue() == ((TwoPlayerMove) mv).getValue());
     }
+    
+    public int hashCode() {
+        assert false;
+        return 0;
+        //return (int) (getValue()*10) + getToRow() * 100 +  getToCol();
+    }
 
     /**
      * @return  true if the player (or computer) chose to pass this turn.

@@ -17,7 +17,7 @@ import java.text.MessageFormat;
  *
  * @author Barry Becker
  */
-final class OrdersDialog extends OptionsDialog implements ActionListener
+final class OrdersDialog extends OptionsDialog 
 {
     private GalacticPlayer player_;
     //private Galaxy galaxy_;

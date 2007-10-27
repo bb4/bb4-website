@@ -15,7 +15,7 @@ import java.awt.event.*;
  * @author Barry Becker
  */
 public abstract class GameOptionsDialog extends OptionsDialog
-                                        implements ActionListener, ItemListener
+                                                                   implements ItemListener
 {
 
     /**
@@ -54,8 +54,8 @@ public abstract class GameOptionsDialog extends OptionsDialog
 
     protected void initUI()
     {
-
-        mainPanel_.setLayout( new BorderLayout() );
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout( new BorderLayout() );
         // contains tabs for Algorithm, Debugging, and Look and Feel
         JTabbedPane tabbedPanel = new JTabbedPane();
 
@@ -72,10 +72,10 @@ public abstract class GameOptionsDialog extends OptionsDialog
         tabbedPanel.add( GameContext.getLabel("LOOK_AND_FEEL"), lookAndFeelParamPanel );
         tabbedPanel.add( GameContext.getLabel("LOCALE"), localePanel );
 
-        mainPanel_.add( tabbedPanel, BorderLayout.CENTER );
-        mainPanel_.add( buttonsPanel, BorderLayout.SOUTH );
+        mainPanel.add( tabbedPanel, BorderLayout.CENTER );
+        mainPanel.add( buttonsPanel, BorderLayout.SOUTH );
 
-        this.getContentPane().add( mainPanel_ );
+        this.getContentPane().add( mainPanel );
         this.getContentPane().repaint();
         this.pack();
 
@@ -155,6 +155,7 @@ public abstract class GameOptionsDialog extends OptionsDialog
     {
         JPanel p =  new JPanel();
         p.setLayout( new BoxLayout( p, BoxLayout.Y_AXIS ) );
+        p.setAlignmentX( Component.LEFT_ALIGNMENT );
         p.setBorder( BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), GameContext.getLabel("DEBUG_OPTIONS") ) );
 
         JLabel label = new JLabel( "     " );

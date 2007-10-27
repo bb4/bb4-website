@@ -1,5 +1,6 @@
 package com.becker.simulation.fluid;
 
+import com.becker.common.Util;
 import java.awt.event.*;
 
 /**
@@ -10,8 +11,11 @@ import java.awt.event.*;
  */
 public class InteractionHandler implements MouseListener, MouseMotionListener {
         
-    private static final float FORCE = 2.0f;
-    private static final float SOURCE_DENSITY = 1.8f;
+    public static final float DEFAULT_FORCE = 3.0f;
+    public static final float DEFAULT_SOURCE_DENSITY = 1.0f;
+    
+    private float force_ = DEFAULT_FORCE;
+    private float sourceDensity_ = DEFAULT_SOURCE_DENSITY;
     
     Grid grid_;    
     
@@ -29,6 +33,14 @@ public class InteractionHandler implements MouseListener, MouseMotionListener {
         grid_ = grid;
     }
     
+    public void setForce(double force) {
+        force_ = (float) force;
+    }
+    
+    public void setSourceDensity(double sourceDensity) {
+        sourceDensity_ = (float) sourceDensity;
+    }
+    
     
     /**
      * Make waves or add ink 
@@ -40,26 +52,44 @@ public class InteractionHandler implements MouseListener, MouseMotionListener {
         int i = (int) (currentX / scale_);
         int j = (int) (currentY / scale_);
  
+        // apply the change to a convolution kernal area
+        int startX = Math.max(1, i - 1);
+        int stopX = Math.min(grid_.getXDim(), i+1);
+        int startY = Math.max(1, j - 1);
+        int stopY = Math.min(grid_.getYDim(), j+1);
+      
         
-        if (i<1 || i>grid_.getXDim() || j<1 || j> grid_.getYDim()) {
-            // System.out.println("out of bounds i="+i+" j="+j);
-            return;
+        for (int ii=startX; ii<stopX; ii++) {
+             for (int jj=startY; jj<stopY; jj++) {
+                 float weight = (ii == i && jj == j)? 1.0f : 0.3f;
+                 applyChange(ii, jj, weight);
+             }
         }
-        
-        // if the left mouse is down, make waves
-        if (mouse1Down) {
-            //System.out.println("incrementing by " + FORCE * (currentX - lastX) +" ,  "+FORCE * (currentY - lastY));
-            grid_.incrementU(i, j, FORCE * (currentX - lastX));
-            grid_.incrementV(i, j,  FORCE * (currentY - lastY));               
-        }
-        // if the right mouse is down, add ink (density)
-        if (mouse3Down) {
-            grid_.incrementDensity(i, j, SOURCE_DENSITY);
-        }
+       
         lastX = currentX;
         lastY = currentY;
     }
 
+    private void applyChange(int i, int j, float weight) {
+         
+        // if the left mouse is down, make waves
+        if (mouse1Down) {
+            //System.out.println("incrementing by " + FORCE * (currentX - lastX) +" ,  "+FORCE * (currentY - lastY));
+            float fu = (float) (weight * force_ * (currentX - lastX) / scale_);
+            float fv =  (float) (weight *force_ * (currentY - lastY) / scale_);
+            //System.out.println("fu="+Util.formatNumber(fu) + "  fv="+ Util.formatNumber(fv));
+            grid_.incrementU(i, j, fu);
+            grid_.incrementV(i, j, fv);               
+        }  
+        else if (mouse3Down) {   
+            // if the right mouse is down, add ink (density)
+            grid_.incrementDensity(i, j, weight * sourceDensity_);
+        }
+        else {
+            System.out.println("dragged with no button down");
+        }
+    }
+    
     public void mouseMoved(MouseEvent e) {
         currentX = e.getX();
         currentY = e.getY();

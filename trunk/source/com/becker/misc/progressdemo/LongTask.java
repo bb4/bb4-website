@@ -65,7 +65,7 @@ public class LongTask {
     /**
      * The actual long running task.  This runs in a Worker thread.
      */
-    class ActualTask {
+    private class ActualTask {
         ActualTask () {
             //Fake a long task,
             //making a random amount of progress every second.

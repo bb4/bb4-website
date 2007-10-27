@@ -170,7 +170,7 @@ public class GraphRenderer extends JPanel implements Runnable
             if ( refresh ) {
                 //System.out.println("ct="+count+" v="+v);
                 repaint();
-                if ( velocity < 20 ) {
+                if ( velocity < 100 ) {
                     try {
                         Thread.sleep( 200 / velocity );
                     } catch (InterruptedException e) {}

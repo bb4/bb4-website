@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @author Barry Becker
  */
-public class SolutionDialog extends OptionsDialog implements ActionListener
+public class SolutionDialog extends OptionsDialog
 {
 
     private static final long serialVersionUID = 0L;
@@ -39,18 +39,15 @@ public class SolutionDialog extends OptionsDialog implements ActionListener
 
     protected void initUI()
     {
-        mainPanel_.setLayout( new BorderLayout() );
-
-
-
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout( new BorderLayout() );
 
         JPanel buttonsPanel = createButtonsPanel();
 
+        mainPanel.add( solutionPanel_, BorderLayout.CENTER );
+        mainPanel.add( buttonsPanel, BorderLayout.SOUTH );
 
-        mainPanel_.add( solutionPanel_, BorderLayout.CENTER );
-        mainPanel_.add( buttonsPanel, BorderLayout.SOUTH );
-
-        this.getContentPane().add( mainPanel_ );
+        this.getContentPane().add( mainPanel );
         this.getContentPane().repaint();
         this.pack();
     }

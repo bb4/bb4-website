@@ -17,7 +17,7 @@ public class ParameterArray implements Comparable
     // default number of steps to go from the min to the max
     private static final int STEPS = 10;
     private int numSteps_ = STEPS;
-    protected static Random RANDOM = new Random(123);
+    protected static final Random RANDOM = new Random(123);
 
     // assign a fitness (evaluation value) to this set of parameters
     private double fitness_ = 0;

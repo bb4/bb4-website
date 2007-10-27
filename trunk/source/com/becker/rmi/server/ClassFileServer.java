@@ -22,7 +22,7 @@ public class ClassFileServer extends ClassServer {
 
     private String classpath;
 
-    private static int DefaultServerPort = 2001;
+    private static final int DEFAULT_SERVER_PORT = 2001;
 
     /**
      * Constructs a ClassFileServer.
@@ -60,6 +60,7 @@ public class ClassFileServer extends ClassServer {
 
             byte[] bytecodes = new byte[length];
             in.readFully(bytecodes);
+            in.close();
             return bytecodes;
         }
     }
@@ -90,7 +91,7 @@ public class ClassFileServer extends ClassServer {
      */
     public static void main(String args[])
     {
-        int port = DefaultServerPort;
+        int port = DEFAULT_SERVER_PORT;
         String classpath = "";
 
         if (args.length >= 1) {

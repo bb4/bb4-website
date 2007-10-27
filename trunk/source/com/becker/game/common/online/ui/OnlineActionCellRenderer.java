@@ -19,17 +19,18 @@ public class OnlineActionCellRenderer implements TableCellRenderer {
     public OnlineActionCellRenderer(ActionListener listener)
     {
         joinButton_ = new JoinButton(listener);
-
     }
 
-    public Component getTableCellRendererComponent(JTable table,
+    public Component getTableCellRendererComponent(
+                                                   JTable table,
                                                    Object value,   // boolean
                                                    boolean isSelected,
                                                    boolean hasFocus,
                                                    int row, int col)
     {
-        if (value != null)
+        if (value != null) {
             joinButton_.setEnabled((Boolean) value);
+        }
 
         joinButton_.setRow(row);
         return joinButton_;

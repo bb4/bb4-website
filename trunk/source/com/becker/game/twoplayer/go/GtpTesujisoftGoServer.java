@@ -34,7 +34,7 @@ import java.util.List;
  *  @author Barry Becker
  */
 public class GtpTesujisoftGoServer
-    extends GtpServer implements OnlineGameServerInterface
+    extends GtpServer
 {
 
     /** Delay every command (seconds) */

@@ -9,7 +9,7 @@ import java.awt.*;
 /**
  * @author Barry Becker Date: Sep 18, 2005
  */
-public abstract class SimulatorOptionsDialog extends OptionsDialog implements ActionListener
+public abstract class SimulatorOptionsDialog extends OptionsDialog
 {
 
     // the options get set directly on the snake simulator object that is passed in
@@ -45,7 +45,8 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog implements Ac
     protected void initUI()
     {
         setResizable( true );
-        mainPanel_.setLayout( new BorderLayout() );
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout( new BorderLayout() );
 
         JPanel buttonsPanel = createButtonsPanel();
 
@@ -67,10 +68,10 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog implements Ac
         tabbedPanel.setToolTipTextAt( 0, "change the custom options for the " + simulator_.getName() + " simulation" );
         tabbedPanel.setSelectedComponent(customParamPanel);
 
-        mainPanel_.add( tabbedPanel, BorderLayout.CENTER );
-        mainPanel_.add( buttonsPanel, BorderLayout.SOUTH );
+        mainPanel.add( tabbedPanel, BorderLayout.CENTER );
+        mainPanel.add( buttonsPanel, BorderLayout.SOUTH );
 
-        this.getContentPane().add( mainPanel_ );
+        this.getContentPane().add( mainPanel );
         this.getContentPane().repaint();
         this.pack();
     }

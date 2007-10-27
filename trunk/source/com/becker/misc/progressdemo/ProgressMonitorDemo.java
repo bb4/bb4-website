@@ -17,7 +17,7 @@ public class ProgressMonitorDemo extends JFrame {
 
     public ProgressMonitorDemo() {
         super("ProgressMonitorDemo");
-        task = new LongTask(new Integer(550));
+        task = new LongTask(Integer.valueOf(550));
 
         //Create the demo's UI.
         startButton = new JButton("Start");
@@ -37,6 +37,15 @@ public class ProgressMonitorDemo extends JFrame {
 
         //Create a timer.
         timer = new Timer(ONE_SECOND, new TimerListener());
+        
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+        });
+        
+        pack();
+        setVisible(true);
     }
 
     /**
@@ -84,13 +93,6 @@ public class ProgressMonitorDemo extends JFrame {
     
     public static void main(String[] args) {
         JFrame frame = new ProgressMonitorDemo();
-        frame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        });
-
-        frame.pack();
-        frame.setVisible(true);
+        
     }
 }

@@ -14,11 +14,11 @@ public class OnlineActionCellEditor extends com.becker.ui.table.AbstractCellEdit
 
     public OnlineActionCellEditor(ActionListener listener)
     {
-
         cellRenderer_  =  new OnlineActionCellRenderer(listener);
     }
 
-    public Component getTableCellEditorComponent(JTable table, Object val,
+    public Component getTableCellEditorComponent(
+                                                 JTable table, Object val,
                                                  boolean isSelected,
                                                  int row, int col)
     {

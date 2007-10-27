@@ -2,6 +2,9 @@ package com.becker.game.common.online;
 
 import com.becker.game.common.*;
 import com.becker.common.*;
+import com.becker.game.multiplayer.common.online.SurrogatePlayer;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Handles the processing of all commands send to the online game server.
@@ -10,9 +13,10 @@ import com.becker.common.*;
  */
 public class ServerCommandProcessor {
 
-    // maintain a list of game tables.
+    /** Maintain a list of game tables. */
     private OnlineGameTableList tables_;
 
+    /** Maintain the master game state on the server. */
     private GameController controller_;
 
     /**
@@ -28,6 +32,9 @@ public class ServerCommandProcessor {
         return tables_;
     }
 
+    /**
+     * Factory method to create the game controller.
+     */
     private void createController(String gameName) {
         String controllerClass = PluginManager.getInstance().getPlugin(gameName).getControllerClass();
         Class c = Util.loadClass(controllerClass);
@@ -47,24 +54,28 @@ public class ServerCommandProcessor {
     /**
      * Update our internal game table list given the cmd from the client.
      * @param cmd to process. The command that the player has issued.
-     * @return the response command to send to all the clients.
+     * @return the response command(s) to send to all the clients.
      */
-    public GameCommand processCmd(GameCommand cmd) {
-        GameCommand response = new GameCommand(GameCommand.Name.UPDATE_TABLES, getTables());
-
+    public List<GameCommand> processCommand(GameCommand cmd) {
+        
+        List<GameCommand> responses = new LinkedList<GameCommand>();
+        boolean useUpdateTable = true;
+        
         switch (cmd.getName()) {
             case ENTER_ROOM :
                 //System.out.println("Entering room.");
                 break;
             case LEAVE_ROOM :
-                System.out.println("Player "+cmd.getArgument()+" is Leaving the room.");
+                System.out.println("Player "+cmd.getArgument()+" is now leaving the room.");
                 tables_.removePlayer((String) cmd.getArgument());
                 break;
             case ADD_TABLE :
                 addTable((OnlineGameTable) cmd.getArgument());
                 break;
             case JOIN_TABLE :
-                joinTable((OnlineGameTable) cmd.getArgument());
+                GameCommand startCmd = joinTable((OnlineGameTable) cmd.getArgument());
+                if (startCmd != null)
+                    responses.add(startCmd);
                 break;
             case CHANGE_NAME :
                 String[] names = ((String)cmd.getArgument()).split(GameCommand.CHANGE_TO);
@@ -76,10 +87,17 @@ public class ServerCommandProcessor {
                 break;
             case CHAT_MESSAGE :
                 //System.out.println("chat message=" + cmd.getArgument());
-                response = cmd;
+                useUpdateTable = false;
+                responses.add(cmd);
                 break;
         }
-        return response;
+        
+        if (useUpdateTable) {
+            GameCommand response = new GameCommand(GameCommand.Name.UPDATE_TABLES, getTables());
+            responses.add(0, response);  // add as first command in response.
+        }
+        
+        return responses;
     }
 
     /**
@@ -101,10 +119,12 @@ public class ServerCommandProcessor {
     }
 
     /**
-     * get the recent player from table and have them join the table with the same name.
+     * Get the most recently added human player from table and have them join the table with the same name.
+     * If there is a table now ready to paly after this change, then start it.
      */
-    private void joinTable(OnlineGameTable table) {
+    private GameCommand joinTable(OnlineGameTable table) {
 
+        GameCommand response = null;
         // if the player at this new table is already sitting at another table,
         // remove him from the other tables(s) and delete those other tables (if no one else is there).
         Player p = table.getNewestHumanPlayer();
@@ -114,9 +134,14 @@ public class ServerCommandProcessor {
         OnlineGameTable tableToStart = tables_.getTableReadyToPlay(p.getName());
         if (tableToStart != null) {
             startGame(tableToStart);
+            response = new GameCommand(GameCommand.Name.START_GAME,  tableToStart);
         }
+        return response;
     }
 
+    /**
+     * Change the players name from oldName to newName. 
+     */
     private void changeName(String oldName, String newName) {
 
         tables_.changeName(oldName, newName);
@@ -125,17 +150,29 @@ public class ServerCommandProcessor {
 
     /**
      * When all the conditions are met for starting a new game, we create a new game controller of the
-     * appropriate type and start the game.
+     * appropriate type and start the game here on the server.
+     * All human players will be surrogate and robots will be themselves.
      * @param table
      */
     private void startGame(OnlineGameTable table) {
 
         System.out.println("NOW starting game on Server! "+ table);
 
-        // create players from the table.
-        Player[] players = null;
-        controller_.setPlayers(players);
-        controller_.reset();
+        // Create players from the table and start.
+        List<Player> players = table.getPlayers();
+        assert (players.size() == table.getNumPlayersNeeded());
+        Player[] playersArray = new Player[players.size()];
+        for (int i=0; i<players.size(); i++) {
+            Player player = players.get(i);
+           // if (paleyr.isHuman()) {
+            //    playersArray[i] = new SurrogatePlayer(player);
+           // } else {
+           //     playersArray[i] = player;
+            //}                   
+        }
+        controller_.setPlayers(playersArray);
+        ////controller_.reset();
+        // broadcast the command to start for all the clients
 
     }
 

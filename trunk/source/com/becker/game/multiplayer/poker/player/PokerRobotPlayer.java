@@ -33,7 +33,7 @@ public abstract class PokerRobotPlayer extends PokerPlayer
      *
      * @return an appropriate action based on the situation
      */
-    public abstract PokerAction getAction(PokerController pc);
+    //public abstract PokerAction getAction(PokerController pc);
 
     /**
      *

@@ -23,7 +23,6 @@ public class DiceSimulator extends Simulator {
     private Random random_ = new Random(0);
 
 
-
     public DiceSimulator() {
         super("Dice Histogram");
         commonInit();
@@ -39,12 +38,16 @@ public class DiceSimulator extends Simulator {
         numSides_ = numSides;
         initHistogram();
     }
+    
+    protected void reset() {
+        initHistogram();
+    }
 
 
     private void initHistogram() {
         data_ = new int[numDice_ * (numSides_-1) + 1];
         histogram_ = new HistogramRenderer(data_, numDice_);
-        random_.setSeed((int)(Math.random() * 1000));
+        //random_.setSeed(1);
     }
 
     private void commonInit() {

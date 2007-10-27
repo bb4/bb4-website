@@ -2,6 +2,9 @@ package com.becker.simulation.reactiondiffusion;
 
 import com.becker.ui.legend.*;
 import com.becker.ui.*;
+import com.becker.ui.sliders.LabeledSlider;
+import com.becker.ui.sliders.SliderChangeListener;
+import com.becker.ui.sliders.SliderGroup;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -13,25 +16,44 @@ import java.awt.event.*;
  * @author Barry Becker Date: Nov 5, 2006
  */
 public class RDDynamicOptions extends JPanel
-                              implements ActionListener, ChangeListener {
+                              implements ActionListener, SliderChangeListener {
 
     private GrayScott gs_;
     private RDSimulator simulator_;
-
-    private LabeledSlider kSlider_;
-    private LabeledSlider fSlider_;
-    private LabeledSlider hSlider_;
-    private LabeledSlider heightSlider_;
-    private LabeledSlider specularSlider_;
-    private LabeledSlider numStepsSlider_;
-    private Button restartButton_;
 
     private JCheckBox showU_;
     private JCheckBox showV_;
     private JCheckBox useConcurrency_;
 
     private ContinuousColorLegend legend_;
+    
 
+    private static final String K_SLIDER = "K";
+    private static final String F_SLIDER = "F";
+    private static final String H_SLIDER = "H";    
+    private static final String BH_SLIDER = "Bump Height";
+    private static final String SH_SLIDER = "Specular Highlight";
+    private static final String NS_SLIDER = "Num Steps per Frame";
+    
+    private SliderGroup sliderGroup_;
+    
+    private static final String[] SLIDER_NAMES = {
+        K_SLIDER,      F_SLIDER,     H_SLIDER,    BH_SLIDER,  SH_SLIDER,  NS_SLIDER
+    };
+    private static final double[] SLIDER_MIN = {
+         0,                     0,                 0.008,            0.0,             0.0,             RDSimulator.DEFAULT_STEPS_PER_FRAME/10.0
+    };
+    private static final double[] SLIDER_MAX = {
+         0.3,                 0.3,              0.048,            30.0,            1.0,             4.0*RDSimulator.DEFAULT_STEPS_PER_FRAME
+    }; 
+    private static final double[] SLIDER_INITIAL = {
+     GrayScott.K0,  GrayScott.F0,   GrayScott.H0,  0.0,             0.0,            RDSimulator.DEFAULT_STEPS_PER_FRAME
+    };
+    private static final double[] SCALE_FACTORS = {
+        1000,             1000,              10000,             10,             100,            1
+    }; 
+ 
+    
 
     public RDDynamicOptions(GrayScott gs, RDSimulator simulator) {
 
@@ -41,49 +63,19 @@ public class RDDynamicOptions extends JPanel
 
         gs_ = gs;
         simulator_ = simulator;
-
-        restartButton_ = new Button("Restart");
-        restartButton_.setMaximumSize(new Dimension(60, 20));
-        restartButton_.addActionListener(this);
-
-        kSlider_ = new LabeledSlider("K = ", GrayScott.K0, 0.0, 0.3);
-        kSlider_.addChangeListener(this);
-
-        fSlider_ = new LabeledSlider("F = ", GrayScott.F0, 0.0, 0.3);
-        fSlider_.addChangeListener(this);
-
-        hSlider_ = new LabeledSlider("H = ", GrayScott.H0, 0.008, 0.048);
-        hSlider_.addChangeListener(this);
-
-        heightSlider_ = new LabeledSlider("Bump Height = ", 0.0, 0.0, 30.0);
-        heightSlider_.addChangeListener(this);
-
-        specularSlider_ = new LabeledSlider("Specular Higlight = ", 0.0, 0.0, 1.0);
-        specularSlider_.addChangeListener(this);
-        specularSlider_.setEnabled(false);
-
-        numStepsSlider_ = new LabeledSlider("Num Steps per Frame = ", RDSimulator.DEFAULT_STEPS_PER_FRAME, 1, 100);
-        numStepsSlider_.setShowAsInteger(true);
-        numStepsSlider_.addChangeListener(this);
-
-        JPanel uvCheckBoxes = createCheckBoxes();
         
-        legend_ = new ContinuousColorLegend(null, simulator_.getRenderer().getColorMap(), true);
+        sliderGroup_ = new SliderGroup(SLIDER_NAMES, SLIDER_MIN, SLIDER_MAX, SLIDER_INITIAL, SCALE_FACTORS);
+        sliderGroup_.addSliderChangeListener(this);
 
-        add(fSlider_);
-        add(kSlider_);
-        add(hSlider_);
-        add(Box.createVerticalStrut(10));
-        add(heightSlider_);
-        add(specularSlider_);
-        add(Box.createVerticalStrut(10));
-        add(numStepsSlider_);
+        JPanel uvCheckBoxes = createCheckBoxes();      
+        legend_ = new ContinuousColorLegend(null, simulator_.getRenderer().getColorMap(), true);
+        
+        add(sliderGroup_);
         add(Box.createVerticalStrut(10));
         add(uvCheckBoxes);
         add(Box.createVerticalStrut(10));
-        add(restartButton_);
-        add(Box.createVerticalStrut(10));
         add(legend_);
+        add(Box.createVerticalGlue());
     }
     
     private JPanel createCheckBoxes() {
@@ -109,19 +101,23 @@ public class RDDynamicOptions extends JPanel
     }
 
 
+    public void reset() {
+        //gs_.reset();
+        sliderGroup_.reset();
+        /*
+        fSlider_.setValue(gs_.getF());
+        kSlider_.setValue(gs_.getK());
+        hSlider_.setValue(gs_.getH());
+         **/
+    }
+    
     /**
-     * The restart button was pressed.
+     * One of the buttons was pressed/
      */
     public void actionPerformed(ActionEvent e) {
         RDRenderer r = simulator_.getRenderer();
 
-        if (e.getSource() == restartButton_) {
-            gs_.reset();
-            fSlider_.setValue(gs_.getF());
-            kSlider_.setValue(gs_.getK());
-            hSlider_.setValue(gs_.getH());
-        }
-        else if (e.getSource() == showU_) {
+        if (e.getSource() == showU_) {
             r.setShowingU(!r.isShowingU());
         }
         else if (e.getSource() == showV_) {
@@ -135,25 +131,26 @@ public class RDDynamicOptions extends JPanel
     /**
      * one of the sliders was moved.
      */
-    public void stateChanged(ChangeEvent e) {
-        if (e.getSource() == fSlider_.getSlider()) {
-            gs_.setF(fSlider_.getValue());
+    public void sliderChanged(int sliderIndex, String sliderName, double value) {
+        if (sliderName.equals(F_SLIDER)) {
+            gs_.setF(value);
         }
-        else if (e.getSource() == kSlider_.getSlider()) {
-            gs_.setK(kSlider_.getValue());
+        else if (sliderName.equals(K_SLIDER)) {
+            gs_.setK(value);
         }
-        else if (e.getSource() == hSlider_.getSlider()) {
-            gs_.setH(hSlider_.getValue());
+        else if (sliderName.equals(H_SLIDER)) {
+            gs_.setH(value);
         }
-        else if (e.getSource() == heightSlider_.getSlider()) {
-            simulator_.getRenderer().setHeightScale(heightSlider_.getValue());
-            specularSlider_.setEnabled(heightSlider_.getValue() > 0);
+        else if (sliderName.equals(BH_SLIDER)) {
+            simulator_.getRenderer().setHeightScale(value);
+            sliderGroup_.setEnabled(SH_SLIDER, value > 0);
+            //specularSlider_.setEnabled(value > 0);
         }
-        else if (e.getSource() == specularSlider_.getSlider()) {
-            simulator_.getRenderer().setSpecular(specularSlider_.getValue());
+        else if (sliderName.equals(SH_SLIDER)) {
+            simulator_.getRenderer().setSpecular(value);
         }
-        else if (e.getSource() == numStepsSlider_.getSlider()) {
-            simulator_.setNumStepsPerFrame((int) numStepsSlider_.getValue());
+        else if (sliderName.equals(NS_SLIDER)) {
+            simulator_.setNumStepsPerFrame((int) value);
         }
     }
 

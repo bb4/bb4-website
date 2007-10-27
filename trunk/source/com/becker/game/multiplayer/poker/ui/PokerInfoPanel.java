@@ -129,23 +129,72 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
            // open the command dialog to get the players commands
            PokerPlayer currentPlayer = (PokerPlayer)pc.getCurrentPlayer();
 
-           // skip the player if he has folded
-
            // if the current player has folded, then advance to the next player.
            if (currentPlayer.hasFolded())  {
               pc.advanceToNextPlayer();
            }
 
+           int callAmount = pc.getCurrentMaxContribution() - currentPlayer.getContribution();
+           
            BettingDialog bettingDialog = new BettingDialog(pc, getParent());
 
            boolean canceled = bettingDialog.showDialog();
            if ( !canceled ) {
+               PokerAction action = currentPlayer.getAction(pc);
                // apply the players action : fold, check, call, raise
-               currentPlayer.contributeToPot(pc, bettingDialog.getContributeAmount());
+               switch (action.getActionName()) {
+                    case FOLD :
+                        currentPlayer.setFold(true);                  
+                        break;
+                    case CALL :               
+                        if (callAmount <= currentPlayer.getCash())  {
+                            currentPlayer.contributeToPot(pc, callAmount);                     
+                        } else {                            
+                            currentPlayer.setFold(true);
+                            assert false; // should never happen. remove.
+                        }
+                        break;
+                    case RAISE :
+                        currentPlayer.contributeToPot(pc, callAmount);
+                        int raise = action.getRaiseAmount();
+                        currentPlayer.contributeToPot(pc, raise);
+                        break;
+                }               
+                             
+               //currentPlayer.contributeToPot(pc, bettingDialog.getContributeAmount());
                pc.advanceToNextPlayer();
            }
         }
     }
+    /*
+        int callAmount = pc.getCurrentMaxContribution() - robot.getContribution();
+
+        PokerAction action = robot.getAction(pc);
+
+        switch (action.getActionName()) {
+            case FOLD :
+                robot.setFold(true);
+                msg = robot.getName() + " folded.";
+                break;
+            case CALL :
+                // System.out.println("PGV: robot call amount = currentMaxContrib - robot.getContrib) = "
+                //                   + pc.getCurrentMaxContribution()+" - "+robot.getContribution());
+                if (callAmount <= robot.getCash())   {
+                    robot.contributeToPot(pc, callAmount);
+                    msg = robot.getName() + " has called by adding "+ callAmount + " to the pot.";
+                } else {
+                    robot.setFold(true);
+                    msg = robot.getName() + " folded.";
+                }
+                break;
+            case RAISE :
+                robot.contributeToPot(pc, callAmount);
+                int raise = action.getRaiseAmount();
+                robot.contributeToPot(pc, raise);
+                msg = robot.getName() + " has met the "+callAmount + ", and rasied the pot by " + raise;
+                break;
+        }
+*/
 
     /**
      * this is general information that is applicable to every 2 player game.

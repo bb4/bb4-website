@@ -75,6 +75,8 @@
     <pathelement location="${libDir}/jigo.jar"/>
     <pathelement location="${libDir}/gogui7.1.jar"/>
     <pathelement location="${libDir}/gtpserver.jar"/>
+    <pathelement location="${libDir}/commons-codec-1.3.jar"/>
+    <pathelement location="${libDir}/rt.jar"/>
   </path>
 
 
@@ -182,6 +184,24 @@
       <param name="args" value="-game chess"/>
     </antcall>
   </target>
+  
+  <target name="executePokerServerAndClients" depends="compile" description="Run online poker server and several clients">
+      <parallel>   
+          <antcall target="executePokerServer"/>
+          <sequential>
+              <sleep seconds="5" />
+              <antcall target="executePoker"/>
+          </sequential>
+           <sequential>
+              <sleep seconds="5"/>
+              <antcall target="executePoker"/>
+          </sequential>
+          <sequential>
+              <sleep seconds="5"/>
+              <antcall target="executePoker"/>
+          </sequential>
+      </parallel>
+  </target>
 
   <target name="executePokerServer" depends="compile" description="Run online poker server">
     <antcall target="executeProgram">
@@ -191,7 +211,7 @@
     </antcall>
   </target>
 
-  <target name="executePoker" depends="compile" description="Run poker card game app">
+  <target name="executePoker" depends="compile" description="Run poker card game app"> 
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
@@ -224,11 +244,11 @@
        </junit>
   </target>
 
-  <target name="executeColorMixer" description="Run the color mixer tool">
+  <!--target name="executeColorMixer" description="Run the color mixer tool">
     <antcall target="executeProgram">
       <param name="className" value="com.becker.misc.colormixer.ColorMixer"/>
     </antcall>
-  </target>
+  </target -->
 
   <target name="executeDice" description="Run the Dice simulator">
     <antcall target="executeProgram">
@@ -319,6 +339,13 @@
     </java>
   </target>
   
+  <target name="executeSimpleEditor" depends="compile" description="A simple editor.">
+    <echo message="now executing simple editor"/>
+    <java classname="com.becker.misc.sedit.SimpleEditor" classpath="${classesDir};${libDir}/commons-codec-1.3.jar;${libDir}/rt.jar" fork="true" jvm="${java_compiler}" maxmemory="128M">
+        <jvmarg value="${assertionsFlag}"/>
+    </java>
+  </target>
+  
   <target name="executeNativeRender" depends="compile" description="A simple test of the native graphics renderer.">
       <echo message="now executing NativeRender"/>
       <java classname="com.becker.misc.nativeRender.NativeRenderTest" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="128M">
@@ -387,7 +414,7 @@
   </target>
 
   <!-- call this to run java programs  -->
-  <target name="executeProgram" depends="compile" description="Run a program">
+  <target name="executeProgram" depends="compile"  description="Run a program">
     <java classname="${className}" classpath="${classesDir};${libPath}" fork="true" jvm="${java_compiler}">
         <sysproperty key="DEBUG" value="true"/>
         <arg line="${args}"/>

@@ -80,27 +80,27 @@ public final class PngEncoder
 
   // Since these are used most often, move them up for a better bytecode.
   //
-  protected int bytePos, maxPos;
+  private int bytePos, maxPos;
 
-  protected byte[] pngBytes;
-  protected byte[] priorRow;
-  protected byte[] leftBytes;
-  protected Image myImage;
-  protected int width, height;
+  private byte[] pngBytes;
+  private byte[] priorRow;
+  private byte[] leftBytes;
+  private Image myImage;
+  private int width, height;
 
   // hdrPos, dataPos, and endPos are not used.
   // int hdrPos, dataPos, endPos
   
-  protected CRC32 crc = new CRC32();
+  private CRC32 crc = new CRC32();
 
   // crcValue is never used, either (value was substituted immediately).
-  //protected long crcValue;
+  //private long crcValue;
 
-  protected boolean myEncodeAlpha;
-  protected int myFilter = FILTER_NONE;
+  private boolean myEncodeAlpha;
+  private int myFilter = FILTER_NONE;
 
-  protected int bytesPerPixel;
-  protected int compressionLevel = NO_COMPRESSION;
+  private int bytesPerPixel;
+  private int compressionLevel = NO_COMPRESSION;
 
   /**
    * Class constructor specifying Image to encode, with no alpha channel
@@ -251,7 +251,7 @@ public final class PngEncoder
    * @return Array of newly desired length. If shorter than the
    * original, the trailing elements are truncated.
    */
-  protected byte[] resizeByteArray( byte[] array, int newLength )
+  private byte[] resizeByteArray( byte[] array, int newLength )
   {
     byte[]  newArray = new byte[newLength];
 
@@ -273,7 +273,7 @@ public final class PngEncoder
    * @param offset The starting point to write to.
    * @return The next place to be written to in the pngBytes array.
    */
-  protected int writeBytes( byte[] data, int offset )
+  private int writeBytes( byte[] data, int offset )
   {
     maxPos = Math.max( maxPos, offset + data.length );
 
@@ -298,7 +298,7 @@ public final class PngEncoder
    * @param offset The starting point to write to.
    * @return The next place to be written to in the pngBytes array.
    */
-  protected int writeBytes( byte[] data, int nBytes, int offset )
+  private int writeBytes( byte[] data, int nBytes, int offset )
   {
     maxPos = Math.max( maxPos, offset + nBytes );
 
@@ -317,7 +317,7 @@ public final class PngEncoder
    * @param offset The starting point to write to.
    * @return The next place to be written to in the pngBytes array.
    */
-  protected int writeInt4( int n, int offset )
+  private int writeInt4( int n, int offset )
   {
     byte[] temp = { (byte)((n >> 24) & 0xFF),
                     (byte)((n >> 16) & 0xFF),
@@ -333,7 +333,7 @@ public final class PngEncoder
    * @param offset The starting point to write to.
    * @return The next place to be written to in the pngBytes array.
    */
-  protected int writeByte( int b, int offset )
+  private int writeByte( int b, int offset )
   {
     byte[] temp = { (byte) b };
     return writeBytes( temp, offset );
@@ -349,7 +349,7 @@ public final class PngEncoder
    * @return The next place to be written to in the pngBytes array.
    * @see java.lang.String#getBytes()
    */
-  protected int writeString( String s, int offset )
+  private int writeString( String s, int offset )
   {
     return writeBytes( s.getBytes(), offset );
   }
@@ -357,7 +357,7 @@ public final class PngEncoder
   /**
    * Write a PNG "IHDR" chunk into the pngBytes array.
    */
-  protected void writeHeader()
+  private void writeHeader()
   {
     int startPos;
 
@@ -391,7 +391,7 @@ public final class PngEncoder
    * @param pixels The array holding the scan lines being built
    * @param startPos Starting position within pixels of bytes to be filtered.
    */
-  protected void filterSub( byte[] pixels, int startPos )
+  private void filterSub( byte[] pixels, int startPos )
   {
     int endPos = startPos + (width * bytesPerPixel),
         leftInsert = bytesPerPixel,
@@ -422,7 +422,7 @@ public final class PngEncoder
    * @param pixels The array holding the scan lines being built
    * @param startPos Starting position within pixels of bytes to be filtered.
    */
-  protected void filterUp( byte[] pixels, int startPos )
+  private void filterUp( byte[] pixels, int startPos )
   {
     int nBytes = width * bytesPerPixel;
     byte current_byte;
@@ -450,7 +450,7 @@ public final class PngEncoder
    *
    * @return true if no errors; false if error grabbing pixels
    */
-  protected boolean writeImageData()
+  private boolean writeImageData()
   {
     int rowsLeft = height;  // number of rows remaining to write
     int startRow = 0;       // starting row to process this time through
@@ -582,7 +582,7 @@ public final class PngEncoder
   /**
    * Write a PNG "IEND" chunk into the pngBytes array.
    */
-  protected void writeEnd()
+  private void writeEnd()
   {
     bytePos = writeInt4( 0, bytePos );
     bytePos = writeString( "IEND", bytePos );

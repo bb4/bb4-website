@@ -13,7 +13,7 @@ import java.io.*;
  */
 public class OnlineGameTable implements Serializable {
 
-    private static final int serialVersionUID = 1;
+    private static final long serialVersionUID = 1;
 
     /** the name of the virtual online table.  */
     private String name_;
@@ -26,7 +26,7 @@ public class OnlineGameTable implements Serializable {
 
     private GameOptions gameOptions_;
 
-    /** most recent player to join the table.   */
+    /** most recent human player to join the table.   */
     private Player newestHumanPlayer_;
 
 

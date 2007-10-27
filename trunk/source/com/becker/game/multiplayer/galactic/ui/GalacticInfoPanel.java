@@ -116,7 +116,7 @@ class GalacticInfoPanel extends GameInfoPanel implements GameChangedListener, Ac
            Point p = this.getParent().getLocationOnScreen();
 
            // offset the dlg so the Galaxy grid is visible as a reference
-           ordersDialog.setLocation((int)(p.getX()+0.7*getParent().getWidth()), (int)(p.getY()+getParent().getHeight()/3));
+           ordersDialog.setLocation((int)(p.getX()+0.7*getParent().getWidth()), (int)(p.getY()+getParent().getHeight()/3.0));
 
            boolean canceled = ordersDialog.showDialog();
            if ( !canceled ) { // newGame a game with the newly defined options

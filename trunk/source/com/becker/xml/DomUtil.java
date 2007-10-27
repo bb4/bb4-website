@@ -141,8 +141,7 @@ public class DomUtil {
         String attribs = "";
         if (attribMap!= null) {
             attribMap.getLength();
-            //String id = attribMap.
-
+         
             for (int i=0; i<attribMap.getLength(); i++) {
                 Node n = attribMap.item(i);
                 attribs += n.getNodeName()+"=\""+n.getNodeValue() +"\"  ";

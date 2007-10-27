@@ -18,18 +18,18 @@ import java.util.*;
 public class GoString extends GoSet
 {
 
-    // the group to which this string belongs
+    /** The group to which this string belongs. */
     protected GoGroup group_;
 
-    // used by Benson's algorithm to help determine unconditional life
+    /** Used by Benson's algorithm to help determine unconditional life. */
     private Set nbrs_;
-    // if true, then we are an eye in an unconditionally alive group
+    /** If true, then we are an eye in an unconditionally alive group. */
     private boolean unconditionallyAlive_;
-    // keep track of number of liberties instead of computing each time (for performance)
-    private Set liberties_;
+    /** Keep track of number of liberties instead of computing each time (for performance). */
+    private Set<GoBoardPosition> liberties_;
 
     /**
-     * constructor. Create a new string containing the specified stone
+     * Constructor. Create a new string containing the specified stone.
      */
     public GoString( GoBoardPosition stone, GoBoard board )
     {
@@ -59,8 +59,6 @@ public class GoString extends GoSet
         initializeLiberties(board);
     }
 
-
-    // set/get the group
     public final void setGroup( GoGroup group )
     {
         group_ = group;
@@ -197,15 +195,15 @@ public class GoString extends GoSet
     }
 
     /**
-     * if the libertyPos is occupied, then we subract this liberty, else add it
+     * If the libertyPos is occupied, then we subract this liberty, else add it.
      * @param libertyPos
      */
     public void changedLiberty(GoBoardPosition libertyPos) {
          if (libertyPos.isOccupied()) {
              boolean removed = liberties_.remove(libertyPos);
-             //assert removed : "could not remove "+libertyPos +" from "+liberties_;  // hitting if showing game tree
+             assert removed : "could not remove "+libertyPos +" from "+liberties_;  // hitting if showing game tree
          } else {
-             assert (!liberties_.contains(libertyPos));
+             assert (!liberties_.contains(libertyPos)) : this + " already had " + libertyPos +" as a liberty and we were not expecting that. Liberties_=" + liberties_;
              liberties_.add(libertyPos);
              if (members_.size() == 1)
                  assert(liberties_.size() <= 4) :this +" has too many liberties for one stone :"+ liberties_ +  " just added :"+libertyPos;

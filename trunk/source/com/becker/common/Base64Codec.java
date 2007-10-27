@@ -1,11 +1,14 @@
 package com.becker.common;
 
-
-
-import com.sun.jndi.toolkit.chars.*;
+//import com.sun.jndi.toolkit.chars.BASE64Encoder;
+//import com.sun.jndi.toolkit.chars.BASE64Decoder;
+//import org.apache.commons.codec.binary.*;
+import org.apache.commons.codec.binary.Base64;
 import java.io.*;
 import java.util.zip.*;
 import static com.becker.common.EncodingConstants.*;
+import com.sun.jndi.toolkit.chars.BASE64Decoder;
+import com.sun.jndi.toolkit.chars.BASE64Encoder;
 
 /**
  * Utility methods for Base64 compression and decompression.
@@ -17,9 +20,8 @@ public final class Base64Codec {
     private Base64Codec() {}
 
     // for character codec
-    private static BASE64Encoder charEncoder_ = null;
-    private static BASE64Decoder charDecoder_ = null;
-
+    private static Base64 charEncoder_ = null;
+   
     /**
      * take a String and compress it.
      * See @decompress for reversing the compression.
@@ -29,7 +31,7 @@ public final class Base64Codec {
     public static synchronized String compress(final String data )
     {
         if (charEncoder_ == null) {            
-            charEncoder_ = new BASE64Encoder();
+            charEncoder_ = new Base64();
         }
         
         ByteArrayOutputStream byteOut = new ByteArrayOutputStream( 512 );
@@ -47,7 +49,7 @@ public final class Base64Codec {
             e.printStackTrace();
         }
 
-        return charEncoder_.encode( byteOut.toByteArray() );
+        return new String(charEncoder_.encodeBase64( byteOut.toByteArray() ));
     }
 
     /**
@@ -56,16 +58,11 @@ public final class Base64Codec {
      */
     public static synchronized String decompress( final String data )
     {
-        if (charDecoder_==null) {
-            charDecoder_ = new BASE64Decoder();
+        if (charEncoder_==null) {
+            charEncoder_ = new Base64();
         }
         // convert from string to bytes for uncompressing
-        byte[] compressedDat = null;
-        try {
-            compressedDat = charDecoder_.decodeBuffer( data );
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        byte[] compressedDat = charEncoder_.decodeBase64( data.getBytes() );  
 
         final ByteArrayInputStream in = new ByteArrayInputStream( compressedDat );
         final Inflater inflater = new Inflater();

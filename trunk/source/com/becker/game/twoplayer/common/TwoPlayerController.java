@@ -33,8 +33,7 @@ public abstract class TwoPlayerController extends GameController
 
     // these are the default game constants
     // they may be modified through the ui (see GameOptionsDialog)
-    // -- these other constants are game type dependent and could move to subclasses
-
+    // -- these other constants anything
     /** anything greater than this is considered a won game  */
     public static final double WINNING_VALUE = SearchStrategy.WINNING_VALUE;
 

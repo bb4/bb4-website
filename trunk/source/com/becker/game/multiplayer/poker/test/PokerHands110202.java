@@ -257,7 +257,7 @@ class PokerHands110202 {
     }
 
 
-    public class PokerHand implements Comparable {
+    public static class PokerHand implements Comparable {
 
         private List<Card> hand_;
         private Map matchMap_;

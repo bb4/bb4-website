@@ -114,7 +114,10 @@ public final class RDRenderer {
                 }
 
                 g2.setColor(c);
+                
+                // no significant performance difference between these 2
                 g2.drawLine(MARGIN + x, MARGIN + y, MARGIN + x, MARGIN + y);
+                //g2.fillRect(MARGIN + x, MARGIN + y, 1, 1);
             }
         }
     }

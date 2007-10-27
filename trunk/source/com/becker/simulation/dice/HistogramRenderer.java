@@ -9,8 +9,7 @@ import java.awt.*;
  * @author Barry Becker Date: Feb 4, 2007
  */
 public class HistogramRenderer {
-
-
+    
     private int[] data_;
 
     private int minX_;

@@ -160,7 +160,7 @@ public class FilePrinter
         }
     }
 
-    public class FileQuitAction
+    public static class FileQuitAction
             extends AbstractAction
     {
         public FileQuitAction()

@@ -17,7 +17,7 @@ import java.util.List;
  *
  */
 final class PegBoardViewer extends PuzzleViewer<PegBoard, PegMove>
-                                             implements ActionListener,  Refreshable<PegBoard, PegMove>
+                                             implements ActionListener
 {
 
     private static final int INC = 10;
