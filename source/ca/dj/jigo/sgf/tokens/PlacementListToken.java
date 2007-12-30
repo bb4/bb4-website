@@ -23,8 +23,10 @@ import ca.dj.jigo.sgf.Point;
 
 import java.io.StreamTokenizer;
 import java.io.IOException;
+import java.util.Iterator;
 
-import java.util.Enumeration;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -32,7 +34,7 @@ import java.util.Vector;
  */
 public class PlacementListToken extends PlacementToken implements MarkupToken
 {
-  private Vector myPoints = new Vector();
+  private List<Point> myPoints = new LinkedList<Point>();
 
   public PlacementListToken() { }
 
@@ -41,20 +43,24 @@ public class PlacementListToken extends PlacementToken implements MarkupToken
   {
     do
     {
-      // Read a point in the list of points (of which there must be at least
-      // one), then add it to our internal list of points.
-      //
-      if( parsePoint( st ) )
-        addPoint( getPoint() );
+      // Read a point in the list of points (of which there must be at least one), 
+      // then add it to our internal list of points.
+      // need to make a copy. otherwise we end up adding the same point to the list each time.
+     System.out.println("adding point ...");
+      if( parsePoint( st ) ) {
+          
+          addPoint( new Point(getPoint()) );       
+      }
     }
     while( st.nextToken() == (int)'[' );
-
+    
     st.pushBack();
-
+ 
     return true;
   }
 
-  private void addPoint( Point point ) { myPoints.addElement( point ); }
-  public Enumeration getPoints() { return myPoints.elements(); }
+  private void addPoint( Point point ) { myPoints.add( point ); }
+  public Iterator<Point> getPoints() { return myPoints.iterator(); }
+  public List<Point> getPoints2() { return myPoints; }
 }
 

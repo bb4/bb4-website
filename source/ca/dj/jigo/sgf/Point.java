@@ -44,5 +44,13 @@ public final class Point
     x = newX;
     y = newY;
   }
+  
+  /**
+   * Copy constructor
+   */
+  public Point(Point pt)
+  {
+      this(pt.x, pt.y);
+  }
 }
 
