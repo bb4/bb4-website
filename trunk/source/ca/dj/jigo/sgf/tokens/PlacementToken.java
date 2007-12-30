@@ -72,12 +72,21 @@ public class PlacementToken extends SGFToken
     if( (token == (int)']') || (token != StreamTokenizer.TT_WORD) )
       return true;
 
+    int xCoord = -1;
+    int yCoord = -1;
     try
     {
-      setX( coordFromChar( st.sval.charAt( 0 ) ) );
-      setY( coordFromChar( st.sval.charAt( 1 ) ) );
+      int xChar = st.sval.charAt( 0 );
+      int yChar =  st.sval.charAt( 1 );
+      xCoord = coordFromChar( xChar );
+      yCoord = coordFromChar( yChar );
+      setX( xCoord );
+      setY( yCoord );
     }
-    catch( Exception e ) { }
+    catch( Exception e ) { 
+        System.out.println("Error at row="+ yCoord + " col="+ xCoord );
+        e.printStackTrace();
+    }
 
     // Read the closing parenthesis; we're done.
     //
@@ -96,8 +105,6 @@ public class PlacementToken extends SGFToken
 
     if( (ch >= 'A') && (ch <= 'Z') )
       return ch - 'A' + 1;
-
-
 
     return 0;
   }
