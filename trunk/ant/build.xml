@@ -161,7 +161,7 @@
   
    <target name="testBlockade" depends="compile" description=" blockade game tests">
        <echo message="now running BLOCKADE tests"/>
-       <junit  printsummary="yes"  haltonfailure="no" showoutput="yes">
+       <junit  printsummary="yes"  fork="yes"  haltonfailure="no" showoutput="yes">
            <classpath path="${classesDir}"/>
            <formatter type="plain"/>
            <!--formatter type="brief" usefile="false" /-->
@@ -237,9 +237,11 @@
   
   <target name="testGo" depends="compile" description=" go game tests">
        <echo message="now running GO tests"/>
-       <junit  printsummary="yes"  haltonfailure="no" showoutput="yes">
+       <junit  printsummary="yes"  fork="yes"  haltonfailure="no" showoutput="yes" >
            <classpath path="${classesDir}"/>
+           <assertions><enable/></assertions>
            <formatter type="plain"/>
+           <!--test name="com.becker.game.twoplayer.go.test.TestAll" outfile="../test/go/goTestResults"/-->
            <test name="com.becker.game.twoplayer.go.test.TestAll" outfile="../test/go/goTestResults"/>
        </junit>
   </target>
@@ -308,11 +310,23 @@
   
   <target name="testLiquid" depends="compile" description=" liquid tests" >
        <echo message="now running LIQUID tests"/>
-       <junit  printsummary="yes"  haltonfailure="no" showoutput="yes" >
+       <junit  printsummary="yes" fork="yes"  haltonfailure="no" showoutput="yes" >
            <classpath path="${classesDir};${libDir}/vecmath.jar"/>
+           <assertions><enable/></assertions>
            <formatter type="plain"/>
            <!--formatter type="brief" usefile="false" /-->
            <test name="com.becker.simulation.liquid.test.TestCell" outfile="../test/liquid/liquidTestResults"/>
+       </junit>
+  </target>
+  
+  <target name="testSound" depends="compile" description=" sound tests">
+       <echo message="now running sound tests"/>
+       <junit  printsummary="yes"  fork="yes" haltonfailure="no" showoutput="yes">
+           <classpath path="${classesDir}"/>
+           <assertions><enable/></assertions>
+           <formatter type="plain"/>
+           <!--formatter type="brief" usefile="false" /-->
+           <test name="com.becker.sound.test.SoundTest" outfile="../test/sound/soundTestResults"/>
        </junit>
   </target>
 
