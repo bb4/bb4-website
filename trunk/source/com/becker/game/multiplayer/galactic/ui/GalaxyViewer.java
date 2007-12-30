@@ -157,7 +157,7 @@ public class GalaxyViewer extends GameBoardViewer
 
         // for each order of each player, apply it for one year
         // if there are battles, show them in the battle dialog and record the result in the move.
-        Player[] players = controller_.getPlayers();
+        List<? extends Player> players = controller_.getPlayers();
 
         for (final Player player : players) {
             List orders = ((GalacticPlayer) player).getOrders();
@@ -218,7 +218,7 @@ public class GalaxyViewer extends GameBoardViewer
     {
 
         // before we draw the planets, draw the fleets and their paths
-        Player[] players = controller_.getPlayers();
+        List<? extends Player> players = controller_.getPlayers();
         for (final Player player : players) {
             List orders = ((GalacticPlayer) player).getOrders();
             Iterator orderIt = orders.iterator();

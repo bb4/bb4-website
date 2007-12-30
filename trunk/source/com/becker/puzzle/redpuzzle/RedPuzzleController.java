@@ -1,6 +1,6 @@
 package com.becker.puzzle.redpuzzle;
 
-import com.becker.common.Util;
+import com.becker.common.util.Util;
 import com.becker.common.Worker;
 import com.becker.puzzle.common.AbstractPuzzleController;
 import com.becker.puzzle.common.AlgorithmEnum;
@@ -49,7 +49,7 @@ public class RedPuzzleController extends AbstractPuzzleController<PieceList, Pie
         // for each piece that we have not tried yet, see if it fits.
         // if it does, add that to the set of legal next moves.        
         List<Piece> moves = new LinkedList<Piece>();
-        for  (int i=0; i<NUM_PIECES; i++) {
+        for  (int i = 0; i < NUM_PIECES; i++) {
             Piece p = SHUFFLED_PIECES.get(i);
             if (!position.contains(p)) {
                 int r = 0; 

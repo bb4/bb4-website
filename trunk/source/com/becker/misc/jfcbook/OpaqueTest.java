@@ -1,7 +1,8 @@
 package com.becker.misc.jfcbook;
 
+import com.becker.common.util.FileUtil;
 import com.becker.ui.*;
-import com.becker.common.Util;
+import com.becker.common.util.Util;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,7 +42,7 @@ public class OpaqueTest extends JFrame {
 
 
 class RainPanel extends JPanel {
-	ImageIcon rain = new ImageIcon(Util.PROJECT_DIR + "source/com/becker/misc/jfcbook/rain.gif");
+	ImageIcon rain = new ImageIcon(FileUtil.PROJECT_DIR + "source/com/becker/misc/jfcbook/rain.gif");
 	private int rainw = rain.getIconWidth();
 	private int rainh = rain.getIconHeight();
 

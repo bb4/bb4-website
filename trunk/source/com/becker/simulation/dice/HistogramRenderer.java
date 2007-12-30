@@ -1,6 +1,7 @@
 package com.becker.simulation.dice;
 
 import com.becker.common.*;
+import com.becker.common.util.Util;
 
 import java.awt.*;
 

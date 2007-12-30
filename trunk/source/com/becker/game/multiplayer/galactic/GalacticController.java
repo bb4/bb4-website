@@ -3,6 +3,7 @@ package com.becker.game.multiplayer.galactic;
 import com.becker.game.common.*;
 import com.becker.game.common.Move;
 import com.becker.game.common.ui.GameBoardViewer;
+import com.becker.game.multiplayer.common.MultiGamePlayer;
 import com.becker.game.multiplayer.galactic.ui.GalaxyViewer;
 import com.becker.game.multiplayer.galactic.player.*;
 import com.becker.optimization.ParameterArray;
@@ -80,7 +81,7 @@ public class GalacticController extends GameController
     protected void initializeData()
     {
         initPlayers();
-        ((Galaxy)board_).initPlanets((GalacticPlayer[])players_, (GalacticOptions)getOptions());
+        ((Galaxy)board_).initPlanets((List<GalacticPlayer>)players_, (GalacticOptions)getOptions());
     }
 
      /**
@@ -92,17 +93,17 @@ public class GalacticController extends GameController
         // After that, they can change manually to get different players.
         if (players_ == null) {
             // create the default players. One human and one robot.
-            players_ = new GalacticPlayer[2];
-            GalacticPlayer[] gplayers = (GalacticPlayer[])players_;
+            players_ = new ArrayList<GalacticPlayer>(2);
+            List<GalacticPlayer> gplayers = (List<GalacticPlayer>)players_;
             Planet homePlanet = new Planet('A', GalacticPlayer.DEFAULT_NUM_SHIPS, 10, new Location(5, 5));
-            players_[0] = GalacticPlayer.createGalacticPlayer("Admiral 1",
-                                      homePlanet, GalacticPlayer.getNewPlayerColor(gplayers), true);
-            homePlanet.setOwner((GalacticPlayer)players_[0]);
+            gplayers.add(GalacticPlayer.createGalacticPlayer("Admiral 1",
+                                      homePlanet, MultiGamePlayer.getNewPlayerColor(gplayers), true));
+            homePlanet.setOwner((GalacticPlayer)players_.get(0));
 
             homePlanet = new Planet('B', GalacticPlayer.DEFAULT_NUM_SHIPS, 10, new Location(10, 10));
-            players_[1] = GalacticPlayer.createGalacticPlayer("Admiral 2",
-                                      homePlanet, GalacticPlayer.getNewPlayerColor(gplayers), false);
-            homePlanet.setOwner((GalacticPlayer)players_[1]);
+            gplayers.add(GalacticPlayer.createGalacticPlayer("Admiral 2",
+                                      homePlanet, MultiGamePlayer.getNewPlayerColor(gplayers), false));
+            homePlanet.setOwner((GalacticPlayer)players_.get(1));
         }
         currentPlayerIndex_ = 0;
     }
@@ -113,7 +114,7 @@ public class GalacticController extends GameController
      */
     public Player getCurrentPlayer()
     {
-        return players_[currentPlayerIndex_];
+        return players_.get(currentPlayerIndex_);
     }
 
     public void computerMovesFirst()
@@ -197,7 +198,7 @@ public class GalacticController extends GameController
      */
     private int advanceToNextPlayerIndex()
     {
-        currentPlayerIndex_ = (currentPlayerIndex_+1) % players_.length;
+        currentPlayerIndex_ = (currentPlayerIndex_+1) % players_.size();
         return currentPlayerIndex_;
     }
 
@@ -206,7 +207,7 @@ public class GalacticController extends GameController
      */
     public Player getFirstPlayer()
     {
-        return players_[0];
+        return players_.get(0);
     }
 
     public GameOptions getOptions() {

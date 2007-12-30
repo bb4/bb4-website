@@ -65,7 +65,7 @@ public class Galaxy extends Board
         }
     }
 
-    public void initPlanets(GalacticPlayer[] players, GalacticOptions options)
+    public void initPlanets(List<GalacticPlayer> players, GalacticOptions options)
     {
         hmPlanets_.clear();
 
@@ -76,7 +76,7 @@ public class Galaxy extends Board
         }
 
         planets_.clear();
-        for (int i=0; i<getNumPlanets(); i++)
+        for (int i = 0; i < getNumPlanets(); i++)
         {
 
             // find a random position

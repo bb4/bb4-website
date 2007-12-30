@@ -94,24 +94,24 @@ public class Log
     {
         if ( logLevel <= appLogLevel ) {
             if ((logDestination_ & LOG_TO_CONSOLE) >0) {
-                System.err.print( message );
+                System.err.println( message );
             }
             if ((logDestination_ & LOG_TO_WINDOW) > 0) {
                 if ( logWindow_ != null )
                     logWindow_.appendText( message );
                 else
-                    System.err.print("no logWindow to print to. First specify with setLogWindow. message="+message);
+                    System.err.println("no logWindow to print to. First specify with setLogWindow. message="+message);
             }
              if ((logDestination_ & LOG_TO_FILE) > 0) {
                  if (fileOutStream_ != null)  {
                      try {
                          fileOutStream_.write(message.getBytes());
                      } catch (IOException e) {
-                         System.err.print( message );
+                         System.err.println( message );
                          e.printStackTrace();
                      }
                  }
-                 else System.err.print("no logFile to print to. First specify with setLogFile. message="+message);
+                 else System.err.println("no logFile to print to. First specify with setLogFile. message="+message);
             }
         }
     }

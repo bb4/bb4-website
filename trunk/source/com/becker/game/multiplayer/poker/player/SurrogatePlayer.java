@@ -1,6 +1,8 @@
 package com.becker.game.multiplayer.poker.player;
 
 import com.becker.game.common.online.*;
+import com.becker.game.multiplayer.poker.PokerAction;
+import com.becker.game.multiplayer.poker.PokerController;
 
 import java.awt.*;
 
@@ -24,5 +26,10 @@ public class SurrogatePlayer extends PokerPlayer implements OnlineChangeListener
      */
     public void handleServerUpdate(GameCommand cmd) {
       
+    }
+    
+    public PokerAction getAction(PokerController pc) {
+        // @@ todo
+        return new PokerAction(pc.getCurrentPlayer().getName(), PokerAction.Name.CALL, 0);
     }
 }

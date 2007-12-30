@@ -2,6 +2,7 @@ package com.becker.game.multiplayer.common.ui;
 
 import com.becker.game.common.*;
 import com.becker.ui.table.*;
+import java.util.List;
 
 import javax.swing.table.*;
 
@@ -25,7 +26,7 @@ public abstract class SummaryTable extends TableBase  {
      * constructor
      * @param players to initializet the rows in the table with.
      */
-    public SummaryTable(Player[] players, String[] columnNames)
+    public SummaryTable(List<? extends Player> players, String[] columnNames)
     {
         super(players, columnNames);
     }

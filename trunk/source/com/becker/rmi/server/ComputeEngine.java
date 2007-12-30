@@ -1,6 +1,8 @@
 package com.becker.rmi.server;
 
 import com.becker.common.*;
+import com.becker.common.util.FileUtil;
+import com.becker.common.util.Util;
 import com.becker.rmi.server.*;
 import com.becker.rmi.common.*;
 
@@ -15,7 +17,7 @@ public class ComputeEngine extends UnicastRemoteObject
     //private static final String NAME = "rmi://becker-hm2:"+ PORT +"/ComputeEngine";
     private int port_ = 2020;
     private String hostname_ = "becker-hm2";
-    private static final String CLASSPATH = Util.PROJECT_DIR + "rmi_server";
+    private static final String CLASSPATH = FileUtil.PROJECT_DIR + "rmi_server";
 
     public ComputeEngine() throws RemoteException {
         super();

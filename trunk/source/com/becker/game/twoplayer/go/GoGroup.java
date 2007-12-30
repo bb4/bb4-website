@@ -1,6 +1,7 @@
 package com.becker.game.twoplayer.go;
 
 import com.becker.common.*;
+import com.becker.common.util.Util;
 import com.becker.game.common.*;
 
 import java.util.*;
@@ -9,7 +10,7 @@ import java.util.*;
  *  A GoGroup is composed of a loosely connected set of one or more same color strings.
  *  A GoString by comparison, is composed of a strongly connected set of one or more same color stones.
  *  A GoArmy is a loosely coupled set of Groups
- *  Groups may be connected by diagonals or one space jumps, or uncut knights moves, but not nikken tobi
+ *  Groups may be connected by diagonals or one space jumps, or uncut knights moves, but not nikken tobi.
  *
  *  @see GoString
  *  @see GoArmy
@@ -29,6 +30,11 @@ public final class GoGroup extends GoSet
      * false-eye: any string of spaces or dead enemy stones for which one is a false eye.
      */
     private Set eyes_;
+    /**
+     *measure of how easily the group can make 2 eyes.
+     */
+    private float eyePotential_;
+    
     /**
      * This is a number between -1 and 1 that indicates how likely the group is to live
      * independent of the health of the stones around it.
@@ -77,7 +83,8 @@ public final class GoGroup extends GoSet
     }
 
     /**
-     * constructor. Create a new group containing the specified list of stones
+     * Constructor. 
+     * Create a new group containing the specified list of stones
      * Every stone in the list passed in must say that it is owned by this new group,
      * and every string must be wholy owned by this new group.
      * @param stones list of stones to create a group from.
@@ -93,7 +100,7 @@ public final class GoGroup extends GoSet
             GoString string = stone.getString();
             assert ( string != null ): "There is no owning string for "+stone;
             if ( !members_.contains( string ) ) {
-                assert ( ownedByPlayer1_ == string.isOwnedByPlayer1()): string +"ownership not the same as "+this;
+                assert ( ownedByPlayer1_ == string.isOwnedByPlayer1()): string +"ownership not the same as " + this;
                 //string.confirmOwnedByOnlyOnePlayer();
                 members_.add( string );
             }
@@ -107,7 +114,7 @@ public final class GoGroup extends GoSet
      */
     private void commonInit()
     {
-        eyes_ = new HashSet();
+        eyes_ = new LinkedHashSet();
         changed_ = true;
     }
 
@@ -156,7 +163,6 @@ public final class GoGroup extends GoSet
     }
 
 
-
     /**
      * merge another group into this one.
      * @param group the group to merge into this one
@@ -166,7 +172,7 @@ public final class GoGroup extends GoSet
     {
         if ( this == group ) {
             // its a self join
-            GameContext.log( 2, "Warning: attempting a self join" );
+            GameContext.log( 1, "Warning: attempting a self join." );
             return;
         }
         for (Object s : group.getMembers()) {
@@ -225,7 +231,6 @@ public final class GoGroup extends GoSet
     }
 
 
-
     /**
      * Get the number of liberties that the group has.
      * @return the number of liberties that the group has
@@ -275,6 +280,11 @@ public final class GoGroup extends GoSet
             GoString string = (GoString) it.next();
             stones.addAll( string.getMembers() );
         }
+        // verify that none of these member stones are null.
+        for (Object s: stones)
+        {
+            assert (s != null): "unexpected null stone in "+ stones;
+        }
         return stones;
     }
 
@@ -283,8 +293,10 @@ public final class GoGroup extends GoSet
     /**
      * compute how many eyes (connected internal blank areas) this group has.
      * the eyes are either false eyes or true (or big or territorial) eyes.
-     * This method is expensive.
+     * Also update eyePotential (a measure of how good the groups ability to make 2 eyes(.
+     * This method is expensive. That is why the 2 things it computes (eyes and eyePotential) are cached.
      * @param board the owning board
+     * @return 
      */
     private void updateEyes( GoBoard board )
     {
@@ -296,7 +308,7 @@ public final class GoGroup extends GoSet
 
         Box box = GoBoardUtil.findBoundingBox(members_);
 
-        // forget what we had computed before about the eyes
+        // forget what we had computed before about the eyes.
         clearEyes();
 
         // next eliminate all the stones and spaces that are in the bounding rect,
@@ -329,8 +341,8 @@ public final class GoGroup extends GoSet
                         ownedByPlayer1_, board, lists, box );
         }
 
-        // now do a paint fill on each of the empty unvisited spaces left.
-        // most of these remaining empty spaces are connected to an eye of some type.
+        // Now do a paint fill on each of the empty unvisited spaces left.
+        // Most of these remaining empty spaces are connected to an eye of some type.
         // There will be some that fill spaces between black and white stones.
         // Don't count these as eyes unless the stones of the opposite color are much weaker -
         // in which case they are assumed dead and hence part of the eye.
@@ -357,8 +369,128 @@ public final class GoGroup extends GoSet
             }
         }
         GoBoardUtil.unvisitPositionsInLists( lists );
+        eyePotential_ = calculateEyePotential(box, board);
     }
-
+    
+    /**
+     *@return eyePtoential - a measure of how easily this group can make 2 eyes (0 - 2; 2 meaning has 2 eyes).
+     */
+    private float calculateEyePotential(Box bbox, GoBoard board) {
+        int numRows = board.getNumRows();
+        int numCols = board.getNumCols();
+        // Expand the bbox by one in all directions.
+        // if the bbox is within one space of the edge, extend it all the way to the edge.
+        // loop through the rows and columns calculating distances from group stones 
+        // to the edge and to other stones.
+        // if there is a (mostly living) enemy stone in the run, don't count the run.
+        
+        bbox.expandGloballyBy(1, numRows, numCols);
+        bbox.expandBordersToEdge(1, numRows, numCols);
+        float totalPotential = 0;
+         
+        // make sure that every internal enemy stone is really an enemy and not just dead.
+        // compare it with one of the group strings.
+        GoString gs = ((GoString)this.getMembers().iterator().next());
+            
+        // first look at the row runs
+        for ( int r = bbox.getMinRow(); r <= bbox.getMaxRow(); r++ ) {     
+            //System.out.println("row run = "+ r);
+            totalPotential += 
+                    getRowColPotential(r, bbox.getMinCol(), 0, 1, bbox.getMaxRow(), bbox.getMaxCol(), board, gs);
+        }
+        // now acrue column run potentials
+        for ( int c = bbox.getMinCol(); c <= bbox.getMaxCol(); c++ ) {        
+            //System.out.println("col run = "+ c);
+            totalPotential += 
+                    getRowColPotential(bbox.getMinRow(), c, 1, 0, bbox.getMaxRow(), bbox.getMaxCol(), board, gs);
+        }
+        
+        return (float)Math.min(1.9, Math.sqrt(totalPotential)/1.3);
+    }
+    
+    /**
+     * Find the potential for one of the bbox's rows or columns.
+     */
+    private float getRowColPotential(int r, int c, int rowInc, int colInc, int maxRow, int maxCol, 
+                                                          GoBoard board, GoString groupString) {
+        float rowPotential = 0;   
+        boolean containsEnemy = false;
+        int breadth = (rowInc ==1)? (maxRow - r) : (maxCol - c);        
+        GoBoardPosition startSpace = (GoBoardPosition) board.getPosition( r, c );       
+        do {         
+            GoBoardPosition space = (GoBoardPosition) board.getPosition( r, c );          
+            GoBoardPosition firstSpace = space;            
+            int runLength = 0;
+            while (c <= maxCol && r <= maxRow && (space.isUnoccupied() ||  
+                      (space.isOccupied() && space.getPiece().isOwnedByPlayer1() != isOwnedByPlayer1()))) {
+                if (space.isOccupied() &&  space.getPiece().isOwnedByPlayer1() != isOwnedByPlayer1() 
+                    && groupString.isEnemy(space)) {
+                    containsEnemy =  true;
+                }
+                runLength++;
+                r += rowInc; c += colInc;
+                space = (GoBoardPosition) board.getPosition( r, c );                
+            }
+            boolean bounded = !(firstSpace.equals(startSpace)) && space!=null && space.isOccupied();             
+            // now acrue the potential           
+            if (!containsEnemy && runLength < breadth && runLength > 0) {               
+                 int firstPos, max, currentPos;
+                 if (rowInc ==1) {
+                     firstPos = firstSpace.getRow();
+                     max = board.getNumRows();   
+                     currentPos = r;
+                 } else {
+                     firstPos = firstSpace.getCol();
+                     max = board.getNumCols();   
+                     currentPos = c;
+                 }                 
+                 rowPotential += getRunPotential(runLength, firstPos, currentPos, max, bounded);                                           
+            }               
+            r += rowInc; c += colInc;
+        } while (c <= maxCol && r <= maxRow);
+        // System.out.println("rcPotential = " + rowPotential);  
+        return rowPotential;
+    }
+    
+  
+    private float getRunPotential(int runLength, int firstPos, int endPosP1, int max, 
+                                                    boolean boundedByStones) {
+        float potential = 0;
+        assert(runLength > 0);
+        // this case is where the run is next to an edge or bounded by friend stones. 
+        // Weight the potential more heavily.
+        if ((firstPos == 1 || endPosP1 == max || boundedByStones)) {
+            switch (runLength) {   
+                case 1: potential = 0.25f; break;
+                case 2: potential = 0.35f; break;
+                case 3: potential = 0.4f; break;
+                case 4: potential = 0.3f; break;
+                case 5: potential = 0.2f; break;
+                case 6: potential = 0.15f; break;
+                case 7: potential = 0.1f; break;
+                default : potential = 0.05f;
+            }
+        }
+        else {
+            // a run to boundary. Less weight attributed.
+            switch (runLength) {        
+                case 1: potential = 0.05f; break;
+                case 2: potential = 0.15f; break;
+                case 3: potential = 0.2f; break;
+                case 4: potential = 0.25f; break;
+                case 5: potential = 0.2f; break;
+                case 6: potential = 0.15f; break;
+                case 7: potential = 0.1f; break;
+                case 8: potential = 0.6f; break;
+                default : potential = 0.05f;
+            }
+        }
+        String color = this.isOwnedByPlayer1()?"black":"white";
+        //System.out.println(color + " potential for first="+ firstPos + " end="+endPosP1 
+        //        + " max="+max+ " runLen="+runLength+" bounded="+boundedByStones  +" IS:"+potential);
+        return potential;
+    }
+    
     /**
      * mark as visited all the non-friend (empty or enemy) spaces connected to this one.
      *
@@ -398,7 +530,7 @@ public final class GoGroup extends GoSet
 
 
     /**
-     * check this list of stones to confirm that enemy stones don't border it.
+     * Check this list of stones to confirm that enemy stones don't border it.
      * If they do, then it is not an eye - return false.
      *
      * @param eyeList the candidate string of stones to misc for eye status
@@ -461,6 +593,14 @@ public final class GoGroup extends GoSet
     {
         return absoluteHealth_;
     }
+    
+    /**
+     * only used in tester. otherwise would be private.
+     */
+    public float getEyePotential()
+    {
+        return eyePotential_;
+    }
 
     /**
      * Calculate the absolute health of a group.
@@ -475,6 +615,7 @@ public final class GoGroup extends GoSet
      * A perfect 1 (or -1) indicates unconditional life (or death).
      * This means that the group cannot be killed (or given life) no matter
      * how many times the opponent plays (see Dave Benson 1977).
+     *http://senseis.xmp.net/?BensonsAlgorithm
      *
      * @@ need expert advice to make this work well.
      * @@ make the constants parameters and optimize them.
@@ -495,15 +636,14 @@ public final class GoGroup extends GoSet
         float side = ownedByPlayer1_? 1.0f : -1.0f;
 
         // we need to come up with some approximation for the health so update eyes can be done more accurately.
-        int numEyes = calcNumEyes();
+        float numEyes = calcNumEyes();
         absoluteHealth_ = determineHealth(side, numEyes, numLiberties, board);
 
         profiler.start(GoProfiler.UPDATE_EYES);
         updateEyes( board );  // expensive
         profiler.stop(GoProfiler.UPDATE_EYES);
 
-
-        numEyes = calcNumEyes();
+        numEyes = Math.max(eyePotential_, calcNumEyes());
 
         // health based on eye shape - the most significant factor
         float health = determineHealth(side, numEyes, numLiberties, board);
@@ -519,18 +659,21 @@ public final class GoGroup extends GoSet
 
         changed_ = false;  // cached until something changes
 
-
         //if (numLiberties<=1)
         //    GameContext.log(2, "health for "+this+" = health="+health+"  + health="+health);
         return absoluteHealth_;
     }
 
 
-    private int calcNumEyes() {
+    /**
+     *Determine approximately how many eyes the group has. 
+     *This is purposely a little vague, but if more than 2.0, then must be unconditionally alive.
+     */
+    private float calcNumEyes() {
         // figure out how many of each eye type we have
         Iterator it = eyes_.iterator();
-        int numEyes = 0;
-        //// int numFalseEyes = 0;
+        float numEyes = 0;
+        // int numFalseEyes = 0;
         while ( it.hasNext() ) {
             GoEye eye = (GoEye) it.next();
             switch (eye.getEyeType()) {
@@ -541,26 +684,30 @@ public final class GoGroup extends GoSet
                     numEyes++;
                     break;
                 case BIG_EYE:
-                    numEyes++;
+                    numEyes += 1.1;
                     break; // @@ count as 1 eye for now. maybe 1.5 would be better
                 case TERRITORIAL_EYE:
-                    numEyes += 1.8;
+                    numEyes += 1.6f;
                     break; // counts as 2 true eyes
-            }
+            }            
         }
+        
         return numEyes;
     }
 
     /**
      * determine the health of the group based on the number of eyes and the number of liberties.
      */
-    private float determineHealth(float side, int numEyes, int numLiberties, GoBoard board)  {
+    public float determineHealth(float side, float numEyes, int numLiberties, GoBoard board)  {
         float health;
 
-        if ( numEyes >= 2 )  {
+        if ( numEyes >= 2.0 )  {
            health = calcTwoEyedHealth(side, board);
         }
-        else if (numEyes == 1) {
+        else if (numEyes >= 1.5) {
+            health = calcAlmostTwoEyedHealth(side, numLiberties);
+        }
+        else if (numEyes >= 1.0) {
             health = calcOneEyedHealth(side, numLiberties);
         }
         else {
@@ -570,24 +717,65 @@ public final class GoGroup extends GoSet
     }
 
 
+    /**
+     *Calculate the health of a group that has 2 eyes.
+     */
     private float calcTwoEyedHealth(float side, GoBoard board) {
         float health;
         if (isUnconditionallyAlive(board)) {
             // in addition to this, the individual strings will get a score of side (ie +/- 1).
-            health = 0.98f * side;
+            health = 0.99f * side;
         }
         else {
             // its probably alive
             // may not be alive if the opponent has a lot of kos and gets to play lots of times in a row
-            health = 0.95f * side;
+            health = 0.94f * side;
         }
         return health;
     }
 
+    /**
+     * Calculate the health of a group that has only one eye.
+     */
+    private static float calcAlmostTwoEyedHealth(float side, int numLiberties) {
+        float health = 0;
+        if (numLiberties > 6)  {
+            health = side * Math.min(0.93f, (1.0f - 20.0f/(numLiberties + 30.0f)));
+        }
+        else  {  // numLiberties<=5. Very unlikely to occur
+            GameContext.log(0, "We have almost 2 eyes but only numLiberties. How can that be?");
+            switch (numLiberties) {
+                case 0:                
+                case 1:                  
+                case 2:
+                    // this can't happen because the stone should already be captured.
+                    assert false: "can't have almost 2 eyes and only 2 or fewer liberties!";        
+                    break;
+                case 3:
+                    health = side * 0.01f;
+                    break;
+                case 4:
+                    health = side * 0.05f;
+                    break;
+                case 5:
+                    health = side * 0.19f;
+                    break;
+                case 6:
+                    health = side * 0.29f;
+                    break;
+                default: assert false;
+            }
+        }
+        return health;
+    }
+
+    /**
+     * Calculate the health of a group that has only one eye.
+     */
     private static float calcOneEyedHealth(float side, int numLiberties) {
         float health = 0;
         if (numLiberties > 6)  {
-            health = side * Math.min(0.9f, (1.0f - 20.0f/(numLiberties + 23.0f)));
+            health = side * Math.min(0.89f, (1.0f - 20.0f/(numLiberties + 23.0f)));
         }
         else  {  // numLiberties<=5
             switch (numLiberties) {
@@ -622,6 +810,9 @@ public final class GoGroup extends GoSet
         return health;
     }
 
+    /**
+     *   Calculate the health of a group that has no eyes.
+     */
     private float calcNoEyeHealth(float side, int numLiberties) {
         float health = 0;
         int numStones = getNumStones();
@@ -633,7 +824,6 @@ public final class GoGroup extends GoSet
             switch (numLiberties) { // numEyes == 0
                 case 0:
                     // this can't happen because the stone should already be captured.
-                    //GameContext.log(0, "Error: can't have no liberties and still be on the board! "+ this);
                     assert false : "can't have no liberties and still be on the board! "+ this;
                     health = -side;
                     break;
@@ -698,8 +888,7 @@ public final class GoGroup extends GoSet
      * This measure of the group's health should be much more accurate than the absolute health
      * because it takes into account the relative health of neighboring groups.
      * If the health of an opponent bordering group is in worse shape
-     * than our own then we get a boost since we can probably
-     * kill that group first.
+     * than our own then we get a boost since we can probably kill that group first.
      *
      * @return the overall health of the group.
      */
@@ -768,6 +957,7 @@ public final class GoGroup extends GoSet
      * @@ may need to make this n^2 method more efficient.
      * note: has intentional side effect of marking stones with enemy group nbrs as visited.
      * @param board
+     * @param groupStones the set of stones in the group to find enemies of.
      * @return a HashSet of the groups that are enemies of this group
      */
     private Set getEnemyGroupNeighbors(GoBoard board, Set groupStones)

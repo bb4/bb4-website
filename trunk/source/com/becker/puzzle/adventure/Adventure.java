@@ -1,5 +1,6 @@
 package com.becker.puzzle.adventure;
 
+import com.becker.common.util.FileUtil;
 import com.becker.xml.*;
 import com.becker.common.*;
 import org.w3c.dom.*;
@@ -132,7 +133,7 @@ public class Adventure {
     public static void main( String[] args ) throws IOException {
 
         //assert(args.length == 1) : "You must specify a script file as an argument (e.g. ludlowScript.xml).";
-        File file = new File(Util.PROJECT_DIR + "source/com/becker/puzzle/adventure/ludlowScript.xml");       
+        File file = new File(FileUtil.PROJECT_DIR + "source/com/becker/puzzle/adventure/ludlowScript.xml");       
         if (args.length == 1)
             file = new File(args[0]);
 

@@ -1,6 +1,6 @@
 package com.becker.optimization;
 
-import com.becker.common.Util;
+import com.becker.common.util.Util;
 
 /**
  *  represents a general parameter to an algoritm

@@ -5,9 +5,13 @@ import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
 import com.becker.game.multiplayer.poker.*;
 import com.becker.game.multiplayer.poker.player.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.util.List;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
 
 /**
@@ -94,7 +98,7 @@ public class PokerGameViewer extends GameBoardViewer
         StringBuffer buf = new StringBuffer("Game Over\n");
 
         // find the player with the most money. That's the winner.
-        Player[] players = controller_.getPlayers();
+        java.util.List<? extends Player> players = controller_.getPlayers();
         int max = -1;
         PokerPlayer winner = null;
         for (final Player p : players) {
@@ -190,7 +194,7 @@ public class PokerGameViewer extends GameBoardViewer
      */
     public void showRoundOver(PokerPlayer winner, int winnings) {
 
-        Player[] players = controller_.getPlayers();
+        List<? extends Player> players = controller_.getPlayers();
         for (final Player p : players) {
             PokerPlayer player = (PokerPlayer) p;
             player.getHand().setFaceUp(true);

@@ -56,6 +56,9 @@ public abstract class PokerPlayer extends MultiGamePlayer
            return PokerRobotPlayer.getSequencedRobotPlayer(name, money, color);
     }
 
+    /**
+     * Some poker action - like call, raise, fold
+     */
     public abstract PokerAction getAction(PokerController pc);
    
     

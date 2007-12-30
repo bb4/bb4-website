@@ -13,7 +13,7 @@ public class CommandLineOptions  {
     private final Map<String, String> optionsMap_ = new HashMap<String, String>();
 
     /**
-     * Constructor
+     * Constructor.
      * Parse out the args and put them in a hashmap.
      * We expect the args to be some set of flags of the form -<flagname> followed by and  optional value
      * So an example argumant list might be
@@ -23,7 +23,7 @@ public class CommandLineOptions  {
      */
     public CommandLineOptions(String[] args) {
         int ct = 0;
-         System.out.println("creating cmd line options from  s= "+  args.length);
+        // System.out.println("creating cmd line options from  s= "+  args.length);
         while (ct < args.length) {
             String arg = args[ct];
             System.out.println("arg="+arg);

@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.go;
 
-import com.becker.common.Util;
+import com.becker.common.util.Util;
 import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GameContext;
 

@@ -5,6 +5,7 @@ import com.becker.game.common.ui.*;
 import com.becker.game.multiplayer.common.ui.*;
 import com.becker.game.multiplayer.common.online.ui.*;
 import com.becker.game.multiplayer.set.*;
+import java.util.List;
 
 import javax.swing.*;
 
@@ -14,7 +15,9 @@ import javax.swing.*;
 public class SetNewGameDialog extends MultiPlayerNewGameDialog
 {
 
-    // constructor
+    /**
+     * constructor.
+     */
     public SetNewGameDialog( JFrame parent, ViewerCallbackInterface viewer )
     {
         super( parent, viewer );
@@ -22,7 +25,7 @@ public class SetNewGameDialog extends MultiPlayerNewGameDialog
 
 
     protected PlayerTable createPlayerTable() {
-        return  new SetPlayerTable((SetPlayer[]) controller_.getPlayers());
+        return  new SetPlayerTable((List<SetPlayer>) controller_.getPlayers());
     }
 
 

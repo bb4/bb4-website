@@ -1,6 +1,7 @@
 package com.becker.optimization;
 
 import com.becker.common.*;
+import com.becker.common.util.Util;
 
 import java.util.*;
 

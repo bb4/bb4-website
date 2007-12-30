@@ -9,6 +9,7 @@ import com.becker.game.multiplayer.poker.ui.*;
 import com.becker.optimization.*;
 
 import java.util.*;
+import java.util.List;
 
 /**
  * Defines everything the computer needs to know to play Poker.
@@ -99,7 +100,7 @@ public class PokerController extends GameController
         currentPlayerIndex_ = 0;
 
         initPlayers();
-        ((PokerTable)board_).initPlayers((PokerPlayer[])players_, this);
+        ((PokerTable)board_).initPlayers((List<PokerPlayer>)players_, this);
     }
 
     public GameOptions getOptions() {
@@ -118,16 +119,16 @@ public class PokerController extends GameController
         // After that, they can change manually to get different players.
         if (players_ == null) {
             // create the default players. One human and one robot.
-            players_ = new PokerPlayer[2];
-            PokerPlayer[] gplayers = (PokerPlayer[])players_;
-            //PokerHand hand = new PokerHand(null);
-            players_[0] = PokerPlayer.createPokerPlayer("Player 1",
-                                       100, MultiGamePlayer.getNewPlayerColor(gplayers), true);
+            players_ = new ArrayList<PokerPlayer>(2);
+            List<PokerPlayer> pplayers = (List<PokerPlayer>)players_;
+
+            pplayers.add(PokerPlayer.createPokerPlayer("Player 1",
+                                       100, MultiGamePlayer.getNewPlayerColor(pplayers), true));
 
 
-            players_[1] = PokerPlayer.createPokerPlayer("Player 2",
-                                       100, PokerPlayer.getNewPlayerColor(gplayers), false);
-            players_[1].setName(players_[1].getName()+'('+((PokerRobotPlayer)players_[1]).getType()+')');
+            pplayers.add(PokerPlayer.createPokerPlayer("Player 2",
+                                       100, PokerPlayer.getNewPlayerColor(pplayers), false));
+            players_.get(1).setName(pplayers.get(1).getName()+'('+((PokerRobotPlayer)players_.get(1)).getType()+')');
         }
 
         dealCardsToPlayers(5);
@@ -177,8 +178,8 @@ public class PokerController extends GameController
      */
     public int getCurrentMaxContribution() {
        int max = Integer.MIN_VALUE;
-        Player[] players = getPlayers();
-        for (final Player p : players) {
+        List<PokerPlayer> players = (List<PokerPlayer>)getPlayers();
+        for (final PokerPlayer p : players) {
             PokerPlayer player = (PokerPlayer) p;
             if (player.getContribution() > max) {
                 max = player.getContribution();
@@ -195,7 +196,7 @@ public class PokerController extends GameController
     public int getAllInAmount() {
         // loop through the players and return the min number of chips of any player
         int min = Integer.MAX_VALUE;
-        Player[] players = getPlayers();
+        List<PokerPlayer> players = (List<PokerPlayer>)getPlayers();
         for (final Player p : players) {
             PokerPlayer player = (PokerPlayer) p;
             if (!player.hasFolded() && ((player.getCash() + player.getContribution()) < min)) {
@@ -211,7 +212,7 @@ public class PokerController extends GameController
      */
     public Player getCurrentPlayer()
     {
-        return players_[currentPlayerIndex_];
+        return players_.get(currentPlayerIndex_);
     }
 
     public void computerMovesFirst()
@@ -258,7 +259,7 @@ public class PokerController extends GameController
         if (getBoard().getLastMove() == null)
             return false;
 
-        Player[] players = getPlayers();
+        List<PokerPlayer> players = (List<PokerPlayer>)getPlayers();
         int numPlayersStillPlaying = 0;
         for (Player p : players) {
             PokerPlayer player = (PokerPlayer) p;
@@ -315,7 +316,7 @@ public class PokerController extends GameController
      * @return true of the round is over
      */
     private boolean roundOver() {
-        PokerPlayer[] players = (PokerPlayer[])getPlayers();
+        //List<PokerPlayer> players = (List<PokerPlayer>)getPlayers();
 
         if (allButOneFolded())  {
             return true;
@@ -325,7 +326,8 @@ public class PokerController extends GameController
         int contrib = this.getCurrentMaxContribution();
         System.out.println("in roundover check max contrib="+contrib);
 
-        for (PokerPlayer p : players) {
+        for (Player pp : getPlayers()) {
+            PokerPlayer p = (PokerPlayer)pp;
             if (!p.hasFolded()) {
                 assert(p.getContribution() <= contrib) :
                        "contrib was supposed to be the max, but " + p + " contradicats that.";
@@ -344,7 +346,7 @@ public class PokerController extends GameController
      public int getNumNonFoldedPlayers()
      {
         // a player is not counted as active if he is "out of the game".
-        PokerPlayer[] players = (PokerPlayer[])getPlayers();
+        List<PokerPlayer> players = (List<PokerPlayer>)getPlayers();
         int count = 0;
         for (final PokerPlayer p : players) {
             if (!p.isOutOfGame())
@@ -381,7 +383,7 @@ public class PokerController extends GameController
     }
 
     private boolean allButOneFolded() {
-        PokerPlayer[] players = (PokerPlayer[])getPlayers();
+        List<PokerPlayer> players = (List<PokerPlayer>)getPlayers();
 
         int numNotFolded = 0;
         for (final PokerPlayer p : players) {
@@ -397,22 +399,22 @@ public class PokerController extends GameController
      * @return the player with the best poker hand
      */
     private PokerPlayer determineWinner() {
-        PokerPlayer[] players = (PokerPlayer[])getPlayers();
+        List<PokerPlayer> players = (List<PokerPlayer>)getPlayers();
         PokerPlayer winner;
         PokerHand bestHand;
         int first=0;
-        //
-        while (players[first].hasFolded() && first < players.length) {
+        
+        while (players.get(first).hasFolded() && first < players.size()) {
             first++;
         }
-        if (players[first].hasFolded())
+        if (players.get(first).hasFolded())
             GameContext.log(0, "All players folded. That was dumb. The winner will be random.");
 
-        winner = players[first];
+        winner = players.get(first);
         bestHand = winner.getHand();
 
-        for (int i=first+1; i<players.length; i++) {
-            PokerPlayer p = players[i];
+        for (int i = first+1; i < players.size(); i++) {
+            PokerPlayer p = players.get(i);
             if (!p.hasFolded() && p.getHand().compareTo(bestHand) > 0) {
                 bestHand = p.getHand();
                 winner = p;
@@ -428,16 +430,16 @@ public class PokerController extends GameController
     private int advanceToNextPlayerIndex()
     {
         playIndex_++;
-        currentPlayerIndex_ = (currentPlayerIndex_+1) % players_.length;
+        currentPlayerIndex_ = (currentPlayerIndex_+1) % players_.size();
         while (getPlayer(currentPlayerIndex_).hasFolded())
-            currentPlayerIndex_ = (currentPlayerIndex_+1) % players_.length;
+            currentPlayerIndex_ = (currentPlayerIndex_+1) % players_.size();
 
         return currentPlayerIndex_;
     }
 
 
     private PokerPlayer getPlayer(int index) {
-        return (PokerPlayer) getPlayers()[index];
+        return (PokerPlayer) getPlayers().get(index);
     }
 
     /**
@@ -445,15 +447,15 @@ public class PokerController extends GameController
      */
     public Player getFirstPlayer()
     {
-        return players_[startingPlayerIndex_];
+        return players_.get(startingPlayerIndex_);
     }
 
     /**
      * @param players  the players currently playing the game
      */
-    public void setPlayers( Player[] players )
+    public void setPlayers( List<? extends Player> players )
     {
-        players_ = players;
+        super.setPlayers(players);
         // deal cards to the players
         dealCardsToPlayers(5);
     }

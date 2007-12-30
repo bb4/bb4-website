@@ -18,12 +18,12 @@ public class TestAll extends TestCase {
         TestSuite suite =  new TestSuite("All Go Tests");
 
         suite.addTest(TestAllWhiteBox.suite());
-        suite.addTestSuite(TestShape.class);
-        suite.addTestSuite(TestEyes.class);
-        suite.addTestSuite(TestScoring.class);
-        suite.addTest(TestProblemCollections.suite());
-        suite.addTestSuite(TestLifeAndDeath.class);
-        suite.addTestSuite(TestKiseido2002.class);
+        //suite.addTestSuite(TestShape.class);
+        //suite.addTestSuite(TestEyes.class);
+        // suite.addTestSuite(TestScoring.class);
+        //suite.addTest(TestProblemCollections.suite());
+        //suite.addTestSuite(TestLifeAndDeath.class);
+        //suite.addTestSuite(TestKiseido2002.class);
 
         return suite;
     }

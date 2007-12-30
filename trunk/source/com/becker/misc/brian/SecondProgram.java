@@ -1,6 +1,6 @@
 package com.becker.misc.brian;
 
-import com.becker.common.Util;
+import com.becker.common.util.Util;
 
 
 /**

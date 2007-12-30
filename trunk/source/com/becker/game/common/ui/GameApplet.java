@@ -1,6 +1,7 @@
 package com.becker.game.common.ui;
 
 import com.becker.common.*;
+import com.becker.common.util.Util;
 import com.becker.game.common.*;
 import com.becker.ui.*;
 
@@ -34,7 +35,7 @@ public class GameApplet extends JApplet
         // this will load the resources for the specified game.        
         GameContext.loadGameResources(gameName);
         
-        Class gameClass = Util.loadClass(className);            
+        Class gameClass = ClassLoaderSingleton.loadClass(className);            
 
         try {
             gamePanel_ = (GamePanel)gameClass.newInstance();

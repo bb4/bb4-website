@@ -24,8 +24,11 @@ public class PluginManager {
     private final Map<String, GamePlugin> hmLabelToPlugin_;
     private final GamePlugin defaultGame_;
 
+    /**
+     *  load plugin games from plugins.xml
+     */
     private PluginManager() {
-               // load plugin games from plugins.xml
+
         URL url = GUIUtil.getURL(PLUGINS_FILE);
         System.out.println("about to parse url="+url +"\n plugin file location="+PLUGINS_FILE);
         Document document = DomUtil.parseXML(url);
@@ -88,7 +91,4 @@ public class PluginManager {
     public GamePlugin getDefaultPlugin() {
        return defaultGame_;
     }
-
-    //private void initialize()  {
-    //}
 }

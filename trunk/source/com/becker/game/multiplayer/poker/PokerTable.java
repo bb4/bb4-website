@@ -3,6 +3,7 @@ package com.becker.game.multiplayer.poker;
 import com.becker.game.common.*;
 import com.becker.game.common.Move;
 import com.becker.game.multiplayer.poker.player.*;
+import java.util.List;
 
 /**
  * Representation of a Poker Game Board
@@ -57,9 +58,9 @@ public class PokerTable extends Board
      * @param players
      * @param controller
      */
-    public void initPlayers(PokerPlayer[] players, PokerController controller) {
+    public void initPlayers(List<PokerPlayer> players, PokerController controller) {
         double angle = 0.6 * Math.PI;
-        double angleIncrement = 2.0 * Math.PI / (players.length);
+        double angleIncrement = 2.0 * Math.PI / (players.size());
         double rowRad = getNumRows() >> 1;
         double colRad = getNumCols() >> 1;
 

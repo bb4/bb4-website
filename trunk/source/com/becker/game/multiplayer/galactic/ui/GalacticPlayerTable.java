@@ -2,15 +2,18 @@ package com.becker.game.multiplayer.galactic.ui;
 
 import com.becker.common.*;
 import com.becker.game.common.*;
+import com.becker.game.multiplayer.common.MultiGamePlayer;
 import com.becker.game.multiplayer.common.ui.*;
 import com.becker.game.multiplayer.galactic.*;
 import com.becker.game.multiplayer.galactic.player.*;
 import com.becker.ui.table.*;
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.table.*;
 import javax.swing.event.*;
 import javax.swing.*;
-import java.awt.*;
 
 
 /**
@@ -53,7 +56,7 @@ public class GalacticPlayerTable extends PlayerTable implements TableModelListen
      * constructor
      * @param players to initializet the rows in the table with.
      */
-    public GalacticPlayerTable(Player[] players)
+    public GalacticPlayerTable(List<? extends Player> players)
     {
         super(players, galacticColumnNames_);
         table_.getModel().addTableModelListener(this);
@@ -73,22 +76,22 @@ public class GalacticPlayerTable extends PlayerTable implements TableModelListen
     /**
      * @return  the players represented by rows in the table
      */
-    public Player[] getPlayers()
+    public List<? extends Player> getPlayers()
     {
         TableModel model = table_.getModel();
         int nRows = model.getRowCount();
-        Player[] players = new GalacticPlayer[nRows];
+        List<GalacticPlayer> players = new ArrayList<GalacticPlayer>(nRows);
         for (int i=0; i<nRows; i++) {
             char planetName = (Character) model.getValueAt(i, HOME_PLANET_INDEX);
             Planet planet = Galaxy.getPlanet(planetName);
             planet.setProductionCapacity((Integer) model.getValueAt(i, PRODUCTION_INDEX));
             planet.setNumShips((Integer) (model.getValueAt(i, NUM_SHIPS_INDEX)));
             ImageIcon icon = (ImageIcon) (model.getValueAt(i, ICON_INDEX));
-            players[i] = GalacticPlayer.createGalacticPlayer(
-                                    (String)model.getValueAt(i, NAME_INDEX),
+            players.add(GalacticPlayer.createGalacticPlayer(
+                                    (String) model.getValueAt(i, NAME_INDEX),
                                     planet,
-                                    (Color)model.getValueAt(i, COLOR_INDEX),
-                                    ((Boolean)model.getValueAt(i, HUMAN_INDEX)), icon);
+                                    (Color) model.getValueAt(i, COLOR_INDEX),
+                                    ((Boolean) model.getValueAt(i, HUMAN_INDEX)), icon));
         }
         return players;
     }
@@ -116,7 +119,7 @@ public class GalacticPlayerTable extends PlayerTable implements TableModelListen
     protected Player createPlayer() {
         int ct = table_.getRowCount();
         Planet planet = new Planet((char)('A'+ct), GalacticPlayer.DEFAULT_NUM_SHIPS, 10, new Location(0,0));
-        Color newColor = GalacticPlayer.getNewPlayerColor((GalacticPlayer[])getPlayers());
+        Color newColor = MultiGamePlayer.getNewPlayerColor((List<GalacticPlayer>)getPlayers());
         GalacticPlayer player = GalacticPlayer.createGalacticPlayer(
                                              "Admiral "+(ct+1), planet, newColor, true);
         planet.setOwner(player);

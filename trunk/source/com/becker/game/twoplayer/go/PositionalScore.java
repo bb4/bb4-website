@@ -1,6 +1,7 @@
 package com.becker.game.twoplayer.go;
 
 import com.becker.common.*;
+import com.becker.common.util.Util;
 
 /**
  * For debuggin purposes we want to keep more detail on what composes the overall score.

@@ -1,6 +1,7 @@
 package com.becker.optimization.test;
 
 import com.becker.common.*;
+import com.becker.common.util.FileUtil;
 import com.becker.optimization.*;
 import junit.framework.*;
 
@@ -31,7 +32,7 @@ public class TestAnalyticFunctionProblem extends OptimizerTestCase {
         for (AnalyticFunctionTestProblem.Variation v : AnalyticFunctionTestProblem.Variation.values()) {
 
             OptimizeeTestProblem problem = new AnalyticFunctionTestProblem(v);
-            String logFile = Util.PROJECT_DIR + "performance/test_optimizer/analytic_" + v + "_optimization.txt";
+            String logFile = FileUtil.PROJECT_DIR + "performance/test_optimizer/analytic_" + v + "_optimization.txt";
 
             Optimizer optimizer =  new Optimizer(problem, logFile);
 

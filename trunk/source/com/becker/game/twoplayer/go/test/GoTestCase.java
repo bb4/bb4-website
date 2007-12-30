@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.go.test;
 
+import com.becker.common.util.Util;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.*;
 import com.becker.game.twoplayer.common.search.*;
@@ -41,7 +42,7 @@ public class GoTestCase extends TestCase {
         //controller_.allPlayersComputer();
         TwoPlayerOptions options = controller_.getTwoPlayerOptions();
         options.setAlphaBeta(true);
-        options.setLookAhead(4);
+        options.setLookAhead(2);
         options.setPercentageBestMoves(40);
         //opttions.setQuiescence(true); // take stoo long if on
         options.setSearchStrategyMethod(SearchStrategyType.MINIMAX);
@@ -63,17 +64,16 @@ public class GoTestCase extends TestCase {
     }
 
     protected GoMove getNextMove(String problemFile, boolean blackPlays) {
-
-
         System.out.println("finding next move for "+problemFile+" ...");
         long time = System.currentTimeMillis();
         restore(problemFile);
+        System.out.println("problem restored.");
         controller_.requestComputerMove( blackPlays, true );
-
+        System.out.println("done requesting move");
         GoMove m = (GoMove) controller_.getBoard().getLastMove();
 
-        long elapsedTime = (System.currentTimeMillis() - time) / 1000;
-        System.out.println("got " + m + " in " + elapsedTime + " seconds.");
+        double elapsedTime = (System.currentTimeMillis() - time) / 1000.0;
+        System.out.println("got " + m + " in " + Util.formatNumber(elapsedTime) + " seconds.");
         return m;
     }
 

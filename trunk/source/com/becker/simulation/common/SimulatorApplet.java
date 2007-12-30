@@ -2,6 +2,7 @@ package com.becker.simulation.common;
 
 
 import com.becker.common.*;
+import com.becker.common.util.Util;
 import com.becker.ui.*;
 import com.becker.ui.animation.*;
 
@@ -68,7 +69,7 @@ public class SimulatorApplet extends JApplet {
         if (className == null) {
             return null;
         }
-        Class simulatorClass = Util.loadClass(className);
+        Class simulatorClass = ClassLoaderSingleton.loadClass(className);
         Simulator simulator = null;
 
         try {

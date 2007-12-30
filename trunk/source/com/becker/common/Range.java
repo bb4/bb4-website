@@ -1,7 +1,9 @@
 package com.becker.common;
 
 /**
- * @author Barry Becker Date: Mar 12, 2006
+ * Manage a double precision range.
+ * 
+ * @author Barry Becker
  */
 public class Range {
 
@@ -36,11 +38,17 @@ public class Range {
         return min_;
     }
 
+    /**
+     *Extend this range by the range argument.
+     */
     public void add(Range range) {
         add(range.getMin());
         add(range.getMax());
     }
 
+    /**
+     * Extend this range by the value argument.
+     */
     public void add(double value) {
         if (value < min_) {
             min_ = value;
