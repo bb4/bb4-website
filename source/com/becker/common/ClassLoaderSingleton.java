@@ -23,5 +23,47 @@ public class ClassLoaderSingleton {
         }
         return loader_;
     }
+    
+    
+    
+
+    /**
+     * @param className  the class to load.
+     * @return  the loaded class.
+     */
+    public static Class loadClass(String className)
+    {
+        return loadClass(className, null);
+    }
+
+    /**
+     * @param className  the class to load.
+     * @param defaultClassName  the backup class to load if className does not exist.
+     * @return  the loaded class.
+     */
+    public static Class loadClass(String className, String defaultClassName)
+    {
+        Class theClass = null;
+        try {
+            //System.out.println( "about to load "+className );
+            theClass = Class.forName(className);
+        }
+        catch (ClassNotFoundException e) {
+            System.out.println("Unable to find the class "+ className+". Check your classpath.");
+            //System.out.println("The current classpath is :"+System.getProperty("java.class.path"));
+            if (defaultClassName == null) {
+                e.printStackTrace();
+                return null;
+            }
+            System.out.println("Attempting to load "+defaultClassName+" instead.");
+            try {
+                theClass = Class.forName(defaultClassName);
+            } catch (ClassNotFoundException cne) {
+                 cne.printStackTrace();
+            }
+        }
+        System.out.println("class "+className+" was loaded succesfully.");
+        return theClass;
+    }
 }
 

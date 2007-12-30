@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.common;
 
-import com.becker.common.Util;
+import com.becker.common.util.Util;
 import com.becker.common.Worker;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.search.SearchStrategy;
@@ -11,6 +11,7 @@ import com.becker.optimization.Optimizer;
 import com.becker.optimization.OptimizationType;
 import com.becker.optimization.Optimizee;
 import com.becker.sound.MusicMaker;
+import java.util.ArrayList;
 
 import java.util.Collections;
 import java.util.List;
@@ -114,9 +115,9 @@ public abstract class TwoPlayerController extends GameController
      */
     private void createPlayers()
     {
-        Player[] players = new Player[2];
-        players[0] = new Player(getTwoPlayerOptions().getPlayerName(true), null, true);
-        players[1] = new Player(getTwoPlayerOptions().getPlayerName(false), null, false);
+        List<Player> players = new ArrayList<Player>(2);
+        players.add(new Player(getTwoPlayerOptions().getPlayerName(true), null, true));
+        players.add(new Player(getTwoPlayerOptions().getPlayerName(false), null, false));
         setPlayers(players);
     }
 
@@ -152,7 +153,7 @@ public abstract class TwoPlayerController extends GameController
      */
     public Player getPlayer1()
     {
-        return players_[0];
+        return players_.get(0);
     }
 
     /**
@@ -160,7 +161,7 @@ public abstract class TwoPlayerController extends GameController
      */
     public Player getPlayer2()
     {
-        return players_[1];
+        return players_.get(1);
     }
     
     protected TwoPlayerMove getRandomMove(List moveList) {

@@ -73,7 +73,7 @@ public final class GoEye extends GoString implements GoMember
     {
         assert ( spaces != null): "spaces is null";
         int size = spaces.size();
-        // iterate through. if any are determined to be a false-eye then return false-eye.
+        // iterate through. if any are determined to be a false-eye, then return false-eye for the eye type.
         Iterator it = spaces.iterator();
         while ( it.hasNext() ) {
             GoBoardPosition space = (GoBoardPosition) it.next();

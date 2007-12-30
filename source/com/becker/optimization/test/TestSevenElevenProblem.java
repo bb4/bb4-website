@@ -1,5 +1,6 @@
 package com.becker.optimization.test;
 
+import com.becker.common.util.FileUtil;
 import com.becker.optimization.*;
 import com.becker.common.*;
 import junit.framework.*;
@@ -16,7 +17,7 @@ public class TestSevenElevenProblem extends OptimizerTestCase {
 
        OptimizeeTestProblem problem = new SevenElevenTestProblem();
        Optimizer optimizer =
-               new Optimizer(problem, Util.PROJECT_DIR + "performance/test_optimizer/sevenEleven_optimization.txt");
+               new Optimizer(problem, FileUtil.PROJECT_DIR + "performance/test_optimizer/sevenEleven_optimization.txt");
 
        ParameterArray initialGuess = problem.getInitialGuess();
 

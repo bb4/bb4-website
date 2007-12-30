@@ -142,8 +142,8 @@ public class SetController extends GameController
             currentPlayerIndex_ = NO_PLAYER_SELECTED;
             return;
         }
-        for (int i=0; i<players_.length; i++) {
-            if (player == players_[i]) {
+        for (int i = 0; i < players_.size(); i++) {
+            if (player == players_.get(i)) {
                 currentPlayerIndex_ = i;
                 return;
             }
@@ -170,18 +170,19 @@ public class SetController extends GameController
         // After that, they can change manually to get different players.
         if (players_ == null) {
             // create the default players. One human and one robot.
-            players_ = new SetPlayer[2];
-            SetPlayer[] gplayers = (SetPlayer[])players_;
-            players_[0] = SetPlayer.createSetPlayer("Player 1", SetPlayer.getNewPlayerColor(gplayers), true);
-
-            players_[1] = SetPlayer.createSetPlayer("Player 2", SetPlayer.getNewPlayerColor(gplayers), false);
-            players_[1].setName(players_[1].getName()+'('+((SetRobotPlayer)players_[1]).getRobotType()+')');
+            players_ = new ArrayList<SetPlayer>(2);
+            List<SetPlayer> splayers = (List<SetPlayer>)players_;
+            splayers.add(SetPlayer.createSetPlayer("Player 1", 
+                                                                              SetPlayer.getNewPlayerColor(splayers), true));
+            splayers.add(SetPlayer.createSetPlayer("Player 2", 
+                                                                             SetPlayer.getNewPlayerColor(splayers), false));
+            players_.get(1).setName(players_.get(1).getName()+'('+((SetRobotPlayer)players_.get(1)).getRobotType()+')');
         }
     }
 
     public Player getCurrentPlayer() {
         if (currentPlayerIndex_ != NO_PLAYER_SELECTED) {
-            return players_[currentPlayerIndex_];
+            return players_.get(currentPlayerIndex_);
         }
         return null;
     }
@@ -213,16 +214,16 @@ public class SetController extends GameController
      * @return the player with the most sets
      */
     public SetPlayer determineWinner() {
-        SetPlayer[] players = (SetPlayer[])getPlayers();
+        List<SetPlayer> players = (List<SetPlayer>)getPlayers();
         SetPlayer winner;
 
         int first=0;
 
-        winner = players[first];
+        winner = players.get(first);
         int mostSets = winner.getNumSetsFound();
 
-        for (int i=first+1; i<players.length; i++) {
-            SetPlayer p = players[i];
+        for (int i = first+1; i < players.size(); i++) {
+            SetPlayer p = players.get(i);
             if (p.getNumSetsFound() > mostSets) {
                 mostSets = p.getNumSetsFound();
                 winner = p;
@@ -238,7 +239,7 @@ public class SetController extends GameController
     public Player getFirstPlayer()
     {
         assert false : "no player goes first in set.";
-        return players_[0];
+        return players_.get(0);
     }
 
     /**

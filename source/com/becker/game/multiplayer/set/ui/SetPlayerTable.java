@@ -4,9 +4,11 @@ package com.becker.game.multiplayer.set.ui;
 import com.becker.game.common.*;
 import com.becker.game.multiplayer.common.ui.*;
 import com.becker.game.multiplayer.set.*;
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.table.*;
-import java.awt.*;
 
 
 /**
@@ -31,7 +33,7 @@ public class SetPlayerTable extends PlayerTable
      * constructor                                                                           
      * @param players to initializet the rows in the table with.
      */
-    public SetPlayerTable(SetPlayer[] players)
+    public SetPlayerTable(List<SetPlayer> players)
     {
         super(players, setColumnNames_);
     }
@@ -40,16 +42,16 @@ public class SetPlayerTable extends PlayerTable
     /**
      * @return  the players represented by rows in the table
      */
-    public Player[] getPlayers()
+    public List<SetPlayer> getPlayers()
     {
         TableModel model = table_.getModel();
         int nRows = model.getRowCount();
-        Player[] players = new SetPlayer[nRows];
-        for (int i=0; i<nRows; i++) {
-            players[i] = SetPlayer.createSetPlayer(
-                                 (String)model.getValueAt(i, NAME_INDEX),
-                                 (Color)model.getValueAt(i, COLOR_INDEX),
-                                 ((Boolean)model.getValueAt(i, HUMAN_INDEX)));
+        List<SetPlayer> players = new ArrayList<SetPlayer>(nRows);
+        for (int i = 0; i < nRows; i++) {
+            players.add( SetPlayer.createSetPlayer(
+                                 (String) model.getValueAt(i, NAME_INDEX),
+                                 (Color) model.getValueAt(i, COLOR_INDEX),
+                                 ((Boolean) model.getValueAt(i, HUMAN_INDEX))));
         }
         return players;
     }

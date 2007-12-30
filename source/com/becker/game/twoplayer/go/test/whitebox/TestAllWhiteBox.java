@@ -19,7 +19,7 @@ public class TestAllWhiteBox extends GoTestCase {
 
         TestSuite suite =  new TestSuite("Whitebox Tests");
 
-        suite.addTestSuite(TestGoBoard.class);
+        ////suite.addTestSuite(TestGoBoard.class);
         suite.addTestSuite(TestGoGroup.class);
 
         return suite;

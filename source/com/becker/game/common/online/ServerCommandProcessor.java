@@ -1,8 +1,10 @@
 package com.becker.game.common.online;
 
+import com.becker.common.util.Util;
 import com.becker.game.common.*;
 import com.becker.common.*;
 import com.becker.game.multiplayer.common.online.SurrogatePlayer;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -37,7 +39,7 @@ public class ServerCommandProcessor {
      */
     private void createController(String gameName) {
         String controllerClass = PluginManager.getInstance().getPlugin(gameName).getControllerClass();
-        Class c = Util.loadClass(controllerClass);
+        Class c = ClassLoaderSingleton.loadClass(controllerClass);
         try {
             controller_ = (GameController) c.newInstance();
         } catch (InstantiationException e) {
@@ -161,16 +163,16 @@ public class ServerCommandProcessor {
         // Create players from the table and start.
         List<Player> players = table.getPlayers();
         assert (players.size() == table.getNumPlayersNeeded());
-        Player[] playersArray = new Player[players.size()];
-        for (int i=0; i<players.size(); i++) {
+        List<Player> newPlayers = new ArrayList<Player>(players.size());
+        for (int i = 0; i < players.size(); i++) {
             Player player = players.get(i);
-           // if (paleyr.isHuman()) {
+            // if (paleyr.isHuman()) {
             //    playersArray[i] = new SurrogatePlayer(player);
-           // } else {
-           //     playersArray[i] = player;
+            // } else {
+            //     playersArray[i] = player;
             //}                   
         }
-        controller_.setPlayers(playersArray);
+        controller_.setPlayers(newPlayers);
         ////controller_.reset();
         // broadcast the command to start for all the clients
 

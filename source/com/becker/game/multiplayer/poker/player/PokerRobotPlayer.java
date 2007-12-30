@@ -1,9 +1,8 @@
 package com.becker.game.multiplayer.poker.player;
 
-
 import com.becker.game.multiplayer.poker.*;
-
-import java.awt.*;
+import java.awt.Color;
+import java.util.List;
 
 /**
  * Represents a Robot poker player.
@@ -79,7 +78,7 @@ public abstract class PokerRobotPlayer extends PokerPlayer
     }
 
     protected boolean allOthersFolded(PokerController pc) {
-        PokerPlayer[] players = (PokerPlayer[]) pc.getPlayers();
+        List<PokerPlayer> players = (List<PokerPlayer>) pc.getPlayers();
         for (final PokerPlayer newVar : players) {
             if (!newVar.hasFolded() && (newVar != this)) {
                 return false;

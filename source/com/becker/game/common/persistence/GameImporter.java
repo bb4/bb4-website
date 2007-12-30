@@ -35,7 +35,7 @@ public abstract class GameImporter {
 
         List<Move> moveSequence = new LinkedList<Move>();
         extractMoveList( game.getTree(), moveSequence );
-        GameContext.log( 2, "move sequence= " + moveSequence );
+        //GameContext.log( 1, "move sequence= " + moveSequence );
         controller_.reset();
 
         Iterator it = moveSequence.iterator();
@@ -78,7 +78,9 @@ public abstract class GameImporter {
      */
     private void extractMoveList( SGFTree tree, List<Move> moveList )
     {
-        Enumeration trees = tree.getTrees(), leaves = tree.getLeaves(), tokens;
+        Enumeration trees = tree.getTrees();
+        Enumeration leaves = tree.getLeaves();
+        Enumeration tokens;
 
         while ( leaves != null && leaves.hasMoreElements() ) {
             SGFToken token;

@@ -15,7 +15,9 @@ public final class GoGroupUtil {
 
     /**
      * Use Benson's algorithm (1977) to determine if a set of strings and eyes within a group
-     * is unconditionally alive
+     * is unconditionally alive.
+     *http://senseis.xmp.net/?BensonsAlgorithm
+     *
      * @return true if unconditionally alive
      */
     public static boolean isUnconditionallyAlive(GoGroup group, GoBoard board) {

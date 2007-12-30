@@ -57,7 +57,7 @@ public class OrdersTable extends TableBase
      */
     public OrdersTable(List<Order> orders)
     {
-        super(orders.toArray(), columnNames_);
+        super(orders, columnNames_);
 
         lastOrders_ = orders;
     }

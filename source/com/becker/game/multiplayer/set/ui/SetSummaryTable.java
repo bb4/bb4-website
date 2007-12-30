@@ -3,6 +3,7 @@ package com.becker.game.multiplayer.set.ui;
 import com.becker.game.common.*;
 import com.becker.game.multiplayer.common.ui.*;
 import com.becker.game.multiplayer.set.*;
+import java.util.List;
 
 import javax.swing.*;
 
@@ -29,7 +30,7 @@ public class SetSummaryTable extends SummaryTable
      * constructor
      * @param players to initializet the rows in the table with.
      */
-    public SetSummaryTable(Player[] players)
+    public SetSummaryTable(List<? extends Player> players)
     {
         super(players, COLUMN_NAMES);
         getTable().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

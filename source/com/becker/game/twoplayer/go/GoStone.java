@@ -1,6 +1,7 @@
 package com.becker.game.twoplayer.go;
 
 import com.becker.common.*;
+import com.becker.common.util.Util;
 import com.becker.game.common.*;
 
 /**

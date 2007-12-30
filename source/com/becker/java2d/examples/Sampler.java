@@ -1,5 +1,6 @@
 package com.becker.java2d.examples;
 
+import com.becker.common.util.FileUtil;
 import com.becker.java2d.SplitImageComponent;
 import com.becker.java2d.Utilities;
 import com.becker.common.*;
@@ -23,7 +24,7 @@ public class Sampler
 
     public static void main( String[] args )
     {
-        String imageFile = Util.PROJECT_DIR + "classes/com/becker/java2d/images/Ethol with Roses.small.jpg";
+        String imageFile = FileUtil.PROJECT_DIR + "classes/com/becker/java2d/images/Ethol with Roses.small.jpg";
         if ( args.length > 0 ) imageFile = args[0];
         new Sampler( imageFile );
     }

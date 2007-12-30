@@ -7,18 +7,22 @@ import com.becker.common.*;
  * @ Barry Becker
  */
 public class Box {
-    private final Location corner1_;
-    private final Location corner2_;
+    private final Location topLeftCorner_;
+    private final Location bottomRightCorner_;
 
-    public Box(Location corner1, Location corner2) {
-        corner1_ = corner1;
-        corner2_ = corner2;
+    /**
+     *@param topLeftCorner
+     *@param bottomRightCorner
+     */
+    public Box(Location topLeftCorner, Location bottomRightCorner) {
+        topLeftCorner_ = topLeftCorner;
+        bottomRightCorner_ = bottomRightCorner;
         verify();
     }
 
     public Box(int rowMin, int colMin, int rowMax, int colMax) {
-        corner1_ = new Location(rowMin, colMin);
-        corner2_ = new Location(rowMax, colMax);
+        topLeftCorner_ = new Location(rowMin, colMin);
+        bottomRightCorner_ = new Location(rowMax, colMax);
         verify();
     }
 
@@ -26,48 +30,48 @@ public class Box {
      *  make sure corner 1 is the top left and corner 2 is the bottom right
      */
     private void verify() {
-       if (corner1_.getRow() > corner2_.getRow()) {
-            int temp = corner1_.getRow();
-            corner1_.setRow(corner2_.getRow());
-            corner2_.setRow(temp);
+       if (topLeftCorner_.getRow() > bottomRightCorner_.getRow()) {
+            int temp = topLeftCorner_.getRow();
+            topLeftCorner_.setRow(bottomRightCorner_.getRow());
+            bottomRightCorner_.setRow(temp);
         }
-        if (corner1_.getCol() > corner2_.getCol()) {
-            int temp = corner1_.getCol();
-            corner1_.setCol(corner2_.getCol());
-            corner2_.setCol(temp);
+        if (topLeftCorner_.getCol() > bottomRightCorner_.getCol()) {
+            int temp = topLeftCorner_.getCol();
+            topLeftCorner_.setCol(bottomRightCorner_.getCol());
+            bottomRightCorner_.setCol(temp);
         }
     }
 
     public int getWidth() {
-        return Math.abs(corner2_.getCol() - corner1_.getCol());
+        return Math.abs(bottomRightCorner_.getCol() - topLeftCorner_.getCol());
     }
 
     public int getHeight() {
-        return Math.abs(corner2_.getRow() - corner1_.getRow());
+        return Math.abs(bottomRightCorner_.getRow() - topLeftCorner_.getRow());
     }
 
     public Location getTopLeftCorner() {
-       return corner1_;
+       return topLeftCorner_;
     }
 
     public Location getBottomRightCorner() {
-       return corner2_;
+       return bottomRightCorner_;
     }
 
     public int getMinRow() {
-        return corner1_.getRow();
+        return topLeftCorner_.getRow();
     }
 
     public int getMinCol() {
-        return corner1_.getCol();
+        return topLeftCorner_.getCol();
     }
 
     public int getMaxRow() {
-        return corner2_.getRow();
+        return bottomRightCorner_.getRow();
     }
 
     public int getMaxCol() {
-        return corner2_.getCol();
+        return bottomRightCorner_.getCol();
     }
 
     public int getArea()  {
@@ -75,17 +79,17 @@ public class Box {
     }
 
     public void expandBy(Location loc) {
-        if (loc.getRow() < corner1_.getRow()) {
-            corner1_.setRow(loc.getRow());
+        if (loc.getRow() < topLeftCorner_.getRow()) {
+            topLeftCorner_.setRow(loc.getRow());
         }
-        else if (loc.getRow() > corner2_.getRow()) {
-            corner2_.setRow(loc.getRow());
+        else if (loc.getRow() > bottomRightCorner_.getRow()) {
+            bottomRightCorner_.setRow(loc.getRow());
         }
-        if (loc.getCol() < corner1_.getCol())  {
-            corner1_.setCol(loc.getCol());
+        if (loc.getCol() < topLeftCorner_.getCol())  {
+            topLeftCorner_.setCol(loc.getCol());
         }
-        else if (loc.getCol() > corner2_.getCol()) {
-            corner2_.setCol(loc.getCol());
+        else if (loc.getCol() > bottomRightCorner_.getCol()) {
+            bottomRightCorner_.setCol(loc.getCol());
         }
     }
 
@@ -93,12 +97,47 @@ public class Box {
         expandBy(box.getTopLeftCorner());
         expandBy(box.getBottomRightCorner());
     }
+    
+    /**
+     * @param amount amount to expand all borders of the box by.
+     * @param maxX don't go further than this though.
+     * @param maxY don't go further than this though.
+     */
+    public void expandGloballyBy(int amount, int maxRow, int maxCol) {
+      
+        topLeftCorner_.setRow(Math.max(topLeftCorner_.getRow() - amount, 1));
+        topLeftCorner_.setCol(Math.max(topLeftCorner_.getCol() - amount, 1));
+        
+        bottomRightCorner_.setRow(Math.min(bottomRightCorner_.getRow() + amount, maxRow));
+        bottomRightCorner_.setCol(Math.min(bottomRightCorner_.getCol() + amount, maxCol));  
+    }
+    
+    /**
+     * @param threshold if withing this distance to the edge, extend the box all the way to that edge.
+     * @param maxX don't go further than this though.
+     * @param maxY don't go further than this though.
+     */
+    public void expandBordersToEdge(int threshold, int maxRow, int maxCol) {
+        if (topLeftCorner_.getRow() <= threshold + 1) {
+            topLeftCorner_.setRow(1);
+        }
+        if (topLeftCorner_.getCol() <= threshold + 1) {
+            topLeftCorner_.setCol(1);
+        }
+        if (maxRow - bottomRightCorner_.getRow() <= threshold) {
+            bottomRightCorner_.setRow(maxRow);
+        }
+        if (maxCol - bottomRightCorner_.getCol() <= threshold) {
+            bottomRightCorner_.setCol(maxCol);
+        }
+    }
+    
 
     public String toString() {
         StringBuffer buf = new StringBuffer("Box:");
-        buf.append(corner1_);
+        buf.append(topLeftCorner_);
         buf.append(" - ");
-        buf.append(corner2_);
+        buf.append(bottomRightCorner_);
         return buf.toString();
     }
 }

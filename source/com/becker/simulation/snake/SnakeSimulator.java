@@ -1,6 +1,8 @@
 package com.becker.simulation.snake;
 
 import com.becker.common.*;
+import com.becker.common.util.FileUtil;
+import com.becker.common.util.Util;
 import com.becker.optimization.*;
 import com.becker.simulation.common.*;
 import com.becker.ui.*;
@@ -132,7 +134,7 @@ public class SnakeSimulator extends NewtonianSimulator
         if (GUIUtil.isStandAlone())
             optimizer = new Optimizer( this );
         else
-            optimizer = new Optimizer( this, Util.PROJECT_DIR+"performance/snake/snake_optimization.txt" );
+            optimizer = new Optimizer( this, FileUtil.PROJECT_DIR+"performance/snake/snake_optimization.txt" );
 
         setPaused(false);
         optimizer.doOptimization(  OptimizationType.GENETIC_SEARCH, INITIAL_PARAMS, 0.3);

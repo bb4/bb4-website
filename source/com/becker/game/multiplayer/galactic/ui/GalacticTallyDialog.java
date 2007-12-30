@@ -31,11 +31,11 @@ final class GalacticTallyDialog extends TallyDialog
         super( parent, controller );
     }
 
-    protected SummaryTable createSummaryTable(Player[] players) {
+    protected SummaryTable createSummaryTable(List<? extends Player> players) {
         return new GalacticSummaryTable(players);
     }
 
-    protected String findWinner(Player[] players)
+    protected String findWinner(List<? extends Player> players)
     {
         String winner ="nobody";
         double maxCriteria = -1.0;

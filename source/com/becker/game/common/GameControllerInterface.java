@@ -61,7 +61,7 @@ public interface GameControllerInterface
     /**
      * @return an array of the players playing the game
      */
-    Player[] getPlayers();
+    List<? extends Player> getPlayers();
 
 
     /**

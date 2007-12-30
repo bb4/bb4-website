@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.common.search;
 
-import com.becker.common.Util;
+import com.becker.common.util.Util;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 
 import javax.swing.tree.DefaultMutableTreeNode;

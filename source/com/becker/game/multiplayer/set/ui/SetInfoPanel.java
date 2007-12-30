@@ -141,7 +141,7 @@ class SetInfoPanel extends GameInfoPanel
         int selectedPlayerIndex = playerTable_.getTable().getSelectedRow();
         SetPlayer selectedPlayer = null;
         if (selectedPlayerIndex >= 0) {
-            selectedPlayer = (SetPlayer) c.getPlayers()[selectedPlayerIndex];
+            selectedPlayer = (SetPlayer) c.getPlayers().get(selectedPlayerIndex);
         }
         return selectedPlayer;
     }

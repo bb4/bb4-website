@@ -1,6 +1,8 @@
 package com.becker.ui.animation;
 
 import com.becker.common.*;
+import com.becker.common.util.ImageUtil;
+import com.becker.common.util.Util;
 
 import javax.swing.*;
 import java.awt.*;

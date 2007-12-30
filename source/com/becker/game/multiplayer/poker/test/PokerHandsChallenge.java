@@ -1,9 +1,10 @@
 package com.becker.game.multiplayer.poker.test;
 
+import com.becker.common.util.FileUtil;
 import com.becker.game.multiplayer.poker.PokerHand;
 import com.becker.game.common.GameContext;
 import com.becker.game.card.Card;
-import com.becker.common.Util;
+import com.becker.common.util.FileUtil;
 
 import java.io.*;
 import java.util.*;
@@ -88,7 +89,7 @@ public class PokerHandsChallenge {
 
 
         BufferedReader breader = null;
-        String fullPath = Util.PROJECT_DIR + "source/" + GameContext.GAME_ROOT + file;
+        String fullPath = FileUtil.PROJECT_DIR + "source/" + GameContext.GAME_ROOT + file;
         try {
             FileReader reader = new FileReader(fullPath);
             breader = new BufferedReader(reader);

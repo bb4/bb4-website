@@ -18,7 +18,6 @@ public class ColorMap
     // temp vars for interpolation
     private static float[] rgba_ = new float[4];
     private static float[] rgba1_ = new float[4];
-    //private float opacity_ = 1.0f; // opaque by default
 
     /**
      * give a list of (increasing) values and colors to map to.

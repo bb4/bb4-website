@@ -26,10 +26,7 @@ public class TestShape extends GoTestCase {
         checkShape(5, 9, 6);
         checkShape(5, 10, 6);
         checkShape(6, 10, 3);
-
     }
-
-
 
     private void checkShape(int r, int c, int expectedShapeScore) {
         GoBoard board = (GoBoard)controller_.getBoard();
@@ -37,7 +34,6 @@ public class TestShape extends GoTestCase {
         int n = GoBoardUtil.formsBadShape(position, board);
         Assert.assertTrue("Expected "+expectedShapeScore+" but got "+n+" for "+position, n == expectedShapeScore);
     }
-
 
 
     public static Test suite() {

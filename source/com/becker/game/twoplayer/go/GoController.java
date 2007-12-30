@@ -44,11 +44,12 @@ import static com.becker.game.twoplayer.go.GoControllerConstants.*;
  * High priority todo:
  *
  *  - Break out GameBoardRenderer from GameBoardViewer for each game package.
- *  - Add test cases for every little method of every class
+ *  - Add test cases for every little method of every class. Use clover to verify.
+ *  - Add tests for GoGroup.calculate*Health
  *  - Why don't test cases find optimal moves?
- *  - fix scoring (allow for different types of rule systems
+ *  - fix scoring (allow for different types of rule systems)
  *  - parallelize minimax (http://www.cs.vu.nl/~aske/mtdf.html#abmem)
- *
+ *  - 
  * bugs
  *  - Error: can't have no liberties and still be on the board!
  *  - don't play in territory at end of game.
@@ -259,8 +260,8 @@ public final class GoController extends TwoPlayerController
      * (not yet filled with captures).
      * So the estimate will be very rough at the beginning of the game, but should get better as more pieces are played.
      *
-     * Since this can be called white we are processing, we return cached values in
-     * those cases to avoit a ConcurrentModificationException.
+     * Since this can be called while we are processing, we return cached values in
+     * those cases to avoid a ConcurrentModificationException.
      *
      * @param forPlayer1 if true, get the captures for player1, else for player2
      * @return estimate of the amount of territory the player has
@@ -270,13 +271,8 @@ public final class GoController extends TwoPlayerController
         Move m = board_.getLastMove();
         if ( m == null )
             return 0;
-
-        if (forPlayer1)  {
-            return ((GoBoard)board_).getTerritoryEstimate(forPlayer1, true); // black est
-        }
-        else  {
-            return ((GoBoard)board_).getTerritoryEstimate(forPlayer1, true); // white est
-        }
+        
+        return ((GoBoard)board_).getTerritoryEstimate(forPlayer1, true);    
     }
 
     /**

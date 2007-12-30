@@ -19,7 +19,6 @@ public class SGFGoLoader extends SGFLoader {
     }
     
     
-    
   /**
    * Reads an SGF token, provided a StreamTokenizer to help with parsing the
    * text into SGFTokens.
@@ -37,68 +36,68 @@ public class SGFGoLoader extends SGFLoader {
     // Black and White moves are the most common token in an SGF file.
     //
     if( tokenName.equals( "B" ) || tokenName.equals( "BLACK" )  )
-      token = new BlackMoveToken();
+        token = new BlackMoveToken();
     else if( tokenName.equals( "W" ) || tokenName.equals( "WHITE" ) )
-      token = new WhiteMoveToken();
+        token = new WhiteMoveToken();
 
     // Comments, notes, and figures are next most common.
     //
     else if( tokenName.equals( "C" ) || tokenName.equals( "COMMENT" ) )
-      token = new CommentToken();
+        token = new CommentToken();
     else if( tokenName.equals( "N" ) || tokenName.equals( "NAME" ) )
-      token = new NodeNameToken();
+        token = new NodeNameToken();
     else if( tokenName.equals( "FG" ) )
-      token = new FigureToken();
+        token = new FigureToken();
 
     // Tokens which apply to a leaf are next most common (board mark-up,
     // estimated score, etc.).
     //
     else if( tokenName.equals( "AR" ) )
-      token = new ArrowToken();
+        token = new ArrowToken();
     else if( tokenName.equals( "CR" ) )
-      token = new CircleToken();
+        token = new CircleToken();
     else if( tokenName.equals( "SQ" ) )
-      token = new SquareToken();
+        token = new SquareToken();
     else if( tokenName.equals( "LB" ) )
-      token = new LabelToken();
+        token = new LabelToken();
     else if( tokenName.equals( "MN" ) )
-      token = new MoveNumberToken();
+        token = new MoveNumberToken();
     else if( tokenName.equals( "LN" ) )
-      token = new LineToken();
+        token = new LineToken();
     else if( tokenName.equals( "DD" ) )
-      token = new DimToken();
+        token = new DimToken();
     else if( tokenName.equals( "SL" ) )
-      token = new SelectedListToken();
+        token = new SelectedListToken();
     else if( tokenName.equals( "VW" ) )
-      token = new ViewToken();
+        token = new ViewToken();
 
     // Adding black moves and white moves is typically done at the beginning
     // of a game (initial board position).
     //
     else if( tokenName.equals( "AB" ) || tokenName.equals( "ADDBLACK" ) )
-      token = new AddBlackToken();
+        token = new AddBlackToken();
     else if( tokenName.equals( "AW" ) || tokenName.equals( "ADDWHITE" ) )
-      token = new AddWhiteToken();
+        token = new AddWhiteToken();
 
     // Many features of SGF are rarely used (but must be present and accounted
     // for in order to make a fully-compliant API).  These follow ...
     //
     else if( tokenName.equals( "TE" ) )
-      token = new TesujiToken();
+        token = new TesujiToken();
     else if( tokenName.equals( "BM" ) )
-      token = new BadMoveToken();
+        token = new BadMoveToken();
     else if( tokenName.equals( "GB" ) )
-      token = new GoodBlackMoveToken();
+        token = new GoodBlackMoveToken();
     else if( tokenName.equals( "GW" ) )
-      token = new GoodWhiteMoveToken();
+        token = new GoodWhiteMoveToken();
     else if( tokenName.equals( "DM" ) )
-      token = new EvenPositionToken();
+        token = new EvenPositionToken();
     else if( tokenName.equals( "UC" ) )
-      token = new UnclearPositionToken();
+        token = new UnclearPositionToken();
     else if( tokenName.equals( "IT" ) )
-      token = new InterestingMoveToken();
+        token = new InterestingMoveToken();
     else if( tokenName.equals( "DO" ) )
-      token = new DoubtfulMoveToken();
+        token = new DoubtfulMoveToken();
 
     // Ko move, illegal capture, used mostly at the end of the game.
     //
@@ -110,67 +109,79 @@ public class SGFGoLoader extends SGFLoader {
     // standard convention for JiGo's SGF API.
     //
     else if( tokenName.equals( "FF" ) )
-      token = new FileFormatToken();
+        token = new FileFormatToken();
     else if( tokenName.equals( "GM" ) || tokenName.equals( "GAME" ) )
-      token = new GameTypeToken();
+        token = new GameTypeToken();
     else if( tokenName.equals( "SZ" ) || tokenName.equals( "SIZE" ) )
-      token = new SizeToken();
+        token = new SizeToken();
     else if( tokenName.equals( "KM" ) || tokenName.equals( "KOMI" ) )
-      token = new KomiToken();
+        token = new KomiToken();
     else if( tokenName.equals( "PW" ) || tokenName.equals( "PLAYERWHITE" ) )
-      token = new WhiteNameToken();
+        token = new WhiteNameToken();
     else if( tokenName.equals( "PB" ) || tokenName.equals( "PLAYERBLACK" ) )
-      token = new BlackNameToken();
+        token = new BlackNameToken();
     else if( tokenName.equals( "WR" ) || tokenName.equals( "WHITERANK" )  )
-      token = new WhiteRankToken();
+        token = new WhiteRankToken();
     else if( tokenName.equals( "BR" ) || tokenName.equals( "WHITERANK" )  )
-      token = new BlackRankToken();
+        token = new BlackRankToken();
     else if( tokenName.equals( "DT" ) || tokenName.equals( "DATE" ) )
-      token = new DateToken();
+         token = new DateToken();
     else if( tokenName.equals( "RE" ) || tokenName.equals( "RESULT" ) )
-      token = new ResultToken();
+        token = new ResultToken();
     else if( tokenName.equals( "TM" ) || tokenName.equals( "TIME" ) )
-      token = new TimeLimitToken();
+        token = new TimeLimitToken();
     else if( tokenName.equals( "BL" ) )
-      token = new BlackTimeToken();
+        token = new BlackTimeToken();
     else if( tokenName.equals( "WL" ) )
-      token = new WhiteTimeToken();
+        token = new WhiteTimeToken();
     else if( tokenName.equals( "OB" ) )
-      token = new BlackStonesLeftToken();
+        token = new BlackStonesLeftToken();
     else if( tokenName.equals( "OW" ) )
-      token = new WhiteStonesLeftToken();
+        token = new WhiteStonesLeftToken();
     else if( tokenName.equals( "PM" ) )
-      token = new PrintModeToken();
+        token = new PrintModeToken();
     else if( tokenName.equals( "SY" ) )
-      token = new SystemToken();
+        token = new SystemToken();
     else if( tokenName.equals( "PC" ) )
-      token = new PlaceToken();
+        token = new PlaceToken();
     else if( tokenName.equals( "EV" ) || tokenName.equals( "EVENT" ) )
-      token = new EventToken();
+        token = new EventToken();
     else if( tokenName.equals( "RO" ) || tokenName.equals( "ROUND" ) )
-      token = new RoundToken();
+        token = new RoundToken();
     else if( tokenName.equals( "SO" ) || tokenName.equals( "SOURCE" ) )
-      token = new SourceToken();
+        token = new SourceToken();
     else if( tokenName.equals( "US" ) )
-      token = new UserToken();
+          token = new UserToken();
     else if( tokenName.equals( "GC" ) )
-      token = new GameCommentToken();
+        token = new GameCommentToken();
     else if( tokenName.equals( "RU" ) )
-      token = new RuleSetToken();
+        token = new RuleSetToken();
     else if( tokenName.equals( "BS" ) )
-      token = new BlackSpeciesToken();
+       token = new BlackSpeciesToken();
     else if( tokenName.equals( "WS" ) )
-      token = new WhiteSpeciesToken();
+        token = new WhiteSpeciesToken();
     else if( tokenName.equals( "GN" ) || tokenName.equals( "GAMENAME" ) )
-      token = new GameNameToken();
+        token = new GameNameToken();
     else if( tokenName.equals( "ID" ) )
-      token = new GameIDToken();
+        token = new GameIDToken();
     else if( tokenName.equals( "CA" ) ) {
-     //  token = new CharsetToken();   // where did this token class go?
+         //  token = new CharsetToken();   // where did this token class go?
          token = new TextToken();
-    }
-    // these token names appear in the IGS test files, but I don't know what they are for.
-    else if (tokenName.equals("ST") || tokenName.equals("OT") || tokenName.equals("HA") 
+    } 
+    // else if (tokenName.equals("HA") ) 
+    //    token = new HandicapToken();
+
+    // these token names appear in the IGS test files, but I don't know what they are for, or they just arent that useful.
+    // see http://www.red-bean.com/sgf/proplist_t.html
+    // ST  Style           root	      number (range: 0-3)
+    // OT  Overtime        game-info        simpletext
+    // HA   Handicap        game-info        number
+    // PL   Player to play  setup            color
+    // AP  Application     root	      composed simpletext ':' number
+    // PP ???
+    // RG ???
+    else if (tokenName.equals("ST") || tokenName.equals("OT") || tokenName.equals("PL") 
+               || tokenName.equals( "CA" ) ||  tokenName.equals( "HA" )
                || tokenName.equals("AP") || tokenName.equals("PP") || tokenName.equals("RG")) {
         token = new TextToken();
     }

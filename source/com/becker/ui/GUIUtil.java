@@ -1,6 +1,9 @@
 package com.becker.ui;
 
 import com.becker.common.*;
+import com.becker.common.util.FileUtil;
+import com.becker.common.util.ImageUtil;
+import com.becker.common.util.Util;
 import com.sun.java.swing.plaf.windows.*;
 
 import javax.jnlp.*;
@@ -28,7 +31,7 @@ public final class GUIUtil
     private static boolean isStandAlone_ = true;
 
     // default location of images unless otherwise specified.
-    private static String resourceRoot_ = Util.PROJECT_DIR + "source/";
+    private static String resourceRoot_ = FileUtil.PROJECT_DIR + "source/";
 
     // for opening files.
     // don't create this here or applets using this class will have a security exception

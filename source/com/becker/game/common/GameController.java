@@ -17,9 +17,6 @@ public abstract class GameController
            implements GameControllerInterface, OnlineChangeListener
 {
 
-    // these are the default game constants
-    // they may be modified through the ui (see GameOptionsDialog)
-
     /** the board has the layout of the pieces. */
     protected Board board_;
 
@@ -28,9 +25,9 @@ public abstract class GameController
 
 
     /** the list of players actively playing the game, in the order that they move. */
-    protected Player[] players_;
+    protected List<? extends Player> players_;
 
-    /** collections of game specific options. */
+    /** collections of game specific options.  They may be modified through the ui (see GameOptionsDialog)*/
     protected GameOptions gameOptions_;
 
     /**
@@ -100,7 +97,7 @@ public abstract class GameController
      */
     public Player getFirstPlayer()
     {
-        return getPlayers()[0];
+        return getPlayers().get(0);
     }
 
 
@@ -176,7 +173,7 @@ public abstract class GameController
      *
      * @return a list of the players playing the game (in the order that they move).
      */
-    public Player[] getPlayers()
+    public List<? extends Player> getPlayers()
     {
         return players_;
     }
@@ -185,7 +182,7 @@ public abstract class GameController
      * Maybe use list of players rather than array.
      * @param players the players currently playing the game
      */
-    public void setPlayers( Player[] players )
+    public void setPlayers( List<? extends Player> players )
     {
        players_ = players;
     }
@@ -195,7 +192,7 @@ public abstract class GameController
      */
     public int getNumPlayers()
     {
-        return players_.length;
+        return players_.size();
     }
 
     /**
@@ -203,8 +200,8 @@ public abstract class GameController
      */
     public boolean allPlayersHuman()
     {
-       for (int i=0; i<getNumPlayers(); i++)  {
-           if (!players_[i].isHuman()) return false;
+       for (int i = 0; i < getNumPlayers(); i++)  {
+           if (!players_.get(i).isHuman()) return false;
        }
        return true;
     }
@@ -215,7 +212,7 @@ public abstract class GameController
     public boolean allPlayersComputer()
     {
        for (int i=0; i<getNumPlayers(); i++)  {
-           if (players_[i].isHuman()) return false;
+           if (players_.get(i).isHuman()) return false;
        }
        return true;
     }

@@ -1,6 +1,7 @@
 package com.becker.puzzle.sudoku;
 
 import com.becker.common.*;
+import com.becker.common.util.Util;
 
 /**
  * This does the hard work of actually solving the puzzle.

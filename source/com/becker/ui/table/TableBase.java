@@ -1,5 +1,6 @@
 package com.becker.ui.table;
 
+import java.util.List;
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
@@ -25,7 +26,7 @@ public abstract class TableBase
     /**
      * Constructor
      */
-    public TableBase(Object[] rows, String[] columnNames) {
+    public TableBase(List rows, String[] columnNames) {
 
         initColumnMeta(columnNames);
         initializeTable(rows);
@@ -35,7 +36,7 @@ public abstract class TableBase
      * constructor
      * @param rows to initializet the rows in the table with.
      */
-    public TableBase(Object[] rows, TableColumnMeta[] columnMeta)
+    public TableBase(List rows, TableColumnMeta[] columnMeta)
     {
         columnMeta_ = columnMeta;
         initializeTable(rows);
@@ -54,7 +55,7 @@ public abstract class TableBase
     /**
      * @param rows initial data
      */
-    protected void initializeTable(Object[] rows)
+    protected void initializeTable(List rows)
     {
         String[] columnNames = new String[columnMeta_.length];
         for (int i=0; i<columnMeta_.length; i++) {

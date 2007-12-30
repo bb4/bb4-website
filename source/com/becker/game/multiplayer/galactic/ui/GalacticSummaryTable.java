@@ -36,7 +36,7 @@ public class GalacticSummaryTable extends SummaryTable
      * constructor
      * @param players to initializet the rows in the table with.
      */
-    public GalacticSummaryTable(Player[] players)
+    public GalacticSummaryTable(List<? extends Player> players)
     {
         super(players, COLUMN_NAMES);
     }

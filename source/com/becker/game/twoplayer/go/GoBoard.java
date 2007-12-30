@@ -414,6 +414,7 @@ public final class GoBoard extends TwoPlayerBoard
     /**
      * get an estimate of the territory for the specified player.
      * This estimate is computed by summing all spaces in eyes + dead opponent stones that are still on the board in eyes.
+     * Empty spaces are weighted by how likely they are to eventually be territory of one side or the other.
      * At the end of the game this + the number of pieces captured so far should give the true score.
      */
     public int getTerritoryEstimate( boolean forPlayer1, boolean estimate)
@@ -426,6 +427,7 @@ public final class GoBoard extends TwoPlayerBoard
                GoBoardPosition pos = (GoBoardPosition)positions_[i][j];
                double val = estimate? pos.getScoreContribution() : (forPlayer1? 1.0 : -1.0);
 
+               // the territory estimate will always be positive for both sides.
                if (pos.isUnoccupied()) {
                    if (forPlayer1 && pos.getScoreContribution() > 0) {
                        territoryEstimate += val;
@@ -525,6 +527,7 @@ public final class GoBoard extends TwoPlayerBoard
      */
     public Set getGroupNeighbors( GoBoardPosition position, boolean samePlayerOnly )
     {
+        assert (position != null);
         assert (position.getPiece() != null);
         return getGroupNeighbors( position, position.getPiece().isOwnedByPlayer1(), samePlayerOnly );
     }
@@ -773,7 +776,7 @@ public final class GoBoard extends TwoPlayerBoard
            case NOT_FRIEND:   // blank or enemy
                 if ( !nbr.isVisited() &&
                     ( nbr.isUnoccupied() ||
-                       ( nbr.isOccupied() && (nbr.getPiece().isOwnedByPlayer1()!=friendOwnedByPlayer1))
+                       ( nbr.isOccupied() && (nbr.getPiece().isOwnedByPlayer1() != friendOwnedByPlayer1))
                     ))  {
                     stack.add( 0, nbr );
                     return 1;
@@ -987,6 +990,10 @@ public final class GoBoard extends TwoPlayerBoard
         private List<GoBoardPosition> starPoints_ = null;
 
 
+        /**
+         * @param num number of handicap stones
+         * @param boradSize on one side.
+         */
         HandicapStones(int num, int boardSize) {
             initStarPoints(boardSize);
             numHandicapStones_ = num;

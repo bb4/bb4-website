@@ -1,7 +1,7 @@
 package com.becker.puzzle.hiq;
 
 
-import com.becker.common.Util;
+import com.becker.common.util.Util;
 import com.becker.puzzle.common.PuzzleViewer;
 import com.becker.puzzle.common.Refreshable;
 import java.awt.event.ActionEvent;

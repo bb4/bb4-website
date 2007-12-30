@@ -104,46 +104,6 @@ public class GalacticPlayer extends Player
         return icon_;
     }
 
-
-    /**
-     * try to give a unique color based on the name
-     * and knowing what the current player colors are.
-     */
-    public static Color getNewPlayerColor(GalacticPlayer[] players)
-    {
-
-        boolean uniqueEnough;
-        float candidateHue;
-
-        do {
-            // keep trying hues until we find one that is not within tolerance distance from another
-            candidateHue = (float)Math.random();
-            uniqueEnough = isHueUniqueEnough(candidateHue, players);
-        } while (!uniqueEnough);
-
-        return Color.getHSBColor(candidateHue, SATURATION, BRIGHTNESS);
-    }
-
-    /**
-     * @@ this method could use some improvement
-     * @param hue to check for uniqueness compared to other players.
-     * @param players
-     * @return
-     */
-    private static boolean isHueUniqueEnough(float hue, GalacticPlayer[] players)
-    {
-        int ct=0;
-        float tolerance = 1.0f/(1.0f+1.8f*players.length);
-        while ( ct < players.length) {
-            if (players[ct] == null)
-                ct++;
-            else if (Math.abs(GUIUtil.getColorHue(players[ct].getColor()) - hue) > tolerance)
-                ct++;
-            else break;
-        }
-        return (ct == players.length);
-    }
-
     /**
      * @param orders set the current list of orders for the player
      */

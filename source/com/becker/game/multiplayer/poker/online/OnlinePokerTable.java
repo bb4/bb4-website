@@ -22,7 +22,7 @@ public class OnlinePokerTable extends MultiPlayerOnlineTable {
     protected void addRobotPlayer(int i) {
 
         int size = getPlayers().size();
-        Color newColor = PokerPlayer.getNewPlayerColor(getPlayers().toArray(new Player[size]));
+        Color newColor = PokerPlayer.getNewPlayerColor(getPlayers());
 
         PokerOptions options = (PokerOptions) getGameOptions();
         String name = "Robot " + (i+1);

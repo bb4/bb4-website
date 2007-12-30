@@ -1,6 +1,7 @@
 package com.becker.ui.legend;
 
 import com.becker.common.*;
+import com.becker.common.util.Util;
 
 import javax.swing.*;
 import java.awt.*;

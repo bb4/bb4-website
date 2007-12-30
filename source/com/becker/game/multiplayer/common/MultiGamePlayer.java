@@ -2,8 +2,11 @@ package com.becker.game.multiplayer.common;
 
 import com.becker.game.common.*;
 import com.becker.ui.*;
+import java.awt.Color;
+import java.util.List;
 
-import java.awt.*;
+//import java.awt.*;
+
 
 /**
  *
@@ -26,7 +29,7 @@ public class MultiGamePlayer extends Player {
      * try to give a unique color based on the name
      * and knowing what the current player colors are.
      */
-    public static Color getNewPlayerColor(Player[] players)
+    public static Color getNewPlayerColor(List<? extends Player> players)
     {
 
         boolean uniqueEnough;
@@ -48,18 +51,18 @@ public class MultiGamePlayer extends Player {
      * @param players
      * @return true if hue is different enough from the others.
      */
-    private static boolean isHueUniqueEnough(float hue, Player[] players)
+    private static boolean isHueUniqueEnough(float hue, List<? extends Player> players)
     {
         int ct=0;
-        float tolerance = 1.0f/(1.0f+1.8f*players.length);
-        while ( ct < players.length) {
-            if (players[ct] == null)
+        float tolerance = 1.0f/(1.0f+1.8f*players.size());
+        while ( ct < players.size()) {
+            if (players.get(ct) == null)
                 ct++;
-            else if (Math.abs(GUIUtil.getColorHue(players[ct].getColor()) - hue) > tolerance)
+            else if (Math.abs(GUIUtil.getColorHue(players.get(ct).getColor()) - hue) > tolerance)
                 ct++;
             else break;
         }
-        return (ct == players.length);
+        return (ct == players.size());
     }
 
 }

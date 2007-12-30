@@ -69,7 +69,7 @@ public class MusicMaker
     public static final String CHEM_TONE = "chem-tone";
 
 
-    public static final String[] favorites_ = {
+    public static final String[] FAVORITES = {
             PIANO, ORGAN, VIOLIN,
             ORCHESTRA_HIT, TRUMPET, TROMBONE,
             TUBA, WHISTLE, WARM_PAD, GOBLINS,
@@ -85,40 +85,11 @@ public class MusicMaker
             SCRATCH, SCRATCH2, METALLIC_SNARE, CHEM_TONE
     };
 
-    //------ Main method - for testing--------------------------------------------------------
-    public static void main( String[] args )
-    {
-
-        MusicMaker m = new MusicMaker();
-        SpeechSynthesizer speech = new SpeechSynthesizer();
-        //speech.sayPhoneWord("y|ouu");
-
-        for ( int i = 6; i < favorites_.length; i++ ) {
-            // first set the instrument
-            m.playNote(favorites_[i], 45, 0, 1, 100 );
-            //speech.sayPhoneWord(favorites_[i]);
-            System.out.println(i+ " "+favorites_[i] );
-
-
-            // now play the instrument in a variety of ways
-            for (int j=1; j<5; j++)
-                m.playNote(10+j*20, 300, 800);
-            for (int j=1; j<5; j++)
-                m.playNote(10+j*20, 700, 1000);
-            for (int j=1; j<10; j++)
-                m.playNote(10+j*10, 50, 2000);
-        }
-    }
 
     //Construct the application
     public MusicMaker()
     {
         initSynthesizer();
-    }
-
-    public String[] getFavoriteSounds()
-    {
-        return favorites_;
     }
 
     protected void initSynthesizer()

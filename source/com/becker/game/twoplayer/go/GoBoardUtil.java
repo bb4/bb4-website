@@ -21,7 +21,7 @@ public final class GoBoardUtil
      * if its not that much weaker then we don't really have an eye.
      * @@ make this a game parameter .6 - 1.8 that can be optimized.
      */
-    static final float DIFFERENCE_THRESHOLD = 0.6f;
+    static final float DIFFERENCE_THRESHOLD = 0.7f;
 
     private GoBoardUtil() {
     }
@@ -66,7 +66,7 @@ public final class GoBoardUtil
 
     /**
      * @param positions to find bounding box of
-     * @return boundin box of set of stones/positions passed in
+     * @return bounding box of set of stones/positions passed in
      */
     static Box findBoundingBox(Set positions)  {
         int rMin = 100000; // something huge ( more than max rows)

@@ -63,13 +63,13 @@ public class GoGameImporter extends GameImporter {
                 KomiToken komiToken = (KomiToken) token;
                 ((GoOptions)gc.getOptions()).setKomi(komiToken.getKomi());
             }
-            else if (token instanceof HandicapToken) {
-                //HandicapToken handicapToken = (HandicapToken) token;
-                // so we don't guess wrong on where the handicap positions are
-                // we will rely on their being an AB command to specifically tell where the handicap stones are
-                //GameContext.log(2,"***handicap ="+handicapToken.getHandicap());
-                //this.setHandicap(handicapToken.getHandicap());
-            }
+            // so we don't guess wrong on where the handicap positions are
+            // we will rely on their being an AB (add black) command to specifically tell where the handicap stones are
+            /*else if (token instanceof HandicapToken) {
+                HandicapToken handicapToken = (HandicapToken) token;               
+                GameContext.log(2,"***handicap ="+handicapToken.getHandicap());
+                this.setHandicap(handicapToken.getHandicap());
+            }*/
             else if (token instanceof WhiteNameToken) {
                 WhiteNameToken nameToken = (WhiteNameToken) token;
                 gc.getPlayer2().setName(nameToken.getName());
@@ -85,6 +85,9 @@ public class GoGameImporter extends GameImporter {
             else if (token instanceof RuleSetToken) {
                 //RuleSetToken ruleToken = (RuleSetToken) token;
                 //this.setRuleSet(ruleToken.getKomi());
+            }
+            else {
+                GameContext.log(1, "Ignoring  token =" + token.getClass().getName() + " while parsing.");
             }
         }
         gc.getBoard().setSize(size, size);
@@ -106,18 +109,20 @@ public class GoGameImporter extends GameImporter {
             addMoves((PlacementListToken)token, moveList);
             found = true;
         }
+        /*
         else if (token instanceof CharsetToken ) {
-            //CharsetToken charsetToken = (CharsetToken) token;
+            CharsetToken charsetToken = (CharsetToken) token;
         }
         else if (token instanceof OverTimeToken ) {
-            //OverTimeToken charsetToken = (OverTimeToken) token;
-            //System.out.println("charset="+charsetToken.getCharset());
+            OverTimeToken charsetToken = (OverTimeToken) token;
+            System.out.println("charset="+charsetToken.getCharset());
         }
+         */
         else if (token instanceof TextToken ) {
             TextToken textToken = (TextToken) token;
-            System.out.println("text="+textToken.getText());
+            //System.out.println("text="+textToken.getText());
         } else {
-            System.out.println("\nignoring token "+token.getClass().getName());
+            GameContext.log(0, "Ignoring token "+token.getClass().getName() + " while processing.");
         }
         return found;
     }
@@ -128,11 +133,13 @@ public class GoGameImporter extends GameImporter {
      * @param token
      */
     private static void addMoves(PlacementListToken token, List moveList) {
-        Enumeration points = token.getPoints();
+        Iterator<Point> points = token.getPoints();
+        System.out.println("num points ="+token.getPoints2().size());
         boolean player1 = token instanceof AddBlackToken;
-
-        while (points.hasMoreElements()) {
-            Point point = (Point)points.nextElement();
+        
+        while (points.hasNext()) {
+            Point point = points.next();
+            System.out.println("adding move at row=" + point.y+" col="+ point.x);
             moveList.add( new GoMove( point.y, point.x, 0, new GoStone(player1)));
         }
     }

@@ -1,6 +1,6 @@
 package com.becker.simulation.fluid;
 
-import com.becker.common.Util;
+import com.becker.common.util.Util;
 import java.awt.event.*;
 
 /**

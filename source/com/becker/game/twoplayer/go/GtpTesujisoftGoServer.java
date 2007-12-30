@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.go;
 
+import com.becker.common.util.FileUtil;
 import com.becker.game.common.*;
 import com.becker.game.common.online.*;
 import com.becker.game.twoplayer.common.search.*;
@@ -369,7 +370,7 @@ public class GtpTesujisoftGoServer
             {
                 String helpText =
                     "Usage: java -classpath "+
-                        Util.PROJECT_DIR +
+                        FileUtil.PROJECT_DIR +
                         "/classes com.becker.game.twoplayer.go.GtpTesujisoftGoServer [options]\n" +
                         '\n' +
                     "-config       config file\n" +

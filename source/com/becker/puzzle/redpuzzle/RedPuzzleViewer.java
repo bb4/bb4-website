@@ -1,6 +1,7 @@
 package com.becker.puzzle.redpuzzle;
 
 import com.becker.common.*;
+import com.becker.common.util.Util;
 import com.becker.puzzle.common.PuzzleViewer;
 import com.becker.puzzle.common.Refreshable;
 import com.becker.sound.*;

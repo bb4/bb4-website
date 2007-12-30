@@ -64,7 +64,7 @@ public class GameApp implements ActionListener
     {
         System.out.println("*** About to get plugin for "+gameName);
         String className = PluginManager.getInstance().getPlugin(gameName).getPanelClass();
-        Class gameClass = Util.loadClass(className);
+        Class gameClass = ClassLoaderSingleton.loadClass(className);
 
         // this will load the resources for the specified game.
         GameContext.loadGameResources(gameName);

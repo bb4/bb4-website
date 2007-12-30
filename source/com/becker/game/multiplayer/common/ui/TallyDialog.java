@@ -2,9 +2,14 @@ package com.becker.game.multiplayer.common.ui;
 
 import com.becker.game.common.*;
 import com.becker.ui.*;
+import java.awt.AWTEvent;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.util.List;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.BorderLayout;
 import java.awt.event.*;
 
 /**
@@ -55,7 +60,7 @@ public abstract class TallyDialog extends OptionsDialog
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
 
-        Player[] players = controller_.getPlayers();
+        List<? extends Player> players = controller_.getPlayers();
         String winningPlayer = findWinner(players);
 
         // show a label at the top with who the winner is
@@ -78,9 +83,9 @@ public abstract class TallyDialog extends OptionsDialog
         //this.setPreferredSize(new Dimension(500,300));
     }
 
-    protected abstract SummaryTable createSummaryTable(Player[] players);
+    protected abstract SummaryTable createSummaryTable(List<? extends Player> players);
 
-    protected abstract String findWinner(Player[] players);
+    protected abstract String findWinner(List<? extends Player> players);
 
 
     /**

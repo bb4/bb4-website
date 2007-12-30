@@ -17,8 +17,6 @@ public class TestScoring extends GoTestCase {
         checkScoring("problem_score1", 0, 0, 0, 0, 74, 57);
     }
 
-
-
     public void testScoring55a() {
         checkScoring("problem_score55a", 0, 0, 0, 7, 17, 0);
     }

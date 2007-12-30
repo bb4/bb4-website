@@ -14,9 +14,9 @@ import java.util.List;
 public class TestKiseido2002 extends GoTestCase {
 
 
-
 /*  the rest of these work.    */
 
+    
     public void testJanuary() {
         check("2002-01");
     }
@@ -24,7 +24,7 @@ public class TestKiseido2002 extends GoTestCase {
     public void testFebruary() {
         check("2002-02");
     }
-
+    
     public void testMarch() {
         check("2002-03");
     }
@@ -65,7 +65,6 @@ public class TestKiseido2002 extends GoTestCase {
         check("2002-12");
     }
 
- 
 
     /**
      * Verify that we can load all the files with the specified pattern
@@ -73,14 +72,19 @@ public class TestKiseido2002 extends GoTestCase {
      */
     private void check(String problemPattern) {
 
+        GameContext.log(0, "Now checking "+ problemPattern);
         String[] files = getFilesMatching("games2002/", problemPattern);
 
-        for (int i=0; i<files.length; i++) {
+        for (int i = 0; i < files.length; i++) {
 
             String filename =  files[i].substring(0, files[i].length() - 4);
-            GameContext.log(1, "about to restore :"+filename);
+            GameContext.log(0, " about to restore :"+filename);
+            try {
             restore("games2002/" + filename);
-            GameContext.log(1, "    done restoring :"+filename);
+            } catch (AssertionError e) {
+                System.out.println("error on "+ filename);
+                e.printStackTrace();
+            }
         }
 
         // must check the worth of the board once to update the scoreContributions fo empty spaces.
@@ -90,7 +94,6 @@ public class TestKiseido2002 extends GoTestCase {
 
         Assert.assertTrue(true);
     }
-
 
 
     public static Test suite() {
