@@ -185,6 +185,22 @@
     </antcall>
   </target>
   
+  <target name="executeTrivial" depends="compile" description="Run trivial test game app"> 
+    <antcall target="executeProgram">
+      <param name="className" value="${gameAppClass}"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
+      <param name="args" value="-game trivial"/>
+    </antcall>
+  </target>
+  
+  <target name="executePoker" depends="compile" description="Run poker card game app"> 
+    <antcall target="executeProgram">
+      <param name="className" value="${gameAppClass}"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
+      <param name="args" value="-game poker"/>
+    </antcall>
+  </target>
+  
   <target name="executePokerServerAndClients" depends="compile" description="Run online poker server and several clients">
       <parallel>   
           <antcall target="executePokerServer"/>
@@ -211,14 +227,6 @@
     </antcall>
   </target>
 
-  <target name="executePoker" depends="compile" description="Run poker card game app"> 
-    <antcall target="executeProgram">
-      <param name="className" value="${gameAppClass}"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
-      <param name="args" value="-game poker"/>
-    </antcall>
-  </target>
-
   <target name="executeSetGame" description="Run the Set Game app">
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>  <!-- com.becker.game.multiplayer.set.SetApplet -->
@@ -238,11 +246,12 @@
   <target name="testGo" depends="compile" description=" go game tests">
        <echo message="now running GO tests"/>
        <junit  printsummary="yes"  fork="yes"  haltonfailure="no" showoutput="yes" >
-           <classpath path="${classesDir}"/>
+           <classpath path="${libDir}/junit.jar;${classesDir}"/>
            <assertions><enable/></assertions>
            <formatter type="plain"/>
            <!--test name="com.becker.game.twoplayer.go.test.TestAll" outfile="../test/go/goTestResults"/-->
-           <test name="com.becker.game.twoplayer.go.test.TestAll" outfile="../test/go/goTestResults"/>
+           <test name="com.becker.game.twoplayer.go.test.whitebox.TestAllWhiteBox" outfile="../test/go/goTestResults"/>
+           <!-- test name="com.becker.game.twoplayer.go.test.TestEyes" outfile="../test/go/goTestResults"/-->
        </junit>
   </target>
 
@@ -353,6 +362,13 @@
     </java>
   </target>
   
+  <target name="executeStringUtil" depends="compile" description="A simple string replacement program.">
+    <echo message="now executing StringUtil test"/>
+    <java classname="com.becker.misc.string.StringUtil" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="128M">
+        <jvmarg value="${assertionsFlag}"/>
+    </java>
+  </target>
+  
   <target name="executeSimpleEditor" depends="compile" description="A simple editor.">
     <echo message="now executing simple editor"/>
     <java classname="com.becker.misc.sedit.SimpleEditor" classpath="${classesDir};${libDir}/commons-codec-1.3.jar;${libDir}/rt.jar" fork="true" jvm="${java_compiler}" maxmemory="128M">
@@ -436,6 +452,7 @@
         <!-- jvmarg value="-agentlib:yjpagent"/  -->
         <!-- use this if running netbeans profiler -->
         <!--jvmarg value="-agentpath:D:\apps\java\netbeans-5.5\profiler1\lib\deployed\jdk15\windows\profilerinterface.dll=D:\apps\java\netbeans-5.5\profiler1\lib,5140"/-->
+        <!--jvmarg value="-agentlib:jdwp=transport=dt_socket,server=y,address=8000"     for Netbeans debugging-->                                           
         <jvmarg value="-Xms128M"/>
         <jvmarg value="-Xmx256M"/>
         <jvmarg value="${assertionsFlag}"/>
@@ -448,6 +465,7 @@
         <sysproperty key="DEBUG" value="true"/>
         <arg value="${arg1}"/>
         <arg value="${arg2}"/>
+        <!--jvmarg value="-agentlib:jdwp=transport=dt_socket,server=y,address=8000 "/  for Netbeans debugging-->          
         <jvmarg value="-Xms128M"/>
         <jvmarg value="-Xmx256M"/>
         <jvmarg value="${assertionsFlag}"/>
