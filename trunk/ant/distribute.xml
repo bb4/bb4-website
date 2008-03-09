@@ -162,6 +162,12 @@
           <param name="componentDir" value="game/multiplayer/poker"/>
           <param name="jarFile" value="poker.jar"/>
       </antcall>
+      
+      <!-- copy the class files that are needed for trivial game deployment -->
+      <antcall target="deployJar">
+          <param name="componentDir" value="game/multiplayer/trivial"/>
+          <param name="jarFile" value="trivial.jar"/>
+      </antcall>
             
       <!-- copy the class files that are needed for puzzle deployment -->
       <antcall target="deployJar">
