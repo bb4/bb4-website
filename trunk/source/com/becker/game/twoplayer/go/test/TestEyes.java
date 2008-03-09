@@ -12,6 +12,7 @@ import java.util.*;
  */
 public class TestEyes extends GoTestCase {
 
+    private static final String PATH_PREFIX = "eyes/";
 
     // simple eye tests
     public void testEyes1() {
@@ -32,10 +33,16 @@ public class TestEyes extends GoTestCase {
         checkEyes("problem_eyes3", blackEyes, whiteEyes);
     }
 
-    public void testCornerLife() {
+    public void testCornerLife4() {
         EyeCounts blackEyes = new EyeCounts(0, 2, 0, 0);
         EyeCounts whiteEyes = new EyeCounts(0, 0, 0, 0);
         checkEyes("problem_eyes4", blackEyes, whiteEyes);
+    }
+    
+     public void testCornerLife4a() {
+        EyeCounts blackEyes = new EyeCounts(0, 2, 0, 0);
+        EyeCounts whiteEyes = new EyeCounts(0, 0, 0, 0);
+        checkEyes("problem_eyes4a", blackEyes, whiteEyes);
     }
 
      public void testEyes5() {
@@ -378,7 +385,7 @@ public class TestEyes extends GoTestCase {
                            EyeCounts expectedBlackEyes, EyeCounts expectedWhiteEyes) {
 
         GameContext.log(0, "finding eyes for "+eyesProblemFile+" ...");
-        restore(eyesProblemFile);
+        restore(PATH_PREFIX + eyesProblemFile);
 
         //Set groups = ((GoBoard) controller_.getBoard()).getGroups();
 
@@ -404,7 +411,6 @@ public class TestEyes extends GoTestCase {
     private EyeCounts getEyeCounts(Set eyes)  {
         EyeCounts counts = new EyeCounts();
 
-        // int numFalseEyes = 0;
         for (Object e : eyes) {
 
             GoEye eye = (GoEye) e;

@@ -1,6 +1,5 @@
 package com.becker.game.common.online;
 
-import com.becker.common.util.Util;
 import com.becker.game.common.*;
 import com.becker.common.*;
 import com.becker.game.multiplayer.common.online.SurrogatePlayer;
@@ -166,11 +165,11 @@ public class ServerCommandProcessor {
         List<Player> newPlayers = new ArrayList<Player>(players.size());
         for (int i = 0; i < players.size(); i++) {
             Player player = players.get(i);
-            // if (paleyr.isHuman()) {
-            //    playersArray[i] = new SurrogatePlayer(player);
-            // } else {
-            //     playersArray[i] = player;
-            //}                   
+            if (player.isHuman()) {
+                newPlayers.add(new SurrogatePlayer(player, controller_.getServerConnection()));
+            } else {
+                newPlayers.add(player);
+            }                   
         }
         controller_.setPlayers(newPlayers);
         ////controller_.reset();

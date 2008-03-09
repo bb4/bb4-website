@@ -19,7 +19,7 @@ import java.util.*;
  */
  public class PokerOnlineGameTablesTable extends MultiPlayerOnlineGameTablesTable {
 
-    private static final Random RANDOM = new Random();
+    
 
     private static final int ANTE_INDEX = NUM_BASE_COLUMNS;
     private static final int MAX_RAISE_INDEX = NUM_BASE_COLUMNS + 1;
@@ -62,12 +62,6 @@ import java.util.*;
 
     public Player createPlayerForName(String playerName) {
         return new PokerHumanPlayer(playerName, 100, getRandomColor());
-    }
-
-    private static Color getRandomColor() {
-
-        int r = RANDOM.nextInt(256);
-        return new Color(r, 255 - r, RANDOM.nextInt(256));
     }
 
 }

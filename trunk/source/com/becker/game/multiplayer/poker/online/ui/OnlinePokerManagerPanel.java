@@ -16,6 +16,8 @@ import java.awt.event.*;
  */
 public class OnlinePokerManagerPanel extends MultiPlayerOnlineManagerPanel {
 
+    private static final long serialVersionUID = 1;
+    
     public OnlinePokerManagerPanel(ViewerCallbackInterface viewer, ChangeListener dlg) {
         super(viewer, dlg);
     }

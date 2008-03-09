@@ -7,10 +7,14 @@ import com.becker.game.multiplayer.poker.PokerController;
 import java.awt.*;
 
 /**
+ * A surrogate player represents an actual human player on the server,
+ * or it may represent a computer or human player in the client controller.
  * @author Barry Becker Date: Feb 3, 2007
  */
 public class SurrogatePlayer extends PokerPlayer implements OnlineChangeListener {
 
+    private static final long serialVersionUID = 1;
+    
     protected ServerConnection connection_;
 
     public SurrogatePlayer(String name, int money, Color color, boolean isHuman, ServerConnection connection) {

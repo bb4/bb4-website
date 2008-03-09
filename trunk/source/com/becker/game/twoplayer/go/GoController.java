@@ -40,9 +40,11 @@ import static com.becker.game.twoplayer.go.GoControllerConstants.*;
  * Estimated days to implement are in ()'s after each item. I have about 4 hours in a day on the weekend.
  * This lists only grows. As I complete one task, I typically add 2 more.
  * In reality, I'll probably never finish. That's ok, I'm not sure I want to. I enjoy doing it.
+ * 
  *
  * High priority todo:
- *
+ * - We could avoid a lot od subclasses if we just specify game specific classes in the plugin xml 
+ *    and then create the classes using reflection in the base class.
  *  - Break out GameBoardRenderer from GameBoardViewer for each game package.
  *  - Add test cases for every little method of every class. Use clover to verify.
  *  - Add tests for GoGroup.calculate*Health

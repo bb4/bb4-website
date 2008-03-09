@@ -1,8 +1,8 @@
 package com.becker.game.twoplayer.go.test.whitebox;
 
+import com.becker.common.util.Util;
 import com.becker.game.twoplayer.go.*;
 import com.becker.game.twoplayer.go.test.GoTestCase;
-import java.util.List;
 import java.util.Set;
 import junit.framework.Assert;
 
@@ -12,7 +12,9 @@ import junit.framework.Assert;
  */
 public class TestGoGroup extends GoTestCase {    
     
+    
     // test absolute health calculation, and the number of liberties for the main black and white groups.
+    // testAbsHealth1* test configurations with 1 stone in each group.
     public void testAbsHealth1() {
         controller_.reset();
         EyeType[] blackEyes = {};
@@ -29,14 +31,14 @@ public class TestGoGroup extends GoTestCase {
                                                  blackHealth, whiteHealth, 
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
+     
     
-    // test absolute health calculation, and the number of liberties for the main black and white groups.
     public void testAbsHealth1a() {
         controller_.reset();
         EyeType[] blackEyes = {};
         EyeType[] whiteEyes = {};
         double bPotential = 0.3;
-        double wPotential = 0.24;
+        double wPotential = 0.3;
         double blackHealth = 0.1;
         double whiteHealth = -0.1;
         double AbsAbsHealthDiff = 0.0;
@@ -46,9 +48,56 @@ public class TestGoGroup extends GoTestCase {
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth, 
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
+    } 
+    public void testAbsHealth1b() {
+        controller_.reset();
+        EyeType[] blackEyes = {};
+        EyeType[] whiteEyes = {};
+        double bPotential = 0.34;
+        double wPotential = 0.34;
+        double blackHealth = 0.1;
+        double whiteHealth = -0.1;
+        double AbsAbsHealthDiff = 0.0;
+        double AbsHealthDiff = 0.2;
+        double RelHealthDiff = 0.2;
+        verifyHealthDifferences("whitebox/groupHealth1b", 4, 4, blackEyes, whiteEyes, 
+                                                 bPotential, wPotential,
+                                                 blackHealth, whiteHealth, 
+                                                 AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
+    }    
+    public void testAbsHealth1c() {
+        controller_.reset();
+        EyeType[] blackEyes = {};
+        EyeType[] whiteEyes = {};
+        double bPotential = 0.49;
+        double wPotential = 0.49;
+        double blackHealth = 0.1;
+        double whiteHealth = -0.1;
+        double AbsAbsHealthDiff = 0.0;
+        double AbsHealthDiff = 0.2;
+        double RelHealthDiff = 0.2;
+        verifyHealthDifferences("whitebox/groupHealth1c", 4, 4, blackEyes, whiteEyes, 
+                                                 bPotential, wPotential,
+                                                 blackHealth, whiteHealth, 
+                                                 AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
-
-
+    public void testAbsHealth1d() {
+        controller_.reset();
+        EyeType[] blackEyes = {};
+        EyeType[] whiteEyes = {};
+        double bPotential = 0.24;
+        double wPotential = 0.0;
+        double blackHealth = 0.1;
+        double whiteHealth = -0.02;
+        double AbsAbsHealthDiff = 0.0;
+        double AbsHealthDiff = 0.2;
+        double RelHealthDiff = 0.2;
+        verifyHealthDifferences("whitebox/groupHealth1d", 3, 2, blackEyes, whiteEyes, 
+                                                 bPotential, wPotential,
+                                                 blackHealth, whiteHealth, 
+                                                 AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
+    }
+  
     public void testAbsHealth2() {
         EyeType[] blackEyes = {};
         EyeType[] whiteEyes = {};
@@ -63,7 +112,112 @@ public class TestGoGroup extends GoTestCase {
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth, 
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
+    }
+    public void testAbsHealth2a() {
+        EyeType[] blackEyes = {};
+        EyeType[] whiteEyes = {};
+        double bPotential = 0.42;
+        double wPotential = 0.42;
+        double blackHealth = 0.2;
+        double whiteHealth = -0.2;
+        double AbsAbsHealthDiff = 0.0;
+        double AbsHealthDiff = 0.4;
+        double RelHealthDiff = 0.4;
+        verifyHealthDifferences("whitebox/groupHealth2a", 6, 6, blackEyes, whiteEyes, 
+                                                 bPotential, wPotential,
+                                                 blackHealth, whiteHealth, 
+                                                 AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
    }
+    public void testAbsHealth2b() {
+        EyeType[] blackEyes = {};
+        EyeType[] whiteEyes = {};
+        double bPotential = 0.73;
+        double wPotential = 0.64;
+        double blackHealth = 0.2;
+        double whiteHealth = -0.2;
+        double AbsAbsHealthDiff = 0.0;
+        double AbsHealthDiff = 0.4;
+        double RelHealthDiff = 0.4;
+        verifyHealthDifferences("whitebox/groupHealth2b", 6, 6, blackEyes, whiteEyes, 
+                                                 bPotential, wPotential,
+                                                 blackHealth, whiteHealth, 
+                                                 AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
+    }
+    public void testAbsHealth2c() {
+        EyeType[] blackEyes = {};
+        EyeType[] whiteEyes = {};
+        double bPotential = 0.54;
+        double wPotential = 0.38;
+        double blackHealth = 0.2;
+        double whiteHealth = -0.1;
+        double AbsAbsHealthDiff = 0.1;
+        double AbsHealthDiff = 0.3;
+        double RelHealthDiff = 0.3;
+        verifyHealthDifferences("whitebox/groupHealth2c", 6, 5, blackEyes, whiteEyes, 
+                                                 bPotential, wPotential,
+                                                 blackHealth, whiteHealth, 
+                                                 AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
+   }
+    public void testAbsHealth2d() {
+        EyeType[] blackEyes = {};
+        EyeType[] whiteEyes = {};
+        double bPotential = 0.385;
+        double wPotential = 0.384;
+        double blackHealth = 0.1;
+        double whiteHealth = -0.1;
+        double AbsAbsHealthDiff = 0.0;
+        double AbsHealthDiff = 0.2;
+        double RelHealthDiff = 0.2;
+        verifyHealthDifferences("whitebox/groupHealth2d", 5, 5, blackEyes, whiteEyes, 
+                                                 bPotential, wPotential,
+                                                 blackHealth, whiteHealth, 
+                                                 AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
+    }
+    public void testAbsHealth2e() {
+        EyeType[] blackEyes = {};
+        EyeType[] whiteEyes = {};
+        double bPotential = 0.516;
+        double wPotential = 0.344;
+        double blackHealth = 0.1;
+        double whiteHealth = -0.05;
+        double AbsAbsHealthDiff = 0.1;
+        double AbsHealthDiff = 0.15;
+        double RelHealthDiff = 0.15;
+        verifyHealthDifferences("whitebox/groupHealth2e", 5, 4, blackEyes, whiteEyes, 
+                                                 bPotential, wPotential,
+                                                 blackHealth, whiteHealth, 
+                                                 AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
+   }
+    public void testAbsHealth2f() {
+        EyeType[] blackEyes = {};
+        EyeType[] whiteEyes = {};
+        double bPotential = 0.596;
+        double wPotential = 0.385;
+        double blackHealth = 0.1;
+        double whiteHealth = -0.1;
+        double AbsAbsHealthDiff = 0.1;
+        double AbsHealthDiff = 0.2;
+        double RelHealthDiff = 0.2;
+        verifyHealthDifferences("whitebox/groupHealth2f", 5, 5, blackEyes, whiteEyes, 
+                                                 bPotential, wPotential,
+                                                 blackHealth, whiteHealth, 
+                                                 AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
+    }
+    public void testAbsHealth2g() {
+        EyeType[] blackEyes = {};
+        EyeType[] whiteEyes = {};
+        double bPotential = 0.17;
+        double wPotential = 0.544; //0.5439
+        double blackHealth = -0.3;
+        double whiteHealth = -0.05;
+        double AbsAbsHealthDiff = 0.25;
+        double AbsHealthDiff = -0.25;
+        double RelHealthDiff = -0.3375;
+        verifyHealthDifferences("whitebox/groupHealth2g", 2, 4, blackEyes, whiteEyes, 
+                                                 bPotential, wPotential,
+                                                 blackHealth, whiteHealth, 
+                                                 AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
+    }
 
     public void testAbsHealth3() {
         EyeType[] blackEyes = {EyeType.TERRITORIAL_EYE, EyeType.TERRITORIAL_EYE};
@@ -81,18 +235,93 @@ public class TestGoGroup extends GoTestCase {
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
     
-
+    public void testAbsHealth3a() {
+        EyeType[] blackEyes = {};
+        EyeType[] whiteEyes = {};
+        double bPotential = 0.877;
+        double wPotential = 0.49;
+        double blackHealth = 0.24;
+        double whiteHealth = -0.24;
+        double AbsAbsHealthDiff = 0.0;
+        double AbsHealthDiff = 0.48;
+        double RelHealthDiff = 0.48;
+        verifyHealthDifferences("whitebox/groupHealth3a", 8, 8, blackEyes, whiteEyes, 
+                                                 bPotential, wPotential,
+                                                 blackHealth, whiteHealth, 
+                                                 AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
+    }
+    public void testAbsHealth3b() {
+        EyeType[] blackEyes = {};
+        EyeType[] whiteEyes = {};
+        double bPotential = 0.82;
+        double wPotential = 0.51;
+        double blackHealth = 0.10;
+        double whiteHealth = -0.10;
+        double AbsAbsHealthDiff = 0.0;
+        double AbsHealthDiff = 0.2;
+        double RelHealthDiff = 0.62;
+        verifyHealthDifferences("whitebox/groupHealth3b", 5, 5, blackEyes, whiteEyes, 
+                                                 bPotential, wPotential,
+                                                 blackHealth, whiteHealth, 
+                                                 AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
+    }
+    public void testAbsHealth3c() {
+        EyeType[] blackEyes = {EyeType.FALSE_EYE};
+        EyeType[] whiteEyes = {};
+        double bPotential = 0.344;
+        double wPotential = 0.384;
+        double blackHealth = 0.02;
+        double whiteHealth = -0.1;
+        double AbsAbsHealthDiff = -0.08;
+        double AbsHealthDiff = 0.12;
+        double RelHealthDiff = 0.12;
+        verifyHealthDifferences("whitebox/groupHealth3c", 3, 5, blackEyes, whiteEyes, 
+                                                 bPotential, wPotential,
+                                                 blackHealth, whiteHealth, 
+                                                 AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
+    }
+    
     public void testAbsHealth4() {
         EyeType[] blackEyes = {};  // should really have a territorial eye here: EyeType.TERRITORIAL_EYE
         EyeType[] whiteEyes = {EyeType.TRUE_EYE};
         double bPotential = 1.9;
-        double wPotential = 0.34;
-        double blackHealth = 0.68; 
-        double whiteHealth = -0.43;
-        double AbsAbsHealthDiff =0.253;
+        double wPotential = 0.877;
+        double blackHealth = 0.79; 
+        double whiteHealth = -0.405;
+        double AbsAbsHealthDiff =0.388;
         double AbsHealthDiff = 1.11;
         double RelHealthDiff = 1.11;
         verifyHealthDifferences("whitebox/groupHealth4", 33, 12, blackEyes, whiteEyes, 
+                                                 bPotential, wPotential,
+                                                 blackHealth, whiteHealth, 
+                                                 AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
+    }
+    public void testAbsHealth4a() {
+        EyeType[] blackEyes = {};  // should really have a territorial eye here: EyeType.TERRITORIAL_EYE
+        EyeType[] whiteEyes = {};
+        double bPotential = 1.0;
+        double wPotential = 0.54;
+        double blackHealth = 0.36; 
+        double whiteHealth = -0.28;
+        double AbsAbsHealthDiff =0.083;
+        double AbsHealthDiff = 0.64;
+        double RelHealthDiff = 0.64;
+        verifyHealthDifferences("whitebox/groupHealth4a", 10, 10, blackEyes, whiteEyes, 
+                                                 bPotential, wPotential,
+                                                 blackHealth, whiteHealth, 
+                                                 AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
+    }
+    public void testAbsHealth4b() {
+        EyeType[] blackEyes = {};  // should really have a territorial eye here: EyeType.TERRITORIAL_EYE
+        EyeType[] whiteEyes = {};
+        double bPotential = 0.788;
+        double wPotential = 0.91;
+        double blackHealth = 0.26; 
+        double whiteHealth = -0.315;
+        double AbsAbsHealthDiff = -0.054;
+        double AbsHealthDiff = 0.58;
+        double RelHealthDiff = 0.58;
+        verifyHealthDifferences("whitebox/groupHealth4b", 9, 12, blackEyes, whiteEyes, 
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth, 
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
@@ -101,14 +330,46 @@ public class TestGoGroup extends GoTestCase {
     public void testAbsHealth5() {
         EyeType[] blackEyes = {EyeType.TRUE_EYE};
         EyeType[] whiteEyes = {};
-        double bPotential = 0.0;
-        double wPotential = 0.52;
+        double bPotential = 0.67;
+        double wPotential = 0.54;
         double blackHealth = -0.05; 
         double whiteHealth = -0.24;
         double AbsAbsHealthDiff = -0.1;
         double AbsHealthDiff = 0.2;
         double RelHealthDiff = 0.2;
         verifyHealthDifferences("whitebox/groupHealth5", 4, 8, blackEyes, whiteEyes, 
+                                                 bPotential, wPotential,
+                                                 blackHealth, whiteHealth, 
+                                                 AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
+    }
+    
+    public void testAbsHealth5a() {
+        EyeType[] blackEyes = {};
+        EyeType[] whiteEyes = {};
+        double bPotential = 0.71;
+        double wPotential = 1.09;
+        double blackHealth = 0.28; 
+        double whiteHealth = -0.405;
+        double AbsAbsHealthDiff = -0.125;
+        double AbsHealthDiff = 0.685;
+        double RelHealthDiff = 0.685;
+        verifyHealthDifferences("whitebox/groupHealth5a", 10, 12, blackEyes, whiteEyes, 
+                                                 bPotential, wPotential,
+                                                 blackHealth, whiteHealth, 
+                                                 AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
+    }
+    
+    public void testAbsHealth5b() {
+        EyeType[] blackEyes = {EyeType.BIG_EYE};
+        EyeType[] whiteEyes = {};
+        double bPotential = 0.877;
+        double wPotential = 1.14;
+        double blackHealth = 0.34; 
+        double whiteHealth = -0.42;
+        double AbsAbsHealthDiff = -0.084;
+        double AbsHealthDiff = 0.764;
+        double RelHealthDiff = 0.764;
+        verifyHealthDifferences("whitebox/groupHealth5b", 9, 13, blackEyes, whiteEyes, 
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth, 
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
@@ -129,6 +390,22 @@ public class TestGoGroup extends GoTestCase {
                                                  blackHealth, whiteHealth, 
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
+    
+    public void testAbsHealth6a() {
+        EyeType[] blackEyes = {EyeType.TRUE_EYE, EyeType.TRUE_EYE};
+        EyeType[] whiteEyes = {};
+        double bPotential = 0.93;
+        double wPotential = 1.31;
+        double blackHealth = 1.0;
+        double whiteHealth = -0.5;
+        double AbsAbsHealthDiff = 0.49;
+        double AbsHealthDiff = 1.5;
+        double RelHealthDiff = 1.5;
+        verifyHealthDifferences("whitebox/groupHealth6a", 8, 18, blackEyes, whiteEyes, 
+                                                 bPotential, wPotential,
+                                                 blackHealth, whiteHealth, 
+                                                 AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
+    }
 
      public void testAbsHealth7() {
         EyeType[] blackEyes = {EyeType.TERRITORIAL_EYE, EyeType.BIG_EYE};
@@ -136,11 +413,43 @@ public class TestGoGroup extends GoTestCase {
         double bPotential = 1.55;
         double wPotential = 0.69;
         double blackHealth = 0.94;
-        double whiteHealth = -0.20;
-        double AbsAbsHealthDiff = 0.8;
-        double AbsHealthDiff = 1.1;
-        double RelHealthDiff = 1.1;
-        verifyHealthDifferences("whitebox/groupHealth7", 19, 7, blackEyes, whiteEyes,  
+        double whiteHealth = -0.2;
+        double AbsAbsHealthDiff = 0.74;
+        double AbsHealthDiff = 1.14;
+        double RelHealthDiff = 1.14;
+        verifyHealthDifferences("whitebox/groupHealth7", 19, 6, blackEyes, whiteEyes,  
+                                                 bPotential, wPotential,
+                                                 blackHealth, whiteHealth, 
+                                                 AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
+    }
+     
+    public void testAbsHealth8() {
+        EyeType[] blackEyes = {};
+        EyeType[] whiteEyes = {};
+        double bPotential = 0.54;
+        double wPotential = 0.89;
+        double blackHealth = 0.315;
+        double whiteHealth = -0.3;
+        double AbsAbsHealthDiff = 0.017;
+        double AbsHealthDiff = 0.613;
+        double RelHealthDiff = 0.613;
+        verifyHealthDifferences("whitebox/groupHealth8", 12, 11, blackEyes, whiteEyes,  
+                                                 bPotential, wPotential,
+                                                 blackHealth, whiteHealth, 
+                                                 AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
+    }
+    
+    public void testAbsHealth9() {
+        EyeType[] blackEyes = {};
+        EyeType[] whiteEyes = {};
+        double bPotential = 1.49;
+        double wPotential = 0.77;
+        double blackHealth = 0.44;
+        double whiteHealth = -0.22;
+        double AbsAbsHealthDiff = 0.22;
+        double AbsHealthDiff = 0.663;
+        double RelHealthDiff = 0.683;
+        verifyHealthDifferences("whitebox/groupHealth9", 14, 7, blackEyes, whiteEyes,  
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth, 
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
@@ -170,24 +479,14 @@ public class TestGoGroup extends GoTestCase {
         GoGroup wg = getBiggestGroup(false);
         
          int numBlackLiberties = bg.getLiberties((GoBoard) controller_.getBoard()).size();
-         Assert.assertEquals(file + ". Expected num black liberties ="+ expectedNumberOfBlackLiberties + " but got "+numBlackLiberties, 
-                 expectedNumberOfBlackLiberties, numBlackLiberties);
-         
+        
          int numWhiteLiberties = wg.getLiberties((GoBoard) controller_.getBoard()).size();
-         Assert.assertEquals(file + ". Expected num white liberties ="+ expectedNumberOfWhiteLiberties + " but got "+numWhiteLiberties, 
-                 expectedNumberOfBlackLiberties, numBlackLiberties);
-
          
         double bah = bg.getAbsoluteHealth();
         double wah = wg.getAbsoluteHealth();              
-        //System.out.println(file + " b health="+bah + " white h="+wah);
-         Assert.assertTrue(file + ".  Unexpected black health = " + bah,  approximatelyEqual(expectedBlackHealth, bah, EPS));
-         Assert.assertTrue(file + ".  Unexpected white health = " + wah,  approximatelyEqual(expectedWhiteHealth, wah, EPS));
          
         double bPotential = bg.getEyePotential();
-        double wPotential = wg.getEyePotential();
-        Assert.assertTrue(file + ".  Unexpected black eye potential = " + bPotential,  approximatelyEqual(expectedBlackEyePotential, bPotential, EPS));
-         Assert.assertTrue(file + ".  Unexpected white eye potential = " + wPotential,  approximatelyEqual(expectedWhiteEyePotential, wPotential, EPS));
+        double wPotential = wg.getEyePotential();     
         
         // verify that we have the expected number and type of eyes for that biggest group
         verifyEyes(bg.getEyes(), blackEyes, true);
@@ -202,125 +501,74 @@ public class TestGoGroup extends GoTestCase {
         double daah = abah - awah;
         double dah = bah - wah;
         double drh = brh - wrh;
+        
+        // if any of the assertions are going to fail, lets print all the results nicely so they can be copied over easily
+        boolean libertiesOK = (expectedNumberOfBlackLiberties == numBlackLiberties) && (expectedNumberOfWhiteLiberties == numWhiteLiberties);
+        boolean bEyePotentialOK = approximatelyEqual(expectedBlackEyePotential, bPotential, EPS);
+        boolean wEyePotentialOK = approximatelyEqual(expectedWhiteEyePotential, wPotential, EPS);
+        boolean bHealthOK = approximatelyEqual(expectedBlackHealth, bah, EPS);
+        boolean wHealthOK = approximatelyEqual(expectedWhiteHealth, wah, EPS);
+        boolean absAbsDifOK = approximatelyEqual(daah, expectedAbsAbsHealthDifference, THRESH);
+        boolean absDifOK = approximatelyEqual(dah, expectedAbsHealthDifference, THRESH);
+        boolean relDifOK = approximatelyEqual(drh, expectedRelHealthDifference, THRESH);
+        
+        if (!(libertiesOK && bEyePotentialOK && wEyePotentialOK && bHealthOK && wHealthOK && absAbsDifOK && absDifOK && relDifOK))  {
+            System.out.println( file + "\t exp \t got ");
+            System.out.println("\t\t\t-----\t-----");
+            System.out.println("black liberties    \t "+ expectedNumberOfBlackLiberties +"\t " + numBlackLiberties + errorMarker(libertiesOK));
+            System.out.println("white liberties    \t "+ expectedNumberOfWhiteLiberties +"\t " + numWhiteLiberties + errorMarker(libertiesOK) );
+            System.out.println("black eye potential\t" + expectedBlackEyePotential + "\t " + Util.formatNumber(bPotential) + errorMarker(bEyePotentialOK));
+            System.out.println("white eye potential\t" + expectedWhiteEyePotential + "\t " + Util.formatNumber(wPotential) + errorMarker(wEyePotentialOK));
+            
+            System.out.println("black health      \t" + expectedBlackHealth + "\t " + Util.formatNumber(bah) + errorMarker(bHealthOK));
+            System.out.println("white health      \t" + expectedWhiteHealth + "\t " + Util.formatNumber(wah) + errorMarker(wHealthOK));
+            
+            System.out.println("absAbs health dif \t" + expectedAbsAbsHealthDifference + "\t " + Util.formatNumber(daah) + errorMarker(absAbsDifOK));
+            System.out.println("absolute health diff\t" + expectedAbsHealthDifference + "\t " + Util.formatNumber(dah) + errorMarker(absDifOK));
+            System.out.println("relative health dif \t" + expectedRelHealthDifference + "\t " + Util.formatNumber(drh) + errorMarker(relDifOK));   
+            
+            System.out.println("black eyes: "+ bg.getEyes());
+            System.out.println("white eyes: "+ wg.getEyes());
+            
+            System.out.println("\n");
+        }
+        
+        Assert.assertEquals(file + ". Expected num black liberties ="+ expectedNumberOfBlackLiberties + " but got "+numBlackLiberties, 
+                 expectedNumberOfBlackLiberties, numBlackLiberties);
+        Assert.assertEquals(file + ". Expected num white liberties ="+ expectedNumberOfWhiteLiberties + " but got "+numWhiteLiberties, 
+                 expectedNumberOfWhiteLiberties, numWhiteLiberties);
+         
+        Assert.assertTrue(file + ".  Unexpected black eye potential = " + bPotential,  bEyePotentialOK);
+        Assert.assertTrue(file + ".  Unexpected white eye potential = " + wPotential,  wEyePotentialOK);
 
-        Assert.assertTrue(file + ". Expected abs(black AbsHealth) - abs(white AbsHealth) to be about "
-                + expectedAbsAbsHealthDifference + "\n but instead got ("+abah+" -"+ awah+") = "+ daah,
-                approximatelyEqual(daah, expectedAbsAbsHealthDifference, THRESH));
+        Assert.assertTrue(file + ".  Unexpected black health = " + bah,  bHealthOK);
+        Assert.assertTrue(file + ".  Unexpected white health = " + wah,  wHealthOK);
+        
+        Assert.assertTrue(file + ". Expected (absAbs) abs(black AbsHealth) - abs(white AbsHealth) to be about "
+                + expectedAbsAbsHealthDifference + "\n but instead got ("+abah+" -"+ awah+") = "+ daah, absAbsDifOK);
         Assert.assertTrue(file + ". Expected (black AbsHealth) - (white AbsHealth) to be about "
-                + expectedAbsHealthDifference + "\n but instead got ("+bah+" -"+ wah+") = "+ dah,
-                approximatelyEqual(dah, expectedAbsHealthDifference, THRESH));
-        Assert.assertTrue(file + ". Expected (black RelativeHealth) - (white RelativeHealth) to be about "
-                + expectedRelHealthDifference + "\n but instead got  ("+brh+" -"+ wrh+") = "+ drh,
-                approximatelyEqual(drh, expectedRelHealthDifference, THRESH));
+                + expectedAbsHealthDifference + "\n but instead got ("+bah+" -"+ wah+") = "+ dah, absDifOK);
+        Assert.assertTrue(file + ". Expected (rel) (black RelativeHealth) - (white RelativeHealth) to be about "
+                + expectedRelHealthDifference + "\n but instead got  ("+brh+" -"+ wrh+") = "+ drh, relDifOK);
+    }
+    
+    private final String errorMarker(boolean OK) {
+        return (OK?"":"      *Error*");
     }
 
-
-    private final void verifyEyes(Set eyes, EyeType[] expectedEyes, boolean black)
+    private final void verifyEyes(Set<GoEye> eyes, EyeType[] expectedEyes, boolean black)
     {
         String color = black? "black" : "white";
         Assert.assertEquals("unequal numbers of "+color+" eyes", expectedEyes.length, eyes.size());
         if (eyes.size() > 0)
         {
             int i = 0;
-            for (Object o : eyes) {
-                EyeType eType = ((GoEye) o).getEyeType();
+            for (GoEye eye : eyes) {
+                EyeType eType = eye.getEyeType();
                 Assert.assertTrue(color + "Eye " + i + " was not the type that we expected. It was " + eType, (expectedEyes[i] == eType));  
                 i++;
             }    
         }
     }
-    
-/*
-    // test for unconditional life
-    public void testUnconditionalLife1() {
-        controller_.reset();
-        verifyUnconditionalLife("whitebox/unconditionalLife1", true, 12, true);
-    }
-
-    public void testUnconditionalLife2() {
-        verifyUnconditionalLife("whitebox/unconditionalLife2", true, 13, false);
-    }
-
-    public void testUnconditionalLife3() {
-        verifyUnconditionalLife("whitebox/unconditionalLife3", true, 11, false);
-    }
-
-
-    public void testUnconditionalLife4() {
-        verifyUnconditionalLife("whitebox/unconditionalLife4", true, 8, false);
-    }
-
-    public void testUnconditionalLife5() {
-        verifyUnconditionalLife("whitebox/unconditionalLife5", true, 7, false);
-    }
-
-
-    public void testUnconditionalLife6() {
-        verifyUnconditionalLife("whitebox/unconditionalLife6", true, 7, true);
-    }
-
-    public void testUnconditionalLife7() {
-        verifyUnconditionalLife("whitebox/unconditionalLife7", false, 8, true);
-    }
-
-
-    public void testUnconditionalLife8() {
-        verifyUnconditionalLife("whitebox/unconditionalLife8", true, 13, true);
-    }
-
-    public void testUnconditionalLife9() {
-        verifyUnconditionalLife("whitebox/unconditionalLife9", false, 9, false);
-    }
-
-
-    public void testUnconditionalLife11() {
-
-        verifyUnconditionalLife("whitebox/unconditionalLife11", true, 14, true);
-    }
-
-    public void testUnconditionalLife12() {
-        verifyUnconditionalLife("whitebox/unconditionalLife12", true, 21, true);
-    }
-
-     public void testUnconditionalLife13() {
-        verifyUnconditionalLife("whitebox/unconditionalLife13", true, 15, false);
-    }
-
-     public void testUnconditionalLife14() {
-        verifyUnconditionalLife("whitebox/unconditionalLife14", true, 13, false);
-    }
-   
-     public void testUnconditionalLife15() {
-        verifyUnconditionalLife("whitebox/unconditionalLife15", true, 12, true);
-    }
- */
-
-
-    /**
-     * Use Benson's algorithm for detecting unconditionally alive groups.
-     */
-    private void verifyUnconditionalLife(String file,
-                                         boolean forBlackGroup, int expectedSizeOfGroup, boolean expectedUnconditionalyAlive) {
-        restore(file);
-
-        // find the biggest black and white groups
-        GoGroup group = getBiggestGroup(forBlackGroup);
-
-        int size = group.getNumStones();
-        Assert.assertTrue("We expected the size of the test group to be "+ expectedSizeOfGroup
-                +" but instead it was "+ size,
-                size == expectedSizeOfGroup);
-
-        boolean unconditionallyAlive = GoGroupUtil.isUnconditionallyAlive(group, (GoBoard) controller_.getBoard());
-
-        if (expectedUnconditionalyAlive) {
-            Assert.assertTrue("Expected this group be unconditionally alive, but its not. group=" + group,
-                               unconditionallyAlive);
-        } else {
-            Assert.assertTrue("Did not expected this group be unconditionally alive, but it is. group=" + group,
-                               !unconditionallyAlive);
-        }
-    }
-
 
 }

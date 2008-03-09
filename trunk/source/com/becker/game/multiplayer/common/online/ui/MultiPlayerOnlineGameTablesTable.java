@@ -10,6 +10,7 @@ import com.becker.ui.table.*;
 import javax.swing.table.*;
 import java.awt.event.*;
 import java.util.*;
+import java.awt.Color;
 
 /**
  * A table that has a row for each virtual online game table.
@@ -38,6 +39,8 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase {
     private static int counter_;
 
     private ActionListener actionListener_;
+    
+    private static final Random RANDOM = new Random();
 
 
     /**
@@ -152,6 +155,12 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase {
 
     protected static synchronized String getUniqueName() {
           return "Table "+ counter_++;
+    }
+    
+     protected static Color getRandomColor() {
+
+        int r = RANDOM.nextInt(256);
+        return new Color(r, 255 - r, RANDOM.nextInt(256));
     }
 
 }

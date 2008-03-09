@@ -141,7 +141,7 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
         assert(!stone.isVisited());
 
         if (m.isSuicidal(board)) {
-           JOptionPane.showMessageDialog( null, GameContext.getLabel("SUICIDAL") );
+            JOptionPane.showMessageDialog( null, GameContext.getLabel("SUICIDAL") );
             GameContext.log( 1, "GoBoardViewer: That move is suicidal (and hence illegal): " + stone );
             return;
         }

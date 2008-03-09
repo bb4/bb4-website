@@ -24,15 +24,13 @@ public class Profiler
     /**
      * Default constructor.
      */
-    public Profiler()
-    {}
+    public Profiler() {}
 
     /**
      * add a top level entry.
      * @param name of the top level entry
      */
-    public void add(String name)
-    {
+    public void add(String name)  {
         ProfilerEntry e = new ProfilerEntry(name);
         topLevelEntries_.add(e);
         hmEntries_.put(name, e);
@@ -43,8 +41,7 @@ public class Profiler
      * @param name
      * @param parent entry above us.
      */
-    public void add(String name, String parent)
-    {
+    public void add(String name, String parent)  {
         ProfilerEntry par = hmEntries_.get(parent);
         assert par!=null : "invalid parent: "+parent;
         ProfilerEntry e = new ProfilerEntry(name);
@@ -55,8 +52,7 @@ public class Profiler
     /**
      * @param name the entry for whom we are to start the timing.
      */
-    public void start(String name)
-     {
+    public void start(String name)  {
          if (!enabled_) return;
          ProfilerEntry p = hmEntries_.get(name);
          p.start();
@@ -65,8 +61,7 @@ public class Profiler
     /**
      * @param name the entry for which we are to stop the timing and increment the total time.
      */
-     public void stop(String name)
-     {
+     public void stop(String name) {
          if (!enabled_) return;
          ProfilerEntry p = hmEntries_.get(name);
          p.stop();
@@ -76,8 +71,7 @@ public class Profiler
     /**
      * reset all the timing numbers to 0
      */
-    public void resetAll()
-    {
+    public void resetAll()  {
        Iterator childIt = topLevelEntries_.iterator();
         while (childIt.hasNext()) {
             ProfilerEntry p = (ProfilerEntry)childIt.next();
@@ -88,8 +82,7 @@ public class Profiler
     /**
      * pretty print all the performance statistics.
      */
-    public void print()
-    {
+    public void print() {
         if (!enabled_) return;
         Iterator childIt = topLevelEntries_.iterator();
         while (childIt.hasNext()) {
@@ -98,13 +91,21 @@ public class Profiler
         }
     }
 
-    public void setEnabled(boolean enable)
-    {
+    public String toString() {
+        StringBuilder bldr = new StringBuilder();
+        Iterator childIt = topLevelEntries_.iterator();
+        while (childIt.hasNext()) {
+            ProfilerEntry p = (ProfilerEntry)childIt.next();
+            bldr.append(p.toString());
+        }
+        return bldr.toString();
+    }
+    
+    public void setEnabled(boolean enable) {
         enabled_ = enable;
     }
 
-    public void setLogger(Log logger)
-    {
+    public void setLogger(Log logger) {
         logger_ = logger;
     }
 
@@ -159,12 +160,17 @@ public class Profiler
 
         protected void print(String indent)
         {
+            print(indent,  logger_);
+        }
+        
+        protected void print(String indent, Log logger)
+        {
             double seconds = (double)totalTime_/1000.0;
             String text = indent+ "Time for "+name_+" : "+ Util.formatNumber(seconds) +" seconds";
-            if (logger_==null)
+            if (logger==null)
                 System.out.println(text);
             else                
-                 logger_.println(text);
+                 logger.println(text);
             Iterator childIt = children_.iterator();
 
             long totalChildTime = 0;
@@ -175,6 +181,16 @@ public class Profiler
             }
             assert (totalChildTime <= 1.1 * totalTime_ ): "The sum of the child times("+totalChildTime
                     +") cannot be greater than the parent time ("+totalTime_+").";
+        }
+        
+        public String toString()
+        {
+            Log log = new Log();
+            log.setDestination(Log.LOG_TO_STRING);
+            StringBuilder bldr = new StringBuilder();
+            log.setStringBuilder(bldr);
+            print(INDENT, log);
+            return bldr.toString();
         }
 
     }

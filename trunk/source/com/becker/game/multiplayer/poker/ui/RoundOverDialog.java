@@ -11,13 +11,9 @@ import java.awt.*;
 import java.text.NumberFormat;
 
 
-
 /**
  * Show a summary of the final results.
- * We will show how many planets and how many ships each remaining player has.
- * The winner is the player with the most planets.
- * If there are more than one player with the same number of planets,
- * then the number of ships will be used to break ties.
+ * The winner is the player with al the chips.
  *
  * @author Barry Becker
  */

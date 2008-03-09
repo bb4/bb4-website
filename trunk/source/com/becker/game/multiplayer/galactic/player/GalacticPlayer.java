@@ -164,14 +164,13 @@ public class GalacticPlayer extends Player
         return totalCapacity;
     }
 
-    public String toString()
-    {
-        StringBuffer sb = new StringBuffer( super.toString() );
+    protected String additionalInfo() {
+        StringBuffer sb = new StringBuffer();   
         sb.append("Fleet size: "+getTotalNumShips());
         sb.append("Home planet: "+homePlanet_.getName());
         return sb.toString();
     }
-
+    
 }
 
 

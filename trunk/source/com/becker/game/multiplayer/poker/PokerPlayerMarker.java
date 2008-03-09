@@ -28,14 +28,14 @@ public class PokerPlayerMarker extends GamePiece
         setAnnotation(""+owner.getName());
         owner_ = owner;
     }
-
+    /*
     public PokerPlayerMarker( PokerPlayer owner, Location pos)
     {
         setAnnotation(""+owner.getName());
         owner_ = owner;
         location_ = pos;
         assert(pos!=null);
-    }
+    }*/
 
 
     public PokerPlayer getOwner()

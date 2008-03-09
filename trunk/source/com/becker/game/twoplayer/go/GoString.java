@@ -22,9 +22,11 @@ public class GoString extends GoSet
     protected GoGroup group_;
 
     /** Used by Benson's algorithm to help determine unconditional life. */
-    private Set nbrs_;
-    /** If true, then we are an eye in an unconditionally alive group. */
+    private Set<GoString> neighbors_;
+    
+    /** If true, then we are an eye in an unconditionally alive group (according to Benson's algorithm). */
     private boolean unconditionallyAlive_;
+    
     /** Keep track of number of liberties instead of computing each time (for performance). */
     private Set<GoBoardPosition> liberties_;
 
@@ -360,16 +362,22 @@ public class GoString extends GoSet
 
 
     /**
-     * @return nbr eyes if string, or nbs strings if eye
+     * @return neighbor eyes if string, or neighboring strings if we are an eye.
      */
-    public Set getNbrs() {
-        return nbrs_;
+    public Set<GoString> getNeighbors() {
+        return neighbors_;
     }
 
-    public void setNbrs(Set nbrEyes) {
-        nbrs_ = nbrEyes;
+    /**
+     * Set our neigbors (eyes if string, or neighboring strings if we are an eye).
+     */
+    public void setNbrs(Set<GoString> nbrEyes) {
+        neighbors_ = nbrEyes;
     }
 
+    /**
+     * @return true if unconditionally alive.
+     */
     public boolean isUnconditionallyAlive() {
         return unconditionallyAlive_;
     }

@@ -155,7 +155,7 @@ public class PokerGameViewer extends GameBoardViewer
                 break;
         }
 
-        JOptionPane.showMessageDialog(parent_, msg, "Robot Name", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(parent_, msg, robot.getName(), JOptionPane.INFORMATION_MESSAGE);
         refresh();
         pc.advanceToNextPlayer();
 

@@ -465,7 +465,8 @@ public final class GoBoardUtil
         return true;
     }
 
-    private static final float MIN_THRESH = 0.2f;
+    private static final float MIN_THRESH = 0.3f;
+    
     /**
      * @param group
      * @param stone
@@ -476,7 +477,7 @@ public final class GoBoardUtil
     {
         float groupHealth = group.getAbsoluteHealth();
         // for purposes of determining relative weakness. Don't allow the outer group to go out of its living range.
-        if (group.isOwnedByPlayer1() && groupHealth < MIN_THRESH) {
+        if (group.isOwnedByPlayer1() &&  groupHealth < MIN_THRESH) {
             groupHealth = MIN_THRESH;
         } else if (!group.isOwnedByPlayer1() && groupHealth > -MIN_THRESH) {
             groupHealth = -MIN_THRESH;
@@ -484,6 +485,7 @@ public final class GoBoardUtil
         float stoneHealth = stone.getHealth();
         if (stone.isOwnedByPlayer1())  {
             assert (!group.isOwnedByPlayer1());
+            //System.out.println("-" + groupHealth +" - "+ stoneHealth +" = "+ (-groupHealth - stoneHealth) );
             return (-groupHealth - stoneHealth > threshold);
         }
         else {

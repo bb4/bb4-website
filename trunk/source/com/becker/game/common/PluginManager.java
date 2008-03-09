@@ -49,7 +49,10 @@ public class PluginManager {
             String name = DomUtil.getAttribute(n, "name");
             String msgKey = DomUtil.getAttribute(n, "msgKey");
             String msgBundleBase = DomUtil.getAttribute(n, "msgBundleBase");
+            
+            System.out.println("want to get label for key="+msgKey);
             String label = GameContext.getLabel(msgKey);
+            
             String panelClass =  DomUtil.getAttribute(n, "panelClass");
             String controllerClass =  DomUtil.getAttribute(n, "controllerClass");
             String def = DomUtil.getAttribute(n, "default", "false");

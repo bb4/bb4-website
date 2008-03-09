@@ -159,11 +159,12 @@ public abstract class PokerPlayer extends MultiGamePlayer
         cash_ += controller.getPotValue();
         controller.setPotValue(0);
     }
-
-    public String toString()
-    {
-        StringBuffer sb = new StringBuffer( super.toString() );
-        sb.append(" Hand: "+getHand());
+    
+    protected String additionalInfo() {
+        StringBuffer sb = new StringBuffer();
+        if (getHand() != null) {            
+            sb.append(" Hand: "+getHand());
+        }
         sb.append(" Money: "+cash_);
         return sb.toString();
     }

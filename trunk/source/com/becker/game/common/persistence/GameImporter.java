@@ -41,6 +41,7 @@ public abstract class GameImporter {
         Iterator it = moveSequence.iterator();
         while ( it.hasNext() ) {
             Move m = (Move) it.next();
+            //System.out.println("now making:"+ m);
             controller_.makeMove( m );
         }
     }

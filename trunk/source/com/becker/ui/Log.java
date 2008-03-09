@@ -5,7 +5,6 @@ import java.io.*;
 /**
  * Provide support for general logging.
  * You have the option of logging output to the console, to a separate window, or to a file
- * @@ we could also allow output to go to more than one.
  *
  * @see com.becker.ui.OutputWindow
  * @author Barry Becker
@@ -18,6 +17,7 @@ public class Log
     public static final int LOG_TO_CONSOLE = 0x1;
     public static final int LOG_TO_WINDOW = 0x2;
     public static final int LOG_TO_FILE = 0x4;
+    public static final int LOG_TO_STRING = 0x8;
 
     // must be static because accessed in satic method (logMessage)
     // the default is to log to the console
@@ -26,6 +26,8 @@ public class Log
     // an output window for logging
     private OutputWindow logWindow_ = null;
     private FileOutputStream fileOutStream_ = null;
+    // used if logging to String
+    private StringBuilder logBuffer_ = null;
 
     /**
      * Log Constructor
@@ -83,6 +85,11 @@ public class Log
         fileOutStream_ = new FileOutputStream(fileName);
         // @@ should wrap in a BufferedOutputStream for performance.
     }
+    
+    public void setStringBuilder(StringBuilder bldr)
+    {
+        logBuffer_ = bldr;
+    }
 
     /**
      * Log a message to the logDestination
@@ -102,8 +109,8 @@ public class Log
                 else
                     System.err.println("no logWindow to print to. First specify with setLogWindow. message="+message);
             }
-             if ((logDestination_ & LOG_TO_FILE) > 0) {
-                 if (fileOutStream_ != null)  {
+            if ((logDestination_ & LOG_TO_FILE) > 0) {
+                if (fileOutStream_ != null)  {
                      try {
                          fileOutStream_.write(message.getBytes());
                      } catch (IOException e) {
@@ -112,6 +119,13 @@ public class Log
                      }
                  }
                  else System.err.println("no logFile to print to. First specify with setLogFile. message="+message);
+            }
+            if ((logDestination_ & LOG_TO_STRING) > 0) {
+                if (logBuffer_ != null)
+                {
+                    logBuffer_.append(message);
+                }
+                else System.err.println("no StringBuilder buffer was set to print to. First specify with setStringBuilder.  message="+message);
             }
         }
     }
