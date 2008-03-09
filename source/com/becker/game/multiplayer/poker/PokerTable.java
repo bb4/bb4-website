@@ -47,12 +47,18 @@ public class PokerTable extends Board
         reset();
     }
 
+    /**
+     * A poker game has no real limit so we just reutnr a huge number.
+     * @return max number of poker rounds allowed.
+     */
     public int getMaxNumMoves()
     {
-        return rowsTimesCols_;
+        return 1000000;
     }
 
+    // size of a players marker
     private static final double RADIUS = 0.65;
+    
     /**
      * place the players around the poker table
      * @param players
@@ -100,6 +106,5 @@ public class PokerTable extends Board
         GameContext.log(0,  "undo no implemented yet for poker." );
         //clear(positions_[move.getToRow()][move.getToCol()]);
     }
-
 
 }

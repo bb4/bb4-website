@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plugins SYSTEM "http://www.geocities.com/BarryBecker4/schema/plugins.dtd">
+<!DOCTYPE plugins SYSTEM "G:\projects\java_projects\trunk\source\com\becker\game\plugins.dtd">
+<!--!DOCTYPE plugins SYSTEM "http://www.geocities.com/BarryBecker4/schema/plugins.dtd"-->
+
 <plugins date="10/19/2004" author="Barry Becker">
     
     <!-- whenever you add a new game to the framework, you need to add an extra entry here -->    
@@ -47,5 +49,10 @@
           msgBundleBase="com.becker.game.multiplayer.set.resources.setMessages"
           panelClass="com.becker.game.multiplayer.set.ui.SetPanel"
           controllerClass="com.becker.game.multiplayer.set.SetController" />
+      <game name="trivial"
+          msgKey="TRIVIAL"
+          msgBundleBase="com.becker.game.multiplayer.trivial.resources.trivialMessages"
+          panelClass="com.becker.game.multiplayer.trivial.ui.TrivialPanel"
+          controllerClass="com.becker.game.multiplayer.trivial.TrivialController" />
 
 </plugins>

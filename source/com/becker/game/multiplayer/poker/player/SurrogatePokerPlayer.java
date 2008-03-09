@@ -7,8 +7,9 @@ import com.becker.game.multiplayer.poker.PokerController;
 import java.awt.*;
 
 /**
- *@@TODO - individual games should not have surrogate player classes.
- *See game/common/online/SurrogatePlayer you create a surrogate and give it the playerInfo for the actual player.
+ *@@TODO - individual game types should not have surrogate player classes.
+ *See game/common/online/SurrogatePlayer. 
+ * You create a surrogate and give it the player object for the actual player.
  *
  * On the server, all players are surrogates except for the robot players.
  * On the client, all players are surrogates except for the human player that is controlling that client.

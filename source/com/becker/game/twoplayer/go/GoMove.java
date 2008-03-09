@@ -330,8 +330,7 @@ public final class GoMove extends TwoPlayerMove
                 str.setUnconditionallyAlive(false);
                 str.setNbrs(null);
             }
-            for (Object e : group.getEyes())  {
-                GoEye eye = (GoEye) e;
+            for (GoEye eye : group.getEyes())  {      
                 eye.setUnconditionallyAlive(false);
                 eye.setNbrs(null);
             }
@@ -567,8 +566,6 @@ public final class GoMove extends TwoPlayerMove
 
 
     /**
-     * OLD WAY (had some problems
-     *
      * remove all the groups on the board.
      * Then for each stone, find its group and add that new group to the board's group list.
      * Continue until all stone accounted for.

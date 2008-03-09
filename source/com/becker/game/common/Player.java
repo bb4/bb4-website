@@ -96,14 +96,18 @@ public class Player implements Serializable
         return hash;
     }
     
-    public String toString()
-    {
+    public String toString() {
         StringBuffer sb = new StringBuffer( 100 );
 
-        sb.append("Name : ").append(name_);
+        sb.append("[ *").append(name_).append("* ");
         if (!isHuman())
             sb.append(" (computer)");
+        sb.append(additionalInfo()).append(" ]");
         return sb.toString();
+    }
+    
+    protected String additionalInfo() {
+        return "";
     }
 }
 

@@ -3,7 +3,7 @@ package com.becker.game.multiplayer.poker;
 import com.becker.game.common.*;
 
 /**
- * Captures the delta state change of everything that happened during one tround of the poker game.
+ * Captures the delta state change of everything that happened during one round of the poker game.
  * This should include the amount that each player has contributed to the pot.
  * Allows for undo.
  *

@@ -190,10 +190,11 @@ public final class GameContext
             System.out.println("could not find "+resourcePath);
             e.printStackTrace();
         }
+        assert (gameMessages_ != null) : "gameMessages were null after loading them for :" + gameName_;
     }
 
     public static void loadGameResources() {
-        loadGameResources(gameName_);
+        loadGameResources(gameName_);        
     }
 
     /**
@@ -227,7 +228,7 @@ public final class GameContext
         else {
 
             if (gameMessages_ == null) {
-                loadGameResources();
+                loadGameResources();             
             }
 
             String label = key; // default

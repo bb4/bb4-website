@@ -15,9 +15,12 @@ import java.util.List;
  * Defines everything the computer needs to know to play Poker.
  *
  * ToDo list
- * - change GameController.setPlayer and getPlayers to use Lists rather than Arrays (refactor)
+ * - something screwed up adding players out of order
+ * - fix TrivialMarker not showing number.
+ * - move most of what is in the trivial game up to multiplayer common.
  * - Make PokerHumanPlayer return a PokerAction
  * - SurrogatePokerPlayer should wait (block) on an Action from the client or server.
+ * - All players should have an action that they perform (for all games. This action is like a move in a 2 player game.)
  *
  * - add host and port to game options
  * - use real faces for players
@@ -33,7 +36,7 @@ import java.util.List;
  *      - show who gets pot
  *      - show the pot
  *      - give option to start another round with same players
- *      - unless really done, onmly then can you exit.
+ *      - unless really done, only then can you exit.
  *
  *  bugs
  *     - at end of game the winning players winnings are not added to his cash.
@@ -75,7 +78,7 @@ public class PokerController extends GameController
     /**
      *  Construct the Poker game controller given an initial board size
      */
-    public PokerController(int nrows, int ncols )
+    private PokerController(int nrows, int ncols )
     {
         board_ = new PokerTable( nrows, ncols);
         initializeData();
@@ -85,6 +88,7 @@ public class PokerController extends GameController
     /**
      * Return the game board back to its initial openning state
      */
+    @Override
     public void reset()
     {
         super.reset();
@@ -120,6 +124,7 @@ public class PokerController extends GameController
         if (players_ == null) {
             // create the default players. One human and one robot.
             players_ = new ArrayList<PokerPlayer>(2);
+            @SuppressWarnings("unchecked")
             List<PokerPlayer> pplayers = (List<PokerPlayer>)players_;
 
             pplayers.add(PokerPlayer.createPokerPlayer("Player 1",

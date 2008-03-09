@@ -91,11 +91,9 @@ public class SetPlayer extends MultiGamePlayer
         return getName().hashCode();
     }
 
-    public String toString()
-    {
-        StringBuffer sb = new StringBuffer( super.toString() );
-        sb.append("Num Sets Found: "+numSetsFound_);
-        return sb.toString();
+    public String additionalInfo()
+    {      
+        return "Num Sets Found: "+numSetsFound_;
     }
 
 

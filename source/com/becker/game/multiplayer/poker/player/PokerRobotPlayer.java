@@ -24,6 +24,9 @@ public abstract class PokerRobotPlayer extends PokerPlayer
     }
 
 
+    /**
+     * @return a string describing the type of robot.
+     */
     public String getType() {
         return  robotType_.getName();
     }
@@ -41,7 +44,7 @@ public abstract class PokerRobotPlayer extends PokerPlayer
     protected abstract int getRaise(PokerController pc);
 
     /**
-     *
+     * just pass in options instead of money
      * @return a random robot player
      */
     public static PokerRobotPlayer getRandomRobotPlayer(String name, int money, Color color)

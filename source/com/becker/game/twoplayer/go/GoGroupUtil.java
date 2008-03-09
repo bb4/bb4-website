@@ -6,7 +6,8 @@ import java.util.*;
 
 /**
  * static methods for determing properties of groups
- * Includes Bensons algoritm for unconditional life
+ * Includes Benson's algoritm for unconditional life
+ *
  * @author Barry Becker Date: Aug 28, 2005
  */
 public final class GoGroupUtil {
@@ -23,27 +24,25 @@ public final class GoGroupUtil {
     public static boolean isUnconditionallyAlive(GoGroup group, GoBoard board) {
 
         // mark all the strings in the group as not UA
-        Set candidateStrings = new HashSet();
+        Set<GoString> candidateStrings = new HashSet<GoString>();
         for (Object s : group.getMembers()) {
             GoString str = (GoString)s;
             str.setUnconditionallyAlive(true);
             candidateStrings.add(str);
         }
-
+       
         findNeighborStringSets(group, board);
 
         // now create the neighbor eye sets for each qualified string
-        for (Object e : group.getEyes()) {
-            GoEye eye = (GoEye) e;
-            if (eye.getNbrs() != null) {
-                for (Object s : eye.getNbrs()) {
-                    GoString str = (GoString) s;
-                    if (str.getNbrs() == null) {
+        for (GoEye eye : group.getEyes()) {          
+            if (eye.getNeighbors() != null) {
+                for (GoString str : eye.getNeighbors()) {                  
+                    if (str.getNeighbors() == null) {
                         str.setNbrs(new HashSet());
                     }
                     // only add the eye if every unoccupied position in the eye is adjacent to the str
                     if  (eye.allUnocupiedAdjacentToString(str, board)) {
-                        str.getNbrs().add(eye);
+                        str.getNeighbors().add(eye);
                     }
                 }
             }
@@ -52,26 +51,23 @@ public final class GoGroupUtil {
         boolean done;
         do {
             done = true;
-            for (Object e : group.getEyes()) {
-                GoEye eye = (GoEye)e;
+            for (GoEye eye : group.getEyes()) {
                 eye.setUnconditionallyAlive(true);
-                if (eye.getNbrs() != null) {
-                    for (Object str : eye.getNbrs()) {
-                        GoString nbrStr = (GoString) str;
+                if (eye.getNeighbors() != null) {
+                    for (GoString nbrStr : eye.getNeighbors()) {                     
                         if (!nbrStr.isUnconditionallyAlive()) {
                             eye.setUnconditionallyAlive(false);
                         }
                     }
                 }
             }
-            Iterator it = candidateStrings.iterator();
+            Iterator<GoString> it = candidateStrings.iterator();
             while (it.hasNext()) {
-                GoString str = (GoString) it.next();
+                GoString str = it.next();
                 // find the number of ua eyes adjacent
                 int numUAEyesAdjacent = 0;
-                if (str.getNbrs() != null) {
-                    for (Object e : str.getNbrs()) {
-                        GoEye eye = (GoEye) e;
+                if (str.getNeighbors() != null) {
+                    for (GoString eye : str.getNeighbors()) {                      
                         if (eye.isUnconditionallyAlive()) {
                             numUAEyesAdjacent++;
                         }
@@ -99,9 +95,8 @@ public final class GoGroupUtil {
     private static void findNeighborStringSets(GoGroup group, GoBoard board) {
         // first find the neighbor string sets for each true eye in the group
         //Set candidateUAStrings = new HashSet();
-        for (Object e : group.getEyes()) {
-            GoEye eye = (GoEye) e;
-            if (eye.getNbrs() == null) {
+        for (GoEye eye : group.getEyes()) {         
+            if (eye.getNeighbors() == null) {
                 eye.setNbrs(new HashSet());
             }
             for (Object point : eye.getMembers()) {
@@ -116,8 +111,8 @@ public final class GoGroupUtil {
                             break;
                         }
                         else {
-                            if (eye.getNbrs() != null ) {
-                                eye.getNbrs().add(nbr.getString());
+                            if (eye.getNeighbors() != null ) {
+                                eye.getNeighbors().add(nbr.getString());
                                 //candidateUAStrings.add(nbr.getString());
                             }
                         }
@@ -125,7 +120,7 @@ public final class GoGroupUtil {
                 }
             }
             GameContext.log(2, "num string nbrs of eyes = "
-                    + ((eye.getNbrs() == null)? 0 : eye.getNbrs().size()));
+                    + ((eye.getNeighbors() == null)? 0 : eye.getNeighbors().size()));
         }
     }
 

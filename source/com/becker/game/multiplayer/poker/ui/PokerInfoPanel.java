@@ -151,7 +151,7 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
                             currentPlayer.contributeToPot(pc, callAmount);                     
                         } else {                            
                             currentPlayer.setFold(true);
-                            assert false; // should never happen. remove.
+                            assert false; // still happened. need to fix!
                         }
                         break;
                     case RAISE :

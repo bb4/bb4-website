@@ -29,7 +29,7 @@ public final class GoGroup extends GoSet
      * it includes eyes of all types including false eyes
      * false-eye: any string of spaces or dead enemy stones for which one is a false eye.
      */
-    private Set eyes_;
+    private Set<GoEye> eyes_;
     /**
      *measure of how easily the group can make 2 eyes.
      */
@@ -114,7 +114,7 @@ public final class GoGroup extends GoSet
      */
     private void commonInit()
     {
-        eyes_ = new LinkedHashSet();
+        eyes_ = new LinkedHashSet<GoEye>();
         changed_ = true;
     }
 
@@ -387,6 +387,8 @@ public final class GoGroup extends GoSet
         bbox.expandGloballyBy(1, numRows, numCols);
         bbox.expandBordersToEdge(1, numRows, numCols);
         float totalPotential = 0;
+        String color = this.isOwnedByPlayer1()? "black" : "white";
+        //System.out.println(color + ":==== In calc potential box="+ bbox);
          
         // make sure that every internal enemy stone is really an enemy and not just dead.
         // compare it with one of the group strings.
@@ -413,13 +415,15 @@ public final class GoGroup extends GoSet
      */
     private float getRowColPotential(int r, int c, int rowInc, int colInc, int maxRow, int maxCol, 
                                                           GoBoard board, GoString groupString) {
-        float rowPotential = 0;   
-        boolean containsEnemy = false;
+        float rowPotential = 0;           
         int breadth = (rowInc ==1)? (maxRow - r) : (maxCol - c);        
-        GoBoardPosition startSpace = (GoBoardPosition) board.getPosition( r, c );       
+        GoBoardPosition startSpace = (GoBoardPosition) board.getPosition( r, c );      
+        String rc = rowInc == 1 ? "col": "row";
+        //System.out.println(rc+":");
         do {         
             GoBoardPosition space = (GoBoardPosition) board.getPosition( r, c );          
-            GoBoardPosition firstSpace = space;            
+            GoBoardPosition firstSpace = space;  
+            boolean containsEnemy = false;
             int runLength = 0;
             while (c <= maxCol && r <= maxRow && (space.isUnoccupied() ||  
                       (space.isOccupied() && space.getPiece().isOwnedByPlayer1() != isOwnedByPlayer1()))) {
@@ -432,7 +436,8 @@ public final class GoGroup extends GoSet
                 space = (GoBoardPosition) board.getPosition( r, c );                
             }
             boolean bounded = !(firstSpace.equals(startSpace)) && space!=null && space.isOccupied();             
-            // now acrue the potential           
+            // now acrue the potential      
+            //System.out.println("check containsEnemy="+containsEnemy+" runLength="+runLength + " ("+r+","+c+") useIt="+(!containsEnemy && runLength < breadth && runLength > 0));
             if (!containsEnemy && runLength < breadth && runLength > 0) {               
                  int firstPos, max, currentPos;
                  if (rowInc ==1) {
@@ -486,7 +491,7 @@ public final class GoGroup extends GoSet
             }
         }
         String color = this.isOwnedByPlayer1()?"black":"white";
-        //System.out.println(color + " potential for first="+ firstPos + " end="+endPosP1 
+       // System.out.println(color + " potential for first="+ firstPos + " end="+endPosP1 
         //        + " max="+max+ " runLen="+runLength+" bounded="+boundedByStones  +" IS:"+potential);
         return potential;
     }
@@ -551,10 +556,10 @@ public final class GoGroup extends GoSet
             GoString string = position.getString();
 
             if (position.isOccupied()) {
-                GoStone stone  = ((GoStone)position.getPiece());
+                GoStone stone  = (GoStone) position.getPiece();
                 if (string.size() == 1 && Math.abs(stone.getHealth()) <= 0.11) {
                     // since its a lone stone inside an enemy eye, we assume it is more dead than alive
-                    stone.setHealth(stone.isOwnedByPlayer1() ? -0.5f : 0.5f);
+                    stone.setHealth(stone.isOwnedByPlayer1() ? -0.6f : 0.6f);
                 }
                 if (groupString.isEnemy(position)) {
                     return false;  // not eye
@@ -568,7 +573,7 @@ public final class GoGroup extends GoSet
     /**
      * @return  set of eyes currently identified for this group.
      */
-    public Set getEyes()
+    public Set<GoEye> getEyes()
     {
         return eyes_;
     }
@@ -580,10 +585,9 @@ public final class GoGroup extends GoSet
     {
         if (eyes_.isEmpty())
             return;
-        Iterator it = eyes_.iterator();
+        Iterator<GoEye> it = eyes_.iterator();
         while (it.hasNext()) {
-            GoEye eye = (GoEye)it.next();
-            eye.clear();
+            it.next().clear();
         }
         eyes_.clear();
         changed_ = true;
@@ -668,24 +672,24 @@ public final class GoGroup extends GoSet
     /**
      *Determine approximately how many eyes the group has. 
      *This is purposely a little vague, but if more than 2.0, then must be unconditionally alive.
+     *The value that we count for each type of eye could be optimized.
      */
     private float calcNumEyes() {
         // figure out how many of each eye type we have
-        Iterator it = eyes_.iterator();
+        Iterator<GoEye> it = eyes_.iterator();
         float numEyes = 0;
-        // int numFalseEyes = 0;
         while ( it.hasNext() ) {
-            GoEye eye = (GoEye) it.next();
+            GoEye eye = it.next();
             switch (eye.getEyeType()) {
                 case FALSE_EYE:
-                    //// numFalseEyes++;
+                    numEyes+= 0.19f;
                     break;
                 case TRUE_EYE:
                     numEyes++;
                     break;
                 case BIG_EYE:
                     numEyes += 1.1;
-                    break; // @@ count as 1 eye for now. maybe 1.5 would be better
+                    break; 
                 case TERRITORIAL_EYE:
                     numEyes += 1.6f;
                     break; // counts as 2 true eyes
@@ -716,6 +720,9 @@ public final class GoGroup extends GoSet
         return health;
     }
 
+    private static final float BEST_TWO_EYED_HEALTH = 1.0f;
+    private static final float BEST_ALMOST_TWO_EYED_HEALTH = 0.94f;
+    private static final float BEST_ONE_EYED_HEALTH = 0.89f;
 
     /**
      *Calculate the health of a group that has 2 eyes.
@@ -724,12 +731,12 @@ public final class GoGroup extends GoSet
         float health;
         if (isUnconditionallyAlive(board)) {
             // in addition to this, the individual strings will get a score of side (ie +/- 1).
-            health = 0.99f * side;
+            health = BEST_TWO_EYED_HEALTH * side;
         }
         else {
             // its probably alive
             // may not be alive if the opponent has a lot of kos and gets to play lots of times in a row
-            health = 0.94f * side;
+            health = BEST_ALMOST_TWO_EYED_HEALTH * side;
         }
         return health;
     }
@@ -737,25 +744,26 @@ public final class GoGroup extends GoSet
     /**
      * Calculate the health of a group that has only one eye.
      */
-    private static float calcAlmostTwoEyedHealth(float side, int numLiberties) {
+    private float calcAlmostTwoEyedHealth(float side, int numLiberties) {
         float health = 0;
         if (numLiberties > 6)  {
-            health = side * Math.min(0.93f, (1.0f - 20.0f/(numLiberties + 30.0f)));
+            health = side * Math.min(BEST_ALMOST_TWO_EYED_HEALTH, (1.15f - 20.0f/(numLiberties + 23.0f)));
         }
-        else  {  // numLiberties<=5. Very unlikely to occur
-            GameContext.log(0, "We have almost 2 eyes but only numLiberties. How can that be?");
+        else  {  // numLiberties<=5. Very unlikely to occur           
             switch (numLiberties) {
                 case 0:                
-                case 1:                  
-                case 2:
-                    // this can't happen because the stone should already be captured.
-                    assert false: "can't have almost 2 eyes and only 2 or fewer liberties!";        
+                case 1:                                                   
+                    assert false: "can't have almost 2 eyes and only 1 or fewer liberties! " + this.toString();        
                     break;
+                case 2:
+                    health = side * 0.02f;
+                     GameContext.log(0, "We have almost 2 eyes but only 2 Liberties. How can that be? " + this.toString());
+                    break;  
                 case 3:
-                    health = side * 0.01f;
+                    health = side * 0.05f;
                     break;
                 case 4:
-                    health = side * 0.05f;
+                    health = side * 0.1f;
                     break;
                 case 5:
                     health = side * 0.19f;
@@ -775,7 +783,7 @@ public final class GoGroup extends GoSet
     private static float calcOneEyedHealth(float side, int numLiberties) {
         float health = 0;
         if (numLiberties > 6)  {
-            health = side * Math.min(0.89f, (1.0f - 20.0f/(numLiberties + 23.0f)));
+            health = side * Math.min(BEST_ONE_EYED_HEALTH, (1.03f - 20.0f/(numLiberties + 20.0f)));
         }
         else  {  // numLiberties<=5
             switch (numLiberties) {
@@ -1019,12 +1027,12 @@ public final class GoGroup extends GoSet
         Object clone = super.clone();
 
         if (this.eyes_!=null)  {
-            ((GoGroup)clone).eyes_ = new HashSet();
+            ((GoGroup)clone).eyes_ = new HashSet<GoEye>();
             Set m = ((GoGroup)clone).eyes_;
 
-            Iterator it = this.eyes_.iterator();
+            Iterator<GoEye> it = this.eyes_.iterator();
             while (it.hasNext()) {
-                GoMember c = (GoMember)it.next();
+                GoMember c = it.next();
                 m.add(c.clone());
             }
         }
