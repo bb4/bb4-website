@@ -8,6 +8,7 @@ import com.becker.java2d.*;
 import com.becker.ui.*;
 import com.becker.common.*;
 
+import com.becker.game.multiplayer.poker.player.PokerPlayer;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
@@ -105,16 +106,16 @@ public class PokerRenderer extends GamePieceRenderer
             g2.drawString( playerMarker.getAnnotation(), pos.x - cellSize, pos.y - 3*offset);
         }
 
-        //System.out.println("location ="+position.getLocation());
-        if (!playerMarker.getOwner().hasFolded())
-            renderHand(g2, position.getLocation(), playerMarker.getOwner().getHand(), cellSize);
+        PokerPlayer p = (PokerPlayer)playerMarker.getOwner();
+        if (!p.hasFolded())
+            renderHand(g2, position.getLocation(), p.getHand(), cellSize);
         else {
             // they have folded. Cover with a gray rectangle to indicate.
             g2.setColor(FOLDED_COLOR);
             g2.fillRect( pos.x - cellSize, pos.y - cellSize, 6*pieceSize , 6*pieceSize );
         }
 
-        renderChips(g2, position.getLocation(), playerMarker.getOwner().getCash(), cellSize);
+        renderChips(g2, position.getLocation(), p.getCash(), cellSize);
     }
 
 

@@ -7,7 +7,7 @@ import com.becker.game.common.*;
  */
 public class MultiGameOptions extends GameOptions {
 
-    private static final int DEFAULT_PLAYER_LIMIT = 4;
+    private static final int DEFAULT_PLAYER_LIMIT = 8;
     private static final int DEFAULT_NUM_ROBOT_PLAYERS = 1;
 
     // no more than this many allowed at the table.

@@ -64,9 +64,10 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase {
         initializeTable(null);
     }
 
-    /***
+    /**
      * init the table of tables.
      */
+    @Override
     protected void updateColumnMeta(TableColumnMeta[] columnMeta) {
 
         columnMeta[NUM_PLAYERS_INDEX].setTooltip(MAX_NUM_PLAYERS_TIP);

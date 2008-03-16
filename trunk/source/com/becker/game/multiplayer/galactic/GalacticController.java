@@ -6,9 +6,9 @@ import com.becker.game.common.ui.GameBoardViewer;
 import com.becker.game.multiplayer.common.MultiGamePlayer;
 import com.becker.game.multiplayer.galactic.ui.GalaxyViewer;
 import com.becker.game.multiplayer.galactic.player.*;
-import com.becker.optimization.ParameterArray;
 import com.becker.common.*;
 
+import com.becker.game.multiplayer.common.MultiGameController;
 import java.util.*;
 
 /**
@@ -42,7 +42,7 @@ import java.util.*;
  *
  * @author Barry Becker
  */
-public class GalacticController extends GameController
+public class GalacticController extends MultiGameController
 {
 
     private static final int DEFAULT_NUM_ROWS = 16;
@@ -55,39 +55,22 @@ public class GalacticController extends GameController
      */
     public GalacticController()
     {
-        board_ = new Galaxy( DEFAULT_NUM_ROWS, DEFAULT_NUM_COLS );
-        initializeData();
+        super(DEFAULT_NUM_ROWS, DEFAULT_NUM_COLS );
     }
 
     /**
      *  Construct the Galactic game controller given an initial board size
      */
-    public GalacticController(int nrows, int ncols )
+    protected Board createTable(int nrows, int ncols )
     {
-        board_ = new Galaxy( nrows, ncols );
-        initializeData();
+        return new Galaxy( nrows, ncols );
     }
 
-
-    /**
-     * Return the game board back to its initial openning state
-     */
-    public void reset()
-    {
-        super.reset();
-        initializeData();
-    }
-
-    protected void initializeData()
-    {
-        initPlayers();
-        ((Galaxy)board_).initPlanets((List<GalacticPlayer>)players_, (GalacticOptions)getOptions());
-    }
 
      /**
      * by default we start with one human and one robot player.
      */
-    private void initPlayers()
+    protected void initPlayers()
     {
         // we just init the first time.
         // After that, they can change manually to get different players.
@@ -106,21 +89,8 @@ public class GalacticController extends GameController
             homePlanet.setOwner((GalacticPlayer)players_.get(1));
         }
         currentPlayerIndex_ = 0;
-    }
-
-    /**
-     *
-     * @return the player whos turn it is now.
-     */
-    public Player getCurrentPlayer()
-    {
-        return players_.get(currentPlayerIndex_);
-    }
-
-    public void computerMovesFirst()
-    {
-        GalaxyViewer gviewer  = (GalaxyViewer)this.getViewer();
-        gviewer.doComputerMove(getCurrentPlayer());
+        
+        ((Galaxy)board_).initPlanets((List<GalacticPlayer>)players_, (GalacticOptions)getOptions());
     }
 
     /**
@@ -148,6 +118,25 @@ public class GalacticController extends GameController
         return (Galaxy.allPlanetsOwnedByOnePlayer());
     }
 
+    /**
+     * @return the player with the most planets
+     */
+    public MultiGamePlayer determineWinner() {
+        
+       GalacticPlayer winner = null;
+        double maxCriteria = -1.0;
+        for (final Player newVar : players_) {
+            GalacticPlayer player = (GalacticPlayer) newVar;
+            List planets = Galaxy.getPlanets(player);
+            double criteria = planets.size() + (double) player.getTotalNumShips() / 100000000000.0;
+
+            if (criteria > maxCriteria) {
+                maxCriteria = criteria;
+                winner = player;
+            }
+        }
+        return winner;        
+    }
 
     /**
      * advance to the next player turn in order.
@@ -164,9 +153,7 @@ public class GalacticController extends GameController
             return 0;
         }
 
-
         int nextIndex = advanceToNextPlayerIndex();
-
 
         if (getCurrentPlayer() == getFirstPlayer()) {
 
@@ -196,25 +183,15 @@ public class GalacticController extends GameController
      * make it the next players turn
      * @return the index of the next player
      */
-    private int advanceToNextPlayerIndex()
+    protected int advanceToNextPlayerIndex()
     {
         currentPlayerIndex_ = (currentPlayerIndex_+1) % players_.size();
         return currentPlayerIndex_;
     }
 
-    /**
-     *  @return the player that goes first.
-     */
-    public Player getFirstPlayer()
-    {
-        return players_.get(0);
-    }
 
-    public GameOptions getOptions() {
-        if (gameOptions_ == null) {
-            gameOptions_ = new GalacticOptions();
-        }
-        return gameOptions_;
+    public GameOptions createOptions() {     
+         return new GalacticOptions();  
     }
 
     ////////// some Galactic specific methods ///////////////////
@@ -230,45 +207,6 @@ public class GalacticController extends GameController
     public void setNumPlanets(int numPlanets)
     {
         ((Galaxy)board_).setNumPlanets(numPlanets);
-    }
-
-
-    /**
-     *  Statically evaluate the board position
-     *  @return the lastMoves value modified by the value add of the new move.
-     *   a large positive value means that the move is good from the specified players viewpoint
-     */
-    protected double worth( Move lastMove, ParameterArray weights )
-    {
-        return lastMove.getValue();
-    }
-
-    /*
-     * generate all possible next moves.
-     * impossible for this game.
-     */
-    public List generateMoves( Move lastMove, ParameterArray weights, boolean player1sPerspective )
-    {
-        return new LinkedList();
-    }
-
-    /**
-     * return any moves that result in a win
-     */
-    public List generateUrgentMoves( Move lastMove, ParameterArray weights, boolean player1sPerspective )
-    {
-        return null;
-    }
-
-    /**
-     * @param m
-     * @param weights
-     * @param player1sPerspective
-     * @return true if the last move created a big change in the score
-     */
-    public boolean inJeopardy( Move m, ParameterArray weights, boolean player1sPerspective )
-    {
-        return false;
     }
 
 }

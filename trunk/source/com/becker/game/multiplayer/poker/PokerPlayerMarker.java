@@ -4,6 +4,7 @@ import com.becker.game.common.*;
 import com.becker.game.multiplayer.poker.player.*;
 import com.becker.common.*;
 
+import com.becker.game.multiplayer.common.MultiPlayerMarker;
 import java.awt.*;
 
 /**
@@ -13,92 +14,17 @@ import java.awt.*;
  * @see com.becker.game.multiplayer.poker.PokerTable
  * @author Barry Becker
  */
-public class PokerPlayerMarker extends GamePiece
+public class PokerPlayerMarker extends MultiPlayerMarker
 {
 
     private static final long serialVersionUID = 1;
 
-    private PokerPlayer owner_;
-    private Location location_;
-    private boolean highlighted_;
-
 
     public PokerPlayerMarker(PokerPlayer owner)
     {
-        setAnnotation(""+owner.getName());
-        owner_ = owner;
+        super(owner);
     }
-    /*
-    public PokerPlayerMarker( PokerPlayer owner, Location pos)
-    {
-        setAnnotation(""+owner.getName());
-        owner_ = owner;
-        location_ = pos;
-        assert(pos!=null);
-    }*/
-
-
-    public PokerPlayer getOwner()
-    {
-        return owner_;
-    }
-
-
-    public boolean isHighlighted() {
-        return highlighted_;
-    }
-
-    public void setHighlighted(boolean highlighted) {
-        highlighted_ = highlighted;
-    }
-
-
-    public Color getColor()
-    {
-        return getOwner().getColor();
-    }
-
-    public Location getLocation()
-    {
-        return location_;
-    }
-
-    /**
-     * ordinarily this does not change
-     */
-    public void setLocation(Location loc)
-    {
-        location_ = loc;
-    }
-
-    /**
-      * get the textual representation of the poker marker.
-      * @return string form
-      */
-     public String toString()
-     {
-         return toString("\n");
-     }
-
-     /**
-      * get the html representation of the poker marker.
-      * @return html form
-      */
-     public String toHtml()
-     {
-         return toString( "<br>" );
-     }
-
-
-    public String toString(String newLine)
-    {
-        StringBuffer sb = new StringBuffer("");
-
-        if (getOwner()!=null)
-            sb.append("Owner: "+this.getOwner().getName()+newLine);
-        return sb.toString();
-    }
-
+  
 }
 
 

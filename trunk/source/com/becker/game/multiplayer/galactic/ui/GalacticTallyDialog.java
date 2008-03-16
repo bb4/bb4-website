@@ -1,6 +1,7 @@
 package com.becker.game.multiplayer.galactic.ui;
 
 import com.becker.game.common.*;
+import com.becker.game.multiplayer.common.MultiGamePlayer;
 import com.becker.game.multiplayer.common.ui.*;
 import com.becker.game.multiplayer.galactic.*;
 import com.becker.game.multiplayer.galactic.player.*;
@@ -35,21 +36,14 @@ final class GalacticTallyDialog extends TallyDialog
         return new GalacticSummaryTable(players);
     }
 
-    protected String findWinner(List<? extends Player> players)
+    /**
+     * 
+     * @param players
+     * @return the player with the most planets (num ships used only as a tie breaker).
+     */
+    public MultiGamePlayer findWinner(List<? extends Player> players)
     {
-        String winner ="nobody";
-        double maxCriteria = -1.0;
-        for (final Player newVar : players) {
-            GalacticPlayer player = (GalacticPlayer) newVar;
-            List planets = Galaxy.getPlanets(player);
-            double criteria = planets.size() + (double) player.getTotalNumShips() / 100000000000.0;
-
-            if (criteria > maxCriteria) {
-                maxCriteria = criteria;
-                winner = player.getName();
-            }
-        }
-        return winner;
+        return controller_.determineWinner();        
     }
 
 }

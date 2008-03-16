@@ -6,6 +6,8 @@ import com.becker.game.common.ui.*;
 import com.becker.game.multiplayer.set.*;
 import com.becker.common.*;
 
+import com.becker.game.multiplayer.common.MultiGameController;
+import com.becker.game.multiplayer.common.ui.MultiGameViewer;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -18,12 +20,11 @@ import java.util.List;
  *
  * @author Barry Becker
  */
-public final class SetGameViewer extends GameBoardViewer
+public final class SetGameViewer extends MultiGameViewer
                                  implements MouseMotionListener
 {
 
     private Card currentlyHighlightedCard_ = null;
-    private boolean winnerDialogShown_ = false;
 
 
     // Constructor.
@@ -45,10 +46,22 @@ public final class SetGameViewer extends GameBoardViewer
      *
      * @return the game specific controller for this viewer.
      */
-    protected GameController createController() {
+    protected MultiGameController createController() {
         return new SetController();
     }
 
+    
+    /**
+     * make the computer move and show it on the screen.
+     *
+     * @param player computer player to move
+     * @return done return true if the game is over after moving
+     */
+    public boolean doComputerMove(Player player)
+    {
+        assert false : " no computer player for set yet. coming soon!";
+        return false;
+    }
 
     public int getCanvasWidth() {
         return getWidth() - 2 * CardRenderer.LEFT_MARGIN;
@@ -118,21 +131,6 @@ public final class SetGameViewer extends GameBoardViewer
         }
     }
 
-    /**
-     * Implements the GameChangedListener interface.
-     * Called when the game has changed in some way
-     * @param evt
-     */
-    public void gameChanged(GameChangedEvent evt)
-    {
-        if (controller_.isDone() && !winnerDialogShown_)  {
-            winnerDialogShown_ = true;
-            this.showWinnerDialog();
-        }
-        else if (!winnerDialogShown_) {
-             super.gameChanged(evt);
-        }
-    }
 
     public String getGameOverMessage() {
         SetPlayer winner =  ((SetController)controller_).determineWinner();
@@ -167,8 +165,6 @@ public final class SetGameViewer extends GameBoardViewer
         }
         return c.getDeck().get(selectedIndex);
     }
-
-    public void mouseDragged(MouseEvent e) {}
 
     public void mouseMoved(MouseEvent e) {
         Card card = findCardOver(e.getX(), e.getY());
@@ -211,7 +207,16 @@ public final class SetGameViewer extends GameBoardViewer
              cards.get(i).setSelected(false);
          }
     }
+    
+    /**
+     * draw a grid of some sort if there is one.
+     * none by default.
+     */
+    protected void drawGrid(Graphics2D g2, int startPos, int rightEdgePos, int bottomEdgePos, int start,
+                            int nrows1, int ncols1, int gridOffset) {}
 
+
+    public void mouseDragged(MouseEvent e) {}
 
     public void mouseClicked(MouseEvent e) {
 

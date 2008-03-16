@@ -79,6 +79,7 @@ public abstract class Board implements BoardInterface, Cloneable
         return moveList_;
     }
 
+    public void initPlayers() {};
 
     /**
      * @return the most recent move played on the board. Returns null if there isn't one.
