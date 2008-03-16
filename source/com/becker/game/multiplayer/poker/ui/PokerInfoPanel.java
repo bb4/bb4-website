@@ -38,10 +38,6 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
 
     protected void createSubPanels()
     {
-        //JPanel panel = new JPanel(new BorderLayout());
-        //JPanel boxPanel = new JPanel();
-        // boxPanel.setLayout(new BoxLayout(boxPanel, BoxLayout.X_AXIS)) ;
-
         add( createGeneralInfoPanel() );
 
         // the custom panel shows game specific info. In this case, the command button.
@@ -166,35 +162,6 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
            }
         }
     }
-    /*
-        int callAmount = pc.getCurrentMaxContribution() - robot.getContribution();
-
-        PokerAction action = robot.getAction(pc);
-
-        switch (action.getActionName()) {
-            case FOLD :
-                robot.setFold(true);
-                msg = robot.getName() + " folded.";
-                break;
-            case CALL :
-                // System.out.println("PGV: robot call amount = currentMaxContrib - robot.getContrib) = "
-                //                   + pc.getCurrentMaxContribution()+" - "+robot.getContribution());
-                if (callAmount <= robot.getCash())   {
-                    robot.contributeToPot(pc, callAmount);
-                    msg = robot.getName() + " has called by adding "+ callAmount + " to the pot.";
-                } else {
-                    robot.setFold(true);
-                    msg = robot.getName() + " folded.";
-                }
-                break;
-            case RAISE :
-                robot.contributeToPot(pc, callAmount);
-                int raise = action.getRaiseAmount();
-                robot.contributeToPot(pc, raise);
-                msg = robot.getName() + " has met the "+callAmount + ", and rasied the pot by " + raise;
-                break;
-        }
-*/
 
     /**
      * this is general information that is applicable to every 2 player game.

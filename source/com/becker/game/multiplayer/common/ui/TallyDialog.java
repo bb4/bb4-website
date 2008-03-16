@@ -1,6 +1,8 @@
 package com.becker.game.multiplayer.common.ui;
 
 import com.becker.game.common.*;
+import com.becker.game.multiplayer.common.MultiGameController;
+import com.becker.game.multiplayer.common.MultiGamePlayer;
 import com.becker.ui.*;
 import java.awt.AWTEvent;
 import java.awt.FlowLayout;
@@ -21,7 +23,7 @@ import java.awt.event.*;
  */
 public abstract class TallyDialog extends OptionsDialog
 {
-    private GameController controller_;
+    protected MultiGameController controller_;
 
     private GradientButton okButton_;
 
@@ -31,7 +33,7 @@ public abstract class TallyDialog extends OptionsDialog
      * @param parent frame to display relative to
      * @param controller pass in game controller.
      */
-    public TallyDialog( Frame parent, GameController controller )
+    public TallyDialog( Frame parent, MultiGameController controller )
     {
         super( parent );
         controller_ = controller;
@@ -61,7 +63,7 @@ public abstract class TallyDialog extends OptionsDialog
         mainPanel.setLayout(new BorderLayout());
 
         List<? extends Player> players = controller_.getPlayers();
-        String winningPlayer = findWinner(players);
+        String winningPlayer = findWinner(players).getName();
 
         // show a label at the top with who the winner is
         JLabel winnerLabel = new JLabel();
@@ -85,7 +87,7 @@ public abstract class TallyDialog extends OptionsDialog
 
     protected abstract SummaryTable createSummaryTable(List<? extends Player> players);
 
-    protected abstract String findWinner(List<? extends Player> players);
+    protected abstract MultiGamePlayer findWinner(List<? extends Player> players);
 
 
     /**

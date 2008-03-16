@@ -2,6 +2,8 @@ package com.becker.game.multiplayer.set;
 
 import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
+import com.becker.game.multiplayer.common.MultiGameController;
+import com.becker.game.multiplayer.common.MultiGamePlayer;
 import com.becker.optimization.*;
 
 import java.util.*;
@@ -10,12 +12,13 @@ import java.util.*;
  * Defines everything the computer needs to know to play Set with multiple players.
  *
  * todo
+ *  - seelection does not always take
+ *  - show sets panel does not scroll.
  *  - add hints
- *  - highlight solution on board when mousing over
  *
  * @author Barry Becker
  */
-public class SetController extends GameController
+public class SetController extends MultiGameController
 {
 
     // the deck is like the board or model
@@ -36,10 +39,11 @@ public class SetController extends GameController
     /**
      *  Construct the Set game controller
      */
-    public SetController()
-    {
-        board_ = null; // do we need a board?
-        initializeData();
+    public SetController() {}
+    
+    
+    protected Board createTable(int rowl, int cols) {
+        return null;
     }
 
     /**
@@ -60,6 +64,15 @@ public class SetController extends GameController
     }
 
     /**
+     * make it the next players turn
+     * @return the index of the next player
+     */
+    protected int advanceToNextPlayerIndex() {
+        assert false : "not used in set game";
+        return 0;
+    }
+   
+    /**
      *
      * @return the deck of cards (numCardsShown of which are shown face up on the board)
      */
@@ -67,14 +80,13 @@ public class SetController extends GameController
         return deck_;
     }
 
-    public GameOptions getOptions() {
-        if (gameOptions_ == null) {
-            gameOptions_ = new SetOptions();
-        }
-        return gameOptions_;
+    public GameOptions createOptions() {      
+        return new SetOptions();
     }
 
-    public boolean isOnlinePlayAvailable() {return false; }
+    public boolean isOnlinePlayAvailable() {
+        return false; 
+    }
 
     /**
      * @return the number of face up cards on the board.
@@ -164,7 +176,7 @@ public class SetController extends GameController
      /**
      * by default we start with one human and one robot player.
      */
-    private void initPlayers()
+    protected void initPlayers()
     {
         // we just init the first time.
         // After that, they can change manually to get different players.
@@ -180,9 +192,9 @@ public class SetController extends GameController
         }
     }
 
-    public Player getCurrentPlayer() {
+    public MultiGamePlayer getCurrentPlayer() {
         if (currentPlayerIndex_ != NO_PLAYER_SELECTED) {
-            return players_.get(currentPlayerIndex_);
+            return (MultiGamePlayer)players_.get(currentPlayerIndex_);
         }
         return null;
     }
@@ -240,34 +252,6 @@ public class SetController extends GameController
     {
         assert false : "no player goes first in set.";
         return players_.get(0);
-    }
-
-    /**
-     * the following methods do not apply to set
-     */
-    protected double worth( Move lastMove, ParameterArray weights )
-    {
-        assert false : "irrelevant for set game";
-        return lastMove.getValue();
-    }
-
-    public List generateMoves( Move lastMove, ParameterArray weights, boolean player1sPerspective )
-    {
-        assert false : "irrelevant for set game";
-        List moveList = new LinkedList();
-        return moveList;
-    }
-
-    public List generateUrgentMoves( Move lastMove, ParameterArray weights, boolean player1sPerspective )
-    {
-        assert false : "irrelevant for set game";
-        return null;
-    }
-
-    public boolean inJeopardy( Move m, ParameterArray weights, boolean player1sPerspective )
-    {
-        assert false : "irrelevant for set game";
-        return false;
     }
 
 }

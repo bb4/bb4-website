@@ -3,6 +3,7 @@ package com.becker.game.multiplayer.poker.ui;
 import com.becker.common.*;
 import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
+import com.becker.game.multiplayer.common.ui.MultiGameViewer;
 import com.becker.game.multiplayer.poker.*;
 import com.becker.game.multiplayer.poker.player.*;
 import java.awt.Color;
@@ -21,12 +22,8 @@ import java.awt.event.*;
  *
  *  @author Barry Becker
  */
-public class PokerGameViewer extends GameBoardViewer
+public class PokerGameViewer extends MultiGameViewer
 {
-
-    private static final Color DEFAULT_GRID_COLOR = Color.GRAY;
-    private static final Color TABLE_COLOR = new Color(190, 160, 110);
-    private boolean winnerDialogShown_ = false;
 
     //Construct the application
     public PokerGameViewer()
@@ -38,57 +35,6 @@ public class PokerGameViewer extends GameBoardViewer
     {
         return new PokerController();
     }
-
-    protected int getDefaultCellSize()
-    {
-        return 8;
-    }
-
-    protected Color getDefaultGridColor()
-    {
-        return DEFAULT_GRID_COLOR;
-    }
-
-    /**
-     * start over with a new game using the current options.
-     */
-    public final void startNewGame()
-    {
-        reset();
-        winnerDialogShown_ = false;
-        this.sendGameChangedEvent(null);  // get the info panel to refresh with 1st players name
-
-        if (!controller_.getFirstPlayer().isHuman())
-            controller_.computerMovesFirst();
-    }
-
-    /**
-     * whether or not to draw the pieces on cell centers or vertices (like go or pente, but not like checkers).
-     */
-    protected boolean offsetGrid()
-    {
-        return true;
-    }
-
-    protected void drawLastMoveMarker(Graphics2D g2)
-    {}
-
-
-    public void mousePressed( MouseEvent e )
-    {}
-
-     /**
-      * display a dialog at the end of the game showing who won and other relevant
-      * game specific information.
-      */
-    protected void showWinnerDialog()
-    {
-
-        String message = getGameOverMessage();
-        JOptionPane.showMessageDialog( this, message, GameContext.getLabel("GAME_OVER"),
-                   JOptionPane.INFORMATION_MESSAGE );
-    }
-
 
     /**
      * @return   the message to display at the completion of the game.
@@ -163,23 +109,6 @@ public class PokerGameViewer extends GameBoardViewer
     }
 
     /**
-     * Implements the GameChangedListener interface.
-     * Called when the game has changed in some way
-     * @param evt
-     */
-    public void gameChanged(GameChangedEvent evt)
-    {
-        if (controller_.isDone() && !winnerDialogShown_)  {
-            winnerDialogShown_ = true;
-            showWinnerDialog();
-        }
-        else if (!winnerDialogShown_) {
-             super.gameChanged(evt);
-        }
-    }
-
-
-    /**
      *
      * @param lastMove the move to show (but now record)
      */
@@ -187,7 +116,6 @@ public class PokerGameViewer extends GameBoardViewer
     {
         return PokerRound.createMove();
     }
-
 
     /**
      * show who won the round and dispurse the pot
@@ -211,32 +139,16 @@ public class PokerGameViewer extends GameBoardViewer
 
         roundOverDlg.setVisible(true);
     }
-
-
-    public void highlightPlayer(Player player, boolean hightlighted)
-    {
-        // player.setHighlighted(hightlighted);
-        this.refresh();
-    }
-
-
-    protected void drawBackground(Graphics g, int startPos, int rightEdgePos, int bottomEdgePos )
-    {
-        super.drawBackground(g, startPos, rightEdgePos, bottomEdgePos);
-        g.setColor( backgroundColor_ );
-        int width = this.getBoard().getNumCols() * this.getCellSize();
-        int height = this.getBoard().getNumRows() * this.getCellSize();
-        g.setColor(TABLE_COLOR);
-        g.fillOval((int)(0.05*width), (int)(0.05*height), (int)(0.9*width), (int)(0.9*height));
-    }
-
+    
     /**
-     * no grid in poker
+     * 
+     * draw a grid of some sort if there is one.
+     * none by default.
      */
     protected void drawGrid(Graphics2D g2, int startPos, int rightEdgePos, int bottomEdgePos, int start,
-                            int nrows1, int ncols1, int gridOffset) {
-    }
+                            int nrows1, int ncols1, int gridOffset) {}
 
+    
     /**
      * Draw the pieces and possibly other game markers for both players.
      */
@@ -256,23 +168,4 @@ public class PokerGameViewer extends GameBoardViewer
         // now draw the players and their stuff (face, anme, chips, cards, etc)
         super.drawMarkers(nrows, ncols, g2);
     }
-
-    /**
-     * @return the tooltip for the panel given a mouse event
-     */
-    public String getToolTipText( MouseEvent e )
-    {
-        Location loc = createLocation(e, getCellSize());
-        StringBuffer sb = new StringBuffer( "<html><font=-3>" );
-
-        BoardPosition space = controller_.getBoard().getPosition( loc );
-        if ( space != null && space.isOccupied() && GameContext.getDebugMode() >= 0 ) {
-            //sb.append(((Planet)space.getPiece()).toHtml());
-            sb.append("<br>");
-            sb.append( loc );
-        }
-        sb.append( "</font></html>" );
-        return sb.toString();
-    }
-
 }

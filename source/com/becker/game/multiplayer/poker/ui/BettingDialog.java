@@ -2,6 +2,7 @@ package com.becker.game.multiplayer.poker.ui;
 
 import com.becker.common.*;
 import com.becker.game.common.*;
+import com.becker.game.multiplayer.common.ui.ActionDialog;
 import com.becker.game.multiplayer.poker.*;
 import com.becker.game.multiplayer.poker.player.*;
 import com.becker.ui.*;
@@ -15,15 +16,13 @@ import java.text.*;
  * Allow the user to specify a poker action
  * @author Barry Becker
  */
-public final class BettingDialog extends OptionsDialog
+public final class BettingDialog extends ActionDialog
 {
-    private PokerPlayer player_;
-
+  
     private GradientButton foldButton_;
     private GradientButton callButton_;    // call or check
     private GradientButton raiseButton_;
 
-    private PokerController pc_;
     private int callAmount_;
     private int contributeAmount_;
     private int raiseAmount_ = 0;
@@ -34,77 +33,40 @@ public final class BettingDialog extends OptionsDialog
      */
     public BettingDialog(PokerController pc, Component parent)
     {
-        pc_ = pc;
-        player_ = (PokerPlayer)pc_.getCurrentPlayer();
-        callAmount_ = player_.getCallAmount(pc_);
+        super(pc, parent);
+        callAmount_ = ((PokerPlayer)player_).getCallAmount(pc);
         contributeAmount_ = 0;
-
-        Point p = parent.getLocationOnScreen();
-        // offset the dlg so the board is visible as a reference
-        setLocation((int)(p.getX() + 0.7*getParent().getWidth()),
-                                 (int)(p.getY() + getParent().getHeight()/3.0));
-        initUI();
     }
 
 
     /**
      * ui initialization of the tree control.
      */
-    protected void initUI()
-    {
-        setResizable( true );
-        JPanel mainPanel = new JPanel();
-        mainPanel =  new JPanel();
-        mainPanel.setLayout( new BorderLayout() );
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-
-        JPanel pokerHandPanel =new PokerHandPanel(player_.getHand());
-        JPanel buttonsPanel = createButtonsPanel();
-
-        JPanel instructions = createInstructionsPanel();
-
-        mainPanel.add(pokerHandPanel , BorderLayout.NORTH);
-        mainPanel.add(instructions, BorderLayout.CENTER);
-        mainPanel.add(buttonsPanel, BorderLayout.SOUTH);
-
-        getContentPane().add( mainPanel );
-        getContentPane().repaint();
-        pack();
+    protected JPanel createPersonalInfoPanel() {
+         
+        return new PokerHandPanel(((PokerPlayer)player_).getHand());       
     }
 
 
-    private JPanel createInstructionsPanel() {
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEtchedBorder(), BorderFactory.createEmptyBorder(5,5,5,5)));
-        JPanel playerPanel = createPlayerLabel(player_);
-
+    protected JPanel createGameInstructionsPanel() {
+        
         NumberFormat cf = getCurrencyFormat();
-        String cash = cf.format(player_.getCash());
+        String cash = cf.format(((PokerPlayer)player_).getCash());
         JPanel instr = new JPanel();
         instr.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
         JLabel currentCash = new JLabel("You currently have "+cash);
 
         JLabel amountToCall = new JLabel("To call, you need to add "+cf.format(callAmount_));
-
-        //panel.setPreferredSize(new Dimension(400, 100));
-        panel.add(playerPanel, BorderLayout.NORTH);
-        panel.add(currentCash, BorderLayout.CENTER);
+         
+         
+        JPanel gameInstructions = new JPanel(new BorderLayout());
+        gameInstructions.add(currentCash, BorderLayout.CENTER);
         if (callAmount_ > 0)  {
-            panel.add(amountToCall, BorderLayout.SOUTH);
+            gameInstructions.add(amountToCall, BorderLayout.SOUTH);
         }
-        return panel;
+        return gameInstructions;   
     }
 
-    public static JPanel createPlayerLabel(PokerPlayer player) {
-        JPanel p = new JPanel();
-        JPanel swatch = new JPanel();
-        swatch.setPreferredSize(new Dimension(10, 10));
-        swatch.setBackground(player.getColor());
-        JLabel playerLabel = new JLabel(player.getName());
-        p.add(swatch);
-        p.add(playerLabel);
-        return p;
-    }
 
     /**
      *  create the OK/Cancel buttons that go at the bottom.
@@ -131,17 +93,14 @@ public final class BettingDialog extends OptionsDialog
 
 
     public static NumberFormat getCurrencyFormat() {
-
         //@@ fix i18n
         return NumberFormat.getCurrencyInstance(GameContext.getDefaultLocaleType().getLocale());
-
     }
 
     public String getTitle()
     {
         return GameContext.getLabel("MAKE_YOUR_BET");
     }
-
 
 
     /**
@@ -154,7 +113,7 @@ public final class BettingDialog extends OptionsDialog
         PokerAction.Name actionName = null;
         if (source == foldButton_) {
             actionName = PokerAction.Name.FOLD;
-            player_.setFold(true);
+            ((PokerPlayer)player_).setFold(true);
             this.setVisible(false);
         }
         else if ( source == callButton_ ) {
@@ -176,10 +135,11 @@ public final class BettingDialog extends OptionsDialog
 
 
     public void showRaiseDialog() {
-        // open a dlg to get an order
-        PokerOptions options = (PokerOptions)pc_.getOptions();
+        // open a dlg to get an order        
+        PokerController pc = (PokerController)gc_;
+        PokerOptions options = (PokerOptions)gc_.getOptions();
         RaiseDialog raiseDialog =
-                new RaiseDialog(player_, callAmount_, pc_.getAllInAmount(),
+                new RaiseDialog((PokerPlayer)player_, callAmount_, pc.getAllInAmount(),
                                 options.getMaxAbsoluteRaise(), options.getAnte());
 
         raiseDialog.setLocation((int)(this.getLocation().getX() + 40), (int)(this.getLocation().getY() +170));

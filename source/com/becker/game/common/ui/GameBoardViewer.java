@@ -208,8 +208,9 @@ public abstract class GameBoardViewer
     {
         // this will paint the component immediately
         Graphics g = this.getGraphics();
-        if (g!=null)
+        if (g!=null) {
             this.paint(g);
+        }
     }
 
 

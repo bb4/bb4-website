@@ -49,7 +49,7 @@ import java.util.List;
  *
  * @author Barry Becker
  */
-public class PokerController extends GameController
+public class PokerController extends MultiGameController
 {
 
     private static final int DEFAULT_NUM_ROWS = 32;
@@ -57,33 +57,15 @@ public class PokerController extends GameController
 
     private static final int POKER_SERVER_PORT = 4443;
 
-    private int currentPlayerIndex_;
     private int pot_;
-    // there is a different starting player each round
-    private int startingPlayerIndex_ = 0;
-    // the ith play in a given round
-    private int playIndex_ = 0;
-
-
 
     /**
      *  Construct the Poker game controller
      */
     public PokerController()
     {
-        board_ = new PokerTable( DEFAULT_NUM_ROWS, DEFAULT_NUM_COLS );
-        initializeData();
+        super( DEFAULT_NUM_ROWS, DEFAULT_NUM_COLS );   
     }
-
-    /**
-     *  Construct the Poker game controller given an initial board size
-     */
-    private PokerController(int nrows, int ncols )
-    {
-        board_ = new PokerTable( nrows, ncols);
-        initializeData();
-    }
-
 
     /**
      * Return the game board back to its initial openning state
@@ -93,31 +75,27 @@ public class PokerController extends GameController
     {
         super.reset();
         initializeData();
+        pot_ = 0;
         anteUp();
     }
 
-    protected void initializeData()
+    public GameOptions createOptions() {
+        return new PokerOptions();
+    }
+    
+    /**
+     *  Construct the game controller given an initial board size
+     */
+    protected Board createTable(int nrows, int ncols )
     {
-        pot_ = 0;
-        startingPlayerIndex_ = 0;
-        playIndex_ = 0;
-        currentPlayerIndex_ = 0;
-
-        initPlayers();
-        ((PokerTable)board_).initPlayers((List<PokerPlayer>)players_, this);
+        return new PokerTable(nrows, ncols);
     }
 
-    public GameOptions getOptions() {
-        if (gameOptions_ == null) {
-            gameOptions_ = new PokerOptions();
-        }
-        return gameOptions_;
-    }
 
     /**
      * by default we start with one human and one robot player.
      */
-    private void initPlayers()
+    protected void initPlayers()
     {
         // we just init the first time.
         // After that, they can change manually to get different players.
@@ -138,6 +116,8 @@ public class PokerController extends GameController
 
         dealCardsToPlayers(5);
         currentPlayerIndex_ = 0;
+        
+        ((PokerTable)board_).initPlayers((List<PokerPlayer>)players_, this);
     }
 
     /**
@@ -153,9 +133,11 @@ public class PokerController extends GameController
                 // ran out of cards. start a new shuffled deck.
                 deck = Card.newDeck();
             }
-            PokerPlayer player = ((PokerPlayer) p);
-            player.setHand(new PokerHand(deck, numCardsToDealToEachPlayer));
-            player.resetPlayerForNewRound();
+            if (!(p instanceof SurrogatePlayer)) {
+                PokerPlayer player = ((PokerPlayer) p);
+                player.setHand(new PokerHand(deck, numCardsToDealToEachPlayer));
+                player.resetPlayerForNewRound();
+            }
         }
     }
 
@@ -193,9 +175,7 @@ public class PokerController extends GameController
         return max;
     }
 
-
     /**
-     *
      * @return the min number of chips of any player
      */
     public int getAllInAmount() {
@@ -211,21 +191,6 @@ public class PokerController extends GameController
         return min;
     }
 
-    /**
-     *
-     * @return the player whos turn it is now.
-     */
-    public Player getCurrentPlayer()
-    {
-        return players_.get(currentPlayerIndex_);
-    }
-
-    public void computerMovesFirst()
-    {
-        PokerGameViewer gviewer  = (PokerGameViewer)this.getViewer();
-        gviewer.doComputerMove(getCurrentPlayer());
-    }
-
 
     public int getPotValue() {
         return pot_;
@@ -233,21 +198,6 @@ public class PokerController extends GameController
 
     public void setPotValue(int potValue) {
         pot_ = potValue;
-    }
-
-
-    /**
-     * @return the server connection.
-     */
-    protected ServerConnection createServerConnection() {
-
-        ServerConnection sc =  new ServerConnection(getServerPort());
-        sc.addOnlineChangeListener(this);
-        return sc;
-    }
-
-    public boolean isOnlinePlayAvailable() {
-        return getServerConnection().isConnected();
     }
 
     public int getServerPort() {
@@ -366,7 +316,7 @@ public class PokerController extends GameController
      * @param pviewer
      */
     private void doRoundOverBookKeeping(PokerGameViewer pviewer) {
-        PokerPlayer winner = determineWinner();
+        PokerPlayer winner = (PokerPlayer)determineWinner();
         int winnings = this.getPotValue();
         winner.claimPot(this);
         pviewer.showRoundOver(winner, winnings);
@@ -380,7 +330,7 @@ public class PokerController extends GameController
             do {
                startingPlayerIndex_ = (++startingPlayerIndex_) % this.getNumPlayers();
             }
-            while (getPlayer(startingPlayerIndex_).isOutOfGame());
+            while (((PokerPlayer)getPlayer(startingPlayerIndex_)).isOutOfGame());
 
             currentPlayerIndex_ = startingPlayerIndex_;
             playIndex_ = 0;
@@ -403,7 +353,7 @@ public class PokerController extends GameController
      *
      * @return the player with the best poker hand
      */
-    private PokerPlayer determineWinner() {
+    public MultiGamePlayer determineWinner() {
         List<PokerPlayer> players = (List<PokerPlayer>)getPlayers();
         PokerPlayer winner;
         PokerHand bestHand;
@@ -432,27 +382,14 @@ public class PokerController extends GameController
      * make it the next players turn
      * @return the index of the next player
      */
-    private int advanceToNextPlayerIndex()
+    protected int advanceToNextPlayerIndex()
     {
         playIndex_++;
         currentPlayerIndex_ = (currentPlayerIndex_+1) % players_.size();
-        while (getPlayer(currentPlayerIndex_).hasFolded())
+        while (((PokerPlayer)getPlayer(currentPlayerIndex_)).hasFolded())
             currentPlayerIndex_ = (currentPlayerIndex_+1) % players_.size();
 
         return currentPlayerIndex_;
-    }
-
-
-    private PokerPlayer getPlayer(int index) {
-        return (PokerPlayer) getPlayers().get(index);
-    }
-
-    /**
-     *  @return the player that goes first.
-     */
-    public Player getFirstPlayer()
-    {
-        return players_.get(startingPlayerIndex_);
     }
 
     /**
@@ -463,44 +400,6 @@ public class PokerController extends GameController
         super.setPlayers(players);
         // deal cards to the players
         dealCardsToPlayers(5);
-    }
-
-    /**
-     *  Statically evaluate the board position
-     *  @return the lastMoves value modified by the value add of the new move.
-     *   a large positive value means that the move is good from the specified players viewpoint
-     */
-    protected double worth( Move lastMove, ParameterArray weights )
-    {
-        return lastMove.getValue();
-    }
-
-    /*
-     * generate all possible next moves.
-     * impossible for this game.
-     */
-    public List generateMoves( Move lastMove, ParameterArray weights, boolean player1sPerspective )
-    {
-        return new LinkedList();
-    }
-
-    /**
-     * return any moves that result in a win
-     */
-    public List generateUrgentMoves( Move lastMove, ParameterArray weights, boolean player1sPerspective )
-    {
-        return null;
-    }
-
-    /**
-     * @param m
-     * @param weights
-     * @param player1sPerspective
-     * @return true if the last move created a big change in the score
-     */
-    public boolean inJeopardy( Move m, ParameterArray weights, boolean player1sPerspective )
-    {
-        return false;
     }
 
 }

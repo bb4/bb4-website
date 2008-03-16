@@ -1,6 +1,7 @@
 package com.becker.game.multiplayer.poker.ui;
 
 import com.becker.game.common.*;
+import com.becker.game.multiplayer.common.ui.ActionDialog;
 import com.becker.game.multiplayer.poker.player.PokerPlayer;
 import com.becker.game.multiplayer.poker.player.*;
 import com.becker.ui.*;
@@ -56,7 +57,7 @@ public class RoundOverDialog extends OptionsDialog
 
     private JPanel createInstructionsPanel() {
         JPanel panel = new JPanel(new BorderLayout());
-        JPanel playerPanel = BettingDialog.createPlayerLabel(winner_);
+        JPanel playerPanel = ActionDialog.createPlayerLabel(winner_);
 
         NumberFormat cf = BettingDialog.getCurrencyFormat();
         String cash = cf.format(winnings_);

@@ -1,7 +1,7 @@
 package com.becker.game.multiplayer.galactic.player;
 
 import com.becker.game.common.*;
-import com.becker.game.multiplayer.galactic.player.*;
+import com.becker.game.multiplayer.common.MultiGamePlayer;
 import com.becker.game.multiplayer.galactic.*;
 import com.becker.ui.*;
 
@@ -16,7 +16,7 @@ import java.text.*;
  *
  * @author Barry Becker
  */
-public class GalacticPlayer extends Player
+public class GalacticPlayer extends MultiGamePlayer
 {
     protected static final String GALACTIC_IMAGE_DIR = GameContext.GAME_ROOT+"multiplayer/galactic/ui/images/";
 
@@ -32,9 +32,6 @@ public class GalacticPlayer extends Player
 
     // ? have list of planets owned?
 
-    private static final float SATURATION = 0.8f;
-    private static final float BRIGHTNESS = 0.999f;
-
     public static final int DEFAULT_NUM_SHIPS = 100;
 
 
@@ -47,8 +44,7 @@ public class GalacticPlayer extends Player
     }
 
 
-    protected GalacticPlayer(String name, Planet homePlanet, Color color, boolean isHuman)
-    {
+    protected GalacticPlayer(String name, Planet homePlanet, Color color, boolean isHuman) {
         super(name, color, isHuman);
         homePlanet_ = homePlanet;
         homePlanet_.setOwner(this);
@@ -59,17 +55,17 @@ public class GalacticPlayer extends Player
      * Factory method for creating Galactic players of the appropriate type.
      * @return
      */
-    public static GalacticPlayer createGalacticPlayer(String name, Planet homePlanet, Color color, boolean isHuman)
-    {
+    public static GalacticPlayer createGalacticPlayer(
+                                                   String name, Planet homePlanet, Color color, boolean isHuman) {
        if (isHuman)
            return new GalacticHumanPlayer(name, homePlanet, color);
         else
            return GalacticRobotPlayer.getSequencedRobotPlayer(name, homePlanet, color);
     }
 
-    public static GalacticPlayer createGalacticPlayer(String name, Planet homePlanet, Color color,
-                                                      boolean isHuman, ImageIcon icon)
-    {
+    public static GalacticPlayer createGalacticPlayer(
+                                                      String name, Planet homePlanet, Color color,
+                                                      boolean isHuman, ImageIcon icon) {
        if (isHuman)
            return new GalacticHumanPlayer(name, homePlanet, color, icon);
         else
@@ -81,19 +77,16 @@ public class GalacticPlayer extends Player
      * @param i index of player
      * @return  the default name for player i
      */
-    public String getDefaultName(int i)
-    {
+    public String getDefaultName(int i)  {
         Object[] args = {Integer.toString(i)};
         return MessageFormat.format(GameContext.getLabel("GALACTIC_DEFAULT_NAME"), args );
     }
 
-    public Planet getHomePlanet()
-    {
+    public Planet getHomePlanet()  {
         return homePlanet_;
     }
 
-    public void setHomePlanet( Planet homePlanet )
-    {
+    public void setHomePlanet( Planet homePlanet ) {
         this.homePlanet_ = homePlanet;
     }
 
@@ -107,8 +100,7 @@ public class GalacticPlayer extends Player
     /**
      * @param orders set the current list of orders for the player
      */
-    public void setOrders(List<Order> orders)
-    {
+    public void setOrders(List<Order> orders)  {
         if (orders==null)
             return;
         orders_.clear();
@@ -120,8 +112,7 @@ public class GalacticPlayer extends Player
     /**
      * @return get the current list of orders for the player
      */
-    public List<Order> getOrders()
-    {
+    public List<Order> getOrders()  {
         GameContext.log(1,  "orders_="+orders_ );
         return orders_;
     }
@@ -132,8 +123,7 @@ public class GalacticPlayer extends Player
      * are in transit.
      * @return total num ships under this players command
      */
-    public int getTotalNumShips()
-    {
+    public int getTotalNumShips() {
         int totalNumShips = 0;
         Iterator it = orders_.iterator();
         while (it.hasNext()) {
@@ -152,8 +142,7 @@ public class GalacticPlayer extends Player
     /**
      * @return  the total production capacity of all the planets owned by this player
      */
-    public int getTotalProductionCapacity()
-    {
+    public int getTotalProductionCapacity()  {
          int totalCapacity = 0;
         List ownedPlanets = Galaxy.getPlanets(this);
         Iterator pit = ownedPlanets.iterator();

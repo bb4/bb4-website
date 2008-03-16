@@ -3,6 +3,8 @@ package com.becker.game.multiplayer.galactic.ui;
 import com.becker.common.*;
 import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
+import com.becker.game.multiplayer.common.MultiGameController;
+import com.becker.game.multiplayer.common.ui.MultiGameViewer;
 import com.becker.game.multiplayer.galactic.*;
 import com.becker.game.multiplayer.galactic.player.*;
 
@@ -19,7 +21,7 @@ import java.util.List;
  *
  *  @author Barry Becker
  */
-public class GalaxyViewer extends GameBoardViewer
+public class GalaxyViewer extends MultiGameViewer
 {
 
     private boolean winnerDialogShown_ = false;
@@ -30,7 +32,7 @@ public class GalaxyViewer extends GameBoardViewer
         pieceRenderer_ = PlanetRenderer.getRenderer();
     }
 
-    protected GameController createController()
+    protected MultiGameController createController()
     {
         return new GalacticController();
     }
@@ -44,40 +46,6 @@ public class GalaxyViewer extends GameBoardViewer
     {
         return GRID_COLOR;
     }
-
-    /**
-     * start over with a new game using the current options.
-     */
-    public final void startNewGame()
-    {
-        reset();
-        winnerDialogShown_ = false;
-        this.sendGameChangedEvent(null);  // get the info panel to refresh with 1st players name
-
-        if (!controller_.getFirstPlayer().isHuman())
-            controller_.computerMovesFirst();
-    }
-
-    /**
-     * whether or not to draw the pieces on cell centers or vertices (like go or pente, but not like checkers).
-     */
-    protected boolean offsetGrid()
-    {
-        return true;
-    }
-
-    protected void drawLastMoveMarker(Graphics2D g2)
-    {}
-
-
-    public void mousePressed( MouseEvent e )
-    {
-        //Location loc = createLocation(e, getCellSize());
-        //Galaxy board = (Galaxy) controller_.getBoard();
-        // nothing to do here really for this kind of game
-    }
-
-
 
      /**
       * display a dialog at the end of the game showing who won and other relevant
@@ -127,22 +95,6 @@ public class GalaxyViewer extends GameBoardViewer
         gc.advanceToNextPlayer();
 
         return false;
-    }
-
-    /**
-     * Implements the GameChangedListener interface.
-     * Called when the game has changed in some way
-     * @param evt
-     */
-    public void gameChanged(GameChangedEvent evt)
-    {
-        if (controller_.isDone() && !winnerDialogShown_)  {
-            winnerDialogShown_ = true;
-            this.showWinnerDialog();
-        }
-        else if (!winnerDialogShown_) {
-             super.gameChanged(evt);
-        }
     }
 
 
@@ -245,6 +197,13 @@ public class GalaxyViewer extends GameBoardViewer
 
         // now draw the planets on top
         super.drawMarkers(nrows, ncols, g2);
+    }
+
+    
+    protected void drawBackground( Graphics g, int startPos, int rightEdgePos, int bottomEdgePos )
+    {
+        g.setColor( backgroundColor_ );
+        g.fillRect( 0, 0, this.getWidth(), this.getHeight() );
     }
 
     /**
