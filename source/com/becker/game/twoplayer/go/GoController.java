@@ -53,6 +53,7 @@ import static com.becker.game.twoplayer.go.GoControllerConstants.*;
  *  - parallelize minimax (http://www.cs.vu.nl/~aske/mtdf.html#abmem)
  *  - 
  * bugs
+ *  - Reporting that the wrong player has won. both scores are reported as 0.
  *  - Error: can't have no liberties and still be on the board!
  *  - don't play in territory at end of game.
  *  - back up and play black, back up again and play white.

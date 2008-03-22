@@ -119,6 +119,24 @@ public abstract class GameInfoPanel extends TexturedPanel implements GameChanged
         JLabel turnLabel = createLabel(GameContext.getLabel("PLAYER_TO_MOVE") + COLON);
         initPlayerLabel();
 
+        JLabel moveNumTextLabel = createLabel( GameContext.getLabel("CURRENT_MOVE_NUM") + COLON);
+        moveNumTextLabel.setHorizontalAlignment(JLabel.LEFT);
+        moveNumLabel_ = createLabel( "  " );
+
+        generalPanel.add( createRowEntryPanel( turnLabel, playerLabel_ ) );
+        generalPanel.add( createRowEntryPanel( moveNumTextLabel, moveNumLabel_ ) );
+
+        // add this back in when it is implemented
+        //generalPanel.add( createRowEntryPanel(showRecommendedMove_) );
+        generalPanel.add( Box.createGlue() );
+
+        return generalPanel;
+        /*
+        JPanel generalPanel = createSectionPanel(GameContext.getLabel("GENERAL_INFO"));
+
+        JLabel turnLabel = createLabel(GameContext.getLabel("PLAYER_TO_MOVE") + COLON);
+        initPlayerLabel();
+
         JLabel moveNumTextLabel = createLabel( getMoveNumLabel());
         moveNumTextLabel.setHorizontalAlignment(JLabel.LEFT);
         moveNumLabel_ = createLabel( " 0" );
@@ -131,6 +149,7 @@ public abstract class GameInfoPanel extends TexturedPanel implements GameChanged
         generalPanel.add( Box.createGlue() );
 
         return generalPanel;
+         * */
     }
 
     protected String getMoveNumLabel()

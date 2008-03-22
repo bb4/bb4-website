@@ -160,6 +160,8 @@ public class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMo
         
         if (newPosition.isHomeBase( !isPlayer1 )) {
             hasWon_ = true;
+            assert(isPlayer1 == (controller_.getCurrentPlayer() == controller_.getFirstPlayer()));
+            controller_.getCurrentPlayer().setWon(true);      
         }
         else {
             // piece moved! now a wall needs to be placed.
@@ -196,13 +198,17 @@ public class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMo
      */
     private boolean placeWall(Location loc, BlockadeMove m)
     {
+        if (draggedWall_ == null)
+            return false;
+        
         // first check to see if its a legal placement
         BlockadeBoard board = (BlockadeBoard)controller_.getBoard();
 
         // check wall intersection and overlaps.
+        //assert(draggedWall_ != null);
         String sError = board.checkLegalWallPlacement(draggedWall_, loc, m.getPiece());
 
-        if (sError!=null) {
+        if (sError != null) {
             JOptionPane.showMessageDialog( this, sError);
             draggedWall_ = null;
             return false;

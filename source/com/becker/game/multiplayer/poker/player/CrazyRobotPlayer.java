@@ -42,11 +42,15 @@ public class CrazyRobotPlayer extends PokerRobotPlayer
     }
 
     protected int getRaise(PokerController pc) {
-        int allInAmt = pc.getAllInAmount() - getContribution();
+        int allInAmt = pc.getAllInAmount() - getContribution() - getCallAmount(pc);
+        int raiseAmt = 0;
         if (getHand().getScore() > 100) {
-            return min(DESIRED_RAISE, getCash(), allInAmt);
+            raiseAmt = min(DESIRED_RAISE, getCash(), allInAmt);
         }
-        return min(2, getCash(), allInAmt);
+        else {
+            raiseAmt = min(2, getCash(), allInAmt);
+        }
+        return raiseAmt;
     }
 
     public String getType() {

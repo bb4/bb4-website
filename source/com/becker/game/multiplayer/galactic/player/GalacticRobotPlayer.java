@@ -73,6 +73,8 @@ public abstract class GalacticRobotPlayer extends GalacticPlayer
                 orders.add(order);
             }
         }
+        
+        System.out.println("num orders=" + orders.size());
         return orders;
     }
 
