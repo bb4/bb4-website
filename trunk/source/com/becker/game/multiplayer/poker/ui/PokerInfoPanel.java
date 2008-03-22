@@ -147,7 +147,8 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
                             currentPlayer.contributeToPot(pc, callAmount);                     
                         } else {                            
                             currentPlayer.setFold(true);
-                            assert false; // still happened. need to fix!
+                            // if this happens it was probably because someone was allowed to raise by more than the all in amount.
+                            assert false:"callAmount=" + callAmount +" currentPlayer cash="+currentPlayer.getCash(); 
                         }
                         break;
                     case RAISE :
@@ -161,30 +162,6 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
                pc.advanceToNextPlayer();
            }
         }
-    }
-
-    /**
-     * this is general information that is applicable to every 2 player game.
-     */
-    protected JPanel createGeneralInfoPanel()
-    {
-        JPanel generalPanel = createSectionPanel(GameContext.getLabel("GENERAL_INFO"));
-
-        JLabel turnLabel = createLabel(GameContext.getLabel("PLAYER_TO_MOVE") + COLON);
-        initPlayerLabel();
-
-        JLabel moveNumTextLabel = createLabel( GameContext.getLabel("CURRENT_MOVE_NUM") + COLON);
-        moveNumTextLabel.setHorizontalAlignment(JLabel.LEFT);
-        moveNumLabel_ = createLabel( "  " );
-
-        generalPanel.add( createRowEntryPanel( turnLabel, playerLabel_ ) );
-        generalPanel.add( createRowEntryPanel( moveNumTextLabel, moveNumLabel_ ) );
-
-        // add this back in when it is implemented
-        //generalPanel.add( createRowEntryPanel(showRecommendedMove_) );
-        generalPanel.add( Box.createGlue() );
-
-        return generalPanel;
     }
 
 

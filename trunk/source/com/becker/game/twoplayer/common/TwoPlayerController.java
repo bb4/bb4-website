@@ -181,8 +181,9 @@ public abstract class TwoPlayerController extends GameController
         if ( board_.getMoveList().size() < 4 )
             return 0.5f;
 
+        assert(board_.getLastMove() != null);
         // @@ is this right?
-        // we can use this formula to estimate the outcome:
+        // we can use this formula to estimate the outcome:       
         double inherVal = ((TwoPlayerMove)board_.getLastMove()).getInheritedValue();
         if ( Math.abs( inherVal ) > WINNING_VALUE )
             GameContext.log( 1, "TwoPlayerController: warning: the score for p1 is greater than WINNING_VALUE(" +
@@ -296,7 +297,6 @@ public abstract class TwoPlayerController extends GameController
             //getMoveList().add( selectedMove );
             //player1sTurn_ = !player1;
         }
-
 
         if ( GameContext.isProfiling() ) {
             showProfileStats( System.currentTimeMillis() - time, strategy_.getNumMovesConsidered() );
@@ -707,7 +707,7 @@ public abstract class TwoPlayerController extends GameController
                 GameContext.log(0, "Game is over because there are no more moves");
                 return true;
             }
-            if (getPlayer1().hasWon() || getPlayer1().hasWon())
+            if (getPlayer1().hasWon() || getPlayer2().hasWon())
                 return true;
 
             boolean won = (Math.abs( m.getValue() ) >= WINNING_VALUE);

@@ -82,6 +82,7 @@ public class GalaxyViewer extends MultiGameViewer
         assert(!player.isHuman());
         GalacticRobotPlayer robot = (GalacticRobotPlayer)player;
         GalacticController gc = (GalacticController) controller_;
+        System.out.println("now doing computer move. about to make orders");
         robot.makeOrders((Galaxy)getBoard(), gc.getNumberOfYearsRemaining());
 
         /*

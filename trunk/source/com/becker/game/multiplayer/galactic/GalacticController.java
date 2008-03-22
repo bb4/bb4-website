@@ -48,8 +48,6 @@ public class GalacticController extends MultiGameController
     private static final int DEFAULT_NUM_ROWS = 16;
     protected static final int DEFAULT_NUM_COLS = 16;
 
-    private int currentPlayerIndex_;
-
     /**
      *  Construct the Galactic game controller
      */

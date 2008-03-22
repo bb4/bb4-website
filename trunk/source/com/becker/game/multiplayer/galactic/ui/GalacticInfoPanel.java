@@ -130,30 +130,6 @@ class GalacticInfoPanel extends GameInfoPanel implements GameChangedListener, Ac
         }
     }
 
-    /**
-     * this is general information that is applicable to every 2 player game.
-     */
-    protected JPanel createGeneralInfoPanel()
-    {
-        JPanel generalPanel = createSectionPanel(GameContext.getLabel("GENERAL_INFO"));
-
-        JLabel turnLabel = createLabel(GameContext.getLabel("PLAYER_TO_MOVE") + COLON);
-        initPlayerLabel();
-
-        JLabel moveNumTextLabel = createLabel( GameContext.getLabel("CURRENT_MOVE_NUM") + COLON);
-        moveNumTextLabel.setHorizontalAlignment(JLabel.LEFT);
-        moveNumLabel_ = createLabel( "  " );
-
-        generalPanel.add( createRowEntryPanel( turnLabel, playerLabel_ ) );
-        generalPanel.add( createRowEntryPanel( moveNumTextLabel, moveNumLabel_ ) );
-
-        // add this back in when it is implemented
-        //generalPanel.add( createRowEntryPanel(showRecommendedMove_) );
-        generalPanel.add( Box.createGlue() );
-
-        return generalPanel;
-    }
-
 
     /**
      * set the appropriate text and color for the player label.

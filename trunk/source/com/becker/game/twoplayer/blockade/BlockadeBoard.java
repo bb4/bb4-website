@@ -595,7 +595,7 @@ public class BlockadeBoard extends TwoPlayerBoard
         if (m.getWall() != null)
             addWall(m.getWall());
         positions_[m.getFromRow()][m.getFromCol()].clear();
-
+       
         return true;
     }
     

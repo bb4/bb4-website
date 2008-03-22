@@ -185,6 +185,7 @@
     </antcall>
   </target>
   
+  
   <target name="executeTrivial" depends="compile" description="Run trivial test game app"> 
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
@@ -193,10 +194,45 @@
     </antcall>
   </target>
   
+   <target name="executeTrivialServer" depends="compile" description="Run online trivial server">
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.game.common.online.ui.OnlineGameServerFrame"/>
+      <param name="libPath" value="${libDir}/jai_codec.jar;"/>
+      <param name="args" value="-game trivial"/>
+    </antcall>
+  </target>
+  
+  <target name="executeTrivialServerAndClients" depends="compile" description="Run online trivial server and several clients">
+      <parallel>   
+          <antcall target="executeTrivialServer"/>
+          <sequential>
+              <sleep seconds="5" />
+              <antcall target="executeTrivial"/>
+          </sequential>
+           <sequential>
+              <sleep seconds="5"/>
+              <antcall target="executeTrivial"/>
+          </sequential>
+          <sequential>
+              <sleep seconds="5"/>
+              <antcall target="executeTrivial"/>
+          </sequential>
+      </parallel>
+  </target>
+  
+  
   <target name="executePoker" depends="compile" description="Run poker card game app"> 
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
+      <param name="args" value="-game poker"/>
+    </antcall>
+  </target>
+  
+   <target name="executePokerServer" depends="compile" description="Run online poker server">
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.game.common.online.ui.OnlineGameServerFrame"/>
+      <param name="libPath" value="${libDir}/jai_codec.jar;"/>
       <param name="args" value="-game poker"/>
     </antcall>
   </target>
@@ -218,14 +254,7 @@
           </sequential>
       </parallel>
   </target>
-
-  <target name="executePokerServer" depends="compile" description="Run online poker server">
-    <antcall target="executeProgram">
-      <param name="className" value="com.becker.game.common.online.ui.OnlineGameServerFrame"/>
-      <param name="libPath" value="${libDir}/jai_codec.jar;"/>
-      <param name="args" value="-game poker"/>
-    </antcall>
-  </target>
+  
 
   <target name="executeSetGame" description="Run the Set Game app">
     <antcall target="executeProgram">
@@ -452,7 +481,7 @@
         <!-- jvmarg value="-agentlib:yjpagent"/  -->
         <!-- use this if running netbeans profiler -->
         <!--jvmarg value="-agentpath:D:\apps\java\netbeans-5.5\profiler1\lib\deployed\jdk15\windows\profilerinterface.dll=D:\apps\java\netbeans-5.5\profiler1\lib,5140"/-->
-        <!--jvmarg value="-agentlib:jdwp=transport=dt_socket,server=y,address=8000"     for Netbeans debugging-->                                           
+        <!-- jvmarg value="-agentlib:jdwp=transport=dt_socket,server=y,address=8000"/ -->  <!--   for Netbeans debugging-->                                           
         <jvmarg value="-Xms128M"/>
         <jvmarg value="-Xmx256M"/>
         <jvmarg value="${assertionsFlag}"/>

@@ -117,11 +117,32 @@ public class BlockadeController extends TwoPlayerController
      */
     protected double worth( Move lastMove, ParameterArray weights )
     {
-        BlockadeBoard board = (BlockadeBoard)board_;        
-        PlayerPathLengths pathLengths = board.findPlayerPathLengths((BlockadeMove)lastMove);        
+        BlockadeBoard board = (BlockadeBoard)board_;       
+        BlockadeMove m = (BlockadeMove)lastMove;
+        // if its a winning move then return the winning value
+        boolean player1Moved = m.isPlayer1();     
+        if (checkForWin(player1Moved, player1Moved? board.getPlayer2Homes() : board.getPlayer1Homes()))
+            return WINNING_VALUE;
+    
+        PlayerPathLengths pathLengths = board.findPlayerPathLengths(m);        
         return pathLengths.determineWorth(WINNING_VALUE, weights);
     }
     
+     
+    /**
+      * 
+      * @return true if player has reached an opponent home. (for player1 or player2 depending on boolean player1 value)
+      */
+    protected static boolean checkForWin(boolean player1, BoardPosition[] homes) {
+        for (int i=0; i< homes.length; i++) {
+            GamePiece p = homes[i].getPiece();
+            if (p != null && p.isOwnedByPlayer1() != player1)
+                return true;
+        }
+        return false;
+    }
+
+
 
     public List<BlockadeMove> getPossibleMoveList(BoardPosition position)
     {
@@ -620,6 +641,19 @@ public class BlockadeController extends TwoPlayerController
             return getBestMoves( player1, moveList, player1sPerspective );
         }
 
+        /**
+         * given a move, determine whether the game is over.
+         * If recordWin is true, then the variables for player1/2HasWon can get set.
+         *  sometimes, like when we are looking ahead we do not want to set these.
+         * @param m the move to check. If null then return true.
+         * @param recordWin if true then the controller state will record wins
+         */
+        public boolean done( TwoPlayerMove m, boolean recordWin )
+        {
+            BlockadeBoard board = (BlockadeBoard)board_;
+            return (checkForWin(true, board.getPlayer1Homes()) || checkForWin(false, board.getPlayer2Homes()));
+        }
+       
 
         /**
          * @@ quiescent search not yet implemented for Blockade
