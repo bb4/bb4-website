@@ -27,7 +27,8 @@ public class GameCommand implements Serializable {
         CHANGE_NAME,
         UPDATE_TABLES,
         CHAT_MESSAGE,
-        START_GAME
+        START_GAME,
+        DO_ACTION
     }
 
 

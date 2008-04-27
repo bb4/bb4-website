@@ -1,6 +1,8 @@
 package com.becker.game.multiplayer.poker.player;
 
 
+import com.becker.game.multiplayer.common.MultiGameController;
+import com.becker.game.common.PlayerAction;
 import com.becker.game.multiplayer.poker.*;
 
 import java.awt.*;
@@ -15,19 +17,14 @@ public class CrazyRobotPlayer extends PokerRobotPlayer
     private static final long serialVersionUID = 1;
 
     private static final int DESIRED_RAISE = 20;
-
+   
 
     public CrazyRobotPlayer(String name, int cash, Color color, RobotType rType)
     {
         super(name, cash, color, rType);
     }
-
-    /**
-     *
-     * @return an appropriate action based on the situation
-     */
-    public PokerAction getAction(PokerController pc) {
-
+    
+    protected PokerAction createAction(PokerController pc) {
         PokerAction.Name action;
         int raise = 0;
         if ((getCash() > getCallAmount(pc)) && (getHand().getScore() > 10 || Math.random() > 0.3)) {

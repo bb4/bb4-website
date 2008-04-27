@@ -54,8 +54,8 @@ public class Card {
 
 
 
-    public static List newDeck() {
-        List deck = new ArrayList<Card>(protoDeck); // Return copy of prototype deck
+    public static List<Card> newDeck() {
+        List<Card> deck = new ArrayList<Card>(protoDeck); // Return copy of prototype deck
         Collections.shuffle(deck);
         return deck;
     }

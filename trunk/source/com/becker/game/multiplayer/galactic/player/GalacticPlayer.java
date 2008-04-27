@@ -1,7 +1,9 @@
 package com.becker.game.multiplayer.galactic.player;
 
 import com.becker.game.common.*;
+import com.becker.game.multiplayer.common.MultiGameController;
 import com.becker.game.multiplayer.common.MultiGamePlayer;
+import com.becker.game.common.PlayerAction;
 import com.becker.game.multiplayer.galactic.*;
 import com.becker.ui.*;
 
@@ -109,6 +111,21 @@ public class GalacticPlayer extends MultiGamePlayer
         }
     }
 
+    /**
+     * A galactic action is a set of orders for directing ships to planets.
+     */
+    public PlayerAction getAction(MultiGameController controller) {
+        return new GalacticAction(getName(), getOrders());
+    }
+   
+    /**
+     * A galactic action is a set of orders for directing ships to planets.
+     */
+    public void setAction(PlayerAction action) {
+        setOrders(((GalacticAction) action).getOrders());
+    }
+   
+    
     /**
      * @return get the current list of orders for the player
      */

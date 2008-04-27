@@ -14,7 +14,7 @@ import java.util.*;
  *  @author Barry Becker
  */
 public abstract class GameController
-           implements GameControllerInterface, OnlineChangeListener
+           implements GameControllerInterface
 {
 
     /** the board has the layout of the pieces. */
@@ -62,7 +62,7 @@ public abstract class GameController
      */
     public void reset()
     {
-        board_.reset();
+          board_.reset();
     }
 
     public int getNumMoves() {
@@ -184,7 +184,10 @@ public abstract class GameController
      */
     public void setPlayers( List<? extends Player> players )
     {
+        if (board_ != null)
+            reset();
        players_ = players;
+       initializeData();
     }
 
     /**
@@ -246,10 +249,14 @@ public abstract class GameController
         return null;
     }
 
+    /**
+     * 
+     * @param cmd containing an action for one of the players
+     *
     public void handleServerUpdate(GameCommand cmd) {
         // @@ need to put something here for.
-        //System.out.println("Need controller implmentation for handleServerUpdate");
-    }
+        //System.out.println("Need controller implementation for handleServerUpdate");
+    }*/
 
     /**
      *
@@ -263,6 +270,15 @@ public abstract class GameController
      */
     public int getServerPort() {
         return -1;
+    }
+    
+    /**
+     * Someday 2 player games should use actions rathern than moves so
+     * that they too can be run over the game server.
+     * @param action
+     */
+    public void handlePlayerAction(PlayerAction action) {
+        assert false : "handlePlayerAction not implemented for " + this.getClass().getName();
     }
 
 }

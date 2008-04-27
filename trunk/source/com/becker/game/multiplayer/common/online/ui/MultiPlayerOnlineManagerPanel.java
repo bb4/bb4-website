@@ -5,17 +5,23 @@ import com.becker.game.common.online.ui.*;
 import com.becker.game.common.online.*;
 import com.becker.game.common.ui.*;
 import com.becker.game.multiplayer.common.*;
+import com.becker.game.multiplayer.common.online.SurrogatePlayer;
 import com.becker.game.multiplayer.common.ui.*;
 import com.becker.ui.*;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import javax.swing.*;
 import javax.swing.event.*;
-import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Manage multiplayer online game tables.
  * Shows a list of the currently active tables to the user in a table.
+ * Used only on the client to show list of active game tables.
  *
  * @author Barry Becker Date: May 14, 2006
  */
@@ -134,10 +140,15 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
                 startGame();
                 break;
            case CHAT_MESSAGE : break;
+            case DO_ACTION: break;
            default : assert false : "Unexpected command name :"+ cmd.getName();
         }
     }
 
+    /**
+     * 
+     * @param tableList list of tables to update.
+     */
     public void updateTables(OnlineGameTableList tableList) {  
         onlineGameTablesTable_.removeAllRows();
 
@@ -146,6 +157,7 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
             onlineGameTablesTable_.addRow(table, table.hasPlayer(currentName_));
         }
 
+        // see if the table that the player is at is ready to start playing.
         OnlineGameTable readyTable = tableList.getTableReadyToPlay(currentName_);
         if (readyTable != null) {
             // then the table the player is sitting at is ready to begin play.
@@ -167,11 +179,27 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
     
     /**
      * An online table has filled with players and is ready to start.
+     * Initiallize the players for the controller with surrogates for all but the single current player on this client.
      */
     protected void startGame()
     {
-        System.out.println("Start the game for player:" + currentName_);
-        //controller_.setPlayers(onlineGameTablesTable_.getSelectedTable().getPlayersAsArray());
+        System.out.println("Start the game for player:" + currentName_ +" on the client. Table=" +  onlineGameTablesTable_.getSelectedTable());
+        
+        // since we are on the client we need to create surrogates for the players which are not the current player
+        Iterator<Player> it = onlineGameTablesTable_.getSelectedTable().getPlayers().iterator();
+        List<MultiGamePlayer> players = new ArrayList<MultiGamePlayer>();
+        while (it.hasNext()) {
+            MultiGamePlayer player = (MultiGamePlayer)it.next();
+            if (!player.getName().equals(this.currentName_)) {
+                // add surrogate
+                players.add(new SurrogatePlayer(player, controller_.getServerConnection()));
+            }
+            else {
+                players.add(player);
+            }
+        }
+        System.out.println("starting game with players="+players);
+        controller_.setPlayers(players);       
     }
 
     /**

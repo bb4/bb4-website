@@ -7,6 +7,7 @@ import com.becker.game.multiplayer.set.*;
 import com.becker.common.*;
 
 import com.becker.game.multiplayer.common.MultiGameController;
+import com.becker.game.multiplayer.common.online.SurrogatePlayer;
 import com.becker.game.multiplayer.common.ui.MultiGameViewer;
 import javax.swing.*;
 import java.awt.*;
@@ -60,6 +61,18 @@ public final class SetGameViewer extends MultiGameViewer
     public boolean doComputerMove(Player player)
     {
         assert false : " no computer player for set yet. coming soon!";
+        return false;
+    }
+    
+    /**
+     * make the computer move and show it on the screen.
+     *
+     * @param player computer player to move
+     * @return done return true if the game is over after moving
+     */
+    public boolean doSurrogateMove(SurrogatePlayer player)
+    {
+        assert false : " no online pla for set yet. coming soon!";
         return false;
     }
 

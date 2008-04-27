@@ -110,13 +110,12 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
 
 
     /**
-     * The Orders button was pressed.
-     * open the Orders dialog to get the players commands
+     * The Comman button was pressed.
+     * open the dialog to get the players command.
      * @param e
      */
     public void actionPerformed(ActionEvent e)
     {
-
         if (e.getSource() == commandButton_)
         {
             PokerController pc = (PokerController)controller_;
@@ -125,6 +124,7 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
            // open the command dialog to get the players commands
            PokerPlayer currentPlayer = (PokerPlayer)pc.getCurrentPlayer();
 
+           
            // if the current player has folded, then advance to the next player.
            if (currentPlayer.hasFolded())  {
               pc.advanceToNextPlayer();
@@ -136,7 +136,7 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
 
            boolean canceled = bettingDialog.showDialog();
            if ( !canceled ) {
-               PokerAction action = currentPlayer.getAction(pc);
+               PokerAction action = (PokerAction)currentPlayer.getAction(pc);
                // apply the players action : fold, check, call, raise
                switch (action.getActionName()) {
                     case FOLD :
@@ -158,7 +158,6 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
                         break;
                 }               
                              
-               //currentPlayer.contributeToPot(pc, bettingDialog.getContributeAmount());
                pc.advanceToNextPlayer();
            }
         }

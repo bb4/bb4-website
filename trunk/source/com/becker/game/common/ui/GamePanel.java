@@ -4,13 +4,17 @@ import com.becker.common.*;
 import com.becker.common.util.ImageUtil;
 import com.becker.game.common.*;
 import com.becker.game.common.online.ui.*;
+import com.becker.sound.SpeechSynthesizer;
 import com.becker.ui.*;
 
+import java.applet.AudioClip;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.*;
 import java.io.*;
+import java.net.URL;
+import sun.applet.AppletAudioClip;
 
 /**
  * This is an abstract base class for a Game UI.
@@ -188,21 +192,18 @@ public abstract class GamePanel extends TexturedPanel
         //start and initialize a new game with the default options
         boardViewer_.startNewGame();
 
-        // misc speech
+        // Intro speech
         if ( GameContext.getUseSound() ) {
             // This works for arbitrary strings, but is not as nice sounding as the pre-generated wav file.
-            /* npe in applet (why?)
-            SpeechSynthesizer speech = new SpeechSynthesizer();
-            speech.sayPhoneWords( GREETING );
-            */
-
+            /* npe in applet (why?) */
+            //SpeechSynthesizer speech = new SpeechSynthesizer();
+            //speech.sayPhoneWords( GREETING );
+            
             // use when sound card available
-            /* causing security exception in applet?
-            URL url = GUIUtil.getURL("com/becker/sound/play_game_voice.wav");
-            AudioClip clip = new AppletAudioClip(url);
-            clip.play();
-            */
-
+            /* causing security exception in applet? */
+            //URL url = GUIUtil.getURL("com/becker/sound/play_game_voice.wav");
+            //AudioClip clip = new AppletAudioClip(url);
+            //clip.play();            
         }
         this.setDoubleBuffered(false);
     }

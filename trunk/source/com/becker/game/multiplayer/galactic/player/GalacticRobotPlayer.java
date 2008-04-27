@@ -28,8 +28,7 @@ public abstract class GalacticRobotPlayer extends GalacticPlayer
     /**
      * @return the current list of this Robot's orders.
      */
-    public abstract List makeOrders(Galaxy galaxy, int numYearsRemaining);
-
+    public abstract List<Order> makeOrders(Galaxy galaxy, int numYearsRemaining);
 
     /**
      * send atacks to numAttacks closest planets not owned by this robot player.

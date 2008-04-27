@@ -111,7 +111,7 @@ class SetInfoPanel extends GameInfoPanel
 
     /**
      * implements the GameChangedListener interface.
-     * This method called whenever something on th eboard has changed.
+     * This method called whenever something on the board has changed.
      */
     public void gameChanged( GameChangedEvent gce )
     {

@@ -2,6 +2,7 @@ package com.becker.game.common.online;
 
 import com.becker.game.common.*;
 import com.becker.common.*;
+import com.becker.game.multiplayer.common.MultiGamePlayer;
 import com.becker.game.multiplayer.common.online.SurrogatePlayer;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -53,7 +54,7 @@ public class ServerCommandProcessor {
     }
 
     /**
-     * Update our internal game table list given the cmd from the client.
+     * Update our internal game table list, or server controlller given the cmd from the client.
      * @param cmd to process. The command that the player has issued.
      * @return the response command(s) to send to all the clients.
      */
@@ -89,8 +90,19 @@ public class ServerCommandProcessor {
             case CHAT_MESSAGE :
                 //System.out.println("chat message=" + cmd.getArgument());
                 useUpdateTable = false;
+                responses.add(cmd);          
+                break;
+            case DO_ACTION :
+                // a player or robot moves, this action is sent here to the server, then we broadcast it out so the surrogate(s) can be updated.
+                useUpdateTable = false;
+                //System.out.println("Ignoring DO_ACTION in ServerCommandProcessor. Surrogates to handle");
+                // one of the client players has acted. We need to apply this to the server controller.
+                //PlayerAction action = (PlayerAction) cmd.getArgument();
+                //controller_.handlePlayerAction(action);     
                 responses.add(cmd);
                 break;
+            default: 
+                assert false : "Unhandled command: "+ cmd;
         }
         
         if (useUpdateTable) {
@@ -121,7 +133,7 @@ public class ServerCommandProcessor {
 
     /**
      * Get the most recently added human player from table and have them join the table with the same name.
-     * If there is a table now ready to paly after this change, then start it.
+     * If there is a table now ready to play after this change, then start it.
      */
     private GameCommand joinTable(OnlineGameTable table) {
 
@@ -164,17 +176,20 @@ public class ServerCommandProcessor {
         assert (players.size() == table.getNumPlayersNeeded());
         List<Player> newPlayers = new ArrayList<Player>(players.size());
         for (int i = 0; i < players.size(); i++) {
-            Player player = players.get(i);
+            MultiGamePlayer player = (MultiGamePlayer)players.get(i);
             if (player.isHuman()) {
                 newPlayers.add(new SurrogatePlayer(player, controller_.getServerConnection()));
             } else {
                 newPlayers.add(player);
             }                   
         }
+        controller_.reset();
         controller_.setPlayers(newPlayers);
-        ////controller_.reset();
-        // broadcast the command to start for all the clients
-
+        // if getFirstPlayer returns null, then it is not a turn based game
+        if (controller_.getFirstPlayer() != null &&  !controller_.getFirstPlayer().isHuman()) {
+            controller_.computerMovesFirst();
+        }
+       
     }
 
     /**

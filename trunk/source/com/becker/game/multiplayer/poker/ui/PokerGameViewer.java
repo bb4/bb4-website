@@ -3,6 +3,7 @@ package com.becker.game.multiplayer.poker.ui;
 import com.becker.common.*;
 import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
+import com.becker.game.multiplayer.common.online.SurrogatePlayer;
 import com.becker.game.multiplayer.common.ui.MultiGameViewer;
 import com.becker.game.multiplayer.poker.*;
 import com.becker.game.multiplayer.poker.player.*;
@@ -70,42 +71,74 @@ public class PokerGameViewer extends MultiGameViewer
     {
         assert(!player.isHuman());
         PokerRobotPlayer robot = (PokerRobotPlayer)player;
-        PokerController pc = (PokerController) controller_;
-
-        String msg = null;
-        int callAmount = pc.getCurrentMaxContribution() - robot.getContribution();
-
-        PokerAction action = robot.getAction(pc);
-
-        switch (action.getActionName()) {
-            case FOLD :
-                robot.setFold(true);
-                msg = robot.getName() + " folded.";
-                break;
-            case CALL :
-                // System.out.println("PGV: robot call amount = currentMaxContrib - robot.getContrib) = "
-                //                   + pc.getCurrentMaxContribution()+" - "+robot.getContribution());
-                if (callAmount <= robot.getCash())   {
-                    robot.contributeToPot(pc, callAmount);
-                    msg = robot.getName() + " has called by adding "+ callAmount + " to the pot.";
-                } else {
-                    robot.setFold(true);
-                    msg = robot.getName() + " folded.";
-                }
-                break;
-            case RAISE :
-                robot.contributeToPot(pc, callAmount);
-                int raise = action.getRaiseAmount();
-                robot.contributeToPot(pc, raise);
-                msg = robot.getName() + " has met the "+callAmount + ", and rasied the pot by " + raise;
-                break;
-        }
+        PokerController pc = (PokerController) controller_;        
+        
+        String msg = applyAction(robot.getAction(pc), robot);    
 
         JOptionPane.showMessageDialog(parent_, msg, robot.getName(), JOptionPane.INFORMATION_MESSAGE);
         refresh();
         pc.advanceToNextPlayer();
 
         return false;
+    }
+    
+    
+    /**
+     * make the computer move and show it on the screen.
+     *
+     * @param player computer player to move
+     * @return done return true if the game is over after moving
+     */
+    public boolean doSurrogateMove(SurrogatePlayer player)
+    {
+        PokerController pc = (PokerController) controller_;   
+        PlayerAction action = player.getAction(pc);
+
+        applyAction(action, player.getPlayer());
+        
+        pc.advanceToNextPlayer();
+
+        return false;
+    }
+    
+    /**
+     * @param action to take
+     * @param player to apply it to
+     * @return message to show if on client.
+     */
+    protected String applyAction(PlayerAction action,  Player player) {
+        
+        PokerPlayer p = (PokerPlayer) player;
+        PokerAction act = (PokerAction) action;
+        PokerController pc = (PokerController) controller_;
+        
+        String msg = null;
+        int callAmount = pc.getCurrentMaxContribution() - p.getContribution();
+        
+        switch (act.getActionName()) {
+            case FOLD :
+                p.setFold(true);
+                msg = p.getName() + " folded.";
+                break;
+            case CALL :
+                // System.out.println("PGV: robot call amount = currentMaxContrib - robot.getContrib) = "
+                //                   + pc.getCurrentMaxContribution()+" - "+robot.getContribution());
+                if (callAmount <= p.getCash())  {
+                    p.contributeToPot(pc, callAmount);
+                    msg = p.getName() + " has called by adding "+ callAmount + " to the pot.";
+                } else {
+                    p.setFold(true);
+                    msg = p.getName() + " folded.";
+                }
+                break;
+            case RAISE :
+                p.contributeToPot(pc, callAmount);
+                int raise = act.getRaiseAmount();
+                p.contributeToPot(pc, raise);
+                msg = p.getName() + " has met the "+callAmount + ", and rasied the pot by " + raise;
+                break;
+        }
+        return msg;
     }
 
     /**

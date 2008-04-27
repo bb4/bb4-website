@@ -67,10 +67,6 @@ public class OnlineGameTable implements Serializable {
         return players_;
     }
 
-    public Player[] getPlayersAsArray() {
-        return players_.toArray(new Player[players_.size()]);
-    }
-
     public Player getOwner() {
         return owner_;
     }

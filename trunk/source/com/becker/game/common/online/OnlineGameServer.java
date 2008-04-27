@@ -2,7 +2,6 @@ package com.becker.game.common.online;
 
 import com.becker.common.*;
 import com.becker.game.common.*;
-import java.awt.ScrollPane;
 
 import javax.swing.*;
 import java.io.*;
@@ -45,7 +44,7 @@ public class OnlineGameServer  {
      */
     public OnlineGameServer(String gameType, JTextArea textArea) {
 
-        //port_ = PluginManager.getInstance().getPlugin(gameType).getPort();;
+        //port_ = PluginManager.getInstance().getPlugin(gameType).getPort();
         textArea_ = textArea;
         cmdProcessor_ = new ServerCommandProcessor(gameType);
         port_ = cmdProcessor_.getPort();
@@ -158,8 +157,6 @@ public class OnlineGameServer  {
                         }
                     }
 
-                    //Send acknowledgment back to client
-                    //oStream.writeObject(new GameCommand("received", cmd));
                     if (text_ == null)  {
                        System.out.println(cmd.toString());
                     }  else {
@@ -167,9 +164,7 @@ public class OnlineGameServer  {
                        JScrollPane spane = ((JScrollPane)text_.getParent().getParent());
                        spane.getVerticalScrollBar().setValue(spane.getVerticalScrollBar().getMaximum());
                     }
-
                 }
-
             }
             catch (ClassNotFoundException e) {
                 e.printStackTrace();
@@ -186,16 +181,25 @@ public class OnlineGameServer  {
         /**
          * broadcast the current list of tables to all the online clients.
          */
-        public void update(GameCommand response) throws IOException {
+        public synchronized void update(GameCommand response) throws IOException {
 
             GameContext.log(1, "OnlineGameServer: sending:"+cmdProcessor_.getTables());
 
             // must reset the stream first, otherwise tables_ will always be the same as first sent.
             oStream_.reset();
-            //oStream_.writeObject(new GameCommand(GameCommand.Name.UPDATE_TABLES, cmdProcessor_.getTables()));
             oStream_.writeObject(response);
             oStream_.flush();
+           
         }
+        
+        protected void finalize() {
+            try {
+               oStream_.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     /**
@@ -225,7 +229,7 @@ public class OnlineGameServer  {
          GameCommand cmd = new GameCommand(GameCommand.Name.valueOf(cmdStr), cmdStr);
          return processCmd(cmd);
      } */
-
+        
 
     /**
      * create and show the server.
