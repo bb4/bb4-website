@@ -1,14 +1,16 @@
 package com.becker.common;
 
 import java.awt.geom.Point2D;
+import java.io.Serializable;
 
 /**
  * Represents a location location of something in integer coordinates.
  *
  * @author Barry Becker
  */
-public final class Location
+public final class Location implements Serializable
 {
+    private static final long serialVersionUID = 1;
     private int row_ = 0;
     private int col_ = 0;
 

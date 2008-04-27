@@ -1,5 +1,6 @@
 package com.becker.game.multiplayer.set;
 
+import com.becker.game.common.PlayerAction;
 import com.becker.game.common.*;
 import com.becker.game.multiplayer.common.*;
 
@@ -39,6 +40,22 @@ public class SetPlayer extends MultiGamePlayer
            return SetRobotPlayer.getSequencedRobotPlayer(name, color);
     }
 
+    /**
+     * I see this as returning a set of 3 cards that the player has selected.
+     * @return player action
+     */
+    public PlayerAction getAction(MultiGameController controller) {
+        assert false : "getAction not implemented yet";
+        return null;
+    }
+    
+    /**
+     * @return player action
+     */
+    public void setAction(PlayerAction action) {
+        assert false : "setAction implemented yet";
+    }
+    
     /**
      *
      * @param i index of player
@@ -95,7 +112,6 @@ public class SetPlayer extends MultiGamePlayer
     {      
         return "Num Sets Found: "+numSetsFound_;
     }
-
 
 }
 

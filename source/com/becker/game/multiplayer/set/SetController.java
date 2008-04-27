@@ -63,8 +63,7 @@ public class SetController extends MultiGameController
         gameChanged();
     }
 
-    /**
-     * make it the next players turn
+    /**There is not a concept of turns in set.
      * @return the index of the next player
      */
     protected int advanceToNextPlayerIndex() {
@@ -250,8 +249,8 @@ public class SetController extends MultiGameController
      */
     public Player getFirstPlayer()
     {
-        assert false : "no player goes first in set.";
-        return players_.get(0);
+        System.out.println("There is not actual first player in set");         
+        return null;
     }
 
 }

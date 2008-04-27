@@ -2,6 +2,7 @@ package com.becker.game.multiplayer.poker;
 
 import com.becker.game.common.*;
 import com.becker.game.common.Move;
+import com.becker.game.multiplayer.common.online.SurrogatePlayer;
 import com.becker.game.multiplayer.poker.player.*;
 import java.util.List;
 
@@ -64,27 +65,33 @@ public class PokerTable extends Board
      * @param players
      * @param controller
      */
-    public void initPlayers(List<PokerPlayer> players, PokerController controller) {
+    public void initPlayers(List<? extends Player> players, PokerController controller) {
         double angle = 0.6 * Math.PI;
         double angleIncrement = 2.0 * Math.PI / (players.size());
         double rowRad = getNumRows() >> 1;
         double colRad = getNumCols() >> 1;
+        reset();
+        for (final Player p : players) {
 
-        for (final PokerPlayer p : players) {
-
+            PokerPlayer pp = null;
+            if (p.isSurrogate()) {
+                pp = (PokerPlayer) ((SurrogatePlayer) p).getPlayer();
+            }
+            else {
+                pp = (PokerPlayer)p;
+            }
             int row = (int) (0.93 * rowRad + (RADIUS * rowRad) * (Math.sin(angle)));
             int col = (int) (0.9 * colRad + (RADIUS * colRad) * (Math.cos(angle)));
 
             BoardPosition position = getPosition(row, col);
-            position.setPiece(p.getPiece());
-            p.getPiece().setLocation(position.getLocation());
+            position.setPiece(pp.getPiece());
+            pp.getPiece().setLocation(position.getLocation());
             angle += angleIncrement;
         }
     }
 
     /**
      * given a move specification, execute it on the board
-     * This applies the results for all the battles for one year (turn).
      *
      * @param move the move to make, if possible.
      * @return false if the move is illegal.

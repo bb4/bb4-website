@@ -1,5 +1,7 @@
 package com.becker.game.multiplayer.poker.player;
 
+import com.becker.game.multiplayer.common.MultiGameController;
+import com.becker.game.common.PlayerAction;
 import com.becker.game.multiplayer.poker.*;
 import java.awt.Color;
 import java.util.List;
@@ -22,7 +24,31 @@ public abstract class PokerRobotPlayer extends PokerPlayer
         super(name, money, color, false);
         robotType_ = rType;
     }
+    
+    
+    public void setAction(PlayerAction action) {
+        assert action != null;
+        action_ = (PokerAction) action;
+    }
+    
+    /**
+     *
+     * @return an appropriate action based on the situation
+     */
+    public PlayerAction getAction(MultiGameController controller) {
 
+        PokerAction a;
+        if (action_ == null) {
+            a = createAction((PokerController) controller);
+        }
+        else {
+            a = action_;
+        }
+        action_ = null;
+        return a;
+    }
+
+    protected abstract PokerAction createAction(PokerController pc); 
 
     /**
      * @return a string describing the type of robot.
@@ -30,12 +56,6 @@ public abstract class PokerRobotPlayer extends PokerPlayer
     public String getType() {
         return  robotType_.getName();
     }
-
-    /**
-     *
-     * @return an appropriate action based on the situation
-     */
-    //public abstract PokerAction getAction(PokerController pc);
 
     /**
      *

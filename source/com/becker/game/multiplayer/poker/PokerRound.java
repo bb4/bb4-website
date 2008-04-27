@@ -12,11 +12,6 @@ import com.becker.game.common.*;
  */
 public class PokerRound extends Move
 {
-
-    // a list of player chip contributions to the pot.
-    // private List contributions_;
-
-
     /**
      *  Constructor. This should never be called directly
      *  use the factory method createMove instead.

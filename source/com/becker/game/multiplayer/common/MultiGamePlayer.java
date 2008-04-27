@@ -1,5 +1,6 @@
 package com.becker.game.multiplayer.common;
 
+import com.becker.game.common.PlayerAction;
 import com.becker.game.common.*;
 import com.becker.ui.*;
 import java.awt.Color;
@@ -9,10 +10,10 @@ import java.util.List;
 
 
 /**
- *
+ * A player in a multi-player game.
  * @author Barry Becker Date: Mar 19, 2006
  */
-public class MultiGamePlayer extends Player {
+public abstract class MultiGamePlayer extends Player {
 
     private static final long serialVersionUID = 1;
 
@@ -24,6 +25,17 @@ public class MultiGamePlayer extends Player {
         super(name, color, isHuman);
     }
 
+    /**
+     * A key abstraction for multi game players.
+     * @return this players action
+     */
+    public abstract PlayerAction getAction(MultiGameController controller);
+    
+    /**
+     * 
+     * @param action to set.
+     */
+    public abstract void setAction(PlayerAction action);
 
     /**
      * try to give a unique color based on the name
@@ -43,8 +55,7 @@ public class MultiGamePlayer extends Player {
 
         return Color.getHSBColor(candidateHue, SATURATION, BRIGHTNESS);
     }
-
-
+  
     /**
      * @@ this method could use some improvement
      * @param hue to check for uniqueness compared to other players.
@@ -63,6 +74,11 @@ public class MultiGamePlayer extends Player {
             else break;
         }
         return (ct == players.size());
+    }
+    
+    public MultiPlayerMarker getPiece() {
+        assert false: "no piece support for " + this.getClass().getName();
+        return null;        
     }
 
 }

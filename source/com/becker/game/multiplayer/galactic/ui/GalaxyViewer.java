@@ -4,6 +4,7 @@ import com.becker.common.*;
 import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
 import com.becker.game.multiplayer.common.MultiGameController;
+import com.becker.game.multiplayer.common.online.SurrogatePlayer;
 import com.becker.game.multiplayer.common.ui.MultiGameViewer;
 import com.becker.game.multiplayer.galactic.*;
 import com.becker.game.multiplayer.galactic.player.*;
@@ -82,9 +83,10 @@ public class GalaxyViewer extends MultiGameViewer
         assert(!player.isHuman());
         GalacticRobotPlayer robot = (GalacticRobotPlayer)player;
         GalacticController gc = (GalacticController) controller_;
-        System.out.println("now doing computer move. about to make orders");
+        System.out.println("now doing computer move. about to make orders");        
+        
         robot.makeOrders((Galaxy)getBoard(), gc.getNumberOfYearsRemaining());
-
+        
         /*
         // records the result on the board.
         Move lastMove = getBoard().getLastMove();
@@ -94,10 +96,24 @@ public class GalaxyViewer extends MultiGameViewer
         this.refresh();
 
         gc.advanceToNextPlayer();
-
         return false;
     }
 
+    /**
+     * make the computer move and show it on the screen.
+     *
+     * @param player computer player to move
+     * @return done return true if the game is over after moving
+     */
+    public boolean doSurrogateMove(SurrogatePlayer player)
+    {
+        GalacticController pc = (GalacticController) controller_;   
+        // simply blocks until action set?
+        PlayerAction action = player.getAction(pc);
+        pc.advanceToNextPlayer();
+        return false;
+    }
+    
 
     /**
      * This will run all the battle simulations needed to calculate the result and put it in the new move.
@@ -113,6 +129,9 @@ public class GalaxyViewer extends MultiGameViewer
         List<? extends Player> players = controller_.getPlayers();
 
         for (final Player player : players) {
+            //GalacticPlayer gp = (GalacticPlayer) player;
+            //GalacticAction ga =  (GalacticAction)gp.getAction((MultiGameController)controller_);
+            //List orders = ga.getOrders();
             List orders = ((GalacticPlayer) player).getOrders();
             Iterator orderIt = orders.iterator();
             while (orderIt.hasNext()) {

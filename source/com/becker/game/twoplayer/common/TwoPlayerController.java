@@ -433,8 +433,6 @@ public abstract class TwoPlayerController extends GameController
         return processing_;
     }
 
-
-
     public void pause()
     {
         if (getSearchStrategy() == null) {

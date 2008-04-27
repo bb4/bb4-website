@@ -1,4 +1,4 @@
-package com.becker.game.multiplayer.common;
+package com.becker.game.common;
 
 import java.io.*;
 
@@ -15,6 +15,10 @@ public class PlayerAction implements Serializable {
 
     private String playerName_;
 
+    /**
+     * 
+     * @param playerName the name of the player making the action.
+     */
     public PlayerAction(String playerName) {
         playerName_ = playerName;
     }

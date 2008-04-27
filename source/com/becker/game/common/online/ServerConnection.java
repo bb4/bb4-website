@@ -23,7 +23,7 @@ public class ServerConnection {
 
     private boolean isConnected_ = false;
 
-    /** a list of things that want to hear about broad casts form the server about changed game state. */
+    /** a list of things that want to hear about broadcasts form the server about changed game state. */
     private List<OnlineChangeListener> changeListeners_;
 
     /**
@@ -138,6 +138,10 @@ public class ServerConnection {
 
     public void leaveRoom(String playerName) {
         sendCommand(new GameCommand(GameCommand.Name.LEAVE_ROOM, playerName));
+    }
+    
+    public void playerActionPerformed(PlayerAction action) {
+        sendCommand(new GameCommand(GameCommand.Name.DO_ACTION, action));
     }
 
     private void exceptionOccurred(String msg, Throwable t) {

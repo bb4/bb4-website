@@ -7,14 +7,17 @@ import com.becker.game.multiplayer.common.*;
 import com.becker.game.multiplayer.poker.player.*;
 import com.becker.game.multiplayer.poker.ui.*;
 import com.becker.optimization.*;
+import com.becker.game.multiplayer.common.online.SurrogatePlayer;
 
 import java.util.*;
 import java.util.List;
 
 /**
  * Defines everything the computer needs to know to play Poker.
+ * 
  *
  * ToDo list
+ *  - for chat, you should only chat with those at your table if you are in t a game, else chat only with those not in a game.
  * - something screwed up adding players out of order
  * - fix TrivialMarker not showing number.
  * - move most of what is in the trivial game up to multiplayer common.
@@ -117,7 +120,7 @@ public class PokerController extends MultiGameController
         dealCardsToPlayers(5);
         currentPlayerIndex_ = 0;
         
-        ((PokerTable)board_).initPlayers((List<PokerPlayer>)players_, this);
+        ((PokerTable)board_).initPlayers(players_, this);
     }
 
     /**
@@ -133,11 +136,16 @@ public class PokerController extends MultiGameController
                 // ran out of cards. start a new shuffled deck.
                 deck = Card.newDeck();
             }
-            if (!(p instanceof SurrogatePlayer)) {
-                PokerPlayer player = ((PokerPlayer) p);
-                player.setHand(new PokerHand(deck, numCardsToDealToEachPlayer));
-                player.resetPlayerForNewRound();
+            PokerPlayer player = null;
+            if (p.isSurrogate()) {
+                player = (PokerPlayer) ((SurrogatePlayer)p).getPlayer();
+                
             }
+            else {
+                player = (PokerPlayer) p;
+            }
+            player.setHand(new PokerHand(deck, numCardsToDealToEachPlayer));
+            player.resetPlayerForNewRound();
         }
     }
 

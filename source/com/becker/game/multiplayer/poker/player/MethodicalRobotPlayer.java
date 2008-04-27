@@ -1,6 +1,8 @@
 package com.becker.game.multiplayer.poker.player;
 
 
+import com.becker.game.multiplayer.common.MultiGameController;
+import com.becker.game.common.PlayerAction;
 import com.becker.game.multiplayer.poker.*;
 
 import java.awt.*;
@@ -20,10 +22,9 @@ public class MethodicalRobotPlayer extends PokerRobotPlayer
     }
 
     /**
-     *
      * @return an appropriate action based on the situation
      */
-    public PokerAction getAction(PokerController pc) {
+    protected PokerAction createAction(PokerController pc) {
         boolean othersFolded = allOthersFolded(pc);
 
         PokerAction.Name action;

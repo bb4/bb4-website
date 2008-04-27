@@ -29,6 +29,8 @@ public abstract class PokerPlayer extends MultiGamePlayer
     private int contribution_;
 
     public static final int DEFAULT_CASH = 100;
+    
+    protected PokerAction action_;
 
 
     protected PokerPlayer(String name, int money, Color color, boolean isHuman)
@@ -55,12 +57,6 @@ public abstract class PokerPlayer extends MultiGamePlayer
         else
            return PokerRobotPlayer.getSequencedRobotPlayer(name, money, color);
     }
-
-    /**
-     * Some poker action - like call, raise, fold
-     */
-    public abstract PokerAction getAction(PokerController pc);
-   
     
     /**
      *

@@ -13,7 +13,7 @@ public class Player implements Serializable
     private static final long serialVersionUID = 1;
 
     public static final int HUMAN_PLAYER = 1;
-    public static final int COMPUTER_PLAYER = 2;
+    public static final int COMPUTER_PLAYER = 2;    
 
     // name of the pplayer
     protected String name_;
@@ -78,6 +78,10 @@ public class Player implements Serializable
     public void setWon(boolean won)
     {
         hasWon_ = won;
+    }
+    
+    public boolean isSurrogate() {
+        return false;
     }
 
     /**
