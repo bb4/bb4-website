@@ -206,7 +206,7 @@
       <parallel>   
           <antcall target="executeTrivialServer"/>
           <sequential>
-              <sleep seconds="5" />
+              <sleep seconds="4" />
               <antcall target="executeTrivial"/>
           </sequential>
            <sequential>
@@ -214,7 +214,7 @@
               <antcall target="executeTrivial"/>
           </sequential>
           <sequential>
-              <sleep seconds="5"/>
+              <sleep seconds="6"/>
               <antcall target="executeTrivial"/>
           </sequential>
       </parallel>
