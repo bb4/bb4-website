@@ -2,8 +2,10 @@ package com.becker.simulation.dice;
 
 import com.becker.simulation.common.*;
 
+import com.becker.ui.animation.AnimationFrame;
 import java.awt.*;
 import java.util.*;
+import javax.swing.JFrame;
 
 /**
  * @author Barry Becker Date: Feb 4, 2007
@@ -91,6 +93,14 @@ public class DiceSimulator extends Simulator {
         return "dice";
     }
 
+    public static void main( String[] args )
+    {
+        final DiceSimulator sim = new DiceSimulator();
+        sim.setNumDice(3);
+        sim.setNumSides(6);
+        sim.setPaused(false);
+        JFrame f = new AnimationFrame( sim );    
+    }
 }
 
 

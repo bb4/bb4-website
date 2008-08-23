@@ -1,23 +1,20 @@
 package com.becker.game.twoplayer.go;
 
-import com.becker.common.Profiler;
-import com.becker.game.common.GameContext;
+import com.becker.game.common.GameProfiler;
+
 
 /**
- * User: Barry Becker
- * Date: Apr 16, 2005
- * Time: 6:20:14 AM
+ * Keep track of how much time is spent in each time critical part of the 
+ * comupter move processing.
+ * 
+ * @author Barry Becker
  */
-public final class GoProfiler extends Profiler {
-
-    public static final String GENERATE_MOVES = "generating moves";
-    private static final String UNDO_MOVE = "undoing move";
+public final class GoProfiler extends GameProfiler {
+  
     private static final String UPDATE_STRINGS_AFTER_REMOVE = "updating strings after remove";
     private static final String UPDATE_GROUPS_AFTER_REMOVE = "updating groups after remove";
-    private static final String MAKE_MOVE = "making move";
     private static final String UPDATE_STRINGS_AFTER_MOVE = "updating strings after move";
     private static final String UPDATE_GROUPS_AFTER_MOVE = "updating groups after move";
-    public static final String CALC_WORTH = "calculating worth";
     //private static final String GET_NBR_GROUPS = "getting nbr groups";
     public static final String UPDATE_TERRITORY = "updating territory";
     public static final String ABSOLUTE_TERRITORY = "absolute territory";
@@ -33,7 +30,7 @@ public final class GoProfiler extends Profiler {
 
     public GoProfiler() {
         add(GENERATE_MOVES);
-          add(CALC_WORTH);
+          add(CALC_WORTH, GENERATE_MOVES);
         add(UNDO_MOVE);
           add(UPDATE_STRINGS_AFTER_REMOVE, UNDO_MOVE);
           add(UPDATE_GROUPS_AFTER_REMOVE, UNDO_MOVE);
@@ -54,27 +51,6 @@ public final class GoProfiler extends Profiler {
         add(FIND_STRINGS);
     }
 
-    public void initialize() {
-        resetAll();
-        setEnabled(GameContext.isProfiling());
-        setLogger(GameContext.getLogger());
-    }
-
-    public void startUndoMove() {
-        this.start(UNDO_MOVE);
-    }
-
-    public void stopUndoMove() {
-        this.stop(UNDO_MOVE);
-    }
-
-    public void startMakeMove() {
-        this.start(MAKE_MOVE);
-    }
-
-    public void stopMakeMove() {
-        this.stop(MAKE_MOVE);
-    }
 
     public void startUpdateStringsAfterRemove() {
         this.start(UPDATE_STRINGS_AFTER_REMOVE);

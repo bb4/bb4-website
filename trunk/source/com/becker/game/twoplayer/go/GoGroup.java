@@ -627,7 +627,7 @@ public final class GoGroup extends GoSet
      *
      * @return the overall health of the group independent of nbr groups.
      */
-    float calculateAbsoluteHealth( GoBoard board, GoProfiler profiler )
+    float calculateAbsoluteHealth( GoBoard board, GameProfiler profiler )
     {
 
         if ( !changed_ )

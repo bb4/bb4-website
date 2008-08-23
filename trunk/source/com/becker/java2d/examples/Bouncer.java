@@ -13,24 +13,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.Random;
 
 public class Bouncer extends AnimationComponent
-{
-    public static void main( String[] args )
-    {
-        final Bouncer bouncer = new Bouncer();
-        JFrame f = new AnimationFrame( bouncer );
-        bouncer.setFont( new Font( "Serif", Font.PLAIN, 12 ) );
-
-        Panel controls = new Panel();
-        controls.add( bouncer.createCheckbox( "Anti.", Bouncer.ANTIALIASING ) );
-        controls.add( bouncer.createCheckbox( "Trans.", Bouncer.TRANSFORM ) );
-        controls.add( bouncer.createCheckbox( "Gradient", Bouncer.GRADIENT ) );
-        controls.add( bouncer.createCheckbox( "Outline", Bouncer.OUTLINE ) );
-        controls.add( bouncer.createCheckbox( "Dotted", Bouncer.DOTTED ) );
-        controls.add( bouncer.createCheckbox( "Axes", Bouncer.AXES ) );
-        controls.add( bouncer.createCheckbox( "Clip", Bouncer.CLIP ) );
-        f.getContentPane().add( controls, BorderLayout.NORTH );
-        f.setVisible( true );
-    }
+{    
 
     // Tweakable variables
     private boolean mAntialiasing, mGradient, mOutline;
@@ -153,6 +136,7 @@ public class Bouncer extends AnimationComponent
 
     public void paint( Graphics g )
     {
+        super.paint(g);
         Graphics2D g2 = (Graphics2D) g;
         setAntialiasing( g2 );
         setClip( g2 );
@@ -247,5 +231,23 @@ public class Bouncer extends AnimationComponent
         g2.drawLine( w + side - arrow, h - arrow, w + side, h );
         g2.drawLine( w, h - side, w, h + side );
         g2.drawLine( w + arrow, h + side - arrow, w, h + side );
+    }
+    
+    public static void main( String[] args )
+    {
+        final Bouncer bouncer = new Bouncer();
+        AnimationFrame f = new AnimationFrame( bouncer );
+        bouncer.setFont( new Font( "Serif", Font.PLAIN, 12 ) );
+        bouncer.setPaused(false);
+
+        Panel controls = new Panel();
+        controls.add( bouncer.createCheckbox( "Anti.", Bouncer.ANTIALIASING ) );
+        controls.add( bouncer.createCheckbox( "Trans.", Bouncer.TRANSFORM ) );
+        controls.add( bouncer.createCheckbox( "Gradient", Bouncer.GRADIENT ) );
+        controls.add( bouncer.createCheckbox( "Outline", Bouncer.OUTLINE ) );
+        controls.add( bouncer.createCheckbox( "Dotted", Bouncer.DOTTED ) );
+        controls.add( bouncer.createCheckbox( "Axes", Bouncer.AXES ) );
+        controls.add( bouncer.createCheckbox( "Clip", Bouncer.CLIP ) );
+        f.getContentPane().add( controls, BorderLayout.NORTH );           
     }
 }

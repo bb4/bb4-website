@@ -5,8 +5,7 @@ import com.becker.ui.ApplicationFrame;
 import java.awt.*;
 import java.awt.geom.*;
 
-public abstract class Transformers
-        extends Component
+public abstract class Transformers extends Component
 {
     Shape mAxes, mShape;
     int mLength = 54, mArrowLength = 4, mTickSize = 4;
@@ -70,6 +69,7 @@ public abstract class Transformers
 
     public void paint( Graphics g )
     {
+        super.paint(g);
         Graphics2D g2 = (Graphics2D) g;
 
         // Use antialiasing.

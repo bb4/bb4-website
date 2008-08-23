@@ -75,6 +75,7 @@ public class SplitImageComponent
 
     public void paint( Graphics g )
     {
+        super.paint(g);
         Graphics2D g2 = (Graphics2D) g;
         int width = getSize().width;
         int height = getSize().height;

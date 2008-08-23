@@ -7,19 +7,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.font.*;
 
-public class HitMe
-        extends ApplicationFrame
+public class HitMe extends ApplicationFrame
 {
-    public static void main( String[] args )
-    {
-        Frame f = new HitMe();
-        f.setTitle( "HitMe v1.0" );
-        f.setVisible( true );
-    }
-
+    
     private TextLayout mTextLayout;
     private int mX = 40, mY = 80;
 
+    
     public HitMe()
     {
         super( "HitMe v1.0" );
@@ -36,6 +30,7 @@ public class HitMe
 
     public void paint( Graphics g )
     {
+        super.paint(g);
         Graphics2D g2 = (Graphics2D) g;
 
         g2.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
@@ -51,4 +46,10 @@ public class HitMe
 
         mTextLayout.draw( g2, mX, mY );
     }
+    
+    public static void main( String[] args )
+    {
+        new HitMe();         
+    }
+
 }

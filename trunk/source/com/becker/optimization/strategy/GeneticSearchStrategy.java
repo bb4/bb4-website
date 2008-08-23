@@ -26,7 +26,7 @@ public class GeneticSearchStrategy extends OptimizationStrategy
     private static final double NBR_RADIUS = 0.03;
     private static final double NBR_RADIUS_SHRINK_FACTOR = 0.9;
     private static final double NBR_RADIUS_SOFTENER = 5.0;
-    private static final double INITIAL_RADIUS = 1.7;
+    private static final double INITIAL_RADIUS = 1.5;
 
 
     // this prevents us from running forever.
@@ -99,12 +99,12 @@ public class GeneticSearchStrategy extends OptimizationStrategy
          ParameterArray currentBest;
          ParameterArray lastBest;
          double deltaFitness = 0;
-         boolean optimalFitnessReached = false;
+         //boolean optimalFitnessReached = false;
 
          populationSize_ = Math.min(POPULATION_MAX, (int)Math.pow(POPULATION_SIZE_PER_DIM, params.size()));
 
          // create an initial population based on params and POPULATION_SIZE-1 other random candidate solutions.
-         List population = new LinkedList();
+         List<ParameterArray> population = new LinkedList<ParameterArray>();
          population.add(params);
          for (int i=1; i<populationSize_; i++) {
              population.add(i, params.getRandomNeighbor(INITIAL_RADIUS));
@@ -135,11 +135,12 @@ public class GeneticSearchStrategy extends OptimizationStrategy
              while ( k < populationSize_ ) {
                  // loop over the keepers until all replacements found
                  m = k % keepSize;
-                 // do the best one 2wice to avoid terminating too
-                 // quickly in the event that we got a very good fitness score on an early iteration.
-                 if (m == keepSize-1)
+                 // do the best one twice to avoid terminating too quickly
+                 // in the event that we got a very good fitness score on an early iteration.
+                 if (m == keepSize-1) {
                      m=0;
-                 ParameterArray p = (ParameterArray) population.get(m);
+                 }
+                 ParameterArray p = population.get(m);
                  // add a permutation of one of the keepers
                  // we multiply the radius by m because we want the worse ones to have
                  // higher variability.

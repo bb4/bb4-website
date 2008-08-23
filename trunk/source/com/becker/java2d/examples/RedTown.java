@@ -1,30 +1,24 @@
 package com.becker.java2d.examples;
 
+import com.becker.ui.ApplicationFrame;
 import com.becker.ui.GradientButton;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class RedTown
-        extends JFrame
+public class RedTown extends ApplicationFrame
 {
-    public static void main( String[] args )
+   
+    public RedTown(String title)
     {
-        new RedTown();
-    }
-
-    public RedTown()
-    {
-        super( "RedTown v1.0" );
-        createUI();
-        setVisible( true );
+        super( title );
     }
 
     protected void createUI()
     {
-        setSize( 400, 400 );
-        setLocation( 100, 100 );
+        super.createUI();
+    
         getContentPane().setLayout( new GridBagLayout() );
         GradientButton colorButton = new GradientButton( "Choose a color..." );
         getContentPane().add( colorButton );
@@ -37,13 +31,11 @@ public class RedTown
                 if ( c != null ) getContentPane().setBackground( c );
             }
         } );
-
-        addWindowListener( new WindowAdapter()
-        {
-            public void windowClosing( WindowEvent we )
-            {
-                System.exit( 0 );
-            }
-        } );
     }
+    
+    public static void main( String[] args )
+    {
+        new RedTown("Red Town");
+    }
+
 }

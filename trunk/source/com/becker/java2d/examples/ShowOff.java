@@ -1,5 +1,6 @@
 package com.becker.java2d.examples;
 
+import com.becker.java2d.Utilities;
 import com.becker.ui.ApplicationFrame;
 import com.sun.image.codec.jpeg.*;
 
@@ -10,41 +11,11 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.InputStream;
 
 public class ShowOff
         extends Component
 {
-    public static void main( String[] args )
-    {
-        try {
-            // The image is loaded either from this
-            //   default filename or the first command-
-            //   line argument.
-            // The second command-line argument specifies
-            //   what string will be displayed. The third
-            //   specifies at what point in the string the
-            //   background color will change.
-            String filename = "Raphael.jpg";
-            String message = "Java2D";
-            int split = 4;
-            if ( args.length > 0 ) filename = args[0];
-            if ( args.length > 1 ) message = args[1];
-            if ( args.length > 2 ) split = Integer.parseInt( args[2] );
-            ApplicationFrame f = new ApplicationFrame( "ShowOff v1.0" );
-            f.getContentPane().setLayout( new BorderLayout() );
-            ShowOff showOff = new ShowOff( filename, message, split );
-            f.getContentPane().add( showOff, BorderLayout.CENTER );
-            f.setSize( f.getPreferredSize() );
-            f.center();
-            f.setResizable( false );
-            f.setVisible( true );
-        } catch (Exception e) {
-            System.out.println( e );
-            System.exit( 0 );
-        }
-    }
-
+    
     private BufferedImage mImage;
     private Font mFont;
     private String mMessage;
@@ -54,11 +25,10 @@ public class ShowOff
     public ShowOff( String filename, String message, int split )
             throws IOException, ImageFormatException
     {
-        // Get the specified image.
-        InputStream in = getClass().getResourceAsStream( filename );
-        JPEGImageDecoder decoder = JPEGCodec.createJPEGDecoder( in );
-        mImage = decoder.decodeAsBufferedImage();
-        in.close();
+        
+        Image img = Utilities.blockingLoad( filename );
+        mImage = Utilities.makeBufferedImage( img );
+ 
         // Create a font.
         mFont = new Font( "Serif", Font.PLAIN, 116 );
         // Save the message and split.
@@ -185,4 +155,30 @@ public class ShowOff
         g2.drawString( s, (float) x, (float) -bounds.getY() );
         return advance;
     }
+    
+    public static void main( String[] args ) throws IOException
+    {
+            // The image is loaded either from this
+            //   default filename or the first command-
+            //   line argument.
+            // The second command-line argument specifies
+            //   what string will be displayed. The third
+            //   specifies at what point in the string the
+            //   background color will change.
+            String filename = Utilities.DEFAULT_IMAGE_DIR +"Raphael.jpg";
+            String message = "Java2D";
+            int split = 4;
+            if ( args.length > 0 ) filename = args[0];
+            if ( args.length > 1 ) message = args[1];
+            if ( args.length > 2 ) split = Integer.parseInt( args[2] );
+            ApplicationFrame f = new ApplicationFrame( "ShowOff v1.0" );
+            f.getContentPane().setLayout( new BorderLayout() );
+            ShowOff showOff = new ShowOff( filename, message, split );
+            f.getContentPane().add( showOff, BorderLayout.CENTER );
+            f.center();
+            f.setResizable( false );
+
+
+    }
+
 }

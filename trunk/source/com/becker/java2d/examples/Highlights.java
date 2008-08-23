@@ -7,14 +7,8 @@ import java.awt.event.*;
 import java.awt.font.*;
 import java.awt.geom.AffineTransform;
 
-public class Highlights
-        extends ApplicationFrame
-{
-    public static void main( String[] args )
-    {
-        Frame f = new Highlights();
-        f.setVisible( true );
-    }
+public class Highlights extends ApplicationFrame
+{    
 
     private TextLayout mTextLayout;
     private TextHitInfo mFirstHit, mSecondHit;
@@ -52,6 +46,7 @@ public class Highlights
 
     public void paint( Graphics g )
     {
+        super.paint(g);
         Graphics2D g2 = (Graphics2D) g;
 
         g2.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
@@ -79,5 +74,10 @@ public class Highlights
 
         g2.setPaint( Color.black );
         mTextLayout.draw( g2, mX, mY );
+    }
+    
+    public static void main( String[] args )
+    {
+        new Highlights();    
     }
 }

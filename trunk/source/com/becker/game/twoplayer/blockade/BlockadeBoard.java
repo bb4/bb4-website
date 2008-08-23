@@ -531,7 +531,7 @@ public class BlockadeBoard extends TwoPlayerBoard
     {
         List<Path> paths1 = findAllOpponentShortestPaths(true);  
         List<Path> paths2 = findAllOpponentShortestPaths(false);    
-        System.out.println("paths1.length="+paths1.size()+" paths2.length ="+paths2.size() );
+       GameContext.log(0, "paths1.length="+paths1.size()+" paths2.length ="+paths2.size() );
         
         int expectedNumPaths = NUM_HOMES*NUM_HOMES;
         return  (paths1.size() < expectedNumPaths || paths2.size() <expectedNumPaths );      
@@ -588,14 +588,16 @@ public class BlockadeBoard extends TwoPlayerBoard
      */
     protected boolean makeInternalMove( Move move )
     {
+        getProfiler().startMakeMove();
         BlockadeMove m = (BlockadeMove) move;
         positions_[m.getToRow()][m.getToCol()].setPiece(m.getPiece());
 
         // we also need to place a wall.
-        if (m.getWall() != null)
+        if (m.getWall() != null) {
             addWall(m.getWall());
+        }
         positions_[m.getFromRow()][m.getFromCol()].clear();
-       
+        getProfiler().stopMakeMove();
         return true;
     }
     
@@ -604,16 +606,18 @@ public class BlockadeBoard extends TwoPlayerBoard
      * for Blockade, undoing a move means moving the piece back and
      * restoring any captures.
      */
-    protected void undoInternalMove( Move move )
-    {
+    protected void undoInternalMove( Move move ) {
+        getProfiler().startUndoMove();
         BlockadeMove m = (BlockadeMove) move;
         BoardPosition startPos = positions_[m.getFromRow()][m.getFromCol()];
         startPos.setPiece( m.getPiece() );
         positions_[m.getToRow()][m.getToCol()].clear();
 
         // remove the wall that was placed by this move.
-        if (m.getWall()!=null)
+        if (m.getWall()!=null) {
             removeWall(m.getWall());
+        }
+        getProfiler().stopUndoMove();
     }
 
 
@@ -634,6 +638,9 @@ public class BlockadeBoard extends TwoPlayerBoard
         return ((BlockadeBoardPosition) pos).getStateIndex();
     }
     
+    protected GameProfiler createProfiler() {     
+        return new BlockadeProfiler();
+    }
 
     public String toString()
     {

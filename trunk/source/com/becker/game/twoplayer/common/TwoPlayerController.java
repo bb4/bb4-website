@@ -266,7 +266,7 @@ public abstract class TwoPlayerController extends GameController
         long time = 0;
         if ( GameContext.isProfiling() ) {
             time = System.currentTimeMillis();
-            initializeGobalProfilingStats();
+            initializeProfilingStats();
         }
 
         assert (!getMoveList().isEmpty()) : "Error: null before search";
@@ -317,15 +317,8 @@ public abstract class TwoPlayerController extends GameController
         GameContext.log( 0, "There were " + numMovesConsidered + " moves considered." );
         GameContext.log( 0, "The total time for the computer to move was : " +
                 Util.formatNumber((float)totalTime/1000) + " seconds." );
+        board_.getProfiler().print();
     }
-
-
-    /**
-     * set up stats profiling state if needed.
-     * does nothing by default.
-     */
-    protected void initializeGobalProfilingStats()
-    {}
 
     /**
      * record the human's move p.

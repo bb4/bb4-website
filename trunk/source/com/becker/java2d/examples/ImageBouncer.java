@@ -17,7 +17,7 @@ public class ImageBouncer
 
     public static void main( String[] args )
     {
-        String filename = "knudsen.gif";
+        String filename = Utilities.DEFAULT_IMAGE_DIR+  "knudsen.gif";
         if ( args.length > 0 ) filename = args[0];
 
         Image image = Utilities.blockingLoad( filename );
@@ -48,8 +48,7 @@ public class ImageBouncer
                 bouncer.setImageType( type );
             }
         } );
-
-        f.setVisible( true );
+        bouncer.setPaused(false);
     }
 
     private boolean mBilinear = false;
@@ -92,8 +91,8 @@ public class ImageBouncer
         Random random = new Random();
         mX = random.nextFloat() * 500;
         mY = random.nextFloat() * 500;    
-        mDeltaX = random.nextFloat() * 3;
-        mDeltaY = random.nextFloat() * 3;
+        mDeltaX = 0.1f + random.nextFloat();
+        mDeltaY = 0.1f + random.nextFloat();
     }
 
     public String getFileNameBase()
@@ -166,7 +165,7 @@ public class ImageBouncer
         mX += mDeltaX;
         mY += mDeltaY;
 
-        mTheta += Math.PI / 192;
+        mTheta += Math.PI / 384;
         if ( mTheta > (2 * Math.PI) ) mTheta -= (2 * Math.PI);
         return 0;
     }

@@ -117,6 +117,7 @@ public class BlockadeController extends TwoPlayerController
      */
     protected double worth( Move lastMove, ParameterArray weights )
     {
+        board_.getProfiler().startCalcWorth();
         BlockadeBoard board = (BlockadeBoard)board_;       
         BlockadeMove m = (BlockadeMove)lastMove;
         // if its a winning move then return the winning value
@@ -124,8 +125,10 @@ public class BlockadeController extends TwoPlayerController
         if (checkForWin(player1Moved, player1Moved? board.getPlayer2Homes() : board.getPlayer1Homes()))
             return WINNING_VALUE;
     
-        PlayerPathLengths pathLengths = board.findPlayerPathLengths(m);        
-        return pathLengths.determineWorth(WINNING_VALUE, weights);
+        PlayerPathLengths pathLengths = board.findPlayerPathLengths(m);               
+        double worth = pathLengths.determineWorth(WINNING_VALUE, weights);
+        board_.getProfiler().startCalcWorth();
+        return worth;
     }
     
      
@@ -311,7 +314,8 @@ public class BlockadeController extends TwoPlayerController
         
         // is it true that the set of walls we could add for any constant set of opponent paths is always the same regardless of firstStep?
         // I think its only true as long as firstStep is not touching any of those opponent paths
-        System.out.print(firstStep+"\nopaths="+opponentPaths+"\n [[");
+        GameContext.log(2, firstStep+"\nopaths="+opponentPaths+"\n [[");
+        
         for (Path opponentPath: opponentPaths) {
             assert (opponentPath != null): 
                 "Opponent path was null. There are "+opponentPaths.size()+" oppenent paths.";
@@ -343,7 +347,7 @@ public class BlockadeController extends TwoPlayerController
            }
            //assert (!moves.isEmpty()) : "No opponent moves found for "+firstStep +" along opponentPath="+opponentPath;
        }
-       System.out.println("]]");
+       GameContext.log(2, "]]");
          
         // if no move was added add the more with no wall placement
         if (moves.isEmpty()) {
@@ -618,6 +622,7 @@ public class BlockadeController extends TwoPlayerController
             boolean player1 = !(lastMove.isPlayer1());
             BlockadeBoard board = (BlockadeBoard)board_;
 
+            board.getProfiler().startGenerateMoves();
             // first find the opponent's shortest paths. There must be NUM_HOMES squared of them (unless the player won).
             // There is one path from every piece to every opponent home (i.e. n*n)            
             List<Path> opponentPaths = board.findAllOpponentShortestPaths(player1);    
@@ -638,6 +643,7 @@ public class BlockadeController extends TwoPlayerController
             }
             assert (!moveList.isEmpty()): "There aren't any moves to consider for lastMove="+lastMove
                     +" p1Perspective="+player1sPerspective+". Complete movelist ="+board_.getMoveList() + " \nThe pieces are at:" + pawnLocations;
+            board.getProfiler().stopGenerateMoves();
             return getBestMoves( player1, moveList, player1sPerspective );
         }
 

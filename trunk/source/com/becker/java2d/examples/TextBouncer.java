@@ -10,9 +10,10 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 import java.util.Random;
 
-public class TextBouncer
-        extends AnimationComponent
+public class TextBouncer extends AnimationComponent
 {
+    private static final float SHEAR_SCALE = 0.02f;
+    
     public static void main( String[] args )
     {
         String s = "Firenze";
@@ -54,7 +55,7 @@ public class TextBouncer
         allControls.add( fontControls );
         f.add( allControls, BorderLayout.NORTH );
 
-        f.setVisible( true );
+        bouncer.setPaused(false);
     }
 
     private boolean mAntialiasing = false, mGradient = false;
@@ -100,11 +101,11 @@ public class TextBouncer
         Random random = new Random();
         mX = random.nextFloat() * 500;
         mY = random.nextFloat() * 500;
-        mDeltaX = random.nextFloat() * 3;
-        mDeltaY = random.nextFloat() * 3;
-        mShearX = random.nextFloat() / 2;
-        mShearY = random.nextFloat() / 2;
-        mShearDeltaX = mShearDeltaY = .05f;
+        mDeltaX = 0.01f + random.nextFloat()/2.0f;
+        mDeltaY = 0.01f + random.nextFloat()/2.0f;
+        mShearX = random.nextFloat() / 7;
+        mShearY = random.nextFloat() / 7;
+        mShearDeltaX = mShearDeltaY = SHEAR_SCALE;
     }
     
     public String getFileNameBase() {
@@ -159,15 +160,16 @@ public class TextBouncer
         mX += mDeltaX;
         mY += mDeltaY;
 
-        mTheta += Math.PI / 192;
+        mTheta += Math.PI / 384;
         if ( mTheta > (2 * Math.PI) ) mTheta -= (2 * Math.PI);
 
-        if ( mShearX + mShearDeltaX > .5 )
+        double shearThresh = 10.0 * SHEAR_SCALE;
+        if ( mShearX + mShearDeltaX > shearThresh )
             mShearDeltaX = -mShearDeltaX;
-        else if ( mShearX + mShearDeltaX < -.5 ) mShearDeltaX = -mShearDeltaX;
+        else if ( mShearX + mShearDeltaX < -shearThresh ) mShearDeltaX = -mShearDeltaX;
         if ( mShearY + mShearDeltaY > .5 )
             mShearDeltaY = -mShearDeltaY;
-        else if ( mShearY + mShearDeltaY < -.5 ) mShearDeltaY = -mShearDeltaY;
+        else if ( mShearY + mShearDeltaY < -shearThresh ) mShearDeltaY = -mShearDeltaY;
         mShearX += mShearDeltaX;
         mShearY += mShearDeltaY;
         return 0;

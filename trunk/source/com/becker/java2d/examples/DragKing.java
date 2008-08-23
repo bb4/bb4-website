@@ -6,9 +6,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
 
-public class DragKing
-        extends ApplicationFrame
-        implements MouseListener, MouseMotionListener
+public class DragKing extends ApplicationFrame
+                                    implements MouseListener, MouseMotionListener
 {
     public static void main( String[] args )
     {
@@ -22,7 +21,7 @@ public class DragKing
     {
         super( "DragKing v1.0" );
         setSize( 300, 300 );
-        center();
+        //center();
 
         mPoints = new Point2D[9];
         // Cubic curve.
@@ -44,11 +43,12 @@ public class DragKing
         addMouseListener( this );
         addMouseMotionListener( this );
 
-        setVisible( true );
+        //setVisible( true );
     }
 
     public void paint( Graphics g )
     {
+        super.paint(g);
         Graphics2D g2 = (Graphics2D) g;
 
         // Draw the tangents.
