@@ -205,7 +205,8 @@ public final class GoMove extends TwoPlayerMove
      */
     private void updateStringsAfterMoving( GoBoardPosition stone, GoBoard board )
     {
-        GoBoard.getProfiler().startUpdateStringsAfterMove();
+        GoProfiler profiler = (GoProfiler)board.getProfiler();
+        profiler.startUpdateStringsAfterMove();
 
         Set nbrs = board.getNobiNeighbors( stone, NeighborType.FRIEND );
 
@@ -249,7 +250,7 @@ public final class GoMove extends TwoPlayerMove
             }
         }
         cleanupGroups(board);
-        GoBoard.getProfiler().stopUpdateStringsAfterMove();
+        profiler.stopUpdateStringsAfterMove();
     }
 
 
@@ -261,7 +262,8 @@ public final class GoMove extends TwoPlayerMove
      */
     private static void updateStringsAfterRemoving( GoBoardPosition stone, GoString string,  GoBoard board )
     {
-        GoBoard.getProfiler().startUpdateStringsAfterRemove();
+        GoProfiler profiler = (GoProfiler)board.getProfiler();
+        profiler.startUpdateStringsAfterRemove();
 
         // avoid error when calling from treeDlg
         if (string == null) return;
@@ -298,7 +300,7 @@ public final class GoMove extends TwoPlayerMove
             GoBoardUtil.confirmStonesInValidGroups(board.getGroups(), board);
             GoBoardUtil.confirmStonesInOneGroup( group, board.getGroups() );
         }
-        GoBoard.getProfiler().stopUpdateStringsAfterRemove();
+        profiler.stopUpdateStringsAfterRemove();
     }
 
 
@@ -312,7 +314,8 @@ public final class GoMove extends TwoPlayerMove
      */
     private void updateGroupsAfterRemoving( GoBoardPosition stone, GoString string, GoBoard board )
     {
-        GoBoard.getProfiler().startUpdateGroupsAfterRemove();
+        GoProfiler profiler = (GoProfiler)board.getProfiler();
+        profiler.startUpdateGroupsAfterRemove();
 
         if ( string == null ) {
             if ( GameContext.getDebugMode() > 1 )
@@ -364,7 +367,7 @@ public final class GoMove extends TwoPlayerMove
 
         cleanupGroups(board);
 
-        GoBoard.getProfiler().stopUpdateGroupsAfterRemove();
+        profiler.stopUpdateGroupsAfterRemove();
     }
 
 
@@ -475,7 +478,7 @@ public final class GoMove extends TwoPlayerMove
      */
     private void determineCaptures(GoBoardPosition stone, GoBoard board)
     {
-        GoBoard.getProfiler().start(GoProfiler.FIND_CAPTURES);
+        board.getProfiler().start(GoProfiler.FIND_CAPTURES);
         assert ( stone!=null );
         Set nbrs = board.getNobiNeighbors( stone, NeighborType.ENEMY );
         CaptureList captureList = null;
@@ -498,7 +501,7 @@ public final class GoMove extends TwoPlayerMove
                 captureList.addAllCopied( str.getMembers() );
             }
         }
-        GoBoard.getProfiler().stop(GoProfiler.FIND_CAPTURES);
+        board.getProfiler().stop(GoProfiler.FIND_CAPTURES);
         captureList_ =  captureList;
     }
 
@@ -572,7 +575,8 @@ public final class GoMove extends TwoPlayerMove
      */
     private static void updateGroupsAfterMoving( GoBoardPosition pos, GoBoard board )
     {
-        GoBoard.getProfiler().startUpdateGroupsAfterMove();
+        GoProfiler profiler = (GoProfiler)board.getProfiler();
+        profiler.startUpdateGroupsAfterMove();
 
         if (GameContext.getDebugMode() > 1) {
             GoBoardUtil.confirmAllStonesInUniqueGroups(board.getGroups());
@@ -611,7 +615,7 @@ public final class GoMove extends TwoPlayerMove
             }
         }
 
-        GoBoard.getProfiler().stopUpdateGroupsAfterMove();
+        profiler.stopUpdateGroupsAfterMove();
     }
 
 
@@ -894,8 +898,6 @@ public final class GoMove extends TwoPlayerMove
         if ( GameContext.getDebugMode() > 1 )
              GoBoardUtil.confirmStonesInValidGroups(board.getGroups(), board);
     }
-
-
 
     /**
      * remove groups that have no stones in them.

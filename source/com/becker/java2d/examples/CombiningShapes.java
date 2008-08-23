@@ -8,8 +8,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.geom.*;
 
-public class CombiningShapes
-        extends JComponent
+public class CombiningShapes  extends JComponent
 {
     public static void main( String[] args )
     {

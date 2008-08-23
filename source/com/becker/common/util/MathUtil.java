@@ -30,15 +30,6 @@ public final class MathUtil {
 
 
     /**
-     * find the greatest common divisor of 2 positive integers.
-     */
-    public static int gcd( int x, int y )
-    {
-        if ( x % y == 0 ) return y;
-        return gcd( y, x % y );
-    }
-
-    /**
      *
      * @param a
      * @param b

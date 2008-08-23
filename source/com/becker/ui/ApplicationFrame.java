@@ -5,6 +5,10 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+/**
+ * Boiler plate code for a java application.
+ * @author Barry Becker
+ */
 public class ApplicationFrame extends JFrame
 {
 
@@ -28,12 +32,15 @@ public class ApplicationFrame extends JFrame
 
         addWindowListener( new WindowAdapter()
         {
+            @Override
             public void windowClosing( WindowEvent e )
             {
                 dispose();
                 System.exit( 0 );
             }
         } );
+        
+        this.setVisible(true);
     }
 
     public void center()
@@ -43,5 +50,6 @@ public class ApplicationFrame extends JFrame
         int x = (screenSize.width - frameSize.width) >> 1;
         int y = (screenSize.height - frameSize.height) >> 1;
         setLocation( x, y );
+ 
     }
 }

@@ -226,6 +226,11 @@ public abstract class GameController
 
     public abstract GameOptions getOptions();
 
+    protected void initializeProfilingStats()
+    {
+        board_.initializeProfilingStats();
+    }
+
     /**
      * You should probably check to see if online play is available before calling this.
      * @return a server connection if it is possible to get one.

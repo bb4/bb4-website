@@ -1,5 +1,6 @@
 package com.becker.java2d.examples;
 
+import com.becker.java2d.Utilities;
 import com.becker.ui.ApplicationFrame;
 import com.sun.image.codec.jpeg.*;
 
@@ -26,16 +27,14 @@ public class TexturePaintFill
 
     public TexturePaintFill( String filename )
             throws IOException, ImageFormatException
-    {
-        // Load the specified JPEG file.
-        InputStream in = getClass().getResourceAsStream( filename );
-        JPEGImageDecoder decoder = JPEGCodec.createJPEGDecoder( in );
-        mImage = decoder.decodeAsBufferedImage();
-        in.close();
+    {        
+        Image img = Utilities.blockingLoad( Utilities.DEFAULT_IMAGE_DIR +  filename );
+        mImage = Utilities.makeBufferedImage( img );
     }
 
     public void paint( Graphics g )
     {
+        super.paint(g);
         Graphics2D g2 = (Graphics2D) g;
         // Create a round rectangle.
         RoundRectangle2D r = new RoundRectangle2D.Float( 25, 35, 150, 150, 25, 25 );

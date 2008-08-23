@@ -1,6 +1,7 @@
 package com.becker.optimization;
 
 import com.becker.common.util.Util;
+import java.util.Random;
 
 /**
  *  represents a general parameter to an algoritm
@@ -78,6 +79,21 @@ public class Parameter
         }
     }
 
+    /**
+     * 
+     * @param r  the size of the (1 std deviation) gaussian neighborhood to select a random nbr from
+     *     (relative to each parameter range).
+     */
+    public void tweakValue(double r, Random rand)
+    {      
+             this.setValue(getValue() + rand.nextGaussian() * r * getRange());
+             if (getValue() > getMaxValue()) {
+                  setValue(getMaxValue());
+             }
+             else if (getValue() < getMinValue()) {
+                 setValue(getMinValue());
+             }
+    }
 
     public String toString()
     {
@@ -90,6 +106,15 @@ public class Parameter
         sa.append( Util.formatNumber(getMaxValue()) );
         sa.append( ']' );
         return sa.toString();
+    }
+    
+    public Class getType() {
+        if (isIntegerOnly()) {
+            return int.class; // Integer.TYPE;  //int.class;
+        }
+        else {
+            return float.class; // Float.TYPE; //  float.class;
+        }
     }
 
     public double getValue() {

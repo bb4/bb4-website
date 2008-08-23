@@ -10,7 +10,7 @@ import java.util.*;
  *
  *  @author Barry Becker
  */
-public class ParameterArray implements Comparable
+public class ParameterArray implements Comparable<ParameterArray>
 {
 
     protected Parameter[] params_ = null;
@@ -139,13 +139,8 @@ public class ParameterArray implements Comparable
      {
          ParameterArray nbr = this.copy();
          for ( int k = 0; k < params_.length; k++ ) {
-             Parameter newPar = nbr.get(k);
-             Parameter currentPar = this.get(k);
-             newPar.setValue(currentPar.getValue() + RANDOM.nextGaussian() * r * currentPar.getRange());
-             if (newPar.getValue() > newPar.getMaxValue())
-                 newPar.setValue(newPar.getMaxValue());
-             else if (newPar.getValue() < newPar.getMinValue())
-                 newPar.setValue(newPar.getMinValue());
+             Parameter par = nbr.get(k);
+             par.tweakValue(r, RANDOM);            
          }
 
          return nbr;
@@ -281,14 +276,4 @@ public class ParameterArray implements Comparable
         else
             return 0;
     }
-
-    /**
-     * implements the Comparable interface.
-     * @param obj
-     * @return
-     */
-    public int compareTo(Object obj) {
-        return compareTo((ParameterArray)obj);
-    }
-
 }

@@ -28,7 +28,10 @@ public abstract class Board implements BoardInterface, Cloneable
 
     protected int numRows_;
     protected int numCols_;
-     protected int rowsTimesCols_;
+    protected int rowsTimesCols_;
+    
+     /** a global profiler for recording timing stats. */
+    private static GameProfiler profiler_;
 
     /**
      * We keep a list of the moves that have been made.
@@ -231,12 +234,31 @@ public abstract class Board implements BoardInterface, Cloneable
     {
         return !(r < 1 || r > getNumRows() || c < 1 || c > getNumCols());
     }
+    
+     
+    public void initializeProfilingStats()
+    {
+        profiler_.initialize();
+    }
 
     /**
-     * for profiling output in a log
+      * For profiling output in a log
+      * Record times for these operations so we get an accurate picture of where the bottlenecks are.
+      */
+    public GameProfiler getProfiler() {
+        if (profiler_ == null)
+        {
+            profiler_ = createProfiler();
+        }
+        return profiler_;
+    }
+    
+    /**
+     * @return object to keep track of profiling statistics.
      */
-    public void initializeGobalProfilingStats()
-    {}
+    protected GameProfiler createProfiler() {
+        return new GameProfiler();
+    }
 
     /**
      * Explicitly clean things up to avoid memory leaks.

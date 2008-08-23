@@ -14,21 +14,24 @@ public class Bandito
         // Create a frame window to hold everything.
         ApplicationFrame f = new ApplicationFrame( "Bandito v1.0" );
         // Create a SplitImageComponent with the source image.
-        String filename = Utilities.DEFAULT_IMAGE_DIR+"Ethol with Roses.small.jpg";
+        String filename = Utilities.DEFAULT_IMAGE_DIR+ "Ethol with Roses.small.jpg"; //"Raphael.jpg"; 
         //String filename = "Raphael.jpg";
         SplitImageComponent sic = new SplitImageComponent( filename );
 
         // Create a BandCombineOp.
         float[][] matrix = {
-            {-1, 0, 0, 255},
-            {0, 1, 0, 0},
-            {0, 0, 1, 0}
+            {-1, 0, 0, 0, 255},
+            {0, 1, 0, 0, 0},
+            {0, 0, 1, 0, 0},
+            {0, 0, 0, 1, 0}
         };
+        
         BandCombineOp op = new BandCombineOp( matrix, null );
 
         // Process the source image raster.
         BufferedImage sourceImage = sic.getImage();
         Raster source = sourceImage.getRaster();
+        System.out.println("source numbands="+ source.getNumBands()); 
         WritableRaster destination = op.filter( source, null );
 
         // Create a destination image using the processed
@@ -40,8 +43,5 @@ public class Bandito
         // Set up the frame window.
         f.getContentPane().setLayout( new BorderLayout() );
         f.getContentPane().add( sic, BorderLayout.CENTER );
-        f.setSize( f.getPreferredSize() );
-        f.center();
-        f.setVisible( true );
     }
 }

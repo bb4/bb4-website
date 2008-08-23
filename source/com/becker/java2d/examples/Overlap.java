@@ -19,6 +19,7 @@ public class Overlap
 
     public void paint( Graphics g )
     {
+        super.paint(g);
         Graphics2D g2 = (Graphics2D) g;
         double x = 15, y = 50, w = 70, h = 70;
         Ellipse2D e = new Ellipse2D.Double( x, y, w, h );

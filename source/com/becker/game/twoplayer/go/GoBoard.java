@@ -27,8 +27,8 @@ public final class GoBoard extends TwoPlayerBoard
     // armies not implemented yet.
     //private Set armies_;
 
-    // The difference between the 2 player's territory.
-    // It is computed as black-white = sum(health of stone i)
+    /** The difference between the 2 player's territory.
+     * It is computed as black-white = sum(health of stone i) */
     private float territoryDelta_ = 0;
 
     private CandidateMoves candidateMoves_;
@@ -37,10 +37,6 @@ public final class GoBoard extends TwoPlayerBoard
 
     private int numWhiteStonesCaptured_ = 0;
     private int numBlackStonesCaptured_ = 0;
-
-    // a global profiler for recording timing stats
-    private static final GoProfiler profiler_ = new GoProfiler();
-
 
 
     /**
@@ -190,17 +186,9 @@ public final class GoBoard extends TwoPlayerBoard
         return groups_;
     }
 
-    /**
-     * record times for these operations so we get an accurate picture of where the bottlenecks are.
-     */
-    public void initializeGobalProfilingStats()
-    {
-        profiler_.initialize();
-    }
-
-
-    public static GoProfiler getProfiler() {
-        return profiler_;
+   
+    protected GameProfiler createProfiler() {     
+        return new GoProfiler();
     }
 
     /**
@@ -212,13 +200,14 @@ public final class GoBoard extends TwoPlayerBoard
      */
     protected boolean makeInternalMove( Move move )
     {
-        profiler_.startMakeMove();
+        getProfiler().startMakeMove();
 
         GoMove m = (GoMove)move;
 
         // if its a passing move, there is nothing to do
         if ( m.isPassingMove() ) {
             GameContext.log( 2, "making passing move" );
+            getProfiler().stopMakeMove();
             return true;
         }
 
@@ -231,7 +220,7 @@ public final class GoBoard extends TwoPlayerBoard
         m.updateBoardAfterMoving(this);
         updateCaptures(m, true);
 
-        profiler_.stopMakeMove();
+        getProfiler().stopMakeMove();
         return true;
     }
 
@@ -242,12 +231,13 @@ public final class GoBoard extends TwoPlayerBoard
      */
     protected void undoInternalMove( Move move )
     {
-        profiler_.startUndoMove();
+        getProfiler().startUndoMove();
 
         GoMove m = (GoMove) move;
 
         // there is nothing to do if it is a pass
         if ( m.isPassingMove() ) {
+            getProfiler().stopUndoMove();
             return;
         }
 
@@ -256,7 +246,7 @@ public final class GoBoard extends TwoPlayerBoard
         m.updateBoardAfterRemoving(this);
         updateCaptures(m, false);
 
-        profiler_.stopUndoMove();
+        getProfiler().stopUndoMove();
     }
 
     private void updateCaptures(GoMove move, boolean increment) {
@@ -300,7 +290,7 @@ public final class GoBoard extends TwoPlayerBoard
      */
     float updateTerritory(GoBoardPosition lastMove)
     {
-        profiler_.start(GoProfiler.UPDATE_TERRITORY);
+        getProfiler().start(GoProfiler.UPDATE_TERRITORY);
 
         float delta = 0;
         Iterator it = groups_.iterator();
@@ -308,37 +298,37 @@ public final class GoBoard extends TwoPlayerBoard
         // be used in the more accurate relative health computation.
 
         while ( it.hasNext() ) {
-            profiler_.start(GoProfiler.ABSOLUTE_TERRITORY);
+            getProfiler().start(GoProfiler.ABSOLUTE_TERRITORY);
             GoGroup g = (GoGroup) it.next();
 
-            float health = g.calculateAbsoluteHealth( this, profiler_ );
+            float health = g.calculateAbsoluteHealth( this, getProfiler());
 
             if (!USE_RELATIVE_GROUP_SCORING)  {
                 g.updateTerritory( health );
                 delta += health * g.getNumStones();
             }
-            profiler_.stop(GoProfiler.ABSOLUTE_TERRITORY);
+           getProfiler().stop(GoProfiler.ABSOLUTE_TERRITORY);
         }
 
         if (USE_RELATIVE_GROUP_SCORING)  {
-            profiler_.start(GoProfiler.RELATIVE_TERRITORY);
+            getProfiler().start(GoProfiler.RELATIVE_TERRITORY);
             it = groups_.iterator();
             while ( it.hasNext() ) {
                 GoGroup g = (GoGroup) it.next();
-                float health = g.calculateRelativeHealth( this, lastMove, profiler_ );
+                float health = g.calculateRelativeHealth( this, lastMove, getProfiler());
                 g.updateTerritory( health );
                 delta += health * g.getNumStones();
             }
-            profiler_.stop(GoProfiler.RELATIVE_TERRITORY);
+            getProfiler().stop(GoProfiler.RELATIVE_TERRITORY);
         }
         // need to loop over the board and determine for each space if it is territory for the specified player.
         // We will first mark visited all the stones that are "controlled" by the specified player.
         // The unoccupied "controlled" positions will be territory.
-        profiler_.start(GoProfiler.UPDATE_EMPTY);
+        getProfiler().start(GoProfiler.UPDATE_EMPTY);
         delta += updateEmptyRegions();
-        profiler_.stop(GoProfiler.UPDATE_EMPTY);
+        getProfiler().stop(GoProfiler.UPDATE_EMPTY);
 
-        profiler_.stop(GoProfiler.UPDATE_TERRITORY);
+        getProfiler().stop(GoProfiler.UPDATE_TERRITORY);
         territoryDelta_ = delta;
         return delta;
     }
@@ -385,7 +375,7 @@ public final class GoBoard extends TwoPlayerBoard
                                                      boolean returnToUnvisitedState, NeighborType type,
                                                      int rMin, int rMax, int cMin, int cMax )
     {
-        profiler_.start(GoProfiler.FIND_STRINGS);
+        getProfiler().start(GoProfiler.FIND_STRINGS);
         List stones = new ArrayList();
         // perform a breadth first search  until all found.
         // use the visited flag to indicate that a stone has been added to the string
@@ -405,7 +395,7 @@ public final class GoBoard extends TwoPlayerBoard
         if ( returnToUnvisitedState )
             GoBoardUtil.unvisitPositions( stones );
         // GoBoardUtil.confirmNoDupes( stone, stones );
-        profiler_.stop(GoProfiler.FIND_STRINGS);
+        getProfiler().stop(GoProfiler.FIND_STRINGS);
 
         return stones;
     }
@@ -511,14 +501,14 @@ public final class GoBoard extends TwoPlayerBoard
      */
     public Set getGroupNeighbors( GoBoardPosition stone, boolean friendPlayer1, boolean samePlayerOnly )
     {
-        profiler_.start(GoProfiler.GET_GROUP_NBRS);
+        getProfiler().start(GoProfiler.GET_GROUP_NBRS);
         List stack = new LinkedList();
 
         pushGroupNeighbors( stone, friendPlayer1, stack, samePlayerOnly );
         Set nbrStones = new HashSet();
          nbrStones.addAll( stack );
 
-        profiler_.stop(GoProfiler.GET_GROUP_NBRS);
+        getProfiler().stop(GoProfiler.GET_GROUP_NBRS);
         return nbrStones;
     }
 
@@ -716,7 +706,7 @@ public final class GoBoard extends TwoPlayerBoard
      */
     public List findGroupFromInitialPosition( GoBoardPosition stone, boolean returnToUnvisitedState )
     {
-        profiler_.start(GoProfiler.FIND_GROUPS);
+        getProfiler().start(GoProfiler.FIND_GROUPS);
         List stones = new ArrayList();
         // perform a breadth first search  until all found.
         // use the visited flag to indicate that a stone has been added to the group
@@ -737,7 +727,7 @@ public final class GoBoard extends TwoPlayerBoard
             if (GameContext.getDebugMode() > 1)
                 GoBoardUtil.confirmAllUnvisited(this);
         }
-        profiler_.stop(GoProfiler.FIND_GROUPS);
+        getProfiler().stop(GoProfiler.FIND_GROUPS);
         return stones;
     }
 

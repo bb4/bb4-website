@@ -16,7 +16,8 @@ public class Utilities
     private static final MediaTracker sTracker = new MediaTracker( sComponent );
     private static int sID = 0;
 
-    public static final String DEFAULT_IMAGE_DIR = FileUtil.PROJECT_DIR + "source/com/becker/java2d/images/";
+    public static final String DEFAULT_IMAGE_DIR = 
+            FileUtil.PROJECT_DIR + "source/com/becker/java2d/images/";
 
     public static boolean waitForImage( Image image )
     {

@@ -106,7 +106,8 @@ public class GraphRenderer extends JPanel implements Runnable
 
         if ( r2 == 0 ) return; // avoid degenerate case - div by 0
 
-        int revs = (int) (sign * r2) / MathUtil.gcd( (int) r1, (int) (sign * r2) );
+        long gcd = MathUtil.gcd( (long) r1, (long) (sign * r2) );
+        int revs = (int)((sign * r2) / gcd);
 
         offlineGraphics_.setPaintMode();
 

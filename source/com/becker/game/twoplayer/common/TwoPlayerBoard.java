@@ -14,6 +14,7 @@ import java.util.*;
 public abstract class TwoPlayerBoard extends Board
 {
 
+    
     /**
      * given a move specification, execute it on the board
      * This places the players symbol at the position specified by move.

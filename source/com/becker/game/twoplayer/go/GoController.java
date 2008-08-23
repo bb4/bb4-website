@@ -312,17 +312,6 @@ public final class GoController extends TwoPlayerController
         makeMove( m );
     }
 
-    protected void initializeGobalProfilingStats()
-    {
-        board_.initializeGobalProfilingStats();
-    }
-
-    protected void showProfileStats( long totalTime, int numMoves )
-    {
-        super.showProfileStats( totalTime, numMoves );
-        GoBoard.getProfiler().print();
-    }
-
     /**
      * save the current state of the go game to a file in SGF (4) format (standard game format).
      *This should some day be xml (xgf)
@@ -678,7 +667,7 @@ public final class GoController extends TwoPlayerController
         public final List generateMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
         {
             GoBoard board = (GoBoard) board_;
-            GoBoard.getProfiler().start(GoProfiler.GENERATE_MOVES);
+            board.getProfiler().startGenerateMoves();
             List moveList = new LinkedList();
             int i,j;
             int nCols = board.getNumCols();
@@ -702,18 +691,18 @@ public final class GoController extends TwoPlayerController
                             GameContext.log( 2, "The move was a suicide (can't add it to the list): " + m );
                         }
                         else {
-                            GoBoard.getProfiler().stop(GoProfiler.GENERATE_MOVES);
+                            board.getProfiler().stopGenerateMoves();
                             board.makeMove( m );
-                            GoBoard.getProfiler().start(GoProfiler.GENERATE_MOVES);
+                            board.getProfiler().startGenerateMoves();
                             // this value is not likely to change much except local to last move,
                             // anyway we could cache that?
-                            GoBoard.getProfiler().start(GoProfiler.CALC_WORTH);
+                            board.getProfiler().startCalcWorth();
                             m.setValue(worth( m, weights, player1sPerspective ));
-                            GoBoard.getProfiler().stop(GoProfiler.CALC_WORTH);
+                            board.getProfiler().stopCalcWorth();
                             // now revert the board
-                            GoBoard.getProfiler().stop(GoProfiler.GENERATE_MOVES);
+                            board.getProfiler().stopGenerateMoves();
                             board.undoMove();
-                            GoBoard.getProfiler().start(GoProfiler.GENERATE_MOVES);
+                            board.getProfiler().startGenerateMoves();
                             moveList.add( m );
                         }
                     }
@@ -726,7 +715,7 @@ public final class GoController extends TwoPlayerController
             if (getNumMoves() > nCols+nRows)  {
                 moveList.add(moveList.size(), GoMove.createPassMove(lastMove.getValue(), player1));
             }
-            GoBoard.getProfiler().stop(GoProfiler.GENERATE_MOVES);
+            board.getProfiler().stopGenerateMoves();
 
             return moveList;
         }
