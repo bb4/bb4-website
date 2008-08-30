@@ -55,8 +55,6 @@ public class ProcessingOperators
         mOps = new HashMap<String, MetaImageOp>();
         createConvolutions();        
         createLookups();
-        //createTransformations();
-        //createRescales();
         createColorOps();
         createJHLabsOps();
     }
@@ -154,17 +152,19 @@ public class ProcessingOperators
     private void createJHLabsOps()
     {
        List<Parameter> params = new ArrayList<Parameter>();
-       params.add(new Parameter(0.0, 0, 5.0, "time"));
-       params.add(new Parameter(32.0, 0.5, 100.0, "scale"));
-       // params.add(new Parameter(10, 1, 30, "brightness", true));
+       params.add(new Parameter(0.0, 0, .01, "time"));
+       params.add(new Parameter(30.0, 0.8, 30.0, "scale"));
+       params.add(new Parameter(10, 1, 20, "brightness", true));
        params.add(new Parameter(0.9, 0.0, 1.0, "turbulence"));
        params.add(new Parameter(0.0, 0.0, 1.0, "dispersion"));
-       params.add(new Parameter(1.0, 0.3, 1.0, "amount"));
-       
+       params.add(new Parameter(1.0, 0.3, 1.0, "amount"));       
         mOps.put( "Caustics", new MetaImageOp(CausticsFilter.class, params));       
+        
+       params = new ArrayList<Parameter>();
+       params.add(new Parameter(1.0, 0.3, 2.0, "height"));
+       mOps.put("Bump Filter", new MetaImageOp(BumpFilter.class, params));
+     
         /*
-        mOps.put("Bump Filter (small)", new BumpFilter(0.5f));
-        mOps.put("Bump Filter (large)", new BumpFilter(1.5f));
         CellularFilter cfilter = new CellularFilter();
         cfilter.setTurbulence(1.4f);
         cfilter.setF1(0.1f);

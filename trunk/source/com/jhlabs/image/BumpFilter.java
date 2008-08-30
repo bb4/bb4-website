@@ -16,6 +16,8 @@ limitations under the License.
 
 package com.jhlabs.image;
 
+import java.awt.*;
+import java.awt.geom.*;
 import java.awt.image.*;
 
 /**
@@ -24,10 +26,23 @@ import java.awt.image.*;
 public class BumpFilter extends ConvolveFilter {
 	
 
+    public BumpFilter() {
+        super(getEmbossMatrix(0.8f));
+    }
 
 	public BumpFilter(float bumpHeight) {
 		super(getEmbossMatrix(bumpHeight));
 	}
+    
+    
+    /**
+     * @param height Height of the simulated bumps. 0-2.0.
+     */
+	public void setHeight(float height) {
+		Kernel k = new Kernel(3, 3, getEmbossMatrix(height));
+        this.setKernel(k);
+	}
+       
     
     private static final float[] getEmbossMatrix(float height)
     {

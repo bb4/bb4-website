@@ -85,15 +85,24 @@ public class Parameter
      *     (relative to each parameter range).
      */
     public void tweakValue(double r, Random rand)
-    {      
-             this.setValue(getValue() + rand.nextGaussian() * r * getRange());
-             if (getValue() > getMaxValue()) {
-                  setValue(getMaxValue());
-             }
-             else if (getValue() < getMinValue()) {
-                 setValue(getMinValue());
-             }
-    }
+    {           
+        if (r == 0 ) {
+            return;  // no change in the param.
+        }
+        double prevValue = getValue();
+        double change = rand.nextGaussian() * r * getRange();
+        this.setValue(getValue() + change);
+        if (getValue() > getMaxValue()) {
+              setValue(getMaxValue());
+        }
+        else if (getValue() < getMinValue()) {
+             setValue(getMinValue());
+        }
+        if (prevValue == getValue() &&
+            (prevValue == getMinValue() || prevValue == getMaxValue())) {
+            setValue(prevValue - change);
+        }
+   }
 
     public String toString()
     {
