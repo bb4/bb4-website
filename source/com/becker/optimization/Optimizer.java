@@ -1,5 +1,6 @@
 package com.becker.optimization;
 
+import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.strategy.*;
 
 import java.io.*;

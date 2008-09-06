@@ -2,7 +2,11 @@ package com.becker.java2d.imageproc;
 
 import com.becker.common.*;
 
-import com.becker.optimization.Parameter;
+import com.becker.optimization.parameter.BooleanParameter;
+import com.becker.optimization.parameter.DoubleParameter;
+import com.becker.optimization.parameter.IntegerParameter;
+import com.becker.optimization.parameter.Parameter;
+import com.becker.optimization.parameter.StringParameter;
 import com.jhlabs.image.*;
 import java.awt.color.ColorSpace;
 import java.awt.event.*;
@@ -152,71 +156,87 @@ public class ProcessingOperators
     private void createJHLabsOps()
     {
        List<Parameter> params = new ArrayList<Parameter>();
-       params.add(new Parameter(0.0, 0, .01, "time"));
-       params.add(new Parameter(30.0, 0.8, 30.0, "scale"));
-       params.add(new Parameter(10, 1, 20, "brightness", true));
-       params.add(new Parameter(0.9, 0.0, 1.0, "turbulence"));
-       params.add(new Parameter(0.0, 0.0, 1.0, "dispersion"));
-       params.add(new Parameter(1.0, 0.3, 1.0, "amount"));       
+       params.add(new DoubleParameter(0.0, 0, 10.0, "time"));
+       params.add(new DoubleParameter(32.0, 0.1, 100.0, "scale"));
+       params.add(new IntegerParameter(10, 1, 50, "brightness"));
+       params.add(new DoubleParameter(0.0, 0.0, 10.0, "turbulence"));
+       params.add(new DoubleParameter(0.0, 0.0, 1.0, "dispersion"));
+       params.add(new DoubleParameter(1.0, 0.1, 2.0, "amount"));       
         mOps.put( "Caustics", new MetaImageOp(CausticsFilter.class, params));       
         
        params = new ArrayList<Parameter>();
-       params.add(new Parameter(1.0, 0.3, 2.0, "height"));
-       mOps.put("Bump Filter", new MetaImageOp(BumpFilter.class, params));
-     
-        /*
-        CellularFilter cfilter = new CellularFilter();
-        cfilter.setTurbulence(1.4f);
-        cfilter.setF1(0.1f);
-        cfilter.setF2(0.4f);
-        cfilter.setF3(0.3f);
-        cfilter.setF3(0.2f);
-        cfilter.setRandomness(0.8f);
-        cfilter.setAmount(1.3f);
-        cfilter.setGradientCoefficient(1.0f);
-        cfilter.setScale(16);
-        cfilter.setUseColor(true);
-        mOps.put("Cellular", cfilter);                
-        mOps.put("Contour", new ContourFilter());
-        mOps.put("Crystallize", new CrystallizeFilter());
-        CurvesFilter curvesFilter = new CurvesFilter();
+       params.add(new DoubleParameter(1.0, 0.5, 1.8, "height"));
+       mOps.put("Bumps", new MetaImageOp(BumpFilter.class, params));
+            
+       params = new ArrayList<Parameter>();
+       params.add(new BooleanParameter(true, "useColor"));
+       params.add(new StringParameter(CellularFilter.GridType.RANDOM, CellularFilter.GridType.values(), "gridType"));
+       params.add(new IntegerParameter(1, 1, 20, "turbulence"));       
+       params.add(new DoubleParameter(0.0, 0.0, 1.0, "F1"));
+       params.add(new DoubleParameter(0.0, 0.0, 1.0, "F2"));
+       params.add(new DoubleParameter(0.0, 0.0, 1.0, "randomness"));
+       params.add(new DoubleParameter(.5, 0.0, 1.0, "amount"));
+       params.add(new DoubleParameter(1.0, 0.0, 2.0, "gradientCoefficient"));
+       params.add(new DoubleParameter(1.0, 1.0, 30.0, "stretch"));
+       params.add(new DoubleParameter(0.0, 0.0, Math.PI, "angle")); // in radians
+       params.add(new DoubleParameter(1.0, 0.0, 5.0, "angleCoefficient"));
+       params.add(new IntegerParameter(1, 1, 6, "distancePower"));
+       params.add(new DoubleParameter(16.0, 0.1, 64.0, "scale"));     
+       mOps.put("Cellular", new MetaImageOp(CellularFilter.class, params));
+       
+       params = new ArrayList<Parameter>();
+       params.add(new DoubleParameter(5.0, 0.1, 10.0, "levels"));
+       params.add(new DoubleParameter(1.0, 0.1, 10.0, "scale"));
+       params.add(new DoubleParameter(0.0, 0.0, 2.0, "offset"));
+       params.add(new IntegerParameter(0xff2200aa, 0xff000000, 0xffffffff, "contourColor"));
+       mOps.put("Contour", new MetaImageOp(ContourFilter.class, params));
+       
+       params = new ArrayList<Parameter>();
+       params.add(new BooleanParameter(false, "fadeEdges"));
+       params.add(new DoubleParameter(0.4, 0.1, 2.0, "edgeThickness"));       
+       params.add(new IntegerParameter(0xff2200aa, 0xff000000, 0xffffffff, "edgeColor"));
+       mOps.put("Crystallize", new MetaImageOp(CrystallizeFilter.class, params));
+       
+       params = new ArrayList<Parameter>();
+       params.add(new BooleanParameter(true, "emboss"));
+       params.add(new DoubleParameter(2.0, 0.0, Math.PI, "azimuth"));
+       params.add(new DoubleParameter(0.4, 0.0, Math.PI/2.0, "elevation"));    
+       params.add(new DoubleParameter(0.5, 0.1, 2.5, "bumpHeight"));
+       mOps.put("Emboss", new MetaImageOp(EmbossFilter.class, params));       
+       
+       mOps.put("Equalize", new MetaImageOp(new EqualizeFilter()));
+       
+       params = new ArrayList<Parameter>();
+       params.add(new StringParameter(FBMFilter.BasisType.CELLULAR, FBMFilter.BasisType.values(), "basisType"));
+       params.add(new StringParameter(PixelUtils.OperationType.MULTIPLY, PixelUtils.OperationType.values(), "operation"));
+       //params.add(new IntegerParameter(0, 0, 4, "basisType"));
+       //params.add(new IntegerParameter(7, 0, 20, "operation"));
+       params.add(new DoubleParameter(0.8, 0.0, 2.0, "amount"));
+       params.add(new DoubleParameter(32, 4, 128, "scale"));
+       params.add(new DoubleParameter(1, 1, 8, "stretch"));
+       params.add(new DoubleParameter(0, 0, Math.PI, "angle"));
+       params.add(new DoubleParameter(1.0, 0.0, 5.0, "H"));
+       params.add(new DoubleParameter(2.0, 0.1, 4.0, "lacunarity"));
+       params.add(new DoubleParameter(0.5, 0.1, 2.0, "gain"));
+       params.add(new DoubleParameter(0.5, 0.0, 2.0, "bias"));
+       params.add(new DoubleParameter(4.0, 0.1, 16.0, "octaves"));
+       mOps.put("Fractal Noise", new MetaImageOp(FBMFilter.class, params));
+       
+
+       /* tricky
+        params = new ArrayList<Parameter>();
         float x[] = {0f, 0.1f, 0.8f, 1f};
         float y[] = {0f, 0.01f, .95f, 1f};
         CurvesFilter.Curve c = 
                 new CurvesFilter.Curve(x, y);
         curvesFilter.setCurve(c);
-        mOps.put("Curve", curvesFilter);
-        mOps.put("Diffusion", new DiffusionFilter());
-        EmbossFilter embFilter = new EmbossFilter();      
-        mOps.put("Emboss", embFilter);
-        mOps.put("Equalize", new EqualizeFilter());
-        
-        int op = PixelUtils.AVERAGE; // ADD and MULTIPLY also good.
-        float amount = 0.8f;
-        FBMFilter fbm1 = new FBMFilter();
-        fbm1.setOperation(op);
-        fbm1.setAmount(amount);
-        fbm1.setBasisType(FBMFilter.NOISE);
-        mOps.put("FBM (ridged)", fbm1);
-        
-        FBMFilter fbm2 = new FBMFilter();
-        fbm2.setOperation(op);
-        fbm2.setAmount(amount);
-        fbm2.setBasisType(FBMFilter.RIDGED);
-        mOps.put("FBM (noise)", fbm2);
-        
-        FBMFilter fbm3 = new FBMFilter();
-        fbm3.setOperation(op);
-        fbm3.setAmount(amount);
-        fbm3.setBasisType(FBMFilter.CELLULAR);
-        mOps.put("FBM (cellular)", fbm3);
-        
-        FBMFilter fbm4 = new FBMFilter();
-        fbm4.setOperation(op);
-        fbm4.setAmount(amount);
-        fbm4.setBasisType(FBMFilter.SCNOISE);
-        mOps.put("FBM (scnoise)", fbm4);
-        
+        mOps.put("Curves", new MetaImageOp(CurvesFilter.class, params));
+        * 
+        params = new ArrayList<Parameter>();       
+        mOps.put("Diffusion", new MetaImageOp(DiffusionFilter.class, params));
+       */
+       
+        /*                 
         //mOps.put("Field Warp", new FieldWarpFilter());
         mOps.put("JavaLnf", new JavaLnFFilter());
         PlasmaFilter plasmaFilter = new PlasmaFilter();
@@ -270,7 +290,7 @@ public class ProcessingOperators
         mOps.put("Weave", new WeaveFilter());  
         mOps.put("Wood", new WoodFilter());                 
         //mOps.put("Skeleton", new SkeletonFilter());      
-         * */  
+         */
     }
 
 }

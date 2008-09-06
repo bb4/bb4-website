@@ -1,5 +1,6 @@
 package com.becker.optimization.test;
 
+import com.becker.optimization.parameter.ParameterArray;
 import com.becker.common.*;
 import com.becker.common.util.FileUtil;
 import com.becker.optimization.*;

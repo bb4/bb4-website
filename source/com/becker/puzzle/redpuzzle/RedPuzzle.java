@@ -9,6 +9,7 @@ import com.becker.puzzle.common.Refreshable;
 import com.becker.ui.*;
 import com.becker.ui.sliders.LabeledSlider;
 
+import com.becker.ui.sliders.SliderChangeListener;
 import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.*;
@@ -27,7 +28,7 @@ import java.awt.event.*;
  * @author Barry becker
  */
 public final class RedPuzzle extends PuzzleApplet 
-                                             implements ChangeListener                                                                 
+                                             implements SliderChangeListener                                                                 
 {
     
     // allows you to change the animation speed.
@@ -62,7 +63,7 @@ public final class RedPuzzle extends PuzzleApplet
         return animSpeedSlider_;
     }
 
-    public void stateChanged(ChangeEvent e) {
+    public void sliderChanged(LabeledSlider slider) {
         ((RedPuzzleViewer)viewer_).setAnimationSpeed((int) animSpeedSlider_.getValue());
     }
 

@@ -1,5 +1,7 @@
 package com.becker.optimization.test;
 
+import com.becker.optimization.parameter.ParameterArray;
+import com.becker.optimization.parameter.Parameter;
 import com.becker.optimization.*;
 
 import javax.swing.*;

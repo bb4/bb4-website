@@ -1,9 +1,12 @@
 package com.becker.simulation.snake;
 
+import com.becker.optimization.parameter.ParameterArray;
+import com.becker.optimization.parameter.Parameter;
 import com.becker.common.*;
 import com.becker.common.util.FileUtil;
 import com.becker.common.util.Util;
 import com.becker.optimization.*;
+import com.becker.optimization.parameter.DoubleParameter;
 import com.becker.simulation.common.*;
 import com.becker.ui.*;
 
@@ -22,10 +25,11 @@ public class SnakeSimulator extends NewtonianSimulator
     protected static final int NUM_STEPS_PER_FRAME = 200;
 
     private static final Parameter[] PARAMS = {
-            new Parameter( WAVE_SPEED, 0.0001, 0.02, "wave speed" ),
-            new Parameter( WAVE_AMPLITUDE, 0.001, 0.2, "wave amplitude" ),
-            new Parameter( WAVE_PERIOD, 0.5, 9.0, "wave period" ),
+            new DoubleParameter( WAVE_SPEED, 0.0001, 0.02, "wave speed" ),
+            new DoubleParameter( WAVE_AMPLITUDE, 0.001, 0.2, "wave amplitude" ),
+            new DoubleParameter( WAVE_PERIOD, 0.5, 9.0, "wave period" ),
     };
+    
     private static final ParameterArray INITIAL_PARAMS = new ParameterArray( PARAMS);
 
     private Snake snake_ = null;

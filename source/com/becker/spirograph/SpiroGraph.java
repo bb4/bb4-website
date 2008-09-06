@@ -2,7 +2,7 @@ package com.becker.spirograph;
 
 import com.becker.ui.*;
 import com.becker.ui.sliders.ColorSliderGroup;
-import com.becker.ui.sliders.SliderChangeListener;
+import com.becker.ui.sliders.SliderGroupChangeListener;
 import com.becker.ui.sliders.SliderGroup;
 
 import javax.swing.*;
@@ -20,7 +20,7 @@ import java.awt.event.*;
  * @author Barry Becker
  */
 public class SpiroGraph extends JApplet
-        implements ActionListener, SliderChangeListener
+        implements ActionListener, SliderGroupChangeListener
 {
     public static final String HIDE_LABEL = "Hide Axes";
     private static final String SHOW_LABEL = "Show Axes";

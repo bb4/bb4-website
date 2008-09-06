@@ -1,7 +1,10 @@
 package com.becker.optimization.test;
 
+import com.becker.optimization.parameter.ParameterArray;
+import com.becker.optimization.parameter.Parameter;
 import com.becker.common.util.FileUtil;
 import com.becker.optimization.*;
+import com.becker.optimization.parameter.DoubleParameter;
 
 /**
  * This is a simple search space to test the optimization package.
@@ -36,10 +39,10 @@ public class SevenElevenTestProblem extends OptimizeeTestProblem
     private static final double  P3 = 120.0;
     private static final double  P4 = 150.0;
     private static final Parameter[] EXACT_SOLUTION_PARAMS =
-            {new Parameter(P1, 0.0, 1000.0, "p1", true),
-             new Parameter(P2, 0.0, 1000.0, "p2", true),
-             new Parameter(P3, 0.0, 1000.0, "p3", true),
-             new Parameter(P4, 0.0, 1000.0, "p4", true)};
+            {new DoubleParameter(P1, 0.0, 1000.0, "p1"),
+             new DoubleParameter(P2, 0.0, 1000.0, "p2"),
+             new DoubleParameter(P3, 0.0, 1000.0, "p3"),
+             new DoubleParameter(P4, 0.0, 1000.0, "p4")};
 
     private static final ParameterArray INITIAL_GUESS = new ParameterArray(vals, minVals, maxVals, names);
 

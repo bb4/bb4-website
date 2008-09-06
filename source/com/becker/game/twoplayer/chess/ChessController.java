@@ -6,7 +6,7 @@ import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.common.Move;
 import com.becker.game.common.*;
-import com.becker.optimization.ParameterArray;
+import com.becker.optimization.parameter.ParameterArray;
 import com.becker.sound.MusicMaker;
 
 import java.util.*;

@@ -2,8 +2,8 @@ package com.becker.game.twoplayer.common.ui;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameWeights;
-import com.becker.optimization.Parameter;
-import com.becker.optimization.ParameterArray;
+import com.becker.optimization.parameter.Parameter;
+import com.becker.optimization.parameter.ParameterArray;
 import com.becker.ui.GradientButton;
 import com.becker.ui.OptionsDialog;
 

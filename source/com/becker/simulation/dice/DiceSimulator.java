@@ -8,6 +8,9 @@ import java.util.*;
 import javax.swing.JFrame;
 
 /**
+ * Simluates the rolling of N number of M sided dice lots of times
+ * to see what kind of distribution of numbers you get.
+ * 
  * @author Barry Becker Date: Feb 4, 2007
  */
 public class DiceSimulator extends Simulator {
@@ -45,11 +48,9 @@ public class DiceSimulator extends Simulator {
         initHistogram();
     }
 
-
     private void initHistogram() {
         data_ = new int[numDice_ * (numSides_-1) + 1];
         histogram_ = new HistogramRenderer(data_, numDice_);
-        //random_.setSeed(1);
     }
 
     private void commonInit() {
@@ -61,7 +62,6 @@ public class DiceSimulator extends Simulator {
     protected SimulatorOptionsDialog createOptionsDialog() {
          return new DiceOptionsDialog( frame_, this );
     }
-
 
     protected double getInitialTimeStep() {
         return TIME_STEP;
@@ -80,13 +80,11 @@ public class DiceSimulator extends Simulator {
     }
 
 
-
     public void paint( Graphics g )
     {
         histogram_.setSize(getWidth(), getHeight());
         histogram_.paint(g);
     }
-
 
     protected String getFileNameBase()
     {

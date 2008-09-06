@@ -1,5 +1,6 @@
-package com.becker.optimization;
+package com.becker.optimization.parameter;
 
+import com.becker.optimization.parameter.Parameter;
 import com.becker.common.*;
 import com.becker.common.util.Util;
 
@@ -33,7 +34,7 @@ public class ParameterArray implements Comparable<ParameterArray>
     }
 
     /**
-     * constructor
+     * constructor if all the params are DoubleParameters
      * @param vals the values for each parameter.
      * @param minVals the minimum value allowed for each parameter respectively.
      * @param maxVals the maximum value allowed for each parameter respectively.
@@ -45,7 +46,20 @@ public class ParameterArray implements Comparable<ParameterArray>
         params_ = new Parameter[len];
         for (int i=0; i<len; i++)
         {
-            params_[i] = new Parameter(vals[i], minVals[i], maxVals[i], names[i]);
+            params_[i] = new DoubleParameter(vals[i], minVals[i], maxVals[i], names[i]);
+        }
+    }
+    
+    /**
+     * Use this construcotr if you have mixed types of parameters.
+     * @param params
+     */
+    public ParameterArray(List<Parameter> params) {
+         int len = params.size();
+        params_ = new Parameter[len];
+        for (int i=0; i<len; i++)
+        {
+            params_[i] = params.get(i);
         }
     }
 

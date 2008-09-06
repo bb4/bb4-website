@@ -25,28 +25,10 @@ import java.awt.Color;
  */
 public class PixelUtils {
 
-	public final static int REPLACE = 0;
-	public final static int NORMAL = 1;
-	public final static int MIN = 2;
-	public final static int MAX = 3;
-	public final static int ADD = 4;
-	public final static int SUBTRACT = 5;
-	public final static int DIFFERENCE = 6;
-	public final static int MULTIPLY = 7;
-	public final static int HUE = 8;
-	public final static int SATURATION = 9;
-	public final static int VALUE = 10;
-	public final static int COLOR = 11;
-	public final static int SCREEN = 12;
-	public final static int AVERAGE = 13;
-	public final static int OVERLAY = 14;
-	public final static int CLEAR = 15;
-	public final static int EXCHANGE = 16;
-	public final static int DISSOLVE = 17;
-	public final static int DST_IN = 18;
-	public final static int ALPHA = 19;
-	public final static int ALPHA_TO_GRAY = 20;
-
+    public enum OperationType {REPLACE, NORMAL, MIN, MAX, ADD, SUBTRACT, 
+    DIFFERENCE, MULTIPLY, HUE, SATURATION, VALUE, COLOR, SCREEN, AVERAGE, 
+    OVERLAY, CLEAR, EXCHANGE, DISSOLVE, DST_IN, ALPHA, ALPHA_TO_GRAY}; 
+	
 	private static Random randomGenerator = new Random();
 
 	/**
@@ -85,16 +67,16 @@ public class PixelUtils {
 	private final static float hsb2[] = new float[3];//FIXME-not thread safe
 	
 	// Return rgb1 painted onto rgb2
-	public static int combinePixels(int rgb1, int rgb2, int op) {
+	public static int combinePixels(int rgb1, int rgb2, OperationType op) {
 		return combinePixels(rgb1, rgb2, op, 0xff);
 	}
 	
-	public static int combinePixels(int rgb1, int rgb2, int op, int extraAlpha, int channelMask) {
+	public static int combinePixels(int rgb1, int rgb2, OperationType op, int extraAlpha, int channelMask) {
 		return (rgb2 & ~channelMask) | combinePixels(rgb1 & channelMask, rgb2, op, extraAlpha);
 	}
 	
-	public static int combinePixels(int rgb1, int rgb2, int op, int extraAlpha) {
-		if (op == REPLACE)
+	public static int combinePixels(int rgb1, int rgb2, OperationType op, int extraAlpha) {
+		if (op == OperationType.REPLACE)
 			return rgb1;
 		int a1 = (rgb1 >> 24) & 0xff;
 		int r1 = (rgb1 >> 16) & 0xff;

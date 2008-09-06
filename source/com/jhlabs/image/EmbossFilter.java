@@ -26,13 +26,18 @@ public class EmbossFilter extends WholeImageFilter {
 
 	private final static float pixelScale = 255.9f;
 
-	private float azimuth = 135.0f * ImageMath.PI / 180.0f, elevation = 30.0f * ImageMath.PI / 180f;
-	private boolean emboss = false;
+	private float azimuth = 135.0f * ImageMath.PI / 180.0f;
+    private float elevation = 30.0f * ImageMath.PI / 180f;
+	private boolean emboss = true;
 	private float width45 = 3.0f;
 
 	public EmbossFilter() {
 	}
 
+    /** 
+     * angle in radians (0 - PI)
+     * @param azimuth
+     */
 	public void setAzimuth(float azimuth) {
 		this.azimuth = azimuth;
 	}
@@ -41,6 +46,10 @@ public class EmbossFilter extends WholeImageFilter {
 		return azimuth;
 	}
 	
+    /**
+     * angle in radians (0 - PI/2)
+     * @param elevation
+     */
 	public void setElevation(float elevation) {
 		this.elevation = elevation;
 	}

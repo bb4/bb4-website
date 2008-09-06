@@ -1,9 +1,12 @@
 package com.becker.optimization.test;
 
+import com.becker.optimization.parameter.ParameterArray;
+import com.becker.optimization.parameter.Parameter;
 import com.becker.common.util.FileUtil;
 import com.becker.common.util.Util;
 import com.becker.optimization.*;
 
+import com.becker.optimization.parameter.DoubleParameter;
 import java.awt.geom.*;
 
 /**
@@ -32,8 +35,8 @@ public class AnalyticFunctionTestProblem extends OptimizeeTestProblem
     private static final double  P1 = 1.0;
     private static final double  P2 = 2.0;
     private static final Parameter[] EXACT_SOLUTION_PARAMS =
-            {new Parameter(P1, 0.0, 3.0, "p1"),
-             new Parameter(P2, 0.0, 3.0, "p2")};
+            {new DoubleParameter(P1, 0.0, 3.0, "p1"),
+             new DoubleParameter(P2, 0.0, 3.0, "p2")};
 
     private static final ParameterArray EXACT_SOLUTION = new ParameterArray(EXACT_SOLUTION_PARAMS);
 

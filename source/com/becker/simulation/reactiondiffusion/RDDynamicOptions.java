@@ -2,8 +2,7 @@ package com.becker.simulation.reactiondiffusion;
 
 import com.becker.ui.legend.*;
 import com.becker.ui.*;
-import com.becker.ui.sliders.LabeledSlider;
-import com.becker.ui.sliders.SliderChangeListener;
+import com.becker.ui.sliders.SliderGroupChangeListener;
 import com.becker.ui.sliders.SliderGroup;
 
 import javax.swing.*;
@@ -16,7 +15,7 @@ import java.awt.event.*;
  * @author Barry Becker Date: Nov 5, 2006
  */
 public class RDDynamicOptions extends JPanel
-                              implements ActionListener, SliderChangeListener {
+                              implements ActionListener, SliderGroupChangeListener {
 
     private GrayScott gs_;
     private RDSimulator simulator_;

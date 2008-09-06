@@ -1,5 +1,6 @@
 package com.becker.optimization.test;
 
+import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.*;
 import junit.framework.*;
 

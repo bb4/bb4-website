@@ -3,7 +3,7 @@ package com.becker.game.twoplayer.common.search;
 import com.becker.common.util.Util;
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.optimization.ParameterArray;
+import com.becker.optimization.parameter.ParameterArray;
 
 import java.util.List;
 

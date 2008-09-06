@@ -131,7 +131,7 @@ public class PlasmaFilter extends WholeImageFilter {
 	}
 
 	private int average(int rgb1, int rgb2) {
-		return PixelUtils.combinePixels(rgb1, rgb2, PixelUtils.AVERAGE);
+		return PixelUtils.combinePixels(rgb1, rgb2, PixelUtils.OperationType.AVERAGE);
 	}
 
 	private int getPixel(int x, int y, int[] pixels, int stride) {

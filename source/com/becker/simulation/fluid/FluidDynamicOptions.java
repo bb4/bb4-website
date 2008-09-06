@@ -2,8 +2,7 @@ package com.becker.simulation.fluid;
 
 import com.becker.ui.legend.*;
 import com.becker.ui.*;
-import com.becker.ui.sliders.LabeledSlider;
-import com.becker.ui.sliders.SliderChangeListener;
+import com.becker.ui.sliders.SliderGroupChangeListener;
 import com.becker.ui.sliders.SliderGroup;
 
 import javax.swing.*;
@@ -16,16 +15,10 @@ import java.awt.event.*;
  * @author Barry Becker 
  */
 public class FluidDynamicOptions extends JPanel
-                              implements ActionListener, SliderChangeListener {
+                              implements ActionListener, SliderGroupChangeListener {
 
 
     private FluidSimulator simulator_;
-
-    private LabeledSlider diffusionSlider_;
-    private LabeledSlider viscositySlider_;
-    private LabeledSlider forceSlider_;
-    private LabeledSlider sourceDensitySlider_;
-    private LabeledSlider numStepsSlider_;
 
     private JCheckBox useConcurrency_;
 
