@@ -42,7 +42,7 @@ public class MinimumFilter extends WholeImageFilter {
 						for (int dx = -1; dx <= 1; dx++) {
 							int ix = x+dx;
 							if (0 <= ix && ix < width) {
-								pixel = PixelUtils.combinePixels(pixel, inPixels[ioffset+ix], PixelUtils.MIN);
+								pixel = PixelUtils.combinePixels(pixel, inPixels[ioffset+ix], PixelUtils.OperationType.MIN);
 							}
 						}
 					}

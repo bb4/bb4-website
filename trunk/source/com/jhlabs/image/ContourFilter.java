@@ -24,9 +24,9 @@ import java.awt.image.*;
  */
 public class ContourFilter extends WholeImageFilter {
 
-	private float levels = 5;
-	private float scale = 1;
-	private float offset = 0;
+	private float levels = 5.0f;
+	private float scale = 1.0f;
+	private float offset = 0.0f;
 	private int contourColor = 0xff000000;
 	
 	public ContourFilter() {
@@ -124,7 +124,7 @@ public class ContourFilter extends WholeImageFilter {
 				}
 
 				if ( v != 0 )
-					outPixels[index] = PixelUtils.combinePixels( inPixels[index], contourColor, PixelUtils.NORMAL, v );
+					outPixels[index] = PixelUtils.combinePixels( inPixels[index], contourColor, PixelUtils.OperationType.NORMAL, v );
 //					outPixels[index] = PixelUtils.combinePixels( (contourColor & 0xff)|(v << 24), inPixels[index], PixelUtils.NORMAL );
 				else
 					outPixels[index] = inPixels[index];

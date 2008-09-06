@@ -1,5 +1,6 @@
 package com.becker.game.multiplayer.common;
 
+import com.becker.optimization.parameter.ParameterArray;
 import com.becker.game.card.*;
 import com.becker.game.common.*;
 import com.becker.game.common.online.*;

@@ -6,7 +6,7 @@ import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.search.SearchStrategy;
 import com.becker.game.twoplayer.common.search.SearchTreeNode;
 import com.becker.game.twoplayer.common.search.Searchable;
-import com.becker.optimization.ParameterArray;
+import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.Optimizer;
 import com.becker.optimization.OptimizationType;
 import com.becker.optimization.Optimizee;

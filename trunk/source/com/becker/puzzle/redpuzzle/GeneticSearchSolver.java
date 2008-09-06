@@ -1,5 +1,6 @@
 package com.becker.puzzle.redpuzzle;
 
+import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.*;
 import com.becker.puzzle.common.Refreshable;
 import java.util.List;

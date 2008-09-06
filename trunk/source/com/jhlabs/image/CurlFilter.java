@@ -192,7 +192,7 @@ public class CurlFilter extends TransformFilter {
 				b = (int)(b * shade);
 				rgb = (rgb & 0xff000000) | (r << 16) | (g << 8) | b;
 				if ( out[3] != 0 )
-					outPixels[x] = PixelUtils.combinePixels( rgb, inPixels[srcWidth*y + x], PixelUtils.NORMAL );
+					outPixels[x] = PixelUtils.combinePixels( rgb, inPixels[srcWidth*y + x], PixelUtils.OperationType.NORMAL );
 				else
 					outPixels[x] = rgb;
 			}

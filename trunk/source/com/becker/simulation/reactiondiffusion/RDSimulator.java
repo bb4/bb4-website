@@ -1,5 +1,6 @@
 package com.becker.simulation.reactiondiffusion;
 
+import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.*;
 import com.becker.simulation.common.*;
 

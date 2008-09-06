@@ -1,5 +1,7 @@
 package com.becker.simulation.liquid;
 
+import com.becker.optimization.parameter.ParameterArray;
+import com.becker.optimization.parameter.Parameter;
 import com.becker.common.*;
 import com.becker.common.util.FileUtil;
 import com.becker.optimization.*;

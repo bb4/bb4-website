@@ -13,7 +13,7 @@ import java.awt.*;
  */
 public class SliderGroup extends JPanel implements ChangeListener {
 
-    private SliderChangeListener sliderListener_;
+    private SliderGroupChangeListener sliderListener_;
 
     private String[] sliderNames_;
     private JLabel[] labels_;
@@ -125,7 +125,6 @@ public class SliderGroup extends JPanel implements ChangeListener {
         labels_[sliderIndex].setText(sliderNames_[sliderIndex] + v);
     }
     
-    
     public void setSliderValue(int sliderIndex, int value) {
         assert(scaleFactors_[sliderIndex] == 1.0) : "you should call setSliderValue(int, double) if you have a slider with real values";
         sliders_[sliderIndex].setValue(value);
@@ -142,7 +141,7 @@ public class SliderGroup extends JPanel implements ChangeListener {
         sliders_[sliderIndex].setMinimum((int) mn);
     }
 
-    public void addSliderChangeListener(SliderChangeListener listener) {
+    public void addSliderChangeListener(SliderGroupChangeListener listener) {
         sliderListener_ = listener;
     }
 
@@ -172,7 +171,7 @@ public class SliderGroup extends JPanel implements ChangeListener {
         return p;
     }
 
-    public void setSliderListener(SliderChangeListener listener) {
+    public void setSliderListener(SliderGroupChangeListener listener) {
         sliderListener_ = listener;
     }
 

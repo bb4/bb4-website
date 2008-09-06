@@ -5,10 +5,10 @@
 
 package com.becker.java2d.imageproc;
 
-import com.becker.optimization.Parameter;
+import com.becker.optimization.parameter.BooleanParameter;
+import com.becker.optimization.parameter.Parameter;
 import java.awt.image.BufferedImageOp;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,7 +17,8 @@ import java.util.Random;
 
 
 /**
- * Contains a 
+ * Contains an image operator and information about it (such as parameters).
+ * 
  * @author Barry Becker
  */
 public class MetaImageOp {
@@ -25,7 +26,7 @@ public class MetaImageOp {
     private Class<? extends BufferedImageOp> opClass;
     private BufferedImageOp op;
     
-    // list of params based on the params specified in the xml file.
+    /** list of params based on the params specified in the xml file. */
     private List<Parameter> parameters;
    
     private boolean isDynamic;
@@ -57,8 +58,7 @@ public class MetaImageOp {
     }
     
     /**
-     * 
-     * @return a concrete instance.
+     * @return a concrete filter operator instance.
      */
     public  BufferedImageOp getInstance()
     {
@@ -107,20 +107,34 @@ public class MetaImageOp {
             // the name must match the property (e.g. foo will be set using setFoo)
             String methodName = 
                     "set" +  p.getName().substring(0, 1).toUpperCase() + p.getName().substring(1);
-            Method method = filter.getClass().getDeclaredMethod(methodName, p.getType());
-            //System.out.println("v=" +p.getValue() + "  type="+p.getType().getName() + "  method="+methodName);
+            Method method = filter.getClass().getDeclaredMethod(methodName, p.getType()); // p.getNaturalValue().getClass());
+            System.out.println("v=" +p.getValue() + "  type="+p.getType() + "  method="+methodName);
           
             Object[] args = new Object[1];
-            p.tweakValue(randomVariance, RANDOM);
-            boolean isFloat =  (p.getType().equals(float.class)) ;
-            //System.out.println("type to cast to = "+p.getType() + " isFloat="+isFloat);
-            //args[0] = isFloat ? (float) p.getValue() :  (int) p.getValue();
-            
-            if (isFloat) {
-                args[0] = (float) p.getValue();
-            } else  {
-                args[0] = (int) p.getValue(); 
+            if (randomVariance > 0) {
+                p.tweakValue(randomVariance, RANDOM);
             }
+            
+            // @@ This should work with autoboxing, but does not for some reason, so we resort to ugly case statement.
+            //args[0] = p.getNaturalValue();
+            
+            Class type = p.getType();
+            if (type.equals(float.class)) {
+                args[0] = (float) p.getValue(); 
+            }
+            else if (type.equals(int.class)) {
+                args[0] = (int) p.getValue();
+            }
+            else if (type.equals(boolean.class)) {
+                args[0] = ((BooleanParameter)p).getNaturalValue();
+            }
+            else if (type.equals(String.class)) {
+                args[0] = p.getNaturalValue();
+            }
+            else  {
+                throw new IllegalArgumentException("Unexpected param type = "+type);
+            }
+           
             //System.out.println("arg="+args[0] + " type="+args[0].getClass().getName());
             method.invoke(filter, args); // p.getType().cast(p.getValue()));            
         } 

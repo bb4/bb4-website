@@ -1,6 +1,6 @@
 package com.becker.game.common;
 
-import com.becker.optimization.ParameterArray;
+import com.becker.optimization.parameter.ParameterArray;
 
 /**
  * The GameWeights define the coefficients to use by the

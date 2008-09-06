@@ -1,14 +1,17 @@
 package com.becker.java2d.imageproc;
 
+import com.becker.optimization.parameter.ParameterChangeListener;
 import com.becker.java2d.SplitImageComponent;
 import com.becker.java2d.Utilities;
 import com.becker.common.*;
 import com.becker.ui.ApplicationFrame;
+import com.becker.optimization.parameter.Parameter;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.*;
 import java.util.*;
+import javax.swing.JComboBox;
 
 public class Sampler extends ApplicationFrame 
                                    implements ItemListener, ActionListener, ParameterChangeListener
@@ -42,7 +45,7 @@ public class Sampler extends ApplicationFrame
         mImageFrame = new Frame( imageFile );
         mImageFrame.setLayout( new BorderLayout() );
         mImageFrame.add( mSplitImageComponent, BorderLayout.CENTER );
-
+        
         Utilities.sizeContainerToComponent( mImageFrame, mSplitImageComponent );
         Utilities.centerFrame( mImageFrame );
         mImageFrame.setVisible( true );
@@ -55,7 +58,7 @@ public class Sampler extends ApplicationFrame
         setFont( new Font( "Serif", Font.PLAIN, 12 ) );
         setLayout( new BorderLayout() );
         // Set our location to the left of the image frame.
-        this.setPreferredSize( new Dimension(300, 350 )); 
+        this.setMinimumSize( new Dimension(300, 500 )); 
         accumulateCheckbox = new Checkbox( "Accumulate", false );
         statusLabel = new Label( "" );    
     }
@@ -65,9 +68,7 @@ public class Sampler extends ApplicationFrame
         Point pt = mImageFrame.getLocation();
         setLocation( pt.x - getSize().width, pt.y );
 
-        filterList = operations.getSortedKeys();
-        add( filterList, BorderLayout.CENTER );
-
+        filterList = operations.getSortedKeys();        
         // When an item is selected, do the corresponding transformation.
         filterList.addItemListener(this);
 
@@ -79,12 +80,13 @@ public class Sampler extends ApplicationFrame
         topBottom.add( accumulateCheckbox );
         topBottom.add( loadButton );
         bottom.add( topBottom );
-        bottom.add( statusLabel );
-        add( bottom, BorderLayout.SOUTH );
+        bottom.add( statusLabel );        
         
         // add placeholder param paner
         paramPanel = new ParameterPanel(null);
-        add(paramPanel, BorderLayout.EAST);
+        add(paramPanel, BorderLayout.CENTER);
+        add( filterList, BorderLayout.WEST );
+        add( bottom, BorderLayout.SOUTH );
         this.pack();
     }
     
@@ -93,8 +95,7 @@ public class Sampler extends ApplicationFrame
      * @param ie
      */
     public void itemStateChanged( ItemEvent ie ) {
-        
-       
+               
         if ( ie.getStateChange() != ItemEvent.SELECTED ) 
             return;
         String key = filterList.getSelectedItem();
@@ -118,17 +119,26 @@ public class Sampler extends ApplicationFrame
         
         statusLabel.setText( "Performing " + key + "...done." );
         
+        replaceParameterUI(metaOp);        
+    }
+    
+    private void replaceParameterUI(MetaImageOp metaOp) {
         // now show ui for modifying the parameters for this op
         this.remove(paramPanel);
         paramPanel = new ParameterPanel(metaOp.getParameters());
         // We will get called whenever a paramerter is tweeked
         paramPanel.addParameterChangeListener(this);
-        this.add(paramPanel, BorderLayout.EAST);
+        this.add(paramPanel, BorderLayout.CENTER);
         this.pack();
     }
     
-    public void parameterChanged()
+    /**
+     * Called whenever one of the UI parameter widgets was changed by the user.
+     * @param param
+     */
+    public void parameterChanged(Parameter param)
     {
+        // we could use param.getName() to get the filter, but its just the currently selected one.
         String key = filterList.getSelectedItem();
         MetaImageOp metaOp = operations.getOperation( key );
         BufferedImageOp op = metaOp.getInstance();

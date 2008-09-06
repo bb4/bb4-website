@@ -1,4 +1,4 @@
-package com.becker.java2d.imageproc;
+package com.becker.optimization.parameter;
 
 /**
  * Implemented by classes that do something when a parameter gets changed.
@@ -6,6 +6,6 @@ package com.becker.java2d.imageproc;
  */
 public interface ParameterChangeListener {
 
-    void parameterChanged();
+    void parameterChanged(Parameter param);
 
 }

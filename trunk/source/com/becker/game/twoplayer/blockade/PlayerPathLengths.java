@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.blockade;
 
 import com.becker.game.common.GameContext;
-import com.becker.optimization.ParameterArray;
+import com.becker.optimization.parameter.ParameterArray;
 import java.util.List;
 
 /**

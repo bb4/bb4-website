@@ -30,13 +30,13 @@ public class CellularFilter extends WholeImageFilter implements Function2D, Clon
 	protected float stretch = 1.0f;
 	protected float angle = 0.0f;
 	public float amount = 1.0f;
-	public float turbulence = 1.0f;
+	public int turbulence = 1;
 	public float gain = 0.5f;
 	public float bias = 0.5f;
-	public float distancePower = 2;
-	public boolean useColor = false;
+	public int distancePower = 2;
+	public boolean useColor = true;
 	protected Colormap colormap = new Gradient();
-	protected float[] coefficients = { 1, 0, 0, 0 };
+	protected float[] coefficients = { 1, 0 };
 	protected float angleCoefficient;
 	protected Random random = new Random();
 	protected float m00 = 1.0f;
@@ -45,17 +45,14 @@ public class CellularFilter extends WholeImageFilter implements Function2D, Clon
 	protected float m11 = 1.0f;
 	protected Point[] results = null;
 	protected float randomness = 0;
-	protected int gridType = HEXAGONAL;
+    public enum GridType {RANDOM, SQUARE, HEXAGONAL, OCTAGONAL, TRIANGULAR };
+	protected GridType gridType = GridType.HEXAGONAL;
 	private float min;
 	private float max;
 	private static byte[] probabilities;
 	private float gradientCoefficient;
 	
-	public final static int RANDOM = 0;
-	public final static int SQUARE = 1;
-	public final static int HEXAGONAL = 2;
-	public final static int OCTAGONAL = 3;
-	public final static int TRIANGULAR = 4;
+    
 
 	public CellularFilter() {
 		results = new Point[3];
@@ -184,22 +181,6 @@ public class CellularFilter extends WholeImageFilter implements Function2D, Clon
 		return coefficients[1];
 	}
 
-	public void setF3( float v ) {
-		coefficients[2] = v;
-	}
-
-	public float getF3() {
-		return coefficients[2];
-	}
-
-	public void setF4( float v ) {
-		coefficients[3] = v;
-	}
-
-	public float getF4() {
-		return coefficients[3];
-	}
-    
     public void setUseColor(boolean useColor) {
         this.useColor = useColor;
     }
@@ -233,31 +214,35 @@ public class CellularFilter extends WholeImageFilter implements Function2D, Clon
 	public float getRandomness() {
 		return randomness;
 	}
-
-	public void setGridType(int gridType) {
+    
+    public void setGridType(String gridType) {
+		this.gridType = GridType.valueOf(gridType);
+	}
+    
+	public void setGridType(GridType gridType) {
 		this.gridType = gridType;
 	}
 
-	public int getGridType() {
+	public GridType getGridType() {
 		return gridType;
 	}
 
-	public void setDistancePower(float distancePower) {
+	public void setDistancePower(int distancePower) {
 		this.distancePower = distancePower;
 	}
 
-	public float getDistancePower() {
+	public int getDistancePower() {
 		return distancePower;
 	}
 
 	/**
      * Specifies the turbulence of the texture.
      * @param turbulence the turbulence of the texture.
-     * @min-value 0
-     * @max-value 1
+     * @min-value 1 - no turbulence
+     * @max-value 20 -  lots of turbulence
      * @see #getTurbulence
      */
-	public void setTurbulence(float turbulence) {
+	public void setTurbulence(int turbulence) {
 		this.turbulence = turbulence;
 	}
 
@@ -266,7 +251,7 @@ public class CellularFilter extends WholeImageFilter implements Function2D, Clon
      * @return the turbulence of the effect.
      * @see #setTurbulence
      */
-	public float getTurbulence() {
+	public int getTurbulence() {
 		return turbulence;
 	}
 
@@ -380,9 +365,9 @@ public class CellularFilter extends WholeImageFilter implements Function2D, Clon
 			float d;
 			dx *= weight;
 			dy *= weight;
-			if (distancePower == 1.0f)
+			if (distancePower == 1)
 				d = dx + dy;
-			else if (distancePower == 2.0f)
+			else if (distancePower == 2)
 				d = (float)Math.sqrt(dx*dx + dy*dy);
 			else
 				d = (float)Math.pow((float)Math.pow(dx, distancePower) + (float)Math.pow(dy, distancePower), 1/distancePower);
@@ -449,7 +434,7 @@ public class CellularFilter extends WholeImageFilter implements Function2D, Clon
 		}
 
 		float t = 0;
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < 2; i++)
 			t += coefficients[i] * results[i].distance;
 		if (angleCoefficient != 0) {
 			float angle = (float)Math.atan2(y-results[0].y, x-results[0].x);
@@ -465,7 +450,7 @@ public class CellularFilter extends WholeImageFilter implements Function2D, Clon
 		return t;
 	}
 	
-	public float turbulence2(float x, float y, float freq) {
+	public float turbulence2(float x, float y, int freq) {
 		float t = 0.0f;
 
 		for (float f = 1.0f; f <= freq; f *= 2)
@@ -480,14 +465,13 @@ public class CellularFilter extends WholeImageFilter implements Function2D, Clon
 		ny /= scale * stretch;
 		nx += 1000;
 		ny += 1000;	// Reduce artifacts around 0,0
-		float f = turbulence == 1.0f ? evaluate(nx, ny) : turbulence2(nx, ny, turbulence);
+		float f = turbulence == 1 ? evaluate(nx, ny) : turbulence2(nx, ny, turbulence);
 		// Normalize to 0..1
         // f = (f-min)/(max-min);
-		f *= 2;
-		f *= amount;
+		f *= (2 * amount);
 		int a = 0xff000000;
 		int v;
-		if (colormap != null) {
+        if (colormap != null) {
 			v = colormap.getColor(f);
 			if (useColor) {
 				int srcx = ImageMath.clamp((int)((results[0].x-1000)*scale), 0, width-1);

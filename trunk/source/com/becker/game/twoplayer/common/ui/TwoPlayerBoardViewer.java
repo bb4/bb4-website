@@ -10,7 +10,7 @@ import com.becker.game.common.ui.GameChangedListener;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerViewerCallbackInterface;
-import com.becker.optimization.ParameterArray;
+import com.becker.optimization.parameter.ParameterArray;
 
 import javax.swing.*;
 import java.awt.*;

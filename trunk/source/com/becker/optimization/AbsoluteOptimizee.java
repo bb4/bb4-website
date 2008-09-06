@@ -1,5 +1,7 @@
 package com.becker.optimization;
 
+import com.becker.optimization.parameter.ParameterArray;
+
 /**
  * Concrete adapter class for optimizee that does not evaluate by comparison.
  *

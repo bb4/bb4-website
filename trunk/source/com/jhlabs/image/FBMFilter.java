@@ -25,11 +25,7 @@ import com.jhlabs.math.*;
  */
 public class FBMFilter extends PointFilter implements Cloneable {
 
-	public final static int NOISE = 0;
-	public final static int RIDGED = 1;
-	public final static int VLNOISE = 2;
-	public final static int SCNOISE = 3;
-	public final static int CELLULAR = 4;
+    public enum BasisType { NOISE,  RIDGED, VLNOISE, SCNOISE, CELLULAR };
 
 	private float scale = 32;
 	private float stretch = 1.0f;
@@ -40,7 +36,7 @@ public class FBMFilter extends PointFilter implements Cloneable {
 	private float lacunarity = 2.0f;
 	private float gain = 0.5f;
 	private float bias = 0.5f;
-	private int operation;
+	private PixelUtils.OperationType operation;
 	private float m00 = 1.0f;
 	private float m01 = 0.0f;
 	private float m10 = 0.0f;
@@ -48,14 +44,13 @@ public class FBMFilter extends PointFilter implements Cloneable {
 	private float min;
 	private float max;
 	private Colormap colormap = new Gradient();
-	private boolean ridged;
 	private FBM fBm;
 	protected Random random = new Random();
-	private int basisType = NOISE;
+	private BasisType basisType = BasisType.NOISE;
 	private Function2D basis;
 
 	public FBMFilter() {
-		setBasisType(NOISE);
+		setBasisType(BasisType.NOISE);
 	}
 
 	/**
@@ -77,12 +72,16 @@ public class FBMFilter extends PointFilter implements Cloneable {
 	public float getAmount() {
 		return amount;
 	}
+    
+    public void setOperation(String operation) {
+        setOperation(PixelUtils.OperationType.valueOf(operation));
+    }
 
-	public void setOperation(int operation) {
+	public void setOperation(PixelUtils.OperationType operation) {
 		this.operation = operation;
 	}
 	
-	public int getOperation() {
+	public PixelUtils.OperationType getOperation() {
 		return operation;
 	}
 	
@@ -209,7 +208,11 @@ public class FBMFilter extends PointFilter implements Cloneable {
 		return colormap;
 	}
 	
-	public void setBasisType(int basisType) {
+    public void setBasisType(String type) {
+        setBasisType(BasisType.valueOf(type));
+    }
+    
+	public void setBasisType(BasisType basisType) {
 		this.basisType = basisType;
 		switch (basisType) {
 		default:
@@ -231,7 +234,7 @@ public class FBMFilter extends PointFilter implements Cloneable {
 		}
 	}
 
-	public int getBasisType() {
+	public BasisType getBasisType() {
 		return basisType;
 	}
 
@@ -278,7 +281,7 @@ public class FBMFilter extends PointFilter implements Cloneable {
 			int b = v;
 			v = a|r|g|b;
 		}
-		if (operation != PixelUtils.REPLACE)
+		if (operation != PixelUtils.OperationType.REPLACE)
 			v = PixelUtils.combinePixels(rgb, v, operation);
 		return v;
 	}

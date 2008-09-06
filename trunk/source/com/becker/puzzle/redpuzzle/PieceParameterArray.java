@@ -1,5 +1,6 @@
 package com.becker.puzzle.redpuzzle;
 
+import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.*;
 
 /**

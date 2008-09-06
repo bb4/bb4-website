@@ -1,5 +1,7 @@
 package com.becker.optimization;
 
+import com.becker.optimization.parameter.ParameterArray;
+
 
 
 /**

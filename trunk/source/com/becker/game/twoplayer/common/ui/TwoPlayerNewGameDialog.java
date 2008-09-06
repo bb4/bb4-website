@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.common.ui;
 
+import com.becker.optimization.parameter.ParameterArray;
 import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
 import com.becker.game.twoplayer.common.*;

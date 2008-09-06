@@ -19,7 +19,9 @@ public class DiceOptionsDialog extends SimulatorOptionsDialog {
     private NumberInput numSidesField_;
 
 
-    // constructor
+    /**
+     * constructor
+     */ 
     public DiceOptionsDialog( Frame parent, Simulator simulator )
     {
         super( parent, simulator );
@@ -29,7 +31,6 @@ public class DiceOptionsDialog extends SimulatorOptionsDialog {
     {
         return "Dice Simulation Configuration";
     }
-
 
     protected JPanel createCustomParamPanel()
     {
@@ -53,8 +54,6 @@ public class DiceOptionsDialog extends SimulatorOptionsDialog {
 
         return paramPanel;
     }
-
-
 
     protected void ok()
     {

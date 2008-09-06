@@ -3,15 +3,17 @@ package com.becker.ui.sliders;
 import com.becker.common.*;
 import com.becker.common.util.Util;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import javax.swing.*;
 import javax.swing.event.*;
-import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Draws a horizontal slider with a label on top.
  * The value is draw to the right of the label.
  *
- * @author Barry Becker Date: Nov 5, 2006
+ * @author Barry Becker
  */
 public class LabeledSlider extends JPanel implements ChangeListener {
 
@@ -20,11 +22,13 @@ public class LabeledSlider extends JPanel implements ChangeListener {
     private JLabel label_;
     private String labelText_;
     private JSlider slider_;
+    private java.util.List<SliderChangeListener> listeners_;
 
     private double min_, max_;
     private int resolution_ = DEFAULT_SLIDER_RESOLUTION;
     private double ratio_;
     private boolean showAsInteger_ = false;
+    private double lastValue_;
 
     public LabeledSlider(String labelText, double initialValue, double min, double max) {
 
@@ -35,25 +39,23 @@ public class LabeledSlider extends JPanel implements ChangeListener {
         min_ = min;
         max_ = max;
         ratio_ = (max_ - min_)/resolution_;
-
-        label_ = new JLabel();
         labelText_ = labelText;
-        label_.setText(labelText + Util.formatNumber(initialValue));
-        label_.setAlignmentY(JLabel.RIGHT_ALIGNMENT);
+          
+        lastValue_ = initialValue;
         int pos = getPositionFromValue(initialValue);
 
         slider_ = new JSlider(JSlider.HORIZONTAL, 0, resolution_, pos);
         slider_.setName(labelText);
-        slider_.setPaintTicks(true);
-        slider_.setMajorTickSpacing(10);
-        slider_.setMinorTickSpacing(2);
-        //slider_.setPaintLabels(true);
+        slider_.setPaintTicks(true);        
         slider_.setPaintTrack(true);
         slider_.addChangeListener(this);
-
+        listeners_ = new ArrayList<SliderChangeListener>();
+ 
+        label_ = createLabel();     
         add(createLabelPanel(label_));
         add(slider_);
         setBorder(BorderFactory.createEtchedBorder());
+        setResolution(resolution_);
     }
 
     public JSlider getSlider() {
@@ -70,10 +72,19 @@ public class LabeledSlider extends JPanel implements ChangeListener {
         slider_.setMaximum(resolution_);
         ratio_ = (max_ - min_)/resolution_;
         slider_.setValue(getPositionFromValue(v));
+        
+        slider_.setMajorTickSpacing(resolution/10);
+        if (resolution_ >30 && resolution_ < 90) {
+            slider_.setMinorTickSpacing(2);
+        }
+        else if (resolution_ >= 90 && resolution_ < 900) {
+            slider_.setMinorTickSpacing(5);
+        }
+        //slider_.setPaintLabels(true);      
     }
 
-    public void addChangeListener(ChangeListener l) {
-        slider_.addChangeListener(l);
+    public void addChangeListener(SliderChangeListener l) {
+        listeners_.add(l);
     }
 
     public double getValue() {
@@ -88,6 +99,10 @@ public class LabeledSlider extends JPanel implements ChangeListener {
         slider_.setEnabled(enable);
     }
 
+    public String getName() {
+        return labelText_;
+    }
+    
     private double getValueFromPosition(int pos) {
         return  (double)pos * ratio_ + min_;
     }
@@ -96,6 +111,13 @@ public class LabeledSlider extends JPanel implements ChangeListener {
         return (int) ((value - min_) / ratio_);
     }
 
+    private JLabel createLabel() {
+        JLabel label =  new JLabel();
+        label.setText(getLabelText());
+        label.setAlignmentY(JLabel.RIGHT_ALIGNMENT);
+        return label;
+    }
+    
     private JPanel createLabelPanel(JLabel label) {
         JPanel p = new JPanel(new BorderLayout());
         p.add(label, BorderLayout.WEST);
@@ -103,13 +125,28 @@ public class LabeledSlider extends JPanel implements ChangeListener {
         p.setMaximumSize(new Dimension(MAX_WIDTH, 22));
         return p;
     }
+    
+    private String getLabelText() {
+        String val = showAsInteger_? Integer.toString((int) getValue()) : Util.formatNumber(getValue());
+        return labelText_ + ": " +  val;
+    }
 
     /**
      * one of the sliders was moved.
      */
     public void stateChanged(ChangeEvent e) {
-
-        String val = showAsInteger_? Integer.toString((int) getValue()) : Util.formatNumber(getValue());
-        label_.setText(labelText_ + val);
+       
+        double val = getValue();
+        if (val != lastValue_) {           
+            label_.setText(getLabelText());
+            for (SliderChangeListener listener : listeners_) {
+                listener.sliderChanged(this);
+            }
+            lastValue_ = val;
+        }
+    }
+    
+    public String toString() {
+        return "Slider "+ labelText_ + " min="+min_+ " max="+max_ + "  value="+ getValue() + " ratio=" + ratio_;
     }
 }
