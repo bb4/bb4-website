@@ -222,14 +222,14 @@ public class GlintFilter extends AbstractBufferedImageOp {
 
 					// Horizontal
 					for ( int i = 0, k = 0; i <= xmax; i++, k++ )
-						dstPixels[index+i] = PixelUtils.combinePixels( dstPixels[index+i], colors[k], PixelUtils.OperationType.ADD );
+						dstPixels[index+i] = PixelUtils.combinePixels( dstPixels[index+i], colors[k], OperationType.ADD );
 					for ( int i = -1, k = 1; i >= xmin; i--, k++ )
-						dstPixels[index+i] = PixelUtils.combinePixels( dstPixels[index+i], colors[k], PixelUtils.OperationType.ADD );
+						dstPixels[index+i] = PixelUtils.combinePixels( dstPixels[index+i], colors[k], OperationType.ADD );
 					// Vertical
 					for ( int i = 1, j = index+width, k = 0; i <= ymax; i++, j += width, k++ )
-						dstPixels[j] = PixelUtils.combinePixels( dstPixels[j], colors[k], PixelUtils.OperationType.ADD );
+						dstPixels[j] = PixelUtils.combinePixels( dstPixels[j], colors[k], OperationType.ADD );
 					for ( int i = -1, j = index-width, k = 0; i >= ymin; i--, j -= width, k++ )
-						dstPixels[j] = PixelUtils.combinePixels( dstPixels[j], colors[k], PixelUtils.OperationType.ADD );
+						dstPixels[j] = PixelUtils.combinePixels( dstPixels[j], colors[k], OperationType.ADD );
 
 					// Diagonals
 					int xymin = Math.max( xmin2, ymin2 );
@@ -237,19 +237,19 @@ public class GlintFilter extends AbstractBufferedImageOp {
 					// SE
 					int count = Math.min( xmax2, ymax2 );
 					for ( int i = 1, j = index+width+1, k = 0; i <= count; i++, j += width+1, k++ )
-						dstPixels[j] = PixelUtils.combinePixels( dstPixels[j], colors2[k], PixelUtils.OperationType.ADD );
+						dstPixels[j] = PixelUtils.combinePixels( dstPixels[j], colors2[k], OperationType.ADD );
 					// NW
 					count = Math.min( -xmin2, -ymin2 );
 					for ( int i = 1, j = index-width-1, k = 0; i <= count; i++, j -= width+1, k++ )
-						dstPixels[j] = PixelUtils.combinePixels( dstPixels[j], colors2[k], PixelUtils.OperationType.ADD );
+						dstPixels[j] = PixelUtils.combinePixels( dstPixels[j], colors2[k], OperationType.ADD );
 					// NE
 					count = Math.min( xmax2, -ymin2 );
 					for ( int i = 1, j = index-width+1, k = 0; i <= count; i++, j += -width+1, k++ )
-						dstPixels[j] = PixelUtils.combinePixels( dstPixels[j], colors2[k], PixelUtils.OperationType.ADD );
+						dstPixels[j] = PixelUtils.combinePixels( dstPixels[j], colors2[k], OperationType.ADD );
 					// SW
 					count = Math.min( -xmin2, ymax2 );
 					for ( int i = 1, j = index+width-1, k = 0; i <= count; i++, j += width-1, k++ )
-						dstPixels[j] = PixelUtils.combinePixels( dstPixels[j], colors2[k], PixelUtils.OperationType.ADD );
+						dstPixels[j] = PixelUtils.combinePixels( dstPixels[j], colors2[k], OperationType.ADD );
 				}
 				index++;
 			}

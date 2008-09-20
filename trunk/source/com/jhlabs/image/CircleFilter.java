@@ -41,7 +41,7 @@ public class CircleFilter extends TransformFilter {
      * Construct a CircleFilter.
      */
     public CircleFilter() {
-		setEdgeAction( ZERO );
+		setEdgeAction( EdgeAction.ZERO );
 	}
 
 	/**

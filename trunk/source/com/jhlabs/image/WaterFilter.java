@@ -38,7 +38,7 @@ public class WaterFilter extends TransformFilter {
 	private float icentreY;
 
 	public WaterFilter() {
-		setEdgeAction( CLAMP );
+		setEdgeAction( EdgeAction.CLAMP );
 	}
 
 	/**

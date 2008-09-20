@@ -124,7 +124,7 @@ public class ContourFilter extends WholeImageFilter {
 				}
 
 				if ( v != 0 )
-					outPixels[index] = PixelUtils.combinePixels( inPixels[index], contourColor, PixelUtils.OperationType.NORMAL, v );
+					outPixels[index] = PixelUtils.combinePixels( inPixels[index], contourColor, OperationType.NORMAL, v );
 //					outPixels[index] = PixelUtils.combinePixels( (contourColor & 0xff)|(v << 24), inPixels[index], PixelUtils.NORMAL );
 				else
 					outPixels[index] = inPixels[index];

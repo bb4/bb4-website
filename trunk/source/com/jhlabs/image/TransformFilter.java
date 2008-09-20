@@ -25,40 +25,16 @@ import java.awt.image.*;
  */
 public abstract class TransformFilter extends AbstractBufferedImageOp {
 
-    /**
-     * Treat pixels off the edge as zero.
-     */
-	public final static int ZERO = 0;
-
-    /**
-     * Clamp pixels to the image edges.
-     */
-	public final static int CLAMP = 1;
-
-    /**
-     * Wrap pixels off the edge onto the oppsoite edge.
-     */
-	public final static int WRAP = 2;
-
-    /**
-     * Use nearest-neighbout interpolation.
-     */
-	public final static int NEAREST_NEIGHBOUR = 0;
-
-    /**
-     * Use bilinear interpolation.
-     */
-	public final static int BILINEAR = 1;
 
     /**
      * The action to take for pixels off the image edge.
      */
-	protected int edgeAction = ZERO;
+	protected EdgeAction edgeAction = EdgeAction.ZERO;
 
     /**
      * The type of interpolation to use.
      */
-	protected int interpolation = BILINEAR;
+	protected InterpolationType interpolation = InterpolationType.BILINEAR;
 
     /**
      * The output image rectangle.
@@ -75,16 +51,18 @@ public abstract class TransformFilter extends AbstractBufferedImageOp {
      * @param edgeAction one of ZERO, CLAMP or WRAP
      * @see #getEdgeAction
      */
-	public void setEdgeAction(int edgeAction) {
+	public void setEdgeAction(EdgeAction edgeAction) {
 		this.edgeAction = edgeAction;
 	}
 
+   
+    
     /**
      * Get the action to perform for pixels off the edge of the image.
      * @return one of ZERO, CLAMP or WRAP
      * @see #setEdgeAction
      */
-	public int getEdgeAction() {
+	public EdgeAction getEdgeAction() {
 		return edgeAction;
 	}
 	
@@ -93,7 +71,7 @@ public abstract class TransformFilter extends AbstractBufferedImageOp {
      * @param interpolation one of NEAREST_NEIGHBOUR or BILINEAR
      * @see #getInterpolation
      */
-	public void setInterpolation(int interpolation) {
+	public void setInterpolation(InterpolationType interpolation) {
 		this.interpolation = interpolation;
 	}
 
@@ -102,7 +80,7 @@ public abstract class TransformFilter extends AbstractBufferedImageOp {
      * @return one of NEAREST_NEIGHBOUR or BILINEAR
      * @see #setInterpolation
      */
-	public int getInterpolation() {
+	public InterpolationType getInterpolation() {
 		return interpolation;
 	}
 	
@@ -139,7 +117,7 @@ public abstract class TransformFilter extends AbstractBufferedImageOp {
 
 		int[] inPixels = getRGB( src, 0, 0, width, height, null );
 
-		if ( interpolation == NEAREST_NEIGHBOUR )
+		if ( interpolation == InterpolationType.NEAREST_NEIGHBOUR )
 			return filterPixelsNN( dst, width, height, inPixels, transformedSpace );
 
 		int srcWidth = width;

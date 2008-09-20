@@ -36,7 +36,7 @@ public class CurlFilter extends TransformFilter {
 	 * Construct a CurlFilter with no distortion.
 	 */
 	public CurlFilter() {
-		setEdgeAction( ZERO );
+		setEdgeAction( EdgeAction.ZERO );
 	}
 
 	public void setTransition( float transition ) {
@@ -72,7 +72,7 @@ public class CurlFilter extends TransformFilter {
 */
 
 	static class Sampler {
-		private int edgeAction;
+		private EdgeAction edgeAction;
 		private int width, height;
 		private int[] inPixels;
 		
@@ -142,7 +142,7 @@ public class CurlFilter extends TransformFilter {
 
 		int[] inPixels = getRGB( src, 0, 0, width, height, null );
 
-		if ( interpolation == NEAREST_NEIGHBOUR )
+		if ( interpolation == InterpolationType.NEAREST_NEIGHBOUR )
 			return filterPixelsNN( dst, width, height, inPixels, transformedSpace );
 
 		int srcWidth = width;
@@ -192,7 +192,7 @@ public class CurlFilter extends TransformFilter {
 				b = (int)(b * shade);
 				rgb = (rgb & 0xff000000) | (r << 16) | (g << 8) | b;
 				if ( out[3] != 0 )
-					outPixels[x] = PixelUtils.combinePixels( rgb, inPixels[srcWidth*y + x], PixelUtils.OperationType.NORMAL );
+					outPixels[x] = PixelUtils.combinePixels( rgb, inPixels[srcWidth*y + x], OperationType.NORMAL );
 				else
 					outPixels[x] = rgb;
 			}

@@ -27,29 +27,16 @@ import com.jhlabs.math.*;
  */
 public class RippleFilter extends TransformFilter {
 	
-    /**
-     * Sine wave ripples.
-     */
-	public final static int SINE = 0;
-
-    /**
-     * Sawtooth wave ripples.
-     */
-	public final static int SAWTOOTH = 1;
-
-    /**
-     * Triangle wave ripples.
-     */
-	public final static int TRIANGLE = 2;
-
-    /**
-     * Noise ripples.
-     */
-	public final static int NOISE = 3;
+    public enum RippleType {
+        SINE,       // Sine wave ripples.
+        SAWTOOTH,   // Sawtooth wave ripples.
+        TRIANGLE,   // Triangle wave ripples.
+        NOISE   // Noisy ripples.
+    };
 
 	private float xAmplitude, yAmplitude;
 	private float xWavelength, yWavelength;
-	private int waveType;
+	private RippleType waveType;
 
 	/**
 	 * Construct a RippleFilter.
@@ -138,21 +125,25 @@ public class RippleFilter extends TransformFilter {
 	 * @param waveType the type.
      * @see #getWaveType
 	 */
-	public void setWaveType(int waveType) {
+	public void setWaveType(RippleType waveType) {
 		this.waveType = waveType;
 	}
+    
+    public void setWaveType(String waveType) {
+        setWaveType(RippleType.valueOf(waveType));
+    }
 
 	/**
 	 * Get the wave type.
 	 * @return the type.
      * @see #setWaveType
 	 */
-	public int getWaveType() {
+	public RippleType getWaveType() {
 		return waveType;
 	}
 
 	protected void transformSpace(Rectangle r) {
-		if (edgeAction == ZERO) {
+		if (edgeAction == EdgeAction.ZERO) {
 			r.x -= (int)xAmplitude;
 			r.width += (int)(2*xAmplitude);
 			r.y -= (int)yAmplitude;

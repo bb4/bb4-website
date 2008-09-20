@@ -25,10 +25,7 @@ import java.awt.Color;
  */
 public class PixelUtils {
 
-    public enum OperationType {REPLACE, NORMAL, MIN, MAX, ADD, SUBTRACT, 
-    DIFFERENCE, MULTIPLY, HUE, SATURATION, VALUE, COLOR, SCREEN, AVERAGE, 
-    OVERLAY, CLEAR, EXCHANGE, DISSOLVE, DST_IN, ALPHA, ALPHA_TO_GRAY}; 
-	
+    	
 	private static Random randomGenerator = new Random();
 
 	/**
