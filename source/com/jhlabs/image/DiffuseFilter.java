@@ -29,7 +29,7 @@ public class DiffuseFilter extends TransformFilter {
 	private float scale = 4;
 	
 	public DiffuseFilter() {
-		setEdgeAction(CLAMP);
+		setEdgeAction(EdgeAction.CLAMP);
 	}
 	
 	/**
@@ -51,6 +51,14 @@ public class DiffuseFilter extends TransformFilter {
 	public float getScale() {
 		return scale;
 	}
+    
+     /**
+     * 
+     * @param edgeAction
+     */
+    public void setEdgeAction(String edgeAction) {
+        setEdgeAction(EdgeAction.valueOf(edgeAction));
+    }
 
 	protected void transformInverse(int x, int y, float[] out) {
 		int angle = (int)(Math.random() * 255);
@@ -59,6 +67,7 @@ public class DiffuseFilter extends TransformFilter {
 		out[1] = y + distance * cosTable[angle];
 	}
 
+    @Override
     public BufferedImage filter( BufferedImage src, BufferedImage dst ) {
 		sinTable = new float[256];
 		cosTable = new float[256];

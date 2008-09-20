@@ -32,7 +32,7 @@ public class MarbleFilter extends TransformFilter {
 	private float turbulence = 1;
 	
 	public MarbleFilter() {
-		setEdgeAction(CLAMP);
+		setEdgeAction(EdgeAction.CLAMP);
 	}
 	
 	/**
@@ -116,13 +116,13 @@ public class MarbleFilter extends TransformFilter {
 		cosTable = new float[256];
 		for (int i = 0; i < 256; i++) {
 			float angle = ImageMath.TWO_PI*i/256f*turbulence;
-			sinTable[i] = (float)(-yScale*Math.sin(angle));
-			cosTable[i] = (float)(yScale*Math.cos(angle));
+			sinTable[i] = (float)(-amount*Math.sin(angle));
+			cosTable[i] = (float)(amount*Math.cos(angle));
 		}
 	}
 
 	private int displacementMap(int x, int y) {
-		return PixelUtils.clamp((int)(127 * (1+Noise.noise2(x / xScale, y / xScale))));
+		return PixelUtils.clamp((int)(127 * (1+Noise.noise2(x / xScale, y / yScale))));
 	}
 	
 	protected void transformInverse(int x, int y, float[] out) {

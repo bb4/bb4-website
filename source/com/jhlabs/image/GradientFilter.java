@@ -50,7 +50,7 @@ public class GradientFilter extends AbstractBufferedImageOp {
 	private Colormap colormap = null;
 	private int type;
 	private int interpolation = INT_LINEAR;
-	private PixelUtils.OperationType paintMode = PixelUtils.OperationType.NORMAL;
+	private OperationType paintMode = OperationType.NORMAL;
 
 	public GradientFilter() {
 	}
@@ -136,11 +136,11 @@ public class GradientFilter extends AbstractBufferedImageOp {
 		return colormap;
 	}
 	
-	public void setPaintMode(PixelUtils.OperationType paintMode) {
+	public void setPaintMode(OperationType paintMode) {
 		this.paintMode = paintMode;
 	}
 
-	public PixelUtils.OperationType getPaintMode() {
+	public OperationType getPaintMode() {
 		return paintMode;
 	}
 

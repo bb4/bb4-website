@@ -27,6 +27,7 @@ public class MarbleTexFilter extends PointFilter {
 	private float angle = 0.0f;
 	private float turbulence = 1;
 	private float turbulenceFactor = 0.5f;
+    private float brightness = 1.0f;
 	private Colormap colormap;
 	private float m00 = 1.0f;
 	private float m01 = 0.0f;
@@ -81,6 +82,10 @@ public class MarbleTexFilter extends PointFilter {
 	public float getTurbulenceFactor() {
 		return turbulenceFactor;
 	}
+    
+    public void setBrightness(float brightness) {
+		this.brightness = brightness;
+	}
 
 	public void setColormap(Colormap colormap) {
 		this.colormap = colormap;
@@ -120,7 +125,7 @@ public class MarbleTexFilter extends PointFilter {
 			greenLayer = brownLayer = Math.abs(t);
 
 			perturb = (float)Math.sin(40.*chaos);
-			perturb = (float)Math.abs(perturb);
+			perturb = Math.abs(perturb);
 
 			brownPerturb = .6f*perturb + 0.3f;
 			greenPerturb = .2f*perturb + 0.8f;
@@ -135,9 +140,9 @@ public class MarbleTexFilter extends PointFilter {
 			int r = (rgb >> 16) & 0xff;
 			int g = (rgb >> 8) & 0xff;
 			int b = rgb & 0xff;
-			r = PixelUtils.clamp((int)(r*red));
-			g = PixelUtils.clamp((int)(g*grn));
-			b = PixelUtils.clamp((int)(b*blu));
+			r = PixelUtils.clamp((int)(brightness * r * red));
+			g = PixelUtils.clamp((int)(brightness * g * grn));
+			b = PixelUtils.clamp((int)(brightness * b * blu));
 			return (rgb & 0xff000000) | (r<<16) | (g<<8) | b;
 		}
 	}

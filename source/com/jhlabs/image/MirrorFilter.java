@@ -21,16 +21,20 @@ import java.awt.geom.*;
 import java.awt.image.*;
 
 public class MirrorFilter extends AbstractBufferedImageOp {
+    private boolean useOpacity = true;
     private float opacity = 1.0f;
 	private float centreY = 0.5f;
     private float distance;
     private float angle;
-    private float rotation;
     private float gap;
 
     public MirrorFilter() {
 	}
 	
+    public void setUseOpacity(boolean use) {
+        useOpacity = use;
+    }
+    
 	/**
      * Specifies the angle of the mirror.
      * @param angle the angle of the mirror.
@@ -56,14 +60,6 @@ public class MirrorFilter extends AbstractBufferedImageOp {
 
 	public float getDistance() {
 		return distance;
-	}
-	
-	public void setRotation( float rotation ) {
-		this.rotation = rotation;
-	}
-
-	public float getRotation() {
-		return rotation;
 	}
 	
 	public void setGap( float gap ) {
@@ -115,11 +111,12 @@ public class MirrorFilter extends AbstractBufferedImageOp {
 		g.clipRect( 0, 0, width, h );
 		g.drawRenderedImage( src, null );
 		g.setClip( clip );
-		g.clipRect( 0, h+d, width, height-h-d );
-		g.translate( 0, 2*h+d );
+        //g.rotate(angle);
+        g.clipRect( 0, h+d, width, height-h-d );
+		g.translate( 0, 2*h+d );        
 		g.scale( 1, -1 );
 		g.drawRenderedImage( src, null );
-		g.setPaint( new GradientPaint( 0, 0, new Color( 1.0f, 0.0f, 0.0f, 0.0f ), 0, h, new Color( 0.0f, 1.0f, 0.0f, opacity ) ) );
+		g.setPaint( new GradientPaint( 0, 0, new Color( 1.0f, 0.0f, 0.0f, useOpacity?0.0f:1.0f ), 0, h, new Color( 0.0f, 1.0f, 0.0f, opacity ) ) );
 		g.setComposite( AlphaComposite.getInstance( AlphaComposite.DST_IN ) );
 		g.fillRect( 0, 0, width, h );
 		g.setClip( clip );

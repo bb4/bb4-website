@@ -40,7 +40,7 @@ public class TwirlFilter extends TransformFilter {
 	 * Construct a TwirlFilter with no distortion.
 	 */
 	public TwirlFilter() {
-		setEdgeAction( CLAMP );
+		setEdgeAction( EdgeAction.CLAMP );
 	}
 
 	/**

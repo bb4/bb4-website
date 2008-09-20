@@ -28,7 +28,7 @@ public class TextureFilter extends PointFilter {
 	public float turbulence = 1.0f;
 	public float gain = 0.5f;
 	public float bias = 0.5f;
-	public PixelUtils.OperationType operation;
+	public OperationType operation;
 	private float m00 = 1.0f;
 	private float m01 = 0.0f;
 	private float m10 = 0.0f;
@@ -67,11 +67,11 @@ public class TextureFilter extends PointFilter {
 		return function;
 	}
 
-	public void setOperation(PixelUtils.OperationType operation) {
+	public void setOperation(OperationType operation) {
 		this.operation = operation;
 	}
 	
-	public PixelUtils.OperationType getOperation() {
+	public OperationType getOperation() {
 		return operation;
 	}
 	
@@ -199,7 +199,7 @@ public class TextureFilter extends PointFilter {
 			int b = v;
 			v = a|r|g|b;
 		}
-		if (operation != PixelUtils.OperationType.REPLACE)
+		if (operation != OperationType.REPLACE)
 			v = PixelUtils.combinePixels(rgb, v, operation);
 		return v;
 	}

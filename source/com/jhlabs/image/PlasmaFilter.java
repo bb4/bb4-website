@@ -131,7 +131,7 @@ public class PlasmaFilter extends WholeImageFilter {
 	}
 
 	private int average(int rgb1, int rgb2) {
-		return PixelUtils.combinePixels(rgb1, rgb2, PixelUtils.OperationType.AVERAGE);
+		return PixelUtils.combinePixels(rgb1, rgb2, OperationType.AVERAGE);
 	}
 
 	private int getPixel(int x, int y, int[] pixels, int stride) {
@@ -142,7 +142,7 @@ public class PlasmaFilter extends WholeImageFilter {
 		pixels[y*stride+x] = rgb;
 	}
 	
-	private boolean doPixel(int x1, int y1, int x2, int y2, int[] pixels, int stride, int depth, int scale) {
+	private boolean doPixel(int x1, int y1, int x2, int y2, int[] pixels, int stride, int depth, float scale) {
 		int mx, my;
 
 		if (depth == 0) {
@@ -227,9 +227,9 @@ public class PlasmaFilter extends WholeImageFilter {
 		putPixel(w1/2, h1, randomRGB(inPixels, w1/2, h1), outPixels, width);
 
 		int depth = 1;
-		while (doPixel(0, 0, width-1, height-1, outPixels, width, depth, 0))
+		while (doPixel(0, 0, width-1, height-1, outPixels, width, depth, scaling)) {
 			depth++;
-
+        }
 		if (useColormap && colormap != null) {
 			int index = 0;
 			for (int y = 0; y < height; y++) {

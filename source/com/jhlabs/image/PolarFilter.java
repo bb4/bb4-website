@@ -24,22 +24,13 @@ import java.awt.image.*;
  */
 public class PolarFilter extends TransformFilter {
 	
-	/**
-     * Convert from rectangular to polar coordinates.
-     */
-    public final static int RECT_TO_POLAR = 0;
+    public enum PolarMappingType {
+         RECT_TO_POLAR,  // Convert from rectangular to polar coordinates.
+         POLAR_TO_RECT,  // Convert from polar to rectangular coordinates.
+         INVERT_IN_CIRCLE  // Invert the image in a circle.
+    };
 
-	/**
-     * Convert from polar to rectangular coordinates.
-     */
-	public final static int POLAR_TO_RECT = 1;
-
-	/**
-     * Invert the image in a circle.
-     */
-	public final static int INVERT_IN_CIRCLE = 2;
-
-	private int type;
+	private PolarMappingType type;
 	private float width, height;
 	private float centreX, centreY;
 	private float radius;
@@ -48,16 +39,16 @@ public class PolarFilter extends TransformFilter {
      * Construct a PolarFilter.
      */
     public PolarFilter() {
-		this(RECT_TO_POLAR);
+		this(PolarMappingType.RECT_TO_POLAR);
 	}
 
 	/**
      * Construct a PolarFilter.
      * @param type the distortion type
      */
-	public PolarFilter(int type) {
+	public PolarFilter(PolarMappingType type) {
 		this.type = type;
-		setEdgeAction(CLAMP);
+		setEdgeAction(EdgeAction.CLAMP);
 	}
 
     public BufferedImage filter( BufferedImage src, BufferedImage dst ) {
@@ -74,8 +65,17 @@ public class PolarFilter extends TransformFilter {
      * @param type the distortion type
      * @see #getType
      */
-	public void setType(int type) {
+	public void setType(PolarMappingType type) {
 		this.type = type;
+	}
+    
+    /**
+     * Set the distortion type.
+     * @param type the distortion type
+     * @see #getType
+     */
+	public void setType(String type) {
+		setType(PolarMappingType.valueOf(type));
 	}
 
 	/**
@@ -83,9 +83,17 @@ public class PolarFilter extends TransformFilter {
      * @return the distortion type
      * @see #setType
      */
-	public int getType() {
+	public PolarMappingType getType() {
 		return type;
 	}
+    
+     /**
+     * 
+     * @param edgeAction
+     */
+    public void setEdgeAction(String edgeAction) {
+        setEdgeAction(EdgeAction.valueOf(edgeAction));
+    }
 
 	private float sqr(float x) {
 		return x*x;
@@ -101,10 +109,10 @@ public class PolarFilter extends TransformFilter {
 			theta = 0;
 			if (x >= centreX) {
 				if (y > centreY) {
-					theta = ImageMath.PI - (float)Math.atan(((float)(x - centreX))/((float)(y - centreY)));
+					theta = ImageMath.PI - (float)Math.atan((x - centreX)/(y - centreY));
 					r = (float)Math.sqrt(sqr (x - centreX) + sqr (y - centreY));
 				} else if (y < centreY) {
-					theta = (float)Math.atan (((float)(x - centreX))/((float)(centreY - y)));
+					theta = (float)Math.atan ((x - centreX)/(centreY - y));
 					r = (float)Math.sqrt (sqr (x - centreX) + sqr (centreY - y));
 				} else {
 					theta = ImageMath.HALF_PI;
@@ -112,10 +120,10 @@ public class PolarFilter extends TransformFilter {
 				}
 			} else if (x < centreX) {
 				if (y < centreY) {
-					theta = ImageMath.TWO_PI - (float)Math.atan (((float)(centreX -x))/((float)(centreY - y)));
+					theta = ImageMath.TWO_PI - (float)Math.atan ((centreX -x)/(centreY - y));
 					r = (float)Math.sqrt (sqr (centreX - x) + sqr (centreY - y));
 				} else if (y > centreY) {
-					theta = ImageMath.PI + (float)Math.atan (((float)(centreX - x))/((float)(y - centreY)));
+					theta = ImageMath.PI + (float)Math.atan ((centreX - x)/(y - centreY));
 					r = (float)Math.sqrt (sqr (centreX - x) + sqr (y - centreY));
 				} else {
 					theta = 1.5f * ImageMath.PI;
@@ -123,11 +131,11 @@ public class PolarFilter extends TransformFilter {
 				}
 			}
 			if (x != centreX)
-				m = Math.abs (((float)(y - centreY)) / ((float)(x - centreX)));
+				m = Math.abs ((y - centreY) / (x - centreX));
 			else
 				m = 0;
 			
-			if (m <= ((float)height / (float)width)) {
+			if (m <= (height / width)) {
 				if (x == centreX) {
 					xmax = 0;
 					ymax = centreY;

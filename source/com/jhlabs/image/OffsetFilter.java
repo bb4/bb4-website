@@ -33,7 +33,7 @@ public class OffsetFilter extends TransformFilter {
 		this.xOffset = xOffset;
 		this.yOffset = yOffset;
 		this.wrap = wrap;
-		setEdgeAction( ZERO );
+		setEdgeAction( EdgeAction.ZERO );
 	}
 
 	public void setXOffset(int xOffset) {

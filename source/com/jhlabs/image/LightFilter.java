@@ -28,44 +28,34 @@ import java.util.*;
  */
 public class LightFilter extends WholeImageFilter {
 	
-    /**
-     * Take the output colors from the input image.
-     */
-	public final static int COLORS_FROM_IMAGE = 0;
-
-    /**
-     * Use constant material color.
-     */
-	public final static int COLORS_CONSTANT = 1;
-
-    /**
-     * Use the input image brightness as the bump map.
-     */
-	public final static int BUMPS_FROM_IMAGE = 0;
-
-    /**
-     * Use the input image alpha as the bump map.
-     */
-	public final static int BUMPS_FROM_IMAGE_ALPHA = 1;
-
-    /**
-     * Use a separate image alpha channel as the bump map.
-     */
-	public final static int BUMPS_FROM_MAP = 2;
-
-    /**
-     * Use a custom function as the bump map.
-     */
-	public final static int BUMPS_FROM_BEVEL = 3;
-
+    public enum ColorType {
+        FROM_IMAGE,  // Take the output colors from the input image.
+        CONSTANT // Use constant material color.
+    };
+    public enum BumpType {
+        FROM_IMAGE,           // Use the input image brightness as the bump map.
+        FROM_IMAGE_ALPHA,  // Use the input image alpha as the bump map.
+        FROM_MAP,               // Use a separate image alpha channel as the bump map.
+        FROM_BEVEL           // Use a custom function as the bump map.
+    };
+    
+    public enum BumpShapeType {
+        NONE,
+        SMOOTH,
+        STEP,
+        TRIANGLE,
+        CIRCLE,
+        GAIN
+    }
+   
 	private float bumpHeight;
 	private float bumpSoftness;
-	private int bumpShape;
+	private BumpShapeType bumpShape;
 	private float viewDistance = 10000.0f;
 	Material material;
 	private Vector lights;
-	private int colorSource = COLORS_FROM_IMAGE;
-	private int bumpSource = BUMPS_FROM_IMAGE;
+	private ColorType colorSource = ColorType.FROM_IMAGE;
+	private BumpType bumpSource = BumpType.FROM_IMAGE;
 	private Function2D bumpFunction;
 	private Image environmentMap;
 	private int[] envPixels;
@@ -85,7 +75,7 @@ public class LightFilter extends WholeImageFilter {
 		addLight(new DistantLight());
 		bumpHeight = 1.0f;
 		bumpSoftness = 5.0f;
-		bumpShape = 0;
+		bumpShape = BumpShapeType.NONE;
 		material = new Material();
 		l = new Vector3f();
 		v = new Vector3f();
@@ -129,11 +119,15 @@ public class LightFilter extends WholeImageFilter {
 		return bumpSoftness;
 	}
 
-	public void setBumpShape(int bumpShape) {
+	public void setBumpShape(BumpShapeType bumpShape) {
 		this.bumpShape = bumpShape;
 	}
+    
+    public void setBumpShape(String bumpShape) {
+		setBumpShape(BumpShapeType.valueOf(bumpShape));
+	}
 
-	public int getBumpShape() {
+	public BumpShapeType getBumpShape() {
 		return bumpShape;
 	}
 
@@ -161,19 +155,27 @@ public class LightFilter extends WholeImageFilter {
 		return environmentMap;
 	}
 
-	public void setColorSource(int colorSource) {
+	public void setColorSource(ColorType colorSource) {
 		this.colorSource = colorSource;
 	}
 
-	public int getColorSource() {
+    public void setColorSource(String colorSource) {
+        setColorSource(ColorType.valueOf(colorSource));
+    }
+    
+	public ColorType getColorSource() {
 		return colorSource;
 	}
 
-	public void setBumpSource(int bumpSource) {
+	public void setBumpSource(BumpType bumpSource) {
 		this.bumpSource = bumpSource;
 	}
 
-	public int getBumpSource() {
+    public void setBumpSource(String bumpSource) {
+		setBumpSource(BumpType.valueOf(bumpSource));
+	}
+    
+	public BumpType getBumpSource() {
 		return bumpSource;
 	}
 
@@ -217,12 +219,12 @@ public class LightFilter extends WholeImageFilter {
 		Function2D bump = bumpFunction;
 
 		// Apply the bump softness
-		if (bumpSource == BUMPS_FROM_IMAGE || bumpSource == BUMPS_FROM_IMAGE_ALPHA || bumpSource == BUMPS_FROM_MAP || bump == null) {
+		if (bumpSource ==BumpType.FROM_IMAGE || bumpSource == BumpType.FROM_IMAGE_ALPHA || bumpSource ==BumpType.FROM_MAP || bump == null) {
 			if ( bumpSoftness != 0 ) {
 				int bumpWidth = width;
 				int bumpHeight = height;
 				int[] bumpPixels = inPixels;
-				if ( bumpSource == BUMPS_FROM_MAP && bumpFunction instanceof ImageFunction2D ) {
+				if ( bumpSource == BumpType.FROM_MAP && bumpFunction instanceof ImageFunction2D ) {
 					ImageFunction2D if2d = (ImageFunction2D)bumpFunction;
 					bumpWidth = if2d.getWidth();
 					bumpHeight = if2d.getHeight();
@@ -239,38 +241,14 @@ public class LightFilter extends WholeImageFilter {
 				Kernel kernel = GaussianFilter.makeKernel( bumpSoftness );
 				GaussianFilter.convolveAndTranspose( kernel, bumpPixels, tmpPixels, bumpWidth, bumpHeight, true, false, false, GaussianFilter.WRAP_EDGES );
 				GaussianFilter.convolveAndTranspose( kernel, tmpPixels, softPixels, bumpHeight, bumpWidth, true, false, false, GaussianFilter.WRAP_EDGES );
-				bump = new ImageFunction2D(softPixels, bumpWidth, bumpHeight, ImageFunction2D.CLAMP, bumpSource == BUMPS_FROM_IMAGE_ALPHA);
-final Function2D bbump = bump;
-if ( bumpShape != 0 ) {
-	bump = new Function2D() {
-		private Function2D original = bbump;
-
-		public float evaluate(float x, float y) {
-			float v = original.evaluate( x, y );
-			switch ( bumpShape ) {
-			case 1:
-//				v = v > 0.5f ? 0.5f : v;
-				v *= ImageMath.smoothStep( 0.45f, 0.55f, v );
-				break;
-			case 2:
-				v = v < 0.5f ? 0.5f : v;
-				break;
-			case 3:
-				v = ImageMath.triangle( v );
-				break;
-			case 4:
-				v = ImageMath.circleDown( v );
-				break;
-			case 5:
-				v = ImageMath.gain( v, 0.75f );
-				break;
-			}
-			return v;
-		}
-	};
-}
-			} else if ( bumpSource != BUMPS_FROM_MAP )
-				bump = new ImageFunction2D(inPixels, width, height, ImageFunction2D.CLAMP, bumpSource == BUMPS_FROM_IMAGE_ALPHA);
+				bump = new ImageFunction2D(softPixels, bumpWidth, bumpHeight, ImageFunction2D.CLAMP, bumpSource ==BumpType.FROM_IMAGE_ALPHA);
+                
+                final Function2D bbump = bump;
+                if ( bumpShape != BumpShapeType.NONE ) {
+                    bump = createBumpFunction(bbump);
+               }
+			} else if ( bumpSource != BumpType.FROM_MAP )
+				bump = new ImageFunction2D(inPixels, width, height, ImageFunction2D.CLAMP, bumpSource == BumpType.FROM_IMAGE_ALPHA);
 		}
 
 		float reflectivity = material.reflectivity;
@@ -299,7 +277,7 @@ if ( bumpShape != 0 ) {
 				boolean x1 = x < width-1;
 				
 				// Calculate the normal at this point
-				if (bumpSource != BUMPS_FROM_BEVEL) {
+				if (bumpSource != BumpType.FROM_BEVEL) {
 					// Complicated and slower method
 					// Calculate four normals using the gradients in +/- X/Y directions
 					int count = 0;
@@ -367,7 +345,7 @@ if ( bumpShape != 0 ) {
 
 				if (normal.z >= 0) {
 					// Get the material colour at this point
-					if (colorSource == COLORS_FROM_IMAGE)
+					if (colorSource == ColorType.FROM_IMAGE)
 						setFromRGB(diffuseColor, inPixels[index]);
 					else
 						setFromRGB(diffuseColor, material.diffuseColor);
@@ -404,7 +382,35 @@ if ( bumpShape != 0 ) {
 		}
 		return outPixels;
 	}
+    
+    private Function2D createBumpFunction(final Function2D bbump) {
+        return new Function2D() {
+            private Function2D original = bbump;
 
+            public float evaluate(float x, float y) {
+                float v = original.evaluate( x, y );
+                switch ( bumpShape ) {
+                case SMOOTH:
+                    v *= ImageMath.smoothStep( 0.45f, 0.55f, v );
+                    break;
+                case STEP:
+                    v = v < 0.5f ? 0.5f : v;
+                    break;
+                case TRIANGLE:
+                    v = ImageMath.triangle( v );
+                    break;
+                case CIRCLE:
+                    v = ImageMath.circleDown( v );
+                    break;
+                case GAIN:
+                    v = ImageMath.gain( v, 0.75f );
+                    break;
+                }
+                return v;
+            }
+        };
+    }
+            
 	protected Color4f phongShade(Vector3f position, Vector3f viewpoint, Vector3f normal, Color4f diffuseColor, Color4f specularColor, Material material, Light[] lightsArray) {
 		shadedColor.set(diffuseColor);
 		shadedColor.scale(material.ambientIntensity);

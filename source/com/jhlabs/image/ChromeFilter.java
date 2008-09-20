@@ -66,7 +66,7 @@ public class ChromeFilter extends LightFilter {
 	}
 
     public BufferedImage filter( BufferedImage src, BufferedImage dst ) {
-		setColorSource( LightFilter.COLORS_CONSTANT );
+		setColorSource( LightFilter.ColorType.CONSTANT );
 		dst = super.filter( src, dst );
 		TransferFilter tf = new TransferFilter() {
 			protected float transferFunction( float v ) {

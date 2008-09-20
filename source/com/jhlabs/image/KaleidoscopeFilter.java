@@ -39,7 +39,7 @@ public class KaleidoscopeFilter extends TransformFilter {
 	 * Construct a KaleidoscopeFilter with no distortion.
 	 */
 	public KaleidoscopeFilter() {
-		setEdgeAction( CLAMP );
+		setEdgeAction( EdgeAction.WRAP );
 	}
 
 	/**
@@ -187,7 +187,7 @@ public class KaleidoscopeFilter extends TransformFilter {
 		theta = ImageMath.triangle( (float)( theta/Math.PI*sides*.5 ) );
 		if ( radius != 0 ) {
 			double c = Math.cos(theta);
-			double radiusc = radius/c;
+			double radiusc = radius/(1.0 + c);
 			r = radiusc * ImageMath.triangle( (float)(r/radiusc) );
 		}
 		theta += angle;
