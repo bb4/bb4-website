@@ -76,7 +76,9 @@ public class MirrorFilter extends AbstractBufferedImageOp {
      * @see #getOpacity
      */
 	public void setOpacity( float opacity ) {
+        if (opacity >1.0 || opacity <0.0) throw new IllegalArgumentException("Op cannot be greater than 1. it was "+ opacity);
 		this.opacity = opacity;
+        
 	}
 
 	/**
@@ -116,7 +118,7 @@ public class MirrorFilter extends AbstractBufferedImageOp {
 		g.translate( 0, 2*h+d );        
 		g.scale( 1, -1 );
 		g.drawRenderedImage( src, null );
-		g.setPaint( new GradientPaint( 0, 0, new Color( 1.0f, 0.0f, 0.0f, useOpacity?0.0f:1.0f ), 0, h, new Color( 0.0f, 1.0f, 0.0f, opacity ) ) );
+        g.setPaint( new GradientPaint( 0, 0, new Color( 1.0f, 0.0f, 0.0f, useOpacity?0.0f:1.0f ), 0, h, new Color( 0.0f, 1.0f, 0.0f, opacity ) ) );
 		g.setComposite( AlphaComposite.getInstance( AlphaComposite.DST_IN ) );
 		g.fillRect( 0, 0, width, h );
 		g.setClip( clip );

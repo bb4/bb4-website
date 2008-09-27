@@ -45,6 +45,7 @@ public class RippleFilter extends TransformFilter {
 		xAmplitude = 5.0f;
 		yAmplitude = 0.0f;
 		xWavelength = yWavelength = 16.0f;
+        setEdgeAction(EdgeAction.WRAP);
 	}
 
 	/**
