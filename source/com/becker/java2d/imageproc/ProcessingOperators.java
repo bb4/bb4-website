@@ -8,7 +8,6 @@ import com.becker.optimization.parameter.IntegerParameter;
 import com.becker.optimization.parameter.Parameter;
 import com.becker.optimization.parameter.StringParameter;
 import com.jhlabs.image.*;
-import java.awt.color.ColorSpace;
 import java.awt.event.*;
 import java.awt.image.*;
 import java.util.*;
@@ -58,7 +57,6 @@ public class ProcessingOperators
     {
         mOps = new HashMap<String, MetaImageOp>();
         createConvolutions();        
-        createLookups();
         createColorOps();
         createJHLabsOps();
     }
@@ -94,8 +92,10 @@ public class ProcessingOperators
                     new Kernel( 3, 3, sharp ) ) ));
     }
 
-    private void createLookups()
+    private void createColorOps()
     {
+        mOps.put( "Grayscale", new MetaImageOp(new GrayscaleFilter()));       
+        
         short[] brighten = new short[256];
         short[] betterBrighten = new short[256];
         short[] posterize = new short[256];
@@ -147,11 +147,6 @@ public class ProcessingOperators
                 new ShortLookupTable( 0, blueRemove ), null ) ));
     }
 
-    private void createColorOps()
-    {
-        mOps.put( "Grayscale", new MetaImageOp(new ColorConvertOp(
-                ColorSpace.getInstance( ColorSpace.CS_GRAY ), null ) ));
-    }
     
     private void createJHLabsOps()
     {
@@ -208,7 +203,7 @@ public class ProcessingOperators
        
        params = new ArrayList<Parameter>();
        params.add(new StringParameter(FBMFilter.BasisType.CELLULAR, FBMFilter.BasisType.values(), "basisType"));
-       params.add(new StringParameter(PixelUtils.OperationType.MULTIPLY, PixelUtils.OperationType.values(), "operation"));
+       params.add(new StringParameter(OperationType.MULTIPLY, OperationType.values(), "operation"));
        //params.add(new IntegerParameter(0, 0, 4, "basisType"));
        //params.add(new IntegerParameter(7, 0, 20, "operation"));
        params.add(new DoubleParameter(0.8, 0.0, 2.0, "amount"));
@@ -221,9 +216,147 @@ public class ProcessingOperators
        params.add(new DoubleParameter(0.5, 0.0, 2.0, "bias"));
        params.add(new DoubleParameter(4.0, 0.1, 16.0, "octaves"));
        mOps.put("Fractal Noise", new MetaImageOp(FBMFilter.class, params));
+              
+       params = new ArrayList<Parameter>();
+       params.add(new BooleanParameter(true, "useImageColors"));
+       params.add(new DoubleParameter(0.9, 0.01, 2.0, "turbulence"));
+       params.add(new DoubleParameter(1.0, 0.01, 3.0, "scaling"));    
+       mOps.put("Plasma", new MetaImageOp(PlasmaFilter.class, params));     
        
+       params = new ArrayList<Parameter>();
+       params.add(new StringParameter(PolarFilter.PolarMappingType.RECT_TO_POLAR, PolarFilter.PolarMappingType.values(), "type"));
+       params.add(new StringParameter(EdgeAction.WRAP, EdgeAction.values(), "edgeAction")); 
+       mOps.put("Polar", new MetaImageOp(PolarFilter.class, params));     
+       
+       params = new ArrayList<Parameter>();
+       params.add(new StringParameter(RippleFilter.RippleType.SINE, RippleFilter.RippleType.values(), "waveType"));
+       params.add(new DoubleParameter(5.0, 0.0, 10.0, "xAmplitude"));
+       params.add(new DoubleParameter(0.0, 0.0, 10.0, "yAmplitude"));
+       params.add(new DoubleParameter(16, 1, 64, "xWavelength"));
+       params.add(new DoubleParameter(16, 1, 64, "yWavelength"));
+       mOps.put("Ripple", new MetaImageOp(RippleFilter.class, params));     
+       
+       params = new ArrayList<Parameter>();
+       params.add(new StringParameter(EdgeAction.WRAP, EdgeAction.values(), "edgeAction")); 
+       params.add(new DoubleParameter(1.0, 0.1, 5.0, "scale"));
+       mOps.put("Diffuse", new MetaImageOp(DiffuseFilter.class, params));     
+       
+       params = new ArrayList<Parameter>();       
+       params.add(new DoubleParameter(1.0, 0.1, 5.0, "redGamma"));
+       params.add(new DoubleParameter(1.0, 0.1, 5.0, "greenGamma"));
+       params.add(new DoubleParameter(1.0, 0.1, 5.0, "blueGamma"));
+       mOps.put("Gamma", new MetaImageOp(GammaFilter.class, params));     
+       
+       params = new ArrayList<Parameter>();       
+       params.add(new StringParameter(LightFilter.BumpShapeType.NONE, LightFilter.BumpShapeType.values(), "bumpShape"));
+       params.add(new DoubleParameter(.5, 0.1, 2.0, "bumpHeight"));
+       params.add(new DoubleParameter(0.0, 0.0, 2.0, "bumpSoftness"));
+       params.add(new DoubleParameter(10000.0, 10.0, 10000.0, "viewDistance"));
+       mOps.put("Light", new MetaImageOp(LightFilter.class, params));   
+       
+       params = new ArrayList<Parameter>();       
+       params.add(new DoubleParameter(1.0, 0.5, 3.0, "amount"));
+       params.add(new DoubleParameter(1.0, 0.5, 16.0, "turbulence"));
+       params.add(new DoubleParameter(6.0, 1.0, 100.0, "xScale"));
+       params.add(new DoubleParameter(6.0, 1.0, 100.0, "yScale"));
+       mOps.put("Marble", new MetaImageOp(MarbleFilter.class, params));   
+       
+       params = new ArrayList<Parameter>();       
+       params.add(new DoubleParameter(1.0, 0.5, 10.0, "turbulence"));
+       params.add(new DoubleParameter(0.5, 0.1, 5.0, "turbulenceFactor"));
+       params.add(new DoubleParameter(32.0, 8.0, 128.0, "scale"));
+       params.add(new DoubleParameter(0.0, 0.0, Math.PI, "angle"));
+       params.add(new DoubleParameter(1.0, 0.5, 10.0, "stretch"));       
+       params.add(new DoubleParameter(1.0, 0.5, 3.0, "brightness"));   
+       mOps.put("MarbleTexture", new MetaImageOp(MarbleTexFilter.class, params));   
+       
+       params = new ArrayList<Parameter>();       
+       params.add(new BooleanParameter(true, "useOpacity"));
+       params.add(new DoubleParameter(1.0, 0.1, 1.0, "opacity"));
+       params.add(new DoubleParameter(0.5, 0.4, 0.9, "centreY"));
+       mOps.put("Mirror", new MetaImageOp(MirrorFilter.class, params));   
+       
+       params = new ArrayList<Parameter>();       
+       params.add(new BooleanParameter(false, "raysOnly"));
+       params.add(new DoubleParameter(0.5, 0.1, 1.0, "opacity"));
+       params.add(new DoubleParameter(0.5, 0.1, 1.0, "threshold"));
+       params.add(new DoubleParameter(0.5, 0.0, 1.0, "strength"));    
+       mOps.put("Rays", new MetaImageOp(RaysFilter.class, params));   
+       
+       params = new ArrayList<Parameter>();       
+       params.add(new DoubleParameter(0.5, 0.2, 2.0, "amount")); 
+       mOps.put("Saturation", new MetaImageOp(SaturationFilter.class, params));   
+       
+       params = new ArrayList<Parameter>();       
+       params.add(new BooleanParameter(false, "shadowOnly"));
+       params.add(new BooleanParameter(false, "addMargins"));
+       params.add(new DoubleParameter(0.5, 0.0, 1.0, "opacity"));
+       params.add(new DoubleParameter(5.0, 0.0, 10.0, "radius"));
+       params.add(new DoubleParameter(Math.PI*6/4, 0.0, 2*Math.PI, "angle"));    
+       params.add(new DoubleParameter(5.0, 1.0, 10.0, "distance")); 
+       params.add(new IntegerParameter(0xff220066, 0xff000000, 0xffffffff, "shadowColor"));
+       mOps.put("Shadow", new MetaImageOp(ShadowFilter.class, params));   
 
-       /* tricky
+       params = new ArrayList<Parameter>();       
+       params.add(new IntegerParameter(3, 1, 6, "sides"));
+       params.add(new DoubleParameter(0.0, 0.0, 500.0, "radius"));
+       params.add(new DoubleParameter(0, 0.0, 2*Math.PI, "angle")); 
+       params.add(new DoubleParameter(0, 0.0, Math.PI, "angle2"));
+       params.add(new DoubleParameter(0.5, 0.2, 0.8, "centreX")); 
+       params.add(new DoubleParameter(0.5, 0.2, 0.8, "centreY"));
+       mOps.put("Kaleidoscope", new MetaImageOp(KaleidoscopeFilter.class, params));  
+       
+       params = new ArrayList<Parameter>();       
+       params.add(new IntegerParameter(127, 0, 127, "lowerThreshold"));
+       params.add(new IntegerParameter(127, 127, 255, "upperThreshold"));    
+       mOps.put("Threshold", new MetaImageOp(ThresholdFilter.class, params));  
+       
+       params = new ArrayList<Parameter>();       
+       params.add(new IntegerParameter(40, 8, 1000, "width")); 
+       params.add(new IntegerParameter(40, 8, 1000, "height"));
+       mOps.put("Scale", new MetaImageOp(ScaleFilter.class, params));  
+       
+        /*              
+        mOps.put("Shine", new ShineFilter());                                    
+        mOps.put("Gain", new GainFilter()); 
+        mOps.put("Glint", new GlintFilter());  
+        mOps.put("Glow", new GlowFilter());            
+        mOps.put("Lens Blur", new LensBlurFilter());                  
+         * 
+        SwimFilter swimFilter = new SwimFilter();
+        swimFilter.setAmount(2.0f);
+        mOps.put("Swim", swimFilter);     
+         * 
+        WaterFilter waterDrop = new WaterFilter();
+        waterDrop.setCentreX((float)Math.random());
+        waterDrop.setCentreY((float)Math.random());
+        waterDrop.setRadius(10.0f + (float)(100.0 * Math.random()));
+        mOps.put("Water Drop", waterDrop);  
+         * 
+        mOps.put("Median", new MedianFilter());          
+        
+        //  float distance, float angle, float rotation, float zoom
+        mOps.put("Motion blur", new MotionBlurFilter(2.0f, 3.0f, 0.0f, 0.0f));  
+        mOps.put("Pointillize", new PointillizeFilter());  
+        mOps.put("Quantize", new QuantizeFilter());         
+             
+        mOps.put("Blur (smart)", new SmartBlurFilter());  
+        mOps.put("Smear", new SmearFilter());  
+        mOps.put("Sparkle", new SparkleFilter());        
+        mOps.put("Chrome", new ChromeFilter());         
+        
+        TwirlFilter twirl = new TwirlFilter();
+        twirl.setAngle(1.0f);
+        twirl.setRadius(200.0f);
+        mOps.put("Twirl", twirl);  
+                
+        // secondary
+        mOps.put("Weave", new WeaveFilter());  
+        mOps.put("Wood", new WoodFilter());     
+        mOps.put("Life", new LifeFilter());                       
+         */
+       
+        /* tricky
         params = new ArrayList<Parameter>();
         float x[] = {0f, 0.1f, 0.8f, 1f};
         float y[] = {0f, 0.01f, .95f, 1f};
@@ -231,66 +364,17 @@ public class ProcessingOperators
                 new CurvesFilter.Curve(x, y);
         curvesFilter.setCurve(c);
         mOps.put("Curves", new MetaImageOp(CurvesFilter.class, params));
-        * 
         params = new ArrayList<Parameter>();       
         mOps.put("Diffusion", new MetaImageOp(DiffusionFilter.class, params));
-       */
-       
-        /*                 
-        //mOps.put("Field Warp", new FieldWarpFilter());
-        mOps.put("JavaLnf", new JavaLnFFilter());
-        PlasmaFilter plasmaFilter = new PlasmaFilter();
-        plasmaFilter.setUseImageColors(true);
-        plasmaFilter.setTurbulence(0.9f);
-        
-        mOps.put("Plasma", plasmaFilter);
-        mOps.put("Polar Fit", new PolarFilter());
-        mOps.put("Ripple", new RippleFilter());     
-        mOps.put("Diffuse", new DiffuseFilter());  
-        mOps.put("Gain", new GainFilter()); 
-        mOps.put("Gamma", new GammaFilter());  
-        mOps.put("Glint", new GlintFilter());  
-        mOps.put("Glow", new GlowFilter());  
-        mOps.put("Kaleidoscope", new KaleidoscopeFilter());  
-        mOps.put("Lens Blur", new LensBlurFilter());  
-        mOps.put("Life", new LifeFilter());  
-        mOps.put("Light", new LightFilter());   // cool
-        mOps.put("Marble", new MarbleFilter()); 
-        mOps.put("MarbleTexture", new MarbleTexFilter()); 
-        mOps.put("Median", new MedianFilter());  
-        mOps.put("Mirror", new MirrorFilter());  
-        //  float distance, float angle, float rotation, float zoom
-        mOps.put("Motion blur", new MotionBlurFilter(2.0f, 3.0f, 0.0f, 0.0f));  
-        mOps.put("Pointillize", new PointillizeFilter());  
-        mOps.put("Quantize", new QuantizeFilter());         
-        mOps.put("Rays", new RaysFilter());          
-        mOps.put("Saturation", new SaturationFilter(2.0f));  
+         * 
+        //mOps.put("JavaLnf", new JavaLnFFilter());
+        //mOps.put("Shatter", new ShatterFilter());  
+        //mOps.put("Sky", new SkyFilter());   // npe
         //mOps.put("Scratch", new ScratchFilter());   white       
         //mOps.put("Shade", new ShadeFilter());  
-        mOps.put("Shadow", new ShadowFilter(30.0f, 4.0f, 1.0f, 0.5f));  
-        //mOps.put("Shatter", new ShatterFilter());  
-        mOps.put("Shine", new ShineFilter());        
-        //mOps.put("Sky", new SkyFilter());   // npe
-        mOps.put("Blur (smart)", new SmartBlurFilter());  
-        mOps.put("Smear", new SmearFilter());  
-        mOps.put("Sparkle", new SparkleFilter());         
-        SwimFilter swimFilter = new SwimFilter();
-        swimFilter.setAmount(2.0f);
-        mOps.put("Swim", swimFilter);  
-        mOps.put("Threshold", new ThresholdFilter());  
-        TwirlFilter twirl = new TwirlFilter();
-        twirl.setAngle(1.0f);
-        twirl.setRadius(200.0f);
-        mOps.put("Twirl", twirl);  
-        WaterFilter waterDrop = new WaterFilter();
-        waterDrop.setCentreX((float)Math.random());
-        waterDrop.setCentreY((float)Math.random());
-        waterDrop.setRadius(10.0f + (float)(100.0 * Math.random()));
-        mOps.put("Water Drop", waterDrop);  
-        mOps.put("Weave", new WeaveFilter());  
-        mOps.put("Wood", new WoodFilter());                 
-        //mOps.put("Skeleton", new SkeletonFilter());      
-         */
+        //mOps.put("Field Warp", new FieldWarpFilter());
+         // mOps.put("Skeleton", new SkeletonFilter());  
+       */
     }
 
 }

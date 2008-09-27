@@ -11,23 +11,26 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.*;
 import java.util.*;
-import javax.swing.JComboBox;
 
-public class Sampler extends ApplicationFrame 
+/**
+ * Allows you to test filters and modify their parameters on the fly.
+ * Based on the Sampler program that comes with Java2D by Knudsen.
+ */
+public class FilterSampler extends ApplicationFrame 
                                    implements ItemListener, ActionListener, ParameterChangeListener
 {
     private Frame mImageFrame;
     private SplitImageComponent mSplitImageComponent;
-    private ProcessingOperators operations;
+    private ProcessingOperators operations;    
     
     private Checkbox accumulateCheckbox;
     private Label statusLabel = new Label( "" );
     private ParameterPanel paramPanel;
     private java.awt.List filterList;
 
-    public Sampler( String imageFile )
+    public FilterSampler( String imageFile )
     {
-        super( "Sampler v1.0" );
+        super( "Filter Sampler" );
         operations = new ProcessingOperators();
         createImageFrame( imageFile );
         initializeUI();
@@ -45,10 +48,10 @@ public class Sampler extends ApplicationFrame
         mImageFrame = new Frame( imageFile );
         mImageFrame.setLayout( new BorderLayout() );
         mImageFrame.add( mSplitImageComponent, BorderLayout.CENTER );
-        
+            
         Utilities.sizeContainerToComponent( mImageFrame, mSplitImageComponent );
         Utilities.centerFrame( mImageFrame );
-        mImageFrame.setVisible( true );
+        mImageFrame.setVisible( true );        
     }
 
     @Override
@@ -147,12 +150,15 @@ public class Sampler extends ApplicationFrame
     
     private void applyImageOperator(BufferedImageOp op) {
         BufferedImage source = mSplitImageComponent.getSecondImage();
-        if ( source == null || accumulateCheckbox.getState() == false )
+        if ( source == null || accumulateCheckbox.getState() == false ) {
             source = mSplitImageComponent.getImage();
+        }
         BufferedImage destination = op.filter( source, null );
+        
         mSplitImageComponent.setSecondImage( destination );
         mSplitImageComponent.setSize(
-                mSplitImageComponent.getPreferredSize() );        
+                mSplitImageComponent.getPreferredSize() );       
+        
         mImageFrame.setSize( mImageFrame.getPreferredSize() );
     }
     
@@ -162,7 +168,7 @@ public class Sampler extends ApplicationFrame
       */
      public void actionPerformed( ActionEvent ae ) {
          
-        FileDialog fd = new FileDialog( Sampler.this );
+        FileDialog fd = new FileDialog( FilterSampler.this  );
         fd.setVisible(true);
         if ( fd.getFile() == null ) return;
         String path = fd.getDirectory() + fd.getFile();
@@ -179,6 +185,6 @@ public class Sampler extends ApplicationFrame
         String imageFile = Utilities.DEFAULT_IMAGE_DIR + "Ethol with Roses.small.jpg";
         if ( args.length > 0 ) 
             imageFile = args[0];
-        new Sampler( imageFile );
+        new FilterSampler( imageFile );
     }
 }

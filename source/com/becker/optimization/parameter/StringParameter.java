@@ -16,13 +16,13 @@ public class StringParameter extends IntegerParameter
 
     public StringParameter( int index, List<String> values, String paramName)
     {        
-        super(index, 0, values.size(), paramName);  
+        super(index, 0, values.size()-1, paramName);  
         values_ = values;
     }
     
     public StringParameter( Enum val, Enum[] enumValues , String paramName)
     {        
-        super(val.ordinal(), 0, enumValues.length, paramName);    
+        super(val.ordinal(), 0, enumValues.length-1, paramName);    
         List<String> values = new ArrayList<String>(enumValues.length);
         int i = 0;
         for (Enum v: enumValues) {

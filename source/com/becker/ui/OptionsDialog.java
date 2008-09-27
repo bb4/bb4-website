@@ -75,7 +75,7 @@ public abstract class OptionsDialog extends JDialog implements ActionListener
     {
         canceled_ = false;
         if (parent_ != null)  {
-            this.setLocationRelativeTo( parent_ );
+            this.setLocationRelativeTo( parent_ ); 
         }
 
         this.setVisible( true );
