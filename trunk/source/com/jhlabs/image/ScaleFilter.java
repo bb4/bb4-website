@@ -43,6 +43,21 @@ public class ScaleFilter extends AbstractBufferedImageOp {
 		this.width = width;
 		this.height = height;
 	}
+    
+    /**
+     * @param width the width to scale to
+     */
+	public void setWidth(int width) {
+		this.width = width;	
+	}
+
+    /**
+     * @param height the height to scale to
+     */
+	public void setHeight(int height ) {
+		this.height = height;
+	}
+
 
     public BufferedImage filter( BufferedImage src, BufferedImage dst ) {
         int w = src.getWidth();
