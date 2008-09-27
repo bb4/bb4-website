@@ -1,16 +1,8 @@
 package com.becker.puzzle.hiq;
 
-import com.becker.common.Worker;
 import com.becker.puzzle.common.AbstractPuzzleController;
-import com.becker.puzzle.common.AlgorithmEnum;
-import com.becker.puzzle.common.BaseConcurrentPuzzleSolver;
-import com.becker.puzzle.common.ConcurrentPuzzleSolver;
-import com.becker.puzzle.common.PuzzleController;
-import com.becker.puzzle.common.PuzzleSolver;
 import com.becker.puzzle.common.Refreshable;
-import com.becker.puzzle.common.SequentialPuzzleSolver;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**

@@ -58,12 +58,17 @@ public abstract class AbstractParameter implements Parameter
         if (isIntegerOnly()) {
             increment = Math.max((int) increment, 1);
         }
-        if ( (getValue()+increment > getMaxValue()) || (getValue()+increment < getMinValue()) ) {
-            value_ = (getValue() - increment);
-            return -increment;
+        double v = getValue();
+        if ( (v+increment > getMaxValue())) {
+            value_ = getMaxValue();
+            return 0;
+        }
+        else if (v+increment < getMinValue())  {
+            value_ = getMinValue();
+            return 0;
         }
         else {
-            value_ = (getValue() + increment);
+            value_ = (v + increment);
             return increment;
         }
     }
@@ -81,16 +86,18 @@ public abstract class AbstractParameter implements Parameter
         double prevValue = getValue();
         double change = rand.nextGaussian() * r * getRange();
         value_ = (getValue() + change);
-        if (getValue() > getMaxValue()) {
+        if (value_ > getMaxValue()) {
               value_ = getMaxValue();
         }
-        else if (getValue() < getMinValue()) {
+        else if (value_ < getMinValue()) {
              value_ = getMinValue();
         }
-        if (prevValue == getValue() &&
+        /*
+        if (prevValue == value_ &&
             (prevValue == getMinValue() || prevValue == getMaxValue())) {
+            // @@ I suppose this could still give something out of range.
             value_ = (prevValue - change);
-        }
+        }*/
    }
 
     public String toString()

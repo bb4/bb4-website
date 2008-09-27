@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.*;
 /**
  * PuzzleSolver
  * <p/>
- * Solver that recognizes when no solution exists and stops running it that happens.
+ * Solver that recognizes when no solution exists and stops running if that happens.
  *
  * @author Brian Goetz and Tim Peierls
  */

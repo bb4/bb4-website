@@ -154,7 +154,7 @@ public abstract class GamePanel extends TexturedPanel
         GameContext.setLogger( new Log( logWindow ) );
 
         newGameDialog_ = createNewGameDialog( parent, boardViewer_ );
-       // onlineGameDialog_ = createOnlineGameDialog(parent, boardViewer_);
+        // onlineGameDialog_ = createOnlineGameDialog(parent, boardViewer_);
         optionsDialog_ = createOptionsDialog( parent, boardViewer_.getController() );
 
         // if the board is too big, allow it to be scrolled.

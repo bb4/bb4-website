@@ -42,7 +42,7 @@ import java.util.*;
  *   Finally, I found that it was enough to search entirely from the beginning
  * and just prune when I reach states I've encountered before.
  * When I first ran this successfully, it took about 1 hour to run on an AMD 64bit 3200.
- * After optimization it now run in about 3 minutes on a Core2Duo (189 seconds).
+ * After optimization it  ran in about 3 minutes on a Core2Duo (189 seconds).
  * After parallelizing the algorithm using ConcurrrentPuzzleSolver it is down to 93 seconds on the CoreDuo.
  */
 public final class HiQPuzzle extends PuzzleApplet 

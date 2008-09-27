@@ -16,7 +16,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 /**
- * Red Puzzle
+ * Red Puzzle Application to show the solving of the puzzle.
  * This program solves a 9 piece puzzle that has nubs on all 4 sides of every piece.
  * Its virtually impossible to solve by hand because of all the possible permutations.
  * This program can usually solve it by trying between 6,000 and 20,000 combinations.

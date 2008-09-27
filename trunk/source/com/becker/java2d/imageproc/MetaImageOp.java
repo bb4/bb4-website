@@ -102,17 +102,18 @@ public class MetaImageOp {
     private void setParameters(BufferedImageOp filter, float randomVariance) 
             throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException
     {
-        System.out.println("op="+filter.getClass().getSimpleName());
+        //System.out.println("op="+filter.getClass().getSimpleName());
         for (Parameter p : parameters) {
             // the name must match the property (e.g. foo will be set using setFoo)
             String methodName = 
                     "set" +  p.getName().substring(0, 1).toUpperCase() + p.getName().substring(1);
             Method method = filter.getClass().getDeclaredMethod(methodName, p.getType()); // p.getNaturalValue().getClass());
-            System.out.println("v=" +p.getValue() + "  type="+p.getType() + "  method="+methodName);
+            //System.out.println("v=" +p.getValue() + "  type="+p.getType() + "  method="+methodName);
           
             Object[] args = new Object[1];
+            Parameter param = p.copy();
             if (randomVariance > 0) {
-                p.tweakValue(randomVariance, RANDOM);
+                param.tweakValue(randomVariance, RANDOM);
             }
             
             // @@ This should work with autoboxing, but does not for some reason, so we resort to ugly case statement.
@@ -120,22 +121,22 @@ public class MetaImageOp {
             
             Class type = p.getType();
             if (type.equals(float.class)) {
-                args[0] = (float) p.getValue(); 
+                args[0] = (float) param.getValue(); 
             }
             else if (type.equals(int.class)) {
-                args[0] = (int) p.getValue();
+                args[0] = (int) param.getValue();
             }
             else if (type.equals(boolean.class)) {
                 args[0] = ((BooleanParameter)p).getNaturalValue();
             }
             else if (type.equals(String.class)) {
-                args[0] = p.getNaturalValue();
+                args[0] = param.getNaturalValue();
             }
             else  {
                 throw new IllegalArgumentException("Unexpected param type = "+type);
             }
            
-            //System.out.println("arg="+args[0] + " type="+args[0].getClass().getName());
+            //System.out.println("arg="+args[0] + " type="+args[0].getClass().getName() +" v="+p.getValue());
             method.invoke(filter, args); // p.getType().cast(p.getValue()));            
         } 
         
