@@ -24,7 +24,8 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog
     private NumberInput numStepsPerFrameField_;
     private NumberInput scaleField_;
 
-
+    private static final int MAX_NUM_STEPS_PER_FRAME = 10000;
+    
     // bottom buttons
     private GradientButton startButton_ = new GradientButton();
 
@@ -126,10 +127,10 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog
                                 "This controls the size of the numerical intergration steps",
                                 0.001, 0.9, false);
         numStepsPerFrameField_ =
-                new NumberInput("Num Steps Per Frame (1 slow but smooth - 1000 (fast but choppy):  ",
+                new NumberInput("Num Steps Per Frame (1 slow but smooth - "+MAX_NUM_STEPS_PER_FRAME+" (fast but choppy):  ",
                                 simulator_.getNumStepsPerFrame(),
                                "This controls the number of the numerical intergration steps per animation frame",
-                               1, 1000, true);
+                               1, MAX_NUM_STEPS_PER_FRAME, true);
 
         textInputsPanel.add( timeStepField_ );
         textInputsPanel.add( numStepsPerFrameField_ );

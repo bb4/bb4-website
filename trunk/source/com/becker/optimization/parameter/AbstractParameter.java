@@ -1,5 +1,6 @@
 package com.becker.optimization.parameter;
 
+import com.becker.optimization.parameter.redistribution.RedistributionFunction;
 import com.becker.common.util.Util;
 import java.util.Random;
 
@@ -17,6 +18,8 @@ public abstract class AbstractParameter implements Parameter
     private double range_ = 0.0;
     private String name_ = null;
     private boolean integerOnly_ = false;
+    
+    protected RedistributionFunction redistributionFunction_;
 
     /**
      *  Constructor
@@ -47,7 +50,7 @@ public abstract class AbstractParameter implements Parameter
 
     /**
      * increments the parameter based on the number of steps to get from one end of the range to the other.
-     * If we are already at the max end of the range, then we increment in a negative direction.
+     * If we are already at the max end of the range, then we can only move in the other direction if at all.
      * @param numSteps of steps to get from one end of the range to the other
      * @param direction 1 for forward, -1 for backward.
      * @return the size of the increment taken
@@ -83,7 +86,6 @@ public abstract class AbstractParameter implements Parameter
         if (r == 0 ) {
             return;  // no change in the param.
         }
-        double prevValue = getValue();
         double change = rand.nextGaussian() * r * getRange();
         value_ = (getValue() + change);
         if (value_ > getMaxValue()) {
@@ -92,14 +94,13 @@ public abstract class AbstractParameter implements Parameter
         else if (value_ < getMinValue()) {
              value_ = getMinValue();
         }
-        /*
-        if (prevValue == value_ &&
-            (prevValue == getMinValue() || prevValue == getMaxValue())) {
-            // @@ I suppose this could still give something out of range.
-            value_ = (prevValue - change);
-        }*/
    }
+    
+    public void randomizeValue(Random rand) {
+        value_ = getMinValue() + rand.nextDouble() * getRange();
+    }
 
+    @Override
     public String toString()
     {
         StringBuffer sa = new StringBuffer( getName() );
@@ -123,14 +124,24 @@ public abstract class AbstractParameter implements Parameter
     }
     
     public void setValue(double value) {
+        assert (value > minValue_ && value < maxValue_) : 
+            "Value " + value + " outside range [" + minValue_ +", " + maxValue_ + "]";
         this.value_ = value;
+        // if there is a redistribution function, we need to apply its inverse.
+        if (redistributionFunction_ != null) {
+            this.value_= redistributionFunction_.getInverseFunctionValue(value);
+        }
     }
 
     public double getValue() {
-        if (isIntegerOnly())  {
-            return Math.round(value_);
+        double value = value_;
+        if (redistributionFunction_ != null) {
+            double v = (value_ - minValue_) / getRange();
+            v = redistributionFunction_.getFunctionValue(v);
+            value = v * getRange() + minValue_;
         }
-        return value_;
+            
+        return value;
     }  
 
     public double getMinValue() {
@@ -149,4 +160,7 @@ public abstract class AbstractParameter implements Parameter
         return name_;
     }
     
+    public void setRedistributionFunction(RedistributionFunction function) {
+        redistributionFunction_ = function;
+    }
 }

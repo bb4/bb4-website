@@ -58,7 +58,7 @@ public class Range {
         }
     }
 
-    public double getRange() {
+    public double getExtent() {
         if (min_ > max_) {
             return Double.NaN;
         }
@@ -77,11 +77,11 @@ public class Range {
      * @return  normalized value assumeing 0 for min. 1 for max.
      */
     public double mapToUnitScale(double value) {
-        double range = getRange();
+        double range = getExtent();
         if (range == 0) {
             return 0;
         }
-        return (value - getMin()) / getRange();
+        return (value - getMin()) / getExtent();
     }
 
     public String toString() {
