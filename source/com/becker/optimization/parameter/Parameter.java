@@ -1,5 +1,6 @@
 package com.becker.optimization.parameter;
 
+import com.becker.optimization.parameter.redistribution.RedistributionFunction;
 import com.becker.optimization.parameter.ui.ParameterWidget;
 import java.util.Random;
 
@@ -35,6 +36,12 @@ public interface Parameter
      *     (relative to each parameter range).
      */
     void tweakValue(double r, Random rand);
+    
+    /**
+     * Randomizes the value within its range.
+     * If no redistribution function, then the distribution is uniform.
+     */
+    void randomizeValue(Random rand);
   
     /**
      * @return a value whose type matches the type of the parameter.
@@ -48,8 +55,20 @@ public interface Parameter
      *  e.g a BooleanParameter is returned as a 0 (false) or 1 (true).
      */
     double getValue();
+    
+    /**
+     * This optional function redistributes the normally uniform
+     * parameter distribution into something potentially completely different
+     * like a gaussian, or one where specific values have higher probability than others.
+     * @param func the redistribution function to use
+     */
+    void setRedistributionFunction(RedistributionFunction func);
 
     /**
+     * Set the value of the parameter.
+     * If there is a redistribution function, then
+     * set the value in the inverse redistribution space - at least 
+     * until I implement the inverse redistribution function.
      * @param value value to set.
      */
     void setValue(double value);

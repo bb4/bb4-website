@@ -75,9 +75,6 @@ public class NumberInput extends JPanel
         numPanel.add( numberField_ );        
         //numPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
         
-        // JPanel spacer = new JPanel();
-        //spacer.setPreferredSize(new Dimension(1000, 10));
-        //add(spacer, BorderLayout.CENTER);
         add(numPanel, BorderLayout.EAST); //add(numPanel);
 
         if (toolTip!=null)

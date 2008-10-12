@@ -1,11 +1,9 @@
 package com.becker.simulation.dice;
 
+import com.becker.ui.HistogramRenderer;
 import com.becker.simulation.common.*;
-
-import com.becker.ui.animation.AnimationFrame;
 import java.awt.*;
 import java.util.*;
-import javax.swing.JFrame;
 
 /**
  * Simluates the rolling of N number of M sided dice lots of times
@@ -13,24 +11,14 @@ import javax.swing.JFrame;
  * 
  * @author Barry Becker Date: Feb 4, 2007
  */
-public class DiceSimulator extends Simulator {
-
-
-    protected static final double TIME_STEP = 1.0;
-    protected static final int DEFAULT_STEPS_PER_FRAME = 50;
-
-    private HistogramRenderer histogram_;
-    private int[] data_;
+public class DiceSimulator extends DistributionSimulator {
 
     private int numDice_ = 2;
     private int numSides_ = 6;
 
-    private Random random_ = new Random(0);
-
 
     public DiceSimulator() {
         super("Dice Histogram");
-        commonInit();
         initHistogram();
     }
 
@@ -43,49 +31,24 @@ public class DiceSimulator extends Simulator {
         numSides_ = numSides;
         initHistogram();
     }
-    
-    protected void reset() {
-        initHistogram();
-    }
 
-    private void initHistogram() {
+    protected void initHistogram() {
         data_ = new int[numDice_ * (numSides_-1) + 1];
         histogram_ = new HistogramRenderer(data_, numDice_);
-    }
-
-    private void commonInit() {
-        initCommonUI();
-        setNumStepsPerFrame(DEFAULT_STEPS_PER_FRAME);
-        this.setPreferredSize(new Dimension( 600, 500 ));
     }
 
     protected SimulatorOptionsDialog createOptionsDialog() {
          return new DiceOptionsDialog( frame_, this );
     }
-
-    protected double getInitialTimeStep() {
-        return TIME_STEP;
-    }
-
-    public double timeStep()
-    {
-        if ( !isPaused() ) {
-            int total = 0;
-            for (int i=0; i<numDice_; i++) {
-               total += random_.nextInt(numSides_);
-            }
-            data_[total]++;
+   
+    protected int getXPositionToIncrement() {
+        int total = 0;
+        for (int i=0; i<numDice_; i++) {
+           total += random_.nextInt(numSides_);
         }
-        return timeStep_;
+        return total;
     }
-
-
-    public void paint( Graphics g )
-    {
-        histogram_.setSize(getWidth(), getHeight());
-        histogram_.paint(g);
-    }
-
+    
     protected String getFileNameBase()
     {
         return "dice";
@@ -96,8 +59,7 @@ public class DiceSimulator extends Simulator {
         final DiceSimulator sim = new DiceSimulator();
         sim.setNumDice(3);
         sim.setNumSides(6);
-        sim.setPaused(false);
-        JFrame f = new AnimationFrame( sim );    
+        runSimulation(sim);
     }
 }
 
