@@ -132,6 +132,15 @@
       <ant antfile="rmi.xml" inheritall="true" target="deployRMIServer"/>
   </target>
 
+  <target name="testCommon" depends="compile" description="common tests">
+       <echo message="now running Common tests"/>
+       <junit  printsummary="yes"  fork="yes"  haltonfailure="no" showoutput="yes" >
+           <classpath path="${libDir}/junit.jar;${classesDir}"/>
+           <assertions><enable/></assertions>
+           <formatter type="plain"/>
+           <test name="com.becker.common.test.TestAll" outfile="../test/common/commonTestResults"/>     
+       </junit>
+  </target>
 
   <!--************** Tasks to execute programs ****************-->
 
@@ -290,11 +299,27 @@
     </antcall>
   </target -->
 
+  <target name="executeImageBreeder" description="Run the Image Breeder">
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.java2d.imageproc.FilterBreeder"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>    
+      <param name="args" value=""/>
+    </antcall>
+  </target>
+  
   <target name="executeDice" description="Run the Dice simulator">
     <antcall target="executeProgram">
       <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
       <param name="args" value="com.becker.simulation.dice.DiceSimulator"/>
+    </antcall>
+  </target>
+  
+  <target name="executeParameterDistribution" description="Run the Parameter Distribution simulator">
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
+      <param name="args" value="com.becker.simulation.parameter.ParameterSimulator"/>
     </antcall>
   </target>
 
@@ -481,9 +506,9 @@
         <!-- jvmarg value="-agentlib:yjpagent"/  -->
         <!-- use this if running netbeans profiler -->
         <!--jvmarg value="-agentpath:D:\apps\java\netbeans-5.5\profiler1\lib\deployed\jdk15\windows\profilerinterface.dll=D:\apps\java\netbeans-5.5\profiler1\lib,5140"/-->
-        <!-- jvmarg value="-agentlib:jdwp=transport=dt_socket,server=y,address=8000"/ -->  <!--   for Netbeans debugging-->                                           
+        <!--jvmarg value="-agentlib:jdwp=transport=dt_socket,server=y,address=8000"/-->  <!--   for Netbeans debugging-->                                           
         <jvmarg value="-Xms128M"/>
-        <jvmarg value="-Xmx256M"/>
+        <jvmarg value="-Xmx1028M"/>
         <jvmarg value="${assertionsFlag}"/>
     </java>
   </target>
