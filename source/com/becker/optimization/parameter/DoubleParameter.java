@@ -1,5 +1,7 @@
 package com.becker.optimization.parameter;
 
+import com.becker.optimization.parameter.redistribution.GaussianRedistribution;
+import com.becker.optimization.parameter.redistribution.UniformRedistribution;
 import com.becker.optimization.parameter.ui.DoubleParameterWidget;
 import com.becker.optimization.parameter.ui.ParameterWidget;
 
@@ -22,10 +24,30 @@ public class DoubleParameter extends AbstractParameter
     {
         super(val, minVal, maxVal, paramName, false);    
     }
+    
+    public static DoubleParameter createGaussianParameter(
+                                                            double val, double minVal, double maxVal, 
+                                                            String paramName, double normalizedMean, double stdDeviation) {
+        DoubleParameter param = new DoubleParameter(val, minVal, maxVal, paramName);
+        param.setRedistributionFunction(new GaussianRedistribution(normalizedMean, stdDeviation));    
+        return param;
+    }
+    
+    public static DoubleParameter createUniformParameter(
+                                                            double val, double minVal, double maxVal, 
+                                                            String paramName, double[] specialValues, 
+                                                            double[] specialValueProbabilities) {
+        DoubleParameter param = new DoubleParameter(val, minVal, maxVal, paramName);
+        param.setRedistributionFunction(
+                new UniformRedistribution(specialValues, specialValueProbabilities));   
+        return param;
+    }
 
     public Parameter copy()
     {
-        return new DoubleParameter( getValue(), getMinValue(), getMaxValue(), getName() );
+        DoubleParameter p =  new DoubleParameter( getValue(), getMinValue(), getMaxValue(), getName() );
+        p.setRedistributionFunction(redistributionFunction_);
+        return p;
     }
 
     public Object getNaturalValue() {

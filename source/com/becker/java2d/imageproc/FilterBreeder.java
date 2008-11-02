@@ -21,6 +21,12 @@ import java.awt.Image;
 import java.awt.event.*;
 import java.awt.image.*;
 import java.util.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Allows you to mix filters together using a genetic algorithm
@@ -136,20 +142,15 @@ public class FilterBreeder extends ApplicationFrame
         String key = filterList.getSelectedItem();
         MetaImageOp metaOp = operations.getOperation( key );
        
-        statusLabel.setText( "Performing " + key + "..." );
-        
         // don't allow doing anything while processing
         filterList.setEnabled( false );
         accumulateCheckbox.setEnabled( false );
         
-        long time = System.currentTimeMillis();
         applyImageOperator(metaOp);      
-        int elapsedTime =(int) ((System.currentTimeMillis() - time)/1000);
+        
         
         filterList.setEnabled( true );
         accumulateCheckbox.setEnabled( true );
-        
-        statusLabel.setText( "Performing " + key + "...done in " + elapsedTime +" seconds" );
         
         replaceParameterUI(metaOp);        
     }
@@ -177,16 +178,31 @@ public class FilterBreeder extends ApplicationFrame
         applyImageOperator(metaOp);        
     }
     
-    private void applyImageOperator(MetaImageOp metaOp) {
+    private void applyImageOperator(MetaImageOp metaOp)  {
  
+        String key = filterList.getSelectedItem();
+        statusLabel.setText( "Performing " + key + "..." );
         // create a bunch of child permutations and add them to the imageListPanel
         images.clear();
         
-        List<Runnable> filterTasks = new ArrayList<Runnable>(NUM_CHILD_IMAGES);
+        long time = System.currentTimeMillis();
+        List<Callable> filterTasks = new ArrayList<Callable>(NUM_CHILD_IMAGES);
         for (int i=0; i<NUM_CHILD_IMAGES; i++) {
             filterTasks.add(new Worker(metaOp));           
-        }        
-        parallelizer.invokeAll(filterTasks);
+        }       
+        
+        List<Future<BufferedImage>> imageFutures = parallelizer.invokeAll(filterTasks);
+        
+        for (Future<BufferedImage> f : imageFutures) {
+            try {
+                BufferedImage img = f.get(3, TimeUnit.SECONDS);
+                images.add(img);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+        int elapsedTime =(int) ((System.currentTimeMillis() - time)/1000);
+        statusLabel.setText( "Performing " + key + "...done in " + elapsedTime +" seconds" );
          
         imageListPanel.setImageList(images);         
     }
@@ -209,15 +225,16 @@ public class FilterBreeder extends ApplicationFrame
     public static void main( String[] args )
     {
         String imageFile = Utilities.DEFAULT_IMAGE_DIR + "Ethol with Roses.small.jpg";
-        if ( args.length > 0 ) 
+        if ( args.length > 0 )  {
             imageFile = args[0];
+        }
         new FilterBreeder( imageFile );
     }
     
     /**
      * Runs one of the chunks.
      */
-    private class Worker implements Runnable {
+    private class Worker implements Callable<BufferedImage> {
 
         private MetaImageOp metaOp;
         
@@ -225,8 +242,9 @@ public class FilterBreeder extends ApplicationFrame
            this.metaOp = metaOp;
         }
         
-        public void run() {            
-            images.add(metaOp.getRandomInstance(0.2f).filter( currentImage, null ));            
+        public BufferedImage call() {  
+            BufferedImage img = metaOp.getRandomInstance(0.2f).filter( currentImage, null );   
+            return img;         
         }
     }
 }

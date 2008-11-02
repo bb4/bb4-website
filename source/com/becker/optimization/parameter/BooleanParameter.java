@@ -1,5 +1,6 @@
 package com.becker.optimization.parameter;
 
+import com.becker.optimization.parameter.redistribution.BooleanRedistribution;
 import com.becker.optimization.parameter.ui.BooleanParameterWidget;
 import com.becker.optimization.parameter.ui.ParameterWidget;
 
@@ -15,10 +16,21 @@ public class BooleanParameter extends IntegerParameter
     {
         super(val?1:0, 0, 1, paramName);    
     }
+    
+    public static BooleanParameter createSkewedParameter(
+                                                           boolean value, String paramName, 
+                                                           double percentTrue)  {
+        BooleanParameter param = new BooleanParameter(value, paramName);
+        param.setRedistributionFunction(new BooleanRedistribution(percentTrue));    
+        return param;
+    }
 
+    @Override
     public Parameter copy()
     {
-        return new BooleanParameter( (Boolean)getNaturalValue(), getName() );
+        BooleanParameter p =  new BooleanParameter( (Boolean)getNaturalValue(), getName() );
+        p.setRedistributionFunction(redistributionFunction_);
+        return p;
     }
     
     public Object getNaturalValue() {

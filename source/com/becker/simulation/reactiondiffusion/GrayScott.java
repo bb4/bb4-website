@@ -179,7 +179,7 @@ final class GrayScott {
         workers.add(edgeWorker);   
    
         // blocks until all Callables are done running.
-        parallelizer.invokeAll(workers);
+        parallelizer.invokeAllRunnables(workers);
      
         commitChanges();       
     }

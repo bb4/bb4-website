@@ -1,6 +1,7 @@
 package com.becker.optimization.parameter.redistribution;
 
 import com.becker.common.function.PiecewiseFunction;
+import com.becker.common.util.MathUtil;
 
 
 /**
@@ -62,8 +63,16 @@ public class UniformRedistribution extends AbstractRedistributionFunction {
              xValues[i2 + 1] =  lastX + (specialValues[i] - specialValuesm1) * ratio;
              yValues[i2 + 1] = specialValues[i];          
              xValues[i2 + 2] = xValues[i2 + 1] +specialValueProbabilities[i];
+             
              yValues[i2 + 2] = specialValues[i];   
+             if (i > 0) {
+                 xValues[i2 + 1] += MathUtil.EPS;
+             }
              lastX = xValues[i2 + 2];
+        }
+       System.out.println("len="+ len);
+        if (len == 2) {
+            xValues[2* len -  2] -= MathUtil.EPS_MEDIUM;
         }
         xValues[2 * len + 1] = 1.0;
         yValues[2 * len + 1] = 1.0;
@@ -82,6 +91,7 @@ public class UniformRedistribution extends AbstractRedistributionFunction {
              }
             specialProbabilityTotal += specialValueProbabilities[i];
         }
+        //assert (specialProbabilityTotal < 1.0) : "Sum of special probabilities is not lesst than one. It was " + specialProbabilityTotal;
         verifyInRange(specialProbabilityTotal);
         return specialProbabilityTotal;
     }

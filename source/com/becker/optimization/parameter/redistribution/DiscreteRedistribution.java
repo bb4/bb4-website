@@ -24,7 +24,7 @@ public class DiscreteRedistribution extends UniformRedistribution {
         numDiscretes = numValues;
 
         for (int i=0; i<len; i++) {
-            assert discreteSpecialValues[i] < numDiscretes;
+            assert discreteSpecialValues[i] < numDiscretes : " A discrete special value ("+discreteSpecialValues[i] +") was >= " + numDiscretes;
             specialValues[i] = ((double)(discreteSpecialValues[i])) / (double)(numValues-1);          
             specialValueProbabilities[i] = discreteSpecialValueProbabilities[i]; 
         }

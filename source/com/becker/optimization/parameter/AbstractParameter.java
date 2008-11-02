@@ -87,30 +87,36 @@ public abstract class AbstractParameter implements Parameter
             return;  // no change in the param.
         }
         double change = rand.nextGaussian() * r * getRange();
-        value_ = (getValue() + change);
+        value_ += change;
         if (value_ > getMaxValue()) {
               value_ = getMaxValue();
         }
         else if (value_ < getMinValue()) {
              value_ = getMinValue();
         }
+        //if ("radius".equals(getName()))
+        //   System.out.println("New tweeked value for " + this.getName() +" = " + value_ + " will result in realValue="+getValue() +" rfunc="+redistributionFunction_);
+        //setValue(value_);
    }
     
     public void randomizeValue(Random rand) {
-        value_ = getMinValue() + rand.nextDouble() * getRange();
+        setValue(getMinValue() + rand.nextDouble() * getRange());
     }
 
     @Override
     public String toString()
     {
-        StringBuffer sa = new StringBuffer( getName() );
+        StringBuilder sa = new StringBuilder( getName() );
         sa.append( " =" );
         sa.append( Util.formatNumber(getValue()) );
         sa.append( " [" );
         sa.append( Util.formatNumber(getMinValue()) );
         sa.append( ", " );
         sa.append( Util.formatNumber(getMaxValue()) );
-        sa.append( ']' );
+        sa.append( ']' );  
+        if (this.redistributionFunction_ != null) {
+            sa.append( " redistributionFunction="+this.redistributionFunction_);
+        }
         return sa.toString();
     }
     
@@ -124,25 +130,27 @@ public abstract class AbstractParameter implements Parameter
     }
     
     public void setValue(double value) {
-        assert (value > minValue_ && value < maxValue_) : 
-            "Value " + value + " outside range [" + minValue_ +", " + maxValue_ + "]";
+        validateRange(value);
         this.value_ = value;
         // if there is a redistribution function, we need to apply its inverse.
         if (redistributionFunction_ != null) {
-            this.value_= redistributionFunction_.getInverseFunctionValue(value);
+            double v = (value - minValue_) / getRange();
+            this.value_= 
+                    minValue_ + getRange() *redistributionFunction_.getInverseFunctionValue(v);
         }
     }
 
     public double getValue() {
-        double value = value_;
+        double value = value_;     
         if (redistributionFunction_ != null) {
             double v = (value_ - minValue_) / getRange();
             v = redistributionFunction_.getFunctionValue(v);
-            value = v * getRange() + minValue_;
-        }
-            
+            value = v * getRange() + minValue_;        
+        } 
+        validateRange(value);
         return value;
     }  
+   
 
     public double getMinValue() {
         return minValue_;
@@ -163,4 +171,10 @@ public abstract class AbstractParameter implements Parameter
     public void setRedistributionFunction(RedistributionFunction function) {
         redistributionFunction_ = function;
     }
+    
+    private void validateRange(double value) {
+        assert (value >= minValue_ && value <= maxValue_) : 
+            "Value " + value + " outside range [" + minValue_ +", " + maxValue_ + "]";
+    }
+   
 }

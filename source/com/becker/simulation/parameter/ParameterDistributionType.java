@@ -5,13 +5,16 @@ import com.becker.optimization.parameter.*;
 
 /**
  * Different types of parmeter distributions to test.
+ * Since we apply a redistribution to the original skewed distribution, we expect the result to be a uniform distribution.
  * 
  * @author Bary Becker
  */
 public enum ParameterDistributionType {
-
-    GAUSSIAN("Gaussian", new DoubleParameter(0, 0, 5.0, getDefaultName()), new GaussianRedistribution(0.5, 0.2)),
-    GAUSSIAN_NARROW("Gaussian (narrow)", new DoubleParameter(0, 0, 5.0, getDefaultName()), new GaussianRedistribution(0.5, 0.02)),
+    GAUSSIAN8("Gaussian 0-8", new DoubleParameter(0, 0, 8.0, getDefaultName()), new GaussianRedistribution(0.5, 0.3)),
+    GAUSSIAN_NARROW1("Gaussian (narrow 0-1)", new DoubleParameter(0, 0, 1.0, getDefaultName()), new GaussianRedistribution(0.5, 0.15)),
+    GAUSSIAN_NARROW8("Gaussian (narrow 0-8)", new DoubleParameter(0, 0, 8.0, getDefaultName()), new GaussianRedistribution(0.5, 0.15)),
+    GAUSSIAN_NARROWER("Gaussian (narrower)", new DoubleParameter(0, 0, 5.0, getDefaultName()), new GaussianRedistribution(0.5, 0.1)), 
+    GAUSSIAN_NARROWEST("Gaussian (narrowest)", new DoubleParameter(0, 0, 5.0, getDefaultName()), new GaussianRedistribution(0.5, 0.01)), // still has a problem
     GAUSSIAN_WIDE("Gaussian (wide)", new DoubleParameter(0, 0, 5.0, getDefaultName()), new GaussianRedistribution(0.5, 0.8)),
     UNIFORM("Uniform", new DoubleParameter(0, 0, 5.0, getDefaultName()), null),
     RIGHT_SKEWED_GAUSSIAN("Right skewed gaussian", new DoubleParameter(0, 0, 10.0, getDefaultName()), new GaussianRedistribution(0.7, 0.3)),
@@ -29,14 +32,14 @@ public enum ParameterDistributionType {
     SPECIAL_UNIFORM_RIGHT("Special Uniform Right only", new DoubleParameter(0, 0, 5.0, getDefaultName()), getUniformRight()),
     SPECIAL_UNIFORM_LEFTRIGHT("Special Uniform Left and Right only", new DoubleParameter(0, 0, 5.0, getDefaultName()), getUniformLeftRight()),
     SPECIAL_UNIFORM_SEVERAL("Special Uniform Several", new DoubleParameter(0, 0, 5.0, getDefaultName()), getUniformSeveral()),
-    DISCRETE_UNIFORM("Uniform discrete", new IntegerParameter(0, 0, getNumDiscretes()-1, getDefaultName()), null),
+    DISCRETE_UNIFORM("Uniform discrete", new IntegerParameter(0, 0, getNumDiscretes()-1, getDefaultName()), null), 
     SPECIFIC_DISCRETE_1("Uniform discrete1", new IntegerParameter(0, 0, getNumDiscretes()-1, getDefaultName()), getDiscUniform1()),
     SPECIFIC_DISCRETE_2("Uniform discrete (0, 4)", new IntegerParameter(0, 0, getNumDiscretes()-1, getDefaultName()),  getDiscUniform2()),
     SPECIFIC_DISCRETE_ALL("Uniform discrete (all)", new IntegerParameter(0, 0, 3, getDefaultName()),  getDiscUniformAll()),
-    SPECIFIC_DISCRETE_3("Uniform discrete (1, 2, 6)", new IntegerParameter(0, 0, getNumDiscretes()-1, getDefaultName()), getDiscUniform3()),
-    SPECIFIC_DISCRETE_3a("Uniform discrete3a", new IntegerParameter(0, 0, getNumDiscretes()-1, getDefaultName()), getDiscUniform3a()),
+    SPECIFIC_DISCRETE_3("Uniform discrete (1, 2, 6)", new IntegerParameter(0, 0, getNumDiscretes()-1, getDefaultName()), getDiscUniform3()), 
+    SPECIFIC_DISCRETE_3a("Uniform discrete3a", new IntegerParameter(0, 0, getNumDiscretes()-1, getDefaultName()), getDiscUniform3a()),   // still has a problem 
     BOOLEAN("Boolean Uniform", new BooleanParameter(false, "Param"), null),
-    BOOLEAN_SKEWED("Boolean Skewed", new BooleanParameter(false, "Param"), new BooleanRedistribution(0.1));
+    BOOLEAN_SKEWED("Boolean Skewed", new BooleanParameter(false, "Param"), new BooleanRedistribution(0.8)); 
     
     private String name;
     private Parameter param;
@@ -47,7 +50,6 @@ public enum ParameterDistributionType {
     private ParameterDistributionType(String name, Parameter param, RedistributionFunction redistFunction) {
         this.name = name;
         this.param = param;
-       //this.redisrFunction = redistFunction;
         if (redistFunction != null) {
             this.param.setRedistributionFunction(redistFunction);
         }
@@ -92,8 +94,8 @@ public enum ParameterDistributionType {
     
     
     private static RedistributionFunction getDiscUniform1() {
-        final int[] values = {2};
-        final double[] valueProbs = {0.4};
+        final int[] values = {3};
+        final double[] valueProbs = {0.8};
         return new DiscreteRedistribution(getNumDiscretes(), values, valueProbs);
     }
     private static RedistributionFunction getDiscUniform2() {
@@ -108,7 +110,7 @@ public enum ParameterDistributionType {
     }
     private static RedistributionFunction getDiscUniform3a() {
         final int[] values = {1, 2, 6};
-        final double[] valueProbs = {0.3, 0.3, 0.4};
+        final double[] valueProbs = {0.2, 0.6, 0.2};
         return new DiscreteRedistribution(getNumDiscretes(), values, valueProbs);
     }
     private static RedistributionFunction getDiscUniformAll() {
