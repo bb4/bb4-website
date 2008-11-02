@@ -9,8 +9,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Using this class you should be able to easily parallelize a loop of long running tasks.
@@ -36,8 +40,12 @@ public class Parallelizer <T> {
         this(DEFAULT_NUM_THREADS);
     }
 
+    /**
+     * @param numThreads number of thread. Must be 1 or greater. One means not parallelism.
+     */
     public Parallelizer(int numThreads)
     {
+        assert numThreads > 0;
         this.numThreads = numThreads;
         exec = Executors.newFixedThreadPool(numThreads);   
     }
@@ -50,28 +58,40 @@ public class Parallelizer <T> {
       * Invoke all the workers at once and block until they are all done
       * Once all the separate threads have completed there assigned work, you may want to commit the results.
       */
-    public void invokeAll(List<Runnable> workers)  {
+    public void invokeAllRunnables(List<Runnable> workers)  {
             
         // convert the runnables to callables so the invokeAll api works
         List<Callable<T>> callables = new ArrayList<Callable<T>>(workers.size());
         for (Runnable r : workers) {
             callables.add(new Worker(r));
         }
-        invokeAll(callables);         
+        
+        List<Future<T>> futures =  invokeAll(callables);   
+        
+        for (Future<T> f :  futures) {
+            try {
+                f.get();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Parallelizer.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ExecutionException ex) {
+                Logger.getLogger(Parallelizer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
     
     /**
      * Invoke all the workers at once and block until they are all done
      * Once all the separate threads have completed there assigned work, you may want to commit the results.
      */
-    public void invokeAll(Collection<? extends Callable<T>> callables)  {
+    public List<Future<T>> invokeAll(Collection<? extends Callable<T>> callables)  {
             
+        List<Future<T>> f = null;
         try {
-            // blocks until all Callables are done running.
-            exec.invokeAll(callables);
+           f =  exec.invokeAll(callables);
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         } 
+        return f;
     }
     
     /**
@@ -86,7 +106,7 @@ public class Parallelizer <T> {
         }
         
         public T call() {
-            runnable.run();
+            runnable.run(); 
             return null;
         }
     }

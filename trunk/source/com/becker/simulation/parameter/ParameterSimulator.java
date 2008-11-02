@@ -20,6 +20,7 @@ public class ParameterSimulator extends DistributionSimulator {
     // init with some default
     private Parameter parameter_ =  ParameterDistributionType.values()[0].getParameter();
 
+    private boolean showRedistribution_ = true;
 
     public ParameterSimulator() {
         super("Parameter Histogram");
@@ -29,6 +30,14 @@ public class ParameterSimulator extends DistributionSimulator {
     public void setParameter(Parameter parameter) {
         parameter_ = parameter;
         initHistogram();
+    }
+    
+    public void setShowRedistribution(boolean show) {
+        showRedistribution_ = show;
+    }
+    
+    public boolean isShowRedistribution() {
+        return showRedistribution_;
     }
 
     protected void initHistogram() {
@@ -49,13 +58,24 @@ public class ParameterSimulator extends DistributionSimulator {
     }
     
     protected int getXPositionToIncrement() {
-         parameter_.randomizeValue(random_);  
-         int xpos;
+        if (showRedistribution_) {
+            parameter_.randomizeValue(random_);  
+        }
+        else {
+            double scale = parameter_.isIntegerOnly()?  parameter_.getRange() + 1.0 : parameter_.getRange();
+            double v = parameter_.getMinValue() + random_.nextDouble() * scale;
+            parameter_.setValue(v);
+        }
+        
+        //if (Math.abs(setValue - parameter_.getValue()) >0.5) {
+        //    System.out.println("setValue="+setValue +" but got "+parameter_.getValue());
+        //}
+        int xpos;
         if (parameter_.isIntegerOnly()) {
            xpos = (int)parameter_.getValue();
         }
         else {
-            xpos =  (int)((NUM_DOUBLE_BINS-1) * parameter_.getValue()/ parameter_.getRange());
+            xpos =  (int)((NUM_DOUBLE_BINS-1) * parameter_.getValue() / parameter_.getRange());
         }
          return xpos;
     }
@@ -68,7 +88,6 @@ public class ParameterSimulator extends DistributionSimulator {
     public static void main( String[] args )
     {
         final ParameterSimulator sim = new ParameterSimulator();
-        //sim.setParameter(new IntegerParameter(2, 0, 5, "int"));
         runSimulation(sim);
     }
 }

@@ -122,6 +122,7 @@ public final class ImageListPanel extends JPanel
         // find the number of rows that will give the closest match on the aspect ratios
         int numImages = images_.size();
         int numRows = 1;
+        assert numImages > 0 : "There needs to be at least on e image";
         numColumns_ = numImages;
         double ratio = imageRatio_ * numImages;
         double lastRatio = 1000000;        
@@ -215,7 +216,7 @@ public final class ImageListPanel extends JPanel
      */
     private BufferedImage findImageOver(int x, int y) {
 
-        int selectedIndex = -1;
+        int selectedIndex = -1;        
         for (int i = 0; i < images_.size(); i++ ) {
             int row = i / numColumns_;
             int col = i % numColumns_;

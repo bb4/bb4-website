@@ -1,5 +1,6 @@
 package com.becker.optimization.parameter;
 
+import com.becker.optimization.parameter.redistribution.DiscreteRedistribution;
 import com.becker.optimization.parameter.ui.ParameterWidget;
 import com.becker.optimization.parameter.ui.StringParameterWidget;
 import java.util.ArrayList;
@@ -30,11 +31,37 @@ public class StringParameter extends IntegerParameter
         }
         values_ = values;        
     }
+    
+    public static StringParameter createDiscreteParameter(
+                                                            int index, List<String> values, String paramName, 
+                                                            int[] discreteSpecialValues, double[] specialValueProbabilities) {
+       StringParameter param = new StringParameter(index, values, paramName);
+        param.setRedistributionFunction(
+                new DiscreteRedistribution(values.size(), discreteSpecialValues, specialValueProbabilities));    
+        return param;
+    }
+    
+    public static StringParameter createDiscreteParameter(
+                                                            Enum val, Enum[] enumValues, String paramName, 
+                                                            Enum[] specialEnumValues, double[] specialValueProbabilities) {
+       StringParameter param = new StringParameter(val, enumValues, paramName);
+       int[] discSpecialValues = new int[specialEnumValues.length];
+       for (int i=0; i<specialEnumValues.length; i++ ) {
+           Enum e = specialEnumValues[i];
+           discSpecialValues[i] = e.ordinal();
+       }
+       param.setRedistributionFunction(
+                new DiscreteRedistribution(enumValues.length, discSpecialValues, specialValueProbabilities));    
+        return param;
+    }
+
 
 
     public Parameter copy()
     {
-        return new StringParameter( (int)getValue(), values_, getName() );
+        StringParameter p = new StringParameter( (int)getValue(), values_, getName() );
+        p.setRedistributionFunction(redistributionFunction_);
+        return p;
     }
 
     public Object getNaturalValue() {

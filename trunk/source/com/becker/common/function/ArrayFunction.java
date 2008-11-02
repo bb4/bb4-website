@@ -25,11 +25,32 @@ public class ArrayFunction implements Function {
      * Constructor.
      * @param funcMap
      */
-    public ArrayFunction(double[] funcMap, InterpolationMethod interpMethod) {
-        functionMap = funcMap;
-        inverseFunctionMap = MathUtil.createInverseFunction(funcMap, new Range(0, 1.0));
+    public ArrayFunction(double[] func, InterpolationMethod interpMethod) {
+        this(func, MathUtil.createInverseFunction(func, new Range(0, 1.0)), interpMethod);        
+    }
+    
+    /**
+     * Constructor.
+     * Use this version of the constructor if you already know the inverse function and do not 
+     * want to compute it (because computing it will not be as accurate).
+     * @param funcMap
+     */
+    public ArrayFunction(double[] func, double[] inverseFunc) {
+        this(func, inverseFunc, InterpolationMethod.LINEAR);        
+    }
+    
+    /**
+     * Constructor.
+     * Use this version of the constructor if you already know the inverse function and do not 
+     * want to compute it (because computing it will not be as accurate).
+     * @param funcMap
+     */
+    public ArrayFunction(double[] func, double[] inverseFunc, InterpolationMethod interpMethod) {
+        functionMap = func;
+        inverseFunctionMap = inverseFunc;
         interpolationMethod = interpMethod;        
     }
+    
     
     /**
      * Constructor.
@@ -64,10 +85,10 @@ public class ArrayFunction implements Function {
         
         switch (interpolationMethod) {
             case CUBIC: 
-                funcValue = MathUtil.cubicInterpolate(value, functionMap);
+                funcValue = MathUtil.cubicInterpolate(value, func);
                 break;
             case LINEAR:
-                 funcValue = MathUtil.linearlyInterpolate(value, functionMap);
+                 funcValue = MathUtil.linearlyInterpolate(value, func);
                  break;
         }
   

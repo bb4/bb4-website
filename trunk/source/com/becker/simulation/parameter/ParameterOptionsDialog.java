@@ -16,8 +16,11 @@ public class ParameterOptionsDialog extends SimulatorOptionsDialog {
 
     /** number of dice to use.   */
     private JComboBox parameterChoiceField_;
-
+    private JCheckBox showRedistribution_;
+    
     private ParameterDistributionType paramType;
+    
+    
 
     /**
      * constructor
@@ -44,7 +47,10 @@ public class ParameterOptionsDialog extends SimulatorOptionsDialog {
         parameterChoiceField_.setModel(
                 new DefaultComboBoxModel(ParameterDistributionType.values()));
 
+        ParameterSimulator simulator = (ParameterSimulator) getSimulator();
+        showRedistribution_ = new JCheckBox("Show Redistribution", simulator.isShowRedistribution());
         innerPanel.add( parameterChoiceField_ );
+        innerPanel.add(showRedistribution_);
         JPanel fill = new JPanel();
         paramPanel.add(innerPanel, BorderLayout.NORTH);
         paramPanel.add(fill, BorderLayout.CENTER);
@@ -60,6 +66,7 @@ public class ParameterOptionsDialog extends SimulatorOptionsDialog {
         // set the common rendering and global physics options
         simulator.setParameter(
                 ParameterDistributionType.values()[parameterChoiceField_.getSelectedIndex()].getParameter());
+        simulator.setShowRedistribution(showRedistribution_.isSelected());
     }
 
 }

@@ -1,6 +1,7 @@
 package com.becker.common.util;
 
 import com.becker.common.Range;
+import java.util.Arrays;
 
 
 /**
@@ -11,9 +12,11 @@ import com.becker.common.Range;
  */
 public final class MathUtil {
 
-    public static final double EPS = 0.0000000000001;
+    public static final double EPS = 0.000000000000000001;
     
-    public static final double BIG_EPS = 0.03;
+    public static final double EPS_MEDIUM = 0.00000000001;
+    
+    public static final double EPS_BIG = 0.26;
 
     private MathUtil() {};
 
@@ -43,8 +46,7 @@ public final class MathUtil {
     public static long lcm(long a, long b) {
         return Math.abs(a * b) / gcd(a, b);
     }
-
-
+    
 
     public static long lcm(int[] values) {
 
@@ -67,8 +69,9 @@ public final class MathUtil {
         double x = value *(double) len;
         
         int index0 = (int) x;
-        assert(index0 < len);
+        assert(x <= len) : index0 +" is >= " + len + ". x="+x;
         int index1 = index0 + 1;
+        if (index0 == len) index1 = len; // I think this should never happen
         double xdiff = x - index0;
         assert  (index0 >= 0) : "index0 must be greater than 0, but was "+index0;
         assert(index1 <= len) : "index1 must be less than the size of the array, but was "+index1;
@@ -109,22 +112,27 @@ public final class MathUtil {
         return y0 * mxdiff * mxdiff2 + 3.0 * mxdiff2 *xdiff * y1 + 3.0 *  mxdiff *xdiff2 * y2 + xdiff * xdiff2 * y3;
     }
     
-   private static final double MAX_ERROR_FUNCTION_TABLE_VALUE = 3.4;
+   private static final double MAX_ERROR_FUNCTION_TABLE_VALUE = 5.3;
+   
     /**
      * The gaussian error function table. 
      * See http://eceweb.uccs.edu/Wickert/ece3610/lecture_notes/erf_tables.pdf
-     * for values of x  = 0.0, 0.1, ... 3.4
+     * for values of x  = 0.0, 0.1, ... MAX_ERROR_FUNCTION_TABLE_VALUE
+     * @@ try plotting this in log scale.
      */
     private static final double[] ERROR_FUNCTION = {
-          0.000000,   0.1124629, 0.2227026, 0.3286268, 0.4283924, 0.5204999, 0.6038561, 0.6778012, 0.7421008, 0.7969081, 0.8427007,
-          0.883533,   0.910314,   0.9340079, 0.9522851, 0.9661051, 0.9763484, 0.9837905, 0.9890905, 0.9927904, 0.9953223, 
-          0.9970205, 0.9981372, 0.9988568, 0.9990646, 0.9993115, 0.9995901, 0.99976,     0.99987,     0.99992,     0.99996, 
-          0.99998,     0.99999,     0.999993,   1.0000
+          0.0000000,   0.0563721,   0.11246296,  0.16800,   0.2227026,  0.27633,    0.3286268,    0.37938,    0.4283924,   0.47548,     0.5204999,    0.56332,     0.6038561,    0.64203,    0.6778012,     0.71116,        0.7421008,       0.77067,        0.7969081,       0.82089, 
+          0.8427007,   0.86244,   0.883533,    0.89612,   0.910314,    0.92290,    0.9340079,    0.94376,    0.9522851,   0.95970,     0.9661051,    0.97162,     0.9763484,    0.98038,    0.9837905,     0.98667,        0.9890905,       0.99111,        0.9927904,       0.99418, 
+          0.99532213,   0.996258,   0.9970205,  0.99764,   0.9981372,  0.99854,    0.9988568,    0.99911,    0.9993115,   0.99947,     0.9995901,    0.99969,     0.99976,        0.99982,    0.99987,         0.9999,          0.99992,           0.99994,        0.99995887,         0.99996977878,
+          0.999977894,   0.999983, 0.999988,    0.999991, 0.9999931,  0.9999957, 0.9999975,  0.9999980, 0.9999984,  0.99999870,   0.99999930, 0.99999970,  0.999999840,  0.999999901, 0.9999999350,   0.999999860,  0.999999910,     0.999999931,  0.999999955,    0.999999971, 
+          //    4.0                      4.05                4.1                          4.15                      4.2                       4.25                         4.3                        4.35                      4.4                           4.45                          4.5                                  4.55                              4.6                                4.65                           4.7                                   4.75                            4.8                              4.85                                4.9                                  4.95
+          0.99999998453,   0.999999988, 0.999999993279,  0.999999995601, 0.99999999713,  0.99999999814275, 0.999999998802, 0.999999999231, 0.9999999995088,  0.99999999968776,  0.9999999998024914, 0.999999999875673,  0.9999999999221209,  0.999999999951454, 0.9999999999698866,   0.9999999999814,  0.9999999999885819,   0.9999999999930206,   0.9999999999957546,    0.9999999999974303, 
+          0.99999999999845,  0.9999999999988,   0.99999999999945,   0.9999999999996,   0.999999999999806,  0.9999999999996,  0.99999999999994                                                                   
     };
     
      /**
-      * We expect x to be in the range approximately 0.0, 4.0.
-      * Values outside of 3.3 to 3.3 are 
+      * We expect x to be in the range approximately 0.0, 5.0.
+      * Values outside of -MAX_ERROR_FUNCTION_TABLE_VALUE to MAX_ERROR_FUNCTION_TABLE_VALUE are 
       * Currently just using simple linear interpolation.
       * We could improve by using quadratic interpolation.
       * @param x
@@ -133,7 +141,13 @@ public final class MathUtil {
        
         double sign = (x>=0)? 1.0:-1.0;
         if (Math.abs(x) >  MAX_ERROR_FUNCTION_TABLE_VALUE) {
-            return sign;
+            
+            double v = (1.0 -  (100.0 - Math.abs(x) )* EPS_MEDIUM);
+            if (x>50) {
+                System.out.println("erf("+x+")="+ v);
+            }
+            assert v > 0.0 : " x="+ x + " v="+ v;
+            return sign *v;
         }        
         return sign * linearlyInterpolate((Math.abs(x) / MAX_ERROR_FUNCTION_TABLE_VALUE), ERROR_FUNCTION);
     }
@@ -163,11 +177,12 @@ public final class MathUtil {
      */
     public static double[] createInverseFunction(double[] func, Range xRange) {
         int len = func.length;
-        int lenm1 = len -1;
-        
+        int lenm1 = len - 1;
+        //System.out.println("orig fun=" +Arrays.toString(func));
         double[] invFunc = new double[len];
         int j = 0;
         double xMax = xRange.getMax();
+        assert (func[lenm1] == 1.0) : func[lenm1] + " was not = 1.0";
         for (int i=0; i<len; i++) {     
             double xval = (double)i/lenm1;
             while (j<lenm1 && func[j] <= xval) {
@@ -187,13 +202,16 @@ public final class MathUtil {
                     assert nume == 0;
                     denom = 1.0;
                 }
-                invFunc[i] = xRange.getMin() + (((double)j + nume/denom)/ lenm1) * xRange.getExtent();
-                assert (invFunc[i]<xMax + BIG_EPS): invFunc[i] + " was not less than " + xMax; 
-                if (invFunc[i] > xMax) {
-                    invFunc[i] = xMax;
-                }
+                double y = (((double)(j-1) + nume/denom)/ (double)lenm1);
+                //System.out.println("i="+i+" j=" + j +"  func[j]="+ func[j]  +" nume=" + nume + " denom="+denom +" lenm1=" + lenm1 + " y="+y + " xval="+xval);
+                invFunc[i] = xRange.getMin() + y * xRange.getExtent();
+                assert (invFunc[i]<xMax + EPS_BIG): invFunc[i] + " was not less than " + xMax;                 
             }
         }
+        assert (invFunc[lenm1]>xMax - EPS_BIG): invFunc[lenm1] + " was not greater than " + xMax; 
+        invFunc[lenm1] = xMax;
+        
+        System.out.println("inverse fun=" +Arrays.toString(invFunc));
         return invFunc;
     }
 }

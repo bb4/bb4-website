@@ -25,7 +25,7 @@ public abstract class AbstractRedistributionFunction implements RedistributionFu
     public double getFunctionValue(double value) {
         verifyInRange(value);
         
-        double newValue = redistributionFunction.getFunctionValue(value);   // MathUtil.cubicInterpolate(value, functionMap);
+        double newValue = redistributionFunction.getFunctionValue(value);  
   
         verifyInRange(newValue);
         return newValue;

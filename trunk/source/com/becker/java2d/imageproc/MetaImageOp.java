@@ -108,8 +108,7 @@ public class MetaImageOp {
             String methodName = 
                     "set" +  p.getName().substring(0, 1).toUpperCase() + p.getName().substring(1);
             Method method = filter.getClass().getDeclaredMethod(methodName, p.getType()); // p.getNaturalValue().getClass());
-            //System.out.println("v=" +p.getValue() + "  type="+p.getType() + "  method="+methodName);
-          
+            
             Object[] args = new Object[1];
             Parameter param = p.copy();
             if (randomVariance > 0) {

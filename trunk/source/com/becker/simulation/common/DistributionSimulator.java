@@ -61,6 +61,7 @@ public abstract class DistributionSimulator extends Simulator {
     protected abstract int getXPositionToIncrement();
 
 
+    @Override
     public void paint( Graphics g )
     {
         histogram_.setSize(getWidth(), getHeight());
