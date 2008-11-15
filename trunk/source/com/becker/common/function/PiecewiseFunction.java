@@ -21,9 +21,6 @@ public class PiecewiseFunction implements Function {
     public PiecewiseFunction(double[] xVals, double[] yVals ) {
         xValues = xVals;
         yValues = yVals;     
-        for (int i=0; i< xValues.length; i++) {
-            System.out.println("x="+xValues[i] + " y=" + yValues[i]);
-        }     
         assert xValues.length == yValues.length;
     }
   
@@ -71,5 +68,13 @@ public class PiecewiseFunction implements Function {
             double yValm1 = yVals[i - 1];
             return yValm1 + ratio * (yVals[i] -  yValm1);
         }
+    }
+    
+    public String toString() {
+        StringBuilder bldr = new StringBuilder("PiecewiseFunction: ");
+        for (int i=0; i< xValues.length; i++) {
+            bldr.append("x="+xValues[i] + " y=" + yValues[i]);
+        }     
+        return bldr.toString();
     }
 }

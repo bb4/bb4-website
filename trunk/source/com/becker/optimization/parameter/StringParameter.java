@@ -72,6 +72,10 @@ public class StringParameter extends IntegerParameter
        return values_;
     }
    
+   protected boolean isOrdered() {
+        return false;
+    }
+   
    public Class getType() {
         return String.class; 
     }

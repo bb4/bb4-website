@@ -7,14 +7,13 @@ import com.becker.optimization.parameter.ui.ParameterWidget;
 import java.util.Random;
 
 /**
- *  represents an integer parameter to an algorithm
+ *  represents an integer parameter in an algorithm
  *
  *  @author Barry Becker
  */
 public class IntegerParameter extends AbstractParameter
 {
-
-    public IntegerParameter( int val, int minVal, int maxVal, String paramName )
+    public IntegerParameter(int val, int minVal, int maxVal, String paramName )
     {
         super((double)val, (double)minVal, (double)maxVal, paramName, true);    
     }
@@ -40,6 +39,25 @@ public class IntegerParameter extends AbstractParameter
     public void randomizeValue(Random rand) {
         value_ = getMinValue() + rand.nextDouble() * (getRange() + 1.0);
     }
+    
+    @Override
+    public void tweakValue(double r, Random rand)
+    {      
+        if (isOrdered()) {
+            super.tweakValue(r, rand);
+        }
+        else {
+            double rr = rand.nextDouble();
+            if (rr < r) {
+                // if not ordered, then just randomize with probability r
+                randomizeValue(rand) ;
+            }
+        }
+   }
+    
+    protected boolean isOrdered() {
+        return true;
+    }
 
     @Override
     public void setValue(double value) {
@@ -62,7 +80,7 @@ public class IntegerParameter extends AbstractParameter
             value = rv * (getRange() + (1.0 - MathUtil.EPS)) + minValue_;
             //System.out.println("stored="+v + " redistr rv="+rv + " getValue="+value);
         }
-        return (int) value;
+        return (int) value; 
     }  
 
     @Override

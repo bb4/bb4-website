@@ -8,9 +8,8 @@ import java.awt.geom.Rectangle2D;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 
-public class PatchworkComponent
-        extends JComponent
-        implements Printable
+public class PatchworkComponent extends JComponent
+                                                         implements Printable
 {
 
     private float mSide = 36;

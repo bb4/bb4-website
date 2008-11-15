@@ -1,193 +1,56 @@
 package com.becker.java2d.imageproc;
 
-import com.becker.optimization.parameter.ParameterChangeListener;
-import com.becker.java2d.Utilities;
 import com.becker.common.*;
-import com.becker.ui.ApplicationFrame;
 import com.becker.optimization.parameter.Parameter;
 
-import com.becker.ui.ImageListPanel;
-import java.awt.BorderLayout;
-import java.awt.Button;
-import java.awt.Checkbox;
-import java.awt.Dimension;
-import java.awt.FileDialog;
-import java.awt.Font;
-import java.awt.Frame;
-import java.awt.GridLayout;
-import java.awt.Label;
-import java.awt.Panel;
-import java.awt.Image;
 import java.awt.event.*;
 import java.awt.image.*;
 import java.util.*;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
- * Allows you to mix filters together using a genetic algorithm
- * in order to produce very interesting results.
- * 
- * TODO:
- *  - perfect candidate for parallelization
- *    - Brian big hair took 106 seconds to run caustics
- *  - mouse over to see full image or Min of image and (1000*1000)
- *  - do single parent exploration by clicking on images.
+ * Create a set of images from a single MetaImageOp
  */
-public class FilterBreeder extends ApplicationFrame 
-                                   implements ItemListener, ActionListener, ParameterChangeListener
+public class FilterBreeder                                          
 {
-    private static int NUM_CHILD_IMAGES = 20;
-    
-    private Frame mImageListFrame;
-    private ImageListPanel imageListPanel;
-    private BufferedImage currentImage;
-    
-    private ProcessingOperators operations;
-    
-    private Checkbox accumulateCheckbox;
-    private Label statusLabel = new Label( "" );
-    private ParameterPanel paramPanel;
-    private java.awt.List filterList;
-    
+    private MetaImageOp metaOp;
+    private float variance;
+            
+    private BufferedImage imageToBreed;
+   
     private Parallelizer parallelizer = new Parallelizer();
     
-    private List<BufferedImage> images = 
-                Collections.synchronizedList(new ArrayList<BufferedImage>(NUM_CHILD_IMAGES));
-        
+    private Map<BufferedImage, List<Parameter>> imgToParamsMap;
 
-    public FilterBreeder( String imageFile )
+    /**
+     * Create permutations from the input image based on the metaOp passed in.
+     * @param image image to breed
+     * @param op metaOp to breed based on.
+     * @param variance amount of variation to have in bred images.
+     */
+    public FilterBreeder(BufferedImage image,  MetaImageOp op, float variance)
     {
-        super( "Filter Breeder" );
-        operations = new ProcessingOperators();
-        createImageFrame( imageFile );
-        initializeUI();
-    }
-
-    /**
-     * The image to be manipulated goes in a separate frame.
-     * @param imageFile
-     */
-    private void createImageFrame( String imageFile )
-    {              
-        System.out.println("path="+imageFile);
-        currentImage = getBufferedImage(imageFile);
-                 
-        // also create image list panel
-        imageListPanel = new ImageListPanel();
-        imageListPanel.setMaxNumSelections(2);
-        imageListPanel.setPreferredSize(new Dimension(700, 300));
-        mImageListFrame = new Frame( imageFile );
-        mImageListFrame.setLayout( new BorderLayout() );
-        mImageListFrame.add( imageListPanel, BorderLayout.CENTER );
-        
-        Utilities.sizeContainerToComponent( mImageListFrame, imageListPanel );
-        //Utilities.centerFrame( mImageListFrame );
-        mImageListFrame.setVisible( true );          
-    }
-    
-    private BufferedImage getBufferedImage(String path) {
-        Image image = Utilities.blockingLoad( path );
-        return  Utilities.makeBufferedImage( image );
-    }
-
-    @Override
-    protected void createUI()
-    {        
-        super.createUI();
-        setFont( new Font( "Serif", Font.PLAIN, 12 ) );
-        setLayout( new BorderLayout() );
-        // Set our location to the left of the image frame.
-        this.setMinimumSize( new Dimension(300, 500 )); 
-        accumulateCheckbox = new Checkbox( "Accumulate", false );
-        statusLabel = new Label( "" );    
-    }
-    
-    protected void initializeUI()
-    {                
-        filterList = operations.getSortedKeys();        
-        // When an item is selected, do the corresponding transformation.
-        filterList.addItemListener(this);
-
-        Button loadButton = new Button( "Load..." );
-        loadButton.addActionListener(this);
-
-        Panel bottom = new Panel( new GridLayout( 2, 1 ) );
-        Panel topBottom = new Panel();
-        topBottom.add( accumulateCheckbox );
-        topBottom.add( loadButton );
-        bottom.add( topBottom );
-        bottom.add( statusLabel );        
-        
-        // add placeholder param paner
-        paramPanel = new ParameterPanel(null);
-        add(paramPanel, BorderLayout.CENTER);
-        add( filterList, BorderLayout.WEST );
-        add( bottom, BorderLayout.SOUTH );
-        this.pack();
+        metaOp = op;
+        imageToBreed = image;
+        this.variance = variance;
+        imgToParamsMap = new HashMap<BufferedImage, List<Parameter>> ();          
     }
     
     /**
-     * Called when an item in the list of transformations is called.
-     * @param ie
+     * 
+     * @param numChildImages
+     * @return list of bred images
      */
-    public void itemStateChanged( ItemEvent ie ) {
-               
-        if ( ie.getStateChange() != ItemEvent.SELECTED ) 
-            return;
-        String key = filterList.getSelectedItem();
-        MetaImageOp metaOp = operations.getOperation( key );
-       
-        // don't allow doing anything while processing
-        filterList.setEnabled( false );
-        accumulateCheckbox.setEnabled( false );
+    public List<BufferedImage> breedImages(int numChildImages)  {
+
+        List<BufferedImage> images = 
+                Collections.synchronizedList(new ArrayList<BufferedImage>(numChildImages));
+            
+        imgToParamsMap.clear();        
         
-        applyImageOperator(metaOp);      
-        
-        
-        filterList.setEnabled( true );
-        accumulateCheckbox.setEnabled( true );
-        
-        replaceParameterUI(metaOp);        
-    }
-    
-    private void replaceParameterUI(MetaImageOp metaOp) {
-        // now show ui for modifying the parameters for this op
-        this.remove(paramPanel);
-        paramPanel = new ParameterPanel(metaOp.getParameters());
-        // We will get called whenever a paramerter is tweeked
-        paramPanel.addParameterChangeListener(this);
-        this.add(paramPanel, BorderLayout.CENTER);
-        this.pack();
-    }
-    
-    /**
-     * Called whenever one of the UI parameter widgets was changed by the user.
-     * @param param
-     */
-    public void parameterChanged(Parameter param)
-    {
-        // we could use param.getName() to get the filter, but its just the currently selected one.
-        String key = filterList.getSelectedItem();
-        MetaImageOp metaOp = operations.getOperation( key );
-        //BufferedImageOp op = metaOp.getInstance();
-        applyImageOperator(metaOp);        
-    }
-    
-    private void applyImageOperator(MetaImageOp metaOp)  {
- 
-        String key = filterList.getSelectedItem();
-        statusLabel.setText( "Performing " + key + "..." );
-        // create a bunch of child permutations and add them to the imageListPanel
-        images.clear();
-        
-        long time = System.currentTimeMillis();
-        List<Callable> filterTasks = new ArrayList<Callable>(NUM_CHILD_IMAGES);
-        for (int i=0; i<NUM_CHILD_IMAGES; i++) {
+        List<Callable> filterTasks = new ArrayList<Callable>(numChildImages);
+        for (int i=0; i<numChildImages; i++) {
             filterTasks.add(new Worker(metaOp));           
         }       
         
@@ -195,41 +58,20 @@ public class FilterBreeder extends ApplicationFrame
         
         for (Future<BufferedImage> f : imageFutures) {
             try {
-                BufferedImage img = f.get(3, TimeUnit.SECONDS);
+                BufferedImage img = f.get();
                 images.add(img);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
         }
-        int elapsedTime =(int) ((System.currentTimeMillis() - time)/1000);
-        statusLabel.setText( "Performing " + key + "...done in " + elapsedTime +" seconds" );
-         
-        imageListPanel.setImageList(images);         
-    }
-          
-    
-     /**
-      * Called when the load button is pressed.
-      * @param ae
-      */
-     public void actionPerformed( ActionEvent ae ) {
-         
-        FileDialog fd = new FileDialog( FilterBreeder.this    );
-        fd.setVisible(true);
-        if ( fd.getFile() == null ) return;
-        String path = fd.getDirectory() + fd.getFile();
         
-        currentImage = getBufferedImage( path );     
+        return images;
     }
-
-    public static void main( String[] args )
-    {
-        String imageFile = Utilities.DEFAULT_IMAGE_DIR + "Ethol with Roses.small.jpg";
-        if ( args.length > 0 )  {
-            imageFile = args[0];
-        }
-        new FilterBreeder( imageFile );
+    
+    public Map<BufferedImage, List<Parameter>> getImgToParamsMap() {
+        return imgToParamsMap;
     }
+      
     
     /**
      * Runs one of the chunks.
@@ -239,11 +81,14 @@ public class FilterBreeder extends ApplicationFrame
         private MetaImageOp metaOp;
         
         public Worker(MetaImageOp metaOp) {
-           this.metaOp = metaOp;
+            // need to make a copy or other parallel thread may step on our internal data.
+            this.metaOp = metaOp.copy();
         }
         
         public BufferedImage call() {  
-            BufferedImage img = metaOp.getRandomInstance(0.2f).filter( currentImage, null );   
+            BufferedImage img = metaOp.getRandomInstance(variance).filter( imageToBreed, null  );   
+            // remember the parameters that were used to create this instance;
+            imgToParamsMap.put(img, metaOp.getLastUsedParameters());
             return img;         
         }
     }

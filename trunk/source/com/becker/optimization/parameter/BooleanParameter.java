@@ -33,15 +33,23 @@ public class BooleanParameter extends IntegerParameter
         return p;
     }
     
+    @Override
     public Object getNaturalValue() {
         // true if getValue is odd.
         return Boolean.valueOf(((int)getValue() % 2) == 1);
    }
-
+    
+   @Override
+   protected boolean isOrdered() {
+        return false;
+   }
+   
+    @Override
     public Class getType() {
         return boolean.class; 
     }
     
+    @Override
     public ParameterWidget createWidget(ParameterChangeListener listener) {
         return new BooleanParameterWidget(this, listener);
     }

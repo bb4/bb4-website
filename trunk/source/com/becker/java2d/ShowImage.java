@@ -3,8 +3,7 @@ package com.becker.java2d;
 import java.applet.Applet;
 import java.awt.*;
 
-public class ShowImage
-        extends Applet
+public class ShowImage extends Applet
 {
     private Image mImage;
 

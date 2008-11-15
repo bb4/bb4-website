@@ -77,26 +77,27 @@ public abstract class AbstractParameter implements Parameter
     }
 
     /**
+     * Teak the value of this paramteter a little. If r is big, you may be tweaking it a lot.
      * 
      * @param r  the size of the (1 std deviation) gaussian neighborhood to select a random nbr from
      *     r is relative to each parameter range (in other words scaled by it).
      */
     public void tweakValue(double r, Random rand)
     {           
+        assert Math.abs(r) < 1.0;
         if (r == 0 ) {
             return;  // no change in the param.
         }
-        double change = rand.nextGaussian() * r * getRange();
+        
+        double change = (rand.nextGaussian()-0.5) * r * getRange();
         value_ += change;
         if (value_ > getMaxValue()) {
               value_ = getMaxValue();
         }
         else if (value_ < getMinValue()) {
              value_ = getMinValue();
-        }
-        //if ("radius".equals(getName()))
-        //   System.out.println("New tweeked value for " + this.getName() +" = " + value_ + " will result in realValue="+getValue() +" rfunc="+redistributionFunction_);
-        //setValue(value_);
+        }  
+        setValue(value_);
    }
     
     public void randomizeValue(Random rand) {

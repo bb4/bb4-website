@@ -5,8 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.print.*;
 
-public class FilePrinter
-        extends JFrame
+public class FilePrinter extends JFrame
 {
     public static void main( String[] args )
     {

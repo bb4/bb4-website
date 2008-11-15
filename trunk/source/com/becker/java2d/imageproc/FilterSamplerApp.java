@@ -1,7 +1,7 @@
 package com.becker.java2d.imageproc;
 
 import com.becker.optimization.parameter.ParameterChangeListener;
-import com.becker.java2d.SplitImageComponent;
+import com.becker.java2d.ui.SplitImageComponent;
 import com.becker.java2d.Utilities;
 import com.becker.common.*;
 import com.becker.ui.ApplicationFrame;
@@ -16,7 +16,7 @@ import java.util.*;
  * Allows you to test filters and modify their parameters on the fly.
  * Based on the Sampler program that comes with Java2D by Knudsen.
  */
-public class FilterSampler extends ApplicationFrame 
+public class FilterSamplerApp extends ApplicationFrame 
                                    implements ItemListener, ActionListener, ParameterChangeListener
 {
     private Frame mImageFrame;
@@ -28,7 +28,7 @@ public class FilterSampler extends ApplicationFrame
     private ParameterPanel paramPanel;
     private java.awt.List filterList;
 
-    public FilterSampler( String imageFile )
+    public FilterSamplerApp( String imageFile )
     {
         super( "Filter Sampler" );
         operations = new ProcessingOperators();
@@ -128,7 +128,7 @@ public class FilterSampler extends ApplicationFrame
     private void replaceParameterUI(MetaImageOp metaOp) {
         // now show ui for modifying the parameters for this op
         this.remove(paramPanel);
-        paramPanel = new ParameterPanel(metaOp.getParameters());
+        paramPanel = new ParameterPanel(metaOp.getBaseParameters());
         // We will get called whenever a paramerter is tweeked
         paramPanel.addParameterChangeListener(this);
         this.add(paramPanel, BorderLayout.CENTER);
@@ -168,7 +168,7 @@ public class FilterSampler extends ApplicationFrame
       */
      public void actionPerformed( ActionEvent ae ) {
          
-        FileDialog fd = new FileDialog( FilterSampler.this  );
+        FileDialog fd = new FileDialog( FilterSamplerApp.this    );
         fd.setVisible(true);
         if ( fd.getFile() == null ) return;
         String path = fd.getDirectory() + fd.getFile();
@@ -185,6 +185,6 @@ public class FilterSampler extends ApplicationFrame
         String imageFile = Utilities.DEFAULT_IMAGE_DIR + "Ethol with Roses.small.jpg";
         if ( args.length > 0 ) 
             imageFile = args[0];
-        new FilterSampler( imageFile );
+        new FilterSamplerApp( imageFile );
     }
 }
