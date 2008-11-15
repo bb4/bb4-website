@@ -1,4 +1,4 @@
-package com.becker.java2d;
+package com.becker.java2d.ui;
 
 import com.becker.ui.ApplicationFrame;
 
@@ -6,8 +6,7 @@ import java.awt.*;
 import java.awt.image.ImageObserver;
 import java.net.URL;
 
-public class RightSizer
-        extends ApplicationFrame
+public class RightSizer extends ApplicationFrame
 {
     private Image mImage;
 

@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.becker.java2d.imageproc;
 
 import com.becker.optimization.parameter.BooleanParameter;
@@ -13,6 +8,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.lang.reflect.*;
+import java.util.ArrayList;
 import java.util.Random;
 
 
@@ -26,15 +22,17 @@ public class MetaImageOp {
     private Class<? extends BufferedImageOp> opClass;
     private BufferedImageOp op;
     
-    /** list of params based on the params specified in the xml file. */
+    /** list of base params based for creating concrete imageOps. */
     private List<Parameter> parameters;
+    
+    /** last used list of params used to create recent imageOp. */
+    private List<Parameter> lastUsedParameters;
    
     private boolean isDynamic;
     
     /** Ensures that all randomness is repeatable. */
     private static Random RANDOM = new Random(1);
     
-    public FilterType type;
     
     /**
      * Use this constructor if no parameters.
@@ -77,7 +75,7 @@ public class MetaImageOp {
         try {
 
             this.op = opClass.newInstance();
-            setParameters(op, randomVariance);            
+            lastUsedParameters = tweakParameters(op, randomVariance);            
             
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -86,8 +84,20 @@ public class MetaImageOp {
         return op;
     }
     
-    public List<Parameter> getParameters() {
+    public List<Parameter> getBaseParameters() {
         return parameters;
+    }
+    
+    public List<Parameter> getLastUsedParameters() {
+        return lastUsedParameters;
+    }
+    
+    public MetaImageOp copy() {
+        if (isDynamic) {
+             return new MetaImageOp(opClass, parameters);
+        } else {
+             return new MetaImageOp(op);
+        }       
     }
     
     /**
@@ -99,10 +109,12 @@ public class MetaImageOp {
      * @throws java.lang.IllegalArgumentException
      * @throws java.lang.reflect.InvocationTargetException
      */
-    private void setParameters(BufferedImageOp filter, float randomVariance) 
+    private synchronized List<Parameter> tweakParameters(BufferedImageOp filter, float randomVariance) 
             throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException
     {
         //System.out.println("op="+filter.getClass().getSimpleName());
+        List<Parameter> newParams = new ArrayList<Parameter>(parameters.size());
+        
         for (Parameter p : parameters) {
             // the name must match the property (e.g. foo will be set using setFoo)
             String methodName = 
@@ -111,33 +123,35 @@ public class MetaImageOp {
             
             Object[] args = new Object[1];
             Parameter param = p.copy();
-            if (randomVariance > 0) {
-                param.tweakValue(randomVariance, RANDOM);
+            
+            if (randomVariance > 0) {        
+                    param.tweakValue(randomVariance, RANDOM);
             }
+            newParams.add(param);
             
             // @@ This should work with autoboxing, but does not for some reason, so we resort to ugly case statement.
-            //args[0] = p.getNaturalValue();
+            //args[0] = param.getNaturalValue();
             
-            Class type = p.getType();
-            if (type.equals(float.class)) {
+            Class paramType = param.getType();
+            if (paramType.equals(float.class)) {
                 args[0] = (float) param.getValue(); 
             }
-            else if (type.equals(int.class)) {
+            else if (paramType.equals(int.class)) {
                 args[0] = (int) param.getValue();
             }
-            else if (type.equals(boolean.class)) {
-                args[0] = ((BooleanParameter)p).getNaturalValue();
+            else if (paramType.equals(boolean.class)) {
+                args[0] = ((BooleanParameter)param).getNaturalValue();
             }
-            else if (type.equals(String.class)) {
+            else if (paramType.equals(String.class)) {
                 args[0] = param.getNaturalValue();
             }
             else  {
-                throw new IllegalArgumentException("Unexpected param type = "+type);
+                throw new IllegalArgumentException("Unexpected param type = "+paramType);
             }
            
             //System.out.println("arg="+args[0] + " type="+args[0].getClass().getName() +" v="+p.getValue());
             method.invoke(filter, args); // p.getType().cast(p.getValue()));            
         } 
-        
+        return newParams;        
     }
 }

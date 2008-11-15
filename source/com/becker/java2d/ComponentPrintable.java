@@ -5,8 +5,7 @@ import java.awt.*;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 
-public class ComponentPrintable
-        implements Printable
+public class ComponentPrintable implements Printable
 {
     private Component mComponent;
 

@@ -1,5 +1,6 @@
-package com.becker.java2d;
+package com.becker.java2d.ui;
 
+import com.becker.java2d.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;

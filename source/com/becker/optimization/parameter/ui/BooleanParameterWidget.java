@@ -19,6 +19,8 @@ import javax.swing.JCheckBox;
  */
 public class BooleanParameterWidget extends ParameterWidget implements ItemListener {
 
+    private JCheckBox cb;
+    
     public BooleanParameterWidget(Parameter param, ParameterChangeListener listener) {
         super(param, listener);
     }
@@ -28,7 +30,7 @@ public class BooleanParameterWidget extends ParameterWidget implements ItemListe
      */
     protected void addChildren() {
              
-            JCheckBox cb = new JCheckBox();            
+            cb = new JCheckBox();            
             cb.setText(parameter.getName());
        
             BooleanParameter bparam = (BooleanParameter) parameter;
@@ -42,11 +44,15 @@ public class BooleanParameterWidget extends ParameterWidget implements ItemListe
       * @param e the item event
       */
     public void itemStateChanged(ItemEvent e) { 
-        JCheckBox cb = (JCheckBox) e.getSource();
         parameter.setValue(cb.isSelected()?1:0);
         doNotification();
     }
     
+    public void refreshInternal() {
+        cb.setSelected((Boolean)parameter.getNaturalValue());
+    }
+    
+    @Override
     protected int getMaxHeight() { 
         return 20; 
     }

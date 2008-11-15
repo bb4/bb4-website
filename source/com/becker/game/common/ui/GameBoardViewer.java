@@ -386,6 +386,7 @@ public abstract class GameBoardViewer
     /**
      * This overrides Component's processEvent.
      */
+    @Override
     public void processEvent( AWTEvent evt )
     {
         if ( evt instanceof GameChangedEvent ) {

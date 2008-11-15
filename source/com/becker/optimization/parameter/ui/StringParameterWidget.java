@@ -21,6 +21,7 @@ import javax.swing.JComboBox;
  */
 public class StringParameterWidget extends ParameterWidget implements ActionListener {
 
+    private JComboBox dropdown;
     
     public StringParameterWidget(Parameter param, ParameterChangeListener listener) {
         super(param, listener);
@@ -33,7 +34,7 @@ public class StringParameterWidget extends ParameterWidget implements ActionList
              
            // create a dropdown
             StringParameter sparam = (StringParameter) parameter;
-            JComboBox dropdown = new JComboBox(sparam.getStringValues().toArray());
+            dropdown = new JComboBox(sparam.getStringValues().toArray());
             dropdown.setName(parameter.getName());
             dropdown.setMaximumSize(new Dimension(200, 20));
             //System.out.println("values= " + sparam.getStringValues().toArray());
@@ -47,9 +48,12 @@ public class StringParameterWidget extends ParameterWidget implements ActionList
       * @param e the item event
       */
     public void actionPerformed(ActionEvent e) {    
-        JComboBox dropdown = (JComboBox) e.getSource();
         parameter.setValue(dropdown.getSelectedIndex());
         doNotification();
+    }
+    
+    public void refreshInternal() {
+        dropdown.setSelectedItem((String)parameter.getNaturalValue());
     }
     
     protected int getMaxHeight() { 

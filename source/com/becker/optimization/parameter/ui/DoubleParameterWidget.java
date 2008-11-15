@@ -18,6 +18,8 @@ import java.awt.BorderLayout;
  */
 public class DoubleParameterWidget extends ParameterWidget implements SliderChangeListener {
    
+    private LabeledSlider slider_;
+    
     public DoubleParameterWidget(Parameter param, ParameterChangeListener listener) {
         super(param, listener);
     }
@@ -27,14 +29,14 @@ public class DoubleParameterWidget extends ParameterWidget implements SliderChan
      */
     protected void addChildren() {
         
-             LabeledSlider slider = 
+             slider_ = 
                      new LabeledSlider(parameter.getName(), parameter.getValue(), 
                                                    parameter.getMinValue(), parameter.getMaxValue());
              if (parameter.isIntegerOnly()) {
-                 slider.setShowAsInteger(true);
+                 slider_.setShowAsInteger(true);
              }
-             slider.addChangeListener(this);             
-             add(slider, BorderLayout.CENTER);
+             slider_.addChangeListener(this);             
+             add(slider_, BorderLayout.CENTER);
     }
 
     /**
@@ -43,5 +45,9 @@ public class DoubleParameterWidget extends ParameterWidget implements SliderChan
     public void sliderChanged(LabeledSlider slider) {    
          parameter.setValue(slider.getValue());
          doNotification();        
+    }
+    
+    public void refreshInternal() {
+        slider_.setValue(parameter.getValue());
     }
 }

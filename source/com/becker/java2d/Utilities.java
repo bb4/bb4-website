@@ -71,6 +71,12 @@ public static final String DEFAULT_IMAGE_DIR =
         g2.drawImage( image, null, null );
         return bufferedImage;
     }
+    
+    public static BufferedImage getBufferedImage(String path) {
+        Image image = Utilities.blockingLoad( path );
+        return  Utilities.makeBufferedImage( image );
+    }
+
 
     public static Frame getNonClearingFrame( String name, Component c )
     {

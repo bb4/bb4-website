@@ -14,7 +14,6 @@ import java.util.*;
 
 /**
  * A set of  available image processing operations.
- * 
  */
 public class ProcessingOperators 
 {
@@ -176,6 +175,7 @@ public class ProcessingOperators
         params.add(new BooleanParameter(true, "useImageColors"));
         params.add(new DoubleParameter(0.9, 0.01, 2.0, "turbulence"));
         params.add(new DoubleParameter(1.0, 0.01, 3.0, "scaling"));    
+        params.add(new BooleanParameter(true, "useImageColors"));    
         mOps.put("Plasma", new MetaImageOp(PlasmaFilter.class, params));     
        
         params = new ArrayList<Parameter>();
@@ -193,7 +193,7 @@ public class ProcessingOperators
        
         params = new ArrayList<Parameter>();
         params.add(new StringParameter(EdgeAction.WRAP, EdgeAction.values(), "edgeAction")); 
-        params.add(new DoubleParameter(1.0, 0.1, 5.0, "scale"));
+        params.add(new DoubleParameter(2.0, 0.5, 6.0, "scale"));
         mOps.put("Diffuse", new MetaImageOp(DiffuseFilter.class, params));     
        
         params = new ArrayList<Parameter>();       
@@ -205,12 +205,12 @@ public class ProcessingOperators
         params = new ArrayList<Parameter>();       
         params.add(new StringParameter(LightFilter.BumpShapeType.NONE, LightFilter.BumpShapeType.values(), "bumpShape"));
         params.add(new DoubleParameter(.5, 0.1, 2.0, "bumpHeight"));
-        params.add(new DoubleParameter(0.0, 0.0, 2.0, "bumpSoftness"));
+        params.add(new DoubleParameter(0.0, 0.0, 3.0, "bumpSoftness"));
         params.add(new DoubleParameter(10000.0, 10.0, 10000.0, "viewDistance"));
         mOps.put("Light", new MetaImageOp(LightFilter.class, params));   
        
         params = new ArrayList<Parameter>();       
-        params.add(new DoubleParameter(1.0, 0.5, 3.0, "amount"));
+        params.add(new DoubleParameter(1.0, 0.8, 5.0, "amount"));
         params.add(new DoubleParameter(1.0, 0.5, 16.0, "turbulence"));
         params.add(new DoubleParameter(6.0, 1.0, 100.0, "xScale"));
         params.add(new DoubleParameter(6.0, 1.0, 100.0, "yScale"));
@@ -222,7 +222,7 @@ public class ProcessingOperators
         params.add(new DoubleParameter(32.0, 8.0, 128.0, "scale"));
         params.add(new DoubleParameter(0.0, 0.0, Math.PI, "angle"));
         params.add(new DoubleParameter(1.0, 0.5, 10.0, "stretch"));       
-        params.add(new DoubleParameter(1.0, 0.5, 3.0, "brightness"));   
+        params.add(new DoubleParameter(1.0, 0.5, 6.0, "brightness"));   
         mOps.put("MarbleTexture", new MetaImageOp(MarbleTexFilter.class, params));   
        
         params = new ArrayList<Parameter>();       
@@ -246,7 +246,7 @@ public class ProcessingOperators
         params.add(new BooleanParameter(false, "shadowOnly"));
         params.add(new BooleanParameter(false, "addMargins"));
         params.add(new DoubleParameter(0.5, 0.0, 1.0, "opacity"));
-        params.add(new DoubleParameter(5.0, 0.0, 10.0, "radius2"));
+        params.add(new DoubleParameter(5.0, 0.0, 10.0, "radius"));
         params.add(new DoubleParameter(Math.PI*6/4, 0.0, 2*Math.PI, "angle"));    
         params.add(new DoubleParameter(5.0, 1.0, 10.0, "distance")); 
         params.add(new IntegerParameter(0xff220066, 0xff000000, 0xffffffff, "shadowColor"));

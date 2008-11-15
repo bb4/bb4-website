@@ -4,6 +4,7 @@ import com.becker.common.*;
 import com.becker.optimization.parameter.Parameter;
 
 import com.becker.optimization.parameter.ParameterChangeListener;
+import com.becker.optimization.parameter.ui.ParameterWidget;
 import java.awt.event.*;
 import java.awt.image.*;
 import java.util.*;
@@ -39,7 +40,28 @@ public class ParameterPanel extends JScrollPane
         }
         this.setViewportView(viewPanel);   
     }
-
+    
+    /**
+     * @param params set of parameters that match the number and type of the original
+     */
+    public void updateParameters( List<Parameter> params)
+    {
+        if (params == null) return;
+        assert params.size() == parameters.size();
+        for (int i=0; i<params.size(); i++) {
+            
+            Parameter newp = params.get(i);
+            Parameter currentp = parameters.get(i);
+            assert newp.getName().equals(currentp.getName());
+            currentp.setValue(newp.getValue());
+        }
+        int numKids = viewPanel.getComponentCount();
+        for (int i=0; i<numKids; i++) {
+            ParameterWidget w = (ParameterWidget) viewPanel.getComponent(i);
+            w.refresh();
+        }
+    }         
+   
     /**
      * Add a unique UI element for manipulating each individual parameter.
      */

@@ -7,9 +7,8 @@ import java.awt.print.Printable;
 import java.io.*;
 import java.util.Vector;
 
-public class FilePageRenderer
-        extends JComponent
-        implements Printable
+public class FilePageRenderer extends JComponent
+                                                   implements Printable
 {
     private int mCurrentPage;
     // mLines contains all the lines of the file.

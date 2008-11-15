@@ -2,7 +2,7 @@ package com.becker.java2d.examples;
 
 import com.becker.ui.ApplicationFrame;
 import com.becker.java2d.Utilities;
-import com.becker.java2d.SplitImageComponent;
+import com.becker.java2d.ui.SplitImageComponent;
 
 import java.awt.*;
 import java.awt.image.*;
