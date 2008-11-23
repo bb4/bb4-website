@@ -395,10 +395,10 @@ public class TestEyes extends GoTestCase {
         GoGroup biggestBlackGroup =getBiggestGroup(true);
         GoGroup biggestWhiteGroup = getBiggestGroup(false);
 
-        EyeCounts eyeCounts = getEyeCounts(biggestBlackGroup.getEyes());
+        EyeCounts eyeCounts = getEyeCounts(biggestBlackGroup.getEyes(null));
         Assert.assertTrue("Actual Black Eye counts were \n"+eyeCounts+" but was expecting \n"+ expectedBlackEyes,
                               eyeCounts.equals(expectedBlackEyes));
-        eyeCounts = getEyeCounts(biggestWhiteGroup.getEyes());
+        eyeCounts = getEyeCounts(biggestWhiteGroup.getEyes(null));
         Assert.assertTrue("Actual White Eye counts were \n"+eyeCounts+" but was expecting \n"+ expectedWhiteEyes,
                               eyeCounts.equals(expectedWhiteEyes));
     }

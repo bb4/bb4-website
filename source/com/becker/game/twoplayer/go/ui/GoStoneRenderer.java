@@ -62,6 +62,7 @@ public final class GoStoneRenderer extends TwoPlayerPieceRenderer
     /**
      * @return the color the pieces for player1.   (black)
      */
+    @Override
     public Color getPlayer1Color()
     {
         return PLAYER1_STONE_COLOR;
@@ -70,6 +71,7 @@ public final class GoStoneRenderer extends TwoPlayerPieceRenderer
      /**
      * @return the color the pieces for player2.   (white)
      */
+    @Override
     public Color getPlayer2Color()
     {
         return PLAYER2_STONE_COLOR;
@@ -95,6 +97,7 @@ public final class GoStoneRenderer extends TwoPlayerPieceRenderer
      * @param g2 graphics context
      * @param position of the piece to render
      */
+    @Override
     public void render( Graphics2D g2, BoardPosition position, int cellSize, Board board)
     {
         GoBoardPosition stonePos = (GoBoardPosition)position;

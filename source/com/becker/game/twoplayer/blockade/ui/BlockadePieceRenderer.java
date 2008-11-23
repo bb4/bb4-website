@@ -40,6 +40,7 @@ class BlockadePieceRenderer extends TwoPlayerPieceRenderer
     /**
      * this draws the actual piece.
      */
+    @Override
     public void render( Graphics2D g2, BoardPosition position, int cellSize, Board b)
     {
         GamePiece piece = position.getPiece();

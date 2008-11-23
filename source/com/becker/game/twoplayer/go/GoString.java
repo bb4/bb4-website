@@ -18,6 +18,9 @@ import java.util.*;
 public class GoString extends GoSet
 {
 
+    /** a set of the stones that are in the string */
+    private Set<GoBoardPosition> members_;
+    
     /** The group to which this string belongs. */
     protected GoGroup group_;
 
@@ -37,7 +40,7 @@ public class GoString extends GoSet
     {
         assert ( stone.isOccupied() );
         ownedByPlayer1_ = stone.getPiece().isOwnedByPlayer1();
-        members_.add( stone );
+        getMembers().add( stone );
         stone.setString( this );
         group_ = null;
         initializeLiberties(board);
@@ -59,6 +62,17 @@ public class GoString extends GoSet
             addMemberInternal( pos, board);
         }
         initializeLiberties(board);
+    }
+    
+    /**
+     * @return  the hashSet containing the members
+     */
+    public Set<GoBoardPosition> getMembers() {
+        return members_;
+    }
+    
+    protected void initializeMembers() {
+        members_ = new HashSet<GoBoardPosition>();
     }
 
     public final void setGroup( GoGroup group )
@@ -88,7 +102,7 @@ public class GoString extends GoSet
         assert ( stone.isOccupied()): "trying to add empty space to string. stone=" + stone ;
         assert ( stone.getPiece().isOwnedByPlayer1() == ownedByPlayer1_):
                 "stones added to a string must have like ownership";
-        if ( members_.contains( stone ) ) {
+        if ( getMembers().contains( stone ) ) {
             // this case can happen sometimes.
             // For example if the new stone completes a loop and self-joins the string to itself
             //GameContext.log( 2, "Warning: the string, " + this + ", already contains the stone " + stone );
@@ -102,7 +116,7 @@ public class GoString extends GoSet
         }
 
         stone.setString( this );
-        members_.add( stone );
+        getMembers().add( stone );
     }
 
     /**
@@ -116,7 +130,7 @@ public class GoString extends GoSet
             return;
         }
 
-        Set stringMembers = new HashSet();
+        Set<GoBoardPosition> stringMembers = new HashSet<GoBoardPosition>();
         stringMembers.addAll(string.getMembers());
         // must remove these after iterating otherwise we get a ConcurrentModificationException
         string.getGroup().remove(string);
@@ -144,10 +158,10 @@ public class GoString extends GoSet
      */
     public final void remove( GoBoardPosition stone, GoBoard board )
     {
-        boolean removed = members_.remove( stone );
+        boolean removed = getMembers().remove( stone );
         assert (removed) : "failed to remove "+stone+" from"+ this;
         stone.setString(null);
-        if ( members_.isEmpty()) {
+        if ( getMembers().isEmpty()) {
             group_.remove( this );
         }
         initializeLiberties(board);
@@ -164,7 +178,7 @@ public class GoString extends GoSet
         while ( it.hasNext() ) {
             GoBoardPosition stone = (GoBoardPosition) it.next();
             // hitting this from UpdateStringsAfterRemoving
-            //assert ( members_.contains( stone )): "ERROR: GoString.remove: " + stone + " is not a subset of \n" + this;
+            //assert ( getMembers().contains( stone )): "ERROR: GoString.remove: " + stone + " is not a subset of \n" + this;
             remove( stone, board );
         }
         initializeLiberties(board);
@@ -180,15 +194,15 @@ public class GoString extends GoSet
      * return the set of liberty positions that the string has
      * @param board
      */
-    public final Set getLiberties(GoBoard board)
+    public final Set<GoBoardPosition> getLiberties(GoBoard board)
     {
         return liberties_;
     }
 
     private Set initializeLiberties(GoBoard board) {
-        liberties_ = new HashSet();
+        liberties_ = new HashSet<GoBoardPosition>();
 
-        Iterator it = members_.iterator();
+        Iterator it = getMembers().iterator();
         while ( it.hasNext() ) {
             GoBoardPosition stone = (GoBoardPosition) it.next();
             addLiberties( stone, liberties_, board );
@@ -207,7 +221,7 @@ public class GoString extends GoSet
          } else {
              assert (!liberties_.contains(libertyPos)) : this + " already had " + libertyPos +" as a liberty and we were not expecting that. Liberties_=" + liberties_;
              liberties_.add(libertyPos);
-             if (members_.size() == 1)
+             if (getMembers().size() == 1)
                  assert(liberties_.size() <= 4) :this +" has too many liberties for one stone :"+ liberties_ +  " just added :"+libertyPos;
          }
     }
@@ -226,7 +240,7 @@ public class GoString extends GoSet
     /**
      * only add liberties for this stone if they are not already in the set
      */
-    private static void addLiberties( GoBoardPosition stone, Set liberties, GoBoard board )
+    private static void addLiberties( GoBoardPosition stone, Set<GoBoardPosition> liberties, GoBoard board )
     {
         int r = stone.getRow();
         int c = stone.getCol();
@@ -240,11 +254,11 @@ public class GoString extends GoSet
             addLiberty( board.getPosition( r, c + 1 ), liberties );
     }
 
-    private static void addLiberty( BoardPosition libertySpace, Set liberties )
+    private static void addLiberty( BoardPosition libertySpace, Set<GoBoardPosition> liberties )
     {
         // this assumes a HashSet will not allow you to add the same object twice (no dupes)
         if ( libertySpace.isUnoccupied() )
-            liberties.add( libertySpace );
+            liberties.add( (GoBoardPosition)libertySpace );
     }
 
     /** set the health of members equal to the specified value
@@ -252,7 +266,7 @@ public class GoString extends GoSet
      */
     public final void updateTerritory( float health )
     {
-        Iterator it = members_.iterator();
+        Iterator it = getMembers().iterator();
         while ( it.hasNext() ) {
             GoBoardPosition pos = (GoBoardPosition) it.next();
             GoStone stone = (GoStone)pos.getPiece();
@@ -282,7 +296,7 @@ public class GoString extends GoSet
      */
     public final void unvisit()
     {
-        Iterator it = members_.iterator();
+        Iterator it = getMembers().iterator();
         while ( it.hasNext() ) {
             GoBoardPosition stone = (GoBoardPosition) it.next();
             stone.setVisited( false );
@@ -297,10 +311,11 @@ public class GoString extends GoSet
     /**
      * @return  a string representation for the string.
      */
+    @Override
     public String toString()
     {
         StringBuffer sb = new StringBuffer( getPrintPrefix() );
-        Iterator it = members_.iterator();
+        Iterator it = getMembers().iterator();
         if ( it.hasNext() ) {
             GoBoardPosition p = (GoBoardPosition) it.next();
             sb.append( p.toString() );
@@ -320,7 +335,7 @@ public class GoString extends GoSet
      */
     public final boolean areAnyBlank()
     {
-        final Iterator it = members_.iterator();
+        final Iterator it = getMembers().iterator();
         while ( it.hasNext() ) {
             final GoBoardPosition stone = (GoBoardPosition) it.next();
             if ( stone.isUnoccupied() )
@@ -334,13 +349,13 @@ public class GoString extends GoSet
      */
     public final void confirmValid( GoBoard b )
     {
-        Iterator it = members_.iterator();
+        Iterator it = getMembers().iterator();
         if ( it.hasNext() ) {
             List list = b.findStringFromInitialPosition( (GoBoardPosition) it.next(), true );
             // confirm that all member_ stones are in the string
             while ( it.hasNext() ) {
                 GoBoardPosition s = (GoBoardPosition) it.next();
-                assert ( list.contains( s )): list + " does not contain " + s + ". members_ =" + members_ ;
+                assert ( list.contains( s )): list + " does not contain " + s + ". getMembers() =" + getMembers() ;
             }
         }
     }
@@ -350,7 +365,7 @@ public class GoString extends GoSet
      */
     public final void confirmOwnedByOnlyOnePlayer()
     {
-        Iterator it = members_.iterator();
+        Iterator it = getMembers().iterator();
 
         if ( it.hasNext() ) {
             GoBoardPosition s = (GoBoardPosition) it.next();

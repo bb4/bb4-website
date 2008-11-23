@@ -46,8 +46,13 @@ public class ParameterPanel extends JScrollPane
      */
     public void updateParameters( List<Parameter> params)
     {
-        if (params == null) return;
-        assert params.size() == parameters.size();
+        if (params == null) 
+            return;
+        if (parameters != null) {
+            assert params.size() == parameters.size() : 
+                "old param size = "+parameters.size() + " new param size = " + params.size();
+        }
+        
         for (int i=0; i<params.size(); i++) {
             
             Parameter newp = params.get(i);

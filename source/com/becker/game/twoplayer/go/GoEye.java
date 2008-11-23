@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.go;
 import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GameContext;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -21,6 +22,9 @@ import java.util.Set;
  */
 public final class GoEye extends GoString implements GoMember
 {
+    /** a set of the stones that are in the eye space. */
+    private Set<GoBoardPosition> members_;
+    
     // For some eyes (like big eyes) there is a key point that will make a single eye if
     // the opponent plays first, or 2 eyes if you play first
     private GoBoardPosition keyPoint_ = null;
@@ -50,6 +54,19 @@ public final class GoEye extends GoString implements GoMember
             return "unknown eye type";
         return type_.toString();
     }
+    
+    @Override
+    protected void initializeMembers() {
+        members_ = new HashSet<GoBoardPosition>();
+    }
+    
+    /**
+     * @return  the hashSet containing the members
+     */
+    @Override
+    public Set<GoBoardPosition> getMembers() {
+        return members_;
+    }
 
     /**
      * Add a space to the eye string.
@@ -57,13 +74,13 @@ public final class GoEye extends GoString implements GoMember
      */
     @Override protected void addMemberInternal(GoBoardPosition space, GoBoard board)
     {
-        if ( members_.contains( space ) ) {
+        if ( getMembers().contains( space ) ) {
             GameContext.log( 1, "Warning: the eye, " + this + ", already contains " + space );
             assert ( (space.getString() == null) || (this == space.getString())):
                     "bad space or bad owning string" + space.getString();
         }
         space.setEye( this );
-        members_.add( space );
+        getMembers().add( space );
     }
 
     /**
@@ -218,6 +235,7 @@ public final class GoEye extends GoString implements GoMember
      *  If the difference in health between the stones is great, then they are not really enemies
      *  because one of them is dead.
      */
+    @Override
     protected boolean isEnemy( GoBoardPosition pos)
     {
         assert (group_ != null): "group for "+this+" is null";
@@ -263,7 +281,7 @@ public final class GoEye extends GoString implements GoMember
      */
     public void clear()
     {
-         Iterator it = members_.iterator();
+         Iterator it = getMembers().iterator();
          while (it.hasNext()) {
              GoBoardPosition pos = (GoBoardPosition)it.next();
              pos.setEye(null);
@@ -273,6 +291,7 @@ public final class GoEye extends GoString implements GoMember
          setGroup(null);
     }
 
+    @Override
     protected String getPrintPrefix()
     {
         return " Eye: " + getEyeTypeName() + ": ";

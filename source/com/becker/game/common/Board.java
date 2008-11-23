@@ -89,9 +89,10 @@ public abstract class Board implements BoardInterface, Cloneable
      */
     public final Move getLastMove()
     {
-        if ( moveList_ == null || moveList_.isEmpty() )
+        if ( moveList_ == null || moveList_.isEmpty() ) {
             return null;
-        return moveList_.get(moveList_.size()-1);
+        }
+        return moveList_.getLast();  //get(moveList_.size()-1);
     }
 
 
@@ -131,6 +132,7 @@ public abstract class Board implements BoardInterface, Cloneable
      * @return a deep copy of the board.
      * @throws CloneNotSupportedException if this object should not be cloned.
      */
+    @Override
     public Object clone() throws CloneNotSupportedException
     {
        Object clone = super.clone();

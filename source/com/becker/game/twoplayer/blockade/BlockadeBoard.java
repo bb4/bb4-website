@@ -41,6 +41,7 @@ public class BlockadeBoard extends TwoPlayerBoard
     /**
      * reset the board to its initial state.
      */
+    @Override
     public void reset()
     {
         super.reset();
@@ -75,6 +76,7 @@ public class BlockadeBoard extends TwoPlayerBoard
     /**
      * Can't change the size of a Blockade board.
      */
+    @Override
     public final void setSize( int numRows, int numCols )
     {
         numRows_ = numRows;

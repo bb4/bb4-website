@@ -14,14 +14,13 @@ import static com.becker.game.twoplayer.go.GoControllerConstants.*;
  * For example, we update strings, and groups (and eventually armies) after each move.
  * After updating we can use these structures to estimate territory for each side.
  *
- *
  * @author Barry Becker
  */
 public final class GoBoard extends TwoPlayerBoard
 {
 
     // this is a set of active groups. Groups are composed of strings.
-    private Set groups_ = null;
+    private Set<GoGroup> groups_;
 
     // this is a set of active armies. Armies are composed of groups.
     // armies not implemented yet.
@@ -33,7 +32,7 @@ public final class GoBoard extends TwoPlayerBoard
 
     private CandidateMoves candidateMoves_;
 
-    private HandicapStones handicap_ = null;
+    private HandicapStones handicap_;
 
     private int numWhiteStonesCaptured_ = 0;
     private int numBlackStonesCaptured_ = 0;
@@ -48,7 +47,7 @@ public final class GoBoard extends TwoPlayerBoard
     public GoBoard( int numRows, int numCols, int numHandicapStones )
     {
         // need to synchronize this to avoid concurrent modification error during search.
-        groups_ = Collections.synchronizedSet(new HashSet(10));
+        groups_ = Collections.synchronizedSet(new HashSet<GoGroup>(10));
         //armies_ = new HashSet(0);
         setSize( numRows, numCols );
         setHandicap(numHandicapStones);
@@ -57,6 +56,7 @@ public final class GoBoard extends TwoPlayerBoard
     /**
      * start over from the beggining and reinitialize everything.
      */
+    @Override
     public void reset()
     {
         super.reset();
@@ -81,19 +81,20 @@ public final class GoBoard extends TwoPlayerBoard
     /**
       * @return a deep copy of the board.
       */
+    @Override
      public Object clone() throws CloneNotSupportedException
      {
         Object clone = super.clone();
 
         // make copies of all the groups and armies
         if (groups_!=null) {
-            ((GoBoard)clone).groups_ = new HashSet(10);
+            ((GoBoard)clone).groups_ = new HashSet<GoGroup>(10);
 
-            Set groupsCopy = ((GoBoard)clone).groups_;
+            Set<GoGroup> groupsCopy = ((GoBoard)clone).groups_;
 
             // new way to interate
-            for (Object g : groups_)  {
-                groupsCopy.add(((GoGroup)g).clone());
+            for (GoGroup g : groups_)  {
+                groupsCopy.add((GoGroup)g.clone());
             }
         }
 
@@ -109,6 +110,7 @@ public final class GoBoard extends TwoPlayerBoard
      *
      * @@ Bill says just create new board instead of calling reset or resize
      */
+    @Override
     public void setSize( int numRows, int numCols )
     {
         numRows_ = numRows;
@@ -187,6 +189,7 @@ public final class GoBoard extends TwoPlayerBoard
     }
 
    
+    @Override
     protected GameProfiler createProfiler() {     
         return new GoProfiler();
     }
@@ -198,6 +201,7 @@ public final class GoBoard extends TwoPlayerBoard
      *
      * @return false if the move is somehow invalid
      */
+    @Override
     protected boolean makeInternalMove( Move move )
     {
         getProfiler().startMakeMove();
@@ -267,7 +271,7 @@ public final class GoBoard extends TwoPlayerBoard
     public int getNumCaptures(boolean player1StonesCaptured) {
         return player1StonesCaptured ? numBlackStonesCaptured_ : numWhiteStonesCaptured_ ;
     }
-
+    
 
     public float getTerritoryDelta()
     {
@@ -315,7 +319,7 @@ public final class GoBoard extends TwoPlayerBoard
             it = groups_.iterator();
             while ( it.hasNext() ) {
                 GoGroup g = (GoGroup) it.next();
-                float health = g.calculateRelativeHealth( this, lastMove, getProfiler());
+                float health = g.calculateRelativeHealth(this, lastMove, (GoProfiler)getProfiler());
                 g.updateTerritory( health );
                 delta += health * g.getNumStones();
             }
@@ -344,63 +348,7 @@ public final class GoBoard extends TwoPlayerBoard
         return GoBoardUtil.updateEmptyRegions(this);
     }
 
-
-    /**
-     * determine a set of stones that are tightly connected to the specified stone.
-     * This set of stones constitutes a string, but since stones cannot belong to more than
-     * one string we must return a List.
-     * @param stone he stone from which to begin searching for the string
-     * @param returnToUnvisitedState if true then the stomes will all be marked unvisited when done searching
-     */
-    public List findStringFromInitialPosition( GoBoardPosition stone, boolean returnToUnvisitedState )
-    {
-        return findStringFromInitialPosition(
-                stone, stone.getPiece().isOwnedByPlayer1(), returnToUnvisitedState, NeighborType.OCCUPIED,
-                1, numRows_, 1, numCols_ );
-    }
-
-    public List findStringFromInitialPosition( GoBoardPosition stone,  boolean friendOwnedByP1,
-                                                     boolean returnToUnvisitedState, NeighborType type,
-                                                     Box box) {
-         return findStringFromInitialPosition(
-                stone, friendOwnedByP1, returnToUnvisitedState, type,
-                box.getMinRow(), box.getMaxRow(), box.getMinCol(), box.getMaxCol() );
-    }
-
-    /**
-     * determines a string connected from a seed stone within a specified bounding area
-     * @return string from seed stone
-     */
-    public List findStringFromInitialPosition( GoBoardPosition stone,  boolean friendOwnedByP1,
-                                                     boolean returnToUnvisitedState, NeighborType type,
-                                                     int rMin, int rMax, int cMin, int cMax )
-    {
-        getProfiler().start(GoProfiler.FIND_STRINGS);
-        List stones = new ArrayList();
-        // perform a breadth first search  until all found.
-        // use the visited flag to indicate that a stone has been added to the string
-        List stack = new LinkedList();
-        assert ( stone.getRow() >= rMin && stone.getRow() <= rMax && stone.getCol() >= cMin && stone.getCol() <= cMax ):
-                "rMin="+rMin +" rMax="+rMax+" cMin="+cMin+" cMax="+cMax+"   r="+stone.getRow()+" c="+stone.getCol();
-        assert ( !stone.isVisited() ): "stone="+stone;
-        stack.add( 0, stone );
-        while ( !stack.isEmpty() ) {
-            GoBoardPosition s = (GoBoardPosition) stack.remove( 0 );
-            if ( !s.isVisited() ) {
-                s.setVisited( true );
-                stones.add( s );
-                pushStringNeighbors(s, friendOwnedByP1, stack, true, type,  new Box(rMin, cMin, rMax, cMax));
-            }
-        }
-        if ( returnToUnvisitedState )
-            GoBoardUtil.unvisitPositions( stones );
-        // GoBoardUtil.confirmNoDupes( stone, stones );
-        getProfiler().stop(GoProfiler.FIND_STRINGS);
-
-        return stones;
-    }
-
-
+    
     /**
      * get an estimate of the territory for the specified player.
      * This estimate is computed by summing all spaces in eyes + dead opponent stones that are still on the board in eyes.
@@ -446,6 +394,45 @@ public final class GoBoard extends TwoPlayerBoard
         return (int)territoryEstimate;
     }
 
+    /**
+     * determine a set of stones that are tightly connected to the specified stone.
+     * This set of stones constitutes a string, but since stones cannot belong to more than
+     * one string we must return a List.
+     * @param stone he stone from which to begin searching for the string
+     * @param returnToUnvisitedState if true then the stomes will all be marked unvisited when done searching
+     */
+    public List findStringFromInitialPosition( GoBoardPosition stone, boolean returnToUnvisitedState )
+    {
+        return findStringFromInitialPosition(
+                stone, stone.getPiece().isOwnedByPlayer1(), returnToUnvisitedState, NeighborType.OCCUPIED,
+                1, numRows_, 1, numCols_ );
+    }
+
+    public List findStringFromInitialPosition( GoBoardPosition stone,  boolean friendOwnedByP1,
+                                                     boolean returnToUnvisitedState, NeighborType type,
+                                                     Box box) {
+         return findStringFromInitialPosition(
+                stone, friendOwnedByP1, returnToUnvisitedState, type,
+                box.getMinRow(), box.getMaxRow(), box.getMinCol(), box.getMaxCol() );
+    }
+    
+    /**
+     * determines a string connected from a seed stone within a specified bounding area
+     * @return string from seed stone
+     */
+    public List findStringFromInitialPosition( GoBoardPosition stone,  boolean friendOwnedByP1,
+                                                     boolean returnToUnvisitedState, NeighborType type,
+                                                     int rMin, int rMax, int cMin, int cMax )
+    {
+        getProfiler().start(GoProfiler.FIND_STRINGS);
+        NeighborAnalyzer ba = new NeighborAnalyzer(this);
+        List<GoBoardPosition> stones = 
+                ba.findStringFromInitialPosition(stone, friendOwnedByP1, returnToUnvisitedState, 
+                                                                  type, rMin, rMax, cMin, cMax);
+        getProfiler().stop(GoProfiler.FIND_STRINGS);
+
+        return stones;
+    }
 
     /**
      * get neighboring stones of the specified stone.
@@ -465,26 +452,10 @@ public final class GoBoard extends TwoPlayerBoard
      * @param neighborType (EYE, NOT_FRIEND etc)
      * @return a set of stones that are immediate (nobi) neighbors.
      */
-    public Set getNobiNeighbors( GoBoardPosition stone, boolean friendOwnedByP1, NeighborType neighborType )
+    public Set<GoBoardPosition> getNobiNeighbors( GoBoardPosition stone, boolean friendOwnedByP1, NeighborType neighborType )
     {
-        Set nbrs = new HashSet();
-        int row = stone.getRow();
-        int col = stone.getCol();
-
-        if ( row > 1 )
-            GoBoardUtil.getNobiNeighbor( (GoBoardPosition) positions_[row - 1][col],
-                                         friendOwnedByP1, nbrs, neighborType );
-        if ( row + 1 <= numRows_ )
-            GoBoardUtil.getNobiNeighbor( (GoBoardPosition) positions_[row + 1][col],
-                                         friendOwnedByP1, nbrs, neighborType );
-        if ( col > 1 )
-            GoBoardUtil.getNobiNeighbor( (GoBoardPosition) positions_[row][col - 1],
-                                         friendOwnedByP1, nbrs, neighborType );
-        if ( col + 1 <= numCols_ )
-            GoBoardUtil.getNobiNeighbor( (GoBoardPosition) positions_[row][col + 1],
-                                         friendOwnedByP1, nbrs, neighborType );
-
-        return nbrs;
+        NeighborAnalyzer ba = new NeighborAnalyzer(this);
+        return ba.getNobiNeighbors(stone, friendOwnedByP1, neighborType);
     }
 
     /**
@@ -499,15 +470,13 @@ public final class GoBoard extends TwoPlayerBoard
      * @param friendPlayer1 typically stone.isOwnedByPlayer1 value of stone unless it is blank.
      * @param samePlayerOnly if true then find group nbrs that are have same ownership as friendPlayer1
      */
-    public Set getGroupNeighbors( GoBoardPosition stone, boolean friendPlayer1, boolean samePlayerOnly )
+    public Set<GoBoardPosition> getGroupNeighbors( GoBoardPosition stone, boolean friendPlayer1, boolean samePlayerOnly )
     {
         getProfiler().start(GoProfiler.GET_GROUP_NBRS);
-        List stack = new LinkedList();
-
-        pushGroupNeighbors( stone, friendPlayer1, stack, samePlayerOnly );
-        Set nbrStones = new HashSet();
-         nbrStones.addAll( stack );
-
+       
+        NeighborAnalyzer ba = new NeighborAnalyzer(this);
+        Set<GoBoardPosition> nbrStones = ba.getGroupNeighbors(stone, friendPlayer1, samePlayerOnly);
+     
         getProfiler().stop(GoProfiler.GET_GROUP_NBRS);
         return nbrStones;
     }
@@ -522,165 +491,6 @@ public final class GoBoard extends TwoPlayerBoard
         return getGroupNeighbors( position, position.getPiece().isOwnedByPlayer1(), samePlayerOnly );
     }
 
-
-    /**
-     * Check all nobi neighbors (at most 4).
-     * @param s the stone of which to check the neighbors of
-     * @param stack the stack to add unvisited neighbors
-     * @return number of stones added to the stack
-     */
-    private int pushStringNeighbors( GoBoardPosition s, boolean friendPlayer1, List stack,
-                                     boolean samePlayerOnly, NeighborType type,
-                                     Box bbox )  {
-        int r = s.getRow();
-        int c = s.getCol();
-        int numPushed = 0;
-        Location loc = new Location(r, c);
-
-        if ( r > 1 )
-            numPushed += checkNeighbor( loc, -1, 0, friendPlayer1, stack, samePlayerOnly, type, bbox );
-        if ( c > 1 )
-            numPushed += checkNeighbor( loc, 0, -1, friendPlayer1, stack, samePlayerOnly, type, bbox );
-        if ( r + 1 <= numRows_ )
-            numPushed += checkNeighbor( loc, 1, 0, friendPlayer1, stack, samePlayerOnly, type, bbox );
-        if ( c + 1 <= numCols_ )
-            numPushed += checkNeighbor( loc, 0, 1, friendPlayer1, stack, samePlayerOnly, type, bbox );
-
-        return numPushed;
-    }
-
-    int pushStringNeighbors( GoBoardPosition s, boolean friendPlayer1, List stack, boolean samePlayerOnly )
-    {
-        return pushStringNeighbors( s, friendPlayer1, stack, samePlayerOnly,
-                                    NeighborType.OCCUPIED, new Box(1, 1, numRows_, numCols_));
-    }
-
-    /**
-     * Check all diagonal neighbors (at most 4).
-     * @param s the stone of which to check the neighbors of
-     * @param stack the stack to add unvisited neighbors
-     * @return number of stones added to the stack
-     */
-    private int pushEnemyDiagonalNeighbors( GoBoardPosition s, boolean friendPlayer1, List stack )
-    {
-        int r = s.getRow();
-        int c = s.getCol();
-        int numPushed = 0;
-        if ( r > 1 && c > 1 )
-            numPushed += checkDiagonalNeighbor( r, c, -1, -1, friendPlayer1, false, stack );
-        if ( r + 1 <= numRows_ && c > 1 )
-            numPushed += checkDiagonalNeighbor( r, c, 1, -1, friendPlayer1, false, stack );
-        if ( r + 1 <= numRows_ && c + 1 <= numCols_ )
-            numPushed += checkDiagonalNeighbor( r, c, 1, 1, friendPlayer1, false, stack );
-        if ( r > 1 && c + 1 <= numCols_ )
-            numPushed += checkDiagonalNeighbor( r, c, -1, 1, friendPlayer1, false, stack );
-
-        return numPushed;
-    }
-
-    /**
-     * Check all non-nobi group neighbors.
-     * @param pos the stone of which to check the neighbors of
-     * @param stack the stack to add unvisited neighbors
-     * @param sameSideOnly if true push pure group nbrs of the same side only.
-     * @return number of stones added to the stack
-     */
-    private int pushPureGroupNeighbors( GoBoardPosition pos, boolean friendPlayer1, boolean sameSideOnly, List stack )
-    {
-        int r = pos.getRow();
-        int c = pos.getCol();
-        int numPushed = 0;
-
-        // if the stone of which we are checking nbrs is in atari, then there are no pure group nbrs because an
-        // atari counts as a cut
-        if (pos.isInAtari(this))
-          return 0;
-
-
-        // now check the diagonals
-        if ( r > 1 && c > 1 )
-            numPushed += checkDiagonalNeighbor( r, c, -1, -1, friendPlayer1, sameSideOnly, stack );
-        if ( r > 1 && c + 1 <= numCols_ )
-            numPushed += checkDiagonalNeighbor( r, c, -1, 1, friendPlayer1, sameSideOnly, stack );
-        if ( r + 1 <= numRows_ && c + 1 <= numCols_ )
-            numPushed += checkDiagonalNeighbor( r, c, 1, 1, friendPlayer1, sameSideOnly, stack );
-        if ( r + 1 <= numRows_ && c > 1 )
-            numPushed += checkDiagonalNeighbor( r, c, 1, -1, friendPlayer1, sameSideOnly, stack );
-
-        // now check the 1-space jumps
-        if ( r > 2 )
-            numPushed += checkOneSpaceNeighbor( r, c, -2, 0, friendPlayer1, sameSideOnly, stack );
-        if ( c > 2 )
-            numPushed += checkOneSpaceNeighbor( r, c, 0, -2, friendPlayer1, sameSideOnly, stack );
-        if ( r + 2 <= numRows_ )
-            numPushed += checkOneSpaceNeighbor( r, c, 2, 0, friendPlayer1, sameSideOnly, stack );
-        if ( c + 2 <= numCols_ )
-            numPushed += checkOneSpaceNeighbor( r, c, 0, 2, friendPlayer1, sameSideOnly, stack );
-
-        // now check knights move neighbors
-        if ( (r > 2) && (c > 1) )
-            numPushed += checkKogeimaNeighbor( r, c, -2, -1, friendPlayer1,  sameSideOnly, stack );
-        if ( (r > 2) && (c + 1 <= numCols_) )
-            numPushed += checkKogeimaNeighbor( r, c, -2, 1, friendPlayer1, sameSideOnly, stack );
-
-        if ( (r + 2 <= numRows_) && (c > 1) )
-            numPushed += checkKogeimaNeighbor( r, c, 2, -1, friendPlayer1, sameSideOnly, stack );
-        if ( (r + 2 <= numRows_) && (c + 1 <= numCols_) )
-            numPushed += checkKogeimaNeighbor( r, c, 2, 1, friendPlayer1, sameSideOnly, stack );
-
-        if ( (r > 1) && (c > 2) )
-            numPushed += checkKogeimaNeighbor( r, c, -1, -2, friendPlayer1, sameSideOnly, stack );
-        if ( (r + 1 <= numRows_) && (c > 2) )
-            numPushed += checkKogeimaNeighbor( r, c, 1, -2, friendPlayer1, sameSideOnly, stack );
-
-        if ( (r > 1) && (c + 2 <= numCols_) )
-            numPushed += checkKogeimaNeighbor( r, c, -1, 2, friendPlayer1, sameSideOnly, stack );
-        if ( (r + 1 <= numRows_) && (c + 2 <= numCols_) )
-            numPushed += checkKogeimaNeighbor( r, c, 1, 2, friendPlayer1, sameSideOnly, stack );
-
-        return numPushed;
-    }
-
-
-    /**
-     * Check all 20 neighbors (including diagonals, 1-space jumps, and knights moves).
-     * Make sure diagonals are not cut nor 1-space jumps peeped.
-     *
-     * @param s the position containing a stone of which to check the neighbors of.
-     * @param friendPlayer1 side to find groups stones for.
-     * @param stack the stack to add unvisited neighbors.
-     * @return number of stones added to the stack.
-     */
-    private int pushGroupNeighbors( GoBoardPosition s, boolean friendPlayer1, List stack )
-    {
-        return pushGroupNeighbors( s, friendPlayer1, stack, true );
-    }
-
-    /**
-     * Check all 20 neighbors (including diagonals, 1-space jumps, and knights moves).
-     * Make sure diagonals and 1-space jumps are not cut.
-     * Don't push a group neighbor if it is part of a string which is in atari
-     *
-     * @param s the position of a stone of which to check the neighbors of.
-     * @param friendPlayer1 side to find group stones for.
-     * @param stack the stack on which we add unvisited neighbors.
-     * @return number of stones added to the stack.
-     */
-    private int pushGroupNeighbors( GoBoardPosition s, boolean friendPlayer1, List stack, boolean samePlayerOnly )
-    {
-        // start with the nobi string nbrs
-        int numPushed = pushStringNeighbors( s, friendPlayer1, stack, samePlayerOnly );
-
-        // now push the non-nobi group neighbors
-        if ( !samePlayerOnly )
-            numPushed += pushEnemyDiagonalNeighbors( s, friendPlayer1, stack );
-
-        // we only find pure group neighbors of the same color
-        numPushed += pushPureGroupNeighbors( s, friendPlayer1, true, stack );
-
-        return numPushed;
-    }
-
     /**
      * determine a set of stones that are loosely connected to the specified stone.
      * This set of stones constitutes a group, but since stones cannot belong to more than
@@ -689,7 +499,7 @@ public final class GoBoard extends TwoPlayerBoard
      * @param stone the stone to search from for group neighbors.
      * @return the list of stones in the group that was found.
      */
-    public List findGroupFromInitialPosition( GoBoardPosition stone )
+    public List<GoBoardPosition> findGroupFromInitialPosition( GoBoardPosition stone )
     {
         return findGroupFromInitialPosition( stone, true );
     }
@@ -704,207 +514,18 @@ public final class GoBoard extends TwoPlayerBoard
      * @param returnToUnvisitedState if true, then mark everything unvisited when done.
      * @return the list of stones in the group that was found.
      */
-    public List findGroupFromInitialPosition( GoBoardPosition stone, boolean returnToUnvisitedState )
+    public List<GoBoardPosition> findGroupFromInitialPosition( GoBoardPosition stone, boolean returnToUnvisitedState )
     {
         getProfiler().start(GoProfiler.FIND_GROUPS);
-        List stones = new ArrayList();
-        // perform a breadth first search  until all found.
-        // use the visited flag to indicate that a stone has been added to the group
-        List stack = new LinkedList();
-        stack.add( 0, stone );
-        while ( !stack.isEmpty() ) {
-            GoBoardPosition s = (GoBoardPosition) stack.remove( 0 );
-            if ( !s.isVisited()) {
-                s.setVisited( true );
-                assert (s.getPiece().isOwnedByPlayer1()==stone.getPiece().isOwnedByPlayer1()):
-                        s+" does not have same ownership as "+stone;
-                stones.add( s );
-                pushGroupNeighbors( s, s.getPiece().isOwnedByPlayer1(), stack );
-            }
-        }
-        if ( returnToUnvisitedState ) {
-            GoBoardUtil.unvisitPositions( stones );
-            if (GameContext.getDebugMode() > 1)
-                GoBoardUtil.confirmAllUnvisited(this);
-        }
+        
+        NeighborAnalyzer ba = new NeighborAnalyzer(this);
+        List<GoBoardPosition> stones = ba.findGroupFromInitialPosition(stone, returnToUnvisitedState);
+   
         getProfiler().stop(GoProfiler.FIND_GROUPS);
         return stones;
     }
 
-    /**
-     * Check an immediately adjacent (nobi) nbr.
-     *
-     * @param r row
-     * @param c column
-     * @param rowOffset offset from row indicating position of ngbor to check
-     * @param colOffset offset from column indicating position of ngbor to check
-     * @param friendOwnedByPlayer1 need to specify this when the position checked, s, is empty and has undefined ownership.
-     * @param stack if nbr fits criteria then add to stack
-     * @param samePlayerOnly  mus the nbr be owned by the same player only
-     * @param type one of REGULAR_PIECE, UNOCCUPIED, or NOT_FRIEND
-     * @return  1 if this is a valid neighbor of the type that we want
-     */
-    private int checkNeighbor( int r, int c, int rowOffset, int colOffset,
-                                    boolean friendOwnedByPlayer1, List stack, boolean samePlayerOnly, NeighborType type)
-    {
-        GoBoardPosition nbr = (GoBoardPosition) positions_[r + rowOffset][c + colOffset];
-
-        switch (type) {
-            case OCCUPIED:  // occupied black or white
-                if ( !nbr.isVisited() && nbr.isOccupied() &&
-                     (!samePlayerOnly || nbr.getPiece().isOwnedByPlayer1() == friendOwnedByPlayer1)) {
-                    stack.add( 0, nbr );
-                    return 1;
-                }
-                break;
-           case UNOCCUPIED:  // empty space
-                if ( !nbr.isVisited() && nbr.isUnoccupied() ) {
-                    stack.add( 0, nbr );
-                    return 1;
-                }
-                break;
-           case NOT_FRIEND:   // blank or enemy
-                if ( !nbr.isVisited() &&
-                    ( nbr.isUnoccupied() ||
-                       ( nbr.isOccupied() && (nbr.getPiece().isOwnedByPlayer1() != friendOwnedByPlayer1))
-                    ))  {
-                    stack.add( 0, nbr );
-                    return 1;
-                }
-                break;
-           default : assert false: "unknown or unsupported neighbor type:"+type;
-        }
-        return 0;
-    }
-
-
-    /**
-     * return 1 if this is a valid neighbor according to specification.
-     * These are the immediately adjacent (nobi) nbrs within the specified rectangular bounds
-     */
-    private int checkNeighbor( Location loc, int rowOffset, int colOffset,
-                               boolean friendOwnedByPlayer1, List stack, boolean samePlayerOnly, NeighborType type,
-                               Box bbox )
-    {
-        int r = loc.getRow();
-        int c = loc.getCol();
-        GoBoardPosition nbr = (GoBoardPosition) positions_[r + rowOffset][c + colOffset];
-        if ( nbr.getRow() >= bbox.getMinRow() && nbr.getRow() <= bbox.getMaxRow()
-          && nbr.getCol() >= bbox.getMinCol() && nbr.getCol() <= bbox.getMaxCol() ) {
-            return checkNeighbor( r, c, rowOffset, colOffset, friendOwnedByPlayer1, stack, samePlayerOnly, type );
-        }
-        else {
-            return 0;
-        }
-    }
-
-    /**
-     *  We allow these connections as long as the diagonal has not been fully cut.
-     *  i.e. not an opponent stone on both sides of the cut (or the diag stone is not in atari).
-     *
-     *  @param sameSideOnly if true then push nbrs on the same side, else push enemy nbrs
-     */
-    private int checkDiagonalNeighbor( int r, int c, int rowOffset, int colOffset,
-                                       boolean friendPlayer1, boolean sameSideOnly, List stack )
-    {
-        GoBoardPosition nbr = (GoBoardPosition) positions_[r + rowOffset][c + colOffset];
-        if (nbr.isUnoccupied()) {
-            return 0;
-        }
-        // don't add it if it is in atari
-        // but this leads to a problem in that ataried stones then don't belong to a group.
-        if  (nbr.isInAtari(this)) {
-            return 0;
-        }
-        // determine the side we are checking for (one or the other)
-        boolean sideTest = sameSideOnly ? friendPlayer1 : !friendPlayer1;
-        if ( (nbr.getPiece().isOwnedByPlayer1() == sideTest) && !nbr.isVisited()) {
-            if (!((positions_[r + rowOffset][c].isOccupied() &&
-                   positions_[r + rowOffset][c].getPiece().isOwnedByPlayer1() != sideTest) &&
-                   (positions_[r][c + colOffset].isOccupied() &&
-                   positions_[r][c + colOffset].getPiece().isOwnedByPlayer1() != sideTest)) )  {
-                // then not cut
-                 stack.add( 0, nbr );
-                return 1;
-            }
-        }
-        return 0;
-    }
-
-    /**
-     * Connected only add if not completely cut (there's no enemy stone in the middle).
-     */
-    private int checkOneSpaceNeighbor( int r, int c, int rowOffset, int colOffset,
-                                       boolean friendPlayer1, boolean samePlayerOnly, List stack )
-    {
-        GoBoardPosition nbr = (GoBoardPosition) positions_[r + rowOffset][c + colOffset];
-        // don't add it if it is in atari
-        if (nbr.isInAtari(this))
-            return 0;
-        if ( nbr.isOccupied() &&
-                (!samePlayerOnly || nbr.getPiece().isOwnedByPlayer1() == friendPlayer1) && !nbr.isVisited() ) {
-            // we consider the link cut if there is an opponent piece between the 2 stones
-            //     eg:          *|*
-            boolean cut;
-            if ( rowOffset == 0 ) {
-                int col = c + (colOffset >> 1);
-                cut =  (positions_[r][col].isOccupied() &&
-                        (positions_[r][col].getPiece().isOwnedByPlayer1() != friendPlayer1));
-            }
-            else {
-                int row = r + (rowOffset >> 1);
-                cut =   (positions_[row][c].isOccupied() &&
-                        (positions_[row][c].getPiece().isOwnedByPlayer1() != friendPlayer1));
-            }
-            if ( !cut ) {
-                stack.add( 0, nbr );
-                return 1;
-            }
-        }
-        return 0;
-    }
-
-    /**
-     * for the knight's move we consider it cut if there is an enemy stone at the base.
-     */
-    private int checkKogeimaNeighbor( int r, int c, int rowOffset, int colOffset,
-                                      boolean friendPlayer1, boolean sameSideOnly, List stack )
-    {
-        if ( !inBounds( r + rowOffset, c + colOffset )) {
-            return 0;
-        }
-        GoBoardPosition nbr = (GoBoardPosition) positions_[r + rowOffset][c + colOffset];
-        // don't add it if it is in atari
-        if (nbr.isInAtari(this)) {
-            return 0;
-        }
-
-        if ( nbr.isOccupied() && (!sameSideOnly || nbr.getPiece().isOwnedByPlayer1() == friendPlayer1) && !nbr.isVisited() ) {
-            boolean cut;
-            // consider it cut if there is an opponent stone in one of the 2 spaces between.
-            if ( Math.abs( rowOffset ) == 2 ) {
-                int rr = r + (rowOffset >> 1);
-                cut = (positions_[rr][c].isOccupied()
-                        && (positions_[rr][c].getPiece().isOwnedByPlayer1() != friendPlayer1)) ||
-                        (positions_[rr][c + colOffset].isOccupied()
-                        && (positions_[rr][c + colOffset].getPiece().isOwnedByPlayer1() != friendPlayer1));
-            }
-            else {
-                int cc = c + (colOffset >> 1);
-                cut = (positions_[r][cc].isOccupied()
-                        && (positions_[r][cc].getPiece().isOwnedByPlayer1() != friendPlayer1)) ||
-                        (positions_[r + rowOffset][cc].isOccupied()
-                        && (positions_[r + rowOffset][cc].getPiece().isOwnedByPlayer1() != friendPlayer1));
-            }
-            if ( !cut ) {
-                stack.add( 0, nbr );
-                return 1;
-            }
-        }
-        return 0;
-    }
-
-
+   
     /**
      * clear all the eyes from all the stones on the board
      */
@@ -915,14 +536,13 @@ public final class GoBoard extends TwoPlayerBoard
                 GoBoardPosition space = (GoBoardPosition)positions_[i][j];
                 if ( space.isInEye() )     {
                     // remove reference to the owning group so it can be garbage collected.
-                    space.getEye().getGroup().getEyes().remove(this);
+                    space.getEye().getGroup().getEyes(this).remove(this);
                     space.getEye().clear();
                     space.setEye(null);
                 }
             }
         }
     }
-
 
     /**
      * @return either the number of black or white stones.
@@ -954,14 +574,13 @@ public final class GoBoard extends TwoPlayerBoard
     }
 
 
-
     public List getHandicapPositions() {
         return handicap_.getStarPoints();
     }
 
+    @Override
     public String toString() {
         return GoBoardUtil.toString(this);
-
     }
 
 
@@ -1004,19 +623,17 @@ public final class GoBoard extends TwoPlayerBoard
         public List getHandicapMoves()
         {
             assert numHandicapStones_ <= starPoints_.size();
-            List handicapMoves = new ArrayList(numHandicapStones_);
+            List<GoMove> handicapMoves = new ArrayList<GoMove>(numHandicapStones_);
 
             for ( int i = 0; i < numHandicapStones_; i++ ) {
                 GoBoardPosition hpos = starPoints_.get( i );
 
                 GoMove m = GoMove.createGoMove( hpos.getRow(), hpos.getCol(), 0, (GoStone)hpos.getPiece());
                                               new GoStone(hpos.getPiece().isOwnedByPlayer1(), GamePiece.REGULAR_PIECE );
-                //board.makeMove( m );
                 handicapMoves.add(m);
             }
             return handicapMoves;
         }
-
 
         /**
          * initialize a list of stones at the star points

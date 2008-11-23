@@ -60,7 +60,7 @@ public class GoGameExporter extends GameExporter {
             // include error info and stack trace in the comments to help debug
             if ( ae != null ) {
                 out.write( "C[" );
-                out.write( GoBoardUtil.getGroupsText(((GoBoard) gc.getBoard()).getGroups() ));
+                out.write( BoardDebugUtil.getGroupsText(((GoBoard) gc.getBoard()).getGroups() ));
                 if ( ae.getMessage() != null ) {
                     out.write( ae.getMessage() );
                     //out would need to be a PrintWriter for this to work

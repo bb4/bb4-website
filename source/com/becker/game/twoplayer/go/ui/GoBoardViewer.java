@@ -10,6 +10,7 @@ import com.becker.ui.GUIUtil;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -21,10 +22,10 @@ import java.util.Set;
  *
  *  @author Barry Becker
  */
-final class GoBoardViewer extends TwoPlayerBoardViewer
+final class GoBoardViewer extends TwoPlayerBoardViewer implements MouseMotionListener
 {
 
-    // the image for the wooden board.
+    /** the image for the wooden board. */
     private static final ImageIcon woodGrainImage_ =
             GUIUtil.getIcon(GameContext.GAME_ROOT + "twoplayer/go/ui/images/goBoard1.png");
 
@@ -40,6 +41,22 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
     GoBoardViewer()
     {
         pieceRenderer_ = GoStoneRenderer.getRenderer();
+        
+        addMouseMotionListener( this );
+    }
+    
+    /**
+     * start over with a new game using the current options.
+     */
+    @Override
+    public void startNewGame()
+    {
+        super.startNewGame();
+        draggedShowPiece_ =  null;
+        if (!controller_.allPlayersComputer()) {
+            draggedShowPiece_ = 
+                    new GoBoardPosition(0, 0, null, new GoStone(get2PlayerController().isPlayer1sTurn()));
+        }
     }
 
     protected GameController createController()
@@ -47,6 +64,7 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
         return new GoController();
     }
 
+    @Override
     protected int getDefaultCellSize()
     {
         return 16;
@@ -55,6 +73,7 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
     /**
      * first draw borders for the groups in the appropriate color, then draw the pieces for both players.
      */
+    @Override
     protected void drawMarkers( int nrows, int ncols, Graphics2D g2 )
     {
         GoBoard board = (GoBoard)getBoard();
@@ -89,6 +108,7 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
     /**
      * whether to draw the pieces on cell centers or vertices (like go).
      */
+    @Override
     protected boolean offsetGrid()
     {
         return true;
@@ -109,25 +129,28 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
      *  mouseClicked requires both the mouse down and mouse up event to occur at the same location.
      *  classes derived from TwoPlayerBoardViewer must call mousePressed first.
      */
+    @Override
     public void mousePressed( MouseEvent e )
     {
         // all derived classes must check this to disable user clicks while the computer is thinking
-        if (get2PlayerController().isProcessing())
+        if (get2PlayerController().isProcessing()) {
             return;
+        }
         Location loc = createLocation(e, getCellSize());
         GoBoard board = (GoBoard) controller_.getBoard();
         GoController controller = (GoController) controller_;
 
-        GameContext.log( 3, "GoBoardViewer: mousePressed: controller_.isPlayer1sTurn()="
-                            + get2PlayerController().isPlayer1sTurn());
-
-        GoMove m = GoMove.createGoMove( loc.getRow(), loc.getCol(), 0, new GoStone(controller.isPlayer1sTurn()));
+        boolean player1sTurn = controller.isPlayer1sTurn();
+        GameContext.log( 3, "GoBoardViewer: mousePressed: player1sTurn()=" + player1sTurn);
+   
+        GoMove m = GoMove.createGoMove( loc.getRow(), loc.getCol(), 0, new GoStone(player1sTurn));
 
         // if there is already a piece where the user clicked, or its
         // out of bounds, or its a suicide move, then return without doing anything
         GoBoardPosition stone = (GoBoardPosition) board.getPosition( loc );
-        if ( stone == null )
+        if ( stone == null ) {
             return;      // user clicked out of bounds
+        }
 
         if ( stone.isOccupied() ) {
             JOptionPane.showMessageDialog( null, GameContext.getLabel("CANT_PLAY_ON_STONE") );
@@ -147,14 +170,40 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
         }
 
         if ( !continuePlay( m ) ) {   // then game over
+            draggedShowPiece_ = null;
             showWinnerDialog();
+        } else if (controller_.allPlayersHuman()) {
+            // create a stone to show for the next players move
+            draggedShowPiece_ = 
+                    new GoBoardPosition(loc.getRow(), loc.getCol(), null, new GoStone(!player1sTurn));
         }
     }
 
+     /**
+     * if we are in wallPlacingMode, then we show the wall being dragged around.
+     * When the player clicks the wall is irrevocably placed.
+     * @param e
+     */
+    public void mouseMoved( MouseEvent e )
+    {
+        if (get2PlayerController().isProcessing()) {
+            return;
+        }
+        Location loc = createLocation(e, getCellSize());
+
+        if ( draggedShowPiece_ != null ) {
+            draggedShowPiece_.setLocation( loc );
+        }
+        repaint();
+    }
+    
+    public void mouseDragged(MouseEvent e) {}
+        
     /**
      * display a dialog at the end of the game showing who won and other relevant
      * game specific information.
      */
+    @Override
     protected void showWinnerDialog()
     {
          super.showWinnerDialog();
@@ -165,6 +214,7 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
     /**
      * @return   the message to display at the completion of the game.
      */
+    @Override
     protected String getGameOverMessage()
     {
         String message = "\n";
@@ -198,6 +248,7 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
      * draw the wood grain background.
      * @param g
      */
+    @Override
     protected void drawBackground( Graphics g, int startPos, int rightEdgePos, int bottomEdgePos )
     {
         super.drawBackground( g ,  startPos, rightEdgePos, bottomEdgePos);
@@ -210,6 +261,7 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
     /**
      * @return the tooltip for the panel given a mouse event.
      */
+    @Override
     public String getToolTipText( MouseEvent e )
     {
         if (get2PlayerController().isProcessing())
@@ -253,4 +305,5 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
         sb.append( "</font></html>" );
         return sb.toString();
     }
+
 }

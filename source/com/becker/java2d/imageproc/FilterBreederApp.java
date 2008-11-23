@@ -45,13 +45,21 @@ public class FilterBreederApp extends ApplicationFrame
     private Frame mImageListFrame;
     private ImageListPanel imageListPanel;
     private JButton loadButton;
-    private JButton goButton;
+    private JButton newGenerationButton;
+    private JButton lastGenerationButton;
+    
     private Label statusLabel = new Label( "" );
     private ParameterPanel paramPanel;
     private java.awt.List filterList;
     
     private ProcessingOperators operations;
     private Map<BufferedImage, List<Parameter>> imgToParamsMap;
+    private Map<BufferedImage, List<Parameter>> lastImgToParamsMap;
+    private List<BufferedImage> lastImages;
+    private List<Integer> lastSelectedIndices;
+    private int lastSelectedFilterIndex;
+    private int currentSelectedFilterIndex;
+    private int generationCountForFilter = 0;
 
     public FilterBreederApp( String imageFile )
     {
@@ -62,7 +70,7 @@ public class FilterBreederApp extends ApplicationFrame
     }
 
     /**
-     * The image to be manipulated goes in a separate frame.
+     * The generated images are shown in a separate window.
      * @param imageFile
      */
     private void createImageFrame( String imageFile )
@@ -101,6 +109,8 @@ public class FilterBreederApp extends ApplicationFrame
         filterList.addItemListener(this);
         // arbitrarily select the first one
         filterList.select(0);
+        lastSelectedFilterIndex = filterList.getSelectedIndex();
+        currentSelectedFilterIndex = lastSelectedFilterIndex;
 
         loadButton = new JButton( "Load..." );
         loadButton.addActionListener(this);
@@ -108,17 +118,27 @@ public class FilterBreederApp extends ApplicationFrame
         LabeledSlider varianceSlider = new LabeledSlider("Variance" , DEFAULT_VARIANCE, 0.0, 0.5);
         varianceSlider.addChangeListener(this);
         
-        goButton = new JButton( "Go" );
-        goButton.addActionListener(this);
+        newGenerationButton = new JButton( "New Generation" );
+        newGenerationButton.setToolTipText("Create a new generation of images using the current selected image as a parent.");
+        newGenerationButton.addActionListener(this);
+        
+        lastGenerationButton = new JButton( "Last Generation" );
+        newGenerationButton.setToolTipText("Go back to the last generation of images that were based on the current selectoion's parent.");
+        lastGenerationButton.addActionListener(this);
+        // initially there is nothing to go back to.
+        lastGenerationButton.setEnabled(false);
 
-        Panel bottom = new Panel( new GridLayout( 2, 1 ) );
+        Panel bottom = new Panel( new GridLayout( 3, 1 ) );
         Panel topBottom = new Panel();
+        Panel middleBottom = new Panel();
         
         topBottom.add( loadButton );
         topBottom.add(varianceSlider);
-        topBottom.add(goButton);
+        middleBottom.add(newGenerationButton);
+        middleBottom.add(lastGenerationButton);
         
         bottom.add( topBottom );
+        bottom.add(middleBottom);
         bottom.add( statusLabel );        
         
         // add placeholder param panel
@@ -139,24 +159,32 @@ public class FilterBreederApp extends ApplicationFrame
                
         if ( ie.getStateChange() != ItemEvent.SELECTED ) 
             return;
+        if ( filterList.getSelectedIndex() != lastSelectedFilterIndex) {
+            lastSelectedFilterIndex = currentSelectedFilterIndex;
+            currentSelectedFilterIndex =  filterList.getSelectedIndex();      
+            generationCountForFilter = 0;
+            updateParameterUI(true);          
+        }
+    }
+    
+    private void updateParameterUI(boolean recalc) {
         String key = filterList.getSelectedItem();
         MetaImageOp metaOp = operations.getOperation( key );
-       
-        applyImageOperator(metaOp);              
-        
-        replaceParameterUI(metaOp);        
+        replaceParameterUI(metaOp);  
+        if (recalc) {
+            applyImageOperator(metaOp);     
+        }
     }
     
     private void replaceParameterUI(MetaImageOp metaOp) {
         // now show ui for modifying the parameters for this op
         this.remove(paramPanel);
         paramPanel = new ParameterPanel(metaOp.getBaseParameters());
-        // don't called whenever a paramerter is tweeked
+        // don't called whenever a parameter is tweeked
         // paramPanel.addParameterChangeListener(this);
         this.add(paramPanel, BorderLayout.CENTER);
         this.pack();
     }
-
     
     private void createImagesForSelectedFilter() {
         // we could use param.getName() to get the filter, but its just the currently selected one.
@@ -165,11 +193,29 @@ public class FilterBreederApp extends ApplicationFrame
         applyImageOperator(metaOp);        
     }
     
+    private void restoreLastGeneration() {
+        if (lastSelectedFilterIndex != filterList.getSelectedIndex() && generationCountForFilter <= 1) {
+            filterList.select(lastSelectedFilterIndex);
+            updateParameterUI(false);
+        }
+        imgToParamsMap = lastImgToParamsMap;
+        imageListPanel.setImageList(lastImages);    
+        imageListPanel.setSelectedImageIndices(lastSelectedIndices);
+        lastImgToParamsMap = null;
+        lastImages = null;
+        lastGenerationButton.setEnabled(false);
+    }
+    
     private void applyImageOperator(MetaImageOp metaOp)  {
  
         String key = filterList.getSelectedItem();
         statusLabel.setText( "Performing " + key + "..." );
         // create a bunch of child permutations and add them to the imageListPanel
+        
+        lastImgToParamsMap = imgToParamsMap;
+        lastImages = imageListPanel.getImageList();
+        lastSelectedIndices = imageListPanel.getSelectedImageIndices();
+        generationCountForFilter++;
         
         enableUI(false);
         long time = System.currentTimeMillis();
@@ -182,13 +228,17 @@ public class FilterBreederApp extends ApplicationFrame
         statusLabel.setText( "Performing " + key + "...done in " + elapsedTime +" seconds" );
          
         imageListPanel.setImageList(images);     
+        
         enableUI(true);
     }
           
     private void enableUI(boolean enable) {
         filterList.setEnabled( enable );
-        goButton.setEnabled(enable);
+        newGenerationButton.setEnabled(enable);
         loadButton.setEnabled(enable);
+        if (lastImages!= null) {
+            lastGenerationButton.setEnabled(enable);
+        }
     }
     
      /**
@@ -198,8 +248,11 @@ public class FilterBreederApp extends ApplicationFrame
      public void actionPerformed( ActionEvent ae ) {
          
          JButton button = (JButton)ae.getSource();
-         if (button == goButton) {
+         if (button == newGenerationButton) {
              createImagesForSelectedFilter();
+         }
+         else if (button == lastGenerationButton) {
+             restoreLastGeneration();
          }
          else if (button == loadButton) {
              FileDialog fd = new FileDialog( FilterBreederApp.this        );
@@ -224,6 +277,7 @@ public class FilterBreederApp extends ApplicationFrame
      */
     public void imageSelected(BufferedImage img) {
          List<Parameter> params = imgToParamsMap.get(img);
+         assert(params != null);
          //System.out.println("image selected params = " + params);
          paramPanel.updateParameters(params);
     }

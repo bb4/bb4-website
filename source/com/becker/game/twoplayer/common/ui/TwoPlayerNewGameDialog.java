@@ -49,6 +49,11 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
         return (TwoPlayerController)controller_;
     }
 
+    /**
+     * 
+     * @return panel for the local player
+     */
+    @Override
     protected JPanel createPlayLocalPanel()
     {
         JPanel playLocalPanel = new JPanel();
@@ -185,6 +190,7 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
         return false; // how to cancel?
     }
 
+    @Override
     protected void ok()
     {
         TwoPlayerController c = get2PlayerController();

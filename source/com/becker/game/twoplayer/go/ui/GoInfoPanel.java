@@ -97,6 +97,7 @@ final class GoInfoPanel extends TwoPlayerInfoPanel implements GameChangedListene
     /**
      * update the info with controller stats when the game changes.
      */
+    @Override
     public void gameChanged( GameChangedEvent gce )
     {
         super.gameChanged( gce );
