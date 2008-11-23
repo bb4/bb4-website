@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.go;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -15,6 +16,9 @@ import java.util.Set;
 public final class GoArmy extends GoSet
 {
 
+    /** a set of the groups that are in the army. */
+    private Set<GoGroup> members_;
+    
     // unlike the territory of a group, moyo territory indicates the amount of space
     // mapped out by the army. It will potentially become real territory if all goes well.
     int moyoTerritory_ = 0;
@@ -29,7 +33,18 @@ public final class GoArmy extends GoSet
     {
         group.setArmy( this );
         ownedByPlayer1_ = group.isOwnedByPlayer1();
-        members_.add( group );
+        getMembers().add( group );
+    }
+    
+    /**
+     * @return  the hashSet containing the members
+     */
+    public Set<GoGroup> getMembers() {
+        return members_;
+    }
+    
+    protected void initializeMembers() {
+        members_ = new HashSet<GoGroup>();
     }
 
     /**
@@ -38,9 +53,9 @@ public final class GoArmy extends GoSet
     private void addMember( GoGroup group, GoBoard board )
     {
         assert (group.isOwnedByPlayer1()==ownedByPlayer1_): "groups added to an army must have like ownership";
-        assert (!members_.contains( group )): "the army already contains this group";
+        assert (!getMembers().contains( group )): "the army already contains this group";
         group.setArmy( this );
-        members_.add( group );
+        getMembers().add( group );
         numLiberties_ = numLiberties_ - 1 + group.getLiberties(board).size();
     }
 
@@ -67,9 +82,10 @@ public final class GoArmy extends GoSet
                 numLiberties_--;
             return;
         }
-        Iterator it = members_.iterator();
-        while ( it.hasNext() )
+        Iterator it = getMembers().iterator();
+        while ( it.hasNext() ) {
             addMember( (GoGroup) it.next(), board );
+        }
         numLiberties_ += army.getLiberties(board).size();
         if ( strongConnection )
             numLiberties_--;
@@ -80,7 +96,7 @@ public final class GoArmy extends GoSet
     public void remove( GoGroup group )
     {
         assert (group.size() == 0): "can't remove a non-empty group";
-        members_.remove( group );
+        getMembers().remove( group );
     }
 
     protected boolean isEnemy(GoBoardPosition p)
@@ -90,10 +106,11 @@ public final class GoArmy extends GoSet
     }
 
 
+    @Override
     public String toString()
     {
         String s = " These are the groups in this army :\n";
-        Iterator it = members_.iterator();
+        Iterator it = getMembers().iterator();
         while ( it.hasNext() ) {
             GoGroup p = (GoGroup) it.next();
             s += '(' + p.toString() + "),";

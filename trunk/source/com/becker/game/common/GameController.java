@@ -197,6 +197,18 @@ public abstract class GameController
     {
         return players_.size();
     }
+    
+
+     /**
+      * Clear the game over state in case the user decides to undo moves or play another game.
+      */
+    public void clearGameOver() {
+
+       for (Player p : getPlayers()) {
+           p.setWon(false);
+       } 
+    }
+
 
     /**
      * @return true if there are only human players

@@ -44,16 +44,32 @@ import static com.becker.game.twoplayer.go.GoControllerConstants.*;
  * 
  *
  * High priority todo:
- * - We could avoid a lot od subclasses if we just specify game specific classes in the plugin xml 
+ * - We could avoid a lot of subclasses if we just specify game specific classes in the plugin xml 
  *    and then create the classes using reflection in the base class.
+ *  - pull out evaluator into separate class to allow for evaluation strategies.
+ *  - factor out Bensons algorithm and other methods into separate classes (instead of static util classes).
  *  - Break out GameBoardRenderer from GameBoardViewer for each game package.
  *  - Add test cases for every little method of every class. Use clover to verify.
  *  - Add tests for GoGroup.calculate*Health
- *  - Why don't test cases find optimal moves?
+ *  - Why don't test cases find optimal moves.
  *  - fix scoring (allow for different types of rule systems)
  *  - parallelize minimax (http://www.cs.vu.nl/~aske/mtdf.html#abmem)
- *  - 
- * bugs
+ *  - parallelize move evaluation
+ *  - First 2 plys should look at global moves and do more local evaluation for deeper levels. 
+ *    Consider groups involved in capturing race (semi-eye)
+ *  - Remember moves that were once deemed important.
+ *  - Only pass if player cannot improve score by playing. Do not fill liberties. Fill dames.
+ *  - Fix multiplayer. Existing open source framework? get simple case working.
+ *  - show transparent stone under cursor when about to move.
+ *  
+ * Medium priority
+ *  - Need to replace sgf (from jigo) files with standard jar. This may require submitting changes to open source project.
+ *  - Same with image processing lib from jhlabs.
+ *  - Support for komi (0.5, 5.5 or 7.5).
+ *  - Scoring of seki - no points for either
+ *  - get minimally working and open source it.
+ * 
+ * Bugs
  *  - Reporting that the wrong player has won. both scores are reported as 0.
  *  - Error: can't have no liberties and still be on the board!
  *  - don't play in territory at end of game.
@@ -165,6 +181,7 @@ public final class GoController extends TwoPlayerController
     /**
      * @return go game options (uses lazy construction).
      */
+    @Override
     public GameOptions getOptions() {
         if (gameOptions_ == null) {
             TwoPlayerOptions options = new GoOptions();
@@ -231,6 +248,7 @@ public final class GoController extends TwoPlayerController
     /**
      * @return true if the computer is to make the first move.
      */
+    @Override
     public boolean doesComputerMoveFirst()
     {
         int handicap = ((GoBoard) board_).getHandicap();
@@ -243,6 +261,7 @@ public final class GoController extends TwoPlayerController
      * If called before the end of the game it just returns 0 - same as it does in the case of a tie.
      * @return some measure of how overwhelming the win was. May need to negate based on which player one.
      */
+    @Override
     public double getStrengthOfWin()
     {
         return Math.abs(getFinalScore(true) - getFinalScore(false));
@@ -319,6 +338,7 @@ public final class GoController extends TwoPlayerController
      * @param fileName name of the file to save the state to
      * @param ae the exception that occurred causing us to want to save state
      */
+    @Override
     public void saveToFile( String fileName, AssertionError ae )
     {
         GoGameExporter exporter = new GoGameExporter(this);
@@ -326,6 +346,7 @@ public final class GoController extends TwoPlayerController
     }
 
 
+    @Override
     public void restoreFromFile( String fileName ) {
         GoGameImporter importer = new GoGameImporter(this);
         importer.restoreFromFile(fileName);
@@ -466,6 +487,8 @@ public final class GoController extends TwoPlayerController
      * clear the game over state in case the user decides to undo moves
      */
     public void clearGameOver() {
+        super.clearGameOver();
+      
          for ( int row = 1; row <= board_.getNumRows(); row++ ) {    //rows
             for ( int col = 1; col <= board_.getNumCols(); col++ ) {  //cols
                 GoBoardPosition space = (GoBoardPosition)board_.getPosition( row, col );

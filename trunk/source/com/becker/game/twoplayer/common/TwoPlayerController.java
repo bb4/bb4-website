@@ -595,7 +595,7 @@ public abstract class TwoPlayerController extends GameController
         public int getNumParameters() {
             return weights_.getDefaultWeights().size();
         }
-
+        
         /**
          * Compares to sets of game parameters.
          * It does this by playing the computer against itself. One computer player has the params1

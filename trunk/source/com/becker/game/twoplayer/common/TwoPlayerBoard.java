@@ -13,7 +13,6 @@ import java.util.*;
  */
 public abstract class TwoPlayerBoard extends Board
 {
-
     
     /**
      * given a move specification, execute it on the board

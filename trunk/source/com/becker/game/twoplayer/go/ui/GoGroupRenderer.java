@@ -27,11 +27,11 @@ final class GoGroupRenderer
     private static final float BORDER_OFFSET = 0.5f;
     private static final Color EYE_TEXT_COLOR = new Color( 30, 10, 10 );
 
-    // cache the border area, color, and cellSize in hashMaps
-    // so that we don't have to recompute them if they have not changed.
-    private static final Map hmBorderAreaCache_ = new HashMap();
-    private static final Map hmBorderColorCache_ = new HashMap();
-    private static final Map hmCellSizeCache_ = new HashMap();
+    /**
+     * cache the border area, color, and cellSize in hashMaps
+     * so that we don't have to recompute them if they have not changed.
+     */ 
+    private static final Map<GoGroup, GroupRegion> hmRegionCache_ = new HashMap<GoGroup, GroupRegion>();
 
     private GoGroupRenderer() {
     }
@@ -324,12 +324,10 @@ final class GoGroupRenderer
      */
     public static void drawGroupDecoration(GoGroup group, ColorMap colormap, float cellSize, GoBoard board, Graphics2D g2)
     {
-        Area cachedBorderArea = (Area)hmBorderAreaCache_.get(group);
-        Color cachedBorderColor = (Color)hmBorderColorCache_.get(group);
-        Float cachedCellSize = (Float)hmCellSizeCache_.get(group);
-
+        GroupRegion cachedRegion = hmRegionCache_.get(group);
+     
         /* giving cc mod error */
-        if ( group.hasChanged() || cachedBorderArea == null || cellSize != cachedCellSize ) {
+        if ( group.hasChanged() || cachedRegion == null || cellSize != cachedRegion.cellSize ) {
 
             // the colormap will show red if close to dead,
             // so reverse the health value for the other player
@@ -337,28 +335,31 @@ final class GoGroupRenderer
             if (!group.isOwnedByPlayer1())
                 h = -h;
 
-            cachedBorderArea = calcGroupBorder( group.getStones(), cellSize, board );
-            cachedBorderColor = colormap.getColorForValue( h );
-            cachedCellSize = cellSize;
+            cachedRegion.borderArea = calcGroupBorder( group.getStones(), cellSize, board );
+            cachedRegion.borderColor = colormap.getColorForValue( h );
+            cachedRegion.cellSize = cellSize;
 
             // cache these new values (until something changes again)
-            hmBorderAreaCache_.put(group, cachedBorderArea);
-            hmBorderColorCache_.put(group, cachedBorderColor);
-            hmCellSizeCache_.put(group, cachedCellSize);
+            hmRegionCache_.put(group, cachedRegion);      
         }
 
 
         // fill in the cumulative group border
-        if ( cachedBorderArea !=null ) {
-            g2.setColor( cachedBorderColor );
-            g2.fill( cachedBorderArea );
+        if ( cachedRegion !=null ) {
+            g2.setColor( cachedRegion.borderColor );
+            g2.fill( cachedRegion.borderArea );
             g2.setColor( Color.black );
-            g2.draw( cachedBorderArea );
+            g2.draw( cachedRegion.borderArea );
         }
 
-        if (!group.getEyes().isEmpty())   {
-            drawEyes( cellSize, g2, group.getEyes() );
+        if (!group.getEyes(board).isEmpty())   {
+            drawEyes( cellSize, g2, group.getEyes(board) );
         }
     }
 
+    private static class GroupRegion {
+        Area borderArea;
+        Color borderColor;
+        float cellSize;
+    }
 }

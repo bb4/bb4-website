@@ -2,7 +2,6 @@ package com.becker.game.twoplayer.go;
 
 import com.becker.common.util.Util;
 import com.becker.game.common.BoardPosition;
-import com.becker.game.common.GameContext;
 
 
 /**
@@ -135,6 +134,7 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
         return visited_;
     }
 
+    @Override
     public Object clone() throws CloneNotSupportedException
     {
         Object clone = super.clone();
@@ -200,6 +200,7 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
     /**
      * make it show an empty board position.
      */
+    @Override
     public void clear()
     {
         assert false : "must use clear(board) instead";
@@ -209,6 +210,7 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
     /**
      * @return a string representation of the go board position
      */
+    @Override
     public String getDescription()
     {
         return super.getDescription()+ " score:"+Util.formatNumber(scoreContribution_);

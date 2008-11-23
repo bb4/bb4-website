@@ -25,8 +25,7 @@ public final class GoGroupUtil {
 
         // mark all the strings in the group as not UA
         Set<GoString> candidateStrings = new HashSet<GoString>();
-        for (Object s : group.getMembers()) {
-            GoString str = (GoString)s;
+        for (GoString str : group.getMembers()) {
             str.setUnconditionallyAlive(true);
             candidateStrings.add(str);
         }
@@ -34,11 +33,11 @@ public final class GoGroupUtil {
         findNeighborStringSets(group, board);
 
         // now create the neighbor eye sets for each qualified string
-        for (GoEye eye : group.getEyes()) {          
+        for (GoEye eye : group.getEyes(board)) {          
             if (eye.getNeighbors() != null) {
                 for (GoString str : eye.getNeighbors()) {                  
                     if (str.getNeighbors() == null) {
-                        str.setNbrs(new HashSet());
+                        str.setNbrs(new HashSet<GoString>());
                     }
                     // only add the eye if every unoccupied position in the eye is adjacent to the str
                     if  (eye.allUnocupiedAdjacentToString(str, board)) {
@@ -51,7 +50,7 @@ public final class GoGroupUtil {
         boolean done;
         do {
             done = true;
-            for (GoEye eye : group.getEyes()) {
+            for (GoEye eye : group.getEyes(board)) {
                 eye.setUnconditionallyAlive(true);
                 if (eye.getNeighbors() != null) {
                     for (GoString nbrStr : eye.getNeighbors()) {                     
@@ -92,12 +91,16 @@ public final class GoGroupUtil {
     }
 
 
+    /**
+     * first find the neighbor string sets for each true eye in the group.
+     * @param group
+     * @param board
+     */
     private static void findNeighborStringSets(GoGroup group, GoBoard board) {
-        // first find the neighbor string sets for each true eye in the group
-        //Set candidateUAStrings = new HashSet();
-        for (GoEye eye : group.getEyes()) {         
+        
+        for (GoEye eye : group.getEyes(board)) {         
             if (eye.getNeighbors() == null) {
-                eye.setNbrs(new HashSet());
+                eye.setNbrs(new HashSet<GoString>());
             }
             for (Object point : eye.getMembers()) {
                 GoBoardPosition pos = (GoBoardPosition) point;
@@ -125,15 +128,11 @@ public final class GoGroupUtil {
     }
 
 
-
-    /////////// utility/debugging methods  /////////////////////////
-
-
     /** see if the group contains all the stones that are in the specified list (it may contain others as well)
      * @param stones list of stones to check if same as those in this group
      * @return true if all the strings are in this group
      */
-    public static  boolean contains(GoGroup group, List stones )
+    private static  boolean contains(GoGroup group, List stones )
     {
         Iterator it = stones.iterator();
         while ( it.hasNext() ) {
@@ -161,30 +160,5 @@ public final class GoGroupUtil {
                 return false;
         }
         return true;
-    }
-
-    /**
-     * go through the groups strings and verify that they are valid (have all nobi connections)
-     */
-    public static void confirmValidStrings(GoGroup group, GoBoard b )
-    {
-        Iterator it = group.getMembers().iterator();
-        while ( it.hasNext() ) {
-            GoString string = (GoString) it.next();
-            string.confirmValid( b );
-        }
-    }
-
-    public static void confirmNoNullMembers(GoGroup group)
-    {
-        Iterator it = group.getStones().iterator();
-        boolean failed = false;
-        while (it.hasNext()) {
-            GoBoardPosition s = (GoBoardPosition)it.next();
-            if (s.getPiece()==null) failed = true;
-        }
-        if (failed) {
-            assert false : "Group contains an empty position: "+group.toString();
-        }
     }
 }

@@ -88,6 +88,7 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
     /**
      * set an optional progress bar for showing progress as the computer thinks about its next move.
      */
+    @Override
     public void setProgressBar(JProgressBar progressBar)
     {
         progressBar_ = progressBar;
@@ -116,6 +117,7 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
     /**
      * return the game to its original state.
      */
+    @Override
     public void reset()
     {
         controller_.reset();  //clear what's there and start over
@@ -126,7 +128,7 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
     /**
      * start over with a new game using the current options.
      */
-    public final void startNewGame()
+    public void startNewGame()
     {
         reset();
         TwoPlayerController c = get2PlayerController();
@@ -341,6 +343,7 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
      * Called when the game has changed in some way
      * @param evt
      */
+    @Override
     public void gameChanged(GameChangedEvent evt)
     {
         TwoPlayerController c = get2PlayerController();
@@ -348,8 +351,9 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
         if (c.getSearchable().done( (TwoPlayerMove)evt.getMove(), true) && !c.getTwoPlayerOptions().isAutoOptimize())
             showWinnerDialog();
         else {
-            if (get2PlayerController().allPlayersComputer())
-              continuePlay((TwoPlayerMove)evt.getMove());
+            if (get2PlayerController().allPlayersComputer()) {
+                continuePlay((TwoPlayerMove)evt.getMove());
+            }
         }
     }
 
@@ -545,6 +549,7 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
     /**
      * @return the cached game board if we are in the middle of processing.
      */
+    @Override
     public Board getBoard()
     {
        TwoPlayerController c = get2PlayerController();

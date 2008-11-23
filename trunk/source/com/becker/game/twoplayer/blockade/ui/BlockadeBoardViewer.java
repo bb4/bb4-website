@@ -29,7 +29,6 @@ public class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMo
     // becomes true if the player has placed his pawn on an opponent base.
     private boolean hasWon_ = false;
     
-    private static final short DRAG_TRANSPARENCY = 170;
 
     /**
      * Construct the viewer.
@@ -52,6 +51,7 @@ public class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMo
     }
 
 
+    @Override
     public void mousePressed( MouseEvent e )
     {
 
@@ -73,7 +73,6 @@ public class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMo
         draggedPiece_ = position;
         draggedShowPiece_ = position.copy();
         assert (draggedShowPiece_.getPiece() != null);
-        draggedShowPiece_.getPiece().setTransparency( DRAG_TRANSPARENCY );
     }
 
     /**
@@ -81,6 +80,7 @@ public class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMo
      * depending on the value of wallPlacingMode_.
      * @param e
      */
+    @Override
     public void mouseReleased( MouseEvent e )
     {
         // compute the coords of the position that we dropped the piece on.
@@ -248,60 +248,64 @@ public class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMo
             BlockadeBoard board = (BlockadeBoard)controller_.getBoard();
             // now show it in the new location
             Location loc = createLocation(e, getCellSize());
-            if (board.getPosition(loc)==null)
+            if (board.getPosition(loc)==null) {
                 return;  // out of bounds
+            }
             int index = getWallIndexForPosition(e.getX(), e.getY(), loc, board);
 
-            Set positions = new HashSet();
+            Set<BlockadeBoardPosition> positions = new HashSet<BlockadeBoardPosition>();
 
             boolean isVertical = false;
+            BoardPosition pos1 = null,  pos2 = null;
 
             switch (index) {
                 case 0 :
                     isVertical = true;
-                    positions.add(board.getPosition(loc));
-                    positions.add(board.getPosition(loc.getRow()+1, loc.getCol()));
+                    pos1 = board.getPosition(loc);
+                    pos2 = board.getPosition(loc.getRow()+1, loc.getCol());
                     break;
                 case 1 :
                     isVertical = true;
                     assert (board.getPosition(loc)!=null);
                     assert (board.getPosition(loc.getRow()-1, loc.getCol())!=null);
-                    positions.add(board.getPosition(loc));
-                    positions.add(board.getPosition(loc.getRow()-1, loc.getCol()));
+                    pos1 = board.getPosition(loc);
+                    pos2 = board.getPosition(loc.getRow()-1, loc.getCol());
                     break;
                 case 2 :
                     isVertical = false;
-                    positions.add(board.getPosition(loc.getRow()-1, loc.getCol()));
-                    positions.add(board.getPosition(loc.getRow()-1, loc.getCol()+1));
+                    pos1 = board.getPosition(loc.getRow()-1, loc.getCol());
+                    pos2 = board.getPosition(loc.getRow()-1, loc.getCol()+1);
                     break;
                 case 3 :
                     isVertical = false;
-                    positions.add(board.getPosition(loc.getRow()-1, loc.getCol()));
-                    positions.add(board.getPosition(loc.getRow()-1, loc.getCol()-1));
+                    pos1 = board.getPosition(loc.getRow()-1, loc.getCol());
+                    pos2 = board.getPosition(loc.getRow()-1, loc.getCol()-1);
                     break;
                 case 4 :
                     isVertical = true;
-                    positions.add(board.getPosition(loc.getRow(), loc.getCol()-1));
-                    positions.add(board.getPosition(loc.getRow()-1, loc.getCol()-1));
+                    pos1 = board.getPosition(loc.getRow(), loc.getCol()-1);
+                    pos2 = board.getPosition(loc.getRow()-1, loc.getCol()-1);
                     break;
                 case 5 :
                     isVertical = true;
-                    positions.add(board.getPosition(loc.getRow(), loc.getCol()-1));
-                    positions.add(board.getPosition(loc.getRow()+1, loc.getCol()-1));
+                    pos1 = board.getPosition(loc.getRow(), loc.getCol()-1);
+                    pos2 = board.getPosition(loc.getRow()+1, loc.getCol()-1);
                     break;
                 case 6 :
                     isVertical = false;
-                    positions.add(board.getPosition(loc));
-                    positions.add(board.getPosition(loc.getRow(), loc.getCol()-1));
+                    pos1 = board.getPosition(loc);
+                    pos2 = board.getPosition(loc.getRow(), loc.getCol()-1);
                     break;
                 case 7 :
                     isVertical = false;
-                    positions.add(board.getPosition(loc));
-                    positions.add(board.getPosition(loc.getRow(), loc.getCol()+1));
+                    pos1 = board.getPosition(loc);
+                    pos2 = board.getPosition(loc.getRow(), loc.getCol()+1);
                     break;
                 default : assert false:("bad index="+index);
             }
 
+            positions.add((BlockadeBoardPosition)pos1);
+            positions.add((BlockadeBoardPosition)pos2);
             draggedWall_ = new BlockadeWall(isVertical, positions);
 
             repaint();
@@ -357,6 +361,7 @@ public class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMo
         }
     }
 
+    @Override
     protected void drawMarkers( int nrows, int ncols, Graphics2D g2 )
     {
         BlockadeBoard board = (BlockadeBoard)controller_.getBoard();
@@ -406,6 +411,7 @@ public class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMo
         }
     }
 
+    @Override
     protected void drawBackground( Graphics g, int startPos, int rightEdgePos, int bottomEdgePos )
     {
         super.drawBackground(g, startPos, rightEdgePos, bottomEdgePos);
@@ -436,6 +442,7 @@ public class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMo
     /**
      * @return the tooltip for the panel given a mouse event.
      */
+    @Override
     public String getToolTipText( MouseEvent e )
     {
         Location loc = createLocation(e, getCellSize());

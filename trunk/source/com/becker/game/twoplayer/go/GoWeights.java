@@ -12,10 +12,10 @@ public class GoWeights extends GameWeights {
 
 
     /** use these if no others are provided. */
-    private static final double[] DEFAULT_WEIGHTS = {1.0,  0.5,  0.1,  20.0};
+    private static final double[] DEFAULT_WEIGHTS = {1.0,  0.5,  0.1,  10.0};
 
     /** don't allow the weights to exceed these maximum values. */
-    private static final double[] MAX_WEIGHTS = {4.0,  1.0,  4.0,  10.0};
+    private static final double[] MAX_WEIGHTS = {4.0,  1.0,  4.0,  20.0};
 
     private static final String[] WEIGHT_SHORT_DESCRIPTIONS = {
         "Health",

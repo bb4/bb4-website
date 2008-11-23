@@ -83,13 +83,18 @@ public final class ImageListPanel extends JPanel
     }
     
     public void setImageList(List<BufferedImage> images) {
+        assert images!=null;
         images_ = images;
         imageRatio_ = calculateImageRatio(images);
         baseImageWidth_ = images.get(0).getWidth() + TOTAL_MARGIN;
         selectedImages_ = new ArrayList<BufferedImage>();
+        highlightedImage_ = null;
         this.repaint();
     }
     
+    public List<BufferedImage> getImageList() {
+        return images_;
+    }
     public void setMaxNumSelections(int max) {
         maxNumSelections_ = max;
     }
@@ -107,9 +112,39 @@ public final class ImageListPanel extends JPanel
      * This is how the client can unregister itself to receive these events.
      * @param isl the listener  to remove
      */
-    private void removeImageSelectionListener( ImageSelectionListener isl )
+    public void removeImageSelectionListener( ImageSelectionListener isl )
     {
         imgSelectionListeners_.remove(isl);
+    }
+    
+    
+    public List<Integer> getSelectedImageIndices() {
+        
+        if (images_ == null)
+            return null;
+        List<Integer> selectedIndices = new LinkedList<Integer>();
+        
+        for (int i = 0; i < images_.size();  i++ ) {
+           
+            BufferedImage img =  images_.get(i);
+            if (selectedImages_.contains(img)) {
+                selectedIndices.add(i);
+            }         
+        }
+        return selectedIndices;
+    }
+    
+    public void setSelectedImageIndices(List<Integer> selectedIndices) {
+        assert selectedIndices != null;
+        // replace what we have with the new selections
+        selectedImages_.clear();
+        for (int i = 0; i < images_.size();  i++ ) {
+            if (selectedIndices.contains(i)) {
+                BufferedImage img =  images_.get(i);
+                selectedImages_.add(img);
+                updateImageSelectionListeners(img);
+            }         
+        }
     }
 
     private static double calculateImageRatio(List<BufferedImage> images) {
@@ -133,7 +168,8 @@ public final class ImageListPanel extends JPanel
     protected void paintComponent( Graphics g )
     {
         super.paintComponents( g );
-        if (images_ == null) return;
+        if (images_ == null || images_.size() == 0) 
+            return;
         
         // erase what's there and redraw.        
         g.clearRect( 0, 0, getWidth(), getHeight() );
@@ -145,7 +181,6 @@ public final class ImageListPanel extends JPanel
         // find the number of rows that will give the closest match on the aspect ratios
         int numImages = images_.size();
         int numRows = 1;
-        assert numImages > 0 : "There needs to be at least one image";
         numColumns_ = numImages;
         double ratio = imageRatio_ * numImages;
         double lastRatio = 100000000;        
@@ -191,6 +226,7 @@ public final class ImageListPanel extends JPanel
                                      imageDisplayWidth_ + TOTAL_MARGIN, imageDisplayHeight_ + TOTAL_MARGIN);
             }        
         }
+        
         if (enlargedImageIndex >= 0) {      
             int w = highlightedImage_.getWidth();
             int h = highlightedImage_.getHeight();
@@ -297,9 +333,13 @@ public final class ImageListPanel extends JPanel
             this.repaint();            
         }
         
+         updateImageSelectionListeners(img);
+    }
+    
+    private void updateImageSelectionListeners(BufferedImage selectedImage) {
         // make sure listeners get notification that an image was selected.
         for (ImageSelectionListener isl : imgSelectionListeners_) {
-                isl.imageSelected(img);
+                isl.imageSelected(selectedImage);
          }
     }
  

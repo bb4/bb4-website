@@ -4,7 +4,7 @@ import com.becker.common.*;
 import com.becker.common.util.Util;
 
 /**
- * For debuggin purposes we want to keep more detail on what composes the overall score.
+ * For debugging purposes we want to keep more detail on what composes the overall score.
  * @author Barry Becker Date: Dec 30, 2006
  */
 public class PositionalScore {

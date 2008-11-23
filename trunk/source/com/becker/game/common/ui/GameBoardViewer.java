@@ -30,9 +30,9 @@ import java.util.List;
  *
  *  @author Barry Becker
  */
-public abstract class GameBoardViewer
-              extends JPanel
-              implements ViewerCallbackInterface, MouseListener, GameChangedListener
+public abstract class GameBoardViewer extends JPanel
+                                                                   implements ViewerCallbackInterface, 
+                                                                                       MouseListener, GameChangedListener
 {
     
     // every GameBoardViewer must contain one of these
@@ -80,6 +80,7 @@ public abstract class GameBoardViewer
     protected static final Stroke LAST_MOVE_INDICATOR_STROKE = new BasicStroke(2);
     // dont allow the cells of the game board to get smaller than this
     public static final int MINIMUM_CELL_SIZE = 8;
+    private static final short DRAG_TRANSPARENCY = 170;
 
     /**
      * Construct the viewer.
@@ -334,6 +335,7 @@ public abstract class GameBoardViewer
     /**
      * @param c  the new color of the board.
      */
+    @Override
     public void setBackground( Color c )
     {
         backgroundColor_ = c;
@@ -343,6 +345,7 @@ public abstract class GameBoardViewer
     /**
      * @return c  the board color
      */
+    @Override
     public Color getBackground()
     {
         return backgroundColor_;
@@ -443,12 +446,17 @@ public abstract class GameBoardViewer
     /**
      * This renders the current state of the Board to the screen.
      */
+    @Override
     protected void paintComponent( Graphics g )
     {
         Board board = getBoard();
         int nrows = board.getNumRows();
         int ncols = board.getNumCols();
         cellSize_ = calcCellSize( nrows, ncols );
+        
+        if ( draggedShowPiece_!=null) {
+            draggedShowPiece_.getPiece().setTransparency( DRAG_TRANSPARENCY );
+        }
 
         super.paintComponents( g );
         //super.paintComponent(g);   // need?

@@ -76,6 +76,7 @@ public class TwoPlayerPieceRenderer extends GamePieceRenderer
     /**
      * @return color for annotation text (if any).
      */
+    @Override
     protected Color getTextColor(GamePiece piece)
     {
         Color textColor = PLAYER2_TEXT_COLOR;

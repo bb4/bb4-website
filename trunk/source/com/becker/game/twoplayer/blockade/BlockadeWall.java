@@ -1,6 +1,5 @@
 package com.becker.game.twoplayer.blockade;
 
-
 import java.util.*;
 
 /**
@@ -15,10 +14,10 @@ import java.util.*;
 public class BlockadeWall
 {
 
-    // whether the wall is VERTICAL or HORIZONTAL
+    /** whether the wall is VERTICAL or HORIZONTAL */
     private boolean isVertical_;
 
-    // the BlockadeBoardPosition that contain the wall (on the south or east faces depending on the orientation).
+    /** the BlockadeBoardPosition that contain the wall (on the south or east faces depending on the orientation). */
     private Set<BlockadeBoardPosition> positions_;
 
     /**
@@ -27,7 +26,7 @@ public class BlockadeWall
     public BlockadeWall( boolean isVertical)
     {
         isVertical_ = isVertical;
-        positions_ = new HashSet();
+        positions_ = new HashSet<BlockadeBoardPosition>();
     }
 
     /**
@@ -44,7 +43,7 @@ public class BlockadeWall
      */
     public BlockadeWall(BlockadeBoardPosition p1, BlockadeBoardPosition p2)
     {
-         Set hsPositions = new HashSet( 2 );
+         Set<BlockadeBoardPosition> hsPositions = new HashSet<BlockadeBoardPosition>( 2 );
          hsPositions.add( p1 );
          hsPositions.add( p2 );
          isVertical_ = p1.getCol() == p2.getCol();
@@ -56,6 +55,7 @@ public class BlockadeWall
      * @param wall  the wall to compare to.
      * @return  true if values are equal.
      */
+    @Override
     public boolean equals( Object wall )
     {
          BlockadeWall comparisonWall = (BlockadeWall) wall;
@@ -66,6 +66,7 @@ public class BlockadeWall
          return true;
     }
     
+    @Override
     public int hashCode() {
          int hashcode = 0;
          for (BlockadeBoardPosition p: positions_) {

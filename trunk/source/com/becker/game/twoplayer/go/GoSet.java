@@ -18,9 +18,6 @@ import java.util.Set;
 public abstract class GoSet implements GoMember
 {
 
-    // a set of the stones/strings/groups that are in the string/group/army
-    protected Set members_ = null;
-
     // true if this set of stones is owned by player one (black)
     protected boolean ownedByPlayer1_;
 
@@ -29,11 +26,11 @@ public abstract class GoSet implements GoMember
      */
     protected GoSet()
     {
-        members_ = new HashSet();
+        initializeMembers();
     }
 
     /**
-     *  get the number of liberties (open surrounding spaces)
+     * Get the number of liberties (open surrounding spaces)
      * @param board
      */
     public abstract Set getLiberties(GoBoard board);
@@ -51,38 +48,39 @@ public abstract class GoSet implements GoMember
      */
     public final int size()
     {
-        return members_.size();
+        return getMembers().size();
     }
 
     /**
      * @return  the hashSet containing the members
      */
-    public final Set getMembers()
-    {
-        return members_;
-    }
-
+    public abstract Set<? extends GoMember> getMembers();
+    
+    protected abstract void initializeMembers();
+    
     /**
      * remove all the elelments of this set.
      */
     final void removeAll()
     {
-        members_.clear();
+        getMembers().clear();
     }
 
     /**
      * @return a deep copy of this GoSet
      * @throws CloneNotSupportedException
      */
+    @Override
     public Object clone() throws CloneNotSupportedException
     {
         Object clone = super.clone();
 
-        if (this.members_!=null)  {
-            ((GoSet)clone).members_ = new HashSet();
-            Set m = ((GoSet)clone).members_;
+        if (getMembers()!=null)  {
+            ((GoSet)clone).initializeMembers();
+            //((GoSet)clone).members_ = new HashSet();
+            Set m = ((GoSet)clone).getMembers();
 
-            Iterator it = this.members_.iterator();
+            Iterator it = getMembers().iterator();
             while (it.hasNext()) {
                 Object c = null;
                 try {

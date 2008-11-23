@@ -175,7 +175,7 @@ public abstract class AbstractParameter implements Parameter
     
     private void validateRange(double value) {
         assert (value >= minValue_ && value <= maxValue_) : 
-            "Value " + value + " outside range [" + minValue_ +", " + maxValue_ + "]";
+            "Value " + value + " outside range [" + minValue_ +", " + maxValue_ + "] for parameter " + getName();
     }
    
 }

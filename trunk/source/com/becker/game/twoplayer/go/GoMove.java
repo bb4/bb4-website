@@ -189,9 +189,10 @@ public final class GoMove extends TwoPlayerMove
      */
     private static void adjustLiberties(GoBoardPosition liberty, GoBoard board) {
 
-         Set stringNbrs = GoBoardUtil.findStringNeighbors( liberty, board );
-         for (Object sn : stringNbrs) {
-             GoString s = (GoString) sn;    
+         NeighborAnalyzer ba = new NeighborAnalyzer(board);
+         Set<GoString> stringNbrs = ba.findStringNeighbors( liberty );
+         for (GoString sn : stringNbrs) {
+             GoString s = sn;    
              s.changedLiberty(liberty);
          }
     }
@@ -221,7 +222,7 @@ public final class GoMove extends TwoPlayerMove
             GoBoardPosition nbrStone = (GoBoardPosition) nbrIt.next();
             str = nbrStone.getString();
             str.addMember( stone, board );
-            GoBoardUtil.debugPrintGroups( 3, "groups before merging:", true, true, board.getGroups());
+            BoardDebugUtil.debugPrintGroups( 3, "groups before merging:", true, true, board.getGroups());
 
             if ( nbrs.size() > 1 ) {
                 // then we probably need to merge the strings.
@@ -296,9 +297,9 @@ public final class GoMove extends TwoPlayerMove
         }
         //cleanupGroups();
         if ( GameContext.getDebugMode() > 1 ) {
-            GoBoardUtil.confirmNoEmptyStrings(board.getGroups());
-            GoBoardUtil.confirmStonesInValidGroups(board.getGroups(), board);
-            GoBoardUtil.confirmStonesInOneGroup( group, board.getGroups() );
+            BoardValidationUtil.confirmNoEmptyStrings(board.getGroups());
+            BoardValidationUtil.confirmStonesInValidGroups(board.getGroups(), board);
+            BoardValidationUtil.confirmStonesInOneGroup( group, board.getGroups() );
         }
         profiler.stopUpdateStringsAfterRemove();
     }
@@ -319,7 +320,7 @@ public final class GoMove extends TwoPlayerMove
 
         if ( string == null ) {
             if ( GameContext.getDebugMode() > 1 )
-                GoBoardUtil.confirmStonesInValidGroups(board.getGroups(), board);
+                BoardValidationUtil.confirmStonesInValidGroups(board.getGroups(), board);
             return;
         }
 
@@ -333,7 +334,7 @@ public final class GoMove extends TwoPlayerMove
                 str.setUnconditionallyAlive(false);
                 str.setNbrs(null);
             }
-            for (GoEye eye : group.getEyes())  {      
+            for (GoEye eye : group.getEyes(board))  {      
                 eye.setUnconditionallyAlive(false);
                 eye.setNbrs(null);
             }
@@ -362,7 +363,7 @@ public final class GoMove extends TwoPlayerMove
         updateEnemyGroupsAfterRemoval(enemyNbrs, board);
 
         if ( GameContext.getDebugMode() > 1 )  {
-            GoBoardUtil.confirmNoEmptyStrings(board.getGroups());
+            BoardValidationUtil.confirmNoEmptyStrings(board.getGroups());
         }
 
         cleanupGroups(board);
@@ -378,7 +379,7 @@ public final class GoMove extends TwoPlayerMove
     private static void updateFriendlyGroupsAfterRemoval(Set friendlyNbrs, GoBoard board) {
 
         if ( GameContext.getDebugMode() > 1 )  { // in a state were not necessarily in valid groups?
-             GoBoardUtil.confirmStonesInValidGroups(board.getGroups(), board);
+             BoardValidationUtil.confirmStonesInValidGroups(board.getGroups(), board);
         }
         if ( friendlyNbrs.size() > 0) {
             // need to search even if just 1 nbr since the removal of the stone may cause a string to no longer be
@@ -405,7 +406,7 @@ public final class GoMove extends TwoPlayerMove
                         //group.remove( stones1 );
 
                         if ( GameContext.getDebugMode() > 1 )
-                            GoBoardUtil.confirmStonesInOneGroup( newGroup, board.getGroups() );
+                            BoardValidationUtil.confirmStonesInOneGroup( newGroup, board.getGroups() );
                     }
                     lists.add( stones1 );
                 }
@@ -413,7 +414,7 @@ public final class GoMove extends TwoPlayerMove
 
             GoBoardUtil.unvisitPositionsInLists( lists );
             if ( GameContext.getDebugMode() > 1 ) {
-               GoBoardUtil.confirmStonesInValidGroups( board.getGroups(), board );
+               BoardValidationUtil.confirmStonesInValidGroups( board.getGroups(), board );
             }
         }
     }
@@ -464,8 +465,8 @@ public final class GoMove extends TwoPlayerMove
                     board.getGroups().add( restoredGroup );
                 }
                 if ( GameContext.getDebugMode() > 1 ) {
-                    GoBoardUtil.confirmStonesInValidGroups(board.getGroups(), board);
-                    GoBoardUtil.confirmAllStonesInGroupsClaimed(board.getGroups(), board);
+                    BoardValidationUtil.confirmStonesInValidGroups(board.getGroups(), board);
+                    BoardValidationUtil.confirmAllStonesInGroupsClaimed(board.getGroups(), board);
                 }
             }
         }
@@ -579,7 +580,7 @@ public final class GoMove extends TwoPlayerMove
         profiler.startUpdateGroupsAfterMove();
 
         if (GameContext.getDebugMode() > 1) {
-            GoBoardUtil.confirmAllStonesInUniqueGroups(board.getGroups());
+            BoardValidationUtil.confirmAllStonesInUniqueGroups(board.getGroups());
         }
 
         // remove all the current groups (we will then add them back)
@@ -604,11 +605,11 @@ public final class GoMove extends TwoPlayerMove
         board.updateTerritory(pos);
 
         if ( GameContext.getDebugMode() > 1 ) {
-            GoBoardUtil.confirmNoEmptyStrings(board.getGroups());
-            GoBoardUtil.confirmStonesInValidGroups(board.getGroups(), board);
-            GoBoardUtil.confirmAllStonesInUniqueGroups(board.getGroups());
+            BoardValidationUtil.confirmNoEmptyStrings(board.getGroups());
+            BoardValidationUtil.confirmStonesInValidGroups(board.getGroups(), board);
+            BoardValidationUtil.confirmAllStonesInUniqueGroups(board.getGroups());
             try {
-                GoBoardUtil.confirmAllStonesInGroupsClaimed(board.getGroups(), board);
+                BoardValidationUtil.confirmAllStonesInGroupsClaimed(board.getGroups(), board);
             } catch (AssertionError e) {
                 GameContext.log(1, "The move was :"+pos);
                 throw e;
@@ -747,8 +748,8 @@ public final class GoMove extends TwoPlayerMove
             restoreCapturesOnBoard(board);
             updateAfterRestoringCaptures(board);
             if (GameContext.getDebugMode() > 1) {
-                GoBoardUtil.confirmStonesInValidGroups(board.getGroups(), board);
-                GoBoardUtil.confirmAllStonesInUniqueGroups(board.getGroups());
+                BoardValidationUtil.confirmStonesInValidGroups(board.getGroups(), board);
+                BoardValidationUtil.confirmAllStonesInUniqueGroups(board.getGroups());
                 GameContext.log( 3, "GoBoard: undoInternalMove: " + this + "  groups after restoring captures:" );
             }
         }
@@ -821,8 +822,9 @@ public final class GoMove extends TwoPlayerMove
     {
         CaptureList captures = getCaptures();
 
-        if ( GameContext.getDebugMode() > 1 )
-             GoBoardUtil.confirmStonesInValidGroups(board.getGroups(), board);
+        if ( GameContext.getDebugMode() > 1 ) {
+             BoardValidationUtil.confirmStonesInValidGroups(board.getGroups(), board);
+        }
 
         List enemyNobiNbrs = new LinkedList();
         Iterator captureIt = captures.iterator();
@@ -890,13 +892,14 @@ public final class GoMove extends TwoPlayerMove
             GoBoardUtil.unvisitPositions( list );
             GoGroup group = new GoGroup( list );
             if (GameContext.getDebugMode() > 1) {
-                GoBoardUtil.confirmStonesInOneGroup(group, board.getGroups());
+                BoardValidationUtil.confirmStonesInOneGroup(group, board.getGroups());
                 GameContext.log( 2, "updateAfterRestoringCaptures("+captures+"): adding sub group :" + group );
             }
             board.getGroups().add( group );
         }
-        if ( GameContext.getDebugMode() > 1 )
-             GoBoardUtil.confirmStonesInValidGroups(board.getGroups(), board);
+        if ( GameContext.getDebugMode() > 1 ) {
+             BoardValidationUtil.confirmStonesInValidGroups(board.getGroups(), board);
+        }
     }
 
     /**
@@ -909,7 +912,7 @@ public final class GoMove extends TwoPlayerMove
             GoGroup group = (GoGroup) it.next();
             //group.confirmNoNullMembers();
             if ( group.getNumStones() == 0 )  {
-                assert (group.getEyes().isEmpty()): group+ " has eyes! It was assumed not to.\n"+this;
+                //assert (group.getEyes().isEmpty()): group+ " has eyes! It was assumed not to.\n"+this;
                 it.remove();
             }
         }
