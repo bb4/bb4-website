@@ -146,7 +146,6 @@ public class BoardValidationUtil {
                             assert false: "ERROR: " + s + " contained by 2 groups" ;
                         }
                         confirmStoneInStringAlsoInGroup(s, g, groups);
-
                     }
                 }
             }

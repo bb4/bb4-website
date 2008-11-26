@@ -6,6 +6,7 @@ import com.becker.game.twoplayer.go.board.GoStone;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.GoBoardUtil;
 import com.becker.game.twoplayer.go.*;
+import com.becker.game.twoplayer.go.board.analysis.ShapeAnalyzer;
 import com.becker.game.twoplayer.go.test.*;
 import junit.framework.*;
 
@@ -223,7 +224,8 @@ public class TestGoBoard extends GoTestCase {
 
         GoBoard board = (GoBoard)controller_.getBoard();
         GoBoardPosition pos = (GoBoardPosition)board.getPosition(row, col);
-        int badShapeScore = GoBoardUtil.formsBadShape(pos, board);
+        ShapeAnalyzer sa = new ShapeAnalyzer(board);
+        int badShapeScore = sa.formsBadShape(pos);
         Assert.assertTrue("badShapeScore="+badShapeScore+" expected="+expected, badShapeScore == expected);
     }
 

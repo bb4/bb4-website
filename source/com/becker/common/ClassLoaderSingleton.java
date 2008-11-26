@@ -25,8 +25,6 @@ public class ClassLoaderSingleton {
     }
     
     
-    
-
     /**
      * @param className  the class to load.
      * @return  the loaded class.

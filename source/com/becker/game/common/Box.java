@@ -3,10 +3,11 @@ package com.becker.game.common;
 import com.becker.common.*;
 
 /**
- * A box defined by 2 locations
- * @ Barry Becker
+ * A box defined by 2 locations.
+ * @author Barry Becker
  */
 public class Box {
+    
     private final Location topLeftCorner_;
     private final Location bottomRightCorner_;
 
@@ -133,6 +134,7 @@ public class Box {
     }
     
 
+    @Override
     public String toString() {
         StringBuffer buf = new StringBuffer("Box:");
         buf.append(topLeftCorner_);

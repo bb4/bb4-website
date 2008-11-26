@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.go.board;
 
+import com.becker.game.twoplayer.go.board.analysis.GroupHealthAnalyzer;
 import com.becker.game.twoplayer.go.*;
 import com.becker.common.*;
 import com.becker.common.util.Util;
@@ -57,6 +58,8 @@ public final class GoGroup extends GoSet
         Iterator it = stones.iterator();
         while ( it.hasNext() ) {
             GoBoardPosition stone = (GoBoardPosition) it.next();
+            assert stone.getPiece().isOwnedByPlayer1() == ownedByPlayer1_ : 
+                "Stones in group must all be owned by the same player. stones="+ stones;
             //actually this is ok - sometimes happens legitimately
             //assert isFalse(stone.isVisited(), stone+" is marked visited in "+stones+" when it should not be.");
             GoString string = stone.getString();
@@ -70,6 +73,11 @@ public final class GoGroup extends GoSet
         }       
     }
 
+    private void commonInit()
+    {
+        healthAnalyzer_ = new GroupHealthAnalyzer(this);       
+    }
+    
     protected void initializeMembers() {
         members_ = new HashSet<GoString>();
     }
@@ -81,13 +89,8 @@ public final class GoGroup extends GoSet
         return members_;
     }
     
-    /**
-     * common initialization
-     */
-    private void commonInit()
-    {
-        healthAnalyzer_ = new GroupHealthAnalyzer(this);       
-    }
+    
+    
 
     /**
      * set/get the army

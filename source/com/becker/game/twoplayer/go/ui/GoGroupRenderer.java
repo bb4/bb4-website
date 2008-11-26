@@ -340,6 +340,7 @@ final class GoGroupRenderer
             if (!group.isOwnedByPlayer1())
                 h = -h;
 
+            cachedRegion = new GroupRegion();
             cachedRegion.borderArea = calcGroupBorder( group.getStones(), cellSize, board );
             cachedRegion.borderColor = colormap.getColorForValue( h );
             cachedRegion.cellSize = cellSize;
