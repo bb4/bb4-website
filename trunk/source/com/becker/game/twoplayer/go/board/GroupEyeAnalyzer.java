@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.go;
+package com.becker.game.twoplayer.go.board;
 
 import com.becker.game.common.Box;
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public class GroupEyeAnalyzer {
     public GroupEyeAnalyzer(GoGroup group, GoBoard board) {
         group_ = group;
         board_ = board;
-        boundingBox_ = GoBoardUtil.findBoundingBox(group_.getMembers());
+        boundingBox_ = findBoundingBox(group_.getMembers());
     }
     
     /**
@@ -306,6 +306,37 @@ public class GroupEyeAnalyzer {
         }
         // if we make it here, its a bonafied eye.
         return true;
+    }
+    
+    /**
+     * @param positions to find bounding box of
+     * @return bounding box of set of stones/positions passed in
+     */
+    private static Box findBoundingBox(Set positions)  {
+        int rMin = 100000; // something huge ( more than max rows)
+        int rMax = 0;
+        int cMin = 100000; // something huge ( more than max cols)
+        int cMax = 0;
+
+        // first determine a bounding rectangle for the group.
+        Iterator it = positions.iterator();
+        GoBoardPosition stone;
+        while ( it.hasNext() ) {
+            GoString string = (GoString) it.next();
+            Iterator it1 = string.getMembers().iterator();
+
+            while ( it1.hasNext() ) {
+                stone = (GoBoardPosition) it1.next();
+                int row = stone.getRow();
+                int col = stone.getCol();
+                if ( row < rMin ) rMin = row;
+                if ( row > rMax ) rMax = row;
+                if ( col < cMin ) cMin = col;
+                if ( col > cMax ) cMax = col;
+            }
+        }
+
+        return new Box(rMin, cMin, rMax, cMax);
     }
     
 }

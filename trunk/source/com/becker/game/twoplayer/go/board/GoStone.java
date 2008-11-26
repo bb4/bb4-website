@@ -1,8 +1,9 @@
-package com.becker.game.twoplayer.go;
+package com.becker.game.twoplayer.go.board;
 
 import com.becker.common.*;
 import com.becker.common.util.Util;
 import com.becker.game.common.*;
+import com.becker.game.twoplayer.go.board.PositionalScore;
 
 /**
  * A GoStone describes the physical marker at a location on the board.
@@ -100,11 +101,13 @@ public final class GoStone extends GamePiece implements GoMember
      * @return a deep copy of this stone
      * @throws CloneNotSupportedException
      */
+    @Override
     public Object clone() throws CloneNotSupportedException
     {
         return super.clone();
     }
 
+    @Override
     public String getDescription() {
         StringBuffer sb = new StringBuffer( "" );
         //sb.append( type_ );
@@ -124,6 +127,7 @@ public final class GoStone extends GamePiece implements GoMember
     /**
      *  Print more compactly than super class.
      */
+    @Override
     public String toString()
     {
         StringBuffer sb = new StringBuffer( "" );
@@ -133,6 +137,3 @@ public final class GoStone extends GamePiece implements GoMember
         return sb.toString();
     }
 }
-
-
-

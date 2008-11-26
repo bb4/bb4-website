@@ -1,5 +1,6 @@
-package com.becker.game.twoplayer.go;
+package com.becker.game.twoplayer.go.board;
 
+import com.becker.game.twoplayer.go.*;
 import com.becker.common.*;
 import com.becker.common.util.Util;
 import com.becker.game.common.*;
@@ -35,11 +36,11 @@ public final class GoGroup extends GoSet
      */
     public GoGroup( GoString string )
     {
+        commonInit();
         ownedByPlayer1_ = string.isOwnedByPlayer1();
          
         getMembers().add( string );
-        string.setGroup( this );
-        commonInit();
+        string.setGroup( this );        
     }
 
     /**
@@ -51,6 +52,7 @@ public final class GoGroup extends GoSet
      */
     public GoGroup( List stones )
     {
+        commonInit( );
         ownedByPlayer1_ = ((GoBoardPosition) stones.get( 0 )).getPiece().isOwnedByPlayer1();
         Iterator it = stones.iterator();
         while ( it.hasNext() ) {
@@ -65,8 +67,7 @@ public final class GoGroup extends GoSet
                 getMembers().add( string );
             }
             string.setGroup( this );
-        }
-        commonInit( );
+        }       
     }
 
     protected void initializeMembers() {
@@ -313,6 +314,42 @@ public final class GoGroup extends GoSet
         }
         return false;
     }
+    
+    
+    /**
+     * @param stones list of stones to check if same as those in this group
+     * @return true if this group exacly contains the list of stones and no others
+     */
+    public boolean exactlyContains(List<GoBoardPosition> stones)
+    {
+        if ( !contains(stones ) )
+            return false;
+        // make sure that every stone in the group is also in the list.
+        // that way we are assured that they are the same.
+        Iterator<GoBoardPosition> sIt = getStones().iterator();
+        while ( sIt.hasNext() ) {
+            GoBoardPosition s = sIt.next();
+            if ( !stones.contains( s ) )
+                return false;
+        }
+        return true;
+    }
+    
+    /**
+     * see if the group contains all the stones that are in the specified list (it may contain others as well)
+     * @param stones list of stones to check if same as those in this group
+     * @return true if all the strings are in this group
+     */
+    private boolean contains( List<GoBoardPosition> stones )
+    {
+        Iterator<GoBoardPosition> it = stones.iterator();
+        while ( it.hasNext() ) {
+            GoString s = (it.next()).getString();
+            if ( !getMembers().contains( s ) )
+                return false;
+        }
+        return true;
+    }
 
     /**
      *  @return true if the piece is an enemy of the set owner.
@@ -327,6 +364,8 @@ public final class GoGroup extends GoSet
 
         return ( stone.isOwnedByPlayer1() != ownedByPlayer1_  && !muchWeaker);
     }
+    
+    
 
     /**
      * get the textual representation of the group.

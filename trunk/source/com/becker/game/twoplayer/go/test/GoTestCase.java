@@ -1,5 +1,8 @@
 package com.becker.game.twoplayer.go.test;
 
+import com.becker.game.twoplayer.go.board.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.GoGroup;
+import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.common.util.Util;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.*;

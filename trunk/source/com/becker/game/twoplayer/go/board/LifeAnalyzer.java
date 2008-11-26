@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.go;
+package com.becker.game.twoplayer.go.board;
 
 import com.becker.game.common.*;
 
@@ -6,13 +6,19 @@ import java.util.*;
 
 /**
  * static methods for determing properties of groups
- * Includes Benson's algoritm for unconditional life
+ * Includes Benson's algoritm for unconditional life.
  *
  * @author Barry Becker Date: Aug 28, 2005
  */
-public final class GoGroupUtil {
+public final class LifeAnalyzer {
 
-    private GoGroupUtil() {}
+    private GoGroup group_;
+    private GoBoard board_;
+    
+    public LifeAnalyzer(GoGroup group, GoBoard board) {
+        group_ = group;
+        board_ = board;
+    }
 
     /**
      * Use Benson's algorithm (1977) to determine if a set of strings and eyes within a group
@@ -21,26 +27,26 @@ public final class GoGroupUtil {
      *
      * @return true if unconditionally alive
      */
-    public static boolean isUnconditionallyAlive(GoGroup group, GoBoard board) {
+    public boolean isUnconditionallyAlive() {
 
         // mark all the strings in the group as not UA
         Set<GoString> candidateStrings = new HashSet<GoString>();
-        for (GoString str : group.getMembers()) {
+        for (GoString str : group_.getMembers()) {
             str.setUnconditionallyAlive(true);
             candidateStrings.add(str);
         }
        
-        findNeighborStringSets(group, board);
+        findNeighborStringSets();
 
         // now create the neighbor eye sets for each qualified string
-        for (GoEye eye : group.getEyes(board)) {          
+        for (GoEye eye : group_.getEyes(board_)) {          
             if (eye.getNeighbors() != null) {
                 for (GoString str : eye.getNeighbors()) {                  
                     if (str.getNeighbors() == null) {
                         str.setNbrs(new HashSet<GoString>());
                     }
                     // only add the eye if every unoccupied position in the eye is adjacent to the str
-                    if  (eye.allUnocupiedAdjacentToString(str, board)) {
+                    if  (eye.allUnocupiedAdjacentToString(str, board_)) {
                         str.getNeighbors().add(eye);
                     }
                 }
@@ -50,7 +56,7 @@ public final class GoGroupUtil {
         boolean done;
         do {
             done = true;
-            for (GoEye eye : group.getEyes(board)) {
+            for (GoEye eye : group_.getEyes(board_)) {
                 eye.setUnconditionallyAlive(true);
                 if (eye.getNeighbors() != null) {
                     for (GoString nbrStr : eye.getNeighbors()) {                     
@@ -82,8 +88,7 @@ public final class GoGroupUtil {
         }  while ( !(done || candidateStrings.isEmpty()));
 
         // clear str nbrs
-        for (Object s : group.getMembers()) {
-            GoString str = (GoString)s;
+        for (GoString str : group_.getMembers()) {  
             str.setNbrs(null);
         }
 
@@ -93,22 +98,19 @@ public final class GoGroupUtil {
 
     /**
      * first find the neighbor string sets for each true eye in the group.
-     * @param group
-     * @param board
      */
-    private static void findNeighborStringSets(GoGroup group, GoBoard board) {
+    private void findNeighborStringSets() {
         
-        for (GoEye eye : group.getEyes(board)) {         
+        for (GoEye eye : group_.getEyes(board_)) {         
             if (eye.getNeighbors() == null) {
                 eye.setNbrs(new HashSet<GoString>());
             }
-            for (Object point : eye.getMembers()) {
-                GoBoardPosition pos = (GoBoardPosition) point;
+            for (GoBoardPosition pos : eye.getMembers()) {
                 if (pos.isUnoccupied()) {
-                    Set nbrs = board.getNobiNeighbors(pos, eye.isOwnedByPlayer1(), NeighborType.FRIEND);
-                    for (Object n : nbrs) {
-                        GoBoardPosition nbr = (GoBoardPosition) n;
-                        if (nbr.getString().getGroup() != group) {
+                    Set<GoBoardPosition> nbrs = board_.getNobiNeighbors(pos, eye.isOwnedByPlayer1(), NeighborType.FRIEND);
+                    for (GoBoardPosition nbr : nbrs) {
+                    
+                        if (nbr.getString().getGroup() != group_) {
                             // this eye is not UA.
                             eye.setNbrs(null);
                             break;
@@ -125,40 +127,5 @@ public final class GoGroupUtil {
             GameContext.log(2, "num string nbrs of eyes = "
                     + ((eye.getNeighbors() == null)? 0 : eye.getNeighbors().size()));
         }
-    }
-
-
-    /** see if the group contains all the stones that are in the specified list (it may contain others as well)
-     * @param stones list of stones to check if same as those in this group
-     * @return true if all the strings are in this group
-     */
-    private static  boolean contains(GoGroup group, List stones )
-    {
-        Iterator it = stones.iterator();
-        while ( it.hasNext() ) {
-            GoString s = ((GoBoardPosition) it.next()).getString();
-            if ( !group.getMembers().contains( s ) )
-                return false;
-        }
-        return true;
-    }
-
-    /**
-     * @param stones list of stones to check if same as those in this group
-     * @return true if this group exacly contains the list of stones and no others
-     */
-    public static boolean exactlyContains(GoGroup group, List stones)
-    {
-        if ( !contains(group, stones ) )
-            return false;
-        // make sure that every stone in the group is also in the list.
-        // that way we are assured that they are the same.
-        Iterator sIt = group.getStones().iterator();
-        while ( sIt.hasNext() ) {
-            GoBoardPosition s = (GoBoardPosition) sIt.next();
-            if ( !stones.contains( s ) )
-                return false;
-        }
-        return true;
     }
 }

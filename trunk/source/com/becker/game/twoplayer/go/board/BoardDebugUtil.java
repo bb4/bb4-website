@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package com.becker.game.twoplayer.go;
+package com.becker.game.twoplayer.go.board;
 
 import com.becker.game.common.GameContext;
 import java.util.Collection;
@@ -58,7 +58,7 @@ public final class BoardDebugUtil {
     /**
      * pretty print a list of all the current groups (and the strings they contain)
      */
-    static void debugPrintGroups( int logLevel, Set groups)
+    public static void debugPrintGroups( int logLevel, Set groups)
     {
         debugPrintGroups( logLevel,  "---The groups currently on the board are:", true, true, groups);
     }
@@ -66,7 +66,7 @@ public final class BoardDebugUtil {
     /**
      * pretty print a list of all the current groups (and the strings they contain)
      */
-    static void debugPrintGroups( int logLevel, String title, boolean showBlack, boolean showWhite, Set groups)
+    public static void debugPrintGroups( int logLevel, String title, boolean showBlack, boolean showWhite, Set groups)
     {
         if (logLevel <= GameContext.getDebugMode())  {
             GameContext.log( logLevel, title );

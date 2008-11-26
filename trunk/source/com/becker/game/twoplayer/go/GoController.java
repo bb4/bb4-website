@@ -1,5 +1,10 @@
 package com.becker.game.twoplayer.go;
 
+import com.becker.game.twoplayer.go.board.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.GoStone;
+import com.becker.game.twoplayer.go.board.PositionalScore;
+import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.GoBoardUtil;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.*;

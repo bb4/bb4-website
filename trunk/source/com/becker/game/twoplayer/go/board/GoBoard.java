@@ -1,5 +1,6 @@
-package com.becker.game.twoplayer.go;
+package com.becker.game.twoplayer.go.board;
 
+import com.becker.game.twoplayer.go.*;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.*;
 import com.becker.common.*;
@@ -34,8 +35,7 @@ public final class GoBoard extends TwoPlayerBoard
 
     private HandicapStones handicap_;
 
-    private int numWhiteStonesCaptured_ = 0;
-    private int numBlackStonesCaptured_ = 0;
+    private BoardUpdater boardUpdater_;
 
 
     /**
@@ -51,6 +51,7 @@ public final class GoBoard extends TwoPlayerBoard
         //armies_ = new HashSet(0);
         setSize( numRows, numCols );
         setHandicap(numHandicapStones);
+        boardUpdater_ = new BoardUpdater(this);
     }
 
     /**
@@ -183,7 +184,7 @@ public final class GoBoard extends TwoPlayerBoard
      * get the current set of active groups
      * @return all the valid groups on the board (for both sides)
      */
-    public Set getGroups()
+    public Set<GoGroup> getGroups()
     {
         return groups_;
     }
@@ -221,13 +222,11 @@ public final class GoBoard extends TwoPlayerBoard
 
         clearEyes();
         super.makeInternalMove( m );
-        m.updateBoardAfterMoving(this);
-        updateCaptures(m, true);
-
+        boardUpdater_.updateAfterMove(m);
+        
         getProfiler().stopMakeMove();
         return true;
     }
-
 
     /**
      * for Go, undoing a move means changing that space back to a blank, restoring captures, and updating groups.
@@ -247,29 +246,15 @@ public final class GoBoard extends TwoPlayerBoard
 
         // first make sure that there are no references to obsolete groups.
         clearEyes();
-        m.updateBoardAfterRemoving(this);
-        updateCaptures(m, false);
+        
+        boardUpdater_.updateAfterRemove(m);        
 
         getProfiler().stopUndoMove();
     }
-
-    private void updateCaptures(GoMove move, boolean increment) {
-
-        int numCaptures = move.getNumCaptures();
-        int num = increment ? move.getNumCaptures() : -move.getNumCaptures();
-
-        if (numCaptures > 0) {
-            if (move.isPlayer1()) {
-                numWhiteStonesCaptured_ += num;
-            } else {
-                numBlackStonesCaptured_ += num;
-            }
-        }
-    }
-
+    
 
     public int getNumCaptures(boolean player1StonesCaptured) {
-        return player1StonesCaptured ? numBlackStonesCaptured_ : numWhiteStonesCaptured_ ;
+        return boardUpdater_.getNumCaptures(player1StonesCaptured);
     }
     
 
@@ -292,7 +277,7 @@ public final class GoBoard extends TwoPlayerBoard
      * @return the estimated difference in territory between the 2 sides.
      *  A large positive number indicates black is winning, while a negative number indicates that white has the edge.
      */
-    float updateTerritory(GoBoardPosition lastMove)
+    public float updateTerritory(GoBoardPosition lastMove)
     {
         getProfiler().start(GoProfiler.UPDATE_TERRITORY);
 
@@ -401,14 +386,14 @@ public final class GoBoard extends TwoPlayerBoard
      * @param stone he stone from which to begin searching for the string
      * @param returnToUnvisitedState if true then the stomes will all be marked unvisited when done searching
      */
-    public List findStringFromInitialPosition( GoBoardPosition stone, boolean returnToUnvisitedState )
+    public List<GoBoardPosition> findStringFromInitialPosition( GoBoardPosition stone, boolean returnToUnvisitedState )
     {
         return findStringFromInitialPosition(
                 stone, stone.getPiece().isOwnedByPlayer1(), returnToUnvisitedState, NeighborType.OCCUPIED,
                 1, numRows_, 1, numCols_ );
     }
 
-    public List findStringFromInitialPosition( GoBoardPosition stone,  boolean friendOwnedByP1,
+    public List<GoBoardPosition> findStringFromInitialPosition( GoBoardPosition stone,  boolean friendOwnedByP1,
                                                      boolean returnToUnvisitedState, NeighborType type,
                                                      Box box) {
          return findStringFromInitialPosition(
@@ -420,7 +405,7 @@ public final class GoBoard extends TwoPlayerBoard
      * determines a string connected from a seed stone within a specified bounding area
      * @return string from seed stone
      */
-    public List findStringFromInitialPosition( GoBoardPosition stone,  boolean friendOwnedByP1,
+    public List<GoBoardPosition> findStringFromInitialPosition( GoBoardPosition stone,  boolean friendOwnedByP1,
                                                      boolean returnToUnvisitedState, NeighborType type,
                                                      int rMin, int rMax, int cMin, int cMax )
     {
@@ -440,7 +425,7 @@ public final class GoBoard extends TwoPlayerBoard
      * @param neighborType (EYE, NOT_FRIEND etc)
      * @return a set of stones that are immediate (nobi) neighbors.
      */
-    public Set getNobiNeighbors( GoBoardPosition stone, NeighborType neighborType )
+    public Set<GoBoardPosition> getNobiNeighbors( GoBoardPosition stone, NeighborType neighborType )
     {
        return getNobiNeighbors( stone, stone.getPiece().isOwnedByPlayer1(), neighborType);
     }
@@ -525,6 +510,25 @@ public final class GoBoard extends TwoPlayerBoard
         return stones;
     }
 
+    
+    /**
+     * @param empties a list of unoccupied positions.
+     * @return a list of stones bordering the set of empty board positions.
+     */
+    public Set<GoBoardPosition> findOccupiedNeighbors(List empties)
+    {
+        Iterator it = empties.iterator();
+        Set<GoBoardPosition> allNbrs = new HashSet<GoBoardPosition>();
+        while (it.hasNext()) {
+            GoBoardPosition empty = (GoBoardPosition)it.next();
+            assert (empty.isUnoccupied());
+            Set<GoBoardPosition> nbrs = getNobiNeighbors(empty, false, NeighborType.OCCUPIED);
+            // add these nbrs to the set of all nbrs
+            // (dupes automatically culled because HashSets only have unique members)
+            allNbrs.addAll(nbrs);
+        }
+        return allNbrs;
+    }
    
     /**
      * clear all the eyes from all the stones on the board
@@ -563,10 +567,9 @@ public final class GoBoard extends TwoPlayerBoard
         return numStones;
     }
 
-
     /**
      * Num different states. 
-     * This is used primarily for the Zobrist hash. You do not need to override if yo udo not use it.
+     * This is used primarily for the Zobrist hash. You do not need to override if you do not use it.
      * @return number of different states this position can have.
      */
     public int getNumPositionStates() {
@@ -580,10 +583,42 @@ public final class GoBoard extends TwoPlayerBoard
 
     @Override
     public String toString() {
-        return GoBoardUtil.toString(this);
+        int rows = getNumRows();
+        int cols = getNumCols();
+        StringBuffer buf = new StringBuffer((rows + 2) * (cols + 2));
+
+        buf.append("   ");
+        for ( int j = 1; j <= rows; j++ ) {
+            buf.append(j % 10);
+        }
+        buf.append(' ');
+        buf.append("\n  ");
+        for ( int j = 1; j <= cols + 2; j++ ) {
+            buf.append('-');
+        }
+        buf.append('\n');
+
+        for ( int i = 1; i <= rows; i++ ) {
+            buf.append(i / 10);
+            buf.append(i % 10);
+            buf.append('|');
+            for ( int j = 1; j <= cols; j++ ) {
+                GoBoardPosition space = (GoBoardPosition) getPosition(i, j);
+                if ( space.isOccupied() )     {
+                    buf.append(space.getPiece().isOwnedByPlayer1()?'X':'O');
+                }
+                else {
+                    buf.append(' ');
+                }
+            }
+            buf.append('|');
+            buf.append('\n');
+        }
+        return buf.toString();
     }
 
 
+    
     /**
      * The number of star points used for handicap stones on the board
      * There may be none.

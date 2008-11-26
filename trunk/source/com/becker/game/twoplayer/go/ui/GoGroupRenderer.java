@@ -1,5 +1,10 @@
 package com.becker.game.twoplayer.go.ui;
 
+import com.becker.game.twoplayer.go.board.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.GoEye;
+import com.becker.game.twoplayer.go.board.GoGroup;
+import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.GoBoardUtil;
 import static com.becker.game.twoplayer.go.GoControllerConstants.*;   // jdk 1.5 feature
 import com.becker.common.ColorMap;
 import com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer;

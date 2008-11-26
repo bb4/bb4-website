@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.go.persistence;
 
+import com.becker.game.twoplayer.go.board.GoStone;
 import com.becker.game.common.*;
 import ca.dj.jigo.sgf.tokens.*;
 import ca.dj.jigo.sgf.*;

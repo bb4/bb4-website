@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.go;
+package com.becker.game.twoplayer.go.board;
 
 import com.becker.game.common.*;
 import java.util.*;
@@ -6,7 +6,7 @@ import static com.becker.game.twoplayer.go.GoControllerConstants.USE_RELATIVE_GR
 
 
 /**
- * static untility methods to support the GoBoard class.
+ * static utility methods to support the GoBoard class.
  *
  * @see GoBoard
  * @author Barry Becker.
@@ -25,37 +25,7 @@ public final class GoBoardUtil
 
     private GoBoardUtil() {}
 
-    /**
-     * @param positions to find bounding box of
-     * @return bounding box of set of stones/positions passed in
-     */
-    static Box findBoundingBox(Set positions)  {
-        int rMin = 100000; // something huge ( more than max rows)
-        int rMax = 0;
-        int cMin = 100000; // something huge ( more than max cols)
-        int cMax = 0;
-
-        // first determine a bounding rectangle for the group.
-        Iterator it = positions.iterator();
-        GoBoardPosition stone;
-        while ( it.hasNext() ) {
-            GoString string = (GoString) it.next();
-            Iterator it1 = string.getMembers().iterator();
-
-            while ( it1.hasNext() ) {
-                stone = (GoBoardPosition) it1.next();
-                int row = stone.getRow();
-                int col = stone.getCol();
-                if ( row < rMin ) rMin = row;
-                if ( row > rMax ) rMax = row;
-                if ( col < cMin ) cMin = col;
-                if ( col > cMax ) cMax = col;
-            }
-        }
-
-        return new Box(rMin, cMin, rMax, cMax);
-    }
-
+    
     /**
      * set the visited flag back to false for a list of lists of stones
      */
@@ -80,37 +50,13 @@ public final class GoBoardUtil
         }
     }
 
-
-    /**
-     * return true if the stones in this list exactly match those in an existing group
-     */
-    public static boolean groupAlreadyExists( List stones, GoBoard board )
-    {
-        Iterator gIt = board.getGroups().iterator();
-        // first find the group that contains the stones
-        while ( gIt.hasNext() ) {
-            GoGroup g = (GoGroup) gIt.next();
-            if ( GoGroupUtil.exactlyContains(g, stones) )
-                return true;
-        }
-        return false;
-    }
-
-
-    public static int getBadShapeAux( BoardPosition adjacent1, boolean player1 )
-    {
-        if ( adjacent1.isUnoccupied() || adjacent1.getPiece().isOwnedByPlayer1() == player1 )
-            return 1;
-        return 0;
-    }
-
     /**
      * @param group
      * @param stone
      * @param threshold
      * @return return true of the stone is greater than threshold weaker than the group.
      */
-    static boolean isStoneWeaker(GoGroup group, GoStone stone, float threshold)
+    private static boolean isStoneWeakerThanGroup(GoGroup group, GoStone stone, float threshold)
     {
         float groupHealth = group.getAbsoluteHealth();
         // for purposes of determining relative weakness. Don't allow the outer group to go out of its living range.
@@ -132,19 +78,11 @@ public final class GoBoardUtil
     }
 
     /**
-     * @return return true of the stone is weaker than the group.
-     */
-    static boolean isStoneWeaker(GoGroup group, GoStone stone)
-    {
-        return isStoneWeaker(group, stone, 0);
-    }
-
-    /**
      * @return true if the stone is much weaker than the group
      */
     static boolean isStoneMuchWeaker(GoGroup group, GoStone stone)
     {
-        boolean weaker = isStoneWeaker(group, stone, DIFFERENCE_THRESHOLD);
+        boolean weaker = isStoneWeakerThanGroup(group, stone, DIFFERENCE_THRESHOLD);
         return weaker;
     }
 
@@ -153,7 +91,7 @@ public final class GoBoardUtil
      * @param board
      * @return the change in score after updating the empty regions
      */
-    static float updateEmptyRegions(GoBoard board) {
+    public static float updateEmptyRegions(GoBoard board) {
         float diffScore = 0;
         //only do this when the midgame starts, since early on there is always only one connected empty region.
         int edgeOffset = 1;
@@ -166,7 +104,7 @@ public final class GoBoardUtil
         int rMax = board.getNumRows()-edgeOffset;
         int cMax = board.getNumCols()-edgeOffset;
 
-        List emptyLists = new LinkedList();
+        List<List> emptyLists = new LinkedList<List>();
         for ( int i = min; i <= rMax; i++ )  {
            for ( int j = min; j <= cMax; j++ ) {
                GoBoardPosition pos = (GoBoardPosition)board.getPosition(i, j);
@@ -176,10 +114,10 @@ public final class GoBoardUtil
 
                        // don't go all the way to the borders (until the end of the game),
                        // since otherwise we will likely get only one big empty region.
-                       List empties = board.findStringFromInitialPosition(pos, false, false, NeighborType.UNOCCUPIED,
+                       List<GoBoardPosition> empties = board.findStringFromInitialPosition(pos, false, false, NeighborType.UNOCCUPIED,
                                                                     min, rMax,  min, cMax);
                        emptyLists.add(empties);
-                       Set nbrs = findOccupiedNeighbors(empties, board);
+                       Set nbrs = board.findOccupiedNeighbors(empties);
                        float avg = calcAverageScore(nbrs);
 
                        float score = avg * (float)nbrs.size() / Math.max(1, Math.max(nbrs.size(), empties.size()));
@@ -200,41 +138,6 @@ public final class GoBoardUtil
 
         unvisitPositionsInLists(emptyLists);
         return diffScore;
-    }
-
-
-    /**
-     * @param empties a list of unoccupied positions.
-     * @return a list of stones bordering the set of empty board positions.
-     */
-    public static Set<GoBoardPosition> findOccupiedNeighbors(List empties, GoBoard board)
-    {
-        Iterator it = empties.iterator();
-        Set<GoBoardPosition> allNbrs = new HashSet<GoBoardPosition>();
-        while (it.hasNext()) {
-            GoBoardPosition empty = (GoBoardPosition)it.next();
-            assert (empty.isUnoccupied());
-            Set<GoBoardPosition> nbrs = board.getNobiNeighbors(empty, false, NeighborType.OCCUPIED);
-            // add these nbrs to the set of all nbrs
-            // (dupes automatically culled because HashSets only have unique members)
-            allNbrs.addAll(nbrs);
-        }
-        return allNbrs;
-    }
-
-
-    /**
-     * Remove all the groups in groups_ corresponding to the specified list of stones.
-     * @param stones
-     */
-    public static void removeGroupsForListOfStones(List stones, GoBoard board) {
-        Iterator mIt = stones.iterator();
-        while ( mIt.hasNext() ) {
-            GoBoardPosition nbrStone = (GoBoardPosition) mIt.next();
-            // In the case where the removed stone was causing an atari in a string in an enemy group,
-            // there is a group that does not contain a nbrstone that also needs to be removed here.
-            board.getGroups().remove( nbrStone.getGroup() );
-        }
     }
 
     
@@ -326,41 +229,13 @@ public final class GoBoardUtil
         }
         return 0;
     }
-
-    public static String toString(GoBoard board) {
-
-        int rows = board.getNumRows();
-        int cols = board.getNumCols();
-        StringBuffer buf = new StringBuffer((rows + 2) * (cols + 2));
-
-        buf.append("   ");
-        for ( int j = 1; j <= board.getNumCols(); j++ ) {
-            buf.append(j % 10);
-        }
-        buf.append(' ');
-        buf.append("\n  ");
-        for ( int j = 1; j <= cols + 2; j++ ) {
-            buf.append('-');
-        }
-        buf.append('\n');
-
-        for ( int i = 1; i <= rows; i++ ) {
-            buf.append(i / 10);
-            buf.append(i % 10);
-            buf.append('|');
-            for ( int j = 1; j <= cols; j++ ) {
-                GoBoardPosition space = (GoBoardPosition) board.getPosition(i, j);
-                if ( space.isOccupied() )     {
-                    buf.append(space.getPiece().isOwnedByPlayer1()?'X':'O');
-                }
-                else {
-                    buf.append(' ');
-                }
-            }
-            buf.append('|');
-            buf.append('\n');
-        }
-        return buf.toString();
+    
+    
+    private static int getBadShapeAux( BoardPosition adjacent1, boolean player1 )
+    {
+        if ( adjacent1.isUnoccupied() || adjacent1.getPiece().isOwnedByPlayer1() == player1 )
+            return 1;
+        return 0;
     }
 
 }

@@ -1,5 +1,8 @@
 package com.becker.game.twoplayer.go.test.whitebox;
 
+import com.becker.game.twoplayer.go.board.GoGroup;
+import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.LifeAnalyzer;
 import com.becker.common.util.Util;
 import com.becker.game.twoplayer.go.*;
 import com.becker.game.twoplayer.go.test.GoTestCase;
@@ -94,7 +97,8 @@ public class TestUnconditionalLife extends GoTestCase {
                 +" but instead it was "+ size,
                 size == expectedSizeOfGroup);
         System.out.println("now testing unconditional life.");
-        boolean unconditionallyAlive = GoGroupUtil.isUnconditionallyAlive(group, (GoBoard) controller_.getBoard());
+        LifeAnalyzer analyzer = new LifeAnalyzer(group, (GoBoard) controller_.getBoard());
+        boolean unconditionallyAlive = analyzer.isUnconditionallyAlive();
 
         if (expectedUnconditionalyAlive) {
             Assert.assertTrue("Expected this group be unconditionally alive, but its not. group=" + group,
