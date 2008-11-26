@@ -1,5 +1,6 @@
-package com.becker.game.twoplayer.go.board;
+package com.becker.game.twoplayer.go.board.analysis;
 
+import com.becker.game.twoplayer.go.board.*;
 import com.becker.game.common.Box;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -8,9 +9,9 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Methods related to undertanding the eye spaces within a group.
+ * Methods related to understanding the eye spaces within a group.
  * 
- * @author becker
+ * @author Barry Becker
  */
 public class GroupEyeAnalyzer {
 

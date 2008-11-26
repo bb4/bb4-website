@@ -250,7 +250,6 @@ public final class GUIUtil
      */
     public static ImageIcon getIcon(String sPath) {
         ImageIcon icon;
-        //System.out.println( "loading "+sPath );
         if (isStandAlone_)   {
              icon = new ImageIcon( ClassLoaderSingleton.getClassLoader().getResource(sPath));
         }
@@ -276,6 +275,8 @@ public final class GUIUtil
                 String spec = "file:" + resourceRoot_ + sPath;
                 url = new URL(spec);
             }
+            assert url != null : 
+                "failed to create url for  "+sPath + " standAlone="+isStandAlone_ +" resourceRoot_="+ resourceRoot_;
         } catch (MalformedURLException e) {
             System.out.println( sPath+" is not a valid resource or URL" );
             e.printStackTrace();

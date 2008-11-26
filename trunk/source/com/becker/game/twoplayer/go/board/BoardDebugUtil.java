@@ -23,7 +23,7 @@ public final class BoardDebugUtil {
      * pretty print a list of all the current groups (and the strings they contain)
      * @param stones list of stones to print
      */
-    static void debugPrintList( int logLevel, String title, Collection stones)
+    public static void debugPrintList( int logLevel, String title, Collection stones)
       {
            GameContext.log(logLevel, debugPrintListText(logLevel, title, stones));
       }

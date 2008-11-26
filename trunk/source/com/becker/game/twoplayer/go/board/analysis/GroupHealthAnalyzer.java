@@ -1,5 +1,6 @@
-package com.becker.game.twoplayer.go.board;
+package com.becker.game.twoplayer.go.board.analysis;
 
+import com.becker.game.twoplayer.go.board.*;
 import com.becker.game.twoplayer.go.*;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameProfiler;
@@ -11,7 +12,7 @@ import java.util.Set;
 /**
  * Analyzes a group to determine how alive it is.
  * 
- * @author becker
+ * @author Barry Becker
  */
 public class GroupHealthAnalyzer implements Cloneable {
 
@@ -96,20 +97,6 @@ public class GroupHealthAnalyzer implements Cloneable {
         return changed_;
     }
     
-    /**
-     * clear the current eyes for the group (in preparation for recomputing them).
-     */
-    private void clearEyes()
-    {
-        if (eyes_.isEmpty())
-            return;
-        Iterator<GoEye> it = eyes_.iterator();
-        while (it.hasNext()) {
-            it.next().clear();
-        }
-        eyes_.clear();
-        changed_ = true;
-    }
     
     /**
      * Get the number of liberties that the group has.
@@ -167,24 +154,6 @@ public class GroupHealthAnalyzer implements Cloneable {
         return eyes_;
     }    
     
-    /**
-     * compute how many eyes (connected internal blank areas) this group has.
-     * the eyes are either false eyes or true (or big or territorial) eyes.
-     * Also update eyePotential (a measure of how good the groups ability to make 2 eyes(.
-     * This method is expensive. That is why the 2 things it computes (eyes and eyePotential) are cached.
-     * @param board the owning board
-     * @return 
-     */
-    private void updateEyes( GoBoard board )
-    {
-        if (!changed_)
-            return;
-        
-        GroupEyeAnalyzer eyeAnalyzer = new GroupEyeAnalyzer(group_, board);
-        eyes_ = eyeAnalyzer.determineEyes();
-        eyePotential_ = eyeAnalyzer.calculateEyePotential();
-    }
- 
 
     /**
      * Calculate the absolute health of a group.
@@ -207,7 +176,7 @@ public class GroupHealthAnalyzer implements Cloneable {
      *
      * @return the overall health of the group independent of nbr groups.
      */
-    float calculateAbsoluteHealth( GoBoard board, GameProfiler profiler )
+    public float calculateAbsoluteHealth( GoBoard board, GameProfiler profiler )
     {
 
         if ( !changed_ ) {
@@ -405,7 +374,7 @@ public class GroupHealthAnalyzer implements Cloneable {
     /**
      *   Calculate the health of a group that has no eyes.
      */
-    private float calcNoEyeHealth(float side, int numLiberties) {
+    public float calcNoEyeHealth(float side, int numLiberties) {
         float health = 0;
         int numStones = getNumStones();
 
@@ -484,7 +453,7 @@ public class GroupHealthAnalyzer implements Cloneable {
      *
      * @return the overall health of the group.
      */
-    float calculateRelativeHealth( GoBoard board, GoBoardPosition lastMove, GoProfiler profiler )
+    public float calculateRelativeHealth( GoBoard board, GoBoardPosition lastMove, GoProfiler profiler )
     {
         // we multiply by a +/- sign depending on the side
         float side = group_.isOwnedByPlayer1()? 1.0f : -1.0f;
@@ -578,6 +547,40 @@ public class GroupHealthAnalyzer implements Cloneable {
         }
         return enemyNbrs;
     }
+    
+     /**
+     * compute how many eyes (connected internal blank areas) this group has.
+     * the eyes are either false eyes or true (or big or territorial) eyes.
+     * Also update eyePotential (a measure of how good the groups ability to make 2 eyes(.
+     * This method is expensive. That is why the 2 things it computes (eyes and eyePotential) are cached.
+     * @param board the owning board
+     * @return 
+     */
+    private void updateEyes( GoBoard board )
+    {
+        if (!changed_)
+            return;
+        
+        GroupEyeAnalyzer eyeAnalyzer = new GroupEyeAnalyzer(group_, board);
+        eyes_ = eyeAnalyzer.determineEyes();
+        eyePotential_ = eyeAnalyzer.calculateEyePotential();
+    }
+ 
+    /**
+     * clear the current eyes for the group (in preparation for recomputing them).
+     */
+    private void clearEyes()
+    {
+        if (eyes_.isEmpty())
+            return;
+        Iterator<GoEye> it = eyes_.iterator();
+        while (it.hasNext()) {
+            it.next().clear();
+        }
+        eyes_.clear();
+        changed_ = true;
+    }
+    
     
     /**
      * @return a deep copy of this GroupHealthAnalyzer

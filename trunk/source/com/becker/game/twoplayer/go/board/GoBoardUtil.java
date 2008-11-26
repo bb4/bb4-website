@@ -49,42 +49,7 @@ public final class GoBoardUtil
             s.setVisited( false );
         }
     }
-
-    /**
-     * @param group
-     * @param stone
-     * @param threshold
-     * @return return true of the stone is greater than threshold weaker than the group.
-     */
-    private static boolean isStoneWeakerThanGroup(GoGroup group, GoStone stone, float threshold)
-    {
-        float groupHealth = group.getAbsoluteHealth();
-        // for purposes of determining relative weakness. Don't allow the outer group to go out of its living range.
-        if (group.isOwnedByPlayer1() &&  groupHealth < MIN_LIFE_THRESH) {
-            groupHealth = MIN_LIFE_THRESH;
-        } else if (!group.isOwnedByPlayer1() && groupHealth > -MIN_LIFE_THRESH) {
-            groupHealth = -MIN_LIFE_THRESH;
-        }
-        float stoneHealth = stone.getHealth();
-        if (stone.isOwnedByPlayer1())  {
-            assert (!group.isOwnedByPlayer1());
-            //System.out.println("-" + groupHealth +" - "+ stoneHealth +" = "+ (-groupHealth - stoneHealth) );
-            return (-groupHealth - stoneHealth > threshold);
-        }
-        else {
-            assert (group.isOwnedByPlayer1());
-            return ( groupHealth + stoneHealth > threshold);
-        }
-    }
-
-    /**
-     * @return true if the stone is much weaker than the group
-     */
-    static boolean isStoneMuchWeaker(GoGroup group, GoStone stone)
-    {
-        boolean weaker = isStoneWeakerThanGroup(group, stone, DIFFERENCE_THRESHOLD);
-        return weaker;
-    }
+    
 
     /**
      * 
@@ -161,81 +126,41 @@ public final class GoBoardUtil
         }
         return totalScore/stones.size();
     }
-
+    
+    /**
+     * @return true if the stone is much weaker than the group
+     */
+    static boolean isStoneMuchWeaker(GoGroup group, GoStone stone)
+    {
+        boolean weaker = isStoneWeakerThanGroup(group, stone, DIFFERENCE_THRESHOLD);
+        return weaker;
+    }
 
     /**
-     * @return a number corresponding to the number of clumps of 4 or empty triangles that this stone is connected to.
-     * returns 0 if does not form bad shape at all. Large numbers indicate worse shape.
-     * Possible bad shapes are :
-     *  SHAPE_EMPTY_TRIANGLE :  X -   ,   SHAPE_CLUMP_OF_4 :  X X
-     *                          X X                           X X
+     * @param group
+     * @param stone
+     * @param threshold
+     * @return return true of the stone is greater than threshold weaker than the group.
      */
-    public static int formsBadShape(GoBoardPosition position, GoBoard board)
+    private static boolean isStoneWeakerThanGroup(GoGroup group, GoStone stone, float threshold)
     {
-        GoStone stone = (GoStone)position.getPiece();
-        int r = position.getRow();
-        int c = position.getCol();
-
-        int severity =
-             checkBadShape(stone, r, c,  1,-1, 1, board) +
-             checkBadShape(stone, r, c, -1,-1, 1, board) +
-             checkBadShape(stone, r, c,  1, 1, 1, board) +
-             checkBadShape(stone, r, c, -1, 1, 1, board) +
-
-             checkBadShape(stone, r, c,  1,-1, 2, board) +
-             checkBadShape(stone, r, c, -1,-1, 2, board) +
-             checkBadShape(stone, r, c,  1, 1, 2, board) +
-             checkBadShape(stone, r, c, -1, 1, 2, board) +
-
-             checkBadShape(stone, r, c,  1,-1, 3, board) +
-             checkBadShape(stone, r, c, -1,-1, 3, board) +
-             checkBadShape(stone, r, c,  1, 1, 3, board) +
-             checkBadShape(stone, r, c, -1, 1, 3, board);
-
-        return severity;
-    }
-
-    private static int checkBadShape(GoStone stone, int r, int c, int incr, int incc, int type, GoBoard board) {
-        boolean player1 = stone.isOwnedByPlayer1();
-        if ( board.inBounds( r + incr, c + incc ) ) {
-            BoardPosition adjacent1 = board.getPosition( r + incr, c );
-            BoardPosition adjacent2 = board.getPosition( r , c + incc);
-            BoardPosition diagonal = board.getPosition( r + incr, c + incc);
-            // there are 3 cases:
-            //       a1 diag    X     XX    X
-            //        X a2      XX    X    XX
-            switch (type) {
-                case 1 :
-                    if (adjacent1.isOccupied() && adjacent2.isOccupied())  {
-                        if (   adjacent1.getPiece().isOwnedByPlayer1() == player1
-                            && adjacent2.getPiece().isOwnedByPlayer1() == player1)
-                            return getBadShapeAux(diagonal, player1);
-                    }  break;
-                case 2 :
-                    if (adjacent1.isOccupied() && diagonal.isOccupied())  {
-                        if (   adjacent1.getPiece().isOwnedByPlayer1() == player1
-                            && diagonal.getPiece().isOwnedByPlayer1() == player1)
-                            return getBadShapeAux(adjacent2, player1);
-                    }  break;
-                case 3 :
-                    if (adjacent2.isOccupied() && diagonal.isOccupied())  {
-                        if (   adjacent2.getPiece().isOwnedByPlayer1() == player1
-                            && diagonal.getPiece().isOwnedByPlayer1() == player1)
-                            return getBadShapeAux(adjacent1, player1);
-                    }  break;
-               default : assert false;
-
-            }
+        float groupHealth = group.getAbsoluteHealth();
+        // for purposes of determining relative weakness. Don't allow the outer group to go out of its living range.
+        if (group.isOwnedByPlayer1() &&  groupHealth < MIN_LIFE_THRESH) {
+            groupHealth = MIN_LIFE_THRESH;
+        } else if (!group.isOwnedByPlayer1() && groupHealth > -MIN_LIFE_THRESH) {
+            groupHealth = -MIN_LIFE_THRESH;
         }
-        return 0;
-    }
-    
-    
-    private static int getBadShapeAux( BoardPosition adjacent1, boolean player1 )
-    {
-        if ( adjacent1.isUnoccupied() || adjacent1.getPiece().isOwnedByPlayer1() == player1 )
-            return 1;
-        return 0;
+        float stoneHealth = stone.getHealth();
+        if (stone.isOwnedByPlayer1())  {
+            assert (!group.isOwnedByPlayer1());
+            //System.out.println("-" + groupHealth +" - "+ stoneHealth +" = "+ (-groupHealth - stoneHealth) );
+            return (-groupHealth - stoneHealth > threshold);
+        }
+        else {
+            assert (group.isOwnedByPlayer1());
+            return ( groupHealth + stoneHealth > threshold);
+        }
     }
 
 }

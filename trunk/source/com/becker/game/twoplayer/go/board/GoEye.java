@@ -236,7 +236,7 @@ public final class GoEye extends GoString implements GoMember
      *  because one of them is dead.
      */
     @Override
-    protected boolean isEnemy( GoBoardPosition pos)
+    public boolean isEnemy( GoBoardPosition pos)
     {
         assert (group_ != null): "group for "+this+" is null";
         GoStone stone = (GoStone)pos.getPiece();

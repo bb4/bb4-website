@@ -224,7 +224,6 @@ public class DomUtil {
     public static Document parseXML(URL url)
     {
         try {
-
             URLConnection urlc = url.openConnection();
             InputStream is = urlc.getInputStream();
             return parseXML(is, true, null);

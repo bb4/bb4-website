@@ -217,7 +217,8 @@ public class GoString extends GoSet
     public void changedLiberty(GoBoardPosition libertyPos) {
          if (libertyPos.isOccupied()) {
              boolean removed = liberties_.remove(libertyPos);
-             assert removed : "could not remove " + libertyPos +" from "+liberties_;  // hitting if showing game tree ////
+             // hitting if showing game tree perhaps because already removed.
+             //assert removed : "could not remove " + libertyPos +" from "+liberties_;  
          } else {
              assert (!liberties_.contains(libertyPos)) : this + " already had " + libertyPos +" as a liberty and we were not expecting that. Liberties_=" + liberties_;
              liberties_.add(libertyPos);
@@ -280,7 +281,7 @@ public class GoString extends GoSet
      *  If the difference in health between the stones is great, then they are not really enemies
      *  because one of them is dead.
      */
-    protected boolean isEnemy( GoBoardPosition pos)
+    public boolean isEnemy( GoBoardPosition pos)
     {
         assert (group_ != null): "group for "+this+" is null";
         assert (pos.isOccupied()): "pos not occupied: ="+pos;

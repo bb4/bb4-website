@@ -2,7 +2,7 @@ package com.becker.game.twoplayer.go.test.whitebox;
 
 import com.becker.game.twoplayer.go.board.GoGroup;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.LifeAnalyzer;
+import com.becker.game.twoplayer.go.board.analysis.LifeAnalyzer;
 import com.becker.common.util.Util;
 import com.becker.game.twoplayer.go.*;
 import com.becker.game.twoplayer.go.test.GoTestCase;

@@ -4,11 +4,11 @@ import com.becker.game.twoplayer.go.board.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.GoStone;
 import com.becker.game.twoplayer.go.board.PositionalScore;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.GoBoardUtil;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.*;
 import com.becker.game.twoplayer.common.search.*;
+import com.becker.game.twoplayer.go.board.analysis.ShapeAnalyzer;
 import com.becker.game.twoplayer.go.persistence.GoGameExporter;
 import com.becker.game.twoplayer.go.persistence.GoGameImporter;
 import com.becker.optimization.*;
@@ -314,6 +314,7 @@ public final class GoController extends TwoPlayerController
     }
 
     // return the game board back to its initial openning state
+    @Override
     public void reset()
     {
         super.reset();
@@ -391,7 +392,7 @@ public final class GoController extends TwoPlayerController
         // adjust for board size - so worth will be comparable regardless of board size.
         double scaleFactor = 361.0 / Math.pow(board.getNumRows(), 2);
         double captureWt = weights.get(GoWeights.CAPTURE_WEIGHT_INDEX).getValue();
-        double captureScore = captureWt * (getNumCaptures( true ) - getNumCaptures( false ));
+        double captureScore = captureWt * (getNumCaptures( false ) - getNumCaptures( true ));
         float n = 2.0f * board.getNumRows();
         // opening = 1.99 - 1.5;   middle = 1.5 - 1.01;    end = 1.0
         double gameStageBoost = 0.5 + 2.0 * Math.max((n - (float)getNumMoves())/n, 0.0);
@@ -449,7 +450,8 @@ public final class GoController extends TwoPlayerController
 
             int side = position.getPiece().isOwnedByPlayer1()? 1: -1;
             // penalize bad shape like empty triangles
-            score.badShapeScore = -(side * GoBoardUtil.formsBadShape(position, board)
+            ShapeAnalyzer sa = new ShapeAnalyzer(board);
+            score.badShapeScore = -(side * sa.formsBadShape(position)
                                    * weights.get(GoWeights.BAD_SHAPE_WEIGHT_INDEX).getValue());
 
             // Usually a very low weight is assigned to where stone is played unless we are at the start of the game.
@@ -491,6 +493,7 @@ public final class GoController extends TwoPlayerController
     /**
      * clear the game over state in case the user decides to undo moves
      */
+    @Override
     public void clearGameOver() {
         super.clearGameOver();
       
@@ -601,6 +604,7 @@ public final class GoController extends TwoPlayerController
          * @param recordWin if true then the controller state will record wins
          * @return true if the game is over
          */
+        @Override
         public final boolean done( TwoPlayerMove m, boolean recordWin )
         {
             boolean gameOver = false;
@@ -683,6 +687,7 @@ public final class GoController extends TwoPlayerController
          * @param player1sPerspective
          * @return true if the last move created a big change in the score
          */
+        @Override
         public boolean inJeopardy( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
         {
             GoBoard gb = (GoBoard) board_;
@@ -697,7 +702,7 @@ public final class GoController extends TwoPlayerController
         {
             GoBoard board = (GoBoard) board_;
             board.getProfiler().startGenerateMoves();
-            List moveList = new LinkedList();
+            List<GoMove> moveList = new LinkedList<GoMove>();
             int i,j;
             int nCols = board.getNumCols();
             int nRows = board.getNumRows();

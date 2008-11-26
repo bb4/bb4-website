@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.go.board;
 
+import com.becker.game.twoplayer.go.board.analysis.NeighborAnalyzer;
 import com.becker.game.common.BoardPosition;
 import com.becker.game.common.CaptureList;
 import com.becker.game.common.GameContext;
@@ -30,27 +31,15 @@ public class BoardUpdater {
         board_ = board;
     }
     
-    public void updateAfterMove(GoMove move) {
-        updateAfterMoving(move);
-        updateCaptures(move, true);
-    }
-    
-    public void updateAfterRemove(GoMove move) {
-        updateBoardAfterRemoving(move);
-        updateCaptures(move, false);
-    }
-   
      public int getNumCaptures(boolean player1StonesCaptured) {
         return player1StonesCaptured ? numBlackStonesCaptured_ : numWhiteStonesCaptured_ ;
     }
     
-    
-    
     /**
      * @param move the move that was just made
      */
-    private void updateAfterMoving(GoMove move) {
-        
+    public void updateAfterMove(GoMove move) {
+ 
         GoBoardPosition stone = (GoBoardPosition) (board_.getPosition(move.getToRow(), move.getToCol()));
     
         adjustLiberties(stone);
@@ -64,19 +53,22 @@ public class BoardUpdater {
         updateStringsAfterMoving(stone);
         removeCaptures(move.getToRow(), move.getToCol(), captures);
         updateGroupsAfterMoving(stone);
+        updateCaptures(move, true);
     }
     
-    private void updateBoardAfterRemoving(GoMove m) {
+    public void updateAfterRemove(GoMove move) {
 
-         GoBoardPosition stone =  (GoBoardPosition) (board_.getPosition(m.getToRow(), m.getToCol()));
+         GoBoardPosition stone =  (GoBoardPosition) (board_.getPosition(move.getToRow(), move.getToCol()));
 
          GoString stringThatItBelongedTo = stone.getString();
          stone.clear(board_);   // clearing a stone may cause a string to split into smaller strings
          adjustLiberties(stone);
 
          updateStringsAfterRemoving( stone, stringThatItBelongedTo);
-         restoreCaptures(m.getCaptures());
+         restoreCaptures(move.getCaptures());
          updateGroupsAfterRemoving( stone, stringThatItBelongedTo);
+         
+         updateCaptures(move, false);
      }
 
 
