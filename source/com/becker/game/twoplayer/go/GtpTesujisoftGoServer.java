@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.go;
 
+import com.becker.game.twoplayer.go.board.GoStone;
 import com.becker.common.util.FileUtil;
 import com.becker.game.common.*;
 import com.becker.game.common.online.*;

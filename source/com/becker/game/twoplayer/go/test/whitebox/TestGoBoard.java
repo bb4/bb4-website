@@ -1,5 +1,10 @@
 package com.becker.game.twoplayer.go.test.whitebox;
 
+import com.becker.game.common.BoardPosition;
+import com.becker.game.twoplayer.go.board.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.GoStone;
+import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.GoBoardUtil;
 import com.becker.game.twoplayer.go.*;
 import com.becker.game.twoplayer.go.test.*;
 import junit.framework.*;
@@ -134,12 +139,12 @@ public class TestGoBoard extends GoTestCase {
         restore("whitebox/occupiedNbrs1");
         GoBoard board = (GoBoard)controller_.getBoard();
 
-        List empties = new ArrayList(4);
+        List<BoardPosition> empties = new ArrayList<BoardPosition>(4);
         empties.add(board.getPosition(3, 3));
         empties.add(board.getPosition(3, 4));
         empties.add(board.getPosition(4, 3));
         empties.add(board.getPosition(4, 4));
-        int numNbrs = GoBoardUtil.findOccupiedNeighbors(empties, board).size();
+        int numNbrs = board.findOccupiedNeighbors(empties).size();
         Assert.assertTrue("numNbrs="+numNbrs+" expected "+ 6, numNbrs == 6);
         //verifyOccupiedNbrs("whitebox/occupiedNbrs1", empties, 9);
     }
@@ -159,7 +164,7 @@ public class TestGoBoard extends GoTestCase {
         restore(file);
 
         GoBoard board = (GoBoard)controller_.getBoard();
-        int numNbrs = GoBoardUtil.findOccupiedNeighbors(empties, board).size();
+        int numNbrs = board.findOccupiedNeighbors(empties).size();
 
         Assert.assertTrue("numNbrs="+numNbrs+" expected "+ expectedNumNbrs, numNbrs == expectedNumNbrs);
     }

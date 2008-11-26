@@ -1,5 +1,6 @@
-package com.becker.game.twoplayer.go;
+package com.becker.game.twoplayer.go.board;
 
+import com.becker.game.twoplayer.go.*;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameProfiler;
 import java.util.HashSet;
@@ -307,7 +308,8 @@ public class GroupHealthAnalyzer implements Cloneable {
      */
     private float calcTwoEyedHealth(float side, GoBoard board) {
         float health;
-        if (GoGroupUtil.isUnconditionallyAlive(group_, board)) {
+        LifeAnalyzer analyzer = new LifeAnalyzer(group_, board);
+        if (analyzer.isUnconditionallyAlive()) {
             // in addition to this, the individual strings will get a score of side (ie +/- 1).
             health = BEST_TWO_EYED_HEALTH * side;
         }

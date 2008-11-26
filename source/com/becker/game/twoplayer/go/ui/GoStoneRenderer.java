@@ -6,9 +6,9 @@ import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer;
 import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
-import com.becker.game.twoplayer.go.GoBoard;
-import com.becker.game.twoplayer.go.GoBoardPosition;
-import com.becker.game.twoplayer.go.GoStone;
+import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.GoStone;
 import com.becker.ui.GUIUtil;
 import com.becker.common.*;
 

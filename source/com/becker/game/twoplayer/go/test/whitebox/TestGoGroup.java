@@ -1,5 +1,9 @@
 package com.becker.game.twoplayer.go.test.whitebox;
 
+import com.becker.game.twoplayer.go.board.EyeType;
+import com.becker.game.twoplayer.go.board.GoEye;
+import com.becker.game.twoplayer.go.board.GoGroup;
+import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.common.util.Util;
 import com.becker.game.twoplayer.go.*;
 import com.becker.game.twoplayer.go.test.GoTestCase;

@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.go;
+package com.becker.game.twoplayer.go.board;
 
 import java.util.Iterator;
 import java.util.List;
@@ -51,8 +51,9 @@ public class BoardValidationUtil {
     /**
      * verify that all the stones on the board are in the boards member list of groups.
      */
-    public static void confirmStonesInValidGroups(Set groups, GoBoard board)
+    public static void confirmStonesInValidGroups(GoBoard board)
     {
+        Set groups = board.getGroups();
         for ( int i = 1; i <= board.getNumRows(); i++ )
             for ( int j = 1; j <= board.getNumCols(); j++ ) {
                 GoBoardPosition space = (GoBoardPosition) board.getPosition( i, j );
@@ -194,7 +195,7 @@ public class BoardValidationUtil {
         }
     }
 
-    static void confirmNoEmptyStrings(Set groups)
+    public static void confirmNoEmptyStrings(Set groups)
     {
         for (Object g : groups)  {
             for (Object s : ((GoGroup)g).getMembers()) {
