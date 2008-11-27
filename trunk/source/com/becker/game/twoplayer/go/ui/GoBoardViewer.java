@@ -7,6 +7,7 @@ import com.becker.game.twoplayer.go.board.GoEye;
 import com.becker.game.twoplayer.go.board.GoGroup;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.common.*;
+import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameController;
 import com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer;
@@ -28,7 +29,8 @@ import java.util.Set;
  *
  *  @author Barry Becker
  */
-final class GoBoardViewer extends TwoPlayerBoardViewer implements MouseMotionListener
+final class GoBoardViewer extends TwoPlayerBoardViewer 
+                                             implements MouseMotionListener
 {
 
     /** the image for the wooden board. */
@@ -40,6 +42,8 @@ final class GoBoardViewer extends TwoPlayerBoardViewer implements MouseMotionLis
     private static final String SCORE = GameContext.getLabel("SCORE_EQUALS");
 
     public static final ColorMap COLORMAP = new GoColorMap();
+    
+    private BoardPosition savedShowPiece_;
 
     /**
      * Construct the viewer given the controller.
@@ -59,10 +63,7 @@ final class GoBoardViewer extends TwoPlayerBoardViewer implements MouseMotionLis
     {
         super.startNewGame();
         draggedShowPiece_ =  null;
-        if (!controller_.allPlayersComputer()) {
-            draggedShowPiece_ = 
-                    new GoBoardPosition(0, 0, null, new GoStone(get2PlayerController().isPlayer1sTurn()));
-        }
+        initDraggedShowPiece();
     }
 
     protected GameController createController()
@@ -74,6 +75,14 @@ final class GoBoardViewer extends TwoPlayerBoardViewer implements MouseMotionLis
     protected int getDefaultCellSize()
     {
         return 16;
+    }
+    
+    private void initDraggedShowPiece() {
+        if (!controller_.allPlayersComputer()) {
+            draggedShowPiece_ = 
+                    new GoBoardPosition(0, 0, null, new GoStone(get2PlayerController().isPlayer1sTurn()));
+            savedShowPiece_ = draggedShowPiece_;
+        }
     }
 
     /**
@@ -188,7 +197,6 @@ final class GoBoardViewer extends TwoPlayerBoardViewer implements MouseMotionLis
      /**
      * if we are in wallPlacingMode, then we show the wall being dragged around.
      * When the player clicks the wall is irrevocably placed.
-     * @param e
      */
     public void mouseMoved( MouseEvent e )
     {
@@ -203,8 +211,21 @@ final class GoBoardViewer extends TwoPlayerBoardViewer implements MouseMotionLis
         repaint();
     }
     
-    public void mouseDragged(MouseEvent e) {}
-        
+    public void mouseDragged(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseEntered( MouseEvent e ) {
+        draggedShowPiece_ = savedShowPiece_;
+    }
+    
+    @Override
+    public void mouseExited( MouseEvent e ) {
+        //savedShowPiece_ = draggedShowPiece_;
+        draggedShowPiece_ = null;
+        repaint();
+    }
+    
     /**
      * display a dialog at the end of the game showing who won and other relevant
      * game specific information.

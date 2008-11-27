@@ -48,6 +48,7 @@ public class GoGameImporter extends GameImporter {
     /**
      * Initialize the board based on the SGF game.
      */
+    @Override
     protected void parseSGFGameInfo( SGFGame game) {
 
         GoController gc = (GoController) controller_;
@@ -95,7 +96,8 @@ public class GoGameImporter extends GameImporter {
     }
 
 
-    protected boolean processToken(SGFToken token, List moveList) {
+    @Override
+    protected boolean processToken(SGFToken token, List<Move> moveList) {
 
         boolean found = false;
         if (token instanceof MoveToken ) {
@@ -133,20 +135,20 @@ public class GoGameImporter extends GameImporter {
      * Such as placing handicaps when reading from an sgf file.
      * @param token
      */
-    private static void addMoves(PlacementListToken token, List moveList) {
+    private static void addMoves(PlacementListToken token, List<Move> moveList) {
         Iterator<Point> points = token.getPoints();
         System.out.println("num points ="+token.getPoints2().size());
         boolean player1 = token instanceof AddBlackToken;
         
         while (points.hasNext()) {
             Point point = points.next();
-            System.out.println("adding move at row=" + point.y+" col="+ point.x);
+            //System.out.println("adding move at row=" + point.y+" col="+ point.x);
             moveList.add( new GoMove( point.y, point.x, 0, new GoStone(player1)));
         }
     }
 
 
-    protected Move createMoveFromToken( SGFToken token)
+    protected GoMove createMoveFromToken( SGFToken token)
     {        
           MoveToken mvToken = (MoveToken) token;
           if (mvToken.isPass()) {

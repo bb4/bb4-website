@@ -46,8 +46,9 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
     }
 
     /**
-     * create a deep copy of this position.
+     * Create a deep copy of this position.
      */
+    @Override
     public BoardPosition copy()
     {
         GoBoardPosition pos = new GoBoardPosition( row_, col_, string_, (GoStone)piece_);
@@ -57,6 +58,7 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
     /**
      * copy all fields from another stone to this one.
      */
+    @Override
     public void copy( BoardPosition pos )
     {
         super.copy(pos);
@@ -220,6 +222,7 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
     /**
      * @return a string representation of the go board position
      */
+    @Override
     public String toString()
     {
         return super.toString()+ " s:"+Util.formatNumber(scoreContribution_) + " hc:"+hashCode();
@@ -233,6 +236,3 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
         this.scoreContribution_ = scoreContribution;
     }
 }
-
-
-

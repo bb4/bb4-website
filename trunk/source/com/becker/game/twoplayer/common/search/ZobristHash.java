@@ -48,7 +48,6 @@ public final class ZobristHash {
                 }
             }
         }
-
     }
 
     /**

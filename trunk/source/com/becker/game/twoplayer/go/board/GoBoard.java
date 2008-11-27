@@ -1,11 +1,13 @@
 package com.becker.game.twoplayer.go.board;
 
+import com.becker.game.twoplayer.go.board.analysis.CandidateMoveAnalyzer;
 import com.becker.game.twoplayer.go.board.analysis.NeighborAnalyzer;
 import com.becker.game.twoplayer.go.*;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.*;
 import com.becker.common.*;
 
+import com.becker.game.twoplayer.go.board.analysis.TerritoryAnalyzer;
 import java.util.*;
 
 import static com.becker.game.twoplayer.go.GoControllerConstants.*;
@@ -27,17 +29,14 @@ public final class GoBoard extends TwoPlayerBoard
     // this is a set of active armies. Armies are composed of groups.
     // armies not implemented yet.
     //private Set armies_;
-
-    /** The difference between the 2 player's territory.
-     * It is computed as black-white = sum(health of stone i) */
-    private float territoryDelta_ = 0;
-
-    private CandidateMoves candidateMoves_;
+    
+    private CandidateMoveAnalyzer candidateMoves_;
 
     private HandicapStones handicap_;
 
     private BoardUpdater boardUpdater_;
 
+    private TerritoryAnalyzer territoryAnalyzer_;
 
     /**
      *  Constructor.
@@ -53,6 +52,7 @@ public final class GoBoard extends TwoPlayerBoard
         setSize( numRows, numCols );
         setHandicap(numHandicapStones);
         boardUpdater_ = new BoardUpdater(this);
+        territoryAnalyzer_ = new TerritoryAnalyzer(this);
     }
 
     /**
@@ -131,7 +131,7 @@ public final class GoBoard extends TwoPlayerBoard
         // we don't use the 0 edges of the board
         positions_ = new BoardPosition[numRows_ + 1][numCols_ + 1];
 
-        candidateMoves_ = new CandidateMoves(numRows);
+        candidateMoves_ = new CandidateMoveAnalyzer(numRows);
         reset();
     }
 
@@ -258,126 +258,27 @@ public final class GoBoard extends TwoPlayerBoard
         return boardUpdater_.getNumCaptures(player1StonesCaptured);
     }
     
-
+    /**
+     * @see TerritoryAnalyzer#getTerritoryDelta
+     */
     public float getTerritoryDelta()
     {
-        return territoryDelta_;
+        return territoryAnalyzer_.getTerritoryDelta();
     }
-
-    /**
-     * loops through the groups and armies to determine the territorial
-     * difference between the players.
-     * Then loops through and determines a score for positions that are not part of groups.
-     * If a position is part of an area that borders only a living group, then it is considered
-     * territory for that group's side. If, however, the position borders living groups from
-     * both sides, then the score is weighted according to what proportion of the perimeter
-     * borders each living group and how alive those bordering groups are.
-     * This is the primary factor in evaluating the board position for purposes of search.
-     * This method and the methods it calls are the crux of this go playing program.
-     *
-     * @return the estimated difference in territory between the 2 sides.
-     *  A large positive number indicates black is winning, while a negative number indicates that white has the edge.
-     */
-    public float updateTerritory(GoBoardPosition lastMove)
-    {
-        getProfiler().start(GoProfiler.UPDATE_TERRITORY);
-
-        float delta = 0;
-        Iterator it = groups_.iterator();
-        // first calculate the absolute health of the groups so that measure can
-        // be used in the more accurate relative health computation.
-
-        while ( it.hasNext() ) {
-            getProfiler().start(GoProfiler.ABSOLUTE_TERRITORY);
-            GoGroup g = (GoGroup) it.next();
-
-            float health = g.calculateAbsoluteHealth( this, getProfiler());
-
-            if (!USE_RELATIVE_GROUP_SCORING)  {
-                g.updateTerritory( health );
-                delta += health * g.getNumStones();
-            }
-           getProfiler().stop(GoProfiler.ABSOLUTE_TERRITORY);
-        }
-
-        if (USE_RELATIVE_GROUP_SCORING)  {
-            getProfiler().start(GoProfiler.RELATIVE_TERRITORY);
-            it = groups_.iterator();
-            while ( it.hasNext() ) {
-                GoGroup g = (GoGroup) it.next();
-                float health = g.calculateRelativeHealth(this, lastMove, (GoProfiler)getProfiler());
-                g.updateTerritory( health );
-                delta += health * g.getNumStones();
-            }
-            getProfiler().stop(GoProfiler.RELATIVE_TERRITORY);
-        }
-        // need to loop over the board and determine for each space if it is territory for the specified player.
-        // We will first mark visited all the stones that are "controlled" by the specified player.
-        // The unoccupied "controlled" positions will be territory.
-        getProfiler().start(GoProfiler.UPDATE_EMPTY);
-        delta += updateEmptyRegions();
-        getProfiler().stop(GoProfiler.UPDATE_EMPTY);
-
-        getProfiler().stop(GoProfiler.UPDATE_TERRITORY);
-        territoryDelta_ = delta;
-        return delta;
-    }
-
-
-    /**
-     * assign scores to empty positions that are not eyes in groups.
-     *
-     * @return the estimated difference in territory. A positive value means black is ahead.
-     */
-    private float updateEmptyRegions()
-    {
-        return GoBoardUtil.updateEmptyRegions(this);
-    }
-
-    
-    /**
-     * get an estimate of the territory for the specified player.
-     * This estimate is computed by summing all spaces in eyes + dead opponent stones that are still on the board in eyes.
-     * Empty spaces are weighted by how likely they are to eventually be territory of one side or the other.
-     * At the end of the game this + the number of pieces captured so far should give the true score.
+ 
+   /**
+     * @see TerritoryAnalyzer#getTerritoryEstimate
      */
     public int getTerritoryEstimate( boolean forPlayer1, boolean estimate)
     {
-        float territoryEstimate = 0;
-
-        // we should be able to just sum all the position scores now.
-        for ( int i = 1; i <= getNumRows(); i++ )  {
-           for ( int j = 1; j <= getNumCols(); j++ ) {
-               GoBoardPosition pos = (GoBoardPosition)positions_[i][j];
-               double val = estimate? pos.getScoreContribution() : (forPlayer1? 1.0 : -1.0);
-
-               // the territory estimate will always be positive for both sides.
-               if (pos.isUnoccupied()) {
-                   if (forPlayer1 && pos.getScoreContribution() > 0) {
-                       territoryEstimate += val;
-                   }
-                   else if (!forPlayer1 && pos.getScoreContribution() < 0)  {
-                       territoryEstimate -= val;  // will be positive
-                   }
-               }
-               else { // occupied
-                   GamePiece p = pos.getPiece();
-                   GoGroup group = pos.getGroup();
-                   assert(p != null);
-                   if (group != null) {
-                       if (forPlayer1 && !p.isOwnedByPlayer1() && group.getRelativeHealth() >= 0) {
-                           territoryEstimate += val;
-                       }
-                       // Getting npe here
-                       else if (!forPlayer1 && p.isOwnedByPlayer1() && group.getRelativeHealth() <= 0)  {
-                           territoryEstimate -= val;
-                       }
-                   }
-               }
-           }
-        }
-
-        return (int)territoryEstimate;
+        return territoryAnalyzer_.getTerritoryEstimate(forPlayer1, estimate);
+    }
+    
+    /**
+     * @see TerritoryAnalyzer#updateTerritory
+     */
+    public float updateTerritory(GoBoardPosition lastMove) {
+        return territoryAnalyzer_.updateTerritory(lastMove);
     }
 
     /**
@@ -411,9 +312,9 @@ public final class GoBoard extends TwoPlayerBoard
                                                      int rMin, int rMax, int cMin, int cMax )
     {
         getProfiler().start(GoProfiler.FIND_STRINGS);
-        NeighborAnalyzer ba = new NeighborAnalyzer(this);
+        NeighborAnalyzer na = new NeighborAnalyzer(this);
         List<GoBoardPosition> stones = 
-                ba.findStringFromInitialPosition(stone, friendOwnedByP1, returnToUnvisitedState, 
+                na.findStringFromInitialPosition(stone, friendOwnedByP1, returnToUnvisitedState, 
                                                                   type, rMin, rMax, cMin, cMax);
         getProfiler().stop(GoProfiler.FIND_STRINGS);
 
@@ -440,8 +341,8 @@ public final class GoBoard extends TwoPlayerBoard
      */
     public Set<GoBoardPosition> getNobiNeighbors( GoBoardPosition stone, boolean friendOwnedByP1, NeighborType neighborType )
     {
-        NeighborAnalyzer ba = new NeighborAnalyzer(this);
-        return ba.getNobiNeighbors(stone, friendOwnedByP1, neighborType);
+        NeighborAnalyzer na = new NeighborAnalyzer(this);
+        return na.getNobiNeighbors(stone, friendOwnedByP1, neighborType);
     }
 
     /**
@@ -460,8 +361,8 @@ public final class GoBoard extends TwoPlayerBoard
     {
         getProfiler().start(GoProfiler.GET_GROUP_NBRS);
        
-        NeighborAnalyzer ba = new NeighborAnalyzer(this);
-        Set<GoBoardPosition> nbrStones = ba.getGroupNeighbors(stone, friendPlayer1, samePlayerOnly);
+        NeighborAnalyzer na = new NeighborAnalyzer(this);
+        Set<GoBoardPosition> nbrStones = na.getGroupNeighbors(stone, friendPlayer1, samePlayerOnly);
      
         getProfiler().stop(GoProfiler.GET_GROUP_NBRS);
         return nbrStones;
@@ -504,31 +405,11 @@ public final class GoBoard extends TwoPlayerBoard
     {
         getProfiler().start(GoProfiler.FIND_GROUPS);
         
-        NeighborAnalyzer ba = new NeighborAnalyzer(this);
-        List<GoBoardPosition> stones = ba.findGroupFromInitialPosition(stone, returnToUnvisitedState);
+        NeighborAnalyzer na = new NeighborAnalyzer(this);
+        List<GoBoardPosition> stones = na.findGroupFromInitialPosition(stone, returnToUnvisitedState);
    
         getProfiler().stop(GoProfiler.FIND_GROUPS);
         return stones;
-    }
-
-    
-    /**
-     * @param empties a list of unoccupied positions.
-     * @return a list of stones bordering the set of empty board positions.
-     */
-    public Set<GoBoardPosition> findOccupiedNeighbors(List empties)
-    {
-        Iterator it = empties.iterator();
-        Set<GoBoardPosition> allNbrs = new HashSet<GoBoardPosition>();
-        while (it.hasNext()) {
-            GoBoardPosition empty = (GoBoardPosition)it.next();
-            assert (empty.isUnoccupied());
-            Set<GoBoardPosition> nbrs = getNobiNeighbors(empty, false, NeighborType.OCCUPIED);
-            // add these nbrs to the set of all nbrs
-            // (dupes automatically culled because HashSets only have unique members)
-            allNbrs.addAll(nbrs);
-        }
-        return allNbrs;
     }
    
     /**
@@ -541,13 +422,13 @@ public final class GoBoard extends TwoPlayerBoard
                 GoBoardPosition space = (GoBoardPosition)positions_[i][j];
                 if ( space.isInEye() )     {
                     // remove reference to the owning group so it can be garbage collected.
-                    space.getEye().getGroup().getEyes(this).remove(this);
                     space.getEye().clear();
                     space.setEye(null);
                 }
             }
         }
     }
+    
 
     /**
      * @return either the number of black or white stones.
@@ -576,7 +457,6 @@ public final class GoBoard extends TwoPlayerBoard
     public int getNumPositionStates() {
         return 3;
     }
-
 
     public List getHandicapPositions() {
         return handicap_.getStarPoints();
@@ -618,7 +498,7 @@ public final class GoBoard extends TwoPlayerBoard
         return buf.toString();
     }
 
-
+    
     
     /**
      * The number of star points used for handicap stones on the board

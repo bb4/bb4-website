@@ -21,8 +21,8 @@ public class GroupHealthAnalyzer implements Cloneable {
     
     /**
      * need 2 true eyes to be unconditionally alive.
-     * this is a set of GoEyes which give the spaces in the eye
-     * it includes eyes of all types including false eyes
+     * This is a set of GoEyes which give the spaces in the eye.
+     * It includes eyes of all types including false eyes.
      * false-eye: any string of spaces or dead enemy stones for which one is a false eye.
      */
     private Set<GoEye> eyes_;
@@ -64,7 +64,7 @@ public class GroupHealthAnalyzer implements Cloneable {
      * Set this to true when the eyes need to be recalculated.
      * It must be set to true if the group has changed in any way.
       */
-    private boolean changed_ = true;
+    private boolean eyeCacheBroken_ = true;
     
     /**
      * Constructor.
@@ -73,7 +73,7 @@ public class GroupHealthAnalyzer implements Cloneable {
     public GroupHealthAnalyzer(GoGroup group) {
         group_ = group;
         eyes_ = new LinkedHashSet<GoEye>();
-        changed_ = true;
+        eyeCacheBroken_ = true;
     }
     
     /**
@@ -84,8 +84,7 @@ public class GroupHealthAnalyzer implements Cloneable {
         return absoluteHealth_;
     }
     
-    public void breakCache() {
-        changed_ = true;
+    public void breakEyeCache() {
         clearEyes();
     }
     
@@ -94,7 +93,7 @@ public class GroupHealthAnalyzer implements Cloneable {
      */
     public boolean hasChanged()
     {
-        return changed_;
+        return eyeCacheBroken_;
     }
     
     
@@ -104,7 +103,7 @@ public class GroupHealthAnalyzer implements Cloneable {
      */
     public Set getLiberties(GoBoard board)
     {      
-        if (!changed_) {
+        if (!eyeCacheBroken_) {
              return cachedLiberties_;
         }
         Set<GoBoardPosition> liberties = new HashSet<GoBoardPosition>();
@@ -129,7 +128,7 @@ public class GroupHealthAnalyzer implements Cloneable {
      */
     public int getNumStones()
     {
-        if (!changed_) {
+        if (!eyeCacheBroken_) {
             return cachedNumStonesInGroup_;
         }
         int numStones = 0;
@@ -146,11 +145,8 @@ public class GroupHealthAnalyzer implements Cloneable {
      * @return  set of eyes currently identified for this group.
      */
     public Set<GoEye> getEyes(GoBoard board)
-    {                
-        if (changed_ && board!=null) {
-            GameContext.log(2, "attempting to get eyes when they are not up to date. need to update.");
-            updateEyes(board);            
-        }
+    {                 
+        updateEyes(board);            
         return eyes_;
     }    
     
@@ -179,7 +175,7 @@ public class GroupHealthAnalyzer implements Cloneable {
     public float calculateAbsoluteHealth( GoBoard board, GameProfiler profiler )
     {
 
-        if ( !changed_ ) {
+        if ( !eyeCacheBroken_ ) {
             return absoluteHealth_;
         }
 
@@ -211,8 +207,6 @@ public class GroupHealthAnalyzer implements Cloneable {
             absoluteHealth_ = side;
         }
 
-        changed_ = false;  // cached until something changes
-        
         return absoluteHealth_;
     }
 
@@ -453,7 +447,7 @@ public class GroupHealthAnalyzer implements Cloneable {
      *
      * @return the overall health of the group.
      */
-    public float calculateRelativeHealth( GoBoard board, GoBoardPosition lastMove, GoProfiler profiler )
+    public float calculateRelativeHealth( GoBoard board, GoProfiler profiler )
     {
         // we multiply by a +/- sign depending on the side
         float side = group_.isOwnedByPlayer1()? 1.0f : -1.0f;
@@ -548,7 +542,8 @@ public class GroupHealthAnalyzer implements Cloneable {
         return enemyNbrs;
     }
     
-     /**
+    
+    /**
      * compute how many eyes (connected internal blank areas) this group has.
      * the eyes are either false eyes or true (or big or territorial) eyes.
      * Also update eyePotential (a measure of how good the groups ability to make 2 eyes(.
@@ -558,12 +553,14 @@ public class GroupHealthAnalyzer implements Cloneable {
      */
     private void updateEyes( GoBoard board )
     {
-        if (!changed_)
+        if (!eyeCacheBroken_ || board == null) {
             return;
+        }
         
-        GroupEyeAnalyzer eyeAnalyzer = new GroupEyeAnalyzer(group_, board);
+        GroupEyeSpaceAnalyzer eyeAnalyzer = new GroupEyeSpaceAnalyzer(group_, board);
         eyes_ = eyeAnalyzer.determineEyes();
         eyePotential_ = eyeAnalyzer.calculateEyePotential();
+        eyeCacheBroken_ = false;  // cached until something changes
     }
  
     /**
@@ -578,7 +575,7 @@ public class GroupHealthAnalyzer implements Cloneable {
             it.next().clear();
         }
         eyes_.clear();
-        changed_ = true;
+        eyeCacheBroken_ = true;
     }
     
     

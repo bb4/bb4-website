@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.go.board;
 
+import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
 import com.becker.game.twoplayer.go.board.analysis.GroupHealthAnalyzer;
 import com.becker.game.twoplayer.go.*;
 import com.becker.common.*;
@@ -11,11 +12,9 @@ import java.util.*;
 /**
  *  A GoGroup is composed of a loosely connected set of one or more same color strings.
  *  A GoString by comparison, is composed of a strongly connected set of one or more same color stones.
- *  A GoArmy is a loosely coupled set of Groups
  *  Groups may be connected by diagonals or one space jumps, or uncut knights moves, but not nikken tobi.
  *
  *  @see GoString
- *  @see GoArmy
  *  @see GoBoard
  *  @author Barry Becker
  */
@@ -24,9 +23,6 @@ public final class GoGroup extends GoSet
 
     /** a set of the strings that are in the group. */
     private Set<GoString> members_;
-
-    /** the army to which this group belongs */
-    private GoArmy army_;
 
     /** Responsible for determining how alive or dead the group is. */
     private GroupHealthAnalyzer healthAnalyzer_;
@@ -89,27 +85,6 @@ public final class GoGroup extends GoSet
         return members_;
     }
     
-    
-    
-
-    /**
-     * set/get the army
-     * @param army the owning army
-     */
-    public void setArmy( GoArmy army )
-    {
-        army_ = army;
-    }
-
-    /**
-     * get the owning army for this group
-     * @return the owning army
-     */
-    public GoArmy getArmy()
-    {
-        return army_;
-    }
-
     /**
      * add a string to the group.
      * @param string the string to add
@@ -133,7 +108,7 @@ public final class GoGroup extends GoSet
         }
         string.setGroup( this );
         getMembers().add( string );
-        healthAnalyzer_.breakCache();       
+        healthAnalyzer_.breakEyeCache();       
     }
 
 
@@ -155,7 +130,7 @@ public final class GoGroup extends GoSet
             addMember(string, board);
         }
         group.removeAll();
-        healthAnalyzer_.breakCache();  
+        healthAnalyzer_.breakEyeCache();  
     }
 
     /**
@@ -181,7 +156,7 @@ public final class GoGroup extends GoSet
             // remove the string associated with the stone
             remove( str );
         }
-        healthAnalyzer_.breakCache();     
+        healthAnalyzer_.breakEyeCache();     
     }
 
     /**
@@ -199,7 +174,7 @@ public final class GoGroup extends GoSet
             return;
         }
         getMembers().remove( string );
-       healthAnalyzer_.breakCache();     
+       healthAnalyzer_.breakEyeCache();     
     }
 
 
@@ -221,14 +196,14 @@ public final class GoGroup extends GoSet
         return healthAnalyzer_.getNumStones();
     }
     
-    float calculateAbsoluteHealth( GoBoard board, GameProfiler profiler )
+    public float calculateAbsoluteHealth( GoBoard board, GameProfiler profiler )
     {
         return healthAnalyzer_.calculateAbsoluteHealth(board, profiler);
     }
     
-    float calculateRelativeHealth( GoBoard board, GoBoardPosition lastMove, GoProfiler profiler )
+    public float calculateRelativeHealth( GoBoard board, GoProfiler profiler )
     {
-        return healthAnalyzer_.calculateRelativeHealth(board, lastMove, profiler);
+        return healthAnalyzer_.calculateRelativeHealth(board,  profiler);
     }
     
     public float getAbsoluteHealth() {
@@ -293,8 +268,7 @@ public final class GoGroup extends GoSet
     public Object clone() throws CloneNotSupportedException
     {
         Object clone = super.clone();
-        ((GoGroup)clone).healthAnalyzer_ = (GroupHealthAnalyzer)healthAnalyzer_.clone(); 
-        assert ((GoGroup)clone).healthAnalyzer_ != null;
+        ((GoGroup)clone).healthAnalyzer_ = new GroupHealthAnalyzer((GoGroup) clone);
         return clone;     
     }
 

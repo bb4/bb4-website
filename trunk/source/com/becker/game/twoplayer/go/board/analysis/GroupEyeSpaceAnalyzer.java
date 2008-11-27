@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Methods related to understanding the eye spaces within a group.
+ * Methods related to understanding the eyes within a group.
  * 
  * @author Barry Becker
  */
-public class GroupEyeAnalyzer {
+public class GroupEyeSpaceAnalyzer {
 
     /** The group of go stones that we are analyzing. */
     private GoGroup group_;
@@ -26,9 +26,10 @@ public class GroupEyeAnalyzer {
     /**
      * Constructor.
      */
-    public GroupEyeAnalyzer(GoGroup group, GoBoard board) {
+    public GroupEyeSpaceAnalyzer(GoGroup group, GoBoard board) {
         group_ = group;
         board_ = board;
+        assert board_ != null;
         boundingBox_ = findBoundingBox(group_.getMembers());
     }
     
@@ -83,7 +84,7 @@ public class GroupEyeAnalyzer {
                 // if the empty space is already marked as being an eye, skip
                 GoBoardPosition space = (GoBoardPosition) board_.getPosition( r, c );
                 if ( !space.isVisited() && space.isUnoccupied() && !space.isInEye() ) {
-                    List eyeSpaces =
+                    List<GoBoardPosition> eyeSpaces =
                             board_.findStringFromInitialPosition( space, ownedByPlayer1,
                                                                  false, NeighborType.NOT_FRIEND,
                                                                  boundingBox_  );

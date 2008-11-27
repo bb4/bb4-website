@@ -40,14 +40,15 @@ public final class LifeAnalyzer {
         findNeighborStringSets();
 
         // now create the neighbor eye sets for each qualified string
-        for (GoEye eye : group_.getEyes(board_)) {          
+        for (GoEye eye : group_.getEyes(board_)) {       
+            EyeAnalyzer a = new EyeAnalyzer(eye);
             if (eye.getNeighbors() != null) {
                 for (GoString str : eye.getNeighbors()) {                  
                     if (str.getNeighbors() == null) {
                         str.setNbrs(new HashSet<GoString>());
                     }
                     // only add the eye if every unoccupied position in the eye is adjacent to the str
-                    if  (eye.allUnocupiedAdjacentToString(str, board_)) {
+                    if  (a.allUnocupiedAdjacentToString(str, board_)) {
                         str.getNeighbors().add(eye);
                     }
                 }

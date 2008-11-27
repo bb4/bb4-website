@@ -177,8 +177,8 @@ public final class GameContext
     public static void loadGameResources(String gameName)
     {
         gameName_ = gameName;
-        System.out.println("loadGameResources gameName="+ gameName);
-        System.out.println("plugin = " + PluginManager.getInstance().getPlugin(gameName));
+        //System.out.println("loadGameResources gameName="+ gameName);
+        //System.out.println("plugin = " + PluginManager.getInstance().getPlugin(gameName));
         String resourcePath = PluginManager.getInstance().getPlugin(gameName).getMsgBundleBase();
         log(2, "searching for "+ resourcePath);
 

@@ -4,7 +4,7 @@ import com.becker.game.twoplayer.go.board.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.GoEye;
 import com.becker.game.twoplayer.go.board.GoGroup;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.GoBoardUtil;
+import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
 import static com.becker.game.twoplayer.go.GoControllerConstants.*;   // jdk 1.5 feature
 import com.becker.common.ColorMap;
 import com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer;
@@ -21,7 +21,6 @@ import java.util.List;
 /**
  *  Static 8tility methods for rendering GoGroup deciration
  *  A GoString by comparison, is composed of a strongly connected set of one or more same color stones.
- *  A GoArmy is a loosely coupled set of Groups
  *  Groups may be connected by diagonals or one space jumps, or uncut knights moves, but not nikken tobi
  *
  *  @author Barry Becker
