@@ -83,7 +83,7 @@ public abstract class TwoPlayerBoard extends Board
         if (pos.isOccupied()) {
             return 0;
         } else {
-            return pos.getPiece().isOwnedByPlayer1()? 1:0;
+            return pos.getPiece().isOwnedByPlayer1()? 1:-1;
         }
     }
 

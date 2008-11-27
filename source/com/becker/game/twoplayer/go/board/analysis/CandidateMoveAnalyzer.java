@@ -1,5 +1,6 @@
-package com.becker.game.twoplayer.go.board;
+package com.becker.game.twoplayer.go.board.analysis;
 
+import com.becker.game.twoplayer.go.board.*;
 import com.becker.game.common.BoardPosition;
 
 /**
@@ -8,7 +9,7 @@ import com.becker.game.common.BoardPosition;
  * @author Barry Becker
  *         Date: Aug 21, 2005
  */
-class CandidateMoves {
+public class CandidateMoveAnalyzer {
 
     private static final int CANDIDATE_MOVE_OFFSET = 1;
 
@@ -17,7 +18,11 @@ class CandidateMoves {
     /** this is an auxilliary structure to help determine candidate moves. */
     private boolean[][] candidateMoves_;
 
-    CandidateMoves(int size) {
+    /**
+     * Constructor.
+     * @param size
+     */
+    public CandidateMoveAnalyzer(int size) {
         size_ = size;
         candidateMoves_ = new boolean[size_ + 1][size_ + 1];
     }

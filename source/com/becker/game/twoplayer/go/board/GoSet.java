@@ -12,7 +12,6 @@ import java.util.Set;
  *
  *  @see GoString
  *  @see GoGroup
- *  @see GoArmy
  *  @author Barry Becker
  */
 public abstract class GoSet implements GoMember

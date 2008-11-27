@@ -51,7 +51,7 @@ import java.text.MessageFormat;
  *  @author Barry Becker
  */
 public abstract class TwoPlayerBoardViewer extends GameBoardViewer
-                      implements MouseListener, GameChangedListener, TwoPlayerViewerCallbackInterface
+                      implements GameChangedListener, TwoPlayerViewerCallbackInterface
 {
 
     private static final int PROGRESS_UPDATE_DELAY = 700;

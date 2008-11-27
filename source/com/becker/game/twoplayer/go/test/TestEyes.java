@@ -4,6 +4,7 @@ import com.becker.game.twoplayer.go.board.GoEye;
 import com.becker.game.twoplayer.go.board.GoGroup;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.go.*;
+import com.becker.game.twoplayer.go.board.GoBoard;
 import junit.framework.*;
 
 import java.util.*;
@@ -376,7 +377,7 @@ public class TestEyes extends GoTestCase {
 
 
 
-  //-----------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------
     /**
      *
      * @param eyesProblemFile
@@ -386,21 +387,23 @@ public class TestEyes extends GoTestCase {
     private void checkEyes(String eyesProblemFile,
                            EyeCounts expectedBlackEyes, EyeCounts expectedWhiteEyes) {
 
-        GameContext.log(0, "finding eyes for "+eyesProblemFile+" ...");
+        System.out.println("finding eyes for "+eyesProblemFile+" ...");
+        //GameContext.log(0, "finding eyes for "+eyesProblemFile+" ...");
         restore(PATH_PREFIX + eyesProblemFile);
 
+        GoBoard board = (GoBoard)controller_.getBoard();
         //Set groups = ((GoBoard) controller_.getBoard()).getGroups();
 
         // consider the 2 biggest groups
         //Assert.assertTrue("There were not two groups. Instead there were :"+groups.size(), groups.size() == 2);
 
-        GoGroup biggestBlackGroup =getBiggestGroup(true);
+        GoGroup biggestBlackGroup = getBiggestGroup(true);
         GoGroup biggestWhiteGroup = getBiggestGroup(false);
 
-        EyeCounts eyeCounts = getEyeCounts(biggestBlackGroup.getEyes(null));
+        EyeCounts eyeCounts = getEyeCounts(biggestBlackGroup.getEyes(board));
         Assert.assertTrue("Actual Black Eye counts were \n"+eyeCounts+" but was expecting \n"+ expectedBlackEyes,
                               eyeCounts.equals(expectedBlackEyes));
-        eyeCounts = getEyeCounts(biggestWhiteGroup.getEyes(null));
+        eyeCounts = getEyeCounts(biggestWhiteGroup.getEyes(board));
         Assert.assertTrue("Actual White Eye counts were \n"+eyeCounts+" but was expecting \n"+ expectedWhiteEyes,
                               eyeCounts.equals(expectedWhiteEyes));
     }
@@ -452,6 +455,7 @@ public class TestEyes extends GoTestCase {
             numTerritorialEyes = numTerritorial;
         }
 
+        @Override
         public boolean equals(Object ocounts) {
             EyeCounts counts = (EyeCounts)ocounts;
             return (counts.numFalseEyes == numFalseEyes
@@ -460,17 +464,20 @@ public class TestEyes extends GoTestCase {
                     && counts.numTerritorialEyes == numTerritorialEyes);
         }
 
+        @Override
         public int hashCode() {
             return 1000000*numTerritorialEyes + 10000 * numBigEyes + 100 * numTrueEyes + numFalseEyes;
         }
 
         
+        @Override
         public String toString() {
             StringBuffer buf = new StringBuffer('\n');
-            buf.append("False Eyes: "+numFalseEyes+'\n');
-            buf.append("True Eyes: "+numTrueEyes+'\n');
-            buf.append("Big Eyes  : "+numBigEyes+'\n');
-            buf.append("Territorial: "+numTerritorialEyes+'\n');
+            String nl = "\r\n";
+            buf.append(" False Eyes: "+numFalseEyes+nl);
+            buf.append(" True Eyes: "+numTrueEyes+nl);
+            buf.append(" Big Eyes  : "+numBigEyes+nl);
+            buf.append(" Territorial: "+numTerritorialEyes+nl);
             return buf.toString();
         }
     }

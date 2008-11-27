@@ -28,6 +28,7 @@ public enum EyeType
     }
 
 
+    @Override
     public String toString() {
         return label_;
     }

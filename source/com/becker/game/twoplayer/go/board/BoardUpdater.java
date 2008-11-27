@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.go.board;
 
+import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
 import com.becker.game.twoplayer.go.board.analysis.NeighborAnalyzer;
 import com.becker.game.common.BoardPosition;
 import com.becker.game.common.CaptureList;
@@ -740,7 +741,8 @@ public class BoardUpdater {
                 str.setUnconditionallyAlive(false);
                 str.setNbrs(null);
             }
-            for (GoEye eye : group.getEyes(board_))  {      
+            Set<GoEye> eyes = group.getEyes(board_);
+            for (GoEye eye : eyes)  {      
                 eye.setUnconditionallyAlive(false);
                 eye.setNbrs(null);
             }

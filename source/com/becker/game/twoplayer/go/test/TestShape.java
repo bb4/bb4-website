@@ -16,7 +16,7 @@ public class TestShape extends GoTestCase {
 
 
     public void testShape1() {
-        restore("problem_shape1");
+        restore("shape/problem_shape1");
 
         checkShape(4, 4, 0);
         checkShape(9, 4, 0);

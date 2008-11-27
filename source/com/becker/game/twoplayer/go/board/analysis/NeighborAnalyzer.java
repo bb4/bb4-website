@@ -366,6 +366,24 @@ public class NeighborAnalyzer {
         }
         return stones;
     }
+    
+    
+    /**
+     * @param empties a list of unoccupied positions.
+     * @return a list of stones bordering the set of empty board positions.
+     */
+    public Set<GoBoardPosition> findOccupiedNeighbors(List<GoBoardPosition> empties)
+    {
+        Set<GoBoardPosition> allNbrs = new HashSet<GoBoardPosition>();
+        for (GoBoardPosition empty : empties) {
+            assert (empty.isUnoccupied());
+            Set<GoBoardPosition> nbrs = getNobiNeighbors(empty, false, NeighborType.OCCUPIED);
+            // add these nbrs to the set of all nbrs
+            // (dupes automatically culled because HashSets only have unique members)
+            allNbrs.addAll(nbrs);
+        }
+        return allNbrs;
+    }
 
     /**
      * Check an immediately adjacent (nobi) nbr.
@@ -544,5 +562,5 @@ public class NeighborAnalyzer {
         }
         return 0;
     }
-
+    
 }

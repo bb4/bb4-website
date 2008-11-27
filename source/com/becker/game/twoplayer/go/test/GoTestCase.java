@@ -70,9 +70,9 @@ public class GoTestCase extends TestCase {
         System.out.println("finding next move for "+problemFile+" ...");
         long time = System.currentTimeMillis();
         restore(problemFile);
-        System.out.println("problem restored.");
+        //System.out.println("problem restored.");
         controller_.requestComputerMove( blackPlays, true );
-        System.out.println("done requesting move");
+        //System.out.println("done requesting move");
         GoMove m = (GoMove) controller_.getBoard().getLastMove();
 
         double elapsedTime = (System.currentTimeMillis() - time) / 1000.0;

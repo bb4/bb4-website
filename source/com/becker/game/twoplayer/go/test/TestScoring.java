@@ -10,6 +10,8 @@ import junit.framework.TestSuite;
  */
 public class TestScoring extends GoTestCase {
 
+    private static final String PATH_PREFIX = "scoring/";
+    
     // give some leeway on the territory estimate since its a heuristic.
     private static final double TOLERANCE = 5;
 
@@ -45,7 +47,7 @@ public class TestScoring extends GoTestCase {
                         int expectedDeadBlackOnBoard, int expectedDeadWhiteOnBoard,
                         int expectedBlackTerr, int expectedWhiteTerr) {
 
-        updateLifeAndDeath(scoringProblem);
+        updateLifeAndDeath(PATH_PREFIX + scoringProblem);
 
         int blackTerrEst = controller_.getTerritory(true);
         int whiteTerrEst = controller_.getTerritory(false);
