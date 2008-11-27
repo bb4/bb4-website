@@ -46,7 +46,7 @@ public class PlacementListToken extends PlacementToken implements MarkupToken
       // Read a point in the list of points (of which there must be at least one), 
       // then add it to our internal list of points.
       // need to make a copy. otherwise we end up adding the same point to the list each time.
-     System.out.println("adding point ...");
+      // System.out.println("adding point ...");
       if( parsePoint( st ) ) {
           
           addPoint( new Point(getPoint()) );       
