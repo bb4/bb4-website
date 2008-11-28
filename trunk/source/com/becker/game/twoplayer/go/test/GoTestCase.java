@@ -28,17 +28,21 @@ public class GoTestCase extends TestCase {
             GameContext.getHomeDir() +"/test/go/cases/";
 
     private static final String SGF_EXTENSION = ".sgf";
+    
+    /** usually 0, but 1 or 2 may be useful when debugging. */
+    private static final int DEBUG_LEVEL = 0;
 
     protected GoController controller_;
 
     /**
      * common initialization for all go test cases.
      */
+    @Override
     protected void setUp() throws Exception {
         super.setUp();
         // this will load the resources for the specified game.
         GameContext.loadGameResources("go");
-        GameContext.setDebugMode(0);
+        GameContext.setDebugMode(DEBUG_LEVEL);
 
         controller_ = new GoController(13, 13, 0);
 
@@ -99,19 +103,18 @@ public class GoTestCase extends TestCase {
     }
 
 
-
     /**
-     * @param black
+     * @param black true if plack
      * @return the biggest black group if black is true else biggest white group.
      */
-    protected GoGroup getBiggestGroup(boolean black) {
+    protected GoGroup getBiggestGroup(boolean isBlack) {
 
-        Set groups = ((GoBoard) controller_.getBoard()).getGroups();
+        Set<GoGroup> groups = ((GoBoard) controller_.getBoard()).getGroups();
         GoGroup biggestGroup = null;
 
-        for (Object g : groups) {
-            GoGroup group = (GoGroup)g;
-            if (((GoBoardPosition)group.getStones().iterator().next()).getPiece().isOwnedByPlayer1() == black) {
+        for (GoGroup group : groups) {
+            Set<GoBoardPosition> stones = group.getStones();
+            if (stones.iterator().next().getPiece().isOwnedByPlayer1() == isBlack) {
                 if (biggestGroup == null || group.getNumStones() > biggestGroup.getNumStones()) {
                     biggestGroup = group;
                 }

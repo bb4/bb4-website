@@ -137,7 +137,7 @@ public class GoGameImporter extends GameImporter {
      */
     private static void addMoves(PlacementListToken token, List<Move> moveList) {
         Iterator<Point> points = token.getPoints();
-        System.out.println("num points ="+token.getPoints2().size());
+        // System.out.println("num points ="+token.getPoints2().size());
         boolean player1 = token instanceof AddBlackToken;
         
         while (points.hasNext()) {

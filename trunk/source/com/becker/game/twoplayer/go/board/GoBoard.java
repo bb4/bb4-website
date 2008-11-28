@@ -269,16 +269,16 @@ public final class GoBoard extends TwoPlayerBoard
    /**
      * @see TerritoryAnalyzer#getTerritoryEstimate
      */
-    public int getTerritoryEstimate( boolean forPlayer1, boolean estimate)
+    public int getTerritoryEstimate( boolean forPlayer1, boolean isEndOfGame)
     {
-        return territoryAnalyzer_.getTerritoryEstimate(forPlayer1, estimate);
+        return territoryAnalyzer_.getTerritoryEstimate(forPlayer1, isEndOfGame);
     }
     
     /**
      * @see TerritoryAnalyzer#updateTerritory
      */
-    public float updateTerritory(GoBoardPosition lastMove) {
-        return territoryAnalyzer_.updateTerritory(lastMove);
+    public float updateTerritory(boolean isEndOfGame) {
+        return territoryAnalyzer_.updateTerritory(isEndOfGame);
     }
 
     /**

@@ -29,11 +29,10 @@ public final class GoBoardUtil
     /**
      * set the visited flag back to false for a list of lists of stones
      */
-    public static void unvisitPositionsInLists( List lists )
+    public static void unvisitPositionsInLists( List<List> lists )
     {
-        Iterator it = lists.iterator();
-        while ( it.hasNext() ) {
-            unvisitPositions( (List) it.next() );
+        for (List list : lists) {
+            unvisitPositions( list );
         }
     }
 

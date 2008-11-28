@@ -421,10 +421,10 @@ public class BoardUpdater {
         unvisitAll();
 
         // verify that the string to which we added the stone has at least one liberty
-        //assert (pos.getString().getNumLiberties(board) > 0): "The placed stone "+pos+" has no liberties "+pos.getGroup();
+        assert (pos.getString().getNumLiberties(board_) > 0): "The placed stone "+pos+" has no liberties "+pos.getGroup();
 
         // this gets used when calculating the worth of the board
-        board_.updateTerritory(pos);
+        board_.updateTerritory(false);
 
         if ( GameContext.getDebugMode() > 1 ) {
             BoardValidationUtil.confirmNoEmptyStrings(board_.getGroups());
