@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.go.test;
 
-import com.becker.game.twoplayer.go.test.whitebox.TestAllWhiteBox;
+import com.becker.game.twoplayer.go.test.board.TestAllBoard;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -17,13 +17,15 @@ public class TestAll extends TestCase {
 
         TestSuite suite =  new TestSuite("All Go Tests");
 
-        //suite.addTest(TestAllWhiteBox.suite());
-        //suite.addTestSuite(TestShape.class);
-        //suite.addTestSuite(TestEyes.class);
-        //suite.addTestSuite(TestScoring.class);     //  should be easy to fix.
-        suite.addTest(TestProblemCollections.suite());
-        //suite.addTestSuite(TestLifeAndDeath.class);
-        ////suite.addTestSuite(TestKiseido2002.class);
+        suite.addTest(TestAllBoard.suite());
+        suite.addTestSuite(TestShape.class);
+        suite.addTestSuite(TestEyes.class);
+        suite.addTestSuite(TestScoring.class);     
+        //suite.addTest(TestProblemCollections.suite());
+        suite.addTestSuite(TestLifeAndDeath.class);
+        
+        // this one takes really long.
+        //suite.addTestSuite(TestKiseido2002.class); 
 
         return suite;
     }
