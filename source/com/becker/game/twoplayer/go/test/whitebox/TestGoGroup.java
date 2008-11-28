@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.go.test.whitebox;
+package com.becker.game.twoplayer.go.test.board;
 
 import com.becker.game.twoplayer.go.board.EyeType;
 import com.becker.game.twoplayer.go.board.GoEye;
@@ -16,6 +16,7 @@ import junit.framework.Assert;
  */
 public class TestGoGroup extends GoTestCase {    
     
+    private static final String PREFIX = "board/";
     
     // test absolute health calculation, and the number of liberties for the main black and white groups.
     // testAbsHealth1* test configurations with 1 stone in each group.
@@ -30,7 +31,7 @@ public class TestGoGroup extends GoTestCase {
         double AbsAbsHealthDiff = 0.0;
         double AbsHealthDiff = 0.2;
         double RelHealthDiff = 0.2;
-        verifyHealthDifferences("whitebox/groupHealth1", 4, 4, blackEyes, whiteEyes, 
+        verifyHealthDifferences("groupHealth1", 4, 4, blackEyes, whiteEyes, 
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth, 
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
@@ -48,7 +49,7 @@ public class TestGoGroup extends GoTestCase {
         double AbsAbsHealthDiff = 0.0;
         double AbsHealthDiff = 0.2;
         double RelHealthDiff = 0.2;
-        verifyHealthDifferences("whitebox/groupHealth1a", 3, 3, blackEyes, whiteEyes, 
+        verifyHealthDifferences("groupHealth1a", 3, 3, blackEyes, whiteEyes, 
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth, 
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
@@ -64,7 +65,7 @@ public class TestGoGroup extends GoTestCase {
         double AbsAbsHealthDiff = 0.0;
         double AbsHealthDiff = 0.2;
         double RelHealthDiff = 0.2;
-        verifyHealthDifferences("whitebox/groupHealth1b", 4, 4, blackEyes, whiteEyes, 
+        verifyHealthDifferences("groupHealth1b", 4, 4, blackEyes, whiteEyes, 
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth, 
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
@@ -80,7 +81,7 @@ public class TestGoGroup extends GoTestCase {
         double AbsAbsHealthDiff = 0.0;
         double AbsHealthDiff = 0.2;
         double RelHealthDiff = 0.2;
-        verifyHealthDifferences("whitebox/groupHealth1c", 4, 4, blackEyes, whiteEyes, 
+        verifyHealthDifferences("groupHealth1c", 4, 4, blackEyes, whiteEyes, 
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth, 
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
@@ -96,7 +97,7 @@ public class TestGoGroup extends GoTestCase {
         double AbsAbsHealthDiff = 0.0;
         double AbsHealthDiff = 0.2;
         double RelHealthDiff = 0.2;
-        verifyHealthDifferences("whitebox/groupHealth1d", 3, 2, blackEyes, whiteEyes, 
+        verifyHealthDifferences("groupHealth1d", 3, 2, blackEyes, whiteEyes, 
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth, 
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
@@ -112,7 +113,7 @@ public class TestGoGroup extends GoTestCase {
         double AbsAbsHealthDiff = 0.1;
         double AbsHealthDiff = 0.8;
         double RelHealthDiff = 0.872;
-        verifyHealthDifferences("whitebox/groupHealth2", 19, 14, blackEyes, whiteEyes, 
+        verifyHealthDifferences("groupHealth2", 19, 14, blackEyes, whiteEyes, 
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth, 
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
@@ -127,7 +128,7 @@ public class TestGoGroup extends GoTestCase {
         double AbsAbsHealthDiff = 0.0;
         double AbsHealthDiff = 0.4;
         double RelHealthDiff = 0.4;
-        verifyHealthDifferences("whitebox/groupHealth2a", 6, 6, blackEyes, whiteEyes, 
+        verifyHealthDifferences("groupHealth2a", 6, 6, blackEyes, whiteEyes, 
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth, 
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
@@ -142,7 +143,7 @@ public class TestGoGroup extends GoTestCase {
         double AbsAbsHealthDiff = 0.0;
         double AbsHealthDiff = 0.4;
         double RelHealthDiff = 0.4;
-        verifyHealthDifferences("whitebox/groupHealth2b", 6, 6, blackEyes, whiteEyes, 
+        verifyHealthDifferences("groupHealth2b", 6, 6, blackEyes, whiteEyes, 
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth, 
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
@@ -157,7 +158,7 @@ public class TestGoGroup extends GoTestCase {
         double AbsAbsHealthDiff = 0.1;
         double AbsHealthDiff = 0.3;
         double RelHealthDiff = 0.3;
-        verifyHealthDifferences("whitebox/groupHealth2c", 6, 5, blackEyes, whiteEyes, 
+        verifyHealthDifferences("groupHealth2c", 6, 5, blackEyes, whiteEyes, 
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth, 
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
@@ -172,7 +173,7 @@ public class TestGoGroup extends GoTestCase {
         double AbsAbsHealthDiff = 0.0;
         double AbsHealthDiff = 0.2;
         double RelHealthDiff = 0.2;
-        verifyHealthDifferences("whitebox/groupHealth2d", 5, 5, blackEyes, whiteEyes, 
+        verifyHealthDifferences("groupHealth2d", 5, 5, blackEyes, whiteEyes, 
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth, 
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
@@ -187,7 +188,7 @@ public class TestGoGroup extends GoTestCase {
         double AbsAbsHealthDiff = 0.1;
         double AbsHealthDiff = 0.15;
         double RelHealthDiff = 0.15;
-        verifyHealthDifferences("whitebox/groupHealth2e", 5, 4, blackEyes, whiteEyes, 
+        verifyHealthDifferences("groupHealth2e", 5, 4, blackEyes, whiteEyes, 
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth, 
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
@@ -202,7 +203,7 @@ public class TestGoGroup extends GoTestCase {
         double AbsAbsHealthDiff = 0.1;
         double AbsHealthDiff = 0.2;
         double RelHealthDiff = 0.2;
-        verifyHealthDifferences("whitebox/groupHealth2f", 5, 5, blackEyes, whiteEyes, 
+        verifyHealthDifferences("groupHealth2f", 5, 5, blackEyes, whiteEyes, 
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth, 
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
@@ -217,7 +218,7 @@ public class TestGoGroup extends GoTestCase {
         double AbsAbsHealthDiff = 0.25;
         double AbsHealthDiff = -0.25;
         double RelHealthDiff = -0.3375;
-        verifyHealthDifferences("whitebox/groupHealth2g", 2, 4, blackEyes, whiteEyes, 
+        verifyHealthDifferences("groupHealth2g", 2, 4, blackEyes, whiteEyes, 
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth, 
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
@@ -233,7 +234,7 @@ public class TestGoGroup extends GoTestCase {
         double AbsAbsHealthDiff = 0.8;
         double AbsHealthDiff = 1.1;
         double RelHealthDiff = 1.1;
-        verifyHealthDifferences("whitebox/groupHealth3", 20, 6, blackEyes, whiteEyes, 
+        verifyHealthDifferences("groupHealth3", 20, 6, blackEyes, whiteEyes, 
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth, 
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
@@ -249,7 +250,7 @@ public class TestGoGroup extends GoTestCase {
         double AbsAbsHealthDiff = 0.0;
         double AbsHealthDiff = 0.48;
         double RelHealthDiff = 0.48;
-        verifyHealthDifferences("whitebox/groupHealth3a", 8, 8, blackEyes, whiteEyes, 
+        verifyHealthDifferences("groupHealth3a", 8, 8, blackEyes, whiteEyes, 
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth, 
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
@@ -264,7 +265,7 @@ public class TestGoGroup extends GoTestCase {
         double AbsAbsHealthDiff = 0.0;
         double AbsHealthDiff = 0.2;
         double RelHealthDiff = 0.62;
-        verifyHealthDifferences("whitebox/groupHealth3b", 5, 5, blackEyes, whiteEyes, 
+        verifyHealthDifferences("groupHealth3b", 5, 5, blackEyes, whiteEyes, 
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth, 
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
@@ -279,7 +280,7 @@ public class TestGoGroup extends GoTestCase {
         double AbsAbsHealthDiff = -0.08;
         double AbsHealthDiff = 0.12;
         double RelHealthDiff = 0.12;
-        verifyHealthDifferences("whitebox/groupHealth3c", 3, 5, blackEyes, whiteEyes, 
+        verifyHealthDifferences("groupHealth3c", 3, 5, blackEyes, whiteEyes, 
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth, 
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
@@ -295,7 +296,7 @@ public class TestGoGroup extends GoTestCase {
         double AbsAbsHealthDiff =0.388;
         double AbsHealthDiff = 1.11;
         double RelHealthDiff = 1.11;
-        verifyHealthDifferences("whitebox/groupHealth4", 33, 12, blackEyes, whiteEyes, 
+        verifyHealthDifferences("groupHealth4", 33, 12, blackEyes, whiteEyes, 
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth, 
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
@@ -310,7 +311,7 @@ public class TestGoGroup extends GoTestCase {
         double AbsAbsHealthDiff =0.083;
         double AbsHealthDiff = 0.64;
         double RelHealthDiff = 0.64;
-        verifyHealthDifferences("whitebox/groupHealth4a", 10, 10, blackEyes, whiteEyes, 
+        verifyHealthDifferences("groupHealth4a", 10, 10, blackEyes, whiteEyes, 
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth, 
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
@@ -325,7 +326,7 @@ public class TestGoGroup extends GoTestCase {
         double AbsAbsHealthDiff = -0.054;
         double AbsHealthDiff = 0.58;
         double RelHealthDiff = 0.58;
-        verifyHealthDifferences("whitebox/groupHealth4b", 9, 12, blackEyes, whiteEyes, 
+        verifyHealthDifferences("groupHealth4b", 9, 12, blackEyes, whiteEyes, 
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth, 
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
@@ -341,7 +342,7 @@ public class TestGoGroup extends GoTestCase {
         double AbsAbsHealthDiff = -0.1;
         double AbsHealthDiff = 0.2;
         double RelHealthDiff = 0.2;
-        verifyHealthDifferences("whitebox/groupHealth5", 4, 8, blackEyes, whiteEyes, 
+        verifyHealthDifferences("groupHealth5", 4, 8, blackEyes, whiteEyes, 
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth, 
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
@@ -357,7 +358,7 @@ public class TestGoGroup extends GoTestCase {
         double AbsAbsHealthDiff = -0.125;
         double AbsHealthDiff = 0.685;
         double RelHealthDiff = 0.685;
-        verifyHealthDifferences("whitebox/groupHealth5a", 10, 12, blackEyes, whiteEyes, 
+        verifyHealthDifferences("groupHealth5a", 10, 12, blackEyes, whiteEyes, 
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth, 
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
@@ -373,7 +374,7 @@ public class TestGoGroup extends GoTestCase {
         double AbsAbsHealthDiff = -0.084;
         double AbsHealthDiff = 0.764;
         double RelHealthDiff = 0.764;
-        verifyHealthDifferences("whitebox/groupHealth5b", 9, 13, blackEyes, whiteEyes, 
+        verifyHealthDifferences("groupHealth5b", 9, 13, blackEyes, whiteEyes, 
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth, 
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
@@ -389,7 +390,7 @@ public class TestGoGroup extends GoTestCase {
         double AbsAbsHealthDiff = 0.0;
         double AbsHealthDiff = -0.6;
         double RelHealthDiff = -0.6;
-        verifyHealthDifferences("whitebox/groupHealth6", 2, 2, blackEyes, whiteEyes, 
+        verifyHealthDifferences("groupHealth6", 2, 2, blackEyes, whiteEyes, 
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth, 
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
@@ -405,7 +406,7 @@ public class TestGoGroup extends GoTestCase {
         double AbsAbsHealthDiff = 0.49;
         double AbsHealthDiff = 1.5;
         double RelHealthDiff = 1.5;
-        verifyHealthDifferences("whitebox/groupHealth6a", 8, 18, blackEyes, whiteEyes, 
+        verifyHealthDifferences("groupHealth6a", 8, 18, blackEyes, whiteEyes, 
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth, 
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
@@ -421,7 +422,7 @@ public class TestGoGroup extends GoTestCase {
         double AbsAbsHealthDiff = 0.74;
         double AbsHealthDiff = 1.14;
         double RelHealthDiff = 1.14;
-        verifyHealthDifferences("whitebox/groupHealth7", 19, 6, blackEyes, whiteEyes,  
+        verifyHealthDifferences("groupHealth7", 19, 6, blackEyes, whiteEyes,  
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth, 
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
@@ -437,7 +438,7 @@ public class TestGoGroup extends GoTestCase {
         double AbsAbsHealthDiff = 0.017;
         double AbsHealthDiff = 0.613;
         double RelHealthDiff = 0.613;
-        verifyHealthDifferences("whitebox/groupHealth8", 12, 11, blackEyes, whiteEyes,  
+        verifyHealthDifferences("groupHealth8", 12, 11, blackEyes, whiteEyes,  
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth, 
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
@@ -453,7 +454,7 @@ public class TestGoGroup extends GoTestCase {
         double AbsAbsHealthDiff = 0.22;
         double AbsHealthDiff = 0.663;
         double RelHealthDiff = 0.683;
-        verifyHealthDifferences("whitebox/groupHealth9", 14, 7, blackEyes, whiteEyes,  
+        verifyHealthDifferences("groupHealth9", 14, 7, blackEyes, whiteEyes,  
                                                  bPotential, wPotential,
                                                  blackHealth, whiteHealth, 
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
@@ -476,7 +477,8 @@ public class TestGoGroup extends GoTestCase {
                                          double expectedAbsAbsHealthDifference,
                                          double expectedAbsHealthDifference,
                                          double expectedRelHealthDifference) {
-        restore(file);
+        restore(PREFIX + file);
+        System.out.println("test=" + file);
 
         // find the biggest black and white groups
         GoGroup bg = getBiggestGroup(true);
@@ -570,7 +572,9 @@ public class TestGoGroup extends GoTestCase {
             int i = 0;
             for (GoEye eye : eyes) {
                 EyeType eType = eye.getEyeType();
-                Assert.assertTrue(color + "Eye " + i + " was not the type that we expected. It was " + eType, (expectedEyes[i] == eType));  
+                Assert.assertTrue(color + "Eye " + i + " was not the type that we expected. " +
+                        "It was " + eType +" , but we expected " + expectedEyes[i],
+                         (expectedEyes[i] == eType));  
                 i++;
             }    
         }

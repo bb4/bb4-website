@@ -1,6 +1,7 @@
-package com.becker.game.twoplayer.go.test.whitebox;
+package com.becker.game.twoplayer.go.test.board;
 
 import com.becker.game.twoplayer.go.test.GoTestCase;
+import com.becker.game.twoplayer.go.test.board.analysis.TestAllAnalysis;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -9,7 +10,7 @@ import junit.framework.TestSuite;
  *
  * @author Barry Becker
  */
-public class TestAllWhiteBox extends GoTestCase {
+public class TestAllBoard extends GoTestCase {
 
 
     /**
@@ -17,11 +18,12 @@ public class TestAllWhiteBox extends GoTestCase {
      */
     public static Test suite() {
 
-        TestSuite suite =  new TestSuite("Whitebox Tests");
+        TestSuite suite =  new TestSuite("Board Tests");
 
+        suite.addTest(TestAllAnalysis.suite());
+        
         suite.addTestSuite(TestGoBoard.class);
         suite.addTestSuite(TestGoGroup.class);
-        suite.addTestSuite(TestUnconditionalLife.class);
 
         return suite;
     }
