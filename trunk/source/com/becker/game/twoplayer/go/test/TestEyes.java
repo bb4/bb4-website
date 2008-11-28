@@ -392,7 +392,6 @@ public class TestEyes extends GoTestCase {
         restore(PATH_PREFIX + eyesProblemFile);
 
         GoBoard board = (GoBoard)controller_.getBoard();
-        //Set groups = ((GoBoard) controller_.getBoard()).getGroups();
 
         // consider the 2 biggest groups
         //Assert.assertTrue("There were not two groups. Instead there were :"+groups.size(), groups.size() == 2);
