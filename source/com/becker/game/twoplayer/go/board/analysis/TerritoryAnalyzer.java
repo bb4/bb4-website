@@ -4,10 +4,8 @@ import com.becker.game.common.GamePiece;
 import com.becker.game.twoplayer.go.GoProfiler;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
 import com.becker.game.twoplayer.go.board.GoGroup;
 import com.becker.game.twoplayer.go.board.NeighborType;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -22,8 +20,15 @@ public class TerritoryAnalyzer {
     private GoBoard board_;
     
     /** The difference between the 2 player's territory.
-     * It is computed as black-white = sum(health of stone i) */
+     * It is computed as black-white = sum(health of stone i) 
+     */
     private float territoryDelta_ = 0;
+    
+    /**
+     * When the ratio of actual moves to expected moves exceeds this, then
+     * take the analysis all the way to the edge of the board.
+     */
+    private static float EMPTY_REGION_EDGE_THRESH = 0.24f;
 
     /**
      * Constructor
@@ -44,15 +49,15 @@ public class TerritoryAnalyzer {
      * Empty spaces are weighted by how likely they are to eventually be territory of one side or the other.
      * At the end of the game this + the number of pieces captured so far should give the true score.
      */
-    public int getTerritoryEstimate( boolean forPlayer1, boolean estimate)
+    public int getTerritoryEstimate( boolean forPlayer1, boolean isEndOfGame)
     {
         float territoryEstimate = 0;
 
         // we should be able to just sum all the position scores now.
         for ( int i = 1; i <= board_.getNumRows(); i++ )  {
            for ( int j = 1; j <= board_.getNumCols(); j++ ) {
-               GoBoardPosition pos =  (GoBoardPosition) board_.getPosition(j, j);
-               double val = estimate? pos.getScoreContribution() : (forPlayer1? 1.0 : -1.0);
+               GoBoardPosition pos =  (GoBoardPosition) board_.getPosition(i, j);
+               double val = isEndOfGame?  (forPlayer1? 1.0 : -1.0) : pos.getScoreContribution() ;
 
                // the territory estimate will always be positive for both sides.
                if (pos.isUnoccupied()) {
@@ -64,28 +69,26 @@ public class TerritoryAnalyzer {
                    }
                }
                else { // occupied
-                   GamePiece p = pos.getPiece();
+                   GamePiece piece = pos.getPiece();
                    GoGroup group = pos.getGroup();
-                   assert(p != null);
+                   assert(piece != null);
                    if (group != null) {
-                       if (forPlayer1 && !p.isOwnedByPlayer1() && group.getRelativeHealth() >= 0) {
+                       // add credit for probable captured stones.
+                       if (forPlayer1 && !piece.isOwnedByPlayer1() && group.getRelativeHealth() >= 0) {
                            territoryEstimate += val;
                        }
-                       // Getting npe here
-                       else if (!forPlayer1 && p.isOwnedByPlayer1() && group.getRelativeHealth() <= 0)  {
+                       else if (!forPlayer1 && piece.isOwnedByPlayer1() && group.getRelativeHealth() <= 0)  {
                            territoryEstimate -= val;
                        }
                    }
                }
            }
         }
-
         return (int)territoryEstimate;
     }
     
     /**
-     * Loops through the groups and armies to determine the territorial
-     * difference between the players.
+     * Loops through the groups to determine the territorial difference between the players.
      * Then it loops through and determines a score for positions that are not part of groups.
      * If a position is part of an area that borders only a living group, then it is considered
      * territory for that group's side. If, however, the position borders living groups from
@@ -97,7 +100,7 @@ public class TerritoryAnalyzer {
      * @return the estimated difference in territory between the 2 sides.
      *  A large positive number indicates black is winning, while a negative number indicates that white has the edge.
      */
-    public float updateTerritory(GoBoardPosition lastMove) {
+    public float updateTerritory(boolean isEndOfGame) {
         GoProfiler prof = (GoProfiler)board_.getProfiler();
         prof.start(GoProfiler.UPDATE_TERRITORY);
 
@@ -129,7 +132,7 @@ public class TerritoryAnalyzer {
         // We will first mark visited all the stones that are "controlled" by the specified player.
         // The unoccupied "controlled" positions will be territory.
         prof.start(GoProfiler.UPDATE_EMPTY);
-        delta += updateEmptyRegions();
+        delta += updateEmptyRegions(isEndOfGame);
         prof.stop(GoProfiler.UPDATE_EMPTY);
 
         prof.stop(GoProfiler.UPDATE_TERRITORY);
@@ -138,10 +141,9 @@ public class TerritoryAnalyzer {
     }
     
     /**
-     * @param board
      * @return the change in score after updating the empty regions
      */
-    private float updateEmptyRegions() {
+    private float updateEmptyRegions(boolean isEndOfGame) {
         float diffScore = 0;
         //only do this when the midgame starts, since early on there is always only one connected empty region.
         int edgeOffset = 1;
@@ -149,7 +151,9 @@ public class TerritoryAnalyzer {
         if (board_.getNumMoves() <= 2 * board_.getNumRows()) {
             return diffScore;
         }
-        if (board_.getNumMoves() >= board_.getTypicalNumMoves() / 4.3) {
+        // later in the game we can take the analysis all the way to the edge.
+        float ratio = (float)board_.getNumMoves() / (float)board_.getTypicalNumMoves();
+        if ((ratio > EMPTY_REGION_EDGE_THRESH) || isEndOfGame) {
             edgeOffset = 0;
         }
         int min = 1+edgeOffset;
@@ -176,10 +180,9 @@ public class TerritoryAnalyzer {
 
                        float score = avg * (float)nbrs.size() / Math.max(1, Math.max(nbrs.size(), empties.size()));
                        assert (score <= 1.0 && score >= -1.0): "score="+score+" avg="+avg;
-                       Iterator it = empties.iterator();
-                       while (it.hasNext()) {
-                           GoBoardPosition p = (GoBoardPosition)it.next();
-                           p.setScoreContribution(score);
+                      
+                       for (GoBoardPosition space : empties) {
+                           space.setScoreContribution(score);
                            diffScore += score;
                        }
                    }

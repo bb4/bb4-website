@@ -18,140 +18,9 @@ import java.util.*;
 import static com.becker.game.twoplayer.go.GoControllerConstants.*;
 
 /**
- * Defines everything the computer needs to know to play Go
- * If you are not familiar with rules of go or the following terms, see
- * Mathematical Go by Berlekamp and Wolfe (appendix B).
- * terms: liberty, atari, snapback, ko, seki, string, group, dame
- *        eye, false eye, big eye, dead stone, independently alive group,
- *        territory, bent 4, moyo, nobi, ikken tobi, nikken tobi, kogeima
- *
- * I will try to adhere to Modern Chinese rules.
- * Here are the unique aspects of Chinese rules that differ from other common rulesets:
- *  1) Any suicide move is considered illegal.
- *  2) When you pass, your opponent gets a point.
- *     For computer go, this is useful because it forces
- *     decision/completion of groups to help determine life and
- *     death and a proper score.
- *  3) The game terminates when the 2 players pass consecutively.
- *  4) score = komi (5.5) + stones on board of player + player territory
- *     (note: captures not counted)
- *
- * The computer keeps track of hierachies of stones. The pecking order is:
- *   stones - individual spaces. They can be empty or occupied.
- *   strings - tightly connected collections of stones (nobi connections only)
- *   groups - connected collections of strings (nikken tobi, and kogeima)
- *   armies - loosely connected collections of groups (still to do).
- *
- * Things still to do:
- * Estimated days to implement are in ()'s after each item. I have about 4 hours in a day on the weekend.
- * This lists only grows. As I complete one task, I typically add 2 more.
- * In reality, I'll probably never finish. That's ok, I'm not sure I want to. I enjoy doing it.
+ * Defines everything the computer needs to know to play Go.
  * 
- *
- * High priority todo:
- * - We could avoid a lot of subclasses if we just specify game specific classes in the plugin xml 
- *    and then create the classes using reflection in the base class.
- *  - pull out evaluator into separate class to allow for evaluation strategies.
- *  - factor out Bensons algorithm and other methods into separate classes (instead of static util classes).
- *  - Break out GameBoardRenderer from GameBoardViewer for each game package.
- *  - Add test cases for every little method of every class. Use clover to verify.
- *  - Add tests for GoGroup.calculate*Health
- *  - Why don't test cases find optimal moves.
- *  - fix scoring (allow for different types of rule systems)
- *  - parallelize minimax (http://www.cs.vu.nl/~aske/mtdf.html#abmem)
- *  - parallelize move evaluation
- *  - First 2 plys should look at global moves and do more local evaluation for deeper levels. 
- *    Consider groups involved in capturing race (semi-eye)
- *  - Remember moves that were once deemed important.
- *  - Only pass if player cannot improve score by playing. Do not fill liberties. Fill dames.
- *  - Fix multiplayer. Existing open source framework? get simple case working.
- *  - show transparent stone under cursor when about to move.
- *  
- * Medium priority
- *  - Need to replace sgf (from jigo) files with standard jar. This may require submitting changes to open source project.
- *  - Same with image processing lib from jhlabs.
- *  - Support for komi (0.5, 5.5 or 7.5).
- *  - Scoring of seki - no points for either
- *  - get minimally working and open source it.
- * 
- * Bugs
- *  - Reporting that the wrong player has won. both scores are reported as 0.
- *  - Error: can't have no liberties and still be on the board!
- *  - don't play in territory at end of game.
- *  - back up and play black, back up again and play white.
- *  - java.lang.AssertionError: The sum of the child times(23411) cannot be greater than the parent time (23296)
- *  - pause/continue not working in tree dialog.
- *
- *
- ** common algorithm improvements
- *
- *    - accurate scoring when the game is over (score what it can, and allow for player dispute of score).
- *    - implement armies (2)
- *    - use runner up caching (moves that were good in the past are likely to be still good) (2)
- *    - add randomness to computer moves (have option since sometimes its undesirable) (1)
- *    - adhere to chinese rules, add other rulesets as options. (4)
- *    - consider monkey jump connections.
- *    - if the computer or player resigns, the playerWon vars should be set and the strcngth of
- *      the win should be large.
- *    - remember good moves that have not yet been played. On a big board, they will probably remain good moves.
- *      These good moves should be at the head of a list when possible moves are being generated.
- *
- ** Packaging issues
- *    - ant deploy could use significant cleanup.
- *    - images on index web page should link directly to applets (or webstart).
- *    - auto generate images for index page.
- *    - make this text a web page and add a link to it.
- *    - maintain on website as applet and webstart (yahoo does not yet support webstart. See hostway) (1)
- *    - add high level descriptions of class interactions to package level javadoc (i.e. the architecture) (1).
- *    - cleanup all java doc (1)
- *    - remove all circular dependencies (use pasta from optimalJ) (1)
- *    - put game defaults in a config file rather than having as constants in controller classes.
- *    - make opensource (3)
- *    - write a book about it. Targetting teens. (50)
- *
- ** Performance issues
- *    - check performance bottleknecks with profilers like Yourkit and JProfiler.
- *    - cache isInAtari for better performance
- *
- ** Refactoring changes needed
- *    - alpha-beta and quiescent setter/getter methods could be properties of the SearchStrategy
- *      instead of the game controller.
- *    - Bill seems to think that I should remove setSize and reset from the GameBoard api and just use the constructor.
- *    - make client/server for multi-user play. Mostly done. try on IGS.
- *    - use InputVerifier to validate text type ins.
- *
- ** UI features
- *    - add resign button. (1)
- *    - have female voice repeat all text if sound on. (1)
- *    - visualize how pruning works. Animate the game tree rendering. Use VCR like controls to control animation. (2)
- *    - show visualization of all next move values in main and debug windows (1)
- *    - allow player to ask for suggested move (1)
- *    - use kiseido or GoGui for front end? (3)
- *    - Investigate VASSAL framework. Moyoman. Freya Game engine.
- *    - defaults for options should come from config/preferences file rather than hardcode (1) (see jdk1.4 preferences)
- *    - handle time limits and options (2)
- *    - allow undo/redo of moves in a computer vs. computer game.
- *    - quick keys (kbd shortcuts)
- *    - have it play automatically on Kiseido/IGS without intervention (like many faces of go does) (4)
- *    - allow playing over the net (6)
- *
- * Bugs and Verification:
- *  - after reloading an SGF file its the wrong player's turn
- *  - reading an SGF should set the state of the game params like board size
- *  - adding stones and strings to strings and groups that already contain them.
- *  - automatically run suite of regression tests. (2)
- *  - at end of game, computer plays in its own eyes instead of passing.
- *
- * Resolved bugs (check for regressions)
- *  - confirm computing eyes correctly (and health).
- *  - verify correctness of static evaluation weights and worth function (2)
- *  - confirm can play suicidal move when capturing enemy stones (1)
- *  - sound/speech not working (in applet only? missing libs?)
- *  - When the computer plays in your eye, the eye goes away. It should not.
- *  - Do not have any rendering done in anything but ui classes (done) (1).
- *  - switch to using type safe enums instead of int constants (done).
- *  - Game tree shold show expected follow up moves.
- *
+ * @see package.html for more info.
  * @see GoBoard
  * @author Barry Becker
  */
@@ -167,7 +36,9 @@ public final class GoController extends TwoPlayerController
     private int numDeadWhiteStonesOnBoard_ = 0;
 
 
-    //Construct the Go game controller
+    /**
+     * Construct the Go game controller.
+     */
     public GoController()
     {
         board_ = new GoBoard( DEFAULT_NUM_ROWS, DEFAULT_NUM_ROWS, 0 );
@@ -300,17 +171,17 @@ public final class GoController extends TwoPlayerController
         if ( m == null )
             return 0;
         
-        return ((GoBoard)board_).getTerritoryEstimate(forPlayer1, true);    
+        return ((GoBoard)board_).getTerritoryEstimate(forPlayer1, false);    
     }
 
     /**
-     *
+     * Call this at the end of the game when we need to try to get an accurate score.
      * @param forPlayer1
      * @return the actual score (each empty space counts as one)
      */
     public int getTerritory( boolean forPlayer1 )
     {
-        return((GoBoard) board_).getTerritoryEstimate(forPlayer1, false);
+        return((GoBoard) board_).getTerritoryEstimate(forPlayer1, true);
     }
 
     // return the game board back to its initial openning state
@@ -350,7 +221,6 @@ public final class GoController extends TwoPlayerController
         GoGameExporter exporter = new GoGameExporter(this);
         exporter.saveToFile(fileName, ae);
     }
-
 
     @Override
     public void restoreFromFile( String fileName ) {
@@ -416,7 +286,7 @@ public final class GoController extends TwoPlayerController
             ((TwoPlayerMove) lastMove).setScoreDescription(desc);
         }
 
-        //GameContext.log(1,"GoController.worth: worth="+worth);
+        GameContext.log(2,"GoController.worth: worth="+worth);
         if ( worth < -WIN_THRESHOLD ) {
             // then the margin is too great
             return -WINNING_VALUE;
@@ -529,10 +399,11 @@ public final class GoController extends TwoPlayerController
         System.out.println("getNumCaptures("+side+")="+ getNumCaptures(player1));
         System.out.println("num dead "+side+" stones on board= "+ (player1 ? numDeadWhiteStonesOnBoard_ : numDeadBlackStonesOnBoard_));
 
-        System.out.println("getTerritory("+side+")="+getTerritory(player1));
+        int p1Territory = getTerritory(player1);
+        System.out.println("getTerritory("+side+")="+p1Territory);
         System.out.println("captures="+captures);
-        System.out.println("final = terr - captures="+ (getTerritory(player1) - captures));
-        return getTerritory(player1) - captures;
+        System.out.println("final = terr - captures="+ (p1Territory - captures));
+        return p1Territory - captures;
     }
 
     public int getNumDeadStonesOnBoard(boolean black) {
@@ -547,23 +418,7 @@ public final class GoController extends TwoPlayerController
     */
     public void updateLifeAndDeath()
     {
-       // the last 2 moves must passes so
-       List moves = getMoveList();
-       GoMove lastMove; // = (GoMove)moves.get(moves.size()-1);
-
-       // if we are loading saved games, then winner might have won by time or forfeit
-       // - in which case the last 2 moves are not passes.
-       //GoMove nextToLastMove = (GoMove)moves.get(moves.size()-2);
-       //assert(lastMove.isPassingMove());
-       //assert(nextToLastMove.isPassingMove());
-       assert(moves.size() > 3);
-
-       // we need to get the third to last move.
-       //JOptionPane.showConfirmDialog((Component)viewer_, "before udpate territory");
-       lastMove = (GoMove)moves.get(moves.size()-3);
-       GoBoardPosition lastStone = (GoBoardPosition)board_.getPosition(lastMove.getToRow(), lastMove.getToCol());
-       ((GoBoard)board_).updateTerritory(lastStone);
-       //JOptionPane.showConfirmDialog((Component)viewer_, "udpated territory");
+       ((GoBoard)board_).updateTerritory(true);
 
        for ( int row = 1; row <= board_.getNumRows(); row++ ) {    //rows
             for ( int col = 1; col <= board_.getNumCols(); col++ ) {  //cols
@@ -586,12 +441,13 @@ public final class GoController extends TwoPlayerController
             }
         }
     }
-
+    
 
     public Searchable getSearchable() {
          return new GoSearchable();
     }
 
+    
 
     protected class GoSearchable extends TwoPlayerSearchable {
 
@@ -635,7 +491,7 @@ public final class GoController extends TwoPlayerController
 
             if (gameOver && recordWin) {
                 //we should not call this twice
-                //assert(numDeadBlackStonesOnBoard_==0 && numDeadWhiteStonesOnBoard_==0):" should not update life and death twice.";
+                assert(numDeadBlackStonesOnBoard_==0 && numDeadWhiteStonesOnBoard_==0):" should not update life and death twice.";
                 GameContext.log(0, " Error: should not update life and death twice.");
 
                 // now that we are finally at the end of the game,

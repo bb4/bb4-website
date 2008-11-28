@@ -13,9 +13,6 @@ import java.util.List;
  */
 public class TestKiseido2002 extends GoTestCase {
 
-
-/*  the rest of these work.    */
-
     
     public void testJanuary() {
         check("2002-01");
