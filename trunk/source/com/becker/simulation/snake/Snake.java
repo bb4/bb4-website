@@ -7,6 +7,7 @@ import java.awt.*;
 import java.io.*;
 
 import static com.becker.simulation.snake.SnakeConstants.*;
+import com.becker.common.ILog;
 
 /**
  *  Data structure and methods for representing a single dynamic snake
@@ -49,7 +50,7 @@ public class Snake {
 
     // the time since the start of the simulation
     private double time_ = 0.0;
-    private static Log logger_ = null;
+    private static ILog logger_ = null;
 
     // tweekable rendering parameters
     private boolean showVelocityVectors_ = false;
@@ -91,7 +92,7 @@ public class Snake {
         readConfigFile( configFile );
         commonInit();
     }
-        
+
     public synchronized void reset() {
         resetFromData();
     }

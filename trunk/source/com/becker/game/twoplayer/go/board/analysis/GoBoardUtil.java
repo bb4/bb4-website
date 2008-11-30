@@ -41,11 +41,10 @@ public final class GoBoardUtil
      */
     public static void unvisitPositions( Collection positions )
     {
-        Iterator it = positions.iterator();
         // return the stone to the unvisited state
-        while ( it.hasNext() ) {
-            GoBoardPosition s = (GoBoardPosition) it.next();
-            s.setVisited( false );
+        for (Object position : positions) {
+            GoBoardPosition s = (GoBoardPosition) position;
+            s.setVisited(false);
         }
     }
     
@@ -54,8 +53,7 @@ public final class GoBoardUtil
      */
     public static boolean isStoneMuchWeaker(GoGroup group, GoStone stone)
     {
-        boolean weaker = isStoneWeakerThanGroup(group, stone, DIFFERENCE_THRESHOLD);
-        return weaker;
+        return isStoneWeakerThanGroup(group, stone, DIFFERENCE_THRESHOLD);
     }
 
     /**

@@ -40,7 +40,7 @@ public final class GoEye extends GoString implements GoMember
         group_ = g;
         ownedByPlayer1_ = g.isOwnedByPlayer1();        
         eyeAnalyzer_ = new EyeAnalyzer(this);
-        type_ = eyeAnalyzer_.determineEyeType( spaces, board );
+        type_ = eyeAnalyzer_.determineEyeType( board );
         
     }
 

@@ -7,6 +7,8 @@ import java.awt.*;
 
 import static com.becker.simulation.trebuchet.TrebuchetConstants.*;
 import static com.becker.simulation.common.PhysicsConstants.*;
+import com.becker.common.ILog;
+
 import static java.lang.Math.*;
 
 /**
@@ -42,7 +44,7 @@ public class Trebuchet {
     private RenderablePart[] part_;
 
     // the time since the start of the simulation
-    private static Log logger_ = null;
+    private static ILog logger_ = null;
 
     // tweekable rendering parameters
     private boolean showVelocityVectors_ = false;
@@ -61,7 +63,7 @@ public class Trebuchet {
         commonInit();
     }
 
-    public void reset() {    
+    public void reset() {
         RenderablePart.setAngularVelocity(0);
         commonInit();
     }

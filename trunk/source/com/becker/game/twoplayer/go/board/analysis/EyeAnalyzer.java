@@ -9,8 +9,6 @@ import com.becker.game.twoplayer.go.board.NeighborType;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.GoGroup;
 import com.becker.game.twoplayer.go.board.GoStone;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -20,7 +18,7 @@ import java.util.Set;
  */
 public class EyeAnalyzer {
 
-    GoEye eye_;
+    private GoEye eye_;
     
     public EyeAnalyzer(GoEye eye) {
         eye_ = eye;  
@@ -30,8 +28,9 @@ public class EyeAnalyzer {
     /**
      * @return the eye type determined based on the properties and nbrs of the positions in the spaces list.
      */
-    public EyeType determineEyeType( List<GoBoardPosition> spaces, GoBoard board )
+    public EyeType determineEyeType(GoBoard board)
     {
+        Set<GoBoardPosition> spaces = eye_.getMembers();
         assert ( spaces != null): "spaces is null";
         int size = spaces.size();
         // iterate through. if any are determined to be a false-eye, then return false-eye for the eye type.
@@ -53,13 +52,14 @@ public class EyeAnalyzer {
             int max = 0;
             int sum = 0;
             for (GoBoardPosition space : spaces) {
-                int numNobiNbrs = getNumEyeNobiNeighbors( space, spaces );
+                int numNobiNbrs = getNumEyeNobiNeighbors( space);
                 sum += numNobiNbrs;
                 if ( numNobiNbrs > max ) {
                     keyPoint = space;
                     max = numNobiNbrs;
                 }
             }
+            assert keyPoint != null : "There must be a space with at least 1 nobi nbr";
             // check for different cases of big eyes
             boolean farmersHatOrClump =  ((size == 4) && ((max == 3 && sum == 6) || (max == 2 && sum == 8)));
             boolean bulkyOrCrossedFive = ((size == 5) && ((max == 4 && sum == 8) || (max == 3 && sum == 10)));
@@ -86,17 +86,14 @@ public class EyeAnalyzer {
     }
 
     /**
-     * get number of eye-space nobi neighbors.
+     * @return number of eye-space nobi neighbors.
      * these neighbors may either be blanks or dead stones of the opponent
      */
-    private static int getNumEyeNobiNeighbors( GoBoardPosition space, List spaces )
+    private int getNumEyeNobiNeighbors( GoBoardPosition space)
     {
         int numNbrs = 0;
-
-        Iterator it = spaces.iterator();
-
-        while ( it.hasNext() ) {
-            GoBoardPosition ns = (GoBoardPosition) it.next();
+        for (GoBoardPosition ns : eye_.getMembers()) {
+       
             if ( space.getDistanceFrom( ns ) == 1.0 )
                 numNbrs++;
         }
@@ -137,15 +134,6 @@ public class EyeAnalyzer {
             if (qualifiedOpponentDiagonal( 1, 1, r,c, board, groupP1))
                 numOppDiag++;
 
-            /* it is also a requirement that one of the friendly nbrs be in atari - No!
-            boolean nbrInAtari = false;
-            Iterator it = nbrs.iterator();
-            while (it.hasNext() && !nbrInAtari) {
-                GoBoardPosition nbr = (GoBoardPosition)it.next();
-                if (nbr.isInAtari(board))
-                    nbrInAtari = true;
-            }  */
-
             // now decide if false eye based on nbrs and proximity to edge.
             if ( numOppDiag >= 2  && (nbrs.size() >= 3))
                 return true;
@@ -176,7 +164,7 @@ public class EyeAnalyzer {
     }
 
     /**
-     *  @return true if the piece is an enemy of the string owner
+     *  @return true if the piece is an enemy of the string owner.
      *  If the difference in health between the stones is great, then they are not really enemies
      *  because one of them is dead.
      */
@@ -184,14 +172,15 @@ public class EyeAnalyzer {
     {
         GoGroup g = eye_.getGroup();
         assert (g != null): "group for "+ eye_ +" is null";
-        GoStone stone = (GoStone)pos.getPiece();
-        boolean weaker = false;
-        if (stone != null)  {
-            weaker = GoBoardUtil.isStoneMuchWeaker(g, stone);
+        if (pos.isUnoccupied()) {
+            return false;
         }
+        GoStone stone = (GoStone)pos.getPiece();
+        boolean weaker = GoBoardUtil.isStoneMuchWeaker(g, stone);
+
         assert (g.isOwnedByPlayer1() == eye_.isOwnedByPlayer1()):
                  "Bad group ownership for eye="+ eye_ +". Owning Group="+g;
-        return (pos.isOccupied() && (stone.isOwnedByPlayer1() != eye_.isOwnedByPlayer1() && !weaker));
+        return (stone.isOwnedByPlayer1() != eye_.isOwnedByPlayer1() && !weaker);
     }
 
 
@@ -203,14 +192,14 @@ public class EyeAnalyzer {
             if (pos.isUnoccupied()) {
                 Set<GoBoardPosition> nbrs = b.getNobiNeighbors(pos, eye_.isOwnedByPlayer1(), NeighborType.FRIEND);
                 // verify that at least one of the nbrs is in this string
-                boolean thereIsANbr = false;
+                boolean thereIsaNbr = false;
                 for  (GoBoardPosition nbr : nbrs) { 
                     if (string.getMembers().contains(nbr)) {
-                        thereIsANbr = true;
+                        thereIsaNbr = true;
                         break;
                     }
                 }
-                if (!thereIsANbr) {
+                if (!thereIsaNbr) {
                     //GameContext.log(2, "pos:"+pos+" was found to not be adjacent to the bordering string : "+this);
                     return false;
                 }

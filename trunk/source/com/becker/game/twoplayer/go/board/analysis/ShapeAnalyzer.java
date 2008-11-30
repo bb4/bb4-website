@@ -16,7 +16,7 @@ import com.becker.game.common.BoardPosition;
  */
 public class ShapeAnalyzer {
 
-    GoBoard board_;
+    private GoBoard board_;
     
     public ShapeAnalyzer(GoBoard board) {
         board_ =board;

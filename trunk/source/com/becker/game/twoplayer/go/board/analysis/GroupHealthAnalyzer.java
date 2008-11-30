@@ -81,11 +81,17 @@ public class GroupHealthAnalyzer implements Cloneable {
      */
     public float getAbsoluteHealth()
     {
+        //assert !eyeCacheBroken_;
         return absoluteHealth_;
     }
     
     public void breakEyeCache() {
         clearEyes();
+    }
+    
+    public float getEyePotential() {
+        assert !eyeCacheBroken_;
+        return eyePotential_;
     }
     
     /**
@@ -132,9 +138,7 @@ public class GroupHealthAnalyzer implements Cloneable {
             return cachedNumStonesInGroup_;
         }
         int numStones = 0;
-        Iterator<GoString> it = group_.getMembers().iterator();
-        while ( it.hasNext() ) {
-            GoString str = it.next();
+        for (GoString str : group_.getMembers()) {
             numStones += str.size();
         }
         cachedNumStonesInGroup_ = numStones;
@@ -304,7 +308,8 @@ public class GroupHealthAnalyzer implements Cloneable {
                     break;
                 case 2:
                     health = side * 0.02f;
-                     GameContext.log(0, "We have almost 2 eyes but only 2 Liberties. How can that be? " + this.toString());
+                    // this actually happens quite often.
+                     GameContext.log(1, "We have almost 2 eyes but only 2 Liberties. How can that be? " + this.toString());
                     break;  
                 case 3:
                     health = side * 0.05f;
@@ -368,7 +373,7 @@ public class GroupHealthAnalyzer implements Cloneable {
     /**
      *   Calculate the health of a group that has no eyes.
      */
-    public float calcNoEyeHealth(float side, int numLiberties) {
+    float calcNoEyeHealth(float side, int numLiberties) {
         float health = 0;
         int numStones = getNumStones();
 
@@ -505,6 +510,7 @@ public class GroupHealthAnalyzer implements Cloneable {
 
     public float getRelativeHealth()
     {
+        assert !eyeCacheBroken_;
         return relativeHealth_;
     }
 
@@ -549,7 +555,6 @@ public class GroupHealthAnalyzer implements Cloneable {
      * Also update eyePotential (a measure of how good the groups ability to make 2 eyes(.
      * This method is expensive. That is why the 2 things it computes (eyes and eyePotential) are cached.
      * @param board the owning board
-     * @return 
      */
     private void updateEyes( GoBoard board )
     {
@@ -570,9 +575,8 @@ public class GroupHealthAnalyzer implements Cloneable {
     {
         if (eyes_.isEmpty())
             return;
-        Iterator<GoEye> it = eyes_.iterator();
-        while (it.hasNext()) {
-            it.next().clear();
+        for (GoEye eye : eyes_) {
+            eye.clear();
         }
         eyes_.clear();
         eyeCacheBroken_ = true;
@@ -592,10 +596,8 @@ public class GroupHealthAnalyzer implements Cloneable {
             ((GroupHealthAnalyzer)clone).eyes_ = new HashSet<GoEye>();
             Set<GoEye> m = ((GroupHealthAnalyzer)clone).eyes_;
 
-            Iterator<GoEye> it = this.eyes_.iterator();
-            while (it.hasNext()) {
-                GoEye c = it.next();
-                m.add((GoEye)c.clone());
+            for (GoEye eye : this.eyes_) {
+                m.add((GoEye) eye.clone());
             }
         }
         return clone;

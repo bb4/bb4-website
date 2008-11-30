@@ -13,18 +13,18 @@ import java.util.Set;
 /**
  * Performs static analysis of a go board to determine strings and
  * other analysis involving neighbor locations.
- * 
+ *
  * @author becker
  */
 public class NeighborAnalyzer {
 
-    GoBoard board_;
-    
+    private GoBoard board_;
+
     public NeighborAnalyzer(GoBoard board) {
         board_ = board;
     }
-   
-        
+
+
     /**
      * determines a string connected from a seed stone within a specified bounding area
      * @return string from seed stone
@@ -63,7 +63,8 @@ public class NeighborAnalyzer {
      * @param neighborType (EYE, NOT_FRIEND etc)
      * @return a set of stones that are immediate (nobi) neighbors.
      */
-    public Set<GoBoardPosition> getNobiNeighbors( GoBoardPosition stone, boolean friendOwnedByP1, NeighborType neighborType )
+    public Set<GoBoardPosition> getNobiNeighbors( GoBoardPosition stone, boolean friendOwnedByP1,
+                                                  NeighborType neighborType )
     {
         Set<GoBoardPosition> nbrs = new HashSet<GoBoardPosition>();
         int row = stone.getRow();
@@ -84,9 +85,9 @@ public class NeighborAnalyzer {
 
         return nbrs;
     }
-    
+
     /**
-     * 
+     *
      * @param stone
      * @return
      */
@@ -102,7 +103,7 @@ public class NeighborAnalyzer {
         }
         return stringNbrs;
     }
-    
+
     /**
      * Get an adjacent neighbor stones restricted to the desired type.
      *
@@ -111,8 +112,8 @@ public class NeighborAnalyzer {
      * @param nbrs  hashset of the ngbors matching the criteria.
      * @param neighborType  one of NEIGHBOR_ANY, NEIGHBOR_ENEMY_ONLY, or NEIGHBOR_FRIENDLY_ONLY
      */
-    private static void getNobiNeighbor( GoBoardPosition nbrStone, boolean friendOwnedByP1, 
-                                                                 Set<GoBoardPosition> nbrs, NeighborType neighborType )
+    private static void getNobiNeighbor( GoBoardPosition nbrStone, boolean friendOwnedByP1,
+                                         Set<GoBoardPosition> nbrs, NeighborType neighborType )
     {
 
         boolean correctNeighborType = true;
@@ -156,7 +157,7 @@ public class NeighborAnalyzer {
      * @param samePlayerOnly if true then find group nbrs that are have same ownership as friendPlayer1
      */
     public Set<GoBoardPosition> getGroupNeighbors( GoBoardPosition stone, boolean friendPlayer1, boolean samePlayerOnly )
-    {  
+    {
         List<GoBoardPosition> stack = new LinkedList<GoBoardPosition>();
 
         pushGroupNeighbors( stone, friendPlayer1, stack, samePlayerOnly );
@@ -172,8 +173,8 @@ public class NeighborAnalyzer {
      * @param stack the stack to add unvisited neighbors
      * @return number of stones added to the stack
      */
-    private int pushStringNeighbors( GoBoardPosition s, boolean friendPlayer1, 
-                                     List<GoBoardPosition> stack, boolean samePlayerOnly, 
+    private int pushStringNeighbors( GoBoardPosition s, boolean friendPlayer1,
+                                     List<GoBoardPosition> stack, boolean samePlayerOnly,
                                      NeighborType type, Box bbox )  {
         int r = s.getRow();
         int c = s.getCol();
@@ -192,7 +193,7 @@ public class NeighborAnalyzer {
         return numPushed;
     }
 
-    private int pushStringNeighbors( GoBoardPosition s, boolean friendPlayer1, List<GoBoardPosition> stack, 
+    private int pushStringNeighbors( GoBoardPosition s, boolean friendPlayer1, List<GoBoardPosition> stack,
                                                boolean samePlayerOnly )
     {
         return pushStringNeighbors( s, friendPlayer1, stack, samePlayerOnly,
@@ -205,7 +206,7 @@ public class NeighborAnalyzer {
      * @param stack the stack to add unvisited neighbors
      * @return number of stones added to the stack
      */
-    private int pushEnemyDiagonalNeighbors( GoBoardPosition s, boolean friendPlayer1, 
+    private int pushEnemyDiagonalNeighbors( GoBoardPosition s, boolean friendPlayer1,
                                                                            List<GoBoardPosition> stack )
     {
         int r = s.getRow();
@@ -230,7 +231,7 @@ public class NeighborAnalyzer {
      * @param sameSideOnly if true push pure group nbrs of the same side only.
      * @return number of stones added to the stack
      */
-    private int pushPureGroupNeighbors( GoBoardPosition pos, boolean friendPlayer1, boolean sameSideOnly, 
+    private int pushPureGroupNeighbors( GoBoardPosition pos, boolean friendPlayer1, boolean sameSideOnly,
                                                                    List<GoBoardPosition> stack )
     {
         int r = pos.getRow();
@@ -314,7 +315,7 @@ public class NeighborAnalyzer {
      * @param stack the stack on which we add unvisited neighbors.
      * @return number of stones added to the stack.
      */
-    private int pushGroupNeighbors( GoBoardPosition s, boolean friendPlayer1, List<GoBoardPosition> stack, 
+    private int pushGroupNeighbors( GoBoardPosition s, boolean friendPlayer1, List<GoBoardPosition> stack,
                                                            boolean samePlayerOnly )
     {
         // start with the nobi string nbrs
@@ -343,7 +344,7 @@ public class NeighborAnalyzer {
      */
     public List<GoBoardPosition> findGroupFromInitialPosition( GoBoardPosition stone, boolean returnToUnvisitedState )
     {
-        
+
         List<GoBoardPosition> stones = new ArrayList<GoBoardPosition>();
         // perform a breadth first search  until all found.
         // use the visited flag to indicate that a stone has been added to the group
@@ -356,7 +357,7 @@ public class NeighborAnalyzer {
                 assert (s.getPiece().isOwnedByPlayer1()==stone.getPiece().isOwnedByPlayer1()):
                         s+" does not have same ownership as "+stone;
                 stones.add( s );
-                pushGroupNeighbors( s, s.getPiece().isOwnedByPlayer1(), stack );
+                pushGroupNeighbors(s, s.getPiece().isOwnedByPlayer1(), stack );
             }
         }
         if ( returnToUnvisitedState ) {
@@ -366,8 +367,8 @@ public class NeighborAnalyzer {
         }
         return stones;
     }
-    
-    
+
+
     /**
      * @param empties a list of unoccupied positions.
      * @return a list of stones bordering the set of empty board positions.
@@ -392,14 +393,15 @@ public class NeighborAnalyzer {
      * @param c column
      * @param rowOffset offset from row indicating position of ngbor to check
      * @param colOffset offset from column indicating position of ngbor to check
-     * @param friendOwnedByPlayer1 need to specify this when the position checked, s, is empty and has undefined ownership.
+     * @param friendOwnedByPlayer1 need to specify this when the position checked, s,
+     * is empty and has undefined ownership.
      * @param stack if nbr fits criteria then add to stack
      * @param samePlayerOnly  mus the nbr be owned by the same player only
      * @param type one of REGULAR_PIECE, UNOCCUPIED, or NOT_FRIEND
      * @return  1 if this is a valid neighbor of the type that we want
      */
     private int checkNeighbor( int r, int c, int rowOffset, int colOffset,
-                                    boolean friendOwnedByPlayer1, List<GoBoardPosition> stack, 
+                                    boolean friendOwnedByPlayer1, List<GoBoardPosition> stack,
                                     boolean samePlayerOnly, NeighborType type)
     {
         GoBoardPosition nbr = (GoBoardPosition) board_.getPosition(r + rowOffset, c + colOffset);
@@ -438,7 +440,7 @@ public class NeighborAnalyzer {
      * These are the immediately adjacent (nobi) nbrs within the specified rectangular bounds
      */
     private int checkNeighbor( Location loc, int rowOffset, int colOffset,
-                               boolean friendOwnedByPlayer1, List<GoBoardPosition> stack, 
+                               boolean friendOwnedByPlayer1, List<GoBoardPosition> stack,
                                boolean samePlayerOnly, NeighborType type,
                                Box bbox )
     {
@@ -461,7 +463,7 @@ public class NeighborAnalyzer {
      *  @param sameSideOnly if true then push nbrs on the same side, else push enemy nbrs
      */
     private int checkDiagonalNeighbor( int r, int c, int rowOffset, int colOffset,
-                                       boolean friendPlayer1, boolean sameSideOnly, 
+                                       boolean friendPlayer1, boolean sameSideOnly,
                                        List<GoBoardPosition> stack )
     {
         GoBoardPosition nbr = (GoBoardPosition) board_.getPosition(r + rowOffset, c + colOffset);
@@ -492,7 +494,7 @@ public class NeighborAnalyzer {
      * Connected only add if not completely cut (there's no enemy stone in the middle).
      */
     private int checkOneSpaceNeighbor( int r, int c, int rowOffset, int colOffset,
-                                                                 boolean friendPlayer1, boolean samePlayerOnly, 
+                                                                 boolean friendPlayer1, boolean samePlayerOnly,
                                                                  List<GoBoardPosition> stack )
     {
         GoBoardPosition nbr = (GoBoardPosition)board_.getPosition(r + rowOffset, c + colOffset);
@@ -526,7 +528,7 @@ public class NeighborAnalyzer {
      * for the knight's move we consider it cut if there is an enemy stone at the base.
      */
     private int checkKogeimaNeighbor( int r, int c, int rowOffset, int colOffset,
-                                      boolean friendPlayer1, boolean sameSideOnly, 
+                                      boolean friendPlayer1, boolean sameSideOnly,
                                       List<GoBoardPosition> stack )
     {
         if ( !board_.inBounds( r + rowOffset, c + colOffset )) {
@@ -562,5 +564,5 @@ public class NeighborAnalyzer {
         }
         return 0;
     }
-    
+
 }

@@ -68,7 +68,6 @@ public final class GoMove extends TwoPlayerMove
     {
         GoBoardPosition stone = (GoBoardPosition) board.getPosition( getToRow(), getToCol() );
 
-        //Set nobiNbrs = board.getNobiNeighbors(stone, false, NeighborType.OCCUPIED);
         Set <GoBoardPosition>nobiNbrs = board.getNobiNeighbors(stone, false, NeighborType.ANY);
         Set<GoBoardPosition> occupiedNbrs = new HashSet<GoBoardPosition>();
         for (GoBoardPosition pos : nobiNbrs) {
@@ -82,8 +81,7 @@ public final class GoMove extends TwoPlayerMove
             return false;
         }
 
-        for (Object n : occupiedNbrs)  {
-            GoBoardPosition nbr = (GoBoardPosition) n;
+        for (GoBoardPosition nbr : occupiedNbrs)  {
             if (nbr.getPiece().isOwnedByPlayer1() == this.isPlayer1()) {
                 // friendly string
                 if (nbr.getString().getNumLiberties(board) > 1) {

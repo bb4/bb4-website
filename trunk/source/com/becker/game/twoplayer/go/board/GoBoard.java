@@ -26,12 +26,6 @@ public final class GoBoard extends TwoPlayerBoard
     // this is a set of active groups. Groups are composed of strings.
     private Set<GoGroup> groups_;
 
-    // this is a set of active armies. Armies are composed of groups.
-    // armies not implemented yet.
-    //private Set armies_;
-    
-    private CandidateMoveAnalyzer candidateMoves_;
-
     private HandicapStones handicap_;
 
     private BoardUpdater boardUpdater_;
@@ -63,7 +57,6 @@ public final class GoBoard extends TwoPlayerBoard
     {
         super.reset();
         groups_.clear();
-        //armies_.clear();
         for ( int i = 1; i <= getNumRows(); i++ )  {
             for ( int j = 1; j <= getNumCols(); j++ ) {
                 positions_[i][j] = new GoBoardPosition(i,j, null, null);
@@ -71,8 +64,6 @@ public final class GoBoard extends TwoPlayerBoard
         }
         // first time through we need to initialize the starpoint positions
         setHandicap(getHandicap());
-
-        candidateMoves_.reset();
     }
 
     public void setHandicap(int handicap) {
@@ -130,8 +121,6 @@ public final class GoBoard extends TwoPlayerBoard
         rowsTimesCols_ = numRows_ * numCols_;
         // we don't use the 0 edges of the board
         positions_ = new BoardPosition[numRows_ + 1][numCols_ + 1];
-
-        candidateMoves_ = new CandidateMoveAnalyzer(numRows);
         reset();
     }
 
@@ -146,21 +135,6 @@ public final class GoBoard extends TwoPlayerBoard
             return 0;
         }
         return handicap_.getNumber();
-    }
-
-    public void determineCandidateMoves() {
-        candidateMoves_.determineCandidateMoves(positions_);
-    }
-
-    /**
-     * In theory all empties should be considered, but in practice we keep
-     * a shorter list of reasonable moves lest things get intractable.
-     *
-     * @return true if this position is a reasonable next move
-     */
-    public boolean isCandidateMove( int row, int col )
-    {
-        return candidateMoves_.isCandidateMove(row,col) && positions_[row][col].isUnoccupied();
     }
 
 
@@ -517,7 +491,7 @@ public final class GoBoard extends TwoPlayerBoard
 
         /**
          * @param num number of handicap stones
-         * @param boradSize on one side.
+         * @param boardSize on one side.
          */
         HandicapStones(int num, int boardSize) {
             initStarPoints(boardSize);

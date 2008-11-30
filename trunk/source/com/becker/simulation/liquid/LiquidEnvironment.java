@@ -6,6 +6,7 @@ import javax.vecmath.*;
 import java.util.*;
 
 import static com.becker.simulation.common.PhysicsConstants.*;
+import com.becker.common.ILog;
 
 /**
  *  this is the global space containing all the cells, walls, and particles
@@ -57,11 +58,11 @@ public class LiquidEnvironment
     private static final double B0 = 1.7;  // used in mass conservation (how?)
     private static final double SPIGOT_VELOCITY = 30.0;
     private static final int NUM_RAND_PARTS = 5;
-    
+
     // ensure that the runs are the same
     private static final Random RANDOM = new Random(1);
 
-    private static Log logger_ = null;
+    private static ILog logger_ = null;
     public static final int LOG_LEVEL = 0;
 
     //Constructor
@@ -85,7 +86,7 @@ public class LiquidEnvironment
         int i, j;
         if (logger_ == null) {
             logger_ = new Log( new OutputWindow( "Log", null ) );
-            logger_.setDestination( Log.LOG_TO_WINDOW );
+            logger_.setDestination( ILog.LOG_TO_WINDOW );
         }
 
         for ( j = 0; j < yDim_; j++ ) {
@@ -309,7 +310,7 @@ public class LiquidEnvironment
                 int ii = ((particle.x - i) > 0.5) ? (i + 1) : (i - 1);
                 int jj = ((particle.y - j) > 0.5) ? (j + 1) : (j - 1);
 
-                Vector2d vel = 
+                Vector2d vel =
                         grid_[i][j].interpolateVelocity( particle,
                             grid_[ii][j], grid_[i][jj],
                             grid_[i - 1][j], grid_[i - 1][jj], // u
@@ -320,7 +321,7 @@ public class LiquidEnvironment
 
                 double magnitude = vel.length();
                 if (magnitude > maxLength) {
-                    maxLength = magnitude;                    
+                    maxLength = magnitude;
                 }
                 /*
                 double dist = magnitude * timeStep;
@@ -338,9 +339,9 @@ public class LiquidEnvironment
                 ii = (int) particle.x;
                 jj = (int) particle.y;
 
-            
+
                 if (ii<0 || jj<0) {
-                     logger_.println( " i="+i+" j="+j +"   ii="+ii+ "  jj="+jj + " v.len="+vel.length());   
+                     logger_.println( " i="+i+" j="+j +"   ii="+ii+ "  jj="+jj + " v.len="+vel.length());
                 }
                 // move outside the obstacle if we find ouselves in one
                 if ( grid_[ii][jj].getStatus() == CellStatus.OBSTACLE ) {
@@ -357,7 +358,7 @@ public class LiquidEnvironment
                         particle.set( particle.x, jj + 1.0 + EPSILON );
                     }
                 }
- 
+
                 ii = (int) particle.x;
                 jj = (int) particle.y;
 

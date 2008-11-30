@@ -151,7 +151,7 @@ public abstract class GamePanel extends TexturedPanel
         boardViewer_ = createBoardViewer();
 
         OutputWindow logWindow = new OutputWindow( GameContext.getLabel("LOG_OUTPUT"), null);
-        GameContext.setLogger( new Log( logWindow ) );
+        GameContext.setLogger( new Log(logWindow) );
 
         newGameDialog_ = createNewGameDialog( parent, boardViewer_ );
         // onlineGameDialog_ = createOnlineGameDialog(parent, boardViewer_);
@@ -198,12 +198,12 @@ public abstract class GamePanel extends TexturedPanel
             /* npe in applet (why?) */
             //SpeechSynthesizer speech = new SpeechSynthesizer();
             //speech.sayPhoneWords( GREETING );
-            
+
             // use when sound card available
             /* causing security exception in applet? */
             //URL url = GUIUtil.getURL("com/becker/sound/play_game_voice.wav");
             //AudioClip clip = new AppletAudioClip(url);
-            //clip.play();            
+            //clip.play();
         }
         this.setDoubleBuffered(false);
     }

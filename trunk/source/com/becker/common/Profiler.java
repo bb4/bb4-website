@@ -13,13 +13,12 @@ import java.util.*;
  */
 public class Profiler
 {
-
     private static final String INDENT = "    ";
 
     private final Map<String,ProfilerEntry> hmEntries_ = new HashMap<String,ProfilerEntry>();
     private final List<ProfilerEntry> topLevelEntries_ = new LinkedList<ProfilerEntry>();
     private boolean enabled_ = true;
-    private static Log logger_ = null;
+    private static ILog logger_ = null;
 
     /**
      * Default constructor.
@@ -93,19 +92,17 @@ public class Profiler
 
     public String toString() {
         StringBuilder bldr = new StringBuilder();
-        Iterator childIt = topLevelEntries_.iterator();
-        while (childIt.hasNext()) {
-            ProfilerEntry p = (ProfilerEntry)childIt.next();
+        for (ProfilerEntry p : topLevelEntries_) {
             bldr.append(p.toString());
         }
         return bldr.toString();
     }
-    
+
     public void setEnabled(boolean enable) {
         enabled_ = enable;
     }
 
-    public void setLogger(Log logger) {
+    public void setLogger(ILog logger) {
         logger_ = logger;
     }
 
@@ -151,25 +148,23 @@ public class Profiler
         protected void resetAll()
         {
             totalTime_ = 0;
-            Iterator childIt = children_.iterator();
-            while (childIt.hasNext()) {
-                ProfilerEntry p = (ProfilerEntry)childIt.next();
+            for (ProfilerEntry p : children_) {
                 p.resetAll();
             }
         }
 
         protected void print(String indent)
         {
-            print(indent,  logger_);
+            print(indent, logger_);
         }
-        
-        protected void print(String indent, Log logger)
+
+        protected void print(String indent, ILog logger)
         {
             double seconds = (double)totalTime_/1000.0;
             String text = indent+ "Time for "+name_+" : "+ Util.formatNumber(seconds) +" seconds";
             if (logger==null)
                 System.out.println(text);
-            else                
+            else
                  logger.println(text);
             Iterator childIt = children_.iterator();
 
@@ -182,11 +177,11 @@ public class Profiler
             assert (totalChildTime <= 1.1 * totalTime_ ): "The sum of the child times("+totalChildTime
                     +") cannot be greater than the parent time ("+totalTime_+").";
         }
-        
+
         public String toString()
         {
             Log log = new Log();
-            log.setDestination(Log.LOG_TO_STRING);
+            log.setDestination(ILog.LOG_TO_STRING);
             StringBuilder bldr = new StringBuilder();
             log.setStringBuilder(bldr);
             print(INDENT, log);

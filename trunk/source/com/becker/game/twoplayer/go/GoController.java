@@ -8,6 +8,7 @@ import com.becker.optimization.parameter.ParameterArray;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.*;
 import com.becker.game.twoplayer.common.search.*;
+import com.becker.game.twoplayer.go.board.analysis.CandidateMoveAnalyzer;
 import com.becker.game.twoplayer.go.board.analysis.ShapeAnalyzer;
 import com.becker.game.twoplayer.go.persistence.GoGameExporter;
 import com.becker.game.twoplayer.go.persistence.GoGameImporter;
@@ -491,7 +492,7 @@ public final class GoController extends TwoPlayerController
 
             if (gameOver && recordWin) {
                 //we should not call this twice
-                assert(numDeadBlackStonesOnBoard_==0 && numDeadWhiteStonesOnBoard_==0):" should not update life and death twice.";
+                //assert(numDeadBlackStonesOnBoard_==0 && numDeadWhiteStonesOnBoard_==0):" should not update life and death twice.";
                 GameContext.log(0, " Error: should not update life and death twice.");
 
                 // now that we are finally at the end of the game,
@@ -564,7 +565,7 @@ public final class GoController extends TwoPlayerController
             int nRows = board.getNumRows();
             assert (nRows == nCols) : " rows and cols must be the same in go";
 
-            board.determineCandidateMoves();
+            CandidateMoveAnalyzer candidateMoves = new CandidateMoveAnalyzer(board);   
 
             boolean player1 = true;
             if ( lastMove != null ) {
@@ -574,7 +575,7 @@ public final class GoController extends TwoPlayerController
             for ( i = 1; i <= nCols; i++ )      //cols
                 for ( j = 1; j <= nRows; j++ )    //rows
                     // if its a candidate move and not an immediate takeback (which would break the rule of ko)
-                    if ( board.isCandidateMove( j, i ) && !isTakeBack( j, i, (GoMove) lastMove, board ) ) {
+                    if ( candidateMoves.isCandidateMove( j, i ) && !isTakeBack( j, i, (GoMove) lastMove, board ) ) {
                         GoMove m = GoMove.createGoMove( j, i, lastMove.getValue(), new GoStone(player1) );
 
                         if ( m.isSuicidal(board) ) {
