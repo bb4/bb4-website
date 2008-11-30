@@ -13,45 +13,75 @@ public class CandidateMoveAnalyzer {
 
     private static final int CANDIDATE_MOVE_OFFSET = 1;
 
-    private int size_;
+    private final GoBoard board_;
+
+    private final int size_;
 
     /** this is an auxilliary structure to help determine candidate moves. */
-    private boolean[][] candidateMoves_;
+    private final boolean[][] candidateMoves_;
 
     /**
      * Constructor.
-     * @param size
      */
-    public CandidateMoveAnalyzer(int size) {
-        size_ = size;
+    public CandidateMoveAnalyzer(GoBoard board) {
+        board_ = board;
+        size_ = board.getNumRows();
         candidateMoves_ = new boolean[size_ + 1][size_ + 1];
+        initiallize();
     }
 
+    /**
+     * In theory all empties should be considered, but in practice we keep
+     * a shorter list of reasonable moves lest things get intractable.
+     *
+     * @return true if this position is a reasonable next move.
+     */
+    public final boolean isCandidateMove( int row, int col )
+    {
+        return candidateMoves_[row][col];
+    }
+
+    /**
+     * @return number of candidate moves found.
+     */
+    public final int getNumCandidates() {
+        int num = 0;
+        for (int i = 1; i <= size_; i++ ) {
+            for (int j = 1; j <= size_; j++ ) {
+                if ( isCandidateMove(i, j) ) {
+                    num++;
+                }
+            }
+        }
+        return num;
+    }
 
     /**
      * we start with a default list of good starting moves, and
      * add to it all moves within 2 spaces of those that are played.
      */
-    public void reset()
+    private void initiallize()
     {
         int i,j;
 
         // this will fill a 2 stone wide strip on the 3rd and 4rth lines of the board.
         // this includes the star points and many others as candidates to consider
         for ( i = 3; i <= size_ - 2; i++ ) {
-            candidateMoves_[i][3] = true;
-            candidateMoves_[i][4] = true;
-            candidateMoves_[i][size_ - 2] = true;
-            candidateMoves_[i][size_ - 3] = true;
+             tryToAddCandidateMove(board_.getPosition(i, 3));
+             tryToAddCandidateMove(board_.getPosition(i, 4));
+             tryToAddCandidateMove(board_.getPosition(i, size_ - 2));
+             tryToAddCandidateMove(board_.getPosition(i, size_ - 3));
         }
         for ( j = 5; j <= size_ - 4; j++ ) {
-            candidateMoves_[3][j] = true;
-            candidateMoves_[4][j] = true;
-            candidateMoves_[size_ - 2][j] = true;
-            candidateMoves_[size_ - 3][j] = true;
+            tryToAddCandidateMove(board_.getPosition(3, j));
+            tryToAddCandidateMove(board_.getPosition(4, j));
+            tryToAddCandidateMove(board_.getPosition(size_ - 2, j));
+            tryToAddCandidateMove(board_.getPosition(size_ - 3, j));
         }
         // also make the center space a candidate move
-        candidateMoves_[((size_ + 1) >> 1)][((size_ + 1) >> 1)] = true;
+        tryToAddCandidateMove(board_.getPosition(((size_ + 1) >> 1), ((size_ + 1) >> 1)));
+
+        determineAdjacentCandidates();
     }
 
 
@@ -59,49 +89,52 @@ public class CandidateMoveAnalyzer {
      * this method splats a footprint of trues around the current moves.
      * later we look for empty spots that are true for candidate moves
      */
-    public final void determineCandidateMoves(BoardPosition positions[][])
+    private void determineAdjacentCandidates()
     {
         //  set the footprints
-        int i,j;
-        for ( i = 1; i <= size_; i++ )
-            for ( j = 1; j <= size_; j++ )
-                if ( positions[i][j].isOccupied() )
-                    addCandidateMoves( positions[i][j], positions);
-    }
-
-    /**
-     * this method splats a footprint of trues around the specified move.
-     * @param stone
-     */
-    private void addCandidateMoves( BoardPosition stone, BoardPosition positions[][] )
-    {
-        int i,j;
-        boolean[][] b = candidateMoves_;
-
-        int startrow = Math.max( stone.getRow() - CANDIDATE_MOVE_OFFSET, 1 );
-        int stoprow = Math.min( stone.getRow() + CANDIDATE_MOVE_OFFSET, size_ );
-        int startcol = Math.max( stone.getCol() - CANDIDATE_MOVE_OFFSET, 1 );
-        int stopcol = Math.min( stone.getCol() + CANDIDATE_MOVE_OFFSET, size_ );
-        // set the footprint
-        for ( i = startrow; i <= stoprow; i++ ) {
-            for ( j = startcol; j <= stopcol; j++ )  {
-                GoBoardPosition pos = (GoBoardPosition) positions[i][j];
-                // never add a stone (from either side to an unconditonally alive eye. There is no advantage to it.
-                if (pos.isUnoccupied() && !(pos.getEye()!=null && pos.getEye().isUnconditionallyAlive())) {
-                    b[i][j] = true;
+        for (int i = 1; i <= size_; i++ ) {
+            for (int j = 1; j <= size_; j++ ) {
+                GoBoardPosition pos = (GoBoardPosition) board_.getPosition(i,j);
+                System.out.println("pos="+pos);
+                if ( pos.isOccupied() ) {
+                    addCandidateMoves(pos);
                 }
             }
         }
     }
 
     /**
-     * In theory, all empties should be considered, but in practice we keep
-     * a shorter list of reasonable moves lest things get intractable.
-     *
-     * @return true if this position is a reasonable next move
+     * this method splats a footprint of trues around the specified move.
+     * @param stone
      */
-    public final boolean isCandidateMove( int row, int col )
+    private void addCandidateMoves( GoBoardPosition stone )
     {
-        return candidateMoves_[row][col];
+        int startrow = Math.max( stone.getRow() - CANDIDATE_MOVE_OFFSET, 1 );
+        int stoprow = Math.min( stone.getRow() + CANDIDATE_MOVE_OFFSET, size_ );
+        int startcol = Math.max( stone.getCol() - CANDIDATE_MOVE_OFFSET, 1 );
+        int stopcol = Math.min( stone.getCol() + CANDIDATE_MOVE_OFFSET, size_ );
+        // set the footprint
+        for (int i = startrow; i <= stoprow; i++ ) {
+            for (int j = startcol; j <= stopcol; j++ )  {
+                GoBoardPosition pos = (GoBoardPosition) board_.getPosition(i,j);
+                 tryToAddCandidateMove(pos);
+            }
+        }
     }
+
+    /**
+     * Add only of unoccupied and not an unconditionally alize eye.
+     * never add a stone from either side to an unconditonally alive eye. There is no advantage to it.
+     * @param position the poistion to try adding as a possible candidate move.
+     */
+    private void tryToAddCandidateMove(BoardPosition position) {
+        GoBoardPosition pos = (GoBoardPosition) position;
+        if (pos.getEye()!=null)     {
+            System.out.println("eyep="+pos + "eye="+ pos.getEye() + " u_alive=" + pos.getEye().isUnconditionallyAlive());
+        }
+        if (pos.isUnoccupied() && !(pos.getEye()!=null && pos.getEye().isUnconditionallyAlive())) {
+            candidateMoves_[pos.getRow()][pos.getCol()] = true;
+        }
+    }
+
 }

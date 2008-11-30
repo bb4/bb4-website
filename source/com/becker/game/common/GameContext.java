@@ -2,6 +2,7 @@ package com.becker.game.common;
 
 import com.becker.common.util.FileUtil;
 import com.becker.common.util.Util;
+import com.becker.common.ILog;
 import com.becker.sound.MusicMaker;
 import com.becker.ui.Log;
 
@@ -20,7 +21,7 @@ public final class GameContext
     private static Set<String> commonMessageKeys_ = new HashSet<String>();
 
     // logger object. Use console by default.
-    private static Log logger_ = new Log();
+    private static ILog logger_ = new Log();
 
     // use sound effects if true
     private static boolean useSound_ = true;
@@ -97,7 +98,7 @@ public final class GameContext
     /**
      * @param logger the logging device. Determines where the output goes.
      */
-    public static void setLogger( Log logger )
+    public static void setLogger( ILog logger )
     {
         assert logger != null;
         logger_ = logger;
@@ -106,7 +107,7 @@ public final class GameContext
     /**
      * @return the logging device to use.
      */
-    public static Log getLogger()
+    public static ILog getLogger()
     {
         return logger_;
     }
@@ -154,7 +155,7 @@ public final class GameContext
     public static String getHomeDir()
     {
         String userHome = FileUtil.USER_HOME;   // System.getProperty("user.home")
-        
+
         String home =  userHome + "/projects/java_projects/trunk";
         log(1, "home = " + home );
         return home;
@@ -194,7 +195,7 @@ public final class GameContext
     }
 
     public static void loadGameResources() {
-        loadGameResources(gameName_);        
+        loadGameResources(gameName_);
     }
 
     /**
@@ -228,7 +229,7 @@ public final class GameContext
         else {
 
             if (gameMessages_ == null) {
-                loadGameResources();             
+                loadGameResources();
             }
 
             String label = key; // default

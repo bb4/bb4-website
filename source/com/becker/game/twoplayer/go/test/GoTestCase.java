@@ -104,7 +104,7 @@ public class GoTestCase extends TestCase {
 
 
     /**
-     * @param black true if plack
+     * @param isBlack true if black
      * @return the biggest black group if black is true else biggest white group.
      */
     protected GoGroup getBiggestGroup(boolean isBlack) {

@@ -2,6 +2,7 @@ package com.becker.game.common.ui;
 
 import com.becker.game.common.*;
 import com.becker.ui.*;
+import com.becker.common.ILog;
 
 import javax.swing.*;
 import javax.swing.Box;
@@ -193,13 +194,13 @@ public abstract class GameOptionsDialog extends OptionsDialog
         p.add( createRadioButtonPanel( fileOutputButton_, buttonGroup, false ) );
         logDestination_ = GameContext.getLogger().getDestination();
         switch (logDestination_) {
-            case Log.LOG_TO_CONSOLE:
+            case ILog.LOG_TO_CONSOLE:
                 consoleOutputButton_.setSelected( true );
                 break;
-            case Log.LOG_TO_WINDOW:
+            case ILog.LOG_TO_WINDOW:
                 windowOutputButton_.setSelected( true );
                 break;
-            case Log.LOG_TO_FILE:
+            case ILog.LOG_TO_FILE:
                 fileOutputButton_.setSelected( true );
                 break;
             default : assert false : "invalid destination : " + logDestination_;
@@ -373,11 +374,11 @@ public abstract class GameOptionsDialog extends OptionsDialog
     public void itemStateChanged( ItemEvent e )
     {
         if ( consoleOutputButton_ != null && consoleOutputButton_.isSelected() )
-            logDestination_ = Log.LOG_TO_CONSOLE;
+            logDestination_ = ILog.LOG_TO_CONSOLE;
         else if ( windowOutputButton_ != null && windowOutputButton_.isSelected() )
-            logDestination_ = Log.LOG_TO_WINDOW;
+            logDestination_ = ILog.LOG_TO_WINDOW;
         else if ( fileOutputButton_ != null && fileOutputButton_.isSelected() )
-            logDestination_ = Log.LOG_TO_FILE;
+            logDestination_ = ILog.LOG_TO_FILE;
     }
 
 }

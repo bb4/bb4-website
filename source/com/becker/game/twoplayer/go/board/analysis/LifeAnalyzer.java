@@ -6,8 +6,8 @@ import com.becker.game.common.*;
 import java.util.*;
 
 /**
- * static methods for determing properties of groups
- * Includes Benson's algoritm for unconditional life.
+ * Determine if group is unconditionally alive using
+ * Benson's algoritm for unconditional life.
  *
  * @author Barry Becker Date: Aug 28, 2005
  */
@@ -15,7 +15,7 @@ public final class LifeAnalyzer {
 
     private GoGroup group_;
     private GoBoard board_;
-    
+
     public LifeAnalyzer(GoGroup group, GoBoard board) {
         group_ = group;
         board_ = board;
@@ -36,14 +36,14 @@ public final class LifeAnalyzer {
             str.setUnconditionallyAlive(true);
             candidateStrings.add(str);
         }
-       
+
         findNeighborStringSets();
 
         // now create the neighbor eye sets for each qualified string
-        for (GoEye eye : group_.getEyes(board_)) {       
+        for (GoEye eye : group_.getEyes(board_)) {
             EyeAnalyzer a = new EyeAnalyzer(eye);
             if (eye.getNeighbors() != null) {
-                for (GoString str : eye.getNeighbors()) {                  
+                for (GoString str : eye.getNeighbors()) {
                     if (str.getNeighbors() == null) {
                         str.setNbrs(new HashSet<GoString>());
                     }
@@ -61,7 +61,7 @@ public final class LifeAnalyzer {
             for (GoEye eye : group_.getEyes(board_)) {
                 eye.setUnconditionallyAlive(true);
                 if (eye.getNeighbors() != null) {
-                    for (GoString nbrStr : eye.getNeighbors()) {                     
+                    for (GoString nbrStr : eye.getNeighbors()) {
                         if (!nbrStr.isUnconditionallyAlive()) {
                             eye.setUnconditionallyAlive(false);
                         }
@@ -74,7 +74,7 @@ public final class LifeAnalyzer {
                 // find the number of ua eyes adjacent
                 int numUAEyesAdjacent = 0;
                 if (str.getNeighbors() != null) {
-                    for (GoString eye : str.getNeighbors()) {                      
+                    for (GoString eye : str.getNeighbors()) {
                         if (eye.isUnconditionallyAlive()) {
                             numUAEyesAdjacent++;
                         }
@@ -90,7 +90,7 @@ public final class LifeAnalyzer {
         }  while ( !(done || candidateStrings.isEmpty()));
 
         // clear str nbrs
-        for (GoString str : group_.getMembers()) {  
+        for (GoString str : group_.getMembers()) {
             str.setNbrs(null);
         }
 
@@ -102,8 +102,8 @@ public final class LifeAnalyzer {
      * first find the neighbor string sets for each true eye in the group.
      */
     private void findNeighborStringSets() {
-        
-        for (GoEye eye : group_.getEyes(board_)) {         
+
+        for (GoEye eye : group_.getEyes(board_)) {
             if (eye.getNeighbors() == null) {
                 eye.setNbrs(new HashSet<GoString>());
             }
@@ -111,7 +111,7 @@ public final class LifeAnalyzer {
                 if (pos.isUnoccupied()) {
                     Set<GoBoardPosition> nbrs = board_.getNobiNeighbors(pos, eye.isOwnedByPlayer1(), NeighborType.FRIEND);
                     for (GoBoardPosition nbr : nbrs) {
-                    
+
                         if (nbr.getString().getGroup() != group_) {
                             // this eye is not UA.
                             eye.setNbrs(null);

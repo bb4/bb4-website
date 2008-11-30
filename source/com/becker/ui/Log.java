@@ -1,5 +1,7 @@
 package com.becker.ui;
 
+import com.becker.common.ILog;
+
 import java.io.*;
 
 /**
@@ -9,15 +11,8 @@ import java.io.*;
  * @see com.becker.ui.OutputWindow
  * @author Barry Becker
  */
-
-public class Log
+public class Log implements ILog
 {
-
-    // you can specify the debug, profile info, warning, and error resources to go to one @@ or more of these plaes.
-    public static final int LOG_TO_CONSOLE = 0x1;
-    public static final int LOG_TO_WINDOW = 0x2;
-    public static final int LOG_TO_FILE = 0x4;
-    public static final int LOG_TO_STRING = 0x8;
 
     // must be static because accessed in satic method (logMessage)
     // the default is to log to the console
@@ -25,7 +20,7 @@ public class Log
 
     // an output window for logging
     private OutputWindow logWindow_ = null;
-    private FileOutputStream fileOutStream_ = null;
+    private OutputStream fileOutStream_ = null;
     // used if logging to String
     private StringBuilder logBuffer_ = null;
 
@@ -45,7 +40,8 @@ public class Log
         setDestination( logDestination_ );
     }
 
-    /** return the current log destination
+    /**
+     * @return  the current loggin destination
      */
     public int getDestination()
     {
@@ -75,17 +71,12 @@ public class Log
         logWindow_ = w;
     }
 
-    /**
-     *
-     * @param fileName  the name of the file to send the output to.
-     */
+
     public void setLogFile( String fileName ) throws FileNotFoundException
     {
-
-        fileOutStream_ = new FileOutputStream(fileName);
-        // @@ should wrap in a BufferedOutputStream for performance.
+        fileOutStream_ = new BufferedOutputStream(new FileOutputStream(fileName));
     }
-    
+
     public void setStringBuilder(StringBuilder bldr)
     {
         logBuffer_ = bldr;
