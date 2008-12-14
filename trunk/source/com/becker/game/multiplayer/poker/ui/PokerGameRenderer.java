@@ -29,7 +29,7 @@ public class PokerGameRenderer extends MultiGameBoardRenderer
      */
     private PokerGameRenderer()
     {
-        pieceRenderer_ = PokerRenderer.getRenderer();
+        pieceRenderer_ = PokerPlayerRenderer.getRenderer();
     }
 
     public static GameBoardRenderer getRenderer()
@@ -63,12 +63,12 @@ public class PokerGameRenderer extends MultiGameBoardRenderer
         Board board = controller.getBoard();
         Location loc = new Location(board.getNumRows() >> 1, (board.getNumCols() >> 1) - 3);
         int pot = ((PokerController)controller).getPotValue();
-        ((PokerRenderer)pieceRenderer_).renderChips(g2, loc, pot, this.getCellSize());
+        ((PokerPlayerRenderer)pieceRenderer_).renderChips(g2, loc, pot, this.getCellSize());
 
         // draw a backroung circle for the player whose turn it is
         PokerPlayer player = (PokerPlayer)controller.getCurrentPlayer();
         PokerPlayerMarker m = player.getPiece();
-        g2.setColor(PokerRenderer.HIGHLIGHT_COLOR);
+        g2.setColor(PokerPlayerRenderer.HIGHLIGHT_COLOR);
         g2.fillOval(cellSize_*(m.getLocation().getCol()-2), cellSize_*(m.getLocation().getRow()-2), 10*cellSize_, 10*cellSize_);
 
         // now draw the players and their stuff (face, anme, chips, cards, etc)
