@@ -95,7 +95,6 @@ public class CandidateMoveAnalyzer {
         for (int i = 1; i <= size_; i++ ) {
             for (int j = 1; j <= size_; j++ ) {
                 GoBoardPosition pos = (GoBoardPosition) board_.getPosition(i,j);
-                System.out.println("pos="+pos);
                 if ( pos.isOccupied() ) {
                     addCandidateMoves(pos);
                 }
@@ -129,9 +128,6 @@ public class CandidateMoveAnalyzer {
      */
     private void tryToAddCandidateMove(BoardPosition position) {
         GoBoardPosition pos = (GoBoardPosition) position;
-        if (pos.getEye()!=null)     {
-            System.out.println("eyep="+pos + "eye="+ pos.getEye() + " u_alive=" + pos.getEye().isUnconditionallyAlive());
-        }
         if (pos.isUnoccupied() && !(pos.getEye()!=null && pos.getEye().isUnconditionallyAlive())) {
             candidateMoves_[pos.getRow()][pos.getCol()] = true;
         }

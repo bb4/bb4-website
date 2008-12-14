@@ -20,11 +20,10 @@ public class TestAll extends TestCase {
         suite.addTest(TestAllBoard.suite());
         suite.addTestSuite(TestShape.class);
         suite.addTestSuite(TestScoring.class);
-
-        //suite.addTestSuite(TestLifeAndDeath.class);
+        suite.addTestSuite(TestLifeAndDeath.class);
 
         // these 2 can take really long.
-        ////suite.addTest(TestProblemCollections.suite());
+        suite.addTest(TestProblemCollections.suite());
         ////suite.addTestSuite(TestKiseido2002.class);
 
         return suite;

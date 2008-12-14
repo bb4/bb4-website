@@ -35,7 +35,7 @@ public abstract class GameController
      * this allows us to talk with the game server (if it is available). null if not
      */
     protected ServerConnection serverConnection_;
-    
+
     /** Make sure that the program runs in a reproducible way by always starting from the same random seed. */
     protected static final Random RANDOM = new Random(1);
 
@@ -80,6 +80,17 @@ public abstract class GameController
 
     public LinkedList<Move> getMoveList() {
         return board_.getMoveList();
+    }
+
+    /**
+     *
+     * @return the most recent move played
+     */
+    public Move getLastMove() {
+        if (getMoveList() == null || getMoveList().size() == 0) {
+            return null;
+        }
+        return getMoveList().getLast();
     }
 
     /**
@@ -197,7 +208,7 @@ public abstract class GameController
     {
         return players_.size();
     }
-    
+
 
      /**
       * Clear the game over state in case the user decides to undo moves or play another game.
@@ -206,7 +217,7 @@ public abstract class GameController
 
        for (Player p : getPlayers()) {
            p.setWon(false);
-       } 
+       }
     }
 
 
@@ -267,7 +278,7 @@ public abstract class GameController
     }
 
     /**
-     * 
+     *
      * @param cmd containing an action for one of the players
      *
     public void handleServerUpdate(GameCommand cmd) {
@@ -288,7 +299,7 @@ public abstract class GameController
     public int getServerPort() {
         return -1;
     }
-    
+
     /**
      * Someday 2 player games should use actions rathern than moves so
      * that they too can be run over the game server.

@@ -7,11 +7,11 @@ import java.awt.*;
 import java.awt.geom.*;
 
 /**
- * Singleton class that takes a game piece and renders it for the TwoPlayerBoardViewer.
+ * Abstract singleton class that takes a game piece and renders it for the GameBoardViewer.
  * We use a separate piece rendering class to avoid having ui in the piece class itself.
  * This allows us to more cleanly separate the client and server code.
  *
- * @see com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer
+ * @see com.becker.game.common.ui.GameBoardViewer
  * @author Barry Becker
  */
 public abstract class GamePieceRenderer
@@ -27,7 +27,7 @@ public abstract class GamePieceRenderer
 
     /**
      * private constructor because this class is a singleton.
-     * Use getPieceRenderer instead
+     * Use getRenderer instead
      */
     protected GamePieceRenderer()
     {}
@@ -54,8 +54,8 @@ public abstract class GamePieceRenderer
     public static Point getPosition(BoardPosition position, int cellSize, int pieceSize)
     {
         int offset = (cellSize - pieceSize) >> 1;
-        position_.x = GameBoardViewer.BOARD_MARGIN + cellSize*(position.getCol()-1) + offset;
-        position_.y = GameBoardViewer.BOARD_MARGIN + cellSize*(position.getRow()-1) + offset;
+        position_.x = GameBoardRenderer.BOARD_MARGIN + cellSize*(position.getCol()-1) + offset;
+        position_.y = GameBoardRenderer.BOARD_MARGIN + cellSize*(position.getRow()-1) + offset;
         return position_;
     }
 

@@ -142,8 +142,7 @@ public final class GameTreeDialog extends JDialog
         viewerPanel.add( infoPanel, BorderLayout.SOUTH);
         previewPanel.add( viewerPanel, BorderLayout.CENTER );
 
-        JSplitPane topSplitPane = new JSplitPane( JSplitPane.HORIZONTAL_SPLIT, true, scrollPane_, previewPanel );
-        return topSplitPane;
+        return new JSplitPane( JSplitPane.HORIZONTAL_SPLIT, true, scrollPane_, previewPanel );
     }
 
     /**

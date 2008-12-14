@@ -2,6 +2,8 @@ package com.becker.game.twoplayer.checkers.ui;
 
 import com.becker.common.*;
 import com.becker.game.common.*;
+import com.becker.game.common.ui.GameBoardViewer;
+import com.becker.game.common.ui.GameBoardRenderer;
 import com.becker.game.twoplayer.checkers.*;
 import com.becker.game.twoplayer.common.*;
 import com.becker.game.twoplayer.common.ui.*;
@@ -19,20 +21,15 @@ import java.util.List;
  *
  *  @author Barry Becker
  */
-public class CheckersBoardViewer extends TwoPlayerBoardViewer implements MouseMotionListener
+public class CheckersBoardViewer extends TwoPlayerBoardViewer
+                                 implements MouseMotionListener
 {
-
-    // colors of the squares on the chess board.
-    // make them transparend so the background color shows through.
-    protected static final Color BLACK_SQUARE_COLOR = new Color(2, 2, 2, 80);
-    protected static final Color RED_SQUARE_COLOR = new Color(250, 0, 0, 80);
 
     /**
      *  Construct the viewer
      */
     public CheckersBoardViewer()
     {
-        pieceRenderer_ = CheckersPieceRenderer.getRenderer();
         addMouseMotionListener( this );
     }
 
@@ -42,63 +39,10 @@ public class CheckersBoardViewer extends TwoPlayerBoardViewer implements MouseMo
         return new CheckersController();
     }
 
-
-    protected int getDefaultCellSize()
-    {
-        return 34;
+    protected GameBoardRenderer getBoardRenderer() {
+        return CheckersBoardRenderer.getRenderer();
     }
 
-    /**
-     *  animate the last move so the player does not lose orientation.
-     */
-    public void showLastMove()
-    {
-        CheckersMove m = (CheckersMove)getBoard().getLastMove();
-        // if we have captures, then we want to show each one
-        if (m.captureList != null) {
-            controller_.undoLastMove();
-            BoardPosition origPos = getBoard().getPosition(m.getFromRow(), m.getFromCol());
-            draggedShowPiece_ = origPos.copy();
-            origPos.setPiece(null);
-            Iterator it = m.captureList.iterator();
-            while (it.hasNext()) {
-                BoardPosition capPos = (BoardPosition)it.next();
-                int rOrig =  draggedShowPiece_.getRow();
-                int cOrig =  draggedShowPiece_.getCol();
-                int rdir = capPos.getRow() - rOrig;
-                int cdir = capPos.getCol() - cOrig;
-                draggedShowPiece_.setRow(rOrig + 2*rdir);
-                draggedShowPiece_.setCol(cOrig + 2*cdir);
-                getBoard().getPosition(capPos.getLocation()).setPiece(null);
-                refresh();
-                //JOptionPane.showMessageDialog(this, "cap1");
-            }
-            draggedShowPiece_ = null;
-            controller_.makeMove(m);
-        }
-
-        // this will paint the component immediately
-        refresh();
-    }
-
-
-    protected void drawBackground( Graphics g, int startPos, int rightEdgePos, int bottomEdgePos )
-    {
-        super.drawBackground(g, startPos, rightEdgePos, bottomEdgePos);
-
-        Board board = controller_.getBoard();
-        int nrows = board.getNumRows();
-        int ncols = board.getNumCols();
-
-        for (int i=0; i<nrows; i++) {
-            for (int j=0; j<ncols; j++)  {
-                g.setColor(((i+j)%2 == 0)? BLACK_SQUARE_COLOR : RED_SQUARE_COLOR);
-                int ioff = TwoPlayerBoardViewer.BOARD_MARGIN + cellSize_ * i;
-                int joff = TwoPlayerBoardViewer.BOARD_MARGIN + cellSize_ * j;
-                g.fillRect( ioff, joff, cellSize_, cellSize_ );
-            }
-        }
-    }
 
     /**
      * @param position
@@ -120,7 +64,7 @@ public class CheckersBoardViewer extends TwoPlayerBoardViewer implements MouseMo
     {
         if (get2PlayerController().isProcessing())
             return;
-        Location loc = createLocation(e, getCellSize());
+        Location loc = getBoardRenderer().createLocation(e);
 
         Board board = controller_.getBoard();
         BoardPosition position = board.getPosition( loc );
@@ -132,27 +76,23 @@ public class CheckersBoardViewer extends TwoPlayerBoardViewer implements MouseMo
         if ( get2PlayerController().isPlayer1sTurn() != piece.isOwnedByPlayer1() )
             return; // wrong players piece
 
-        draggedPiece_ = position;
-        draggedShowPiece_ = position.copy();
-        draggedShowPiece_.getPiece().setTransparency( (short) 160 );
+        getBoardRenderer().setDraggedPiece(position);
     }
 
     public void mouseReleased( MouseEvent e )
     {
         // compute the coords of the position that we dropped the piece on.
-        Location loc = createLocation(e, getCellSize());
+        Location loc = getBoardRenderer().createLocation(e);
 
-        if ( draggedPiece_ == null )
+        if ( getBoardRenderer().getDraggedPiece() == null )
             return; // nothing being dragged
 
         Board board = controller_.getBoard();
         // get the original position.
-        BoardPosition position =  board.getPosition( draggedPiece_.getLocation() );
-
+        BoardPosition position = board.getPosition( getBoardRenderer().getDraggedPiece().getLocation());
 
         // valid or not, we won't show the dragged piece after releasing the mouse
-        draggedPiece_ = null;
-        draggedShowPiece_ = null;
+        getBoardRenderer().setDraggedPiece(null);
 
         BoardPosition destp = board.getPosition( loc );
         if (customCheckFails(position, destp)) {
@@ -201,10 +141,10 @@ public class CheckersBoardViewer extends TwoPlayerBoardViewer implements MouseMo
      */
     public void mouseDragged( MouseEvent e )
     {
-        Location loc = createLocation(e, getCellSize());
+        Location loc = getBoardRenderer().createLocation(e);
 
-        if ( draggedShowPiece_ != null ) {
-            draggedShowPiece_.setLocation( loc );
+        if ( getBoardRenderer().getDraggedShowPiece() != null ) {
+            getBoardRenderer().getDraggedShowPiece().setLocation( loc );
         }
         refresh();
     }
@@ -217,7 +157,7 @@ public class CheckersBoardViewer extends TwoPlayerBoardViewer implements MouseMo
      */
     public String getToolTipText( MouseEvent e )
     {
-        Location loc = createLocation(e, getCellSize());
+        Location loc = getBoardRenderer().createLocation(e);
         StringBuffer sb = new StringBuffer( "<html><font=-3>" );
 
         BoardPosition space = controller_.getBoard().getPosition( loc );

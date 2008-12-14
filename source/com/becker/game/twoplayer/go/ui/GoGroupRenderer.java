@@ -1,14 +1,13 @@
 package com.becker.game.twoplayer.go.ui;
 
-import com.becker.game.twoplayer.go.board.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.GoEye;
-import com.becker.game.twoplayer.go.board.GoGroup;
-import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.*;
 import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
 import static com.becker.game.twoplayer.go.GoControllerConstants.*;   // jdk 1.5 feature
 import com.becker.common.ColorMap;
 import com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer;
+import com.becker.game.twoplayer.common.ui.TwoPlayerBoardRenderer;
 import com.becker.game.twoplayer.go.*;
+import com.becker.game.common.GameContext;
 
 import java.awt.*;
 import java.awt.geom.Area;
@@ -34,7 +33,7 @@ final class GoGroupRenderer
     /**
      * cache the border area, color, and cellSize in hashMaps
      * so that we don't have to recompute them if they have not changed.
-     */ 
+     */
     private static final Map<GoGroup, GroupRegion> hmRegionCache_ = new HashMap<GoGroup, GroupRegion>();
 
     private GoGroupRenderer() {
@@ -46,13 +45,14 @@ final class GoGroupRenderer
      */
     private static Area calcGroupBorder( Set groupStones, float cellSize, GoBoard board )
     {
-        if (groupStones == null || groupStones.isEmpty())
-          return null;  // nothing to draw an area for.
+        if (groupStones == null || groupStones.isEmpty()) {
+            return null;  // nothing to draw an area for.
+        }
 
         GoBoardPosition firstStone = (GoBoardPosition) groupStones.iterator().next();
 
         if ( groupStones.size() == 1 ) {
-            float margin = TwoPlayerBoardViewer.BOARD_MARGIN;
+            float margin = TwoPlayerBoardRenderer.BOARD_MARGIN;
             float offset = + BORDER_OFFSET + 0.5f;
             // case where the group contains only 1 stone
             float x = margin + (firstStone.getCol() - offset) * cellSize;
@@ -65,7 +65,7 @@ final class GoGroupRenderer
         List q = new ArrayList();
         Set qset = new HashSet();
         List visitedSet = new ArrayList();
-        q.add( firstStone.copy() );   // avoid cc mod exception?
+        q.add( firstStone.copy() );
         qset.add( firstStone );
         Area area = new Area();
 
@@ -74,10 +74,8 @@ final class GoGroupRenderer
             qset.remove( stone );
             stone.setVisited( true );
             visitedSet.add(stone);
-            Set nbrs = board.getGroupNeighbors( stone, true );
-            Iterator it = nbrs.iterator();
-            while ( it.hasNext() ) {
-                GoBoardPosition nbrStone = (GoBoardPosition) it.next();
+            Set<GoBoardPosition> nbrs = board.getGroupNeighbors( stone, true );
+            for (GoBoardPosition nbrStone : nbrs) {
                 // accumulate all the borders to arrive at the final group border
                 area.add( new Area( getBorderBetween( stone, nbrStone, cellSize ) ) );
                 if ( !nbrStone.isVisited() && !qset.contains( nbrStone ) ) {
@@ -88,6 +86,8 @@ final class GoGroupRenderer
         }
         // mark all the stones in the group unvisited again.
         GoBoardUtil.unvisitPositions( visitedSet );
+        if (GameContext.getDebugMode() > 1)
+                BoardValidationUtil.confirmAllUnvisited(board);
         return area;
     }
 
@@ -99,7 +99,7 @@ final class GoGroupRenderer
         // we can tell which case we have by how far apart the two stones are
         double dist = s1.getDistanceFrom( s2 );
         GeneralPath border = null;
-  
+
         if ( dist == 1.0 || dist == 2.0 ) {
             // **  or *_*
             border = getLinearNbrBorder( s1, s2, cellSize );
@@ -128,7 +128,7 @@ final class GoGroupRenderer
     {
         GeneralPath border = new GeneralPath();
         float celld2 = cellSize / 2.0f;
-        float margin = TwoPlayerBoardViewer.BOARD_MARGIN;
+        float margin = TwoPlayerBoardRenderer.BOARD_MARGIN;
 
         if ( s1.getRow() == s2.getRow() ) { // horizontal
             GoBoardPosition leftStone;
@@ -186,7 +186,7 @@ final class GoGroupRenderer
     {
         GeneralPath border = new GeneralPath();
         float celld2 = cellSize / 2.0f;
-        float margin = TwoPlayerBoardViewer.BOARD_MARGIN;
+        float margin = TwoPlayerBoardRenderer.BOARD_MARGIN;
 
         // upper left = ul, lr = lower right, ...
         GoBoardPosition ulStone = null, lrStone = null, llStone = null, urStone = null;
@@ -253,10 +253,12 @@ final class GoGroupRenderer
     {
         GeneralPath border = new GeneralPath();
         float celld2 = cellSize / 2.0f;
-        float margin = TwoPlayerBoardViewer.BOARD_MARGIN;
+        float margin = TwoPlayerBoardRenderer.BOARD_MARGIN;
 
         // calc vector from s1 to s2
-        Point2D.Float p = new Point2D.Float( celld2 * (s2Stone.getCol() - s1Stone.getCol()), celld2 * (s2Stone.getRow() - s1Stone.getRow()) );
+        Point2D.Float p =
+                new Point2D.Float( celld2 * (s2Stone.getCol() - s1Stone.getCol()),
+                                   celld2 * (s2Stone.getRow() - s1Stone.getRow()) );
         float s1x = margin + ((float) s1Stone.getCol() - BORDER_OFFSET) * cellSize;
         float s1y = margin + ((float) s1Stone.getRow() - BORDER_OFFSET) * cellSize;
         float s2x = margin + ((float) s2Stone.getCol() - BORDER_OFFSET) * cellSize;
@@ -299,7 +301,7 @@ final class GoGroupRenderer
      */
     private static void drawEyes( float cellSize, Graphics2D g2, Set eyes )
     {
-        float margin = TwoPlayerBoardViewer.BOARD_MARGIN;
+        float margin = TwoPlayerBoardRenderer.BOARD_MARGIN;
         if ( !eyes.isEmpty() ) {
             Font font = new Font( "SanSerif", Font.PLAIN, (int) (1.6 * Math.sqrt( cellSize ) - 1) );
             g2.setFont( font );
@@ -329,15 +331,15 @@ final class GoGroupRenderer
     public static void drawGroupDecoration(GoGroup group, ColorMap colormap, float cellSize, GoBoard board, Graphics2D g2)
     {
         GroupRegion cachedRegion = hmRegionCache_.get(group);
-     
-        /* giving cc mod error */
+
         if ( group.hasChanged() || cachedRegion == null || cellSize != cachedRegion.cellSize ) {
 
             // the colormap will show red if close to dead,
             // so reverse the health value for the other player
             double h = (USE_RELATIVE_GROUP_SCORING ? group.getRelativeHealth():group.getAbsoluteHealth());
-            if (!group.isOwnedByPlayer1())
+            if (!group.isOwnedByPlayer1())  {
                 h = -h;
+            }
 
             cachedRegion = new GroupRegion();
             cachedRegion.borderArea = calcGroupBorder( group.getStones(), cellSize, board );
@@ -345,20 +347,26 @@ final class GoGroupRenderer
             cachedRegion.cellSize = cellSize;
 
             // cache these new values (until something changes again)
-            hmRegionCache_.put(group, cachedRegion);      
+            hmRegionCache_.put(group, cachedRegion);
         }
 
-
-        // fill in the cumulative group border
-        if ( cachedRegion !=null ) {
-            g2.setColor( cachedRegion.borderColor );
-            g2.fill( cachedRegion.borderArea );
-            g2.setColor( Color.black );
-            g2.draw( cachedRegion.borderArea );
-        }
+        fillInRegion(g2, cachedRegion);
 
         if (!group.getEyes(board).isEmpty())   {
             drawEyes( cellSize, g2, group.getEyes(board) );
+        }
+    }
+
+    /**
+     * Draw the border for the group.
+     */
+    private static void fillInRegion(Graphics2D g2, GroupRegion region) {
+        // fill in the cumulative group border
+        if ( region != null &&  region.borderArea != null) {
+            g2.setColor( region.borderColor );
+            g2.fill( region.borderArea );
+            g2.setColor( Color.black );
+            g2.draw( region.borderArea );
         }
     }
 

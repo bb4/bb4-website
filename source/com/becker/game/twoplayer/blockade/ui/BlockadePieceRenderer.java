@@ -7,6 +7,7 @@ import com.becker.game.common.Board;
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer;
 import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
+import com.becker.game.twoplayer.common.ui.TwoPlayerBoardRenderer;
 
 import java.awt.*;
 
@@ -25,7 +26,7 @@ class BlockadePieceRenderer extends TwoPlayerPieceRenderer
 
     /**
      * private constructor because this class is a singleton.
-     * Use getPieceRenderer instead
+     * Use getRenderer instead
      */
     protected BlockadePieceRenderer()
     {}
@@ -62,8 +63,8 @@ class BlockadePieceRenderer extends TwoPlayerPieceRenderer
      */
     static boolean renderWallAtPosition( Graphics2D g2, BlockadeBoardPosition bpos, int cellSize )
     {
-        int xpos = TwoPlayerBoardViewer.BOARD_MARGIN + cellSize*(bpos.getCol());
-        int ypos = TwoPlayerBoardViewer.BOARD_MARGIN + cellSize*(bpos.getRow());
+        int xpos = TwoPlayerBoardRenderer.BOARD_MARGIN + cellSize*(bpos.getCol());
+        int ypos = TwoPlayerBoardRenderer.BOARD_MARGIN + cellSize*(bpos.getRow());
 
         int wallWidthD2 = (int)(WALL_WIDTH_FRAC * cellSize);
         int wallWidth =  (int)(2.1 * wallWidthD2);
@@ -90,8 +91,8 @@ class BlockadePieceRenderer extends TwoPlayerPieceRenderer
      */
     static boolean renderWallAtPosition1( Graphics2D g2, BlockadeBoardPosition bpos, int cellSize )
     {
-        int xpos = TwoPlayerBoardViewer.BOARD_MARGIN + cellSize*(bpos.getCol());
-        int ypos = TwoPlayerBoardViewer.BOARD_MARGIN + cellSize*(bpos.getRow());
+        int xpos = TwoPlayerBoardRenderer.BOARD_MARGIN + cellSize*(bpos.getCol());
+        int ypos = TwoPlayerBoardRenderer.BOARD_MARGIN + cellSize*(bpos.getRow());
         GameContext.log(2, "wall xpos="+xpos+" ypos="+ypos+" bpos="+bpos );
 
         int wallWidthD2 = (int)(WALL_WIDTH_FRAC * cellSize);

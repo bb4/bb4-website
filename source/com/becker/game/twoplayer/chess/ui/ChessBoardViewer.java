@@ -4,6 +4,7 @@ import com.becker.game.twoplayer.checkers.ui.CheckersBoardViewer;
 import com.becker.game.twoplayer.chess.*;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.common.*;
+import com.becker.game.common.ui.GameBoardRenderer;
 
 import javax.swing.*;
 import java.awt.event.MouseMotionListener;
@@ -26,15 +27,19 @@ public class ChessBoardViewer extends CheckersBoardViewer implements MouseMotion
      * Construct the viewer
      */
     public ChessBoardViewer()
-    {
-        pieceRenderer_ = ChessPieceRenderer.getRenderer();
-    }
+    {}
+
 
 
     protected GameController createController()
     {
         return new ChessController();
     }
+
+protected GameBoardRenderer getBoardRenderer() {
+        return ChessBoardRenderer.getRenderer();
+    }
+
 
     protected boolean customCheckFails(BoardPosition position, BoardPosition destp)
     {

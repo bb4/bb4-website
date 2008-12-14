@@ -11,14 +11,14 @@ import java.util.Set;
 
 /**
  * Analyzes a group to determine how alive it is.
- * 
+ *
  * @author Barry Becker
  */
 public class GroupHealthAnalyzer implements Cloneable {
 
     /** The group of go stones that we are analyzing. */
     private GoGroup group_;
-    
+
     /**
      * need 2 true eyes to be unconditionally alive.
      * This is a set of GoEyes which give the spaces in the eye.
@@ -26,10 +26,10 @@ public class GroupHealthAnalyzer implements Cloneable {
      * false-eye: any string of spaces or dead enemy stones for which one is a false eye.
      */
     private Set<GoEye> eyes_;
-    
+
     /** measure of how easily the group can make 2 eyes. */
     private float eyePotential_;
-    
+
     /**
      * This is a number between -1 and 1 that indicates how likely the group is to live
      * independent of the health of the stones around it.
@@ -42,7 +42,7 @@ public class GroupHealthAnalyzer implements Cloneable {
      * A score of near 0 indicates it is very uncertain whether the group will live or die.
      */
     private float absoluteHealth_ = 0;
-    
+
     /**
      * This measure of health is also between -1 and 1 but it should be more
      * accurate because it takes into account the health of neighboring enemy groups as well.
@@ -59,13 +59,13 @@ public class GroupHealthAnalyzer implements Cloneable {
 
     /** Number of stones in the group. */
     private int cachedNumStonesInGroup_;
-    
+
     /**
      * Set this to true when the eyes need to be recalculated.
      * It must be set to true if the group has changed in any way.
       */
     private boolean eyeCacheBroken_ = true;
-    
+
     /**
      * Constructor.
      * @param group group to analyze.
@@ -75,7 +75,7 @@ public class GroupHealthAnalyzer implements Cloneable {
         eyes_ = new LinkedHashSet<GoEye>();
         eyeCacheBroken_ = true;
     }
-    
+
     /**
      * only used in tester. otherwise would be private.
      */
@@ -84,16 +84,16 @@ public class GroupHealthAnalyzer implements Cloneable {
         //assert !eyeCacheBroken_;
         return absoluteHealth_;
     }
-    
+
     public void breakEyeCache() {
         clearEyes();
     }
-    
+
     public float getEyePotential() {
         assert !eyeCacheBroken_;
         return eyePotential_;
     }
-    
+
     /**
      * @return true if the group has changed (structurally) in any way.
      */
@@ -101,33 +101,33 @@ public class GroupHealthAnalyzer implements Cloneable {
     {
         return eyeCacheBroken_;
     }
-    
-    
+
+
     /**
      * Get the number of liberties that the group has.
      * @return the number of liberties that the group has
      */
     public Set getLiberties(GoBoard board)
-    {      
+    {
         if (!eyeCacheBroken_) {
              return cachedLiberties_;
         }
         Set<GoBoardPosition> liberties = new HashSet<GoBoardPosition>();
-        for (GoString str : group_.getMembers()) {        
+        for (GoString str : group_.getMembers()) {
             liberties.addAll(str.getLiberties(board));
         }
         cachedLiberties_ = liberties;
         return liberties;
     }
-    
+
     /**
      * If nothing cached, this may not be accurate.
-     * @return number of cached liberties. 
+     * @return number of cached liberties.
      */
     public int getNumLiberties() {
         return cachedLiberties_== null ? 0 : cachedLiberties_.size();
     }
-    
+
     /**
      * Calculate the number of stones in the group.
      * @return number of stones in the group.
@@ -144,16 +144,16 @@ public class GroupHealthAnalyzer implements Cloneable {
         cachedNumStonesInGroup_ = numStones;
         return numStones;
     }
-    
+
     /**
      * @return  set of eyes currently identified for this group.
      */
     public Set<GoEye> getEyes(GoBoard board)
-    {                 
-        updateEyes(board);            
+    {
+        updateEyes(board);
         return eyes_;
-    }    
-    
+    }
+
 
     /**
      * Calculate the absolute health of a group.
@@ -216,7 +216,7 @@ public class GroupHealthAnalyzer implements Cloneable {
 
 
     /**
-     *Determine approximately how many eyes the group has. 
+     *Determine approximately how many eyes the group has.
      *This is purposely a little vague, but if more than 2.0, then must be unconditionally alive.
      *The value that we count for each type of eye could be optimized.
      */
@@ -235,13 +235,13 @@ public class GroupHealthAnalyzer implements Cloneable {
                     break;
                 case BIG_EYE:
                     numEyes += 1.1;
-                    break; 
+                    break;
                 case TERRITORIAL_EYE:
                     numEyes += 1.6f;
                     break; // counts as 2 true eyes
-            }            
+            }
         }
-        
+
         return numEyes;
     }
 
@@ -287,8 +287,8 @@ public class GroupHealthAnalyzer implements Cloneable {
         }
         return health;
     }
-    
-   
+
+
     /**
      * Calculate the health of a group that has only one eye.
      */
@@ -297,12 +297,12 @@ public class GroupHealthAnalyzer implements Cloneable {
         if (numLiberties > 6)  {
             health = side * Math.min(BEST_ALMOST_TWO_EYED_HEALTH, (1.15f - 20.0f/(numLiberties + 23.0f)));
         }
-        else  {  // numLiberties<=5. Very unlikely to occur           
+        else  {  // numLiberties<=5. Very unlikely to occur
             switch (numLiberties) {
-                case 0:                
-                case 1:                                                   
-                    // assert false: "can't have almost 2 eyes and only 1 or fewer liberties! " + this.toString();      
-                    // but apparently it can (seen on 5x5 game):  
+                case 0:
+                case 1:
+                    // assert false: "can't have almost 2 eyes and only 1 or fewer liberties! " + this.toString();
+                    // but apparently it can (seen on 5x5 game):
                     //  OOOOX
                     //      XOX
                     break;
@@ -310,7 +310,7 @@ public class GroupHealthAnalyzer implements Cloneable {
                     health = side * 0.02f;
                     // this actually happens quite often.
                      GameContext.log(1, "We have almost 2 eyes but only 2 Liberties. How can that be? " + this.toString());
-                    break;  
+                    break;
                 case 3:
                     health = side * 0.05f;
                     break;
@@ -504,30 +504,33 @@ public class GroupHealthAnalyzer implements Cloneable {
         }
 
         GoBoardUtil.unvisitPositions(groupStones);
+        if (GameContext.getDebugMode() > 1)
+                BoardValidationUtil.confirmAllUnvisited(board);
 
         return relativeHealth_;
     }
 
     public float getRelativeHealth()
     {
-        assert !eyeCacheBroken_;
+        if (eyeCacheBroken_) {
+            GameContext.log(0, "Getting stale relative health = " + relativeHealth_);
+        }
         return relativeHealth_;
     }
 
     /**
      * @@ may need to make this n^2 method more efficient.
-     * note: has intentional side effect of marking stones with enemy group nbrs as visited.
+     * note: has intentional side effect of marking stones with enemy group nbrs as visited (within groupStones).
      * @param board
      * @param groupStones the set of stones in the group to find enemies of.
      * @return a HashSet of the groups that are enemies of this group
      */
-    private Set getEnemyGroupNeighbors(GoBoard board, Set groupStones)
+    private Set getEnemyGroupNeighbors(GoBoard board, Set<GoBoardPosition> groupStones)
     {
         Set<GoGroup> enemyNbrs = new HashSet<GoGroup>();
 
         // for every stone in the group.
-        for (Object s : groupStones) {
-            GoBoardPosition stone = (GoBoardPosition)s;
+        for (GoBoardPosition stone : groupStones) {
             Set nbrs = board.getGroupNeighbors(stone, false);
 
             // if the stone has any enemy nbrs then mark it visited.
@@ -547,8 +550,8 @@ public class GroupHealthAnalyzer implements Cloneable {
         }
         return enemyNbrs;
     }
-    
-    
+
+
     /**
      * compute how many eyes (connected internal blank areas) this group has.
      * the eyes are either false eyes or true (or big or territorial) eyes.
@@ -561,13 +564,13 @@ public class GroupHealthAnalyzer implements Cloneable {
         if (!eyeCacheBroken_ || board == null) {
             return;
         }
-        
+
         GroupEyeSpaceAnalyzer eyeAnalyzer = new GroupEyeSpaceAnalyzer(group_, board);
         eyes_ = eyeAnalyzer.determineEyes();
         eyePotential_ = eyeAnalyzer.calculateEyePotential();
         eyeCacheBroken_ = false;  // cached until something changes
     }
- 
+
     /**
      * clear the current eyes for the group (in preparation for recomputing them).
      */
@@ -581,8 +584,8 @@ public class GroupHealthAnalyzer implements Cloneable {
         eyes_.clear();
         eyeCacheBroken_ = true;
     }
-    
-    
+
+
     /**
      * @return a deep copy of this GroupHealthAnalyzer
      * @throws CloneNotSupportedException
@@ -591,7 +594,7 @@ public class GroupHealthAnalyzer implements Cloneable {
     public Object clone() throws CloneNotSupportedException
     {
         Object clone = super.clone();
-         
+
         if (eyes_ !=null)  {
             ((GroupHealthAnalyzer)clone).eyes_ = new HashSet<GoEye>();
             Set<GoEye> m = ((GroupHealthAnalyzer)clone).eyes_;

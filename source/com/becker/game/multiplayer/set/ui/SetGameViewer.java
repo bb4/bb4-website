@@ -28,7 +28,9 @@ public final class SetGameViewer extends MultiGameViewer
     private Card currentlyHighlightedCard_ = null;
 
 
-    // Constructor.
+    /**
+     * Constructor
+     */
     SetGameViewer()
     {
         NumberFormat formatter_=new DecimalFormat();
@@ -44,14 +46,17 @@ public final class SetGameViewer extends MultiGameViewer
     }
 
     /**
-     *
      * @return the game specific controller for this viewer.
      */
     protected MultiGameController createController() {
         return new SetController();
     }
 
-    
+    protected GameBoardRenderer getBoardRenderer() {
+        return SetGameRenderer.getRenderer();
+    }
+
+
     /**
      * make the computer move and show it on the screen.
      *
@@ -63,7 +68,7 @@ public final class SetGameViewer extends MultiGameViewer
         assert false : " no computer player for set yet. coming soon!";
         return false;
     }
-    
+
     /**
      * make the computer move and show it on the screen.
      *
@@ -76,111 +81,16 @@ public final class SetGameViewer extends MultiGameViewer
         return false;
     }
 
-    public int getCanvasWidth() {
-        return getWidth() - 2 * CardRenderer.LEFT_MARGIN;
-    }
-
-    public int getNumColumns() {
-        float rat = (float) getCanvasWidth() / (getHeight() - 2 * CardRenderer.TOP_MARGIN);
-
-        int numColumns = 20;
-        if (rat < 0.05) {
-            numColumns = 1;
-        } else if (rat < 0.15) {
-            numColumns = 2;
-        } else if (rat < 0.3) {
-            numColumns = 3;
-        } else if (rat < 0.6) {
-            numColumns = 4;
-        } else if (rat < 0.9) {
-            numColumns = 5;
-        } else if (rat < 1.2) {
-            numColumns = 6;
-        } else if (rat < 2.0) {
-            numColumns = 7;
-        } else if (rat < 3.4) {
-            numColumns = 10;
-        }
-        return numColumns;
-    }
-
-    private Dimension calcCardDimension(int numCols) {
-        int cardWidth = getCanvasWidth() / numCols;
-        return new Dimension(cardWidth, (int) (cardWidth * CardRenderer.CARD_HEIGHT_RAT));
-    }
-
-
-    protected void drawLastMoveMarker(Graphics2D graphics2d) {}
-
-    /**
-     * This renders the current state of the puzzle to the screen.
-     * Render each card in the deck.
-     */
-    protected void paintComponent( Graphics g )
-    {
-        int i;
-
-        super.paintComponents( g );
-        // erase what's there and redraw.
-        SetController c = (SetController)controller_;
-
-        g.clearRect( 0, 0, getWidth(), getHeight() );
-        g.setColor( BACKGROUND_COLOR );
-        g.fillRect( 0, 0, getWidth(), getHeight() );
-
-        int numCols = getNumColumns();
-
-        Dimension cardDim = calcCardDimension(numCols);
-        int cardWidth = (int) cardDim.getWidth();
-        int cardHeight = (int) cardDim.getHeight();
-
-        for (i = 0; i<c.getNumCardsShowing(); i++ ) {
-            int row = i / numCols;
-            int col = i % numCols;
-            int colPos = col * cardWidth + CardRenderer.LEFT_MARGIN;
-            int rowPos = row * cardHeight + CardRenderer.TOP_MARGIN;
-            CardRenderer.render((Graphics2D) g, c.getDeck().get(i),
-                                new Location(colPos, rowPos), cardWidth, cardHeight, false);
-        }
-    }
-
-
     public String getGameOverMessage() {
         SetPlayer winner =  ((SetController)controller_).determineWinner();
         return "the game is over. The winner is " + winner.getName() + " with " + winner.getNumSetsFound() + "sets";
     }
 
-    /**
-     * @return  the card that the mouse is currently over (at x, y coords)
-     */
-    private Card findCardOver(int x, int y) {
-        int numCols = getNumColumns();
-        SetController c = (SetController)controller_;
-
-        Dimension cardDim = calcCardDimension(numCols);
-        int cardWidth = (int) cardDim.getWidth();
-        int cardHeight = (int) cardDim.getHeight();
-
-        int selectedIndex = -1;
-        for (int i = 0; i<c.getNumCardsShowing(); i++ ) {
-            int row = i / numCols;
-            int col = i % numCols;
-            int colPos = col * cardWidth + CardRenderer.LEFT_MARGIN;
-            int rowPos = row * cardHeight + CardRenderer.TOP_MARGIN;
-            if (   x > colPos && x <= colPos + cardDim.getWidth()
-                && y > rowPos && y <= rowPos + cardDim.getHeight()) {
-                selectedIndex = i;
-                break;
-            }
-        }
-        if (selectedIndex == -1) {
-            return null;
-        }
-        return c.getDeck().get(selectedIndex);
-    }
 
     public void mouseMoved(MouseEvent e) {
-        Card card = findCardOver(e.getX(), e.getY());
+        Card card =
+             ((SetGameRenderer)getBoardRenderer()).findCardOver(controller_, e.getX(), e.getY(),
+                                                                getWidth(), getHeight());
 
         boolean changed = card != currentlyHighlightedCard_;
 
@@ -220,7 +130,7 @@ public final class SetGameViewer extends MultiGameViewer
              cards.get(i).setSelected(false);
          }
     }
-    
+
     /**
      * draw a grid of some sort if there is one.
      * none by default.
@@ -239,7 +149,7 @@ public final class SetGameViewer extends MultiGameViewer
             JOptionPane.showMessageDialog(this, "Before you can select a set, you must specify a player on the right.");
             return;
         }
-        Card card = findCardOver(e.getX(), e.getY());
+        Card card = ((SetGameRenderer)getBoardRenderer()).findCardOver(c, e.getX(), e.getY(), getWidth(), getHeight());
         if (card != null) {
            card.toggleSelect();
            this.repaint();
@@ -269,5 +179,12 @@ public final class SetGameViewer extends MultiGameViewer
         }
     }
 
+    /**
+     * @return the tooltip for the panel given a mouse event
+     */
+    public String getToolTipText( MouseEvent e )
+    {
+        return null;
+    }
 }
 

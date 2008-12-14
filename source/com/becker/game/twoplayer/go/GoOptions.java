@@ -12,7 +12,6 @@ public class GoOptions extends TwoPlayerOptions {
     // The komi can vary, but 5.5 seems most commonly used.
     public static final float DEFAULT_KOMI = 5.5f;
 
-
     // initial look ahead factor.
     static final int DEFAULT_LOOKAHEAD = 2;
     // for any given ply never consider more that BEST_PERCENTAGE of the top moves

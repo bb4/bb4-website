@@ -18,7 +18,7 @@ public class CheckersPieceRenderer extends TwoPlayerPieceRenderer
 
     /**
      * private constructor because this class is a singleton.
-     * Use getPieceRenderer instead
+     * Use getRenderer instead
      */
     protected CheckersPieceRenderer()
     {}

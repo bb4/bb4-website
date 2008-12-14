@@ -23,14 +23,11 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
      */
     protected GameController controller_;
 
-    // contains the two tabs : options for creating a new game, or loading a saved game
+    /** contains potentially 2 tabs that shows options for creating a new game, or playing online */
     protected final JTabbedPane tabbedPanel_ = new JTabbedPane();
 
     protected JPanel playLocalPanel_;
-    protected JPanel loadGamePanel_;
     protected OnlineGameManagerPanel playOnlinePanel_;
-
-    protected GradientButton openFileButton_;
 
     protected NumberInput rowSizeField_;
     protected NumberInput colSizeField_;
@@ -58,15 +55,12 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
         mainPanel.setLayout( new BorderLayout() );
 
         playLocalPanel_ = createPlayLocalPanel();
-        loadGamePanel_ = createLoadGamePanel();
 
         JPanel buttonsPanel = createButtonsPanel();
 
         // add the tabs
         tabbedPanel_.add( GameContext.getLabel("NEW_GAME"), playLocalPanel_ );
         tabbedPanel_.setToolTipTextAt( 0, GameContext.getLabel("NEW_GAME_TIP") );
-        tabbedPanel_.add( GameContext.getLabel("LOAD_GAME"), loadGamePanel_ );
-        tabbedPanel_.setToolTipTextAt( 1, GameContext.getLabel("LOAD_GAME_TIP") );
         tabbedPanel_.addChangeListener(this);
 
         mainPanel.add( tabbedPanel_, BorderLayout.CENTER );
@@ -170,67 +164,14 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
         return outerPanel;
     }
 
-
-    protected JPanel createLoadGamePanel()
-    {
-        JPanel loadGamePanel = new JPanel();
-        loadGamePanel.setLayout( new BoxLayout( loadGamePanel, BoxLayout.Y_AXIS ) );
-
-        JPanel p = new JPanel();
-        p.setLayout( new BoxLayout( p, BoxLayout.X_AXIS ) );
-        p.setBorder( BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(),
-                     GameContext.getLabel("SPECIFY_SGF") ) );
-        p.setMaximumSize( new Dimension( 400, ROW_HEIGHT + 30 ) );
-        //p.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-        openFileField_ = new JTextField( "" );
-        openFileField_.setAlignmentX( Component.LEFT_ALIGNMENT );
-        openFileButton_ = new GradientButton( "..." );
-        openFileButton_.setPreferredSize( new Dimension( 20, ROW_HEIGHT ) );
-        openFileButton_.addActionListener( this );
-        openFileButton_.setAlignmentX( Component.LEFT_ALIGNMENT );
-
-        JLabel label = new JLabel(GameContext.getLabel("FILE_NAME") + COLON);
-        label.setAlignmentX( Component.LEFT_ALIGNMENT );
-        p.add( label );
-
-        p.add( openFileField_ );
-        p.add( openFileButton_ );
-
-        loadGamePanel.add( p);
-
-        return loadGamePanel;
-    }
-
     protected void ok()
     {
         if (board_ != null && rowSizeField_!= null) {
             board_.setSize( rowSizeField_.getIntValue(), colSizeField_.getIntValue() );
         }
 
-        //restore the saved file if one was specified
-        String fileToOpen = openFileField_.getText();
-        if ( fileToOpen != null && fileToOpen.length() > 1 ) {
-            controller_.restoreFromFile( fileToOpen );
-            canceled_ = true;
-        }
-        else
-            canceled_ = false;
+        canceled_ = false;
         this.setVisible( false );
-    }
-
-    protected void openFile()
-    {
-       if (GUIUtil.isStandAlone())  {
-             JOptionPane.showMessageDialog(this, GameContext.getLabel("CANT_OPEN_WHEN_STANDALONE"));
-       } else {
-            JFileChooser chooser = GUIUtil.getFileChooser();
-            chooser.setCurrentDirectory( new File( GameContext.getHomeDir()) );
-            int state = chooser.showOpenDialog( null );
-            File file = chooser.getSelectedFile();
-            if ( file != null && state == JFileChooser.APPROVE_OPTION )
-                openFileField_.setText( file.getAbsolutePath() );
-        }
     }
 
     public boolean showDialog() {
@@ -267,11 +208,8 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
         else if ( source == cancelButton_ ) {
             cancel();
         }
-        else if ( source == openFileButton_ ) {
-            openFile();
-        }
     }
-    
+
     /**
      * cancel button pressed
      */
@@ -318,6 +256,6 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
                 playOnlinePanel_.closing();
             }
         }
-    }   
+    }
 
 }

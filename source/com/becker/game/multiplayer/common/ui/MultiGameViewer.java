@@ -25,29 +25,12 @@ import java.awt.event.*;
 public abstract class MultiGameViewer extends GameBoardViewer
 {
 
-    private static final Color DEFAULT_GRID_COLOR = Color.GRAY;
-    private static final Color DEFAULT_TABLE_COLOR = new Color(190, 160, 110);
     protected boolean winnerDialogShown_ = false;
 
     // Construct the application
     public MultiGameViewer() {}
 
     protected abstract MultiGameController createController();
-
-    protected int getDefaultCellSize()
-    {
-        return 8;
-    }
-
-    protected Color getDefaultGridColor()
-    {
-        return DEFAULT_GRID_COLOR;
-    }
-    
-    protected Color getDefaultTableColor()
-    {
-        return DEFAULT_TABLE_COLOR;
-    }
 
     /**
      * start over with a new game using the current options.
@@ -59,23 +42,12 @@ public abstract class MultiGameViewer extends GameBoardViewer
         this.sendGameChangedEvent(null);  // get the info panel to refresh with 1st players name
 
         if (controller_.getFirstPlayer().isSurrogate()) {
-            doSurrogateMove((SurrogatePlayer) controller_.getCurrentPlayer());        
+            doSurrogateMove((SurrogatePlayer) controller_.getCurrentPlayer());
         }
         else if (!controller_.getFirstPlayer().isHuman()) {
             controller_.computerMovesFirst();
-        }        
+        }
     }
-
-    /**
-     * whether or not to draw the pieces on cell centers or vertices (like go or pente, but not like checkers).
-     */
-    protected boolean offsetGrid()
-    {
-        return true;
-    }
-
-    protected void drawLastMoveMarker(Graphics2D g2)
-    {}
 
      /**
       * display a dialog at the end of the game showing who won and other relevant
@@ -93,7 +65,7 @@ public abstract class MultiGameViewer extends GameBoardViewer
      * @return   the message to display at the completion of the game.
      */
     protected abstract String getGameOverMessage();
-   
+
 
     /**
      * make the computer move and show it on the screen.
@@ -102,14 +74,14 @@ public abstract class MultiGameViewer extends GameBoardViewer
      * @return done return true if the game is over after moving
      */
     public abstract boolean doComputerMove(Player player);
- 
+
     /**
      * make the computer move and show it on the screen.
      *
      * @param player computer player to move
      * @return done return true if the game is over after moving
      */
-    public abstract boolean doSurrogateMove(SurrogatePlayer player);    
+    public abstract boolean doSurrogateMove(SurrogatePlayer player);
 
     /**
      * Do nothting by default.
@@ -137,7 +109,7 @@ public abstract class MultiGameViewer extends GameBoardViewer
         }
     }
 
-    
+
     /**
      * Many multiplayer games don't use this.
      * @param lastMove the move to show (but now record)
@@ -162,34 +134,16 @@ public abstract class MultiGameViewer extends GameBoardViewer
     }
 
     /**
-     * Draw the background and a depiction of a circular game table
-     * @param g
-     * @param startPos
-     * @param rightEdgePos
-     * @param bottomEdgePos
-     */
-    protected void drawBackground(Graphics g, int startPos, int rightEdgePos, int bottomEdgePos )
-    {
-        super.drawBackground(g, startPos, rightEdgePos, bottomEdgePos);
-        g.setColor( backgroundColor_ );
-        int width = this.getBoard().getNumCols() * this.getCellSize();
-        int height = this.getBoard().getNumRows() * this.getCellSize();
-        g.setColor(getDefaultTableColor());
-        g.fillOval((int)(0.05*width), (int)(0.05*height), (int)(0.9*width), (int)(0.9*height));
-    }
-
-    /**
      * @return the tooltip for the panel given a mouse event
      */
     public String getToolTipText( MouseEvent e )
     {
-        Location loc = createLocation(e, getCellSize());
+        Location loc = getBoardRenderer().createLocation(e);
         StringBuffer sb = new StringBuffer( "<html><font=-3>" );
 
         if (controller_.getBoard() != null) {
             BoardPosition space = controller_.getBoard().getPosition( loc );
             if ( space != null && space.isOccupied() && GameContext.getDebugMode() >= 0 ) {
-                //sb.append(((Planet)space.getPiece()).toHtml());
                 sb.append("<br>");
                 sb.append( loc );
             }

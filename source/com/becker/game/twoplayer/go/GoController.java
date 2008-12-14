@@ -20,7 +20,7 @@ import static com.becker.game.twoplayer.go.GoControllerConstants.*;
 
 /**
  * Defines everything the computer needs to know to play Go.
- * 
+ *
  * @see package.html for more info.
  * @see GoBoard
  * @author Barry Becker
@@ -42,12 +42,16 @@ public final class GoController extends TwoPlayerController
      */
     public GoController()
     {
+        GameContext.setDebugMode(DEFAULT_DEBUG_LEVEL);
         board_ = new GoBoard( DEFAULT_NUM_ROWS, DEFAULT_NUM_ROWS, 0 );
         initializeData();
     }
 
     /**
      *  Construct the Go game controller given dimensions and number of handicap stones.
+     * @param nrows
+     * @param ncols
+     * @param numHandicapStones
      */
     public GoController( int nrows, int ncols, int numHandicapStones )
     {
@@ -171,8 +175,8 @@ public final class GoController extends TwoPlayerController
         Move m = board_.getLastMove();
         if ( m == null )
             return 0;
-        
-        return ((GoBoard)board_).getTerritoryEstimate(forPlayer1, false);    
+
+        return ((GoBoard)board_).getTerritoryEstimate(forPlayer1, false);
     }
 
     /**
@@ -269,8 +273,8 @@ public final class GoController extends TwoPlayerController
         double gameStageBoost = 0.5 + 2.0 * Math.max((n - (float)getNumMoves())/n, 0.0);
 
         PositionalScore totalScore = new PositionalScore();
-        for ( row = 1; row <= board.getNumRows(); row++ ) {    //rows
-            for ( col = 1; col <= board.getNumCols(); col++ ) {  //cols
+        for ( row = 1; row <= board.getNumRows(); row++ ) {
+            for ( col = 1; col <= board.getNumCols(); col++ ) {
 
                 GoBoardPosition position = (GoBoardPosition) board.getPosition( row, col );
                 double positionalScore = gameStageBoost * positionalScore_[row][col];
@@ -287,7 +291,7 @@ public final class GoController extends TwoPlayerController
             ((TwoPlayerMove) lastMove).setScoreDescription(desc);
         }
 
-        GameContext.log(2,"GoController.worth: worth="+worth);
+        GameContext.log(3,"GoController.worth: worth="+worth);
         if ( worth < -WIN_THRESHOLD ) {
             // then the margin is too great
             return -WINNING_VALUE;
@@ -300,6 +304,10 @@ public final class GoController extends TwoPlayerController
     }
 
     /**
+     * @param position
+     * @param weights
+     * @param positionalScore
+     * @param board
      * @return the score contribution from a single point on the board
      */
     private static PositionalScore calcPositionalScore(GoBoardPosition position, ParameterArray weights,
@@ -342,6 +350,11 @@ public final class GoController extends TwoPlayerController
     /**
      * it is a takeback move if the proposed move position (row,col) would immdiately replace the last captured piece
      *  and capture the stone that did the capturing.
+     * @param row
+     * @param col
+     * @param lastMove
+     * @param board
+     * @return
      */
     public static boolean isTakeBack( int row, int col, GoMove lastMove, GoBoard board )
     {
@@ -367,7 +380,7 @@ public final class GoController extends TwoPlayerController
     @Override
     public void clearGameOver() {
         super.clearGameOver();
-      
+
          for ( int row = 1; row <= board_.getNumRows(); row++ ) {    //rows
             for ( int col = 1; col <= board_.getNumCols(); col++ ) {  //cols
                 GoBoardPosition space = (GoBoardPosition)board_.getPosition( row, col );
@@ -442,13 +455,13 @@ public final class GoController extends TwoPlayerController
             }
         }
     }
-    
+
 
     public Searchable getSearchable() {
          return new GoSearchable();
     }
 
-    
+
 
     protected class GoSearchable extends TwoPlayerSearchable {
 
@@ -565,7 +578,7 @@ public final class GoController extends TwoPlayerController
             int nRows = board.getNumRows();
             assert (nRows == nCols) : " rows and cols must be the same in go";
 
-            CandidateMoveAnalyzer candidateMoves = new CandidateMoveAnalyzer(board);   
+            CandidateMoveAnalyzer candidateMoves = new CandidateMoveAnalyzer(board);
 
             boolean player1 = true;
             if ( lastMove != null ) {

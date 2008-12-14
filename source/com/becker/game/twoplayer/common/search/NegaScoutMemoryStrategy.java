@@ -122,7 +122,6 @@ public final class NegaScoutMemoryStrategy extends SearchStrategy
             }
         }
 
-
         /* Transposition table storing of bounds. Fail low result implies an upper bound */
         int g = (int) selectedMove.getInheritedValue();
         if (selectedMove.getInheritedValue() <= alpha) {

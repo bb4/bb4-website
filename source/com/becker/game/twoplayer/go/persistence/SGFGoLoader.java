@@ -11,14 +11,14 @@ import java.io.StreamTokenizer;
  * @author becker
  */
 public class SGFGoLoader extends SGFLoader {
-    
+
     /**
      * Creates a new instance of SGFGoLoader
      */
     public SGFGoLoader() {
     }
-    
-    
+
+
   /**
    * Reads an SGF token, provided a StreamTokenizer to help with parsing the
    * text into SGFTokens.
@@ -130,9 +130,9 @@ public class SGFGoLoader extends SGFLoader {
         token = new ResultToken();
     else if( tokenName.equals( "TM" ) || tokenName.equals( "TIME" ) )
         token = new TimeLimitToken();
-    else if( tokenName.equals( "BL" ) )
+    else if( tokenName.equals( "BL" ) )  // BlacktimeLeft, Balck's time left after white has made a move
         token = new BlackTimeToken();
-    else if( tokenName.equals( "WL" ) )
+    else if( tokenName.equals( "WL" ) )  // WhitetimeLeft, White's time left after black has made a move
         token = new WhiteTimeToken();
     else if( tokenName.equals( "OB" ) )
         token = new BlackStonesLeftToken();
@@ -142,7 +142,7 @@ public class SGFGoLoader extends SGFLoader {
         token = new PrintModeToken();
     else if( tokenName.equals( "SY" ) )
         token = new SystemToken();
-    else if( tokenName.equals( "PC" ) )
+    else if( tokenName.equals( "PC" ) )  // place where game took place
         token = new PlaceToken();
     else if( tokenName.equals( "EV" ) || tokenName.equals( "EVENT" ) )
         token = new EventToken();
@@ -167,28 +167,30 @@ public class SGFGoLoader extends SGFLoader {
     else if( tokenName.equals( "CA" ) ) {
          //  token = new CharsetToken();   // where did this token class go?
          token = new TextToken();
-    } 
-    // else if (tokenName.equals("HA") ) 
+    }
+    // else if (tokenName.equals("HA") )
     //    token = new HandicapToken();
 
     // these token names appear in the IGS test files, but I don't know what they are for, or they just arent that useful.
     // see http://www.red-bean.com/sgf/proplist_t.html
     // ST  Style           root	      number (range: 0-3)
     // OT  Overtime        game-info        simpletext
-    // HA   Handicap        game-info        number
-    // PL   Player to play  setup            color
+    // HA  Handicap        game-info        number
+    // PL  Player to play  setup            color
     // AP  Application     root	      composed simpletext ':' number
+    // CP  copyright
+    // LT  Lose on Time, present in the root node if losing on time happens
     // PP ???
     // RG ???
-    else if (tokenName.equals("ST") || tokenName.equals("OT") || tokenName.equals("PL") 
+    else if (tokenName.equals("ST") || tokenName.equals("OT") || tokenName.equals("PL")
                || tokenName.equals( "CA" ) ||  tokenName.equals( "HA" )
-               || tokenName.equals("AP") || tokenName.equals("PP") || tokenName.equals("RG")) {
+               || tokenName.equals("AP") || tokenName.equals("CP") || tokenName.equals("LT")
+               || tokenName.equals("PP") || tokenName.equals("RG")) {
         token = new TextToken();
     }
-
-    // If all else fails, fail.
-    else
-      throw new SGFException("unexpected token name:"+ tokenName);
+    else { // If all else fails, fail.
+        throw new SGFException("unexpected token name:"+ tokenName);
+    }
 
     // Now that we know what type of token we have, ask it to parse itself.
     // Most of the parsing is done by the TextToken class.  All tokens are
@@ -198,5 +200,5 @@ public class SGFGoLoader extends SGFLoader {
 
     return token;
   }
-    
+
 }

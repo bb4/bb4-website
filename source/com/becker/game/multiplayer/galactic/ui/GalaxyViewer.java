@@ -25,29 +25,18 @@ import java.util.List;
 public class GalaxyViewer extends MultiGameViewer
 {
 
-    private boolean winnerDialogShown_ = false;
-
     //Construct the application
     public GalaxyViewer()
-    {
-        pieceRenderer_ = PlanetRenderer.getRenderer();
-    }
+    {}
 
     protected MultiGameController createController()
     {
         return new GalacticController();
     }
 
-    protected int getDefaultCellSize()
-    {
-        return 16;
+    protected GameBoardRenderer getBoardRenderer() {
+        return GalaxyRenderer.getRenderer();
     }
-
-    protected Color getDefaultGridColor()
-    {
-        return GRID_COLOR;
-    }
-
      /**
       * display a dialog at the end of the game showing who won and other relevant
       * game specific information.
@@ -83,10 +72,10 @@ public class GalaxyViewer extends MultiGameViewer
         assert(!player.isHuman());
         GalacticRobotPlayer robot = (GalacticRobotPlayer)player;
         GalacticController gc = (GalacticController) controller_;
-        System.out.println("now doing computer move. about to make orders");        
-        
+        System.out.println("now doing computer move. about to make orders");
+
         robot.makeOrders((Galaxy)getBoard(), gc.getNumberOfYearsRemaining());
-        
+
         /*
         // records the result on the board.
         Move lastMove = getBoard().getLastMove();
@@ -107,13 +96,13 @@ public class GalaxyViewer extends MultiGameViewer
      */
     public boolean doSurrogateMove(SurrogatePlayer player)
     {
-        GalacticController pc = (GalacticController) controller_;   
+        GalacticController pc = (GalacticController) controller_;
         // simply blocks until action set?
         PlayerAction action = player.getAction(pc);
         pc.advanceToNextPlayer();
         return false;
     }
-    
+
 
     /**
      * This will run all the battle simulations needed to calculate the result and put it in the new move.
@@ -184,54 +173,11 @@ public class GalaxyViewer extends MultiGameViewer
     }
 
     /**
-     * Draw the pieces and possibly other game markers for both players.
-     */
-    protected void drawMarkers( int nrows, int ncols, Graphics2D g2 )
-    {
-
-        // before we draw the planets, draw the fleets and their paths
-        List<? extends Player> players = controller_.getPlayers();
-        for (final Player player : players) {
-            List orders = ((GalacticPlayer) player).getOrders();
-            Iterator orderIt = orders.iterator();
-            while (orderIt.hasNext()) {
-                Order order = (Order) orderIt.next();
-                int margin = GameBoardViewer.BOARD_MARGIN;
-
-                Location begin = order.getOrigin().getLocation();
-                Point2D end = order.getCurrentLocation();
-
-                g2.setColor(order.getOwner().getColor());
-                int beginX = (int) (margin + cellSize_ * (begin.getCol() - 0.5));
-                int beginY = (int) (margin + cellSize_ * begin.getRow() - 0.5);
-                int endX = (int) (margin + cellSize_ * (end.getX() - 0.5));
-                int endY = (int) (margin + cellSize_ * (end.getY() - 0.5));
-
-                g2.drawLine(beginX, beginY,  endX, endY);
-
-                // the glyph at the end of the line representing the fleet
-                int rad = (int) Math.round(Math.sqrt(order.getFleetSize()));
-                g2.drawOval((int) (endX - rad / 2.0), (int) (endY - rad / 2.0), rad, rad);
-            }
-        }
-
-        // now draw the planets on top
-        super.drawMarkers(nrows, ncols, g2);
-    }
-
-    
-    protected void drawBackground( Graphics g, int startPos, int rightEdgePos, int bottomEdgePos )
-    {
-        g.setColor( backgroundColor_ );
-        g.fillRect( 0, 0, this.getWidth(), this.getHeight() );
-    }
-
-    /**
      * @return the tooltip for the panel given a mouse event
      */
     public String getToolTipText( MouseEvent e )
     {
-        Location loc = createLocation(e, getCellSize());
+        Location loc = getBoardRenderer().createLocation(e);
         StringBuffer sb = new StringBuffer( "<html><font=-3>" );
 
         BoardPosition space = controller_.getBoard().getPosition( loc );

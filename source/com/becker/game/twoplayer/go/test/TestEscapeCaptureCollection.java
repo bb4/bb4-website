@@ -14,20 +14,21 @@ import junit.framework.TestSuite;
  */
 public class TestEscapeCaptureCollection extends GoTestCase {
 
+    private static final String PREFIX = "problems/sgf/escape_capture/";
 
     public void test3() {
-        GoMove m = getNextMove("problems/sgf/escape_capture/escape_capture.3", true);
-        checkExpected(m, 6, 11);
+        GoMove m = getNextMove(PREFIX + "escape_capture.3", true);
+        verifyExpected(m, 6, 11);
     }
 
     public void test5() {
-        GoMove m = getNextMove("problems/sgf/escape_capture/escape_capture.5", true);
-        checkExpected(m, 0, 6);
+        GoMove m = getNextMove(PREFIX + "escape_capture.5", true);
+        verifyExpected(m, 0, 6);
     }
 
     public void test13() {
-        GoMove m = getNextMove("problems/sgf/escape_capture/escape_capture.13", false);
-        checkExpected(m, 13, 5);
+        GoMove m = getNextMove(PREFIX + "escape_capture.13", false);
+        verifyExpected(m, 13, 5);
     }
 
 
