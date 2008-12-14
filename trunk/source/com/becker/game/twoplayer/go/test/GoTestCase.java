@@ -4,6 +4,7 @@ import com.becker.game.twoplayer.go.board.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.GoGroup;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.common.util.Util;
+import com.becker.common.Location;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.*;
 import com.becker.game.twoplayer.common.search.*;
@@ -25,10 +26,10 @@ public class GoTestCase extends TestCase {
 
     // moved all test cases here so they are not included in the jar and do not need to be searched
     private static final String EXTERNAL_TEST_CASE_DIR =
-            GameContext.getHomeDir() +"/test/go/cases/";
+            GameContext.getHomeDir() + "/test/go/cases/";
 
     private static final String SGF_EXTENSION = ".sgf";
-    
+
     /** usually 0, but 1 or 2 may be useful when debugging. */
     private static final int DEBUG_LEVEL = 0;
 
@@ -36,6 +37,7 @@ public class GoTestCase extends TestCase {
 
     /**
      * common initialization for all go test cases.
+     * Override setOptionOverides if you want different search parameters.
      */
     @Override
     protected void setUp() throws Exception {
@@ -44,16 +46,30 @@ public class GoTestCase extends TestCase {
         GameContext.loadGameResources("go");
         GameContext.setDebugMode(DEBUG_LEVEL);
 
-        controller_ = new GoController(13, 13, 0);
+        controller_ = new GoController(getBoardSize(), getBoardSize(), 0);
 
-        //controller_.allPlayersComputer();
         TwoPlayerOptions options = controller_.getTwoPlayerOptions();
+        setOptionOverrides(options);
+    }
+
+    /**
+     * Derived classes should override if they want different options.
+     * @param options default options to override
+     */
+    protected void setOptionOverrides(TwoPlayerOptions options) {
         options.setAlphaBeta(true);
         options.setLookAhead(2);
         options.setPercentageBestMoves(40);
-        //opttions.setQuiescence(true); // take stoo long if on
+        //options.setQuiescence(true); // takes too long if on
         options.setSearchStrategyMethod(SearchStrategyType.MINIMAX);
+    }
 
+    /**
+     * Override if your test suite requires a different size.
+     * @return board size to use for tests.
+     */
+    protected int getBoardSize() {
+        return 13;
     }
 
     protected void restore(String problemFile) {
@@ -76,7 +92,7 @@ public class GoTestCase extends TestCase {
         restore(problemFile);
         //System.out.println("problem restored.");
         controller_.requestComputerMove( blackPlays, true );
-        //System.out.println("done requesting move");
+
         GoMove m = (GoMove) controller_.getBoard().getLastMove();
 
         double elapsedTime = (System.currentTimeMillis() - time) / 1000.0;
@@ -84,10 +100,22 @@ public class GoTestCase extends TestCase {
         return m;
     }
 
-    protected static void checkExpected(GoMove m, int row, int col) {
+    protected static void verifyExpected(GoMove m, int row, int col) {
 
         Assert.assertTrue("Was expecting "+ row +", "+ col +", but instead got "+m,
-                          m.getToRow() == row && m.getToCol() == col);
+                      isExpected(m, row, col));
+    }
+
+
+
+    protected static boolean isExpected(GoMove m, Location loc) {
+
+        return isExpected(m, m.getToRow(), loc.getCol());
+    }
+
+    protected static boolean isExpected(GoMove m, int row, int col) {
+
+        return m.getToRow() == row && m.getToCol() == col;
     }
 
 

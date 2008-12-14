@@ -2,6 +2,8 @@ package com.becker.game.twoplayer.go.test;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.GoMove;
+import com.becker.game.twoplayer.common.TwoPlayerOptions;
+import com.becker.game.twoplayer.common.search.SearchStrategyType;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -13,7 +15,7 @@ import java.util.List;
  */
 public class TestKiseido2002 extends GoTestCase {
 
-    
+
     public void testJanuary() {
         check("2002-01");
     }
@@ -21,7 +23,7 @@ public class TestKiseido2002 extends GoTestCase {
     public void testFebruary() {
         check("2002-02");
     }
-    
+
     public void testMarch() {
         check("2002-03");
     }

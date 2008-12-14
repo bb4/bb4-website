@@ -157,7 +157,8 @@ public abstract class GameOptionsDialog extends OptionsDialog
         JPanel p =  new JPanel();
         p.setLayout( new BoxLayout( p, BoxLayout.Y_AXIS ) );
         p.setAlignmentX( Component.LEFT_ALIGNMENT );
-        p.setBorder( BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), GameContext.getLabel("DEBUG_OPTIONS") ) );
+        p.setBorder( BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(),
+                     GameContext.getLabel("DEBUG_OPTIONS") ) );
 
         JLabel label = new JLabel( "     " );
         label.setAlignmentX( Component.LEFT_ALIGNMENT );

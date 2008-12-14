@@ -9,6 +9,8 @@ import com.becker.ui.*;
 import com.becker.common.*;
 
 import com.becker.game.multiplayer.poker.player.PokerPlayer;
+import com.becker.game.twoplayer.common.ui.TwoPlayerBoardRenderer;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
@@ -32,19 +34,19 @@ public class PokerRenderer extends GamePieceRenderer
     // the suit images
     private static ImageIcon[] suitImages_ = new ImageIcon[Card.Suit.values().length];
 
-    private static final String IMAGE_DIR = GameContext.GAME_ROOT+"multiplayer/poker/ui/images/";
+    private static final String IMAGE_DIR = GameContext.GAME_ROOT + "multiplayer/poker/ui/images/";
     static {
         // gets the images from resources or the filesystem
         // depending if we are running as an applet or application respectively.
-        suitImages_[Card.Suit.CLUBS.ordinal()] = GUIUtil.getIcon(IMAGE_DIR+"club_small.gif");
-        suitImages_[Card.Suit.SPADES.ordinal()] = GUIUtil.getIcon(IMAGE_DIR+"spade_small.gif");
-        suitImages_[Card.Suit.HEARTS.ordinal()] = GUIUtil.getIcon(IMAGE_DIR+"heart_small.gif");
-        suitImages_[Card.Suit.DIAMONDS.ordinal()] = GUIUtil.getIcon(IMAGE_DIR+"diamond_small.gif");
+        suitImages_[Card.Suit.CLUBS.ordinal()] = GUIUtil.getIcon(IMAGE_DIR + "club_small.gif");
+        suitImages_[Card.Suit.SPADES.ordinal()] = GUIUtil.getIcon(IMAGE_DIR + "spade_small.gif");
+        suitImages_[Card.Suit.HEARTS.ordinal()] = GUIUtil.getIcon(IMAGE_DIR + "heart_small.gif");
+        suitImages_[Card.Suit.DIAMONDS.ordinal()] = GUIUtil.getIcon(IMAGE_DIR + "diamond_small.gif");
     }
 
     /**
      * private constructor because this class is a singleton.
-     * Use getPieceRenderer instead
+     * Use getRenderer instead
      */
     private PokerRenderer()
     {}
@@ -98,7 +100,8 @@ public class PokerRenderer extends GamePieceRenderer
             g2.fillOval( pos.x, pos.y, 3*pieceSize , 3*pieceSize );
         }
 
-        Font font = BASE_FONT.deriveFont(Font.BOLD, (float) cellSize / (float) GameBoardViewer.MINIMUM_CELL_SIZE  * 8);
+        Font font = BASE_FONT.deriveFont(Font.BOLD, (float) cellSize /
+                    TwoPlayerBoardRenderer.MINIMUM_CELL_SIZE  * 8);
         int offset = (pieceSize<(0.6*cellSize))? -1 : cellSize/5;
         if ( playerMarker.getAnnotation() != null ) {
             g2.setColor( Color.black );
@@ -166,7 +169,8 @@ public class PokerRenderer extends GamePieceRenderer
     private static void renderFaceUpCard(Graphics2D g2, int x, int y,
                                          int cellSize, int cardArc, Card c)
     {
-        Font font = POKER_CHIP_FONT.deriveFont((float) cellSize / (float)GameBoardViewer.MINIMUM_CELL_SIZE  * POKER_CARD_FONT_SIZE);
+        Font font = POKER_CHIP_FONT.deriveFont((float) cellSize /
+                    TwoPlayerBoardRenderer.MINIMUM_CELL_SIZE  * POKER_CARD_FONT_SIZE);
 
         ImageIcon imgIcon = suitImages_[c.suit().ordinal()];
         float rat = (float) imgIcon.getIconHeight() / imgIcon.getIconWidth();
@@ -223,7 +227,8 @@ public class PokerRenderer extends GamePieceRenderer
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(GameContext.getDefaultLocaleType().getLocale());
         String cashAmount = currencyFormat.format(amount);
         x = (int)((location.getCol() +1 +firstNonZeroPile*CHIP_PILE_WIDTH) * cellSize);
-        Font f = POKER_CHIP_FONT.deriveFont((float) cellSize / (float)GameBoardViewer.MINIMUM_CELL_SIZE*POKER_CHIP_FONT_SIZE);
+        Font f = POKER_CHIP_FONT.deriveFont((float) cellSize /
+                 TwoPlayerBoardRenderer.MINIMUM_CELL_SIZE*POKER_CHIP_FONT_SIZE);
         g2.setFont(f);
         g2.drawString(cashAmount, x , (int)(y + height + cellSize/1.2));
     }

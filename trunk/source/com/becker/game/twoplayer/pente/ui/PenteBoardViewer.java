@@ -2,6 +2,7 @@ package com.becker.game.twoplayer.pente.ui;
 
 import com.becker.common.*;
 import com.becker.game.common.*;
+import com.becker.game.common.ui.GameBoardRenderer;
 import com.becker.game.twoplayer.common.*;
 import com.becker.game.twoplayer.common.ui.*;
 import com.becker.game.twoplayer.pente.*;
@@ -21,12 +22,15 @@ public class PenteBoardViewer extends TwoPlayerBoardViewer
     //Construct the application
     public PenteBoardViewer()
     {
-        pieceRenderer_ = TwoPlayerPieceRenderer.getRenderer();
     }
 
     protected GameController createController()
     {
         return new PenteController();
+    }
+
+    protected GameBoardRenderer getBoardRenderer() {
+        return PenteBoardRenderer.getRenderer();
     }
 
     protected int getDefaultCellSize()
@@ -40,8 +44,7 @@ public class PenteBoardViewer extends TwoPlayerBoardViewer
         if (get2PlayerController().isProcessing() || get2PlayerController().isDone())   {
             return;
         }
-        Location loc = createLocation(e, getCellSize());
-
+        Location loc = getBoardRenderer().createLocation(e);
 
         PenteBoard board = (PenteBoard) controller_.getBoard();
 

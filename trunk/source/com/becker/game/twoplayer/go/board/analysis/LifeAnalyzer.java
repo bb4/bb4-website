@@ -126,7 +126,7 @@ public final class LifeAnalyzer {
                     }
                 }
             }
-            GameContext.log(2, "num string nbrs of eyes = "
+            GameContext.log(3, "num string nbrs of eyes = "
                     + ((eye.getNeighbors() == null)? 0 : eye.getNeighbors().size()));
         }
     }

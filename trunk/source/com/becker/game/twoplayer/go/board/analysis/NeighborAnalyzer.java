@@ -49,8 +49,11 @@ public class NeighborAnalyzer {
                 pushStringNeighbors(s, friendOwnedByP1, stack, true, type,  new Box(rMin, cMin, rMax, cMax));
             }
         }
-        if ( returnToUnvisitedState )
+        if ( returnToUnvisitedState ) {
             GoBoardUtil.unvisitPositions( stones );
+            if (GameContext.getDebugMode() > 1)
+                BoardValidationUtil.confirmAllUnvisited(board_);
+        }
         // GoBoardUtil.confirmNoDupes( stone, stones );
 
         return stones;

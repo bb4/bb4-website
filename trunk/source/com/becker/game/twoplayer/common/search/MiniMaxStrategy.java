@@ -45,7 +45,7 @@ public final class MiniMaxStrategy extends SearchStrategy
         int alpha = oldAlpha;
         int beta = oldBeta;
 
-        // if player 1, then search for a high score, else seach for a low score
+        // if player 1, then search for a high score, else seach for a low score.
         boolean player1 = lastMove.isPlayer1();
 
         if ( depth == 0 || searchable_.done( lastMove, false ) ) {

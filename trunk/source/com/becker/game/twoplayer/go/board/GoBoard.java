@@ -86,8 +86,10 @@ public final class GoBoard extends TwoPlayerBoard
             Set<GoGroup> groupsCopy = ((GoBoard)clone).groups_;
 
             // new way to interate
-            for (GoGroup g : groups_)  {
-                groupsCopy.add((GoGroup)g.clone());
+            synchronized(groups_)   {
+                for (GoGroup g : groups_)  {
+                    groupsCopy.add((GoGroup)g.clone());
+                }
             }
         }
 
@@ -164,9 +166,9 @@ public final class GoBoard extends TwoPlayerBoard
         return groups_;
     }
 
-   
+
     @Override
-    protected GameProfiler createProfiler() {     
+    protected GameProfiler createProfiler() {
         return new GoProfiler();
     }
 
@@ -198,7 +200,7 @@ public final class GoBoard extends TwoPlayerBoard
         clearEyes();
         super.makeInternalMove( m );
         boardUpdater_.updateAfterMove(m);
-        
+
         getProfiler().stopMakeMove();
         return true;
     }
@@ -221,17 +223,17 @@ public final class GoBoard extends TwoPlayerBoard
 
         // first make sure that there are no references to obsolete groups.
         clearEyes();
-        
-        boardUpdater_.updateAfterRemove(m);        
+
+        boardUpdater_.updateAfterRemove(m);
 
         getProfiler().stopUndoMove();
     }
-    
+
 
     public int getNumCaptures(boolean player1StonesCaptured) {
         return boardUpdater_.getNumCaptures(player1StonesCaptured);
     }
-    
+
     /**
      * @see TerritoryAnalyzer#getTerritoryDelta
      */
@@ -239,7 +241,7 @@ public final class GoBoard extends TwoPlayerBoard
     {
         return territoryAnalyzer_.getTerritoryDelta();
     }
- 
+
    /**
      * @see TerritoryAnalyzer#getTerritoryEstimate
      */
@@ -247,7 +249,7 @@ public final class GoBoard extends TwoPlayerBoard
     {
         return territoryAnalyzer_.getTerritoryEstimate(forPlayer1, isEndOfGame);
     }
-    
+
     /**
      * @see TerritoryAnalyzer#updateTerritory
      */
@@ -276,7 +278,7 @@ public final class GoBoard extends TwoPlayerBoard
                 stone, friendOwnedByP1, returnToUnvisitedState, type,
                 box.getMinRow(), box.getMaxRow(), box.getMinCol(), box.getMaxCol() );
     }
-    
+
     /**
      * determines a string connected from a seed stone within a specified bounding area
      * @return string from seed stone
@@ -287,8 +289,8 @@ public final class GoBoard extends TwoPlayerBoard
     {
         getProfiler().start(GoProfiler.FIND_STRINGS);
         NeighborAnalyzer na = new NeighborAnalyzer(this);
-        List<GoBoardPosition> stones = 
-                na.findStringFromInitialPosition(stone, friendOwnedByP1, returnToUnvisitedState, 
+        List<GoBoardPosition> stones =
+                na.findStringFromInitialPosition(stone, friendOwnedByP1, returnToUnvisitedState,
                                                                   type, rMin, rMax, cMin, cMax);
         getProfiler().stop(GoProfiler.FIND_STRINGS);
 
@@ -334,10 +336,10 @@ public final class GoBoard extends TwoPlayerBoard
     public Set<GoBoardPosition> getGroupNeighbors( GoBoardPosition stone, boolean friendPlayer1, boolean samePlayerOnly )
     {
         getProfiler().start(GoProfiler.GET_GROUP_NBRS);
-       
+
         NeighborAnalyzer na = new NeighborAnalyzer(this);
         Set<GoBoardPosition> nbrStones = na.getGroupNeighbors(stone, friendPlayer1, samePlayerOnly);
-     
+
         getProfiler().stop(GoProfiler.GET_GROUP_NBRS);
         return nbrStones;
     }
@@ -378,14 +380,14 @@ public final class GoBoard extends TwoPlayerBoard
     public List<GoBoardPosition> findGroupFromInitialPosition( GoBoardPosition stone, boolean returnToUnvisitedState )
     {
         getProfiler().start(GoProfiler.FIND_GROUPS);
-        
+
         NeighborAnalyzer na = new NeighborAnalyzer(this);
         List<GoBoardPosition> stones = na.findGroupFromInitialPosition(stone, returnToUnvisitedState);
-   
+
         getProfiler().stop(GoProfiler.FIND_GROUPS);
         return stones;
     }
-   
+
     /**
      * clear all the eyes from all the stones on the board
      */
@@ -402,7 +404,7 @@ public final class GoBoard extends TwoPlayerBoard
             }
         }
     }
-    
+
 
     /**
      * @return either the number of black or white stones.
@@ -424,7 +426,7 @@ public final class GoBoard extends TwoPlayerBoard
     }
 
     /**
-     * Num different states. 
+     * Num different states.
      * This is used primarily for the Zobrist hash. You do not need to override if you do not use it.
      * @return number of different states this position can have.
      */
@@ -472,8 +474,8 @@ public final class GoBoard extends TwoPlayerBoard
         return buf.toString();
     }
 
-    
-    
+
+
     /**
      * The number of star points used for handicap stones on the board
      * There may be none.

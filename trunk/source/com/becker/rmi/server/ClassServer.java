@@ -36,7 +36,6 @@ import java.net.*;
 public abstract class ClassServer implements Runnable {
 
     private ServerSocket server = null;
-    private int port;
 
     /**
      * Constructs a ClassServer that listens on <b>port</b> and
@@ -48,7 +47,7 @@ public abstract class ClassServer implements Runnable {
      */
     protected ClassServer(int port) throws IOException
     {
-	  this.port = port;
+	  int port1=port;
 	  server = new ServerSocket(port);
 	  newListener();
     }

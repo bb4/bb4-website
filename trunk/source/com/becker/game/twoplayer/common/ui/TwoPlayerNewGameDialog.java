@@ -50,7 +50,7 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
     }
 
     /**
-     * 
+     *
      * @return panel for the local player
      */
     @Override
@@ -176,7 +176,9 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
     }
 
 
-    // return true if canceled
+    /**
+     *  @return return true if canceled
+     */
     private boolean showEditWeightsDialog( ParameterArray weights )
     {
         EditWeightsDialog editWtsDlg = new EditWeightsDialog( parent_, weights, gameWeights_ );
@@ -187,7 +189,7 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
                 + pt.x, ((frmSize.height - dlgSize.height) >> 1) + pt.y );
         editWtsDlg.setModal( true );
         editWtsDlg.setVisible(true);
-        return false; // how to cancel?
+        return false;
     }
 
     @Override
@@ -205,15 +207,7 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
             c.getPlayer2().setHuman( human2Button_.isSelected() );
         }
         board_.setSize( rowSizeField_.getIntValue(), colSizeField_.getIntValue() );
-
-        //restore the saved file if one was specified
-        String fileToOpen = openFileField_.getText();
-        if ( fileToOpen != null && fileToOpen.length() > 1 ) {
-            get2PlayerController().restoreFromFile( fileToOpen );
-            canceled_ = true;
-        }
-        else
-            canceled_ = false;
+        canceled_ = false;
         setVisible( false );
     }
 
@@ -245,9 +239,6 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
         else if ( source == editWts2Button_ ) {
             showEditWeightsDialog( gameWeights_.getPlayer2Weights() );
         }
-        else if ( source == openFileButton_ ) {
-            openFile();
-        }
         else if (source == optimizationCheckbox_) {
             boolean checked = optimizationCheckbox_.isSelected();
             if (checked)  {
@@ -271,7 +262,6 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
                  }
             }
 
-            //playerPanel_.setEnabled(checked);
             computer1Button_.setSelected(checked);
             computer2Button_.setSelected(checked);
             editWts1Button_.setEnabled( !checked );

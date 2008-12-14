@@ -11,7 +11,6 @@ import java.awt.*;
 public class BarryTheme extends DefaultMetalTheme
 {
 
-    private Font font_;
     private ColorUIResource colorResourcePrimary1_;
     private ColorUIResource colorResourcePrimary2_;
     private ColorUIResource colorResourcePrimary3_;
@@ -29,7 +28,7 @@ public class BarryTheme extends DefaultMetalTheme
                        Color colorPrimary1, Color colorPrimary2, Color colorPrimary3,
                        Color colorSecondary1, Color colorSecondary2, Color colorSecondary3 )
     {
-        font_ = font;
+        Font font_=font;
 
         black_ = new ColorUIResource( black );
         white_ = new ColorUIResource( white );

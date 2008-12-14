@@ -12,7 +12,7 @@ import java.awt.*;
  * Set of buttons to control debug animation at the bottom fot he gameTreeDialog.
  * @author Barry Becker Date: Dec 24, 2006
  */
-public class GameTreeButtons extends JPanel implements ActionListener {
+class GameTreeButtons extends JPanel implements ActionListener {
 
     private final JButton pauseButton_;
     private final JButton stepButton_;

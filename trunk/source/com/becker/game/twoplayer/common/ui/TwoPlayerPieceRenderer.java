@@ -18,7 +18,7 @@ import java.text.*;
 public class TwoPlayerPieceRenderer extends GamePieceRenderer
 {
 
-    // there must be one of these for each derived class too.
+    /** there must be one of these for each derived class too. */
     private static GamePieceRenderer renderer_ = null;
 
     private static final Color DEFAULT_PLAYER1_COLOR = new Color( 230, 100, 255);

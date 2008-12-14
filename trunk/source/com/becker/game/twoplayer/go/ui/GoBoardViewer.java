@@ -10,7 +10,11 @@ import com.becker.common.*;
 import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameController;
+import com.becker.game.common.Board;
+import com.becker.game.common.ui.GameBoardRenderer;
 import com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer;
+import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
+import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.go.*;
 import com.becker.ui.GUIUtil;
 
@@ -29,20 +33,15 @@ import java.util.Set;
  *
  *  @author Barry Becker
  */
-final class GoBoardViewer extends TwoPlayerBoardViewer 
-                                             implements MouseMotionListener
+final class GoBoardViewer extends TwoPlayerBoardViewer
+                          implements MouseMotionListener
 {
-
-    /** the image for the wooden board. */
-    private static final ImageIcon woodGrainImage_ =
-            GUIUtil.getIcon(GameContext.GAME_ROOT + "twoplayer/go/ui/images/goBoard1.png");
 
     private static final String STONES_CAPTURED = GameContext.getLabel("CAPTURES_EQUALS");
     private static final String TERRITORY = GameContext.getLabel("TERRITORY_EQUALS");
     private static final String SCORE = GameContext.getLabel("SCORE_EQUALS");
 
-    public static final ColorMap COLORMAP = new GoColorMap();
-    
+    /** Still remember the dragged show piece when the players mouse goes off the board. */
     private BoardPosition savedShowPiece_;
 
     /**
@@ -50,11 +49,9 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
      */
     GoBoardViewer()
     {
-        pieceRenderer_ = GoStoneRenderer.getRenderer();
-        
         addMouseMotionListener( this );
     }
-    
+
     /**
      * start over with a new game using the current options.
      */
@@ -62,8 +59,13 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
     public void startNewGame()
     {
         super.startNewGame();
-        draggedShowPiece_ =  null;
-        initDraggedShowPiece();
+        getBoardRenderer().setDraggedShowPiece(null);
+
+        if (!controller_.allPlayersComputer()) {
+            getBoardRenderer().setDraggedShowPiece(
+                    new GoBoardPosition(0, 0, null, new GoStone(get2PlayerController().isPlayer1sTurn())));
+            savedShowPiece_ = getBoardRenderer().getDraggedShowPiece();
+        }
     }
 
     protected GameController createController()
@@ -71,63 +73,10 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
         return new GoController();
     }
 
-    @Override
-    protected int getDefaultCellSize()
-    {
-        return 16;
-    }
-    
-    private void initDraggedShowPiece() {
-        if (!controller_.allPlayersComputer()) {
-            draggedShowPiece_ = 
-                    new GoBoardPosition(0, 0, null, new GoStone(get2PlayerController().isPlayer1sTurn()));
-            savedShowPiece_ = draggedShowPiece_;
-        }
+    protected GameBoardRenderer getBoardRenderer() {
+        return GoBoardRenderer.getRenderer();
     }
 
-    /**
-     * first draw borders for the groups in the appropriate color, then draw the pieces for both players.
-     */
-    @Override
-    protected void drawMarkers( int nrows, int ncols, Graphics2D g2 )
-    {
-        GoBoard board = (GoBoard)getBoard();
-
-        // draw the starpoint markers
-        List starpoints = board.getHandicapPositions();
-        Iterator it = starpoints.iterator();
-        g2.setColor(Color.black);
-        double rad = (float)cellSize_/21.0 + 0.46;
-        while (it.hasNext()) {
-            GoBoardPosition p = (GoBoardPosition)it.next();
-            g2.fillOval(BOARD_MARGIN+(int)(cellSize_*(p.getCol()-0.505)-rad),
-                        BOARD_MARGIN+(int)(cellSize_*(p.getRow()-0.505)-rad),
-                        (int)(2.0*rad+1.7), (int)(2.0*rad+1.7));
-        }
-
-        Set groups = board.getGroups();
-        // draw the group borders
-        if ( GameContext.getDebugMode() > 0 ) {
-            it = groups.iterator();
-            while ( it.hasNext() ) {
-                GoGroup group = (GoGroup) it.next();
-                GoGroupRenderer.drawGroupDecoration(group, COLORMAP, (float) cellSize_, board, g2 );
-            }
-        }
-
-        super.drawMarkers( nrows, ncols, g2 );
-
-        drawNextMoveMarkers(g2);
-    }
-
-    /**
-     * whether to draw the pieces on cell centers or vertices (like go).
-     */
-    @Override
-    protected boolean offsetGrid()
-    {
-        return true;
-    }
 
     /**
      * perform a pass for the current player.
@@ -151,13 +100,13 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
         if (get2PlayerController().isProcessing()) {
             return;
         }
-        Location loc = createLocation(e, getCellSize());
+        Location loc = getBoardRenderer().createLocation(e);
         GoBoard board = (GoBoard) controller_.getBoard();
         GoController controller = (GoController) controller_;
 
         boolean player1sTurn = controller.isPlayer1sTurn();
         GameContext.log( 3, "GoBoardViewer: mousePressed: player1sTurn()=" + player1sTurn);
-   
+
         GoMove m = GoMove.createGoMove( loc.getRow(), loc.getCol(), 0, new GoStone(player1sTurn));
 
         // if there is already a piece where the user clicked, or its
@@ -185,12 +134,12 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
         }
 
         if ( !continuePlay( m ) ) {   // then game over
-            draggedShowPiece_ = null;
+            getBoardRenderer().setDraggedShowPiece(null);
             showWinnerDialog();
         } else if (controller_.allPlayersHuman()) {
             // create a stone to show for the next players move
-            draggedShowPiece_ = 
-                    new GoBoardPosition(loc.getRow(), loc.getCol(), null, new GoStone(!player1sTurn));
+            getBoardRenderer().setDraggedShowPiece(
+                    new GoBoardPosition(loc.getRow(), loc.getCol(), null, new GoStone(!player1sTurn)));
         }
     }
 
@@ -203,29 +152,28 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
         if (get2PlayerController().isProcessing()) {
             return;
         }
-        Location loc = createLocation(e, getCellSize());
+        Location loc = getBoardRenderer().createLocation(e);
 
-        if ( draggedShowPiece_ != null ) {
-            draggedShowPiece_.setLocation( loc );
+        if ( getBoardRenderer().getDraggedShowPiece() != null ) {
+            getBoardRenderer().getDraggedShowPiece().setLocation( loc );
         }
         repaint();
     }
-    
+
     public void mouseDragged(MouseEvent e) {
     }
 
     @Override
     public void mouseEntered( MouseEvent e ) {
-        draggedShowPiece_ = savedShowPiece_;
+        getBoardRenderer().setDraggedShowPiece(savedShowPiece_);
     }
-    
+
     @Override
     public void mouseExited( MouseEvent e ) {
-        //savedShowPiece_ = draggedShowPiece_;
-        draggedShowPiece_ = null;
+        getBoardRenderer().setDraggedShowPiece(null);
         repaint();
     }
-    
+
     /**
      * display a dialog at the end of the game showing who won and other relevant
      * game specific information.
@@ -234,7 +182,7 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
     protected void showWinnerDialog()
     {
          super.showWinnerDialog();
-         ((GoController)controller_).clearGameOver();
+         controller_.clearGameOver();
     }
 
 
@@ -272,20 +220,6 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
     }
 
     /**
-     * draw the wood grain background.
-     * @param g
-     */
-    @Override
-    protected void drawBackground( Graphics g, int startPos, int rightEdgePos, int bottomEdgePos )
-    {
-        super.drawBackground( g ,  startPos, rightEdgePos, bottomEdgePos);
-        int t = (int)(cellSize_/3.4f);
-        g.drawImage(woodGrainImage_.getImage(), (int)(startPos-1.35*t), (int)(startPos-1.35*t),
-                                                (rightEdgePos+t), (bottomEdgePos+t), null);
-    }
-
-
-    /**
      * @return the tooltip for the panel given a mouse event.
      */
     @Override
@@ -294,7 +228,7 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
         if (get2PlayerController().isProcessing())
             return "";  // avoids concurrent modification exception
 
-        Location loc = createLocation(e, getCellSize());
+        Location loc = getBoardRenderer().createLocation(e);
         StringBuffer sb = new StringBuffer( "<html><font=-3>" );
 
         GoBoardPosition space = (GoBoardPosition) controller_.getBoard().getPosition( loc );

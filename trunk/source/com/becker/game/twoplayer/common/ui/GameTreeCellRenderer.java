@@ -38,7 +38,7 @@ public class GameTreeCellRenderer extends DefaultTreeCellRenderer
     /**
      * initialize the colormap used to color the gmae tree rows, nodes, and arcs.
      */
-    protected static ColorMap createColormap(TwoPlayerPieceRenderer renderer) {
+    private static ColorMap createColormap(TwoPlayerPieceRenderer renderer) {
         // we will use this colormap for both the text tree and the graphical
         // tree viewers so they have consistent coloring.
         final double[] values = {-TwoPlayerController.WINNING_VALUE,
@@ -97,7 +97,7 @@ public class GameTreeCellRenderer extends DefaultTreeCellRenderer
         return this;
     }
 
-    protected static Color getFGColor( Object value ) {
+    private static Color getFGColor( Object value ) {
 
         SearchTreeNode node = (SearchTreeNode) value;
         TwoPlayerMove m = (TwoPlayerMove) node.getUserObject();
@@ -112,7 +112,7 @@ public class GameTreeCellRenderer extends DefaultTreeCellRenderer
 
     protected Color getBGColor( Object value )  {
 
-        Color c = null;
+        Color c;
         SearchTreeNode node = (SearchTreeNode) value;
         int numChildren = node.getChildCount();
         setText( getText() + " kids=" + numChildren );

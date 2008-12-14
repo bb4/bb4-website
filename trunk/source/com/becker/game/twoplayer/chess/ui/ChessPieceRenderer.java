@@ -55,7 +55,7 @@ public class ChessPieceRenderer  extends TwoPlayerPieceRenderer
 
     /**
      * protected constructor because this class is a singleton.
-     * Use getPieceRenderer instead
+     * Use getRenderer instead
      */
     protected ChessPieceRenderer()
     {}

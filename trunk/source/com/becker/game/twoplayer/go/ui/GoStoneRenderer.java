@@ -6,6 +6,7 @@ import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer;
 import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
+import com.becker.game.twoplayer.common.ui.TwoPlayerBoardRenderer;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.GoStone;
@@ -17,8 +18,8 @@ import java.awt.*;
 import java.awt.image.*;
 
 /**
- * Singleton class that takes a checkers piece and renders it for the ChessBoardViewer.
- * @see com.becker.game.twoplayer.chess.ui.ChessBoardViewer
+ * Singleton class that takes a checkers piece and renders it for the GoBoardViewer.
+ * @see com.becker.game.twoplayer.go.ui.GoBoardViewer
  * @author Barry Becker
  */
 public final class GoStoneRenderer extends TwoPlayerPieceRenderer
@@ -34,7 +35,8 @@ public final class GoStoneRenderer extends TwoPlayerPieceRenderer
     private static final int ATARI_MARKER_RADIUS = 6;
 
     // instead of rendering we can just show image icons which look even better.
-    // gets the images from resources or the filesystem depending if we are running as an applet or application respectively.
+    // gets the images from resources or the filesystem depending if we are running as an applet or
+    // application respectively.
     private static final String DIR = GameContext.GAME_ROOT+"twoplayer/go/ui/images/";
     public static final ImageIcon BLACK_STONE_IMG = GUIUtil.getIcon(DIR+"goStoneBlack.png");
     public static final ImageIcon WHITE_STONE_IMG = GUIUtil.getIcon(DIR+"goStoneWhite.png");
@@ -112,9 +114,9 @@ public final class GoStoneRenderer extends TwoPlayerPieceRenderer
             Color c = new Color(pc.getRed(), pc.getGreen(), pc.getBlue(),
                          Math.min(255, op));    // @@ should not need min
             g2.setColor(c);
-            g2.fillRect(TwoPlayerBoardViewer.BOARD_MARGIN + cellSize*(position.getCol()-1),
-                        TwoPlayerBoardViewer.BOARD_MARGIN + cellSize*(position.getRow()-1),
-                         cellSize, cellSize );
+            g2.fillRect(TwoPlayerBoardRenderer.BOARD_MARGIN + cellSize*(position.getCol()-1),
+                        TwoPlayerBoardRenderer.BOARD_MARGIN + cellSize*(position.getRow()-1),
+                        cellSize, cellSize );
         }
 
         GoStone stone = (GoStone)position.getPiece();
@@ -128,7 +130,6 @@ public final class GoStoneRenderer extends TwoPlayerPieceRenderer
             scaleFactors_[3] = (255 - transp)/255;
             RescaleOp transparencyOp = new RescaleOp(scaleFactors_, OFFSETS, null);
             BufferedImage bufImg = ImageUtil.makeBufferedImage(getImage(stone));
-            //System.out.println("transp="+transp+" scaleFactors_[3]="+scaleFactors_[3]);
             img = transparencyOp.filter(bufImg, null);
         }
         g2.drawImage(img, pos.x, pos.y, pieceSize, pieceSize , null);

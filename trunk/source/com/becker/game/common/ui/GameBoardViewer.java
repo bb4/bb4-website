@@ -31,28 +31,18 @@ import java.util.List;
  *  @author Barry Becker
  */
 public abstract class GameBoardViewer extends JPanel
-                                                                   implements ViewerCallbackInterface, 
-                                                                                       MouseListener, GameChangedListener
+                                   implements ViewerCallbackInterface,
+                                              MouseListener, GameChangedListener
 {
-    
-    // every GameBoardViewer must contain one of these
+
+    /** every GameBoardViewer must contain a controller. */
     protected GameController controller_ = null;
 
-    // the size of a game board cell where the pieces go
-    protected int cellSize_;
-    // for restoring undone moves
+    /** for restoring undone moves. */
     protected final LinkedList<Move> undoneMoves_ = new LinkedList<Move>();
 
-    // to move pieces you drag them (if the move is valid)
-    protected BoardPosition draggedPiece_ = null;
-    // this copy of the dragged piece is only for show
-    protected BoardPosition draggedShowPiece_ = null;
-
-    // singleton class for rendering the game pieces
-    // we use a separate piece rendering class to avoid having ui in the piece class itself.
-    // This allows us to more cleanly separate the client pieces from the server.
-    // this must be initialized in the derived classes constructor.
-    protected GamePieceRenderer pieceRenderer_ = null;
+    /** do not access directly. Instead use getBoardRenderer() */
+    private GameBoardRenderer boardRenderer_;
 
     private static JFileChooser chooser_ = null;
 
@@ -67,20 +57,6 @@ public abstract class GameBoardViewer extends JPanel
     protected static Cursor origCursor_ = null;
     protected Frame parent_ = null;
 
-    // defaults for the grid and board colors.
-    // The may be changed using the options panel in the ui.
-    protected static final Color BACKGROUND_COLOR = GUIUtil.UI_COLOR_SECONDARY3;
-    protected static final Color GRID_COLOR = GUIUtil.UI_COLOR_SECONDARY1;
-    public static final int BOARD_MARGIN = 6;
-    protected Color backgroundColor_ = BACKGROUND_COLOR;
-    protected Color gridColor_;
-
-    protected static final Font VIEWER_FONT = new Font( "SansSerif", Font.PLAIN, 8 );
-    protected static final Color LAST_MOVE_INDICATOR_COLOR = new Color( 255, 120, 0 );
-    protected static final Stroke LAST_MOVE_INDICATOR_STROKE = new BasicStroke(2);
-    // dont allow the cells of the game board to get smaller than this
-    public static final int MINIMUM_CELL_SIZE = 8;
-    private static final short DRAG_TRANSPARENCY = 170;
 
     /**
      * Construct the viewer.
@@ -92,8 +68,6 @@ public abstract class GameBoardViewer extends JPanel
         // = createController();  used to do this, but I want only one controller, while I may have several viewers.
         evtq_ = Toolkit.getDefaultToolkit().getSystemEventQueue();
         enableEvents( 0 );
-        cellSize_ = getDefaultCellSize();
-        gridColor_ = getDefaultGridColor();
 
         // this activates tooltip text for the component
         this.setToolTipText( "" );
@@ -110,13 +84,12 @@ public abstract class GameBoardViewer extends JPanel
     }
 
     /**
-     *
      * @return the game specific controller for this viewer.
      */
     protected abstract GameController createController();
 
     /**
-     * @return our game controller
+     * @return our game controller.
      */
     public GameController getController()
     {
@@ -133,7 +106,7 @@ public abstract class GameBoardViewer extends JPanel
 
     /**
      * restore a game from a previously saved file (in SGF = Smart Game Format)
-     * Derived classes should implement the details of the open
+     * Derived classes should implement the details of the open.
      */
     public void openGame()
     {
@@ -143,7 +116,7 @@ public abstract class GameBoardViewer extends JPanel
         if ( file != null && state == JFileChooser.APPROVE_OPTION )  {
             //lastDirectoryAccessed_ = file.getAbsolutePath();
             controller_.restoreFromFile(file.getAbsolutePath());
-            refresh();
+            sendGameChangedEvent(controller_.getLastMove());
         }
     }
 
@@ -183,12 +156,6 @@ public abstract class GameBoardViewer extends JPanel
        saveGame(null);
     }
 
-
-    protected Color getDefaultGridColor()
-    {
-        return GRID_COLOR;
-    }
-
     /**
      *  cause the board UI to draw itself based on the current state of the game.
      */
@@ -225,14 +192,19 @@ public abstract class GameBoardViewer extends JPanel
         commonReset(board);
     }
 
+    /**
+     * Each board must create its own renderer singleton.
+     * @return gamve viewer specific renderer
+     */
+    protected abstract GameBoardRenderer getBoardRenderer();
+
     protected void commonReset(Board board)
     {
         int nrows = board.getNumRows();
         int ncols = board.getNumCols();
-        setSize( new Dimension( 2*BOARD_MARGIN + ncols * getCellSize(),
-                                2*BOARD_MARGIN + nrows * getCellSize() ));
-        setPreferredSize( new Dimension( 2*BOARD_MARGIN + ncols * getDefaultCellSize(),
-                                         2*BOARD_MARGIN + nrows * getDefaultCellSize()) );
+
+        setSize( getBoardRenderer().getSize(nrows, ncols));
+        setPreferredSize( getBoardRenderer().getPreferredSize(nrows, ncols));
     }
 
     /**
@@ -240,29 +212,6 @@ public abstract class GameBoardViewer extends JPanel
      */
     public abstract void startNewGame();
 
-    /**
-     * @return  the size of a board position cell (must be square).
-     */
-    protected final int getCellSize()
-    {
-        return cellSize_;
-    }
-
-    /**
-     * @return  default cell size (override for specific games).
-     */
-    protected int getDefaultCellSize()
-    {
-        return 16;
-    }
-
-    /**
-     * @return the object that knows how to render the pieces.
-     */
-    public GamePieceRenderer getPieceRenderer()
-    {
-        return pieceRenderer_;
-    }
 
     /**
      * in some cases the viewer is used to show games only.
@@ -338,7 +287,7 @@ public abstract class GameBoardViewer extends JPanel
     @Override
     public void setBackground( Color c )
     {
-        backgroundColor_ = c;
+        getBoardRenderer().setBackground(c);
         refresh();
     }
 
@@ -348,7 +297,7 @@ public abstract class GameBoardViewer extends JPanel
     @Override
     public Color getBackground()
     {
-        return backgroundColor_;
+        return getBoardRenderer().getBackground();
     }
 
     /**
@@ -356,7 +305,7 @@ public abstract class GameBoardViewer extends JPanel
      */
     public void setGridColor( Color c )
     {
-        gridColor_ = c;
+       getBoardRenderer().setGridColor(c);
         refresh();
     }
 
@@ -365,7 +314,7 @@ public abstract class GameBoardViewer extends JPanel
      */
     public Color getGridColor()
     {
-        return gridColor_;
+        return getBoardRenderer().getGridColor();
     }
 
     /**
@@ -411,113 +360,16 @@ public abstract class GameBoardViewer extends JPanel
     public void mouseEntered( MouseEvent e ) {}
     public void mouseExited( MouseEvent e ) {}
 
-
-    /**
-     * Compute the cell sizes base on the the dimenions of the viewer
-     * The viewer window may be resized causing the cell size to change dynamically
-     * @param nrows
-     * @param ncols
-     * @return
-     */
-    private int calcCellSize( int nrows, int ncols )
-    {
-        int size;
-
-        float panelWidth = (float) this.getWidth();
-        float panelHeight = (float) this.getHeight();
-        float panelAspect = panelWidth / panelHeight;
-        float boardAspect = (float) ncols / (float) nrows;
-
-        //GameContext.log(0, "compare "+boardAspect+"("+ncols+","+nrows+") to "+panelAspect+"("+panelWidth+","+panelHeight+") to ");
-        if ( boardAspect < panelAspect )
-            size = (int) ((panelHeight - 2*BOARD_MARGIN + 1) / nrows);
-        else
-            size = (int) ((panelWidth - 2*BOARD_MARGIN + 1) / ncols);
-
-        return Math.max( size, MINIMUM_CELL_SIZE );
-    }
-
-    protected void drawBackground( Graphics g, int startPos, int rightEdgePos, int bottomEdgePos )
-    {
-        g.setColor( backgroundColor_ );
-        g.fillRect( 0, 0, this.getWidth(), this.getHeight() );
-    }
-
     /**
      * This renders the current state of the Board to the screen.
      */
     @Override
     protected void paintComponent( Graphics g )
     {
-        Board board = getBoard();
-        int nrows = board.getNumRows();
-        int ncols = board.getNumCols();
-        cellSize_ = calcCellSize( nrows, ncols );
-        
-        if ( draggedShowPiece_!=null) {
-            draggedShowPiece_.getPiece().setTransparency( DRAG_TRANSPARENCY );
-        }
-
         super.paintComponents( g );
-        //super.paintComponent(g);   // need?
 
-        Graphics2D g2 = (Graphics2D)g;
-
-        int gridOffset = 0;
-        int start = 0;
-        int nrows1 = nrows;
-        int ncols1 = ncols;
-        if ( offsetGrid() ) {
-            gridOffset = cellSize_ >> 1;
-            nrows1 = nrows - 1;
-            ncols1 = ncols - 1;
-        }
-
-        int startPos = BOARD_MARGIN + start * cellSize_ + gridOffset;
-
-        int rightEdgePos = BOARD_MARGIN + cellSize_ * ncols1 + gridOffset;
-        int bottomEdgePos = BOARD_MARGIN + cellSize_ * nrows1 + gridOffset;
-
-        drawBackground( g2, startPos, rightEdgePos, bottomEdgePos );
-
-        drawGrid(g2, startPos, rightEdgePos, bottomEdgePos, start, nrows1, ncols1, gridOffset);
-
-        g2.setFont( VIEWER_FONT );
-        // now draw both player markers
-        drawMarkers( nrows, ncols, g2 );
-
-        // if there is a piece being dragged, draw it
-        if ( draggedShowPiece_ != null ) {
-            pieceRenderer_.render(g2, draggedShowPiece_, cellSize_, board);
-        }
-
-        drawLastMoveMarker(g2);
+        getBoardRenderer().render( g, controller_, this.getWidth(), this.getHeight());
     }
-
-    protected void drawGrid(Graphics2D g2, int startPos, int rightEdgePos, int bottomEdgePos, int start,
-                            int nrows1, int ncols1, int gridOffset) {
-
-        // draw the hatches which deliniate the cells
-        g2.setColor( gridColor_ );
-        int xpos, ypos;
-        int i;
-
-        for ( i = start; i <= nrows1; i++ )  //   -----
-        {
-            ypos = BOARD_MARGIN + i * cellSize_ + gridOffset;
-            g2.drawLine( startPos, ypos, rightEdgePos, ypos );
-        }
-        for ( i = start; i <= ncols1; i++ )  //   ||||
-        {
-            xpos = BOARD_MARGIN + i * cellSize_ + gridOffset;
-            g2.drawLine( xpos, startPos, xpos, bottomEdgePos );
-        }
-    }
-
-    /**
-     * draw some indication of where the last move was made.
-     */
-    protected abstract void drawLastMoveMarker(Graphics2D g2);
 
     /**
      * @return the cached game board if we are in the middle of processing.
@@ -533,46 +385,12 @@ public abstract class GameBoardViewer extends JPanel
      */
     protected void assertFailed( AssertionError ae )
     {
-        GameContext.log(1,  "An assertion failed. Writing to error file." );
+        GameContext.log(1, "An assertion failed. Writing to error file." );
         ae.printStackTrace();
         // make sure the state of the game at the point of the error is displayed.
         this.refresh();
         saveGame();
     }
-
-    /**
-     * Draw the pieces and possibly other game markers for both players.
-     */
-    protected void drawMarkers( int nrows, int ncols, Graphics2D g2 )
-    {
-        Board board = getBoard();
-        for ( int i = 1; i <= nrows; i++ ) {
-            for ( int j = 1; j <= ncols; j++ ) {
-                pieceRenderer_.render(g2, board.getPosition( i, j ),  cellSize_, board);
-            }
-        }
-    }
-
-    /**
-     * whether or not to draw the pieces on cell centers or vertices (like go or pente, but not like checkers).
-     */
-    protected boolean offsetGrid()
-    {
-        return false;
-    }
-
-    /**
-     * Constructs a new Location given a MouseEvent
-     *
-     * @param e  the row  coordinate.
-     */
-    public static Location createLocation( MouseEvent e, int cellSize)
-    {
-        int row = (e.getY()-BOARD_MARGIN)/cellSize + 1;
-        int col = (e.getX()-BOARD_MARGIN)/cellSize + 1;
-        return  new Location(row, col);
-    }
-
 
     /**
      * do any needed cleanup.

@@ -89,7 +89,7 @@ final class GoInfoPanel extends TwoPlayerInfoPanel implements GameChangedListene
     private JPanel createLegendPanel() {
         JPanel legendPanel = createSectionPanel("Group Health Legend");
         ContinuousColorLegend legend =
-                new ContinuousColorLegend(null, GoBoardViewer.COLORMAP, false);
+                new ContinuousColorLegend(null, GoBoardRenderer.COLORMAP, false);
         legendPanel.add(legend);
         return legendPanel;
     }

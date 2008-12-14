@@ -7,6 +7,7 @@ import com.becker.game.common.Move;
 import com.becker.game.common.ui.GameBoardViewer;
 import com.becker.game.common.ui.GameChangedEvent;
 import com.becker.game.common.ui.GameChangedListener;
+import com.becker.game.common.ui.GamePieceRenderer;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerViewerCallbackInterface;
@@ -23,7 +24,7 @@ import java.text.MessageFormat;
  * This class contains a TwoPlayerController and displays the current state of the Game.
  * The TwoPlayerController contains a Board which describes this state.
  * The game specific TwoPlayerController is created upon construction to be used internally.
- * This class contains all that is needed to render the board and its pieces.
+ * This class delegates to a boardRenderer to render the board and its pieces.
  * There should be no references to swing classes outside the ui subpackage.
  *     This class sends a GameChangedEvent after each move in case there are other
  * components (like the GameTreeViewer) that need to update based on the new board state.
@@ -58,14 +59,16 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
     private static final int PROGRESS_STEP_DELAY = 100;
     private static final short FUTURE_MOVE_TRANSP = 190;
 
-    // show this cached board if we are in the middle of processing the next one
-    // (to avoid concurrency problems)
+    /**
+     * Show this cached board if we are in the middle of processing the next one
+     * (to avoid concurrency problems)
+     */
     private Board cachedGameBoard_ = null;
 
-    // becomes true when stepping through the search
+    /** becomes true when stepping through the search.   */
     private boolean stepping_ = false;
 
-    // we occasionally want to show the conputers considered next moves in the ui
+    /** we occasionally want to show the conputers considered next moves in the ui. */
     private TwoPlayerMove[] nextMoves_;
 
 
@@ -100,6 +103,10 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
 
     public void setNextMoves(TwoPlayerMove[] nextMoves) {
         nextMoves_ = nextMoves;
+    }
+
+    public GamePieceRenderer getPieceRenderer() {
+        return getBoardRenderer().getPieceRenderer();
     }
 
 
@@ -311,31 +318,6 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
       };
 
       SwingUtilities.invokeLater(doComputerMoved);
-    }
-
-    protected void drawLastMoveMarker(Graphics2D g2)
-    {
-        // this draws a small indicator on the last move to show where it was played
-        TwoPlayerMove last = (TwoPlayerMove) getBoard().getLastMove();
-        if ( last != null ) {
-            g2.setColor( LAST_MOVE_INDICATOR_COLOR );
-            g2.setStroke(LAST_MOVE_INDICATOR_STROKE);
-            int xpos = BOARD_MARGIN + (last.getToCol() - 1) * cellSize_ + 1;
-            int ypos = BOARD_MARGIN + (last.getToRow() - 1) * cellSize_ + 1;
-            g2.drawOval( xpos, ypos, cellSize_ - 2, cellSize_ - 2 );
-        }
-    }
-
-    /**
-     * draw markers for the next moves (if they have been specified)
-     */
-    protected void drawNextMoveMarkers(Graphics2D g2) {
-        Board board = getBoard();
-        if (getNextMoves() != null) {
-            for (TwoPlayerMove move : getNextMoves()) {
-                ((TwoPlayerPieceRenderer) pieceRenderer_).renderNextMove(g2, move, cellSize_, board);
-            }
-        }
     }
 
     /**

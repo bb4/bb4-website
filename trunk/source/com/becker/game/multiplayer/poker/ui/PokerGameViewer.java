@@ -28,13 +28,15 @@ public class PokerGameViewer extends MultiGameViewer
 
     //Construct the application
     public PokerGameViewer()
-    {
-        pieceRenderer_ = PokerRenderer.getRenderer();
-    }
+    {}
 
     protected PokerController createController()
     {
         return new PokerController();
+    }
+
+    protected GameBoardRenderer getBoardRenderer() {
+        return PokerGameRenderer.getRenderer();
     }
 
     /**
@@ -71,9 +73,9 @@ public class PokerGameViewer extends MultiGameViewer
     {
         assert(!player.isHuman());
         PokerRobotPlayer robot = (PokerRobotPlayer)player;
-        PokerController pc = (PokerController) controller_;        
-        
-        String msg = applyAction(robot.getAction(pc), robot);    
+        PokerController pc = (PokerController) controller_;
+
+        String msg = applyAction(robot.getAction(pc), robot);
 
         JOptionPane.showMessageDialog(parent_, msg, robot.getName(), JOptionPane.INFORMATION_MESSAGE);
         refresh();
@@ -81,8 +83,8 @@ public class PokerGameViewer extends MultiGameViewer
 
         return false;
     }
-    
-    
+
+
     /**
      * make the computer move and show it on the screen.
      *
@@ -91,30 +93,30 @@ public class PokerGameViewer extends MultiGameViewer
      */
     public boolean doSurrogateMove(SurrogatePlayer player)
     {
-        PokerController pc = (PokerController) controller_;   
+        PokerController pc = (PokerController) controller_;
         PlayerAction action = player.getAction(pc);
 
         applyAction(action, player.getPlayer());
-        
+
         pc.advanceToNextPlayer();
 
         return false;
     }
-    
+
     /**
      * @param action to take
      * @param player to apply it to
      * @return message to show if on client.
      */
     protected String applyAction(PlayerAction action,  Player player) {
-        
+
         PokerPlayer p = (PokerPlayer) player;
         PokerAction act = (PokerAction) action;
         PokerController pc = (PokerController) controller_;
-        
+
         String msg = null;
         int callAmount = pc.getCurrentMaxContribution() - p.getContribution();
-        
+
         switch (act.getActionName()) {
             case FOLD :
                 p.setFold(true);
@@ -171,34 +173,5 @@ public class PokerGameViewer extends MultiGameViewer
                                  (int)(p.getY()+getParent().getHeight()/3.0));
 
         roundOverDlg.setVisible(true);
-    }
-    
-    /**
-     * 
-     * draw a grid of some sort if there is one.
-     * none by default.
-     */
-    protected void drawGrid(Graphics2D g2, int startPos, int rightEdgePos, int bottomEdgePos, int start,
-                            int nrows1, int ncols1, int gridOffset) {}
-
-    
-    /**
-     * Draw the pieces and possibly other game markers for both players.
-     */
-    protected void drawMarkers( int nrows, int ncols, Graphics2D g2 )
-    {
-        // draw the pot in the middle
-        Location loc = new Location(getBoard().getNumRows() >> 1, (getBoard().getNumCols() >> 1) - 3);
-        int pot = ((PokerController)controller_).getPotValue();
-        ((PokerRenderer)pieceRenderer_).renderChips(g2, loc, pot, this.getCellSize());
-
-        // draw a backroung circle for the player whose turn it is
-        PokerPlayer player = (PokerPlayer)controller_.getCurrentPlayer();
-        PokerPlayerMarker m = player.getPiece();
-        g2.setColor(PokerRenderer.HIGHLIGHT_COLOR);
-        g2.fillOval(cellSize_*(m.getLocation().getCol()-2), cellSize_*(m.getLocation().getRow()-2), 10*cellSize_, 10*cellSize_);
-
-        // now draw the players and their stuff (face, anme, chips, cards, etc)
-        super.drawMarkers(nrows, ncols, g2);
     }
 }
