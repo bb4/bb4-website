@@ -285,10 +285,11 @@
        <echo message="now running GO tests"/>
        <junit  printsummary="yes"  fork="yes"  haltonfailure="no" showoutput="yes" >
            <classpath path="${libDir}/junit.jar;${classesDir}"/>
+           <!--jvmarg value="-agentlib:jdwp=transport=dt_socket,server=y,address=8000"/-->
            <assertions><enable/></assertions>
            <formatter type="plain"/>
-           <!--test name="com.becker.game.twoplayer.go.test.TestAll" outfile="../test/go/goTestResults"/-->
-           <test name="com.becker.game.twoplayer.go.test.whitebox.TestAllWhiteBox" outfile="../test/go/goTestResults"/>
+           <test name="com.becker.game.twoplayer.go.test.TestAll" outfile="../test/go/goTestResults"/>
+           <!--test name="com.becker.game.twoplayer.go.test.whitebox.TestAllWhiteBox" outfile="../test/go/goTestResults"/-->
            <!-- test name="com.becker.game.twoplayer.go.test.TestEyes" outfile="../test/go/goTestResults"/-->
        </junit>
   </target>
