@@ -23,7 +23,7 @@ import java.text.*;
  * @see com.becker.game.multiplayer.poker.PokerTable
  * @author Barry Becker
  */
-public class PokerRenderer extends GamePieceRenderer
+public class PokerPlayerRenderer extends GamePieceRenderer
 {
     private static GamePieceRenderer renderer_ = null;
 
@@ -48,13 +48,13 @@ public class PokerRenderer extends GamePieceRenderer
      * private constructor because this class is a singleton.
      * Use getRenderer instead
      */
-    private PokerRenderer()
+    private PokerPlayerRenderer()
     {}
 
     public static GamePieceRenderer getRenderer()
     {
         if (renderer_ == null)
-            renderer_ = new PokerRenderer();
+            renderer_ = new PokerPlayerRenderer();
         return renderer_;
     }
 
@@ -70,7 +70,7 @@ public class PokerRenderer extends GamePieceRenderer
     }
 
     /**
-     * this draws the actual card at this location (if there is one).
+     * this draws the actual player marker, cards, and chips at this location (if there is one).
      *
      * @param g2 graphics context
      * @param position the position of the piece to render

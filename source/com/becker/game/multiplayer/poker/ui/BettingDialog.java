@@ -18,7 +18,7 @@ import java.text.*;
  */
 public final class BettingDialog extends ActionDialog
 {
-  
+
     private GradientButton foldButton_;
     private GradientButton callButton_;    // call or check
     private GradientButton raiseButton_;
@@ -43,13 +43,13 @@ public final class BettingDialog extends ActionDialog
      * ui initialization of the tree control.
      */
     protected JPanel createPersonalInfoPanel() {
-         
-        return new PokerHandPanel(((PokerPlayer)player_).getHand());       
+
+        return new PokerHandPanel(((PokerPlayer)player_).getHand());
     }
 
 
     protected JPanel createGameInstructionsPanel() {
-        
+
         NumberFormat cf = getCurrencyFormat();
         String cash = cf.format(((PokerPlayer)player_).getCash());
         JPanel instr = new JPanel();
@@ -57,14 +57,14 @@ public final class BettingDialog extends ActionDialog
         JLabel currentCash = new JLabel("You currently have "+cash);
 
         JLabel amountToCall = new JLabel("To call, you need to add "+cf.format(callAmount_));
-         
-         
+
+
         JPanel gameInstructions = new JPanel(new BorderLayout());
         gameInstructions.add(currentCash, BorderLayout.CENTER);
         if (callAmount_ > 0)  {
             gameInstructions.add(amountToCall, BorderLayout.SOUTH);
         }
-        return gameInstructions;   
+        return gameInstructions;
     }
 
 
@@ -129,13 +129,13 @@ public final class BettingDialog extends ActionDialog
         else {
             assert false :"actionPerformed source="+source+". not recognized";
         }
-        
+
         ((PokerHumanPlayer)player_).setAction(new PokerAction(player_.getName(), actionName, raiseAmount_));
     }
 
 
     public void showRaiseDialog() {
-        // open a dlg to get an order        
+        // open a dlg to get an order
         PokerController pc = (PokerController)gc_;
         PokerOptions options = (PokerOptions)gc_.getOptions();
         RaiseDialog raiseDialog =
@@ -146,7 +146,7 @@ public final class BettingDialog extends ActionDialog
 
         boolean canceled = raiseDialog.showDialog();
 
-        if ( !canceled ) { 
+        if ( !canceled ) {
             raiseAmount_ = raiseDialog.getRaiseAmount();
             contributeAmount_  = callAmount_ + raiseAmount_;
             this.setVisible(false);
@@ -170,7 +170,7 @@ public final class BettingDialog extends ActionDialog
         }
 
         protected void paintComponent(Graphics g) {
-             PokerRenderer renderer = (PokerRenderer)PokerRenderer.getRenderer();
+             PokerPlayerRenderer renderer = (PokerPlayerRenderer) PokerPlayerRenderer.getRenderer();
              renderer.renderHand((Graphics2D)g, new Location(0, 2), hand_, 22);
         }
     }
