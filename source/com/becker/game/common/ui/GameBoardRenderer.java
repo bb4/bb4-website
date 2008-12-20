@@ -22,7 +22,6 @@ public abstract class GameBoardRenderer
     /** the size of a game board cell where the pieces go */
     protected int cellSize_;
 
-
     /** to move pieces you drag them (if the move is valid) */
     protected BoardPosition draggedPiece_ = null;
 
@@ -41,7 +40,9 @@ public abstract class GameBoardRenderer
     // The may be changed using the options panel in the ui.
     protected static final Color BACKGROUND_COLOR = GUIUtil.UI_COLOR_SECONDARY3;
     protected static final Color GRID_COLOR = GUIUtil.UI_COLOR_SECONDARY1;
-    public static final int BOARD_MARGIN = 8;
+    private static final int BOARD_MARGIN = 5;
+    private static final int PREFERRED_CELL_SIZE = 16;
+
     protected Color backgroundColor_ = BACKGROUND_COLOR;
     protected Color gridColor_ = GRID_COLOR;
 
@@ -54,7 +55,7 @@ public abstract class GameBoardRenderer
 
     /**
      * private constructor because this class is a singleton.
-     * Use getPieceRenderer instead
+     * Use getPieceRenderer instead.
      */
     protected GameBoardRenderer()
     {
@@ -67,14 +68,14 @@ public abstract class GameBoardRenderer
     }
 
     public Dimension getSize(int nrows, int ncols) {
-        return new Dimension( 2*BOARD_MARGIN + ncols * getCellSize(),
-                                2*BOARD_MARGIN + nrows * getCellSize() );
+        return new Dimension( 2*getMargin() + ncols * getCellSize(),
+                                2*getMargin() + nrows * getCellSize() );
     }
 
     public Dimension getPreferredSize(int nrows, int ncols) {
 
-        return new Dimension( 2*BOARD_MARGIN + ncols * getDefaultCellSize(),
-                                         2*BOARD_MARGIN + nrows * getDefaultCellSize());
+        return new Dimension( 2*getMargin() + ncols * getPreferredCellSize(),
+                                         2*getMargin() + nrows * getPreferredCellSize());
     }
 
     /**
@@ -124,8 +125,9 @@ public abstract class GameBoardRenderer
      */
     public Location createLocation( MouseEvent e)
     {
-        int row = (e.getY()- BOARD_MARGIN)/ getCellSize() + 1;
-        int col = (e.getX()- BOARD_MARGIN)/ getCellSize() + 1;
+        int size = Math.max(1, getCellSize());
+        int row = (e.getY()- getMargin())/ size + 1;
+        int col = (e.getX()- getMargin())/ size + 1;
         return  new Location(row, col);
     }
 
@@ -133,20 +135,18 @@ public abstract class GameBoardRenderer
     /**
      * @return  default cell size (override for specific games).
      */
-    protected int getDefaultCellSize()
+    protected int getPreferredCellSize()
     {
-        return 16;
+        return PREFERRED_CELL_SIZE;
     }
 
     /**
-     * @return  the default color for the gridlines.
+     * @return the space to the left and at the top of the board.
      */
-    protected Color getDefaultGridColor()
+    protected int getMargin()
     {
-        return GRID_COLOR;
+        return BOARD_MARGIN;
     }
-
-
     /**
      * whether or not to draw the pieces on cell centers or vertices (like go or pente, but not like checkers).
      */
@@ -207,9 +207,9 @@ public abstract class GameBoardRenderer
         //GameContext.log(0, "compare "+boardAspect+"("+ncols+","+nrows+") to "
         //    + panelAspect + "("+panelWidth+","+panelHeight+") to ");
         if ( boardAspect < panelAspect )
-            size = ((panelHeight - 2 * BOARD_MARGIN + 1) / nrows);
+            size = ((panelHeight - 2 * getMargin() + 1) / nrows);
         else
-            size = ((panelWidth - 2 * BOARD_MARGIN + 1) / ncols);
+            size = ((panelWidth - 2 * getMargin() + 1) / ncols);
 
         return Math.max( size, MINIMUM_CELL_SIZE );
     }
@@ -227,12 +227,12 @@ public abstract class GameBoardRenderer
 
         for ( i = start; i <= nrows1; i++ )  //   -----
         {
-            ypos = BOARD_MARGIN + i * cellSize_ + gridOffset;
+            ypos = getMargin() + i * cellSize_ + gridOffset;
             g2.drawLine( startPos, ypos, rightEdgePos, ypos );
         }
         for ( i = start; i <= ncols1; i++ )  //   ||||
         {
-            xpos = BOARD_MARGIN + i * cellSize_ + gridOffset;
+            xpos = getMargin() + i * cellSize_ + gridOffset;
             g2.drawLine( xpos, startPos, xpos, bottomEdgePos );
         }
     }
@@ -255,7 +255,7 @@ public abstract class GameBoardRenderer
         int ncols = board.getNumCols();
         for ( int i = 1; i <= nrows; i++ ) {
             for ( int j = 1; j <= ncols; j++ ) {
-                pieceRenderer_.render(g2, board.getPosition( i, j ),  cellSize_, board);
+                pieceRenderer_.render(g2, board.getPosition( i, j ),  cellSize_, getMargin(), board);
             }
         }
     }
@@ -288,9 +288,9 @@ public abstract class GameBoardRenderer
             ncols1 = ncols - 1;
         }
 
-        int startPos = BOARD_MARGIN + gridOffset;
-        int rightEdgePos = BOARD_MARGIN + cellSize_ * ncols1 + gridOffset;
-        int bottomEdgePos = BOARD_MARGIN + cellSize_ * nrows1 + gridOffset;
+        int startPos = getMargin() + gridOffset;
+        int rightEdgePos = getMargin() + cellSize_ * ncols1 + gridOffset;
+        int bottomEdgePos = getMargin() + cellSize_ * nrows1 + gridOffset;
 
         drawBackground( g2, board, startPos, rightEdgePos, bottomEdgePos, panelWidth, panelHeight );
 
@@ -302,7 +302,7 @@ public abstract class GameBoardRenderer
 
         // if there is a piece being dragged, draw it
         if ( draggedShowPiece_ != null ) {
-            pieceRenderer_.render(g2, draggedShowPiece_, cellSize_, board);
+            pieceRenderer_.render(g2, draggedShowPiece_, cellSize_, getMargin(), board);
         }
 
         drawLastMoveMarker(g2, controller);

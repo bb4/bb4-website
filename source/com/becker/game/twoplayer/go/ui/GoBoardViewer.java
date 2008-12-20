@@ -171,7 +171,7 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
     @Override
     public void mouseExited( MouseEvent e ) {
         getBoardRenderer().setDraggedShowPiece(null);
-        repaint();
+        //repaint();
     }
 
     /**

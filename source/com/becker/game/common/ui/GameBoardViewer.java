@@ -305,7 +305,7 @@ public abstract class GameBoardViewer extends JPanel
      */
     public void setGridColor( Color c )
     {
-       getBoardRenderer().setGridColor(c);
+        getBoardRenderer().setGridColor(c);
         refresh();
     }
 

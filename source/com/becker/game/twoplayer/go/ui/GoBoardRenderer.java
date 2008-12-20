@@ -16,6 +16,8 @@ import com.becker.ui.GUIUtil;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
+import java.awt.font.LineMetrics;
 import java.util.*;
 
 /**
@@ -31,46 +33,52 @@ public class GoBoardRenderer extends TwoPlayerBoardRenderer
 
     public static final ColorMap COLORMAP = new GoColorMap();
 
+    private static final Color TICK_LABEL_COLOR = new Color(10, 10, 10);
+    private static final int BOARD_MARGIN = 12;
+    private static final Font TICK_LABEL_FONT = new Font("Sans-serif", Font.PLAIN, 11);
+
     /** the image for the wooden board. */
     private static final ImageIcon woodGrainImage_ =
-            GUIUtil.getIcon(GameContext.GAME_ROOT + "twoplayer/go/ui/images/goBoard1.png");
+            GUIUtil.getIcon(GameContext.GAME_ROOT + "twoplayer/go/ui/images/goBoard1.gif");
 
     /**
      * private constructor because this class is a singleton.
      * Use getRenderer instead
      */
-    protected GoBoardRenderer()
-    {
+    protected GoBoardRenderer() {
         pieceRenderer_ = GoStoneRenderer.getRenderer();
     }
 
-    public static GameBoardRenderer getRenderer()
-    {
+    /**
+     * @return singleton instance
+     */
+    public static GameBoardRenderer getRenderer() {
         if (renderer_ == null)
             renderer_ = new GoBoardRenderer();
         return renderer_;
     }
 
     @Override
-    protected int getDefaultCellSize()
-    {
+    protected int getPreferredCellSize() {
         return 16;
     }
 
+    protected int getMargin()  {
+        return BOARD_MARGIN;
+    }
 
     /**
-     * whether to draw the pieces on cell centers or vertices (like go).
+     * whether to draw the pieces on cell centers or vertices (the way go requires).
      */
     @Override
-    protected boolean offsetGrid()
-    {
+    protected boolean offsetGrid() {
         return true;
     }
 
-
-    private static final Color TICK_LABEL_COLOR = new Color(10, 10, 20);
-
-
+    /**
+     * @param i
+     * @return i converted to a character string.
+     */
     private String int2char(int i) {
         char c = (char)('a' + i);
         return Character.toString(c);
@@ -86,18 +94,22 @@ public class GoBoardRenderer extends TwoPlayerBoardRenderer
         super.drawGrid(g2, startPos, rightEdgePos, bottomEdgePos, start, nrows1, ncols1, gridOffset);
 
         // only draw the row and column numbering if in debug mode
-        if (GameContext.getDebugMode() == 0) return;
+        if (GameContext.getDebugMode() == 0)
+            return;
 
         g2.setColor( TICK_LABEL_COLOR );
-        for (int i = start; i <= nrows1; i++ )  //   -----
-        {
-            int ypos = (int)(1.7*BOARD_MARGIN) + i * cellSize_ + gridOffset;
+        g2.setFont(TICK_LABEL_FONT);
+        Rectangle2D metrics = TICK_LABEL_FONT.getMaxCharBounds(g2.getFontRenderContext());
+        int textHt = (int)Math.ceil(metrics.getHeight());
+        int appxHt1 = (int)(textHt/2.8);
+
+        for (int i = start; i <= nrows1; i++ ) {  //   |
+            int ypos = getMargin() + appxHt1 + i * cellSize_ + gridOffset;
             g2.drawString(int2char(i), 1, ypos);
         }
-        for (int i = start; i <= ncols1; i++ )  //   ||||
-        {
-            int xpos = BOARD_MARGIN/2 + i * cellSize_ + gridOffset;
-            g2.drawString(int2char(i), xpos, (int)(1.3 * BOARD_MARGIN));
+        for (int i = start; i <= ncols1; i++ ) {  //   --
+            int xpos = getMargin() - 1 + i * cellSize_ + gridOffset;
+            g2.drawString(int2char(i), xpos, (3 +  getMargin() - appxHt1));
         }
     }
 
@@ -132,8 +144,8 @@ public class GoBoardRenderer extends TwoPlayerBoardRenderer
         double rad = (float)cellSize_/21.0 + 0.46;
         while (it.hasNext()) {
             GoBoardPosition p = (GoBoardPosition)it.next();
-            g2.fillOval(BOARD_MARGIN + (int)(cellSize_*(p.getCol()-0.505)-rad),
-                        BOARD_MARGIN +(int)(cellSize_*(p.getRow()-0.505)-rad),
+            g2.fillOval(getMargin() + (int)(cellSize_*(p.getCol()-0.505)-rad),
+                        getMargin() +(int)(cellSize_*(p.getRow()-0.505)-rad),
                         (int)(2.0*rad+1.7), (int)(2.0*rad+1.7));
         }
 
@@ -142,7 +154,7 @@ public class GoBoardRenderer extends TwoPlayerBoardRenderer
         if ( GameContext.getDebugMode() > 0 ) {
             synchronized(groups) {
                 for (GoGroup group : groups) {
-                    GoGroupRenderer.drawGroupDecoration(group, COLORMAP, (float) cellSize_, board, g2 );
+                    GoGroupRenderer.drawGroupDecoration(group, COLORMAP, (float) cellSize_, getMargin(), board, g2 );
                 }
             }
         }
@@ -161,7 +173,7 @@ public class GoBoardRenderer extends TwoPlayerBoardRenderer
         Board board = controller.getBoard();
         if (nextMoves != null) {
             for (TwoPlayerMove move : nextMoves) {
-                ((TwoPlayerPieceRenderer) pieceRenderer_).renderNextMove(g2, move, cellSize_, board);
+                ((TwoPlayerPieceRenderer) pieceRenderer_).renderNextMove(g2, move, cellSize_, getMargin(), board);
             }
         }
     }

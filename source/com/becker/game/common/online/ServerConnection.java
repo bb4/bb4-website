@@ -56,7 +56,7 @@ public class ServerConnection {
 
         try {
             // Send data over socket
-            assert(oStream_!=null && cmd!=null): "oStream="+ oStream_ +" cmd=" + cmd;
+            assert(oStream_!=null && cmd!=null): "No socket: oStream="+ oStream_ +" cmd=" + cmd;
             oStream_.writeObject(cmd);
             oStream_.flush();
         }
@@ -139,7 +139,7 @@ public class ServerConnection {
     public void leaveRoom(String playerName) {
         sendCommand(new GameCommand(GameCommand.Name.LEAVE_ROOM, playerName));
     }
-    
+
     public void playerActionPerformed(PlayerAction action) {
         sendCommand(new GameCommand(GameCommand.Name.DO_ACTION, action));
     }

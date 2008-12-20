@@ -18,7 +18,7 @@ import java.util.*;
 import java.util.List;
 
 /**
- *  Static 8tility methods for rendering GoGroup deciration
+ *  Static Utility methods for rendering GoGroup description.
  *  A GoString by comparison, is composed of a strongly connected set of one or more same color stones.
  *  Groups may be connected by diagonals or one space jumps, or uncut knights moves, but not nikken tobi
  *
@@ -36,14 +36,14 @@ final class GoGroupRenderer
      */
     private static final Map<GoGroup, GroupRegion> hmRegionCache_ = new HashMap<GoGroup, GroupRegion>();
 
-    private GoGroupRenderer() {
-    }
+    private GoGroupRenderer()
+    {}
 
 
     /**
      * accumulate an area geometry that can be rendered to show the group border.
      */
-    private static Area calcGroupBorder( Set groupStones, float cellSize, GoBoard board )
+    private static Area calcGroupBorder( Set groupStones, float cellSize, int margin, GoBoard board )
     {
         if (groupStones == null || groupStones.isEmpty()) {
             return null;  // nothing to draw an area for.
@@ -52,7 +52,6 @@ final class GoGroupRenderer
         GoBoardPosition firstStone = (GoBoardPosition) groupStones.iterator().next();
 
         if ( groupStones.size() == 1 ) {
-            float margin = TwoPlayerBoardRenderer.BOARD_MARGIN;
             float offset = + BORDER_OFFSET + 0.5f;
             // case where the group contains only 1 stone
             float x = margin + (firstStone.getCol() - offset) * cellSize;
@@ -77,7 +76,7 @@ final class GoGroupRenderer
             Set<GoBoardPosition> nbrs = board.getGroupNeighbors( stone, true );
             for (GoBoardPosition nbrStone : nbrs) {
                 // accumulate all the borders to arrive at the final group border
-                area.add( new Area( getBorderBetween( stone, nbrStone, cellSize ) ) );
+                area.add( new Area( getBorderBetween( stone, nbrStone, cellSize, margin ) ) );
                 if ( !nbrStone.isVisited() && !qset.contains( nbrStone ) ) {
                     q.add( nbrStone );
                     qset.add( nbrStone );
@@ -94,7 +93,7 @@ final class GoGroupRenderer
     /**
      * return a path marking the border between the 2 specified stones.
      */
-    private static GeneralPath getBorderBetween( GoBoardPosition s1, GoBoardPosition s2, float cellSize )
+    private static GeneralPath getBorderBetween( GoBoardPosition s1, GoBoardPosition s2, float cellSize, int margin )
     {
         // we can tell which case we have by how far apart the two stones are
         double dist = s1.getDistanceFrom( s2 );
@@ -102,17 +101,17 @@ final class GoGroupRenderer
 
         if ( dist == 1.0 || dist == 2.0 ) {
             // **  or *_*
-            border = getLinearNbrBorder( s1, s2, cellSize );
+            border = getLinearNbrBorder( s1, s2, cellSize, margin);
         }
         else if ( (dist - Math.sqrt( 2.0 )) < 0.001 ) {
             // *_
             // _*
-            border = getDiagonalNbrBorder( s1, s2, cellSize );
+            border = getDiagonalNbrBorder( s1, s2, cellSize, margin );
         }
         else if ( (dist - Math.sqrt( 5.0 )) < 0.001 ) {
             // *__
             // __*
-            border = getKogeimaNbrBorder( s1, s2, cellSize );
+            border = getKogeimaNbrBorder( s1, s2, cellSize, margin );
         }
         else
             assert false: "error! dist="+dist ;
@@ -124,11 +123,10 @@ final class GoGroupRenderer
     /**
      * @return  path corresponding to a linear neighbor border.
      */
-    private static GeneralPath getLinearNbrBorder( GoBoardPosition s1, GoBoardPosition s2, float cellSize )
+    private static GeneralPath getLinearNbrBorder( GoBoardPosition s1, GoBoardPosition s2, float cellSize, int margin)
     {
         GeneralPath border = new GeneralPath();
         float celld2 = cellSize / 2.0f;
-        float margin = TwoPlayerBoardRenderer.BOARD_MARGIN;
 
         if ( s1.getRow() == s2.getRow() ) { // horizontal
             GoBoardPosition leftStone;
@@ -182,11 +180,11 @@ final class GoGroupRenderer
     /**
      * @return a path correspodning to a diagonal neighbor border.
      */
-    private static GeneralPath getDiagonalNbrBorder( GoBoardPosition s1, GoBoardPosition s2, float cellSize )
+    private static GeneralPath getDiagonalNbrBorder( GoBoardPosition s1, GoBoardPosition s2,
+                                                     float cellSize, int margin )
     {
         GeneralPath border = new GeneralPath();
         float celld2 = cellSize / 2.0f;
-        float margin = TwoPlayerBoardRenderer.BOARD_MARGIN;
 
         // upper left = ul, lr = lower right, ...
         GoBoardPosition ulStone = null, lrStone = null, llStone = null, urStone = null;
@@ -249,11 +247,11 @@ final class GoGroupRenderer
     /**
      * @return a border corresponding to a kogeima (nights move) neighbor border.
      */
-    private static GeneralPath getKogeimaNbrBorder( GoBoardPosition s1Stone, GoBoardPosition s2Stone, float cellSize )
+    private static GeneralPath getKogeimaNbrBorder( GoBoardPosition s1Stone, GoBoardPosition s2Stone,
+                                                    float cellSize, int margin )
     {
         GeneralPath border = new GeneralPath();
         float celld2 = cellSize / 2.0f;
-        float margin = TwoPlayerBoardRenderer.BOARD_MARGIN;
 
         // calc vector from s1 to s2
         Point2D.Float p =
@@ -299,9 +297,8 @@ final class GoGroupRenderer
     /**
      * draw the group's eyes (for debugging/understanding purposes).
      */
-    private static void drawEyes( float cellSize, Graphics2D g2, Set eyes )
+    private static void drawEyes( float cellSize, Graphics2D g2, Set eyes, int margin )
     {
-        float margin = TwoPlayerBoardRenderer.BOARD_MARGIN;
         if ( !eyes.isEmpty() ) {
             Font font = new Font( "SanSerif", Font.PLAIN, (int) (1.6 * Math.sqrt( cellSize ) - 1) );
             g2.setFont( font );
@@ -328,7 +325,8 @@ final class GoGroupRenderer
      * draw debugging information about the group like its border and eyeshapes.
      * @see GoGroupRenderer
      */
-    public static void drawGroupDecoration(GoGroup group, ColorMap colormap, float cellSize, GoBoard board, Graphics2D g2)
+    public static void drawGroupDecoration(GoGroup group, ColorMap colormap, float cellSize,
+                                           int margin, GoBoard board, Graphics2D g2)
     {
         GroupRegion cachedRegion = hmRegionCache_.get(group);
 
@@ -342,7 +340,7 @@ final class GoGroupRenderer
             }
 
             cachedRegion = new GroupRegion();
-            cachedRegion.borderArea = calcGroupBorder( group.getStones(), cellSize, board );
+            cachedRegion.borderArea = calcGroupBorder( group.getStones(), cellSize, margin, board );
             cachedRegion.borderColor = colormap.getColorForValue( h );
             cachedRegion.cellSize = cellSize;
 
@@ -353,7 +351,7 @@ final class GoGroupRenderer
         fillInRegion(g2, cachedRegion);
 
         if (!group.getEyes(board).isEmpty())   {
-            drawEyes( cellSize, g2, group.getEyes(board) );
+            drawEyes( cellSize, g2, group.getEyes(board), margin );
         }
     }
 

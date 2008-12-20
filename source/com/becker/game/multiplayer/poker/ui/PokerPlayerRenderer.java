@@ -75,7 +75,7 @@ public class PokerPlayerRenderer extends GamePieceRenderer
      * @param g2 graphics context
      * @param position the position of the piece to render
      */
-    public void render( Graphics2D g2, BoardPosition position, int cellSize, Board b)
+    public void render( Graphics2D g2, BoardPosition position, int cellSize, int margin, Board b)
     {
         PokerPlayerMarker playerMarker = (PokerPlayerMarker)position.getPiece();
         if (playerMarker == null)
@@ -83,7 +83,7 @@ public class PokerPlayerRenderer extends GamePieceRenderer
 
 
         int pieceSize = getPieceSize(cellSize, playerMarker);
-        Point pos = getPosition(position, cellSize, pieceSize);
+        Point pos = getPosition(position, cellSize, pieceSize, margin);
         Ellipse2D circle = new Ellipse2D.Float( pos.x, pos.y, pieceSize + 1, pieceSize + 1 );
         int hlOffset = (int) (pieceSize / 2.3 + 0.5);  //spec highlight offset
         Color c= getPieceColor(playerMarker);

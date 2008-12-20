@@ -100,7 +100,7 @@ public final class GoStoneRenderer extends TwoPlayerPieceRenderer
      * @param position of the piece to render
      */
     @Override
-    public void render( Graphics2D g2, BoardPosition position, int cellSize, Board board)
+    public void render( Graphics2D g2, BoardPosition position, int cellSize, int margin, Board board)
     {
         GoBoardPosition stonePos = (GoBoardPosition)position;
         if (GameContext.getDebugMode() > 0)  {
@@ -114,8 +114,8 @@ public final class GoStoneRenderer extends TwoPlayerPieceRenderer
             Color c = new Color(pc.getRed(), pc.getGreen(), pc.getBlue(),
                          Math.min(255, op));    // @@ should not need min
             g2.setColor(c);
-            g2.fillRect(TwoPlayerBoardRenderer.BOARD_MARGIN + cellSize*(position.getCol()-1),
-                        TwoPlayerBoardRenderer.BOARD_MARGIN + cellSize*(position.getRow()-1),
+            g2.fillRect(margin + cellSize*(position.getCol()-1),
+                        margin + cellSize*(position.getRow()-1),
                         cellSize, cellSize );
         }
 
@@ -123,7 +123,7 @@ public final class GoStoneRenderer extends TwoPlayerPieceRenderer
         if (stone == null)
             return; // nothing to render
         int pieceSize = getPieceSize(cellSize, stone);
-        Point pos = getPosition(position, cellSize, pieceSize);
+        Point pos = getPosition(position, cellSize, pieceSize, margin);
         float transp = stone.getTransparency();
         Image img = getImage(stone);
         if (transp > 0) {

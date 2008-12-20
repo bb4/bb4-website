@@ -46,16 +46,10 @@ public class GalaxyRenderer extends MultiGameBoardRenderer
     }
 
 
-    protected int getDefaultCellSize()
+    protected int getPreferredCellSize()
     {
         return 16;
     }
-
-    protected Color getDefaultGridColor()
-    {
-        return GRID_COLOR;
-    }
-
 
     /**
      * Draw the pieces and possibly other game markers for both players.
@@ -69,7 +63,7 @@ public class GalaxyRenderer extends MultiGameBoardRenderer
             Iterator orderIt = orders.iterator();
             while (orderIt.hasNext()) {
                 Order order = (Order) orderIt.next();
-                int margin = GameBoardRenderer.BOARD_MARGIN;
+                int margin = getMargin();
 
                 Location begin = order.getOrigin().getLocation();
                 Point2D end = order.getCurrentLocation();
