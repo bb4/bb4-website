@@ -94,14 +94,14 @@ public class TwoPlayerPieceRenderer extends GamePieceRenderer
     /**
      * show the next moves in a special way.
      */
-    public void renderNextMove( Graphics2D g2, TwoPlayerMove move, int cellSize, Board b) {
+    public void renderNextMove( Graphics2D g2, TwoPlayerMove move, int cellSize, int margin, Board b) {
 
         if (move.getPiece() != null)  {
             g2.setColor(getPieceColor(move.getPiece()));
 
             BoardPosition position = b.getPosition(move.getToRow(), move.getToCol());
             int pieceSize = (int)(NEXT_MOVE_SIZE_FRAC * getPieceSize(cellSize, move.getPiece()));
-            Point pos = getPosition(position, cellSize, pieceSize);
+            Point pos = getPosition(position, cellSize, pieceSize, margin);
             g2.setFont(BASE_FONT);
             g2.fillOval( pos.x, pos.y, pieceSize, pieceSize );
             g2.setColor(move.isUrgent() ? URGENT_COLOR : Color.DARK_GRAY);

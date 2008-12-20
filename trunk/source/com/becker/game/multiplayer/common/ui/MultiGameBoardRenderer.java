@@ -25,16 +25,13 @@ public abstract class MultiGameBoardRenderer extends GameBoardRenderer
      * Use getRenderer instead
      */
     protected MultiGameBoardRenderer()
-    {}
-
-    protected int getDefaultCellSize()
     {
-        return 8;
+        setGridColor(DEFAULT_GRID_COLOR);
     }
 
-    protected Color getDefaultGridColor()
+    protected int getPreferredCellSize()
     {
-        return DEFAULT_GRID_COLOR;
+        return 8;
     }
 
     protected Color getDefaultTableColor()
@@ -50,7 +47,6 @@ public abstract class MultiGameBoardRenderer extends GameBoardRenderer
         return true;
 
     }
-
 
     /**
      * Draw the background and a depiction of a circular game table.

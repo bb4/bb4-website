@@ -43,7 +43,7 @@ public class CheckersBoardRenderer extends TwoPlayerBoardRenderer
     }
 
 
-    protected int getDefaultCellSize()
+    protected int getPreferredCellSize()
     {
         return 34;
     }
@@ -59,8 +59,8 @@ public class CheckersBoardRenderer extends TwoPlayerBoardRenderer
         for (int i=0; i<nrows; i++) {
             for (int j=0; j<ncols; j++)  {
                 g.setColor(((i+j)%2 == 0)? BLACK_SQUARE_COLOR : RED_SQUARE_COLOR);
-                int ioff = GameBoardRenderer.BOARD_MARGIN + cellSize_ * i;
-                int joff = GameBoardRenderer.BOARD_MARGIN + cellSize_ * j;
+                int ioff = getMargin() + cellSize_ * i;
+                int joff = getMargin() + cellSize_ * j;
                 g.fillRect( ioff, joff, cellSize_, cellSize_ );
             }
         }
@@ -81,25 +81,18 @@ public class CheckersBoardRenderer extends TwoPlayerBoardRenderer
             BoardPosition origPos = board.getPosition(m.getFromRow(), m.getFromCol());
             draggedShowPiece_ = origPos.copy();
             origPos.setPiece(null);
-            Iterator it = m.captureList.iterator();
-            while (it.hasNext()) {
-                BoardPosition capPos = (BoardPosition)it.next();
-                int rOrig =  draggedShowPiece_.getRow();
-                int cOrig =  draggedShowPiece_.getCol();
+            for (BoardPosition capPos : m.captureList) {
+                int rOrig = draggedShowPiece_.getRow();
+                int cOrig = draggedShowPiece_.getCol();
                 int rdir = capPos.getRow() - rOrig;
                 int cdir = capPos.getCol() - cOrig;
-                draggedShowPiece_.setRow(rOrig + 2*rdir);
-                draggedShowPiece_.setCol(cOrig + 2*cdir);
+                draggedShowPiece_.setRow(rOrig + 2 * rdir);
+                draggedShowPiece_.setCol(cOrig + 2 * cdir);
                 board.getPosition(capPos.getLocation()).setPiece(null);
-                // refresh();  careful,  could cause loop
-                //JOptionPane.showMessageDialog(this, "cap1");
             }
             draggedShowPiece_ = null;
             controller.makeMove(m);
         }
-
-        // this will paint the component immediately
-        //refresh();
     }
 
 
@@ -109,8 +102,6 @@ public class CheckersBoardRenderer extends TwoPlayerBoardRenderer
      */
     protected void drawGrid(Graphics2D g2, int startPos, int rightEdgePos, int bottomEdgePos, int start,
                             int nrows1, int ncols1, int gridOffset) {}
-
-
 
 
 }

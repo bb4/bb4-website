@@ -32,8 +32,8 @@ public abstract class TwoPlayerBoardRenderer extends GameBoardRenderer
             g2.setColor( LAST_MOVE_INDICATOR_COLOR );
             g2.setStroke(LAST_MOVE_INDICATOR_STROKE);
             int cellSize = getCellSize();
-            int xpos = BOARD_MARGIN + (last.getToCol() - 1) * cellSize + 1;
-            int ypos = BOARD_MARGIN + (last.getToRow() - 1) * cellSize + 1;
+            int xpos = getMargin() + (last.getToCol() - 1) * cellSize + 1;
+            int ypos = getMargin() + (last.getToRow() - 1) * cellSize + 1;
             g2.drawOval( xpos, ypos, cellSize - 2, cellSize - 2 );
         }
     }

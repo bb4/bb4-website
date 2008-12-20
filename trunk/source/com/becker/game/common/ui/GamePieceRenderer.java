@@ -51,11 +51,11 @@ public abstract class GamePieceRenderer
     }
 
 
-    public static Point getPosition(BoardPosition position, int cellSize, int pieceSize)
+    public static Point getPosition(BoardPosition position, int cellSize, int pieceSize, int margin)
     {
         int offset = (cellSize - pieceSize) >> 1;
-        position_.x = GameBoardRenderer.BOARD_MARGIN + cellSize*(position.getCol()-1) + offset;
-        position_.y = GameBoardRenderer.BOARD_MARGIN + cellSize*(position.getRow()-1) + offset;
+        position_.x = margin + cellSize*(position.getCol()-1) + offset;
+        position_.y = margin + cellSize*(position.getRow()-1) + offset;
         return position_;
     }
 
@@ -70,7 +70,7 @@ public abstract class GamePieceRenderer
      * @param g2 graphics context
      * @param position the position of the piece to render
      */
-    public void render( Graphics2D g2, BoardPosition position, int cellSize, Board b)
+    public void render( Graphics2D g2, BoardPosition position, int cellSize, int margin, Board b)
     {
         GamePiece piece = position.getPiece();
         // if there is no piece, then nothing to render
@@ -78,7 +78,7 @@ public abstract class GamePieceRenderer
             return;
 
         int pieceSize = getPieceSize(cellSize, piece);
-        Point pos = getPosition(position, cellSize, pieceSize);
+        Point pos = getPosition(position, cellSize, pieceSize, margin);
         Ellipse2D circle = new Ellipse2D.Float( pos.x, pos.y, pieceSize + 1, pieceSize + 1 );
         int hlOffset = (int) (pieceSize / 2.3 + 0.5);  //spec highlight offset
         RoundGradientPaint rgp = new RoundGradientPaint(
