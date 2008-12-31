@@ -7,10 +7,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- *  the ChessChessBoardPosition describes the physical marker at a location on the board.
- *  It can beA ChessPiece is either empty or contains one of the standard chess pieces.
+ *  The ChessChessBoardPosition describes the physical marker at a location on the board.
+ *  A ChessPiece is either empty or contains one of the standard chess pieces.
  *  This class has in it the rules for how each chess move can move.
- *  @@ consider making this an abstract class and faving subclasses for each piece type.
  *
  * @see ChessBoard
  * @author Barry Becker
