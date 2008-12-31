@@ -1,7 +1,10 @@
 package com.becker.puzzle.common;
 
+import com.becker.ui.GUIUtil;
+
 import java.util.*;
 import java.util.concurrent.*;
+import java.security.AccessControlException;
 
 /**
  * ConcurrentPuzzleSolver
@@ -14,7 +17,7 @@ import java.util.concurrent.*;
 public class BaseConcurrentPuzzleSolver <P, M>  implements PuzzleSolver<P, M> {
     private final PuzzleController<P, M> puzzle;
     private final ExecutorService exec;
-    
+
     private final Set<P> seen;
     protected final ValueLatch<PuzzleNode<P, M>> solution = new ValueLatch<PuzzleNode<P, M>>();
     private final Refreshable<P, M> ui;
@@ -33,13 +36,13 @@ public class BaseConcurrentPuzzleSolver <P, M>  implements PuzzleSolver<P, M> {
             tpe.setRejectedExecutionHandler(new ThreadPoolExecutor.DiscardPolicy());
         }
     }
-    
+
     /**
      *The amount that you want the search to use depth first or breadth first search.
      *If factor is 0, then all depth first traversal and not concurrent, if 1 then all breadth first search and not sequential.
      *If the search is large, it is easier to run out of memory at the extremes.
      *Must be greater than 0 to have some amount of concurrency used.
-     *@param factor a number between 0 and 1. One being all breadth frist search and not sequential. 
+     *@param factor a number between 0 and 1. One being all breadth frist search and not sequential.
      */
     protected void setDepthBreadthFactor(float factor) {
         depthBreadthFactor = factor;
@@ -53,18 +56,23 @@ public class BaseConcurrentPuzzleSolver <P, M>  implements PuzzleSolver<P, M> {
     public List<M> solve() throws InterruptedException {
         try {
             P p = puzzle.initialPosition();
-            long startTime = System.currentTimeMillis();          
+            long startTime = System.currentTimeMillis();
             exec.execute(newTask(p, null, null));
             // block until solution found
             PuzzleNode<P, M> solnPuzzleNode = solution.getValue();
             List<M> path = (solnPuzzleNode == null) ? null: solnPuzzleNode.asMoveList();
-            if (ui != null) {      
+            if (ui != null) {
                 long elapsedTime = System.currentTimeMillis() - startTime;
                 ui.finalRefresh(path, solnPuzzleNode.position, numTries, elapsedTime);
-            } 
+            }
             return path;
         } finally {
-            exec.shutdown();
+            try {
+                exec.shutdown();
+            } catch (AccessControlException e) {
+                System.out.println("AccessControlException shutting down exec thread. " +
+                        "Probably because running in a secure sandbox.");
+            }
         }
     }
 
@@ -78,22 +86,22 @@ public class BaseConcurrentPuzzleSolver <P, M>  implements PuzzleSolver<P, M> {
         }
 
         public void run() {
-            numTries++;             
-            if (solution.isSet() || puzzle.alreadySeen(position, seen)) {                         
+            numTries++;
+            if (solution.isSet() || puzzle.alreadySeen(position, seen)) {
                 return; // already solved or seen this position
             }
-            if (ui!=null && !solution.isSet()) {     
-          
-                ui.refresh(position, numTries);                    
-            }     
-            if (puzzle.isGoal(position)) {                
+            if (ui!=null && !solution.isSet()) {
+
+                ui.refresh(position, numTries);
+            }
+            if (puzzle.isGoal(position)) {
                 solution.setValue(this);
             }
             else {
                 for (M m : puzzle.legalMoves(position)) {
                     Runnable task = newTask(puzzle.move(position, m), m, this);
-                    // either process the children sequentially or concurrently based on  depthBreadthFactor               
-                    if (RANDOM.nextFloat() > depthBreadthFactor) 
+                    // either process the children sequentially or concurrently based on  depthBreadthFactor
+                    if (RANDOM.nextFloat() > depthBreadthFactor)
                         task.run();
                     else
                         exec.execute(task);

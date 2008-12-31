@@ -16,21 +16,10 @@ class LiquidOptionsDialog extends NewtonianSimOptionsDialog
                           implements ActionListener
 {
 
-    // snake param options controls
-    private JTextField waveSpeedField_;
-    private JTextField waveAmplitudeField_;
-    private JTextField wavePeriodField_;
-    private JTextField massScaleField_;
-    private JTextField springKField_;
-    private JTextField springDampingField_;
-
-
-
     // constructor
     LiquidOptionsDialog( Frame parent, LiquidSimulator simulator ) {
         super( parent, simulator );
     }
-
 
 
     protected JPanel createCustomParamPanel() {
@@ -44,7 +33,7 @@ class LiquidOptionsDialog extends NewtonianSimOptionsDialog
                 BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), "Liquid Parameters" ) );
 
 
-        LiquidSimulator simulator = (LiquidSimulator) getSimulator();
+        //LiquidSimulator simulator = (LiquidSimulator) getSimulator();
 
         /*
         waveSpeedField_ = new JTextField( Double.toString( simulator.getSnake().getWaveSpeed() ) );
@@ -65,7 +54,7 @@ class LiquidOptionsDialog extends NewtonianSimOptionsDialog
         super.ok();
 
         // set the snake params
-        LiquidSimulator simulator = (LiquidSimulator) getSimulator();
+        //LiquidSimulator simulator = (LiquidSimulator) getSimulator();
 
         //Double waveSpeed = new Double( waveSpeedField_.getText() );
         //simulator.getSnake().setWaveSpeed( waveSpeed );

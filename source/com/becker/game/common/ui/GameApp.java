@@ -29,10 +29,8 @@ public class GameApp implements ActionListener
 
 
     static {
-        if (GameContext.getUseSound()) {
-            GameContext.log(3, "GameApp static init." );
-            GUIUtil.setStandAlone((GUIUtil.getBasicService() != null));
-        }
+        GameContext.log(3, "GameApp static init." );
+        GUIUtil.setStandAlone((GUIUtil.getBasicService() != null));
     }
 
     /**
@@ -41,7 +39,7 @@ public class GameApp implements ActionListener
     private GameApp()
     {
         GUIUtil.setCustomLookAndFeel();
-        
+
         frame_ = new JFrame();
         frame_.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -168,7 +166,7 @@ public class GameApp implements ActionListener
         // do webstart check and set appropriately
         GUIUtil.setStandAlone((GUIUtil.getBasicService() != null));
 
-        
+
         String defaultGame = PluginManager.getInstance().getDefaultPlugin().getName();
         String gameName;
         if (args.length == 0) {
@@ -187,7 +185,7 @@ public class GameApp implements ActionListener
             // create a game panel of the appropriate type based on the name of the class passed in.
             // if no game is specified as an argument, then we show a menu for selecting a game
             gameName = options.getValueForOption("game", defaultGame);
-            
+
             if (options.contains("locale")) {
                 // then a locale has been specified
                 String localeName = options.getValueForOption("locale", "ENGLISH");

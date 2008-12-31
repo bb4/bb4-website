@@ -9,18 +9,18 @@ import java.util.*;
  * @author Barry Becker Date: May 6, 2006
  */
 public class ReadNumberApp {
-   
+
     private static final BigInteger ZERO = new BigInteger("0");
     private static final BigInteger ONE_THOUSAND = new BigInteger("1000");
-    
+
     // biggest number we will allow (vigintillion)
     private static final BigInteger BIGGEST =
             new BigInteger("999999999999999999999999999999999999999999999999999999999999999");
 
-    // A greeting specified using allophones. See SpeechSynthesizer.    
+    // A greeting specified using allophones. See SpeechSynthesizer.
     private static final String GREETING = "p|l|ee|z e|n|t|er aa nn|u|m|b|er .|.";
      private static final SpeechSynthesizer speech = new SpeechSynthesizer();
-    
+
     private enum Type {ENGLISH , PHONETIC};
 
     /** don't allow instances of statid class */
@@ -31,11 +31,11 @@ public class ReadNumberApp {
     }
 
     public static void sayInEnglish(BigInteger number) {
-        String phonetic =  translateNumber(number, Type.PHONETIC);
+        String phonetic = translateNumber(number, Type.PHONETIC);
         speech.sayText( phonetic );
     }
 
-        
+
     /**
      * @param number
      * @return the english form of the number
@@ -43,7 +43,7 @@ public class ReadNumberApp {
     private static String translateNumber(BigInteger number, Type type) {
 
         if (number.compareTo(BIGGEST) > 0) {
-            return (type == Type.ENGLISH) ? 
+            return (type == Type.ENGLISH) ?
                 "OK. I give up. That number is tooo big even for me." :
                 "ii g|i|v u|p|. th|a|t n|u|m|b|e|r i|s t|uu b|i|g| ee|v|e|n f|o|r m|ee|.";
         }
@@ -66,7 +66,7 @@ public class ReadNumberApp {
         }
         return result;
     }
-        
+
 
     private static String getEnglishForGroup(int number, Type type) {
         assert(number >= 0 && number < 1000);
@@ -105,9 +105,9 @@ public class ReadNumberApp {
          }
          speech.sayPhoneWords( words );
     }
-    
+
     private static void testNumberSpeach() {
-                
+
         numberPronunciation(SimpleNumber.values());
         numberPronunciation(TensNumber.values());
         numberPronunciation(GroupNumber.values());
@@ -115,9 +115,9 @@ public class ReadNumberApp {
 
     public static void main(String[] args) {
         GUIUtil.setStandAlone(false);
-        
+
         //ReadNumberApp.testNumberSpeach();
-        // This works for arbitrary strings, but is not as nice sounding as the pre-generated wav file.        
+        // This works for arbitrary strings, but is not as nice sounding as the pre-generated wav file.
         speech.sayText( GREETING );
 
         Scanner scanner = new Scanner(System.in);

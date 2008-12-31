@@ -27,7 +27,7 @@ public class BlockadeGameImporter extends GameImporter {
         try {
             FileInputStream iStream = new FileInputStream( fileName );
             GameContext.log( 2, "opening " + fileName );
-            
+
             SGFLoader gameLoader = new SGFBlockadeLoader();
             SGFGame game = gameLoader.load( iStream );
             restoreGame( game );
@@ -63,7 +63,7 @@ public class BlockadeGameImporter extends GameImporter {
                 Size2Token sizeToken = (Size2Token)token;
                 numRows = sizeToken.getNumRows();
                 numCols = sizeToken.getNumColumns();
-            }        
+            }
             else if (token instanceof Player2NameToken) {
                 Player2NameToken nameToken = (Player2NameToken) token;
                 gc.getPlayer2().setName(nameToken.getName());
@@ -71,7 +71,7 @@ public class BlockadeGameImporter extends GameImporter {
             else if (token instanceof Player1NameToken) {
                 Player1NameToken nameToken = (Player1NameToken) token;
                 gc.getPlayer1().setName(nameToken.getName());
-            }           
+            }
         }
         gc.getBoard().setSize(numRows, numCols);
     }
@@ -88,9 +88,9 @@ public class BlockadeGameImporter extends GameImporter {
         }
         else if (token instanceof TextToken ) {
             TextToken textToken = (TextToken) token;
-            System.out.println("text="+textToken.getText());
+            GameContext.log(1, "text="+textToken.getText());
         } else {
-            System.out.println("\nignoring token "+token.getClass().getName());
+            GameContext.log(1, "\nignoring token "+token.getClass().getName());
         }
         return found;
     }
@@ -102,16 +102,16 @@ public class BlockadeGameImporter extends GameImporter {
     protected Move createMoveFromToken( SGFToken token)
     {
          BlockadeMoveToken mvToken = (BlockadeMoveToken) token;
-         
+
          boolean player1 = token instanceof Player1MoveToken;
          BlockadeWall wall = null;
          if (mvToken.hasWall())
-             wall = new BlockadeWall(new BlockadeBoardPosition(mvToken.getWallPoint1().y, mvToken.getWallPoint1().x), 
+             wall = new BlockadeWall(new BlockadeBoardPosition(mvToken.getWallPoint1().y, mvToken.getWallPoint1().x),
                                                        new BlockadeBoardPosition(mvToken.getWallPoint2().y, mvToken.getWallPoint2().x));
-         
+
          BlockadeMove move = BlockadeMove.createMove(mvToken.getFromY(), mvToken.getFromX(),
                                                                                         mvToken.getToY(), mvToken.getToX(),
-                                                                                        0, new GamePiece(player1), wall);  
+                                                                                        0, new GamePiece(player1), wall);
          return move;
     }
 

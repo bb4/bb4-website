@@ -1,6 +1,5 @@
 package com.becker.simulation.common;
 
-
 import com.becker.common.*;
 import com.becker.common.util.Util;
 import com.becker.ui.*;
@@ -10,22 +9,29 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
+ * Base class for all simulator applets.
  * Resizable applet for showing simulations.
  *
- * @author Barry Becker Date: Sep 17, 2005
+ * @author Barry Becker   Date: Sep 17, 2005
  */
-public class SimulatorApplet extends JApplet {
+public class SimulatorApplet extends ApplicationApplet {
 
     private static Simulator simulator_ = null;
-    private ResizableAppletPanel resizablePanel_ = null;
+
     private static final boolean RUN_OPTIMIZATION = false;
     private static final String DEFAULT_SIMULATOR = "com.becker.simulation.snake.SnakeSimulator";
 
-    public SimulatorApplet() {}
+    public  SimulatorApplet() {
+        simulator_ = null;
+    }
 
+    /**
+     * Construct the applet
+     * @param simulatorClassName  name of the simulator class to show.
+     */
     public SimulatorApplet(String simulatorClassName) {
 
-         simulator_ = createSimulationFromClassName(simulatorClassName);
+        simulator_ = createSimulationFromClassName(simulatorClassName);
     }
 
     public String getTitle() {
@@ -33,11 +39,11 @@ public class SimulatorApplet extends JApplet {
     }
 
     /**
-     * the applet's init method
+     * create and initialize the simulation
      */
-    public void init()
+    public JPanel createMainPanel()
     {
-        this.getParameterInfo();
+        //this.getParameterInfo();
         if (simulator_ == null) {
 
             String className = getParameter("panel_class");
@@ -52,23 +58,19 @@ public class SimulatorApplet extends JApplet {
             animPanel.add( dynamicControls, BorderLayout.EAST );
         }
 
-        resizablePanel_ = new ResizableAppletPanel( animPanel );
-        Container content = this.getContentPane();
-        content.setLayout(new BorderLayout());
-
-        content.add( resizablePanel_, BorderLayout.CENTER );
         simulator_.setVisible(true);
-        System.out.println("size="+simulator_.getPreferredSize());
-        content.setPreferredSize(simulator_.getPreferredSize());
-        content.repaint();
+        //System.out.println("size="+simulator_.getPreferredSize());
+        //content.setPreferredSize(simulator_.getPreferredSize());
+        //content.repaint();
         setSize(simulator_.getPreferredSize());
-     
+        return animPanel;
     }
 
     private static  Simulator createSimulationFromClassName(String className) {
         if (className == null) {
             return null;
         }
+        System.out.println("about to load: " + className);
         Class simulatorClass = ClassLoaderSingleton.loadClass(className);
         Simulator simulator = null;
 

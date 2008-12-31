@@ -61,7 +61,7 @@ public class BlockadeTestCase extends TestCase {
     protected Move getNextMove(String problemFile, boolean firstPlayerPlays) {
 
 
-        System.out.println("finding next move for "+problemFile+" ...");
+        GameContext.log(1, "finding next move for "+problemFile+" ...");
         long time = System.currentTimeMillis();
         restore(problemFile);
         controller_.requestComputerMove( firstPlayerPlays, true );
@@ -69,7 +69,7 @@ public class BlockadeTestCase extends TestCase {
         Move m = controller_.getBoard().getLastMove();
 
         long elapsedTime = (System.currentTimeMillis() - time) / 1000;
-        System.out.println("got " + m + " in " + elapsedTime + " seconds.");
+        GameContext.log(1, "got " + m + " in " + elapsedTime + " seconds.");
         return m;
     }
 

@@ -20,26 +20,19 @@ public final class EnvironmentRenderer
     private static final Color TEXT_COLOR = new Color( 10, 10, 170, 200 );
     //private static final float PRESSURE_COL_OPACITY = 0.01f;
     // scales the size of everything
-    public static final double DEFAULT_SCALE = 30;
+    private static final double DEFAULT_SCALE = 30;
+    private static final double VELOCITY_VECTOR_SCALE = .5;
 
     private static final int OFFSET = 10;
 
-    private static final double pressureVals_[] = {-100.0, -5.0, 0.0, 5.0, 100.0};
-    private static final Color pressureColors_[] = {
-        new Color( 0, 0, 255, 20 ),
-        new Color( 70, 120, 240, 20 ),
-        new Color( 250, 250, 250, 20 ),
-        new Color( 240, 120, 57, 20 ),
-        new Color( 255, 0, 0, 20 )
-    };
-    private static final ColorMap pressureColorMap_ =
-            new ColorMap( pressureVals_, pressureColors_ );
+    private static final ColorMap pressureColorMap_ = new PressureColorMap();
 
     // temp var used throughout for efficency. avoids creating objects
-    private static double[] a_ = new double[2]; // temp point var
+    private static final double[] a_ = new double[2]; // temp point var
     private static final Font BASE_FONT = new Font( "Sans-serif", Font.PLAIN, 12 );
 
     private double scale_ = DEFAULT_SCALE;
+
     private float wallLineWidth_;
     private int particleSize_;
 
@@ -49,7 +42,7 @@ public final class EnvironmentRenderer
 
     public EnvironmentRenderer() {
        setScale(DEFAULT_SCALE);
-    };
+    }
 
     public void setScale(double scale) {
         scale_ = DEFAULT_SCALE;
@@ -83,18 +76,15 @@ public final class EnvironmentRenderer
      */
    public void render(LiquidEnvironment env, Graphics2D g)
     {
-
         double time = System.currentTimeMillis();
 
         int i,j;
         int rightEdgePos = (int) (scale_ * env.getXDim());
         int bottomEdgePos = (int) (scale_ * env.getYDim());
-        Cell[][] grid = env.getGrid();
 
         // draw the cells colored by ---pressure--- val
         if (showPressures_)
             renderPressure(g, env);
-
 
         // draw the ---walls---
         Stroke oldStroke = g.getStroke();
@@ -122,6 +112,7 @@ public final class EnvironmentRenderer
 
         // draw text representing internal state for debug purposes.
         if ( LiquidEnvironment.LOG_LEVEL >= 2 ) {
+            Cell[][] grid = env.getGrid();
             g.setColor( TEXT_COLOR );
             g.setFont( BASE_FONT );
             StringBuffer strBuf = new StringBuffer( "12" );
@@ -165,19 +156,17 @@ public final class EnvironmentRenderer
     private void drawParticles(Graphics2D g, LiquidEnvironment env) {
         g.setColor( PARTICLE_COLOR );
         // draw the ---particles--- of liquid
-        Iterator it = env.getParticles().iterator();
-        while ( it.hasNext() ) {
-            Particle p = (Particle) it.next();
-            p.get( a_ );
+        for (Particle p : env.getParticles()) {
+            p.get(a_);
             //Cell c = p.getCell();
             //int[] pos = c.getPos();
             //if (pos[0] == 2  &&  pos[1] == 2)
             int comp = (int) (256.0 * p.getAge() / 10.0);
             comp = (comp > 255) ? 255 : comp;
-            g.setColor( new Color( comp, 100, 255 - comp, 60 ) );
+            g.setColor(new Color(comp, 100, 255 - comp, 60));
             //System.out.println("pos = "+a_[0]+", "+a_[0]);
-            g.fillOval( (int) (scale_ * a_[0] + OFFSET), (int) (scale_ * a_[1] + OFFSET), particleSize_, particleSize_ );
-            g.setColor( PARTICLE_COLOR );
+            g.fillOval((int) (scale_ * a_[0] + OFFSET), (int) (scale_ * a_[1] + OFFSET),
+                              particleSize_, particleSize_);
         }
     }
 
@@ -200,11 +189,13 @@ public final class EnvironmentRenderer
                 double u = grid[i][j].getUip();
                 double v = grid[i][j].getVjp();
                 int x = (int) (scale_ * i) + OFFSET;
+                int xMid =  (int) (scale_ * (i + 0.5)) + OFFSET;
+                int xLen = (int) (scale_ * i + VELOCITY_VECTOR_SCALE * u) + OFFSET;
                 int y = (int) (scale_ * j) + OFFSET;
-                g.drawLine( (int) (scale_ * (i + 0.5)) + OFFSET, y,
-                        (int) (scale_ * (i + 0.5)) + OFFSET, (int) (scale_ * j + 8.0 * v) + OFFSET );
-                g.drawLine( x, (int) (scale_ * (j + 0.5)) + OFFSET,
-                        (int) (scale_ * i + 8.0 * u) + OFFSET, (int) (scale_ * (j + 0.5)) + OFFSET );
+                int yMid =  (int) (scale_ * (j + 0.5)) + OFFSET;
+                int yLen = (int) (scale_ * j + VELOCITY_VECTOR_SCALE * v) + OFFSET ;
+                g.drawLine( xMid, y, xMid, yLen);
+                g.drawLine( x, yMid, xLen, yMid );
             }
         }
     }

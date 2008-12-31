@@ -8,9 +8,9 @@ import javax.vecmath.*;
  *
  *                   ^  vjp_[cur_]     pos v direction
  *                   |
- *             ________
+ *              _____________
  *             |             |
- *      <--  |      p     |  --> uip_[cur_]
+ *        <--  |      p      |  --> uip_[cur_]
  *             |             |
  *              ------------
  *                   |
@@ -24,17 +24,17 @@ public class Cell
 {
 
     // 4 if 2d, 6 if 3d, 12 if 4d
-    public static final int NUM_CELL_FACES = 4;
+    private static final int NUM_CELL_FACES = 4;
 
     // type of cell
     private CellStatus status_;
 
     // size of a cell
-    private double dx_;
-    private double dy_;
+    private final double dx_;
+    private final double dy_;
     // squares of edge lengths
-    private double dxSq_;
-    private double dySq_;
+    private final double dxSq_;
+    private final double dySq_;
 
     // pressure at the center of the cell
     private double pressure_;
@@ -43,8 +43,8 @@ public class Cell
     // defined at the center of each face
     // uip_ = u(i+0.5, j, k)
     // vjp_ = v(i, j+0.5, k)
-    private double[] uip_ = new double[2];
-    private double[] vjp_ = new double[2];
+    private final double[] uip_ = new double[2];
+    private final double[] vjp_ = new double[2];
 
     private int numParticles_;
 
@@ -139,13 +139,13 @@ public class Cell
     {
         if ( numParticles_ < 0 ) {
             assert false : "num particles less than 0";
-        } 
+        }
         else if ( status_ == CellStatus.OBSTACLE ) {
-            return;
+            // obstacles never change status
         }
         else if ( numParticles_ == 0 ) {
             status_ = CellStatus.EMPTY;
-        } 
+        }
         else {
             if ( cXp1.getNumParticles() > 0 && cXm1.getNumParticles() > 0 &&
                     cYp1.getNumParticles() > 0 && cYm1.getNumParticles() > 0 ) {
@@ -162,7 +162,7 @@ public class Cell
     }
 
     /**
-     * compute velocity at next time step.
+     * compute velocity at next time step given nieghboring cells.
      *         O        cYp1  cXp1Yp1
      *       cXm1       M       cXp1
      *     cXm1Yp1  cYm1     O
@@ -180,7 +180,7 @@ public class Cell
             vjp_[1 - current_] = vjp_[current_] + dt * forceY;
             return;
         }
-        assert  (dt > 0.0000001) : "dt got too small";
+        assert  (dt > 0.000001) : "dt got too small";
 
         // u
         // u(i, j) = 0.5*(u(i+0.5, j) + u(i-0.5, j))
@@ -205,11 +205,14 @@ public class Cell
 
         if ( cXp1.getStatus() != CellStatus.OBSTACLE ) {
             double newu =  uip_[current_] + dt * ( pf );
-            if (newu > 20) {
-                System.out.println("newu="+ newu);
-                newu = 20;
-            }
-            uip_[1 - current_] = newu;          
+            /*
+            if (Math.abs(pf) > 10) {
+                System.out.println("much bigger x change than expected. oldu ="+ uip_[current_] + " newu="+ newu + " forceX=" + forceX + " forceY="+forceY
+                        + "\ncXp1=" + cXp1 + " cXm1=" + cXm1
+                        + "\ncXp1=" + cYp1 + " cXm1=" + cYm1
+                        + "\ncXp1Ym1=" + cXp1Ym1 + " cXm1Yp1=" + cXm1Yp1);
+            } */
+            uip_[1 - current_] = newu;
         }
 
         // v
@@ -220,7 +223,7 @@ public class Cell
         // v(i, j) = 0.5*(v(i, j-0.5) + v(i, j+0.5))
         double v_j = (cYm1.vjp_[current_] + vjp_[current_]) / 2.0;
         // v(i, j+1) = 0.5*(v(i, j+0.5) + v(i, j+1.5))
-        double v_jp1 = (vjp_[current_] + cYp1.vjp_[current_]);
+        double v_jp1 = (vjp_[current_] + cYp1.vjp_[current_]) / 2.0;    // / 2.0 was not here originally
 
         xNume = (u_imjp * v_imjp - u_ipjp * v_ipjp);
         yNume = (v_j * v_j - v_jp1 * v_jp1);
@@ -231,10 +234,13 @@ public class Cell
 
         if ( cYp1.getStatus() != CellStatus.OBSTACLE ) {
             double newv =  vjp_[current_] + dt * ( pf );
-             if (newv > 20) {
-                System.out.println("newv="+ newv);       
-                newv = 20;
-             }
+            /*
+            if (Math.abs(pf) > 10) {
+                System.out.println("much bigger y change than expected. oldv ="+ vjp_[current_] + " newv="+ newv + " forceX=" + forceX + " forceY="+forceY
+                        + "\ncXp1=" + cXp1 + " cXm1=" + cXm1
+                        + "\ncXp1=" + cYp1 + " cXm1=" + cYm1
+                        + "\ncXp1Ym1=" + cXp1Ym1 + " cXm1Yp1=" + cXm1Yp1);
+            } */
             vjp_[1 - current_] = newv;
         }
         //String message = ("updateTilde: new vel is:"+v_jp[1-cur_]+", forceY="+dt*forceY);
@@ -300,21 +306,21 @@ public class Cell
      *          4  2  X
      *          3  c  1
      *          X  5  6
-     *  case 2 and 3: particle in upper left 
+     *  case 2 and 3: particle in upper left
      *         4   2   X
      *       1/3  c   X
      *         6   5   X
-     *  case 3: lower right.  
+     *  case 3: lower right.
      *  case 4: particle in lower left.
      *         X    X    X
      *       1/3   c    X
-     *       4/6 2/5  X        
+     *       4/6 2/5  X
      * @param cX either one forward or one back in the x direction depending on the position of the particle.
      * @param cY either one forward or one back in the y direction depending on the position of the particle.
      * @param cXm1  x- 1  (always the cell to the left)
      * @param cXm1y x - 1 and either one forward or one back in the y direction depending on the position of the particle.
      * @param cYm1  y - 1  (always the cell to the bottom)
-     * @param cYm1y x -1 and either one forward or one back in the y direction depending on the position of the particle.
+     * @param cXym1 x -1 and either one forward or one back in the y direction depending on the position of the particle.
      */
     public Vector2d interpolateVelocity( Point2d particle,
                                      Cell cX, Cell cY,
@@ -328,9 +334,9 @@ public class Cell
         double y = particle.y - (int) particle.y;
 
         double xx = (x > 0.5) ? (1.5 - x) : (0.5 + x);
-        double yy = (y > 0.5) ? (1.5 - y) : (0.5 + y);        
+        double yy = (y > 0.5) ? (1.5 - y) : (0.5 + y);
         double x1 = (1.0 - x) * cXm1.uip_[current_] + x * uip_[current_];
-        double x2 = (1.0 - x) * cXm1y.uip_[current_] + x * cY.uip_[current_];        
+        double x2 = (1.0 - x) * cXm1y.uip_[current_] + x * cY.uip_[current_];
         double pu =  x1 * yy + x2 * (1.0 - yy);
         double y1 = (1.0 - y) * cYm1.vjp_[current_] + y * vjp_[current_];
         double y2 = (1.0 - y) * cXym1.vjp_[current_] + y * cX.vjp_[current_];
@@ -350,16 +356,17 @@ public class Cell
      * Ensure that what comes in must also go out.
      * cXp1 stands for the neighbor cell that is located at +1 in the X direction.
      * @param numSurfaces number of empty adjacent cells. In other words the number of surfaces we have.
-     * @param 
+     * @param
      */
     private void dissipateOverflow( int numSurfaces, double overflow,
                                     Cell cXp1, Cell cXm1, Cell cYp1, Cell cYm1 )
     {
-        //System.out.println("dissipating overflow at ("+x_[0]+","+x_[1]+") ="+overflow+" n= "+n);
+        if (Math.abs(overflow) > 1000)
+            System.out.println("dissipating overflow ="+overflow);
         if ( cXp1.getStatus() == CellStatus.EMPTY ) {
-            if ( numSurfaces == 1 ) 
+            if ( numSurfaces == 1 )
                 uip_[current_] = -dx_ * overflow;
-            else if ( (numSurfaces == 3 && cXm1.getStatus() != CellStatus.EMPTY) || (numSurfaces == 2) ) 
+            else if ( (numSurfaces == 3 && cXm1.getStatus() != CellStatus.EMPTY) || (numSurfaces == 2) )
                 uip_[current_] = cXm1.uip_[current_];
         }
         if ( cXm1.getStatus() == CellStatus.EMPTY ) {

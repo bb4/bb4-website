@@ -16,8 +16,8 @@ public class Cell {
     // the BigCell to which I belong
     private BigCell parent_;
 
-    // and, most importantly, the intersection of these.
-    private List candidates_ = null;
+    /** and, most importantly, the intersection of these.    */
+    private List<Integer> candidates_ = null;
 
 
     public Cell(int value, BigCell parent) {
@@ -47,7 +47,7 @@ public class Cell {
     public void clearValue() {
         value_ = 0;
         original_ = false;
-        candidates_ = Collections.synchronizedList(new LinkedList());
+        candidates_ = Collections.synchronizedList(new LinkedList<Integer>());
     }
 
     /**
@@ -65,7 +65,7 @@ public class Cell {
             candidates_ = null;
         }
         else {
-            candidates_ = new LinkedList();
+            candidates_ = new LinkedList<Integer>();
         }
     }
 
@@ -75,12 +75,12 @@ public class Cell {
         return candidates_;
     }
 
-    public void updateCandidates(List rowCandidates, List colCandidates) {
+    public void updateCandidates(List<Integer> rowCandidates, List<Integer> colCandidates) {
         if (candidates_ == null)
             return;
         candidates_.clear();
-        List bcList = parent_.getCandidates();
-        for (Object candidate : bcList)  {
+        List<Integer> bcList = parent_.getCandidates();
+        for (Integer candidate : bcList)  {
             //System.out.println("Checking to see if " + candidate + " is also in "
             //                   + getRowCandidates(row)
             //                  + " or " + getColCandidates(col));
@@ -91,10 +91,11 @@ public class Cell {
     }
 
     /**
-     * @@ Perhaps make a separate pass for setting all the cells that only have one value in candidate list first.
+     * @@ Perhaps make a separate pass for setting all the cells that only have one value in the
+     * candidate list first.
      * This should improve performance.
      */
-    public void checkAndSetUniqueValues(List rowCandidates, List colCandidates) {
+    public void checkAndSetUniqueValues(List<Integer> rowCandidates, List<Integer> colCandidates) {
 
         if (candidates_ == null) {
             // nothing to do, the final value is already determined.
@@ -104,7 +105,7 @@ public class Cell {
         int unique = parent_.getUniqueValueForCell(this);
         if (unique > 0) {
             // set it and remove from appropriate candidate lists
-            //System.out.println("setting val of "+ row+ "  "+col+" to "+ unique );
+            // System.out.println("setting val of "+ row+ "  "+col+" to "+ unique );
             setValue(unique);
             assert(candidates_.contains(unique));
             candidates_.clear();

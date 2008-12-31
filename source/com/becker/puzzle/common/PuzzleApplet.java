@@ -10,57 +10,50 @@ import java.util.*;
 
 /**
  * Base class for Puzzle applets.
- * @author Barry Becker
+ *
+ * @author Barry Becker  Date: Sep 2005
  */
-public abstract class PuzzleApplet extends JApplet 
-                                                 implements ActionListener, ItemListener
+public abstract class PuzzleApplet extends ApplicationApplet
+                                   implements ActionListener, ItemListener
 {
-    
     protected PuzzleController controller_;
     protected PuzzleViewer viewer_;
-    private ResizableAppletPanel resizablePanel_ = null;
-    
+
     private JButton solveButton_;
     private Choice algorithmChoice_;
 
     /**
-     * Construct the application
+     * Construct the application.
      */
-    public PuzzleApplet() {
-        GUIUtil.setCustomLookAndFeel();
-    }
+    public PuzzleApplet() {}
 
     /**
      * create and initialize the puzzle
      * (init required for applet)
      */
-    public void init() {
+    protected JPanel createMainPanel() {
+        JPanel mainPanel = new JPanel(new BorderLayout());
 
         viewer_ = createViewer();
         controller_ = createController(viewer_);
-        
-        JPanel mainPanel = new JPanel(new BorderLayout());
-        resizablePanel_ = new ResizableAppletPanel(mainPanel);
-        
+
         mainPanel.add(createButtonPanel(), BorderLayout.NORTH);
         mainPanel.add(viewer_, BorderLayout.CENTER);
         JPanel customControls = createCustomControls();
         if (customControls != null) {
             mainPanel.add(customControls, BorderLayout.SOUTH);
         }
-             
-        getContentPane().add(resizablePanel_);
-        getContentPane().setPreferredSize(viewer_.getPreferredSize());
+        return mainPanel;
     }
 
     protected abstract PuzzleViewer createViewer();
-    
+
     protected abstract PuzzleController createController(Refreshable viewer);
-    
+
     protected JPanel createCustomControls() {
         return null;
     }
-  
+
     /**
      * solve and generate button at the top.
      */
@@ -82,16 +75,17 @@ public abstract class PuzzleApplet extends JApplet
      */
     private Choice createAlgorithmDropdown() {
         algorithmChoice_ = new Choice();
-        algorithmChoice_.addItemListener(this);       
+        algorithmChoice_.addItemListener(this);
         for (AlgorithmEnum a: getAlgorithmValues()) {
             algorithmChoice_.add(a.getLabel());
         }
         algorithmChoice_.select(0);
         return algorithmChoice_;
     }
-    
+
+
     protected abstract AlgorithmEnum[] getAlgorithmValues();
-    
+
     /**
      * algorithm selected.
      * @param e
@@ -99,32 +93,20 @@ public abstract class PuzzleApplet extends JApplet
     public void itemStateChanged(ItemEvent e) {
 
         int selected = algorithmChoice_.getSelectedIndex();
-        controller_.setAlgorithm(getAlgorithmValues()[selected]);        
+        controller_.setAlgorithm(getAlgorithmValues()[selected]);
     }
-
 
     /**
      *Solve button clicked.
      */
     public void actionPerformed(ActionEvent e) {
         // must execute long tasks in a separate thread,
-        // otherwise you don't see the steps of the animation.        
+        // otherwise you don't see the steps of the animation.
         Object src = e.getSource();
-        
-        if (src == solveButton_)  {        
-            controller_.startSolving();                                             
+
+        if (src == solveButton_)  {
+            controller_.startSolving();
         }
     }
-    
-    /**
-     * called by the browser after init(), if running as an applet
-     */
-    public void start() {}
-
-    /**
-     * stop and cleanup.
-     */
-    public void stop() {}
-    
 }
 

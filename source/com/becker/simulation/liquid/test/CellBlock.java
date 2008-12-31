@@ -6,10 +6,10 @@ import com.becker.simulation.liquid.*;
  * A 3x3 block of cells for testing purposes
  * @author Barry Becker Date: Aug 12, 2006
  */
-public class CellBlock {
+class CellBlock {
 
     private static final int DIM = 3;
-    private Cell[][] block_;
+    private final Cell[][] block_;
 
     public CellBlock() {
         block_ = new Cell[DIM][DIM];
@@ -30,7 +30,7 @@ public class CellBlock {
     public Cell get(int offsetX, int offsetY) {
         return block_[offsetX + 1][offsetY + 1];
     }
-    
+
     public Cell getAbsolute(int x, int y) {
         return block_[x][y];
     }
@@ -40,7 +40,7 @@ public class CellBlock {
            for (int j = 0; j<DIM; j++)
                block_[i][j].setPressure(p);
     }
-    
+
     public void setVelocities(double u, double v) {
         for (int i = 0; i<DIM; i++)
            for (int j = 0; j<DIM; j++)

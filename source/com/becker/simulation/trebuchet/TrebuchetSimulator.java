@@ -29,6 +29,7 @@ public class TrebuchetSimulator extends NewtonianSimulator
 
     private static final String FILE_NAME_BASE = ANIMATION_FRAME_FILE_NAME_PREFIX + "trebuchet/trebuchetFrame";
 
+    private static final int DEFAULT_NUM_STEPS_PER_FRAME = 1;
 
     // the amount to advance the animation in time for each frame in seconds
     private static final double TIME_STEP = 0.002;
@@ -41,7 +42,7 @@ public class TrebuchetSimulator extends NewtonianSimulator
     public TrebuchetSimulator()
     {
         super("Trebuchet");
-        reset();        
+        reset();
         this.setPreferredSize(new Dimension( 800, 900));
     }
 
@@ -54,12 +55,12 @@ public class TrebuchetSimulator extends NewtonianSimulator
     private void commonInit( Trebuchet trebuchet )
     {
         trebuchet_ = trebuchet;
-        setNumStepsPerFrame(4);
+        setNumStepsPerFrame(DEFAULT_NUM_STEPS_PER_FRAME);
         this.setBackground(BACKGROUND_COLOR);
         initCommonUI();
         this.render();
     }
-    
+
     protected void reset() {
         final Trebuchet trebuchet = new Trebuchet();
         commonInit( trebuchet );
@@ -71,9 +72,9 @@ public class TrebuchetSimulator extends NewtonianSimulator
     }
 
     public JPanel createTopControls()
-    {                 
-         JPanel controls = super.createTopControls();     
-        
+    {
+         JPanel controls = super.createTopControls();
+
         JPanel zoomPanel = new JPanel();
         zoomPanel.setLayout(new FlowLayout());
         JLabel zoomLabel = new JLabel( " Zoom" );
