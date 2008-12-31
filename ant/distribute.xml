@@ -4,7 +4,6 @@
   </description>
 
   <!-- need these for auto creation of applet html files
-      TODO: make default appletHtml.properties file that contains defaults and then have only overrides in other files.
    -->
   <property file="common.properties"/>
   <property file="appletHtmlCommon.properties"/>
