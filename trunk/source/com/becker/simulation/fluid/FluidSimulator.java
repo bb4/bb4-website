@@ -2,16 +2,12 @@ package com.becker.simulation.fluid;
 
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.parameter.Parameter;
-import com.becker.common.*;
 import com.becker.common.util.FileUtil;
 import com.becker.optimization.*;
 import com.becker.simulation.common.*;
 import com.becker.ui.*;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import javax.swing.JPanel;
 
 /**
@@ -20,9 +16,9 @@ import javax.swing.JPanel;
  *http://www.dgp.toronto.edu/people/stam/reality/Research/pdf/GDC03.pdf
  *
  *
- *TODO
- *  change measning of foxce vectors checlbox
- *  Shouyld not need to check the show force vector check to see things.
+ * TODO
+ *  change meaning of force vectors checkbox
+ *  Should not need to check the show force vector check to see things.
  *  Have the grid resize as the panel resizes
  *  Liquid specific parameters 
  *   - number of cells (x,y) - autocalculate the scale size based on the window size.
@@ -30,7 +26,6 @@ import javax.swing.JPanel;
  *   - viscosity
  *   - force factor
  *   - source_ink factor
- *   - 
  */
 public class FluidSimulator extends NewtonianSimulator 
 {
