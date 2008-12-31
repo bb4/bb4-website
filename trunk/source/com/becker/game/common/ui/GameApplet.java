@@ -26,16 +26,16 @@ public class GameApplet extends JApplet
         GUIUtil.setStandAlone(true);
 
         String gameName = getParameter("program_name");
-        // these values can now be retrieved from plugins.xml instead from applet 
+        // these values can now be retrieved from plugins.xml instead from applet
         String className = PluginManager.getInstance().getPlugin(gameName).getPanelClass();
-                
-        //String className = getParameter("panel_class");       
-        String localeName = getParameter("locale");
-   
-        // this will load the resources for the specified game.        
+
+        //String className = getParameter("panel_class");
+        //String localeName = getParameter("locale");
+
+        // this will load the resources for the specified game.
         GameContext.loadGameResources(gameName);
-        
-        Class gameClass = ClassLoaderSingleton.loadClass(className);            
+
+        Class gameClass = ClassLoaderSingleton.loadClass(className);
 
         try {
             gamePanel_ = (GamePanel)gameClass.newInstance();

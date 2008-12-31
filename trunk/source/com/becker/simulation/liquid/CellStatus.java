@@ -13,7 +13,7 @@ public enum CellStatus {
     ISOLATED('I');   // has liquid, but no full cells are adjacent
 
 
-    private char symbol_;
+    private final char symbol_;
 
     /**
      * constructor for cell type enum

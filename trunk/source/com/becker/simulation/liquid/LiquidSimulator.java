@@ -2,7 +2,6 @@ package com.becker.simulation.liquid;
 
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.parameter.Parameter;
-import com.becker.common.*;
 import com.becker.common.util.FileUtil;
 import com.becker.optimization.*;
 import com.becker.simulation.common.*;
@@ -10,21 +9,23 @@ import com.becker.ui.*;
 
 import java.awt.*;
 
+/**
+ * @author Barry Becker
+ */
 public class LiquidSimulator extends NewtonianSimulator
 {
 
-    //public static final String CONFIG_FILE = "com/becker/liquid/initialState.data";
     public static final String CONFIG_FILE = "com/becker/liquid/initialStateTest.data";
     private static final String FILE_NAME_BASE = ANIMATION_FRAME_FILE_NAME_PREFIX + "liquid/liquidFrame";
 
-    LiquidEnvironment environment_;
-    EnvironmentRenderer envRenderer_;
+    private LiquidEnvironment environment_;
+    private EnvironmentRenderer envRenderer_;
 
-    // if true it will save all the animation steps to files
+    /** if true it will save all the animation steps to files */
     public static final boolean RECORD_ANIMATION = false;
 
-    protected static final double TIME_STEP = 0.01;  // initial time step
-
+    /** The initial time step. It may adapt. */
+    private static final double INITIAL_TIME_STEP = 0.002;
 
     private static final Color BG_COLOR = Color.white;
 
@@ -33,8 +34,7 @@ public class LiquidSimulator extends NewtonianSimulator
 
     public LiquidSimulator() {
         super("Liquid");
-        environment_ =  new LiquidEnvironment( 20, 15 );
-        commonInit();
+        reset();
     }
 
     public LiquidSimulator( LiquidEnvironment environment )
@@ -43,16 +43,19 @@ public class LiquidSimulator extends NewtonianSimulator
         environment_ = environment;
         commonInit();
     }
-    
+
     protected void reset() {
+        boolean oldPaused = this.isPaused();
+        setPaused(true);
         environment_ =  new LiquidEnvironment( 20, 15 );
         commonInit();
+        setPaused(oldPaused);
     }
 
     private void commonInit() {
         initCommonUI();
         envRenderer_ = new EnvironmentRenderer();
-   
+
         int s = (int) envRenderer_.getScale();
         setPreferredSize(new Dimension( environment_.getWidth() * s, environment_.getHeight() * s));
     }
@@ -63,7 +66,7 @@ public class LiquidSimulator extends NewtonianSimulator
 
 
     protected double getInitialTimeStep() {
-        return TIME_STEP;
+        return INITIAL_TIME_STEP;
     }
 
 
@@ -97,6 +100,7 @@ public class LiquidSimulator extends NewtonianSimulator
     public void setShowForceVectors( boolean show ) {
         envRenderer_.setShowPressures(show);
     }
+
     public boolean getShowForceVectors() {
         return envRenderer_.getShowPressures();
     }

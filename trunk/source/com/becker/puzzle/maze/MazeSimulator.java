@@ -10,15 +10,12 @@ import java.awt.event.*;
  * A maze generator and solver
  *@author Barry Becker
  */
-public class MazeSimulator extends JApplet implements ActionListener
+public class MazeSimulator extends ApplicationApplet implements ActionListener
 {
-
     MazePanel mazePanel_;
 
-    ResizableAppletPanel resizablePanel_ = null;
-
     // the passage thickness in pixels
-    protected static final int PASSAGE_THICKNESS = 60;
+    protected static final int PASSAGE_THICKNESS = 40;
     protected static final int INITIAL_ANIMATION_SPEED = 20;
 
     protected NumberInput thicknessField_ = null;
@@ -34,67 +31,62 @@ public class MazeSimulator extends JApplet implements ActionListener
 
     protected Dimension oldSize_ = null;
 
-    public boolean isStandalone_ = false;
-    // the frame is only created if we run as an application
-    protected JFrame baseFrame_ = null;
-
     // constructor
     public MazeSimulator()
-    {
-        mazePanel_ = new MazePanel();
-        commonInit();
-    }
-
-    public void commonInit()
-    {
-        GUIUtil.setCustomLookAndFeel();
-
-        System.out.println( "creating maze simulator" );
-        enableEvents( AWTEvent.WINDOW_EVENT_MASK );
-
-        setFont( new Font( "Serif", Font.PLAIN, 14 ) );
-
-        JPanel mainPanel = createMainPanel( mazePanel_ );
-
-        resizablePanel_ = new ResizableAppletPanel( mainPanel );
-        this.getContentPane().add( resizablePanel_ );
-
-        mazePanel_.addComponentListener( new ComponentAdapter()
-        {
-            public void componentResized( ComponentEvent ce )
-            {
-                // only resize if the dimensions have changed
-                Dimension newSize = mazePanel_.getSize();
-                if ( oldSize_ == null ||
-                        oldSize_.getWidth() != newSize.getWidth() ||
-                        oldSize_.getHeight() != newSize.getHeight() ) {
-                    oldSize_ = newSize;
-                    //System.out.println( "compResized: oldSize=" + oldSize_ + " maze_.getSize()=" + maze_.getSize() );
-                    if (newSize.getWidth() > 0) {
-                        //System.out.println("compResized: call regen");
-                        resized();
-                    }
-                }  else {
-                    System.out.println("The dims did not change "+oldSize_.getWidth()+' ' + newSize.getWidth());
-                }
-            }
-        } );
-    }
-
-    /**
-     *  Overrides the applet init() method.
-     */
-    public void init()
     {}
 
     /**
      * Build the user interface with parameter input controls at the top.
      */
-    private JPanel createMainPanel( MazePanel maze )
+    protected JPanel createMainPanel()
     {
+        mazePanel_ = createMazePanel();
+
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout( new BorderLayout() );
 
+        JPanel controlsPanel = createControlsPanel();
+
+        JPanel mazePanel = new JPanel( new BorderLayout() );
+        mazePanel.add( mazePanel_, BorderLayout.CENTER );
+        mazePanel.setBorder(
+                BorderFactory.createCompoundBorder( BorderFactory.createEmptyBorder( 4, 4, 4, 4 ),
+                        BorderFactory.createCompoundBorder( BorderFactory.createLoweredBevelBorder(),
+                                BorderFactory.createEmptyBorder( 4, 4, 4, 4 ) )
+                )
+        );
+        mainPanel.add( controlsPanel, BorderLayout.NORTH );
+        mainPanel.add( mazePanel, BorderLayout.CENTER );
+
+        return mainPanel;
+    }
+
+    private MazePanel createMazePanel() {
+        final MazePanel mazePanel = new MazePanel();
+        mazePanel.addComponentListener( new ComponentAdapter()
+        {
+            public void componentResized( ComponentEvent ce )
+            {
+                // only resize if the dimensions have changed
+                Dimension newSize = mazePanel.getSize();
+                boolean changedSize = oldSize_ == null ||
+                        oldSize_.getWidth() != newSize.getWidth() ||
+                        oldSize_.getHeight() != newSize.getHeight();
+                if ( changedSize ) {
+                    oldSize_ = newSize;
+                    if (newSize.getWidth() > 0) {
+                        regenerate();
+                    }
+                }
+            }
+        } );
+        return mazePanel;
+    }
+
+    /**
+     * @return panel containing the maze controls to show at the top.
+     */
+    private JPanel createControlsPanel() {
         JPanel controlsPanel = new JPanel();
         thicknessField_ = new NumberInput("Thickness", PASSAGE_THICKNESS,
                                           "The passage thickness", 2, 200, true);
@@ -122,21 +114,8 @@ public class MazeSimulator extends JApplet implements ActionListener
         solveButton_ = new GradientButton( "Solve" );
         solveButton_.addActionListener( this );
         controlsPanel.add( solveButton_ );
-
-        JPanel mazePanel = new JPanel( new BorderLayout() );
-        mazePanel.add( maze, BorderLayout.CENTER );
-        mazePanel.setBorder(
-                BorderFactory.createCompoundBorder( BorderFactory.createEmptyBorder( 4, 4, 4, 4 ),
-                        BorderFactory.createCompoundBorder( BorderFactory.createLoweredBevelBorder(),
-                                BorderFactory.createEmptyBorder( 4, 4, 4, 4 ) )
-                )
-        );
-        mainPanel.add( controlsPanel, BorderLayout.NORTH );
-        mainPanel.add( mazePanel, BorderLayout.CENTER );
-
-        return mainPanel;
+        return controlsPanel;
     }
-
 
     /**
      * called when a button is pressed.
@@ -192,19 +171,14 @@ public class MazeSimulator extends JApplet implements ActionListener
      */
     public void setSize( int width, int height )
     {
-        resizablePanel_.setSize( width, height );
+        super.setSize( width, height );
         //System.out.println("setSize: call regen ("+ width+", "+height + ")");
-        resized();
-    }
-
-    public void resized()
-    {
         regenerate();
     }
 
     public void start()
     {
-        resized();
+        regenerate();
     }
 
     //------ Main method --------------------------------------------------------

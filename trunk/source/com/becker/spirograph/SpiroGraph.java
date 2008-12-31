@@ -19,7 +19,7 @@ import java.awt.event.*;
  *
  * @author Barry Becker
  */
-public class SpiroGraph extends JApplet
+public class SpiroGraph extends ApplicationApplet
         implements ActionListener, SliderGroupChangeListener
 {
     public static final String HIDE_LABEL = "Hide Axes";
@@ -57,48 +57,8 @@ public class SpiroGraph extends JApplet
     protected JLabel xFunction_, yFunction_;
     protected GradientButton hide_, clear_, draw_, reset_;
 
-    ResizableAppletPanel resizablePanel_ = null;
 
-    public void init()
-    {
-        GUIUtil.setCustomLookAndFeel();
-
-        //setLayout(new BorderLayout());
-        getContentPane().setLayout( new BorderLayout() );
-
-        state_ = new GraphState();
-
-        state_.setR1(SLIDER_INITIAL[RAD1]);
-        state_.setR2(SLIDER_INITIAL[RAD2]);
-        state_.setPos(SLIDER_INITIAL[POS]);
-        state_.setVelocity(SLIDER_INITIAL[VEL]);
-        state_.setWidth(SLIDER_INITIAL[WIDTH]);
-        state_.setNumSegmentsPerRev(SLIDER_INITIAL[SEGMENTS]);
-
-        JPanel p1;
-        p1 = new JPanel();
-        p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS) );
-
-        sliderGroup_ = new SliderGroup(SLIDER_NAMES, SLIDER_MIN, SLIDER_MAX, SLIDER_INITIAL);
-        sliderGroup_.addSliderChangeListener(this);
-        p1.add(sliderGroup_);
-
-        p1.add(createButtonGroup());
-
-        ColorSliderGroup colorSelector = new ColorSliderGroup();
-        colorSelector.setColorChangeListener(state_);
-        p1.add(colorSelector);
-
-        JPanel fill = new JPanel();
-        fill.setPreferredSize(new Dimension(100, 1000));
-        p1.add(fill);
-
-        graphRenderer_ = new GraphRenderer(state_, draw_);
-
-        initializeRenderer(p1);
-        setSize(getContentPane().getWidth(), getContentPane().getHeight());
-    }
-
+    public SpiroGraph() {}
 
     private JPanel createButtonGroup()
     {
@@ -137,8 +97,30 @@ public class SpiroGraph extends JApplet
         return bp;
     }
 
-    public void initializeRenderer(JPanel p1)
+    public JPanel createMainPanel()
     {
+        state_ = createGraphState();
+
+        JPanel p1;
+        p1 = new JPanel();
+        p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS) );
+
+        sliderGroup_ = new SliderGroup(SLIDER_NAMES, SLIDER_MIN, SLIDER_MAX, SLIDER_INITIAL);
+        sliderGroup_.addSliderChangeListener(this);
+        p1.add(sliderGroup_);
+
+        p1.add(createButtonGroup());
+
+        ColorSliderGroup colorSelector = new ColorSliderGroup();
+        colorSelector.setColorChangeListener(state_);
+        p1.add(colorSelector);
+
+        JPanel fill = new JPanel();
+        fill.setPreferredSize(new Dimension(100, 1000));
+        p1.add(fill);
+
+        graphRenderer_ = new GraphRenderer(state_, draw_);
+
         JPanel mainPanel = new JPanel( new BorderLayout() );
 
         JPanel q1 = new JPanel();
@@ -151,9 +133,22 @@ public class SpiroGraph extends JApplet
         mainPanel.add( "Center", graphRenderer_ );
         mainPanel.add( "South", q1 );
 
-        resizablePanel_ = new ResizableAppletPanel( mainPanel );
-        this.getContentPane().add( resizablePanel_ );
+
+        return mainPanel;
+        // setSize(getContentPane().getWidth(), getContentPane().getHeight());
     }
+
+    private GraphState createGraphState() {
+        GraphState state = new GraphState();
+        state.setR1(SLIDER_INITIAL[RAD1]);
+        state.setR2(SLIDER_INITIAL[RAD2]);
+        state.setPos(SLIDER_INITIAL[POS]);
+        state.setVelocity(SLIDER_INITIAL[VEL]);
+        state.setWidth(SLIDER_INITIAL[WIDTH]);
+        state.setNumSegmentsPerRev(SLIDER_INITIAL[SEGMENTS]);
+        return state;
+    }
+
 
     public void updateEqn()
     {
@@ -200,7 +195,7 @@ public class SpiroGraph extends JApplet
     {
         // I know that all the sliders are integer based.
         int value = (int)sliderValue;
-        
+
         //System.out.println(sliderName+ ' ' + value);
         int velocity = sliderGroup_.getSliderValueAsInt(VEL);
 
@@ -298,20 +293,11 @@ public class SpiroGraph extends JApplet
         GraphRenderer.thread_.start();
     }
 
-    /**
-     * This method allows javascript to resize the applet from the browser.
-     */
-    public void setSize( int width, int height )
-    {
-        System.out.println("in setSize w="+width+" h="+height);
-        resizablePanel_.setSize( width, height );
-    }
-
     //------ Main method - to allow running as an application ---------------------
     public static void main( String[] args )
     {
         SpiroGraph applet = new SpiroGraph();
-        GUIUtil.showApplet( applet, "SpiroGraph Applet" );
+        GUIUtil.showApplet( applet, "SpiroGraph" );
     }
 }
 

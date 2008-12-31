@@ -8,13 +8,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
-public class ColorMixer extends JApplet implements ActionListener, ChangeListener
+public class ColorMixer extends ApplicationApplet implements ActionListener, ChangeListener
 {
-
-    ResizableAppletPanel resizablePanel_ = null;
-
-    // the passage thickness in pixels
-
     private JButton colorButtonA_;
     private JButton colorButtonB_;
     private Color colorA_ = Color.WHITE;
@@ -25,49 +20,12 @@ public class ColorMixer extends JApplet implements ActionListener, ChangeListene
 
     private MixedColorsScrollPane mixedColorsPanel_;
 
-
-    public boolean isStandalone_ = false;
-    // the frame is only created if we run as an application
-    protected JFrame baseFrame_ = null;
-
     // constructor
     public ColorMixer()
     {
-        commonInit();
     }
 
-    // constructor
-    public void commonInit()
-    {
-        GUIUtil.setCustomLookAndFeel();
-
-        System.out.println( "creating color mixer" );
-        enableEvents( AWTEvent.WINDOW_EVENT_MASK );
-        setFont( new Font( "Serif", Font.PLAIN, 14 ) );
-
-        JPanel mainPanel = createMainPanel();
-
-        resizablePanel_ = new ResizableAppletPanel( mainPanel );
-        this.getContentPane().add( resizablePanel_ );
-
-        mixedColorsPanel_.addComponentListener( new ComponentAdapter()
-        {
-            public void componentResized( ComponentEvent ce )
-            {
-                    //resized();
-            }
-        } );
-    }
-
-    /**
-     *  Overrides the applet init() method
-     */
-    public void init()
-    {
-        //resized();
-    }
-
-    private JPanel createMainPanel()
+    protected JPanel createMainPanel()
     {
         mixedColorsPanel_ = new MixedColorsScrollPane(colorA_, colorB_);
         //mixedColorsPanel_.setPreferredSize(new Dimension(300, 500));
@@ -130,7 +88,6 @@ public class ColorMixer extends JApplet implements ActionListener, ChangeListene
      */
     public void actionPerformed( ActionEvent e )
     {
-
         Object source = e.getSource();
 
         if ( source == colorButtonA_ || source == colorButtonB_) {
@@ -149,21 +106,6 @@ public class ColorMixer extends JApplet implements ActionListener, ChangeListene
             mixedColorsPanel_.setOpacity((float)opacitySlider_.getValue()/SLIDER_TICKS);
             resizablePanel_.repaint();
         }
-    }
-
-    /**
-     * This method allow javascript to resize the applet from the browser.
-     */
-    public void setSize( int width, int height )
-    {
-        resizablePanel_.setSize( width, height );
-        //resized();
-    }
-
-
-    public void start()
-    {
-        //resized();
     }
 
     //------ Main method --------------------------------------------------------

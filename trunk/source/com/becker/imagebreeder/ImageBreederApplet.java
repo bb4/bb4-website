@@ -1,26 +1,28 @@
-package com.becker.java2d.imageproc;
+package com.becker.imagebreeder;
 
 import com.becker.java2d.Utilities;
-import com.becker.common.*;
+import com.becker.java2d.imageproc.ParameterPanel;
+import com.becker.java2d.imageproc.ProcessingOperators;
+import com.becker.java2d.imageproc.MetaImageOp;
+import com.becker.imagebreeder.ImageBreeder;
 import com.becker.ui.ApplicationFrame;
+import com.becker.ui.GUIUtil;
+import com.becker.ui.ApplicationApplet;
 import com.becker.optimization.parameter.Parameter;
 
 import com.becker.java2d.ui.ImageListPanel;
 import com.becker.java2d.ui.ImageSelectionListener;
 import com.becker.ui.sliders.LabeledSlider;
 import com.becker.ui.sliders.SliderChangeListener;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FileDialog;
-import java.awt.Font;
-import java.awt.Frame;
-import java.awt.GridLayout;
-import java.awt.Label;
-import java.awt.Panel;
+import com.becker.game.common.GameContext;
+import com.becker.common.util.ImageUtil;
+
+import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.*;
 import java.util.*;
-import javax.swing.JButton;
+import java.util.List;
+import javax.swing.*;
 
 /**
  * Allows you to mix filters together using a genetic algorithm
@@ -29,16 +31,18 @@ import javax.swing.JButton;
  * TODO:
  *  - Brian big hair took 106 seconds to run caustics
  */
-public class FilterBreederApp extends ApplicationFrame
-                                     implements ItemListener,
-                                                         ActionListener,
-                                                         ImageSelectionListener,
-                                                         SliderChangeListener
+public class ImageBreederApplet extends ApplicationApplet
+                                implements ItemListener,
+                                            ActionListener,
+                                            ImageSelectionListener,
+                                            SliderChangeListener
 {
-
     private static int NUM_CHILD_IMAGES = 20;
     private static float DEFAULT_VARIANCE = 0.2f;
     private float variance = DEFAULT_VARIANCE;
+    private static final String IMAGE_DIR = "com/becker/imagebreeder/ui/images/";
+
+    private static final String DEFAULT_IMAGE = "brian_in_surf1_big_hair_smaller.jpg";
 
     private BufferedImage currentImage;
 
@@ -48,6 +52,7 @@ public class FilterBreederApp extends ApplicationFrame
     private JButton lastGenerationButton;
 
     private Label statusLabel = new Label( "" );
+    private JPanel mainPanel;
     private ParameterPanel paramPanel;
     private java.awt.List filterList;
 
@@ -60,12 +65,25 @@ public class FilterBreederApp extends ApplicationFrame
     private int currentSelectedFilterIndex;
     private int generationCountForFilter = 0;
 
-    public FilterBreederApp( String imageFile )
+    /**
+     * constructor
+     */
+    public ImageBreederApplet()
     {
-        super( "Filter Breeder" );
+        System.out.println("empty constructor for ImageBreeder");
+        GUIUtil.setStandAlone(true);
+        operations = new ProcessingOperators();
+        createImageFrame(IMAGE_DIR + DEFAULT_IMAGE);
+    }
+
+    /**
+     * constructor
+     * @param imageFile
+     */
+    public ImageBreederApplet( String imageFile )
+    {
         operations = new ProcessingOperators();
         createImageFrame( imageFile );
-        initializeUI();
     }
 
     /**
@@ -74,7 +92,9 @@ public class FilterBreederApp extends ApplicationFrame
      */
     private void createImageFrame( String imageFile )
     {
-        currentImage = Utilities.getBufferedImage(imageFile);
+        ImageIcon img = GUIUtil.getIcon(imageFile);
+        currentImage = ImageUtil.makeBufferedImage(img.getImage());
+        //Utilities.getBufferedImage(imageFile);
 
         // also create image list panel
         imageListPanel = new ImageListPanel();
@@ -90,18 +110,7 @@ public class FilterBreederApp extends ApplicationFrame
         mImageListFrame.setVisible( true );
     }
 
-    @Override
-    protected void createUI()
-    {
-        super.createUI();
-        setFont( new Font( "Serif", Font.PLAIN, 12 ) );
-        setLayout( new BorderLayout() );
-        // Set our location to the left of the image frame.
-        this.setMinimumSize( new Dimension(300, 500 ));
-        statusLabel = new Label( "" );
-    }
-
-    protected void initializeUI()
+    protected JPanel createMainPanel()
     {
         filterList = operations.getSortedKeys();
         // When an item is selected, do the corresponding transformation.
@@ -110,6 +119,25 @@ public class FilterBreederApp extends ApplicationFrame
         filterList.select(0);
         lastSelectedFilterIndex = filterList.getSelectedIndex();
         currentSelectedFilterIndex = lastSelectedFilterIndex;
+
+        mainPanel = new JPanel(new BorderLayout());
+
+        // add placeholder param panel
+        paramPanel = new ParameterPanel(null);
+        mainPanel.add(paramPanel, BorderLayout.CENTER);
+        mainPanel.add( filterList, BorderLayout.WEST );
+        mainPanel.add( createBottomControls(), BorderLayout.SOUTH );
+
+        createImagesForSelectedFilter();
+
+        return mainPanel;
+    }
+
+    public Dimension getSize() {
+        return new Dimension(400, 500);
+    }
+
+    private JPanel createBottomControls() {
 
         loadButton = new JButton( "Load..." );
         loadButton.addActionListener(this);
@@ -127,27 +155,32 @@ public class FilterBreederApp extends ApplicationFrame
         // initially there is nothing to go back to.
         lastGenerationButton.setEnabled(false);
 
-        Panel bottom = new Panel( new GridLayout( 3, 1 ) );
-        Panel topBottom = new Panel();
-        Panel middleBottom = new Panel();
+        JPanel controls = new JPanel(new BorderLayout());
 
-        topBottom.add( loadButton );
-        topBottom.add(varianceSlider);
-        middleBottom.add(newGenerationButton);
-        middleBottom.add(lastGenerationButton);
+        JPanel topControls = new JPanel( new GridLayout( 2, 1 ) );
+        JPanel top = new JPanel();
+        JPanel middle = new JPanel();
 
-        bottom.add( topBottom );
-        bottom.add(middleBottom);
-        bottom.add( statusLabel );
+        top.add( loadButton );
+        top.add(varianceSlider);
 
-        // add placeholder param panel
-        paramPanel = new ParameterPanel(null);
-        add(paramPanel, BorderLayout.CENTER);
-        add( filterList, BorderLayout.WEST );
-        add( bottom, BorderLayout.SOUTH );
-        this.pack();
+        middle.add(newGenerationButton);
+        middle.add(lastGenerationButton);
+        controls.setPreferredSize(new Dimension(300, 120));
 
-        createImagesForSelectedFilter();
+        topControls.add( top );
+        topControls.add( middle );
+
+        controls.add( topControls, BorderLayout.WEST);
+        controls.add( statusLabel , BorderLayout.SOUTH);
+
+        return controls;
+    }
+
+    private JPanel fill() {
+        JPanel fill = new JPanel();
+        fill.setPreferredSize(new Dimension(1000, 10));
+        return fill;
     }
 
     /**
@@ -177,12 +210,14 @@ public class FilterBreederApp extends ApplicationFrame
 
     private void replaceParameterUI(MetaImageOp metaOp) {
         // now show ui for modifying the parameters for this op
-        this.remove(paramPanel);
+        mainPanel.remove(paramPanel);
         paramPanel = new ParameterPanel(metaOp.getBaseParameters());
         // don't called whenever a parameter is tweeked
         // paramPanel.addParameterChangeListener(this);
-        this.add(paramPanel, BorderLayout.CENTER);
-        this.pack();
+        mainPanel.add(paramPanel, BorderLayout.CENTER);
+        mainPanel.doLayout(); //doLayout(); //pack();
+        mainPanel.validate();
+        mainPanel.repaint();
     }
 
     private void createImagesForSelectedFilter() {
@@ -219,7 +254,7 @@ public class FilterBreederApp extends ApplicationFrame
         enableUI(false);
         long time = System.currentTimeMillis();
 
-        FilterBreeder fb = new FilterBreeder(currentImage, metaOp, variance);
+        ImageBreeder fb = new ImageBreeder(currentImage, metaOp, variance);
         List<BufferedImage> images = fb.breedImages(NUM_CHILD_IMAGES);
         imgToParamsMap = fb.getImgToParamsMap();
 
@@ -254,7 +289,8 @@ public class FilterBreederApp extends ApplicationFrame
              restoreLastGeneration();
          }
          else if (button == loadButton) {
-             FileDialog fd = new FileDialog( FilterBreederApp.this        );
+             Frame f = null;
+             FileDialog fd = new FileDialog( f  );
              fd.setVisible(true);
              if ( fd.getFile() == null ) return;
              String path = fd.getDirectory() + fd.getFile();
@@ -272,7 +308,7 @@ public class FilterBreederApp extends ApplicationFrame
 
     /**
      * Make the parameters setting smatch the last selected image.
-     * @param evt
+     * @param img
      */
     public void imageSelected(BufferedImage img) {
          List<Parameter> params = imgToParamsMap.get(img);
@@ -284,10 +320,12 @@ public class FilterBreederApp extends ApplicationFrame
 
     public static void main( String[] args )
     {
-        String imageFile = Utilities.DEFAULT_IMAGE_DIR + "Ethol with Roses.small.jpg";
-        if ( args.length > 0 )  {
+        String imageFile = IMAGE_DIR + DEFAULT_IMAGE;
+        if ( args.length > 0 && !args[0].equals("imagebreeder") )  {
             imageFile = args[0];
         }
-        new FilterBreederApp( imageFile );
+
+        ImageBreederApplet breeder = new ImageBreederApplet(imageFile);
+        GUIUtil.showApplet( breeder, "Image Breeder");
     }
 }

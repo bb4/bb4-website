@@ -251,10 +251,12 @@ public final class GUIUtil
     public static ImageIcon getIcon(String sPath) {
         ImageIcon icon;
         if (isStandAlone_)   {
-             icon = new ImageIcon( ClassLoaderSingleton.getClassLoader().getResource(sPath));
+            //System.out.println("spath="+ sPath);
+            icon = new ImageIcon( ClassLoaderSingleton.getClassLoader().getResource(sPath));
         }
         else {
-             icon = new ImageIcon(resourceRoot_ + sPath);
+            //System.out.println("not standalone: spath="+ sPath);
+            icon = new ImageIcon(resourceRoot_ + sPath);
         }
         assert (icon != null) : "failed to find image:"+sPath;
         return icon;
@@ -275,7 +277,7 @@ public final class GUIUtil
                 String spec = "file:" + resourceRoot_ + sPath;
                 url = new URL(spec);
             }
-            assert url != null : 
+            assert url != null :
                 "failed to create url for  "+sPath + " standAlone="+isStandAlone_ +" resourceRoot_="+ resourceRoot_;
         } catch (MalformedURLException e) {
             System.out.println( sPath+" is not a valid resource or URL" );
@@ -330,21 +332,27 @@ public final class GUIUtil
        baseFrame.setTitle( title );
        baseFrame.setContentPane( applet.getContentPane() );
 
-       baseFrame.setSize( applet.getSize() );
-
        Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
        int height = (int) (2.0 * d.getHeight()  / 3.0) ;
-       int width = (int) Math.min(height * 1.5, 2.0 * d.getWidth() / 3);      
+       int width = (int) Math.min(height * 1.5, 2.0 * d.getWidth() / 3);
        baseFrame.setLocation( (d.width - width) >> 2, (d.height - height) >> 2 );
-       
+
        baseFrame.setVisible( true );
-       baseFrame.setSize( width, height);
+       Dimension dim = applet.getSize();
+       System.out.println("baseFrame get size="+ dim);
+       if (dim.width == 0) {
+           baseFrame.setSize( width, height);
+       } else {
+           baseFrame.setSize( applet.getSize() );
+       }
+
+
 
        // call the applet's init method
        applet.init();
 
        baseFrame.repaint();
-       baseFrame.setVisible( true );       
+       baseFrame.setVisible( true );
 
        // call the applet's start method
        applet.start();
@@ -358,9 +366,9 @@ public final class GUIUtil
         isStandAlone_ = false;
         assert !isStandAlone_: "You must be running as an application if you are calling this method.";
 
-        //Schedule a job for the event-dispatching thread:
+        // Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
-        // follows patter from http://java.sun.com/docs/books/tutorial/uiswing/misc/threads.html
+        // follows pattern from http://java.sun.com/docs/books/tutorial/uiswing/misc/threads.html
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 createAndShowAppletFrame(applet, title);

@@ -26,8 +26,8 @@ import java.util.*;
 public class BlockadeController extends TwoPlayerController
 {
 
-    public static final int DEFAULT_LOOKAHEAD = 1;  // shoudl be 2 or 3    
-    
+    public static final int DEFAULT_LOOKAHEAD = 1;  // shoudl be 2 or 3
+
     /** For any given ply never consider more that BEST_PERCENTAGE of the top moves. */
     private static final int BEST_PERCENTAGE = 100;
 
@@ -83,7 +83,7 @@ public class BlockadeController extends TwoPlayerController
         return worth(board_.getLastMove(), weights_.getDefaultWeights());
     }
 
-    
+
     /**
      * save the current state of the blockade game to a file in SGF (4) format (standard game format).
      *This should some day be xml (xgf)
@@ -118,22 +118,22 @@ public class BlockadeController extends TwoPlayerController
     protected double worth( Move lastMove, ParameterArray weights )
     {
         board_.getProfiler().startCalcWorth();
-        BlockadeBoard board = (BlockadeBoard)board_;       
+        BlockadeBoard board = (BlockadeBoard)board_;
         BlockadeMove m = (BlockadeMove)lastMove;
         // if its a winning move then return the winning value
-        boolean player1Moved = m.isPlayer1();     
+        boolean player1Moved = m.isPlayer1();
         if (checkForWin(player1Moved, player1Moved? board.getPlayer2Homes() : board.getPlayer1Homes()))
             return WINNING_VALUE;
-    
-        PlayerPathLengths pathLengths = board.findPlayerPathLengths(m);               
+
+        PlayerPathLengths pathLengths = board.findPlayerPathLengths(m);
         double worth = pathLengths.determineWorth(WINNING_VALUE, weights);
         board_.getProfiler().startCalcWorth();
         return worth;
     }
-    
-     
+
+
     /**
-      * 
+      *
       * @return true if player has reached an opponent home. (for player1 or player2 depending on boolean player1 value)
       */
     protected static boolean checkForWin(boolean player1, BoardPosition[] homes) {
@@ -166,13 +166,13 @@ public class BlockadeController extends TwoPlayerController
         }
         return false;
     }
- 
+
 
     /**
      * The 9 wall cases for a diagonal move
      */
     private List<BlockadeWall> checkWallsForDiagonal(
-                                                    BlockadeBoardPosition topLeft, 
+                                                    BlockadeBoardPosition topLeft,
                                                     BlockadeBoardPosition topRight,
                                                     BlockadeBoardPosition bottomLeft )
     {
@@ -221,29 +221,29 @@ public class BlockadeController extends TwoPlayerController
         }
         return wallsToCheck;
     }
-    
-    
+
+
     /**
      * This used to be 4 methods (one for each of right, left, top, and bottom).
      * @param pos one of the 3 base positions
      * @return list of accumulated walls to check.
      */
-    private List handleDirectionCase(BlockadeBoardPosition pos, int rowOffset, int colOffset, 
+    private List handleDirectionCase(BlockadeBoardPosition pos, int rowOffset, int colOffset,
                                                           List<BlockadeWall> wallsToCheck)
     {
         BlockadeBoardPosition offsetPos =
                     (BlockadeBoardPosition)board_.getPosition(pos.getRow() + rowOffset, pos.getCol() + colOffset);
         boolean isVertical = (rowOffset != 0);
-        
+
         if (offsetPos != null) {
             boolean dirOpen = isVertical? offsetPos.isEastOpen() : offsetPos.isSouthOpen();
             if (dirOpen)
                wallsToCheck.add( new BlockadeWall(pos, offsetPos));
-        }  
+        }
         return wallsToCheck;
     }
 
-    
+
     /**
       * Find all the moves a piece can make from position p, and insert them into moveList.
       *
@@ -275,7 +275,7 @@ public class BlockadeController extends TwoPlayerController
 
              // after making the first move, the shortest paths may have changed somewhat.
              // unfortunately, I think we need to recalculate them.
-             BlockadeBoardPosition newPos = 
+             BlockadeBoardPosition newPos =
                      (BlockadeBoardPosition) board.getPosition(firstStep.getToRow(), firstStep.getToCol());
              List<Path> ourPaths = board.findShortestPaths(newPos);
 
@@ -288,7 +288,7 @@ public class BlockadeController extends TwoPlayerController
              board.undoMove();
          }
          // GameContext.log(0, "addMoves nummoves add="+numMovesAdded );
-         
+
          // failing here.
          ////assert (numMovesAdded > 0): "No moves added for position p="+ p
          ////        + " moves={"+nMovesAtEachStep +"} and shortest paths: " + paths
@@ -305,19 +305,19 @@ public class BlockadeController extends TwoPlayerController
      * @param opponentPaths the opponent shortest paths.
      * @return all move variations on firstStep based on different wall placements.
      */
-    private List<BlockadeMove> findWallPlacementsForMove(BlockadeMove firstStep, 
+    private List<BlockadeMove> findWallPlacementsForMove(BlockadeMove firstStep,
                                                                                                   List<Path> paths, List<Path> opponentPaths,
                                                                                                   ParameterArray weights)
     {
-        List<BlockadeMove> moves = new LinkedList<BlockadeMove>();               
+        List<BlockadeMove> moves = new LinkedList<BlockadeMove>();
         BlockadeMove ourmove = firstStep;
-        
+
         // is it true that the set of walls we could add for any constant set of opponent paths is always the same regardless of firstStep?
         // I think its only true as long as firstStep is not touching any of those opponent paths
         GameContext.log(2, firstStep+"\nopaths="+opponentPaths+"\n [[");
-        
+
         for (Path opponentPath: opponentPaths) {
-            assert (opponentPath != null): 
+            assert (opponentPath != null):
                 "Opponent path was null. There are "+opponentPaths.size()+" oppenent paths.";
             for (int j = 0; j < opponentPath.getLength(); j++) {
                 // if there is no wall currently interfering with this wall placement,
@@ -330,41 +330,40 @@ public class BlockadeController extends TwoPlayerController
                 // get all the possible legal and reasonable wall placements for this move along the opponent path that do not interfere with our own paths.
                 List<BlockadeWall> walls = getWallsForMove(move, paths);
                 GameContext.log(2, "num walls for move "+move+"  = "+walls.size() );
-                
+
                 if  (walls.isEmpty()) {
                     GameContext.log(0, "***No walls for move "+move+" at step j=" + j + " along opponentPath="+opponentPath +" that do not interfere with our path");
                 }
 
                 // typically 0-4 walls
                 assert walls.size() <=4:"num walls = " + walls.size();
-                for (BlockadeWall wall: walls) {                 
+                for (BlockadeWall wall: walls) {
                     addMoveWithWallPlacement(ourmove, wall, weights, moves);
                }
            }
-           // System.out.print(" "+ moves.size()); 
            if (moves.isEmpty()) {
-               System.out.println("No opponent moves found for "+firstStep +" along opponentPath="+opponentPath);
+               GameContext.log(1, "No opponent moves found for "+firstStep +" along opponentPath="+opponentPath);
            }
            //assert (!moves.isEmpty()) : "No opponent moves found for "+firstStep +" along opponentPath="+opponentPath;
        }
        GameContext.log(2, "]]");
-         
+
         // if no move was added add the more with no wall placement
         if (moves.isEmpty()) {
            addMoveWithWallPlacement(ourmove, null, weights, moves);
         }
-        
+
         return moves;
     }
-    
+
     /**
      * Add a new move to movelist.
      * The move is based on ourmove and the specified wall (the wall may be null is none placed).
      */
-    private void addMoveWithWallPlacement(BlockadeMove ourmove, BlockadeWall wall, 
+    private void addMoveWithWallPlacement(BlockadeMove ourmove, BlockadeWall wall,
                                                                          ParameterArray weights, List<BlockadeMove> moves) {
         double value = 0.0;
-        BlockadeBoard board = (BlockadeBoard)board_; 
+        BlockadeBoard board = (BlockadeBoard)board_;
         // @@ we should provide the value here since we have all the path info.
         // we do not want to compute the path info again by calling findPlayerPathLengths.
         // The value will change based on how much we shorten our paths while lengthening the opponents.
@@ -372,20 +371,20 @@ public class BlockadeController extends TwoPlayerController
                BlockadeMove.createMove(ourmove.getFromRow(), ourmove.getFromCol(),
                                        ourmove.getToRow(), ourmove.getToCol(),
                                        value, ourmove.getPiece(), wall);
-        // for the time being just call worth directly. Its less efficient, but simpler.                   
+        // for the time being just call worth directly. Its less efficient, but simpler.
         board_.makeMove(m);
-        PlayerPathLengths pathLengths = board.findPlayerPathLengths(m);            
+        PlayerPathLengths pathLengths = board.findPlayerPathLengths(m);
         board_.undoMove();
 
         if (pathLengths.isValid()) {
-            m.setValue(pathLengths.determineWorth(WINNING_VALUE, weights));                    
+            m.setValue(pathLengths.determineWorth(WINNING_VALUE, weights));
             moves.add(m);
-        }      
+        }
         else {
             System.out.println("Did not add "+ m+ " because it was invalid.");
         }
     }
-    
+
     /**
      * Find all the possible and legal wall placements for this given step along the opponent path
      * that do not adversely affecting our own shortest paths.
@@ -403,10 +402,10 @@ public class BlockadeController extends TwoPlayerController
         int fromCol = move.getFromCol();
         BlockadeBoard b = (BlockadeBoard)board_;
         BlockadeBoardPosition origPos =  (BlockadeBoardPosition)board_.getPosition(fromRow, fromCol);
-        BlockadeBoardPosition westPos = origPos.getNeighbor(Direction.WEST, b); 
-        BlockadeBoardPosition eastPos = origPos.getNeighbor(Direction.EAST, b);  
-        BlockadeBoardPosition northPos = origPos.getNeighbor(Direction.NORTH, b); 
-        BlockadeBoardPosition southPos = origPos.getNeighbor(Direction.SOUTH, b); 
+        BlockadeBoardPosition westPos = origPos.getNeighbor(Direction.WEST, b);
+        BlockadeBoardPosition eastPos = origPos.getNeighbor(Direction.EAST, b);
+        BlockadeBoardPosition northPos = origPos.getNeighbor(Direction.NORTH, b);
+        BlockadeBoardPosition southPos = origPos.getNeighbor(Direction.SOUTH, b);
         switch (move.getDirection()) {
             case EAST_EAST :
                 checkAddWallsForDirection(eastPos, paths, Direction.EAST, wallsList);
@@ -445,8 +444,8 @@ public class BlockadeController extends TwoPlayerController
 
         return wallsList;
     }
-    
-    
+
+
     /**
      * Add the walls that don't block your own paths, but do block the opponent shortest paths.
      * @param pos to start from.
@@ -454,40 +453,40 @@ public class BlockadeController extends TwoPlayerController
      * @param direction to move one space (one of EAST, WEST, NORTH, SOUTH).
      * @return the accumulated list of walls.
      */
-    private List<BlockadeWall> checkAddWallsForDirection(BlockadeBoardPosition pos, List<Path> paths, 
+    private List<BlockadeWall> checkAddWallsForDirection(BlockadeBoardPosition pos, List<Path> paths,
                                                                                                Direction direction, List<BlockadeWall> wallsList)
     {
         BlockadeBoard b = (BlockadeBoard)board_;
         List<BlockadeWall> wallsToCheck = new LinkedList<BlockadeWall>();
-        BlockadeBoardPosition westPos = pos.getNeighbor(Direction.WEST, b); 
-        BlockadeBoardPosition eastPos = pos.getNeighbor(Direction.EAST, b);  
-        BlockadeBoardPosition northPos = pos.getNeighbor(Direction.NORTH, b); 
-        BlockadeBoardPosition southPos = pos.getNeighbor(Direction.SOUTH, b); 
+        BlockadeBoardPosition westPos = pos.getNeighbor(Direction.WEST, b);
+        BlockadeBoardPosition eastPos = pos.getNeighbor(Direction.EAST, b);
+        BlockadeBoardPosition northPos = pos.getNeighbor(Direction.NORTH, b);
+        BlockadeBoardPosition southPos = pos.getNeighbor(Direction.SOUTH, b);
 
         switch (direction) {
             case EAST :
-                addWallsForEast(eastPos, pos, wallsToCheck);  
+                addWallsForEast(eastPos, pos, wallsToCheck);
                 break;
             case WEST :
-                addWallsForWest(westPos, pos, wallsToCheck);               
+                addWallsForWest(westPos, pos, wallsToCheck);
                 break;
             case NORTH :
-                addWallsForNorth(northPos, pos, wallsToCheck);       
+                addWallsForNorth(northPos, pos, wallsToCheck);
                 break;
             case SOUTH :
-                 addWallsForSouth(southPos, pos, wallsToCheck);                  
+                 addWallsForSouth(southPos, pos, wallsToCheck);
                  break;
             // There are 4 basic cases for all the diagonals.
             case NORTH_WEST :
-                 BlockadeBoardPosition northWestPos = pos.getNeighbor(Direction.NORTH_WEST, b);   
+                 BlockadeBoardPosition northWestPos = pos.getNeighbor(Direction.NORTH_WEST, b);
                  wallsToCheck = checkWallsForDiagonal(northWestPos, northPos, westPos );
                  break;
             case NORTH_EAST :
-                 BlockadeBoardPosition northEastPos = pos.getNeighbor(Direction.NORTH_EAST, b);  
+                 BlockadeBoardPosition northEastPos = pos.getNeighbor(Direction.NORTH_EAST, b);
                  wallsToCheck = checkWallsForDiagonal(northPos, northEastPos, pos );
                  break;
             case SOUTH_WEST :
-                 BlockadeBoardPosition southWestPos = pos.getNeighbor(Direction.SOUTH_WEST, b);  
+                 BlockadeBoardPosition southWestPos = pos.getNeighbor(Direction.SOUTH_WEST, b);
                  wallsToCheck = checkWallsForDiagonal(westPos, pos, southWestPos );
                  break;
             case SOUTH_EAST :
@@ -497,8 +496,8 @@ public class BlockadeController extends TwoPlayerController
 
         return getBlockedWalls(wallsToCheck, paths, wallsList);
     }
-    
-       
+
+
     /**
      * @param wallsToCheck
      * @param paths
@@ -515,25 +514,25 @@ public class BlockadeController extends TwoPlayerController
 
         return wallsList;
     }
-    
-    
+
+
     /**
      *Add valid wall placements to the east.
      *Also verify not intersecting a horizontal wall.
      */
-    private void addWallsForEast(BlockadeBoardPosition eastPos, 
+    private void addWallsForEast(BlockadeBoardPosition eastPos,
                                                       BlockadeBoardPosition pos, List<BlockadeWall> wallsToCheck) {
-        if (eastPos!=null && !pos.isEastBlocked())  {   
+        if (eastPos!=null && !pos.isEastBlocked())  {
             BlockadeBoard b = (BlockadeBoard)board_;
-            BlockadeBoardPosition northPos = pos.getNeighbor(Direction.NORTH, b);  
-            BlockadeBoardPosition southPos = pos.getNeighbor(Direction.SOUTH, b); 
-            BlockadeBoardPosition northEastPos = pos.getNeighbor(Direction.NORTH_EAST, b);  
+            BlockadeBoardPosition northPos = pos.getNeighbor(Direction.NORTH, b);
+            BlockadeBoardPosition southPos = pos.getNeighbor(Direction.SOUTH, b);
+            BlockadeBoardPosition northEastPos = pos.getNeighbor(Direction.NORTH_EAST, b);
             if (northPos != null && !northPos.isEastBlocked()
-                 && !(northPos.isSouthBlocked() && northPos.getSouthWall() == northEastPos.getSouthWall())) {                                
+                 && !(northPos.isSouthBlocked() && northPos.getSouthWall() == northEastPos.getSouthWall())) {
                 wallsToCheck.add( new BlockadeWall(pos, northPos) );
             }
             if (southPos != null && !southPos.isEastBlocked()
-                && !(pos.isSouthBlocked() && pos.getSouthWall() == eastPos.getSouthWall())) {    
+                && !(pos.isSouthBlocked() && pos.getSouthWall() == eastPos.getSouthWall())) {
                 wallsToCheck.add( new BlockadeWall( pos, southPos) );
             }
         }
@@ -542,62 +541,62 @@ public class BlockadeController extends TwoPlayerController
     /**
      *Add valid wall placements to the west.
      */
-    private void addWallsForWest(BlockadeBoardPosition westPos, 
+    private void addWallsForWest(BlockadeBoardPosition westPos,
                                                        BlockadeBoardPosition pos, List<BlockadeWall> wallsToCheck) {
-        if (westPos!=null && !westPos.isEastBlocked())  {   
+        if (westPos!=null && !westPos.isEastBlocked())  {
             BlockadeBoard b = (BlockadeBoard)board_;
-            BlockadeBoardPosition northPos = pos.getNeighbor(Direction.NORTH, b);   
-            BlockadeBoardPosition southPos = pos.getNeighbor(Direction.SOUTH, b); 
+            BlockadeBoardPosition northPos = pos.getNeighbor(Direction.NORTH, b);
+            BlockadeBoardPosition southPos = pos.getNeighbor(Direction.SOUTH, b);
             BlockadeBoardPosition northWestPos = pos.getNeighbor(Direction.NORTH_WEST, b);
             if (northPos !=  null && !northWestPos.isEastBlocked()
-                && !(northWestPos.isSouthBlocked() && northWestPos.getSouthWall() == northPos.getSouthWall())) {        
+                && !(northWestPos.isSouthBlocked() && northWestPos.getSouthWall() == northPos.getSouthWall())) {
                 wallsToCheck.add( new BlockadeWall(westPos, northWestPos) );
             }
-            BlockadeBoardPosition southWestPos = pos.getNeighbor(Direction.SOUTH_WEST, b); 
+            BlockadeBoardPosition southWestPos = pos.getNeighbor(Direction.SOUTH_WEST, b);
             if (southPos != null && !southWestPos.isEastBlocked()
-                && !(westPos.isSouthBlocked() && westPos.getSouthWall() == pos.getSouthWall())) {   
+                && !(westPos.isSouthBlocked() && westPos.getSouthWall() == pos.getSouthWall())) {
                 wallsToCheck.add( new BlockadeWall(westPos, southWestPos) );
             }
         }
     }
-    
+
     /**
      *Add valid wall placements to the north.
      */
-    private void addWallsForNorth(BlockadeBoardPosition northPos, 
+    private void addWallsForNorth(BlockadeBoardPosition northPos,
                                                         BlockadeBoardPosition pos, List<BlockadeWall> wallsToCheck) {
         if (northPos!=null && !northPos.isSouthBlocked())  {
             BlockadeBoard b = (BlockadeBoard)board_;
-            BlockadeBoardPosition westPos = pos.getNeighbor(Direction.WEST, b); 
-            BlockadeBoardPosition northWestPos = pos.getNeighbor(Direction.NORTH_WEST, b);   
+            BlockadeBoardPosition westPos = pos.getNeighbor(Direction.WEST, b);
+            BlockadeBoardPosition northWestPos = pos.getNeighbor(Direction.NORTH_WEST, b);
             if (westPos != null && !northWestPos.isSouthBlocked()
-                && !(westPos.isEastBlocked() && westPos.getEastWall() == northWestPos.getEastWall())) {   
+                && !(westPos.isEastBlocked() && westPos.getEastWall() == northWestPos.getEastWall())) {
                 wallsToCheck.add( new BlockadeWall( northPos, northWestPos) );
-            }                    
+            }
             BlockadeBoardPosition northEastPos = pos.getNeighbor(Direction.NORTH_EAST, b);
             if (northEastPos != null && !northEastPos.isSouthBlocked()
-                && !(pos.isEastBlocked() && pos.getEastWall() == northPos.getEastWall())) {   
+                && !(pos.isEastBlocked() && pos.getEastWall() == northPos.getEastWall())) {
                 wallsToCheck.add( new BlockadeWall(northPos, northEastPos) );
             }
         }
     }
-    
+
     /**
      *Add valid wall placements to the south.
      */
-    private void addWallsForSouth(BlockadeBoardPosition southPos, 
+    private void addWallsForSouth(BlockadeBoardPosition southPos,
                                                       BlockadeBoardPosition pos , List<BlockadeWall> wallsToCheck) {
-        if (southPos != null && !pos.isSouthBlocked()) {    
+        if (southPos != null && !pos.isSouthBlocked()) {
             BlockadeBoard b = (BlockadeBoard)board_;
             BlockadeBoardPosition westPos = pos.getNeighbor(Direction.WEST, b);
             BlockadeBoardPosition eastPos = pos.getNeighbor(Direction.EAST, b);
             if (eastPos != null && !eastPos.isSouthBlocked()
-                && !(pos.isEastBlocked() && pos.getEastWall() == southPos.getEastWall())) { 
+                && !(pos.isEastBlocked() && pos.getEastWall() == southPos.getEastWall())) {
                 wallsToCheck.add( new BlockadeWall(pos, eastPos) );
-            }               
-            BlockadeBoardPosition southWestPos = pos.getNeighbor(Direction.SOUTH_WEST, b); 
+            }
+            BlockadeBoardPosition southWestPos = pos.getNeighbor(Direction.SOUTH_WEST, b);
             if (westPos!=null && !westPos.isSouthBlocked()
-                && !(westPos.isEastBlocked() && westPos.getEastWall() == southWestPos.getEastWall())) { 
+                && !(westPos.isEastBlocked() && westPos.getEastWall() == southWestPos.getEastWall())) {
                 wallsToCheck.add( new BlockadeWall(pos, westPos) );
             }
          }
@@ -624,9 +623,9 @@ public class BlockadeController extends TwoPlayerController
 
             board.getProfiler().startGenerateMoves();
             // first find the opponent's shortest paths. There must be NUM_HOMES squared of them (unless the player won).
-            // There is one path from every piece to every opponent home (i.e. n*n)            
-            List<Path> opponentPaths = board.findAllOpponentShortestPaths(player1);    
-            
+            // There is one path from every piece to every opponent home (i.e. n*n)
+            List<Path> opponentPaths = board.findAllOpponentShortestPaths(player1);
+
             // For each piece of the current player's NUM_HOME pieces, add a move that represents a step along
             // its shortest paths to the opponent homes and all reasonable wall placements.
             // To limit the number of wall placements we will restrict possiblities to those positions which
@@ -634,10 +633,10 @@ public class BlockadeController extends TwoPlayerController
             List<BoardPosition> pawnLocations = new LinkedList<BoardPosition>();
             for ( int row = 1; row <= board.getNumRows(); row++ ) {
                 for ( int col = 1; col <= board.getNumCols(); col++ ) {
-                    BoardPosition p = board_.getPosition( row, col );                  
-                    if ( p.isOccupied() && p.getPiece().isOwnedByPlayer1() == player1 ) {   
+                    BoardPosition p = board_.getPosition( row, col );
+                    if ( p.isOccupied() && p.getPiece().isOwnedByPlayer1() == player1 ) {
                         pawnLocations.add(p);
-                        addMoves( p, moveList, opponentPaths, weights );                     
+                        addMoves( p, moveList, opponentPaths, weights );
                     }
                 }
             }
@@ -659,7 +658,7 @@ public class BlockadeController extends TwoPlayerController
             BlockadeBoard board = (BlockadeBoard)board_;
             return (checkForWin(true, board.getPlayer1Homes()) || checkForWin(false, board.getPlayer2Homes()));
         }
-       
+
 
         /**
          * @@ quiescent search not yet implemented for Blockade

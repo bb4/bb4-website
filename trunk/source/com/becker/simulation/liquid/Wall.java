@@ -9,15 +9,15 @@ import java.awt.geom.*;
  *
  *  @author Barry Becker
  */
-public class Wall
+class Wall
 {
 
     // the 2 endpoints defining the wall
-    private Line2D.Double segment_;
+    private final Line2D.Double segment_;
 
     // the thickness of the wall.
     // @@ should it have other properties?
-    private float thickness_;
+    private final float thickness_;
 
     //Constructor
     public Wall( double x1, double y1, double x2, double y2 )

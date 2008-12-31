@@ -15,7 +15,8 @@ import java.awt.event.*;
  *
  * @author Barry becker
  */
-public final class SudokuPuzzle extends JApplet implements ActionListener, ItemListener
+public final class SudokuPuzzle extends JApplet
+                                implements ActionListener, ItemListener
 {
 
     private SudokuPanel puzzlePanel_;
@@ -58,7 +59,6 @@ public final class SudokuPuzzle extends JApplet implements ActionListener, ItemL
      */
     public void start() {
         puzzlePanel_.setSize(this.getSize());
-        //puzzlePanel_.repaint();
     }
 
     /**

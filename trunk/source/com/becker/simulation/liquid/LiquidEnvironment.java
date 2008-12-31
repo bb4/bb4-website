@@ -14,6 +14,8 @@ import com.becker.common.ILog;
  *  X axis increases to the left
  *  Y axis increases downwards to be consistent with java graphics
  *  adapted from work by Nick Foster.
+ *  See
+ *  http://physbam.stanford.edu/~fedkiw/papers/stanford2001-02.pdf
  *
  *  Improvements:
  *    - increase performance by only keeping trakc of particles near the surface.
@@ -21,8 +23,27 @@ import com.becker.common.ILog;
  *
  *  @author Barry Becker
  */
-public class LiquidEnvironment
+class LiquidEnvironment
 {
+    /** for debugging */
+    public static final int LOG_LEVEL = 0;
+
+    /** physical constants. cell width and height in mm. */
+    private static final double CELL_SIZE = 10.0;
+
+    /** density of the liquid in grams per mm^3.  water = 1000 kg/m^3 or .001 g/mm^2  */
+    private static final double DENSITY = 0.001;
+    /**
+     *  viscosity of the liquid. Larger for molasses (.3), smaller for kerosine (.0001)
+     * Water is about .001 Ns/m^2 or .01 g/s mm
+     */
+    private static final double VISCOSITY = 0.002; //0.001;
+    //private static final double JITTERING = .1;
+    private static final double B0 = 1.7;  // used in mass conservation (how?)
+    private static final double SPIGOT_VELOCITY = 30.0;
+    private static final int NUM_RAND_PARTS = 5;
+
+    private boolean firstTime = true;
 
     // the dimensions of the space
     private int xDim_ = 30;
@@ -33,37 +54,20 @@ public class LiquidEnvironment
     private Cell[][] grid_ = null;
 
     // the set of particles in this simulation
-    private Set particles_ = new HashSet();
+    private final Set<Particle> particles_ = new HashSet<Particle>();
     // keep the walls globally because we need to draw them each frame
-    private List walls_ = new ArrayList();
+    private final List walls_ = new ArrayList();
 
     private static final double EPSILON = 0.0000001;
-    private static final double MAX_INC = 0.1;
-    private static final double MIN_INC = 0.001;
 
     // the time since the start of the simulation
     private double time_ = 0.0;
-
-    // physical constants.
-    // cell width and height in mm.
-    private static final double CELL_SIZE = 10.0;
-
-    // density of the liquid in grams per mm^3
-    // water = 1000 kg/m^3 or .001 g/mm^2
-    private static final double DENSITY = 0.001;
-    // viscosity of the liquid. Larger for molasses (.3), smaller for kerosine (.0001)
-    // Water is about .001 Ns/m^2 or .01 g/s mm
-    private static final double VISCOSITY = 0.001; //0.001;
-    //private static final double JITTERING = .1;
-    private static final double B0 = 1.7;  // used in mass conservation (how?)
-    private static final double SPIGOT_VELOCITY = 30.0;
-    private static final int NUM_RAND_PARTS = 5;
 
     // ensure that the runs are the same
     private static final Random RANDOM = new Random(1);
 
     private static ILog logger_ = null;
-    public static final int LOG_LEVEL = 0;
+
 
     //Constructor
     public LiquidEnvironment( String configFile )
@@ -118,7 +122,7 @@ public class LiquidEnvironment
         return grid_;
     }
 
-    public Set getParticles() {
+    public Set<Particle> getParticles() {
         return particles_;
     }
 
@@ -168,7 +172,7 @@ public class LiquidEnvironment
         for ( j = 1; j < yDim_ - 1; j++ ) {
             for ( i = 1; i < xDim_ - 1; i++ ) {
                 grid_[i][j].updateStatus(
-                        grid_[i + 1][j], grid_[i - 1][j], grid_[i][j + 1], grid_[i][j - 1] );
+                    grid_[i + 1][j], grid_[i - 1][j], grid_[i][j + 1], grid_[i][j - 1] );
             }
         }
     }
@@ -214,6 +218,11 @@ public class LiquidEnvironment
             grid_[4][i].setUip( SPIGOT_VELOCITY );
         }
 
+        /* try this as a test
+        if (firstTime) {
+            addRandomParticles( 3, 2 );
+            firstTime = false;
+        }   */
         addRandomParticles( 3, 2 );
         addRandomParticles( 3, 3 );
         addRandomParticles( 3, 4 );
@@ -228,7 +237,7 @@ public class LiquidEnvironment
         log( 1, "stepForward: about to update the velocity field (timeStep=" + timeStep + ')' );
         int i, j;
         double fx = 0;
-        double fy = GRAVITY / 1.0;   // how do we need to scale gravity?
+        double fy = GRAVITY;   // how do we need to scale gravity?
 
         for ( j = 1; j < yDim_ - 1; j++ ) {
             for ( i = 1; i < xDim_ - 1; i++ ) {
@@ -281,7 +290,7 @@ public class LiquidEnvironment
             for ( i = 1; i < xDim_ - 1; i++ ) {
                 // I think the last arg is atmospheric pressure
                 grid_[i][j].updateSurfaceVelocities(
-                        grid_[i + 1][j], grid_[i - 1][j], grid_[i][j + 1], grid_[i][j - 1], ATMOSPHERIC_PRESSURE );
+                    grid_[i + 1][j], grid_[i - 1][j], grid_[i][j + 1], grid_[i][j - 1], ATMOSPHERIC_PRESSURE );
             }
         }
     }
@@ -297,7 +306,7 @@ public class LiquidEnvironment
         double maxLength = Double.MIN_VALUE;
         double invCellSize = 1.0/CELL_SIZE;
         // max distance to go in one step. Beyond this, we apply the governer.
-        double maxDistance = CELL_SIZE/20.0;
+        //double maxDistance = CELL_SIZE/20.0;
 
         while ( it.hasNext() ) {
             Particle particle = (Particle) it.next();
@@ -332,17 +341,36 @@ public class LiquidEnvironment
                         logger_.println("a_vmag="+vel.length());
                 }*/
 
-                particle.set( particle.x + timeStep * vel.x, particle.y + timeStep * vel.y );
+                double xChange = timeStep * vel.x;
+                double yChange = timeStep * vel.y;
+                particle.set( particle.x + xChange, particle.y + yChange );
                 particle.incAge( timeStep );
 
-                // to ensure the liquid does not enter an OBSTACLE
+                // ensure the liquid does not enter an OBSTACLE
                 ii = (int) particle.x;
                 jj = (int) particle.y;
 
+                if (ii<0 || jj<0 || ii>=grid_.length || jj >= grid_[0].length) {
+                    logger_.println( " i="+i+" j="+j +"    ii="+ii+ "  jj="+jj + " v.len="+vel.length() +" xChange="+xChange +" yChange=" + yChange +" timeStep="+timeStep);
+                    if (ii < 0) {
+                        particle.x = 0.0;
+                        ii = 0;
+                    }
+                    if (jj < 0) {
+                        particle.y = 0.0;
+                        jj = 0;
+                    }
+                    if (ii >= grid_.length) {
+                        ii = grid_.length - 1;
+                        particle.x = ii;
 
-                if (ii<0 || jj<0) {
-                     logger_.println( " i="+i+" j="+j +"   ii="+ii+ "  jj="+jj + " v.len="+vel.length());
+                    }
+                    if (jj >= grid_[0].length) {
+                        jj = grid_[0].length - 1;
+                        particle.y = jj;
+                    }
                 }
+
                 // move outside the obstacle if we find ouselves in one
                 if ( grid_[ii][jj].getStatus() == CellStatus.OBSTACLE ) {
                     if ( ii > i ) {
@@ -398,7 +426,7 @@ public class LiquidEnvironment
     }
 
     /**
-     * config() and addParticles()
+     * setup the obstacles.
      */
     private void setInitialConditions()
     {
@@ -417,7 +445,7 @@ public class LiquidEnvironment
 
     private void addParticle( double x, double y )
     {
-        Point2d p = new Particle( x, y, grid_[(int) x][(int) y] );
+        Particle p = new Particle( x, y, grid_[(int) x][(int) y] );
         particles_.add( p );
         grid_[(int) x][(int) y].incParticles();
     }

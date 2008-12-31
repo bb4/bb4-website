@@ -28,8 +28,6 @@ final class SudokuPanel extends JPanel
     private static final Stroke CELL_STROKE = new BasicStroke(0.5f);
     private static final Stroke BIG_CELL_STROKE = new BasicStroke(3.0f);
 
-    // the contorller that does the work of finding the solution.
-
     private Board board_;
 
 
@@ -122,7 +120,7 @@ final class SudokuPanel extends JPanel
     /**
      * Draw a cell at the specified location.
      */
-    private static synchronized void drawCell(Graphics g, Cell cell, int xpos, int ypos, int pieceSize) {
+    private static void drawCell(Graphics g, Cell cell, int xpos, int ypos, int pieceSize) {
 
         int s = (int) (pieceSize * 0.4);
 
@@ -148,18 +146,19 @@ final class SudokuPanel extends JPanel
             int yOffsetLow =  (int) (0.9 * s);
             int yOffsetHi =  (int) (2.1 * s);
 
-            int size = candidates.size();
-            drawHintNumber(g, 0, size, candidates, xpos + xOffsetLow, ypos + yOffsetLow);
-            drawHintNumber(g, 1, size, candidates, xpos + xOffsetHi, ypos + yOffsetLow);
-            drawHintNumber(g, 2, size, candidates, xpos + xOffsetLow, ypos + yOffsetHi);
-            drawHintNumber(g, 3, size, candidates, xpos + xOffsetHi, ypos + yOffsetHi);
+            drawHintNumber(g, 0, candidates, xpos + xOffsetLow, ypos + yOffsetLow);
+            drawHintNumber(g, 1, candidates, xpos + xOffsetHi, ypos + yOffsetLow);
+            drawHintNumber(g, 2, candidates, xpos + xOffsetLow, ypos + yOffsetHi);
+            drawHintNumber(g, 3, candidates, xpos + xOffsetHi, ypos + yOffsetHi);
         }
     }
 
-    private static void drawHintNumber(Graphics g, int cellNum, int size, List cands,
-                                       int x, int y) {
-        if (cellNum < cands.size() && !cands.isEmpty()) {
-            g.drawString(cands.get(cellNum).toString(), x, y);
+    private static void drawHintNumber(Graphics g, int cellNum, List<Integer> cands, int x, int y) {
+        synchronized (cands) {
+            if (cellNum < cands.size() && !cands.isEmpty()) {
+                Integer v = cands.get(cellNum);
+                g.drawString(v.toString(), x, y);
+            }
         }
     }
 
@@ -191,6 +190,5 @@ final class SudokuPanel extends JPanel
             g2.drawLine( xpos, MARGIN, xpos, bottomEdgePos );
         }
     }
-
 }
 
