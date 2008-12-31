@@ -19,19 +19,22 @@ import java.util.*;
  */
 public class ChessController extends CheckersController
 {
-    // @@todo:
-    //  - show indicator of invalid move while dragging piece (before placed)
-    //        Should show piece grayed our or transparent until in a valid position
-    //        If you drop the piece in an invlid position, instead of showing an error messagem
-    //        animate the piece back to its original position.
-    //  - exchange pawn for best piece when it reaches the other side.
-    //  - if you are in check, then don't allow moves other than those that get you out of check.
-    //  - game is over if no moves available (because of check mate usually).
-    //  - there is a tendancy to get into an infinite cycle at the end of a computer vs computer game.
-    //  - castling.
-    //  - account for amount of king endangerment in worth.
-    //  - Checkers and Chess should probably have a common abstract base class, but I can't think of a good
-    //    name for it, so currently Chess just derives from Checkers.
+    /**
+     *  Chess features to add:
+     *
+     *  - show indicator of invalid move while dragging piece (before placed)
+     *        Should show piece grayed our or transparent until in a valid position
+     *       If you drop the piece in an invlid position, instead of showing an error messagem
+     *      animate the piece back to its original position.
+     * - exchange pawn for best piece when it reaches the other side.
+     * - if you are in check, then don't allow moves other than those that get you out of check.
+     * - game is over if no moves available (because of check mate usually).
+     * - there is a tendancy to get into an infinite cycle at the end of a computer vs computer game.
+     * - castling.
+     * - account for amount of king endangerment in worth.
+     * - Checkers and Chess should probably have a common abstract base class, but I can't think of a good
+     *   name for it, so currently Chess just derives from Checkers.
+     */
 
     // initial look ahead factor.
     private static final int DEFAULT_CHESS_LOOKAHEAD = 3;
