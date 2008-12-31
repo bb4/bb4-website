@@ -3,20 +3,14 @@
   <description>usage: ant {task}
   </description>
 
+  <property file="common.properties"/>
+
   <!-- enable or disable assertions when runnning. Should disable before formally releasing a new version. -->
   <property name="assertionsFlag" value="-enableassertions"/>
-  <!-- place where compiled classes go. images and resources also get copied here -->
-  <property name="classesDir" value="../classes"/>
-  <!-- place where all original source files come from. -->
-  <property name="sourceDir" value="../source"/>
+
   <!-- put test results here -->
-   <property name="testOutput" value="../temp"/>
-  <!-- place where all process files for distribution go. -->
-  <property name="distributionDir" value="../dist"/>
-  <property name="distributionGameDir" value="${distributionDir}/games"/>
-  <property name="distributionSchemaDir" value="${distributionDir}/schema"/>
-  <!-- place where all thirdparty libraries are located. -->
-  <property name="libDir" value="../lib"/>
+  <property name="testOutput" value="../temp"/>
+
   <!-- place to put .class files, images and resources, so they can be jar'd up -->
   <property name="stagingDir" value="../temp/classes"/>
   <!-- root dir for auxilliary ant libraries. standby is "/usr/share/ant" or "/usr/local/Intellij/idea-2253/lib/ant"-->
@@ -25,15 +19,13 @@
   <property name="gameAppClass" value="com.becker.game.common.ui.GameApp"/>
   <!-- the jvm to use when executing -->
   <!-- property name="java_home" value="/usr/java/jdk1.5.0_05"/
-       property name="java14" value="/usr/java/jdk1.4.2/bin/java"/
-       property name="java15" value="${java_home}/bin/amd64/java"/ -->
+         property name="java14" value="/usr/java/jdk1.4.2/bin/java"/
+         property name="java15" value="${java_home}/bin/amd64/java"/ -->
   <property name="java_home" value="D:/apps/Java"/>
   <property name="java15" value="${java_home}/java1.5.0_12/jre/bin/java"/>
   <property name="java16" value="${java_home}/jdk1.6.0_02/bin/java"/>
   <property name="java_compiler" value="${java16}"/>
   <property name="sleepTime" value="100"/>
-
-  <property name="project_home" value="G:/projects/java_projects/trunk"/> <!-- value="/windows/projects/java_projects/trunk"/ -->
 
 
   <!-- Load additional tasks   -->
@@ -138,7 +130,7 @@
            <classpath path="${libDir}/junit.jar;${classesDir}"/>
            <assertions><enable/></assertions>
            <formatter type="plain"/>
-           <test name="com.becker.common.test.TestAll" outfile="../test/common/commonTestResults"/>     
+           <test name="com.becker.common.test.TestAll" outfile="../test/common/commonTestResults"/>
        </junit>
   </target>
 
@@ -164,10 +156,10 @@
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
-      <param name="args" value="-game blockade"/>       
+      <param name="args" value="-game blockade"/>
     </antcall>
-  </target> 
-  
+  </target>
+
    <target name="testBlockade" depends="compile" description=" blockade game tests">
        <echo message="now running BLOCKADE tests"/>
        <junit  printsummary="yes"  fork="yes"  haltonfailure="no" showoutput="yes">
@@ -193,16 +185,16 @@
       <param name="args" value="-game chess"/>
     </antcall>
   </target>
-  
-  
-  <target name="executeTrivial" depends="compile" description="Run trivial test game app"> 
+
+
+  <target name="executeTrivial" depends="compile" description="Run trivial test game app">
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
       <param name="args" value="-game trivial"/>
     </antcall>
   </target>
-  
+
    <target name="executeTrivialServer" depends="compile" description="Run online trivial server">
     <antcall target="executeProgram">
       <param name="className" value="com.becker.game.common.online.ui.OnlineGameServerFrame"/>
@@ -210,9 +202,9 @@
       <param name="args" value="-game trivial"/>
     </antcall>
   </target>
-  
+
   <target name="executeTrivialServerAndClients" depends="compile" description="Run online trivial server and several clients">
-      <parallel>   
+      <parallel>
           <antcall target="executeTrivialServer"/>
           <sequential>
               <sleep seconds="4" />
@@ -228,16 +220,16 @@
           </sequential>
       </parallel>
   </target>
-  
-  
-  <target name="executePoker" depends="compile" description="Run poker card game app"> 
+
+
+  <target name="executePoker" depends="compile" description="Run poker card game app">
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
       <param name="args" value="-game poker"/>
     </antcall>
   </target>
-  
+
    <target name="executePokerServer" depends="compile" description="Run online poker server">
     <antcall target="executeProgram">
       <param name="className" value="com.becker.game.common.online.ui.OnlineGameServerFrame"/>
@@ -245,9 +237,9 @@
       <param name="args" value="-game poker"/>
     </antcall>
   </target>
-  
+
   <target name="executePokerServerAndClients" depends="compile" description="Run online poker server and several clients">
-      <parallel>   
+      <parallel>
           <antcall target="executePokerServer"/>
           <sequential>
               <sleep seconds="5" />
@@ -263,7 +255,7 @@
           </sequential>
       </parallel>
   </target>
-  
+
 
   <target name="executeSetGame" description="Run the Set Game app">
     <antcall target="executeProgram">
@@ -280,7 +272,7 @@
       <param name="args" value="-game go"/>
     </antcall>
   </target>
-  
+
   <target name="testGo" depends="compile" description=" go game tests">
        <echo message="now running GO tests"/>
        <junit  printsummary="yes"  fork="yes"  haltonfailure="no" showoutput="yes" >
@@ -298,16 +290,16 @@
     <antcall target="executeProgram">
       <param name="className" value="com.becker.misc.colormixer.ColorMixer"/>
     </antcall>
-  </target -->
+  </target-->
 
   <target name="executeImageBreeder" description="Run the Image Breeder">
     <antcall target="executeProgram">
-      <param name="className" value="com.becker.java2d.imageproc.FilterBreederApp"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>    
+      <param name="className" value="com.becker.imagebreeder.ImageBreederApplet" />
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar" />
       <param name="args" value=""/>
     </antcall>
   </target>
-  
+
   <target name="executeDice" description="Run the Dice simulator">
     <antcall target="executeProgram">
       <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
@@ -315,7 +307,7 @@
       <param name="args" value="com.becker.simulation.dice.DiceSimulator"/>
     </antcall>
   </target>
-  
+
   <target name="executeParameterDistribution" description="Run the Parameter Distribution simulator">
     <antcall target="executeProgram">
       <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
@@ -363,7 +355,7 @@
       <param name="args" value="com.becker.simulation.liquid.LiquidSimulator"/>
     </antcall>
   </target>
-  
+
   <target name="executeFluid" description="Run the Fluid simulator">
     <antcall target="executeProgram">
       <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
@@ -371,7 +363,7 @@
       <param name="args" value="com.becker.simulation.fluid.FluidSimulator"/>
     </antcall>
   </target>
-  
+
   <target name="testLiquid" depends="compile" description=" liquid tests" >
        <echo message="now running LIQUID tests"/>
        <junit  printsummary="yes" fork="yes"  haltonfailure="no" showoutput="yes" >
@@ -382,7 +374,7 @@
            <test name="com.becker.simulation.liquid.test.TestCell" outfile="../test/liquid/liquidTestResults"/>
        </junit>
   </target>
-  
+
   <target name="testSound" depends="compile" description=" sound tests">
        <echo message="now running sound tests"/>
        <junit  printsummary="yes"  fork="yes" haltonfailure="no" showoutput="yes">
@@ -409,28 +401,28 @@
       <param name="args" value="${project_home}/source/com/becker/puzzle/adventure/ludlowScript.xml"/>
     </antcall>
   </target>
-  
+
   <target name="executeGiveChange" depends="compile" description="A simple educational program for computing change.">
     <echo message="now executing GiveChange"/>
     <java classname="com.becker.misc.givechange.GiveChange" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="128M">
         <jvmarg value="${assertionsFlag}"/>
     </java>
   </target>
-  
+
   <target name="executeStringUtil" depends="compile" description="A simple string replacement program.">
     <echo message="now executing StringUtil test"/>
     <java classname="com.becker.misc.string.StringUtil" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="128M">
         <jvmarg value="${assertionsFlag}"/>
     </java>
   </target>
-  
+
   <target name="executeSimpleEditor" depends="compile" description="A simple editor.">
     <echo message="now executing simple editor"/>
     <java classname="com.becker.misc.sedit.SimpleEditor" classpath="${classesDir};${libDir}/commons-codec-1.3.jar;${libDir}/rt.jar" fork="true" jvm="${java_compiler}" maxmemory="128M">
         <jvmarg value="${assertionsFlag}"/>
     </java>
   </target>
-  
+
   <target name="executeNativeRender" depends="compile" description="A simple test of the native graphics renderer.">
       <echo message="now executing NativeRender"/>
       <java classname="com.becker.misc.nativeRender.NativeRenderTest" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="128M">
@@ -458,7 +450,7 @@
         <jvmarg value="${assertionsFlag}"/>
     </java>
   </target>
-  
+
 
   <target name="XMLViewer" depends="compile" description=" run the XML Viewer app">
     <antcall target="executeProgram">
@@ -490,7 +482,7 @@
       <param name="arg2" value="${java_compiler} -ea -classpath ${classesDir}:${libDir}/gogui7.1.jar:${libDir}/jigo.jar com.becker.game.twoplayer.go.GtpTesujisoftGoServer"/>
     </antcall>
   </target>
-  
+
    <target name="concurrencyExample_SingleThreadWebServer" depends="compile" description="concurrency example.">
     <echo message="now executing concurrency example"/>
     <java classname="net.jcip.examples.SingleThreadWebServer" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="128M">
@@ -507,7 +499,7 @@
         <!-- jvmarg value="-agentlib:yjpagent"/  -->
         <!-- use this if running netbeans profiler -->
         <!--jvmarg value="-agentpath:D:\apps\java\netbeans-5.5\profiler1\lib\deployed\jdk15\windows\profilerinterface.dll=D:\apps\java\netbeans-5.5\profiler1\lib,5140"/-->
-        <!--jvmarg value="-agentlib:jdwp=transport=dt_socket,server=y,address=8000"/-->  <!--   for Netbeans debugging-->                                           
+        <!--jvmarg value="-agentlib:jdwp=transport=dt_socket,server=y,address=8000"/-->  <!--   for Netbeans debugging-->
         <jvmarg value="-Xms128M"/>
         <jvmarg value="-Xmx1028M"/>
         <jvmarg value="${assertionsFlag}"/>
@@ -520,7 +512,7 @@
         <sysproperty key="DEBUG" value="true"/>
         <arg value="${arg1}"/>
         <arg value="${arg2}"/>
-        <!--jvmarg value="-agentlib:jdwp=transport=dt_socket,server=y,address=8000 "/  for Netbeans debugging-->          
+        <!--jvmarg value="-agentlib:jdwp=transport=dt_socket,server=y,address=8000 "/  for Netbeans debugging-->
         <jvmarg value="-Xms128M"/>
         <jvmarg value="-Xmx256M"/>
         <jvmarg value="${assertionsFlag}"/>
