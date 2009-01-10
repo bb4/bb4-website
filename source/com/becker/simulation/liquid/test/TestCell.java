@@ -7,10 +7,9 @@ import com.becker.simulation.liquid.*;
 /**
  * @author Barry Becker Date: Aug 12, 2006
  */
-
 public class TestCell extends TestCase {
 
-    private static final double VISCOSITY = 0.001; //0.001;
+    private static final double VISCOSITY = 0.001; 
     private static final  double DT = 0.1;
 
     public void testCellStatus1() {
@@ -42,7 +41,6 @@ public class TestCell extends TestCase {
     }
 
 
-
     public void testInterpolateVelocities() {
         CellBlock cb = new CellBlock();
         Particle particle = null;
@@ -65,11 +63,10 @@ public class TestCell extends TestCase {
         particle = new Particle(1.1, 1.1, cell);  // lower left
         verifyParticleVelocity(particle, cb,  new Vector2d(0.7254, 0.46));
 
-
         particle = new Particle(1.9, 1.1, cell);  // lower right
         verifyParticleVelocity(particle, cb,  new Vector2d(0.5606, 0.22));
 
-       particle = new Particle(1.1, 1.9, cell); // upper left
+        particle = new Particle(1.1, 1.9, cell); // upper left
         verifyParticleVelocity(particle, cb,  new Vector2d(0.9294, 0.78));
 
         particle = new Particle(1.9, 1.9, cell); // upper right
@@ -90,6 +87,7 @@ public class TestCell extends TestCase {
         int j = (int) particle.y;
         if (i>2 || j>2) System.out.println( "i="+i+" j="+j);
         assert (i<3 && j<3): "i="+i+" j="+j;
+
         int ii = ((particle.x - i) > 0.5) ? (i + 1) : (i - 1);
         int jj = ((particle.y - j) > 0.5) ? (j + 1) : (j - 1);
          if (ii>2 || jj>2) System.out.println( "ii="+ii+" jj="+jj);

@@ -12,20 +12,24 @@ import javax.vecmath.*;
 public class Particle extends Point2d
 {
 
-    // the cell that the particle belongs to
+    /** the cell that the particle belongs to */
     private Cell cell_;
 
-    // the velocity vector of the particle in mm/s
-    //public Vector2d velocity;
-    // the mass of the particle in grams
+    /**
+     * the velocity vector of the particle in mm/s
+     *public Vector2d velocity;
+     * the mass of the particle in grams.
+     */
     private double age_;
-    // radius of influence of this particle
-    private double radius_;
-    // we may want to mix different liquids and uyse this for coloration
-    // what about mixing oil and water?
-    private int materialType_;
 
-    // @@ add member for texture coordinates?
+    /** radius of influence of this particle */
+    //private double radius_;
+
+    /**
+     * we may want to mix different liquids and uyse this for coloration
+     * what about mixing oil and water?
+     */
+    //private int materialType_;
 
 
     /**

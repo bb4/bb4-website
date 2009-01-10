@@ -23,7 +23,7 @@ class CellBlock {
     }
 
     /**
-     *Gets a relative cell. Relative from center
+     * Gets a cell relative to the center cell poistion.
      * e.g. get(0,0) returns the center cell.
      * @return cell relative to center of the block
      */
@@ -31,6 +31,9 @@ class CellBlock {
         return block_[offsetX + 1][offsetY + 1];
     }
 
+    /**
+     * @return the cell at the specified position in the array.
+     */
     public Cell getAbsolute(int x, int y) {
         return block_[x][y];
     }
@@ -47,6 +50,9 @@ class CellBlock {
                block_[i][j].setVelocityP(u, v);
     }
 
+    /**
+     * @param numParticlesPerCell number of particles to add to each cell in the block.
+     */
     public void setCellParticles(int numParticlesPerCell) {
         for (int i = 0; i<DIM; i++){
            for (int j = 0; j<DIM; j++) {
@@ -60,10 +66,11 @@ class CellBlock {
                }
            }
         }
+        updateCenterStatus();
     }
 
     public void updateCenterStatus() {
-        block_[1][1].updateStatus(get(1,0), get(-1,0), get(0,1), get(0,-1));
+        block_[1][1].updateStatus(get(1, 0), get(-1, 0), get(0, 1), get(0, -1));
     }
 }
 

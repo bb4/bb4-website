@@ -8,11 +8,11 @@ import javax.vecmath.*;
  *
  *                   ^  vjp_[cur_]     pos v direction
  *                   |
- *              _____________
+ *              _______
  *             |             |
- *        <--  |      p      |  --> uip_[cur_]
+ *     <--  |      p      |  --> uip_[cur_]
  *             |             |
- *              ------------
+ *              -----------
  *                   |
  *                   v
  *
@@ -23,32 +23,35 @@ import javax.vecmath.*;
 public class Cell
 {
 
-    // 4 if 2d, 6 if 3d, 12 if 4d
+    /**  4 if 2d, 6 if 3d, 12 if 4d */
     private static final int NUM_CELL_FACES = 4;
 
-    // type of cell
+    /** type of cell  */
     private CellStatus status_;
 
-    // size of a cell
+    /** size of a cell */
     private final double dx_;
     private final double dy_;
-    // squares of edge lengths
+
+    /** squares of edge lengths */
     private final double dxSq_;
     private final double dySq_;
 
-    // pressure at the center of the cell
+    /** pressure at the center of the cell */
     private double pressure_;
 
-    // velocities in x, y directions
-    // defined at the center of each face
-    // uip_ = u(i+0.5, j, k)
-    // vjp_ = v(i, j+0.5, k)
+    /**
+     * velocities in x, y directions
+     * defined at the center of each face
+     * uip_ = u(i+0.5, j, k)
+     * vjp_ = v(i, j+0.5, k)
+     */
     private final double[] uip_ = new double[2];
     private final double[] vjp_ = new double[2];
 
     private int numParticles_;
 
-    // use this to switch between current and last copies of fields. (hack)
+    /** use this to switch between current and last copies of fields. (hack) */
     private static int current_;
 
     /**
@@ -69,7 +72,9 @@ public class Cell
         dySq_ = dy_ * dy_;
     }
 
-    // global swap of fields (use with care). (hack)
+    /**
+     *  global swap of fields (use with care). (hack)
+     */
     public static void swap()
     {
         current_ = 1 - current_;
@@ -168,6 +173,7 @@ public class Cell
      *     cXm1Yp1  cYm1     O
      *
      * The formulas here equate to a numerical solution of the Navioer-Stokes equation.
+     * RISK:5
      */
     public void updateTildeVelocities( Cell cXp1, Cell cXm1,
                                        Cell cYp1, Cell cYm1,
@@ -196,8 +202,8 @@ public class Cell
         // v(i+0.5, j+0.5) = 0.5*(v(i, j+0.5) + v(i+1, j+0.5))
         double v_ipjp = (vjp_[current_] + cXp1.vjp_[current_]) / 2.0;
 
-        double xNume = (u_i * u_i - u_ip1 * u_ip1);
-        double yNume = (u_ipjm * v_ipjm - u_ipjp * v_ipjp);
+        double xNume = (u_i * u_i  -  u_ip1 * u_ip1);
+        double yNume = (u_ipjm * v_ipjm  -  u_ipjp * v_ipjp);
         double v1 = (cXp1.uip_[current_] - 2 * uip_[current_] + cXm1.uip_[current_]) / dxSq_;
         double v2 = (cYp1.uip_[current_] - 2 * uip_[current_] + cYm1.uip_[current_]) / dySq_;
         double pf = xNume/ dx_ + yNume / dy_ +
@@ -230,7 +236,7 @@ public class Cell
         v1 =  (cXp1.vjp_[current_] - 2 * vjp_[current_] + cXm1.vjp_[current_]) / dxSq_;
         v2 =  (cYp1.vjp_[current_] - 2 * vjp_[current_] + cYm1.vjp_[current_]) / dySq_;
         pf = xNume / dx_ + yNume / dy_ +
-                    forceY + (pressure_ + cYp1.getPressure()) / dy_ + viscosity * (v1 + v2);
+                forceY + (pressure_ + cYp1.getPressure()) / dy_ + viscosity * (v1 + v2);
 
         if ( cYp1.getStatus() != CellStatus.OBSTACLE ) {
             double newv =  vjp_[current_] + dt * ( pf );
@@ -259,6 +265,7 @@ public class Cell
     /**
      * Update pressure and velocities to satisfy mass conservation.
      * What is the intuitive meaning of b0?
+     * RISK:5
      */
     public double updateMassConservation( double b0, double dt,
                                           Cell cXp1, Cell cXm1, Cell cYp1, Cell cYm1 )
@@ -306,29 +313,32 @@ public class Cell
      *          4  2  X
      *          3  c  1
      *          X  5  6
-     *  case 2 and 3: particle in upper left
+     *  case 2: particle in upper left
      *         4   2   X
      *       1/3  c   X
      *         6   5   X
      *  case 3: lower right.
+     *          X   X   X
+     *          3   c   1
+     *          4 2/5 6
      *  case 4: particle in lower left.
      *         X    X    X
      *       1/3   c    X
      *       4/6 2/5  X
-     * @param cX either one forward or one back in the x direction depending on the position of the particle.
-     * @param cY either one forward or one back in the y direction depending on the position of the particle.
-     * @param cXm1  x- 1  (always the cell to the left)
-     * @param cXm1y x - 1 and either one forward or one back in the y direction depending on the position of the particle.
-     * @param cYm1  y - 1  (always the cell to the bottom)
-     * @param cXym1 x -1 and either one forward or one back in the y direction depending on the position of the particle.
+     * @param cX either one forward or one back in the x direction depending on the position of the particle. [1]
+     * @param cY either one forward or one back in the y direction depending on the position of the particle. [2]
+     * @param cXm1  x- 1  (always the cell to the left)                                                                                                [3]
+     * @param cXm1y x - 1 and either one forward or one back in the y direction depending on the position of the particle. [4]
+     * @param cYm1  y - 1  (always the cell to the bottom)                                                                                                [5]
+     * @param cYm1x  y - 1 and either one forward or one back in the x direction depending on the position of the particle.  [6]
      */
     public Vector2d interpolateVelocity( Point2d particle,
                                      Cell cX, Cell cY,
                                      Cell cXm1, Cell cXm1y, // u
-                                     Cell cYm1, Cell cXym1)  // v
+                                     Cell cYm1, Cell cYm1x)  // v
     {
         assert ( status_ != CellStatus.OBSTACLE && status_ != CellStatus.EMPTY && numParticles_ >= 0 ) :
-             "Error: interpVel cell status=" + status_ + " num particles = " + numParticles_ ;
+             "Error: interpVelocity cell status=" + status_ + " num particles = " + numParticles_ ;
 
         double x = particle.x - (int) particle.x;
         double y = particle.y - (int) particle.y;
@@ -337,9 +347,9 @@ public class Cell
         double yy = (y > 0.5) ? (1.5 - y) : (0.5 + y);
         double x1 = (1.0 - x) * cXm1.uip_[current_] + x * uip_[current_];
         double x2 = (1.0 - x) * cXm1y.uip_[current_] + x * cY.uip_[current_];
-        double pu =  x1 * yy + x2 * (1.0 - yy);
+        double pu = x1 * yy + x2 * (1.0 - yy);
         double y1 = (1.0 - y) * cYm1.vjp_[current_] + y * vjp_[current_];
-        double y2 = (1.0 - y) * cXym1.vjp_[current_] + y * cX.vjp_[current_];
+        double y2 = (1.0 - y) * cYm1x.vjp_[current_] + y * cX.vjp_[current_];
         double pv = y1 * xx + y2 * (1.0 - xx);
 
         /*if (pu!=0 || pv!=0) {
@@ -353,51 +363,15 @@ public class Cell
     }
 
     /**
-     * Ensure that what comes in must also go out.
-     * cXp1 stands for the neighbor cell that is located at +1 in the X direction.
-     * @param numSurfaces number of empty adjacent cells. In other words the number of surfaces we have.
-     * @param
-     */
-    private void dissipateOverflow( int numSurfaces, double overflow,
-                                    Cell cXp1, Cell cXm1, Cell cYp1, Cell cYm1 )
-    {
-        if (Math.abs(overflow) > 1000)
-            System.out.println("dissipating overflow ="+overflow);
-        if ( cXp1.getStatus() == CellStatus.EMPTY ) {
-            if ( numSurfaces == 1 )
-                uip_[current_] = -dx_ * overflow;
-            else if ( (numSurfaces == 3 && cXm1.getStatus() != CellStatus.EMPTY) || (numSurfaces == 2) )
-                uip_[current_] = cXm1.uip_[current_];
-        }
-        if ( cXm1.getStatus() == CellStatus.EMPTY ) {
-            if ( numSurfaces == 1 )
-                cXm1.uip_[current_] = dx_ * overflow;
-            else if ( (numSurfaces == 3 && cXp1.getStatus() != CellStatus.EMPTY) || (numSurfaces == 2) )
-                cXm1.uip_[current_] = uip_[current_];
-        }
-
-        if ( cYp1.getStatus() == CellStatus.EMPTY ) {
-            if ( numSurfaces == 1 )
-                vjp_[current_] = -dy_ * overflow;
-            else if ( (numSurfaces == 3 && cYm1.getStatus() != CellStatus.EMPTY) || (numSurfaces == 2) )
-                vjp_[current_] = cYm1.vjp_[current_];
-        }
-        if ( cYm1.getStatus() == CellStatus.EMPTY ) {
-            if ( numSurfaces == 1 )
-                cYm1.vjp_[current_] = dy_ * overflow;
-            else if ( (numSurfaces == 3 && cYp1.getStatus() != CellStatus.EMPTY) || (numSurfaces == 2) )
-                cYm1.vjp_[current_] = vjp_[current_];
-        }
-    }
-
-    /**
      * Force no divergence in surface cells, by updating velocities directly.
+     * RISK 5
      */
     public void updateSurfaceVelocities( Cell cXp1, Cell cXm1, Cell cYp1, Cell cYm1,
                                          double pressure0 )
     {
-        if ( status_ != CellStatus.SURFACE )
+        if ( status_ != CellStatus.SURFACE ) {
             return;
+        }
 
         int count = 0;
         double overflow = 0;
@@ -426,6 +400,47 @@ public class Cell
         pressure_ = pressure0;
     }
 
+    /**
+     * Ensure that what comes in must also go out.
+     * cXp1 stands for the neighbor cell that is located at +1 in the X direction.
+     * @param numSurfaces number of empty adjacent cells. In other words the number of surfaces we have.
+     * @param overflow the overflow to dissapate out the surface sides
+     * RISK:5
+     */
+    private void dissipateOverflow( int numSurfaces, double overflow,
+                                    Cell cXp1, Cell cXm1, Cell cYp1, Cell cYm1 )
+    {
+        if (Math.abs(overflow) > 1000) {
+            System.out.println("dissipating large overflow ="+overflow);
+        }
+        if ( cXp1.getStatus() == CellStatus.EMPTY ) {
+            if ( numSurfaces == 1 )
+                uip_[current_] = -dx_ * overflow;
+            else if ( (numSurfaces == 3 && cXm1.getStatus() != CellStatus.EMPTY) || (numSurfaces == 2) )
+                uip_[current_] = cXm1.uip_[current_];
+        }
+        if ( cXm1.getStatus() == CellStatus.EMPTY ) {
+            if ( numSurfaces == 1 )
+                cXm1.uip_[current_] = dx_ * overflow;
+            else if ( (numSurfaces == 3 && cXp1.getStatus() != CellStatus.EMPTY) || (numSurfaces == 2) )
+                cXm1.uip_[current_] = uip_[current_];
+        }
+
+        if ( cYp1.getStatus() == CellStatus.EMPTY ) {
+            if ( numSurfaces == 1 )
+                vjp_[current_] = -dy_ * overflow;
+            else if ( (numSurfaces == 3 && cYm1.getStatus() != CellStatus.EMPTY) || (numSurfaces == 2) )
+                vjp_[current_] = cYm1.vjp_[current_];
+        }
+        if ( cYm1.getStatus() == CellStatus.EMPTY ) {
+            if ( numSurfaces == 1 )
+                cYm1.vjp_[current_] = dy_ * overflow;
+            else if ( (numSurfaces == 3 && cYp1.getStatus() != CellStatus.EMPTY) || (numSurfaces == 2) )
+                cYm1.vjp_[current_] = vjp_[current_];
+        }
+    }
+
+
     public void setVelocityP( double u, double v )
     {
         uip_[0] = u;
@@ -434,6 +449,7 @@ public class Cell
         vjp_[1] = v;
     }
 
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Cell:");
         sb.append(status_);

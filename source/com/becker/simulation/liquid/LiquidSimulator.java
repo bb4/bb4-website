@@ -15,13 +15,14 @@ import java.awt.*;
 public class LiquidSimulator extends NewtonianSimulator
 {
 
-    public static final String CONFIG_FILE = "com/becker/liquid/initialStateTest.data";
-    private static final String FILE_NAME_BASE = ANIMATION_FRAME_FILE_NAME_PREFIX + "liquid/liquidFrame";
+    public static final String CONFIG_FILE = "com/becker/liquid/configurations/initialStateTest.data";
+    private static final String FILE_NAME_BASE =
+            ANIMATION_FRAME_FILE_NAME_PREFIX + "liquid/liquidFrame";
 
     private LiquidEnvironment environment_;
     private EnvironmentRenderer envRenderer_;
 
-    /** if true it will save all the animation steps to files */
+    /** if true, it will save all the animation steps to files */
     public static final boolean RECORD_ANIMATION = false;
 
     /** The initial time step. It may adapt. */
@@ -37,6 +38,10 @@ public class LiquidSimulator extends NewtonianSimulator
         reset();
     }
 
+    /**
+     *
+     * @param environment
+     */
     public LiquidSimulator( LiquidEnvironment environment )
     {
         super("Liquid");
@@ -54,7 +59,7 @@ public class LiquidSimulator extends NewtonianSimulator
 
     private void commonInit() {
         initCommonUI();
-        envRenderer_ = new EnvironmentRenderer();
+        envRenderer_ = new EnvironmentRenderer(environment_);
 
         int s = (int) envRenderer_.getScale();
         setPreferredSize(new Dimension( environment_.getWidth() * s, environment_.getHeight() * s));
@@ -82,10 +87,12 @@ public class LiquidSimulator extends NewtonianSimulator
     }
 
 
+    @Override
     public void setScale( double scale ) {
         envRenderer_.setScale(scale);
 
     }
+    @Override
     public double getScale() {
         return envRenderer_.getScale();
     }
@@ -130,6 +137,7 @@ public class LiquidSimulator extends NewtonianSimulator
         return 0.01;
     }
 
+    @Override
     public void doOptimization()
     {
         Optimizer optimizer;
@@ -147,6 +155,7 @@ public class LiquidSimulator extends NewtonianSimulator
         optimizer.doOptimization(OptimizationType.GENETIC_SEARCH, paramArray, 0.3);
     }
 
+    @Override
     public int getNumParameters() {
         return NUM_OPT_PARAMS;
     }
@@ -163,19 +172,22 @@ public class LiquidSimulator extends NewtonianSimulator
         return 0.0;
     }
 
+    @Override
     public double getOptimalFitness() {
         return 0;
     }
 
+    @Override
     public Color getBackground()
     {
         return BG_COLOR;
     }
 
+    @Override
     public void paint( Graphics g )
     {
         Graphics2D g2 = (Graphics2D) g;
-        envRenderer_.render(environment_, g2 );
+        envRenderer_.render(g2 );
     }
 
     protected String getFileNameBase()
