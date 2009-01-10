@@ -9,21 +9,21 @@ import static com.becker.simulation.common.PhysicsConstants.*;
 import com.becker.common.ILog;
 
 /**
- *  this is the global space containing all the cells, walls, and particles
+ *  This is the global space containing all the cells, walls, and particles
  *  Assumes an M*N grid of cells.
  *  X axis increases to the left
- *  Y axis increases downwards to be consistent with java graphics
+ *  Y axis increases downwards to be consistent with java graphics.
  *  adapted from work by Nick Foster.
  *  See
  *  http://physbam.stanford.edu/~fedkiw/papers/stanford2001-02.pdf
  *
  *  Improvements:
- *    - increase performance by only keeping trakc of particles near the surface.
- *    - allow configuring walls from file
+ *    - increase performance by only keeping track of particles near the surface.
+ *    - allow configuring walls from file.
  *
  *  @author Barry Becker
  */
-class LiquidEnvironment
+public class LiquidEnvironment
 {
     /** for debugging */
     public static final int LOG_LEVEL = 0;
@@ -41,9 +41,7 @@ class LiquidEnvironment
     //private static final double JITTERING = .1;
     private static final double B0 = 1.7;  // used in mass conservation (how?)
     private static final double SPIGOT_VELOCITY = 30.0;
-    private static final int NUM_RAND_PARTS = 5;
-
-    private boolean firstTime = true;
+    private static final int NUM_RAND_PARTS = 1;
 
     // the dimensions of the space
     private int xDim_ = 30;
@@ -69,14 +67,18 @@ class LiquidEnvironment
     private static ILog logger_ = null;
 
 
-    //Constructor
+    /**
+     * Constructor to use if you want the environment based on a config file.
+     */
     public LiquidEnvironment( String configFile )
     {
         //readConfigFile(configFile, walls_);
         initEnvironment( walls_ );
     }
 
-    //Constructor
+    /**
+     * Constructor
+     */
     public LiquidEnvironment( int w, int h )
     {
         xDim_ = w + 2;
@@ -162,11 +164,11 @@ class LiquidEnvironment
     /**
      * cell status
      *  EMPTY   : air
-     *  FULL    : full of fluid.
+     *  FULL     : full of fluid.
      *  SURFACE : on the boundary between the liquid and surrounding medium
      *  ISOLATED: has liquid but no full cells are adjacent
      */
-    private void updateCellStatus()
+    public void updateCellStatus()
     {
         int i, j;
         for ( j = 1; j < yDim_ - 1; j++ ) {
@@ -218,11 +220,6 @@ class LiquidEnvironment
             grid_[4][i].setUip( SPIGOT_VELOCITY );
         }
 
-        /* try this as a test
-        if (firstTime) {
-            addRandomParticles( 3, 2 );
-            firstTime = false;
-        }   */
         addRandomParticles( 3, 2 );
         addRandomParticles( 3, 3 );
         addRandomParticles( 3, 4 );
@@ -255,11 +252,13 @@ class LiquidEnvironment
     /**
      * perform pressure iteration to consider mass conservation.
      * repeat till all cells in the flow field have a divergence less than EPSILON.
+     * When things go bad, this can take 50-70 iterations
      */
     private double updatePressure( double timeStep )
     {
         int i, j;
         double maxDivergence, divergence;
+        int count = 0;
 
         do {
             // adjust tilde velocities to satisfy mass conservation
@@ -270,13 +269,15 @@ class LiquidEnvironment
                             grid_[i][j].updateMassConservation( B0, timeStep,
                                     grid_[i + 1][j], grid_[i - 1][j],
                                     grid_[i][j + 1], grid_[i][j - 1] );
-                    if ( divergence > maxDivergence )
+                    if ( divergence > maxDivergence ) {
                         maxDivergence = divergence;
+                    }
                 }
             }
+            count++;
             log( 2, " updatePress: maxDiv = " + maxDivergence );
         } while ( maxDivergence > EPSILON );
-        log( 1, " updatePress: converged to maxDiv = " + maxDivergence );
+        log( 1, " updatePress: converged to maxDiv = " + maxDivergence  + " after " + count +" interations.");
         return maxDivergence;
     }
 
@@ -296,8 +297,9 @@ class LiquidEnvironment
     }
 
     /**
-     * move particles according to vector field
+     * move particles according to vector field.
      * updates the timeStep if the cfl condition is not met.
+     * RISK: 3
      */
     private double updateParticlePosition( double timeStep )
     {
@@ -305,26 +307,19 @@ class LiquidEnvironment
         // keep track of the biggest velocity magnitude so we can adjust the timestep appropriately.
         double maxLength = Double.MIN_VALUE;
         double invCellSize = 1.0/CELL_SIZE;
-        // max distance to go in one step. Beyond this, we apply the governer.
-        //double maxDistance = CELL_SIZE/20.0;
-
+        
         while ( it.hasNext() ) {
             Particle particle = (Particle) it.next();
             // velocity of a particle : determined using area weighting interpolation
+
             int i = (int) particle.x;
             int j = (int) particle.y;
             CellStatus status = grid_[i][j].getStatus();
 
             if ( status == CellStatus.FULL || status == CellStatus.SURFACE || status == CellStatus.ISOLATED ) {
-                int ii = ((particle.x - i) > 0.5) ? (i + 1) : (i - 1);
-                int jj = ((particle.y - j) > 0.5) ? (j + 1) : (j - 1);
 
-                Vector2d vel =
-                        grid_[i][j].interpolateVelocity( particle,
-                            grid_[ii][j], grid_[i][jj],
-                            grid_[i - 1][j], grid_[i - 1][jj], // u
-                            grid_[i][j - 1], grid_[ii][j - 1]);  // v
-
+                Vector2d vel = findInterpolatedGridVelocity(particle);
+               
                 // scale the velocity by the cell size so we can assume the cells have unit dims
                 vel.scale(invCellSize);
 
@@ -347,8 +342,8 @@ class LiquidEnvironment
                 particle.incAge( timeStep );
 
                 // ensure the liquid does not enter an OBSTACLE
-                ii = (int) particle.x;
-                jj = (int) particle.y;
+                int ii = (int) particle.x;
+                int jj = (int) particle.y;
 
                 if (ii<0 || jj<0 || ii>=grid_.length || jj >= grid_[0].length) {
                     logger_.println( " i="+i+" j="+j +"    ii="+ii+ "  jj="+jj + " v.len="+vel.length() +" xChange="+xChange +" yChange=" + yChange +" timeStep="+timeStep);
@@ -371,18 +366,18 @@ class LiquidEnvironment
                     }
                 }
 
-                // move outside the obstacle if we find ouselves in one
+                // move outside the obstacle if we find ourselves in one
                 if ( grid_[ii][jj].getStatus() == CellStatus.OBSTACLE ) {
-                    if ( ii > i ) {
+                    if ( i < ii ) {
                         particle.set( ii - EPSILON, particle.y );
                     }
-                    else if ( ii < i ) {
+                    else if (i > ii ) {
                         particle.set( ii + 1.0 + EPSILON, particle.y );
                     }
-                    if ( jj > j ) {
+                    if ( j < jj ) {
                         particle.set( particle.x, jj - EPSILON );
                     }
-                    else if ( jj < j ) {
+                    else if ( j > jj ) {
                         particle.set( particle.x, jj + 1.0 + EPSILON );
                     }
                 }
@@ -404,20 +399,43 @@ class LiquidEnvironment
             }
         }
 
-        /*
+        adjustTimeStep(timeStep, maxLength);
+       
+        return timeStep;
+    }
+
+    public Vector2d findInterpolatedGridVelocity(Particle particle) {
+         int i = (int) particle.x;
+         int j = (int) particle.y;
+         int ii = ((particle.x - i) > 0.5) ? (i + 1) : (i - 1);
+         int jj = ((particle.y - j) > 0.5) ? (j + 1) : (j - 1);
+
+         Vector2d vel =
+             grid_[i][j].interpolateVelocity( particle,
+                        grid_[ii][j], grid_[i][jj],
+                        grid_[i - 1][j], grid_[i - 1][jj], // u
+                        grid_[i][j - 1], grid_[ii][j - 1]);  // v
+         return vel;
+    }
+
+    private double adjustTimeStep(double timeStep, double maxLength) {
+
+        // max distance to go in one step. Beyond this, we apply the governer.
+        double maxDistance = CELL_SIZE/10.0;
+        double minDistance = CELL_SIZE/10000.0;
+
+        // adjust the timestep if needed.
         double increment = (timeStep * maxLength);
         double newTimeStep = timeStep;
-        if (increment > MAX_INC) {
+        if (increment > maxDistance) {
             newTimeStep /= 2.0;
             log(0, "updateParticlePosition: HALVED dt=" + timeStep +" increment="+increment );
         }
-        else if (increment < MIN_INC) {
+        else if (increment < minDistance) {
             newTimeStep *= 2.0;
             log(0, "updateParticlePosition: DOUBLED dt=" + timeStep +" increment="+increment );
-        }*/
-
-
-        return timeStep;
+        }
+        return newTimeStep;
     }
 
     public int numParticles()
