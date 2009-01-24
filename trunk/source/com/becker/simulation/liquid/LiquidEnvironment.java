@@ -1,5 +1,8 @@
 package com.becker.simulation.liquid;
 
+import com.becker.simulation.liquid.config.Conditions;
+import com.becker.simulation.liquid.config.Source;
+import com.becker.simulation.liquid.config.Region;
 import com.becker.ui.*;
 
 import javax.vecmath.*;

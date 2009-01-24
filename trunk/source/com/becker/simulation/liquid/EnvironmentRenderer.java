@@ -1,5 +1,6 @@
 package com.becker.simulation.liquid;
 
+import com.becker.simulation.liquid.config.PressureColorMap;
 import com.becker.common.*;
 
 import java.awt.*;
