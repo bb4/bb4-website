@@ -402,7 +402,7 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
         EyeType[] whiteEyes = {};
         double bPotential = 0.93;
         double wPotential = 1.31;
-        double blackHealth = 1.0;
+        double blackHealth = 0.9399999976158142;  // 1.0
         double whiteHealth = -0.5;
         double AbsAbsHealthDiff = 0.49;
         double AbsHealthDiff = 1.5;

@@ -11,6 +11,7 @@ import com.becker.game.common.BoardPosition;
  */
 public class CandidateMoveAnalyzer {
 
+    /** don't check for candidates at the very edge unless thre are nieghboring stones */
     private static final int CANDIDATE_MOVE_OFFSET = 1;
 
     private final GoBoard board_;

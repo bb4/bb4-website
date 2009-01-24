@@ -60,6 +60,7 @@ public class Scene {
         }
         return choices;
     }
+    
     /**
      * @return the name of the scene
      */

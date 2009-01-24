@@ -1,8 +1,5 @@
 package com.becker.simulation.parameter;
 
-
-import com.becker.simulation.dice.*;
-import com.becker.ui.*;
 import com.becker.simulation.common.*;
 
 import javax.swing.*;
@@ -14,7 +11,7 @@ import java.awt.*;
 public class ParameterOptionsDialog extends SimulatorOptionsDialog {
 
 
-    /** number of dice to use.   */
+    /** type of distribution function to test.   */
     private JComboBox parameterChoiceField_;
     private JCheckBox showRedistribution_;
     
@@ -32,7 +29,7 @@ public class ParameterOptionsDialog extends SimulatorOptionsDialog {
 
     public String getTitle()
     {
-        return "Paremeter Simulation Configuration";
+        return "Parameter Simulation Configuration";
     }
 
     protected JPanel createCustomParamPanel()
@@ -42,7 +39,6 @@ public class ParameterOptionsDialog extends SimulatorOptionsDialog {
         JPanel innerPanel = new JPanel();
         innerPanel.setLayout( new BoxLayout(innerPanel, BoxLayout.Y_AXIS));
 
-        JLabel label = new JLabel("Parameter");
         parameterChoiceField_ = new JComboBox();
         parameterChoiceField_.setModel(
                 new DefaultComboBoxModel(ParameterDistributionType.values()));
