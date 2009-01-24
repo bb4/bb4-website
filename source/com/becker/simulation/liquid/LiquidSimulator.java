@@ -15,7 +15,6 @@ import java.awt.*;
 public class LiquidSimulator extends NewtonianSimulator
 {
 
-    public static final String CONFIG_FILE = "com/becker/liquid/configurations/initialStateTest.data";
     private static final String FILE_NAME_BASE =
             ANIMATION_FRAME_FILE_NAME_PREFIX + "liquid/liquidFrame";
 
@@ -35,24 +34,29 @@ public class LiquidSimulator extends NewtonianSimulator
 
     public LiquidSimulator() {
         super("Liquid");
-        reset();
+        environment_ = new LiquidEnvironment( ConfigurationEnum.BASIC.getFileName() );
+        commonInit();
     }
 
     /**
-     *
      * @param environment
-     */
+     *
     public LiquidSimulator( LiquidEnvironment environment )
     {
         super("Liquid");
         environment_ = environment;
+        commonInit();
+    }*/
+
+    public void loadEnvironment(String configFile) {
+        environment_ = new LiquidEnvironment(configFile);
         commonInit();
     }
 
     protected void reset() {
         boolean oldPaused = this.isPaused();
         setPaused(true);
-        environment_ =  new LiquidEnvironment( 20, 15 );
+        environment_.reset();
         commonInit();
         setPaused(oldPaused);
     }

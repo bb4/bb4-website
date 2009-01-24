@@ -13,8 +13,10 @@ import java.awt.event.*;
  * @author Bary Becker
  */
 class LiquidOptionsDialog extends NewtonianSimOptionsDialog
-                          implements ActionListener
 {
+
+     /** type of distribution function to test.   */
+    private JComboBox configurationChoiceField_;
 
     // constructor
     LiquidOptionsDialog( Frame parent, LiquidSimulator simulator ) {
@@ -32,33 +34,53 @@ class LiquidOptionsDialog extends NewtonianSimOptionsDialog
         liquidParamPanel.setBorder(
                 BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), "Liquid Parameters" ) );
 
-
         //LiquidSimulator simulator = (LiquidSimulator) getSimulator();
 
-        /*
-        waveSpeedField_ = new JTextField( Double.toString( simulator.getSnake().getWaveSpeed() ) );
-        waveSpeedField_.setMaximumSize( TEXT_FIELD_DIM );
-        JPanel p1 =
-                new NumberInputPanel( "Wave Speed (.001 slow - .9 fast):  ", waveSpeedField_ );
-        p1.setToolTipText( "This controls the speed at which the force function that travels down the body of the snake" );
-        liquidParamPanel.add( p1 );
-        */
+        configurationChoiceField_ = createConfigChoice();
 
+        liquidParamPanel.add( configurationChoiceField_ );
         customParamPanel.add(liquidParamPanel, BorderLayout.NORTH);
 
         return customParamPanel;
     }
 
+    private JComboBox createConfigChoice() {
+
+        JComboBox configurationChoice = new JComboBox();
+
+        configurationChoice.setModel(
+                new DefaultComboBoxModel(ConfigurationEnum.values()));
+        configurationChoice.setToolTipText(ConfigurationEnum.values()[0].getDescription());
+        configurationChoice.addActionListener(this);
+        return configurationChoice;
+    }
+    
+    public void actionPerformed( ActionEvent e )
+    {
+        super.actionPerformed(e);
+        
+        Object source = e.getSource();
+
+        if ( source == configurationChoiceField_ ) {
+            
+            ConfigurationEnum selectedValue =
+                   ((ConfigurationEnum)configurationChoiceField_.getSelectedItem());
+            configurationChoiceField_.setToolTipText(selectedValue.getDescription());
+        }
+    }
+
+
     @Override
     protected void ok() {
 
+        // set the liquid environment
+        LiquidSimulator simulator = (LiquidSimulator) getSimulator();
+
+        ConfigurationEnum selected = (ConfigurationEnum) configurationChoiceField_.getSelectedItem();
+
+        simulator.loadEnvironment(selected.getFileName());
+
         super.ok();
-
-        // set the snake params
-        //LiquidSimulator simulator = (LiquidSimulator) getSimulator();
-
-        //Double waveSpeed = new Double( waveSpeedField_.getText() );
-        //simulator.getSnake().setWaveSpeed( waveSpeed );
     }
 
 }
