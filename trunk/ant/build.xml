@@ -367,7 +367,7 @@
   <target name="testLiquid" depends="compile" description=" liquid tests" >
        <echo message="now running LIQUID tests"/>
        <junit  printsummary="yes" fork="yes"  haltonfailure="no" showoutput="yes" >
-           <classpath path="${classesDir};${libDir}/vecmath.jar"/>
+           <classpath path="${classesDir};${libDir}/junit.jar;${libDir}/vecmath.jar"/>
            <assertions><enable/></assertions>
            <formatter type="plain"/>
            <!--formatter type="brief" usefile="false" /-->
