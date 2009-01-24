@@ -1,5 +1,6 @@
 package com.becker.simulation.liquid;
 
+import com.becker.simulation.liquid.config.ConfigurationEnum;
 import com.becker.simulation.common.*;
 
 import javax.swing.*;

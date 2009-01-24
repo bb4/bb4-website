@@ -1,4 +1,4 @@
-package com.becker.simulation.liquid;
+package com.becker.simulation.liquid.config;
 
 /**
  * Different configurations to choose from.
@@ -28,7 +28,7 @@ public enum ConfigurationEnum {
     }
 
     private static final String getFileBase() {
-        return "com/becker/simulation/liquid/configuration/";
+        return "com/becker/simulation/liquid/data/";
     }
 
     public String getFileName() {

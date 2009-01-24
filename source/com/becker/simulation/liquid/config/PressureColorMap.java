@@ -1,4 +1,4 @@
-package com.becker.simulation.liquid;
+package com.becker.simulation.liquid.config;
 
 import com.becker.common.*;
 

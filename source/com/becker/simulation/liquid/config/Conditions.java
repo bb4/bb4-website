@@ -1,5 +1,6 @@
-package com.becker.simulation.liquid;
+package com.becker.simulation.liquid.config;
 
+import com.becker.simulation.liquid.config.ConfigurationEnum;
 import com.becker.common.Location;
 import com.becker.ui.GUIUtil;
 import com.becker.xml.DomUtil;

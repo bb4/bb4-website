@@ -1,5 +1,6 @@
 package com.becker.simulation.liquid;
 
+import com.becker.simulation.liquid.config.ConfigurationEnum;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.parameter.Parameter;
 import com.becker.common.util.FileUtil;
