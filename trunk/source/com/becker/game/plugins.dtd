@@ -1,4 +1,3 @@
-
 <!ELEMENT plugins   (game)*>
 <!ELEMENT game    EMPTY>
 
@@ -6,6 +5,7 @@
     date        CDATA      #IMPLIED
     author      NMTOKENS   #IMPLIED
 >
+
 <!ATTLIST game
     name             ID       #REQUIRED
     msgKey           NMTOKENS #REQUIRED

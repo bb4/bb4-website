@@ -15,7 +15,7 @@ import java.util.*;
  *  Games like pente, go, chess, checkers, go-moku,
  *  shoji, othello, connect4, squares, Stratego, Blockade
  *  Other games like Risk, Galactic Empire, or Monopoly and might be supportable in the future.
- *  They are harder because they do not have perfect information (i.e. they use dice)
+ *  They are harder because they do not have perfect information (i.e. they use dice).
  *  and have multiple players.
  *
  *  @author Barry Becker
@@ -29,7 +29,7 @@ public abstract class Board implements BoardInterface, Cloneable
     protected int numRows_;
     protected int numCols_;
     protected int rowsTimesCols_;
-    
+
      /** a global profiler for recording timing stats. */
     private static GameProfiler profiler_;
 
@@ -177,16 +177,16 @@ public abstract class Board implements BoardInterface, Cloneable
        return true;
     }
 
-    public int hashCode() {        
+    public int hashCode() {
         int hash = 0;
         int nRows = getNumRows();
         int nCols = getNumCols();
-        for ( int i = 1; i <= nRows; i++ )   {           
+        for ( int i = 1; i <= nRows; i++ )   {
           int pos = (i-1) * nCols;
           for ( int j = 1; j <= nCols; j++ ) {
-              BoardPosition p1 = this.getPosition(i,j);  
-              if (p1.isOccupied()) {          
-                  hash += 2 *(pos + j) + (p1.getPiece().isOwnedByPlayer1()? 1: 2);                  
+              BoardPosition p1 = this.getPosition(i,j);
+              if (p1.isOccupied()) {
+                  hash += 2 *(pos + j) + (p1.getPiece().isOwnedByPlayer1()? 1: 2);
               }
            }
         }
@@ -236,8 +236,8 @@ public abstract class Board implements BoardInterface, Cloneable
     {
         return !(r < 1 || r > getNumRows() || c < 1 || c > getNumCols());
     }
-    
-     
+
+
     public void initializeProfilingStats()
     {
         profiler_.initialize();
@@ -254,7 +254,7 @@ public abstract class Board implements BoardInterface, Cloneable
         }
         return profiler_;
     }
-    
+
     /**
      * @return object to keep track of profiling statistics.
      */

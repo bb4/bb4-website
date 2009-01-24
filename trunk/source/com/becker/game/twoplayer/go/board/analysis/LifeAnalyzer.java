@@ -33,7 +33,7 @@ public final class LifeAnalyzer {
         // mark all the strings in the group as not UA
         Set<GoString> candidateStrings = new HashSet<GoString>();
         for (GoString str : group_.getMembers()) {
-            str.setUnconditionallyAlive(true);
+            str.setUnconditionallyAlive(false);
             candidateStrings.add(str);
         }
 

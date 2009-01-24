@@ -13,10 +13,14 @@ You are on a camping trip with a large group of boyscouts. During a nighttime hi
 You stumble upon a meadow. There in front of you is a large mansion. You hear an eary plea for help coming from inside. What do you do?
         </description>
         <choices>
-            <choice description="Knock on the front door"              resultScene="no_response" />
-            <choice description="Open the front door without knocking" resultScene="inside_entrance" />
-            <choice description="Scream"                               resultScene="sky_falls"/>
-            <choice description="Knock on the front door"              resultScene="no_response"/>
+            <choice description="Knock on the front door"
+                          resultScene="no_response" />
+            <choice description="Open the front door without knocking"
+                          resultScene="inside_entrance" />
+            <choice description="Scream"
+                          resultScene="sky_falls"/>
+            <choice description="Knock on the front door"
+                          resultScene="no_response"/>
         </choices>
     </scene>
 
@@ -25,10 +29,14 @@ You stumble upon a meadow. There in front of you is a large mansion. You hear an
            No one comes to the door and you hear nothing. A few minutes pass. Still nothing.
         </description>
         <choices>
-            <choice description="Knock again"                          resultScene="no_response" />
-            <choice description="Open the front door without knocking" resultScene="inside_entrance" />
-            <choice description="Scream"                               resultScene="sky_falls"/>
-            <choice description="Return to the rest of your group"     resultScene="quit"/>
+            <choice description="Knock again"
+                          resultScene="no_response" />
+            <choice description="Open the front door without knocking"
+                          resultScene="inside_entrance" />
+            <choice description="Scream"
+                          resultScene="sky_falls"/>
+            <choice description="Return to the rest of your group"
+                          resultScene="quit"/>
         </choices>
     </scene>
 
@@ -43,10 +51,14 @@ You stumble upon a meadow. There in front of you is a large mansion. You hear an
            section on that south face of the hall.
         </description>
         <choices>
-            <choice description="Go through left opening"                     resultScene="rat_room" />
-            <choice description="Go through right opening"                    resultScene="boogie" />
-            <choice description="Tamper with mirror at the end of the hall."  resultScene="mirror"/>
-            <choice description="Exit"                                        resultScene="quit"/>
+            <choice description="Go through left opening"
+                          resultScene="rat_room" />
+            <choice description="Go through right opening"
+                          resultScene="boogie" />
+            <choice description="Tamper with mirror at the end of the hall."
+                          resultScene="mirror"/>
+            <choice description="Exit"
+                          resultScene="quit"/>
         </choices>
     </scene>
 
@@ -61,9 +73,12 @@ south, if paced out.
 There is a door on the east side of the room.
         </description>
         <choices>
-            <choice description="Inspect the couch."                      resultScene="rat_attack" />
-            <choice description="Sift through the leaves on the floor."   resultScene="key" />
-            <choice description="TGo through the door on the east side."  resultScene="C"/>
+            <choice description="Inspect the couch."
+                          resultScene="rat_attack" />
+            <choice description="Sift through the leaves on the floor."
+                          resultScene="key" />
+            <choice description="TGo through the door on the east side."
+                          resultScene="C"/>
         </choices>
     </scene>
 
@@ -91,7 +106,8 @@ eighty feet long east and west and twenty feet long north and south.
 The hall leads to another room at the end. ",
         </description>
         <choices>
-            <choice description="Proceed into the room at the end of the hall."    resultScene="D" />
+            <choice description="Proceed into the room at the end of the hall."
+                          resultScene="D" />
         </choices>
     </scene>
 
@@ -187,7 +203,7 @@ surprises you. ",
         </description>
     </scene>
 </script>
-<!--  disallow comment nodes are detect when parsing.
+<!--  disallow comment nodes that are detected when parsing.
 
         new Scene("E",
                   "

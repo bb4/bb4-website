@@ -50,6 +50,14 @@ public final class Location implements Serializable
         this.col_ = col;
     }
 
+    public int getX() {
+        return col_;
+    }
+
+    public int getY() {
+        return row_;
+    }
+
     /**
      * Checks to see if the given location has the same coordinates as this
      * one.

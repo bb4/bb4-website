@@ -2,7 +2,6 @@ package com.becker.game.twoplayer.go.test.board.analysis;
 
 import com.becker.common.Location;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.*;
 import com.becker.game.twoplayer.go.board.analysis.CandidateMoveAnalyzer;
 import com.becker.game.twoplayer.go.test.GoTestCase;
 import java.util.ArrayList;
@@ -24,16 +23,22 @@ public class TestCandidateMoveAnalyzer extends GoTestCase {
     }
 
     public void testCandidateMoves2() {
-        verifyCandidateMoves("problem_score2", 79, null); // or 74?
+        verifyCandidateMoves("problem_score2", 79, null);   // or 74?
     }
     public void testCandidateMoves3() {
         List<Location> expCandidates = new ArrayList<Location>(20);
+        expCandidates.add(new Location(1, 1));
+        expCandidates.add(new Location(1, 4));
+        expCandidates.add(new Location(2, 1));
+        expCandidates.add(new Location(2, 5));
         expCandidates.add(new Location(4, 1));
         expCandidates.add(new Location(4, 3));
+        expCandidates.add(new Location(4, 5));
         expCandidates.add(new Location(5, 1));
         expCandidates.add(new Location(5, 2));
+        expCandidates.add(new Location(5, 5));
 
-        verifyCandidateMoves("problem_score55a", 4, expCandidates);
+        verifyCandidateMoves("problem_score55a", 10, expCandidates);
     }
 
     public void testCandidateMoves4() {
@@ -48,10 +53,10 @@ public class TestCandidateMoveAnalyzer extends GoTestCase {
         expCandidates.add(new Location(3, 2));
         expCandidates.add(new Location(4, 1));
         expCandidates.add(new Location(5, 1));
-        expCandidates.add(new Location(5, 4));
-        expCandidates.add(new Location(5, 5));
+        //expCandidates.add(new Location(5, 4));
+        //expCandidates.add(new Location(5, 5));
 
-        verifyCandidateMoves("problem_score55b", 10, expCandidates);
+        verifyCandidateMoves("problem_score55b", 8, expCandidates);   // 10?
     }
 
 

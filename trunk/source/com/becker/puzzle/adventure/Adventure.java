@@ -3,9 +3,11 @@ package com.becker.puzzle.adventure;
 import com.becker.common.util.FileUtil;
 import com.becker.xml.*;
 import com.becker.common.*;
+import com.becker.ui.GUIUtil;
 import org.w3c.dom.*;
 
 import java.io.*;
+import java.net.URL;
 import java.util.*;
 
 /**
@@ -40,9 +42,12 @@ public class Adventure {
 
     public static final Scene TERMINAL_SCENE = new Scene(Choice.QUIT, "Goodbye", null);
 
-
+    /**
+     * Construct an adventure given an xml document object
+     * @param document containing the scene data
+     */
     public Adventure(Document document) {
-        Node root = document.getDocumentElement();  //DomUtil.getRootNode(document);
+        Node root = document.getDocumentElement(); 
         NodeList children = root.getChildNodes();
         Scene[] scenes = new Scene[children.getLength()];
         for (int i=0; i < children.getLength(); i++) {
@@ -132,12 +137,18 @@ public class Adventure {
      */
     public static void main( String[] args ) throws IOException {
 
-        //assert(args.length == 1) : "You must specify a script file as an argument (e.g. ludlowScript.xml).";
-        File file = new File(FileUtil.PROJECT_DIR + "source/com/becker/puzzle/adventure/ludlowScript.xml");       
-        if (args.length == 1)
-            file = new File(args[0]);
-
-        Document document = DomUtil.parseXMLFile(file);
+        Document document = null;
+        if (args.length == 1) {
+            File file = new File(args[0]);
+            document = DomUtil.parseXMLFile(file);
+        }
+        else {
+            // File file = new File(FileUtil.PROJECT_DIR + "source/com/becker/puzzle/adventure/ludlowScript.xml");
+            URL url = GUIUtil.getURL("com/becker/puzzle/adventure/ludlowScript.xml");
+            System.out.println("about to parse url="+url +"\n plugin file location="+ url);
+            document = DomUtil.parseXML(url);
+        }
+        
         //DomUtil.printTree(document, 0);
 
         //Adventure story = new Adventure(SceneData.getScenes());
