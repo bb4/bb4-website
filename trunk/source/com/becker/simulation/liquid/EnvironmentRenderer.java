@@ -107,6 +107,7 @@ public final class EnvironmentRenderer
         }
         
         // draw the ---velocity--- field (and status)
+       System.out.println("show vel=" + showVelocities_);
         if (showVelocities_)
             drawCellFaceVelocities(g);
 

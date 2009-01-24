@@ -265,7 +265,7 @@ public class Cell
     /**
      * Update pressure and velocities to satisfy mass conservation.
      * What is the intuitive meaning of b0?
-     * RISK:5
+     * RISK:10
      */
     public double updateMassConservation( double b0, double dt,
                                           Cell cXp1, Cell cXm1, Cell cYp1, Cell cYm1 )

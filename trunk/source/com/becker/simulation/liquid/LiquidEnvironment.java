@@ -33,6 +33,7 @@ public class LiquidEnvironment
 
     /** density of the liquid in grams per mm^3.  water = 1000 kg/m^3 or .001 g/mm^2  */
     private static final double DENSITY = 0.001;
+
     /**
      *  viscosity of the liquid. Larger for molasses (.3), smaller for kerosine (.0001)
      * Water is about .001 Ns/m^2 or .01 g/s mm
@@ -40,7 +41,6 @@ public class LiquidEnvironment
     private static final double VISCOSITY = 0.002; //0.001;
     //private static final double JITTERING = .1;
     private static final double B0 = 1.7;  // used in mass conservation (how?)
-    private static final double SPIGOT_VELOCITY = 30.0;
     private static final int NUM_RAND_PARTS = 1;
 
     // the dimensions of the space
@@ -51,10 +51,11 @@ public class LiquidEnvironment
     // in x,y (col, row) order
     private Cell[][] grid_ = null;
 
+    /** constraints and conditions from the configuation file. */
+    private Conditions conditions_;
+
     // the set of particles in this simulation
-    private final Set<Particle> particles_ = new HashSet<Particle>();
-    // keep the walls globally because we need to draw them each frame
-    private final List walls_ = new ArrayList();
+    private Set<Particle> particles_;
 
     private static final double EPSILON = 0.0000001;
 
@@ -72,36 +73,40 @@ public class LiquidEnvironment
      */
     public LiquidEnvironment( String configFile )
     {
-        //readConfigFile(configFile, walls_);
-        initEnvironment( walls_ );
+        initializeFromConfigFile(configFile);
     }
 
-    /**
-     * Constructor
-     */
-    public LiquidEnvironment( int w, int h )
+    private void initializeFromConfigFile(String configFile) {
+
+        conditions_ = new Conditions(configFile);
+        initEnvironment();
+    }
+    
+    public void reset() {
+        
+        initEnvironment();
+    }
+
+    private void initEnvironment()
     {
-        xDim_ = w + 2;
-        yDim_ = h + 2;
+        xDim_ = conditions_.getGridWidth() + 2;
+        yDim_ = conditions_.getGridHeight() + 2;
         grid_ = new Cell[xDim_][yDim_];
-        initEnvironment( walls_ );
-    }
 
-    private void initEnvironment( List walls )
-    {
-        int i, j;
+        particles_ = new HashSet<Particle>();
+
         if (logger_ == null) {
             logger_ = new Log( new OutputWindow( "Log", null ) );
             logger_.setDestination( ILog.LOG_TO_WINDOW );
         }
 
-        for ( j = 0; j < yDim_; j++ ) {
-            for ( i = 0; i < xDim_; i++ ) {
+        for (int j = 0; j < yDim_; j++ ) {
+            for (int i = 0; i < xDim_; i++ ) {
                 grid_[i][j] = new Cell();
             }
         }
-        //pressureColorMap_.setOpacity(PRESSURE_COL_OPACITY);
-        setInitialConditions();
+        setInitialLiquid();
+        setBoundaries();
         setConstraints();
     }
 
@@ -180,17 +185,71 @@ public class LiquidEnvironment
     }
 
     /**
-     *  set OBSTACLE condition of stationary objects, inflow/outflow.
+     * setup the obstacles.
      */
-    private void setConstraints()
+    private void setBoundaries()
     {
         int i, j;
-        Cell n;
-
         // right and left
         for ( j = 0; j < yDim_; j++ ) {
+            grid_[0][j].setStatus( CellStatus.OBSTACLE );
+            grid_[xDim_ - 1][j].setStatus( CellStatus.OBSTACLE );
+        }
+        // top and bottom
+        for ( i = 0; i < xDim_; i++ ) {
+            grid_[i][0].setStatus( CellStatus.OBSTACLE );
+            grid_[i][yDim_ - 1].setStatus( CellStatus.OBSTACLE );
+        }
+    }
+
+    private void setInitialLiquid() {
+        for (Region region : conditions_.getInitialLiquidRegions()) {
+            for (int i = region.getStart().getX(); i <= region.getStop().getX(); i++ ) {
+                 for (int j = region.getStart().getY(); j <= region.getStop().getY(); j++ ) {
+                     addRandomParticles(i, j, 4 * NUM_RAND_PARTS);
+                 }
+            }
+        }
+    }
+
+    private void setConstraints() {
+        setBoundaryConstraints();
+
+        //addWalls();
+        addSources();
+        //addSinks();
+    }
+
+    private void addSources() {
+        for (Source source : conditions_.getSources()) {
+            addSource(source);
+        }
+    }
+
+
+    private void addSource(Source source) {
+        //add a spigot of liquid
+        Vector2d velocity = source.getVelocity();
+
+        for (int i = source.getStart().getX(); i <= source.getStop().getX(); i++ ) {
+             for (int j = source.getStart().getY(); j <= source.getStop().getY(); j++ ) {
+                 grid_[i][j].setUip( velocity.x );
+                 grid_[i][j].setVjp( velocity.y );
+                 addRandomParticles(i, j, NUM_RAND_PARTS);
+             }
+        }
+    }
+
+
+    /**
+     *  set OBSTACLE condition of stationary objects, inflow/outflow.
+     */
+    private void setBoundaryConstraints()
+    {
+        // right and left
+        for (int j = 0; j < yDim_; j++ ) {
             // left
-            n = grid_[1][j];
+            Cell n = grid_[1][j];
             grid_[0][j].setPressure( n.getPressure() );
             grid_[0][j].setVelocityP( 0, -n.getVjp() );
             // right
@@ -201,9 +260,9 @@ public class LiquidEnvironment
         }
 
         // top and bottom
-        for ( i = 0; i < xDim_; i++ ) {
+        for (int i = 0; i < xDim_; i++ ) {
             // bottom
-            n = grid_[i][1];
+            Cell n = grid_[i][1];
             grid_[i][0].setPressure( n.getPressure() );
             grid_[i][0].setVelocityP( -n.getUip(), 0 );
             // top
@@ -211,19 +270,7 @@ public class LiquidEnvironment
             grid_[i][yDim_ - 1].setPressure( n.getPressure() );
             grid_[i][yDim_ - 1].setVelocityP( -n.getUip(), 0 );
             grid_[i][yDim_ - 2].setVjp( 0 );
-        }
-
-        //add a spigot of liquid
-        for ( i = 2; i < 6; i++ ) {
-            grid_[2][i].setUip( SPIGOT_VELOCITY );
-            grid_[3][i].setUip( SPIGOT_VELOCITY );
-            grid_[4][i].setUip( SPIGOT_VELOCITY );
-        }
-
-        addRandomParticles( 3, 2 );
-        addRandomParticles( 3, 3 );
-        addRandomParticles( 3, 4 );
-        addRandomParticles( 3, 5 );
+        }      
     }
 
     /**
@@ -256,15 +303,14 @@ public class LiquidEnvironment
      */
     private double updatePressure( double timeStep )
     {
-        int i, j;
         double maxDivergence, divergence;
         int count = 0;
 
         do {
             // adjust tilde velocities to satisfy mass conservation
             maxDivergence = 0;
-            for ( j = 1; j < yDim_ - 1; j++ ) {
-                for ( i = 1; i < xDim_ - 1; i++ ) {
+            for (int j = 1; j < yDim_ - 1; j++ ) {
+                for (int i = 1; i < xDim_ - 1; i++ ) {
                     divergence =
                             grid_[i][j].updateMassConservation( B0, timeStep,
                                     grid_[i + 1][j], grid_[i - 1][j],
@@ -277,7 +323,9 @@ public class LiquidEnvironment
             count++;
             log( 2, " updatePress: maxDiv = " + maxDivergence );
         } while ( maxDivergence > EPSILON );
-        log( 1, " updatePress: converged to maxDiv = " + maxDivergence  + " after " + count +" interations.");
+        if (count >20) {
+            log( 0, " updatePress: converged to maxDiv = " + maxDivergence  + " after " + count +" iterations.");
+        }
         return maxDivergence;
     }
 
@@ -443,24 +491,6 @@ public class LiquidEnvironment
         return particles_.size();
     }
 
-    /**
-     * setup the obstacles.
-     */
-    private void setInitialConditions()
-    {
-        int i, j;
-        // right and left
-        for ( j = 0; j < yDim_; j++ ) {
-            grid_[0][j].setStatus( CellStatus.OBSTACLE );
-            grid_[xDim_ - 1][j].setStatus( CellStatus.OBSTACLE );
-        }
-        // top and bottom
-        for ( i = 0; i < xDim_; i++ ) {
-            grid_[i][0].setStatus( CellStatus.OBSTACLE );
-            grid_[i][yDim_ - 1].setStatus( CellStatus.OBSTACLE );
-        }
-    }
-
     private void addParticle( double x, double y )
     {
         Particle p = new Particle( x, y, grid_[(int) x][(int) y] );
@@ -468,12 +498,10 @@ public class LiquidEnvironment
         grid_[(int) x][(int) y].incParticles();
     }
 
-    private void addRandomParticles( double x, double y )
+    private void addRandomParticles( double x, double y, int numParticles )
     {
-        for ( int i = 0; i < NUM_RAND_PARTS; i++ ) {
-            Particle p = new Particle( x + RANDOM.nextDouble(), y + RANDOM.nextDouble(), grid_[(int) x][(int) y] );
-            particles_.add( p );
-            grid_[(int) x][(int) y].incParticles();
+        for ( int i = 0; i < numParticles; i++ ) {
+            addParticle( x + RANDOM.nextDouble(), y + RANDOM.nextDouble());
         }
     }
 

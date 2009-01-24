@@ -1,10 +1,11 @@
 package com.becker.simulation.liquid;
 
+import com.becker.common.Location;
 import java.awt.geom.*;
 
 /**
  *  Walls form a basis for solid objects in the simulation space.
- *  They are straight lines and immovable.
+ *  They are straight lines  (either horizontal or vertical) and immovable.
  *  Endpoints of walls must be on cell boundaries
  *
  *  @author Barry Becker
@@ -12,16 +13,27 @@ import java.awt.geom.*;
 class Wall
 {
 
-    // the 2 endpoints defining the wall
+    /** the 2 endpoints defining the wall */
     private final Line2D.Double segment_;
 
-    // the thickness of the wall.
-    // @@ should it have other properties?
+    /** the thickness of the wall. */
     private final float thickness_;
 
-    //Constructor
+    /**
+     * The start and stop locations define the endpoints of a horizontal or vertical line.
+     * @param startLocation
+     * @param stopLocation
+     */
+    public Wall(Location startLocation, Location stopLocation) {
+        this(startLocation.getX(), startLocation.getY(), stopLocation.getX(), stopLocation.getY());
+    }
+
+    /**
+     * Constructor
+     */
     public Wall( double x1, double y1, double x2, double y2 )
     {
+        assert (x1 == x2 || y1 == y2);
         segment_ = new Line2D.Double( x1, y1, x2, y2 );
         thickness_ = 2.0f;
     }
