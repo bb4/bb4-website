@@ -10,7 +10,7 @@ import java.awt.geom.*;
  *
  *  @author Barry Becker
  */
-class Wall
+public class Wall
 {
 
     /** the 2 endpoints defining the wall */

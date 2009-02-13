@@ -13,13 +13,16 @@
 <!ELEMENT sink        EMPTY>
 <!ELEMENT region    EMPTY>
 
+
+<!-- The grid dimensions define the space within external walls.
+       So actual dimensions are [1,1] to [gridWidth, gridHeight] -->
 <!-- gravity is in m/seconds ^2 -->
 <!ATTLIST environment
     date        CDATA      #IMPLIED
-    author      NMTOKENS   #IMPLIED
+    author      NMTOKENS   #IMPLIED  
     gridWidth       CDATA    #REQUIRED
     gridHeight      CDATA    #REQUIRED
-    cellSize    CDATA    #REQUIRED
+    cellSize    CDATA    #REQUIRED 
     gravity     CDATA    #REQUIRED
 >
 

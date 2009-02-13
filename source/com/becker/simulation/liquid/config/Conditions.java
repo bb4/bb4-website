@@ -1,6 +1,5 @@
 package com.becker.simulation.liquid.config;
 
-import com.becker.simulation.liquid.config.ConfigurationEnum;
 import com.becker.common.Location;
 import com.becker.ui.GUIUtil;
 import com.becker.xml.DomUtil;
@@ -174,6 +173,11 @@ public class Conditions {
          assert commaPos != -1;
          int xPos = Integer.parseInt(locationString.substring(0, commaPos));
          int yPos = Integer.parseInt(locationString.substring(commaPos + 1));
+
+         // verify that it is within the bounds of the grid
+         assert (xPos <=  this.gridWidth_ && xPos > 0) : "invalid xpos = "+ xPos;
+         assert (yPos <=  this.gridHeight_ && yPos > 0) : "invalid ypos = "+ yPos;
+
          return new Location(yPos, xPos);
     }
 

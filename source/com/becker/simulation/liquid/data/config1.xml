@@ -10,7 +10,7 @@
     </walls>
     
     <liquid>
-        <source start="5,6" velocity="30.0,0.0" />
+        <source start="5,6" velocity="20.0,0.0" />
         <region start="1,18" stop="25,21" />
     </liquid>
 

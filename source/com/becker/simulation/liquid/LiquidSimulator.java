@@ -26,7 +26,7 @@ public class LiquidSimulator extends NewtonianSimulator
     public static final boolean RECORD_ANIMATION = false;
 
     /** The initial time step. It may adapt. */
-    private static final double INITIAL_TIME_STEP = 0.002;
+    private static final double INITIAL_TIME_STEP = 0.02;
 
     private static final Color BG_COLOR = Color.white;
 
@@ -38,16 +38,6 @@ public class LiquidSimulator extends NewtonianSimulator
         environment_ = new LiquidEnvironment( ConfigurationEnum.BASIC.getFileName() );
         commonInit();
     }
-
-    /**
-     * @param environment
-     *
-    public LiquidSimulator( LiquidEnvironment environment )
-    {
-        super("Liquid");
-        environment_ = environment;
-        commonInit();
-    }*/
 
     public void loadEnvironment(String configFile) {
         environment_ = new LiquidEnvironment(configFile);
@@ -118,10 +108,8 @@ public class LiquidSimulator extends NewtonianSimulator
     }
 
     public void setDrawMesh( boolean use ) {
-        //snake_.setDrawMesh(use);
     }
     public boolean getDrawMesh() {
-        //return snake_.getDrawMesh();
         return false;
     }
 
