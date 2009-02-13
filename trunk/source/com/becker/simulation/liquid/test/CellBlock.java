@@ -3,12 +3,22 @@ package com.becker.simulation.liquid.test;
 import com.becker.simulation.liquid.*;
 
 /**
- * A 3x3 block of cells for testing purposes
+ * A 3x3 block of cells for testing purposes.
+ * There is a layer of obstacle cells surrounding the 9 in the middle.
+ * 
+ *                      ^  positive y direction.
+ *                       |
+ *    c(-1, -1)  |    c(0, -1) | c(0, -1)
+ *   -------------------------------------
+ *    c(-1, 0)  |    c(0, 0)   | c(0, 0)   --->  Positive x
+ *   -------------------------------------
+ *    c(-1, 1)  |    c(0, 1)   |  c(0, 1)
+ *
  * @author Barry Becker Date: Aug 12, 2006
  */
 class CellBlock {
 
-    private static final int DIM = 3;
+    private static final int DIM = 5;
     private final Cell[][] block_;
 
     public CellBlock() {
@@ -19,7 +29,7 @@ class CellBlock {
                block_[i][j] = new Cell();
            }
         }
-        updateCenterStatus();
+        updateCellStatuses();
     }
 
     /**
@@ -28,14 +38,15 @@ class CellBlock {
      * @return cell relative to center of the block
      */
     public Cell get(int offsetX, int offsetY) {
-        return block_[offsetX + 1][offsetY + 1];
+        return block_[offsetX + 2][offsetY + 2];
     }
 
     /**
-     * @return the cell at the specified position in the array.
+     * @return the cell at the specified position in the array
+     * (excluding the outer obstacle cells).
      */
     public Cell getAbsolute(int x, int y) {
-        return block_[x][y];
+        return block_[x+1][y+1];
     }
 
     public void setPressures(double p) {
@@ -53,24 +64,67 @@ class CellBlock {
     /**
      * @param numParticlesPerCell number of particles to add to each cell in the block.
      */
-    public void setCellParticles(int numParticlesPerCell) {
-        for (int i = 0; i<DIM; i++){
-           for (int j = 0; j<DIM; j++) {
-               Cell cell = block_[i][j];
-               int n = cell.getNumParticles();
-               for (int k = 0; k<n; k++) {
-                   cell.decParticles();
-               }
-               for (int k = 0; k<numParticlesPerCell; k++) {
-                   cell.incParticles();
-               }
-           }
-        }
-        updateCenterStatus();
+    public void setCenterCellParticles(int numParticles) {
+
+       setSingleCellParticles(1, 1, numParticles);
+       updateCellStatuses();
     }
 
-    public void updateCenterStatus() {
-        block_[1][1].updateStatus(get(1, 0), get(-1, 0), get(0, 1), get(0, -1));
+    /**
+     * Set all the cell particles with numParticlesPerCEll
+     * @param numParticlesPerCell number of particles to add to each cell in the block.
+     */
+    public void setAllCellParticles(int numParticlesPerCell) {
+        setCellBlockParticles(1, 1, DIM-1, DIM-1, numParticlesPerCell);
+    }
+
+    /** set left 6 cells */
+    public void setLeftCellParticles(int numParticlesPerCell) {
+        setCellBlockParticles(1, 1, DIM-2, DIM-1, numParticlesPerCell);
+    }
+
+    /** set right 6 cells */
+    public void setRightCellParticles(int numParticlesPerCell) {
+        setCellBlockParticles(2, 1, DIM-1, DIM-1, numParticlesPerCell);
+    }
+    
+    /** set top 6 cells */
+    public void setTopCellParticles(int numParticlesPerCell) {
+        setCellBlockParticles(1, 1, DIM-1, DIM-2, numParticlesPerCell);
+    }
+    
+    /** set bottom 6 cells */
+    public void setBottomCellParticles(int numParticlesPerCell) {
+        setCellBlockParticles(1, 2, DIM-1, DIM-1, numParticlesPerCell);
+    }
+
+    /**
+     * @param numParticlesPerCell number of particles to add to each cell in the block.
+     */
+    private void setCellBlockParticles(int minX, int minY, int maxX, int maxY, int numParticlesPerCell) {
+        for (int i = minX; i<maxX; i++){
+           for (int j = minY; j<maxY; j++) {
+               setSingleCellParticles(i, j, numParticlesPerCell);
+           }
+        }
+        updateCellStatuses();
+    }
+
+    private void setSingleCellParticles(int xpos, int ypos, int numParticles) {
+        Cell cell = getAbsolute(xpos, ypos);
+        int n = cell.getNumParticles();
+        for (int k = 0; k<n; k++) {
+           cell.decParticles();
+        }
+        for (int k = 0; k<numParticles; k++) {
+           cell.incParticles();
+        }
+    }
+
+    public void updateCellStatuses() {
+        for (int i = 1; i<DIM-2; i++)
+           for (int j = 1; j<DIM-2; j++) 
+               block_[i][j].updateStatus(block_[i+1][j], block_[i-1][j], block_[i][j+1], block_[i][j-1]);
     }
 }
 

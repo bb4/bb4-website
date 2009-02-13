@@ -9,7 +9,8 @@ public enum ConfigurationEnum {
     
     BASIC("Basic", "A stream of water into a pool",  getFileBase() + "config1.xml"),
     SPIGOT("Spigot", "A spigot aimed to the right", getFileBase() + "spigot.xml"),
-    WATER_WALL("Water wall", "An initial wall of water on the right", getFileBase() + "wallOfWater.xml");
+    WATER_WALL_LEFT("Water wall (left)", "An initial wall of water on the left", getFileBase() + "wallOfWaterLeft.xml"),
+    WATER_WALL_RIGHT("Water wall (right)", "An initial wall of water on the right", getFileBase() + "wallOfWaterRight.xml");
 
 
     private String name;

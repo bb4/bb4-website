@@ -146,22 +146,22 @@ public class LiquidEnvironment
      */
     public double stepForward( double timeStep )
     {
-        // Determine cell contents depending on the method used to track the surface
+        // Update cell status so we can track the surface.
         updateCellStatus();
 
-        // Set up OBSTACLE conditions for the free surface and obstacle cells
+        // Set up obstacle conditions for the free surface and obstacle cells
         setConstraints();
 
-        // Compute u, v for all full cells
+        // Compute velocities for all full cells.
         updateVelocity( timeStep );
 
-        // Compute the pressure for all Full Cells
+        // Compute the pressure for all Full Cells.
         updatePressure( timeStep );
 
-        // Re-calculate OBSTACLE velocities for Surface cells
+        // Re-calculate obstacle velocities for Surface cells.
         updateSurfaceVelocity();
 
-        // Update the position of the surface and objects
+        // Update the position of the surface and objects.
         double newTimeStep = updateParticlePosition( timeStep );
 
         time_ += newTimeStep;
@@ -182,7 +182,10 @@ public class LiquidEnvironment
         for ( j = 1; j < yDim_ - 1; j++ ) {
             for ( i = 1; i < xDim_ - 1; i++ ) {
                 grid_[i][j].updateStatus(
-                    grid_[i + 1][j], grid_[i - 1][j], grid_[i][j + 1], grid_[i][j - 1] );
+                                   grid_[i + 1][j],
+                                   grid_[i - 1][j],
+                                   grid_[i][j + 1],
+                                   grid_[i][j - 1]     );
             }
         }
     }
@@ -254,11 +257,11 @@ public class LiquidEnvironment
             // left
             Cell n = grid_[1][j];
             grid_[0][j].setPressure( n.getPressure() );
-            grid_[0][j].setVelocityP( 0, -n.getVjp() );
+            grid_[0][j].setVelocityP( 0, n.getVjp() );   // -n.getVjP ???
             // right
             n = grid_[xDim_ - 2][j];
             grid_[xDim_ - 1][j].setPressure( n.getPressure() );
-            grid_[xDim_ - 1][j].setVelocityP( 0, -n.getVjp() );
+            grid_[xDim_ - 1][j].setVelocityP( 0, n.getVjp() );  // -n.getVip()
             grid_[xDim_ - 2][j].setUip( 0 );
         }
 
@@ -267,11 +270,11 @@ public class LiquidEnvironment
             // bottom
             Cell n = grid_[i][1];
             grid_[i][0].setPressure( n.getPressure() );
-            grid_[i][0].setVelocityP( -n.getUip(), 0 );
+            grid_[i][0].setVelocityP( n.getUip(), 0 ); // -n.getUip() ???
             // top
             n = grid_[i][yDim_ - 2];
             grid_[i][yDim_ - 1].setPressure( n.getPressure() );
-            grid_[i][yDim_ - 1].setVelocityP( -n.getUip(), 0 );
+            grid_[i][yDim_ - 1].setVelocityP( n.getUip(), 0 );  // -n.getUip()
             grid_[i][yDim_ - 2].setVjp( 0 );
         }      
     }
@@ -291,7 +294,7 @@ public class LiquidEnvironment
                 grid_[i][j].updateTildeVelocities(
                         grid_[i + 1][j], grid_[i - 1][j],
                         grid_[i][j + 1], grid_[i][j - 1],
-                        grid_[i + 1][j - 1], grid_[i - 1][j + 1],
+                        grid_[i + 1][j - 1], grid_[i - 1][j + 1], // grid_[i + 1][j - 1], grid_[i - 1][j + 1],
                         timeStep, fx, fy, VISCOSITY
                 );
             }
@@ -302,11 +305,12 @@ public class LiquidEnvironment
     /**
      * perform pressure iteration to consider mass conservation.
      * repeat till all cells in the flow field have a divergence less than EPSILON.
-     * When things go bad, this can take 50-70 iterations
+     * When things go bad, this can take 50-70 or more iterations
      */
     private double updatePressure( double timeStep )
     {
-        double maxDivergence, divergence;
+        double maxDivergence;
+        double divergence = 0;
         int count = 0;
 
         do {
@@ -316,8 +320,8 @@ public class LiquidEnvironment
                 for (int i = 1; i < xDim_ - 1; i++ ) {
                     divergence =
                             grid_[i][j].updateMassConservation( B0, timeStep,
-                                    grid_[i + 1][j], grid_[i - 1][j],
-                                    grid_[i][j + 1], grid_[i][j - 1] );
+                                                             grid_[i + 1][j], grid_[i - 1][j],
+                                                             grid_[i][j + 1], grid_[i][j - 1] );
                     if ( divergence > maxDivergence ) {
                         maxDivergence = divergence;
                     }
@@ -342,7 +346,9 @@ public class LiquidEnvironment
             for ( i = 1; i < xDim_ - 1; i++ ) {
                 // I think the last arg is atmospheric pressure
                 grid_[i][j].updateSurfaceVelocities(
-                    grid_[i + 1][j], grid_[i - 1][j], grid_[i][j + 1], grid_[i][j - 1], ATMOSPHERIC_PRESSURE );
+                                  grid_[i + 1][j],   grid_[i - 1][j],
+                                  grid_[i][j + 1],   grid_[i][j - 1],  
+                                  ATMOSPHERIC_PRESSURE );
             }
         }
     }
@@ -363,8 +369,8 @@ public class LiquidEnvironment
             Particle particle = (Particle) it.next();
             // velocity of a particle : determined using area weighting interpolation
 
-            int i = (int) particle.x;
-            int j = (int) particle.y;
+            int i = (int) Math.floor(particle.x);
+            int j = (int) Math.floor(particle.y);
             CellStatus status = grid_[i][j].getStatus();
 
             if ( status == CellStatus.FULL || status == CellStatus.SURFACE || status == CellStatus.ISOLATED ) {
@@ -386,6 +392,11 @@ public class LiquidEnvironment
                         vel.scale(factor);
                         logger_.println("a_vmag="+vel.length());
                 }*/
+                /*
+                while (Math.abs(timeStep * vel.x) > 1.0 || Math.abs(timeStep * vel.y) > 1.0) {
+                    timeStep /= 2.0;
+                    System.out.println("vel.x="+vel.x+ ", vel.y="+vel.x +" new timeStep="+timeStep +"    invCellSize="+invCellSize);
+                }*/
 
                 double xChange = timeStep * vel.x;
                 double yChange = timeStep * vel.y;
@@ -393,8 +404,8 @@ public class LiquidEnvironment
                 particle.incAge( timeStep );
 
                 // ensure the liquid does not enter an OBSTACLE
-                int ii = (int) particle.x;
-                int jj = (int) particle.y;
+                int ii = (int) Math.floor(particle.x);
+                int jj = (int) Math.floor(particle.y);
 
                 if (ii<0 || jj<0 || ii>=grid_.length || jj >= grid_[0].length) {
                     logger_.println( " i="+i+" j="+j +"    ii="+ii+ "  jj="+jj + " v.len="+vel.length() +" xChange="+xChange +" yChange=" + yChange +" timeStep="+timeStep);
@@ -441,7 +452,7 @@ public class LiquidEnvironment
 
                 // adjust # particles as they cross cell boundaries
                 grid_[ii][jj].incParticles(); // increment new cell
-                grid_[i][j].decParticles();   // decrement last cell
+                grid_[i][j].decParticles();  // decrement last cell
                 particle.setCell( grid_[ii][jj] );
 
                 assert ( grid_[i][j].getNumParticles() >= 0): // hitting this
@@ -455,6 +466,10 @@ public class LiquidEnvironment
         return timeStep;
     }
 
+    /**
+     * @param particle partical to find velocity for
+     * @return the interpolated (weighted) velocity vector for the particle
+     */
     public Vector2d findInterpolatedGridVelocity(Particle particle) {
          int i = (int) particle.x;
          int j = (int) particle.y;
@@ -463,9 +478,9 @@ public class LiquidEnvironment
 
          Vector2d vel =
              grid_[i][j].interpolateVelocity( particle,
-                        grid_[ii][j], grid_[i][jj],
-                        grid_[i - 1][j], grid_[i - 1][jj], // u
-                        grid_[i][j - 1], grid_[ii][j - 1]);  // v
+                                              grid_[ii][j], grid_[i][jj],
+                                              grid_[i - 1][j], grid_[i - 1][jj], // u
+                                              grid_[i][j - 1], grid_[ii][j - 1]);  // v
          return vel;
     }
 

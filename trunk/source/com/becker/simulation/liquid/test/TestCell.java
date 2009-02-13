@@ -17,27 +17,27 @@ public class TestCell extends TestCase {
         CellBlock cb = new CellBlock();
         Cell cell = cb.get(0,0);
 
-        cb.updateCenterStatus();
-        Assert.assertTrue( "unexpected status"+ cell.getStatus(), cell.getStatus() == CellStatus.EMPTY);
+        cb.updateCellStatuses();
+        Assert.assertTrue( "unexpected status"+ cell.getStatus(), cell.isEmpty());
         cell.incParticles();
-        cb.updateCenterStatus();
-        Assert.assertTrue( "unexpected status"+ cell.getStatus(), cell.getStatus() == CellStatus.ISOLATED);
+        cb.updateCellStatuses();
+        Assert.assertTrue( "unexpected status"+ cell.getStatus(), cell.isIsolated());
         cell.incParticles();
         cell.incParticles();
-        cb.updateCenterStatus();
-        Assert.assertTrue( "unexpected status"+ cell.getStatus(), cell.getStatus() == CellStatus.ISOLATED);
+        cb.updateCellStatuses();
+        Assert.assertTrue( "unexpected status"+ cell.getStatus(), cell.isIsolated());
         cb.get(1, 0).incParticles();
-        cb.updateCenterStatus();
-        Assert.assertTrue( "unexpected status"+ cell.getStatus(), cell.getStatus() == CellStatus.SURFACE);
+        cb.updateCellStatuses();
+        Assert.assertTrue( "unexpected status"+ cell.getStatus(), cell.isSurface());
         cb.get(-1, 0).incParticles();
-        cb.updateCenterStatus();
-        Assert.assertTrue( "unexpected status"+ cell.getStatus(), cell.getStatus() == CellStatus.SURFACE);
+        cb.updateCellStatuses();
+        Assert.assertTrue( "unexpected status"+ cell.getStatus(), cell.isSurface());
         cb.get(0, 1).incParticles();
-        cb.updateCenterStatus();
-        Assert.assertTrue( "unexpected status"+ cell.getStatus(), cell.getStatus() == CellStatus.SURFACE);
+        cb.updateCellStatuses();
+        Assert.assertTrue( "unexpected status"+ cell.getStatus(), cell.isSurface());
         cb.get(0, -1).incParticles();
-        cb.updateCenterStatus();
-        Assert.assertTrue( "unexpected status"+ cell.getStatus(), cell.getStatus() == CellStatus.FULL);
+        cb.updateCellStatuses();
+        Assert.assertTrue( "unexpected status"+ cell.getStatus(), cell.isFull());
     }
 
 
@@ -45,7 +45,7 @@ public class TestCell extends TestCase {
         CellBlock cb = new CellBlock();
         Particle particle = null;
         cb.setPressures(1.0);
-        cb.setCellParticles(5);
+        cb.setAllCellParticles(5);
 
         Cell cell = cb.get(0,0);
         particle = new Particle(1.1, 1.1, cell);
@@ -108,28 +108,28 @@ public class TestCell extends TestCase {
         CellBlock cb = new CellBlock();
         Cell cell = cb.get(0,0);
 
-        checkTildeVelocities(cb, 0.1, 0.1);
+        checkTildeVelocities(cb, 0.0, 0.0);
 
         cell.setVelocityP(1.0, 0);
-        checkTildeVelocities(cb, 1.1, 0.1);
+        checkTildeVelocities(cb, 1.0, 0.0); // was 1.1, 0.1
 
         cell.setVelocityP(0.0, 1.0);
         cell.setPressure(1.0);
-        checkTildeVelocities(cb, 0.1, 1.1);
+        checkTildeVelocities(cb, 0.0, 1.0); // was 0.1, 1.1
 
         cell.setVelocityP(1.0, 0);
-        cb.setCellParticles(5);
+        cb.setAllCellParticles(5);
         cb.setPressures(1.0);
         cell.setPressure(10.0);
-        cb.updateCenterStatus();
-        checkTildeVelocities(cb, 2.1996, 1.2000000000000002);
+        cb.updateCellStatuses();
+        checkTildeVelocities(cb, 1.0, 0.0); //2.1996, 1.0);
 
         cell.setVelocityP(1.0, 0);
-        cb.setCellParticles(5);
+        cb.setAllCellParticles(5);
         cb.get(0,1).setPressure(0.8);
         cb.get(1,0).setVelocityP(0.6,0.3);
-        cb.updateCenterStatus();
-        checkTildeVelocities(cb, 2.15316, 1.17253);
+        cb.updateCellStatuses();
+        checkTildeVelocities(cb, 1.0, 0.0);   // 2.15316, 1.01253);
     }
 
     void checkTildeVelocities(CellBlock cb, double expectedU, double expectedV) {
@@ -144,7 +144,7 @@ public class TestCell extends TestCase {
                                     DT, fx, fy, VISCOSITY);
         Cell.swap();
 
-        Assert.assertTrue( "Unxepected value " + cell.getUip() + ", " + cell.getVjp(),
+        Assert.assertTrue( "Unxepected values Uip=" + cell.getUip() + ",  Vjp=" + cell.getVjp(),
                            (cell.getUip() == expectedU) && (cell.getVjp() == expectedV));
     }
 
@@ -155,30 +155,65 @@ public class TestCell extends TestCase {
         double b = 1.7;
 
         cell.setVelocityP(1.0, 0);
-        cb.setCellParticles(5);
+        cb.setAllCellParticles(5);
         cb.setPressures(1.0);
         cell.setPressure(2.0);
-        cb.updateCenterStatus();
+        cb.updateCellStatuses();
         double divergence = cell.updateMassConservation( b, DT,
                                     cb.get(1,0), cb.get(-1,0), cb.get(0,1), cb.get(0,-1));
 
-        Assert.assertTrue("unexpected div="+divergence, divergence == 1.0);
+        Assert.assertEquals("unexpected div="+divergence, 0.0, divergence);
 
         cell.setVelocityP(1.0, 0);
-        cb.setCellParticles(5);
+        cb.setAllCellParticles(5);
         cb.setPressures(1.0);
         cb.get(1,0).setPressure(2.0);
         cell.setPressure(1.5);
-        cb.updateCenterStatus();
+        cb.updateCellStatuses();
         divergence = cell.updateMassConservation( b, DT,
                                     cb.get(1,0), cb.get(-1,0), cb.get(0,1), cb.get(0,-1));
 
-        Assert.assertTrue("unexpected div="+divergence, divergence == 0.1499999999999999);
-
+        Assert.assertEquals("unexpected div="+divergence,
+                                         0.0, divergence); // 0.1499999999999999
     }
 
-    public void testDissapateOverflow() {
 
+    /**
+     * This test dissipateOverflow as well as updateSurfaceVelocities.
+     */
+    public void testUpdateSurfaceVelocitiesTrivial() {
+
+        double pressure = 1.0;
+        CellBlock cb = new CellBlock();
+        cb.setPressures(pressure);
+        verifySurfaceVelocities(cb, pressure, 1.0, 0.0, 0.0, 0.0, 0.0);
+    }
+    
+     /**
+      * This test dissipateOverflow as well as updateSurfaceVelocities.
+      */
+    public void testUpdateSurfaceVelocitiesUniformX() {
+
+        double pressure = 1.0;
+        CellBlock cb = new CellBlock();
+        cb.setPressures(pressure);
+        
+        cb.setVelocities(1.0,  0.0);
+        verifySurfaceVelocities(cb, pressure,  1.0, 1.0, 1.0, 0.0, 0.0);          
+    }
+    
+    private void verifySurfaceVelocities(CellBlock cb, 
+                double pressure, double expectedPressure, 
+                double expRightXVel, double expLeftXVel, double expTopYVel, double expBottomYVel) {
+        
+        Cell cell = cb.get(0, 0);
+        cell.updateSurfaceVelocities(cb.get(1, 0), cb.get(-1, 0), cb.get(0, 1), cb.get(0, -1), pressure);
+
+         Assert.assertEquals("Unexpected pressure.", expectedPressure, cell.getPressure());
+         Assert.assertEquals("Unexpected right x velocity.", expRightXVel, cell.getUip());
+         Assert.assertEquals("Unexpected left x velocity.", expLeftXVel, cb.get(-1, 0).getUip());
+         Assert.assertEquals("Unexpected top velocity.", expTopYVel,  cell.getVjp());
+         Assert.assertEquals("Unexpected bottom x velocity.", expBottomYVel, cb.get(0, 1).getVjp());
     }
 
 }
