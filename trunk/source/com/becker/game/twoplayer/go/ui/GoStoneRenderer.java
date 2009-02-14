@@ -91,7 +91,7 @@ public final class GoStoneRenderer extends TwoPlayerPieceRenderer
     /**
      * this draws the actual piece
      * Draws the go stone as an image.
-     * Apply a RescalOp filter to adjust the transparency if need be.
+     * Apply a RescaleOp filter to adjust the transparency if need be.
      *
      * @param g2 graphics context
      * @param position of the piece to render
@@ -106,7 +106,7 @@ public final class GoStoneRenderer extends TwoPlayerPieceRenderer
             Color pc = (score > 0? PLAYER1_STONE_COLOR : PLAYER2_STONE_COLOR);
             int op = (int)((100 * Math.abs(score)));
             if (op >255) {
-                System.out.println("error score too big ="+score);
+                GameContext.log(0, "error score too big ="+score);
             }
             Color c = new Color(pc.getRed(), pc.getGreen(), pc.getBlue(),
                          Math.min(255, op));    // @@ should not need min
