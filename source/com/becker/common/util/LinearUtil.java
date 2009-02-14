@@ -1,6 +1,5 @@
 package com.becker.common.util;
 
-import com.becker.common.*;
 import javax.vecmath.*;
 
 /**

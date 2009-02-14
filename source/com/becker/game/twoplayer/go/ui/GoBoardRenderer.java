@@ -6,7 +6,6 @@ import com.becker.game.common.GameContext;
 import com.becker.game.common.ui.GameBoardRenderer;
 import com.becker.game.twoplayer.common.ui.TwoPlayerBoardRenderer;
 import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
-import com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.GoBoardPosition;
@@ -17,7 +16,6 @@ import com.becker.ui.GUIUtil;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
-import java.awt.font.LineMetrics;
 import java.util.*;
 
 /**
@@ -63,6 +61,7 @@ public class GoBoardRenderer extends TwoPlayerBoardRenderer
         return 16;
     }
 
+    @Override
     protected int getMargin()  {
         return BOARD_MARGIN;
     }
@@ -88,6 +87,7 @@ public class GoBoardRenderer extends TwoPlayerBoardRenderer
      * draw a grid of some sort if there is one.
      * none by default for poker.
      */
+    @Override
     protected void drawGrid(Graphics2D g2, int startPos, int rightEdgePos, int bottomEdgePos, int start,
                             int nrows1, int ncols1, int gridOffset) {
 

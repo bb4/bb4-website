@@ -34,6 +34,7 @@ public class ChessBoardRenderer extends CheckersBoardRenderer
         return renderer_;
     }
 
+    @Override
     protected void drawLastMoveMarker(Graphics2D g2, GameControllerInterface controller)
     {}
 }

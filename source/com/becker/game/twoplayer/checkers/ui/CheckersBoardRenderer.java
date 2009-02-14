@@ -71,6 +71,7 @@ public class CheckersBoardRenderer extends TwoPlayerBoardRenderer
      *  animate the last move so the player does not lose orientation.
      * @@ probably does not work.
      */
+    @Override
     protected void drawLastMoveMarker(Graphics2D g2, GameControllerInterface controller)
     {
         Board board = controller.getBoard();

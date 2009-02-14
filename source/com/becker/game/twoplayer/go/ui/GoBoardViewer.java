@@ -4,27 +4,19 @@ import com.becker.game.twoplayer.go.board.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.GoStone;
 import com.becker.game.twoplayer.go.board.GoString;
 import com.becker.game.twoplayer.go.board.GoEye;
-import com.becker.game.twoplayer.go.board.GoGroup;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.common.*;
 import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameController;
-import com.becker.game.common.Board;
 import com.becker.game.common.ui.GameBoardRenderer;
 import com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer;
-import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
-import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.go.*;
 import com.becker.ui.GUIUtil;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
 
 /**
  *  Takes a GoController as input and displays the
