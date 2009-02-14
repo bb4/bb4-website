@@ -4,14 +4,11 @@ import com.becker.common.util.ImageUtil;
 import com.becker.game.common.Board;
 import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GameContext;
-import com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer;
 import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
-import com.becker.game.twoplayer.common.ui.TwoPlayerBoardRenderer;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.GoStone;
 import com.becker.ui.GUIUtil;
-import com.becker.common.*;
 
 import javax.swing.*;
 import java.awt.*;
