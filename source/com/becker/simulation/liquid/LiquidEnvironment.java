@@ -182,10 +182,8 @@ public class LiquidEnvironment
         for ( j = 1; j < yDim_ - 1; j++ ) {
             for ( i = 1; i < xDim_ - 1; i++ ) {
                 grid_[i][j].updateStatus(
-                                   grid_[i + 1][j],
-                                   grid_[i - 1][j],
-                                   grid_[i][j + 1],
-                                   grid_[i][j - 1]     );
+                                grid_[i + 1][j],     grid_[i - 1][j],
+                                grid_[i][j + 1],     grid_[i][j - 1]  );
             }
         }
     }
@@ -237,12 +235,14 @@ public class LiquidEnvironment
         //add a spigot of liquid
         Vector2d velocity = source.getVelocity();
 
-        for (int i = source.getStart().getX(); i <= source.getStop().getX(); i++ ) {
-             for (int j = source.getStart().getY(); j <= source.getStop().getY(); j++ ) {
-                 grid_[i][j].setUip( velocity.x );
-                 grid_[i][j].setVjp( velocity.y );
-                 addRandomParticles(i, j, NUM_RAND_PARTS);
-             }
+        if (source.isOn(time_)) {
+            for (int i = source.getStart().getX(); i <= source.getStop().getX(); i++ ) {
+                 for (int j = source.getStart().getY(); j <= source.getStop().getY(); j++ ) {
+                     grid_[i][j].setUip( velocity.x );
+                     grid_[i][j].setVjp( velocity.y );
+                     addRandomParticles(i, j, NUM_RAND_PARTS);
+                 }
+            }
         }
     }
 

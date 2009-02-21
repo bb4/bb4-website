@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE environment SYSTEM "G:\projects\java_projects\trunk\source\com\becker\simulation\liquid\config\liquid.dtd">
+<!--  !DOCTYPE environment SYSTEM "http://www.geocities.com/BarryBecker4/schema/liquid.dtd" -->
+
+<environment date="1/9/2009" author="Barry Becker"
+                        gridWidth="21" gridHeight="15" cellSize="10.0" gravity="9.8">
+
+    <liquid>
+        <source start="5,6" velocity="10.0,0.0" startTime="0.5" duration="1.0" repeatInterval="3.0" />
+    </liquid>
+
+</environment>

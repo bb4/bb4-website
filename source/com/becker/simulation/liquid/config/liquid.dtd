@@ -32,9 +32,12 @@
 >
 
 <!ATTLIST source
-    start           CDATA    #REQUIRED
-    stop           CDATA    #IMPLIED
-    velocity       CDATA    #REQUIRED
+    start             CDATA    #REQUIRED
+    stop             CDATA    #IMPLIED
+    velocity         CDATA    #REQUIRED
+    startTime       CDATA   #IMPLIED
+    duration          CDATA   #IMPLIED
+    repeatInterval  CDATA   #IMPLIED
 >
 <!ATTLIST sink
     start           CDATA    #REQUIRED

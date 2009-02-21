@@ -26,6 +26,7 @@ public class BlockadeTestCase extends TestCase {
     /**
      * common initialization for all go test cases.
      */
+    @Override
     protected void setUp() throws Exception {
         super.setUp();
         // this will load the resources for the specified game.

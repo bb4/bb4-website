@@ -1,7 +1,6 @@
-package com.becker.game.twoplayer.go.test.board;
+package com.becker.simulation.liquid.test.config;
 
 import com.becker.game.twoplayer.go.test.GoTestCase;
-import com.becker.game.twoplayer.go.test.board.analysis.TestAllAnalysis;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -10,7 +9,7 @@ import junit.framework.TestSuite;
  *
  * @author Barry Becker
  */
-public class TestAllBoard extends GoTestCase {
+public class TestAllConfig extends GoTestCase {
 
 
     /**
@@ -18,10 +17,10 @@ public class TestAllBoard extends GoTestCase {
      */
     public static Test suite() {
 
-        TestSuite suite =  new TestSuite("Board Tests");
+        TestSuite suite =  new TestSuite("Config Tests");
 
-        suite.addTest(TestAllAnalysis.suite());
-        suite.addTestSuite(TestGoBoard.class);
+        suite.addTestSuite(TestSource.class);
+        //suite.addTest(TestSource.suite);
 
         return suite;
     }
