@@ -132,7 +132,7 @@ public class TestCell extends TestCase {
         checkTildeVelocities(cb, 1.0, 0.0);   // 2.15316, 1.01253);
     }
 
-    void checkTildeVelocities(CellBlock cb, double expectedU, double expectedV) {
+    private void checkTildeVelocities(CellBlock cb, double expectedU, double expectedV) {
         Cell cell = cb.get(0,0);
 
         double fx = 1;

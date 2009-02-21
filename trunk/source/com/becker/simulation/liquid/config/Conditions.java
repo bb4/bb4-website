@@ -150,10 +150,19 @@ public class Conditions {
     }
     
     private Source parseSource(Node sourceNode) {
-           
+
+        double startTime =
+                Double.parseDouble(DomUtil.getAttribute(sourceNode, "startTime", "0"));
+        double duration =
+                Double.parseDouble(DomUtil.getAttribute(sourceNode, "duration", "-1"));
+        double repeatInterval =
+                Double.parseDouble(DomUtil.getAttribute(sourceNode, "repeatInterval", "-1"));
+
         Source source = new Source(parseLocation(sourceNode, START), 
                                                       parseLocation(sourceNode, STOP), 
-                                                      parseVector(sourceNode, "velocity"));
+                                                      parseVector(sourceNode, "velocity"),
+                                                      startTime, duration, repeatInterval);
+
         return source;
     }
     
