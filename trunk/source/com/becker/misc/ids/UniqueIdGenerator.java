@@ -1,7 +1,5 @@
 package com.becker.misc.ids;
 
-import java.awt.*;
-import java.awt.event.*;
 import java.util.*;
 
 public class UniqueIdGenerator  {
