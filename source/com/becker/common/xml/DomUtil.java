@@ -1,4 +1,4 @@
-package com.becker.xml;
+package com.becker.common.xml;
 
 import org.w3c.dom.*;
 import org.xml.sax.*;

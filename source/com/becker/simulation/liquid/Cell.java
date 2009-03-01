@@ -306,7 +306,7 @@ public class Cell
     /**
      * Update pressure and velocities to satisfy mass conservation.
      * What is the intuitive meaning of b0?
-     * RISK:2
+     * RISK:3
      * @return the amount of divergence from the cell that
      * we will need to dissapate.
      */

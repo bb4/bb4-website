@@ -1,7 +1,8 @@
 package com.becker.puzzle.adventure;
 
+import com.becker.common.xml.DomUtil;
 import org.w3c.dom.*;
-import com.becker.xml.*;
+import com.becker.common.xml.*;
 
 /**
  * A choice that you can make in a scene.

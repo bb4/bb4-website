@@ -1,7 +1,7 @@
 package com.becker.puzzle.adventure;
 
 import org.w3c.dom.*;
-import com.becker.xml.*;
+import com.becker.common.xml.*;
 
 
 /**
@@ -121,6 +121,7 @@ public class Scene {
     /**
      * @return the text and choices.
      */
+    @Override
     public String toString() {
         StringBuffer buf = new StringBuffer();
         buf.append('\n' + this.getText() +'\n');

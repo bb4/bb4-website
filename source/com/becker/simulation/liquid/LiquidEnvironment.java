@@ -43,7 +43,7 @@ public class LiquidEnvironment
      */
     private static final double VISCOSITY = 0.002; //0.001;
     //private static final double JITTERING = .1;
-    private static final double B0 = 1.7;  // used in mass conservation (how?)
+    private static final double B0 = 1.2;  // 1.7 // used in mass conservation (how?)
     private static final int NUM_RAND_PARTS = 1;
 
     // the dimensions of the space
@@ -305,7 +305,8 @@ public class LiquidEnvironment
     /**
      * perform pressure iteration to consider mass conservation.
      * repeat till all cells in the flow field have a divergence less than EPSILON.
-     * When things go bad, this can take 50-70 or more iterations
+     * When things go bad, this can take 50-70 or more iterations.
+     * RISK: 6
      */
     private double updatePressure( double timeStep )
     {
@@ -329,7 +330,7 @@ public class LiquidEnvironment
             }
             count++;
             log( 2, " updatePress: maxDiv = " + maxDivergence );
-        } while ( maxDivergence > EPSILON );
+        } while ( maxDivergence > 0.001 * EPSILON );
         if (count >20) {
             log( 0, " updatePress: converged to maxDiv = " + maxDivergence  + " after " + count +" iterations.");
         }

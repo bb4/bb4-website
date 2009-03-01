@@ -2,7 +2,7 @@ package com.becker.simulation.liquid.config;
 
 import com.becker.common.Location;
 import com.becker.ui.GUIUtil;
-import com.becker.xml.DomUtil;
+import com.becker.common.xml.DomUtil;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;

@@ -85,7 +85,7 @@ public final class GoBoard extends TwoPlayerBoard
 
             Set<GoGroup> groupsCopy = ((GoBoard)clone).groups_;
 
-            // new way to interate
+            // new way to interate. Still getting ConcurrentModificationException
             synchronized(groups_)   {
                 for (GoGroup g : groups_)  {
                     groupsCopy.add((GoGroup)g.clone());

@@ -1,7 +1,8 @@
 package com.becker.game.common;
 
+import com.becker.common.xml.DomUtil;
 import com.becker.ui.*;
-import com.becker.xml.*;
+import com.becker.common.xml.*;
 import org.w3c.dom.*;
 
 import java.net.*;
