@@ -80,17 +80,4 @@ public class Source extends Region {
        }
         return on;
     }
-/*
-    public double getStartTime() {
-        return startTime;
-    }
-
-    public double getDuration() {
-        return duration;
-    }
-
-    public double getRepeatInterval() {
-        return repeatInterval;
-    }
- */
 }

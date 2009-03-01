@@ -1,4 +1,4 @@
-package com.becker.xml;
+package com.becker.ui.xmlviewer;
 
 import org.w3c.dom.*;
 

@@ -1,5 +1,6 @@
-package com.becker.xml;
+package com.becker.ui.xmlviewer;
 
+import com.becker.common.xml.DomUtil;
 import org.w3c.dom.*;
 
 import javax.swing.*;

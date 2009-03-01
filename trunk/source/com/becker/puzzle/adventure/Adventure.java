@@ -1,8 +1,6 @@
 package com.becker.puzzle.adventure;
 
-import com.becker.common.util.FileUtil;
-import com.becker.xml.*;
-import com.becker.common.*;
+import com.becker.common.xml.*;
 import com.becker.ui.GUIUtil;
 import org.w3c.dom.*;
 
@@ -33,7 +31,7 @@ import java.util.*;
 public class Adventure {
 
     private Scene[] scenes_;
-    private Map sceneSet_;
+    private Map<String, Scene> sceneSet_;
     private Scene currentScene_;
 
     // as stack of current;y visited scenes. There may be duplicates if you visit the same scene twice.
@@ -67,7 +65,7 @@ public class Adventure {
 
     public void initFromScenes(Scene[] scenes)  {
         scenes_ = scenes;
-        sceneSet_ = new HashMap(scenes_.length);
+        sceneSet_ = new HashMap<String, Scene>(scenes_.length);
         for (final Scene scene : scenes) {
             if (scene.getChoices() == null) {
                 scene.setChoices(new Choice[] {new Choice(Choice.QUIT, null)} ) ;
@@ -111,7 +109,7 @@ public class Adventure {
             }
             else {
                 visitedScenes_.add(currentScene_);
-                currentScene_ = (Scene) sceneSet_.get( nextSceneName );
+                currentScene_ = sceneSet_.get( nextSceneName );
                 assert (currentScene_ != null)  : "Could not find a scene named '"+ nextSceneName+"'.";
             }
         }

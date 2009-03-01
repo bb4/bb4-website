@@ -1,5 +1,6 @@
-package com.becker.xml;
+package com.becker.aikido;
 
+import com.becker.common.xml.DomUtil;
 import com.becker.common.util.FileUtil;
 import org.w3c.dom.*;
 
