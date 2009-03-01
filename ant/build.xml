@@ -404,28 +404,28 @@
 
   <target name="executeGiveChange" depends="compile" description="A simple educational program for computing change.">
     <echo message="now executing GiveChange"/>
-    <java classname="com.becker.misc.givechange.GiveChange" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="128M">
+    <java classname="com.becker.apps.misc.givechange.GiveChange" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="128M">
         <jvmarg value="${assertionsFlag}"/>
     </java>
   </target>
 
   <target name="executeStringUtil" depends="compile" description="A simple string replacement program.">
     <echo message="now executing StringUtil test"/>
-    <java classname="com.becker.misc.string.StringUtil" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="128M">
+    <java classname="com.becker.apps.misc.string.StringUtil" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="128M">
         <jvmarg value="${assertionsFlag}"/>
     </java>
   </target>
 
   <target name="executeSimpleEditor" depends="compile" description="A simple editor.">
     <echo message="now executing simple editor"/>
-    <java classname="com.becker.misc.sedit.SimpleEditor" classpath="${classesDir};${libDir}/commons-codec-1.3.jar;${libDir}/rt.jar" fork="true" jvm="${java_compiler}" maxmemory="128M">
+    <java classname="com.becker.apps.misc.sedit.SimpleEditor" classpath="${classesDir};${libDir}/commons-codec-1.3.jar;${libDir}/rt.jar" fork="true" jvm="${java_compiler}" maxmemory="128M">
         <jvmarg value="${assertionsFlag}"/>
     </java>
   </target>
 
   <target name="executeNativeRender" depends="compile" description="A simple test of the native graphics renderer.">
       <echo message="now executing NativeRender"/>
-      <java classname="com.becker.misc.nativeRender.NativeRenderTest" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="128M">
+      <java classname="com.becker.apps.misc.nativeRender.NativeRenderTest" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="128M">
           <jvmarg value="${assertionsFlag}"/>
       </java>
   </target>
@@ -457,7 +457,7 @@
       <param name="className" value="com.becker.xml.DomEcho"/>
       <param name="libPath" value="${libDir}/vecmath.jar"/>
       <!--param name="args" value="${project_home}/source/com/becker/xml/katate_dori.xml"/ -->
-      <param name="args" value="${project_home}/source/com/becker/misc/yugioh/yugiohCards.xml"/>
+      <param name="args" value="${project_home}/source/com/becker/apps/misc/yugioh/yugiohCards.xml"/>
     </antcall>
   </target>
 
@@ -518,8 +518,6 @@
         <jvmarg value="${assertionsFlag}"/>
     </java>
   </target>
-
-
 
 </project>
 
