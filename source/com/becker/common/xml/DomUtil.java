@@ -228,8 +228,8 @@ public class DomUtil {
             InputStream is = urlc.getInputStream();
             return parseXML(is, true, null);
         } catch  (IOException e) {
-            System.out.println("Failed ");
-            e.printStackTrace();
+            System.out.println("Failed");
+            e.printStackTrace(); 
         }
         return null;
     }
