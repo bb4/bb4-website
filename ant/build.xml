@@ -294,7 +294,7 @@
 
   <target name="executeImageBreeder" description="Run the Image Breeder">
     <antcall target="executeProgram">
-      <param name="className" value="com.becker.imagebreeder.ImageBreederApplet" />
+      <param name="className" value="com.becker.apps.imagebreeder.ImageBreederApplet" />
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar" />
       <param name="args" value=""/>
     </antcall>
