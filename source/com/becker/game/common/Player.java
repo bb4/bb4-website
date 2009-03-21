@@ -15,18 +15,25 @@ public class Player implements Serializable
     public static final int HUMAN_PLAYER = 1;
     public static final int COMPUTER_PLAYER = 2;    
 
-    // name of the pplayer
+    /** name of the pplayer. */
     protected String name_;
 
-    // each player has an associated color
+    /** each player has an associated color. */
     protected Color color_;
 
-    // each player is either human or robot
+    /** each player is either human or robot. */
     protected int type_;
 
+    /** Becomes true if this player has won the game. */
     protected boolean hasWon_ = false;
 
 
+    /**
+     * Constructor.
+     * @param name name of the player
+     * @param color some color identifying th eplayer in the ui.
+     * @param isHuman true if human rather than computer player
+     */
     public Player(String name, Color color, boolean isHuman)
     {
         name_ = name;
@@ -87,11 +94,13 @@ public class Player implements Serializable
     /**
      * Two players are considered equal if their name and type are the same.
      */
+    @Override
     public boolean equals(Object p) {
         Player p1 = (Player) p;
         return (name_.equals(p1.getName()) && isHuman() == p1.isHuman());
     }
 
+    @Override
     public int hashCode() {
         int hash = (isHuman() ? 100000000: 0);
         for (int i = 0; i<name_.length(); i++) {
@@ -100,6 +109,7 @@ public class Player implements Serializable
         return hash;
     }
     
+    @Override
     public String toString() {
         StringBuffer sb = new StringBuffer( 100 );
 

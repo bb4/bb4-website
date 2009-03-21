@@ -10,7 +10,7 @@
   <!-- these properties are for the RMI tasks -->
   <property name="rmiClientDir" value="../rmi_client"/>
   <property name="rmiServerDir" value="../rmi_server"/>
-  <property name="rmiPort" value="2020"/>
+  <property name="rmiPort" value="2018"/>
 
   <target name="rmi_clean" description="Cleans out all the existing compiled classes and $(distributionDir}">
     <delete dir="${rmiClientDir}"/>
@@ -29,7 +29,7 @@
     <!-- distribute stub file(s) and class files for the RMI client -->
     <copy todir="${rmiClientDir}">
       <fileset dir="${classesDir}">
-        <include name="com/becker/client/Pi.class"/> <!-- this includes ComputeEngine_stub.class -->
+        <include name="com/becker/rmi/client/Pi.class"/> <!-- this includes ComputeEngine_stub.class -->
       </fileset>
       <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
     </copy>
@@ -45,8 +45,7 @@
     <!-- distribute stub file(s) and class files for the RMI server -->
     <copy todir="${rmiServerDir}">
       <fileset dir="${classesDir}">
-        <include name="com/becker/server/*.class"/> <!-- this includes ComputeEngine_stub.class -->
-        <include name="com/becker/common/*.class"/>
+        <include name="com/becker/rmi/server/*.class"/> <!-- this includes ComputeEngine_stub.class -->
       </fileset>
       <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
     </copy>
@@ -66,7 +65,7 @@
     
     <java classname="com.becker.rmi.server.ComputeEngine" classpath="${classesDir};${rmiServerDir}" fork="true">
       <jvmarg value="-Djava.rmi.server.codebase=file:/${rmiServerDir}"/>
-      <jvmarg value="-Djava.rmi.server.hostname=../${hostname}"/>
+      <jvmarg value="-Djava.rmi.server.hostname=${hostname}"/>
       <jvmarg value="-Djava.security.policy=java.policy"/>
       <jvmarg value="-Xms128M"/>
       <jvmarg value="-Xmx256M"/>
@@ -85,7 +84,7 @@
       <jvmarg value="-Xmx64M"/>
       <arg value="${hostname}"/>   <!-- hostname -->
       <arg value="${rmiPort}"/>       <!-- rmi port number -->
-      <arg value="500"/>      <!-- number of decimal places to compute pi to -->
+      <arg value="5000"/>      <!-- number of decimal places to compute pi to -->
     </java>
     <echo message="done starting rmi compute server."/>
   </target>

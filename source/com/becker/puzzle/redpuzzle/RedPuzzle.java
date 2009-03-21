@@ -1,6 +1,5 @@
 package com.becker.puzzle.redpuzzle;
 
-import com.becker.common.*;
 import com.becker.puzzle.common.AlgorithmEnum;
 import com.becker.puzzle.common.PuzzleApplet;
 import com.becker.puzzle.common.PuzzleController;
@@ -11,15 +10,13 @@ import com.becker.ui.sliders.LabeledSlider;
 
 import com.becker.ui.sliders.SliderChangeListener;
 import javax.swing.*;
-import javax.swing.event.*;
-import java.awt.*;
-import java.awt.event.*;
 
 /**
  * Red Puzzle Application to show the solving of the puzzle.
  * This program solves a 9 piece puzzle that has nubs on all 4 sides of every piece.
  * Its virtually impossible to solve by hand because of all the possible permutations.
- * This program can usually solve it by trying between 6,000 and 20,000 combinations.
+ * This program can usually solve it by trying between 6,000 and 20,000 combinations
+ * in a brute force manner. Other more sophisticated solvers can do it in far fewer tries.
  *
  * For random number seed =5 and mutable piece objects it takes
  * BruteForce < 8.0s and Genetic= 3.0s
@@ -31,7 +28,7 @@ public final class RedPuzzle extends PuzzleApplet
                                              implements SliderChangeListener                                                                 
 {
     
-    // allows you to change the animation speed.
+    /** allows you to change the animation speed. */
     private LabeledSlider animSpeedSlider_;
     
 
@@ -53,6 +50,7 @@ public final class RedPuzzle extends PuzzleApplet
         return Algorithm.values();
     }
     
+    @Override
     protected JPanel createCustomControls() {
     
         animSpeedSlider_ = new LabeledSlider("Speed ", RedPuzzleViewer.INITIAL_ANIM_SPEED, 1, RedPuzzleViewer.MAX_ANIM_SPEED);

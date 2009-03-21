@@ -1,6 +1,5 @@
 package com.becker.game.common;
 
-import com.becker.common.xml.DomUtil;
 import com.becker.ui.*;
 import com.becker.common.xml.*;
 import org.w3c.dom.*;
@@ -18,12 +17,12 @@ public class PluginManager {
     private static final String PLUGINS_FILE = GameContext.GAME_ROOT +  "plugins.xml";
 
     private static PluginManager manager_ = null;
-    private final List<GamePlugin> plugins_;
-    // mapping from the name to the plugin
-    private final Map<String, GamePlugin> hmNameToPlugin_;
-    // mapping from the label to the plugin
-    private final Map<String, GamePlugin> hmLabelToPlugin_;
-    private final GamePlugin defaultGame_;
+    private List<GamePlugin> plugins_;
+    /** mapping from the name to the plugin */
+    private Map<String, GamePlugin> hmNameToPlugin_;
+    /** mapping from the label to the plugin */
+    private Map<String, GamePlugin> hmLabelToPlugin_;
+    private GamePlugin defaultGame_;
 
     /**
      *  load plugin games from plugins.xml
@@ -32,36 +31,36 @@ public class PluginManager {
 
         URL url = GUIUtil.getURL(PLUGINS_FILE);
         System.out.println("about to parse url="+url +"\n plugin file location="+PLUGINS_FILE);
-        Document document = DomUtil.parseXML(url);
-        
+        Document xmlDocument = DomUtil.parseXML(url);
+
+        initializePlugins(xmlDocument);
+    }
+
+    /**
+     * Get the pligins from the xml document
+     * @param document parsed xml from the plugins.xml file.
+     */
+    private void initializePlugins(Document document) {
         Node root = document.getDocumentElement();    // games element
         NodeList children = root.getChildNodes();
         plugins_ = new ArrayList<GamePlugin>();
         hmNameToPlugin_ = new HashMap<String, GamePlugin>();
         hmLabelToPlugin_ = new HashMap<String, GamePlugin>();
-        GamePlugin defaultGame = null; 
+        GamePlugin defaultGame = null;
 
         int num = children.getLength();
         for (int i=0; i < num; i++) {
 
             Node n = children.item(i);
+
             if (("#comment".equals(n.getNodeName())))
                 continue;     // skip comment nodes
-            String name = DomUtil.getAttribute(n, "name");
-            String msgKey = DomUtil.getAttribute(n, "msgKey");
-            String msgBundleBase = DomUtil.getAttribute(n, "msgBundleBase");
-            
-            String label = GameContext.getLabel(msgKey);
-            
-            String panelClass =  DomUtil.getAttribute(n, "panelClass");
-            String controllerClass =  DomUtil.getAttribute(n, "controllerClass");
-            String def = DomUtil.getAttribute(n, "default", "false");
-            boolean isDefault = Boolean.parseBoolean(def);
-            GamePlugin plugin = new GamePlugin(name, label, msgBundleBase, panelClass, controllerClass, isDefault);
+            GamePlugin plugin = createPlugin(n);
+
             plugins_.add(plugin);
             hmNameToPlugin_.put(plugin.getName(), plugin);
             hmLabelToPlugin_.put(plugin.getLabel(), plugin);
-            if (isDefault) {
+            if (plugin.isDefault()) {
                 defaultGame = plugin;
             }
         }
@@ -70,6 +69,24 @@ public class PluginManager {
         }
         defaultGame_ = defaultGame;
         //System.out.println("plugins="+plugins_);
+    }
+
+    /**
+     * @param node
+     * @return a plugin object that we created from the xml node.
+     */
+    private GamePlugin createPlugin(Node node) {
+        String name = DomUtil.getAttribute(node, "name");
+        String msgKey = DomUtil.getAttribute(node, "msgKey");
+        String msgBundleBase = DomUtil.getAttribute(node, "msgBundleBase");
+
+        String label = GameContext.getLabel(msgKey);
+
+        String panelClass =  DomUtil.getAttribute(node, "panelClass");
+        String controllerClass =  DomUtil.getAttribute(node, "controllerClass");
+        String def = DomUtil.getAttribute(node, "default", "false");
+        boolean isDefault = Boolean.parseBoolean(def);
+        return new GamePlugin(name, label, msgBundleBase, panelClass, controllerClass, isDefault);
     }
 
     public static PluginManager getInstance() {

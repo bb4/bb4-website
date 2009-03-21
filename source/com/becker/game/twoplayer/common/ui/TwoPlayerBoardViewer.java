@@ -14,10 +14,8 @@ import com.becker.game.twoplayer.common.TwoPlayerViewerCallbackInterface;
 import com.becker.optimization.parameter.ParameterArray;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
 import java.text.MessageFormat;
 
 /**
@@ -46,8 +44,6 @@ import java.text.MessageFormat;
  * It passes the user's input to the TwoPlayerController, which in turn tells the GameViewer
  * things such as whether the user's move was legal or not, and also tells the GameViewer
  * what the computer's move is.
- *
- *  note: subclasses must override paintComponent to have the board show up.
  *
  *  @author Barry Becker
  */

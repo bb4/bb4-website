@@ -1,6 +1,5 @@
 package com.becker.puzzle.redpuzzle;
 
-import com.becker.common.*;
 import com.becker.puzzle.common.PuzzleSolver;
 import com.becker.puzzle.common.Refreshable;
 import java.util.List;
@@ -15,16 +14,16 @@ import java.util.List;
  */
 public abstract class RedPuzzleSolver implements PuzzleSolver<PieceList, Piece> {
 
-    // the unsorted pieces that we draw from and place in the solvedPieces list.
+    /** the unsorted pieces that we draw from and place in the solvedPieces list. */
     protected PieceList pieces_;
 
-    // the pieces we have correctly fitted so far.
+    /** the pieces we have correctly fitted so far. */
     protected PieceList solution_;
     
-    // some measure of the number of iterations the solver needs to solve the puzzle.
+    /** some measure of the number of iterations the solver needs to solve the puzzle. */
     protected int numTries_ = 0;
     
-    protected Refreshable puzzlePanel_;
+    protected Refreshable<PieceList, Piece> puzzlePanel_;
 
     /**
      * Constructor
@@ -43,7 +42,7 @@ public abstract class RedPuzzleSolver implements PuzzleSolver<PieceList, Piece> 
     public abstract List<Piece> solve();
 
     /**
-     * the number of successfully placed pieces so far.
+     * the list of successfully placed pieces so far.
      * @return
      */
     public PieceList getSolvedPieces() {
@@ -51,7 +50,7 @@ public abstract class RedPuzzleSolver implements PuzzleSolver<PieceList, Piece> 
     }
 
     /**
-     * @return  the number of pieces we have tried to fit so far.
+     * @return  the number of different ways we have tried to fit pieces together so far.
      */
     public int getNumIterations() {
         return numTries_;

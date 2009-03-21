@@ -5,10 +5,10 @@ package com.becker.puzzle.common;
  * 
  * @author Barr Becker
  */
-public interface AlgorithmEnum {
+public interface AlgorithmEnum<P, M> {
     
     String getLabel();
     
-    PuzzleSolver createSolver(PuzzleController controller, Refreshable ui);
+    PuzzleSolver createSolver(PuzzleController<P, M> controller, Refreshable<P, M> ui);
     
 }

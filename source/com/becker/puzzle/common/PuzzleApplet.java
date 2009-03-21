@@ -1,12 +1,10 @@
 package com.becker.puzzle.common;
 
-import com.becker.puzzle.common.Refreshable;
 import com.becker.ui.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
 
 /**
  * Base class for Puzzle applets.
@@ -14,7 +12,7 @@ import java.util.*;
  * @author Barry Becker  Date: Sep 2005
  */
 public abstract class PuzzleApplet extends ApplicationApplet
-                                   implements ActionListener, ItemListener
+                                                         implements ActionListener, ItemListener
 {
     protected PuzzleController controller_;
     protected PuzzleViewer viewer_;

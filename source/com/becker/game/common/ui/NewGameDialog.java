@@ -8,10 +8,9 @@ import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
 
 /**
- * Use this modal dialog to let the user to configure a new local game.
+ * Use this modal dialog to let the user configure a new local game.
  * The have a choice of a new player vs player game or combinations of player vs computer or all computer.
  *
  * @author Barry Becker
@@ -72,7 +71,6 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
 
     protected OnlineGameManagerPanel createPlayOnlinePanel() {
         return null; // nothing if no online play supported
-        //return new OnlineGameManagerPanel(viewer_);
     }
 
     protected JPanel createPlayLocalPanel()
@@ -174,6 +172,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
         this.setVisible( false );
     }
 
+    @Override
     public boolean showDialog() {
 
         boolean serverAvailable =  controller_.isOnlinePlayAvailable();

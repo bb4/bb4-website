@@ -2,7 +2,6 @@ package com.becker.game.twoplayer.common;
 
 import com.becker.common.util.Util;
 import com.becker.game.common.*;
-import com.becker.common.*;
 
 /**
  *  This base class describes a change in state from one board
@@ -128,11 +127,13 @@ public class TwoPlayerMove extends Move
      * @param mv  the move to compare to.
      * @return  true if values are equal.
      */
+    @Override
     public boolean equals( Object mv )
     {
         return (getValue() == ((TwoPlayerMove) mv).getValue());
     }
     
+    @Override
     public int hashCode() {
         assert false;
         return 0;
@@ -203,6 +204,7 @@ public class TwoPlayerMove extends Move
         scoreDescription_ = desc;
     }
 
+    @Override
     public String toString() {
         StringBuffer s = new StringBuffer();
         if (piece_!=null)

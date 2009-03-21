@@ -12,10 +12,10 @@ import java.util.List;
  *
  * @author Barry Becker Date: Aug 6, 2006
  */
-public class BruteForceSolver extends RedPuzzleSolver {
+public class BruteForceSolver<P, M> extends RedPuzzleSolver {
 
 
-    public BruteForceSolver(PieceList pieces, Refreshable puzzlePanel) {
+    public BruteForceSolver(PieceList pieces, Refreshable<PieceList, Piece> puzzlePanel) {
         super(pieces);
         puzzlePanel_ = puzzlePanel;
         assert (puzzlePanel_ != null): "for now we require a puzzle panel.";
@@ -30,7 +30,7 @@ public class BruteForceSolver extends RedPuzzleSolver {
         List<Piece> moves = null;
         long startTime = System.currentTimeMillis();
         
-        if  (solvePuzzle(puzzlePanel_, pieces_, 0).size() ==0) {
+        if  (solvePuzzle(puzzlePanel_, pieces_, 0).size() == 0) {
             moves = solution_.getPieces();
         }
            
@@ -48,7 +48,7 @@ public class BruteForceSolver extends RedPuzzleSolver {
      * @param i insdex of last placed piece. If we have to backtrack, we put it back where we got it.
      * @return true if successfully solved, false if no solution.
      */
-    protected PieceList solvePuzzle( Refreshable puzzlePanel, PieceList pieces, int i ) {
+    protected PieceList solvePuzzle( Refreshable<PieceList, Piece> puzzlePanel, PieceList pieces, int i ) {
         boolean solved = false;
 
         // base case of the recursion. If reached, the puzzle has been solved.

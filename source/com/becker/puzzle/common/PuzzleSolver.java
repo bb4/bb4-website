@@ -1,11 +1,12 @@
 package com.becker.puzzle.common;
 
 import java.util.List;
-import java.util.concurrent.atomic.*;
 
 /**
  * PuzzleSolver interface
  * <p/>
+ * P is the Puzzle type
+ * M is the move type
  *
  * @author Barry Becker
  */

@@ -6,7 +6,6 @@ import com.becker.ui.*;
 
 import javax.swing.*;
 import java.awt.event.*;
-import java.util.*;
 
 /**
  * This is the application frame wrapper for the game programs.
@@ -16,17 +15,10 @@ import java.util.*;
  * @see com.becker.game.common.ui.GamePanel
  * @author Barry Becker
  */
-public class GameApp implements ActionListener
+public class GameApp
 {
-
     private GamePanel gamePanel_ = null;
     private JFrame frame_ = null;
-
-    private JMenuItem openItem_;
-    private JMenuItem saveItem_;
-    private JMenuItem saveImageItem_;
-    private JMenuItem exitItem_;
-
 
     static {
         GameContext.log(3, "GameApp static init." );
@@ -34,9 +26,10 @@ public class GameApp implements ActionListener
     }
 
     /**
-     * Game application constructor
+     * Game application constructor.
+     * @param initialGame the initial game to show.
      */
-    private GameApp()
+    private GameApp(String initialGame)
     {
         GUIUtil.setCustomLookAndFeel();
 
@@ -51,67 +44,17 @@ public class GameApp implements ActionListener
         // display the frame
         frame_.setVisible(true);
         frame_.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-    }
 
-
-    /**
-     * Show the game panel for the specifued game
-     * @param gameName name of the game to show in the frame.
-     */
-    private void showGame(String gameName)
-    {
-        System.out.println("*** About to get plugin for "+gameName);
-        String className = PluginManager.getInstance().getPlugin(gameName).getPanelClass();
-        Class gameClass = ClassLoaderSingleton.loadClass(className);
-
-        // this will load the resources for the specified game.
-        GameContext.loadGameResources(gameName);
-
-        if (gamePanel_ != null) {
-            frame_.getContentPane().remove(gamePanel_);
-        }
-
-        try {
-            gamePanel_ = (GamePanel)gameClass.newInstance();
-            gamePanel_.init(frame_);
-
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
-        frame_.getContentPane().add(gamePanel_);
-        frame_.setTitle(gamePanel_.getTitle());
-        frame_.setVisible(true);
+        addMenuBar(initialGame);
     }
 
     /**
      * Add a top level menu to allow changing to a different game from the one currently displayed.
      */
-    private void addMenuBar()
+    private void addMenuBar(String initialGame)
     {
-        JMenu fileMenu = new JMenu(GameContext.getLabel("FILE"));
-        JMenu gameMenu= new JMenu(GameContext.getLabel("GAME"));
-        fileMenu.setBorder(BorderFactory.createEtchedBorder());
-        gameMenu.setBorder(BorderFactory.createEtchedBorder());
-
-        openItem_ =  createMenuItem(GameContext.getLabel("OPEN"));
-        saveItem_ =  createMenuItem(GameContext.getLabel("SAVE"));
-        saveImageItem_ =  createMenuItem(GameContext.getLabel("SAVE_IMAGE"));
-        exitItem_ = createMenuItem("Exit");
-        fileMenu.add(openItem_);
-        fileMenu.add(saveItem_);
-        fileMenu.add(saveImageItem_);
-        fileMenu.add(exitItem_);
-
-        Iterator pluginIt = PluginManager.getInstance().getPlugins().iterator();
-
-        while (pluginIt.hasNext()) {
-            GamePlugin p = (GamePlugin) pluginIt.next();
-            String gameNameLabel = (String)(p.getLabel());
-            gameMenu.add(createMenuItem(gameNameLabel));
-        }
+        JMenu fileMenu = new FileMenu(gamePanel_);
+        JMenu gameMenu= new GameMenu(gamePanel_, frame_, initialGame);
 
         JMenuBar menubar = new JMenuBar();
         menubar.add(fileMenu);
@@ -120,38 +63,7 @@ public class GameApp implements ActionListener
         frame_.getRootPane().setJMenuBar(menubar);
     }
 
-
-    private JMenuItem createMenuItem(String name)
-    {
-        JMenuItem item = new JMenuItem(name);
-        item.addActionListener(this);
-        return item;
-    }
-
-    /**
-     * called when the user has selected a different game to play from the game menu
-     * @param e
-     */
-    public void actionPerformed( ActionEvent e )
-    {
-        JMenuItem item = (JMenuItem) e.getSource();
-        if (item == openItem_)  {
-            gamePanel_.openGame();
-        }
-        else if (item == saveItem_) {
-            gamePanel_.saveGame();
-        }
-        else if (item == saveImageItem_) {
-            GUIUtil.saveSnapshot(gamePanel_, GameContext.getHomeDir());
-        }
-        else if (item == exitItem_) {
-            System.exit(0);
-        }
-        else {
-            showGame(PluginManager.getInstance().getPluginFromLabel(item.getText()).getName());
-        }
-    }
-
+    
     /**
      * Static method to start up the game playing application.
      * The arguments allowed are :
@@ -165,7 +77,6 @@ public class GameApp implements ActionListener
 
         // do webstart check and set appropriately
         GUIUtil.setStandAlone((GUIUtil.getBasicService() != null));
-
 
         String defaultGame = PluginManager.getInstance().getDefaultPlugin().getName();
         String gameName;
@@ -194,10 +105,7 @@ public class GameApp implements ActionListener
             }
         }
 
-        GameApp gameApp = new GameApp();
-
-        gameApp.addMenuBar();
-        gameApp.showGame(gameName);
+        GameApp gameApp = new GameApp(gameName);
     }
 
 }

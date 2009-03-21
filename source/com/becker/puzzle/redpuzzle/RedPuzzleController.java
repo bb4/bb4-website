@@ -1,15 +1,9 @@
 package com.becker.puzzle.redpuzzle;
 
-import com.becker.common.util.Util;
-import com.becker.common.Worker;
 import com.becker.puzzle.common.AbstractPuzzleController;
-import com.becker.puzzle.common.AlgorithmEnum;
-import com.becker.puzzle.common.PuzzleController;
-import com.becker.puzzle.common.PuzzleSolver;
 import com.becker.puzzle.common.Refreshable;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * The controller allows the solver to do its thing by providing the PuzzleController api.

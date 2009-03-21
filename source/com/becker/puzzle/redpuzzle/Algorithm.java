@@ -12,7 +12,7 @@ import com.becker.puzzle.common.SequentialPuzzleSolver;
  * 
  * @author Barry Becker
  */
-public enum Algorithm  implements AlgorithmEnum {
+public enum Algorithm  implements AlgorithmEnum<PieceList, Piece> {
     
     BRUTE_FORCE_ORIGINAL("Brute force (hand crafted)"),  
     BRUTE_FORCE_SEQUENTIAL("Brute force (sequential)"), 
@@ -36,15 +36,16 @@ public enum Algorithm  implements AlgorithmEnum {
     /**
      * Create an instance of the algorithm given the controller and a refreshable.
      */
-    public PuzzleSolver createSolver(PuzzleController controller, Refreshable ui) {
+    public PuzzleSolver<PieceList, Piece> createSolver(PuzzleController<PieceList, Piece> controller,
+                                                                                      Refreshable<PieceList, Piece> ui) {
         PieceList pieces =  PieceList.getInitialPuzzlePieces();
         switch (this) {
             case BRUTE_FORCE_ORIGINAL :
-                return new BruteForceSolver(pieces, ui);
+                return new BruteForceSolver<PieceList, Piece>(pieces, ui);
             case BRUTE_FORCE_SEQUENTIAL :
-                return new SequentialPuzzleSolver(controller, ui);
+                return new SequentialPuzzleSolver<PieceList, Piece>(controller, ui);
             case BRUTE_FORCE_CONCURRENT :
-                return new ConcurrentPuzzleSolver(controller, 0.2f, ui);
+                return new ConcurrentPuzzleSolver<PieceList, Piece>(controller, 0.2f, ui);
             case GENETIC_SEARCH :
                 return new GeneticSearchSolver( pieces, ui);
         }
