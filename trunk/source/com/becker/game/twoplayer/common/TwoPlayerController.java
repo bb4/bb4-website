@@ -50,6 +50,7 @@ public abstract class TwoPlayerController extends GameController
     /** if this becomes non-null we will fill in the game tree for display in a UI. */
     private SearchTreeNode root_;
 
+    /** Worker represents a separate thread for computing the next move. */
     private Worker worker_;
 
     /** this is true while the computer thinks about its next move. */
@@ -92,6 +93,7 @@ public abstract class TwoPlayerController extends GameController
     /**
      * Return the game board back to its initial openning state
      */
+    @Override
     public void reset()
     {
         if (isProcessing()) {

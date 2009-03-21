@@ -32,6 +32,7 @@ public class ChessBoard extends CheckersBoard
     /**
      *  reset the board to its initial state.
      */
+    @Override
     public void reset()
     {
         super.reset();

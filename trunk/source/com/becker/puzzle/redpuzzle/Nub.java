@@ -10,7 +10,7 @@ package com.becker.puzzle.redpuzzle;
 public class Nub {
 
     /**
-     * the complete set of nubs that you can have.
+     * the complete set of nubs.
      */
     public static final Nub INNY_SPADE = new Nub(Suit.SPADE, false);
     public static final Nub OUTY_SPADE = new Nub(Suit.SPADE, true);
@@ -68,6 +68,7 @@ public class Nub {
     /**
      * @return nice readable string representation of a nub
      */
+    @Override
     public String toString() {
        return  (isOuty() ? "outy" : "inny") + ' ' +getSuit();
     }

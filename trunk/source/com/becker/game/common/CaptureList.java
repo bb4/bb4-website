@@ -99,6 +99,7 @@ public class CaptureList extends LinkedList<BoardPosition>
     /**
      * Produces a string representation of the list of captured pieces.
      */
+    @Override
     public String toString()
     {
         String s = " These piece(s) were captured by this move:\n";

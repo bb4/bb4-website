@@ -41,6 +41,7 @@ public final class SetGameViewer extends MultiGameViewer
     }
 
 
+    @Override
     public void startNewGame() {
         controller_.reset();
     }
@@ -182,6 +183,7 @@ public final class SetGameViewer extends MultiGameViewer
     /**
      * @return the tooltip for the panel given a mouse event
      */
+    @Override
     public String getToolTipText( MouseEvent e )
     {
         return null;

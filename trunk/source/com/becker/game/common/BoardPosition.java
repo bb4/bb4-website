@@ -38,6 +38,7 @@ public class BoardPosition
     /**
      * @return  true if values are equal.
      */
+    @Override
     public boolean equals( Object pos )  {   
          if ((pos == null) || !(pos.getClass().equals(this.getClass()))) {
              return false;
@@ -61,6 +62,7 @@ public class BoardPosition
     /**
      *override hashcode if you override equals
      */
+    @Override
     public int hashCode() {
         return getRow() * 200 + getCol() ;
     }
@@ -202,6 +204,7 @@ public class BoardPosition
     /**
      * @return a string representation of the board position
      */
+    @Override
     public String toString()
     {
         return toString(false);

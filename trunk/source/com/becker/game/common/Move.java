@@ -4,13 +4,6 @@ package com.becker.game.common;
  *  This base class describes a change in state from one board
  *  position to the next in a game.
  *
- *  Note: when I first created this class I used a freeList to recycle
- *  old moves and avoid unnecessary object creation. However, while profiling,
- *  I found that this was actually slower than jnot using it.
- *
- *  We could save significant space by removing some of these members,
- *  and reducing the size of the remaining ones. eg toRow, toCol can be byte, value can be float, etc.
- *
  *  @see Board
  *  @author Barry Becker
  */
@@ -62,6 +55,7 @@ public class Move implements Comparable
     }
 
 
+    @Override
     public String toString()
     {
         return "The value of this move is "+value_;

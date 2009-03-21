@@ -2,7 +2,6 @@ package com.becker.game.twoplayer.common.ui;
 
 import com.becker.common.util.Util;
 import com.becker.ui.*;
-import com.becker.common.*;
 import com.becker.game.twoplayer.common.*;
 import com.becker.game.twoplayer.common.search.*;
 

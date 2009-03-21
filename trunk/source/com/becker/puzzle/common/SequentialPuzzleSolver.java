@@ -3,14 +3,13 @@ package com.becker.puzzle.common;
 import java.util.*;
 
 /**
- * SequentialPuzzleSolver
- * <p/>
  * Sequential puzzle solver.
  * Performs a depth first search on the state space.
  *
- * @author Brian Goetz, Tim Peierls, Barry Becker
+ * @author Brian Goetz, Tim Peierls
+ * @author Barry Becker
  */
-public class SequentialPuzzleSolver <P, M> implements PuzzleSolver<P, M> {
+public class SequentialPuzzleSolver<P, M> implements PuzzleSolver<P, M> {
     private final PuzzleController<P, M> puzzle;
     private final Set<P> seen = new HashSet<P>();
     private final Refreshable<P, M> ui;

@@ -1,9 +1,6 @@
 package com.becker.rmi.server;
 
-import com.becker.common.*;
 import com.becker.common.util.FileUtil;
-import com.becker.common.util.Util;
-import com.becker.rmi.server.*;
 import com.becker.rmi.common.*;
 
 import java.rmi.*;
@@ -15,8 +12,8 @@ public class ComputeEngine extends UnicastRemoteObject
 {
     //private static final int PORT = 2020;
     //private static final String NAME = "rmi://becker-hm2:"+ PORT +"/ComputeEngine";
-    private int port_ = 2020;
-    private String hostname_ = "becker-hm2";
+    //private int port_ = 2020;
+    //private String hostname_ = "becker-hm2";
     private static final String CLASSPATH = FileUtil.PROJECT_DIR + "rmi_server";
 
     public ComputeEngine() throws RemoteException {
@@ -30,7 +27,7 @@ public class ComputeEngine extends UnicastRemoteObject
     private static void startHTTPServer(int port, String classpath)
     {
         try {
-            // we have to use a different pot than the rmiregistry uses or else we get an exception
+            // we have to use a different port than the rmiregistry uses or else we get an exception
             // stating that that port is already in use.
             new ClassFileServer(port, classpath);
             System.out.println( "ClassFileServer started on port "+port );
@@ -78,3 +75,4 @@ public class ComputeEngine extends UnicastRemoteObject
         }
     }
 }
+

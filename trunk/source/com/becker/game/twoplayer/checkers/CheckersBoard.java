@@ -30,6 +30,7 @@ public class CheckersBoard extends TwoPlayerBoard
     /**
      * reset the board to its initial state.
      */
+    @Override
     public void reset()
     {
         super.reset();

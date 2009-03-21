@@ -1,7 +1,6 @@
 package com.becker.puzzle.redpuzzle;
 
 import com.becker.optimization.parameter.ParameterArray;
-import com.becker.optimization.*;
 
 /**
  * The parameter array to use when searching (using optimization) to find a red puzzle solution.
@@ -23,6 +22,7 @@ public class PieceParameterArray extends ParameterArray {
         pieces_ = pieces;
     }
 
+    @Override
     public PieceParameterArray copy() {
         PieceParameterArray copy = new PieceParameterArray(pieces_);
         copy.setFitness(this.getFitness());
@@ -36,6 +36,7 @@ public class PieceParameterArray extends ParameterArray {
      * @param rad proportional to the number of pieces that you want to vary.
      * @return the random nbr (potential solution).
      */
+    @Override
     public ParameterArray getRandomNeighbor(double rad)
     {
         PieceList pieces = new PieceList(pieces_);
@@ -101,6 +102,12 @@ public class PieceParameterArray extends ParameterArray {
         pieces.doSwap(p1, p2);
     }
 
+    /**
+     *
+     * @param pieces
+     * @return probability used to determine if we do a piece swap.
+     *   Pieces that already fit have a low probability of being swapped.
+     */
     private static double[] findSwapProbabilities(PieceList pieces) {
 
         double[] swapProbabilities = new double[NUM_PIECES];
@@ -111,6 +118,7 @@ public class PieceParameterArray extends ParameterArray {
     }
 
     /**
+     * @param p some value between 0 and the totalProbability (i.e. 100%).
      * @return the piece that was selected given the probability.
      */
     private static int getPieceFromProb(double p, double[] probabilities) {
@@ -126,6 +134,7 @@ public class PieceParameterArray extends ParameterArray {
     /**
      * @return get a completely random solution in the parameter space.
      */
+    @Override
     public ParameterArray getRandomSolution()
     {
        PieceList pl = new PieceList(pieces_);
@@ -144,11 +153,13 @@ public class PieceParameterArray extends ParameterArray {
     /**
      * @return the number of parameters in the array.
      */
+    @Override
     public int size()
     {
         return pieces_.size();
     }
 
+    @Override
     public String toString()
     {
         return pieces_.toString();
@@ -157,6 +168,7 @@ public class PieceParameterArray extends ParameterArray {
     /**
      * @return  the parameters in a string of Comma Separated Values.
      */
+    @Override
     public String toCSVString()
     {
         return toString();

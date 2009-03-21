@@ -14,21 +14,25 @@ public class GamePiece implements Serializable
 {
     private static final long serialVersionUID = 1;
 
-    // Subclasses should add more types if needed.
+    /** Subclasses should add more types if needed. */
     public static final char REGULAR_PIECE = 'x';
 
-    //true if this is player1's piece
+    /** true if this is player1's piece. */
     protected boolean ownedByPlayer1_;
 
-    // the type of piece to draw
+    /** the type of piece to draw */
     protected char type_;
 
-    // For some pieces we may wish to represent them
-    // more transparently (255 = total transparent; 0= totally opaque)
+    /**
+     * For some pieces we may wish to represent them
+     * more transparently (255 = total transparent; 0= totally opaque)
+     */
     private short transparency_;
 
-    // a string associated with the piece to give additional information.
-    // For example you can use this to show a number (0-99)
+    /**
+     * a string associated with the piece to give additional information.
+     * For example you can use this to show a number (0-99)
+     */
     private String annotation_;
 
     /**
@@ -118,7 +122,7 @@ public class GamePiece implements Serializable
     }
 
     /**
-     * copy data from another position into me.
+     * copy data from another game piece into me.
      */
     public void copy(GamePiece p)
     {
@@ -129,7 +133,7 @@ public class GamePiece implements Serializable
     }
 
     /**
-     * @return Possibly give mroe detail that you would get with just toString().
+     * @return Possibly give more detail that you would get with just toString().
      */
     public String getDescription() {
         return toString();
@@ -138,6 +142,7 @@ public class GamePiece implements Serializable
     /**
      * @return a string representation of the board position
      */
+    @Override
     public String toString()
     {
         StringBuffer sb = new StringBuffer( "" );

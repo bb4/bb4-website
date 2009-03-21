@@ -5,6 +5,8 @@ import com.becker.optimization.parameter.ParameterArray;
 /**
  * The GameWeights define the coefficients to use by the
  * evaluation polynomial used by each computer player.
+ * Optimizing these weights is the primary way that the game
+ * learns to play better.
  *
  * @author Barry Becker
  */
@@ -134,6 +136,7 @@ public class GameWeights
     /**
      * nicely print the weights
      */
+    @Override
     public final String toString()
     {
         return "Player1's weights are:"+p1Weights_+"\nPlayer2's weights are "+p2Weights_;

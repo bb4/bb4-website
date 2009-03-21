@@ -122,7 +122,7 @@ public class PieceList {
      */
     public Piece get(int i)  {
         assert i < NUM_PIECES :
-                "there are only " +NUM_PIECES + " pieces, but you tried to get the "+(i+1)+"th";
+                "there are only " + NUM_PIECES + " pieces, but you tried to get the "+(i+1)+"th";
         return pieces_.get(i);
     }
 
@@ -218,6 +218,7 @@ public class PieceList {
         
     /**
      * Try the piece.
+     * @param piece the piece to try to fit into our current solution.
      * @return true if it fits.
      */
     public boolean fits( Piece p) {
@@ -314,6 +315,7 @@ public class PieceList {
         return pieces_.contains(p);
     }
             
+    @Override
     public String toString() {
         StringBuffer buf = new StringBuffer("PieceList: ("+size()+" pieces)\n");
         for (Piece p : pieces_) {

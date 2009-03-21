@@ -14,6 +14,8 @@ import java.net.*;
  */
 public class ComputePi {
 
+    private static final int DIGITS_PER_LINE = 100;
+
     private ComputePi() {};
 
     private static void handleException(Exception e) {
@@ -33,7 +35,13 @@ public class ComputePi {
             int numDigits = Integer.parseInt(args[2]);
             Pi task = new Pi( numDigits );
             BigDecimal pi = (BigDecimal) (comp.executeTask( task ));
-            System.out.println("Here is Pi computed to "+numDigits+" digits of precision"+pi);
+            StringBuilder piDigits = new StringBuilder(pi.toString());
+            System.out.println("Here is Pi computed to "+numDigits+" digits of precision");
+            int numLines = piDigits.length() / DIGITS_PER_LINE;
+            for (int i=0; i<numLines; i++) {
+                int start = i*DIGITS_PER_LINE;
+                System.out.println(piDigits.substring(start, start + DIGITS_PER_LINE));
+            }
         } catch (NumberFormatException e) {
             handleException(e);
         } catch (NotBoundException e) {

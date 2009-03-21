@@ -1,12 +1,12 @@
 package com.becker.puzzle.sudoku;
 
-import com.becker.common.*;
+//import com.becker.common.*;
+import com.becker.common.Worker;
 import com.becker.puzzle.sudoku.test.*;
 import com.becker.ui.*;
-
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.*;
 
 /**
  * Sudoku Puzzle UI.

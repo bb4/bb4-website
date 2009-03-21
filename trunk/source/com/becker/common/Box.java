@@ -1,4 +1,4 @@
-package com.becker.game.common;
+package com.becker.common;
 
 import com.becker.common.*;
 

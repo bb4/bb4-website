@@ -23,7 +23,7 @@
          property name="java15" value="${java_home}/bin/amd64/java"/ -->
   <property name="java_home" value="D:/apps/Java"/>
   <property name="java15" value="${java_home}/java1.5.0_12/jre/bin/java"/>
-  <property name="java16" value="${java_home}/jdk1.6.0_02/bin/java"/>
+  <property name="java16" value="${java_home}/jdk1.6.0_12/bin/java"/>
   <property name="java_compiler" value="${java16}"/>
   <property name="sleepTime" value="100"/>
 
@@ -49,21 +49,6 @@
     <pathelement location="${libDir}/jai_codec.jar"/>
     <pathelement location="${libDir}/jnlp.jar"/>
     <pathelement location="${libDir}/junit.jar"/>
-    <!--pathelement location="${libDir}/batik-awt-util.jar"/>
-    <pathelement location="${libDir}/batik-bridge.jar"/>
-    <pathelement location="${libDir}/batik-css.jar"/>
-    <pathelement location="${libDir}/batik-dom.jar"/>
-    <pathelement location="${libDir}/batik-ext.jar"/>
-    <pathelement location="${libDir}/batik-extension.jar"/>
-    <pathelement location="${libDir}/batik-gui-util.jar"/>
-    <pathelement location="${libDir}/batik-gvt.jar"/>
-    <pathelement location="${libDir}/batik-parser.jar"/>
-    <pathelement location="${libDir}/batik-svg-dom.jar"/>
-    <pathelement location="${libDir}/batik-svggen.jar"/>
-    <pathelement location="${libDir}/batik-swing.jar"/>
-    <pathelement location="${libDir}/batik-transcoder.jar"/>
-    <pathelement location="${libDir}/batik-util.jar"/>
-    <pathelement location="${libDir}/batik-xml.jar-->
     <pathelement location="${libDir}/jigo.jar"/>
     <pathelement location="${libDir}/gogui7.1.jar"/>
     <pathelement location="${libDir}/gtpserver.jar"/>
@@ -481,13 +466,6 @@
       <param name="arg1" value="-program"/>
       <param name="arg2" value="${java_compiler} -ea -classpath ${classesDir}:${libDir}/gogui7.1.jar:${libDir}/jigo.jar com.becker.game.twoplayer.go.GtpTesujisoftGoServer"/>
     </antcall>
-  </target>
-
-   <target name="concurrencyExample_SingleThreadWebServer" depends="compile" description="concurrency example.">
-    <echo message="now executing concurrency example"/>
-    <java classname="net.jcip.examples.SingleThreadWebServer" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="128M">
-        <jvmarg value="${assertionsFlag}"/>
-    </java>
   </target>
 
   <!-- call this to run java programs  -->

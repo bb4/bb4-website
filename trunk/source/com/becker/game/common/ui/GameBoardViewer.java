@@ -1,6 +1,5 @@
 package com.becker.game.common.ui;
 
-import com.becker.common.*;
 import com.becker.game.common.*;
 import com.becker.ui.*;
 
@@ -24,15 +23,13 @@ import java.util.List;
  * things such as whether the user's move was legal or not, and also tells the GameViewer
  * what the computer's move is.
  *
- * @@ should split out rendering into a separate GameBoardRenderer class (and for all derived classes).
- *
  *  note: subclasses must override paintComponent to have the board show up.
  *
  *  @author Barry Becker
  */
 public abstract class GameBoardViewer extends JPanel
-                                   implements ViewerCallbackInterface,
-                                              MouseListener, GameChangedListener
+                                                                  implements ViewerCallbackInterface,
+                                                                                      MouseListener, GameChangedListener
 {
 
     /** every GameBoardViewer must contain a controller. */
@@ -40,9 +37,6 @@ public abstract class GameBoardViewer extends JPanel
 
     /** for restoring undone moves. */
     protected final LinkedList<Move> undoneMoves_ = new LinkedList<Move>();
-
-    /** do not access directly. Instead use getBoardRenderer() */
-    private GameBoardRenderer boardRenderer_;
 
     private static JFileChooser chooser_ = null;
 

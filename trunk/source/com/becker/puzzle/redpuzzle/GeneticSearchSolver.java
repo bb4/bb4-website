@@ -24,7 +24,7 @@ public class GeneticSearchSolver extends RedPuzzleSolver
     public static final double MAX_FITS = 24 + 4 * THREE_FIT_BOOST + FOUR_FIT_BOOST;
 
 
-    public GeneticSearchSolver(PieceList pieces,  Refreshable puzzlePanel) {
+    public GeneticSearchSolver(PieceList pieces,  Refreshable<PieceList, Piece> puzzlePanel) {
         super(pieces);
         puzzlePanel_ = puzzlePanel;
     }

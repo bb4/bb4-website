@@ -57,14 +57,5 @@ public abstract class PuzzleViewer<P, M> extends JPanel implements Refreshable<P
         msg += " Memory used = "+ Util.formatNumber(totalMem_ - freeMem_) +"k";
         return msg;
     }
-    
-    protected void drawStatus(Graphics g, int x, int y) {
-        String[] lines = status_.split("\n");
-        int offset = 0;
-        for (String line : lines) {
-            offset += 14;
-            g.drawString( line, x, y + offset );
-        }
-    }
         
 }

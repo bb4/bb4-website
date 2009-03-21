@@ -152,6 +152,7 @@ public abstract class Board implements BoardInterface, Cloneable
      * @param b
      * @return true if all the pieces in board b in the same spot and have like ownership as this.
      */
+    @Override
     public boolean equals(Object b)
     {
        Board board = (Board)b;
@@ -177,6 +178,7 @@ public abstract class Board implements BoardInterface, Cloneable
        return true;
     }
 
+    @Override
     public int hashCode() {
         int hash = 0;
         int nRows = getNumRows();

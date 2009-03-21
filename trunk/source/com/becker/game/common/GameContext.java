@@ -1,7 +1,6 @@
 package com.becker.game.common;
 
 import com.becker.common.util.FileUtil;
-import com.becker.common.util.Util;
 import com.becker.common.ILog;
 import com.becker.sound.MusicMaker;
 import com.becker.ui.Log;
@@ -11,8 +10,7 @@ import java.util.*;
 
 /**
  * Manage game context info such as logging, debugging, resources, and profiling.
- * @@ we could also use this class to manage configuration information from a config file.
- * @@ Move more things here. Pehaps use java properties?
+ * @@ Move more things here. Pehaps use java properties? config file?
  *
  * @author Barry Becker
  */
@@ -20,13 +18,13 @@ public final class GameContext
 {
     private static Set<String> commonMessageKeys_ = new HashSet<String>();
 
-    // logger object. Use console by default.
+    /** logger object. Use console by default. */
     private static ILog logger_ = new Log();
 
-    // use sound effects if true
+    /** use sound effects if true. */
     private static boolean useSound_ = true;
 
-    // this is a singleton. It generates the sounds
+    /** this is a singleton. It generates the sounds. */
     private static MusicMaker musicMaker_ = null;
 
     private static final String COMMON_MESSAGE_BUNDLE = "com.becker.game.common.resources.coreMessages";

@@ -1,16 +1,14 @@
 package com.becker.game.twoplayer.go.board;
 
-import com.becker.game.twoplayer.go.board.analysis.CandidateMoveAnalyzer;
+import com.becker.common.Box;
 import com.becker.game.twoplayer.go.board.analysis.NeighborAnalyzer;
 import com.becker.game.twoplayer.go.*;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.*;
-import com.becker.common.*;
 
 import com.becker.game.twoplayer.go.board.analysis.TerritoryAnalyzer;
 import java.util.*;
 
-import static com.becker.game.twoplayer.go.GoControllerConstants.*;
 
 /**
  * Representation of a Go Game Board
