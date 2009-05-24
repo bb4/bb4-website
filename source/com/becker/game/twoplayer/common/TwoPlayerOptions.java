@@ -2,6 +2,7 @@ package com.becker.game.twoplayer.common;
 
 import com.becker.game.twoplayer.common.search.*;
 import com.becker.game.common.*;
+import com.becker.sound.MusicMaker;
 
 /**
  * Encapsulate two player options here to keep the TwoPlayerController class mush simpler.
@@ -38,8 +39,20 @@ public class TwoPlayerOptions extends GameOptions
     private String player1Name_ = GameContext.getLabel("PLAYER1");
     private String player2Name_ = GameContext.getLabel("PLAYER2");
 
+
     /**
-     *
+     * Default Constructor
+     * @param defaultLookAhead default number of moves to look ahead.
+     * @param defaultBestPercentage default number of best moves to consider at each ply.
+     */
+    public TwoPlayerOptions() {
+        lookAhead_ = 3;
+        bestPercentage_ = 100;
+        preferredTone_ = MusicMaker.TAIKO_DRUM;
+    }
+
+    /**
+     * Constructor
      * @param defaultLookAhead default number of moves to look ahead.
      * @param defaultBestPercentage default number of best moves to consider at each ply.
      */
@@ -47,6 +60,9 @@ public class TwoPlayerOptions extends GameOptions
         lookAhead_ = defaultLookAhead;
         bestPercentage_ = defaultBestPercentage;
         preferredTone_ = preferredTone;
+        if (preferredTone == null)
+               preferredTone_ = MusicMaker.TAIKO_DRUM;
+        
     }
 
     /**

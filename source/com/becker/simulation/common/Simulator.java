@@ -1,7 +1,6 @@
 package com.becker.simulation.common;
 
 import com.becker.optimization.parameter.ParameterArray;
-import com.becker.common.*;
 import com.becker.common.util.FileUtil;
 import com.becker.common.util.Util;
 import com.becker.optimization.*;
@@ -143,6 +142,7 @@ public abstract class Simulator extends AnimationComponent
         return null;
     }
 
+    @Override
     protected String getStatusMessage()
     {
         return "frames/second=" + Util.formatNumber( getFrameRate() );

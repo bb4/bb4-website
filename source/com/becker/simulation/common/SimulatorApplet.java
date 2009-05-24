@@ -1,7 +1,6 @@
 package com.becker.simulation.common;
 
 import com.becker.common.*;
-import com.becker.common.util.Util;
 import com.becker.ui.*;
 import com.becker.ui.animation.*;
 
@@ -50,7 +49,7 @@ public class SimulatorApplet extends ApplicationApplet {
             className = className == null ? DEFAULT_SIMULATOR : className;
             simulator_ = createSimulationFromClassName(className);
         }
-
+    
         JPanel animPanel = new AnimationPanel( simulator_ );
         animPanel.add( simulator_.createTopControls(), BorderLayout.NORTH );
         JPanel dynamicControls = simulator_.createDynamicControls();
@@ -59,9 +58,6 @@ public class SimulatorApplet extends ApplicationApplet {
         }
 
         simulator_.setVisible(true);
-        //System.out.println("size="+simulator_.getPreferredSize());
-        //content.setPreferredSize(simulator_.getPreferredSize());
-        //content.repaint();
         setSize(simulator_.getPreferredSize());
         return animPanel;
     }
@@ -87,21 +83,15 @@ public class SimulatorApplet extends ApplicationApplet {
     }
 
     /**
-     * the applets start method
+     * the applets start method.
      */
+    @Override
     public void start()
     {
         if (RUN_OPTIMIZATION)
             simulator_.doOptimization();
     }
 
-    /**
-     * This method allow javascript to resize the applet from the browser.
-     */
-    public void setSize( int width, int height )
-    {
-        resizablePanel_.setSize( width, height );
-    }
 
     //------ Main method - to allow running as an application ---------------------
     public static void main( String[] args )

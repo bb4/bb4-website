@@ -14,11 +14,15 @@ import java.util.List;
  */
 public final class MiniMaxStrategy extends SearchStrategy
 {
-    // number of moves to consider at the top ply.
-    // we use this number to determine how far into the search that we are.
+    /**
+     * Number of moves to consider at the top ply.
+     * we use this number to determine how far into the search that we are.
+     */
     private int numTopLevelMoves_;
 
-    //Construct the strategy
+    /**
+     * Constructor for the strategy.
+     */
     public MiniMaxStrategy( Searchable controller )
     {
         super( controller );
@@ -26,7 +30,7 @@ public final class MiniMaxStrategy extends SearchStrategy
 
     /**
      * The MiniMax algorithm (with alpha-beta pruning)
-     * This method is the crux of all 2 player zero sum games with perfect information
+     * This method is the crux of all 2 player zero sum games with perfect information.
      *
      * @param lastMove the most recent move made by one of the players
      * @param weights coefficient for the evaluation polunomial that indirectly determines the best move

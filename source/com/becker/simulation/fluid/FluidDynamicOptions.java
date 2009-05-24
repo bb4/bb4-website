@@ -1,12 +1,11 @@
 package com.becker.simulation.fluid;
 
 import com.becker.ui.legend.*;
-import com.becker.ui.*;
 import com.becker.ui.sliders.SliderGroupChangeListener;
 import com.becker.ui.sliders.SliderGroup;
 
+import com.becker.ui.sliders.SliderProperties;
 import javax.swing.*;
-import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -32,26 +31,17 @@ public class FluidDynamicOptions extends JPanel
 
     private SliderGroup sliderGroup_;
     
-    private static final String[] SLIDER_NAMES = {
-        DR_SLIDER,  VISC_SLIDER,   FORCE_SLIDER,  SD_SLIDER,   NS_SLIDER
+    private static final double MIN_STEPS = FluidSimulator.DEFAULT_STEPS_PER_FRAME/10.0;
+    private static final double MAX_STEPS = 4.0*FluidSimulator.DEFAULT_STEPS_PER_FRAME;
+
+    private static final SliderProperties[] SLIDER_PROPS = {
+        new SliderProperties(DR_SLIDER,           0,              9.0,       FluidEnvironment.DEFAULT_DIFFUSION_RATE,         100.0),
+        new SliderProperties(VISC_SLIDER,        0,              8.0,       FluidEnvironment.DEFAULT_VISCOSITY,                   100.0),
+        new SliderProperties(FORCE_SLIDER,     0.01,        30.0,      InteractionHandler.DEFAULT_FORCE,                         100.0),
+        new SliderProperties(SD_SLIDER,           0.01,         4.0,       InteractionHandler.DEFAULT_SOURCE_DENSITY,       100.0),
+        new SliderProperties( NS_SLIDER, MIN_STEPS, MAX_STEPS, FluidSimulator.DEFAULT_STEPS_PER_FRAME,               1.0),
     };
-    private static final double[] SLIDER_MIN = {
-         0,                  0,                    0.01,                   0.01,             FluidSimulator.DEFAULT_STEPS_PER_FRAME/10.0
-    };
-    private static final double[] SLIDER_MAX = {
-         9.0,             8.0,                 30.0,                     4.0,               4.0*FluidSimulator.DEFAULT_STEPS_PER_FRAME
-    }; 
-    private static final double[] SLIDER_INITIAL = {
-        FluidEnvironment.DEFAULT_DIFFUSION_RATE,  
-                          FluidEnvironment.DEFAULT_VISCOSITY,   
-                                                   InteractionHandler.DEFAULT_FORCE,   
-                                                                              InteractionHandler.DEFAULT_SOURCE_DENSITY,    
-                                                                                                   FluidSimulator.DEFAULT_STEPS_PER_FRAME
-    };
-    private static final double[] SCALE_FACTORS = {
-         100.0,           100.0,             100.0,                 100.0,         1.0
-    }; 
- 
+
 
     public FluidDynamicOptions(FluidSimulator simulator) {
 
@@ -61,7 +51,7 @@ public class FluidDynamicOptions extends JPanel
 
         simulator_ = simulator;
 
-        sliderGroup_ = new SliderGroup(SLIDER_NAMES, SLIDER_MIN, SLIDER_MAX, SLIDER_INITIAL, SCALE_FACTORS);
+        sliderGroup_ = new SliderGroup(SLIDER_PROPS);
         sliderGroup_.addSliderChangeListener(this);
     
         JPanel checkBoxes = createCheckBoxes();

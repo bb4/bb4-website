@@ -3,8 +3,6 @@ package com.becker.game.twoplayer.go.test.board.analysis;
 import com.becker.game.twoplayer.go.test.*;
 import com.becker.game.twoplayer.go.board.GoEye;
 import com.becker.game.twoplayer.go.board.GoGroup;
-import com.becker.game.common.*;
-import com.becker.game.twoplayer.go.*;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import junit.framework.*;
 

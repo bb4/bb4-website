@@ -4,7 +4,6 @@ import com.becker.common.*;
 import com.becker.common.util.ImageUtil;
 
 import java.awt.*;
-import java.util.*;
 
 /**
  *  Renders a specified liquid environment.
