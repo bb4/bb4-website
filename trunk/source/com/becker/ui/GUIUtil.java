@@ -66,7 +66,7 @@ public final class GUIUtil
 
 
     // get custom colors for these look and feel properties
-    private static Map hmUIProps_ = new HashMap();
+    private static Map<String, Color> hmUIProps_ = new HashMap<String, Color>();
 
     // webstart services
     private static BasicService basicService_ = null;
@@ -346,8 +346,6 @@ public final class GUIUtil
            baseFrame.setSize( applet.getSize() );
        }
 
-
-
        // call the applet's init method
        applet.init();
 
@@ -360,8 +358,10 @@ public final class GUIUtil
 
     /**
      * this method is useful for turning Applets into applications.
+     * @param applet the applet to show
+     * @param title title to appear in the titlebar of the application frame.
      */
-    public static void showApplet( final JApplet applet, final String title )
+    public static void showApplet( final JApplet applet, final String title)
     {
         isStandAlone_ = false;
         assert !isStandAlone_: "You must be running as an application if you are calling this method.";

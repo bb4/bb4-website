@@ -1,6 +1,5 @@
 package com.becker.ui.animation;
 
-import com.becker.common.*;
 import com.becker.common.util.ImageUtil;
 import com.becker.common.util.Util;
 
@@ -135,7 +134,7 @@ public abstract class AnimationComponent extends Container implements Runnable
      */
     protected void render()
     {
-        Graphics g = getGraphics();
+        Graphics2D g = (Graphics2D)getGraphics();
         if ( g != null ) {
             Dimension d = getSize();
             if ( checkImage( d ) ) {
@@ -151,7 +150,7 @@ public abstract class AnimationComponent extends Container implements Runnable
                 // Clean up.
                 imageGraphics.dispose();
             }
-            g.dispose();
+            //g.dispose();
         }
     }
 

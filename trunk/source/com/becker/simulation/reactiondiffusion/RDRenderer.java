@@ -15,31 +15,31 @@ public final class RDRenderer {
     private boolean isShowingU_ = false;
     private boolean isShowingV_ = true;
 
-    // used for scaling the bump height. if 0, then no bumpiness.
+    /** used for scaling the bump height. if 0, then no bumpiness. */
     private double heightScale_ = 0;
 
 
-    // the bigger this is the smaller the specular highlight will be.
+    /** the bigger this is the smaller the specular highlight will be. */
     private static final double SPECULAR_HIGHLIGHT_EXP = 4.0;
     private static final Vector3d LIGHT_SOURCE_DIR = new Vector3d(1.0, 1.0, 1.0);
     private static final Vector3d HALF_ANGLE;
     private static final Color LIGHT_SOURCE_COLOR = Color.WHITE;
     static {
         LIGHT_SOURCE_DIR.normalize();
-        HALF_ANGLE = new Vector3d(0,0,1);
+        HALF_ANGLE = new Vector3d(0, 0, 1);
         HALF_ANGLE.add(LIGHT_SOURCE_DIR);
         HALF_ANGLE.normalize();
     }
     private double specularConst_ = 0;
 
-    private static final int MARGIN = 20;
+    private static final int MARGIN = 0;
 
     private ColorMap cmap_;
 
     double minC_ = 0;
     double maxC_ = 1.0;
 
-    public RDRenderer(GrayScott gs) {
+    RDRenderer(GrayScott gs) {
         gs_ = gs;
         cmap_ = createColorMap();
     }
@@ -57,7 +57,8 @@ public final class RDRenderer {
               minC_ + 0.5 * range,
               minC_ + 0.7 * range,
               minC_ + 0.94 * range,
-              minC_ + range};
+              minC_ + range
+        };
         Color[] colors = {
             new Color(0, 0, 0),
             new Color(0, 0, 255),   // .04
@@ -88,26 +89,14 @@ public final class RDRenderer {
      */
     public void render(Graphics2D g2) {
 
-        int cn;
         int xmax = gs_.getWidth();
         int ymax = gs_.getHeight();
-        //cmap_ = createColorMap();
-        //minC_ = 1000.0;
-        //maxC_= -1000.0;
 
         for (int x = 0; x < xmax; x++) {
             for (int y = 0; y < ymax; y++) {
 
                 double concentration = getConcentration(x, y);
 
-                /*
-                if (concentration > maxC_) {
-                    maxC_ = concentration;
-                }
-                if ( concentration < minC_)  {
-                    minC_ = concentration;
-                }
-                */
                 Color c = cmap_.getColorForValue(concentration);
                 if (heightScale_ != 0) {
                     c = adjustForLighting(c, concentration, x, y, xmax, ymax);
@@ -117,7 +106,6 @@ public final class RDRenderer {
                 
                 // no significant performance difference between these 2
                 g2.drawLine(MARGIN + x, MARGIN + y, MARGIN + x, MARGIN + y);
-                //g2.fillRect(MARGIN + x, MARGIN + y, 1, 1);
             }
         }
     }
@@ -145,6 +133,7 @@ public final class RDRenderer {
     public void setShowingV(boolean showingV) {
         isShowingV_ = showingV;
     }
+
 
     /**
      *

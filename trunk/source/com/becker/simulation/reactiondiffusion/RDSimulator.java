@@ -1,7 +1,5 @@
 package com.becker.simulation.reactiondiffusion;
 
-import com.becker.optimization.parameter.ParameterArray;
-import com.becker.optimization.*;
 import com.becker.simulation.common.*;
 
 import javax.swing.*;
@@ -9,19 +7,24 @@ import java.awt.*;
 
 /**
  * Reaction diffusion simulator.
- * based on work by Joakim Linde and modified by Barry Becker.
- *
+ * Based on work by Joakim Linde and modified by Barry Becker.
  */
 public class RDSimulator extends Simulator {
 
     private static final String FILE_NAME_BASE = ANIMATION_FRAME_FILE_NAME_PREFIX + "reactiondiffusion/rdFrame";
+    private static final int FIXED_SIZE_DIM = 250;
 
     private GrayScott grayScott_;
     private RDRenderer renderer_;
     private RDDynamicOptions rdOptions_;
 
-    protected static final double TIME_STEP = 1.0;
+    protected static final double INITIAL_TIME_STEP = 1.0;
     protected static final int DEFAULT_STEPS_PER_FRAME = 10;
+
+    private boolean useFixedSize_ = false;
+
+    private int oldWidth;
+    private int oldHeight;
    
 
     public RDSimulator() {
@@ -30,13 +33,27 @@ public class RDSimulator extends Simulator {
     }
 
 
+    /**
+     * @param fixed if true then the render area does not resize automatically.
+     */
+    public void setUseFixedSize(boolean fixed) {
+        useFixedSize_ = fixed;
+    }
+
+    public boolean getUseFixedSize() {
+        return useFixedSize_;
+    }
+
+
     private void commonInit() {
         initCommonUI();
+        grayScott_ = new GrayScott(1, 1);
 
-        grayScott_ = new GrayScott(250, 250);
         renderer_ = new RDRenderer(grayScott_);
 
         setNumStepsPerFrame(DEFAULT_STEPS_PER_FRAME);
+        oldWidth = this.getWidth();
+        oldHeight = this.getHeight();
     }
     
     protected void reset() {
@@ -50,7 +67,7 @@ public class RDSimulator extends Simulator {
 
 
     protected double getInitialTimeStep() {
-        return TIME_STEP;
+        return INITIAL_TIME_STEP;
     }
 
     public double timeStep()
@@ -62,50 +79,54 @@ public class RDSimulator extends Simulator {
     }
 
 
+    @Override
     public void setScale( double scale ) {
         //envRenderer_.setScale(scale);
     }
 
+    @Override
     public double getScale() {
         //return envRenderer_.getScale();
         return 0.01;
     }
 
+    @Override
     public JPanel createDynamicControls() {
         rdOptions_ = new RDDynamicOptions(grayScott_, this);
         return rdOptions_;
     }
 
 
-    public void doOptimization()
+    @Override
+    public void paint( Graphics g )
     {
-       System.out.println("not yet implemented");
-    }
+        checkDimensions();
 
-    public int getNumParameters() {
-        return 0;
+        Graphics2D g2 = (Graphics2D) g;
+        renderer_.render(g2 );
     }
 
     /**
-     * *** implements the key method of the Optimizee interface ***
-     *
-     * evaluates the fitness.
+     * Sets to new size if needed.
      */
-    public double evaluateFitness( ParameterArray params )
-    {
-        assert false : "not implemented yet";
-        return 0.0;
-    }
+    private void checkDimensions() {
+        int w = FIXED_SIZE_DIM;
+        int h = FIXED_SIZE_DIM;
+        if (!useFixedSize_) {
+            w = getWidth();
+            h = getHeight();
+            if (w != oldWidth || h != oldHeight) {
+                grayScott_.setSize(w, h);
+                oldWidth = w;
+                oldHeight = h;
+            }
+        }
 
-    public double getOptimalFitness() {
-        return 0;
-    }
-
-
-    public void paint( Graphics g )
-    {
-        Graphics2D g2 = (Graphics2D) g;
-        renderer_.render(g2 );
+        if (w != oldWidth || h != oldHeight) {
+            grayScott_.setSize(w, h);
+        }
+        oldWidth = w;
+        oldHeight = h;
     }
 
     protected String getFileNameBase()

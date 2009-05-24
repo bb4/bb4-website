@@ -5,6 +5,7 @@ import com.becker.ui.sliders.ColorSliderGroup;
 import com.becker.ui.sliders.SliderGroupChangeListener;
 import com.becker.ui.sliders.SliderGroup;
 
+import com.becker.ui.sliders.SliderProperties;
 import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
@@ -38,20 +39,17 @@ public class SpiroGraph extends ApplicationApplet
     private static final int RAD2 = 1;
     private static final int POS = 2;
     private static final int VEL = 3;
-    private static final int WIDTH = 4;
+    //private static final int WIDTH = 4;
     private static final int SEGMENTS = 5;
 
-    private static final String[] SLIDER_NAMES = {
-        "Radius1", "Radius2", "Position", "Speed", "Line Width", "Num Segments/Revolution"
-    };
-    private static final int[] SLIDER_MIN = {
-        5,          -59,      -300,                     1,                1,    GraphState.DEFAULT_NUM_SEGMENTS/10
-    };
-    private static final int[] SLIDER_MAX = {
-        255,       200,       300, GraphState.VELOCITY_MAX,          50,       4*GraphState.DEFAULT_NUM_SEGMENTS
-    };
-    private static final int[] SLIDER_INITIAL = {
-        60,         60,        60,                     3, GraphState.INITIAL_LINE_WIDTH, GraphState.DEFAULT_NUM_SEGMENTS
+    private static final SliderProperties[] SLIDER_PROPS = {
+        new SliderProperties("Radius1",          5,           255,      60),
+        new SliderProperties("Radius2",       -59,           200,      60),
+        new SliderProperties("Position",      -300,          300,      60),
+        new SliderProperties("Speed",             1,          GraphState.VELOCITY_MAX,     3),
+        new SliderProperties("Line Width",        1,         50,      GraphState.INITIAL_LINE_WIDTH),
+        new SliderProperties("Num Segments/Revolution",  GraphState.DEFAULT_NUM_SEGMENTS/10,
+                4*GraphState.DEFAULT_NUM_SEGMENTS,   GraphState.DEFAULT_NUM_SEGMENTS),
     };
 
     protected JLabel xFunction_, yFunction_;
@@ -105,7 +103,7 @@ public class SpiroGraph extends ApplicationApplet
         p1 = new JPanel();
         p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS) );
 
-        sliderGroup_ = new SliderGroup(SLIDER_NAMES, SLIDER_MIN, SLIDER_MAX, SLIDER_INITIAL);
+        sliderGroup_ = new SliderGroup(SLIDER_PROPS);
         sliderGroup_.addSliderChangeListener(this);
         p1.add(sliderGroup_);
 
@@ -140,12 +138,12 @@ public class SpiroGraph extends ApplicationApplet
 
     private GraphState createGraphState() {
         GraphState state = new GraphState();
-        state.setR1(SLIDER_INITIAL[RAD1]);
-        state.setR2(SLIDER_INITIAL[RAD2]);
-        state.setPos(SLIDER_INITIAL[POS]);
-        state.setVelocity(SLIDER_INITIAL[VEL]);
-        state.setWidth(SLIDER_INITIAL[WIDTH]);
-        state.setNumSegmentsPerRev(SLIDER_INITIAL[SEGMENTS]);
+        state.setR1((float) SLIDER_PROPS[RAD1].getInitialValue());
+        state.setR2((float) SLIDER_PROPS[RAD2].getInitialValue());
+        state.setPos((float) SLIDER_PROPS[POS].getInitialValue());
+        state.setVelocity((int) SLIDER_PROPS[VEL].getInitialValue());
+        state.setWidth((int) SLIDER_PROPS[WIDTH].getInitialValue());
+        state.setNumSegmentsPerRev((int) SLIDER_PROPS[SEGMENTS].getInitialValue());
         return state;
     }
 

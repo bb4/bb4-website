@@ -171,6 +171,7 @@ public class ChessController extends CheckersController
 
 
 
+    @Override
     public Searchable getSearchable() {
         return new ChessSearchable();
     }

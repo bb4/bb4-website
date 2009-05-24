@@ -1,6 +1,5 @@
 package com.becker.ui.sliders;
 
-import com.becker.common.*;
 import com.becker.common.util.Util;
 
 import java.awt.BorderLayout;
@@ -11,7 +10,7 @@ import java.util.ArrayList;
 
 /**
  * Draws a horizontal slider with a label on top.
- * The value is draw to the right of the label.
+ * The value is drawn to right of the label.
  *
  * @author Barry Becker
  */
@@ -95,10 +94,12 @@ public class LabeledSlider extends JPanel implements ChangeListener {
         slider_.setValue(getPositionFromValue(v));
     }
 
+    @Override
     public void setEnabled(boolean enable) {
         slider_.setEnabled(enable);
     }
 
+    @Override
     public String getName() {
         return labelText_;
     }
@@ -146,6 +147,7 @@ public class LabeledSlider extends JPanel implements ChangeListener {
         }
     }
     
+    @Override
     public String toString() {
         return "Slider "+ labelText_ + " min="+min_+ " max="+max_ + "  value="+ getValue() + " ratio=" + ratio_;
     }

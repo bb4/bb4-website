@@ -1,18 +1,22 @@
 package com.becker.simulation.reactiondiffusion;
 
 import com.becker.common.Parallelizer;
+import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
 
 
 /**
  * This is the core of the Gray-Scott reaction diffusion simulation.
- * based on implmentation by Joakim Linde and modified by Barry Becker.
+ * based on implementation by Joakim Linde and modified by Barry Becker.
  *
  *Here are some parallelism results using my Core2Duo 6400.
  * Without parallelism  8.62 fps
  * With parallelism (but not borders) 10.16 fps
  * With parallelism (and borders in sep thread) 10.36 fps
+ * After more tuning 19fps (num steps per frame = 10)
+ *TODO:
+ * - restore last valid state when no activity or all black.
  */
 final class GrayScott {
 
@@ -25,7 +29,7 @@ final class GrayScott {
     private static final double DV = 1.0e-5;
     
     /** Recycle threads so we do not create thousands and eventually run out of memory. */
-    private Parallelizer parallelizer;
+    private Parallelizer<Worker> parallelizer;
    
    
     /** concentrations of the 2 chemicals. */
@@ -40,7 +44,10 @@ final class GrayScott {
 
     private double duDivh2_;
     private double dvDivh2_;
-    int width_, height_;
+    private int width_, height_;
+
+    /** null if no new size has been requestsed. */
+    private Dimension requestedNewSize;
        
 
     /**
@@ -61,14 +68,27 @@ final class GrayScott {
         setParallelized(true);
         initialState(f, k, h);        
     }
+
+    /**
+     * doesn't change the size immediately since running threads may
+     * be using the current array. We wait until the current timeStep completes
+     * before reinitializing with the new size.
+     * @param width
+     * @param height
+     */
+    public void setSize(int width, int height) {
+
+        requestedNewSize = new Dimension(width, height);
+    }
     
     public double getU(int x, int y) {
-        return u_[x][y];
+        return u_[x % width_][y % height_];
     }
     
     public double getV(int x, int y) {
-        return v_[x][y];
+        return v_[x % width_][y % height_];
     }
+
 
     public void reset() {
         initialState(F0, K0, H0);
@@ -134,17 +154,17 @@ final class GrayScott {
     }
 
     /** 
-     * set this to true if you want to run the version
-     *that will particiton the task of computing the next timeStop 
+     *Set this to true if you want to run the version
+     *that will partition the task of computing the next timeStop
      *into smaller pieces that can be run on different threads.
      *This should speed thinks up on a multi-core computer.
      */
     public void setParallelized(boolean parallelized) {
         if (parallelized)  {
-            parallelizer = new Parallelizer();
+            parallelizer = new Parallelizer<Worker>();
         }
         else {
-            parallelizer = new Parallelizer(1);
+            parallelizer = new Parallelizer<Worker>(1);
         }
     }
  
@@ -181,7 +201,14 @@ final class GrayScott {
         // blocks until all Callables are done running.
         parallelizer.invokeAllRunnables(workers);
      
-        commitChanges();       
+        commitChanges();
+
+        if (requestedNewSize != null) {
+             this.width_ = requestedNewSize.width;
+             this.height_ = requestedNewSize.height;
+             requestedNewSize = null;
+             reset();
+        }
     }
     
     private void commitChanges() {

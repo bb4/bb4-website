@@ -1,12 +1,11 @@
 package com.becker.simulation.reactiondiffusion;
 
 import com.becker.ui.legend.*;
-import com.becker.ui.*;
 import com.becker.ui.sliders.SliderGroupChangeListener;
 import com.becker.ui.sliders.SliderGroup;
 
+import com.becker.ui.sliders.SliderProperties;
 import javax.swing.*;
-import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -23,38 +22,35 @@ public class RDDynamicOptions extends JPanel
     private JCheckBox showU_;
     private JCheckBox showV_;
     private JCheckBox useConcurrency_;
+    private JCheckBox useFixedSize_;
 
     private ContinuousColorLegend legend_;
     
-
     private static final String K_SLIDER = "K";
     private static final String F_SLIDER = "F";
     private static final String H_SLIDER = "H";    
     private static final String BH_SLIDER = "Bump Height";
     private static final String SH_SLIDER = "Specular Highlight";
     private static final String NS_SLIDER = "Num Steps per Frame";
+    private static final String TIMESTEP_SLIDER = "Time Step Size";
     
     private SliderGroup sliderGroup_;
+    private static final double MIN_NUM_STEPS = RDSimulator.DEFAULT_STEPS_PER_FRAME/10.0;
+    private static final double MAX_NUM_STEPS = 4.0*RDSimulator.DEFAULT_STEPS_PER_FRAME;
+
+    private static final SliderProperties[] SLIDER_PROPS = {
+        new SliderProperties(K_SLIDER,      0,           0.3,      GrayScott.K0,     1000),
+        new SliderProperties(F_SLIDER,      0,           0.3,      GrayScott.F0,     1000),
+        new SliderProperties(H_SLIDER,      0.008,    0.05,    GrayScott.H0,    10000),
+        new SliderProperties(BH_SLIDER,     0,          30.0,     0.0,                     10),
+        new SliderProperties(SH_SLIDER,     0,          1.0,      0.0,                     100),
+        new SliderProperties(NS_SLIDER,  MIN_NUM_STEPS,   MAX_NUM_STEPS,   RDSimulator.DEFAULT_STEPS_PER_FRAME, 1),
+        new SliderProperties(TIMESTEP_SLIDER,   0.1,     2.0,     RDSimulator.INITIAL_TIME_STEP,    100),
+    };
     
-    private static final String[] SLIDER_NAMES = {
-        K_SLIDER,      F_SLIDER,     H_SLIDER,    BH_SLIDER,  SH_SLIDER,  NS_SLIDER
-    };
-    private static final double[] SLIDER_MIN = {
-         0,                     0,                 0.008,            0.0,             0.0,             RDSimulator.DEFAULT_STEPS_PER_FRAME/10.0
-    };
-    private static final double[] SLIDER_MAX = {
-         0.3,                 0.3,              0.048,            30.0,            1.0,             4.0*RDSimulator.DEFAULT_STEPS_PER_FRAME
-    }; 
-    private static final double[] SLIDER_INITIAL = {
-     GrayScott.K0,  GrayScott.F0,   GrayScott.H0,  0.0,             0.0,            RDSimulator.DEFAULT_STEPS_PER_FRAME
-    };
-    private static final double[] SCALE_FACTORS = {
-        1000,             1000,              10000,             10,             100,            1
-    }; 
- 
     
 
-    public RDDynamicOptions(GrayScott gs, RDSimulator simulator) {
+    RDDynamicOptions(GrayScott gs, RDSimulator simulator) {
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(BorderFactory.createEtchedBorder());
@@ -63,7 +59,7 @@ public class RDDynamicOptions extends JPanel
         gs_ = gs;
         simulator_ = simulator;
         
-        sliderGroup_ = new SliderGroup(SLIDER_NAMES, SLIDER_MIN, SLIDER_MAX, SLIDER_INITIAL, SCALE_FACTORS);
+        sliderGroup_ = new SliderGroup(SLIDER_PROPS);
         sliderGroup_.addSliderChangeListener(this);
 
         JPanel uvCheckBoxes = createCheckBoxes();      
@@ -74,13 +70,14 @@ public class RDDynamicOptions extends JPanel
         add(uvCheckBoxes);
         add(Box.createVerticalStrut(10));
         add(legend_);
-        add(Box.createVerticalGlue());
+
+        JPanel fill = new JPanel();
+        fill.setPreferredSize(new Dimension(10, 1000));
+        add(fill);
     }
     
     private JPanel createCheckBoxes() {
-        
-        JPanel checkBoxes = new JPanel(new FlowLayout());
-        
+     
         RDRenderer r = simulator_.getRenderer();
         showU_ = new JCheckBox("U Value", r.isShowingU());
         showU_.addActionListener(this);
@@ -89,11 +86,13 @@ public class RDDynamicOptions extends JPanel
         useConcurrency_ = new JCheckBox("Parallel", gs_.isParallelized());
         useConcurrency_.setToolTipText("Will take advantage of multiple processors if present.");
         useConcurrency_.addActionListener(this);
-        checkBoxes.add(showU_); //, BorderLayout.EAST);
-        checkBoxes.add(Box.createHorizontalGlue());
-        checkBoxes.add(showV_); //, BorderLayout.CENTER);
-        checkBoxes.add(Box.createHorizontalGlue());
+        useFixedSize_ = new JCheckBox("Fixed Size", simulator_.getUseFixedSize());
+        useFixedSize_.addActionListener(this);
+         JPanel checkBoxes = new JPanel(new GridLayout(0, 2));
+        checkBoxes.add(showU_);     //, BorderLayout.EAST);
         checkBoxes.add(useConcurrency_);
+        checkBoxes.add(showV_);   
+        checkBoxes.add(useFixedSize_);
         
         checkBoxes.setBorder(BorderFactory.createEtchedBorder());
         return checkBoxes;
@@ -101,13 +100,7 @@ public class RDDynamicOptions extends JPanel
 
 
     public void reset() {
-        //gs_.reset();
         sliderGroup_.reset();
-        /*
-        fSlider_.setValue(gs_.getF());
-        kSlider_.setValue(gs_.getK());
-        hSlider_.setValue(gs_.getH());
-         **/
     }
     
     /**
@@ -122,8 +115,12 @@ public class RDDynamicOptions extends JPanel
         else if (e.getSource() == showV_) {
             r.setShowingV(!r.isShowingV());
             repaint();
-        } else if (e.getSource() == useConcurrency_) {
+        }
+        else if (e.getSource() == useConcurrency_) {
             gs_.setParallelized(!gs_.isParallelized());
+        }
+        else if (e.getSource() == useFixedSize_) {
+            simulator_.setUseFixedSize(useFixedSize_.isSelected());
         }
     }
 
@@ -150,6 +147,9 @@ public class RDDynamicOptions extends JPanel
         }
         else if (sliderName.equals(NS_SLIDER)) {
             simulator_.setNumStepsPerFrame((int) value);
+        }
+        else if (sliderName.equals(TIMESTEP_SLIDER)) {
+            simulator_.setTimeStep(value);
         }
     }
 

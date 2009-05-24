@@ -104,16 +104,16 @@ public abstract class SearchStrategy
     }
 
     /**
-     * The search algorithm
-     * This method is the crux of all 2 player zero sum games with perfect information
+     * The search algorithm.
+     * This method is the crux of all 2 player zero sum games with perfect information.
      *
-     * @param lastMove the most recent move made by one of the players
-     * @param weights coefficient for the evaluation polunomial that indirectly determines the best move
-     * @param depth how deep in this local game tree that we are to search
+     * @param lastMove the most recent move made by one of the players.
+     * @param weights coefficient for the evaluation polunomial that indirectly determines the best move.
+     * @param depth how deep in this local game tree that we are to search.
      * @param alpha same as p2best but for the other player. (alpha)
-     * @param beta the maximum of the value that it inherits from above and the best move found at this level (beta)
-     * @param parent for constructing a ui tree. If null no game tree is constructed
-     * @return the chosen move (ie the best move) (may be null if no next move)
+     * @param beta the maximum of the value that it inherits from above and the best move found at this level (beta).
+     * @param parent for constructing a ui tree. If null no game tree is constructed.
+     * @return the chosen move (ie the best move) (may be null if no next move).
      */
     public abstract TwoPlayerMove search( TwoPlayerMove lastMove, ParameterArray weights,
                                           int depth, int quiescentDepth,

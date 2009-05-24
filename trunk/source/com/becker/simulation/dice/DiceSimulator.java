@@ -2,8 +2,7 @@ package com.becker.simulation.dice;
 
 import com.becker.ui.HistogramRenderer;
 import com.becker.simulation.common.*;
-import java.awt.*;
-import java.util.*;
+
 
 /**
  * Simluates the rolling of N number of M sided dice lots of times

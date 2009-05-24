@@ -26,6 +26,7 @@ public abstract class ApplicationApplet extends JApplet
     /**
      * initialize. Called by the browser.
      */
+    @Override
     public void init() {
 
         resizablePanel_ =
@@ -43,9 +44,13 @@ public abstract class ApplicationApplet extends JApplet
     /**
      * This method allow javascript to resize the applet from the browser.
      */
+    @Override
     public void setSize( int width, int height )
     {
-        resizablePanel_.setSize( width, height );
+        super.setSize(width, height);
+        if (resizablePanel_ != null) {
+            resizablePanel_.setSize( width, height );
+        }
     }
 
 

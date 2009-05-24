@@ -1,6 +1,5 @@
 package com.becker.simulation.common;
 
-import com.becker.simulation.dice.*;
 import com.becker.ui.HistogramRenderer;
 
 import com.becker.ui.animation.AnimationFrame;
@@ -9,8 +8,8 @@ import java.util.*;
 import javax.swing.JFrame;
 
 /**
- * Simluates the rolling of N number of M sided dice lots of times
- * to see what kind of distribution of numbers you get.
+ * Simluates the the generation of a historgram based on
+ * some stochastic processs.
  * 
  * @author Barry Becker Date: Feb 4, 2007
  */
