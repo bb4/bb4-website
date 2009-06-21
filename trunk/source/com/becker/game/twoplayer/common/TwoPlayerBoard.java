@@ -54,17 +54,6 @@ public abstract class TwoPlayerBoard extends Board
      */
     public abstract int getTypicalNumMoves();
 
-    /*
-    public Move undoMove() {
-        if ( !getMoveList().isEmpty() ) {
-            TwoPlayerMove m = (TwoPlayerMove) getMoveList().removeLast();
-            undoInternalMove( m );
-            return m;
-        }
-        return null;
-    }
-    */
-
 
     /**
      * Num different states. E.g. black queen.
@@ -86,5 +75,4 @@ public abstract class TwoPlayerBoard extends Board
             return pos.getPiece().isOwnedByPlayer1()? 1:-1;
         }
     }
-
 }

@@ -51,13 +51,14 @@ public abstract class TwoPlayerPanel extends GamePanel
     /**
      *  UIComponent initialization.
      */
+    @Override
     protected void initGui(JFrame parent)
     {
         super.initGui(parent);
 
         // we create a separate controller for the TreeDialog so it can browse without
         // disturbing the state of the actual game.
-        treeDialog_ = createGameTreeDialog();
+        ///treeDialog_ = createGameTreeDialog();
 
         TwoPlayerOptions options = get2PlayerController().getTwoPlayerOptions();
         GameContext.log(2, "2player pane init  get2PlayerController().getShowGameTree() ="+ options.getShowGameTree() );
@@ -66,6 +67,7 @@ public abstract class TwoPlayerPanel extends GamePanel
         }
     }
 
+    @Override
     protected JPanel createBottomDecorationPanel()
     {
         progressBar_ = createProgressBar();
@@ -133,6 +135,7 @@ public abstract class TwoPlayerPanel extends GamePanel
      * <P>
      * super.actionPerformed(e);
      */
+    @Override
     public void actionPerformed( ActionEvent e )
     {
         Object source = e.getSource();

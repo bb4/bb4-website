@@ -65,11 +65,11 @@ public class OnlineGameServer  {
             server_ = new ServerSocket(port_);
         }
         catch (BindException e) {
-            System.out.println("Address already in use! Perhaps there is already another game server sunning on this port:" + port_);
+            GameContext.log(0, "Address already in use! Perhaps there is already another game server sunning on this port:" + port_);
             throw new RuntimeException(e);
         }
         catch (IOException e) {
-            System.out.println("Could not listen on port " + port_);
+            GameContext.log(0, "Could not listen on port " + port_);
             e.printStackTrace();
             throw new RuntimeException(e);
         }
@@ -158,7 +158,7 @@ public class OnlineGameServer  {
                     }
 
                     if (text_ == null)  {
-                       System.out.println(cmd.toString());
+                       GameContext.log(0,cmd.toString());
                     }  else {
                        text_.append(cmd.toString() + '\n'); 
                        JScrollPane spane = ((JScrollPane)text_.getParent().getParent());
@@ -208,11 +208,11 @@ public class OnlineGameServer  {
      */
     public static boolean verifyCmdLineOptions(CommandLineOptions options) {
         if (options.contains("help") || !options.contains(GAME_OPTION)) {
-            System.out.println("Usage: -game <game name>\n");
+           GameContext.log(0, "Usage: -game <game name>\n");
             return false;
         }
         if (options.getValueForOption(GAME_OPTION) == null) {
-            System.out.println("You must specify a valid game. See plugins.xml for list of available games.");
+            GameContext.log(0,"You must specify a valid game. See plugins.xml for list of available games.");
             return false;
         }
         return true;

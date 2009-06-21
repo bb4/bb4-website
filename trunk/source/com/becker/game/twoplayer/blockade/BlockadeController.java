@@ -53,6 +53,7 @@ public class BlockadeController extends TwoPlayerController
         weights_ = new BlockadeWeights();
     }
 
+    @Override
     protected TwoPlayerOptions createOptions() {
         return new TwoPlayerOptions(DEFAULT_LOOKAHEAD, BEST_PERCENTAGE, MusicMaker.APPLAUSE);
     }
@@ -60,13 +61,9 @@ public class BlockadeController extends TwoPlayerController
     /**
      * The computer makes the first move in the game
      */
-    public void computerMovesFirst()
-    {
-        // create a bogus previous move
-        TwoPlayerMove lastMove = BlockadeMove.createMove( 2, 2, 3, 3, 0, new GamePiece(false), null );
-
+    public void computerMovesFirst() {
         // determine the possible moves and choose one at random.
-        List moveList = getSearchable().generateMoves( lastMove, weights_.getPlayer1Weights(), true );
+        List moveList = getSearchable().generateMoves( null, weights_.getPlayer1Weights(), true );
 
         makeMove( getRandomMove(moveList) );
     }
@@ -90,6 +87,7 @@ public class BlockadeController extends TwoPlayerController
      * @param fileName name of the file to save the state to
      * @param ae the exception that occurred causing us to want to save state
      */
+    @Override
     public void saveToFile( String fileName, AssertionError ae )
     {
         BlockadeGameExporter exporter = new BlockadeGameExporter(this);
@@ -97,6 +95,7 @@ public class BlockadeController extends TwoPlayerController
     }
 
 
+    @Override
     public void restoreFromFile( String fileName ) {
         BlockadeGameImporter importer = new BlockadeGameImporter(this);
         importer.restoreFromFile(fileName);
@@ -611,14 +610,16 @@ public class BlockadeController extends TwoPlayerController
     public class BlockadeSearchable extends TwoPlayerSearchable {
 
         /**
-         *  generate all possible legal and reasonable next moves.
-         *  In blockade, there are a huge amount of possible next moves because of all the possible
-         *  wall placements. So restrict wall placements to those that hinder the enemy while not hindering you.
+         * Generate all possible legal and reasonable next moves.
+         * In blockade, there are a huge amount of possible next moves because of all the possible
+         * wall placements. So restrict wall placements to those that hinder the enemy while not hindering you.
+         * lastMove may be null if there was no last move.
          */
         public List generateMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
         {
             List moveList = new LinkedList();
-            boolean player1 = !(lastMove.isPlayer1());
+            boolean player1 = (lastMove != null)?  !(lastMove.isPlayer1()) : true;
+
             BlockadeBoard board = (BlockadeBoard)board_;
 
             board.getProfiler().startGenerateMoves();
@@ -653,8 +654,12 @@ public class BlockadeController extends TwoPlayerController
          * @param m the move to check. If null then return true.
          * @param recordWin if true then the controller state will record wins
          */
-        public boolean done( TwoPlayerMove m, boolean recordWin )
+        public boolean done( TwoPlayerMove lastMove, boolean recordWin )
         {
+            if (getNumMoves() > 0 && lastMove == null) {
+                GameContext.log(0, "Game is over because there are no more moves");
+                return true;
+            }
             BlockadeBoard board = (BlockadeBoard)board_;
             return (checkForWin(true, board.getPlayer1Homes()) || checkForWin(false, board.getPlayer2Homes()));
         }
@@ -662,7 +667,7 @@ public class BlockadeController extends TwoPlayerController
 
         /**
          * @@ quiescent search not yet implemented for Blockade
-         * Probably we could return moves that result in a dratic change in value.
+         * Probably we could return moves that result in a drastic change in value.
          *
          * @param lastMove
          * @param weights

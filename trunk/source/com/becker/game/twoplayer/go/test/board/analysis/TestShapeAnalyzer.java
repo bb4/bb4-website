@@ -2,7 +2,6 @@ package com.becker.game.twoplayer.go.test.board.analysis;
 
 import com.becker.game.twoplayer.go.board.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.*;
 import com.becker.game.twoplayer.go.board.analysis.ShapeAnalyzer;
 import com.becker.game.twoplayer.go.test.*;
 import junit.framework.*;
@@ -10,7 +9,7 @@ import junit.framework.*;
 import java.util.*;
 
 /**
- * Verify that all the methods in GoBaord work as expected
+ * Verify expected shapes on the board.
  * @author Barry Becker
  */
 public class TestShapeAnalyzer extends GoTestCase {

@@ -3,6 +3,8 @@ package com.becker.game.twoplayer.common;
 import com.becker.common.util.Util;
 import com.becker.common.Worker;
 import com.becker.game.common.*;
+import com.becker.game.twoplayer.common.persistence.TwoPlayerGameExporter;
+import com.becker.game.twoplayer.common.persistence.TwoPlayerGameImporter;
 import com.becker.game.twoplayer.common.search.SearchStrategy;
 import com.becker.game.twoplayer.common.search.SearchTreeNode;
 import com.becker.game.twoplayer.common.search.Searchable;
@@ -47,7 +49,7 @@ public abstract class TwoPlayerController extends GameController
     /** the method the computer will use for searching for the next move.  */
     private SearchStrategy strategy_;
 
-    /** if this becomes non-null we will fill in the game tree for display in a UI. */
+    /** if this becomes non-null, we will fill in the game tree for display in a UI. */
     private SearchTreeNode root_;
 
     /** Worker represents a separate thread for computing the next move. */
@@ -112,6 +114,29 @@ public abstract class TwoPlayerController extends GameController
         player1sTurn_ = true;
     }
 
+
+
+    /**
+     * save the current state of the blockade game to a file in SGF (4) format (standard game format).
+     *This should some day be xml (xgf)
+     * @param fileName name of the file to save the state to
+     * @param ae the exception that occurred causing us to want to save state
+     */
+    @Override
+    public void saveToFile( String fileName, AssertionError ae )
+    {
+        TwoPlayerGameExporter exporter = new TwoPlayerGameExporter(this);
+        exporter.saveToFile(fileName, ae);
+    }
+
+
+    @Override
+    public void restoreFromFile( String fileName ) {
+        TwoPlayerGameImporter importer = new TwoPlayerGameImporter(this);
+        importer.restoreFromFile(fileName);
+    }
+
+
     /**
      * create the 2 players.
      */
@@ -166,6 +191,11 @@ public abstract class TwoPlayerController extends GameController
         return players_.get(1);
     }
     
+    /**
+     *
+     * @param moveList
+     * @return
+     */
     protected TwoPlayerMove getRandomMove(List moveList) {
        
         int r = (int) (RANDOM.nextFloat() * moveList.size());
@@ -199,6 +229,7 @@ public abstract class TwoPlayerController extends GameController
      * If called before the end of the game it just reutrns 0 - same as it does in the case of a tie.
      * @return some measure of how overwhelming the win was. May need to negate based on which player one.
      */
+    @Override
     public double getStrengthOfWin()
     {
         if (!( getPlayer1().hasWon() || getPlayer2().hasWon()))
@@ -229,6 +260,7 @@ public abstract class TwoPlayerController extends GameController
      * retract the most recently played move
      * @return  the move which was undone (null returned if no prior move)
      */
+    @Override
     public Move undoLastMove()
     {
         TwoPlayerMove m = (TwoPlayerMove) board_.undoMove();
@@ -341,10 +373,10 @@ public abstract class TwoPlayerController extends GameController
      * Its most common use is for browsing the game tree.
      *  @param m the move to play.
      */
+    @Override
     public void makeMove( Move m )
     {
         board_.makeMove( m );
-        //getMoveList().add( m );
         player1sTurn_ = !((TwoPlayerMove)m).isPlayer1();
     }
 
@@ -714,7 +746,7 @@ public abstract class TwoPlayerController extends GameController
         }
 
         /**
-         * returns true if the specified move caused one or more opponent pieces to become jeopardized
+         * @return true if the specified move caused one or more opponent pieces to become jeopardized
          */
         public boolean inJeopardy( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
         {

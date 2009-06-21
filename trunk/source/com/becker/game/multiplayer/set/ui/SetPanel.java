@@ -56,6 +56,7 @@ public class SetPanel extends GamePanel
      * implements the GameChangedListener interface.
      * This method called whenever a move has been made.
      */
+    @Override
     public void gameChanged( GameChangedEvent gce )
     {
         // do nothing for this.
@@ -80,6 +81,7 @@ public class SetPanel extends GamePanel
      * <P>
      * super.actionPerformed(e);
      */
+    @Override
     public void actionPerformed( ActionEvent e )
     {
         Object source = e.getSource();

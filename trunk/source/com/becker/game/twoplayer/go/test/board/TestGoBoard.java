@@ -10,7 +10,7 @@ import junit.framework.*;
 import java.util.*;
 
 /**
- * Verify that all the methods in GoBaord work as expected
+ * Verify that all the methods in GoBoard work as expected
  * @author Barry Becker
  */
 public class TestGoBoard extends GoTestCase {

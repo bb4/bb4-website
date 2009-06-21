@@ -6,9 +6,7 @@ import com.becker.game.twoplayer.blockade.BlockadeBoardPosition;
 import com.becker.game.twoplayer.blockade.BlockadeWall;
 import junit.framework.*;
 import com.becker.game.twoplayer.blockade.BlockadeBoard;
-import com.becker.game.twoplayer.blockade.BlockadeController;
 import com.becker.game.twoplayer.blockade.BlockadeMove;
-import com.becker.game.twoplayer.blockade.Path;
 import java.util.List;
 
 /**

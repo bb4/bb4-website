@@ -71,6 +71,5 @@ public class Card {
     public static void main(String[] args) {
 
         List deck = newDeck();
-        System.out.println("deck="+deck);
     }
 }

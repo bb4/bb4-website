@@ -60,13 +60,10 @@ public class SGFLoader
   public  synchronized SGFGame load( InputStream is )
     throws IOException, SGFException
   {
-    SGFToken token = null;
-
     // Create and initialize a new StreamTokenizer, to make parsing simple.
     //
     StreamTokenizer st = new StreamTokenizer(
-      new BufferedReader(
-        new InputStreamReader( is ) ) );
+        new BufferedReader( new InputStreamReader( is ) ) );
 
     resetTokenizer( st );
 

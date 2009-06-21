@@ -1,6 +1,8 @@
 package com.becker.game.twoplayer.pente.test;
 
 import com.becker.game.common.GameController;
+import com.becker.game.common.GamePiece;
+import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.test.TwoPlayerSearchableBaseTst;
 import com.becker.game.twoplayer.pente.PenteController;
@@ -9,7 +11,7 @@ import junit.framework.Test;
 
 
 /**
- * Verify that all the methods in GoBaord work as expected
+ * Verify that all the methods in PenteSearchable work as expected
  * @author Barry Becker
  */
 public class TestPenteSearchable extends TwoPlayerSearchableBaseTst {
@@ -27,6 +29,13 @@ public class TestPenteSearchable extends TwoPlayerSearchableBaseTst {
      */
     protected TwoPlayerOptions createTwoPlayerGameOptions() {
         return new TwoPlayerOptions();
+    }
+
+    /**
+     * @return an initial move by player one.
+     */
+    protected  TwoPlayerMove createInitialMove() {
+        return  TwoPlayerMove.createMove(5, 5,   0, new GamePiece(true));
     }
 
     public static Test suite() {

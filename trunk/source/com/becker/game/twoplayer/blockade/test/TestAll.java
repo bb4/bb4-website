@@ -19,7 +19,8 @@ public class TestAll extends TestCase {
         //suite.addTest(TestAllWhiteBox.suite());
         suite.addTestSuite(TestBlockadeBoard.class);
         suite.addTestSuite(TestBlockadeController.class); 
-        
+        suite.addTestSuite(TestBlockadeSearchable.class);
+
         return suite;
     }
 }

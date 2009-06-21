@@ -12,7 +12,6 @@ import com.becker.game.twoplayer.go.board.analysis.CandidateMoveAnalyzer;
 import com.becker.game.twoplayer.go.board.analysis.ShapeAnalyzer;
 import com.becker.game.twoplayer.go.persistence.GoGameExporter;
 import com.becker.game.twoplayer.go.persistence.GoGameImporter;
-import com.becker.optimization.*;
 
 import java.util.*;
 
@@ -204,10 +203,7 @@ public final class GoController extends TwoPlayerController
 
     public void computerMovesFirst()
     {
-        // create a bogus previous move
-        GoMove lastMove = GoMove.createGoMove( 4, 4, 1, new GoStone(getPlayer1().isHuman()));
-
-        List moveList = getSearchable().generateMoves( lastMove, weights_.getPlayer1Weights(), true );
+        List moveList = getSearchable().generateMoves( null, weights_.getPlayer1Weights(), true );
         // select the best(first since sorted) move to use
         GoMove m = (GoMove) moveList.get( 0 );
 
@@ -573,20 +569,16 @@ public final class GoController extends TwoPlayerController
             GoBoard board = (GoBoard) board_;
             board.getProfiler().startGenerateMoves();
             List<GoMove> moveList = new LinkedList<GoMove>();
-            int i,j;
             int nCols = board.getNumCols();
             int nRows = board.getNumRows();
             assert (nRows == nCols) : " rows and cols must be the same in go";
 
             CandidateMoveAnalyzer candidateMoves = new CandidateMoveAnalyzer(board);
 
-            boolean player1 = true;
-            if ( lastMove != null ) {
-                player1 = !(lastMove.isPlayer1());
-            }
+            boolean player1 = (lastMove != null)?  !lastMove.isPlayer1() : true;
 
-            for ( i = 1; i <= nCols; i++ )      //cols
-                for ( j = 1; j <= nRows; j++ )    //rows
+            for (int i = 1; i <= nCols; i++ )      //cols
+                for (int j = 1; j <= nRows; j++ )    //rows
                     // if its a candidate move and not an immediate takeback (which would break the rule of ko)
                     if ( candidateMoves.isCandidateMove( j, i ) && !isTakeBack( j, i, (GoMove) lastMove, board ) ) {
                         GoMove m = GoMove.createGoMove( j, i, lastMove.getValue(), new GoStone(player1) );

@@ -53,14 +53,9 @@ public class CheckersController extends TwoPlayerController
     /**
      * The computer makes the first move in the game.
      */
-    public void computerMovesFirst()
-    {
-        // create a bogus previous move
-        TwoPlayerMove lastMove = CheckersMove.createMove( 2, 2, 3, 3,
-                null, 0, new CheckersPiece(false, CheckersPiece.REGULAR_PIECE) );
-
+    public void computerMovesFirst() {
         // determine the possible moves and choose one at random.
-        List moveList = getSearchable().generateMoves( lastMove, weights_.getPlayer1Weights(), true );
+        List moveList = getSearchable().generateMoves( null, weights_.getPlayer1Weights(), true );
 
         assert (!moveList.isEmpty());
         makeMove( getRandomMove(moveList) );
@@ -396,7 +391,7 @@ public class CheckersController extends TwoPlayerController
             int j, row,col;
             player1sPerspective_ = player1sPerspective;
 
-            boolean player1 = !(lastMove.isPlayer1());
+            boolean player1 = (lastMove != null)?  !(lastMove.isPlayer1()) : true;
 
             // scan through the board positions. For each each piece of the current player's,
             // add all the moves that it can make.

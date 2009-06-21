@@ -25,7 +25,10 @@ public class PenteBoard extends TwoPlayerBoard
         setSize( numRows, numCols );
     }
 
-    // reset the board to its initial state
+    /**
+     * Reset the board to its initial state.
+     */
+    @Override
     public void reset()
     {
         super.reset();
@@ -45,7 +48,10 @@ public class PenteBoard extends TwoPlayerBoard
             }
     }
 
-    // must call reset() after changing the size
+    /**
+     *  must call reset() after changing the size.
+     */
+    @Override
     public void setSize( int numRows, int numCols )
     {
         numRows_ = numRows;
@@ -69,7 +75,9 @@ public class PenteBoard extends TwoPlayerBoard
         return rowsTimesCols_ / 3;
     }
 
-    // for pente, undoing a move is just changing that space back to a blank
+    /**
+     *  For pente, undoing a move is just changing that space back to a blank.
+     */
     protected void undoInternalMove( Move move )
     {
         TwoPlayerMove m = (TwoPlayerMove)move;
@@ -77,8 +85,8 @@ public class PenteBoard extends TwoPlayerBoard
     }
 
     /**
-     * this method splats a footprint of trues around the current moves.
-     * later we look for empty spots that are true for candidate moves
+     * This method splats a footprint of trues around the current moves.
+     * later we look for empty spots that are true for candidate moves.
      */
     public void determineCandidateMoves()
     {

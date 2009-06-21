@@ -1,68 +1,59 @@
-package com.becker.game.twoplayer.go.persistence;
+package com.becker.game.twoplayer.common.persistence;
 
-import com.becker.game.twoplayer.go.board.BoardDebugUtil;
-import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.common.GameContext;
-import com.becker.game.common.Move;
+import com.becker.game.common.*;
 import com.becker.game.common.persistence.GameExporter;
-import com.becker.game.twoplayer.go.*;
 
+import com.becker.game.twoplayer.common.TwoPlayerController;
+import com.becker.game.twoplayer.common.TwoPlayerMove;
 import java.io.*;
 import java.util.*;
 
 /**
- * Exports the state of a Go game to a file.
+ * Exports the state of a two player game to a file.
  *
- * @author Barry Becker Date: Oct 28, 2006
+ * @author Barry Becker
  */
-public class GoGameExporter extends GameExporter {
+public class TwoPlayerGameExporter extends GameExporter {
 
-
-    public GoGameExporter(GoController controller)
+    
+    public TwoPlayerGameExporter(TwoPlayerController controller)
     {
         super(controller);
     }
 
 
     /**
-     * save the current state of the go game to a file in SGF (4) format
+     * save the current state of the game to a file in SGF (4) format.
+     * SGF stands for Smart Game Format. Its text based but should be xml.
      * @param fileName name of the file to save the state to
      * @param ae the exception that occurred causing us to want to save state
      */
     public void saveToFile( String fileName, AssertionError ae )
     {
         GameContext.log( 1, "saving state to :" + fileName );
-        GoController gc = (GoController) controller_;
-        GoBoard board = (GoBoard) gc.getBoard();
+        TwoPlayerController gc = (TwoPlayerController) controller_;
 
         try {
             FileWriter out = new FileWriter( fileName );
-            //PrintWriter foo;
             // SGF header info
             out.write( "(;\n" );
             out.write( "FF[4]\n" );
             out.write( "GM[1]\n" );
-            out.write( "CA[UTF-8]\n" );
-            out.write( "ST[2]\n" );
-            out.write( "RU[japanese]\n" );
-            out.write( "SZ[" + gc.getBoard().getNumRows() + "]\n" );
-            out.write( "PB[" + gc.getPlayer1().getName() + "]\n" );
-            out.write( "PW[" + gc.getPlayer2().getName() + "]\n" );
-            out.write( "KM[" + ((GoOptions) gc.getOptions()).getKomi() + "]\n" );
-            out.write( "PC[US]\n" );
-            out.write( "HA[" + board.getHandicap() + "]\n" );
+            //out.write( "CA[UTF-8]\n" );
+            out.write( "SZ2[" + gc.getBoard().getNumRows() + "][" + gc.getBoard().getNumCols() + "]\n" );
+            out.write( "Player1[" + gc.getPlayer1().getName() + "]\n" );
+            out.write( "Player2[" + gc.getPlayer2().getName() + "]\n" );
             out.write( "GN[test1]\n" );
-            // out.write("PC[US]"); ?? add the handicap stones if present
-            Iterator it = gc.getMoveList().iterator();
-            GameContext.log( 2, "movelist size= " + gc.getMoveList().size() );
+
+            Iterator<Move> it = gc.getMoveList().iterator();
+            GameContext.log( 0, "movelist size= " + gc.getMoveList().size() );
             while ( it.hasNext() ) {
-                GoMove move = (GoMove) it.next();
+                Move move = it.next();
                 out.write( getSgfForMove(move) );
             }
             // include error info and stack trace in the comments to help debug
             if ( ae != null ) {
                 out.write( "C[" );
-                out.write( BoardDebugUtil.getGroupsText(((GoBoard) gc.getBoard()).getGroups() ));
                 if ( ae.getMessage() != null ) {
                     out.write( ae.getMessage() );
                     //out would need to be a PrintWriter for this to work
@@ -82,21 +73,24 @@ public class GoGameExporter extends GameExporter {
      * SGF stands for Smart Game Format and is commonly used for Go
      */
     protected String getSgfForMove(Move move) {
-        GoMove m = (GoMove) move;
+        TwoPlayerMove m = (TwoPlayerMove) move;
         // passes are not represented in SGF - so just skip it if the piece is null.
-        if (m.getPiece() == null)
-             return "[]";
+    
         StringBuffer buf = new StringBuffer("");
-        char player = 'W';
-        if ( m.getPiece().isOwnedByPlayer1() )
-            player = 'B';
+        String player = "P2";
+        if ( m.isPlayer1() )
+        {
+            player = "P1";
+        }
         buf.append( ';' );
         buf.append( player );
         buf.append( '[' );
         buf.append( (char) ('a' + m.getToCol() - 1) );
         buf.append( (char) ('a' + m.getToRow() - 1) );
         buf.append( ']' );
+            
         buf.append( '\n' );
         return buf.toString();
     }
+    
 }

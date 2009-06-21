@@ -176,8 +176,8 @@ public final class GameContext
     public static void loadGameResources(String gameName)
     {
         gameName_ = gameName;
-        //System.out.println("loadGameResources gameName="+ gameName);
-        //System.out.println("plugin = " + PluginManager.getInstance().getPlugin(gameName));
+        log(1, "loadGameResources gameName="+ gameName);
+        log(1,"plugin = " + PluginManager.getInstance().getPlugin(gameName));
         String resourcePath = PluginManager.getInstance().getPlugin(gameName).getMsgBundleBase();
         log(2, "searching for "+ resourcePath);
 
@@ -186,7 +186,7 @@ public final class GameContext
                     resourcePath, currentLocale_.getLocale());
         }
         catch (MissingResourceException e) {
-            System.out.println("could not find "+resourcePath);
+            log(0, "could not find "+resourcePath);
             e.printStackTrace();
         }
         assert (gameMessages_ != null) : "gameMessages were null after loading them for :" + gameName_;
@@ -273,7 +273,7 @@ public final class GameContext
             Enumeration enum1 = bundle.getKeys();
             while (enum1.hasMoreElements()) {
                 String key = (String) enum1.nextElement();
-                //System.out.println(locales.getValue(i).getName()+" "+key);
+                log(2, newVar.name() + " " + key);
                 keySet.add(key);
             }
             messageKeySets.add(keySet);
