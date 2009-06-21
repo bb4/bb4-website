@@ -16,13 +16,11 @@ public abstract class AbstractGameMenu extends JMenu implements ActionListener {
     /**
      * Game file menu constructor
      * @param title user visible menu title.
-     * @param gamePanel the game panel
      */
-    public AbstractGameMenu(String title, GamePanel gamePanel)
+    public AbstractGameMenu(String title)
     {
         super(title);
-        gamePanel_ = gamePanel;
-
+        
         setBorder(BorderFactory.createEtchedBorder());
     }
 

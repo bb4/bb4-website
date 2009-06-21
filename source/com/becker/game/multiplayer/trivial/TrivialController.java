@@ -1,13 +1,9 @@
 package com.becker.game.multiplayer.trivial;
 
-import com.becker.game.card.*;
 import com.becker.game.common.*;
-import com.becker.game.common.online.*;
 import com.becker.game.multiplayer.common.*;
 import com.becker.game.multiplayer.common.online.SurrogatePlayer;
 import com.becker.game.multiplayer.trivial.player.*;
-import com.becker.game.multiplayer.trivial.ui.*;
-import com.becker.optimization.*;
 
 import java.util.*;
 import java.util.List;

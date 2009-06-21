@@ -61,14 +61,10 @@ public class ChessController extends CheckersController
     /**
      * The computer makes the first move in the game.
      */
-    public void computerMovesFirst()
-    {
-        // create a bogus previous move
-        ChessMove lastMove = ChessMove.createMove( 2,  2,  3,  3,
-                null, 0, new ChessPiece(false, ChessPiece.REGULAR_PIECE));
+    public void computerMovesFirst() {
 
         // determine the possible moves and choose one at random.
-        List moveList = getSearchable().generateMoves( lastMove, weights_.getPlayer1Weights(), true );
+        List moveList = getSearchable().generateMoves( null, weights_.getPlayer1Weights(), true );
 
         makeMove( getRandomMove(moveList) );
         player1sTurn_ = false;
@@ -180,7 +176,7 @@ public class ChessController extends CheckersController
     public class ChessSearchable extends CheckersSearchable {
 
          /**
-         *  generate all possible next moves
+         *  generate all possible next moves.
          */
         public List generateMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
         {
@@ -188,7 +184,7 @@ public class ChessController extends CheckersController
             int row,col;
             player1sPerspective_ = player1sPerspective;
 
-            boolean player1 = !(lastMove.isPlayer1());
+            boolean player1 = (lastMove != null)?  !(lastMove.isPlayer1()) : true;
 
             // scan through the board positions. For each each piece of the current player's,
             // add all the moves that it can make.

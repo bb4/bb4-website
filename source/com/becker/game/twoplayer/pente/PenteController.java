@@ -56,6 +56,7 @@ public class PenteController extends TwoPlayerController
         return PentePatterns.M;
     }
 
+    @Override
     protected TwoPlayerOptions createOptions() {
         return new TwoPlayerOptions(DEFAULT_LOOKAHEAD, BEST_PERCENTAGE, MusicMaker.TAIKO_DRUM);
     }
@@ -83,7 +84,7 @@ public class PenteController extends TwoPlayerController
     }
 
     /**
-     *
+     *Evaluate a line (vertical, horizontal, or diagonal.
      * @param line  the line to evaluate
      * @param symb  the current players symbol
      * @param opponent   symbol for the opponents's piece
@@ -118,20 +119,24 @@ public class PenteController extends TwoPlayerController
         //  - the end of a line.
         if ( (line.charAt( pos ) == opponent) && (pos == minpos) )
             ct++;
-        else
+        else {
             while ( ct > minpos && (line.charAt( ct - 1 ) != opponent)
                     && !(line.charAt( ct ) == PentePatterns.UNOCCUPIED
-                    && line.charAt( ct - 1 ) == PentePatterns.UNOCCUPIED) )
+                    && line.charAt( ct - 1 ) == PentePatterns.UNOCCUPIED) ) {
                 ct--;
+            }
+        }
         int start = ct;
         ct = pos;
         if ( (line.charAt( pos ) == opponent) && (pos == maxpos - 1) )
             ct--;
-        else
+        else {
             while ( ct < (maxpos - 1) && (line.charAt( ct + 1 ) != opponent)
                     && !(line.charAt( ct ) == PentePatterns.UNOCCUPIED
-                    && line.charAt( ct + 1 ) == PentePatterns.UNOCCUPIED) )
+                    && line.charAt( ct + 1 ) == PentePatterns.UNOCCUPIED) ) {
                 ct++;
+            }
+        }
         int stop = ct;
         int inthash = PentePatterns.convertPatternToInt( line, start, stop + 1 );
         int index = PentePatterns.weightIndexTable_[inthash];
@@ -154,8 +159,9 @@ public class PenteController extends TwoPlayerController
             opponent = P1_SYMB;
 
         int len = line.length();
-        if ( len < 3 )
+        if ( len < 3 ) {
             return 0; // not an interesting pattern.
+        }
 
         double newScore = evalLine( line, symb, opponent, position, 0, len, weights );
         newScore += evalLine( line, opponent, symb, position, 0, len, weights );
@@ -168,7 +174,9 @@ public class PenteController extends TwoPlayerController
         return newScore - oldScore;
     }
 
-    // debugging aid
+    /**
+     * debugging aid
+     */
     protected static void worthDebug( char c, StringBuffer line, int pos, int diff )
     {
         GameContext.log( 2,
@@ -206,7 +214,6 @@ public class PenteController extends TwoPlayerController
         // look at every string that passes through this new move
         // to see how the value is effected.
         // there are 4 directions: - | \ /
-
 
         startc = col - PentePatterns.M;   //  -
         if ( startc < 1 ) startc = 1;
@@ -299,26 +306,24 @@ public class PenteController extends TwoPlayerController
      }
 
 
-
     protected class PenteSearchable extends TwoPlayerSearchable {
 
         /*
-         * generate all possible next moves
+         * generate all possible next moves.
          */
         public List generateMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
         {
             List moveList = new LinkedList();
-            int i,j;
             int ncols = board_.getNumCols();
             int nrows = board_.getNumRows();
 
             PenteBoard pb = (PenteBoard) board_;
             pb.determineCandidateMoves();
 
-            boolean player1 = !(lastMove.isPlayer1());
+            boolean player1 = (lastMove != null)?  !(lastMove.isPlayer1()) : true;
 
-            for ( i = 1; i <= ncols; i++ )
-                for ( j = 1; j <= nrows; j++ )
+            for (int i = 1; i <= ncols; i++ )
+                for (int j = 1; j <= nrows; j++ )
                     if ( pb.isCandidateMove( j, i ) ) {
                         TwoPlayerMove m = TwoPlayerMove.createMove( j, i, lastMove.getValue(), new GamePiece(player1));
                         pb.makeMove( m );
@@ -332,7 +337,7 @@ public class PenteController extends TwoPlayerController
         }
 
         /**
-         * return any moves that result in a win
+         * @return the moves that result in a certain win.
          */
         public List generateUrgentMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
         {

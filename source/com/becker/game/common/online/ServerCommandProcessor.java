@@ -65,10 +65,10 @@ public class ServerCommandProcessor {
         
         switch (cmd.getName()) {
             case ENTER_ROOM :
-                //System.out.println("Entering room.");
+                GameContext.log(2,"Entering room.");
                 break;
             case LEAVE_ROOM :
-                System.out.println("Player "+cmd.getArgument()+" is now leaving the room.");
+                GameContext.log(0, "Player "+cmd.getArgument()+" is now leaving the room.");
                 tables_.removePlayer((String) cmd.getArgument());
                 break;
             case ADD_TABLE :
@@ -88,14 +88,14 @@ public class ServerCommandProcessor {
             case UPDATE_TABLES :
                 break;
             case CHAT_MESSAGE :
-                //System.out.println("chat message=" + cmd.getArgument());
+                GameContext.log(2, "chat message=" + cmd.getArgument());
                 useUpdateTable = false;
                 responses.add(cmd);          
                 break;
             case DO_ACTION :
                 // a player or robot moves, this action is sent here to the server, then we broadcast it out so the surrogate(s) can be updated.
                 useUpdateTable = false;
-                //System.out.println("Ignoring DO_ACTION in ServerCommandProcessor. Surrogates to handle");
+                GameContext.log(2, "Ignoring DO_ACTION in ServerCommandProcessor. Surrogates to handle");
                 // one of the client players has acted. We need to apply this to the server controller.
                 //PlayerAction action = (PlayerAction) cmd.getArgument();
                 //controller_.handlePlayerAction(action);     
@@ -141,7 +141,7 @@ public class ServerCommandProcessor {
         // if the player at this new table is already sitting at another table,
         // remove him from the other tables(s) and delete those other tables (if no one else is there).
         Player p = table.getNewestHumanPlayer();
-        //System.out.println("in join table on the server p="+p);
+        GameContext.log(2, "in join table on the server p="+p);
         tables_.removePlayer(p);
         tables_.join(table.getName(), p);
         OnlineGameTable tableToStart = tables_.getTableReadyToPlay(p.getName());
@@ -169,7 +169,7 @@ public class ServerCommandProcessor {
      */
     private void startGame(OnlineGameTable table) {
 
-        System.out.println("NOW starting game on Server! "+ table);
+        GameContext.log(1, "NOW starting game on Server! "+ table);
 
         // Create players from the table and start.
         List<Player> players = table.getPlayers();

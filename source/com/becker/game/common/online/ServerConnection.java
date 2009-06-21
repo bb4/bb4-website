@@ -82,7 +82,7 @@ public class ServerConnection {
             Thread t = new Thread(w);
             t.start();
 
-            System.out.println("connected.");
+            GameContext.log(0, "connected.");
             isConnected_ = true;
         }
         catch (ConnectException e) {

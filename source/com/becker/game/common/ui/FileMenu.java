@@ -13,8 +13,7 @@ import javax.swing.*;
  */
 public class FileMenu extends JMenu implements ActionListener {
 
-    private GamePanel gamePanel_;
-
+    GameMenu gameMenu_;
     private JMenuItem openItem_;
     private JMenuItem saveItem_;
     private JMenuItem saveImageItem_;
@@ -24,11 +23,10 @@ public class FileMenu extends JMenu implements ActionListener {
     /**
      * Game file menu constructor
      */
-    public FileMenu(GamePanel gamePanel)
+    public FileMenu(GameMenu gameMenu)
     {
         super(GameContext.getLabel("FILE"));
-        gamePanel_ = gamePanel;
-
+        gameMenu_ = gameMenu;
         setBorder(BorderFactory.createEtchedBorder());
 
         openItem_ =  createMenuItem(GameContext.getLabel("OPEN"));
@@ -57,13 +55,13 @@ public class FileMenu extends JMenu implements ActionListener {
     {
         JMenuItem item = (JMenuItem) e.getSource();
         if (item == openItem_)  {
-            gamePanel_.openGame();
+            gameMenu_.getGamePanel().openGame();
         }
         else if (item == saveItem_) {
-            gamePanel_.saveGame();
+            gameMenu_.getGamePanel().saveGame();
         }
         else if (item == saveImageItem_) {
-            GUIUtil.saveSnapshot(gamePanel_, GameContext.getHomeDir());
+            GUIUtil.saveSnapshot(gameMenu_.getGamePanel(), GameContext.getHomeDir());
         }
         else if (item == exitItem_) {
             System.exit(0);

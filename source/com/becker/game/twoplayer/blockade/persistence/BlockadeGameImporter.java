@@ -3,53 +3,30 @@ package com.becker.game.twoplayer.blockade.persistence;
 import com.becker.game.common.*;
 import ca.dj.jigo.sgf.tokens.*;
 import ca.dj.jigo.sgf.*;
-import com.becker.game.common.persistence.GameImporter;
 import com.becker.game.twoplayer.blockade.*;
 import com.becker.game.twoplayer.blockade.persistence.tokens.*;
 
-import javax.swing.*;
+import com.becker.game.twoplayer.common.persistence.TwoPlayerGameImporter;
+import com.becker.game.twoplayer.common.persistence.tokens.Player1NameToken;
+import com.becker.game.twoplayer.common.persistence.tokens.Player2NameToken;
+import com.becker.game.twoplayer.common.persistence.tokens.Size2Token;
 import java.util.*;
-import java.io.*;
 
 /**
  * Imports the stat of a Go game from a file.
  *
  * @author Barry Becker Date: Oct 28, 2006
  */
-public class BlockadeGameImporter extends GameImporter {
+public class BlockadeGameImporter extends TwoPlayerGameImporter {
 
     public BlockadeGameImporter(BlockadeController controller) {
         super(controller);
     }
 
-    public void restoreFromFile( String fileName ) {
-
-        try {
-            FileInputStream iStream = new FileInputStream( fileName );
-            GameContext.log( 2, "opening " + fileName );
-
-            SGFLoader gameLoader = new SGFBlockadeLoader();
-            SGFGame game = gameLoader.load( iStream );
-            restoreGame( game );
-
-        } catch (FileNotFoundException fnfe) {
-            JOptionPane.showMessageDialog( null,
-                                           "file " + fileName + " was not found." + fnfe.getMessage() );
-        } catch (IOException ioe) {
-            JOptionPane.showMessageDialog( null,
-                                           "IOException occurrred while reading " +
-                                           fileName + " :" + ioe.getMessage() );
-        } catch (SGFException sgfe) {
-            JOptionPane.showMessageDialog( null,
-                                           "file " + fileName + " had an SGF error while loading: " +
-                                           sgfe.getMessage() );
-            sgfe.printStackTrace();
-        }
-    }
-
     /**
      * Initialize the board based on the SGF game.
      */
+    @Override
     protected void parseSGFGameInfo( SGFGame game) {
 
         BlockadeController gc = (BlockadeController) controller_;
@@ -79,7 +56,8 @@ public class BlockadeGameImporter extends GameImporter {
     /**
      *
      */
-    protected boolean processToken(SGFToken token, List moveList) {
+    @Override
+    protected boolean processToken(SGFToken token, List<Move> moveList) {
 
         boolean found = false;
         if (token instanceof BlockadeMoveToken ) {
@@ -99,6 +77,7 @@ public class BlockadeGameImporter extends GameImporter {
     /**
      * Create a blockade more from the MoveToken
      */
+    @Override
     protected Move createMoveFromToken( SGFToken token)
     {
          BlockadeMoveToken mvToken = (BlockadeMoveToken) token;

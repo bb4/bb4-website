@@ -108,12 +108,19 @@ public abstract class GameBoardViewer extends JPanel
         int state = chooser.showOpenDialog( null );
         File file = chooser.getSelectedFile();
         if ( file != null && state == JFileChooser.APPROVE_OPTION )  {
-            //lastDirectoryAccessed_ = file.getAbsolutePath();
             controller_.restoreFromFile(file.getAbsolutePath());
             sendGameChangedEvent(controller_.getLastMove());
         }
     }
 
+    /**
+     * save the current game to the specified file (in SGF = Smart Game Format)
+     */
+    public void saveGame()
+    {
+       saveGame(null);
+    }
+    
     /**
      * save the current game to the specified file (in SGF = Smart Game Format)
      * Derived classes should implement the details of the save
@@ -130,6 +137,7 @@ public abstract class GameBoardViewer extends JPanel
             //if (!fPath.endsWith('.' + SgfFileFilter.SGF_EXTENSION))
             //    fPath += '.' + SgfFileFilter.SGF_EXTENSION;
             controller_.saveToFile( fPath, ae );
+
         }
     }
 
@@ -142,13 +150,6 @@ public abstract class GameBoardViewer extends JPanel
         return chooser_;
     }
 
-    /**
-     * save the current game to the specified file (in SGF = Smart Game Format)
-     */
-    public void saveGame()
-    {
-       saveGame(null);
-    }
 
     /**
      *  cause the board UI to draw itself based on the current state of the game.

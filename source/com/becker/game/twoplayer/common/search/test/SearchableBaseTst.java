@@ -27,9 +27,7 @@ public abstract class SearchableBaseTst extends TestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-
-        System.out.println("in setup");
-         controller = createController();        
+        controller = createController();        
     }
 
 

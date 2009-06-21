@@ -48,7 +48,7 @@ public interface Searchable
     void undoInternalMove( TwoPlayerMove m );
 
     /**
-     * given a move determine whether the game is over.
+     * Given a move, determine whether the game is over.
      * If recordWin is true then the variables for player1/2HasWon can get set.
      * sometimes, like when we are looking ahead in search we do not want to set these.
      * @param m the move to check. If null then return true.
@@ -57,10 +57,10 @@ public interface Searchable
     boolean done( TwoPlayerMove m, boolean recordWin );
 
     /**
-     * Generate a list of candidate next moves given the last move
+     * Generate a list of candidate next moves given the last move.
      * This function is a key function that must be created for each type of game added.
      *
-     *  @param lastMove  the last move made
+     *  @param lastMove  the last move made if there was one. (null if first move of the game)
      *  @param weights  the polynomial weights to use in the polynomial evaluation function.
      *  @param player1sPerspective if true assign worth values according to p1.
      */

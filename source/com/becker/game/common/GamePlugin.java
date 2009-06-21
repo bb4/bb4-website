@@ -1,5 +1,8 @@
 package com.becker.game.common;
 
+import com.becker.common.ClassLoaderSingleton;
+import com.becker.game.common.ui.GamePanel;
+
 
 /**
  * Immutable class representing meta info about a game plugin.
@@ -17,6 +20,15 @@ public class GamePlugin {
     private final String controllerClass_;
     private final boolean isDefault_;
 
+    /**
+     *
+     * @param name of the plugin game
+     * @param label user visible title for the game
+     * @param msgBundleBase place to get localized strings from for this game.
+     * @param panelClass
+     * @param controllerClass
+     * @param isDefault if true, show this game initially.
+     */
     public GamePlugin(String name, String label, String msgBundleBase,
                       String panelClass, String controllerClass,
                       boolean isDefault) {
@@ -45,9 +57,26 @@ public class GamePlugin {
         return label_;
     }
 
-    public String getPanelClass() {
+    private String getPanelClass() {
         //return Util.loadClass(panelClass_);
         return panelClass_;
+    }
+
+    public GamePanel getPanelInstance() {
+
+       Class gameClass = ClassLoaderSingleton.loadClass(getPanelClass());
+
+       GamePanel gamePanel = null;
+        try {
+            gamePanel = (GamePanel)gameClass.newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return gamePanel;
     }
 
     public String getControllerClass() {

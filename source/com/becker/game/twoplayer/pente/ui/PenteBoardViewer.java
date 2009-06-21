@@ -39,6 +39,7 @@ public class PenteBoardViewer extends TwoPlayerBoardViewer
     }
 
 
+    @Override
     public void mousePressed( MouseEvent e )
     {
         if (get2PlayerController().isProcessing() || get2PlayerController().isDone())   {

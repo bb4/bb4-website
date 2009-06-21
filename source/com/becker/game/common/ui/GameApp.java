@@ -17,8 +17,7 @@ import java.awt.event.*;
  */
 public class GameApp
 {
-    private GamePanel gamePanel_ = null;
-    private JFrame frame_ = null;
+    private JFrame frame_;
 
     static {
         GameContext.log(3, "GameApp static init." );
@@ -35,17 +34,21 @@ public class GameApp
 
         frame_ = new JFrame();
         frame_.addWindowListener(new WindowAdapter() {
+            @Override
             public void windowClosing(WindowEvent e) {
                 System.exit(0);
             }
         });
+     
+        // this will load the resources for the specified game.
+        //GameContext.loadGameResources(initialGame);
+       
+        addMenuBar(initialGame);
 
         frame_.setBounds(200, 200, 600, 500);
         // display the frame
         frame_.setVisible(true);
         frame_.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-
-        addMenuBar(initialGame);
     }
 
     /**
@@ -53,14 +56,15 @@ public class GameApp
      */
     private void addMenuBar(String initialGame)
     {
-        JMenu fileMenu = new FileMenu(gamePanel_);
-        JMenu gameMenu= new GameMenu(gamePanel_, frame_, initialGame);
-
+        GameMenu gameMenu = new GameMenu( frame_, initialGame);
+        JMenu fileMenu = new FileMenu(gameMenu);
+       
         JMenuBar menubar = new JMenuBar();
         menubar.add(fileMenu);
         menubar.add(gameMenu);
 
         frame_.getRootPane().setJMenuBar(menubar);
+
     }
 
     
@@ -91,7 +95,7 @@ public class GameApp
             CommandLineOptions options = new CommandLineOptions(args);
 
             if (options.contains("help")) {
-                System.out.println("Usage: -game <game> [-locale <locale>]");
+                GameContext.log(0, "Usage: -game <game> [-locale <locale>]");
             }
             // create a game panel of the appropriate type based on the name of the class passed in.
             // if no game is specified as an argument, then we show a menu for selecting a game
@@ -105,7 +109,7 @@ public class GameApp
             }
         }
 
-        GameApp gameApp = new GameApp(gameName);
+        new GameApp(gameName);
     }
 
 }

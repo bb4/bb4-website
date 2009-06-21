@@ -160,7 +160,7 @@ public abstract class GameBoardRenderer
     public void setGridColor( Color c )
     {
         gridColor_ = c;
-        System.out.println("setting gridColor to " + c);
+        GameContext.log(1, "setting gridColor to " + c);
     }
 
     /**

@@ -37,9 +37,12 @@ public abstract class Board implements BoardInterface, Cloneable
      * We keep a list of the moves that have been made.
      * We can navigate forward or backward in time using this
      */
-    protected final LinkedList<Move> moveList_ = new LinkedList<Move>();
+    protected LinkedList<Move> moveList_;// = new LinkedList<Move>();
 
-
+   public Board() {
+       System.out.println("creating board and movelist to go with it.");
+       moveList_ = new LinkedList<Move>();
+   }
     /**
      *  Reset the board to its initial state.
      */
@@ -155,25 +158,25 @@ public abstract class Board implements BoardInterface, Cloneable
     @Override
     public boolean equals(Object b)
     {
-       Board board = (Board)b;
-       for ( int i = 1; i <= getNumRows(); i++ )   {
-          for ( int j = 1; j <= getNumCols(); j++ ) {
-              BoardPosition p1 = this.getPosition(i,j);
-              BoardPosition p2 = board.getPosition(i,j);
-              if (p1.isOccupied() != p2.isOccupied()) {
-                  GameContext.log(2, "Inconsistent occupation status  p1="+p1+ " and p2="+p2 );
-                  return false;
-              }
-              if (p1.isOccupied() && p2.isOccupied()) {
-                  GamePiece piece1 = p1.getPiece();
-                  GamePiece piece2 = p2.getPiece();
-                  if (piece1.isOwnedByPlayer1() != piece2.isOwnedByPlayer1() ||
-                      piece1.getType() != piece2.getType())    {
-                      GameContext.log(2, "There was an inconsistency between p1="+p1+ " and "+p2 );
-                      return false;
-                  }
-              }
-          }
+        Board board = (Board)b;
+        for ( int i = 1; i <= getNumRows(); i++ )   {
+            for ( int j = 1; j <= getNumCols(); j++ ) {
+                BoardPosition p1 = this.getPosition(i,j);
+                BoardPosition p2 = board.getPosition(i,j);
+                if (p1.isOccupied() != p2.isOccupied()) {
+                    GameContext.log(2, "Inconsistent occupation status  p1="+p1+ " and p2="+p2 );
+                    return false;
+                }
+                if (p1.isOccupied() && p2.isOccupied()) {
+                    GamePiece piece1 = p1.getPiece();
+                    GamePiece piece2 = p2.getPiece();
+                    if (piece1.isOwnedByPlayer1() != piece2.isOwnedByPlayer1() ||
+                        piece1.getType() != piece2.getType())    {
+                        GameContext.log(2, "There was an inconsistency between p1="+p1+ " and "+p2 );
+                        return false;
+                    }
+                }
+            }
        }
        return true;
     }
@@ -212,9 +215,9 @@ public abstract class Board implements BoardInterface, Cloneable
      */
     public Move undoMove() {
         if ( !getMoveList().isEmpty() ) {
-            Move m = getMoveList().removeLast();
-            undoInternalMove( m );
-            return m;
+            Move move = getMoveList().removeLast();
+            undoInternalMove( move );
+            return move;
         }
         return null;
     }
@@ -271,6 +274,28 @@ public abstract class Board implements BoardInterface, Cloneable
     public void dispose()
     {
         positions_ = null;
+    }
+
+
+    @Override
+    public String toString() {
+        StringBuilder bldr = new StringBuilder(1000);
+        bldr.append("\n");
+        int nRows = getNumRows();
+        int nCols = getNumCols();
+        for ( int i = 1; i <= nRows; i++ )   {
+          for ( int j = 1; j <= nCols; j++ ) {
+              BoardPosition p1 = this.getPosition(i,j);
+              if (p1.isOccupied()) {
+                  bldr.append(p1.getPiece());
+              }
+              else {
+                  bldr.append(" _ ");
+              }
+           }
+           bldr.append("\n");
+        }
+        return bldr.toString();
     }
 
 }

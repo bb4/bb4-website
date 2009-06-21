@@ -272,7 +272,7 @@ public abstract class GameController
      * @return the server connection if one can be created, else null.
      */
     protected ServerConnection createServerConnection() {
-        System.out.println("Cannot create a server connection for "+ this.getClass().getName()
+        GameContext.log(0, "Cannot create a server connection for "+ this.getClass().getName()
                            +". Online play not supported");
         return null;
     }
@@ -283,7 +283,7 @@ public abstract class GameController
      *
     public void handleServerUpdate(GameCommand cmd) {
         // @@ need to put something here for.
-        //System.out.println("Need controller implementation for handleServerUpdate");
+        GameContext.log(2, "Need controller implementation for handleServerUpdate");
     }*/
 
     /**

@@ -1,20 +1,14 @@
 package com.becker.game.common.ui;
 
-import com.becker.common.*;
 import com.becker.common.util.ImageUtil;
 import com.becker.game.common.*;
-import com.becker.game.common.online.ui.*;
-import com.becker.sound.SpeechSynthesizer;
 import com.becker.ui.*;
 
-import java.applet.AudioClip;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.*;
 import java.io.*;
-import java.net.URL;
-import sun.applet.AppletAudioClip;
 
 /**
  * This is an abstract base class for a Game UI.
@@ -91,15 +85,15 @@ public abstract class GamePanel extends TexturedPanel
         addComponentListener( new ComponentAdapter()
         {
 
+            @Override
             public void componentResized( ComponentEvent ce )
             {
-                //System.out.println("resized");
+                GameContext.log(2, "resized");
             }
         } );
     }
 
     public void openGame() {
-
         boardViewer_.openGame();
     }
 
@@ -259,6 +253,7 @@ public abstract class GamePanel extends TexturedPanel
     /**
      * This method allows javascript to resize the applet from the browser.
      */
+    @Override
     public final void setSize( int width, int height )
     {
         resizablePanel_.setSize( width, height );

@@ -50,7 +50,7 @@ public class OnlineGameTableList extends ArrayList<OnlineGameTable>
      */
     public void removePlayer(String playerName) {
         Iterator<OnlineGameTable> it = this.iterator();
-        System.out.println("OnlineGameTableList.removePlayer "+ playerName +" is leaving.");
+        GameContext.log(0,"OnlineGameTableList.removePlayer "+ playerName +" is leaving.");
         while (it.hasNext()) {
             OnlineGameTable table = it.next();
             // loop through the list of players and remove the player if the name matches

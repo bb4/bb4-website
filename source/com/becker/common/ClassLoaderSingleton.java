@@ -48,7 +48,6 @@ public class ClassLoaderSingleton {
         }
         catch (ClassNotFoundException e) {
             System.out.println("Unable to find the class "+ className+". Check your classpath.");
-            //System.out.println("The current classpath is :"+System.getProperty("java.class.path"));
             if (defaultClassName == null) {
                 e.printStackTrace();
                 return null;
@@ -60,7 +59,6 @@ public class ClassLoaderSingleton {
                  cne.printStackTrace();
             }
         }
-        System.out.println("class "+className+" was loaded succesfully.");
         return theClass;
     }
 }

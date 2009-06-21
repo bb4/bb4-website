@@ -27,7 +27,7 @@ public abstract class GameImporter {
     public abstract void restoreFromFile(String fileName);
 
     /**
-     * This will retore a game from an SGF structure
+     * This will retore a game from an SGF structure to the controller
      */
     protected void restoreGame( SGFGame game )
     {
@@ -35,16 +35,18 @@ public abstract class GameImporter {
 
         List<Move> moveSequence = new LinkedList<Move>();
         extractMoveList( game.getTree(), moveSequence );
-        //GameContext.log( 1, "move sequence= " + moveSequence );
+        GameContext.log( 0, "move sequence= " + moveSequence );
         controller_.reset();
 
         Iterator it = moveSequence.iterator();
         while ( it.hasNext() ) {
             Move m = (Move) it.next();
-            //System.out.println("now making:"+ m);
+            GameContext.log(0, "now making:"+ m);
             controller_.makeMove( m );
         }
     }
+
+    protected abstract SGFLoader createLoader();
 
     /**
      * @param game to parse
@@ -56,7 +58,7 @@ public abstract class GameImporter {
             InfoToken token = (InfoToken) e.nextElement();
             if (token instanceof SizeToken) {
                 SizeToken sizeToken = (SizeToken)token;
-                //System.out.println("info token size ="+sizeToken.getSize());
+                GameContext.log(2, "info token size ="+sizeToken.getSize());
                 size = sizeToken.getSize();
             }
         }
@@ -113,10 +115,12 @@ public abstract class GameImporter {
 
         boolean found = false;
         if (token instanceof MoveToken ) {
-            moveList.add( createMoveFromToken( token ) );
+            Move move = createMoveFromToken( token );
+            System.out.println("creating move="+ move);
+            moveList.add( move );
             found = true;
         } else {
-            System.out.println("ignoring token "+token.getClass().getName());
+            GameContext.log(0, "ignoring token "+token.getClass().getName());
         }
         return found;
     }
