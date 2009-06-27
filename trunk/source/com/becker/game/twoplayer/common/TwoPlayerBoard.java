@@ -6,8 +6,8 @@ import java.util.*;
 
 
 /**
- * Defines the structure of the blockade board and the pieces on it.
- * Each BlockadeBoardPosition can contain a piece and south and east walls.
+ * Defines the structure of the board and the pieces on it.
+ * Each BoardPosition can contain a piece.
  *
  * @author Barry Becker
  */

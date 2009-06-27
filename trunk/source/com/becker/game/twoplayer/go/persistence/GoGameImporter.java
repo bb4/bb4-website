@@ -128,6 +128,7 @@ public class GoGameImporter extends TwoPlayerGameImporter {
     }
 
 
+    @Override
     protected GoMove createMoveFromToken( SGFToken token)
     {        
           MoveToken mvToken = (MoveToken) token;

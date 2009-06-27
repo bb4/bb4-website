@@ -23,6 +23,12 @@ public class BlockadeGameImporter extends TwoPlayerGameImporter {
         super(controller);
     }
 
+    @Override
+     protected SGFLoader createLoader() {
+        return new BlockadeSGFLoader();
+    }
+
+
     /**
      * Initialize the board based on the SGF game.
      */
@@ -82,7 +88,7 @@ public class BlockadeGameImporter extends TwoPlayerGameImporter {
     {
          BlockadeMoveToken mvToken = (BlockadeMoveToken) token;
 
-         boolean player1 = token instanceof Player1MoveToken;
+         boolean player1 = token instanceof Player1BlockadeMoveToken;
          BlockadeWall wall = null;
          if (mvToken.hasWall())
              wall = new BlockadeWall(new BlockadeBoardPosition(mvToken.getWallPoint1().y, mvToken.getWallPoint1().x),

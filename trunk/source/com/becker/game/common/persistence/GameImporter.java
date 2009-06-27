@@ -41,7 +41,7 @@ public abstract class GameImporter {
         Iterator it = moveSequence.iterator();
         while ( it.hasNext() ) {
             Move m = (Move) it.next();
-            GameContext.log(0, "now making:"+ m);
+            GameContext.log(1, "now making:"+ m);
             controller_.makeMove( m );
         }
     }
@@ -84,7 +84,7 @@ public abstract class GameImporter {
         Enumeration trees = tree.getTrees();
         Enumeration leaves = tree.getLeaves();
         Enumeration tokens;
-
+        System.out.println("trees=" + trees + " leaves=" + leaves);
         while ( leaves != null && leaves.hasMoreElements() ) {
             SGFToken token;
             tokens = ((SGFLeaf) leaves.nextElement()).getTokens();
@@ -109,12 +109,12 @@ public abstract class GameImporter {
     /**
      * @param token to process
      * @param moveList to add the processed token to
-     * @return true if the token is an instance of MoveToken.
+     * @return true if the token is an instance of PlacementToken.
      */
     protected boolean processToken(SGFToken token, List<Move> moveList) {
 
         boolean found = false;
-        if (token instanceof MoveToken ) {
+        if (token instanceof PlacementToken ) {
             Move move = createMoveFromToken( token );
             System.out.println("creating move="+ move);
             moveList.add( move );
