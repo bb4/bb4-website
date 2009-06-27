@@ -46,6 +46,7 @@ public class CheckersController extends TwoPlayerController
         weights_ = new CheckersWeights();
     }
 
+    @Override
     protected TwoPlayerOptions createOptions() {
         return new TwoPlayerOptions(DEFAULT_LOOKAHEAD, 100, MusicMaker.SITAR);
     }
@@ -68,6 +69,7 @@ public class CheckersController extends TwoPlayerController
      * If called before the end of the game it just reutrns 0 - same as it does in the case of a tie.
      * @return some measure of how overwhelming the win was. May need to negate based on which player one.
      */
+    @Override
     public double getStrengthOfWin()
     {
         if (!getPlayer1().hasWon() && !getPlayer2().hasWon())
@@ -169,7 +171,7 @@ public class CheckersController extends TwoPlayerController
      */
     private int checkJumpMove( BoardPosition current,
                                CheckersMove m, int rowInc, int colInc,
-                               List jumpMoves, ParameterArray weights )
+                               List<CheckersMove> jumpMoves, ParameterArray weights )
     {
         BoardPosition next = board_.getPosition( current.getRow() + rowInc, current.getCol() + colInc );
         BoardPosition beyondNext = board_.getPosition( current.getRow() + 2 * rowInc, current.getCol() + 2 * colInc );
@@ -201,7 +203,7 @@ public class CheckersController extends TwoPlayerController
             else
                 mm.kinged = false;
 
-            List list;
+            List<CheckersMove> list;
             // we cannot make more jumps if we just got kinged.
             if (!justKinged) {    // may be superfluous
                 list = findJumpMoves( beyondNext, rowInc, mm, weights );
@@ -222,11 +224,11 @@ public class CheckersController extends TwoPlayerController
      * won't be taken twice in the same move. At the end we return the captured
      * pieces to the board so the state is not change.
      */
-    private List findJumpMoves( BoardPosition current,
+    private List<CheckersMove> findJumpMoves( BoardPosition current,
                                       int rowInc, CheckersMove m,
                                       ParameterArray weights )
     {
-        List jumpMoves = new LinkedList();
+        List<CheckersMove> jumpMoves = new LinkedList<CheckersMove>();
         // if there are jumps beyond this we have to make them.
         // We have at least the current jump m.
 
@@ -267,7 +269,7 @@ public class CheckersController extends TwoPlayerController
      * @param moveList add the potential moves to this existing list
      * @return the number of moves added
      */
-    private int addMovesForDirection( BoardPosition pos, List moveList,
+    private int addMovesForDirection( BoardPosition pos, List<CheckersMove> moveList,
                                       int rowInc, int colInc, TwoPlayerMove lastMove, ParameterArray weights )
     {
         CheckersMove m;
@@ -300,7 +302,7 @@ public class CheckersController extends TwoPlayerController
             m = CheckersMove.createMove( pos.getRow(), pos.getCol(), beyondNext.getRow(), beyondNext.getCol(),
                     capture, lastMove.getValue(),  pos.getPiece().copy() );
 
-            List jumps = findJumpMoves( beyondNext, rowInc, m, weights );
+            List<CheckersMove> jumps = findJumpMoves( beyondNext, rowInc, m, weights );
             moveList.addAll( jumps );
 
             return jumps.size();
@@ -316,7 +318,7 @@ public class CheckersController extends TwoPlayerController
      * @param weights to use.
      * @return the number of moves added.
      */
-    public int addMoves( BoardPosition p, List moveList, TwoPlayerMove lastMove, ParameterArray weights )
+    public int addMoves( BoardPosition p, List<CheckersMove> moveList, TwoPlayerMove lastMove, ParameterArray weights )
     {
         int direction = -1;
         if ( p.getPiece().isOwnedByPlayer1() )
@@ -346,7 +348,7 @@ public class CheckersController extends TwoPlayerController
                     int i = 0;
 
                     while ( i < numKingMoves ) {
-                        CheckersMove m = (CheckersMove) moveList.get( initialNumMoves + numMovesAdded + i );
+                        CheckersMove m = moveList.get( initialNumMoves + numMovesAdded + i );
                         GameContext.log( 1, "lastMove="+ lastMove);
                         assert ( m.isPlayer1() == moveToCheck.isPlayer1()):
                                 "player ownership not equal comparing \n"+m+" with \n"+moveToCheck;
@@ -387,7 +389,7 @@ public class CheckersController extends TwoPlayerController
          */
         public List generateMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
         {
-            List moveList = new LinkedList();
+            List<CheckersMove> moveList = new LinkedList<CheckersMove>();
             int j, row,col;
             player1sPerspective_ = player1sPerspective;
 

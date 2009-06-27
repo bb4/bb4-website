@@ -1,8 +1,8 @@
 package com.becker.game.twoplayer.common.persistence.tokens;
 
 import ca.dj.jigo.sgf.Point;
-import ca.dj.jigo.sgf.tokens.SGFToken;
 
+import ca.dj.jigo.sgf.tokens.PlacementToken;
 import java.io.StreamTokenizer;
 import java.io.IOException;
 
@@ -10,8 +10,7 @@ import java.io.IOException;
  * A generic two player move.
  * The superclass for Player1MoveToken and Player2MoveToken.
  */
-public abstract class TwoPlayerMoveToken extends SGFToken
-{
+public abstract class TwoPlayerMoveToken extends PlacementToken {
     protected Point toPoint = new Point();
     
 
@@ -21,8 +20,9 @@ public abstract class TwoPlayerMoveToken extends SGFToken
     public TwoPlayerMoveToken() { }
   
     /**
-     * Parse in the wall locations.
+     * Parse in the position of the piece.
      */
+    @Override
    protected boolean parseContent( StreamTokenizer st )  throws IOException
    {
        boolean parsed = parsePoint( st, toPoint );

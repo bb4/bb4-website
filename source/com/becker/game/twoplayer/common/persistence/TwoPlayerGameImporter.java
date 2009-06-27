@@ -17,7 +17,7 @@ import java.util.*;
 import java.io.*;
 
 /**
- * Imports the state of a Go game from a file.
+ * Imports the state of a two player game from a file.
  *
  * @author Barry Becker
  */
@@ -35,7 +35,7 @@ public class TwoPlayerGameImporter extends GameImporter {
 
         try {
             FileInputStream iStream = new FileInputStream( fileName );
-            GameContext.log( 2, "opening " + fileName );
+            GameContext.log( 0, "opening " + fileName );
 
             SGFLoader gameLoader = createLoader();
             SGFGame game = gameLoader.load( iStream );
@@ -98,7 +98,7 @@ public class TwoPlayerGameImporter extends GameImporter {
     protected boolean processToken(SGFToken token, List<Move> moveList) {
 
         boolean found = false;
-        if (token instanceof MoveToken ) {
+        if (token instanceof PlacementToken ) {
             moveList.add( createMoveFromToken( token ) );
             found = true;
         }
@@ -113,7 +113,7 @@ public class TwoPlayerGameImporter extends GameImporter {
 
 
     /**
-     * Create a blockade more from the MoveToken
+     * Create a move from the two player move Token
      */
     protected Move createMoveFromToken( SGFToken token)
     {

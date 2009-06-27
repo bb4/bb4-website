@@ -88,8 +88,9 @@ public class GoGameExporter extends GameExporter {
              return "[]";
         StringBuffer buf = new StringBuffer("");
         char player = 'W';
-        if ( m.getPiece().isOwnedByPlayer1() )
+        if ( m.getPiece().isOwnedByPlayer1() ) {
             player = 'B';
+        }
         buf.append( ';' );
         buf.append( player );
         buf.append( '[' );

@@ -114,10 +114,8 @@ public abstract class TwoPlayerController extends GameController
         player1sTurn_ = true;
     }
 
-
-
     /**
-     * save the current state of the blockade game to a file in SGF (4) format (standard game format).
+     * save the current state of the game to a file in SGF (4) format (standard game format).
      *This should some day be xml (xgf)
      * @param fileName name of the file to save the state to
      * @param ae the exception that occurred causing us to want to save state
@@ -128,7 +126,6 @@ public abstract class TwoPlayerController extends GameController
         TwoPlayerGameExporter exporter = new TwoPlayerGameExporter(this);
         exporter.saveToFile(fileName, ae);
     }
-
 
     @Override
     public void restoreFromFile( String fileName ) {

@@ -34,7 +34,7 @@ public class SGFLoader
   private final static String INVALID_SGF_FILE =
     "Invalid SGF File.";
 
-  private static Vector myGameInfoTokens = new Vector( 10 );
+  private static List<SGFToken> myGameInfoTokens = new ArrayList<SGFToken>(10);
 
   /**
    * constructor.
@@ -90,7 +90,7 @@ public class SGFLoader
   {
     // Reset the game information tokens so they have a place to stay.
     //
-    myGameInfoTokens.setSize( 0 );
+    myGameInfoTokens.clear();
 
     // Read the game tree, and return a new SGFGame coupling
     // them like lovers.
@@ -103,10 +103,9 @@ public class SGFLoader
     // to the game.  This way we guarantee that all tokens related to
     // the game are in the SGFGame class.
     //
-    for( Enumeration e = myGameInfoTokens.elements();
-         e.hasMoreElements();
-         sgfGame.addInfoToken( (InfoToken)(e.nextElement()) ) )
-      ;
+    for ( SGFToken token  : myGameInfoTokens)   {
+         sgfGame.addInfoToken( (InfoToken)(token) );
+    }
 
     return sgfGame;
   }
@@ -202,13 +201,13 @@ public class SGFLoader
           // class, it gets a special place in life.
           //
           if( sgfToken instanceof InfoToken )
-            myGameInfoTokens.addElement( sgfToken );
+              myGameInfoTokens.add( sgfToken );
           else
           {
             if( leaf == null )
-              leaf = new SGFLeaf( sgfToken );
+                leaf = new SGFLeaf( sgfToken );
             else
-              leaf.addToken( sgfToken );
+                leaf.addToken( sgfToken );
           }
         }
     }

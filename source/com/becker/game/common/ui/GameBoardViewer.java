@@ -110,6 +110,7 @@ public abstract class GameBoardViewer extends JPanel
         if ( file != null && state == JFileChooser.APPROVE_OPTION )  {
             controller_.restoreFromFile(file.getAbsolutePath());
             sendGameChangedEvent(controller_.getLastMove());
+            this.refresh();
         }
     }
 
