@@ -2,6 +2,7 @@ package com.becker.puzzle.common;
 
 /**
  * Enum for type of solver to employ when solving the puzzle.
+ * Solver for a given puzzle position P and state transition/move M.
  * 
  * @author Barr Becker
  */

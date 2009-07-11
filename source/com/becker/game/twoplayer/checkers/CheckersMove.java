@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.checkers;
 
+import com.becker.common.Location;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 
@@ -13,13 +14,15 @@ import com.becker.game.twoplayer.common.TwoPlayerMove;
 public class CheckersMove extends TwoPlayerMove
 {
 
-    // the position that the piece is moving from
-    protected byte fromRow_;
-    protected byte fromCol_;
-    // True if the piece just got kinged as a result of this move
+    /** the position that the piece is moving from */
+    protected Location fromLocation_;
+
+    /** True if the piece just got kinged as a result of this move. */
     public boolean kinged;
-    // a linked list of the pieces that were captured with this move
-    // Usually this is null (if no captures) or 1, but could be more.
+
+    /**a linked list of the pieces that were captured with this move
+     * Usually this is null (if no captures) or 1, but could be more.
+     */
     public CaptureList captureList = null;
 
     /**
@@ -32,8 +35,7 @@ public class CheckersMove extends TwoPlayerMove
                           double val, GamePiece piece)
     {
         super( destinationRow, destinationCol, val,  piece );
-        fromRow_ = originRow;
-        fromCol_ = originCol;
+        fromLocation_ = new Location(originRow, originCol);
         kinged = false;
         captureList = captures;
     }
@@ -64,20 +66,20 @@ public class CheckersMove extends TwoPlayerMove
 
     public void setToRow(int toRow)
     {
-        toRow_ = (byte)toRow;
+        toLocation_.setRow(toRow);
     }
     public void setToCol(int toCol)
     {
-        toCol_ = (byte)toCol;
+        toLocation_.setCol(toCol);
     }
 
     public int getFromRow()
     {
-        return fromRow_;
+        return fromLocation_.getRow();
     }
     public int getFromCol()
     {
-        return fromCol_;
+        return fromLocation_.getCol();
     }
 
     public void removeCaptures( CheckersBoard b )
@@ -102,8 +104,10 @@ public class CheckersMove extends TwoPlayerMove
             // then make a deep copy
             newList = captureList.copy();
         }
-        CheckersMove cp = createMove( fromRow_, fromCol_, toRow_, toCol_,
-                newList, getValue(), getPiece().copy());
+        CheckersMove cp = 
+                createMove( fromLocation_.getRow(), fromLocation_.getCol(),
+                                   toLocation_.getRow(), toLocation_.getCol(),
+                                   newList, getValue(), getPiece().copy());
         cp.setSelected(this.isSelected());
         cp.kinged = this.kinged;
         return cp;
@@ -117,7 +121,7 @@ public class CheckersMove extends TwoPlayerMove
         if ( captureList != null ) {
             s += captureList.toString();
         }
-        s += " (" + fromRow_ + ", " + fromCol_ + ")->(" + toRow_ + ", " + toCol_ + ")";
+        s += " (" + fromLocation_ + ")->(" + toLocation_ + ")";
         return s;
     }
 }

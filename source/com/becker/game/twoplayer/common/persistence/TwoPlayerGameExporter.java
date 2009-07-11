@@ -84,11 +84,7 @@ public class TwoPlayerGameExporter extends GameExporter {
         }
         buf.append( ';' );
         buf.append( player );
-        buf.append( '[' );
-        buf.append( (char) ('a' + m.getToCol() - 1) );
-        buf.append( (char) ('a' + m.getToRow() - 1) );
-        buf.append( ']' );
-            
+        serializePosition(m.getToLocation(), buf);
         buf.append( '\n' );
         return buf.toString();
     }

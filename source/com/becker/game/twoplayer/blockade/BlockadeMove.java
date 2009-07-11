@@ -1,7 +1,9 @@
 package com.becker.game.twoplayer.blockade;
 
+import com.becker.common.Location;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.*;
+import java.util.Iterator;
 
 /**
  *  Describes a change in state from one board
@@ -13,9 +15,9 @@ import com.becker.game.twoplayer.common.*;
 public class BlockadeMove extends TwoPlayerMove
 {
 
-    // the position that the piece is moving from
-    private int fromRow_;
-    private int fromCol_;
+    /** the position that the piece is moving from */
+    private Location fromLocation_;
+
 
     // the wall placed as part of this move
     private BlockadeWall wall_;
@@ -26,16 +28,16 @@ public class BlockadeMove extends TwoPlayerMove
      *  Constructor. This should never be called directly
      *  use the factory method createMove instead.
      */
-    private BlockadeMove( byte originRow, byte originCol,
-                          byte destinationRow, byte destinationCol,
+    public BlockadeMove( int originRow, int originCol,
+                          int destinationRow, int destinationCol,
                           double val, GamePiece piece, BlockadeWall w)
     {
         super( destinationRow, destinationCol, val,  piece );
-        fromRow_ = originRow;
-        fromCol_ = originCol;
+        fromLocation_ = new Location(originRow, originCol);
         wall_ = w;
-        int rowDif = toRow_ - fromRow_;
-        int colDif = toCol_ - fromCol_;
+
+        int rowDif = toLocation_.getRow() - fromLocation_.getRow();
+        int colDif = toLocation_.getCol() - fromLocation_.getCol();
         direction_ = Direction.getDirection(rowDif, colDif);
     }
 
@@ -58,11 +60,14 @@ public class BlockadeMove extends TwoPlayerMove
     /**
      * make a deep copy.
      */
+    @Override
     public TwoPlayerMove copy()
     {
 
-        BlockadeMove cp = createMove( fromRow_, fromCol_, toRow_, toCol_,
-                                      getValue(), getPiece(), wall_);
+        BlockadeMove cp = 
+                createMove( fromLocation_.getRow(), fromLocation_.getCol(),
+                                   toLocation_.getRow(), toLocation_.getCol(),
+                                   getValue(), getPiece(), wall_);
         cp.setSelected(this.isSelected());     
         return cp;
     }
@@ -72,28 +77,36 @@ public class BlockadeMove extends TwoPlayerMove
      * @param mv  the move to compare to.
      * @return  true if values are equal.
      */
+    @Override
     public boolean equals( Object mv )
     {
          BlockadeMove comparisonMove = (BlockadeMove) mv;
-         return (fromRow_ == comparisonMove.getFromRow()) &&
-                    (fromCol_ == comparisonMove.getFromCol()) &&
-                    (toRow_ == comparisonMove.getToRow()) &&
-                    (toCol_ == comparisonMove.getToCol()) &&                    
-                    ((wall_==null && comparisonMove.getWall() == null) ||wall_.equals(comparisonMove.getWall())) &&
+         return (getFromLocation().equals(comparisonMove.getFromLocation())) &&
+                    (getToLocation().equals(comparisonMove.getToLocation())) &&
+                    ((wall_==null && comparisonMove.getWall() == null) 
+                     ||wall_.equals(comparisonMove.getWall())) &&
                     (isPlayer1() == comparisonMove.isPlayer1());
     }
     
+    @Override
     public int hashCode() {
-       return (100*fromRow_ + 99*fromCol_ + 30*toRow_ + toCol_ + wall_.hashCode() + (isPlayer1()?54321:0));
+       return (100*fromLocation_.getRow() + 99* fromLocation_.getCol()
+                  + 30* getToLocation().getRow() + getToLocation().getCol() + wall_.hashCode() + (isPlayer1()?54321:0));
     }
 
     public int getFromRow()
     {
-        return fromRow_;
+        return fromLocation_.getRow();
     }
+
     public int getFromCol()
     {
-        return fromCol_;
+         return fromLocation_.getCol();
+    }
+
+    public Location getFromLocation()
+    {
+        return fromLocation_;
     }
 
     public BlockadeWall getWall()
@@ -120,6 +133,7 @@ public class BlockadeMove extends TwoPlayerMove
      * @param board
      * @return  true if the wall blocks this move.
      */
+    @SuppressWarnings("fallthrough")
     public boolean isMoveBlockedByWall(BlockadeWall wall, BlockadeBoard board)
     {
         // We assume that this wall does not interfere with other walls as that would be invalid.
@@ -162,8 +176,9 @@ public class BlockadeMove extends TwoPlayerMove
                 if (south.isSouthBlocked())
                     blocked = true;
             case SOUTH :
-                if (start.isSouthBlocked())
+                if (start.isSouthBlocked()) {
                     blocked = true;
+                }
                 break;
             case NORTH_WEST :
                 BlockadeBoardPosition northWest = start.getNeighbor(Direction.NORTH_WEST, board); 
@@ -199,7 +214,35 @@ public class BlockadeMove extends TwoPlayerMove
         return blocked;
     }
 
+    /**
+     * @return a string, which if executed will create a move identical to this instance.
+     */
+    @Override
+    public String getConstructorString() {
+
+        String wallCreator ="null";
+        if ( getWall() != null) {
+            Iterator<BlockadeBoardPosition> it = getWall().getPositions().iterator();
+            BlockadeBoardPosition p1 = it.next();
+            BlockadeBoardPosition p2 = it.next();
+            wallCreator = "new BlockadeWall(new BlockadeBoardPosition(" + p1.getRow()  +", "+ p1.getCol() +  "), "
+                                                             + "new BlockadeBoardPosition(" + p2.getRow()  +", "+ p2.getCol() +"))";
+        }
+        String pieceCreator = "null";
+        if (getPiece() != null) {
+            pieceCreator = "new GamePiece(" + getPiece().isOwnedByPlayer1() + ")";
+        }
+
+        String cs = "new BlockadeMove("
+                + getFromLocation().getRow() + "," + getFromLocation().getCol() +",  "
+                +  getToLocation().getRow()  + "," + getToLocation().getCol()  + ", " + getValue() + ", "
+                + pieceCreator +", " + wallCreator +
+                "),";
+        return cs;
+    }
+
     
+    @Override
     public String toString()
     {
         String s = super.toString();
@@ -209,7 +252,7 @@ public class BlockadeMove extends TwoPlayerMove
         else {
             s += " (no wall placed)";
         }
-        s += " (" + fromRow_ + ", " + fromCol_ + ")->(" + toRow_ + ", " + toCol_ + ")";
+        s += " (" + fromLocation_ + ")->(" + getToLocation() + ")";
         return s;
     }
 }

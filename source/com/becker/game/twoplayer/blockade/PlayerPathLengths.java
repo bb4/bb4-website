@@ -2,17 +2,16 @@ package com.becker.game.twoplayer.blockade;
 
 import com.becker.game.common.GameContext;
 import com.becker.optimization.parameter.ParameterArray;
-import java.util.List;
 
 /**
- * Contains all the paths and lengths from each pawn to opponent homes
+ * Contains all the path lengths from each pawn to opponent homes
  *
  * @author Barry Becker
  */
 public class PlayerPathLengths {
  
     
-   /**   */
+   /** path lengths from pawns to opponent homes for each of the 2 players.  */
    private PathLengths[] pathLengths = new PathLengths[2];
 
 
@@ -25,7 +24,7 @@ public class PlayerPathLengths {
     }
     
     public PathLengths getPathLengthsForPlayer(boolean player1) {
-        return pathLengths[player1?0:1];
+        return pathLengths[player1 ?  0: 1];
     }
     
     /**
@@ -36,7 +35,8 @@ public class PlayerPathLengths {
     }
     
     /**
-     *Calculate the worth of the recently placed move based on the path lengths.
+     * Calculate the worth of the recently placed move based on the path lengths.
+     * 
      * @param winningValue
      * @param weights
      */
@@ -49,15 +49,14 @@ public class PlayerPathLengths {
         // If it landed on an opponents home base, then return a winning value.
         // It has landed if any of the shortest paths are 0.
         if (pathLengths[p1].shortestLength == 0 ) {
-            GameContext.log(0, "*WON*");
+            GameContext.log(1, "**WON**");
             value = winningValue;
         }
         else if ( pathLengths[p2].shortestLength == 0 ) {
-            GameContext.log(0, "*WON**");
+            GameContext.log(1, "**WON**");
             value = -winningValue;
         }
         else {
-            // move this to PlayerPathLengthss.getValue(BlockadeWeights)
             int shortestLengthDiff = pathLengths[p2].shortestLength - pathLengths[p1].shortestLength;
             int secondShortestDiff = pathLengths[p2].secondShortestLength - pathLengths[p1].secondShortestLength;
             int furthestLengthDiff = pathLengths[p2].furthestLength - pathLengths[p1].furthestLength;
@@ -71,6 +70,7 @@ public class PlayerPathLengths {
     
     /**
      */
+    @Override
     public String toString() {
         StringBuilder bldr = new StringBuilder();
         bldr.append("PlayerPathLengths:");

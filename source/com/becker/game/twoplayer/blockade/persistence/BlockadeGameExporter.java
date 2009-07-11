@@ -49,7 +49,7 @@ public class BlockadeGameExporter extends TwoPlayerGameExporter {
         if (m.getWall() != null) {
             buf.append("wall");           
             for (BlockadeBoardPosition pos : m.getWall().getPositions()) {               
-                serializePosition(pos, buf);
+                serializePosition(pos.getLocation(), buf);
             }
         }
         else {

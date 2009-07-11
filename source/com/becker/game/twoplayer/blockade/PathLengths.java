@@ -16,9 +16,18 @@ public class PathLengths {
     boolean isValid = true;
    
     /**
+     * Default constructor
      */
     public PathLengths() {}
 
+    /**
+     * Constructor for creating expected object for testing.
+     */
+    public PathLengths(int shortest, int secondShortest, int furthest) {
+        shortestLength = shortest;
+        secondShortestLength = secondShortest;
+        furthestLength = furthest;
+    }
     /**
      * Update the values of the shortest, secondShortest and furthest.
      * @param paths
@@ -27,7 +36,7 @@ public class PathLengths {
     {
         // if we don't have NUM_HOMES paths then this set of path lengths is invalid.
         // probably the move and corresponding wall placement was not valid, or we landed on a home.
-        if (paths.size() < BlockadeBoard.NUM_HOMES) {
+        if (paths.size() == 0 || (paths.size() < BlockadeBoard.NUM_HOMES && (paths.get(0).getLength() > 0))) {
             isValid = false;
             return;
         }
@@ -53,10 +62,29 @@ public class PathLengths {
     public boolean isValid() {
         return isValid;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        PathLengths compPathLengths = (PathLengths) o;
+        return (this.shortestLength == compPathLengths.shortestLength
+                && this.secondShortestLength == compPathLengths.secondShortestLength
+                && this.furthestLength == compPathLengths.furthestLength);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 97 * hash + this.shortestLength;
+        hash = 97 * hash + this.secondShortestLength;
+        hash = 97 * hash + this.furthestLength;
+        hash = 97 * hash + (this.isValid ? 1 : 0);
+        return hash;
+    }
     
     /**
      * Serialize.
      */
+    @Override
     public String toString() {
        return "shortestLength=" + shortestLength+
                " secondShortestLength =" + secondShortestLength+

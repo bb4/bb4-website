@@ -27,6 +27,17 @@ public class Path {
         this();
         addPathElements(node);
     }
+
+    public Path(String[] test) {
+        this();
+    }
+
+    public Path(BlockadeMove[] moves) {
+        this();
+        for (BlockadeMove m : moves) {
+            add(m);
+        }
+    }
     
     public void add(BlockadeMove move) {
         elements_.add(move);
@@ -57,7 +68,6 @@ public class Path {
     
     public void addPathElements(DefaultMutableTreeNode node) {
         Object[] ps = node.getUserObjectPath();
-        Path path = new Path();
         if (ps.length > 1)  {
             // skip the first null move.
             for (int k = 1; k < ps.length; k++) {
@@ -76,6 +86,7 @@ public class Path {
     /**
      *return true if the 2 paths are equal.
      */
+    @Override
     public boolean equals(Object path) {
         Path comparisonPath = (Path) path;
         if (comparisonPath.getLength() != this.getLength())
@@ -88,6 +99,7 @@ public class Path {
         return true;
     }
     
+    @Override
     public int hashCode() {
         int hash =  this.getLength() * 100000;
         for (BlockadeMove move : elements_) {
@@ -100,7 +112,7 @@ public class Path {
      *Stringify list path.
      */
     public String toString() {
-        if (elements_.isEmpty()) return "";
+        if (elements_.isEmpty()) return "Path has 0 length";
         
         StringBuilder bldr = new StringBuilder(32);
         for (BlockadeMove move: elements_) {

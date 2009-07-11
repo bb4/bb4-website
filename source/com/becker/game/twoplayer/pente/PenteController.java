@@ -311,9 +311,9 @@ public class PenteController extends TwoPlayerController
         /*
          * generate all possible next moves.
          */
-        public List generateMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
+        public List<? extends TwoPlayerMove> generateMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
         {
-            List moveList = new LinkedList();
+            List<TwoPlayerMove> moveList = new LinkedList<TwoPlayerMove>();
             int ncols = board_.getNumCols();
             int nrows = board_.getNumRows();
 

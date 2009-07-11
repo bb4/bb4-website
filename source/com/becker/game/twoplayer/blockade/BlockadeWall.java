@@ -18,24 +18,15 @@ public class BlockadeWall
     private boolean isVertical_;
 
     /** the BlockadeBoardPosition that contain the wall (on the south or east faces depending on the orientation). */
-    private Set<BlockadeBoardPosition> positions_;
+    private LinkedHashSet<BlockadeBoardPosition> positions_;
 
     /**
      * constructor
      */
-    public BlockadeWall( boolean isVertical)
+    public BlockadeWall( LinkedHashSet<BlockadeBoardPosition> positions)
     {
-        isVertical_ = isVertical;
-        positions_ = new HashSet<BlockadeBoardPosition>();
-    }
-
-    /**
-     * constructor
-     */
-    public BlockadeWall( boolean isVertical, Set<BlockadeBoardPosition> positions)
-    {
-        isVertical_ = isVertical;
-        positions_ = positions;
+        Iterator<BlockadeBoardPosition> it = positions.iterator();
+        init(it.next(), it.next());
     }
      
     /**
@@ -43,13 +34,16 @@ public class BlockadeWall
      */
     public BlockadeWall(BlockadeBoardPosition p1, BlockadeBoardPosition p2)
     {
-         Set<BlockadeBoardPosition> hsPositions = new HashSet<BlockadeBoardPosition>( 2 );
+         init(p1, p2);
+    }
+
+    private void init(BlockadeBoardPosition p1, BlockadeBoardPosition p2) {
+         LinkedHashSet<BlockadeBoardPosition> hsPositions = new LinkedHashSet<BlockadeBoardPosition>( 2 );
          hsPositions.add( p1 );
          hsPositions.add( p2 );
          isVertical_ = p1.getCol() == p2.getCol();
-         positions_ = hsPositions;  
-    }
-    
+         positions_ = hsPositions;
+    }    
         
     /**
      * @param wall  the wall to compare to.
@@ -59,18 +53,22 @@ public class BlockadeWall
     public boolean equals( Object wall )
     {
          BlockadeWall comparisonWall = (BlockadeWall) wall;
-         for (BlockadeBoardPosition pos: positions_) {
-             if (!comparisonWall.getPositions().contains(pos))
-                 return false;
+         if (this.isVertical_ != comparisonWall.isVertical_ ||
+                 !this.getFirstPosition().getLocation().equals(comparisonWall.getFirstPosition().getLocation())) {
+             return false;
          }
+         // for (BlockadeBoardPosition pos: positions_) {
+         //     if (!comparisonWall.getPositions().contains(pos))
+         //         return false;
+         // }
          return true;
     }
     
     @Override
     public int hashCode() {
          int hashcode = 0;
-         for (BlockadeBoardPosition p: positions_) {
-             hashcode += p.hashCode();
+         for (BlockadeBoardPosition pos: positions_) {
+             hashcode += pos.hashCode();
          }
          return hashcode;
     }
@@ -93,8 +91,6 @@ public class BlockadeWall
         return !isVertical_;
     }
 
-
-
     /**
      * @return  the positions bordered by this wall.
      */
@@ -102,6 +98,8 @@ public class BlockadeWall
     {
         return positions_;
     }
+
+
     
     /**
      * @return either the top/north or the left/west board position 
@@ -125,10 +123,12 @@ public class BlockadeWall
      */
     public BlockadeWall copy()
     {
-        BlockadeWall w = new BlockadeWall( isVertical_, positions_ );
+
+        BlockadeWall w = new BlockadeWall(positions_);
         return w;
     }
 
+    @Override
     public String toString()
     {
         // we may also want to include the position that the wall is at.

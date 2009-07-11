@@ -35,7 +35,7 @@ public abstract class GameImporter {
 
         List<Move> moveSequence = new LinkedList<Move>();
         extractMoveList( game.getTree(), moveSequence );
-        GameContext.log( 0, "move sequence= " + moveSequence );
+        GameContext.log( 1, "move sequence= " + moveSequence );
         controller_.reset();
 
         Iterator it = moveSequence.iterator();
@@ -84,7 +84,6 @@ public abstract class GameImporter {
         Enumeration trees = tree.getTrees();
         Enumeration leaves = tree.getLeaves();
         Enumeration tokens;
-        System.out.println("trees=" + trees + " leaves=" + leaves);
         while ( leaves != null && leaves.hasMoreElements() ) {
             SGFToken token;
             tokens = ((SGFLeaf) leaves.nextElement()).getTokens();

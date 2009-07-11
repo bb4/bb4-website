@@ -1,6 +1,5 @@
 package com.becker.common;
 
-import com.becker.common.*;
 
 /**
  * A box defined by 2 locations.
@@ -32,12 +31,12 @@ public class Box {
      */
     private void verify() {
        if (topLeftCorner_.getRow() > bottomRightCorner_.getRow()) {
-            int temp = topLeftCorner_.getRow();
+            byte temp = topLeftCorner_.getRow();
             topLeftCorner_.setRow(bottomRightCorner_.getRow());
             bottomRightCorner_.setRow(temp);
         }
         if (topLeftCorner_.getCol() > bottomRightCorner_.getCol()) {
-            int temp = topLeftCorner_.getCol();
+            byte temp = topLeftCorner_.getCol();
             topLeftCorner_.setCol(bottomRightCorner_.getCol());
             bottomRightCorner_.setCol(temp);
         }
@@ -106,11 +105,11 @@ public class Box {
      */
     public void expandGloballyBy(int amount, int maxRow, int maxCol) {
       
-        topLeftCorner_.setRow(Math.max(topLeftCorner_.getRow() - amount, 1));
-        topLeftCorner_.setCol(Math.max(topLeftCorner_.getCol() - amount, 1));
+        topLeftCorner_.setRow((byte)Math.max(topLeftCorner_.getRow() - amount, 1));
+        topLeftCorner_.setCol((byte)Math.max(topLeftCorner_.getCol() - amount, 1));
         
-        bottomRightCorner_.setRow(Math.min(bottomRightCorner_.getRow() + amount, maxRow));
-        bottomRightCorner_.setCol(Math.min(bottomRightCorner_.getCol() + amount, maxCol));  
+        bottomRightCorner_.setRow((byte)Math.min(bottomRightCorner_.getRow() + amount, maxRow));
+        bottomRightCorner_.setCol((byte)Math.min(bottomRightCorner_.getCol() + amount, maxCol));
     }
     
     /**
@@ -120,7 +119,7 @@ public class Box {
      */
     public void expandBordersToEdge(int threshold, int maxRow, int maxCol) {
         if (topLeftCorner_.getRow() <= threshold + 1) {
-            topLeftCorner_.setRow(1);
+            topLeftCorner_.setRow((byte)1);
         }
         if (topLeftCorner_.getCol() <= threshold + 1) {
             topLeftCorner_.setCol(1);

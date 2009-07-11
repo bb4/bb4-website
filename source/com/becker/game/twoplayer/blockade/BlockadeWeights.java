@@ -12,7 +12,7 @@ public class BlockadeWeights extends GameWeights {
 
 
     /** Use these weights if no others are provided.   */
-    private static final double[] DEFAULT_WEIGHTS = {8.0, 7.0, 4.0};
+    private static final double[] DEFAULT_WEIGHTS = {8.0, 5.0, 2.0};
 
     /** don't allow the weights to exceed these maximum values   */
     private static final double[] MAX_WEIGHTS = {50.0, 50.0, 50.0};

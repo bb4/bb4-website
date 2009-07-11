@@ -64,7 +64,7 @@ public class BoardPosition
      */
     @Override
     public int hashCode() {
-        return getRow() * 200 + getCol() ;
+        return getRow() * 300 + getCol() ;
     }
         
     /**

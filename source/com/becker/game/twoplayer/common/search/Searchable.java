@@ -64,7 +64,10 @@ public interface Searchable
      *  @param weights  the polynomial weights to use in the polynomial evaluation function.
      *  @param player1sPerspective if true assign worth values according to p1.
      */
-    List generateMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective );
+    List<? extends TwoPlayerMove> generateMoves(
+                                                TwoPlayerMove lastMove,
+                                                ParameterArray weights,
+                                                boolean player1sPerspective );
 
     /**
      * generate those moves that are critically urgent
@@ -74,7 +77,9 @@ public interface Searchable
      *  @param lastMove  the last move made
      *  @param weights  the polynomial weights to use in the polynomial evaluation function
      */
-    List generateUrgentMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective );
+    List<? extends TwoPlayerMove> generateUrgentMoves(
+                                                    TwoPlayerMove lastMove, ParameterArray weights,
+                                                    boolean player1sPerspective );
 
     /**
      * returns true if the specified move caused one or more opponent pieces to become jeopardized

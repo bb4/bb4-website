@@ -110,7 +110,7 @@ public class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMo
             return false; // nothing being dragged
         }
 
-        Board board = controller_.getBoard();
+        BlockadeBoard board = (BlockadeBoard) controller_.getBoard();
         // get the original position.
         BlockadeBoardPosition position =
                 (BlockadeBoardPosition)board.getPosition( getBoardRenderer().getDraggedPiece().getLocation());
@@ -124,7 +124,7 @@ public class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMo
             return false;
         }
 
-        List possibleMoveList = ((BlockadeController)controller_).getPossibleMoveList(position);
+        List<BlockadeMove> possibleMoveList = ((BlockadeController)controller_).getPossibleMoveList(position);
 
         // verify that the move is valid before allowing it to be made.
         Iterator it = possibleMoveList.iterator();
@@ -248,7 +248,7 @@ public class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMo
             }
             int index = ((BlockadeBoardRenderer)getBoardRenderer()).getWallIndexForPosition(e.getX(), e.getY(), loc, board);
 
-            Set<BlockadeBoardPosition> positions = new HashSet<BlockadeBoardPosition>();
+            Set<BlockadeBoardPosition> positions = new LinkedHashSet<BlockadeBoardPosition>();
 
             boolean isVertical = false;
             BoardPosition pos1 = null,  pos2 = null;
@@ -301,7 +301,8 @@ public class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMo
 
             positions.add((BlockadeBoardPosition)pos1);
             positions.add((BlockadeBoardPosition)pos2);
-            ((BlockadeBoardRenderer)getBoardRenderer()).setDraggedWall(new BlockadeWall(isVertical, positions));
+            ((BlockadeBoardRenderer)getBoardRenderer()).setDraggedWall(
+                    new BlockadeWall((BlockadeBoardPosition)pos1, (BlockadeBoardPosition)pos2));
 
             repaint();
         }
