@@ -57,7 +57,8 @@ final class PathRenderer {
         pathColor = pathColor.darker();
         
         for (final Path path : paths) {
-            int alpha = 5 + (20 * ALPHA_CONST) / Math.min(ALPHA_CONST, (path.getLength() + 1));
+            assert(path.getLength() >= 0);
+            int alpha = Math.min(255, 5 + (20 * ALPHA_CONST) / Math.min(ALPHA_CONST, (path.getLength() + 1)));
             Color c = new Color(pathColor.getRed(), pathColor.getGreen(), pathColor.getBlue(), alpha);
             g2.setColor(c);
             drawPath(g2, path, cellSize);

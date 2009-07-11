@@ -4,15 +4,16 @@ import java.awt.geom.Point2D;
 import java.io.Serializable;
 
 /**
- * Represents a location location of something in integer coordinates.
+ * Represents a location location of something in byte coordinates.
+ * The range of bytes are only 0 to 255 and cannot be negative.
  *
  * @author Barry Becker
  */
 public final class Location implements Serializable
 {
     private static final long serialVersionUID = 1;
-    private int row_ = 0;
-    private int col_ = 0;
+    private byte row_ = 0;
+    private byte col_ = 0;
 
     /**
      * Constructs a new point at (0, 0).
@@ -24,30 +25,30 @@ public final class Location implements Serializable
     /**
      * Constructs a new Location at the given coordinates.
      *
-     * @param r  the row  coordinate.
-     * @param c  the column coordinate.
+     * @param row  the row  coordinate (0 - 255).
+     * @param col  the column coordinate (0 - 255).
      */
-    public Location( int r, int c )
+    public Location( int row, int col )
     {
-        row_ = r;
-        col_ = c;
+        row_ = (byte) row;
+        col_ = (byte) col;
     }
 
 
-    public int getRow() {
+    public byte getRow() {
         return row_;
     }
 
     public void setRow(int row) {
-        this.row_ = row;
+        this.row_ =(byte) row;
     }
 
-    public int getCol() {
+    public byte getCol() {
         return col_;
     }
 
     public void setCol(int col) {
-        this.col_ = col;
+        this.col_ =(byte) col;
     }
 
     public int getX() {

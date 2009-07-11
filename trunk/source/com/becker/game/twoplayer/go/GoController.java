@@ -522,7 +522,7 @@ public final class GoController extends TwoPlayerController
          * @param player1sPerspective
          * @return list of urgent moves
          */
-        public final List generateUrgentMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
+        public final List<GoMove> generateUrgentMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
         {
             List moves = generateMoves( lastMove, weights, player1sPerspective );
             GoBoard gb = (GoBoard) board_;
@@ -564,7 +564,7 @@ public final class GoController extends TwoPlayerController
         /**
          * generate all possible next moves
          */
-        public final List generateMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
+        public final List<? extends TwoPlayerMove> generateMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
         {
             GoBoard board = (GoBoard) board_;
             board.getProfiler().startGenerateMoves();
@@ -603,7 +603,7 @@ public final class GoController extends TwoPlayerController
                         }
                     }
 
-            moveList = getBestMoves( player1, moveList, player1sPerspective );
+            moveList = ( List<GoMove>) getBestMoves(player1, moveList, player1sPerspective);
 
             // if we are well into the game, include a passing move.
             // if none of the generated moves have an inherited value better than the passing move

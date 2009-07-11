@@ -73,10 +73,12 @@ public class BlockadeController extends TwoPlayerController
      * If called before the end of the game it just reutrns 0 - same as it does in the case of a tie.
      * @return some measure of how overwhelming the win was. May need to negate based on which player one.
      */
+    @Override
     public double getStrengthOfWin()
     {
-        if (!getPlayer1().hasWon() && !getPlayer2().hasWon())
+        if (!getPlayer1().hasWon() && !getPlayer2().hasWon()) {
              return 0.0;
+        }
         return worth(board_.getLastMove(), weights_.getDefaultWeights());
     }
 
@@ -121,31 +123,39 @@ public class BlockadeController extends TwoPlayerController
         BlockadeMove m = (BlockadeMove)lastMove;
         // if its a winning move then return the winning value
         boolean player1Moved = m.isPlayer1();
-        if (checkForWin(player1Moved, player1Moved? board.getPlayer2Homes() : board.getPlayer1Homes()))
-            return WINNING_VALUE;
+
+        if (checkForWin(player1Moved,
+                                 player1Moved? board.getPlayer2Homes() : board.getPlayer1Homes())) {
+            GameContext.log(1, "FOUND WIN!!!");
+            return player1Moved ? WINNING_VALUE : -WINNING_VALUE;
+        }
 
         PlayerPathLengths pathLengths = board.findPlayerPathLengths(m);
         double worth = pathLengths.determineWorth(WINNING_VALUE, weights);
-        board_.getProfiler().startCalcWorth();
+        board_.getProfiler().stopCalcWorth();
         return worth;
     }
 
 
     /**
-      *
+      * If a players pawn lands on an opponent home, the game is over.
+      * @param player1 the player to check to see fi won.
+      * @param homes the array of home bases.
       * @return true if player has reached an opponent home. (for player1 or player2 depending on boolean player1 value)
       */
     protected static boolean checkForWin(boolean player1, BoardPosition[] homes) {
         for (int i=0; i< homes.length; i++) {
             GamePiece p = homes[i].getPiece();
-            if (p != null && p.isOwnedByPlayer1() != player1)
+            if (p != null && p.isOwnedByPlayer1() == player1)
                 return true;
         }
         return false;
     }
 
-
-
+    /**
+     * @param position
+     * @return a possible list of moves based on position passed in.
+     */
     public List<BlockadeMove> getPossibleMoveList(BoardPosition position)
     {
         return ((BlockadeBoard)board_).getPossibleMoveList(position, !position.getPiece().isOwnedByPlayer1());
@@ -227,7 +237,7 @@ public class BlockadeController extends TwoPlayerController
      * @param pos one of the 3 base positions
      * @return list of accumulated walls to check.
      */
-    private List handleDirectionCase(BlockadeBoardPosition pos, int rowOffset, int colOffset,
+    private List<BlockadeWall> handleDirectionCase(BlockadeBoardPosition pos, int rowOffset, int colOffset,
                                                           List<BlockadeWall> wallsToCheck)
     {
         BlockadeBoardPosition offsetPos =
@@ -246,12 +256,12 @@ public class BlockadeController extends TwoPlayerController
     /**
       * Find all the moves a piece can make from position p, and insert them into moveList.
       *
-      * @param p the piece to check.
+      * @param p the piece to check from its new location.
       * @param moveList add the potential moves to this existing list.
       * @param weights to use.
       * @return the number of moves added.
       */
-     private int addMoves( BoardPosition p, List moveList, List<Path> opponentPaths,
+     private int addMoves( BoardPosition p, List<BlockadeMove> moveList, List<Path> opponentPaths,
                                           ParameterArray weights )
      {
          BlockadeBoard board = (BlockadeBoard)board_;
@@ -260,14 +270,10 @@ public class BlockadeController extends TwoPlayerController
          // first find the NUM_HOMES shortest paths for p.
          List<Path> paths = board.findShortestPaths((BlockadeBoardPosition)p);
 
-         assert (paths.size() == BlockadeBoard.NUM_HOMES):
-                 "There must be at least one route to each opponent home base. Expected "+
-                 BlockadeBoard.NUM_HOMES+" but got "+paths.size() +". They were:" + paths;
-
          // for each of these paths, add possible wall positions.
          // Take the first move from each shortest path and add the wall positions to it.
-         List nMovesAtEachStep = new LinkedList();
-         for (int i = 0; i < BlockadeBoard.NUM_HOMES; i++) {
+         List<Integer> nMovesAtEachStep = new LinkedList<Integer>();
+         for (int i = 0; i < paths.size(); i++) {
              BlockadeMove firstStep = paths.get(i).get(0);
              // make the move
              board.makeMove(firstStep);
@@ -277,28 +283,30 @@ public class BlockadeController extends TwoPlayerController
              BlockadeBoardPosition newPos =
                      (BlockadeBoardPosition) board.getPosition(firstStep.getToRow(), firstStep.getToCol());
              List<Path> ourPaths = board.findShortestPaths(newPos);
-
-             List wallMoves = findWallPlacementsForMove(firstStep, ourPaths, opponentPaths, weights);
+             
+             List<BlockadeMove> wallMoves = findWallPlacementsForMove(firstStep, ourPaths, opponentPaths, weights);
              GameContext.log(2, "num wall placements for Move = " +wallMoves.size());
-             moveList.addAll(wallMoves);
+             board.undoMove();
+
+             // iterate through the wallMoves and add only the ones that are not there already
+             for (BlockadeMove wallMove : wallMoves) {
+                 if (!moveList.contains(wallMove)) {
+                     moveList.add(wallMove);
+                 }
+             }
+
              nMovesAtEachStep.add(wallMoves.size());
              numMovesAdded += wallMoves.size();
-             // undo the move
-             board.undoMove();
          }
          // GameContext.log(0, "addMoves nummoves add="+numMovesAdded );
 
-         // failing here.
-         ////assert (numMovesAdded > 0): "No moves added for position p="+ p
-         ////        + " moves={"+nMovesAtEachStep +"} and shortest paths: " + paths
-         ////        + " \n Opponent shortest paths ="+opponentPaths;
          return numMovesAdded;
     }
 
     /**
      * Find variations for move firstStep based on all the possible valid wall placements that make the opponent
      * shortest paths longer, while not adversely affecting our own shortest paths.
-     *@@ optimize
+     * @@ optimize
      * @param firstStep the move to find wall placements for.
      * @param paths our shortest paths.
      * @param opponentPaths the opponent shortest paths.
@@ -331,7 +339,7 @@ public class BlockadeController extends TwoPlayerController
                 GameContext.log(2, "num walls for move "+move+"  = "+walls.size() );
 
                 if  (walls.isEmpty()) {
-                    GameContext.log(0, "***No walls for move "+move+" at step j=" + j + " along opponentPath="+opponentPath +" that do not interfere with our path");
+                    GameContext.log(1, "***No walls for move "+move+" at step j=" + j + " along opponentPath="+opponentPath +" that do not interfere with our path");
                 }
 
                 // typically 0-4 walls
@@ -380,7 +388,7 @@ public class BlockadeController extends TwoPlayerController
             moves.add(m);
         }
         else {
-            System.out.println("Did not add "+ m+ " because it was invalid.");
+            GameContext.log(2, "Did not add "+ m+ " because it was invalid.");
         }
     }
 
@@ -392,6 +400,7 @@ public class BlockadeController extends TwoPlayerController
      * @param paths our friendly paths.
      * @return the walls for a specific move along an opponent path.
      */
+    @SuppressWarnings("fallthrough")
     public List<BlockadeWall> getWallsForMove(BlockadeMove move, List<Path> paths)
     {
         List<BlockadeWall> wallsList = new LinkedList<BlockadeWall>();
@@ -502,7 +511,7 @@ public class BlockadeController extends TwoPlayerController
      * @param paths
      * @return wallsList list of walls that are blocking paths.
      */
-    private List getBlockedWalls(List<BlockadeWall> wallsToCheck, List<Path> paths, List wallsList)  {
+    private List<BlockadeWall> getBlockedWalls(List<BlockadeWall> wallsToCheck, List<Path> paths, List<BlockadeWall> wallsList)  {
         BlockadeBoard board = (BlockadeBoard)board_;
         Iterator it = wallsToCheck.iterator();
         while (it.hasNext()) {
@@ -615,9 +624,9 @@ public class BlockadeController extends TwoPlayerController
          * wall placements. So restrict wall placements to those that hinder the enemy while not hindering you.
          * lastMove may be null if there was no last move.
          */
-        public List generateMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
+        public List<? extends TwoPlayerMove> generateMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
         {
-            List moveList = new LinkedList();
+            List<BlockadeMove> moveList = new LinkedList<BlockadeMove>();
             boolean player1 = (lastMove != null)?  !(lastMove.isPlayer1()) : true;
 
             BlockadeBoard board = (BlockadeBoard)board_;
@@ -650,18 +659,26 @@ public class BlockadeController extends TwoPlayerController
         /**
          * given a move, determine whether the game is over.
          * If recordWin is true, then the variables for player1/2HasWon can get set.
-         *  sometimes, like when we are looking ahead we do not want to set these.
+         * Sometimes, like when we are looking ahead we do not want to set these.
          * @param m the move to check. If null then return true.
          * @param recordWin if true then the controller state will record wins
          */
+        @Override
         public boolean done( TwoPlayerMove lastMove, boolean recordWin )
         {
             if (getNumMoves() > 0 && lastMove == null) {
-                GameContext.log(0, "Game is over because there are no more moves");
+                GameContext.log(0, "Game is over because there are no more moves.");
                 return true;
             }
             BlockadeBoard board = (BlockadeBoard)board_;
-            return (checkForWin(true, board.getPlayer1Homes()) || checkForWin(false, board.getPlayer2Homes()));
+            
+            boolean p1Won = checkForWin(true, board.getPlayer2Homes());
+            boolean p2Won = checkForWin(false, board.getPlayer1Homes());
+            if (p1Won)
+                getPlayer1().setWon(true);
+            else if (p2Won)
+                getPlayer2().setWon(true);
+            return (p1Won || p2Won);
         }
 
 
@@ -674,7 +691,7 @@ public class BlockadeController extends TwoPlayerController
          * @param player1sPerspective
          * @return list of urgent moves
          */
-        public List generateUrgentMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
+        public List<BlockadeMove> generateUrgentMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
         {
             return null;
         }

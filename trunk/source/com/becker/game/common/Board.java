@@ -40,7 +40,6 @@ public abstract class Board implements BoardInterface, Cloneable
     protected LinkedList<Move> moveList_;// = new LinkedList<Move>();
 
    public Board() {
-       System.out.println("creating board and movelist to go with it.");
        moveList_ = new LinkedList<Move>();
    }
     /**

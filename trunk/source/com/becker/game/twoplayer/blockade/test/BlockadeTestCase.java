@@ -15,7 +15,7 @@ import junit.framework.*;
 public class BlockadeTestCase extends TestCase {
 
 
-    // moved all test cases here so they are not included in the jar and do not need to be searched
+    /** moved all test cases here so they are not included in the jar and do not need to be searched */
     private static final String EXTERNAL_TEST_CASE_DIR =
             GameContext.getHomeDir() +"/test/blockade/cases/";
 
@@ -47,7 +47,6 @@ public class BlockadeTestCase extends TestCase {
     protected void restore(String problemFile) {
         controller_.restoreFromFile(EXTERNAL_TEST_CASE_DIR + problemFile + SGF_EXTENSION);
     }
-
 
     /**
      * @param directory to search for the files in.
@@ -87,6 +86,7 @@ public class BlockadeTestCase extends TestCase {
     }
 
 
+    @Override
     protected void tearDown() throws Exception {
         super.tearDown();
     }

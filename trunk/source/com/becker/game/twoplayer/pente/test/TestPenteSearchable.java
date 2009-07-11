@@ -24,6 +24,10 @@ public class TestPenteSearchable extends TwoPlayerSearchableBaseTst {
         return new PenteController(10, 10);
     }
 
+        protected String getTestCaseDir() {
+        return EXTERNAL_TEST_CASE_DIR + "pente/cases/searchable/";
+    }
+
     /**
      * Create the game options
      */

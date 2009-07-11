@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.chess;
 
+import com.becker.common.Location;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 
@@ -13,14 +14,16 @@ import com.becker.game.twoplayer.common.TwoPlayerMove;
 public class ChessMove extends TwoPlayerMove
 {
 
-    // the position that the piece is moving from
-    protected int fromRow_;
-    protected int fromCol_;
+    /** the position that the piece is moving from */
+    protected Location fromLocation_;
 
-    // this is null (if no captures) or 1 if there was a capture.
-    // in chess there can never be more than one piece captured by a single move.
+    /**
+     * this is null (if no captures) or 1 if there was a capture.
+     * in chess there can never be more than one piece captured by a single move.
+     */
     public CaptureList captureList = null;
 
+    /** True if the first time this piece has moved. */
     private boolean firstTimeMoved_ = true;
 
 
@@ -34,8 +37,8 @@ public class ChessMove extends TwoPlayerMove
                           double val, GamePiece piece )
     {
         super( destinationRow, destinationCol, val, piece );
-        fromRow_ = originRow;
-        fromCol_ = originCol;
+        fromLocation_ = new Location(originRow, originCol);
+
         captureList = captures;
         firstTimeMoved_ = true;
     }
@@ -56,12 +59,12 @@ public class ChessMove extends TwoPlayerMove
 
     public int getFromRow()
     {
-        return fromRow_;
+        return fromLocation_.getRow();
     }
 
     public int getFromCol()
     {
-        return fromCol_;
+        return fromLocation_.getCol();
     }
 
     /**
@@ -75,8 +78,9 @@ public class ChessMove extends TwoPlayerMove
             newList = captureList.copy();
         }
         ChessMove cp =
-                createMove( fromRow_, fromCol_, toRow_, toCol_,
-                            newList, getValue(), getPiece());
+                createMove( fromLocation_.getRow(), fromLocation_.getCol(),
+                                   toLocation_.getRow(), toLocation_.getCol(),
+                                   newList, getValue(), getPiece());
         cp.setSelected(this.isSelected());
         cp.firstTimeMoved_ = this.firstTimeMoved_;
         return cp;
@@ -101,7 +105,7 @@ public class ChessMove extends TwoPlayerMove
         if ( captureList != null ) {
             sb.append( captureList.toString() );
         }
-        sb.append( " (" + fromRow_ + ", " + fromCol_ + ")->(" + toRow_+ ", " + toCol_ + ')' );
+        sb.append( " (" +fromLocation_ + ")->(" +toLocation_ + ')' );
         return sb.toString();
     }
 }

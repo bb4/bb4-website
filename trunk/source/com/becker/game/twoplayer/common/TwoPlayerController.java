@@ -40,6 +40,9 @@ public abstract class TwoPlayerController extends GameController
     /** anything greater than this is considered a won game  */
     public static final double WINNING_VALUE = SearchStrategy.WINNING_VALUE;
 
+    /** Np matter wha tthe percentBestMoves is we should not prune if less than this number. */
+    private static final int MIN_BEST_MOVES = 10;
+
     protected boolean player1sTurn_ = true;
 
     /** these weights determine how the computer values each move.
@@ -547,7 +550,8 @@ public abstract class TwoPlayerController extends GameController
         return (player1sPerspective) ? value : -value;
     }
 
-    /** evaluates from player 1's perspective
+    /**
+     * Evaluates from player 1's perspective
      */
     protected abstract double worth( Move lastMove, ParameterArray weights );
 
@@ -559,7 +563,7 @@ public abstract class TwoPlayerController extends GameController
      * @param moveList the list of all generated moves
      * @param player1sPerspective if true than bestMoves are from player1s perspective
      */
-    protected final List getBestMoves( boolean player1, List moveList, boolean player1sPerspective )
+    protected final List<? extends TwoPlayerMove>  getBestMoves( boolean player1, List<? extends TwoPlayerMove> moveList, boolean player1sPerspective )
     {
 
         // sort the list so the better moves appear first.
@@ -575,15 +579,14 @@ public abstract class TwoPlayerController extends GameController
         // A move which has a low score this time might actually lead to the best move later.
         int numMoves = moveList.size();
 
-        List bestMoveList = moveList;
+        List<? extends TwoPlayerMove> bestMoveList = moveList;
         int best = (int) ((float) getTwoPlayerOptions().getPercentageBestMoves() / HUNDRED * numMoves);
-        if ( best < numMoves && numMoves >10 )
+        if ( best < numMoves && numMoves > MIN_BEST_MOVES)
             bestMoveList = moveList.subList( 0, best );
 
         //GameContext.log(2, "generated top moves are :  " + moveList );
         return bestMoveList;
     }
-
 
 
     public final Optimizee getOptimizee() {

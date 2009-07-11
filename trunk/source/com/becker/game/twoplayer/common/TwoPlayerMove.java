@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.common;
 
+import com.becker.common.Location;
 import com.becker.common.util.Util;
 import com.becker.game.common.*;
 
@@ -25,9 +26,8 @@ public class TwoPlayerMove extends Move
     private static final String P1 = GameContext.getLabel("PLAYER1");
     private static final String P2 = GameContext.getLabel("PLAYER2");
 
-    // the position of the move
-    protected byte toRow_;
-    protected byte toCol_;
+    /** the location of the move */
+    protected Location toLocation_;
 
     /**
      * The is the more accurate evaluated value from point of view of p1
@@ -78,11 +78,11 @@ public class TwoPlayerMove extends Move
     /**
      * create a move object representing a transition on the board.
      */
-    protected TwoPlayerMove( byte destinationRow, byte destinationCol,
+    protected TwoPlayerMove( int destinationRow, int destinationCol,
                     double val, GamePiece p )
     {
-        toRow_ = destinationRow;
-        toCol_ = destinationCol;
+        toLocation_ = new Location(destinationRow, destinationCol);
+
         setValue(val);
         inheritedValue_ = getValue();
         selected_ = false;
@@ -98,7 +98,16 @@ public class TwoPlayerMove extends Move
     public static TwoPlayerMove createMove( int destinationRow, int destinationCol,
                                    double val, GamePiece piece )
     {
-        return new TwoPlayerMove( (byte)destinationRow, (byte)destinationCol, val, piece );
+        return new TwoPlayerMove(destinationRow, destinationCol, val ,piece);
+    }
+
+    /**
+     * factory method for getting new moves. It uses recycled objects if possible.
+     */
+    public static TwoPlayerMove createMove( Location destinationLocation,
+                                   double val, GamePiece piece )
+    {
+        return new TwoPlayerMove(destinationLocation.getRow(), destinationLocation.getCol(), val, piece );
     }
 
     /**
@@ -106,20 +115,25 @@ public class TwoPlayerMove extends Move
      */
     public TwoPlayerMove copy()
     {
-        TwoPlayerMove cp = createMove( toRow_, toCol_, getValue(),  piece_ );
+        TwoPlayerMove cp = createMove( toLocation_, getValue(),  piece_ );
         cp.selected_ = selected_;
         cp.urgent_ = urgent_;
         return cp;
     }
 
-    public final int getToRow()
+    public final byte getToRow()
     {
-        return toRow_;
+        return toLocation_.getRow();
     }
 
-    public final int getToCol()
+    public final byte getToCol()
     {
-        return toCol_;
+        return toLocation_.getCol();
+    }
+
+    public final Location getToLocation()
+    {
+        return toLocation_;
     }
 
 
@@ -204,6 +218,14 @@ public class TwoPlayerMove extends Move
         scoreDescription_ = desc;
     }
 
+    /**
+     * @return a string, which if executed will create a move identical to this instance.
+     */
+    public String getConstructorString() {
+        String cs = "createConstructorString for " + this.getClass().getName() +" not yet implemented.";
+        return cs;
+    }
+
     @Override
     public String toString() {
         StringBuffer s = new StringBuffer();
@@ -215,7 +237,7 @@ public class TwoPlayerMove extends Move
         if (piece_!=null)
             s.append( " piece:" + piece_.toString());
         //s.append(" sel:"+selected);
-        s.append( "(" + toRow_ + ", " + toCol_ + ')' );
+        s.append('(' + toLocation_.toString() + ')' );
         if (urgent_)
             s.append(" urgent!");
         return s.toString();

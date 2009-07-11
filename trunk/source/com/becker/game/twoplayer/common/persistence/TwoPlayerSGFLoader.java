@@ -88,7 +88,7 @@ public class TwoPlayerSGFLoader extends SGFLoader {
       // subclasses of SGFToken.
       //
       token.parse( st );
-      System.out.println("parsed token = " + tokenName + " "   + token.toString());
+      //System.out.println("parsed token = " + tokenName + " "   + token.toString());
 
       return token;
   }

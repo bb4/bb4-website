@@ -88,6 +88,7 @@ public final class BlockadeBoardPosition extends BoardPosition
     /**
      * make it show an empty board position.
      */
+    @Override
     public void clear()
     {
         super.clear();
@@ -118,6 +119,7 @@ public final class BlockadeBoardPosition extends BoardPosition
     /**
      * create a deep copy of this position.
      */
+    @Override
     public BoardPosition copy()
     {
         BlockadeBoardPosition pos =

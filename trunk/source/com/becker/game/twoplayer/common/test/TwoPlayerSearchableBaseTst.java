@@ -18,11 +18,14 @@ import java.util.List;
 public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
 
     private static final int DEFAULT_DEBUG_LEVEL = 2;
-
     private static final int DEFAULT_LOOKAHEAD = 2;
     private static final int DEFAULT_BEST_PERCENTAGE = 100;
 
+    /** moved all test cases here so they are not included in the jar and do not need to be searched */
+    protected static final String EXTERNAL_TEST_CASE_DIR =
+            GameContext.getHomeDir() +"/test/";
 
+    private static final String SGF_EXTENSION = ".sgf";
 
     /**
      * common initialization for all go test cases.
@@ -48,6 +51,19 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
         //controller_ = new GoController(getBoardSize(), getBoardSize(), 0);
     }
 
+    /**
+     * Restore a game file
+     * @param problemFile the saved game to restor and test.
+     */
+    protected void restore(String problemFile) {
+        getController().restoreFromFile(getTestCaseDir() + problemFile + SGF_EXTENSION);
+    }
+
+    protected abstract String getTestCaseDir();
+
+    protected TwoPlayerController getController() {
+        return (TwoPlayerController) controller;
+    }
 
     /**
      * Create the game options
@@ -66,10 +82,6 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
 
     protected TwoPlayerOptions getTwoPlayerOptions()  {
         return  (TwoPlayerOptions)controller.getOptions();
-    }
-
-    protected TwoPlayerController getTwoPlayerController() {
-        return (TwoPlayerController)controller;
     }
 
     /** verify that we can retrieve the lookahead value. */
@@ -107,11 +119,12 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
     public void testDoneNullAfterFirstMove() {
 
         controller.computerMovesFirst();
+
         Assert.assertTrue("We expect to be done if our next move is null and at least one move has been made. ",
                 searchable.done(null, false));
     }
 
-    /** Verify not done after first move..  */
+    /** Verify not done after first move.  */
     public void testDoneStartGame() {
         Assert.assertFalse("We don't expect to be done after making the very first move. ", searchable.done(createInitialMove(), false));
     }
@@ -123,7 +136,7 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
 
     /**load a game at the last move and verify that the next move results in done == true  */
     public void testDoneEndGame() {
-        Assert.assertFalse(false);
+        Assert.assertTrue(true);
     }
 
     /**  
@@ -132,7 +145,7 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
      */
    public void testGenerateMovesBeforeFirstMove() {
  
-       List moves = searchable.generateMoves(null, getTwoPlayerController().getComputerWeights().getPlayer1Weights(), true);
+       List moves = searchable.generateMoves(null, getController().getComputerWeights().getPlayer1Weights(), true);
        Assert.assertTrue("We expect the move list to be non-null very start of the game.", moves!= null);
        // usually we have a special way to generate the first move (see computerMovesFirst).
        // probably need to have game specific result here.
@@ -150,7 +163,7 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
      */
    public void testGenerateMovesAfterFirstMove() {
        controller.computerMovesFirst();
-       ParameterArray wts = getTwoPlayerController().getComputerWeights().getPlayer1Weights();
+       ParameterArray wts = getController().getComputerWeights().getPlayer1Weights();
        TwoPlayerMove lastMove = (TwoPlayerMove)controller.getLastMove();
        List moves = searchable.generateMoves(lastMove, wts, true);
 
@@ -158,20 +171,50 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
        Assert.assertTrue("We expected some valid next moves at the very start of the game.",  moves.size() > 0);
    }
 
-    /**  Load a game in the middle and verify that we can get reasonable next moves. */
-   public void testGenerateMovesMidGame() {
+    /**  Load a game in the middle and verify that we can get all the reasonable next moves. */
+   public void testGenerateAllP1MovesMidGame() {
        Assert.assertFalse(false);
    }
 
-    /** Load a game at the end and verify that there are no valid next moves. */
-   public void testGenerateMovesEndGame() {
+   /**  Load a game in the middle and verify that we can get the expected high value next moves. */
+   public void testGenerateTopP1MovesMidGame() {
        Assert.assertFalse(false);
    }
-   
+
+    /** Load a game at the end and verify that we can get all the reasonable next moves. */
+   public void testGenerateAllP1MovesEndGame() {
+       Assert.assertFalse(false);
+   }
+
+   /** Load a game at the end and verify that we can get all the high value next moves. */
+   public void testGenerateTopP1MovesEndGame() {
+       Assert.assertFalse(false);
+   }
+
+   /**  Load a game in the middle and verify that we can get all the reasonable next moves. */
+   public void testGenerateAllP2MovesMidGame() {
+       Assert.assertFalse(false);
+   }
+
+   /**  Load a game in the middle and verify that we can get the expected high value next moves. */
+   public void testGenerateTopP2MovesMidGame() {
+       Assert.assertFalse(false);
+   }
+
+    /** Load a game at the end and verify that we can get all the reasonable next moves. */
+   public void testGenerateAllP2MovesEndGame() {
+       Assert.assertFalse(false);
+   }
+
+   /** Load a game at the end and verify that we can get all the high value next moves. */
+   public void testGenerateTopP2MovesEndGame() {
+       Assert.assertFalse(false);
+   }
+
     /**  Verify that we generate a correct list of urgent moves.  */
     public void  testGenerateUrgentMoves() {
         // there should not be any urgen moves at the very start of the gamel
-         List moves = searchable.generateUrgentMoves(null, getTwoPlayerController().getComputerWeights().getPlayer1Weights(), true);
+         List moves = searchable.generateUrgentMoves(null, getController().getComputerWeights().getPlayer1Weights(), true);
          Assert.assertTrue("We expected move list to be non-null.", moves!= null );
          Assert.assertTrue("We expected no urgent moves at the start of the game.",  moves.size() == 0);
 
@@ -185,11 +228,11 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
     /**  Verify that we can detect when a player is in jeopardy. */
     public void testInJeopardy() {
         boolean actualInJeopardy =
-                searchable.inJeopardy(null, getTwoPlayerController().getComputerWeights().getPlayer1Weights(), true);
+                searchable.inJeopardy(null, getController().getComputerWeights().getPlayer1Weights(), true);
         Assert.assertFalse("We don't expect anything to be in jeopardy at the very start of the game.", actualInJeopardy);
 
         actualInJeopardy =
-                searchable.inJeopardy(createInitialMove(), getTwoPlayerController().getComputerWeights().getPlayer2Weights(), false);
+                searchable.inJeopardy(createInitialMove(), getController().getComputerWeights().getPlayer2Weights(), false);
         Assert.assertFalse("We don't expect anything to be in jeopardy at the very start of the game.", actualInJeopardy);
 
         // load a typical game in the middle and verify a move that does not put anything in jeopardy.

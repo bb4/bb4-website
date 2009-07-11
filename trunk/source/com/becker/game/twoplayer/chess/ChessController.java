@@ -61,6 +61,7 @@ public class ChessController extends CheckersController
     /**
      * The computer makes the first move in the game.
      */
+    @Override
     public void computerMovesFirst() {
 
         // determine the possible moves and choose one at random.
@@ -70,6 +71,7 @@ public class ChessController extends CheckersController
         player1sTurn_ = false;
     }
 
+    @Override
     protected TwoPlayerOptions createOptions() {
         return new TwoPlayerOptions(DEFAULT_CHESS_LOOKAHEAD, 100, MusicMaker.TAIKO_DRUM);
     }
