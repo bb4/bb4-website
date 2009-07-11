@@ -137,6 +137,17 @@
     </antcall>
   </target>
 
+  <target name="testPente" depends="compile" description=" pente game tests">
+       <echo message="now running Pente tests"/>
+       <junit  printsummary="yes"  fork="yes"  haltonfailure="no" showoutput="yes" >
+           <classpath path="${libDir}/junit.jar;${classesDir}"/>
+           <!--jvmarg value="-agentlib:jdwp=transport=dt_socket,server=y,address=8000"/-->
+           <assertions><enable/></assertions>
+           <formatter type="plain"/>
+           <test name="com.becker.game.twoplayer.pente.test.TestAll" outfile="../test/pente/penteTestResults"/>
+       </junit>
+  </target>
+
   <target name="executeBlockade" description="Run the blockade program">
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
@@ -145,12 +156,13 @@
     </antcall>
   </target>
 
-   <target name="testBlockade" depends="compile" description=" blockade game tests">
+   <target name="testBlockade" depends="compile" description="Blockade game tests">
        <echo message="now running BLOCKADE tests"/>
        <junit  printsummary="yes"  fork="yes"  haltonfailure="no" showoutput="yes">
-           <classpath path="${classesDir}"/>
+           <classpath path="${libDir}/junit.jar;${classesDir}"/>
            <formatter type="plain"/>
            <!--formatter type="brief" usefile="false" /-->
+          <!--jvmarg value="-agentlib:jdwp=transport=dt_socket,server=y,address=8000"/-->  <!--   for Netbeans debugging-->
            <test name="com.becker.game.twoplayer.blockade.test.TestAll" outfile="../test/blockade/blockadeTestResults"/>
        </junit>
   </target>
@@ -312,7 +324,7 @@
 
   <target name="executeSpirograph" description="Run the SpiroGraph program">
     <antcall target="executeProgram">
-      <param name="className" value="com.becker.spirograph.SpiroGraph"/>
+      <param name="className" value="com.becker.apps.spirograph.SpiroGraph"/>
       <param name="libPath" value="${libDir}/jai_codec.jar"/>
     </antcall>
   </target>
@@ -439,7 +451,7 @@
 
   <target name="XMLViewer" depends="compile" description=" run the XML Viewer app">
     <antcall target="executeProgram">
-      <param name="className" value="com.becker.xml.DomEcho"/>
+      <param name="className" value="com.becker.ui.xmlviewer.DomEcho"/>
       <param name="libPath" value="${libDir}/vecmath.jar"/>
       <!--param name="args" value="${project_home}/source/com/becker/xml/katate_dori.xml"/ -->
       <param name="args" value="${project_home}/source/com/becker/apps/misc/yugioh/yugiohCards.xml"/>
