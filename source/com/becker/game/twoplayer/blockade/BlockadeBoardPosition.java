@@ -21,8 +21,9 @@ public final class BlockadeBoardPosition extends BoardPosition
     private BlockadeWall southWall_ = null;
     private BlockadeWall eastWall_ = null;
 
-    // This is a temporary state that is used for some traversal operations.
+    /** This is a temporary state that is used for some traversal operations. */
     private boolean visited_;
+
     private boolean isPlayer1Home_ = false;
     private boolean isPlayer2Home_ = false;
     
@@ -60,7 +61,7 @@ public final class BlockadeBoardPosition extends BoardPosition
     
     /**
      *reuse previously computed shortest paths if they are still valid.
-     *Caching can cause a subtle problem were it is invalid, so I turned it off.
+     *Caching can cause a subtle problems were it is invalid, so I turned it off.
      *@param wall the most recently placed wall
      */
     public List<Path>  findShortestPaths(BlockadeBoard board, BlockadeWall wall) {
@@ -68,20 +69,21 @@ public final class BlockadeBoardPosition extends BoardPosition
         List<Path> paths = cachedPaths_;
         // Why didn't caching work like I hoped? 
         // Seems that walls have a more subtle influence on the path than I thought.
-        paths = board.findShortestPaths(this);           
-        /*
+        paths = board.findShortestPaths(this);
+
+        /* possibly remove 
         if (isPathCacheBroken(wall, board)) {  
             paths = board.findShortestPaths(this);   
             cachedPaths_ = paths;
         }  else {
             paths = board.findShortestPaths(this);   
-            for (int i=0; i<paths.length; i++) {
-                Path p = paths[i];
-                Path cp = cachedPaths_[i];
+            for (int i = 0; i < paths.size(); i++) {
+                Path p = paths.get(i);
+                Path cp = cachedPaths_.get(i);
                 assert (p.equals(cp)) : p +" was not equal to "+cp +" wall placed was "+ wall;
             }                
-        }    
-        */
+        }    */
+
         return paths;
     }
     

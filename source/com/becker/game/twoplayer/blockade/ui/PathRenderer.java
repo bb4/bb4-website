@@ -49,8 +49,9 @@ final class PathRenderer {
         BasicStroke pathStroke = 
                 new BasicStroke((float)cellSize * PATH_WIDTH_RATIO, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
         g2.setStroke(pathStroke);
+        if (pos == null || pos.isUnoccupied()) return;
+
         List<Path> paths = b.findShortestPaths(pos);
-  
         boolean p1 = pos.getPiece().isOwnedByPlayer1();
         Color pathColor = p1? BlockadePieceRenderer.getRenderer().getPlayer1Color() :
                                             BlockadePieceRenderer.getRenderer().getPlayer2Color();
