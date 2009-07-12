@@ -166,18 +166,16 @@ public class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMo
 
 
     /**
+     * If there is a piece at the destination already, or destination is out of bounds,
+     * then return without doing anything.
      * @param position orig position.
      * @param destp position to move to.
      * @return true if this is not a valie move.
      */
     private static boolean customCheckFails(BoardPosition position, BoardPosition destp)
     {
-        // if there is a piece at the destination already, or destination is out of bounds,
-        // then return without doing anything
         BlockadeBoardPosition destpos = (BlockadeBoardPosition)destp;
-        if (destpos.isOccupied())
-            GameContext.log(0, destpos + "is occupied by "+destp.getPiece() );
-        return  ( (position == null) || (destpos.isOccupied() && !destpos.isHomeBase()) );
+        return  ( (destpos == null) || (destpos.isOccupied() && !destpos.isHomeBase()) );
     }
 
     /**

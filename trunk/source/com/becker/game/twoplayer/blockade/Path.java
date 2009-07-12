@@ -13,7 +13,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
  * @author Barry Becker
  */
 public class Path {
-    
+
+    /** the path elements that represent steps to the opponent home. */
     List<BlockadeMove> elements_;
     
     /**
@@ -111,6 +112,7 @@ public class Path {
     /**
      *Stringify list path.
      */
+    @Override
     public String toString() {
         if (elements_.isEmpty()) return "Path has 0 length";
         

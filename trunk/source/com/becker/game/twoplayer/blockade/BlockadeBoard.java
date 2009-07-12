@@ -394,16 +394,11 @@ public class BlockadeBoard extends TwoPlayerBoard
                     List<DefaultMutableTreeNode> children =  findPathChildren(toPosition, node, opponentIsPlayer1);
                     q.addAll(children);
                 }
-            };
+            }
         }
         // extract the paths by working backwards to the root from the homes.
         List<Path> paths = extractPaths(homeSet);   
-        /*
-        This can happen when adding walls. We don't add the wall if it happens.
-        assert (paths.size() == BlockadeBoard.NUM_HOMES || position.isHomeBase(opponentIsPlayer1) ) :
-                 "Too few paths:  "+paths.size() +" != "+BlockadeBoard.NUM_HOMES
-                   +" found for pos="+position+". The paths were :"+paths;
-        */
+
         // return everything to an unvisted state.
         unvisitAll();
         return paths;
@@ -589,6 +584,7 @@ public class BlockadeBoard extends TwoPlayerBoard
      * and then also places a wall somewhere.
      * @return true if the move was made successfully
      */
+    @Override
     protected boolean makeInternalMove( Move move )
     {
         getProfiler().startMakeMove();
@@ -637,14 +633,17 @@ public class BlockadeBoard extends TwoPlayerBoard
      * The index of the state for this position.
      * @return The index of the state for tihs position.
      */
+    @Override
     public  int getStateIndex(BoardPosition pos) {
         return ((BlockadeBoardPosition) pos).getStateIndex();
     }
     
+    @Override
     protected GameProfiler createProfiler() {     
-        return new BlockadeProfiler();
+        return new GameProfiler();
     }
 
+    @Override
     public String toString()
     {
         StringBuffer buf = new StringBuffer(50);

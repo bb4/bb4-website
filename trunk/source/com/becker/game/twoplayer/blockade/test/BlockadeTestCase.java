@@ -24,7 +24,7 @@ public class BlockadeTestCase extends TestCase {
     protected BlockadeController controller_;
 
     /**
-     * common initialization for all go test cases.
+     * common initialization for all test cases.
      */
     @Override
     protected void setUp() throws Exception {

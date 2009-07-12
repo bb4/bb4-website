@@ -559,21 +559,22 @@ public abstract class TwoPlayerController extends GameController
      * Take the list of all possible next moves and return just the top bestPercentage of them 
      * (or 10 moves, whichever is greater).
      *
+     * sort the list so the better moves appear first.
+     * This is a terrific improvement when used in conjunction with alpha-beta pruning.
+     *
      * @param player1 true if its player one's turn
      * @param moveList the list of all generated moves
      * @param player1sPerspective if true than bestMoves are from player1s perspective
      */
-    protected final List<? extends TwoPlayerMove>  getBestMoves( boolean player1, List<? extends TwoPlayerMove> moveList, boolean player1sPerspective )
+    protected final List<? extends TwoPlayerMove>  getBestMoves( boolean player1, List<? extends TwoPlayerMove> moveList,
+                                                                                                            boolean player1sPerspective )
     {
-
-        // sort the list so the better moves appear first.
-        // This is a terrific improvement when used in conjunction with
-        // alpha-beta pruning
         Collections.sort( moveList );
 
         // reverse the order so the best move (using static board evaluation) is first
-        if ( player1 == player1sPerspective )
+        if ( player1 == player1sPerspective ) {
            Collections.reverse( moveList );
+        }
 
         // We could potentially eliminate the best move doing this.
         // A move which has a low score this time might actually lead to the best move later.
