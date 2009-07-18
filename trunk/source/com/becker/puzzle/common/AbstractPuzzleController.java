@@ -27,12 +27,19 @@ public abstract class AbstractPuzzleController<P, M> implements PuzzleController
     }
         
     /**
-     * There are different approaches we can take to solving the red puzzle.
+     * There are different approaches we can take to solving thepuzzle.
      *
      * @param alg
      */
     public void setAlgorithm(AlgorithmEnum algorithm) {
         algorithm_ = algorithm;
+    }
+
+    /**
+     * get the solver algoritym..
+     */
+    public AlgorithmEnum getAlgorithm() {
+        return algorithm_;
     }
   
     

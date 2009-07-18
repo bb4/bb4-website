@@ -68,7 +68,7 @@ public class TestSource extends TestCase {
     private void verifyStatus(Source src, double t, boolean expectedValue) {
         boolean isOn = src.isOn(t);
         String err = (isOn == expectedValue)? "" : " : ERROR";
-        System.out.println("checking t="+t +" exp="+expectedValue +" got=" + isOn  + err);
+        ////System.out.println("checking t="+t +" exp="+expectedValue +" got=" + isOn  + err);
         if (expectedValue) {
             assertTrue("We expected it to be on at "+ t, isOn);
         }

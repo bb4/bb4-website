@@ -9,7 +9,10 @@ package com.becker.puzzle.common;
 public interface AlgorithmEnum<P, M> {
     
     String getLabel();
+
+    int ordinal();
     
-    PuzzleSolver createSolver(PuzzleController<P, M> controller, Refreshable<P, M> ui);
+    PuzzleSolver createSolver(PuzzleController<P, M> controller,
+                                               Refreshable<P, M> ui);
     
 }

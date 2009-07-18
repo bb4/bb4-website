@@ -31,22 +31,26 @@ public class ChessBoardViewer extends CheckersBoardViewer implements MouseMotion
 
 
 
+    @Override
     protected GameController createController()
     {
         return new ChessController();
     }
 
+    @Override
 protected GameBoardRenderer getBoardRenderer() {
         return ChessBoardRenderer.getRenderer();
     }
 
 
+    @Override
     protected boolean customCheckFails(BoardPosition position, BoardPosition destp)
     {
        // intentionally do nothing.
        return false;
     }
 
+    @Override
     protected List getPossibleMoveList(BoardPosition position)
     {
         ChessPiece piece = (ChessPiece)position.getPiece();
@@ -65,6 +69,7 @@ protected GameBoardRenderer getBoardRenderer() {
      * the opponents king in jeopardy.
      * @param m the last move made
      */
+    @Override
     public void warnOnSpecialMoves( TwoPlayerMove m )
     {
         super.warnOnSpecialMoves(m);

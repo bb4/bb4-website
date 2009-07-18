@@ -3,13 +3,13 @@ package com.becker.puzzle.common;
 import java.awt.Graphics;
 
 /**
- * Singleton class that takes a PieceList and renders it for the RedPuzzleViewer.
+ * Singleton class that takes a PieceList and renders it for the PuzzleViewer.
  * Having the renderer separate from the viewer helps to separate out the rendering logic
- * from other features of the RedPuzzleViewer.
+ * from other features of the PuzzleViewer.
  *
  * @author Barry Becker
  */
-public abstract class PuzzleRenderer <P> {
+public abstract class PuzzleRenderer<P> {
 
 
     /**

@@ -135,7 +135,7 @@ public class BoardPosition
      */
     public BoardPosition copy()
     {
-        return new BoardPosition( row_, col_, (piece_==null) ? null : piece_.copy());
+        return new BoardPosition( row_, col_, (piece_== null) ? null : piece_.copy());
     }
 
     /**

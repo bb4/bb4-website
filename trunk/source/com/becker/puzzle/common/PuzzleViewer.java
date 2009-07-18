@@ -1,7 +1,6 @@
 package com.becker.puzzle.common;
 
 import com.becker.common.util.Util;
-import java.awt.Graphics;
 import java.util.List;
 import javax.swing.JPanel;
 

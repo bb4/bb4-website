@@ -278,7 +278,7 @@ public class Cell
                     + (pressure_ - cYp1.getPressure()) / dy_
                     + viscosity * (v1 + v2);
             double newv =  vjp_[current_] + dt * pf;
-            
+            /*
             if (Math.abs(pf) > 5.0) {
                 System.out.println("much bigger y change than expected. oldv ="
                       + vjp_[current_] + " newv="+ newv
@@ -286,7 +286,7 @@ public class Cell
                         + "\ncXp1=" + cXp1 + " cXm1=" + cXm1
                         + "\ncXp1=" + cYp1 + " cXm1=" + cYm1
                         + "\ncXp1Ym1=" + cXp1Ym1 + " cXm1Yp1=" + cXm1Yp1);
-            } 
+            } */
             vjp_[1 - current_] = newv;
         }
         /*

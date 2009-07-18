@@ -37,7 +37,7 @@ public abstract class Board implements BoardInterface, Cloneable
      * We keep a list of the moves that have been made.
      * We can navigate forward or backward in time using this
      */
-    protected LinkedList<Move> moveList_;// = new LinkedList<Move>();
+    private LinkedList<Move> moveList_;
 
    public Board() {
        moveList_ = new LinkedList<Move>();
@@ -87,14 +87,15 @@ public abstract class Board implements BoardInterface, Cloneable
     public void initPlayers() {};
 
     /**
+     * Will return null before the first move has been played.
      * @return the most recent move played on the board. Returns null if there isn't one.
      */
     public final Move getLastMove()
     {
-        if ( moveList_ == null || moveList_.isEmpty() ) {
+        if ( getMoveList().isEmpty() ) {
             return null;
         }
-        return moveList_.getLast();  //get(moveList_.size()-1);
+        return getMoveList().getLast();
     }
 
 
@@ -103,9 +104,7 @@ public abstract class Board implements BoardInterface, Cloneable
      */
     public final int getNumMoves()
     {
-        if ( moveList_ == null || moveList_.isEmpty() )
-            return 0; // no moves yet
-        return moveList_.size();
+        return getMoveList().size();
     }
 
 

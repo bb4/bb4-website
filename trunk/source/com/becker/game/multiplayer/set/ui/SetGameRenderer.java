@@ -5,11 +5,10 @@ import com.becker.game.multiplayer.set.SetController;
 import com.becker.game.multiplayer.set.Card;
 import com.becker.game.common.ui.GameBoardRenderer;
 import com.becker.game.common.GameControllerInterface;
-import com.becker.game.common.Move;
-import com.becker.game.common.Board;
 import com.becker.common.Location;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 
 
 /**
@@ -74,8 +73,6 @@ public class SetGameRenderer extends MultiGameBoardRenderer
         return new Dimension(cardWidth, (int) (cardWidth * CardRenderer.CARD_HEIGHT_RAT));
     }
 
-
-
     /**
      * @return  the card that the mouse is currently over (at x, y coords)
      */
@@ -108,6 +105,7 @@ public class SetGameRenderer extends MultiGameBoardRenderer
     /**
      * This renders the current state of the Board to the screen.
      */
+    @Override
     public void render( Graphics g, GameControllerInterface controller, int panelWidth, int panelHeight )
     {
         // erase what's there and redraw.
@@ -123,13 +121,13 @@ public class SetGameRenderer extends MultiGameBoardRenderer
         int cardWidth = (int) cardDim.getWidth();
         int cardHeight = (int) cardDim.getHeight();
 
-        for (int i = 0; i<c.getNumCardsShowing(); i++ ) {
+        for (int i = 0; i < c.getNumCardsShowing(); i++ ) {
             int row = i / numCols;
             int col = i % numCols;
             int colPos = col * cardWidth + CardRenderer.LEFT_MARGIN;
             int rowPos = row * cardHeight + CardRenderer.TOP_MARGIN;
             CardRenderer.render((Graphics2D) g, c.getDeck().get(i),
-                                new Location(colPos, rowPos), cardWidth, cardHeight, false);
+                                new Point2D.Float(colPos, rowPos), cardWidth, cardHeight, false);
         }
     }
 }

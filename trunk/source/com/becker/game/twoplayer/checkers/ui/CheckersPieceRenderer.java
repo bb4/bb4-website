@@ -33,6 +33,7 @@ public class CheckersPieceRenderer extends TwoPlayerPieceRenderer
     /**
      * this draws the actual piece.
      */
+    @Override
     public void render( Graphics2D g2, BoardPosition position, int cellSize, int margin, Board b)
     {
         CheckersPiece piece = (CheckersPiece)position.getPiece();
@@ -40,18 +41,20 @@ public class CheckersPieceRenderer extends TwoPlayerPieceRenderer
             return; // nothing to render
 
         int pieceSize = getPieceSize(cellSize, piece);
-        if ( piece.getType() == CheckersPiece.REGULAR_PIECE )
+
+        if ( piece.getType() == CheckersPiece.REGULAR_PIECE ) {
             super.render( g2, position, cellSize, margin, b);
+        }
         else {  //draw a KING
             g2.setColor( getPieceColor(piece) );
-            Point pos = getPosition(position, cellSize, margin, pieceSize);
+            Point pos = getPosition(position, cellSize, pieceSize, margin);
 
-            g2.fillRect( pos.x + 1, pos.y + 1,
-                         pieceSize, pieceSize );
+            g2.fillRect( pos.x, pos.y, pieceSize, pieceSize );
 
             if ( piece.getTransparency() == 0 ) {
-                g2.setColor( Color.black );
-                g2.drawRect( pos.x + 1, pos.y + 1, pieceSize + 1, pieceSize + 1 );
+                 // black outline
+                 g2.setColor( Color.black );
+                 g2.drawRect( pos.x , pos.y, pieceSize + 1, pieceSize + 1 );
             }
         }
     }

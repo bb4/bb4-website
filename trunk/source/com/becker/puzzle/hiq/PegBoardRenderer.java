@@ -18,6 +18,7 @@ public class PegBoardRenderer extends PuzzleRenderer<PegBoard> {
     private static final int LEFT_MARGIN = 50;
     private static final int TOP_MARGIN = 55;
 
+    private static final Color BACKGROUND_COLOR = new Color(235, 235, 240);
     private static final Color FILLED_HOLE_COLOR = new Color(120, 0, 190);
     private static final Color EMPTY_HOLE_COLOR = new Color(55, 55, 65, 150);
     private static final int FILLED_HOLE_RAD = 16;
@@ -41,7 +42,7 @@ public class PegBoardRenderer extends PuzzleRenderer<PegBoard> {
 
         // erase what's there and redraw.
         g.clearRect( 0, 0, width, height );
-        g.setColor( new Color( 235, 235, 230 ) );
+        g.setColor( BACKGROUND_COLOR );
         g.fillRect( 0, 0, width, height );
 
         int size = PegBoard.SIZE;
@@ -77,7 +78,7 @@ public class PegBoardRenderer extends PuzzleRenderer<PegBoard> {
                     Color c = empty ?  EMPTY_HOLE_COLOR : FILLED_HOLE_COLOR;
                     int r = empty ? EMPTY_HOLE_RAD : FILLED_HOLE_RAD;
                     g.setColor(c);
-                    int rr = r >> 1;
+                    int rr = r / 2;
 
                     g.fillOval(xpos + INC - rr, ypos + INC - rr, r, r);
                 }

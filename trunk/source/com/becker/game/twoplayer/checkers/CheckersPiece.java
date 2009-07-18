@@ -30,6 +30,7 @@ public class CheckersPiece extends GamePiece
     /**
      *   create a deep copy of the position
      */
+    @Override
     public GamePiece copy()
     {
         CheckersPiece p = new CheckersPiece( ownedByPlayer1_, type_ );
