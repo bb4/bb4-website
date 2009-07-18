@@ -53,6 +53,8 @@ class LiquidOptionsDialog extends NewtonianSimOptionsDialog
                 new DefaultComboBoxModel(ConfigurationEnum.values()));
         configurationChoice.setToolTipText(ConfigurationEnum.values()[0].getDescription());
         configurationChoice.addActionListener(this);
+
+        LiquidSimulator simulator = (LiquidSimulator) getSimulator();
         return configurationChoice;
     }
     

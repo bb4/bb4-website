@@ -7,11 +7,6 @@ import com.becker.puzzle.common.PuzzleViewer;
 import com.becker.puzzle.common.Refreshable;
 import com.becker.ui.*;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
-
 /**
  * HiQ Puzzle.
  * This program solves a very difficult classic solitaire puzzle

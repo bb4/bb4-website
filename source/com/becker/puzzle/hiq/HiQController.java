@@ -16,7 +16,8 @@ public class HiQController extends AbstractPuzzleController<PegBoard, PegMove> {
 
     public HiQController(Refreshable ui) {        
         super(ui);
-        algorithm_ = Algorithm.SEQUENTIAL; 
+        // set default
+        algorithm_ = Algorithm.CONCURRENT_OPTIMUM;
     }
 
     public PegBoard initialPosition() {
@@ -40,6 +41,7 @@ public class HiQController extends AbstractPuzzleController<PegBoard, PegMove> {
      *If it was never seen before add it.
      *Must be synchronized because some solvers use concurrency.
      */
+    @Override
     public synchronized boolean alreadySeen(PegBoard position, Set<PegBoard> seen) {
        
         boolean visited = false;

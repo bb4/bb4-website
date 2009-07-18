@@ -43,10 +43,10 @@ public final class PegMove
     }
 
     protected PegMove(Location from, Location destination) {
-        fromRow_ = (byte) from.getRow();
-        fromCol_ = (byte) from.getCol();
-        toRow_ = (byte) destination.getRow();
-        toCol_ = (byte) destination.getCol();
+        fromRow_ = from.getRow();
+        fromCol_ = from.getCol();
+        toRow_ = destination.getRow();
+        toCol_ = destination.getCol();
     }
 
     /**
@@ -75,6 +75,7 @@ public final class PegMove
         return toCol_;
     }
 
+    @Override
     public String toString()
     {
         StringBuffer s = new StringBuffer();

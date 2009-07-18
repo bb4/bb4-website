@@ -10,6 +10,7 @@ import java.util.*;
 import java.util.List;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.Point2D;
 
 /**
  * @author Barry Becker Date: Apr 2, 2006
@@ -151,6 +152,7 @@ public class SolutionPanel extends JPanel
      * This renders the current state of the puzzle to the screen.
      * Render each card in the deck.
      */
+    @Override
     protected void paintComponent( Graphics g )
     {
         int i;
@@ -174,7 +176,7 @@ public class SolutionPanel extends JPanel
             int colPos = col * cardWidth + CardRenderer.LEFT_MARGIN;
             int rowPos = row * cardHeight + CardRenderer.TOP_MARGIN;
             CardRenderer.render((Graphics2D) g, sets_.get(i),
-                                new Location(colPos, rowPos), cardWidth, cardHeight, false);
+                                new Point2D.Float(colPos, rowPos), cardWidth, cardHeight, false);
         }
     }
 

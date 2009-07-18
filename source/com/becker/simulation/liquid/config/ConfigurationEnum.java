@@ -6,9 +6,9 @@ package com.becker.simulation.liquid.config;
  * @author Bary Becker
  */
 public enum ConfigurationEnum {
-    
-    BASIC("Basic", "A stream of water into a pool",  getFileBase() + "config1.xml"),
+
     SPIGOT("Spigot", "A spigot aimed to the right", getFileBase() + "spigot.xml"),
+    BASIC("Basic", "A stream of water into a pool",  getFileBase() + "config1.xml"),
     WATER_WALL_LEFT("Water wall (left)", "An initial wall of water on the left", getFileBase() + "wallOfWaterLeft.xml"),
     WATER_WALL_RIGHT("Water wall (right)", "An initial wall of water on the right", getFileBase() + "wallOfWaterRight.xml"),
     PULSE_LARGE("Pulsing spigot", "Water pulsing out of the spigot", getFileBase() + "pulse.xml"),

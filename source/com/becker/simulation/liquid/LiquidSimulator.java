@@ -26,7 +26,7 @@ public class LiquidSimulator extends NewtonianSimulator
     public static final boolean RECORD_ANIMATION = false;
 
     /** The initial time step. It may adapt. */
-    private static final double INITIAL_TIME_STEP = 0.02;
+    private static final double INITIAL_TIME_STEP = 0.005;
 
     private static final Color BG_COLOR = Color.white;
 
@@ -35,7 +35,7 @@ public class LiquidSimulator extends NewtonianSimulator
 
     public LiquidSimulator() {
         super("Liquid");
-        environment_ = new LiquidEnvironment( ConfigurationEnum.BASIC.getFileName() );
+        environment_ = new LiquidEnvironment( ConfigurationEnum.SPIGOT.getFileName() );
         commonInit();
     }
 

@@ -44,6 +44,11 @@ public interface PuzzleController<P, M> {
      *specify the algorithm to use.
      */
     void setAlgorithm(AlgorithmEnum algorithm);
+
+    /**
+     *get the algorithm to use.
+     */
+    AlgorithmEnum getAlgorithm();
     
     /**
      *begin the search to find a solution to the puzzle.

@@ -132,9 +132,9 @@ public final class CardRenderer {
      * @param g2 graphics context
      * @param position the position of the piece to render
      */
-    public static void render(Graphics2D g2, Card card, Location position, int width, int height, boolean highlight) {
-       int x = position.getRow();
-       int y = position.getCol();
+    public static void render(Graphics2D g2, Card card, Point2D position, int width, int height, boolean highlight) {
+       int x = (int)position.getX();
+       int y = (int)position.getY();
 
        int cardArc = (int) (ARC_RAT * width);
        int margin = (int) (MARGIN_RAT * width);

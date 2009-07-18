@@ -77,7 +77,7 @@ public abstract class PuzzleApplet extends ApplicationApplet
         for (AlgorithmEnum a: getAlgorithmValues()) {
             algorithmChoice_.add(a.getLabel());
         }
-        algorithmChoice_.select(0);
+        algorithmChoice_.select(controller_.getAlgorithm().ordinal());
         return algorithmChoice_;
     }
 

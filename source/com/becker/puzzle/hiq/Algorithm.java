@@ -32,15 +32,16 @@ public enum Algorithm implements AlgorithmEnum {
     public String getLabel() {
         return label;
     }
+
     
     /**
      * Create an instance of the algorithm given the controller and a refreshable.
      */
     public PuzzleSolver createSolver(PuzzleController controller, Refreshable ui) {
-  
+
         switch (this) {
             case SEQUENTIAL :
-                return new SequentialPuzzleSolver(controller, ui);    
+                return new SequentialPuzzleSolver(controller, ui);
             case CONCURRENT_BREADTH :
                 return new ConcurrentPuzzleSolver(controller, 0.6f, ui);
             case CONCURRENT_DEPTH :

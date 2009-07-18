@@ -61,6 +61,7 @@ final class PegBoardViewer extends PuzzleViewer<PegBoard, PegMove>
         return path_;
     }
     
+    @Override
     public void refresh(PegBoard board, long numTries) {         
         if (numTries % 6000 == 0) {
             status_ = createStatusMessage(numTries);
@@ -68,6 +69,7 @@ final class PegBoardViewer extends PuzzleViewer<PegBoard, PegMove>
         }
     }
     
+    @Override
     public void finalRefresh(java.util.List<PegMove> path, PegBoard board, long numTries, long millis) {      
         super.finalRefresh(path, board, numTries, millis);
         showPath(path, board, numTries);                 
@@ -119,7 +121,7 @@ final class PegBoardViewer extends PuzzleViewer<PegBoard, PegMove>
             int inc = stepSize > 0 ? 1 : -1;
             int toStep = currentStep_ + stepSize;
             do {
-                board_ = board_.doMove((PegMove)path_.get(currentStep_), (inc < 0));
+                board_ = board_.doMove(path_.get(currentStep_), (inc < 0));
                 currentStep_ += inc;
             } while (currentStep_ != toStep);
             repaint();
@@ -128,11 +130,12 @@ final class PegBoardViewer extends PuzzleViewer<PegBoard, PegMove>
         /**
          * This renders the current state of the puzzle to the screen.
          */
+        @Override
         protected void paintComponent( Graphics g )
         {
             super.paintComponents( g );
 
-            renderer_.render(g, board_, status_, WIDTH, WIDTH);
+            renderer_.render(g, board_, status_, getWidth(), getHeight());
         }
     }
 }

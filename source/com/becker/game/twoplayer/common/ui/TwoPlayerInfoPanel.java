@@ -91,6 +91,7 @@ public class TwoPlayerInfoPanel extends GameInfoPanel implements GameChangedList
      * implements the GameChangedListener interface.
      * This method called whenever a move has been made.
      */
+    @Override
     public void gameChanged( GameChangedEvent gce )
     {
         if ( controller_ == null )
@@ -98,8 +99,9 @@ public class TwoPlayerInfoPanel extends GameInfoPanel implements GameChangedList
         if ( controller_.getBoard().getLastMove() != null ) {
             setPlayerLabel();
             moveNumLabel_.setText( controller_.getNumMoves() + " " );
+            chanceOfWinningLabel_.setText( Util.formatNumber(getController().getChanceOfPlayer1Winning()) + ' ' );
         }
-        chanceOfWinningLabel_.setText( Util.formatNumber(getController().getChanceOfPlayer1Winning()) + ' ' );
+        
     }
 
 }
