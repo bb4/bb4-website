@@ -270,7 +270,7 @@
 
       <!-- copy the class files that are needed for imagebreeder deployment -->
       <antcall target="deployJar">
-          <param name="componentDir" value="imagebreeder"/>
+          <param name="componentDir" value="apps/imagebreeder"/>
           <param name="jarFile" value="imagebreeder.jar"/>
       </antcall>
 
@@ -310,7 +310,7 @@
       <copy todir="${stagingDir}">
           <fileset dir="${classesDir}">
               <include name="com/becker/${componentDir}/**/*.class"/>
-              <exclude name="com/becker/${componentDir}/**/test"/>
+              <exclude name="com/becker/${componentDir}/**/test/**/*.class"/>
           </fileset>
           <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
       </copy>
@@ -338,6 +338,10 @@
       <antcall target="copyResources">
           <param name="path" value="${componentDir}/resources"/>
           <param name="pattern" value="*.properties"/>
+      </antcall>
+      <antcall target="copyResources">
+          <param name="path" value="${componentDir}/data"/>
+          <param name="pattern" value="*.xml"/>
       </antcall>
   </target>
 
