@@ -69,7 +69,7 @@ public class Cell {
         }
     }
 
-    public List getCandidates() {
+    public List<Integer> getCandidates() {
         if (original_)
             assert(candidates_ == null) : candidates_ +" not null";
         return candidates_;

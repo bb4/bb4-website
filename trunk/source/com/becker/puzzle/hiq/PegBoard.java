@@ -1,6 +1,5 @@
 package com.becker.puzzle.hiq;
 
-import com.becker.game.common.*;
 import com.becker.common.*;
 
 import java.util.*;
@@ -80,10 +79,10 @@ public class PegBoard {
         
         //Location fromLocation = move.getFrom();
         //Location toLocation = move.getTo();
-        byte fromRow = (byte) move.getFromRow();
-        byte fromCol = (byte) move.getFromCol();
-        byte toRow = (byte) move.getToRow();
-        byte toCol = (byte) move.getToCol();
+        byte fromRow = move.getFromRow();
+        byte fromCol = move.getFromCol();
+        byte toRow = move.getToRow();
+        byte toCol = move.getToCol();
         
         setPosition(fromRow, fromCol,  undo);
         // Remove or replace the piece that was jumped as appropriate
@@ -160,8 +159,8 @@ public class PegBoard {
      */
     private List<PegMove> findMovesForLocation(Location location, boolean undo) {
         List<PegMove> moves = new LinkedList<PegMove>();
-        byte r = (byte) location.getRow();
-        byte c = (byte) location.getCol();
+        byte r = location.getRow();
+        byte c = location.getCol();
 
         // 4 cases to consider: NEWS
         checkMoveForDirection(r, c, 0, -2, undo, moves);
@@ -298,6 +297,7 @@ public class PegBoard {
         return (symmIndex==0) ? this : rotate(BOARD_SYMMETRY[symmIndex]);   
     }
 
+    @Override
     public boolean equals(Object b) {
         PegBoard board = (PegBoard) b;
         return (bits_ == board.bits_ && finalBit_ == board.finalBit_ && nextToFinalBit_ == board.nextToFinalBit_);
@@ -306,6 +306,7 @@ public class PegBoard {
     /**
      * All but one bit accounted for in the hash.
      */
+    @Override
     public int hashCode() {
         return nextToFinalBit_ ? -bits_ : bits_;
     }
@@ -322,6 +323,7 @@ public class PegBoard {
         return rotatedBoard;
     }
 
+    @Override
     public String toString() {      
         StringBuffer buf= new StringBuffer(finalBit_?"1":"0");
         buf.append(nextToFinalBit_?"1":"0");

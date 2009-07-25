@@ -25,7 +25,7 @@ public class RedPuzzleController extends AbstractPuzzleController<PieceList, Pie
     /**
      * Creates a new instance of RedPuzzleController
      */
-    public RedPuzzleController(Refreshable ui) {        
+    public RedPuzzleController(Refreshable<PieceList, Piece> ui) {
         super(ui);
         algorithm_ = Algorithm.BRUTE_FORCE_ORIGINAL;
     }

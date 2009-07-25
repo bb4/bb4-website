@@ -42,8 +42,8 @@ public enum Direction {
     public static List getShuffledDirections()
     {
         double rnd = RANDOM.nextDouble();
-        List directions = new ArrayList();
-        List originalDirections = new ArrayList();
+        List<Direction> directions = new ArrayList<Direction>();
+        List<Direction> originalDirections = new ArrayList<Direction>();
         for (Direction d : values()) {
             originalDirections.add(d);
         }

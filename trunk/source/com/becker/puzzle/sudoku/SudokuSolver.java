@@ -1,6 +1,5 @@
 package com.becker.puzzle.sudoku;
 
-import com.becker.common.*;
 import com.becker.common.util.Util;
 
 /**

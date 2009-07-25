@@ -1,6 +1,5 @@
 package com.becker.puzzle.sudoku;
 
-//import com.becker.common.*;
 import com.becker.common.Worker;
 import com.becker.puzzle.sudoku.test.*;
 import com.becker.ui.*;
@@ -43,6 +42,7 @@ public final class SudokuPuzzle extends JApplet
      * create and initialize the puzzle
      * (init required for applet)
      */
+    @Override
     public void init() {
         puzzlePanel_ = new SudokuPanel(Data.SAMPLE1);
 
@@ -57,6 +57,7 @@ public final class SudokuPuzzle extends JApplet
      * start solving the puzzle.
      * called by the browser after init(), if running as an applet
      */
+    @Override
     public void start() {
         puzzlePanel_.setSize(this.getSize());
     }
@@ -64,6 +65,7 @@ public final class SudokuPuzzle extends JApplet
     /**
      * stop and cleanup.
      */
+    @Override
     public void stop() {}
 
     /**
@@ -111,6 +113,7 @@ public final class SudokuPuzzle extends JApplet
                     return null;
                 }
 
+                @Override
                 public void finished() {
                     puzzlePanel_.repaint();
                 }
@@ -127,6 +130,7 @@ public final class SudokuPuzzle extends JApplet
                     return null;
                 }
 
+                @Override
                 public void finished() {
                     puzzlePanel_.repaint();
                 }

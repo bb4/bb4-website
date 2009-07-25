@@ -128,7 +128,7 @@ public class SudokuGenerator {
      */
     private List getRandomPositions(int size) {
         int numPositions = size * size * size * size;
-        List positionList = new ArrayList(numPositions);
+        List<Integer> positionList = new ArrayList(numPositions);
         for (int i=0; i < numPositions; i++) {
             positionList.add(i);
         }

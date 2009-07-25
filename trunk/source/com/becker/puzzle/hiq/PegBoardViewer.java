@@ -15,6 +15,7 @@ import java.util.List;
 final class PegBoardViewer extends PuzzleViewer<PegBoard, PegMove>
                                              implements ActionListener
 {
+    private static final long serialVersionUID = 1L;
 
     private List<PegMove> path_;
     private int currentStep_;
@@ -111,6 +112,8 @@ final class PegBoardViewer extends PuzzleViewer<PegBoard, PegMove>
      */
     private class PegBoardCanvas extends JPanel
     {
+        private static final long serialVersionUID = 1L;
+
         private PegBoardRenderer renderer_ =  new PegBoardRenderer();
         /**
          * switch from the current move in the sequence forwards or backwards stepSize.

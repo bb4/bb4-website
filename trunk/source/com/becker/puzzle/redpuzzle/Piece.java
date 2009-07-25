@@ -116,7 +116,11 @@ public final class Piece
      * @param piece to compare to
      * @return true if logically equal (independent of rotation).
      */
+    @Override
     public boolean equals(Object piece) {
+        if (getClass() != piece.getClass()) {
+            return false;
+        }
         Piece p = (Piece) piece;
         
         return (               
@@ -128,14 +132,19 @@ public final class Piece
         );
     }
 
+
+    @Override
     public int hashCode() {
         assert false : "hashCode not designed";
         return 42; // any arbitrary constant will do 
     }
+
+
     
     /**
      * @return a nice readable string representation for debugging.
      */
+    @Override
     public String toString() {
         StringBuffer buf = new StringBuffer("Piece "+ getNumber() + " (orientation="+orientation_+"): ");
         for (Direction d : Direction.values()) {

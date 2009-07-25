@@ -1,7 +1,5 @@
 package com.becker.puzzle.common;
 
-import com.becker.ui.GUIUtil;
-
 import java.util.*;
 import java.util.concurrent.*;
 import java.security.AccessControlException;

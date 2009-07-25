@@ -1,6 +1,5 @@
 package com.becker.puzzle.shuffle;
 
-import com.becker.common.*;
 import com.becker.common.util.MathUtil;
 
 /**
@@ -83,6 +82,7 @@ public class Deck2 {
         return cycles;
     }
 
+    @Override
     public String toString() {
 
         StringBuffer buffer = new StringBuffer();

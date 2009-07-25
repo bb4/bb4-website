@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.*;
  *
  * @author Brian Goetz and Tim Peierls
  */
-public class ConcurrentPuzzleSolver <P,M> extends BaseConcurrentPuzzleSolver<P, M> {
+public class ConcurrentPuzzleSolver <P, M> extends BaseConcurrentPuzzleSolver<P, M> {
     
     public ConcurrentPuzzleSolver(PuzzleController<P, M> puzzle, Refreshable<P, M> ui) {
         super(puzzle, ui);
@@ -27,6 +27,7 @@ public class ConcurrentPuzzleSolver <P,M> extends BaseConcurrentPuzzleSolver<P, 
 
     private final AtomicInteger taskCount = new AtomicInteger(0);
 
+    @Override
     protected Runnable newTask(P p, M m, PuzzleNode<P, M> n) {
         return new CountingSolverTask(p, m, n);
     }
@@ -37,6 +38,7 @@ public class ConcurrentPuzzleSolver <P,M> extends BaseConcurrentPuzzleSolver<P, 
             taskCount.incrementAndGet();
         }
 
+        @Override
         public void run() {
             try {
                 super.run();

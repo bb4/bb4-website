@@ -191,7 +191,7 @@ public class DomUtil {
                 factory.setAttribute( "http://java.sun.com/xml/jaxp/properties/schemaLanguage",
                                        "http://www.w3.org/2001/XMLSchema");
 
-                //URI schemaURI = new URI("http://www.geocities.com/BarryBecker4/schema/yugioh.xsd");
+                //URI schemaURI = new URI("http://barrybecker4.com/schema/yugioh.xsd");
                 factory.setAttribute("http://java.sun.com/xml/jaxp/properties/schemaSource", xsdUri);
             }
 
@@ -224,6 +224,8 @@ public class DomUtil {
     public static Document parseXML(URL url)
     {
         try {
+            System.out.println("url=" + url);
+            System.out.println("url path=" + url.getPath());
             URLConnection urlc = url.openConnection();
             InputStream is = urlc.getInputStream();
             return parseXML(is, true, null);
