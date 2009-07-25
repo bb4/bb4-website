@@ -14,7 +14,11 @@ import java.util.Set;
  */
 public class HiQController extends AbstractPuzzleController<PegBoard, PegMove> {    
 
-    public HiQController(Refreshable ui) {        
+    /**
+     * 
+     * @param ui
+     */
+    public HiQController(Refreshable<PegBoard, PegMove> ui) {
         super(ui);
         // set default
         algorithm_ = Algorithm.CONCURRENT_OPTIMUM;

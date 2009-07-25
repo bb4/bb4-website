@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-<!-- note: if you modify this file, you must upload it again to www.geocities.com.BarryBecker4/schema -->
+<!-- note: if you modify this file, you must upload it again to barrybecker4.com/schema -->
 
   <xsd:element name="yugioh">
     <xsd:complexType>

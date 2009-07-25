@@ -12,7 +12,7 @@ import com.becker.puzzle.common.SequentialPuzzleSolver;
  * 
  * @author becker
  */
-public enum Algorithm implements AlgorithmEnum {
+public enum Algorithm implements AlgorithmEnum<PegBoard, PegMove> {
     
     SEQUENTIAL("Solve sequentially"),  
     CONCURRENT_BREADTH("Solve concurrently (breadth first)"), 
@@ -37,18 +37,19 @@ public enum Algorithm implements AlgorithmEnum {
     /**
      * Create an instance of the algorithm given the controller and a refreshable.
      */
-    public PuzzleSolver createSolver(PuzzleController controller, Refreshable ui) {
+    public PuzzleSolver<PegBoard, PegMove> createSolver(PuzzleController<PegBoard, PegMove> controller, Refreshable<PegBoard, PegMove> ui) {
 
         switch (this) {
             case SEQUENTIAL :
-                return new SequentialPuzzleSolver(controller, ui);
+                return new SequentialPuzzleSolver<PegBoard, PegMove>(controller, ui);
             case CONCURRENT_BREADTH :
-                return new ConcurrentPuzzleSolver(controller, 0.6f, ui);
+                return new ConcurrentPuzzleSolver<PegBoard, PegMove>(controller, 0.6f, ui);
             case CONCURRENT_DEPTH :
-                return new ConcurrentPuzzleSolver(controller, 0.1f, ui);
+                return new ConcurrentPuzzleSolver<PegBoard, PegMove>(controller, 0.1f, ui);
             case CONCURRENT_OPTIMUM :
-                return new ConcurrentPuzzleSolver(controller, 0.2f, ui);
+                return new ConcurrentPuzzleSolver<PegBoard, PegMove>(controller, 0.2f, ui);
         }
-        return null; //never reached
+        return null;
     }
+
 }

@@ -30,10 +30,10 @@ public class Board
     static final int MAX_SIZE = 9;
 
     // lists of row and col candidates for every row and col.
-    protected List[] rowCandidates_;
-    protected List[] colCandidates_;
+    protected List<Integer>[] rowCandidates_;
+    protected List<Integer>[] colCandidates_;
 
-    private List valuesList_;
+    private List<Integer> valuesList_;
 
     private int numIterations_;
 
@@ -52,7 +52,7 @@ public class Board
 
         initRowColCandidateLists();
 
-        valuesList_ = new ArrayList();
+        valuesList_ = new ArrayList<Integer>();
         for (int i = 1; i<=nn_; i++) {
             valuesList_.add(i);
         }
@@ -229,7 +229,7 @@ public class Board
     }
 
     private void updateRowCandidates(int row) {
-        List rowCands = rowCandidates_[row];
+        List<Integer> rowCands = rowCandidates_[row];
         rowCands.clear();
         rowCands.addAll(valuesList_);
         for (int j=0; j < nn_; j++) {
@@ -247,7 +247,7 @@ public class Board
     }
 
     private void updateColCandidates(int col) {
-        List colCands = colCandidates_[col];
+        List<Integer> colCands = colCandidates_[col];
         colCands.clear();
         colCands.addAll(valuesList_);
         for (int j = 0; j < nn_; j++) {
@@ -278,15 +278,15 @@ public class Board
     /**
      * @return the complete set of allowable values (1,... nn);
      */
-    protected List getValuesList() {
+    protected List<Integer> getValuesList() {
         return valuesList_;
     }
 
-    protected List getRowCandidates(int row)  {
+    protected List<Integer> getRowCandidates(int row)  {
         return rowCandidates_[row];
     }
 
-    protected List getColCandidates(int col)  {
+    protected List<Integer> getColCandidates(int col)  {
         return colCandidates_[col];
     }
 
@@ -303,8 +303,8 @@ public class Board
         rowCandidates_ = new List[nn_];
         colCandidates_ = new List[nn_];
         for (int i=0; i < nn_; i++) {
-            rowCandidates_[i] = new LinkedList();
-            colCandidates_[i] = new LinkedList();
+            rowCandidates_[i] = new LinkedList<Integer>();
+            colCandidates_[i] = new LinkedList<Integer>();
         }
     }
 

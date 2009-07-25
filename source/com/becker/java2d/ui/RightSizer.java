@@ -12,7 +12,7 @@ public class RightSizer extends ApplicationFrame
 
     public static void main( String[] args ) throws Exception
     {
-        String url = "http://www.geocities.com/barrybecker4/family_portrait_s.JPG";
+        String url = "http://barrybecker4.com/family_portrait_s.JPG";
         if ( args.length > 0 ) url = args[0];
         new RightSizer( new URL( url ) );
     }

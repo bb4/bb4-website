@@ -2,7 +2,6 @@ package com.becker.puzzle.sudoku;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 
 /**
  * Draws the current best solution to the puzzle in a panel.
@@ -10,7 +9,7 @@ import java.util.List;
  *
  *  @author Barry Becker
  */
-final class SudokuPanel extends JPanel
+public final class SudokuPanel extends JPanel
 {
 
     private Board board_;

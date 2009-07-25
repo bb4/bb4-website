@@ -271,7 +271,6 @@ public final class GUIUtil
         try {
             if (isStandAlone_)   {
                 url = ClassLoaderSingleton.getClassLoader().getResource(sPath);
-                //System.out.println("About to load URL: "+url);
             }
             else {
                 String spec = "file:" + resourceRoot_ + sPath;

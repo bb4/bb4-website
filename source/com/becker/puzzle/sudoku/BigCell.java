@@ -15,7 +15,7 @@ public class BigCell {
     protected int n_;
 
     // The number which have not yet been used in this big cell.
-    private List bigCellCandidates_;
+    private List<Integer> bigCellCandidates_;
 
     private Board board_;
 
@@ -32,7 +32,7 @@ public class BigCell {
                cells_[i][j] = new Cell(0, this);
            }
         }
-        bigCellCandidates_ = new LinkedList();
+        bigCellCandidates_ = new LinkedList<Integer>();
     }
 
     /**
@@ -61,7 +61,7 @@ public class BigCell {
         }
     }
 
-    public List getCandidates() {
+    public List<Integer> getCandidates() {
         return bigCellCandidates_;
     }
 

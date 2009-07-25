@@ -16,6 +16,11 @@ public class SequentialPuzzleSolver<P, M> implements PuzzleSolver<P, M> {
     private long numTries = 0;
     private long startTime;
 
+    /**
+     *
+     * @param puzzle
+     * @param ui
+     */
     public SequentialPuzzleSolver(PuzzleController<P, M> puzzle, Refreshable<P, M> ui) {
         this.puzzle = puzzle;
         this.ui = ui;
