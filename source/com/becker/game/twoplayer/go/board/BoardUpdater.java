@@ -37,6 +37,7 @@ public class BoardUpdater {
     }
     
     /**
+     * Update the board after move has been played.
      * @param move the move that was just made
      */
     public void updateAfterMove(GoMove move) {
@@ -53,6 +54,7 @@ public class BoardUpdater {
         
         updateStringsAfterMoving(stone);
         removeCaptures(move.getToRow(), move.getToCol(), captures);
+        assert (stone.getString().getNumLiberties(board_) > 0): "The placed stone "+stone+" has no liberties "+stone.getGroup() +"\n"+ board_.toString();
         updateGroupsAfterMoving(stone);
         updateCaptures(move, true);
     }
@@ -392,7 +394,7 @@ public class BoardUpdater {
 
 
     /**
-     * remove all the groups on the board.
+     * Remove all the groups on the board.
      * Then for each stone, find its group and add that new group to the board's group list.
      * Continue until all stone accounted for.
      */

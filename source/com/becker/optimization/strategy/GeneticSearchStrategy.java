@@ -205,14 +205,17 @@ public class GeneticSearchStrategy extends OptimizationStrategy
             ParameterArray p = (ParameterArray) population.get(i);
 
             double fitness = 0;
-            if (optimizee_.evaluateByComparison())
+            if (optimizee_.evaluateByComparison()) {
                 fitness =  optimizee_.compareFitness(p, params);
-            else
+            }
+            else {
                 fitness =  optimizee_.evaluateFitness(p);
+            }
 
             p.setFitness(fitness);
-            if (fitness > bestFitness.getFitness())
+            if (fitness > bestFitness.getFitness()) {
                 bestFitness = p;
+            }
         }
         return bestFitness.copy();
     }

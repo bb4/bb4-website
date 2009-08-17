@@ -426,6 +426,7 @@ public final class GoBoard extends TwoPlayerBoard
     /**
      * Num different states.
      * This is used primarily for the Zobrist hash. You do not need to override if you do not use it.
+     * The states are player1, player2, or empty (we may want to add ko).
      * @return number of different states this position can have.
      */
     public int getNumPositionStates() {

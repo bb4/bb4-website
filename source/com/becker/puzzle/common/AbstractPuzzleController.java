@@ -16,7 +16,7 @@ public abstract class AbstractPuzzleController<P, M> implements PuzzleController
     protected final Refreshable<P, M> ui_;
 
     /** default solver. */
-    protected AlgorithmEnum algorithm_;
+    protected AlgorithmEnum<P, M> algorithm_;
 
 
     /**
@@ -31,7 +31,7 @@ public abstract class AbstractPuzzleController<P, M> implements PuzzleController
      *
      * @param alg
      */
-    public void setAlgorithm(AlgorithmEnum algorithm) {
+    public void setAlgorithm(AlgorithmEnum<P, M> algorithm) {
         algorithm_ = algorithm;
     }
 

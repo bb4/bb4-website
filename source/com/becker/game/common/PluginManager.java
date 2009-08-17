@@ -30,7 +30,7 @@ public class PluginManager {
     private PluginManager() {
 
         URL url = GUIUtil.getURL(PLUGINS_FILE);
-        System.out.println("about to parse url="+url +"\n plugin file location="+PLUGINS_FILE);
+        GameContext.log(1, "about to parse url="+url +"\n plugin file location="+PLUGINS_FILE);
         Document xmlDocument = DomUtil.parseXML(url);
 
         initializePlugins(xmlDocument);

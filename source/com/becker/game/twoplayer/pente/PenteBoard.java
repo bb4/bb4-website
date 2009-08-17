@@ -127,6 +127,7 @@ public class PenteBoard extends TwoPlayerBoard
     /**
      * Num different states.
      * This is used primarily for the Zobrist hash. You do not need to override if yo udo not use it.
+     * States: player1, player2, empty.
      * @return number of different states this position can have.
      */
     public int getNumPositionStates() {

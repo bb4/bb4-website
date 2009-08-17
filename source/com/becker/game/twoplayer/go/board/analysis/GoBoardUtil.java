@@ -1,7 +1,6 @@
 package com.becker.game.twoplayer.go.board.analysis;
 
 import com.becker.game.twoplayer.go.board.*;
-import com.becker.game.common.*;
 import java.util.*;
 
 
