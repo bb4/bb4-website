@@ -69,10 +69,10 @@ public abstract class TwoPlayerBoard extends Board
      * @return The index of the state for tihs position.
      */
     public int getStateIndex(BoardPosition pos) {
-        if (pos.isOccupied()) {
+        if (!pos.isOccupied()) {
             return 0;
         } else {
-            return pos.getPiece().isOwnedByPlayer1()? 1:-1;
+            return pos.getPiece().isOwnedByPlayer1()? 1:2;
         }
     }
 }

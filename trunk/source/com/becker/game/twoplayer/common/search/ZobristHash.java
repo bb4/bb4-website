@@ -20,10 +20,13 @@ public final class ZobristHash {
 
     private long[][][] randomNumberTable_;
 
-    /** The number of states for a position is the number of pieces (or combinations of pieces if more than one
+    /**
+     * The number of states for a position is the number of pieces (or combinations of pieces if more than one
      * are allowed at a given position) times the number of players (always 2?).
+     * So for example, in chess, the numStates would be 7 * 2 = 14. For go, 2.
      */
     private int numStatesPerPosition_;
+
     /** Get random numbers with a seed so things are predictable. */
     private static final Random RANDOM = new Random(0);
 

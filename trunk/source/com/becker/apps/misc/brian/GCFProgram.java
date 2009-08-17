@@ -1,15 +1,11 @@
 package com.becker.apps.misc.brian;
 
 
-
-
 /**
  * Brian's Second Program
  */
 
 public final class GCFProgram  {
-
-
 
 
     private static long bruteGCF(long a, long b) {
@@ -39,8 +35,12 @@ public final class GCFProgram  {
 
     public static void main( String[] args ) {
 
-        long a = 23423423454L;
-        long b = 4567876976786L;
+        //long a = 23423423454L;
+        //long b = 4567876976786L;
+        long a = 36618;
+        long b = 8105362;
+
+        System.out.println("Finding Greatest Common Factor of a=" + a + " and b="+ b);
 
         long time = System.currentTimeMillis();
         long answer = bruteGCF(a, b);
@@ -50,8 +50,6 @@ public final class GCFProgram  {
         answer = euclidGCF(a, b);
         System.out.println("brute answer =" + answer + "  time="+ (System.currentTimeMillis() - time) );
 
-
         System.out.println("DONE!");
-
     }
 }

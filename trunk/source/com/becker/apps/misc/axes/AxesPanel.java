@@ -48,9 +48,13 @@ public class AxesPanel extends JPanel implements ActionListener {
 
 
         synchButton_ = new JButton("Synchronize O point");
+        synchButton_.setMaximumSize(new Dimension(100, 22));
         synchButton_.addActionListener(this);
 
-        this.add(synchButton_, BorderLayout.NORTH);
+        JPanel buttonContainer = new JPanel(new FlowLayout());
+        buttonContainer.add(synchButton_);
+
+        this.add(buttonContainer, BorderLayout.NORTH);
         this.add(legend1_, BorderLayout.CENTER);
         this.add(legend2_, BorderLayout.SOUTH);
     }

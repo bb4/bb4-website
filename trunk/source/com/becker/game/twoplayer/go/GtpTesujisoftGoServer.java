@@ -3,22 +3,23 @@ package com.becker.game.twoplayer.go;
 import com.becker.game.twoplayer.go.board.GoStone;
 import com.becker.common.util.FileUtil;
 import com.becker.game.common.*;
-import com.becker.game.common.online.*;
 import com.becker.game.twoplayer.common.search.*;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
-import com.becker.common.*;
 import go.Point;
 import gtp.GtpServer;
 import utils.Options;
 import utils.StringUtils;
-import version.Version;
 
 import java.io.*;
 import java.util.List;
+import sun.misc.Version;
 
 /**
- * Wrapper for testing GTP controlling programs (like GoGui for example).
- * Inherits the ability to connect a Go program supporting GTP to a socket from GtpServer.
+ * This class wraps the GoController and provides an interface to a GTP based controller (front end ui).
+ * GoGui is typically the controller I have used, but it could be any GTP based UI.
+ * 
+ * This wraps my Tesujisoft go engine so that a client program can use it.
+ * If you want to have the Tesujisoft go engine play on KGS use GtpKgsTesujisoftGoClient.
  *
  * The key commands are:
  *   boardSize
@@ -26,10 +27,9 @@ import java.util.List;
  *   gen_move
  *   play
  *
- * This class wraps the GoController and provides an interface to a GTP based controller (front end ui).
- * GoGui is typically the controller I have used, but it could be any GTP based UI.
+ * 
+ * Inherits the ability to connect a Go program supporting GTP to a socket from GtpServer.
  *
- * @@ add time settings in controller. implement time_settings command
  * @@ implement req_genmove
  * @@ implement final_status_list
  *
@@ -41,7 +41,8 @@ public class GtpTesujisoftGoServer
 
     /** Delay every command (seconds) */
     private int delay_;
-    private int size_;
+
+    private int boardSize_;
 
     private Thread thread_;
 
@@ -53,15 +54,15 @@ public class GtpTesujisoftGoServer
     private enum Command {boardsize, clear_board, echo, echo_err, fixed_handicap,
                          final_score, final_status_list, genmove, gogui_interrupt,
                          list_commands, known_command, komi, name, play,
-                         protocol_version, reg_genmove, time_settings, undo, quit,
+                         protocol_version, reg_genmove, time_settings, time_left, undo, quit,
                          tesujisoft_bwboard, tesujisoft_delay, tesujisoft_invalid,
                          version}
 
 
-    public GtpTesujisoftGoServer(InputStream in, OutputStream out, PrintStream log)
+    public GtpTesujisoftGoServer(InputStream in, OutputStream out, PrintStream logger)
         throws Exception
     {
-        super(in, out, log);
+        super(in, out, logger);
 
         // this will load the resources for the specified game.
         GameContext.loadGameResources("go");
@@ -83,6 +84,7 @@ public class GtpTesujisoftGoServer
         String[] cmdArray = StringUtils.tokenize(cmdLine);
         String cmdStr = cmdArray[0];
         boolean status = true;
+        ////log("handling command="+ cmdStr);
 
         Command cmd = Command.valueOf(cmdStr);
 
@@ -138,10 +140,14 @@ public class GtpTesujisoftGoServer
             case list_commands :
                 listCommands(response);
                 break;
+            case time_settings :
+                cmdTimeSettings(cmdArray, response); break;
+            case time_left :
+                cmdTimeLeft(cmdArray, response); break;
             case undo :
                 cmdUndo(response); break;
             case version :
-                response.append(Version.get()); break;
+                response.append(GoController.VERSION); break;
             case quit : break;
             default :
                 response.append("unknown command");
@@ -165,20 +171,19 @@ public class GtpTesujisoftGoServer
         options.setPercentageBestMoves(50);
         options.setQuiescence(false);
         options.setSearchStrategyMethod(SearchStrategyType.MINIMAX);
-        size_ = size;
+        boardSize_ = size;
     }
 
     private void bwBoard(StringBuffer response)
     {
         response.append('\n');
-        for (int x = 0; x < size_; ++x)
+        for (int x = 0; x < boardSize_; ++x)
         {
-            for (int y = 0; y < size_; ++y)
+            for (int y = 0; y < boardSize_; ++y)
                 response.append(Math.random() > 0.5 ? "B " : "W ");
             response.append('\n');
         }
     }
-
 
     private boolean cmdBoardsize(String[] cmdArray, StringBuffer response)
     {
@@ -296,11 +301,10 @@ public class GtpTesujisoftGoServer
                              "It does not start with a status character.\n");
     }
 
-
     private boolean cmdPlay(String[] cmdArray, StringBuffer response)
     {
         ColorPointArgument argument =
-            parseColorPointArgument(cmdArray, response, size_);
+            parseColorPointArgument(cmdArray, response, boardSize_);
         if (argument == null)
             return false;
 
@@ -308,12 +312,11 @@ public class GtpTesujisoftGoServer
 
         if (point != null)  {
             boolean isBlack = controller_.getCurrentPlayer().equals(controller_.getPlayer1());
-            GoMove move = new GoMove(point.getY(), point.getX(),  0, new GoStone(isBlack));
+            GoMove move = new GoMove(point.getX()+1, point.getY()+1,  0, new GoStone(isBlack));
             controller_.manMoves(move);
         }
         return true;
     }
-
 
     private boolean cmdKomi(String[] cmdArray, StringBuffer response) {
         DoubleArgument argument =
@@ -323,6 +326,30 @@ public class GtpTesujisoftGoServer
 
         float komi = (float)argument.m_double;
         ((GoOptions)controller_.getOptions()).setKomi(komi);
+        return true;
+    }
+
+    /**
+     * Arguments: int main_time, int byo_yomi_time, int byo_yomi_stones
+     *Fails:     syntax error
+     * Returns:   nothing
+     */
+     private boolean cmdTimeSettings(String[] cmdArray, StringBuffer response) {
+
+         //System.err.println("arg len for time_settings="+ cmdArray.length);
+         //System.err.println("time_settings = main="+ cmdArray[1] ); //+"  byo_yomi=" + byo_yomi_time +" stones=" + byo_yomi_stones);
+         return true;
+    }
+
+     /**
+     * Arguments: int main_time, int byo_yomi_time, int byo_yomi_stones
+     *Fails:     syntax error
+     * Returns:   nothing
+     */
+     private boolean cmdTimeLeft(String[] cmdArray, StringBuffer response) {
+
+         //System.err.println("arg len for time_left ="+ cmdArray.length);
+         //System.err.println("time_left = main="+ cmdArray[1] ); //+"  byo_yomi=" + byo_yomi_time +" stones=" + byo_yomi_stones);
         return true;
     }
 
@@ -352,8 +379,6 @@ public class GtpTesujisoftGoServer
     }
 
 
-
-
 //----------------------------------------------------------------------------
 
     public static void main(String[] args)
@@ -363,7 +388,7 @@ public class GtpTesujisoftGoServer
             String[] options = {
                 "config:",
                 "help",
-                "log:",
+                "log",
                 "version"
             };
             Options opt = Options.parse(args, options);
@@ -383,7 +408,7 @@ public class GtpTesujisoftGoServer
             }
             if (opt.isSet("version"))
             {
-                System.out.println("GtpTesujisoft " + Version.get());
+                System.out.println("GtpTesujisoft " + GoController.VERSION);
                 return;
             }
             PrintStream log = null;
@@ -392,6 +417,12 @@ public class GtpTesujisoftGoServer
                 File file = new File(opt.getString("log"));
                 log = new PrintStream(new FileOutputStream(file));
             }
+            else {
+                String logFile = GameContext.getHomeDir() + "/temp/" + "log.txt";
+                File file = new File(logFile);
+                log = new PrintStream(new FileOutputStream(file));
+            }
+
             GtpTesujisoftGoServer gtpTSGoServer = new GtpTesujisoftGoServer(System.in, System.out, log);
             gtpTSGoServer.mainLoop();
             if (log != null)

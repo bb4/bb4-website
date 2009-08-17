@@ -148,7 +148,7 @@ public final class GameContext
     }
 
     /**
-     * @return home directory. Assumes running as an pp.
+     * @return home directory. Assumes running as an Application.
      */
     public static String getHomeDir()
     {

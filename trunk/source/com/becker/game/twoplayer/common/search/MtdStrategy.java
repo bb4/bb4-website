@@ -2,7 +2,6 @@ package com.becker.game.twoplayer.common.search;
 
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.game.twoplayer.common.*;
-import com.becker.optimization.*;
 
 /**
  *  This strategy class defines the MTD search algorithm.
@@ -12,8 +11,10 @@ import com.becker.optimization.*;
  */
 public final class MtdStrategy extends SearchStrategy
 {
-    // number of moves to consider at the top ply.
-    // we use this number to determine how far into the search that we are.
+    /**
+     * Number of moves to consider at the top ply.
+     * we use this number to determine how far into the search that we are.
+     */
     private int numTopLevelMoves_;
 
     private SearchStrategy searchWithMemory_;

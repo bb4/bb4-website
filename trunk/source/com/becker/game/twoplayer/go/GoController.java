@@ -26,6 +26,7 @@ import static com.becker.game.twoplayer.go.GoControllerConstants.*;
  */
 public final class GoController extends TwoPlayerController
 {
+    public static final String VERSION = "0.99";
 
     // a lookup table of scores to attribute to the board positions when calculating the worth
     private float[][] positionalScore_ = null;

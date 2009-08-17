@@ -10,9 +10,10 @@ public class OpaqueTest extends JFrame {
 
     public static void main( String[] args )
     {
+        GUIUtil.setStandAlone(false);
         JFrame f = new OpaqueTest();
         Container contentPane = f.getContentPane();
-		TexturedPanel rainPanel = new TexturedPanel(GUIUtil.getIcon("com/becker/misc/jfcbook/rain.gif"));
+		TexturedPanel rainPanel = new TexturedPanel(GUIUtil.getIcon("com/becker/apps/misc/jfcbook/rain.gif"));
 
         ResizableAppletPanel resizablePanel = new ResizableAppletPanel( rainPanel );
 

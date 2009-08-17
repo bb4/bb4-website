@@ -42,7 +42,7 @@ public interface PuzzleController<P, M> {
     /**
      *specify the algorithm to use.
      */
-    void setAlgorithm(AlgorithmEnum algorithm);
+    void setAlgorithm(AlgorithmEnum<P, M> algorithm);
 
     /**
      *get the algorithm to use.

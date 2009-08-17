@@ -31,7 +31,7 @@ public final class GUIUtil
     private static boolean isStandAlone_ = true;
 
     // default location of images unless otherwise specified.
-    private static String resourceRoot_ = FileUtil.PROJECT_DIR + "source/";
+    private static final String RESOURCE_ROOT = FileUtil.PROJECT_DIR + "source/";
 
     // for opening files.
     // don't create this here or applets using this class will have a security exception
@@ -118,14 +118,6 @@ public final class GUIUtil
         return isStandAlone_;
     }
 
-    /**
-     * only applies if running as an application
-     * @param resourceRoot the location on disk where the images are located
-     */
-    public static void setResourceRoot(String resourceRoot)
-    {
-        resourceRoot_ = resourceRoot;
-    }
 
     /**
      *get a singleton filechooser.
@@ -252,11 +244,17 @@ public final class GUIUtil
         ImageIcon icon;
         if (isStandAlone_)   {
             //System.out.println("spath="+ sPath);
-            icon = new ImageIcon( ClassLoaderSingleton.getClassLoader().getResource(sPath));
+            URL url = ClassLoaderSingleton.getClassLoader().getResource(sPath);
+            if (url != null) {
+                icon = new ImageIcon( url );
+            }
+            else {
+                throw new IllegalArgumentException("Invalid file or url path:"+ sPath);
+            }
         }
         else {
             //System.out.println("not standalone: spath="+ sPath);
-            icon = new ImageIcon(resourceRoot_ + sPath);
+            icon = new ImageIcon(RESOURCE_ROOT + sPath);
         }
         assert (icon != null) : "failed to find image:"+sPath;
         return icon;
@@ -273,11 +271,11 @@ public final class GUIUtil
                 url = ClassLoaderSingleton.getClassLoader().getResource(sPath);
             }
             else {
-                String spec = "file:" + resourceRoot_ + sPath;
+                String spec = "file:" + RESOURCE_ROOT + sPath;
                 url = new URL(spec);
             }
             assert url != null :
-                "failed to create url for  "+sPath + " standAlone="+isStandAlone_ +" resourceRoot_="+ resourceRoot_;
+                "failed to create url for  "+sPath + " standAlone="+isStandAlone_ +" resourceRoot_="+ RESOURCE_ROOT;
         } catch (MalformedURLException e) {
             System.out.println( sPath+" is not a valid resource or URL" );
             e.printStackTrace();
