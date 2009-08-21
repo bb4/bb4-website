@@ -4,10 +4,9 @@ import com.becker.game.twoplayer.go.board.*;
 import com.becker.game.common.BoardPosition;
 
 /**
- * Creates a set of reasonal next moves for a given player.
+ * Creates a set of reasonable next moves for a given player.
  *
- * @author Barry Becker
- *         Date: Aug 21, 2005
+ * @author Barry Becker  Date: Aug 21, 2005
  */
 public class CandidateMoveAnalyzer {
 

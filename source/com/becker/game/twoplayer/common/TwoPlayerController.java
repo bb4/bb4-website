@@ -5,6 +5,7 @@ import com.becker.common.Worker;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.persistence.TwoPlayerGameExporter;
 import com.becker.game.twoplayer.common.persistence.TwoPlayerGameImporter;
+import com.becker.game.twoplayer.common.search.AbstractSearchStrategy;
 import com.becker.game.twoplayer.common.search.SearchStrategy;
 import com.becker.game.twoplayer.common.search.SearchTreeNode;
 import com.becker.game.twoplayer.common.search.Searchable;

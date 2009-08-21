@@ -4,22 +4,21 @@ import com.becker.optimization.parameter.ParameterArray;
 import com.becker.game.twoplayer.common.*;
 
 /**
+ * Memory enhanced Test Driver search.
  *  This strategy class defines the MTD search algorithm.
  *  See http://home.tiscali.nl/askeplaat/mtdf.html
  *
  *  @author Barry Becker  2/07
  */
-public final class MtdStrategy extends SearchStrategy
+public final class MtdStrategy extends AbstractSearchStrategy
 {
+
+    /** The "memory" search strategy to use. Must use memory/cache to avoid researching overhead. */
+    private AbstractSearchStrategy searchWithMemory_;
+
     /**
-     * Number of moves to consider at the top ply.
-     * we use this number to determine how far into the search that we are.
-     */
-    private int numTopLevelMoves_;
-
-    private SearchStrategy searchWithMemory_;
-
-    /** Construct NegaMax the strategy given a controller interface.
+     * Construct NegaMax the strategy given a controller interface.
+     * @param controller
     */
     public MtdStrategy( Searchable controller )
     {
@@ -27,16 +26,7 @@ public final class MtdStrategy extends SearchStrategy
     }
 
     /**
-     * The NegaMax algorithm (with alpha-beta pruning)
-     * This method is the crux of all 2 player zero sum games with perfect information
-     *
-     * @param lastMove the most recent move made by one of the players
-     * @param weights coefficient for the evaluation polunomial that indirectly determines the best move
-     * @param depth how deep in this local game tree that we are to search
-     * @param alpha same as p2best but for the other player. (alpha)
-     * @param beta the maximum of the value that it inherits from above and the best move found at this level (beta)
-     * @param parent for constructing a ui tree. If null no game tree is constructed
-     * @return the chosen move (ie the best move) (may be null if no next move)
+     * @inheritDoc
      */
     public TwoPlayerMove search( TwoPlayerMove lastMove, ParameterArray weights,
                                        int depth, int quiescentDepth,

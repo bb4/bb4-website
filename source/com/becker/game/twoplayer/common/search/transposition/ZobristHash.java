@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.common.search;
+package com.becker.game.twoplayer.common.search.transposition;
 
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.*;

@@ -13,30 +13,25 @@ import java.util.List;
  *
  *  @author Barry Becker
  */
-public final class NegaMaxStrategy extends SearchStrategy
+public class NegaMaxStrategy extends AbstractSearchStrategy
 {
-    // number of moves to consider at the top ply.
-    // we use this number to determine how far into the search that we are.
-    private int numTopLevelMoves_;
+    /**
+     * Number of moves to consider at the top ply.
+     * we use this number to determine how far into the search that we are.
+     */
+    protected int numTopLevelMoves_;
 
-    /** Construct NegaMax the strategy given a controller interface.
-    */
+    /**
+     * Construct NegaMax the strategy given a controller interface.
+     * @param controller the game controller that has options and can make/undo moves.
+     */
     public NegaMaxStrategy( Searchable controller )
     {
         super( controller );
     }
 
     /**
-     * The NegaMax algorithm (with alpha-beta pruning)
-     * This method is the crux of all 2 player zero sum games with perfect information
-     *
-     * @param lastMove the most recent move made by one of the players
-     * @param weights coefficient for the evaluation polunomial that indirectly determines the best move
-     * @param depth how deep in this local game tree that we are to search
-     * @param alpha same as p2best but for the other player. (alpha)
-     * @param beta the maximum of the value that it inherits from above and the best move found at this level (beta)
-     * @param parent for constructing a ui tree. If null no game tree is constructed
-     * @return the chosen move (ie the best move) (may be null if no next move)
+     * @inheritDoc
      */
     public TwoPlayerMove search( TwoPlayerMove lastMove, ParameterArray weights,
                                        int depth, int quiescentDepth,
@@ -84,7 +79,7 @@ public final class NegaMaxStrategy extends SearchStrategy
             }
 
             searchable_.makeInternalMove( theMove );
-            SearchTreeNode child = addNodeToTree( parent, theMove, alpha, beta, i++ );
+            SearchTreeNode child = addNodeToTree(parent, theMove, alpha, beta, i++ );
 
             // recursive call
             selectedMove = searchInternal( theMove, weights, depth-1, quiescentDepth, -beta, -alpha, child );
@@ -105,8 +100,7 @@ public final class NegaMaxStrategy extends SearchStrategy
             }
             if ( alphaBeta_ ) {
                 if ( val >= beta ) {
-                    if ( parent != null && !list.isEmpty() )
-                        showPrunedNodesInTree( list, parent, i, val, beta, PRUNE_BETA);
+                    showPrunedNodesInTree( list, parent, i, val, beta, PruneType.BETA);
                     bestMove.setSelected(true);
                     return bestMove;
                 }
@@ -126,7 +120,7 @@ public final class NegaMaxStrategy extends SearchStrategy
      * This continues the search in situations where the board position is not stable.
      * For example, perhaps we are in the middle of a piece exchange
      */
-    private TwoPlayerMove quiescentSearch( TwoPlayerMove lastMove, ParameterArray weights,
+    protected TwoPlayerMove quiescentSearch( TwoPlayerMove lastMove, ParameterArray weights,
                                           int depth, int oldAlpha, int beta, SearchTreeNode parent )
     {
         int alpha = oldAlpha;
@@ -167,7 +161,7 @@ public final class NegaMaxStrategy extends SearchStrategy
             assert theMove!=null;
 
             searchable_.makeInternalMove( theMove );
-            SearchTreeNode child = addNodeToTree( parent, theMove, alpha, beta, i++ );
+            SearchTreeNode child = addNodeToTree(parent, theMove, alpha, beta, i++ );
 
             TwoPlayerMove selectedMove = quiescentSearch( theMove, weights, depth+1, -beta, -alpha, child );
             assert selectedMove!=null;

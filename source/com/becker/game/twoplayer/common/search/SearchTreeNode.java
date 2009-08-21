@@ -5,6 +5,7 @@ import com.becker.game.twoplayer.common.TwoPlayerMove;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.util.Enumeration;
+import java.util.List;
 
 /**
  *  Represents a move/node in the game tree.
@@ -54,7 +55,10 @@ public class SearchTreeNode extends DefaultMutableTreeNode
 
 
 
-    // Default Constructor
+    /**
+     * Default Constructor
+     * @param m the user object (like a board move).
+     */
     public SearchTreeNode(Object m)
     {
         setUserObject(m);
@@ -76,6 +80,50 @@ public class SearchTreeNode extends DefaultMutableTreeNode
     }
 
     /**
+     * Add a move to the visual game tree (if parent not null).
+     * @param theMove the two player move to add.
+     * @param alpha for the added node
+     * @param beta beta for the added node.
+     * @param i the child index of the added node.
+     * @return the childNode that was added.
+     */
+    public SearchTreeNode addChild(TwoPlayerMove theMove,
+                                       int alpha, int beta, int i ) {
+
+        SearchTreeNode child = new SearchTreeNode( theMove );
+        child.setAlpha(alpha);
+        child.setBeta(beta);
+        this.insert( child, i );
+
+        return child;
+    }
+
+
+    /**
+     * Show nodes corresponding to pruyned branches in the game tree (if one is used).
+     *
+     * @param list list of moves that resulted in pruned branches.
+     * @param val the worth of the node/move
+     * @param thresh the alpha or beta threshold compared to.
+     * @param type either PRUNE_ALPHA or PRUNE_BETA - pruned by comparison with Alpha or Beta.
+     * @param i th child.
+     */
+    public void addPrunedChildNodes( List list, int i, int val, int thresh, PruneType type)
+    {
+        int index = i;
+        while ( !list.isEmpty() ) {
+            TwoPlayerMove theMove = (TwoPlayerMove) (list.remove(0));
+            SearchTreeNode child = new SearchTreeNode( theMove );
+            child.setPruned(true);
+            String sComp = (type == PruneType.ALPHA) ? " < " : " > ";
+            child.setComment("Children pruned because " +
+                            Util.formatNumber(val) + sComp + Util.formatNumber(thresh) + '.');
+            this.insert( child, index );
+            index++;
+        }
+    }
+
+    /**
      *
      * @return the move that the computer expects will be played next
      */
@@ -94,6 +142,7 @@ public class SearchTreeNode extends DefaultMutableTreeNode
     }
 
 
+    @Override
     public String toString () {
         Object m = getUserObject();
         if (m==null) return null;

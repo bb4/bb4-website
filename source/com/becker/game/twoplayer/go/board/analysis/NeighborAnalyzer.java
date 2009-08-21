@@ -24,7 +24,6 @@ public class NeighborAnalyzer {
         board_ = board;
     }
 
-
     /**
      * determines a string connected from a seed stone within a specified bounding area
      * @return string from seed stone
