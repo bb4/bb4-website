@@ -8,11 +8,12 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- *  This strategy class defines the MiniMax search algorithm.
+ * This strategy class defines the MiniMax search algorithm.
+ * This is the simplest search strategy to which the other variants are compared.
  *
  *  @author Barry Becker
  */
-public final class MiniMaxStrategy extends SearchStrategy
+public final class MiniMaxStrategy extends AbstractSearchStrategy
 {
     /**
      * Number of moves to consider at the top ply.
@@ -22,6 +23,7 @@ public final class MiniMaxStrategy extends SearchStrategy
 
     /**
      * Constructor for the strategy.
+     * @param controller the game controller that has options and can make/undo moves.
      */
     public MiniMaxStrategy( Searchable controller )
     {
@@ -29,16 +31,7 @@ public final class MiniMaxStrategy extends SearchStrategy
     }
 
     /**
-     * The MiniMax algorithm (with alpha-beta pruning)
-     * This method is the crux of all 2 player zero sum games with perfect information.
-     *
-     * @param lastMove the most recent move made by one of the players
-     * @param weights coefficient for the evaluation polunomial that indirectly determines the best move
-     * @param depth how deep in this local game tree that we are to search
-     * @param oldAlpha same as p2best but for the other player. (alpha)
-     * @param oldBeta the maximum of the value that it inherits from above and the best move found at this level (beta)
-     * @param parent for constructing a ui tree. If null no game tree is constructed
-     * @return the chosen move (ie the best move) (may be null if no next move)
+     * @inheritDoc
      */
     public TwoPlayerMove search( TwoPlayerMove lastMove, ParameterArray weights,
                                        int depth, int quiescentDepth,
@@ -90,7 +83,7 @@ public final class MiniMaxStrategy extends SearchStrategy
             }
 
             searchable_.makeInternalMove( theMove );
-            SearchTreeNode child = addNodeToTree( parent, theMove, alpha, beta, i++ );
+            SearchTreeNode child = addNodeToTree(parent, theMove, alpha, beta, i++);
 
             // recursive call
             selectedMove = search( theMove, weights, depth-1, quiescentDepth, alpha, beta, child );
@@ -118,8 +111,7 @@ public final class MiniMaxStrategy extends SearchStrategy
             if ( alphaBeta_ ) {
                 if ( player1 && (selectedValue < alpha) ) {
                     if ( selectedValue < beta ) {
-                        if ( parent != null )
-                            showPrunedNodesInTree( list, parent, i, selectedValue, beta, PRUNE_BETA);
+                        showPrunedNodesInTree( list, parent, i, selectedValue, beta, PruneType.BETA);
                         break; // pruned
                     }
                     else
@@ -127,8 +119,7 @@ public final class MiniMaxStrategy extends SearchStrategy
                 }
                 if ( !player1 && (selectedValue > beta) ) {
                     if ( selectedValue > alpha ) {
-                        if ( parent != null )
-                            showPrunedNodesInTree( list, parent, i, selectedValue, alpha, PRUNE_ALPHA);
+                        showPrunedNodesInTree( list, parent, i, selectedValue, alpha, PruneType.ALPHA);
                         break; // pruned
                     }
                     else
@@ -142,6 +133,7 @@ public final class MiniMaxStrategy extends SearchStrategy
         lastMove.setInheritedValue(bestMove.getInheritedValue());
         return bestMove;
     }
+
 
     /**
      * This continues the search in situations where the board position is not stable.
@@ -194,7 +186,7 @@ public final class MiniMaxStrategy extends SearchStrategy
         while ( it.hasNext() ) {
             TwoPlayerMove theMove = (TwoPlayerMove) it.next();
             searchable_.makeInternalMove( theMove );
-            SearchTreeNode child = addNodeToTree( parent, theMove, alpha, beta, i++ );
+            SearchTreeNode child = addNodeToTree(parent,  theMove, alpha, beta, i++ );
 
             TwoPlayerMove selectedMove = quiescentSearch( theMove, weights, depth+1, alpha, beta, child );
             assert selectedMove!=null;

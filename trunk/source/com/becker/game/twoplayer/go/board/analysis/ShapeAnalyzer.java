@@ -16,6 +16,9 @@ import com.becker.game.common.BoardPosition;
  */
 public class ShapeAnalyzer {
 
+    private static final int EMPTY_TRIANGLE_PENALTY = 1;
+    private static final int CLUMP_OF_FOUR_PENALTY = 1;
+
     private GoBoard board_;
     
     public ShapeAnalyzer(GoBoard board) {
@@ -26,8 +29,12 @@ public class ShapeAnalyzer {
      * @return a number corresponding to the number of clumps of 4 or empty triangles that this stone is connected to.
      * returns 0 if does not form bad shape at all. Large numbers indicate worse shape.
      * Possible bad shapes are :
-     *  SHAPE_EMPTY_TRIANGLE :  X -   ,   SHAPE_CLUMP_OF_4 :  X X
-     *                          X X                           X X
+     *  SHAPE_EMPTY_TRIANGLE :  
+     *   X -
+     *   X X
+     * SHAPE_CLUMP_OF_4 :
+     *   X X
+     *   X X
      */
     public int formsBadShape(GoBoardPosition position)
     {
@@ -36,64 +43,62 @@ public class ShapeAnalyzer {
         int c = position.getCol();
 
         int severity =
-             checkBadShape(stone, r, c,  1,-1, 1) +
-             checkBadShape(stone, r, c, -1,-1, 1) +
-             checkBadShape(stone, r, c,  1, 1, 1) +
-             checkBadShape(stone, r, c, -1, 1, 1) +
-
-             checkBadShape(stone, r, c,  1,-1, 2) +
-             checkBadShape(stone, r, c, -1,-1, 2) +
-             checkBadShape(stone, r, c,  1, 1, 2) +
-             checkBadShape(stone, r, c, -1, 1, 2) +
-
-             checkBadShape(stone, r, c,  1,-1, 3) +
-             checkBadShape(stone, r, c, -1,-1, 3) +
-             checkBadShape(stone, r, c,  1, 1, 3) +
-             checkBadShape(stone, r, c, -1, 1, 3);
+                checkBadShape(stone, r, c,  1,-1)
+             + checkBadShape(stone, r, c, -1,-1)
+             + checkBadShape(stone, r, c,  1, 1)
+             + checkBadShape(stone, r, c, -1, 1);
 
         return severity;
     }
 
-    private int checkBadShape(GoStone stone, int r, int c, int incr, int incc, int type) {
+    /**
+     *  There are 3 empty triangle cases based on where the sote is:
+     *       adj1    diag   X       XX     X
+     *       space adj2    XX     X      XX
+     *
+     * @param stone that forms part of the empty triangle
+     * @return the amount to penalize for bad shape.
+     */
+    private int checkBadShape(GoStone stone, int r, int c, int incr, int incc) {
         boolean player1 = stone.isOwnedByPlayer1();
-        if ( board_.inBounds( r + incr, c + incc ) ) {
-            BoardPosition adjacent1 = board_.getPosition( r + incr, c );
-            BoardPosition adjacent2 = board_.getPosition( r , c + incc);
-            BoardPosition diagonal = board_.getPosition( r + incr, c + incc);
-            // there are 3 cases:
-            //       a1 diag    X     XX    X
-            //        X a2      XX    X    XX
-            switch (type) {
-                case 1 :
-                    if (adjacent1.isOccupied() && adjacent2.isOccupied())  {
-                        if (   adjacent1.getPiece().isOwnedByPlayer1() == player1
-                            && adjacent2.getPiece().isOwnedByPlayer1() == player1)
-                            return getBadShapeAux(diagonal, player1);
-                    }  break;
-                case 2 :
-                    if (adjacent1.isOccupied() && diagonal.isOccupied())  {
-                        if (   adjacent1.getPiece().isOwnedByPlayer1() == player1
-                            && diagonal.getPiece().isOwnedByPlayer1() == player1)
-                            return getBadShapeAux(adjacent2, player1);
-                    }  break;
-                case 3 :
-                    if (adjacent2.isOccupied() && diagonal.isOccupied())  {
-                        if (   adjacent2.getPiece().isOwnedByPlayer1() == player1
-                            && diagonal.getPiece().isOwnedByPlayer1() == player1)
-                            return getBadShapeAux(adjacent1, player1);
-                    }  break;
-               default : assert false;
 
-            }
+        if ( !board_.inBounds( r + incr, c + incc ) ) {
+            return 0;
         }
-        return 0;
+        BoardPosition adjacent1 = board_.getPosition( r + incr, c );
+        BoardPosition adjacent2 = board_.getPosition( r , c + incc);
+        BoardPosition diagonal = board_.getPosition( r + incr, c + incc);
+        
+        int severityScore = 0;
+
+        if (adjacent1.isOccupied() && adjacent2.isOccupied())  {
+            if (   adjacent1.getPiece().isOwnedByPlayer1() == player1
+                && adjacent2.getPiece().isOwnedByPlayer1() == player1)
+                severityScore += getBadShapeAux(diagonal, player1);
+        }
+
+        if (adjacent1.isOccupied() && diagonal.isOccupied())  {
+            if (   adjacent1.getPiece().isOwnedByPlayer1() == player1
+                && diagonal.getPiece().isOwnedByPlayer1() == player1)
+                severityScore += getBadShapeAux(adjacent2, player1);
+        }
+
+        if (adjacent2.isOccupied() && diagonal.isOccupied())  {
+            if (   adjacent2.getPiece().isOwnedByPlayer1() == player1
+                && diagonal.getPiece().isOwnedByPlayer1() == player1)
+                severityScore += getBadShapeAux(adjacent1, player1);
+        }
+        return severityScore;
     }
     
     
-    private static int getBadShapeAux( BoardPosition adjacent1, boolean player1 )
+    private static int getBadShapeAux( BoardPosition nearbySpace, boolean player1 )
     {
-        if ( adjacent1.isUnoccupied() || adjacent1.getPiece().isOwnedByPlayer1() == player1 ) {
-            return 1;
+        if (nearbySpace.isUnoccupied()) {
+            return EMPTY_TRIANGLE_PENALTY;
+        } 
+        else if (nearbySpace.getPiece().isOwnedByPlayer1() == player1 )  {
+            return CLUMP_OF_FOUR_PENALTY;
         }
         return 0;
     }

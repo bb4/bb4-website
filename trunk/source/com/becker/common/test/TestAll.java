@@ -1,6 +1,6 @@
 package com.becker.common.test;
 
-import com.becker.game.twoplayer.go.test.*;
+import com.becker.common.test.util.TestAllUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -18,7 +18,10 @@ public class TestAll extends TestCase {
         TestSuite suite =  new TestSuite("All Common Tests");
    
         suite.addTestSuite(NiceNumbersTest.class);
-        suite.addTestSuite(MathUtilTest.class);
+        suite.addTestSuite(LRUCacheTest.class);
+        //suite.addTestSuite(MathUtilTest.class);
+
+        suite.addTest(TestAllUtil.suite());
 
         return suite;
     }

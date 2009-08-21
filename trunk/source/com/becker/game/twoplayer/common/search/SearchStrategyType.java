@@ -3,35 +3,53 @@ package com.becker.game.twoplayer.common.search;
 import com.becker.game.common.*;
 
 /**
- * @author Barry Becker Date: Mar 10, 2007
+ * Currently supported search method strategy
+ *
+ * @author Barry Becker  Date: Mar 10, 2007
  */
 public enum SearchStrategyType {
 
-    // currently supported search method strategy
-    // @@ ad ability to have plugable strategies.
-    MINIMAX("MINIMAX_SEARCH"),
-    NEGAMAX("NEGAMAX_SEARCH"),
-    NEGASCOUT("NEGASCOUT_SEARCH"),
-    NEGASCOUT_W_MEMORY("NEGASCOUT__W_MEMORY_SEARCH"),
-    MTD("MTD_SEARCH");
+    
+    MINIMAX("MINIMAX_SEARCH") {
+        public SearchStrategy createStrategy(Searchable s) { return new MiniMaxStrategy(s); }
+    },
+    NEGAMAX("NEGAMAX_SEARCH") {
+        public SearchStrategy createStrategy(Searchable s) { return new NegaMaxStrategy(s); }
+    },
+    NEGASCOUT("NEGASCOUT_SEARCH") {
+        public SearchStrategy createStrategy(Searchable s) { return new NegaScoutStrategy(s); }
+    },
+    NEGASCOUT_W_MEMORY("NEGASCOUT_W_MEMORY_SEARCH") {
+        public SearchStrategy createStrategy(Searchable s) { return new NegaScoutMemoryStrategy(s); }
+    },
+    MTD("MTD_SEARCH"){
+        public SearchStrategy createStrategy(Searchable s) { return new MtdStrategy(s); }
+    };
 
-    private String label_;
+    private String labelKey_;
 
     /**
-     * constructor for eye type enum
+     * Constructor for eye type enum.
      *
      * @param label message key
      */
-    private SearchStrategyType(String label) {
-        label_ = label;
+    private SearchStrategyType(String labelKey) {
+        labelKey_ = labelKey;
     }
 
 
     /**
-     * @return localized description
+     * @return localized description.
      */
     public String getLabel() {
-        return GameContext.getLabel(label_);
+        return GameContext.getLabel(labelKey_);
     }
+
+    /**
+     * Factory method for creating the search strategy to use.
+     * Do not call the constructor directly.
+     * @return the search method to use
+     */
+    public abstract SearchStrategy createStrategy(Searchable s);
 
 }

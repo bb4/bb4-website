@@ -251,7 +251,7 @@ public class TwoPlayerOptions extends GameOptions
      */
     public SearchStrategy getSearchStrategy(Searchable searchable) {
 
-        return SearchStrategy.createSearchStrategy(getSearchStrategyMethod(), searchable);
+        return getSearchStrategyMethod().createStrategy(searchable);
     }
 
 }

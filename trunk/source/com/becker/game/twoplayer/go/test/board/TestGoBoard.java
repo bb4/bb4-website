@@ -7,8 +7,6 @@ import com.becker.game.twoplayer.go.*;
 import com.becker.game.twoplayer.go.test.*;
 import junit.framework.*;
 
-import java.util.*;
-
 /**
  * Verify that all the methods in GoBoard work as expected
  * @author Barry Becker

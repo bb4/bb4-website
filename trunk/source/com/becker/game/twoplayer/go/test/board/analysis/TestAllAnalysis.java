@@ -18,10 +18,10 @@ public class TestAllAnalysis extends GoTestCase {
 
         TestSuite suite =  new TestSuite("Analysis Tests");
 
-        //suite.addTestSuite(TestLifeAnalyzer.class);
-        //suite.addTestSuite(TestShapeAnalyzer.class);
+        suite.addTestSuite(TestLifeAnalyzer.class);
+        suite.addTestSuite(TestShapeAnalyzer.class);
         suite.addTestSuite(TestCandidateMoveAnalyzer.class);
-        //suite.addTestSuite(TestNeighborAnalyzer.class);
+        suite.addTestSuite(TestNeighborAnalyzer.class);
         
         suite.addTestSuite(TestEyeAnalyzer.class);
         //suite.addTestSuite(TestGroupeEyeSpaceAnalyzer.class);

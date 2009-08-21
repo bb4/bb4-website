@@ -1,4 +1,4 @@
-package com.becker.common.test;
+package com.becker.common.test.util;
 
 import junit.framework.*;
 import com.becker.common.util.MathUtil;
@@ -38,11 +38,7 @@ public class MathUtilTest extends TestCase {
         Assert.assertEquals(result, 2L);
         
         result = MathUtil.gcd(423L, -40L);               
-        Assert.assertEquals(result, 1L);
-       
-        
+        Assert.assertEquals(result, 1L);               
     }
-
- 
 
 }
