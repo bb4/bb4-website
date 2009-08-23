@@ -44,7 +44,7 @@ public class SetGameRenderer extends MultiGameBoardRenderer
     }
 
 
-    private int getNumColumns(int panelWidth, int panelHeight) {
+    private int getNumColumns(int panelWidth, int panelHeight, int numCards) {
         float rat = (float) getCanvasWidth(panelWidth) / (panelHeight - 2 * CardRenderer.TOP_MARGIN);
 
         int numColumns = 20;
@@ -65,6 +65,8 @@ public class SetGameRenderer extends MultiGameBoardRenderer
         } else if (rat < 3.4) {
             numColumns = 10;
         }
+        // if there are a lot of cards showing, double the number of columns
+        numColumns *= (1 + numCards / 41);
         return numColumns;
     }
 
@@ -77,15 +79,17 @@ public class SetGameRenderer extends MultiGameBoardRenderer
      * @return  the card that the mouse is currently over (at x, y coords)
      */
     public Card findCardOver(GameControllerInterface controller, int x, int y, int panelWidth, int panelHeight) {
-        int numCols = getNumColumns(panelWidth, panelHeight);
         SetController c = (SetController)controller;
 
+        int numCards = c.getNumCardsShowing();
+        int numCols = getNumColumns(panelWidth, panelHeight, numCards);
+       
         Dimension cardDim = calcCardDimension(numCols, panelWidth);
         int cardWidth = (int) cardDim.getWidth();
         int cardHeight = (int) cardDim.getHeight();
 
         int selectedIndex = -1;
-        for (int i = 0; i<c.getNumCardsShowing(); i++ ) {
+        for (int i = 0; i<numCards; i++ ) {
             int row = i / numCols;
             int col = i % numCols;
             int colPos = col * cardWidth + CardRenderer.LEFT_MARGIN;
@@ -110,12 +114,13 @@ public class SetGameRenderer extends MultiGameBoardRenderer
     {
         // erase what's there and redraw.
         SetController c = (SetController)controller;
+        int numCards = c.getNumCardsShowing();
 
         g.clearRect( 0, 0, panelWidth, panelHeight );
         g.setColor( getBackground() );
         g.fillRect( 0, 0, panelWidth, panelHeight );
 
-        int numCols = getNumColumns(panelWidth, panelHeight);
+        int numCols = getNumColumns(panelWidth, panelHeight, numCards);
 
         Dimension cardDim = calcCardDimension(numCols, panelWidth);
         int cardWidth = (int) cardDim.getWidth();

@@ -4,9 +4,7 @@ import com.becker.game.twoplayer.go.board.*;
 import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
 import static com.becker.game.twoplayer.go.GoControllerConstants.*;   // jdk 1.5 feature
 import com.becker.common.ColorMap;
-import com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer;
-import com.becker.game.twoplayer.common.ui.TwoPlayerBoardRenderer;
-import com.becker.game.twoplayer.go.*;
+import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GameContext;
 
 import java.awt.*;
@@ -61,9 +59,9 @@ final class GoGroupRenderer
 
         // to avoid adding the same stone to the queue twice we maintain a hashSet
         // which does not allow dupes.
-        List q = new ArrayList();
-        Set qset = new HashSet();
-        List visitedSet = new ArrayList();
+        List<BoardPosition> q = new ArrayList<BoardPosition>();
+        Set<GoBoardPosition> qset = new HashSet<GoBoardPosition>();
+        List<GoBoardPosition> visitedSet = new ArrayList<GoBoardPosition>();
         q.add( firstStone.copy() );
         qset.add( firstStone );
         Area area = new Area();

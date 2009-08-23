@@ -1,6 +1,9 @@
-package com.becker.game.twoplayer.common.search;
+package com.becker.game.twoplayer.common.search.strategy;
 
+import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
+import com.becker.game.twoplayer.common.search.*;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.twoplayer.common.search.tree.GameTreeViewable;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**
@@ -22,6 +25,7 @@ public interface SearchStrategy {
      * @param lastMove the most recent move made by one of the players.
      * @param weights coefficient for the evaluation polunomial that indirectly determines the best move.
      * @param depth how deep in this local game tree that we are to search.
+     *   When depth becomes 0 we are at a leaf and should terminate (unless its an urgent move and quiescence is on).
      * @param quiescentDepth how far to go to reach quiescence if we detect an urgent move.
      * @param alpha same as p2best but for the other player. (alpha)
      * @param beta the maximum of the value that it inherits from above and the best move found at this level (beta).
@@ -34,7 +38,7 @@ public interface SearchStrategy {
 
 
     /**
-     * @return the number of moves considered in the search so far
+     * @return the number of moves considered in the search so far.
      */
     int getNumMovesConsidered();
 
@@ -45,6 +49,12 @@ public interface SearchStrategy {
      * @return the approximate percentage of total search time that has been completed.
      */
    int getPercentDone();
+
+   /**
+    * An optional game tree event listener. There can be at most one.
+    * @param listener
+    */
+   void setGameTreeEventListener(GameTreeViewable listener);
 
 
     // these methods give an external thread debugging controls over the search.

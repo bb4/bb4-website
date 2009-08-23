@@ -216,7 +216,7 @@ public abstract class GamePanel extends TexturedPanel
     /**
      * @return the dialog used for configuring a new game to play.
      */
-    protected abstract NewGameDialog createNewGameDialog( JFrame parent, ViewerCallbackInterface viewer );
+    protected abstract NewGameDialog createNewGameDialog( JFrame parent, GameViewable viewer );
 
     /**
      * @return  the dialog used to specify various game options and parameters.

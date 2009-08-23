@@ -70,10 +70,10 @@ public class CheckersController extends TwoPlayerController
      * @return some measure of how overwhelming the win was. May need to negate based on which player one.
      */
     @Override
-    public double getStrengthOfWin()
+    public int getStrengthOfWin()
     {
         if (!getPlayer1().hasWon() && !getPlayer2().hasWon())
-             return 0.0;
+             return 0;
         return worth(board_.getLastMove(), weights_.getDefaultWeights());
     }
 
@@ -121,7 +121,7 @@ public class CheckersController extends TwoPlayerController
      *   a positive value means that player1 has the advantage.
      *   A big negative value means a good move for p2.
      */
-    protected double worth( Move lastMove, ParameterArray weights )
+    protected int worth( Move lastMove, ParameterArray weights )
     {
         int row, col, odd;
         int posScore = 0;
@@ -276,7 +276,7 @@ public class CheckersController extends TwoPlayerController
         BoardPosition next = board_.getPosition( pos.getRow() + rowInc, pos.getCol() + colInc );
         if ( next!=null && next.isUnoccupied() ) {
             assert ( pos!=null): "pos is null" ;
-            double val = 0;
+            int val = 0;
             if ( lastMove != null ) {
                 // then not the first move of the game
                 val = lastMove.getValue();
@@ -387,7 +387,8 @@ public class CheckersController extends TwoPlayerController
         /**
          *  generate all possible next moves
          */
-        public List generateMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
+        public List<? extends TwoPlayerMove> generateMoves(
+                TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
         {
             List<CheckersMove> moveList = new LinkedList<CheckersMove>();
             int j, row,col;
@@ -419,7 +420,8 @@ public class CheckersController extends TwoPlayerController
          * @param player1sPerspective
          * @return list of urgent moves
          */
-        public List generateUrgentMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
+        public List<? extends TwoPlayerMove> generateUrgentMoves(
+                TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
         {
             return null;
         }

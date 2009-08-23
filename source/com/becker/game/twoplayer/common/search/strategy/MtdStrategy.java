@@ -1,5 +1,7 @@
-package com.becker.game.twoplayer.common.search;
+package com.becker.game.twoplayer.common.search.strategy;
 
+import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
+import com.becker.game.twoplayer.common.search.*;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.game.twoplayer.common.*;
 
@@ -58,7 +60,7 @@ public final class MtdStrategy extends AbstractSearchStrategy
                 beta = g;
             }
             selectedMove = searchWithMemory_.search(lastMove, weights, depth, quiescentDepth, beta -1, beta, parent);
-            g = (int) selectedMove.getInheritedValue();
+            g = selectedMove.getInheritedValue();
 
             if (g < beta) {
                 upperBound = g;

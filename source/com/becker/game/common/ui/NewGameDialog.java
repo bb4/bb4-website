@@ -36,11 +36,11 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
 
     // the options get set directly on the game controller and viewer that are passed in
     protected final Board board_;
-    protected final ViewerCallbackInterface viewer_;
+    protected final GameViewable viewer_;
 
 
     // constructor
-    public NewGameDialog( JFrame parent, ViewerCallbackInterface viewer)
+    public NewGameDialog( JFrame parent, GameViewable viewer)
     {
         super( parent );
         controller_ = viewer.getController();

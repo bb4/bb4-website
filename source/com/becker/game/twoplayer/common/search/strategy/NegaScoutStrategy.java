@@ -1,6 +1,8 @@
-package com.becker.game.twoplayer.common.search;
+package com.becker.game.twoplayer.common.search.strategy;
 
-
+import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
+import com.becker.game.twoplayer.common.search.tree.PruneType;
+import com.becker.game.twoplayer.common.search.*;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.optimization.parameter.ParameterArray;
 
@@ -9,11 +11,10 @@ import java.util.List;
 
 /**
  *  This strategy class defines the NegaScout search algorithm.
+ * (also known as principal variation search /PVS)
  *  Negascout is very much like negamax except that it uses a 0 sized search window
  * and iterative deepening.
  *  See http://en.wikipedia.org/wiki/Negascout
- *
- * @@ curently identical to negamax
  *
  *  @author Barry Becker
  */
@@ -83,18 +84,18 @@ public final class NegaScoutStrategy extends NegaMaxStrategy
             // recursive call
             selectedMove = searchInternal( theMove, weights, depth-1, quiescentDepth, -newBeta, -alpha, child );
 
-            int val = - (int) selectedMove.getInheritedValue();
+            int val = - selectedMove.getInheritedValue();
             theMove.setInheritedValue(val);
 
 
             if ( val > alpha && val < beta && i > 0 && depth > 0 ) {
 
-                child = parent.addChild( theMove, alpha, beta, i );
+                child = addNodeToTree(parent, theMove, alpha, beta, i);
 
                 // re-search with narrower window
                 selectedMove = searchInternal( theMove, weights, depth-1, quiescentDepth, -beta, -val, child );
 
-                val = - (int) selectedMove.getInheritedValue();
+                val = - selectedMove.getInheritedValue();
             }
             i++;
 
@@ -118,7 +119,6 @@ public final class NegaScoutStrategy extends NegaMaxStrategy
                 }
                 newBeta = alpha + 1;
             }
-
         }
 
         bestMove.setSelected(true);

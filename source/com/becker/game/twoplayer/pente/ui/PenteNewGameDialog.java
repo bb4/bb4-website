@@ -9,7 +9,7 @@ import java.awt.event.*;
 public class PenteNewGameDialog extends TwoPlayerNewGameDialog implements ActionListener
 {
 
-    public PenteNewGameDialog( JFrame parent, ViewerCallbackInterface viewer )
+    public PenteNewGameDialog( JFrame parent, GameViewable viewer )
     {
         super( parent, viewer );
     }

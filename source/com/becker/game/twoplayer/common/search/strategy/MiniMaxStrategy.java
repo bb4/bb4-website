@@ -1,6 +1,8 @@
-package com.becker.game.twoplayer.common.search;
+package com.becker.game.twoplayer.common.search.strategy;
 
-import com.becker.game.common.GameContext;
+import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
+import com.becker.game.twoplayer.common.search.tree.PruneType;
+import com.becker.game.twoplayer.common.search.*;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.optimization.parameter.ParameterArray;
 
@@ -60,8 +62,6 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
         if (depth == searchable_.getLookAhead())
             numTopLevelMoves_ = list.size();
 
-        GameContext.log( 3, "there were " + list.size() + " moves generated." );
-
         if ( emptyMoveList( list, lastMove ) ) {
             // if there are no possible next moves, return null (we hit the end of the game).
             return null;
@@ -95,16 +95,16 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
                 continue;
             }
 
-            selectedValue = (int) selectedMove.getInheritedValue();
+            selectedValue = selectedMove.getInheritedValue();
             if ( player1 ) {
                 if ( selectedValue < bestInheritedValue ) {
                     bestMove = theMove;
-                    bestInheritedValue = (int) bestMove.getInheritedValue();
+                    bestInheritedValue = bestMove.getInheritedValue();
                 }
             }
             else if ( selectedValue > bestInheritedValue ) {
                 bestMove = theMove;
-                bestInheritedValue = (int) bestMove.getInheritedValue();
+                bestInheritedValue = bestMove.getInheritedValue();
             }
 
             //********* alpha beta pruning ********
@@ -158,13 +158,13 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
             if ( lastMove.getValue() >= beta )
                 return lastMove; // prune
             if ( lastMove.getValue() > alpha )
-                alpha = (int) lastMove.getValue();
+                alpha = lastMove.getValue();
         }
         else {
             if ( lastMove.getValue() >= alpha )
                 return lastMove; // prune
             if ( lastMove.getValue() > beta )
-                beta = (int) lastMove.getValue();
+                beta = lastMove.getValue();
         }
 
         // generate those moves that are critically urgent
@@ -191,11 +191,11 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
             TwoPlayerMove selectedMove = quiescentSearch( theMove, weights, depth+1, alpha, beta, child );
             assert selectedMove!=null;
 
-            int selectedValue = (int) selectedMove.getInheritedValue();
+            int selectedValue = selectedMove.getInheritedValue();
             if ( player1 ) {
                 if ( selectedValue < bestInheritedValue ) {
                     bestMove = theMove;
-                    bestInheritedValue = (int) bestMove.getInheritedValue();
+                    bestInheritedValue = bestMove.getInheritedValue();
                 }
             }
             else if ( selectedValue > bestInheritedValue ) {
@@ -208,13 +208,13 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
                 if ( bestMove.getInheritedValue() >= beta )
                     return bestMove;  // prune
                 if ( bestMove.getInheritedValue() > alpha )
-                    alpha = (int) bestMove.getInheritedValue();
+                    alpha = bestMove.getInheritedValue();
             }
             else {
                 if ( bestMove.getInheritedValue() >= alpha )
                     return bestMove;  // prune
                 if ( bestMove.getInheritedValue() > beta )
-                    beta = (int) bestMove.getInheritedValue();
+                    beta = bestMove.getInheritedValue();
             }
         }
         return bestMove;

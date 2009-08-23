@@ -29,7 +29,7 @@ public interface GameControllerInterface
     /**
      * @return the class which shows the current state of the game board. May be null.
      */
-    ViewerCallbackInterface getViewer();
+    GameViewable getViewer();
 
     /**
      * retract the most recently played move

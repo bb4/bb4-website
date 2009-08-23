@@ -40,7 +40,7 @@ public class PlayerPathLengths {
      * @param winningValue
      * @param weights
      */
-    public double determineWorth(double winningValue, ParameterArray weights) {
+    public int determineWorth(double winningValue, ParameterArray weights) {
         
         double value;
         int p1 = 0;
@@ -65,7 +65,7 @@ public class PlayerPathLengths {
                        + weights.get(BlockadeWeights.SECOND_CLOSEST_WEIGHT_INDEX).getValue() * secondShortestDiff
                        + weights.get(BlockadeWeights.FURTHEST_WEIGHT_INDEX).getValue() * furthestLengthDiff;
         }
-        return value;
+        return (int)value;
     }
     
     /**

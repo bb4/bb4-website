@@ -19,7 +19,7 @@ import java.util.List;
  *
  *  @author Barry Becker
  */
-public class BlockadeBoardViewer extends TwoPlayerBoardViewer implements MouseMotionListener
+public class BlockadeBoardViewer extends AbstractTwoPlayerBoardViewer implements MouseMotionListener
 {
     /** this becomes true when the player needs to place a wall instead of a piece during his turn.  */
     private boolean wallPlacingMode_ = false;

@@ -1,20 +1,24 @@
 package com.becker.game.twoplayer.common.ui;
 
+import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
 import com.becker.game.twoplayer.common.*;
-import com.becker.game.twoplayer.common.search.*;
+import com.becker.game.twoplayer.common.search.tree.GameTreeViewable;
+import com.becker.game.twoplayer.common.search.tree.PruneType;
 import com.becker.ui.*;
 import com.becker.ui.legend.*;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.event.*;
 import javax.swing.tree.*;
-import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import java.util.List;
+import java.awt.event.WindowEvent;
 
 /**
  * Draw the entire game tree using a java tree control.
@@ -24,10 +28,10 @@ import java.util.List;
  * @author Barry Becker
  */
 public final class GameTreeDialog extends JDialog
-                               implements GameChangedListener,
-                                          MouseMotionListener, TreeExpansionListener
+                               implements GameChangedListener, GameTreeViewable,
+                                                   MouseMotionListener, TreeExpansionListener
 {
-    //the options get set directly on the game controller that is passed in.
+    /** the options get set directly on the game controller that is passed in. */
     private TwoPlayerController controller_;
 
     private JScrollPane scrollPane_;
@@ -45,10 +49,10 @@ public final class GameTreeDialog extends JDialog
 
     private Board board_ = null;
 
-    // the viewer in the debug window
-    private TwoPlayerViewerCallbackInterface boardViewer_;
+    /** the viewer in the debug window. */
+    private TwoPlayerViewable boardViewer_;
 
-    // the controller that is actually being played in the normal view.
+    /** the controller that is actually being played in the normal view. */
     private TwoPlayerController mainController_;
 
     private GameTreeCellRenderer cellRenderer_;
@@ -59,12 +63,12 @@ public final class GameTreeDialog extends JDialog
      * @param parent frame to display relative to
      * @param boardViewer
      */
-    public GameTreeDialog( JFrame parent, TwoPlayerBoardViewer boardViewer, GameTreeCellRenderer cellRenderer )
+    public GameTreeDialog( JFrame parent, AbstractTwoPlayerBoardViewer boardViewer, GameTreeCellRenderer cellRenderer )
     {
         super( parent );
         initialize(boardViewer, cellRenderer);
 
-        enableEvents( AWTEvent.WINDOW_EVENT_MASK );
+        enableEvents( WindowEvent.WINDOW_EVENT_MASK );
         try {
             initUI();
         } catch (OutOfMemoryError oom) {
@@ -75,7 +79,7 @@ public final class GameTreeDialog extends JDialog
         pack();
     }
 
-    public synchronized void initialize(TwoPlayerBoardViewer boardViewer, GameTreeCellRenderer cellRenderer) {
+    public synchronized void initialize(AbstractTwoPlayerBoardViewer boardViewer, GameTreeCellRenderer cellRenderer) {
         boardViewer_ = boardViewer;
         controller_ = (TwoPlayerController)boardViewer.getController();
         board_ = controller_.getBoard();
@@ -95,7 +99,7 @@ public final class GameTreeDialog extends JDialog
         JPanel mainPanel = new JPanel(new BorderLayout() );
 
         TwoPlayerPieceRenderer pieceRenderer =
-                (TwoPlayerPieceRenderer)((TwoPlayerBoardViewer)boardViewer_).getPieceRenderer();
+                (TwoPlayerPieceRenderer)((AbstractTwoPlayerBoardViewer)boardViewer_).getPieceRenderer();
         treeViewer_ =
                 new GameTreeViewer(root_, cellRenderer_.getColorMap(), pieceRenderer);
         treeViewer_.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
@@ -122,7 +126,7 @@ public final class GameTreeDialog extends JDialog
 
         JPanel previewPanel = new JPanel(new BorderLayout());
 
-        ((TwoPlayerBoardViewer)boardViewer_).setPreferredSize( new Dimension( 200, 500 ) );
+        ((AbstractTwoPlayerBoardViewer)boardViewer_).setPreferredSize( new Dimension( 200, 500 ) );
 
         JPanel viewerPanel = new JPanel();
         viewerPanel.setLayout(new BorderLayout());
@@ -138,7 +142,7 @@ public final class GameTreeDialog extends JDialog
         infoPanel.add(colorLegend, BorderLayout.SOUTH);
 
         // this goes to the right of the test tree view
-        viewerPanel.add( (TwoPlayerBoardViewer)boardViewer_, BorderLayout.CENTER);
+        viewerPanel.add( (AbstractTwoPlayerBoardViewer)boardViewer_, BorderLayout.CENTER);
         viewerPanel.add( infoPanel, BorderLayout.SOUTH);
         previewPanel.add( viewerPanel, BorderLayout.CENTER );
 
@@ -276,7 +280,7 @@ public final class GameTreeDialog extends JDialog
         int chainLength = path.getPathCount();
         Object[] nodes = path.getPath();
         SearchTreeNode lastNode = (SearchTreeNode)nodes[chainLength-1];
-        List moveList = new LinkedList();
+        List<TwoPlayerMove> moveList = new LinkedList<TwoPlayerMove>();
         TwoPlayerMove m = null;
         for ( int i = 0; i < chainLength; i++ ) {
             SearchTreeNode node = (SearchTreeNode) nodes[i];
@@ -286,7 +290,7 @@ public final class GameTreeDialog extends JDialog
             moveList.add( m );
         }
 
-        TwoPlayerBoardViewer viewer = (TwoPlayerBoardViewer)boardViewer_;
+        AbstractTwoPlayerBoardViewer viewer = (AbstractTwoPlayerBoardViewer)boardViewer_;
         if (SHOW_SUCCESSIVE_MOVES) {
             // add expected successive moves to show likely outcome.
             moveList = addSuccessiveMoves(moveList, lastNode);
@@ -305,7 +309,7 @@ public final class GameTreeDialog extends JDialog
      * Add to the list all the moves that we expect are most likely to occur given the current game state.
      * This is how the computer expects the game to play out.
      */
-    private static List addSuccessiveMoves(List moveList, SearchTreeNode finalNode) {
+    private static List<TwoPlayerMove> addSuccessiveMoves(List<TwoPlayerMove> moveList, SearchTreeNode finalNode) {
 
         SearchTreeNode nextNode = finalNode.getExpectedNextNode();
         while (nextNode !=  null)  {
@@ -329,7 +333,7 @@ public final class GameTreeDialog extends JDialog
             it.next();
         }
         // show in this debug window, and not the main viewer window.
-        ((TwoPlayerBoardViewer)boardViewer_).showMoveSequence( moveList );
+        ((AbstractTwoPlayerBoardViewer)boardViewer_).showMoveSequence( moveList );
 
     }
 
@@ -351,6 +355,7 @@ public final class GameTreeDialog extends JDialog
     }
 
 
+    @Override
     protected void processWindowEvent( WindowEvent e )
     {
         if ( e.getID() == WindowEvent.WINDOW_CLOSING ) {
@@ -366,8 +371,28 @@ public final class GameTreeDialog extends JDialog
     public synchronized void close()
     {
         // if we set the root to null, then it doesnt have to build the tree
-        controller_.setGameTreeRoot( null );
+        controller_.setGameTreeListener( null );
         setVisible(false);
+    }
+
+    /* --------------- GameTreeViewable implmentation ------------------*/
+    // we need these methods to occur on the event dispatch thread to avoid
+    // threading conflicts that could occur during concurrent rendering.
+
+
+    public void addNode(SearchTreeNode parent, SearchTreeNode child, int i) {
+        parent.insert(child, i);
+    }
+
+    public void addPrunedNodes(List list, SearchTreeNode parent,
+                                                                        int i, int val, int thresh, PruneType type) {
+        parent.addPrunedChildNodes(list, i, val, thresh, type);
+    }
+
+    public void resetTree(TwoPlayerMove p) {
+        root_.removeAllChildren(); // clear it out
+        p.setSelected(true);
+        root_.setUserObject( p );
     }
 
 }

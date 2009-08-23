@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.blockade.test;
 
+import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.blockade.BlockadeController;
 import com.becker.game.twoplayer.blockade.BlockadeMove;

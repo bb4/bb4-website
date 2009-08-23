@@ -26,7 +26,7 @@ public abstract class MultiPlayerNewGameDialog extends NewGameDialog
     private PlayerTable playerTable_;
 
 
-    public MultiPlayerNewGameDialog( JFrame parent, ViewerCallbackInterface viewer)
+    public MultiPlayerNewGameDialog( JFrame parent, GameViewable viewer)
     {
         super( parent, viewer);
         initUI();

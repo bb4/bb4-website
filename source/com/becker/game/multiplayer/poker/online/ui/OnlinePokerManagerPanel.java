@@ -18,7 +18,7 @@ public class OnlinePokerManagerPanel extends MultiPlayerOnlineManagerPanel {
 
     private static final long serialVersionUID = 1;
     
-    public OnlinePokerManagerPanel(ViewerCallbackInterface viewer, ChangeListener dlg) {
+    public OnlinePokerManagerPanel(GameViewable viewer, ChangeListener dlg) {
         super(viewer, dlg);
     }
 

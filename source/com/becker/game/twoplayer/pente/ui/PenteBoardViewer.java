@@ -16,7 +16,7 @@ import java.awt.event.*;
  *
  *  @author Barry Becker
  */
-public class PenteBoardViewer extends TwoPlayerBoardViewer
+public class PenteBoardViewer extends AbstractTwoPlayerBoardViewer
 {
 
     //Construct the application

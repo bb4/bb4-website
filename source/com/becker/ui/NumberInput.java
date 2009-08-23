@@ -97,9 +97,11 @@ public class NumberInput extends JPanel
         double v = Double.parseDouble(text);
         if (v < getMin()) {
             numberField_.setText(""+ getMin());
+            v = getMin();
         }
         else  if (v > getMax()) {
             numberField_.setText(""+ getMax());
+            v = getMax();
         }
         return v;
     }
@@ -121,6 +123,7 @@ public class NumberInput extends JPanel
         return v;
     }
 
+    @Override
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
         getNumberField().setEnabled(enabled);
@@ -130,6 +133,7 @@ public class NumberInput extends JPanel
         return numberField_;
     }
 
+    @Override
     public synchronized void addKeyListener(KeyListener keyListener) {
         getNumberField().addKeyListener(keyListener);
     }
@@ -163,6 +167,7 @@ public class NumberInput extends JPanel
             integerOnly_ = integerOnly;
         }
 
+        @Override
         public void keyTyped( KeyEvent key )  {
             char c = key.getKeyChar();
             if ( c >= 'A' && c <= 'z' ) {

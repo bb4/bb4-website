@@ -21,7 +21,7 @@ public abstract class GameController
     protected Board board_;
 
     /** sometimes we want to draw directly to the ui while thinking (for debugging purposes) . */
-    protected ViewerCallbackInterface viewer_;
+    protected GameViewable viewer_;
 
 
     /** the list of players actively playing the game, in the order that they move. */
@@ -52,7 +52,7 @@ public abstract class GameController
      * optionally set a viewer for the controller.
      * @param viewer
      */
-    public void setViewer(ViewerCallbackInterface viewer)
+    public void setViewer(GameViewable viewer)
     {
        viewer_ = viewer;
     }
@@ -73,7 +73,7 @@ public abstract class GameController
      * @return the class which shows the current state of the game board.
      * May be null if the viewer was never set.
      */
-    public ViewerCallbackInterface getViewer()
+    public GameViewable getViewer()
     {
         return viewer_;
     }
@@ -97,9 +97,9 @@ public abstract class GameController
      * If called before the end of the game it just reutrns 0 - same as it does in the case of a tie.
      * @return some measure of how overwhelming the win was. May need to negate based on which player one.
      */
-    public double getStrengthOfWin()
+    public int getStrengthOfWin()
     {
-        return 0.0;
+        return 0;
     }
 
 

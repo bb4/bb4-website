@@ -34,7 +34,7 @@ public class ChessMove extends TwoPlayerMove
     private ChessMove( byte originRow, byte originCol,
                           byte destinationRow, byte destinationCol,
                           CaptureList captures,
-                          double val, GamePiece piece )
+                          int val, GamePiece piece )
     {
         super( destinationRow, destinationCol, val, piece );
         fromLocation_ = new Location(originRow, originCol);
@@ -51,7 +51,7 @@ public class ChessMove extends TwoPlayerMove
             int originRow, int originCol,
             int destinationRow, int destinationCol,
             CaptureList captures,
-            double val, GamePiece piece )
+            int val, GamePiece piece )
     {
         return new ChessMove( (byte)originRow, (byte)originCol,
                 (byte)destinationRow, (byte)destinationCol, captures, val, piece );
@@ -70,6 +70,7 @@ public class ChessMove extends TwoPlayerMove
     /**
      * make a deep copy of this move.
      */
+    @Override
     public TwoPlayerMove copy()
     {
         CaptureList newList = null;
@@ -96,6 +97,7 @@ public class ChessMove extends TwoPlayerMove
     }
 
 
+    @Override
     public String toString()
     {
         StringBuffer sb = new StringBuffer(super.toString());

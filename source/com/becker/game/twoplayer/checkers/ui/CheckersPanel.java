@@ -31,7 +31,7 @@ public class CheckersPanel extends TwoPlayerPanel
         return new CheckersBoardViewer();
     }
 
-    protected NewGameDialog createNewGameDialog( JFrame parent, ViewerCallbackInterface viewer )
+    protected NewGameDialog createNewGameDialog( JFrame parent, GameViewable viewer )
     {
         return new CheckersNewGameDialog( parent, viewer );
     }

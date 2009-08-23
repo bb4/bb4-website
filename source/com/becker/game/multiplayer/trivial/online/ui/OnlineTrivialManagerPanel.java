@@ -18,7 +18,7 @@ public class OnlineTrivialManagerPanel extends MultiPlayerOnlineManagerPanel {
 
     private static final long serialVersionUID = 1;
     
-    public OnlineTrivialManagerPanel(ViewerCallbackInterface viewer, ChangeListener dlg) {
+    public OnlineTrivialManagerPanel(GameViewable viewer, ChangeListener dlg) {
         super(viewer, dlg);
     }
 

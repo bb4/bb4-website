@@ -36,7 +36,7 @@ class SetOptionsDialog extends MultiGameOptionsDialog
 
         initialNumCards_ =
                 new NumberInput(GameContext.getLabel("INITIAL_NUM_CARDS"), options.getInitialNumCardsShown(),
-                                GameContext.getLabel("INITIAL_NUM_CARDS_TIP"), 8, 16, true);
+                                GameContext.getLabel("INITIAL_NUM_CARDS_TIP"), 8, 81, true);
 
         initMultiControllerParamComponents(options);
         

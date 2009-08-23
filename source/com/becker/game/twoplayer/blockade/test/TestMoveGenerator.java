@@ -65,8 +65,8 @@ public class TestMoveGenerator extends BlockadeTestCase {
         BlockadeWall wall1 = new BlockadeWall((BlockadeBoardPosition) board.getPosition(8, 10), (BlockadeBoardPosition) board.getPosition(9, 10));
         BlockadeWall wall2 = new BlockadeWall((BlockadeBoardPosition) board.getPosition(12, 6), (BlockadeBoardPosition) board.getPosition(12, 7));
 
-        BlockadeMove move1 = BlockadeMove.createMove(8, 11, 6, 11, 0.1, piece2, wall2);
-        BlockadeMove move2 = BlockadeMove.createMove(12,6, 10, 6, 0.1, piece1, wall1);
+        BlockadeMove move1 = BlockadeMove.createMove(8, 11, 6, 11,  1 /*0.1*/, piece2, wall2);
+        BlockadeMove move2 = BlockadeMove.createMove(12,6, 10, 6, 1 /*0.1*/, piece1, wall1);
 
         controller_.makeMove(move1);
         controller_.makeMove(move2);

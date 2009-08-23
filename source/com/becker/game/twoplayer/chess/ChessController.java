@@ -87,7 +87,7 @@ public class ChessController extends CheckersController
      *   a positive value means that player1 has the advantage.
      *   A big negative value means a good move for p2.
      */
-    protected double worth( Move lastMove, ParameterArray weights )
+    protected int worth( Move lastMove, ParameterArray weights )
     {
         int row, col;
         double score = 0;
@@ -120,7 +120,7 @@ public class ChessController extends CheckersController
                 }
             }
         }
-        return score;
+        return (int)score;
     }
 
 

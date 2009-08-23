@@ -2,7 +2,7 @@ package com.becker.game.twoplayer.common.ui;
 
 import com.becker.common.ColorMap;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.common.search.SearchTreeNode;
+import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 
 import javax.swing.*;
 import javax.swing.tree.TreePath;
@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  *  This class takes a root node and displays the portion of the tree visible in the text tree control.
- *  An actual graphicsl tree is shown to represent the game search tree.
+ *  An actual graphics tree is shown to represent the game search tree.
  *
  *  @author Barry Becker
  */
@@ -47,7 +47,7 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
     private int width_;
     private int levelHeight_;
 
-    // most recently highlighted path
+    /** most recently highlighted path. */
     private TreePath oldHighlightPath_;
 
 
@@ -91,6 +91,7 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
     /**
      * @param c  the new color of the tree.
      */
+    @Override
     public synchronized void setBackground( Color c )
     {
         backgroundColor_ = c;

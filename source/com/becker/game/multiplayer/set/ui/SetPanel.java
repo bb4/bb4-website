@@ -37,7 +37,7 @@ public class SetPanel extends GamePanel
         return new SetGameViewer();
     }
 
-    protected NewGameDialog createNewGameDialog( JFrame parent, ViewerCallbackInterface viewer )
+    protected NewGameDialog createNewGameDialog( JFrame parent, GameViewable viewer )
     {
         return new SetNewGameDialog( parent, viewer );
     }

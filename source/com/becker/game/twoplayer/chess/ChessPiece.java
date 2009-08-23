@@ -2,7 +2,6 @@ package com.becker.game.twoplayer.chess;
 
 import com.becker.game.common.*;
 import com.becker.game.common.Move;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,6 +9,9 @@ import java.util.List;
  *  The ChessChessBoardPosition describes the physical marker at a location on the board.
  *  A ChessPiece is either empty or contains one of the standard chess pieces.
  *  This class has in it the rules for how each chess move can move.
+ *
+ * @@ make this an enum with findMoves as an abstract method.
+ *  The images and label could also be part of the enum.
  *
  * @see ChessBoard
  * @author Barry Becker
@@ -36,6 +38,7 @@ public class ChessPiece extends GamePiece
     /**
      *  create a deep copy of the position.
      */
+    @Override
     public GamePiece copy()
     {
         ChessPiece p = new ChessPiece( ownedByPlayer1_, type_);
@@ -44,6 +47,7 @@ public class ChessPiece extends GamePiece
         return p;
     }
 
+    @Override
     public void copy(GamePiece p)
     {
         super.copy(p);
@@ -73,12 +77,12 @@ public class ChessPiece extends GamePiece
      * @param lastMove the most recently made move.
      * @return a list of legal moves for this piece to make
      */
-    public List findPossibleMoves(Board board, int row, int col, Move lastMove)
+    public List<ChessMove> findPossibleMoves(Board board, int row, int col, Move lastMove)
     {
-        List moveList = null;
+        List<ChessMove> moveList = null;
 
         switch (type_) {
-            case PAWN : moveList = findPawnMoves(board, row, col, lastMove); break;
+            case PAWN : moveList = findPawnMoves(board, row, col); break;
             case ROOK : moveList = findRookMoves(board, row, col, lastMove); break;
             case KNIGHT : moveList = findKnightMoves(board, row, col, lastMove); break;
             case BISHOP : moveList = findBishopMoves(board, row, col, lastMove); break;
@@ -93,9 +97,9 @@ public class ChessPiece extends GamePiece
      * Find all the legal moves that this pawn can make.
      * @return list of legal pawn moves.
      */
-    private List findPawnMoves(Board board, int row, int col, Move lastMove)
+    private List<ChessMove> findPawnMoves(Board board, int row, int col)
     {
-        List moveList = new LinkedList();
+        List<ChessMove> moveList = new LinkedList<ChessMove>();
 
         int direction = -1;
         if ( isOwnedByPlayer1() )
@@ -118,7 +122,8 @@ public class ChessPiece extends GamePiece
      * see if its legal to move the pawn forward numSteps. If so, add it to the moveList.
      * @return moveList list of legal moves discovered so far.
      */
-    private List checkPawnForward(int row, int col, int direction, int numSteps, Board b, List moveList)
+    private List checkPawnForward(int row, int col, int direction, int numSteps, Board b, 
+                                                         List<ChessMove> moveList)
     {
         BoardPosition next =  b.getPosition( row + numSteps*direction, col );
         checkForNonCapture(next, row, col, moveList);
@@ -130,7 +135,8 @@ public class ChessPiece extends GamePiece
      * If so, add it to the moveList.
      * @return moveList list of legal moves discovered so far.
      */
-    private List checkPawnDiagonal(int row, int col, int direction, int colInc, Board b, List moveList)
+    private List<ChessMove> checkPawnDiagonal(int row, int col, int direction, int colInc, Board b,
+                                                                               List<ChessMove> moveList)
     {
         BoardPosition diag =  b.getPosition( row + direction, col + colInc );
         return checkForCapture(diag, row, col, moveList);
@@ -141,9 +147,9 @@ public class ChessPiece extends GamePiece
      * @@ allow castling as an option the first time it as moved.
      * @return list of possible moves.
      */
-    private List findRookMoves(Board board, int row, int col, Move lastMove)
+    private List<ChessMove> findRookMoves(Board board, int row, int col, Move lastMove)
     {
-        List moveList = new LinkedList();
+        List<ChessMove> moveList = new LinkedList<ChessMove>();
 
         // consider horixontal and vertical directions.
         checkRunDirection(row, col, 1, 0,  board, moveList);
@@ -158,9 +164,9 @@ public class ChessPiece extends GamePiece
      * find all the moves for this bishop given the current board configuration.
      * @return list of possible moves
      */
-    private List findBishopMoves(Board board, int row, int col, Move lastMove)
+    private List<ChessMove> findBishopMoves(Board board, int row, int col, Move lastMove)
     {
-        List moveList = new LinkedList();
+        List<ChessMove> moveList = new LinkedList<ChessMove>();
 
         // consider the 4 diagonal directions.
         checkRunDirection(row, col, 1, 1,  board, moveList);
@@ -175,14 +181,14 @@ public class ChessPiece extends GamePiece
      * find all the moves for this queen given the current board configuration.
      * @return list of possible moves.
      */
-    private List findQueenMoves(Board board, int row, int col, Move lastMove)
+    private List<ChessMove> findQueenMoves(Board board, int row, int col, Move lastMove)
     {
-        List moveList = new LinkedList();
+        List<ChessMove> moveList = new LinkedList<ChessMove>();
 
         // the set of queen moves equals rook type moves and bishop type moves.
         // all 8 directions are covered by this.
-        List rookMoveList = findRookMoves(board, row, col, lastMove);
-        List bishopMoveList = findBishopMoves(board, row, col,  lastMove);
+        List<ChessMove> rookMoveList = findRookMoves(board, row, col, lastMove);
+        List<ChessMove> bishopMoveList = findBishopMoves(board, row, col,  lastMove);
 
         moveList.addAll(rookMoveList);
         moveList.addAll(bishopMoveList);
@@ -200,7 +206,7 @@ public class ChessPiece extends GamePiece
      * there are 8 postitions that the knight can move to, but only some may be legal.
      * @return list of possible moves.
      */
-    private List findKnightMoves(Board board, int row, int col, Move lastMove)
+    private List<ChessMove> findKnightMoves(Board board, int row, int col, Move lastMove)
     {
         return getEightDirectionalMoves(board, row, col, lastMove, knightMoveRow_, knightMoveCol_);
     }
@@ -215,7 +221,7 @@ public class ChessPiece extends GamePiece
      * We do not allow a king to move to a position that would put it in check.
      * @return list of possible moves.
      */
-    private List findKingMoves(Board board, int row, int col, Move lastMove)
+    private List<ChessMove> findKingMoves(Board board, int row, int col, Move lastMove)
     {
         return getEightDirectionalMoves(board, row, col, lastMove, kingMoveRow_, kingMoveCol_);
     }
@@ -225,9 +231,9 @@ public class ChessPiece extends GamePiece
      * find moves for kings or knights which have 8 possible moves.
      * @return  those moves which are valid out of the eight possible that are checked.
      */
-    private List getEightDirectionalMoves(Board board, int row, int col, Move lastMove, int[] rowOffsets, int[] colOffsets)
+    private List<ChessMove> getEightDirectionalMoves(Board board, int row, int col, Move lastMove, int[] rowOffsets, int[] colOffsets)
     {
-        List moveList = new LinkedList();
+        List<ChessMove> moveList = new LinkedList<ChessMove>();
 
         for (int i=0; i<8; i++) {
             BoardPosition next =
@@ -243,7 +249,8 @@ public class ChessPiece extends GamePiece
      * @param moveList the accumulated possible moves
      * @return moveList
      */
-    private List checkRunDirection(int curRow, int curCol, int rowDir, int colDir, Board board, List moveList)
+    private List<ChessMove> checkRunDirection(int curRow, int curCol, int rowDir, int colDir, Board board,
+                                                       List<ChessMove> moveList)
     {
       // loop through all spaces between this piece and the next piece or the edge of the board.
       // if the next piece encountered in the specified direction is an opponent piece, then capture it.
@@ -272,11 +279,11 @@ public class ChessPiece extends GamePiece
      * @param moveList current list of legal moves for this piece
      * @return all current legal moves plus the capture if there is one
      */
-    private List checkForNonCapture(BoardPosition next, int row, int col, List moveList)
+    private List<ChessMove> checkForNonCapture(BoardPosition next, int row, int col, List<ChessMove> moveList)
     {
         if ( (next != null) &&  next.isUnoccupied()) {
             ChessMove m = ChessMove.createMove(row, col, next.getRow(), next.getCol(),
-                                                null, 0.0, this );
+                                                null, 0, this );
             moveList.add( m );
         }
         return moveList;
@@ -288,7 +295,7 @@ public class ChessPiece extends GamePiece
      * @param moveList current list of legal moves for this piece
      * @return all current legal moves plus the capture if there is one
      */
-    private List checkForCapture(BoardPosition next, int row, int col, List moveList)
+    private List<ChessMove> checkForCapture(BoardPosition next, int row, int col, List<ChessMove> moveList)
     {
         if ( (next != null) &&  next.isOccupied() && (next.getPiece().isOwnedByPlayer1() != isOwnedByPlayer1())) {
             // there can only be one capture in chess.
@@ -301,6 +308,7 @@ public class ChessPiece extends GamePiece
         return moveList;
     }
 
+    @Override
     public String toString()
     {
         StringBuffer sb = new StringBuffer( super.toString() );

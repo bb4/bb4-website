@@ -345,7 +345,7 @@ public final class GoBoard extends TwoPlayerBoard
     /**
      * This version assumes that the stone is occupied.
      */
-    public Set getGroupNeighbors( GoBoardPosition position, boolean samePlayerOnly )
+    public Set<GoBoardPosition> getGroupNeighbors( GoBoardPosition position, boolean samePlayerOnly )
     {
         assert (position != null);
         assert (position.getPiece() != null);

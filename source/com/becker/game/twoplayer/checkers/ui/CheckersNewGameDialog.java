@@ -15,7 +15,7 @@ public class CheckersNewGameDialog extends TwoPlayerNewGameDialog implements Act
 {
 
     // constructor
-    public CheckersNewGameDialog( JFrame parent, ViewerCallbackInterface viewer )
+    public CheckersNewGameDialog( JFrame parent, GameViewable viewer )
     {
         super( parent, viewer );
     }

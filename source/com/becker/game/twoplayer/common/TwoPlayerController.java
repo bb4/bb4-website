@@ -5,10 +5,11 @@ import com.becker.common.Worker;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.persistence.TwoPlayerGameExporter;
 import com.becker.game.twoplayer.common.persistence.TwoPlayerGameImporter;
-import com.becker.game.twoplayer.common.search.AbstractSearchStrategy;
-import com.becker.game.twoplayer.common.search.SearchStrategy;
-import com.becker.game.twoplayer.common.search.SearchTreeNode;
+import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
+import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
 import com.becker.game.twoplayer.common.search.Searchable;
+import com.becker.game.twoplayer.common.search.tree.GameTreeViewable;
+import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.Optimizer;
 import com.becker.optimization.OptimizationType;
@@ -39,10 +40,13 @@ public abstract class TwoPlayerController extends GameController
     // they may be modified through the ui (see GameOptionsDialog)
     // -- these other constants anything
     /** anything greater than this is considered a won game  */
-    public static final double WINNING_VALUE = SearchStrategy.WINNING_VALUE;
+    public static final int WINNING_VALUE = SearchStrategy.WINNING_VALUE;
 
     /** Np matter wha tthe percentBestMoves is we should not prune if less than this number. */
     private static final int MIN_BEST_MOVES = 10;
+
+    /** not really infinty, but close enough for our purposes. */
+    private static final int INFINITY = Integer.MAX_VALUE-1;
 
     protected boolean player1sTurn_ = true;
 
@@ -54,7 +58,7 @@ public abstract class TwoPlayerController extends GameController
     private SearchStrategy strategy_;
 
     /** if this becomes non-null, we will fill in the game tree for display in a UI. */
-    private SearchTreeNode root_;
+    private GameTreeViewable gameTreeListener_;
 
     /** Worker represents a separate thread for computing the next move. */
     private Worker worker_;
@@ -90,9 +94,9 @@ public abstract class TwoPlayerController extends GameController
         return (TwoPlayerOptions) getOptions();
     }
 
-    public TwoPlayerViewerCallbackInterface get2PlayerViewer()
+    public TwoPlayerViewable get2PlayerViewer()
     {
-       return (TwoPlayerViewerCallbackInterface)viewer_;
+       return (TwoPlayerViewable)viewer_;
     }
 
 
@@ -231,11 +235,11 @@ public abstract class TwoPlayerController extends GameController
      * @return some measure of how overwhelming the win was. May need to negate based on which player one.
      */
     @Override
-    public double getStrengthOfWin()
+    public int getStrengthOfWin()
     {
         if (!( getPlayer1().hasWon() || getPlayer2().hasWon()))
-            return 0.0;
-        return 50.0 / (float)getNumMoves();
+            return 0;
+        return 50 / getNumMoves();
     }
 
 
@@ -312,19 +316,23 @@ public abstract class TwoPlayerController extends GameController
             weights = weights_.getPlayer1Weights();
         else
             weights = weights_.getPlayer2Weights();
-        if ( root_ != null ) {
-            root_.removeAllChildren(); // clear it out
-            p.setSelected(true);
-            root_.setUserObject( p );
+        if ( gameTreeListener_ != null ) {
+            gameTreeListener_.resetTree(p);
         }
 
         /////////////////////// SEARCH //////////////////////////////////////////////////////
         strategy_ = getTwoPlayerOptions().getSearchStrategy(getSearchable());
 
+        SearchTreeNode root = null;
+        if (gameTreeListener_ != null) {
+            strategy_.setGameTreeEventListener(gameTreeListener_);
+            root = gameTreeListener_.getRootNode();
+        }
+
         TwoPlayerMove selectedMove =
                 strategy_.search( p, weights, getSearchable().getLookAhead(), 0,
-                                  Integer.MAX_VALUE, Integer.MIN_VALUE, root_ );
-        /////////////////////////////////////////////////////////////////////////////////////
+                                  INFINITY, -INFINITY, root );
+        /////////////////////////////////////////////////////////////////////////////////////////
 
         if ( selectedMove != null ) {
             makeMove( selectedMove );
@@ -419,6 +427,7 @@ public abstract class TwoPlayerController extends GameController
                 return move_;
             }
 
+            @Override
             public void finished() {
                 processing_ = false;
                 if (get2PlayerViewer() != null)  {
@@ -507,23 +516,24 @@ public abstract class TwoPlayerController extends GameController
     }
 
     /**
-     * if desired we can set a game tree root. If non-null then this
-     * tree will get filled in as the search is conducted. It can then be
-     * viewed in the GameTreeDialog or some other UI.
+     * if desired we can set a game tree listener. If non-null then this
+     * will be updated as the search is conducted. The GameTreeDialog
+     * is an example of something that implements this interface and can
+     * be used to view the game tree as the search is progressing.
      *
      * Here's how the GameTreeDialog is able to show the game tree:
      * When the user indicates that they want to see the GameTreeDialog,
-     * the game panel gives the tree from the GameTreeDialog to the Controller:
-     * controller_.setGameTreeRoot( treeDialog_.getRootNode() );
+     * the game panel gives the GameTreeDialog to the Controller:
+     * controller_.setGameTreeListener( treeDialog_ );
      * Then whenever a move by either party occurs, the GameTreeDialog recieves
-     * a game changed event. The GameTreeDialog renders the tree that was build up during search.
+     * a game tree event. The GameTreeDialog renders the tree that was build up during search.
      * It already has a reference to the root of the tree.
-     * If this method is never called, root_ remains null, and the controller
-     * knows that it should not bother to create the tree when searching.
+     * If this method is never called, the controller knows
+     * that it should not bother to create the tree when searching.
      */
-    public final void setGameTreeRoot( SearchTreeNode root )
+    public final void setGameTreeListener( GameTreeViewable gameTreeListener )
     {
-        root_ = root;
+        gameTreeListener_ = gameTreeListener;
     }
 
 
@@ -545,16 +555,18 @@ public abstract class TwoPlayerController extends GameController
      *  @param player1sPerspective if true, evaluate the board from p1's perspective, else p2's.
      *  @return the worth of the board from the specified players point of view
      */
-    public final double worth( Move lastMove, ParameterArray weights, boolean player1sPerspective )
+    public final int worth( Move lastMove, ParameterArray weights, boolean player1sPerspective )
     {
-        double value = worth( lastMove, weights );
+        int value = worth( lastMove, weights );
         return (player1sPerspective) ? value : -value;
     }
 
     /**
      * Evaluates from player 1's perspective
+     * @return an integer value for the worth of the move.
+     *  must be between -SearchStrategy.WINNING_VALUE and SearchStrategy.WINNING_VALUE.
      */
-    protected abstract double worth( Move lastMove, ParameterArray weights );
+    protected abstract int worth( Move lastMove, ParameterArray weights );
 
     /**
      * Take the list of all possible next moves and return just the top bestPercentage of them 
@@ -573,7 +585,8 @@ public abstract class TwoPlayerController extends GameController
         Collections.sort( moveList );
 
         // reverse the order so the best move (using static board evaluation) is first
-        if ( player1 == player1sPerspective ) {
+        SearchStrategyType searchType = ((TwoPlayerOptions) getOptions()).getSearchStrategyMethod();
+        if ( searchType.sortAscending(player1, player1sPerspective)) {
            Collections.reverse( moveList );
         }
 

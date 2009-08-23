@@ -10,7 +10,7 @@ import com.becker.game.common.ui.GameChangedListener;
 import com.becker.game.common.ui.GamePieceRenderer;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.common.TwoPlayerViewerCallbackInterface;
+import com.becker.game.twoplayer.common.TwoPlayerViewable;
 import com.becker.optimization.parameter.ParameterArray;
 
 import javax.swing.*;
@@ -47,8 +47,8 @@ import java.text.MessageFormat;
  *
  *  @author Barry Becker
  */
-public abstract class TwoPlayerBoardViewer extends GameBoardViewer
-                      implements GameChangedListener, TwoPlayerViewerCallbackInterface
+public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
+                      implements GameChangedListener, TwoPlayerViewable
 {
 
     private static final int PROGRESS_UPDATE_DELAY = 700;
@@ -71,7 +71,7 @@ public abstract class TwoPlayerBoardViewer extends GameBoardViewer
     /**
      * Construct the viewer.
      */
-    public TwoPlayerBoardViewer()
+    public AbstractTwoPlayerBoardViewer()
     {
         controller_.setViewer(this);
     }

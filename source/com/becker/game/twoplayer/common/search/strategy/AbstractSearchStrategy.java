@@ -1,8 +1,11 @@
-package com.becker.game.twoplayer.common.search;
+package com.becker.game.twoplayer.common.search.strategy;
 
-import com.becker.common.util.Util;
+import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
+import com.becker.game.twoplayer.common.search.tree.PruneType;
+import com.becker.game.twoplayer.common.search.*;
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.twoplayer.common.search.tree.GameTreeViewable;
 import com.becker.optimization.parameter.ParameterArray;
 
 import java.util.List;
@@ -42,6 +45,10 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
     /** The user can sometimes interrupt the search. */
     protected boolean interrupted_ = false;
 
+    /** The optional ui component that will be updated to reflect the current search tree.  */
+    protected GameTreeViewable gameTreeListener_;
+
+
     /**
      * Construct the strategy.
      * do not call directly. Use createSearchStrategy factory method instead.
@@ -66,15 +73,15 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
     /**
      * add a move to the visual game tree (if parent not null).
      */
-    static SearchTreeNode addNodeToTree( SearchTreeNode parent, TwoPlayerMove theMove,
+    protected SearchTreeNode addNodeToTree( SearchTreeNode parent, TwoPlayerMove theMove,
                                          int alpha, int beta, int i )
     {
         SearchTreeNode child = null;
-        if ( parent != null ) {
+        if (gameTreeListener_ != null) {
             child = new SearchTreeNode( theMove );
             child.setAlpha(alpha);
             child.setBeta(beta);
-            parent.insert( child, i );
+            gameTreeListener_.addNode(parent, child, i);
         }
         return child;
     }
@@ -84,16 +91,17 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
      *
      * @param list of pruned nodes
      * @param parent the tree node entry above the current position.
+     * @param i th child.
      * @param val the worth of the node/move
      * @param thresh the alpha or beta threshold compared to.
      * @param type either PRUNE_ALPHA or PRUNE_BETA - pruned by comparison with Alpha or Beta.
-     * @param i th child.
      */
-    static void showPrunedNodesInTree( List list, SearchTreeNode parent,
-                                                                   int i, int val, int thresh, PruneType type)
+    protected void showPrunedNodesInTree( List list, SearchTreeNode parent,
+                                                                        int i, int val, int thresh, PruneType type)
     {
-        if (parent != null)
-            parent.addPrunedChildNodes(list, i, val, thresh, type);
+        if (gameTreeListener_ != null) {
+            gameTreeListener_.addPrunedNodes(list, parent, i, val, thresh, type);
+        }
     }
 
     /**
@@ -121,6 +129,15 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
     {
         return percentDone_;
     }
+
+    /**
+     * Set an optional ui component that will update when the search tree is modified.
+     * @param listener
+     */
+    public void setGameTreeEventListener(GameTreeViewable listener) {
+        gameTreeListener_ = listener;
+    }
+
 
     // these methods give an external thread debugging controls over the search
 

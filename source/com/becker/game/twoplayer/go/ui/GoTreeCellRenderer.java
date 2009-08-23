@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.go.ui;
 
+import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.common.*;
 import com.becker.common.util.Util;
 import com.becker.game.twoplayer.common.*;

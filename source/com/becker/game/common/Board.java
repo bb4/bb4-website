@@ -80,6 +80,10 @@ public abstract class Board implements BoardInterface, Cloneable
         return numCols_;
     }
 
+    /**
+     * @@ consider making a defensive copy to avoid concurrent modification exception.
+     * @return
+     */
     public LinkedList<Move> getMoveList() {
         return moveList_;
     }

@@ -18,7 +18,7 @@ public class SetNewGameDialog extends MultiPlayerNewGameDialog
     /**
      * constructor.
      */
-    public SetNewGameDialog( JFrame parent, ViewerCallbackInterface viewer )
+    public SetNewGameDialog( JFrame parent, GameViewable viewer )
     {
         super( parent, viewer );
     }

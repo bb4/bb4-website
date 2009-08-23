@@ -111,7 +111,7 @@ public abstract class TwoPlayerPanel extends GamePanel
      */
     protected GameTreeDialog createGameTreeDialog()
     {
-        TwoPlayerBoardViewer v = (TwoPlayerBoardViewer)createBoardViewer();
+        AbstractTwoPlayerBoardViewer v = (AbstractTwoPlayerBoardViewer)createBoardViewer();
         v.setViewOnly( true ); // we don't want it to recieve click events
         return new GameTreeDialog( null, v, new GameTreeCellRenderer((TwoPlayerPieceRenderer)v.getPieceRenderer()) );
     }
@@ -124,7 +124,7 @@ public abstract class TwoPlayerPanel extends GamePanel
          // take the root from the treeDialog and set it on the TwoPlayerController so it can
          // create the tree and allow the treeDialog to show it when the
          // change event happens.
-         get2PlayerController().setGameTreeRoot( treeDialog_.getRootNode() );
+         get2PlayerController().setGameTreeListener( treeDialog_ );
          treeDialog_.setVisible(true);
     }
 
@@ -139,7 +139,7 @@ public abstract class TwoPlayerPanel extends GamePanel
     public void actionPerformed( ActionEvent e )
     {
         Object source = e.getSource();
-        TwoPlayerBoardViewer v = (TwoPlayerBoardViewer)boardViewer_;
+        AbstractTwoPlayerBoardViewer v = (AbstractTwoPlayerBoardViewer)boardViewer_;
 
         if ( source == toolBar_.getNewGameButton()) {
             //newGameDialog_.setLocationRelativeTo( this );

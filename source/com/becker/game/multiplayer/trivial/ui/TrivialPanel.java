@@ -30,7 +30,7 @@ public class TrivialPanel extends GamePanel
         return new TrivialGameViewer();
     }
 
-    protected NewGameDialog createNewGameDialog( JFrame parent, ViewerCallbackInterface viewer ) {
+    protected NewGameDialog createNewGameDialog( JFrame parent, GameViewable viewer ) {
         return new TrivialNewGameDialog( parent, viewer );
     }
 
