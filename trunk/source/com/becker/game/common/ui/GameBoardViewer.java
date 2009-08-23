@@ -28,7 +28,7 @@ import java.util.List;
  *  @author Barry Becker
  */
 public abstract class GameBoardViewer extends JPanel
-                                                                  implements ViewerCallbackInterface,
+                                                                  implements GameViewable,
                                                                                       MouseListener, GameChangedListener
 {
 
@@ -40,8 +40,9 @@ public abstract class GameBoardViewer extends JPanel
 
     private static JFileChooser chooser_ = null;
 
-    // for firing events
+    /** for dispatching events */
     private final EventQueue evtq_;
+    /** list of listeners for handling those events. */
     private final List<GameChangedListener> gameListeners_ = new ArrayList<GameChangedListener>();
 
     protected JProgressBar progressBar_ = null;

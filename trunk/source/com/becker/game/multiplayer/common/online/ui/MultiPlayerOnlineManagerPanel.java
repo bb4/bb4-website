@@ -41,7 +41,7 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
     /**
      * Constructor
      */
-    public MultiPlayerOnlineManagerPanel(ViewerCallbackInterface viewer, ChangeListener dlg) {
+    public MultiPlayerOnlineManagerPanel(GameViewable viewer, ChangeListener dlg) {
         super(viewer, dlg);
     }
 

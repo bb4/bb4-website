@@ -34,7 +34,7 @@ public class ChessPanel extends TwoPlayerPanel
         return new ChessBoardViewer();
     }
 
-    protected NewGameDialog createNewGameDialog( JFrame parent, ViewerCallbackInterface viewer )
+    protected NewGameDialog createNewGameDialog( JFrame parent, GameViewable viewer )
     {
         return new ChessNewGameDialog( parent, viewer );
     }

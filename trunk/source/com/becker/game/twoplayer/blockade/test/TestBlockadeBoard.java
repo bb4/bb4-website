@@ -156,60 +156,60 @@ public class TestBlockadeBoard extends BlockadeTestCase {
 
     private static final BlockadeMove[][] moves1 =  {
                 {
-                    new BlockadeMove(6,4,  8,4, 0.0, new GamePiece(false), null),
-                    new BlockadeMove(8,4,  10,4, 0.0, null, null),
-                    new BlockadeMove(10,4,  11,5, 0.0, null, null),
-                    new BlockadeMove(11,5,  11,7, 0.0, null, null),
-                    new BlockadeMove(11,7,  11,8, 0.0, null, null),
+                    new BlockadeMove(6,4,  8,4, 0, new GamePiece(false), null),
+                    new BlockadeMove(8,4,  10,4, 0, null, null),
+                    new BlockadeMove(10,4,  11,5, 0, null, null),
+                    new BlockadeMove(11,5,  11,7, 0, null, null),
+                    new BlockadeMove(11,7,  11,8, 0, null, null),
                 },
                 {
-                    new BlockadeMove(6,4,  8,4, 0.0, new GamePiece(false), null),
-                    new BlockadeMove(8,4,  10,4, 0.0, null, null),
-                    new BlockadeMove(10,4,  10,2, 0.0, null, null),
-                    new BlockadeMove(10,2,  11,3, 0.0, null, null),
-                    new BlockadeMove(11,3,  11,4, 0.0, null, null),
+                    new BlockadeMove(6,4,  8,4, 0, new GamePiece(false), null),
+                    new BlockadeMove(8,4,  10,4, 0, null, null),
+                    new BlockadeMove(10,4,  10,2, 0, null, null),
+                    new BlockadeMove(10,2,  11,3, 0, null, null),
+                    new BlockadeMove(11,3,  11,4, 0, null, null),
                 },
                 {
-                    new BlockadeMove(8,8,  10,8, 0.0, new GamePiece(false), null),
-                    new BlockadeMove(10,8,  11,9, 0.0, null, null),
-                    new BlockadeMove(11,9,  11,8, 0.0, null, null),
+                    new BlockadeMove(8,8,  10,8, 0, new GamePiece(false), null),
+                    new BlockadeMove(10,8,  11,9, 0, null, null),
+                    new BlockadeMove(11,9,  11,8, 0, null, null),
                 },
                 {
-                    new BlockadeMove(8,8,  10,8, 0.0, new GamePiece(false), null),
-                    new BlockadeMove(10,8,  10,6, 0.0, null, null),
-                    new BlockadeMove(10,6,  12,6, 0.0, null, null),
-                    new BlockadeMove(12,6,  13,5, 0.0, null, null),
-                    new BlockadeMove(13,5,  12,4, 0.0, null, null),
-                    new BlockadeMove(12,4,  11,4, 0.0, null, null),
+                    new BlockadeMove(8,8,  10,8, 0, new GamePiece(false), null),
+                    new BlockadeMove(10,8,  10,6, 0, null, null),
+                    new BlockadeMove(10,6,  12,6, 0, null, null),
+                    new BlockadeMove(12,6,  13,5, 0, null, null),
+                    new BlockadeMove(13,5,  12,4, 0, null, null),
+                    new BlockadeMove(12,4,  11,4, 0, null, null),
                 },           
     };
 
 
     private static final BlockadeMove[][] moves2 =  {
             {
-                new BlockadeMove(8,3,  6,3, 0.0, new GamePiece(true), null),
-                new BlockadeMove(6,3,  5,4, 0.0, null, null),
-                new BlockadeMove(5,4,  4,4, 0.0, null, null),
+                new BlockadeMove(8,3,  6,3, 0, new GamePiece(true), null),
+                new BlockadeMove(6,3,  5,4, 0, null, null),
+                new BlockadeMove(5,4,  4,4, 0, null, null),
             },
             {
-                new BlockadeMove(8,3,  6,3, 0.0, new GamePiece(true), null),
-                new BlockadeMove(6,3,  5,4, 0.0, null, null),
-                new BlockadeMove(5,4,  4,4, 0.0, null, null),
-                new BlockadeMove(4,4,  4,6, 0.0, null, null),
-                new BlockadeMove(4,6,  4,8, 0.0, null, null),
+                new BlockadeMove(8,3,  6,3, 0, new GamePiece(true), null),
+                new BlockadeMove(6,3,  5,4, 0, null, null),
+                new BlockadeMove(5,4,  4,4, 0, null, null),
+                new BlockadeMove(4,4,  4,6, 0, null, null),
+                new BlockadeMove(4,6,  4,8, 0, null, null),
             },
             {
-                new BlockadeMove(9,8,  8,9, 0.0, new GamePiece(true), null),
-                new BlockadeMove(8,9,  6,9, 0.0, null, null),
-                new BlockadeMove(6,9,  4,9, 0.0, null, null),
-                new BlockadeMove(4,9,  4,8, 0.0, null, null),
+                new BlockadeMove(9,8,  8,9, 0, new GamePiece(true), null),
+                new BlockadeMove(8,9,  6,9, 0, null, null),
+                new BlockadeMove(6,9,  4,9, 0, null, null),
+                new BlockadeMove(4,9,  4,8, 0, null, null),
             },
             {
-                new BlockadeMove(9,8,  7,8, 0.0, new GamePiece(true), null),
-                new BlockadeMove(7,8,  7,6, 0.0, null, null),
-                new BlockadeMove(7,6,  7,4, 0.0, null, null),
-                new BlockadeMove(7,4,  5,4, 0.0, null, null),
-                new BlockadeMove(5,4,  4,4, 0.0, null, null),
+                new BlockadeMove(9,8,  7,8, 0, new GamePiece(true), null),
+                new BlockadeMove(7,8,  7,6, 0, null, null),
+                new BlockadeMove(7,6,  7,4, 0, null, null),
+                new BlockadeMove(7,4,  5,4, 0, null, null),
+                new BlockadeMove(5,4,  4,4, 0, null, null),
             }
     };
 
@@ -314,8 +314,8 @@ public class TestBlockadeBoard extends BlockadeTestCase {
         BlockadeWall wall1 = new BlockadeWall((BlockadeBoardPosition) board.getPosition(8, 10), (BlockadeBoardPosition) board.getPosition(9, 10));
         BlockadeWall wall2 = new BlockadeWall((BlockadeBoardPosition) board.getPosition(12, 6), (BlockadeBoardPosition) board.getPosition(12, 7));
 
-        BlockadeMove move1 = BlockadeMove.createMove(8, 11, 6, 11, 0.1, piece2, wall2);
-        BlockadeMove move2 = BlockadeMove.createMove(12,6, 10, 6, 0.1, piece1, wall1);
+        BlockadeMove move1 = BlockadeMove.createMove(8, 11, 6, 11, 1 /*0.1*/, piece2, wall2);
+        BlockadeMove move2 = BlockadeMove.createMove(12,6, 10, 6,  1 /*0.1*/, piece1, wall1);
 
         controller_.makeMove(move1);
         controller_.makeMove(move2);

@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.go.test;
 
+import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
 import com.becker.game.twoplayer.go.board.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.GoGroup;
 import com.becker.game.twoplayer.go.board.GoBoard;

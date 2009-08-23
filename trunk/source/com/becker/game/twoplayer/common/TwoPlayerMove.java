@@ -34,7 +34,7 @@ public class TwoPlayerMove extends Move
      * It gets inherited from its descendants. It would be the real (perfect)
      * value of the position if the game tree is complete (which rarely happens in practice)
      */
-    private double inheritedValue_;
+    private int inheritedValue_;
 
     /**
      * true if player1 made the move
@@ -79,7 +79,7 @@ public class TwoPlayerMove extends Move
      * create a move object representing a transition on the board.
      */
     protected TwoPlayerMove( int destinationRow, int destinationCol,
-                    double val, GamePiece p )
+                    int val, GamePiece p )
     {
         toLocation_ = new Location(destinationRow, destinationCol);
 
@@ -96,7 +96,7 @@ public class TwoPlayerMove extends Move
      * factory method for getting new moves. It uses recycled objects if possible.
      */
     public static TwoPlayerMove createMove( int destinationRow, int destinationCol,
-                                   double val, GamePiece piece )
+                                   int val, GamePiece piece )
     {
         return new TwoPlayerMove(destinationRow, destinationCol, val ,piece);
     }
@@ -105,7 +105,7 @@ public class TwoPlayerMove extends Move
      * factory method for getting new moves. It uses recycled objects if possible.
      */
     public static TwoPlayerMove createMove( Location destinationLocation,
-                                   double val, GamePiece piece )
+                                   int val, GamePiece piece )
     {
         return new TwoPlayerMove(destinationLocation.getRow(), destinationLocation.getCol(), val, piece );
     }
@@ -162,11 +162,11 @@ public class TwoPlayerMove extends Move
         return isPass_;
     }
 
-    public double getInheritedValue() {
+    public int getInheritedValue() {
         return inheritedValue_;
     }
 
-    public void setInheritedValue(double inheritedValue) {
+    public void setInheritedValue(int inheritedValue) {
         this.inheritedValue_ = inheritedValue;
     }
 

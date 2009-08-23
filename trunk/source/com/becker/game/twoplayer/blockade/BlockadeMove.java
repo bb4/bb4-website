@@ -30,7 +30,7 @@ public class BlockadeMove extends TwoPlayerMove
      */
     public BlockadeMove( int originRow, int originCol,
                           int destinationRow, int destinationCol,
-                          double val, GamePiece piece, BlockadeWall w)
+                          int val, GamePiece piece, BlockadeWall w)
     {
         super( destinationRow, destinationCol, val,  piece );
         fromLocation_ = new Location(originRow, originCol);
@@ -48,7 +48,7 @@ public class BlockadeMove extends TwoPlayerMove
     public static BlockadeMove createMove(
             int originRow, int originCol,
             int destinationRow, int destinationCol,
-            double val, GamePiece piece, BlockadeWall w)
+            int val, GamePiece piece, BlockadeWall w)
     {
         BlockadeMove m = new BlockadeMove( (byte)originRow, (byte)originCol,
                 (byte)destinationRow, (byte)destinationCol, val,  piece, w);

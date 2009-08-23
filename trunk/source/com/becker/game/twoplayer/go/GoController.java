@@ -143,9 +143,9 @@ public final class GoController extends TwoPlayerController
      * @return some measure of how overwhelming the win was. May need to negate based on which player one.
      */
     @Override
-    public double getStrengthOfWin()
+    public int getStrengthOfWin()
     {
-        return Math.abs(getFinalScore(true) - getFinalScore(false));
+        return (int)Math.abs(getFinalScore(true) - getFinalScore(false));
     }
 
     /**
@@ -256,7 +256,7 @@ public final class GoController extends TwoPlayerController
      *   a positive value means that player1 has the advantage.
      *   A big negative value means a good move for p2.
      */
-    protected double worth( Move lastMove, ParameterArray weights )
+    protected int worth( Move lastMove, ParameterArray weights )
     {
         int row, col;
         double worth;
@@ -297,7 +297,7 @@ public final class GoController extends TwoPlayerController
             // then the margin is too great
             return WINNING_VALUE;
         }
-        return worth;
+        return (int)worth;
     }
 
     /**
@@ -523,14 +523,14 @@ public final class GoController extends TwoPlayerController
          * @param player1sPerspective
          * @return list of urgent moves
          */
-        public final List<GoMove> generateUrgentMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
+        public final List<? extends TwoPlayerMove> generateUrgentMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
         {
-            List moves = generateMoves( lastMove, weights, player1sPerspective );
+            List<? extends TwoPlayerMove> moves = generateMoves( lastMove, weights, player1sPerspective );
             GoBoard gb = (GoBoard) board_;
             GoMove lastMovePlayed = (GoMove) lastMove;
 
             // just keep the moves that take captures
-            Iterator it = moves.iterator();
+            Iterator<? extends TwoPlayerMove> it = moves.iterator();
             while ( it.hasNext() ) {
                 GoMove move = (GoMove) it.next();
                 if ( move.getNumCaptures() == 0 || lastMovePlayed.causesAtari(gb) > 0 ) {

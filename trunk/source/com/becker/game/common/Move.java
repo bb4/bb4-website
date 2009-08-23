@@ -11,10 +11,12 @@ public class Move implements Comparable
 {
 
     /**
-     * value of this move from the point of view of player1.
+     * The value of this move from the point of view of player1.
      * The value is determined by static evaluation of the board.
+     * We use an integer because 0 width search windows require
+     * coarse values to work well.
      */
-    private double value_;
+    private int value_;
 
 
     /**
@@ -61,11 +63,11 @@ public class Move implements Comparable
         return "The value of this move is "+value_;
     }
 
-    public double getValue() {
+    public int getValue() {
         return value_;
     }
 
-    public void setValue(double value) {
+    public void setValue(int value) {
         this.value_ = value;
     }
 }

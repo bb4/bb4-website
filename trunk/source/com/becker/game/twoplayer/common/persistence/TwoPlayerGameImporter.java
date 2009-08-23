@@ -122,7 +122,7 @@ public class TwoPlayerGameImporter extends GameImporter {
          boolean player1 = token instanceof Player1MoveToken;
         
          TwoPlayerMove move = 
-                 TwoPlayerMove.createMove(mvToken.getToY(), mvToken.getToX(), 0.0,  new GamePiece(player1));
+                 TwoPlayerMove.createMove(mvToken.getToY(), mvToken.getToX(), 0,  new GamePiece(player1));
 
          return move;
     }

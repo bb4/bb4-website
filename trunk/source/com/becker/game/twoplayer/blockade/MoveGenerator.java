@@ -179,7 +179,7 @@ public class MoveGenerator {
      */
     private void addMoveWithWallPlacement(BlockadeMove ourmove, BlockadeWall wall,
                                                                          ParameterArray weights, List<BlockadeMove> moves) {
-        double value = 0.0;
+        int value = 0;
         // @@ we should provide the value here since we have all the path info.
         // we do not want to compute the path info again by calling findPlayerPathLengths.
         // The value will change based on how much we shorten our paths while lengthening the opponents.

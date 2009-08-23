@@ -30,7 +30,7 @@ public final class GoMove extends TwoPlayerMove
      * instead call the factory method so we recycle objects.
      * use createMove to get moves, and dispose to recycle them
      */
-    public GoMove( int destinationRow, int destinationCol, double val, GoStone stone )
+    public GoMove( int destinationRow, int destinationCol, int val, GoStone stone )
     {
         super( (byte)destinationRow, (byte)destinationCol, val, stone );
     }
@@ -41,7 +41,7 @@ public final class GoMove extends TwoPlayerMove
      */
     public static GoMove createGoMove(
             int destinationRow, int destinationCol,
-            double val, GoStone stone )
+            int val, GoStone stone )
     {
         return new GoMove( (byte)destinationRow, (byte)destinationCol, val, stone );
     }
@@ -49,7 +49,7 @@ public final class GoMove extends TwoPlayerMove
     /**
      * factory method for creating a passing move
      */
-    public static GoMove createPassMove( double val,  boolean player1)
+    public static GoMove createPassMove( int val,  boolean player1)
     {
         GoMove m = createGoMove( 0, 0, val, null );
         m.isPass_ = true;

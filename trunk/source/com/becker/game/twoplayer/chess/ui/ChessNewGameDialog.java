@@ -15,7 +15,7 @@ public class ChessNewGameDialog extends TwoPlayerNewGameDialog implements Action
 {
 
     // constructor
-    public ChessNewGameDialog( JFrame parent, ViewerCallbackInterface viewer )
+    public ChessNewGameDialog( JFrame parent, GameViewable viewer )
     {
         super( parent, viewer );
     }

@@ -32,7 +32,7 @@ public class CheckersMove extends TwoPlayerMove
     private CheckersMove( byte originRow, byte originCol,
                           byte destinationRow, byte destinationCol,
                           CaptureList captures,
-                          double val, GamePiece piece)
+                          int val, GamePiece piece)
     {
         super( destinationRow, destinationCol, val,  piece );
         fromLocation_ = new Location(originRow, originCol);
@@ -48,7 +48,7 @@ public class CheckersMove extends TwoPlayerMove
             int originRow, int originCol,
             int destinationRow, int destinationCol,
             CaptureList captures,
-            double val, GamePiece piece )
+            int val, GamePiece piece )
     {
         CheckersMove m = new CheckersMove( (byte)originRow, (byte)originCol,
                 (byte)destinationRow, (byte)destinationCol, captures, val, piece );

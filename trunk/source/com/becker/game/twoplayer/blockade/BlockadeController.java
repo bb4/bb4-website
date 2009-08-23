@@ -74,10 +74,10 @@ public class BlockadeController extends TwoPlayerController
      * @return some measure of how overwhelming the win was. May need to negate based on which player one.
      */
     @Override
-    public double getStrengthOfWin()
+    public int getStrengthOfWin()
     {
         if (!getPlayer1().hasWon() && !getPlayer2().hasWon()) {
-             return 0.0;
+             return 0;
         }
         return worth(board_.getLastMove(), weights_.getDefaultWeights());
     }
@@ -116,7 +116,7 @@ public class BlockadeController extends TwoPlayerController
      *   a positive value means that player1 has the advantage.
      *   A big negative value means a good move for p2.
      */
-    protected double worth( Move lastMove, ParameterArray weights )
+    protected int worth( Move lastMove, ParameterArray weights )
     {
         board_.getProfiler().startCalcWorth();
         BlockadeBoard board = (BlockadeBoard)board_;
@@ -131,7 +131,7 @@ public class BlockadeController extends TwoPlayerController
         }
 
         PlayerPathLengths pathLengths = board.findPlayerPathLengths(m);
-        double worth = pathLengths.determineWorth(WINNING_VALUE, weights);
+        int worth = pathLengths.determineWorth(WINNING_VALUE, weights);
         board_.getProfiler().stopCalcWorth();
         return worth;
     }

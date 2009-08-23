@@ -1,5 +1,9 @@
-package com.becker.game.twoplayer.common.search;
+package com.becker.game.twoplayer.common.search.strategy;
 
+import com.becker.game.common.GameContext;
+import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
+import com.becker.game.twoplayer.common.search.tree.PruneType;
+import com.becker.game.twoplayer.common.search.*;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.optimization.parameter.ParameterArray;
 
@@ -37,25 +41,26 @@ public class NegaMaxStrategy extends AbstractSearchStrategy
                                        int depth, int quiescentDepth,
                                        int alpha, int beta, SearchTreeNode parent )
     {
+        // need to negate alpha and beta on initial call.
         return searchInternal( lastMove, weights, depth, quiescentDepth, -alpha, -beta, parent );
     }
 
+
     private TwoPlayerMove searchInternal( TwoPlayerMove lastMove, ParameterArray weights,
-                                          int depth, int quiescentDepth,
-                                          int oldAlpha, int beta, SearchTreeNode parent )
+                                       int depth, int quiescentDepth,
+                                       int alpha, int beta, SearchTreeNode parent )
     {
-        int alpha = oldAlpha;
         if ( depth == 0 || searchable_.done( lastMove, false ) ) {
             if ( quiescence_ && depth == 0 )
                 return quiescentSearch( lastMove, weights, quiescentDepth, alpha, beta, parent );
             else {
-                lastMove.setInheritedValue( -lastMove.getValue());     //??  negate value?
+                lastMove.setInheritedValue( lastMove.getValue());   
                 return lastMove;
             }
         }
 
         // generate a list of all candidate next moves, and pick the best one
-        List list = searchable_.generateMoves( lastMove, weights, lastMove.isPlayer1() );
+        List list = searchable_.generateMoves( lastMove, weights, lastMove.isPlayer1());
         movesConsidered_ += list.size();
         if (depth == searchable_.getLookAhead())
             numTopLevelMoves_ = list.size();
@@ -66,8 +71,10 @@ public class NegaMaxStrategy extends AbstractSearchStrategy
         }
 
         int i = 0;
-        int bestVal = Integer.MIN_VALUE;
-        TwoPlayerMove selectedMove, bestMove = (TwoPlayerMove) (list.get( 0 ));
+        int bestValue = Integer.MIN_VALUE;
+        TwoPlayerMove selectedMove;
+        TwoPlayerMove bestMove = (TwoPlayerMove) (list.get( 0 ));
+
         while ( !list.isEmpty() ) {
             checkPause();
             if (interrupted_)
@@ -91,40 +98,40 @@ public class NegaMaxStrategy extends AbstractSearchStrategy
                 continue;
             }
 
-            int val = - (int) selectedMove.getInheritedValue();
-            theMove.setInheritedValue(val);
+            int selectedValue = - selectedMove.getInheritedValue();
+            theMove.setInheritedValue( selectedValue);
 
-            if ( val > bestVal ) {
-                bestMove = theMove;
-                bestVal = val;
-            }
-            if ( alphaBeta_ ) {
-                if ( val >= beta ) {
-                    showPrunedNodesInTree( list, parent, i, val, beta, PruneType.BETA);
-                    bestMove.setSelected(true);
-                    return bestMove;
-                }
-                if ( val > alpha ) {
-                    alpha = val;
+            if ( alphaBeta_ ) {                 
+                if ( selectedValue > alpha ) {
+                    alpha = selectedValue;
                     bestMove = theMove;
-                }
+                }         
+                if ( alpha >= beta ) {
+                    showPrunedNodesInTree( list, parent, i, selectedValue, beta, PruneType.BETA);
+                    
+                    break;
+                } 
+            } else if ( selectedValue > bestValue ) {
+                bestMove = theMove;
+                bestValue = selectedValue;
             }
         }
 
+        bestMove.setInheritedValue(alpha);
         bestMove.setSelected(true);
-        lastMove.setInheritedValue(-bestMove.getInheritedValue());
         return bestMove;
     }
 
     /**
      * This continues the search in situations where the board position is not stable.
-     * For example, perhaps we are in the middle of a piece exchange
+     * For example, perhaps we are in the middle of a piece exchange.
+     *
      */
     protected TwoPlayerMove quiescentSearch( TwoPlayerMove lastMove, ParameterArray weights,
                                           int depth, int oldAlpha, int beta, SearchTreeNode parent )
     {
         int alpha = oldAlpha;
-        int val = (int) lastMove.getValue();
+        int val = lastMove.getValue();
         lastMove.setInheritedValue(val);
         if ( depth >= MAX_QUIESCENT_DEPTH) {
             return lastMove;
@@ -152,7 +159,7 @@ public class NegaMaxStrategy extends AbstractSearchStrategy
         double bestVal = Double.MIN_VALUE;
         TwoPlayerMove bestMove = null;
         movesConsidered_ += list.size();
-        //GameContext.log( 2, "********* urgent moves = " + list );
+        GameContext.log( 2, "********* urgent moves = " + list );
         Iterator it = list.iterator();
         int i = 0;
 
@@ -166,7 +173,7 @@ public class NegaMaxStrategy extends AbstractSearchStrategy
             TwoPlayerMove selectedMove = quiescentSearch( theMove, weights, depth+1, -beta, -alpha, child );
             assert selectedMove!=null;
 
-            val = -(int)selectedMove.getInheritedValue();
+            val = -selectedMove.getInheritedValue();
             theMove.setInheritedValue(val);
 
             searchable_.undoInternalMove( theMove );
@@ -176,7 +183,8 @@ public class NegaMaxStrategy extends AbstractSearchStrategy
             }
             if ( alphaBeta_ ) {
                 if ( val >= beta ) {
-                    return bestMove;
+                    //return bestMove;
+                    break;
                 }
                 if ( val > alpha ) {
                     alpha = val;

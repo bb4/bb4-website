@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.common.search;
+package com.becker.game.twoplayer.common.search.tree;
 
 /**
  * Either alpha or beta pruning.

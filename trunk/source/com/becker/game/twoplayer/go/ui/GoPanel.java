@@ -6,7 +6,7 @@ import com.becker.game.common.ui.GameInfoPanel;
 import com.becker.game.common.ui.GameToolBar;
 import com.becker.game.common.ui.NewGameDialog;
 import com.becker.game.twoplayer.common.ui.GameTreeDialog;
-import com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer;
+import com.becker.game.twoplayer.common.ui.AbstractTwoPlayerBoardViewer;
 import com.becker.game.twoplayer.common.ui.TwoPlayerPanel;
 
 import javax.swing.*;
@@ -43,7 +43,7 @@ public final class GoPanel extends TwoPlayerPanel
         return new GoBoardViewer();
     }
 
-    protected NewGameDialog createNewGameDialog( JFrame parent, ViewerCallbackInterface viewer )
+    protected NewGameDialog createNewGameDialog( JFrame parent, GameViewable viewer )
     {
         return new GoNewGameDialog( parent, viewer );
     }
@@ -56,7 +56,7 @@ public final class GoPanel extends TwoPlayerPanel
 
     protected GameTreeDialog createGameTreeDialog()
     {
-        TwoPlayerBoardViewer v =(TwoPlayerBoardViewer)createBoardViewer();
+        AbstractTwoPlayerBoardViewer v =(AbstractTwoPlayerBoardViewer)createBoardViewer();
         v.setViewOnly( true ); // we don't want it to recieve click events
         return new GameTreeDialog( null, v, new GoTreeCellRenderer());
     }

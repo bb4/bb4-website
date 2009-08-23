@@ -15,7 +15,7 @@ import javax.swing.*;
 public class PokerNewGameDialog extends MultiPlayerNewGameDialog
 {
 
-    public PokerNewGameDialog( JFrame parent, ViewerCallbackInterface viewer )
+    public PokerNewGameDialog( JFrame parent, GameViewable viewer )
     {
         super( parent, viewer );
     }

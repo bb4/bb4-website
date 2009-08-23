@@ -21,7 +21,7 @@ import java.util.List;
  *
  *  @author Barry Becker
  */
-public class CheckersBoardViewer extends TwoPlayerBoardViewer
+public class CheckersBoardViewer extends AbstractTwoPlayerBoardViewer
                                  implements MouseMotionListener
 {
 

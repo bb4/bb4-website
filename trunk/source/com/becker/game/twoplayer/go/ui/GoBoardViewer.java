@@ -10,7 +10,7 @@ import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameController;
 import com.becker.game.common.ui.GameBoardRenderer;
-import com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer;
+import com.becker.game.twoplayer.common.ui.AbstractTwoPlayerBoardViewer;
 import com.becker.game.twoplayer.go.*;
 import com.becker.ui.GUIUtil;
 
@@ -25,7 +25,7 @@ import java.awt.event.MouseMotionListener;
  *
  *  @author Barry Becker
  */
-final class GoBoardViewer extends TwoPlayerBoardViewer
+final class GoBoardViewer extends AbstractTwoPlayerBoardViewer
                           implements MouseMotionListener
 {
 
@@ -76,7 +76,7 @@ final class GoBoardViewer extends TwoPlayerBoardViewer
     public void pass()
     {
         GameContext.log( 1, "passing" );
-        GoMove m = GoMove.createPassMove( 0.0, get2PlayerController().isPlayer1sTurn() );
+        GoMove m = GoMove.createPassMove( 0, get2PlayerController().isPlayer1sTurn() );
         continuePlay( m );
     }
 

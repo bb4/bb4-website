@@ -32,7 +32,7 @@ public class GalacticPanel extends GamePanel
         return new GalaxyViewer();
     }
 
-    protected NewGameDialog createNewGameDialog( JFrame parent, ViewerCallbackInterface viewer )
+    protected NewGameDialog createNewGameDialog( JFrame parent, GameViewable viewer )
     {
         return new GalacticNewGameDialog( parent, viewer );
     }

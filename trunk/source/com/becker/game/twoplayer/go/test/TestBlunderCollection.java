@@ -2,7 +2,7 @@ package com.becker.game.twoplayer.go.test;
 
 import com.becker.game.twoplayer.go.GoMove;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
-import com.becker.game.twoplayer.common.search.SearchStrategyType;
+import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

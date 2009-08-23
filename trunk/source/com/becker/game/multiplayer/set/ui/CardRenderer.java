@@ -1,8 +1,6 @@
 package com.becker.game.multiplayer.set.ui;
 
-import com.becker.game.common.*;
 import com.becker.game.multiplayer.set.*;
-import com.becker.common.*;
 
 import java.awt.*;
 import java.awt.geom.*;
@@ -16,21 +14,22 @@ import java.awt.geom.*;
  */
 public final class CardRenderer {
 
-    public static final int LEFT_MARGIN = 10;
-    public static final int TOP_MARGIN = 10;
+    public static final int LEFT_MARGIN = 5;
+    public static final int TOP_MARGIN = 5;
 
     public static final float CARD_HEIGHT_RAT = 1.5f;
 
 
-    private static final Font BASE_FONT = new Font( "Sans-serif", Font.PLAIN, 11 );
+    //private static final Font BASE_FONT = new Font( "Sans-serif", Font.PLAIN, 11 );
     private static final Color BACKGROUND_COLOR = new Color(250, 250, 255);
 
     private static final Color BORDER_COLOR = new Color(45, 45, 55);
     private static final Color HIGHLIGHTED_BORDER_COLOR = new Color(205, 205, 0);
     private static final Color SELECTED_BORDER_COLOR = new Color(255, 255, 0);
 
-    private static final float MARGIN_RAT = 0.06f;
+    private static final float MARGIN_RAT = 0.02f;
     private static final Stroke SHAPE_BORDER_STROKE = new BasicStroke(4.0f);
+    //private static final int BORDER_THICKNESS = 1;
 
     private static final float SHAPE_SIZE_FRAC = 0.82f;
     private static final float THIRD_SHAPE_FRAC = 0.9f; // slightly different for the diamond

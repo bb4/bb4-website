@@ -36,7 +36,7 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
 
 
     // constructor
-    public TwoPlayerNewGameDialog( JFrame parent, ViewerCallbackInterface viewer )
+    public TwoPlayerNewGameDialog( JFrame parent, GameViewable viewer )
     {
         super( parent, viewer );
         gameWeights_ = get2PlayerController().getComputerWeights();  // gets the actual weights

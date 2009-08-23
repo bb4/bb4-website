@@ -15,7 +15,7 @@ import javax.swing.*;
 public class TrivialNewGameDialog extends MultiPlayerNewGameDialog
 {
 
-    public TrivialNewGameDialog( JFrame parent, ViewerCallbackInterface viewer ) {
+    public TrivialNewGameDialog( JFrame parent, GameViewable viewer ) {
         super( parent, viewer );
     }
 

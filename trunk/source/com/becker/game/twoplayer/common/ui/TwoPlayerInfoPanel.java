@@ -75,7 +75,7 @@ public class TwoPlayerInfoPanel extends GameInfoPanel implements GameChangedList
      */
     protected void setPlayerLabel()
     {
-        TwoPlayerBoardViewer viewer = (TwoPlayerBoardViewer)controller_.getViewer();
+        AbstractTwoPlayerBoardViewer viewer = (AbstractTwoPlayerBoardViewer)controller_.getViewer();
         TwoPlayerPieceRenderer renderer = (TwoPlayerPieceRenderer)viewer.getPieceRenderer();
         boolean p1sturn = getController().isPlayer1sTurn();
         String player = p1sturn? getController().getPlayer1().getName() : getController().getPlayer2().getName();

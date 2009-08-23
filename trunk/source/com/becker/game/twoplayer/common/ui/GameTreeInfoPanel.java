@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.common.ui;
 
+import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.common.util.Util;
 import com.becker.ui.*;
 import com.becker.game.twoplayer.common.*;
@@ -43,7 +44,7 @@ public class GameTreeInfoPanel extends JPanel {
     /**
      *  Display all the relevant info for the moused over move.
      */
-    public void setText(TwoPlayerBoardViewer viewer, TwoPlayerMove m, SearchTreeNode lastNode) {
+    public void setText(AbstractTwoPlayerBoardViewer viewer, TwoPlayerMove m, SearchTreeNode lastNode) {
         TwoPlayerPieceRenderer renderer = (TwoPlayerPieceRenderer)viewer.getPieceRenderer();
         TwoPlayerController controller = (TwoPlayerController)viewer.getController();   // ?? correct?
         String passSuffix = m.isPassingMove() ? " (Pass)" : "";

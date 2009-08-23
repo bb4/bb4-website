@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.common;
 
 import com.becker.game.common.Move;
-import com.becker.game.common.ViewerCallbackInterface;
+import com.becker.game.common.GameViewable;
 
 /**
  * The TwoPlayerController communicates with the viewer via this interface.
@@ -10,7 +10,7 @@ import com.becker.game.common.ViewerCallbackInterface;
  *
  * @author Barry Becker
  */
-public interface TwoPlayerViewerCallbackInterface  extends ViewerCallbackInterface
+public interface TwoPlayerViewable  extends GameViewable
 {
 
     /**

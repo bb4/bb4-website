@@ -195,11 +195,11 @@ public class PenteController extends TwoPlayerController
     }
 
     /**
-     *  Statically evaluate the board position
+     *  Statically evaluate the board position.
      *  @return the lastMoves value modified by the value add of the new move.
      *   a large positive value means that the move is good from the specified players viewpoint
      */
-    protected double worth( Move lastMove, ParameterArray weights )
+    protected int worth( Move lastMove, ParameterArray weights )
     {
         int startc, startr, stopc, stopr, position;
         int i;
@@ -297,7 +297,7 @@ public class PenteController extends TwoPlayerController
         //worthDebug('/', line, position, diff);
 
 
-        return lastMove.getValue() + diff;
+        return (int)(lastMove.getValue() + diff);
     }
 
 
@@ -339,12 +339,13 @@ public class PenteController extends TwoPlayerController
         /**
          * @return the moves that result in a certain win.
          */
-        public List generateUrgentMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
+        public List<? extends TwoPlayerMove> generateUrgentMoves(
+                TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
         {
-            List moves = generateMoves( lastMove, weights, player1sPerspective );
+            List<? extends TwoPlayerMove> moves = generateMoves( lastMove, weights, player1sPerspective );
 
             // now keep only those that result in a win.
-            Iterator it = moves.iterator();
+            Iterator<? extends TwoPlayerMove> it = moves.iterator();
             while ( it.hasNext() ) {
                 TwoPlayerMove move = (TwoPlayerMove) it.next();
                 if ( Math.abs( move.getInheritedValue() ) < WINNING_VALUE )

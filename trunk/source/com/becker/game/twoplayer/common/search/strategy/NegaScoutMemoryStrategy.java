@@ -1,5 +1,8 @@
-package com.becker.game.twoplayer.common.search;
+package com.becker.game.twoplayer.common.search.strategy;
 
+import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
+import com.becker.game.twoplayer.common.search.tree.PruneType;
+import com.becker.game.twoplayer.common.search.*;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.optimization.parameter.ParameterArray;
 import java.util.List;
@@ -9,7 +12,7 @@ import java.util.List;
  *  Negascout is very much like minimax, but it avoids having separate
  *  sections of code for minimizing and maximizing search.
  *  This version stores the values of moves that have already been searched.
- *  See http://home.tiscali.nl/askeplaat/mtdf.html
+ *  See http://people.csail.mit.edu/plaat/mtdf.html
  *  and http://en.wikipedia.org/wiki/Negascout
  *
  *  @author Barry Becker  2/07
@@ -28,6 +31,7 @@ public final class NegaScoutMemoryStrategy extends NegaMaxStrategy
     /**
      * @inheritDoc
      */
+    @Override
     public TwoPlayerMove search( TwoPlayerMove lastMove, ParameterArray weights,
                                        int depth, int quiescentDepth,
                                        int alpha, int beta, SearchTreeNode parent )
@@ -89,7 +93,7 @@ public final class NegaScoutMemoryStrategy extends NegaMaxStrategy
                 continue;
             }
 
-            int val = - (int) selectedMove.getInheritedValue();
+            int val = - selectedMove.getInheritedValue();
             theMove.setInheritedValue(val);
 
             if ( val > bestVal ) {
@@ -109,7 +113,7 @@ public final class NegaScoutMemoryStrategy extends NegaMaxStrategy
         }
 
         /* Transposition table storing of bounds. Fail low result implies an upper bound */
-        int g = (int) selectedMove.getInheritedValue();
+        int g = selectedMove.getInheritedValue();
         if (selectedMove.getInheritedValue() <= alpha) {
             //n.upperbound := g;
             //store n.upperbound;

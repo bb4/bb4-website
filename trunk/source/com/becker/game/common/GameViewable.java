@@ -7,7 +7,7 @@ package com.becker.game.common;
  *
  * @author Barry Becker
  */
-public interface ViewerCallbackInterface
+public interface GameViewable
 {
 
     /**

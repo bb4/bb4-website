@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.common.search;
+package com.becker.game.twoplayer.common.search.tree;
 
 import com.becker.common.util.Util;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
@@ -18,6 +18,7 @@ import java.util.List;
  */
 public class SearchTreeNode extends DefaultMutableTreeNode
 {
+    private static final long serialVersionUID = 1L;
 
     /**
      *  true if this move is the leaf of a pruned path in the game tree.

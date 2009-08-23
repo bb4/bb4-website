@@ -142,6 +142,7 @@ public final class SetGameViewer extends MultiGameViewer
 
     public void mouseDragged(MouseEvent e) {}
 
+    @Override
     public void mouseClicked(MouseEvent e) {
 
         SetController c = (SetController)controller_;

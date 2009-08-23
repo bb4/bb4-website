@@ -19,7 +19,7 @@ final class GoNewGameDialog extends TwoPlayerNewGameDialog implements ActionList
     private static final String WHITE_IS = GameContext.getLabel("WHITE_IS");
 
     // constructor
-    GoNewGameDialog( JFrame parent, ViewerCallbackInterface viewer )
+    GoNewGameDialog( JFrame parent, GameViewable viewer )
     {
         super( parent, viewer );
     }

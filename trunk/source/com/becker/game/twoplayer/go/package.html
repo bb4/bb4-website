@@ -19,17 +19,16 @@ only
 4 simple rules are:
 </p>
 <ol>
-  <li>
-When a group of stones is completely surrounded they are captured. Each
+  <li>When a group of stones is completely surrounded they are
+captured. Each
 capture counts as 1 point at the end.</li>
-  <li>
-Every empty space completely surrounded by a group of stomes of one
+  <li>Every empty space completely surrounded by a group of stomes of
+one
 color
 counts as a point.</li>
-  <li>
-The board cannot look like it did at any time in the past (rule of ko).</li>
-  <li>
-When the 2 players have passed in succession, the game is over.</li>
+  <li>The board cannot look like it did at any time in the past (rule
+of ko).</li>
+  <li>When the 2 players have passed in succession, the game is over.</li>
 </ol>
 &nbsp; If you are not familiar with rules of go or the following terms,
 see
@@ -96,10 +95,94 @@ sure I want to. I enjoy doing it.<br>
 <h3>High Priority Features<br>
 </h3>
 <ul>
-  <li>Dont play in an eye unless its a false eye&nbsp; (1)</li>
+  <li>Use events to update GameTree. In GameTreeDialog, post events so
+updating of tree happens in same thread as rendering. Currently getting
+these exceptions:<br>
+    <small><small>Exception in thread "AWT-EventQueue-0"
+java.lang.NullPointerException<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
+com.becker.game.twoplayer.blockade.ui.PathRenderer.drawShortestPaths(PathRenderer.java:55)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
+com.becker.game.twoplayer.blockade.ui.BlockadeBoardRenderer.drawMarkers(BlockadeBoardRenderer.java:160)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
+com.becker.game.common.ui.GameBoardRenderer.render(GameBoardRenderer.java:300)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
+com.becker.game.common.ui.GameBoardViewer.paintComponent(GameBoardViewer.java:367)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
+javax.swing.JComponent.paint(JComponent.java:1027)<br>
+    <br>
+Exception in thread "AWT-EventQueue-0"
+java.util.ConcurrentModificationException<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
+java.util.LinkedList$ListItr.checkForComodification(LinkedList.java:761)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
+java.util.LinkedList$ListItr.next(LinkedList.java:696)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
+com.becker.game.twoplayer.common.ui.GameTreeDialog.setMoveList(GameTreeDialog.java:329)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
+com.becker.game.twoplayer.common.ui.GameTreeDialog.showCurrentGameTree(GameTreeDialog.java:218)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
+com.becker.game.twoplayer.common.ui.GameTreeDialog.gameChanged(GameTreeDialog.java:199)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
+com.becker.game.common.ui.GameBoardViewer.processEvent(GameBoardViewer.java:342)<br>
+Exception in thread "AWT-EventQueue-0" java.lang.NullPointerException<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
+com.becker.game.common.BoardPosition.copy(BoardPosition.java:138)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
+com.becker.game.common.Board.clone(Board.java:148)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
+com.becker.game.twoplayer.common.ui.TwoPlayerBoardViewer.getBoard(TwoPlayerBoardViewer.java:536)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
+com.becker.game.common.ui.GamePanel.gameChanged(GamePanel.java:295)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
+com.becker.game.common.ui.GameBoardViewer.processEvent(GameBoardViewer.java:342)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
+java.awt.Component.dispatchEventImpl(Component.java:4583)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
+java.awt.Container.dispatchEventImpl(Container.java:2099)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
+java.awt.Component.dispatchEvent(Component.java:4413)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
+java.awt.EventQueue.dispatchEvent(EventQueue.java:599)<br>
+    <br>
+Exception in thread "AWT-EventQueue-0"
+java.lang.ArrayIndexOutOfBoundsException: 7<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
+com.becker.game.twoplayer.common.ui.GameTreeViewer.drawTree(GameTreeViewer.java:203)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
+com.becker.game.twoplayer.common.ui.GameTreeViewer.paintComponent(GameTreeViewer.java:314)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
+javax.swing.JComponent.paint(JComponent.java:1027)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
+javax.swing.JComponent.paintChildren(JComponent.java:864)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
+javax.swing.JSplitPane.paintChildren(JSplitPane.java:1030)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
+javax.swing.JComponent.paint(JComponent.java:1036)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
+javax.swing.JComponent.paintChildren(JComponent.java:864)<br>
+    <br>
+Exception in thread "AWT-EventQueue-0" java.lang.AssertionError<br>
+    <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
+com.becker.game.twoplayer.common.TwoPlayerController.getChanceOfPlayer1Winning(TwoPlayerController.java:221)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
+com.becker.game.twoplayer.common.ui.TwoPlayerInfoPanel.gameChanged(TwoPlayerInfoPanel.java:102)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
+com.becker.game.common.ui.GameBoardViewer.processEvent(GameBoardViewer.java:343)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at
+java.awt.Component.dispatchEventImpl(Component.java:4583)</small></small><br>
+    <br>
+  </li>
+  <li>Use enum for ChessPieceType.<br>
+  </li>
+  <li>Dont play in an eye unless its a false eye&nbsp; (fixed?)</li>
+  <li>Add negaScout</li>
+  <li>Add mtd(f) search.<br>
+  </li>
   <li>Allow player to ask for suggested move (1)&nbsp;&nbsp;</li>
   <li>Show visualization of all next move values in main
-and debug windows. (2)<br>
+and debug windows. (done?)<br>
   </li>
   <li>Implement accurate scoring (allow for different types of rule
 systems). Score what
@@ -110,7 +193,7 @@ should be set and the strcngth of the win should be large. (1)</li>
 to verify. (10)&nbsp; <br>
   </li>
   <li>Parallelize minimax (http://www.cs.vu.nl/~aske/mtdf.html#abmem)</li>
-  <li>Parallelize move evaluation</li>
+  <li>Parallelize move evaluation/</li>
   <li>&nbsp;First 2 plys should look at global moves and do more local
 evaluation for deeper levels. (1)</li>
   <li>Consider groups involved in capturing race (semi-eye) (1)<br>
@@ -137,8 +220,7 @@ moves are being generated. (2)&nbsp;</li>
 to play better (4)&nbsp;&nbsp;</li>
   <li>If the computer or player resigns, the playerWon vars should be
 set and the strcngth of the win should be large.</li>
-  <li>Improve performance with profiling (1)
-  </li>
+  <li>Improve performance with profiling (1) </li>
 </ul>
 <h3>Medium Priority Features<br>
 </h3>
@@ -213,8 +295,7 @@ constants in controller classes.</li>
   <li>add html documentation describing architecture
 (3)&nbsp;</li>
   <li>write a book about it. Targetting teens year
-olds. (50)
-    <br>
+olds. (50) <br>
   </li>
 </ul>
 <p></p>
@@ -229,8 +310,7 @@ stones (1)&nbsp;</li>
   <li>Correct handling of snapbacks (1)&nbsp;</li>
   <li>Sound/speech not working (in applet only? missing libs?)</li>
   <li>When the computer plays in your eye, the eye goes away. It should
-not.&nbsp;
-  </li>
+not.&nbsp; </li>
 </ul>
 </body>
 </html>

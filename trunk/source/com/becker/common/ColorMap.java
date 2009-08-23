@@ -40,6 +40,11 @@ public class ColorMap
         }
     }
 
+    public Color getColorForValue( final int value )
+    {
+        return getColorForValue( (double) value );
+    }
+
     public synchronized Color getColorForValue( final double value )
     {
         int len = getNumValues();

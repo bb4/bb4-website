@@ -15,7 +15,7 @@ class BlockadeNewGameDialog extends TwoPlayerNewGameDialog implements ActionList
 {
 
     // constructor
-    public BlockadeNewGameDialog( JFrame parent, ViewerCallbackInterface viewer )
+    public BlockadeNewGameDialog( JFrame parent, GameViewable viewer )
     {
         super( parent, viewer );
     }

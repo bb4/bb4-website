@@ -34,7 +34,7 @@ public class PentePanel extends TwoPlayerPanel
         return new PenteBoardViewer();
     }
 
-    protected NewGameDialog createNewGameDialog( JFrame parent, ViewerCallbackInterface viewer )
+    protected NewGameDialog createNewGameDialog( JFrame parent, GameViewable viewer )
     {
         return new PenteNewGameDialog( parent, viewer );
     }
