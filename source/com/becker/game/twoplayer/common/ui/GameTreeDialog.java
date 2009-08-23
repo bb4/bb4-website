@@ -380,19 +380,33 @@ public final class GameTreeDialog extends JDialog
     // threading conflicts that could occur during concurrent rendering.
 
 
-    public void addNode(SearchTreeNode parent, SearchTreeNode child, int i) {
-        parent.insert(child, i);
+    public void addNode(final SearchTreeNode parent, final SearchTreeNode child, final int i) {
+
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                parent.insert(child, i);
+            }
+        });
     }
 
-    public void addPrunedNodes(List list, SearchTreeNode parent,
-                                                                        int i, int val, int thresh, PruneType type) {
-        parent.addPrunedChildNodes(list, i, val, thresh, type);
+    public void addPrunedNodes(final List list,  final SearchTreeNode parent,
+                                                    final int i, final int val, final int thresh, final PruneType type) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                parent.addPrunedChildNodes(list, i, val, thresh, type);
+            }
+        });
     }
 
-    public void resetTree(TwoPlayerMove p) {
-        root_.removeAllChildren(); // clear it out
-        p.setSelected(true);
-        root_.setUserObject( p );
+    public void resetTree(final TwoPlayerMove p) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                root_.removeAllChildren(); // clear it out
+                p.setSelected(true);
+                root_.setUserObject( p );
+            }
+        });
+        
     }
 
 }
