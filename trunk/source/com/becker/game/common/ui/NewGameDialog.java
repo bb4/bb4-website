@@ -249,9 +249,9 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
     {
         if ( e.getID() == WindowEvent.WINDOW_CLOSING ) {
 
-            System.out.println("Window closing!");
+            System.err.println("Window closing!");
             if (controller_.isOnlinePlayAvailable()) {
-                System.out.println("Standing up from table.");
+                GameContext.log(0, "Standing up from table.");
                 playOnlinePanel_.closing();
             }
         }

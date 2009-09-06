@@ -14,7 +14,10 @@ import com.becker.optimization.parameter.ParameterArray;
 public interface SearchStrategy {
 
     /** anything greater than this is considered a won game. */
-    public static final int WINNING_VALUE = 1024;
+    public static final int WINNING_VALUE = 4096;
+
+    /** For our purposes, this is effectively infinity. */
+    public static final int INFINITY = 10000000;
 
 
     /**

@@ -46,7 +46,7 @@ public abstract class TwoPlayerController extends GameController
     private static final int MIN_BEST_MOVES = 10;
 
     /** not really infinty, but close enough for our purposes. */
-    private static final int INFINITY = Integer.MAX_VALUE-1;
+    private static final int INFINITY = SearchStrategy.INFINITY;
 
     protected boolean player1sTurn_ = true;
 

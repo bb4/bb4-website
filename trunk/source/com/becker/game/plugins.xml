@@ -11,6 +11,11 @@
           msgBundleBase="com.becker.game.twoplayer.pente.resources.penteMessages"
           panelClass="com.becker.game.twoplayer.pente.ui.PentePanel"
           controllerClass="com.becker.game.twoplayer.pente.PenteController" />
+    <game name="tictactoe"
+          msgKey="TIC_TAC_TOE"
+          msgBundleBase="com.becker.game.twoplayer.tictactoe.resources.tictactoeMessages"
+          panelClass="com.becker.game.twoplayer.tictactoe.ui.TicTacToePanel"
+          controllerClass="com.becker.game.twoplayer.tictactoe.TicTacToeController" />
     <game name="checkers"
           msgKey="CHECKERS"
           msgBundleBase="com.becker.game.twoplayer.checkers.resources.checkersMessages"

@@ -21,7 +21,7 @@ public class PenteBoardRenderer extends TwoPlayerBoardRenderer
      * private constructor because this class is a singleton.
      * Use getRenderer instead
      */
-    private PenteBoardRenderer()
+    protected PenteBoardRenderer()
     {
         pieceRenderer_ = TwoPlayerPieceRenderer.getRenderer();
     }

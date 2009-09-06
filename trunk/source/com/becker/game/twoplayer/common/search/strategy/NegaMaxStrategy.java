@@ -19,11 +19,6 @@ import java.util.List;
  */
 public class NegaMaxStrategy extends AbstractSearchStrategy
 {
-    /**
-     * Number of moves to consider at the top ply.
-     * we use this number to determine how far into the search that we are.
-     */
-    protected int numTopLevelMoves_;
 
     /**
      * Construct NegaMax the strategy given a controller interface.
@@ -71,7 +66,7 @@ public class NegaMaxStrategy extends AbstractSearchStrategy
         }
 
         int i = 0;
-        int bestValue = Integer.MIN_VALUE;
+        int bestValue = -SearchStrategy.INFINITY;
         TwoPlayerMove selectedMove;
         TwoPlayerMove bestMove = (TwoPlayerMove) (list.get( 0 ));
 
@@ -81,9 +76,7 @@ public class NegaMaxStrategy extends AbstractSearchStrategy
                 return lastMove;
 
             TwoPlayerMove theMove = (TwoPlayerMove) (list.remove(0));
-            if (depth == searchable_.getLookAhead())   {
-                percentDone_ = 100 * (numTopLevelMoves_-list.size()) / numTopLevelMoves_;
-            }
+            updatePercentDone(depth, list);
 
             searchable_.makeInternalMove( theMove );
             SearchTreeNode child = addNodeToTree(parent, theMove, alpha, beta, i++ );
@@ -99,25 +92,25 @@ public class NegaMaxStrategy extends AbstractSearchStrategy
             }
 
             int selectedValue = - selectedMove.getInheritedValue();
-            theMove.setInheritedValue( selectedValue);
+            theMove.setInheritedValue( selectedValue );
 
-            if ( alphaBeta_ ) {                 
+            if ( alphaBeta_ ) {
                 if ( selectedValue > alpha ) {
                     alpha = selectedValue;
                     bestMove = theMove;
-                }         
+                }
                 if ( alpha >= beta ) {
                     showPrunedNodesInTree( list, parent, i, selectedValue, beta, PruneType.BETA);
-                    
                     break;
-                } 
+                }
             } else if ( selectedValue > bestValue ) {
                 bestMove = theMove;
                 bestValue = selectedValue;
             }
         }
 
-        bestMove.setInheritedValue(alpha);
+        if ( alphaBeta_ )
+            bestMove.setInheritedValue(alpha);
         bestMove.setSelected(true);
         return bestMove;
     }
@@ -156,7 +149,7 @@ public class NegaMaxStrategy extends AbstractSearchStrategy
         if ( list == null || list.isEmpty() )
             return lastMove; // nothing to check
 
-        double bestVal = Double.MIN_VALUE;
+        int bestVal = - SearchStrategy.INFINITY;
         TwoPlayerMove bestMove = null;
         movesConsidered_ += list.size();
         GameContext.log( 2, "********* urgent moves = " + list );
@@ -192,11 +185,12 @@ public class NegaMaxStrategy extends AbstractSearchStrategy
                 }
             }
         }
-        if (bestMove != null) {
-            bestMove.setSelected(true);
-            lastMove.setInheritedValue(-bestMove.getInheritedValue());
-        } else {
+        if (bestMove == null) {
+            System.out.println("returning last move as bestmove");
             bestMove = lastMove;   // avoid returning null
+        } else {
+            bestMove.setSelected(true);
+            lastMove.setInheritedValue(bestMove.getInheritedValue()); /// negate?
         }
         return bestMove;
     }

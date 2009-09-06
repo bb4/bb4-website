@@ -68,7 +68,6 @@ public class PluginManager {
             defaultGame = plugins_.get(0);
         }
         defaultGame_ = defaultGame;
-        //System.out.println("plugins="+plugins_);
     }
 
     /**

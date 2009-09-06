@@ -66,7 +66,7 @@ public final class NegaScoutMemoryStrategy extends NegaMaxStrategy
         }
 
         int i = 0;
-        int bestVal = Integer.MIN_VALUE;
+        int bestVal = -SearchStrategy.INFINITY; 
         TwoPlayerMove selectedMove = null;
         TwoPlayerMove bestMove = (TwoPlayerMove) (list.get( 0 ));
 
@@ -76,9 +76,7 @@ public final class NegaScoutMemoryStrategy extends NegaMaxStrategy
                 return lastMove;
 
             TwoPlayerMove theMove = (TwoPlayerMove) (list.remove(0));
-            if (depth == searchable_.getLookAhead())   {
-                percentDone_ = 100 * (numTopLevelMoves_-list.size()) / numTopLevelMoves_;
-            }
+            updatePercentDone(depth, list);
 
             searchable_.makeInternalMove( theMove );
             SearchTreeNode child = addNodeToTree(parent, theMove, alpha, beta, i++ );

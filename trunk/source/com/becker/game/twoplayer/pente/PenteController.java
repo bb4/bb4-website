@@ -30,6 +30,8 @@ public class PenteController extends TwoPlayerController
     private static final char P1_SYMB = 'X';
     private static final char P2_SYMB = 'O';
 
+    protected Patterns patterns_;
+
     /**
      *  Construct the Pente game controller
      */
@@ -48,19 +50,14 @@ public class PenteController extends TwoPlayerController
         board_ = new PenteBoard( nrows, ncols );
     }
 
-    /**
-     * @return the number of consecutive pieces in a row needed to constitute a win.
-     */
-    public static int getNInARow()
-    {
-        return PentePatterns.M;
-    }
-
     @Override
     protected TwoPlayerOptions createOptions() {
-        return new TwoPlayerOptions(DEFAULT_LOOKAHEAD, BEST_PERCENTAGE, MusicMaker.TAIKO_DRUM);
+        return new TwoPlayerOptions(DEFAULT_LOOKAHEAD, getDefaultBestPercentage(), MusicMaker.TAIKO_DRUM);
     }
 
+    protected int getDefaultBestPercentage() {
+        return BEST_PERCENTAGE;
+    }
 
     /**
      *  this gets the pente specific patterns and weights
@@ -68,7 +65,7 @@ public class PenteController extends TwoPlayerController
     protected void initializeData()
     {
         weights_ = new PenteWeights();
-        PentePatterns.initialize();
+        patterns_ = new PentePatterns();
     }
 
     /**
@@ -76,7 +73,7 @@ public class PenteController extends TwoPlayerController
      */
     public void computerMovesFirst()
     {
-        int delta = PentePatterns.M - 1;
+        int delta = patterns_.getWinRunLength() - 1;
         int c = (int) (RANDOM.nextFloat() * (board_.getNumCols() - 2 * delta) + delta + 1);
         int r = (int) (RANDOM.nextFloat() * (board_.getNumRows() - 2 * delta) + delta + 1);
         TwoPlayerMove m = TwoPlayerMove.createMove( r, c, 0, new GamePiece(true) );
@@ -138,8 +135,7 @@ public class PenteController extends TwoPlayerController
             }
         }
         int stop = ct;
-        int inthash = PentePatterns.convertPatternToInt( line, start, stop + 1 );
-        int index = PentePatterns.weightIndexTable_[inthash];
+        int index = patterns_.getWeightIndexForPattern(line, start, stop + 1);
 
         if ( symb == P1_SYMB )
             return weights.get(index).getValue();
@@ -209,15 +205,16 @@ public class PenteController extends TwoPlayerController
         int col = lMove.getToCol();
         int numRows = board_.getNumRows();
         int numCols = board_.getNumCols();
+        int winLength = patterns_.getWinRunLength();
         StringBuffer line = new StringBuffer( "" );
 
         // look at every string that passes through this new move
         // to see how the value is effected.
         // there are 4 directions: - | \ /
 
-        startc = col - PentePatterns.M;   //  -
+        startc = col - winLength;   //  -
         if ( startc < 1 ) startc = 1;
-        stopc = col + PentePatterns.M;
+        stopc = col + winLength;
         if ( stopc > numCols ) stopc = numCols;
         for ( i = startc; i <= stopc; i++ )
             lineAppend( board_.getPosition( row, i ), line );
@@ -227,9 +224,9 @@ public class PenteController extends TwoPlayerController
         //worthDebug('-', line, position, diff);
 
 
-        startr = row - PentePatterns.M;      //  |
+        startr = row - winLength;      //  |
         if ( startr < 1 ) startr = 1;
-        stopr = row + PentePatterns.M;
+        stopr = row + winLength;
         if ( stopr > numRows ) stopr = numRows;
         line.setLength( 0 );
         for ( i = startr; i <= stopr; i++ )
@@ -240,8 +237,8 @@ public class PenteController extends TwoPlayerController
         //worthDebug('|', line, position, diff);
 
 
-        startc = col - PentePatterns.M;      //  \
-        startr = row - PentePatterns.M;
+        startc = col - winLength;      //  \
+        startr = row - winLength;
         if ( startc < 1 ) {
             startr = startr + 1 - startc;
             startc = 1;
@@ -250,8 +247,8 @@ public class PenteController extends TwoPlayerController
             startc = startc + 1 - startr;
             startr = 1;
         }
-        stopc = col + PentePatterns.M;
-        stopr = row + PentePatterns.M;
+        stopc = col + winLength;
+        stopr = row + winLength;
         if ( stopc > numCols ) {
             stopr = stopr + numCols - stopc;
             //stopc = numCols;
@@ -269,8 +266,8 @@ public class PenteController extends TwoPlayerController
         //worthDebug('\\', line, position, diff);
 
 
-        startc = col - PentePatterns.M;     //  /
-        startr = row + PentePatterns.M;
+        startc = col - winLength;     //  /
+        startr = row + winLength;
         if ( startc < 1 ) {
             startr = startr + startc - 1;
             startc = 1;
@@ -279,8 +276,8 @@ public class PenteController extends TwoPlayerController
             startc = startc - numRows + startr;
             startr = numRows;
         }
-        stopc = col + PentePatterns.M;
-        stopr = row - PentePatterns.M;
+        stopc = col + winLength;
+        stopr = row - winLength;
         if ( stopc > numCols ) {
             stopr = stopr - numCols + stopc;
             stopc = numCols;
@@ -295,7 +292,6 @@ public class PenteController extends TwoPlayerController
         position = col - startc;
         diff += computeValueDifference( line, position, weights );
         //worthDebug('/', line, position, diff);
-
 
         return (int)(lastMove.getValue() + diff);
     }
@@ -366,13 +362,11 @@ public class PenteController extends TwoPlayerController
          */
         public boolean inJeopardy( Move m, ParameterArray weights, boolean player1sPerspective )
         {
-            // consider the delta big if >= w. Where w is the value of a near win.
-            double w = weights.get(PenteWeights.JEOPARDY_WEIGHT).getValue();
-
             double newValue = worth( m, weights, player1sPerspective );
             double diff = newValue - m.getValue();
 
-            return (diff > w);
+            // consider the delta big if >= w. Where w is the value of a near win.
+            return (diff > weights.get(PenteWeights.JEOPARDY_WEIGHT).getValue());
         }
     }
 

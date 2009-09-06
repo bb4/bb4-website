@@ -1,7 +1,6 @@
 package com.becker.game.twoplayer.chess;
 
 import com.becker.game.common.*;
-import com.becker.game.twoplayer.common.*;
 
 /**
  * These weights determine how the computer values features of the board
@@ -13,19 +12,24 @@ public class ChessWeights extends GameWeights {
 
     /** use these weights if no others are provided. */
     private static final double[] DEFAULT_CHESS_WEIGHTS = {
-        1.1,  7.0,  10.0,  10.0,  14.0,  2.0 * TwoPlayerController.WINNING_VALUE,  0.5
+        4.4,  14.0,  17.0,  29.0,  36.0,  ASSUMED_WINNING_VALUE,  1.1
     };
 
     /** don't allow the weights to exceed these maximum values. */
     private static final double[] MAX_CHESS_WEIGHTS = {
-        10.0,  100.0,  100.0,  100.0,  100.0,  2.0 * TwoPlayerController.WINNING_VALUE+1.0,  10.0
+        30.0,  200.0,  200.0,  200.0,  200.0,  2 * ASSUMED_WINNING_VALUE,  20.0
+    };
+
+    /** don't allow the weights to go below these minimum values. */
+    private static final double[] MIN_CHESS_WEIGHTS = {
+        1.0,       2.0,     2.0,     2.0,      3.0,  ASSUMED_WINNING_VALUE,  0.0
     };
 
     private static final String[] CHESS_WEIGHT_SHORT_DESCRIPTIONS = {
         "Pawn weight",
         "Knight weight",
-        "Rook weight",
         "Bishop weight",
+        "Rook weight",
         "Queen weight",
         "King weight",
         "Pawn Advancement weight"
@@ -34,8 +38,8 @@ public class ChessWeights extends GameWeights {
     private static final String[] CHESS_WEIGHT_DESCRIPTIONS = {
         "Weight to associate with each remaining pawn",
         "Weight to associate with Knights",
-        "Weight to associate with Rooks",
         "Weight to associate with Bishops",
+        "Weight to associate with Rooks",
         "Weight to associate with the Queen",
         "Weight to associate with the King",
         "Weight to associate with pawn advancement"
@@ -43,13 +47,14 @@ public class ChessWeights extends GameWeights {
 
     static final int PAWN_WEIGHT_INDEX = 0;
     static final int KNIGHT_WEIGHT_INDEX = 1;
-    static final int ROOK_WEIGHT_INDEX = 2;
-    static final int BISHOP_WEIGHT_INDEX = 3;
+    static final int BISHOP_WEIGHT_INDEX = 2;
+    static final int ROOK_WEIGHT_INDEX = 3;
     static final int QUEEN_WEIGHT_INDEX = 4;
     static final int KING_WEIGHT_INDEX = 5;
     static final int PAWN_ADVANCEMENT_WEIGHT_INDEX = 6;
 
     public ChessWeights() {
-        super( DEFAULT_CHESS_WEIGHTS, MAX_CHESS_WEIGHTS, CHESS_WEIGHT_SHORT_DESCRIPTIONS, CHESS_WEIGHT_DESCRIPTIONS );
+        super( DEFAULT_CHESS_WEIGHTS, MIN_CHESS_WEIGHTS, MAX_CHESS_WEIGHTS,
+                CHESS_WEIGHT_SHORT_DESCRIPTIONS, CHESS_WEIGHT_DESCRIPTIONS );
     }
 }

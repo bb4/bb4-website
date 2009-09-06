@@ -1,5 +1,6 @@
 package com.becker.game.common;
 
+import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**
@@ -12,7 +13,11 @@ import com.becker.optimization.parameter.ParameterArray;
  */
 public class GameWeights
 {
-    private static final double MIN_WEIGHT = 0.0;
+    /** scores computed from weights are assumed to be between [0 and 1000] for player1 */
+    protected static final double ASSUMED_WINNING_VALUE = 1000;
+
+    /** the weights are created assuming a winning vbalue of 1000. It that changes we need to scale them */
+    protected static final double SCALE = SearchStrategy.WINNING_VALUE /ASSUMED_WINNING_VALUE;
 
     private static int numWeights_;
 
@@ -38,17 +43,20 @@ public class GameWeights
         init();
     }
 
-    public GameWeights( double[] defaultWeights, double[] maxWeights, String[] names, String[] descriptions )
+    public GameWeights( double[] defaultWeights, double[] minWeights, double[] maxWeights, String[] names, String[] descriptions )
     {
         numWeights_ = defaultWeights.length;
         double[] minVals = new double[numWeights_];
+        double [] defaultVals = new double[numWeights_];
+        double [] maxVals = new double[numWeights_];
 
-        for (int i=0; i<numWeights_; i++)
+        for (int i = 0; i < numWeights_; i++)
         {
-            minVals[i] = MIN_WEIGHT;
-            //maxVals[i] = MAX_WEIGHT; // for all game programs
+            minVals[i] = SCALE * minWeights[i];
+            defaultVals[i] = SCALE * defaultWeights[i];
+            maxVals[i] = SCALE * maxWeights[i];
         }
-        defaultWeights_ =  new ParameterArray(defaultWeights, minVals, maxWeights, names);
+        defaultWeights_ =  new ParameterArray(defaultVals, minVals, maxVals, names);
 
         names_ = names;
         descriptions_ = descriptions;

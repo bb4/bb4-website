@@ -52,6 +52,7 @@ public class ChessController extends CheckersController
     /**
      * this gets the Chess specific weights.
      */
+    @Override
     protected void initializeData()
     {
         weights_ = new ChessWeights();
@@ -87,10 +88,11 @@ public class ChessController extends CheckersController
      *   a positive value means that player1 has the advantage.
      *   A big negative value means a good move for p2.
      */
+    @Override
     protected int worth( Move lastMove, ParameterArray weights )
     {
         int row, col;
-        double score = 0;
+        float score = 0;
 
         // evaluate the board after the move has been made
         for ( row = 1; row <= NUM_ROWS; row++ ) {      //rows
@@ -98,7 +100,7 @@ public class ChessController extends CheckersController
                 BoardPosition pos = board_.getPosition( row, col );
                 if ( pos.isOccupied() ) {
                     GamePiece piece = pos.getPiece();
-                    int side = piece.isOwnedByPlayer1()?1:-1;
+                    float side = piece.isOwnedByPlayer1()?1:-1;
                     switch (piece.getType()) {
                         case ChessPiece.PAWN :
                             //  pawn advancemnt
@@ -132,14 +134,14 @@ public class ChessController extends CheckersController
      * @param weights to use.
      * @return the number of moves added.
      */
-    public int addMoves( BoardPosition pos, List moveList, TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
+    public int addMoves( BoardPosition pos, List<ChessMove> moveList, TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
     {
-        List moves = ((ChessPiece)pos.getPiece()).findPossibleMoves(board_, pos.getRow(), pos.getCol(), lastMove);
+        List<ChessMove> moves = ((ChessPiece)pos.getPiece()).findPossibleMoves(board_, pos.getRow(), pos.getCol(), lastMove);
 
         // score the moves in this list
-        Iterator it = moves.iterator();
+        Iterator<ChessMove> it = moves.iterator();
         while (it.hasNext()) {
-            ChessMove move = (ChessMove)it.next();
+            ChessMove move = it.next();
             // first apply the move
             board_.makeMove(move);
             move.setValue(worth(move, weights, player1sPerspective));
@@ -178,11 +180,12 @@ public class ChessController extends CheckersController
     public class ChessSearchable extends CheckersSearchable {
 
          /**
-         *  generate all possible next moves.
-         */
+          *  generate all possible next moves.
+          */
+        @Override
         public List generateMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
         {
-            List moveList = new LinkedList();
+            List<ChessMove> moveList = new LinkedList<ChessMove>();
             int row,col;
             player1sPerspective_ = player1sPerspective;
 

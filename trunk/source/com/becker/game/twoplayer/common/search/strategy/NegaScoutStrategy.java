@@ -42,19 +42,16 @@ public final class NegaScoutStrategy extends NegaMaxStrategy
 
     private TwoPlayerMove searchInternal( TwoPlayerMove lastMove, ParameterArray weights,
                                           int depth, int quiescentDepth,
-                                          int oldAlpha, int beta, SearchTreeNode parent )
+                                          int alpha, int beta, SearchTreeNode parent )
     {
 
         if ( depth == 0 || searchable_.done( lastMove, false ) ) {
             if ( quiescence_ && depth == 0 ) {
-               return quiescentSearch( lastMove, weights, quiescentDepth, oldAlpha, beta, parent );
+               return quiescentSearch( lastMove, weights, quiescentDepth, alpha, beta, parent );
             }
-            lastMove.setInheritedValue( -lastMove.getValue());
+            lastMove.setInheritedValue( lastMove.getValue());
             return lastMove;
         }
-
-        int alpha = oldAlpha;
-        int newBeta = beta;
 
         // generate a list of all candidate next moves, and pick the best one
         List list = searchable_.generateMoves( lastMove, weights, lastMove.isPlayer1() );
@@ -64,7 +61,9 @@ public final class NegaScoutStrategy extends NegaMaxStrategy
             numTopLevelMoves_ = list.size();
 
         int i = 0;
-        //int bestVal = Integer.MIN_VALUE;
+        int bestVal = -SearchStrategy.INFINITY;
+        int newBeta = beta;
+
         TwoPlayerMove selectedMove;
         TwoPlayerMove bestMove = (TwoPlayerMove) list.get( 0 );
 
@@ -74,28 +73,28 @@ public final class NegaScoutStrategy extends NegaMaxStrategy
                 return lastMove;
 
             TwoPlayerMove theMove = (TwoPlayerMove) (list.remove(0));
-            if (depth == searchable_.getLookAhead())   {
-                percentDone_ = 100 * (numTopLevelMoves_-list.size()) / numTopLevelMoves_;
-            }
-
+            updatePercentDone(depth, list);
+            
             searchable_.makeInternalMove( theMove );
             SearchTreeNode child = addNodeToTree(parent, theMove, alpha, beta, i );
 
-            // recursive call
+            // search with minimal search window
             selectedMove = searchInternal( theMove, weights, depth-1, quiescentDepth, -newBeta, -alpha, child );
 
             int val = - selectedMove.getInheritedValue();
             theMove.setInheritedValue(val);
 
+            if (val > bestVal) {  // then minimal search window failed
+                if (newBeta == beta || depth <= 2) {       
+                    bestVal = val;
+                } else {
+                    // re-search with narrower window (typical alpha beta search).
+                    selectedMove = searchInternal( theMove, weights, depth-1, quiescentDepth, -beta, -val, child );
 
-            if ( val > alpha && val < beta && i > 0 && depth > 0 ) {
-
-                child = addNodeToTree(parent, theMove, alpha, beta, i);
-
-                // re-search with narrower window
-                selectedMove = searchInternal( theMove, weights, depth-1, quiescentDepth, -beta, -val, child );
-
-                val = - selectedMove.getInheritedValue();
+                    bestVal = - selectedMove.getInheritedValue();
+                    theMove.setInheritedValue(bestVal);
+                }
+                bestMove = theMove;
             }
             i++;
 
@@ -105,24 +104,23 @@ public final class NegaScoutStrategy extends NegaMaxStrategy
                 // if this happens it means there isn't any possible move beyond theMove.
                 continue;
             }
-
-            alpha = Math.max(alpha, val);
-            if (alpha == val)
-                bestMove = theMove;
-            bestMove.setInheritedValue(alpha);
-
+    
             if ( alphaBeta_ ) {
+                if (bestVal > alpha)
+                    alpha = bestVal;
                 if ( alpha >= beta ) {
-                        showPrunedNodesInTree( list, parent, i, val, beta, PruneType.BETA);
-                    bestMove.setSelected(true);
-                    return bestMove;
+                    showPrunedNodesInTree( list, parent, i, val, beta, PruneType.BETA);
+
+                    bestMove.setInheritedValue(alpha);
+                    break;  // prune
                 }
                 newBeta = alpha + 1;
             }
         }
 
         bestMove.setSelected(true);
-        lastMove.setInheritedValue(-bestMove.getInheritedValue());
+        lastMove.setInheritedValue(bestMove.getInheritedValue());
         return bestMove;
     }
+
 }
