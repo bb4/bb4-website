@@ -126,6 +126,12 @@
           <param name="jarFile" value="pente.jar"/>
       </antcall>
 
+       <!-- copy the class files that are needed for pente deployment -->
+      <antcall target="deployJar">
+          <param name="componentDir" value="game/twoplayer/tictactoe"/>
+          <param name="jarFile" value="tictactoe.jar"/>
+      </antcall>
+
       <!-- copy the class files that are needed for blockade deployment -->
       <antcall target="deployJar">
           <param name="componentDir" value="game/twoplayer/blockade"/>
