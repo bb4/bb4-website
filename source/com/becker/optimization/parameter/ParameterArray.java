@@ -1,7 +1,5 @@
 package com.becker.optimization.parameter;
 
-import com.becker.optimization.parameter.Parameter;
-import com.becker.common.*;
 import com.becker.common.util.Util;
 
 import java.util.*;

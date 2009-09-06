@@ -115,7 +115,7 @@ public abstract class GameImporter {
         boolean found = false;
         if (token instanceof PlacementToken ) {
             Move move = createMoveFromToken( token );
-            System.out.println("creating move="+ move);
+            GameContext.log(2, "creating move="+ move);
             moveList.add( move );
             found = true;
         } else {

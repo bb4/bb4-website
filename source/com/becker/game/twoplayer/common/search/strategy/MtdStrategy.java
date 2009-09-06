@@ -47,8 +47,8 @@ public final class MtdStrategy extends AbstractSearchStrategy
                                           int f,  SearchTreeNode parent )
     {
         int g = f;
-        int upperBound = Integer.MAX_VALUE;
-        int lowerBound = Integer.MIN_VALUE;
+        int upperBound = SearchStrategy.INFINITY;
+        int lowerBound =-SearchStrategy.INFINITY;
         int beta;
 
         TwoPlayerMove selectedMove = null;

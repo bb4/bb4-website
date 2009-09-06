@@ -48,6 +48,12 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
     /** The optional ui component that will be updated to reflect the current search tree.  */
     protected GameTreeViewable gameTreeListener_;
 
+    /**
+     * Number of moves to consider at the top ply.
+     * we use this number to determine how far into the search that we are.
+     */
+    protected int numTopLevelMoves_;
+
 
     /**
      * Construct the strategy.
@@ -138,6 +144,15 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
         gameTreeListener_ = listener;
     }
 
+    /**
+     * Update the percentage done serching variable for the progress bar
+     * if we are at the top level (otherwise this is a no-op).
+     */
+    protected void updatePercentDone(int depth,  List remainingNextMoves) {
+        if (depth == searchable_.getLookAhead())   {
+            percentDone_ = 100 * (numTopLevelMoves_-remainingNextMoves.size()) / numTopLevelMoves_;
+        }
+    }
 
     // these methods give an external thread debugging controls over the search
 

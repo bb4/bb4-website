@@ -314,11 +314,11 @@ public final class GoController extends TwoPlayerController
 
         if (position.isInEye())  {
             if (position.isOccupied()) {
-                // a dead enemy stone in the eye
-                score.deadStoneScore = position.getEye().isOwnedByPlayer1()? 2.0:-2.0;
+                // a dead enemy stone in the eye coiunts twice.
+                score.deadStoneScore = position.getEye().isOwnedByPlayer1()? 2.0 : -2.0;
             }
             else {
-                score.eyeSpaceScore = position.getEye().isOwnedByPlayer1()? 1.0:-1.0;
+                score.eyeSpaceScore = position.getEye().isOwnedByPlayer1()? 1.0 : -1.0;
             }
         }
         else if ( position.isOccupied() ) {
@@ -405,15 +405,15 @@ public final class GoController extends TwoPlayerController
         int captures = getNumCaptures(player1) + (player1 ? numDeadWhiteStonesOnBoard_ : numDeadBlackStonesOnBoard_);
 
         String side = (player1? "black":"white");
-        System.out.println("----");
-        System.out.println("final score for "+ side);
-        System.out.println("getNumCaptures("+side+")="+ getNumCaptures(player1));
-        System.out.println("num dead "+side+" stones on board= "+ (player1 ? numDeadWhiteStonesOnBoard_ : numDeadBlackStonesOnBoard_));
+        GameContext.log(0, "----");
+        GameContext.log(0, "final score for "+ side);
+        GameContext.log(0, "getNumCaptures("+side+")="+ getNumCaptures(player1));
+        GameContext.log(0, "num dead "+side+" stones on board= "+ (player1 ? numDeadWhiteStonesOnBoard_ : numDeadBlackStonesOnBoard_));
 
         int p1Territory = getTerritory(player1);
-        System.out.println("getTerritory("+side+")="+p1Territory);
-        System.out.println("captures="+captures);
-        System.out.println("final = terr - captures="+ (p1Territory - captures));
+        GameContext.log(0, "getTerritory("+side+")="+p1Territory);
+        GameContext.log(0, "captures="+captures);
+        GameContext.log(0, "final = terr - captures="+ (p1Territory - captures));
         return p1Territory - captures;
     }
 

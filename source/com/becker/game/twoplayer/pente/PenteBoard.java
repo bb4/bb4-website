@@ -25,6 +25,14 @@ public class PenteBoard extends TwoPlayerBoard
         setSize( numRows, numCols );
     }
 
+     /**
+      * default constructor
+     */
+    public PenteBoard()
+    {
+        setSize( 30, 30 );
+    }
+
     /**
      * Reset the board to its initial state.
      */
@@ -68,9 +76,6 @@ public class PenteBoard extends TwoPlayerBoard
         return rowsTimesCols_;
     }
 
-    /**
-     * @return typical number of moves in a go game.
-     */
     public int getTypicalNumMoves() {
         return rowsTimesCols_ / 3;
     }
@@ -120,7 +125,6 @@ public class PenteBoard extends TwoPlayerBoard
      */
     public boolean isCandidateMove( int row, int col )
     {
-        //System.out.println("boolb="+candidateMoves_[row][col] +"b="+positions_[row][col]);
         return (candidateMoves_[row][col] && positions_[row][col].isUnoccupied());
     }
 

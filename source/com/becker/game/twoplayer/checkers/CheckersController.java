@@ -124,8 +124,8 @@ public class CheckersController extends TwoPlayerController
     protected int worth( Move lastMove, ParameterArray weights )
     {
         int row, col, odd;
-        int posScore = 0;
-        int negScore = 0;
+        float posScore = 0;
+        float negScore = 0;
 
         for ( row = 1; row <= NUM_ROWS; row++ ) {    //rows
             odd = row % 2;
@@ -134,21 +134,13 @@ public class CheckersController extends TwoPlayerController
                 BoardPosition p = board_.getPosition( row, col );
                 if ( p.isOccupied() ) {
                     CheckersPiece piece = (CheckersPiece) p.getPiece();
+                    float sign =  piece.isOwnedByPlayer1() ? 1 : -1;
                     if ( piece.isKing()) {
-                        if ( piece.isOwnedByPlayer1() )
-                            posScore += weights.get(CheckersWeights.KINGED_WEIGHT_INDEX).getValue();
-                        else
-                            negScore -= weights.get(CheckersWeights.KINGED_WEIGHT_INDEX).getValue();
+                           posScore += sign * weights.get(CheckersWeights.KINGED_WEIGHT_INDEX).getValue();
                     }
-                    else { // REGULAR_PIECE
-                        if ( piece.isOwnedByPlayer1() ) {
-                            posScore += weights.get(CheckersWeights.PIECE_WEIGHT_INDEX).getValue();
-                            posScore += weights.get(CheckersWeights.ADVANCEMENT_WEIGHT_INDEX).getValue() * row;
-                        }
-                        else {
-                            negScore -= weights.get(CheckersWeights.PIECE_WEIGHT_INDEX).getValue();
-                            negScore -= weights.get(CheckersWeights.ADVANCEMENT_WEIGHT_INDEX).getValue() * (9 - row);
-                        }
+                    else { // REGULAR_PIECE    
+                           posScore += sign * weights.get(CheckersWeights.PIECE_WEIGHT_INDEX).getValue();
+                           posScore += sign *weights.get(CheckersWeights.ADVANCEMENT_WEIGHT_INDEX).getValue() * row;
                     }
                 }
             }
@@ -161,7 +153,7 @@ public class CheckersController extends TwoPlayerController
             // then there is no more of player 2's pieces
             return WINNING_VALUE;
         }
-        return (posScore + negScore);
+        return (int)(posScore + negScore);
     }
 
     /**

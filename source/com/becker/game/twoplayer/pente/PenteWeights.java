@@ -14,16 +14,25 @@ import com.becker.game.common.*;
  */
 public class PenteWeights extends GameWeights {
 
-    public static final int JEOPARDY_WEIGHT = 8;
+    /** If greater than this threshold, then opponent is in jeopardy. */
+    public static final int JEOPARDY_WEIGHT = 80;
 
     /** These defaults may be overriden in by the user in the UI. */
     private static final double[] DEFAULT_WEIGHTS = {
-        0.0,   0.0,  0.0,  0.0,  2.0,  5.0,  30.0, 31.0,   140.0,  1400.0,  1400.0,  1400.0
+        0.0,    0.0,    0.0,    0.0,     2.0,     6.0,      JEOPARDY_WEIGHT/2.0,     JEOPARDY_WEIGHT/2 + 2,    JEOPARDY_WEIGHT *2 + 30,
+        2*ASSUMED_WINNING_VALUE,  2*ASSUMED_WINNING_VALUE,  2*ASSUMED_WINNING_VALUE
     };
 
     /** Don't allow the weights to exceed these maximum values. Upper limit. */
     private static final double[] MAX_WEIGHTS = {
-        5.0,  5.0,  5.0,  10.0,  20.0,  20.0,  100.0,  100.0,  1000.0,  10000.0,  10000.0,  20000.0
+        10.0,  10.0,  10.0,  20.0,  40.0,  40.0,  200.0,  200.0,  2 * ASSUMED_WINNING_VALUE,
+        4 * ASSUMED_WINNING_VALUE,  6 * ASSUMED_WINNING_VALUE,  8 * ASSUMED_WINNING_VALUE
+    };
+
+     /** Don't allow the weights to go below these minimum values. Upper limit. */
+    private static final double[] MIN_WEIGHTS = {
+        0.0,    0.0,    0.0,    0.0,     0.0,     1.0,       1.0,        1.0,        10.0,
+        ASSUMED_WINNING_VALUE,  ASSUMED_WINNING_VALUE,  ASSUMED_WINNING_VALUE
     };
 
     private static final String[] WEIGHT_SHORT_DESCRIPTIONS = {
@@ -47,7 +56,7 @@ public class PenteWeights extends GameWeights {
     };
 
     public PenteWeights() {
-        super( DEFAULT_WEIGHTS, MAX_WEIGHTS, WEIGHT_SHORT_DESCRIPTIONS, WEIGHT_DESCRIPTIONS );
+        super( DEFAULT_WEIGHTS,  MIN_WEIGHTS, MAX_WEIGHTS, WEIGHT_SHORT_DESCRIPTIONS, WEIGHT_DESCRIPTIONS );
     }
 
 }

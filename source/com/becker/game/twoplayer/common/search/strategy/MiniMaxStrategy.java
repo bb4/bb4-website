@@ -17,11 +17,6 @@ import java.util.List;
  */
 public final class MiniMaxStrategy extends AbstractSearchStrategy
 {
-    /**
-     * Number of moves to consider at the top ply.
-     * we use this number to determine how far into the search that we are.
-     */
-    private int numTopLevelMoves_;
 
     /**
      * Constructor for the strategy.
@@ -68,8 +63,9 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
         }
 
         int i = 0;
-        int selectedValue, bestInheritedValue = Integer.MIN_VALUE;
-        if ( player1 ) bestInheritedValue = Integer.MAX_VALUE;
+        int selectedValue = -SearchStrategy.INFINITY;
+        int bestInheritedValue = -SearchStrategy.INFINITY;
+        if ( player1 ) bestInheritedValue = SearchStrategy.INFINITY;
 
         TwoPlayerMove bestMove = (TwoPlayerMove) (list.get( 0 ));
         while ( !list.isEmpty() ) {
@@ -78,9 +74,7 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
                 return lastMove;
 
             TwoPlayerMove theMove = (TwoPlayerMove) (list.remove(0));
-            if (depth == searchable_.getLookAhead())   {
-                percentDone_ = 100 * (numTopLevelMoves_-list.size()) / numTopLevelMoves_;
-            }
+            updatePercentDone(depth, list);
 
             searchable_.makeInternalMove( theMove );
             SearchTreeNode child = addNodeToTree(parent, theMove, alpha, beta, i++);
@@ -176,8 +170,8 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
             return lastMove; // nothing to check
         }
 
-        double bestInheritedValue = Integer.MIN_VALUE;
-        if ( player1 ) bestInheritedValue = Integer.MAX_VALUE;
+        double bestInheritedValue = -SearchStrategy.INFINITY;
+        if ( player1 ) bestInheritedValue = SearchStrategy.INFINITY;
         TwoPlayerMove bestMove = (TwoPlayerMove) list.get(0);
         movesConsidered_ += list.size();
         Iterator it = list.iterator();
