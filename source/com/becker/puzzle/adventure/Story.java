@@ -1,11 +1,11 @@
 package com.becker.puzzle.adventure;
 
-import com.becker.common.xml.*;
+import com.becker.common.xml.DomUtil;
 import com.becker.ui.GUIUtil;
+import java.io.File;
+import java.net.URL;
 import org.w3c.dom.*;
 
-import java.io.*;
-import java.net.URL;
 import java.util.*;
 
 /**
@@ -15,7 +15,9 @@ import java.util.*;
  * This program is meant as a very simple example of how you can
  * approach creating a simple adventure game on a somputer.
  *
- * There are several obvious improvements that I will leave as an exercise for reader (Brian I hope).
+ * There are many improvements that  I will leave as an exercise for reader (Brian I hope).
+ * Next to each is a number which is the number of hours I expect it would take me to implement.
+ *
  * 1) Keep track of the items tha the player has. They initially start with about 10 things but then find/use
  *   items as their adventure progresses.
  * 2) Automatic fighting with monsters. We know the hit points and armor class of the player and monster.
@@ -25,41 +27,80 @@ import java.util.*;
  * 3) Add a graphical User Interface so that the text will wrap nicely in a text area and we can show pictures
  *  for each scene. Furthermore we could have windows that pop up to show the players stats or item inventory.
  * 4) Make multi-player (hard)
+ * 5) Create a user interface instead of text only mode. Support both.
+ * 6) Add pictures and sound. The pictures and sound should be kept in a /resources directory
+ *  and be loaded by convention. The name of the resource could correspond to the scene name.
+ *  The alternative is to explicitly name the resource in the xml file.
+ * 7) Allow the user to edit the scenes - live through the UI. Perhaps the edit mode could be
+ *  password protected. When editing a scene you are prsented with a form that has all the
+ * attributes for the scene including a dropdown for selecting which scenes navigate to it and
+ * where you can navigate to from this scene. Save and load the xml that defines the game.
+ * 8) This type of application could be used for more than just games. Tutorials or an expert system would
+ * be other nice applicaitons.
  *
  * @author Barry Becker
  */
-public class Adventure {
+public class Story {
 
+    private String title;
     private Scene[] scenes_;
     private Map<String, Scene> sceneSet_;
     private Scene currentScene_;
 
-    // as stack of current;y visited scenes. There may be duplicates if you visit the same scene twice.
-    // If you backup, then we pop the stack.
+    /**
+     * as stack of current;y visited scenes. There may be duplicates if you visit the same scene twice.
+     * If you backup, then we pop the stack.
+     */
     private LinkedList<Scene> visitedScenes_;
 
-    public static final Scene TERMINAL_SCENE = new Scene(Choice.QUIT, "Goodbye", null);
-
+   
     /**
      * Construct an adventure given an xml document object
      * @param document containing the scene data
      */
-    public Adventure(Document document) {
-        Node root = document.getDocumentElement(); 
+    public Story(Document document) {
+        Node root = document.getDocumentElement();
+        title = DomUtil.getAttribute(root, "title");
         NodeList children = root.getChildNodes();
         Scene[] scenes = new Scene[children.getLength()];
         for (int i=0; i < children.getLength(); i++) {
-            //if (children.item(i).hasChildNodes())
             scenes[i] = new Scene(children.item(i));
         }
         initFromScenes(scenes);
+    }
+
+    /** @return the title of the story */
+    public String getTitle() {
+        return title;
+    }
+     
+
+    /**
+     * If args[0] does not have the name of the document to use, use a default.
+     * @param args command line args (0 or 1 if name of xml doc is specified.)
+     * @return the loaded Document that contains the asventure.
+     */
+    public static Document retrieveStoryDocument(String[] args) {
+        Document document = null;
+        if (args.length == 1) {
+            File file = new File(args[0]);
+            document = DomUtil.parseXMLFile(file);
+        }
+        else { // default
+            URL url = GUIUtil.getURL("com/becker/puzzle/adventure/stories/ludlowScript.xml");
+            System.out.println("about to parse url="+url +"\n plugin file location="+ url);
+            document = DomUtil.parseXML(url);
+        }
+        //DomUtil.printTree(document, 0);
+
+        return document;
     }
 
     /**
      * Construct an adventure given a list of scenes.
      * @param scenes
      */
-    public Adventure(Scene[] scenes) {
+    public Story(Scene[] scenes) {
         initFromScenes(scenes);
     }
 
@@ -72,7 +113,6 @@ public class Adventure {
             }
             sceneSet_.put(scene.getName(), scene);
         }
-        sceneSet_.put(TERMINAL_SCENE.getName(), TERMINAL_SCENE);
 
         verifyScenes();
         scenes_[0].setFirst();
@@ -93,12 +133,18 @@ public class Adventure {
     }
 
 
+    /**
+     * Advance the story to the next scene based on the specified choice
+     * @param choice index of the selected choice.
+     */
     public void advanceScene(int choice) {
         if (choice < 0) {
             currentScene_ = null;   // game over
             return;
         }
+
         String nextSceneName =  currentScene_.getNextSceneName(choice);
+
         if (nextSceneName != null) {
             if (nextSceneName.equals(Choice.QUIT))  {
                 visitedScenes_.add(currentScene_);
@@ -115,7 +161,6 @@ public class Adventure {
         }
     }
 
-
     /**
      * make sure the set of scenes in internally consistent.
      */
@@ -129,44 +174,5 @@ public class Adventure {
         }
     }
 
-
-    /**
-     * Adventure application entrance point.
-     */
-    public static void main( String[] args ) throws IOException {
-
-        Document document = null;
-        if (args.length == 1) {
-            File file = new File(args[0]);
-            document = DomUtil.parseXMLFile(file);
-        }
-        else {
-            // File file = new File(FileUtil.PROJECT_DIR + "source/com/becker/puzzle/adventure/ludlowScript.xml");
-            URL url = GUIUtil.getURL("com/becker/puzzle/adventure/ludlowScript.xml");
-            System.out.println("about to parse url="+url +"\n plugin file location="+ url);
-            document = DomUtil.parseXML(url);
-        }
-        
-        //DomUtil.printTree(document, 0);
-
-        //Adventure story = new Adventure(SceneData.getScenes());
-        Adventure story = new Adventure(document);
-
-        Scanner scanner = new Scanner(System.in);
-        do {
-            System.out.println(story.getCurrentScene());
-
-            int c = -1;
-
-            if (story.getCurrentScene().hasChoices())  {
-                int nextInt = scanner.nextInt();
-                c = nextInt - 1;
-            }
-            story.advanceScene(c);
-
-        } while (!story.isOver());
-    }
 }
-
-
 

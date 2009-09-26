@@ -1,12 +1,12 @@
 package com.becker.game.twoplayer.pente;
 
 import com.becker.game.common.*;
+import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.optimization.parameter.ParameterArray;
-import com.becker.sound.MusicMaker;
 
 import java.util.*;
 
@@ -20,25 +20,18 @@ public class PenteController extends TwoPlayerController
 
     public static final char REGULAR_PIECE = GamePiece.REGULAR_PIECE;
 
-    private static final int DEFAULT_LOOKAHEAD = 4;
-    // for any given ply never consider more that BEST_PERCENTAGE of the top moves
-    private static final int BEST_PERCENTAGE = 70;
-
     private static final int DEFAULT_NUM_ROWS = 20;
     protected static final int DEFAULT_NUM_COLS = 20;
 
-    private static final char P1_SYMB = 'X';
-    private static final char P2_SYMB = 'O';
-
-    protected Patterns patterns_;
+    protected MoveEvaluator moveEvaluator_;
 
     /**
      *  Construct the Pente game controller
      */
     public PenteController()
-    {
-        initializeData();
+    { 
         board_ = new PenteBoard( DEFAULT_NUM_ROWS, DEFAULT_NUM_ROWS );
+        initializeData();
     }
 
     /**
@@ -46,17 +39,13 @@ public class PenteController extends TwoPlayerController
      */
     public PenteController(int nrows, int ncols )
     {
-        initializeData();
         board_ = new PenteBoard( nrows, ncols );
+        initializeData();
     }
 
     @Override
     protected TwoPlayerOptions createOptions() {
-        return new TwoPlayerOptions(DEFAULT_LOOKAHEAD, getDefaultBestPercentage(), MusicMaker.TAIKO_DRUM);
-    }
-
-    protected int getDefaultBestPercentage() {
-        return BEST_PERCENTAGE;
+        return new PenteOptions();
     }
 
     /**
@@ -65,7 +54,7 @@ public class PenteController extends TwoPlayerController
     protected void initializeData()
     {
         weights_ = new PenteWeights();
-        patterns_ = new PentePatterns();
+        moveEvaluator_ = new MoveEvaluator((TwoPlayerBoard)board_, new PentePatterns());
     }
 
     /**
@@ -73,121 +62,11 @@ public class PenteController extends TwoPlayerController
      */
     public void computerMovesFirst()
     {
-        int delta = patterns_.getWinRunLength() - 1;
+        int delta = PentePatterns.WIN_RUN_LENGTH - 1;
         int c = (int) (RANDOM.nextFloat() * (board_.getNumCols() - 2 * delta) + delta + 1);
         int r = (int) (RANDOM.nextFloat() * (board_.getNumRows() - 2 * delta) + delta + 1);
         TwoPlayerMove m = TwoPlayerMove.createMove( r, c, 0, new GamePiece(true) );
         makeMove( m );
-    }
-
-    /**
-     *Evaluate a line (vertical, horizontal, or diagonal.
-     * @param line  the line to evaluate
-     * @param symb  the current players symbol
-     * @param opponent   symbol for the opponents's piece
-     * @param pos
-     * @param minpos
-     * @param maxpos
-     * @param weights
-     * @return the worth of a (vertical, horizontal, left diagonal, or right diagonal) line.
-     */
-    private double evalLine( StringBuffer line, char symb, char opponent,
-                          int pos, int minpos, int maxpos, ParameterArray weights )
-    {
-        int len = maxpos - minpos;
-        int ct = pos;
-        if ( len < 3 )
-            return 0; // not an interesting pattern.
-
-        if ( (line.charAt( pos ) == opponent)
-                && !(pos == minpos) && !(pos == maxpos - 1) ) {
-            // first check for a special case where there was a blocking move in the
-            // middle. In this case we break the string into an upper and lower
-            // half and evaluate each separately.
-            return (evalLine( line, symb, opponent, pos, minpos, pos + 1, weights )
-                    + evalLine( line, symb, opponent, pos, pos, maxpos, weights ));
-
-        }
-        // In general, we march from position in the middle towards the ends of the
-        // string. Marching stops when we encounter one of the following
-        // conditions:
-        //  - 2 blanks in a row (@@ we may want to allow this)
-        //  - an opponent's blocking piece
-        //  - the end of a line.
-        if ( (line.charAt( pos ) == opponent) && (pos == minpos) )
-            ct++;
-        else {
-            while ( ct > minpos && (line.charAt( ct - 1 ) != opponent)
-                    && !(line.charAt( ct ) == PentePatterns.UNOCCUPIED
-                    && line.charAt( ct - 1 ) == PentePatterns.UNOCCUPIED) ) {
-                ct--;
-            }
-        }
-        int start = ct;
-        ct = pos;
-        if ( (line.charAt( pos ) == opponent) && (pos == maxpos - 1) )
-            ct--;
-        else {
-            while ( ct < (maxpos - 1) && (line.charAt( ct + 1 ) != opponent)
-                    && !(line.charAt( ct ) == PentePatterns.UNOCCUPIED
-                    && line.charAt( ct + 1 ) == PentePatterns.UNOCCUPIED) ) {
-                ct++;
-            }
-        }
-        int stop = ct;
-        int index = patterns_.getWeightIndexForPattern(line, start, stop + 1);
-
-        if ( symb == P1_SYMB )
-            return weights.get(index).getValue();
-        else
-            return -weights.get(index).getValue();
-    }
-
-    /**
-     *  @return the difference in worth after making a move campared with before.
-     *  We need to look at it from the point of view of both sides (p1 = +, p2 = -)
-     */
-    private double computeValueDifference( StringBuffer line, int position, ParameterArray weights )
-    {
-        char opponent = P2_SYMB;
-        char symb = line.charAt( position ); // the last move made
-        if ( symb == P2_SYMB )
-            opponent = P1_SYMB;
-
-        int len = line.length();
-        if ( len < 3 ) {
-            return 0; // not an interesting pattern.
-        }
-
-        double newScore = evalLine( line, symb, opponent, position, 0, len, weights );
-        newScore += evalLine( line, opponent, symb, position, 0, len, weights );
-
-        line.setCharAt( position, PentePatterns.UNOCCUPIED );
-
-        double oldScore = evalLine( line, symb, opponent, position, 0, len, weights );
-        oldScore += evalLine( line, opponent, symb, position, 0, len, weights );
-
-        return newScore - oldScore;
-    }
-
-    /**
-     * debugging aid
-     */
-    protected static void worthDebug( char c, StringBuffer line, int pos, int diff )
-    {
-        GameContext.log( 2,
-                "Direction: " + c + ' ' + line + "Pos: " + pos + "  difference:" + diff );
-    }
-
-    private static void lineAppend( BoardPosition pos, StringBuffer line )
-    {
-        assert (pos!=null): "pos "+pos+" was null!";
-        if ( pos.getPiece() == null )
-            line.append( PentePatterns.UNOCCUPIED );
-        else if ( pos.getPiece().isOwnedByPlayer1() )
-            line.append( P1_SYMB );
-        else
-            line.append( P2_SYMB );
     }
 
     /**
@@ -197,109 +76,13 @@ public class PenteController extends TwoPlayerController
      */
     protected int worth( Move lastMove, ParameterArray weights )
     {
-        int startc, startr, stopc, stopr, position;
-        int i;
-        double diff;
-        TwoPlayerMove lMove = (TwoPlayerMove)lastMove;
-        int row = lMove.getToRow();
-        int col = lMove.getToCol();
-        int numRows = board_.getNumRows();
-        int numCols = board_.getNumCols();
-        int winLength = patterns_.getWinRunLength();
-        StringBuffer line = new StringBuffer( "" );
-
-        // look at every string that passes through this new move
-        // to see how the value is effected.
-        // there are 4 directions: - | \ /
-
-        startc = col - winLength;   //  -
-        if ( startc < 1 ) startc = 1;
-        stopc = col + winLength;
-        if ( stopc > numCols ) stopc = numCols;
-        for ( i = startc; i <= stopc; i++ )
-            lineAppend( board_.getPosition( row, i ), line );
-
-        position = col - startc;
-        diff = computeValueDifference( line, position, weights );
-        //worthDebug('-', line, position, diff);
-
-
-        startr = row - winLength;      //  |
-        if ( startr < 1 ) startr = 1;
-        stopr = row + winLength;
-        if ( stopr > numRows ) stopr = numRows;
-        line.setLength( 0 );
-        for ( i = startr; i <= stopr; i++ )
-            lineAppend( board_.getPosition( i, col ), line );
-
-        position = row - startr;
-        diff += computeValueDifference( line, position, weights );
-        //worthDebug('|', line, position, diff);
-
-
-        startc = col - winLength;      //  \
-        startr = row - winLength;
-        if ( startc < 1 ) {
-            startr = startr + 1 - startc;
-            startc = 1;
-        }
-        if ( startr < 1 ) {
-            startc = startc + 1 - startr;
-            startr = 1;
-        }
-        stopc = col + winLength;
-        stopr = row + winLength;
-        if ( stopc > numCols ) {
-            stopr = stopr + numCols - stopc;
-            //stopc = numCols;
-        }
-        if ( stopr > numRows ) {
-            //stopc = stopc + numRows - stopr;
-            stopr = numRows;
-        }
-        line.setLength( 0 );
-        for ( i = startr; i <= stopr; i++ )
-            lineAppend( board_.getPosition( i, startc + i - startr ), line );
-
-        position = row - startr;
-        diff += computeValueDifference( line, position, weights );
-        //worthDebug('\\', line, position, diff);
-
-
-        startc = col - winLength;     //  /
-        startr = row + winLength;
-        if ( startc < 1 ) {
-            startr = startr + startc - 1;
-            startc = 1;
-        }
-        if ( startr > numRows ) {
-            startc = startc - numRows + startr;
-            startr = numRows;
-        }
-        stopc = col + winLength;
-        stopr = row - winLength;
-        if ( stopc > numCols ) {
-            stopr = stopr - numCols + stopc;
-            stopc = numCols;
-        }
-        if ( stopr < 1 ) {
-            stopc = stopc + stopr - 1;
-        }
-        line.setLength( 0 );
-        for ( i = startc; i <= stopc; i++ )
-            lineAppend( board_.getPosition( startr - i + startc, i ), line );
-
-        position = col - startc;
-        diff += computeValueDifference( line, position, weights );
-        //worthDebug('/', line, position, diff);
-
-        return (int)(lastMove.getValue() + diff);
+        return moveEvaluator_.worth(lastMove, weights);
     }
-
 
     public Searchable getSearchable() {
          return new PenteSearchable();
      }
+
 
 
     protected class PenteSearchable extends TwoPlayerSearchable {
@@ -366,7 +149,11 @@ public class PenteController extends TwoPlayerController
             double diff = newValue - m.getValue();
 
             // consider the delta big if >= w. Where w is the value of a near win.
-            return (diff > weights.get(PenteWeights.JEOPARDY_WEIGHT).getValue());
+            return (diff > getJeopardyWeight());
+        }
+
+        int getJeopardyWeight()  {
+            return PenteWeights.JEOPARDY_WEIGHT;
         }
     }
 

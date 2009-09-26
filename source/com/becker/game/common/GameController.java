@@ -45,7 +45,7 @@ public abstract class GameController
      */
     public GameController()
     {
-        GameContext.log( 2, " mem=" + Runtime.getRuntime().freeMemory() );
+        GameContext.log( 3, " mem=" + Runtime.getRuntime().freeMemory() );
     }
 
     /**

@@ -13,6 +13,8 @@ import com.becker.game.common.GameContext;
  */
 public class PentePatterns extends Patterns
 {
+    public static final int WIN_RUN_LENGTH = 5;
+
     /** total number of patterns used. */
     private static final int NUM_PATTERNS = 210;
 
@@ -72,7 +74,7 @@ public class PentePatterns extends Patterns
      * if M is five then the game is pente
      */
     public int getWinRunLength() {
-        return 5;
+        return WIN_RUN_LENGTH;
     }
 
     protected int getNumPatterns() {

@@ -20,20 +20,10 @@ import java.util.*;
 public interface Searchable
 {
 
-    /**
-     * @return the amount of lookahead (number of plys) used by the search strategy
+    /** 
+     * @return the game specific two player options having to do with search parameters.
      */
-    int getLookAhead();
-
-    /**
-     * @return true if alpha-beta pruning is being employed by the search strategy.
-     */
-    boolean getAlphaBeta();
-
-    /**
-     * @return whether or not the quiescent search option is being used by the search strategy
-     */
-    boolean getQuiescence();
+    TwoPlayerOptions getOptions();
 
     /**
      * @param m the move to play.

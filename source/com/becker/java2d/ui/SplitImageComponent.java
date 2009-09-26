@@ -58,6 +58,7 @@ public class SplitImageComponent
         setBackground( Color.white );
         addMouseListener( new MouseAdapter()
         {
+            @Override
             public void mousePressed( MouseEvent me )
             {
                 mSplitX = me.getX();
@@ -66,6 +67,7 @@ public class SplitImageComponent
         } );
         addMouseMotionListener( new MouseMotionAdapter()
         {
+            @Override
             public void mouseDragged( MouseEvent me )
             {
                 mSplitX = me.getX();
@@ -74,6 +76,7 @@ public class SplitImageComponent
         } );
     }
 
+    @Override
     public void paint( Graphics g )
     {
         super.paint(g);
@@ -94,7 +97,8 @@ public class SplitImageComponent
         }
         g2.drawImage( getImage(), 0, 0, null );
 
-        if ( mSplitX == 0 || mSecondImage == null ) return;
+        if ( mSplitX == 0 || mSecondImage == null )
+            return;
 
         Rectangle secondClip = new Rectangle( 0, 0, mSplitX, height );
         g2.setClip( secondClip );
@@ -106,6 +110,7 @@ public class SplitImageComponent
         g2.draw( splitLine );
     }
 
+    @Override
     public Dimension getPreferredSize()
     {
         int width = 100;

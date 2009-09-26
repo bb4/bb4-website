@@ -1,17 +1,9 @@
 package com.becker.java2d.ui;
 
-
-import com.becker.game.multiplayer.set.ui.*;
-import com.becker.game.common.*;
-import com.becker.game.common.ui.*;
-import com.becker.game.multiplayer.set.*;
-import com.becker.common.*;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.text.*;
 import java.util.*;
 import java.util.Timer;
 import java.util.List;
@@ -26,7 +18,7 @@ import java.util.List;
  * @author Barry Becker
  */
 public final class ImageListPanel extends JPanel
-                                 implements MouseMotionListener, MouseListener
+                                                       implements MouseMotionListener, MouseListener
 {
     private List<BufferedImage> images_;
     private BufferedImage highlightedImage_ = null;

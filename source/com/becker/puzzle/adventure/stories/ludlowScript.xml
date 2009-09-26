@@ -5,12 +5,14 @@
 
     <scene name="start">
         <description>
-****************************************\n
-*** The Mansion of Professor Ludlow ****\n
-****************************************\n
-     Adapted from a D&amp;D module by James Ward\n\n"+
-You are on a camping trip with a large group of boyscouts. During a nighttime hike, you get separated from the rest of the group.\n
-You stumble upon a meadow. There in front of you is a large mansion. You hear an eary plea for help coming from inside. What do you do?
+****************************************
+*** The Mansion of Professor Ludlow ****
+****************************************
+     Adapted from a D&amp;D module by James Ward
+
+You are on a camping trip with a large group of boyscouts. During a nighttime hike, you get separated from the rest of the group.
+You stumble upon a meadow. There in front of you is a large mansion. You hear an eary plea for help coming from inside.
+What do you do?
         </description>
         <choices>
             <choice description="Knock on the front door"
@@ -42,12 +44,12 @@ You stumble upon a meadow. There in front of you is a large mansion. You hear an
 
     <scene name="inside_entrance">
         <description>
-           The double door is unlocked and opens easily.\n
-           The beam of your flashligh reveals an empty hallway with a mirror at the opposite end. \n
-           There are openings that lead to rooms on the right and left.\n
-               The hall has inch-thick red carpeting\n
-           and walnut-paneled walls. The mirror at the end runs from the\n
-           floor to the twenty-foot-high ceiling and covers the forty feet of wall\n
+           The double door is unlocked and opens easily.
+           The beam of your flashligh reveals an empty hallway with a mirror at the opposite end. 
+           There are openings that lead to rooms on the right and left.
+               The hall has inch-thick red carpeting
+           and walnut-paneled walls. The mirror at the end runs from the
+           floor to the twenty-foot-high ceiling and covers the forty feet of wall
            section on that south face of the hall.
         </description>
         <choices>

@@ -39,6 +39,6 @@ public class CheckersWeights extends GameWeights {
 
 
     public CheckersWeights() {
-        super( DEFAULT_WEIGHTS, MIN_WEIGHTS, MAX_WEIGHTS, WEIGHT_SHORT_DESCRIPTIONS, WEIGHT_DESCRIPTIONS );
+        super(DEFAULT_WEIGHTS, MIN_WEIGHTS, MAX_WEIGHTS, WEIGHT_SHORT_DESCRIPTIONS, WEIGHT_DESCRIPTIONS );
     }
 }

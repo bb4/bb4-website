@@ -6,6 +6,9 @@ import java.awt.*;
 import java.awt.image.ImageObserver;
 import java.net.URL;
 
+/**
+ * Shows an image in a frame of the same size.
+ */
 public class RightSizer extends ApplicationFrame
 {
     private Image mImage;
@@ -13,7 +16,9 @@ public class RightSizer extends ApplicationFrame
     public static void main( String[] args ) throws Exception
     {
         String url = "http://barrybecker4.com/family_portrait_s.JPG";
-        if ( args.length > 0 ) url = args[0];
+        if ( args.length > 0 ) 
+            url = args[0];
+
         new RightSizer( new URL( url ) );
     }
 
@@ -24,6 +29,9 @@ public class RightSizer extends ApplicationFrame
         rightSize();
     }
 
+    /**
+     * Set the frame size to the same size as the image (once it has loaded).
+     */
     private void rightSize()
     {
         int width = mImage.getWidth( this );
@@ -37,6 +45,7 @@ public class RightSizer extends ApplicationFrame
         setVisible( true );
     }
 
+    @Override
     public boolean imageUpdate( Image img, int infoflags,
                                 int x, int y, int width, int height )
     {
@@ -57,11 +66,13 @@ public class RightSizer extends ApplicationFrame
         return true;
     }
 
+    @Override
     public void update( Graphics g )
     {
         paint( g );
     }
 
+    @Override
     public void paint( Graphics g )
     {
         Insets insets = getInsets();

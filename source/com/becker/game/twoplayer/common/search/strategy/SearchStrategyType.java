@@ -2,6 +2,7 @@ package com.becker.game.twoplayer.common.search.strategy;
 
 import com.becker.game.twoplayer.common.search.*;
 import com.becker.game.common.*;
+import com.becker.optimization.parameter.ParameterArray;
 
 /**
  * Currently supported search method strategy
@@ -12,40 +13,40 @@ public enum SearchStrategyType {
 
     
     MINIMAX("MINIMAX_SEARCH") {
-        public SearchStrategy createStrategy(Searchable s) { 
-            return new MiniMaxStrategy(s);
+        public SearchStrategy createStrategy(Searchable s, ParameterArray weights) {
+            return new MiniMaxStrategy(s, weights);
         }
         public boolean sortAscending(boolean player1, boolean playerOnesPerspective) { 
             return  ( player1 == playerOnesPerspective);
         }
     },
     NEGAMAX("NEGAMAX_SEARCH") {
-        public SearchStrategy createStrategy(Searchable s) {
-            return new NegaMaxStrategy(s);
+        public SearchStrategy createStrategy(Searchable s, ParameterArray weights) {
+            return new NegaMaxStrategy(s, weights);
         }
          public boolean sortAscending(boolean player1, boolean playerOnesPerspective) {
             return false;
         }
     },
     NEGASCOUT("NEGASCOUT_SEARCH") {
-        public SearchStrategy createStrategy(Searchable s) {
-            return new NegaScoutStrategy(s);
+        public SearchStrategy createStrategy(Searchable s, ParameterArray weights) {
+            return new NegaScoutStrategy(s, weights);
         }
         public boolean sortAscending(boolean player1, boolean playerOnesPerspective) {
             return  false;
         }
     },
     NEGASCOUT_W_MEMORY("NEGASCOUT_W_MEMORY_SEARCH") {
-        public SearchStrategy createStrategy(Searchable s) {
-            return new NegaScoutMemoryStrategy(s);
+        public SearchStrategy createStrategy(Searchable s, ParameterArray weights) {
+            return new NegaScoutMemoryStrategy(s, weights);
         }
         public boolean sortAscending(boolean player1, boolean playerOnesPerspective) {
             return  false;
         }
     },
     MTD("MTD_SEARCH"){
-        public SearchStrategy createStrategy(Searchable s) {
-            return new MtdStrategy(s);
+        public SearchStrategy createStrategy(Searchable s, ParameterArray weights) {
+            return new MtdStrategy(s, weights);
         }
         public boolean sortAscending(boolean player1, boolean playerOnesPerspective) {
             return  false;
@@ -76,7 +77,7 @@ public enum SearchStrategyType {
      * Do not call the constructor directly.
      * @return the search method to use
      */
-    public abstract SearchStrategy createStrategy(Searchable s);
+    public abstract SearchStrategy createStrategy(Searchable s, ParameterArray weights);
 
     /**
      * How to sort when determining subset of best moves to try.

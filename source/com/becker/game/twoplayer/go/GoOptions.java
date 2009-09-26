@@ -9,13 +9,17 @@ import com.becker.sound.*;
 public class GoOptions extends TwoPlayerOptions {
 
 
-    // The komi can vary, but 5.5 seems most commonly used.
+    /** The komi can vary, but 5.5 seems most commonly used. */
     public static final float DEFAULT_KOMI = 5.5f;
 
-    // initial look ahead factor.
-    static final int DEFAULT_LOOKAHEAD = 2;
-    // for any given ply never consider more that BEST_PERCENTAGE of the top moves
-    static final int BEST_PERCENTAGE = 70;
+    /** initial look ahead factor. */
+    static final int DEFAULT_LOOK_AHEAD = 2;
+
+    /** for any given ply never consider more that BEST_PERCENTAGE of the top moves. */
+    static final int DEFAULT_PERCENTAGE_BEST_MOVES = 70;
+
+    /** for any given ply never consider less taht this many moves. */
+    static final int DEFAULT_MIN_BEST_MOVES = 10;
 
 
     // additional score given to black or white to bring things into balance.
@@ -23,12 +27,32 @@ public class GoOptions extends TwoPlayerOptions {
     private float komi_ = DEFAULT_KOMI;
 
     public GoOptions() {
-        this(DEFAULT_LOOKAHEAD, BEST_PERCENTAGE, MusicMaker.SHAMISEN, DEFAULT_KOMI);
+        this(DEFAULT_LOOK_AHEAD, DEFAULT_PERCENTAGE_BEST_MOVES , DEFAULT_MIN_BEST_MOVES,
+               MusicMaker.SHAMISEN, DEFAULT_KOMI);
     }
 
-    public GoOptions(int defaultLookAhead, int defaultBestPercentage, String preferredTone, float komi) {
-        super(defaultLookAhead, defaultBestPercentage, preferredTone);
+    public GoOptions(int defaultLookAhead, int defaultBestPercentage, int minBestMoves,
+                                 String preferredTone, float komi) {
+        super(defaultLookAhead, defaultBestPercentage, minBestMoves,  preferredTone);
         setKomi(komi);
+    }
+
+    @Override
+    protected int getDefaultLookAhead() {
+        return DEFAULT_LOOK_AHEAD;
+    }
+    @Override
+    protected int getDefaultPercentageBestMoves() {
+        return DEFAULT_PERCENTAGE_BEST_MOVES;
+    }
+    @Override
+    protected int getDefaultMinBestMoves() {
+        return DEFAULT_MIN_BEST_MOVES;
+    }
+
+    @Override
+    public int getMaxQuiescentDepth() {
+        return 16;
     }
 
     public float getKomi() {
@@ -38,6 +62,5 @@ public class GoOptions extends TwoPlayerOptions {
     public void setKomi(float komi) {
         this.komi_ = komi;
     }
-
 
 }

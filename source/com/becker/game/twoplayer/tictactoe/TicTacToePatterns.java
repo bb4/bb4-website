@@ -15,6 +15,8 @@ import com.becker.game.twoplayer.pente.Patterns;
 public final class TicTacToePatterns extends Patterns
 {
 
+    public static final int WIN_RUN_LENGTH = 3;
+
     private static final int NUM_PATTERNS = 7;
 
     private static String[] patternString = {
@@ -33,7 +35,7 @@ public final class TicTacToePatterns extends Patterns
       * This is how many in a row are needed to win
       */
     public int getWinRunLength() {
-        return 3;
+        return WIN_RUN_LENGTH;
     }
 
     protected int getNumPatterns() {

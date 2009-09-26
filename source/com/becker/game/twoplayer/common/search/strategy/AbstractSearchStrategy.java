@@ -5,6 +5,7 @@ import com.becker.game.twoplayer.common.search.tree.PruneType;
 import com.becker.game.twoplayer.common.search.*;
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.tree.GameTreeViewable;
 import com.becker.optimization.parameter.ParameterArray;
 
@@ -22,13 +23,13 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
 {
  
     /** if true, then use alpha-beta pruning. */
-    final boolean alphaBeta_;
+    protected final boolean alphaBeta_;
 
     /** If true, then use additional qeiscent search to extent the search tree for urgent moves. */
-    final boolean quiescence_;
+    protected final boolean quiescence_;
 
-    /** Don't go deeper than this when trying to find quiescence. */
-    protected static final int MAX_QUIESCENT_DEPTH = 12;
+    /** the number of plys to look ahead when searching. */
+    final int lookAhead_;
 
     /** the interface implemented by the generic game controller that provides standard methods. */
     Searchable searchable_ = null;
@@ -39,11 +40,14 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
     /** approximate percent of search that is complete at given moment. */
     int percentDone_ = 0;
 
+    /** don't search more levels ahead than this during quiescent search. */
+    int maxQuiescentDepth_ = 0;
+
+    /** weights coefficients for the evaluation polunomial that indirectly determines the best move.   */
+    ParameterArray weights_;
+
     /** True when search is paused. */
     private boolean paused_ = false;
-
-    /** The user can sometimes interrupt the search. */
-    protected boolean interrupted_ = false;
 
     /** The optional ui component that will be updated to reflect the current search tree.  */
     protected GameTreeViewable gameTreeListener_;
@@ -59,22 +63,83 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
      * Construct the strategy.
      * do not call directly. Use createSearchStrategy factory method instead.
      * @param controller the game controller that has options and can make/undo moves.
+     * @param weights coefficients for the evaluation polunomial that indirectly determines the best move.
      */
-    protected AbstractSearchStrategy( Searchable controller )
+    protected AbstractSearchStrategy( Searchable controller, ParameterArray weights )
     {
         searchable_ = controller;
-        alphaBeta_ = searchable_.getAlphaBeta();
-        quiescence_ = searchable_.getQuiescence();
-        GameContext.log( 2, "alpha beta=" + alphaBeta_ + " quiescence=" + quiescence_ );
+        TwoPlayerOptions opts = searchable_.getOptions();
+        alphaBeta_ = opts.getAlphaBeta();
+        quiescence_ = opts.getQuiescence();
+        lookAhead_ = opts.getLookAhead();
+        maxQuiescentDepth_ = opts.getMaxQuiescentDepth();
+        weights_ = weights;
+        GameContext.log( 2, "alpha beta=" + alphaBeta_ + " quiescence=" + quiescence_ + " lookAhead = " + lookAhead_);
     }
+
 
     /**
      * @inheritDoc
      */
-    public abstract TwoPlayerMove search( TwoPlayerMove lastMove, ParameterArray weights,
-                                          int depth, int quiescentDepth,
-                                          int alpha, int beta, SearchTreeNode parent );
+    public TwoPlayerMove search( TwoPlayerMove lastMove, 
+                                                     int alpha, int beta, SearchTreeNode parent ) {
+        return searchInternal( lastMove,  lookAhead_,  alpha, beta, parent );
+    }
 
+    /**
+     * @see SearchStrategy.search method doc
+     */
+    protected TwoPlayerMove searchInternal( TwoPlayerMove lastMove,
+                                          int depth, 
+                                          int alpha, int beta, SearchTreeNode parent ) {
+
+        if ( depth == 0 || searchable_.done( lastMove, false ) ) {
+            if ( quiescence_ && depth == 0 )
+                return quiescentSearch(lastMove, depth, alpha, beta, parent);
+            lastMove.setInheritedValue(lastMove.getValue());
+            return lastMove;
+        }
+
+        // generate a list of all candidate next moves, and pick the best one
+        List<? extends TwoPlayerMove> list =
+                searchable_.generateMoves( lastMove,  weights_,  fromPlayer1sPerspective(lastMove));
+        movesConsidered_ += list.size();
+        if (depth ==lookAhead_)
+            numTopLevelMoves_ = list.size();
+
+        if ( emptyMoveList( list, lastMove) ) {
+            // if there are no possible next moves, return null (we hit the end of the game).
+            return null;
+        }
+
+        return findBestMove(lastMove, depth, list, alpha, beta, parent);
+    }
+
+
+    /**
+     * This is the part of the search algorithm that varies most among the search strategies.
+     * That is why I break it out into a separete overridable method.
+     *
+     * @param lastMove the most recent move made by one of the players.
+     * @param depth how deep in this local game tree that we are to search.
+     *   When depth becomes 0 we are at a leaf and should terminate (unless its an urgent move and quiescence is on).
+      *@param list generated list of next moves to search.
+     * @param alpha same as p2best but for the other player. (alpha)
+     * @param beta the maximum of the value that it inherits from above and the best move found at this level (beta).
+     * @param parent for constructing a ui tree. If null no game tree is constructed.
+     * @return the chosen move (ie the best move) (may be null if no next move).
+     */
+    protected abstract TwoPlayerMove findBestMove(TwoPlayerMove lastMove, 
+                                       int depth, List<? extends TwoPlayerMove> list,
+                                       int alpha, int beta, SearchTreeNode parent);
+
+
+    /**
+     * This continues the search in situations where the board position is not stable.
+     * For example, perhaps we are in the middle of a piece exchange
+     */
+    protected abstract TwoPlayerMove quiescentSearch( TwoPlayerMove lastMove,
+                                          int depth, int alpha, int beta, SearchTreeNode parent );
 
     /**
      * add a move to the visual game tree (if parent not null).
@@ -113,7 +178,7 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
     /**
      * @return true if the move list is empty.
      */
-    static boolean emptyMoveList( List list, TwoPlayerMove lastMove )
+    static boolean emptyMoveList( List<? extends TwoPlayerMove> list, TwoPlayerMove lastMove )
     {
         if ( !list.isEmpty() ) return false;
 
@@ -149,13 +214,19 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
      * if we are at the top level (otherwise this is a no-op).
      */
     protected void updatePercentDone(int depth,  List remainingNextMoves) {
-        if (depth == searchable_.getLookAhead())   {
+        if (depth == lookAhead_)   {
             percentDone_ = 100 * (numTopLevelMoves_-remainingNextMoves.size()) / numTopLevelMoves_;
         }
     }
 
-    // these methods give an external thread debugging controls over the search
+    /**
+     * For minimax this is always true, but it depends on the player for the nega type searches.
+     * @return true if we should evaluate the board from the point of view of player one.
+     */
+    protected abstract boolean fromPlayer1sPerspective(TwoPlayerMove lastMove);
 
+
+    // these methods give an external thread debugging controls over the search
 
     public void pause()
     {
@@ -177,17 +248,20 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
     /**
      * pause if we are paused. Continue when not paused anymore.
      * The pause value is changed by the TwoPlayerBoardViewer
+     * @return false right away if not paused. Returns true only if
+     *  a long pause has been interrupted.
      */
-    void checkPause() {
+    boolean pauseInterrupted() {
         try {
             while (paused_) {
                 Thread.sleep(100);
             }
+            return false;
         } catch (InterruptedException e) {
             //e.printStackTrace();
             GameContext.log(2, "interrupted" );
-            interrupted_ = true;
             e.printStackTrace();
+            return true;
         }
     }
 

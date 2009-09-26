@@ -20,7 +20,7 @@ public class GameTreeCellRenderer extends DefaultTreeCellRenderer
     private Color p1Color_ = Color.green;
     private ColorMap colormap_ = null;
 
-    private static final Color SELECTED_COLOR = new Color( 200, 50, 0 );
+    private static final Color SELECTED_COLOR = new Color( 200, 20, 0 );
 
     private final JLabel pieceLabel_ = new JLabel();
     private final JPanel cellPanel_ = new JPanel();
@@ -29,14 +29,16 @@ public class GameTreeCellRenderer extends DefaultTreeCellRenderer
         commonInit();
     }
 
-    // Default Constructor
+    /**
+     * Default Constructor
+     */
     public GameTreeCellRenderer(TwoPlayerPieceRenderer pieceRenderer) {
         setColorMap(createColormap(pieceRenderer));
         commonInit();
     }
 
     /**
-     * initialize the colormap used to color the gmae tree rows, nodes, and arcs.
+     * initialize the colormap used to color the game tree rows, nodes, and arcs.
      */
     private static ColorMap createColormap(TwoPlayerPieceRenderer renderer) {
         // we will use this colormap for both the text tree and the graphical
@@ -77,6 +79,7 @@ public class GameTreeCellRenderer extends DefaultTreeCellRenderer
         colormap_ = cmap;
     }
 
+    @Override
     public Component getTreeCellRendererComponent(
             JTree tree, Object value,
             boolean sel, boolean expanded,
@@ -88,12 +91,11 @@ public class GameTreeCellRenderer extends DefaultTreeCellRenderer
         Color bg = getBGColor( value );
         Color fg = getFGColor( value );
 
-        setBackground( bg );
         setForeground( fg );
-        setBackgroundNonSelectionColor( bg );
+        //setBackground( Color.WHITE );
+        //setBackgroundNonSelectionColor( bg );
         setBackgroundSelectionColor( Color.orange );
-        // for some reason this doesn't work right
-        //return cellPanel_;
+
         return this;
     }
 
