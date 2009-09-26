@@ -87,24 +87,24 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
     /** verify that we can retrieve the lookahead value. */
     public void testLookaheadValue() {
 
-        Assert.assertEquals("Unexpected lookahead value.", DEFAULT_LOOKAHEAD, searchable.getLookAhead());
+        Assert.assertEquals("Unexpected lookahead value.", DEFAULT_LOOKAHEAD, searchable.getOptions().getLookAhead());
         getTwoPlayerOptions().setLookAhead(7);
-        Assert.assertEquals("Unexpected lookahead value.", 7, searchable.getLookAhead());
+        Assert.assertEquals("Unexpected lookahead value.", 7, searchable.getOptions().getLookAhead());
     }
 
     /** verify that we can retrieve the lookahead value. */
     public void testAlphaBetaValue() {
 
-        Assert.assertEquals("Unexpected alphabeta value.", true, searchable.getAlphaBeta());
+        Assert.assertEquals("Unexpected alphabeta value.", true, searchable.getOptions().getAlphaBeta());
         getTwoPlayerOptions().setAlphaBeta(false);
-        Assert.assertEquals("Unexpected alphabeta value.", false, searchable.getAlphaBeta());
+        Assert.assertEquals("Unexpected alphabeta value.", false, searchable.getOptions().getAlphaBeta());
     }
 
     /** verify that we can retrieve the quiescence value. */
     public void testQuiescenceValue()  {
-        Assert.assertEquals("Unexpected quiessence value.", false, searchable.getQuiescence());
+        Assert.assertEquals("Unexpected quiessence value.", false, searchable.getOptions().getQuiescence());
         getTwoPlayerOptions().setQuiescence(true);
-        Assert.assertEquals("Unexpected quiessence value.", true, searchable.getQuiescence());
+        Assert.assertEquals("Unexpected quiessence value.", true, searchable.getOptions().getQuiescence());
     }
 
 

@@ -14,7 +14,7 @@ import com.becker.optimization.parameter.ParameterArray;
 public class GameWeights
 {
     /** scores computed from weights are assumed to be between [0 and 1000] for player1 */
-    protected static final double ASSUMED_WINNING_VALUE = 1000;
+    protected static final double ASSUMED_WINNING_VALUE = 1024;
 
     /** the weights are created assuming a winning vbalue of 1000. It that changes we need to scale them */
     protected static final double SCALE = SearchStrategy.WINNING_VALUE /ASSUMED_WINNING_VALUE;

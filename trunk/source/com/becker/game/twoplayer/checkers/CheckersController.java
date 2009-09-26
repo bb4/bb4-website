@@ -6,7 +6,6 @@ import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.optimization.parameter.ParameterArray;
-import com.becker.sound.MusicMaker;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -18,8 +17,6 @@ import java.util.List;
  */
 public class CheckersController extends TwoPlayerController
 {
-
-    private static final int DEFAULT_LOOKAHEAD = 4;
 
     // the checkers board must be 8*8
     protected static final int NUM_ROWS = 8;
@@ -48,7 +45,7 @@ public class CheckersController extends TwoPlayerController
 
     @Override
     protected TwoPlayerOptions createOptions() {
-        return new TwoPlayerOptions(DEFAULT_LOOKAHEAD, 100, MusicMaker.SITAR);
+        return new CheckersOptions();
     }
 
     /**
@@ -134,14 +131,13 @@ public class CheckersController extends TwoPlayerController
                 BoardPosition p = board_.getPosition( row, col );
                 if ( p.isOccupied() ) {
                     CheckersPiece piece = (CheckersPiece) p.getPiece();
-                    float sign =  piece.isOwnedByPlayer1() ? 1 : -1;
-                    if ( piece.isKing()) {
-                           posScore += sign * weights.get(CheckersWeights.KINGED_WEIGHT_INDEX).getValue();
-                    }
-                    else { // REGULAR_PIECE    
-                           posScore += sign * weights.get(CheckersWeights.PIECE_WEIGHT_INDEX).getValue();
-                           posScore += sign *weights.get(CheckersWeights.ADVANCEMENT_WEIGHT_INDEX).getValue() * row;
-                    }
+                    boolean isPlayer1 = piece.isOwnedByPlayer1();
+                    int advancement = isPlayer1? row : NUM_ROWS - row;
+                    int pieceScore = calcPieceScore(piece.isKing(), advancement, weights);
+                    if (isPlayer1)
+                        posScore += pieceScore;
+                    else
+                        negScore -= pieceScore;
                 }
             }
         }
@@ -154,6 +150,22 @@ public class CheckersController extends TwoPlayerController
             return WINNING_VALUE;
         }
         return (int)(posScore + negScore);
+    }
+
+    /**
+     * 
+     * @return the score for a particular piece.
+     */
+    private int calcPieceScore(boolean isKing, int advancement, ParameterArray weights) {
+        int score = 0;
+        if (isKing) {
+               score += weights.get(CheckersWeights.KINGED_WEIGHT_INDEX).getValue();
+        }
+        else { // REGULAR_PIECE
+               score += weights.get(CheckersWeights.PIECE_WEIGHT_INDEX).getValue();
+               score += weights.get(CheckersWeights.ADVANCEMENT_WEIGHT_INDEX).getValue() * advancement;
+        }
+        return score;
     }
 
     /**
@@ -416,14 +428,6 @@ public class CheckersController extends TwoPlayerController
                 TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
         {
             return null;
-        }
-
-        /**
-         * returns true if the specified move caused one or more opponent pieces to become jeopardized
-         */
-        public boolean inJeopardy( TwoPlayerMove m )
-        {
-            return false;
         }
     }
 }

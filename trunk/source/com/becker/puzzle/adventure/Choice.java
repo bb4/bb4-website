@@ -1,6 +1,5 @@
 package com.becker.puzzle.adventure;
 
-import com.becker.common.xml.DomUtil;
 import org.w3c.dom.*;
 import com.becker.common.xml.*;
 
@@ -15,9 +14,7 @@ public class Choice {
     private String description_;
     private String destination_;
 
-
     public static final String QUIT = "Quit";
-
     public static final String PREVIOUS_SCENE = "last scene";
 
     public Choice(Node choiceNode) {
@@ -30,9 +27,7 @@ public class Choice {
         destination_ = dest;
     }
 
-
     /**
-     *
      * @return the test shown in the choice list.
      */
     public String getDescription() {
@@ -40,7 +35,6 @@ public class Choice {
     }
 
     /**
-     *
      * @return the name of the scene to go to if they select this choice.
      */
     public String getDestination() {

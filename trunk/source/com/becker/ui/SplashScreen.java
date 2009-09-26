@@ -34,6 +34,7 @@ public final class SplashScreen extends JWindow
                 (screenSize.height >> 1) - (labelSize.height >> 1) );
         addMouseListener( new MouseAdapter()
         {
+            @Override
             public void mousePressed( MouseEvent e )
             {
                 setVisible( false );

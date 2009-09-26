@@ -8,9 +8,7 @@ package com.becker.ui.sliders;
 public interface SliderChangeListener {
 
     /**
-     * @param sliderIndex index of the slider that changed
-     * @param sliderName name of slider that was moved.
-     * @param value the new value
+     * @param slider the slider that was moved.
      */
     void sliderChanged(LabeledSlider slider);
 }

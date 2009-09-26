@@ -13,7 +13,6 @@ public abstract class ApplicationApplet extends JApplet
     protected ResizableAppletPanel resizablePanel_;
 
     static {
-        System.out.println("ApplicationApplet static init." );
         GUIUtil.setStandAlone((GUIUtil.getBasicService() != null));
     }
     /**
@@ -57,6 +56,7 @@ public abstract class ApplicationApplet extends JApplet
     /**
      * called by the browser after init(), if running as an applet
      */
+    @Override
     public void start() {}
 
 }

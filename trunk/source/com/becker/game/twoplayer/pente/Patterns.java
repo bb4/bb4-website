@@ -71,7 +71,7 @@ public abstract class Patterns
     
     protected abstract int getWeightIndex(int i);
 
-    public int getWeightIndexForPattern(StringBuffer pattern, int minpos, int maxpos) {
+    public int getWeightIndexForPattern(StringBuilder pattern, int minpos, int maxpos) {
         return weightIndexTable_[convertPatternToInt(pattern, minpos, maxpos)];
     }
     /**
@@ -81,7 +81,7 @@ public abstract class Patterns
      */
     protected static int convertPatternToInt( String pattern )
     {
-        StringBuffer buf = new StringBuffer( pattern );
+        StringBuilder buf = new StringBuilder( pattern );
         return convertPatternToInt( buf, 0, pattern.length() );
     }
 
@@ -90,7 +90,7 @@ public abstract class Patterns
      * this integer can be used like a hash for a quick lookup of the weight
      * in the weightIndexTable
      */
-    protected static int convertPatternToInt( StringBuffer pattern, int minpos, int maxpos )
+    protected static int convertPatternToInt( StringBuilder pattern, int minpos, int maxpos )
     {
         int power = 1;
         int sum = 0;
@@ -109,7 +109,7 @@ public abstract class Patterns
         weightIndexTable_[hash] = wtIndex;
 
         // also add the reversed pattern
-        StringBuffer reverse = new StringBuffer( pattern );
+        StringBuilder reverse = new StringBuilder( pattern );
         int len = pattern.length();
         for ( int j = 0; j < reverse.length(); j++ )
             reverse.setCharAt( j, pattern.charAt( len - j - 1 ) );

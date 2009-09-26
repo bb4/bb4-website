@@ -120,6 +120,7 @@ public class MazePanel extends JComponent {
     /**
      * Render the Environment on the screen.
      */
+    @Override
     public void paintComponent( Graphics g )
     {
         super.paintComponent( g );

@@ -14,7 +14,6 @@ import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.Optimizer;
 import com.becker.optimization.OptimizationType;
 import com.becker.optimization.Optimizee;
-import com.becker.sound.MusicMaker;
 import java.util.ArrayList;
 
 import java.util.Collections;
@@ -42,8 +41,6 @@ public abstract class TwoPlayerController extends GameController
     /** anything greater than this is considered a won game  */
     public static final int WINNING_VALUE = SearchStrategy.WINNING_VALUE;
 
-    /** Np matter wha tthe percentBestMoves is we should not prune if less than this number. */
-    private static final int MIN_BEST_MOVES = 10;
 
     /** not really infinty, but close enough for our purposes. */
     private static final int INFINITY = SearchStrategy.INFINITY;
@@ -77,7 +74,6 @@ public abstract class TwoPlayerController extends GameController
         createPlayers();
     }
 
-
     public GameOptions getOptions() {
         if (gameOptions_ == null) {
             gameOptions_ = createOptions();
@@ -85,10 +81,11 @@ public abstract class TwoPlayerController extends GameController
         return gameOptions_;
     }
 
-    protected TwoPlayerOptions createOptions() {
-        return new TwoPlayerOptions(4, 50, MusicMaker.TAIKO_DRUM);
-    }
-
+    /**
+     * @return custom set of search and game options.
+     */
+    protected abstract TwoPlayerOptions createOptions();
+    
     public TwoPlayerOptions getTwoPlayerOptions() {
 
         return (TwoPlayerOptions) getOptions();
@@ -98,7 +95,6 @@ public abstract class TwoPlayerController extends GameController
     {
        return (TwoPlayerViewable)viewer_;
     }
-
 
     /**
      * Return the game board back to its initial openning state
@@ -321,7 +317,7 @@ public abstract class TwoPlayerController extends GameController
         }
 
         /////////////////////// SEARCH //////////////////////////////////////////////////////
-        strategy_ = getTwoPlayerOptions().getSearchStrategy(getSearchable());
+        strategy_ = getTwoPlayerOptions().getSearchStrategy(getSearchable(), weights);
 
         SearchTreeNode root = null;
         if (gameTreeListener_ != null) {
@@ -330,8 +326,7 @@ public abstract class TwoPlayerController extends GameController
         }
 
         TwoPlayerMove selectedMove =
-                strategy_.search( p, weights, getSearchable().getLookAhead(), 0,
-                                  INFINITY, -INFINITY, root );
+                strategy_.search( p, INFINITY, -INFINITY, root );
         /////////////////////////////////////////////////////////////////////////////////////////
 
         if ( selectedMove != null ) {
@@ -595,8 +590,8 @@ public abstract class TwoPlayerController extends GameController
         int numMoves = moveList.size();
 
         List<? extends TwoPlayerMove> bestMoveList = moveList;
-        int best = (int) ((float) getTwoPlayerOptions().getPercentageBestMoves() / HUNDRED * numMoves);
-        if ( best < numMoves && numMoves > MIN_BEST_MOVES)
+        int best = (int) ((float) getTwoPlayerOptions().getPercentageBestMoves() / HUNDRED * numMoves) + 1;
+        if ( best < numMoves && numMoves > getTwoPlayerOptions().getMinBestMoves())
             bestMoveList = moveList.subList( 0, best );
 
         //GameContext.log(2, "generated top moves are :  " + moveList );
@@ -679,29 +674,10 @@ public abstract class TwoPlayerController extends GameController
 
     public abstract class TwoPlayerSearchable implements Searchable {
 
-        /**
-         * @return the number of moves/plys to lookahead while searching
-         */
-        public final int getLookAhead() {
-            return getTwoPlayerOptions().getLookAhead();
+        public TwoPlayerOptions getOptions() {
+            return (TwoPlayerOptions) gameOptions_;
         }
-
-        /**
-         * @return  whether to use alpha beta pruning while searching
-         */
-        public final boolean getAlphaBeta() {
-            return getTwoPlayerOptions().getAlphaBeta();
-        }
-
-        /**
-         * @return whether or not the quiescent search option is being used by the search strategy
-         */
-        public final boolean getQuiescence()
-        {
-            return getTwoPlayerOptions().getQuiescence();
-        }
-
-
+        
         /**
          * @param m the move to play.
          */

@@ -59,19 +59,11 @@ public final class GoController extends TwoPlayerController
         initializeData();
     }
 
-    /**
-     * @return go game options (uses lazy construction).
-     */
-    @Override
-    public GameOptions getOptions() {
-        if (gameOptions_ == null) {
-            TwoPlayerOptions options = new GoOptions();
-            options.setPlayerName(true, GameContext.getLabel("BLACK"));
-            options.setPlayerName(false, GameContext.getLabel("WHITE"));
-            gameOptions_ = options;
-        }
-
-        return gameOptions_;
+    protected TwoPlayerOptions createOptions() {
+        TwoPlayerOptions options = new GoOptions();
+        options.setPlayerName(true, GameContext.getLabel("BLACK"));
+        options.setPlayerName(false, GameContext.getLabel("WHITE"));
+        return options;
     }
 
     /**
@@ -462,6 +454,8 @@ public final class GoController extends TwoPlayerController
 
     protected class GoSearchable extends TwoPlayerSearchable {
 
+        private static final int NUM_STONES_ATARIED = 4;
+
         /**
          * given a move determine whether the game is over.
          * If recordWin is true then the variables for player1/2HasWon can get set.
@@ -558,7 +552,7 @@ public final class GoController extends TwoPlayerController
         public boolean inJeopardy( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
         {
             GoBoard gb = (GoBoard) board_;
-            return (( (GoMove)lastMove ).causesAtari(gb) > 5);
+            return (( (GoMove)lastMove ).causesAtari(gb) > NUM_STONES_ATARIED);
         }
 
 

@@ -1,7 +1,6 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
-import com.becker.game.twoplayer.common.search.*;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.tree.GameTreeViewable;
 import com.becker.optimization.parameter.ParameterArray;
@@ -26,17 +25,12 @@ public interface SearchStrategy {
      * Derived classes work by narrowing a bound on the value of the optimal move.
      *
      * @param lastMove the most recent move made by one of the players.
-     * @param weights coefficient for the evaluation polunomial that indirectly determines the best move.
-     * @param depth how deep in this local game tree that we are to search.
-     *   When depth becomes 0 we are at a leaf and should terminate (unless its an urgent move and quiescence is on).
-     * @param quiescentDepth how far to go to reach quiescence if we detect an urgent move.
      * @param alpha same as p2best but for the other player. (alpha)
      * @param beta the maximum of the value that it inherits from above and the best move found at this level (beta).
      * @param parent for constructing a ui tree. If null no game tree is constructed.
      * @return the chosen move (ie the best move) (may be null if no next move).
      */
-    TwoPlayerMove search( TwoPlayerMove lastMove, ParameterArray weights,
-                                          int depth, int quiescentDepth,
+    TwoPlayerMove search( TwoPlayerMove lastMove, 
                                           int alpha, int beta, SearchTreeNode parent );
 
 

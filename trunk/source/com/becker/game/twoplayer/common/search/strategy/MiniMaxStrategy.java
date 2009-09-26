@@ -17,60 +17,31 @@ import java.util.List;
  */
 public final class MiniMaxStrategy extends AbstractSearchStrategy
 {
-
     /**
      * Constructor for the strategy.
-     * @param controller the game controller that has options and can make/undo moves.
+     * @inheritDoc
      */
-    public MiniMaxStrategy( Searchable controller )
+    public MiniMaxStrategy( Searchable controller, ParameterArray weights )
     {
-        super( controller );
+        super( controller, weights );
     }
 
     /**
      * @inheritDoc
      */
-    public TwoPlayerMove search( TwoPlayerMove lastMove, ParameterArray weights,
-                                       int depth, int quiescentDepth,
-                                       int oldAlpha, int oldBeta, SearchTreeNode parent )
-    {
-        List list;   // list of moves to consider
+    protected TwoPlayerMove findBestMove(TwoPlayerMove lastMove, 
+                                       int depth,  List<? extends TwoPlayerMove> list,  
+                                       int alpha, int beta, SearchTreeNode parent) {
+        int i = 0;
+        int selectedValue = -SearchStrategy.INFINITY;  // need to initialize?
         TwoPlayerMove selectedMove;  // the currently selected move
-        int alpha = oldAlpha;
-        int beta = oldBeta;
-
         // if player 1, then search for a high score, else seach for a low score.
         boolean player1 = lastMove.isPlayer1();
-
-        if ( depth == 0 || searchable_.done( lastMove, false ) ) {
-            if ( quiescence_ && depth == 0 )
-                return quiescentSearch( lastMove, weights, quiescentDepth, alpha, beta, parent );
-            else {
-                lastMove.setInheritedValue(lastMove.getValue());
-                return lastMove;
-            }
-        }
-
-        // generate a list of all candidate next moves, and pick the best one
-        list = searchable_.generateMoves( lastMove, weights, true );
-        movesConsidered_ += list.size();
-        if (depth == searchable_.getLookAhead())
-            numTopLevelMoves_ = list.size();
-
-        if ( emptyMoveList( list, lastMove ) ) {
-            // if there are no possible next moves, return null (we hit the end of the game).
-            return null;
-        }
-
-        int i = 0;
-        int selectedValue = -SearchStrategy.INFINITY;
-        int bestInheritedValue = -SearchStrategy.INFINITY;
-        if ( player1 ) bestInheritedValue = SearchStrategy.INFINITY;
+        int bestInheritedValue = player1? SearchStrategy.INFINITY: -SearchStrategy.INFINITY;
 
         TwoPlayerMove bestMove = (TwoPlayerMove) (list.get( 0 ));
         while ( !list.isEmpty() ) {
-            checkPause();
-            if (interrupted_)
+            if (pauseInterrupted())
                 return lastMove;
 
             TwoPlayerMove theMove = (TwoPlayerMove) (list.remove(0));
@@ -80,7 +51,7 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
             SearchTreeNode child = addNodeToTree(parent, theMove, alpha, beta, i++);
 
             // recursive call
-            selectedMove = search( theMove, weights, depth-1, quiescentDepth, alpha, beta, child );
+            selectedMove = searchInternal( theMove, depth-1, alpha, beta, child );
 
             searchable_.undoInternalMove( theMove );
 
@@ -101,7 +72,6 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
                 bestInheritedValue = bestMove.getInheritedValue();
             }
 
-            //********* alpha beta pruning ********
             if ( alphaBeta_ ) {
                 if ( player1 && (selectedValue < alpha) ) {
                     if ( selectedValue < beta ) {
@@ -120,7 +90,6 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
                         beta = selectedValue;
                 }
             }
-            //********* end alpha beta pruning *****
         }
 
         bestMove.setSelected(true);
@@ -133,18 +102,18 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
      * This continues the search in situations where the board position is not stable.
      * For example, perhaps we are in the middle of a piece exchange
      */
-    private TwoPlayerMove quiescentSearch( TwoPlayerMove lastMove, ParameterArray weights,
-                                          int depth, int oldAlpha, int oldBeta, SearchTreeNode parent )
+    protected TwoPlayerMove quiescentSearch( TwoPlayerMove lastMove, 
+                                                    int depth, int oldAlpha, int oldBeta, SearchTreeNode parent )
     {
         int alpha = oldAlpha;
         int beta = oldBeta;
         lastMove.setInheritedValue(lastMove.getValue());
-        if ( depth >= MAX_QUIESCENT_DEPTH) {
+        if ( depth >= maxQuiescentDepth_) {
             return lastMove;
         }
-        if ( searchable_.inJeopardy( lastMove, weights, true )) {
+        if ( searchable_.inJeopardy( lastMove, weights_,  true )) {
             // then search  a little deeper
-            return search( lastMove, weights, 1, depth+1, alpha, beta, parent );
+            return searchInternal( lastMove,  depth+1, alpha, beta, parent );
         }
 
         boolean player1 = lastMove.isPlayer1();
@@ -163,8 +132,8 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
 
         // generate those moves that are critically urgent
         // if you generate too many, then you run the risk of an explosion in the search tree
-        // these moves should be sorted from most to least urgent
-        List list = searchable_.generateUrgentMoves( lastMove, weights, true );
+        // these moves should be sorted from most to least urgent.
+        List list = searchable_.generateUrgentMoves( lastMove, weights_, fromPlayer1sPerspective(lastMove) );
 
         if ( list == null || list.isEmpty() ) {
             return lastMove; // nothing to check
@@ -182,7 +151,7 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
             searchable_.makeInternalMove( theMove );
             SearchTreeNode child = addNodeToTree(parent,  theMove, alpha, beta, i++ );
 
-            TwoPlayerMove selectedMove = quiescentSearch( theMove, weights, depth+1, alpha, beta, child );
+            TwoPlayerMove selectedMove = quiescentSearch( theMove, depth+1, alpha, beta, child );
             assert selectedMove!=null;
 
             int selectedValue = selectedMove.getInheritedValue();
@@ -214,4 +183,8 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
         return bestMove;
     }
 
+
+    protected boolean fromPlayer1sPerspective(TwoPlayerMove lastMove) {
+        return true;
+    }
 }

@@ -8,12 +8,10 @@ import com.becker.common.util.Util;
 import com.becker.common.Location;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.*;
-import com.becker.game.twoplayer.common.search.*;
 import com.becker.game.twoplayer.go.*;
 import com.becker.ui.filefilter.GenericFileFilter;
 import junit.framework.*;
 
-import java.io.*;
 import java.util.*;
 
 /**

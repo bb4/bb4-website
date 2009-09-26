@@ -1,0 +1,93 @@
+package com.becker.puzzle.adventure.ui;
+
+import com.becker.puzzle.adventure.*;
+import com.becker.ui.ApplicationApplet;
+import com.becker.ui.GUIUtil;
+import java.awt.BorderLayout;
+import org.w3c.dom.*;
+
+import java.io.*;
+import javax.swing.BorderFactory;
+import javax.swing.JPanel;
+
+/**
+ * Run your own adventure story.
+ * This version runs the adventure in text only mode.
+ * @see Adventure
+ *
+ * @author Barry Becker
+ */
+public final class GraphicalAdventure extends ApplicationApplet
+                                                              implements SceneChangeListener {
+
+
+    private Story story_;
+    private StoryPanel storyPanel_;
+
+    private ChoicePanel choicePanel_ = null;
+
+
+    public GraphicalAdventure(Story story)
+    {
+        story_ = story;
+    }
+
+
+    /**
+     * Build the user interface with parameter input controls at the top.
+     */
+    protected JPanel createMainPanel()
+    {
+        storyPanel_ =  new StoryPanel(story_);
+        choicePanel_ = new ChoicePanel(story_.getCurrentScene().getChoices());
+        choicePanel_.addSceneChangeListener(this);
+
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout( new BorderLayout() );
+
+        mainPanel.add( storyPanel_, BorderLayout.CENTER );
+        mainPanel.setBorder(
+                BorderFactory.createCompoundBorder( BorderFactory.createEmptyBorder( 4, 4, 4, 4 ),
+                        BorderFactory.createCompoundBorder( BorderFactory.createLoweredBevelBorder(),
+                                BorderFactory.createEmptyBorder( 4, 4, 4, 4 ) )
+                )
+        );
+
+        mainPanel.add( choicePanel_, BorderLayout.SOUTH );
+
+        return mainPanel;
+    }
+
+
+
+    /**
+     * called when a button is pressed.
+     */
+    public void sceneChanged( int selectedChoiceIndex )
+    {
+        story_.advanceScene(selectedChoiceIndex);
+        storyPanel_.repaint();
+        choicePanel_.setChoices(story_.getCurrentScene().getChoices());
+    }
+
+    @Override
+    public void start()
+    {
+        //regenerate();
+    }
+
+
+    /**
+     * Graphical Adventure application entrance point.
+     */
+    public static void main( String[] args ) throws IOException {
+
+        Document document =Story.retrieveStoryDocument(args);
+       
+        Story story = new Story(document);
+
+        GraphicalAdventure adventure = new GraphicalAdventure(story);
+        GUIUtil.showApplet( adventure, story.getTitle()); // use adventure.getTitle()
+    }
+}
+

@@ -8,7 +8,6 @@ import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.optimization.parameter.ParameterArray;
-import com.becker.sound.MusicMaker;
 
 import java.util.*;
 
@@ -25,11 +24,6 @@ import java.util.*;
  */
 public class BlockadeController extends TwoPlayerController
 {
-
-    public static final int DEFAULT_LOOKAHEAD = 1;  // shoudl be 2 or 3
-
-    /** For any given ply never consider more that BEST_PERCENTAGE of the top moves. */
-    private static final int BEST_PERCENTAGE = 100;
 
     /** the default Blockade board is 14 by 11 */
     private static final int NUM_ROWS = 14;
@@ -55,7 +49,7 @@ public class BlockadeController extends TwoPlayerController
 
     @Override
     protected TwoPlayerOptions createOptions() {
-        return new TwoPlayerOptions(DEFAULT_LOOKAHEAD, BEST_PERCENTAGE, MusicMaker.APPLAUSE);
+        return new BlockadeOptions();
     }
 
     /**

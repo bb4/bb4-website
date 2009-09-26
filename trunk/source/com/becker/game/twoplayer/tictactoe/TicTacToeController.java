@@ -1,6 +1,9 @@
 package com.becker.game.twoplayer.tictactoe;
 
+import com.becker.game.twoplayer.common.TwoPlayerBoard;
+import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
+import com.becker.game.twoplayer.pente.MoveEvaluator;
 import com.becker.game.twoplayer.pente.PenteController;
 
 /**
@@ -10,24 +13,19 @@ import com.becker.game.twoplayer.pente.PenteController;
 */
 public class TicTacToeController extends PenteController
 {
-
-    /** for any given ply never consider more that BEST_PERCENTAGE of the top moves. */
-    private static final int BEST_PERCENTAGE = 100;
-
- 
     /**
      *  Construct the Pente game controller
      */
     public TicTacToeController()
     {
-        initializeData();
         board_ = new TicTacToeBoard();
+        initializeData();
     }
 
     @Override
-    protected int getDefaultBestPercentage() {
-        return BEST_PERCENTAGE;
-    }
+    protected TwoPlayerOptions createOptions() {
+        return new TicTacToeOptions();
+    } 
 
     /**
      *  this gets the pente specific patterns and weights
@@ -36,7 +34,7 @@ public class TicTacToeController extends PenteController
     protected void initializeData()
     {
         weights_ = new TicTacToeWeights();
-        patterns_ = new TicTacToePatterns();
+        moveEvaluator_ = new MoveEvaluator((TwoPlayerBoard)board_, new TicTacToePatterns());
     }
 
     @Override

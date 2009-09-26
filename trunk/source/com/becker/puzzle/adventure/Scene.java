@@ -8,6 +8,8 @@ import com.becker.common.xml.*;
  * Every scene has some text_ which describes the scene and a list of
  * choices which the actor chooses from to decide what to do next.
  * There is a "Return to last scene" choice automatically appened to all list of choices.
+ *
+ * @@include images, sounds, music.
  * @author Barry Becker Date: Apr 22, 2006
  */
 public class Scene {
@@ -17,6 +19,10 @@ public class Scene {
     private Choice[] choices_;
     private boolean isFirst_;
 
+    /**
+     * Scenes that have no further options only allow you to quit.
+     */
+    private static final Choice[] TERMINAL_CHOICE = new Choice[]{new Choice("Quit", Choice.QUIT)};
 
     public Scene(Node sceneNode) {
         String description = sceneNode.getFirstChild().getTextContent();
@@ -42,7 +48,7 @@ public class Scene {
      * @param text
      */
     public Scene(String name, String text) {
-        this(name, text, new Choice[]{new Choice("Quit", Choice.QUIT)});
+        this(name, text, TERMINAL_CHOICE);
     }
 
 
@@ -69,7 +75,6 @@ public class Scene {
     }
 
     /**
-     *
      * @return some text that describes the scene.
      */
     public String getText() {
@@ -102,12 +107,21 @@ public class Scene {
      * @return the name of the next scene given the number of the choice.
      */
     public String getNextSceneName(int choice) {
+
         if (choice == choices_.length) {
             return Choice.PREVIOUS_SCENE;
         }
+
         if (choice < 0 || choice > choices_.length-1)
             return null;
-        return choices_[choice].getDestination();
+        
+        String destination = choices_[choice].getDestination();
+        if (destination == null)
+        {
+            System.out.println("Goodbye");
+            System.exit(0);
+        }
+        return destination;
     }
 
     /**

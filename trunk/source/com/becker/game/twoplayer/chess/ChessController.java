@@ -4,10 +4,8 @@ import com.becker.game.twoplayer.checkers.CheckersController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
-import com.becker.game.common.Move;
 import com.becker.game.common.*;
 import com.becker.optimization.parameter.ParameterArray;
-import com.becker.sound.MusicMaker;
 
 import java.util.*;
 
@@ -35,10 +33,6 @@ public class ChessController extends CheckersController
      * - Checkers and Chess should probably have a common abstract base class, but I can't think of a good
      *   name for it, so currently Chess just derives from Checkers.
      */
-
-    // initial look ahead factor.
-    private static final int DEFAULT_CHESS_LOOKAHEAD = 3;
-
 
     /**
      *   Construct the Chess game controller.
@@ -74,7 +68,7 @@ public class ChessController extends CheckersController
 
     @Override
     protected TwoPlayerOptions createOptions() {
-        return new TwoPlayerOptions(DEFAULT_CHESS_LOOKAHEAD, 100, MusicMaker.TAIKO_DRUM);
+        return new ChessOptions();
     }
 
 
@@ -183,7 +177,7 @@ public class ChessController extends CheckersController
           *  generate all possible next moves.
           */
         @Override
-        public List generateMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
+        public List<? extends TwoPlayerMove> generateMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
         {
             List<ChessMove> moveList = new LinkedList<ChessMove>();
             int row,col;
@@ -206,6 +200,26 @@ public class ChessController extends CheckersController
             removeSelfCheckingMoves(moveList);
 
             return getBestMoves( player1, moveList, player1sPerspective );
+        }
+
+        /**
+         * @@todo
+         * @return those moves that result in check or getting out of check.
+         */
+        @Override
+        public List<? extends TwoPlayerMove> generateUrgentMoves(
+                TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
+        {
+            return null;
+        }
+
+        /**
+         * @@todo
+         * @return true if the specified move caused one or more opponent pieces to become jeopardized
+         */
+        public boolean inJeopardy( TwoPlayerMove m )
+        {
+            return false;
         }
     }
 
