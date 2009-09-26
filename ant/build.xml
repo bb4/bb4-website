@@ -155,6 +155,17 @@
     </antcall>
   </target>
 
+  <target name="testTicTacToe" depends="compile" description=" tic-tac-toe game tests">
+       <echo message="now running TicTacToe tests"/>
+       <junit  printsummary="yes"  fork="yes"  haltonfailure="no" showoutput="yes" >
+           <classpath path="${libDir}/junit.jar;${classesDir}"/>
+           <!--jvmarg value="-agentlib:jdwp=transport=dt_socket,server=y,address=8000"/-->
+           <assertions><enable/></assertions>
+           <formatter type="plain"/>
+           <test name="com.becker.game.twoplayer.tictactoe.test.TestAll" outfile="../test/tictactoe/tictactoeTestResults"/>
+       </junit>
+  </target>
+
   <target name="executeBlockade" description="Run the blockade program">
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
@@ -398,11 +409,19 @@
      </antcall>
   </target>
 
-  <target name="executeAdventure" depends="compile" description="An Exciting text based adventure game">
-    <echo message="now executing Adventure"/>
+  <target name="executeAdventure(Text)" depends="compile" description="An Exciting text based adventure game">
+    <echo message="now executing TextAdventure"/>
     <antcall target="executeProgram">
-      <param name="className" value="com.becker.puzzle.adventure.Adventure"/>
-      <param name="args" value="${project_home}/source/com/becker/puzzle/adventure/ludlowScript.xml"/>
+      <param name="className" value="com.becker.puzzle.adventure.TextAdventure"/>
+      <param name="args" value="${project_home}/source/com/becker/puzzle/adventure/stories/ludlowScript.xml"/>
+    </antcall>
+  </target>
+
+  <target name="executeAdventure(Graphical)" depends="compile" description="An Exciting graphical based adventure game">
+    <echo message="now executing GraphicalAdventure"/>
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.puzzle.adventure.ui.GraphicalAdventure"/>
+      <param name="args" value="${project_home}/source/com/becker/puzzle/adventure/stories/ludlowScript.xml"/>
     </antcall>
   </target>
 
