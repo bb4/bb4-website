@@ -41,7 +41,6 @@ public class ChoicePanel extends JPanel implements ActionListener {
          for (Choice choice : choices) {
              addOption(i++, choice);
          }
-         this.invalidate();
          this.revalidate();
          this.repaint();
     }

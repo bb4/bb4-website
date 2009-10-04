@@ -6,7 +6,7 @@
 
 <!ATTLIST script
     title      NMTOKENS   #REQUIRED
-    imgpath    CDATA      #REQUIRED
+    name    CDATA      #REQUIRED
     date       CDATA      #IMPLIED
     author     NMTOKENS   #IMPLIED
 >

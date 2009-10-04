@@ -87,8 +87,23 @@ public final class ImageListPanel extends JPanel
     public List<BufferedImage> getImageList() {
         return images_;
     }
+
     public void setMaxNumSelections(int max) {
         maxNumSelections_ = max;
+    }
+
+    /**
+     * Sometimes we just want to show a single image and have it fit the
+     * available area.
+     */
+    public void setSingleImage(BufferedImage image) {
+        if (image == null) {
+            System.out.println("warning: setting null image");
+            return;
+        }
+        List<BufferedImage> imageList = new ArrayList<BufferedImage>(1);
+        imageList.add(image);
+        setImageList(imageList);
     }
     
     /**

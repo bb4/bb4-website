@@ -145,7 +145,7 @@ public class SpeechSynthesizer
             thisPhoneFile = "com/becker/sound/allophones/" + thisPhoneFile + ".au";
 
             // -- get the data from the file --
-            //System.out.println("thisPhoneFile="+thisPhoneFile);
+            System.out.println("thisPhoneFile="+thisPhoneFile);
             byte[] thisSound = getSound( thisPhoneFile );
             assert (thisSound.length > 0) : "Invalid sound file: "+thisPhoneFile;
 
@@ -220,6 +220,7 @@ public class SpeechSynthesizer
     {
         try {
             //URL url = SpeechSynthesizer.class.getResource( fileName );
+            System.out.println("getSound sPath=" + sPath);
             URL url = GUIUtil.getURL( sPath );
             AudioInputStream stream = AudioSystem.getAudioInputStream( url );
             AudioFormat format = stream.getFormat();

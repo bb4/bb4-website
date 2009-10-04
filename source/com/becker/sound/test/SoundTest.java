@@ -1,9 +1,14 @@
 package com.becker.sound.test;
 
 import junit.framework.*;
-import com.becker.common.*;
+import com.becker.puzzle.adventure.Story;
 import com.becker.sound.*;
-import java.util.*;
+import com.becker.ui.GUIUtil;
+import java.net.URL;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.SourceDataLine;
 
 
 /**
@@ -18,8 +23,58 @@ public class SoundTest extends TestCase {
      */
     public SoundTest() {
     }
+
     
-    
+    public void testWav() {
+
+        String soundPath = Story.STORIES_ROOT + "sounds/test.au";
+        //URL clipURL = GUIUtil.getURL(soundPath);
+        //URL clipURL = new URL("file://G:/projects/java_projects/trunk/source/com/becker/puzzle/adventure/stories/ludlow/sounds/scream.au");
+        //AudioClip audioClip = Applet.getAudioClip(clipURL);
+        //audioClip.play();
+        URL clipURL = GUIUtil.getURL(soundPath);
+
+
+
+        try {
+            AudioInputStream fis =
+             AudioSystem.getAudioInputStream(clipURL);
+            System.out.println("File AudioFormat: " + fis.getFormat());
+            AudioInputStream ais = AudioSystem.getAudioInputStream(
+             AudioFormat.Encoding.PCM_SIGNED,fis);
+            AudioFormat af = ais.getFormat();
+            System.out.println("AudioFormat: " + af.toString());
+
+            int frameRate = (int)af.getFrameRate();
+            System.out.println("Frame Rate: " + frameRate);
+            int frameSize = af.getFrameSize();
+            System.out.println("Frame Size: " + frameSize);
+
+            SourceDataLine line = AudioSystem.getSourceDataLine(af);
+
+            line.open(af);
+            int bufSize = line.getBufferSize();
+            System.out.println("Buffer Size: " + bufSize);
+
+            line.start();
+
+            byte[] data = new byte[bufSize];
+            int bytesRead;
+
+            while ((bytesRead = ais.read(data,0,data.length)) != -1) {
+                line.write(data,0,bytesRead);
+            }
+
+            line.drain();
+            line.stop();
+            line.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+    }
+
+    /*
     public void testSound1() {
                             
         MusicMaker m = new MusicMaker();
@@ -40,7 +95,7 @@ public class SoundTest extends TestCase {
         }
         //Assert.assertTrue(LOOSE + Arrays.toString(resultLoose),
         //                       Arrays.equals(resultLoose, EXPECTED_LOOSE_CUTS2));    
-    }
+    }*/
 
        
     public void testSpeech() {
@@ -49,11 +104,5 @@ public class SoundTest extends TestCase {
     }
 
 
-
-    public void testFracDicgits3() {
-        double f = NiceNumbers.getNumberOfFractionDigits(0.0000001, 0.0001, 30);
-        Assert.assertTrue("Expecteing f= 6.0, but got " + f,
-                                  (f == 6.0));
-    }
     
 }

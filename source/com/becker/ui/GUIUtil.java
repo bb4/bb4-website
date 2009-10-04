@@ -241,14 +241,21 @@ public final class GUIUtil
      * get the image icon given the full path to the image.
      */
     public static ImageIcon getIcon(String sPath) {
-        ImageIcon icon;
+        return getIcon(sPath, true);
+    }
+
+    /**
+     * get the image icon given the full path to the image.
+     */
+    public static ImageIcon getIcon(String sPath, boolean failIfNotFound) {
+        ImageIcon icon = null;
         if (isStandAlone_)   {
             //System.out.println("spath="+ sPath);
             URL url = ClassLoaderSingleton.getClassLoader().getResource(sPath);
             if (url != null) {
                 icon = new ImageIcon( url );
             }
-            else {
+            else if (failIfNotFound) {
                 throw new IllegalArgumentException("Invalid file or url path:"+ sPath);
             }
         }
@@ -256,16 +263,41 @@ public final class GUIUtil
             //System.out.println("not standalone: spath="+ sPath);
             icon = new ImageIcon(RESOURCE_ROOT + sPath);
         }
-        assert (icon != null) : "failed to find image:"+sPath;
+        assert (icon != null || !failIfNotFound) : "failed to find image:"+sPath;
         return icon;
     }
+
+
+    /**
+     * Load a buffered image from a file or resource.
+     * @return loaded image or null if not found.
+     */
+    public static BufferedImage getBufferedImage(String path) {
+
+         ImageIcon img = GUIUtil.getIcon(path, false);
+         BufferedImage image = null;
+         if (img != null && img.getIconWidth() > 0) {
+             image = ImageUtil.makeBufferedImage(img.getImage());
+         }
+         return image;
+    }
+
 
     /**
      * get a URL given the path to a file.
      */
     public static URL getURL(String sPath) {
 
+        return getURL(sPath, true);
+     }
+
+    /**
+     * get a URL given the path to a file.
+     */
+    public static URL getURL(String sPath, boolean failIfNotFound) {
+
         URL url = null;
+        System.out.println("searching for url path=" + sPath);
         try {
             if (isStandAlone_)   {
                 url = ClassLoaderSingleton.getClassLoader().getResource(sPath);
@@ -274,7 +306,8 @@ public final class GUIUtil
                 String spec = "file:" + RESOURCE_ROOT + sPath;
                 url = new URL(spec);
             }
-            assert url != null :
+
+            assert (url != null || !failIfNotFound):
                 "failed to create url for  "+sPath + " standAlone="+isStandAlone_ +" resourceRoot_="+ RESOURCE_ROOT;
         } catch (MalformedURLException e) {
             System.out.println( sPath+" is not a valid resource or URL" );
@@ -282,6 +315,7 @@ public final class GUIUtil
         }
         return url;
      }
+
 
 
      /**

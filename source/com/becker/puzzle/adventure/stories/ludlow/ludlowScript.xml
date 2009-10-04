@@ -1,0 +1,227 @@
+<?xml version="1.0"?>
+<!DOCTYPE script SYSTEM "http://barrybecker4.com/schema/script.dtd">
+
+<script title="The Mansion of Professor Ludlow" name="ludlow" date="10/19/2006" author="Barry Becker">
+
+    <scene name="start">
+        <description>
+*******************************************
+***** The Mansion of Professor Ludlow *****
+*******************************************
+     Adapted from a D&amp;D module by James Ward
+
+You are on a camping trip with a large group of boyscouts.
+During a nighttime hike, you get separated from the rest of the group.
+You stumble upon a meadow. There in front of you is a large mansion.
+You hear an eary plea for help coming from inside.
+What do you do?
+        </description>
+        <choices>
+            <choice description="Knock on the front door"
+                          resultScene="no_response" />
+            <choice description="Open the front door without knocking"
+                          resultScene="inside_entrance" />
+            <choice description="Scream"
+                          resultScene="sky_falls"/>
+            <choice description="Knock on the front door"
+                          resultScene="no_response"/>
+        </choices>
+    </scene>
+
+    <scene name="no_response">
+        <description>
+No one comes to the door and you hear nothing.
+A few minutes pass. Still nothing.
+        </description>
+        <choices>
+            <choice description="Knock again"
+                          resultScene="no_response" />
+            <choice description="Open the front door without knocking"
+                          resultScene="inside_entrance" />
+            <choice description="Scream"
+                          resultScene="sky_falls"/>
+            <choice description="Return to the rest of your group"
+                          resultScene="quit"/>
+        </choices>
+    </scene>
+
+    <scene name="inside_entrance">
+        <description>
+ The double door is unlocked and opens easily.
+ The beam of your flashligh reveals an empty hallway with a mirror at the opposite end. 
+ There are openings that lead to rooms on the right and left.
+ The hall has inch-thick red carpeting and walnut-paneled walls. The mirror at the end runs from the floor to the twenty-foot-high ceiling and covers the forty feet of wall section on that south face of the hall.
+        </description>
+        <choices>
+            <choice description="Go through left opening"
+                          resultScene="rat_room" />
+            <choice description="Go through right opening"
+                          resultScene="boogie" />
+            <choice description="Tamper with mirror at the end of the hall."
+                          resultScene="mirror"/>
+            <choice description="Exit"
+                          resultScene="quit"/>
+        </choices>
+    </scene>
+
+    <scene name="rat_room">
+        <description>
+There are leaves on the floor, and an old worn out couch in the north east corner.
+There is a musty smell to the room, and leaves are littered on the floor. The couch is an old, dusty, overstuffed relic with several cushions and rips on all parts of it.  The room measures sixty feet east and west and forty feet north and south, if paced out. There is a door on the east side of the room.
+        </description>
+        <choices>
+            <choice description="Inspect the couch."
+                          resultScene="rat_attack" />
+            <choice description="Sift through the leaves on the floor."
+                          resultScene="key" />
+            <choice description="Go through the door on the east side."
+                          resultScene="C"/>
+        </choices>
+    </scene>
+
+    <scene name="rat_attack">
+        <description>
+Rats com out from under the couch and attack you. One bites you and gives you a terrible disease.
+(Suggestion: maybe we should have generated melee combat here so the outcome is random.)
+        </description>
+    </scene>
+
+    <scene name="key">
+        <description>
+You find a golden key under the pile of leaves.
+(Suggestion: keep an inventory of items that the player has.)
+        </description>
+    </scene>
+
+    <scene name="C">
+        <description>
+The beam of your flashlight show a hall with pink walls and a floor of red marble. The walls have clean squares all over them where pictures were obviously once hung, but are no longer. The floor has dried leaves littering it. If paced out, the hall is eighty feet long east and west and twenty feet long north and south. The hall leads to another room at the end.
+        </description>
+        <choices>
+            <choice description="Proceed into the room at the end of the hall."
+                          resultScene="D" />
+        </choices>
+    </scene>
+
+
+    <scene name="D">
+        <description>
+The beam of the flashlight shows a room with gray painted walls and a cement floor. It is filled with wooden crates and there are leaves all over the room in large piles.
+There are 200 empty wooden crates of differing sizes, and the biggest concentration of leaves is in the southwest corner of the room.  The room measures sixty feet east and west and forty feet north and south and has a side alcove to the south starting on the east wall that is forty feet long east and west and twenty feet long north and south. It is here that the concentration of leaves is located. Behind a big crate along the east wall, thirty feet from the north corner, one finds a door with a normal handle.
+        </description>
+        <choices>
+            <choice description="Go through door behind big crate."    resultScene="E" />
+            <choice description="Look inside all the crates."          resultScene="crates" />
+            <choice description="ift through the pile of leaves."      resultScene="D_leaves" />
+        </choices>
+    </scene>
+
+    <scene name="crates">
+        <description>
+It takes you a really long time, but you finally open and inspect all the crates." +
+You find nothing in them except for leaves, dust, and 200 paperclips. ",
+        </description>
+        <choices>
+            <choice description="Proceed into the room at the end of the hall."    resultScene="D" />
+        </choices>
+    </scene>
+
+    <scene name="D_leaves">
+        <description>
+There are snakes in the leaves. A group of 3 4 foot long rattlesnakes attack.
+(HP: 10,8,5; #AT: 1; damage:1-3; AC: 5; SA: Save versus death caused by poison).
+        </description>
+        <choices>
+            <choice description="Proceed into the room at the end of the hall."    resultScene="D" />
+        </choices>
+    </scene>
+
+    <scene name="E">
+        <description>
+   The beam of your flashlight shows a room with gray painted\n
+walls and a cement floor. It is filled with boxes and barrels.\n
+   There are thirteen barrels of grain\n
+alcohol each with the number \"50\" painted on it. There are thirteen\n
+boxes filled with pairs of white gloves. A metal chest contains a silver\n
+set made to serve eighteen people, four pairs of silver candlesticks,\n
+three huge silver carving knives (like short swords), and eighteen\n
+solid silver goblets (total worth of the silver items is 20,000 silver\n
+pieces). There are thirteen chests filled with books about plants;\n
+thirteen boxes filled with assorted sizes of clay pots; and ten large\n
+crates with mattresses in them. When paced out, the room is forty\n
+feet wide east and west and sixty feet wide north and south. A door\n
+on the east wall is originally hidden by the mattress crates.\n
+    When you enter the room,\n
+are immediately attacked by an incredibly old man dressed in\n
+rags and carrying a butcher knife (HP: 7; #AT: 1; 0: 1-6; AC: 10; SA:\n
+None). This old man leaps out from behind some of the boxes and\n
+surprises you. ",
+                  //"   He will never follow a retreating group out\n
+                  // "of the room, but will act dangerously at all other times and will never\n
+                  //"listen to any type of reason.
+        </description>
+        <choices>
+            <choice description="Proceed into the room at the end of the hall."    resultScene="D" />
+        </choices>
+    </scene>
+
+    <scene name="mirror">
+        <description>You find that the mirror lifts easily. There is a secrete door behind it.</description>
+        <choices>
+            <choice description="Try to open the secret door."    resultScene="gold" />
+        </choices>
+    </scene>
+
+    <scene name="gold">
+        <description>Congratulations. There is a pot of gold behind the door. You go home rich.</description>
+    </scene>
+    <scene name="boogie">
+        <description>The boogie man jumps out and eats you.</description>
+    </scene>
+    <scene name="sky_falls">
+        <description>The sky falls on you.</description>
+    </scene>
+    <scene name="quit">
+        <description>You go back to the others. They don't believe your story. You enjoy the rest of the camping trip.
+        </description>
+    </scene>
+</script>
+<!--  disallow comment nodes that are detected when parsing.
+
+        new Scene("E",
+                  "
+                  new Choice[]{
+                      new Choice("Fight the old man.", "fight old man"),
+                      new Choice("Open the barrels.", "open barrels"),
+                      new Choice("Go through the door on the east wall.", "F")
+                  }),
+
+
+        new Scene("fight old man",
+                  "He beats you up, then eats you while you are still alive."),
+
+        new Scene("open barrels",
+                  "They appear to contain a liquid that looks and smells like grain alcohol.",
+                  new Choice[]{
+                      new Choice("Drink the alcohol.", "drink alcohol"),
+                      new Choice("Spill the barrels of alcohol.", "spill alcohol"),
+                  }),
+
+        new Scene("drink alcohol",
+                  "You get really drunk and pass out. You never get a chance to wake up because the denizens of the mansion eat you first."
+                  ),
+
+        new Scene("spill alcohol",
+                 "Great. You've made a huge mess. There is about 2 inches of alcohol on the floor.",
+                  new Choice[]{
+                      new Choice("light a match", "light alcohol"),
+                  }),
+
+        new Scene("light alcohol",
+                  "The room and everything in it (including you) go up in a huge ball of fire. There is no escaping the conflagoration."),
+
+        new Scene("F",
+                  "The door opens on a brick wall. In other words it a false door."),
+
+ -->
+
