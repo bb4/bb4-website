@@ -75,8 +75,12 @@
         <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
       </copy>
       <antcall target="copyResources">
-        <param name="path" value="sound"/>
-        <param name="pattern" value="*.wav,*.au"/>
+        <param name="path" value="sound/allophones"/>
+        <param name="pattern" value="*.wav"/>
+      </antcall>
+      <antcall target="copyResources">
+        <param name="path" value="sound/allophones"/>
+        <param name="pattern" value="*.au"/>
       </antcall>
       <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/sound.jar"/>
       <delete dir="${stagingDir}/com"/>
@@ -232,6 +236,36 @@
           <param name="jarFile" value="hiq.jar"/>
       </antcall>
 
+      <!-- copy the class files that are needed for adventure deployment -->
+      <antcall target="deployJar">
+          <param name="componentDir" value="puzzle/adventure"/>
+          <param name="jarFile" value="adventure.jar"/>
+      </antcall>
+
+      <!-- refactor so that copyResources does all images and sounds in specified path -->
+      <antcall target="copyResources">
+        <param name="path" value="puzzle/adventure/stories/ludlow/images"/>
+        <param name="pattern" value="*.png"/>
+      </antcall>
+      <antcall target="copyResources">
+        <param name="path" value="puzzle/adventure/stories/ludlow/images"/>
+        <param name="pattern" value="*.jpg"/>
+      </antcall>
+      <antcall target="copyResources">
+        <param name="path" value="puzzle/adventure/stories/ludlow/sounds"/>
+        <param name="pattern" value="*.wav"/>
+      </antcall>
+      <antcall target="copyResources">
+        <param name="path" value="puzzle/adventure/stories/ludlow/sounds"/>
+        <param name="pattern" value="*.au"/>
+      </antcall>
+      <antcall target="copyResources">
+        <param name="path" value="puzzle/adventure/stories/ludlow/sounds"/>
+        <param name="pattern" value="*.mp3"/>
+      </antcall>
+
+
+
       <!-- copy the class files that are needed for snake deployment -->
       <antcall target="deployJar">
           <param name="componentDir" value="simulation/snake"/>
@@ -360,7 +394,7 @@
       <propertycopy from="appletIndexFile.${locale}" name="appletIndexFileForLocale"/>
       <echo message="Generating Table: ${appletListForLocale}"/>
 
-      <echo message="copying ${sourceDir}/html/${appletIndexFile} to ${distributionDir}/../${appletIndexFileForLocale}"/>
+      <!--echo message="copying ${sourceDir}/html/${appletIndexFile} to ${distributionDir}/../${appletIndexFileForLocale}"/-->
       <copy file="${sourceDir}/html/${appletIndexFile}" tofile="${distributionDir}/../${appletIndexFileForLocale}"/>
 
 

@@ -60,7 +60,7 @@
 
   <target name="compile" depends="init" description="Compiles the source code">
     <javac debug="yes" deprecation="yes" destdir="${classesDir}"
-        nowarn="no" optimize="yes" srcdir="${sourceDir}" verbose="true"
+        nowarn="no" optimize="yes" srcdir="${sourceDir}" verbose="false"
         executable="${java_home}/bin/javac" compiler="modern" source="1.5">
        <!-- compilerarg value="-Xlint" /   this is nice but adding support for generics is a bit of a rathole.-->
        <classpath refid="compile.classpath"/>
@@ -83,20 +83,20 @@
   </target>
 
   <target name="clean" depends="init" description="Cleans out all the existing compiled classes and ${distributionDir}">
-    <delete dir="${classesDir}"/>
-    <delete dir="${distributionDir}"/>
-    <ant antfile="rmi.xml" inheritall="true" target="rmi_clean"/>
+     <delete dir="${classesDir}"/>
+     <delete dir="${distributionDir}"/>
+     <ant antfile="rmi.xml" inheritall="true" target="rmi_clean"/>
   </target>
 
   <target name="init">
-    <mkdir dir="${classesDir}"/>
-    <mkdir dir="${distributionDir}"/>
-    <mkdir dir="${distributionGameDir}"/>
-    <ant antfile="rmi.xml" inheritall="true" target="rmi_init"/>
+     <mkdir dir="${classesDir}"/>
+     <mkdir dir="${distributionDir}"/>
+     <mkdir dir="${distributionGameDir}"/>
+     <ant antfile="rmi.xml" inheritall="true" target="rmi_init"/>
   </target>
 
 
-  <target name="deploy" depends="compile"
+  <target name="deploy" depends="compile" 
       description="deploys the built jar files to the ${distributionDir} dir so they can be bulk copied to a website">
       <ant antfile="distribute.xml" inheritall="true" target="distribute"/>
   </target>
@@ -393,7 +393,7 @@
   <target name="testSound" depends="compile" description=" sound tests">
        <echo message="now running sound tests"/>
        <junit  printsummary="yes"  fork="yes" haltonfailure="no" showoutput="yes">
-           <classpath path="${classesDir}"/>
+           <classpath path="${libDir}/junit.jar;${classesDir}"/>
            <assertions><enable/></assertions>
            <formatter type="plain"/>
            <!--formatter type="brief" usefile="false" /-->
@@ -413,7 +413,7 @@
     <echo message="now executing TextAdventure"/>
     <antcall target="executeProgram">
       <param name="className" value="com.becker.puzzle.adventure.TextAdventure"/>
-      <param name="args" value="${project_home}/source/com/becker/puzzle/adventure/stories/ludlowScript.xml"/>
+      <param name="args" value="${project_home}/source/com/becker/puzzle/adventure/stories/ludlow/ludlowScript.xml"/>
     </antcall>
   </target>
 
@@ -421,7 +421,8 @@
     <echo message="now executing GraphicalAdventure"/>
     <antcall target="executeProgram">
       <param name="className" value="com.becker.puzzle.adventure.ui.GraphicalAdventure"/>
-      <param name="args" value="${project_home}/source/com/becker/puzzle/adventure/stories/ludlowScript.xml"/>
+      <param name="libPath" value="${libDir}/jai_codec.jar" />
+      <param name="args" value="${project_home}/source/com/becker/puzzle/adventure/stories/ludlow/ludlowScript.xml"/>
     </antcall>
   </target>
 
@@ -454,24 +455,24 @@
   </target>
 
   <target name="executeRedPuzzle" depends="compile" description=" run the Red Puzzle screenSaver">
-    <echo message="now executing red puzzle"/>
-    <java classname="com.becker.puzzle.redpuzzle.RedPuzzle" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="128M">
-        <jvmarg value="${assertionsFlag}"/>
-    </java>
+     <echo message="now executing red puzzle"/>
+     <java classname="com.becker.puzzle.redpuzzle.RedPuzzle" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="128M">
+         <jvmarg value="${assertionsFlag}"/>
+     </java>
   </target>
 
   <target name="executeSudoku" depends="compile" description=" run the Sudoku solver">
-    <echo message="now executing Sudoku"/>
-    <java classname="com.becker.puzzle.sudoku.SudokuPuzzle" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="128M">
-        <jvmarg value="${assertionsFlag}"/>
-    </java>
+     <echo message="now executing Sudoku"/>
+     <java classname="com.becker.puzzle.sudoku.SudokuPuzzle" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="128M">
+         <jvmarg value="${assertionsFlag}"/>
+     </java>
   </target>
 
   <target name="executeHiQPuzzle" depends="compile" description=" run the Hi-Q Puzzle screenSaver">
-    <echo message="now executing Hi-Q"/>
-    <java classname="com.becker.puzzle.hiq.HiQPuzzle" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="400M">
-        <jvmarg value="${assertionsFlag}"/>
-    </java>
+     <echo message="now executing Hi-Q"/>
+     <java classname="com.becker.puzzle.hiq.HiQPuzzle" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="400M">
+         <jvmarg value="${assertionsFlag}"/>
+     </java>
   </target>
 
 
@@ -485,19 +486,19 @@
   </target>
 
   <target name="XMLAppGenerator" depends="compile" description=" run the XML App Generator">
-    <antcall target="executeProgram">
-      <param name="className" value="com.becker.xml.AikidoAppGenerator"/>
-      <param name="args" value="${project_home}/source/com/becker/xml/katate_dori.xml"/>
-    </antcall>
+     <antcall target="executeProgram">
+       <param name="className" value="com.becker.xml.AikidoAppGenerator"/>
+       <param name="args" value="${project_home}/source/com/becker/xml/katate_dori.xml"/>
+     </antcall>
   </target>
 
 
   <target name="showFonts" depends="compile">
-    <java classname="com.becker.java2d.examples.ShowFonts" classpath="${classesDir}"/>
+     <java classname="com.becker.java2d.examples.ShowFonts" classpath="${classesDir}"/>
   </target>
 
   <target name="kgsTesujisoftGoClient" depends="compile" description="run the Tesujisoft Go engine on KGS.">
-    <antcall target="executeProgram">
+     <antcall target="executeProgram">
       <param name="className" value="com.becker.game.twoplayer.go.GtpKgsTesujisoftGoClient"/>
       <param name="libPath" value="${libDir}/kgsGtp.jar;${libDir}/gogui7.1.jar"/>
     </antcall>
