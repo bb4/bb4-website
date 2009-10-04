@@ -18,7 +18,7 @@ import java.util.*;
  * There are many improvements that  I will leave as an exercise for reader (Brian I hope).
  * Next to each is a number which is the number of hours I expect it would take me to implement.
  *
- * 1) Keep track of the items tha the player has. They initially start with about 10 things but then find/use
+ * 1) Keep track of the items that the player has. They initially start with about 10 things but then find/use
  *   items as their adventure progresses.
  * 2) Automatic fighting with monsters. We know the hit points and armor class of the player and monster.
  *  It should be a simple matter to have the compat automatically carried out in order to determine the winner and
@@ -37,22 +37,31 @@ import java.util.*;
  * where you can navigate to from this scene. Save and load the xml that defines the game.
  * 8) This type of application could be used for more than just games. Tutorials or an expert system would
  * be other nice applicaitons.
+ * 9) Have probabalistic choices. For example, if you encounter a monster and choose to fight it, then
+ * the outcome may be one of several different things. We can also influence the outcome by what sort of
+ * items the player has.
+ * 10) fix sound deploy in ant
  *
  * @author Barry Becker
  */
 public class Story {
 
+    /** title of the story */
     private String title;
-    private Scene[] scenes_;
-    private Map<String, Scene> sceneSet_;
+
+    /** maps scene name to the scene */
+    private Map<String, Scene> sceneMap_;
+
     private Scene currentScene_;
 
     /**
-     * as stack of current;y visited scenes. There may be duplicates if you visit the same scene twice.
+     * A stack of currently visited scenes. There may be duplicates if you visit the same scene twice.
      * If you backup, then we pop the stack.
      */
     private LinkedList<Scene> visitedScenes_;
 
+    /** all the stories need to be stored at this location */
+    public static final String STORIES_ROOT = "com/becker/puzzle/adventure/stories/";
    
     /**
      * Construct an adventure given an xml document object
@@ -61,10 +70,11 @@ public class Story {
     public Story(Document document) {
         Node root = document.getDocumentElement();
         title = DomUtil.getAttribute(root, "title");
+        String resourcePath = STORIES_ROOT + DomUtil.getAttribute(root, "name")  + "/";
         NodeList children = root.getChildNodes();
         Scene[] scenes = new Scene[children.getLength()];
         for (int i=0; i < children.getLength(); i++) {
-            scenes[i] = new Scene(children.item(i));
+            scenes[i] = new Scene(children.item(i), resourcePath);
         }
         initFromScenes(scenes);
     }
@@ -87,7 +97,7 @@ public class Story {
             document = DomUtil.parseXMLFile(file);
         }
         else { // default
-            URL url = GUIUtil.getURL("com/becker/puzzle/adventure/stories/ludlowScript.xml");
+            URL url = GUIUtil.getURL("com/becker/puzzle/adventure/stories/ludlow/ludlowScript.xml");
             System.out.println("about to parse url="+url +"\n plugin file location="+ url);
             document = DomUtil.parseXML(url);
         }
@@ -105,18 +115,18 @@ public class Story {
     }
 
     public void initFromScenes(Scene[] scenes)  {
-        scenes_ = scenes;
-        sceneSet_ = new HashMap<String, Scene>(scenes_.length);
+
+        sceneMap_ = new HashMap<String, Scene>(scenes.length);
         for (final Scene scene : scenes) {
             if (scene.getChoices() == null) {
                 scene.setChoices(new Choice[] {new Choice(Choice.QUIT, null)} ) ;
             }
-            sceneSet_.put(scene.getName(), scene);
+            sceneMap_.put(scene.getName(), scene);
         }
 
         verifyScenes();
-        scenes_[0].setFirst();
-        currentScene_ = scenes_[0];
+        scenes[0].setFirst();
+        currentScene_ = scenes[0];
         visitedScenes_ = new LinkedList<Scene>();
     }
 
@@ -155,7 +165,7 @@ public class Story {
             }
             else {
                 visitedScenes_.add(currentScene_);
-                currentScene_ = sceneSet_.get( nextSceneName );
+                currentScene_ = sceneMap_.get( nextSceneName );
                 assert (currentScene_ != null)  : "Could not find a scene named '"+ nextSceneName+"'.";
             }
         }
@@ -165,9 +175,11 @@ public class Story {
      * make sure the set of scenes in internally consistent.
      */
     private void verifyScenes() {
-        for (Scene scene : scenes_) {
+        for (Scene scene : sceneMap_.values()) {
             for (Choice choice : scene.getChoices())  {
-                if (choice.getDestination()!= null && sceneSet_.get(choice.getDestination()) == null) {
+                String dest = choice.getDestination();
+                if (dest != null && !Choice.PREVIOUS_SCENE.equals(choice.getDestination())
+                       &&  sceneMap_.get(choice.getDestination()) == null) {
                     assert false : "No scene named "+ choice.getDestination();
                 }
             }

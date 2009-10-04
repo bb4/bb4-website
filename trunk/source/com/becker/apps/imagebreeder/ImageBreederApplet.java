@@ -12,7 +12,6 @@ import com.becker.java2d.ui.ImageListPanel;
 import com.becker.java2d.ui.ImageSelectionListener;
 import com.becker.ui.sliders.LabeledSlider;
 import com.becker.ui.sliders.SliderChangeListener;
-import com.becker.common.util.ImageUtil;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -89,9 +88,7 @@ public class ImageBreederApplet extends ApplicationApplet
      */
     private void createImageFrame( String imageFile )
     {
-        ImageIcon img = GUIUtil.getIcon(imageFile);
-        currentImage = ImageUtil.makeBufferedImage(img.getImage());
-        //Utilities.getBufferedImage(imageFile);
+        currentImage = GUIUtil.getBufferedImage(imageFile);
 
         // also create image list panel
         imageListPanel = new ImageListPanel();
@@ -130,6 +127,7 @@ public class ImageBreederApplet extends ApplicationApplet
         return mainPanel;
     }
 
+    @Override
     public Dimension getSize() {
         return new Dimension(400, 500);
     }

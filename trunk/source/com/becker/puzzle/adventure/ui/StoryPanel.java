@@ -1,6 +1,6 @@
 package com.becker.puzzle.adventure.ui;
 
-import com.becker.puzzle.adventure.Scene;
+import com.becker.java2d.ui.ImageListPanel;
 import com.becker.puzzle.adventure.Story;
 import javax.swing.*;
 import java.awt.*;
@@ -9,35 +9,50 @@ import java.awt.*;
  * This panel is responsible for drawing the Text describing the current scene.
  * @author Barry Becker 
  */
-public class StoryPanel extends JComponent {
-
+public class StoryPanel extends JSplitPane {
 
     private Story story_;
 
-    // rendering attributes
-    private static final Color WALL_COLOR = new Color( 80, 0, 150 );
-    private static final Color PATH_COLOR = new Color( 255, 220, 50);
+    private static final Font TEXT_FONT = new Font("Courier", Font.PLAIN, 12);
+    private static final int INITAL_LEFT_WIDTH = 600;
 
-    private static final Color TEXT_COLOR = new Color( 250, 0, 100 );
-    private static final Color BG_COLOR = new Color( 225, 240, 250 );
+    private JTextArea textArea_;
+    private ImageListPanel imagePanel_;
 
-    private Font TEXT_FONT = new Font("Courier", Font.PLAIN, 12);
 
-    TextArea textArea_;
-
+    /**
+     * Constructor
+     * @param story story for which to show text and image in the panel.
+     */
     public StoryPanel(Story story) {
-        
-        this.setLayout(new BorderLayout());
+
         story_ = story;
 
-        textArea_ = new TextArea();
-        textArea_.setFont(TEXT_FONT);
+        setContinuousLayout(true);
+        setDividerLocation(INITAL_LEFT_WIDTH);
 
-        textArea_.setText(story_.getCurrentScene().getText());
-        
-        this.add(textArea_, BorderLayout.CENTER);
+        textArea_ = createTextArea();
+        imagePanel_ = createImagePanel();
+
+        add( imagePanel_, JSplitPane.RIGHT);
+        add(textArea_, JSplitPane.LEFT);
     }
 
+    private JTextArea createTextArea() {
+        JTextArea textArea = new JTextArea();
+        textArea.setFont(TEXT_FONT);
+        textArea.setWrapStyleWord(true);
+        textArea.setLineWrap(true);
+        textArea.setMinimumSize(new Dimension(INITAL_LEFT_WIDTH/2, 300));
+        return textArea;
+    }
+
+    private ImageListPanel createImagePanel() {
+        ImageListPanel imagePanel = new ImageListPanel();
+        imagePanel.setMaxNumSelections(1);
+        imagePanel.setPreferredSize(new Dimension(700, 200));
+        return imagePanel;
+    }
 
     /**
      * Render the Environment on the screen.
@@ -46,11 +61,8 @@ public class StoryPanel extends JComponent {
     public void paintComponent( Graphics g )
     {
         super.paintComponent( g );
-
-        //Graphics2D g2 = (Graphics2D) g;
-
         textArea_.setText(story_.getCurrentScene().getText());
+        imagePanel_.setSingleImage(story_.getCurrentScene().getImage());
     }
-
 
 }

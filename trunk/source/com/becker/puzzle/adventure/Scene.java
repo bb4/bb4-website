@@ -2,14 +2,18 @@ package com.becker.puzzle.adventure;
 
 import org.w3c.dom.*;
 import com.becker.common.xml.*;
+import com.becker.sound.SoundUtil;
+import com.becker.ui.GUIUtil;
+import java.awt.image.BufferedImage;
+import java.net.URL;
 
 
 /**
  * Every scene has some text_ which describes the scene and a list of
  * choices which the actor chooses from to decide what to do next.
  * There is a "Return to last scene" choice automatically appened to all list of choices.
+ * A scene may also have an associated sound and image.
  *
- * @@include images, sounds, music.
  * @author Barry Becker Date: Apr 22, 2006
  */
 public class Scene {
@@ -18,55 +22,76 @@ public class Scene {
     private String text_;
     private Choice[] choices_;
     private boolean isFirst_;
+    private URL soundURL_;
+    private BufferedImage image_;
+
 
     /**
      * Scenes that have no further options only allow you to quit.
      */
     private static final Choice[] TERMINAL_CHOICE = new Choice[]{new Choice("Quit", Choice.QUIT)};
 
-    public Scene(Node sceneNode) {
+    public Scene(Node sceneNode, String resourcePath) {
         String description = sceneNode.getFirstChild().getTextContent();
+
         commonInit(DomUtil.getAttribute(sceneNode, "name"),
-                  description,
-                  getChoices(sceneNode));
+                  description, getChoices(sceneNode), resourcePath);
     }
 
-    public Scene(String name, String text, Choice[] choices) {
-        commonInit(name, text, choices);
-    }
-
-    private void commonInit(String name, String text, Choice[] choices) {
+    private void commonInit(String name, String text, Choice[] choices, String resourcePath) {
         name_ = name;
         text_ = text;
         choices_ = choices;
-    }
 
+        try {
+            String soundPath = resourcePath + "sounds/" + name + ".au";
+            soundURL_ = GUIUtil.getURL( soundPath, false);
+
+            String imagePath = resourcePath + "images/" +name + ".jpg";
+            image_ = GUIUtil.getBufferedImage(imagePath);
+        } catch (NoClassDefFoundError e) {
+            System.out.println("You are trying to load sounds and images when text only scenes are supported. " +
+                    "If you need this to work add the jai library to your classpath");
+        }
+    }
 
     /**
-     * use this constructor if this is a terminal scene. (i.e. no choices)
-     * @param name
-     * @param text
+     * @param sceneNode scene to get choices for.
+     * @return the coices for the scpecified scene.
      */
-    public Scene(String name, String text) {
-        this(name, text, TERMINAL_CHOICE);
-    }
-
-
-    private static Choice[] getChoices(Node sceneNode) {
+    private Choice[] getChoices(Node sceneNode) {
         Choice[] choices = null;
         // if there are choices they will be the second element (right after description).
         NodeList children = sceneNode.getChildNodes();
         if (children.getLength() > 1) {
             Node choicesNode = children.item(1);
             NodeList choiceList = choicesNode.getChildNodes();
-            choices = new Choice[choiceList.getLength()];
-            for (int i=0; i<choiceList.getLength(); i++) {
+            int numChoices = choiceList.getLength();
+            choices = new Choice[numChoices + (isFirst()?0:1)];
+            for (int i=0; i<numChoices; i++) {
+                System.out.println("i=" + i + " numChildren="+ numChoices);
+                assert choiceList.item(i) != null;
                 choices[i] = new Choice(choiceList.item(i));
             }
+            if ( !isFirst() ) {
+                choices[numChoices] = new Choice("Go back to last scene.", Choice.PREVIOUS_SCENE);
+            }
         }
+        
         return choices;
     }
-    
+
+    /**
+     * @return  choices that will lead to the next scene.
+     */
+    public Choice[] getChoices() {
+        return choices_;
+    }
+
+    public void setChoices(Choice[] choices) {
+        choices_ = choices;
+    }
+
     /**
      * @return the name of the scene
      */
@@ -82,15 +107,16 @@ public class Scene {
     }
 
     /**
-     *
-     * @return  choices that will lead to the next scene.
+     * @return image associated with this scene if there is one (else null)
      */
-    public Choice[] getChoices() {
-        return choices_;
+    public BufferedImage getImage() {
+         return image_;
     }
 
-    public void setChoices(Choice[] choices) {
-        choices_ = choices;
+
+    public void playSound() {
+        if (soundURL_ != null)
+             SoundUtil.playSound(soundURL_);
     }
 
     public void setFirst() {
@@ -125,7 +151,6 @@ public class Scene {
     }
 
     /**
-     *
      * @return true if there are more than one coice for the user to select from.
      */
     public boolean hasChoices() {
@@ -145,8 +170,6 @@ public class Scene {
             for (int i=0; i < len; i++)  {
                 buf.append((1+i) + ") " + choices_[i].getDescription() + '\n');
             }
-            if ( !isFirst())
-                buf.append((len + 1) + ") Go back to last scene.");
         }
         return buf.toString();
     }

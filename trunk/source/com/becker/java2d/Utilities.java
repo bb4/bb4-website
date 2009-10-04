@@ -16,9 +16,13 @@ public class Utilities
     private static final MediaTracker sTracker = new MediaTracker( sComponent );
     private static int sID = 0;
 
-public static final String DEFAULT_IMAGE_DIR = 
+    public static final String DEFAULT_IMAGE_DIR =
             FileUtil.PROJECT_DIR + "source/com/becker/java2d/images/";
 
+    /**
+     * @param image image to load
+     * @return true when the image has been loaded.
+     */
     public static boolean waitForImage( Image image )
     {
         int id;
@@ -82,6 +86,7 @@ public static final String DEFAULT_IMAGE_DIR =
     {
         final Frame f = new Frame( name )
         {
+            @Override
             public void update( Graphics g )
             {
                 paint( g );
@@ -93,6 +98,7 @@ public static final String DEFAULT_IMAGE_DIR =
         f.add( c, BorderLayout.CENTER );
         f.addWindowListener( new WindowAdapter()
         {
+            @Override
             public void windowClosing( WindowEvent e )
             {
                 f.dispose();

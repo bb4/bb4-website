@@ -9,6 +9,7 @@ import java.util.*;
  * Run your own adventure story.
  * This version runs the adventure in text only mode.
  * @see Adventure
+ * @see GraphicalAdventure
  *
  * @author Barry Becker
  */
@@ -26,17 +27,31 @@ public final class TextAdventure {
 
         Scanner scanner = new Scanner(System.in);
         do {
-            System.out.println(story.getCurrentScene());
 
-            int c = -1;
+            Scene currentScene = story.getCurrentScene();
+            System.out.println(currentScene);
 
-            if (story.getCurrentScene().hasChoices())  {
-                int nextInt = scanner.nextInt();
-                c = nextInt - 1;
-            }
-            story.advanceScene(c);
+            int nextSceneIndex = getNextSceneIndex(currentScene, scanner);
+            
+            story.advanceScene(nextSceneIndex);
 
         } while (!story.isOver());
+    }
+
+
+    /**
+     * Retrieve the selection from the player using the scanner.
+     * @return the next scene to advance to.
+     */
+    private static int getNextSceneIndex(Scene scene, Scanner scanner) {
+
+        int sceneIndex = -1;
+
+        if (scene.hasChoices())  {
+            int nextInt = scanner.nextInt();
+            sceneIndex = nextInt - 1;
+        }
+        return sceneIndex;
     }
 }
 
