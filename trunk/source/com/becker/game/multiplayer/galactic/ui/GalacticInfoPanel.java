@@ -1,5 +1,6 @@
 package com.becker.game.multiplayer.galactic.ui;
 
+import com.becker.ui.components.GradientButton;
 import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
 import com.becker.game.multiplayer.galactic.*;

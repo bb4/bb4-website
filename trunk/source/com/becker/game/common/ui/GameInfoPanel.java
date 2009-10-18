@@ -1,5 +1,6 @@
 package com.becker.game.common.ui;
 
+import com.becker.ui.components.TexturedPanel;
 import com.becker.game.common.*;
 import com.becker.game.common.online.ui.*;
 import com.becker.ui.*;

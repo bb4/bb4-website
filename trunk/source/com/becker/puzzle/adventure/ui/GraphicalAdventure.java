@@ -1,5 +1,6 @@
 package com.becker.puzzle.adventure.ui;
 
+import com.becker.ui.dialogs.PasswordDialog;
 import com.becker.puzzle.adventure.*;
 import com.becker.ui.ApplicationApplet;
 import com.becker.ui.GUIUtil;
@@ -46,6 +47,7 @@ public final class GraphicalAdventure extends ApplicationApplet
         frame.setJMenuBar(menubar);
         frame.invalidate();
         frame.validate();
+
     }
 
 
@@ -81,11 +83,19 @@ public final class GraphicalAdventure extends ApplicationApplet
 
         mainPanel_.add( storyPanel_, BorderLayout.CENTER );
         mainPanel_.add( choicePanel_, BorderLayout.SOUTH );
+        refresh();
     }
 
 
     public Story getStory() {
         return story_;
+    }
+
+    protected void refresh()
+    {
+        mainPanel_.invalidate();
+        mainPanel_.validate();
+        mainPanel_.repaint();
     }
 
     /**
@@ -108,8 +118,7 @@ public final class GraphicalAdventure extends ApplicationApplet
     public void sceneChanged( int selectedChoiceIndex )
     {
         story_.advanceScene(selectedChoiceIndex);
-        storyPanel_.invalidate();
-        storyPanel_.repaint();
+        refresh();
         choicePanel_.setChoices(story_.getCurrentScene().getChoices());
         story_.getCurrentScene().playSound();
     }

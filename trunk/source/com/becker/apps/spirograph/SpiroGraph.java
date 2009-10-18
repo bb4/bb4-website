@@ -1,5 +1,6 @@
 package com.becker.apps.spirograph;
 
+import com.becker.ui.components.GradientButton;
 import com.becker.ui.*;
 import com.becker.ui.sliders.ColorSliderGroup;
 import com.becker.ui.sliders.SliderGroupChangeListener;

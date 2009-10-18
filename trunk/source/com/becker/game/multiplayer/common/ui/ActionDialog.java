@@ -1,5 +1,6 @@
 package com.becker.game.multiplayer.common.ui;
 
+import com.becker.ui.dialogs.OptionsDialog;
 import com.becker.common.*;
 import com.becker.game.common.*;
 import com.becker.game.multiplayer.common.MultiGameController;

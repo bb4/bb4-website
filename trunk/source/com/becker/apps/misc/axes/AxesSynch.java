@@ -1,5 +1,6 @@
 package com.becker.apps.misc.axes;
 
+import com.becker.ui.components.ResizableAppletPanel;
 import com.becker.ui.*;
 
 import javax.swing.*;

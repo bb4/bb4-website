@@ -1,5 +1,8 @@
 package com.becker.game.common.ui;
 
+import com.becker.ui.components.ResizableAppletPanel;
+import com.becker.ui.components.TexturedPanel;
+import com.becker.ui.dialogs.OutputWindow;
 import com.becker.common.util.FileUtil;
 import com.becker.common.util.ImageUtil;
 import com.becker.game.common.*;

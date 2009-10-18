@@ -1,5 +1,7 @@
-package com.becker.ui;
+package com.becker.ui.components;
 
+import com.becker.ui.*;
+import com.becker.ui.components.GradientButton;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -43,6 +45,7 @@ public class TexturedToolBar extends JToolBar
     }
 
 
+    @Override
     public void paintComponent(Graphics g)
     {
         GUIUtil.paintComponentWithTexture(texture_, this, g);

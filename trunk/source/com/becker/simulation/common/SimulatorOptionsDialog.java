@@ -1,5 +1,8 @@
 package com.becker.simulation.common;
 
+import com.becker.ui.components.NumberInput;
+import com.becker.ui.components.GradientButton;
+import com.becker.ui.dialogs.OptionsDialog;
 import com.becker.ui.*;
 
 import javax.swing.*;

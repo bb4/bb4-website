@@ -1,5 +1,6 @@
-package com.becker.ui;
+package com.becker.ui.components;
 
+import com.becker.ui.dialogs.OptionsDialog;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -19,7 +20,8 @@ public class NumberInput extends JPanel
     private double max_;
 
     protected static final int TEXT_FIELD_WIDTH = 50;
-    protected static final Dimension TEXT_FIELD_DIM = new Dimension( TEXT_FIELD_WIDTH, OptionsDialog.ROW_HEIGHT );
+    protected static final Dimension TEXT_FIELD_DIM =
+            new Dimension( TEXT_FIELD_WIDTH, OptionsDialog.ROW_HEIGHT );
 
 
     /**

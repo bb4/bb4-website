@@ -1,5 +1,6 @@
 package com.becker.simulation.common;
 
+import com.becker.ui.components.NumberInput;
 import com.becker.ui.*;
 
 import javax.swing.*;

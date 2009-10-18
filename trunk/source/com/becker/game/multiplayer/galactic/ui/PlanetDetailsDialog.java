@@ -4,7 +4,7 @@ import com.becker.common.ColorMap;
 import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
 import com.becker.ui.GUIUtil;
-import com.becker.ui.GradientButton;
+import com.becker.ui.components.GradientButton;
 
 import javax.swing.*;
 import java.awt.*;

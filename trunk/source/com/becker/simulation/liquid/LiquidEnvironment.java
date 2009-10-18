@@ -1,5 +1,6 @@
 package com.becker.simulation.liquid;
 
+import com.becker.ui.dialogs.OutputWindow;
 import com.becker.simulation.liquid.config.Conditions;
 import com.becker.simulation.liquid.config.Source;
 import com.becker.simulation.liquid.config.Region;

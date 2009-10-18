@@ -1,5 +1,7 @@
-package com.becker.ui;
+package com.becker.ui.dialogs;
 
+import com.becker.ui.components.GradientButton;
+import com.becker.ui.*;
 import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
@@ -23,9 +25,8 @@ public abstract class OptionsDialog extends JDialog implements ActionListener
     /** cache a pointer to this in case we have children */
     protected Frame parent_ = null;
 
-
     /** the height of an option row in a panel */
-    protected static final int ROW_HEIGHT = 18;
+    public static final int ROW_HEIGHT = 18;
 
 
     /**
