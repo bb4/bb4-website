@@ -1,5 +1,6 @@
 package com.becker.game.common.ui;
 
+import com.becker.common.util.FileUtil;
 import com.becker.game.common.GameContext;
 import com.becker.ui.GUIUtil;
 import java.awt.event.ActionEvent;
@@ -61,7 +62,7 @@ public class FileMenu extends JMenu implements ActionListener {
             gameMenu_.getGamePanel().saveGame();
         }
         else if (item == saveImageItem_) {
-            GUIUtil.saveSnapshot(gameMenu_.getGamePanel(), GameContext.getHomeDir());
+            GUIUtil.saveSnapshot(gameMenu_.getGamePanel(), FileUtil.getHomeDir());
         }
         else if (item == exitItem_) {
             System.exit(0);

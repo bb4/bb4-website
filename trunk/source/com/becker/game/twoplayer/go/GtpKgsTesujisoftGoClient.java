@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.go;
 
+import com.becker.common.util.FileUtil;
 import com.becker.game.common.*;
 import java.io.*;
 
@@ -27,7 +28,7 @@ public class GtpKgsTesujisoftGoClient
     {
         try
         {
-            String logFile = GameContext.getHomeDir() + "/temp/" + "log.txt";
+            String logFile = FileUtil.getHomeDir() + "/temp/" + "log.txt";
             
             File file = new File(logFile);
             PrintStream log = new PrintStream(new FileOutputStream(file));
@@ -36,7 +37,8 @@ public class GtpKgsTesujisoftGoClient
             final GtpTesujisoftGoServer gtpTSGoServer = new GtpTesujisoftGoServer(System.in, System.out, log);
 
             Properties props = new Properties();
-            FileInputStream inStream = new FileInputStream(GameContext.getHomeDir() + "/source/" +  GameContext.GAME_ROOT + "twoplayer/go/resources/tesujiBot.properties");
+            FileInputStream inStream = new FileInputStream(FileUtil.getHomeDir()
+                    + "/source/" +  GameContext.GAME_ROOT + "twoplayer/go/resources/tesujiBot.properties");
             props.load(inStream);
             log.println("props=" + props.toString());
             inStream.close();

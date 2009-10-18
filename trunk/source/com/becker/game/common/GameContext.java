@@ -147,20 +147,6 @@ public final class GameContext
         return musicMaker_;
     }
 
-    /**
-     * @return home directory. Assumes running as an Application.
-     */
-    public static String getHomeDir()
-    {
-        String userHome = FileUtil.USER_HOME;   // System.getProperty("user.home")
-
-        String home =  userHome + "/projects/java_projects/trunk";
-        log(1, "home = " + home );
-        return home;
-    }
-
-
-
     public static LocaleType getDefaultLocaleType()
     {
         return DEFAULT_LOCALE;

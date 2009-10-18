@@ -1,11 +1,11 @@
 package com.becker.game.twoplayer.blockade.test;
 
+import com.becker.common.util.FileUtil;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.blockade.BlockadeController;
 import com.becker.game.twoplayer.blockade.BlockadeMove;
 import com.becker.game.twoplayer.common.*;
-import com.becker.game.twoplayer.common.search.*;
 import com.becker.ui.filefilter.GenericFileFilter;
 import junit.framework.*;
 
@@ -18,7 +18,7 @@ public class BlockadeTestCase extends TestCase {
 
     /** moved all test cases here so they are not included in the jar and do not need to be searched */
     private static final String EXTERNAL_TEST_CASE_DIR =
-            GameContext.getHomeDir() +"/test/blockade/cases/";
+            FileUtil.getHomeDir() +"/test/blockade/cases/";
 
     private static final String SGF_EXTENSION = ".sgf";
 

@@ -8,12 +8,13 @@ import java.awt.Dimension;
 import org.w3c.dom.*;
 
 import java.io.*;
+import javax.swing.JFrame;
+import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
 /**
  * Run your own adventure story.
  * This version runs the adventure in Graphical mode (with images and sound).
- * @see Adventure
  * @see TextAdventure
  *
  * @author Barry Becker
@@ -24,12 +25,27 @@ public final class GraphicalAdventure extends ApplicationApplet
     private Story story_;
     private StoryPanel storyPanel_;
     private ChoicePanel choicePanel_ = null;
+    private JPanel mainPanel_;
 
-
+    /**
+     * Constructor.
+     * @param story initial story to show.
+     */
     public GraphicalAdventure(Story story)
     {
         GUIUtil.setStandAlone(false);
+        
         story_ = story;
+        JFrame frame = GUIUtil.showApplet( this, story.getTitle());
+
+        StoryMenu storyMenu = new StoryMenu(this);
+
+        JMenuBar menubar = new JMenuBar();
+        menubar.add(storyMenu);
+
+        frame.setJMenuBar(menubar);
+        frame.invalidate();
+        frame.validate();
     }
 
 
@@ -38,6 +54,23 @@ public final class GraphicalAdventure extends ApplicationApplet
      */
     protected JPanel createMainPanel()
     {
+        mainPanel_ = new JPanel();
+        mainPanel_.setLayout( new BorderLayout() );
+
+        setStory(story_);
+
+        return mainPanel_;
+    }
+
+    /**
+     * If a new story is loaded, call this method to update the ui.
+     * @param story new story to present.
+     */
+    public void setStory(Story story) {
+        story_ = story;
+        System.out.println("set new story");
+        mainPanel_.removeAll();
+
         storyPanel_ =  new StoryPanel(story_);
 
         // setup for initial scene
@@ -46,15 +79,28 @@ public final class GraphicalAdventure extends ApplicationApplet
 
         choicePanel_.addSceneChangeListener(this);
 
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout( new BorderLayout() );
-
-        mainPanel.add( storyPanel_, BorderLayout.CENTER );
-        mainPanel.add( choicePanel_, BorderLayout.SOUTH );
-
-        return mainPanel;
+        mainPanel_.add( storyPanel_, BorderLayout.CENTER );
+        mainPanel_.add( choicePanel_, BorderLayout.SOUTH );
     }
 
+
+    public Story getStory() {
+        return story_;
+    }
+
+    /**
+     * Allow user to edit the current story if they know the passord.
+     */
+    public void editStory() {
+        // show password dialog.
+        PasswordDialog pwDlg = new PasswordDialog("ludlow");
+        boolean canceled = pwDlg.showDialog();
+
+        if ( !canceled ) {
+            StoryEditorDialog storyEditor = new StoryEditorDialog(story_);
+            storyEditor.setVisible(true);
+        }
+    }
 
     /**
      * called when a button is pressed.
@@ -62,16 +108,10 @@ public final class GraphicalAdventure extends ApplicationApplet
     public void sceneChanged( int selectedChoiceIndex )
     {
         story_.advanceScene(selectedChoiceIndex);
-        System.out.println("request to repaint sent");
         storyPanel_.invalidate();
         storyPanel_.repaint();
         choicePanel_.setChoices(story_.getCurrentScene().getChoices());
         story_.getCurrentScene().playSound();
-    }
-
-    @Override
-    public void start()
-    {
     }
 
     
@@ -85,12 +125,11 @@ public final class GraphicalAdventure extends ApplicationApplet
      */
     public static void main( String[] args ) throws IOException {
 
-        Document document =Story.retrieveStoryDocument(args);
+        Document document = Story.importStoryDocument(args);
        
         Story story = new Story(document);
 
         GraphicalAdventure adventure = new GraphicalAdventure(story);
-        GUIUtil.showApplet( adventure, story.getTitle()); 
     }
 }
 

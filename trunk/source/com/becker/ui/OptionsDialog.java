@@ -16,16 +16,15 @@ public abstract class OptionsDialog extends JDialog implements ActionListener
 
     protected static final String COLON = " : ";
 
-
-    // there is always a cancel button so it is included here.
+    /** there is always a cancel button so it is included here. */
     protected GradientButton cancelButton_ = new GradientButton();
     protected boolean canceled_ = false;
 
-    // cache a pointer to this in case we have children
+    /** cache a pointer to this in case we have children */
     protected Frame parent_ = null;
 
-    // constants
-    //  the height of an option row in a panel
+
+    /** the height of an option row in a panel */
     protected static final int ROW_HEIGHT = 18;
 
 
@@ -108,6 +107,7 @@ public abstract class OptionsDialog extends JDialog implements ActionListener
     /**
      *  If the user clicks the X in the upper right, its the same as pressing cancel
      */
+    @Override
     protected void processWindowEvent( WindowEvent e )
     {
         if ( e.getID() == WindowEvent.WINDOW_CLOSING ) {

@@ -1,10 +1,10 @@
 package com.becker.game.twoplayer.common.ui;
 
+import com.becker.common.util.FileUtil;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
 import com.becker.game.twoplayer.common.*;
-import com.becker.optimization.*;
 import com.becker.ui.*;
 import com.becker.ui.filefilter.*;
 
@@ -249,7 +249,7 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
                 }
                 else {
                     JFileChooser chooser = GUIUtil.getFileChooser();
-                    chooser.setCurrentDirectory( new File( GameContext.getHomeDir() ) );
+                    chooser.setCurrentDirectory( new File( FileUtil.getHomeDir() ) );
                     chooser.setFileFilter(new TextFileFilter());
                     int state = chooser.showOpenDialog( this );
                     File file = chooser.getSelectedFile();

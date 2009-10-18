@@ -5,6 +5,7 @@ import com.becker.common.xml.*;
 import com.becker.sound.SoundUtil;
 import com.becker.ui.GUIUtil;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.net.URL;
 
 
@@ -27,15 +28,42 @@ public class Scene {
 
 
     /**
-     * Scenes that have no further options only allow you to quit.
+     *
+     * @param sceneNode
+     * @param resourcePath
      */
-    private static final Choice[] TERMINAL_CHOICE = new Choice[]{new Choice("Quit", Choice.QUIT)};
-
     public Scene(Node sceneNode, String resourcePath) {
         String description = sceneNode.getFirstChild().getTextContent();
 
         commonInit(DomUtil.getAttribute(sceneNode, "name"),
                   description, getChoices(sceneNode), resourcePath);
+    }
+
+    /**
+     *
+     * @param document the document to which to append this scene as a child.
+     */
+    public void appendToDocument(Document document) {
+
+          Element sceneElem = document.createElement("scene");
+          sceneElem.setAttribute("name", getName());
+          Element descElem = document.createElement("description");
+          descElem.setTextContent(getText());
+          sceneElem.appendChild(descElem);
+
+          // if we only have the QUIT choice, don't bother to add the choice list.
+          Choice firstChoice = this.getChoices()[0];
+          if (firstChoice != Choice.QUIT_CHOICE) {
+              Element choicesElem =  document.createElement("choices");
+              sceneElem.appendChild(choicesElem);
+              for (int i=0; i<this.getChoices().length-1; i++) {
+                  Choice choice = this.getChoices()[i];
+                  choicesElem.appendChild(choice.createElement(document));
+              }
+          }
+
+          Element rootElement = document.getDocumentElement();
+          rootElement.appendChild(sceneElem);
     }
 
     private void commonInit(String name, String text, Choice[] choices, String resourcePath) {
@@ -45,7 +73,7 @@ public class Scene {
 
         try {
             String soundPath = resourcePath + "sounds/" + name + ".au";
-            soundURL_ = GUIUtil.getURL( soundPath, false);
+            soundURL_ = GUIUtil.getURL(soundPath, false);
 
             String imagePath = resourcePath + "images/" +name + ".jpg";
             image_ = GUIUtil.getBufferedImage(imagePath);
@@ -69,7 +97,6 @@ public class Scene {
             int numChoices = choiceList.getLength();
             choices = new Choice[numChoices + (isFirst()?0:1)];
             for (int i=0; i<numChoices; i++) {
-                System.out.println("i=" + i + " numChildren="+ numChoices);
                 assert choiceList.item(i) != null;
                 choices[i] = new Choice(choiceList.item(i));
             }
@@ -113,10 +140,17 @@ public class Scene {
          return image_;
     }
 
+    public boolean hasSound() {
+        if (soundURL_ == null) return false;
+        File file = new File(soundURL_.getFile());
+        return file.exists();
+    }
+
 
     public void playSound() {
-        if (soundURL_ != null)
+        if (hasSound()) {
              SoundUtil.playSound(soundURL_);
+        }
     }
 
     public void setFirst() {
@@ -155,6 +189,23 @@ public class Scene {
      */
     public boolean hasChoices() {
         return choices_ != null;
+    }
+
+    /**
+     * Prints what is missing if anything for this scene.
+     * @return false if something is missing.
+     */
+    public boolean verifyMedia() {
+        if (getImage() == null || !hasSound()) {
+                System.out.print("scene: " + getName() );
+                if (getImage() == null)
+                    System.out.print("  missing image");
+                if (!hasSound())
+                    System.out.print("  missing sound" );
+                System.out.println("");
+                return false;
+           }
+        return true;
     }
 
     /**

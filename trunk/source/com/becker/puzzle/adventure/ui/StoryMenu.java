@@ -1,0 +1,126 @@
+package com.becker.puzzle.adventure.ui;
+
+import com.becker.common.util.FileUtil;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import javax.swing.BorderFactory;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import com.becker.puzzle.adventure.Story;
+import com.becker.ui.GUIUtil;
+import com.becker.ui.filefilter.ExtensionFileFilter;
+
+/**
+ * File menu for story application.
+ * You can open, save, or edit a story file.
+ *
+ * @author Barry Becker
+ */
+public class StoryMenu extends JMenu implements ActionListener  {
+
+    //private JFrame frame_;
+    private GraphicalAdventure storyApp_;
+
+    private JMenuItem openItem_;
+    private JMenuItem saveItem_;
+    private JMenuItem editItem_;
+    private JMenuItem exitItem_;
+
+    private static final String EXT = "xml";
+
+    /**
+     * Game application constructor
+     * @param frame
+     * @param initialGame the initially selected game.
+     */
+    public StoryMenu(GraphicalAdventure storyApp)
+    {
+        super("Story");
+
+        this.setBorder(BorderFactory.createEtchedBorder());
+
+        storyApp_ = storyApp;
+        //showStory(initialStory);
+        setBorder(BorderFactory.createEtchedBorder());
+
+        openItem_ =  createMenuItem("Open");
+        saveItem_ =  createMenuItem("Save");
+        editItem_ =  createMenuItem("Edit");
+        exitItem_ = createMenuItem("Exit");
+        add(openItem_);
+        add(saveItem_);
+        add(editItem_);
+        add(exitItem_);
+    }
+
+    /**
+     * called when the user has selected a different story file option.
+     * @param e
+     */
+    public void actionPerformed( ActionEvent e )
+    {
+         JMenuItem item = (JMenuItem) e.getSource();
+         if (item == openItem_)  {
+            openStory();
+        }
+        else if (item == saveItem_) {
+            saveStory();
+        }
+        else if (item == editItem_) {
+            storyApp_.editStory();
+        }
+        else if (item == exitItem_) {
+            System.exit(0);
+        }
+        else {
+            assert false : "unexpected menuItem = "+ item.getName();
+        }
+    }
+    
+    private void openStory() {
+
+        File file = FileUtil.getSelectedFileToOpen(EXT, getDefaultDir());
+        if ( file != null)  {
+            Story story = new Story(Story.importStoryDocument(file));
+            storyApp_.setStory(story);
+        }
+    }
+
+    private void saveStory() {
+        File file = FileUtil.getSelectedFileToSave(EXT, getDefaultDir());
+        if ( file != null) {
+            // if it does not have the .sgf extension already then add it
+            String fPath = file.getAbsolutePath();
+            fPath = ExtensionFileFilter.addExtIfNeeded(fPath, EXT);
+            storyApp_.getStory().saveStoryDocument(fPath);
+        }
+    }
+
+    private File getDefaultDir() {
+        String defaultDir = GUIUtil.RESOURCE_ROOT + Story.STORIES_ROOT;
+        return new File(defaultDir);
+    }
+
+    /**
+     * Create a menu item.
+     * @param name name of the menu item. The label.
+     * @return the menu item to add.
+     */
+    protected JMenuItem createMenuItem(String name)
+    {
+        JMenuItem item = new JMenuItem(name);
+        item.addActionListener(this);
+        return item;
+    }
+
+
+    /**
+     * Show the game panel for the specified game
+     * @param gameName name of the game to show in the frame.
+     */
+    private void showStory(String storyName)
+    {
+    
+    }
+}

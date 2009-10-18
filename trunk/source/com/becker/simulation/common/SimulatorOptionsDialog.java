@@ -90,6 +90,7 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog
         return buttonsPanel;
     }
 
+    @Override
     public String getTitle()
     {
         return "Simulation Configuration";

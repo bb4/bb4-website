@@ -1,5 +1,7 @@
 package com.becker.common.xml;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.w3c.dom.*;
 import org.xml.sax.*;
 
@@ -8,15 +10,22 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
+import javax.xml.transform.*;
+import javax.xml.transform.dom.*;
+import javax.xml.transform.stream.*;
+
 /**
  * Static utility methods for manipulating an XML dom.
  *
  * @author Barry Becker
  * Date: Oct 17, 2004
  */
-public class DomUtil {
+public final class DomUtil {
 
     private DomUtil() {};
+
+    /** This is where I keep all my published xsds (xml schemas)  and dtds (doc type definitions) */
+    public static final String SCHEMA_LOCATION = "http://barrybecker4.com/schema/";
 
     /**
      * Initialize a dom document structure.
@@ -26,7 +35,7 @@ public class DomUtil {
     {
         Document document = null;
         DocumentBuilderFactory factory =
-           DocumentBuilderFactory.newInstance();
+        DocumentBuilderFactory.newInstance();
         try {
           DocumentBuilder builder = factory.newDocumentBuilder();
           document = builder.newDocument();  // Create from whole cloth
@@ -47,6 +56,23 @@ public class DomUtil {
     }
 
     /**
+     * @return a new document (or null if there was an error creating one)
+     */
+    public static Document createNewDocument() {
+        DocumentBuilderFactory documentBuilderFactory =
+                                       DocumentBuilderFactory.newInstance();
+        DocumentBuilder documentBuilder;
+
+        try {
+            documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            return documentBuilder.newDocument();
+        } catch (ParserConfigurationException ex) {
+            Logger.getLogger(DomUtil.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    /**
      * go through the dom hier and remove spurious text nodes and alse
      * replace "use" nodes with a deep copy of what they refer to.
      * @param root
@@ -55,7 +81,7 @@ public class DomUtil {
     public static void postProcessDocument(Node root, Document document, boolean replaceUseWithDeepCopy) {
         NodeList l = root.getChildNodes();
 
-        List deleteList = new ArrayList();
+        List<Node> deleteList = new ArrayList<Node>();
 
         for (int i=0; i<l.getLength(); i++) {
             Node n = l.item(i);
@@ -250,5 +276,53 @@ public class DomUtil {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     *
+     * @param destFileName file to write xml to
+     * @param document xml document to write.
+     * @param name of the schema to use if any (e.g. script.dtd of games.xsd). May be null.
+     */
+    public static void writeXMLFile(String destFileName, Document document, String schema)  {
+        System.out.println("writing to " + destFileName);
+        OutputStream output;
+        try {
+            output = new BufferedOutputStream(new FileOutputStream(destFileName));
+            writeXML(output, document, schema);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(DomUtil.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    /**
+     * @param oStream stream to write xml to.
+     * @param document the xml document to be written to the specified output stream
+     * @param name of the schema to use if any (e.g. script.dtd of games.xsd). May be null.
+     */
+    public static void writeXML(OutputStream oStream, Document document, String schema)  {
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = null;
+        try {
+            transformer = transformerFactory.newTransformer();
+             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+            if (schema != null) {
+                transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM,  DomUtil.SCHEMA_LOCATION + schema);
+            }
+        } catch (TransformerConfigurationException ex) {
+            Logger.getLogger(DomUtil.class.getName()).log(Level.SEVERE, null, ex);
+        }      
+        DOMSource source = new DOMSource(document);
+        
+         // takes some OutputStream or Writer
+        StreamResult result =  new StreamResult(oStream);  // replace out with FileOutputStream  // System.out
+
+        try {
+            // replace out with FileOutputStream  // System.out
+            transformer.transform(source, result);
+        } catch (TransformerException ex) {
+            Logger.getLogger(DomUtil.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

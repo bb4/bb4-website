@@ -21,7 +21,7 @@ public final class TextAdventure {
      */
     public static void main( String[] args ) throws IOException {
 
-        Document document = Story.retrieveStoryDocument(args);
+        Document document = Story.importStoryDocument(args);
        
         Story story = new Story(document);
 

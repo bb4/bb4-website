@@ -41,6 +41,8 @@ import java.util.*;
  * the outcome may be one of several different things. We can also influence the outcome by what sort of
  * items the player has.
  * 10) fix sound deploy in ant
+ * 11) add means to edit the network of scene from within the application. Show all scene leading to and from
+ * the current scene. Allow editing of scene properties and associatating media.
  *
  * @author Barry Becker
  */
@@ -49,10 +51,25 @@ public class Story {
     /** title of the story */
     private String title;
 
+    /** name of the stoy used as an identifier for by convention resolution of locations and things like that. e.g. ludlow. */
+    private String name;
+
+    /**person who created the story document. */
+    private String author;
+
+    /** date story was created. */
+    private String date;
+
     /** maps scene name to the scene */
     private Map<String, Scene> sceneMap_;
 
+    /** This list allows us to retrieve the scenes in the same order they were loaded. */
+    private List<String> sceneList_;
+
     private Scene currentScene_;
+
+    private static final String ROOT_ELEMENT = "script";
+
 
     /**
      * A stack of currently visited scenes. There may be duplicates if you visit the same scene twice.
@@ -70,7 +87,10 @@ public class Story {
     public Story(Document document) {
         Node root = document.getDocumentElement();
         title = DomUtil.getAttribute(root, "title");
-        String resourcePath = STORIES_ROOT + DomUtil.getAttribute(root, "name")  + "/";
+        name =  DomUtil.getAttribute(root, "name");
+        author = DomUtil.getAttribute(root, "author");
+        date = DomUtil.getAttribute(root, "date");
+        String resourcePath = STORIES_ROOT +name + "/";
         NodeList children = root.getChildNodes();
         Scene[] scenes = new Scene[children.getLength()];
         for (int i=0; i < children.getLength(); i++) {
@@ -83,28 +103,76 @@ public class Story {
     public String getTitle() {
         return title;
     }
-     
+
+
+    /**
+     * Write the story document back to xml.
+     * @param destFileName file to write to.
+     */
+    public void saveStoryDocument(String destFileName) {
+         try {
+           Document document = createStoryDocument();
+            DomUtil.writeXMLFile(destFileName, document, "script.dtd");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * @return the story document based on the current state of the story.
+     */
+    private Document createStoryDocument() {
+        
+        Document document = DomUtil.createNewDocument();
+
+        Element rootElement = document.createElement(ROOT_ELEMENT);
+        rootElement.setAttribute("author", author);
+        rootElement.setAttribute("name", name);
+        rootElement.setAttribute("date", date);
+        rootElement.setAttribute("title", title);
+        document.appendChild(rootElement);
+
+        for (String sceneName : sceneList_) {
+            Scene scene = sceneMap_.get(sceneName);
+            scene.appendToDocument(document);
+        }
+
+        return document;
+    }
 
     /**
      * If args[0] does not have the name of the document to use, use a default.
      * @param args command line args (0 or 1 if name of xml doc is specified.)
      * @return the loaded Document that contains the asventure.
      */
-    public static Document retrieveStoryDocument(String[] args) {
+    public static Document importStoryDocument(String[] args) {
         Document document = null;
         if (args.length == 1) {
             File file = new File(args[0]);
             document = DomUtil.parseXMLFile(file);
         }
         else { // default
-            URL url = GUIUtil.getURL("com/becker/puzzle/adventure/stories/ludlow/ludlowScript.xml");
-            System.out.println("about to parse url="+url +"\n plugin file location="+ url);
+            URL url = GUIUtil.getURL(STORIES_ROOT + "ludlow/ludlowScript.xml");
+            System.out.println("about to parse url="+url +"\n story file location="+ url);
             document = DomUtil.parseXML(url);
         }
         //DomUtil.printTree(document, 0);
-
         return document;
     }
+
+    public static Document importStoryDocument(File file) {
+        Document document = null;
+
+        // first try to load it as a file. If that doesnt work, try as a URL.
+        //File file = new File(fileName);
+        if (file.exists()) {
+            document = DomUtil.parseXMLFile(file);
+        }
+        
+        return document;
+    }
+
 
     /**
      * Construct an adventure given a list of scenes.
@@ -117,11 +185,13 @@ public class Story {
     public void initFromScenes(Scene[] scenes)  {
 
         sceneMap_ = new HashMap<String, Scene>(scenes.length);
+        sceneList_ = new ArrayList<String>(scenes.length);
         for (final Scene scene : scenes) {
             if (scene.getChoices() == null) {
-                scene.setChoices(new Choice[] {new Choice(Choice.QUIT, null)} ) ;
+                scene.setChoices(new Choice[] {Choice.QUIT_CHOICE} ) ;
             }
             sceneMap_.put(scene.getName(), scene);
+            sceneList_.add(scene.getName());
         }
 
         verifyScenes();
@@ -176,6 +246,8 @@ public class Story {
      */
     private void verifyScenes() {
         for (Scene scene : sceneMap_.values()) {
+            scene.verifyMedia();
+            
             for (Choice choice : scene.getChoices())  {
                 String dest = choice.getDestination();
                 if (dest != null && !Choice.PREVIOUS_SCENE.equals(choice.getDestination())
