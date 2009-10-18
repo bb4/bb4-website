@@ -1,5 +1,6 @@
 package com.becker.game.common.ui;
 
+import com.becker.common.util.FileUtil;
 import com.becker.common.util.ImageUtil;
 import com.becker.game.common.*;
 import com.becker.ui.*;
@@ -262,7 +263,7 @@ public abstract class GamePanel extends TexturedPanel
     public void saveSnapshot() {
 
         JFileChooser chooser = GUIUtil.getFileChooser();
-        chooser.setCurrentDirectory( new File( GameContext.getHomeDir() ) );
+        chooser.setCurrentDirectory( new File( FileUtil.getHomeDir() ) );
         int state = chooser.showSaveDialog( null );
         File file = chooser.getSelectedFile();
         if ( file != null && state == JFileChooser.APPROVE_OPTION ) {

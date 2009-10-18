@@ -28,13 +28,7 @@ public class SoundTest extends TestCase {
     public void testWav() {
 
         String soundPath = Story.STORIES_ROOT + "sounds/test.au";
-        //URL clipURL = GUIUtil.getURL(soundPath);
-        //URL clipURL = new URL("file://G:/projects/java_projects/trunk/source/com/becker/puzzle/adventure/stories/ludlow/sounds/scream.au");
-        //AudioClip audioClip = Applet.getAudioClip(clipURL);
-        //audioClip.play();
         URL clipURL = GUIUtil.getURL(soundPath);
-
-
 
         try {
             AudioInputStream fis =
@@ -74,7 +68,6 @@ public class SoundTest extends TestCase {
 
     }
 
-    /*
     public void testSound1() {
                             
         MusicMaker m = new MusicMaker();
@@ -95,14 +88,12 @@ public class SoundTest extends TestCase {
         }
         //Assert.assertTrue(LOOSE + Arrays.toString(resultLoose),
         //                       Arrays.equals(resultLoose, EXPECTED_LOOSE_CUTS2));    
-    }*/
+    }
 
        
     public void testSpeech() {
          SpeechSynthesizer speech = new SpeechSynthesizer();
          speech.sayPhoneWord("y|ouu");
     }
-
-
     
 }

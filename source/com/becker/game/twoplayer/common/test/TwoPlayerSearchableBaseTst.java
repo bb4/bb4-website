@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.common.test;
 
+import com.becker.common.util.FileUtil;
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
@@ -23,7 +24,7 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
 
     /** moved all test cases here so they are not included in the jar and do not need to be searched */
     protected static final String EXTERNAL_TEST_CASE_DIR =
-            GameContext.getHomeDir() +"/test/";
+            FileUtil.getHomeDir() +"/test/";
 
     private static final String SGF_EXTENSION = ".sgf";
 

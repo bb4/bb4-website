@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <!DOCTYPE script SYSTEM "http://barrybecker4.com/schema/script.dtd">
-
 <script title="The Mansion of Professor Ludlow" name="ludlow" date="10/19/2006" author="Barry Becker">
 
     <scene name="start">
@@ -17,14 +16,10 @@ You hear an eary plea for help coming from inside.
 What do you do?
         </description>
         <choices>
-            <choice description="Knock on the front door"
-                          resultScene="no_response" />
-            <choice description="Open the front door without knocking"
-                          resultScene="inside_entrance" />
-            <choice description="Scream"
-                          resultScene="sky_falls"/>
-            <choice description="Knock on the front door"
-                          resultScene="no_response"/>
+            <choice description="Knock on the front door"  resultScene="no_response" />
+            <choice description="Open the front door without knocking"  resultScene="inside_entrance" />
+            <choice description="Scream"                             resultScene="sky_falls"/>
+            <choice description="Knock on the front door"  resultScene="no_response"/>
         </choices>
     </scene>
 
@@ -34,14 +29,10 @@ No one comes to the door and you hear nothing.
 A few minutes pass. Still nothing.
         </description>
         <choices>
-            <choice description="Knock again"
-                          resultScene="no_response" />
-            <choice description="Open the front door without knocking"
-                          resultScene="inside_entrance" />
-            <choice description="Scream"
-                          resultScene="sky_falls"/>
-            <choice description="Return to the rest of your group"
-                          resultScene="quit"/>
+            <choice description="Knock again"  resultScene="no_response" />
+            <choice description="Open the front door without knocking"  resultScene="inside_entrance" />
+            <choice description="Scream"   resultScene="sky_falls"/>
+            <choice description="Return to the rest of your group"   resultScene="quit"/>
         </choices>
     </scene>
 
@@ -53,14 +44,10 @@ A few minutes pass. Still nothing.
  The hall has inch-thick red carpeting and walnut-paneled walls. The mirror at the end runs from the floor to the twenty-foot-high ceiling and covers the forty feet of wall section on that south face of the hall.
         </description>
         <choices>
-            <choice description="Go through left opening"
-                          resultScene="rat_room" />
-            <choice description="Go through right opening"
-                          resultScene="boogie" />
-            <choice description="Tamper with mirror at the end of the hall."
-                          resultScene="mirror"/>
-            <choice description="Exit"
-                          resultScene="quit"/>
+            <choice description="Go through left opening"  resultScene="rat_room" />
+            <choice description="Go through right opening"  resultScene="boogie" />
+            <choice description="Tamper with mirror at the end of the hall."  resultScene="mirror"/>
+            <choice description="Exit"   resultScene="quit"/>
         </choices>
     </scene>
 
@@ -70,12 +57,9 @@ There are leaves on the floor, and an old worn out couch in the north east corne
 There is a musty smell to the room, and leaves are littered on the floor. The couch is an old, dusty, overstuffed relic with several cushions and rips on all parts of it.  The room measures sixty feet east and west and forty feet north and south, if paced out. There is a door on the east side of the room.
         </description>
         <choices>
-            <choice description="Inspect the couch."
-                          resultScene="rat_attack" />
-            <choice description="Sift through the leaves on the floor."
-                          resultScene="key" />
-            <choice description="Go through the door on the east side."
-                          resultScene="C"/>
+            <choice description="Inspect the couch."   resultScene="rat_attack" />
+            <choice description="Sift through the leaves on the floor."  resultScene="key" />
+            <choice description="Go through the door on the east side."    resultScene="pink_hallway"/>
         </choices>
     </scene>
 
@@ -93,75 +77,61 @@ You find a golden key under the pile of leaves.
         </description>
     </scene>
 
-    <scene name="C">
+    <scene name="pink_hallway">
         <description>
 The beam of your flashlight show a hall with pink walls and a floor of red marble. The walls have clean squares all over them where pictures were obviously once hung, but are no longer. The floor has dried leaves littering it. If paced out, the hall is eighty feet long east and west and twenty feet long north and south. The hall leads to another room at the end.
         </description>
         <choices>
-            <choice description="Proceed into the room at the end of the hall."
-                          resultScene="D" />
+            <choice description="Proceed into the room at the end of the hall."  resultScene="crate_room" />
         </choices>
     </scene>
 
 
-    <scene name="D">
+    <scene name="crate_room">
         <description>
 The beam of the flashlight shows a room with gray painted walls and a cement floor. It is filled with wooden crates and there are leaves all over the room in large piles.
 There are 200 empty wooden crates of differing sizes, and the biggest concentration of leaves is in the southwest corner of the room.  The room measures sixty feet east and west and forty feet north and south and has a side alcove to the south starting on the east wall that is forty feet long east and west and twenty feet long north and south. It is here that the concentration of leaves is located. Behind a big crate along the east wall, thirty feet from the north corner, one finds a door with a normal handle.
         </description>
         <choices>
             <choice description="Go through door behind big crate."    resultScene="E" />
-            <choice description="Look inside all the crates."          resultScene="crates" />
-            <choice description="ift through the pile of leaves."      resultScene="D_leaves" />
+            <choice description="Look inside all the crates."          resultScene="open_crates" />
+            <choice description="ift through the pile of leaves."      resultScene="crate_room_leaves" />
         </choices>
     </scene>
 
-    <scene name="crates">
+    <scene name="open_crates">
         <description>
 It takes you a really long time, but you finally open and inspect all the crates." +
 You find nothing in them except for leaves, dust, and 200 paperclips. ",
         </description>
         <choices>
-            <choice description="Proceed into the room at the end of the hall."    resultScene="D" />
+            <choice description="Proceed into the room at the end of the hall."    resultScene="stub" />
         </choices>
     </scene>
 
-    <scene name="D_leaves">
+    <scene name="crate_room_leaves">
         <description>
 There are snakes in the leaves. A group of 3 4 foot long rattlesnakes attack.
 (HP: 10,8,5; #AT: 1; damage:1-3; AC: 5; SA: Save versus death caused by poison).
         </description>
         <choices>
-            <choice description="Proceed into the room at the end of the hall."    resultScene="D" />
+            <choice description="Proceed into the room at the end of the hall."    resultScene="stub" />
         </choices>
     </scene>
 
     <scene name="E">
         <description>
-   The beam of your flashlight shows a room with gray painted\n
-walls and a cement floor. It is filled with boxes and barrels.\n
-   There are thirteen barrels of grain\n
-alcohol each with the number \"50\" painted on it. There are thirteen\n
-boxes filled with pairs of white gloves. A metal chest contains a silver\n
-set made to serve eighteen people, four pairs of silver candlesticks,\n
-three huge silver carving knives (like short swords), and eighteen\n
-solid silver goblets (total worth of the silver items is 20,000 silver\n
-pieces). There are thirteen chests filled with books about plants;\n
-thirteen boxes filled with assorted sizes of clay pots; and ten large\n
-crates with mattresses in them. When paced out, the room is forty\n
-feet wide east and west and sixty feet wide north and south. A door\n
-on the east wall is originally hidden by the mattress crates.\n
-    When you enter the room,\n
-are immediately attacked by an incredibly old man dressed in\n
-rags and carrying a butcher knife (HP: 7; #AT: 1; 0: 1-6; AC: 10; SA:\n
-None). This old man leaps out from behind some of the boxes and\n
-surprises you. ",
+   The beam of your flashlight shows a room with gray painted walls and a cement floor. It is filled with boxes and barrels.
+   There are thirteen barrels of grain alcohol each with the number "50" painted on it. There are thirteen boxes filled with pairs of white gloves. A metal chest contains a silver set made to serve eighteen people, four pairs of silver candlesticks, three huge silver carving knives (like short swords), and eighteen solid silver goblets (total worth of the silver items is 20,000 silver pieces).
+There are thirteen chests filled with books about plants; thirteen boxes filled with assorted sizes of clay pots; and ten large crates with mattresses in them. When paced out, the room is forty feet wide east and west and sixty feet wide north and south.
+A door on the east wall is originally hidden by the mattress crates.
+    When you enter the room, you are immediately attacked by an incredibly old man dressed in rags and carrying a butcher knife (HP: 7; #AT: 1; 0: 1-6; AC: 10; SA:None). This old man leaps out from behind some of the boxes and surprises you.
                   //"   He will never follow a retreating group out\n
-                  // "of the room, but will act dangerously at all other times and will never\n
+                  // "of the room, but will act dangerously at all other times and will never
                   //"listen to any type of reason.
         </description>
         <choices>
-            <choice description="Proceed into the room at the end of the hall."    resultScene="D" />
+            <choice description="Proceed into the room at the end of the hall."    resultScene="stub" />
         </choices>
     </scene>
 
@@ -180,6 +150,10 @@ surprises you. ",
     </scene>
     <scene name="sky_falls">
         <description>The sky falls on you.</description>
+    </scene>
+     <scene name="stub">
+        <description>TBD
+        </description>
     </scene>
     <scene name="quit">
         <description>You go back to the others. They don't believe your story. You enjoy the rest of the camping trip.

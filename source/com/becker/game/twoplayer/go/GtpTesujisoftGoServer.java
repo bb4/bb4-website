@@ -4,7 +4,6 @@ import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
 import com.becker.game.twoplayer.go.board.GoStone;
 import com.becker.common.util.FileUtil;
 import com.becker.game.common.*;
-import com.becker.game.twoplayer.common.search.*;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import go.Point;
 import gtp.GtpServer;
@@ -13,7 +12,6 @@ import utils.StringUtils;
 
 import java.io.*;
 import java.util.List;
-import sun.misc.Version;
 
 /**
  * This class wraps the GoController and provides an interface to a GTP based controller (front end ui).
@@ -419,7 +417,7 @@ public class GtpTesujisoftGoServer
                 log = new PrintStream(new FileOutputStream(file));
             }
             else {
-                String logFile = GameContext.getHomeDir() + "/temp/" + "log.txt";
+                String logFile = FileUtil.getHomeDir() + "/temp/" + "log.txt";
                 File file = new File(logFile);
                 log = new PrintStream(new FileOutputStream(file));
             }

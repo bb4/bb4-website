@@ -27,19 +27,21 @@ public final class GUIUtil
 {
     private GUIUtil() {}
 
-    // if true then running as an applet or webstart. if false, then running as an application
+    /** if true then running as an applet or webstart. if false, then running as an application. */
     private static boolean isStandAlone_ = true;
 
-    // default location of images unless otherwise specified.
-    private static final String RESOURCE_ROOT = FileUtil.PROJECT_DIR + "source/";
+    /** default location of files on the local system unless otherwise specified. */
+    public static final String RESOURCE_ROOT = FileUtil.PROJECT_DIR + "source/";
 
-    // for opening files.
-    // don't create this here or applets using this class will have a security exception
-    // instead we create a singleton when needed.
+    /**
+     * For opening files.
+     * don't create this here or applets using this class will have a security exception
+     * instead we create a singleton when needed.
+     */
     private static JFileChooser fileChooser_ = null;
 
 
-    // default font and color for the UI
+    /** default font and color for the UI */
     public static final Font UI_FONT = new Font( "Sans Serif", Font.PLAIN, 10 );      // standard
 
     // Purple color theme
@@ -292,12 +294,12 @@ public final class GUIUtil
      }
 
     /**
-     * get a URL given the path to a file.
+     * get a URL given the path to an existing file.
      */
     public static URL getURL(String sPath, boolean failIfNotFound) {
 
         URL url = null;
-        System.out.println("searching for url path=" + sPath);
+        //System.out.println("searching for url path=" + sPath);
         try {
             if (isStandAlone_)   {
                 url = ClassLoaderSingleton.getClassLoader().getResource(sPath);
@@ -345,16 +347,38 @@ public final class GUIUtil
         return w;
     }
 
-   /**
+
+    /**
+     * this method is useful for turning Applets into applications.
+     * @param applet the applet to show
+     * @param title title to appear in the titlebar of the application frame.
+     */
+    public static JFrame showApplet( final JApplet applet, final String title)
+    {
+        isStandAlone_ = false;
+        assert !isStandAlone_: "You must be running as an application if you are calling this method.";
+
+        // Schedule a job for the event-dispatching thread:
+        // creating and showing this application's GUI.
+        // follows pattern from http://java.sun.com/docs/books/tutorial/uiswing/misc/threads.html
+        ////SwingUtilities.invokeLater(new Runnable() {
+        ////    public void run() {
+                return createAndShowAppletFrame(applet, title);
+        ////    }
+        ////});
+    }
+
+    /**
      * Create the GUI and show it.  For thread safety,
      * this method should be invoked from the event-dispatching thread.
      */
-    private static void createAndShowAppletFrame(JApplet applet, String title) {
+    private static  JFrame createAndShowAppletFrame(JApplet applet, String title) {
        JFrame baseFrame = new JFrame();
 
        baseFrame.setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
        baseFrame.addWindowListener( new WindowAdapter()
        {
+            @Override
            public void windowClosed( WindowEvent e )
            {
                System.exit( 0 );
@@ -370,7 +394,7 @@ public final class GUIUtil
 
        baseFrame.setVisible( true );
        Dimension dim = applet.getSize();
-       System.out.println("baseFrame get size="+ dim);
+       //System.out.println("baseFrame get size="+ dim);
        if (dim.width == 0) {
            baseFrame.setSize( width, height);
        } else {
@@ -385,28 +409,27 @@ public final class GUIUtil
 
        // call the applet's start method
        applet.start();
+       return baseFrame;
    }
 
     /**
-     * this method is useful for turning Applets into applications.
-     * @param applet the applet to show
-     * @param title title to appear in the titlebar of the application frame.
+     *
+     * @param comp ui componetn to get base frame for.
+     * @return the base frame if there is one (else null).
      */
-    public static void showApplet( final JApplet applet, final String title)
+    public static JFrame getBaseFrame(JComponent comp)
     {
-        isStandAlone_ = false;
-        assert !isStandAlone_: "You must be running as an application if you are calling this method.";
-
-        // Schedule a job for the event-dispatching thread:
-        //creating and showing this application's GUI.
-        // follows pattern from http://java.sun.com/docs/books/tutorial/uiswing/misc/threads.html
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                createAndShowAppletFrame(applet, title);
-            }
-        });
+        Component parent = comp.getParent();
+        while (parent != null && !(parent instanceof JFrame)) {
+            parent = parent.getParent();
+        }
+        if (parent == null) {
+            return null;
+        }
+        else {
+            return (JFrame) parent;
+        }
     }
-
 
     /**
      * gets a color from a hexadecimal string like "AABBCC"

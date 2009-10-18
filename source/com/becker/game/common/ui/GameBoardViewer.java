@@ -1,5 +1,6 @@
 package com.becker.game.common.ui;
 
+import com.becker.common.util.FileUtil;
 import com.becker.game.common.*;
 import com.becker.ui.*;
 
@@ -37,8 +38,6 @@ public abstract class GameBoardViewer extends JPanel
 
     /** for restoring undone moves. */
     protected final LinkedList<Move> undoneMoves_ = new LinkedList<Move>();
-
-    private static JFileChooser chooser_ = null;
 
     /** for dispatching events */
     private final EventQueue evtq_;
@@ -105,7 +104,7 @@ public abstract class GameBoardViewer extends JPanel
      */
     public void openGame()
     {
-        JFileChooser chooser = getFileChooser();
+        JFileChooser chooser = FileUtil.getFileChooser(new SgfFileFilter());
         int state = chooser.showOpenDialog( null );
         File file = chooser.getSelectedFile();
         if ( file != null && state == JFileChooser.APPROVE_OPTION )  {
@@ -129,27 +128,15 @@ public abstract class GameBoardViewer extends JPanel
      */
     public void saveGame( AssertionError ae )
     {
-        JFileChooser chooser = getFileChooser();
+        JFileChooser chooser = FileUtil.getFileChooser(new SgfFileFilter());
         int state = chooser.showSaveDialog( null );
         File file = chooser.getSelectedFile();
         if ( file != null && state == JFileChooser.APPROVE_OPTION ) {
             // if it does not have the .sgf extension already then add it
             String fPath = file.getAbsolutePath();
             fPath = SgfFileFilter.addExtIfNeeded(fPath, SgfFileFilter.SGF_EXTENSION);
-            //if (!fPath.endsWith('.' + SgfFileFilter.SGF_EXTENSION))
-            //    fPath += '.' + SgfFileFilter.SGF_EXTENSION;
             controller_.saveToFile( fPath, ae );
-
         }
-    }
-
-    private static JFileChooser getFileChooser() {
-        if (chooser_ == null) {
-            chooser_ = GUIUtil.getFileChooser();
-            chooser_.setCurrentDirectory( new File( GameContext.getHomeDir() ) );
-            chooser_.setFileFilter(new SgfFileFilter());
-        }
-        return chooser_;
     }
 
 

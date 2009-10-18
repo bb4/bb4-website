@@ -15,8 +15,7 @@ public class AxesSynch extends JApplet
 
 
     public boolean isStandalone_ = false;
-    // the frame is only created if we run as an application
-    protected JFrame baseFrame_ = null;
+
 
     // constructor
     public AxesSynch()
@@ -39,6 +38,7 @@ public class AxesSynch extends JApplet
 
         axesPanel_.addComponentListener( new ComponentAdapter()
         {
+            @Override
             public void componentResized( ComponentEvent ce )
             {
                     //resized();
@@ -49,6 +49,7 @@ public class AxesSynch extends JApplet
     /**
      *  Overrides the applet init() method
      */
+    @Override
     public void init()
     {
         //resized();

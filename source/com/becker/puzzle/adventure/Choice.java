@@ -17,6 +17,9 @@ public class Choice {
     public static final String QUIT = "Quit";
     public static final String PREVIOUS_SCENE = "last scene";
 
+    /** This choice is automatically added if there are no other choices. */
+    public static final Choice QUIT_CHOICE = new Choice(Choice.QUIT, null);
+
     public Choice(Node choiceNode) {
         this(DomUtil.getAttribute(choiceNode, "description"),
              DomUtil.getAttribute(choiceNode, "resultScene"));
@@ -39,5 +42,12 @@ public class Choice {
      */
     public String getDestination() {
         return destination_;
+    }
+
+    public Element createElement(Document document) {
+        Element choiceElem = document.createElement("choice");
+        choiceElem.setAttribute("description", getDescription());
+        choiceElem.setAttribute("resultScene", getDestination());
+        return choiceElem;
     }
 }

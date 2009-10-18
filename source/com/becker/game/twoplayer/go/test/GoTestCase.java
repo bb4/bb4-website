@@ -6,6 +6,7 @@ import com.becker.game.twoplayer.go.board.GoGroup;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.common.util.Util;
 import com.becker.common.Location;
+import com.becker.common.util.FileUtil;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.*;
 import com.becker.game.twoplayer.go.*;
@@ -25,7 +26,7 @@ public class GoTestCase extends TestCase {
 
     // moved all test cases here so they are not included in the jar and do not need to be searched
     private static final String EXTERNAL_TEST_CASE_DIR =
-            GameContext.getHomeDir() + "/test/go/cases/";
+            FileUtil.getHomeDir() + "/test/go/cases/";
 
     private static final String SGF_EXTENSION = ".sgf";
 

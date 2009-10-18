@@ -3,19 +3,14 @@ package com.becker.apps.misc.sedit;
 import com.becker.common.Base64Codec;
 import com.becker.ui.GUIUtil;
 import com.becker.ui.filefilter.ExtensionFileFilter;
-import com.becker.ui.filefilter.TextFileFilter;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.ByteOrder;
-import java.nio.CharBuffer;
 import javax.swing.*;
 
 
@@ -23,12 +18,10 @@ public class SimpleEditor extends JFrame implements ActionListener {
  
   
     private JTextArea editArea;
-    private String newline = "\n";
     
     // menu options
     private JMenuItem openItem_;
     private JMenuItem saveItem_;
-    private JMenuItem saveImageItem_;
     private JMenuItem exitItem_;
     
     private static JFileChooser chooser_ = null;
@@ -43,6 +36,7 @@ public class SimpleEditor extends JFrame implements ActionListener {
         GUIUtil.setCustomLookAndFeel();
            
        addWindowListener(new WindowAdapter() {
+            @Override
             public void windowClosing(WindowEvent e) {
                 System.exit(0);
             }
@@ -125,7 +119,6 @@ public class SimpleEditor extends JFrame implements ActionListener {
         int state = chooser.showOpenDialog( null );
         File file = chooser.getSelectedFile();
         if ( file != null && state == JFileChooser.APPROVE_OPTION )  {
-            //lastDirectoryAccessed_ = file.getAbsolutePath();
             loadFile(file.getAbsolutePath());       
         }
     }
@@ -143,8 +136,7 @@ public class SimpleEditor extends JFrame implements ActionListener {
             // if it does not have the .sgf extension already then add it
             String fPath = file.getAbsolutePath();
             fPath = ExtensionFileFilter.addExtIfNeeded(fPath, EXT);
-      
-           saveFile( fPath);
+            saveFile( fPath);
         }
     }
     
@@ -156,7 +148,6 @@ public class SimpleEditor extends JFrame implements ActionListener {
         }
         return chooser_;
     }
-    
     
     
     private void loadFile(String fileName) {
