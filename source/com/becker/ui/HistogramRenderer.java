@@ -1,6 +1,5 @@
 package com.becker.ui;
 
-import com.becker.common.*;
 import com.becker.common.util.Util;
 
 import java.awt.*;

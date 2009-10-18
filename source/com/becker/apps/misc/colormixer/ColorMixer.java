@@ -1,5 +1,6 @@
 package com.becker.apps.misc.colormixer;
 
+import com.becker.ui.components.ColorInputPanel;
 import com.becker.ui.*;
 
 import javax.swing.*;

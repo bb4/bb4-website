@@ -3,8 +3,8 @@ package com.becker.game.multiplayer.galactic.ui;
 import com.becker.game.common.*;
 import com.becker.game.multiplayer.galactic.*;
 import com.becker.game.multiplayer.galactic.player.*;
-import com.becker.ui.GradientButton;
-import com.becker.ui.OptionsDialog;
+import com.becker.ui.components.GradientButton;
+import com.becker.ui.dialogs.OptionsDialog;
 
 import javax.swing.*;
 import java.awt.*;

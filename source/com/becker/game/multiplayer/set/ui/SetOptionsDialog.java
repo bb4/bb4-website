@@ -1,5 +1,6 @@
 package com.becker.game.multiplayer.set.ui;
 
+import com.becker.ui.components.NumberInput;
 import com.becker.game.common.*;
 import com.becker.game.multiplayer.common.ui.*;
 import com.becker.game.multiplayer.set.*;

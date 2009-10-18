@@ -1,5 +1,7 @@
 package com.becker.game.multiplayer.poker.ui;
 
+import com.becker.ui.components.GradientButton;
+import com.becker.ui.dialogs.OptionsDialog;
 import com.becker.game.common.*;
 import com.becker.game.multiplayer.common.ui.ActionDialog;
 import com.becker.game.multiplayer.poker.player.PokerPlayer;

@@ -1,5 +1,7 @@
 package com.becker.puzzle.maze;
 
+import com.becker.ui.components.NumberInput;
+import com.becker.ui.components.GradientButton;
 import com.becker.ui.*;
 
 import javax.swing.*;

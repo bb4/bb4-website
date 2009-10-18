@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.common.ui;
 
+import com.becker.ui.components.NumberInput;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
 import com.becker.game.common.*;
 import com.becker.game.common.ui.GameOptionsDialog;

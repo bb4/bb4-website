@@ -22,6 +22,12 @@ public class ShowOff
     private int mSplit;
     private TextLayout mLayout;
 
+    /**
+     *
+     * @param filename
+     * @param message
+     * @param split
+     */
     public ShowOff( String filename, String message, int split )
             throws IOException, ImageFormatException
     {

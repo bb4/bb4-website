@@ -4,8 +4,8 @@ import com.becker.game.common.GameContext;
 import com.becker.game.common.GameWeights;
 import com.becker.optimization.parameter.Parameter;
 import com.becker.optimization.parameter.ParameterArray;
-import com.becker.ui.GradientButton;
-import com.becker.ui.OptionsDialog;
+import com.becker.ui.components.GradientButton;
+import com.becker.ui.dialogs.OptionsDialog;
 
 import javax.swing.*;
 import java.awt.*;

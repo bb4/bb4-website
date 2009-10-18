@@ -1,5 +1,6 @@
 package com.becker.ui;
 
+import com.becker.ui.components.ResizableAppletPanel;
 import javax.swing.*;
 
 /**

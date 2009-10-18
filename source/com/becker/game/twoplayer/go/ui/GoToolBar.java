@@ -2,7 +2,7 @@ package com.becker.game.twoplayer.go.ui;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.common.ui.GameToolBar;
-import com.becker.ui.GradientButton;
+import com.becker.ui.components.GradientButton;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;

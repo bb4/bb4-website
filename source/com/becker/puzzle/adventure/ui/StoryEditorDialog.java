@@ -1,7 +1,7 @@
 package com.becker.puzzle.adventure.ui;
 
 import com.becker.ui.GUIUtil;
-import com.becker.ui.GradientButton;
+import com.becker.ui.components.GradientButton;
 import java.awt.AWTEvent;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -47,7 +47,7 @@ public class StoryEditorDialog extends JDialog implements ActionListener {
     {
         enableEvents( AWTEvent.WINDOW_EVENT_MASK );
         //this.setLocationRelativeTo( parent_ );
-        this.setResizable(false);
+        this.setResizable(true);
         setTitle("Enter the top secret password");
 
         this.setModal( true );

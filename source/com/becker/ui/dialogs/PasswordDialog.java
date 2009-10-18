@@ -1,7 +1,7 @@
-package com.becker.puzzle.adventure.ui;
+package com.becker.ui.dialogs;
 
 import com.becker.ui.GUIUtil;
-import com.becker.ui.GradientButton;
+import com.becker.ui.components.GradientButton;
 import java.awt.AWTEvent;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -72,7 +72,6 @@ public class PasswordDialog extends JDialog implements ActionListener {
         mainPanel.add( buttonsPanel, BorderLayout.SOUTH );
 
         this.getContentPane().add(mainPanel);
-        //this.setPreferredSize(new Dimension(200, 100));
 
         // security violation in applet and webstart
         if (!GUIUtil.isStandAlone())
@@ -87,8 +86,10 @@ public class PasswordDialog extends JDialog implements ActionListener {
     protected  JPanel createButtonsPanel() {
         JPanel buttonsPanel = new JPanel( new FlowLayout() );
 
-        initBottomButton( okButton_, "OK", "Check to see if the password is correct. " );
-        initBottomButton( cancelButton_, "Cancel", "Go back to the main window without entering a password." );
+        initBottomButton( okButton_,
+                "OK", "Check to see if the password is correct. " );
+        initBottomButton( cancelButton_,
+                "Cancel", "Go back to the main window without entering a password." );
 
         buttonsPanel.add( okButton_ );
         buttonsPanel.add( cancelButton_ );
@@ -127,7 +128,6 @@ public class PasswordDialog extends JDialog implements ActionListener {
 
     public void actionPerformed( ActionEvent e )
     {
-
         Object source = e.getSource();
 
         if ( source == okButton_ ) {
