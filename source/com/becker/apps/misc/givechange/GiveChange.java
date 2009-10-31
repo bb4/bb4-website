@@ -2,7 +2,9 @@ package com.becker.apps.misc.givechange;
 
 import com.becker.common.util.Util;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * Program to compute change given a number of cents between 0 and 99.
@@ -35,16 +37,16 @@ public final class GiveChange
     private static long getAmount(long max) throws IOException
     {
         long amount = 0;
-        byte b[] = new byte[100];
         boolean valid = false;
 
         do {
             System.out.println( "Enter a number of cents for which to compute ideal change "+
                     "[0 - "+Util.formatNumber(max) +"]:" );
-            System.in.read(b);
-            String str = new String(b);
-            int end = str.indexOf('\n');
-            str = str.substring(0, end);      // remove trailing newline
+            
+            InputStreamReader  inp = new InputStreamReader(System.in);
+            BufferedReader br = new BufferedReader(inp);
+            String str = br.readLine();
+
             try {
                 amount = Long.parseLong(str);
                 valid = true;

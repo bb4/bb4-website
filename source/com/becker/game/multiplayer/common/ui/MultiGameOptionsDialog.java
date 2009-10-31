@@ -4,7 +4,6 @@ import com.becker.ui.components.NumberInput;
 import com.becker.game.common.ui.*;
 import com.becker.game.common.*;
 import com.becker.game.multiplayer.common.*;
-import com.becker.ui.*;
 
 import javax.swing.*;
 import java.awt.event.*;

@@ -41,6 +41,7 @@ public abstract class PlayerTable extends TableBase
         deletedRows_ = new ArrayList<Vector>();
     }
 
+    @Override
     protected void updateColumnMeta(TableColumnMeta[] columnMeta) {
 
         columnMeta[NAME_INDEX].setPreferredWidth(130);

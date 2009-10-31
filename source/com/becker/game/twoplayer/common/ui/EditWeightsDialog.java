@@ -27,42 +27,44 @@ class EditWeightsDialog extends OptionsDialog
 
     private GradientButton okButton_;
 
+     private JPanel weightsPanel_;
+
     private static final Dimension LABEL_DIM = new Dimension( 200, 20 );
     private static final Dimension FIELD_DIM = new Dimension( 100, 20 );
     private static final Dimension WEIGHT_PANEL_DIM = new Dimension( 900, 25 );
 
     // constructor
-    EditWeightsDialog( Frame parent, ParameterArray weights, GameWeights gameWeights )
+    EditWeightsDialog( JFrame parent, ParameterArray weights, GameWeights gameWeights )
     {
         super( parent );
 
         // make a copy of the weights so we can cancel if desired
         weights_ = weights;  // this does not make a copy.
         gameWeights_ = gameWeights;
-
-        initUI();
+        showContent();
     }
 
+    @Override
     public String getTitle()
     {
         return GameContext.getLabel("EDIT_WEIGHTS");
     }
 
-    private void initUI()
+    protected JComponent createDialogContent()
     {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout( new BoxLayout( mainPanel, BoxLayout.Y_AXIS ) );
 
         JLabel instructLabel = new JLabel( GameContext.getLabel("EDIT_WTS_BELOW") );
-        JPanel weightsPanel_=createWeightsPanel( weights_ );
+        weightsPanel_= createWeightsPanel();
+        initWeightsPanel();
         JScrollPane scrollPane_=new JScrollPane( weightsPanel_ );
 
         mainPanel.add( instructLabel );
         mainPanel.add( scrollPane_ );
         mainPanel.add( createButtonsPanel() );
 
-        getContentPane().add( mainPanel );
-        pack();
+        return mainPanel;
     }
 
     protected JPanel createButtonsPanel()
@@ -79,12 +81,16 @@ class EditWeightsDialog extends OptionsDialog
         return buttonsPanel;
     }
 
-    private JPanel createWeightsPanel( ParameterArray weights )
+    private JPanel createWeightsPanel()
     {
         JPanel p = new JPanel();
         p.setLayout( new BoxLayout( p, BoxLayout.Y_AXIS ) );
         p.setBorder( BorderFactory.createEtchedBorder() );
-        int len = weights.size();
+        return p;
+    }
+
+    private void initWeightsPanel() {
+        int len = weights_.size();
         weightFields_ = new JTextField[len];
 
         final FlowLayout fl = new FlowLayout();
@@ -102,10 +108,9 @@ class EditWeightsDialog extends OptionsDialog
             weightPanel.add( lab );
             weightPanel.add( weightFields_[i] );
             //weightPanel.setBorder(BorderFactory.createRaisedBevelBorder());
-            p.add( weightPanel );
+            weightsPanel_.add( weightPanel );
         }
-        p.add( Box.createVerticalGlue() ); // fill extra space at the bottom
-        return p;
+        weightsPanel_.add( Box.createVerticalGlue() ); // fill extra space at the bottom
     }
 
     private void ok()
@@ -127,15 +132,14 @@ class EditWeightsDialog extends OptionsDialog
     }
 
 
+    @Override
     public void actionPerformed( ActionEvent e )
     {
+        super.actionPerformed(e);
         Object source = e.getSource();
         if ( source == okButton_ ) {
             ok();
             dispose();
-        }
-        else if ( source == cancelButton_ ) {
-            cancel();
         }
     }
 }

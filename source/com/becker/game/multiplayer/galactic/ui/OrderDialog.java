@@ -22,10 +22,8 @@ import java.util.List;
  * @author Barry Becker
  */
 public final class OrderDialog extends OptionsDialog
-                               implements ActionListener, ItemListener
+                                                  implements ActionListener, ItemListener
 {
-    private GalacticPlayer player_;
-
     private GradientButton okButton_;
 
     private JComboBox originCombo_;
@@ -33,6 +31,7 @@ public final class OrderDialog extends OptionsDialog
 
     private JLabel availableShips_;
     private NumberInput numShips_;
+    GalacticPlayer player_;
 
     private int numYearsRemaining_;
 
@@ -46,18 +45,19 @@ public final class OrderDialog extends OptionsDialog
      */
     public OrderDialog(GalacticPlayer player, Map totalOutgoing, int numYearsRemaining)
     {
-        player_ = player;
+
         totalOutgoing_ = totalOutgoing;
         numYearsRemaining_ = numYearsRemaining;
+        player_ = player;
 
-        initUI();
+        showContent();
     }
 
 
     /**
      * ui initialization of the tree control.
      */
-    protected void initUI()
+    protected JComponent createDialogContent()
     {
         JPanel mainPanel = new JPanel();
         setResizable( true );
@@ -67,16 +67,16 @@ public final class OrderDialog extends OptionsDialog
         JPanel buttonsPanel = createButtonsPanel();
 
         // add the form elements
-
         String labelText = GameContext.getLabel("ORIGIN");
-        originCombo_ = createPlanetSelect(player_);
+        originCombo_ = new JComboBox();
         originCombo_.addItemListener(this);
+        initPlanetSelect(originCombo_, player_);
         JPanel originPanel = createComboInputPanel(labelText, originCombo_);
 
         labelText = GameContext.getLabel("DESTINATION");
-        destinationCombo_ = createPlanetSelect(null);
+        destinationCombo_ = new JComboBox();
         JPanel destPanel = createComboInputPanel( labelText, destinationCombo_);
-
+        initPlanetSelect(destinationCombo_, null);
         availableShips_ = new JLabel();
 
         showAvailableShips(getOrigin());
@@ -94,21 +94,20 @@ public final class OrderDialog extends OptionsDialog
         //mainPanel_.add(new JLabel(" "), BorderLayout.SOUTH);
         mainPanel.add(buttonsPanel, BorderLayout.SOUTH);
 
-        getContentPane().add( mainPanel );
-        getContentPane().repaint();
-        pack();
+        return mainPanel;
     }
 
-    private static JComboBox createPlanetSelect(GalacticPlayer player) {
+    private void initPlanetSelect(JComboBox combo, GalacticPlayer player) {
         // if player is null return a combo with all planets
-
         List planets =  Galaxy.getPlanets(player);
         String sPlanets[] = new String[planets.size()];
         for (int i=0; i<planets.size(); i++)  {
             Planet planet = (Planet)planets.get(i);
             sPlanets[i] = Character.toString(planet.getName());
         }
-        return new JComboBox(sPlanets);
+        ComboBoxModel comboModel = new DefaultComboBoxModel(sPlanets);
+        combo.setModel(comboModel);
+       
     }
 
     /**
@@ -128,6 +127,7 @@ public final class OrderDialog extends OptionsDialog
         return buttonsPanel;
     }
 
+    @Override
     public String getTitle()
     {
         return GameContext.getLabel("MAKE_ORDER");

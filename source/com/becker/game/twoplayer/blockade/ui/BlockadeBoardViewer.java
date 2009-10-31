@@ -7,10 +7,11 @@ import com.becker.game.twoplayer.blockade.*;
 import com.becker.game.twoplayer.common.ui.*;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  *  This class takes a BlockadeController as input and displays the
@@ -19,13 +20,15 @@ import java.util.List;
  *
  *  @author Barry Becker
  */
-public class BlockadeBoardViewer extends AbstractTwoPlayerBoardViewer implements MouseMotionListener
+public class BlockadeBoardViewer extends AbstractTwoPlayerBoardViewer
+                                                          implements MouseMotionListener
 {
     /** this becomes true when the player needs to place a wall instead of a piece during his turn.  */
     private boolean wallPlacingMode_ = false;
 
     private BlockadeMove currentMove_ = null;
-    // becomes true if the player has placed his pawn on an opponent base.
+
+    /** becomes true if the player has placed his pawn on an opponent base. */
     private boolean hasWon_ = false;
 
 

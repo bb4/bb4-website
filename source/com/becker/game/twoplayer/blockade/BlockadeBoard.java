@@ -155,7 +155,7 @@ public class BlockadeBoard extends TwoPlayerBoard
          BlockadeBoardPosition pos = (BlockadeBoardPosition)position;
          int fromRow = pos.getRow();
          int fromCol = pos.getCol();
-       
+
          BlockadeBoardPosition westPos = pos.getNeighbor(Direction.WEST, this); 
          BlockadeBoardPosition eastPos = pos.getNeighbor(Direction.EAST, this);  
          BlockadeBoardPosition northPos = pos.getNeighbor(Direction.NORTH, this); 

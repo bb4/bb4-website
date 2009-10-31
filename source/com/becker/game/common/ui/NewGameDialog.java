@@ -5,7 +5,6 @@ import com.becker.ui.components.GradientButton;
 import com.becker.ui.dialogs.OptionsDialog;
 import com.becker.game.common.*;
 import com.becker.game.common.online.ui.*;
-import com.becker.ui.*;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -26,7 +25,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
     protected GameController controller_;
 
     /** contains potentially 2 tabs that shows options for creating a new game, or playing online */
-    protected final JTabbedPane tabbedPanel_ = new JTabbedPane();
+    protected JTabbedPane tabbedPanel_;
 
     protected JPanel playLocalPanel_;
     protected OnlineGameManagerPanel playOnlinePanel_;
@@ -35,23 +34,26 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
     protected NumberInput colSizeField_;
     protected JTextField openFileField_;
 
-    protected final GradientButton startButton_ = new GradientButton();
+    protected GradientButton startButton_;
 
     // the options get set directly on the game controller and viewer that are passed in
     protected final Board board_;
     protected final GameViewable viewer_;
 
 
-    // constructor
+    /**
+     *  constructor
+     */
     public NewGameDialog( JFrame parent, GameViewable viewer)
     {
         super( parent );
         controller_ = viewer.getController();
         board_ = controller_.getBoard();
         viewer_ = viewer;
+        showContent();
     }
 
-    protected void initUI()
+    protected JComponent createDialogContent()
     {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout( new BorderLayout() );
@@ -61,6 +63,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
         JPanel buttonsPanel = createButtonsPanel();
 
         // add the tabs
+        tabbedPanel_ = new JTabbedPane();
         tabbedPanel_.add( GameContext.getLabel("NEW_GAME"), playLocalPanel_ );
         tabbedPanel_.setToolTipTextAt( 0, GameContext.getLabel("NEW_GAME_TIP") );
         tabbedPanel_.addChangeListener(this);
@@ -68,8 +71,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
         mainPanel.add( tabbedPanel_, BorderLayout.CENTER );
         mainPanel.add( buttonsPanel, BorderLayout.SOUTH );
 
-        this.getContentPane().add( mainPanel );
-        this.pack();
+        return mainPanel;
     }
 
     protected OnlineGameManagerPanel createPlayOnlinePanel() {
@@ -101,6 +103,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
     {
         JPanel buttonsPanel = new JPanel( new FlowLayout() );
 
+        startButton_ = new GradientButton();
         initBottomButton( startButton_, GameContext.getLabel("START_GAME"), GameContext.getLabel("START_GAME_TIP") );
         initBottomButton( cancelButton_, GameContext.getLabel("CANCEL"), GameContext.getLabel("NGD_CANCEL_TIP") );
 
@@ -128,6 +131,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
         return null;
     }
 
+    @Override
     public String getTitle()
     {
         return GameContext.getLabel("NEW_GAME_DLG_TITLE");
@@ -200,21 +204,21 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
     /**
      * Called when one of the buttons at the bottom pressed
      */
+    @Override
     public void actionPerformed( ActionEvent e )
     {
+        super.actionPerformed(e);
         Object source = e.getSource();
 
         if ( source == startButton_ ) {
             ok();
-        }
-        else if ( source == cancelButton_ ) {
-            cancel();
         }
     }
 
     /**
      * cancel button pressed
      */
+    @Override
     protected void cancel()
     {
         // You are only allowed to participate in only games when the dialog is open.
@@ -248,6 +252,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
     /**
      * If the window gets closed, then the player has stood up from his table if online.
      */
+    @Override
     protected void processWindowEvent( WindowEvent e )
     {
         if ( e.getID() == WindowEvent.WINDOW_CLOSING ) {

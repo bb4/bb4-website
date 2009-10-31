@@ -49,7 +49,7 @@ public abstract class GameBoardViewer extends JPanel
 
     protected final Cursor waitCursor_ = new Cursor( Cursor.WAIT_CURSOR );
     protected static Cursor origCursor_ = null;
-    protected Frame parent_ = null;
+    protected JFrame parent_ = null;
 
 
     /**
@@ -73,7 +73,7 @@ public abstract class GameBoardViewer extends JPanel
         addGameChangedListener(this);
     }
 
-    public void setParentFrame(Frame parent) {
+    public void setParentFrame(JFrame parent) {
         parent_ = parent;
     }
 

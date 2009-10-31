@@ -1,72 +1,55 @@
 package com.becker.puzzle.adventure.ui;
 
-import com.becker.ui.GUIUtil;
 import com.becker.ui.components.GradientButton;
-import java.awt.AWTEvent;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import javax.swing.BorderFactory;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
 import com.becker.puzzle.adventure.Story;
+import com.becker.ui.dialogs.AbstractDialog;
+import java.awt.BorderLayout;
+import javax.swing.JComponent;
+import javax.swing.JTextArea;
 
 /**
  *
  * @author Barry Becker
  */
-public class StoryEditorDialog extends JDialog implements ActionListener {
-
-
-    /** there is always a cancel button so it is included here. */
-    protected GradientButton cancelButton_ = new GradientButton();
-    protected boolean canceled_ = false;
+public class StoryEditorDialog extends AbstractDialog
+                                                  implements ActionListener {
 
     /** click this when the password has been entered. */
-     protected GradientButton okButton_ = new GradientButton();
+    protected GradientButton okButton_ = new GradientButton();
 
-
-     private Story story_;
+    /** The story to edit */
+    private Story story_;
 
     public StoryEditorDialog(Story story) {
-      
+
         story_ = story;
 
-        commonInit();
-    }
-
-
-    /**
-     * initiallize the dialogs ui
-     */
-    public void commonInit()
-    {
-        enableEvents( AWTEvent.WINDOW_EVENT_MASK );
-        //this.setLocationRelativeTo( parent_ );
         this.setResizable(true);
-        setTitle("Enter the top secret password");
-
+        setTitle("Story Editor");
         this.setModal( true );
-
-        pack();
+        showContent();
     }
 
 
-    /**
-     * initialize one of the buttons that go at the bottom of the dialog
-     * typically this is something like ok, cancel, start, ...
-     */
-    protected void initBottomButton( GradientButton bottomButton, String buttonText, String buttonToolTip )
-    {
-        bottomButton.setText( buttonText );
-        bottomButton.setToolTipText( buttonToolTip );
-        bottomButton.addActionListener( this );
-        bottomButton.setPreferredSize( new Dimension( 140, 25 ) );
-        bottomButton.setMinimumSize( new Dimension( 50, 25 ) );
+    protected JComponent createDialogContent() {
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.setSize(new Dimension(800, 1200));
+        JTextArea text1 = new JTextArea();
+        text1.setText("asjfalksjf ;lksj flsaj flkdsaj lksadj flksadj flksa;j flkdsajf lkdsaj slda;kjsadkl slkdaj fds");
+        JTextArea text2 = new JTextArea();
+        JTextArea text3 = new JTextArea();
+
+        mainPanel.add(text1, BorderLayout.NORTH);
+        mainPanel.add(text2, BorderLayout.CENTER);
+        mainPanel.add(text3, BorderLayout.SOUTH);
+
+        return mainPanel;
     }
 
     /**
@@ -84,26 +67,10 @@ public class StoryEditorDialog extends JDialog implements ActionListener {
         return buttonsPanel;
     }
 
-     /**
-     * @return true if the dialog is canceled
-     */
-    public boolean showDialog()
-    {
-        canceled_ = false;
-        //if (parent_ != null)  {
-        //    this.setLocationRelativeTo( parent_ );
-        //}
-
-        this.setVisible( true );
-        this.toFront();
-        this.pack();
-
-        return canceled_;
-    }
 
     public void actionPerformed( ActionEvent e )
     {
-
+        super.actionPerformed(e);
         Object source = e.getSource();
 
         if ( source == okButton_ ) {
@@ -111,34 +78,5 @@ public class StoryEditorDialog extends JDialog implements ActionListener {
                 JOptionPane.showMessageDialog( null,
                         "Done editing!", "Info", JOptionPane.INFORMATION_MESSAGE );
         }
-        else if ( source == cancelButton_ ) {
-            cancel();
-        }
     }
-
-    /**
-     *  If the user clicks the X in the upper right, its the same as pressing cancel
-     */
-    protected void processWindowEvent( WindowEvent e )
-    {
-        if ( e.getID() == WindowEvent.WINDOW_CLOSING ) {
-            cancel();
-        }
-        super.processWindowEvent( e );
-    }
-
-    protected static Border createMarginBorder()
-    {
-        return BorderFactory.createEmptyBorder(3, 3, 3, 3);
-    }
-
-    /**
-     * cancel button pressed
-     */
-    protected void cancel()
-    {
-        canceled_ = true;
-        this.setVisible( false );
-    }
-
 }

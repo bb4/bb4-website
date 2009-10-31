@@ -5,7 +5,6 @@ import com.becker.ui.dialogs.OptionsDialog;
 import com.becker.game.common.*;
 import com.becker.game.multiplayer.galactic.*;
 import com.becker.game.multiplayer.galactic.player.*;
-import com.becker.ui.*;
 import com.becker.sound.MusicMaker;
 
 import javax.swing.*;
@@ -56,19 +55,19 @@ final class BattleDialog extends OptionsDialog
      * @param battle the simulation
      * @param viewer send in the viewer so we can give feedbak about the battle while it is occurring
      */
-    BattleDialog( Frame parent, BattleSimulation battle, GalaxyViewer viewer )
+    BattleDialog( JFrame parent, BattleSimulation battle, GalaxyViewer viewer )
     {
         super( parent );
         this.setResizable(false);
-        //if (!GUIUtil.isStandAlone())
-        //    this.setAlwaysOnTop(true);   // causes access control exception in applet
+        this.setModal(true);
+     
         battle_ = battle;
         viewer_ = viewer;
-        initUI();
-        this.setModal(true);
+        showContent();
     }
 
 
+    @Override
     public String getTitle()
     {
         return "Battle Sequence";
@@ -77,7 +76,7 @@ final class BattleDialog extends OptionsDialog
     /**
      * ui initialization of the tree control.
      */
-    protected void initUI()
+    protected JComponent createDialogContent()
     {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout( new BorderLayout() );
@@ -112,14 +111,14 @@ final class BattleDialog extends OptionsDialog
         mainPanel.add(descriptionLabel_, BorderLayout.NORTH);
         mainPanel.add(canvasPanel, BorderLayout.CENTER);
         mainPanel.add( buttonsPanel, BorderLayout.SOUTH );
-        getContentPane().add( mainPanel );
 
         viewer_.showPlanetUnderAttack(battle_.getPlanet(), true);
 
         int numAttackShips = battle_.getOrder().getFleetSize();
         int numDefendShips = battle_.getPlanet().getNumShips();
         this.refresh(numAttackShips, numDefendShips);
-        pack();
+
+        return mainPanel;
     }
 
 
@@ -144,6 +143,7 @@ final class BattleDialog extends OptionsDialog
      * called when one of the buttons at the bottom has been pressed.
      * @param e
      */
+    @Override
     public void actionPerformed( ActionEvent e )
     {
 
@@ -166,7 +166,6 @@ final class BattleDialog extends OptionsDialog
         }
     }
 
-
     /**
      * refresh the game tree.
      */
@@ -174,7 +173,6 @@ final class BattleDialog extends OptionsDialog
     {
         canvas_.setFleetSizes(attackers, defenders);
     }
-
 
 
     /**
@@ -260,6 +258,7 @@ final class BattleDialog extends OptionsDialog
          }
 
 
+        @Override
         public void paint(Graphics g) {
 
             if (g == null)
@@ -298,10 +297,7 @@ final class BattleDialog extends OptionsDialog
             g2.drawString(Integer.toString(numShips), LEFT_IMAGE_MARGIN  + numShips + 15, yPos+22);
             if (numShips > 0)
                 g2.drawRect(LEFT_IMAGE_MARGIN, yPos + 5, numShips, BAR_THICKNESS);
-
         }
-
     }
-
 }
 

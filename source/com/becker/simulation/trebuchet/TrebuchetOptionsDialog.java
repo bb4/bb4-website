@@ -2,7 +2,6 @@ package com.becker.simulation.trebuchet;
 
 import com.becker.ui.components.NumberInput;
 import com.becker.simulation.common.*;
-import com.becker.ui.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,7 +26,7 @@ class TrebuchetOptionsDialog extends NewtonianSimOptionsDialog implements Action
 
 
     // constructor
-    TrebuchetOptionsDialog( Frame parent, TrebuchetSimulator simulator ) {
+    TrebuchetOptionsDialog( JFrame parent, TrebuchetSimulator simulator ) {
         super( parent, simulator );
     }
 
@@ -42,10 +41,8 @@ class TrebuchetOptionsDialog extends NewtonianSimOptionsDialog implements Action
         trebParamPanel.setBorder(
                 BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), "Trebuchet Parameters" ) );
 
-
         TrebuchetSimulator simulator = (TrebuchetSimulator) getSimulator();
         Trebuchet treb = simulator.getTrebuchet();
-
 
         counterWeightLeverlLengthField_ =
                 new NumberInput( "Counter Weight Lever Length (1.0 short - 3.0 long):  ",
@@ -78,8 +75,6 @@ class TrebuchetOptionsDialog extends NewtonianSimOptionsDialog implements Action
                                  "This controls length of the lever arm from the fulcrum to the sling attachment point.",
                                  1.0, 5.0, false);
 
-
-
         slingReleaseAngleField_ =
                 new NumberInput( "Sling Release Angle  (0.0 small - PI/2 large):  ",
                                  treb.getSlingReleaseAngle(),
@@ -100,6 +95,7 @@ class TrebuchetOptionsDialog extends NewtonianSimOptionsDialog implements Action
         return customParamPanel;
     }
 
+    @Override
     protected void ok() {
 
         super.ok();

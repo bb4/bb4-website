@@ -4,6 +4,7 @@ import com.becker.ui.components.GradientButton;
 import com.becker.game.common.*;
 import com.becker.ui.*;
 
+import com.becker.ui.dialogs.AbstractDialog;
 import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
@@ -15,7 +16,7 @@ import java.text.*;
  *
  * @author Barry Becker
  */
-public final class HelpDialog extends JDialog implements ActionListener
+public final class HelpDialog extends AbstractDialog implements ActionListener
 {
 
     private final GradientButton okButton_ = new GradientButton();
@@ -36,25 +37,20 @@ public final class HelpDialog extends JDialog implements ActionListener
      * @param comments supplementary info
      * @param text game specific instructions to display.
      */
-    public HelpDialog( Frame parent, String gameName, String comments, String text)
+    public HelpDialog( JFrame parent, String gameName, String comments, String text)
     {
         super( parent );
 
         gameName_ = gameName;
         comments_ = comments;
         overviewText_ = text;
-
-        enableEvents( AWTEvent.WINDOW_EVENT_MASK );
-        initGUI();
-
-        this.setLocationRelativeTo( parent );
-        pack();
+        showContent();
     }
 
     /**
      * builds the ui.
      */
-    private void initGUI()
+    protected JComponent createDialogContent()
     {
         Object[] arg = {gameName_};
         this.setTitle( MessageFormat.format(GameContext.getLabel("ABOUT"), arg));
@@ -71,7 +67,6 @@ public final class HelpDialog extends JDialog implements ActionListener
         logoInsetsPanel.setLayout( flowLayout1 );
         logoInsetsPanel.setBorder( new EmptyBorder( 10, 10, 10, 10 ) );
 
-
         okButton_.setText( GameContext.getLabel("OK") );
         okButton_.addActionListener( this );
 
@@ -85,7 +80,6 @@ public final class HelpDialog extends JDialog implements ActionListener
 
         logoInsetsPanel.add( logo, null );
         summaryPanel.add( logoInsetsPanel, BorderLayout.WEST );
-        this.getContentPane().add( overviewPanel, null );
 
         overviewPanel.add( overviewTextArea, BorderLayout.CENTER );
 
@@ -93,6 +87,8 @@ public final class HelpDialog extends JDialog implements ActionListener
         overviewPanel.add( bottomButtonPanel, BorderLayout.SOUTH );
         overviewPanel.add( summaryPanel, BorderLayout.NORTH );
         //overviewPanel.setMaximumSize(new Dimension(500,800));
+
+        return overviewPanel;
     }
 
     /**
@@ -145,22 +141,11 @@ public final class HelpDialog extends JDialog implements ActionListener
         return summaryPanel;
     }
 
-    /*
-    protected void processWindowEvent( WindowEvent e )
-    {
-        if ( e.getID() == WindowEvent.WINDOW_CLOSING ) {
-            cancel();
-        }
-        super.processWindowEvent( e );
-    }*/
 
-    private void cancel()
-    {
-        dispose();
-    }
-
+    @Override
     public void actionPerformed( ActionEvent e )
     {
+        super.actionPerformed(e);
         if ( e.getSource() == okButton_ ) {
             cancel();
         }

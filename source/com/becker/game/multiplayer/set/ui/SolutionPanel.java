@@ -1,9 +1,7 @@
 package com.becker.game.multiplayer.set.ui;
 
 import com.becker.game.multiplayer.set.*;
-import com.becker.game.common.*;
 import com.becker.ui.*;
-import com.becker.common.*;
 
 import javax.swing.*;
 import java.util.*;
@@ -18,7 +16,6 @@ import java.awt.geom.Point2D;
 public class SolutionPanel extends JPanel
                            implements MouseMotionListener{
 
-
     private List<Card> sets_;
 
     private List<Card> currentlyHighlightedSet_;
@@ -27,7 +24,9 @@ public class SolutionPanel extends JPanel
 
     private static final Color BACKGROUND_COLOR = GUIUtil.UI_COLOR_SECONDARY3;
 
-    // Constructor.
+    /**
+     * Constructor.
+     */
     SolutionPanel(List<Card> sets, SetGameViewer viewer)
     {
         assert (sets != null);
@@ -51,6 +50,7 @@ public class SolutionPanel extends JPanel
         return new Dimension(cardWidth, (int) (cardWidth * CardRenderer.CARD_HEIGHT_RAT));
     }
 
+    @Override
     public Dimension getPreferredSize() {
         return new Dimension(300, 800);
     }

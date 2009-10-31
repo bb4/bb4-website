@@ -25,6 +25,16 @@ public class NumberInput extends JPanel
 
 
     /**
+     * Often the iniial value cannot be set when initializing the content of a dialog.
+     * This uses a default of 0 until the real default can be set with setInitialValue.
+     * @param labelText label for the number input element
+     */
+    public NumberInput( String labelText)
+    {
+       this( labelText, 0, null, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
+    }
+
+    /**
      * @param labelText label for the number input element
      * @param initialValue the value to use if nothing else if entered. shows in the ui.
      */
@@ -138,6 +148,11 @@ public class NumberInput extends JPanel
     @Override
     public synchronized void addKeyListener(KeyListener keyListener) {
         getNumberField().addKeyListener(keyListener);
+    }
+
+    public void setInitialValue(double value)
+    {
+        this.initialValue_ = value;
     }
 
     public double getMin() {

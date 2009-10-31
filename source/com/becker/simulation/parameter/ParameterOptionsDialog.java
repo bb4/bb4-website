@@ -10,23 +10,21 @@ import java.awt.*;
  */
 public class ParameterOptionsDialog extends SimulatorOptionsDialog {
 
-
     /** type of distribution function to test.   */
     private JComboBox parameterChoiceField_;
     private JCheckBox showRedistribution_;
-    
-    private ParameterDistributionType paramType;
-    
-    
 
     /**
      * constructor
      */ 
-    public ParameterOptionsDialog( Frame parent, Simulator simulator )
+    public ParameterOptionsDialog( JFrame parent, Simulator simulator )
     {
         super( parent, simulator );
+        ParameterSimulator psim = (ParameterSimulator) getSimulator();
+        showRedistribution_ .setSelected(psim.isShowRedistribution());
     }
 
+    @Override
     public String getTitle()
     {
         return "Parameter Simulation Configuration";
@@ -43,8 +41,8 @@ public class ParameterOptionsDialog extends SimulatorOptionsDialog {
         parameterChoiceField_.setModel(
                 new DefaultComboBoxModel(ParameterDistributionType.values()));
 
-        ParameterSimulator simulator = (ParameterSimulator) getSimulator();
-        showRedistribution_ = new JCheckBox("Show Redistribution", simulator.isShowRedistribution());
+        
+        showRedistribution_ = new JCheckBox("Show Redistribution");
         innerPanel.add( parameterChoiceField_ );
         innerPanel.add(showRedistribution_);
         JPanel fill = new JPanel();
@@ -54,6 +52,7 @@ public class ParameterOptionsDialog extends SimulatorOptionsDialog {
         return paramPanel;
     }
 
+    @Override
     protected void ok()
     {
         super.ok();

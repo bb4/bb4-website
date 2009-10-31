@@ -64,6 +64,7 @@ public class GalacticPlayerTable extends PlayerTable implements TableModelListen
         setRowHeight(ROW_HEIGHT);
     }
 
+
     protected void updateColumnMeta(TableColumnMeta[] columnMeta) {
 
         columnMeta[ICON_INDEX].setPreferredWidth(48);

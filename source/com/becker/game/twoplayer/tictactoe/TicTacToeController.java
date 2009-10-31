@@ -37,6 +37,10 @@ public class TicTacToeController extends PenteController
         moveEvaluator_ = new MoveEvaluator((TwoPlayerBoard)board_, new TicTacToePatterns());
     }
 
+    protected int getWinRunLength() {
+        return TicTacToePatterns.WIN_RUN_LENGTH;
+    }
+
     @Override
     public Searchable getSearchable() {
          return new TicTacToeSearchable();

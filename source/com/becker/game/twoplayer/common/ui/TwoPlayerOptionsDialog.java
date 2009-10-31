@@ -6,8 +6,6 @@ import com.becker.game.common.*;
 import com.becker.game.common.ui.GameOptionsDialog;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
-import com.becker.game.twoplayer.common.search.*;
-import com.becker.ui.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,7 +28,7 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
     private JCheckBox quiescenceCheckbox_;
     private JCheckBox gameTreeCheckbox_;
     private JCheckBox computerAnimationCheckbox_;
-
+    private JLabel treeUpperBound_;
 
     // constructor
     public TwoPlayerOptionsDialog( JFrame parent, GameController controller )
@@ -41,7 +39,7 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
 
     private TwoPlayerController get2PlayerController()
     {
-        return (TwoPlayerController)controller_;
+        return (TwoPlayerController) controller_;
     }
 
     public GameOptions getOptions() {
@@ -62,6 +60,7 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
     /**
      * @return algorithm tab panel.
      */
+    @Override
     protected JPanel createControllerParamPanel()
     {
         TwoPlayerOptions options = get2PlayerController().getTwoPlayerOptions();
@@ -75,7 +74,6 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
         JLabel label = new JLabel( "     " );  // initial space
         label.setAlignmentX( Component.LEFT_ALIGNMENT );
         p.add( label );
-
 
         // radio buttons for which search algorithm to use
         JLabel algorithmLabel = new JLabel( GameContext.getLabel("SELECT_SEARCH_ALGORITHM") );
@@ -138,6 +136,7 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
     /**
      * @return debug params tab panel
      */
+    @Override
     protected JPanel createDebugParamPanel()
     {
         JPanel p = createDebugOptionsPanel();
@@ -167,10 +166,10 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
     }
 
 
-
     /**
      * called when a button has been pressed
      */
+    @Override
     public void actionPerformed( ActionEvent e )
     {
         Object source = e.getSource();
@@ -196,6 +195,7 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
     /**
      * Invoked when a radio button has changed its selection state.
      */
+    @Override
     public void itemStateChanged( ItemEvent e )
     {
         super.itemStateChanged(e);
@@ -226,6 +226,7 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
             treeBound_ = treeBound;
         }
 
+        @Override
         public void keyPressed( KeyEvent evt )
         {
             treeBound_.setText( "" + calcTreeUpperBound( lookAheadField_.getIntValue(),  bestPercentageField_.getIntValue()) );

@@ -3,7 +3,6 @@ package com.becker.simulation.common;
 import com.becker.ui.components.NumberInput;
 import com.becker.ui.components.GradientButton;
 import com.becker.ui.dialogs.OptionsDialog;
-import com.becker.ui.*;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -19,8 +18,8 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog
     private Simulator simulator_;
 
     // rendering option controls
-    private JCheckBox antialiasingCheckbox_ = null;
-    private JCheckBox recordAnimationCheckbox_ = null;
+    private JCheckBox antialiasingCheckbox_;
+    private JCheckBox recordAnimationCheckbox_;
 
     // aniumation param options controls
     private NumberInput timeStepField_;
@@ -33,20 +32,20 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog
     private GradientButton startButton_ = new GradientButton();
 
     // constructor
-    public SimulatorOptionsDialog( Frame parent, Simulator simulator )
+    public SimulatorOptionsDialog( JFrame parent, Simulator simulator )
     {
         super( parent );
         simulator_ = simulator;
-
-        initUI();
+        showContent();
     }
+
 
     public Simulator getSimulator()
     {
         return simulator_;
     }
 
-    protected void initUI()
+    protected JComponent createDialogContent()
     {
         setResizable( true );
         JPanel mainPanel = new JPanel();
@@ -59,32 +58,32 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog
         JPanel customParamPanel = createCustomParamPanel();
 
         // contains the two tabls : options for creating a new game, or loading a saved game
-        JTabbedPane tabbedPanel = new JTabbedPane();
+         JTabbedPane tabbedPanel = new JTabbedPane();
         tabbedPanel.add( "Rendering", renderingParamPanel );
-        tabbedPanel.setToolTipTextAt( 0, "change the rendering options for the " +
-                                         simulator_.getName() + " simulation" );
+        tabbedPanel.setToolTipTextAt( 0, "change the rendering options for the simulation" );
         if (globalPhysicalParamPanel != null) {
             tabbedPanel.add( "Animation", globalPhysicalParamPanel );
+            tabbedPanel.setToolTipTextAt( 0,
+                    "change the animation and physical constants controlling the simulation" );
         }
-        tabbedPanel.setToolTipTextAt( 0, "change the animation and physical constants controlling the " +
-                                         simulator_.getName() + " in the simulation" );
-        tabbedPanel.add( simulator_.getName() + " Specific", customParamPanel );
-        tabbedPanel.setToolTipTextAt( 0, "change the custom options for the " + simulator_.getName() + " simulation" );
+        
+        tabbedPanel.add( "Custom", customParamPanel );
+        tabbedPanel.setToolTipTextAt( tabbedPanel.getTabCount()-1,
+                "change the custom options for the simulation" );
         tabbedPanel.setSelectedComponent(customParamPanel);
 
         mainPanel.add( tabbedPanel, BorderLayout.CENTER );
         mainPanel.add( buttonsPanel, BorderLayout.SOUTH );
 
-        this.getContentPane().add( mainPanel );
-        this.getContentPane().repaint();
-        this.pack();
+        return mainPanel;
     }
+
 
     protected JPanel createButtonsPanel()
     {
         JPanel buttonsPanel = new JPanel( new FlowLayout() );
 
-        initBottomButton( startButton_, "Done", "Use these selections when running " + simulator_.getName() + '.' );
+        initBottomButton( startButton_, "Done", "Use these selections when running the simulation." );
         initBottomButton( cancelButton_, "Cancel", "Resume the current simulation without changing the options" );
 
         buttonsPanel.add( startButton_ );
@@ -114,14 +113,14 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog
         textInputsPanel.setBorder(
                 BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), "Animation Options" ) );
 
-        antialiasingCheckbox_ = new JCheckBox( "Use Antialiasing", simulator_.getAntialiasing() );
+        antialiasingCheckbox_ = new JCheckBox("Use Antialiasing", simulator_.getAntialiasing());
         antialiasingCheckbox_.setToolTipText( "this toggle the use of antialising when rendering lines." );
         antialiasingCheckbox_.addActionListener( this );
         togglesPanel.add( antialiasingCheckbox_ );
 
         addAdditionalToggles(togglesPanel) ;
 
-        recordAnimationCheckbox_ = new JCheckBox( "Record Animation Frames", simulator_.getRecordAnimation() );
+        recordAnimationCheckbox_ = new JCheckBox( "Record Animation Frames", simulator_.getRecordAnimation());
         recordAnimationCheckbox_.setToolTipText( "Record each animation frame to a unique file" );
         recordAnimationCheckbox_.addActionListener( this );
         togglesPanel.add( recordAnimationCheckbox_ );
@@ -141,7 +140,7 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog
 
         scaleField_ =
                 new NumberInput( "Geometry Scale (1.0 = standard size):  ", simulator_.getScale(),
-                                 "This controls the size of the " + simulator_.getName(),
+                                 "This controls the size of the objects in the simulation",
                                  0.01, 1000, false);
         scaleField_.setEnabled( false );
         textInputsPanel.add( scaleField_ );

@@ -16,17 +16,9 @@ class FluidOptionsDialog extends NewtonianSimOptionsDialog
                           implements ActionListener
 {
 
-    // snake param options controls
-    private JTextField waveSpeedField_;
-    private JTextField waveAmplitudeField_;
-    private JTextField wavePeriodField_;
-    private JTextField massScaleField_;
-    private JTextField springKField_;
-    private JTextField springDampingField_;
-
 
     // constructor
-    FluidOptionsDialog( Frame parent, FluidSimulator simulator ) {
+    FluidOptionsDialog( JFrame parent, FluidSimulator simulator ) {
         super( parent, simulator );
     }
 
@@ -62,9 +54,6 @@ class FluidOptionsDialog extends NewtonianSimOptionsDialog
 
         // set the snake params
         FluidSimulator simulator = (FluidSimulator) getSimulator();
-
-        //Double waveSpeed = new Double( waveSpeedField_.getText() );
-        //simulator.getSnake().setWaveSpeed( waveSpeed );
     }
 
 }

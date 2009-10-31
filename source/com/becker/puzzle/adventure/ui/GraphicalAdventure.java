@@ -47,9 +47,7 @@ public final class GraphicalAdventure extends ApplicationApplet
         frame.setJMenuBar(menubar);
         frame.invalidate();
         frame.validate();
-
     }
-
 
     /**
      * Build the user interface with parameter input controls at the top.
@@ -138,7 +136,7 @@ public final class GraphicalAdventure extends ApplicationApplet
        
         Story story = new Story(document);
 
-        GraphicalAdventure adventure = new GraphicalAdventure(story);
+        new GraphicalAdventure(story);
     }
 }
 

@@ -37,6 +37,7 @@ class GalacticOptionsDialog extends MultiGameOptionsDialog
     /**
      * @return galactic game optiosn tab panel.
      */
+    @Override
     protected JComponent[] getControllerParamComponents()
     {
         GalacticOptions options = (GalacticOptions)controller_.getOptions();

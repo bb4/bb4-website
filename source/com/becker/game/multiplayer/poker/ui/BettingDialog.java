@@ -6,7 +6,6 @@ import com.becker.game.common.*;
 import com.becker.game.multiplayer.common.ui.ActionDialog;
 import com.becker.game.multiplayer.poker.*;
 import com.becker.game.multiplayer.poker.player.*;
-import com.becker.ui.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -137,8 +136,8 @@ public final class BettingDialog extends ActionDialog
 
     public void showRaiseDialog() {
         // open a dlg to get an order
-        PokerController pc = (PokerController)gc_;
-        PokerOptions options = (PokerOptions)gc_.getOptions();
+        PokerController pc = (PokerController)controller_;
+        PokerOptions options = (PokerOptions)controller_.getOptions();
         RaiseDialog raiseDialog =
                 new RaiseDialog((PokerPlayer)player_, callAmount_, pc.getAllInAmount(),
                                 options.getMaxAbsoluteRaise(), options.getAnte());

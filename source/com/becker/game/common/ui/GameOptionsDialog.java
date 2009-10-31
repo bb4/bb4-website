@@ -5,7 +5,6 @@ import com.becker.ui.components.GradientButton;
 import com.becker.ui.components.ColorInputPanel;
 import com.becker.ui.dialogs.OptionsDialog;
 import com.becker.game.common.*;
-import com.becker.ui.*;
 import com.becker.common.ILog;
 
 import javax.swing.*;
@@ -30,34 +29,37 @@ public abstract class GameOptionsDialog extends OptionsDialog
     private static final long serialVersionUID = 0L;
 
     // debug params
-    protected NumberInput dbgLevelField_ = null;
-    protected final JTextField logFileField_ = null;
-    protected JRadioButton consoleOutputButton_ = null;  // output radio button group
-    protected JRadioButton windowOutputButton_ = null;  // output radio button group
-    protected JRadioButton fileOutputButton_ = null;  // output radio button group
+    protected NumberInput dbgLevelField_;
+    protected JTextField logFileField_;
+    protected JRadioButton consoleOutputButton_;  // output radio button group
+    protected JRadioButton windowOutputButton_;  // output radio button group
+    protected JRadioButton fileOutputButton_;  // output radio button group
     protected int logDestination_;
-    protected final GradientButton logFileButton_ = null;
-    protected JCheckBox profileCheckbox_ = null;
+    protected GradientButton logFileButton_;
+    protected JCheckBox profileCheckbox_;
 
     // look and feel params
-    protected JCheckBox soundCheckbox_ = null;
-    protected JCheckBox imagesCheckbox_ = null;
-    protected JButton boardColorButton_ = null;
-    protected JButton gridColorButton_ = null;
+    protected JCheckBox soundCheckbox_;
+    protected JCheckBox imagesCheckbox_;
+    protected JButton boardColorButton_;
+    protected JButton gridColorButton_;
 
-    protected JComboBox localeComboBox_ = null;
+    protected JComboBox localeComboBox_;
 
-    protected GradientButton okButton_ = new GradientButton();
+    protected GradientButton okButton_;
 
-    // constructor
+    /**
+     *  constructor
+     */
     public GameOptionsDialog( JFrame parent, GameController controller )
     {
         super(parent);
         controller_ = controller;
-        initUI();
+ 
+        showContent();
     }
 
-    protected void initUI()
+    protected JComponent createDialogContent()
     {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout( new BorderLayout() );
@@ -80,13 +82,10 @@ public abstract class GameOptionsDialog extends OptionsDialog
         mainPanel.add( tabbedPanel, BorderLayout.CENTER );
         mainPanel.add( buttonsPanel, BorderLayout.SOUTH );
 
-        this.getContentPane().add( mainPanel );
-        this.getContentPane().repaint();
-        this.pack();
-
-        this.setLocationRelativeTo(parent_);
+        return mainPanel;
     }
 
+    @Override
     public String getTitle()
     {
         return GameContext.getLabel("GAME_OPTIONS");
@@ -132,6 +131,7 @@ public abstract class GameOptionsDialog extends OptionsDialog
     {
         JPanel buttonsPanel = new JPanel( new FlowLayout() );
 
+        okButton_ =  new GradientButton();
         initBottomButton( okButton_, GameContext.getLabel("OK"), GameContext.getLabel("USE_OPTIONS") );
         initBottomButton( cancelButton_, GameContext.getLabel("CANCEL"), GameContext.getLabel("RESUME") );
 
@@ -360,12 +360,10 @@ public abstract class GameOptionsDialog extends OptionsDialog
      */
     public void actionPerformed( ActionEvent e )
     {
+        super.actionPerformed(e);
         Object source = e.getSource();
         if ( source == okButton_ ) {
             ok();
-        }
-        else if ( source == cancelButton_ ) {
-            cancel();
         }
         else if (source == localeComboBox_) {
             GameContext.log(0, "locale="+localeComboBox_.getSelectedItem());

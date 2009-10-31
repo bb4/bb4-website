@@ -1,18 +1,11 @@
 package com.becker.game.multiplayer.common.ui;
 
 import com.becker.ui.dialogs.OptionsDialog;
-import com.becker.common.*;
-import com.becker.game.common.*;
 import com.becker.game.multiplayer.common.MultiGameController;
 import com.becker.game.multiplayer.common.MultiGamePlayer;
-import com.becker.game.multiplayer.poker.*;
-import com.becker.game.multiplayer.poker.player.*;
-import com.becker.ui.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.text.*;
 
 /**
  * Allow the user to specify a poker action
@@ -22,8 +15,9 @@ public abstract class ActionDialog extends OptionsDialog
 {
     protected MultiGamePlayer player_;
 
-    protected MultiGameController gc_;
+    protected MultiGameController controller_;
 
+    private PlayerLabel playerLabel_;
 
     /**
      * constructor - create the tree dialog.
@@ -31,21 +25,20 @@ public abstract class ActionDialog extends OptionsDialog
      */
     public ActionDialog(MultiGameController gc, Component parent)
     {
-        gc_ = gc;
-        player_ = gc_.getCurrentPlayer();  
-      
+        controller_ = gc;
+        player_ = controller_.getCurrentPlayer();
         Point p = parent.getLocationOnScreen();
         // offset the dlg so the board is visible as a reference
         setLocation((int)(p.getX() + 0.7*getParent().getWidth()),
                                  (int)(p.getY() + getParent().getHeight()/3.0));
-        initUI();
+        showContent();
     }
 
 
     /**
      * ui initialization of the tree control.
      */
-    protected void initUI()
+    protected JComponent createDialogContent()
     {
         setResizable( true );
         JPanel mainPanel = new JPanel();
@@ -62,9 +55,7 @@ public abstract class ActionDialog extends OptionsDialog
         mainPanel.add(instructions, BorderLayout.CENTER);
         mainPanel.add(buttonsPanel, BorderLayout.SOUTH);
 
-        getContentPane().add( mainPanel );
-        getContentPane().repaint();
-        pack();
+        return mainPanel;
     }
 
     protected abstract JPanel createPersonalInfoPanel();
@@ -74,12 +65,13 @@ public abstract class ActionDialog extends OptionsDialog
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createEtchedBorder(), BorderFactory.createEmptyBorder(5,5,5,5)));
-        JPanel playerPanel = createPlayerLabel(player_);
+        playerLabel_ = new PlayerLabel();
+        playerLabel_.setPlayer(player_);
 
         JPanel gameSpecificInstructions = createGameInstructionsPanel();
         
         //panel.setPreferredSize(new Dimension(400, 100));
-        panel.add(playerPanel, BorderLayout.NORTH);
+        panel.add(playerLabel_, BorderLayout.NORTH);
         panel.add(gameSpecificInstructions, BorderLayout.CENTER);
               
         return panel;
@@ -87,24 +79,11 @@ public abstract class ActionDialog extends OptionsDialog
 
     protected abstract JPanel createGameInstructionsPanel();
     
-    public static JPanel createPlayerLabel(Player player) {
-        JPanel p = new JPanel();
-        JPanel swatch = new JPanel();
-        swatch.setPreferredSize(new Dimension(10, 10));
-        swatch.setBackground(player.getColor());
-        JLabel playerLabel = new JLabel(player.getName());
-        p.add(swatch);
-        p.add(playerLabel);
-        return p;
-    }
 
     /**
      *  create the OK/Cancel buttons that go at the bottom.
      */
     protected abstract JPanel createButtonsPanel();
- 
-
-    public abstract String getTitle();
 
 }
 

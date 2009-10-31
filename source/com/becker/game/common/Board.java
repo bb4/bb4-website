@@ -119,7 +119,21 @@ public abstract class Board implements BoardInterface, Cloneable
     public final BoardPosition getPosition( int row, int col )
     {
         if ( row < 1 || row > numRows_ || col < 1 || col > numCols_) {
-            throw new IllegalArgumentException("row ("+row+") or col ("+col+") out of bounds");
+            return null;
+        }
+        return positions_[row][col];
+    }
+
+    /**
+     * returns null if there is no game piece at the position specified.
+     * @return the piece at the specified location. Returns null if there is no piece there.
+     */
+    public final BoardPosition getPositionSafe( int row, int col )
+    {
+        if ( row < 1 || row > numRows_ || col < 1 || col > numCols_) {
+            throw new IllegalArgumentException(
+                    "row ("+row+") or col ("+col+") out of bounds. Legal bounds were row[1, "
+                    + numRows_ + "], col[1," + numCols_ + "]");
         }
         return positions_[row][col];
     }

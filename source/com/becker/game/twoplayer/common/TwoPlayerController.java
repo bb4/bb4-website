@@ -35,9 +35,6 @@ import java.util.List;
 public abstract class TwoPlayerController extends GameController
 {
 
-    // these are the default game constants
-    // they may be modified through the ui (see GameOptionsDialog)
-    // -- these other constants anything
     /** anything greater than this is considered a won game  */
     public static final int WINNING_VALUE = SearchStrategy.WINNING_VALUE;
 

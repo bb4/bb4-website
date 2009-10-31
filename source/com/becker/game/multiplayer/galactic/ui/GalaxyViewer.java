@@ -11,7 +11,6 @@ import com.becker.game.multiplayer.galactic.player.*;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.*;
 import java.util.*;
 import java.util.List;
 
@@ -41,6 +40,7 @@ public class GalaxyViewer extends MultiGameViewer
       * display a dialog at the end of the game showing who won and other relevant
       * game specific information.
       */
+    @Override
      protected void showWinnerDialog()
      {
          //String message = getGameOverMessage();

@@ -20,6 +20,7 @@ public class ChessNewGameDialog extends TwoPlayerNewGameDialog implements Action
         super( parent, viewer );
     }
 
+    @Override
     public final String getTitle()
     {
         return GameContext.getLabel("CHESS_OPTIONS");

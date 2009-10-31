@@ -29,6 +29,7 @@ public final class RaiseDialog extends OptionsDialog
 
     private static final int DEFAULT_RAISE_AMOUNT = 5; // dollars
 
+
     /**
      * constructor - create the tree dialog.
      * @param player
@@ -37,21 +38,21 @@ public final class RaiseDialog extends OptionsDialog
      */
     public RaiseDialog(PokerPlayer player, int callAmount, int allInAmount, int maxRaiseAllowed, int ante)
     {
+        setResizable( true );
         player_ = player;
         callAmount_ = callAmount;
         allInAmount_ = allInAmount;
         maxRaiseAllowed_ = maxRaiseAllowed;
         ante_ = ante;
-        initUI();
+        showContent();
     }
 
 
     /**
      * ui initialization of the tree control.
      */
-    protected void initUI()
+    protected JComponent createDialogContent()
     {
-        setResizable( true );        
         JPanel mainPanel =  new JPanel();
         mainPanel.setLayout( new BorderLayout() );
 
@@ -85,14 +86,14 @@ public final class RaiseDialog extends OptionsDialog
             raiseAmount_ = new NumberInput(GameContext.getLabel("AMOUNT_TO_RAISE2"), DEFAULT_RAISE_AMOUNT);
         }
 
+
         primaryPanel.add(instructionsPanel, BorderLayout.NORTH);
         primaryPanel.add(raiseAmount_, BorderLayout.CENTER);
         mainPanel.add(primaryPanel, BorderLayout.CENTER);
         mainPanel.add(buttonsPanel, BorderLayout.SOUTH);
 
-        getContentPane().add( mainPanel );
-        getContentPane().repaint();
-        pack();
+
+        return mainPanel;
     }
 
 
@@ -113,6 +114,7 @@ public final class RaiseDialog extends OptionsDialog
         return buttonsPanel;
     }
 
+    @Override
     public String getTitle()
     {
         return GameContext.getLabel("MAKE_RAISE");
@@ -123,8 +125,10 @@ public final class RaiseDialog extends OptionsDialog
      * called when one of the buttons at the bottom have been pressed.
      * @param e
      */
+    @Override
     public void actionPerformed( ActionEvent e )
     {
+        super.actionPerformed(e);
         Object source = e.getSource();
         if (source == okButton_) {
             int contrib = callAmount_ + getRaiseAmount();
@@ -143,9 +147,6 @@ public final class RaiseDialog extends OptionsDialog
             else {
                 this.setVisible(false);
             }
-        }
-        else if ( source == cancelButton_ ) {
-            cancel();
         }
         else {
            System.out.println( "actionPerformed source="+source+". not cancel and not ok" );

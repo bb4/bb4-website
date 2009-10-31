@@ -6,7 +6,7 @@ import com.becker.game.common.ui.*;
 import com.becker.game.twoplayer.common.*;
 import com.becker.game.twoplayer.common.search.tree.GameTreeViewable;
 import com.becker.game.twoplayer.common.search.tree.PruneType;
-import com.becker.ui.*;
+import com.becker.ui.dialogs.AbstractDialog;
 import com.becker.ui.legend.*;
 
 import java.awt.BorderLayout;
@@ -18,7 +18,6 @@ import javax.swing.tree.*;
 import java.awt.event.*;
 import java.util.*;
 import java.util.List;
-import java.awt.event.WindowEvent;
 
 /**
  * Draw the entire game tree using a java tree control.
@@ -27,7 +26,7 @@ import java.awt.event.WindowEvent;
  *
  * @author Barry Becker
  */
-public final class GameTreeDialog extends JDialog
+public final class GameTreeDialog extends AbstractDialog
                                implements GameChangedListener, GameTreeViewable,
                                                    MouseMotionListener, TreeExpansionListener
 {
@@ -43,7 +42,6 @@ public final class GameTreeDialog extends JDialog
 
     private GameTreeInfoPanel infoPanel_;
 
-    private static final int ROW_HEIGHT = 11;
     private static final int TREE_WIDTH = 420;
     private static final boolean SHOW_SUCCESSIVE_MOVES  = true;
 
@@ -67,16 +65,6 @@ public final class GameTreeDialog extends JDialog
     {
         super( parent );
         initialize(boardViewer, cellRenderer);
-
-        enableEvents( WindowEvent.WINDOW_EVENT_MASK );
-        try {
-            initUI();
-        } catch (OutOfMemoryError oom) {
-            GameContext.log( 0, "we ran out of memory!" );
-            GameContext.log( 0, GUIUtil.getStackTrace( oom ) );
-            throw oom;
-        }
-        pack();
     }
 
     public synchronized void initialize(AbstractTwoPlayerBoardViewer boardViewer, GameTreeCellRenderer cellRenderer) {
@@ -84,21 +72,22 @@ public final class GameTreeDialog extends JDialog
         controller_ = (TwoPlayerController)boardViewer.getController();
         board_ = controller_.getBoard();
         cellRenderer_ = cellRenderer;
+        //treeViewer_.setPieceRenderer();
+        showContent();
     }
 
     /**
      * ui initialization of the tree control.
      */
-    private synchronized void initUI()
+    protected JComponent createDialogContent()
     {
         setTitle( "Game Tree" );
-        setResizable( true );
         root_ = new SearchTreeNode(null);
         textTree_ = createTree( root_ );
 
         JPanel mainPanel = new JPanel(new BorderLayout() );
 
-        TwoPlayerPieceRenderer pieceRenderer =
+         TwoPlayerPieceRenderer pieceRenderer =
                 (TwoPlayerPieceRenderer)((AbstractTwoPlayerBoardViewer)boardViewer_).getPieceRenderer();
         treeViewer_ =
                 new GameTreeViewer(root_, cellRenderer_.getColorMap(), pieceRenderer);
@@ -118,7 +107,7 @@ public final class GameTreeDialog extends JDialog
         gameTreeButtons_ = new GameTreeButtons(this);
         mainPanel.add( gameTreeButtons_, BorderLayout.SOUTH );
 
-        getContentPane().add( mainPanel );
+        return mainPanel;
     }
 
 
@@ -355,24 +344,15 @@ public final class GameTreeDialog extends JDialog
     }
 
 
-    @Override
-    protected void processWindowEvent( WindowEvent e )
-    {
-        if ( e.getID() == WindowEvent.WINDOW_CLOSING ) {
-            dispose();
-        }
-        super.processWindowEvent( e );
-    }
-
-
     /**
      * called when the ok button is clicked.
      */
-    public synchronized void close()
+    @Override
+    public void close()
     {
         // if we set the root to null, then it doesnt have to build the tree
         controller_.setGameTreeListener( null );
-        setVisible(false);
+        super.close();
     }
 
     /* --------------- GameTreeViewable implmentation ------------------*/
@@ -405,8 +385,7 @@ public final class GameTreeDialog extends JDialog
                 p.setSelected(true);
                 root_.setUserObject( p );
             }
-        });
-        
+        });        
     }
 
 }
