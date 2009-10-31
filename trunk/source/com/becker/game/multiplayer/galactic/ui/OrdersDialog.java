@@ -41,19 +41,15 @@ final class OrdersDialog extends OptionsDialog
     {
         super(parent);
         player_ = player;
-        //galaxy_ = galaxy;
         ordersTable_ = new OrdersTable(player.getOrders());
         numPreExistingOrders_ = ordersTable_.getNumRows();
         numYearsRemaining_ = numYearsRemaining;
 
-        parent_ = parent;
         commonInit();
-
-        initUI();
-        toFront();
+        showContent();
     }
 
-    protected void initUI()
+    protected JComponent createDialogContent()
     {
         setResizable( true );
 
@@ -95,10 +91,7 @@ final class OrdersDialog extends OptionsDialog
         mainPanel.add(scrollPane, BorderLayout.CENTER);
         mainPanel.add(buttonsPanel, BorderLayout.SOUTH);
 
-
-        this.getContentPane().add(mainPanel);
-        this.getContentPane().repaint();
-        this.pack();
+        return mainPanel;
     }
 
     public String getTitle()

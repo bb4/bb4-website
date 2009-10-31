@@ -155,6 +155,7 @@ public class CheckersBoardViewer extends AbstractTwoPlayerBoardViewer
      /**
      * @return the tooltip for the panel given a mouse event
      */
+    @Override
     public String getToolTipText( MouseEvent e )
     {
         Location loc = getBoardRenderer().createLocation(e);

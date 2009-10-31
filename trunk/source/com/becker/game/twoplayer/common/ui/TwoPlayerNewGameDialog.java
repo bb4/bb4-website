@@ -30,28 +30,24 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
 
     private JCheckBox optimizationCheckbox_;
 
-    private final GameWeights gameWeights_;
-
     private GradientButton editWts1Button_;
     private GradientButton editWts2Button_;
 
 
-    // constructor
+    /**
+     * constructor
+     */
     public TwoPlayerNewGameDialog( JFrame parent, GameViewable viewer )
     {
-        super( parent, viewer );
-        gameWeights_ = get2PlayerController().getComputerWeights();  // gets the actual weights
-
-        initUI();
+        super( parent, viewer );    
     }
 
     private TwoPlayerController get2PlayerController()
     {
-        return (TwoPlayerController)controller_;
+        return (TwoPlayerController) controller_;
     }
 
     /**
-     *
      * @return panel for the local player
      */
     @Override
@@ -134,6 +130,7 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
         return outerPanel;
     }
 
+
     protected String getPlayer1Label()
     {
         return GameContext.getLabel("FIRST_PLAYER" ) + COLON;
@@ -182,7 +179,8 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
      */
     private boolean showEditWeightsDialog( ParameterArray weights )
     {
-        EditWeightsDialog editWtsDlg = new EditWeightsDialog( parent_, weights, gameWeights_ );
+        GameWeights gameWeights = get2PlayerController().getComputerWeights();
+        EditWeightsDialog editWtsDlg = new EditWeightsDialog( parent_, weights, gameWeights );
         Dimension dlgSize = editWtsDlg.getPreferredSize();
         Dimension frmSize = getSize();
         Point pt = getLocation();
@@ -212,9 +210,11 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
         setVisible( false );
     }
 
+    @Override
     public void actionPerformed( ActionEvent e )
     {
         Object source = e.getSource();
+        GameWeights gameWeights = get2PlayerController().getComputerWeights();
 
         if ( source == startButton_ ) {
             ok();
@@ -235,10 +235,10 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
             editWts2Button_.setEnabled( false );
         }
         else if ( source == editWts1Button_ ) {
-            showEditWeightsDialog( gameWeights_.getPlayer1Weights() );
+            showEditWeightsDialog( gameWeights.getPlayer1Weights() );
         }
         else if ( source == editWts2Button_ ) {
-            showEditWeightsDialog( gameWeights_.getPlayer2Weights() );
+            showEditWeightsDialog( gameWeights.getPlayer2Weights() );
         }
         else if (source == optimizationCheckbox_) {
             boolean checked = optimizationCheckbox_.isSelected();

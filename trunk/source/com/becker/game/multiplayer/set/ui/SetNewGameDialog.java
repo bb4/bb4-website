@@ -4,9 +4,9 @@ import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
 import com.becker.game.multiplayer.common.ui.*;
 import com.becker.game.multiplayer.common.online.ui.*;
-import com.becker.game.multiplayer.set.*;
-import java.util.List;
 
+import com.becker.game.multiplayer.set.SetPlayer;
+import java.util.List;
 import javax.swing.*;
 
 /**

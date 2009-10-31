@@ -10,7 +10,7 @@ import java.awt.*;
  */
 public class RDOptionsDialog extends SimulatorOptionsDialog {
 
-    public RDOptionsDialog( Frame parent, Simulator simulator ) {
+    public RDOptionsDialog( JFrame parent, Simulator simulator ) {
         super(parent, simulator);
     }
 

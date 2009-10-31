@@ -126,7 +126,7 @@ public class MoveEvaluator
 
         int position = col - startc;
         int diff = computeValueDifference( line, position, weights );
-        worthDebug(Direction.UP_DIAGONAL, line, position, diff);
+        //worthDebug(Direction.UP_DIAGONAL, line, position, diff);
         return diff;
     }
 

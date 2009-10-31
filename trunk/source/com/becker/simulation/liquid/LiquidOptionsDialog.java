@@ -20,7 +20,7 @@ class LiquidOptionsDialog extends NewtonianSimOptionsDialog
     private JComboBox configurationChoiceField_;
 
     // constructor
-    LiquidOptionsDialog( Frame parent, LiquidSimulator simulator ) {
+    LiquidOptionsDialog( JFrame parent, LiquidSimulator simulator ) {
         super( parent, simulator );
     }
 

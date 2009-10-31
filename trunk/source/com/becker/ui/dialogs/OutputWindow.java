@@ -2,50 +2,35 @@ package com.becker.ui.dialogs;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowEvent;
 
 /**
  * Use this dialog to show the user a body of text
  *
  * @author Barry Becker
  */
-public class OutputWindow extends JDialog
+public class OutputWindow extends AbstractDialog
 {
 
     protected JPanel mainPanel_ = null;
     protected JTextArea textArea_ = null;
 
-    // cache a pointer to this in case we have children
-    protected JFrame parent_ = null;
+    
     private static final Font TEXT_FONT = new Font( "Times-Roman", Font.PLAIN, 10 );
     private static final Dimension DEFAUT_SIZE = new Dimension( 500, 400 );
     private static final long serialVersionUID = 1234L;
 
-    // constructor
+    /**
+     * Constructor
+     */
     public OutputWindow( String title, JFrame parent )
     {
         super( parent );
-        parent_ = parent;
-        this.setTitle( title );
-
-        enableEvents( AWTEvent.WINDOW_EVENT_MASK );
-        try {
-            initUI();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        pack();
+        this.setTitle( title );     
         this.setModal( false );
+        showContent();
     }
 
-    // @return true if the dialog is canceled
-    public boolean showDialog()
-    {
-        setVisible( true );
-        return true;
-    }
-
-    protected void initUI()
+    protected JComponent createDialogContent()
     {
         textArea_ = new JTextArea( "" );
         textArea_.setWrapStyleWord( true );
@@ -57,8 +42,10 @@ public class OutputWindow extends JDialog
         JScrollPane scrollPane = new JScrollPane( textArea_ );
         scrollPane.setPreferredSize( DEFAUT_SIZE );
 
-        this.getContentPane().add( scrollPane, "Center" );
+        //this.getContentPane().add( scrollPane, "Center" );
+        return scrollPane;
     }
+ 
 
     /**
      * add this text to what is already there
@@ -75,24 +62,5 @@ public class OutputWindow extends JDialog
     public void setText( String text )
     {
         textArea_.setText( text );
-    }
-
-    protected void processWindowEvent( WindowEvent e )
-    {
-        if ( e.getID() == WindowEvent.WINDOW_CLOSING ) {
-            cancel();
-        }
-        super.processWindowEvent( e );
-    }
-
-    protected void cancel()
-    {
-        this.setVisible( false );
-    }
-
-    public void close()
-    {
-        this.setVisible( false );
-        this.dispose();
     }
 }

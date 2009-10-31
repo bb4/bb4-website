@@ -20,46 +20,54 @@ import java.util.List;
  */
 public class SolutionDialog extends OptionsDialog
 {
-
     private static final long serialVersionUID = 0L;
 
     protected GradientButton okButton_ = new GradientButton();
+
+    private JPanel solutionsHolder_;
     private SolutionPanel solutionPanel_;
+    private SetController controller_;
 
-    // list of sets. Each consecutive set of 3 cards in this list is a set.
-    List<Card> sets_;
 
-    // constructor
+    /**
+     *  Constructor
+     */
     public SolutionDialog(JFrame parent, SetController controller )
     {
         super( parent);
 
-        sets_ = controller.getSetsOnBoard();
-        solutionPanel_ = new SolutionPanel(sets_, (SetGameViewer) controller.getViewer());
-        initUI();
+        controller_ = controller;
+        
+        showContent();
     }
 
-    protected void initUI()
+    protected JComponent createDialogContent()
     {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout( new BorderLayout() );
 
         JPanel buttonsPanel = createButtonsPanel();
 
-        mainPanel.add( solutionPanel_, BorderLayout.CENTER );
+         // list of sets. Each consecutive set of 3 cards in this list is a set.
+        List<Card> sets_ = controller_.getSetsOnBoard();
+        solutionPanel_ = new SolutionPanel(sets_, (SetGameViewer) controller_.getViewer());
+
+        solutionsHolder_ = new JPanel();
+        solutionsHolder_.add(solutionPanel_);
+        mainPanel.add( solutionsHolder_, BorderLayout.CENTER );
         mainPanel.add( buttonsPanel, BorderLayout.SOUTH );
 
-        this.getContentPane().add( mainPanel );
-        this.getContentPane().repaint();
-        this.pack();
+
+        return mainPanel;
     }
 
+    @Override
     public String getTitle()
     {
         return GameContext.getLabel("SETS_ON_BOARD");
     }
 
-    // create the OK Cancel buttons that go at the botton
+    /** create the OK Cancel buttons that go at the botton  */
     protected JPanel createButtonsPanel()
     {
         JPanel buttonsPanel = new JPanel( new FlowLayout() );
@@ -83,6 +91,7 @@ public class SolutionDialog extends OptionsDialog
     /**
      * called when a button has been pressed
      */
+    @Override
     public void actionPerformed( ActionEvent e )
     {
         Object source = e.getSource();

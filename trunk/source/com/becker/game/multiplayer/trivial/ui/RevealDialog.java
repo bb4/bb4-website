@@ -1,17 +1,14 @@
 package com.becker.game.multiplayer.trivial.ui;
 
 import com.becker.ui.components.GradientButton;
-import com.becker.common.*;
-import com.becker.game.common.*;
+
 import com.becker.game.multiplayer.common.ui.ActionDialog;
 import com.becker.game.multiplayer.trivial.*;
 import com.becker.game.multiplayer.trivial.player.*;
-import com.becker.ui.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.text.*;
 
 /**
  * Allow the user to specify a trivial action: keep hidden or reveal.

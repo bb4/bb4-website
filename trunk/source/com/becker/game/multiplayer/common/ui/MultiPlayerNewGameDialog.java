@@ -23,14 +23,16 @@ public abstract class MultiPlayerNewGameDialog extends NewGameDialog
     // add / remove players
     private GradientButton addButton_;
     private GradientButton removeButton_;
-    // list of players in the local game.
+
+    /** list of players in the local game. */
     private PlayerTable playerTable_;
 
-
+    /**
+     * Constructor.
+     */
     public MultiPlayerNewGameDialog( JFrame parent, GameViewable viewer)
     {
         super( parent, viewer);
-        initUI();
         this.setResizable(true);
     }
 
@@ -65,6 +67,7 @@ public abstract class MultiPlayerNewGameDialog extends NewGameDialog
 
         playerTable_ = createPlayerTable();
         playerTable_.addListSelectionListener(this);
+        
 
         playerPanel.add(new JScrollPane(playerTable_.getTable()), BorderLayout.CENTER);
         playerPanel.setPreferredSize(new Dimension(500,300));
@@ -81,6 +84,7 @@ public abstract class MultiPlayerNewGameDialog extends NewGameDialog
     /**
      * panel which allows changin board specific properties.
      */
+    @Override
     protected JPanel createBoardParamPanel()
     {
         return null;
@@ -90,6 +94,7 @@ public abstract class MultiPlayerNewGameDialog extends NewGameDialog
      * the ok button has been pressed, indicating the desire to start the game with
      * the configuration specified.
      */
+    @Override
     protected void ok()
     {
         Component selectedTab = tabbedPanel_.getSelectedComponent();
@@ -99,6 +104,7 @@ public abstract class MultiPlayerNewGameDialog extends NewGameDialog
         super.ok();
     }
 
+    @Override
     public void actionPerformed( ActionEvent e )
     {
         super.actionPerformed(e);

@@ -16,7 +16,7 @@ public abstract class TableBase
 {
     protected JTable table_;
 
-    // meta data information about each column and its header.
+    /** meta data information about each column and its header. */
     protected TableColumnMeta[] columnMeta_;
 
     public TableBase() {
@@ -31,6 +31,7 @@ public abstract class TableBase
         initColumnMeta(columnNames);
         initializeTable(rows);
     }
+
 
     /**
      * constructor
@@ -50,7 +51,6 @@ public abstract class TableBase
         columnMeta_ = columnMeta;
     }
 
-    protected abstract void addRow(Object row);
 
     /**
      * @param rows initial data
@@ -79,12 +79,14 @@ public abstract class TableBase
         }
     }
 
+    protected abstract void addRow(Object row);
+
     /**
      * override to assign specific tooltips, widths, rederers andneditors on a per column basis.
      * @param columnMeta
      */
     protected void updateColumnMeta(TableColumnMeta[] columnMeta) {
-        // does nothgin by default
+        // does nothing by default
     }
 
     protected abstract TableModel createTableModel(String[] columnNames);
@@ -116,6 +118,4 @@ public abstract class TableBase
     public int getNumRows() {
         return table_.getRowCount();
     }
-
-
 }

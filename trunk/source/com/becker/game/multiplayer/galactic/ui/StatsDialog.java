@@ -1,38 +1,22 @@
 package com.becker.game.multiplayer.galactic.ui;
 
 import com.becker.ui.components.GradientButton;
-import com.becker.common.*;
 import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
-import com.becker.ui.*;
 
+import com.becker.ui.dialogs.AbstractDialog;
 import javax.swing.*;
-import java.awt.*;
 
 /**
- * Draw stats about the palerys and planet ownership in the Galaxy.
+ * Draw stats about the players and planet ownership in the Galaxy.
  *
  * @author Barry Becker
  */
-final class StatsDialog extends JDialog
-
+final class StatsDialog extends AbstractDialog
 {
-
     private final JPanel mainPanel_ = new JPanel();
-    private final JPanel previewPanel_ = new JPanel();
-    private JScrollPane scrollPane_ = null;
 
     private final GradientButton closeButton_ = new GradientButton();
-
-    private final JLabel infoLabel_ = new JLabel();
-
-    private static final int ROW_HEIGHT = 11;
-    private static final int TREE_WIDTH = 420;
-
-    // the controller that is actually being played
-    private GameControllerInterface mainController_ = null;
-
-    private ColorMap colormap_ = null;
 
 
     /**
@@ -46,35 +30,15 @@ final class StatsDialog extends JDialog
         GameBoardViewer boardViewer_=boardViewer;
         GameController controller_=boardViewer.getController();
         Board board_=controller_.getBoard();
-
-        enableEvents( AWTEvent.WINDOW_EVENT_MASK );
-        try {
-            initUI();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } catch (OutOfMemoryError oom) {
-            GameContext.log( 0, "we ran out of memory!" );
-            GameContext.log( 0, GUIUtil.getStackTrace( oom ) );
-        }
-        pack();
+        showContent();
     }
-
 
     /**
      * ui initialization of the tree control.
      */
-    private void initUI()
-    {}
-
-
-
-    /**
-     * called when the ok button is clicked.
-     */
-    private void close()
+    protected JComponent createDialogContent()
     {
-        this.setVisible(false);
+        return new JPanel();
     }
-
 }
 

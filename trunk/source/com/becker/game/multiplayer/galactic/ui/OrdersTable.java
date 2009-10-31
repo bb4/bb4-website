@@ -58,10 +58,12 @@ public class OrdersTable extends TableBase
     public OrdersTable(List<Order> orders)
     {
         super(orders, columnNames_);
-
-        lastOrders_ = orders;
+    
+         lastOrders_ = orders;
     }
 
+
+    @Override
     protected void updateColumnMeta(TableColumnMeta[] columnMeta) {
 
         for (int i = 0; i < getNumColumns(); i++) {

@@ -4,7 +4,6 @@ import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
 import com.becker.game.multiplayer.set.*;
 
-import javax.swing.Box;
 import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.*;
@@ -19,7 +18,6 @@ class SetInfoPanel extends GameInfoPanel
                    implements GameChangedListener, ListSelectionListener
 {
 
-    //  buttons to either give commands or pass
     private SetSummaryTable playerTable_;
 
     private JPanel playerPanel_;
@@ -36,12 +34,14 @@ class SetInfoPanel extends GameInfoPanel
         super(controller);
     }
 
+    @Override
     protected void createSubPanels()
     {
         add( createGeneralInfoPanel() );
         add( createCustomInfoPanel() );
     }
 
+    @Override
     protected int getMinWidth() {
         return 250;
     }
@@ -50,6 +50,7 @@ class SetInfoPanel extends GameInfoPanel
      * This panel shows information that is specific to the game type.
      * For Set, we have a button that allows the current player to enter his commands
      */
+    @Override
     protected JPanel createCustomInfoPanel()
     {
         JPanel pp = createSectionPanel("Players");
@@ -68,6 +69,7 @@ class SetInfoPanel extends GameInfoPanel
     /**
      * this is general information that is applicable to every 2 player game.
      */
+    @Override
     protected JPanel createGeneralInfoPanel()
     {
         JPanel generalPanel = createSectionPanel(GameContext.getLabel("GENERAL_INFO"));
@@ -103,6 +105,7 @@ class SetInfoPanel extends GameInfoPanel
     /**
      * restore to new game state.
      */
+    @Override
     public void reset() {
         insertPlayerTable();
         invalidate();
@@ -113,6 +116,7 @@ class SetInfoPanel extends GameInfoPanel
      * implements the GameChangedListener interface.
      * This method called whenever something on the board has changed.
      */
+    @Override
     public void gameChanged( GameChangedEvent gce )
     {
         if ( controller_ == null )

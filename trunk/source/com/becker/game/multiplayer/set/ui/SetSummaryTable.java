@@ -22,7 +22,8 @@ public class SetSummaryTable extends SummaryTable
 
     private static final String NUM_SETS = GameContext.getLabel("NUM_SETS");
 
-    private static final String[] COLUMN_NAMES =  {NAME,
+    private static final String[] COLUMN_NAMES =  {
+                                                  NAME,
                                                   COLOR,
                                                   NUM_SETS};
 
@@ -35,7 +36,6 @@ public class SetSummaryTable extends SummaryTable
         super(players, COLUMN_NAMES);
         getTable().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
-
 
     /**
      * add a row based on a player object

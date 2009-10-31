@@ -23,6 +23,7 @@ public class TrivialNewGameDialog extends MultiPlayerNewGameDialog
         return  new TrivialPlayerTable((List<TrivialPlayer>) controller_.getPlayers());
     }
 
+    @Override
     protected OnlineGameManagerPanel createPlayOnlinePanel() {
         return new OnlineTrivialManagerPanel(viewer_, this);
     }

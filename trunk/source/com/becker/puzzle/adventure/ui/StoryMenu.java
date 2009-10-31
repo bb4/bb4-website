@@ -41,7 +41,6 @@ public class StoryMenu extends JMenu implements ActionListener  {
         this.setBorder(BorderFactory.createEtchedBorder());
 
         storyApp_ = storyApp;
-        //showStory(initialStory);
         setBorder(BorderFactory.createEtchedBorder());
 
         openItem_ =  createMenuItem("Open");
@@ -77,9 +76,11 @@ public class StoryMenu extends JMenu implements ActionListener  {
             assert false : "unexpected menuItem = "+ item.getName();
         }
     }
-    
-    private void openStory() {
 
+    /**
+     * View the story that the user opens from the file chooser.
+     */
+    private void openStory() {
         File file = FileUtil.getSelectedFileToOpen(EXT, getDefaultDir());
         if ( file != null)  {
             Story story = new Story(Story.importStoryDocument(file));
@@ -87,6 +88,9 @@ public class StoryMenu extends JMenu implements ActionListener  {
         }
     }
 
+    /**
+     * Save the current story to a file.
+     */
     private void saveStory() {
         File file = FileUtil.getSelectedFileToSave(EXT, getDefaultDir());
         if ( file != null) {
@@ -112,15 +116,5 @@ public class StoryMenu extends JMenu implements ActionListener  {
         JMenuItem item = new JMenuItem(name);
         item.addActionListener(this);
         return item;
-    }
-
-
-    /**
-     * Show the game panel for the specified game
-     * @param gameName name of the game to show in the frame.
-     */
-    private void showStory(String storyName)
-    {
-    
     }
 }

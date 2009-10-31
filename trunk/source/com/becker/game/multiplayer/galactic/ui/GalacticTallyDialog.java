@@ -4,10 +4,9 @@ import com.becker.game.common.*;
 import com.becker.game.multiplayer.common.MultiGamePlayer;
 import com.becker.game.multiplayer.common.ui.*;
 import com.becker.game.multiplayer.galactic.*;
-import com.becker.game.multiplayer.galactic.player.*;
 
-import java.awt.*;
 import java.util.List;
+import javax.swing.JFrame;
 
 
 
@@ -27,7 +26,7 @@ final class GalacticTallyDialog extends TallyDialog
      * @param parent frame to display relative to
      * @param controller
      */
-    GalacticTallyDialog( Frame parent, GalacticController controller )
+    GalacticTallyDialog( JFrame parent, GalacticController controller )
     {
         super( parent, controller );
     }

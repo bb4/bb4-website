@@ -62,12 +62,17 @@ public class PenteController extends TwoPlayerController
      */
     public void computerMovesFirst()
     {
-        int delta = PentePatterns.WIN_RUN_LENGTH - 1;
+        int delta = getWinRunLength() - 1;
         int c = (int) (RANDOM.nextFloat() * (board_.getNumCols() - 2 * delta) + delta + 1);
         int r = (int) (RANDOM.nextFloat() * (board_.getNumRows() - 2 * delta) + delta + 1);
         TwoPlayerMove m = TwoPlayerMove.createMove( r, c, 0, new GamePiece(true) );
         makeMove( m );
     }
+
+    protected int getWinRunLength() {
+        return PentePatterns.WIN_RUN_LENGTH;
+    }
+
 
     /**
      *  Statically evaluate the board position.
@@ -82,7 +87,6 @@ public class PenteController extends TwoPlayerController
     public Searchable getSearchable() {
          return new PenteSearchable();
      }
-
 
 
     protected class PenteSearchable extends TwoPlayerSearchable {

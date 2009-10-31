@@ -23,11 +23,12 @@ public class DiceOptionsDialog extends SimulatorOptionsDialog {
     /**
      * constructor
      */ 
-    public DiceOptionsDialog( Frame parent, Simulator simulator )
+    public DiceOptionsDialog( JFrame parent, Simulator simulator )
     {
         super( parent, simulator );
     }
 
+    @Override
     public String getTitle()
     {
         return "Dice Simulation Configuration";
@@ -56,6 +57,7 @@ public class DiceOptionsDialog extends SimulatorOptionsDialog {
         return paramPanel;
     }
 
+    @Override
     protected void ok()
     {
         super.ok();

@@ -5,14 +5,10 @@ import com.becker.ui.dialogs.OptionsDialog;
 import com.becker.game.common.*;
 import com.becker.game.multiplayer.common.MultiGameController;
 import com.becker.game.multiplayer.common.MultiGamePlayer;
-import com.becker.ui.*;
-import java.awt.AWTEvent;
 import java.awt.FlowLayout;
-import java.awt.Frame;
 import java.util.List;
 
 import javax.swing.*;
-import java.awt.Color;
 import java.awt.BorderLayout;
 import java.awt.event.*;
 
@@ -29,37 +25,34 @@ public abstract class TallyDialog extends OptionsDialog
 
     private GradientButton okButton_;
 
+    private SummaryTable summaryTable_;
+
+    private JLabel winnerLabel_;
+
 
     /**
      * constructor - create the tree dialog.
      * @param parent frame to display relative to
      * @param controller pass in game controller.
      */
-    public TallyDialog( Frame parent, MultiGameController controller )
+    public TallyDialog( JFrame parent, MultiGameController controller )
     {
         super( parent );
         controller_ = controller;
 
-        enableEvents( AWTEvent.WINDOW_EVENT_MASK );
-        try {
-            initUI();
-        } catch (OutOfMemoryError oom) {
-            GameContext.log( 0, "we ran out of memory!" );
-            GameContext.log( 0, GUIUtil.getStackTrace( oom ) );
-        }
-        pack();
+        showContent();
     }
 
+    @Override
     public String getTitle()
     {
         return GameContext.getLabel("TALLY_TITLE");
     }
 
-
     /**
      * ui initialization of the tree control.
      */
-    protected void initUI()
+    protected JComponent createDialogContent()
     {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
@@ -82,9 +75,7 @@ public abstract class TallyDialog extends OptionsDialog
         mainPanel.add(tablePanel, BorderLayout.CENTER);
         mainPanel.add(createButtonsPanel(), BorderLayout.SOUTH);
 
-
-        this.getContentPane().add(mainPanel);
-        //this.setPreferredSize(new Dimension(500,300));
+        return mainPanel;
     }
 
     protected abstract SummaryTable createSummaryTable(List<? extends Player> players);
@@ -109,7 +100,7 @@ public abstract class TallyDialog extends OptionsDialog
         return buttonsPanel;
     }
 
-
+    @Override
     public void actionPerformed(ActionEvent e)
     {
         Object source = e.getSource();
@@ -118,7 +109,6 @@ public abstract class TallyDialog extends OptionsDialog
             this.setVisible(false);
         }
     }
-
 
 }
 

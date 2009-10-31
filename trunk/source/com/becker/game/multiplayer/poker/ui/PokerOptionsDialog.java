@@ -4,8 +4,6 @@ import com.becker.ui.components.NumberInput;
 import com.becker.game.common.*;
 import com.becker.game.multiplayer.common.ui.*;
 import com.becker.game.multiplayer.poker.*;
-import com.becker.ui.*;
-import java.awt.Dimension;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -34,6 +32,7 @@ public class PokerOptionsDialog extends MultiGameOptionsDialog
     /**
      * @return an array of panels to put in the parent controller param panel.
      */
+    @Override
     protected JComponent[] getControllerParamComponents() {
 
         PokerOptions options = (PokerOptions)controller_.getOptions();
