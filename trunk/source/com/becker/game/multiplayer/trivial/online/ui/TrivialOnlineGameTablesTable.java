@@ -8,9 +8,7 @@ import com.becker.game.multiplayer.common.online.ui.*;
 import com.becker.game.common.online.*;
 import com.becker.game.common.*;
 
-import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
 
 /**
  * Show Trivial specific game options in the table row.
@@ -20,7 +18,7 @@ import java.util.*;
 public class TrivialOnlineGameTablesTable extends MultiPlayerOnlineGameTablesTable {
 
     
-    private static final String[] TRIVIAL_COLUMN_NAMES = {JOIN, MAX_NUM_PLAYERS, PLAYER_NAMES};
+    private static final String[] TRIVIAL_COLUMN_NAMES = {JOIN, MIN_NUM_PLAYERS, PLAYER_NAMES};
 
     /**
      *

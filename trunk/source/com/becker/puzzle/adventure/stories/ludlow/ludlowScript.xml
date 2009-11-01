@@ -41,7 +41,9 @@ A few minutes pass. Still nothing.
  The double door is unlocked and opens easily.
  The beam of your flashligh reveals an empty hallway with a mirror at the opposite end. 
  There are openings that lead to rooms on the right and left.
- The hall has inch-thick red carpeting and walnut-paneled walls. The mirror at the end runs from the floor to the twenty-foot-high ceiling and covers the forty feet of wall section on that south face of the hall.
+ The hall has inch-thick red carpeting and walnut-paneled walls. 
+ The mirror at the end runs from the floor to the twenty-foot-high ceiling
+ and covers the forty feet of wall section on that south face of the hall.
         </description>
         <choices>
             <choice description="Go through left opening"  resultScene="rat_room" />
@@ -54,7 +56,8 @@ A few minutes pass. Still nothing.
     <scene name="rat_room">
         <description>
 There are leaves on the floor, and an old worn out couch in the north east corner.
-There is a musty smell to the room, and leaves are littered on the floor. The couch is an old, dusty, overstuffed relic with several cushions and rips on all parts of it.  The room measures sixty feet east and west and forty feet north and south, if paced out. There is a door on the east side of the room.
+There is a musty smell to the room, and leaves are littered on the floor. The couch is an old, dusty, overstuffed relic with several cushions and rips on all parts of it.
+The room measures sixty feet east and west and forty feet north and south, if paced out. There is a door on the east side of the room.
         </description>
         <choices>
             <choice description="Inspect the couch."   resultScene="rat_attack" />

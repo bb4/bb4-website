@@ -10,6 +10,7 @@ import com.becker.game.multiplayer.common.online.SurrogatePlayer;
 import com.becker.game.multiplayer.common.ui.*;
 import com.becker.ui.*;
 
+import com.becker.ui.table.TableButton;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.*;
@@ -58,6 +59,7 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
      * If you join a different table, you leave the last one that you joined.
      * A table (row) is removed if everyone leaves it.
      */
+    @Override
     protected JPanel createPlayOnlinePanel()
     {
         createGameTableDialog_ = createNewGameTableDialog();
@@ -127,6 +129,7 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
      * The server has sent out a message to all the clients.
      * @param cmd the command to handle.
      */
+    @Override
     public void handleServerUpdate(GameCommand cmd) {
 
         if (onlineGameTablesTable_ == null)
@@ -216,7 +219,7 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
                 createNewGameTable();            
             }
             else {         
-                joinDifferentTable((JoinButton) source);
+                joinDifferentTable((TableButton) source);
             }
         }
     }
@@ -264,7 +267,7 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
      * The local user has clicked  a join button on a different table
      * indicating that they want to join that table.
      */
-    private void joinDifferentTable(JoinButton b) {
+    private void joinDifferentTable(TableButton b) {
 
         int joinRow = b.getRow();
         System.out.println("in join different table. row="+ joinRow);

@@ -68,7 +68,6 @@ public abstract class MultiPlayerNewGameDialog extends NewGameDialog
         playerTable_ = createPlayerTable();
         playerTable_.addListSelectionListener(this);
         
-
         playerPanel.add(new JScrollPane(playerTable_.getTable()), BorderLayout.CENTER);
         playerPanel.setPreferredSize(new Dimension(500,300));
         return playerPanel;
