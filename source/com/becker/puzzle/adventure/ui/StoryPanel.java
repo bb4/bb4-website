@@ -13,7 +13,7 @@ public class StoryPanel extends JSplitPane {
 
     private Story story_;
 
-    private static final Font TEXT_FONT = new Font("Courier", Font.PLAIN, 12);
+    public static final Font TEXT_FONT = new Font("Courier", Font.PLAIN, 12);
     private static final int INITAL_LEFT_WIDTH = 600;
 
     private JTextArea textArea_;

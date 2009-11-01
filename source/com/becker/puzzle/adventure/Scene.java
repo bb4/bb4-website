@@ -7,6 +7,8 @@ import com.becker.ui.GUIUtil;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -21,7 +23,7 @@ public class Scene {
 
     private String name_;
     private String text_;
-    private Choice[] choices_;
+    private List<Choice> choices_;
     private boolean isFirst_;
     private URL soundURL_;
     private BufferedImage image_;
@@ -52,12 +54,12 @@ public class Scene {
           sceneElem.appendChild(descElem);
 
           // if we only have the QUIT choice, don't bother to add the choice list.
-          Choice firstChoice = this.getChoices()[0];
+          Choice firstChoice = this.getChoices().get(0);
           if (firstChoice != Choice.QUIT_CHOICE) {
               Element choicesElem =  document.createElement("choices");
               sceneElem.appendChild(choicesElem);
-              for (int i=0; i<this.getChoices().length-1; i++) {
-                  Choice choice = this.getChoices()[i];
+              for (int i=0; i<this.getChoices().size()-1; i++) {
+                  Choice choice = this.getChoices().get(i);
                   choicesElem.appendChild(choice.createElement(document));
               }
           }
@@ -66,7 +68,7 @@ public class Scene {
           rootElement.appendChild(sceneElem);
     }
 
-    private void commonInit(String name, String text, Choice[] choices, String resourcePath) {
+    private void commonInit(String name, String text, List<Choice> choices, String resourcePath) {
         name_ = name;
         text_ = text;
         choices_ = choices;
@@ -87,21 +89,21 @@ public class Scene {
      * @param sceneNode scene to get choices for.
      * @return the coices for the scpecified scene.
      */
-    private Choice[] getChoices(Node sceneNode) {
-        Choice[] choices = null;
+    private List<Choice> getChoices(Node sceneNode) {
+        List<Choice> choices = null;
         // if there are choices they will be the second element (right after description).
         NodeList children = sceneNode.getChildNodes();
         if (children.getLength() > 1) {
             Node choicesNode = children.item(1);
             NodeList choiceList = choicesNode.getChildNodes();
             int numChoices = choiceList.getLength();
-            choices = new Choice[numChoices + (isFirst()?0:1)];
+            choices = new ArrayList<Choice>(numChoices + (isFirst()? 0 : 1));
             for (int i=0; i<numChoices; i++) {
                 assert choiceList.item(i) != null;
-                choices[i] = new Choice(choiceList.item(i));
+                choices.add(new Choice(choiceList.item(i)));
             }
             if ( !isFirst() ) {
-                choices[numChoices] = new Choice("Go back to last scene.", Choice.PREVIOUS_SCENE);
+                choices.add(new Choice("Go back to last scene.", Choice.PREVIOUS_SCENE));
             }
         }
         
@@ -111,11 +113,11 @@ public class Scene {
     /**
      * @return  choices that will lead to the next scene.
      */
-    public Choice[] getChoices() {
+    public List<Choice> getChoices() {
         return choices_;
     }
 
-    public void setChoices(Choice[] choices) {
+    public void setChoices(List<Choice> choices) {
         choices_ = choices;
     }
 
@@ -131,6 +133,29 @@ public class Scene {
      */
     public String getText() {
         return text_;
+    }
+
+    public void setText(String text) {
+        text_ = text;
+    }
+
+    /**
+     * @param scene to see if parent
+     * @return true if the specified scene is our immediate parent.
+     */
+    public boolean isParentOf(Scene scene) {
+        String sName = scene.getName();
+        assert sName != null;
+        int numChoices = choices_.size();
+        for (int i=0; i<numChoices-1; i++) {
+            Choice choice = choices_.get(i);
+            assert choice != null;
+            assert choice.getDestination() != null;
+            if (choice.getDestination().equals(sName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -168,14 +193,14 @@ public class Scene {
      */
     public String getNextSceneName(int choice) {
 
-        if (choice == choices_.length) {
+        if (choice == choices_.size()) {
             return Choice.PREVIOUS_SCENE;
         }
 
-        if (choice < 0 || choice > choices_.length-1)
+        if (choice < 0 || choice > choices_.size()-1)
             return null;
         
-        String destination = choices_[choice].getDestination();
+        String destination = choices_.get(choice).getDestination();
         if (destination == null)
         {
             System.out.println("Goodbye");
@@ -217,9 +242,9 @@ public class Scene {
         buf.append('\n' + this.getText() +'\n');
 
         if (choices_ != null) {
-            int len = choices_.length;
+            int len = choices_.size();
             for (int i=0; i < len; i++)  {
-                buf.append((1+i) + ") " + choices_[i].getDescription() + '\n');
+                buf.append((1+i) + ") " + choices_.get(i).getDescription() + '\n');
             }
         }
         return buf.toString();

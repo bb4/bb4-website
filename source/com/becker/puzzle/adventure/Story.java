@@ -79,7 +79,8 @@ public class Story {
 
     /** all the stories need to be stored at this location */
     public static final String STORIES_ROOT = "com/becker/puzzle/adventure/stories/";
-   
+
+
     /**
      * Construct an adventure given an xml document object
      * @param document containing the scene data
@@ -98,13 +99,44 @@ public class Story {
         }
         initFromScenes(scenes);
     }
+    
+    /** do not call directly */
+    private Story() {}
+
+    /**
+     * Copy constructor.
+     * @param story story to copy
+     */
+    public Story(Story story) {
+        initializeFrom(story);
+    }
+
+    public void initializeFrom(Story story) {
+        this.title = story.getTitle();
+        this.name = story.name;
+        this.author = story.author;
+        this.date = story.date;
+        if (sceneList_ == null) {
+            createSceneMap(story.getSceneList().size());
+        }
+        this.sceneList_.clear();
+        this.sceneMap_.clear();
+        this.sceneList_.addAll(story.getSceneList());
+        this.sceneMap_.putAll(story.getSceneMap());
+        this.currentScene_ = story.currentScene_;
+    }
 
     /** @return the title of the story */
     public String getTitle() {
         return title;
     }
+   
 
 
+    public void resetToFirstScene() {
+        currentScene_ = sceneMap_.get(sceneList_.get(0));
+    }
+    
     /**
      * Write the story document back to xml.
      * @param destFileName file to write to.
@@ -117,6 +149,14 @@ public class Story {
         catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    protected List<String> getSceneList() {
+        return new ArrayList<String>(sceneList_);
+    }
+
+    protected Map<String, Scene> getSceneMap() {
+        return new HashMap<String, Scene>(sceneMap_);
     }
 
     /**
@@ -183,12 +223,13 @@ public class Story {
     }
 
     public void initFromScenes(Scene[] scenes)  {
-
-        sceneMap_ = new HashMap<String, Scene>(scenes.length);
-        sceneList_ = new ArrayList<String>(scenes.length);
+        createSceneMap(scenes.length);
+        
         for (final Scene scene : scenes) {
             if (scene.getChoices() == null) {
-                scene.setChoices(new Choice[] {Choice.QUIT_CHOICE} ) ;
+                List<Choice> quitChoice = new ArrayList<Choice>();
+                quitChoice.add(Choice.QUIT_CHOICE);
+                scene.setChoices(quitChoice) ;
             }
             sceneMap_.put(scene.getName(), scene);
             sceneList_.add(scene.getName());
@@ -198,6 +239,11 @@ public class Story {
         scenes[0].setFirst();
         currentScene_ = scenes[0];
         visitedScenes_ = new LinkedList<Scene>();
+    }
+
+    private void createSceneMap(int size) {
+        sceneMap_ = new HashMap<String, Scene>(size);
+        sceneList_ = new ArrayList<String>(size);
     }
 
     public Scene getCurrentScene()  {
@@ -240,6 +286,22 @@ public class Story {
             }
         }
     }
+
+    /**
+     * @return a list of all the scenes that led to the current scene.
+     */
+    public List<Scene> getParentScenes()  {
+        List<Scene> parentScenes = new ArrayList<Scene>();
+        // loop through all the scenes, and if any of them have us as a child, add to the list
+        for (String sceneName : sceneList_) {
+            Scene s = sceneMap_.get(sceneName);
+            if (s.isParentOf(currentScene_)) {
+                parentScenes.add(s);
+            }
+        }
+        return parentScenes;
+    }
+
 
     /**
      * make sure the set of scenes in internally consistent.

@@ -25,14 +25,14 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase {
     protected static final int NUM_BASE_COLUMNS = 3;
 
     protected static final String JOIN = GameContext.getLabel("ACTION");
-    protected static final String MAX_NUM_PLAYERS = GameContext.getLabel("MAX_NUM_PLAYERS");
+    protected static final String MIN_NUM_PLAYERS = GameContext.getLabel("MIN_NUM_PLAYERS");
     protected static final String PLAYER_NAMES = GameContext.getLabel("PLAYER_NAMES");
 
     protected static final String JOIN_TIP = GameContext.getLabel("ACTION_TIP");
-    protected static final String MAX_NUM_PLAYERS_TIP = GameContext.getLabel("MAX_NUM_PLAYERS_TIP");
+    protected static final String MIN_NUM_PLAYERS_TIP = GameContext.getLabel("MIN_NUM_PLAYERS_TIP");
     protected static final String PLAYER_NAMES_TIP = GameContext.getLabel("PLAYER_NAMES_TIP");
 
-    private static final String[] COLUMN_NAMES = {JOIN, MAX_NUM_PLAYERS, PLAYER_NAMES};
+    private static final String[] COLUMN_NAMES = {JOIN, MIN_NUM_PLAYERS, PLAYER_NAMES};
 
     protected OnlineGameTable selectedTable_;
     protected List<OnlineGameTable> tableList_;
@@ -70,14 +70,20 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase {
     @Override
     protected void updateColumnMeta(TableColumnMeta[] columnMeta) {
 
-        columnMeta[NUM_PLAYERS_INDEX].setTooltip(MAX_NUM_PLAYERS_TIP);
+        columnMeta[NUM_PLAYERS_INDEX].setTooltip(MIN_NUM_PLAYERS_TIP);
 
         // more space needed for the names list.
         columnMeta[PLAYER_NAMES_INDEX].setPreferredWidth(200);
 
         TableColumnMeta actionCol = columnMeta[JOIN_INDEX];
-        actionCol.setCellRenderer(new OnlineActionCellRenderer(actionListener_));
-        actionCol.setCellEditor(new OnlineActionCellEditor(actionListener_));
+
+        ButtonCellEditor joinCellEditor =
+                new ButtonCellEditor(GameContext.getLabel("JOIN"), 
+                                                  GameContext.getLabel("JOIN_TIP"),
+                                                  actionListener_);
+        
+        actionCol.setCellRenderer(joinCellEditor.getCellRenderer());
+        actionCol.setCellEditor(joinCellEditor);
         actionCol.setPreferredWidth(55);
     }
 

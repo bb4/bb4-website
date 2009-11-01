@@ -1,5 +1,6 @@
 package com.becker.puzzle.adventure.ui;
 
+import com.becker.puzzle.adventure.ui.editor.StoryEditorDialog;
 import com.becker.ui.dialogs.PasswordDialog;
 import com.becker.puzzle.adventure.*;
 import com.becker.ui.ApplicationApplet;
@@ -102,11 +103,18 @@ public final class GraphicalAdventure extends ApplicationApplet
     public void editStory() {
         // show password dialog.
         PasswordDialog pwDlg = new PasswordDialog("ludlow");
-        boolean canceled = pwDlg.showDialog();
+        boolean canceled = false; // pwDlg.showDialog();
 
         if ( !canceled ) {
             StoryEditorDialog storyEditor = new StoryEditorDialog(story_);
-            storyEditor.setVisible(true);
+            boolean editingCanceled = storyEditor.showDialog();
+            if (!editingCanceled) {
+                System.out.println("done editing");
+                // show the edited version.
+                story_.initializeFrom(storyEditor.getEditedStory());
+                story_.resetToFirstScene();
+                setStory(story_);
+            }
         }
     }
 

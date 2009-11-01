@@ -20,7 +20,7 @@ public class ChoicePanel extends JPanel implements ActionListener {
     /**
      * Construct based on a list of Choices.
      */
-    public ChoicePanel(Choice[] choices) {
+    public ChoicePanel(List<Choice> choices) {
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         sceneChangeListeners_ = new ArrayList<SceneChangeListener>();
@@ -32,7 +32,7 @@ public class ChoicePanel extends JPanel implements ActionListener {
      * Update the list of options shown
      * @param choices
      */
-    public void setChoices(Choice[] choices) {
+    public void setChoices(List<Choice> choices) {
 
          this.removeAll();
 

@@ -189,7 +189,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
                  tabbedPanel_.add(playOnlinePanel_, 0);
                  tabbedPanel_.setTitleAt(0, "Play Online");
                  tabbedPanel_.setSelectedIndex(0);
-                 pack();
+                 //pack();
              }
              tabbedPanel_.setEnabledAt(0, true);
         }

@@ -10,7 +10,6 @@ import java.util.*;
 
 /**
  * Copied with modification from from Graphic Java (Swing) book (by David Geary).
- *
  */
 public abstract class AbstractCellEditor
                 implements TableCellEditor, TreeCellEditor {

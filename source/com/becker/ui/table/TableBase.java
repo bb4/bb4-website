@@ -7,8 +7,7 @@ import javax.swing.table.*;
 
 
 /**
- *
- * This represents a generic table, with a set of columns and tooltips for thos column headers.
+ * This represents a generic table, with a set of columns and tooltips for those column headers.
  *
  * @author Barry Becker Date: Jan 13, 2007
  */
@@ -20,8 +19,7 @@ public abstract class TableBase
     protected TableColumnMeta[] columnMeta_;
 
     public TableBase() {
-
-    };
+    }
 
     /**
      * Constructor
@@ -46,7 +44,7 @@ public abstract class TableBase
     protected void initColumnMeta(String[] columnNames) {
         TableColumnMeta[] columnMeta = new TableColumnMeta[columnNames.length];
         for (int i=0; i<columnNames.length; i++) {
-            columnMeta[i] = new TableColumnMeta(columnNames[i], null);
+            columnMeta[i] = new TableColumnMeta(columnNames[i], columnNames[i]);
         }
         columnMeta_ = columnMeta;
     }
