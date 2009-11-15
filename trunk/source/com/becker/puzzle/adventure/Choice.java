@@ -37,6 +37,10 @@ public class Choice {
         return description_;
     }
 
+    public void setDescription(String desc) {
+        description_ = desc;
+    }
+
     /**
      * @return the name of the scene to go to if they select this choice.
      */
@@ -44,6 +48,10 @@ public class Choice {
         return destination_;
     }
 
+    /**
+     * Factory method to create a choice.
+     * @return the choice instance.
+     */
     public Element createElement(Document document) {
         Element choiceElem = document.createElement("choice");
         choiceElem.setAttribute("description", getDescription());

@@ -27,7 +27,7 @@ public class TrivialRobotPlayer extends TrivialPlayer
     }
 
     /**
-     * @@ only reveal with  a certain probability
+     * Only reveal actionwith  a certain probability.
      * @param pc
      * @return the actoin
      */

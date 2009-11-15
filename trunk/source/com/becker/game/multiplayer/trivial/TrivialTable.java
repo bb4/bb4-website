@@ -28,6 +28,7 @@ public class TrivialTable extends Board
     /**
      *  reset the board to its initial state
      */
+    @Override
     public void reset()
     {
         super.reset();
@@ -39,6 +40,7 @@ public class TrivialTable extends Board
     }
 
 
+    @Override
     public void setSize( int numRows, int numCols )
     {
         numRows_ = numRows;

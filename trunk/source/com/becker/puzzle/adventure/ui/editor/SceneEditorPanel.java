@@ -3,13 +3,11 @@ package com.becker.puzzle.adventure.ui.editor;
 import com.becker.ui.dialogs.ImagePreviewDialog;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import javax.swing.JComponent;
 import javax.swing.JTextArea;
 import com.becker.puzzle.adventure.Scene;
 import com.becker.puzzle.adventure.ui.StoryPanel;
 import com.becker.ui.components.GradientButton;
 import com.becker.ui.components.TextInput;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -33,7 +31,7 @@ public class SceneEditorPanel extends JPanel implements ActionListener {
     private  TextInput nameInput_;
     private JTextArea sceneText_;
 
-
+    private static final int EDITOR_WIDTH = 900;
 
     /**
      * Constructor
@@ -48,6 +46,7 @@ public class SceneEditorPanel extends JPanel implements ActionListener {
 
     protected void createUI() {
         this.setLayout(new BorderLayout());
+        this.setPreferredSize(new Dimension(EDITOR_WIDTH, 600));
 
         this.setBorder(
                 BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(),"Edit current Scene" ) );
@@ -57,10 +56,7 @@ public class SceneEditorPanel extends JPanel implements ActionListener {
         sceneText_ = new JTextArea();
         sceneText_.setFont(StoryPanel.TEXT_FONT);
         sceneText_.setText(scene_.getText());
-  
 
-        //saveButton_ = new GradientButton("Save scene changes");
-        //saveButton_.addActionListener(this);
         add(nameInput_, BorderLayout.NORTH);
         add(new JScrollPane(sceneText_), BorderLayout.CENTER);
         add(createMediaButtons(), BorderLayout.SOUTH);

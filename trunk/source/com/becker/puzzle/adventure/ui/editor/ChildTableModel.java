@@ -34,6 +34,9 @@ public class ChildTableModel extends DefaultTableModel
     @Override
     public boolean isCellEditable(int row, int column)
     {
-        return (column == ChildTable.ACTION_DESCRIPTION_INDEX);
+
+        return (column == ChildTable.ACTION_INDEX
+                || column == ChildTable.NAVIGATE_INDEX
+                || column == ChildTable.CHOICE_DESCRIPTION_INDEX);
     }
 }

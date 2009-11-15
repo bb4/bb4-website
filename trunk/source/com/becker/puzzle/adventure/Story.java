@@ -1,5 +1,6 @@
 package com.becker.puzzle.adventure;
 
+import com.becker.common.util.OrderedMap;
 import com.becker.common.xml.DomUtil;
 import com.becker.ui.GUIUtil;
 import java.io.File;
@@ -11,7 +12,6 @@ import java.util.*;
 /**
  * Run your own adventure story.
  * Just modify the script in SceneData and run.
- *
  * This program is meant as a very simple example of how you can
  * approach creating a simple adventure game on a somputer.
  *
@@ -24,19 +24,14 @@ import java.util.*;
  *  It should be a simple matter to have the compat automatically carried out in order to determine the winner and
  *  supbract hit point losses as appropriate. We can also take into other effects like disease or healing effects.
  *  The player should also be given the option to flee, or instigate other action during the melee.
- * 3) Add a graphical User Interface so that the text will wrap nicely in a text area and we can show pictures
- *  for each scene. Furthermore we could have windows that pop up to show the players stats or item inventory.
+ * 3) Add a graphical User Interface. We could have windows that pop up to show the players stats or item inventory.
  * 4) Make multi-player (hard)
- * 5) Create a user interface instead of text only mode. Support both.
- * 6) Add pictures and sound. The pictures and sound should be kept in a /resources directory
- *  and be loaded by convention. The name of the resource could correspond to the scene name.
- *  The alternative is to explicitly name the resource in the xml file.
- * 7) Allow the user to edit the scenes - live through the UI. Perhaps the edit mode could be
- *  password protected. When editing a scene you are prsented with a form that has all the
+ * 7) Allow the user to edit the scenes - live through the UI.
+ * When editing a scene you are presented with a form that has all the
  * attributes for the scene including a dropdown for selecting which scenes navigate to it and
  * where you can navigate to from this scene. Save and load the xml that defines the game.
  * 8) This type of application could be used for more than just games. Tutorials or an expert system would
- * be other nice applicaitons.
+ * be other nice applications.
  * 9) Have probabalistic choices. For example, if you encounter a monster and choose to fight it, then
  * the outcome may be one of several different things. We can also influence the outcome by what sort of
  * items the player has.
@@ -60,16 +55,13 @@ public class Story {
     /** date story was created. */
     private String date;
 
-    /** maps scene name to the scene */
-    private Map<String, Scene> sceneMap_;
+    /** Maps scene name to the scene. Preserves order of scenes. */
+    private OrderedMap<String, Scene> sceneMap_;
 
-    /** This list allows us to retrieve the scenes in the same order they were loaded. */
-    private List<String> sceneList_;
-
+    /** The scene where the user is now. */
     private Scene currentScene_;
 
     private static final String ROOT_ELEMENT = "script";
-
 
     /**
      * A stack of currently visited scenes. There may be duplicates if you visit the same scene twice.
@@ -95,7 +87,7 @@ public class Story {
         NodeList children = root.getChildNodes();
         Scene[] scenes = new Scene[children.getLength()];
         for (int i=0; i < children.getLength(); i++) {
-            scenes[i] = new Scene(children.item(i), resourcePath);
+            scenes[i] = new Scene(children.item(i), resourcePath, i==0);
         }
         initFromScenes(scenes);
     }
@@ -104,7 +96,7 @@ public class Story {
     private Story() {}
 
     /**
-     * Copy constructor.
+     * Copy constructor. Creates a deep copy.
      * @param story story to copy
      */
     public Story(Story story) {
@@ -116,25 +108,24 @@ public class Story {
         this.name = story.name;
         this.author = story.author;
         this.date = story.date;
-        if (sceneList_ == null) {
-            createSceneMap(story.getSceneList().size());
+        if (sceneMap_ == null) {
+            sceneMap_ = createSceneMap(story.getSceneMap().size());
         }
-        this.sceneList_.clear();
         this.sceneMap_.clear();
-        this.sceneList_.addAll(story.getSceneList());
-        this.sceneMap_.putAll(story.getSceneMap());
+        copySceneMap(story.getSceneMap());
         this.currentScene_ = story.currentScene_;
+        this.visitedScenes_ = new LinkedList<Scene>();
+        this.visitedScenes_.addAll(story.visitedScenes_);
     }
 
     /** @return the title of the story */
     public String getTitle() {
         return title;
     }
-   
 
-
+    /** Return to the initial sceen from wherever they be now. */
     public void resetToFirstScene() {
-        currentScene_ = sceneMap_.get(sceneList_.get(0));
+        currentScene_ = sceneMap_.getFirst();
     }
     
     /**
@@ -151,12 +142,9 @@ public class Story {
         }
     }
 
-    protected List<String> getSceneList() {
-        return new ArrayList<String>(sceneList_);
-    }
 
-    protected Map<String, Scene> getSceneMap() {
-        return new HashMap<String, Scene>(sceneMap_);
+    private OrderedMap<String, Scene> getSceneMap() {
+        return sceneMap_;
     }
 
     /**
@@ -173,7 +161,7 @@ public class Story {
         rootElement.setAttribute("title", title);
         document.appendChild(rootElement);
 
-        for (String sceneName : sceneList_) {
+        for (String sceneName : sceneMap_.keyList()) {
             Scene scene = sceneMap_.get(sceneName);
             scene.appendToDocument(document);
         }
@@ -205,7 +193,6 @@ public class Story {
         Document document = null;
 
         // first try to load it as a file. If that doesnt work, try as a URL.
-        //File file = new File(fileName);
         if (file.exists()) {
             document = DomUtil.parseXMLFile(file);
         }
@@ -222,8 +209,20 @@ public class Story {
         initFromScenes(scenes);
     }
 
+    private OrderedMap<String, Scene> createSceneMap(int size) {
+       return new OrderedMap<String, Scene>(size);
+    }
+
+    private void copySceneMap(OrderedMap<String, Scene> fromMap) {
+        for (String sceneName : fromMap.keyList()) {
+            Scene scene = fromMap.get(sceneName);
+            // add deep copies of the scene.
+            sceneMap_.put(sceneName, new Scene(scene));
+        }
+    }
+
     public void initFromScenes(Scene[] scenes)  {
-        createSceneMap(scenes.length);
+        sceneMap_ = createSceneMap(scenes.length);
         
         for (final Scene scene : scenes) {
             if (scene.getChoices() == null) {
@@ -232,18 +231,11 @@ public class Story {
                 scene.setChoices(quitChoice) ;
             }
             sceneMap_.put(scene.getName(), scene);
-            sceneList_.add(scene.getName());
         }
-
         verifyScenes();
-        scenes[0].setFirst();
+        
         currentScene_ = scenes[0];
         visitedScenes_ = new LinkedList<Scene>();
-    }
-
-    private void createSceneMap(int size) {
-        sceneMap_ = new HashMap<String, Scene>(size);
-        sceneList_ = new ArrayList<String>(size);
     }
 
     public Scene getCurrentScene()  {
@@ -258,7 +250,6 @@ public class Story {
        return getCurrentScene() == null;
     }
 
-
     /**
      * Advance the story to the next scene based on the specified choice
      * @param choice index of the selected choice.
@@ -271,6 +262,16 @@ public class Story {
 
         String nextSceneName =  currentScene_.getNextSceneName(choice);
 
+        advanceToScene(nextSceneName);
+    }
+    
+    /**
+     * Jump to some arbitrary scene.
+     * Not typically used. Should use advanceScene for normal navigation.
+     * @param choice index of the selected choice.
+     */
+    public void advanceToScene(String nextSceneName) {
+     
         if (nextSceneName != null) {
             if (nextSceneName.equals(Choice.QUIT))  {
                 visitedScenes_.add(currentScene_);
@@ -293,7 +294,7 @@ public class Story {
     public List<Scene> getParentScenes()  {
         List<Scene> parentScenes = new ArrayList<Scene>();
         // loop through all the scenes, and if any of them have us as a child, add to the list
-        for (String sceneName : sceneList_) {
+        for (String sceneName : sceneMap_.keyList()) {
             Scene s = sceneMap_.get(sceneName);
             if (s.isParentOf(currentScene_)) {
                 parentScenes.add(s);
@@ -301,7 +302,6 @@ public class Story {
         }
         return parentScenes;
     }
-
 
     /**
      * make sure the set of scenes in internally consistent.
@@ -319,6 +319,5 @@ public class Story {
             }
         }
     }
-
 }
 

@@ -8,6 +8,7 @@ import com.becker.game.multiplayer.common.online.ui.*;
 import com.becker.game.common.online.*;
 import com.becker.game.common.*;
 
+import com.becker.ui.table.TableButtonListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -35,8 +36,8 @@ import java.util.*;
      *
      * @param actionListener  that gets called when the player selects a different table to join.
      */
-    public PokerOnlineGameTablesTable(ActionListener actionListener) {
-         super(POKER_COLUMN_NAMES, actionListener);
+    public PokerOnlineGameTablesTable(TableButtonListener tableButtonListener) {
+         super(POKER_COLUMN_NAMES, tableButtonListener);
     }
 
 

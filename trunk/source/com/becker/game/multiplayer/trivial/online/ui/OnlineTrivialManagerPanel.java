@@ -5,6 +5,7 @@ import com.becker.game.common.ui.*;
 import com.becker.game.multiplayer.common.online.ui.*;
 import com.becker.game.multiplayer.trivial.ui.*;
 
+import com.becker.ui.table.TableButtonListener;
 import javax.swing.event.*;
 import java.awt.event.*;
 
@@ -23,8 +24,8 @@ public class OnlineTrivialManagerPanel extends MultiPlayerOnlineManagerPanel {
     }
 
     protected MultiPlayerOnlineGameTablesTable createOnlineGamesTable(String playersName,
-                                                                      ActionListener listener) {
-        return new TrivialOnlineGameTablesTable(listener);
+                                                                      TableButtonListener tableButtonListener) {
+        return new TrivialOnlineGameTablesTable(tableButtonListener);
     }
 
     /**
