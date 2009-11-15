@@ -10,7 +10,7 @@ import com.becker.game.multiplayer.common.online.SurrogatePlayer;
 import com.becker.game.multiplayer.common.ui.*;
 import com.becker.ui.*;
 
-import com.becker.ui.table.TableButton;
+import com.becker.ui.table.TableButtonListener;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.*;
@@ -28,7 +28,8 @@ import java.util.List;
  * @author Barry Becker Date: May 14, 2006
  */
 public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPanel
-                                                  implements ActionListener, MouseListener, KeyListener {
+                                                  implements ActionListener, MouseListener, 
+                                                                      KeyListener, TableButtonListener {
 
     private static final String DEFAULT_NAME = "<name>";
 
@@ -118,7 +119,7 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
 
 
     protected abstract MultiPlayerOnlineGameTablesTable createOnlineGamesTable(String name,
-                                                                               ActionListener listener);
+                                                                               TableButtonListener tableButtonListener);
 
     /**
      * You are free to set your own options for the table that you are creating.
@@ -209,7 +210,7 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
     /**
      * Implements actionlistener.
      * The user has done something to change the table list
-     * (e.g. added a new game table or joined a different table).
+     * (e.g. added a new game).
      */
     public void actionPerformed( ActionEvent e ) {
         Object source = e.getSource();
@@ -218,9 +219,17 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
             if (source == createTableButton_) {        
                 createNewGameTable();            
             }
-            else {         
-                joinDifferentTable((TableButton) source);
-            }
+        }
+    }
+
+    /**
+     * Implements tableButtonLlistener.
+     * User has joined a different table.
+     */
+    public void tableButtonClicked( int row, int col, String id ) {
+
+        if (nameChecksOut()) {
+                joinDifferentTable(row);
         }
     }
 
@@ -267,9 +276,8 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
      * The local user has clicked  a join button on a different table
      * indicating that they want to join that table.
      */
-    private void joinDifferentTable(TableButton b) {
+    private void joinDifferentTable(int joinRow) {
 
-        int joinRow = b.getRow();
         System.out.println("in join different table. row="+ joinRow);
         PlayerTableModel m = onlineGameTablesTable_.getPlayerModel();
 

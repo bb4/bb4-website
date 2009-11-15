@@ -1,11 +1,5 @@
 package com.becker.ui.components;
 
-/**
- * GradientButton
- * Standard GradientButton that shows a vertical gradient on it.
- *
- */
-
 import javax.swing.*;
 import javax.swing.plaf.ButtonUI;
 import javax.swing.plaf.basic.BasicButtonUI;
@@ -16,14 +10,19 @@ import java.awt.geom.Rectangle2D;
 
 /**
  * GradientButton with a gradient background
+ * Standard GradientButton that shows a vertical gradient on it.
+ * @author Barry Becker
  */
 public class GradientButton extends JButton implements MouseListener
 {
-    // color at the top of the button
+    /** color at the top of the button. */
     private Color gradientStartColor_ = null;
-    //  color at the bottom of the button
+
+    /**  color at the bottom of the button. */
     private Color gradientEndColor_ = null;
+
     private static final long serialVersionUID = 0L;
+
     private boolean mousedOver_ = false;
 
     private CustomUI myUI_ = new CustomUI();
@@ -82,6 +81,7 @@ public class GradientButton extends JButton implements MouseListener
     /**
      * Don't let anyone change the UI object.
      */
+    @Override
     public void setUI( ButtonUI b )
     {
         super.setUI( myUI_ );
@@ -160,6 +160,7 @@ public class GradientButton extends JButton implements MouseListener
      */
     private class CustomUI extends BasicButtonUI
     {
+        @Override
         protected void paintText( Graphics g, JComponent c, Rectangle textRect, String text )
         {
             //if the button has no icon, add the gradient background
@@ -169,6 +170,7 @@ public class GradientButton extends JButton implements MouseListener
             super.paintText( g, c, textRect, text );
         }
 
+        @Override
         protected void paintIcon( Graphics g, JComponent c, Rectangle iconRect )
         {
             //if the button has an icon, add the gradient background

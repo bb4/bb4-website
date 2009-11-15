@@ -18,29 +18,26 @@ public class ParentTable extends TableBase  {
     public static final String NAVIGATE_TO_PARENT_BUTTON_ID = "navToParent";
 
     protected static final int NAVIGATE_INDEX = 0;
-    protected static final int NAME_INDEX = 1;
-    protected static final int NUM_CHILDREN_INDEX = 2;
+    protected static final int NUM_CHILDREN_INDEX = 1;
 
     protected static final String NAVIGATE = "Navigate to";
-    protected static final String NAME = "Name";
     protected static final String NUM_CHILDREN = "Num Children";
 
-    private ActionListener actionListener_;
-
-    private static String[] parentColumnNames_ =  {
+    private static final String[] PARENT_COLUMN_NAMES =  {
         NAVIGATE,
-         NAME,
          NUM_CHILDREN
     };
 
+    private TableButtonListener tableButtonListener_;
 
     /**
      * constructor
      * @param players to initializet the rows in the table with.
      */
-    public ParentTable(List<Scene> scenes, ActionListener listener)  {
-        super(scenes, parentColumnNames_);
-        actionListener_ = listener;
+    public ParentTable(List<Scene> scenes, TableButtonListener listener)  {
+        initColumnMeta(PARENT_COLUMN_NAMES);
+        tableButtonListener_ = listener;
+        initializeTable(scenes);
     }
 
     /**
@@ -51,7 +48,7 @@ public class ParentTable extends TableBase  {
     {
         Scene parentScene = (Scene) scene;
         Object d[] = new Object[getNumColumns()];
-        d[NAME_INDEX] = parentScene.getName();
+        d[NAVIGATE_INDEX] = parentScene.getName();
         d[NUM_CHILDREN_INDEX] = parentScene.getChoices().size();
         getParentTableModel().addRow(d);
     }
@@ -60,30 +57,24 @@ public class ParentTable extends TableBase  {
     @Override
     protected void updateColumnMeta(TableColumnMeta[] columnMeta) {
 
-        TableColumnMeta numChildrenMeta = columnMeta[NUM_CHILDREN_INDEX];
-
-        // more space needed for the names list.
-        columnMeta[NAME_INDEX].setPreferredWidth(200);
-
         TableColumnMeta navigateCol = columnMeta[NAVIGATE_INDEX];
 
-        ButtonCellEditor navCellEditor =
-                new ButtonCellEditor("Go",  actionListener_, NAVIGATE_TO_PARENT_BUTTON_ID);
+        TableButton navCellEditor = new TableButton(NAVIGATE_INDEX, NAVIGATE_TO_PARENT_BUTTON_ID);
+        navCellEditor.addTableButtonListener(tableButtonListener_);
 
-        navigateCol.setCellRenderer(navCellEditor.getCellRenderer());
+        navigateCol.setCellRenderer(navCellEditor);
         navigateCol.setCellEditor(navCellEditor);
-        navigateCol.setPreferredWidth(40);
-        navigateCol.setMaxWidth(100);
-     
+        navigateCol.setPreferredWidth(210);
+        navigateCol.setMaxWidth(500);
 
         columnMeta[NUM_CHILDREN_INDEX].setMinWidth(40);
         columnMeta[NUM_CHILDREN_INDEX].setPreferredWidth(100);
     }
 
 
-
     protected TableModel createTableModel(String[] columnNames)  {
-        return  new DefaultTableModel(columnNames, 0);
+        DefaultTableModel model = new ParentTableModel(columnNames, 0);
+        return  model;
     }
 
 

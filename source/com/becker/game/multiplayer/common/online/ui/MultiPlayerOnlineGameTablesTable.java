@@ -17,7 +17,7 @@ import java.awt.Color;
  *
  * @author Barry Becker
  */
-public abstract class MultiPlayerOnlineGameTablesTable extends TableBase {
+public abstract class MultiPlayerOnlineGameTablesTable extends TableBase  {
 
     protected static final int JOIN_INDEX = 0;
     protected static final int NUM_PLAYERS_INDEX = 1;
@@ -38,7 +38,7 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase {
     protected List<OnlineGameTable> tableList_;
     private static int counter_;
 
-    private ActionListener actionListener_;
+    private TableButtonListener tableButtonListener_;
     
     private static final Random RANDOM = new Random();
 
@@ -47,17 +47,17 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase {
      * constructor
      * @param actionListener called when join button clicked.
      */
-    public MultiPlayerOnlineGameTablesTable(ActionListener actionListener)
+    public MultiPlayerOnlineGameTablesTable(TableButtonListener tableButtonListener)
     {
-        this(COLUMN_NAMES, actionListener);
+        this(COLUMN_NAMES, tableButtonListener);
     }
 
-    public MultiPlayerOnlineGameTablesTable(String[] colNames, ActionListener actionListener) {
+    public MultiPlayerOnlineGameTablesTable(String[] colNames, TableButtonListener tableButtonListener) {
 
         initColumnMeta(colNames);
 
-        assert(actionListener != null);
-        actionListener_ = actionListener;
+        assert(tableButtonListener != null);
+        tableButtonListener_ = tableButtonListener;
         selectedTable_ = null;
         tableList_ = new ArrayList<OnlineGameTable>();
 
@@ -77,12 +77,10 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase {
 
         TableColumnMeta actionCol = columnMeta[JOIN_INDEX];
 
-        ButtonCellEditor joinCellEditor =
-                new ButtonCellEditor(GameContext.getLabel("JOIN"), 
-                                                  GameContext.getLabel("JOIN_TIP"),
-                                                  actionListener_);
-        
-        actionCol.setCellRenderer(joinCellEditor.getCellRenderer());
+        TableButton joinCellEditor = new TableButton(GameContext.getLabel("JOIN"), "id");
+        joinCellEditor.addTableButtonListener(tableButtonListener_);
+        joinCellEditor.setToolTipText(GameContext.getLabel("JOIN_TIP"));
+        actionCol.setCellRenderer(joinCellEditor);
         actionCol.setCellEditor(joinCellEditor);
         actionCol.setPreferredWidth(55);
     }

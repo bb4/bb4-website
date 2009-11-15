@@ -51,7 +51,7 @@ public abstract class TableBase
 
 
     /**
-     * @param rows initial data
+     * @param rows initial data to show in the table.
      */
     protected void initializeTable(List rows)
     {

@@ -34,11 +34,27 @@ public class Scene {
      * @param sceneNode
      * @param resourcePath
      */
-    public Scene(Node sceneNode, String resourcePath) {
+    public Scene(Node sceneNode, String resourcePath, boolean isFirst) {
         String description = sceneNode.getFirstChild().getTextContent();
 
+        isFirst_= isFirst;
         commonInit(DomUtil.getAttribute(sceneNode, "name"),
                   description, getChoices(sceneNode), resourcePath);
+    }
+
+    /**
+     * Copy constructor
+     * @param scene the scene to initialize from.
+     */
+    public Scene(Scene scene) {
+        this.name_ = scene.getName();
+        this.text_ = scene.getText();
+        this.image_ = scene.getImage();
+        this.soundURL_ = scene.soundURL_;
+        this.choices_ = new ArrayList<Choice>();
+        this.choices_.addAll(scene.getChoices());
+        System.out.println("copying scene " + name_ + " num choices = " + choices_.size());
+        this.isFirst_ = scene.isFirst();
     }
 
     /**
@@ -117,8 +133,29 @@ public class Scene {
         return choices_;
     }
 
+    /**
+     * @return choice associated with specified destination.
+     */
+    public Choice getChoiceByDestination(String destinationScene) {
+
+        for (Choice choice : choices_) {
+            if (choice.getDestination().equals(destinationScene)) {
+                return choice;
+            }
+        }
+        assert false :
+            "could not find choice for destination "+ destinationScene + " in scene "+ getName();
+        return null;
+    }
+
     public void setChoices(List<Choice> choices) {
         choices_ = choices;
+    }
+
+    public void deleteChoice(int choice) {
+        System.out.println("deleting choice : " +choice + " num choices=" + choices_.size());
+        choices_.remove(choice);
+        System.out.println("after deleting num="+ choices_.size());
     }
 
     /**
@@ -176,10 +213,6 @@ public class Scene {
         if (hasSound()) {
              SoundUtil.playSound(soundURL_);
         }
-    }
-
-    public void setFirst() {
-        isFirst_ = true;
     }
 
     public boolean isFirst() {

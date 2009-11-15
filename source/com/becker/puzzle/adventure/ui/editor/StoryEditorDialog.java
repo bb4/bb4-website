@@ -1,5 +1,6 @@
 package com.becker.puzzle.adventure.ui.editor;
 
+import com.becker.puzzle.adventure.Choice;
 import com.becker.ui.components.GradientButton;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -7,21 +8,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 import com.becker.puzzle.adventure.Story;
+import com.becker.puzzle.adventure.Scene;
 import com.becker.ui.dialogs.AbstractDialog;
-import com.becker.ui.table.TableButton;
+import com.becker.ui.table.TableButtonListener;
 import java.awt.BorderLayout;
 import java.awt.Font;
+import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import com.becker.puzzle.adventure.Scene;
 
 /**
  *
  * @author Barry Becker
  */
 public class StoryEditorDialog extends AbstractDialog
-                                                  implements ActionListener {
+                                                  implements ActionListener, TableButtonListener {
 
     /** The story to edit */
     private Story story_;
@@ -32,7 +37,10 @@ public class StoryEditorDialog extends AbstractDialog
     private SceneEditorPanel sceneEditor;
 
     private static final Font INSTRUCTION_FONT = new Font("Sans Serif", Font.PLAIN, 10);
-    
+
+    private List<Scene>  parentScenes_;
+    private ChildTable  childTable_;
+
 
     /**
      * Constructor
@@ -51,7 +59,7 @@ public class StoryEditorDialog extends AbstractDialog
 
     protected JComponent createDialogContent() {
         JPanel mainPanel = new JPanel(new BorderLayout());
-        mainPanel.setSize(new Dimension(800, 1200));
+        //mainPanel.setPreferredSize(new Dimension(800, 1200));
 
         JPanel editingPane = createEditingPane();
         JLabel title = new JLabel("Navigate through the scene heirarchy and change values for scenes.");
@@ -61,8 +69,7 @@ public class StoryEditorDialog extends AbstractDialog
         mainPanel.add(title, BorderLayout.NORTH);
         mainPanel.add(editingPane, BorderLayout.CENTER);
         mainPanel.add(createButtonsPanel(), BorderLayout.SOUTH);
-        //mainPanel.setPreferredSize(new Dimension(700,900));
-
+      
         return mainPanel;
     }
 
@@ -85,14 +92,15 @@ public class StoryEditorDialog extends AbstractDialog
 
     private JComponent createParentTable() {
         JPanel parentContainer = new JPanel(new BorderLayout());
-        ParentTable parentTable = new ParentTable(story_.getParentScenes(), this);
+        parentScenes_ = story_.getParentScenes();
+        ParentTable parentTable = new ParentTable(parentScenes_, this);
 
         parentContainer.setBorder(
                 BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(),"Parent Scenes" ) );
 
         parentContainer.add(new JScrollPane(parentTable.getTable()), BorderLayout.CENTER);
 
-        parentContainer.setPreferredSize(new Dimension(700, 80));
+        parentContainer.setPreferredSize(new Dimension(SceneEditorPanel.WIDTH, 120));
         return parentContainer;
     }
 
@@ -109,14 +117,15 @@ public class StoryEditorDialog extends AbstractDialog
 
     private JComponent createChildTable() {
         JPanel childContainer = new JPanel(new BorderLayout());
-        ChildTable childTable = new ChildTable(story_.getCurrentScene().getChoices(), this);
+
+         childTable_ = new ChildTable(story_.getCurrentScene().getChoices(), this);
 
         childContainer.setBorder(
                 BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(),"Choices (to navigate to child scenes)" ) );
 
-        childContainer.add(new JScrollPane(childTable.getTable()), BorderLayout.CENTER);
+        childContainer.add(new JScrollPane(childTable_.getTable()), BorderLayout.CENTER);
 
-        childContainer.setPreferredSize(new Dimension(700, 120));
+        childContainer.setPreferredSize(new Dimension(SceneEditorPanel.WIDTH, 200));
         return childContainer;
     }
 
@@ -139,34 +148,57 @@ public class StoryEditorDialog extends AbstractDialog
     @Override
     public void actionPerformed( ActionEvent e )
     {
+        System.out.println("in StoryEditorDlg actionPerfmd");
         super.actionPerformed(e);
         Object source = e.getSource();
 
         if ( source == okButton_ ) {      
             ok();
         }
-        else if (source instanceof TableButton ) {
-            TableButton button = (TableButton) source;
-            if (ChildTable.NAVIGATE_TO_CHILD_BUTTON_ID.equals(button.getId())) {
-
-            } else if (ChildTable.DELETE_CHOICE_BUTTON_ID.equals(button.getId())) {
-
-            } if (ParentTable.NAVIGATE_TO_PARENT_BUTTON_ID.equals(button.getId())) {
-
-            }
-        }
     }
 
+    /**
+     *
+     * @param row
+     * @param col
+     * @param buttonId id of buttonEditor clicked.
+     */
+    public void tableButtonClicked(int row, int col, String buttonId) {
+
+        if (ChildTable.NAVIGATE_TO_CHILD_BUTTON_ID.equals(buttonId)) {
+            System.out.println("nav to child : " + row);
+            story_.advanceScene(row);
+        } else if (ChildTable.ACTION_BUTTON_ID.equals(buttonId)) {
+             System.out.println("delete child : " + row);
+             int answer = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this choice?");
+             if (answer == JOptionPane.YES_OPTION) {
+                  story_.getCurrentScene().deleteChoice(row);
+             } else {
+                 return;
+             }
+        } else if (ParentTable.NAVIGATE_TO_PARENT_BUTTON_ID.equals(buttonId)) {
+             System.out.println("nav to parent : " + row);
+             story_.advanceToScene(parentScenes_.get(row).getName());
+        }
+        else {
+            assert false : "unexpected id =" + buttonId;
+        }
+        showContent();
+    }
+
+    /**
+     * @return our edited copy of the story we were passed at construction.
+     */
     public Story getEditedStory() {
         return story_;
     }
 
     protected void ok()
     {
-         //JOptionPane.showMessageDialog( null,
-         //               "Done editing!", "Info", JOptionPane.INFORMATION_MESSAGE );
-        //canceled_ = false;
         sceneEditor.doSave();
+        // also save the choice text (it may have been modified)
+        childTable_.updateSceneChoices(story_.getCurrentScene());
+
         this.setVisible( false );
     }
 }

@@ -55,6 +55,7 @@ public abstract class AbstractDialog extends JDialog implements ActionListener {
      * @param content
      */
     protected final void showContent() {
+        this.getContentPane().removeAll();
         this.getContentPane().add(createDialogContent());
 
         enableEvents(AWTEvent.WINDOW_EVENT_MASK);

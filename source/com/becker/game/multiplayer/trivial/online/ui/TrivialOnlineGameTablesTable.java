@@ -8,6 +8,7 @@ import com.becker.game.multiplayer.common.online.ui.*;
 import com.becker.game.common.online.*;
 import com.becker.game.common.*;
 
+import com.becker.ui.table.TableButtonListener;
 import java.awt.event.*;
 
 /**
@@ -24,8 +25,8 @@ public class TrivialOnlineGameTablesTable extends MultiPlayerOnlineGameTablesTab
      *
      * @param actionListener  that gets called when the player selects a different table to join.
      */
-    public TrivialOnlineGameTablesTable(ActionListener actionListener) {
-         super(TRIVIAL_COLUMN_NAMES, actionListener);
+    public TrivialOnlineGameTablesTable(TableButtonListener tableButtonListener) {
+         super(TRIVIAL_COLUMN_NAMES, tableButtonListener);
     }
 
 

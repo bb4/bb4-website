@@ -19,7 +19,6 @@ What do you do?
             <choice description="Knock on the front door"  resultScene="no_response" />
             <choice description="Open the front door without knocking"  resultScene="inside_entrance" />
             <choice description="Scream"                             resultScene="sky_falls"/>
-            <choice description="Knock on the front door"  resultScene="no_response"/>
         </choices>
     </scene>
 

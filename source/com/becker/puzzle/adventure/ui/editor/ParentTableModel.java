@@ -13,19 +13,16 @@ import java.util.*;
  */
 public class ParentTableModel extends DefaultTableModel
 {
-    boolean editable_;
     private static final long serialVersionUID = 0;
 
-    public ParentTableModel(Object[][] data, Object[] columnNames, boolean editable)
+    public ParentTableModel(Object[][] data, Object[] columnNames)
     {
         super(data, columnNames);
-        editable_ = editable;
     }
 
-    public ParentTableModel(Object[] columnNames, int rowCount, boolean editable)
+    public ParentTableModel(Object[] columnNames, int rowCount)
     {
         super(columnNames, rowCount);
-        editable_ = editable;
     }
 
     @Override
@@ -38,6 +35,7 @@ public class ParentTableModel extends DefaultTableModel
     @Override
     public boolean isCellEditable(int row, int column)
     {
-        return editable_;
+
+        return (column == ParentTable.NAVIGATE_INDEX);
     }
 }

@@ -25,7 +25,9 @@ import java.awt.event.*;
 public class TrivialGameViewer extends MultiGameViewer
 {
 
-    // Construct the application
+    /**
+     *  Construct the application
+     */
     public TrivialGameViewer()
     {
     }
@@ -107,8 +109,9 @@ public class TrivialGameViewer extends MultiGameViewer
      * @param player to apply it to
      * @return message to show if on client.
      */
+    @Override
     protected String applyAction(PlayerAction action,  Player player) {
-
+        assert action != null;
         TrivialPlayer p = (TrivialPlayer) player;
         TrivialAction act = (TrivialAction) action;
         TrivialController tc = (TrivialController) controller_;
