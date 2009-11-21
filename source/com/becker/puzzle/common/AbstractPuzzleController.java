@@ -69,6 +69,7 @@ public abstract class AbstractPuzzleController<P, M> implements PuzzleController
 
         Worker worker = new Worker()  {
 
+            @Override
             public Object construct()  {
 
                 // this does all the heavy work of solving it.

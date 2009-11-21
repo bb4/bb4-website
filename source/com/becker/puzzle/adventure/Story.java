@@ -175,7 +175,7 @@ public class Story {
      * @return the loaded Document that contains the asventure.
      */
     public static Document importStoryDocument(String[] args) {
-        Document document = null;
+        Document document;
         if (args.length == 1) {
             File file = new File(args[0]);
             document = DomUtil.parseXMLFile(file);
@@ -221,12 +221,12 @@ public class Story {
         }
     }
 
-    public void initFromScenes(Scene[] scenes)  {
+    void initFromScenes(Scene[] scenes)  {
         sceneMap_ = createSceneMap(scenes.length);
         
         for (final Scene scene : scenes) {
             if (scene.getChoices() == null) {
-                List<Choice> quitChoice = new ArrayList<Choice>();
+                ChoiceList quitChoice = new ChoiceList();
                 quitChoice.add(Choice.QUIT_CHOICE);
                 scene.setChoices(quitChoice) ;
             }
@@ -268,7 +268,7 @@ public class Story {
     /**
      * Jump to some arbitrary scene.
      * Not typically used. Should use advanceScene for normal navigation.
-     * @param choice index of the selected choice.
+     * @param nextSceneName name of the scene to navigate to.
      */
     public void advanceToScene(String nextSceneName) {
      
@@ -301,6 +301,21 @@ public class Story {
             }
         }
         return parentScenes;
+    }
+
+    /**
+     * @return a list of all the existing scenes that we could navigate to
+     *   that are not already included in the current scene's list of choices.
+     */
+    public List<String> getCandidateDestinationSceneNames() {
+        List<String> candidateSceneNames = new ArrayList<String>();
+
+         for (String sceneName : sceneMap_.keyList()) {
+            if (!getCurrentScene().getChoices().isDestination(sceneName)) {
+                candidateSceneNames.add(sceneName);
+            }
+        }
+        return candidateSceneNames;
     }
 
     /**

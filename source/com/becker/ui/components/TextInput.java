@@ -14,9 +14,6 @@ public class TextInput extends JPanel
 {
     private JTextField textField_;
 
-    protected static final Dimension TEXT_FIELD_DIM =
-            new Dimension( 1000, OptionsDialog.ROW_HEIGHT );
-
 
     /**
      * Often the iniial value cannot be set when initializing the content of a dialog.
@@ -52,8 +49,8 @@ public class TextInput extends JPanel
         add(panel, BorderLayout.CENTER);
     }
 
-    public void setWidth(int width) {
-        textField_.getMaximumSize().setSize(width, textField_.getMaximumSize().getHeight());
+    public void setColumns(int numColumns) {
+        textField_.setColumns(numColumns);
     }
 
     public String getValue() {

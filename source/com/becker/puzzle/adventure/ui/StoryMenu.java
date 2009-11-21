@@ -17,7 +17,7 @@ import com.becker.ui.filefilter.ExtensionFileFilter;
  *
  * @author Barry Becker
  */
-public class StoryMenu extends JMenu implements ActionListener  {
+class StoryMenu extends JMenu implements ActionListener  {
 
     //private JFrame frame_;
     private GraphicalAdventure storyApp_;
@@ -111,7 +111,7 @@ public class StoryMenu extends JMenu implements ActionListener  {
      * @param name name of the menu item. The label.
      * @return the menu item to add.
      */
-    protected JMenuItem createMenuItem(String name)
+    JMenuItem createMenuItem(String name)
     {
         JMenuItem item = new JMenuItem(name);
         item.addActionListener(this);

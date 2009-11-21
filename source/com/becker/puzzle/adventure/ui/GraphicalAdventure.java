@@ -22,10 +22,9 @@ import javax.swing.JPanel;
  * @author Barry Becker
  */
 public final class GraphicalAdventure extends ApplicationApplet
-                                                              implements SceneChangeListener {
+                                      implements SceneChangeListener {
 
     private Story story_;
-    private StoryPanel storyPanel_;
     private ChoicePanel choicePanel_ = null;
     private JPanel mainPanel_;
 
@@ -72,7 +71,7 @@ public final class GraphicalAdventure extends ApplicationApplet
         System.out.println("set new story");
         mainPanel_.removeAll();
 
-        storyPanel_ =  new StoryPanel(story_);
+        StoryPanel storyPanel = new StoryPanel(story_);
 
         // setup for initial scene
         choicePanel_ = new ChoicePanel(story_.getCurrentScene().getChoices());
@@ -80,7 +79,7 @@ public final class GraphicalAdventure extends ApplicationApplet
 
         choicePanel_.addSceneChangeListener(this);
 
-        mainPanel_.add( storyPanel_, BorderLayout.CENTER );
+        mainPanel_.add( storyPanel, BorderLayout.CENTER );
         mainPanel_.add( choicePanel_, BorderLayout.SOUTH );
         refresh();
     }
@@ -90,7 +89,7 @@ public final class GraphicalAdventure extends ApplicationApplet
         return story_;
     }
 
-    protected void refresh()
+    void refresh()
     {
         mainPanel_.invalidate();
         mainPanel_.validate();

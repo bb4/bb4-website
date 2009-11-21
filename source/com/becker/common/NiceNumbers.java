@@ -1,8 +1,8 @@
 package com.becker.common;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.text.*;
 
 /**
  * Calculate nice round numbered cutpoints for a given range.
@@ -18,7 +18,7 @@ public final class NiceNumbers {
     // Used in calculating log base 10.
     private static final double LOG10SCALE = 1.0 / Math.log(10.0);
 
-    private static DecimalFormat format_ = new DecimalFormat("###,###.##");
+    private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("###,###.##");
 
 
     /**
@@ -41,12 +41,12 @@ public final class NiceNumbers {
 
     public static String[] getCutPointLabels(double min, double max, int maxTicks, boolean useTightLabeling) {
         double [] cutPoints  = getCutPoints(min, max, maxTicks, useTightLabeling);
-        format_.setMaximumFractionDigits(getNumberOfFractionDigits(min, max, maxTicks));
+        DECIMAL_FORMAT.setMaximumFractionDigits(getNumberOfFractionDigits(min, max, maxTicks));
 
         int len = cutPoints.length;
         String[] labels = new String[len];
         for (int i=0; i<len; i++) {
-            labels[i] = format_.format(cutPoints[i]);
+            labels[i] = DECIMAL_FORMAT.format(cutPoints[i]);
         }
         return labels;
     }

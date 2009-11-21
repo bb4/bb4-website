@@ -236,8 +236,9 @@ final class GoBoardViewer extends AbstractTwoPlayerBoardViewer
                 if ( string.getGroup() != null ) {
                     sb.append( "<br>" );
                     String groupText = string.getGroup().toHtml();
-                    groupText = GUIUtil.replaceString( groupText, stringText, "<font color=#440000>" + stringText + "</font>" );
-                    groupText = GUIUtil.replaceString( groupText, spaceText, "<b><font color=#991100>" + spaceText + "</font></b>" );
+
+                    groupText = groupText.replaceAll(stringText, "<font color=#440000>" + stringText + "</font>" );
+                    groupText = groupText.replaceAll(spaceText, "<b><font color=#991100>" + spaceText + "</font></b>");
                     sb.append( groupText );
                 }
             }
@@ -245,7 +246,7 @@ final class GoBoardViewer extends AbstractTwoPlayerBoardViewer
             if (eye != null) {
                String eyeText = eye.toString();
                sb.append( "<br>" );
-               eyeText = GUIUtil.replaceString( eyeText, spaceText, "<b><font color=#991100>" + spaceText + "</font></b>");
+               eyeText = eyeText.replaceAll(spaceText, "<b><font color=#991100>" + spaceText + "</font></b>");
                sb.append(eyeText);
                // to debug show the group that contains this eye
                sb.append( "<br>" );

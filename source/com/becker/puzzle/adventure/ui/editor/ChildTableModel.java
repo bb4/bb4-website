@@ -3,6 +3,8 @@ package com.becker.puzzle.adventure.ui.editor;
 import com.becker.game.multiplayer.common.ui.*;
 import javax.swing.table.*;
 import java.util.*;
+import com.becker.puzzle.adventure.Scene;
+import com.becker.puzzle.adventure.Choice;
 
 
 /**
@@ -24,10 +26,51 @@ public class ChildTableModel extends DefaultTableModel
         super(columnNames, rowCount);
     }
 
+    /**
+     * @param row row to check
+     * @return true if last row in table.
+     */
+    public boolean isLastRow(int row) {
+         return row == this.getRowCount() -1;
+    }
+
+    /**
+     * Make the text for the scene choice descriptions match the scene passed in.
+     * @param currentScene scene to update to.
+     */
+    public void updateSceneChoices(Scene currentScene) {
+        for (int i=0; i<getRowCount()-1; i++) {
+            String dest = getValueAt(i, ChildTable.NAVIGATE_INDEX).toString();
+            Choice c =  currentScene.getChoices().getChoiceByDestination(dest);
+            c.setDescription(getValueAt(i, ChildTable.CHOICE_DESCRIPTION_INDEX).toString());
+        }
+    }
+
+    /**
+     * Set the scene name of the current add row and add another add row.
+     * @param addedSceneName  name pf the scene to add.
+     */
+    public void addNewChildChoice(String addedSceneName) {
+         System.out.println("adding new scene :" + addedSceneName);
+         setValueAt(ChildTable.DELETE_BUTTON_LABEL, getRowCount()-1, ChildTable.ACTION_INDEX);
+         setValueAt(addedSceneName, getRowCount()-1, ChildTable.NAVIGATE_INDEX);
+
+        Object d[] = new Object[this.getColumnCount()];
+        d[ChildTable.ACTION_INDEX] = ChildTable.ADD_BUTTON_LABEL;
+        d[ChildTable.NAVIGATE_INDEX] = ChildTable.ADD_BUTTON_LABEL;
+        d[ChildTable.CHOICE_DESCRIPTION_INDEX] = ChildTable.NEW_CHOICE_DESC_LABEL;
+
+        this.addRow(d);
+        this.fireTableDataChanged();
+        int numRows = this.getRowCount();
+        this.fireTableRowsInserted(numRows-1, numRows);
+        this.fireTableStructureChanged();
+    }
+
     @Override
     public Class getColumnClass(int col)
     {
-        List v = (Vector)dataVector.elementAt(0);
+        List v = (List) dataVector.elementAt(0);
         return v.get(col).getClass();
     }
 

@@ -7,8 +7,7 @@ import com.becker.ui.GUIUtil;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+
 
 
 /**
@@ -23,7 +22,7 @@ public class Scene {
 
     private String name_;
     private String text_;
-    private List<Choice> choices_;
+    private ChoiceList choices_;
     private boolean isFirst_;
     private URL soundURL_;
     private BufferedImage image_;
@@ -39,11 +38,11 @@ public class Scene {
 
         isFirst_= isFirst;
         commonInit(DomUtil.getAttribute(sceneNode, "name"),
-                  description, getChoices(sceneNode), resourcePath);
+                  description, new ChoiceList(sceneNode, isFirst()), resourcePath);
     }
 
     /**
-     * Copy constructor
+     * Copy constructor.
      * @param scene the scene to initialize from.
      */
     public Scene(Scene scene) {
@@ -51,14 +50,12 @@ public class Scene {
         this.text_ = scene.getText();
         this.image_ = scene.getImage();
         this.soundURL_ = scene.soundURL_;
-        this.choices_ = new ArrayList<Choice>();
-        this.choices_.addAll(scene.getChoices());
+        this.choices_ = new ChoiceList(scene);
         System.out.println("copying scene " + name_ + " num choices = " + choices_.size());
         this.isFirst_ = scene.isFirst();
     }
 
     /**
-     *
      * @param document the document to which to append this scene as a child.
      */
     public void appendToDocument(Document document) {
@@ -70,12 +67,12 @@ public class Scene {
           sceneElem.appendChild(descElem);
 
           // if we only have the QUIT choice, don't bother to add the choice list.
-          Choice firstChoice = this.getChoices().get(0);
+          Choice firstChoice = getChoices().get(0);
           if (firstChoice != Choice.QUIT_CHOICE) {
               Element choicesElem =  document.createElement("choices");
               sceneElem.appendChild(choicesElem);
-              for (int i=0; i<this.getChoices().size()-1; i++) {
-                  Choice choice = this.getChoices().get(i);
+              for (int i=0; i<getChoices().size()-1; i++) {
+                  Choice choice = getChoices().get(i);
                   choicesElem.appendChild(choice.createElement(document));
               }
           }
@@ -84,7 +81,7 @@ public class Scene {
           rootElement.appendChild(sceneElem);
     }
 
-    private void commonInit(String name, String text, List<Choice> choices, String resourcePath) {
+    private void commonInit(String name, String text, ChoiceList choices, String resourcePath) {
         name_ = name;
         text_ = text;
         choices_ = choices;
@@ -101,54 +98,16 @@ public class Scene {
         }
     }
 
-    /**
-     * @param sceneNode scene to get choices for.
-     * @return the coices for the scpecified scene.
-     */
-    private List<Choice> getChoices(Node sceneNode) {
-        List<Choice> choices = null;
-        // if there are choices they will be the second element (right after description).
-        NodeList children = sceneNode.getChildNodes();
-        if (children.getLength() > 1) {
-            Node choicesNode = children.item(1);
-            NodeList choiceList = choicesNode.getChildNodes();
-            int numChoices = choiceList.getLength();
-            choices = new ArrayList<Choice>(numChoices + (isFirst()? 0 : 1));
-            for (int i=0; i<numChoices; i++) {
-                assert choiceList.item(i) != null;
-                choices.add(new Choice(choiceList.item(i)));
-            }
-            if ( !isFirst() ) {
-                choices.add(new Choice("Go back to last scene.", Choice.PREVIOUS_SCENE));
-            }
-        }
-        
-        return choices;
-    }
-
+    
     /**
      * @return  choices that will lead to the next scene.
      */
-    public List<Choice> getChoices() {
+    public ChoiceList getChoices() {
         return choices_;
     }
 
-    /**
-     * @return choice associated with specified destination.
-     */
-    public Choice getChoiceByDestination(String destinationScene) {
 
-        for (Choice choice : choices_) {
-            if (choice.getDestination().equals(destinationScene)) {
-                return choice;
-            }
-        }
-        assert false :
-            "could not find choice for destination "+ destinationScene + " in scene "+ getName();
-        return null;
-    }
-
-    public void setChoices(List<Choice> choices) {
+    public void setChoices(ChoiceList choices) {
         choices_ = choices;
     }
 
@@ -182,17 +141,7 @@ public class Scene {
      */
     public boolean isParentOf(Scene scene) {
         String sName = scene.getName();
-        assert sName != null;
-        int numChoices = choices_.size();
-        for (int i=0; i<numChoices-1; i++) {
-            Choice choice = choices_.get(i);
-            assert choice != null;
-            assert choice.getDestination() != null;
-            if (choice.getDestination().equals(sName)) {
-                return true;
-            }
-        }
-        return false;
+        return choices_.isDestination(sName);
     }
 
     /**
@@ -215,7 +164,7 @@ public class Scene {
         }
     }
 
-    public boolean isFirst() {
+    boolean isFirst() {
         return isFirst_;
     }
 
