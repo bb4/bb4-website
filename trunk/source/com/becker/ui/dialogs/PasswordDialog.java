@@ -1,6 +1,5 @@
 package com.becker.ui.dialogs;
 
-import com.becker.ui.GUIUtil;
 import com.becker.ui.components.GradientButton;
 import java.awt.AWTEvent;
 import java.awt.BorderLayout;
@@ -22,7 +21,7 @@ import javax.swing.JPasswordField;
 public class PasswordDialog extends AbstractDialog
                                                 implements ActionListener, KeyListener {
 
-    private static String DEFAULT_PASSWORD = "hello123";
+    private static final String DEFAULT_PASSWORD = "hello123";
     private String password_;
 
     private JPasswordField passwordField_;
@@ -34,7 +33,10 @@ public class PasswordDialog extends AbstractDialog
     private static final char NEWLINE_CHAR = 10;
 
 
-
+    /**
+     * Constructor
+     * @param expectedPassword password that the user must enter to continue.
+     */
     public PasswordDialog(String expectedPassword) {
         super();
         if (expectedPassword == null)
@@ -49,6 +51,7 @@ public class PasswordDialog extends AbstractDialog
     /**
      * initiallize the dialogs ui
      */
+    @Override
     public JPanel createDialogContent()
     {
         enableEvents( AWTEvent.WINDOW_EVENT_MASK );
@@ -78,6 +81,7 @@ public class PasswordDialog extends AbstractDialog
 
     /**
      *  create the buttons that go at the botton ( eg OK, Cancel, ...)
+     * @return panel with ok cancel buttons.
      */
     protected  JPanel createButtonsPanel() {
         JPanel buttonsPanel = new JPanel( new FlowLayout() );
@@ -127,7 +131,7 @@ public class PasswordDialog extends AbstractDialog
 
     public void keyPressed(KeyEvent key) {
         char c = key.getKeyChar();
-        System.out.println("key="+ Integer.toString(c) + " key2=" + c);
+        //System.out.println("key="+ Integer.toString(c) + " key2=" + c);
         if (c == NEWLINE_CHAR) {
             validatePassword();
         }

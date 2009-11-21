@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -15,6 +14,7 @@ import java.util.Set;
  *
  * @author becker
  */
+@SuppressWarnings({"SuspiciousMethodCalls"})
 public class OrderedMap<K, V> implements Map<K, V> {
 
      /** maps scene name to the scene */
@@ -30,9 +30,9 @@ public class OrderedMap<K, V> implements Map<K, V> {
 
     /**
      * Copy constructor
-     * @param capacity
+     * @param map map to initialize from
      */
-    public OrderedMap(OrderedMap map) {
+    public OrderedMap(OrderedMap<K, V> map) {
         this(map.size());
         putAll(map);
     }

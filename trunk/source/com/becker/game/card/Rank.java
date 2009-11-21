@@ -6,6 +6,7 @@ import java.util.HashMap;
 /**
  * @author Barry Becker  Date: Mar 5, 2005
  */
+@SuppressWarnings({"StaticMethodOnlyUsedInOneClass", "UnusedDeclaration", "ClassWithTooManyFields"})
 public enum Rank {
 
     DEUCE("2"),
@@ -32,7 +33,7 @@ public enum Rank {
         }
     }
 
-    private Rank(String symbol) {
+    Rank(String symbol) {
         symbol_ = symbol;
 
     }

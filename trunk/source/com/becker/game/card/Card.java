@@ -10,7 +10,7 @@ public class Card {
 
     /** The cards rank: 2,3,4,...,10,J,Q,K,A */
     private final Rank rank_;
-    private final Suit suit_;
+    private Suit suit_;
 
     /** A prototype deck that gets statically initialized. */
     private static final List<Card> protoDeck = new ArrayList<Card>();
@@ -45,7 +45,7 @@ public class Card {
             case 'D' : this.suit_ = Suit.DIAMONDS; break;
             case 'C' : this.suit_ = Suit.CLUBS; break;
             case 'S' : this.suit_ = Suit.SPADES; break;
-            default: this.suit_ = null;  assert false;
+            default: assert false : "Invalid card token:"+ cardToken;
         }
     }
 
@@ -59,7 +59,6 @@ public class Card {
 
 
     /**
-     *
      * @return Return a copy of prototype deck
      */
     public static List<Card> newDeck() {
@@ -69,7 +68,6 @@ public class Card {
     }
 
     public static void main(String[] args) {
-
-        List deck = newDeck();
+        newDeck();
     }
 }

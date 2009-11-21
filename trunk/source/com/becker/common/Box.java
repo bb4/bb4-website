@@ -5,14 +5,16 @@ package com.becker.common;
  * A box defined by 2 locations.
  * @author Barry Becker
  */
+@SuppressWarnings({"UnusedDeclaration"})
 public class Box {
     
     private final Location topLeftCorner_;
     private final Location bottomRightCorner_;
 
     /**
-     *@param topLeftCorner
-     *@param bottomRightCorner
+     * Constructor
+     *@param topLeftCorner top left corner coordinates.
+     *@param bottomRightCorner bottom right corner coordinates.
      */
     public Box(Location topLeftCorner, Location bottomRightCorner) {
         topLeftCorner_ = topLeftCorner;
@@ -74,10 +76,6 @@ public class Box {
         return bottomRightCorner_.getCol();
     }
 
-    public int getArea()  {
-        return getWidth() * getHeight();
-    }
-
     public void expandBy(Location loc) {
         if (loc.getRow() < topLeftCorner_.getRow()) {
             topLeftCorner_.setRow(loc.getRow());
@@ -93,15 +91,10 @@ public class Box {
         }
     }
 
-    public void expandBy(Box box)  {
-        expandBy(box.getTopLeftCorner());
-        expandBy(box.getBottomRightCorner());
-    }
-    
     /**
      * @param amount amount to expand all borders of the box by.
-     * @param maxX don't go further than this though.
-     * @param maxY don't go further than this though.
+     * @param maxRow don't go further than this though.
+     * @param maxCol don't go further than this though.
      */
     public void expandGloballyBy(int amount, int maxRow, int maxCol) {
       
@@ -114,8 +107,8 @@ public class Box {
     
     /**
      * @param threshold if withing this distance to the edge, extend the box all the way to that edge.
-     * @param maxX don't go further than this though.
-     * @param maxY don't go further than this though.
+     * @param maxRow don't go further than this though.
+     * @param maxCol don't go further than this though.
      */
     public void expandBordersToEdge(int threshold, int maxRow, int maxCol) {
         if (topLeftCorner_.getRow() <= threshold + 1) {

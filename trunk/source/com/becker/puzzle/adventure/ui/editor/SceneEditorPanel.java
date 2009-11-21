@@ -28,17 +28,21 @@ class SceneEditorPanel extends JPanel implements ActionListener {
     private GradientButton showImageButton_;
     private GradientButton playSoundButton_;
 
+    private TextInput nameInput_ ;
     private JTextArea sceneText_;
+
+    private String oldSceneName_;
 
     private static final int EDITOR_WIDTH = 900;
 
     /**
      * Constructor
-     * @param scene
+     * @param scene the scene to populate the editor with.
      */
     public  SceneEditorPanel(Scene scene) {
 
         scene_ = scene;
+        oldSceneName_ = scene_.getName();
         createUI();
     }
 
@@ -50,7 +54,8 @@ class SceneEditorPanel extends JPanel implements ActionListener {
         this.setBorder(
                 BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(),"Edit current Scene" ) );
 
-        TextInput nameInput_= new TextInput("name:", scene_.getName());
+        nameInput_= new TextInput("name:", scene_.getName());
+        nameInput_.setColumns(70);
 
         sceneText_ = new JTextArea();
         sceneText_.setFont(StoryPanel.TEXT_FONT);
@@ -63,6 +68,7 @@ class SceneEditorPanel extends JPanel implements ActionListener {
 
     /**
      * for sound and image and whatever else is associated with the scene.
+     * @return image and sound buttons in a panel.
      */
     private JPanel createMediaButtons() {
         JPanel buttonPanel = new JPanel(new FlowLayout());
@@ -94,7 +100,24 @@ class SceneEditorPanel extends JPanel implements ActionListener {
         }
     }
 
+    public boolean isSceneNameChanged() {
+        return !oldSceneName_.equals(nameInput_.getValue());
+    }
+
+    public String getOldSceneName() {
+        return oldSceneName_;
+    }
+
+    public Scene getEditedScene() {
+        return scene_;
+    }
+    /**
+     * Persist the scene changes to the story.
+     */
     public void doSave() {
+        if (isSceneNameChanged()) {
+            scene_.setName(nameInput_.getValue());
+        }
         scene_.setText(sceneText_.getText());
     }
 }
