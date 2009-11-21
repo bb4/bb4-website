@@ -12,7 +12,7 @@ import com.becker.common.xml.*;
 public class Choice {
 
     private String description_;
-    private String destination_;
+    private String destinationScene_;
 
     public static final String QUIT = "Quit";
     public static final String PREVIOUS_SCENE = "last scene";
@@ -27,7 +27,7 @@ public class Choice {
 
     public Choice(String desc, String dest) {
         description_ = desc;
-        destination_ = dest;
+        destinationScene_ = dest;
     }
 
     /**
@@ -45,7 +45,11 @@ public class Choice {
      * @return the name of the scene to go to if they select this choice.
      */
     public String getDestination() {
-        return destination_;
+        return destinationScene_;
+    }
+
+    public void setDestination(String destName) {
+        destinationScene_ = destName;
     }
 
     /**

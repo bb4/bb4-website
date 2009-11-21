@@ -8,8 +8,7 @@ import java.util.*;
 /**
  * Run your own adventure story.
  * This version runs the adventure in text only mode.
- * @see Adventure
- * @see GraphicalAdventure
+ * @see com.becker.puzzle.adventure.ui.GraphicalAdventure
  *
  * @author Barry Becker
  */
@@ -29,7 +28,7 @@ public final class TextAdventure {
         do {
 
             Scene currentScene = story.getCurrentScene();
-            System.out.println(currentScene);
+            System.out.println(currentScene.print());
 
             int nextSceneIndex = getNextSceneIndex(currentScene, scanner);
             

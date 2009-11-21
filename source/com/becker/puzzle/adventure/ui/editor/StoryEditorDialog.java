@@ -1,6 +1,5 @@
 package com.becker.puzzle.adventure.ui.editor;
 
-import com.becker.puzzle.adventure.Choice;
 import com.becker.ui.components.GradientButton;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -19,7 +18,6 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
-import com.becker.puzzle.adventure.Scene;
 
 /**
  *
@@ -41,7 +39,7 @@ public class StoryEditorDialog extends AbstractDialog
     private List<Scene>  parentScenes_;
     private ChildTableModel  childTableModel_;
 
-
+    
     /**
      * Constructor
      * @param story creates a copy of this in case we cancel.
@@ -57,9 +55,9 @@ public class StoryEditorDialog extends AbstractDialog
     }
 
 
+    @Override
     protected JComponent createDialogContent() {
         JPanel mainPanel = new JPanel(new BorderLayout());
-        //mainPanel.setPreferredSize(new Dimension(800, 1200));
 
         JPanel editingPane = createEditingPane();
         JLabel title = new JLabel("Navigate through the scene heirarchy and change values for scenes.");
@@ -77,7 +75,7 @@ public class StoryEditorDialog extends AbstractDialog
      * Parent table on top
      * Scene editor in the middle
      * Child options on the bottom
-     * @return
+     * @return the panel that holds the story editor controls
      */
     private JPanel createEditingPane() {
         JPanel editingPane = new JPanel(new BorderLayout());
@@ -131,7 +129,8 @@ public class StoryEditorDialog extends AbstractDialog
     }
 
     /**
-     *  create the buttons that go at the botton ( eg OK, Cancel, ...)
+     * Create the buttons that go at the botton ( eg OK, Cancel, ...)
+     * @return ok cancel panel.
      */
     JPanel createButtonsPanel() {
         JPanel buttonsPanel = new JPanel( new FlowLayout() );
@@ -160,8 +159,8 @@ public class StoryEditorDialog extends AbstractDialog
 
     /**
      *
-     * @param row
-     * @param col
+     * @param row  table row
+     * @param col  table column
      * @param buttonId id of buttonEditor clicked.
      */
     public void tableButtonClicked(int row, int col, String buttonId) {
@@ -171,6 +170,7 @@ public class StoryEditorDialog extends AbstractDialog
                 addNewChoice();
             } else {
                 System.out.println("nav to child : " + row);
+                commitChanges();
                 story_.advanceScene(row);
             }
         } else if (ChildTable.ACTION_BUTTON_ID.equals(buttonId)) {
@@ -186,8 +186,9 @@ public class StoryEditorDialog extends AbstractDialog
                  }
             }
         } else if (ParentTable.NAVIGATE_TO_PARENT_BUTTON_ID.equals(buttonId)) {
-             System.out.println("nav to parent : " + row);
-             story_.advanceToScene(parentScenes_.get(row).getName());
+            System.out.println("nav to parent : " + row);
+            commitChanges();
+            story_.advanceToScene(parentScenes_.get(row).getName());
         }
         else {
             assert false : "unexpected id =" + buttonId;
@@ -216,12 +217,18 @@ public class StoryEditorDialog extends AbstractDialog
         return story_;
     }
 
-    void ok()
-    {
+    void commitChanges() {
         sceneEditor.doSave();
+        if (sceneEditor.isSceneNameChanged()) {
+             story_.sceneNameChanged(sceneEditor.getOldSceneName(), sceneEditor.getEditedScene().getName());
+        }
         // also save the choice text (it may have been modified)
         childTableModel_.updateSceneChoices(story_.getCurrentScene());
+    }
 
+    void ok()
+    {
+        commitChanges();
         this.setVisible( false );
     }
 }

@@ -41,6 +41,7 @@ import java.util.*;
  *
  * @author Barry Becker
  */
+@SuppressWarnings({"AssignmentToNull"})
 public class Story {
 
     /** title of the story */
@@ -49,7 +50,7 @@ public class Story {
     /** name of the stoy used as an identifier for by convention resolution of locations and things like that. e.g. ludlow. */
     private String name;
 
-    /**person who created the story document. */
+    /** person who created the story document. */
     private String author;
 
     /** date story was created. */
@@ -88,12 +89,10 @@ public class Story {
         Scene[] scenes = new Scene[children.getLength()];
         for (int i=0; i < children.getLength(); i++) {
             scenes[i] = new Scene(children.item(i), resourcePath, i==0);
+            //scenes[i].addSceneNameChangeListener(this);
         }
         initFromScenes(scenes);
     }
-    
-    /** do not call directly */
-    private Story() {}
 
     /**
      * Copy constructor. Creates a deep copy.
@@ -192,7 +191,7 @@ public class Story {
     public static Document importStoryDocument(File file) {
         Document document = null;
 
-        // first try to load it as a file. If that doesnt work, try as a URL.
+        // first try to load it as a file. If that doesn't work, try as a URL.
         if (file.exists()) {
             document = DomUtil.parseXMLFile(file);
         }
@@ -200,10 +199,9 @@ public class Story {
         return document;
     }
 
-
     /**
      * Construct an adventure given a list of scenes.
-     * @param scenes
+     * @param scenes array of scenes to use in this story.
      */
     public Story(Scene[] scenes) {
         initFromScenes(scenes);
@@ -240,10 +238,6 @@ public class Story {
 
     public Scene getCurrentScene()  {
         return currentScene_;
-    }
-
-    public Scene getLastScene() {
-        return visitedScenes_.getLast();
     }
 
     public boolean isOver() {
@@ -333,6 +327,20 @@ public class Story {
                 }
             }
         }
+    }
+
+    /**
+     * Since the name of one of the scenes has changed we need to update the sceneMap.
+     */
+    public void sceneNameChanged(String oldSceneName, String newSceneName) {
+        Scene changedScene = sceneMap_.remove(oldSceneName);
+        System.out.println("oldScene name=" + oldSceneName +"  newSceneName="+ newSceneName+"  changedScene=" + changedScene.getName());
+        sceneMap_.put(newSceneName, changedScene);
+        // also need to update the references to named scenes in the choices.
+        for (String sceneName : sceneMap_.keyList()) {
+            sceneMap_.get(sceneName).getChoices().sceneNameChanged(oldSceneName, newSceneName); 
+        }
+        System.out.println("visited scenes="+ visitedScenes_);
     }
 }
 

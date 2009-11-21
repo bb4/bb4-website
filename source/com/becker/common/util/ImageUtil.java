@@ -1,6 +1,7 @@
 package com.becker.common.util;
 
 import com.sun.image.codec.jpeg.*;
+import com.sun.image.codec.jpeg.JPEGEncodeParam;
 import com.sun.media.jai.codec.*;
 
 import java.awt.*;
@@ -12,18 +13,19 @@ import java.io.*;
  *
  * @author Barry Becker
  */
+@SuppressWarnings({"StaticMethodOnlyUsedInOneClass"})
 public final class ImageUtil
 {
 
     // print quality for JPGs. 1.0 is no compression.
     private static final float JPG_QUALITY = 0.9f;
 
-    public enum ImageType { PNG, JPG };
+    public enum ImageType { PNG, JPG }
 
     private ImageUtil() {}
 
     /**
-     * create a BufferedImage from an Image
+     * @return a BufferedImage from an Image
      */
     public static BufferedImage makeBufferedImage( final Image image )
     {
@@ -62,7 +64,7 @@ public final class ImageUtil
 
     /**
      *  write an image to the given output stream
-     *  @param img
+     *  @param img image to write.
      *  @param os output stream to write to
      *  @param type the type of image to create ("jpg" or "png")
      */
@@ -73,7 +75,7 @@ public final class ImageUtil
 
         if ( type == ImageType.JPG ) {
             JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder( os );
-            com.sun.image.codec.jpeg.JPEGEncodeParam param = encoder.getDefaultJPEGEncodeParam( bi );
+            JPEGEncodeParam param = encoder.getDefaultJPEGEncodeParam( bi );
             // this makes the images near perfect - very little compression
             param.setQuality( JPG_QUALITY, false );
             encoder.setJPEGEncodeParam( param );
@@ -81,7 +83,7 @@ public final class ImageUtil
             try {
                 encoder.encode( bi );  // this writes it to a file as a .jpg
             } catch (IOException fne) {
-                System.out.println( "IOException error:" + fne.getMessage());
+                System.err.println( "IOException error:" + fne.getMessage());
             }
         }
         else { // PNG is the default
@@ -140,8 +142,8 @@ public final class ImageUtil
 
            
     // temp vars for interpolation
-    private static float[] rgbaL = new float[4];
-    private static float[] rgbaU = new float[4];
+    private static final float[] rgbaL = new float[4];
+    private static final float[] rgbaU = new float[4];
     
     public static Color interpolate( double x, double y, float[]  colorLL, float[] colorLR, float[] colorUL, float[]  colorUR )
     {      

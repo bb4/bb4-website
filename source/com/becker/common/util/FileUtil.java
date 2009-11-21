@@ -41,8 +41,7 @@ public final class FileUtil
     
 
     /**
-     * @param filter optional file filter
-     * @return
+     * @return a generic file chooser.
      */
     public static JFileChooser getFileChooser() {
         return getFileChooser(null);
@@ -50,7 +49,7 @@ public final class FileUtil
 
     /**
      * @param filter optional file filter
-     * @return
+     * @return file chooser with specified filter.
      */
     public static JFileChooser getFileChooser(FileFilter filter) {
         if (chooser_ == null) {
@@ -67,9 +66,7 @@ public final class FileUtil
     public static String getHomeDir()
     {
         String userHome = FileUtil.USER_HOME;   // System.getProperty("user.home");
-
-        String home =  userHome + "/projects/java_projects/trunk";
-        return home;
+        return userHome + "/projects/java_projects/trunk";
     }
 
     public static File getSelectedFileToSave(String extension, File defaultDir) {
@@ -104,6 +101,7 @@ public final class FileUtil
      *	create a PrintWriter with utf8 encoding
      *  returns null if there was a problem creating it.
      *	@param filename including the full path
+     * @return
      */
     public static PrintWriter createPrintWriter( String filename )
     {
@@ -126,7 +124,6 @@ public final class FileUtil
      * @param srcfile The source file
      * @param destfile The destination file
      * @throws SecurityException
-     * @throws java.io.IOException
      */
     public static void copyFile( String srcfile, String destfile ) throws IOException
     {
@@ -147,5 +144,4 @@ public final class FileUtil
             output.close();
         }
     }
-    
 }

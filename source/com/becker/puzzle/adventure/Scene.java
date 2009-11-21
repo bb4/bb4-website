@@ -7,16 +7,17 @@ import com.becker.ui.GUIUtil;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
-
+import java.util.LinkedList;
+import java.util.List;
 
 
 /**
- * Every scene has some text_ which describes the scene and a list of
+ * Every scene has a name_, some text_ which describes the scene. and a list of
  * choices which the actor chooses from to decide what to do next.
  * There is a "Return to last scene" choice automatically appened to all list of choices.
  * A scene may also have an associated sound and image.
  *
- * @author Barry Becker Date: Apr 22, 2006
+ * @author Barry Becker
  */
 public class Scene {
 
@@ -27,11 +28,9 @@ public class Scene {
     private URL soundURL_;
     private BufferedImage image_;
 
-
     /**
-     *
-     * @param sceneNode
-     * @param resourcePath
+     * @param sceneNode  xml element to initialize from.
+     * @param resourcePath where we can find images and sounds.
      */
     public Scene(Node sceneNode, String resourcePath, boolean isFirst) {
         String description = sceneNode.getFirstChild().getTextContent();
@@ -60,25 +59,25 @@ public class Scene {
      */
     public void appendToDocument(Document document) {
 
-          Element sceneElem = document.createElement("scene");
-          sceneElem.setAttribute("name", getName());
-          Element descElem = document.createElement("description");
-          descElem.setTextContent(getText());
-          sceneElem.appendChild(descElem);
+        Element sceneElem = document.createElement("scene");
+        sceneElem.setAttribute("name", getName());
+        Element descElem = document.createElement("description");
+        descElem.setTextContent(getText());
+        sceneElem.appendChild(descElem);
 
-          // if we only have the QUIT choice, don't bother to add the choice list.
-          Choice firstChoice = getChoices().get(0);
-          if (firstChoice != Choice.QUIT_CHOICE) {
-              Element choicesElem =  document.createElement("choices");
-              sceneElem.appendChild(choicesElem);
-              for (int i=0; i<getChoices().size()-1; i++) {
-                  Choice choice = getChoices().get(i);
-                  choicesElem.appendChild(choice.createElement(document));
-              }
-          }
+        // if we only have the QUIT choice, don't bother to add the choice list.
+        Choice firstChoice = getChoices().get(0);
+        if (firstChoice != Choice.QUIT_CHOICE) {
+            Element choicesElem =  document.createElement("choices");
+            sceneElem.appendChild(choicesElem);
+            for (int i=0; i<getChoices().size()-1; i++) {
+                Choice choice = getChoices().get(i);
+                choicesElem.appendChild(choice.createElement(document));
+            }
+        }
 
-          Element rootElement = document.getDocumentElement();
-          rootElement.appendChild(sceneElem);
+        Element rootElement = document.getDocumentElement();
+        rootElement.appendChild(sceneElem);
     }
 
     private void commonInit(String name, String text, ChoiceList choices, String resourcePath) {
@@ -98,7 +97,6 @@ public class Scene {
         }
     }
 
-    
     /**
      * @return  choices that will lead to the next scene.
      */
@@ -106,7 +104,10 @@ public class Scene {
         return choices_;
     }
 
-
+    /**
+     * Does not make a copy of the choices.
+     * @param choices choices to use.
+     */
     public void setChoices(ChoiceList choices) {
         choices_ = choices;
     }
@@ -122,6 +123,14 @@ public class Scene {
      */
     public String getName() {
         return name_;
+    }
+
+    /**
+     * When changing the name we must call sceneNameChanged on the listeners that are interested in the change.
+     * @param name new scene name
+     */
+    public void setName(String name) {
+        name_ = name;
     }
 
     /**
@@ -157,7 +166,6 @@ public class Scene {
         return file.exists();
     }
 
-
     public void playSound() {
         if (hasSound()) {
              SoundUtil.playSound(soundURL_);
@@ -170,7 +178,7 @@ public class Scene {
 
     /**
      *
-     * @param choice
+     * @param choice navigate to the scene indicated by this choice.
      * @return the name of the next scene given the number of the choice.
      */
     public String getNextSceneName(int choice) {
@@ -215,20 +223,25 @@ public class Scene {
         return true;
     }
 
+    public String print() {
+        StringBuffer buf = new StringBuffer();
+        buf.append('\n').append(this.getText()).append('\n');
+
+        if (choices_ != null) {
+            int len = choices_.size();
+            for (int i=0; i < len; i++)  {
+                buf.append(1 + i).append(") ").append(choices_.get(i).getDescription()).append('\n');
+            }
+        }
+        return buf.toString();
+    }
+
     /**
      * @return the text and choices.
      */
     @Override
     public String toString() {
-        StringBuffer buf = new StringBuffer();
-        buf.append('\n' + this.getText() +'\n');
-
-        if (choices_ != null) {
-            int len = choices_.size();
-            for (int i=0; i < len; i++)  {
-                buf.append((1+i) + ") " + choices_.get(i).getDescription() + '\n');
-            }
-        }
-        return buf.toString();
+        
+        return this.getName();
     }
 }
