@@ -3,7 +3,6 @@ package com.becker.ui;
 import com.becker.common.*;
 import com.becker.common.util.FileUtil;
 import com.becker.common.util.ImageUtil;
-import com.becker.common.util.Util;
 import com.sun.java.swing.plaf.windows.*;
 
 import javax.jnlp.*;
@@ -144,29 +143,6 @@ public final class GUIUtil
         }
         return trace;
     }
-
-    /**
-     * Replace oldString with newString.
-     */
-    public static String replaceString( String value, String oldString, String newString )
-    {
-        if ( value == null || value.length() == 0 ) return value;
-        int oldLength = oldString.length();
-        StringBuffer buf = new StringBuffer();
-        int last = 0, i;
-        while ( true ) {
-            i = value.indexOf( oldString, last );
-            if ( i < 0 ) {
-                buf.append( value.substring( last ) );
-                break;
-            }
-            buf.append( value.substring( last, i ) );
-            buf.append( newString );
-            last = i + oldLength;
-        }
-        return buf.toString();
-    }
-
 
     /**
      *  Set the ui looki and feel to my very own.
@@ -317,7 +293,6 @@ public final class GUIUtil
         }
         return url;
      }
-
 
 
      /**
@@ -567,6 +542,4 @@ public final class GUIUtil
         }
         return basicService_;
     }
-
 }
-

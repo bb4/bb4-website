@@ -1,7 +1,8 @@
 package com.becker.common;
 
 import java.awt.Color;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class maps numbers to colors.
@@ -16,8 +17,8 @@ public class ColorMap
     final private List<Color> colors_;
 
     // temp vars for interpolation
-    private static float[] rgba_ = new float[4];
-    private static float[] rgba1_ = new float[4];
+    private static final float[] rgba_ = new float[4];
+    private static final float[] rgba1_ = new float[4];
 
     /**
      * give a list of (increasing) values and colors to map to.

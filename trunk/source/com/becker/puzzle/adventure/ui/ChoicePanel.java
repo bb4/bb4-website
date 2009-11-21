@@ -1,6 +1,7 @@
 package com.becker.puzzle.adventure.ui;
 
 import com.becker.puzzle.adventure.Choice;
+import com.becker.puzzle.adventure.ChoiceList;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
@@ -12,7 +13,7 @@ import javax.swing.*;
  * You press the button to take the action.
  * @author Barry Becker 
  */
-public class ChoicePanel extends JPanel implements ActionListener {
+class ChoicePanel extends JPanel implements ActionListener {
 
     private List<SceneChangeListener> sceneChangeListeners_;
 
@@ -20,7 +21,7 @@ public class ChoicePanel extends JPanel implements ActionListener {
     /**
      * Construct based on a list of Choices.
      */
-    public ChoicePanel(List<Choice> choices) {
+    public ChoicePanel(ChoiceList choices) {
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         sceneChangeListeners_ = new ArrayList<SceneChangeListener>();
@@ -32,7 +33,7 @@ public class ChoicePanel extends JPanel implements ActionListener {
      * Update the list of options shown
      * @param choices
      */
-    public void setChoices(List<Choice> choices) {
+    public void setChoices(ChoiceList choices) {
 
          this.removeAll();
 

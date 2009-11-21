@@ -39,7 +39,7 @@ public class StoryEditorDialog extends AbstractDialog
     private static final Font INSTRUCTION_FONT = new Font("Sans Serif", Font.PLAIN, 10);
 
     private List<Scene>  parentScenes_;
-    private ChildTable  childTable_;
+    private ChildTableModel  childTableModel_;
 
 
     /**
@@ -118,12 +118,13 @@ public class StoryEditorDialog extends AbstractDialog
     private JComponent createChildTable() {
         JPanel childContainer = new JPanel(new BorderLayout());
 
-         childTable_ = new ChildTable(story_.getCurrentScene().getChoices(), this);
+         ChildTable childTable = new ChildTable(story_.getCurrentScene().getChoices(), this);
+         childTableModel_ = childTable.getChildTableModel();
 
         childContainer.setBorder(
                 BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(),"Choices (to navigate to child scenes)" ) );
 
-        childContainer.add(new JScrollPane(childTable_.getTable()), BorderLayout.CENTER);
+        childContainer.add(new JScrollPane(childTable.getTable()), BorderLayout.CENTER);
 
         childContainer.setPreferredSize(new Dimension(SceneEditorPanel.WIDTH, 200));
         return childContainer;
@@ -132,7 +133,7 @@ public class StoryEditorDialog extends AbstractDialog
     /**
      *  create the buttons that go at the botton ( eg OK, Cancel, ...)
      */
-    protected  JPanel createButtonsPanel() {
+    JPanel createButtonsPanel() {
         JPanel buttonsPanel = new JPanel( new FlowLayout() );
 
         initBottomButton( okButton_, "OK", "Save your edits and see the changes in the story. " );
@@ -166,16 +167,24 @@ public class StoryEditorDialog extends AbstractDialog
     public void tableButtonClicked(int row, int col, String buttonId) {
 
         if (ChildTable.NAVIGATE_TO_CHILD_BUTTON_ID.equals(buttonId)) {
-            System.out.println("nav to child : " + row);
-            story_.advanceScene(row);
+            if (childTableModel_.isLastRow(row)) {
+                addNewChoice();
+            } else {
+                System.out.println("nav to child : " + row);
+                story_.advanceScene(row);
+            }
         } else if (ChildTable.ACTION_BUTTON_ID.equals(buttonId)) {
-             System.out.println("delete child : " + row);
-             int answer = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this choice?");
-             if (answer == JOptionPane.YES_OPTION) {
-                  story_.getCurrentScene().deleteChoice(row);
-             } else {
-                 return;
-             }
+            if (childTableModel_.isLastRow(row)) {
+                addNewChoice();
+            } else {
+                 System.out.println("delete child : " + row);
+                 int answer = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this choice?");
+                 if (answer == JOptionPane.YES_OPTION) {
+                      story_.getCurrentScene().deleteChoice(row);
+                 } else {
+                     return;
+                 }
+            }
         } else if (ParentTable.NAVIGATE_TO_PARENT_BUTTON_ID.equals(buttonId)) {
              System.out.println("nav to parent : " + row);
              story_.advanceToScene(parentScenes_.get(row).getName());
@@ -187,17 +196,31 @@ public class StoryEditorDialog extends AbstractDialog
     }
 
     /**
+     * Show a dialog that allows selecting the new child scene destination.
+     * This will be either an exisiting scene or a new one.
+     * A new row is automatically added to the table.
+     */
+    private void addNewChoice() {
+        NewChoiceDialog newChoiceDlg = new NewChoiceDialog(story_.getCandidateDestinationSceneNames());
+            boolean canceled = newChoiceDlg.showDialog();
+            if (!canceled) {
+                String addedSceneName = newChoiceDlg.getSelectedDestinationScene();
+                childTableModel_.addNewChildChoice(addedSceneName);
+            }
+    }
+
+    /**
      * @return our edited copy of the story we were passed at construction.
      */
     public Story getEditedStory() {
         return story_;
     }
 
-    protected void ok()
+    void ok()
     {
         sceneEditor.doSave();
         // also save the choice text (it may have been modified)
-        childTable_.updateSceneChoices(story_.getCurrentScene());
+        childTableModel_.updateSceneChoices(story_.getCurrentScene());
 
         this.setVisible( false );
     }

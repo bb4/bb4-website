@@ -122,7 +122,6 @@ public class PasswordDialog extends AbstractDialog
      * Hitting enter is like clicking "ok"
      * @param key key that was typed.
      */
-    @Override
     public void keyTyped( KeyEvent key )  {    
     }
 

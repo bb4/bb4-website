@@ -31,14 +31,12 @@ public abstract class AbstractDialog extends JDialog implements ActionListener {
     public static final int ROW_HEIGHT = 18;
 
 
-
     /**
      * Constructor
      * Subclasses will set internal data here.
      * At the end of every derived class constructor, displayContent should be called.
      */
     public AbstractDialog() {
-
     }
 
     /**
@@ -81,7 +79,7 @@ public abstract class AbstractDialog extends JDialog implements ActionListener {
         bottomButton.setText( buttonText );
         bottomButton.setToolTipText( buttonToolTip );
         bottomButton.addActionListener( this );
-        bottomButton.setPreferredSize( new Dimension( 140, 25 ) );
+        // bottomButton.setPreferredSize( new Dimension( 140, 25 ) );
         bottomButton.setMinimumSize( new Dimension( 50, 25 ) );
     }
     
@@ -93,6 +91,9 @@ public abstract class AbstractDialog extends JDialog implements ActionListener {
         canceled_ = false;
         if (parent_ != null)  {
             this.setLocationRelativeTo( parent_ );
+        } else {
+            // something besides the corner.
+            this.setLocation(100, 100);
         }
 
         this.setVisible( true );

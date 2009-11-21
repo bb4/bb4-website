@@ -19,7 +19,7 @@ import javax.swing.JScrollPane;
  * Used to edit an individual scene.
  * @author Barry Becker
  */
-public class SceneEditorPanel extends JPanel implements ActionListener {
+class SceneEditorPanel extends JPanel implements ActionListener {
 
 
     /** The scene to edit */
@@ -28,7 +28,6 @@ public class SceneEditorPanel extends JPanel implements ActionListener {
     private GradientButton showImageButton_;
     private GradientButton playSoundButton_;
 
-    private  TextInput nameInput_;
     private JTextArea sceneText_;
 
     private static final int EDITOR_WIDTH = 900;
@@ -44,14 +43,14 @@ public class SceneEditorPanel extends JPanel implements ActionListener {
     }
 
 
-    protected void createUI() {
+    void createUI() {
         this.setLayout(new BorderLayout());
         this.setPreferredSize(new Dimension(EDITOR_WIDTH, 600));
 
         this.setBorder(
                 BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(),"Edit current Scene" ) );
 
-        nameInput_ = new TextInput("name:", scene_.getName());
+        TextInput nameInput_= new TextInput("name:", scene_.getName());
 
         sceneText_ = new JTextArea();
         sceneText_.setFont(StoryPanel.TEXT_FONT);

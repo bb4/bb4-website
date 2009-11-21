@@ -13,15 +13,15 @@ import javax.swing.table.*;
  *
  * @author Barry Becker
  */
-public class ParentTable extends TableBase  {
+class ParentTable extends TableBase  {
 
     public static final String NAVIGATE_TO_PARENT_BUTTON_ID = "navToParent";
 
-    protected static final int NAVIGATE_INDEX = 0;
-    protected static final int NUM_CHILDREN_INDEX = 1;
+    static final int NAVIGATE_INDEX = 0;
+    private static final int NUM_CHILDREN_INDEX = 1;
 
-    protected static final String NAVIGATE = "Navigate to";
-    protected static final String NUM_CHILDREN = "Num Children";
+    private static final String NAVIGATE = "Navigate to";
+    private static final String NUM_CHILDREN = "Num Children";
 
     private static final String[] PARENT_COLUMN_NAMES =  {
         NAVIGATE,
@@ -73,12 +73,11 @@ public class ParentTable extends TableBase  {
 
 
     protected TableModel createTableModel(String[] columnNames)  {
-        DefaultTableModel model = new ParentTableModel(columnNames, 0);
-        return  model;
+        return new ParentTableModel(columnNames, 0);
     }
 
 
-    protected DefaultTableModel getParentTableModel()
+    DefaultTableModel getParentTableModel()
     {
         return (DefaultTableModel)table_.getModel();
     }
