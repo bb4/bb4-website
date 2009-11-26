@@ -16,9 +16,10 @@ public class Choice {
 
     public static final String QUIT = "Quit";
     public static final String PREVIOUS_SCENE = "last scene";
+    public static final String EXIT_DEST = "____EXIT____";
 
     /** This choice is automatically added if there are no other choices. */
-    public static final Choice QUIT_CHOICE = new Choice(Choice.QUIT, null);
+    public static final Choice QUIT_CHOICE = new Choice(Choice.QUIT, EXIT_DEST);
 
     public Choice(Node choiceNode) {
         this(DomUtil.getAttribute(choiceNode, "description"),

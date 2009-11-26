@@ -3,6 +3,8 @@ package com.becker.puzzle.adventure.ui.editor;
 import com.becker.puzzle.adventure.Choice;
 import com.becker.puzzle.adventure.ChoiceList;
 import com.becker.ui.table.*;
+
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.table.*;
@@ -69,7 +71,6 @@ class ChildTable extends TableBase  {
                      getChildTableModel().getRowCount()-1, ACTION_INDEX);
         }
         getChildTableModel().addRow(d);
-
     }
 
     @Override
@@ -87,6 +88,11 @@ class ChildTable extends TableBase  {
         TableColumnMeta navigateCol = columnMeta[NAVIGATE_INDEX];
 
         TableButton navCellEditor = new TableButton(NAVIGATE_INDEX, NAVIGATE_TO_CHILD_BUTTON_ID);
+
+        List<Object> disabledList = new LinkedList<Object>();
+        disabledList.add(Choice.EXIT_DEST);
+        navCellEditor.setDisabledValues(disabledList);
+        
         navCellEditor.addTableButtonListener(tableButtonListener_);
         actionCellEditor.setToolTipText("navigate to this scene");
         navigateCol.setCellRenderer(navCellEditor);
