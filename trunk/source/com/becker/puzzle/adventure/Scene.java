@@ -7,8 +7,6 @@ import com.becker.ui.GUIUtil;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
-import java.util.LinkedList;
-import java.util.List;
 
 
 /**
@@ -50,8 +48,15 @@ public class Scene {
         this.image_ = scene.getImage();
         this.soundURL_ = scene.soundURL_;
         this.choices_ = new ChoiceList(scene);
-        System.out.println("copying scene " + name_ + " num choices = " + choices_.size());
         this.isFirst_ = scene.isFirst();
+    }
+
+    /**
+     * Constructor for a simple new scene with no media or initial choices
+     */
+    public Scene(String name, String text, String resourcePath) {
+        ChoiceList choices = new ChoiceList();
+        commonInit(name, text, choices, resourcePath);
     }
 
     /**
@@ -65,14 +70,16 @@ public class Scene {
         descElem.setTextContent(getText());
         sceneElem.appendChild(descElem);
 
-        // if we only have the QUIT choice, don't bother to add the choice list.
-        Choice firstChoice = getChoices().get(0);
-        if (firstChoice != Choice.QUIT_CHOICE) {
-            Element choicesElem =  document.createElement("choices");
-            sceneElem.appendChild(choicesElem);
-            for (int i=0; i<getChoices().size()-1; i++) {
-                Choice choice = getChoices().get(i);
-                choicesElem.appendChild(choice.createElement(document));
+        if (!getChoices().isEmpty()) {
+            // if we only have the QUIT choice, don't bother to add the choice list.
+            Choice firstChoice = getChoices().get(0);
+            if (firstChoice != Choice.QUIT_CHOICE) {
+                Element choicesElem =  document.createElement("choices");
+                sceneElem.appendChild(choicesElem);
+                for (int i=0; i<getChoices().size()-1; i++) {
+                    Choice choice = getChoices().get(i);
+                    choicesElem.appendChild(choice.createElement(document));
+                }
             }
         }
 
@@ -84,7 +91,10 @@ public class Scene {
         name_ = name;
         text_ = text;
         choices_ = choices;
+        loadResources(name, resourcePath);
+    }
 
+    private void loadResources(String name, String resourcePath) {
         try {
             String soundPath = resourcePath + "sounds/" + name + ".au";
             soundURL_ = GUIUtil.getURL(soundPath, false);
@@ -104,16 +114,7 @@ public class Scene {
         return choices_;
     }
 
-    /**
-     * Does not make a copy of the choices.
-     * @param choices choices to use.
-     */
-    public void setChoices(ChoiceList choices) {
-        choices_ = choices;
-    }
-
     public void deleteChoice(int choice) {
-        System.out.println("deleting choice : " +choice + " num choices=" + choices_.size());
         choices_.remove(choice);
         System.out.println("after deleting num="+ choices_.size());
     }

@@ -87,16 +87,17 @@ public class StoryEditorDialog extends AbstractDialog
         return editingPane;
     }
 
-
     private JComponent createParentTable() {
         JPanel parentContainer = new JPanel(new BorderLayout());
         parentScenes_ = story_.getParentScenes();
         ParentTable parentTable = new ParentTable(parentScenes_, this);
 
+        JPanel tableHolder = new JPanel();
+        tableHolder.setMaximumSize(new Dimension(500, 300));
         parentContainer.setBorder(
-                BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(),"Parent Scenes" ) );
+                BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), "Parent Scenes" ));
 
-        parentContainer.add(new JScrollPane(parentTable.getTable()), BorderLayout.CENTER);
+        parentContainer.add(new JScrollPane(parentTable.getTable()), BorderLayout.WEST);
 
         parentContainer.setPreferredSize(new Dimension(SceneEditorPanel.WIDTH, 120));
         return parentContainer;
@@ -148,7 +149,6 @@ public class StoryEditorDialog extends AbstractDialog
     @Override
     public void actionPerformed( ActionEvent e )
     {
-        System.out.println("in StoryEditorDlg actionPerfmd");
         super.actionPerformed(e);
         Object source = e.getSource();
 
@@ -167,17 +167,15 @@ public class StoryEditorDialog extends AbstractDialog
 
         if (ChildTable.NAVIGATE_TO_CHILD_BUTTON_ID.equals(buttonId)) {
             if (childTableModel_.isLastRow(row)) {
-                addNewChoice();
+                addNewChoice(row);
             } else {
-                System.out.println("nav to child : " + row);
-                commitChanges();
+                commitSceneChanges();
                 story_.advanceScene(row);
             }
         } else if (ChildTable.ACTION_BUTTON_ID.equals(buttonId)) {
             if (childTableModel_.isLastRow(row)) {
-                addNewChoice();
+                addNewChoice(row);
             } else {
-                 System.out.println("delete child : " + row);
                  int answer = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this choice?");
                  if (answer == JOptionPane.YES_OPTION) {
                       story_.getCurrentScene().deleteChoice(row);
@@ -186,8 +184,7 @@ public class StoryEditorDialog extends AbstractDialog
                  }
             }
         } else if (ParentTable.NAVIGATE_TO_PARENT_BUTTON_ID.equals(buttonId)) {
-            System.out.println("nav to parent : " + row);
-            commitChanges();
+            commitSceneChanges();
             story_.advanceToScene(parentScenes_.get(row).getName());
         }
         else {
@@ -200,14 +197,19 @@ public class StoryEditorDialog extends AbstractDialog
      * Show a dialog that allows selecting the new child scene destination.
      * This will be either an exisiting scene or a new one.
      * A new row is automatically added to the table.
+     * @param row row of the new choice in the child table.
      */
-    private void addNewChoice() {
+    private void addNewChoice(int row) {
         NewChoiceDialog newChoiceDlg = new NewChoiceDialog(story_.getCandidateDestinationSceneNames());
-            boolean canceled = newChoiceDlg.showDialog();
-            if (!canceled) {
-                String addedSceneName = newChoiceDlg.getSelectedDestinationScene();
-                childTableModel_.addNewChildChoice(addedSceneName);
-            }
+        boolean canceled = newChoiceDlg.showDialog();
+        if (!canceled) {
+            String addedSceneName = newChoiceDlg.getSelectedDestinationScene();
+            String choiceDescription = childTableModel_.getChoiceDescription(row);
+            story_.addChoiceToCurrentScene(addedSceneName, choiceDescription);
+            childTableModel_.addNewChildChoice(addedSceneName);
+            //commitSceneChanges();
+            //story_.advanceToScene(addedSceneName);
+        }
     }
 
     /**
@@ -217,7 +219,7 @@ public class StoryEditorDialog extends AbstractDialog
         return story_;
     }
 
-    void commitChanges() {
+    void commitSceneChanges() {
         sceneEditor.doSave();
         if (sceneEditor.isSceneNameChanged()) {
              story_.sceneNameChanged(sceneEditor.getOldSceneName(), sceneEditor.getEditedScene().getName());
@@ -228,7 +230,7 @@ public class StoryEditorDialog extends AbstractDialog
 
     void ok()
     {
-        commitChanges();
+        commitSceneChanges();
         this.setVisible( false );
     }
 }

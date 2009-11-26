@@ -64,6 +64,8 @@ public class Story {
 
     private static final String ROOT_ELEMENT = "script";
 
+    private String resourcePath_;
+
     /**
      * A stack of currently visited scenes. There may be duplicates if you visit the same scene twice.
      * If you backup, then we pop the stack.
@@ -84,12 +86,11 @@ public class Story {
         name =  DomUtil.getAttribute(root, "name");
         author = DomUtil.getAttribute(root, "author");
         date = DomUtil.getAttribute(root, "date");
-        String resourcePath = STORIES_ROOT +name + "/";
+        resourcePath_ = STORIES_ROOT + name + "/";
         NodeList children = root.getChildNodes();
         Scene[] scenes = new Scene[children.getLength()];
         for (int i=0; i < children.getLength(); i++) {
-            scenes[i] = new Scene(children.item(i), resourcePath, i==0);
-            //scenes[i].addSceneNameChangeListener(this);
+            scenes[i] = new Scene(children.item(i), resourcePath_, i==0);
         }
         initFromScenes(scenes);
     }
@@ -107,6 +108,7 @@ public class Story {
         this.name = story.name;
         this.author = story.author;
         this.date = story.date;
+        this.resourcePath_ = story.resourcePath_;
         if (sceneMap_ == null) {
             sceneMap_ = createSceneMap(story.getSceneMap().size());
         }
@@ -223,11 +225,7 @@ public class Story {
         sceneMap_ = createSceneMap(scenes.length);
         
         for (final Scene scene : scenes) {
-            if (scene.getChoices() == null) {
-                ChoiceList quitChoice = new ChoiceList();
-                quitChoice.add(Choice.QUIT_CHOICE);
-                scene.setChoices(quitChoice) ;
-            }
+            assert scene.getChoices() != null;
             sceneMap_.put(scene.getName(), scene);
         }
         verifyScenes();
@@ -255,7 +253,6 @@ public class Story {
         }
 
         String nextSceneName =  currentScene_.getNextSceneName(choice);
-
         advanceToScene(nextSceneName);
     }
     
@@ -267,7 +264,7 @@ public class Story {
     public void advanceToScene(String nextSceneName) {
      
         if (nextSceneName != null) {
-            if (nextSceneName.equals(Choice.QUIT))  {
+            if (nextSceneName.equals(Choice.EXIT_DEST))  {
                 visitedScenes_.add(currentScene_);
                 currentScene_ = null;
             }
@@ -298,6 +295,20 @@ public class Story {
     }
 
     /**
+     *
+     * @param newSceneName name of the new scene. It may or may not exist already.
+     * @param choiceDescription  text describing what you will do to go to the destination.
+     */
+    public void addChoiceToCurrentScene(String newSceneName, String choiceDescription) {
+        // if we do not already have this scene, we need to create it.
+        if (!sceneMap_.containsKey(newSceneName)) {
+            Scene newScene = new Scene(newSceneName, " --- describe the scene here ---", resourcePath_);
+            sceneMap_.put(newSceneName, newScene);
+        }
+        this.getCurrentScene().getChoices().add( new Choice(choiceDescription, newSceneName));
+    }
+
+    /**
      * @return a list of all the existing scenes that we could navigate to
      *   that are not already included in the current scene's list of choices.
      */
@@ -321,9 +332,11 @@ public class Story {
             
             for (Choice choice : scene.getChoices())  {
                 String dest = choice.getDestination();
-                if (dest != null && !Choice.PREVIOUS_SCENE.equals(choice.getDestination())
-                       &&  sceneMap_.get(choice.getDestination()) == null) {
-                    assert false : "No scene named "+ choice.getDestination();
+                if (dest != null
+                        && !Choice.PREVIOUS_SCENE.equals(choice.getDestination())
+                        && !Choice.QUIT_CHOICE.equals(choice)
+                        && sceneMap_.get(choice.getDestination()) == null) {
+                    assert false : "No scene named " + choice.getDestination() + " desc="+ choice.getDescription();
                 }
             }
         }

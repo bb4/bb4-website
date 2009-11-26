@@ -40,10 +40,18 @@ public class ChildTableModel extends DefaultTableModel
      */
     public void updateSceneChoices(Scene currentScene) {
         for (int i=0; i<getRowCount()-1; i++) {
-            String dest = getValueAt(i, ChildTable.NAVIGATE_INDEX).toString();
+            String dest = (String) getValueAt(i, ChildTable.NAVIGATE_INDEX);
             Choice c =  currentScene.getChoices().getChoiceByDestination(dest);
             c.setDescription(getValueAt(i, ChildTable.CHOICE_DESCRIPTION_INDEX).toString());
         }
+    }
+
+    public String getDestinationSceneName(int row) {
+        return (String) this.getValueAt(row, ChildTable.NAVIGATE_INDEX);
+    }
+
+    public String getChoiceDescription(int row) {
+        return (String) this.getValueAt(row, ChildTable.CHOICE_DESCRIPTION_INDEX);
     }
 
     /**
@@ -51,9 +59,9 @@ public class ChildTableModel extends DefaultTableModel
      * @param addedSceneName  name pf the scene to add.
      */
     public void addNewChildChoice(String addedSceneName) {
-         System.out.println("adding new scene :" + addedSceneName);
-         setValueAt(ChildTable.DELETE_BUTTON_LABEL, getRowCount()-1, ChildTable.ACTION_INDEX);
-         setValueAt(addedSceneName, getRowCount()-1, ChildTable.NAVIGATE_INDEX);
+        System.out.println("adding new scene :" + addedSceneName);
+        setValueAt(ChildTable.DELETE_BUTTON_LABEL, getRowCount()-1, ChildTable.ACTION_INDEX);
+        setValueAt(addedSceneName, getRowCount()-1, ChildTable.NAVIGATE_INDEX);
 
         Object d[] = new Object[this.getColumnCount()];
         d[ChildTable.ACTION_INDEX] = ChildTable.ADD_BUTTON_LABEL;
@@ -77,9 +85,10 @@ public class ChildTableModel extends DefaultTableModel
     @Override
     public boolean isCellEditable(int row, int column)
     {
-
-        return (column == ChildTable.ACTION_INDEX
+        boolean editableColumn = column == ChildTable.ACTION_INDEX
                 || column == ChildTable.NAVIGATE_INDEX
-                || column == ChildTable.CHOICE_DESCRIPTION_INDEX);
+                || column == ChildTable.CHOICE_DESCRIPTION_INDEX;
+        return (editableColumn
+                && !Choice.EXIT_DEST.equals(getValueAt(row, ChildTable.NAVIGATE_INDEX)));
     }
 }
