@@ -10,7 +10,6 @@ import java.util.ListIterator;
 
 /**
  * A choice that you can make in a scene.
- * Immutable.
  *
  * @author Barry Becker
  */
@@ -54,27 +53,9 @@ public class ChoiceList implements List<Choice> {
                 assert choiceList.item(i) != null;
                 choices_.add(new Choice(choiceList.item(i)));
             }
-            //if ( !isFirst ) {
-            //    choices_.add(new Choice("Go back to last scene.", Choice.PREVIOUS_SCENE));
-            //}
         } else {
             choices_ = new ArrayList<Choice>();
         }
-    }
-
-    /**
-     * @return choice associated with specified destination.
-     */
-    public Choice getChoiceByDestination(String destinationScene) {
-
-        for (Choice choice : choices_) {
-            if (choice.getDestination().equals(destinationScene)) {
-                return choice;
-            }
-        }
-        assert false :
-            "could not find choice for destination "+ destinationScene;
-        return null;
     }
 
     /**
@@ -107,6 +88,7 @@ public class ChoiceList implements List<Choice> {
                 "choiceMap.size()=" + choiceMap.size() + " not equal choices_.size()=" + choices_.size();
         List<Choice> newChoices = new ArrayList<Choice>(choiceMap.size());
         for (String dest : choiceMap.keyList()) {
+            System.out.println("updating dest="+ dest);
             newChoices.add(new Choice(choiceMap.get(dest), dest));
         }
         choices_ = newChoices;

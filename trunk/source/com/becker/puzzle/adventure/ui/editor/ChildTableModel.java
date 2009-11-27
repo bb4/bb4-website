@@ -34,15 +34,12 @@ public class ChildTableModel extends DefaultTableModel
     public void updateSceneChoices(Scene currentScene) {
         OrderedMap<String, String> choiceMap = new OrderedMap<String, String>();
 
+        System.out.println("num choices in table="+ getRowCount()); 
         for (int i = 0; i < getRowCount(); i++) {
             String dest = (String) getValueAt(i, ChildTable.NAVIGATE_INDEX);
             choiceMap.put(dest, getValueAt(i, ChildTable.CHOICE_DESCRIPTION_INDEX).toString());
         }
         currentScene.getChoices().update(choiceMap);
-    }
-
-    public String getDestinationSceneName(int row) {
-        return (String) this.getValueAt(row, ChildTable.NAVIGATE_INDEX);
     }
 
     public String getChoiceDescription(int row) {
@@ -56,7 +53,6 @@ public class ChildTableModel extends DefaultTableModel
      */
     public void addNewChildChoice(int row, String addedSceneName) {
         System.out.println("adding new scene :" + addedSceneName + " at " + row);
-        //setValueAt(addedSceneName, getRowCount()-1, ChildTable.NAVIGATE_INDEX);
 
         Object d[] = new Object[this.getColumnCount()];
         d[ChildTable.NAVIGATE_INDEX] = addedSceneName;
@@ -76,10 +72,6 @@ public class ChildTableModel extends DefaultTableModel
     @Override
     public boolean isCellEditable(int row, int column)
     {
-        boolean editableColumn = 
-                column == ChildTable.NAVIGATE_INDEX
-                || column == ChildTable.CHOICE_DESCRIPTION_INDEX;
-        return (editableColumn
-                && !Choice.EXIT_DEST.equals(getValueAt(row, ChildTable.NAVIGATE_INDEX)));
+        return true;
     }
 }

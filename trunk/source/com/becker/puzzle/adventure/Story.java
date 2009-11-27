@@ -113,7 +113,8 @@ public class Story {
         }
         this.sceneMap_.clear();
         copySceneMap(story.getSceneMap());
-        this.currentScene_ = story.currentScene_;
+        //this.currentScene_ = story.currentScene_;
+        this.advanceToScene(story.getCurrentScene().getName());
         this.visitedScenes_ = new LinkedList<Scene>();
         this.visitedScenes_.addAll(story.visitedScenes_);
     }
@@ -263,18 +264,10 @@ public class Story {
     public void advanceToScene(String nextSceneName) {
      
         if (nextSceneName != null) {
-            //if (nextSceneName.equals(Choice.EXIT_DEST))  {
-            //    visitedScenes_.add(currentScene_);
-            //    currentScene_ = null;
-            //}
-            //else if (nextSceneName.equals(Choice.PREVIOUS_SCENE)) {
-            //    currentScene_ = visitedScenes_.removeLast();
-            //}
-            //else {
+            if (currentScene_ != null)
                 visitedScenes_.add(currentScene_);
-                currentScene_ = sceneMap_.get( nextSceneName );
-                assert (currentScene_ != null)  : "Could not find a scene named '"+ nextSceneName+"'.";
-            //}
+            currentScene_ = sceneMap_.get( nextSceneName );
+            assert (currentScene_ != null)  : "Could not find a scene named '"+ nextSceneName+"'.";
         }
     }
 
