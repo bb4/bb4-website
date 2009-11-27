@@ -176,7 +176,6 @@ public class StoryEditorDialog extends AbstractDialog
         moveUpButton_.setIcon(GUIUtil.getIcon(IMAGE_PATH + "up_arrow.png"));
         moveDownButton_.setIcon(GUIUtil.getIcon(IMAGE_PATH + "down_arrow.png"));
 
-        addButton_.setEnabled(false);
         removeButton_.setEnabled(false);
         moveUpButton_.setEnabled(false);
         moveDownButton_.setEnabled(false);
@@ -217,9 +216,9 @@ public class StoryEditorDialog extends AbstractDialog
             ok();
         }
         else if (source == addButton_) {
-            if (row < childModel.getRowCount())
-                addNewChoice(row);
+            addNewChoice(row);
         }
+
         else if (source == removeButton_) {
             System.out.println("remove row");
             int answer = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete choice "
@@ -262,21 +261,38 @@ public class StoryEditorDialog extends AbstractDialog
     }
 
     /**
+     * A row in the child table has been selected or selection has changed.
+     * @param e
+     */
+    public void valueChanged(ListSelectionEvent e) {
+        selectedChildRow_ = childTable_.getSelectedRow();
+        System.out.println("selected row now " + selectedChildRow_);
+        removeButton_.setEnabled(true);
+        updateMoveButtons();
+    }
+
+    private void updateMoveButtons() {
+        moveUpButton_.setEnabled(selectedChildRow_ > 0);
+        moveDownButton_.setEnabled(selectedChildRow_ < childTable_.getNumRows() - 1);
+    }
+
+    /**
      * Show a dialog that allows selecting the new child scene destination.
      * This will be either an exisiting scene or a new one.
      * A new row is automatically added to the table.
      * @param row row of the new choice in the child table.
      */
     private void addNewChoice(int row) {
+        if (row < 0) row = 0;
         NewChoiceDialog newChoiceDlg = new NewChoiceDialog(story_.getCandidateDestinationSceneNames());
         ChildTableModel childModel = childTable_.getChildTableModel();
 
         boolean canceled = newChoiceDlg.showDialog();
         if (!canceled) {
             String addedSceneName = newChoiceDlg.getSelectedDestinationScene();
+            childModel.addNewChildChoice(row, addedSceneName);
             String choiceDescription = childModel.getChoiceDescription(row);
             story_.addChoiceToCurrentScene(addedSceneName, choiceDescription);
-            childModel.addNewChildChoice(row, addedSceneName);
             newChoiceDlg.close();
         }
     }
@@ -293,7 +309,7 @@ public class StoryEditorDialog extends AbstractDialog
         if (sceneEditor.isSceneNameChanged()) {
              story_.sceneNameChanged(sceneEditor.getOldSceneName(), sceneEditor.getEditedScene().getName());
         }
-        // also save the choice text (it may have been modified)
+        // also save the choice text (it may have been modified or reordered)
         childTable_.getChildTableModel().updateSceneChoices(story_.getCurrentScene());
     }
 
@@ -301,22 +317,5 @@ public class StoryEditorDialog extends AbstractDialog
     {
         commitSceneChanges();
         this.setVisible( false );
-    }
-
-    /**
-     * A row in the child table has been selected or changed selected.
-     * @param e
-     */
-    public void valueChanged(ListSelectionEvent e) {
-        selectedChildRow_ = e.getFirstIndex();
-        System.out.println("selected row now "+ selectedChildRow_);
-        removeButton_.setEnabled(true);
-        addButton_.setEnabled(true);
-        updateMoveButtons();
-    }
-
-    private void updateMoveButtons() {
-        moveUpButton_.setEnabled(selectedChildRow_ > 0);
-        moveDownButton_.setEnabled(selectedChildRow_ < childTable_.getNumRows() - 2);
     }
 }

@@ -78,10 +78,6 @@ class ChildTable extends TableBase  {
 
         TableButton navCellEditor = new TableButton(NAVIGATE_INDEX, NAVIGATE_TO_CHILD_BUTTON_ID);
 
-        List<Object> disabledList = new LinkedList<Object>();
-        disabledList.add(Choice.EXIT_DEST);
-        navCellEditor.setDisabledValues(disabledList);
-        
         navCellEditor.addTableButtonListener(tableButtonListener_);
         navCellEditor.setToolTipText("navigate to this scene");
         navigateCol.setCellRenderer(navCellEditor);
