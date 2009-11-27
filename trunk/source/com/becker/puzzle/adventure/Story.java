@@ -135,8 +135,10 @@ public class Story {
      */
     public void saveStoryDocument(String destFileName) {
          try {
-           Document document = createStoryDocument();
-            DomUtil.writeXMLFile(destFileName, document, "script.dtd");
+             System.out.println("saving ...");
+             Document document = createStoryDocument();
+             DomUtil.writeXMLFile(destFileName, document, "script.dtd");
+             System.out.println("done saving.");
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -196,8 +198,7 @@ public class Story {
         // first try to load it as a file. If that doesn't work, try as a URL.
         if (file.exists()) {
             document = DomUtil.parseXMLFile(file);
-        }
-        
+        }       
         return document;
     }
 
