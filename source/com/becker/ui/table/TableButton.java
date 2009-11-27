@@ -107,9 +107,7 @@ public class TableButton extends GradientButton
         if (columnIndex_ >= 0 && !isNullValued) {
             this.setText(cellValue.toString());
         }
-        if (isNullValued || disabledValues_.contains(cellValue)) {
-            this.setEnabled(false);
-        }
+        this.setEnabled(!(isNullValued || disabledValues_.contains(cellValue)));
     }
 
     public void addCellEditorListener(CellEditorListener arg0) {

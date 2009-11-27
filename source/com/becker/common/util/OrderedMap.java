@@ -23,6 +23,10 @@ public class OrderedMap<K, V> implements Map<K, V> {
     /** This list allows us to retrieve the scenes in the same order they were loaded. */
     private List<K> keys_;
 
+    public OrderedMap() {
+        this(5);
+    }
+
     public OrderedMap(int capacity) {
         map_ = new HashMap<K, V>(capacity);
         keys_ = new ArrayList<K>(capacity);
