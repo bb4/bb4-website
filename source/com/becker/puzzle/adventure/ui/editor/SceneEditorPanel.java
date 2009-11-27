@@ -33,7 +33,7 @@ class SceneEditorPanel extends JPanel implements ActionListener {
 
     private String oldSceneName_;
 
-    private static final int EDITOR_WIDTH = 900;
+    public static final int EDITOR_WIDTH = 900;
 
     /**
      * Constructor

@@ -1,5 +1,6 @@
 package com.becker.puzzle.adventure.ui.editor;
 
+import com.becker.common.util.OrderedMap;
 import com.becker.game.multiplayer.common.ui.*;
 import javax.swing.table.*;
 import java.util.*;
@@ -8,8 +9,7 @@ import com.becker.puzzle.adventure.Choice;
 
 
 /**
- * Basically the DefaultTableModel with a few customizations
- * @see com.becker.game.multiplayer.common.ui.PlayerTable
+ * Basically the DefaultTableModel with a few customizations.
  *
  * @author Barry Becker
  */
@@ -27,23 +27,18 @@ public class ChildTableModel extends DefaultTableModel
     }
 
     /**
-     * @param row row to check
-     * @return true if last row in table.
-     */
-    public boolean isLastRow(int row) {
-         return row == this.getRowCount() -1;
-    }
-
-    /**
      * Make the text for the scene choice descriptions match the scene passed in.
+     * Also the order may have changed, so that needs to be checked as well.
      * @param currentScene scene to update to.
      */
     public void updateSceneChoices(Scene currentScene) {
-        for (int i=0; i<getRowCount()-1; i++) {
+        OrderedMap<String, String> choiceMap = new OrderedMap<String, String>();
+
+        for (int i = 0; i < getRowCount(); i++) {
             String dest = (String) getValueAt(i, ChildTable.NAVIGATE_INDEX);
-            Choice c =  currentScene.getChoices().getChoiceByDestination(dest);
-            c.setDescription(getValueAt(i, ChildTable.CHOICE_DESCRIPTION_INDEX).toString());
+            choiceMap.put(dest, getValueAt(i, ChildTable.CHOICE_DESCRIPTION_INDEX).toString());
         }
+        currentScene.getChoices().update(choiceMap);
     }
 
     public String getDestinationSceneName(int row) {
@@ -56,23 +51,19 @@ public class ChildTableModel extends DefaultTableModel
 
     /**
      * Set the scene name of the current add row and add another add row.
+     * @param row location to add the new choice
      * @param addedSceneName  name pf the scene to add.
      */
-    public void addNewChildChoice(String addedSceneName) {
-        System.out.println("adding new scene :" + addedSceneName);
-        setValueAt(ChildTable.DELETE_BUTTON_LABEL, getRowCount()-1, ChildTable.ACTION_INDEX);
-        setValueAt(addedSceneName, getRowCount()-1, ChildTable.NAVIGATE_INDEX);
+    public void addNewChildChoice(int row, String addedSceneName) {
+        System.out.println("adding new scene :" + addedSceneName + " at " + row);
+        //setValueAt(addedSceneName, getRowCount()-1, ChildTable.NAVIGATE_INDEX);
 
         Object d[] = new Object[this.getColumnCount()];
-        d[ChildTable.ACTION_INDEX] = ChildTable.ADD_BUTTON_LABEL;
-        d[ChildTable.NAVIGATE_INDEX] = ChildTable.ADD_BUTTON_LABEL;
+        d[ChildTable.NAVIGATE_INDEX] = addedSceneName;
         d[ChildTable.CHOICE_DESCRIPTION_INDEX] = ChildTable.NEW_CHOICE_DESC_LABEL;
+        this.insertRow(row, d);
 
-        this.addRow(d);
-        this.fireTableDataChanged();
-        int numRows = this.getRowCount();
-        this.fireTableRowsInserted(numRows-1, numRows);
-        this.fireTableStructureChanged();
+        this.fireTableRowsInserted(row, row);  // need this
     }
 
     @Override
@@ -85,8 +76,8 @@ public class ChildTableModel extends DefaultTableModel
     @Override
     public boolean isCellEditable(int row, int column)
     {
-        boolean editableColumn = column == ChildTable.ACTION_INDEX
-                || column == ChildTable.NAVIGATE_INDEX
+        boolean editableColumn = 
+                column == ChildTable.NAVIGATE_INDEX
                 || column == ChildTable.CHOICE_DESCRIPTION_INDEX;
         return (editableColumn
                 && !Choice.EXIT_DEST.equals(getValueAt(row, ChildTable.NAVIGATE_INDEX)));

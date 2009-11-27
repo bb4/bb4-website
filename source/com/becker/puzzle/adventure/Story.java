@@ -68,7 +68,6 @@ public class Story {
 
     /**
      * A stack of currently visited scenes. There may be duplicates if you visit the same scene twice.
-     * If you backup, then we pop the stack.
      */
     private LinkedList<Scene> visitedScenes_;
 
@@ -252,7 +251,7 @@ public class Story {
             return;
         }
 
-        String nextSceneName =  currentScene_.getNextSceneName(choice);
+        String nextSceneName = currentScene_.getNextSceneName(choice);
         advanceToScene(nextSceneName);
     }
     
@@ -264,18 +263,18 @@ public class Story {
     public void advanceToScene(String nextSceneName) {
      
         if (nextSceneName != null) {
-            if (nextSceneName.equals(Choice.EXIT_DEST))  {
-                visitedScenes_.add(currentScene_);
-                currentScene_ = null;
-            }
-            if (nextSceneName.equals(Choice.PREVIOUS_SCENE)) {
-                currentScene_ = visitedScenes_.removeLast();
-            }
-            else {
+            //if (nextSceneName.equals(Choice.EXIT_DEST))  {
+            //    visitedScenes_.add(currentScene_);
+            //    currentScene_ = null;
+            //}
+            //else if (nextSceneName.equals(Choice.PREVIOUS_SCENE)) {
+            //    currentScene_ = visitedScenes_.removeLast();
+            //}
+            //else {
                 visitedScenes_.add(currentScene_);
                 currentScene_ = sceneMap_.get( nextSceneName );
                 assert (currentScene_ != null)  : "Could not find a scene named '"+ nextSceneName+"'.";
-            }
+            //}
         }
     }
 
@@ -332,10 +331,10 @@ public class Story {
             
             for (Choice choice : scene.getChoices())  {
                 String dest = choice.getDestination();
-                if (dest != null
-                        && !Choice.PREVIOUS_SCENE.equals(choice.getDestination())
-                        && !Choice.QUIT_CHOICE.equals(choice)
-                        && sceneMap_.get(choice.getDestination()) == null) {
+                if (dest != null  &&
+                        //&& !Choice.PREVIOUS_SCENE.equals(choice.getDestination())
+                        //&& !Choice.QUIT_CHOICE.equals(choice)
+                        sceneMap_.get(choice.getDestination()) == null) {
                     assert false : "No scene named " + choice.getDestination() + " desc="+ choice.getDescription();
                 }
             }
