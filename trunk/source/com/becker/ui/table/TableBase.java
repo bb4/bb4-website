@@ -89,6 +89,11 @@ public abstract class TableBase
 
     protected abstract TableModel createTableModel(String[] columnNames);
 
+
+    public int getSelectedRow() {
+        return table_.getSelectedRow();
+    }
+
     public JTable getTable()
     {
         return table_;
