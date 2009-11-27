@@ -31,8 +31,7 @@ class StoryMenu extends JMenu implements ActionListener  {
 
     /**
      * Game application constructor
-     * @param frame
-     * @param initialGame the initially selected game.
+     * @param storyApp the initially selected game.
      */
     public StoryMenu(GraphicalAdventure storyApp)
     {
