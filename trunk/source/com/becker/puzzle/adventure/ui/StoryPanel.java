@@ -43,6 +43,7 @@ public class StoryPanel extends JSplitPane {
         textArea.setFont(TEXT_FONT);
         textArea.setWrapStyleWord(true);
         textArea.setLineWrap(true);
+        textArea.setEditable(false);
         textArea.setMinimumSize(new Dimension(INITAL_LEFT_WIDTH/2, 300));
         return textArea;
     }

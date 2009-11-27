@@ -73,14 +73,14 @@ public class Scene {
         if (!getChoices().isEmpty()) {
             // if we only have the QUIT choice, don't bother to add the choice list.
             Choice firstChoice = getChoices().get(0);
-            if (firstChoice != Choice.QUIT_CHOICE) {
-                Element choicesElem =  document.createElement("choices");
-                sceneElem.appendChild(choicesElem);
-                for (int i=0; i<getChoices().size()-1; i++) {
-                    Choice choice = getChoices().get(i);
-                    choicesElem.appendChild(choice.createElement(document));
-                }
+            //if (firstChoice != Choice.QUIT_CHOICE) {
+            Element choicesElem =  document.createElement("choices");
+            sceneElem.appendChild(choicesElem);
+            for (int i=0; i<getChoices().size()-1; i++) {
+                Choice choice = getChoices().get(i);
+                choicesElem.appendChild(choice.createElement(document));
             }
+            //}
         }
 
         Element rootElement = document.getDocumentElement();
@@ -184,20 +184,18 @@ public class Scene {
      */
     public String getNextSceneName(int choice) {
 
-        if (choice == choices_.size()) {
-            return Choice.PREVIOUS_SCENE;
-        }
+        //if (choice == choices_.size()) {
+        //    return Choice.PREVIOUS_SCENE;
+        //}
+        assert choice >= 0 || choice < choices_.size();
 
-        if (choice < 0 || choice > choices_.size()-1)
-            return null;
-        
-        String destination = choices_.get(choice).getDestination();
-        if (destination == null)
+        return choices_.get(choice).getDestination();
+        /*if (destination == Choice.EXIT_DEST)
         {
             System.out.println("Goodbye");
             System.exit(0);
         }
-        return destination;
+        return destination; */
     }
 
     /**

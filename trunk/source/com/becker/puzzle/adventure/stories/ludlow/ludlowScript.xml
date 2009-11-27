@@ -18,7 +18,7 @@ What do you do?
         <choices>
             <choice description="Knock on the front door"  resultScene="no_response" />
             <choice description="Open the front door without knocking"  resultScene="inside_entrance" />
-            <choice description="Scream"                             resultScene="sky_falls"/>
+            <choice description="Scream"                          resultScene="sky_falls"/>
         </choices>
     </scene>
 
@@ -48,7 +48,7 @@ A few minutes pass. Still nothing.
             <choice description="Go through left opening"  resultScene="rat_room" />
             <choice description="Go through right opening"  resultScene="boogie" />
             <choice description="Tamper with mirror at the end of the hall."  resultScene="mirror"/>
-            <choice description="Exit"   resultScene="quit"/>
+            <choice description="Exit the mansion"   resultScene="quit"/>
         </choices>
     </scene>
 
@@ -62,6 +62,7 @@ The room measures sixty feet east and west and forty feet north and south, if pa
             <choice description="Inspect the couch."   resultScene="rat_attack" />
             <choice description="Sift through the leaves on the floor."  resultScene="key" />
             <choice description="Go through the door on the east side."    resultScene="pink_hallway"/>
+            <choice description="Go back to the inside entrance"   resultScene="inside_entrance" />
         </choices>
     </scene>
 
@@ -77,27 +78,35 @@ Rats com out from under the couch and attack you. One bites you and gives you a 
 You find a golden key under the pile of leaves.
 (Suggestion: keep an inventory of items that the player has.)
         </description>
+        <choices>
+            <choice description="Continue"  resultScene="rat_room" />
+        </choices>
     </scene>
 
     <scene name="pink_hallway">
         <description>
-The beam of your flashlight show a hall with pink walls and a floor of red marble. The walls have clean squares all over them where pictures were obviously once hung, but are no longer. The floor has dried leaves littering it. If paced out, the hall is eighty feet long east and west and twenty feet long north and south. The hall leads to another room at the end.
+The beam of your flashlight show a hall with pink walls and a floor of red marble.
+The walls have clean squares all over them where pictures were obviously once hung, but are no longer.
+The floor has dried leaves littering it. If paced out, the hall is eighty feet long east and west and twenty feet long north and south. The hall leads to another room at the end.
         </description>
         <choices>
             <choice description="Proceed into the room at the end of the hall."  resultScene="crate_room" />
+            <choice description="Back to previous room"  resultScene="rat_room" />
         </choices>
     </scene>
-
 
     <scene name="crate_room">
         <description>
 The beam of the flashlight shows a room with gray painted walls and a cement floor. It is filled with wooden crates and there are leaves all over the room in large piles.
-There are 200 empty wooden crates of differing sizes, and the biggest concentration of leaves is in the southwest corner of the room.  The room measures sixty feet east and west and forty feet north and south and has a side alcove to the south starting on the east wall that is forty feet long east and west and twenty feet long north and south. It is here that the concentration of leaves is located. Behind a big crate along the east wall, thirty feet from the north corner, one finds a door with a normal handle.
+There are 200 empty wooden crates of differing sizes, and the biggest concentration of leaves is in the southwest corner of the room.
+The room measures sixty feet east and west and forty feet north and south and has a side alcove to the south starting on the east wall that is forty feet long east and west and twenty feet long north and south. It is here that the concentration of leaves is located. Behind a big crate along the east wall, thirty feet from the north corner, one finds a door with a normal handle.
         </description>
         <choices>
             <choice description="Go through door behind big crate."    resultScene="E" />
             <choice description="Look inside all the crates."          resultScene="open_crates" />
-            <choice description="ift through the pile of leaves."      resultScene="crate_room_leaves" />
+            <choice description="Sift through the pile of leaves on the floor."    resultScene="crate_room_leaves" />
+            <choice description="Proceed into the room at the end of the hall."    resultScene="stub" />
+            <choice description="Back to hallway"  resultScene="pink_hallway" />
         </choices>
     </scene>
 
@@ -107,7 +116,7 @@ It takes you a really long time, but you finally open and inspect all the crates
 You find nothing in them except for leaves, dust, and 200 paperclips. ",
         </description>
         <choices>
-            <choice description="Proceed into the room at the end of the hall."    resultScene="stub" />
+            <choice description="Continue."    resultScene="crate_room" />
         </choices>
     </scene>
 
@@ -117,7 +126,7 @@ There are snakes in the leaves. A group of 3 4 foot long rattlesnakes attack.
 (HP: 10,8,5; #AT: 1; damage:1-3; AC: 5; SA: Save versus death caused by poison).
         </description>
         <choices>
-            <choice description="Proceed into the room at the end of the hall."    resultScene="stub" />
+            <choice description="Continue."    resultScene="crate_room" />
         </choices>
     </scene>
 
@@ -154,12 +163,14 @@ A door on the east wall is originally hidden by the mattress crates.
         <description>The sky falls on you.</description>
     </scene>
      <scene name="stub">
-        <description>TBD
-        </description>
+        <description>TBD</description>
     </scene>
     <scene name="quit">
         <description>You go back to the others. They don't believe your story. You enjoy the rest of the camping trip.
         </description>
+        <choices>
+            <choice description="Return to the mansion"  resultScene="start" />
+        </choices>
     </scene>
 </script>
 <!--  disallow comment nodes that are detected when parsing.

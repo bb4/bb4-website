@@ -1,5 +1,6 @@
 package com.becker.puzzle.adventure;
 
+import com.becker.common.util.OrderedMap;
 import org.w3c.dom.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,7 +14,6 @@ import java.util.ListIterator;
  *
  * @author Barry Becker
  */
-@SuppressWarnings({"ClassWithTooManyMethods"})
 public class ChoiceList implements List<Choice> {
 
     private List<Choice> choices_;
@@ -54,14 +54,11 @@ public class ChoiceList implements List<Choice> {
                 assert choiceList.item(i) != null;
                 choices_.add(new Choice(choiceList.item(i)));
             }
-            if ( !isFirst ) {
-                choices_.add(new Choice("Go back to last scene.", Choice.PREVIOUS_SCENE));
-            }
+            //if ( !isFirst ) {
+            //    choices_.add(new Choice("Go back to last scene.", Choice.PREVIOUS_SCENE));
+            //}
         } else {
-            // if there are no choices, we at least need to add the option to QUIT
             choices_ = new ArrayList<Choice>();
-            choices_.add(Choice.QUIT_CHOICE);
-
         }
     }
 
@@ -99,6 +96,20 @@ public class ChoiceList implements List<Choice> {
                 c.setDestination(newSceneName);
             }
         }
+    }
+
+    /**
+     * update the order and descriptions
+     * @param choiceMap new order and descriptions to update with.
+     */
+    public void update(OrderedMap<String, String> choiceMap)  {
+        assert choiceMap.size() == choices_.size() :
+                "choiceMap.size()=" + choiceMap.size() + " not equal choices_.size()=" + choices_.size();
+        List<Choice> newChoices = new ArrayList<Choice>(choiceMap.size());
+        for (String dest : choiceMap.keyList()) {
+            newChoices.add(new Choice(choiceMap.get(dest), dest));
+        }
+        choices_ = newChoices;
     }
 
     public int size() {

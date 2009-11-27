@@ -41,7 +41,7 @@ public abstract class AbstractDialog extends JDialog implements ActionListener {
 
     /**
      * Constructor.
-     * @param parent
+     * @param parent parent component to place ourselves relative to.
      */
     public AbstractDialog(JFrame parent) {
         this();
@@ -50,7 +50,6 @@ public abstract class AbstractDialog extends JDialog implements ActionListener {
 
     /**
      * Must be called once after the context has been created.
-     * @param content
      */
     protected final void showContent() {
         this.getContentPane().removeAll();
@@ -79,8 +78,7 @@ public abstract class AbstractDialog extends JDialog implements ActionListener {
         bottomButton.setText( buttonText );
         bottomButton.setToolTipText( buttonToolTip );
         bottomButton.addActionListener( this );
-        // bottomButton.setPreferredSize( new Dimension( 140, 25 ) );
-        bottomButton.setMinimumSize( new Dimension( 50, 25 ) );
+        bottomButton.setMinimumSize( new Dimension( 45, 25 ) );
     }
     
      /**
@@ -107,7 +105,7 @@ public abstract class AbstractDialog extends JDialog implements ActionListener {
     public void actionPerformed( ActionEvent e )
     {
         Object source = e.getSource();  
-         if ( source == cancelButton_ ) {
+        if ( source == cancelButton_ ) {
             cancel();
         }
     }
