@@ -1,7 +1,9 @@
 package com.becker.puzzle.adventure;
 
 import com.becker.common.util.OrderedMap;
-import org.w3c.dom.*;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;

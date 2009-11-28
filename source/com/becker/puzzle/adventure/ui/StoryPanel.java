@@ -2,6 +2,7 @@ package com.becker.puzzle.adventure.ui;
 
 import com.becker.java2d.ui.ImageListPanel;
 import com.becker.puzzle.adventure.Story;
+
 import javax.swing.*;
 import java.awt.*;
 

@@ -1,19 +1,15 @@
 package com.becker.puzzle.adventure.ui.editor;
 
-import com.becker.ui.dialogs.ImagePreviewDialog;
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import javax.swing.JTextArea;
 import com.becker.puzzle.adventure.Scene;
 import com.becker.puzzle.adventure.ui.StoryPanel;
 import com.becker.ui.components.GradientButton;
 import com.becker.ui.components.TextInput;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+import com.becker.ui.dialogs.ImagePreviewDialog;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.BorderFactory;
-import javax.swing.JScrollPane;
 
 /**
  * Used to edit an individual scene.

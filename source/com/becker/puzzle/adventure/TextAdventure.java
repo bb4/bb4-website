@@ -1,9 +1,9 @@
 package com.becker.puzzle.adventure;
 
-import org.w3c.dom.*;
+import org.w3c.dom.Document;
 
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.util.Scanner;
 
 /**
  * Run your own adventure story.

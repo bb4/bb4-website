@@ -1,11 +1,10 @@
 package com.becker.puzzle.adventure.ui.editor;
 
 import com.becker.common.util.OrderedMap;
-import com.becker.game.multiplayer.common.ui.*;
-import javax.swing.table.*;
-import java.util.*;
 import com.becker.puzzle.adventure.Scene;
-import com.becker.puzzle.adventure.Choice;
+
+import javax.swing.table.DefaultTableModel;
+import java.util.List;
 
 
 /**
