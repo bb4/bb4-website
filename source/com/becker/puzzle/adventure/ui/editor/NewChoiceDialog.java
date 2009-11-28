@@ -80,6 +80,7 @@ class NewChoiceDialog extends AbstractDialog
 
     /**
      *  create the buttons that go at the botton ( eg OK, Cancel, ...)
+     * @return buttons panel.
      */
     JPanel createButtonsPanel() {
         JPanel buttonsPanel = new JPanel();
