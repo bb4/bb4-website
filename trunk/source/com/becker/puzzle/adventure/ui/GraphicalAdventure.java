@@ -1,5 +1,6 @@
 package com.becker.puzzle.adventure.ui;
 
+import com.becker.common.xml.DomUtil;
 import com.becker.puzzle.adventure.Story;
 import com.becker.puzzle.adventure.TextAdventure;
 import com.becker.puzzle.adventure.ui.editor.StoryEditorDialog;
@@ -10,6 +11,7 @@ import org.w3c.dom.Document;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -25,6 +27,8 @@ public final class GraphicalAdventure extends ApplicationApplet
     private Story story_;
     private ChoicePanel choicePanel_ = null;
     private JPanel mainPanel_;
+    private boolean storyEdited_ = false;
+
 
     /**
      * Constructor.
@@ -50,6 +54,7 @@ public final class GraphicalAdventure extends ApplicationApplet
     /**
      * Build the user interface with parameter input controls at the top.
      */
+    @Override
     protected JPanel createMainPanel()
     {
         mainPanel_ = new JPanel();
@@ -95,24 +100,54 @@ public final class GraphicalAdventure extends ApplicationApplet
     }
 
     /**
-     * Allow user to edit the current story if they know the passord.
+     * Allow user to edit the current story if they know the password.
      */
     public void editStory() {
         // show password dialog.
         PasswordDialog pwDlg = new PasswordDialog("ludlow");
         boolean canceled = false; // pwDlg.showDialog();
+        if ( canceled ) return;
 
-        if ( !canceled ) {
-            StoryEditorDialog storyEditor = new StoryEditorDialog(story_);
-            boolean editingCanceled = storyEditor.showDialog();
-            if (!editingCanceled) {
-                System.out.println("done editing");
-                // show the edited version.
-                story_.initializeFrom(storyEditor.getEditedStory());
-                story_.resetToFirstScene();
-                setStory(story_);
-            }
+        StoryEditorDialog storyEditor = new StoryEditorDialog(story_);
+        boolean editingCanceled = storyEditor.showDialog();
+        if (!editingCanceled) {
+            System.out.println("done editing");
+            // show the edited version.
+            story_.initializeFrom(storyEditor.getEditedStory());
+            story_.resetToFirstScene();
+            setStory(story_);
+            storyEdited_ = true;
         }
+    }
+
+    public boolean isStoryEdited() {
+        return storyEdited_;
+    }
+
+    public void loadStory(File file) {
+         Story story = new Story(importStoryDocument(file));
+         setStory(story);
+    }
+
+    /**
+     * @param file name of the xml document to import.
+     * @return the imported story xml document.
+     */
+    private static Document importStoryDocument(File file) {
+        Document document = null;
+        // first try to load it as a file. If that doesn't work, try as a URL.
+        if (file.exists()) {
+            document = DomUtil.parseXMLFile(file);
+        }
+        return document;
+    }
+
+    /**
+     * @param fPath fully qualified filename and path to save to.
+     */
+    public void saveStory(String fPath) {
+        getStory().saveStoryDocument(fPath);
+        storyEdited_ = false;
     }
 
     /**

@@ -1,9 +1,11 @@
 package com.becker.puzzle.adventure.ui;
 
 import com.becker.common.util.FileUtil;
+import com.becker.common.xml.DomUtil;
 import com.becker.puzzle.adventure.Story;
 import com.becker.ui.GUIUtil;
 import com.becker.ui.filefilter.ExtensionFileFilter;
+import org.w3c.dom.Document;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -68,11 +70,31 @@ class StoryMenu extends JMenu implements ActionListener  {
             storyApp_.editStory();
         }
         else if (item == exitItem_) {
-            System.exit(0);
+            if (confirmExit())  {
+                System.exit(0);
+            }
         }
         else {
             assert false : "unexpected menuItem = "+ item.getName();
         }
+    }
+
+    /**
+     * If there are modifications, confirm before exiting.
+     * @return true if exiting was confirm or if no edit was made so confirm not needed.
+     */
+    private boolean confirmExit() {
+
+        if (storyApp_.isStoryEdited())  {
+            int choice = JOptionPane.showConfirmDialog(this,
+                    "You have unsaved changes. Are you sure you want to exit?",
+                    "Confirm Quit", JOptionPane.YES_NO_OPTION);
+            if (choice == JOptionPane.NO_OPTION)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -81,8 +103,7 @@ class StoryMenu extends JMenu implements ActionListener  {
     private void openStory() {
         File file = FileUtil.getSelectedFileToOpen(EXT, getDefaultDir());
         if ( file != null)  {
-            Story story = new Story(Story.importStoryDocument(file));
-            storyApp_.setStory(story);
+            storyApp_.loadStory(file);
         }
     }
 
@@ -95,7 +116,7 @@ class StoryMenu extends JMenu implements ActionListener  {
             // if it does not have the .sgf extension already then add it
             String fPath = file.getAbsolutePath();
             fPath = ExtensionFileFilter.addExtIfNeeded(fPath, EXT);
-            storyApp_.getStory().saveStoryDocument(fPath);
+            storyApp_.saveStory(fPath);
         }
     }
 
@@ -115,4 +136,5 @@ class StoryMenu extends JMenu implements ActionListener  {
         item.addActionListener(this);
         return item;
     }
+
 }

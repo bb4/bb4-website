@@ -3,10 +3,10 @@
 <script author="Barry Becker" date="10/19/2006" name="ludlow" title="The Mansion of Professor Ludlow">
     <scene name="start">
         <description>
-*******************************************
-***** The Mansion of Professor Ludlow *****
-*******************************************
-    Adapted from a D&amp;D module by James Ward
+***************************************************
+********* The Mansion of Professor Ludlow *********
+***************************************************
+      Adapted from a D&amp;D module by James Ward
 
 You are on a camping trip with a large group of boyscouts.
 During a nighttime hike, you get separated from the rest of the group.
@@ -57,16 +57,6 @@ You find nothing in them except for leaves, dust, and 200 paperclips. ",
             <choice description="Continue." resultScene="D.crate_room"/>
         </choices>
     </scene>
-    <scene name="mirror">
-        <description>You find that the mirror lifts easily. There is a secrete door behind it.</description>
-        <choices>
-            <choice description="Try to open the secret door." resultScene="gold"/>
-        </choices>
-    </scene>
-    <scene name="gold">
-        <description>Congratulations. There is a pot of gold behind the door. You go home rich.</description>
-        <choices/>
-    </scene>
     <scene name="sky_falls">
         <description>The sky falls on you.</description>
         <choices/>
@@ -94,7 +84,7 @@ You find nothing in them except for leaves, dust, and 200 paperclips. ",
         <choices>
             <choice description="Go through left opening" resultScene="B.rat_room"/>
             <choice description="Go through right opening" resultScene="K.boogie"/>
-            <choice description="Tamper with mirror at the end of the hall." resultScene="mirror"/>
+            <choice description="Tamper with mirror at the end of the hall." resultScene="A.mirror"/>
             <choice description="Exit the mansion" resultScene="quit"/>
         </choices>
     </scene>
@@ -169,7 +159,7 @@ bottom of the stairs up; on the east wall section by the stairs is
 another way out of the room.</description>
         <choices>
             <choice description="Head south and climb the stairs." resultScene="F.stairway"/>
-            <choice description="Exit to the east using the opening at the base of the stairs." resultScene="J.Batthroom"/>
+            <choice description="Exit to the east using the opening at the base of the stairs." resultScene="J.Bathroom"/>
             <choice description="Inspect the rocks on the shelves." resultScene="F.rocks"/>
             <choice description="Exit tot the west into the passageway at the north corner of the room" resultScene="G.passageway"/>
             <choice description="Go back to gray storage room." resultScene="E.gray_storage_room"/>
@@ -200,12 +190,24 @@ A door on the east wall is originally hidden by the mattress crates.
         </choices>
     </scene>
     <scene name="G.passageway">
-        <description> --- describe the scene here ---</description>
-        <choices/>
-    </scene>
-    <scene name="J.Batthroom">
-        <description> --- describe the scene here ---</description>
-        <choices/>
+        <description>The beams of the flashlights show the passageway has
+strange objects hanging on its gray painted walls. The floor is of black
+marble. There are openings out of the hall from the east and west
+ends.
+ The hall is lined with hanging medieval weapons: 3 heavy maces, 2 halberds, 3 crossbows
+with one bolt each, 3 short swords, 5 huge two-handed swords, 5 dagoers.
+4 boar soears. and 3 flails. All of these are easily detachable and have traces of preserving oil on them. 
+The hall is twenty feet wide, north and south and 100 feet long east and west.
+
+The weapons are all in perfect
+condition and do the following damage: Maces-2-7 pts; Halberds-
+1-10 pts.; Crossbows-1-4 pts.; Short Swords-1-6 pts.; two-handed
+Swords-1-10 pts.; Oaggers-1-4 pts.; Boar Spears-2-7 pts.; and
+Flails-2-7 pts.</description>
+        <choices>
+            <choice description=" - Put your choice description here -" resultScene="H.fur_room"/>
+            <choice description=" Go back to the oak storage room." resultScene="F.oak_room"/>
+        </choices>
     </scene>
     <scene name="F.stairway">
         <description> --- describe the scene here ---</description>
@@ -221,5 +223,113 @@ entire room.</description>
         <choices>
             <choice description=" - Put your choice description here -" resultScene="F.oak_room"/>
         </choices>
+    </scene>
+    <scene name="H.fur_room">
+        <description>The beams of the flashlights show a room filled with furs
+covering the walls, ceiling, and floor. There is a large spiral staircase
+in one corner that seems to be made out of metal.
+
+The furs are purple in color and very rough to the touch. They do not appear to be dyed,
+and each furis very large and cannot be cut or moved from any section of the
+room. The spiral staircase is in the northwest corner of the room. It is
+made of metal and painted with purple enamel paint. If paced out, the
+room is eighty feet east and west and sixty feet wide to the north and
+south.</description>
+        <choices>
+            <choice description=" inspect furs on wall." resultScene="H.inspect_wall"/>
+            <choice description="Go up the spiral staircase." resultScene="H.spiral_staircase"/>
+            <choice description="Go back to the passageway." resultScene="G.passageway"/>
+        </choices>
+    </scene>
+    <scene name="H.inspect_wall">
+        <description>If any tapping is done to the wall section marked with the secret door symbol it will
+show a hollow sound. If the wall is closely examined by hand, that whole section of
+fur will appear to be loose. It will easily move to the side with the push
+of a hand, revealing a normal door.</description>
+        <choices>
+            <choice description="Go through the secret door." resultScene="I.statue_room"/>
+            <choice description="Stay in fur room." resultScene="H.fur_room"/>
+        </choices>
+    </scene>
+    <scene name="H.spiral_staircase">
+        <description> --- describe the scene here ---</description>
+        <choices/>
+    </scene>
+    <scene name="I.statue_room">
+        <description>The beams of the flashlights show a room filled with statues of
+differing types. The walls, floor and ceiling are of green paneled
+wood.
+There are fifteen statues in this area: 
+three Viking types with ring mail for armor, horned helmets, and
+drawn swords in their hands; two female amazon types, each with a
+bow and arrow ready to fire; four men in plate mail with plumed
+helmets and swords at their sides; and five Wisconsin State Highway
+Patrolmen with pistols and equipment on their belts and nightsticks in
+their hands. The room is paced out to be sixty feet to the east and
+west and forty feet to the north and south.</description>
+        <choices>
+            <choice description="Attempt to speak with the statues" resultScene="I.talk_to_statues"/>
+            <choice description="Attack the statues." resultScene="I.attack_statues"/>
+        </choices>
+    </scene>
+    <scene name="I.talk_to_statues">
+        <description> They make some grunting noises back to you.</description>
+        <choices>
+            <choice description="Attack the statues." resultScene="I.attack_statues"/>
+            <choice description="Continue" resultScene="I.statue_room"/>
+        </choices>
+    </scene>
+    <scene name="I.attack_statues">
+        <description> --- describe the scene here ---</description>
+        <choices/>
+    </scene>
+    <scene name="A.mirror">
+        <description>You find that the mirror lifts easily. There is a secrete door behind it.</description>
+        <choices>
+            <choice description="Try to open the secret door." resultScene="P.plant_room"/>
+        </choices>
+    </scene>
+    <scene name="P.plant_room">
+        <description>The beams of the flashlights show a room filled with plants
+from wall to wall and traveling up to the ceiling. One also notices a
+strange purple glow from the bottoms of all the plants. An exit is
+visible on the other side of the room.
+
+All of the plants are in tanks that
+are filled with a glowing purple liquid. The plants seem to sway
+towards any people entering the area. Some of them bear fruit and
+berries. The room cannot be paced out because of the plants, but the
+path from exit to exit is eighty feet.
+
+</description>
+        <choices>
+            <choice description="Inspect the plants" resultScene="P.inspect_plants"/>
+            <choice description="Go back to foyer." resultScene="A.inside_entrance"/>
+        </choices>
+    </scene>
+    <scene name="P.inspect_plants">
+        <description>Seven stirges fly out and attack. Their pointy beaks suck your blood.</description>
+        <choices/>
+    </scene>
+    <scene name="J.Bathroom">
+        <description> The beams of the flashlights show a bathroom with all the
+things one would expect to find in such a place. There is a sink with a
+mirror above it, a stool, and a bathtub. The floor, walls, ceiling, and all
+The water works fine in this area, except when it is about to overflow any sink or tub or stool for any
+reason. It will cut itself off first. There are hinges on the door frame but
+no other sign that there ever was a door there. If paced out the main
+room is forty feet by forty feet, plus a hall section that has the tub at its
+end. This hall section starts on the south wall and is ten feet wide
+(east and west) and twenty feet long.</description>
+        <choices>
+            <choice description=" - Put your choice description here -" resultScene="J.medicine_cabinet"/>
+        </choices>
+    </scene>
+    <scene name="J.medicine_cabinet">
+        <description> The mirror over the sink has a recessed cabinet. 
+In it are two small plastic bottles of pills: One has ten green pills that
+ will speed any being up to twice normal for three melee rounds; the second 
+bottle has twenty pink pills that will restore ten lost hit points per pill.</description>
+        <choices/>
     </scene>
 </script>

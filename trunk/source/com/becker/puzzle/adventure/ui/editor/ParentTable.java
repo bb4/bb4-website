@@ -35,7 +35,8 @@ class ParentTable extends TableBase  {
 
     /**
      * constructor
-     * @param players to initializet the rows in the table with.
+     * @param scenes to initializet the rows in the table with.
+     * @param listener called when button in row is clicked.
      */
     public ParentTable(List<Scene> scenes, TableButtonListener listener)  {
         initColumnMeta(PARENT_COLUMN_NAMES);
@@ -45,8 +46,9 @@ class ParentTable extends TableBase  {
 
     /**
      * add a row based on a player object
-     * @param player to add
+     * @param scene scene to add
      */
+    @Override
     protected void addRow(Object scene)
     {
         Scene parentScene = (Scene) scene;
@@ -75,6 +77,7 @@ class ParentTable extends TableBase  {
     }
 
 
+    @Override
     protected TableModel createTableModel(String[] columnNames)  {
         return new ParentTableModel(columnNames, 0);
     }

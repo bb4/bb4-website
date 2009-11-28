@@ -43,6 +43,8 @@ public class StoryEditorDialog extends AbstractDialog
     private GradientButton moveUpButton_ = new GradientButton();
     private GradientButton moveDownButton_ = new GradientButton();
 
+    private JComboBox sceneSelector_;
+
     /** location for images. */
     private static final String IMAGE_PATH =  "com/becker/puzzle/adventure/ui/images/";
 
@@ -61,7 +63,6 @@ public class StoryEditorDialog extends AbstractDialog
         this.setModal( true );
         showContent();
     }
-
 
     @Override
     protected JComponent createDialogContent() {
@@ -88,9 +89,8 @@ public class StoryEditorDialog extends AbstractDialog
     private JPanel createEditingPane() {
         JPanel editingPane = new JPanel(new BorderLayout());
 
-        editingPane.add(createParentTable(), BorderLayout.NORTH);
+        editingPane.add(createParentTablePanel(), BorderLayout.NORTH);
         editingPane.add(createSceneEditingPanel(), BorderLayout.CENTER);
-        editingPane.add(createButtonsPanel(), BorderLayout.SOUTH);
 
         return editingPane;
     }
@@ -98,7 +98,7 @@ public class StoryEditorDialog extends AbstractDialog
     /**
      * @return  table holding list of scenes that lead to the currently edited scene.
      */
-    private JComponent createParentTable() {
+    private JComponent createParentTablePanel() {
         JPanel parentContainer = new JPanel(new BorderLayout());
         parentScenes_ = story_.getParentScenes();
         ParentTable parentTable = new ParentTable(parentScenes_, this);
@@ -120,7 +120,7 @@ public class StoryEditorDialog extends AbstractDialog
         sceneEditor = new SceneEditorPanel(story_.getCurrentScene());
 
         container.add(sceneEditor, BorderLayout.CENTER);
-        container.add(createChildTable(), BorderLayout.SOUTH);
+        container.add(createChildTablePanel(), BorderLayout.SOUTH);
 
         return container;
     }
@@ -128,36 +128,24 @@ public class StoryEditorDialog extends AbstractDialog
     /**
      * @return  table of child scene choices.
      */
-    private JComponent createChildTable() {
+    private JComponent createChildTablePanel() {
         JPanel childContainer = new JPanel(new BorderLayout());
 
         childTable_ = new ChildTable(story_.getCurrentScene().getChoices(), this);
         childTable_.addListSelectionListener(this);
 
         childContainer.setBorder(
-                BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(),"Choices (to navigate to child scenes)" ) );
+                BorderFactory.createTitledBorder(
+                        BorderFactory.createEtchedBorder(), "Choices (to navigate to child scenes)" ) );
 
         childContainer.add(new JScrollPane(childTable_.getTable()), BorderLayout.CENTER);
+        childContainer.add(createChildRowEditButtons(), BorderLayout.SOUTH);
 
-        childContainer.setPreferredSize(new Dimension(SceneEditorPanel.WIDTH, 200));
+        childContainer.setPreferredSize(new Dimension(SceneEditorPanel.WIDTH, 240));
         return childContainer;
     }
 
-    /**
-     * Create the buttons that go at the botton ( eg row editing buttons and OK, Cancel, ...)
-     * @return ok cancel panel.
-     */
-    JPanel createButtonsPanel() {
-        JPanel outerPanel = new JPanel( new BorderLayout() );
-        JPanel leftButtonsPanel = createLeftButtons();
-        JPanel rightButtonsPanel = createRightButtons();
-
-        outerPanel.add(leftButtonsPanel, BorderLayout.WEST);
-        outerPanel.add(rightButtonsPanel, BorderLayout.EAST);
-        return outerPanel;
-    }
-
-    JPanel createLeftButtons() {
+    JPanel createChildRowEditButtons() {
         JPanel leftButtonsPanel = new JPanel( new FlowLayout() );
 
         initBottomButton( addButton_, "Add",
@@ -184,6 +172,30 @@ public class StoryEditorDialog extends AbstractDialog
         leftButtonsPanel.add( moveDownButton_ );
         return leftButtonsPanel;
     }
+
+    /**
+     * Create the buttons that go at the botton ( eg row editing buttons and OK, Cancel, ...)
+     * @return ok cancel panel.
+     */
+    JPanel createButtonsPanel() {
+        JPanel outerPanel = new JPanel( new BorderLayout() );
+
+        outerPanel.add(createJumpToPanel(), BorderLayout.WEST);
+        outerPanel.add(createRightButtons(), BorderLayout.EAST);
+        return outerPanel;
+    }
+
+    JPanel createJumpToPanel() {
+        JPanel panel = new JPanel(new BorderLayout());
+        JLabel label = new JLabel("Jump to Scene");
+        sceneSelector_ = new JComboBox(story_.getAllSceneNames().toArray());
+        sceneSelector_.addActionListener(this);
+        panel.add(label, BorderLayout.WEST);
+        panel.add(sceneSelector_, BorderLayout.CENTER);
+        panel.setToolTipText("Jump to a specific scene so you can edit from there.");
+        return panel;
+    }
+
 
     JPanel createRightButtons() {
         JPanel rightButtonsPanel = new JPanel( new FlowLayout() );
@@ -234,6 +246,13 @@ public class StoryEditorDialog extends AbstractDialog
             selectedChildRow_ = childTable_.moveRow(row, row + 1);
             updateMoveButtons();
         }
+
+        else if (source == sceneSelector_) {
+            commitSceneChanges();
+            story_.advanceToScene(sceneSelector_.getSelectedItem().toString());
+            showContent();
+        }
+        // This will prevent this handler from being called multiple times. Don't know why.
         e.setSource(null);
     }
 
@@ -244,12 +263,11 @@ public class StoryEditorDialog extends AbstractDialog
      */
     public void tableButtonClicked(int row, int col, String buttonId) {
 
+        commitSceneChanges();
         if (ChildTable.NAVIGATE_TO_CHILD_BUTTON_ID.equals(buttonId)) {
-            commitSceneChanges();
             story_.advanceScene(row);
         }
         else if (ParentTable.NAVIGATE_TO_PARENT_BUTTON_ID.equals(buttonId)) {
-            commitSceneChanges();
             story_.advanceToScene(parentScenes_.get(row).getName());
         }
         else {
@@ -261,7 +279,7 @@ public class StoryEditorDialog extends AbstractDialog
 
     /**
      * A row in the child table has been selected or selection has changed.
-     * @param e
+     * @param e event
      */
     public void valueChanged(ListSelectionEvent e) {
         selectedChildRow_ = childTable_.getSelectedRow();
@@ -279,10 +297,10 @@ public class StoryEditorDialog extends AbstractDialog
      * Show a dialog that allows selecting the new child scene destination.
      * This will be either an exisiting scene or a new one.
      * A new row is automatically added to the table.
-     * @param row row of the new choice in the child table.
+     * @param newRow row of the new choice in the child table.
      */
-    private void addNewChoice(int row) {
-        if (row < 0) row = 0;
+    private void addNewChoice(int newRow) {
+        int row = (newRow < 0) ? 0 : newRow;
         NewChoiceDialog newChoiceDlg = new NewChoiceDialog(story_.getCandidateDestinationSceneNames());
         ChildTableModel childModel = childTable_.getChildTableModel();
 

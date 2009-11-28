@@ -74,7 +74,7 @@ public class Story {
     /**
      * A stack of currently visited scenes. There may be duplicates if you visit the same scene twice.
      */
-    private LinkedList<Scene> visitedScenes_;
+    private List<Scene> visitedScenes_;
 
     /** all the stories need to be stored at this location */
     public static final String STORIES_ROOT = "com/becker/puzzle/adventure/stories/";
@@ -196,16 +196,6 @@ public class Story {
         return document;
     }
 
-    public static Document importStoryDocument(File file) {
-        Document document = null;
-
-        // first try to load it as a file. If that doesn't work, try as a URL.
-        if (file.exists()) {
-            document = DomUtil.parseXMLFile(file);
-        }       
-        return document;
-    }
-
     /**
      * Construct an adventure given a list of scenes.
      * @param scenes array of scenes to use in this story.
@@ -320,6 +310,10 @@ public class Story {
         return candidateSceneNames;
     }
 
+    public List<String> getAllSceneNames() {
+        return sceneMap_.keyList();
+    }
+    
     /**
      * make sure the set of scenes in internally consistent.
      */

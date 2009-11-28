@@ -1,5 +1,6 @@
 package com.becker.puzzle.adventure;
 
+import com.becker.puzzle.adventure.ui.GraphicalAdventure;
 import org.w3c.dom.Document;
 
 import java.io.IOException;
@@ -8,11 +9,13 @@ import java.util.Scanner;
 /**
  * Run your own adventure story.
  * This version runs the adventure in text only mode.
- * @see com.becker.puzzle.adventure.ui.GraphicalAdventure
+ * @see GraphicalAdventure
  *
  * @author Barry Becker
  */
 public final class TextAdventure {
+
+    private TextAdventure() {}
 
 
     /**
