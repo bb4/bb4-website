@@ -88,7 +88,6 @@ public class ChoiceList implements List<Choice> {
                 "choiceMap.size()=" + choiceMap.size() + " not equal choices_.size()=" + choices_.size();
         List<Choice> newChoices = new ArrayList<Choice>(choiceMap.size());
         for (String dest : choiceMap.keyList()) {
-            System.out.println("updating dest="+ dest);
             newChoices.add(new Choice(choiceMap.get(dest), dest));
         }
         choices_ = newChoices;

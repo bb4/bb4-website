@@ -52,7 +52,6 @@ class ChildTable extends TableBase  {
         if (newRow >= 0 && newRow < getChildTableModel().getRowCount()) {
             getChildTableModel().moveRow(oldRow, oldRow, newRow);
             getTable().setRowSelectionInterval(newRow, newRow);
-            System.out.println("new row selected after move="+ newRow +"(oldrow="+ oldRow +")");
             return newRow;
         }
         return oldRow;
