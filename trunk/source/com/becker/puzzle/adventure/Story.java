@@ -135,7 +135,6 @@ public class Story {
      */
     public void saveStoryDocument(String destFileName) {
          try {
-             System.out.println("saving ...");
              Document document = createStoryDocument();
              DomUtil.writeXMLFile(destFileName, document, "script.dtd");
              System.out.println("done saving.");
@@ -340,13 +339,12 @@ public class Story {
      */
     public void sceneNameChanged(String oldSceneName, String newSceneName) {
         Scene changedScene = sceneMap_.remove(oldSceneName);
-        System.out.println("oldScene name=" + oldSceneName +"  newSceneName="+ newSceneName+"  changedScene=" + changedScene.getName());
+        //System.out.println("oldScene name=" + oldSceneName +"  newSceneName="+ newSceneName+"  changedScene=" + changedScene.getName());
         sceneMap_.put(newSceneName, changedScene);
         // also need to update the references to named scenes in the choices.
         for (String sceneName : sceneMap_.keyList()) {
             sceneMap_.get(sceneName).getChoices().sceneNameChanged(oldSceneName, newSceneName); 
         }
-        System.out.println("visited scenes="+ visitedScenes_);
     }
 }
 

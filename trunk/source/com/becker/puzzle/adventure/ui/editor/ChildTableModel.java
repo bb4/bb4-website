@@ -34,7 +34,6 @@ public class ChildTableModel extends DefaultTableModel
     public void updateSceneChoices(Scene currentScene) {
         OrderedMap<String, String> choiceMap = new OrderedMap<String, String>();
 
-        System.out.println("num choices in table="+ getRowCount()); 
         for (int i = 0; i < getRowCount(); i++) {
             String dest = (String) getValueAt(i, ChildTable.NAVIGATE_INDEX);
             choiceMap.put(dest, getValueAt(i, ChildTable.CHOICE_DESCRIPTION_INDEX).toString());
@@ -52,7 +51,6 @@ public class ChildTableModel extends DefaultTableModel
      * @param addedSceneName  name pf the scene to add.
      */
     public void addNewChildChoice(int row, String addedSceneName) {
-        System.out.println("adding new scene :" + addedSceneName + " at " + row);
 
         Object d[] = new Object[this.getColumnCount()];
         d[ChildTable.NAVIGATE_INDEX] = addedSceneName;

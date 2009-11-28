@@ -220,7 +220,7 @@ public class StoryEditorDialog extends AbstractDialog
         }
 
         else if (source == removeButton_) {
-            System.out.println("remove row");
+            //System.out.println("remove row");
             int answer = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete choice "
                     + childModel.getValueAt(row, ChildTable.NAVIGATE_INDEX) +"?");
             if (answer == JOptionPane.YES_OPTION) {
@@ -257,6 +257,7 @@ public class StoryEditorDialog extends AbstractDialog
         else {
             assert false : "unexpected id =" + buttonId;
         }
+        selectedChildRow_ = -1;
         showContent();
     }
 
@@ -266,7 +267,7 @@ public class StoryEditorDialog extends AbstractDialog
      */
     public void valueChanged(ListSelectionEvent e) {
         selectedChildRow_ = childTable_.getSelectedRow();
-        System.out.println("selected row now " + selectedChildRow_);
+        //System.out.println("selected row now " + selectedChildRow_);
         removeButton_.setEnabled(true);
         updateMoveButtons();
     }

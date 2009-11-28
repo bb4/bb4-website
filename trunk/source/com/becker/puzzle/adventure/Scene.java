@@ -96,7 +96,7 @@ public class Scene {
             String imagePath = resourcePath + "images/" +name + ".jpg";
             image_ = GUIUtil.getBufferedImage(imagePath);
         } catch (NoClassDefFoundError e) {
-            System.out.println("You are trying to load sounds and images when text only scenes are supported. " +
+            System.err.println("You are trying to load sounds and images when text only scenes are supported. " +
                     "If you need this to work add the jai library to your classpath");
         }
     }
@@ -110,7 +110,6 @@ public class Scene {
 
     public void deleteChoice(int choice) {
         choices_.remove(choice);
-        System.out.println("after deleting num="+ choices_.size());
     }
 
     /**
@@ -196,14 +195,14 @@ public class Scene {
      */
     public boolean verifyMedia() {
         if (getImage() == null || !hasSound()) {
-                System.out.print("scene: " + getName() );
-                if (getImage() == null)
-                    System.out.print("  missing image");
-                if (!hasSound())
-                    System.out.print("  missing sound" );
-                System.out.println("");
-                return false;
-           }
+            System.out.print("scene: " + getName() );
+            if (getImage() == null)
+                System.out.print("  missing image");
+            if (!hasSound())
+                System.out.print("  missing sound" );
+            System.out.println("");
+            return false;
+       }
         return true;
     }
 

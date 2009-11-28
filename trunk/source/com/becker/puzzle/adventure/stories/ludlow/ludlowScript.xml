@@ -16,7 +16,7 @@ What do you do?
         </description>
         <choices>
             <choice description="Knock on the front door" resultScene="no_response"/>
-            <choice description="Open the front door without knocking" resultScene="inside_entrance"/>
+            <choice description="Open the front door without knocking" resultScene="A.inside_entrance"/>
             <choice description="Scream" resultScene="sky_falls"/>
         </choices>
     </scene>
@@ -27,43 +27,14 @@ A few minutes pass. Still nothing.
         </description>
         <choices>
             <choice description="Knock again" resultScene="no_response"/>
-            <choice description="Open the front door without knocking" resultScene="inside_entrance"/>
+            <choice description="Open the front door without knocking" resultScene="A.inside_entrance"/>
             <choice description="Scream" resultScene="sky_falls"/>
             <choice description="Return to the rest of your group" resultScene="quit"/>
         </choices>
     </scene>
-    <scene name="inside_entrance">
-        <description>
- The double door is unlocked and opens easily.
- The beam of your flashligh reveals an empty hallway with a mirror at the opposite end. 
- There are openings that lead to rooms on the right and left.
- The hall has inch-thick red carpeting and walnut-paneled walls. 
- The mirror at the end runs from the floor to the twenty-foot-high ceiling
- and covers the forty feet of wall section on that south face of the hall.
-        </description>
-        <choices>
-            <choice description="Go through left opening" resultScene="rat_room"/>
-            <choice description="Go through right opening" resultScene="boogie"/>
-            <choice description="Tamper with mirror at the end of the hall." resultScene="mirror"/>
-            <choice description="Exit the mansion" resultScene="quit"/>
-        </choices>
-    </scene>
-    <scene name="rat_room">
-        <description>
-There are leaves on the floor, and an old worn out couch in the north east corner.
-There is a musty smell to the room, and leaves are littered on the floor. The couch is an old, dusty, overstuffed relic with several cushions and rips on all parts of it.
-The room measures sixty feet east and west and forty feet north and south, if paced out. There is a door on the east side of the room.
-        </description>
-        <choices>
-            <choice description="Inspect the couch." resultScene="rat_attack"/>
-            <choice description="Sift through the leaves on the floor." resultScene="key"/>
-            <choice description="Go through the door on the east side." resultScene="pink_hallway"/>
-            <choice description="Go back to the inside entrance" resultScene="inside_entrance"/>
-        </choices>
-    </scene>
     <scene name="rat_attack">
-        <description>
-Rats com out from under the couch and attack you. One bites you and gives you a terrible disease.
+        <description>Rats com out from under the couch and attack you. 
+One bites you and gives you a terrible disease.
 (Suggestion: maybe we should have generated melee combat here so the outcome is random.)
         </description>
         <choices/>
@@ -74,32 +45,7 @@ You find a golden key under the pile of leaves.
 (Suggestion: keep an inventory of items that the player has.)
         </description>
         <choices>
-            <choice description="Continue" resultScene="rat_room"/>
-        </choices>
-    </scene>
-    <scene name="pink_hallway">
-        <description>
-The beam of your flashlight show a hall with pink walls and a floor of red marble.
-The walls have clean squares all over them where pictures were obviously once hung, but are no longer.
-The floor has dried leaves littering it. If paced out, the hall is eighty feet long east and west and twenty feet long north and south. The hall leads to another room at the end.
-        </description>
-        <choices>
-            <choice description="Proceed into the room at the end of the hall." resultScene="crate_room"/>
-            <choice description="Back to previous room" resultScene="rat_room"/>
-        </choices>
-    </scene>
-    <scene name="crate_room">
-        <description>
-The beam of the flashlight shows a room with gray painted walls and a cement floor. It is filled with wooden crates and there are leaves all over the room in large piles.
-There are 200 empty wooden crates of differing sizes, and the biggest concentration of leaves is in the southwest corner of the room.
-The room measures sixty feet east and west and forty feet north and south and has a side alcove to the south starting on the east wall that is forty feet long east and west and twenty feet long north and south. It is here that the concentration of leaves is located. Behind a big crate along the east wall, thirty feet from the north corner, one finds a door with a normal handle.
-        </description>
-        <choices>
-            <choice description="Go through door behind big crate." resultScene="E"/>
-            <choice description="Look inside all the crates." resultScene="open_crates"/>
-            <choice description="Sift through the pile of leaves on the floor." resultScene="crate_room_leaves"/>
-            <choice description="Proceed into the room at the end of the hall." resultScene="stub"/>
-            <choice description="Back to hallway" resultScene="pink_hallway"/>
+            <choice description="Continue" resultScene="B.rat_room"/>
         </choices>
     </scene>
     <scene name="open_crates">
@@ -108,31 +54,7 @@ It takes you a really long time, but you finally open and inspect all the crates
 You find nothing in them except for leaves, dust, and 200 paperclips. ",
         </description>
         <choices>
-            <choice description="Continue." resultScene="crate_room"/>
-        </choices>
-    </scene>
-    <scene name="crate_room_leaves">
-        <description>
-There are snakes in the leaves. A group of 3 4 foot long rattlesnakes attack.
-(HP: 10,8,5; #AT: 1; damage:1-3; AC: 5; SA: Save versus death caused by poison).
-        </description>
-        <choices>
-            <choice description="Continue." resultScene="crate_room"/>
-        </choices>
-    </scene>
-    <scene name="E">
-        <description>
-   The beam of your flashlight shows a room with gray painted walls and a cement floor. It is filled with boxes and barrels.
-   There are thirteen barrels of grain alcohol each with the number "50" painted on it. There are thirteen boxes filled with pairs of white gloves. A metal chest contains a silver set made to serve eighteen people, four pairs of silver candlesticks, three huge silver carving knives (like short swords), and eighteen solid silver goblets (total worth of the silver items is 20,000 silver pieces).
-There are thirteen chests filled with books about plants; thirteen boxes filled with assorted sizes of clay pots; and ten large crates with mattresses in them. When paced out, the room is forty feet wide east and west and sixty feet wide north and south.
-A door on the east wall is originally hidden by the mattress crates.
-    When you enter the room, you are immediately attacked by an incredibly old man dressed in rags and carrying a butcher knife (HP: 7; #AT: 1; 0: 1-6; AC: 10; SA:None). This old man leaps out from behind some of the boxes and surprises you.
-                  //"   He will never follow a retreating group out\n
-                  // "of the room, but will act dangerously at all other times and will never
-                  //"listen to any type of reason.
-        </description>
-        <choices>
-            <choice description="Proceed into the room at the end of the hall." resultScene="stub"/>
+            <choice description="Continue." resultScene="D.crate_room"/>
         </choices>
     </scene>
     <scene name="mirror">
@@ -143,10 +65,6 @@ A door on the east wall is originally hidden by the mattress crates.
     </scene>
     <scene name="gold">
         <description>Congratulations. There is a pot of gold behind the door. You go home rich.</description>
-        <choices/>
-    </scene>
-    <scene name="boogie">
-        <description>The boogie man jumps out and eats you.</description>
         <choices/>
     </scene>
     <scene name="sky_falls">
@@ -162,6 +80,146 @@ A door on the east wall is originally hidden by the mattress crates.
         </description>
         <choices>
             <choice description="Return to the mansion" resultScene="start"/>
+        </choices>
+    </scene>
+    <scene name="A.inside_entrance">
+        <description>
+ The double door is unlocked and opens easily.
+ The beam of your flashligh reveals an empty hallway with a mirror at the opposite end. 
+ There are openings that lead to rooms on the left and right.
+ The hall has inch-thick red carpeting and walnut-paneled walls. 
+ The mirror at the end runs from the floor to the twenty-foot-high ceiling
+ and covers the forty feet of wall section on that south face of the hall.
+        </description>
+        <choices>
+            <choice description="Go through left opening" resultScene="B.rat_room"/>
+            <choice description="Go through right opening" resultScene="K.boogie"/>
+            <choice description="Tamper with mirror at the end of the hall." resultScene="mirror"/>
+            <choice description="Exit the mansion" resultScene="quit"/>
+        </choices>
+    </scene>
+    <scene name="B.rat_room">
+        <description>The beams of the flashlights show a room paneled in redstained barn boards with a floor of the same substance. There is a couch in the northeast corner of the room and an opening out of theroom on the east wall.
+
+There are leaves on the floor, and an old worn out couch in the north east corner. There is a musty smell to the room, and leaves are littered on the floor. 
+The couch is an old, dusty, overstuffed relic with several cushions and rips on all parts of it. The room measures sixty feet east and west and forty feet north and south, if paced out. 
+There is a door on the east side of the room.
+        </description>
+        <choices>
+            <choice description="Inspect the couch." resultScene="rat_attack"/>
+            <choice description="Sift through the leaves on the floor." resultScene="key"/>
+            <choice description="Go through the door on the east side." resultScene="C.pink_hallway"/>
+            <choice description="Go back to the inside entrance" resultScene="A.inside_entrance"/>
+        </choices>
+    </scene>
+    <scene name="K.boogie">
+        <description>The boogie man jumps out and eats you.</description>
+        <choices/>
+    </scene>
+    <scene name="C.pink_hallway">
+        <description>The beam of your flashlight show a hall with pink walls and a floor of red marble.
+The walls have clean squares all over them where pictures were obviously once hung, but are no longer.
+The floor has dried leaves littering it. If paced out, the hall is eighty feet long east and west and twenty feet long north and south. 
+The hall leads to another room at the end.
+        </description>
+        <choices>
+            <choice description="Proceed into the room at the end of the hall." resultScene="D.crate_room"/>
+            <choice description="Back to previous room" resultScene="B.rat_room"/>
+        </choices>
+    </scene>
+    <scene name="D.crate_room">
+        <description>
+The beam of the flashlight shows a room with gray painted walls and a cement floor. 
+It is filled with wooden crates and there are leaves all over the room in large piles.
+There are 200 empty wooden crates of differing sizes, and the biggest concentration of leaves is in the southwest corner of the room.
+The room measures sixty feet east and west and forty feet north and south and has a side alcove to the south starting on the east wall that is forty feet long east and west and twenty feet long north and south. 
+It is here that the concentration of leaves is located. Behind a big crate along the east wall, thirty feet from the north corner, one finds a door with a normal handle.
+        </description>
+        <choices>
+            <choice description="Go through door behind big crate." resultScene="E.gray_storage_room"/>
+            <choice description="Look inside all the crates." resultScene="open_crates"/>
+            <choice description="Sift through the pile of leaves on the floor." resultScene="D.crate_room_leaves"/>
+            <choice description="Proceed into the room at the end of the hall." resultScene="stub"/>
+            <choice description="Back to hallway" resultScene="C.pink_hallway"/>
+        </choices>
+    </scene>
+    <scene name="D.crate_room_leaves">
+        <description>There are snakes in the leaves. A group of 3 4 foot long rattlesnakes attack.
+(HP: 10,8,5; #AT: 1; damage:1-3; AC: 5; SA: Save versus death caused by poison).
+        </description>
+        <choices>
+            <choice description="Continue." resultScene="D.crate_room"/>
+        </choices>
+    </scene>
+    <scene name="F.oak_room">
+        <description>The beams of the flashlights show a room paneled in oak with
+an oaken floor that is filled with shelves upon shelves of rocks. From
+the door, a set of stairs is visible going up from the south section of
+the room.
+These shelves are obviously a
+geological exhibit of some type, since every sample of rock has a
+scientific name on it. Each of the samples weighs about a pound. If
+paced out, the room is sixty feet west and east with a partial wall
+running north, starting twenty feet from the east wall and extending
+forty feet. The room is eighty feet long north and south. On the west
+wall in the north corner is a passageway out of the room. Also on that
+wall, sixty feet from the north corner, is a doorway. Further down from
+this door is a twenty by twenty feet corridor section that ends at the
+bottom of the stairs up; on the east wall section by the stairs is
+another way out of the room.</description>
+        <choices>
+            <choice description="Head south and climb the stairs." resultScene="F.stairway"/>
+            <choice description="Exit to the east using the opening at the base of the stairs." resultScene="J.Batthroom"/>
+            <choice description="Inspect the rocks on the shelves." resultScene="F.rocks"/>
+            <choice description="Exit tot the west into the passageway at the north corner of the room" resultScene="G.passageway"/>
+            <choice description="Go back to gray storage room." resultScene="E.gray_storage_room"/>
+        </choices>
+    </scene>
+    <scene name="E.crazy_man_attacks">
+        <description>When you enter the room, you are immediately attacked by an incredibly old man dressed in rags and carrying a butcher knife 
+(HP: 7; #AT: 1; 0: 1-6; AC: 10; SA:None). 
+This old man leaps out from behind some of the boxes and surprises you.
+He will never follow a retreating group out of the room, but will act dangerously at all other times and will never listen to any type of reason.</description>
+        <choices/>
+    </scene>
+    <scene name="E.gray_storage_room">
+        <description>The beam of your flashlight shows a room with gray painted walls and a cement floor. 
+It is filled with boxes and barrels.
+There are thirteen barrels of grain alcohol each with the number "50" painted on it. 
+There are thirteen boxes filled with pairs of white gloves. 
+A metal chest contains a silver set made to serve eighteen people, four pairs of silver candlesticks, three huge silver carving knives (like short swords), and eighteen solid silver goblets (total worth of the silver items is 20,000 silver pieces).
+There are thirteen chests filled with books about plants; thirteen boxes filled with assorted sizes of clay pots; and ten large crates with mattresses in them. When paced out, the room is forty feet wide east and west and sixty feet wide north and south.
+A door on the east wall is originally hidden by the mattress crates.
+
+        </description>
+        <choices>
+            <choice description="Go through the door on the east side of the room." resultScene="F.oak_room"/>
+            <choice description="Proceed into the room at the end of the hall." resultScene="stub"/>
+            <choice description=" Inspect boxes and barrels further." resultScene="E.crazy_man_attacks"/>
+            <choice description="Go back to the room with the crates." resultScene="D.crate_room"/>
+        </choices>
+    </scene>
+    <scene name="G.passageway">
+        <description> --- describe the scene here ---</description>
+        <choices/>
+    </scene>
+    <scene name="J.Batthroom">
+        <description> --- describe the scene here ---</description>
+        <choices/>
+    </scene>
+    <scene name="F.stairway">
+        <description> --- describe the scene here ---</description>
+        <choices/>
+    </scene>
+    <scene name="F.rocks">
+        <description>All of the valuable minerals in the
+rock collection like gold, silver, platinum, and copper, are on shelves
+on the south wall in the small corridor created by the dividing northsouth
+wall. They will all be on the highest shelves and above the
+normal eye level of any scout. There are no crystal samples in the
+entire room.</description>
+        <choices>
+            <choice description=" - Put your choice description here -" resultScene="F.oak_room"/>
         </choices>
     </scene>
 </script>
