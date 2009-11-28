@@ -1,21 +1,14 @@
 package com.becker.puzzle.adventure.ui.editor;
 
 import com.becker.ui.components.GradientButton;
+import com.becker.ui.components.TextInput;
+import com.becker.ui.dialogs.AbstractDialog;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JPanel;
-import com.becker.ui.dialogs.AbstractDialog;
 import java.util.List;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import com.becker.ui.components.TextInput;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JComboBox;
 
 /**
  * Allow the user to select the name of the destination scene

@@ -2,13 +2,13 @@ package com.becker.puzzle.adventure.ui.editor;
 
 import com.becker.puzzle.adventure.Choice;
 import com.becker.puzzle.adventure.ChoiceList;
-import com.becker.ui.table.*;
-
-import java.util.LinkedList;
-import java.util.List;
+import com.becker.ui.table.TableBase;
+import com.becker.ui.table.TableButton;
+import com.becker.ui.table.TableButtonListener;
+import com.becker.ui.table.TableColumnMeta;
 
 import javax.swing.*;
-import javax.swing.table.*;
+import javax.swing.table.TableModel;
 
 
 /**

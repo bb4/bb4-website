@@ -1,18 +1,16 @@
 package com.becker.puzzle.adventure.ui;
 
+import com.becker.puzzle.adventure.Story;
+import com.becker.puzzle.adventure.TextAdventure;
 import com.becker.puzzle.adventure.ui.editor.StoryEditorDialog;
-import com.becker.ui.dialogs.PasswordDialog;
-import com.becker.puzzle.adventure.*;
 import com.becker.ui.ApplicationApplet;
 import com.becker.ui.GUIUtil;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import org.w3c.dom.*;
+import com.becker.ui.dialogs.PasswordDialog;
+import org.w3c.dom.Document;
 
-import java.io.*;
-import javax.swing.JFrame;
-import javax.swing.JMenuBar;
-import javax.swing.JPanel;
+import javax.swing.*;
+import java.awt.*;
+import java.io.IOException;
 
 /**
  * Run your own adventure story.

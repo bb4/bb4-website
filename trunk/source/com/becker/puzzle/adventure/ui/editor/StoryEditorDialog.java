@@ -1,20 +1,18 @@
 package com.becker.puzzle.adventure.ui.editor;
 
+import com.becker.puzzle.adventure.Scene;
+import com.becker.puzzle.adventure.Story;
 import com.becker.ui.GUIUtil;
 import com.becker.ui.components.GradientButton;
-
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-
-import com.becker.puzzle.adventure.Story;
-import com.becker.puzzle.adventure.Scene;
 import com.becker.ui.dialogs.AbstractDialog;
 import com.becker.ui.table.TableButtonListener;
 
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 /**

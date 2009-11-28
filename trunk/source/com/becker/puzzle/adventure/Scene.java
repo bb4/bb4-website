@@ -1,9 +1,12 @@
 package com.becker.puzzle.adventure;
 
-import org.w3c.dom.*;
-import com.becker.common.xml.*;
+import com.becker.common.xml.DomUtil;
 import com.becker.sound.SoundUtil;
 import com.becker.ui.GUIUtil;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;

@@ -1,15 +1,14 @@
 package com.becker.puzzle.adventure.ui;
 
 import com.becker.common.util.FileUtil;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import javax.swing.BorderFactory;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import com.becker.puzzle.adventure.Story;
 import com.becker.ui.GUIUtil;
 import com.becker.ui.filefilter.ExtensionFileFilter;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 
 /**
  * File menu for story application.

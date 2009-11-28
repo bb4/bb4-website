@@ -2,10 +2,12 @@ package com.becker.puzzle.adventure.ui;
 
 import com.becker.puzzle.adventure.Choice;
 import com.becker.puzzle.adventure.ChoiceList;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.*;
-import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**

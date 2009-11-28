@@ -1,11 +1,14 @@
 package com.becker.puzzle.adventure.ui.editor;
 
 import com.becker.puzzle.adventure.Scene;
-import com.becker.ui.table.*;
-import java.awt.event.ActionListener;
-import java.util.List;
+import com.becker.ui.table.TableBase;
+import com.becker.ui.table.TableButton;
+import com.becker.ui.table.TableButtonListener;
+import com.becker.ui.table.TableColumnMeta;
 
-import javax.swing.table.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import java.util.List;
 
 
 /**
