@@ -24,7 +24,7 @@ class ParentTable extends TableBase  {
     private static final int NUM_CHILDREN_INDEX = 1;
 
     private static final String NAVIGATE = "Navigate to";
-    private static final String NUM_CHILDREN = "Num Children";
+    private static final String NUM_CHILDREN = "Child Scenes";
 
     private static final String[] PARENT_COLUMN_NAMES =  {
         NAVIGATE,

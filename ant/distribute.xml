@@ -78,10 +78,6 @@
         <param name="path" value="sound/allophones"/>
         <param name="pattern" value="*.wav"/>
       </antcall>
-      <antcall target="copyResources">
-        <param name="path" value="sound/allophones"/>
-        <param name="pattern" value="*.au"/>
-      </antcall>
       <jar basedir="${stagingDir}" compress="true" destfile="${distributionGameDir}/sound.jar"/>
       <delete dir="${stagingDir}/com"/>
 
@@ -243,27 +239,12 @@
       </antcall>
 
       <!-- refactor so that copyResources does all images and sounds in specified path -->
-      <antcall target="copyResources">
-        <param name="path" value="puzzle/adventure/stories/ludlow/images"/>
-        <param name="pattern" value="*.png"/>
+      <antcall target="copyImageResources">
+        <param name="path" value="puzzle/adventure/stories/"/>
       </antcall>
-      <antcall target="copyResources">
-        <param name="path" value="puzzle/adventure/stories/ludlow/images"/>
-        <param name="pattern" value="*.jpg"/>
+      <antcall target="copyAudioResources">
+        <param name="path" value="puzzle/adventure/stories/"/>
       </antcall>
-      <antcall target="copyResources">
-        <param name="path" value="puzzle/adventure/stories/ludlow/sounds"/>
-        <param name="pattern" value="*.wav"/>
-      </antcall>
-      <antcall target="copyResources">
-        <param name="path" value="puzzle/adventure/stories/ludlow/sounds"/>
-        <param name="pattern" value="*.au"/>
-      </antcall>
-      <antcall target="copyResources">
-        <param name="path" value="puzzle/adventure/stories/ludlow/sounds"/>
-        <param name="pattern" value="*.mp3"/>
-      </antcall>
-
 
 
       <!-- copy the class files that are needed for snake deployment -->
@@ -361,19 +342,12 @@
       <delete dir="${stagingDir}/com"/>
   </target>
 
-
   <target name="copyAllResources">
-      <antcall target="copyResources">
-          <param name="path" value="${componentDir}/ui/images"/>
-          <param name="pattern" value="*.gif"/>
+      <antcall target="copyAudioResources">
+          <param name="path" value="${componentDir}/../sounds"/>
       </antcall>
-      <antcall target="copyResources">
-          <param name="path" value="${componentDir}/ui/images"/>
-          <param name="pattern" value="*.png"/>
-      </antcall>
-      <antcall target="copyResources">
-          <param name="path" value="${componentDir}/ui/images"/>
-          <param name="pattern" value="*.jpg"/>
+      <antcall target="copyImageResources">
+          <param name="path" value="${componentDir}/../images"/>
       </antcall>
       <antcall target="copyResources">
           <param name="path" value="${componentDir}/resources"/>
@@ -382,6 +356,30 @@
       <antcall target="copyResources">
           <param name="path" value="${componentDir}/data"/>
           <param name="pattern" value="*.xml"/>
+      </antcall>
+  </target>
+
+  <target name="copyAudioResources">
+      <antcall target="copyResources">
+          <param name="pattern" value="*.wav"/>
+      </antcall>
+      <antcall target="copyResources">
+          <param name="pattern" value="*.au"/>
+      </antcall>
+      <antcall target="copyResources">
+          <param name="pattern" value="*.mp3"/>
+      </antcall>
+  </target>
+
+  <target name="copyImageResources">
+      <antcall target="copyResources">
+          <param name="pattern" value="*.gif"/>
+      </antcall>
+      <antcall target="copyResources">
+          <param name="pattern" value="*.png"/>
+      </antcall>
+      <antcall target="copyResources">
+          <param name="pattern" value="*.jpg"/>
       </antcall>
   </target>
 
