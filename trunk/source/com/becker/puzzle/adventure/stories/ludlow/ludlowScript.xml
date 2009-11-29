@@ -32,22 +32,6 @@ A few minutes pass. Still nothing.
             <choice description="Return to the rest of your group" resultScene="quit"/>
         </choices>
     </scene>
-    <scene name="rat_attack">
-        <description>Rats com out from under the couch and attack you. 
-One bites you and gives you a terrible disease.
-(Suggestion: maybe we should have generated melee combat here so the outcome is random.)
-        </description>
-        <choices/>
-    </scene>
-    <scene name="key">
-        <description>
-You find a golden key under the pile of leaves.
-(Suggestion: keep an inventory of items that the player has.)
-        </description>
-        <choices>
-            <choice description="Continue" resultScene="B.rat_room"/>
-        </choices>
-    </scene>
     <scene name="open_crates">
         <description>
 It takes you a really long time, but you finally open and inspect all the crates." +
@@ -96,8 +80,8 @@ The couch is an old, dusty, overstuffed relic with several cushions and rips on 
 There is a door on the east side of the room.
         </description>
         <choices>
-            <choice description="Inspect the couch." resultScene="rat_attack"/>
-            <choice description="Sift through the leaves on the floor." resultScene="key"/>
+            <choice description="Inspect the couch." resultScene="B.rat_attack"/>
+            <choice description="Sift through the leaves on the floor." resultScene="B.key"/>
             <choice description="Go through the door on the east side." resultScene="C.pink_hallway"/>
             <choice description="Go back to the inside entrance" resultScene="A.inside_entrance"/>
         </choices>
@@ -331,5 +315,21 @@ In it are two small plastic bottles of pills: One has ten green pills that
  will speed any being up to twice normal for three melee rounds; the second 
 bottle has twenty pink pills that will restore ten lost hit points per pill.</description>
         <choices/>
+    </scene>
+    <scene name="B.rat_attack">
+        <description>Rats com out from under the couch and attack you. 
+One bites you and gives you a terrible disease.
+(Suggestion: maybe we should have generated melee combat here so the outcome is random.)
+        </description>
+        <choices/>
+    </scene>
+    <scene name="B.key">
+        <description>
+You find a golden key under the pile of leaves.
+(Suggestion: keep an inventory of items that the player has.)
+        </description>
+        <choices>
+            <choice description="Continue" resultScene="B.rat_room"/>
+        </choices>
     </scene>
 </script>
