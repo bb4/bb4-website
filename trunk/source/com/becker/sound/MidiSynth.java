@@ -748,6 +748,7 @@ public class MidiSynth extends JPanel {
                 } 
             } else if (button.equals(saveB)) {
                 try {
+                    System.out.println("about to ready user.dir property.");
                     File file = new File(System.getProperty("user.dir"));
                     JFileChooser fc = new JFileChooser(file);
                     fc.setFileFilter(new javax.swing.filechooser.FileFilter() {
