@@ -5,13 +5,13 @@
 
 package com.becker.optimization.parameter.redistribution;
 
-import com.becker.common.function.Function;
+import com.becker.common.math.function.Function;
 
 /**
  * Responsible for defining the probability distribution for selecting random parameter values.
  * Derived classes will defin the different sorts of redistribution functions.
  * 
- * @author becker
+ * @author Barry Becker
  */
 public interface RedistributionFunction extends Function {
    

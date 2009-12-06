@@ -1,8 +1,10 @@
 package com.becker.optimization.test;
 
+import com.becker.optimization.Optimizer;
 import com.becker.optimization.parameter.ParameterArray;
-import com.becker.optimization.*;
-import junit.framework.*;
+import com.becker.optimization.strategy.OptimizationStrategyType;
+import junit.framework.Assert;
+import junit.framework.TestCase;
 
 /**
  * @author Barry Becker Date: Jun 29, 2006
@@ -12,37 +14,37 @@ public abstract class OptimizerTestCase extends TestCase {
 
     public void testGlobalSampling() {
 
-        doTest(OptimizationType.GLOBAL_SAMPLING);
+        doTest(OptimizationStrategyType.GLOBAL_SAMPLING);
     }
 
     public void testHillClimbing() {
 
-        doTest(OptimizationType.HILL_CLIMBING);
+        doTest(OptimizationStrategyType.HILL_CLIMBING);
     }
 
 
     public void testGlobalHillClimbing() {
 
-        doTest(OptimizationType.GLOBAL_HILL_CLIMBING);
+        doTest(OptimizationStrategyType.GLOBAL_HILL_CLIMBING);
     }
 
     public void testSimulatedAnnealing() {
 
-        doTest(OptimizationType.SIMULATED_ANNEALING);
+        doTest(OptimizationStrategyType.SIMULATED_ANNEALING);
     }
 
     public void testGeneticSearch() {
 
-        doTest(OptimizationType.GENETIC_SEARCH);
+        doTest(OptimizationStrategyType.GENETIC_SEARCH);
     }
 
 
-    protected abstract void doTest(OptimizationType optType);
+    protected abstract void doTest(OptimizationStrategyType optType);
 
     /**
      * Give an error if not withing errorThresh of the exact solution.
      */
-    protected static void verifyTest(OptimizationType optType, OptimizeeTestProblem problem, ParameterArray initialGuess,
+    protected static void verifyTest(OptimizationStrategyType optType, OptimizeeTestProblem problem, ParameterArray initialGuess,
                                    Optimizer optimizer, double fitnessRange, double errorThresh, String title) {
 
         ParameterArray solution = optimizer.doOptimization(optType, initialGuess, fitnessRange);

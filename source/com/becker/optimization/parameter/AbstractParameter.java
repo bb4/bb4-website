@@ -1,7 +1,8 @@
 package com.becker.optimization.parameter;
 
-import com.becker.optimization.parameter.redistribution.RedistributionFunction;
 import com.becker.common.util.Util;
+import com.becker.optimization.parameter.redistribution.RedistributionFunction;
+
 import java.util.Random;
 
 /**

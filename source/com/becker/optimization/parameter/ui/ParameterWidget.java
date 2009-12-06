@@ -5,15 +5,15 @@
 
 package com.becker.optimization.parameter.ui;
 
-import com.becker.optimization.parameter.ParameterChangeListener;
 import com.becker.optimization.parameter.Parameter;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import javax.swing.JPanel;
+import com.becker.optimization.parameter.ParameterChangeListener;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  *
- * @author becker
+ * @author Barry Becker
  */
 public abstract class ParameterWidget extends JPanel {
 

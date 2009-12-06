@@ -5,9 +5,9 @@
 
 package com.becker.optimization.parameter.redistribution;
 
-import com.becker.common.Range;
-import com.becker.common.function.ArrayFunction;
-import com.becker.common.util.MathUtil;
+import com.becker.common.math.MathUtil;
+import com.becker.common.math.Range;
+import com.becker.common.math.function.ArrayFunction;
 
 /**
  * Convert the uniform distribution to a normal (gaussian) one.

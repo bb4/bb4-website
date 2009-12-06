@@ -1,13 +1,15 @@
 package com.becker.optimization;
 
 import com.becker.optimization.parameter.ParameterArray;
-import com.becker.optimization.strategy.*;
+import com.becker.optimization.strategy.OptimizationStrategy;
+import com.becker.optimization.strategy.OptimizationStrategyType;
 
-import java.io.*;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * This class (the optimizer) uses a specified optimization strategy to optimize something (the optimizee).
- * @see OptimizationType for a list of the possible algorithms.
+ * @see OptimizationStrategyType for a list of the possible algorithms.
  *
  *  This class uses the delegation design pattern rather than inheritance
  * so that it can be reused across many classes. For example, I could have
@@ -31,13 +33,12 @@ import java.io.*;
  */
 public class Optimizer
 {
-
     Optimizee optimizee_;
 
     // debug level of 0 means no debug info, 3 is all debug info.
     protected static final int DEBUG_LEVEL = 0;
 
-    protected String sLogFile_ = null;
+    protected Logger logger_;
     public static final String SEPARATOR = ",\t";
 
     protected OptimizationListener listener_;
@@ -61,7 +62,7 @@ public class Optimizer
     public Optimizer( Optimizee optimizee, String optimizationLogFile )
     {
         optimizee_ = optimizee;
-        sLogFile_ = optimizationLogFile;
+        logger_ = new Logger(optimizationLogFile);
     }
 
     public Optimizee getOptimizee() {
@@ -73,89 +74,20 @@ public class Optimizer
      * @param optimizationType the type of search to perform
      * @param params the initialGuess at the solution. Also defines the bounds of the search space.
      * @param fitnessRange the approximate range (max-min) of the fitness values
-     * @return the soution to the optimization problem
+     * @return the soution to the optimization problem.
      */
-    public ParameterArray doOptimization(OptimizationType optimizationType, ParameterArray params, double fitnessRange )
+    public ParameterArray doOptimization(OptimizationStrategyType optimizationType, ParameterArray params, double fitnessRange )
     {
-        if (sLogFile_!=null)
-            initializeLogFile( params );
+        logger_.initialize( params );
 
-        OptimizationStrategy optStrategy = null;
-
-        switch (optimizationType) {
-            case GLOBAL_SAMPLING:
-                optStrategy = new GlobalSampleStrategy(optimizee_, sLogFile_);
-                // 10 sample points in each dim. 1000 evaluations if 3 dimensions.
-                ((GlobalSampleStrategy)optStrategy).setSamplingRate(120 / optimizee_.getNumParameters());
-                break;
-            case GLOBAL_HILL_CLIMBING:
-                optStrategy = new GlobalSampleStrategy(optimizee_, sLogFile_);
-                // 3 sample points along each dimensiont
-                ((GlobalSampleStrategy)optStrategy).setSamplingRate(12 / optimizee_.getNumParameters());
-                // first find a good place to start
-                // @@ perhaps we should try several of the better results from global sampling.
-                params = optStrategy.doOptimization(params, fitnessRange);
-                optStrategy = new HillClimbingStrategy(optimizee_, sLogFile_);
-                break;
-            case HILL_CLIMBING:
-                optStrategy = new HillClimbingStrategy(optimizee_, sLogFile_);
-                break;
-            case SIMULATED_ANNEALING:
-                optStrategy = new SimulatedAnnealingStrategy(optimizee_, sLogFile_);
-                ((SimulatedAnnealingStrategy)optStrategy).setMaxTemperature(fitnessRange/20.0);
-                break;
-            case GENETIC_SEARCH:
-                optStrategy = new GeneticSearchStrategy(optimizee_, sLogFile_);
-                ((GeneticSearchStrategy)optStrategy).setImprovementEpsilon(fitnessRange/100000000.0);
-                break;
-            case TABU_SEARCH:
-                //optStrategy = new TabuStrategy(optimizee_, sLogFile_);
-                break;
-            case STATE_SPACE:
-                break;
-        }
-
-        if (optStrategy == null) {
-            System.out.println("Optimization strategy not implemented yet: " + optimizationType);
-            return params;
-        } else {
-            optStrategy.setListener(listener_);
-            return optStrategy.doOptimization(params, fitnessRange);
-        }
+        OptimizationStrategy optStrategy = optimizationType.getStrategy(optimizee_, fitnessRange);
+        optStrategy.setLogger(logger_);
+  
+        optStrategy.setListener(listener_);
+        return optStrategy.doOptimization(params, fitnessRange);
     }
 
     public void setListener(OptimizationListener l) {
         listener_ = l;
     }
-
-    public void removeListener() {
-        listener_ = null;
-    }
-
-
-    /**
-     * create and init the log file.
-     * @param params used to determine param names.
-     */
-    protected final void initializeLogFile(ParameterArray params)
-    {
-        try {
-            // create the log file (destroying it if it already existed)
-            FileWriter logFile = new FileWriter( sLogFile_, false );
-
-            logFile.write( "iteration"+SEPARATOR );
-            logFile.write( "fitness"+SEPARATOR );
-            logFile.write( "jumpSize"+SEPARATOR );
-            logFile.write( "dotprod"+SEPARATOR );
-            for (int i=0; i<params.size(); i++) {
-                logFile.write( params.get(i).getName() +SEPARATOR );
-            }
-            logFile.write( "comment " );
-            logFile.write( '\n' );
-            logFile.close();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
-    }
-
 }

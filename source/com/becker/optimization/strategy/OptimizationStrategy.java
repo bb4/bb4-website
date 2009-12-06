@@ -1,16 +1,20 @@
 package com.becker.optimization.strategy;
 
-import com.becker.optimization.parameter.ParameterArray;
 import com.becker.common.util.Util;
-import com.becker.optimization.*;
+import com.becker.optimization.Logger;
+import com.becker.optimization.OptimizationListener;
+import com.becker.optimization.Optimizee;
+import com.becker.optimization.Optimizer;
+import com.becker.optimization.parameter.ParameterArray;
 
-import java.io.*;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * Abstract base class for Optimization strategy.
  *
  * This and derived classes uses the strategy design pattern.
- * @see com.becker.optimization.Optimizer
+ * @see Optimizer
  *
  * @author Barry Becker
  */
@@ -18,20 +22,17 @@ public abstract class OptimizationStrategy
 {
     Optimizee optimizee_;
 
-    // debug level of 0 means no debug info, 3 is all debug info.
+    /** debug level of 0 means no debug info, 3 is all debug info.  */
     protected static final int DEBUG_LEVEL = 0;
-    protected static final int DEFAULT_SAMPLING_RATE = 3;
 
-    protected String sLogFile_ = null;
+    protected Logger logger_;
 
-    // listen for optimization changed events. useful for debugging.
+    /** listen for optimization changed events. useful for debugging.  */
     protected OptimizationListener listener_;
-
 
 
     /**
      * Constructor
-     * No log file specified in this constructor. (use this version if running in unsigned applet).
      * @param optimizee the thing to be optimized.
      */
     public OptimizationStrategy( Optimizee optimizee )
@@ -40,21 +41,17 @@ public abstract class OptimizationStrategy
     }
 
     /**
-     * Constructor
-     * @param optimizee the thing to be optimized.
-     * @param optimizationLogFile the file that will record the results
+     * @param logger the file that will record the results
      */
-    public OptimizationStrategy( Optimizee optimizee, String optimizationLogFile )
-    {
-        optimizee_ = optimizee;
-        sLogFile_ = optimizationLogFile;
+    public void setLogger(Logger logger) {
+        logger_ = logger;
     }
-
 
     /**
      *
      * @param initialParams the initial guess at the solution.
      * @param fitnessRange the approximate absolute value of the fitnessRange.
+     * @return optimized parameters.
      */
     public abstract ParameterArray doOptimization(ParameterArray initialParams, double fitnessRange);
 
@@ -63,12 +60,9 @@ public abstract class OptimizationStrategy
         listener_ = l;
     }
 
-    public void removeListener() {
-        listener_ = null;
-    }
 
     /**
-     * @param currentBest
+     * @param currentBest current best parameter set.
      * @return true if the optimal fitness has been reached.
      */
     protected boolean isOptimalFitnessReached(ParameterArray currentBest) {
@@ -77,41 +71,6 @@ public abstract class OptimizationStrategy
              optimalFitnessReached = currentBest.getFitness() >= optimizee_.getOptimalFitness();
         }
         return optimalFitnessReached;
-    }
-
-    /**
-     * Write a row to the file and close it again.
-     * That way if we terminate, we still have something in the file.
-     * @param iteration the current iteration.
-     * @param fitness the current fitness level. Or increase if fitness if in comparison mode.
-     * @param jumpSize the distance we moved in parameter space since the last iteration.
-     * @param params the params to write.
-     */
-    protected final void writeToLog(int iteration, double fitness, double jumpSize, double distance,
-                                  ParameterArray params, String comment)
-    {
-        String sep = Optimizer.SEPARATOR;
-        String rowText = iteration + sep
-                       + Util.formatNumber(fitness) + sep
-                       + Util.formatNumber(jumpSize) + sep
-                       + Util.formatNumber(distance) + sep
-                       + params.toCSVString() + sep
-                       + comment;
-
-        if (sLogFile_ == null) {
-            System.out.println( "<no logfile>: "+rowText );
-            return;
-        }
-        try {
-            // append to existing log file.
-            FileWriter logFile = new FileWriter( sLogFile_, true );
-            logFile.write( rowText+'\n' );
-            logFile.flush();
-            logFile.close();
-        }
-        catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
     }
 
 }

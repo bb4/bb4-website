@@ -1,13 +1,13 @@
 package com.becker.optimization.test;
 
-import com.becker.optimization.parameter.ParameterArray;
+import com.becker.optimization.OptimizationListener;
 import com.becker.optimization.parameter.Parameter;
-import com.becker.optimization.*;
+import com.becker.optimization.parameter.ParameterArray;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.*;
-import java.util.*;
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
 import java.util.List;
 
 /**

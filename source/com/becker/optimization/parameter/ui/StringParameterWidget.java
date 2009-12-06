@@ -5,19 +5,18 @@
 
 package com.becker.optimization.parameter.ui;
 
-import com.becker.optimization.parameter.ParameterChangeListener;
 import com.becker.optimization.parameter.Parameter;
-
+import com.becker.optimization.parameter.ParameterChangeListener;
 import com.becker.optimization.parameter.StringParameter;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JComboBox;
 
 /**
  *
- * @author becker
+ * @author Barry Becker
  */
 public class StringParameterWidget extends ParameterWidget implements ActionListener {
 

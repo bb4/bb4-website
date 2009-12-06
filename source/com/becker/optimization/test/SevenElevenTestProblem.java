@@ -1,10 +1,11 @@
 package com.becker.optimization.test;
 
-import com.becker.optimization.parameter.ParameterArray;
-import com.becker.optimization.parameter.Parameter;
 import com.becker.common.util.FileUtil;
-import com.becker.optimization.*;
+import com.becker.optimization.Optimizer;
 import com.becker.optimization.parameter.DoubleParameter;
+import com.becker.optimization.parameter.Parameter;
+import com.becker.optimization.parameter.ParameterArray;
+import com.becker.optimization.strategy.OptimizationStrategyType;
 
 /**
  * This is a simple search space to test the optimization package.
@@ -105,7 +106,7 @@ public class SevenElevenTestProblem extends OptimizeeTestProblem
 
         ParameterArray initialGuess = problem.getInitialGuess();
 
-        ParameterArray solution = optimizer.doOptimization(OptimizationType.GLOBAL_SAMPLING, initialGuess, FITNESS_RANGE);
+        ParameterArray solution = optimizer.doOptimization(OptimizationStrategyType.GLOBAL_SAMPLING, initialGuess, FITNESS_RANGE);
 
         System.out.println( "\n************************************************************************" );
         System.out.println( "The solution to the 7-11 Test Problem is :\n"+solution );

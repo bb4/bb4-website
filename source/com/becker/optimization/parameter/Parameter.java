@@ -2,6 +2,7 @@ package com.becker.optimization.parameter;
 
 import com.becker.optimization.parameter.redistribution.RedistributionFunction;
 import com.becker.optimization.parameter.ui.ParameterWidget;
+
 import java.util.Random;
 
 /**
