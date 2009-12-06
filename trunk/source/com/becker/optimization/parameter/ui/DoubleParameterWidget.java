@@ -5,16 +5,16 @@
 
 package com.becker.optimization.parameter.ui;
 
-import com.becker.optimization.parameter.ParameterChangeListener;
 import com.becker.optimization.parameter.Parameter;
+import com.becker.optimization.parameter.ParameterChangeListener;
 import com.becker.ui.sliders.LabeledSlider;
 import com.becker.ui.sliders.SliderChangeListener;
-import com.becker.ui.sliders.LabeledSlider;
-import java.awt.BorderLayout;
+
+import java.awt.*;
 
 /**
  *
- * @author becker
+ * @author Barry Becker
  */
 public class DoubleParameterWidget extends ParameterWidget implements SliderChangeListener {
    

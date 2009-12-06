@@ -1,10 +1,11 @@
 package com.becker.optimization.test;
 
-import com.becker.optimization.parameter.ParameterArray;
-import com.becker.common.*;
 import com.becker.common.util.FileUtil;
-import com.becker.optimization.*;
-import junit.framework.*;
+import com.becker.optimization.Optimizer;
+import com.becker.optimization.parameter.ParameterArray;
+import com.becker.optimization.strategy.OptimizationStrategyType;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
 /**
  * @author Barry Becker Date: Jun 28, 2006
@@ -28,7 +29,7 @@ public class TestAnalyticFunctionProblem extends OptimizerTestCase {
     };
 
 
-    protected void doTest(OptimizationType optType) {
+    protected void doTest(OptimizationStrategyType optType) {
 
         for (AnalyticFunctionTestProblem.Variation v : AnalyticFunctionTestProblem.Variation.values()) {
 

@@ -1,13 +1,13 @@
 package com.becker.optimization.test;
 
-import com.becker.optimization.parameter.ParameterArray;
-import com.becker.optimization.parameter.Parameter;
 import com.becker.common.util.FileUtil;
-import com.becker.common.util.Util;
-import com.becker.optimization.*;
-
+import com.becker.optimization.Optimizer;
 import com.becker.optimization.parameter.DoubleParameter;
-import java.awt.geom.*;
+import com.becker.optimization.parameter.Parameter;
+import com.becker.optimization.parameter.ParameterArray;
+import com.becker.optimization.strategy.OptimizationStrategyType;
+
+import java.awt.geom.Point2D;
 
 /**
  * This is a simple search space to test the optimization package.
@@ -131,7 +131,7 @@ public class AnalyticFunctionTestProblem extends OptimizeeTestProblem
     }
 
 
-    private static void doTest(OptimizationType optType, ParameterArray initialGuess, Optimizer optimizer, Variation v) {
+    private static void doTest(OptimizationStrategyType optType, ParameterArray initialGuess, Optimizer optimizer, Variation v) {
 
         ParameterArray solution = optimizer.doOptimization(optType, initialGuess, FITNESS_RANGE);
 
@@ -170,8 +170,8 @@ public class AnalyticFunctionTestProblem extends OptimizeeTestProblem
 
         ParameterArray initialGuess = testProblem.getInitialGuess();
 
-        doTest(OptimizationType.HILL_CLIMBING, initialGuess, optimizer, v);
-        //for (OptimizationType type : OptimizationType.values()) {
+        doTest(OptimizationStrategyType.HILL_CLIMBING, initialGuess, optimizer, v);
+        //for (OptimizationStrategyType type : OptimizationStrategyType.values()) {
         //    doTest(type, initialGuess, optimizer);
         //}
 

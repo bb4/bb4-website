@@ -1,9 +1,9 @@
 package com.becker.optimization.strategy;
 
-import com.becker.optimization.parameter.ParameterArray;
-import com.becker.optimization.parameter.Parameter;
 import com.becker.common.util.Util;
-import com.becker.optimization.*;
+import com.becker.optimization.Optimizee;
+import com.becker.optimization.parameter.Parameter;
+import com.becker.optimization.parameter.ParameterArray;
 
 /**
  *  Hill climbing optimization strategy.
@@ -17,15 +17,15 @@ public class HillClimbingStrategy extends OptimizationStrategy
     private static final double MIN_DOT_PRODUCT = 0.3;
     private static final double MAX_DOT_PRODUCT = 0.98;
 
-    // continue optimization iteration until the improvement in fitness is less than this.
+    /** continue optimization iteration until the improvement in fitness is less than this.  */
     private static final double FITNESS_EPS_PERCENT = 0.0000001;
     private static final double JUMP_SIZE_EPS = 0.000001;
 
     private static final double JUMP_SIZE_INC_FACTOR = 1.3;
     private static final double JUMP_SIZE_DEC_FACTOR = 0.6;
 
-    // approximate number of steps to take when marching across one of the parmater dimensions.
-    // used to caclulate the stepsize in a dimension direction.
+    // approximate number of steps to take when marching across one of the paramater dimensions.
+    // used to calculate the stepsize in a dimension direction.
     private static final int NUM_STEPS = 30;
 
 
@@ -33,24 +33,12 @@ public class HillClimbingStrategy extends OptimizationStrategy
      * Constructor
      * use a harcoded static data interface to initialize.
      * so it can be easily run in an applet without using resources.
-     * No log file specified in this constructor. (use this version if running in unsigned applet).
      * @param optimizee the thing to be optimized.
      */
     public HillClimbingStrategy( Optimizee optimizee )
     {
         super(optimizee);
     }
-
-    /**
-     * Constructor
-     * @param optimizee the thing to be optimized.
-     * @param optimizationLogFile the file that will record the results
-     */
-    public HillClimbingStrategy( Optimizee optimizee, String optimizationLogFile )
-    {
-        super(optimizee, optimizationLogFile);
-    }
-
 
 
     /**
@@ -79,7 +67,7 @@ public class HillClimbingStrategy extends OptimizationStrategy
             params.setFitness(optimizee_.evaluateFitness(params));
         }
         int numIterations = 0;
-        writeToLog(0, params.getFitness(), 0.0, 0.0, params, "initial test");
+        logger_.write(0, params.getFitness(), 0.0, 0.0, params, "initial test");
 
         double improvement = 0;
         double fitnessEps = fitnessRange * FITNESS_EPS_PERCENT / 100.0;
@@ -108,10 +96,7 @@ public class HillClimbingStrategy extends OptimizationStrategy
                 ParameterArray oldParams = params.copy();
 
                 iter.updateGradient(jumpSize, gradLength);
-
-                //System.out.println( "gradient to add = " + params.vecToString( iter.gradient ) );
                 params.add( iter.gradient );
-                //System.out.println( "the new params are = \n" + params );
 
                 if (evalByComparison) {
                     params.setFitness(optimizee_.compareFitness(params, oldParams));
@@ -130,7 +115,7 @@ public class HillClimbingStrategy extends OptimizationStrategy
                 if (!improved) {
                     // we have not improved, try again with a reduced jump size.
                     System.out.println( "Warning: the new params are worse so reduce the step size and try again");
-                    writeToLog(numIterations, params.getFitness(), jumpSize, Double.NaN, params, "not improved");
+                    logger_.write(numIterations, params.getFitness(), jumpSize, Double.NaN, params, "not improved");
                     params = oldParams;
                     jumpSize *= JUMP_SIZE_DEC_FACTOR;
                 }
@@ -140,7 +125,7 @@ public class HillClimbingStrategy extends OptimizationStrategy
             double divisor = (ParameterArray.length( iter.gradient ) * ParameterArray.length( iter.oldGradient ));
             dotProduct = (divisor==0.0) ? 1.0 : dotProduct/divisor;
             numIterations++;
-            writeToLog(numIterations, params.getFitness(), jumpSize, dotProduct, params, Util.formatNumber(improvement));
+            logger_.write(numIterations, params.getFitness(), jumpSize, dotProduct, params, Util.formatNumber(improvement));
 
             if (listener_ != null) {
                 listener_.optimizerChanged(params);

@@ -3,6 +3,7 @@ package com.becker.optimization.parameter;
 import com.becker.optimization.parameter.redistribution.DiscreteRedistribution;
 import com.becker.optimization.parameter.ui.ParameterWidget;
 import com.becker.optimization.parameter.ui.StringParameterWidget;
+
 import java.util.ArrayList;
 import java.util.List;
 

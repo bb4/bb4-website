@@ -1,10 +1,9 @@
 package com.becker.optimization.test;
 
-import com.becker.optimization.*;
+import com.becker.optimization.Optimizer;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.geom.*;
+import java.awt.geom.Point2D;
 
 /**
  * Show iteration steps to 2 d solution.

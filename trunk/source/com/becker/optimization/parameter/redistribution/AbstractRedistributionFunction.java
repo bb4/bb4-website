@@ -5,8 +5,7 @@
 
 package com.becker.optimization.parameter.redistribution;
 
-import com.becker.common.function.Function;
-import com.becker.common.util.MathUtil;
+import com.becker.common.math.function.Function;
 
 /**
  *

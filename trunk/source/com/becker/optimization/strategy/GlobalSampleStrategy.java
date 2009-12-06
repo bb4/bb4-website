@@ -1,22 +1,23 @@
 package com.becker.optimization.strategy;
 
-import com.becker.optimization.parameter.ParameterArray;
+import com.becker.common.math.MultiArray;
+import com.becker.optimization.Optimizee;
 import com.becker.optimization.parameter.Parameter;
-import com.becker.common.MultiArray;
-import com.becker.optimization.*;
+import com.becker.optimization.parameter.ParameterArray;
 
 
 /**
- *  Hill climbing optimization strategy.
+ *  Global sampling optimization strategy.
  *
  * @author Barry Becker
  */
 public class GlobalSampleStrategy extends OptimizationStrategy
 {
-    // unreasonable to have a sampling rate higher than this.
+    /** unreasonable to have a sampling rate higher than this.  */
     private static final int MAX_SAMPLE_RATE_X_DIMS = 20000;
 
     private static final int DEFAULT_SAMPLE_RATE_X_DIMS = 12;
+
     //the user should set this explicitly.
     int samplingRate_;
 
@@ -31,17 +32,6 @@ public class GlobalSampleStrategy extends OptimizationStrategy
         super(optimizee);
         samplingRate_ =  DEFAULT_SAMPLE_RATE_X_DIMS / optimizee_.getNumParameters();
     }
-
-    /**
-     * Constructor
-     * @param optimizee the thing to be optimized.
-     * @param optimizationLogFile the file that will record the results
-     */
-    public GlobalSampleStrategy( Optimizee optimizee, String optimizationLogFile )
-    {
-        super(optimizee, optimizationLogFile);
-    }
-
 
     /**
      * @param samplingRate the rate at which to sample along each dimension when trying guesses globally.
@@ -73,6 +63,7 @@ public class GlobalSampleStrategy extends OptimizationStrategy
      * @param fitnessRange the approximate absolute value of the fitnessRange.
      * @return best solution found using global sampling.
      */
+    @Override
     public ParameterArray doOptimization( ParameterArray params, double fitnessRange )
     {
         int numDims = params.size();

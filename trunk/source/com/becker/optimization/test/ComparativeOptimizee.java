@@ -1,7 +1,7 @@
 package com.becker.optimization.test;
 
+import com.becker.optimization.Optimizee;
 import com.becker.optimization.parameter.ParameterArray;
-import com.becker.optimization.*;
 
 /**
  * Concrete adapter class for a comparison base Optimizee

@@ -1,8 +1,8 @@
 package com.becker.optimization.strategy;
 
-import com.becker.optimization.parameter.ParameterArray;
 import com.becker.common.util.Util;
-import com.becker.optimization.*;
+import com.becker.optimization.Optimizee;
+import com.becker.optimization.parameter.ParameterArray;
 
 /**
  * Simulated annealing optimization strategy.
@@ -27,24 +27,12 @@ public class SimulatedAnnealingStrategy extends OptimizationStrategy
      * Constructor
      * use a harcoded static data interface to initialize.
      * so it can be easily run in an applet without using resources.
-     * No log file specified in this constructor. (use this version if running in unsigned applet).
      * @param optimizee the thing to be optimized.
      */
     public SimulatedAnnealingStrategy( Optimizee optimizee )
     {
         super(optimizee);
     }
-
-    /**
-     * Constructor
-     * @param optimizee the thing to be optimized.
-     * @param optimizationLogFile the file that will record the results
-     */
-    public SimulatedAnnealingStrategy( Optimizee optimizee, String optimizationLogFile )
-    {
-        super(optimizee, optimizationLogFile);
-    }
-
 
     /**
      *
@@ -54,8 +42,6 @@ public class SimulatedAnnealingStrategy extends OptimizationStrategy
     {
         tempMax_ = tempMax;
     }
-
-
 
     /**
      * finds a local maxima.
@@ -133,7 +119,7 @@ public class SimulatedAnnealingStrategy extends OptimizationStrategy
                  }
 
                  System.out.println("T="+temperature+" ct="+ct+" dist="+dist+" deltaFitness="+deltaFitness+"  currentFitness = "+currentFitness );
-                 writeToLog(ct, currentFitness, r, dist, params, Util.formatNumber(temperature));
+                 logger_.write(ct, currentFitness, r, dist, params, Util.formatNumber(temperature));
 
                  ct++;
              } while (ct < N * params.size() && !isOptimalFitnessReached(params));
@@ -143,7 +129,7 @@ public class SimulatedAnnealingStrategy extends OptimizationStrategy
          } while (temperature > tempMin);
 
          System.out.println("T="+temperature+"  currentFitness = "+bestFitness );
-         writeToLog(ct, currentFitness, 0, 0, bestParams, Util.formatNumber(temperature));
+         logger_.write(ct, currentFitness, 0, 0, bestParams, Util.formatNumber(temperature));
 
          return bestParams;
      }

@@ -6,16 +6,17 @@
 package com.becker.optimization.parameter.ui;
 
 import com.becker.optimization.parameter.BooleanParameter;
-import com.becker.optimization.parameter.ParameterChangeListener;
 import com.becker.optimization.parameter.Parameter;
-import java.awt.BorderLayout;
+import com.becker.optimization.parameter.ParameterChangeListener;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import javax.swing.JCheckBox;
 
 /**
  *
- * @author becker
+ * @author Barry Becker
  */
 public class BooleanParameterWidget extends ParameterWidget implements ItemListener {
 

@@ -1,10 +1,12 @@
 package com.becker.optimization.strategy;
 
-import com.becker.optimization.parameter.ParameterArray;
 import com.becker.common.util.Util;
-import com.becker.optimization.*;
+import com.becker.optimization.Optimizee;
+import com.becker.optimization.parameter.ParameterArray;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Genetic Algorithm (evolutionary) optimization strategy.
@@ -17,9 +19,9 @@ import java.util.*;
 public class GeneticSearchStrategy extends OptimizationStrategy
 {
 
-    // The population size will be this number raised to the number of dimensions power (up to POP_MAX).
+    /** The population size will be this number raised to the number of dimensions power (up to POP_MAX). */
     private static final int POPULATION_SIZE_PER_DIM = 4;
-    // but never exceed this amount
+    /** but never exceed this amount  */
     private static final int POPULATION_MAX = 4000;
 
     // the amount to decimate the parent population by on each iteration
@@ -30,7 +32,7 @@ public class GeneticSearchStrategy extends OptimizationStrategy
     private static final double INITIAL_RADIUS = 1.5;
 
 
-    // this prevents us from running forever.
+    /** this prevents us from running forever.  */
     private static final int MAX_ITERATIONS = 100;
 
     // stop when the avg population score does not improve by better than this
@@ -52,24 +54,12 @@ public class GeneticSearchStrategy extends OptimizationStrategy
      * Constructor
      * use a harcoded static data interface to initialize.
      * so it can be easily run in an applet without using resources.
-     * No log file specified in this constructor. (use this version if running in unsigned applet).
      * @param optimizee the thing to be optimized.
      */
     public GeneticSearchStrategy( Optimizee optimizee )
     {
         super(optimizee);
     }
-
-    /**
-     * Constructor
-     * @param optimizee the thing to be optimized.
-     * @param optimizationLogFile the file that will record the results
-     */
-    public GeneticSearchStrategy( Optimizee optimizee, String optimizationLogFile )
-    {
-        super(optimizee, optimizationLogFile);
-    }
-
 
     /**
      *
@@ -159,7 +149,7 @@ public class GeneticSearchStrategy extends OptimizationStrategy
              System.out.println(" ct="+ct+"  nbrRadius_="+nbrRadius_ +" population size=" + populationSize_
                                 +" deltaFitness="+deltaFitness+"  currentBest = "+ currentBest.getFitness()
                                 +"  lastBest="+ lastBest.getFitness());
-             writeToLog(ct, currentBest.getFitness(), nbrRadius_, deltaFitness, params, "---");
+             logger_.write(ct, currentBest.getFitness(), nbrRadius_, deltaFitness, params, "---");
              lastBest = currentBest.copy();
 
              if (listener_ != null) {
@@ -179,7 +169,7 @@ public class GeneticSearchStrategy extends OptimizationStrategy
              System.out.println("stopped because we made no IMPROVEMENT");
          }
          System.out.println("----------------------- done -------------------");
-         writeToLog(ct, currentBest.getFitness(), 0, 0, currentBest, Util.formatNumber(ct));
+         logger_.write(ct, currentBest.getFitness(), 0, 0, currentBest, Util.formatNumber(ct));
 
          return currentBest;
      }

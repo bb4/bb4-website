@@ -2,7 +2,8 @@ package com.becker.optimization.parameter;
 
 import com.becker.common.util.Util;
 
-import java.util.*;
+import java.util.List;
+import java.util.Random;
 
 /**
  *  represents a 1 dimensional array of parameters

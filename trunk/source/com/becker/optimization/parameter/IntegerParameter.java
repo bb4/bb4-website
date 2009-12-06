@@ -1,9 +1,10 @@
 package com.becker.optimization.parameter;
 
-import com.becker.common.util.MathUtil;
+import com.becker.common.math.MathUtil;
 import com.becker.optimization.parameter.redistribution.DiscreteRedistribution;
 import com.becker.optimization.parameter.ui.DoubleParameterWidget;
 import com.becker.optimization.parameter.ui.ParameterWidget;
+
 import java.util.Random;
 
 /**
