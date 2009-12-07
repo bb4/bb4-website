@@ -14,7 +14,7 @@ import javax.sound.sampled.SourceDataLine;
 /**
  *
  * Created on November 11, 2007, 11:02 AM
- * @author becker
+ * @author Barry Becker
  */
 public class SoundTest extends TestCase {
     
