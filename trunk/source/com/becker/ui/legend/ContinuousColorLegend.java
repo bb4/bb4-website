@@ -2,7 +2,7 @@ package com.becker.ui.legend;
 
 //import com.becker.common.*;
 import com.becker.common.ColorMap;
-import com.becker.common.NiceNumbers;
+import com.becker.common.math.NiceNumbers;
 import com.becker.common.util.Util;
 
 import javax.swing.*;
