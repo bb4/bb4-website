@@ -44,9 +44,7 @@ public enum Direction {
         double rnd = RANDOM.nextDouble();
         List<Direction> directions = new ArrayList<Direction>();
         List<Direction> originalDirections = new ArrayList<Direction>();
-        for (Direction d : values()) {
-            originalDirections.add(d);
-        }
+        originalDirections.addAll(Arrays.asList(values()));
 
         double fwdProb = FORWARD.getProbability();
         double leftProb = LEFT.getProbability();
@@ -116,5 +114,4 @@ public enum Direction {
         }
         return newDir;
     }
-
 }

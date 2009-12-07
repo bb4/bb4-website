@@ -22,7 +22,7 @@ public class MazeSimulator extends ApplicationApplet implements ActionListener
 
     protected NumberInput thicknessField_ = null;
 
-    // ui for entering the direction probablilities.
+    // ui for entering the direction probabilities.
     protected NumberInput forwardProbField_ = null;
     protected NumberInput leftProbField_ = null;
     protected NumberInput rightProbField_ = null;
@@ -67,6 +67,7 @@ public class MazeSimulator extends ApplicationApplet implements ActionListener
         final MazePanel mazePanel = new MazePanel();
         mazePanel.addComponentListener( new ComponentAdapter()
         {
+            @Override
             public void componentResized( ComponentEvent ce )
             {
                 // only resize if the dimensions have changed
@@ -142,7 +143,7 @@ public class MazeSimulator extends ApplicationApplet implements ActionListener
     public void regenerate()
     {
         if ( thicknessField_ == null )   {
-            return; // not inited yet
+            return; // not initialized yet
         }
 
         int thickness = thicknessField_.getIntValue();
@@ -171,6 +172,7 @@ public class MazeSimulator extends ApplicationApplet implements ActionListener
     /**
      * This method allow javascript to resize the applet from the browser.
      */
+    @Override
     public void setSize( int width, int height )
     {
         super.setSize( width, height );
@@ -178,6 +180,7 @@ public class MazeSimulator extends ApplicationApplet implements ActionListener
         regenerate();
     }
 
+    @Override
     public void start()
     {
         regenerate();

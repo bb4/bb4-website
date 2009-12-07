@@ -54,7 +54,6 @@ public class MazeCell
         northPath = false;
         southPath = false;        
     }
-
 }
 
 

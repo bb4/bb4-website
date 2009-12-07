@@ -10,7 +10,6 @@ import java.awt.*;
  */
 public class GenState
 {
-
     private Point position_;
     private Point direction_;
     private int depth_;
