@@ -1,6 +1,4 @@
-package com.becker.common;
-
-
+package com.becker.common.math;
 
 /**
  * Provide support for high dimensional arrays of doubles.
@@ -106,6 +104,7 @@ public class MultiArray
     /**
      * get a raw integer index from a integer array of indices.
      * @param index ndim array of indices.
+     * @return raw index
      */
     private int getRawIndex( int[] index )
     {
@@ -122,6 +121,7 @@ public class MultiArray
     /**
      * get an integer array of indices from a raw integer index.
      * @param rawIndex the raw integer index to convert to an array of int indices.
+     * @return an integer array of indices from a raw integer index.
      */
     public int[] getIndexFromRaw( int rawIndex )
     {
@@ -136,7 +136,7 @@ public class MultiArray
     }
 
     /**
-     * @param rawIndex
+     * @param rawIndex raw index
      * @return a string representation of the tuple
      * eg "3,5,9,3"
      */

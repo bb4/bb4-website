@@ -1,9 +1,7 @@
 package com.becker.common.test.util;
 
 import junit.framework.*;
-import com.becker.common.util.MathUtil;
-
-import java.util.*;
+import com.becker.common.math.MathUtil;
 
 /**
  * @author Barry Becker Date: Apr 2, 2006

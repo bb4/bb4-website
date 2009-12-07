@@ -1,4 +1,4 @@
-package com.becker.common;
+package com.becker.common.concurrency;
 
 
 /**
@@ -49,15 +49,11 @@ public abstract class Worker {
         return returnValue_;
     }
 
-    /**
-     * Set the value produced by worker thread
-     */
-    private synchronized void setValue(Object x) {
-        returnValue_ = x;
-    }
+
 
     /**
      * Compute the value to be returned by the <code>get</code> method.
+     * @return the result.
      */
     public abstract Object construct();
 
@@ -110,14 +106,11 @@ public abstract class Worker {
      * and then exit.
      */
     public Worker() {
-        //final Runnable doFinished = new Runnable() {
-        //   public void run() { finished(); }
-        //};
 
         Runnable doConstruct = new Runnable() {
             public void run() {
                 try {
-                    setValue(construct());
+                    returnValue_ = construct();
                 }
                 finally {
                     threadVar_.clear();

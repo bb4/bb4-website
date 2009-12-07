@@ -61,7 +61,7 @@ public final class Base64Codec {
         if (charEncoder_==null) {
             charEncoder_ = new Base64();
         }
-        // convert from string to bytes for uncompressing
+        // convert from string to bytes for decompressing
         byte[] compressedDat = charEncoder_.decodeBase64( data.getBytes() );  
 
         final ByteArrayInputStream in = new ByteArrayInputStream( compressedDat );

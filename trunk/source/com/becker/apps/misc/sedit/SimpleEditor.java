@@ -2,7 +2,7 @@ package com.becker.apps.misc.sedit;
 
 import com.becker.common.Base64Codec;
 import com.becker.ui.GUIUtil;
-import com.becker.ui.filefilter.ExtensionFileFilter;
+import com.becker.ui.file.ExtensionFileFilter;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.BufferedReader;

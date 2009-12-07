@@ -1,8 +1,7 @@
 package com.becker.game.common.ui;
 
-import com.becker.common.util.FileUtil;
 import com.becker.game.common.*;
-import com.becker.ui.*;
+import com.becker.ui.file.FileChooserUtil;
 
 import javax.swing.*;
 import javax.swing.Timer;
@@ -29,8 +28,7 @@ import java.util.List;
  *  @author Barry Becker
  */
 public abstract class GameBoardViewer extends JPanel
-                                                                  implements GameViewable,
-                                                                                      MouseListener, GameChangedListener
+                                      implements GameViewable, MouseListener, GameChangedListener
 {
 
     /** every GameBoardViewer must contain a controller. */
@@ -104,7 +102,7 @@ public abstract class GameBoardViewer extends JPanel
      */
     public void openGame()
     {
-        JFileChooser chooser = FileUtil.getFileChooser(new SgfFileFilter());
+        JFileChooser chooser = FileChooserUtil.getFileChooser(new SgfFileFilter());
         int state = chooser.showOpenDialog( null );
         File file = chooser.getSelectedFile();
         if ( file != null && state == JFileChooser.APPROVE_OPTION )  {
@@ -128,7 +126,7 @@ public abstract class GameBoardViewer extends JPanel
      */
     public void saveGame( AssertionError ae )
     {
-        JFileChooser chooser = FileUtil.getFileChooser(new SgfFileFilter());
+        JFileChooser chooser = FileChooserUtil.getFileChooser(new SgfFileFilter());
         int state = chooser.showSaveDialog( null );
         File file = chooser.getSelectedFile();
         if ( file != null && state == JFileChooser.APPROVE_OPTION ) {

@@ -10,7 +10,7 @@ import com.becker.common.util.FileUtil;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.*;
 import com.becker.game.twoplayer.go.*;
-import com.becker.ui.filefilter.GenericFileFilter;
+import com.becker.ui.file.GenericFileFilter;
 import junit.framework.*;
 
 import java.util.*;

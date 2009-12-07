@@ -18,14 +18,13 @@ import javax.xml.transform.stream.*;
  * Static utility methods for manipulating an XML dom.
  *
  * @author Barry Becker
- * Date: Oct 17, 2004
  */
 public final class DomUtil {
 
-    private DomUtil() {};
+    private DomUtil() {}
 
     /** This is where I keep all my published xsds (xml schemas)  and dtds (doc type definitions) */
-    public static final String SCHEMA_LOCATION = "http://barrybecker4.com/schema/";
+    private static final String SCHEMA_LOCATION = "http://barrybecker4.com/schema/";
 
     /**
      * Initialize a dom document structure.
@@ -78,7 +77,7 @@ public final class DomUtil {
      * @param root
      * @param document
      */
-    public static void postProcessDocument(Node root, Document document, boolean replaceUseWithDeepCopy) {
+    private static void postProcessDocument(Node root, Document document, boolean replaceUseWithDeepCopy) {
         NodeList l = root.getChildNodes();
 
         List<Node> deleteList = new ArrayList<Node>();
@@ -99,7 +98,7 @@ public final class DomUtil {
             postProcessDocument(n, document, replaceUseWithDeepCopy);
 
             if (name!=null && "use".equals(name)) {
-                // substitue the element with the specified id
+                // substitute the element with the specified id
                 NamedNodeMap attrs = n.getAttributes();
                 Node attr =  attrs.item(0);
                 assert "ref".equals(attr.getNodeName()): "attr name="+attr.getNodeName();
@@ -117,10 +116,8 @@ public final class DomUtil {
             }
         }
 
-        Iterator it = deleteList.iterator();
-        while (it.hasNext()) {
-            Node n = (Node)it.next();
-            root.removeChild(n);
+        for (Node aDeleteList : deleteList) {
+            root.removeChild(aDeleteList);
         }
     }
 
@@ -144,7 +141,7 @@ public final class DomUtil {
         String attributeVal = null;
         if (attribMap == null)
             return null;
-        //assert (attribMap!=null) : "no attributes for " +node.getNodeName()+" "+node.getNodeValue();
+        // assert (attribMap!=null) : "no attributes for " +node.getNodeName()+" "+node.getNodeValue();
 
         for (int i=0; i<attribMap.getLength(); i++) {
             Node attr = attribMap.item(i);
@@ -202,7 +199,7 @@ public final class DomUtil {
      * Set replaceUseWithDeepCopy to false if you are in a debug mode and don't want to see a lot of redundant subtrees.
      * @param stream some input stream.
      * @param replaceUseWithDeepCopy if true then replace each instance of a use node with a deep copy of what it refers to
-     * @param xsdURI location of the schema to use for validation.
+     * @param xsdUri location of the schema to use for validation.
      * @return the parsed file as a Document
      */
     private static Document parseXML(InputStream stream, boolean replaceUseWithDeepCopy, String xsdUri)
@@ -282,7 +279,7 @@ public final class DomUtil {
      *
      * @param destFileName file to write xml to
      * @param document xml document to write.
-     * @param name of the schema to use if any (e.g. script.dtd of games.xsd). May be null.
+     * @param schema of the schema to use if any (e.g. script.dtd of games.xsd). May be null.
      */
     public static void writeXMLFile(String destFileName, Document document, String schema)  {
         System.out.println("writing to " + destFileName);
@@ -298,9 +295,9 @@ public final class DomUtil {
     /**
      * @param oStream stream to write xml to.
      * @param document the xml document to be written to the specified output stream
-     * @param name of the schema to use if any (e.g. script.dtd of games.xsd). May be null.
+     * @param schema of the schema to use if any (e.g. script.dtd of games.xsd). May be null.
      */
-    public static void writeXML(OutputStream oStream, Document document, String schema)  {
+    private static void writeXML(OutputStream oStream, Document document, String schema)  {
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = null;
         try {
@@ -316,7 +313,7 @@ public final class DomUtil {
         DOMSource source = new DOMSource(document);
         
          // takes some OutputStream or Writer
-        StreamResult result =  new StreamResult(oStream);  // replace out with FileOutputStream  // System.out
+        StreamResult result =  new StreamResult(oStream);  // replace out with FileOutputStream
 
         try {
             // replace out with FileOutputStream  // System.out

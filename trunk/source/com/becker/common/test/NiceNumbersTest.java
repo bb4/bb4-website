@@ -1,12 +1,12 @@
 package com.becker.common.test;
 
+import com.becker.common.math.NiceNumbers;
 import junit.framework.*;
-import com.becker.common.*;
 
 import java.util.*;
 
 /**
- * @author Barry Becker Date: Apr 2, 2006
+ * @author Barry Becker
  */
 public class NiceNumbersTest extends TestCase {
 
@@ -41,33 +41,33 @@ public class NiceNumbersTest extends TestCase {
     public void testFracDicgits1() {
         double expectedNumFractDigits = 0;
         double f = NiceNumbers.getNumberOfFractionDigits(10, 100, 3);
-        Assert.assertTrue("Expecteing f= "+expectedNumFractDigits+", but got " + f,
+        Assert.assertTrue("Expecting f= "+expectedNumFractDigits+", but got " + f,
                                   (f == expectedNumFractDigits));
         f = NiceNumbers.getNumberOfFractionDigits(1000, 100000, 10);
-        Assert.assertTrue("Expecteing f= "+expectedNumFractDigits+", but got " + f,
+        Assert.assertTrue("Expecting f= "+expectedNumFractDigits+", but got " + f,
                                   (f == expectedNumFractDigits));
 
         f = NiceNumbers.getNumberOfFractionDigits(-1000, -100, 300);
-        Assert.assertTrue("Expecteing f= "+expectedNumFractDigits+", but got " + f,
+        Assert.assertTrue("Expecting f= "+expectedNumFractDigits+", but got " + f,
                                   (f == expectedNumFractDigits));
     }
 
     public void testFracDicgits2() {
         double f = NiceNumbers.getNumberOfFractionDigits(0.001, -0.002, 300);
-        Assert.assertTrue("Expecteing f= 0.0, but got " + f,
+        Assert.assertTrue("Expecting f= 0.0, but got " + f,
                                   (f == 0.0));
     }
 
 
     public void testFracDicgits3() {
         double f = NiceNumbers.getNumberOfFractionDigits(0.0000001, 0.0001, 30);
-        Assert.assertTrue("Expecteing f= 6.0, but got " + f,
+        Assert.assertTrue("Expecting f= 6.0, but got " + f,
                                   (f == 6.0));
     }
 
     public void testFracDicgits4() {
         double f = NiceNumbers.getNumberOfFractionDigits(-100.01, -100.001, 30);
-        Assert.assertTrue("Expecteing f= 4.0, but got " + f,
+        Assert.assertTrue("Expecting f= 4.0, but got " + f,
                                   (f == 4.0));
     }
 

@@ -1,4 +1,4 @@
-package com.becker.common.function;
+package com.becker.common.math.function;
 
 
 /**

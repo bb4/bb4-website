@@ -1,5 +1,5 @@
-			 Running the ClassFileServer
-	
+--- Running the ClassFileServer  ---
+
 ClassFileServer is an implementation of a mini-webserver that can be used by
 an RMI application to load classes over the network.  Typically, RMI uses an
 HTTP server to load files from a URL. The ClassFileServer provides the same

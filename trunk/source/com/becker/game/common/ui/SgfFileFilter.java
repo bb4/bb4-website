@@ -1,6 +1,6 @@
 package com.becker.game.common.ui;
 
-import com.becker.ui.filefilter.*;
+import com.becker.ui.file.*;
 
 /**
  * File filter for SGF files.

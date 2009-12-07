@@ -11,11 +11,11 @@ public interface ILog {
 
 
     // you can specify the debug, profile info, warning, and error resources to go to one
-    // or more of these plaes.
-    public static final int LOG_TO_CONSOLE = 0x1;
-    public static final int LOG_TO_WINDOW = 0x2;
-    public static final int LOG_TO_FILE = 0x4;
-    public static final int LOG_TO_STRING = 0x8;
+    // or more of these places.
+    int LOG_TO_CONSOLE = 0x1;
+    int LOG_TO_WINDOW = 0x2;
+    int LOG_TO_FILE = 0x4;
+    int LOG_TO_STRING = 0x8;
 
     /**
      *  Set the log destination
@@ -33,6 +33,9 @@ public interface ILog {
      */
     void setLogFile( String fileName ) throws FileNotFoundException;
 
+    /** for logging to a string. */
+    void setStringBuilder(StringBuilder bldr);
+
     /**
      * Log a message to the logDestination
      * @param logLevel message will only be logged if this number is less than the application logLevel (debug_)
@@ -49,12 +52,9 @@ public interface ILog {
      */
     void println( int logLevel, int appLogLevel, String message );
 
-
     void print( String message );
 
-
     void println( String message );
-
 }
 
 

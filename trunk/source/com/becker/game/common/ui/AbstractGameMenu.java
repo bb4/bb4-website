@@ -6,7 +6,7 @@ import javax.swing.*;
 /**
  * The standard file menu for all game programs.
  * Allows such common operations as new, load, save, exit.
- * @author becker
+ * @author Barry Becker
  */
 public abstract class AbstractGameMenu extends JMenu implements ActionListener {
 

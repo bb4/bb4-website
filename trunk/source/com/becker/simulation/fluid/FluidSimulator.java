@@ -4,6 +4,7 @@ import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.parameter.Parameter;
 import com.becker.common.util.FileUtil;
 import com.becker.optimization.*;
+import com.becker.optimization.strategy.OptimizationStrategyType;
 import com.becker.simulation.common.*;
 import com.becker.ui.*;
 
@@ -178,7 +179,7 @@ public class FluidSimulator extends NewtonianSimulator
         ParameterArray paramArray = new ParameterArray( params );
 
         setPaused(false);
-        optimizer.doOptimization(OptimizationType.GENETIC_SEARCH, paramArray, 0.3);
+        optimizer.doOptimization(OptimizationStrategyType.GENETIC_SEARCH, paramArray, 0.3);
     }
 
     public int getNumParameters() {

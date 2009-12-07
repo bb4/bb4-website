@@ -2,7 +2,7 @@ package com.becker.simulation.fluid;
 
 /**
  * Data behind the Fluid.
- * @author becker
+ * @author Barry Becker
  */
 public class Grid {
     

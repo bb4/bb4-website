@@ -1,7 +1,7 @@
-package com.becker.common.function;
+package com.becker.common.math.function;
 
-import com.becker.common.Range;
-import com.becker.common.util.MathUtil;
+import com.becker.common.math.Range;
+import com.becker.common.math.MathUtil;
 
 /**
  * The function is represented with an array of lookups that
@@ -17,23 +17,23 @@ public class ArrayFunction implements Function {
     /** The inverse lookup for the main function. */
     private double[] inverseFunctionMap;
     
-    public enum InterpolationMethod {LINEAR, CUBIC};
+    public enum InterpolationMethod {LINEAR, CUBIC}
     
     private InterpolationMethod interpolationMethod;
      
     /**
      * Constructor.
-     * @param funcMap
+     * @param func
      */
     public ArrayFunction(double[] func, InterpolationMethod interpMethod) {
-        this(func, MathUtil.createInverseFunction(func, new Range(0, 1.0)), interpMethod);        
+        this(func, MathUtil.createInverseFunction(func, new Range(0, 1.0)), interpMethod);
     }
     
     /**
      * Constructor.
      * Use this version of the constructor if you already know the inverse function and do not 
      * want to compute it (because computing it will not be as accurate).
-     * @param funcMap
+     * @param func function definition.
      */
     public ArrayFunction(double[] func, double[] inverseFunc) {
         this(func, inverseFunc, InterpolationMethod.LINEAR);        
@@ -43,7 +43,7 @@ public class ArrayFunction implements Function {
      * Constructor.
      * Use this version of the constructor if you already know the inverse function and do not 
      * want to compute it (because computing it will not be as accurate).
-     * @param funcMap
+     * @param func
      */
     public ArrayFunction(double[] func, double[] inverseFunc, InterpolationMethod interpMethod) {
         functionMap = func;

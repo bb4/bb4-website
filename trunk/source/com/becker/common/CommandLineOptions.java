@@ -6,7 +6,7 @@ import java.util.*;
  * A convenient packaging of command line options that are specified for a program when you
  * run it from the command line.
  *
- * @author Barry Becker Date: Jan 20, 2007
+ * @author Barry Becker
  */
 public class CommandLineOptions  {
 
@@ -51,7 +51,7 @@ public class CommandLineOptions  {
     }
 
     /**
-     * @param option
+     * @param option  some string representing the option
      * @return value for the option (may be null if no value for the option)
      */
     public String getValueForOption(String option) {
@@ -72,16 +72,7 @@ public class CommandLineOptions  {
         return optionsMap_.size();
     }
 
-
     public String toString() {
         return optionsMap_.toString();
-    }
-
-    /** test */
-    public static void main(String[] args) {
-
-        String[] testArgs = {"-a", "b", "-c", "dog", "-e", "-f", "-type", "foo", "-h"};
-        CommandLineOptions options = new CommandLineOptions(testArgs);
-        System.out.println("options = " + options);
     }
 }

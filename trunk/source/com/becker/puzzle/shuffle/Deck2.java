@@ -1,6 +1,6 @@
 package com.becker.puzzle.shuffle;
 
-import com.becker.common.util.MathUtil;
+import com.becker.common.math.MathUtil;
 
 /**
  * Analytic solution to the card shuffling problem.

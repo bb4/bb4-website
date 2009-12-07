@@ -13,7 +13,7 @@ import static com.becker.game.twoplayer.go.GoControllerConstants.USE_RELATIVE_GR
 
 /**
  *
- * @author becker
+ * @author Barry Becker
  */
 public class TerritoryAnalyzer {
 

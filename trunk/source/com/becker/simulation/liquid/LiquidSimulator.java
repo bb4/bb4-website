@@ -1,5 +1,6 @@
 package com.becker.simulation.liquid;
 
+import com.becker.optimization.strategy.OptimizationStrategyType;
 import com.becker.simulation.liquid.config.ConfigurationEnum;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.parameter.Parameter;
@@ -145,7 +146,7 @@ public class LiquidSimulator extends NewtonianSimulator
         ParameterArray paramArray = new ParameterArray( params );
 
         setPaused(false);
-        optimizer.doOptimization(OptimizationType.GENETIC_SEARCH, paramArray, 0.3);
+        optimizer.doOptimization(OptimizationStrategyType.GENETIC_SEARCH, paramArray, 0.3);
     }
 
     @Override

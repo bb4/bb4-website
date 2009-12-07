@@ -10,7 +10,7 @@ import java.util.Set;
  *See puzzle.common for puzzle framework classes.
  *
  * Created on July 28, 2007
- * @author becker
+ * @author Barry Becker
  */
 public class HiQController extends AbstractPuzzleController<PegBoard, PegMove> {    
 
