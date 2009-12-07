@@ -1,4 +1,4 @@
-package com.becker.ui.filefilter;
+package com.becker.ui.file;
 
 import javax.swing.filechooser.*;
 import java.io.File;

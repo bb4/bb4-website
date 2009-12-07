@@ -1,10 +1,11 @@
 package com.becker.ui.dialogs;
 
-import com.becker.java2d.ui.ImageListPanel;
+import com.becker.ui.components.ImageListPanel;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import javax.swing.JPanel;
+
 import com.becker.ui.dialogs.AbstractDialog;
 import java.awt.BorderLayout;
 import java.awt.image.BufferedImage;

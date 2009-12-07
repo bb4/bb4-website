@@ -1,4 +1,4 @@
-package com.becker.ui.filefilter;
+package com.becker.ui.file;
 
 /**
  * This is a FileFilter for text files.
