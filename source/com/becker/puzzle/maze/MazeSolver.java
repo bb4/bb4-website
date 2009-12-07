@@ -5,10 +5,9 @@ import java.util.List;
 import java.awt.*;
 
 /**
- * @author Barry Becker Date: Jul 29, 2006
+ * @author Barry Becker
  */
 public class MazeSolver {
-
 
     private MazePanel panel_;
 
@@ -43,7 +42,7 @@ public class MazeSolver {
         // while there are still paths to try and we have not yet encountered the finish
         while ( !stack.isEmpty() && !solved ) {
 
-            GenState state = (GenState) stack.remove(0);  // pop
+            GenState state = stack.remove(0);  // pop
 
             currentPosition = state.getPosition();
             solutionPath.add(0, currentPosition);
@@ -94,7 +93,7 @@ public class MazeSolver {
             }
             else {
                 // need to back up to the next path we will try
-                GenState lastState = (GenState) stack.get(0); 
+                GenState lastState = stack.get(0);
                 
                 Point pos;
                 do {
