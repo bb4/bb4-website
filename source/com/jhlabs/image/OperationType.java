@@ -6,8 +6,7 @@
 package com.jhlabs.image;
 
 /**
- *
- * @author becker
+ * @author Barry Becker
  */
 public enum OperationType {
 
