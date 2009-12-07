@@ -48,5 +48,5 @@ java.lang.NullPointerException
 	at com.becker.game.twoplayer.common.TwoPlayerController.findComputerMove(TwoPlayerController.java:456)
 	at com.becker.game.twoplayer.common.TwoPlayerController.access$100(TwoPlayerController.java:25)
 	at com.becker.game.twoplayer.common.TwoPlayerController$1.construct(TwoPlayerController.java:582)
-	at com.becker.common.Worker$1.run(Worker.java:111)
+	at com.becker.common.concurrency.Worker$1.run(Worker.java:111)
 	at java.lang.Thread.run(Thread.java:595)
