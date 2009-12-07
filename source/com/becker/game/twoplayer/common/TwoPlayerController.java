@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.common;
 
+import com.becker.common.concurrency.Worker;
 import com.becker.common.util.Util;
-import com.becker.common.Worker;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.persistence.TwoPlayerGameExporter;
 import com.becker.game.twoplayer.common.persistence.TwoPlayerGameImporter;
@@ -12,7 +12,7 @@ import com.becker.game.twoplayer.common.search.tree.GameTreeViewable;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.Optimizer;
-import com.becker.optimization.OptimizationType;
+import com.becker.optimization.strategy.OptimizationStrategyType;
 import com.becker.optimization.Optimizee;
 import java.util.ArrayList;
 
@@ -448,7 +448,7 @@ public abstract class TwoPlayerController extends GameController
 
         ParameterArray optimizedParams;
         optimizedParams =
-                optimizer.doOptimization( OptimizationType.HILL_CLIMBING,
+                optimizer.doOptimization( OptimizationStrategyType.HILL_CLIMBING,
                                           getComputerWeights().getDefaultWeights(),
                                           WINNING_VALUE);
        return optimizedParams;

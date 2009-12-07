@@ -6,7 +6,7 @@ import java.util.List;
  * A UI element that can be refreshed to show the current state.
  *
  * Created on July 28, 2007, 7:00 AM
- * @author becker
+ * @author Barry Becker
  */
 public interface Refreshable <P, M> {
     

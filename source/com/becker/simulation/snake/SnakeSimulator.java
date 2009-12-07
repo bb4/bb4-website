@@ -2,11 +2,11 @@ package com.becker.simulation.snake;
 
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.parameter.Parameter;
-import com.becker.common.*;
 import com.becker.common.util.FileUtil;
 import com.becker.common.util.Util;
 import com.becker.optimization.*;
 import com.becker.optimization.parameter.DoubleParameter;
+import com.becker.optimization.strategy.OptimizationStrategyType;
 import com.becker.simulation.common.*;
 import com.becker.ui.*;
 
@@ -141,7 +141,7 @@ public class SnakeSimulator extends NewtonianSimulator
             optimizer = new Optimizer( this, FileUtil.PROJECT_DIR+"performance/snake/snake_optimization.txt" );
 
         setPaused(false);
-        optimizer.doOptimization(  OptimizationType.GENETIC_SEARCH, INITIAL_PARAMS, 0.3);
+        optimizer.doOptimization(  OptimizationStrategyType.GENETIC_SEARCH, INITIAL_PARAMS, 0.3);
     }
 
     public int getNumParameters() {

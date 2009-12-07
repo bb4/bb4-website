@@ -12,7 +12,7 @@ import java.util.Set;
  * Map that maintains the order in which the entries are added to it.
  * It does not implement the SortedMap interface but is in some ways similar.
  *
- * @author becker
+ * @author Barry Becker
  */
 @SuppressWarnings({"SuspiciousMethodCalls"})
 public class OrderedMap<K, V> implements Map<K, V> {

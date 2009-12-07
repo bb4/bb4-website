@@ -14,7 +14,7 @@ import java.util.Set;
  * Performs static analysis of a go board to determine strings and
  * other analysis involving neighbor locations.
  *
- * @author becker
+ * @author Barry Becker
  */
 public class NeighborAnalyzer {
 

@@ -1,11 +1,9 @@
 package com.becker.puzzle.adventure.ui;
 
-import com.becker.common.util.FileUtil;
-import com.becker.common.xml.DomUtil;
 import com.becker.puzzle.adventure.Story;
 import com.becker.ui.GUIUtil;
-import com.becker.ui.filefilter.ExtensionFileFilter;
-import org.w3c.dom.Document;
+import com.becker.ui.file.ExtensionFileFilter;
+import com.becker.ui.file.FileChooserUtil;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -101,7 +99,7 @@ class StoryMenu extends JMenu implements ActionListener  {
      * View the story that the user opens from the file chooser.
      */
     private void openStory() {
-        File file = FileUtil.getSelectedFileToOpen(EXT, getDefaultDir());
+        File file = FileChooserUtil.getSelectedFileToOpen(EXT, getDefaultDir());
         if ( file != null)  {
             storyApp_.loadStory(file);
         }
@@ -111,7 +109,7 @@ class StoryMenu extends JMenu implements ActionListener  {
      * Save the current story to a file.
      */
     private void saveStory() {
-        File file = FileUtil.getSelectedFileToSave(EXT, getDefaultDir());
+        File file = FileChooserUtil.getSelectedFileToSave(EXT, getDefaultDir());
         if ( file != null) {
             // if it does not have the .sgf extension already then add it
             String fPath = file.getAbsolutePath();

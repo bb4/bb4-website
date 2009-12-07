@@ -6,7 +6,7 @@ import com.becker.game.common.*;
 import com.becker.game.twoplayer.blockade.BlockadeController;
 import com.becker.game.twoplayer.blockade.BlockadeMove;
 import com.becker.game.twoplayer.common.*;
-import com.becker.ui.filefilter.GenericFileFilter;
+import com.becker.ui.file.GenericFileFilter;
 import junit.framework.*;
 
 /**

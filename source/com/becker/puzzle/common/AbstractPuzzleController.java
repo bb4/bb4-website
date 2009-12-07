@@ -1,6 +1,7 @@
 package com.becker.puzzle.common;
 
-import com.becker.common.Worker;
+import com.becker.common.concurrency.Worker;
+
 import java.util.List;
 import java.util.Set;
 

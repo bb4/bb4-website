@@ -1,8 +1,7 @@
 package com.becker.apps.spirograph;
 
-import com.becker.common.*;
 import com.becker.common.util.ImageUtil;
-import com.becker.common.util.MathUtil;
+import com.becker.common.math.MathUtil;
 
 import javax.swing.*;
 import java.awt.*;

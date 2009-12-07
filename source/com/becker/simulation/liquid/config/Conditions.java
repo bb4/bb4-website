@@ -15,7 +15,7 @@ import org.w3c.dom.NodeList;
  * Configuration constraints and initial conditions to use while running the simulation.
  * Loaded from a config file.
  *
- * @author becker
+ * @author Barry Becker
  */
 public class Conditions {
 

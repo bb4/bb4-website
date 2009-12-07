@@ -7,7 +7,7 @@ import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
 import com.becker.game.twoplayer.common.*;
 import com.becker.ui.*;
-import com.becker.ui.filefilter.*;
+import com.becker.ui.file.*;
 
 import javax.swing.*;
 import java.awt.*;

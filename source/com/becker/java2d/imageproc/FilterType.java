@@ -7,7 +7,7 @@ package com.becker.java2d.imageproc;
 
 /**
  *
- * @author becker
+ * @author Barry Becker
  */
 public enum FilterType {
      CONVOLUTION,   // sharpen/blur/edge

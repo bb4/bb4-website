@@ -3,11 +3,11 @@
  * and open the template in the editor.
  */
 
-package com.becker.common.function;
+package com.becker.common.math.function;
 
 /**
- *
- * @author becker
+ * Defines interface for generic 1-1 function f(x).
+ * @author Barry Becker
  */
 public interface Function {
 

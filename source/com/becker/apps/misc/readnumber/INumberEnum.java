@@ -7,7 +7,7 @@ package com.becker.apps.misc.readnumber;
 
 /**
  *
- * @author becker
+ * @author Barry Becker
  */
 public interface INumberEnum {
     String toString();

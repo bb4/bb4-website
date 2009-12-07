@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  *
- * @author becker
+ * @author Barry Becker
  */
 public class GalacticAction extends PlayerAction {
     

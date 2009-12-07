@@ -1,6 +1,6 @@
 package com.becker.apps.misc.progressdemo;
 
-import com.becker.common.Worker;
+import com.becker.common.concurrency.Worker;
 
 /** Uses a Worker to perform a time-consuming (and utterly fake) task. */
 

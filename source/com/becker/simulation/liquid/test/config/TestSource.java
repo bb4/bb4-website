@@ -7,7 +7,7 @@ import javax.vecmath.Vector2d;
 
 /**
  *
- * @author becker
+ * @author Barry Becker
  */
 public class TestSource extends TestCase {
 

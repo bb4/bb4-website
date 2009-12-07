@@ -15,7 +15,7 @@ public final class Util
     private static final DecimalFormat format_ = new DecimalFormat("###,###.##");
     private static final DecimalFormat intFormat_ = new DecimalFormat("#,###");
 
-    private Util() {};
+    private Util() {}
 
 
     /**

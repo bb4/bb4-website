@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 /**
  *
  * Created on August 26, 2007, 10:41 AM
- * @author becker
+ * @author Barry Becker
  */
 public abstract class PuzzleViewer<P, M> extends JPanel implements Refreshable<P, M> {
     

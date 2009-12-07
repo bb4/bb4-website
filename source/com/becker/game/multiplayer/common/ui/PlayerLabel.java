@@ -12,7 +12,7 @@ import com.becker.game.common.Player;
 
 /**
  *
- * @author becker
+ * @author Barry Becker
  */
 public class PlayerLabel extends JPanel {
 

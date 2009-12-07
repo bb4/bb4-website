@@ -8,7 +8,7 @@ import java.io.StreamTokenizer;
 /**
  *
  * Created on May 27, 2007, 5:35 AM
- * @author becker
+ * @author Barry Becker
  */
 public class GoSGFLoader extends SGFLoader {
 

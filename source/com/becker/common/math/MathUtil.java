@@ -1,6 +1,6 @@
-package com.becker.common.util;
+package com.becker.common.math;
 
-import com.becker.common.Range;
+import com.becker.common.math.Range;
 import java.util.Arrays;
 
 
@@ -18,7 +18,7 @@ public final class MathUtil {
     
     public static final double EPS_BIG = 0.26;
 
-    private MathUtil() {};
+    private MathUtil() {}
 
     /**
      * @return the greatest common divisor of 2 longs (may be negative).
@@ -64,7 +64,7 @@ public final class MathUtil {
      * @return interpolated value.
      */
     public static double linearlyInterpolate(double value, double[] function) {
-        // now use linear interpolation beteen values
+        // now use linear interpolation between values
         int len =  function.length-1;
         double x = value *(double) len;
         
@@ -87,7 +87,7 @@ public final class MathUtil {
      * @return interpolated value.
      */
     public static double cubicInterpolate(double value, double[] function) {
-        // now use linear interpolation beteen values
+        // now use linear interpolation between values
         int len =  function.length-1;
         double x = value *(double) len;       
         int index0 = (int) x;

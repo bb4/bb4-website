@@ -1,6 +1,6 @@
 package com.becker.apps.imagebreeder;
 
-import com.becker.common.*;
+import com.becker.common.concurrency.Parallelizer;
 import com.becker.optimization.parameter.Parameter;
 import com.becker.java2d.imageproc.MetaImageOp;
 

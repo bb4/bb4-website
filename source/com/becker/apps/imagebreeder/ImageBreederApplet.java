@@ -8,8 +8,8 @@ import com.becker.ui.GUIUtil;
 import com.becker.ui.ApplicationApplet;
 import com.becker.optimization.parameter.Parameter;
 
-import com.becker.java2d.ui.ImageListPanel;
-import com.becker.java2d.ui.ImageSelectionListener;
+import com.becker.ui.components.ImageListPanel;
+import com.becker.ui.components.ImageSelectionListener;
 import com.becker.ui.sliders.LabeledSlider;
 import com.becker.ui.sliders.SliderChangeListener;
 
@@ -30,7 +30,7 @@ import javax.swing.*;
 public class ImageBreederApplet extends ApplicationApplet
                                 implements ItemListener,
                                             ActionListener,
-                                            ImageSelectionListener,
+        ImageSelectionListener,
                                             SliderChangeListener
 {
     private static int NUM_CHILD_IMAGES = 20;

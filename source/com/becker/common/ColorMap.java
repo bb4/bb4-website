@@ -12,13 +12,9 @@ import java.util.List;
  */
 public class ColorMap
 {
-
     final private List<Double> values_;
     final private List<Color> colors_;
 
-    // temp vars for interpolation
-    private static final float[] rgba_ = new float[4];
-    private static final float[] rgba1_ = new float[4];
 
     /**
      * give a list of (increasing) values and colors to map to.
@@ -67,6 +63,17 @@ public class ColorMap
         return interpolate( x );
     }
 
+    // temp vars for interpolation
+    private static final float[] rgba_ = new float[4];
+    private static final float[] rgba1_ = new float[4];
+
+    /**
+     * I don't think we should get a race condition because the static rgb variables are only used in this
+     * class and this method is synchronized. I want to avoid creating the rgb arrays each time the method is called.
+     * @param x value to retur color for.
+     * @return interpolated color
+     */
+    @SuppressWarnings({"AccessToStaticFieldLockedOnInstance"})
     private synchronized Color interpolate( double x )
     {
         int i = (int) x;

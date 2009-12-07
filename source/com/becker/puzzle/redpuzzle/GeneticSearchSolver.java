@@ -2,6 +2,7 @@ package com.becker.puzzle.redpuzzle;
 
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.*;
+import com.becker.optimization.strategy.OptimizationStrategyType;
 import com.becker.puzzle.common.Refreshable;
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class GeneticSearchSolver extends RedPuzzleSolver
         optimizer.setListener(this);
 
         ParameterArray solution =
-            optimizer.doOptimization(OptimizationType.GENETIC_SEARCH,
+            optimizer.doOptimization(OptimizationStrategyType.GENETIC_SEARCH,
                                      initialGuess, SOLVED_THRESH);
 
         solution_ = ((PieceParameterArray)solution).getPieceList();

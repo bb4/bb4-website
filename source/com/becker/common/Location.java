@@ -66,8 +66,10 @@ public final class Location implements Serializable
      * @param location  The location whose coordinates are to be compared.
      * @return true  The location's coordinates exactly equal this location's.
      */
+    @Override
     public boolean equals( Object location )
     {
+        if (!(location instanceof Location)) return false;
         Location loc = (Location) location;
         return (loc.getRow() == row_) && (loc.getCol() == col_);
     }

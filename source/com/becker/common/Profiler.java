@@ -1,7 +1,6 @@
 package com.becker.common;
 
 import com.becker.common.util.Util;
-import com.becker.ui.*;
 
 import java.util.*;
 
@@ -66,15 +65,12 @@ public class Profiler
          p.stop();
      }
 
-
     /**
      * reset all the timing numbers to 0
      */
     public void resetAll()  {
-       Iterator childIt = topLevelEntries_.iterator();
-        while (childIt.hasNext()) {
-            ProfilerEntry p = (ProfilerEntry)childIt.next();
-            p.resetAll();
+        for (ProfilerEntry entry : topLevelEntries_) {
+            entry.resetAll();
         }
     }
 
@@ -83,17 +79,15 @@ public class Profiler
      */
     public void print() {
         if (!enabled_) return;
-        Iterator childIt = topLevelEntries_.iterator();
-        while (childIt.hasNext()) {
-            ProfilerEntry p = (ProfilerEntry)childIt.next();
-            p.print("");
+        for (ProfilerEntry entry : topLevelEntries_) {
+            entry.print("");
         }
     }
 
-    public String toString() {
+    public String toString(ILog log) {
         StringBuilder bldr = new StringBuilder();
         for (ProfilerEntry p : topLevelEntries_) {
-            bldr.append(p.toString());
+            bldr.append(p.toString(log));
         }
         return bldr.toString();
     }
@@ -178,9 +172,8 @@ public class Profiler
                     +") cannot be greater than the parent time ("+totalTime_+").";
         }
 
-        public String toString()
+        public String toString(ILog log)
         {
-            Log log = new Log();
             log.setDestination(ILog.LOG_TO_STRING);
             StringBuilder bldr = new StringBuilder();
             log.setStringBuilder(bldr);

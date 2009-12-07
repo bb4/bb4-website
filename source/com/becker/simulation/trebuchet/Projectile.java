@@ -1,7 +1,6 @@
 package com.becker.simulation.trebuchet;
 
-import com.becker.common.*;
-import com.becker.common.util.LinearUtil;
+import com.becker.common.math.LinearUtil;
 
 import javax.vecmath.*;
 import java.awt.*;

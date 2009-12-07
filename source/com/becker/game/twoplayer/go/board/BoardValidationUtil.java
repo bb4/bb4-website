@@ -8,7 +8,7 @@ import java.util.Set;
  * Assert certain things are true about the board.
  * Helpful for debugging.
  * 
- * @author becker
+ * @author Barry Becker
  */
 public class BoardValidationUtil {
     

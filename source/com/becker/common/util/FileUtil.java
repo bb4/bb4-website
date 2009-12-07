@@ -1,29 +1,21 @@
 package com.becker.common.util;
 
-import com.becker.ui.GUIUtil;
-import com.becker.ui.filefilter.ExtensionFileFilter;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileFilter;
 
 /**
  * Miscelaneous commonly used file related static utility methods.
- *@author Barry Becker
+ * @author Barry Becker
  */
 public final class FileUtil
 {
-
-    private static JFileChooser chooser_ = null;
-
     /**
      *  This path should be changed if you run the application form of the applets on a different machine.
      *  use this if running under windows
@@ -31,34 +23,13 @@ public final class FileUtil
     public static final String USER_HOME = "G:";
 
     // use this running under Linux
-    //public static final String USER_HOME = "/windows"; 
+    // public static final String USER_HOME = "/windows";
     public static final String PROJECT_DIR = USER_HOME + "/projects/java_projects/trunk/";
     
     /**
      * cannot instantiate static class.
      */
     private FileUtil() {}
-    
-
-    /**
-     * @return a generic file chooser.
-     */
-    public static JFileChooser getFileChooser() {
-        return getFileChooser(null);
-    }
-
-    /**
-     * @param filter optional file filter
-     * @return file chooser with specified filter.
-     */
-    public static JFileChooser getFileChooser(FileFilter filter) {
-        if (chooser_ == null) {
-            chooser_ = GUIUtil.getFileChooser();
-            chooser_.setCurrentDirectory( new File( getHomeDir() ) );
-            chooser_.setFileFilter(filter);
-        }
-        return chooser_;
-    }
 
     /**
      * @return home directory. Assumes running as an Application.
@@ -69,38 +40,10 @@ public final class FileUtil
         return userHome + "/projects/java_projects/trunk";
     }
 
-    public static File getSelectedFileToSave(String extension, File defaultDir) {
-        return getSelectedFile("Save", extension, defaultDir);
-    }
-
-    public static File getSelectedFileToOpen(String extension, File defaultDir) {
-         return getSelectedFile("Open", extension, defaultDir);
-    }
-
-    private static File getSelectedFile(String action, String extension, File defaultDir) {
-
-        JFileChooser chooser = FileUtil.getFileChooser(new ExtensionFileFilter(extension));
-         chooser.setDialogTitle(action);
-         chooser.setApproveButtonText(action);
-         // not really very i18nish, but oh ok for now.
-         chooser.setApproveButtonToolTipText(action + " the specified file.");
-
-         if (defaultDir != null) {
-             chooser.setCurrentDirectory(defaultDir);
-         }
-
-         int state = chooser.showOpenDialog( null );
-         File file = chooser.getSelectedFile();
-         if ( file != null && state == JFileChooser.APPROVE_OPTION )  {
-             return file;
-         }
-         else return null;
-    }
-
     /**
-     *	create a PrintWriter with utf8 encoding
-     *  returns null if there was a problem creating it.
-     *	@param filename including the full path
+     * create a PrintWriter with utf8 encoding
+     * returns null if there was a problem creating it.
+     * @param filename including the full path
      * @return
      */
     public static PrintWriter createPrintWriter( String filename )

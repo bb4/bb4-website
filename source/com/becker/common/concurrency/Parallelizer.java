@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package com.becker.common;
+package com.becker.common.concurrency;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -82,6 +82,7 @@ public class Parallelizer <T> {
     /**
      * Invoke all the workers at once and block until they are all done
      * Once all the separate threads have completed there assigned work, you may want to commit the results.
+     * @return list of Future tasks.
      */
     public List<Future<T>> invokeAll(Collection<? extends Callable<T>> callables)  {
             

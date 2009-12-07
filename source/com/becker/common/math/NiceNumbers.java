@@ -1,4 +1,4 @@
-package com.becker.common;
+package com.becker.common.math;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -7,15 +7,16 @@ import java.util.List;
 /**
  * Calculate nice round numbered cutpoints for a given range.
  * You can choose loose or tight labeling.
+ * (derived from a Graphics Gems 1 article by Paul Heckbert)
  *
- * @author Barry Becker    (derived from a Graphics Gems 1 article by Paul Heckbert)
+ * @author Barry Becker
  */
 public final class NiceNumbers {
 
-    // We will never show a range less than this
+    /** We will never show a range less than this */
     private static final double MIN_RANGE = 1.0E-10;
 
-    // Used in calculating log base 10.
+    /** Used in calculating log base 10. */
     private static final double LOG10SCALE = 1.0 / Math.log(10.0);
 
     private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("###,###.##");
@@ -39,6 +40,7 @@ public final class NiceNumbers {
 
     private static final double LABEL_PROXIMITY_THRESH = 0.2;
 
+    /** labels for the found cutpoints. */
     public static String[] getCutPointLabels(double min, double max, int maxTicks, boolean useTightLabeling) {
         double [] cutPoints  = getCutPoints(min, max, maxTicks, useTightLabeling);
         DECIMAL_FORMAT.setMaximumFractionDigits(getNumberOfFractionDigits(min, max, maxTicks));
@@ -79,7 +81,7 @@ public final class NiceNumbers {
 
             if (useTightLabeling) {
                 positions.add(checkSmallNumber(minimum));
-                // this logic is to prevent the min or max label from overwriting one of the nice cutpoints.
+                // this logic is to prevent the min or max label from overwriting one of the nice cut-points.
                 double initialInc = d;
                 double pct = (min + d - minimum) / d;
                 if (LABEL_PROXIMITY_THRESH > pct) {

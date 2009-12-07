@@ -10,7 +10,7 @@ import com.becker.puzzle.common.SequentialPuzzleSolver;
 /**
  * Type of HiQ solver to use.
  * 
- * @author becker
+ * @author Barry Becker
  */
 public enum Algorithm implements AlgorithmEnum<PegBoard, PegMove> {
     

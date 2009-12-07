@@ -17,7 +17,7 @@ import java.util.Set;
 /**
  * Responsible for updating a go board after making or undoing a move.
  * 
- * @author becker
+ * @author Barry Becker
  */
 public class BoardUpdater {
 

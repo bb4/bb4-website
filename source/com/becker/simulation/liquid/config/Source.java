@@ -7,7 +7,7 @@ import javax.vecmath.Vector2d;
  * Represents a source of liquid in the simulation.
  * Like a spigot.
  *
- * @author becker
+ * @author Barry Becker
  */
 public class Source extends Region {
 

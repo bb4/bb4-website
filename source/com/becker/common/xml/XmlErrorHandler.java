@@ -3,7 +3,7 @@ package com.becker.common.xml;
 import org.xml.sax.*;
 
 /**
- * @author Barry Becker Date: Jan 21, 2007
+ * @author Barry Becker
  */
 public class XmlErrorHandler implements ErrorHandler {
 

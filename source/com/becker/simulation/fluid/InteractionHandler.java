@@ -7,7 +7,7 @@ import java.awt.event.*;
  * Handle mouse interactions - converting them in to physical manifestations.
  *
  * Created on September 23, 2007, 7:46 AM
- * @author becker
+ * @author Barry Becker
  */
 public class InteractionHandler implements MouseListener, MouseMotionListener {
         

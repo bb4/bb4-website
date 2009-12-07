@@ -13,7 +13,7 @@ import java.util.Set;
 
 /**
  *
- * @author becker
+ * @author Barry Becker
  */
 public final class BoardDebugUtil {
 

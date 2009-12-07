@@ -1,4 +1,6 @@
-package com.becker.common.util;
+package com.becker.common.math;
+
+import com.becker.common.util.Util;
 
 import javax.vecmath.*;
 
@@ -10,7 +12,7 @@ import javax.vecmath.*;
  */
 public final class LinearUtil
 {
-    private LinearUtil() {};
+    private LinearUtil() {}
 
     /**
      * matrix conjugate-Gradient solver for Ax=b
