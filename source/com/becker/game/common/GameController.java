@@ -34,7 +34,7 @@ public abstract class GameController
      * Optional. Only present if we are online
      * this allows us to talk with the game server (if it is available). null if not
      */
-    protected ServerConnection serverConnection_;
+    protected IServerConnection serverConnection_;
 
     /** Make sure that the program runs in a reproducible way by always starting from the same random seed. */
     protected static final Random RANDOM = new Random(1);
@@ -258,7 +258,7 @@ public abstract class GameController
      * You should probably check to see if online play is available before calling this.
      * @return a server connection if it is possible to get one.
      */
-    public ServerConnection getServerConnection() {
+    public IServerConnection getServerConnection() {
 
         if (serverConnection_ == null) {
             serverConnection_ = createServerConnection();
@@ -271,7 +271,7 @@ public abstract class GameController
      * Most games do not support online play so returning null is the default
      * @return the server connection if one can be created, else null.
      */
-    protected ServerConnection createServerConnection() {
+    protected IServerConnection createServerConnection() {
         GameContext.log(0, "Cannot create a server connection for "+ this.getClass().getName()
                            +". Online play not supported");
         return null;

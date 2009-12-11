@@ -13,6 +13,7 @@ public class SudokuGenerator {
     private int size_;
     private int numCells_;
     private Random random_;
+    private int delay_;
 
     /**
      * Constructor
@@ -26,11 +27,15 @@ public class SudokuGenerator {
     /**
      * Set this seed value if you want to get repeatable results.
      * Same behavior for same seed.
-     * @param seed
+     * @param seed randome seed
      */
     public void setRandomSeed(int seed)
     {
         random_ = new Random(seed);
+    }
+
+    public void setDelay(int delay) {
+        delay_ = delay;
     }
 
     /**
@@ -91,6 +96,7 @@ public class SudokuGenerator {
         List positionList = getRandomPositions(size_);
         // we need a solver to verify that we can still deduce the original
         SudokuSolver solver = new SudokuSolver();
+        solver.setDelay(delay_/10);
 
         int len = size_ * size_;
         int last = len * len;
@@ -100,10 +106,6 @@ public class SudokuGenerator {
             solution.getCell(pos).clearValue();
         }
 
-        //assert(solver.solvePuzzle(solution, ppanel));
-        //solution.reset();
-
-        int givens = 0;
         for (int i=len; i < last; i++) {
             int pos = (Integer) positionList.get(i);
             Cell c = solution.getCell(pos);
@@ -112,10 +114,9 @@ public class SudokuGenerator {
             if (!solver.solvePuzzle(solution, null)) {
                 // put it back since it cannot be solved without this positions value
                 c.setOriginalValue(value);
-                givens++;
             }
             solution.reset();
-            if (ppanel != null)
+            if (ppanel != null && delay_ > 0)
                 ppanel.repaint();
         }
       
@@ -123,7 +124,7 @@ public class SudokuGenerator {
     }
 
     /**
-     * @param size the base size (fourth root of the number of cells.
+     * @param size the base size (fourth root of the number of cells).
      * @return the poistions on the board in a random order in a list
      */
     private List getRandomPositions(int size) {

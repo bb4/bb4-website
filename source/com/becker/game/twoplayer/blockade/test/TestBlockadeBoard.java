@@ -108,9 +108,9 @@ public class TestBlockadeBoard extends BlockadeTestCase {
                   List list1 = board.getPossibleMoveList(position, false);
                   //List list2 = board.getPossibleMoveList( position, true);
 
-                  if (position.isOnEdge(board)) {
+                  if (board.isOnEdge(position)) {
 
-                      if (position.isInCorner(board)) {
+                      if (board.isInCorner(position)) {
                            // if in corner, we expect 3 moves
                           verifyMoves(position, list1,  3, P1_NUM_MAP);
                       }

@@ -25,7 +25,7 @@ public class SudokuSolver {
      * @param board board to show solution on.
      * @return true if solved.
      */
-    public boolean solvePuzzle( Board board) {
+    public boolean solvePuzzle(Board board) {
         return solvePuzzle(board, null);
     }
 
@@ -58,12 +58,10 @@ public class SudokuSolver {
         do {
             // find missing row and column numbers
             board.updateCellCandidates();
-            refresh(puzzlePanel);
-            Util.sleep(delay_);
+            refreshWithDelay(puzzlePanel, 1);
             board.checkAndSetUniqueValues();
 
-            refresh(puzzlePanel);
-            Util.sleep(2*delay_);
+            refreshWithDelay(puzzlePanel, 3);
             board.setNumIterations(++ct);
             solved = board.solved();
 
@@ -75,12 +73,16 @@ public class SudokuSolver {
         return solved;
     }
 
+    private void refreshWithDelay(SudokuPanel puzzlePanel, int relativeDelay) {
+        refresh(puzzlePanel);
+        Util.sleep(relativeDelay * delay_);
+    }
 
 
-    private static void refresh(SudokuPanel puzzlePanel) {
-        if (puzzlePanel == null)
+    private void refresh(SudokuPanel puzzlePanel) {
+        if (puzzlePanel == null || delay_ == 0)
             return;
         puzzlePanel.repaint();
-        Util.sleep(20);  // give it a chance to repaint.
+        Util.sleep(5);  // give it a chance to repaint.
     }
 }

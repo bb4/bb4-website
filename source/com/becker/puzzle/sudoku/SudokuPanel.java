@@ -16,6 +16,7 @@ public final class SudokuPanel extends JPanel
 
     private SudokuRenderer renderer_;
 
+    private int delay_;
 
     /**
      * Constructor. Pass in data for initial Sudoku problem.
@@ -45,9 +46,13 @@ public final class SudokuPanel extends JPanel
         board_ = b;
     }
 
+    public void setDelay(int delay) {
+        delay_ = delay;
+    }
+
     public void startSolving() {
-        // better would be to run in a different thread?
         SudokuSolver solver = new SudokuSolver();
+        solver.setDelay(delay_);
         boolean solved = solver.solvePuzzle(this);
 
         if ( solved )
@@ -58,8 +63,8 @@ public final class SudokuPanel extends JPanel
 
 
     public void generateNewPuzzle() {
-        System.out.println("generating new puzzle.");
         SudokuGenerator generator = new SudokuGenerator(board_.getBaseSize());
+        generator.setDelay(delay_);
         board_ = generator.generatePuzzleBoard(this);
         repaint();
     }

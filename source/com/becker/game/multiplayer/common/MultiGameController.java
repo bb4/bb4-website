@@ -1,14 +1,10 @@
 package com.becker.game.multiplayer.common;
 
 import com.becker.optimization.parameter.ParameterArray;
-import com.becker.game.card.*;
 import com.becker.game.common.*;
 import com.becker.game.common.online.*;
 import com.becker.game.multiplayer.common.online.SurrogatePlayer;
 import com.becker.game.multiplayer.common.ui.MultiGameViewer;
-import com.becker.game.multiplayer.trivial.player.*;
-import com.becker.game.multiplayer.trivial.ui.*;
-import com.becker.optimization.*;
 
 import java.util.*;
 import java.util.List;
@@ -114,9 +110,9 @@ public abstract class MultiGameController extends GameController
     /**
      * @return the server connection.
      */
-    protected ServerConnection createServerConnection() {
+    protected IServerConnection createServerConnection() {
 
-        ServerConnection sc =  new ServerConnection(getServerPort());
+        IServerConnection sc =  new ServerConnection(getServerPort());
         return sc;
     }
 

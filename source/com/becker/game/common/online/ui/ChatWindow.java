@@ -13,12 +13,12 @@ import java.awt.event.*;
  */
 public class ChatWindow extends JPanel implements OnlineChangeListener, KeyListener {
 
-    private ServerConnection connection_;
+    private IServerConnection connection_;
     private final JTextArea textArea_;
     private final JScrollPane scrollPane_;
     private JTextField messageField_;
 
-    public ChatWindow(ServerConnection connection) {
+    public ChatWindow(IServerConnection connection) {
         setLayout(new BorderLayout());
         connection_ = connection;
         connection_.addOnlineChangeListener(this);

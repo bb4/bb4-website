@@ -1,8 +1,8 @@
 package com.becker.game.multiplayer.common.online;
 
 import com.becker.game.common.online.GameCommand;
+import com.becker.game.common.online.IServerConnection;
 import com.becker.game.common.online.OnlineChangeListener;
-import com.becker.game.common.online.ServerConnection;
 import com.becker.game.multiplayer.common.MultiGameController;
 import com.becker.game.multiplayer.common.MultiGamePlayer;
 import com.becker.game.common.PlayerAction;
@@ -13,13 +13,13 @@ import java.awt.*;
  * On the server, all players are surrogates except for the robot players.
  * On the client, all players are surrogates except for the human player that is controlling that client.
  *
- * @author Barry Becker Date: Feb 3, 2007
+ * @author Barry Becker 
  */
 public  class SurrogatePlayer extends MultiGamePlayer implements OnlineChangeListener {
 
     private static final long serialVersionUID = 1;
     
-    protected ServerConnection connection_;
+    protected IServerConnection connection_;
     protected MultiGamePlayer player_;
     
     // wait about 10 seconds for the player to movebefore timing out.
@@ -30,7 +30,7 @@ public  class SurrogatePlayer extends MultiGamePlayer implements OnlineChangeLis
      * @param player
      * @param connection to the server so we can get updated actions.
      */
-    public SurrogatePlayer(MultiGamePlayer player, ServerConnection connection) {
+    public SurrogatePlayer(MultiGamePlayer player, IServerConnection connection) {
         super(player.getName(), player.getColor(), player.isHuman());
         player_ = player;
         connection_ = connection;
