@@ -3,6 +3,8 @@ package com.becker.game.common;
 import com.becker.common.ClassLoaderSingleton;
 import com.becker.game.common.ui.GamePanel;
 
+import javax.swing.*;
+
 
 /**
  * Immutable class representing meta info about a game plugin.

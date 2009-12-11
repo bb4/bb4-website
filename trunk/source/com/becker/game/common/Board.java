@@ -314,4 +314,25 @@ public abstract class Board implements BoardInterface, Cloneable
         return bldr.toString();
     }
 
+    /**
+     * @return true if the specified BoardPosition is on the corder of the board
+     * @param boardPosition
+     */
+    public boolean isInCorner(BoardPosition boardPosition)
+    {
+        // check the 4 corners
+        return ((boardPosition.getRow()==1 && boardPosition.getCol()==1) ||
+                     (boardPosition.getRow()== getNumRows() && boardPosition.getCol()== getNumCols()) ||
+                     (boardPosition.getRow()== getNumRows()  && boardPosition.getCol()==1) ||
+                     (boardPosition.getRow()==1 && boardPosition.getCol()== getNumCols()));
+    }
+
+    /**
+     * @return true if the specified BoardPosition is on the edge of the board
+     * @param boardPosition
+     */
+    public boolean isOnEdge(BoardPosition boardPosition)
+    {
+        return (boardPosition.getRow()==1 || boardPosition.getRow()== getNumRows() || boardPosition.getCol()==1 || boardPosition.getCol()== getNumCols());
+    }
 }

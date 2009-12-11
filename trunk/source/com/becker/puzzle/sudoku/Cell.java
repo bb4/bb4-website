@@ -81,9 +81,6 @@ public class Cell {
         candidates_.clear();
         List<Integer> bcList = parent_.getCandidates();
         for (Integer candidate : bcList)  {
-            //System.out.println("Checking to see if " + candidate + " is also in "
-            //                   + getRowCandidates(row)
-            //                  + " or " + getColCandidates(col));
             if (rowCandidates.contains(candidate) && colCandidates.contains(candidate)) {
                candidates_.add(candidate);
            }
@@ -105,7 +102,6 @@ public class Cell {
         int unique = parent_.getUniqueValueForCell(this);
         if (unique > 0) {
             // set it and remove from appropriate candidate lists
-            // System.out.println("setting val of "+ row+ "  "+col+" to "+ unique );
             setValue(unique);
             assert(candidates_.contains(unique));
             candidates_.clear();

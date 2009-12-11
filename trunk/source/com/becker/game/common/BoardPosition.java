@@ -163,27 +163,7 @@ public class BoardPosition
         double deltaY = this.getRow() - position.getRow();
         return Math.sqrt( deltaX * deltaX + deltaY * deltaY );
     }
-    
-    
-    /**
-     * @return true if the specified BoardPosition is on the edge of the board
-     */
-    public boolean isOnEdge(Board board)
-    {
-        return (getRow()==1 || getRow()==board.getNumRows() || getCol()==1 || getCol()==board.getNumCols());
-    }
 
-    /**
-     * @return true if the specified BoardPosition is on the corder of the board
-     */
-    public boolean isInCorner(Board board)
-    {
-        // check the 4 corners
-        return ((getRow()==1 && getCol()==1) || 
-                     (getRow()==board.getNumRows() && getCol()==board.getNumCols()) || 
-                     (getRow()==board.getNumRows()  && getCol()==1) || 
-                     (getRow()==1 && getCol()==board.getNumCols()));
-    }
 
     /**
      * make it show an empty board position.

@@ -23,14 +23,10 @@ public final class SudokuPuzzle extends JApplet
     // buttons
     private JButton generateButton_;
     private JButton solveButton_;
-    // size dropdown
-    private Choice sizeChoice_;
-    private String[] boardSizeMenuItems_ = {
-        "4 cells on a side",
-        "9 cells on a side",
-        "16 cells on a side",
-        "25 cells (prepare to wait)"
-    };
+
+    private SizeSelector sizeSelector_;
+    private SpeedSelector speedSelector_;
+
 
     /**
      * Construct the application and set the look and feel.
@@ -82,41 +78,36 @@ public final class SudokuPuzzle extends JApplet
 
         panel.add(generateButton_);
         panel.add(solveButton_);
-        panel.add(createSizeDropdown());
+        sizeSelector_ = new SizeSelector();
+        speedSelector_ = new SpeedSelector();
+        sizeSelector_.addItemListener(this);
+        speedSelector_.addItemListener(this);
+        panel.add(sizeSelector_);
+        panel.add(speedSelector_);
         panel.add(Box.createHorizontalGlue());
 
         return panel;
     }
 
-    private Choice createSizeDropdown() {
-        sizeChoice_ = new Choice();
-        sizeChoice_.addItemListener(this);
-        for (final String item : boardSizeMenuItems_) {
-            sizeChoice_.add(item);
-        }
-        sizeChoice_.select(1);
-        return sizeChoice_;
-    }
-
-
     public void actionPerformed(ActionEvent e) {
 
         // must execute long tasks in a separate thread,
         // otherwise you don't see the steps of the animation.
-        Worker worker = null;
+        Worker worker;
         Object src = e.getSource();
 
         if (src == generateButton_)  {
             worker = new Worker() {
 
                 public Object construct() {
+                    puzzlePanel_.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                     puzzlePanel_.generateNewPuzzle();
                     return null;
                 }
 
-                @Override
                 public void finished() {
                     puzzlePanel_.repaint();
+                    puzzlePanel_.setCursor(Cursor.getDefaultCursor());
                 }
             };
             worker.start();
@@ -131,16 +122,13 @@ public final class SudokuPuzzle extends JApplet
                     return null;
                 }
 
-                @Override
                 public void finished() {
                     puzzlePanel_.repaint();
                 }
-
             };
             worker.start();
             solveButton_.setEnabled(false);
         }
-
     }
 
     /**
@@ -149,17 +137,19 @@ public final class SudokuPuzzle extends JApplet
      */
     public void itemStateChanged(ItemEvent e) {
 
-        int selected = sizeChoice_.getSelectedIndex();
-
-        // this formula must change if the menu items change.
-        int size = (selected + 2) ;
-        System.out.println("selected = "+ selected+" size ="+size);
-        SudokuGenerator generator = new SudokuGenerator(size);
-        Board b = generator.generatePuzzleBoard(null);
-        puzzlePanel_.setBoard(b);
-        puzzlePanel_.repaint();
+        if (e.getSource() == sizeSelector_)  {
+            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            int size = sizeSelector_.getSelectedSize();
+            SudokuGenerator generator = new SudokuGenerator(size);
+            Board b = generator.generatePuzzleBoard(null);
+            puzzlePanel_.setBoard(b);
+            puzzlePanel_.repaint();
+            setCursor(Cursor.getDefaultCursor());
+        }
+        else if (e.getSource() == speedSelector_)  {
+            puzzlePanel_.setDelay(speedSelector_.getSelectedDelay());
+        }
     }
-
 
     /**
      * use this to run as an application instead of an applet.

@@ -12,9 +12,9 @@ import java.util.*;
  * Opens a socket to the Game server from the client so we can talk to it.
  * We pass data using object serialization over the input and output streams.
  *
- * @author Barry Becker Date: May 14, 2006
+ * @author Barry Becker
  */
-public class ServerConnection {
+public class ServerConnection implements IServerConnection {
 
     /** Hardcoded for now, but should be configurable. */
     private static final String DEFAULT_HOST = "127.0.0.1"; // localhost // "192.168.1.100";
