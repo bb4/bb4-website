@@ -1,14 +1,10 @@
 package com.becker.common;
 
-//import com.sun.jndi.toolkit.chars.BASE64Encoder;
-//import com.sun.jndi.toolkit.chars.BASE64Decoder;
-//import org.apache.commons.codec.binary.*;
 import org.apache.commons.codec.binary.Base64;
 import java.io.*;
 import java.util.zip.*;
 import static com.becker.common.EncodingConstants.*;
-import com.sun.jndi.toolkit.chars.BASE64Decoder;
-import com.sun.jndi.toolkit.chars.BASE64Encoder;
+
 
 /**
  * Utility methods for Base64 compression and decompression.
@@ -87,5 +83,4 @@ public final class Base64Codec {
 
         return sBuf.toString();
     }
-
 }
