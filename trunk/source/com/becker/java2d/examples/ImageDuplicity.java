@@ -1,11 +1,13 @@
 package com.becker.java2d.examples;
 
 import com.becker.ui.ApplicationFrame;
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGImageDecoder;
+//import com.sun.image.codec.jpeg.JPEGCodec;
+//import com.sun.image.codec.jpeg.JPEGImageDecoder;
+import javax.imageio.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.io.InputStream;
 
 public class ImageDuplicity
@@ -48,8 +50,14 @@ public class ImageDuplicity
         try {
             String filename = "Raphael.jpg";
             InputStream in = getClass().getResourceAsStream( filename );
-            JPEGImageDecoder decoder = JPEGCodec.createJPEGDecoder( in );
-            BufferedImage image = decoder.decodeAsBufferedImage();
+
+            //JPEGImageDecoder decoder = JPEGCodec.createJPEGDecoder( in );
+            //BufferedImage image = decoder.decodeAsBufferedImage();
+
+            ImageReader decoder = (ImageReader)ImageIO.getImageReadersByFormatName("JPEG").next();
+            decoder.setInput(in);
+            BufferedImage image = (BufferedImage) decoder.readAsRenderedImage(0, null);
+
             in.close();
             // Draw the loaded image on the offscreen image.
             g2.drawImage( image, 0, 0, w, h, null );

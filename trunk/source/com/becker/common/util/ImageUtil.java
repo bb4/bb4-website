@@ -1,9 +1,12 @@
 package com.becker.common.util;
 
 import com.sun.image.codec.jpeg.*;
-import com.sun.image.codec.jpeg.JPEGEncodeParam;
+//import com.sun.image.codec.jpeg.JPEGEncodeParam;
 import com.sun.media.jai.codec.*;
 
+import javax.imageio.*;
+import javax.imageio.metadata.IIOMetadata;
+import javax.imageio.plugins.jpeg.JPEGImageWriteParam;
 import java.awt.*;
 import java.awt.image.*;
 import java.io.*;
@@ -65,23 +68,32 @@ public final class ImageUtil
     /**
      *  write an image to the given output stream
      *  @param img image to write.
-     *  @param os output stream to write to
+     *  @param out output stream to write to
      *  @param type the type of image to create ("jpg" or "png")
      */
-    public static void writeImage( Image img, BufferedOutputStream os, ImageType type )
+    public static void writeImage( Image img, BufferedOutputStream out, ImageType type )
     {
         //long time = System.currentTimeMillis();
         BufferedImage bi = makeBufferedImage( img );
 
         if ( type == ImageType.JPG ) {
-            JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder( os );
-            JPEGEncodeParam param = encoder.getDefaultJPEGEncodeParam( bi );
+
+            //JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder( out );
+            //JPEGEncodeParam param = encoder.getDefaultJPEGEncodeParam( bi );
+
+            ImageWriter encoder = ImageIO.getImageWritersByFormatName("JPEG").next();
+            JPEGImageWriteParam param = new JPEGImageWriteParam(null);
+
             // this makes the images near perfect - very little compression
-            param.setQuality( JPG_QUALITY, false );
-            encoder.setJPEGEncodeParam( param );
+            //param.setQuality( JPG_QUALITY, false );
+            //encoder.setJPEGEncodeParam( param );
+
+            param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+            encoder.setOutput(out);
 
             try {
-                encoder.encode( bi );  // this writes it to a file as a .jpg
+                //encoder.encode( bi );  // this writes it to a file as a .jpg
+                encoder.write(null, new IIOImage((RenderedImage)img, null, null), param);
             } catch (IOException fne) {
                 System.err.println( "IOException error:" + fne.getMessage());
             }
@@ -92,7 +104,7 @@ public final class ImageUtil
             PNGEncodeParam param = PNGEncodeParam.getDefaultEncodeParam( bi );
 
             //Create the PNG image encoder.
-            ImageEncoder encoder = ImageCodec.createImageEncoder( "PNG", os, param );
+            ImageEncoder encoder = ImageCodec.createImageEncoder( "PNG", out, param );
             try {
                 encoder.encode( bi );  // this writes it to a file as a .png
             } catch (IOException fne) {
@@ -104,8 +116,8 @@ public final class ImageUtil
         }
 
         try {
-            os.flush();
-            os.close();
+            out.flush();
+            out.close();
         } catch (IOException fne) {
             System.out.println( "IOException error:" + fne.getMessage());
         }

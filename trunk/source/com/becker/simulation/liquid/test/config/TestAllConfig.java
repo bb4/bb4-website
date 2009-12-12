@@ -1,7 +1,7 @@
 package com.becker.simulation.liquid.test.config;
 
-import com.becker.game.twoplayer.go.test.GoTestCase;
 import junit.framework.Test;
+import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
  *
  * @author Barry Becker
  */
-public class TestAllConfig extends GoTestCase {
+public class TestAllConfig extends TestCase {
 
 
     /**

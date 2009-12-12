@@ -2,14 +2,12 @@ package com.becker.java2d.examples;
 
 import com.becker.java2d.Utilities;
 import com.becker.ui.ApplicationFrame;
-import com.sun.image.codec.jpeg.*;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.InputStream;
 
 public class TexturePaintFill
         extends ApplicationFrame
@@ -26,7 +24,7 @@ public class TexturePaintFill
     private BufferedImage mImage;
 
     public TexturePaintFill( String filename )
-            throws IOException, ImageFormatException
+            throws IOException
     {        
         Image img = Utilities.blockingLoad( Utilities.DEFAULT_IMAGE_DIR +  filename );
         mImage = Utilities.makeBufferedImage( img );
