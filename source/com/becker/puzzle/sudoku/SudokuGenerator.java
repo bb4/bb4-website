@@ -1,6 +1,8 @@
 package com.becker.puzzle.sudoku;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 
 /**
@@ -41,7 +43,7 @@ public class SudokuGenerator {
     /**
      * @return generated a random board
      */
-    public Board generatePuzzleBoard(SudokuPanel ppanel) {
+    public Board generatePuzzleBoard(Container ppanel) {
 
         // first find a complete solution, b.
         Board b = new Board(size_);
@@ -49,12 +51,7 @@ public class SudokuGenerator {
         assert success;
 
         Board test = new Board(b);
-
-        if (ppanel != null) {
-            ppanel.setBoard(test);
-            ppanel.repaint();
-        }
-
+      
         // now start removing values until we cannot deduce the final solution from it.
         // for every position (in random order) if we can remove it, do so.
         Board generatedBoard = generateByRemoving(test, ppanel);
@@ -91,7 +88,7 @@ public class SudokuGenerator {
         return false;
     }
 
-    private Board generateByRemoving(Board solution, SudokuPanel ppanel) {
+    private Board generateByRemoving(Board solution, Container ppanel) {
 
         List positionList = getRandomPositions(size_);
         // we need a solver to verify that we can still deduce the original

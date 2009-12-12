@@ -53,7 +53,7 @@ public final class SudokuPanel extends JPanel
     public void startSolving() {
         SudokuSolver solver = new SudokuSolver();
         solver.setDelay(delay_);
-        boolean solved = solver.solvePuzzle(this);
+        boolean solved = solver.solvePuzzle(board_, this);
 
         if ( solved )
             System.out.println( "The final solution is shown. the number of iterations was:" + board_.getNumIterations() );
@@ -66,6 +66,7 @@ public final class SudokuPanel extends JPanel
         SudokuGenerator generator = new SudokuGenerator(board_.getBaseSize());
         generator.setDelay(delay_);
         board_ = generator.generatePuzzleBoard(this);
+
         repaint();
     }
 

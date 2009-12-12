@@ -12,7 +12,8 @@ public interface Refreshable <P, M> {
     
     /**
      * Call when you want the UI to update.
-     * @param done if true then the puzzle simulation has completed.
+     * @param pos if the current position to show.
+     * @param numTries number of tries so far.
      */
     void refresh(P pos, long numTries);
     

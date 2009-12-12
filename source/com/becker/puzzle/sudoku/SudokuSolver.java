@@ -2,6 +2,8 @@ package com.becker.puzzle.sudoku;
 
 import com.becker.common.util.Util;
 
+import java.awt.*;
+
 /**
  * This does the hard work of actually solving the puzzle.
  * Controller in the model-view-controller pattern.
@@ -36,24 +38,15 @@ public class SudokuSolver {
     /**
      * Solves the puzzle.
      * This implements the main algorithm for solving the red puzzle.
-     * @param puzzlePanel the viewer
-     * @return true if solved.
-     */
-    protected  boolean solvePuzzle(SudokuPanel puzzlePanel) {
-        return solvePuzzle(puzzlePanel.getBoard(), puzzlePanel);
-    }
-
-    /**
-     * Solves the puzzle.
-     * This implements the main algorithm for solving the red puzzle.
      * @param board the board to show the solution on.
      * @param puzzlePanel the viewer
      * @return true if solved.
      */
-    protected boolean solvePuzzle( Board board, SudokuPanel puzzlePanel) {
+    public boolean solvePuzzle(Board board, Container puzzlePanel) {
         boolean solved;
         int ct = 0;
-        int maxIterations = 2 * board.getEdgeLength();  // @@ not sure what this should be.
+        // @@ not sure what this should be.
+        int maxIterations = 2 * board.getEdgeLength();
 
         do {
             // find missing row and column numbers
@@ -73,13 +66,13 @@ public class SudokuSolver {
         return solved;
     }
 
-    private void refreshWithDelay(SudokuPanel puzzlePanel, int relativeDelay) {
+    private void refreshWithDelay(Container puzzlePanel, int relativeDelay) {
         refresh(puzzlePanel);
         Util.sleep(relativeDelay * delay_);
     }
 
 
-    private void refresh(SudokuPanel puzzlePanel) {
+    private void refresh(Container puzzlePanel) {
         if (puzzlePanel == null || delay_ == 0)
             return;
         puzzlePanel.repaint();
