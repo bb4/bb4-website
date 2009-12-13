@@ -8,7 +8,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.SourceDataLine;
-import javax.swing.SwingUtilities;
+
 
 /**
  * Util methods for playing sound files.
@@ -21,7 +21,7 @@ public final class SoundUtil {
     /**
      * This converts the file to something that jav can paly.
      * wav, aiff, and au files should work, but currently only au seem to.
-     * @param clipURL
+     * @param soundPath
      */
     public static void playSoundAndWait(String soundPath) {
         URL clipURL = GUIUtil.getURL(soundPath);
@@ -31,7 +31,7 @@ public final class SoundUtil {
     /**
      * This converts the file to something that jav can paly.
      * wav, aiff, and au files should work, but currently only au seem to.
-     * @param clipURL
+     * @param soundPath
      */
     public static void playSound(final String soundPath) {
 
