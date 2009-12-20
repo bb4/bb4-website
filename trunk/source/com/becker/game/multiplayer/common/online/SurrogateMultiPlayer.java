@@ -15,14 +15,12 @@ import java.awt.*;
  *
  * @author Barry Becker 
  */
-public  class SurrogatePlayer extends MultiGamePlayer implements OnlineChangeListener {
+public  class SurrogateMultiPlayer extends MultiGamePlayer implements OnlineChangeListener {
 
-    private static final long serialVersionUID = 1;
-    
     protected IServerConnection connection_;
     protected MultiGamePlayer player_;
     
-    // wait about 10 seconds for the player to movebefore timing out.
+    // wait about 10 seconds for the player to move before timing out.
     private static final int TIMEOUT_DURATION = 40000;
 
 
@@ -30,7 +28,7 @@ public  class SurrogatePlayer extends MultiGamePlayer implements OnlineChangeLis
      * @param player
      * @param connection to the server so we can get updated actions.
      */
-    public SurrogatePlayer(MultiGamePlayer player, IServerConnection connection) {
+    public SurrogateMultiPlayer(MultiGamePlayer player, IServerConnection connection) {
         super(player.getName(), player.getColor(), player.isHuman());
         player_ = player;
         connection_ = connection;

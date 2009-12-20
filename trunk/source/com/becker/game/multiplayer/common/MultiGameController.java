@@ -1,9 +1,9 @@
 package com.becker.game.multiplayer.common;
 
+import com.becker.game.multiplayer.common.online.SurrogateMultiPlayer;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.game.common.*;
 import com.becker.game.common.online.*;
-import com.becker.game.multiplayer.common.online.SurrogatePlayer;
 import com.becker.game.multiplayer.common.ui.MultiGameViewer;
 
 import java.util.*;
@@ -158,7 +158,7 @@ public abstract class MultiGameController extends GameController
         if (!isDone()) {
             if (getCurrentPlayer().isSurrogate()) {
                 System.out.println("about to do surrogate move for " + getCurrentPlayer() + " in controller="+this + " in thread="+Thread.currentThread().getName());
-                pviewer.doSurrogateMove((SurrogatePlayer)getCurrentPlayer());
+                pviewer.doSurrogateMove((SurrogateMultiPlayer)getCurrentPlayer());
             }         
             else if (!getCurrentPlayer().isHuman()) {
                 pviewer.doComputerMove(getCurrentPlayer());

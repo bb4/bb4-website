@@ -2,7 +2,7 @@ package com.becker.game.multiplayer.trivial;
 
 import com.becker.game.common.*;
 import com.becker.game.common.Move;
-import com.becker.game.multiplayer.common.online.SurrogatePlayer;
+import com.becker.game.multiplayer.common.online.SurrogateMultiPlayer;
 import com.becker.game.multiplayer.trivial.player.*;
 import java.util.List;
 
@@ -78,7 +78,7 @@ public class TrivialTable extends Board
         for (Player p : players) {
             TrivialPlayer tp = null;
             if (p.isSurrogate()) {
-                tp = (TrivialPlayer) ((SurrogatePlayer) p).getPlayer();
+                tp = (TrivialPlayer) ((SurrogateMultiPlayer) p).getPlayer();
             }
             else {
                 tp = (TrivialPlayer)p;

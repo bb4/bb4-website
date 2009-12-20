@@ -2,7 +2,7 @@ package com.becker.game.multiplayer.poker;
 
 import com.becker.game.common.*;
 import com.becker.game.common.Move;
-import com.becker.game.multiplayer.common.online.SurrogatePlayer;
+import com.becker.game.multiplayer.common.online.SurrogateMultiPlayer;
 import com.becker.game.multiplayer.poker.player.*;
 import java.util.List;
 
@@ -77,7 +77,7 @@ public class PokerTable extends Board
 
             PokerPlayer pp = null;
             if (p.isSurrogate()) {
-                pp = (PokerPlayer) ((SurrogatePlayer) p).getPlayer();
+                pp = (PokerPlayer) ((SurrogateMultiPlayer) p).getPlayer();
             }
             else {
                 pp = (PokerPlayer)p;

@@ -2,8 +2,6 @@ package com.becker.game.common.online;
 
 import com.becker.game.common.*;
 import com.becker.common.*;
-import com.becker.game.multiplayer.common.MultiGamePlayer;
-import com.becker.game.multiplayer.common.online.SurrogatePlayer;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -175,13 +173,12 @@ public class ServerCommandProcessor {
         List<Player> players = table.getPlayers();
         assert (players.size() == table.getNumPlayersNeeded());
         List<Player> newPlayers = new ArrayList<Player>(players.size());
-        for (int i = 0; i < players.size(); i++) {
-            MultiGamePlayer player = (MultiGamePlayer)players.get(i);
+        for (Player player : players) {
             if (player.isHuman()) {
-                newPlayers.add(new SurrogatePlayer(player, controller_.getServerConnection()));
+                newPlayers.add(player.createSurrogate(controller_.getServerConnection()));
             } else {
                 newPlayers.add(player);
-            }                   
+            }
         }
         controller_.reset();
         controller_.setPlayers(newPlayers);

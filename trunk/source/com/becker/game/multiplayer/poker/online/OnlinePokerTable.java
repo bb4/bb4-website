@@ -2,7 +2,6 @@ package com.becker.game.multiplayer.poker.online;
 
 import com.becker.game.common.*;
 import com.becker.game.multiplayer.common.MultiGamePlayer;
-import com.becker.game.multiplayer.common.online.SurrogatePlayer;
 import com.becker.game.multiplayer.poker.player.*;
 import com.becker.game.multiplayer.poker.*;
 import com.becker.game.multiplayer.common.online.ui.*;
@@ -31,7 +30,7 @@ public class OnlinePokerTable extends MultiPlayerOnlineTable {
         PokerOptions options = (PokerOptions) getGameOptions();
         String name = "Robot " + (i+1);
         PokerPlayer robot = PokerRobotPlayer.getRandomRobotPlayer(name, options.getInitialCash(), newColor);
-        //SurrogatePlayer sp = new SurrogatePlayer(robot);
+        //SurrogateMultiPlayer sp = new SurrogateMultiPlayer(robot);
         this.addPlayer(robot);
     }
 
