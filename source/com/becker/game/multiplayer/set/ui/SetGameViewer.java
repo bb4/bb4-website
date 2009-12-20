@@ -3,11 +3,10 @@ package com.becker.game.multiplayer.set.ui;
 
 import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
+import com.becker.game.multiplayer.common.online.SurrogateMultiPlayer;
 import com.becker.game.multiplayer.set.*;
-import com.becker.common.*;
 
 import com.becker.game.multiplayer.common.MultiGameController;
-import com.becker.game.multiplayer.common.online.SurrogatePlayer;
 import com.becker.game.multiplayer.common.ui.MultiGameViewer;
 import javax.swing.*;
 import java.awt.*;
@@ -76,7 +75,7 @@ public final class SetGameViewer extends MultiGameViewer
      * @param player computer player to move
      * @return done return true if the game is over after moving
      */
-    public boolean doSurrogateMove(SurrogatePlayer player)
+    public boolean doSurrogateMove(SurrogateMultiPlayer player)
     {
         assert false : " no online pla for set yet. coming soon!";
         return false;

@@ -2,12 +2,10 @@ package com.becker.game.multiplayer.poker;
 
 import com.becker.game.card.*;
 import com.becker.game.common.*;
-import com.becker.game.common.online.*;
 import com.becker.game.multiplayer.common.*;
+import com.becker.game.multiplayer.common.online.SurrogateMultiPlayer;
 import com.becker.game.multiplayer.poker.player.*;
 import com.becker.game.multiplayer.poker.ui.*;
-import com.becker.optimization.*;
-import com.becker.game.multiplayer.common.online.SurrogatePlayer;
 
 import java.util.*;
 import java.util.List;
@@ -138,7 +136,7 @@ public class PokerController extends MultiGameController
             }
             PokerPlayer player = null;
             if (p.isSurrogate()) {
-                player = (PokerPlayer) ((SurrogatePlayer)p).getPlayer();
+                player = (PokerPlayer) ((SurrogateMultiPlayer)p).getPlayer();
                 
             }
             else {

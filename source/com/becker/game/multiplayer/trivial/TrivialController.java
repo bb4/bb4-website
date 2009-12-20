@@ -2,7 +2,7 @@ package com.becker.game.multiplayer.trivial;
 
 import com.becker.game.common.*;
 import com.becker.game.multiplayer.common.*;
-import com.becker.game.multiplayer.common.online.SurrogatePlayer;
+import com.becker.game.multiplayer.common.online.SurrogateMultiPlayer;
 import com.becker.game.multiplayer.trivial.player.*;
 
 import java.util.*;
@@ -84,7 +84,7 @@ public class TrivialController extends MultiGameController
         for (Player p : players_) {
             TrivialPlayer tp  = null;
             if (p.isSurrogate()) {
-                tp = (TrivialPlayer)((SurrogatePlayer) p).getPlayer();
+                tp = (TrivialPlayer)((SurrogateMultiPlayer) p).getPlayer();
             }
             else {
                 tp = (TrivialPlayer) p;
@@ -128,7 +128,7 @@ public class TrivialController extends MultiGameController
             currentPlayerIndex_ = (currentPlayerIndex_+1) % players_.size();
             player = getPlayer(currentPlayerIndex_);
             if (player.isSurrogate()) {
-                player = ((SurrogatePlayer)player).getPlayer();
+                player = ((SurrogateMultiPlayer)player).getPlayer();
             }
         }  while (((TrivialPlayer)player).isRevealed());
 

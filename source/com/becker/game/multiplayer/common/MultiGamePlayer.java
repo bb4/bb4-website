@@ -2,11 +2,12 @@ package com.becker.game.multiplayer.common;
 
 import com.becker.game.common.PlayerAction;
 import com.becker.game.common.*;
+import com.becker.game.common.online.IServerConnection;
+import com.becker.game.multiplayer.common.online.SurrogateMultiPlayer;
 import com.becker.ui.*;
 import java.awt.Color;
 import java.util.List;
 
-//import java.awt.*;
 
 
 /**
@@ -80,5 +81,10 @@ public abstract class MultiGamePlayer extends Player {
         assert false: "no piece support for " + this.getClass().getName();
         return null;        
     }
+
+    public Player createSurrogate(IServerConnection connection) {
+        return new SurrogateMultiPlayer(this, connection);
+    }
+
 
 }

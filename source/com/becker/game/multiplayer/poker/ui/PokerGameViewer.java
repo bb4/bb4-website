@@ -1,20 +1,16 @@
 package com.becker.game.multiplayer.poker.ui;
 
-import com.becker.common.*;
 import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
-import com.becker.game.multiplayer.common.online.SurrogatePlayer;
+import com.becker.game.multiplayer.common.online.SurrogateMultiPlayer;
 import com.becker.game.multiplayer.common.ui.MultiGameViewer;
 import com.becker.game.multiplayer.poker.*;
 import com.becker.game.multiplayer.poker.player.*;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+
 import java.awt.Point;
 import java.util.List;
 
 import javax.swing.*;
-import java.awt.event.*;
 
 /**
  *  Takes a PokerController as input and displays the
@@ -91,7 +87,7 @@ public class PokerGameViewer extends MultiGameViewer
      * @param player computer player to move
      * @return done return true if the game is over after moving
      */
-    public boolean doSurrogateMove(SurrogatePlayer player)
+    public boolean doSurrogateMove(SurrogateMultiPlayer player)
     {
         PokerController pc = (PokerController) controller_;
         PlayerAction action = player.getAction(pc);

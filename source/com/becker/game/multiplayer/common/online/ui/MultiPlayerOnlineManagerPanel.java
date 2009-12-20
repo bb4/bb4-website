@@ -1,14 +1,13 @@
 package com.becker.game.multiplayer.common.online.ui;
 
+import com.becker.game.multiplayer.common.online.SurrogateMultiPlayer;
 import com.becker.ui.components.GradientButton;
 import com.becker.game.common.*;
 import com.becker.game.common.online.ui.*;
 import com.becker.game.common.online.*;
 import com.becker.game.common.ui.*;
 import com.becker.game.multiplayer.common.*;
-import com.becker.game.multiplayer.common.online.SurrogatePlayer;
 import com.becker.game.multiplayer.common.ui.*;
-import com.becker.ui.*;
 
 import com.becker.ui.table.TableButtonListener;
 import java.awt.BorderLayout;
@@ -197,7 +196,7 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
             MultiGamePlayer player = (MultiGamePlayer)it.next();
             if (!player.getName().equals(this.currentName_)) {
                 // add surrogate
-                players.add(new SurrogatePlayer(player, controller_.getServerConnection()));
+                players.add(new SurrogateMultiPlayer(player, controller_.getServerConnection()));
             }
             else {
                 players.add(player);

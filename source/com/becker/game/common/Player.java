@@ -1,5 +1,7 @@
 package com.becker.game.common;
 
+import com.becker.game.common.online.IServerConnection;
+
 import java.awt.*;
 import java.io.*;
 
@@ -89,6 +91,10 @@ public class Player implements Serializable
     
     public boolean isSurrogate() {
         return false;
+    }
+
+    public Player createSurrogate(IServerConnection connection) {
+        return new SurrogatePlayer(this, connection);
     }
 
     /**

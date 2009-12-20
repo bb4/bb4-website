@@ -4,7 +4,7 @@ import com.becker.common.*;
 import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
 import com.becker.game.multiplayer.common.MultiGameController;
-import com.becker.game.multiplayer.common.online.SurrogatePlayer;
+import com.becker.game.multiplayer.common.online.SurrogateMultiPlayer;
 import com.becker.game.multiplayer.common.ui.MultiGameViewer;
 import com.becker.game.multiplayer.galactic.*;
 import com.becker.game.multiplayer.galactic.player.*;
@@ -94,7 +94,7 @@ public class GalaxyViewer extends MultiGameViewer
      * @param player computer player to move
      * @return done return true if the game is over after moving
      */
-    public boolean doSurrogateMove(SurrogatePlayer player)
+    public boolean doSurrogateMove(SurrogateMultiPlayer player)
     {
         GalacticController pc = (GalacticController) controller_;
         // simply blocks until action set?

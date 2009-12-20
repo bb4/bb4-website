@@ -1,19 +1,13 @@
 package com.becker.game.multiplayer.trivial.ui;
 
-import com.becker.common.*;
 import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
-import com.becker.game.multiplayer.common.MultiGamePlayer;
-import com.becker.game.multiplayer.common.MultiPlayerMarker;
-import com.becker.game.multiplayer.common.online.SurrogatePlayer;
+import com.becker.game.multiplayer.common.online.SurrogateMultiPlayer;
 import com.becker.game.multiplayer.common.ui.MultiGameViewer;
 import com.becker.game.multiplayer.trivial.*;
 import com.becker.game.multiplayer.trivial.player.*;
-import java.awt.Graphics2D;
-import java.util.*;
 
 import javax.swing.*;
-import java.awt.event.*;
 
 /**
  *  Takes a TrivialController as input and displays the
@@ -92,7 +86,7 @@ public class TrivialGameViewer extends MultiGameViewer
      * @param player computer player to move
      * @return done return true if the game is over after moving
      */
-    public boolean doSurrogateMove(SurrogatePlayer player)
+    public boolean doSurrogateMove(SurrogateMultiPlayer player)
     {
         TrivialController pc = (TrivialController) controller_;
         // this should block until there is an action to get,

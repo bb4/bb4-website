@@ -46,7 +46,7 @@
     <pathelement location="${libDir}/oalnf/oalnf.jar"/>
     <pathelement location="${libDir}/vecmath.jar"/>
     <pathelement location="${libDir}/sun.jar"/>
-    <pathelement location="${libDir}/jai_codec.jar"/>
+    <pathelement location="../lib/jai_codec.jar"/>
     <pathelement location="${libDir}/jnlp.jar"/>
     <pathelement location="${libDir}/junit.jar"/>
     <pathelement location="${libDir}/jigo.jar"/>

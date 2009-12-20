@@ -4,13 +4,7 @@ import com.becker.common.*;
 import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
 import com.becker.game.multiplayer.common.MultiGameController;
-import com.becker.game.multiplayer.common.online.SurrogatePlayer;
-import com.becker.game.multiplayer.trivial.*;
-import com.becker.game.multiplayer.trivial.player.*;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.util.*;
+import com.becker.game.multiplayer.common.online.SurrogateMultiPlayer;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -42,7 +36,7 @@ public abstract class MultiGameViewer extends GameBoardViewer
         this.sendGameChangedEvent(null);  // get the info panel to refresh with 1st players name
 
         if (controller_.getFirstPlayer().isSurrogate()) {
-            doSurrogateMove((SurrogatePlayer) controller_.getCurrentPlayer());
+            doSurrogateMove((SurrogateMultiPlayer) controller_.getCurrentPlayer());
         }
         else if (!controller_.getFirstPlayer().isHuman()) {
             controller_.computerMovesFirst();
@@ -81,7 +75,7 @@ public abstract class MultiGameViewer extends GameBoardViewer
      * @param player computer player to move
      * @return done return true if the game is over after moving
      */
-    public abstract boolean doSurrogateMove(SurrogatePlayer player);
+    public abstract boolean doSurrogateMove(SurrogateMultiPlayer player);
 
     /**
      * Do nothting by default.
