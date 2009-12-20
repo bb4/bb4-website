@@ -26,7 +26,7 @@ public class TableButton extends GradientButton
     private int selectedColumn;
     private List<TableButtonListener> listeners;
     private final String id_;
-    private int columnIndex_ = -1;
+    private int columnIndex_;
     private List<Object> disabledValues_;
 
     /**
@@ -39,7 +39,7 @@ public class TableButton extends GradientButton
         super(text);
 
         id_ = id;
-        columnIndex_ = -1;
+        columnIndex_ = 0; //-1;
         commonInit();
     }
 
@@ -100,7 +100,8 @@ public class TableButton extends GradientButton
     }
 
     private void setLabel(TableModel tableModel, int row) {
-        
+
+        System.out.println("row="+ row + " columnIndex_=" + columnIndex_);
         Object cellValue = tableModel.getValueAt(row, columnIndex_);
 
         boolean isNullValued = cellValue == null;
