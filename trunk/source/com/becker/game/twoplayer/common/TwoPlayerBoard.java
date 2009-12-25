@@ -50,12 +50,6 @@ public abstract class TwoPlayerBoard extends Board
     }
 
     /**
-     * @return the average number of moves played in a typical game.
-     */
-    public abstract int getTypicalNumMoves();
-
-
-    /**
      * Num different states. E.g. black queen.
      * This is used primarily for the Zobrist hash. You do not need to override if yo udo not use it.
      * @return number of different states this position can have.

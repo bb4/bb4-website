@@ -13,8 +13,7 @@ import com.becker.game.twoplayer.pente.ui.PenteBoardRenderer;
  */
 public class TicTacToeBoardRenderer extends PenteBoardRenderer
 {
-    private  static GameBoardRenderer renderer_;
-
+    private static GameBoardRenderer renderer_;
 
     /**
      * private constructor because this class is a singleton.

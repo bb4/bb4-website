@@ -77,13 +77,6 @@ public class CheckersBoard extends TwoPlayerBoard
     }
 
     /**
-     * @return typical number of moves in a go game.
-     */
-    public int getTypicalNumMoves() {
-        return rowsTimesCols_;
-    }
-
-    /**
      * given a move specification, execute it on the board.
      * This places the players symbol at the position specified by move.
      */

@@ -18,7 +18,7 @@ public class PentePatterns extends Patterns
     /** total number of patterns used. */
     private static final int NUM_PATTERNS = 210;
 
-    private static String[] patternString = {
+    private static final String[] PATTERN_STRING = {
         "_XX", "XXX", "_XXX", "X_XX", "_X_X", "_XX_", "_X_X_", "_X_XX", "_XX_X", "_XXX_",
         "_XXXX", "X_X_X", "X_XXX", "XX_XX", "XXXXX", "_X_X_X", "_X_XX_", "_X_XXX", "_XX_XX", "_XXX_X",
         "_XXXX_", "_XXXXX", "X_X_XX", "X_XX_X", "X_XXXX", "XX_XXX", "XXXXXX", "_X_X_X_", "_X_X_XX", "_X_XX_X",
@@ -40,7 +40,7 @@ public class PentePatterns extends Patterns
         "XX_XX_XXXX", "XX_XXX_XXX", "XX_XXXX_XX", "XX_XXXXXXX", "XXX_X_XXX_", "XXX_X_XXXX", "XXX_XX_XXX", "XXX_XXXXX_", "XXX_XXXXXX"
     };
 
-    private static int[] weightIndex = {
+    private static final int[] WEIGHT_INDEX = {
         1, 2, 3, 3, 4, 5, 5, 5, 5, 6,
         7, 4, 6, 7, 9, 5, 6, 7, 7, 7,
         8, 9, 5, 5, 7, 7, 10, 5, 5, 6,
@@ -81,12 +81,17 @@ public class PentePatterns extends Patterns
         return NUM_PATTERNS;
     }
 
+    protected int getMinInterestingLength() {
+        return 3;
+    }
+
+
     protected String getPatternString(int i) {
-        return patternString[i];
+        return PATTERN_STRING[i];
     }
 
     protected int getWeightIndex(int i) {
-        return weightIndex[i];
+        return WEIGHT_INDEX[i];
     }
 
      protected String getPatternFile() {

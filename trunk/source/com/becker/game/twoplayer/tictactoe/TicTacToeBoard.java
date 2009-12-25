@@ -3,7 +3,7 @@ package com.becker.game.twoplayer.tictactoe;
 import com.becker.game.twoplayer.pente.PenteBoard;
 
 /**
- * Representation of a Pente Game Board
+ * Representation of a TicTacToe Game Board
  *
  * @author Barry Becker
  */
@@ -22,8 +22,4 @@ public class TicTacToeBoard extends PenteBoard
         return 9;
     }
 
-    @Override
-    public int getTypicalNumMoves() {
-        return 7;
-    }
 }

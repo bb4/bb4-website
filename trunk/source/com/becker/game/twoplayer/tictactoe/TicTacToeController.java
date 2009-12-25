@@ -7,14 +7,14 @@ import com.becker.game.twoplayer.pente.MoveEvaluator;
 import com.becker.game.twoplayer.pente.PenteController;
 
 /**
- * Defines everything the computer needs to know to play Pente.
+ * Defines everything the computer needs to know to play TicTacToe.
  *
  * @author Barry Becker
 */
 public class TicTacToeController extends PenteController
 {
     /**
-     *  Construct the Pente game controller
+     *  Constructor
      */
     public TicTacToeController()
     {
@@ -28,7 +28,7 @@ public class TicTacToeController extends PenteController
     } 
 
     /**
-     *  this gets the pente specific patterns and weights
+     *  this gets the game specific patterns and weights
      */
     @Override
     protected void initializeData()
@@ -37,6 +37,7 @@ public class TicTacToeController extends PenteController
         moveEvaluator_ = new MoveEvaluator((TwoPlayerBoard)board_, new TicTacToePatterns());
     }
 
+    @Override
     protected int getWinRunLength() {
         return TicTacToePatterns.WIN_RUN_LENGTH;
     }

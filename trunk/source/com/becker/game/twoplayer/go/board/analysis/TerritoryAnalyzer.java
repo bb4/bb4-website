@@ -152,13 +152,13 @@ public class TerritoryAnalyzer {
             return diffScore;
         }
         // later in the game we can take the analysis all the way to the edge.
-        float ratio = (float)board_.getNumMoves() / (float)board_.getTypicalNumMoves();
+        float ratio = (float)board_.getNumMoves() / ((GoBoard)board_).getTypicalNumMoves();
         if ((ratio > EMPTY_REGION_EDGE_THRESH) || isEndOfGame) {
             edgeOffset = 0;
         }
         int min = 1+edgeOffset;
-        int rMax = board_.getNumRows()-edgeOffset;
-        int cMax = board_.getNumCols()-edgeOffset;
+        int rMax = board_.getNumRows() - edgeOffset;
+        int cMax = board_.getNumCols() - edgeOffset;
 
         List<List> emptyLists = new LinkedList<List>();
         NeighborAnalyzer na = new NeighborAnalyzer(board_);
@@ -171,7 +171,8 @@ public class TerritoryAnalyzer {
 
                        // don't go all the way to the borders (until the end of the game),
                        // since otherwise we will likely get only one big empty region.
-                       List<GoBoardPosition> empties = board_.findStringFromInitialPosition(pos, false, false, NeighborType.UNOCCUPIED,
+                       List<GoBoardPosition> empties =
+                               board_.findStringFromInitialPosition(pos, false, false, NeighborType.UNOCCUPIED,
                                                                     min, rMax,  min, cMax);
                        emptyLists.add(empties);
                        
@@ -196,8 +197,7 @@ public class TerritoryAnalyzer {
         GoBoardUtil.unvisitPositionsInLists(emptyLists);
         return diffScore;
     }
-    
-    
+
     /**
      * @param stones actually the positions containing the stones.
      * @return the average scores of the stones in the list.

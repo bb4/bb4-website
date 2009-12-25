@@ -19,23 +19,19 @@ import java.awt.event.*;
 public class PenteBoardViewer extends AbstractTwoPlayerBoardViewer
 {
 
-    //Construct the application
     public PenteBoardViewer()
     {
     }
 
+    @Override
     protected GameController createController()
     {
         return new PenteController();
     }
 
+    @Override
     protected GameBoardRenderer getBoardRenderer() {
         return PenteBoardRenderer.getRenderer();
-    }
-
-    protected int getDefaultCellSize()
-    {
-        return 16;
     }
 
 

@@ -17,16 +17,12 @@ import java.util.*;
 */
 public class PenteController extends TwoPlayerController
 {
-
-    public static final char REGULAR_PIECE = GamePiece.REGULAR_PIECE;
-
     private static final int DEFAULT_NUM_ROWS = 20;
-    protected static final int DEFAULT_NUM_COLS = 20;
 
     protected MoveEvaluator moveEvaluator_;
 
     /**
-     *  Construct the Pente game controller
+     *  Constructor
      */
     public PenteController()
     { 
@@ -97,13 +93,14 @@ public class PenteController extends TwoPlayerController
         public List<? extends TwoPlayerMove> generateMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
         {
             List<TwoPlayerMove> moveList = new LinkedList<TwoPlayerMove>();
-            int ncols = board_.getNumCols();
-            int nrows = board_.getNumRows();
 
             PenteBoard pb = (PenteBoard) board_;
             pb.determineCandidateMoves();
 
             boolean player1 = (lastMove != null)?  !(lastMove.isPlayer1()) : true;
+
+            int ncols = board_.getNumCols();
+            int nrows = board_.getNumRows();
 
             for (int i = 1; i <= ncols; i++ )
                 for (int j = 1; j <= nrows; j++ )
@@ -136,15 +133,12 @@ public class PenteController extends TwoPlayerController
                 else
                     move.setUrgent(true);
             }
-            // ( moves.size() > 0 )
-            //    GameContext.log( 0, "pente controller: the urgent moves are :" + moves );
+            if ( moves.size() > 0 )
+                GameContext.log( 3, "pente controller: the urgent moves are :" + moves );
             return moves;
         }
 
         /**
-         * @param m
-         * @param weights
-         * @param player1sPerspective
          * @return true if the last move created a big change in the score
          */
         public boolean inJeopardy( Move m, ParameterArray weights, boolean player1sPerspective )

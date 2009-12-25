@@ -17,12 +17,13 @@ public class TestAll extends TestCase {
 
         TestSuite suite =  new TestSuite("All Pente Tests");
 
+        suite.addTestSuite(TestPatterns.class);
+        suite.addTestSuite(TestLine.class);
+
         suite.addTestSuite(TestPenteSearchable.class);
-        //suite.addTest(TestPenteSearchable.suite());
-        //suite.addTestSuite(TestShape.class);
-        //suite.addTestSuite(TestScoring.class);
+        suite.addTest(TestMoveEvaluator.suite());
 
-
+        
         return suite;
     }
 }

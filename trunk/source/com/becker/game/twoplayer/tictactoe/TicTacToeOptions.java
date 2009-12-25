@@ -2,9 +2,7 @@ package com.becker.game.twoplayer.tictactoe;
 
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 
-
 /**
- *
  * @author Barry Becker
  */
 public class TicTacToeOptions extends TwoPlayerOptions {
