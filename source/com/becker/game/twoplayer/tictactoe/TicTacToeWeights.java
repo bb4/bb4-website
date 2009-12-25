@@ -37,10 +37,10 @@ public class TicTacToeWeights extends GameWeights {
 
     private static final String[] WEIGHT_DESCRIPTIONS = {
         "1a in a row weight",             // X__
-        "1b in a row weight",              // _X_
-        "open 2a in a row weight",       // XX_
-        "open of 2b in a row weight",    // X_X
-        "3 in a row weight",                    // XXX
+        "1b in a row weight",             // _X_
+        "open 2a in a row weight",        // XX_
+        "open of 2b in a row weight",     // X_X
+        "3 in a row weight",              // XXX
     };
 
     public TicTacToeWeights() {

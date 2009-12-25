@@ -117,13 +117,6 @@ public class BlockadeBoard extends TwoPlayerBoard
     }
 
     /**
-     * @return typical number of moves in a go game.
-     */
-    public int getTypicalNumMoves() {
-        return rowsTimesCols_;
-    }
-    
-    /**
       * Blockade pieces can move 1 or 2 spaces in any direction.
       * However, only in rare cases would you ever want to move only 1 space.
       * For example, move 1 space to land on a home base, or in preparation to jump an oppponent piece.
@@ -328,7 +321,7 @@ public class BlockadeBoard extends TwoPlayerBoard
      * Find moves going to unvisited positions.
      * @param pos the place we are moving from.
      * @param parent the parent node for the child moves
-     * @param oppPlayer the opposing player (opposite of pies at pos).
+     * @param oppPlayer1 the opposing player (opposite of pies at pos).
      * @return a list of TreeNodes containing all the moves that lead to unvisited positions.
      */
     private List<DefaultMutableTreeNode> findPathChildren(BoardPosition pos, MutableTreeNode parent, boolean oppPlayer1)

@@ -30,7 +30,8 @@ public class GameWeights
 
     public GameWeights( ParameterArray defaultWeights )
     {
-        numWeights_ = defaultWeights.size(); // this will not change once set.
+        // this will not change once set.
+        numWeights_ = defaultWeights.size();
 
         defaultWeights_ = defaultWeights;
         names_ = new String[numWeights_];
@@ -68,11 +69,6 @@ public class GameWeights
     {
         p1Weights_ = defaultWeights_.copy();
         p2Weights_ = defaultWeights_.copy();
-    }
-
-    public static int getNumWeights()
-    {
-        return numWeights_;
     }
 
     /**

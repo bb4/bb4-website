@@ -6,14 +6,14 @@ import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 
 /**
- * Representation of a Pente Game Board
+ * Representation of a Pente Game Board.
  *
  * @author Barry Becker
  */
 public class PenteBoard extends TwoPlayerBoard
 {
 
-    // this is an auxilliary structure to help determine candidate moves
+    // this is an auxiliary structure to help determine candidate moves
     private boolean[][] candidateMoves_ = null;
 
     /** constructor
@@ -25,8 +25,8 @@ public class PenteBoard extends TwoPlayerBoard
         setSize( numRows, numCols );
     }
 
-     /**
-      * default constructor
+    /**
+     * default constructor
      */
     public PenteBoard()
     {
@@ -47,9 +47,11 @@ public class PenteBoard extends TwoPlayerBoard
         initCandidateMoves();
     }
 
+    /**
+     * The candidateMoves has a border on all sides
+     */
     private void initCandidateMoves()
     {
-        // the candidateMoves has a border on all sides
         for ( int i = 0; i <= getNumRows() + 1; i++ )
             for ( int j = 0; j <= getNumCols() + 1; j++ ) {
                 candidateMoves_[i][j] = false;
@@ -74,10 +76,6 @@ public class PenteBoard extends TwoPlayerBoard
     public int getMaxNumMoves()
     {
         return rowsTimesCols_;
-    }
-
-    public int getTypicalNumMoves() {
-        return rowsTimesCols_ / 3;
     }
 
     /**

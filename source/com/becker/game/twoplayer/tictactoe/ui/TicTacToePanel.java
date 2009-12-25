@@ -8,14 +8,12 @@ import com.becker.game.twoplayer.pente.ui.PentePanel;
 import javax.swing.*;
 
 /**
- *  This class defines the main UI for the Pente game applet.
- *  It can be run as an applet or application.
+ *  This class defines the main UI for the TicTacToe game applet or application.
  *
  *  @author Barry Becker
  */
 public class TicTacToePanel extends PentePanel
 {
-
     /**
      *  Construct the panel.
      */
@@ -25,7 +23,7 @@ public class TicTacToePanel extends PentePanel
     @Override
     public String getTitle()
     {
-        return  GameContext.getLabel("TIC_TAC_TOE_TITLE");
+        return  GameContext.getLabel("TICTACTOE_TITLE");
     }
 
     @Override
@@ -53,11 +51,10 @@ public class TicTacToePanel extends PentePanel
     protected void showHelpDialog()
     {
         String name = getTitle();
-        String comments = GameContext.getLabel("TIC_TAC_TOE_TITLE");
-        String overview = GameContext.getLabel("TIC_TAC_TOE_OVERVIEW");
+        String comments = GameContext.getLabel("TICTACTOE_TITLE");
+        String overview = GameContext.getLabel("TICTACTOE_OVERVIEW");
         showHelpDialog( name, comments, overview );
     }
-
 }
 
 

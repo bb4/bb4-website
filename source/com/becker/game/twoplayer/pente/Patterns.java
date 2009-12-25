@@ -5,15 +5,18 @@ import com.becker.game.common.GameContext;
 import java.io.*;
 
 /**
- *  Encapsulates the domain knowledge for n in a row game.
- *  These are key patterns that can occur in the game and are weighted
- *  by importance to let the computer play better.
+ * Encapsulates the domain knowledge for n in a row game.
+ * These are key patterns that can occur in the game and are weighted
+ * by importance to let the computer play better.
  *
- *  @author Barry Becker
+ * Do not add duplicate patterns or patterns that are the reverse of other patterns.
+ *
+ * @author Barry Becker
  */
 public abstract class Patterns
 {
-    /** This table provides a quick way to look up a weight for a pattern.
+    /**
+     * This table provides a quick way to look up a weight for a pattern.
      * it acts as a hashmap to a weight index. The pattern can be converted to
      * a lookup index using convertPatternToInt.There is a leading 1 in front of
      * the binary hash - that's why we need 2^12 rather than 2^11.
@@ -44,6 +47,9 @@ public abstract class Patterns
     public abstract int getWinRunLength();
 
     protected abstract int getNumPatterns();
+
+    /** patterns shorter than this are not interesting and have weight 0 */
+    protected abstract int getMinInterestingLength();
     
     /**
      * Initialize all the pente patterns.
@@ -52,7 +58,7 @@ public abstract class Patterns
     {
         weightIndexTable_ = new int[TABLE_SIZE];
         for ( int i = 0; i < TABLE_SIZE; i++ ) {
-            weightIndexTable_[i] = 0;
+            weightIndexTable_[i] = -1;
         }
 
         // since reading files is not easy with applets, I've moved the pattern data into the class PentePatterns.
@@ -71,9 +77,16 @@ public abstract class Patterns
     
     protected abstract int getWeightIndex(int i);
 
+    /**
+     * @param pattern  pattern to get the weight index for.
+     * @param minpos index of first character in pattern
+     * @param maxpos index of last character position in pattern.
+     * @return weight index
+     */
     public int getWeightIndexForPattern(StringBuilder pattern, int minpos, int maxpos) {
         return weightIndexTable_[convertPatternToInt(pattern, minpos, maxpos)];
     }
+    
     /**
      * each pattern can be represented as a unique integer.
      * this integer can be used like a hash for a quick lookup of the weight
@@ -82,20 +95,21 @@ public abstract class Patterns
     protected static int convertPatternToInt( String pattern )
     {
         StringBuilder buf = new StringBuilder( pattern );
-        return convertPatternToInt( buf, 0, pattern.length() );
+        return convertPatternToInt( buf, 0, pattern.length()-1 );
     }
 
     /**
-     * each pattern can be represented as a unique integer.
+     * Each pattern can be represented as a unique integer.
      * this integer can be used like a hash for a quick lookup of the weight
      * in the weightIndexTable
+     * @return integer representation of pattern
      */
     protected static int convertPatternToInt( StringBuilder pattern, int minpos, int maxpos )
     {
         int power = 1;
         int sum = 0;
 
-        for ( int i = maxpos - 1; i >= minpos; i-- ) {
+        for ( int i = maxpos; i >= minpos; i-- ) {
             if ( pattern.charAt( i ) != UNOCCUPIED )
                 sum += power;
             power += power;  // doubles every step thru the loop.
@@ -110,10 +124,9 @@ public abstract class Patterns
 
         // also add the reversed pattern
         StringBuilder reverse = new StringBuilder( pattern );
-        int len = pattern.length();
-        for ( int j = 0; j < reverse.length(); j++ )
-            reverse.setCharAt( j, pattern.charAt( len - j - 1 ) );
-        hash = convertPatternToInt( new String( reverse ) );
+        reverse.reverse();
+
+        hash = convertPatternToInt(reverse, 0, reverse.length()-1);
         weightIndexTable_[hash] = wtIndex;
     }
 
@@ -167,8 +180,6 @@ public abstract class Patterns
 
                 pattern = patterns_[i];
                 setPatternWeightInTable( pattern, wtIndex );
-
-                //System.out.println("pattern "+i+"= "+patterns_[i]+"  wtind= "+wtIndex);
             }
             iStreamReader.close();
         } catch (IOException e) {
