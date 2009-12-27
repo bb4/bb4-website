@@ -2,8 +2,9 @@ package com.becker.game.twoplayer.tictactoe.test;
 
 import com.becker.game.common.GamePiece;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.pente.Line;
-import com.becker.game.twoplayer.pente.MoveEvaluator;
+import com.becker.game.twoplayer.pente.analysis.Direction;
+import com.becker.game.twoplayer.pente.analysis.Line;
+import com.becker.game.twoplayer.pente.analysis.MoveEvaluator;
 import com.becker.game.twoplayer.tictactoe.TicTacToeBoard;
 import com.becker.game.twoplayer.tictactoe.TicTacToePatterns;
 import com.becker.game.twoplayer.tictactoe.TicTacToeWeights;
@@ -87,22 +88,22 @@ public class TestMoveEvaluation extends TestCase  {
         
         TwoPlayerMove move2 = TwoPlayerMove.createMove(2, 1,  0, new GamePiece(false));
         board.makeMove(move2);
-        verifyResult(Line.Direction.HORIZONTAL, 2, 3, false, -7960);
+        verifyResult(Direction.HORIZONTAL, 2, 3, false, -7960);
         board.undoMove();
 
         move2 = TwoPlayerMove.createMove(1, 2,  0, new GamePiece(false));
         board.makeMove(move2);
-        verifyResult(Line.Direction.VERTICAL, 3, 2, false, -7960);
+        verifyResult(Direction.VERTICAL, 3, 2, false, -7960);
         board.undoMove();
 
         move2 = TwoPlayerMove.createMove(3, 1,  0, new GamePiece(false));
         board.makeMove(move2);
-        verifyResult(Line.Direction.UP_DIAGONAL, 1, 3, false, -7956);
+        verifyResult(Direction.UP_DIAGONAL, 1, 3, false, -7956);
         board.undoMove();
 
          move2 = TwoPlayerMove.createMove(1, 1,  0, new GamePiece(false));
          board.makeMove(move2);
-         verifyResult(Line.Direction.DOWN_DIAGONAL, 3, 3, false, -7956);
+         verifyResult(Direction.DOWN_DIAGONAL, 3, 3, false, -7956);
          board.undoMove();
     }
 
@@ -112,14 +113,14 @@ public class TestMoveEvaluation extends TestCase  {
         verifyDiagonalDirectionsResult( row, col, player1, expectedDiagonalWorth);
     }
     private void verifyStraightDirectionsResult(int row, int col, boolean player1, int expectedWorth) {
-        verifyResult(Line.Direction.HORIZONTAL, row, col, player1, expectedWorth);
-        verifyResult(Line.Direction.VERTICAL, col, row, player1, expectedWorth);
+        verifyResult(Direction.HORIZONTAL, row, col, player1, expectedWorth);
+        verifyResult(Direction.VERTICAL, col, row, player1, expectedWorth);
     }
 
     private void verifyDiagonalDirectionsResult(int row, int col, boolean player1, int expectedWorth) {
 
-        verifyResult(Line.Direction.UP_DIAGONAL, col, TicTacToePatterns.WIN_RUN_LENGTH + 1 - col, player1, expectedWorth);
-        verifyResult(Line.Direction.DOWN_DIAGONAL, col, col, player1, expectedWorth);
+        verifyResult(Direction.UP_DIAGONAL, col, TicTacToePatterns.WIN_RUN_LENGTH + 1 - col, player1, expectedWorth);
+        verifyResult(Direction.DOWN_DIAGONAL, col, col, player1, expectedWorth);
     }
 
     /**
@@ -128,7 +129,7 @@ public class TestMoveEvaluation extends TestCase  {
      * @param col column position of move to verify.
      * @param expectedWorth how much the move contributes to the overall worth.
      */
-    private void verifyResult(Line.Direction dir, int row, int col, boolean player1, int expectedWorth) {
+    private void verifyResult(Direction dir, int row, int col, boolean player1, int expectedWorth) {
         TwoPlayerMove lastMove = TwoPlayerMove.createMove(row, col,  0, new GamePiece(player1));
         board.makeMove(lastMove);
         int worth = evaluator.worth(lastMove, weights.getDefaultWeights());

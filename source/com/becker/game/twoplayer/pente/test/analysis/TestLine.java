@@ -1,13 +1,18 @@
-package com.becker.game.twoplayer.pente.test;
+package com.becker.game.twoplayer.pente.test.analysis;
 
 import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GamePiece;
 import com.becker.game.common.GameWeights;
-import com.becker.game.twoplayer.pente.Line;
-import com.becker.game.twoplayer.pente.PenteWeights;
+import com.becker.game.twoplayer.pente.analysis.Line;
+import com.becker.game.twoplayer.pente.Patterns;
+import com.becker.game.twoplayer.pente.test.StubPatterns;
+import com.becker.game.twoplayer.pente.test.StubWeights;
+import com.becker.optimization.parameter.ParameterArray;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import java.util.List;
 
 /**
  * Verify that we correctly evaluate patterns on the board.
@@ -16,7 +21,7 @@ import junit.framework.TestSuite;
  */
 public class TestLine extends TestCase  {
 
-    Line line;
+    LineRecorder line;
     GameWeights weights;
 
     @Override
@@ -27,7 +32,7 @@ public class TestLine extends TestCase  {
 
     public void testAppendEmpty() {
 
-        line = new Line(new StubPatterns(), weights.getDefaultWeights());
+        Line line = new Line(new StubPatterns(), weights.getDefaultWeights());
         BoardPosition pos = new BoardPosition(2, 2, null);
         line.append(pos);
         assertEquals("_", line.toString());
@@ -35,7 +40,7 @@ public class TestLine extends TestCase  {
 
     public void testAppendPlayer() {
 
-        line = new Line(new StubPatterns(), weights.getDefaultWeights());
+        Line line = new Line(new StubPatterns(), weights.getDefaultWeights());
         BoardPosition pos = new BoardPosition(2, 2, new GamePiece(true));
         line.append(pos);
         assertEquals("X", line.toString());
@@ -50,7 +55,9 @@ public class TestLine extends TestCase  {
         double worth;
 
         line = createLine("_X");
+
         worth = line.evalLine(true, 1, 0, 1);
+        checkRecordedPatterns(new String[] {"_X"});
         assertEquals(4.0, worth);
 
         line = createLine("_X");
@@ -73,6 +80,7 @@ public class TestLine extends TestCase  {
         worth = line.evalLine(true, 1, 0, 1);
         assertEquals(20.0, worth);
     }
+
 
     public void testEvaLineSimplePlayer2() {
         double worth;
@@ -107,22 +115,28 @@ public class TestLine extends TestCase  {
 
         line = createLine("X_XX");
         int worth = line.evalLine(true, 2, 2, 3);
+        checkRecordedPatterns(new String[] {"XX"});
         assertEquals(20, worth);
 
         worth = line.evalLine(true, 3, 2, 3);
+        checkRecordedPatterns(new String[] {"XX"});
         assertEquals(20, worth);
 
         worth = line.evalLine(true, 1, 1, 2);
+        checkRecordedPatterns(new String[] {"_X"});
         assertEquals(4, worth);
 
         worth = line.evalLine(true, 1, 0, 3);
+        checkRecordedPatterns(new String[] {"X_XX"});
         assertEquals(0, worth);
 
         worth = line.evalLine(true, 2, 0, 3);
+        checkRecordedPatterns(new String[] {"X_XX"});
         assertEquals(0, worth);
 
         // _XX is not a recognizable StubPattern
         worth = line.evalLine(true, 3, 0, 3);
+        checkRecordedPatterns(new String[] {"X_XX"});
         assertEquals(0, worth);
     }
 
@@ -132,27 +146,43 @@ public class TestLine extends TestCase  {
 
         line = createLine("XOX");
         worth = line.evalLine(true, 2, 0, 2);
+        checkRecordedPatterns(new String[] {"X"});
         assertEquals(0, worth);
 
         line = createLine("XOX");
         worth = line.evalLine(true, 1, 0, 2);
+        checkRecordedPatterns(new String[] {"X", "X"});
         assertEquals(0, worth);
 
         line = createLine("X_OX");
         worth = line.evalLine(true, 2, 0, 3);
+        checkRecordedPatterns(new String[] {"X_", "X"});
         // X_ gets 4.
         assertEquals(4, worth);
 
         line = createLine("X_OX");
         worth = line.evalLine(false, 2, 0, 3);
+        checkRecordedPatterns(new String[] {"_O"});
         assertEquals(-4, worth);
 
         line = createLine("X_O_X");
         worth = line.evalLine(true, 2, 0, 4);
+        checkRecordedPatterns(new String[] {"X_", "_X"});
         // X_ and _X get 4.
         assertEquals(8, worth);
-    }
 
+        line = createLine("XXOXX");
+        worth = line.evalLine(true, 2, 0, 4);
+        checkRecordedPatterns(new String[] {"XX", "XX"});
+        // XX and XX get 20.
+        assertEquals(40, worth);
+
+        line = createLine("XXOXX");
+        worth = line.evalLine(false, 2, 0, 4);
+        checkRecordedPatterns(new String[] {"O"});
+        // O gets 0
+        assertEquals(0, worth);
+    }
 
     public void testComputeValueDifference1() {
 
@@ -165,56 +195,51 @@ public class TestLine extends TestCase  {
         assertEquals(16, diff);
     }
 
-    public void testComputeValueDifference2() {
+    public void testComputeValueDifferenceXX() {
 
-        line = createLine("X_X");
-        assertEquals("X_X", line.toString());
+        line = createLine("XX");
 
         int diff = line.computeValueDifference(0);
-        assertEquals(0, diff);
+        assertEquals(16, diff);
 
         diff = line.computeValueDifference(1);
-        assertEquals(0, diff);
-
-        diff = line.computeValueDifference(2);
-        assertEquals(0, diff);
+        assertEquals(16, diff);
     }
 
-    public void testComputeValueDifference3() {
+    public void testComputeValueDifference_X() {
 
-        line = createLine("XXX");
+        line = createLine("_X");
+        assertEquals("_X", line.toString());
 
         int diff = line.computeValueDifference(0);
         assertEquals(0, diff);
 
         diff = line.computeValueDifference(1);
-        assertEquals(0, diff);
+        assertEquals(4, diff);
+    }
 
-        diff = line.computeValueDifference(2);
-        assertEquals(0, diff);
+
+    private void checkRecordedPatterns(String[] expectedPatterns) {
+        List<String> checkedPatterns = line.getPatternsChecked();
+        int i=0;
+        System.out.println("checkedPatterns = " + TstUtil.quoteStringList(checkedPatterns));
+        assertEquals(expectedPatterns.length, checkedPatterns.size());
+        for (String pat : checkedPatterns) {
+            assertEquals(expectedPatterns[i++], pat);
+        }
+        checkedPatterns.clear();
     }
 
     /**
-     *
      * @param linePattern  some sequence of X, O, _
      * @return the line
      */
-    private Line createLine(String linePattern) {
-        line = new Line(new StubPatterns(), weights.getDefaultWeights());
-        for (int i=0; i<linePattern.length(); i++) {
-             GamePiece piece = null;
-             char c = linePattern.charAt(i);
-              if (c == 'X') {
-                  piece = new GamePiece(true);
-              }
-              if (c == 'O') {
-                  piece = new GamePiece(false);
-              }
-              BoardPosition pos = new BoardPosition(0, 0, piece);
-              line.append(pos);
-         }
-        return line;
+    private LineRecorder createLine(String linePattern) {
+        return TstUtil.createLine(linePattern, new StubPatterns(), weights.getDefaultWeights());
     }
+
+
+
 
     public static Test suite() {
         return new TestSuite(TestLine.class);

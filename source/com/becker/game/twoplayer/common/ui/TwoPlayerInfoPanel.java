@@ -92,7 +92,7 @@ public class TwoPlayerInfoPanel extends GameInfoPanel implements GameChangedList
      * This method called whenever a move has been made.
      */
     @Override
-    public void gameChanged( GameChangedEvent gce )
+    public synchronized void gameChanged( GameChangedEvent gce )
     {
         if ( controller_ == null )
             return;

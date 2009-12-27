@@ -33,7 +33,7 @@ public class TwoPlayerOptions extends GameOptions
     private static final int DEFAULT_MIN_BEST_MOVES = 10;
 
     /** never search more than this many additional plys during quiescent search. */
-    private static final int MAX_QUIESCENT_DEPTH = 10;
+    private static final int MAX_QUIESCENT_DEPTH = 8;
 
     /** Sound played when move is made */
     private static final String DEFAULT_TONE = MusicMaker.TAIKO_DRUM;
@@ -63,8 +63,6 @@ public class TwoPlayerOptions extends GameOptions
 
     /**
      * Default Constructor
-     * @param defaultLookAhead default number of moves to look ahead.
-     * @param defaultBestPercentage default number of best moves to consider at each ply.
      */
     public TwoPlayerOptions() {
         lookAhead_ = getDefaultLookAhead();
@@ -105,6 +103,7 @@ public class TwoPlayerOptions extends GameOptions
      * Two player games can never have more than 2 players. Duh.
      * @return 2
      */
+    @Override
     public int getMaxNumPlayers() {
         return 2;
     }

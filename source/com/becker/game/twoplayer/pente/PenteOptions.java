@@ -35,4 +35,9 @@ public class PenteOptions extends TwoPlayerOptions {
     protected int getDefaultMinBestMoves() {
         return DEFAULT_MIN_BEST_MOVES;
     }
+
+    
+    public int getMaxQuiescentDepth() {
+        return this.getLookAhead() + 2;
+    }
 }

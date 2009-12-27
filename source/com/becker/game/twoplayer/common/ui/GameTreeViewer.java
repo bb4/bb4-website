@@ -21,7 +21,6 @@ import java.util.List;
  */
 final class GameTreeViewer extends JPanel implements MouseMotionListener
 {
-
     private static final Color BACKGROUND_COLOR = Color.white;
     private static final int BACKGROUND_BAND_OPACITY = 100;
     private static final int MARGIN = 8;
@@ -179,7 +178,7 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
      * Draw the nodes and arcs in the game tree.
      * It can get quite huge.
      */
-    private synchronized void drawTree( SearchTreeNode root, Graphics2D g2)
+    private void drawTree( SearchTreeNode root, Graphics2D g2)
     {
         int oldDepth = 0;
         int depth;
@@ -207,7 +206,6 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
             }
             offsetAtLevel[depth] += p.getSpaceAllocation();
         }
-        // initialize offsets
     }
 
 
@@ -237,8 +235,6 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
         if (node.isPruned())  {
            // draw a marker to show that it has been pruned
            g2.setColor(Color.black);
-           //g2.drawLine(x-1, y+1, x+4, y+5);
-           //g2.drawLine(x-1, y+5, x+4, y+1);
            g2.fillRect(x, y+3, width, 1);
         }
     }

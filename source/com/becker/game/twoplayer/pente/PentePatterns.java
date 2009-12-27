@@ -77,14 +77,13 @@ public class PentePatterns extends Patterns
         return WIN_RUN_LENGTH;
     }
 
+    public int getMinInterestingLength() {
+        return 3;
+    }
+    
     protected int getNumPatterns() {
         return NUM_PATTERNS;
     }
-
-    protected int getMinInterestingLength() {
-        return 3;
-    }
-
 
     protected String getPatternString(int i) {
         return PATTERN_STRING[i];

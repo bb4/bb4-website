@@ -1,9 +1,5 @@
 package com.becker.game.twoplayer.pente.test;
 
-import com.becker.game.common.BoardPosition;
-import com.becker.game.common.GamePiece;
-import com.becker.game.common.GameWeights;
-import com.becker.game.twoplayer.pente.Line;
 import com.becker.game.twoplayer.pente.Patterns;
 import com.becker.game.twoplayer.pente.PentePatterns;
 import junit.framework.Test;
