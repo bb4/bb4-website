@@ -1,7 +1,9 @@
-package com.becker.game.twoplayer.pente;
+package com.becker.game.twoplayer.pente.analysis;
 
 import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GameContext;
+import com.becker.game.twoplayer.pente.Patterns;
+import com.becker.game.twoplayer.pente.PentePatterns;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**
@@ -10,16 +12,14 @@ import com.becker.optimization.parameter.ParameterArray;
  */
 public class Line {
 
-    public enum Direction {VERTICAL, HORIZONTAL, DOWN_DIAGONAL, UP_DIAGONAL}
-
-    private static final char P1_SYMB = 'X';
-    private static final char P2_SYMB = 'O';
+    static final char P1_SYMB = 'X';
+    static final char P2_SYMB = 'O';
 
     /** contains the symbols in the line (run) */
-    StringBuilder line;
+    protected StringBuilder line;
 
     protected Patterns patterns_;
-    private ParameterArray weights_;
+    protected ParameterArray weights_;
 
     /**
      * Constructor
@@ -48,15 +48,20 @@ public class Line {
     }
 
     /**
+     * We return the difference in value between how the board looked before the
+     * move was played (from both points of view) to after the move was played
+     * (from both points of view. Its important that we look at it from both
+     * sides because creating a near win is noticed from the moving players point of view
+     * while blocks are noted from the opposing viewpoint.
      *
      * @param position position in the string to compute value difference for.
      * @return the difference in worth after making a move compared with before.
-     *  We need to look at it from the point of view of both sides (p1 = +, p2 = -)
+     *
      */
     public int computeValueDifference(int position)
     {
         char symb = line.charAt( position ); // the last move made
-        boolean player1JustPlayed = (symb == P1_SYMB);
+        boolean player1Perspective = (symb == P1_SYMB);
 
         int len = line.length();
         if ( len < patterns_.getMinInterestingLength() ) {
@@ -65,12 +70,13 @@ public class Line {
 
         line.setCharAt( position, PentePatterns.UNOCCUPIED );
         int maxpos = len - 1;
-        int oldScore = evalLine(player1JustPlayed, position, 0, maxpos);
-        oldScore += evalLine(!player1JustPlayed, position, 0, maxpos);
+
+        int oldScore = evalLine(player1Perspective, position, 0, maxpos);
+        oldScore += evalLine(!player1Perspective, position, 0, maxpos);
 
         line.setCharAt( position, symb );
-        int newScore = evalLine(player1JustPlayed, position, 0, maxpos);
-        newScore += evalLine(!player1JustPlayed, position, 0, maxpos);
+        int newScore = evalLine(player1Perspective, position, 0, maxpos);
+        newScore += evalLine(!player1Perspective, position, 0, maxpos);
 
         return newScore - oldScore;
     }
@@ -78,33 +84,33 @@ public class Line {
     /**
      * Evaluate a line (vertical, horizontal, or diagonal).
      * Public for testing.
-     * @param player1JustPlayed if true, then the first player just moved.
+     * @param player1Perspective if true, then the first player just moved.
      * @param pos the position that was just played (symbol).
      * @param minpos starting pattern index in line (usually 0).
      * @param maxpos last pattern index position in line (usually one less than the line length).
      * @return the worth of a (vertical, horizontal, left diagonal, or right diagonal) line.
      */
-    public int evalLine(boolean player1JustPlayed, int pos, int minpos, int maxpos)
+    public int evalLine(boolean player1Perspective, int pos, int minpos, int maxpos)
     {
         assert pos >= minpos && pos <= maxpos;
         int length = maxpos - minpos + 1;
         if ( length < patterns_.getMinInterestingLength() )
             return 0; // not an interesting pattern.
 
-        char opponentSymb = player1JustPlayed ? P2_SYMB : P1_SYMB;
-        System.out.println("evaluating " + line.substring(minpos, maxpos +1));
-
+        char opponentSymb = player1Perspective ? P2_SYMB : P1_SYMB;
+        
         if ( (line.charAt( pos ) == opponentSymb)
                 && !(pos == minpos) && !(pos == maxpos) ) {
             // first check for a special case where there was a blocking move in the
             // middle. In this case we break the string into an upper and lower
             // half and evaluate each separately.
-            System.out.println("Interesting pattern: " + line + "  pos="+ pos);
-            return (evalLine( player1JustPlayed, pos, minpos, pos)
-                    + evalLine( player1JustPlayed, pos, pos, maxpos));
+            ////System.out.println("Interesting pattern: " + line + "  pos="+ pos);
+            return (evalLine( player1Perspective, pos, minpos, pos)
+                    + evalLine( player1Perspective, pos, pos, maxpos));
         }
-        return getWeight(opponentSymb, pos, minpos, maxpos);
-
+        int wt = getWeight(opponentSymb, pos, minpos, maxpos);
+        System.out.println("evaluating " + line.substring(minpos, maxpos+1) + " wt=" + wt);
+        return wt;
     }
 
     /**
@@ -132,39 +138,58 @@ public class Line {
      * @param maxpos last symbol in the sting to evaluate
      * @return the index to use for getting the weight based on the pattern formed by this line.
      */
-    private int getWeightIndex(char opponentSymb, int pos, int minpos, int maxpos) {
+    protected int getWeightIndex(char opponentSymb, int pos, int minpos, int maxpos) {
 
-        int ct = pos;
-        if ( (line.charAt( pos ) == opponentSymb) && (pos == minpos) )  {
-            ct++;
-        }
-        else {
-            while ( ct > minpos && (line.charAt( ct - 1 ) != opponentSymb)
-                  && !(line.charAt( ct ) == Patterns.UNOCCUPIED && line.charAt( ct - 1 ) == Patterns.UNOCCUPIED) ) {
-                ct--;
-            }
-        }
-        int start = ct;
-        ct = pos;
+        int start = getStartPosition(opponentSymb, pos, minpos);
+        int stop = getStopPosition(opponentSymb, pos, maxpos);
+        return patterns_.getWeightIndexForPattern(line, start, stop);
+    }
+
+    /**
+     * March forward until we hit 2 blanks, an opponent piece, or the end of the line.
+     * @return stop position
+     */
+    protected int getStopPosition(char opponentSymb, int pos, int maxpos) {
+        int stop;
+        stop = pos;
         if ( (line.charAt( pos ) == opponentSymb) && (pos == maxpos) )  {
-            ct--;
+            stop--;
         }
         else {
-            while ( ct < maxpos && (line.charAt( ct + 1 ) != opponentSymb)
-                  && !(line.charAt( ct ) == Patterns.UNOCCUPIED && line.charAt( ct + 1 ) == Patterns.UNOCCUPIED) ) {
-                ct++;
+            while ( stop < maxpos && (line.charAt( stop + 1 ) != opponentSymb)
+                  && !next2Unoccupied(stop, 1) ) {
+                stop++;
             }
         }
-        int stop = ct;
-        System.out.println("getting wt index for " + line.substring(start, stop+1));
-        int index = patterns_.getWeightIndexForPattern(line, start, stop);
-        return index;
+        return stop;
+    }
+
+    /**
+     * March backward until we hit 2 blanks, an opponent piece, or the end of the line.
+     * @return start position
+     */
+    protected int getStartPosition(char opponentSymb, int pos, int minpos) {
+        int start = pos;
+        if ( (line.charAt( pos ) == opponentSymb) && (pos == minpos) )  {
+            start++;
+        }
+        else {
+            while ( start > minpos && (line.charAt( start - 1 ) != opponentSymb)
+                  && !next2Unoccupied(start, -1) ) {
+                start--;
+            }
+        }
+        return start;
+    }
+
+    private boolean next2Unoccupied(int position, int dir) {
+        return (line.charAt( position ) == Patterns.UNOCCUPIED && line.charAt( position + dir ) == Patterns.UNOCCUPIED);
     }
 
     /**
      * debugging aid
      */
-    public void worthDebug( Direction dir, int pos, int diff )
+    public void worthDebug( String dir, int pos, int diff )
     {
         GameContext.log( 0,  dir + " "  + line + "  Pos: " + pos + "  difference:" + diff );
     }

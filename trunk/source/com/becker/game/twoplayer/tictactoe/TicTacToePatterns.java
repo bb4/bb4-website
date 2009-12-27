@@ -42,7 +42,7 @@ public final class TicTacToePatterns extends Patterns
         return NUM_PATTERNS;
     }
 
-    protected int getMinInterestingLength() {
+    public int getMinInterestingLength() {
         return 2;
     }
 

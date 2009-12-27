@@ -46,11 +46,12 @@ public abstract class Patterns
      */
     public abstract int getWinRunLength();
 
+    /** patterns shorter than this are not interesting and have weight 0 */
+    public abstract int getMinInterestingLength();
+
+    /** total number of patterns represented */
     protected abstract int getNumPatterns();
 
-    /** patterns shorter than this are not interesting and have weight 0 */
-    protected abstract int getMinInterestingLength();
-    
     /**
      * Initialize all the pente patterns.
      */

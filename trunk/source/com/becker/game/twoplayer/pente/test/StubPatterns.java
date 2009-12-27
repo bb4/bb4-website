@@ -34,7 +34,7 @@ public final class StubPatterns extends Patterns
         return 2;
     }
 
-    protected int getMinInterestingLength() {
+    public int getMinInterestingLength() {
         return 2;
     }
 

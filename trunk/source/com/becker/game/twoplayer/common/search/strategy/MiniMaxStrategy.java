@@ -29,22 +29,23 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
     /**
      * @inheritDoc
      */
+    @Override
     protected TwoPlayerMove findBestMove(TwoPlayerMove lastMove, 
                                        int depth,  List<? extends TwoPlayerMove> list,  
                                        int alpha, int beta, SearchTreeNode parent) {
         int i = 0;
-        int selectedValue = -SearchStrategy.INFINITY;  // need to initialize?
+        int selectedValue;
         TwoPlayerMove selectedMove;  // the currently selected move
-        // if player 1, then search for a high score, else seach for a low score.
+        // if player 1, then search for a high score, else search for a low score.
         boolean player1 = lastMove.isPlayer1();
         int bestInheritedValue = player1? SearchStrategy.INFINITY: -SearchStrategy.INFINITY;
 
-        TwoPlayerMove bestMove = (TwoPlayerMove) (list.get( 0 ));
+        TwoPlayerMove bestMove = list.get( 0 );
         while ( !list.isEmpty() ) {
             if (pauseInterrupted())
                 return lastMove;
 
-            TwoPlayerMove theMove = (TwoPlayerMove) (list.remove(0));
+            TwoPlayerMove theMove = list.remove(0);
             updatePercentDone(depth, list);
 
             searchable_.makeInternalMove( theMove );
@@ -55,39 +56,36 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
 
             searchable_.undoInternalMove( theMove );
 
-            if (selectedMove == null) {
-                // if this happens it means there isn't any possible move beyond theMove.
-                continue;
-            }
-
-            selectedValue = selectedMove.getInheritedValue();
-            if ( player1 ) {
-                if ( selectedValue < bestInheritedValue ) {
+            if (selectedMove != null) {
+                selectedValue = selectedMove.getInheritedValue();
+                if ( player1 ) {
+                    if ( selectedValue < bestInheritedValue ) {
+                        bestMove = theMove;
+                        bestInheritedValue = bestMove.getInheritedValue();
+                    }
+                }
+                else if ( selectedValue > bestInheritedValue ) {
                     bestMove = theMove;
                     bestInheritedValue = bestMove.getInheritedValue();
                 }
-            }
-            else if ( selectedValue > bestInheritedValue ) {
-                bestMove = theMove;
-                bestInheritedValue = bestMove.getInheritedValue();
-            }
 
-            if ( alphaBeta_ ) {
-                if ( player1 && (selectedValue < alpha) ) {
-                    if ( selectedValue < beta ) {
-                        showPrunedNodesInTree( list, parent, i, selectedValue, beta, PruneType.BETA);
-                        break; // pruned
+                if ( alphaBeta_ ) {
+                    if ( player1 && (selectedValue < alpha) ) {
+                        if ( selectedValue < beta ) {
+                            showPrunedNodesInTree( list, parent, i, selectedValue, beta, PruneType.BETA);
+                            break; // pruned
+                        }
+                        else
+                            alpha = selectedValue;
                     }
-                    else
-                        alpha = selectedValue;
-                }
-                if ( !player1 && (selectedValue > beta) ) {
-                    if ( selectedValue > alpha ) {
-                        showPrunedNodesInTree( list, parent, i, selectedValue, alpha, PruneType.ALPHA);
-                        break; // pruned
+                    if ( !player1 && (selectedValue > beta) ) {
+                        if ( selectedValue > alpha ) {
+                            showPrunedNodesInTree( list, parent, i, selectedValue, alpha, PruneType.ALPHA);
+                            break; // pruned
+                        }
+                        else
+                            beta = selectedValue;
                     }
-                    else
-                        beta = selectedValue;
                 }
             }
         }
@@ -102,7 +100,8 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
      * This continues the search in situations where the board position is not stable.
      * For example, perhaps we are in the middle of a piece exchange
      */
-    protected TwoPlayerMove quiescentSearch( TwoPlayerMove lastMove, 
+    @Override
+    protected TwoPlayerMove quiescentSearch( TwoPlayerMove lastMove,
                                                     int depth, int oldAlpha, int oldBeta, SearchTreeNode parent )
     {
         int alpha = oldAlpha;
@@ -184,6 +183,7 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
     }
 
 
+    @Override
     protected boolean fromPlayer1sPerspective(TwoPlayerMove lastMove) {
         return true;
     }

@@ -34,7 +34,6 @@ public final class MtdStrategy implements SearchStrategy
     /**
      * @inheritDoc
      */
-    @Override
     public TwoPlayerMove search( TwoPlayerMove lastMove,
                                                     int alpha, int beta, SearchTreeNode parent )
     {

@@ -98,7 +98,7 @@ public class TwoPlayerMove extends Move
     public static TwoPlayerMove createMove( int destinationRow, int destinationCol,
                                    int val, GamePiece piece )
     {
-        return new TwoPlayerMove(destinationRow, destinationCol, val ,piece);
+        return new TwoPlayerMove(destinationRow, destinationCol, val, piece);
     }
 
     /**

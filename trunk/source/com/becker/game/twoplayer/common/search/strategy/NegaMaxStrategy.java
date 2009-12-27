@@ -42,19 +42,20 @@ public class NegaMaxStrategy extends AbstractSearchStrategy
     /**
      * @inheritDoc
      */
-    protected TwoPlayerMove findBestMove(TwoPlayerMove lastMove, 
+    @Override
+    protected TwoPlayerMove findBestMove(TwoPlayerMove lastMove,
                                        int depth, List<? extends TwoPlayerMove> list,
                                        int alpha, int beta, SearchTreeNode parent) {
         int i = 0;
         int bestInheritedValue = -SearchStrategy.INFINITY;
         TwoPlayerMove selectedMove;
-        TwoPlayerMove bestMove = (TwoPlayerMove) (list.get( 0 ));
+        TwoPlayerMove bestMove = list.get( 0 );
 
         while ( !list.isEmpty() ) {
             if (pauseInterrupted())
                 return lastMove;
 
-            TwoPlayerMove theMove = (TwoPlayerMove) (list.remove(0));
+            TwoPlayerMove theMove = list.remove(0);
             updatePercentDone(depth, list);
 
             searchable_.makeInternalMove( theMove );
@@ -65,26 +66,24 @@ public class NegaMaxStrategy extends AbstractSearchStrategy
 
             searchable_.undoInternalMove( theMove );
 
-            if (selectedMove == null) {
-                // if this happens it means there isn't any possible move beyond theMove.
-                continue;
-            }
+            if (selectedMove != null) {
 
-            int selectedValue = - selectedMove.getInheritedValue();
-            theMove.setInheritedValue( selectedValue );
+                int selectedValue = - selectedMove.getInheritedValue();
+                theMove.setInheritedValue( selectedValue );
 
-            if ( alphaBeta_ ) {
-                if ( selectedValue > alpha ) {
-                    alpha = selectedValue;
+                if ( alphaBeta_ ) {
+                    if ( selectedValue > alpha ) {
+                        alpha = selectedValue;
+                        bestMove = theMove;
+                    }
+                    if ( alpha >= beta ) {
+                        showPrunedNodesInTree( list, parent, i, selectedValue, beta, PruneType.BETA);
+                        break;
+                    }
+                } else if ( selectedValue > bestInheritedValue ) {
                     bestMove = theMove;
+                    bestInheritedValue = selectedValue;
                 }
-                if ( alpha >= beta ) {
-                    showPrunedNodesInTree( list, parent, i, selectedValue, beta, PruneType.BETA);
-                    break;
-                }
-            } else if ( selectedValue > bestInheritedValue ) {
-                bestMove = theMove;
-                bestInheritedValue = selectedValue;
             }
         }
 
@@ -97,6 +96,7 @@ public class NegaMaxStrategy extends AbstractSearchStrategy
      * This continues the search in situations where the board position is not stable.
      * For example, perhaps we are in the middle of a piece exchange.
      */
+    @Override
     protected TwoPlayerMove quiescentSearch( TwoPlayerMove lastMove,
                                           int depth, int oldAlpha, int beta, SearchTreeNode parent )
     {
@@ -172,6 +172,7 @@ public class NegaMaxStrategy extends AbstractSearchStrategy
         return bestMove;
     }
 
+    @Override
     protected boolean fromPlayer1sPerspective(TwoPlayerMove lastMove) {
         return lastMove.isPlayer1();
     }
