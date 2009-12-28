@@ -1,6 +1,7 @@
 package com.becker.game.multiplayer.galactic.player;
 
 
+import com.becker.game.common.GameContext;
 import com.becker.game.multiplayer.galactic.player.*;
 import com.becker.game.multiplayer.galactic.*;
 
@@ -73,7 +74,7 @@ public abstract class GalacticRobotPlayer extends GalacticPlayer
             }
         }
         
-        System.out.println("num orders=" + orders.size());
+        GameContext.log(1, "num orders=" + orders.size());
         return orders;
     }
 

@@ -81,14 +81,12 @@ public abstract class Board implements BoardInterface, Cloneable
     }
 
     /**
-     * @@ consider making a defensive copy to avoid concurrent modification exception.
-     * @return
+     * consider making a defensive copy to avoid concurrent modification exception.
+     * @return moves made so far.
      */
     public LinkedList<Move> getMoveList() {
         return moveList_;
     }
-
-    public void initPlayers() {};
 
     /**
      * Will return null before the first move has been played.
@@ -101,7 +99,6 @@ public abstract class Board implements BoardInterface, Cloneable
         }
         return getMoveList().getLast();
     }
-
 
     /**
      * @return  the number of moves currently played.
@@ -127,7 +124,7 @@ public abstract class Board implements BoardInterface, Cloneable
     /**
      * returns null if there is no game piece at the position specified.
      * @return the piece at the specified location. Returns null if there is no piece there.
-     */
+     *
     public final BoardPosition getPositionSafe( int row, int col )
     {
         if ( row < 1 || row > numRows_ || col < 1 || col > numCols_) {
@@ -136,7 +133,7 @@ public abstract class Board implements BoardInterface, Cloneable
                     + numRows_ + "], col[1," + numCols_ + "]");
         }
         return positions_[row][col];
-    }
+    }*/
 
     /**
      * returns null if there is no game piece at the position specified.
@@ -267,7 +264,8 @@ public abstract class Board implements BoardInterface, Cloneable
     /**
       * For profiling output in a log
       * Record times for these operations so we get an accurate picture of where the bottlenecks are.
-      */
+     * @return  the profiler object
+     */
     public GameProfiler getProfiler() {
         if (profiler_ == null)
         {
@@ -283,15 +281,6 @@ public abstract class Board implements BoardInterface, Cloneable
         return new GameProfiler();
     }
 
-    /**
-     * Explicitly clean things up to avoid memory leaks.
-     * The most common way to accidentaly have memory leaks is to leave listeners on objects.
-     */
-    public void dispose()
-    {
-        positions_ = null;
-    }
-
 
     @Override
     public String toString() {
@@ -301,9 +290,9 @@ public abstract class Board implements BoardInterface, Cloneable
         int nCols = getNumCols();
         for ( int i = 1; i <= nRows; i++ )   {
           for ( int j = 1; j <= nCols; j++ ) {
-              BoardPosition p1 = this.getPosition(i,j);
-              if (p1.isOccupied()) {
-                  bldr.append(p1.getPiece());
+              BoardPosition pos = this.getPosition(i,j);
+              if (pos.isOccupied()) {
+                  bldr.append(pos.getPiece());
               }
               else {
                   bldr.append(" _ ");
@@ -315,24 +304,25 @@ public abstract class Board implements BoardInterface, Cloneable
     }
 
     /**
+     * Check the 4 corners
      * @return true if the specified BoardPosition is on the corder of the board
-     * @param boardPosition
+     * @param boardPosition position to see if in corner of board.
      */
     public boolean isInCorner(BoardPosition boardPosition)
     {
-        // check the 4 corners
         return ((boardPosition.getRow()==1 && boardPosition.getCol()==1) ||
-                     (boardPosition.getRow()== getNumRows() && boardPosition.getCol()== getNumCols()) ||
-                     (boardPosition.getRow()== getNumRows()  && boardPosition.getCol()==1) ||
-                     (boardPosition.getRow()==1 && boardPosition.getCol()== getNumCols()));
+                (boardPosition.getRow()== getNumRows() && boardPosition.getCol()== getNumCols()) ||
+                (boardPosition.getRow()== getNumRows()  && boardPosition.getCol()==1) ||
+                (boardPosition.getRow()==1 && boardPosition.getCol()== getNumCols()));
     }
 
     /**
      * @return true if the specified BoardPosition is on the edge of the board
-     * @param boardPosition
+     * @param boardPosition position to see if on edge of board.
      */
     public boolean isOnEdge(BoardPosition boardPosition)
     {
-        return (boardPosition.getRow()==1 || boardPosition.getRow()== getNumRows() || boardPosition.getCol()==1 || boardPosition.getCol()== getNumCols());
+        return (boardPosition.getRow()==1 || boardPosition.getRow()== getNumRows()
+                || boardPosition.getCol()==1 || boardPosition.getCol()== getNumCols());
     }
 }

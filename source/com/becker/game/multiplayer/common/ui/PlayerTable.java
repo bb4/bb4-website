@@ -88,7 +88,8 @@ public abstract class PlayerTable extends TableBase
         PlayerTableModel model = (PlayerTableModel)getModel();
         for (int i=nSelected-1; i>=0; i--) {
             int selRow = selectedRows[i];
-            System.out.println("adding this to delete list:"+ model.getDataVector().elementAt(selRow).getClass().getName());
+            GameContext.log(0, "adding this to delete list:"
+                    + model.getDataVector().elementAt(selRow).getClass().getName());
             deletedRows_.add((Vector)model.getDataVector().elementAt(selRow));
             model.removeRow(selRow);
         }

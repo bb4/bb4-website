@@ -147,10 +147,9 @@ public class GamePiece implements Serializable
     {
         StringBuffer sb = new StringBuffer( "" );
         if ( ownedByPlayer1_ )
-            sb.append( "p1 " );
+            sb.append( " X" );
         else
-            sb.append( "p2 " );
-        sb.append( type_ );
+            sb.append( " O" );
         return sb.toString();
     }
 }

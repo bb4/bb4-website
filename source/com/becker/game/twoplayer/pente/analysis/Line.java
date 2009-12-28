@@ -104,12 +104,10 @@ public class Line {
             // first check for a special case where there was a blocking move in the
             // middle. In this case we break the string into an upper and lower
             // half and evaluate each separately.
-            ////System.out.println("Interesting pattern: " + line + "  pos="+ pos);
             return (evalLine( player1Perspective, pos, minpos, pos)
                     + evalLine( player1Perspective, pos, pos, maxpos));
         }
         int wt = getWeight(opponentSymb, pos, minpos, maxpos);
-        System.out.println("evaluating " + line.substring(minpos, maxpos+1) + " wt=" + wt);
         return wt;
     }
 

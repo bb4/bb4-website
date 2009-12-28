@@ -146,7 +146,7 @@ public class GalacticController extends MultiGameController
 
         // show message when done.
         if (isDone()) {
-            System.out.println( "advanceToNextPlayer done" );
+            GameContext.log(1, "advanceToNextPlayer done" );
             ((GameBoardViewer)getViewer()).sendGameChangedEvent(null);
             return 0;
         }

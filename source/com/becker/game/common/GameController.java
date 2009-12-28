@@ -139,15 +139,6 @@ public abstract class GameController
         return board_.undoMove();
     }
 
-
-    /**
-     * clean things up to avoid memory leaks.
-     */
-    public final void dispose()
-    {
-        board_.dispose();
-    }
-
     /**
      * save the current state of the game to a file
      * Use this version when an error occurred and you want to dump the state.

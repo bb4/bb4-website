@@ -110,10 +110,10 @@ public abstract class MultiGameController extends GameController
     /**
      * @return the server connection.
      */
+    @Override
     protected IServerConnection createServerConnection() {
 
-        IServerConnection sc =  new ServerConnection(getServerPort());
-        return sc;
+        return new ServerConnection(getServerPort());
     }
 
     public boolean isOnlinePlayAvailable() {
@@ -157,7 +157,8 @@ public abstract class MultiGameController extends GameController
 
         if (!isDone()) {
             if (getCurrentPlayer().isSurrogate()) {
-                System.out.println("about to do surrogate move for " + getCurrentPlayer() + " in controller="+this + " in thread="+Thread.currentThread().getName());
+                GameContext.log(0, "about to do surrogate move for " + getCurrentPlayer()
+                        + " in controller="+this + " in thread="+Thread.currentThread().getName());
                 pviewer.doSurrogateMove((SurrogateMultiPlayer)getCurrentPlayer());
             }         
             else if (!getCurrentPlayer().isHuman()) {

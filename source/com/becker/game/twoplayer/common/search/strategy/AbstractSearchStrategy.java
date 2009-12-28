@@ -13,15 +13,13 @@ import java.util.List;
 
 /**
  *  This is an abstract base class for a search strategy.
- *  It's sublcasses define the key search algorithms for 2 player zero sum games with
- *  perfect information.
+ *  It's sublcasses define the key search algorithms for 2 player zero sum games with perfect information.
  *  Create one of these right before you do a search.
  *
  *  @author Barry Becker
  */
 public abstract class AbstractSearchStrategy implements SearchStrategy
 {
- 
     /** if true, then use alpha-beta pruning. */
     protected final boolean alphaBeta_;
 
@@ -47,7 +45,7 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
     ParameterArray weights_;
 
     /** True when search is paused. */
-    private boolean paused_ = false;
+    private volatile boolean paused_ = false;
 
     /** The optional ui component that will be updated to reflect the current search tree.  */
     protected GameTreeViewable gameTreeListener_;
@@ -79,7 +77,7 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
 
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public TwoPlayerMove search( TwoPlayerMove lastMove, 
                                                      int alpha, int beta, SearchTreeNode parent ) {
@@ -87,14 +85,14 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
     }
 
     /**
-     * @see SearchStrategy.search method doc
+     * {@inheritDoc}
      */
     protected TwoPlayerMove searchInternal( TwoPlayerMove lastMove,
                                           int depth, 
                                           int alpha, int beta, SearchTreeNode parent ) {
 
         if ( depth == 0 || searchable_.done( lastMove, false ) ) {
-            if ( quiescence_ && depth == 0 )
+            if ( quiescence_ && depth == 0)
                 return quiescentSearch(lastMove, depth, alpha, beta, parent);
             lastMove.setInheritedValue(lastMove.getValue());
             return lastMove;
@@ -137,12 +135,14 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
     /**
      * This continues the search in situations where the board position is not stable.
      * For example, perhaps we are in the middle of a piece exchange
+     * @return the move to use after employing quiescent search.
      */
     protected abstract TwoPlayerMove quiescentSearch( TwoPlayerMove lastMove,
                                           int depth, int alpha, int beta, SearchTreeNode parent );
 
     /**
      * add a move to the visual game tree (if parent not null).
+     * @return the node added to the tree.
      */
     protected SearchTreeNode addNodeToTree( SearchTreeNode parent, TwoPlayerMove theMove,
                                          int alpha, int beta, int i )

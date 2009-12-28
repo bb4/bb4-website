@@ -4,10 +4,10 @@ import com.becker.game.common.GameController;
 import junit.framework.*;
 import com.becker.game.twoplayer.common.search.Searchable;
 
-
 /**
  * Verify that all the methods in the Searchable interface work as expected.
  * Derived test classes will excersize these methods for specific game instances.
+ *
  * @author Barry Becker
  */
 public abstract class SearchableBaseTst extends TestCase {
@@ -19,11 +19,6 @@ public abstract class SearchableBaseTst extends TestCase {
 
     protected static final String PREFIX = "board/";
 
-
-    /**
-     * common initialization for all go test cases.
-     * Override setOptionOverides if you want different search parameters.
-     */
     @Override
     protected void setUp() throws Exception {
         super.setUp();
@@ -36,7 +31,6 @@ public abstract class SearchableBaseTst extends TestCase {
      */
     protected abstract GameController createController();
 
-
     /** verify that we can retrieve the lookahead value. */
     public abstract void testLookaheadValue();
 
@@ -45,5 +39,4 @@ public abstract class SearchableBaseTst extends TestCase {
 
     /** verify that we can retrieve the quiescence value. */
     public abstract void testQuiescenceValue();
-
 }

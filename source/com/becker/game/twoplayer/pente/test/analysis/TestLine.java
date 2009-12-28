@@ -222,7 +222,7 @@ public class TestLine extends TestCase  {
     private void checkRecordedPatterns(String[] expectedPatterns) {
         List<String> checkedPatterns = line.getPatternsChecked();
         int i=0;
-        System.out.println("checkedPatterns = " + TstUtil.quoteStringList(checkedPatterns));
+        //System.out.println("checkedPatterns = " + TstUtil.quoteStringList(checkedPatterns));
         assertEquals(expectedPatterns.length, checkedPatterns.size());
         for (String pat : checkedPatterns) {
             assertEquals(expectedPatterns[i++], pat);

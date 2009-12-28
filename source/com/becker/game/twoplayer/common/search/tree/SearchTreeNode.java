@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.common.search.tree;
 
+import com.becker.common.Location;
 import com.becker.common.util.Util;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  *  Represents a move/node in the game tree.
  *  Each SearchTreeNode contains a Move as its userObject.
- *  When showing the game tree graphicall, these variables can take a lot of space
+ *  When showing the game tree graphically, these variables can take a lot of space
  *  since they are in every node in the tree. Still it is better to have them here than
  *  in the move structure so that when we are not in debug mode the space is not used.
  *
@@ -36,12 +37,10 @@ public class SearchTreeNode extends DefaultMutableTreeNode
     private double beta_ = 0;
 
     /**
-     * Used to layout the tree
-     * roughly based on the num descendants.
+     * Used to layout the tree. Roughly based on the num descendants.
      * initialized by GameTreeViewer.
      */
     private int spaceAllocation_ = 0;
-
 
     /**
      * provide some useful info about the node, like why it was pruned.
@@ -51,9 +50,7 @@ public class SearchTreeNode extends DefaultMutableTreeNode
     /**
      * location in the boardviewer
      */
-    private int xLocation_;
-    private int yLocation_;
-
+    private Location location_;
 
 
     /**
@@ -132,7 +129,7 @@ public class SearchTreeNode extends DefaultMutableTreeNode
         if (children == null)
             return null;
         Enumeration enumeration = children();
-        int i = 0;
+
         while (enumeration.hasMoreElements()) {
             SearchTreeNode node = (SearchTreeNode)enumeration.nextElement();
             TwoPlayerMove m = (TwoPlayerMove)node.getUserObject();
@@ -153,7 +150,7 @@ public class SearchTreeNode extends DefaultMutableTreeNode
         if ( pruned_ )
             s.append( " *PRUNED*" );
         else
-            s.append( " a=" + Util.formatNumber(alpha_) + " b=" + Util.formatNumber(beta_) );
+            s.append(" a=").append(Util.formatNumber(alpha_)).append(" b=").append(Util.formatNumber(beta_));
 
         return s.toString();
     }
@@ -198,19 +195,11 @@ public class SearchTreeNode extends DefaultMutableTreeNode
         this.comment_ = comment;
     }
 
-    public int getX() {
-        return xLocation_;
+    public Location getLocation() {
+        return location_;
     }
 
-    public void setX(int x) {
-        this.xLocation_ = x;
-    }
-
-    public int getY() {
-        return yLocation_;
-    }
-
-    public void setY(int y) {
-        this.yLocation_ = y;
+    public void setLocation(Location loc) {
+        this.location_ = loc;
     }
 }

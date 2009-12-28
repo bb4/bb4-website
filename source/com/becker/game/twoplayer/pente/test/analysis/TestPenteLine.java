@@ -60,13 +60,13 @@ public class TestPenteLine extends TestCase  {
                            String[] expectedPatternsChecked) {
         LineRecorder line = createLine(linePattern);
         int worth = line.evalLine(player1persp, position, 0, linePattern.length()-1);
-        System.out.println("p1Persp=" + player1persp + " " + line +" pos="+ position);
+        //System.out.println("p1Persp=" + player1persp + " " + line +" pos="+ position);
 
         assertEquals("unexpected score for pattern "+ linePattern + " pos=" + position + " player1Persp="+ player1persp,
                 expectedWorth, worth);
 
         List<String> checkedPats = line.getPatternsChecked();
-        System.out.println("pats="+ TstUtil.quoteStringList(checkedPats));
+        //System.out.println("pats="+ TstUtil.quoteStringList(checkedPats));
         assertEquals(expectedPatternsChecked.length, checkedPats.size());
         int i = 0;
         for (String p : checkedPats) {

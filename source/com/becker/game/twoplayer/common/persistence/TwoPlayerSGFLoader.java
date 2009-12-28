@@ -2,6 +2,7 @@ package com.becker.game.twoplayer.common.persistence;
 
 import ca.dj.jigo.sgf.*;
 import ca.dj.jigo.sgf.tokens.*;
+import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.common.persistence.tokens.Player1MoveToken;
 import com.becker.game.twoplayer.common.persistence.tokens.Player1NameToken;
 import com.becker.game.twoplayer.common.persistence.tokens.Player2MoveToken;
@@ -88,7 +89,7 @@ public class TwoPlayerSGFLoader extends SGFLoader {
       // subclasses of SGFToken.
       //
       token.parse( st );
-      //System.out.println("parsed token = " + tokenName + " "   + token.toString());
+      GameContext.log(2, "parsed token = " + tokenName + " "   + token.toString());
 
       return token;
   }

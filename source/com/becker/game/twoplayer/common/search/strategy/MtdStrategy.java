@@ -23,7 +23,6 @@ public final class MtdStrategy implements SearchStrategy
     private ParameterArray weights_;
     /**
      * Construct NegaMax the strategy given a controller interface.
-     * @param controller
     */
     public MtdStrategy( Searchable controller, ParameterArray weights )
     {
@@ -46,7 +45,7 @@ public final class MtdStrategy implements SearchStrategy
 
 
     private TwoPlayerMove searchInternal( TwoPlayerMove lastMove, 
-                                                                     int depth, int f,  SearchTreeNode parent )
+                                          int depth, int f,  SearchTreeNode parent )
     {
         int g = f;
         int upperBound = SearchStrategy.INFINITY;
