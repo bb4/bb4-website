@@ -20,12 +20,12 @@ public abstract class TwoPlayerBoard extends Board
      * @param move the move to make, if possible.
      * @return false if the move is illegal.
      */
+    @Override
     protected boolean makeInternalMove( Move move )
     {
         TwoPlayerMove m = (TwoPlayerMove)move;
         if ( !m.isPassingMove() ) {
             BoardPosition pos = positions_[m.getToRow()][m.getToCol()];
-            System.out.println("pos=" + pos + " move="+ move);
             assert(m.getPiece() != null): "moves piece was null :" + m;
             pos.setPiece(m.getPiece());  // need copy?  I don't think so.
             GamePiece piece = pos.getPiece();
@@ -70,4 +70,30 @@ public abstract class TwoPlayerBoard extends Board
             return pos.getPiece().isOwnedByPlayer1()? 1:2;
         }
     }
+
+    @Override
+    public String toString() {
+        StringBuilder bldr = new StringBuilder(1000);
+        bldr.append("\n");
+        int nRows = getNumRows();
+        int nCols = getNumCols();
+        TwoPlayerMove m = (TwoPlayerMove) getLastMove();
+        for ( int i = 1; i <= nRows; i++ )   {
+          for ( int j = 1; j <= nCols; j++ ) {
+              BoardPosition pos = this.getPosition(i,j);
+              if (pos.isOccupied()) {
+                  if (pos.getLocation().equals(m.getToLocation()))
+                      bldr.append("["+pos.getPiece()+"]");
+                  else
+                      bldr.append(pos.getPiece());
+              }
+              else {
+                  bldr.append(" _ ");
+              }
+           }
+           bldr.append("\n");
+        }
+        return bldr.toString();
+    }
+
 }

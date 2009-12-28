@@ -95,16 +95,14 @@ public final class BoardDebugUtil {
         StringBuffer blackGroupsText = new StringBuffer(showBlack? "The black groups are :\n" : "" );
         StringBuffer whiteGroupsText = new StringBuffer((showBlack?"\n":"") + (showWhite? "The white groups are :\n" : ""));
 
-        Iterator it = groups.iterator();
-        while ( it.hasNext() ) {
-            GoGroup group = (GoGroup) it.next();
-            if ( group.isOwnedByPlayer1() && (showBlack)) {
+        for (Object group1 : groups) {
+            GoGroup group = (GoGroup) group1;
+            if (group.isOwnedByPlayer1() && (showBlack)) {
                 //blackGroupsText.append( "black group owner ="+ group.isOwnedByPlayer1());
-                blackGroupsText.append( group );
-            }
-            else if ( !group.isOwnedByPlayer1()  && showWhite) {
+                blackGroupsText.append(group);
+            } else if (!group.isOwnedByPlayer1() && showWhite) {
                 //whiteGroupsText.append( "white group owner ="+ group.isOwnedByPlayer1());
-                whiteGroupsText.append( group );
+                whiteGroupsText.append(group);
             }
         }
         groupText.append( blackGroupsText );

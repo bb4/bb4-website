@@ -1,6 +1,7 @@
 package com.becker.game.twoplayer.common.ui;
 
 import com.becker.common.ColorMap;
+import com.becker.common.Location;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 
@@ -162,14 +163,16 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
         Object[] pathNodes = path.getPath();
         SearchTreeNode lastNode = (SearchTreeNode)pathNodes[0];
         int diameter = HL_NODE_DIAMETER;
-        g2.drawOval(lastNode.getX() - HL_NODE_RADIUS, lastNode.getY() - HL_NODE_RADIUS, diameter, diameter);
+        Location lastLoc = lastNode.getLocation();
+        g2.drawOval(lastLoc.getX() - HL_NODE_RADIUS, lastLoc.getY() - HL_NODE_RADIUS, diameter, diameter);
         for (int i=1; i<pathNodes.length; i++) {
             SearchTreeNode node = (SearchTreeNode)pathNodes[i];
+            Location nodeLoc = node.getLocation();
             TwoPlayerMove m = (TwoPlayerMove)node.getUserObject();
             g2.setColor(colormap_.getColorForValue(m.getInheritedValue()));
-            g2.drawLine(lastNode.getX(),lastNode.getY(), node.getX(), node.getY());
+            g2.drawLine(lastLoc.getX(),lastLoc.getY(), nodeLoc.getX(), nodeLoc.getY());
             g2.setColor(colormap_.getColorForValue(m.getValue()));
-            g2.drawOval(node.getX()-HL_NODE_RADIUS, node.getY()-HL_NODE_RADIUS, diameter, diameter);
+            g2.drawOval(nodeLoc.getX() - HL_NODE_RADIUS, nodeLoc.getY() - HL_NODE_RADIUS, diameter, diameter);
             lastNode = node;
         }
     }
@@ -221,8 +224,7 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
         g2.setColor( colormap_.getColorForValue(m.getValue()));
         int x = MARGIN + (int) (width_ * (offset + node.getSpaceAllocation() / 2.0) / totalAtLevel_[depth]);
         int y = MARGIN + depth*levelHeight_;
-        node.setX(x);
-        node.setY(y);
+        node.setLocation(new Location(x, y));
 
         int width = 2;
         if (m.isSelected()) {

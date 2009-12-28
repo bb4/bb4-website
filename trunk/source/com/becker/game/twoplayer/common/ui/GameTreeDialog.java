@@ -284,7 +284,7 @@ public final class GameTreeDialog extends AbstractDialog
             // add expected successive moves to show likely outcome.
             moveList = addSuccessiveMoves(moveList, lastNode);
         }
-        //System.out.println("chainlen before="+chainLength+" after="+moveList.size());
+        GameContext.log(3, "chainlen before="+chainLength+" after="+moveList.size());
         chainLength = moveList.size();
         viewer.showMoveSequence( moveList, oldChainLength_, lastNode.getChildMoves() );
 
@@ -316,14 +316,13 @@ public final class GameTreeDialog extends AbstractDialog
     private synchronized void setMoveList( List moveList )
     {
         boardViewer_.reset();
-        // make sure that these are all permanent moves
-        Iterator it = moveList.iterator();
-        while ( it.hasNext() ) {
-            it.next();
-        }
+        // make sure that these are all permanent moves (what was this for?
+        //Iterator it = moveList.iterator();
+        //while ( it.hasNext() ) {
+        //    it.next();
+        //}
         // show in this debug window, and not the main viewer window.
         ((AbstractTwoPlayerBoardViewer)boardViewer_).showMoveSequence( moveList );
-
     }
 
 

@@ -154,7 +154,7 @@ public class Galaxy extends Board
     public void setNumPlanets(int numPlanets)
     {
         if (numPlanets > MAX_NUM_PLANETS) {
-            System.out.println( "You are not allowed to have more than "+ MAX_NUM_PLANETS );
+            GameContext.log(0, "You are not allowed to have more than "+ MAX_NUM_PLANETS );
             numPlanets_ = MAX_NUM_PLANETS;
         }
         numPlanets_ = numPlanets;
@@ -211,8 +211,8 @@ public class Galaxy extends Board
 
     private static void build()
     {
-        for (int i=0; i<planets_.size(); i++)
-            planets_.get(i).incrementYear();
+        for (Planet aPlanets_ : planets_)
+            aPlanets_.incrementYear();
     }
 
 

@@ -128,22 +128,21 @@ public class PenteController extends TwoPlayerController
                 TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
         {
             List<? extends TwoPlayerMove> moves = generateMoves( lastMove, weights, player1sPerspective );
-
             // now keep only those that result in a win.
             Iterator<? extends TwoPlayerMove> it = moves.iterator();
             while ( it.hasNext() ) {
                 TwoPlayerMove move = it.next();
-                if ( Math.abs( move.getInheritedValue() ) < WINNING_VALUE )
+                if ( Math.abs( move.getValue() ) < WINNING_VALUE )
                     it.remove();
-                else
+                else  {
                     move.setUrgent(true);
+                }
             }
-            if ( moves.size() > 0 )
-                GameContext.log( 3, "pente controller: the urgent moves are :" + moves );
             return moves;
         }
 
         /**
+         * Consider the delta big if >= w. Where w is the value of a near win.
          * @return true if the last move created a big change in the score
          */
         @Override
@@ -151,8 +150,6 @@ public class PenteController extends TwoPlayerController
         {
             double newValue = worth( lastMove, weights, player1sPerspective );
             double diff = newValue - lastMove.getValue();
-
-            // consider the delta big if >= w. Where w is the value of a near win.
             return (diff > getJeopardyWeight());
         }
 

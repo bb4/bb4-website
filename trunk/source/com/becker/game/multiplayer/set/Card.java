@@ -1,5 +1,7 @@
 package com.becker.game.multiplayer.set;
 
+import com.becker.game.common.GameContext;
+
 import java.util.*;
 
 /**
@@ -161,7 +163,6 @@ public class Card {
                     candidate.add(cards.get(k));
                     if (isSet(candidate))  {
                         sets.addAll(candidate);
-                        //System.out.println("set = "+ candidate);
                         if (terminateEarly)
                             return sets;
                     }
@@ -188,6 +189,6 @@ public class Card {
     public static void main(String[] args) {
 
         List deck = newDeck();
-        System.out.println("deck="+deck);
+        GameContext.log(0, "deck="+deck);
     }
 }

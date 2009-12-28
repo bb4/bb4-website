@@ -3,7 +3,6 @@ package com.becker.game.twoplayer.common.search.strategy;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.tree.GameTreeViewable;
-import com.becker.optimization.parameter.ParameterArray;
 
 /**
  * Interface for all SearchStrategies for 2 player games with perfect information.
@@ -13,10 +12,10 @@ import com.becker.optimization.parameter.ParameterArray;
 public interface SearchStrategy {
 
     /** anything greater than this is considered a won game. */
-    public static final int WINNING_VALUE = 4096;
+    int WINNING_VALUE = 4096;
 
     /** For our purposes, this is effectively infinity. */
-    public static final int INFINITY = 10000000;
+    int INFINITY = 10000000;
 
 
     /**
@@ -31,7 +30,7 @@ public interface SearchStrategy {
      * @return the chosen move (ie the best move) (may be null if no next move).
      */
     TwoPlayerMove search( TwoPlayerMove lastMove, 
-                                          int alpha, int beta, SearchTreeNode parent );
+                          int alpha, int beta, SearchTreeNode parent );
 
 
     /**
@@ -49,7 +48,7 @@ public interface SearchStrategy {
 
    /**
     * An optional game tree event listener. There can be at most one.
-    * @param listener
+    * @param listener event listener
     */
    void setGameTreeEventListener(GameTreeViewable listener);
 

@@ -1,5 +1,6 @@
 package com.becker.game.multiplayer.trivial.player;
 
+import com.becker.game.common.GameContext;
 import com.becker.game.multiplayer.trivial.*;
 import java.awt.Color;
 
@@ -16,7 +17,7 @@ public class TrivialRobotPlayer extends TrivialPlayer
     public TrivialRobotPlayer(String name, Color color )
     {        
         super(name,  color, false);    
-        System.out.println("created a robot with name="+name);
+        GameContext.log(0, "created a robot with name="+name);
     }
 
     /**

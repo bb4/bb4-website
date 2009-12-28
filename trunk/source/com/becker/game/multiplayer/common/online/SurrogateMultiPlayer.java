@@ -1,5 +1,6 @@
 package com.becker.game.multiplayer.common.online;
 
+import com.becker.game.common.GameContext;
 import com.becker.game.common.online.GameCommand;
 import com.becker.game.common.online.IServerConnection;
 import com.becker.game.common.online.OnlineChangeListener;
@@ -44,7 +45,8 @@ public  class SurrogateMultiPlayer extends MultiGamePlayer implements OnlineChan
         if (cmd.getName() == GameCommand.Name.DO_ACTION) {
             PlayerAction action = (PlayerAction) cmd.getArgument();
             if (action.getPlayerName().equals(name_)) {
-                System.out.println("Setting surrogate(" + player_.getName() + ") action="+action + " on "+this+",  Thread=" + Thread.currentThread().getName());
+                GameContext.log(0, "Setting surrogate(" + player_.getName()
+                        + ") action="+action + " on "+this+",  Thread=" + Thread.currentThread().getName());
                 player_.setAction(action);          
                 notifyAll();  // unblock the wait below                 
             }            

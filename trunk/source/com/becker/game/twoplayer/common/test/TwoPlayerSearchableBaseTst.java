@@ -16,6 +16,7 @@ import java.util.List;
  * Derived test classes will excersize these methods for specific game instances.
  * @author Barry Becker
  */
+@SuppressWarnings({"ClassWithTooManyMethods"})
 public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
 
     private static final int DEFAULT_DEBUG_LEVEL = 2;
@@ -86,6 +87,7 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
     }
 
     /** verify that we can retrieve the lookahead value. */
+    @Override
     public void testLookaheadValue() {
 
         Assert.assertEquals("Unexpected lookahead value.", DEFAULT_LOOKAHEAD, searchable.getOptions().getLookAhead());
@@ -94,6 +96,7 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
     }
 
     /** verify that we can retrieve the lookahead value. */
+    @Override
     public void testAlphaBetaValue() {
 
         Assert.assertEquals("Unexpected alphabeta value.", true, searchable.getOptions().getAlphaBeta());
@@ -102,6 +105,7 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
     }
 
     /** verify that we can retrieve the quiescence value. */
+    @Override
     public void testQuiescenceValue()  {
         Assert.assertEquals("Unexpected quiessence value.", false, searchable.getOptions().getQuiescence());
         getTwoPlayerOptions().setQuiescence(true);
@@ -214,12 +218,12 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
 
     /**  Verify that we generate a correct list of urgent moves.  */
     public void  testGenerateUrgentMoves() {
-        // there should not be any urgen moves at the very start of the gamel
+        // there should not be any urgent moves at the very start of the game.
          List moves = searchable.generateUrgentMoves(null, getController().getComputerWeights().getPlayer1Weights(), true);
          Assert.assertTrue("We expected move list to be non-null.", moves!= null );
          Assert.assertTrue("We expected no urgent moves at the start of the game.",  moves.size() == 0);
 
-         // load a typical game in the middle and verify that there are no urgent next moves.
+         // load a typical game in the beginning and verify that there are no urgent next moves.
 
          // load a critical game in the middle and verify that there are urgent next moves.
 
@@ -241,5 +245,4 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
         // load a critical game in the middle and verify a move that does put the other player in jeopardy.
 
     }
-
 }

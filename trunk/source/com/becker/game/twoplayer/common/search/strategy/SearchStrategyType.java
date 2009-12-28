@@ -58,7 +58,7 @@ public enum SearchStrategyType {
     /**
      * Constructor for eye type enum.
      *
-     * @param label message key
+     * @param labelKey message key
      */
     private SearchStrategyType(String labelKey) {
         labelKey_ = labelKey;
@@ -75,6 +75,7 @@ public enum SearchStrategyType {
     /**
      * Factory method for creating the search strategy to use.
      * Do not call the constructor directly.
+     *
      * @return the search method to use
      */
     public abstract SearchStrategy createStrategy(Searchable s, ParameterArray weights);
@@ -83,6 +84,7 @@ public enum SearchStrategyType {
      * How to sort when determining subset of best moves to try.
      * Negamax and NegaScout type algorithms always maximize - so want a
      * descending order. For minimax, it depends on which player is moving.
+     *
      * @param player1 true if player 1's turn.
      * @param playerOnesPerspective true if scores are from player 1's perspective.
      * @return true if we should short the nodes in ascending order (best move first).

@@ -163,7 +163,7 @@ public class NegaMaxStrategy extends AbstractSearchStrategy
             }
         }
         if (bestMove == null) {
-            System.out.println("returning last move as bestmove");
+            GameContext.log(3, "returning last move as bestmove");
             bestMove = lastMove;   // avoid returning null
         } else {
             bestMove.setSelected(true);

@@ -20,10 +20,12 @@ public class TestTicTacToeSearchable extends TwoPlayerSearchableBaseTst {
     /**
      * Create the controller containing the searchable to test.
      */
+    @Override
     protected  GameController createController() {
         return new TicTacToeController();
     }
 
+    @Override
     protected String getTestCaseDir() {
         return EXTERNAL_TEST_CASE_DIR + "tictactoe/cases/searchable/";
     }
@@ -31,6 +33,7 @@ public class TestTicTacToeSearchable extends TwoPlayerSearchableBaseTst {
     /**
      * Create the game options
      */
+    @Override
     protected TwoPlayerOptions createTwoPlayerGameOptions() {
         // limit level and branching.
         return new TwoPlayerOptions();
@@ -39,6 +42,7 @@ public class TestTicTacToeSearchable extends TwoPlayerSearchableBaseTst {
     /**
      * @return an initial move by player one.
      */
+    @Override
     protected  TwoPlayerMove createInitialMove() {
         return  TwoPlayerMove.createMove(2, 2,   0, new GamePiece(true));
     }

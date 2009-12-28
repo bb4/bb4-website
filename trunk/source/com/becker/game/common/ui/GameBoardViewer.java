@@ -379,7 +379,6 @@ public abstract class GameBoardViewer extends JPanel
      */
     public void dispose()
     {
-        controller_.dispose();
         removeMouseListener( this );
         removeGameChangedListener( this );
     }

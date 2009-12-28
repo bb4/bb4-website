@@ -133,7 +133,7 @@ public class GalacticPlayerTable extends PlayerTable implements TableModelListen
      */
     public void tableChanged(TableModelEvent e) {
         //To change body of implemented methods use File | Settings | File Templates.
-        System.out.println("table changed " + e.getFirstRow() + " col="+ e.getColumn());
+        GameContext.log(0, "table changed " + e.getFirstRow() + " col="+ e.getColumn());
         if (e.getColumn() == HUMAN_INDEX)  {
             int row = e.getFirstRow();
             TableModel m = table_.getModel();

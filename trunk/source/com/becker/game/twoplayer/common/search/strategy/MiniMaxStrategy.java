@@ -102,12 +102,12 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
      */
     @Override
     protected TwoPlayerMove quiescentSearch( TwoPlayerMove lastMove,
-                                                    int depth, int oldAlpha, int oldBeta, SearchTreeNode parent )
+                                             int depth, int oldAlpha, int oldBeta, SearchTreeNode parent )
     {
         int alpha = oldAlpha;
         int beta = oldBeta;
         lastMove.setInheritedValue(lastMove.getValue());
-        if ( depth >= maxQuiescentDepth_) {
+        if ( depth >= maxQuiescentDepth_ || searchable_.done( lastMove, false )) {
             return lastMove;
         }
         if ( searchable_.inJeopardy( lastMove, weights_,  true )) {
@@ -132,21 +132,20 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
         // generate those moves that are critically urgent
         // if you generate too many, then you run the risk of an explosion in the search tree
         // these moves should be sorted from most to least urgent.
-        List list = searchable_.generateUrgentMoves( lastMove, weights_, fromPlayer1sPerspective(lastMove) );
+        List<? extends TwoPlayerMove> list =
+                searchable_.generateUrgentMoves( lastMove, weights_, fromPlayer1sPerspective(lastMove) );
 
-        if ( list == null || list.isEmpty() ) {
+        if ( list.isEmpty() ) {
             return lastMove; // nothing to check
         }
 
         double bestInheritedValue = -SearchStrategy.INFINITY;
         if ( player1 ) bestInheritedValue = SearchStrategy.INFINITY;
-        TwoPlayerMove bestMove = (TwoPlayerMove) list.get(0);
+        TwoPlayerMove bestMove = list.get(0);
         movesConsidered_ += list.size();
-        Iterator it = list.iterator();
         int i = 0;
 
-        while ( it.hasNext() ) {
-            TwoPlayerMove theMove = (TwoPlayerMove) it.next();
+        for (TwoPlayerMove theMove : list) {
             searchable_.makeInternalMove( theMove );
             SearchTreeNode child = addNodeToTree(parent,  theMove, alpha, beta, i++ );
 
