@@ -34,22 +34,27 @@ public final class TicTacToePatterns extends Patterns
      /**
       * This is how many in a row are needed to win
       */
+    @Override
     public int getWinRunLength() {
         return WIN_RUN_LENGTH;
     }
 
+    @Override
     protected int getNumPatterns() {
         return NUM_PATTERNS;
     }
 
+    @Override
     public int getMinInterestingLength() {
         return 2;
     }
 
+    @Override
     protected String getPatternString(int i) {
         return patternString[i];
     }
 
+    @Override
     protected int getWeightIndex(int i) {
         return weightIndex[i];
     }

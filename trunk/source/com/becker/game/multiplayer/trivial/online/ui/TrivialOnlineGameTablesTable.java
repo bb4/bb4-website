@@ -30,6 +30,7 @@ public class TrivialOnlineGameTablesTable extends MultiPlayerOnlineGameTablesTab
     }
 
 
+    @Override
     protected Object[] getRowObject(OnlineGameTable onlineTable, boolean localPlayerAtTable)
     {
         Object d[] = new Object[getNumColumns()];
@@ -42,11 +43,13 @@ public class TrivialOnlineGameTablesTable extends MultiPlayerOnlineGameTablesTab
         return d;
     }
 
+    @Override
     public OnlineGameTable createOnlineTable(String ownerPlayerName, MultiGameOptions options) {
         Player player = createPlayerForName(ownerPlayerName);
         return new OnlineTrivialTable(getUniqueName(), player, options);
     }
 
+    @Override
     public Player createPlayerForName(String playerName) {
         return new TrivialHumanPlayer(playerName,  getRandomColor());
     }

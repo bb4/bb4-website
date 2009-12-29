@@ -23,6 +23,7 @@ public class OnlineTrivialManagerPanel extends MultiPlayerOnlineManagerPanel {
         super(viewer, dlg);
     }
 
+    @Override
     protected MultiPlayerOnlineGameTablesTable createOnlineGamesTable(String playersName,
                                                                       TableButtonListener tableButtonListener) {
         return new TrivialOnlineGameTablesTable(tableButtonListener);
@@ -31,6 +32,7 @@ public class OnlineTrivialManagerPanel extends MultiPlayerOnlineManagerPanel {
     /**
      * You are free to set your own options for the table that you are creating.
      */
+    @Override
     protected GameOptionsDialog createNewGameTableDialog() {
         return new TrivialOptionsDialog(null, controller_);
     }

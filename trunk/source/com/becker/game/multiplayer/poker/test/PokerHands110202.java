@@ -149,7 +149,7 @@ class PokerHands110202 {
             }
         }
 
-        private Rank(String symbol) {
+        Rank(String symbol) {
             symbol_ = symbol;
 
         }

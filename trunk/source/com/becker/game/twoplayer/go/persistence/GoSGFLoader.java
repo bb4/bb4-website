@@ -27,6 +27,7 @@ public class GoSGFLoader extends SGFLoader {
    *
    * @return An SGFToken representing a piece of information about the game.
    */
+  @Override
   protected SGFToken readToken( StreamTokenizer st )
     throws IOException, SGFException
   {

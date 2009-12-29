@@ -38,6 +38,7 @@ final class GoTreeCellRenderer extends GameTreeCellRenderer
         setColorMap(COLORMAP);
     }
 
+    @Override
     public Component getTreeCellRendererComponent(
             JTree tree, Object value,
             boolean sel, boolean expanded,
@@ -57,6 +58,7 @@ final class GoTreeCellRenderer extends GameTreeCellRenderer
         return this;
     }
 
+    @Override
     protected Color getBGColor( Object value )
     {
         return ROW_BG_COLOR;
@@ -66,6 +68,7 @@ final class GoTreeCellRenderer extends GameTreeCellRenderer
     /**
       * Paints the value.  The background is filled based on selected.
       */
+    @Override
     public void paint(Graphics g) {
         Color bColor;
 

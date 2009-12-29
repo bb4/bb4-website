@@ -52,6 +52,7 @@ public abstract class TallyDialog extends OptionsDialog
     /**
      * ui initialization of the tree control.
      */
+    @Override
     protected JComponent createDialogContent()
     {
         JPanel mainPanel = new JPanel();
@@ -86,6 +87,7 @@ public abstract class TallyDialog extends OptionsDialog
     /**
      *  create the OK Cancel buttons that go at the botton
      */
+    @Override
     protected JPanel createButtonsPanel()
     {
         JPanel buttonsPanel = new JPanel( new FlowLayout() );

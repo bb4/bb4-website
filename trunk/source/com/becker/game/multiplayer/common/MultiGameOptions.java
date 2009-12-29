@@ -34,6 +34,7 @@ public class MultiGameOptions extends GameOptions {
         return 2;
     }
 
+    @Override
     public int getMaxNumPlayers() {
         return maxNumPlayers_;
     }
@@ -58,6 +59,7 @@ public class MultiGameOptions extends GameOptions {
      * Check constraints on options to verify validity.
      * @return  null if no errors, return error messages if constraints violated.
      */
+    @Override
     public String testValidity() {
         String msgs = "";
         if (getNumRobotPlayers() > getMaxNumPlayers())  {

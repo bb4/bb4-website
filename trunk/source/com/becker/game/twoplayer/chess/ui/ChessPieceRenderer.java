@@ -12,7 +12,7 @@ import java.awt.*;
 
 /**
  * Singleton class that takes a chess piece and renders it for the ChessBoardViewer.
- * @see com.becker.game.twoplayer.chess.ui.ChessBoardViewer
+ * @see ChessBoardViewer
  * @author Barry Becker
  */
 public class ChessPieceRenderer  extends TwoPlayerPieceRenderer
@@ -71,6 +71,7 @@ public class ChessPieceRenderer  extends TwoPlayerPieceRenderer
      *  determines what color the player1 pieces should be
      *  ignored if using icons to represent the pieces.
      */
+    @Override
     public Color getPlayer1Color()
     {
         return DEFAULT_PLAYER1_COLOR;
@@ -80,6 +81,7 @@ public class ChessPieceRenderer  extends TwoPlayerPieceRenderer
      *  determines what color the player2 pieces should be
      *  ignored if using icons to represent the pieces.
      */
+    @Override
     public Color getPlayer2Color()
     {
         return DEFAULT_PLAYER2_COLOR;
@@ -88,6 +90,7 @@ public class ChessPieceRenderer  extends TwoPlayerPieceRenderer
     /**
      * this draws the actual chess piece
      */
+    @Override
     public void render( Graphics2D g2, BoardPosition position, int cellSize, int margin, Board b)
     {
         ChessPiece piece = (ChessPiece)position.getPiece();

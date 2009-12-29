@@ -19,9 +19,11 @@ public class BlockadeSGFLoader extends TwoPlayerSGFLoader {
     public BlockadeSGFLoader() {
     }
 
+    @Override
     protected TwoPlayerMoveToken createPlayer1MoveToken() {
         return new Player1BlockadeMoveToken();
     }
+    @Override
     protected TwoPlayerMoveToken createPlayer2MoveToken() {
         return new Player2BlockadeMoveToken();
     }

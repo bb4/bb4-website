@@ -49,6 +49,7 @@ public class PokerPlayerTable extends PlayerTable
     /**
      * @return  the players represented by rows in the table
      */
+    @Override
     public List<? extends Player> getPlayers()
     {
         TableModel model = table_.getModel();
@@ -69,6 +70,7 @@ public class PokerPlayerTable extends PlayerTable
      * add a row based on a player object
      * @param player to add
      */
+    @Override
     protected void addRow(Object player)
     {
         Player p = (Player) player;
@@ -81,6 +83,7 @@ public class PokerPlayerTable extends PlayerTable
     }
 
 
+    @Override
     protected Player createPlayer() {
         int ct = table_.getRowCount();
         Color newColor = PokerPlayer.getNewPlayerColor(getPlayers());

@@ -102,7 +102,6 @@ public abstract class GameController
         return 0;
     }
 
-
     /**
      *  @return the player that goes first.
      */
@@ -110,7 +109,6 @@ public abstract class GameController
     {
         return getPlayers().get(0);
     }
-
 
     /**
      * @return the board representation object.

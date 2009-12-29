@@ -290,6 +290,7 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
     /**
      * This renders the current tree to the canvas
      */
+    @Override
     protected synchronized void paintComponent( Graphics g )
     {
 

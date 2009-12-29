@@ -114,6 +114,7 @@ public class GalacticPlayer extends MultiGamePlayer
     /**
      * A galactic action is a set of orders for directing ships to planets.
      */
+    @Override
     public PlayerAction getAction(MultiGameController controller) {
         return new GalacticAction(getName(), getOrders());
     }
@@ -121,6 +122,7 @@ public class GalacticPlayer extends MultiGamePlayer
     /**
      * A galactic action is a set of orders for directing ships to planets.
      */
+    @Override
     public void setAction(PlayerAction action) {
         setOrders(((GalacticAction) action).getOrders());
     }
@@ -170,6 +172,7 @@ public class GalacticPlayer extends MultiGamePlayer
         return totalCapacity;
     }
 
+    @Override
     protected String additionalInfo() {
         StringBuffer sb = new StringBuffer();   
         sb.append("Fleet size: "+getTotalNumShips());

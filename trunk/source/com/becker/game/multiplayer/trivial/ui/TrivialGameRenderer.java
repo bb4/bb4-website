@@ -41,9 +41,11 @@ public class TrivialGameRenderer extends MultiGameBoardRenderer
      * draw a grid of some sort if there is one.
      * none by default.
      */
+    @Override
     protected void drawGrid(Graphics2D g2, int startPos, int rightEdgePos, int bottomEdgePos, int start,
                             int nrows1, int ncols1, int gridOffset) {}
 
+    @Override
     protected void drawBackground( Graphics g, Board board, int startPos, int rightEdgePos, int bottomEdgePos,
                                    int panelWidth, int panelHeight )
     {
@@ -54,6 +56,7 @@ public class TrivialGameRenderer extends MultiGameBoardRenderer
     /**
      * Draw the pieces and possibly other game markers for both players.
      */
+    @Override
     protected void drawMarkers( GameControllerInterface controller, Graphics2D g2 )
     {
         // draw a backround circle for the player whose turn it is

@@ -30,6 +30,7 @@ public class SetToolBar extends GameToolBar {
         super(texture, listener);
     }
 
+    @Override
     protected void addCustomToolBarButtons() {
 
         addButton_ = createToolBarButton( "Add Card", "Add another card to those shown", addImage );
@@ -42,6 +43,7 @@ public class SetToolBar extends GameToolBar {
         add( solveButton_ );
     }
 
+    @Override
     protected boolean hasUndoRedo() {
         return false;
     }

@@ -55,6 +55,7 @@ public class Galaxy extends Board
     /**
      *  reset the board to its initial state
      */
+    @Override
     public void reset()
     {
         super.reset();
@@ -175,6 +176,7 @@ public class Galaxy extends Board
 
 
     // must call reset() after changing the size
+    @Override
     public void setSize( int numRows, int numCols )
     {
         numRows_ = numRows;
@@ -197,6 +199,7 @@ public class Galaxy extends Board
      * @param move the move to make, if possible.
      * @return false if the move is illegal.
      */
+    @Override
     protected boolean makeInternalMove( Move move )
     {
         // first allow all the planets to build for the year
@@ -225,6 +228,7 @@ public class Galaxy extends Board
      * restoring the state of the game one full turn earlier
      * @@ todo
      */
+    @Override
     protected void undoInternalMove( Move move )
     {
         GameContext.log(0,  "undo no implemented yet." );

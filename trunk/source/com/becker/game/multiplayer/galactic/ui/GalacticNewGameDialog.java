@@ -17,6 +17,7 @@ public class GalacticNewGameDialog extends MultiPlayerNewGameDialog
     }
 
 
+    @Override
     protected PlayerTable createPlayerTable() {
         return  new GalacticPlayerTable( controller_.getPlayers());
     }

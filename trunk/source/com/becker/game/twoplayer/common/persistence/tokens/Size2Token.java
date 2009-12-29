@@ -22,6 +22,7 @@ public class Size2Token extends SGFToken implements InfoToken
     /**
      * Parse the dimensions of the board
      */
+    @Override
     protected boolean parseContent( StreamTokenizer st )  throws IOException, SGFException
     {
  

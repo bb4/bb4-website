@@ -54,6 +54,7 @@ public  class SurrogatePlayer extends Player implements OnlineChangeListener {
     }
 
 
+    @Override
     public boolean isSurrogate() {
         return true;
     }

@@ -38,6 +38,7 @@ public class CheckersController extends TwoPlayerController
     /**
      * this gets the checkers specific weights.
      */
+    @Override
     protected void initializeData()
     {
         weights_ = new CheckersWeights();
@@ -118,6 +119,7 @@ public class CheckersController extends TwoPlayerController
      *   a positive value means that player1 has the advantage.
      *   A big negative value means a good move for p2.
      */
+    @Override
     protected int worth( Move lastMove, ParameterArray weights )
     {
         int row, col, odd;
@@ -381,6 +383,7 @@ public class CheckersController extends TwoPlayerController
 
 
 
+    @Override
     public Searchable getSearchable() {
         return new CheckersSearchable();
     }

@@ -22,6 +22,7 @@ public class OnlineTrivialTable extends MultiPlayerOnlineTable {
     /**
      * add robot player i to the table.
      */
+    @Override
     protected void addRobotPlayer(int i) {
 
         String name = "Robot " + (i+1);

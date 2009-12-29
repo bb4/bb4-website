@@ -20,10 +20,12 @@ public class TestPenteSearchable extends TwoPlayerSearchableBaseTst {
     /**
      * Create the controller containing the searchable to test.
      */
+    @Override
     protected  GameController createController() {
         return new PenteController(10, 10);
     }
 
+    @Override
     protected String getTestCaseDir() {
         return EXTERNAL_TEST_CASE_DIR + "pente/cases/searchable/";
     }
@@ -31,6 +33,7 @@ public class TestPenteSearchable extends TwoPlayerSearchableBaseTst {
     /**
      * Create the game options
      */
+    @Override
     protected TwoPlayerOptions createTwoPlayerGameOptions() {
         return new TwoPlayerOptions();
     }
@@ -38,6 +41,7 @@ public class TestPenteSearchable extends TwoPlayerSearchableBaseTst {
     /**
      * @return an initial move by player one.
      */
+    @Override
     protected  TwoPlayerMove createInitialMove() {
         return  TwoPlayerMove.createMove(5, 5,   0, new GamePiece(true));
     }

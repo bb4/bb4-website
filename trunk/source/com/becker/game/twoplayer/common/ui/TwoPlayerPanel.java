@@ -100,6 +100,7 @@ public abstract class TwoPlayerPanel extends GamePanel
     /**
      * @return  the dialog used to specify various game options and parameters.
      */
+    @Override
     protected GameOptionsDialog createOptionsDialog( JFrame parent, GameController controller )
     {
         return new TwoPlayerOptionsDialog( parent, controller );

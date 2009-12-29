@@ -17,11 +17,9 @@ public abstract class ActionDialog extends OptionsDialog
 
     protected MultiGameController controller_;
 
-    private PlayerLabel playerLabel_;
-
     /**
      * constructor - create the tree dialog.
-     * @param pc pokerController
+     * @param gc pokerController
      */
     public ActionDialog(MultiGameController gc, Component parent)
     {
@@ -38,6 +36,7 @@ public abstract class ActionDialog extends OptionsDialog
     /**
      * ui initialization of the tree control.
      */
+    @Override
     protected JComponent createDialogContent()
     {
         setResizable( true );
@@ -65,7 +64,7 @@ public abstract class ActionDialog extends OptionsDialog
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createEtchedBorder(), BorderFactory.createEmptyBorder(5,5,5,5)));
-        playerLabel_ = new PlayerLabel();
+        PlayerLabel playerLabel_ = new PlayerLabel();
         playerLabel_.setPlayer(player_);
 
         JPanel gameSpecificInstructions = createGameInstructionsPanel();
@@ -83,6 +82,7 @@ public abstract class ActionDialog extends OptionsDialog
     /**
      *  create the OK/Cancel buttons that go at the bottom.
      */
+    @Override
     protected abstract JPanel createButtonsPanel();
 
 }

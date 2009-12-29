@@ -63,6 +63,7 @@ class GalacticOptionsDialog extends MultiGameOptionsDialog
     }
 
 
+    @Override
     public GameOptions getOptions() {
         return new GalacticOptions(maxNumPlayers_.getIntValue(),
                                    numRobotPlayers_.getIntValue(),

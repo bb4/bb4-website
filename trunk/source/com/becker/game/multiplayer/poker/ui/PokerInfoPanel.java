@@ -37,6 +37,7 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
         super(controller);
     }
 
+    @Override
     protected void createSubPanels()
     {
         add( createGeneralInfoPanel() );
@@ -54,6 +55,7 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
      * This panel shows information that is specific to the game type.
      * For Poker, we have a button that allows the current player to enter his commands
      */
+    @Override
     protected JPanel createCustomInfoPanel()
     {
         commandPanel_ = createSectionPanel("");
@@ -104,6 +106,7 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
     }
 
 
+    @Override
     protected String getMoveNumLabel()
     {
         return GameContext.getLabel("CURRENT_ROUND" + COLON);
@@ -168,6 +171,7 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
     /**
      * set the appropriate text and color for the player label.
      */
+    @Override
     protected void setPlayerLabel()
     {
         Player player = controller_.getCurrentPlayer();
@@ -192,6 +196,7 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
      * implements the GameChangedListener interface.
      * This method called whenever a move has been made.
      */
+    @Override
     public void gameChanged( GameChangedEvent gce )
     {
         if ( controller_ == null )

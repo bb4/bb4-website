@@ -23,6 +23,7 @@ public class TrivialOptions extends MultiGameOptions {
      * Verify trivial option constraints satisfied.
      * @return error messages to show in a dlg.
      */
+    @Override
     public String testValidity() {
         String superMsgs = super.testValidity();
         String msgs = "" + (superMsgs != null ? superMsgs : "");

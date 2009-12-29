@@ -37,6 +37,7 @@ public class PenteOptions extends TwoPlayerOptions {
     }
 
     
+    @Override
     public int getMaxQuiescentDepth() {
         return this.getLookAhead() + 2;
     }

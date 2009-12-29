@@ -197,7 +197,7 @@ public class BoardValidationUtil {
     public static void confirmNoEmptyStrings(Set groups)
     {
         for (Object g : groups)  {
-            for (Object s : ((GoGroup)g).getMembers()) {
+            for (Object s : ((GoSet) g).getMembers()) {
                 GoString string = (GoString) s;
                 assert (string.size() > 0): "There is an empty string in " + string.getGroup();
             }

@@ -71,6 +71,7 @@ public abstract class TwoPlayerController extends GameController
         createPlayers();
     }
 
+    @Override
     public GameOptions getOptions() {
         if (gameOptions_ == null) {
             gameOptions_ = createOptions();
@@ -134,7 +135,6 @@ public abstract class TwoPlayerController extends GameController
         importer.restoreFromFile(fileName);
     }
 
-
     /**
      * create the 2 players.
      */
@@ -146,7 +146,6 @@ public abstract class TwoPlayerController extends GameController
         setPlayers(players);
     }
 
-
     /**
      * @return the amount of progress (in precentage terms) that we have made toward finding the next computer move.
      */
@@ -154,7 +153,6 @@ public abstract class TwoPlayerController extends GameController
     {
        return strategy_;
     }
-
 
     /**
      * @return true if it is currently player1's turn.
@@ -171,7 +169,6 @@ public abstract class TwoPlayerController extends GameController
     {
         return player1sTurn_? getPlayer1() : getPlayer2();
     }
-
 
     /**
      * @return the player who went first.
@@ -192,7 +189,7 @@ public abstract class TwoPlayerController extends GameController
     /**
      *
      * @param moveList
-     * @return
+     * @return a randome move from the list of genereated moves.
      */
     protected TwoPlayerMove getRandomMove(List moveList) {
        
@@ -253,7 +250,6 @@ public abstract class TwoPlayerController extends GameController
         return (weights_);
     }
 
-
     /**
      * retract the most recently played move
      * @return  the move which was undone (null returned if no prior move)
@@ -280,6 +276,7 @@ public abstract class TwoPlayerController extends GameController
      * Currently online play not available for 2 player games - coming soon!
      * @return false
      */
+    @Override
     public boolean isOnlinePlayAvailable() {
         return false;
     }
@@ -302,35 +299,21 @@ public abstract class TwoPlayerController extends GameController
         }
 
         assert (!getMoveList().isEmpty()) : "Error: null before search";
-        TwoPlayerMove m = (TwoPlayerMove) getMoveList().getLast();
-        TwoPlayerMove p = m.copy();
+        TwoPlayerMove move = (TwoPlayerMove) getMoveList().getLast();
+        TwoPlayerMove lastMove = move.copy();
 
         if ( player1 )
             weights = weights_.getPlayer1Weights();
         else
             weights = weights_.getPlayer2Weights();
         if ( gameTreeListener_ != null ) {
-            gameTreeListener_.resetTree(p);
+            gameTreeListener_.resetTree(lastMove);
         }
-
-        /////////////////////// SEARCH //////////////////////////////////////////////////////
-        strategy_ = getTwoPlayerOptions().getSearchStrategy(getSearchable(), weights);
-
-        SearchTreeNode root = null;
-        if (gameTreeListener_ != null) {
-            strategy_.setGameTreeEventListener(gameTreeListener_);
-            root = gameTreeListener_.getRootNode();
-        }
-
-        TwoPlayerMove selectedMove =
-                strategy_.search( p, INFINITY, -INFINITY, root );
-        /////////////////////////////////////////////////////////////////////////////////////////
+        TwoPlayerMove selectedMove = searchForNextMove(weights, lastMove);
 
         if ( selectedMove != null ) {
             makeMove( selectedMove );
             GameContext.log( 2, "computer move :" + selectedMove.toString() );
-            //getMoveList().add( selectedMove );
-            //player1sTurn_ = !player1;
         }
 
         if ( GameContext.isProfiling() ) {
@@ -340,11 +323,29 @@ public abstract class TwoPlayerController extends GameController
         return selectedMove;
     }
 
+    /**
+     * **** SEARCH ******
+     * @param weights
+     * @param lastMove
+     * @return the best move to use as the next move.
+     */
+    private TwoPlayerMove searchForNextMove(ParameterArray weights, TwoPlayerMove lastMove) {
+        strategy_ = getTwoPlayerOptions().getSearchStrategy(getSearchable(), weights);
+
+        SearchTreeNode root = null;
+        if (gameTreeListener_ != null) {
+            strategy_.setGameTreeEventListener(gameTreeListener_);
+            root = gameTreeListener_.getRootNode();
+        }
+
+        return strategy_.search( lastMove, INFINITY, -INFINITY, root );
+    }
+
 
     /**
      * Export some usefule performance profile statistics in the log.
-     * @param totalTime
-     * @param numMovesConsidered
+     * @param totalTime total elapsed time.
+     * @param numMovesConsidered number of moves inspected during search.
      */
     protected void showProfileStats( long totalTime, int numMovesConsidered )
     {
@@ -411,6 +412,7 @@ public abstract class TwoPlayerController extends GameController
 
             private Move move_ = null;
 
+            @Override
             public Object construct() {
                 processing_ = true;
 
@@ -477,36 +479,6 @@ public abstract class TwoPlayerController extends GameController
         return getSearchStrategy().isPaused();
     }
 
-
-    /**
-     *  @return if positive then computer1 won, else computer2 won.
-     *   the magnitude of this returned value indicates how much it won by.
-     */
-    private double runComputerVsComputer()
-    {
-        boolean done = false;
-        reset();
-        computerMovesFirst();
-
-        if (viewer_ != null)  {
-            get2PlayerViewer().showComputerVsComputerGame();
-        }
-        else {
-            // running in a batch mode where the viewer is not available
-            while ( !done ) {
-                done = getSearchable().done(findComputerMove( false ), true);
-                // if done the final move was played
-                if ( !done ) {
-                    done = getSearchable().done(findComputerMove( true ), true);
-                }
-            }
-        }
-        if (getPlayer1().hasWon())
-            return getStrengthOfWin();
-        else
-            return -getStrengthOfWin();
-    }
-
     /**
      * if desired we can set a game tree listener. If non-null then this
      * will be updated as the search is conducted. The GameTreeDialog
@@ -528,12 +500,13 @@ public abstract class TwoPlayerController extends GameController
         gameTreeListener_ = gameTreeListener;
     }
 
-
+    /**
+     * {@inheritDoc}}
+     */
     public boolean isDone()
     {
         return getSearchable().done((TwoPlayerMove)board_.getLastMove(), false);
     }
-
 
     /**
      *  Statically evaluate a boards state to compute the value of the last move
@@ -570,9 +543,10 @@ public abstract class TwoPlayerController extends GameController
      * @param player1 true if its player one's turn
      * @param moveList the list of all generated moves
      * @param player1sPerspective if true than bestMoves are from player1s perspective
+     * @return
      */
-    protected final List<? extends TwoPlayerMove>  getBestMoves( boolean player1, List<? extends TwoPlayerMove> moveList,
-                                                                                                            boolean player1sPerspective )
+    protected final List<? extends TwoPlayerMove> getBestMoves(boolean player1, List<? extends TwoPlayerMove> moveList,
+                                                               boolean player1sPerspective )
     {
         Collections.sort( moveList );
 
@@ -662,6 +636,36 @@ public abstract class TwoPlayerController extends GameController
             double run2 = runComputerVsComputer();
 
             return (run1 - run2);
+        }
+
+
+        /**
+         *  @return if positive then computer1 won, else computer2 won.
+         *   the magnitude of this returned value indicates how much it won by.
+         */
+        private double runComputerVsComputer()
+        {
+            boolean done = false;
+            reset();
+            computerMovesFirst();
+
+            if (viewer_ != null)  {
+                get2PlayerViewer().showComputerVsComputerGame();
+            }
+            else {
+                // running in a batch mode where the viewer is not available
+                while ( !done ) {
+                    done = getSearchable().done(findComputerMove( false ), true);
+                    // if done the final move was played
+                    if ( !done ) {
+                        done = getSearchable().done(findComputerMove( true ), true);
+                    }
+                }
+            }
+            if (getPlayer1().hasWon())
+                return getStrengthOfWin();
+            else
+                return -getStrengthOfWin();
         }
     }
 

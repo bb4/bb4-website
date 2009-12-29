@@ -24,7 +24,6 @@ public class RoundOverDialog extends OptionsDialog
 
     private PokerPlayer winner_;
     private int winnings_;
-    private PlayerLabel playerLabel_;
     private JLabel winLabel_;
 
 
@@ -40,6 +39,7 @@ public class RoundOverDialog extends OptionsDialog
         showContent();
     }
 
+    @Override
     protected JComponent createDialogContent() {
         setResizable( true );
         JPanel mainPanel =  new JPanel();
@@ -57,14 +57,14 @@ public class RoundOverDialog extends OptionsDialog
 
     private JPanel createInstructionsPanel() {
         JPanel panel = new JPanel(new BorderLayout());
-        playerLabel_ = new PlayerLabel();
-        playerLabel_.setPlayer(winner_);
+        PlayerLabel playerLabel = new PlayerLabel();
+        playerLabel.setPlayer(winner_);
 
         winLabel_ = new JLabel();
         initWonMessage();
 
         //panel.setPreferredSize(new Dimension(400, 100));
-        panel.add(playerLabel_, BorderLayout.NORTH);
+        panel.add(playerLabel, BorderLayout.NORTH);
         panel.add(winLabel_, BorderLayout.CENTER);
         //panel.add(amountToCall, BorderLayout.SOUTH);
         return panel;
@@ -82,6 +82,7 @@ public class RoundOverDialog extends OptionsDialog
        return "Round Over";
     }
 
+    @Override
     protected JPanel createButtonsPanel(){
         JPanel buttonsPanel = new JPanel( new FlowLayout() );
 

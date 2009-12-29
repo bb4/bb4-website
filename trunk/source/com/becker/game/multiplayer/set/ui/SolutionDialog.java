@@ -24,7 +24,6 @@ public class SolutionDialog extends OptionsDialog
 
     protected GradientButton okButton_ = new GradientButton();
 
-    private JPanel solutionsHolder_;
     private SolutionPanel solutionPanel_;
     private SetController controller_;
 
@@ -41,6 +40,7 @@ public class SolutionDialog extends OptionsDialog
         showContent();
     }
 
+    @Override
     protected JComponent createDialogContent()
     {
         JPanel mainPanel = new JPanel();
@@ -52,9 +52,9 @@ public class SolutionDialog extends OptionsDialog
         List<Card> sets_ = controller_.getSetsOnBoard();
         solutionPanel_ = new SolutionPanel(sets_, (SetGameViewer) controller_.getViewer());
 
-        solutionsHolder_ = new JPanel();
-        solutionsHolder_.add(solutionPanel_);
-        mainPanel.add( solutionsHolder_, BorderLayout.CENTER );
+        JPanel solutionsHolder = new JPanel();
+        solutionsHolder.add(solutionPanel_);
+        mainPanel.add(solutionsHolder, BorderLayout.CENTER );
         mainPanel.add( buttonsPanel, BorderLayout.SOUTH );
 
 
@@ -68,6 +68,7 @@ public class SolutionDialog extends OptionsDialog
     }
 
     /** create the OK Cancel buttons that go at the botton  */
+    @Override
     protected JPanel createButtonsPanel()
     {
         JPanel buttonsPanel = new JPanel( new FlowLayout() );

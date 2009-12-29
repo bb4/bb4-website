@@ -131,6 +131,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
     /**
      * start over with a new game using the current options.
      */
+    @Override
     public void startNewGame()
     {
         reset();
@@ -283,37 +284,15 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
 
 
     /**
-     * called when the controller has found the computer's move (usually after a long asynchronous search).
+     * Called when the controller has found the computer's move (usually after a long asynchronous search).
      *  The runnable body will run on the event-dispatch thread when the search has completed.
      * @param m the move that was selected by the computer.
      */
     public void computerMoved(final Move m)
     {
-        final Runnable doComputerMoved = new Runnable() {
-            public void run() {
+        final Runnable postMoveCleanup = new PostMoveCleanup(m);
 
-                timer_.stop();
-
-                setCursor( origCursor_ );
-                if ( GameContext.getUseSound() )
-                    GameContext.getMusicMaker().playNote(
-                            get2PlayerController().getTwoPlayerOptions().getPreferredTone(), 45, 0, 200, 1000 );
-                showLastMove();
-                cachedGameBoard_ = null;
-                if (!get2PlayerController().getTwoPlayerOptions().isAutoOptimize()) {
-                    // show a popup for certain exceptional cases.
-                    // For example, in chess we warn on a checking move.
-                    warnOnSpecialMoves( (TwoPlayerMove)m );
-                    sendGameChangedEvent( m );
-                }
-                if (progressBar_ != null) {
-                    progressBar_.setValue(0);
-                    progressBar_.setString("");
-                }
-           }
-      };
-
-      SwingUtilities.invokeLater(doComputerMoved);
+      SwingUtilities.invokeLater(postMoveCleanup);
     }
 
     /**
@@ -500,6 +479,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
     /**
      * @return   the message to display at the completion of the game.
      */
+    @Override
     protected String getGameOverMessage()
     {
         String message;
@@ -544,6 +524,36 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
        }
        else {
            return c.getBoard();
+       }
+    }
+
+    private class PostMoveCleanup implements Runnable {
+        private final Move m;
+
+        public PostMoveCleanup(Move m) {
+            this.m = m;
+        }
+
+        public void run() {
+
+            timer_.stop();
+
+            setCursor( origCursor_ );
+            if ( GameContext.getUseSound() )
+                GameContext.getMusicMaker().playNote(
+                        get2PlayerController().getTwoPlayerOptions().getPreferredTone(), 45, 0, 200, 1000 );
+            showLastMove();
+            cachedGameBoard_ = null;
+            if (!get2PlayerController().getTwoPlayerOptions().isAutoOptimize()) {
+                // show a popup for certain exceptional cases.
+                // For example, in chess we warn on a checking move.
+                warnOnSpecialMoves( (TwoPlayerMove) m);
+                sendGameChangedEvent(m);
+            }
+            if (progressBar_ != null) {
+                progressBar_.setValue(0);
+                progressBar_.setString("");
+            }
        }
     }
 }

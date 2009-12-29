@@ -64,6 +64,7 @@ public class TwoPlayerPieceRenderer extends GamePieceRenderer
     /**
      * @return the game piece render color.
      */
+    @Override
     protected Color getPieceColor(GamePiece piece)
     {
         Color playerColor = piece.isOwnedByPlayer1() ? getPlayer1Color() : getPlayer2Color();

@@ -51,6 +51,7 @@ public final class RaiseDialog extends OptionsDialog
     /**
      * ui initialization of the tree control.
      */
+    @Override
     protected JComponent createDialogContent()
     {
         JPanel mainPanel =  new JPanel();
@@ -100,6 +101,7 @@ public final class RaiseDialog extends OptionsDialog
     /**
      *  create the OK/Cancel buttons that go at the bottom.
      */
+    @Override
     protected JPanel createButtonsPanel()
     {
         JPanel buttonsPanel = new JPanel( new FlowLayout() );

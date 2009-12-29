@@ -34,11 +34,13 @@ public class CheckersBoardViewer extends AbstractTwoPlayerBoardViewer
     }
 
 
+    @Override
     protected GameController createController()
     {
         return new CheckersController();
     }
 
+    @Override
     protected GameBoardRenderer getBoardRenderer() {
         return CheckersBoardRenderer.getRenderer();
     }
@@ -60,6 +62,7 @@ public class CheckersBoardViewer extends AbstractTwoPlayerBoardViewer
         return possibleMoveList;
     }
 
+    @Override
     public void mousePressed( MouseEvent e )
     {
         if (get2PlayerController().isProcessing())
@@ -79,6 +82,7 @@ public class CheckersBoardViewer extends AbstractTwoPlayerBoardViewer
         getBoardRenderer().setDraggedPiece(position);
     }
 
+    @Override
     public void mouseReleased( MouseEvent e )
     {
         // compute the coords of the position that we dropped the piece on.

@@ -60,11 +60,13 @@ final class GoBoardViewer extends AbstractTwoPlayerBoardViewer
         }
     }
 
+    @Override
     protected GameController createController()
     {
         return new GoController();
     }
 
+    @Override
     protected GameBoardRenderer getBoardRenderer() {
         return GoBoardRenderer.getRenderer();
     }

@@ -37,6 +37,7 @@ public class CrazyRobotPlayer extends GalacticRobotPlayer
     /**
      * @return the current list of this Robot's orders.
      */
+    @Override
     public List makeOrders(Galaxy galaxy, int numYearsRemaining)
     {
         List<Order> newOrders = new ArrayList<Order>();

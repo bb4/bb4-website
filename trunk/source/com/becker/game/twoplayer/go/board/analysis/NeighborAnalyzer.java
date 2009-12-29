@@ -89,9 +89,8 @@ public class NeighborAnalyzer {
     }
 
     /**
-     *
      * @param stone
-     * @return
+     * @return string neighbors
      */
     public Set<GoString> findStringNeighbors(GoBoardPosition stone ) {
         Set<GoString> stringNbrs = new HashSet<GoString>();
@@ -234,7 +233,7 @@ public class NeighborAnalyzer {
      * @return number of stones added to the stack
      */
     private int pushPureGroupNeighbors( GoBoardPosition pos, boolean friendPlayer1, boolean sameSideOnly,
-                                                                   List<GoBoardPosition> stack )
+                                        List<GoBoardPosition> stack )
     {
         int r = pos.getRow();
         int c = pos.getCol();
@@ -318,7 +317,7 @@ public class NeighborAnalyzer {
      * @return number of stones added to the stack.
      */
     private int pushGroupNeighbors( GoBoardPosition s, boolean friendPlayer1, List<GoBoardPosition> stack,
-                                                           boolean samePlayerOnly )
+                                    boolean samePlayerOnly )
     {
         // start with the nobi string nbrs
         int numPushed = pushStringNeighbors( s, friendPlayer1, stack, samePlayerOnly );
@@ -463,6 +462,7 @@ public class NeighborAnalyzer {
      *  i.e. not an opponent stone on both sides of the cut (or the diag stone is not in atari).
      *
      *  @param sameSideOnly if true then push nbrs on the same side, else push enemy nbrs
+     * @return o or 1 depending on if diagonal neighbor
      */
     private int checkDiagonalNeighbor( int r, int c, int rowOffset, int colOffset,
                                        boolean friendPlayer1, boolean sameSideOnly,
@@ -494,10 +494,11 @@ public class NeighborAnalyzer {
 
     /**
      * Connected only add if not completely cut (there's no enemy stone in the middle).
+     * @return return 1 or 0 depending on if there si a onespace neighbor
      */
     private int checkOneSpaceNeighbor( int r, int c, int rowOffset, int colOffset,
-                                                                 boolean friendPlayer1, boolean samePlayerOnly,
-                                                                 List<GoBoardPosition> stack )
+                                       boolean friendPlayer1, boolean samePlayerOnly,
+                                       List<GoBoardPosition> stack )
     {
         GoBoardPosition nbr = (GoBoardPosition)board_.getPosition(r + rowOffset, c + colOffset);
         // don't add it if it is in atari
@@ -566,5 +567,4 @@ public class NeighborAnalyzer {
         }
         return 0;
     }
-
 }

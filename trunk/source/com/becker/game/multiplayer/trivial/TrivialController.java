@@ -33,12 +33,14 @@ public class TrivialController extends MultiGameController
     /**
      *  Construct the game controller given an initial board size
      */
+    @Override
     protected Board createTable(int nrows, int ncols )
     {
         return new TrivialTable(nrows, ncols);
     }
 
 
+    @Override
     public GameOptions createOptions() {
         return new TrivialOptions();      
     }
@@ -46,6 +48,7 @@ public class TrivialController extends MultiGameController
     /**
      * by default we start with one human and one robot player.
      */
+    @Override
     protected void initPlayers()
     {
         // we just init the first time.
@@ -68,6 +71,7 @@ public class TrivialController extends MultiGameController
     }
 
 
+    @Override
     public int getServerPort() {
         return TRIVIAL_SERVER_PORT;
     }
@@ -99,6 +103,7 @@ public class TrivialController extends MultiGameController
     /**
      * @return the player with the best Trivial hand
      */
+    @Override
     public MultiGamePlayer determineWinner() {
         List<TrivialPlayer> players = (List<TrivialPlayer>)getPlayers();
         TrivialPlayer winner = null;
@@ -119,6 +124,7 @@ public class TrivialController extends MultiGameController
      * make it the next players turn
      * @return the index of the next player
      */
+    @Override
     public int advanceToNextPlayerIndex()
     {
         playIndex_++;

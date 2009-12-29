@@ -85,6 +85,7 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase  {
         actionCol.setPreferredWidth(55);
     }
 
+    @Override
     protected TableModel createTableModel(String[] columnNames) {
         return new PlayerTableModel(columnNames, 0, true);
     }
@@ -127,6 +128,7 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase  {
 
     public abstract Player createPlayerForName(String playerName);
 
+    @Override
     protected void addRow(Object onlineTable) {
         this.addRow((OnlineGameTable) onlineTable, true);
     }

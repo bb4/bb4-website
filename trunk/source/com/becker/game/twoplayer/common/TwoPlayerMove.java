@@ -136,7 +136,6 @@ public class TwoPlayerMove extends Move
         return toLocation_;
     }
 
-
     /**
      * @param mv  the move to compare to.
      * @return  true if values are equal.
@@ -222,8 +221,7 @@ public class TwoPlayerMove extends Move
      * @return a string, which if executed will create a move identical to this instance.
      */
     public String getConstructorString() {
-        String cs = "createConstructorString for " + this.getClass().getName() +" not yet implemented.";
-        return cs;
+        return "createConstructorString for " + this.getClass().getName() +" not yet implemented.";
     }
 
     @Override

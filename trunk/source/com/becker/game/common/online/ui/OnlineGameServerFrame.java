@@ -53,6 +53,7 @@ public class OnlineGameServerFrame  extends JFrame {
         getContentPane().add(panel);
 
         WindowListener l = new WindowAdapter() {
+            @Override
             public void windowClosing(WindowEvent e) {
                 System.exit(0);
             }
@@ -67,6 +68,7 @@ public class OnlineGameServerFrame  extends JFrame {
      * Objects created in run method are finalized when
      * program terminates and thread exits.
      */
+    @Override
     protected void finalize() throws Throwable {
         super.finalize();
         server_ = null;

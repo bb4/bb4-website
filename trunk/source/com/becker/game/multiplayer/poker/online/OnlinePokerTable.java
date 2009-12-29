@@ -23,6 +23,7 @@ public class OnlinePokerTable extends MultiPlayerOnlineTable {
      * add robot player i to the table.
      * Since this is on the client, robots are surrogate players.
      */
+    @Override
     protected void addRobotPlayer(int i) {
       
         Color newColor = MultiGamePlayer.getNewPlayerColor(getPlayers());

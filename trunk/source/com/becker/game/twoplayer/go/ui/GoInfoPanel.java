@@ -37,12 +37,14 @@ final class GoInfoPanel extends TwoPlayerInfoPanel implements GameChangedListene
         super( controller );
     }
 
+    @Override
     protected String getTitleText()
     {
         return GameContext.getLabel("GO_INFO");
     }
 
 
+    @Override
     protected void createSubPanels()
     {
         super.createSubPanels();
@@ -57,6 +59,7 @@ final class GoInfoPanel extends TwoPlayerInfoPanel implements GameChangedListene
      * This panel shows information that is specific to go - specifically
      * captures and territory estimates
      */
+    @Override
     protected JPanel createCustomInfoPanel()
     {
         JPanel customPanel = createPanel();

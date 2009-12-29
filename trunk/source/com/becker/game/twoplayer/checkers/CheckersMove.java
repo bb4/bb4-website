@@ -97,6 +97,7 @@ public class CheckersMove extends TwoPlayerMove
     /**
      * make a deep copy.
      */
+    @Override
     public TwoPlayerMove copy()
     {
         CaptureList newList = null;

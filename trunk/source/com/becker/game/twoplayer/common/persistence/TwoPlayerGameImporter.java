@@ -31,6 +31,7 @@ public class TwoPlayerGameImporter extends GameImporter {
      * Take what is in the specified file and show it in the viewer.
      * @param fileName
      */
+    @Override
     public void restoreFromFile( String fileName ) {
 
         try {
@@ -56,6 +57,7 @@ public class TwoPlayerGameImporter extends GameImporter {
         }
     }
 
+    @Override
     protected SGFLoader createLoader() {
         return new TwoPlayerSGFLoader();
     }
@@ -115,6 +117,7 @@ public class TwoPlayerGameImporter extends GameImporter {
     /**
      * Create a move from the two player move Token
      */
+    @Override
     protected Move createMoveFromToken( SGFToken token)
     {
         TwoPlayerMoveToken mvToken = (TwoPlayerMoveToken) token;

@@ -41,6 +41,7 @@ import java.util.*;
     }
 
 
+    @Override
     protected Object[] getRowObject(OnlineGameTable onlineTable, boolean localPlayerAtTable)
     {
         Object d[] = new Object[getNumColumns()];
@@ -56,11 +57,13 @@ import java.util.*;
         return d;
     }
 
+    @Override
     public OnlineGameTable createOnlineTable(String ownerPlayerName, MultiGameOptions options) {
         Player player = createPlayerForName(ownerPlayerName);
         return new OnlinePokerTable(getUniqueName(), player, options);
     }
 
+    @Override
     public Player createPlayerForName(String playerName) {
         return new PokerHumanPlayer(playerName, 100, getRandomColor());
     }

@@ -26,6 +26,7 @@ public abstract class PokerRobotPlayer extends PokerPlayer
     }
     
     
+    @Override
     public void setAction(PlayerAction action) {
         assert action != null;
         action_ = (PokerAction) action;
@@ -35,6 +36,7 @@ public abstract class PokerRobotPlayer extends PokerPlayer
      *
      * @return an appropriate action based on the situation
      */
+    @Override
     public PlayerAction getAction(MultiGameController controller) {
 
         PokerAction a;

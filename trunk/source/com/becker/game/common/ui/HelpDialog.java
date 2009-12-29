@@ -50,6 +50,7 @@ public final class HelpDialog extends AbstractDialog implements ActionListener
     /**
      * builds the ui.
      */
+    @Override
     protected JComponent createDialogContent()
     {
         Object[] arg = {gameName_};

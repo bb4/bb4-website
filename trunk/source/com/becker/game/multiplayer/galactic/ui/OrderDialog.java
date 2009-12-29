@@ -57,6 +57,7 @@ public final class OrderDialog extends OptionsDialog
     /**
      * ui initialization of the tree control.
      */
+    @Override
     protected JComponent createDialogContent()
     {
         JPanel mainPanel = new JPanel();
@@ -113,6 +114,7 @@ public final class OrderDialog extends OptionsDialog
     /**
      *  create the OK/Cancel buttons that go at the bottom.
      */
+    @Override
     protected JPanel createButtonsPanel()
     {
         JPanel buttonsPanel = new JPanel( new FlowLayout() );
@@ -161,6 +163,7 @@ public final class OrderDialog extends OptionsDialog
      * called when one of the buttons at the bottom have been pressed.
      * @param e
      */
+    @Override
     public void actionPerformed( ActionEvent e )
     {
         Object source = e.getSource();

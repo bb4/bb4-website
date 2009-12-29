@@ -23,30 +23,36 @@ public class SetPanel extends GamePanel
     public SetPanel()
     {}
 
+    @Override
     public String getTitle() {
         return "Set Game";
     }
 
 
+    @Override
     protected GameToolBar createToolbar() {
          return new SetToolBar(BG_TEXTURE, this);
     }
 
+    @Override
     protected GameBoardViewer createBoardViewer()
     {
         return new SetGameViewer();
     }
 
+    @Override
     protected NewGameDialog createNewGameDialog( JFrame parent, GameViewable viewer )
     {
         return new SetNewGameDialog( parent, viewer );
     }
 
+    @Override
     protected GameOptionsDialog createOptionsDialog( JFrame parent, GameController controller )
     {
         return new SetOptionsDialog( parent, controller );
     }
 
+    @Override
     protected GameInfoPanel createInfoPanel(GameController controller)
     {
         return new SetInfoPanel( controller);
@@ -67,6 +73,7 @@ public class SetPanel extends GamePanel
      * Display a help dialog.
      * This dialog should tell about the game and give instructions on how to play.
      */
+    @Override
     protected void showHelpDialog()
     {
         String name = getTitle();
