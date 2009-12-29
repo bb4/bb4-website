@@ -343,22 +343,6 @@ public class GoString extends GoSet
         }
     }
 
-    /** confirm that all the stones in the string have the same ownershp as the string.
-     *  we throw and error if this is not true
-     */
-    public final void confirmOwnedByOnlyOnePlayer()
-    {
-        Iterator it = getMembers().iterator();
-
-        if ( it.hasNext() ) {
-            GoBoardPosition s = (GoBoardPosition) it.next();
-            GoStone stone = (GoStone)s.getPiece();
-            assert ( stone.isOwnedByPlayer1() == this.isOwnedByPlayer1()) :
-                    stone + " does not have the same owner as " + this;
-        }
-    }
-
-
     /**
      * @return neighbor eyes if string, or neighboring strings if we are an eye.
      */
