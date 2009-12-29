@@ -100,7 +100,7 @@ public class EyeAnalyzer {
             // now decide if false eye based on nbrs and proximity to edge.
             if ( numOppDiag >= 2  && (nbrs.size() >= 3))
                 return true;
-            else if (space.isOnEdge(board) && numOppDiag >=1) {
+            else if (board.isOnEdge(space) && numOppDiag >=1) {
                 return true;
             }
         }

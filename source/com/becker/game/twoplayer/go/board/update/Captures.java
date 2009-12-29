@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.go.board;
+package com.becker.game.twoplayer.go.board.update;
 
 import com.becker.game.twoplayer.go.GoMove;
 

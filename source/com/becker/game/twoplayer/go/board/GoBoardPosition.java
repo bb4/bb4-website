@@ -51,8 +51,7 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
     @Override
     public BoardPosition copy()
     {
-        GoBoardPosition pos = new GoBoardPosition( row_, col_, string_, (GoStone)piece_);
-         return pos;
+        return new GoBoardPosition( row_, col_, string_, (GoStone)piece_);
     }
 
     /**
@@ -139,8 +138,7 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
     @Override
     public Object clone() throws CloneNotSupportedException
     {
-        Object clone = super.clone();
-        return clone;
+        return super.clone();
     }
 
     /**
@@ -171,15 +169,6 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
             numLiberties++;
 
         return numLiberties;
-    }
-
-
-    /**
-     * @return true if the specified BoardPosition is on the edge of the board
-     */
-    public boolean isOnEdge(GoBoard board)
-    {
-        return (getRow()==1 || getRow()==board.getNumRows() || getCol()==1 || getCol()==board.getNumCols());
     }
 
      /**

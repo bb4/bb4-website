@@ -1,18 +1,10 @@
-package com.becker.game.twoplayer.go.board;
+package com.becker.game.twoplayer.go.board.update;
 
-import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
-import com.becker.game.twoplayer.go.board.analysis.NeighborAnalyzer;
-import com.becker.game.common.BoardPosition;
-import com.becker.game.common.CaptureList;
-import com.becker.game.common.GameContext;
+import com.becker.game.twoplayer.go.board.update.Captures;
+import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.update.PostMoveUpdater;
+import com.becker.game.twoplayer.go.board.update.PostRemoveUpdater;
 import com.becker.game.twoplayer.go.GoMove;
-import com.becker.game.twoplayer.go.GoProfiler;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Responsible for updating a go board after making or undoing a move.
@@ -28,7 +20,7 @@ public class BoardUpdater {
     /**
      * Constructor
      */
-    BoardUpdater(GoBoard board) {
+    public BoardUpdater(GoBoard board) {
 
         captures_ = new Captures();
         postMoveUpdater_ = new PostMoveUpdater(board, captures_);
