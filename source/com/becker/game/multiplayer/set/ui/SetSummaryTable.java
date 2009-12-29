@@ -41,6 +41,7 @@ public class SetSummaryTable extends SummaryTable
      * add a row based on a player object
      * @param player to add
      */
+    @Override
     protected void addRow(Object player)
     {
         SetPlayer p = (SetPlayer)player;

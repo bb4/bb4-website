@@ -29,6 +29,7 @@ public class GoGameExporter extends GameExporter {
      * @param fileName name of the file to save the state to
      * @param ae the exception that occurred causing us to want to save state
      */
+    @Override
     public void saveToFile( String fileName, AssertionError ae )
     {
         GameContext.log( 1, "saving state to :" + fileName );
@@ -81,6 +82,7 @@ public class GoGameExporter extends GameExporter {
      * return the SGF (4) representation of the move
      * SGF stands for Smart Game Format and is commonly used for Go
      */
+    @Override
     protected String getSgfForMove(Move move) {
         GoMove m = (GoMove) move;
         // passes are not represented in SGF - so just skip it if the piece is null.

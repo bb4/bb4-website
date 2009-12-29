@@ -73,30 +73,37 @@ public class PentePatterns extends Patterns
      * This is how many in a row are needed to win
      * if M is five then the game is pente
      */
+    @Override
     public int getWinRunLength() {
         return WIN_RUN_LENGTH;
     }
 
+    @Override
     public int getMinInterestingLength() {
         return 3;
     }
     
+    @Override
     protected int getNumPatterns() {
         return NUM_PATTERNS;
     }
 
+    @Override
     protected String getPatternString(int i) {
         return PATTERN_STRING[i];
     }
 
+    @Override
     protected int getWeightIndex(int i) {
         return WEIGHT_INDEX[i];
     }
 
+     @Override
      protected String getPatternFile() {
         return  GameContext.GAME_ROOT + "pente/Pente.patterns1.dat";
     }
 
+    @Override
     protected String getExportFile() {
         return GameContext.GAME_ROOT + "pente/Pente.export.dat";
     }

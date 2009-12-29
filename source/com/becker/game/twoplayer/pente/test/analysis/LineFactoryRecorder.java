@@ -20,6 +20,7 @@ public class LineFactoryRecorder extends LineFactory {
         lines_ = new LinkedList<Line>();
     }
 
+    @Override
     public Line createLine(Patterns patterns, ParameterArray weights) {
         Line line = new Line(patterns, weights);
         lines_.add(line);

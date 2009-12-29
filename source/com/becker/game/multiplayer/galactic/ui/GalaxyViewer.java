@@ -28,11 +28,13 @@ public class GalaxyViewer extends MultiGameViewer
     public GalaxyViewer()
     {}
 
+    @Override
     protected MultiGameController createController()
     {
         return new GalacticController();
     }
 
+    @Override
     protected GameBoardRenderer getBoardRenderer() {
         return GalaxyRenderer.getRenderer();
     }
@@ -55,6 +57,7 @@ public class GalaxyViewer extends MultiGameViewer
     /**
      * @return   the message to display at the completion of the game.
      */
+    @Override
     protected String getGameOverMessage()
     {
         return "Game Over";
@@ -67,6 +70,7 @@ public class GalaxyViewer extends MultiGameViewer
      * @param player computer player to move
      * @return done return true if the game is over after moving
      */
+    @Override
     public boolean doComputerMove(Player player)
     {
         assert(!player.isHuman());
@@ -94,6 +98,7 @@ public class GalaxyViewer extends MultiGameViewer
      * @param player computer player to move
      * @return done return true if the game is over after moving
      */
+    @Override
     public boolean doSurrogateMove(SurrogateMultiPlayer player)
     {
         GalacticController pc = (GalacticController) controller_;
@@ -109,6 +114,7 @@ public class GalaxyViewer extends MultiGameViewer
      * Simulations may actually be a reinforcements instead of a battle.
      * @param lastMove the move to show (but now record)
      */
+    @Override
     public GalacticTurn createMove(Move lastMove)
     {
         GalacticTurn gmove = GalacticTurn.createMove();
@@ -175,6 +181,7 @@ public class GalaxyViewer extends MultiGameViewer
     /**
      * @return the tooltip for the panel given a mouse event
      */
+    @Override
     public String getToolTipText( MouseEvent e )
     {
         Location loc = getBoardRenderer().createLocation(e);

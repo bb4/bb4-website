@@ -21,27 +21,32 @@ public class GalacticPanel extends GamePanel
     {}
 
 
+    @Override
     public String getTitle()
     {
         return  GameContext.getLabel("GALACTIC_TITLE");
     }
 
 
+    @Override
     protected GameBoardViewer createBoardViewer()
     {
         return new GalaxyViewer();
     }
 
+    @Override
     protected NewGameDialog createNewGameDialog( JFrame parent, GameViewable viewer )
     {
         return new GalacticNewGameDialog( parent, viewer );
     }
 
+    @Override
     protected GameOptionsDialog createOptionsDialog( JFrame parent, GameController controller )
     {
         return new GalacticOptionsDialog( parent, controller );
     }
 
+    @Override
     protected GameInfoPanel createInfoPanel(GameController controller)
     {
 
@@ -49,6 +54,7 @@ public class GalacticPanel extends GamePanel
     }
 
     // Display the help dialog to give instructions
+    @Override
     protected void showHelpDialog()
     {
         String name = getTitle();

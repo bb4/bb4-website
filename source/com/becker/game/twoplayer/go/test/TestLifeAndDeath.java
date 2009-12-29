@@ -24,6 +24,7 @@ public class TestLifeAndDeath extends GoTestCase {
     /**
      * @param options default options to override
      */
+    @Override
     protected void setOptionOverrides(TwoPlayerOptions options) {
         options.setAlphaBeta(true);
         options.setLookAhead(3);

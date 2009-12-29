@@ -146,6 +146,7 @@ public class Planet extends GamePiece
     /**
      * @return more detail that toString()
      */
+    @Override
     public String getDescription()
     {
         StringBuffer sb = new StringBuffer( this.toString() );

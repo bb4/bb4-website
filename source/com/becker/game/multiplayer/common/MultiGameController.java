@@ -63,12 +63,14 @@ public abstract class MultiGameController extends GameController
     /**
      * Return the game board back to its initial openning state
      */
+    @Override
     public void reset()
     {
         super.reset();
         initializeData();
     }
 
+    @Override
     protected void initializeData()
     {
         startingPlayerIndex_ = 0;
@@ -77,6 +79,7 @@ public abstract class MultiGameController extends GameController
         initPlayers();        
     }
 
+    @Override
     public GameOptions getOptions() {
         if (gameOptions_ == null) {
             gameOptions_ = createOptions();
@@ -116,10 +119,12 @@ public abstract class MultiGameController extends GameController
         return new ServerConnection(getServerPort());
     }
 
+    @Override
     public boolean isOnlinePlayAvailable() {
         return getServerConnection().isConnected();
     }
 
+    @Override
     public int getServerPort()
     {
         assert false : "online game play not supported for " + this.getClass().getName();
@@ -185,6 +190,7 @@ public abstract class MultiGameController extends GameController
     /**
      *  @return the player that goes first.
      */
+    @Override
     public Player getFirstPlayer()
     {
         return players_.get(startingPlayerIndex_);

@@ -80,6 +80,7 @@ public class PokerController extends MultiGameController
         anteUp();
     }
 
+    @Override
     public GameOptions createOptions() {
         return new PokerOptions();
     }
@@ -87,6 +88,7 @@ public class PokerController extends MultiGameController
     /**
      *  Construct the game controller given an initial board size
      */
+    @Override
     protected Board createTable(int nrows, int ncols )
     {
         return new PokerTable(nrows, ncols);
@@ -96,6 +98,7 @@ public class PokerController extends MultiGameController
     /**
      * by default we start with one human and one robot player.
      */
+    @Override
     protected void initPlayers()
     {
         // we just init the first time.
@@ -206,6 +209,7 @@ public class PokerController extends MultiGameController
         pot_ = potValue;
     }
 
+    @Override
     public int getServerPort() {
         return POKER_SERVER_PORT;
     }
@@ -235,6 +239,7 @@ public class PokerController extends MultiGameController
      * advance to the next player turn in order.
      * @return the index of the next player to play.
      */
+    @Override
     public int advanceToNextPlayer()
     {
 
@@ -359,6 +364,7 @@ public class PokerController extends MultiGameController
      *
      * @return the player with the best poker hand
      */
+    @Override
     public MultiGamePlayer determineWinner() {
         List<PokerPlayer> players = (List<PokerPlayer>)getPlayers();
         PokerPlayer winner;
@@ -388,6 +394,7 @@ public class PokerController extends MultiGameController
      * make it the next players turn
      * @return the index of the next player
      */
+    @Override
     protected int advanceToNextPlayerIndex()
     {
         playIndex_++;
@@ -401,6 +408,7 @@ public class PokerController extends MultiGameController
     /**
      * @param players  the players currently playing the game
      */
+    @Override
     public void setPlayers( List<? extends Player> players )
     {
         super.setPlayers(players);

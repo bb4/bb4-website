@@ -22,6 +22,7 @@ class OrdersTableModel extends DefaultTableModel
         super(columnNames, rowCount);
     }
 
+    @Override
     public Class getColumnClass(int col)
     {
         List v = (Vector)dataVector.elementAt(0);

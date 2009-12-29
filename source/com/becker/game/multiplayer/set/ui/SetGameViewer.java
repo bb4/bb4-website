@@ -48,10 +48,12 @@ public final class SetGameViewer extends MultiGameViewer
     /**
      * @return the game specific controller for this viewer.
      */
+    @Override
     protected MultiGameController createController() {
         return new SetController();
     }
 
+    @Override
     protected GameBoardRenderer getBoardRenderer() {
         return SetGameRenderer.getRenderer();
     }
@@ -63,6 +65,7 @@ public final class SetGameViewer extends MultiGameViewer
      * @param player computer player to move
      * @return done return true if the game is over after moving
      */
+    @Override
     public boolean doComputerMove(Player player)
     {
         assert false : " no computer player for set yet. coming soon!";
@@ -75,14 +78,16 @@ public final class SetGameViewer extends MultiGameViewer
      * @param player computer player to move
      * @return done return true if the game is over after moving
      */
+    @Override
     public boolean doSurrogateMove(SurrogateMultiPlayer player)
     {
         assert false : " no online pla for set yet. coming soon!";
         return false;
     }
 
+    @Override
     public String getGameOverMessage() {
-        SetPlayer winner =  ((SetController)controller_).determineWinner();
+        SetPlayer winner =  ((SetController) controller_).determineWinner();
         return "the game is over. The winner is " + winner.getName() + " with " + winner.getNumSetsFound() + "sets";
     }
 

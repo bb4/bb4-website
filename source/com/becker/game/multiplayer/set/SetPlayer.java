@@ -44,6 +44,7 @@ public class SetPlayer extends MultiGamePlayer
      * I see this as returning a set of 3 cards that the player has selected.
      * @return player action
      */
+    @Override
     public PlayerAction getAction(MultiGameController controller) {
         assert false : "getAction not implemented yet";
         return null;
@@ -52,6 +53,7 @@ public class SetPlayer extends MultiGamePlayer
     /**
      * @return player action
      */
+    @Override
     public void setAction(PlayerAction action) {
         assert false : "setAction implemented yet";
     }
@@ -108,6 +110,7 @@ public class SetPlayer extends MultiGamePlayer
         return getName().hashCode();
     }
 
+    @Override
     public String additionalInfo()
     {      
         return "Num Sets Found: "+numSetsFound_;

@@ -32,6 +32,7 @@ public abstract class SummaryTable extends TableBase  {
     }
 
 
+    @Override
     protected void updateColumnMeta(TableColumnMeta[] columnMeta) {
 
         TableColumnMeta colorMeta = columnMeta[COLOR_INDEX];
@@ -45,6 +46,7 @@ public abstract class SummaryTable extends TableBase  {
     }
 
 
+    @Override
     protected TableModel createTableModel(String[] columnNames)  {
         return  new PlayerTableModel(columnNames, 0, false);
     }

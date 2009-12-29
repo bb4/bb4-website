@@ -41,11 +41,13 @@ public class BlockadeBoardViewer extends AbstractTwoPlayerBoardViewer
         addMouseMotionListener( this );
     }
 
+    @Override
     protected GameController createController()
     {
         return new BlockadeController();
     }
 
+    @Override
     protected GameBoardRenderer getBoardRenderer() {
         return BlockadeBoardRenderer.getRenderer();
     }
@@ -202,7 +204,7 @@ public class BlockadeBoardViewer extends AbstractTwoPlayerBoardViewer
 
         // check wall intersection and overlaps.
         //assert(draggedWall_ != null);
-        String sError = board.checkLegalWallPlacement(draggedWall, loc, m.getPiece());
+        String sError = board.checkLegalWallPlacement(draggedWall, loc);
 
         if (sError != null) {
             JOptionPane.showMessageDialog( this, sError);

@@ -20,9 +20,11 @@ import java.util.*;
  */
 public final class GoBoard extends TwoPlayerBoard
 {
-
-    // this is a set of active groups. Groups are composed of strings.
-    private Set<GoGroup> groups_;
+    /**
+     * This is a set of active groups. Groups are composed of strings.
+     * need to synchronize this to avoid concurrent modification error during search.
+     */
+    private volatile Set<GoGroup> groups_;
 
     private HandicapStones handicap_;
 
@@ -38,9 +40,7 @@ public final class GoBoard extends TwoPlayerBoard
      */
     public GoBoard( int numRows, int numCols, int numHandicapStones )
     {
-        // need to synchronize this to avoid concurrent modification error during search.
         groups_ = Collections.synchronizedSet(new HashSet<GoGroup>(10));
-        //armies_ = new HashSet(0);
         setSize( numRows, numCols );
         setHandicap(numHandicapStones);
         boardUpdater_ = new BoardUpdater(this);
@@ -60,7 +60,7 @@ public final class GoBoard extends TwoPlayerBoard
                 positions_[i][j] = new GoBoardPosition(i,j, null, null);
             }
         }
-        // first time through we need to initialize the starpoint positions
+        // first time through we need to initialize the star-point positions
         setHandicap(getHandicap());
     }
 
@@ -70,30 +70,27 @@ public final class GoBoard extends TwoPlayerBoard
     }
 
     /**
-      * @return a deep copy of the board.
-      */
+     * @return a deep copy of the board.
+     */
     @Override
-     public Object clone() throws CloneNotSupportedException
-     {
+    public Object clone() throws CloneNotSupportedException
+    {
         Object clone = super.clone();
 
-        // make copies of all the groups and armies
-        if (groups_!=null) {
+        // make copies of all the groups
+        if (groups_ != null) {
             ((GoBoard)clone).groups_ = new HashSet<GoGroup>(10);
 
             Set<GoGroup> groupsCopy = ((GoBoard)clone).groups_;
 
-            // new way to interate. Still getting ConcurrentModificationException
-            synchronized(groups_)   {
+            synchronized(groups_) {
                 for (GoGroup g : groups_)  {
                     groupsCopy.add((GoGroup)g.clone());
                 }
             }
         }
-
         return clone;
-     }
-
+    }
 
     /**
      * set the dimensions of the game board (must be square).
@@ -108,13 +105,7 @@ public final class GoBoard extends TwoPlayerBoard
     {
         numRows_ = numRows;
         numCols_ = numRows; // intentionally same as numRows
-        if ( numRows_ != numCols_ )  {
-            GameContext.log(0,  "The board must be square and have an odd edge length" );
-            if (numRows < numCols)
-                numCols_ = numRows;
-            else
-                numRows_ = numCols;
-        }
+
         if ( numRows_ % 2 == 0 ) numRows_++;
         if ( numCols_ % 2 == 0 ) numCols_++;
 
@@ -123,7 +114,6 @@ public final class GoBoard extends TwoPlayerBoard
         positions_ = new BoardPosition[numRows_ + 1][numCols_ + 1];
         reset();
     }
-
 
     /**
      * get the number of handicap stones used in this game.
@@ -136,7 +126,6 @@ public final class GoBoard extends TwoPlayerBoard
         }
         return handicap_.getNumber();
     }
-
 
     /**
      *in go there is not really a theoretical limit to the number of moves,
@@ -191,10 +180,6 @@ public final class GoBoard extends TwoPlayerBoard
             return true;
         }
 
-        // we hit this all the time when mousing over the game tree.
-        //assert (stone.isUnoccupied()):
-        //        "Position "+stone+" is already occupied. move num ="+ this.getNumMoves() +" \nBoard:\n"+this.toString();
-
         clearEyes();
         super.makeInternalMove( m );
         boardUpdater_.updateAfterMove(m);
@@ -207,6 +192,7 @@ public final class GoBoard extends TwoPlayerBoard
      * for Go, undoing a move means changing that space back to a blank, restoring captures, and updating groups.
      * @param move  the move to undo.
      */
+    @Override
     protected void undoInternalMove( Move move )
     {
         getProfiler().startUndoMove();
@@ -234,14 +220,16 @@ public final class GoBoard extends TwoPlayerBoard
 
     /**
      * @see TerritoryAnalyzer#getTerritoryDelta
+     * @return change in territorial score
      */
     public float getTerritoryDelta()
     {
         return territoryAnalyzer_.getTerritoryDelta();
     }
 
-   /**
+    /**
      * @see TerritoryAnalyzer#getTerritoryEstimate
+     * @return estimate of size of territory for specified player.
      */
     public int getTerritoryEstimate( boolean forPlayer1, boolean isEndOfGame)
     {
@@ -250,6 +238,7 @@ public final class GoBoard extends TwoPlayerBoard
 
     /**
      * @see TerritoryAnalyzer#updateTerritory
+     * @return the estimated difference in territory between the 2 sides.
      */
     public float updateTerritory(boolean isEndOfGame) {
         return territoryAnalyzer_.updateTerritory(isEndOfGame);
@@ -261,6 +250,7 @@ public final class GoBoard extends TwoPlayerBoard
      * one string we must return a List.
      * @param stone he stone from which to begin searching for the string
      * @param returnToUnvisitedState if true then the stomes will all be marked unvisited when done searching
+     * @return fund string.
      */
     public List<GoBoardPosition> findStringFromInitialPosition( GoBoardPosition stone, boolean returnToUnvisitedState )
     {
@@ -330,6 +320,7 @@ public final class GoBoard extends TwoPlayerBoard
      * @param stone (not necessarily occupied)
      * @param friendPlayer1 typically stone.isOwnedByPlayer1 value of stone unless it is blank.
      * @param samePlayerOnly if true then find group nbrs that are have same ownership as friendPlayer1
+     * @return group neighbors
      */
     public Set<GoBoardPosition> getGroupNeighbors( GoBoardPosition stone, boolean friendPlayer1, boolean samePlayerOnly )
     {
@@ -344,6 +335,7 @@ public final class GoBoard extends TwoPlayerBoard
 
     /**
      * This version assumes that the stone is occupied.
+     * @return the list of stones in the group that was found.
      */
     public Set<GoBoardPosition> getGroupNeighbors( GoBoardPosition position, boolean samePlayerOnly )
     {
@@ -403,7 +395,6 @@ public final class GoBoard extends TwoPlayerBoard
         }
     }
 
-
     /**
      * @return either the number of black or white stones.
      */
@@ -429,6 +420,7 @@ public final class GoBoard extends TwoPlayerBoard
      * The states are player1, player2, or empty (we may want to add ko).
      * @return number of different states this position can have.
      */
+    @Override
     public int getNumPositionStates() {
         return 3;
     }
@@ -472,89 +464,4 @@ public final class GoBoard extends TwoPlayerBoard
         }
         return buf.toString();
     }
-
-
-
-    /**
-     * The number of star points used for handicap stones on the board
-     * There may be none.
-     */
-    private static class HandicapStones {
-
-        private static final float HANDICAP_STONE_HEALTH = 0.8f;
-
-        // the number of initial handicap stones to use
-        private int numHandicapStones_ = 0;
-
-        // typically there are at most 9 handicap stones in an uneven game
-        private List<GoBoardPosition> starPoints_ = null;
-
-
-        /**
-         * @param num number of handicap stones
-         * @param boardSize on one side.
-         */
-        HandicapStones(int num, int boardSize) {
-            initStarPoints(boardSize);
-            numHandicapStones_ = num;
-        }
-
-        public int getNumber() {
-            return numHandicapStones_;
-        }
-
-        public List getStarPoints() {
-            return starPoints_;
-        }
-
-        /**
-         * specify the number of handicap stones that will actually be used this game.
-         * public since we might set if from the options dialog
-         */
-        public List getHandicapMoves()
-        {
-            assert numHandicapStones_ <= starPoints_.size();
-            List<GoMove> handicapMoves = new ArrayList<GoMove>(numHandicapStones_);
-
-            for ( int i = 0; i < numHandicapStones_; i++ ) {
-                GoBoardPosition hpos = starPoints_.get( i );
-
-                GoMove m = GoMove.createGoMove( hpos.getRow(), hpos.getCol(), 0, (GoStone)hpos.getPiece());
-                                              new GoStone(hpos.getPiece().isOwnedByPlayer1(), GamePiece.REGULAR_PIECE );
-                handicapMoves.add(m);
-            }
-            return handicapMoves;
-        }
-
-        /**
-         * initialize a list of stones at the star points
-         */
-        private void initStarPoints(int boardSize)
-        {
-            // initialize the list of handicap stones.
-            // The number of these that actually get placed on the board
-            // depends on the handicap
-            starPoints_ = new ArrayList<GoBoardPosition>(9);
-            int nRows = boardSize;
-            int min = 4;
-            // on a really small board we put the corner star points at 3-3.
-            if (nRows < 13)
-                min = 3;
-            int max = nRows - (min-1);
-            int mid = (nRows >> 1) + 1;
-
-            // add the star points
-            GoStone handicapStone = new GoStone(true, HANDICAP_STONE_HEALTH);
-            starPoints_.add( new GoBoardPosition( min, min, null, (GoStone)handicapStone.copy()) );
-            starPoints_.add( new GoBoardPosition( max, max, null, (GoStone)handicapStone.copy()) );
-            starPoints_.add( new GoBoardPosition( min, max, null, (GoStone)handicapStone.copy()) );
-            starPoints_.add( new GoBoardPosition( max, min, null, (GoStone)handicapStone.copy()) );
-            starPoints_.add( new GoBoardPosition( min, mid, null, (GoStone)handicapStone.copy()) );
-            starPoints_.add( new GoBoardPosition( max, mid, null, (GoStone)handicapStone.copy()) );
-            starPoints_.add( new GoBoardPosition( mid, min, null, (GoStone)handicapStone.copy()) );
-            starPoints_.add( new GoBoardPosition( mid, max, null, (GoStone)handicapStone.copy()) );
-            starPoints_.add( new GoBoardPosition( mid, mid, null, handicapStone) );
-        }
-    }
-
 }

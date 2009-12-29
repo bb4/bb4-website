@@ -40,6 +40,7 @@ public class TwoPlayerInfoPanel extends GameInfoPanel implements GameChangedList
     /**
      * this is general information that is applicable to every 2 player game.
      */
+    @Override
     protected JPanel createGeneralInfoPanel()
     {
         JPanel generalPanel = createSectionPanel(GameContext.getLabel("GENERAL_INFO"));
@@ -73,6 +74,7 @@ public class TwoPlayerInfoPanel extends GameInfoPanel implements GameChangedList
     /**
      * set the appropriate text and color for the player label.
      */
+    @Override
     protected void setPlayerLabel()
     {
         AbstractTwoPlayerBoardViewer viewer = (AbstractTwoPlayerBoardViewer)controller_.getViewer();

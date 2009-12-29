@@ -33,7 +33,7 @@ public enum Direction
     /**
      * constructor for blockade direction
      *
-     * @param description string name of the eye type (eg "False Eye")
+     * @param hashKey string name of the eye type (eg "False Eye")
      */
     private Direction(int hashKey) {
         hashKey_ = hashKey;

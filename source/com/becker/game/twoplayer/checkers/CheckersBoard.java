@@ -62,6 +62,7 @@ public class CheckersBoard extends TwoPlayerBoard
     /**
      *  can't change the size of a checkers board.
      */
+    @Override
     public void setSize( int numRows, int numCols )
     {
         if ( numRows != 8 || numCols != 8 )
@@ -80,6 +81,7 @@ public class CheckersBoard extends TwoPlayerBoard
      * given a move specification, execute it on the board.
      * This places the players symbol at the position specified by move.
      */
+    @Override
     protected boolean makeInternalMove( Move move )
     {
         CheckersMove m = (CheckersMove) move;
@@ -95,6 +97,7 @@ public class CheckersBoard extends TwoPlayerBoard
     /**
      * for checkers, undoing a move means moving the piece back and restoring any captures.
      */
+    @Override
     protected void undoInternalMove( Move move )
     {
         CheckersMove m = (CheckersMove) move;
@@ -115,6 +118,7 @@ public class CheckersBoard extends TwoPlayerBoard
      * This is used primarily for the Zobrist hash. You do not need to override if yo udo not use it.
      * @return number of different states this position can have.
      */
+    @Override
     public int getNumPositionStates() {
         return  5;
     }
@@ -123,6 +127,7 @@ public class CheckersBoard extends TwoPlayerBoard
      * The index of the state for tihs position.
      * @return The index of the state for tihs position.
      */
+    @Override
     public int getStateIndex(BoardPosition pos) {
         if (pos.isOccupied()) {
             CheckersPiece p = (CheckersPiece) pos.getPiece();

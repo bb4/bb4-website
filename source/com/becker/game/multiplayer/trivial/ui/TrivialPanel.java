@@ -21,28 +21,34 @@ public class TrivialPanel extends GamePanel
     {}
 
 
+    @Override
     public String getTitle() {
         return  GameContext.getLabel("TRIVIAL_TITLE");
     }
 
 
+    @Override
     protected GameBoardViewer createBoardViewer() {
         return new TrivialGameViewer();
     }
 
+    @Override
     protected NewGameDialog createNewGameDialog( JFrame parent, GameViewable viewer ) {
         return new TrivialNewGameDialog( parent, viewer );
     }
 
+    @Override
     protected GameOptionsDialog createOptionsDialog( JFrame parent, GameController controller ) {
         return new TrivialOptionsDialog( parent, controller );
     }
 
+    @Override
     protected GameInfoPanel createInfoPanel(GameController controller) {
         return new TrivialInfoPanel( controller);
     }
 
     // Display the help dialog to give instructions
+    @Override
     protected void showHelpDialog()  {
         String name = getTitle();
         String comments = GameContext.getLabel("TRIVIAL_TITLE");

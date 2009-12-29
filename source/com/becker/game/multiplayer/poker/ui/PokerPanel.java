@@ -21,28 +21,34 @@ public class PokerPanel extends GamePanel
     {}
 
 
+    @Override
     public String getTitle() {
         return  GameContext.getLabel("POKER_TITLE");
     }
 
 
+    @Override
     protected GameBoardViewer createBoardViewer() {
         return new PokerGameViewer();
     }
 
+    @Override
     protected NewGameDialog createNewGameDialog( JFrame parent, GameViewable viewer ) {
         return new PokerNewGameDialog( parent, viewer );
     }
 
+    @Override
     protected GameOptionsDialog createOptionsDialog( JFrame parent, GameController controller ) {
         return new PokerOptionsDialog( parent, controller );
     }
 
+    @Override
     protected GameInfoPanel createInfoPanel(GameController controller) {
         return new PokerInfoPanel( controller);
     }
 
     // Display the help dialog to give instructions
+    @Override
     protected void showHelpDialog()  {
         String name = getTitle();
         String comments = GameContext.getLabel("POKER_TITLE");

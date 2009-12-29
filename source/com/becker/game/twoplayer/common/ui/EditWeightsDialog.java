@@ -50,6 +50,7 @@ class EditWeightsDialog extends OptionsDialog
         return GameContext.getLabel("EDIT_WEIGHTS");
     }
 
+    @Override
     protected JComponent createDialogContent()
     {
         JPanel mainPanel = new JPanel();
@@ -67,6 +68,7 @@ class EditWeightsDialog extends OptionsDialog
         return mainPanel;
     }
 
+    @Override
     protected JPanel createButtonsPanel()
     {
         JPanel buttonsPanel = new JPanel( new FlowLayout() );

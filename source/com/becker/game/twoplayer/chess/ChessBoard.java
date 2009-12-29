@@ -92,6 +92,7 @@ public class ChessBoard extends CheckersBoard
      * This places the players symbol at the position specified by move.
      * @param move to make
      */
+    @Override
     protected boolean makeInternalMove( Move move )
     {
         ChessMove m = (ChessMove) move;
@@ -118,6 +119,7 @@ public class ChessBoard extends CheckersBoard
      * restoring any captures.
      * @param move to undo
      */
+    @Override
     protected void undoInternalMove( Move move )
     {
         ChessMove m = (ChessMove) move;

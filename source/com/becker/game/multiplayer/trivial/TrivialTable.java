@@ -99,6 +99,7 @@ public class TrivialTable extends Board
      * @param move the move to make, if possible.
      * @return false if the move is illegal.
      */
+    @Override
     protected boolean makeInternalMove( Move move )
     {
         return true;
@@ -110,6 +111,7 @@ public class TrivialTable extends Board
      * restoring the state of the game one full round earlier
      * @@ todo
      */
+    @Override
     protected void undoInternalMove( Move move )
     {
         GameContext.log(0,  "undo not implemented yet for Trivial." );

@@ -39,6 +39,7 @@ public class PlanetRenderer extends GamePieceRenderer
         return renderer_;
     }
 
+    @Override
     protected int getPieceSize(int cellSize, GamePiece piece)
     {
         Planet planet = (Planet)piece;
@@ -47,6 +48,7 @@ public class PlanetRenderer extends GamePieceRenderer
         return (int) (cellSize * rad);
     }
 
+    @Override
     protected Color getPieceColor(GamePiece piece) {
         Planet planet = (Planet)piece;
         return planet.getColor();
@@ -60,6 +62,7 @@ public class PlanetRenderer extends GamePieceRenderer
      * @param g2 graphics context
      * @param position the position of the piece to render
      */
+    @Override
     public void render( Graphics2D g2, BoardPosition position, int cellSize, int margin, Board b)
     {
         Planet planet = (Planet)position.getPiece();

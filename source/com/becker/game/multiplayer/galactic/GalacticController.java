@@ -59,6 +59,7 @@ public class GalacticController extends MultiGameController
     /**
      *  Construct the Galactic game controller given an initial board size
      */
+    @Override
     protected Board createTable(int nrows, int ncols )
     {
         return new Galaxy( nrows, ncols );
@@ -68,6 +69,7 @@ public class GalacticController extends MultiGameController
      /**
      * by default we start with one human and one robot player.
      */
+    @Override
     protected void initPlayers()
     {
         // we just init the first time.
@@ -100,6 +102,7 @@ public class GalacticController extends MultiGameController
         return ((GalacticOptions)getOptions()).getMaxYearsToPlay() - ((m != null)? this.getNumMoves() : 0) - 2;
     }
 
+    @Override
     public boolean isOnlinePlayAvailable() {return false; }
 
     /**
@@ -119,6 +122,7 @@ public class GalacticController extends MultiGameController
     /**
      * @return the player with the most planets
      */
+    @Override
     public MultiGamePlayer determineWinner() {
         
        GalacticPlayer winner = null;
@@ -140,6 +144,7 @@ public class GalacticController extends MultiGameController
      * advance to the next player turn in order.
      * @return the index of the next player to play.
      */
+    @Override
     public int advanceToNextPlayer()
     {
         GalaxyViewer gviewer  = (GalaxyViewer)this.getViewer();
@@ -181,6 +186,7 @@ public class GalacticController extends MultiGameController
      * make it the next players turn
      * @return the index of the next player
      */
+    @Override
     protected int advanceToNextPlayerIndex()
     {
         currentPlayerIndex_ = (currentPlayerIndex_+1) % players_.size();
@@ -188,7 +194,8 @@ public class GalacticController extends MultiGameController
     }
 
 
-    public GameOptions createOptions() {     
+    @Override
+    public GameOptions createOptions() {
          return new GalacticOptions();  
     }
 

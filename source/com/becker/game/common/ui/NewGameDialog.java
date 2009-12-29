@@ -53,6 +53,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
         showContent();
     }
 
+    @Override
     protected JComponent createDialogContent()
     {
         JPanel mainPanel = new JPanel();
@@ -99,6 +100,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
     protected abstract JPanel createPlayerPanel();
 
 
+    @Override
     protected JPanel createButtonsPanel()
     {
         JPanel buttonsPanel = new JPanel( new FlowLayout() );

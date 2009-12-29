@@ -96,6 +96,7 @@ public abstract class PokerPlayer extends MultiGamePlayer
         return outOfGame_ || (cash_ <= 0);
     }
 
+    @Override
     public PokerPlayerMarker getPiece() {
         return piece_;
     }
@@ -156,6 +157,7 @@ public abstract class PokerPlayer extends MultiGamePlayer
         controller.setPotValue(0);
     }
     
+    @Override
     protected String additionalInfo() {
         StringBuffer sb = new StringBuffer();
         if (getHand() != null) {            

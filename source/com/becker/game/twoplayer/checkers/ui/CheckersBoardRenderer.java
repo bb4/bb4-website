@@ -43,11 +43,13 @@ public class CheckersBoardRenderer extends TwoPlayerBoardRenderer
     }
 
 
+    @Override
     protected int getPreferredCellSize()
     {
         return 34;
     }
 
+    @Override
     protected void drawBackground( Graphics g, Board b, int startPos, int rightEdgePos, int bottomEdgePos,
                                    int panelWidth, int panelHeight)
     {
@@ -101,6 +103,7 @@ public class CheckersBoardRenderer extends TwoPlayerBoardRenderer
      * draw a grid of some sort if there is one.
      * none by default for poker.
      */
+    @Override
     protected void drawGrid(Graphics2D g2, int startPos, int rightEdgePos, int bottomEdgePos, int start,
                             int nrows1, int ncols1, int gridOffset) {}
 

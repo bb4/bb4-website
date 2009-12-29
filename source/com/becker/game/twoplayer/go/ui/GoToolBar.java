@@ -24,6 +24,7 @@ class GoToolBar extends GameToolBar {
      /**
      * add the button for passing.
      */
+    @Override
     protected final void addCustomToolBarButtons()
     {
         passButton_ = createToolBarButton( GameContext.getLabel("PASS_BTN"),

@@ -131,7 +131,8 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
 
     /** Verify not done after first move.  */
     public void testDoneStartGame() {
-        Assert.assertFalse("We don't expect to be done after making the very first move. ", searchable.done(createInitialMove(), false));
+        Assert.assertFalse("We don't expect to be done after making the very first move. ",
+               searchable.done(createInitialMove(), false));
     }
 
     /**  load a game in the middle and verify that a legal midgame move doesn't return true.  */

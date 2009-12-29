@@ -46,7 +46,7 @@ public abstract class GameBoardViewer extends JPanel
     protected Timer timer_ = null;
 
     protected final Cursor waitCursor_ = new Cursor( Cursor.WAIT_CURSOR );
-    protected static Cursor origCursor_ = null;
+    protected Cursor origCursor_ = null;
     protected JFrame parent_ = null;
 
 
@@ -69,10 +69,6 @@ public abstract class GameBoardViewer extends JPanel
         addMouseListener( this );
         // add a listener so that we realize when the computer (or human) has finished making his move
         addGameChangedListener(this);
-    }
-
-    public void setParentFrame(JFrame parent) {
-        parent_ = parent;
     }
 
     /**
@@ -163,7 +159,6 @@ public abstract class GameBoardViewer extends JPanel
         }
     }
 
-
     /**
      * return the game to its original state.
      */
@@ -206,7 +201,6 @@ public abstract class GameBoardViewer extends JPanel
             addMouseListener( this );
     }
 
-
     /**
      * Implements the GameChangedListener interface.
      * Called when the game has changed in some way
@@ -218,7 +212,6 @@ public abstract class GameBoardViewer extends JPanel
         this.refresh();
     }
 
-
     /**
      *  This method gets called when the game has changed in some way.
      *  Most likely because a move has been played.
@@ -228,7 +221,6 @@ public abstract class GameBoardViewer extends JPanel
         GameChangedEvent gce = new GameChangedEvent( m, controller_, this );
         evtq_.postEvent( gce );
     }
-
 
     /**
      * @return true if there is a move to undo.

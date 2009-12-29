@@ -50,10 +50,12 @@ public abstract class TrivialPlayer extends MultiGamePlayer
         return value;
     }
     
+    @Override
     public PlayerAction getAction(MultiGameController pc) {
         return action_;
     }
     
+    @Override
     public void setAction(PlayerAction action) {
         action_ = (TrivialAction) action;        
     }
@@ -69,6 +71,7 @@ public abstract class TrivialPlayer extends MultiGamePlayer
         return revealed_;
     }
     
+    @Override
     public MultiPlayerMarker getPiece() {
         return piece_;
     }

@@ -46,6 +46,7 @@ public class GalaxyRenderer extends MultiGameBoardRenderer
     }
 
 
+    @Override
     protected int getPreferredCellSize()
     {
         return 16;
@@ -54,6 +55,7 @@ public class GalaxyRenderer extends MultiGameBoardRenderer
     /**
      * Draw the pieces and possibly other game markers for both players.
      */
+    @Override
     protected void drawMarkers(GameControllerInterface controller, Graphics2D g2 )
     {
         // before we draw the planets, draw the fleets and their paths

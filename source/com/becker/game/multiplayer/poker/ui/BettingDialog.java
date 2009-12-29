@@ -42,12 +42,14 @@ public final class BettingDialog extends ActionDialog
     /**
      * ui initialization of the tree control.
      */
+    @Override
     protected JPanel createPersonalInfoPanel() {
 
         return new PokerHandPanel(((PokerPlayer)player_).getHand());
     }
 
 
+    @Override
     protected JPanel createGameInstructionsPanel() {
 
         NumberFormat cf = getCurrencyFormat();
@@ -71,6 +73,7 @@ public final class BettingDialog extends ActionDialog
     /**
      *  create the OK/Cancel buttons that go at the bottom.
      */
+    @Override
     protected JPanel createButtonsPanel()
     {
         JPanel buttonsPanel = new JPanel( new FlowLayout() );
@@ -97,6 +100,7 @@ public final class BettingDialog extends ActionDialog
         return NumberFormat.getCurrencyInstance(GameContext.getDefaultLocaleType().getLocale());
     }
 
+    @Override
     public String getTitle()
     {
         return GameContext.getLabel("MAKE_YOUR_BET");
@@ -107,6 +111,7 @@ public final class BettingDialog extends ActionDialog
      * called when one of the buttons at the bottom have been pressed.
      * @param e
      */
+    @Override
     public void actionPerformed( ActionEvent e )
     {
         Object source = e.getSource();
@@ -169,6 +174,7 @@ public final class BettingDialog extends ActionDialog
             this.setPreferredSize(new Dimension(400, 120));
         }
 
+        @Override
         protected void paintComponent(Graphics g) {
              PokerPlayerRenderer renderer = (PokerPlayerRenderer) PokerPlayerRenderer.getRenderer();
              renderer.renderHand((Graphics2D)g, new Location(0, 2), hand_, 22);

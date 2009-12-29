@@ -89,6 +89,7 @@ class SetInfoPanel extends GameInfoPanel
         return generalPanel;
     }
 
+    @Override
     protected void setPlayerLabel() {
     }
 

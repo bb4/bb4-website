@@ -71,6 +71,7 @@ public class OrdersTable extends TableBase
         }
     }
 
+    @Override
     protected TableModel createTableModel(String[] columnNames) {
         return  new PlayerTableModel(columnNames_, 0, false);
     }
@@ -150,6 +151,7 @@ public class OrdersTable extends TableBase
      * add a row based on a player object
      * @param order to add
      */
+    @Override
     public void addRow(Object order)
     {
         Order o = (Order)order;

@@ -23,16 +23,19 @@ public class TestBlockadeSearchable extends TwoPlayerSearchableBaseTst {
     /**
      * Create the controller containing the searchable to test.
      */
+    @Override
     protected  GameController createController() {
         return new BlockadeController();
     }
 
+    @Override
     protected String getTestCaseDir() {
         return EXTERNAL_TEST_CASE_DIR + "blockade/cases/searchable/";
     }
     /**
      * Create the game options
      */
+    @Override
     protected TwoPlayerOptions createTwoPlayerGameOptions() {
         return new TwoPlayerOptions();
     }
@@ -40,6 +43,7 @@ public class TestBlockadeSearchable extends TwoPlayerSearchableBaseTst {
     /**
      * @return an initial move by player one.
      */
+    @Override
     protected  TwoPlayerMove createInitialMove() {
         return BlockadeMove.createMove(5, 5,   0, new GamePiece(true));
     }

@@ -78,6 +78,7 @@ public class GtpTesujisoftGoServer
         return 0;
     } */
 
+    @Override
     public boolean handleCommand(String cmdLine, StringBuffer response)
     {
         String[] cmdArray = StringUtils.tokenize(cmdLine);
@@ -157,6 +158,7 @@ public class GtpTesujisoftGoServer
     }
 
 
+    @Override
     public void interruptCommand()
     {
         thread_.interrupt();

@@ -29,6 +29,7 @@ public class TrivialOptionsDialog extends MultiGameOptionsDialog
     /**
      * @return an array of panels to put in the parent controller param panel.
      */
+    @Override
     protected JComponent[] getControllerParamComponents() {
 
         TrivialOptions options = (TrivialOptions)controller_.getOptions();      
@@ -41,6 +42,7 @@ public class TrivialOptionsDialog extends MultiGameOptionsDialog
     }
 
 
+    @Override
     public GameOptions getOptions() {
         return new TrivialOptions(maxNumPlayers_.getIntValue(),
                                 numRobotPlayers_.getIntValue());

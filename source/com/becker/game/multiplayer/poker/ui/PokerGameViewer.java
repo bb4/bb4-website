@@ -26,11 +26,13 @@ public class PokerGameViewer extends MultiGameViewer
     public PokerGameViewer()
     {}
 
+    @Override
     protected PokerController createController()
     {
         return new PokerController();
     }
 
+    @Override
     protected GameBoardRenderer getBoardRenderer() {
         return PokerGameRenderer.getRenderer();
     }
@@ -38,6 +40,7 @@ public class PokerGameViewer extends MultiGameViewer
     /**
      * @return   the message to display at the completion of the game.
      */
+    @Override
     protected String getGameOverMessage()
     {
         StringBuffer buf = new StringBuffer("Game Over\n");
@@ -65,6 +68,7 @@ public class PokerGameViewer extends MultiGameViewer
      * @param player computer player to move
      * @return done return true if the game is over after moving
      */
+    @Override
     public boolean doComputerMove(Player player)
     {
         assert(!player.isHuman());
@@ -87,6 +91,7 @@ public class PokerGameViewer extends MultiGameViewer
      * @param player computer player to move
      * @return done return true if the game is over after moving
      */
+    @Override
     public boolean doSurrogateMove(SurrogateMultiPlayer player)
     {
         PokerController pc = (PokerController) controller_;
@@ -104,6 +109,7 @@ public class PokerGameViewer extends MultiGameViewer
      * @param player to apply it to
      * @return message to show if on client.
      */
+    @Override
     protected String applyAction(PlayerAction action,  Player player) {
 
         PokerPlayer p = (PokerPlayer) player;
@@ -143,6 +149,7 @@ public class PokerGameViewer extends MultiGameViewer
      *
      * @param lastMove the move to show (but now record)
      */
+    @Override
     public PokerRound createMove(Move lastMove)
     {
         return PokerRound.createMove();

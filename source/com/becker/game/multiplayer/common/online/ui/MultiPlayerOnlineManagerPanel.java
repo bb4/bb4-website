@@ -296,6 +296,7 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
      * called when the user closes the online game dialog.
      * We remove them form the active tables.
      */
+    @Override
     public void closing() {
         System.out.println(currentName_+ " is now leaving the room ");
         controller_.getServerConnection().leaveRoom(currentName_);

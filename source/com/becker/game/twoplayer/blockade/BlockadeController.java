@@ -42,6 +42,7 @@ public class BlockadeController extends TwoPlayerController
     /**
      * this gets the Blockade specific weights.
      */
+    @Override
     protected void initializeData()
     {
         weights_ = new BlockadeWeights();
@@ -110,6 +111,7 @@ public class BlockadeController extends TwoPlayerController
      *   a positive value means that player1 has the advantage.
      *   A big negative value means a good move for p2.
      */
+    @Override
     protected int worth( Move lastMove, ParameterArray weights )
     {
         board_.getProfiler().startCalcWorth();
@@ -156,6 +158,7 @@ public class BlockadeController extends TwoPlayerController
     }
 
 
+    @Override
     public Searchable getSearchable() {
         return new BlockadeSearchable();
     }

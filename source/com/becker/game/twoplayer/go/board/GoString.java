@@ -53,14 +53,13 @@ public class GoString extends GoSet
     public GoString( List stones, GoBoard board )
     {
         assert (stones != null && stones.size() > 0): "Tried to create list from empty list";
-        GoStone stone =  (GoStone)((GoBoardPosition) stones.get( 0 )).getPiece();
+        GoStone stone =  (GoStone)((BoardPosition) stones.get( 0 )).getPiece();
         // GoEye constructor calls this method. For eyes the stone is null.
         if (stone != null)
             ownedByPlayer1_ = stone.isOwnedByPlayer1();
-        Iterator it = stones.iterator();
-        while ( it.hasNext() ) {
-            GoBoardPosition pos = (GoBoardPosition) it.next();
-            addMemberInternal( pos, board);
+        for (Object stone1 : stones) {
+            GoBoardPosition pos = (GoBoardPosition) stone1;
+            addMemberInternal(pos, board);
         }
         initializeLiberties(board);
     }
@@ -68,10 +67,12 @@ public class GoString extends GoSet
     /**
      * @return  the hashSet containing the members
      */
+    @Override
     public Set<GoBoardPosition> getMembers() {
         return members_;
     }
     
+    @Override
     protected void initializeMembers() {
         members_ = new HashSet<GoBoardPosition>();
     }
@@ -175,12 +176,9 @@ public class GoString extends GoSet
      */
     public final void remove( Collection stones, GoBoard board )
     {
-        Iterator it = stones.iterator();
-        while ( it.hasNext() ) {
-            GoBoardPosition stone = (GoBoardPosition) it.next();
-            // hitting this from UpdateStringsAfterRemoving
-            //assert ( getMembers().contains( stone )): "ERROR: GoString.remove: " + stone + " is not a subset of \n" + this;
-            remove( stone, board );
+        for (Object stone1 : stones) {
+            GoBoardPosition stone = (GoBoardPosition) stone1;
+            remove(stone, board);
         }
         initializeLiberties(board);
         assert ( size() > 0 );
@@ -195,6 +193,7 @@ public class GoString extends GoSet
      * return the set of liberty positions that the string has
      * @param board
      */
+    @Override
     public final Set<GoBoardPosition> getLiberties(GoBoard board)
     {
         return liberties_;
@@ -203,21 +202,19 @@ public class GoString extends GoSet
     private Set initializeLiberties(GoBoard board) {
         liberties_ = new HashSet<GoBoardPosition>();
 
-        Iterator it = getMembers().iterator();
-        while ( it.hasNext() ) {
-            GoBoardPosition stone = (GoBoardPosition) it.next();
-            addLiberties( stone, liberties_, board );
+        for (GoBoardPosition stone : getMembers()) {
+            addLiberties(stone, liberties_, board);
         }
         return liberties_;
     }
 
     /**
      * If the libertyPos is occupied, then we subract this liberty, else add it.
-     * @param libertyPos
+     * @param libertyPos  position to check for liberty
      */
     public void changedLiberty(GoBoardPosition libertyPos) {
          if (libertyPos.isOccupied()) {
-             boolean removed = liberties_.remove(libertyPos);
+             liberties_.remove(libertyPos);
              // hitting if showing game tree perhaps because already removed.
              //assert removed : "could not remove " + libertyPos +" from "+liberties_;  
          } else {
@@ -227,17 +224,6 @@ public class GoString extends GoSet
                  assert(liberties_.size() <= 4) :this +" has too many liberties for one stone :"+ liberties_ +  " just added :"+libertyPos;
          }
     }
-
-    /**
-     *
-     * @param board
-     * @return  true if the string is in atari
-     */
-    public boolean isInAtari(GoBoard board)
-    {
-        return (getNumLiberties(board) == 0);
-    }
-
 
     /**
      * only add liberties for this stone if they are not already in the set
@@ -268,11 +254,9 @@ public class GoString extends GoSet
      */
     public final void updateTerritory( float health )
     {
-        Iterator it = getMembers().iterator();
-        while ( it.hasNext() ) {
-            GoBoardPosition pos = (GoBoardPosition) it.next();
-            GoStone stone = (GoStone)pos.getPiece();
-            stone.setHealth( health );
+        for (GoBoardPosition pos : getMembers()) {
+            GoStone stone = (GoStone) pos.getPiece();
+            stone.setHealth(health);
         }
     }
 
@@ -282,6 +266,7 @@ public class GoString extends GoSet
      *  If the difference in health between the stones is great, then they are not really enemies
      *  because one of them is dead.
      */
+    @Override
     public boolean isEnemy( GoBoardPosition pos)
     {
         assert (group_ != null): "group for "+this+" is null";
@@ -298,10 +283,8 @@ public class GoString extends GoSet
      */
     public final void unvisit()
     {
-        Iterator it = getMembers().iterator();
-        while ( it.hasNext() ) {
-            GoBoardPosition stone = (GoBoardPosition) it.next();
-            stone.setVisited( false );
+        for (GoBoardPosition stone : getMembers()) {
+            stone.setVisited(false);
         }
     }
 
@@ -337,10 +320,8 @@ public class GoString extends GoSet
      */
     public final boolean areAnyBlank()
     {
-        final Iterator it = getMembers().iterator();
-        while ( it.hasNext() ) {
-            final GoBoardPosition stone = (GoBoardPosition) it.next();
-            if ( stone.isUnoccupied() )
+        for (GoBoardPosition stone : getMembers()) {
+            if (stone.isUnoccupied())
                 return true;
         }
         return false;

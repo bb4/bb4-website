@@ -74,6 +74,7 @@ public final class GoGroup extends GoSet
         healthAnalyzer_ = new GroupHealthAnalyzer(this);       
     }
     
+    @Override
     protected void initializeMembers() {
         members_ = new HashSet<GoString>();
     }
@@ -81,6 +82,7 @@ public final class GoGroup extends GoSet
     /**
      * @return  the hashSet containing the members
      */
+    @Override
     public Set<GoString> getMembers() {
         return members_;
     }
@@ -182,6 +184,7 @@ public final class GoGroup extends GoSet
      * Get the number of liberties that the group has.
      * @return the number of liberties that the group has
      */
+    @Override
     public Set getLiberties(GoBoard board)
     {
         return healthAnalyzer_.getLiberties(board);
@@ -333,6 +336,7 @@ public final class GoGroup extends GoSet
      *  If the difference in health between the stones is great, then they are not really enemies
      *  because one of them is dead.
      */
+    @Override
     protected boolean isEnemy( GoBoardPosition pos)
     {
         assert (pos.isOccupied());

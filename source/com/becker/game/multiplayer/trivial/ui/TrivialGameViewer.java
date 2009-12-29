@@ -26,11 +26,13 @@ public class TrivialGameViewer extends MultiGameViewer
     {
     }
 
+    @Override
     protected TrivialController createController()
     {
         return new TrivialController();
     }
 
+    @Override
     protected GameBoardRenderer getBoardRenderer() {
         return TrivialGameRenderer.getRenderer();
     }
@@ -38,6 +40,7 @@ public class TrivialGameViewer extends MultiGameViewer
     /**
      * @return   the message to display at the completion of the game.
      */
+    @Override
     protected String getGameOverMessage()
     {
         StringBuffer buf = new StringBuffer("Game Over\n");
@@ -65,6 +68,7 @@ public class TrivialGameViewer extends MultiGameViewer
      * @param player computer player to move
      * @return done return true if the game is over after moving
      */
+    @Override
     public boolean doComputerMove(Player player)
     {
         assert(!player.isHuman());
@@ -86,6 +90,7 @@ public class TrivialGameViewer extends MultiGameViewer
      * @param player computer player to move
      * @return done return true if the game is over after moving
      */
+    @Override
     public boolean doSurrogateMove(SurrogateMultiPlayer player)
     {
         TrivialController pc = (TrivialController) controller_;

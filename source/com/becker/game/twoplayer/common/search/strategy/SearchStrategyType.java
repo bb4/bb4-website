@@ -13,41 +13,51 @@ public enum SearchStrategyType {
 
     
     MINIMAX("MINIMAX_SEARCH") {
+        @Override
         public SearchStrategy createStrategy(Searchable s, ParameterArray weights) {
             return new MiniMaxStrategy(s, weights);
         }
-        public boolean sortAscending(boolean player1, boolean playerOnesPerspective) { 
+        @Override
+        public boolean sortAscending(boolean player1, boolean playerOnesPerspective) {
             return  ( player1 == playerOnesPerspective);
         }
     },
     NEGAMAX("NEGAMAX_SEARCH") {
+        @Override
         public SearchStrategy createStrategy(Searchable s, ParameterArray weights) {
             return new NegaMaxStrategy(s, weights);
         }
+         @Override
          public boolean sortAscending(boolean player1, boolean playerOnesPerspective) {
             return false;
         }
     },
     NEGASCOUT("NEGASCOUT_SEARCH") {
+        @Override
         public SearchStrategy createStrategy(Searchable s, ParameterArray weights) {
             return new NegaScoutStrategy(s, weights);
         }
+        @Override
         public boolean sortAscending(boolean player1, boolean playerOnesPerspective) {
             return  false;
         }
     },
     NEGASCOUT_W_MEMORY("NEGASCOUT_W_MEMORY_SEARCH") {
+        @Override
         public SearchStrategy createStrategy(Searchable s, ParameterArray weights) {
             return new NegaScoutMemoryStrategy(s, weights);
         }
+        @Override
         public boolean sortAscending(boolean player1, boolean playerOnesPerspective) {
             return  false;
         }
     },
     MTD("MTD_SEARCH"){
+        @Override
         public SearchStrategy createStrategy(Searchable s, ParameterArray weights) {
             return new MtdStrategy(s, weights);
         }
+        @Override
         public boolean sortAscending(boolean player1, boolean playerOnesPerspective) {
             return  false;
         }

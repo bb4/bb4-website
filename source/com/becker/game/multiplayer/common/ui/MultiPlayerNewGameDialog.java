@@ -40,6 +40,7 @@ public abstract class MultiPlayerNewGameDialog extends NewGameDialog
      * Lets you initialize all the players. Some subset of the players may be robots and not human.
      * @return a table of players
      */
+    @Override
     protected JPanel createPlayerPanel()
     {
         JPanel playerPanel = new JPanel(new BorderLayout());

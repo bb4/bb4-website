@@ -26,23 +26,28 @@ public final class StubPatterns extends Patterns
      /**
       * This is how many in a row are needed to win
       */
+    @Override
     public int getWinRunLength() {
         return 2;
     }
 
+    @Override
     protected int getNumPatterns() {
         return 2;
     }
 
+    @Override
     public int getMinInterestingLength() {
         return 2;
     }
 
 
+    @Override
     protected String getPatternString(int i) {
         return patternString[i];
     }
 
+    @Override
     protected int getWeightIndex(int i) {
         return weightIndex[i];
     }

@@ -59,6 +59,7 @@ public final class GoController extends TwoPlayerController
         initializeData();
     }
 
+    @Override
     protected TwoPlayerOptions createOptions() {
         TwoPlayerOptions options = new GoOptions();
         options.setPlayerName(true, GameContext.getLabel("BLACK"));
@@ -69,6 +70,7 @@ public final class GoController extends TwoPlayerController
     /**
      * this gets the Go specific patterns and weights.
      */
+    @Override
     protected void initializeData()
     {
         numDeadBlackStonesOnBoard_ = 0;
@@ -248,6 +250,7 @@ public final class GoController extends TwoPlayerController
      *   a positive value means that player1 has the advantage.
      *   A big negative value means a good move for p2.
      */
+    @Override
     protected int worth( Move lastMove, ParameterArray weights )
     {
         int row, col;
@@ -446,6 +449,7 @@ public final class GoController extends TwoPlayerController
     }
 
 
+    @Override
     public Searchable getSearchable() {
          return new GoSearchable();
     }

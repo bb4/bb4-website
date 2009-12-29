@@ -49,6 +49,7 @@ final class OrdersDialog extends OptionsDialog
         showContent();
     }
 
+    @Override
     protected JComponent createDialogContent()
     {
         setResizable( true );
@@ -94,6 +95,7 @@ final class OrdersDialog extends OptionsDialog
         return mainPanel;
     }
 
+    @Override
     public String getTitle()
     {
         return GameContext.getLabel("CURRENT_ORDERS_TITLE");
@@ -102,6 +104,7 @@ final class OrdersDialog extends OptionsDialog
     /**
      *  create the OK Cancel buttons that go at the botton
      */
+    @Override
     protected JPanel createButtonsPanel()
     {
         JPanel buttonsPanel = new JPanel( new FlowLayout() );
@@ -126,6 +129,7 @@ final class OrdersDialog extends OptionsDialog
         return ordersTable_.getOrders();
     }
 
+    @Override
     public void actionPerformed(ActionEvent e)
     {
         Object source = e.getSource();

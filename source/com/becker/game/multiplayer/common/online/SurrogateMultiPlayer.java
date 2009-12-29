@@ -53,7 +53,8 @@ public  class SurrogateMultiPlayer extends MultiGamePlayer implements OnlineChan
         }
     }
     
-    public  void setAction(PlayerAction action) {        
+    @Override
+    public  void setAction(PlayerAction action) {
         assert false : "must not set action directly on a surrogate";
     }
         
@@ -63,6 +64,7 @@ public  class SurrogateMultiPlayer extends MultiGamePlayer implements OnlineChan
      * @return an action for this player. Block until the real player, for which we are a surrogate, 
      *    has played and we have an  action to return.
      */
+    @Override
     public synchronized PlayerAction getAction(MultiGameController controller) {
      
         try {
@@ -93,10 +95,12 @@ public  class SurrogateMultiPlayer extends MultiGamePlayer implements OnlineChan
         return player_;
     }
     
+    @Override
     public MultiPlayerMarker getPiece() {
         return player_.getPiece();
     }
     
+    @Override
     public boolean isSurrogate() {
         return true;
     }

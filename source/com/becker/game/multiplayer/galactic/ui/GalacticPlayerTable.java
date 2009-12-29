@@ -20,7 +20,7 @@ import javax.swing.*;
  * GalacticPlayerTable contains a list of players.
  * All the cells are editable.
  * It is initialized with a list of Players and returns a list of Players.
- * @see com.becker.game.multiplayer.galactic.player.GalacticPlayer
+ * @see GalacticPlayer
  *
  * @author Barry Becker
  */
@@ -65,6 +65,7 @@ public class GalacticPlayerTable extends PlayerTable implements TableModelListen
     }
 
 
+    @Override
     protected void updateColumnMeta(TableColumnMeta[] columnMeta) {
 
         columnMeta[ICON_INDEX].setPreferredWidth(48);
@@ -77,6 +78,7 @@ public class GalacticPlayerTable extends PlayerTable implements TableModelListen
     /**
      * @return  the players represented by rows in the table
      */
+    @Override
     public List<? extends Player> getPlayers()
     {
         TableModel model = table_.getModel();
@@ -102,6 +104,7 @@ public class GalacticPlayerTable extends PlayerTable implements TableModelListen
      * add a row based on a player object
      * @param player to add
      */
+    @Override
     protected void addRow(Object player)
     {
         GalacticPlayer p = (GalacticPlayer) player;
@@ -117,6 +120,7 @@ public class GalacticPlayerTable extends PlayerTable implements TableModelListen
         getPlayerModel().addRow(d);
     }
 
+    @Override
     protected Player createPlayer() {
         int ct = table_.getRowCount();
         Planet planet = new Planet((char)('A'+ct), GalacticPlayer.DEFAULT_NUM_SHIPS, 10, new Location(0,0));

@@ -21,10 +21,12 @@ public class PokerNewGameDialog extends MultiPlayerNewGameDialog
     }
 
 
+    @Override
     protected PlayerTable createPlayerTable() {
         return  new PokerPlayerTable((List<PokerPlayer>) controller_.getPlayers());
     }
 
+    @Override
     protected OnlineGameManagerPanel createPlayOnlinePanel() {
         return new OnlinePokerManagerPanel(viewer_, this);
     }

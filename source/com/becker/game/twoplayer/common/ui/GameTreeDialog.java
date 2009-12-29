@@ -79,6 +79,7 @@ public final class GameTreeDialog extends AbstractDialog
     /**
      * ui initialization of the tree control.
      */
+    @Override
     protected JComponent createDialogContent()
     {
         setTitle( "Game Tree" );

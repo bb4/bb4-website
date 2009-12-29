@@ -27,12 +27,14 @@ public class PlayerTableModel extends DefaultTableModel
         editable_ = editable;
     }
 
+    @Override
     public Class getColumnClass(int col)
     {
         List v = (Vector)dataVector.elementAt(0);
         return v.get(col).getClass();
     }
 
+    @Override
     public boolean isCellEditable(int row, int column)
     {
         return editable_;

@@ -97,6 +97,7 @@ protected GameBoardRenderer getBoardRenderer() {
         }
     }
 
+    @Override
     public void showLastMove()
     {
         refresh();

@@ -96,6 +96,7 @@ public class OnlineGameServer  {
      * Objects created in run method are finalized when
      * program terminates and thread exits
      */
+    @Override
     protected void finalize() {
         try {
             super.finalize();
@@ -192,6 +193,7 @@ public class OnlineGameServer  {
            
         }
         
+        @Override
         protected void finalize() {
             try {
                oStream_.close();

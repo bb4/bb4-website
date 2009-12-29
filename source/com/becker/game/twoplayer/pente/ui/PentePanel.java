@@ -23,28 +23,33 @@ public class PentePanel extends TwoPlayerPanel
     {}
 
 
+    @Override
     public String getTitle()
     {
         return  GameContext.getLabel("PENTE_TITLE");
     }
 
 
+    @Override
     protected GameBoardViewer createBoardViewer()
     {
         return new PenteBoardViewer();
     }
 
+    @Override
     protected NewGameDialog createNewGameDialog( JFrame parent, GameViewable viewer )
     {
         return new PenteNewGameDialog( parent, viewer );
     }
 
+    @Override
     protected GameInfoPanel createInfoPanel(GameController controller)
     {
         return new TwoPlayerInfoPanel( controller );   // make PenteInfoPanel
     }
 
     // Display the help dialog to give instructions
+    @Override
     protected void showHelpDialog()
     {
         String name = getTitle();

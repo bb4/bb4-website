@@ -29,6 +29,7 @@ public final class GoPanel extends TwoPlayerPanel
     /**
      * @return the title for the applet/application window
      */
+    @Override
     public String getTitle()
     {
         return GameContext.getLabel("GO");
@@ -38,22 +39,26 @@ public final class GoPanel extends TwoPlayerPanel
      * creates a board viewer of the appropriate type given a game controller
      * @return the game board viewer
      */
+    @Override
     protected GameBoardViewer createBoardViewer()
     {
         return new GoBoardViewer();
     }
 
+    @Override
     protected NewGameDialog createNewGameDialog( JFrame parent, GameViewable viewer )
     {
         return new GoNewGameDialog( parent, viewer );
     }
 
+    @Override
     protected GameInfoPanel createInfoPanel(GameController controller)
     {
         return new GoInfoPanel( controller );
     }
 
 
+    @Override
     protected GameTreeDialog createGameTreeDialog()
     {
         AbstractTwoPlayerBoardViewer v =(AbstractTwoPlayerBoardViewer)createBoardViewer();
@@ -61,6 +66,7 @@ public final class GoPanel extends TwoPlayerPanel
         return new GameTreeDialog( null, v, new GoTreeCellRenderer());
     }
 
+    @Override
     protected GameToolBar createToolbar() {
          return new GoToolBar(BG_TEXTURE, this);
     }
@@ -68,6 +74,7 @@ public final class GoPanel extends TwoPlayerPanel
     /**
      * Display the help dialog to give instructions
      */
+    @Override
     protected void showHelpDialog()
     {
         String name = getTitle();
@@ -80,6 +87,7 @@ public final class GoPanel extends TwoPlayerPanel
     /**
      * handle the pass button and the regular ones too.
      */
+    @Override
     public void actionPerformed( ActionEvent e )
     {
         Object source = e.getSource();

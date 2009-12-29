@@ -42,6 +42,7 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
         return (TwoPlayerController) controller_;
     }
 
+    @Override
     public GameOptions getOptions() {
 
         TwoPlayerOptions options = (TwoPlayerOptions) get2PlayerController().getOptions();

@@ -23,7 +23,7 @@ public class BlockadeWall
     /**
      * constructor
      */
-    public BlockadeWall( LinkedHashSet<BlockadeBoardPosition> positions)
+    public BlockadeWall( Set<BlockadeBoardPosition> positions)
     {
         Iterator<BlockadeBoardPosition> it = positions.iterator();
         init(it.next(), it.next());

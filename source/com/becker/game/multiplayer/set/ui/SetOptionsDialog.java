@@ -47,6 +47,7 @@ class SetOptionsDialog extends MultiGameOptionsDialog
     }
 
 
+    @Override
     public GameOptions getOptions() {
         return new SetOptions(maxNumPlayers_.getIntValue(),
                               numRobotPlayers_.getIntValue(),

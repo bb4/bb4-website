@@ -24,11 +24,13 @@ public abstract class MultiGameViewer extends GameBoardViewer
     // Construct the application
     public MultiGameViewer() {}
 
+    @Override
     protected abstract MultiGameController createController();
 
     /**
      * start over with a new game using the current options.
      */
+    @Override
     public void startNewGame()
     {
         reset();
@@ -47,6 +49,7 @@ public abstract class MultiGameViewer extends GameBoardViewer
       * display a dialog at the end of the game showing who won and other relevant
       * game specific information.
       */
+    @Override
     protected void showWinnerDialog()
     {
         String message = getGameOverMessage();
@@ -58,6 +61,7 @@ public abstract class MultiGameViewer extends GameBoardViewer
     /**
      * @return   the message to display at the completion of the game.
      */
+    @Override
     protected abstract String getGameOverMessage();
 
 
@@ -92,6 +96,7 @@ public abstract class MultiGameViewer extends GameBoardViewer
      * Called when the game has changed in some way
      * @param evt
      */
+    @Override
     public void gameChanged(GameChangedEvent evt)
     {
         if (controller_.isDone() && !winnerDialogShown_)  {
@@ -130,6 +135,7 @@ public abstract class MultiGameViewer extends GameBoardViewer
     /**
      * @return the tooltip for the panel given a mouse event
      */
+    @Override
     public String getToolTipText( MouseEvent e )
     {
         Location loc = getBoardRenderer().createLocation(e);

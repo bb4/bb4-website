@@ -23,28 +23,33 @@ public class ChessPanel extends TwoPlayerPanel
     public ChessPanel()
     {}
 
+    @Override
     public String getTitle()
     {
         return GameContext.getLabel("CHESS_TITLE");
     }
 
 
+    @Override
     protected GameBoardViewer createBoardViewer()
     {
         return new ChessBoardViewer();
     }
 
+    @Override
     protected NewGameDialog createNewGameDialog( JFrame parent, GameViewable viewer )
     {
         return new ChessNewGameDialog( parent, viewer );
     }
 
+    @Override
     protected GameInfoPanel createInfoPanel(GameController controller)
     {
         return new TwoPlayerInfoPanel( controller );   // make ChessInfoPanel
     }
 
     // Display the help dialog to give instructions
+    @Override
     protected void showHelpDialog()
     {
         String name = getTitle();

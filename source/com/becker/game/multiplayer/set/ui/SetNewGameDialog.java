@@ -24,6 +24,7 @@ public class SetNewGameDialog extends MultiPlayerNewGameDialog
     }
 
 
+    @Override
     protected PlayerTable createPlayerTable() {
         return  new SetPlayerTable((List<SetPlayer>) controller_.getPlayers());
     }

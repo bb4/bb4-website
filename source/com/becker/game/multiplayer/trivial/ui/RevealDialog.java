@@ -31,6 +31,7 @@ public final class RevealDialog extends ActionDialog
         super(pc, parent); 
     }
 
+    @Override
     protected JPanel createPersonalInfoPanel()
     {
         JPanel p = new JPanel(new BorderLayout());
@@ -40,6 +41,7 @@ public final class RevealDialog extends ActionDialog
     }
     
     
+    @Override
     protected JPanel createGameInstructionsPanel() {
                   
         JRadioButton keepHiddenButton = new JRadioButton("Keep value hidden");            
@@ -65,6 +67,7 @@ public final class RevealDialog extends ActionDialog
     /**
      *  create the OK/Cancel buttons that go at the bottom.
      */
+    @Override
     protected JPanel createButtonsPanel()
     {
         JPanel buttonsPanel = new JPanel( new FlowLayout() );
@@ -77,6 +80,7 @@ public final class RevealDialog extends ActionDialog
     }
 
 
+    @Override
     public String getTitle()
     {
         return "Hide or Reveal?";
@@ -87,6 +91,7 @@ public final class RevealDialog extends ActionDialog
      * called when one of the buttons at the bottom have been pressed.
      * @param e
      */
+    @Override
     public void actionPerformed( ActionEvent e )
     {
         Object source = e.getSource();

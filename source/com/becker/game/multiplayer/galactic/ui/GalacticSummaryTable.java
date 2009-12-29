@@ -46,6 +46,7 @@ public class GalacticSummaryTable extends SummaryTable
      * add a row based on a player object
      * @param player to add
      */
+    @Override
     protected void addRow(Object player)
     {
         GalacticPlayer p = (GalacticPlayer)player;

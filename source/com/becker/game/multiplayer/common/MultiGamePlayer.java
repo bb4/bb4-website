@@ -82,6 +82,7 @@ public abstract class MultiGamePlayer extends Player {
         return null;        
     }
 
+    @Override
     public Player createSurrogate(IServerConnection connection) {
         return new SurrogateMultiPlayer(this, connection);
     }

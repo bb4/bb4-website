@@ -38,6 +38,7 @@ class GalacticInfoPanel extends GameInfoPanel implements GameChangedListener, Ac
         super(controller);
     }
 
+    @Override
     protected void createSubPanels()
     {
         this.add( createGeneralInfoPanel() );
@@ -52,6 +53,7 @@ class GalacticInfoPanel extends GameInfoPanel implements GameChangedListener, Ac
      * This panel shows information that is specific to the game type.
      * For Galactic Empire we have a button that allows the current player to enter his commands
      */
+    @Override
     protected JPanel createCustomInfoPanel()
     {
 
@@ -84,6 +86,7 @@ class GalacticInfoPanel extends GameInfoPanel implements GameChangedListener, Ac
     }
 
 
+    @Override
     protected String getMoveNumLabel()
     {
         return GameContext.getLabel("CURRENT_YEAR" + COLON);
@@ -135,6 +138,7 @@ class GalacticInfoPanel extends GameInfoPanel implements GameChangedListener, Ac
     /**
      * set the appropriate text and color for the player label.
      */
+    @Override
     protected void setPlayerLabel()
     {
         Player player = controller_.getCurrentPlayer();
@@ -159,6 +163,7 @@ class GalacticInfoPanel extends GameInfoPanel implements GameChangedListener, Ac
      * implements the GameChangedListener interface.
      * This method called whenever a move has been made.
      */
+    @Override
     public void gameChanged( GameChangedEvent gce )
     {
         if ( controller_ == null )

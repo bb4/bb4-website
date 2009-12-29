@@ -26,7 +26,7 @@ import java.util.Set;
  */
 public class BlockadeBoardRenderer extends TwoPlayerBoardRenderer
 {
-    private  static GameBoardRenderer renderer_;
+    private static GameBoardRenderer renderer_;
 
     /** wall that gets dragged around until the player places it.   */
     private BlockadeWall draggedWall_;
@@ -55,6 +55,7 @@ public class BlockadeBoardRenderer extends TwoPlayerBoardRenderer
         return draggedWall_;
     }
 
+    @Override
     protected int getPreferredCellSize()
     {
         return 24;

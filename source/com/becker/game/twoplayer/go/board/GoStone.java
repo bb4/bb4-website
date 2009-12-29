@@ -53,6 +53,7 @@ public final class GoStone extends GamePiece implements GoMember
     /**
      * create a deep copy of this stone
      */
+    @Override
     public GamePiece copy()
     {
         GoStone stone = new GoStone( ownedByPlayer1_, health_);

@@ -35,6 +35,7 @@ class TrivialInfoPanel extends GameInfoPanel implements GameChangedListener, Act
         super(controller);
     }
 
+    @Override
     protected void createSubPanels()
     {
         add( createGeneralInfoPanel() );
@@ -50,6 +51,7 @@ class TrivialInfoPanel extends GameInfoPanel implements GameChangedListener, Act
      * This panel shows information that is specific to the game type.
      * For Trivial, we have a button that allows the current player to enter his commands
      */
+    @Override
     protected JPanel createCustomInfoPanel()
     {
         commandPanel_ = createSectionPanel("");
@@ -77,6 +79,7 @@ class TrivialInfoPanel extends GameInfoPanel implements GameChangedListener, Act
     }
 
 
+    @Override
     protected String getMoveNumLabel()
     {
         return GameContext.getLabel("CURRENT_ROUND" + COLON);
@@ -122,6 +125,7 @@ class TrivialInfoPanel extends GameInfoPanel implements GameChangedListener, Act
     /**
      * set the appropriate text and color for the player label.
      */
+    @Override
     protected void setPlayerLabel()
     {
         Player player = controller_.getCurrentPlayer();
@@ -146,6 +150,7 @@ class TrivialInfoPanel extends GameInfoPanel implements GameChangedListener, Act
      * implements the GameChangedListener interface.
      * This method called whenever a move has been made.
      */
+    @Override
     public void gameChanged( GameChangedEvent gce )
     {
         if ( controller_ == null )

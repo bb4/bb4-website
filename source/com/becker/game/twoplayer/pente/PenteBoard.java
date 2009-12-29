@@ -81,6 +81,7 @@ public class PenteBoard extends TwoPlayerBoard
     /**
      *  For pente, undoing a move is just changing that space back to a blank.
      */
+    @Override
     protected void undoInternalMove( Move move )
     {
         TwoPlayerMove m = (TwoPlayerMove)move;
@@ -132,6 +133,7 @@ public class PenteBoard extends TwoPlayerBoard
      * States: player1, player2, empty.
      * @return number of different states this position can have.
      */
+    @Override
     public int getNumPositionStates() {
         return 3;
     }

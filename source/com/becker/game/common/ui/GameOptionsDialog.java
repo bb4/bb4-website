@@ -19,9 +19,8 @@ import java.awt.event.*;
  * @author Barry Becker
  */
 public abstract class GameOptionsDialog extends OptionsDialog
-                                                                   implements ItemListener
+                                        implements ItemListener
 {
-
     /**
      * the options get set directly on the game controller that is passed in.
      */
@@ -30,12 +29,10 @@ public abstract class GameOptionsDialog extends OptionsDialog
 
     // debug params
     protected NumberInput dbgLevelField_;
-    protected JTextField logFileField_;
     protected JRadioButton consoleOutputButton_;  // output radio button group
     protected JRadioButton windowOutputButton_;  // output radio button group
     protected JRadioButton fileOutputButton_;  // output radio button group
     protected int logDestination_;
-    protected GradientButton logFileButton_;
     protected JCheckBox profileCheckbox_;
 
     // look and feel params
@@ -59,6 +56,7 @@ public abstract class GameOptionsDialog extends OptionsDialog
         showContent();
     }
 
+    @Override
     protected JComponent createDialogContent()
     {
         JPanel mainPanel = new JPanel();
@@ -127,6 +125,7 @@ public abstract class GameOptionsDialog extends OptionsDialog
 
 
     // create the OK Cancel buttons that go at the botton
+    @Override
     protected JPanel createButtonsPanel()
     {
         JPanel buttonsPanel = new JPanel( new FlowLayout() );
@@ -358,6 +357,7 @@ public abstract class GameOptionsDialog extends OptionsDialog
     /**
      * called when a button has been pressed
      */
+    @Override
     public void actionPerformed( ActionEvent e )
     {
         super.actionPerformed(e);

@@ -56,6 +56,7 @@ public class PokerOptionsDialog extends MultiGameOptionsDialog
     }
 
 
+    @Override
     public GameOptions getOptions() {
         return new PokerOptions(maxNumPlayers_.getIntValue(),
                                 numRobotPlayers_.getIntValue(),

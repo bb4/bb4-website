@@ -58,12 +58,14 @@ public class PokerPlayerRenderer extends GamePieceRenderer
         return renderer_;
     }
 
+    @Override
     protected int getPieceSize(int cellSize, GamePiece piece)
     {
         int pieceSize = (int) (0.85f * cellSize * 2);
         return pieceSize;
     }
 
+    @Override
     protected Color getPieceColor(GamePiece piece) {
         PokerPlayerMarker marker = (PokerPlayerMarker)piece;
         return marker.getColor();
@@ -75,6 +77,7 @@ public class PokerPlayerRenderer extends GamePieceRenderer
      * @param g2 graphics context
      * @param position the position of the piece to render
      */
+    @Override
     public void render( Graphics2D g2, BoardPosition position, int cellSize, int margin, Board b)
     {
         PokerPlayerMarker playerMarker = (PokerPlayerMarker)position.getPiece();
