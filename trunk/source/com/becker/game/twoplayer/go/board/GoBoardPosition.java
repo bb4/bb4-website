@@ -9,7 +9,6 @@ import com.becker.game.common.BoardPosition;
  * It can be empty or occupied. If occupied, then it is  either black or white and has a string owner.
  * A GoBoardPosition may have an eye owner if it is part of a group's eye.
  *
- * @see GoBoard
  * @author Barry Becker
  */
 public final class GoBoardPosition extends BoardPosition implements GoMember
