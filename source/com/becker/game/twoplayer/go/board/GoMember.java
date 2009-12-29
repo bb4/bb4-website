@@ -12,5 +12,4 @@ package com.becker.game.twoplayer.go.board;
 public interface GoMember extends Cloneable
 {
     Object clone() throws CloneNotSupportedException;
-
 }
