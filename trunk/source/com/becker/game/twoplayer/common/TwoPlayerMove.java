@@ -4,6 +4,8 @@ import com.becker.common.Location;
 import com.becker.common.util.Util;
 import com.becker.game.common.*;
 
+import java.util.Iterator;
+
 /**
  *  This base class describes a change in state from one board
  *  position to the next in a game.
@@ -18,7 +20,7 @@ import com.becker.game.common.*;
  *  This is the only class where I dispense with setter and getter methods because I think efficiency
  *  of access for this class is important when searching 2 player games.
  *
- *  @see com.becker.game.common.Board
+ *  @see Board
  *  @author Barry Becker
  */
 public class TwoPlayerMove extends Move
@@ -94,6 +96,7 @@ public class TwoPlayerMove extends Move
 
     /**
      * factory method for getting new moves. It uses recycled objects if possible.
+     * @return the newly created move.
      */
     public static TwoPlayerMove createMove( int destinationRow, int destinationCol,
                                    int val, GamePiece piece )
@@ -103,6 +106,7 @@ public class TwoPlayerMove extends Move
 
     /**
      * factory method for getting new moves. It uses recycled objects if possible.
+     * @return the newly created move.
      */
     public static TwoPlayerMove createMove( Location destinationLocation,
                                    int val, GamePiece piece )
@@ -136,21 +140,24 @@ public class TwoPlayerMove extends Move
         return toLocation_;
     }
 
-    /**
-     * @param mv  the move to compare to.
-     * @return  true if values are equal.
-     */
     @Override
-    public boolean equals( Object mv )
-    {
-        return (getValue() == ((TwoPlayerMove) mv).getValue());
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TwoPlayerMove)) return false;
+
+        TwoPlayerMove that = (TwoPlayerMove) o;
+
+        return getValue() == that.getValue()
+                && player1_ == that.player1_
+                && !(toLocation_ != null ? !toLocation_.equals(that.toLocation_) : that.toLocation_ != null);
     }
-    
+
     @Override
     public int hashCode() {
-        assert false;
-        return 0;
-        //return (int) (getValue()*10) + getToRow() * 100 +  getToCol();
+        int result = toLocation_ != null ? toLocation_.hashCode() : 0;
+        result = 31 * result + getValue();
+        result = 31 * result + (player1_ ? 1 : 0);
+        return result;
     }
 
     /**
@@ -221,7 +228,13 @@ public class TwoPlayerMove extends Move
      * @return a string, which if executed will create a move identical to this instance.
      */
     public String getConstructorString() {
-        return "createConstructorString for " + this.getClass().getName() +" not yet implemented.";
+        String pieceCreator = "null";
+        if (getPiece() != null) {
+            pieceCreator = "new GamePiece(" + getPiece().isOwnedByPlayer1() + ")";
+        }
+        return "TwoPlayerMove.createMove(new Location("
+                +  getToLocation().getRow()  + ", " + getToLocation().getCol()  + "), " + getValue() + ", "
+                + pieceCreator + "),";
     }
 
     @Override

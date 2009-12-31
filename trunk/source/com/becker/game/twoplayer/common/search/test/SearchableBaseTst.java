@@ -1,6 +1,7 @@
 package com.becker.game.twoplayer.common.search.test;
 
 import com.becker.game.common.GameController;
+import com.becker.game.twoplayer.common.TwoPlayerController;
 import junit.framework.*;
 import com.becker.game.twoplayer.common.search.Searchable;
 
@@ -14,22 +15,19 @@ public abstract class SearchableBaseTst extends TestCase {
 
     /** The serachable instance under test. */
     protected Searchable searchable;
-    
-    protected GameController controller;
 
-    protected static final String PREFIX = "board/";
+    protected ISearchableHelper helper;
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        controller = createController();        
+        helper = createSearchableHelper();
     }
 
-
     /**
-     * Create the controller containing the searchable to test.
+     * @return the helper that will help us create the contorller, options and other related info.
      */
-    protected abstract GameController createController();
+    protected abstract ISearchableHelper createSearchableHelper();
 
     /** verify that we can retrieve the lookahead value. */
     public abstract void testLookaheadValue();
