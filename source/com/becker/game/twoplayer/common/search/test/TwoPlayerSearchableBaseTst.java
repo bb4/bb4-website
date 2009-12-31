@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.common.test;
+package com.becker.game.twoplayer.common.search.test;
 
 import com.becker.common.util.FileUtil;
 import com.becker.game.common.GameContext;
@@ -13,21 +13,17 @@ import java.util.List;
 
 /**
  * Verify that all the methods in the Searchable interface work as expected.
- * Derived test classes will excersize these methods for specific game instances.
+ * Derived test classes will exercise these methods for specific game instances.
  * @author Barry Becker
  */
-@SuppressWarnings({"ClassWithTooManyMethods"})
+@SuppressWarnings({"ClassWithTooManyMethods", "UnusedDeclaration"})
 public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
 
     private static final int DEFAULT_DEBUG_LEVEL = 2;
     private static final int DEFAULT_LOOKAHEAD = 2;
     private static final int DEFAULT_BEST_PERCENTAGE = 100;
 
-    /** moved all test cases here so they are not included in the jar and do not need to be searched */
-    protected static final String EXTERNAL_TEST_CASE_DIR =
-            FileUtil.getHomeDir() +"/test/";
-
-    private static final String SGF_EXTENSION = ".sgf";
+    private TwoPlayerController controller;
 
     /**
      * common initialization for all go test cases.
@@ -36,41 +32,41 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+        System.out.println("helper = " + helper);
+        searchable = getController().getSearchable();
 
-        searchable = ((TwoPlayerController)controller).getSearchable();
-
-        TwoPlayerOptions options = createTwoPlayerGameOptions();
-        options.setLookAhead(DEFAULT_LOOKAHEAD);
-        options.setAlphaBeta(true);
-        options.setPercentageBestMoves(DEFAULT_BEST_PERCENTAGE);
-        options.setQuiescence(false);
-
-         controller.setOptions(options);
+        TwoPlayerOptions options = createDefaultOptions();
+        controller.setOptions(options);
 
         // this will load the resources for the specified game.
         //GameContext.loadGameResources("go");
         GameContext.setDebugMode(getDebugLevel());
-        //controller_ = new GoController(getBoardSize(), getBoardSize(), 0);
+    }
+    @Override
+    protected abstract ISearchableHelper createSearchableHelper();
+
+    protected TwoPlayerOptions createDefaultOptions() {
+        TwoPlayerOptions options = helper.createTwoPlayerGameOptions();
+        options.setLookAhead(DEFAULT_LOOKAHEAD);
+        options.setAlphaBeta(true);
+        options.setPercentageBestMoves(DEFAULT_BEST_PERCENTAGE);
+        options.setQuiescence(false);
+        return options;
     }
 
     /**
      * Restore a game file
-     * @param problemFile the saved game to restor and test.
+     * @param problemFileBase the saved game to restor and test.
      */
-    protected void restore(String problemFile) {
-        getController().restoreFromFile(getTestCaseDir() + problemFile + SGF_EXTENSION);
+    protected void restore(String problemFileBase) {
+        getController().restoreFromFile(helper.getTestFile(problemFileBase));
     }
-
-    protected abstract String getTestCaseDir();
 
     protected TwoPlayerController getController() {
-        return (TwoPlayerController) controller;
+        if (controller == null)
+            controller = helper.createController();
+        return controller;
     }
-
-    /**
-     * Create the game options
-     */
-    protected abstract TwoPlayerOptions createTwoPlayerGameOptions();
 
     /**
      * @return an initial move by player one.
@@ -83,7 +79,7 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
     }
 
     protected TwoPlayerOptions getTwoPlayerOptions()  {
-        return  (TwoPlayerOptions)controller.getOptions();
+        return  (TwoPlayerOptions)getController().getOptions();
     }
 
     /** verify that we can retrieve the lookahead value. */
@@ -135,15 +131,14 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
                searchable.done(createInitialMove(), false));
     }
 
-    /**  load a game in the middle and verify that a legal midgame move doesn't return true.  */
-    public void testDoneMidGame() {
-        Assert.assertFalse(false);
-    }
+    /**  Load a game in the middle and verify that a legal midgame move doesn't return true.  */
+    public abstract void testNotDoneMidGame();
 
-    /**load a game at the last move and verify that the next move results in done == true  */
-    public void testDoneEndGame() {
-        Assert.assertTrue(true);
-    }
+    /** Load a game that was won in the middle and verify that done returns true.  */
+    public abstract void testDoneForMidGameWin();
+
+    /** Load a game that does not have any more valid moves and verify that done == true  */
+    public abstract void testDoneEndGame();
 
     /**  
      * Verify that we generate a reasonable list of moves to try next.
@@ -152,11 +147,12 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
    public void testGenerateMovesBeforeFirstMove() {
  
        List moves = searchable.generateMoves(null, getController().getComputerWeights().getPlayer1Weights(), true);
-       Assert.assertTrue("We expect the move list to be non-null very start of the game.", moves!= null);
+       Assert.assertTrue("We expect the move list to be non-null at the very start of the game.", moves!= null);
        // usually we have a special way to generate the first move (see computerMovesFirst).
-       // probably need to have game specific result here.
+        System.out.println("first moves="+ moves); 
        int exp = getExpectedNumGeneratedMovesBeforeFirstMove();
-       Assert.assertEquals("Unexpected number of generated moves before the first move has been played: " +moves.size(),  exp, moves.size() );
+       Assert.assertEquals("Unexpected number of generated moves before the first move has been played: " +moves.size(),
+               exp, moves.size() );
    }
 
    protected int getExpectedNumGeneratedMovesBeforeFirstMove() {
@@ -244,6 +240,12 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
         // load a typical game in the middle and verify a move that does not put anything in jeopardy.
 
         // load a critical game in the middle and verify a move that does put the other player in jeopardy.
+    }
 
+    protected void printMoves(String name, List<? extends TwoPlayerMove> moves) {
+        System.out.println("generated moves for "+ name + " were:" );
+        for (TwoPlayerMove m : moves) {
+             System.out.println(m.getConstructorString());
+        }
     }
 }

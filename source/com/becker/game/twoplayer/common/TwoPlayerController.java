@@ -34,10 +34,8 @@ import java.util.List;
  */
 public abstract class TwoPlayerController extends GameController
 {
-
     /** anything greater than this is considered a won game  */
     public static final int WINNING_VALUE = SearchStrategy.WINNING_VALUE;
-
 
     /** not really infinty, but close enough for our purposes. */
     private static final int INFINITY = SearchStrategy.INFINITY;
@@ -83,7 +81,11 @@ public abstract class TwoPlayerController extends GameController
      * @return custom set of search and game options.
      */
     protected abstract TwoPlayerOptions createOptions();
-    
+
+    /**
+     * These options define the search algorithm and other settings.
+     * @return game options
+     */
     public TwoPlayerOptions getTwoPlayerOptions() {
 
         return (TwoPlayerOptions) getOptions();
@@ -133,6 +135,9 @@ public abstract class TwoPlayerController extends GameController
     public void restoreFromFile( String fileName ) {
         TwoPlayerGameImporter importer = new TwoPlayerGameImporter(this);
         importer.restoreFromFile(fileName);
+        TwoPlayerMove m = (TwoPlayerMove)getLastMove();
+        if (m != null)
+            m.setValue( worth( m, weights_.getDefaultWeights()));
     }
 
     /**
@@ -247,7 +252,7 @@ public abstract class TwoPlayerController extends GameController
      */
     public final GameWeights getComputerWeights()
     {
-        return (weights_);
+        return weights_;
     }
 
     /**
@@ -325,8 +330,6 @@ public abstract class TwoPlayerController extends GameController
 
     /**
      * **** SEARCH ******
-     * @param weights
-     * @param lastMove
      * @return the best move to use as the next move.
      */
     private TwoPlayerMove searchForNextMove(ParameterArray weights, TwoPlayerMove lastMove) {
@@ -434,6 +437,7 @@ public abstract class TwoPlayerController extends GameController
 
         if (synchronous) {
             // this blocks until the value is available.
+            // We could probably use a Future here.
             TwoPlayerMove m = (TwoPlayerMove)worker_.get();
             //refresh();
             return getSearchable().done( m, true );
@@ -453,7 +457,7 @@ public abstract class TwoPlayerController extends GameController
                 optimizer.doOptimization( OptimizationStrategyType.HILL_CLIMBING,
                                           getComputerWeights().getDefaultWeights(),
                                           WINNING_VALUE);
-       return optimizedParams;
+        return optimizedParams;
     }
 
     /**
@@ -563,17 +567,14 @@ public abstract class TwoPlayerController extends GameController
         List<? extends TwoPlayerMove> bestMoveList = moveList;
         int best = (int) ((float) getTwoPlayerOptions().getPercentageBestMoves() / HUNDRED * numMoves) + 1;
         if ( best < numMoves && numMoves > getTwoPlayerOptions().getMinBestMoves())
-            bestMoveList = moveList.subList( 0, best );
+            bestMoveList = moveList.subList(0, best);
 
-        //GameContext.log(2, "generated top moves are :  " + moveList );
         return bestMoveList;
     }
-
 
     public final Optimizee getOptimizee() {
         return new TwoPlayerOptimizee();
     }
-
 
     private class TwoPlayerOptimizee implements Optimizee {
 
@@ -711,25 +712,25 @@ public abstract class TwoPlayerController extends GameController
          * given a move, determine whether the game is over.
          * If recordWin is true, then the variables for player1/2HasWon can get set.
          *  sometimes, like when we are looking ahead we do not want to set these.
-         * @param m the move to check. If null then return true.
+         * @param lastMove the move to check. If null then return true. This is typically the last move played.
          * @param recordWin if true then the controller state will record wins
          */
-        public boolean done( TwoPlayerMove m, boolean recordWin )
+        public boolean done( TwoPlayerMove lastMove, boolean recordWin )
         {
             // the game can't be over if no moves have been made yet.
             if (getNumMoves() == 0) {
                 return false;
             }
-            if (getNumMoves() > 0 && m == null) {
+            if (getNumMoves() > 0 && lastMove == null) {
                 GameContext.log(0, "Game is over because there are no more moves");
                 return true;
             }
             if (getPlayer1().hasWon() || getPlayer2().hasWon())
                 return true;
 
-            boolean won = (Math.abs( m.getValue() ) >= WINNING_VALUE);
+            boolean won = (Math.abs( lastMove.getValue() ) >= WINNING_VALUE);
             if ( won && recordWin ) {
-                if ( m.getValue() >= WINNING_VALUE )
+                if ( lastMove.getValue() >= WINNING_VALUE )
                     getPlayer1().setWon(true);
                 else
                     getPlayer2().setWon(true);

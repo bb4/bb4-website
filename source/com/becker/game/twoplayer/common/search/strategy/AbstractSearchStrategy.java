@@ -80,7 +80,7 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
      * {@inheritDoc}
      */
     public TwoPlayerMove search( TwoPlayerMove lastMove, 
-                                                     int alpha, int beta, SearchTreeNode parent ) {
+                                 int alpha, int beta, SearchTreeNode parent ) {
         return searchInternal( lastMove,  lookAhead_,  alpha, beta, parent );
     }
 

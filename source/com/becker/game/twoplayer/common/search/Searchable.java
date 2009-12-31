@@ -37,7 +37,7 @@ public interface Searchable
      * Given a move, determine whether the game is over.
      * If recordWin is true then the variables for player1/2HasWon can get set.
      * sometimes, like when we are looking ahead in search we do not want to set these.
-     * @param m the move to check. If null then return true.
+     * @param m the move to check. If null then return true. This is typically the last move played
      * @param recordWin if true then the controller state will record wins
      * @return  true if the game is over.
      */
