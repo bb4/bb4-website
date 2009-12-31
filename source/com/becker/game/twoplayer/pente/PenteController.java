@@ -109,15 +109,17 @@ public class PenteController extends TwoPlayerController
             for (int i = 1; i <= ncols; i++ )
                 for (int j = 1; j <= nrows; j++ )
                     if ( pb.isCandidateMove( j, i ) ) {
-                        assert lastMove != null;
-                        TwoPlayerMove m = TwoPlayerMove.createMove( j, i, lastMove.getValue(), new GamePiece(player1));
+                        TwoPlayerMove m;
+                        if (lastMove == null)
+                           m = TwoPlayerMove.createMove( j, i, 0, new GamePiece(player1));
+                        else
+                           m = TwoPlayerMove.createMove( j, i, lastMove.getValue(), new GamePiece(player1));
                         pb.makeMove( m );
                         m.setValue(worth( m, weights, player1sPerspective ));
                         // now revert the board
                         pb.undoMove();
                         moveList.add( m );
                     }
-
             return getBestMoves( player1, moveList, player1sPerspective );
         }
 
@@ -148,6 +150,8 @@ public class PenteController extends TwoPlayerController
         @Override
         public boolean inJeopardy( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective  )
         {
+            if (lastMove == null)
+                return false;
             double newValue = worth( lastMove, weights, player1sPerspective );
             double diff = newValue - lastMove.getValue();
             return (diff > getJeopardyWeight());

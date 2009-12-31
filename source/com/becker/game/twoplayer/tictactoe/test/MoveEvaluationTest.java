@@ -3,7 +3,6 @@ package com.becker.game.twoplayer.tictactoe.test;
 import com.becker.game.common.GamePiece;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.pente.analysis.Direction;
-import com.becker.game.twoplayer.pente.analysis.Line;
 import com.becker.game.twoplayer.pente.analysis.MoveEvaluator;
 import com.becker.game.twoplayer.tictactoe.TicTacToeBoard;
 import com.becker.game.twoplayer.tictactoe.TicTacToePatterns;
@@ -17,7 +16,7 @@ import junit.framework.TestCase;
  *
  * @author Barry Becker
  */
-public class TestMoveEvaluation extends TestCase  {
+public class MoveEvaluationTest extends TestCase  {
 
     MoveEvaluator evaluator;
 
@@ -40,8 +39,8 @@ public class TestMoveEvaluation extends TestCase  {
 
     public void test__OEvaluation() {
 
-        verifyAllDirectionsResult(2, 1, false, -4, 0);
-        verifyAllDirectionsResult(2, 3, false, -4, 0);
+        verifyAllDirectionsResult(2, 1, false, -16, -12);
+        verifyAllDirectionsResult(2, 3, false, -16, -12);
     }
 
     public void test_O_Evaluation() {
@@ -59,8 +58,8 @@ public class TestMoveEvaluation extends TestCase  {
         TwoPlayerMove move = TwoPlayerMove.createMove(2, 2,  0, new GamePiece(true));
         board.makeMove(move);
 
-        verifyAllDirectionsResult(2, 1, false, -4, 0);
-        verifyAllDirectionsResult(2, 3, false, -4, 0);
+        verifyAllDirectionsResult(2, 1, false, -12, -8);
+        verifyAllDirectionsResult(2, 3, false, -12, -8);
     }
 
     public void test_OOEvaluation() {
@@ -68,8 +67,8 @@ public class TestMoveEvaluation extends TestCase  {
         TwoPlayerMove move = TwoPlayerMove.createMove(2, 2,  0, new GamePiece(false));
         board.makeMove(move);
 
-        verifyAllDirectionsResult(2, 1, false, -44, -40);
-        verifyAllDirectionsResult(2, 3, false, -44, -40);
+        verifyAllDirectionsResult(2, 1, false, -52, -48);
+        verifyAllDirectionsResult(2, 3, false, -52, -48);
     }
 
     public void test_XXEvaluation() {
@@ -77,8 +76,8 @@ public class TestMoveEvaluation extends TestCase  {
         TwoPlayerMove move = TwoPlayerMove.createMove(2, 2,  0, new GamePiece(true));
         board.makeMove(move);
 
-        verifyAllDirectionsResult(2, 1, true, 44, 40);
-        verifyAllDirectionsResult(2, 3, true, 44, 40);
+        verifyAllDirectionsResult(2, 1, true, 52, 48);
+        verifyAllDirectionsResult(2, 3, true, 52, 48);
     }
 
     public void testOOOEvaluation() {
@@ -88,22 +87,22 @@ public class TestMoveEvaluation extends TestCase  {
         
         TwoPlayerMove move2 = TwoPlayerMove.createMove(2, 1,  0, new GamePiece(false));
         board.makeMove(move2);
-        verifyResult(Direction.HORIZONTAL, 2, 3, false, -7960);
+        verifyResult(Direction.HORIZONTAL, 2, 3, false, -8160);
         board.undoMove();
 
         move2 = TwoPlayerMove.createMove(1, 2,  0, new GamePiece(false));
         board.makeMove(move2);
-        verifyResult(Direction.VERTICAL, 3, 2, false, -7960);
+        verifyResult(Direction.VERTICAL, 3, 2, false, -8160);
         board.undoMove();
 
         move2 = TwoPlayerMove.createMove(3, 1,  0, new GamePiece(false));
         board.makeMove(move2);
-        verifyResult(Direction.UP_DIAGONAL, 1, 3, false, -7956);
+        verifyResult(Direction.UP_DIAGONAL, 1, 3, false, -8156);
         board.undoMove();
 
          move2 = TwoPlayerMove.createMove(1, 1,  0, new GamePiece(false));
          board.makeMove(move2);
-         verifyResult(Direction.DOWN_DIAGONAL, 3, 3, false, -7956);
+         verifyResult(Direction.DOWN_DIAGONAL, 3, 3, false, -8156);
          board.undoMove();
     }
 
@@ -138,6 +137,6 @@ public class TestMoveEvaluation extends TestCase  {
     }
 
     public static Test suite() {
-        return new TestSuite(TestMoveEvaluation.class);
+        return new TestSuite(MoveEvaluationTest.class);
     }
 }

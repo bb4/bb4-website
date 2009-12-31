@@ -22,4 +22,24 @@ public class TicTacToeBoard extends PenteBoard
         return 9;
     }
 
+    /**
+     * All empty positions are candidate moves dor tic tac toe.
+     * This is a bit simler than what we do for pente.
+     */
+    @Override
+    public void determineCandidateMoves()
+    {
+        boolean[][] b = candidateMoves_;
+        // first clear out what we had before
+        initCandidateMoves();
+
+        // set the footprints
+        int i,j;
+
+        for ( i = 1; i <= getNumRows(); i++ )
+            for ( j = 1; j <= getNumCols(); j++ )
+                if ( !positions_[i][j].isOccupied())
+                    b[i][j] = true;
+    }
+
 }

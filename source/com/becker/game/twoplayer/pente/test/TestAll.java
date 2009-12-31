@@ -1,9 +1,9 @@
 package com.becker.game.twoplayer.pente.test;
 
 
-import com.becker.game.twoplayer.pente.test.analysis.TestLine;
-import com.becker.game.twoplayer.pente.test.analysis.TestMoveEvaluator;
-import com.becker.game.twoplayer.pente.test.analysis.TestPenteLine;
+import com.becker.game.twoplayer.pente.test.analysis.LineTest;
+import com.becker.game.twoplayer.pente.test.analysis.MoveEvaluatorTest;
+import com.becker.game.twoplayer.pente.test.analysis.PenteLineTest;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -20,11 +20,11 @@ public class TestAll extends TestCase {
 
         TestSuite suite =  new TestSuite("All Pente Tests");
 
-        suite.addTestSuite(TestPatterns.class);
-        suite.addTestSuite(TestLine.class);
-        suite.addTest(TestMoveEvaluator.suite());
-        suite.addTestSuite(TestPenteLine.class);
-        //suite.addTestSuite(TestPenteSearchable.class);
+        suite.addTestSuite(PatternsTest.class);
+        suite.addTestSuite(LineTest.class);
+        suite.addTest(MoveEvaluatorTest.suite());
+        suite.addTestSuite(PenteLineTest.class);
+        //suite.addTestSuite(PenteSearchableTest.class);
         
         return suite;
     }

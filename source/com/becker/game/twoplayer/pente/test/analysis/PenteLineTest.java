@@ -1,10 +1,8 @@
 package com.becker.game.twoplayer.pente.test.analysis;
 
 import com.becker.game.common.GameWeights;
-import com.becker.game.twoplayer.pente.analysis.Line;
 import com.becker.game.twoplayer.pente.PentePatterns;
 import com.becker.game.twoplayer.pente.PenteWeights;
-import com.becker.game.twoplayer.pente.test.analysis.TestLine;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -16,7 +14,7 @@ import java.util.List;
  *
  * @author Barry Becker
  */
-public class TestPenteLine extends TestCase  {
+public class PenteLineTest extends TestCase  {
 
     GameWeights weights;
     private static final boolean PLAYER1_PERSP = true;
@@ -85,6 +83,6 @@ public class TestPenteLine extends TestCase  {
 
 
     public static Test suite() {
-        return new TestSuite(TestPenteLine.class);
+        return new TestSuite(PenteLineTest.class);
     }
 }

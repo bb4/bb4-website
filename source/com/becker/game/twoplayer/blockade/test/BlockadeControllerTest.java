@@ -14,12 +14,12 @@ import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
  * Created on June 2, 2007, 7:08 AM
  * @author Barry Becker
  */
-public class TestBlockadeController extends BlockadeTestCase {
+public class BlockadeControllerTest extends BlockadeTestCase {
 
     /**
-     * Creates a new instance of TestBlockadeController
+     * Creates a new instance of BlockadeControllerTest
      */
-    public TestBlockadeController() {
+    public BlockadeControllerTest() {
     }
 
     /**

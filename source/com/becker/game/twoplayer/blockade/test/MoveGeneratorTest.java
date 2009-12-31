@@ -15,13 +15,13 @@ import java.util.List;
  * Created on June 2, 2007, 7:08 AM
  * @author Barry Beckerecker
  */
-public class TestMoveGenerator extends BlockadeTestCase {
+public class MoveGeneratorTest extends BlockadeTestCase {
 
 
     /**
      * Constructor
      */
-    public TestMoveGenerator() {
+    public MoveGeneratorTest() {
     }
 
     /**

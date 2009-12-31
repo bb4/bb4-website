@@ -274,7 +274,6 @@ public class PostMoveUpdater extends PostChangeUpdater {
         board_.getGroups().add( newBigGroup );
     }
 
-
     /**
      * We need to identify this pattern:
      *   #0

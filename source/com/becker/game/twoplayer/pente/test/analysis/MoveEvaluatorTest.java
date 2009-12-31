@@ -21,7 +21,7 @@ import java.util.List;
  *
  * @author Barry Becker
  */
-public class TestMoveEvaluator extends TestCase  {
+public class MoveEvaluatorTest extends TestCase  {
 
     MoveEvaluator evaluator;
     GameWeights weights;
@@ -181,6 +181,6 @@ public class TestMoveEvaluator extends TestCase  {
     }
 
     public static Test suite() {
-        return new TestSuite(TestMoveEvaluator.class);
+        return new TestSuite(MoveEvaluatorTest.class);
     }
 }

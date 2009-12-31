@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * @author Barry Becker
  */
-public class TestPatterns extends TestCase  {
+public class PatternsTest extends TestCase  {
 
     Patterns patterns;
 
@@ -80,6 +80,6 @@ public class TestPatterns extends TestCase  {
 
 
     public static Test suite() {
-        return new TestSuite(TestPatterns.class);
+        return new TestSuite(PatternsTest.class);
     }
 }
