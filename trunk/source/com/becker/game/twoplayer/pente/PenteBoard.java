@@ -14,7 +14,7 @@ public class PenteBoard extends TwoPlayerBoard
 {
 
     // this is an auxiliary structure to help determine candidate moves
-    private boolean[][] candidateMoves_ = null;
+    protected boolean[][] candidateMoves_ = null;
 
     /** constructor
      *  @param numRows num rows
@@ -50,7 +50,7 @@ public class PenteBoard extends TwoPlayerBoard
     /**
      * The candidateMoves has a border on all sides
      */
-    private void initCandidateMoves()
+    protected void initCandidateMoves()
     {
         for ( int i = 0; i <= getNumRows() + 1; i++ )
             for ( int j = 0; j <= getNumCols() + 1; j++ ) {
@@ -98,9 +98,10 @@ public class PenteBoard extends TwoPlayerBoard
         // first clear out what we had before
         initCandidateMoves();
 
-        //  set the footprints
+        // set the footprints
         int i,j;
-        for ( i = 1; i <= getNumRows(); i++ )
+        boolean hasCandidates = false;
+        for ( i = 1; i <= getNumRows(); i++ ) {
             for ( j = 1; j <= getNumCols(); j++ ) {
                 if ( positions_[i][j].isOccupied() ) {
                     b[i - 1][j - 1] = true;
@@ -111,8 +112,14 @@ public class PenteBoard extends TwoPlayerBoard
                     b[i + 1][j - 1] = true;
                     b[i + 1][j] = true;
                     b[i + 1][j + 1] = true;
+                    hasCandidates = true;
                 }
             }
+        }
+        // edge case when no moves on the board - just use the center
+        if (!hasCandidates) {
+            b[getNumRows()/2+1][getNumCols()/2+1] = true;
+        }
     }
 
     /**

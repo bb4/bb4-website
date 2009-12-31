@@ -9,7 +9,7 @@ import java.util.*;
 /**
  * @author Barry Becker Date: Mar 3, 2007
  */
-public class TestBlockadeBoard extends BlockadeTestCase {
+public class BlockadeBoardTest extends BlockadeTestCase {
 
     public void testPositionStates() {
 

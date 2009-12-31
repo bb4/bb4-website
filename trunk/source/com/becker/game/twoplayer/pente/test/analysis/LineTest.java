@@ -4,10 +4,8 @@ import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GamePiece;
 import com.becker.game.common.GameWeights;
 import com.becker.game.twoplayer.pente.analysis.Line;
-import com.becker.game.twoplayer.pente.Patterns;
 import com.becker.game.twoplayer.pente.test.StubPatterns;
 import com.becker.game.twoplayer.pente.test.StubWeights;
-import com.becker.optimization.parameter.ParameterArray;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -19,7 +17,7 @@ import java.util.List;
  *
  * @author Barry Becker
  */
-public class TestLine extends TestCase  {
+public class LineTest extends TestCase  {
 
     LineRecorder line;
     GameWeights weights;
@@ -242,6 +240,6 @@ public class TestLine extends TestCase  {
 
 
     public static Test suite() {
-        return new TestSuite(TestLine.class);
+        return new TestSuite(LineTest.class);
     }
 }

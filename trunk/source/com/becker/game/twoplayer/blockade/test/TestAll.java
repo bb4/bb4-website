@@ -16,11 +16,10 @@ public class TestAll extends TestCase {
 
         TestSuite suite =  new TestSuite("All Go Tests");
 
-        //suite.addTest(TestAllWhiteBox.suite());
-        suite.addTestSuite(TestBlockadeBoard.class);
-        suite.addTestSuite(TestBlockadeController.class);
-        suite.addTestSuite(TestMoveGenerator.class);
-        suite.addTestSuite(TestBlockadeSearchable.class);
+        suite.addTestSuite(BlockadeBoardTest.class);
+        suite.addTestSuite(BlockadeControllerTest.class);
+        suite.addTestSuite(MoveGeneratorTest.class);
+        suite.addTestSuite(BlockadeSearchableTest.class);
 
         return suite;
     }

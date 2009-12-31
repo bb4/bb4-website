@@ -220,7 +220,6 @@ public final class OrderDialog extends OptionsDialog
     }
 
     private Planet getOrigin() {
-        System.out.println("originCombo_.getSelectedItem()="+originCombo_.getSelectedItem());
         return Galaxy.getPlanet(originCombo_.getSelectedItem().toString().charAt(0));
     }
 

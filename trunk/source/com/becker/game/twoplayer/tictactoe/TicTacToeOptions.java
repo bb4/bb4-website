@@ -25,10 +25,12 @@ public class TicTacToeOptions extends TwoPlayerOptions {
     protected int getDefaultLookAhead() {
         return DEFAULT_LOOK_AHEAD;
     }
+
     @Override
     protected int getDefaultPercentageBestMoves() {
         return DEFAULT_PERCENTAGE_BEST_MOVES;
     }
+
     @Override
     protected int getDefaultMinBestMoves() {
         return DEFAULT_MIN_BEST_MOVES;

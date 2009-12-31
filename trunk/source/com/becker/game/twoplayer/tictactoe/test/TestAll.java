@@ -17,11 +17,10 @@ public class TestAll extends TestCase {
 
         TestSuite suite =  new TestSuite("All TicTacToe Tests");
 
-        //suite.addTestSuite(TestTicTacToeSearchable.class);
-        suite.addTest(TestMoveEvaluation.suite());
-        //suite.addTestSuite(TestShape.class);
-        //suite.addTestSuite(TestScoring.class);
-
+        suite.addTest(MoveEvaluationTest.suite());
+        suite.addTestSuite(TicTacToeSearchableTest.class);
+        suite.addTestSuite(MiniMaxStrategyTest.class);
+        suite.addTestSuite(NegaMaxStrategyTest.class);
 
         return suite;
     }
