@@ -6,8 +6,7 @@ import com.becker.game.card.Rank;
 import java.util.*;
 
 /**
- * User: Barry Becker
- * Date: Feb 26, 2005
+ * @author Barry Becker
  */
 public class PokerHand implements Comparable {
 
@@ -16,6 +15,7 @@ public class PokerHand implements Comparable {
     private boolean faceUp_;
 
     /**
+     * Constructor
      * @param hand  the initial poker hand  (not necessarily 5 cards)
      */
     public PokerHand(List<Card> hand) {
@@ -38,24 +38,9 @@ public class PokerHand implements Comparable {
         update();
     }
 
-    public void addCard(Card card) {
-        hand_.add(card);
-        // always keep the hand sorted
-        update();
-    }
-
     public List<Card> getCards() {
         // return a copy so the client cannot change our state out from under us.
         return new ArrayList<Card>(hand_);
-
-    }
-
-    /**
-     * @param card  the card you wish to discard from your hand.
-     */
-    public void removeCard(Card card) {
-        hand_.remove(card);
-        update();
     }
 
     private void update() {
@@ -66,7 +51,7 @@ public class PokerHand implements Comparable {
 
     /**
      * whether or not the cards are showing to the rest of the players
-     * @param faceUp
+     * @param faceUp true if the card is face up.
      */
     public void setFaceUp(boolean faceUp) {
         faceUp_ = faceUp;
@@ -86,7 +71,7 @@ public class PokerHand implements Comparable {
     }
 
     private void sort() {
-        Comparator<Card> comparator = new CardComparator();
+        CardComparator comparator = new CardComparator();
         // sort the cards from low to high
         Collections.sort(hand_, comparator);
     }
@@ -195,7 +180,7 @@ public class PokerHand implements Comparable {
         Rank highestRank = null;
         for (Object entry : entries) {
             Map.Entry e = (Map.Entry) entry;
-            if (((Integer)e.getValue()).intValue() == num) {
+            if (((Integer)e.getValue()) == num) {
                 Rank r = (Rank)e.getKey();
                 if (highestRank == null || (r.ordinal() > highestRank.ordinal())) {
                     highestRank = r;
@@ -224,8 +209,8 @@ public class PokerHand implements Comparable {
     }  */
 
     /**
-     * returns true if there is exactly 2 pairs
      * (note: there are not 2 pairs if there is a full house)
+     * @return true if there is exactly 2 pairs
      */
     private boolean hasTwoPairs() {
 
@@ -247,12 +232,12 @@ public class PokerHand implements Comparable {
      * @return a map which has an entry for each card rank represented in the hand and its associated count.
      */
     private Map computeMatchMap() {
-        Map map = new HashMap();
+        Map<Rank, Integer> map = new HashMap<Rank, Integer>();
 
         for (Card c : hand_) {
-            Integer num = (Integer)map.get(c.rank());
+            Integer num = map.get(c.rank());
             if (num != null)  {
-               map.put(c.rank(), num.intValue()+1);
+               map.put(c.rank(), num+1);
             }
             else
                map.put(c.rank(), 1);
@@ -268,7 +253,7 @@ public class PokerHand implements Comparable {
      */
     public int compareTo(Object otherHand) {
         PokerHand hand = (PokerHand) otherHand;
-        // first do a coars comparison based on the type of the hand
+        // first do a coarse comparison based on the type of the hand
         // if a tie, then look more closely
         float difference = determineType().odds() - hand.determineType().odds();
         if (difference > 0) {
@@ -279,32 +264,6 @@ public class PokerHand implements Comparable {
             return compareHandsOfEqualType(this, hand);
         }
     }
-
-    /*
-    public Rank getRankOfLargestNofaKind() {
-        Iterator it = matchMap_.keySet().iterator();
-        int largest = 0;
-
-        while (it.hasNext()) {
-            Rank r = (Rank)it.next();
-            Integer ii = (Integer)matchMap_.get(r);
-            if (ii.intValue() > largest) {
-                largest = ii.intValue();
-
-            }
-        }
-        // now that we know the n
-        Rank rankOfSet = null;
-
-        rankOfSet = r;
-
-        return rankOfSet;
-    } */
-
-    protected Map getMatchMap() {
-        return matchMap_;
-    }
-
 
     /**
      *
@@ -329,12 +288,9 @@ public class PokerHand implements Comparable {
     /**
      * inner class used to define a sord order on cards in a poker hane.
      */
-    private static class CardComparator implements Comparator {
+    private static class CardComparator implements Comparator<Card> {
 
-        public int compare(Object c1, Object c2) {
-
-            Card card1 = (Card)c1;
-            Card card2 = (Card)c2;
+        public int compare(Card card1, Card card2) {
 
             if (card1.rank() == card2.rank())   {
                 return card1.suit().ordinal() - card2.suit().ordinal();
@@ -345,14 +301,13 @@ public class PokerHand implements Comparable {
         }
     }
 
-
     /**
      * Test out the poker hand functionality
      * @param args
      */
-     public static void main(String[] args) {
+    public static void main(String[] args) {
 
-        List deck = Card.newDeck();
+        List<Card> deck = Card.newDeck();
         System.out.println("deck="+deck+ "\n\n");
 
 
@@ -361,7 +316,5 @@ public class PokerHand implements Comparable {
             PokerHand hand = new PokerHand(deck, i);
              System.out.println("Poker Hand "+hand+" \n has a  "+hand.determineType() +"!      score="+hand.getScore());
         }
-
     }
-
 }

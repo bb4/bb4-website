@@ -10,7 +10,8 @@ import java.util.*;
  */
 public class PegBoard {
 
-    public static final byte SIZE = 7;  // this must be odd
+    /** this must be odd */
+    public static final byte SIZE = 7;
     
     /**
      *  The number of symmetries the board has.
@@ -19,8 +20,8 @@ public class PegBoard {
     public static final int SYMMETRIES = 8;
     
     /** maintains the compressed peg position infomation for the board. */
-    private int bits_;                    // the first 32 positions
-    private boolean finalBit_;          // the final, 33rd position
+    private int bits_;                // the first 32 positions
+    private boolean finalBit_;        // the final, 33rd position
     private boolean nextToFinalBit_;  // the final, 32rd position
     
     /** 
@@ -206,9 +207,7 @@ public class PegBoard {
        if (emptyLocations.isEmpty()) {
            moves.add(getFirstMove());
        } else {
-           Iterator it = emptyLocations.iterator();
-           while (it.hasNext()) {
-               Location pos = (Location) it.next();
+           for (Location pos : emptyLocations) {
                moves.addAll(findMovesForLocation(pos, false));
            }
        }
@@ -217,7 +216,7 @@ public class PegBoard {
     }
 
     /**
-     *Map the coordinate location into our memory conserving hash.
+     * @return Map the coordinate location into our memory conserving hash.
      */
     private int getIndexForPosition(int row, int col) {
         int p = row * 10 + col;
@@ -261,7 +260,7 @@ public class PegBoard {
     }
     
     /**
-     *Extract the value of the ith bit.
+     * @return extract the value of the ith bit.
      */
     private boolean get(int i)  {
         if (i == NUM_PEG_HOLES - 1) {
@@ -274,7 +273,7 @@ public class PegBoard {
     }
     
     /**
-     * Number of pegs left on the board.
+     * @return number of pegs left on the board.
      */
     public int getNumPegsLeft() {
         int nPegsLeft = 0;        
@@ -292,6 +291,7 @@ public class PegBoard {
      * if rotateIndex = 1 mirror image of this,
      * if rotateIndex = 2 then 90 degree rotation of this,
      * if rotateIndex = 3 then mirror image of 2, etc
+     * @return specified rotation of the board.
      */
     public PegBoard symmetry(int symmIndex) {
         return (symmIndex==0) ? this : rotate(BOARD_SYMMETRY[symmIndex]);   
@@ -314,6 +314,7 @@ public class PegBoard {
     /**
      * Rotate the board according to symmetry.
      * Not all are rotational symmetries, but you get the idea....
+     * @return specified rotation of the board.
      */
     private PegBoard rotate(byte[] rotateIndices) {
         PegBoard rotatedBoard = new PegBoard();
@@ -329,6 +330,5 @@ public class PegBoard {
         buf.append(nextToFinalBit_?"1":"0");
         buf.append(Integer.toBinaryString(bits_));
         return buf.toString();
-    }    
-    
+    }
 }

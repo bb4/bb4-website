@@ -2,6 +2,9 @@ package com.becker.game.card;
 
 import java.util.*;
 
+/**
+ * Represents a standard playing card.
+ */
 public class Card {
 
     public enum Suit {
@@ -22,7 +25,6 @@ public class Card {
             }
         }
     }
-
 
     /**
      * Constructor.

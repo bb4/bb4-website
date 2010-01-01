@@ -16,9 +16,6 @@ import java.awt.event.*;
  * That old spirograph game from the 70's brought into the computer age
  * Based on work originially done by David Little.
  *
- *TODO:
- *  Move to simulation.spirograph package
- *
  * @author Barry Becker
  */
 public class SpiroGraph extends ApplicationApplet
@@ -40,15 +37,15 @@ public class SpiroGraph extends ApplicationApplet
     private static final int RAD2 = 1;
     private static final int POS = 2;
     private static final int VEL = 3;
-    //private static final int WIDTH = 4;
+    private static final int LINE_WIDTH = 4;
     private static final int SEGMENTS = 5;
 
     private static final SliderProperties[] SLIDER_PROPS = {
-        new SliderProperties("Radius1",          5,           255,      60),
-        new SliderProperties("Radius2",       -59,           200,      60),
-        new SliderProperties("Position",      -300,          300,      60),
-        new SliderProperties("Speed",             1,          GraphState.VELOCITY_MAX,     3),
-        new SliderProperties("Line Width",        1,         50,      GraphState.INITIAL_LINE_WIDTH),
+        new SliderProperties("Radius1",         5,        255,      60),
+        new SliderProperties("Radius2",       -59,        200,      60),
+        new SliderProperties("Position",      -300,       300,      60),
+        new SliderProperties("Speed",           1, GraphState.VELOCITY_MAX,     3),
+        new SliderProperties("Line Width",      1,         50, GraphState.INITIAL_LINE_WIDTH),
         new SliderProperties("Num Segments/Revolution",  GraphState.DEFAULT_NUM_SEGMENTS/10,
                 4*GraphState.DEFAULT_NUM_SEGMENTS,   GraphState.DEFAULT_NUM_SEGMENTS),
     };
@@ -96,6 +93,7 @@ public class SpiroGraph extends ApplicationApplet
         return bp;
     }
 
+    @Override
     public JPanel createMainPanel()
     {
         state_ = createGraphState();
@@ -139,11 +137,11 @@ public class SpiroGraph extends ApplicationApplet
 
     private GraphState createGraphState() {
         GraphState state = new GraphState();
-        state.setR1((float) SLIDER_PROPS[RAD1].getInitialValue());
-        state.setR2((float) SLIDER_PROPS[RAD2].getInitialValue());
-        state.setPos((float) SLIDER_PROPS[POS].getInitialValue());
+        state.params.setR1((float) SLIDER_PROPS[RAD1].getInitialValue());
+        state.params.setR2((float) SLIDER_PROPS[RAD2].getInitialValue());
+        state.params.setPos((float) SLIDER_PROPS[POS].getInitialValue());
         state.setVelocity((int) SLIDER_PROPS[VEL].getInitialValue());
-        state.setWidth((int) SLIDER_PROPS[WIDTH].getInitialValue());
+        state.setWidth((int) SLIDER_PROPS[LINE_WIDTH].getInitialValue());
         state.setNumSegmentsPerRev((int) SLIDER_PROPS[SEGMENTS].getInitialValue());
         return state;
     }
@@ -203,23 +201,23 @@ public class SpiroGraph extends ApplicationApplet
             if ( n < 2 - value ) {
                 n = 1 - value;
                 sliderGroup_.setSliderValue(RAD2, n);
-                state_.setR2(n);
+                state_.params.setR2(n);
             }
             sliderGroup_.setSliderMinimum(RAD2, ( 2 - value ));
-            state_.setR1(value);
+            state_.params.setR1(value);
             graphRenderer_.adjustCircle1();
             if ( velocity == GraphState.VELOCITY_MAX )
                 autoUpdate();
         }
         else if ( src == RAD2 ) {
-            state_.setR2(value);
-            state_.setSign( value < 0 ? -1 : 1);
+            state_.params.setR2(value);
+            state_.params.setSign( value < 0 ? -1 : 1);
             graphRenderer_.adjustCircle2();
             if ( velocity == GraphState.VELOCITY_MAX )
                 autoUpdate();
         }
         else if ( src == POS ) {
-            state_.setPos( value);
+            state_.params.setPos(value);
             graphRenderer_.adjustDot();
             if ( velocity == GraphState.VELOCITY_MAX )
                 autoUpdate();
@@ -227,7 +225,7 @@ public class SpiroGraph extends ApplicationApplet
         else if ( src == VEL ) {
             state_.setVelocity(value);
         }
-        else if ( src == WIDTH ) {
+        else if ( src == LINE_WIDTH ) {
             state_.setWidth(value);
         }
         else if ( src == SEGMENTS ) {

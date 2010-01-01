@@ -10,6 +10,8 @@ import java.awt.image.*;
 /**
  * Program to simulate a SpiroGraph.
  * Adapted from Divid Little's original work.
+ * TODO: cleanup and send back to David Little.
+ * http://www.math.psu.edu/dlittle/applets.html
  *
  *  to do:
  *   - convert to polar coords
@@ -57,9 +59,7 @@ public class GraphRenderer extends JPanel implements Runnable
         state_ = state;
         setBackground( Color.white );
         center_ = new float[2];
-        state_.setX((WD >> 1) + state_.getR1() + (state_.getR2() + state_.getSign()) + state_.getPos());
-        state_.setY(HT >> 1);
-        state_.recordValues();
+        state_.initialize(WD, HT);
 
         offImage_ = ImageUtil.createCompatibleImage( WD, HT );
         if ( offImage_ != null ) {
@@ -94,16 +94,18 @@ public class GraphRenderer extends JPanel implements Runnable
     private synchronized void doRendering()
     {
         int count = 0;
-        initializeValues();
+        state_.initializeValues(WD, HT);
         boolean refresh = false;
         isRendering_ = true;
+        System.out.println("line w="+ state_.getWidth() +" speed=" + state_.getVelocity());
 
-        float r1 = state_.getR1();
-        float r2 = state_.getR2();
-        float p = state_.getPos();
-        float sign = state_.getSign();
+        float r1 = state_.params.getR1();
+        float r2 = state_.params.getR2();
+        float p = state_.params.getPos();
+        float sign = state_.params.getSign();
 
-        if ( r2 == 0 ) return; // avoid degenerate case - div by 0
+        // avoid degenerate div by 0 case
+        if ( r2 == 0 ) return;
 
         long gcd = MathUtil.gcd( (long) r1, (long) (sign * r2) );
         int revs = (int)((sign * r2) / gcd);
@@ -113,82 +115,87 @@ public class GraphRenderer extends JPanel implements Runnable
         float n = 1.0f + state_.getNumSegmentsPerRev() * (Math.abs( p / r2 ));
 
         while ( count++ < (int) (n * revs + 0.5) && isRendering_) {
-            r1 = state_.getR1();
-            r2 = state_.getR2();
-            p = state_.getPos();
-            offlineGraphics_.setColor( state_.getColor() );
-
-            if ( count == (int) (n * revs + 0.5) )
-                state_.setTheta(0.0f);
-            else
-                state_.setTheta((float)(2.0f * Math.PI * count / n));
-            float theta = state_.getTheta();
-            state_.setPhi(theta * (1.0f + r1 / r2));
-            float phi = state_.getPhi();
-            setPoint(p, phi);
-
-            float oldx = state_.getOldX();
-            float oldy = state_.getOldY();
-
-            if (state_.showAxes() && refresh ) {
-                // erase the old indicators
-                float oldR1 = state_.getOldR1();
-                float oldR2 = state_.getOldR2();
-                float oldSign = state_.getOldSign();
-                float oldPhi = state_.getOldPhi();
-                float oldTheta = state_.getOldTheta();
-
-                offlineGraphics_.setColor( CIRCLE_COLOR );
-                offlineGraphics_.setStroke( AXES_STROKE );
-                //System.out.println("erase r1="+oldR1+" r2="+oldR2 +" theta="+oldTheta);
-                drawCircle2( oldR1, oldR2, oldSign, oldTheta );
-                drawDot( oldR1, oldR2, oldSign, oldTheta, state_.getOldPos(), oldPhi );
-                // @@ this will set x and y in state to oldx and oldy (how did this work before?)
-                float x = state_.getX();
-                float y = state_.getY();
-                drawLineToDot( oldR1, oldR2, oldSign, state_.getOldPos(), oldTheta, oldPhi, oldx, oldy );
-                state_.setX(x);
-                state_.setY(y);
-                offlineGraphics_.setPaintMode();
-                offlineGraphics_.setColor( state_.getColor() );
-            }
-            waitIfPaused();
-            int velocity = state_.getVelocity();
-            refresh =  (velocity != GraphState.VELOCITY_MAX); // (count % velocity == 0) &&
-
-            Stroke stroke = new BasicStroke( (float)state_.getWidth() / (float)GraphState.INITIAL_LINE_WIDTH );
-            offlineGraphics_.setStroke( stroke );
-            offlineGraphics_.drawLine( (int) oldx, (int) oldy, (int) state_.getX(), (int) state_.getY() );
-
-            if ( state_.showAxes() && refresh ) {
-                offlineGraphics_.setXORMode( getBackground() );
-                offlineGraphics_.setColor( CIRCLE_COLOR );
-                offlineGraphics_.setStroke( AXES_STROKE );
-                //System.out.println("draw r1="+r1+" r2="+r2 +" theta="+theta);
-                drawCircle2( r1, r2, sign, theta );
-                drawDot( r1, r2, sign, theta, p, phi );
-                drawLineToDot( r1, r2, sign, p, theta, phi, state_.getX(), state_.getY() );
-            }
-            if ( refresh ) {
-                //System.out.println("ct="+count+" v="+v);
-                repaint();
-                if ( velocity < 100 ) {
-                    try {
-                        Thread.sleep( 200 / velocity );
-                    } catch (InterruptedException e) {}
-                }
-                if (requestClear_) {
-                    doClear();
-                    requestClear_ = false;
-                }
-            }
-            state_.recordValues();
-
+            refresh = drawSegment(count, refresh, sign, revs, n);
         }
         repaint();
         drawButton_.setText( SpiroGraph.DRAW_LABEL );
         isRendering_= false;
         thread_ = new Thread( this );
+    }
+
+    private boolean drawSegment(int count, boolean refresh, float sign, int revs, float n) {
+        float r1;
+        float r2;
+        float p;
+        r1 = state_.params.getR1();
+        r2 = state_.params.getR2();
+        p = state_.params.getPos();
+        offlineGraphics_.setColor( state_.getColor() );
+
+        if ( count == (int) (n * revs + 0.5) )
+            state_.params.setTheta(0.0f);
+        else
+            state_.params.setTheta((float)(2.0f * Math.PI * count / n));
+        float theta = state_.params.getTheta();
+        state_.params.setPhi(theta * (1.0f + r1 / r2));
+        float phi = state_.params.getPhi();
+        setPoint(p, phi);
+
+        //float oldx = state_.oldParams.getX();
+        //float oldy = state_.oldParams.getY();
+
+        if (state_.showAxes() && refresh ) {
+            drawIndicators();
+        }
+        waitIfPaused();
+        int velocity = state_.getVelocity();
+        refresh =  (velocity != GraphState.VELOCITY_MAX);
+
+        Stroke stroke = new BasicStroke( (float)state_.getWidth() / (float)GraphState.INITIAL_LINE_WIDTH );
+        offlineGraphics_.setStroke( stroke );
+        offlineGraphics_.drawLine((int) state_.oldParams.getX(), (int) state_.oldParams.getY(),
+                                  (int) state_.params.getX(), (int) state_.params.getY() );
+
+        if ( state_.showAxes() && refresh ) {
+            offlineGraphics_.setXORMode( getBackground() );
+
+            drawCircleAndDot(state_.params);
+        }
+        if ( refresh ) {
+            //System.out.println("ct="+count+" v="+v);
+            repaint();
+            if ( velocity < 100 ) {
+                try {
+                    Thread.sleep( 200 / velocity );
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (requestClear_) {
+                doClear();
+                requestClear_ = false;
+            }
+        }
+        state_.recordValues();
+        return refresh;
+    }
+
+    private void drawIndicators() {
+        // erase the old indicators
+        drawCircleAndDot(state_.oldParams);
+
+        offlineGraphics_.setPaintMode();
+        offlineGraphics_.setColor(state_.getColor());
+    }
+
+
+    private void drawCircleAndDot(Parameters params) {
+
+        offlineGraphics_.setColor( CIRCLE_COLOR );
+        offlineGraphics_.setStroke( AXES_STROKE );
+        drawCircle2(params);
+        drawDot(params);
+        drawLineToDot(params);
     }
 
     public void setPaused( boolean newPauseState )
@@ -214,24 +221,10 @@ public class GraphRenderer extends JPanel implements Runnable
         }
     }
 
-    public void update( Graphics g )
-    {
-        paint( g );
-    }
-
+    @Override
     public void paint( Graphics g )
     {
         g.drawImage( offImage_, (getSize().width - WD) >> 1, (getSize().height - HT) >> 1, this );
-    }
-
-    public void initializeValues()
-    {
-        state_.setSign(state_.getR2() < 0 ? -1:1);
-        state_.setTheta(0.0f);
-        state_.setPhi(0.0f);
-        state_.setX((WD >> 1) + state_.getR1() + state_.getR2() + state_.getSign() + state_.getPos());
-        state_.setY(HT >> 1);
-        state_.recordValues();
     }
 
     /**
@@ -241,13 +234,17 @@ public class GraphRenderer extends JPanel implements Runnable
      */
     public void setPoint(float p, float phi)
     {
-        setCenter( state_.getR1(), state_.getR2(), state_.getSign(), state_.getTheta() );
-        state_.setX((float)(center_[0] + p * Math.cos( phi )));
-        state_.setY((float)(center_[1] - p * Math.sin( phi )));
+        setCenter( state_.params );
+        state_.params.setX((float)(center_[0] + p * Math.cos( phi )));
+        state_.params.setY((float)(center_[1] - p * Math.sin( phi )));
     }
 
-    public void setCenter( float r1, float r2, float sign, float theta )
+    public void setCenter(Parameters params)
     {
+        float r1 = params.getR1();
+        float r2 = params.getR2();
+        float sign = params.getSign();
+        float theta = params.getTheta();
         center_[0] = (float)((WD >> 1) + (r1 + r2 * sign) * Math.cos( theta ));
         center_[1] = (float)((HT >> 1) - (r1 + r2 * sign) * Math.sin( theta ));
     }
@@ -279,27 +276,26 @@ public class GraphRenderer extends JPanel implements Runnable
             offlineGraphics_.drawLine( WD >> 1, 0, WD >> 1, HT );
             offlineGraphics_.drawLine( 0, HT >> 1, WD, HT >> 1 );
             offlineGraphics_.setColor( CIRCLE_COLOR );
-            float r1 = state_.getR1();
-            float r2 = state_.getR2();
-            //float p = state_.getPos();
-            float sign = state_.getSign();
-            float theta = state_.getTheta();
-            //float phi = state_.getPhi();
+            float r1 = state_.params.getR1();
+            float r2 = state_.params.getR2();
+            //float p = state_.params.getPos();
+            float sign = state_.params.getSign();
+            float theta = state_.params.getTheta();
+            //float phi = state_.params.getPhi();
 
             drawCircle1( r1 );
-            drawCircle2( r1, r2, sign, theta );
+            drawCircle2( state_.params );
             //drawDot( r1, r2, sign, theta, p, phi );
             //drawLineToDot( r1, r2, sign, p, theta, phi, state_.getX(), state_.getY() );
         }
         repaint();
     }
 
-
     public void adjustCircle1()
     {
         if ( state_.showAxes() ) {
-            drawCircle1( state_.getOldR1() );
-            drawCircle1( state_.getR1() );
+            drawCircle1( state_.oldParams.getR1() );
+            drawCircle1( state_.params.getR1() );
             adjustCircle2();
         }
         else
@@ -309,8 +305,8 @@ public class GraphRenderer extends JPanel implements Runnable
     public void adjustCircle2()
     {
         if ( state_.showAxes() ) {
-            drawCircle2( state_.getOldR1(), state_.getOldR2(), state_.getOldSign(), state_.getOldTheta() );
-            drawCircle2( state_.getR1(), state_.getR2(), state_.getSign(), state_.getTheta() );
+            drawCircle2( state_.oldParams );
+            drawCircle2( state_.params);
             adjustDot();
         }
         else
@@ -320,10 +316,8 @@ public class GraphRenderer extends JPanel implements Runnable
     public void adjustDot()
     {
         if ( state_.showAxes() ) {
-            drawDot( state_.getOldR1(), state_.getOldR2(),
-                     state_.getOldSign(), state_.getOldTheta(), state_.getOldPos(), state_.getOldPhi() );
-            drawDot( state_.getR1(), state_.getR2(),
-                     state_.getSign(), state_.getTheta(), state_.getPos(), state_.getPhi() );
+            drawDot( state_.oldParams );
+            drawDot( state_.params);
             adjustLineToDot();
         }
         else {
@@ -333,14 +327,8 @@ public class GraphRenderer extends JPanel implements Runnable
 
     public void adjustLineToDot()
     {
-        /*
-        drawLineToDot( state_.getOldR1(), state_.getOldR2(),
-                       state_.getOldSign(), state_.getOldPos(), state_.getOldTheta(), state_.getOldPhi(),
-                       state_.getOldX(), state_.getOldY() );
-        drawLineToDot( state_.getR1(), state_.getR2(),
-                       state_.getSign(), state_.getPos(), state_.getTheta(), state_.getPhi(),
-                       state_.getX(), state_.getY() );
-        */
+        //drawLineToDot( state_.oldParams );
+        //drawLineToDot( state_.params );
         state_.recordValues();
         repaint();
     }
@@ -350,33 +338,39 @@ public class GraphRenderer extends JPanel implements Runnable
         offlineGraphics_.drawOval( (int) ((WD >> 1) - r1), (int) ((HT >> 1) - r1), (int) (2 * r1), (int) (2 * r1) );
     }
 
-    private void drawCircle2( float r1, float r2, float sign, float theta )
+    private void drawCircle2( Parameters params )
     {
-        setCenter( r1, r2, sign, theta );
+        setCenter( params );
+        int sign = params.getSign();
+        float r2 = params.getR2();
         offlineGraphics_.drawOval( (int) (center_[0] - sign * r2), (int) (center_[1] - sign * r2),
-                       (int) (2 * sign * r2), (int) (2 * sign * r2) );
+                                   (int)(2 * sign * r2),  (int)(2 * sign * r2) );
     }
 
-    private void drawDot( float r1, float r2, float sign, float theta, float p, float phi )
+    private void drawDot( Parameters params )
     {
-        setCenter( r1, r2, sign, theta );
+        setCenter( params );
         //System.out.println("r1="+r1+" r2="+r2 + " p="+p + " phi="+phi+" theta="+theta+ " center="+center_[0] + " "+center_[1]);
+        float p = params.getPos();
+        float phi = params.getPhi();
         offlineGraphics_.fillOval( (int) (center_[0] + p * Math.cos( phi )) - HALF_DOT_RAD,
-                (int) (center_[1] - p * Math.sin( phi )) - HALF_DOT_RAD,
-                DOT_RAD, DOT_RAD );
+                (int) (center_[1] - p * Math.sin( phi )) - HALF_DOT_RAD, DOT_RAD, DOT_RAD );
     }
 
 
-    private void drawLineToDot( float r1, float r2, float sign, float p, float theta, float phi, float x, float y )
+    private void drawLineToDot(Parameters params)
     {
-        setCenter( r1, r2, sign, theta );
-        float side = sign;
-        if ( p < 0 ) side = -sign;
+        setCenter( params );
+        int side = params.getSign();
+        float pos = params.getPos();
+        float r2 = params.getR2();
+        float phi = params.getPhi();
+        if ( pos < 0 ) side = -side;
 
         offlineGraphics_.drawLine( (int) (center_[0] + side * r2 * Math.cos( phi )),
                 (int) (center_[1] - side * r2 * Math.sin( phi )),
-                (int) x, (int) y );
-        setPoint(p, phi);
+                (int) params.getX(), (int) params.getY() );
+        setPoint(pos, phi);
     }
 
     public void reset() {
@@ -386,8 +380,7 @@ public class GraphRenderer extends JPanel implements Runnable
         isRendering_ = false;
         state_.reset();
 
-        setPoint(state_.getPos(), 0);
+        setPoint(state_.params.getPos(), 0);
         adjustCircle2();
     }
-
 }

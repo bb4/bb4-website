@@ -78,10 +78,13 @@ public class Optimizer
      */
     public ParameterArray doOptimization(OptimizationStrategyType optimizationType, ParameterArray params, double fitnessRange )
     {
-        logger_.initialize( params );
+
 
         OptimizationStrategy optStrategy = optimizationType.getStrategy(optimizee_, fitnessRange);
-        optStrategy.setLogger(logger_);
+        if (logger_ != null) {
+            logger_.initialize( params );
+            optStrategy.setLogger(logger_);
+        }
   
         optStrategy.setListener(listener_);
         return optStrategy.doOptimization(params, fitnessRange);

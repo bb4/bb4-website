@@ -25,8 +25,8 @@ class PokerHands110202 {
     /**
      *  for reading from stdin for the programmnig contests
      *
-     * expects input to be somehting like   2H 3H 4H 5H 6H 3C 4C 5C 6C 7C
-     *
+     * expects input to be something like   2H 3H 4H 5H 6H 3C 4C 5C 6C 7C
+     * @return the line that was read.
      */
     static String readLine(InputStream stream)  // utility function to read from stdin
     {
