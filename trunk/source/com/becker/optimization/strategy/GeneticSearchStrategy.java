@@ -84,6 +84,7 @@ public class GeneticSearchStrategy extends OptimizationStrategy
      * @param fitnessRange the approximate absolute value of the fitnessRange.
      * @return the optimized params.
      */
+     @Override
      public ParameterArray doOptimization( ParameterArray params, double fitnessRange)
      {
          int ct = 0;
@@ -149,7 +150,7 @@ public class GeneticSearchStrategy extends OptimizationStrategy
              System.out.println(" ct="+ct+"  nbrRadius_="+nbrRadius_ +" population size=" + populationSize_
                                 +" deltaFitness="+deltaFitness+"  currentBest = "+ currentBest.getFitness()
                                 +"  lastBest="+ lastBest.getFitness());
-             logger_.write(ct, currentBest.getFitness(), nbrRadius_, deltaFitness, params, "---");
+             log(ct, currentBest.getFitness(), nbrRadius_, deltaFitness, params, "---");
              lastBest = currentBest.copy();
 
              if (listener_ != null) {
@@ -169,7 +170,7 @@ public class GeneticSearchStrategy extends OptimizationStrategy
              System.out.println("stopped because we made no IMPROVEMENT");
          }
          System.out.println("----------------------- done -------------------");
-         logger_.write(ct, currentBest.getFitness(), 0, 0, currentBest, Util.formatNumber(ct));
+         log(ct, currentBest.getFitness(), 0, 0, currentBest, Util.formatNumber(ct));
 
          return currentBest;
      }
@@ -183,7 +184,7 @@ public class GeneticSearchStrategy extends OptimizationStrategy
      * @param params the best solution from the previous iteration
      * @return the new best solution.
      */
-    private ParameterArray evaluatePopulation(List population, ParameterArray params)
+    private ParameterArray evaluatePopulation(List<ParameterArray> population, ParameterArray params)
     {
         ParameterArray bestFitness = params;
 
@@ -191,15 +192,13 @@ public class GeneticSearchStrategy extends OptimizationStrategy
         // comparing them against the initial params value passed in (including params).
         // @@ this would be a lot better if it were made concurrent.
         //  Create a thread for each evaluation and don't continue until they are all done (countDown latch or gate);
-        for (int i=0; i<population.size(); i++) {
-            ParameterArray p = (ParameterArray) population.get(i);
+        for (ParameterArray p : population) {
 
             double fitness = 0;
             if (optimizee_.evaluateByComparison()) {
-                fitness =  optimizee_.compareFitness(p, params);
-            }
-            else {
-                fitness =  optimizee_.evaluateFitness(p);
+                fitness = optimizee_.compareFitness(p, params);
+            } else {
+                fitness = optimizee_.evaluateFitness(p);
             }
 
             p.setFitness(fitness);

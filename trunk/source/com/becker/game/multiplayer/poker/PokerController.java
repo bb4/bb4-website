@@ -130,7 +130,7 @@ public class PokerController extends MultiGameController
      */
     private void dealCardsToPlayers(int numCardsToDealToEachPlayer) {
          // give the default players some cards.
-        List deck = Card.newDeck();
+        List<Card> deck = Card.newDeck();
         assert (players_ != null) : "No players! (players_ is null)";
         for (Player p : players_) {
             if (deck.size() < numCardsToDealToEachPlayer) {
@@ -174,9 +174,7 @@ public class PokerController extends MultiGameController
      */
     public int getCurrentMaxContribution() {
        int max = Integer.MIN_VALUE;
-        List<PokerPlayer> players = (List<PokerPlayer>)getPlayers();
-        for (final PokerPlayer p : players) {
-            PokerPlayer player = (PokerPlayer) p;
+        for (final PokerPlayer player : getPokerPlayers()) {
             if (player.getContribution() > max) {
                 max = player.getContribution();
             }
@@ -190,9 +188,7 @@ public class PokerController extends MultiGameController
     public int getAllInAmount() {
         // loop through the players and return the min number of chips of any player
         int min = Integer.MAX_VALUE;
-        List<PokerPlayer> players = (List<PokerPlayer>)getPlayers();
-        for (final Player p : players) {
-            PokerPlayer player = (PokerPlayer) p;
+        for (final PokerPlayer player : getPokerPlayers()) {
             if (!player.hasFolded() && ((player.getCash() + player.getContribution()) < min)) {
                 min = player.getCash() + player.getContribution();
             }
@@ -223,10 +219,8 @@ public class PokerController extends MultiGameController
     {
         if (getBoard().getLastMove() == null)
             return false;
-
-        List<PokerPlayer> players = (List<PokerPlayer>)getPlayers();
         int numPlayersStillPlaying = 0;
-        for (Player p : players) {
+        for (Player p : getPokerPlayers()) {
             PokerPlayer player = (PokerPlayer) p;
             if (!player.isOutOfGame())
                 numPlayersStillPlaying++;
@@ -242,7 +236,6 @@ public class PokerController extends MultiGameController
     @Override
     public int advanceToNextPlayer()
     {
-
         PokerGameViewer pviewer = (PokerGameViewer) getViewer();
         pviewer.refresh();
 
@@ -282,7 +275,6 @@ public class PokerController extends MultiGameController
      * @return true of the round is over
      */
     private boolean roundOver() {
-        //List<PokerPlayer> players = (List<PokerPlayer>)getPlayers();
 
         if (allButOneFolded())  {
             return true;
@@ -306,17 +298,16 @@ public class PokerController extends MultiGameController
         return ((playIndex_ >= getNumNonFoldedPlayers()) );
     }
 
-    /**
+     /**
+      * a player is not counted as active if he is "out of the game".
       * @return  number of active players.
       */
      public int getNumNonFoldedPlayers()
      {
-        // a player is not counted as active if he is "out of the game".
-        List<PokerPlayer> players = (List<PokerPlayer>)getPlayers();
         int count = 0;
-        for (final PokerPlayer p : players) {
+        for (final PokerPlayer p : getPokerPlayers()) {
             if (!p.isOutOfGame())
-                count++;
+               count++;
         }
         return count;
      }
@@ -324,7 +315,7 @@ public class PokerController extends MultiGameController
 
     /**
      * take care of distributing the pot, dealing, anteing.
-     * @param pviewer
+     * @param pviewer poker viewer
      */
     private void doRoundOverBookKeeping(PokerGameViewer pviewer) {
         PokerPlayer winner = (PokerPlayer)determineWinner();
@@ -349,10 +340,9 @@ public class PokerController extends MultiGameController
     }
 
     private boolean allButOneFolded() {
-        List<PokerPlayer> players = (List<PokerPlayer>)getPlayers();
 
         int numNotFolded = 0;
-        for (final PokerPlayer p : players) {
+        for (final PokerPlayer p : getPokerPlayers()) {
             if (!p.hasFolded()) {
                 numNotFolded++;
             }
@@ -366,7 +356,7 @@ public class PokerController extends MultiGameController
      */
     @Override
     public MultiGamePlayer determineWinner() {
-        List<PokerPlayer> players = (List<PokerPlayer>)getPlayers();
+        List<PokerPlayer> players = getPokerPlayers();
         PokerPlayer winner;
         PokerHand bestHand;
         int first=0;
@@ -385,8 +375,10 @@ public class PokerController extends MultiGameController
             if (!p.hasFolded() && p.getHand().compareTo(bestHand) > 0) {
                 bestHand = p.getHand();
                 winner = p;
+
             }
         }
+        System.out.println("The winning hand was " + winner.getHand());
         return winner;
     }
 
@@ -414,6 +406,10 @@ public class PokerController extends MultiGameController
         super.setPlayers(players);
         // deal cards to the players
         dealCardsToPlayers(5);
+    }
+
+    protected List<PokerPlayer> getPokerPlayers() {
+        return (List<PokerPlayer>)getPlayers();
     }
 
 }

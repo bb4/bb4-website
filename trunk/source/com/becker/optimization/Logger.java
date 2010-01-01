@@ -1,16 +1,13 @@
 package com.becker.optimization;
 
-import com.becker.common.ILog;
 import com.becker.common.util.Util;
 import com.becker.optimization.parameter.ParameterArray;
-import com.becker.optimization.strategy.OptimizationStrategy;
-import com.becker.optimization.strategy.OptimizationStrategyType;
 
 import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- *
+ * Logger for use with optimzer algorithms.
  *
  * @author Barry Becker
  */

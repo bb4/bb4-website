@@ -4,7 +4,7 @@ import com.becker.common.util.FileUtil;
 import com.becker.game.multiplayer.poker.PokerHand;
 import com.becker.game.common.GameContext;
 import com.becker.game.card.Card;
-import com.becker.common.util.FileUtil;
+import junit.framework.TestCase;
 
 import java.io.*;
 import java.util.*;
@@ -13,44 +13,38 @@ import java.util.*;
 /**
  * programming challenge to test which poker hands are better
  * see  http://www.programming-challenges.com/pg.php?page=downloadproblem&probid=110202&format=html
-  * for details
  *
  * author Barry Becker
  */
-public class PokerHandsChallenge {
-
-    private static final String TEST_FILE = "multiplayer/poker/test/test_hands.data";
-
-    private static final int MAX_LG = 255;
-
+public class PokerHandTest extends TestCase {
 
     /**
-     *  for reading from stdin for the programmnig contests
-     */
-    static String readLine(InputStream stream)  // utility function to read from stdin
-    {
-        byte lin[] = new byte [MAX_LG];
-        int lg = 0, car = -1;
+     * Expects input file to catains like   2H 3H 4H 5H 6H 3C 4C 5C 6C 7C
+     * where the 5 black cards appear first, then the white cards.
+      */
+    private static final String TEST_FILE = "multiplayer/poker/test/test_hands.data";
 
-        try {
-            while (lg < MAX_LG) {
-                car = stream.read();
-                if ((car < 0) || (car == '\n')) break;
-                lin [lg++] += car;
-            }
-        }
-        catch (IOException e) {
-            return (null);
-        }
+    enum Result {WHITE_WIN, BLACK_WIN, TIE}
+    private static final Result[] EXPECTED_RESULTS =
+            {Result.WHITE_WIN, Result.BLACK_WIN, Result.BLACK_WIN, Result.TIE, Result.WHITE_WIN, Result.BLACK_WIN};
 
-        if ((car < 0) && (lg == 0)) return (null);  // eof
-        return (new String (lin, 0, lg));
+
+    public void testPokerHandComparison() throws IOException {
+
+        List<Result> results = evaluate(TEST_FILE);
+
+        assertEquals("Number of reuslts was not what was expected.",
+                EXPECTED_RESULTS.length, results.size());
+
+        for (int i=0; i<EXPECTED_RESULTS.length; i++) {
+            assertEquals(i + ") ", EXPECTED_RESULTS[i], results.get(i));
+        }
     }
 
 
-    private void evaluateLine(String line) {
-         if (line == null || line.length() <2) {
-            return;
+    private Result evaluateLine(String line) {
+        if (line == null || line.length() <2) {
+            throw new IllegalArgumentException("Cannot evaluate line: " + line);
         }
 
         List<Card> blackCards = new ArrayList<Card>(5);
@@ -76,65 +70,54 @@ public class PokerHandsChallenge {
 
         int blackWin = blackHand.compareTo(whiteHand);
         if (blackWin > 0) {
-            System.out.println("Black wins.");
+            return Result.BLACK_WIN;
         } else if (blackWin < 0)  {
-            System.out.println("White wins.");
+            return Result.WHITE_WIN;
         } else {
-            System.out.println("Tie.");
+            return Result.TIE;
         }
     }
 
 
-    public void evaluate(String file) throws IOException {
+    public List<Result> evaluate(String file) throws IOException {
 
-
-        BufferedReader breader = null;
+        List<Result> results = new LinkedList<Result>();
+        BufferedReader breader;
         String fullPath = FileUtil.PROJECT_DIR + "source/" + GameContext.GAME_ROOT + file;
         try {
             FileReader reader = new FileReader(fullPath);
             breader = new BufferedReader(reader);
 
+            String line;
+            while ((line = breader.readLine()) != null)  {
+                results.add(evaluateLine(line));
+            }
+            breader.close();
         } catch (FileNotFoundException e) {
             System.out.println("Could not find : "+fullPath);
         }
-
-        String line;
-
-        while ((line = breader.readLine()) != null)  {
-
-            evaluateLine(line);
-
-        }
-        breader.close();
+        return results;
     }
 
-
-
-     public void evaluate(InputStream stream) throws IOException {
-
+    /*
+    public void evaluate(InputStream stream) throws IOException {
         String line;
-
         while ((line = readLine(stream)) != null) {
-
             evaluateLine(line);
-
         }
-    }
+    }*/
 
-
+    /*
     public static void main(String args[])  {
 
-        PokerHandsChallenge app = new PokerHandsChallenge();
+        PokerHandTest app = new PokerHandTest();
 
         try {
-            //app.evaluate(System.in);
+           //app.evaluate(System.in);
            app.evaluate(TEST_FILE);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-    }
-
-
+    }   */
 }

@@ -67,7 +67,7 @@ public class HillClimbingStrategy extends OptimizationStrategy
             params.setFitness(optimizee_.evaluateFitness(params));
         }
         int numIterations = 0;
-        logger_.write(0, params.getFitness(), 0.0, 0.0, params, "initial test");
+        log(0, params.getFitness(), 0.0, 0.0, params, "initial test");
 
         double improvement = 0;
         double fitnessEps = fitnessRange * FITNESS_EPS_PERCENT / 100.0;
@@ -115,7 +115,7 @@ public class HillClimbingStrategy extends OptimizationStrategy
                 if (!improved) {
                     // we have not improved, try again with a reduced jump size.
                     System.out.println( "Warning: the new params are worse so reduce the step size and try again");
-                    logger_.write(numIterations, params.getFitness(), jumpSize, Double.NaN, params, "not improved");
+                    log(numIterations, params.getFitness(), jumpSize, Double.NaN, params, "not improved");
                     params = oldParams;
                     jumpSize *= JUMP_SIZE_DEC_FACTOR;
                 }
@@ -125,7 +125,7 @@ public class HillClimbingStrategy extends OptimizationStrategy
             double divisor = (ParameterArray.length( iter.gradient ) * ParameterArray.length( iter.oldGradient ));
             dotProduct = (divisor==0.0) ? 1.0 : dotProduct/divisor;
             numIterations++;
-            logger_.write(numIterations, params.getFitness(), jumpSize, dotProduct, params, Util.formatNumber(improvement));
+            log(numIterations, params.getFitness(), jumpSize, dotProduct, params, Util.formatNumber(improvement));
 
             if (listener_ != null) {
                 listener_.optimizerChanged(params);
@@ -177,11 +177,6 @@ public class HillClimbingStrategy extends OptimizationStrategy
 
         /**
          * Compute the square in one of the iteration directions and add it to the running sum.
-         * @param i
-         * @param sumOfSqs
-         * @param optimizee
-         * @param params
-         * @param testParams
          * @return the sum of squares in one of the iteration directions.
          */
         double incSumOfSqs(int i, double sumOfSqs, Optimizee optimizee,

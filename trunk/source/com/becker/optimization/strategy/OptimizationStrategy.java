@@ -25,7 +25,7 @@ public abstract class OptimizationStrategy
     /** debug level of 0 means no debug info, 3 is all debug info.  */
     protected static final int DEBUG_LEVEL = 0;
 
-    protected Logger logger_;
+    private Logger logger_;
 
     /** listen for optimization changed events. useful for debugging.  */
     protected OptimizationListener listener_;
@@ -45,6 +45,12 @@ public abstract class OptimizationStrategy
      */
     public void setLogger(Logger logger) {
         logger_ = logger;
+    }
+
+    protected void log(int iteration, double fitness, double jumpSize, double deltaFitness,
+                      ParameterArray params, String msg) {
+        if (logger_ != null)
+            logger_.write(iteration, fitness, jumpSize, deltaFitness, params, msg);
     }
 
     /**

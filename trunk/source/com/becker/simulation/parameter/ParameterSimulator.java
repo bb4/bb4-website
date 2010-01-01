@@ -40,6 +40,7 @@ public class ParameterSimulator extends DistributionSimulator {
         return showRedistribution_;
     }
 
+    @Override
     protected void initHistogram() {
         if (parameter_.isIntegerOnly()) {
             data_ = new int[(int)parameter_.getRange() + 1];
@@ -53,10 +54,12 @@ public class ParameterSimulator extends DistributionSimulator {
         }                
     }
 
+    @Override
     protected SimulatorOptionsDialog createOptionsDialog() {
          return new ParameterOptionsDialog( frame_, this );
     }
     
+    @Override
     protected int getXPositionToIncrement() {
         if (showRedistribution_) {
             parameter_.randomizeValue(random_);  
@@ -72,7 +75,7 @@ public class ParameterSimulator extends DistributionSimulator {
         //}
         int xpos;
         if (parameter_.isIntegerOnly()) {
-           xpos = (int)parameter_.getValue();
+            xpos = (int)parameter_.getValue();
         }
         else {
             xpos =  (int)((NUM_DOUBLE_BINS-1) * parameter_.getValue() / parameter_.getRange());
@@ -80,6 +83,7 @@ public class ParameterSimulator extends DistributionSimulator {
          return xpos;
     }
 
+    @Override
     protected String getFileNameBase()
     {
         return "parameter";

@@ -207,16 +207,17 @@ public abstract class TwoPlayerController extends GameController
      * The chance of player2 winning = 1 - chance of p1 winning.
      * @return estimated chance of player one winning the game
      */
-    public final double getChanceOfPlayer1Winning()
+    public final synchronized double getChanceOfPlayer1Winning()
     {
         // if true then too early in the game to tell.
-        if ( board_.getMoveList().size() < 4 )
+        TwoPlayerMove lastMove = (TwoPlayerMove) board_.getLastMove();
+        if (board_.getMoveList().size() < 4 )
             return 0.5f;
 
-        assert(board_.getLastMove() != null);
+        assert(lastMove != null);
         // @@ is this right?
         // we can use this formula to estimate the outcome:       
-        double inherVal = ((TwoPlayerMove)board_.getLastMove()).getInheritedValue();
+        double inherVal = lastMove.getInheritedValue();
         if ( Math.abs( inherVal ) > WINNING_VALUE )
             GameContext.log( 1, "TwoPlayerController: warning: the score for p1 is greater than WINNING_VALUE(" +
                     WINNING_VALUE + ")  inheritedVal=" + inherVal );

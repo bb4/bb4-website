@@ -119,7 +119,7 @@ public class SimulatedAnnealingStrategy extends OptimizationStrategy
                  }
 
                  System.out.println("T="+temperature+" ct="+ct+" dist="+dist+" deltaFitness="+deltaFitness+"  currentFitness = "+currentFitness );
-                 logger_.write(ct, currentFitness, r, dist, params, Util.formatNumber(temperature));
+                 log(ct, currentFitness, r, dist, params, Util.formatNumber(temperature));
 
                  ct++;
              } while (ct < N * params.size() && !isOptimalFitnessReached(params));
@@ -129,7 +129,7 @@ public class SimulatedAnnealingStrategy extends OptimizationStrategy
          } while (temperature > tempMin);
 
          System.out.println("T="+temperature+"  currentFitness = "+bestFitness );
-         logger_.write(ct, currentFitness, 0, 0, bestParams, Util.formatNumber(temperature));
+         log(ct, currentFitness, 0, 0, bestParams, Util.formatNumber(temperature));
 
          return bestParams;
      }

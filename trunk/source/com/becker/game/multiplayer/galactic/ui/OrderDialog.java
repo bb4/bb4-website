@@ -215,8 +215,7 @@ public final class OrderDialog extends OptionsDialog
             JOptionPane.showMessageDialog(this, GameContext.getLabel("CANT_SEND_MORE_THAN_YOU_HAVE"));
             return null;
         }
-        Order order = new Order(origin, destination, fleetSize);
-        return order;
+        return new Order(origin, destination, fleetSize);
     }
 
     private Planet getOrigin() {
