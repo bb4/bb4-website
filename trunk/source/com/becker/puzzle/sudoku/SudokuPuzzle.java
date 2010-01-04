@@ -2,7 +2,6 @@ package com.becker.puzzle.sudoku;
 
 import com.becker.ui.components.GradientButton;
 import com.becker.common.concurrency.Worker;
-import com.becker.puzzle.sudoku.test.*;
 import com.becker.ui.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -47,7 +46,7 @@ public final class SudokuPuzzle extends JApplet
 
         panel.add(createButtonPanel(), BorderLayout.NORTH);
         panel.add(puzzlePanel_, BorderLayout.CENTER);
-        getContentPane().add( panel);
+        getContentPane().add(panel);
     }
 
     /**
@@ -56,7 +55,11 @@ public final class SudokuPuzzle extends JApplet
      */
     @Override
     public void start() {
-        puzzlePanel_.setSize(this.getSize());
+        System.out.println("in Sudoku start");
+        // workaround to get webstart view to show initially.
+        Dimension d = this.getSize();
+        puzzlePanel_.setSize(d.width, d.height);
+        getContentPane().resize(d.width + 1, d.height);
     }
 
     /**

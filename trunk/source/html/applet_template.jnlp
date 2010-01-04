@@ -35,7 +35,10 @@
        </resources>
 
        <application-desc main-class="{qualifiedAppClassName}">
+           <argument>-name</argument>
            <argument>{name}</argument>
+           <argument>-locale</argument>
+           <argument>{language}</argument>
        </application-desc>
  </jnlp>
 

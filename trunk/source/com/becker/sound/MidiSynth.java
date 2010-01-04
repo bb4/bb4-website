@@ -29,7 +29,6 @@ package com.becker.sound;
  * redistribute the Software for such purposes.
  */
 
-
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -112,7 +111,7 @@ public class MidiSynth extends JPanel {
         } catch (Exception ex) { ex.printStackTrace(); return; }
 
         Soundbank sb = synthesizer.getDefaultSoundbank();
-	if (sb != null) {
+        if (sb != null) {
             instruments = synthesizer.getDefaultSoundbank().getInstruments();
             synthesizer.loadInstrument(instruments[0]);
         }
@@ -322,8 +321,7 @@ public class MidiSynth extends JPanel {
                 }
             }
         }
-    } // End class Piano
-
+    }
 
 
     /**
@@ -360,8 +358,7 @@ public class MidiSynth extends JPanel {
                 slider[i].repaint();
             }
         }
-    } // End class ChannelData
-
+    }
 
 
     /**
@@ -481,7 +478,7 @@ public class MidiSynth extends JPanel {
             presS = createSlider("Pressure", p);
             revbS = createSlider("Reverb", p);
 
-			// create a slider with a 14-bit range of values for pitch-bend
+            // create a slider with a 14-bit range of values for pitch-bend
             bendS = create14BitSlider("Bend", p);
 
             p.add(Box.createHorizontalStrut(10));
@@ -504,7 +501,7 @@ public class MidiSynth extends JPanel {
             muteCB = createCheckBox("Mute", p);
             soloCB = createCheckBox("Solo", p);
             monoCB = createCheckBox("Mono", p);
-            //sustCB = createCheckBox("Sustain", p);
+            // sustCB = createCheckBox("Sustain", p);
 
             createButton("All Notes Off", p);
             p.add(Box.createHorizontalStrut(10));
@@ -606,7 +603,7 @@ public class MidiSynth extends JPanel {
                 }
             }
         }
-    } // End class Controls
+    }
 
 
 
@@ -683,14 +680,14 @@ public class MidiSynth extends JPanel {
             EmptyBorder eb = new EmptyBorder(0,5,5,5);
             scrollPane.setBorder(new CompoundBorder(eb,new EtchedBorder()));
 
-	    getContentPane().add("Center", scrollPane);
-	    pack();
+            getContentPane().add("Center", scrollPane);
+            pack();
             Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
             int w = 210;
             int h = 160;
             setLocation(d.width/2 - w/2, d.height/2 - h/2);
             setSize(w, h);
-	    setVisible(true);
+            setVisible(true);
         }
 
 
@@ -774,7 +771,6 @@ public class MidiSynth extends JPanel {
         }
 
 
-
         public void meta(MetaMessage message) {
             if (message.getType() == 47) {  // 47 is end of track
                 playB.setText("Play");
@@ -806,8 +802,8 @@ public class MidiSynth extends JPanel {
                 this.name = name;
                 this.track = track;
             }
-        } // End class TrackData
-    } // End class RecordFrame
+        }
+    }
 
 
     public static void main(String args[]) {

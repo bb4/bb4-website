@@ -270,7 +270,7 @@ public final class GUIUtil
      }
 
     /**
-     * get a URL given the path to an existing file.
+     * @return a URL given the path to an existing file.
      */
     public static URL getURL(String sPath, boolean failIfNotFound) {
 

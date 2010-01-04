@@ -290,7 +290,7 @@ public class GroupHealthAnalyzer implements Cloneable {
 
 
     /**
-     * Calculate the health of a group that has only one eye.
+     * @return the health of a group that has only one eye.
      */
     private float calcAlmostTwoEyedHealth(float side, int numLiberties) {
         float health = 0;
@@ -330,7 +330,7 @@ public class GroupHealthAnalyzer implements Cloneable {
     }
 
     /**
-     * Calculate the health of a group that has only one eye.
+     * @return the health of a group that has only one eye.
      */
     private static float calcOneEyedHealth(float side, int numLiberties) {
         float health = 0;
@@ -513,7 +513,7 @@ public class GroupHealthAnalyzer implements Cloneable {
     public float getRelativeHealth()
     {
         if (eyeCacheBroken_) {
-            GameContext.log(0, "Getting stale relative health = " + relativeHealth_);
+            GameContext.log(1, "Getting stale relative health = " + relativeHealth_);
         }
         return relativeHealth_;
     }
@@ -605,5 +605,4 @@ public class GroupHealthAnalyzer implements Cloneable {
         }
         return clone;
     }
-
 }

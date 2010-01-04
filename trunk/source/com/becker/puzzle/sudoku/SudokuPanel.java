@@ -11,7 +11,6 @@ import java.awt.*;
  */
 public final class SudokuPanel extends JPanel
 {
-
     private Board board_;
 
     private SudokuRenderer renderer_;

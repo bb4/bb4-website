@@ -11,6 +11,7 @@ import org.w3c.dom.NodeList;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -183,15 +184,19 @@ public class Story {
      */
     public static Document importStoryDocument(String[] args) {
         Document document;
+
+        // default story
+        URL url = GUIUtil.getURL(STORIES_ROOT + "ludlow/ludlowScript.xml");
+
         if (args.length == 1) {
-            File file = new File(args[0]);
-            document = DomUtil.parseXMLFile(file);
+           url = GUIUtil.getURL(STORIES_ROOT + args[0]);
         }
-        else { // default
-            URL url = GUIUtil.getURL(STORIES_ROOT + "ludlow/ludlowScript.xml");
-            System.out.println("about to parse url="+url +"\n story file location="+ url);
-            document = DomUtil.parseXML(url);
+        else if (args.length >= 1){
+            System.out.println("importStoryDocument Args=" + Arrays.toString(args));
+            url = GUIUtil.getURL(STORIES_ROOT + args[1]);
         }
+        System.out.println("about to parse url="+url +"\n story file location="+ url);
+        document = DomUtil.parseXML(url);
         //DomUtil.printTree(document, 0);
         return document;
     }
@@ -323,10 +328,7 @@ public class Story {
             
             for (Choice choice : scene.getChoices())  {
                 String dest = choice.getDestination();
-                if (dest != null  &&
-                        //&& !Choice.PREVIOUS_SCENE.equals(choice.getDestination())
-                        //&& !Choice.QUIT_CHOICE.equals(choice)
-                        sceneMap_.get(choice.getDestination()) == null) {
+                if (dest != null  && sceneMap_.get(choice.getDestination()) == null) {
                     assert false : "No scene named " + choice.getDestination() + " desc="+ choice.getDescription();
                 }
             }

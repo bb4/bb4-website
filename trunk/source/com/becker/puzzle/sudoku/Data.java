@@ -1,4 +1,4 @@
-package com.becker.puzzle.sudoku.test;
+package com.becker.puzzle.sudoku;
 
 /**
  * Some sample sudoku test puzzle data

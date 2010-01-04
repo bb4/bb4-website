@@ -30,7 +30,7 @@ public abstract class AbstractPuzzleController<P, M> implements PuzzleController
     /**
      * There are different approaches we can take to solving thepuzzle.
      *
-     * @param alg
+     * @param algorithm
      */
     public void setAlgorithm(AlgorithmEnum<P, M> algorithm) {
         algorithm_ = algorithm;

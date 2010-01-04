@@ -232,20 +232,23 @@
           <param name="jarFile" value="hiq.jar"/>
       </antcall>
 
+       <!-- copy xml and media files for stories -->
+      <antcall target="copyImageResources">
+        <param name="path" value="puzzle/adventure/stories/**/images"/>
+      </antcall>
+      <antcall target="copyAudioResources">
+        <param name="path" value="puzzle/adventure/stories/**/sounds"/>
+      </antcall>
+      <antcall target="copyResources">
+          <param name="path" value="puzzle/adventure/stories/**"/>
+          <param name="pattern" value="*.xml"/>
+      </antcall>
+
       <!-- copy the class files that are needed for adventure deployment -->
       <antcall target="deployJar">
           <param name="componentDir" value="puzzle/adventure"/>
           <param name="jarFile" value="adventure.jar"/>
       </antcall>
-
-      <!-- refactor so that copyResources does all images and sounds in specified path -->
-      <antcall target="copyImageResources">
-        <param name="path" value="puzzle/adventure/stories/"/>
-      </antcall>
-      <antcall target="copyAudioResources">
-        <param name="path" value="puzzle/adventure/stories/"/>
-      </antcall>
-
 
       <!-- copy the class files that are needed for snake deployment -->
       <antcall target="deployJar">
@@ -285,7 +288,7 @@
 
       <!-- copy the class files that are needed for spirograph deployment -->
       <antcall target="deployJar">
-          <param name="componentDir" value="spirograph"/>
+          <param name="componentDir" value="apps/spirograph"/>
           <param name="jarFile" value="spirograph.jar"/>
       </antcall>
 
@@ -302,13 +305,14 @@
 
 
   <target name="distributeImages" description="Copy image files to distrib dir">
-    <mkdir dir="${distributionGameDir}"/>
+      <mkdir dir="${distributionGameDir}"/>
       <copy todir="${distributionGameDir}">
         <fileset dir="${sourceDir}/images">
-          <include name="*.jpg"/>
-          <include name="*.png"/>
-          <include name="*.gif"/>
+          <include name="**/*.jpg"/>
+          <include name="**/*.png"/>
+          <include name="**/*.gif"/>
         </fileset>
+
       </copy>
   </target>
 
@@ -344,10 +348,10 @@
 
   <target name="copyAllResources">
       <antcall target="copyAudioResources">
-          <param name="path" value="${componentDir}/../sounds"/>
+          <param name="path" value="${componentDir}/ui/sounds"/>
       </antcall>
       <antcall target="copyImageResources">
-          <param name="path" value="${componentDir}/../images"/>
+          <param name="path" value="${componentDir}/ui/images"/>
       </antcall>
       <antcall target="copyResources">
           <param name="path" value="${componentDir}/resources"/>
@@ -387,14 +391,13 @@
   <target name="create_html_for_locale"
       description="deploys the all the html files for a specified locale. This includes the index page and all the applet pages.">
 
-      <echo message="locale=${locale}"/>
+      <!--echo message="locale=${locale}"/-->
       <propertycopy from="appletHtml.${locale}.appletList" name="appletListForLocale"/>
       <propertycopy from="appletIndexFile.${locale}" name="appletIndexFileForLocale"/>
-      <echo message="Generating Table: ${appletListForLocale}"/>
+      <!--echo message="Generating Table: ${appletListForLocale}"/-->
 
       <!--echo message="copying ${sourceDir}/html/${appletIndexFile} to ${distributionDir}/../${appletIndexFileForLocale}"/-->
       <copy file="${sourceDir}/html/${appletIndexFile}" tofile="${distributionDir}/../${appletIndexFileForLocale}"/>
-
 
       <!-- top level locale specific replacements for the index file. -->
       <foreach delimiter="," list="${htmlindex.replacementList}" param="token" target="substitute_in_indexfile">
@@ -417,7 +420,7 @@
       <!-- instead of copying hand edited html and jnlps for each applet, I will generate them
       automatically from base templates and a properties file that specifies the substitutions
       to make.  -->
-      <echo message="The applets to create files for are: ${appletListForLocale}"/>
+      <!--echo message="The applets to create files for are: ${appletListForLocale}"/-->
 
       <foreach delimiter="," list="${appletListForLocale}" param="appletName" target="create_applet_pages">
         <param name="locale" value="${locale}"/>
@@ -427,7 +430,7 @@
 
 
   <target name="create_applet_pages">
-    <echo message="######### Now creating html and jnlp for : ${appletName}"/>
+    <!--echo message="######### Now creating html and jnlp for : ${appletName}"/-->
 
     <!-- there are 2 web files for each app to make substitutions in -->
     <property name="suffices" value="html,jnlp"/>
@@ -472,7 +475,7 @@
 
   <target name="substitute_in_indexfile">
     <propertycopy from="${item}.${locale}.${token}" name="newValue"/>
-    <!--echo message="Substitute ${newValue} for ${applet}.${token} in ${replaceFile}"/-->
+    <!--echo message="Substitute ${newValue} for ${item}.${token} in ${replaceFile}"/-->
     <replace file="${replaceFile}" token="{${item}.${token}}" value="${newValue}"/>
   </target>
 
@@ -489,14 +492,14 @@
 
   <target name="substitute">
     <propertycopy from="${applet}.${locale}.${token}" name="newValue"/>
-    <!--echo message="Substitute ${token} for ${applet}.${locale}.${token} = ${newValue} in ${replaceFile}"/-->
+    <!--echo message="Substitute ${applet}.${locale}.${token} = ${newValue} for ${token} in ${replaceFile}"/-->
     <replace file="${replaceFile}" token="{${token}}" value="${newValue}"/>
   </target>
 
 
   <!-- copies specified files to both classes dir and staging dir -->
   <target name="copyResources">
-    <echo message="copying ${path}"/>
+    <!--echo message="copying ${path}"/-->
     <copy todir="${classesDir}">
       <fileset dir="${sourceDir}">
         <include name="com/becker/${path}/${pattern}"/>

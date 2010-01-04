@@ -12,7 +12,7 @@ import java.awt.event.*;
  * It contains a GamePanel corresponding to the game you have selected to play.
  * If you specify a game class as an argument, then you do not get a menu of all possible games to play.
  *
- * @see com.becker.game.common.ui.GamePanel
+ * @see GamePanel
  * @author Barry Becker
  */
 public class GameApp
@@ -94,12 +94,13 @@ public class GameApp
         else {
             CommandLineOptions options = new CommandLineOptions(args);
 
+            System.out.println("options=" + options);
             if (options.contains("help")) {
-                GameContext.log(0, "Usage: -game <game> [-locale <locale>]");
+                GameContext.log(0, "Usage: -name <game> [-locale <locale>]");
             }
             // create a game panel of the appropriate type based on the name of the class passed in.
             // if no game is specified as an argument, then we show a menu for selecting a game
-            gameName = options.getValueForOption("game", defaultGame);
+            gameName = options.getValueForOption("name", defaultGame);
 
             if (options.contains("locale")) {
                 // then a locale has been specified

@@ -66,7 +66,6 @@ public class ImageBreederApplet extends ApplicationApplet
      */
     public ImageBreederApplet()
     {
-        System.out.println("empty constructor for ImageBreeder");
         GUIUtil.setStandAlone(true);
         operations = new ProcessingOperators();
         createImageFrame(IMAGE_DIR + DEFAULT_IMAGE);

@@ -11,7 +11,7 @@ import java.awt.*;
  * This is the applet wrapper for the game programs.
  * It contains a TwoPlayerPanel corresponding to the specified game.
  *
- * @see com.becker.game.common.ui.GamePanel
+ * @see GamePanel
  * @author Barry Becker
  */
 public class GameApplet extends JApplet
@@ -26,6 +26,13 @@ public class GameApplet extends JApplet
         GUIUtil.setStandAlone(true);
 
         String gameName = getParameter("program_name");
+        String localeName = getParameter("locale");
+        System.out.println("locale=" + localeName);
+        if (localeName == null)
+            localeName = "ENGLISH";
+
+        LocaleType locale = GameContext.getLocale(localeName, true);
+        GameContext.setLocale(locale);
         GameContext.loadGameResources(gameName);
 
         gamePanel_ = PluginManager.getInstance().getPlugin(gameName).getPanelInstance();

@@ -13,7 +13,7 @@ import java.awt.event.*;
  * @author Barry Becker  Date: Sep 2005
  */
 public abstract class PuzzleApplet extends ApplicationApplet
-                                                         implements ActionListener, ItemListener
+                                  implements ActionListener, ItemListener
 {
     protected PuzzleController controller_;
     protected PuzzleViewer viewer_;

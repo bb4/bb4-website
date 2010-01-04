@@ -1,16 +1,6 @@
 package com.becker.puzzle.sudoku;
 
-import com.becker.common.concurrency.Worker;
-import com.becker.puzzle.sudoku.test.Data;
-import com.becker.ui.GUIUtil;
-import com.becker.ui.components.GradientButton;
-
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 
 /**
  * A combo box that allows the user to select the size of the puzzle

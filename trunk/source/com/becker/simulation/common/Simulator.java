@@ -41,7 +41,6 @@ public abstract class Simulator extends AnimationComponent
      */
     public Simulator(String name) {
         setName(name);
-        GUIUtil.setStandAlone((GUIUtil.getBasicService() != null));
         timeStep_ = getInitialTimeStep();
     }
 

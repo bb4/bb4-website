@@ -21,6 +21,7 @@ public class SimulatorApplet extends ApplicationApplet {
     private static final String DEFAULT_SIMULATOR = "com.becker.simulation.snake.SnakeSimulator";
 
     public  SimulatorApplet() {
+        GUIUtil.setStandAlone(true);
         simulator_ = null;
     }
 
@@ -40,6 +41,7 @@ public class SimulatorApplet extends ApplicationApplet {
     /**
      * create and initialize the simulation
      */
+    @Override
     public JPanel createMainPanel()
     {
         //this.getParameterInfo();
@@ -62,7 +64,7 @@ public class SimulatorApplet extends ApplicationApplet {
         return animPanel;
     }
 
-    private static  Simulator createSimulationFromClassName(String className) {
+    private static Simulator createSimulationFromClassName(String className) {
         if (className == null) {
             return null;
         }
@@ -75,6 +77,7 @@ public class SimulatorApplet extends ApplicationApplet {
             simulator = (Simulator) simulatorClass.newInstance();
 
         } catch (InstantiationException e) {
+            System.err.println("Could not create class for "  + className);
             e.printStackTrace();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
@@ -99,7 +102,11 @@ public class SimulatorApplet extends ApplicationApplet {
 
         // create a simulator panel of the appropriate type based on the name of the class passed in.
         // if no simulator is specified as an argument, then we use the default.
-        String simulatorClassName = (args.length > 0)? args[0] : DEFAULT_SIMULATOR;
+        String simulatorClassName = DEFAULT_SIMULATOR;
+        if (args.length == 1)
+            simulatorClassName = args[0];
+        else if (args.length > 1)
+            simulatorClassName = args[1];
 
         SimulatorApplet applet = new SimulatorApplet(simulatorClassName);
         GUIUtil.showApplet( applet, applet.getTitle() );
