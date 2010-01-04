@@ -9,7 +9,7 @@ import javax.swing.*;
 /**
  * Immutable class representing meta info about a game plugin.
  * There is a game plugin for each game that we support.
- * @see plugins.xml
+ * see plugins.xml
  *
  * @author Barry Becker Date: Jan 20, 2007
  */

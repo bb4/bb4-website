@@ -58,7 +58,7 @@ public abstract class AbstractDialog extends JDialog implements ActionListener {
         enableEvents(AWTEvent.WINDOW_EVENT_MASK);
         // security violation in applet and webstart
         if (!GUIUtil.isStandAlone()) {
-             this.setAlwaysOnTop(true);
+             ////this.setAlwaysOnTop(true);
         }
         pack();
     }

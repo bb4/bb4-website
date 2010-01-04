@@ -159,8 +159,9 @@ public class Scene {
 
     public boolean hasSound() {
         if (soundURL_ == null) return false;
-        File file = new File(soundURL_.getFile());
-        return file.exists();
+        //File file = new File(soundURL_.getFile());
+        //return file.exists();
+        return true;
     }
 
     public void playSound() {

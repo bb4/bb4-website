@@ -1,10 +1,10 @@
 package com.becker.game.twoplayer.common.search.tree;
 
-import com.becker.common.Location;
 import com.becker.common.util.Util;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 
 import javax.swing.tree.DefaultMutableTreeNode;
+import java.awt.*;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -50,7 +50,7 @@ public class SearchTreeNode extends DefaultMutableTreeNode
     /**
      * location in the boardviewer
      */
-    private Location location_;
+    private Point position_;
 
 
     /**
@@ -195,11 +195,11 @@ public class SearchTreeNode extends DefaultMutableTreeNode
         this.comment_ = comment;
     }
 
-    public Location getLocation() {
-        return location_;
+    public Point getPosition() {
+        return position_;
     }
 
-    public void setLocation(Location loc) {
-        this.location_ = loc;
+    public void setLocation(int x, int y) {
+        position_ = new Point(x, y);
     }
 }

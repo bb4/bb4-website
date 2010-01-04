@@ -247,12 +247,12 @@ public final class DomUtil {
     public static Document parseXML(URL url)
     {
         try {
-            //System.out.println("url path=" + url.getPath());
+            System.out.println("url path=" + url.getPath());
             URLConnection urlc = url.openConnection();
             InputStream is = urlc.getInputStream();
             return parseXML(is, true, null);
         } catch  (IOException e) {
-            System.err.println("Failed");
+            System.err.println("Failed to open " +  url.getPath());
             e.printStackTrace(); 
         }
         return null;
@@ -260,7 +260,7 @@ public final class DomUtil {
 
     public static Document parseXMLFile(File file)
     {
-        System.out.println("about to parse "+ file.getAbsolutePath());
+        System.out.println("about to parse "+ file.getPath());
         return parseXMLFile(file, true);
     }
 

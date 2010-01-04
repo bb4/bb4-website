@@ -68,10 +68,6 @@ public class CommandLineOptions  {
         return optionsMap_.get(option);
     }
 
-    public int numOptions() {
-        return optionsMap_.size();
-    }
-
     public String toString() {
         return optionsMap_.toString();
     }

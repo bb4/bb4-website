@@ -132,7 +132,7 @@
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
-      <param name="args" value="-game pente"/>
+      <param name="args" value="-game pente -locale ENGLISH"/>
     </antcall>
   </target>
 
@@ -151,7 +151,7 @@
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
-      <param name="args" value="-game tictactoe"/>
+      <param name="args" value="-game tictactoe -locale ENGLISH"/>
     </antcall>
   </target>
 
@@ -170,7 +170,7 @@
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
-      <param name="args" value="-game blockade"/>
+      <param name="args" value="-game blockade -locale ENGLISH"/>
     </antcall>
   </target>
 
@@ -189,7 +189,7 @@
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
-      <param name="args" value="-game checkers"/>
+      <param name="args" value="-game checkers -locale ENGLISH"/>
     </antcall>
   </target>
 
@@ -197,7 +197,7 @@
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
-      <param name="args" value="-game chess"/>
+      <param name="args" value="-game chess -locale ENGLISH"/>
     </antcall>
   </target>
 
@@ -206,7 +206,7 @@
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
-      <param name="args" value="-game trivial"/>
+      <param name="args" value="-game trivial -locale ENGLISH"/>
     </antcall>
   </target>
 
@@ -241,7 +241,7 @@
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
-      <param name="args" value="-game poker"/>
+      <param name="args" value="-game poker -locale ENGLISH"/>
     </antcall>
   </target>
 
@@ -249,7 +249,7 @@
     <antcall target="executeProgram">
       <param name="className" value="com.becker.game.common.online.ui.OnlineGameServerFrame"/>
       <param name="libPath" value="${libDir}/jai_codec.jar;"/>
-      <param name="args" value="-game poker"/>
+      <param name="args" value="-game poker -locale ENGLISH"/>
     </antcall>
   </target>
 
@@ -276,7 +276,7 @@
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>  <!-- com.becker.game.multiplayer.set.SetApplet -->
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
-      <param name="args" value="-game set"/>
+      <param name="args" value="-game set -locale ENGLISH"/>
     </antcall>
   </target>
 
@@ -284,7 +284,7 @@
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;${libDir}/jigo.jar;${libDir}/gtpserver.jar;"/>
-      <param name="args" value="-game go"/>
+      <param name="args" value="-game go -locale JAPANESE"/>
     </antcall>
   </target>
 
@@ -433,7 +433,7 @@
     </java>
   </target>
 
-  <target name="executeStringUtil" depends="compile" description="A simple string replacement program.">
+  <target name="executeStringUtil" depends="compile">
     <echo message="now executing StringUtil test"/>
     <java classname="com.becker.apps.misc.string.StringUtil" classpath="${classesDir}" fork="true" jvm="${java_compiler}" maxmemory="128M">
         <jvmarg value="${assertionsFlag}"/>
@@ -515,7 +515,7 @@
   </target>
 
   <!-- call this to run java programs  -->
-  <target name="executeProgram" depends="compile"  description="Run a program">
+  <target name="executeProgram" depends="compile">
     <java classname="${className}" classpath="${classesDir};${libPath}" fork="true" jvm="${java_compiler}">
         <sysproperty key="DEBUG" value="true"/>
         <arg line="${args}"/>
@@ -531,7 +531,7 @@
   </target>
 
   <!-- call this to run java programs with two arguments -->
-  <target name="executeProgram2" depends="compile" description="Run a program with 2 args">
+  <target name="executeProgram2" depends="compile">
     <java classname="${className}" classpath="${classesDir};${libPath}" fork="true" jvm="${java_compiler}">
         <sysproperty key="DEBUG" value="true"/>
         <arg value="${arg1}"/>

@@ -36,7 +36,7 @@ public final class GraphicalAdventure extends ApplicationApplet
      */
     public GraphicalAdventure(Story story)
     {
-        GUIUtil.setStandAlone(false);
+        GUIUtil.setStandAlone((GUIUtil.getBasicService() != null));
         
         story_ = story;
         JFrame frame = GUIUtil.showApplet( this, story.getTitle());

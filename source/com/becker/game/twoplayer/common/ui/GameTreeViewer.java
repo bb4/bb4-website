@@ -1,7 +1,6 @@
 package com.becker.game.twoplayer.common.ui;
 
 import com.becker.common.ColorMap;
-import com.becker.common.Location;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 
@@ -114,8 +113,6 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
             return;
         }
 
-        //System.out.println("num children="+node.getChildCount());
-        //
         Enumeration it = node.children();
         while (it.hasMoreElements()) {
             SearchTreeNode child = (SearchTreeNode)it.nextElement();
@@ -143,7 +140,7 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
     public synchronized void highlightPath( TreePath path )
     {
         // unhighlight the old path and highlight the new one without redrawing the whole tree.
-        //GameContext.log(2, "about to highlight "+path );
+        // GameContext.log(2, "about to highlight "+path );
         Graphics2D g2 = (Graphics2D)getGraphics();
         g2.setXORMode(Color.WHITE);
         g2.setStroke(BRUSH_HIGHLIGHT_STROKE);
@@ -163,17 +160,18 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
         Object[] pathNodes = path.getPath();
         SearchTreeNode lastNode = (SearchTreeNode)pathNodes[0];
         int diameter = HL_NODE_DIAMETER;
-        Location lastLoc = lastNode.getLocation();
-        g2.drawOval(lastLoc.getX() - HL_NODE_RADIUS, lastLoc.getY() - HL_NODE_RADIUS, diameter, diameter);
+        Point lastLoc = lastNode.getPosition();
+        g2.drawOval(lastLoc.x - HL_NODE_RADIUS, lastLoc.y - HL_NODE_RADIUS, diameter, diameter);
         for (int i=1; i<pathNodes.length; i++) {
             SearchTreeNode node = (SearchTreeNode)pathNodes[i];
-            Location nodeLoc = node.getLocation();
             TwoPlayerMove m = (TwoPlayerMove)node.getUserObject();
             g2.setColor(colormap_.getColorForValue(m.getInheritedValue()));
-            g2.drawLine(lastLoc.getX(),lastLoc.getY(), nodeLoc.getX(), nodeLoc.getY());
+            
+            Point nodeLoc = node.getPosition();
+            g2.drawLine(lastLoc.x,lastLoc.y, nodeLoc.x,nodeLoc.y);
             g2.setColor(colormap_.getColorForValue(m.getValue()));
-            g2.drawOval(nodeLoc.getX() - HL_NODE_RADIUS, nodeLoc.getY() - HL_NODE_RADIUS, diameter, diameter);
-            lastNode = node;
+            g2.drawOval(nodeLoc.x-HL_NODE_RADIUS, nodeLoc.y-HL_NODE_RADIUS, diameter, diameter);
+            lastLoc = nodeLoc;
         }
     }
 
@@ -211,12 +209,8 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
         }
     }
 
-
     /**
-     * @param node
-     * @param depth
-     * @param offset
-     * @param g2
+     * Draw one of the game tree nodes
      */
     private synchronized void drawNode( SearchTreeNode node, int depth, int offset, Graphics2D g2)
     {
@@ -224,7 +218,7 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
         g2.setColor( colormap_.getColorForValue(m.getValue()));
         int x = MARGIN + (int) (width_ * (offset + node.getSpaceAllocation() / 2.0) / totalAtLevel_[depth]);
         int y = MARGIN + depth*levelHeight_;
-        node.setLocation(new Location(x, y));
+        node.setLocation(x, y);
 
         int width = 2;
         if (m.isSelected()) {
@@ -242,12 +236,7 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
     }
 
     /**
-     * @param parent
-     * @param child child node move
-     * @param depth
-     * @param offset1 offset at parent level.
-     * @param offset2 offset at child level in the tree.
-     * @param g2
+     * Draw a line/arc connecting a parent and child node.
      */
     private synchronized void drawArc( SearchTreeNode parent, SearchTreeNode child,
                                        int depth, int offset1, int offset2, Graphics2D g2)
@@ -276,7 +265,6 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
         g2.setColor( backgroundColor_ );
         g2.fillRect( 0, 0, getWidth(), getHeight() );
 
-
         Color c = pieceRenderer_.getPlayer1Color(); //colormap_.getMaxColor();
         Color p1Color = new Color(c.getRed(), c.getGreen(), c.getBlue(), BACKGROUND_BAND_OPACITY);
         c = pieceRenderer_.getPlayer2Color();  //colormap_.getMinColor();
@@ -293,7 +281,6 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
     @Override
     protected synchronized void paintComponent( Graphics g )
     {
-
         Graphics2D g2 = (Graphics2D)g;
 
         g2.setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
