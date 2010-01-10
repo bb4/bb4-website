@@ -49,7 +49,7 @@ public class PluginManager {
         GamePlugin defaultGame = null;
 
         int num = children.getLength();
-        for (int i=0; i < num; i++) {
+        for (int i = 0; i < num; i++) {
 
             Node n = children.item(i);
 

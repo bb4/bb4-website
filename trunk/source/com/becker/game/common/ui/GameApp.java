@@ -56,7 +56,7 @@ public class GameApp
      */
     private void addMenuBar(String initialGame)
     {
-        GameMenu gameMenu = new GameMenu( frame_, initialGame);
+        GameMenu gameMenu = new GameMenu(frame_, initialGame);
         JMenu fileMenu = new FileMenu(gameMenu);
        
         JMenuBar menubar = new JMenuBar();
@@ -64,9 +64,7 @@ public class GameApp
         menubar.add(gameMenu);
 
         frame_.getRootPane().setJMenuBar(menubar);
-
     }
-
     
     /**
      * Static method to start up the game playing application.
@@ -83,15 +81,12 @@ public class GameApp
         GUIUtil.setStandAlone((GUIUtil.getBasicService() != null));
 
         String defaultGame = PluginManager.getInstance().getDefaultPlugin().getName();
-        String gameName;
-        if (args.length == 0) {
-            gameName = defaultGame;
-        }
-        else if (args.length == 1) {
+        String gameName = defaultGame;
+        if (args.length == 1) {
             // if there is only one arg assume it is the name of the game
             gameName = args[0];
         }
-        else {
+        else if (args.length > 1) {
             CommandLineOptions options = new CommandLineOptions(args);
 
             System.out.println("options=" + options);

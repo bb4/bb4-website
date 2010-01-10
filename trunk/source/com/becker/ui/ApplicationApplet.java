@@ -11,6 +11,7 @@ import javax.swing.*;
  */
 public abstract class ApplicationApplet extends JApplet
 {
+
     protected ResizableAppletPanel resizablePanel_;
 
     static {

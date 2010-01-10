@@ -163,8 +163,10 @@ public final class GameContext
     {
         gameName_ = gameName;
         log(1, "loadGameResources gameName=" + gameName);
-        log(1,"plugin = " + PluginManager.getInstance().getPlugin(gameName));
-        String resourcePath = PluginManager.getInstance().getPlugin(gameName).getMsgBundleBase();
+        GamePlugin plugin = PluginManager.getInstance().getPlugin(gameName);
+        log(1, "plugin = " + plugin);
+        System.out.println("nameName=" + gameName + " plugin=" +plugin);
+        String resourcePath = plugin.getMsgBundleBase();
         log(2, "searching for "+ resourcePath);
 
         try {

@@ -30,6 +30,11 @@ public final class GraphicalAdventure extends ApplicationApplet
     private boolean storyEdited_ = false;
 
 
+    public GraphicalAdventure()
+    {
+        GUIUtil.setStandAlone(true);
+    }
+
     /**
      * Constructor.
      * @param story initial story to show.
@@ -37,7 +42,7 @@ public final class GraphicalAdventure extends ApplicationApplet
     public GraphicalAdventure(Story story)
     {
         GUIUtil.setStandAlone((GUIUtil.getBasicService() != null));
-        
+                
         story_ = story;
         JFrame frame = GUIUtil.showApplet( this, story.getTitle());
 
@@ -70,21 +75,23 @@ public final class GraphicalAdventure extends ApplicationApplet
      * @param story new story to present.
      */
     public void setStory(Story story) {
-        story_ = story;
-        System.out.println("set new story");
-        mainPanel_.removeAll();
+        if (story != null)  {
+            mainPanel_.removeAll();
+            System.out.println("set new story");
+            story_ = story;
 
-        StoryPanel storyPanel = new StoryPanel(story_);
+            StoryPanel storyPanel = new StoryPanel(story_);
 
-        // setup for initial scene
-        choicePanel_ = new ChoicePanel(story_.getCurrentScene().getChoices());
-        story_.getCurrentScene().playSound();
+            // setup for initial scene
+            choicePanel_ = new ChoicePanel(story_.getCurrentScene().getChoices());
+            story_.getCurrentScene().playSound();
 
-        choicePanel_.addSceneChangeListener(this);
+            choicePanel_.addSceneChangeListener(this);
 
-        mainPanel_.add( storyPanel, BorderLayout.CENTER );
-        mainPanel_.add( choicePanel_, BorderLayout.SOUTH );
-        refresh();
+            mainPanel_.add( storyPanel, BorderLayout.CENTER );
+            mainPanel_.add( choicePanel_, BorderLayout.SOUTH );
+            refresh();
+        }
     }
 
 
@@ -105,7 +112,7 @@ public final class GraphicalAdventure extends ApplicationApplet
     public void editStory() {
         // show password dialog.
         PasswordDialog pwDlg = new PasswordDialog("ludlow");
-        boolean canceled = false; // pwDlg.showDialog();
+        boolean canceled = pwDlg.showDialog();
         if ( canceled ) return;
 
         StoryEditorDialog storyEditor = new StoryEditorDialog(story_);
@@ -165,6 +172,20 @@ public final class GraphicalAdventure extends ApplicationApplet
     @Override
     public Dimension getSize() {
         return new Dimension(1000, 700);
+    }
+
+    /**
+     * Entry point for applet.
+     */
+    @Override
+    public void init()  {
+        super.init();
+        if (story_ == null)  {
+            String scriptName = getParameter("name");
+            Document document = Story.importStoryDocument(new String[]{scriptName});
+            Story story = new Story(document);
+            setStory(story);
+        }
     }
 
     /**
