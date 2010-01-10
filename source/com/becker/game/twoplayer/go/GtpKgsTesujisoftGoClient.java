@@ -23,6 +23,7 @@ import org.igoweb.kgs.client.gtp.Options;
  */
 public class GtpKgsTesujisoftGoClient
 {
+    private GtpKgsTesujisoftGoClient() {}
 
     public static void main(String[] args)
     {

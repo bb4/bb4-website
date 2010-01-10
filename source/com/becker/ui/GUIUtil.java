@@ -262,7 +262,7 @@ public final class GUIUtil
 
 
     /**
-     * get a URL given the path to a file.
+     * @return a URL given the path to a file.
      */
     public static URL getURL(String sPath) {
 

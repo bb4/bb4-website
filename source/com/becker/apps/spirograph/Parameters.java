@@ -1,7 +1,7 @@
 package com.becker.apps.spirograph;
 
 /**
- * Hold parameters that define the spirograph.
+ * Hold parameters that define the current spirograph state.
  *
  * @author Barry Becker
  */

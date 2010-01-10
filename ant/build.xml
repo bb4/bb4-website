@@ -124,7 +124,7 @@
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
-      <param name="args" value="-game galactic -locale ENGLISH"/>
+      <param name="args" value="-name galactic -locale ENGLISH"/>
     </antcall>
   </target>
 
@@ -132,7 +132,7 @@
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
-      <param name="args" value="-game pente -locale ENGLISH"/>
+      <param name="args" value="-name pente -locale ENGLISH"/>
     </antcall>
   </target>
 
@@ -151,7 +151,7 @@
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
-      <param name="args" value="-game tictactoe -locale ENGLISH"/>
+      <param name="args" value="-name tictactoe -locale ENGLISH"/>
     </antcall>
   </target>
 
@@ -170,7 +170,7 @@
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
-      <param name="args" value="-game blockade -locale ENGLISH"/>
+      <param name="args" value="-name blockade -locale ENGLISH"/>
     </antcall>
   </target>
 
@@ -189,7 +189,7 @@
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
-      <param name="args" value="-game checkers -locale ENGLISH"/>
+      <param name="args" value="-name checkers -locale ENGLISH"/>
     </antcall>
   </target>
 
@@ -197,7 +197,7 @@
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
-      <param name="args" value="-game chess -locale ENGLISH"/>
+      <param name="args" value="-name chess -locale ENGLISH"/>
     </antcall>
   </target>
 
@@ -206,7 +206,7 @@
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
-      <param name="args" value="-game trivial -locale ENGLISH"/>
+      <param name="args" value="-name trivial -locale ENGLISH"/>
     </antcall>
   </target>
 
@@ -214,7 +214,7 @@
     <antcall target="executeProgram">
       <param name="className" value="com.becker.game.common.online.ui.OnlineGameServerFrame"/>
       <param name="libPath" value="${libDir}/jai_codec.jar;"/>
-      <param name="args" value="-game trivial"/>
+      <param name="args" value="-name trivial"/>
     </antcall>
   </target>
 
@@ -241,7 +241,7 @@
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
-      <param name="args" value="-game poker -locale ENGLISH"/>
+      <param name="args" value="-name poker -locale ENGLISH"/>
     </antcall>
   </target>
 
@@ -249,7 +249,7 @@
     <antcall target="executeProgram">
       <param name="className" value="com.becker.game.common.online.ui.OnlineGameServerFrame"/>
       <param name="libPath" value="${libDir}/jai_codec.jar;"/>
-      <param name="args" value="-game poker -locale ENGLISH"/>
+      <param name="args" value="-name poker -locale ENGLISH"/>
     </antcall>
   </target>
 
@@ -276,7 +276,7 @@
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>  <!-- com.becker.game.multiplayer.set.SetApplet -->
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
-      <param name="args" value="-game set -locale ENGLISH"/>
+      <param name="args" value="-name set -locale ENGLISH"/>
     </antcall>
   </target>
 
@@ -284,7 +284,7 @@
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;${libDir}/jigo.jar;${libDir}/gtpserver.jar;"/>
-      <param name="args" value="-game go -locale JAPANESE"/>
+      <param name="args" value="-name go -locale JAPANESE"/>
     </antcall>
   </target>
 
@@ -413,7 +413,7 @@
     <echo message="now executing TextAdventure"/>
     <antcall target="executeProgram">
       <param name="className" value="com.becker.puzzle.adventure.TextAdventure"/>
-      <param name="args" value="${project_home}/source/com/becker/puzzle/adventure/stories/ludlow/ludlowScript.xml"/>
+      <param name="args" value="ludlow/ludlowScript.xml"/>
     </antcall>
   </target>
 
@@ -422,7 +422,7 @@
     <antcall target="executeProgram">
       <param name="className" value="com.becker.puzzle.adventure.ui.GraphicalAdventure"/>
       <param name="libPath" value="${libDir}/jai_codec.jar" />
-      <param name="args" value="${project_home}/source/com/becker/puzzle/adventure/stories/ludlow/ludlowScript.xml"/>
+      <param name="args" value="ludlow/ludlowScript.xml"/>
     </antcall>
   </target>
 

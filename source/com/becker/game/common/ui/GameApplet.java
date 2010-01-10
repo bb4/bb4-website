@@ -25,13 +25,14 @@ public class GameApplet extends JApplet
         GUIUtil.setCustomLookAndFeel();
         GUIUtil.setStandAlone(true);
 
-        String gameName = getParameter("program_name");
+        String gameName = getParameter("name");
         String localeName = getParameter("locale");
         System.out.println("locale=" + localeName);
         if (localeName == null)
             localeName = "ENGLISH";
 
         LocaleType locale = GameContext.getLocale(localeName, true);
+        System.out.println("setting the locale to " + locale + " for language="+ localeName);
         GameContext.setLocale(locale);
         GameContext.loadGameResources(gameName);
 
@@ -52,11 +53,4 @@ public class GameApplet extends JApplet
         GameContext.log(3, "in setSize w="+width+" h="+height);
         gamePanel_.setSize( width, height );
     }
-
-    /**Get a parameter value*/
-    public final String getParameter( String key, String def )
-    {
-        return (getParameter( key ) != null ? getParameter( key ) : def);
-    }
-
 }

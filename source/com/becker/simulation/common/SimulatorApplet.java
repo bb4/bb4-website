@@ -111,7 +111,6 @@ public class SimulatorApplet extends ApplicationApplet {
         SimulatorApplet applet = new SimulatorApplet(simulatorClassName);
         GUIUtil.showApplet( applet, applet.getTitle() );
     }
-
 }
 
 

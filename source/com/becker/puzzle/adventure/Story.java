@@ -187,15 +187,16 @@ public class Story {
 
         // default story
         URL url = GUIUtil.getURL(STORIES_ROOT + "ludlow/ludlowScript.xml");
-
+        System.out.println("num args="+ args.length);
         if (args.length == 1) {
-           url = GUIUtil.getURL(STORIES_ROOT + args[0]);
+            System.out.println("args[0]=" + args[0]);
+            url = GUIUtil.getURL(STORIES_ROOT + args[0]);
         }
-        else if (args.length >= 1){
+        else if (args.length > 1){
             System.out.println("importStoryDocument Args=" + Arrays.toString(args));
             url = GUIUtil.getURL(STORIES_ROOT + args[1]);
         }
-        System.out.println("about to parse url="+url +"\n story file location="+ url);
+        System.out.println("about to parse url="+url +"\n story file location");
         document = DomUtil.parseXML(url);
         //DomUtil.printTree(document, 0);
         return document;
