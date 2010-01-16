@@ -1,6 +1,7 @@
 package com.becker.apps.spirograph;
 
 import com.becker.ui.sliders.ColorChangeListener;
+
 import java.awt.*;
 
 /**
@@ -18,7 +19,6 @@ public class GraphState implements ColorChangeListener {
     public Parameters params;
     public Parameters oldParams;
 
-
     private Color color_;
 
     private int numSegmentsPerRev_;
@@ -35,11 +35,6 @@ public class GraphState implements ColorChangeListener {
 
     public void initialize(int width, int height) {
         params.initialize(width, height);
-        recordValues();
-    }
-
-    public void initializeValues(int width, int height) {
-        params.initializeValues(width, height);
         recordValues();
     }
 

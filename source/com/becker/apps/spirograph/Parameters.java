@@ -12,14 +12,9 @@ public class Parameters {
 
     public Parameters() {}
 
-    public void initializeValues(int width, int height) {
-        setSign(getR2() < 0 ? -1:1);
-        setTheta(0.0f);
-        setPhi(0.0f);
-        initialize(width, height);
-    }
-
     public void initialize(int width, int height) {
+        setSign(getR2() < 0 ? -1:1);
+        resetAngle();
         setX((width >> 1) + r1_ + (r2_ + sign_) + pos_);
         setY(height >> 1);
     }

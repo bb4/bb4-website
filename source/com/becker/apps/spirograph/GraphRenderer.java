@@ -1,21 +1,15 @@
 package com.becker.apps.spirograph;
 
-import com.becker.common.util.ImageUtil;
 import com.becker.common.math.MathUtil;
+import com.becker.common.util.ImageUtil;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.*;
+import java.awt.image.BufferedImage;
 
 /**
  * Program to simulate a SpiroGraph.
  * Adapted from Divid Little's original work.
- * TODO: cleanup and send back to David Little.
- * http://www.math.psu.edu/dlittle/applets.html
- *
- *  to do:
- *   - convert to polar coords
- *   - search the space of images using a genetic algorithm
  *
  * @author David Little
  * @author Barry Becker
@@ -23,7 +17,8 @@ import java.awt.image.*;
 
 public class GraphRenderer extends JPanel implements Runnable
 {
-    public static final int HT = 1000, WD = 1200;
+    public static final int IMG_HEIGHT = 1600;
+    public static final int IMG_WIDTH = 2400;
 
     private static final Color AXES_COLOR = new Color(120, 120, 200);
     private static final Color CIRCLE_COLOR = new Color(90, 90, 150);
@@ -46,11 +41,11 @@ public class GraphRenderer extends JPanel implements Runnable
     private final Object pauseLock_ = new Object(); // monitor
 
     private GraphState state_;
-    private JButton drawButton_;
+    //private JButton drawButton_;
 
-    GraphRenderer(GraphState state, JButton drawButton)
+    GraphRenderer(GraphState state)
     {
-        drawButton_ = drawButton;
+        //drawButton_ = drawButton;
         commonConstructor(state);
     }
 
@@ -59,9 +54,9 @@ public class GraphRenderer extends JPanel implements Runnable
         state_ = state;
         setBackground( Color.white );
         center_ = new float[2];
-        state_.initialize(WD, HT);
+        state_.initialize(IMG_WIDTH, IMG_HEIGHT);
 
-        offImage_ = ImageUtil.createCompatibleImage( WD, HT );
+        offImage_ = ImageUtil.createCompatibleImage(IMG_WIDTH, IMG_HEIGHT);
         if ( offImage_ != null ) {
             offlineGraphics_ = offImage_.createGraphics();
             offlineGraphics_.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
@@ -72,7 +67,7 @@ public class GraphRenderer extends JPanel implements Runnable
                     RenderingHints.VALUE_COLOR_RENDER_QUALITY );
         }
         else {
-            System.out.println( "error the offImage is null!" );
+            throw new InstantiationError("We could not create the offImage.");
         }
         clear();
     }
@@ -94,17 +89,16 @@ public class GraphRenderer extends JPanel implements Runnable
     private synchronized void doRendering()
     {
         int count = 0;
-        state_.initializeValues(WD, HT);
+        state_.initialize(IMG_WIDTH, IMG_HEIGHT);
         boolean refresh = false;
         isRendering_ = true;
-        System.out.println("line w="+ state_.getWidth() +" speed=" + state_.getVelocity());
 
         float r1 = state_.params.getR1();
         float r2 = state_.params.getR2();
         float p = state_.params.getPos();
         float sign = state_.params.getSign();
 
-        // avoid degenerate div by 0 case
+        // avoid degenerate (divide by 0 case) curves.
         if ( r2 == 0 ) return;
 
         long gcd = MathUtil.gcd( (long) r1, (long) (sign * r2) );
@@ -115,15 +109,19 @@ public class GraphRenderer extends JPanel implements Runnable
         float n = 1.0f + state_.getNumSegmentsPerRev() * (Math.abs( p / r2 ));
 
         while ( count++ < (int) (n * revs + 0.5) && isRendering_) {
-            refresh = drawSegment(count, refresh, sign, revs, n);
+            refresh = drawSegment(count, refresh, revs, n);
         }
         repaint();
-        drawButton_.setText( SpiroGraph.DRAW_LABEL );
+        //drawButton_.setText( SpiroGraph.DRAW_LABEL );
         isRendering_= false;
         thread_ = new Thread( this );
     }
 
-    private boolean drawSegment(int count, boolean refresh, float sign, int revs, float n) {
+    /**
+     * Draw a small line segment that makes up the larger sprial curve.
+     * @return true if refreshed after drawing the segment. Do not refresh if velocity is max.
+     */
+    private boolean drawSegment(int count, boolean refresh, int revs, float n) {
         float r1;
         float r2;
         float p;
@@ -140,9 +138,6 @@ public class GraphRenderer extends JPanel implements Runnable
         state_.params.setPhi(theta * (1.0f + r1 / r2));
         float phi = state_.params.getPhi();
         setPoint(p, phi);
-
-        //float oldx = state_.oldParams.getX();
-        //float oldy = state_.oldParams.getY();
 
         if (state_.showAxes() && refresh ) {
             drawIndicators();
@@ -162,7 +157,6 @@ public class GraphRenderer extends JPanel implements Runnable
             drawCircleAndDot(state_.params);
         }
         if ( refresh ) {
-            //System.out.println("ct="+count+" v="+v);
             repaint();
             if ( velocity < 100 ) {
                 try {
@@ -224,7 +218,9 @@ public class GraphRenderer extends JPanel implements Runnable
     @Override
     public void paint( Graphics g )
     {
-        g.drawImage( offImage_, (getSize().width - WD) >> 1, (getSize().height - HT) >> 1, this );
+        int xpos = (getSize().width - IMG_WIDTH) >> 1;
+        int ypos = (getSize().height - IMG_HEIGHT) >> 1;
+        g.drawImage( offImage_, xpos, ypos, this );
     }
 
     /**
@@ -245,8 +241,8 @@ public class GraphRenderer extends JPanel implements Runnable
         float r2 = params.getR2();
         float sign = params.getSign();
         float theta = params.getTheta();
-        center_[0] = (float)((WD >> 1) + (r1 + r2 * sign) * Math.cos( theta ));
-        center_[1] = (float)((HT >> 1) - (r1 + r2 * sign) * Math.sin( theta ));
+        center_[0] = (float)((IMG_WIDTH >> 1) + (r1 + r2 * sign) * Math.cos( theta ));
+        center_[1] = (float)((IMG_HEIGHT >> 1) - (r1 + r2 * sign) * Math.sin( theta ));
     }
 
     public void clear()
@@ -263,7 +259,7 @@ public class GraphRenderer extends JPanel implements Runnable
             return;
         offlineGraphics_.setPaintMode();
         offlineGraphics_.setColor( getBackground() );
-            offlineGraphics_.fillRect( 0, 0, WD, HT );
+            offlineGraphics_.fillRect( 0, 0, IMG_WIDTH, IMG_HEIGHT);
         drawAxes();
     }
 
@@ -273,8 +269,8 @@ public class GraphRenderer extends JPanel implements Runnable
 
             offlineGraphics_.setXORMode( getBackground() );
             offlineGraphics_.setColor( AXES_COLOR );
-            offlineGraphics_.drawLine( WD >> 1, 0, WD >> 1, HT );
-            offlineGraphics_.drawLine( 0, HT >> 1, WD, HT >> 1 );
+            offlineGraphics_.drawLine( IMG_WIDTH >> 1, 0, IMG_WIDTH >> 1, IMG_HEIGHT);
+            offlineGraphics_.drawLine( 0, IMG_HEIGHT >> 1, IMG_WIDTH, IMG_HEIGHT >> 1 );
             offlineGraphics_.setColor( CIRCLE_COLOR );
             float r1 = state_.params.getR1();
             float r2 = state_.params.getR2();
@@ -335,7 +331,7 @@ public class GraphRenderer extends JPanel implements Runnable
 
     private void drawCircle1( float r1 )
     {
-        offlineGraphics_.drawOval( (int) ((WD >> 1) - r1), (int) ((HT >> 1) - r1), (int) (2 * r1), (int) (2 * r1) );
+        offlineGraphics_.drawOval( (int) ((IMG_WIDTH >> 1) - r1), (int) ((IMG_HEIGHT >> 1) - r1), (int) (2 * r1), (int) (2 * r1) );
     }
 
     private void drawCircle2( Parameters params )
