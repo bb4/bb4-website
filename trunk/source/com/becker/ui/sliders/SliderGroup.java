@@ -48,11 +48,6 @@ public class SliderGroup extends JPanel implements ChangeListener {
 
     /**
      * Initialize sliders with floating point values.
-     * @param sliderNames
-     * @param minVals
-     * @param maxVals
-     * @param initialVals
-     * @param scaleFactors larger number indicates greater resolution/precision
      */
     private void commonInit() {
 
@@ -165,7 +160,7 @@ public class SliderGroup extends JPanel implements ChangeListener {
     
     /**
      * one of the sliders has moved.
-     * @param e
+     * @param e  change event.
      */
     public void stateChanged( ChangeEvent e )
     {
