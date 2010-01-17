@@ -66,5 +66,4 @@ public class ParametricEquations {
     public String getYEquation() {
         return yEquation;
     }
-
 }
