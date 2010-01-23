@@ -114,6 +114,7 @@ public class GraphState implements ColorChangeListener {
         return numSegmentsPerRev_;
     }
 
+    
     public boolean isRendering() {
         return isRendering_;
     }
@@ -147,6 +148,7 @@ public class GraphState implements ColorChangeListener {
      */
     public void reset() {
         params.resetAngle();
+        oldParams.resetAngle();
     }
     /**
      * set the old values from the current.

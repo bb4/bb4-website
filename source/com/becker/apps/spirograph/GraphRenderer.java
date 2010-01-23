@@ -1,107 +1,39 @@
 package com.becker.apps.spirograph;
 
-import com.becker.common.math.MathUtil;
-
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.awt.geom.Point2D;
 
 /**
  * Renders the SpiroGraph curve.
- * Adapted from David Little's original work.
- * Rendering happens in a separate thread. Not use of monitor for locking.
- * @author David Little
+ * May be interrupted.
  * @author Barry Becker
  */
-public class GraphRenderer extends JPanel implements Runnable
+public class GraphRenderer
 {
-    private static final Color BACKGROUND_COLOR = Color.WHITE;
-    private Thread thread_ = null;
     private OfflineGraphics offlineGraphics_;
-    private float[] center_;
-
-    // set this var instead of using Thread.stop (see
-    // http://java.sun.com/products/jdk/1.2/docs/guide/misc/threadPrimitiveDeprecation.html )
-    private volatile boolean paused_ = false;
-    // synchronization monitor.
-    private final Object pauseLock_ = new Object();
     private GraphState state_;
-    private DecorationRenderer decorRenderer_;
+    private GraphPanel graphPanel_;
 
     /**
      * Constructor
      */
-    public GraphRenderer(GraphState state)
+    public GraphRenderer(GraphState state, GraphPanel graphPanel)
     {
         state_ = state;
-        setBackground( BACKGROUND_COLOR );
-        center_ = new float[2];
-        state_.initialize(getWidth(), getHeight());
-        //clear();
-        thread_ = new Thread(this);
-        decorRenderer_ = new DecorationRenderer(state_);
-
-        /** whenever we get resized we need to recreate the offscreen image that we render into.  */
-        this.addComponentListener( new ComponentAdapter()  {
-            @Override
-            public void componentResized( ComponentEvent ce )
-            {
-                offlineGraphics_ = null;
-                repaint();
-            }
-        } );
-    }
-
-    public void pause(){
-        paused_ = true;
-    }
-
-    public void resume(){
-        paused_ = false;
-        thread_ = new Thread(this);
-        thread_.start();
-    }
-
-    public void reset(){
-        paused_ = true;
-        thread_ = new Thread(this);
-        state_.reset();
-        setPoint(state_.params.getPos(), 0);
-        this.repaint();
-    }
-
-    public void start(){
-        if ( paused_ ){
-            paused_ = false;
-        }
-        thread_.start();
+        graphPanel_ = graphPanel;
     }
 
     private OfflineGraphics getOfflineGraphics() {
         if (offlineGraphics_ == null) {
-            offlineGraphics_ = new OfflineGraphics(getSize(), BACKGROUND_COLOR);
+            offlineGraphics_ = new OfflineGraphics(graphPanel_.getSize(), graphPanel_.getBackground());
         }
         return offlineGraphics_;
     }
 
-    public void setPaused( boolean newPauseState )
-    {
-        synchronized (pauseLock_) {
-            if ( paused_ != newPauseState ) {
-                paused_ = newPauseState;
-                pauseLock_.notifyAll();
-            }
-        }
-    }
-
-    /**
-     * starts the rendering thread.
-     */
-    public void run()
+    public void startDrawingGraph() throws InterruptedException
     {
         int count = 0;
-        state_.initialize(getWidth(), getHeight());
+        state_.initialize(graphPanel_.getWidth(), graphPanel_.getHeight());
         state_.setRendering(true);
 
         float r2 = state_.params.getR2();
@@ -117,16 +49,15 @@ public class GraphRenderer extends JPanel implements Runnable
         while ( count++ < (int) (n * revs + 0.5)) {
             drawSegment(count, revs, n);
         }
-        repaint();
 
+        graphPanel_.repaint();
         state_.setRendering(false);
-        thread_ = new Thread( this );
     }
 
     /**
      * Draw a small line segment that makes up the larger sprial curve.
      */
-    private void drawSegment(int count, int revs, float n) {
+    private void drawSegment(int count, int revs, float n) throws InterruptedException {
         float r1;
         float r2;
         float p;
@@ -144,52 +75,28 @@ public class GraphRenderer extends JPanel implements Runnable
         float phi = state_.params.getPhi();
         setPoint(p, phi);
 
-        waitIfPaused();
+        graphPanel_.waitIfPaused();
         Stroke stroke = new BasicStroke( (float)state_.getWidth() / (float)GraphState.INITIAL_LINE_WIDTH );
         getOfflineGraphics().setStroke( stroke );
         getOfflineGraphics().drawLine((int) state_.oldParams.getX(), (int) state_.oldParams.getY(),
                                   (int) state_.params.getX(), (int) state_.params.getY() );
 
         if ( !state_.isMaxVelocity()) {
-            repaint();
+            graphPanel_.repaint();
             doSmallDelay();
         }
         state_.recordValues();
     }
 
-    private void waitIfPaused()
-    {
-        if ( !paused_ ) return;
-        // pause if we get suspended
-        try {
-            synchronized (pauseLock_) {
-                while ( paused_ ) pauseLock_.wait(100);
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    private void doSmallDelay() throws InterruptedException {
+        Thread.sleep(state_.getDelayMillis());
     }
 
-    private void doSmallDelay() {
-        try {
-            Thread.sleep(state_.getDelayMillis());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void paint( Graphics g )
+    public void renderCurrentGraph( Graphics2D g2 )
     {
-        Graphics2D g2 = (Graphics2D)g;
-
-        int xpos = (getSize().width - getWidth()) >> 1;
-        int ypos = (getSize().height - getHeight()) >> 1;
-        g.drawImage( getOfflineGraphics().getOfflineImage(), xpos, ypos, this );
-
-        if ( state_.showDecoration()) {
-            decorRenderer_.drawDecoration(g2, getWidth(), getHeight());
-        }
+        int xpos = (graphPanel_.getSize().width - graphPanel_.getWidth()) >> 1;
+        int ypos = (graphPanel_.getSize().height - graphPanel_.getHeight()) >> 1;
+        g2.drawImage( getOfflineGraphics().getOfflineImage(), xpos, ypos, graphPanel_ );
     }
 
     /**
@@ -197,24 +104,13 @@ public class GraphRenderer extends JPanel implements Runnable
      */
     public void setPoint(float pos, float phi)
     {
-        setCenter( state_.params );
-        state_.params.setX((float)(center_[0] + pos * Math.cos( phi )));
-        state_.params.setY((float)(center_[1] - pos * Math.sin( phi )));
-    }
-
-    public void setCenter(Parameters params)
-    {
-        float r1 = params.getR1();
-        float r2 = params.getR2();
-        float sign = params.getSign();
-        float theta = params.getTheta();
-        center_[0] = (float)((this.getWidth() >> 1) + (r1 + r2 * sign) * Math.cos( theta ));
-        center_[1] = (float)((this.getHeight() >> 1) - (r1 + r2 * sign) * Math.sin( theta ));
+        Point2D center = state_.params.getCenter(graphPanel_.getWidth(), graphPanel_.getHeight());
+        state_.params.setX((float)(center.getX() + pos * Math.cos( phi )));
+        state_.params.setY((float)(center.getY() - pos * Math.sin( phi )));
     }
 
     public void clear()
     {
         getOfflineGraphics().clear();
-        this.repaint();
     }
 }

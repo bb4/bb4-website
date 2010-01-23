@@ -21,6 +21,7 @@ public class OfflineGraphics  {
     /**
      * Constructor
      * @param dim dimensions of offline image to render in.
+     * @param backgroundColor background color for the image.
      */
     public OfflineGraphics(Dimension dim, Color backgroundColor) {
 
@@ -32,22 +33,22 @@ public class OfflineGraphics  {
     }
 
     public void setColor(Color c) {
-        if (offlineGraphics_!=null)
+        if (offlineGraphics_ != null)
             offlineGraphics_.setColor(c);
     }
 
     public void setStroke(Stroke s) {
-        if (offlineGraphics_!=null)
+        if (offlineGraphics_ != null)
             offlineGraphics_.setStroke(s);
     }
 
     public void drawLine(int x1, int y1, int x2, int y2) {
-        if (offlineGraphics_!=null)
+        if (offlineGraphics_ != null)
             offlineGraphics_.drawLine(x1, y1, x2, y2);
     }
 
     public void fillRect(int x, int y, int width , int height) {
-        if (offlineGraphics_!=null)
+        if (offlineGraphics_ != null)
             offlineGraphics_.fillRect(x, y, width, height);
     }
 
@@ -70,18 +71,19 @@ public class OfflineGraphics  {
      * @return the offline graphics created with lazily initialization.
      */
     private Graphics2D createOfflineGraphics() {
-        if (offlineGraphics_ == null && getOfflineImage() != null)  {
-            offlineGraphics_ = getOfflineImage().createGraphics();
-            if (offlineGraphics_ != null)  {
-                offlineGraphics_.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
+        Graphics2D offlineGraphics = null;
+        if (getOfflineImage() != null)  {
+            offlineGraphics = getOfflineImage().createGraphics();
+            if (offlineGraphics != null)  {
+                offlineGraphics.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
                         RenderingHints.VALUE_ANTIALIAS_ON );
-                offlineGraphics_.setRenderingHint( RenderingHints.KEY_RENDERING,
+                offlineGraphics.setRenderingHint( RenderingHints.KEY_RENDERING,
                         RenderingHints.VALUE_RENDER_QUALITY );
-                offlineGraphics_.setRenderingHint( RenderingHints.KEY_COLOR_RENDERING,
+                offlineGraphics.setRenderingHint( RenderingHints.KEY_COLOR_RENDERING,
                         RenderingHints.VALUE_COLOR_RENDER_QUALITY );
-                offlineGraphics_.setPaintMode();
+                offlineGraphics.setPaintMode();
             }
         }
-        return offlineGraphics_;
+        return offlineGraphics;
     }
 }

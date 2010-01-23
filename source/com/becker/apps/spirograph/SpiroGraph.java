@@ -15,25 +15,25 @@ import java.awt.*;
  */
 public class SpiroGraph extends ApplicationApplet
 {
-
     @Override
     public JPanel createMainPanel()
     {
         GraphState state = ControlSliderGroup.createGraphState();
 
-        GraphRenderer graphRenderer = new GraphRenderer(state);
-        ControlPanel cp = new ControlPanel(graphRenderer, state);
+        GraphPanel graphPanel = new GraphPanel(state);
+        ControlPanel cp = new ControlPanel(graphPanel, state);
 
         JPanel mainPanel = new JPanel( new BorderLayout() );
 
-        mainPanel.add( BorderLayout.CENTER, graphRenderer);
+        mainPanel.add( BorderLayout.CENTER, graphPanel);
         mainPanel.add( BorderLayout.EAST, cp );
 
         return mainPanel;
     }
 
-
-    //------ Main method - to allow running as an application --------
+    /**
+     *  Main method - to allow running as an application instead of applet.
+     */
     public static void main( String[] args )
     {
         SpiroGraph applet = new SpiroGraph();

@@ -1,5 +1,7 @@
 package com.becker.apps.spirograph;
 
+import java.awt.geom.Point2D;
+
 /**
  * Hold parameters that define the current spirograph state.
  *
@@ -95,6 +97,16 @@ public class Parameters {
         setTheta(0.0f);
         setPhi(0.0f);
     }
+
+    public Point2D getCenter(int width, int height) {
+        float r1 = getR1();
+        float r2 = getR2();
+        float sign = getSign();
+        float theta = getTheta();
+        return new Point2D.Double((width >> 1) + (r1 + r2 * sign) * Math.cos( theta ),
+                                  (height >> 1) - (r1 + r2 * sign) * Math.sin( theta ));
+    }
+
     /**
      * set our values from another parameters instance.
      */
