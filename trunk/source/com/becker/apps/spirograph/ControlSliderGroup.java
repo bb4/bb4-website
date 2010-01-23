@@ -36,14 +36,14 @@ public class ControlSliderGroup extends SliderGroup
     };
 
     private GraphState state_;
-    protected GraphRenderer graphRenderer_;
+    protected GraphPanel graphPanel_;
 
     /**
      * Constructor.
      */
-    public ControlSliderGroup(GraphRenderer graphRenderer, GraphState state) {
+    public ControlSliderGroup(GraphPanel graphPanel, GraphState state) {
         super(SLIDER_PROPS);
-        graphRenderer_ = graphRenderer;
+        graphPanel_ = graphPanel;
         state_ = state;
         addSliderChangeListener(this);
     }
@@ -96,11 +96,11 @@ public class ControlSliderGroup extends SliderGroup
 
     private void autoUpdate()
     {
-        graphRenderer_.repaint();
+        graphPanel_.repaint();
         if ( state_.isMaxVelocity())  {
-            graphRenderer_.clear();
-            graphRenderer_.reset();
-            graphRenderer_.start();
+            graphPanel_.clear();
+            graphPanel_.reset();
+            graphPanel_.start();
         }
     }
 

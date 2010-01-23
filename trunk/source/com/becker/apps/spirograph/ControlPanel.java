@@ -27,7 +27,7 @@ public class ControlPanel extends JPanel
 
     private ControlSliderGroup sliderGroup_;
     private GraphState state_;
-    protected GraphRenderer graphRenderer_;
+    protected GraphPanel graphPanel_;
 
     private JLabel xFunction_, yFunction_;
     private GradientButton hide_;
@@ -36,14 +36,14 @@ public class ControlPanel extends JPanel
     /**
      * Constructor
      */
-    public ControlPanel(GraphRenderer graphRenderer, GraphState state) {
-        graphRenderer_ = graphRenderer;
+    public ControlPanel(GraphPanel graphPanel, GraphState state) {
+        graphPanel_ = graphPanel;
         state_ = state;
         state_.addStateListener(this);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        sliderGroup_ = new ControlSliderGroup(graphRenderer, state);
+        sliderGroup_ = new ControlSliderGroup(graphPanel, state);
 
         add(sliderGroup_);
         add(createButtonGroup());
@@ -112,35 +112,34 @@ public class ControlPanel extends JPanel
         if ( sliderGroup_.getRadius2Value() != 0 ) {
             if ( DRAW_LABEL.equals(obj) ) {
                 draw_.setText( PAUSE_LABEL );
-                graphRenderer_.start();
+                graphPanel_.start();
             }
             else if ( PAUSE_LABEL.equals(obj) ) {
-                graphRenderer_.setPaused( true );
+                graphPanel_.setPaused( true );
                 draw_.setText( RESUME_LABEL );
             }
             else if ( RESUME_LABEL.equals(obj) ) {
-                graphRenderer_.setPaused( false );
+                graphPanel_.setPaused( false );
                 draw_.setText( PAUSE_LABEL );   // WAS DRAW
             }
         }
 
         if ( RESET_LABEL.equals(obj) ) {
-            graphRenderer_.reset();
+            graphPanel_.reset();
             draw_.setText( DRAW_LABEL );
         }
         else if ( HIDE_DECORATION_LABEL.equals(obj) ) {
             state_.setShowDecoration(false);
             hide_.setText(SHOW_DECORATIONLABEL);
-            graphRenderer_.repaint();
+            graphPanel_.repaint();
         }
         else if ( SHOW_DECORATIONLABEL.equals(obj) ) {
             hide_.setText(HIDE_DECORATION_LABEL);
             state_.setShowDecoration(true);
-            graphRenderer_.repaint();
+            graphPanel_.repaint();
         }
         else if ( CLEAR_LABEL.equals(obj) ) {
-            graphRenderer_.clear();
-            graphRenderer_.repaint();
+            graphPanel_.clear();
         }
     }
 
