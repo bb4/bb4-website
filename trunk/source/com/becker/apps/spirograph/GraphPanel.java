@@ -38,7 +38,7 @@ public class GraphPanel extends JPanel implements Runnable
         state_.initialize(getWidth(), getHeight());
 
         thread_ = new Thread(this);
-        decorRenderer_ = new DecorationRenderer(state_);
+        decorRenderer_ = new DecorationRenderer(state_.params);
         graphRenderer_ = new GraphRenderer(state_, this);
         this.addComponentListener( new ComponentAdapter()  {
             @Override
@@ -91,7 +91,7 @@ public class GraphPanel extends JPanel implements Runnable
     public void run()
     {
         try {
-            graphRenderer_ = new GraphRenderer(state_, this);
+            //graphRenderer_ = new GraphRenderer(state_, this);
             graphRenderer_.startDrawingGraph();
         } catch (InterruptedException e) {
             System.out.println("Drawing interrupted.");
