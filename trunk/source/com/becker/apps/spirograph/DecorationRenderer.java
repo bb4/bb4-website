@@ -11,7 +11,8 @@ import java.awt.geom.Point2D;
 public class DecorationRenderer
 {
     private static final Color AXES_COLOR = new Color(120, 120, 200);
-    private static final Color CIRCLE_COLOR = new Color(220, 0, 20);
+    private static final Color CIRCLE_COLOR = new Color(220, 0, 0);
+    private static final Color CIRCLE2_FILL_COLOR = new Color(200, 0, 0, 40);
     private static final Stroke AXES_STROKE = new BasicStroke( 1 );
     private static final Stroke CIRCLE_STROKE = new BasicStroke( 2 );
     private static final Stroke SPOKE_STROKE = new BasicStroke( 3 );
@@ -73,12 +74,16 @@ public class DecorationRenderer
         Point2D center = params.getCenter(width, height);
         int sign = params.getSign();
         float r2 = params.getR2();
-        g.drawOval( (int) (center.getX() - sign * r2), (int) (center.getY() - sign * r2),
+        g.drawOval( (int) (center.getX() - sign *  r2), (int) (center.getY() - sign *  r2),
+                    (int)(2 * sign * r2),  (int)(2 * sign * r2) );
+        g.setColor(CIRCLE2_FILL_COLOR);
+        g.fillOval( (int) (center.getX() - sign * r2), (int) (center.getY() - sign * r2),
                     (int)(2 * sign * r2),  (int)(2 * sign * r2) );
     }
 
     private void drawLineAndDot(Graphics2D g)
     {
+        g.setColor( CIRCLE_COLOR );
         Point2D center = params.getCenter(width, height);
         int side = params.getSign();
         float pos = params.getPos();

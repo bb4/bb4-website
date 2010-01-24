@@ -19,7 +19,6 @@ public class ControlPanel extends JPanel
 {
     public static final String HIDE_DECORATION_LABEL = "Hide Decoration";
     private static final String SHOW_DECORATIONLABEL = "Show Decoration";
-    private static final String CLEAR_LABEL = "Clear Graph";
     private static final String RESET_LABEL = "Reset";
     public static final String DRAW_LABEL = "Draw Graph";
     private static final String PAUSE_LABEL = "Pause";
@@ -72,14 +71,12 @@ public class ControlPanel extends JPanel
         p.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5),
                                                        BorderFactory.createEtchedBorder(EtchedBorder.RAISED)));
         hide_ = createButton(HIDE_DECORATION_LABEL);
-        GradientButton clear = createButton(CLEAR_LABEL);
         GradientButton reset = createButton(RESET_LABEL);
         draw_ = createButton( DRAW_LABEL );
 
         JPanel bl= new JPanel(new BorderLayout());
         bl.add(hide_, BorderLayout.CENTER);
         p.add( createButtonPanel(hide_) );
-        p.add( createButtonPanel(clear) );
         p.add( createButtonPanel(reset) );
         p.add( createButtonPanel(draw_) );
 
@@ -112,7 +109,7 @@ public class ControlPanel extends JPanel
         if ( sliderGroup_.getRadius2Value() != 0 ) {
             if ( DRAW_LABEL.equals(obj) ) {
                 draw_.setText( PAUSE_LABEL );
-                graphPanel_.start();
+                graphPanel_.startDrawingGraph();
             }
             else if ( PAUSE_LABEL.equals(obj) ) {
                 graphPanel_.setPaused( true );
@@ -129,17 +126,14 @@ public class ControlPanel extends JPanel
             draw_.setText( DRAW_LABEL );
         }
         else if ( HIDE_DECORATION_LABEL.equals(obj) ) {
-            state_.setShowDecoration(false);
             hide_.setText(SHOW_DECORATIONLABEL);
+            state_.setShowDecoration(false);
             graphPanel_.repaint();
         }
         else if ( SHOW_DECORATIONLABEL.equals(obj) ) {
             hide_.setText(HIDE_DECORATION_LABEL);
             state_.setShowDecoration(true);
             graphPanel_.repaint();
-        }
-        else if ( CLEAR_LABEL.equals(obj) ) {
-            graphPanel_.clear();
         }
     }
 

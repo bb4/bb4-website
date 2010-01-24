@@ -62,7 +62,6 @@ public class ControlSliderGroup extends SliderGroup
         // I know that all the sliders are integer based.
         int value = (int)sliderValue;
 
-        // System.out.println(sliderName+ ' ' + value);
         if ( src == ControlSliderGroup.RADIUS1) {
             int n = getSliderValueAsInt(ControlSliderGroup.RADIUS2);
             if ( n < 2 - value ) {
@@ -76,7 +75,6 @@ public class ControlSliderGroup extends SliderGroup
         }
         else if ( src == ControlSliderGroup.RADIUS2) {
             state_.setR2(value);
-            state_.params.setSign( value < 0 ? -1 : 1);
             autoUpdate();
         }
         else if ( src == ControlSliderGroup.POSITION) {
@@ -98,9 +96,9 @@ public class ControlSliderGroup extends SliderGroup
     {
         graphPanel_.repaint();
         if ( state_.isMaxVelocity())  {
-            graphPanel_.clear();
+            //graphPanel_.clear();
             graphPanel_.reset();
-            graphPanel_.start();
+            graphPanel_.drawCompleteGraph(); 
         }
     }
 

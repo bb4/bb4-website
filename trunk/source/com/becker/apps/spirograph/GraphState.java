@@ -134,7 +134,6 @@ public class GraphState implements ColorChangeListener {
     }
 
     /**
-     *
      * @return the number of complete revolutions needed until the curve will overwrite itself.
      */
     public int getNumRevolutions() {
@@ -148,7 +147,6 @@ public class GraphState implements ColorChangeListener {
      */
     public void reset() {
         params.resetAngle();
-        oldParams.resetAngle();
     }
     /**
      * set the old values from the current.

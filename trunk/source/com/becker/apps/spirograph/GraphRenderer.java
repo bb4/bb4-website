@@ -13,7 +13,8 @@ public class GraphRenderer
     private OfflineGraphics offlineGraphics_;
     private GraphState state_;
     private GraphPanel graphPanel_;
-
+    private boolean aborted_ = false;
+    
     /**
      * Constructor
      */
@@ -23,6 +24,9 @@ public class GraphRenderer
         graphPanel_ = graphPanel;
     }
 
+    /**
+     * @return the offline graphics instance. Creates the it if needed before returning.
+     */
     private OfflineGraphics getOfflineGraphics() {
         if (offlineGraphics_ == null) {
             offlineGraphics_ = new OfflineGraphics(graphPanel_.getSize(), graphPanel_.getBackground());
@@ -30,8 +34,7 @@ public class GraphRenderer
         return offlineGraphics_;
     }
 
-    public void startDrawingGraph() throws InterruptedException
-    {
+    public void startDrawingGraph() {
         int count = 0;
         state_.initialize(graphPanel_.getWidth(), graphPanel_.getHeight());
         state_.setRendering(true);
@@ -46,10 +49,9 @@ public class GraphRenderer
 
         float n = 1.0f + state_.getNumSegmentsPerRev() * (Math.abs( p / r2 ));
 
-        while ( count++ < (int) (n * revs + 0.5)) {
+        while ( count++ < (int) (n * revs + 0.5) && !aborted_) {
             drawSegment(count, revs, n);
         }
-
         graphPanel_.repaint();
         state_.setRendering(false);
     }
@@ -57,7 +59,7 @@ public class GraphRenderer
     /**
      * Draw a small line segment that makes up the larger sprial curve.
      */
-    private void drawSegment(int count, int revs, float n) throws InterruptedException {
+    private void drawSegment(int count, int revs, float n) {
         float r1;
         float r2;
         float p;
@@ -88,8 +90,12 @@ public class GraphRenderer
         state_.recordValues();
     }
 
-    private void doSmallDelay() throws InterruptedException {
-        Thread.sleep(state_.getDelayMillis());
+    private void doSmallDelay() {
+        try {
+            Thread.sleep(state_.getDelayMillis());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public void renderCurrentGraph( Graphics2D g2 )
@@ -107,6 +113,13 @@ public class GraphRenderer
         Point2D center = state_.params.getCenter(graphPanel_.getWidth(), graphPanel_.getHeight());
         state_.params.setX((float)(center.getX() + pos * Math.cos( phi )));
         state_.params.setY((float)(center.getY() - pos * Math.sin( phi )));
+    }
+
+    /**
+     * Stop the rendering as quickly as possible
+     */
+    public void abort() {
+        aborted_ = true;
     }
 
     public void clear()
