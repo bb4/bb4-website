@@ -17,16 +17,16 @@ import java.awt.event.ActionListener;
 public class ControlPanel extends JPanel
                           implements ActionListener, GraphStateChangeListener
 {
-    public static final String HIDE_DECORATION_LABEL = "Hide Decoration";
+    private static final String HIDE_DECORATION_LABEL = "Hide Decoration";
     private static final String SHOW_DECORATIONLABEL = "Show Decoration";
     private static final String RESET_LABEL = "Reset";
-    public static final String DRAW_LABEL = "Draw Graph";
+    private static final String DRAW_LABEL = "Draw Graph";
     private static final String PAUSE_LABEL = "Pause";
     private static final String RESUME_LABEL = "Resume Drawing";
 
     private ControlSliderGroup sliderGroup_;
     private GraphState state_;
-    protected GraphPanel graphPanel_;
+    private GraphPanel graphPanel_;
 
     private JLabel xFunction_, yFunction_;
     private GradientButton hide_;

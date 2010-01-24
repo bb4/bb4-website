@@ -16,14 +16,14 @@ import java.awt.event.ComponentEvent;
 public class GraphPanel extends JPanel implements Runnable
 {
     private static final Color BACKGROUND_COLOR = Color.WHITE;
-    private Thread thread_ = null;
+    private Thread thread_;
     private GraphRenderer graphRenderer_;
     private DecorationRenderer decorRenderer_;
     
     // synchronization monitor.
     private final Object pauseLock_ = new Object();
     private volatile boolean paused_ = false;
-    private GraphState state_;
+    private volatile GraphState state_;
 
 
     /**
@@ -46,10 +46,10 @@ public class GraphPanel extends JPanel implements Runnable
             }
         } );
     }
-
+    /*
     public void pause(){
         paused_ = true;
-    }
+    }*/
 
     public void setPaused( boolean newPauseState )
     {
@@ -66,11 +66,13 @@ public class GraphPanel extends JPanel implements Runnable
         thread_ = new Thread(this);
         state_.reset();
         graphRenderer_ = new GraphRenderer(state_, this);
+        paused_ = true;
         this.repaint();
-        paused_ = true;   
     }
 
     public synchronized void drawCompleteGraph() {
+        clear();
+        state_.reset();
         startDrawingGraph();
         waitUntilDoneRendering();
         this.repaint();
@@ -111,21 +113,18 @@ public class GraphPanel extends JPanel implements Runnable
 
     /**
      * Does nothing it not paused.
-     * If paused, it will discontinue processing on this thread until pause:ock is released.
-     * @return true if interrupted while waiting.
+     * If paused, it will discontinue processing on this thread until pauseLock is released.
      */
-    public boolean waitIfPaused()
+    public void waitIfPaused()
     {
-        if ( !paused_ ) return false;
-
         try {
             synchronized (pauseLock_) {
-                while ( paused_ ) pauseLock_.wait(100);
+                while ( paused_ )
+                    pauseLock_.wait(100);
             }
         } catch (InterruptedException e) {
-            return true;
+            e.printStackTrace();
         }
-        return false;
     }
 
     public void clear()
