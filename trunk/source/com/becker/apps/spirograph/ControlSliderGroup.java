@@ -94,11 +94,12 @@ public class ControlSliderGroup extends SliderGroup
 
     private void autoUpdate()
     {
-        graphPanel_.repaint();
         if ( state_.isMaxVelocity())  {
-            //graphPanel_.clear();
             graphPanel_.reset();
             graphPanel_.drawCompleteGraph(); 
+        }
+        else {
+            graphPanel_.repaint();
         }
     }
 

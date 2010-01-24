@@ -15,7 +15,6 @@ public class Parameters {
     public Parameters() {}
 
     public void initialize(int width, int height) {
-        //setSign(getR2() < 0 ? -1:1);
         resetAngle();
         setX((width >> 1) + r1_ + (r2_ + sign_) + pos_);
         setY(height >> 1);
@@ -102,10 +101,9 @@ public class Parameters {
     public Point2D getCenter(int width, int height) {
         float r1 = getR1();
         float r2 = getR2();
-        float sign = getSign();
         float theta = getTheta();
-        return new Point2D.Double((width >> 1) + (r1 + r2 /* * sign */) * Math.cos( theta ),
-                                  (height >> 1) - (r1 + r2 /* *sign */) * Math.sin( theta ));
+        return new Point2D.Double((width >> 1) + (r1 + r2) * Math.cos( theta ),
+                                  (height >> 1) - (r1 + r2) * Math.sin( theta ));
     }
 
     /**
