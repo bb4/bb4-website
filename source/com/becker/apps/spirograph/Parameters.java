@@ -10,12 +10,12 @@ import java.awt.geom.Point2D;
 public class Parameters {
 
     private float r1_, r2_, pos_, theta_, phi_, x_, y_;
-    private int sign_;
+    private int sign_ = 1;
 
     public Parameters() {}
 
     public void initialize(int width, int height) {
-        setSign(getR2() < 0 ? -1:1);
+        //setSign(getR2() < 0 ? -1:1);
         resetAngle();
         setX((width >> 1) + r1_ + (r2_ + sign_) + pos_);
         setY(height >> 1);
@@ -37,6 +37,7 @@ public class Parameters {
 
     public void setR2(float r2) {
         r2_ = r2;
+        setSign( r2 < 0 ? -1 : 1);
     }
 
     /** @return offset position from main circle */
@@ -70,7 +71,7 @@ public class Parameters {
         return sign_;
     }
 
-    public void setSign(int sign)  {
+    private void setSign(int sign)  {
         sign_ = sign;
     }
 
@@ -103,8 +104,8 @@ public class Parameters {
         float r2 = getR2();
         float sign = getSign();
         float theta = getTheta();
-        return new Point2D.Double((width >> 1) + (r1 + r2 * sign) * Math.cos( theta ),
-                                  (height >> 1) - (r1 + r2 * sign) * Math.sin( theta ));
+        return new Point2D.Double((width >> 1) + (r1 + r2 /* * sign */) * Math.cos( theta ),
+                                  (height >> 1) - (r1 + r2 /* *sign */) * Math.sin( theta ));
     }
 
     /**
