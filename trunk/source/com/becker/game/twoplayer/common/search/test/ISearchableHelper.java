@@ -21,9 +21,9 @@ public interface ISearchableHelper {
     TwoPlayerController createController();
 
     /**
-     * @return test file containing state of saved game to restore.
+     * @return test file containing state of saved default game to restore.
      */
-    String getTestFile();
+    String getDefaultTestFile();
 
     /**
      * @return test file containing state of saved game to restore.

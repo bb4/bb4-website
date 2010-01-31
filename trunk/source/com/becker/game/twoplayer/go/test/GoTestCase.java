@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.go.test;
 
+import com.becker.game.twoplayer.common.search.SearchOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
 import com.becker.game.twoplayer.go.board.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.GoGroup;
@@ -49,19 +50,19 @@ public class GoTestCase extends TestCase {
         controller_ = new GoController(getBoardSize(), getBoardSize(), 0);
 
         TwoPlayerOptions options = controller_.getTwoPlayerOptions();
-        setOptionOverrides(options);
+        setOptionOverrides(options.getSearchOptions());
     }
 
     /**
      * Derived classes should override if they want different options.
-     * @param options default options to override
+     * @param sOptions default options to override
      */
-    protected void setOptionOverrides(TwoPlayerOptions options) {
-        options.setAlphaBeta(true);
-        options.setLookAhead(2);
-        options.setPercentageBestMoves(40);
-        //options.setQuiescence(true); // takes too long if on
-        options.setSearchStrategyMethod(SearchStrategyType.MINIMAX);
+    protected void setOptionOverrides(SearchOptions sOptions) {
+        sOptions.setAlphaBeta(true);
+        sOptions.setLookAhead(2);
+        sOptions.setPercentageBestMoves(40);
+        //sOptions.setQuiescence(true); // takes too long if on
+        sOptions.setSearchStrategyMethod(SearchStrategyType.MINIMAX);
     }
 
     /**

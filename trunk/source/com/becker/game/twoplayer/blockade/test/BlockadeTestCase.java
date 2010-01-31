@@ -1,6 +1,7 @@
 package com.becker.game.twoplayer.blockade.test;
 
 import com.becker.common.util.FileUtil;
+import com.becker.game.twoplayer.common.search.SearchOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.blockade.BlockadeController;
@@ -37,11 +38,12 @@ public class BlockadeTestCase extends TestCase {
         controller_ = new BlockadeController();
 
         TwoPlayerOptions options = controller_.getTwoPlayerOptions();
-        options.setAlphaBeta(true);
-        options.setLookAhead(3);
-        options.setPercentageBestMoves(100);
-        //options.setQuiescence(true); // take stoo long if on
-        options.setSearchStrategyMethod(SearchStrategyType.MINIMAX);
+        SearchOptions sOptions = options.getSearchOptions();
+        sOptions.setAlphaBeta(true);
+        sOptions.setLookAhead(3);
+        sOptions.setPercentageBestMoves(100);
+        //sOptions.setQuiescence(true); // takes too long if on
+        sOptions.setSearchStrategyMethod(SearchStrategyType.MINIMAX);
 
     }
 

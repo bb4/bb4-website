@@ -72,7 +72,7 @@ public class BlockadeSearchableTest extends TwoPlayerSearchableBaseTst {
     /**  Load a game in the middle and verify that we can get the expected high value next moves. */
     @Override
     public void testGenerateTopP1MovesMidGame() {
-        getTwoPlayerOptions().setPercentageBestMoves(20);
+        getSearchOptions().setPercentageBestMoves(20);
         checkGeneratedMoves("middleGameP1Turn", EXPECTED_TOP_MIDDLE_GAME_MOVES_P1);
     }
 
@@ -88,7 +88,7 @@ public class BlockadeSearchableTest extends TwoPlayerSearchableBaseTst {
     /** Load a game at the end and verify that we can get all the high value next moves. */
     @Override
     public void testGenerateTopP1MovesEndGame() {
-        getTwoPlayerOptions().setPercentageBestMoves(20);
+        getSearchOptions().setPercentageBestMoves(20);
         checkGeneratedMoves("endGameP1Turn", EXPECTED_TOP_END_GAME_MOVES_P1);
     }
 
@@ -102,7 +102,7 @@ public class BlockadeSearchableTest extends TwoPlayerSearchableBaseTst {
     /**  Load a game in the middle and verify that we can get the expected high value next moves. */
     @Override
     public void testGenerateTopP2MovesMidGame() {
-        getTwoPlayerOptions().setPercentageBestMoves(20);
+        getSearchOptions().setPercentageBestMoves(20);
         checkGeneratedMoves("middleGameP2Turn", EXPECTED_TOP_MIDDLE_GAME_MOVES_P2);
     }
 
@@ -118,7 +118,7 @@ public class BlockadeSearchableTest extends TwoPlayerSearchableBaseTst {
      /** Load a game at the end and verify that we can get all the high value next moves. */
      @Override
      public void testGenerateTopP2MovesEndGame() {
-        getTwoPlayerOptions().setPercentageBestMoves(20);
+        getSearchOptions().setPercentageBestMoves(20);
         checkGeneratedMoves("endGameP2Turn", EXPECTED_TOP_END_GAME_MOVES_P2);
     }
 

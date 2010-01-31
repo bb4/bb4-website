@@ -14,12 +14,10 @@ import java.util.List;
  *  This strategy class defines the NegaMax search algorithm.
  *  Negamax is very much like minimax, but it avoids having separate
  *  sections of code for minimizing and maximizing search.
- *
  *  @author Barry Becker
  */
 public class NegaMaxStrategy extends AbstractSearchStrategy
 {
-
     /**
      * Construct NegaMax the strategy given a controller interface.
      * @inheritDoc
@@ -167,7 +165,7 @@ public class NegaMaxStrategy extends AbstractSearchStrategy
             bestMove = lastMove;   // avoid returning null
         } else {
             bestMove.setSelected(true);
-            lastMove.setInheritedValue(bestMove.getInheritedValue()); /// negate?
+            lastMove.setInheritedValue(bestMove.getInheritedValue()); // negate?
         }
         return bestMove;
     }

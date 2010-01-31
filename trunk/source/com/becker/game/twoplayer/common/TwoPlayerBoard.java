@@ -1,7 +1,6 @@
 package com.becker.game.twoplayer.common;
 
 import com.becker.game.common.*;
-
 import java.util.*;
 
 
@@ -83,7 +82,7 @@ public abstract class TwoPlayerBoard extends Board
               BoardPosition pos = this.getPosition(i,j);
               if (pos.isOccupied()) {
                   if (pos.getLocation().equals(m.getToLocation()))
-                      bldr.append("["+pos.getPiece()+"]");
+                      bldr.append("[").append(pos.getPiece()).append("]");
                   else
                       bldr.append(pos.getPiece());
               }

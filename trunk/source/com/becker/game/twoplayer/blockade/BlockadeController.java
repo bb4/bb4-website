@@ -140,8 +140,8 @@ public class BlockadeController extends TwoPlayerController
       * @return true if player has reached an opponent home. (for player1 or player2 depending on boolean player1 value)
       */
     protected static boolean checkForWin(boolean player1, BoardPosition[] homes) {
-        for (int i=0; i< homes.length; i++) {
-            GamePiece p = homes[i].getPiece();
+        for (BoardPosition home : homes) {
+            GamePiece p = home.getPiece();
             if (p != null && p.isOwnedByPlayer1() == player1)
                 return true;
         }
@@ -149,7 +149,7 @@ public class BlockadeController extends TwoPlayerController
     }
 
     /**
-     * @param position
+     * @param position location
      * @return a possible list of moves based on position passed in.
      */
     public List<BlockadeMove> getPossibleMoveList(BoardPosition position)
@@ -180,7 +180,7 @@ public class BlockadeController extends TwoPlayerController
             MoveGenerator generator = new MoveGenerator(weights, (BlockadeBoard)board_);
             List<BlockadeMove> moveList  = generator.generateMoves(lastMove);
 
-            boolean player1 = (lastMove != null)?  !lastMove.isPlayer1() : true;
+            boolean player1 = (lastMove == null) || !lastMove.isPlayer1();
             List<? extends TwoPlayerMove> bestMoves = 
                     getBestMoves( player1, moveList, player1sPerspective );
 
@@ -192,7 +192,7 @@ public class BlockadeController extends TwoPlayerController
          * given a move, determine whether the game is over.
          * If recordWin is true, then the variables for player1/2HasWon can get set.
          * Sometimes, like when we are looking ahead we do not want to set these.
-         * @param m the move to check. If null then return true.
+         * @param lastMove the move to check. If null then return true.
          * @param recordWin if true then the controller state will record wins
          */
         @Override
@@ -218,9 +218,6 @@ public class BlockadeController extends TwoPlayerController
          * @@ quiescent search not yet implemented for Blockade
          * Probably we could return moves that result in a drastic change in value.
          *
-         * @param lastMove
-         * @param weights
-         * @param player1sPerspective
          * @return list of urgent moves
          */
         public List<BlockadeMove> generateUrgentMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )

@@ -1,6 +1,7 @@
 package com.becker.game.twoplayer.pente;
 
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
+import com.becker.game.twoplayer.common.search.SearchOptions;
 import com.becker.sound.MusicMaker;
 
 /**
@@ -24,22 +25,8 @@ public class PenteOptions extends TwoPlayerOptions {
     }
 
     @Override
-    protected int getDefaultLookAhead() {
-        return DEFAULT_LOOK_AHEAD;
-    }
-    @Override
-    protected int getDefaultPercentageBestMoves() {
-        return DEFAULT_PERCENTAGE_BEST_MOVES;
-    }
-    
-    @Override
-    protected int getDefaultMinBestMoves() {
-        return DEFAULT_MIN_BEST_MOVES;
-    }
-
-    
-    @Override
-    public int getMaxQuiescentDepth() {
-        return this.getLookAhead() + 2;
+    protected SearchOptions createDefaultSearchOptions() {
+        return new SearchOptions(DEFAULT_LOOK_AHEAD, DEFAULT_PERCENTAGE_BEST_MOVES,
+                                 DEFAULT_MIN_BEST_MOVES, DEFAULT_LOOK_AHEAD + 2);
     }
 }

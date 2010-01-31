@@ -26,10 +26,8 @@ public abstract class TwoPlayerMoveToken extends PlacementToken {
    protected boolean parseContent( StreamTokenizer st )  throws IOException
    {
        boolean parsed = parsePoint( st, toPoint );
-       if( st.nextToken() !=  StreamTokenizer.TT_WORD)
-           return false;
+       return st.nextToken() == StreamTokenizer.TT_WORD && parsed;
 
-       return parsed;
    }
 
   /**
@@ -45,9 +43,8 @@ public abstract class TwoPlayerMoveToken extends PlacementToken {
    * The letters are from 'a' through 'Z', inclusive, to represent row
    * (or column) 1 through 52, respectfully.
    * <P>
-   * Returns:
-   *   true - The point was perfectly parsed.
-   *   false - The point wasn't perfectly parsed.
+   * @return true - The point was perfectly parsed.
+   *         false - The point wasn't perfectly parsed.
    */
     protected boolean parsePoint( StreamTokenizer st, Point pt )  throws IOException
     {
@@ -61,8 +58,8 @@ public abstract class TwoPlayerMoveToken extends PlacementToken {
   
 
   /**
-   * Given a token whose value ranges between 'a' through 'z', or 'A'
-   * through 'Z', this method returns the appropriate row/column value.  If
+   * @praram a token whose value ranges between 'a' through 'z', or 'A'  through 'Z',
+   * @return the appropriate row/column value.  If
    * the token isn't between 'a' and 'z', or 'A' and 'Z', this returns 0;
    */
   protected static int coordFromChar( int ch )
@@ -77,20 +74,12 @@ public abstract class TwoPlayerMoveToken extends PlacementToken {
   }
 
    /**
-    * Only subclasses (and classes in this package) may get at this class's
-    * Point variable.  Everybody else must use get*X() and get*Y().
-    */
-   protected Point getToPoint() { return toPoint; }
-
-   /**
-    * Returns:
-    *   The X coordinate of the placement.
+    * @return  The X coordinate of the placement.
     */
     public int getToX() { return toPoint.x; }
 
     /**
-     * Returns:
-     *   The Y coordinate of the placement.
+     * @return  The Y coordinate of the placement.
      */
     public int getToY() { return toPoint.y; }
 

@@ -1,10 +1,10 @@
 package com.becker.game.twoplayer.common.search.test;
 
-import com.becker.common.util.FileUtil;
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
+import com.becker.game.twoplayer.common.search.SearchOptions;
 import junit.framework.*;
 import com.becker.game.twoplayer.common.search.test.SearchableBaseTst;
 import com.becker.optimization.parameter.ParameterArray;
@@ -47,10 +47,11 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
 
     protected TwoPlayerOptions createDefaultOptions() {
         TwoPlayerOptions options = helper.createTwoPlayerGameOptions();
-        options.setLookAhead(DEFAULT_LOOKAHEAD);
-        options.setAlphaBeta(true);
-        options.setPercentageBestMoves(DEFAULT_BEST_PERCENTAGE);
-        options.setQuiescence(false);
+        SearchOptions sOptions = options.getSearchOptions();
+        sOptions.setLookAhead(DEFAULT_LOOKAHEAD);
+        sOptions.setAlphaBeta(true);
+        sOptions.setPercentageBestMoves(DEFAULT_BEST_PERCENTAGE);
+        sOptions.setQuiescence(false);
         return options;
     }
 
@@ -82,30 +83,34 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
         return  (TwoPlayerOptions)getController().getOptions();
     }
 
+    protected SearchOptions getSearchOptions() {
+        return getTwoPlayerOptions().getSearchOptions();
+    }
+
     /** verify that we can retrieve the lookahead value. */
     @Override
     public void testLookaheadValue() {
 
-        Assert.assertEquals("Unexpected lookahead value.", DEFAULT_LOOKAHEAD, searchable.getOptions().getLookAhead());
-        getTwoPlayerOptions().setLookAhead(7);
-        Assert.assertEquals("Unexpected lookahead value.", 7, searchable.getOptions().getLookAhead());
+        Assert.assertEquals("Unexpected lookahead value.", DEFAULT_LOOKAHEAD, searchable.getSearchOptions().getLookAhead());
+        getSearchOptions().setLookAhead(7);
+        Assert.assertEquals("Unexpected lookahead value.", 7, searchable.getSearchOptions().getLookAhead());
     }
 
     /** verify that we can retrieve the lookahead value. */
     @Override
     public void testAlphaBetaValue() {
 
-        Assert.assertEquals("Unexpected alphabeta value.", true, searchable.getOptions().getAlphaBeta());
-        getTwoPlayerOptions().setAlphaBeta(false);
-        Assert.assertEquals("Unexpected alphabeta value.", false, searchable.getOptions().getAlphaBeta());
+        Assert.assertEquals("Unexpected alphabeta value.", true, searchable.getSearchOptions().getAlphaBeta());
+        getSearchOptions().setAlphaBeta(false);
+        Assert.assertEquals("Unexpected alphabeta value.", false, searchable.getSearchOptions().getAlphaBeta());
     }
 
     /** verify that we can retrieve the quiescence value. */
     @Override
     public void testQuiescenceValue()  {
-        Assert.assertEquals("Unexpected quiessence value.", false, searchable.getOptions().getQuiescence());
-        getTwoPlayerOptions().setQuiescence(true);
-        Assert.assertEquals("Unexpected quiessence value.", true, searchable.getOptions().getQuiescence());
+        Assert.assertEquals("Unexpected quiessence value.", false, searchable.getSearchOptions().getQuiescence());
+        getSearchOptions().setQuiescence(true);
+        Assert.assertEquals("Unexpected quiessence value.", true, searchable.getSearchOptions().getQuiescence());
     }
 
 
@@ -213,8 +218,8 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
        Assert.assertFalse(false);
    }
 
-    /**  Verify that we generate a correct list of urgent moves.  */
-    public void  testGenerateUrgentMoves() {
+   /**  Verify that we generate a correct list of urgent moves.  */
+   public void  testGenerateUrgentMoves() {
         // there should not be any urgent moves at the very start of the game.
          List moves = searchable.generateUrgentMoves(null, getController().getComputerWeights().getPlayer1Weights(), true);
          Assert.assertTrue("We expected move list to be non-null.", moves!= null );

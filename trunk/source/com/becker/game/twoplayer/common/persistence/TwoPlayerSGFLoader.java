@@ -3,12 +3,7 @@ package com.becker.game.twoplayer.common.persistence;
 import ca.dj.jigo.sgf.*;
 import ca.dj.jigo.sgf.tokens.*;
 import com.becker.game.common.GameContext;
-import com.becker.game.twoplayer.common.persistence.tokens.Player1MoveToken;
-import com.becker.game.twoplayer.common.persistence.tokens.Player1NameToken;
-import com.becker.game.twoplayer.common.persistence.tokens.Player2MoveToken;
-import com.becker.game.twoplayer.common.persistence.tokens.Player2NameToken;
-import com.becker.game.twoplayer.common.persistence.tokens.Size2Token;
-import com.becker.game.twoplayer.common.persistence.tokens.TwoPlayerMoveToken;
+import com.becker.game.twoplayer.common.persistence.tokens.*;
 import java.io.IOException;
 import java.io.StreamTokenizer;
 

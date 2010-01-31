@@ -31,15 +31,18 @@ public class DiceSimulator extends DistributionSimulator {
         initHistogram();
     }
 
+    @Override
     protected void initHistogram() {
         data_ = new int[numDice_ * (numSides_-1) + 1];
         histogram_ = new HistogramRenderer(data_, numDice_);
     }
 
+    @Override
     protected SimulatorOptionsDialog createOptionsDialog() {
          return new DiceOptionsDialog( frame_, this );
     }
    
+    @Override
     protected int getXPositionToIncrement() {
         int total = 0;
         for (int i=0; i<numDice_; i++) {
@@ -48,6 +51,7 @@ public class DiceSimulator extends DistributionSimulator {
         return total;
     }
     
+    @Override
     protected String getFileNameBase()
     {
         return "dice";

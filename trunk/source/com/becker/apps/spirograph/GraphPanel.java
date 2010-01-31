@@ -46,10 +46,6 @@ public class GraphPanel extends JPanel implements Runnable
             }
         } );
     }
-    /*
-    public void pause(){
-        paused_ = true;
-    }*/
 
     public void setPaused( boolean newPauseState )
     {

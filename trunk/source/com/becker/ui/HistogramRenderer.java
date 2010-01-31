@@ -8,7 +8,7 @@ import java.awt.*;
  * This class renders a histogram.
  * The histogram is defined as an array of integers.
  * 
- * @author Barry Becker Date: Feb 4, 2007
+ * @author Barry Becker
  */
 public class HistogramRenderer {
     

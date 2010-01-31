@@ -5,6 +5,7 @@ import com.becker.common.util.Util;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.persistence.TwoPlayerGameExporter;
 import com.becker.game.twoplayer.common.persistence.TwoPlayerGameImporter;
+import com.becker.game.twoplayer.common.search.SearchOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
 import com.becker.game.twoplayer.common.search.Searchable;
@@ -193,7 +194,7 @@ public abstract class TwoPlayerController extends GameController
     
     /**
      *
-     * @param moveList
+     * @param moveList list of moves
      * @return a randome move from the list of genereated moves.
      */
     protected TwoPlayerMove getRandomMove(List moveList) {
@@ -207,7 +208,7 @@ public abstract class TwoPlayerController extends GameController
      * The chance of player2 winning = 1 - chance of p1 winning.
      * @return estimated chance of player one winning the game
      */
-    public final synchronized double getChanceOfPlayer1Winning()
+    public final double getChanceOfPlayer1Winning()
     {
         // if true then too early in the game to tell.
         TwoPlayerMove lastMove = (TwoPlayerMove) board_.getLastMove();
@@ -334,7 +335,7 @@ public abstract class TwoPlayerController extends GameController
      * @return the best move to use as the next move.
      */
     private TwoPlayerMove searchForNextMove(ParameterArray weights, TwoPlayerMove lastMove) {
-        strategy_ = getTwoPlayerOptions().getSearchStrategy(getSearchable(), weights);
+        strategy_ = getTwoPlayerOptions().getSearchOptions().getSearchStrategy(getSearchable(), weights);
 
         SearchTreeNode root = null;
         if (gameTreeListener_ != null) {
@@ -392,7 +393,7 @@ public abstract class TwoPlayerController extends GameController
      * for the computer to make. It returns immediately (unless the computer is playing itself).
      * Usually returns false, but will return true if it is a computer vs computer game, and the
      * game is over.
-     * @param isPlayer1
+     * @param isPlayer1 true if is player one to move.
      * @return true if the game is over.
      * @throws AssertionError thrown if something bad happened while searching.
      */
@@ -556,7 +557,8 @@ public abstract class TwoPlayerController extends GameController
         Collections.sort( moveList );
 
         // reverse the order so the best move (using static board evaluation) is first
-        SearchStrategyType searchType = ((TwoPlayerOptions) getOptions()).getSearchStrategyMethod();
+        SearchOptions searchOptions = ((TwoPlayerOptions) getOptions()).getSearchOptions();
+        SearchStrategyType searchType = searchOptions.getSearchStrategyMethod();
         if ( searchType.sortAscending(player1, player1sPerspective)) {
            Collections.reverse( moveList );
         }
@@ -566,10 +568,10 @@ public abstract class TwoPlayerController extends GameController
         int numMoves = moveList.size();
 
         List<? extends TwoPlayerMove> bestMoveList = moveList;
-        int best = (int) ((float) getTwoPlayerOptions().getPercentageBestMoves() / HUNDRED * numMoves) + 1;
-        if ( best < numMoves && numMoves > getTwoPlayerOptions().getMinBestMoves())
+        int best = (int) ((float) searchOptions.getPercentageBestMoves() / HUNDRED * numMoves) + 1;
+        if ( best < numMoves && numMoves > searchOptions.getMinBestMoves())  {
             bestMoveList = moveList.subList(0, best);
-
+        }
         return bestMoveList;
     }
 
@@ -577,6 +579,9 @@ public abstract class TwoPlayerController extends GameController
         return new TwoPlayerOptimizee();
     }
 
+    /**
+     * Two sets of gameweights that can be optimized by repetitive play.
+     */
     private class TwoPlayerOptimizee implements Optimizee {
 
         /**
@@ -612,7 +617,7 @@ public abstract class TwoPlayerController extends GameController
         public int getNumParameters() {
             return weights_.getDefaultWeights().size();
         }
-        
+
         /**
          * Compares to sets of game parameters.
          * It does this by playing the computer against itself. One computer player has the params1
@@ -640,7 +645,6 @@ public abstract class TwoPlayerController extends GameController
             return (run1 - run2);
         }
 
-
         /**
          *  @return if positive then computer1 won, else computer2 won.
          *   the magnitude of this returned value indicates how much it won by.
@@ -651,11 +655,11 @@ public abstract class TwoPlayerController extends GameController
             reset();
             computerMovesFirst();
 
-            if (viewer_ != null)  {
+            if (get2PlayerViewer() != null)  {
                 get2PlayerViewer().showComputerVsComputerGame();
             }
             else {
-                // running in a batch mode where the viewer is not available
+                // run in batch mode where the viewer is not available.
                 while ( !done ) {
                     done = getSearchable().done(findComputerMove( false ), true);
                     // if done the final move was played
@@ -677,10 +681,10 @@ public abstract class TwoPlayerController extends GameController
 
     public abstract class TwoPlayerSearchable implements Searchable {
 
-        public TwoPlayerOptions getOptions() {
-            return (TwoPlayerOptions) gameOptions_;
+        public SearchOptions getSearchOptions() {
+            return ((TwoPlayerOptions) gameOptions_).getSearchOptions();
         }
-        
+
         /**
          * @param m the move to play.
          */
@@ -702,7 +706,7 @@ public abstract class TwoPlayerController extends GameController
 
         /**
          * takes back the most recent move.
-         * @param m
+         * @param m  move to undo
          */
         public final void undoInternalMove( TwoPlayerMove m )
         {
@@ -746,6 +750,5 @@ public abstract class TwoPlayerController extends GameController
         {
             return false;
         }
-
     }
 }

@@ -11,10 +11,9 @@ import javax.swing.JFrame;
  * Simluates the the generation of a historgram based on
  * some stochastic processs.
  * 
- * @author Barry Becker Date: Feb 4, 2007
+ * @author Barry Becker
  */
 public abstract class DistributionSimulator extends Simulator {
-
 
     private static final double TIME_STEP = 1.0;
     private static final int DEFAULT_STEPS_PER_FRAME = 100;
@@ -31,6 +30,7 @@ public abstract class DistributionSimulator extends Simulator {
         commonInit();
     }
 
+    @Override
     protected void reset() {
         initHistogram();
     }
@@ -43,12 +43,15 @@ public abstract class DistributionSimulator extends Simulator {
         this.setPreferredSize(new Dimension( 600, 500 ));
     }
 
+    @Override
     protected abstract SimulatorOptionsDialog createOptionsDialog();
 
+    @Override
     protected double getInitialTimeStep() {
         return TIME_STEP;
     }
 
+    @Override
     public double timeStep()
     {
         if ( !isPaused() ) {  
@@ -67,6 +70,7 @@ public abstract class DistributionSimulator extends Simulator {
         histogram_.paint(g);
     }
 
+    @Override
     protected abstract String getFileNameBase();
 
     

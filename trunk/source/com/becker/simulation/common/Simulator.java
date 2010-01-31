@@ -67,7 +67,8 @@ public abstract class Simulator extends AnimationComponent
         return useAntialiasing_;
     }
 
-    public void setScale( double scale ) {};
+    public void setScale( double scale ) {}
+    
     public double getScale() {
         return 1;
     }
