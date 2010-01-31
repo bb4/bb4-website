@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.go.test;
 
+import com.becker.game.twoplayer.common.search.SearchOptions;
 import com.becker.game.twoplayer.go.GoMove;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
@@ -25,7 +26,7 @@ public class TestLifeAndDeath extends GoTestCase {
      * @param options default options to override
      */
     @Override
-    protected void setOptionOverrides(TwoPlayerOptions options) {
+    protected void setOptionOverrides(SearchOptions options) {
         options.setAlphaBeta(true);
         options.setLookAhead(3);
         options.setPercentageBestMoves(60);

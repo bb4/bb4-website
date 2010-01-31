@@ -21,10 +21,44 @@ public class MiniMaxStrategyTest extends MiniMaxStrategyTst {
         return new TicTacToeHelper();
     }
 
+
     @Override
-    protected TwoPlayerMove getExpectedNextMove() {
-          return TwoPlayerMove.createMove(new Location(2, 1), 4, new GamePiece(false));
-        
+    protected TwoPlayerMove getExpectedZeroLookAheadMove() {
+        return TwoPlayerMove.createMove(new Location(2, 2), 16, new GamePiece(true));
     }
 
+    @Override
+    protected TwoPlayerMove getExpectedOneLevelLookAheadMove() {
+        return TwoPlayerMove.createMove(new Location(2, 1), 4, new GamePiece(false));
+    }
+
+    @Override
+    protected TwoPlayerMove getExpectedOneLevelWithQuiescenceMove() {
+        return TwoPlayerMove.createMove(new Location(2, 1), 4, new GamePiece(false));
+    }
+
+    @Override
+    protected TwoPlayerMove getExpectedTwoLevelLookAheadMove() {
+        return TwoPlayerMove.createMove(new Location(2, 1), 4, new GamePiece(false));
+    }
+
+    @Override
+    protected TwoPlayerMove getExpectedFourLevelLookaheadMove() {
+        return TwoPlayerMove.createMove(new Location(1, 1), 8, new GamePiece(false));
+    }
+
+    @Override
+    protected TwoPlayerMove getExpectedFourLevelBest20PercentMove() {
+        return TwoPlayerMove.createMove(new Location(2, 1), 4, new GamePiece(false));
+    }
+
+    @Override
+    protected TwoPlayerMove getExpectedFourLevelWithQuiescenceMove() {
+        return TwoPlayerMove.createMove(new Location(1, 1), 8, new GamePiece(false));
+    }
+
+    @Override
+    protected TwoPlayerMove getExpectedFourLevelNoAlphaBetaMove() {
+        return TwoPlayerMove.createMove(new Location(1, 1), 8, new GamePiece(false));
+    }
 }

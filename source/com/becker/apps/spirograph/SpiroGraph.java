@@ -11,11 +11,6 @@ import java.awt.*;
  * Based on work originially done by David Little.
  * http://www.math.psu.edu/dlittle/java/parametricequations/index.html
  *
- * todo:
- *   - make out circle radius to negative. we should not use abs value.
- *   - replace thread.stop
- *   - subpackages?
- *   - send to David Little.
  * @author Barry Becker
  */
 public class SpiroGraph extends ApplicationApplet

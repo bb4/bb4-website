@@ -20,11 +20,11 @@ import java.awt.*;
 public class ResizableAppletPanel extends JPanel
 {
 
-    // holds what would normally be put in the applet contentpane
+    // holds what would normally be put in the applet content pane
     private JPanel mainPanel_ = null;
     private static final long serialVersionUID = 0L;
 
-    // these buffer panels allows the applet to be resized
+    // these buffer panels allows the applet to be resized.
     private JPanel resizeHorizontalPanel_ = new JPanel();
     private JPanel resizeVerticalPanel_ = new JPanel();
 
@@ -42,8 +42,9 @@ public class ResizableAppletPanel extends JPanel
     }
 
     /**
-     *  This resizes the mainPanel inside the large global applet window
+     * This resizes the mainPanel inside the large global applet window.
      */
+    @Override
     public void setSize( int width, int height )
     {
         int totalWidth = this.getWidth();
@@ -68,5 +69,4 @@ public class ResizableAppletPanel extends JPanel
         validate();
         repaint();
     }
-
 }

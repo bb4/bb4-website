@@ -29,7 +29,7 @@ public class TwoPlayerGameImporter extends GameImporter {
 
     /**
      * Take what is in the specified file and show it in the viewer.
-     * @param fileName
+     * @param fileName file to load
      */
     @Override
     public void restoreFromFile( String fileName ) {
@@ -121,13 +121,8 @@ public class TwoPlayerGameImporter extends GameImporter {
     protected Move createMoveFromToken( SGFToken token)
     {
         TwoPlayerMoveToken mvToken = (TwoPlayerMoveToken) token;
-
-         boolean player1 = token instanceof Player1MoveToken;
+        boolean player1 = token instanceof Player1MoveToken;
         
-         TwoPlayerMove move = 
-                 TwoPlayerMove.createMove(mvToken.getToY(), mvToken.getToX(), 0,  new GamePiece(player1));
-
-         return move;
+        return TwoPlayerMove.createMove(mvToken.getToY(), mvToken.getToX(), 0,  new GamePiece(player1));
     }
-
 }

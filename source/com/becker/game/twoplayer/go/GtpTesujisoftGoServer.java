@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.go;
 
+import com.becker.game.twoplayer.common.search.SearchOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
 import com.becker.game.twoplayer.go.board.GoStone;
 import com.becker.common.util.FileUtil;
@@ -166,7 +167,8 @@ public class GtpTesujisoftGoServer
 
     private void initSize(int size) {
         controller_ = new GoController(size, size, 0);
-        TwoPlayerOptions options = controller_.getTwoPlayerOptions();
+        SearchOptions options = controller_.getTwoPlayerOptions().getSearchOptions();
+
         options.setAlphaBeta(true);
         options.setLookAhead(2);
         options.setPercentageBestMoves(50);

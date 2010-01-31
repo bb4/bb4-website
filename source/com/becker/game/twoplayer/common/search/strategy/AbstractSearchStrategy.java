@@ -5,7 +5,6 @@ import com.becker.game.twoplayer.common.search.tree.PruneType;
 import com.becker.game.twoplayer.common.search.*;
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.tree.GameTreeViewable;
 import com.becker.optimization.parameter.ParameterArray;
 
@@ -66,7 +65,7 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
     protected AbstractSearchStrategy( Searchable controller, ParameterArray weights )
     {
         searchable_ = controller;
-        TwoPlayerOptions opts = searchable_.getOptions();
+        SearchOptions opts = searchable_.getSearchOptions();
         alphaBeta_ = opts.getAlphaBeta();
         quiescence_ = opts.getQuiescence();
         lookAhead_ = opts.getLookAhead();
@@ -203,7 +202,7 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
 
     /**
      * Set an optional ui component that will update when the search tree is modified.
-     * @param listener
+     * @param listener game tree listener
      */
     public void setGameTreeEventListener(GameTreeViewable listener) {
         gameTreeListener_ = listener;

@@ -12,7 +12,6 @@ import java.util.List;
 /**
  * This strategy class defines the MiniMax search algorithm.
  * This is the simplest search strategy to which the other variants are compared.
- *
  *  @author Barry Becker
  */
 public final class MiniMaxStrategy extends AbstractSearchStrategy
@@ -180,7 +179,6 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
         }
         return bestMove;
     }
-
 
     @Override
     protected boolean fromPlayer1sPerspective(TwoPlayerMove lastMove) {

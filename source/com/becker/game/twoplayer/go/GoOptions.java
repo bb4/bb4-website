@@ -1,6 +1,7 @@
 package com.becker.game.twoplayer.go;
 
 import com.becker.game.twoplayer.common.*;
+import com.becker.game.twoplayer.common.search.SearchOptions;
 import com.becker.sound.*;
 
 /**
@@ -26,34 +27,19 @@ public class GoOptions extends TwoPlayerOptions {
     // sort of like giving a partial handicap stone.
     private float komi_ = DEFAULT_KOMI;
 
-    public GoOptions() {
-        this(DEFAULT_LOOK_AHEAD, DEFAULT_PERCENTAGE_BEST_MOVES , DEFAULT_MIN_BEST_MOVES,
-               MusicMaker.SHAMISEN, DEFAULT_KOMI);
-    }
+    public GoOptions() {}
 
-    public GoOptions(int defaultLookAhead, int defaultBestPercentage, int minBestMoves,
+    public GoOptions(SearchOptions searchOptions,
                                  String preferredTone, float komi) {
-        super(defaultLookAhead, defaultBestPercentage, minBestMoves,  preferredTone);
+        super(searchOptions, preferredTone);
         setKomi(komi);
     }
 
     @Override
-    protected int getDefaultLookAhead() {
-        return DEFAULT_LOOK_AHEAD;
-    }
-    @Override
-    protected int getDefaultPercentageBestMoves() {
-        return DEFAULT_PERCENTAGE_BEST_MOVES;
-    }
-    @Override
-    protected int getDefaultMinBestMoves() {
-        return DEFAULT_MIN_BEST_MOVES;
+    protected SearchOptions createDefaultSearchOptions() {
+        return new SearchOptions(DEFAULT_LOOK_AHEAD, DEFAULT_PERCENTAGE_BEST_MOVES, DEFAULT_MIN_BEST_MOVES, 16);
     }
 
-    @Override
-    public int getMaxQuiescentDepth() {
-        return 16;
-    }
 
     public float getKomi() {
         return komi_;

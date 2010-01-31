@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.common.ui;
 
+import com.becker.game.twoplayer.common.search.SearchOptions;
 import com.becker.ui.components.NumberInput;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
 import com.becker.game.common.*;
@@ -46,13 +47,14 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
     public GameOptions getOptions() {
 
         TwoPlayerOptions options = (TwoPlayerOptions) get2PlayerController().getOptions();
+        SearchOptions searchOptions =  options.getSearchOptions();
 
-        options.setAlphaBeta(alphabetaCheckbox_.isSelected());
-        options.setQuiescence( quiescenceCheckbox_.isSelected() );
-        options.setLookAhead( lookAheadField_.getIntValue() );
+        searchOptions.setAlphaBeta(alphabetaCheckbox_.isSelected());
+        searchOptions.setQuiescence( quiescenceCheckbox_.isSelected() );
+        searchOptions.setLookAhead( lookAheadField_.getIntValue() );
 
-        options.setSearchStrategyMethod(getSelectedStrategy());
-        options.setPercentageBestMoves(bestPercentageField_.getIntValue() );
+        searchOptions.setSearchStrategyMethod(getSelectedStrategy());
+        searchOptions.setPercentageBestMoves(bestPercentageField_.getIntValue() );
         options.setShowGameTree( gameTreeCheckbox_.isSelected() );
         options.setShowComputerAnimation( computerAnimationCheckbox_.isSelected() );
         return options;
@@ -65,6 +67,7 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
     protected JPanel createControllerParamPanel()
     {
         TwoPlayerOptions options = get2PlayerController().getTwoPlayerOptions();
+        SearchOptions searchOptions =  options.getSearchOptions();
 
         JPanel p = new JPanel();
         p.setLayout( new BoxLayout( p, BoxLayout.Y_AXIS ) );
@@ -84,7 +87,8 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
         ButtonGroup buttonGroup = new ButtonGroup();
         int numStrategies = SearchStrategyType.values().length;
         strategyButtons_ = new JRadioButton[numStrategies];
-        algorithm_ = options.getSearchStrategyMethod();
+
+        algorithm_ = searchOptions.getSearchStrategyMethod();
         for (int i=0; i<numStrategies; i++) {
             SearchStrategyType alg = SearchStrategyType.values()[i];
             strategyButtons_[i] = new JRadioButton( alg.getLabel());
@@ -94,20 +98,21 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
         // look ahead
         JLabel treeUpperBound = new JLabel();
         lookAheadField_ =
-                new NumberInput( GameContext.getLabel("MOVES_TO_LOOKAHEAD"), options.getLookAhead(),
+                new NumberInput( GameContext.getLabel("MOVES_TO_LOOKAHEAD"), searchOptions.getLookAhead(),
                                  GameContext.getLabel("MOVES_TO_LOOKAHEAD_TIP"), 1, 16, true);
         lookAheadField_.addKeyListener( new UpperBoundKeyListener( lookAheadField_, treeUpperBound) );
 
         // best percentage moves
         bestPercentageField_ =
-                new NumberInput( GameContext.getLabel("PERCENTAGE_AT_PLY"), options.getPercentageBestMoves(),
+                new NumberInput( GameContext.getLabel("PERCENTAGE_AT_PLY"), searchOptions.getPercentageBestMoves(),
                                  GameContext.getLabel("PERCENTAGE_AT_PLY_TIP"), 0, 100, true);
         bestPercentageField_.addKeyListener( new UpperBoundKeyListener( bestPercentageField_, treeUpperBound) );
 
         JPanel p3 = new JPanel( new FlowLayout() );
         JLabel treeUpperBoundLabel = new JLabel( GameContext.getLabel("UPPER_BOUND") );
 
-        treeUpperBound.setText(calcTreeUpperBound(options.getLookAhead(), options.getPercentageBestMoves() ) + "  ");
+        treeUpperBound.setText(calcTreeUpperBound(searchOptions.getLookAhead(),
+                               searchOptions.getPercentageBestMoves() ) + "  ");
         p3.setAlignmentX( Component.LEFT_ALIGNMENT );
         p3.add( treeUpperBoundLabel );
         p3.add( treeUpperBound );
@@ -117,13 +122,13 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
         p.add( p3 );
 
         // alpha-beta pruning option
-        alphabetaCheckbox_ = new JCheckBox( GameContext.getLabel("USE_PRUNING"), options.getAlphaBeta() );
+        alphabetaCheckbox_ = new JCheckBox( GameContext.getLabel("USE_PRUNING"), searchOptions.getAlphaBeta() );
         alphabetaCheckbox_.setToolTipText( GameContext.getLabel("USE_PRUNING_TIP") );
         alphabetaCheckbox_.addActionListener( this );
         p.add( alphabetaCheckbox_ );
 
         // show profile info option
-        quiescenceCheckbox_ = new JCheckBox( GameContext.getLabel("USE_QUIESCENCE"), options.getQuiescence() );
+        quiescenceCheckbox_ = new JCheckBox( GameContext.getLabel("USE_QUIESCENCE"), searchOptions.getQuiescence() );
         quiescenceCheckbox_.setToolTipText( GameContext.getLabel("USE_QUIESCENCE_TIP") );
         quiescenceCheckbox_.addActionListener( this );
         //quiescenceCheckbox_.setEnabled(false); // not currently implemented

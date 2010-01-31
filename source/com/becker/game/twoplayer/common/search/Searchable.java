@@ -16,11 +16,10 @@ import java.util.*;
  */
 public interface Searchable
 {
-
     /** 
-     * @return the game specific two player options having to do with search parameters.
+     * @return the search options having to do with search parameters.
      */
-    TwoPlayerOptions getOptions();
+    SearchOptions getSearchOptions();
 
     /**
      * @param m the move to play.
@@ -29,7 +28,7 @@ public interface Searchable
 
     /**
      * takes back the most recent move.
-     * @param m
+     * @param m move to undo.
      */
     void undoInternalMove( TwoPlayerMove m );
 

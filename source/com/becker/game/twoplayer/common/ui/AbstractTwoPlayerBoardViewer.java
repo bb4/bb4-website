@@ -17,6 +17,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.MessageFormat;
+import java.util.List;
 
 /**
  * This class contains a TwoPlayerController and displays the current state of the Game.
@@ -409,12 +410,12 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
 
 
 
-    public final synchronized void showMoveSequence( java.util.List moveSequence )
+    public final synchronized void showMoveSequence( List moveSequence )
     {
         showMoveSequence( moveSequence, getController().getNumMoves() );
     }
 
-    public final synchronized void showMoveSequence( java.util.List moveSequence, int numMovesToBackup)
+    public final synchronized void showMoveSequence( List moveSequence, int numMovesToBackup)
     {
         showMoveSequence( moveSequence, getController().getNumMoves(), null);
     }
@@ -430,7 +431,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
      * @param nextMoves all the child moves of the final move in the sequence
      *       (see subclass implementations for game specific usages)
      */
-    public final synchronized void showMoveSequence( java.util.List moveSequence,
+    public final synchronized void showMoveSequence( List moveSequence,
                                                int numMovesToBackup, TwoPlayerMove[] nextMoves )
     {
         if ( moveSequence == null || moveSequence.size() == 0 )
@@ -446,13 +447,15 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
             // number of steps to backup is # of most recent real moves minus
             // the first move in the sequence.
             int ct = 0;
-            if ( lastMove != null && firstMove != null ) {
+            if (firstMove != null ) {
                 while ( ct < numMovesToBackup ) {
                     getController().undoLastMove();
                     // I suppose this is possible
-                    assert getBoard().getLastMove() != null :
-                            "Reached the end after backing up "+ct+" out of "+numMovesToBackup+" steps." +
-                            "\n moveSequence=" + moveSequence;
+                    if (getBoard().getLastMove() == null) {
+                        throw new IllegalArgumentException("Reached the end after backing up "
+                                + ct + " out of " + numMovesToBackup + " steps." +
+                                "\n moveSequence=" + moveSequence);
+                    }
                     ct++;
                 }
             }
@@ -473,7 +476,6 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
         setNextMoves(nextMoves);
         refresh();
     }
-
 
 
     /**

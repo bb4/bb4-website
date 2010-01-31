@@ -1,6 +1,7 @@
 package com.becker.game.twoplayer.blockade;
 
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
+import com.becker.game.twoplayer.common.search.SearchOptions;
 import com.becker.sound.MusicMaker;
 
 /**
@@ -21,22 +22,14 @@ public class BlockadeOptions extends TwoPlayerOptions {
     private static final String DEFAULT_TONE = MusicMaker.APPLAUSE;
 
 
-
     public BlockadeOptions() {
     }
 
     @Override
-    protected int getDefaultLookAhead() {
-        return DEFAULT_LOOK_AHEAD;
+    protected SearchOptions createDefaultSearchOptions() {
+        return new SearchOptions(DEFAULT_LOOK_AHEAD, DEFAULT_PERCENTAGE_BEST_MOVES, DEFAULT_MIN_BEST_MOVES);
     }
-    @Override
-    protected int getDefaultPercentageBestMoves() {
-        return DEFAULT_PERCENTAGE_BEST_MOVES;
-    }
-    @Override
-    protected int getDefaultMinBestMoves() {
-        return DEFAULT_MIN_BEST_MOVES;
-    }
+
     @Override
     protected String getDefaultTone() {
         return DEFAULT_TONE;

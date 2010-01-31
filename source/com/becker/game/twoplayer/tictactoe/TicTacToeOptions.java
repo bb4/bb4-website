@@ -1,13 +1,13 @@
 package com.becker.game.twoplayer.tictactoe;
 
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
+import com.becker.game.twoplayer.common.search.SearchOptions;
 
 /**
  * @author Barry Becker
  */
 public class TicTacToeOptions extends TwoPlayerOptions {
 
-    
     /** initial look ahead factor. */
     private static final int DEFAULT_LOOK_AHEAD = 4;
 
@@ -22,17 +22,7 @@ public class TicTacToeOptions extends TwoPlayerOptions {
     }
 
     @Override
-    protected int getDefaultLookAhead() {
-        return DEFAULT_LOOK_AHEAD;
-    }
-
-    @Override
-    protected int getDefaultPercentageBestMoves() {
-        return DEFAULT_PERCENTAGE_BEST_MOVES;
-    }
-
-    @Override
-    protected int getDefaultMinBestMoves() {
-        return DEFAULT_MIN_BEST_MOVES;
+    protected SearchOptions createDefaultSearchOptions() {
+        return new SearchOptions(DEFAULT_LOOK_AHEAD, DEFAULT_PERCENTAGE_BEST_MOVES, DEFAULT_MIN_BEST_MOVES);
     }
 }

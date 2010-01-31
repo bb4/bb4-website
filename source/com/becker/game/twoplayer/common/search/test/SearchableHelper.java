@@ -15,7 +15,7 @@ public abstract class SearchableHelper implements ISearchableHelper {
     private static final String SGF_EXTENSION = ".sgf";
 
 
-    public String getTestFile() {
+    public String getDefaultTestFile() {
         return getTestFile(getDefaultFileName());
     }
 

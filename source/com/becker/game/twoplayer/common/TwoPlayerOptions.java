@@ -15,42 +15,14 @@ import com.becker.sound.MusicMaker;
  */
 public class TwoPlayerOptions extends GameOptions
  {
-
-    /** if true then use alpha beta pruning */
-    private static final boolean ALPHA_BETA = true;
-
-    /** if true then use quiescent search */
-    private static final boolean QUIESCENCE = false;
-
-
-    /** Number of moves to look ahead while searching for the best move. */
-    private static final int DEFAULT_LOOK_AHEAD = 3;
-
-    /** Percentage of best moves to consider at each search ply. */
-    private static final int DEFAULT_PERCENTAGE_BEST_MOVES = 60;
-
-    /** No matter what the percentBestMoves is we should not prune if less than this number. */
-    private static final int DEFAULT_MIN_BEST_MOVES = 10;
-
-    /** never search more than this many additional plys during quiescent search. */
-    private static final int MAX_QUIESCENT_DEPTH = 8;
-
     /** Sound played when move is made */
     private static final String DEFAULT_TONE = MusicMaker.TAIKO_DRUM;
 
-    private boolean alphaBeta_ = ALPHA_BETA;
-    private boolean quiescence_ = QUIESCENCE;
-
-    // if true then try to show a dialog visualizing the game tree.
+    /** if true then try to show a dialog visualizing the game tree.  */
     private boolean showGameTree_ = false;
-    // if true then show all the moves the computer is considering when it considers them.
-    private boolean showComputerAnimation_ = false;
 
-    // the default search method.
-    private SearchStrategyType strategyMethod_ = SearchStrategyType.MINIMAX;
-    private int lookAhead_;
-    private int bestPercentage_;
-    private int minBestMoves_;
+    /** if true then show all the moves the computer is considering when it considers them. */
+    private boolean showComputerAnimation_ = false;
 
     private boolean autoOptimize_;
     private String autoOptimizeFile_ = null;
@@ -60,43 +32,36 @@ public class TwoPlayerOptions extends GameOptions
     private String player1Name_ = GameContext.getLabel("PLAYER1");
     private String player2Name_ = GameContext.getLabel("PLAYER2");
 
+    private SearchOptions searchOptions_;
 
     /**
      * Default Constructor
      */
     public TwoPlayerOptions() {
-        lookAhead_ = getDefaultLookAhead();
-        bestPercentage_ = getDefaultPercentageBestMoves();
-        minBestMoves_ = getDefaultMinBestMoves();
+        searchOptions_ = createDefaultSearchOptions();
         preferredTone_ = getDefaultTone();
     }
 
     /**
      * Constructor
-     * @param defaultLookAhead default number of moves to look ahead.
-     * @param defaultBestPercentage default number of best moves to consider at each ply.
+     * @param searchOptions search options to use.
+     * @param preferredTone sound to make on each move.
      */
-    public TwoPlayerOptions(int defaultLookAhead, int defaultBestPercentage, int minBestMoves, String preferredTone) {
-        lookAhead_ = defaultLookAhead;
-        bestPercentage_ = defaultBestPercentage;
+    public TwoPlayerOptions(SearchOptions searchOptions, String preferredTone) {
+
+        searchOptions_ = searchOptions;
         preferredTone_ = preferredTone;
-        minBestMoves_ = minBestMoves;
-        if (preferredTone == null)
-               preferredTone_ = MusicMaker.TAIKO_DRUM;
-        
+        if (preferredTone == null) {
+           preferredTone_ = MusicMaker.TAIKO_DRUM;
+        }
     }
 
-    protected int getDefaultLookAhead() {
-        return DEFAULT_LOOK_AHEAD;
+    protected SearchOptions createDefaultSearchOptions() {
+        return new SearchOptions();
     }
-    protected int getDefaultPercentageBestMoves() {
-        return DEFAULT_PERCENTAGE_BEST_MOVES;
-    }
-    protected int getDefaultMinBestMoves() {
-        return DEFAULT_MIN_BEST_MOVES;
-    }
-    protected String getDefaultTone() {
-        return DEFAULT_TONE;
+
+    public SearchOptions getSearchOptions() {
+        return searchOptions_;
     }
 
     /**
@@ -106,96 +71,6 @@ public class TwoPlayerOptions extends GameOptions
     @Override
     public int getMaxNumPlayers() {
         return 2;
-    }
-
-    /**
-     * @return the strategy method currently being used.
-     */
-    public SearchStrategyType getSearchStrategyMethod()
-    {
-        return strategyMethod_;
-    }
-
-    /**
-     * @param method the desired search strategy for evaluating the game tree.
-     * (eg MINIMAX, NEGAMAX, etc)
-     */
-    public final void setSearchStrategyMethod(SearchStrategyType method )
-    {
-        strategyMethod_ = method;
-    }
-
-    /**
-     * @return the amount of lookahead (number of plys) used by the search strategy
-     */
-    public final int getLookAhead()
-    {
-        return lookAhead_;
-    }
-
-    /**
-     * @param look the number of plys to look ahaead.
-     */
-    public final void setLookAhead( int look )
-    {
-        lookAhead_ = look;
-    }
-
-    /**
-     * @return  the percentage of top moves considered at each ply
-     */
-    public final int getPercentageBestMoves()
-    {
-        return bestPercentage_;
-    }
-
-    /**
-     * @param bestPercentage  the percentage of top moves considered at each ply
-     */
-    public final void setPercentageBestMoves( int bestPercentage )
-    {
-        bestPercentage_ = bestPercentage;
-    }
-
-    /**
-     *
-     * @return  never return fewer than this many best moves.
-     */
-    public int getMinBestMoves() {
-        return minBestMoves_;
-    }
-
-    /**
-     * @return true if alpha-beta pruning is being employed by the search strategy.
-     */
-    public final boolean getAlphaBeta()
-    {
-        return alphaBeta_;
-    }
-
-    /**
-     * @param ab set whether of not to use alpha-beta pruning
-     */
-    public final void setAlphaBeta( boolean ab )
-    {
-        alphaBeta_ = ab;
-    }
-
-    /**
-     * @return whether or not the quiescent search option is being used by the search strategy
-     */
-    public final boolean getQuiescence()
-    {
-        return quiescence_;
-    }
-
-    public final void setQuiescence( boolean quiescence )
-    {
-        quiescence_ = quiescence;
-    }
-
-    public int getMaxQuiescentDepth() {
-        return MAX_QUIESCENT_DEPTH;
     }
 
     /**
@@ -234,7 +109,6 @@ public class TwoPlayerOptions extends GameOptions
     {
         autoOptimize_ = autoOptimize;
     }
-
 
     /**
      * @return true it the controller is set to auto optimize instead of play a regular game
@@ -276,7 +150,7 @@ public class TwoPlayerOptions extends GameOptions
     }
 
     /**
-     * @param player1
+     * @param player1  true if player one.
      * @return player 1's name if pplayer 1 is true else p2's name
      */
     public String getPlayerName(boolean player1)
@@ -289,14 +163,7 @@ public class TwoPlayerOptions extends GameOptions
         }
     }
 
-    /**
-     *
-     * @param searchable
-     * @return the search strategy to use given a searchable object.
-     */
-    public SearchStrategy getSearchStrategy(Searchable searchable, ParameterArray weights) {
-
-        return getSearchStrategyMethod().createStrategy(searchable, weights);
+    protected String getDefaultTone() {
+        return DEFAULT_TONE;
     }
-
 }
