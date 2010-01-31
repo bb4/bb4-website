@@ -284,7 +284,7 @@
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;${libDir}/jigo.jar;${libDir}/gtpserver.jar;"/>
-      <param name="args" value="-name go -locale JAPANESE"/>
+      <param name="args" value="-name go -locale ENGLISH"/>
     </antcall>
   </target>
 
