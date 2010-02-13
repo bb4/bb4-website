@@ -83,7 +83,8 @@ public final class GameTreeDialog extends AbstractDialog
     protected JComponent createDialogContent()
     {
         setTitle( "Game Tree" );
-        root_ = new SearchTreeNode(null);
+        TwoPlayerMove m = null;
+        root_ = new SearchTreeNode(m);
         textTree_ = createTree( root_ );
 
         JPanel mainPanel = new JPanel(new BorderLayout() );

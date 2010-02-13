@@ -21,12 +21,19 @@ public interface ISearchableHelper {
     TwoPlayerController createController();
 
     /**
+     * @return test file containing state of saved game to restore.
+     */
+    String getTestFile(String problemFileBase);
+
+    /**
      * @return test file containing state of saved default game to restore.
      */
     String getDefaultTestFile();
 
     /**
-     * @return test file containing state of saved game to restore.
+     * @param progress how far into the game are we.
+     * @param player1 true if player one has just palyed.
+     * @return get the game file corresponding to the given amount of progress and the specified player.
      */
-    String getTestFile(String problemFileBase);
+    String getTestFile(Progress progress, boolean  player1);
 }

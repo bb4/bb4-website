@@ -1,13 +1,9 @@
 package com.becker.game.twoplayer.tictactoe.test;
 
-import com.becker.game.common.GameController;
 import com.becker.game.common.GamePiece;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.test.ISearchableHelper;
 import com.becker.game.twoplayer.common.search.test.TwoPlayerSearchableBaseTst;
-import com.becker.game.twoplayer.tictactoe.TicTacToeController;
-import com.becker.game.twoplayer.tictactoe.TicTacToeOptions;
 import com.becker.optimization.parameter.ParameterArray;
 import junit.framework.Assert;
 import junit.framework.TestSuite;
@@ -92,14 +88,14 @@ public class TicTacToeSearchableTest extends TwoPlayerSearchableBaseTst {
       */
     @Override
     public void testGenerateAllP1MovesEndGame() {
-         checkGeneratedMoves("endGameP1Turn", EXPECTED_ALL_END_GAME_MOVES_P1);
+         checkGeneratedMoves("endGameX", EXPECTED_ALL_END_GAME_MOVES_P1);
     }
 
     /** Load a game at the end and verify that we can get all the high value next moves. */
     @Override
     public void testGenerateTopP1MovesEndGame() {
         getSearchOptions().setPercentageBestMoves(20);
-        checkGeneratedMoves("endGameP1Turn", EXPECTED_TOP_END_GAME_MOVES_P1);
+        checkGeneratedMoves("endGameX", EXPECTED_TOP_END_GAME_MOVES_P1);
     }
 
     /**  Load a game in the middle and verify that we can get reasonable next moves. */
@@ -125,14 +121,14 @@ public class TicTacToeSearchableTest extends TwoPlayerSearchableBaseTst {
      */
     @Override
     public void testGenerateAllP2MovesEndGame() {
-        checkGeneratedMoves("endGameP2Turn", EXPECTED_ALL_END_GAME_MOVES_P2);
+        checkGeneratedMoves("endGameO", EXPECTED_ALL_END_GAME_MOVES_P2);
     }
 
      /** Load a game at the end and verify that we can get all the high value next moves. */
      @Override
      public void testGenerateTopP2MovesEndGame() {
         getSearchOptions().setPercentageBestMoves(20);
-        checkGeneratedMoves("endGameP2Turn", EXPECTED_TOP_END_GAME_MOVES_P2);
+        checkGeneratedMoves("endGameO", EXPECTED_TOP_END_GAME_MOVES_P2);
     }
 
 /**  Verify that we generate a correct list of urgent moves.  */
