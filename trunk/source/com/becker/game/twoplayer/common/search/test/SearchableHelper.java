@@ -14,19 +14,34 @@ public abstract class SearchableHelper implements ISearchableHelper {
 
     private static final String SGF_EXTENSION = ".sgf";
 
+    public String getTestFile(String problemFileBase) {
+        return getTestCaseDir() + problemFileBase + SGF_EXTENSION;
+    }
 
     public String getDefaultTestFile() {
         return getTestFile(getDefaultFileName());
     }
 
-    public String getTestFile(String problemFileBase) {
-        return getTestCaseDir() + problemFileBase + SGF_EXTENSION;
+    public String getTestFile(Progress progress, boolean player1) {
+        String fName = null;
+        switch (progress) {
+            case BEGINNING : fName = getStartGameMoveFileName(player1);
+                break;
+            case MIDDLE : fName = getMiddleGameMoveFileName(player1);
+                break;
+            case END : fName = getEndGameMoveFileName(player1);
+                break;
+        }
+        return getTestFile(fName);
     }
-    
-    /**
-     * @return test file containing state of saved game to restore.
-     */
+
+
     protected abstract String getDefaultFileName();
+
+    protected abstract String getStartGameMoveFileName(boolean player1);
+    protected abstract String getMiddleGameMoveFileName(boolean player1);
+    protected abstract String getEndGameMoveFileName(boolean player1);
+
 
     /**
      * @return directory location of test files.

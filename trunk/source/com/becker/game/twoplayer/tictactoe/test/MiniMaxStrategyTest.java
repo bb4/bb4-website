@@ -7,6 +7,7 @@ import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.test.SearchableHelper;
+import com.becker.game.twoplayer.common.search.test.strategy.ExpectedMoveMatrix;
 import com.becker.game.twoplayer.common.search.test.strategy.MiniMaxStrategyTst;
 import com.becker.game.twoplayer.tictactoe.TicTacToeController;
 import com.becker.game.twoplayer.tictactoe.TicTacToeOptions;
@@ -21,44 +22,91 @@ public class MiniMaxStrategyTest extends MiniMaxStrategyTst {
         return new TicTacToeHelper();
     }
 
-
     @Override
-    protected TwoPlayerMove getExpectedZeroLookAheadMove() {
-        return TwoPlayerMove.createMove(new Location(2, 2), 16, new GamePiece(true));
+    protected ExpectedMoveMatrix getExpectedZeroLookAheadMoves() {
+        return new ExpectedMoveMatrix(
+                TwoPlayerMove.createMove(new Location(2, 2), 16, new GamePiece(true)),
+                TwoPlayerMove.createMove(new Location(1, 1), -8, new GamePiece(false)),
+                TwoPlayerMove.createMove(new Location(1, 2), 88, new GamePiece(true)),
+                TwoPlayerMove.createMove(new Location(1, 3), -88, new GamePiece(false)),
+                TwoPlayerMove.createMove(new Location(3, 1), 0, new GamePiece(true)),
+                TwoPlayerMove.createMove(new Location(2, 3), -48, new GamePiece(false)));
     }
 
     @Override
-    protected TwoPlayerMove getExpectedOneLevelLookAheadMove() {
-        return TwoPlayerMove.createMove(new Location(2, 1), 4, new GamePiece(false));
+    protected ExpectedMoveMatrix getExpectedOneLevelLookAheadMoves() {
+        return new ExpectedMoveMatrix(
+                TwoPlayerMove.createMove(new Location(2, 1), 4, new GamePiece(false)),
+                TwoPlayerMove.createMove(new Location(1, 2), 48, new GamePiece(true)),
+                TwoPlayerMove.createMove(new Location(3, 2), 28, new GamePiece(false)),
+                TwoPlayerMove.createMove(new Location(3, 2), 0, new GamePiece(true)),
+                TwoPlayerMove.createMove(new Location(2, 1), 0, new GamePiece(false)),
+                TwoPlayerMove.createMove(new Location(1, 3), -12, new GamePiece(true)));
     }
 
     @Override
-    protected TwoPlayerMove getExpectedOneLevelWithQuiescenceMove() {
-        return TwoPlayerMove.createMove(new Location(2, 1), 4, new GamePiece(false));
+    protected ExpectedMoveMatrix getExpectedOneLevelWithQuiescenceMoves() {
+        return new ExpectedMoveMatrix(
+                TwoPlayerMove.createMove(new Location(2, 1), 4, new GamePiece(false)),
+                TwoPlayerMove.createMove(new Location(1, 2), 48, new GamePiece(true)),
+                TwoPlayerMove.createMove(new Location(3, 2), 28, new GamePiece(false)),
+                TwoPlayerMove.createMove(new Location(2, 3), -32, new GamePiece(true)),
+                TwoPlayerMove.createMove(new Location(2, 1), 0, new GamePiece(false)),
+                TwoPlayerMove.createMove(new Location(1, 3), -12, new GamePiece(true)));
     }
 
     @Override
-    protected TwoPlayerMove getExpectedTwoLevelLookAheadMove() {
-        return TwoPlayerMove.createMove(new Location(2, 1), 4, new GamePiece(false));
+    protected ExpectedMoveMatrix getExpectedTwoLevelLookAheadMoves() {
+        return new ExpectedMoveMatrix(
+                TwoPlayerMove.createMove(new Location(2, 1), 4, new GamePiece(false)),
+                TwoPlayerMove.createMove(new Location(1, 2), 48, new GamePiece(true)),
+                TwoPlayerMove.createMove(new Location(3, 2), 28, new GamePiece(false)),
+                TwoPlayerMove.createMove(new Location(1, 2), 0, new GamePiece(true)),
+                TwoPlayerMove.createMove(new Location(2, 1), 0, new GamePiece(false)),
+                TwoPlayerMove.createMove(new Location(3, 3), -52, new GamePiece(true)));
     }
 
     @Override
-    protected TwoPlayerMove getExpectedFourLevelLookaheadMove() {
-        return TwoPlayerMove.createMove(new Location(1, 1), 8, new GamePiece(false));
+    protected ExpectedMoveMatrix getExpectedFourLevelLookaheadMoves() {
+        return new ExpectedMoveMatrix(
+                TwoPlayerMove.createMove(new Location(1, 1), 8, new GamePiece(false)),
+                TwoPlayerMove.createMove(new Location(1, 2), 48, new GamePiece(true)),
+                TwoPlayerMove.createMove(new Location(3, 2), 28, new GamePiece(false)),
+                TwoPlayerMove.createMove(new Location(1, 2), 0, new GamePiece(true)),
+                TwoPlayerMove.createMove(new Location(2, 1), 0, new GamePiece(false)),
+                TwoPlayerMove.createMove(new Location(1, 3), -12, new GamePiece(true)));
     }
 
     @Override
-    protected TwoPlayerMove getExpectedFourLevelBest20PercentMove() {
-        return TwoPlayerMove.createMove(new Location(2, 1), 4, new GamePiece(false));
+    protected ExpectedMoveMatrix getExpectedFourLevelBest20PercentMoves() {
+        return new ExpectedMoveMatrix(
+                TwoPlayerMove.createMove(new Location(2, 1), 4, new GamePiece(false)),
+                TwoPlayerMove.createMove(new Location(1, 2), 48, new GamePiece(true)),
+                TwoPlayerMove.createMove(new Location(3, 2), 28, new GamePiece(false)),
+                TwoPlayerMove.createMove(new Location(1, 2), 0, new GamePiece(true)),
+                TwoPlayerMove.createMove(new Location(2, 1), 0, new GamePiece(false)),
+                TwoPlayerMove.createMove(new Location(1, 3), -12, new GamePiece(true)));
     }
 
     @Override
-    protected TwoPlayerMove getExpectedFourLevelWithQuiescenceMove() {
-        return TwoPlayerMove.createMove(new Location(1, 1), 8, new GamePiece(false));
+    protected ExpectedMoveMatrix getExpectedFourLevelWithQuiescenceMoves() {
+        return new ExpectedMoveMatrix(
+                TwoPlayerMove.createMove(new Location(1, 1), 8, new GamePiece(false)),
+                TwoPlayerMove.createMove(new Location(1, 2), 48, new GamePiece(true)),
+                TwoPlayerMove.createMove(new Location(3, 2), 28, new GamePiece(false)),
+                TwoPlayerMove.createMove(new Location(1, 2), 0, new GamePiece(true)),
+                TwoPlayerMove.createMove(new Location(2, 1), 0, new GamePiece(false)),
+                TwoPlayerMove.createMove(new Location(1, 3), -12, new GamePiece(true)));
     }
 
     @Override
-    protected TwoPlayerMove getExpectedFourLevelNoAlphaBetaMove() {
-        return TwoPlayerMove.createMove(new Location(1, 1), 8, new GamePiece(false));
+    protected ExpectedMoveMatrix getExpectedFourLevelNoAlphaBetaMoves() {
+        return new ExpectedMoveMatrix(
+                TwoPlayerMove.createMove(new Location(1, 1), 8, new GamePiece(false)),
+                TwoPlayerMove.createMove(new Location(1, 2), 48, new GamePiece(true)),
+                TwoPlayerMove.createMove(new Location(3, 2), 28, new GamePiece(false)),
+                TwoPlayerMove.createMove(new Location(1, 2), 0, new GamePiece(true)),
+                TwoPlayerMove.createMove(new Location(2, 1), 0, new GamePiece(false)),
+                TwoPlayerMove.createMove(new Location(1, 3), -12, new GamePiece(true)));
     }
 }

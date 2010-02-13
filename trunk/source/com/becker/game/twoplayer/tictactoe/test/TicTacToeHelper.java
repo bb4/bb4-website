@@ -36,6 +36,21 @@ public class TicTacToeHelper extends SearchableHelper {
 
     @Override
     protected String getDefaultFileName() {
-        return "midGameCenterX";
+        return getMiddleGameMoveFileName(true);
+    }   
+
+    @Override
+    protected String getStartGameMoveFileName(boolean player1) {
+        return player1 ? "midGameCenterX" : "midGameCenterO";
+    }
+
+    @Override
+    protected String getMiddleGameMoveFileName(boolean player1) {
+        return player1 ? "lateMidGameX" : "lateMidGameO";
+    }
+
+    @Override
+    protected String getEndGameMoveFileName(boolean player1) {
+        return player1 ? "endGameX" : "endGameO";
     }
 }

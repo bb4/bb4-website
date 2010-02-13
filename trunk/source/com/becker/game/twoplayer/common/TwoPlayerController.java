@@ -549,7 +549,7 @@ public abstract class TwoPlayerController extends GameController
      * @param player1 true if its player one's turn
      * @param moveList the list of all generated moves
      * @param player1sPerspective if true than bestMoves are from player1s perspective
-     * @return
+     * @return the best moves in order of how good they are.
      */
     protected final List<? extends TwoPlayerMove> getBestMoves(boolean player1, List<? extends TwoPlayerMove> moveList,
                                                                boolean player1sPerspective )

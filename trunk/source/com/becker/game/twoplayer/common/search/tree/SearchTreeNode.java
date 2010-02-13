@@ -55,9 +55,9 @@ public class SearchTreeNode extends DefaultMutableTreeNode
 
     /**
      * Default Constructor
-     * @param m the user object (like a board move).
+     * @param m a twoplayer board move.
      */
-    public SearchTreeNode(Object m)
+    public SearchTreeNode(TwoPlayerMove m)
     {
         setUserObject(m);
         pruned_ = false;
@@ -139,6 +139,9 @@ public class SearchTreeNode extends DefaultMutableTreeNode
         return null;
     }
 
+    public TwoPlayerMove getMove() {
+        return (TwoPlayerMove) this.getUserObject();
+    }
 
     @Override
     public String toString () {

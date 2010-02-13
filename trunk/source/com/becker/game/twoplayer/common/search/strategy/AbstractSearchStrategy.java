@@ -97,11 +97,12 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
             return lastMove;
         }
 
-        // generate a list of all candidate next moves, and pick the best one
+        // generate a list of all (or bestPercent) candidate next moves, and pick the best one
         List<? extends TwoPlayerMove> list =
-                searchable_.generateMoves( lastMove,  weights_,  fromPlayer1sPerspective(lastMove));
+                searchable_.generateMoves(lastMove,  weights_, fromPlayer1sPerspective(lastMove));
+
         movesConsidered_ += list.size();
-        if (depth ==lookAhead_)
+        if (depth == lookAhead_)
             numTopLevelMoves_ = list.size();
 
         if ( emptyMoveList( list, lastMove) ) {
@@ -214,7 +215,7 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
      */
     protected void updatePercentDone(int depth,  List remainingNextMoves) {
         if (depth == lookAhead_)   {
-            percentDone_ = 100 * (numTopLevelMoves_-remainingNextMoves.size()) / numTopLevelMoves_;
+            percentDone_ = 100 * (numTopLevelMoves_ - remainingNextMoves.size()) / numTopLevelMoves_;
         }
     }
 

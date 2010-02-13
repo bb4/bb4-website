@@ -36,7 +36,7 @@ public class TwoPlayerGameImporter extends GameImporter {
 
         try {
             FileInputStream iStream = new FileInputStream( fileName );
-            GameContext.log( 0, "opening " + fileName );
+            GameContext.log( 2, "opening " + fileName );
 
             SGFLoader gameLoader = createLoader();
             SGFGame game = gameLoader.load( iStream );
