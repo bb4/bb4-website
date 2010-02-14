@@ -50,7 +50,6 @@ final class GoTreeCellRenderer extends GameTreeCellRenderer
         node_ = (SearchTreeNode) value;
 
         Color bg = getBGColor( value );
-        //Color fg = getFGColor( value );
 
         this.setBackgroundNonSelectionColor( bg );
         this.setBackgroundSelectionColor( Color.orange );
@@ -70,30 +69,7 @@ final class GoTreeCellRenderer extends GameTreeCellRenderer
       */
     @Override
     public void paint(Graphics g) {
-        Color bColor;
-
-        if(selected) {
-            bColor = getBackgroundSelectionColor();
-        } else {
-            bColor = getBackgroundNonSelectionColor();
-            if(bColor == null)
-            bColor = getBackground();
-        }
-
-        int imageOffset;
-        if(bColor != null) {
-            //Icon currentI = getIcon();
-
-            imageOffset = 0;
-            g.setColor(bColor);
-            if(getComponentOrientation().isLeftToRight()) {
-                g.fillRect(imageOffset, 0, getWidth() - imageOffset,
-                   getHeight());
-            } else {
-                g.fillRect(0, 0, getWidth() - imageOffset,
-                   getHeight());
-            }
-        }
+        drawCellBackground(g);
 
         Graphics2D g2 = (Graphics2D) g;
         TwoPlayerMove move = (TwoPlayerMove) node_.getUserObject();
@@ -107,8 +83,6 @@ final class GoTreeCellRenderer extends GameTreeCellRenderer
             g2.drawImage(GoStoneRenderer.BLACK_STONE_IMG.getImage(), 1, 0, STONE_IMG_SIZE, STONE_IMG_SIZE, null);
         } else {
             g2.drawImage(GoStoneRenderer.WHITE_STONE_IMG.getImage(), 1, 0, STONE_IMG_SIZE, STONE_IMG_SIZE, null);
-            //inheritedValue = -inheritedValue;
-            //value = -value;
         }
 
         Color c = getColorMap().getColorForValue(inheritedValue);
@@ -135,7 +109,34 @@ final class GoTreeCellRenderer extends GameTreeCellRenderer
         g2.drawString(inhrtdValText, TEXT_MARGIN + STONE_IMG_SIZE + 2, 8);
         g2.drawString(valText, 2 * TEXT_MARGIN + STONE_IMG_SIZE + SWATCH_WIDTH + 2, 8);
         g2.drawString(text, 3 * TEXT_MARGIN + STONE_IMG_SIZE + 2 * SWATCH_WIDTH, 8);
-        //super.paint(g);
+    }
+
+
+    private void drawCellBackground(Graphics g) {
+        Color bColor;
+
+        if(selected) {
+            bColor = getBackgroundSelectionColor();
+        } else {
+            bColor = getBackgroundNonSelectionColor();
+            if(bColor == null)
+                bColor = getBackground();
+        }
+
+        int imageOffset;
+        if(bColor != null) {
+            //Icon currentI = getIcon();
+
+            imageOffset = 0;
+            g.setColor(bColor);
+            if(getComponentOrientation().isLeftToRight()) {
+                g.fillRect(imageOffset, 0, getWidth() - imageOffset,
+                   getHeight());
+            } else {
+                g.fillRect(0, 0, getWidth() - imageOffset,
+                   getHeight());
+            }
+        }
     }
 
 }

@@ -132,7 +132,7 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
         // if you generate too many, then you run the risk of an explosion in the search tree
         // these moves should be sorted from most to least urgent.
         List<? extends TwoPlayerMove> list =
-                searchable_.generateUrgentMoves( lastMove, weights_, fromPlayer1sPerspective(lastMove) );
+                searchable_.generateUrgentMoves( lastMove, weights_, true );
 
         if ( list.isEmpty() ) {
             return lastMove; // nothing to check

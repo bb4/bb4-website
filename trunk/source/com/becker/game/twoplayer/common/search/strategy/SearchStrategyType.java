@@ -29,7 +29,7 @@ public enum SearchStrategyType {
         }
          @Override
          public boolean sortAscending(boolean player1, boolean playerOnesPerspective) {
-            return false;
+            return ( player1 == playerOnesPerspective);
         }
     },
     NEGASCOUT("NEGASCOUT_SEARCH") {

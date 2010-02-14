@@ -1,12 +1,9 @@
 package com.becker.game.twoplayer.pente.test;
 
-import com.becker.game.common.GameController;
 import com.becker.game.common.GamePiece;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.test.ISearchableHelper;
 import com.becker.game.twoplayer.common.search.test.TwoPlayerSearchableBaseTst;
-import com.becker.game.twoplayer.pente.PenteController;
 import junit.framework.TestSuite;
 import junit.framework.Test;
 

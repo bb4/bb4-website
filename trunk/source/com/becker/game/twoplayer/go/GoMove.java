@@ -37,7 +37,8 @@ public final class GoMove extends TwoPlayerMove
 
     /**
      * factory method for getting new moves.
-     *  it uses recycled objects if possible.
+     * it uses recycled objects if possible.
+     * @return new go move
      */
     public static GoMove createGoMove(
             int destinationRow, int destinationCol,
@@ -48,6 +49,7 @@ public final class GoMove extends TwoPlayerMove
 
     /**
      * factory method for creating a passing move
+     * @return new passing move
      */
     public static GoMove createPassMove( int val,  boolean player1)
     {
@@ -121,7 +123,7 @@ public final class GoMove extends TwoPlayerMove
             if (!stringSet.contains(atariedString) && atariedString.getNumLiberties(board) == 1 ) {
                 numInAtari += atariedString.size();
             }
-            stringSet.add(atariedString); // once its in the set we own't check it again.
+            stringSet.add(atariedString); // once its in the set we won't check it again.
         }
         return numInAtari;
     }

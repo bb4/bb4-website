@@ -53,6 +53,7 @@ public class TwoPlayerMove extends Move
      * @@ should not be in this class.
      */
     private boolean urgent_;
+
     /**
      *  if true then this move is a passing move.
      */
@@ -138,6 +139,37 @@ public class TwoPlayerMove extends Move
     public final Location getToLocation()
     {
         return toLocation_;
+    }
+
+
+    /**
+     *  we sort based on the statically evaluated board value
+     *  because the inherited value is not known yet.
+     *  @return  >0 if move m is bigger, < 0 if smaller, =0 if equal
+     */
+    @Override
+    public int compareTo( Move m )
+    {
+        int result = super.compareTo(m);
+        if (result != 0)
+            return result;
+
+        // break tie by row position
+        TwoPlayerMove move = (TwoPlayerMove) m;
+        if ( this.getToRow() < move.getToRow() )
+            return -1;
+        else if ( this.getToRow() > move.getToRow() )
+            return 1;
+        else {
+            // if still tie, break using col position.
+            if ( this.getToCol() < move.getToCol() )
+                return -1;
+            else if ( this.getToCol() > move.getToCol() )
+                return 1;
+            else {
+                return 0;
+          }
+        }
     }
 
     @Override

@@ -38,8 +38,6 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
         TwoPlayerOptions options = createDefaultOptions();
         controller.setOptions(options);
 
-        // this will load the resources for the specified game.
-        //GameContext.loadGameResources("go");
         GameContext.setDebugMode(getDebugLevel());
     }
     @Override

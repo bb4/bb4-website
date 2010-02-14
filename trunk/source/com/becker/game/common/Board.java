@@ -31,7 +31,7 @@ public abstract class Board implements BoardInterface, Cloneable
     protected int rowsTimesCols_;
 
      /** a global profiler for recording timing stats. */
-    private static GameProfiler profiler_;
+    private GameProfiler profiler_;
 
     /**
      * We keep a list of the moves that have been made.
@@ -244,7 +244,7 @@ public abstract class Board implements BoardInterface, Cloneable
 
     public void initializeProfilingStats()
     {
-        profiler_.initialize();
+        getProfiler().initialize();
     }
 
     /**

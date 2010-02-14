@@ -7,9 +7,8 @@ package com.becker.game.common;
  *  @see Board
  *  @author Barry Becker
  */
-public class Move implements Comparable
+public class Move implements Comparable<Move>
 {
-
     /**
      * The value of this move from the point of view of player1.
      * The value is determined by static evaluation of the board.
@@ -17,7 +16,6 @@ public class Move implements Comparable
      * coarse values to work well.
      */
     private int value_;
-
 
     /**
      * protected Constructor.
@@ -29,33 +27,17 @@ public class Move implements Comparable
     /**
      *  we sort based on the statically evaluated board value
      *  because the inherited value is not known yet.
-     *  @return  >0 if move1 bigger, <0 if smaller, =0 if equal
+     *  @return  > 0 if move1 bigger, < 0 if smaller, = 0 if equal
      */
-    public final int compareTo( Object move )
+    public int compareTo( Move move )
     {
-        if ( getValue() < ((Move) move).getValue() )
+        if ( getValue() < move.getValue() )
             return -1;
-        else if ( getValue() > ((Move) move).getValue() )
+        else if ( getValue() > move.getValue() )
             return 1;
         else
             return 0;
     }
-
-    /**
-     * Compare 2 moves to see which has a higher value.
-     * This allows you to sort movesby this metric.
-     * @return  >0 if move1 bigger, <0 if smaller, =0 if equal.
-     */
-    public final int compare( Object move1, Object move2 )
-    {
-        if ( ((Move) move1).value_ < ((Move) move2).value_ )
-            return -1;
-        else if ( ((Move) move1).value_ > ((Move) move2).value_ )
-            return 1;
-        else
-            return 0;
-    }
-
 
     @Override
     public String toString()
