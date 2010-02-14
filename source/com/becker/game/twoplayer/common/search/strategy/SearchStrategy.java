@@ -44,13 +44,13 @@ public interface SearchStrategy {
      *
      * @return the approximate percentage of total search time that has been completed.
      */
-   int getPercentDone();
+    int getPercentDone();
 
-   /**
-    * An optional game tree event listener. There can be at most one.
-    * @param listener event listener
-    */
-   void setGameTreeEventListener(GameTreeViewable listener);
+    /**
+     * An optional game tree event listener. There can be at most one.
+     * @param listener event listener
+     */
+    void setGameTreeEventListener(GameTreeViewable listener);
 
 
     // these methods give an external thread debugging controls over the search.

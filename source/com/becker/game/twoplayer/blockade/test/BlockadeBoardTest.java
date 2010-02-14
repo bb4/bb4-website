@@ -125,7 +125,7 @@ public class BlockadeBoardTest extends BlockadeTestCase {
                   }
                   else if (row == 2 || col == 2 || (row == numRows-1) || (col == numCols-1)) {
                       if (row == col || (row == 2 && col == numCols-1) || (col == 2 && row == numRows-1)) {
-                           // if one space out from corder we expect 6 moves
+                           // if one space out from order we expect 6 moves
                           verifyMoves(position, list1, 6, P1_NUM_MAP);
                       }
                       else {
@@ -143,7 +143,7 @@ public class BlockadeBoardTest extends BlockadeTestCase {
     /**
      *
      */
-    private static final void verifyMoves(BoardPosition position, List player1Moves,  int expectedNumMoves, Map<Location, Integer> p1NumMap) {
+    private static void verifyMoves(BoardPosition position, List player1Moves,  int expectedNumMoves, Map<Location, Integer> p1NumMap) {
 
         if (p1NumMap.containsKey(position.getLocation())) {
              expectedNumMoves = p1NumMap.get(position.getLocation());

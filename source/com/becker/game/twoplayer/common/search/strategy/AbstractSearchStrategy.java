@@ -47,7 +47,7 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
     private volatile boolean paused_ = false;
 
     /** The optional ui component that will be updated to reflect the current search tree.  */
-    protected GameTreeViewable gameTreeListener_;
+    protected GameTreeViewable gameTree_;
 
     /**
      * Number of moves to consider at the top ply.
@@ -87,19 +87,20 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
      * {@inheritDoc}
      */
     protected TwoPlayerMove searchInternal( TwoPlayerMove lastMove,
-                                          int depth, 
+                                          int depth,
                                           int alpha, int beta, SearchTreeNode parent ) {
 
         if ( depth == 0 || searchable_.done( lastMove, false ) ) {
             if ( quiescence_ && depth == 0)
                 return quiescentSearch(lastMove, depth, alpha, beta, parent);
-            lastMove.setInheritedValue(lastMove.getValue());
+            int sign = fromPlayer1sPerspective(lastMove) ? 1 : -1;
+            lastMove.setInheritedValue(sign * lastMove.getValue());
             return lastMove;
         }
 
         // generate a list of all (or bestPercent) candidate next moves, and pick the best one
         List<? extends TwoPlayerMove> list =
-                searchable_.generateMoves(lastMove,  weights_, fromPlayer1sPerspective(lastMove));
+                searchable_.generateMoves(lastMove,  weights_, true);
 
         movesConsidered_ += list.size();
         if (depth == lookAhead_)
@@ -112,7 +113,6 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
 
         return findBestMove(lastMove, depth, list, alpha, beta, parent);
     }
-
 
     /**
      * This is the part of the search algorithm that varies most among the search strategies.
@@ -148,11 +148,11 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
                                          int alpha, int beta, int i )
     {
         SearchTreeNode child = null;
-        if (gameTreeListener_ != null) {
+        if (gameTree_ != null) {
             child = new SearchTreeNode( theMove );
             child.setAlpha(alpha);
             child.setBeta(beta);
-            gameTreeListener_.addNode(parent, child, i);
+            gameTree_.addNode(parent, child, i);
         }
         return child;
     }
@@ -167,11 +167,11 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
      * @param thresh the alpha or beta threshold compared to.
      * @param type either PRUNE_ALPHA or PRUNE_BETA - pruned by comparison with Alpha or Beta.
      */
-    protected void showPrunedNodesInTree( List list, SearchTreeNode parent,
-                                                                        int i, int val, int thresh, PruneType type)
+    protected void showPrunedNodesInTree( List<? extends TwoPlayerMove> list, SearchTreeNode parent,
+                                          int i, int val, int thresh, PruneType type)
     {
-        if (gameTreeListener_ != null) {
-            gameTreeListener_.addPrunedNodes(list, parent, i, val, thresh, type);
+        if (gameTree_ != null) {
+            gameTree_.addPrunedNodes(list, parent, i, val, thresh, type);
         }
     }
 
@@ -206,7 +206,7 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
      * @param listener game tree listener
      */
     public void setGameTreeEventListener(GameTreeViewable listener) {
-        gameTreeListener_ = listener;
+        gameTree_ = listener;
     }
 
     /**

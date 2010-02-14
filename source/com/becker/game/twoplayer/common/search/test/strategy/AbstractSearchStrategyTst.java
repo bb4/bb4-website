@@ -41,17 +41,17 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
 
     /**
      * Edge case where not searching is actually done. The found move will be the last move.
-     *
+     */
     public void testZeroLookAheadSearch() {
         searchOptions.setLookAhead(0);
         verifyMoves("ZeroLookAhead", getExpectedZeroLookAheadMoves());
-    } */
+    }
 
     public void testOneLevelLookAheadSearch() {
         searchOptions.setLookAhead(1);
         verifyMoves("OneLevelLookAhead", getExpectedOneLevelLookAheadMoves());
     }
-       /*
+
     public void testOneLevelWithQuiescenceSearch() {
 
         searchOptions.setLookAhead(1);
@@ -85,12 +85,12 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
         searchOptions.setLookAhead(4);
         searchOptions.setAlphaBeta(false);
         verifyMoves("FourLevelNoAlphaBeta", getExpectedFourLevelNoAlphaBetaMoves());
-    }  */
+    } 
 
     public void verifyMoves(String desc, ExpectedMoveMatrix expectedMoves) {
         searchOptions.setSearchStrategyMethod(getSearchStrategyToTest());
 
-        for (Progress prog :  Progress.values()) {
+        for (Progress prog : Progress.values()) {
             verifyMove(prog, true, expectedMoves, desc);
             verifyMove(prog, false, expectedMoves, desc);
         }
@@ -104,10 +104,10 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
         TwoPlayerMove nextMove = getNextMove();
         String info = getSearchStrategyToTest() + " " + desc + " "  + prog + " player1=" + player1;
         //System.out.println(getSearchStrategyToTest() + ":\nNow comparing expected:" + expectedNextMove + " with: " + getNextMove());
-        //System.out.println(info);
-        //if (!nextMove.equals(expectedNextMove)) {
-        //    System.out.println(" FAIL: got "+ nextMove.getConstructorString() );
-        //}
+        /*System.out.println(info);
+        if (!nextMove.equals(expectedNextMove)) {
+            System.out.println(" FAIL: got "+ nextMove.getConstructorString() );
+        }*/
         assertEquals(info +"\nWe did not get the next move that we expected after searching.",
                 expectedNextMove, getNextMove());
     }

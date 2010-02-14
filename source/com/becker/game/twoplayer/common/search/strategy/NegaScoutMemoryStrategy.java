@@ -37,13 +37,13 @@ public final class NegaScoutMemoryStrategy extends NegaScoutStrategy
         int i = 0;
         int bestVal = -SearchStrategy.INFINITY; 
         TwoPlayerMove selectedMove = null;
-        TwoPlayerMove bestMove = (TwoPlayerMove) (list.get( 0 ));
+        TwoPlayerMove bestMove = list.get( 0 );
 
         while ( !list.isEmpty() ) {
             if (pauseInterrupted())
                 return lastMove;
 
-            TwoPlayerMove theMove = (TwoPlayerMove) (list.remove(0));
+            TwoPlayerMove theMove = list.remove(0);
             updatePercentDone(depth, list);
 
             searchable_.makeInternalMove( theMove );

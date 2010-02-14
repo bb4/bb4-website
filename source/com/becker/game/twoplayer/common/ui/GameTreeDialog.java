@@ -9,8 +9,7 @@ import com.becker.game.twoplayer.common.search.tree.PruneType;
 import com.becker.ui.dialogs.AbstractDialog;
 import com.becker.ui.legend.*;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.event.*;
@@ -28,17 +27,17 @@ import java.util.List;
  */
 public final class GameTreeDialog extends AbstractDialog
                                implements GameChangedListener, GameTreeViewable,
-                                                   MouseMotionListener, TreeExpansionListener
+                                          MouseMotionListener, TreeExpansionListener
 {
     /** the options get set directly on the game controller that is passed in. */
-    private TwoPlayerController controller_;
+    private volatile TwoPlayerController controller_;
 
-    private JScrollPane scrollPane_;
-    private GameTreeViewer treeViewer_;
-    private JTree textTree_;
-    private SearchTreeNode root_;
+    private volatile JScrollPane scrollPane_;
+    private volatile GameTreeViewer treeViewer_;
+    private volatile JTree textTree_;
+    private volatile SearchTreeNode root_;
     private int oldChainLength_ = 0;
-    private GameTreeButtons gameTreeButtons_;
+    private volatile GameTreeButtons gameTreeButtons_;
 
     private GameTreeInfoPanel infoPanel_;
 
@@ -48,12 +47,12 @@ public final class GameTreeDialog extends AbstractDialog
     private Board board_ = null;
 
     /** the viewer in the debug window. */
-    private TwoPlayerViewable boardViewer_;
+    private volatile TwoPlayerViewable boardViewer_;
 
     /** the controller that is actually being played in the normal view. */
     private TwoPlayerController mainController_;
 
-    private GameTreeCellRenderer cellRenderer_;
+    private volatile GameTreeCellRenderer cellRenderer_;
 
 
     /**
@@ -117,7 +116,7 @@ public final class GameTreeDialog extends AbstractDialog
 
         JPanel previewPanel = new JPanel(new BorderLayout());
 
-        ((AbstractTwoPlayerBoardViewer)boardViewer_).setPreferredSize( new Dimension( 200, 500 ) );
+        ((Component) boardViewer_).setPreferredSize( new Dimension( 200, 500 ) );
 
         JPanel viewerPanel = new JPanel();
         viewerPanel.setLayout(new BorderLayout());
@@ -133,7 +132,7 @@ public final class GameTreeDialog extends AbstractDialog
         infoPanel.add(colorLegend, BorderLayout.SOUTH);
 
         // this goes to the right of the test tree view
-        viewerPanel.add( (AbstractTwoPlayerBoardViewer)boardViewer_, BorderLayout.CENTER);
+        viewerPanel.add((Component) boardViewer_, BorderLayout.CENTER);
         viewerPanel.add( infoPanel, BorderLayout.SOUTH);
         previewPanel.add( viewerPanel, BorderLayout.CENTER );
 
@@ -216,7 +215,6 @@ public final class GameTreeDialog extends AbstractDialog
             refresh();
         }
     }
-
 
     /**
      * create the game tree representation
@@ -356,10 +354,9 @@ public final class GameTreeDialog extends AbstractDialog
         super.close();
     }
 
-    /* --------------- GameTreeViewable implmentation ------------------*/
+    /* --------------- GameTreeViewable implementation ------------------*/
     // we need these methods to occur on the event dispatch thread to avoid
     // threading conflicts that could occur during concurrent rendering.
-
 
     public void addNode(final SearchTreeNode parent, final SearchTreeNode child, final int i) {
 
@@ -370,11 +367,13 @@ public final class GameTreeDialog extends AbstractDialog
         });
     }
 
-    public void addPrunedNodes(final List list,  final SearchTreeNode parent,
-                                                    final int i, final int val, final int thresh, final PruneType type) {
+    public void addPrunedNodes(final List<? extends TwoPlayerMove> list, final SearchTreeNode parent,
+                               final int i, final int val, final int thresh, final PruneType type) {
+        // make a defensive copy of the list because we may modify it.
+        final List listCopy = new ArrayList<TwoPlayerMove>(list);
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                parent.addPrunedChildNodes(list, i, val, thresh, type);
+                parent.addPrunedChildNodes(listCopy, i, val, thresh, type);
             }
         });
     }

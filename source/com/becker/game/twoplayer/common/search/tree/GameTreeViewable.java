@@ -30,15 +30,9 @@ public interface GameTreeViewable {
 
     /**
      * Add a set of pruned nodes to the viewable search tree.
-     * @param list
-     * @param parent
-     * @param i
-     * @param val
-     * @param thresh
-     * @param type
      */
-    void addPrunedNodes(List list, SearchTreeNode parent,
-                                         int i, int val, int thresh, PruneType type);
+    void addPrunedNodes(List<? extends TwoPlayerMove> list, SearchTreeNode parent,
+                        int i, int val, int thresh, PruneType type);
 
     /**
      * Clear out the visible search tree.
