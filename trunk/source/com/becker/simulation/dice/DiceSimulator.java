@@ -1,5 +1,7 @@
 package com.becker.simulation.dice;
 
+import com.becker.common.format.IntegerFormatter;
+import com.becker.common.format.ScaledFormatter;
 import com.becker.ui.HistogramRenderer;
 import com.becker.simulation.common.*;
 
@@ -35,6 +37,7 @@ public class DiceSimulator extends DistributionSimulator {
     protected void initHistogram() {
         data_ = new int[numDice_ * (numSides_-1) + 1];
         histogram_ = new HistogramRenderer(data_, numDice_);
+        histogram_.setFormatter(new IntegerFormatter());
     }
 
     @Override
@@ -45,7 +48,7 @@ public class DiceSimulator extends DistributionSimulator {
     @Override
     protected int getXPositionToIncrement() {
         int total = 0;
-        for (int i=0; i<numDice_; i++) {
+        for (int i=0; i < numDice_; i++) {
            total += random_.nextInt(numSides_);
         }
         return total;
@@ -65,5 +68,3 @@ public class DiceSimulator extends DistributionSimulator {
         runSimulation(sim);
     }
 }
-
-

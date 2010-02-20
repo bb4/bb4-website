@@ -11,7 +11,7 @@ import java.util.Iterator;
 public final class Util
 {
     
-    private static final DecimalFormat expFormat_ = new DecimalFormat("###,###.##E0");
+    private static final DecimalFormat expFormat_ = new DecimalFormat("0.###E0");
     private static final DecimalFormat format_ = new DecimalFormat("###,###.##");
     private static final DecimalFormat intFormat_ = new DecimalFormat("#,###");
 
@@ -25,35 +25,33 @@ public final class Util
     public static String formatNumber(double num)
     {
         double absnum = Math.abs(num);
-        if ((num - (long)num) == 0.0) {
-            // it is an integer
+
+        if (absnum > 1000000.0 || absnum < 0.000000001) {
+            return expFormat_.format(num);
+        }
+        if (absnum > 1000.0) {
             format_.setMinimumFractionDigits(0);
             format_.setMaximumFractionDigits(0);
         }
+        else if (absnum > 100.0 || num == 0.0) {
+            format_.setMinimumFractionDigits(1);
+            format_.setMaximumFractionDigits(1);
+        }
+        else if (absnum > 1.0) {
+            format_.setMinimumFractionDigits(1);
+            format_.setMaximumFractionDigits(2);
+        }
+        else if (absnum > 0.0001) {
+            format_.setMinimumFractionDigits(2);
+            format_.setMaximumFractionDigits(5);
+        }
+        else if (absnum>0.000001) {
+            format_.setMinimumFractionDigits(3);
+            format_.setMaximumFractionDigits(8);
+        }
         else {
-            if (absnum > 100000.0 || absnum < 0.000000001) {
-                return expFormat_.format(num);
-            }
-            if (absnum > 100.0 || num == 0.0) {
-                format_.setMinimumFractionDigits(1);
-                format_.setMaximumFractionDigits(1);
-            }
-            else if (absnum > 1.0) {
-                format_.setMinimumFractionDigits(1);
-                format_.setMaximumFractionDigits(2);
-            }
-            else if (absnum > 0.0001) {
-                format_.setMinimumFractionDigits(2);
-                format_.setMaximumFractionDigits(5);
-            }
-            else if (absnum>0.000001) {
-                format_.setMinimumFractionDigits(3);
-                format_.setMaximumFractionDigits(8);
-            }
-            else {
-                format_.setMinimumFractionDigits(6);
-                format_.setMaximumFractionDigits(10);
-            }
+            format_.setMinimumFractionDigits(6);
+            format_.setMaximumFractionDigits(10);
         }
 
         return format_.format(num);

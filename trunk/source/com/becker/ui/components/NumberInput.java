@@ -13,15 +13,10 @@ import java.awt.event.*;
  */
 public class NumberInput extends JPanel
 {
-
     private JTextField numberField_;
     private double initialValue_;
     private double min_;
     private double max_;
-
-    protected static final int TEXT_FIELD_WIDTH = 50;
-    protected static final Dimension TEXT_FIELD_DIM =
-            new Dimension( TEXT_FIELD_WIDTH, OptionsDialog.ROW_HEIGHT );
 
 
     /**
@@ -63,11 +58,9 @@ public class NumberInput extends JPanel
         String initialVal = integerOnly? Integer.toString((int) initialValue) : Double.toString(initialValue);
         numberField_ = new JTextField(initialVal);
 
-        //setLayout( new BoxLayout( this, BoxLayout.X_AXIS ) );
         setLayout( new BorderLayout());
 
-        setAlignmentX( Component.LEFT_ALIGNMENT );        
-        //setPreferredSize(new Dimension(240, 20));
+        setAlignmentX( Component.LEFT_ALIGNMENT );
 
         JLabel label = new JLabel( labelText );        
         add( label, BorderLayout.WEST );
@@ -77,7 +70,6 @@ public class NumberInput extends JPanel
         else
             numberField_.setToolTipText( toolTip );
         numberField_.setPreferredSize( new Dimension( 50, 20 ) );
-        //numberField_.setBorder(BorderFactory.createLineBorder(Color.RED));
 
         numberField_.addKeyListener( new NumberKeyAdapter(integerOnly));
 
@@ -85,25 +77,18 @@ public class NumberInput extends JPanel
         numPanel.setBorder(BorderFactory.createEmptyBorder(0, 2, 0, 2));
         
         numPanel.add( numberField_ );        
-        //numPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
-        
-        add(numPanel, BorderLayout.EAST); //add(numPanel);
 
-        if (toolTip!=null)
+        add(numPanel, BorderLayout.EAST);
+
+        if (toolTip != null)
             this.setToolTipText(toolTip);
         else
             this.setToolTipText(labelText);
     }
 
-    public void setWidth(int width) {
-        numberField_.getMaximumSize().setSize(width, numberField_.getMaximumSize().getHeight());
-    }
-
     public double getValue() {
         String text = numberField_.getText();
         if (text.length() == 0) {
-            //numberField_.setText("" + initialValue_);
-            //return initialValue_;
             return 0;
         }
         double v = Double.parseDouble(text);
@@ -121,8 +106,6 @@ public class NumberInput extends JPanel
     public int getIntValue() {
         String text = getNumberField().getText();
         if (text.length() == 0) {
-            //numberField_.setText("" + (int) initialValue_);
-            //return (int) initialValue_;
             return 0;
         }
         int v = Integer.parseInt(text);
