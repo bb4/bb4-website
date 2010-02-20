@@ -49,8 +49,7 @@ public enum SearchStrategyType {
         }
         @Override
         public boolean sortAscending(boolean player1, boolean playerOnesPerspective) {
-            return  false;
-        }
+            return  false;}
     },
     MTD("MTD_SEARCH"){
         @Override

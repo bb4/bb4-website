@@ -16,11 +16,13 @@ public abstract class AnimationComponent extends Container implements Runnable
 {
 
     protected boolean animating_ = true;
-    protected int numStepsPerFrame_ = 1; // default
-    protected long[] previousTimes_; // milliseconds
+    protected int numStepsPerFrame_ = 1;
+    /** previous times in milliseconds. */
+    protected long[] previousTimes_;
     protected int previousIndex_;
     protected boolean previousFilled_;
-    protected double frameRate_; // frames per second
+    /** frames per second. */
+    protected double frameRate_;
     protected Image image_;
 
     // incremented for every frame
@@ -75,7 +77,7 @@ public abstract class AnimationComponent extends Container implements Runnable
 
     /**
      * Do the timeStepping and rendering in a separate thread
-     *so the rest of the GUI does not freeze and can still handle events.
+     * so the rest of the GUI does not freeze and can still handle events.
      */
     public void run()
     {

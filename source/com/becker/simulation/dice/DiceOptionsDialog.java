@@ -13,7 +13,6 @@ import java.awt.*;
  */
 public class DiceOptionsDialog extends SimulatorOptionsDialog {
 
-
     /** number of dice to use.   */
     private NumberInput numDiceField_;
     /** number of sides on dice.  */
@@ -34,6 +33,7 @@ public class DiceOptionsDialog extends SimulatorOptionsDialog {
         return "Dice Simulation Configuration";
     }
 
+    @Override
     protected JPanel createCustomParamPanel()
     {
         JPanel paramPanel = new JPanel();
@@ -63,7 +63,7 @@ public class DiceOptionsDialog extends SimulatorOptionsDialog {
         super.ok();
 
         DiceSimulator simulator = (DiceSimulator) getSimulator();
-        // set the common rendering and global physics options
+
         simulator.setNumDice(numDiceField_.getIntValue());
         simulator.setNumSides(numSidesField_.getIntValue());
     }

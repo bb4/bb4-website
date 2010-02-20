@@ -323,6 +323,15 @@
     </antcall>
   </target>
 
+<target name="executeStock" description="Run the Stock simulator">
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
+      <param name="args" value="com.becker.simulation.stock.StockSimulator"/>
+    </antcall>
+  </target>
+
+
   <target name="executeParameterDistribution" description="Run the Parameter Distribution simulator">
     <antcall target="executeProgram">
       <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
