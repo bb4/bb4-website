@@ -29,8 +29,9 @@ public class GaussianRedistribution extends AbstractRedistributionFunction {
          initializeFunction();       
     }
     
+    @Override
     protected void initializeFunction() {
-        double[]  functionMap = new double[ NUM_MAP_VALUES];
+        double[]  functionMap;
         double inc = 1.0 /  (NUM_MAP_VALUES-1);
         double[] cdfFunction = new double[NUM_MAP_VALUES];
         cdfFunction[0] = 0;
@@ -74,8 +75,7 @@ public class GaussianRedistribution extends AbstractRedistributionFunction {
         double denom = SQRT2 * stdDeviation;
         double xx = (Math.min(1.0, x) - mean) / denom;
         double erf = MathUtil.errorFunction(xx);
-        double v =  0.5 * (1.0 + erf);
-        return v;      
+        return 0.5 * (1.0 + erf);
     }
 
     public static void main( String[] args )

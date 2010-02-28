@@ -26,14 +26,17 @@ public final class Util
     {
         double absnum = Math.abs(num);
 
-        if (absnum > 1000000.0 || absnum < 0.000000001) {
+        if (absnum == 0)  {
+            return "0";
+        }
+        else if (absnum > 10000000.0 || absnum < 0.000000001) {
             return expFormat_.format(num);
         }
-        if (absnum > 1000.0) {
+        else if (absnum > 1000.0) {
             format_.setMinimumFractionDigits(0);
             format_.setMaximumFractionDigits(0);
         }
-        else if (absnum > 100.0 || num == 0.0) {
+        else if (absnum > 100.0) {
             format_.setMinimumFractionDigits(1);
             format_.setMaximumFractionDigits(1);
         }
@@ -55,6 +58,15 @@ public final class Util
         }
 
         return format_.format(num);
+    }
+
+    /**
+     * @param num the number to format.
+     * @return a nicely formatted string representation of the number.
+     */
+    public static String formatNumber(long num)
+    {
+        return intFormat_.format(num);
     }
 
     /**

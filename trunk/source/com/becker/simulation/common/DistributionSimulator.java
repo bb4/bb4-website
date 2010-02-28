@@ -24,7 +24,6 @@ public abstract class DistributionSimulator extends Simulator {
     /** Seeded Random varaible so results are reproducible. */
     protected Random random_ = new Random(0);
 
-
     public DistributionSimulator(String title) {
         super(title);
         commonInit();
@@ -54,8 +53,9 @@ public abstract class DistributionSimulator extends Simulator {
     @Override
     public double timeStep()
     {
-        if ( !isPaused() ) {  
-            data_[getXPositionToIncrement()]++;
+        if ( !isPaused() ) {
+            int xPos = getXPositionToIncrement();
+            histogram_.increment(xPos);
         }
         return timeStep_;
     }

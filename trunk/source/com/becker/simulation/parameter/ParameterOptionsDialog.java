@@ -30,6 +30,7 @@ public class ParameterOptionsDialog extends SimulatorOptionsDialog {
         return "Parameter Simulation Configuration";
     }
 
+    @Override
     protected JPanel createCustomParamPanel()
     {
         JPanel paramPanel = new JPanel();

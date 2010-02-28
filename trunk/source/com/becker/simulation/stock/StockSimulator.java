@@ -1,42 +1,27 @@
 package com.becker.simulation.stock;
 
+import com.becker.common.format.CurrencyFormatter;
 import com.becker.common.format.INumberFormatter;
-import com.becker.common.format.ScaledFormatter;
+import com.becker.common.math.function.Function;
+import com.becker.common.math.function.LinearFunction;
+import com.becker.common.math.function.LogFunction;
 import com.becker.simulation.common.DistributionSimulator;
 import com.becker.simulation.common.SimulatorOptionsDialog;
 import com.becker.ui.HistogramRenderer;
 
-
 /**
- * Simluates the N stocks over M time periods.
- * There are other options that can be set before graphing the result of the simulation.
+ * Simluates the N stocks over M time periods (and other options).
+ * Graphs the resulting distribution of values for the sample.
  *
  * @author Barry Becker
  */
 public class StockSimulator extends DistributionSimulator {
 
-    static final int DEFAULT_NUM_STOCKS = 1;
-    static final int DEFAULT_NUM_TIME_PERIODS = 10;
-    static final double DEFAULT_PERCENT_INCREASE = 0.6;
-    static final double DEFAULT_PERCENT_DECREASE = 0.4;
-    static final double DEFAULT_STARTING_VALUE = 10000;
-    static final int DEFAULT_X_RESOLUTION = 2;
-    static final boolean DEFAULT_USE_LOG_SCALE = false;
-    static final boolean DEFAULT_USE_RANDOM_CHANGE = false;
-
     private static final int LABEL_WIDTH = 70;
 
-    private int numStocks_ = DEFAULT_NUM_STOCKS;
-    private int numTimePeriods_ = DEFAULT_NUM_TIME_PERIODS;
-    private double percentIncrease_ = DEFAULT_PERCENT_INCREASE;
-    private double percentDecrease_ = DEFAULT_PERCENT_DECREASE;
-    private double startingValue_ = DEFAULT_STARTING_VALUE;
-    private int xResolution_ = DEFAULT_X_RESOLUTION;
-    private boolean useLogScale_ = DEFAULT_USE_LOG_SCALE;
-    private boolean useRandomChange_ = DEFAULT_USE_RANDOM_CHANGE;
+    private StockSampleOptions opts_ = new StockSampleOptions();
+    private Function xFunction_;
 
-    private double xScale_;
-    private double xLogScale_;
 
 
     public StockSimulator() {
@@ -44,55 +29,27 @@ public class StockSimulator extends DistributionSimulator {
         initHistogram();
     }
 
-    // @@ make all these into StockOptions object. same for dice.
-    public void setNumStocks(int numStocks) {
-        numStocks_ = numStocks;
-    }
-
-    public void setNumTimePeriods(int numTimePeriods) {
-        numTimePeriods_ = numTimePeriods;
+    public void setSampleOptions(StockSampleOptions stockSampleOptions) {
+        opts_ = stockSampleOptions;
         initHistogram();
-    }
-
-    public void setPercentIncrease(double percentIncrease) {
-        percentIncrease_ = percentIncrease;
-        initHistogram();
-    }
-
-    public void setPercentDecrease(double percentDecrease) {
-        percentDecrease_ = percentDecrease;
-    }
-
-    public void setStartingValue(double startingValue) {
-        startingValue_ = startingValue;
-    }
-
-    public void setXResolution(int xResolution) {
-        xResolution_ = xResolution;
-        initHistogram();
-    }
-
-    public void setLogScale(boolean useLogScale) {
-        useLogScale_ = useLogScale;
-        initHistogram();
-    }
-
-    public void setRandomChange(boolean useRandomChange) {
-        useRandomChange_ = useRandomChange;
     }
 
     @Override
     protected void initHistogram() {
-        double theoreticalMaximum = startingValue_ * Math.pow(1.0 + percentIncrease_, numTimePeriods_);
-        xScale_ = Math.pow(10, Math.max(0, Math.log10(theoreticalMaximum) - xResolution_));
-        xLogScale_ = 3 * xResolution_ * xResolution_;
-        int maxX = normalizeSample(theoreticalMaximum);
+
+        double max = opts_.getTheoreticalMaximum();
+        double xScale = Math.pow(10, Math.max(0, Math.log10(max) - opts_.xResolution));
+        double xLogScale = 3 * opts_.xResolution * opts_.xResolution;
+
+        xFunction_ =
+                opts_.useLogScale ? new LogFunction(xLogScale, 10.0, true) : new LinearFunction(1/xScale);
+
+        int maxX = (int)xFunction_.getFunctionValue(max);
         data_ = new int[maxX + 1];
-        histogram_ = new HistogramRenderer(data_, 0);
-        INumberFormatter fmtr =  useLogScale_ ?
-                new ScaledFormatter(1.0/xLogScale_, true, true) :
-                new ScaledFormatter(xScale_, false, true);
-        histogram_.setFormatter(fmtr);
+
+        histogram_ = new HistogramRenderer(data_);
+        histogram_.setXFormatter(new CurrencyFormatter());
+        histogram_.setXFunction(xFunction_);
         histogram_.setMaxLabelWidth(LABEL_WIDTH);
     }
 
@@ -104,7 +61,9 @@ public class StockSimulator extends DistributionSimulator {
     @Override
     protected int getXPositionToIncrement() {
         double sample = createSample();
-        return normalizeSample(sample);
+        int normalizedSample = (int)xFunction_.getFunctionValue(sample);
+        //System.out.println("sample=" + sample + " normalizedSample=" + normalizedSample);
+        return normalizedSample;
     }
 
     /**
@@ -113,10 +72,10 @@ public class StockSimulator extends DistributionSimulator {
     private double createSample() {
 
         double total = 0;
-        for (int j = 0; j < numStocks_; j++) {
+        for (int j = 0; j < opts_.numStocks; j++) {
             total += calculateFinalStockPrice();
         }
-        return total / numStocks_;
+        return total / opts_.numStocks;
     }
 
     /**
@@ -124,31 +83,17 @@ public class StockSimulator extends DistributionSimulator {
      */
     private double calculateFinalStockPrice() {
 
-        double stockPrice = startingValue_;
-        for (int i = 0; i < numTimePeriods_; i++) {
-            double percentChange = Math.random() > 0.5 ? percentIncrease_ : -percentDecrease_;
-            if (useRandomChange_)
+        double stockPrice = opts_.startingValue;
+        for (int i = 0; i < opts_.numTimePeriods; i++) {
+            double percentChange =
+                    Math.random() > 0.5 ? opts_.percentIncrease : -opts_.percentDecrease;
+            if (opts_.useRandomChange)
                 stockPrice *= (1.0 + Math.random() * percentChange);
             else
                 stockPrice *= (1.0 + percentChange);
         }
         return stockPrice;
     }
-    /**
-     * Make the sample fix on the x axis.
-     * @return x axis position
-     */
-    private int normalizeSample(double sample)  {
-
-        int bucketX;
-        if (useLogScale_) {
-            bucketX = (int) (xLogScale_ * Math.max(0, Math.log10(sample)));
-        } else {
-            bucketX = (int) (sample / xScale_);  
-        }
-        return bucketX;
-    }
-
 
     @Override
     protected String getFileNameBase()

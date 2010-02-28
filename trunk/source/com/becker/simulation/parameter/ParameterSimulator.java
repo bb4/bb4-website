@@ -1,5 +1,6 @@
 package com.becker.simulation.parameter;
 
+import com.becker.common.math.function.LinearFunction;
 import com.becker.simulation.dice.*;
 import com.becker.ui.HistogramRenderer;
 import com.becker.simulation.common.*;
@@ -18,7 +19,7 @@ public class ParameterSimulator extends DistributionSimulator {
     private static final int NUM_DOUBLE_BINS = 1000;
 
     // init with some default
-    private Parameter parameter_ =  ParameterDistributionType.values()[0].getParameter();
+    private Parameter parameter_ = ParameterDistributionType.values()[0].getParameter();
 
     private boolean showRedistribution_ = true;
 
@@ -44,13 +45,12 @@ public class ParameterSimulator extends DistributionSimulator {
     protected void initHistogram() {
         if (parameter_.isIntegerOnly()) {
             data_ = new int[(int)parameter_.getRange() + 1];
-            histogram_ = new HistogramRenderer(data_, 0);
+            histogram_ = new HistogramRenderer(data_);
         }
         else {
             data_ = new int[NUM_DOUBLE_BINS];
-            histogram_ = 
-                    new HistogramRenderer(data_, parameter_.getMinValue(), 
-                                                            parameter_.getRange()/NUM_DOUBLE_BINS);
+            histogram_ = new HistogramRenderer(data_);
+            histogram_.setXFunction(new LinearFunction(NUM_DOUBLE_BINS/parameter_.getRange(), -parameter_.getMinValue()));
         }                
     }
 
@@ -69,10 +69,7 @@ public class ParameterSimulator extends DistributionSimulator {
             double v = parameter_.getMinValue() + random_.nextDouble() * scale;
             parameter_.setValue(v);
         }
-        
-        //if (Math.abs(setValue - parameter_.getValue()) >0.5) {
-        //    System.out.println("setValue="+setValue +" but got "+parameter_.getValue());
-        //}
+
         int xpos;
         if (parameter_.isIntegerOnly()) {
             xpos = (int)parameter_.getValue();
