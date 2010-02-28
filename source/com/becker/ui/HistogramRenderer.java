@@ -2,6 +2,8 @@ package com.becker.ui;
 
 import com.becker.common.format.DefaultNumberFormatter;
 import com.becker.common.format.INumberFormatter;
+import com.becker.common.math.function.Function;
+import com.becker.common.math.function.LinearFunction;
 import com.becker.common.util.Util;
 
 import java.awt.*;
@@ -17,12 +19,9 @@ public class HistogramRenderer {
     /** y values for every point on the x axis. */
     private int[] data_;
 
-    private double minX_ = 0.0;
-    private double incrementX_ = 1.0;
-
     private static final Color BACKGROUND_COLOR = new Color(255, 255, 255);
-    private static final Color BAR_COLOR = new Color(120, 20, 255);
-    private static final Color BAR_BORDER_COLOR = new Color(0, 0, 20);
+    private static final Color BAR_COLOR = new Color(160, 120, 255);
+    private static final Color BAR_BORDER_COLOR = new Color(0, 0, 0);
 
     private static final int MARGIN = 24;
     private static final int TICK_LENGTH = 4;
@@ -31,22 +30,21 @@ public class HistogramRenderer {
     private int height_;
     private int maxNumLabels_;
     private double barWidth_;
+    private double mean_ = 0;
+    long sum_ = 0;
     int numBars_;
+
+    /** provides a way to scale x axis values. Default if null is the identity function. */
+    Function xFunction_ = new LinearFunction(1.0);
     INumberFormatter formatter_ = new DefaultNumberFormatter();
 
     private static final int DEFAULT_LABEL_WIDTH = 30;
     private int maxLabelWidth_ = DEFAULT_LABEL_WIDTH;
 
-    public HistogramRenderer(int[] data, int minX)
-    {
-        this(data, minX, 1.0);
-    }
     
-    public HistogramRenderer(int[] data, double minX, double xIncrement)
+    public HistogramRenderer(int[] data)
     {
         data_ = data;
-        minX_ = minX;
-        incrementX_ = xIncrement;
         numBars_ = data_.length;
     }
 
@@ -57,10 +55,32 @@ public class HistogramRenderer {
         barWidth_ = (width_ - 2.0 * MARGIN) / numBars_;
     }
 
-    public void setFormatter(INumberFormatter formatter) {
+    public void increment(int xPos) {
+        data_[xPos]++;
+        double xValue = xFunction_.getInverseFunctionValue(xPos);
+        mean_ = (mean_ * sum_  + xValue) / (sum_  + 1);
+        sum_++;
+    }
+
+    /**
+     * @param formatter a way to format the x axis values
+     */
+    public void setXFormatter(INumberFormatter formatter) {
         formatter_ = formatter;
     }
 
+    /**
+     * @param func a way to scale the values on the x axis.
+     */
+    public void setXFunction(Function func) {
+        xFunction_ = func;
+        mean_ =  xFunction_.getInverseFunctionValue(0);
+    }
+
+    /**
+     * The larger this is, the fewere equally spaced x labels.
+     * @param maxLabelWidth   max width of x labels.
+     */
     public void setMaxLabelWidth(int maxLabelWidth) {
         maxLabelWidth_ = maxLabelWidth;
     }
@@ -72,7 +92,6 @@ public class HistogramRenderer {
         Graphics2D g2 = (Graphics2D) g;
 
         int maxHeight = getMaxHeight();
-        int sum = getSum();
         double scale = (height_ -2.0 * MARGIN) / maxHeight;
 
         clearBackground(g2);
@@ -85,17 +104,48 @@ public class HistogramRenderer {
             ct++;
             xpos += barWidth_;
         }
-        drawAxes(g2, maxHeight, sum);
+        drawDecoration(g2, maxHeight);
     }
 
-    private void drawAxes(Graphics2D g2, int maxHeight, int sum) {
+    private void drawDecoration(Graphics2D g2, int maxHeight) {
+        int width =  (int)(barWidth_ * numBars_);
         // left y axis
-        g2.drawLine(MARGIN-1, height_ - MARGIN, MARGIN-1, MARGIN);
+        g2.drawLine(MARGIN-1, height_ - MARGIN,
+                    MARGIN-1, MARGIN);
         // x axis
-        g2.drawLine(MARGIN-1, height_- MARGIN -1, MARGIN-1 + (int)(barWidth_ * numBars_), height_ - MARGIN -1);
+        g2.drawLine(MARGIN-1,         height_- MARGIN -1,
+                    MARGIN-1 + width, height_ - MARGIN -1);
 
-        g2.drawString("Height = " + Util.formatNumber(maxHeight), MARGIN, MARGIN);
-        g2.drawString("Number = " + Util.formatNumber(sum), width_ - 200, MARGIN >> 1);
+        g2.drawString("Height = " + Util.formatNumber(maxHeight), MARGIN/3, MARGIN -2);
+
+        g2.drawString("Number trials = " + Util.formatNumber(sum_), width_ - 300, MARGIN -2);
+        g2.drawString("Mean = " + formatter_.format(mean_), width_ - 130, MARGIN -2);
+
+        // draw a vertical line for the mean
+        int meanXpos = (int)(MARGIN  + (double)width * xFunction_.getFunctionValue(mean_) / numBars_ + barWidth_/2);
+        g2.drawLine(meanXpos,    height_ - MARGIN,
+                    meanXpos,    MARGIN);
+        g2.drawString("Mean", meanXpos + 4, MARGIN + 12);
+
+        // draw a vertical line for the median
+        double median = calcMedian();
+        int medianXpos = (int)(MARGIN  + (double)width * median / numBars_ + barWidth_/2);
+        g2.drawLine(medianXpos,    height_ - MARGIN,
+                    medianXpos,    MARGIN);
+        g2.drawString("Median", medianXpos + 4, MARGIN  + 28);
+
+    }
+
+    private double calcMedian() {
+        long halfTotal = sum_ >> 1;
+        int medianPos = 0;
+        long cumulativeTotal = 0;
+        while (cumulativeTotal < halfTotal) {
+            cumulativeTotal += data_[medianPos++];
+        }
+        if (medianPos > 0)
+            medianPos -= (cumulativeTotal - halfTotal) / data_[medianPos-1];
+        return medianPos - 1; 
     }
 
     /**
@@ -118,15 +168,15 @@ public class HistogramRenderer {
      * draw the label or label and tick if needed for this bar.
      */
     private void drawLabelIfNeeded(Graphics2D g2, float xpos, int ct) {
-        double xValue= minX_ + ct * incrementX_;
+        double xValue = xFunction_.getInverseFunctionValue(ct); // minX_ + ct * incrementX_;
         if (numBars_ < maxNumLabels_) {
             // then draw all labels
-            g2.drawString(formatter_.format(xValue), xpos + 1, height_ - 5);
-        }  else if (ct % (int)((maxLabelWidth_ + 10) * numBars_ / width_) == 0) {
+            g2.drawString(formatter_.format(xValue), xpos, height_ - 5);
+        }  else if (ct % ((maxLabelWidth_ + 10) * numBars_ / width_) == 0) {
             // sparse labeling
             int x = (int)(xpos + barWidth_/2);
             g2.drawLine(x, height_ - MARGIN + TICK_LENGTH, x, height_ - MARGIN);
-            g2.drawString(formatter_.format(xValue), xpos + 2, height_ - 5);
+            g2.drawString(formatter_.format(xValue), xpos - 20, height_ - 5);
         }
     }
 
@@ -143,14 +193,4 @@ public class HistogramRenderer {
         }
         return max;
     }
-
-    private int getSum() {
-        int sum = 0;
-        for (int v : data_) {
-            sum += v;
-        }
-        return sum;
-    }
 }
-
-

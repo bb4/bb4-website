@@ -56,7 +56,8 @@
 
 
   </head>
-  <body bgcolor="#CCCCFF" onload="doInit();" onresize="resizeApplet({doResize});" style="overflow-y: hidden; overflow-x: hidden;" topmargin="0" leftmargin="0">
+  <body bgcolor="#CCCCFF" onload="doInit();" onresize="resizeApplet({doResize});"
+        style="overflow-y: hidden; overflow-x: hidden;" topmargin="0" leftmargin="0">
 
     <div style="width:100%; margin: 6 6 6 6; border: solid 1px #043C08;">
       <table id="instructions"  width="100%" border="0" cellpadding="2" cellspacing="6">
@@ -74,7 +75,7 @@
     </div>
     <br>
 
-    <applet width="{width}" height="{height}" align="Baseline">
+    <applet width="{width}" height="{height}" align="baseline">
       <param name="code" value="{qualifiedAppletClassName}">
       <param name="codebase" value=".">
       <param name="cache_option" value="Plugin">
@@ -83,10 +84,10 @@
       <param name="class_name" value="{className}">
       <param name="name" value="{name}">
       <param name="locale" value="{language}">
-      <param name="type" value="application/x-java-applet;version=1.5">
+      <param name="type" value="application/x-java-applet;version=1.6">
       <param name="scriptable" value="true">
     </applet>
 
   </body>
 </html>
-<noembed><xmp>
+<noembed><xmp/>
