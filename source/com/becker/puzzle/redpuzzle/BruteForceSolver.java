@@ -23,7 +23,6 @@ public class BruteForceSolver<P, M> extends RedPuzzleSolver {
     }
 
     /**
-     * @param puzzlePanel will show the pieces as we arrange them.
      * @return true if a solution is found.
      */
     public List<Piece> solve()  {    
@@ -43,7 +42,7 @@ public class BruteForceSolver<P, M> extends RedPuzzleSolver {
     /**
      * Solves the puzzle.
      * This implements the main recursive algorithm for solving the red puzzle.
-     * @param puzzlePanel
+     * @param puzzlePanel will show the pieces as we arrange them.
      * @param pieces the pieces that have yet to be fitted.
      * @param i insdex of last placed piece. If we have to backtrack, we put it back where we got it.
      * @return true if successfully solved, false if no solution.

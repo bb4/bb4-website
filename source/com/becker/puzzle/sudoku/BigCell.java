@@ -8,13 +8,13 @@ import java.util.*;
  */
 public class BigCell {
 
-    // the internal data structures representing the game board
+    /** the internal data structures representing the game board. */
     protected Cell cells_[][] = null;
 
-    // The number of Cells in the BigCell is n * n.
+    /** The number of Cells in the BigCell is n * n.    */
     protected int n_;
 
-    // The number which have not yet been used in this big cell.
+    /** The number which have not yet been used in this big cell. */
     private List<Integer> bigCellCandidates_;
 
     private Board board_;
@@ -88,20 +88,6 @@ public class BigCell {
             return (Integer) cellCandidates.get(0);
         }
         return 0;   // the value is not unique
-    }
-
-    private boolean isUnique(Object candidate, Cell cell) {
-       for (int i = 0; i < n_; i++) {
-           for (int j = 0; j < n_; j++) {
-               Cell c = cells_[i][j];
-               List candidates = c.getCandidates();
-               if (c != cell && candidates != null && candidates.contains(candidate)) {
-                   // then not unique
-                   return false;
-               }
-           }
-        }
-        return true;
     }
 
     /**

@@ -3,27 +3,18 @@ package com.becker.puzzle.sudoku;
 import java.util.*;
 
 /**
- *  the Board describes the physical layout of the game.
- *  It is an abstract class that provides a common implementation for many of the
- *  methods in the BoardInterface.
+ *  The Board describes the physical layout of the puzzle.
  *  Assumes an M*N grid.
  *  Legal positions are [1, numRows_][1, numCols_]
- *
- *  Games like pente, go, chess, checkers, go-moku,
- *  shoji, othello, connect4, squares, Stratego, Blockade
- *  Other games like Risk, Galactic Empire, or Monopoly and might be supportable in the future.
- *  They are harder because they do not have perfect information (i.e. they use dice)
- *  and have multiple players.
  *
  *  @author Barry Becker
  */
 public class Board
 {
-
-    // the internal data structures representing the game board
+    /** the internal data structures representing the game board. */
     protected BigCell bigCells_[][] = null;
 
-    // The number of Cells in the boad is n^2 * n^2, but there are n * n big cells.
+    /** The number of Cells in the board is n^2 * n^2, but there are n * n big cells.   */
     protected int n_;
     protected int nn_;  // n times n
 
@@ -188,14 +179,15 @@ public class Board
         return true;
     }
 
-    public List findCellCandidates(int position) {
+    public List<Integer> findCellCandidates(int position) {
         return findCellCandidates(position / nn_, position % nn_);
     }
 
     /**
      * update candidate lists for a specific cell
+     * @return cell candidates
      */
-    public List findCellCandidates(int row, int col) {
+    public List<Integer> findCellCandidates(int row, int col) {
         updateRowCandidates(row);
         updateColCandidates(col);
         getBigCell(row/n_, col/n_).updateCandidates();
@@ -229,13 +221,13 @@ public class Board
     }
 
     private void updateRowCandidates(int row) {
-        List<Integer> rowCands = rowCandidates_[row];
-        rowCands.clear();
-        rowCands.addAll(valuesList_);
+        List<Integer> rowCandidates = rowCandidates_[row];
+        rowCandidates.clear();
+        rowCandidates.addAll(valuesList_);
         for (int j=0; j < nn_; j++) {
-            int v = this.getCell(row, j).getValue();
+            int v = getCell(row, j).getValue();
             if (v > 0)  {
-                rowCands.remove((Integer) v);
+                rowCandidates.remove((Integer) v);
             }
         }
     }
@@ -306,6 +298,18 @@ public class Board
             rowCandidates_[i] = new LinkedList<Integer>();
             colCandidates_[i] = new LinkedList<Integer>();
         }
+    }
+
+    public String toString() {
+        StringBuilder bldr = new StringBuilder();
+        for (int row=0; row < nn_; row++) {
+            for (int col=0; col < nn_; col++) {
+                bldr.append(getCell(row, col).getValue());
+                bldr.append(" ");
+            }
+            bldr.append("\n");
+        }
+        return bldr.toString();
     }
 
 }

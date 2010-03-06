@@ -36,8 +36,7 @@ public class DiceSimulator extends DistributionSimulator {
     @Override
     protected void initHistogram() {
         data_ = new int[numDice_ * (numSides_-1) + 1];
-        histogram_ = new HistogramRenderer(data_);
-        histogram_.setXFunction(new LinearFunction(1.0, -numDice_));
+        histogram_ = new HistogramRenderer(data_, new LinearFunction(1.0, -numDice_));
         histogram_.setXFormatter(new IntegerFormatter());
     }
 
@@ -47,10 +46,10 @@ public class DiceSimulator extends DistributionSimulator {
     }
    
     @Override
-    protected int getXPositionToIncrement() {
+    protected double getXPositionToIncrement() {
         int total = 0;
         for (int i=0; i < numDice_; i++) {
-           total += random_.nextInt(numSides_);
+           total += random_.nextInt(numSides_) + 1;
         }
         return total;
     }

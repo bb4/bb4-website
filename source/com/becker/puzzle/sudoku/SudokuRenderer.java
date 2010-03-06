@@ -34,10 +34,10 @@ public class SudokuRenderer extends PuzzleRenderer<Board> {
     {
     }
 
-
     /**
      * This renders the current state of the Board to the screen.
      */
+    @Override
     public void render(Graphics g, Board board, String status, int width, int height )
     {
 
@@ -76,6 +76,8 @@ public class SudokuRenderer extends PuzzleRenderer<Board> {
 
         int s = (int) (pieceSize * 0.4);
 
+        xpos += Math.random() * 3 - 1;
+        ypos += Math.random() * 3 - 1;
         Font font = new Font("Sans Serif", Font.PLAIN, pieceSize >> 1);
         Font candidateFont = new Font("Sans Serif", Font.PLAIN, pieceSize >> 2);
         g.setFont(font);
@@ -105,10 +107,10 @@ public class SudokuRenderer extends PuzzleRenderer<Board> {
         }
     }
 
-    private static void drawHintNumber(Graphics g, int cellNum, List<Integer> cands, int x, int y) {
-        synchronized (cands) {
-            if (cellNum < cands.size() && !cands.isEmpty()) {
-                Integer v = cands.get(cellNum);
+    private static void drawHintNumber(Graphics g, int cellNum, List<Integer> candidates, int x, int y) {
+        synchronized (candidates) {
+            if (cellNum < candidates.size() && !candidates.isEmpty()) {
+                Integer v = candidates.get(cellNum);
                 g.drawString(v.toString(), x, y);
             }
         }
@@ -127,7 +129,7 @@ public class SudokuRenderer extends PuzzleRenderer<Board> {
         int bottomEdgePos = MARGIN + pieceSize * edgeLen;
         int bigCellLen = (int) Math.sqrt(edgeLen);
 
-        // draw the hatches which deliniate the cells
+        // draw the hatches which delineate the cells
         g.setColor( GRID_COLOR );
         for ( int i = 0; i <= edgeLen; i++ )  //   -----
         {

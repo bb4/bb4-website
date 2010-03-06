@@ -83,7 +83,6 @@ public abstract class Simulator extends AnimationComponent
         {
             public void actionPerformed( ActionEvent e )
             {
-                //System.out.println("options button pressed");
 
                 optionsDialog_.setLocationRelativeTo( (Component) e.getSource() );
                 // pause the snake while the options are open
@@ -92,7 +91,6 @@ public abstract class Simulator extends AnimationComponent
                 simulator.setPaused( true );
                 final boolean canceled = optionsDialog_.showDialog();
                 simulator.setPaused( oldPauseVal );
-                //System.out.println( "options selected  canceled=" + canceled );
             }
         } );
         return button;

@@ -5,9 +5,6 @@ import com.becker.common.concurrency.Worker;
 import com.becker.ui.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
@@ -96,47 +93,59 @@ public final class SudokuPuzzle extends JApplet
         return panel;
     }
 
+    /**
+     * Must execute long tasks in a separate thread,
+     * otherwise you don't see the steps of the animation.
+     * @param e
+     */
     public void actionPerformed(ActionEvent e) {
 
-        // must execute long tasks in a separate thread,
-        // otherwise you don't see the steps of the animation.
-        Worker worker;
         Object src = e.getSource();
 
         if (src == generateButton_)  {
-            worker = new Worker() {
-
-                public Object construct() {
-                    puzzlePanel_.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-                    puzzlePanel_.generateNewPuzzle();
-                    return null;
-                }
-
-                public void finished() {
-                    puzzlePanel_.repaint();
-                    puzzlePanel_.setCursor(Cursor.getDefaultCursor());
-                }
-            };
-            worker.start();
-            solveButton_.setEnabled(true);
+            generatePuzzle(speedSelector_.getSelectedDelay());
         }
         else if (src == solveButton_)  {
-
-            worker = new Worker() {
-
-                public Object construct() {
-                    puzzlePanel_.startSolving();
-                    return null;
-                }
-
-                public void finished() {
-                    puzzlePanel_.repaint();
-                }
-            };
-            worker.start();
-            solveButton_.setEnabled(false);
+            solvePuzzle();
         }
     }
+
+    private void generatePuzzle(final int delay) {
+        Worker worker = new Worker() {
+
+            public Object construct() {
+                puzzlePanel_.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                puzzlePanel_.setDelay(delay);
+                puzzlePanel_.generateNewPuzzle(sizeSelector_.getSelectedSize());
+                return null;
+            }
+
+            public void finished() {
+                puzzlePanel_.repaint();
+                puzzlePanel_.setCursor(Cursor.getDefaultCursor());
+            }
+        };
+        worker.start();
+        solveButton_.setEnabled(true);
+    }
+
+    private void solvePuzzle() {
+        Worker worker = new Worker() {
+
+            public Object construct() {
+                puzzlePanel_.setDelay(speedSelector_.getSelectedDelay());
+                puzzlePanel_.startSolving();
+                return null;
+            }
+
+            public void finished() {
+                puzzlePanel_.repaint();
+            }
+        };
+        worker.start();
+        solveButton_.setEnabled(false);
+    }
+
 
     /**
      * size choice selected.
@@ -145,16 +154,7 @@ public final class SudokuPuzzle extends JApplet
     public void itemStateChanged(ItemEvent e) {
 
         if (e.getSource() == sizeSelector_)  {
-            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-            int size = sizeSelector_.getSelectedSize();
-            SudokuGenerator generator = new SudokuGenerator(size);
-            Board b = generator.generatePuzzleBoard(null);
-            puzzlePanel_.setBoard(b);
-            puzzlePanel_.repaint();
-            setCursor(Cursor.getDefaultCursor());
-        }
-        else if (e.getSource() == speedSelector_)  {
-            puzzlePanel_.setDelay(speedSelector_.getSelectedDelay());
+            generatePuzzle(10);
         }
     }
 
