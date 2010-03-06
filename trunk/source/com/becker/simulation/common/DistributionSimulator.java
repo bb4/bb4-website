@@ -21,7 +21,7 @@ public abstract class DistributionSimulator extends Simulator {
     protected HistogramRenderer histogram_;
     protected int[] data_;
 
-    /** Seeded Random varaible so results are reproducible. */
+    /** Seeded Random variable so results are reproducible. */
     protected Random random_ = new Random(0);
 
     public DistributionSimulator(String title) {
@@ -54,13 +54,16 @@ public abstract class DistributionSimulator extends Simulator {
     public double timeStep()
     {
         if ( !isPaused() ) {
-            int xPos = getXPositionToIncrement();
-            histogram_.increment(xPos);
+            histogram_.increment(getXPositionToIncrement());
         }
         return timeStep_;
     }
-    
-    protected abstract int getXPositionToIncrement();
+
+    /**
+     * @return An x value to add to the histogram.
+     * The histogram itself will convert it to the correct x axis bin location.
+     */
+    protected abstract double getXPositionToIncrement();
 
 
     @Override

@@ -1,5 +1,8 @@
 package com.becker.puzzle.sudoku;
 
+import com.becker.common.util.Util;
+
+import javax.swing.*;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
@@ -16,14 +19,18 @@ public class SudokuGenerator {
     private int numCells_;
     private Random random_;
     private int delay_;
+    SudokuPanel ppanel_;
 
     /**
      * Constructor
+     * @param baseSize 4, 9, or 16
+     * @param ppanel renders the puzzle. May be null if you do not want to see animation.
      */
-    public SudokuGenerator(int baseSize) {
+    public SudokuGenerator(int baseSize, SudokuPanel ppanel) {
         size_ = baseSize;
         numCells_ = (int) Math.pow(size_, 4);
         random_ = new Random();
+        ppanel_ = ppanel;
     }
 
     /**
@@ -41,30 +48,31 @@ public class SudokuGenerator {
     }
 
     /**
-     * @return generated a random board
+     * @return generated random board
      */
-    public Board generatePuzzleBoard(Container ppanel) {
+    public Board generatePuzzleBoard() {
 
         // first find a complete solution, b.
         Board b = new Board(size_);
+        System.out.println("gen initial solution");
+
+        if (ppanel_ != null)
+            ppanel_.setBoard(b);
+
         boolean success = generateSolution(b, 0);
+        System.out.println("done gen initial solution");
         assert success;
 
         Board test = new Board(b);
-      
+
         // now start removing values until we cannot deduce the final solution from it.
         // for every position (in random order) if we can remove it, do so.
-        Board generatedBoard = generateByRemoving(test, ppanel);
-
-        return generatedBoard;
+        return generateByRemoving(test);
     }
-
 
     /**
      * Recursive method to generate the sudoku board.
-     * @param board
-     * @param position
-     * @return the currently generated board
+     * @return the currently generated board (may be partial)
      */
     private boolean generateSolution(Board board, int position) {
 
@@ -73,13 +81,16 @@ public class SudokuGenerator {
             return true;  // board complete now
         }
 
-        List candidates = board.findCellCandidates(position);
+        List<Integer> candidates = board.findCellCandidates(position);
         Collections.shuffle(candidates, random_);
 
-        Iterator it = candidates.iterator();
+        if (position % 7 == 0) {
+            ppanel_.repaint();
+        }
+
         Cell c = board.getCell(position);
-        while (it.hasNext()) {
-            c.setValue((Integer) it.next());
+        for (int candidate : candidates) {
+            c.setValue(candidate);
             if (generateSolution(board, position + 1)) {
                 return true;
             }
@@ -88,12 +99,15 @@ public class SudokuGenerator {
         return false;
     }
 
-    private Board generateByRemoving(Board solution, Container ppanel) {
+    private Board generateByRemoving(Board solution) {
+
+        if (ppanel_ != null)
+            ppanel_.setBoard(solution);
 
         List positionList = getRandomPositions(size_);
         // we need a solver to verify that we can still deduce the original
         SudokuSolver solver = new SudokuSolver();
-        solver.setDelay(delay_/10);
+        solver.setDelay(delay_/20);
 
         int len = size_ * size_;
         int last = len * len;
@@ -105,19 +119,29 @@ public class SudokuGenerator {
 
         for (int i=len; i < last; i++) {
             int pos = (Integer) positionList.get(i);
-            Cell c = solution.getCell(pos);
-            int value = c.getValue();
-            c.clearValue();
-            if (!solver.solvePuzzle(solution, null)) {
-                // put it back since it cannot be solved without this positions value
-                c.setOriginalValue(value);
-            }
+            tryRemovingValue(pos, solution, solver);
             solution.reset();
-            if (ppanel != null && delay_ > 0)
-                ppanel.repaint();
         }
       
         return solution;
+    }
+
+    /**
+     * @param pos  position to try removing.
+     */
+    private void tryRemovingValue(int pos, Board solution, SudokuSolver solver) {
+        Cell c = solution.getCell(pos);
+        int value = c.getValue();
+        c.clearValue();
+
+        if (ppanel_ != null && delay_ > 0) {
+            ppanel_.repaint();
+        }
+
+        if (!solver.solvePuzzle(solution, null)) {
+            // put it back since it cannot be solved without this positions value
+            c.setOriginalValue(value);
+        }
     }
 
     /**
@@ -126,7 +150,7 @@ public class SudokuGenerator {
      */
     private List getRandomPositions(int size) {
         int numPositions = size * size * size * size;
-        List<Integer> positionList = new ArrayList(numPositions);
+        List<Integer> positionList = new ArrayList<Integer>(numPositions);
         for (int i=0; i < numPositions; i++) {
             positionList.add(i);
         }

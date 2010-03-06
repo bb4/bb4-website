@@ -20,8 +20,6 @@ public class StockSimulator extends DistributionSimulator {
     private static final int LABEL_WIDTH = 70;
 
     private StockSampleOptions opts_ = new StockSampleOptions();
-    private Function xFunction_;
-
 
 
     public StockSimulator() {
@@ -41,15 +39,14 @@ public class StockSimulator extends DistributionSimulator {
         double xScale = Math.pow(10, Math.max(0, Math.log10(max) - opts_.xResolution));
         double xLogScale = 3 * opts_.xResolution * opts_.xResolution;
 
-        xFunction_ =
+        Function xFunction =
                 opts_.useLogScale ? new LogFunction(xLogScale, 10.0, true) : new LinearFunction(1/xScale);
 
-        int maxX = (int)xFunction_.getFunctionValue(max);
+        int maxX = (int)xFunction.getFunctionValue(max);
         data_ = new int[maxX + 1];
 
-        histogram_ = new HistogramRenderer(data_);
+        histogram_ = new HistogramRenderer(data_, xFunction);
         histogram_.setXFormatter(new CurrencyFormatter());
-        histogram_.setXFunction(xFunction_);
         histogram_.setMaxLabelWidth(LABEL_WIDTH);
     }
 
@@ -59,11 +56,8 @@ public class StockSimulator extends DistributionSimulator {
     }
 
     @Override
-    protected int getXPositionToIncrement() {
-        double sample = createSample();
-        int normalizedSample = (int)xFunction_.getFunctionValue(sample);
-        //System.out.println("sample=" + sample + " normalizedSample=" + normalizedSample);
-        return normalizedSample;
+    protected double getXPositionToIncrement() {
+        return createSample();
     }
 
     /**

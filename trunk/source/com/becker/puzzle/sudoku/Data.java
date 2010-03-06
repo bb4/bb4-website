@@ -43,5 +43,5 @@ public class Data {
 
 
     // you should never instantiate this static class.
-    private Data() {};
+    private Data() {}
 }

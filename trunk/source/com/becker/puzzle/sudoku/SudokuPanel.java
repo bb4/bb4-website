@@ -34,7 +34,7 @@ public final class SudokuPanel extends JPanel
 
     /**
      * reset to new puzzle with specified initial data.
-     * @param initialData
+     * @param initialData starting values.
      */
     public void reset(int[][] initialData) {
         board_ = new Board(initialData);
@@ -60,11 +60,10 @@ public final class SudokuPanel extends JPanel
             System.out.println( "This puzzle is not solvable!" ); // guaranteed not to happen
     }
 
-
-    public void generateNewPuzzle() {
-        SudokuGenerator generator = new SudokuGenerator(board_.getBaseSize());
+    public void generateNewPuzzle(int size) {
+        SudokuGenerator generator = new SudokuGenerator(size, this);
         generator.setDelay(delay_);
-        board_ = generator.generatePuzzleBoard(this);
+        board_ = generator.generatePuzzleBoard();
 
         repaint();
     }

@@ -31,21 +31,37 @@ public class HistogramRenderer {
     private int maxNumLabels_;
     private double barWidth_;
     private double mean_ = 0;
-    long sum_ = 0;
-    int numBars_;
+    private long sum_ = 0;
+    private int numBars_;
 
-    /** provides a way to scale x axis values. Default if null is the identity function. */
-    Function xFunction_ = new LinearFunction(1.0);
-    INumberFormatter formatter_ = new DefaultNumberFormatter();
+    private Function xFunction_;
+    private INumberFormatter formatter_ = new DefaultNumberFormatter();
 
     private static final int DEFAULT_LABEL_WIDTH = 30;
     private int maxLabelWidth_ = DEFAULT_LABEL_WIDTH;
 
-    
+
+    /**
+     * Constructor that assumes no scaling ont he x axis.
+     * @param data  the array to hold counts for each x axis position.
+     */
     public HistogramRenderer(int[] data)
+    {
+        this(data, new LinearFunction(1.0));
+    }
+
+    /**
+     * Constructor
+     * @param data  the array to hold counts for each x axis position.
+     * @param func  a way to scale the values on the x axis.
+     *   This function takes an x value in the domain space and maps it to a bin location.
+     */
+    public HistogramRenderer(int[] data, Function func)
     {
         data_ = data;
         numBars_ = data_.length;
+        xFunction_ = func;
+        mean_ =  xFunction_.getInverseFunctionValue(0);
     }
 
     public void setSize(int width, int height) {
@@ -55,26 +71,19 @@ public class HistogramRenderer {
         barWidth_ = (width_ - 2.0 * MARGIN) / numBars_;
     }
 
-    public void increment(int xPos) {
+    public void increment(double xValue) {
+        int xPos = (int)xFunction_.getFunctionValue(xValue);
         data_[xPos]++;
-        double xValue = xFunction_.getInverseFunctionValue(xPos);
         mean_ = (mean_ * sum_  + xValue) / (sum_  + 1);
         sum_++;
     }
 
     /**
+     * Provides customer formatting for the x axis values.
      * @param formatter a way to format the x axis values
      */
     public void setXFormatter(INumberFormatter formatter) {
         formatter_ = formatter;
-    }
-
-    /**
-     * @param func a way to scale the values on the x axis.
-     */
-    public void setXFunction(Function func) {
-        xFunction_ = func;
-        mean_ =  xFunction_.getInverseFunctionValue(0);
     }
 
     /**
@@ -117,9 +126,8 @@ public class HistogramRenderer {
                     MARGIN-1 + width, height_ - MARGIN -1);
 
         g2.drawString("Height = " + Util.formatNumber(maxHeight), MARGIN/3, MARGIN -2);
-
         g2.drawString("Number trials = " + Util.formatNumber(sum_), width_ - 300, MARGIN -2);
-        g2.drawString("Mean = " + formatter_.format(mean_), width_ - 130, MARGIN -2);
+        g2.drawString("Mean = " + Util.formatNumber(mean_), width_ - 130, MARGIN -2);
 
         // draw a vertical line for the mean
         int meanXpos = (int)(MARGIN  + (double)width * xFunction_.getFunctionValue(mean_) / numBars_ + barWidth_/2);
@@ -133,7 +141,6 @@ public class HistogramRenderer {
         g2.drawLine(medianXpos,    height_ - MARGIN,
                     medianXpos,    MARGIN);
         g2.drawString("Median", medianXpos + 4, MARGIN  + 28);
-
     }
 
     private double calcMedian() {

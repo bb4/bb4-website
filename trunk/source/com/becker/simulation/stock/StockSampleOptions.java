@@ -12,7 +12,7 @@ public class StockSampleOptions {
     static final int DEFAULT_NUM_TIME_PERIODS = 100;
     static final double DEFAULT_PERCENT_INCREASE = 0.6;
     static final double DEFAULT_PERCENT_DECREASE = 0.4;
-    static final double DEFAULT_STARTING_VALUE = 100000;
+    static final double DEFAULT_STARTING_VALUE = 1000;
     static final int DEFAULT_X_RESOLUTION = 2;
     static final boolean DEFAULT_USE_LOG_SCALE = true;
     static final boolean DEFAULT_USE_RANDOM_CHANGE = false;
