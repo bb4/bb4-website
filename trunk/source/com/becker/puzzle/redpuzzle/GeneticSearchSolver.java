@@ -31,9 +31,9 @@ public class GeneticSearchSolver extends RedPuzzleSolver
     }
 
     /**
-     * @param puzzlePanel will show the pieces as we arrange them.
-     * @return true if a solution is found.
+     * @return list of moves to a solution.
      */
+    @Override
     public List<Piece> solve()  {
         
         ParameterArray initialGuess = new PieceParameterArray(pieces_);        
@@ -78,8 +78,8 @@ public class GeneticSearchSolver extends RedPuzzleSolver
      * Return a high score if there are a lot of fits among the pieces.
      * For every nub that fits we count 1
      *
-     * @param params
-     * @return
+     * @param params  parameters
+     * @return fitness value. High is good.
      */
     public double evaluateFitness(ParameterArray params) {
         PieceList pieces = ((PieceParameterArray) params).getPieceList();
@@ -93,7 +93,7 @@ public class GeneticSearchSolver extends RedPuzzleSolver
     }
 
     public double compareFitness(ParameterArray params1, ParameterArray params2) {
-        assert false; // not used since we evaluate in an absolute way.
+        assert false : "compareFitness not used since we evaluate in an absolute way.";
         return 0;
     }
 

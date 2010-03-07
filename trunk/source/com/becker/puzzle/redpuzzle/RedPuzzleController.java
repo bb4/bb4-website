@@ -31,7 +31,8 @@ public class RedPuzzleController extends AbstractPuzzleController<PieceList, Pie
     }
  
     public PieceList initialPosition() {
-        return new PieceList();  // empty piece list 
+        // empty piece list
+        return new PieceList();
     }
 
     public boolean isGoal(PieceList position) {
@@ -39,9 +40,14 @@ public class RedPuzzleController extends AbstractPuzzleController<PieceList, Pie
         return (position.size() == NUM_PIECES);
     }
 
+    /**
+     * For each piece that we have not tried yet, see if it fits.
+     * If it does, add that to the set of legal next moves.
+     * @param position position to look from.
+     * @return list of legal moves that can be made from current position.
+     */
     public List<Piece> legalMoves(PieceList position) {   
-        // for each piece that we have not tried yet, see if it fits.
-        // if it does, add that to the set of legal next moves.        
+
         List<Piece> moves = new LinkedList<Piece>();
         for  (int i = 0; i < NUM_PIECES; i++) {
             Piece p = SHUFFLED_PIECES.get(i);

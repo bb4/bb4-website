@@ -45,10 +45,10 @@ public class RedPuzzleRenderer extends PuzzleRenderer<PieceList> {
     {
     }
 
-
     /**
      * This renders the current state of the Board to the screen.
      */
+    @Override
     public void render( Graphics g, PieceList board, String status, int width, int height )
     {
         // erase what's there and redraw.

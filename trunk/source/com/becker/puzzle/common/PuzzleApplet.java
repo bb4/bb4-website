@@ -12,11 +12,11 @@ import java.awt.event.*;
  *
  * @author Barry Becker  Date: Sep 2005
  */
-public abstract class PuzzleApplet extends ApplicationApplet
+public abstract class PuzzleApplet<P, M> extends ApplicationApplet
                                   implements ActionListener, ItemListener
 {
-    protected PuzzleController controller_;
-    protected PuzzleViewer viewer_;
+    protected PuzzleController<P, M> controller_;
+    protected PuzzleViewer<P, M> viewer_;
 
     private JButton solveButton_;
     private Choice algorithmChoice_;
@@ -30,6 +30,7 @@ public abstract class PuzzleApplet extends ApplicationApplet
      * create and initialize the puzzle
      * (init required for applet)
      */
+    @Override
     protected JPanel createMainPanel() {
         JPanel mainPanel = new JPanel(new BorderLayout());
 
@@ -45,9 +46,9 @@ public abstract class PuzzleApplet extends ApplicationApplet
         return mainPanel;
     }
 
-    protected abstract PuzzleViewer createViewer();
+    protected abstract PuzzleViewer<P, M> createViewer();
 
-    protected abstract PuzzleController createController(Refreshable viewer);
+    protected abstract PuzzleController<P, M> createController(Refreshable<P, M> viewer);
 
     protected JPanel createCustomControls() {
         return null;
@@ -55,6 +56,7 @@ public abstract class PuzzleApplet extends ApplicationApplet
 
     /**
      * solve and generate button at the top.
+     * @return panel will solve button and other interface controls.
      */
     public JPanel createButtonPanel() {
         JPanel panel = new JPanel();
@@ -70,7 +72,7 @@ public abstract class PuzzleApplet extends ApplicationApplet
     }
 
     /**
-     *The dropdown menu at the top for selecting an algorithm for solving the puzzle.
+     * The dropdown menu at the top for selecting an algorithm for solving the puzzle.
      */
     private Choice createAlgorithmDropdown() {
         algorithmChoice_ = new Choice();
@@ -83,7 +85,7 @@ public abstract class PuzzleApplet extends ApplicationApplet
     }
 
 
-    protected abstract AlgorithmEnum[] getAlgorithmValues();
+    protected abstract AlgorithmEnum<P, M>[] getAlgorithmValues();
 
     /**
      * algorithm selected.

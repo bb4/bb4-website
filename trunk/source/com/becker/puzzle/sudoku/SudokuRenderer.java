@@ -3,7 +3,9 @@ package com.becker.puzzle.sudoku;
 import com.becker.puzzle.common.PuzzleRenderer;
 import java.awt.*;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Renders the the sudoku puzzle onscreen.
@@ -76,8 +78,8 @@ public class SudokuRenderer extends PuzzleRenderer<Board> {
 
         int s = (int) (pieceSize * 0.4);
 
-        xpos += Math.random() * 3 - 1;
-        ypos += Math.random() * 3 - 1;
+        int jittered_xpos = xpos + (int)(Math.random() * 3 - 1);
+        int jittered_ypos = ypos + (int)(Math.random() * 3 - 1);
         Font font = new Font("Sans Serif", Font.PLAIN, pieceSize >> 1);
         Font candidateFont = new Font("Sans Serif", Font.PLAIN, pieceSize >> 2);
         g.setFont(font);
@@ -86,32 +88,38 @@ public class SudokuRenderer extends PuzzleRenderer<Board> {
 
         g.setColor( cell.isOriginal() ? CELL_ORIG_TEXT_COLOR : CELL_TEXT_COLOR );
         if (cell.getValue() > 0) {
-            g.drawString( Integer.toString(cell.getValue()), xpos + (int)(0.8 * s), (int)(ypos + s * 1.7) );
+            g.drawString( Integer.toString(cell.getValue()),
+                    jittered_xpos + (int)(0.8 * s), (int)(jittered_ypos + s * 1.7) );
         }
 
         // draw the first 4 numbers in the candidate list, if there are any.
-        List<Integer> candidates = cell.getCandidates();
+        Set<Integer> candidates = cell.getCandidates();
         if (candidates != null) {
             g.setColor(CANDIDATE_TEXT_COLOR);
             g.setFont(candidateFont);
 
-            int xOffsetLow =  (int) (0.4 * s);
-            int xOffsetHi =  (int) (1.5 * s);
-            int yOffsetLow =  (int) (0.9 * s);
-            int yOffsetHi =  (int) (2.1 * s);
-
-            drawHintNumber(g, 0, candidates, xpos + xOffsetLow, ypos + yOffsetLow);
-            drawHintNumber(g, 1, candidates, xpos + xOffsetHi, ypos + yOffsetLow);
-            drawHintNumber(g, 2, candidates, xpos + xOffsetLow, ypos + yOffsetHi);
-            drawHintNumber(g, 3, candidates, xpos + xOffsetHi, ypos + yOffsetHi);
+            drawHints(g, candidates, xpos, ypos, s);
         }
     }
 
-    private static void drawHintNumber(Graphics g, int cellNum, List<Integer> candidates, int x, int y) {
+    private static void drawHints(Graphics g, Set<Integer> candidates, int x, int y, int scale) {
+        int xOffsetLow =  (int) (0.4 * scale);
+        int xOffsetHi =  (int) (1.5 * scale);
+        int yOffsetLow =  (int) (0.9 * scale);
+        int yOffsetHi =  (int) (2.1 * scale);
+        int[][] offsets = {
+                {xOffsetLow, yOffsetLow},
+                {xOffsetHi, yOffsetLow},
+                {xOffsetLow, yOffsetHi},
+                {xOffsetHi, yOffsetHi}
+        };
+
         synchronized (candidates) {
-            if (cellNum < candidates.size() && !candidates.isEmpty()) {
-                Integer v = candidates.get(cellNum);
-                g.drawString(v.toString(), x, y);
+            int ct = 0;
+            Iterator<Integer> cit = candidates.iterator();
+            while (cit.hasNext() && ct < 4)  { 
+                g.drawString(Integer.toString(cit.next()), x + offsets[ct][0], y + offsets[ct][1]);
+                ct++;
             }
         }
     }

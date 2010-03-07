@@ -144,16 +144,16 @@ public class ParameterArray implements Comparable<ParameterArray>
 
 
     /**
-     * @param r the size of the (1 std deviation) gaussian neighborhood to select a random nbr from
+     * @paramm radius the size of the (1 std deviation) gaussian neighborhood to select a random nbr from
      *     (relative to each parameter range).
      * @return the random nbr.
      */
-     public ParameterArray getRandomNeighbor(double r)
+     public ParameterArray getRandomNeighbor(double radius)
      {
          ParameterArray nbr = this.copy();
          for ( int k = 0; k < params_.length; k++ ) {
              Parameter par = nbr.get(k);
-             par.tweakValue(r, RANDOM);            
+             par.tweakValue(radius, RANDOM);
          }
 
          return nbr;

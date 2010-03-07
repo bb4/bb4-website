@@ -17,7 +17,7 @@ public class Cell {
     private BigCell parent_;
 
     /** and, most importantly, the intersection of these.    */
-    private List<Integer> candidates_ = null;
+    private Set<Integer> candidates_ = null;
 
 
     public Cell(int value, BigCell parent) {
@@ -47,7 +47,7 @@ public class Cell {
     public void clearValue() {
         value_ = 0;
         original_ = false;
-        candidates_ = Collections.synchronizedList(new LinkedList<Integer>());
+        candidates_ = Collections.synchronizedSet(new HashSet<Integer>());
     }
 
     /**
@@ -65,22 +65,25 @@ public class Cell {
             candidates_ = null;
         }
         else {
-            candidates_ = new LinkedList<Integer>();
+            candidates_ = new HashSet<Integer>();
         }
     }
 
-    public List<Integer> getCandidates() {
+    public Set<Integer> getCandidates() {
         if (original_)
             assert(candidates_ == null) : candidates_ +" not null";
         return candidates_;
     }
 
-    public void updateCandidates(List<Integer> rowCandidates, List<Integer> colCandidates) {
+    /**
+     * Intersect the parent big cell candidates with the row and column candidates.
+     */
+    public void updateCandidates(Set<Integer> rowCandidates, Set<Integer> colCandidates) {
         if (candidates_ == null)
             return;
         candidates_.clear();
-        List<Integer> bcList = parent_.getCandidates();
-        for (Integer candidate : bcList)  {
+        Set<Integer> bigCellSet = parent_.getCandidates();
+        for (Integer candidate : bigCellSet)  {
             if (rowCandidates.contains(candidate) && colCandidates.contains(candidate)) {
                candidates_.add(candidate);
            }
@@ -89,10 +92,10 @@ public class Cell {
 
     /**
      * @@ Perhaps make a separate pass for setting all the cells that only have one value in the
-     * candidate list first.
+     * candidate set first.
      * This should improve performance.
      */
-    public void checkAndSetUniqueValues(List<Integer> rowCandidates, List<Integer> colCandidates) {
+    public void checkAndSetUniqueValues(Set<Integer> rowCandidates, Set<Integer> colCandidates) {
 
         if (candidates_ == null) {
             // nothing to do, the final value is already determined.
@@ -101,14 +104,14 @@ public class Cell {
 
         int unique = parent_.getUniqueValueForCell(this);
         if (unique > 0) {
-            // set it and remove from appropriate candidate lists
+            // set it and remove from appropriate candidate sets
             setValue(unique);
             assert(candidates_.contains(unique));
             candidates_.clear();
             candidates_ = null;
-            boolean removed1 = parent_.getCandidates().remove((Integer) unique);
-            boolean removed2 = rowCandidates.remove((Integer) unique);
-            boolean removed3 = colCandidates.remove((Integer) unique);
+            boolean removed1 = parent_.getCandidates().remove(unique);
+            boolean removed2 = rowCandidates.remove(unique);
+            boolean removed3 = colCandidates.remove(unique);
 
             assert (removed1) : "Invalid Puzzle: Could not remove " + unique + " from " + parent_.getCandidates();
             assert (removed2) : "Invalid Puzzle: Could not remove " + unique + " from " + rowCandidates;

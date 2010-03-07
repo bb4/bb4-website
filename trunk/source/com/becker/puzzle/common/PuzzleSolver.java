@@ -13,8 +13,8 @@ import java.util.List;
 public interface PuzzleSolver<P, M>  {
   
     /**
-     *Solve the puzzle and return a list of moves that lead to the solution. 
+     * Solve the puzzle and return a list of moves that lead to the solution. 
+     * @return list of moves (transitions) that can be made to arrive at a solution.
      */
     List<M> solve()  throws InterruptedException;
-    
 }

@@ -12,7 +12,7 @@ import java.security.AccessControlException;
  *
  * @author Brian Goetz and Tim Peierls
  */
-public class BaseConcurrentPuzzleSolver <P, M>  implements PuzzleSolver<P, M> {
+public class BaseConcurrentPuzzleSolver<P, M>  implements PuzzleSolver<P, M> {
     private final PuzzleController<P, M> puzzle;
     private final ExecutorService exec;
 

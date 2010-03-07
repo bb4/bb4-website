@@ -15,7 +15,7 @@ public class BigCell {
     protected int n_;
 
     /** The number which have not yet been used in this big cell. */
-    private List<Integer> bigCellCandidates_;
+    private Set<Integer> candidates_;
 
     private Board board_;
 
@@ -32,7 +32,7 @@ public class BigCell {
                cells_[i][j] = new Cell(0, this);
            }
         }
-        bigCellCandidates_ = new LinkedList<Integer>();
+        candidates_ = new HashSet<Integer>();
     }
 
     /**
@@ -48,21 +48,21 @@ public class BigCell {
     }
 
     public void updateCandidates() {
-        bigCellCandidates_.clear();
+        candidates_.clear();
         // assume all of them, then remove those that are represented.
-        bigCellCandidates_.addAll(board_.getValuesList());
+        candidates_.addAll(board_.getValuesList());
         for (int i = 0; i < n_; i++) {
            for (int j = 0; j < n_; j++) {
                int v = cells_[i][j].getValue();
                if (v > 0) {
-                  bigCellCandidates_.remove((Integer) v);
+                  candidates_.remove(v);
                }
            }
         }
     }
 
-    public List<Integer> getCandidates() {
-        return bigCellCandidates_;
+    public Set<Integer> getCandidates() {
+        return candidates_;
     }
 
     /**
@@ -76,16 +76,16 @@ public class BigCell {
     }
 
     /**
-     * @param cell
+     * @param cell  cell to check for unique candidate.
      * @return the unique value for this cell if there is one
      */
     public int getUniqueValueForCell(Cell cell) {
-        List cellCandidates = cell.getCandidates();
+        Set<Integer> cellCandidates = cell.getCandidates();
         if (cellCandidates == null)
             return 0; // cell.getValue();
         if (cellCandidates.size() == 1) {
             // if there is only one candidate, then that is the value for this cell.
-            return (Integer) cellCandidates.get(0);
+            return cellCandidates.iterator().next();
         }
         return 0;   // the value is not unique
     }

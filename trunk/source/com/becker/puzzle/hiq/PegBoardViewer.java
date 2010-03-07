@@ -3,14 +3,13 @@ package com.becker.puzzle.hiq;
 import com.becker.puzzle.common.PuzzleViewer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.LinkedList;
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
 /**
  *  UI for drawing the current best solution to the puzzle.
- *
+ *  @author Barry Becker
  */
 final class PegBoardViewer extends PuzzleViewer<PegBoard, PegMove>
                                              implements ActionListener
@@ -71,18 +70,16 @@ final class PegBoardViewer extends PuzzleViewer<PegBoard, PegMove>
     }
     
     @Override
-    public void finalRefresh(java.util.List<PegMove> path, PegBoard board, long numTries, long millis) {      
+    public void finalRefresh(List<PegMove> path, PegBoard board, long numTries, long millis) {
         super.finalRefresh(path, board, numTries, millis);
-        showPath(path, board, numTries);                 
+        showPath(path, board);
     }
    
     public void makeSound() {
         // add sound
     }
 
-    public void showPath(java.util.List<PegMove> path, PegBoard board, long numTries) {
-        java.util.List<PegMove> p = new LinkedList<PegMove>();
-        p.addAll(path);
+    public void showPath(List<PegMove> path, PegBoard board) {
         
         path_ = path;
         board_ = board;

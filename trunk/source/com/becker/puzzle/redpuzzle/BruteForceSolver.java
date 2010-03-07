@@ -25,6 +25,7 @@ public class BruteForceSolver<P, M> extends RedPuzzleSolver {
     /**
      * @return true if a solution is found.
      */
+    @Override
     public List<Piece> solve()  {    
         List<Piece> moves = null;
         long startTime = System.currentTimeMillis();

@@ -7,7 +7,7 @@ import java.util.Set;
  * PuzzleController constructor.
  * <p/>
  * Abstraction for puzzles like the 'sliding blocks puzzle'
- *The type parameters P and M correspond to a position (state) and a move (transition from one state to the next).
+ * The type parameters P and M correspond to a position (state) and a move (transition from one state to the next).
  *
  * @author Brian Goetz, and Tim Peierls
  */
@@ -21,7 +21,7 @@ public interface PuzzleController<P, M> {
     boolean isGoal(P position);
 
     /**
-     *@return a list of legal next immutable moves.
+     * @return a list of legal next immutable moves.
      */
     List<M> legalMoves(P position);
 
@@ -45,12 +45,13 @@ public interface PuzzleController<P, M> {
     void setAlgorithm(AlgorithmEnum<P, M> algorithm);
 
     /**
-     *get the algorithm to use.
+     * Get the algorithm to use.
+     * @return algorithm to use when solving.
      */
     AlgorithmEnum getAlgorithm();
     
     /**
-     *begin the search to find a solution to the puzzle.
+     * Begin the search to find a solution to the puzzle.
      */
     void startSolving();          
 }

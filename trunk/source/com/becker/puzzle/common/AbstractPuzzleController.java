@@ -2,11 +2,11 @@ package com.becker.puzzle.common;
 
 import com.becker.common.concurrency.Worker;
 
-import java.util.List;
 import java.util.Set;
 
 /**
- * Provbides default implementation for a PuzzleController
+ * Provides default implementation for a PuzzleController.
+ * The puzzle controller updates the ui (refreshable) and determines what algorithm is used to solve it.
  *
  * @author Barry Becker
  */
@@ -30,7 +30,7 @@ public abstract class AbstractPuzzleController<P, M> implements PuzzleController
     /**
      * There are different approaches we can take to solving thepuzzle.
      *
-     * @param algorithm
+     * @param algorithm strategy to use for solving the puzzle.
      */
     public void setAlgorithm(AlgorithmEnum<P, M> algorithm) {
         algorithm_ = algorithm;
@@ -45,8 +45,9 @@ public abstract class AbstractPuzzleController<P, M> implements PuzzleController
 
 
     /**
-     *If it was never seen before add it.
-     *Must be synchronized because some solvers use concurrency.
+     * If it was never seen before add it.
+     * Must be synchronized because some solvers use concurrency.
+     * @return true if this position was already seen while searching.
      */
     public synchronized boolean alreadySeen(P position, Set<P> seen) {
 
@@ -57,7 +58,6 @@ public abstract class AbstractPuzzleController<P, M> implements PuzzleController
          }
         return visited;
     }
-
 
     /**
      * Begin the process of solving.
@@ -74,9 +74,8 @@ public abstract class AbstractPuzzleController<P, M> implements PuzzleController
             public Object construct()  {
 
                 // this does all the heavy work of solving it.
-                List<M> path = null;
                 try {
-                    path = solver.solve();
+                    solver.solve();
                 } catch (InterruptedException e) {
                     assert false: "Thread interrupted. " + e.getMessage();
                 }

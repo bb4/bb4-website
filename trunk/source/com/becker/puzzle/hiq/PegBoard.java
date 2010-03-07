@@ -77,9 +77,7 @@ public class PegBoard {
      */
     public PegBoard(PegBoard pos, PegMove move, boolean undo) {
         this(pos);
-        
-        //Location fromLocation = move.getFrom();
-        //Location toLocation = move.getTo();
+
         byte fromRow = move.getFromRow();
         byte fromCol = move.getFromCol();
         byte toRow = move.getToRow();

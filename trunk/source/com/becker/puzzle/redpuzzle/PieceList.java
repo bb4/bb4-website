@@ -221,7 +221,7 @@ public class PieceList {
      * @param piece the piece to try to fit into our current solution.
      * @return true if it fits.
      */
-    public boolean fits( Piece p) {
+    public boolean fits(Piece piece) {
 
         // it needs to match the piece to the left and above (if present)
         boolean fits = true;
@@ -231,13 +231,13 @@ public class PieceList {
         if ( col > 0 ) {
             // if other than a left edge piece, then we need to match to the left side nub.
             Piece leftPiece = getLast();
-            if (!leftPiece.getRightNub().fitsWith(p.getLeftNub()))
+            if (!leftPiece.getRightNub().fitsWith(piece.getLeftNub()))
                 fits = false;
         }
         if ( row > 0 ) {
             // then we need to match with the top one
             Piece topPiece = get( numSolved - EDGE_LENGTH );
-            if (!topPiece.getBottomNub().fitsWith(p.getTopNub()) )
+            if (!topPiece.getBottomNub().fitsWith(piece.getTopNub()) )
                 fits = false;
         }
 

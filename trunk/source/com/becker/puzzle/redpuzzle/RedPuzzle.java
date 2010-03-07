@@ -24,8 +24,8 @@ import javax.swing.*;
  * BruteForce Sequential <1.0s  BruteForce concurrent <.1s
  * @author Barry becker
  */
-public final class RedPuzzle extends PuzzleApplet 
-                                             implements SliderChangeListener                                                                 
+public final class RedPuzzle extends PuzzleApplet<PieceList, Piece>
+                            implements SliderChangeListener
 {
     
     /** allows you to change the animation speed. */
@@ -38,15 +38,18 @@ public final class RedPuzzle extends PuzzleApplet
     public RedPuzzle() {
     }
 
-    protected PuzzleViewer createViewer() {
-        return new  RedPuzzleViewer();
+    @Override
+    protected PuzzleViewer<PieceList, Piece> createViewer() {
+        return new RedPuzzleViewer();
     }
     
-    protected PuzzleController createController(Refreshable viewer_) {
+    @Override
+    protected PuzzleController<PieceList, Piece> createController(Refreshable<PieceList, Piece> viewer_) {
         return new RedPuzzleController(viewer_);   
     }
     
-    protected AlgorithmEnum[] getAlgorithmValues() {
+    @Override
+    protected AlgorithmEnum<PieceList, Piece>[] getAlgorithmValues() {
         return Algorithm.values();
     }
     

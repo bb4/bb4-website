@@ -25,7 +25,7 @@ public enum Algorithm implements AlgorithmEnum<PegBoard, PegMove> {
      *Private constructor
      * Creates a new instance of Algorithm
      */
-    private Algorithm(String label) {
+    Algorithm(String label) {
         this.label = label;
     }
     
