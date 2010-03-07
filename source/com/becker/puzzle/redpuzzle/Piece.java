@@ -19,7 +19,7 @@ public final class Piece
     /** the number of the piece (1-9). */
     private byte pieceNumber_ = 0;
 
-    public static enum Direction {TOP, RIGHT, BOTTOM, LEFT}
+    public enum Direction {TOP, RIGHT, BOTTOM, LEFT}
 
     /**
      * Constructor.
@@ -149,15 +149,15 @@ public final class Piece
         StringBuffer buf = new StringBuffer("Piece "+ getNumber() + " (orientation="+orientation_+"): ");
         for (Direction d : Direction.values()) {
             Nub n = getNub(d);
-            buf.append(d.toString() + ':' + n.toString() + ";  ");
+            buf.append(d.toString()).append(':').append(n.toString()).append(";  ");
         }
         return buf.toString();
     }
     
     public String toRawString() {
         StringBuffer buf = new StringBuffer("Piece "+ getNumber() + ":");
-        for (int i=0; i<4; i++) {           
-            buf.append(nubs_[i].toString() + " ");
+        for (int i=0; i<4; i++) {
+            buf.append(nubs_[i].toString()).append(" ");
         }
         return buf.toString();
     }

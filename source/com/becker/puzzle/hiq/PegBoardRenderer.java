@@ -32,10 +32,10 @@ public class PegBoardRenderer extends PuzzleRenderer<PegBoard> {
     {
     }
 
-
     /**
      * This renders the current state of the Board to the screen.
      */
+    @Override
     public void render( Graphics g, PegBoard board, String status, int width, int height )
     {
          int i, xpos, ypos;
@@ -52,7 +52,7 @@ public class PegBoardRenderer extends PuzzleRenderer<PegBoard> {
         g.setColor( Color.black );
         drawStatus(g,  status,  LEFT_MARGIN, TOP_MARGIN - 36 );
 
-        // draw the hatches which deliniate the cells
+        // draw the hatches which delineate the cells
         g.setColor( Color.darkGray );
         for ( i = 0; i <= size; i++ )  //   -----
         {

@@ -36,7 +36,6 @@ public abstract class RedPuzzleSolver implements PuzzleSolver<PieceList, Piece> 
 
     /**
      * Derived classes must provide the implmentation fo rthis abstract method.
-     * @param puzzlePanel will show the pieces as we arrange them.
      * @return true if a solution is found.
      */
     public abstract List<Piece> solve();

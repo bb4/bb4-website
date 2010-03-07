@@ -18,8 +18,8 @@ public class SequentialPuzzleSolver<P, M> implements PuzzleSolver<P, M> {
 
     /**
      *
-     * @param puzzle
-     * @param ui
+     * @param puzzle the puzzle to solve
+     * @param ui the thing that can show its current state.
      */
     public SequentialPuzzleSolver(PuzzleController<P, M> puzzle, Refreshable<P, M> ui) {
         this.puzzle = puzzle;
@@ -44,7 +44,7 @@ public class SequentialPuzzleSolver<P, M> implements PuzzleSolver<P, M> {
             for (M move : moves) {
                 P position = puzzle.move(node.position, move);
                 
-                // don't necessarily refresh everytime as that would put too much load on the processor
+                // don't necessarily refresh every time as that would put too much load on the processor
                 if (ui != null)                  
                     ui.refresh(position, numTries);             
                 

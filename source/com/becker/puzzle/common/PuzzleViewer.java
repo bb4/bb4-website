@@ -5,7 +5,7 @@ import java.util.List;
 import javax.swing.JPanel;
 
 /**
- *
+ * Shows the current state of the puzzle in the ui.
  * Created on August 26, 2007, 10:41 AM
  * @author Barry Becker
  */
@@ -45,10 +45,14 @@ public abstract class PuzzleViewer<P, M> extends JPanel implements Refreshable<P
         numTries_ = numTries;
         repaint();
     }
-    
+
+    /**
+     * @param numTries number of attemptws to solve so far.
+     * @return some text to show in the status bar.
+     */
     protected String createStatusMessage(long numTries) {
         String msg = "\nNumber of tries :" + Util.formatNumber(numTries); 
-        // I think this might be an expensize operation so don't do it every time
+        // I think this might be an expensive operation so don't do it every time
         if (Math.random() <.05) {
             totalMem_ = Runtime.getRuntime().totalMemory()/1000;
             freeMem_ = Runtime.getRuntime().freeMemory()/1000;   

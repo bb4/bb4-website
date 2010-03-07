@@ -40,7 +40,7 @@ import com.becker.ui.*;
  * After optimization it  ran in about 3 minutes on a Core2Duo (189 seconds).
  * After parallelizing the algorithm using ConcurrrentPuzzleSolver it is down to 93 seconds on the CoreDuo.
  */
-public final class HiQPuzzle extends PuzzleApplet 
+public final class HiQPuzzle extends PuzzleApplet<PegBoard, PegMove>
 {
     
     /**
@@ -49,15 +49,18 @@ public final class HiQPuzzle extends PuzzleApplet
     public HiQPuzzle() {}
 
     
-    protected PuzzleViewer createViewer() {
+    @Override
+    protected PuzzleViewer<PegBoard, PegMove> createViewer() {
         return new PegBoardViewer(PegBoard.INITIAL_BOARD_POSITION);
     }
 
-    protected PuzzleController createController(Refreshable viewer_) {
+    @Override
+    protected PuzzleController<PegBoard, PegMove> createController(Refreshable<PegBoard, PegMove> viewer_) {
         return new HiQController(viewer_);        
     }
     
-    protected AlgorithmEnum[] getAlgorithmValues() {
+    @Override
+    protected AlgorithmEnum<PegBoard, PegMove>[] getAlgorithmValues() {
         return Algorithm.values();
     }
 

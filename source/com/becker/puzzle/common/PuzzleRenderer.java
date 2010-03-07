@@ -10,8 +10,6 @@ import java.awt.Graphics;
  * @author Barry Becker
  */
 public abstract class PuzzleRenderer<P> {
-
-
     /**
      * private constructor because this class is a singleton.
      * Use getPieceRenderer instead.
@@ -19,7 +17,6 @@ public abstract class PuzzleRenderer<P> {
     public PuzzleRenderer()
     {
     }
-
 
     /**
      * This renders the current state of the Board to the screen.

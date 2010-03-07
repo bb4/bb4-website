@@ -33,16 +33,6 @@ public class SudokuGenerator {
         ppanel_ = ppanel;
     }
 
-    /**
-     * Set this seed value if you want to get repeatable results.
-     * Same behavior for same seed.
-     * @param seed randome seed
-     */
-    public void setRandomSeed(int seed)
-    {
-        random_ = new Random(seed);
-    }
-
     public void setDelay(int delay) {
         delay_ = delay;
     }
@@ -81,8 +71,7 @@ public class SudokuGenerator {
             return true;  // board complete now
         }
 
-        List<Integer> candidates = board.findCellCandidates(position);
-        Collections.shuffle(candidates, random_);
+        List<Integer> candidates = board.getCellCandidates(position);
 
         if (position % 7 == 0) {
             ppanel_.repaint();

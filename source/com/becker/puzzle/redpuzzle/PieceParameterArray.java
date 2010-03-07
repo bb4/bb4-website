@@ -14,8 +14,6 @@ public class PieceParameterArray extends ParameterArray {
 
     private PieceList pieces_ ;
     private static final int NUM_PIECES = 9;
-    public static final double MAX_FITS = 24;
-    public static final int MAX_TRIES = 4;
 
 
     public PieceParameterArray(PieceList pieces) {
@@ -33,49 +31,40 @@ public class PieceParameterArray extends ParameterArray {
      * We want to find a potential solution close to the one that we have, 
      * with minimal disturbance of the pieces that are already fit.
      *
-     * @param rad proportional to the number of pieces that you want to vary.
+     * @param radius proportional to the number of pieces that you want to vary.
      * @return the random nbr (potential solution).
      */
     @Override
-    public ParameterArray getRandomNeighbor(double rad)
+    public ParameterArray getRandomNeighbor(double radius)
     {
         PieceList pieces = new PieceList(pieces_);
 
         int numSwaps = 1;   //Math.max(1, (int) (rad * 2.0));
-        int startFits = pieces.getNumFits();
-        //int improvement = 0;
-        int endFits = 0;
-        int ct = 0;
-        //do {
 
-            for (int i=0; i<numSwaps; i++) {
-                doPieceSwap(pieces);
-            }
+        for (int i=0; i<numSwaps; i++) {
+            doPieceSwap(pieces);
+        }
 
-            assert (pieces.size() == NUM_PIECES);
-            // make a pass over all the pieces.
-            // If rotating a piece leads to more fits, then do it.
-            for ( int k = 0; k < pieces.size(); k++) {
+        assert (pieces.size() == NUM_PIECES);
+        // make a pass over all the pieces.
+        // If rotating a piece leads to more fits, then do it.
+        for ( int k = 0; k < pieces.size(); k++) {
 
-                int numFits = pieces.getNumFits(k);
-                int bestNumFits = numFits;
-                int bestRot = 1;
-                for (int i=0; i<3; i++) {
-         
-                    pieces.rotate(k, 1);  // fix
-                    numFits = pieces.getNumFits(k);
-                    if (numFits > bestNumFits) {
-                        bestNumFits = numFits;
-                        bestRot = 2 + i;
-                    }
+            int numFits = pieces.getNumFits(k);
+            int bestNumFits = numFits;
+            int bestRot = 1;
+            for (int i=0; i<3; i++) {
+
+                pieces.rotate(k, 1);  // fix
+                numFits = pieces.getNumFits(k);
+                if (numFits > bestNumFits) {
+                    bestNumFits = numFits;
+                    bestRot = 2 + i;
                 }
-                // rotate the piece to position of best fit.
-                pieces.rotate(k, bestRot); // fix
             }
-            endFits = pieces.getNumFits();
-            //improvement = endFits - startFits;
-            //ct++;
-        //} while ((improvement < 1 || endFits == MAX_FITS) && ct < MAX_TRIES);
+            // rotate the piece to position of best fit.
+            pieces.rotate(k, bestRot); // fix
+        }
 
         return new PieceParameterArray(pieces);
     }

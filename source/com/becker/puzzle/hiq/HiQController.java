@@ -16,7 +16,7 @@ public class HiQController extends AbstractPuzzleController<PegBoard, PegMove> {
 
     /**
      * 
-     * @param ui
+     * @param ui shows the current state on the screen.
      */
     public HiQController(Refreshable<PegBoard, PegMove> ui) {
         super(ui);

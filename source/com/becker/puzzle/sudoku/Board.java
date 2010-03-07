@@ -20,13 +20,15 @@ public class Board
 
     static final int MAX_SIZE = 9;
 
-    // lists of row and col candidates for every row and col.
-    protected List<Integer>[] rowCandidates_;
-    protected List<Integer>[] colCandidates_;
+    // row and col candidates for every row and col.
+    protected Set<Integer>[] rowCandidates_;
+    protected Set<Integer>[] colCandidates_;
 
-    private List<Integer> valuesList_;
+    /** all the values in the big cell 1...nn_ */
+    private final List<Integer> valuesList_;
 
     private int numIterations_;
+    private Random random_ = new Random();
 
 
     public Board(int size) {
@@ -44,7 +46,7 @@ public class Board
         initRowColCandidateLists();
 
         valuesList_ = new ArrayList<Integer>();
-        for (int i = 1; i<=nn_; i++) {
+        for (int i = 1; i <= nn_; i++) {
             valuesList_.add(i);
         }
     }
@@ -130,7 +132,6 @@ public class Board
      */
     public final Cell getCell( int row, int col )
     {
-
         assert ( row >= 0 && row < nn_ && col >= 0 && col < nn_);
         return bigCells_[row / n_][col / n_].getCell(row % n_, col % n_);
     }
@@ -164,7 +165,7 @@ public class Board
     }
 
     /**
-     * @return true if all the cells have been filed in with a value (even if not a valid solution).
+     * @return true if all the cells have been filled in with a value (even if not a valid solution).
      */
     public boolean isFilledIn() {
 
@@ -179,7 +180,18 @@ public class Board
         return true;
     }
 
-    public List<Integer> findCellCandidates(int position) {
+    /**
+     * @return cell candidates in random order for specified position.
+     */
+    public List<Integer> getCellCandidates(int position) {
+        Set<Integer> candidates = findCellCandidates(position);
+        List<Integer>  randomCandidates = new ArrayList<Integer>(candidates.size());
+        randomCandidates.addAll(candidates);
+        Collections.shuffle(randomCandidates, random_);
+        return randomCandidates;
+    }
+
+    private Set<Integer> findCellCandidates(int position) {
         return findCellCandidates(position / nn_, position % nn_);
     }
 
@@ -187,7 +199,7 @@ public class Board
      * update candidate lists for a specific cell
      * @return cell candidates
      */
-    public List<Integer> findCellCandidates(int row, int col) {
+    public Set<Integer> findCellCandidates(int row, int col) {
         updateRowCandidates(row);
         updateColCandidates(col);
         getBigCell(row/n_, col/n_).updateCandidates();
@@ -221,13 +233,13 @@ public class Board
     }
 
     private void updateRowCandidates(int row) {
-        List<Integer> rowCandidates = rowCandidates_[row];
+        Set<Integer> rowCandidates = rowCandidates_[row];
         rowCandidates.clear();
         rowCandidates.addAll(valuesList_);
         for (int j=0; j < nn_; j++) {
             int v = getCell(row, j).getValue();
             if (v > 0)  {
-                rowCandidates.remove((Integer) v);
+                rowCandidates.remove(v);
             }
         }
     }
@@ -239,13 +251,13 @@ public class Board
     }
 
     private void updateColCandidates(int col) {
-        List<Integer> colCands = colCandidates_[col];
+        Set<Integer> colCands = colCandidates_[col];
         colCands.clear();
         colCands.addAll(valuesList_);
         for (int j = 0; j < nn_; j++) {
             int v = this.getCell(j, col).getValue();
             if (v > 0 )  {
-                colCands.remove((Integer) v);
+                colCands.remove(v);
             }
         }
     }
@@ -274,11 +286,11 @@ public class Board
         return valuesList_;
     }
 
-    protected List<Integer> getRowCandidates(int row)  {
+    protected Set<Integer> getRowCandidates(int row)  {
         return rowCandidates_[row];
     }
 
-    protected List<Integer> getColCandidates(int col)  {
+    protected Set<Integer> getColCandidates(int col)  {
         return colCandidates_[col];
     }
 
@@ -290,13 +302,15 @@ public class Board
         numIterations_ = numIterations;
     }
 
+    /**
+     *  create and initialize the row and col candidate lists
+     */
     private void initRowColCandidateLists() {
-        // create the row and col candidate lists
-        rowCandidates_ = new List[nn_];
-        colCandidates_ = new List[nn_];
+        rowCandidates_ = new Set[nn_];
+        colCandidates_ = new Set[nn_];
         for (int i=0; i < nn_; i++) {
-            rowCandidates_[i] = new LinkedList<Integer>();
-            colCandidates_[i] = new LinkedList<Integer>();
+            rowCandidates_[i] = new HashSet<Integer>();
+            colCandidates_[i] = new HashSet<Integer>();
         }
     }
 
