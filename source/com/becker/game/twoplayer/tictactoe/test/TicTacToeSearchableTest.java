@@ -116,7 +116,7 @@ public class TicTacToeSearchableTest extends TwoPlayerSearchableBaseTst {
     }
 
     /**
-     * Load a game at the end and verify that there are no valid next moves.
+     * Load a game at the end and verify generated endgame moves.
      * Of particular interest here is that we can generate moves that lead to a win.
      */
     @Override
@@ -153,35 +153,6 @@ public class TicTacToeSearchableTest extends TwoPlayerSearchableBaseTst {
                 getController().getSearchable().generateMoves(lastMove, wts, !lastMove.isPlayer1());
 
         checkMoveListAgainstExpected(fileName, expectedMoves, moves);
-    }
-
-    private void checkMoveListAgainstExpected(String title, TwoPlayerMove[] expectedMoves,
-                                              List<? extends TwoPlayerMove> moves) {
-        if (expectedMoves.length != moves.size()) {
-            printMoves( title, moves);
-        }
-
-        Assert.assertEquals("Unexpected number of generated moves.",
-                expectedMoves.length, moves.size());
-
-        StringBuilder diffs = new StringBuilder("");
-        for (int i=0; i<moves.size(); i++) {
-            TwoPlayerMove move = moves.get(i);
-            TwoPlayerMove expMove = expectedMoves[i];
-            if (!move.equals(expMove)) {
-                diffs.append(i);
-                diffs.append(") Unexpected moves.\n Expected ");
-                diffs.append(expMove);
-                diffs.append(" \nBut got ");
-                diffs.append(move);
-                diffs.append("\n");
-            }
-        }
-        if (diffs.length() > 0) {
-            printMoves( title, moves);
-        }
-        Assert.assertTrue("There were unexpected generated moves for " + title +"\n" + diffs,
-                    diffs.length() == 0);
     }
 
     public static Test suite() {

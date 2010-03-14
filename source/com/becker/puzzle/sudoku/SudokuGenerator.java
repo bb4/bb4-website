@@ -37,6 +37,11 @@ public class SudokuGenerator {
         delay_ = delay;
     }
 
+
+    public void setRandomSeed(int seed) {
+        random_.setSeed(seed);
+    }
+
     /**
      * @return generated random board
      */

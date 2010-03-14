@@ -59,7 +59,7 @@ public enum GroupNumber implements INumberEnum
     /**
      * constructor for eye type enun.
      */
-    private GroupNumber(String label, String pronunciation) {
+    GroupNumber(String label, String pronunciation) {
         label_ = label;
         pronunciation_ = pronunciation;
     }

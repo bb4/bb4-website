@@ -19,7 +19,7 @@ public enum TensNumber implements INumberEnum
     private String pronunciation_;
 
 
-    private TensNumber(String label, String pronunciation) {
+    TensNumber(String label, String pronunciation) {
         label_ = label;
         pronunciation_ = pronunciation;
     }

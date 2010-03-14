@@ -40,11 +40,10 @@ public class TestSudokuSolver extends TestCase {
     }
 
     public void generateAndSolve(int baseSize, int seed) {
-        SudokuGenerator generator = new SudokuGenerator(baseSize);
-        generator.setRandomSeed(2);    // make repeatable, not random.
-
+        SudokuGenerator generator = new SudokuGenerator(baseSize, null);
+        generator.setRandomSeed(seed);
         long start = System.currentTimeMillis();
-        Board b = generator.generatePuzzleBoard(null);
+        Board b = generator.generatePuzzleBoard();
         System.out.println("Time to generate size="+baseSize +" was "+ (System.currentTimeMillis() - start));
 
         SudokuSolver solver = new SudokuSolver();
