@@ -60,7 +60,7 @@ public class TwoPlayerMove extends Move
     protected boolean isPass_ = false;
 
     /**
-     * if true then in path to selected move.
+     * if true then this move is in the path to selected move.  The game tree viewer may highlight it.
      */
     private boolean selected_;
 
@@ -275,12 +275,12 @@ public class TwoPlayerMove extends Move
         if (piece_!=null)
             s.append( piece_.isOwnedByPlayer1()? P1 : P2 );
 
-        s.append( " val:" + Util.formatNumber(getValue()) );
-        s.append( " inhrtd:" + Util.formatNumber(inheritedValue_) );
+        s.append(" val:").append(Util.formatNumber(getValue()));
+        s.append(" inhrtd:").append(Util.formatNumber(inheritedValue_));
         if (piece_!=null)
-            s.append( " piece:" + piece_.toString());
+            s.append(" piece:").append(piece_.toString());
         //s.append(" sel:"+selected);
-        s.append('(' + toLocation_.toString() + ')' );
+        s.append('(').append(toLocation_.toString()).append(')');
         if (urgent_)
             s.append(" urgent!");
         return s.toString();

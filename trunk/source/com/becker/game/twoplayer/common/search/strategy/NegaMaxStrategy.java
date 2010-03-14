@@ -99,7 +99,7 @@ public class NegaMaxStrategy extends AbstractSearchStrategy
     {
         int alpha = oldAlpha;
         int val = lastMove.getValue();
-        lastMove.setInheritedValue(val);
+        lastMove.setInheritedValue(val);  // negate?
         if ( depth >= maxQuiescentDepth_) {
             return lastMove;
         }
@@ -115,24 +115,19 @@ public class NegaMaxStrategy extends AbstractSearchStrategy
                 alpha = val;
         }
 
-        // generate those moves that are critically urgent
-        // if you generate too many, then you run the risk of an explosion in the search tree
-        // these moves should be sorted from most to least urgent
-        List list = searchable_.generateUrgentMoves( lastMove, weights_, true );
+        List<? extends TwoPlayerMove> list =
+                searchable_.generateUrgentMoves( lastMove, weights_, true); // true?
 
-        if ( list == null || list.isEmpty() )
+        if (list.isEmpty())
             return lastMove; // nothing to check
 
-        int bestVal = - SearchStrategy.INFINITY;
+        int bestInheritedValue = -SearchStrategy.INFINITY;
         TwoPlayerMove bestMove = null;
         movesConsidered_ += list.size();
         GameContext.log( 2, "********* urgent moves = " + list );
-        Iterator it = list.iterator();
         int i = 0;
 
-        while ( it.hasNext() ) {
-            TwoPlayerMove theMove = (TwoPlayerMove) it.next();
-            assert theMove!=null;
+        for (TwoPlayerMove theMove : list) {
 
             searchable_.makeInternalMove( theMove );
             SearchTreeNode child = addNodeToTree(parent, theMove, alpha, beta, i++ );
@@ -140,32 +135,26 @@ public class NegaMaxStrategy extends AbstractSearchStrategy
             TwoPlayerMove selectedMove = quiescentSearch( theMove, depth+1, -beta, -alpha, child );
             assert selectedMove!=null;
 
-            val = -selectedMove.getInheritedValue();
+            int selectedValue = -selectedMove.getInheritedValue();
             theMove.setInheritedValue(val);
 
             searchable_.undoInternalMove( theMove );
-            if ( val > bestVal ) {
+            if ( selectedValue > bestInheritedValue ) {
                 bestMove = theMove;
-                bestVal = val;
+                bestInheritedValue = selectedValue;
             }
             if ( alphaBeta_ ) {
-                if ( val >= beta ) {
-                    //return bestMove;
-                    break;
+                if ( selectedValue >= beta ) {
+                    return bestMove;
                 }
-                if ( val > alpha ) {
-                    alpha = val;
-                    bestMove = theMove;
+                if ( selectedValue > alpha ) {
+                    alpha = selectedValue;
                 }
             }
         }
-        if (bestMove == null) {
-            GameContext.log(3, "returning last move as bestmove");
-            bestMove = lastMove;   // avoid returning null
-        } else {
-            bestMove.setSelected(true);
-            lastMove.setInheritedValue(-bestMove.getInheritedValue()); // negate?
-        }
+        assert (bestMove != null);
+        bestMove.setSelected(true);
+        lastMove.setInheritedValue(-bestMove.getInheritedValue());
         return bestMove;
     }
 

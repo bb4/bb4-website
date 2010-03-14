@@ -34,7 +34,7 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
                                        int alpha, int beta, SearchTreeNode parent) {
         int i = 0;
         int selectedValue;
-        TwoPlayerMove selectedMove;  // the currently selected move
+        TwoPlayerMove selectedMove;
         // if player 1, then search for a high score, else search for a low score.
         boolean player1 = lastMove.isPlayer1();
         int bestInheritedValue = player1? SearchStrategy.INFINITY: -SearchStrategy.INFINITY;
@@ -105,7 +105,8 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
     {
         int alpha = oldAlpha;
         int beta = oldBeta;
-        lastMove.setInheritedValue(lastMove.getValue());
+        int val = lastMove.getValue();
+        lastMove.setInheritedValue(val);
         if ( depth >= maxQuiescentDepth_ || searchable_.done( lastMove, false )) {
             return lastMove;
         }
@@ -115,22 +116,20 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
         }
 
         boolean player1 = lastMove.isPlayer1();
-        if ( player1 ) {
-            if ( lastMove.getValue() >= beta )
-                return lastMove; // prune
-            if ( lastMove.getValue() > alpha )
-                alpha = lastMove.getValue();
+        if ( alphaBeta_ ) {
+            if ( player1 ) {
+                if ( val >= beta )
+                    return lastMove; // prune
+                if ( val > alpha )
+                    alpha = val;
+            }
+            else {
+                if ( val >= alpha )
+                    return lastMove; // prune
+                if ( val > beta )
+                    beta = val;
+            }
         }
-        else {
-            if ( lastMove.getValue() >= alpha )
-                return lastMove; // prune
-            if ( lastMove.getValue() > beta )
-                beta = lastMove.getValue();
-        }
-
-        // generate those moves that are critically urgent
-        // if you generate too many, then you run the risk of an explosion in the search tree
-        // these moves should be sorted from most to least urgent.
         List<? extends TwoPlayerMove> list =
                 searchable_.generateUrgentMoves( lastMove, weights_, true );
 
@@ -138,8 +137,7 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
             return lastMove; // nothing to check
         }
 
-        double bestInheritedValue = -SearchStrategy.INFINITY;
-        if ( player1 ) bestInheritedValue = SearchStrategy.INFINITY;
+        int bestInheritedValue = player1 ?  SearchStrategy.INFINITY : -SearchStrategy.INFINITY;
         TwoPlayerMove bestMove = list.get(0);
         movesConsidered_ += list.size();
         int i = 0;
@@ -164,17 +162,19 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
             }
 
             searchable_.undoInternalMove( theMove );
-            if ( player1 ) {
-                if ( bestMove.getInheritedValue() >= beta )
-                    return bestMove;  // prune
-                if ( bestMove.getInheritedValue() > alpha )
-                    alpha = bestMove.getInheritedValue();
-            }
-            else {
-                if ( bestMove.getInheritedValue() >= alpha )
-                    return bestMove;  // prune
-                if ( bestMove.getInheritedValue() > beta )
-                    beta = bestMove.getInheritedValue();
+            if ( alphaBeta_ ) {
+                if ( player1 ) {
+                    if ( bestInheritedValue >= beta )
+                        return bestMove;  // prune
+                    if ( bestInheritedValue > alpha )
+                        alpha = bestInheritedValue;
+                }
+                else {
+                    if ( bestInheritedValue >= alpha )
+                        return bestMove;  // prune
+                    if ( bestMove.getInheritedValue() > beta )
+                        beta = bestInheritedValue;
+                }
             }
         }
         return bestMove;

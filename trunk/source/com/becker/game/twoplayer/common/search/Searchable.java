@@ -58,11 +58,12 @@ public interface Searchable
 
     /**
      * generate those moves that are critically urgent
-     * if you generate too many, then you run the risk of an explosion in the search tree
-     * these moves should be sorted from most to least urgent
+     * If you generate too many, then you run the risk of an explosion in the search tree.
+     * These moves should be sorted from most to least urgent
      *
      * @param lastMove  the last move made
      * @param weights  the polynomial weights to use in the polynomial evaluation function
+     * @param player1sPerspective if true, then the values are generated from player one's perpective.
      * @return a list of moves that the current player needs to urgently play or face imminent defeat.
      */
     List<? extends TwoPlayerMove> generateUrgentMoves(

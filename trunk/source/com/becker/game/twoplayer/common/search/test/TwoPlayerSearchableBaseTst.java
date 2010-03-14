@@ -6,7 +6,6 @@ import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.SearchOptions;
 import junit.framework.*;
-import com.becker.game.twoplayer.common.search.test.SearchableBaseTst;
 import com.becker.optimization.parameter.ParameterArray;
 import java.util.List;
 
@@ -216,13 +215,16 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
        Assert.assertFalse(false);
    }
 
-   /**  Verify that we generate a correct list of urgent moves.  */
-   public void  testGenerateUrgentMoves() {
-        // there should not be any urgent moves at the very start of the game.
+   /**  There should not be any urgent moves at the very start of the game.  */
+   public void  testGenerateUrgentMovesAtStartOfGame() {
          List moves = searchable.generateUrgentMoves(null, getController().getComputerWeights().getPlayer1Weights(), true);
          Assert.assertTrue("We expected move list to be non-null.", moves!= null );
          Assert.assertTrue("We expected no urgent moves at the start of the game.",  moves.size() == 0);
+    }
 
+   /**  Verify that we generate a correct list of urgent moves.  */
+   public void  testGenerateUrgentMoves() {
+         Assert.assertFalse(false);
          // load a typical game in the beginning and verify that there are no urgent next moves.
 
          // load a critical game in the middle and verify that there are urgent next moves.
@@ -244,6 +246,37 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
 
         // load a critical game in the middle and verify a move that does put the other player in jeopardy.
     }
+
+
+    protected void checkMoveListAgainstExpected(String title, TwoPlayerMove[] expectedMoves,
+                                              List<? extends TwoPlayerMove> moves) {
+        if (expectedMoves.length != moves.size()) {
+            printMoves( title, moves);
+        }
+
+        Assert.assertEquals("Unexpected number of generated moves.",
+                expectedMoves.length, moves.size());
+
+        StringBuilder diffs = new StringBuilder("");
+        for (int i=0; i<moves.size(); i++) {
+            TwoPlayerMove move = moves.get(i);
+            TwoPlayerMove expMove = expectedMoves[i];
+            if (!move.equals(expMove)) {
+                diffs.append(i);
+                diffs.append(") Unexpected moves.\n Expected ");
+                diffs.append(expMove);
+                diffs.append(" \nBut got ");
+                diffs.append(move);
+                diffs.append("\n");
+            }
+        }
+        if (diffs.length() > 0) {
+            printMoves( title, moves);
+        }
+        Assert.assertTrue("There were unexpected generated moves for " + title +"\n" + diffs,
+                    diffs.length() == 0);
+    }
+
 
     protected void printMoves(String name, List<? extends TwoPlayerMove> moves) {
         System.out.println("generated moves for "+ name + " were:" );

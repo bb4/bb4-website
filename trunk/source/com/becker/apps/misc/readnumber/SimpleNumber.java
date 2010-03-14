@@ -19,7 +19,7 @@ public enum SimpleNumber implements INumberEnum
     TEN("ten", "t|e|n"),
     ELEVEN("eleven", "e|l|e|v|e|n"),
     TWELVE("twelve", "t|w|e|l|v"),
-    THIRTEEN("thirteen", "th|th|i|r|t|ee|n"),
+    THIRTEEN("thirteen", "th|i|r|t|ee|ee|n"),
     FOURTEEN("fourteen", "f|or|t|ee|n"),
     FIFTEEN("fifteen", "f|f|i|f|v|t|ee|n"),
     SIXTEEN("sixteen", "s|i|k|s|t|ee|n"),
@@ -38,9 +38,9 @@ public enum SimpleNumber implements INumberEnum
     /**
      * constructor for eye type enum
      *
-     * @param labelstring name of the eye type (eg "False Eye")
+     * @param label string name of the eye type (eg "False Eye")
      */
-    private SimpleNumber(String label, String pronunciation) {
+    SimpleNumber(String label, String pronunciation) {
         label_ = label;
         pronunciation_ = pronunciation;
     }

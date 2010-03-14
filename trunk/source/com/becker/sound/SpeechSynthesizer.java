@@ -145,7 +145,6 @@ public class SpeechSynthesizer
             thisPhoneFile = "com/becker/sound/allophones/" + thisPhoneFile + ".au";
 
             // -- get the data from the file --
-            System.out.println("thisPhoneFile="+thisPhoneFile);
             byte[] thisSound = getSound( thisPhoneFile );
             assert (thisSound.length > 0) : "Invalid sound file: "+thisPhoneFile;
 
@@ -213,14 +212,13 @@ public class SpeechSynthesizer
     }
 
     /*
-     * This method reads the file for a single allophone and
-     * contructs a byte vector.
+     * This method reads the file for a single allophone and constructs a byte vector.
      */
     private byte[] getSound( String sPath )
     {
         try {
             //URL url = SpeechSynthesizer.class.getResource( fileName );
-            System.out.println("getSound sPath=" + sPath);
+            //System.out.println("getSound sPath=" + sPath);
             URL url = GUIUtil.getURL( sPath );
             AudioInputStream stream = AudioSystem.getAudioInputStream( url );
             AudioFormat format = stream.getFormat();
@@ -228,37 +226,13 @@ public class SpeechSynthesizer
             // -- convert an ALAW/ULAW sound to PCM for playback --
             if ( (format.getEncoding() == AudioFormat.Encoding.ULAW) ||
                     (format.getEncoding() == AudioFormat.Encoding.ALAW) ) {
-                AudioFormat tmpFormat = new AudioFormat(
-                        AudioFormat.Encoding.PCM_SIGNED,
-                        format.getSampleRate(),
-                        format.getSampleSizeInBits() << 1,
-                        format.getChannels(),
-                        format.getFrameSize() << 1,
-                        format.getFrameRate(),
-                        true );
-
+                AudioFormat tmpFormat = createAudioFormat(format);
                 stream = AudioSystem.getAudioInputStream( tmpFormat, stream );
                 format = tmpFormat;
             }
 
-            DataLine.Info info = new DataLine.Info( Clip.class,
-                                                    format,
-                                                    ((int) stream.getFrameLength() * format.getFrameSize()));
-
             if ( line == null ) {
-                // -- output line not instantiated yet --
-                // -- can we find a suitable kind of line? --
-                DataLine.Info outInfo = new DataLine.Info( SourceDataLine.class,
-                        format );
-                if ( !AudioSystem.isLineSupported( outInfo ) ) {
-                    System.out.println( "Line matching " + outInfo + " not supported." );
-                    throw new Exception( "Line matching " + outInfo + " not supported." );
-                }
-
-                // -- open the source data line (the output line) --
-                line = (SourceDataLine) AudioSystem.getLine( outInfo );
-                line.open( format, 50000 );
-                line.start();
+                line = createDataLine(format);
             }
 
             // -- some size calculations --
@@ -270,9 +244,7 @@ public class SpeechSynthesizer
 
             // -- read the data bytes and count them --
             int numBytesRead = 0;
-            if ((numBytesRead = stream.read(data)) != -1) {
-                int numBytesRemaining = numBytesRead;
-            }
+            numBytesRead = stream.read(data);
 
             byte maxByte = 0;
 
@@ -289,5 +261,33 @@ public class SpeechSynthesizer
             e.printStackTrace();
             return new byte[0];
         }
+    }
+
+    private AudioFormat createAudioFormat(AudioFormat format) {
+        return new AudioFormat(
+                AudioFormat.Encoding.PCM_SIGNED,
+                format.getSampleRate(),
+                format.getSampleSizeInBits() << 1,
+                format.getChannels(),
+                format.getFrameSize() << 1,
+                format.getFrameRate(),
+                true );
+    }
+
+    private SourceDataLine createDataLine(AudioFormat format) throws Exception {
+        SourceDataLine dataLine;
+        // -- output line not instantiated yet --
+        // -- can we find a suitable kind of line? --
+        DataLine.Info outInfo = new DataLine.Info( SourceDataLine.class, format );
+        if ( !AudioSystem.isLineSupported( outInfo ) ) {
+            System.out.println( "Line matching " + outInfo + " not supported." );
+            throw new Exception( "Line matching " + outInfo + " not supported." );
+        }
+
+        // -- open the source data line (the output line) --
+        dataLine = (SourceDataLine) AudioSystem.getLine( outInfo );
+        dataLine.open( format, 50000 );
+        dataLine.start();
+        return dataLine;
     }
 }

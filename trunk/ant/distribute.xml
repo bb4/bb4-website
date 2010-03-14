@@ -262,6 +262,12 @@
           <param name="jarFile" value="dice.jar"/>
       </antcall>
 
+      <!-- copy the class files that are needed for stock sim deployment -->
+      <antcall target="deployJar">
+          <param name="componentDir" value="simulation/stock"/>
+          <param name="jarFile" value="stock.jar"/>
+      </antcall>
+
       <!-- copy the class files that are needed for reaction diffusion deployment -->
       <antcall target="deployJar">
           <param name="componentDir" value="simulation/reactiondiffusion"/>
