@@ -11,7 +11,8 @@ public class TicTacToeBoard extends PenteBoard
 {
 
     /** 
-     * Constructor
+     * Constructor.
+     * Tic tac toe is always 3x3
      */
     public TicTacToeBoard() {
         setSize( 3, 3 );

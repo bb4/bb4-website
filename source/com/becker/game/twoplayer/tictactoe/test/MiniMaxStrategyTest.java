@@ -24,89 +24,50 @@ public class MiniMaxStrategyTest extends MiniMaxStrategyTst {
 
     @Override
     protected ExpectedMoveMatrix getExpectedZeroLookAheadMoves() {
-        return new ExpectedMoveMatrix(
-                TwoPlayerMove.createMove(new Location(2, 2), 16, new GamePiece(true)),
-                TwoPlayerMove.createMove(new Location(1, 1), -8, new GamePiece(false)),
-                TwoPlayerMove.createMove(new Location(1, 2), 88, new GamePiece(true)),
-                TwoPlayerMove.createMove(new Location(1, 3), -88, new GamePiece(false)),
-                TwoPlayerMove.createMove(new Location(3, 1), 0, new GamePiece(true)),
-                TwoPlayerMove.createMove(new Location(2, 3), -48, new GamePiece(false)));
+        return ExpectedSearchStrategyResults.EXPECTED_ZERO_LOOKAHEAD_MOVES;
     }
 
     @Override
     protected ExpectedMoveMatrix getExpectedOneLevelLookAheadMoves() {
-        return new ExpectedMoveMatrix(
-                TwoPlayerMove.createMove(new Location(1, 2), 4, new GamePiece(false)),
-                TwoPlayerMove.createMove(new Location(2, 1), 48, new GamePiece(true)),
-                TwoPlayerMove.createMove(new Location(3, 2), 28, new GamePiece(false)),
-                TwoPlayerMove.createMove(new Location(3, 2), 0, new GamePiece(true)),
-                TwoPlayerMove.createMove(new Location(2, 1), 0, new GamePiece(false)),
-                TwoPlayerMove.createMove(new Location(3, 1), -12, new GamePiece(true)));
+        return ExpectedSearchStrategyResults.EXPECTED_ONE_LEVEL_LOOKAHEAD;
     }
 
     @Override
     protected ExpectedMoveMatrix getExpectedOneLevelWithQuiescenceMoves() {
-        return new ExpectedMoveMatrix(
-                TwoPlayerMove.createMove(new Location(1, 2), 4, new GamePiece(false)),
-                TwoPlayerMove.createMove(new Location(2, 1), 48, new GamePiece(true)),
-                TwoPlayerMove.createMove(new Location(3, 2), 28, new GamePiece(false)),
-                TwoPlayerMove.createMove(new Location(2, 3), -32, new GamePiece(true)),
-                TwoPlayerMove.createMove(new Location(2, 1), 0, new GamePiece(false)),
-                TwoPlayerMove.createMove(new Location(3, 1), -12, new GamePiece(true)));
+        return ExpectedSearchStrategyResults.EXPECTED_ONE_LEVEL_WITH_QUIESCENCE;
     }
 
     @Override
     protected ExpectedMoveMatrix getExpectedTwoLevelLookAheadMoves() {
-        return new ExpectedMoveMatrix(
-                TwoPlayerMove.createMove(new Location(1, 2), 4, new GamePiece(false)),
-                TwoPlayerMove.createMove(new Location(2, 1), 48, new GamePiece(true)),
-                TwoPlayerMove.createMove(new Location(3, 2), 28, new GamePiece(false)),
-                TwoPlayerMove.createMove(new Location(1, 2), 0, new GamePiece(true)),
-                TwoPlayerMove.createMove(new Location(2, 1), 0, new GamePiece(false)),
-                TwoPlayerMove.createMove(new Location(3, 3), -52, new GamePiece(true)));
+        return ExpectedSearchStrategyResults.EXPECTED_TWO_LEVEL_LOOKAHEAD;
+
     }
 
     @Override
     protected ExpectedMoveMatrix getExpectedFourLevelLookaheadMoves() {
-        return new ExpectedMoveMatrix(
-                TwoPlayerMove.createMove(new Location(1, 1), 8, new GamePiece(false)),
-                TwoPlayerMove.createMove(new Location(2, 1), 48, new GamePiece(true)),
-                TwoPlayerMove.createMove(new Location(3, 2), 28, new GamePiece(false)),
-                TwoPlayerMove.createMove(new Location(1, 2), 0, new GamePiece(true)),
-                TwoPlayerMove.createMove(new Location(2, 1), 0, new GamePiece(false)),
-                TwoPlayerMove.createMove(new Location(3, 1), -12, new GamePiece(true)));
+        return ExpectedSearchStrategyResults.EXPECTED_FOUR_LEVEL_LOOKAHEAD;
     }
 
     @Override
     protected ExpectedMoveMatrix getExpectedFourLevelBest20PercentMoves() {
-        return new ExpectedMoveMatrix(
-                TwoPlayerMove.createMove(new Location(1, 2), 4, new GamePiece(false)),
-                TwoPlayerMove.createMove(new Location(2, 1), 48, new GamePiece(true)),
-                TwoPlayerMove.createMove(new Location(3, 2), 28, new GamePiece(false)),
-                TwoPlayerMove.createMove(new Location(1, 2), 0, new GamePiece(true)),
-                TwoPlayerMove.createMove(new Location(2, 1), 0, new GamePiece(false)),
-                TwoPlayerMove.createMove(new Location(3, 1), -12, new GamePiece(true)));
+        return ExpectedSearchStrategyResults.EXPECTED_FOUR_LEVEL_BEST_20_PERCENT;
     }
 
     @Override
+    protected ExpectedMoveMatrix getExpectedTwoLevelWithQuiescenceMoves() {
+        return ExpectedSearchStrategyResults.EXPECTED_TWO_LEVEL_WITH_QUIESCENCE;
+    }
+    @Override
+    protected ExpectedMoveMatrix getExpectedThreeLevelWithQuiescenceMoves() {
+        return ExpectedSearchStrategyResults.EXPECTED_THREE_LEVEL_WITH_QUIESCENCE;
+    }
+    @Override
     protected ExpectedMoveMatrix getExpectedFourLevelWithQuiescenceMoves() {
-        return new ExpectedMoveMatrix(
-                TwoPlayerMove.createMove(new Location(1, 1), 8, new GamePiece(false)),
-                TwoPlayerMove.createMove(new Location(2, 1), 48, new GamePiece(true)),
-                TwoPlayerMove.createMove(new Location(3, 2), 28, new GamePiece(false)),
-                TwoPlayerMove.createMove(new Location(1, 2), 0, new GamePiece(true)),
-                TwoPlayerMove.createMove(new Location(2, 1), 0, new GamePiece(false)),
-                TwoPlayerMove.createMove(new Location(3, 1), -12, new GamePiece(true)));
+        return ExpectedSearchStrategyResults.EXPECTED_FOUR_LEVEL_WITH_QUIESCENCE;
     }
 
     @Override
     protected ExpectedMoveMatrix getExpectedFourLevelNoAlphaBetaMoves() {
-        return new ExpectedMoveMatrix(
-                TwoPlayerMove.createMove(new Location(1, 1), 8, new GamePiece(false)),
-                TwoPlayerMove.createMove(new Location(2, 1), 48, new GamePiece(true)),
-                TwoPlayerMove.createMove(new Location(3, 2), 28, new GamePiece(false)),
-                TwoPlayerMove.createMove(new Location(1, 2), 0, new GamePiece(true)),
-                TwoPlayerMove.createMove(new Location(2, 1), 0, new GamePiece(false)),
-                TwoPlayerMove.createMove(new Location(3, 1), -12, new GamePiece(true)));
+        return ExpectedSearchStrategyResults.EXPECTED_FOUR_LEVEL_NO_ALPHA_BETA;
     }
 }

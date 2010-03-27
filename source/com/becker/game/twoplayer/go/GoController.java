@@ -183,7 +183,9 @@ public final class GoController extends TwoPlayerController
         return((GoBoard) board_).getTerritoryEstimate(forPlayer1, true);
     }
 
-    // return the game board back to its initial openning state
+    /**
+     * *return the game board back to its initial opening state
+     */
     @Override
     public void reset()
     {
@@ -458,7 +460,7 @@ public final class GoController extends TwoPlayerController
 
     protected class GoSearchable extends TwoPlayerSearchable {
 
-        private static final int NUM_STONES_ATARIED = 4;
+        private static final int CRITICAL_GROUP_SIZE = 4;
 
         /**
          * given a move determine whether the game is over.
@@ -556,14 +558,14 @@ public final class GoController extends TwoPlayerController
         public boolean inJeopardy( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
         {
             GoBoard gb = (GoBoard) board_;
-            return (( (GoMove)lastMove ).causesAtari(gb) > NUM_STONES_ATARIED);
+            return (( (GoMove)lastMove ).causesAtari(gb) > CRITICAL_GROUP_SIZE);
         }
 
 
         /**
          * generate all possible next moves
          */
-        public final List<? extends TwoPlayerMove> generateMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
+        public final List<? extends TwoPlayerMove> generateMoves(TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
         {
             GoBoard board = (GoBoard) board_;
             board.getProfiler().startGenerateMoves();
@@ -574,7 +576,7 @@ public final class GoController extends TwoPlayerController
 
             CandidateMoveAnalyzer candidateMoves = new CandidateMoveAnalyzer(board);
 
-            boolean player1 = (lastMove != null)?  !lastMove.isPlayer1() : true;
+            boolean player1 = (lastMove == null) || !lastMove.isPlayer1();
 
             for (int i = 1; i <= nCols; i++ )      //cols
                 for (int j = 1; j <= nRows; j++ )    //rows
@@ -602,7 +604,7 @@ public final class GoController extends TwoPlayerController
                         }
                     }
 
-            moveList = ( List<GoMove>) getBestMoves(player1, moveList, player1sPerspective);
+            moveList = (List<GoMove>) getBestMoves(player1, moveList, player1sPerspective);
 
             // if we are well into the game, include a passing move.
             // if none of the generated moves have an inherited value better than the passing move

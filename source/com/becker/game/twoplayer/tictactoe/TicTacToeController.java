@@ -49,7 +49,9 @@ public class TicTacToeController extends PenteController
 
     protected class TicTacToeSearchable extends PenteSearchable {
 
-        int getJeopardyWeight()  {
+
+        @Override
+        protected int getJeopardyWeight()  {
             return TicTacToeWeights.JEOPARDY_WEIGHT;
         }
     }

@@ -148,7 +148,7 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
      */
    public void testGenerateMovesBeforeFirstMove() {
  
-       List moves = searchable.generateMoves(null, getController().getComputerWeights().getPlayer1Weights(), true);
+       List moves = searchable.generateMoves(null, weights(), true);
        Assert.assertTrue("We expect the move list to be non-null at the very start of the game.", moves!= null);
        // usually we have a special way to generate the first move (see computerMovesFirst).
         System.out.println("first moves="+ moves); 
@@ -167,7 +167,7 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
      */
    public void testGenerateMovesAfterFirstMove() {
        controller.computerMovesFirst();
-       ParameterArray wts = getController().getComputerWeights().getPlayer1Weights();
+       ParameterArray wts = weights();
        TwoPlayerMove lastMove = (TwoPlayerMove)controller.getLastMove();
        List moves = searchable.generateMoves(lastMove, wts, true);
 
@@ -205,7 +205,7 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
        Assert.assertFalse(false);
    }
 
-    /** Load a game at the end and verify that we can get all the reasonable next moves. */
+   /** Load a game at the end and verify that we can get all the reasonable next moves. */
    public void testGenerateAllP2MovesEndGame() {
        Assert.assertFalse(false);
    }
@@ -217,9 +217,11 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
 
    /**  There should not be any urgent moves at the very start of the game.  */
    public void  testGenerateUrgentMovesAtStartOfGame() {
-         List moves = searchable.generateUrgentMoves(null, getController().getComputerWeights().getPlayer1Weights(), true);
-         Assert.assertTrue("We expected move list to be non-null.", moves!= null );
-         Assert.assertTrue("We expected no urgent moves at the start of the game.",  moves.size() == 0);
+         List moves = searchable.generateUrgentMoves(null, weights(), true);
+         Assert.assertTrue("We expected move list to be non-null.",
+                 moves != null );
+         Assert.assertTrue("We expected no urgent moves at the start of the game, but was:" + moves,
+                 moves.size() == 0);
     }
 
    /**  Verify that we generate a correct list of urgent moves.  */
@@ -235,7 +237,7 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
     /**  Verify that we can detect when a player is in jeopardy. */
     public void testInJeopardy() {
         boolean actualInJeopardy =
-                searchable.inJeopardy(null, getController().getComputerWeights().getPlayer1Weights(), true);
+                searchable.inJeopardy(null, weights(), true);
         Assert.assertFalse("We don't expect anything to be in jeopardy at the very start of the game.", actualInJeopardy);
 
         actualInJeopardy =
@@ -277,6 +279,9 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
                     diffs.length() == 0);
     }
 
+    protected ParameterArray weights() {
+       return getController().getComputerWeights().getPlayer1Weights(); 
+    }
 
     protected void printMoves(String name, List<? extends TwoPlayerMove> moves) {
         System.out.println("generated moves for "+ name + " were:" );

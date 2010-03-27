@@ -90,8 +90,9 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
                                           int depth,
                                           int alpha, int beta, SearchTreeNode parent ) {
 
-        if ( depth == 0 || searchable_.done( lastMove, false ) ) {
-            if ( quiescence_ && depth == 0)  {
+        boolean done = searchable_.done( lastMove, false);
+        if ( depth == 0 || done ) {
+            if ( quiescence_ && depth == 0 && !done)  {
                 return quiescentSearch(lastMove, depth, alpha, beta, parent);
             }
             int sign = fromPlayer1sPerspective(lastMove) ? 1 : -1;
@@ -265,5 +266,4 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
             return true;
         }
     }
-
 }
