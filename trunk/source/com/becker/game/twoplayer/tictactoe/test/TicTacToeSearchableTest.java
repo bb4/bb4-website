@@ -131,26 +131,41 @@ public class TicTacToeSearchableTest extends TwoPlayerSearchableBaseTst {
         checkGeneratedMoves("endGameO", EXPECTED_TOP_END_GAME_MOVES_P2);
     }
 
-/**  Verify that we generate a correct list of urgent moves.  */
+    /**  Verify that we generate a correct list of urgent moves.  */
     @Override
     public void  testGenerateUrgentMoves() {
 
+        System.out.println("GEN URGENT 1......");
         restore("urgentMoves");
         // there should not be any urgent moves at the very start of the game.
+        System.out.println("lastMove="+getController().getLastMove() );   // 1,1
         List<? extends TwoPlayerMove> moves =
-            searchable.generateUrgentMoves((TwoPlayerMove)getController().getLastMove(),
-                                           getController().getComputerWeights().getPlayer1Weights(), true);
+            searchable.generateUrgentMoves((TwoPlayerMove)getController().getLastMove(), weights(), true);
 
         checkMoveListAgainstExpected("urgentMoves", EXPECTED_URGENT_MOVES, moves);
+        System.out.println("DONE GEN URGENT 1");
+    }
+
+    /**  Verify that we generate a correct list of urgent moves for the other player.  */
+    public void  testGenerateUrgentMovesP2() {
+
+        System.out.println("GEN URGENT 2......");
+        restore("urgentMoves");
+        // there should not be any urgent moves at the very start of the game.
+        System.out.println("lastMove="+getController().getLastMove() );   // 1,1
+        List<? extends TwoPlayerMove> moves =
+            searchable.generateUrgentMoves((TwoPlayerMove)getController().getLastMove(), weights(), true);
+
+        checkMoveListAgainstExpected("urgentMoves", EXPECTED_URGENT_MOVES, moves);
+        System.out.println("DONE GEN URGENT 2");
     }
 
 
     private void checkGeneratedMoves(String fileName, TwoPlayerMove[] expectedMoves) {
         restore(fileName);
-        ParameterArray wts = getController().getComputerWeights().getPlayer1Weights();
         TwoPlayerMove lastMove = (TwoPlayerMove) getController().getLastMove();
         List<? extends TwoPlayerMove> moves =
-                getController().getSearchable().generateMoves(lastMove, wts, !lastMove.isPlayer1());
+                getController().getSearchable().generateMoves(lastMove, weights(), !lastMove.isPlayer1());
 
         checkMoveListAgainstExpected(fileName, expectedMoves, moves);
     }

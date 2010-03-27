@@ -121,6 +121,7 @@ public abstract class GameBoardRenderer
      * Constructs a new Location given a MouseEvent
      *
      * @param e  the row  coordinate.
+     * @return new location based on mouse position.
      */
     public Location createLocation( MouseEvent e)
     {
@@ -147,7 +148,7 @@ public abstract class GameBoardRenderer
         return BOARD_MARGIN;
     }
     /**
-     * whether or not to draw the pieces on cell centers or vertices (like go or pente, but not like checkers).
+     * @return whether or not to draw the pieces on cell centers or vertices (like go or pente, but not like checkers).
      */
     protected boolean offsetGrid()
     {
@@ -180,13 +181,15 @@ public abstract class GameBoardRenderer
     }
 
 
+    /**
+     * Clear the background so old pieces are erased.
+     */
     protected void drawBackground( Graphics g, Board b, int startPos, int rightEdgePos, int bottomEdgePos,
                                    int panelWidth, int panelHeight)
     {
         g.setColor( backgroundColor_ );
         g.fillRect( 0, 0, panelWidth, panelHeight);
     }
-
 
 
     /**
@@ -219,7 +222,7 @@ public abstract class GameBoardRenderer
     protected void drawGrid(Graphics2D g2, int startPos, int rightEdgePos, int bottomEdgePos, int start,
                             int nrows1, int ncols1, int gridOffset) {
 
-        // draw the hatches which deliniate the cells
+        // draw the hatches which delineate the cells
         g2.setColor( getGridColor() );
         int xpos, ypos;
         int i;

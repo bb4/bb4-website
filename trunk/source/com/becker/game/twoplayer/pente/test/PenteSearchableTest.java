@@ -127,8 +127,7 @@ public class PenteSearchableTest extends TwoPlayerSearchableBaseTst {
         restore("urgentMoveP1ToPlay");
         // there should not be any urgent moves at the very start of the game.
         List<? extends TwoPlayerMove> moves =
-            searchable.generateUrgentMoves((TwoPlayerMove)getController().getLastMove(),
-                                           getController().getComputerWeights().getPlayer1Weights(), true);
+            searchable.generateUrgentMoves((TwoPlayerMove)getController().getLastMove(), weights(), true);
 
         checkMoveListAgainstExpected("urgentMoveP1ToPlay", EXPECTED_URGENT_MOVES_P1, moves);
     }
@@ -139,8 +138,7 @@ public class PenteSearchableTest extends TwoPlayerSearchableBaseTst {
         restore("urgentMoveP2ToPlay");
         // there should not be any urgent moves at the very start of the game.
         List<? extends TwoPlayerMove> moves =
-            searchable.generateUrgentMoves((TwoPlayerMove)getController().getLastMove(),
-                                           getController().getComputerWeights().getPlayer1Weights(), true);
+            searchable.generateUrgentMoves((TwoPlayerMove)getController().getLastMove(), weights(), true);
 
         checkMoveListAgainstExpected("urgentMoveP2ToPlay", EXPECTED_URGENT_MOVES_P2, moves);
     }
@@ -148,10 +146,9 @@ public class PenteSearchableTest extends TwoPlayerSearchableBaseTst {
 
     private void checkGeneratedMoves(String fileName, TwoPlayerMove[] expectedMoves) {
         restore(fileName);
-        ParameterArray wts = getController().getComputerWeights().getPlayer1Weights();
         TwoPlayerMove lastMove = (TwoPlayerMove) getController().getLastMove();
         List<? extends TwoPlayerMove> moves =
-                getController().getSearchable().generateMoves(lastMove, wts, !lastMove.isPlayer1());
+                getController().getSearchable().generateMoves(lastMove, weights(), !lastMove.isPlayer1());
 
         checkMoveListAgainstExpected(fileName, expectedMoves, moves);
     }

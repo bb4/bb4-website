@@ -125,7 +125,7 @@ public class BlockadeSearchableTest extends TwoPlayerSearchableBaseTst {
 
     private void checkGeneratedMoves(String fileName, BlockadeMove[] expectedMoves) {
         restore(fileName);
-        ParameterArray wts = getController().getComputerWeights().getPlayer1Weights();
+        ParameterArray wts = weights();
         TwoPlayerMove lastMove = (TwoPlayerMove) getController().getLastMove();
         List<? extends TwoPlayerMove> moves = getController().getSearchable().generateMoves(lastMove, wts, !lastMove.isPlayer1());
 
@@ -141,7 +141,7 @@ public class BlockadeSearchableTest extends TwoPlayerSearchableBaseTst {
             BlockadeMove move = (BlockadeMove) moves.get(i);
             BlockadeMove expMove = expectedMoves[i];
             if (!move.equals(expMove)) {
-                diffs.append(i + ") Unexpected moves.\n Expected "+expMove + " \nBut got "+ move + "\n");
+                diffs.append(i).append(") Unexpected moves.\n Expected ").append(expMove).append(" \nBut got ").append(move).append("\n");
             }
         }
         if (diffs.length() > 0) {
@@ -155,7 +155,7 @@ public class BlockadeSearchableTest extends TwoPlayerSearchableBaseTst {
     @Override
     public void  testGenerateUrgentMoves() {
         // there should not be any urgent moves at the very start of the gamel
-         List moves = searchable.generateUrgentMoves(null, getController().getComputerWeights().getPlayer1Weights(), true);
+         List moves = searchable.generateUrgentMoves(null, weights(), true);
          Assert.assertTrue("We expected move list to be null since generateUrgentMoves is not implemented for Blockade.", (moves == null));
     }
 

@@ -23,6 +23,9 @@ public class MoveEvaluationTest extends TestCase  {
     TicTacToeWeights weights;
 
     TicTacToeBoard board;
+    
+    private static final GamePiece PLAYER1_PIECE = new GamePiece(true);
+    private static final GamePiece PLAYER2_PIECE = new GamePiece(false);
 
     /**
      * common initialization for all go test cases.
@@ -55,7 +58,7 @@ public class MoveEvaluationTest extends TestCase  {
 
     public void test_XOEvaluation() {
 
-        TwoPlayerMove move = TwoPlayerMove.createMove(2, 2,  0, new GamePiece(true));
+        TwoPlayerMove move = TwoPlayerMove.createMove(2, 2,  0, PLAYER1_PIECE);
         board.makeMove(move);
 
         verifyAllDirectionsResult(2, 1, false, -12, -8);
@@ -64,7 +67,7 @@ public class MoveEvaluationTest extends TestCase  {
 
     public void test_OOEvaluation() {
 
-        TwoPlayerMove move = TwoPlayerMove.createMove(2, 2,  0, new GamePiece(false));
+        TwoPlayerMove move = TwoPlayerMove.createMove(2, 2,  0, PLAYER2_PIECE);
         board.makeMove(move);
 
         verifyAllDirectionsResult(2, 1, false, -52, -48);
@@ -73,7 +76,7 @@ public class MoveEvaluationTest extends TestCase  {
 
     public void test_XXEvaluation() {
 
-        TwoPlayerMove move = TwoPlayerMove.createMove(2, 2,  0, new GamePiece(true));
+        TwoPlayerMove move = TwoPlayerMove.createMove(2, 2,  0, PLAYER1_PIECE);
         board.makeMove(move);
 
         verifyAllDirectionsResult(2, 1, true, 52, 48);
@@ -82,27 +85,53 @@ public class MoveEvaluationTest extends TestCase  {
 
     public void testOOOEvaluation() {
 
-        TwoPlayerMove move1 = TwoPlayerMove.createMove(2, 2,  0, new GamePiece(false));
+        TwoPlayerMove move1 = TwoPlayerMove.createMove(2, 2,  0, PLAYER2_PIECE);
         board.makeMove(move1);
         
-        TwoPlayerMove move2 = TwoPlayerMove.createMove(2, 1,  0, new GamePiece(false));
+        TwoPlayerMove move2 = TwoPlayerMove.createMove(2, 1,  0, PLAYER2_PIECE);
         board.makeMove(move2);
         verifyResult(Direction.HORIZONTAL, 2, 3, false, -8160);
         board.undoMove();
 
-        move2 = TwoPlayerMove.createMove(1, 2,  0, new GamePiece(false));
+        move2 = TwoPlayerMove.createMove(1, 2,  0, PLAYER2_PIECE);
         board.makeMove(move2);
         verifyResult(Direction.VERTICAL, 3, 2, false, -8160);
         board.undoMove();
 
-        move2 = TwoPlayerMove.createMove(3, 1,  0, new GamePiece(false));
+        move2 = TwoPlayerMove.createMove(3, 1,  0, PLAYER2_PIECE);
         board.makeMove(move2);
         verifyResult(Direction.UP_DIAGONAL, 1, 3, false, -8156);
         board.undoMove();
 
-         move2 = TwoPlayerMove.createMove(1, 1,  0, new GamePiece(false));
+         move2 = TwoPlayerMove.createMove(1, 1,  0, PLAYER2_PIECE);
          board.makeMove(move2);
          verifyResult(Direction.DOWN_DIAGONAL, 3, 3, false, -8156);
+         board.undoMove();
+    }
+    
+    public void testXXXEvaluation() {
+
+        TwoPlayerMove move1 = TwoPlayerMove.createMove(2, 2,  0, PLAYER1_PIECE);
+        board.makeMove(move1);
+        
+        TwoPlayerMove move2 = TwoPlayerMove.createMove(2, 1,  0, PLAYER1_PIECE);
+        board.makeMove(move2);
+        verifyResult(Direction.HORIZONTAL, 2, 3, true, 8160);
+        board.undoMove();
+
+        move2 = TwoPlayerMove.createMove(1, 2,  0, PLAYER1_PIECE);
+        board.makeMove(move2);
+        verifyResult(Direction.VERTICAL, 3, 2, true, 8160);
+        board.undoMove();
+
+        move2 = TwoPlayerMove.createMove(3, 1,  0, PLAYER1_PIECE);
+        board.makeMove(move2);
+        verifyResult(Direction.UP_DIAGONAL, 1, 3, true, 8156);
+        board.undoMove();
+
+         move2 = TwoPlayerMove.createMove(1, 1,  0, PLAYER1_PIECE);
+         board.makeMove(move2);
+         verifyResult(Direction.DOWN_DIAGONAL, 3, 3, true, 8156);
          board.undoMove();
     }
 

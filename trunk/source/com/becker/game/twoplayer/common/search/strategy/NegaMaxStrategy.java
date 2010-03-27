@@ -99,13 +99,13 @@ public class NegaMaxStrategy extends AbstractSearchStrategy
     {
         int alpha = oldAlpha;
         int val = lastMove.getValue();
-        lastMove.setInheritedValue(val);  // negate?
+        lastMove.setInheritedValue(val);
         if ( depth >= maxQuiescentDepth_) {
             return lastMove;
         }
-        if (searchable_.inJeopardy( lastMove, weights_, lastMove.isPlayer1() ) ) {
-            // then search  a little deeper
-            return searchInternal( lastMove, depth+1, alpha, beta, parent );
+        if (searchable_.inJeopardy( lastMove, weights_, true)) {
+            // then search a little deeper
+            return searchInternal( lastMove, depth+1, -alpha, -beta, parent );
         }
 
         if ( alphaBeta_ ) {
@@ -116,7 +116,7 @@ public class NegaMaxStrategy extends AbstractSearchStrategy
         }
 
         List<? extends TwoPlayerMove> list =
-                searchable_.generateUrgentMoves( lastMove, weights_, true); // true?
+                searchable_.generateUrgentMoves( lastMove, weights_, true);
 
         if (list.isEmpty())
             return lastMove; // nothing to check
@@ -132,7 +132,7 @@ public class NegaMaxStrategy extends AbstractSearchStrategy
             searchable_.makeInternalMove( theMove );
             SearchTreeNode child = addNodeToTree(parent, theMove, alpha, beta, i++ );
 
-            TwoPlayerMove selectedMove = quiescentSearch( theMove, depth+1, -beta, -alpha, child );
+            TwoPlayerMove selectedMove = quiescentSearch( theMove, depth+1, beta, alpha, child );   // neg a/b?
             assert selectedMove!=null;
 
             int selectedValue = -selectedMove.getInheritedValue();
@@ -154,7 +154,7 @@ public class NegaMaxStrategy extends AbstractSearchStrategy
         }
         assert (bestMove != null);
         bestMove.setSelected(true);
-        lastMove.setInheritedValue(-bestMove.getInheritedValue());
+        lastMove.setInheritedValue(bestMove.getInheritedValue());
         return bestMove;
     }
 

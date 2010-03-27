@@ -53,7 +53,6 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
     }
 
     public void testOneLevelWithQuiescenceSearch() {
-
         searchOptions.setLookAhead(1);
         searchOptions.setQuiescence(true);
         verifyMoves("OneLevelWithQuiescence", getExpectedOneLevelWithQuiescenceMoves());
@@ -75,10 +74,22 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
         verifyMoves("FourLevelBest20Percent", getExpectedFourLevelBest20PercentMoves());
     }
 
+    public void testTwoLevelWithQuiescenceLookAheadSearch() {
+        searchOptions.setLookAhead(2);
+        searchOptions.setQuiescence(true);
+        verifyMoves("TwoLevelWithQuiescence", getExpectedTwoLevelWithQuiescenceMoves());
+    }
+
+    public void testThreeLevelWithQuiescenceLookAheadSearch() {
+        searchOptions.setLookAhead(3);
+        searchOptions.setQuiescence(true);
+        verifyMoves("ThreeLevelWithQuiescence", getExpectedThreeLevelWithQuiescenceMoves());
+    }
+
     public void testFourLevelWithQuiescenceLookAheadSearch() {
         searchOptions.setLookAhead(4);
         searchOptions.setQuiescence(true);
-        verifyMoves("FourLevelWithQuiescence",getExpectedFourLevelWithQuiescenceMoves());
+        verifyMoves("FourLevelWithQuiescence", getExpectedFourLevelWithQuiescenceMoves());
     }
 
     public void testFourLevelNoAlphaBetaSearch() {
@@ -103,11 +114,9 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
         TwoPlayerMove expectedNextMove =  expectedMoves.getExpectedMove(prog, player1);
         TwoPlayerMove nextMove = getNextMove();
         String info = getSearchStrategyToTest() + " " + desc + " "  + prog + " player1=" + player1;
-        //System.out.println(getSearchStrategyToTest() + ":\nNow comparing expected:" + expectedNextMove + " with: " + getNextMove());
-        /*System.out.println(info);
-        if (!nextMove.equals(expectedNextMove)) {
-            System.out.println(" FAIL: got "+ nextMove.getConstructorString() );
-        }*/
+        //System.out.print(info);
+        //System.out.println("   " + nextMove.getConstructorString() );
+
         assertEquals(info +"\nWe did not get the next move that we expected after searching.",
                 expectedNextMove, getNextMove());
     }
@@ -121,6 +130,8 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
     protected abstract ExpectedMoveMatrix getExpectedTwoLevelLookAheadMoves();
     protected abstract ExpectedMoveMatrix getExpectedFourLevelLookaheadMoves();
     protected abstract ExpectedMoveMatrix getExpectedFourLevelBest20PercentMoves();
+    protected abstract ExpectedMoveMatrix getExpectedTwoLevelWithQuiescenceMoves();
+    protected abstract ExpectedMoveMatrix getExpectedThreeLevelWithQuiescenceMoves();
     protected abstract ExpectedMoveMatrix getExpectedFourLevelWithQuiescenceMoves();
     protected abstract ExpectedMoveMatrix getExpectedFourLevelNoAlphaBetaMoves();
 

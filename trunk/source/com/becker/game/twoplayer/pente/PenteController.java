@@ -91,10 +91,11 @@ public class PenteController extends TwoPlayerController
 
     protected class PenteSearchable extends TwoPlayerSearchable {
 
-        /*
+        /**
          * generate all possible next moves.
          */
-        public List<? extends TwoPlayerMove> generateMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
+        public List<? extends TwoPlayerMove> generateMoves( TwoPlayerMove lastMove,
+                                                            ParameterArray weights, boolean player1sPerspective )
         {
             List<TwoPlayerMove> moveList = new LinkedList<TwoPlayerMove>();
 
@@ -106,9 +107,9 @@ public class PenteController extends TwoPlayerController
             int ncols = board_.getNumCols();
             int nrows = board_.getNumRows();
 
-            for (int i = 1; i <= ncols; i++ )
-                for (int j = 1; j <= nrows; j++ )
-                    if ( pb.isCandidateMove( j, i ) ) {
+            for (int i = 1; i <= ncols; i++ ) {
+                for (int j = 1; j <= nrows; j++ ) {
+                    if ( pb.isCandidateMove( j, i )) {
                         TwoPlayerMove m;
                         if (lastMove == null)
                            m = TwoPlayerMove.createMove( j, i, 0, new GamePiece(player1));
@@ -120,27 +121,70 @@ public class PenteController extends TwoPlayerController
                         pb.undoMove();
                         moveList.add( m );
                     }
+                }
+            }
             return getBestMoves( player1, moveList, player1sPerspective );
         }
 
         /**
-         * @return the moves that result in a certain win.
+         * Consider both our moves and opponent moves that result in wins.
+         * Opponent moves that result in a win should be blocked.
+         * @return Set of moves the moves that result in a certain win or a certain loss.
          */
         public List<? extends TwoPlayerMove> generateUrgentMoves(
                 TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
         {
-            List<? extends TwoPlayerMove> moves = generateMoves( lastMove, weights, player1sPerspective );
-            // now keep only those that result in a win.
-            Iterator<? extends TwoPlayerMove> it = moves.iterator();
+            // no urgent moves at start of game.
+            if (lastMove == null)  {
+                return new LinkedList<TwoPlayerMove>();
+            }
+            List<TwoPlayerMove> allMoves = findMovesForBothPlayers(lastMove, weights, player1sPerspective);
+
+            // now keep only those that result in a win or loss.
+            Iterator<TwoPlayerMove> it = allMoves.iterator();
+            List<TwoPlayerMove>  urgentMoves = new LinkedList<TwoPlayerMove>();
             while ( it.hasNext() ) {
                 TwoPlayerMove move = it.next();
-                if ( Math.abs( move.getValue() ) < WINNING_VALUE )
-                    it.remove();
-                else  {
+                // if its not a winning move or we already have it, then skip
+                if ( Math.abs(move.getValue()) >= WINNING_VALUE  && !contains(move, urgentMoves) ) {
                     move.setUrgent(true);
+                    urgentMoves.add(move);
                 }
             }
-            return moves;
+            return urgentMoves;
+        }
+
+        /**
+         * Consider both our moves and and opponent moves.
+         * @return Set of all next moves.
+         */
+        private List<TwoPlayerMove> findMovesForBothPlayers(TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective) {
+            List<TwoPlayerMove> allMoves = new ArrayList<TwoPlayerMove>();
+            List<? extends TwoPlayerMove> moves = generateMoves( lastMove, weights, player1sPerspective );
+            allMoves.addAll(moves);
+
+            TwoPlayerMove oppLastMove = lastMove.copy();
+            oppLastMove.setPlayer1(!lastMove.isPlayer1());
+            List<? extends TwoPlayerMove> opponentMoves =
+                    generateMoves( oppLastMove, weights, !player1sPerspective );
+            for (TwoPlayerMove move : opponentMoves){
+                move.setPlayer1(!lastMove.isPlayer1());
+                move.setPiece(new GamePiece(!lastMove.isPlayer1()));
+                allMoves.add(move);
+            }
+
+            return allMoves;
+        }
+
+
+        private boolean contains(TwoPlayerMove move, List<TwoPlayerMove> moves)
+        {
+            for (TwoPlayerMove m : moves) {
+                if (m.getToLocation().equals(move.getToLocation())) {
+                    return true;
+                }
+            }
+            return false;
         }
 
         /**
@@ -157,9 +201,8 @@ public class PenteController extends TwoPlayerController
             return (diff > getJeopardyWeight());
         }
 
-        int getJeopardyWeight()  {
+        protected int getJeopardyWeight()  {
             return PenteWeights.JEOPARDY_WEIGHT;
         }
     }
-
 }
