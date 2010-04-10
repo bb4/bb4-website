@@ -5,6 +5,7 @@ import com.becker.game.common.GamePiece;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.test.SearchableHelper;
 import com.becker.game.twoplayer.common.search.test.strategy.ExpectedMoveMatrix;
+import com.becker.game.twoplayer.common.search.test.strategy.MoveInfo;
 import com.becker.game.twoplayer.common.search.test.strategy.NegaMaxStrategyTst;
 
 /**
@@ -13,9 +14,6 @@ import com.becker.game.twoplayer.common.search.test.strategy.NegaMaxStrategyTst;
  * @author Barry Becker
  */
 public class NegaMaxStrategyTest extends NegaMaxStrategyTst {
-
-    private static final GamePiece PLAYER1_PIECE = new GamePiece(true);
-    private static final GamePiece PLAYER2_PIECE = new GamePiece(false);
 
     @Override
     protected SearchableHelper createSearchableHelper() {
@@ -35,25 +33,11 @@ public class NegaMaxStrategyTest extends NegaMaxStrategyTst {
     @Override
     protected ExpectedMoveMatrix getExpectedOneLevelWithQuiescenceMoves() {
         return ExpectedSearchStrategyResults.EXPECTED_ONE_LEVEL_WITH_QUIESCENCE;
+    }
 
-        /* getting
-        return new ExpectedMoveMatrix(
-            TwoPlayerMove.createMove(new Location(1, 1), 8, PLAYER2_PIECE),   // beginningP1                   // want 1,2
-            TwoPlayerMove.createMove(new Location(3, 3), -4, PLAYER1_PIECE),  //             "midGameCenterO"
-            TwoPlayerMove.createMove(new Location(2, 1), 80, PLAYER2_PIECE),  // middleP1    "lateMidGameX" :   // want 3,2
-            TwoPlayerMove.createMove(new Location(1, 2), 0, PLAYER1_PIECE),   //             "lateMidGameO";
-            TwoPlayerMove.createMove(new Location(2, 1), 0, PLAYER2_PIECE),   // endP1       "endGameX";
-            TwoPlayerMove.createMove(new Location(3, 3), -52, PLAYER1_PIECE)); // endP2      "endGame0";
-         */
-
-        /* want
-        TwoPlayerMove.createMove(new Location(1, 2), 4, PLAYER2_PIECE),  // beginningP1
-            TwoPlayerMove.createMove(new Location(3, 3), -4, PLAYER1_PIECE), //             "midGameCenterO"
-            TwoPlayerMove.createMove(new Location(3, 2), 28, PLAYER2_PIECE), // middleP1    "lateMidGameX" :
-            TwoPlayerMove.createMove(new Location(1, 2), 0, PLAYER1_PIECE),//             "lateMidGameO";
-            TwoPlayerMove.createMove(new Location(2, 1), 0, PLAYER2_PIECE),  // endP1       "endGameX";
-            TwoPlayerMove.createMove(new Location(3, 3), -52, PLAYER1_PIECE) // endP2       "endGame0";   */
-       
+    @Override
+    protected ExpectedMoveMatrix getExpectedOneLevelWithQuiescenceAndABMoves() {
+        return ExpectedSearchStrategyResults.EXPECTED_ONE_LEVEL_WITH_QUIESCENCE_AND_AB;
     }
 
     @Override
@@ -63,7 +47,14 @@ public class NegaMaxStrategyTest extends NegaMaxStrategyTst {
 
     @Override
     protected ExpectedMoveMatrix getExpectedFourLevelLookaheadMoves() {
-        return ExpectedSearchStrategyResults.EXPECTED_FOUR_LEVEL_LOOKAHEAD;
+        //return ExpectedSearchStrategyResults.EXPECTED_FOUR_LEVEL_LOOKAHEAD;
+        return new ExpectedMoveMatrix(   new MoveInfo(TwoPlayerMove.createMove(new Location(1, 1), 8, PLAYER2_PIECE), 782),
+            new MoveInfo(TwoPlayerMove.createMove(new Location(2, 1), 48, PLAYER1_PIECE), 249),
+            new MoveInfo(TwoPlayerMove.createMove(new Location(3, 2), 28, PLAYER2_PIECE), 26),
+            new MoveInfo(TwoPlayerMove.createMove(new Location(1, 2), 0, PLAYER1_PIECE), 52),
+            new MoveInfo(TwoPlayerMove.createMove(new Location(2, 1), 0, PLAYER2_PIECE), 4),
+            new MoveInfo(TwoPlayerMove.createMove(new Location(3, 1), -12, PLAYER1_PIECE), 13)
+        );
     }
 
     @Override
@@ -75,6 +66,12 @@ public class NegaMaxStrategyTest extends NegaMaxStrategyTst {
     protected ExpectedMoveMatrix getExpectedTwoLevelWithQuiescenceMoves() {
         return ExpectedSearchStrategyResults.EXPECTED_TWO_LEVEL_WITH_QUIESCENCE;
     }
+
+    @Override
+    protected ExpectedMoveMatrix getExpectedTwoLevelWithQuiescenceAndABMoves() {
+        return ExpectedSearchStrategyResults.EXPECTED_TWO_LEVEL_WITH_QUIESCENCE_AND_AB;
+    }
+
     @Override
     protected ExpectedMoveMatrix getExpectedThreeLevelWithQuiescenceMoves() {
         return ExpectedSearchStrategyResults.EXPECTED_THREE_LEVEL_WITH_QUIESCENCE;

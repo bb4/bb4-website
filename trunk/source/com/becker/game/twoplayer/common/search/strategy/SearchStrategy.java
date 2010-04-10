@@ -36,7 +36,7 @@ public interface SearchStrategy {
     /**
      * @return the number of moves considered in the search so far.
      */
-    int getNumMovesConsidered();
+    long getNumMovesConsidered();
 
     /**
      * Approximate percent completed for the search.

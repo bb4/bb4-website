@@ -352,7 +352,7 @@ public abstract class TwoPlayerController extends GameController
      * @param totalTime total elapsed time.
      * @param numMovesConsidered number of moves inspected during search.
      */
-    protected void showProfileStats( long totalTime, int numMovesConsidered )
+    protected void showProfileStats( long totalTime, long numMovesConsidered )
     {
         GameContext.log( 0, "----------------------------------------------------------------------------------" );
         GameContext.log( 0, "There were " + numMovesConsidered + " moves considered." );

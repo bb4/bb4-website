@@ -31,8 +31,8 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
     /** the interface implemented by the generic game controller that provides standard methods. */
     Searchable searchable_ = null;
 
-    /** keep track of the number of moves searched so far. */
-    int movesConsidered_ = 0;
+    /** keep track of the number of moves searched so far. Long because there could be quite a few. */
+    long movesConsidered_ = 0;
 
     /** approximate percent of search that is complete at given moment. */
     int percentDone_ = 0;
@@ -193,7 +193,7 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
         return true;
     }
 
-    public final int getNumMovesConsidered()
+    public final long getNumMovesConsidered()
     {
         return movesConsidered_;
     }

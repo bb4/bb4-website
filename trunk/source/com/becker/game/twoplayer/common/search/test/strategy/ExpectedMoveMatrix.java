@@ -9,16 +9,16 @@ import com.becker.game.twoplayer.common.search.test.Progress;
  */
 public class ExpectedMoveMatrix {
 
-    private TwoPlayerMove beginningP1;
-    private TwoPlayerMove beginningP2;
-    private TwoPlayerMove middleP1;
-    private TwoPlayerMove middleP2;
-    private TwoPlayerMove endP1;
-    private TwoPlayerMove endP2;
+    private MoveInfo beginningP1;
+    private MoveInfo beginningP2;
+    private MoveInfo middleP1;
+    private MoveInfo middleP2;
+    private MoveInfo endP1;
+    private MoveInfo endP2;
 
-    public ExpectedMoveMatrix(TwoPlayerMove beginningPlayer1, TwoPlayerMove beginningPlayer2,
-                              TwoPlayerMove middlePlayer1, TwoPlayerMove middlePlayer2,
-                              TwoPlayerMove endPlayer1, TwoPlayerMove endPlayer2) {
+    public ExpectedMoveMatrix(MoveInfo beginningPlayer1, MoveInfo beginningPlayer2,
+                              MoveInfo middlePlayer1, MoveInfo middlePlayer2,
+                              MoveInfo endPlayer1, MoveInfo endPlayer2) {
         beginningP1 = beginningPlayer1;
         beginningP2 = beginningPlayer2;
         middleP1 = middlePlayer1;
@@ -27,9 +27,23 @@ public class ExpectedMoveMatrix {
         endP2 = endPlayer2;
     }
 
+    /**
+     * Use this constructor if you do not have the numMovesConsidered info to include.
+     */
+    public ExpectedMoveMatrix(TwoPlayerMove beginningPlayer1, TwoPlayerMove beginningPlayer2,
+                              TwoPlayerMove middlePlayer1, TwoPlayerMove middlePlayer2,
+                              TwoPlayerMove endPlayer1, TwoPlayerMove endPlayer2) {
+        beginningP1 = new MoveInfo(beginningPlayer1);
+        beginningP2 = new MoveInfo(beginningPlayer2);
+        middleP1 = new MoveInfo(middlePlayer1);
+        middleP2 = new MoveInfo(middlePlayer2);
+        endP1 = new MoveInfo(endPlayer1);
+        endP2 = new MoveInfo(endPlayer2);
+    }
 
-    public TwoPlayerMove getExpectedMove(Progress progress, boolean player1) {
-         TwoPlayerMove expectedMove = null;
+
+    public MoveInfo getExpectedMove(Progress progress, boolean player1) {
+         MoveInfo expectedMove = null;
          switch (progress) {
             case BEGINNING :
                 expectedMove = player1 ?  beginningP1 : beginningP2;

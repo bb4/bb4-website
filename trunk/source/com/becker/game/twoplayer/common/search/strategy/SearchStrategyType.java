@@ -7,10 +7,9 @@ import com.becker.optimization.parameter.ParameterArray;
 /**
  * Currently supported search method strategy
  *
- * @author Barry Becker  Date: Mar 10, 2007
+ * @author Barry Becker
  */
 public enum SearchStrategyType {
-
     
     MINIMAX("MINIMAX_SEARCH") {
         @Override
@@ -29,7 +28,7 @@ public enum SearchStrategyType {
         }
          @Override
          public boolean sortAscending(boolean player1, boolean playerOnesPerspective) {
-            return ( player1 == playerOnesPerspective);
+            return (player1 == playerOnesPerspective);
         }
     },
     NEGASCOUT("NEGASCOUT_SEARCH") {
@@ -39,7 +38,7 @@ public enum SearchStrategyType {
         }
         @Override
         public boolean sortAscending(boolean player1, boolean playerOnesPerspective) {
-            return  false;
+            return (player1 == playerOnesPerspective);
         }
     },
     NEGASCOUT_W_MEMORY("NEGASCOUT_W_MEMORY_SEARCH") {
@@ -49,7 +48,8 @@ public enum SearchStrategyType {
         }
         @Override
         public boolean sortAscending(boolean player1, boolean playerOnesPerspective) {
-            return  false;}
+            return (player1 == playerOnesPerspective);
+        }
     },
     MTD("MTD_SEARCH"){
         @Override
@@ -58,7 +58,7 @@ public enum SearchStrategyType {
         }
         @Override
         public boolean sortAscending(boolean player1, boolean playerOnesPerspective) {
-            return  false;
+            return (player1 == playerOnesPerspective);
         }
     };
 
@@ -69,7 +69,7 @@ public enum SearchStrategyType {
      *
      * @param labelKey message key
      */
-    private SearchStrategyType(String labelKey) {
+    SearchStrategyType(String labelKey) {
         labelKey_ = labelKey;
     }
 
