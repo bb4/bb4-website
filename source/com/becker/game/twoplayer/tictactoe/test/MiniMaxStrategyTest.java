@@ -9,6 +9,7 @@ import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.test.SearchableHelper;
 import com.becker.game.twoplayer.common.search.test.strategy.ExpectedMoveMatrix;
 import com.becker.game.twoplayer.common.search.test.strategy.MiniMaxStrategyTst;
+import com.becker.game.twoplayer.common.search.test.strategy.MoveInfo;
 import com.becker.game.twoplayer.tictactoe.TicTacToeController;
 import com.becker.game.twoplayer.tictactoe.TicTacToeOptions;
 
@@ -38,14 +39,31 @@ public class MiniMaxStrategyTest extends MiniMaxStrategyTst {
     }
 
     @Override
+    protected ExpectedMoveMatrix getExpectedOneLevelWithQuiescenceAndABMoves() {
+        return ExpectedSearchStrategyResults.EXPECTED_ONE_LEVEL_WITH_QUIESCENCE_AND_AB;
+    }
+
+    @Override
     protected ExpectedMoveMatrix getExpectedTwoLevelLookAheadMoves() {
         return ExpectedSearchStrategyResults.EXPECTED_TWO_LEVEL_LOOKAHEAD;
 
     }
 
     @Override
+    protected ExpectedMoveMatrix getExpectedTwoLevelWithQuiescenceAndABMoves() {
+        return ExpectedSearchStrategyResults.EXPECTED_TWO_LEVEL_WITH_QUIESCENCE_AND_AB;
+    }
+
+    @Override
     protected ExpectedMoveMatrix getExpectedFourLevelLookaheadMoves() {
-        return ExpectedSearchStrategyResults.EXPECTED_FOUR_LEVEL_LOOKAHEAD;
+        //return ExpectedSearchStrategyResults.EXPECTED_FOUR_LEVEL_LOOKAHEAD;
+        return new ExpectedMoveMatrix(   new MoveInfo(TwoPlayerMove.createMove(new Location(1, 1), 8, PLAYER2_PIECE), 1380),
+            new MoveInfo(TwoPlayerMove.createMove(new Location(2, 1), 48, PLAYER1_PIECE), 274),
+            new MoveInfo(TwoPlayerMove.createMove(new Location(3, 2), 28, PLAYER2_PIECE), 27),
+            new MoveInfo(TwoPlayerMove.createMove(new Location(1, 2), 0, PLAYER1_PIECE), 52),
+            new MoveInfo(TwoPlayerMove.createMove(new Location(2, 1), 0, PLAYER2_PIECE), 4),
+            new MoveInfo(TwoPlayerMove.createMove(new Location(3, 1), -12, PLAYER1_PIECE), 15)
+        );
     }
 
     @Override

@@ -262,7 +262,8 @@ public class TwoPlayerMove extends Move
     public String getConstructorString() {
         String pieceCreator = "null";
         if (getPiece() != null) {
-            pieceCreator = "new GamePiece(" + getPiece().isOwnedByPlayer1() + ")";
+            pieceCreator = getPiece().isOwnedByPlayer1()? "PLAYER1_PIECE" : "PLAYER2_PIECE";
+            //pieceCreator = "new GamePiece(" + getPiece().isOwnedByPlayer1() + ")";
         }
         return "TwoPlayerMove.createMove(new Location("
                 +  getToLocation().getRow()  + ", " + getToLocation().getCol()  + "), " + getValue() + ", "

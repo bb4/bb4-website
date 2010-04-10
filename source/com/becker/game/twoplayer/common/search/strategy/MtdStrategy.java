@@ -74,9 +74,9 @@ public final class MtdStrategy implements SearchStrategy
     }
 
 
-    public final int getNumMovesConsidered()
+    public final long getNumMovesConsidered()
     {
-        return  searchWithMemory_.getNumMovesConsidered();
+        return searchWithMemory_.getNumMovesConsidered();
     }
 
     public final int getPercentDone()
@@ -86,7 +86,7 @@ public final class MtdStrategy implements SearchStrategy
 
     /**
      * Set an optional ui component that will update when the search tree is modified.
-     * @param listener
+     * @param listener listener
      */
     public void setGameTreeEventListener(GameTreeViewable listener) {
          searchWithMemory_.setGameTreeEventListener(listener);

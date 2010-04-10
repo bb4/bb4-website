@@ -21,6 +21,7 @@ public class TestAll extends TestCase {
         suite.addTestSuite(TicTacToeSearchableTest.class);
         suite.addTestSuite(MiniMaxStrategyTest.class);
         suite.addTestSuite(NegaMaxStrategyTest.class);
+        suite.addTestSuite(NegaScoutStrategyTest.class);
 
         return suite;
     }
