@@ -12,7 +12,6 @@ import java.util.*;
  */
 public abstract class TwoPlayerBoard extends Board
 {
-    
     /**
      * given a move specification, execute it on the board
      * This places the players symbol at the position specified by move.
@@ -37,7 +36,6 @@ public abstract class TwoPlayerBoard extends Board
         }
         return true;
     }
-    
 
     /**
      * @param moves list of moves to make all at once.
@@ -94,5 +92,4 @@ public abstract class TwoPlayerBoard extends Board
         }
         return bldr.toString();
     }
-
 }

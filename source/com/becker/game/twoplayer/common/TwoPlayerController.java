@@ -9,6 +9,7 @@ import com.becker.game.twoplayer.common.search.SearchOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
 import com.becker.game.twoplayer.common.search.Searchable;
+import com.becker.game.twoplayer.common.search.transposition.ZobristHash;
 import com.becker.game.twoplayer.common.search.tree.GameTreeViewable;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.optimization.parameter.ParameterArray;
@@ -41,6 +42,8 @@ public abstract class TwoPlayerController extends GameController
     /** not really infinty, but close enough for our purposes. */
     private static final int INFINITY = SearchStrategy.INFINITY;
 
+    private static final double HUNDRED = 100.0;
+
     protected boolean player1sTurn_ = true;
 
     /** these weights determine how the computer values each move.
@@ -59,7 +62,7 @@ public abstract class TwoPlayerController extends GameController
     /** this is true while the computer thinks about its next move. */
     private boolean processing_ = false;
 
-    private static final double HUNDRED = 100.0;
+    private Searchable searchable_;
 
 
     /**
@@ -676,10 +679,25 @@ public abstract class TwoPlayerController extends GameController
     }
 
 
+    public Searchable getSearchable() {
+        if (searchable_ == null)
+            searchable_ = createSearchable();
+        return searchable_;
+    }
 
-    public abstract Searchable getSearchable();
+    public abstract Searchable createSearchable();
+
 
     public abstract class TwoPlayerSearchable implements Searchable {
+
+        /** Used to generate hashkeys. */
+        ZobristHash hash;
+
+
+        public TwoPlayerSearchable() {
+            TwoPlayerBoard b = (TwoPlayerBoard)board_;
+            hash =  new ZobristHash(b);
+        }
 
         public SearchOptions getSearchOptions() {
             return ((TwoPlayerOptions) gameOptions_).getSearchOptions();
@@ -690,10 +708,11 @@ public abstract class TwoPlayerController extends GameController
          */
         public final void makeInternalMove( TwoPlayerMove m )
         {
-
+            TwoPlayerBoard b = (TwoPlayerBoard) board_;
+            TwoPlayerMove lastMove = (TwoPlayerMove)b.getLastMove();
             if (getNumMoves() > 0)
-                assert(((TwoPlayerMove)board_.getLastMove()).isPlayer1() != m.isPlayer1()):
-                        "can't go twice in a row m="+m+" getLastMove()="+board_.getLastMove() +" movelist = "+getMoveList();
+                assert(lastMove.isPlayer1() != m.isPlayer1()):
+                        "can't go twice in a row m="+m+" getLastMove()="+ lastMove + " movelist = " + getMoveList();
 
             board_.makeMove( m );
 
@@ -702,15 +721,17 @@ public abstract class TwoPlayerController extends GameController
             if ( viewer_ != null && getShowComputerAnimation() ) {
                 viewer_.refresh();
             }*/
+            hash.applyMove(m, b.getStateIndex(b.getPosition(m.getToLocation())));
         }
 
         /**
          * takes back the most recent move.
          * @param m  move to undo
          */
-        public final void undoInternalMove( TwoPlayerMove m )
-        {
-            board_.undoMove();
+        public final void undoInternalMove( TwoPlayerMove m ) {
+            TwoPlayerBoard b = (TwoPlayerBoard) board_;
+            hash.applyMove(m, b.getStateIndex(b.getPosition(m.getToLocation())));
+            b.undoMove();  
         }
 
         /**
@@ -720,8 +741,7 @@ public abstract class TwoPlayerController extends GameController
          * @param lastMove the move to check. If null then return true. This is typically the last move played.
          * @param recordWin if true then the controller state will record wins
          */
-        public boolean done( TwoPlayerMove lastMove, boolean recordWin )
-        {
+        public boolean done( TwoPlayerMove lastMove, boolean recordWin ) {
             // the game can't be over if no moves have been made yet.
             if (getNumMoves() == 0) {
                 return false;
@@ -746,9 +766,15 @@ public abstract class TwoPlayerController extends GameController
         /**
          * @return true if the specified move caused one or more opponent pieces to become jeopardized
          */
-        public boolean inJeopardy( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
-        {
+        public boolean inJeopardy( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective ) {
             return false;
+        }
+
+        /**
+         * @return get a hash key that represents this board state (with negligibly small chance of conflict)
+         */
+        public Long getHashKey() {
+            return hash.getKey();
         }
     }
 }

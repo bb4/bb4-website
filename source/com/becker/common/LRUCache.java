@@ -22,14 +22,14 @@ public class LRUCache<K,V> {
      */
     private static final float   hashTableLoadFactor = 0.75f;
 
-    private LinkedHashMap<K,V>   map;
-    private int                  cacheSize;
+    private LinkedHashMap<K,V>  map;
+    private int cacheSize;
 
     /**
      * Creates a new LRU cache.
      * @param cacheSize the maximum number of entries that will be kept in this cache.
      */
-    public LRUCache (int cacheSize) {
+    public LRUCache(int cacheSize) {
        this.cacheSize = cacheSize;
        int hashTableCapacity = (int)Math.ceil(cacheSize / hashTableLoadFactor) + 1;
        map = new LinkedHashMap<K,V>(hashTableCapacity, hashTableLoadFactor, true) {

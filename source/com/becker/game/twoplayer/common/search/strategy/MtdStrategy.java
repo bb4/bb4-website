@@ -8,10 +8,10 @@ import com.becker.game.twoplayer.common.search.tree.GameTreeViewable;
 
 /**
  * Memory enhanced Test Driver search.
- *  This strategy class defines the MTD search algorithm.
- *  See http://home.tiscali.nl/askeplaat/mtdf.html
+ * This strategy class defines the MTD search algorithm.
+ * See http://home.tiscali.nl/askeplaat/mtdf.html
  *
- *  @author Barry Becker  2/07
+ * @author Barry Becker
  */
 public final class MtdStrategy implements SearchStrategy
 {
@@ -21,8 +21,9 @@ public final class MtdStrategy implements SearchStrategy
 
     private Searchable searchable_;
     private ParameterArray weights_;
+
     /**
-     * Construct NegaMax the strategy given a controller interface.
+     * Constructor.
     */
     public MtdStrategy( Searchable controller, ParameterArray weights )
     {
@@ -34,10 +35,9 @@ public final class MtdStrategy implements SearchStrategy
      * @inheritDoc
      */
     public TwoPlayerMove search( TwoPlayerMove lastMove,
-                                                    int alpha, int beta, SearchTreeNode parent )
+                                 int alpha, int beta, SearchTreeNode parent )
     {
-
-        searchWithMemory_ =  new NegaScoutMemoryStrategy(searchable_, weights_);
+        searchWithMemory_ = new NegaScoutMemoryStrategy(searchable_, weights_);
 
         TwoPlayerMove selectedMove = searchInternal( lastMove, 0, alpha, parent);
         return (selectedMove != null)? selectedMove : lastMove;
@@ -54,12 +54,9 @@ public final class MtdStrategy implements SearchStrategy
 
         TwoPlayerMove selectedMove = null;
         while (lowerBound < upperBound)  {
-            if (g == lowerBound) {
-                beta = g + 1;
-            }
-            else {
-                beta = g;
-            }
+            
+            beta = (g == lowerBound)? g + 1 : g;
+
             selectedMove = searchWithMemory_.search(lastMove, beta -1, beta, parent);
             g = selectedMove.getInheritedValue();
 
@@ -97,16 +94,13 @@ public final class MtdStrategy implements SearchStrategy
        searchWithMemory_.pause();
     }
 
-
     public final boolean isPaused()
     {
         return searchWithMemory_.isPaused();
     }
 
-
     public void continueProcessing()
     {
        searchWithMemory_.continueProcessing();
     }
-
 }

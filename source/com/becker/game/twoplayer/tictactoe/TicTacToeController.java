@@ -43,7 +43,7 @@ public class TicTacToeController extends PenteController
     }
 
     @Override
-    public Searchable getSearchable() {
+    public Searchable createSearchable() {
          return new TicTacToeSearchable();
     }
 
