@@ -84,9 +84,9 @@ public class PenteController extends TwoPlayerController
     }
 
     @Override
-    public Searchable getSearchable() {
+    public Searchable createSearchable() {
          return new PenteSearchable();
-     }
+    }
 
 
     protected class PenteSearchable extends TwoPlayerSearchable {
@@ -142,7 +142,7 @@ public class PenteController extends TwoPlayerController
 
             // now keep only those that result in a win or loss.
             Iterator<TwoPlayerMove> it = allMoves.iterator();
-            List<TwoPlayerMove>  urgentMoves = new LinkedList<TwoPlayerMove>();
+            List<TwoPlayerMove> urgentMoves = new LinkedList<TwoPlayerMove>();
             while ( it.hasNext() ) {
                 TwoPlayerMove move = it.next();
                 // if its not a winning move or we already have it, then skip

@@ -452,7 +452,7 @@ public final class GoController extends TwoPlayerController
 
 
     @Override
-    public Searchable getSearchable() {
+    public Searchable createSearchable() {
          return new GoSearchable();
     }
 

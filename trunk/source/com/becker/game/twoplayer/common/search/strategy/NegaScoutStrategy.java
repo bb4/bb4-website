@@ -95,7 +95,7 @@ public class NegaScoutStrategy extends NegaMaxStrategy
 
                 int selectedValue = -selectedMove.getInheritedValue();
                 theMove.setInheritedValue( selectedValue );
-
+                
                 if (selectedValue > alpha) {
                     alpha = selectedValue;
                 }
@@ -112,9 +112,8 @@ public class NegaScoutStrategy extends NegaMaxStrategy
 
                     selectedValue = -selectedMove.getInheritedValue();
                     theMove.setInheritedValue(selectedValue);
-
-                    theMove.setInheritedValue(alpha);    //  added to get working
-                    bestMove = theMove;                  //
+                    //theMove.setInheritedValue(alpha); // which is right?
+                    bestMove = theMove;
 
                     if (alpha >= beta) {
                         break;

@@ -114,7 +114,7 @@ public class CheckersBoard extends TwoPlayerBoard
 
 
     /**
-     * Num different states. E.g. regulare piece or king or no pieces at the position.
+     * Num different states. E.g. regular piece or king or no pieces at the position.
      * This is used primarily for the Zobrist hash. You do not need to override if yo udo not use it.
      * @return number of different states this position can have.
      */

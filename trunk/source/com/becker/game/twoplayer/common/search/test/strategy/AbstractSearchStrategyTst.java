@@ -126,7 +126,9 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
             verifyMove(prog, true, expectedMoves, desc);
             verifyMove(prog, false, expectedMoves, desc);
         }
-        System.out.println("TOTAL TIME = " + Util.formatNumber( (float)(System.currentTimeMillis() - time) / 1000.0));
+        double elapsed = (float)(System.currentTimeMillis() - time) / 1000.0;
+        assertTrue("Took too long: " + elapsed, elapsed < 1.0);
+        System.out.println("TOTAL TIME = " + Util.formatNumber( elapsed));
     }
 
     public void verifyMove(Progress prog, boolean player1, ExpectedMoveMatrix expectedMoves, String desc) {

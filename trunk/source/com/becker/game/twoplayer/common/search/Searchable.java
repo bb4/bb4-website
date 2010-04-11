@@ -76,4 +76,9 @@ public interface Searchable
      */
     boolean inJeopardy( TwoPlayerMove m, ParameterArray weights, boolean player1sPerspective );
 
+    /**
+     *
+     * @return  the Zobrist hash for the currently searched position
+     */
+    Long getHashKey();
 }
