@@ -5,6 +5,7 @@
 
 package com.becker.optimization.parameter.redistribution;
 
+import com.becker.common.math.Range;
 import com.becker.common.math.function.Function;
 
 /**
@@ -42,6 +43,10 @@ public abstract class AbstractRedistributionFunction implements RedistributionFu
   
         verifyInRange(newValue);
         return newValue;
+    }
+
+    public Range getDomain() {
+        return new Range(0, 1.0);
     }
     
     protected abstract void initializeFunction();

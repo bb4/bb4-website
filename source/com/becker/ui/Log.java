@@ -9,7 +9,7 @@ import java.io.*;
  * Provide support for general logging.
  * You have the option of logging output to the console, to a separate window, or to a file
  *
- * @see com.becker.ui.dialogs.OutputWindow
+ * @see OutputWindow
  * @author Barry Becker
  */
 public class Log implements ILog

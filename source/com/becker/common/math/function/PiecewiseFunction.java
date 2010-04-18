@@ -1,5 +1,7 @@
 package com.becker.common.math.function;
 
+import com.becker.common.math.Range;
+
 
 /**
  * Piecewise linear function representation.
@@ -44,6 +46,10 @@ public class PiecewiseFunction implements Function {
         
         return getValue(value, yValues, xValues); 
     }
+
+    public Range getDomain() {
+        return new Range(xValues[0], xValues[xValues.length-1]);
+    }
     
     
     private double getValue(double value, double[] xVals, double [] yVals) {
@@ -73,7 +79,7 @@ public class PiecewiseFunction implements Function {
     public String toString() {
         StringBuilder bldr = new StringBuilder("PiecewiseFunction: ");
         for (int i=0; i< xValues.length; i++) {
-            bldr.append("x="+xValues[i] + " y=" + yValues[i]);
+            bldr.append("x=").append(xValues[i]).append(" y=").append(yValues[i]);
         }     
         return bldr.toString();
     }

@@ -19,7 +19,6 @@ public class SnakeSimulator extends NewtonianSimulator
 {
 
     public static final String CONFIG_FILE = CONFIG_FILE_PATH_PREFIX + "snake/snakeGeomNormal.data";
-    private static final String FILE_NAME_BASE = ANIMATION_FRAME_FILE_NAME_PREFIX + "snake/snakeFrame";
 
     /** the amount to advance the animation in time for each frame in seconds. */
     protected static final int NUM_STEPS_PER_FRAME = 200;
@@ -144,11 +143,13 @@ public class SnakeSimulator extends NewtonianSimulator
         optimizer.doOptimization(  OptimizationStrategyType.GENETIC_SEARCH, INITIAL_PARAMS, 0.3);
     }
 
+    @Override
     public int getNumParameters() {
         return INITIAL_PARAMS.size();
     }
 
 
+    @Override
     public double timeStep()
     {
         if ( !isPaused() ) {
@@ -157,6 +158,7 @@ public class SnakeSimulator extends NewtonianSimulator
         return timeStep_;
     }
 
+    @Override
     public void paint( Graphics g )
     {
         Graphics2D g2 = (Graphics2D) g;
@@ -196,19 +198,14 @@ public class SnakeSimulator extends NewtonianSimulator
         return gridColor_;
     }
 
-    protected String getFileNameBase()
-    {
-        return FILE_NAME_BASE;
-    }
-    //////////////////////////////////////////////////////////////////
 
 
-
-
+    @Override
     protected SimulatorOptionsDialog createOptionsDialog() {
          return new SnakeOptionsDialog( frame_, this );
     }
 
+    @Override
     protected String getStatusMessage()
     {
         return super.getStatusMessage() + "    velocity=" + Util.formatNumber( velocity_ );
@@ -222,6 +219,7 @@ public class SnakeSimulator extends NewtonianSimulator
      * The measure is purely based on its velocity.
      * If the snake becomes unstable, then 0.0 is returned.
      */
+    @Override
     public double evaluateFitness( ParameterArray params )
     {
         snake_.setWaveSpeed( params.get( 0 ).getValue() );
@@ -241,7 +239,6 @@ public class SnakeSimulator extends NewtonianSimulator
                 e.printStackTrace();
             }
 
-            //System.out.println("vel="+velocity_+ "  timestep="+timeStep_);
             improved = (velocity_ - oldVelocity) > 0.00001;
 
             oldVelocity = velocity_;

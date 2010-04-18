@@ -25,18 +25,16 @@ public class DoubleParameter extends AbstractParameter
         super(val, minVal, maxVal, paramName, false);    
     }
     
-    public static DoubleParameter createGaussianParameter(
-                                                            double val, double minVal, double maxVal, 
-                                                            String paramName, double normalizedMean, double stdDeviation) {
+    public static DoubleParameter createGaussianParameter(double val, double minVal, double maxVal,
+                                                         String paramName, double normalizedMean, double stdDeviation) {
         DoubleParameter param = new DoubleParameter(val, minVal, maxVal, paramName);
         param.setRedistributionFunction(new GaussianRedistribution(normalizedMean, stdDeviation));    
         return param;
     }
     
-    public static DoubleParameter createUniformParameter(
-                                                            double val, double minVal, double maxVal, 
-                                                            String paramName, double[] specialValues, 
-                                                            double[] specialValueProbabilities) {
+    public static DoubleParameter createUniformParameter(double val, double minVal, double maxVal,
+                                                         String paramName, double[] specialValues,
+                                                         double[] specialValueProbabilities) {
         DoubleParameter param = new DoubleParameter(val, minVal, maxVal, paramName);
         param.setRedistributionFunction(
                 new UniformRedistribution(specialValues, specialValueProbabilities));   
@@ -51,13 +49,15 @@ public class DoubleParameter extends AbstractParameter
     }
 
     public Object getNaturalValue() {
-        return Double.valueOf(this.getValue());
+        return this.getValue();
     }
     
+    @Override
     public boolean isIntegerOnly() {
         return false;
     }
     
+    @Override
     public Class getType() {
         return float.class; 
     }

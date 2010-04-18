@@ -19,7 +19,7 @@ public interface ILog {
 
     /**
      *  Set the log destination
-     *  @@ allow multiples using | to combine the hex constants
+     *  Should eventually allow multiples using | to combine the hex constants.
      */
     void setDestination( int logDestination );
 

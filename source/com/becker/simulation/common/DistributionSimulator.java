@@ -72,10 +72,6 @@ public abstract class DistributionSimulator extends Simulator {
         histogram_.setSize(getWidth(), getHeight());
         histogram_.paint(g);
     }
-
-    @Override
-    protected abstract String getFileNameBase();
-
     
     protected static void runSimulation(DistributionSimulator simulator) {     
         simulator.setPaused(false);

@@ -117,6 +117,11 @@ public abstract class Simulator extends AnimationComponent
         return controls;
     }
 
+    @Override
+    protected String getFileNameBase()
+    {
+        return this.getClass().getName();
+    }
     
     /**
      *

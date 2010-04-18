@@ -84,12 +84,6 @@ public class ParameterSimulator extends DistributionSimulator {
         return xpos;  */
     }
 
-    @Override
-    protected String getFileNameBase()
-    {
-        return "parameter";
-    }
-
     public static void main( String[] args )
     {
         final ParameterSimulator sim = new ParameterSimulator();

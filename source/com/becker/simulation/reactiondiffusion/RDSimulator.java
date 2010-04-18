@@ -11,7 +11,6 @@ import java.awt.*;
  */
 public class RDSimulator extends Simulator {
 
-    private static final String FILE_NAME_BASE = ANIMATION_FRAME_FILE_NAME_PREFIX + "reactiondiffusion/rdFrame";
     private static final int FIXED_SIZE_DIM = 250;
 
     private GrayScott grayScott_;
@@ -129,10 +128,6 @@ public class RDSimulator extends Simulator {
         oldHeight = h;
     }
 
-    protected String getFileNameBase()
-    {
-        return FILE_NAME_BASE;
-    }
 
     public RDRenderer getRenderer() {
         return renderer_;

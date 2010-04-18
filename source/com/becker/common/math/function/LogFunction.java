@@ -51,4 +51,8 @@ public class LogFunction implements Function {
         return Math.pow(base, value / scale);
     }
 
+    public Range getDomain() {
+        return new Range(0, Double.MAX_VALUE);
+    }
+
 }

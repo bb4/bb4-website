@@ -89,12 +89,6 @@ public class StockSimulator extends DistributionSimulator {
         return stockPrice;
     }
 
-    @Override
-    protected String getFileNameBase()
-    {
-        return "stock";
-    }
-
     public static void main( String[] args )
     {
         final StockSimulator sim = new StockSimulator();

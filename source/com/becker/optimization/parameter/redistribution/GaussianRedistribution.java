@@ -8,6 +8,8 @@ package com.becker.optimization.parameter.redistribution;
 import com.becker.common.math.MathUtil;
 import com.becker.common.math.Range;
 import com.becker.common.math.function.ArrayFunction;
+import com.becker.common.math.function.ErrorFunction;
+import com.becker.common.math.function.Function;
 
 /**
  * Convert the uniform distribution to a normal (gaussian) one.
@@ -20,19 +22,22 @@ public class GaussianRedistribution extends AbstractRedistributionFunction {
     
     private static final int NUM_MAP_VALUES = 1000;
     private static final double SQRT2 = Math.sqrt(2.0);
+
+    private Function errorFunction;
     
     
     public GaussianRedistribution(double mean, double standardDeviation) {
         verifyInRange(mean);
+        errorFunction = new ErrorFunction();
         this.mean = mean;
         this.stdDeviation = standardDeviation;
-         initializeFunction();       
+        initializeFunction();
     }
     
     @Override
     protected void initializeFunction() {
         double[]  functionMap;
-        double inc = 1.0 /  (NUM_MAP_VALUES-1);
+        double inc = 1.0 / (NUM_MAP_VALUES-1);
         double[] cdfFunction = new double[NUM_MAP_VALUES];
         cdfFunction[0] = 0;
        
@@ -60,8 +65,7 @@ public class GaussianRedistribution extends AbstractRedistributionFunction {
         assert(max > 0.9 && max <1.01);
         cdfFunction[NUM_MAP_VALUES-1] = 1.0;
         Range xRange = new Range(0.0, 1.0);
-        functionMap = 
-                 MathUtil.createInverseFunction(cdfFunction, xRange);
+        functionMap = MathUtil.createInverseFunction(cdfFunction, xRange);
         redistributionFunction = new ArrayFunction(functionMap, cdfFunction);
     }
     
@@ -74,7 +78,7 @@ public class GaussianRedistribution extends AbstractRedistributionFunction {
         
         double denom = SQRT2 * stdDeviation;
         double xx = (Math.min(1.0, x) - mean) / denom;
-        double erf = MathUtil.errorFunction(xx);
+        double erf = errorFunction.getFunctionValue(xx);
         return 0.5 * (1.0 + erf);
     }
 

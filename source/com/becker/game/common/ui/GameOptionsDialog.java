@@ -299,11 +299,7 @@ public abstract class GameOptionsDialog extends OptionsDialog
          p.setAlignmentX( Component.LEFT_ALIGNMENT );
          p.setBorder( BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), GameContext.getLabel("LOCALE_OPTIONS") ) );
 
-         //JLabel label = new JLabel( "     " );
-         //label.setAlignmentX( Component.LEFT_ALIGNMENT );
-         //p.add( label );
-
-         localeComboBox_ = new JComboBox(); //  GameContext.getLabel("LOCALE")); //, GameContext.getDefaultLocaleType() );
+         localeComboBox_ = new JComboBox();
          localeComboBox_.setToolTipText( GameContext.getLabel("LOCALE_TIP") );
 
          // add the available locales to the dropdown
