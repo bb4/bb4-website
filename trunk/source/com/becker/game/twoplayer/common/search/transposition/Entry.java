@@ -38,4 +38,12 @@ public class Entry {
          this.lowerValue = value;       
          this.depth = 0;
     }
+
+    public String toString() {
+        StringBuilder bldr = new StringBuilder();
+        bldr.append("Entry depth=").append(depth);
+        bldr.append("bestMove=").append(bestMove);
+        bldr.append("range=[").append(lowerValue).append(", ").append(upperValue).append("]");
+        return bldr.toString();
+    }
 }

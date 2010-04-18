@@ -1,6 +1,7 @@
 package com.becker.game.twoplayer.common.ui;
 
 import com.becker.common.ColorMap;
+import com.becker.common.util.Util;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 
@@ -29,7 +30,7 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
     private static final BasicStroke HIGHLIGHT_STROKE = new BasicStroke(1.4f);
     private static final BasicStroke BRUSH_HIGHLIGHT_STROKE = new BasicStroke(3.7f);
     private static final int PRUNE_SPACING = 12;
-    // circle around highlighted node
+    /** circle around highlighted node   */
     private static final int HL_NODE_RADIUS = 3;
     private static final int HL_NODE_DIAMETER = 8;
     private static final long serialVersionUID = 0L;
@@ -40,7 +41,8 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
 
     private SearchTreeNode root_;
     private int depth_ = 0;
-    // sum of the number of descendants of all nodes at the level
+
+    /** sum of the number of descendants of all nodes at the level */
     private int[] totalAtLevel_;
 
     private int width_;
@@ -103,7 +105,7 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
             if (node.isPruned()) {
                 // give pruned nodes a little more space
                 int pruneSpace =
-                        node.getSpaceAllocation() + Math.max(1, 4*PRUNE_SPACING - PRUNE_SPACING*depth);
+                        node.getSpaceAllocation() + Math.max(1, 4 * PRUNE_SPACING - PRUNE_SPACING * depth);
                 node.setSpaceAllocation(pruneSpace);
             }
             else {
@@ -155,7 +157,7 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
         oldHighlightPath_ = path;
     }
 
-    private synchronized void highlight( TreePath path, Graphics2D g2)
+    private void highlight( TreePath path, Graphics2D g2)
     {
         Object[] pathNodes = path.getPath();
         SearchTreeNode lastNode = (SearchTreeNode)pathNodes[0];
@@ -168,7 +170,7 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
             g2.setColor(colormap_.getColorForValue(m.getInheritedValue()));
             
             Point nodeLoc = node.getPosition();
-            g2.drawLine(lastLoc.x,lastLoc.y, nodeLoc.x,nodeLoc.y);
+            g2.drawLine(lastLoc.x, lastLoc.y, nodeLoc.x,nodeLoc.y);
             g2.setColor(colormap_.getColorForValue(m.getValue()));
             g2.drawOval(nodeLoc.x-HL_NODE_RADIUS, nodeLoc.y-HL_NODE_RADIUS, diameter, diameter);
             lastLoc = nodeLoc;
@@ -178,12 +180,14 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
     /**
      * Draw the nodes and arcs in the game tree.
      * It can get quite huge.
+     * @return the number of nodes that were drawn.
      */
-    private void drawTree( SearchTreeNode root, Graphics2D g2)
+    private long drawTree( SearchTreeNode root, Graphics2D g2)
     {
         int oldDepth = 0;
         int depth;
         int[] offsetAtLevel = new int[depth_+2];
+        long numNodes = 0;
 
         drawNode(root, 0, 0, g2);
         List<SearchTreeNode> q = new LinkedList<SearchTreeNode>();
@@ -191,6 +195,7 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
 
         while (q.size() > 0) {
             SearchTreeNode p = q.remove(0);
+            numNodes++;
             depth = p.getLevel();
             // draw the arc and child root for each child c of p
             if (depth > oldDepth) {
@@ -207,6 +212,7 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
             }
             offsetAtLevel[depth] += p.getSpaceAllocation();
         }
+        return numNodes;
     }
 
     /**
@@ -297,6 +303,9 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
         levelHeight_ = height /depth_;
 
         g2.setStroke(THIN_STROKE);
-        drawTree(root_, g2);
+        long numNodes = drawTree(root_, g2);
+
+        g2.setColor(Color.BLACK);
+        g2.drawString("Nodes = " + Util.formatNumber(numNodes), MARGIN + width_ - 120 , MARGIN + 10);
     }
 }

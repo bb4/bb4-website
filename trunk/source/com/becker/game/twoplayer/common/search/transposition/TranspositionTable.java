@@ -22,15 +22,4 @@ public class TranspositionTable extends LRUCache<Long, Entry> {
     public TranspositionTable() {
         super(MAX_ENTRIES);
     }
-
-    public Entry get(Long key) {
-        Entry e =  super.get(key);
-        //System.out.println("got " + e + " for " + key);
-        return e;
-    }
-
-    public void put(Long key, Entry e) {
-        //System.out.println("put " + e + " for " + key);
-        super.put(key, e);
-    }
 }

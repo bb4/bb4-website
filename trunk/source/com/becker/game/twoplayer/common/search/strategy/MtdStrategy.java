@@ -9,26 +9,41 @@ import com.becker.game.twoplayer.common.search.tree.GameTreeViewable;
 /**
  * Memory enhanced Test Driver search.
  * This strategy class defines the MTD search algorithm.
- * See http://home.tiscali.nl/askeplaat/mtdf.html
+ * See http://people.csail.mit.edu/plaat/mtdf.html
+ * <pre>
+ * function MTDF(root : node_type; f : integer; d : integer) : integer;
+ *    g = f;
+ *    upperbound = +INFINITY;
+ *    lowerbound = -INFINITY;
+ *    repeat
+ *       if (g == lowerbound)  beta = g + 1;
+ *       else beta = g;
+ *       g = AlphaBetaWithMemory(root, beta - 1, beta, d);
+ *       if (g < beta) upperbound = g;
+ *       else lowerbound = g;
+ *    until lowerbound >= upperbound;
+ *    return g;
+ *</pre>
  *
+ * @@ add iterative deepening (https://chessprogramming.wikispaces.com/MTD(f))
+ * @@ try implementing NegaMaxWithMemory
+ * 
  * @author Barry Becker
  */
 public final class MtdStrategy implements SearchStrategy
 {
-
-    /** The "memory" search strategy to use. Must use memory/cache to avoid researching overhead. */
+    /**
+     * The "memory" search strategy to use. Must use memory/cache to avoid researching overhead.
+     * Either a memory enhanced negascout or memory enhanced NegaScout would work.
+     */
     private AbstractSearchStrategy searchWithMemory_;
-
-    private Searchable searchable_;
-    private ParameterArray weights_;
 
     /**
      * Constructor.
     */
     public MtdStrategy( Searchable controller, ParameterArray weights )
     {
-        searchable_ = controller;
-        weights_ = weights;
+        searchWithMemory_ = new NegaScoutMemoryStrategy(controller, weights);
     }
 
     /**
@@ -37,36 +52,32 @@ public final class MtdStrategy implements SearchStrategy
     public TwoPlayerMove search( TwoPlayerMove lastMove,
                                  int alpha, int beta, SearchTreeNode parent )
     {
-        searchWithMemory_ = new NegaScoutMemoryStrategy(searchable_, weights_);
-
-        TwoPlayerMove selectedMove = searchInternal( lastMove, 0, alpha, parent);
+        TwoPlayerMove selectedMove = searchInternal( lastMove, 0, parent);
         return (selectedMove != null)? selectedMove : lastMove;
     }
 
 
     private TwoPlayerMove searchInternal( TwoPlayerMove lastMove, 
-                                          int depth, int f,  SearchTreeNode parent )
+                                          int f,  SearchTreeNode parent )
     {
         int g = f;
-        int upperBound = SearchStrategy.INFINITY;
-        int lowerBound =-SearchStrategy.INFINITY;
-        int beta;
+        int upperBound =  SearchStrategy.INFINITY;
+        int lowerBound = -SearchStrategy.INFINITY;
 
-        TwoPlayerMove selectedMove = null;
-        while (lowerBound < upperBound)  {
-            
-            beta = (g == lowerBound)? g + 1 : g;
+        TwoPlayerMove selectedMove;
+        do  {
+            int beta = (g == lowerBound)? g + 1 : g;
 
-            selectedMove = searchWithMemory_.search(lastMove, beta -1, beta, parent);
-            g = selectedMove.getInheritedValue();
+            //selectedMove = searchWithMemory_.search(lastMove, beta - 1, beta, parent);
+            //g = selectedMove.getInheritedValue();
+            selectedMove = searchWithMemory_.search(lastMove, -beta + 1, -beta, parent);
+            g = -selectedMove.getInheritedValue();
 
-            if (g < beta) {
-                upperBound = g;
-            }
-            else {
-                lowerBound = g;
-            }
-        }
+            if (g < beta)  upperBound = g;
+            else           lowerBound = g;
+
+            System.out.println("lowerBound =" + lowerBound + " upperBound=" + upperBound  + " beta=" + beta);
+        } while (lowerBound < upperBound);
         return selectedMove;
     }
 

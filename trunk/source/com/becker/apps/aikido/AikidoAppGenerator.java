@@ -147,7 +147,6 @@ public class AikidoAppGenerator {
           + "    alert(textList);\n"
           + "  }\n\n";
 
-        // @@ make ----- a constant
         String selectChanged =
             "  // When called, we delete all future selects (and corresponding img) and create a single next one. \n"
           + "  // \n"

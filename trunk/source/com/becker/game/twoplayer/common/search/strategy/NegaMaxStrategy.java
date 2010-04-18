@@ -31,8 +31,7 @@ public class NegaMaxStrategy extends AbstractSearchStrategy
      * @inheritDoc
      */
     @Override
-    public TwoPlayerMove search( TwoPlayerMove lastMove, 
-                                                     int alpha, int beta, SearchTreeNode parent ) {
+    public TwoPlayerMove search( TwoPlayerMove lastMove, int alpha, int beta, SearchTreeNode parent ) {
         // need to negate alpha and beta on initial call.
         return searchInternal( lastMove, lookAhead_, -alpha, -beta, parent );
     }
