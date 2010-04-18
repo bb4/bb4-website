@@ -35,7 +35,7 @@ public final class ZobristHash {
      */
     public ZobristHash(TwoPlayerBoard board) {
         RANDOM = new Random(0);
-        System.out.println("*********  created new ZOB HASH  **************");
+        GameContext.log(0, "***  created new ZOBRIST HASH  ***");
         this.board = board;
         initialize();
     }
@@ -90,7 +90,8 @@ public final class ZobristHash {
     }
 
     public void applyMove(TwoPlayerMove move, int stateIndex) {
-        applyPositionToKey(move.getToLocation(), stateIndex);
+        if (!move.isPassingMove())
+            applyPositionToKey(move.getToLocation(), stateIndex);
     }
 
     /**

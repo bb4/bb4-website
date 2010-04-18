@@ -3,7 +3,6 @@ package com.becker.game.twoplayer.common.search.strategy;
 import com.becker.game.twoplayer.common.search.transposition.Entry;
 import com.becker.game.twoplayer.common.search.transposition.TranspositionTable;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
-import com.becker.game.twoplayer.common.search.tree.PruneType;
 import com.becker.game.twoplayer.common.search.*;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.optimization.parameter.ParameterArray;
@@ -70,23 +69,10 @@ public final class NegaScoutMemoryStrategy extends NegaScoutStrategy
     protected TwoPlayerMove searchInternal( TwoPlayerMove lastMove,
                                           int depth,
                                           int alpha, int beta, SearchTreeNode parent ) {
-
-        // if we can just look up the best move in the transposition table, then just do that.
         Long key = searchable_.getHashKey();
         Entry entry = lookupTable.get(key);
-        if (entry != null && entry.depth >= depth) {
-            //System.out.println("Yay! cache hit!");
-            if (entry.upperValue <= alpha || entry.upperValue == entry.lowerValue)  {
-                entry.bestMove.setInheritedValue(entry.upperValue);
-                lastMove.setInheritedValue(-entry.upperValue);
-                return entry.bestMove;
-            }
-            if (entry.lowerValue >= beta) {
-                entry.bestMove.setInheritedValue(entry.lowerValue);
-                lastMove.setInheritedValue(-entry.lowerValue);
-                return entry.bestMove;
-            }
-        }
+        if (entryExists(lastMove, depth, alpha, beta, entry))
+            return entry.bestMove;
 
         boolean done = searchable_.done( lastMove, false);
         if ( depth == 0 || done ) {
@@ -118,7 +104,29 @@ public final class NegaScoutMemoryStrategy extends NegaScoutStrategy
         }
 
         return findBestMove(lastMove, depth, list, alpha, beta, parent);
-    } 
+    }
+
+    /**
+     * if we can just look up the best move in the transposition table, then just do that.
+     * @return saved best move in entry
+     */
+    private boolean entryExists(TwoPlayerMove lastMove, int depth, int alpha, int beta, Entry entry) {
+        if (entry != null && entry.depth >= depth) {
+            if (entry.depth > depth)
+                System.out.println("Cache hit. \nentry.depth=" + entry.depth + " depth=" + depth  + "\n" + entry);
+            if (entry.upperValue <= alpha || entry.upperValue == entry.lowerValue)  {
+                entry.bestMove.setInheritedValue(entry.upperValue);
+                lastMove.setInheritedValue(-entry.upperValue);
+                return true;
+            }
+            if (entry.lowerValue >= beta) {
+                entry.bestMove.setInheritedValue(entry.lowerValue);
+                lastMove.setInheritedValue(-entry.lowerValue);
+                return true;
+            }
+        }
+        return false;
+    }
 
 
     /**
@@ -135,6 +143,7 @@ public final class NegaScoutMemoryStrategy extends NegaScoutStrategy
         TwoPlayerMove bestMove = list.get(0);
         Entry entry = new Entry(bestMove, depth, alpha, beta);
 
+        System.out.println("list.size="+ list.size() + " int depth=" + depth + "     alpha="+ alpha +" beta=" + beta);
         while ( !list.isEmpty() ) {
             TwoPlayerMove theMove = list.remove(0);
             if (pauseInterrupted())
@@ -163,6 +172,7 @@ public final class NegaScoutMemoryStrategy extends NegaScoutStrategy
                 }
                 if (alpha >= newBeta) {
                     // re-search with narrower window (typical alpha beta search).
+                    System.out.println("re-searching with narrower window a=" + -beta +" b="+ -alpha);
                     searchable_.makeInternalMove( theMove );
                     selectedMove = searchInternal( theMove, depth-1 , -beta, -alpha, child );
                     searchable_.undoInternalMove( theMove );

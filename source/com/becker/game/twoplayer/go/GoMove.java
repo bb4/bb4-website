@@ -53,7 +53,7 @@ public final class GoMove extends TwoPlayerMove
      */
     public static GoMove createPassMove( int val,  boolean player1)
     {
-        GoMove m = createGoMove( 0, 0, val, null );
+        GoMove m = createGoMove( 1, 1, val, null );
         m.isPass_ = true;
         m.setPlayer1(player1);
         return m;

@@ -35,7 +35,7 @@ import java.util.List;
  *   return α
  *}
  *
- * int NegaScout ( int p, α, β );   {
+ * int NegaScout ( p, α, β );   {
  *    determine successors p_1,...,p_w of p
  *    if ( w = 0 )
  *       return  Evaluate(p)                // leaf
@@ -51,6 +51,22 @@ import java.util.List;
  *    }
  *    return α
  *}
+ *
+ * negascout(node, alpha, beta)
+    if node is a leaf
+        return an evaluated score for the node
+    maxscore = alpha
+    b = beta
+    for each child of node
+        v = -negascout(child, -b, -alpha)
+        if alpha < v < beta and not the first child and depth > 1
+              v = -negascout(child, -beta, -v)  // re-search
+        alpha = max(alpha, v)
+        if alpha >= beta
+            return alpha  // cut-off
+        b = alpha + 1  // set new null window
+    return alpha
+
  *  </pre>
 
  *  @author Barry Becker

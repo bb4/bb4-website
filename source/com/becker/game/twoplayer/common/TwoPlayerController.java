@@ -721,7 +721,10 @@ public abstract class TwoPlayerController extends GameController
             if ( viewer_ != null && getShowComputerAnimation() ) {
                 viewer_.refresh();
             }*/
-            hash.applyMove(m, b.getStateIndex(b.getPosition(m.getToLocation())));
+
+            BoardPosition pos = b.getPosition(m.getToLocation());
+            //assert pos != null : "pos was null at " + m.getToLocation() + " pass="+  m.isPassingMove();
+            hash.applyMove(m, b.getStateIndex(pos));
         }
 
         /**
