@@ -2,6 +2,8 @@ package com.becker.common.math.function;
 
 import com.becker.common.math.Range;
 import com.becker.common.math.MathUtil;
+import com.becker.common.math.interplolation.InterpolationMethod;
+import com.becker.common.math.interplolation.Interpolator;
 
 /**
  * The function is represented with an array of lookups that
@@ -16,14 +18,15 @@ public class ArrayFunction implements Function {
     
     /** The inverse lookup for the main function. */
     private double[] inverseFunctionMap;
-    
-    public enum InterpolationMethod {LINEAR, CUBIC}
-    
-    private InterpolationMethod interpolationMethod;
+
+    private Interpolator interpolator_;
+    private Interpolator inverseInterpolator_;
+
      
     /**
      * Constructor.
      * @param func
+     * @parma interpolationMethod
      */
     public ArrayFunction(double[] func, InterpolationMethod interpMethod) {
         this(func, MathUtil.createInverseFunction(func, new Range(0, 1.0)), interpMethod);
@@ -48,7 +51,8 @@ public class ArrayFunction implements Function {
     public ArrayFunction(double[] func, double[] inverseFunc, InterpolationMethod interpMethod) {
         functionMap = func;
         inverseFunctionMap = inverseFunc;
-        interpolationMethod = interpMethod;        
+        interpolator_ = interpMethod.createInterpolator(func);
+        inverseInterpolator_ = interpMethod.createInterpolator(inverseFunc);
     }
     
     
@@ -66,32 +70,26 @@ public class ArrayFunction implements Function {
      * @return
      */
     public double getFunctionValue(double value) {
-        
-        return getValue(value, functionMap); 
+
+        return interpolator_.interpolate(value);
+    }
+
+    public Range getDomain() {
+        return new Range(0, 1.0);
     }
     
     /**
      * 
      * @param value
-     * @return
+     * @return  inverse function value
      */
     public double getInverseFunctionValue(double value) {
-        
-        return getValue(value, inverseFunctionMap); 
+
+        return inverseInterpolator_.interpolate(value);
     }
-    
-    private double getValue(double value, double[] func) {
-        double funcValue = 0;
-        
-        switch (interpolationMethod) {
-            case CUBIC: 
-                funcValue = MathUtil.cubicInterpolate(value, func);
-                break;
-            case LINEAR:
-                 funcValue = MathUtil.linearlyInterpolate(value, func);
-                 break;
-        }
-  
-        return funcValue;
+
+    public void setInterpolationMethod(InterpolationMethod interp) {
+        interpolator_ = interp.createInterpolator(functionMap);
+        inverseInterpolator_ = interp.createInterpolator(inverseFunctionMap);
     }
 }

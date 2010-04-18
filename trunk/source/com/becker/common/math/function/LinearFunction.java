@@ -1,5 +1,7 @@
 package com.becker.common.math.function;
 
+import com.becker.common.math.Range;
+
 /**
  * The function scales and offsets a value
  *
@@ -37,5 +39,9 @@ public class LinearFunction implements Function {
 
     public double getInverseFunctionValue(double value) {
         return (value - offset) / scale;
+    }
+
+    public Range getDomain() {
+        return new Range(Double.MIN_VALUE, Double.MAX_VALUE);
     }
 }

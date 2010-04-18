@@ -27,8 +27,6 @@ public class TrebuchetSimulator extends NewtonianSimulator
 
     JSlider zoomSlider_;
 
-    private static final String FILE_NAME_BASE = ANIMATION_FRAME_FILE_NAME_PREFIX + "trebuchet/trebuchetFrame";
-
     private static final int DEFAULT_NUM_STEPS_PER_FRAME = 1;
 
     // the amount to advance the animation in time for each frame in seconds
@@ -197,12 +195,6 @@ public class TrebuchetSimulator extends NewtonianSimulator
     public Trebuchet getTrebuchet()
     {
         return trebuchet_;
-    }
-
-
-    protected String getFileNameBase()
-    {
-        return FILE_NAME_BASE;
     }
 
     public void stateChanged(ChangeEvent event) {

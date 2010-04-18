@@ -1,9 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.becker.common.math.function;
+
+import com.becker.common.math.Range;
 
 /**
  * Defines interface for generic 1-1 function f(x).
@@ -25,5 +22,9 @@ public interface Function {
      * @return
      */
     double getInverseFunctionValue(double value);
-    
+
+    /**
+     * @return  range of x axis values
+     */
+    Range getDomain();
 }

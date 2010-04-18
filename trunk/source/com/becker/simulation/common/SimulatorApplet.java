@@ -15,7 +15,7 @@ import java.awt.*;
  */
 public class SimulatorApplet extends ApplicationApplet {
 
-    private static Simulator simulator_ = null;
+    private Simulator simulator_ = null;
 
     private static final boolean RUN_OPTIMIZATION = false;
     private static final String DEFAULT_SIMULATOR = "com.becker.simulation.snake.SnakeSimulator";
@@ -51,7 +51,7 @@ public class SimulatorApplet extends ApplicationApplet {
             className = className == null ? DEFAULT_SIMULATOR : className;
             simulator_ = createSimulationFromClassName(className);
         }
-    
+
         JPanel animPanel = new AnimationPanel( simulator_ );
         animPanel.add( simulator_.createTopControls(), BorderLayout.NORTH );
         JPanel dynamicControls = simulator_.createDynamicControls();

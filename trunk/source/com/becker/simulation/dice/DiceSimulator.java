@@ -53,12 +53,6 @@ public class DiceSimulator extends DistributionSimulator {
         }
         return total;
     }
-    
-    @Override
-    protected String getFileNameBase()
-    {
-        return "dice";
-    }
 
     public static void main( String[] args )
     {
