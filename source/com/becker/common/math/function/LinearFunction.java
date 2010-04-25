@@ -7,7 +7,7 @@ import com.becker.common.math.Range;
  *
  * @author Barry Becker
  */
-public class LinearFunction implements Function {
+public class LinearFunction implements InvertibleFunction {
 
     private double scale;
     private double offset;
@@ -33,11 +33,11 @@ public class LinearFunction implements Function {
         }
     }
 
-    public double getFunctionValue(double value) {
+    public double getValue(double value) {
         return scale * value + offset;
     }
 
-    public double getInverseFunctionValue(double value) {
+    public double getInverseValue(double value) {
         return (value - offset) / scale;
     }
 

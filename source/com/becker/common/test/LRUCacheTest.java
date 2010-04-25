@@ -18,6 +18,7 @@ public class LRUCacheTest extends TestCase {
     private static final String FIVE= "five";
 
     private LRUCache<String,String> lruCache;
+
     @Override
     protected void setUp() throws Exception {
         super.setUp();
@@ -59,7 +60,7 @@ public class LRUCacheTest extends TestCase {
         // List cache content.
         StringBuilder content = new StringBuilder();
         for (Map.Entry<String,String> e : lruCache.getAll()) {
-           content.append("[" + e.getKey() + " : " + e.getValue() +"]");
+            content.append("[").append(e.getKey()).append(" : ").append(e.getValue()).append("]");
         }
 
         String expectedContent = "[4 : second four][5 : five][2 : two]";

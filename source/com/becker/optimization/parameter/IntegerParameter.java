@@ -77,7 +77,7 @@ public class IntegerParameter extends AbstractParameter
         double value = value_; 
         if (redistributionFunction_ != null) {
             double v = (value_ - minValue_) / (getRange() + 1.0);
-            double rv = redistributionFunction_.getFunctionValue(v);
+            double rv = redistributionFunction_.getValue(v);
             value = rv * (getRange() + (1.0 - MathUtil.EPS)) + minValue_;
             //System.out.println("stored="+v + " redistr rv="+rv + " getValue="+value);
         }

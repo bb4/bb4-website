@@ -1,6 +1,5 @@
 package com.becker.common.math.function;
 
-import com.becker.common.math.MathUtil;
 import com.becker.common.math.Range;
 
 /**
@@ -8,7 +7,7 @@ import com.becker.common.math.Range;
  *
  * @author Barry Becker
  */
-public class LogFunction implements Function {
+public class LogFunction implements InvertibleFunction {
 
     private static final double DEFAULT_BASE = 10;
     private double base;   
@@ -36,7 +35,7 @@ public class LogFunction implements Function {
         this.positiveOnly = positiveOnly;
     }
 
-    public double getFunctionValue(double value) {
+    public double getValue(double value) {
 
         if (value <= 0) {
             throw new IllegalArgumentException("Cannot take the log of a number (" + value + ") that is <=0");
@@ -46,7 +45,7 @@ public class LogFunction implements Function {
     }
 
 
-    public double getInverseFunctionValue(double value) {
+    public double getInverseValue(double value) {
 
         return Math.pow(base, value / scale);
     }

@@ -20,7 +20,9 @@ public abstract class AbstractSmoothInterpolator extends AbstractInterpolator {
         // we need to come up with the 4 points to use for interpolation
         double y1 = function[ index0 ];
         double y0 = y1;
-        double y2 = function[ index1 ];
+        double y2 = y1;
+        if (len > 0)
+            y2 = function[ index1 ];
         double y3 = y2;
         if (index0 > 0) {
             y0 = function[index0-1];

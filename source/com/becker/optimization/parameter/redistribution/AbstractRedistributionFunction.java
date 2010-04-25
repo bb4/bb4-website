@@ -6,7 +6,7 @@
 package com.becker.optimization.parameter.redistribution;
 
 import com.becker.common.math.Range;
-import com.becker.common.math.function.Function;
+import com.becker.common.math.function.InvertibleFunction;
 
 /**
  *
@@ -15,17 +15,17 @@ import com.becker.common.math.function.Function;
 public abstract class AbstractRedistributionFunction implements RedistributionFunction {
 
     /** the discretized redistribution function */
-    protected Function redistributionFunction;
+    protected InvertibleFunction redistributionFunction;
     
     /**
      * 
      * @param value
      * @return
      */
-    public double getFunctionValue(double value) {
+    public double getValue(double value) {
         verifyInRange(value);
         
-        double newValue = redistributionFunction.getFunctionValue(value);  
+        double newValue = redistributionFunction.getValue(value);
   
         verifyInRange(newValue);
         return newValue;
@@ -39,7 +39,7 @@ public abstract class AbstractRedistributionFunction implements RedistributionFu
     public double getInverseFunctionValue(double value) {
         verifyInRange(value);
         
-        double newValue = redistributionFunction.getInverseFunctionValue(value); 
+        double newValue = redistributionFunction.getInverseValue(value);
   
         verifyInRange(newValue);
         return newValue;

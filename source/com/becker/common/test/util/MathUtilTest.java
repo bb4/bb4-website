@@ -8,7 +8,7 @@ import com.becker.common.math.MathUtil;
  */
 public class MathUtilTest extends TestCase {
 
-    private static final double EPS = 0.00000000000001;
+    
 
     public void testPositiveGCD() {
         long result;

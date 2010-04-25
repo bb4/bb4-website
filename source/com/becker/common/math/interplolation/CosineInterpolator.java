@@ -18,15 +18,15 @@ public class CosineInterpolator extends AbstractSmoothInterpolator {
     @Override
     public double interpolate(double value) {
 
-        assert(value>=0 && value<=1.0) : "value out of range [0, 1] :" + value;
-        int len =  function.length-1;
+        assert(value >= 0 && value <= 1.0) : "value out of range [0, 1] :" + value;
+        int len =  function.length - 1;
         double x = value * (double) len;
 
         int index0 = (int) x;
 
         int index1 = index0 + 1;
-        if (index0 == len)
-            index1 = len; // This could happen if the function has only one value.
+        if (len == 0)
+            index1 = len; 
         double xdiff = x - index0;
 
         return smoothInterpolate(xdiff, function[index0], function[index1], 0, 0);

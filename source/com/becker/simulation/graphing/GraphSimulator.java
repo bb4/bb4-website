@@ -46,9 +46,6 @@ public class GraphSimulator extends Simulator {
 @Override
     public double timeStep()
     {
-        //if ( !isPaused() ) {
-        //    histogram_.increment(getXPositionToIncrement());
-        //}
         return timeStep_;
     }
 

@@ -21,7 +21,7 @@ public interface RedistributionFunction extends Function {
      * @param value value to remap.
      * @return the remapped value.
      */
-    double getFunctionValue(double value);
+    double getValue(double value);
     
     /**
      * Given a y value (i.e. f(x)) return the corresponding x value.

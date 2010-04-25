@@ -1,6 +1,7 @@
 package com.becker.simulation.graphing;
 
 import com.becker.common.math.function.ArrayFunction;
+import com.becker.common.math.function.ErrorFunction;
 import com.becker.common.math.function.Function;
 import com.becker.optimization.parameter.BooleanParameter;
 import com.becker.optimization.parameter.DoubleParameter;
@@ -22,70 +23,75 @@ public enum FunctionType {
     SQUARE("Square Function", getSquareFunc()),
     TEETH("Teeth", getTeethFunc()),
     JAGGED("Jagged", getJaggedFunc()),
+    ERROR("Error Function", getErrorFunc()),
     SMOOTH("Smooth Function", getSmoothFunc()),
     TYPICAL_SMOOTH("Typical Smooth", getTypicalSmoothFunc()),
     V("V Function", getVFunc());
 
 
     private String name;
-    public ArrayFunction function;
+    public Function function;
 
     private static final double[] NULL_FUNC = null;
 
     /**
      * Constructor
      */
-    FunctionType(String name, ArrayFunction function) {
+    FunctionType(String name, Function function) {
         this.name = name;
         this.function = function;
     }
 
 
-    private static ArrayFunction getHorzLineFunc() {
+    private static Function getHorzLineFunc() {
         double[] data = {1.0, 1.0};
         return new ArrayFunction(data, NULL_FUNC);
     }
 
-    private static ArrayFunction getVertLineFunc() {
+    private static Function getVertLineFunc() {
         double[] data = {0.0, 0.0, 0.0, 1.0, 1.0, 1.0};
         return new ArrayFunction(data, NULL_FUNC);
     }
 
-    private static ArrayFunction getDiagonalFunc() {
+    private static Function getDiagonalFunc() {
         double[] data = {0.0, 1.0};
         return new ArrayFunction(data, NULL_FUNC);
     }
 
-    private static ArrayFunction getVFunc() {
+    private static Function getVFunc() {
         double[] data = {1.0, 0.0, 1.0};
         return new ArrayFunction(data, NULL_FUNC);
     }
 
-     private static ArrayFunction getSquareFunc() {
+     private static Function getSquareFunc() {
         double[] data = {0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0};
         return new ArrayFunction(data, NULL_FUNC);
     }
 
-    private static ArrayFunction getTeethFunc() {
+    private static Function getTeethFunc() {
         double[] data = {0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0};
         return new ArrayFunction(data, NULL_FUNC);
     }
 
-    private static ArrayFunction getJaggedFunc() {
+    private static Function getJaggedFunc() {
         double[] data = {0.0, .5, 0.1, 0.8, 0.6, 1.0};
         return new ArrayFunction(data, NULL_FUNC);
     }
 
-    private static ArrayFunction getSmoothFunc() {
+    private static Function getSmoothFunc() {
         double[] data = {0.0, 0.1, 0.25, 0.5, 0.75, 0.9, 1.0};
         return new ArrayFunction(data);
     }
 
-     private static ArrayFunction getTypicalSmoothFunc() {
+     private static Function getTypicalSmoothFunc() {
         double[] data = {0.0, .1, 0.3, 0.6, 0.7, 0.75, 0.7, 0.5, 0.4, 0.36, 0.39, 0.45, 0.56, 0.7, 1.0};
         return new ArrayFunction(data, NULL_FUNC);
     }
 
+    private static Function getErrorFunc() {
+        return new ErrorFunction();
+    }
+    
 
 
     public String toString() {

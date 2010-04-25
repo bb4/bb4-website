@@ -13,15 +13,7 @@ public interface Function {
      * @param value value to remap.
      * @return the remapped value.
      */
-    double getFunctionValue(double value);
-    
-    /**
-     * Given a y value (i.e. f(x)) return the corresponding x value.
-     * Inverse of the above.
-     * @param value
-     * @return
-     */
-    double getInverseFunctionValue(double value);
+    double getValue(double value);
 
     /**
      * @return  range of x axis values
