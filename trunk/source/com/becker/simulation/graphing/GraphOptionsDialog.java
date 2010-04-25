@@ -2,6 +2,7 @@ package com.becker.simulation.graphing;
 
 
 import com.becker.common.math.function.ArrayFunction;
+import com.becker.common.math.function.Function;
 import com.becker.common.math.interplolation.InterpolationMethod;
 import com.becker.simulation.common.Simulator;
 import com.becker.simulation.common.SimulatorOptionsDialog;
@@ -69,8 +70,11 @@ public class GraphOptionsDialog extends SimulatorOptionsDialog {
 
         GraphSimulator simulator = (GraphSimulator) getSimulator();
 
-        ArrayFunction func = ((FunctionType)functionCombo_.getSelectedItem()).function;
-        func.setInterpolationMethod((InterpolationMethod)interpolationTypeCombo_.getSelectedItem());
+        Function func = ((FunctionType)functionCombo_.getSelectedItem()).function;
+        if (func instanceof ArrayFunction)  {
+            ((ArrayFunction)func).setInterpolationMethod(
+                    (InterpolationMethod)interpolationTypeCombo_.getSelectedItem());
+        }
 
         simulator.setFunction(func);
     }

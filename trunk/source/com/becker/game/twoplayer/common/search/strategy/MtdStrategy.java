@@ -36,14 +36,14 @@ public final class MtdStrategy implements SearchStrategy
      * The "memory" search strategy to use. Must use memory/cache to avoid researching overhead.
      * Either a memory enhanced negascout or memory enhanced NegaScout would work.
      */
-    private AbstractSearchStrategy searchWithMemory_;
+    private SearchStrategy searchWithMemory_;
 
     /**
      * Constructor.
     */
-    public MtdStrategy( Searchable controller, ParameterArray weights )
+    public MtdStrategy(SearchStrategy testSearchStrategy )
     {
-        searchWithMemory_ = new NegaScoutMemoryStrategy(controller, weights);
+        searchWithMemory_ = testSearchStrategy;
     }
 
     /**

@@ -18,7 +18,7 @@ public class LRUCache<K,V> {
 
     /**   
      * The <i>load factor</i> is a measure of how full the hash table is allowed to
-     * get before its capacity is automatically increased.
+     * get before its capacity is automatically increased.  75% in this case.
      */
     private static final float   hashTableLoadFactor = 0.75f;
 
@@ -38,7 +38,8 @@ public class LRUCache<K,V> {
 
           @Override
           protected boolean removeEldestEntry (Map.Entry<K,V> eldest) {
-             return size() > LRUCache.this.cacheSize;
+              //System.out.println("LRU size=" + size() + " cacheSize=" + LRUCache.this.cacheSize);
+              return size() > LRUCache.this.cacheSize;
           }
        };
     }

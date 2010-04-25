@@ -1,8 +1,7 @@
 package com.becker.simulation.stock;
 
 import com.becker.common.format.CurrencyFormatter;
-import com.becker.common.format.INumberFormatter;
-import com.becker.common.math.function.Function;
+import com.becker.common.math.function.InvertibleFunction;
 import com.becker.common.math.function.LinearFunction;
 import com.becker.common.math.function.LogFunction;
 import com.becker.simulation.common.DistributionSimulator;
@@ -39,10 +38,10 @@ public class StockSimulator extends DistributionSimulator {
         double xScale = Math.pow(10, Math.max(0, Math.log10(max) - opts_.xResolution));
         double xLogScale = 3 * opts_.xResolution * opts_.xResolution;
 
-        Function xFunction =
+        InvertibleFunction xFunction =
                 opts_.useLogScale ? new LogFunction(xLogScale, 10.0, true) : new LinearFunction(1/xScale);
 
-        int maxX = (int)xFunction.getFunctionValue(max);
+        int maxX = (int)xFunction.getValue(max);
         data_ = new int[maxX + 1];
 
         histogram_ = new HistogramRenderer(data_, xFunction);

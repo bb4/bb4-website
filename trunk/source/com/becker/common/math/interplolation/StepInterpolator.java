@@ -10,7 +10,7 @@ public class StepInterpolator extends AbstractInterpolator {
     }
 
     public double interpolate(double value) {
-        return function[(int)(value * (function.length-1))];
+        return function[(int)(value * function.length)];
     }
 
 }

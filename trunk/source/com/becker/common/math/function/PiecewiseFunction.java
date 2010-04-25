@@ -8,7 +8,7 @@ import com.becker.common.math.Range;
  * 
  * @author Barry Becker
  */
-public class PiecewiseFunction implements Function {
+public class PiecewiseFunction implements InvertibleFunction {
 
     /** These parallel arrays define the piecewise function map. */
     protected double[] xValues;
@@ -32,7 +32,7 @@ public class PiecewiseFunction implements Function {
      * @param value
      * @return
      */
-    public double getFunctionValue(double value) {
+    public double getValue(double value) {
         
         return getValue(value, xValues, yValues); 
     }
@@ -40,9 +40,9 @@ public class PiecewiseFunction implements Function {
     /**
      * 
      * @param value
-     * @return
+     * @return inverse function value.
      */
-    public double getInverseFunctionValue(double value) {
+    public double getInverseValue(double value) {
         
         return getValue(value, yValues, xValues); 
     }

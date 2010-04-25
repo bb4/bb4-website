@@ -16,8 +16,8 @@ public class Range {
 
     /**
      * init with min and max valeus of the range.
-     * @param minimum
-     * @param maximum
+     * @param minimum min value for range
+     * @param maximum max value for range
      */
     public Range(double minimum, double maximum) {
         min_ = minimum;
@@ -86,5 +86,18 @@ public class Range {
 
     public String toString() {
         return  this.getMin() + " to " + this.getMax();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Range))
+            return false;
+        Range otherRange = (Range) obj;
+        return (this.getMin() == otherRange.getMin() && this.getMax() == otherRange.getMax());
+    }
+
+    public int hashCode() {
+        Double sum = (this.getMin() + this.getMax())/2.0;
+        return sum.hashCode();
     }
 }

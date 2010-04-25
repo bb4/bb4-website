@@ -4,7 +4,6 @@ import com.becker.common.format.DefaultNumberFormatter;
 import com.becker.common.format.INumberFormatter;
 import com.becker.common.math.Range;
 import com.becker.common.math.function.Function;
-import com.becker.common.math.function.LinearFunction;
 import com.becker.common.util.Util;
 
 import java.awt.*;
@@ -27,7 +26,6 @@ public class FunctionRenderer {
 
     private int width_;
     private int height_;
-    private int maxNumLabels_;
 
     private INumberFormatter formatter_ = new DefaultNumberFormatter();
 
@@ -48,7 +46,7 @@ public class FunctionRenderer {
     public void setSize(int width, int height) {
         width_ = width;
         height_ = height;
-        maxNumLabels_ = width_/maxLabelWidth_;
+        int maxNumLabels_ = width_ / maxLabelWidth_;
     }
 
     /**
@@ -85,7 +83,7 @@ public class FunctionRenderer {
         g2.setColor(LINE_COLOR);
         for (int i = 0; i < numPoints;  i++) {
             double x = (double)i/numPoints;
-            drawLine(g2, scale, MARGIN + i, function_.getFunctionValue(x));
+            drawLine(g2, scale, MARGIN + i, function_.getValue(x));
         }
         drawDecoration(g2, yRange);
     }
@@ -128,7 +126,7 @@ public class FunctionRenderer {
         int numPoints = getNumXPoints() ;
         for (int i = 0; i < numPoints;  i++) {
             double x = (double)i/numPoints;
-            range.add(function_.getFunctionValue(x));
+            range.add(function_.getValue(x));
         }
         return range;
     }

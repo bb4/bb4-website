@@ -78,7 +78,7 @@ public class GaussianRedistribution extends AbstractRedistributionFunction {
         
         double denom = SQRT2 * stdDeviation;
         double xx = (Math.min(1.0, x) - mean) / denom;
-        double erf = errorFunction.getFunctionValue(xx);
+        double erf = errorFunction.getValue(xx);
         return 0.5 * (1.0 + erf);
     }
 

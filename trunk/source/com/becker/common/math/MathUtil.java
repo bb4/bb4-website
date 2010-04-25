@@ -61,20 +61,6 @@ public final class MathUtil {
         }
         return result;
     }
-
-    
-    /**
-     * We expect x to be in the range [-1.0, 1.0].
-     * Currently just using simple linear interpolation.
-     * We could improve by using quadratic interpolation.
-     * @param x invers error function value for x.
-     * @return inverse error function value for x.
-     *
-    public static double inverseErrorFunction(double x) {
-        assert (x>=-1.0 && x<=1.0);
-        double sign = (x>=0)? 1.0:-1.0;
-        return sign * linearInterpolate(Math.abs(x), INVERSE_ERROR_FUNCTION);
-    } */
     
     /**
      * Creates an inverse of the function specified

@@ -10,7 +10,7 @@ import com.becker.common.math.interplolation.LinearInterpolator;
  *
  * @author Barry Becker
  */
-public class ErrorFunction implements Function {
+public class ErrorFunction implements InvertibleFunction {
 
     private static final double MAX_ERROR_FUNCTION_TABLE_VALUE = 5.3;
 
@@ -56,7 +56,7 @@ public class ErrorFunction implements Function {
      * @param x
      * @return error function value for x.
      */
-    public double getFunctionValue(double x) {
+    public double getValue(double x) {
        double sign = (x >= 0)? 1.0 : -1.0;
        if (Math.abs(x) > MAX_ERROR_FUNCTION_TABLE_VALUE) {
 
@@ -77,7 +77,7 @@ public class ErrorFunction implements Function {
     * @param x invers error function value for x.
     * @return inverse error function value for x.
         */
-    public double getInverseFunctionValue(double x) {
+    public double getInverseValue(double x) {
         assert (x >= -1.0 && x <= 1.0);
         double sign = (x>=0)? 1.0:-1.0;
         return sign * inverseInterpolator.interpolate(Math.abs(x));

@@ -146,7 +146,7 @@ public abstract class AbstractParameter implements Parameter
         double value = value_;     
         if (redistributionFunction_ != null) {
             double v = (value_ - minValue_) / getRange();
-            v = redistributionFunction_.getFunctionValue(v);
+            v = redistributionFunction_.getValue(v);
             value = v * getRange() + minValue_;        
         } 
         validateRange(value);

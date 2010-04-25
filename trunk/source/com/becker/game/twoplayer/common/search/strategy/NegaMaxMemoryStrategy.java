@@ -1,53 +1,24 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
+import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.transposition.Entry;
 import com.becker.game.twoplayer.common.search.transposition.TranspositionTable;
+import com.becker.game.twoplayer.common.search.tree.PruneType;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
-import com.becker.game.twoplayer.common.search.*;
-import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.optimization.parameter.ParameterArray;
+
 import java.util.List;
 
 /**
- *  This strategy class defines the NegaScout with memory search algorithm.
+ *  This strategy class defines the NegaMax with memory search algorithm.
  *  This version stores the values of moves that have already been searched.
- *  See http://people.csail.mit.edu/plaat/mtdf.html
- *  and http://en.wikipedia.org/wiki/Negascout
+ *  Based on psuedo code from Artificial Intelligence for Games by Millington and Funge.
  *
- * Transposition table (TT) enhanced Alpha-Beta
- * (from http://www.top-5000.nl/ps/An%20Algorithm%20faster%20than%20negascout%20and%20SSS%20in%20pratice.pdf)
- * <pre>
- *   function AlphaBetaWithMemory(n, a, b) {
- *     // Check if position is in table and has been searched to sufficient depth.
- *     if (retrieve(n)) {
- *        if (n.max <= a or n.max == n.min)  return n.max;
- *        if (n.min >= b) return n.min ;
- *    }
- *    // Reached the maximum search depth
- *    if (n = leaf) {
- *      n.min = n.max = g = eval(n);
- *    }
- *    else  {
- *      g = -inf;
- *      c = firstchild(n);
- *      // Search until a cutoff occurs or all children have been considered
- *      while g < b and c != null {
- *        g = max(g, -AlphaBetaWithMemory(c, -b, -a));
- *        a = max(a, g);
- *        c = nextbrother(c);
- *      }
- *      // Save in transposition table
- *      if g <= a then n.max = g;
- *      if a < g < b then n.max = n.min = g;
- *      if g >= b then n.min = g;
- *     }
- *    store(n);
- *    return g;
- * }
- * </pre>
- *  @author Barry Becker 
+ *  @@ Need to fix.
+ *  @author Barry Becker
  */
-public final class NegaScoutMemoryStrategy extends NegaScoutStrategy
+public final class NegaMaxMemoryStrategy extends NegaMaxStrategy
 {
     /** Stores positions that have already been evaluated, so we do not need to repeat work. */
     private TranspositionTable lookupTable;
@@ -55,13 +26,24 @@ public final class NegaScoutMemoryStrategy extends NegaScoutStrategy
     private int cacheHits = 0;
     private int cacheNearHits = 0;
     private int cacheMisses = 0;
+
+
     /**
      * Constructor.
      */
-    public NegaScoutMemoryStrategy( Searchable controller, ParameterArray weights )
+    public NegaMaxMemoryStrategy( Searchable controller, ParameterArray weights )
     {
         super( controller, weights );
         lookupTable = new TranspositionTable();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public TwoPlayerMove search( TwoPlayerMove lastMove, int alpha, int beta, SearchTreeNode parent ) {
+
+        return searchInternal( lastMove, lookAhead_, 0, 0, parent );
     }
 
 
@@ -72,10 +54,21 @@ public final class NegaScoutMemoryStrategy extends NegaScoutStrategy
     protected TwoPlayerMove searchInternal( TwoPlayerMove lastMove,
                                           int depth,
                                           int alpha, int beta, SearchTreeNode parent ) {
+        assert alpha == beta : "gamma: a="+ alpha+" <> b="+ beta;
         Long key = searchable_.getHashKey();
         Entry entry = lookupTable.get(key);
-        if (entryExists(lastMove, depth, alpha, beta, entry))
-            return entry.bestMove;
+        if (entryExists(lastMove, depth, alpha, beta, entry)) {
+            if (entry.lowerValue > alpha) {
+                entry.bestMove.setInheritedValue(entry.lowerValue);
+                return entry.bestMove;
+            }
+            else if (entry.upperValue < beta) {
+                entry.bestMove.setInheritedValue(entry.upperValue);
+                return entry.bestMove;
+            }
+        }
+
+        entry = new Entry(lastMove, depth, -SearchStrategy.INFINITY, SearchStrategy.INFINITY);
 
         boolean done = searchable_.done( lastMove, false);
         if ( depth == 0 || done ) {
@@ -87,8 +80,10 @@ public final class NegaScoutMemoryStrategy extends NegaScoutStrategy
                 return qMove;
             }
             int sign = fromPlayer1sPerspective(lastMove) ? 1 : -1;
-            lastMove.setInheritedValue(sign * lastMove.getValue());
-            entry = new Entry(lastMove, -lastMove.getInheritedValue());
+            int value = sign * lastMove.getValue();
+            lastMove.setInheritedValue(value);
+            entry.lowerValue = value;
+            entry.upperValue = value;
             lookupTable.put(key, entry);
             return lastMove;
         }
@@ -149,13 +144,12 @@ public final class NegaScoutMemoryStrategy extends NegaScoutStrategy
                                          int depth,  List<? extends TwoPlayerMove> list,
                                          int alpha, int beta, SearchTreeNode parent) {
         int i = 0;
-        int newBeta = beta;
+        int bestInheritedValue = -SearchStrategy.INFINITY;
         TwoPlayerMove selectedMove;
 
         TwoPlayerMove bestMove = list.get(0);
         Entry entry = new Entry(bestMove, depth, alpha, beta);
 
-        System.out.println("list.size="+ list.size() + " int depth=" + depth + "     alpha="+ alpha +" beta=" + beta);
         while ( !list.isEmpty() ) {
             TwoPlayerMove theMove = list.remove(0);
             if (pauseInterrupted())
@@ -163,45 +157,36 @@ public final class NegaScoutMemoryStrategy extends NegaScoutStrategy
             updatePercentDone(depth, list);
 
             searchable_.makeInternalMove( theMove );
-            SearchTreeNode child = addNodeToTree(parent, theMove, alpha, beta, i );
+            SearchTreeNode child = addNodeToTree(parent, theMove, alpha, beta, i++);
 
-            // search with minimal search window
-            selectedMove = searchInternal( theMove, depth-1, -newBeta, -alpha, child );
+            selectedMove = searchInternal( theMove, depth-1, -beta, -alpha, child );
 
             searchable_.undoInternalMove( theMove );
+
             if (selectedMove != null) {
 
                 int selectedValue = -selectedMove.getInheritedValue();
                 theMove.setInheritedValue( selectedValue );
 
-                if (selectedValue > alpha) {
-                    alpha = selectedValue;
-                }
-                if (alpha >= beta) {
-                    theMove.setInheritedValue(alpha);
+                if ( selectedValue > bestInheritedValue ) {
                     bestMove = theMove;
-                    break;
+                    entry.bestMove = theMove;
+                    bestInheritedValue = selectedValue;
                 }
-                if (alpha >= newBeta) {
-                    // re-search with narrower window (typical alpha beta search).
-                    System.out.println("re-searching with narrower window a=" + -beta +" b="+ -alpha);
-                    searchable_.makeInternalMove( theMove );
-                    selectedMove = searchInternal( theMove, depth-1 , -beta, -alpha, child );
-                    searchable_.undoInternalMove( theMove );
-
-                    selectedValue = -selectedMove.getInheritedValue();
-                    theMove.setInheritedValue(selectedValue);
-                    bestMove = theMove;
-
-                    if (alpha >= beta) {
+                if ( alphaBeta_ ) {
+                    if ( bestInheritedValue > alpha ) {
+                        alpha = bestInheritedValue;
+                        bestMove = theMove;
+                        entry.bestMove = theMove;
+                    }
+                    if ( alpha >= beta ) {
+                        showPrunedNodesInTree( list, parent, i, selectedValue, beta, PruneType.BETA);
                         break;
                     }
                 }
-                i++;
-                newBeta = alpha + 1;
             }
         }
-        storeBestMove(alpha, beta, entry, bestMove.getInheritedValue());
+        storeBestMove(alpha,entry, bestMove.getInheritedValue());
         bestMove.setSelected(true);
         lastMove.setInheritedValue(-bestMove.getInheritedValue());
         return bestMove;
@@ -210,15 +195,11 @@ public final class NegaScoutMemoryStrategy extends NegaScoutStrategy
     /**
      * Store off the best move so we do not need to analyze it again.
      */
-    private void storeBestMove(int alpha, int beta, Entry entry, int bestValue) {
+    private void storeBestMove(int alpha, Entry entry, int bestValue) {
         if (bestValue <= alpha) {
             entry.upperValue = bestValue;
         }
-        else if (alpha < bestValue && bestValue < beta) {
-            entry.lowerValue = bestValue;
-            entry.upperValue = bestValue;
-        }
-        else if (bestValue >= beta) {
+        else  {
             entry.lowerValue = bestValue;
         }
         lookupTable.put(searchable_.getHashKey(), entry);

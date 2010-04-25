@@ -11,7 +11,7 @@ import com.becker.common.math.interplolation.Interpolator;
  * 
  * @author Barry Becker
  */
-public class ArrayFunction implements Function {
+public class ArrayFunction implements InvertibleFunction {
 
     /** the linear function lookup table. */
     private double[] functionMap;
@@ -69,7 +69,7 @@ public class ArrayFunction implements Function {
      * @param value
      * @return
      */
-    public double getFunctionValue(double value) {
+    public double getValue(double value) {
 
         return interpolator_.interpolate(value);
     }
@@ -83,7 +83,7 @@ public class ArrayFunction implements Function {
      * @param value
      * @return  inverse function value
      */
-    public double getInverseFunctionValue(double value) {
+    public double getInverseValue(double value) {
 
         return inverseInterpolator_.interpolate(value);
     }

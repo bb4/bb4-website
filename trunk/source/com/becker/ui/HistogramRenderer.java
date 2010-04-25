@@ -2,7 +2,7 @@ package com.becker.ui;
 
 import com.becker.common.format.DefaultNumberFormatter;
 import com.becker.common.format.INumberFormatter;
-import com.becker.common.math.function.Function;
+import com.becker.common.math.function.InvertibleFunction;
 import com.becker.common.math.function.LinearFunction;
 import com.becker.common.util.Util;
 
@@ -34,7 +34,7 @@ public class HistogramRenderer {
     private long sum_ = 0;
     private int numBars_;
 
-    private Function xFunction_;
+    private InvertibleFunction xFunction_;
     private INumberFormatter formatter_ = new DefaultNumberFormatter();
 
     private static final int DEFAULT_LABEL_WIDTH = 30;
@@ -56,12 +56,12 @@ public class HistogramRenderer {
      * @param func  a way to scale the values on the x axis.
      *   This function takes an x value in the domain space and maps it to a bin location.
      */
-    public HistogramRenderer(int[] data, Function func)
+    public HistogramRenderer(int[] data, InvertibleFunction func)
     {
         data_ = data;
         numBars_ = data_.length;
         xFunction_ = func;
-        mean_ =  xFunction_.getInverseFunctionValue(0);
+        mean_ =  xFunction_.getInverseValue(0);
     }
 
     public void setSize(int width, int height) {
@@ -72,7 +72,7 @@ public class HistogramRenderer {
     }
 
     public void increment(double xValue) {
-        int xPos = (int)xFunction_.getFunctionValue(xValue);
+        int xPos = (int)xFunction_.getValue(xValue);
         data_[xPos]++;
         mean_ = (mean_ * sum_  + xValue) / (sum_  + 1);
         sum_++;
@@ -130,7 +130,7 @@ public class HistogramRenderer {
         g2.drawString("Mean = " + Util.formatNumber(mean_), width_ - 130, MARGIN -2);
 
         // draw a vertical line for the mean
-        int meanXpos = (int)(MARGIN  + (double)width * xFunction_.getFunctionValue(mean_) / numBars_ + barWidth_/2);
+        int meanXpos = (int)(MARGIN  + (double)width * xFunction_.getValue(mean_) / numBars_ + barWidth_/2);
         g2.drawLine(meanXpos,    height_ - MARGIN,
                     meanXpos,    MARGIN);
         g2.drawString("Mean", meanXpos + 4, MARGIN + 12);
@@ -175,7 +175,7 @@ public class HistogramRenderer {
      * draw the label or label and tick if needed for this bar.
      */
     private void drawLabelIfNeeded(Graphics2D g2, float xpos, int ct) {
-        double xValue = xFunction_.getInverseFunctionValue(ct); // minX_ + ct * incrementX_;
+        double xValue = xFunction_.getInverseValue(ct); // minX_ + ct * incrementX_;
         if (numBars_ < maxNumLabels_) {
             // then draw all labels
             g2.drawString(formatter_.format(xValue), xpos, height_ - 5);
