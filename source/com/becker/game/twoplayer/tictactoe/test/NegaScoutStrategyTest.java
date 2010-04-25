@@ -127,7 +127,7 @@ public class NegaScoutStrategyTest extends NegaScoutStrategyTst {
             new MoveInfo(TwoPlayerMove.createMove(new Location(3, 3), -4, PLAYER1_PIECE), 53),
             new MoveInfo(TwoPlayerMove.createMove(new Location(3, 2), 28, PLAYER2_PIECE), 4),
             new MoveInfo(TwoPlayerMove.createMove(new Location(1, 2), 0, PLAYER1_PIECE), 29),
-            new MoveInfo(TwoPlayerMove.createMove(new Location(2, 1), 4, PLAYER2_PIECE), 2),
+            new MoveInfo(TwoPlayerMove.createMove(new Location(2, 1), 0, PLAYER2_PIECE), 2),
             new MoveInfo(TwoPlayerMove.createMove(new Location(3, 3), -52, PLAYER1_PIECE), 10)
         );
     }

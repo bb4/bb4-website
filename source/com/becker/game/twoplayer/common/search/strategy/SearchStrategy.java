@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
+import com.becker.game.twoplayer.common.search.SearchOptions;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.tree.GameTreeViewable;
@@ -24,14 +25,15 @@ public interface SearchStrategy {
      * Derived classes work by narrowing a bound on the value of the optimal move.
      *
      * @param lastMove the most recent move made by one of the players.
-     * @param alpha same as p2best but for the other player. (alpha)
-     * @param beta the maximum of the value that it inherits from above and the best move found at this level (beta).
      * @param parent for constructing a ui tree. If null no game tree is constructed.
      * @return the chosen move (ie the best move) (may be null if no next move).
      */
-    TwoPlayerMove search( TwoPlayerMove lastMove, 
-                          int alpha, int beta, SearchTreeNode parent );
+    TwoPlayerMove search( TwoPlayerMove lastMove, SearchTreeNode parent );
 
+    /**
+     * @return  parameters for defining the search.
+     */
+    SearchOptions getOptions();
 
     /**
      * @return the number of moves considered in the search so far.
