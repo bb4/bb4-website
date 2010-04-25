@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
+import com.becker.common.math.Range;
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.game.twoplayer.common.search.tree.PruneType;
@@ -31,9 +32,10 @@ public class NegaMaxStrategy extends AbstractSearchStrategy
      * @inheritDoc
      */
     @Override
-    public TwoPlayerMove search( TwoPlayerMove lastMove, int alpha, int beta, SearchTreeNode parent ) {
+    public TwoPlayerMove search( TwoPlayerMove lastMove, SearchTreeNode parent ) {
         // need to negate alpha and beta on initial call.
-        return searchInternal( lastMove, lookAhead_, -alpha, -beta, parent );
+        Range window = getOptions().getInitialSearchWindow();
+        return searchInternal( lastMove, lookAhead_, (int)window.getMax(), (int)window.getMin(), parent );
     }
 
 

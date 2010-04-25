@@ -346,7 +346,7 @@ public abstract class TwoPlayerController extends GameController
             root = gameTreeListener_.getRootNode();
         }
 
-        return strategy_.search( lastMove, INFINITY, -INFINITY, root );
+        return strategy_.search( lastMove, root );
     }
 
 

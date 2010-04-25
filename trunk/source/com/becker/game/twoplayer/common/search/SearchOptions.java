@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.common.search;
 
+import com.becker.common.math.Range;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
 import com.becker.optimization.parameter.ParameterArray;
@@ -8,10 +9,9 @@ import com.becker.optimization.parameter.ParameterArray;
  * Encapsulate two player options here to keep the TwoPlayerController class mush simpler.
  *
  * @author Barry Becker
- * Date: Aug 20, 2005
  */
 public class SearchOptions
- {
+{
     /** if true then use alpha beta pruning */
     private static final boolean ALPHA_BETA = true;
 
@@ -33,12 +33,16 @@ public class SearchOptions
     private boolean alphaBeta_ = ALPHA_BETA;
     private boolean quiescence_ = QUIESCENCE;
 
+    /** default alpha beta values. Some strategies (like nega* reverse them) */
+    private static final Range DEFAULT_SEARCH_WINDOW = new Range(SearchStrategy.INFINITY, -SearchStrategy.INFINITY);
+
     // the default search method.
     private SearchStrategyType strategyMethod_ = SearchStrategyType.MINIMAX;
     private int lookAhead_;
     private int bestPercentage_;
     private int minBestMoves_;
-    private int maxQuiescentDepth_ = DEFAULT_MAX_QUIESCENT_DEPTH;
+    private int maxQuiescentDepth_ = DEFAULT_MAX_QUIESCENT_DEPTH;       
+    private Range initialSearchWindow_ = DEFAULT_SEARCH_WINDOW;
 
 
     /**
@@ -166,9 +170,17 @@ public class SearchOptions
     {
         quiescence_ = quiescence;
     }
-  
+
     public int getMaxQuiescentDepth() {
         return maxQuiescentDepth_;
+    }
+
+    public final void setInitialSearchWindow(Range window) {
+        initialSearchWindow_ = window;
+    }
+
+    public Range getInitialSearchWindow() {
+        return initialSearchWindow_;
     }
 
     /**

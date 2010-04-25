@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
+import com.becker.common.math.Range;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.game.twoplayer.common.search.tree.PruneType;
 import com.becker.game.twoplayer.common.search.*;
@@ -27,22 +28,22 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
     protected final boolean quiescence_;
 
     /** the number of plys to look ahead when searching. */
-    final int lookAhead_;
+    protected final int lookAhead_;
 
     /** the interface implemented by the generic game controller that provides standard methods. */
-    Searchable searchable_ = null;
+    protected Searchable searchable_ = null;
 
     /** keep track of the number of moves searched so far. Long because there could be quite a few. */
-    long movesConsidered_ = 0;
+    protected long movesConsidered_ = 0;
 
     /** approximate percent of search that is complete at given moment. */
-    int percentDone_ = 0;
+    private int percentDone_ = 0;
 
     /** don't search more levels ahead than this during quiescent search. */
-    int maxQuiescentDepth_ = 0;
+    protected int maxQuiescentDepth_ = 0;
 
     /** weights coefficients for the evaluation polunomial that indirectly determines the best move.   */
-    ParameterArray weights_;
+    protected ParameterArray weights_;
 
     /** True when search is paused. */
     private volatile boolean paused_ = false;
@@ -66,7 +67,7 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
     protected AbstractSearchStrategy( Searchable controller, ParameterArray weights )
     {
         searchable_ = controller;
-        SearchOptions opts = searchable_.getSearchOptions();
+        SearchOptions opts = getOptions();
         alphaBeta_ = opts.getAlphaBeta();
         quiescence_ = opts.getQuiescence();
         lookAhead_ = opts.getLookAhead();
@@ -75,13 +76,17 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
         GameContext.log( 2, "alpha beta=" + alphaBeta_ + " quiescence=" + quiescence_ + " lookAhead = " + lookAhead_);
     }
 
+    public SearchOptions getOptions() {
+        return searchable_.getSearchOptions();
+    }
 
     /**
      * {@inheritDoc}
      */
-    public TwoPlayerMove search( TwoPlayerMove lastMove, 
-                                 int alpha, int beta, SearchTreeNode parent ) {
-        return searchInternal( lastMove,  lookAhead_,  alpha, beta, parent );
+    public TwoPlayerMove search( TwoPlayerMove lastMove, SearchTreeNode parent ) {
+
+        Range window = getOptions().getInitialSearchWindow();
+        return searchInternal( lastMove,  lookAhead_, (int)window.getMin(), (int)window.getMax(),  parent );
     }
 
     /**

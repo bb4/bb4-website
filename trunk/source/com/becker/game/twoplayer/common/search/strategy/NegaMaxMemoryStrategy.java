@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
+import com.becker.common.math.Range;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.transposition.Entry;
@@ -41,11 +42,12 @@ public final class NegaMaxMemoryStrategy extends NegaMaxStrategy
      * @inheritDoc
      */
     @Override
-    public TwoPlayerMove search( TwoPlayerMove lastMove, int alpha, int beta, SearchTreeNode parent ) {
-
-        return searchInternal( lastMove, lookAhead_, 0, 0, parent );
+    public TwoPlayerMove search( TwoPlayerMove lastMove, SearchTreeNode parent ) {
+        // need to negate alpha and beta on initial call.
+        Range window = getOptions().getInitialSearchWindow();
+        int g = (int)((window.getMax() +  window.getMin())/2);
+        return searchInternal( lastMove, lookAhead_, g, g, parent );
     }
-
 
     /**
      * {@inheritDoc}
@@ -54,7 +56,6 @@ public final class NegaMaxMemoryStrategy extends NegaMaxStrategy
     protected TwoPlayerMove searchInternal( TwoPlayerMove lastMove,
                                           int depth,
                                           int alpha, int beta, SearchTreeNode parent ) {
-        assert alpha == beta : "gamma: a="+ alpha+" <> b="+ beta;
         Long key = searchable_.getHashKey();
         Entry entry = lookupTable.get(key);
         if (entryExists(lastMove, depth, alpha, beta, entry)) {

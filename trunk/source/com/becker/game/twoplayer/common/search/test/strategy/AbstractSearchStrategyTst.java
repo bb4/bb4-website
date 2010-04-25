@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.common.search.test.strategy;
 
+import com.becker.common.math.Range;
 import com.becker.common.util.Util;
 import com.becker.game.common.GamePiece;
 import com.becker.game.twoplayer.common.TwoPlayerController;
@@ -181,8 +182,7 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
 
         SearchTreeNode root = new SearchTreeNode(lastMove);
         TwoPlayerMove nextMove =
-               strategy.search(lastMove, SearchStrategy.INFINITY, -SearchStrategy.INFINITY, root);
-
+               strategy.search(lastMove, root);
 
         if (searchOptions.getLookAhead() > 0) {
             assertTrue("The last move (" + lastMove + ") was the same player as the next move (" + nextMove + ")",

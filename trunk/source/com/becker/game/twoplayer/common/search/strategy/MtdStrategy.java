@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
+import com.becker.common.math.Range;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.game.twoplayer.common.search.*;
 import com.becker.optimization.parameter.ParameterArray;
@@ -41,16 +42,19 @@ public final class MtdStrategy implements SearchStrategy
     /**
      * Constructor.
     */
-    public MtdStrategy(SearchStrategy testSearchStrategy )
+    public MtdStrategy(SearchStrategy testSearchStrategy)
     {
         searchWithMemory_ = testSearchStrategy;
+    }
+
+    public SearchOptions getOptions() {
+        return searchWithMemory_.getOptions();
     }
 
     /**
      * @inheritDoc
      */
-    public TwoPlayerMove search( TwoPlayerMove lastMove,
-                                 int alpha, int beta, SearchTreeNode parent )
+    public TwoPlayerMove search( TwoPlayerMove lastMove, SearchTreeNode parent )
     {
         TwoPlayerMove selectedMove = searchInternal( lastMove, 0, parent);
         return (selectedMove != null)? selectedMove : lastMove;
@@ -70,7 +74,8 @@ public final class MtdStrategy implements SearchStrategy
 
             //selectedMove = searchWithMemory_.search(lastMove, beta - 1, beta, parent);
             //g = selectedMove.getInheritedValue();
-            selectedMove = searchWithMemory_.search(lastMove, -beta + 1, -beta, parent);
+            getOptions().setInitialSearchWindow(new Range(-beta + 1, -beta));
+            selectedMove = searchWithMemory_.search(lastMove, parent);
             g = -selectedMove.getInheritedValue();
 
             if (g < beta)  upperBound = g;

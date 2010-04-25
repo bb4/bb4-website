@@ -199,11 +199,11 @@ public class ExpectedSearchableResults {
     };
 
     static final TwoPlayerMove[] EXPECTED_URGENT_MOVES_P1 = {
-        TwoPlayerMove.createMove(new Location(3, 2), -8168, PLAYER2_PIECE),
+        TwoPlayerMove.createMove(new Location(4, 3), 8192, PLAYER1_PIECE),
     };
 
     static final TwoPlayerMove[] EXPECTED_URGENT_MOVES_P2 = {
-        TwoPlayerMove.createMove(new Location(3, 2), -8168, PLAYER2_PIECE),
+        TwoPlayerMove.createMove(new Location(4, 7), -8184, PLAYER2_PIECE),
     };
 
     private ExpectedSearchableResults() {
