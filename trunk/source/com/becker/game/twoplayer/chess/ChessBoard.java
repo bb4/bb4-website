@@ -5,27 +5,25 @@ import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.common.Move;
 import com.becker.game.common.*;
 
-import java.util.Iterator;
 import java.util.List;
 
 
 /**
  * Defines the structure of the Chess board and the pieces on it.
  * Chess is played on a ChekersBoard so we derive from that.
- * @see com.becker.game.twoplayer.checkers.CheckersBoard
+ * @see CheckersBoard
  *
  * @author Barry Becker
  */
 public class ChessBoard extends CheckersBoard
 {
-    // arrangement of pieces
-    private static char[] PIECE_ARRANGEMENT = {
-        ChessPiece.ROOK, ChessPiece.KNIGHT, ChessPiece.BISHOP,
-        ChessPiece.QUEEN, ChessPiece.KING,
-        ChessPiece.BISHOP, ChessPiece.KNIGHT, ChessPiece.ROOK
+    /** arrangement of pieces on the back line. */
+    private static final ChessPieceType[] PIECE_ARRANGEMENT = {
+        ChessPieceType.ROOK, ChessPieceType.KNIGHT, ChessPieceType.BISHOP,
+        ChessPieceType.QUEEN, ChessPieceType.KING,
+        ChessPieceType.BISHOP, ChessPieceType.KNIGHT, ChessPieceType.ROOK
     };
 
-    // constructor
     public ChessBoard()
     {}
 
@@ -36,30 +34,39 @@ public class ChessBoard extends CheckersBoard
     public void reset()
     {
         super.reset();
-        assert ( positions_!=null );
-        int i,j;
+        clearBoard();
+        setupPlayerPieces(true); // player1
+        setupPlayerPieces(false); // player2
+    }
+
+    /**
+     * Lay down the initial pieces at the start of the game.
+     * @param isPlayer1 true if black pieces to be laid down.
+     */
+    private void setupPlayerPieces(boolean isPlayer1) {
         int numRows = getNumRows();
-        for ( i = 1; i <= numRows; i++ )  {
-            for ( j = 1; j <= getNumCols(); j++ ) {
+        int pawnRow = isPlayer1 ? 2 : numRows - 1;
+        int kingRow = isPlayer1 ? 1 : numRows;
+        for ( int j = 1; j <= getNumCols(); j++ ) {
+            positions_[kingRow][j] = new BoardPosition( kingRow, j, new ChessPiece(isPlayer1, PIECE_ARRANGEMENT[j-1]) );
+            positions_[pawnRow][j] = new BoardPosition( pawnRow, j, new ChessPiece(isPlayer1, ChessPieceType.PAWN) );
+        }
+    }
+
+    private void clearBoard() {
+        assert ( positions_!=null );
+        int numRows = getNumRows();
+        for ( int i = 1; i <= numRows; i++ )  {
+            for ( int j = 1; j <= getNumCols(); j++ ) {
                 positions_[i][j] = new BoardPosition( i, j, null);
             }
-        }
-
-        // black player's pieces
-        for ( j = 1; j <= getNumCols(); j++ ) {
-            positions_[1][j] = new BoardPosition( 1, j, new ChessPiece(true, PIECE_ARRANGEMENT[j-1]) );
-            positions_[2][j] = new BoardPosition( 2, j, new ChessPiece( true, ChessPiece.PAWN) );
-        }
-        // red player's pieces
-        for ( j = 1; j <= getNumCols(); j++ ) {
-            positions_[numRows][j] = new BoardPosition( numRows, j, new ChessPiece(false, PIECE_ARRANGEMENT[j-1]) );
-            positions_[numRows-1][j] = new BoardPosition( (numRows-1), j, new ChessPiece(false, ChessPiece.PAWN));
         }
     }
 
     /**
      * determine if the specified opponent position is endangering your king.
      * @param pos the opponent position to misc
+     * @return true if the king is in check as a result of the last move.
      */
     public boolean isKingCheckedByPosition(BoardPosition pos, Move lastMove)
     {
@@ -71,13 +78,12 @@ public class ChessBoard extends CheckersBoard
 
         // loop through the possible moves.
         // if any of them capture the king then the opponents king is in check.
-        Iterator it = moves.iterator();
-        while (it.hasNext()) {
-            ChessMove nextMove = (ChessMove)it.next();
+        for (Object move : moves) {
+            ChessMove nextMove = (ChessMove) move;
             CaptureList cl = nextMove.captureList;
             if (null != cl && !cl.isEmpty()) {
-                GamePiece piece = cl.getFirst().getPiece();
-                if (piece.getType() == ChessPiece.KING) {
+                ChessPiece piece = (ChessPiece)cl.getFirst().getPiece();
+                if (piece.is(ChessPieceType.KING)) {
                     checked = true;
                     break;
                 }
@@ -101,8 +107,8 @@ public class ChessBoard extends CheckersBoard
 
         // remove the captures before we place the moved piece since it may be underneath.
         removeCaptures( m.captureList );
-        ////assert (oldPos.getPiece() != null): "oldpos="+oldPos+" m="+m;
-        if (m != null && oldPos.getPiece() != null) {
+
+        if (oldPos.getPiece() != null) {
             m.setFirstTimeMoved(((ChessPiece)oldPos.getPiece()).isFirstTimeMoved());
             newPos.setPiece(m.getPiece());
 
@@ -187,7 +193,6 @@ public class ChessBoard extends CheckersBoard
         return 12;
     }
 
-
     /**
      * The index of the state for tihs position.
      * Perhaps this would be better abstract.
@@ -195,8 +200,11 @@ public class ChessBoard extends CheckersBoard
      */
     @Override
     public int getStateIndex(BoardPosition pos) {
-        assert false: " not implemented";
-        return 0;
+        if (pos.isOccupied()) {
+            ChessPiece p = (ChessPiece) pos.getPiece();
+            return p.typeIndex();
+        } else {
+            return 0;
+        }
     }
-
 }

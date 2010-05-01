@@ -13,7 +13,6 @@ import com.becker.game.twoplayer.common.TwoPlayerMove;
  */
 public class ChessMove extends TwoPlayerMove
 {
-
     /** the position that the piece is moving from */
     protected Location fromLocation_;
 
@@ -46,6 +45,7 @@ public class ChessMove extends TwoPlayerMove
     /**
      * factory method for getting new moves.
      * I used to use recylced objects, but it did not seem to improve performance so I dropped it.
+     * @return new chess move
      */
     public static ChessMove createMove(
             int originRow, int originCol,
@@ -107,7 +107,7 @@ public class ChessMove extends TwoPlayerMove
         if ( captureList != null ) {
             sb.append( captureList.toString() );
         }
-        sb.append( " (" +fromLocation_ + ")->(" +toLocation_ + ')' );
+        sb.append(" (").append(fromLocation_).append(")->(").append(toLocation_).append(')');
         return sb.toString();
     }
 }

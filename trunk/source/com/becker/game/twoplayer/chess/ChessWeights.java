@@ -5,7 +5,7 @@ import com.becker.game.common.*;
 /**
  * These weights determine how the computer values features of the board
  * if only one computer is playing, then only one of the weights arrays is used.
- * @author Barry Becker Date: Feb 11, 2007
+ * @author Barry Becker
  */
 public class ChessWeights extends GameWeights {
 
