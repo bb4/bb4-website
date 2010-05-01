@@ -86,33 +86,17 @@ public class ChessController extends CheckersController
     protected int worth( Move lastMove, ParameterArray weights )
     {
         int row, col;
-        float score = 0;
+        double score = 0;
 
         // evaluate the board after the move has been made
         for ( row = 1; row <= NUM_ROWS; row++ ) {      //rows
             for ( col = 1; col <= NUM_COLS; col++ ) {  //cols
                 BoardPosition pos = board_.getPosition( row, col );
                 if ( pos.isOccupied() ) {
-                    GamePiece piece = pos.getPiece();
-                    float side = piece.isOwnedByPlayer1()?1:-1;
-                    switch (piece.getType()) {
-                        case ChessPiece.PAWN :
-                            //  pawn advancemnt
-                            int advance = (piece.isOwnedByPlayer1()? pos.getRow()-1: (NUM_ROWS-pos.getRow()-1));
-                            score += side * advance * weights.get(ChessWeights.PAWN_ADVANCEMENT_WEIGHT_INDEX).getValue();
-                            score += side * weights.get(ChessWeights.PAWN_WEIGHT_INDEX).getValue(); break;
-                        case ChessPiece.KNIGHT :
-                            score += side * weights.get(ChessWeights.KNIGHT_WEIGHT_INDEX).getValue(); break;
-                        case ChessPiece.ROOK :
-                            score += side * weights.get(ChessWeights.ROOK_WEIGHT_INDEX).getValue(); break;
-                        case ChessPiece.BISHOP :
-                            score += side * weights.get(ChessWeights.BISHOP_WEIGHT_INDEX).getValue(); break;
-                        case ChessPiece.QUEEN :
-                            score += side * weights.get(ChessWeights.QUEEN_WEIGHT_INDEX).getValue(); break;
-                        case ChessPiece.KING :
-                            score += side * weights.get(ChessWeights.KING_WEIGHT_INDEX).getValue(); break;
-                        default : assert false:("bad chess piece type:"+ piece.getType());
-                    }
+                    ChessPiece piece = (ChessPiece)pos.getPiece();
+                    int side = piece.isOwnedByPlayer1() ? 1 : -1;
+                    int advancement =  (piece.isOwnedByPlayer1() ? pos.getRow()-1 : (NUM_ROWS - pos.getRow()-1));
+                    score += piece.getWeightedScore(side, pos, weights, advancement);
                 }
             }
         }
@@ -133,9 +117,7 @@ public class ChessController extends CheckersController
         List<ChessMove> moves = ((ChessPiece)pos.getPiece()).findPossibleMoves(board_, pos.getRow(), pos.getCol(), lastMove);
 
         // score the moves in this list
-        Iterator<ChessMove> it = moves.iterator();
-        while (it.hasNext()) {
-            ChessMove move = it.next();
+        for (ChessMove move : moves) {
             // first apply the move
             board_.makeMove(move);
             move.setValue(worth(move, weights, player1sPerspective));
@@ -183,7 +165,7 @@ public class ChessController extends CheckersController
             int row,col;
             player1sPerspective_ = player1sPerspective;
 
-            boolean player1 = (lastMove != null)?  !(lastMove.isPlayer1()) : true;
+            boolean player1 = (lastMove == null) || !(lastMove.isPlayer1());
 
             // scan through the board positions. For each each piece of the current player's,
             // add all the moves that it can make.

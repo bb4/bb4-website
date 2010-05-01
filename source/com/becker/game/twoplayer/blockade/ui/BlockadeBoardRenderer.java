@@ -72,9 +72,9 @@ public class BlockadeBoardRenderer extends TwoPlayerBoardRenderer
      * /  6 | 7 \
      * </pre>
      *@@ We could make this an enum with values NEE, NNE, NNW, NWW, SWW, etc
-     * @param xp
-     * @param yp
-     * @return
+     * @param xp x position
+     * @param yp y position
+     * @return wall index corresponding to specified position.
      */
     public int getWallIndexForPosition(int xp, int yp, Location loc, BlockadeBoard b)
     {
@@ -85,11 +85,12 @@ public class BlockadeBoardRenderer extends TwoPlayerBoardRenderer
 
         if (loc.getCol() >= numCols)
            x = Math.min(0.499f, x);
-        if (loc.getCol() <= 1)
+        else if (loc.getCol() <= 1)
            x = Math.max(0.501f, x);
+
         if (loc.getRow() >= numRows)
            y = Math.min(0.499f, y);
-        if (loc.getRow() <=1 )
+        else if (loc.getRow() <=1 )
            y = Math.max(0.501f, y);
 
         if (x <= 0.5f) {
@@ -128,7 +129,7 @@ public class BlockadeBoardRenderer extends TwoPlayerBoardRenderer
      */
     private void drawHomeBases(Graphics g, BlockadeBoard board, boolean player1)
     {
-        // draw the homebases
+        // draw the home bases
         BoardPosition[] homes = player1? board.getPlayer1Homes() : board.getPlayer2Homes();
 
         int cellSize = this.getCellSize();

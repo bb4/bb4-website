@@ -13,7 +13,6 @@ import java.util.*;
  */
 public class BlockadeWall
 {
-
     /** whether the wall is VERTICAL or HORIZONTAL */
     private boolean isVertical_;
 
@@ -83,23 +82,12 @@ public class BlockadeWall
     }
 
     /**
-     *
-     * @return true if this is a horizontally oriented wall.
-     */
-    public boolean isHorizontal()
-    {
-        return !isVertical_;
-    }
-
-    /**
      * @return  the positions bordered by this wall.
      */
     public Set<BlockadeBoardPosition> getPositions()
     {
         return positions_;
     }
-
-
     
     /**
      * @return either the top/north or the left/west board position 
@@ -123,9 +111,7 @@ public class BlockadeWall
      */
     public BlockadeWall copy()
     {
-
-        BlockadeWall w = new BlockadeWall(positions_);
-        return w;
+        return new BlockadeWall(positions_);
     }
 
     @Override

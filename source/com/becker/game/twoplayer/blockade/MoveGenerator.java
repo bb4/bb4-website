@@ -271,7 +271,7 @@ public class MoveGenerator {
      * @return the accumulated list of walls.
      */
     private List<BlockadeWall> checkAddWallsForDirection(BlockadeBoardPosition pos, List<Path> paths,
-                                                                                               Direction direction, List<BlockadeWall> wallsList)
+                                                         Direction direction, List<BlockadeWall> wallsList)
     {
         BlockadeBoard b = board_;
         List<BlockadeWall> wallsToCheck = new LinkedList<BlockadeWall>();

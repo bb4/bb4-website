@@ -249,61 +249,49 @@ public class BlockadeBoardViewer extends AbstractTwoPlayerBoardViewer
             if (board.getPosition(loc)==null) {
                 return;  // out of bounds
             }
-            int index = ((BlockadeBoardRenderer)getBoardRenderer()).getWallIndexForPosition(e.getX(), e.getY(), loc, board);
+            int index =
+                ((BlockadeBoardRenderer)getBoardRenderer()).getWallIndexForPosition(e.getX(), e.getY(), loc, board);
 
-            Set<BlockadeBoardPosition> positions = new LinkedHashSet<BlockadeBoardPosition>();
-
-            boolean isVertical = false;
             BoardPosition pos1 = null,  pos2 = null;
 
             switch (index) {
                 case 0 :
-                    isVertical = true;
                     pos1 = board.getPosition(loc);
                     pos2 = board.getPosition(loc.getRow()+1, loc.getCol());
                     break;
                 case 1 :
-                    isVertical = true;
-                    assert (board.getPosition(loc)!=null);
+                    assert (board.getPosition(loc) != null);
                     assert (board.getPosition(loc.getRow()-1, loc.getCol())!=null);
                     pos1 = board.getPosition(loc);
                     pos2 = board.getPosition(loc.getRow()-1, loc.getCol());
                     break;
                 case 2 :
-                    isVertical = false;
                     pos1 = board.getPosition(loc.getRow()-1, loc.getCol());
                     pos2 = board.getPosition(loc.getRow()-1, loc.getCol()+1);
                     break;
                 case 3 :
-                    isVertical = false;
                     pos1 = board.getPosition(loc.getRow()-1, loc.getCol());
                     pos2 = board.getPosition(loc.getRow()-1, loc.getCol()-1);
                     break;
                 case 4 :
-                    isVertical = true;
                     pos1 = board.getPosition(loc.getRow(), loc.getCol()-1);
                     pos2 = board.getPosition(loc.getRow()-1, loc.getCol()-1);
                     break;
                 case 5 :
-                    isVertical = true;
                     pos1 = board.getPosition(loc.getRow(), loc.getCol()-1);
                     pos2 = board.getPosition(loc.getRow()+1, loc.getCol()-1);
                     break;
                 case 6 :
-                    isVertical = false;
                     pos1 = board.getPosition(loc);
                     pos2 = board.getPosition(loc.getRow(), loc.getCol()-1);
                     break;
                 case 7 :
-                    isVertical = false;
                     pos1 = board.getPosition(loc);
                     pos2 = board.getPosition(loc.getRow(), loc.getCol()+1);
                     break;
                 default : assert false:("bad index="+index);
             }
 
-            positions.add((BlockadeBoardPosition)pos1);
-            positions.add((BlockadeBoardPosition)pos2);
             ((BlockadeBoardRenderer)getBoardRenderer()).setDraggedWall(
                     new BlockadeWall((BlockadeBoardPosition)pos1, (BlockadeBoardPosition)pos2));
 
