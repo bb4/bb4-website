@@ -2,8 +2,8 @@ package com.becker.game.twoplayer.blockade;
 
 import com.becker.game.common.GamePiece;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.common.search.test.ISearchableHelper;
-import com.becker.game.twoplayer.common.search.test.TwoPlayerSearchableBaseTst;
+import com.becker.game.twoplayer.common.search.TwoPlayerSearchableBaseTst;
+import com.becker.game.twoplayer.common.search.ISearchableHelper;
 import com.becker.optimization.parameter.ParameterArray;
 import java.util.List;
 import junit.framework.*;

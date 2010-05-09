@@ -3,10 +3,10 @@ package com.becker.game.twoplayer.tictactoe;
 import com.becker.common.Location;
 import com.becker.game.common.GamePiece;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.common.search.test.SearchableHelper;
-import com.becker.game.twoplayer.common.search.test.strategy.ExpectedMoveMatrix;
-import com.becker.game.twoplayer.common.search.test.strategy.MoveInfo;
-import com.becker.game.twoplayer.common.search.test.strategy.NegaScoutStrategyTst;
+import com.becker.game.twoplayer.common.search.SearchableHelper;
+import com.becker.game.twoplayer.common.search.strategy.ExpectedMoveMatrix;
+import com.becker.game.twoplayer.common.search.strategy.MoveInfo;
+import com.becker.game.twoplayer.common.search.strategy.NegaScoutStrategyTst;
 
 /**
  * These results should be exactly the same as we get from minimax

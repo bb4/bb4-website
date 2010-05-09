@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.common.search.test.strategy;
+package com.becker.game.twoplayer.common.search.strategy;
 
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 

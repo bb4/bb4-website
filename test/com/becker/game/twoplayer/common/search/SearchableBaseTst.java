@@ -1,9 +1,6 @@
-package com.becker.game.twoplayer.common.search.test;
+package com.becker.game.twoplayer.common.search;
 
-import com.becker.game.common.GameController;
-import com.becker.game.twoplayer.common.TwoPlayerController;
 import junit.framework.*;
-import com.becker.game.twoplayer.common.search.Searchable;
 
 /**
  * Verify that all the methods in the Searchable interface work as expected.

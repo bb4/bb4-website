@@ -1,11 +1,10 @@
-package com.becker.game.twoplayer.common.search.test.transposition;
+package com.becker.game.twoplayer.common.search.transposition;
 
 import com.becker.common.Location;
 import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GamePiece;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.common.search.transposition.ZobristHash;
 import com.becker.game.twoplayer.tictactoe.TicTacToeBoard;
 import junit.framework.TestCase;
 

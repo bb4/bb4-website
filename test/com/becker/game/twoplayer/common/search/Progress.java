@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.common.search.test;
+package com.becker.game.twoplayer.common.search;
 
 /**
  * The approximate amount of progess we have made in a 2 player game.
