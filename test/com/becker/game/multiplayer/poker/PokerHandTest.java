@@ -1,4 +1,4 @@
-package com.becker.game.multiplayer.poker.test;
+package com.becker.game.multiplayer.poker;
 
 import com.becker.common.util.FileUtil;
 import com.becker.game.multiplayer.poker.PokerHand;
