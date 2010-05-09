@@ -26,11 +26,11 @@
           msgBundleBase="com.becker.game.twoplayer.chess.resources.chessMessages"
           panelClass="com.becker.game.twoplayer.chess.ui.ChessPanel"
           controllerClass="com.becker.game.twoplayer.chess.ChessController" />
-    <game name="com.becker.game.twoplayer.blockade"
+    <game name="blockade"
           msgKey="BLOCKADE"
-          msgBundleBase="com.becker.game.twoplayer.com.becker.game.twoplayer.blockade.resources.blockadeMessages"
-          panelClass="com.becker.game.twoplayer.com.becker.game.twoplayer.blockade.ui.BlockadePanel"
-          controllerClass="com.becker.game.twoplayer.com.becker.game.twoplayer.blockade.BlockadeController" />
+          msgBundleBase="com.becker.game.twoplayer.blockade.resources.blockadeMessages"
+          panelClass="com.becker.game.twoplayer.blockade.ui.BlockadePanel"
+          controllerClass="com.becker.game.twoplayer.blockade.BlockadeController" />
     <game name="go"
           msgKey="GO"
           msgBundleBase="com.becker.game.twoplayer.go.resources.goMessages"

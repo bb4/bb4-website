@@ -18,7 +18,8 @@ public class BlockadeBoardTest extends BlockadeTestCase {
         Assert.assertTrue("no piece or walls", p.getStateIndex() == 0);
         p.setPiece(new GamePiece(true));
 
-        LinkedHashSet<BlockadeBoardPosition> wallPositions = new LinkedHashSet<BlockadeBoardPosition>(2);
+        LinkedHashSet<BlockadeBoardPosition> wallPositions =
+                new LinkedHashSet<BlockadeBoardPosition>(2);
 
         Assert.assertTrue("p1 piece and no walls", p.getStateIndex() == 1);
 
@@ -276,9 +277,9 @@ public class BlockadeBoardTest extends BlockadeTestCase {
             Path ap = actualPaths.get(i);
 
             String diffMarker = ep.equals(ap) ? "" : "***";
-            diffs.append("expected:  "+ ep + "actual  :  " + ap);
+            diffs.append("expected:  ").append(ep).append("actual  :  ").append(ap);
             if (!ep.equals(ap)) {
-                diffs.append("   "+ diffMarker +" \n");
+                diffs.append("   ").append(diffMarker).append(" \n");
                 pathListsDifferent = true;
             }
         }

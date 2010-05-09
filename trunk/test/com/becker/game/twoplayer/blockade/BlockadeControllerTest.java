@@ -6,8 +6,6 @@ import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
 
 
 /**
- * Test methods on the com.becker.game.twoplayer.blockade controller
- * Created on June 2, 2007, 7:08 AM
  * @author Barry Becker
  */
 public class BlockadeControllerTest extends BlockadeTestCase {
@@ -35,7 +33,9 @@ public class BlockadeControllerTest extends BlockadeTestCase {
         int winFromP1Persp = controller_.worth(winningMove, controller_.getDefaultWeights(), true);
         int winFromP2Persp = controller_.worth(winningMove, controller_.getDefaultWeights(), false);
 
-        Assert.assertEquals("Unexpected value of winning move from P1 perspective", SearchStrategy.WINNING_VALUE, winFromP1Persp);
-        Assert.assertEquals("Unexpected value of winning move from P2 perspective", -SearchStrategy.WINNING_VALUE, winFromP2Persp);
+        Assert.assertEquals("Unexpected value of winning move from P1 perspective",
+                SearchStrategy.WINNING_VALUE, winFromP1Persp);
+        Assert.assertEquals("Unexpected value of winning move from P2 perspective",
+                -SearchStrategy.WINNING_VALUE, winFromP2Persp);
     }
 }

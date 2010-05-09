@@ -53,15 +53,16 @@ public class PluginManager {
 
             Node n = children.item(i);
 
-            if (("#comment".equals(n.getNodeName())))
-                continue;     // skip comment nodes
-            GamePlugin plugin = createPlugin(n);
+            if (!"#comment".equals(n.getNodeName())) {
 
-            plugins_.add(plugin);
-            hmNameToPlugin_.put(plugin.getName(), plugin);
-            hmLabelToPlugin_.put(plugin.getLabel(), plugin);
-            if (plugin.isDefault()) {
-                defaultGame = plugin;
+                GamePlugin plugin = createPlugin(n);
+
+                plugins_.add(plugin);
+                hmNameToPlugin_.put(plugin.getName(), plugin);
+                hmLabelToPlugin_.put(plugin.getLabel(), plugin);
+                if (plugin.isDefault()) {
+                    defaultGame = plugin;
+                }
             }
         }
         if (defaultGame == null) {
