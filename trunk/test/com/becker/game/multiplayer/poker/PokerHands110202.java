@@ -1,4 +1,4 @@
-package com.becker.game.multiplayer.poker.test;
+package com.becker.game.multiplayer.poker;
 
 import java.io.*;
 import java.util.*;

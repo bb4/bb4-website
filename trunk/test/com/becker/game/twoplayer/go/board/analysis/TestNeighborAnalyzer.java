@@ -2,6 +2,7 @@ package com.becker.game.twoplayer.go.board.analysis;
 
 import com.becker.game.twoplayer.go.board.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.GoTestCase;
 import junit.framework.*;
 
 import java.util.*;
