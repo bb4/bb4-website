@@ -15,9 +15,7 @@ public class TestAllUtil  {
 
         TestSuite suite =  new TestSuite("All Util Tests");
 
-
         suite.addTestSuite(MathUtilTest.class);
-
 
         return suite;
     }

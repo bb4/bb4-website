@@ -25,6 +25,7 @@ public class TestAll extends TestCase {
         
         suite.addTest(TestAllInterpolation.suite());
         suite.addTest(TestAllFunction.suite());
+        suite.addTest(TestAllUtil.suite());
 
         suite.addTest(TestAllUtil.suite());
 

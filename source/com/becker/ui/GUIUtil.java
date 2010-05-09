@@ -310,7 +310,7 @@ public final class GUIUtil
     public static JWindow showSplashScreen( int waitMillis, String imagePath)
     {
         // show a splash screen initially (if we are running through web start)
-        // so the user knows something is happenning
+        // so the user knows something is happening
         ImageIcon splash;
         URL url = ClassLoaderSingleton.getClassLoader().getResource(imagePath);
         if (url == null) // then use a default
