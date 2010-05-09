@@ -6,11 +6,11 @@ import java.awt.*;
 import java.awt.geom.*;
 
 /**
- * A static class that takes a card and renders it to the Viewer.
+ * Takes a card and renders it to the Viewer.
  * We use a separate card rendering class to avoid having ui in the card class itself.
  * This allows us to more cleanly separate the view from the model.
  *
- * @author Barry Becker Date: Feb 26, 2006
+ * @author Barry Becker
  */
 public final class CardRenderer {
 
@@ -18,7 +18,6 @@ public final class CardRenderer {
     public static final int TOP_MARGIN = 5;
 
     public static final float CARD_HEIGHT_RAT = 1.5f;
-
 
     //private static final Font BASE_FONT = new Font( "Sans-serif", Font.PLAIN, 11 );
     private static final Color BACKGROUND_COLOR = new Color(250, 250, 255);
@@ -29,7 +28,6 @@ public final class CardRenderer {
 
     private static final float MARGIN_RAT = 0.02f;
     private static final Stroke SHAPE_BORDER_STROKE = new BasicStroke(4.0f);
-    //private static final int BORDER_THICKNESS = 1;
 
     private static final float SHAPE_SIZE_FRAC = 0.82f;
     private static final float THIRD_SHAPE_FRAC = 0.9f; // slightly different for the diamond
@@ -43,13 +41,13 @@ public final class CardRenderer {
 
     private static final Color[][] symbolColors = {
         //   solid                  border                 hatched                highlight
-        {new Color(255, 32, 1), new Color(200, 5, 0), new Color(255, 42, 22), new Color(205, 22, 12)},   // FIRST
-        {new Color(0, 250, 0), new Color(0, 180, 0), new Color(0, 243, 1), new Color(10, 202, 2)},       // SECOND
+        {new Color(255, 32, 1),  new Color(200, 5, 0), new Color(255, 42, 22), new Color(205, 22, 12)},   // FIRST
+        {new Color(0, 250, 0),   new Color(0, 180, 0), new Color(0, 243, 1),   new Color(10, 202, 2)},    // SECOND
         {new Color(85, 85, 255), new Color(0, 0, 210), new Color(75, 75, 255), new Color(10, 5, 245)}    // THIRD
     };
 
-    // rounded edge
-    private static final float ARC_RAT = 0.12f;
+    /** rounded edge   */
+    private static final float ARC_RATIO = 0.12f;
 
     /**
      * private constructor because this class is a singleton.
@@ -63,17 +61,17 @@ public final class CardRenderer {
         return symbolColors[val.ordinal()][style.ordinal()];
     }
 
-    protected static Color getCardColor(Card card)
+    private static Color getCardColor(Card card)
     {
         return getColorForValue(card.color(), ColorType.SOLID);
     }
 
-    protected static Color getBorderCardColor(Card card)
+    private static Color getBorderCardColor(Card card)
     {
-        return getColorForValue(card.color(),  card.isHighlighted() ? ColorType.HIGHLIGHT: ColorType.BORDER);
+        return getColorForValue(card.color(), card.isHighlighted() ? ColorType.HIGHLIGHT: ColorType.BORDER);
     }
 
-    protected static Paint getCardTexture(Card card)
+    private static Paint getCardTexture(Card card)
     {
         switch (card.texture()) {
             case FIRST : return BACKGROUND_COLOR;
@@ -135,7 +133,7 @@ public final class CardRenderer {
        int x = (int)position.getX();
        int y = (int)position.getY();
 
-       int cardArc = (int) (ARC_RAT * width);
+       int cardArc = (int) (ARC_RATIO * width);
        int margin = (int) (MARGIN_RAT * width);
 
        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);

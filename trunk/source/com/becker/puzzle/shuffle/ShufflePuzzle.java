@@ -7,7 +7,7 @@ package com.becker.puzzle.shuffle;
  * The remaining cards go on top. The problem is to find the number of perfect shuffles required to return the
  * deck to its original order. Your function should be declared as:
  *
- *    static long shuffles(int nCards,int iCut);
+ *    static long shuffles(int nCards, int iCut);
  *
  * Please send the result of shuffles(1002, 101) along with your program and your resume to 'resume' at nextag.com.
  *
@@ -17,7 +17,7 @@ public class ShufflePuzzle {
 
      private ShufflePuzzle() {}
 
-     static long shuffles(int nCards,int iCut) {
+     static long shuffles(int nCards, int iCut) {
          assert (iCut < nCards);
          Deck deck = new Deck(nCards);
 
@@ -28,7 +28,7 @@ public class ShufflePuzzle {
              deck.doPerfectShuffle(iCut);
              ct++;
              if (ct % 100000 == 0)  {
-               System.out.println(ct + "  " +deck);
+                System.out.println(ct + "  " + deck);
              }
          }
          assert (ct < Integer.MAX_VALUE) : "No amount of shuffling will restore the order";
@@ -40,8 +40,7 @@ public class ShufflePuzzle {
 
         int nCards = 402;
         int iCut = 101;
-        //System.out.println("The answer is " + shuffles(1002, 101));
-        System.out.println("A sorted deck of " + nCards + " cards, cut "+iCut +" deep takes "
+        System.out.println("A sorted deck of " + nCards + " cards, cut " + iCut + " deep takes "
                            + shuffles(nCards, iCut) + " perfect shuffles to restore the deck.");
         System.out.println("time elapsed = " + (System.currentTimeMillis() - time) +" milliseconds");
     }

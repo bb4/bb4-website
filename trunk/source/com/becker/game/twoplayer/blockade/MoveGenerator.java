@@ -15,7 +15,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Generates candidate next moves for a game of blockade given a current board state.
+ * Generates candidate next moves for a game of com.becker.game.twoplayer.blockade given a current board state.
  *
  * @author Barry Becker
  */

@@ -31,7 +31,7 @@ public enum Direction
     private static Map<Integer, Direction> map_;
 
     /**
-     * constructor for blockade direction
+     * constructor for com.becker.game.twoplayer.blockade direction
      *
      * @param hashKey string name of the eye type (eg "False Eye")
      */

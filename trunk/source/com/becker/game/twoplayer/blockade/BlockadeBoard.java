@@ -9,7 +9,7 @@ import javax.swing.tree.MutableTreeNode;
 import java.util.*;
 
 /**
- * Defines the structure of the blockade board and the pieces on it.
+ * Defines the structure of the com.becker.game.twoplayer.blockade board and the pieces on it.
  * Each BlockadeBoardPosition can contain a piece and south and east walls.
  *
  * @author Barry Becker
@@ -88,7 +88,7 @@ public class BlockadeBoard extends TwoPlayerBoard
 
     /**
      * If the Blockade game has more than this many moves, then we assume it is a draw.
-     * We make this number big, because in blockade it is impossible to have a draw.
+     * We make this number big, because in com.becker.game.twoplayer.blockade it is impossible to have a draw.
      * I haven't proved it, but I think it is impossible for the number of moves to exceed
      * the rows*cols.
      * @return assumed maximum number of moves.

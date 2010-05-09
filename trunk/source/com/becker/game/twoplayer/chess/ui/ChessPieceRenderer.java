@@ -1,6 +1,7 @@
 package com.becker.game.twoplayer.chess.ui;
 
 import com.becker.game.twoplayer.chess.ChessPiece;
+import com.becker.game.twoplayer.chess.ChessPieceType;
 import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
 import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GameContext;
@@ -34,23 +35,23 @@ public class ChessPieceRenderer  extends TwoPlayerPieceRenderer
     private static final String IMAGE_DIR = GameContext.GAME_ROOT+"twoplayer/chess/ui/images/";
     static {
         // gets the images from resources or the filesystem depending if we are running as an applet or application respectively.
-        pawnImage_[0] = GUIUtil.getIcon(IMAGE_DIR+"pawn1.png");
-        pawnImage_[1] = GUIUtil.getIcon(IMAGE_DIR+"pawn2.png");
+        pawnImage_[0] = GUIUtil.getIcon(IMAGE_DIR + "pawn1.png");
+        pawnImage_[1] = GUIUtil.getIcon(IMAGE_DIR + "pawn2.png");
 
-        rookImage_[0] = GUIUtil.getIcon(IMAGE_DIR+"rook1.png");
-        rookImage_[1] = GUIUtil.getIcon(IMAGE_DIR+"rook2.png");
+        rookImage_[0] = GUIUtil.getIcon(IMAGE_DIR + "rook1.png");
+        rookImage_[1] = GUIUtil.getIcon(IMAGE_DIR + "rook2.png");
 
-        knightImage_[0] = GUIUtil.getIcon(IMAGE_DIR+"knight1.png");
-        knightImage_[1] = GUIUtil.getIcon(IMAGE_DIR+"knight2.png");
+        knightImage_[0] = GUIUtil.getIcon(IMAGE_DIR + "knight1.png");
+        knightImage_[1] = GUIUtil.getIcon(IMAGE_DIR + "knight2.png");
 
-        bishopImage_[0] = GUIUtil.getIcon(IMAGE_DIR+"bishop1.png");
-        bishopImage_[1] = GUIUtil.getIcon(IMAGE_DIR+"bishop2.png");
+        bishopImage_[0] = GUIUtil.getIcon(IMAGE_DIR + "bishop1.png");
+        bishopImage_[1] = GUIUtil.getIcon(IMAGE_DIR + "bishop2.png");
 
-        queenImage_[0] = GUIUtil.getIcon(IMAGE_DIR+"queen1.png");
-        queenImage_[1] = GUIUtil.getIcon(IMAGE_DIR+"queen2.png");
+        queenImage_[0] = GUIUtil.getIcon(IMAGE_DIR + "queen1.png");
+        queenImage_[1] = GUIUtil.getIcon(IMAGE_DIR + "queen2.png");
 
-        kingImage_[0] = GUIUtil.getIcon(IMAGE_DIR+"king1.png");
-        kingImage_[1] = GUIUtil.getIcon(IMAGE_DIR+"king2.png");
+        kingImage_[0] = GUIUtil.getIcon(IMAGE_DIR + "king1.png");
+        kingImage_[1] = GUIUtil.getIcon(IMAGE_DIR + "king2.png");
     }
 
     /**
@@ -99,18 +100,18 @@ public class ChessPieceRenderer  extends TwoPlayerPieceRenderer
         int p = (piece.isOwnedByPlayer1()? 0:1);
         int pieceSize = getPieceSize(cellSize, piece);
         Point pos = getPosition(position, cellSize, pieceSize, margin);
-        switch (piece.getType()) {
-            case ChessPiece.PAWN :
+        switch (piece.getPieceType()) {
+            case PAWN :
                 g2.drawImage(pawnImage_[p].getImage(), pos.x, pos.y, pieceSize, pieceSize, null); break;
-            case ChessPiece.ROOK :
+            case ROOK :
                 g2.drawImage(rookImage_[p].getImage(), pos.x, pos.y, pieceSize, pieceSize, null); break;
-            case ChessPiece.KNIGHT :
+            case KNIGHT :
                 g2.drawImage(knightImage_[p].getImage(), pos.x, pos.y, pieceSize, pieceSize, null); break;
-            case ChessPiece.BISHOP :
+            case BISHOP :
                 g2.drawImage(bishopImage_[p].getImage(), pos.x, pos.y, pieceSize, pieceSize, null); break;
-            case ChessPiece.QUEEN :
+            case QUEEN :
                 g2.drawImage(queenImage_[p].getImage(), pos.x, pos.y, pieceSize, pieceSize, null); break;
-            case ChessPiece.KING :
+            case KING :
                 g2.drawImage(kingImage_[p].getImage(), pos.x, pos.y, pieceSize, pieceSize, null); break;
             default:
                 assert false:("bad chess piece type: "+piece.getType());

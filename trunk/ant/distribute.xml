@@ -132,7 +132,7 @@
           <param name="jarFile" value="tictactoe.jar"/>
       </antcall>
 
-      <!-- copy the class files that are needed for blockade deployment -->
+      <!-- copy the class files that are needed for com.becker.game.twoplayer.blockade deployment -->
       <antcall target="deployJar">
           <param name="componentDir" value="game/twoplayer/blockade"/>
           <param name="jarFile" value="blockade.jar"/>
@@ -168,7 +168,7 @@
           <include name="ca/dj/jigo/sgf/tokens/*.class"/>
           <exclude name="com/becker/game/twoplayer/go/**/test"/>
         </fileset>
-        <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy -->
+        <mapper from="*.class" to="*.class" type="glob"/> <!-- preserve hierarchy  -->
       </copy>
       <antcall target="copyAllResources">
           <param name="componentDir" value="game/twoplayer/go"/>

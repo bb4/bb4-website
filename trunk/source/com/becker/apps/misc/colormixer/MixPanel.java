@@ -4,12 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * User: Barry Becker
+ * @author Barry Becker
  * Date: Feb 21, 2005
- * Time: 3:07:56 PM
  */
 public class MixPanel extends JPanel {
-
 
     /*
     // mix like light
@@ -31,7 +29,7 @@ public class MixPanel extends JPanel {
 
     public static final int NUM_TYPES = 8;
     */
-
+    private static final Font FONT = new Font(Font.SANS_SERIF, Font.BOLD, 16);
 
     private Color colorA_;
     private Color colorB_;
@@ -81,7 +79,7 @@ public class MixPanel extends JPanel {
         Graphics2D g2 = (Graphics2D)g;
 
         g2.setColor(this.getBackground());
-        g2.fillRect(1,1, this.getWidth(), this.getHeight());
+        g2.fillRect(1, 1, this.getWidth(), this.getHeight());
 
         g2.setColor(colorA_);
         g2.fillRect(10, 1, 100, 30);
@@ -125,10 +123,12 @@ public class MixPanel extends JPanel {
         }
         */
         g2.setComposite(composite);
-
         g2.setColor(colorB_);
         g2.fillRect(40, 12, 100, 30);
-        g2.setComposite(AlphaComposite.Clear);
+        g2.setComposite(AlphaComposite.Src);
+        
+        g2.setFont(FONT);
+        g2.setColor(Color.BLACK);
         g2.drawString(label_, 160, 20);
     }
 }

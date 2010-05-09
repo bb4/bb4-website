@@ -1,6 +1,5 @@
 package com.becker.game.common;
 
-import com.becker.common.util.FileUtil;
 import com.becker.common.ILog;
 import com.becker.sound.MusicMaker;
 import com.becker.ui.Log;
@@ -164,8 +163,8 @@ public final class GameContext
         gameName_ = gameName;
         log(1, "loadGameResources gameName=" + gameName);
         GamePlugin plugin = PluginManager.getInstance().getPlugin(gameName);
-        log(1, "plugin = " + plugin);
-        System.out.println("nameName=" + gameName + " plugin=" +plugin);
+        log(0, "plugin = " + plugin);
+        log(0, "nameName=" + gameName + " plugin=" + plugin);
         String resourcePath = plugin.getMsgBundleBase();
         log(2, "searching for "+ resourcePath);
 
@@ -252,7 +251,7 @@ public final class GameContext
     {
         log(1,"verifying consistency of message bundles... ");
         // an array of hashSets of the keys for each bundle
-        List<Set> messageKeySets = new ArrayList<Set>();
+        List<Set<String>> messageKeySets = new ArrayList<Set<String>>();
         LocaleType[] locales = LocaleType.values();
         for (final LocaleType newVar : locales) {
             ResourceBundle bundle = ResourceBundle.getBundle(COMMON_MESSAGE_BUNDLE,
@@ -270,17 +269,15 @@ public final class GameContext
         // now that we have the keysets report on their consistency.
         // assume that the first is the default (en)
         boolean allConsistent = true;
-        Set defaultKeySet = messageKeySets.get(0);
+        Set<String> defaultKeySet = messageKeySets.get(0);
         // first check that all the non-default locales do not contain keys
         // that the default locale does not have (less common).
         for (int i=1; i<locales.length; i++) {
-            Set keySet = messageKeySets.get(i);
-            Iterator it = keySet.iterator();
-            while (it.hasNext()) {
-                String key = (String)it.next();
+            Set<String> keySet = messageKeySets.get(i);
+            for (String key : keySet) {
                 if (!defaultKeySet.contains(key)) {
-                    log(0, COMMON_MESSAGE_BUNDLE+" for locale "+locales[i]
-                            +" contains the key, "+key+", that is not in the default locale (en).");
+                    log(0, COMMON_MESSAGE_BUNDLE + " for locale " + locales[i]
+                            + " contains the key, " + key + ", that is not in the default locale (en).");
                     allConsistent = false;
                 }
             }
@@ -292,14 +289,12 @@ public final class GameContext
         // the specific locale. I guess this is so you have a default to fall
         // back on, but it will make it harder to do consistency checking on the
         // bundles.
-        Iterator it = defaultKeySet.iterator();
-        while (it.hasNext())  {
-            String key = (String)it.next();
-            for (int i=1; i<locales.length; i++) {
+        for (String key : defaultKeySet) {
+            for (int i = 1; i < locales.length; i++) {
                 Set keySet = messageKeySets.get(i);
                 if (!keySet.contains(key)) {
-                    log(0, COMMON_MESSAGE_BUNDLE+" for locale "+locales[i]
-                            +" does not contain the key "+key);
+                    log(0, COMMON_MESSAGE_BUNDLE + " for locale " + locales[i]
+                            + " does not contain the key " + key);
                     allConsistent = false;
                 }
             }
@@ -318,6 +313,7 @@ public final class GameContext
     /**
      * Looks up an {@link LocaleType} for a given locale name.
      * @param finf fail if not found.
+     * @return locale
      * @throws Error if the name is not a member of the enumeration
      */
     public static LocaleType getLocale(String name, boolean finf) {

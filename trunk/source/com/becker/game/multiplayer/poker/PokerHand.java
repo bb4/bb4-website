@@ -2,6 +2,7 @@ package com.becker.game.multiplayer.poker;
 
 import com.becker.game.card.Card;
 import com.becker.game.card.Rank;
+import com.becker.game.card.Suit;
 
 import java.util.*;
 
@@ -91,6 +92,11 @@ public class PokerHand implements Comparable {
         return PokerHandEnum.HIGH_CARD;
     }
 
+    /**
+     *
+     * @param handType type of poker hand to check for.
+     * @return true if we have the specified handType.
+     */
     public boolean hasA(PokerHandEnum handType) {
         boolean hasStraight = hasStraight();
         boolean hasFlush = hasFlush();
@@ -109,18 +115,17 @@ public class PokerHand implements Comparable {
             case TWO_PAIR: return hasPair && hasTwoPairs();
             case PAIR: return hasPair;
             case HIGH_CARD: return true;
-            default: assert false;
         }
         return false;   // never reached
     }
 
     /**
-     * returns true if there are 5 cards are of the same suit
+     * @return true if there are 5 cards are of the same suit
      */
     private boolean hasFlush() {
 
         int ct = 0;
-        Card.Suit suit = hand_.get(0).suit();
+        Suit suit = hand_.get(0).suit();
         for (Card c : hand_) {
             if (c.suit() == suit)
                 ct++;
@@ -156,7 +161,7 @@ public class PokerHand implements Comparable {
     }
 
     /**
-     * returns true if there is exactly N of a certain rank in the hand
+     * @return true if there is exactly N of a certain rank in the hand
      * (note: there is not 2 of a kind if there is 4 of a kind)
      */
     private boolean hasNofaKind(int num) {
@@ -170,7 +175,7 @@ public class PokerHand implements Comparable {
     }
 
     /**
-     * returns the rank of the n of a kind specified, null if does not have n of a kind.
+     * @return the rank of the n of a kind specified, null if does not have n of a kind.
      * (note: the is not 2 of a kind if there is 4 of a kind)
      * (note: if there is more than 1 n of a kind the highest rank is returned)
      */
