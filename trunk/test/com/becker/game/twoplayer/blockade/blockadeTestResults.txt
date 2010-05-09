@@ -1,0 +1,927 @@
+Testsuite: com.becker.game.twoplayer.blockade.TestAll
+Tests run: 32, Failures: 6, Errors: 10, Time elapsed: 7.345 sec
+------------- Standard Output ---------------
+url path=/G:/projects/java_projects/trunk/classes/com/becker/game/plugins.xml
+nameName=blockade plugin=null
+nameName=blockade plugin=null
+nameName=blockade plugin=null
+nameName=blockade plugin=null
+nameName=blockade plugin=null
+nameName=blockade plugin=null
+nameName=blockade plugin=null
+nameName=blockade plugin=null
+nameName=blockade plugin=null
+nameName=blockade plugin=null
+helper = com.becker.game.twoplayer.blockade.BlockadeHelper@76f8968f
+helper = com.becker.game.twoplayer.blockade.BlockadeHelper@6766afb3
+helper = com.becker.game.twoplayer.blockade.BlockadeHelper@38b5dac4
+helper = com.becker.game.twoplayer.blockade.BlockadeHelper@2adb1d4
+generated moves for middleGameP1Turn were:
+new BlockadeMove(10,4,  9,5, 528, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(6, 10), new BlockadeBoardPosition(7, 10))),
+new BlockadeMove(10,4,  9,5, 528, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(6, 9), new BlockadeBoardPosition(7, 9))),
+new BlockadeMove(10,4,  10,2, 424, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(6, 10), new BlockadeBoardPosition(7, 10))),
+new BlockadeMove(10,4,  10,2, 424, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(6, 9), new BlockadeBoardPosition(7, 9))),
+new BlockadeMove(10,4,  10,2, 392, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 3), new BlockadeBoardPosition(8, 2))),
+new BlockadeMove(10,4,  10,2, 392, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(9, 3), new BlockadeBoardPosition(9, 2))),
+new BlockadeMove(10,4,  9,5, 384, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 10), new BlockadeBoardPosition(7, 10))),
+new BlockadeMove(10,4,  9,5, 360, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 7), new BlockadeBoardPosition(9, 7))),
+new BlockadeMove(10,4,  9,5, 360, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 8), new BlockadeBoardPosition(9, 8))),
+new BlockadeMove(10,4,  9,5, 360, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 6), new BlockadeBoardPosition(9, 6))),
+new BlockadeMove(10,4,  9,5, 312, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(9, 5), new BlockadeBoardPosition(9, 6))),
+new BlockadeMove(10,4,  10,2, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 10), new BlockadeBoardPosition(7, 10))),
+new BlockadeMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(3, 9), new BlockadeBoardPosition(3, 10))),
+new BlockadeMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(5, 9), new BlockadeBoardPosition(5, 10))),
+new BlockadeMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(5, 9), new BlockadeBoardPosition(5, 8))),
+new BlockadeMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(4, 9), new BlockadeBoardPosition(4, 10))),
+new BlockadeMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(6, 10), new BlockadeBoardPosition(5, 10))),
+new BlockadeMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(6, 9), new BlockadeBoardPosition(5, 9))),
+new BlockadeMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(6, 11), new BlockadeBoardPosition(6, 10))),
+new BlockadeMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 6), new BlockadeBoardPosition(8, 7))),
+new BlockadeMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(9, 5), new BlockadeBoardPosition(10, 5))),
+new BlockadeMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(10, 3), new BlockadeBoardPosition(11, 3))),
+new BlockadeMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(10, 3), new BlockadeBoardPosition(9, 3))),
+new BlockadeMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 3), new BlockadeBoardPosition(8, 2))),
+new BlockadeMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(9, 3), new BlockadeBoardPosition(9, 2))),
+new BlockadeMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(4, 5), new BlockadeBoardPosition(5, 5))),
+new BlockadeMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(4, 5), new BlockadeBoardPosition(3, 5))),
+new BlockadeMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(4, 4), new BlockadeBoardPosition(5, 4))),
+new BlockadeMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(4, 4), new BlockadeBoardPosition(3, 4))),
+new BlockadeMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(4, 7), new BlockadeBoardPosition(5, 7))),
+new BlockadeMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(4, 7), new BlockadeBoardPosition(3, 7))),
+new BlockadeMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(4, 6), new BlockadeBoardPosition(5, 6))),
+new BlockadeMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(4, 6), new BlockadeBoardPosition(3, 6))),
+new BlockadeMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(1, 9), new BlockadeBoardPosition(2, 9))),
+new BlockadeMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(2, 10), new BlockadeBoardPosition(2, 11))),
+new BlockadeMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(1, 10), new BlockadeBoardPosition(1, 11))),
+new BlockadeMove(10,4,  9,5, 248, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 3), new BlockadeBoardPosition(8, 4))),
+new BlockadeMove(10,4,  9,5, 248, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(9, 3), new BlockadeBoardPosition(9, 4))),
+new BlockadeMove(10,4,  9,5, 216, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 10), new BlockadeBoardPosition(9, 10))),
+new BlockadeMove(10,4,  10,2, 200, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(3, 9), new BlockadeBoardPosition(3, 10))),
+new BlockadeMove(10,4,  10,2, 200, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(5, 9), new BlockadeBoardPosition(5, 10))),
+new BlockadeMove(10,4,  10,2, 200, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(5, 9), new BlockadeBoardPosition(5, 8))),
+new BlockadeMove(10,4,  10,2, 200, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(4, 9), new BlockadeBoardPosition(4, 10))),
+new BlockadeMove(10,4,  10,2, 200, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(6, 10), new BlockadeBoardPosition(5, 10))),
+new BlockadeMove(10,4,  10,2, 200, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(6, 9), new BlockadeBoardPosition(5, 9))),
+new BlockadeMove(10,4,  10,2, 200, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(6, 11), new BlockadeBoardPosition(6, 10))),
+new BlockadeMove(10,4,  10,2, 200, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 7), new BlockadeBoardPosition(9, 7))),
+new BlockadeMove(10,4,  10,2, 200, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 8), new BlockadeBoardPosition(9, 8))),
+new BlockadeMove(10,4,  10,2, 200, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 6), new BlockadeBoardPosition(9, 6))),
+new BlockadeMove(10,4,  10,2, 200, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 6), new BlockadeBoardPosition(8, 7))),
+new BlockadeMove(10,4,  10,2, 200, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(9, 5), new BlockadeBoardPosition(10, 5))),
+new BlockadeMove(10,4,  10,2, 200, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(9, 5), new BlockadeBoardPosition(9, 6))),
+new BlockadeMove(10,4,  10,2, 200, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(10, 3), new BlockadeBoardPosition(11, 3))),
+new BlockadeMove(10,4,  10,2, 200, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(10, 3), new BlockadeBoardPosition(9, 3))),
+new BlockadeMove(10,4,  10,2, 200, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(4, 5), new BlockadeBoardPosition(5, 5))),
+new BlockadeMove(10,4,  10,2, 200, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(4, 5), new BlockadeBoardPosition(3, 5))),
+new BlockadeMove(10,4,  10,2, 200, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(4, 4), new BlockadeBoardPosition(5, 4))),
+new BlockadeMove(10,4,  10,2, 200, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(4, 4), new BlockadeBoardPosition(3, 4))),
+new BlockadeMove(10,4,  10,2, 200, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(4, 7), new BlockadeBoardPosition(5, 7))),
+new BlockadeMove(10,4,  10,2, 200, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(4, 7), new BlockadeBoardPosition(3, 7))),
+new BlockadeMove(10,4,  10,2, 200, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(4, 6), new BlockadeBoardPosition(5, 6))),
+new BlockadeMove(10,4,  10,2, 200, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(4, 6), new BlockadeBoardPosition(3, 6))),
+new BlockadeMove(10,4,  10,2, 200, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(1, 9), new BlockadeBoardPosition(2, 9))),
+new BlockadeMove(10,4,  10,2, 200, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(2, 10), new BlockadeBoardPosition(2, 11))),
+new BlockadeMove(10,4,  10,2, 200, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(1, 10), new BlockadeBoardPosition(1, 11))),
+new BlockadeMove(10,4,  9,5, 176, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(3, 8), new BlockadeBoardPosition(3, 9))),
+new BlockadeMove(10,4,  9,5, 176, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(1, 8), new BlockadeBoardPosition(1, 9))),
+new BlockadeMove(7,9,  7,11, 176, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(3, 9), new BlockadeBoardPosition(3, 10))),
+new BlockadeMove(7,9,  7,11, 176, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(5, 9), new BlockadeBoardPosition(5, 10))),
+new BlockadeMove(7,9,  7,11, 176, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(5, 9), new BlockadeBoardPosition(5, 8))),
+new BlockadeMove(7,9,  7,11, 176, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(4, 9), new BlockadeBoardPosition(4, 10))),
+new BlockadeMove(7,9,  7,11, 176, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(6, 10), new BlockadeBoardPosition(7, 10))),
+new BlockadeMove(7,9,  7,11, 176, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(6, 10), new BlockadeBoardPosition(5, 10))),
+new BlockadeMove(7,9,  7,11, 176, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(6, 9), new BlockadeBoardPosition(7, 9))),
+new BlockadeMove(7,9,  7,11, 176, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(6, 9), new BlockadeBoardPosition(5, 9))),
+new BlockadeMove(7,9,  7,11, 176, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(6, 11), new BlockadeBoardPosition(6, 10))),
+new BlockadeMove(7,9,  7,11, 176, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 7), new BlockadeBoardPosition(9, 7))),
+new BlockadeMove(7,9,  7,11, 176, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 8), new BlockadeBoardPosition(9, 8))),
+new BlockadeMove(7,9,  7,11, 176, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 6), new BlockadeBoardPosition(9, 6))),
+new BlockadeMove(7,9,  7,11, 176, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 6), new BlockadeBoardPosition(8, 7))),
+new BlockadeMove(7,9,  7,11, 176, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(9, 5), new BlockadeBoardPosition(10, 5))),
+new BlockadeMove(7,9,  7,11, 176, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(9, 5), new BlockadeBoardPosition(9, 6))),
+new BlockadeMove(7,9,  7,11, 176, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(10, 3), new BlockadeBoardPosition(11, 3))),
+new BlockadeMove(7,9,  7,11, 176, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(10, 3), new BlockadeBoardPosition(9, 3))),
+new BlockadeMove(7,9,  7,11, 176, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 3), new BlockadeBoardPosition(8, 2))),
+new BlockadeMove(7,9,  7,11, 176, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(9, 3), new BlockadeBoardPosition(9, 2))),
+new BlockadeMove(7,9,  7,11, 176, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(4, 5), new BlockadeBoardPosition(5, 5))),
+new BlockadeMove(7,9,  7,11, 176, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(4, 5), new BlockadeBoardPosition(3, 5))),
+new BlockadeMove(7,9,  7,11, 176, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(4, 4), new BlockadeBoardPosition(5, 4))),
+new BlockadeMove(7,9,  7,11, 176, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(4, 4), new BlockadeBoardPosition(3, 4))),
+new BlockadeMove(7,9,  7,11, 176, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(4, 7), new BlockadeBoardPosition(5, 7))),
+new BlockadeMove(7,9,  7,11, 176, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(4, 7), new BlockadeBoardPosition(3, 7))),
+new BlockadeMove(7,9,  7,11, 176, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(4, 6), new BlockadeBoardPosition(5, 6))),
+new BlockadeMove(7,9,  7,11, 176, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(4, 6), new BlockadeBoardPosition(3, 6))),
+new BlockadeMove(7,9,  7,11, 176, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(1, 9), new BlockadeBoardPosition(2, 9))),
+new BlockadeMove(7,9,  7,11, 176, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(2, 10), new BlockadeBoardPosition(2, 11))),
+new BlockadeMove(7,9,  7,11, 176, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(1, 10), new BlockadeBoardPosition(1, 11))),
+new BlockadeMove(10,4,  10,2, 168, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 3), new BlockadeBoardPosition(8, 4))),
+new BlockadeMove(10,4,  10,2, 168, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(9, 3), new BlockadeBoardPosition(9, 4))),
+new BlockadeMove(7,9,  7,11, 144, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 10), new BlockadeBoardPosition(7, 10))),
+new BlockadeMove(7,9,  7,11, 144, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 3), new BlockadeBoardPosition(8, 4))),
+new BlockadeMove(7,9,  7,11, 144, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(9, 3), new BlockadeBoardPosition(9, 4))),
+new BlockadeMove(10,4,  10,2, 136, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 10), new BlockadeBoardPosition(9, 10))),
+new BlockadeMove(7,9,  7,11, 112, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 10), new BlockadeBoardPosition(9, 10))),
+new BlockadeMove(10,4,  10,2, 96, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(3, 8), new BlockadeBoardPosition(3, 9))),
+new BlockadeMove(10,4,  10,2, 96, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(1, 8), new BlockadeBoardPosition(1, 9))),
+new BlockadeMove(10,4,  9,5, 96, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(2, 10), new BlockadeBoardPosition(2, 9))),
+new BlockadeMove(10,4,  9,5, 96, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(1, 10), new BlockadeBoardPosition(1, 9))),
+new BlockadeMove(10,4,  9,5, 72, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(3, 8), new BlockadeBoardPosition(3, 7))),
+new BlockadeMove(10,4,  9,5, 72, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(1, 8), new BlockadeBoardPosition(1, 7))),
+new BlockadeMove(10,4,  9,5, 72, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(2, 8), new BlockadeBoardPosition(2, 7))),
+new BlockadeMove(7,9,  7,11, 72, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(3, 8), new BlockadeBoardPosition(3, 9))),
+new BlockadeMove(7,9,  7,11, 72, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(1, 8), new BlockadeBoardPosition(1, 9))),
+new BlockadeMove(10,4,  10,2, 16, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(2, 10), new BlockadeBoardPosition(2, 9))),
+new BlockadeMove(10,4,  10,2, 16, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(1, 10), new BlockadeBoardPosition(1, 9))),
+new BlockadeMove(10,4,  10,2, -8, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(3, 8), new BlockadeBoardPosition(3, 7))),
+new BlockadeMove(10,4,  10,2, -8, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(1, 8), new BlockadeBoardPosition(1, 7))),
+new BlockadeMove(10,4,  10,2, -8, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(2, 8), new BlockadeBoardPosition(2, 7))),
+new BlockadeMove(7,9,  7,11, -8, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(2, 10), new BlockadeBoardPosition(2, 9))),
+new BlockadeMove(7,9,  7,11, -8, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(1, 10), new BlockadeBoardPosition(1, 9))),
+new BlockadeMove(7,9,  7,11, -32, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(3, 8), new BlockadeBoardPosition(3, 7))),
+new BlockadeMove(7,9,  7,11, -32, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(1, 8), new BlockadeBoardPosition(1, 7))),
+new BlockadeMove(7,9,  7,11, -32, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(2, 8), new BlockadeBoardPosition(2, 7))),
+helper = com.becker.game.twoplayer.blockade.BlockadeHelper@3e5646a5
+generated moves for middleGameP1Turn were:
+new BlockadeMove(10,4,  9,5, 528, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(6, 10), new BlockadeBoardPosition(7, 10))),
+new BlockadeMove(10,4,  9,5, 528, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(6, 9), new BlockadeBoardPosition(7, 9))),
+new BlockadeMove(10,4,  10,2, 424, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(6, 10), new BlockadeBoardPosition(7, 10))),
+new BlockadeMove(10,4,  10,2, 424, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(6, 9), new BlockadeBoardPosition(7, 9))),
+new BlockadeMove(10,4,  10,2, 392, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 3), new BlockadeBoardPosition(8, 2))),
+new BlockadeMove(10,4,  10,2, 392, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(9, 3), new BlockadeBoardPosition(9, 2))),
+new BlockadeMove(10,4,  9,5, 384, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 10), new BlockadeBoardPosition(7, 10))),
+new BlockadeMove(10,4,  9,5, 360, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 7), new BlockadeBoardPosition(9, 7))),
+new BlockadeMove(10,4,  9,5, 360, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 8), new BlockadeBoardPosition(9, 8))),
+new BlockadeMove(10,4,  9,5, 360, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 6), new BlockadeBoardPosition(9, 6))),
+new BlockadeMove(10,4,  9,5, 312, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(9, 5), new BlockadeBoardPosition(9, 6))),
+new BlockadeMove(10,4,  10,2, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 10), new BlockadeBoardPosition(7, 10))),
+new BlockadeMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(3, 9), new BlockadeBoardPosition(3, 10))),
+new BlockadeMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(5, 9), new BlockadeBoardPosition(5, 10))),
+new BlockadeMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(5, 9), new BlockadeBoardPosition(5, 8))),
+new BlockadeMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(4, 9), new BlockadeBoardPosition(4, 10))),
+new BlockadeMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(6, 10), new BlockadeBoardPosition(5, 10))),
+new BlockadeMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(6, 9), new BlockadeBoardPosition(5, 9))),
+new BlockadeMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(6, 11), new BlockadeBoardPosition(6, 10))),
+new BlockadeMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 6), new BlockadeBoardPosition(8, 7))),
+new BlockadeMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(9, 5), new BlockadeBoardPosition(10, 5))),
+new BlockadeMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(10, 3), new BlockadeBoardPosition(11, 3))),
+new BlockadeMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(10, 3), new BlockadeBoardPosition(9, 3))),
+new BlockadeMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(8, 3), new BlockadeBoardPosition(8, 2))),
+new BlockadeMove(10,4,  9,5, 280, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(9, 3), new BlockadeBoardPosition(9, 2))),
+helper = com.becker.game.twoplayer.blockade.BlockadeHelper@69912a56
+helper = com.becker.game.twoplayer.blockade.BlockadeHelper@53eacdc4
+generated moves for endGameP1Turn were:
+new BlockadeMove(13,9,  13,7, -1568, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(3, 1), new BlockadeBoardPosition(4, 1))),
+new BlockadeMove(13,9,  13,7, -1568, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(1, 7), new BlockadeBoardPosition(1, 8))),
+new BlockadeMove(13,9,  13,7, -1568, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(12, 4), new BlockadeBoardPosition(12, 5))),
+new BlockadeMove(13,9,  13,7, -1568, new GamePiece(false), new BlockadeWall(new BlockadeBoardPosition(13, 4), new BlockadeBoardPosition(12, 4))),
+helper = com.becker.game.twoplayer.blockade.BlockadeHelper@4e42751f
+generated moves for middleGameP2Turn were:
+new BlockadeMove(3,10,  1,10, 712, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(13, 9), new BlockadeBoardPosition(14, 9))),
+new BlockadeMove(3,10,  1,10, 712, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(11, 11), new BlockadeBoardPosition(11, 10))),
+new BlockadeMove(3,10,  1,10, 712, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(12, 11), new BlockadeBoardPosition(12, 10))),
+new BlockadeMove(3,10,  1,10, 712, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(9, 11), new BlockadeBoardPosition(9, 10))),
+new BlockadeMove(3,10,  1,10, 712, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(10, 11), new BlockadeBoardPosition(10, 10))),
+new BlockadeMove(3,10,  1,10, 712, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 11), new BlockadeBoardPosition(8, 10))),
+new BlockadeMove(8,3,  10,3, 560, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(13, 9), new BlockadeBoardPosition(14, 9))),
+new BlockadeMove(8,3,  10,3, 560, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(11, 11), new BlockadeBoardPosition(11, 10))),
+new BlockadeMove(8,3,  10,3, 560, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(12, 11), new BlockadeBoardPosition(12, 10))),
+new BlockadeMove(8,3,  10,3, 560, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(9, 11), new BlockadeBoardPosition(9, 10))),
+new BlockadeMove(8,3,  10,3, 560, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(10, 11), new BlockadeBoardPosition(10, 10))),
+new BlockadeMove(8,3,  10,3, 560, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 11), new BlockadeBoardPosition(8, 10))),
+new BlockadeMove(3,10,  1,10, 288, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(12, 9), new BlockadeBoardPosition(12, 8))),
+new BlockadeMove(3,10,  1,10, 288, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(11, 9), new BlockadeBoardPosition(11, 8))),
+new BlockadeMove(3,10,  1,10, 216, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(13, 1), new BlockadeBoardPosition(14, 1))),
+new BlockadeMove(3,10,  1,10, 216, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(12, 1), new BlockadeBoardPosition(12, 2))),
+new BlockadeMove(3,10,  1,10, 216, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 1), new BlockadeBoardPosition(7, 1))),
+new BlockadeMove(3,10,  1,10, 216, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 2), new BlockadeBoardPosition(8, 1))),
+new BlockadeMove(3,10,  1,10, 184, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 10), new BlockadeBoardPosition(8, 9))),
+new BlockadeMove(3,10,  1,10, 184, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(12, 9), new BlockadeBoardPosition(12, 10))),
+new BlockadeMove(3,10,  1,10, 152, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 8), new BlockadeBoardPosition(9, 8))),
+new BlockadeMove(3,10,  1,10, 152, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 6), new BlockadeBoardPosition(9, 6))),
+new BlockadeMove(3,10,  1,10, 152, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 6), new BlockadeBoardPosition(7, 6))),
+new BlockadeMove(3,10,  1,10, 152, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 7), new BlockadeBoardPosition(9, 7))),
+new BlockadeMove(3,10,  1,10, 152, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 5), new BlockadeBoardPosition(9, 5))),
+new BlockadeMove(3,10,  1,10, 152, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 5), new BlockadeBoardPosition(8, 6))),
+new BlockadeMove(3,10,  1,10, 152, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(9, 4), new BlockadeBoardPosition(9, 5))),
+new BlockadeMove(3,10,  1,10, 152, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(11, 3), new BlockadeBoardPosition(12, 3))),
+new BlockadeMove(3,10,  1,10, 152, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(11, 2), new BlockadeBoardPosition(12, 2))),
+new BlockadeMove(3,10,  1,10, 152, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(11, 2), new BlockadeBoardPosition(11, 3))),
+new BlockadeMove(3,10,  1,10, 152, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(9, 2), new BlockadeBoardPosition(9, 3))),
+new BlockadeMove(3,10,  1,10, 152, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 2), new BlockadeBoardPosition(8, 3))),
+new BlockadeMove(3,10,  1,10, 152, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(10, 3), new BlockadeBoardPosition(11, 3))),
+new BlockadeMove(3,10,  1,10, 152, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(10, 3), new BlockadeBoardPosition(9, 3))),
+new BlockadeMove(3,10,  1,10, 152, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(10, 2), new BlockadeBoardPosition(9, 2))),
+new BlockadeMove(3,10,  1,10, 152, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(11, 4), new BlockadeBoardPosition(12, 4))),
+new BlockadeMove(3,10,  1,10, 152, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(12, 5), new BlockadeBoardPosition(12, 6))),
+new BlockadeMove(3,10,  1,10, 152, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(12, 5), new BlockadeBoardPosition(12, 4))),
+new BlockadeMove(3,10,  1,10, 152, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(11, 5), new BlockadeBoardPosition(11, 6))),
+new BlockadeMove(3,10,  1,10, 152, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(11, 5), new BlockadeBoardPosition(11, 4))),
+new BlockadeMove(3,10,  1,10, 152, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(13, 6), new BlockadeBoardPosition(14, 6))),
+new BlockadeMove(3,10,  1,10, 152, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(13, 6), new BlockadeBoardPosition(12, 6))),
+new BlockadeMove(3,10,  1,10, 152, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(13, 5), new BlockadeBoardPosition(14, 5))),
+new BlockadeMove(3,10,  1,10, 152, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(13, 5), new BlockadeBoardPosition(12, 5))),
+new BlockadeMove(3,10,  1,10, 152, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(13, 8), new BlockadeBoardPosition(14, 8))),
+new BlockadeMove(3,10,  1,10, 152, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(13, 8), new BlockadeBoardPosition(12, 8))),
+new BlockadeMove(3,10,  1,10, 152, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(13, 7), new BlockadeBoardPosition(14, 7))),
+new BlockadeMove(3,10,  1,10, 152, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(13, 7), new BlockadeBoardPosition(12, 7))),
+new BlockadeMove(3,10,  1,10, 152, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(11, 8), new BlockadeBoardPosition(12, 8))),
+new BlockadeMove(3,10,  1,10, 152, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(13, 10), new BlockadeBoardPosition(14, 10))),
+new BlockadeMove(3,10,  1,10, 152, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(13, 10), new BlockadeBoardPosition(12, 10))),
+new BlockadeMove(8,3,  10,3, 136, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(12, 9), new BlockadeBoardPosition(12, 8))),
+new BlockadeMove(8,3,  10,3, 136, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(11, 9), new BlockadeBoardPosition(11, 8))),
+new BlockadeMove(8,3,  10,3, 64, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(13, 1), new BlockadeBoardPosition(14, 1))),
+new BlockadeMove(8,3,  10,3, 64, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(12, 1), new BlockadeBoardPosition(12, 2))),
+new BlockadeMove(8,3,  10,3, 64, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 1), new BlockadeBoardPosition(7, 1))),
+new BlockadeMove(8,3,  10,3, 64, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 2), new BlockadeBoardPosition(8, 1))),
+new BlockadeMove(8,3,  10,3, 32, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 10), new BlockadeBoardPosition(8, 9))),
+new BlockadeMove(8,3,  10,3, 32, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(12, 9), new BlockadeBoardPosition(12, 10))),
+new BlockadeMove(3,10,  1,10, 24, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(10, 4), new BlockadeBoardPosition(11, 4))),
+new BlockadeMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 8), new BlockadeBoardPosition(9, 8))),
+new BlockadeMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 6), new BlockadeBoardPosition(9, 6))),
+new BlockadeMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 6), new BlockadeBoardPosition(7, 6))),
+new BlockadeMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 7), new BlockadeBoardPosition(9, 7))),
+new BlockadeMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 5), new BlockadeBoardPosition(9, 5))),
+new BlockadeMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 5), new BlockadeBoardPosition(8, 6))),
+new BlockadeMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(9, 4), new BlockadeBoardPosition(9, 5))),
+new BlockadeMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(11, 3), new BlockadeBoardPosition(12, 3))),
+new BlockadeMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(11, 2), new BlockadeBoardPosition(12, 2))),
+new BlockadeMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(11, 2), new BlockadeBoardPosition(11, 3))),
+new BlockadeMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(9, 2), new BlockadeBoardPosition(9, 3))),
+new BlockadeMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 2), new BlockadeBoardPosition(8, 3))),
+new BlockadeMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(10, 2), new BlockadeBoardPosition(9, 2))),
+new BlockadeMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(11, 4), new BlockadeBoardPosition(12, 4))),
+new BlockadeMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(12, 5), new BlockadeBoardPosition(12, 6))),
+new BlockadeMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(12, 5), new BlockadeBoardPosition(12, 4))),
+new BlockadeMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(11, 5), new BlockadeBoardPosition(11, 6))),
+new BlockadeMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(11, 5), new BlockadeBoardPosition(11, 4))),
+new BlockadeMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(13, 6), new BlockadeBoardPosition(14, 6))),
+new BlockadeMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(13, 6), new BlockadeBoardPosition(12, 6))),
+new BlockadeMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(13, 5), new BlockadeBoardPosition(14, 5))),
+new BlockadeMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(13, 5), new BlockadeBoardPosition(12, 5))),
+new BlockadeMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(13, 8), new BlockadeBoardPosition(14, 8))),
+new BlockadeMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(13, 8), new BlockadeBoardPosition(12, 8))),
+new BlockadeMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(13, 7), new BlockadeBoardPosition(14, 7))),
+new BlockadeMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(13, 7), new BlockadeBoardPosition(12, 7))),
+new BlockadeMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(11, 8), new BlockadeBoardPosition(12, 8))),
+new BlockadeMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(13, 10), new BlockadeBoardPosition(14, 10))),
+new BlockadeMove(8,3,  10,3, 0, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(13, 10), new BlockadeBoardPosition(12, 10))),
+new BlockadeMove(8,3,  10,3, -32, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(10, 3), new BlockadeBoardPosition(11, 3))),
+new BlockadeMove(8,3,  10,3, -64, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(10, 3), new BlockadeBoardPosition(9, 3))),
+new BlockadeMove(8,3,  10,3, -192, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(10, 4), new BlockadeBoardPosition(11, 4))),
+helper = com.becker.game.twoplayer.blockade.BlockadeHelper@87afebf
+generated moves for middleGameP2Turn were:
+new BlockadeMove(3,10,  1,10, 712, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(13, 9), new BlockadeBoardPosition(14, 9))),
+new BlockadeMove(3,10,  1,10, 712, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(11, 11), new BlockadeBoardPosition(11, 10))),
+new BlockadeMove(3,10,  1,10, 712, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(12, 11), new BlockadeBoardPosition(12, 10))),
+new BlockadeMove(3,10,  1,10, 712, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(9, 11), new BlockadeBoardPosition(9, 10))),
+new BlockadeMove(3,10,  1,10, 712, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(10, 11), new BlockadeBoardPosition(10, 10))),
+new BlockadeMove(3,10,  1,10, 712, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 11), new BlockadeBoardPosition(8, 10))),
+new BlockadeMove(8,3,  10,3, 560, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(13, 9), new BlockadeBoardPosition(14, 9))),
+new BlockadeMove(8,3,  10,3, 560, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(11, 11), new BlockadeBoardPosition(11, 10))),
+new BlockadeMove(8,3,  10,3, 560, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(12, 11), new BlockadeBoardPosition(12, 10))),
+new BlockadeMove(8,3,  10,3, 560, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(9, 11), new BlockadeBoardPosition(9, 10))),
+new BlockadeMove(8,3,  10,3, 560, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(10, 11), new BlockadeBoardPosition(10, 10))),
+new BlockadeMove(8,3,  10,3, 560, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 11), new BlockadeBoardPosition(8, 10))),
+new BlockadeMove(3,10,  1,10, 288, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(12, 9), new BlockadeBoardPosition(12, 8))),
+new BlockadeMove(3,10,  1,10, 288, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(11, 9), new BlockadeBoardPosition(11, 8))),
+new BlockadeMove(3,10,  1,10, 216, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(13, 1), new BlockadeBoardPosition(14, 1))),
+new BlockadeMove(3,10,  1,10, 216, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(12, 1), new BlockadeBoardPosition(12, 2))),
+new BlockadeMove(3,10,  1,10, 216, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 1), new BlockadeBoardPosition(7, 1))),
+new BlockadeMove(3,10,  1,10, 216, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 2), new BlockadeBoardPosition(8, 1))),
+new BlockadeMove(3,10,  1,10, 184, new GamePiece(true), new BlockadeWall(new BlockadeBoardPosition(8, 10), new BlockadeBoardPosition(8, 9))),
+helper = com.becker.game.twoplayer.blockade.BlockadeHelper@28db4ccf
+helper = com.becker.game.twoplayer.blockade.BlockadeHelper@4823d4c8
+helper = com.becker.game.twoplayer.blockade.BlockadeHelper@170c8785
+helper = com.becker.game.twoplayer.blockade.BlockadeHelper@25b5dab5
+helper = com.becker.game.twoplayer.blockade.BlockadeHelper@5c03bf22
+helper = com.becker.game.twoplayer.blockade.BlockadeHelper@6b5b1b88
+helper = com.becker.game.twoplayer.blockade.BlockadeHelper@46d0cc3a
+helper = com.becker.game.twoplayer.blockade.BlockadeHelper@5aa205d2
+helper = com.becker.game.twoplayer.blockade.BlockadeHelper@59fd01f7
+helper = com.becker.game.twoplayer.blockade.BlockadeHelper@29f10c35
+first moves=[Player 1 val:184 inhrtd:0 piece: X(row=9, colum=8) wall: H (10, 8)southBlocked  (10, 7)southBlocked  (row=11, colum=8)->(row=9, colum=8), Player 1 val:184 inhrtd:0 piece: X(row=9, colum=8) wall: H (10, 8)southBlocked  (10, 9)southBlocked  (row=11, colum=8)->(row=9, colum=8), Player 1 val:184 inhrtd:0 piece: X(row=9, colum=8) wall: H (9, 8)southBlocked  (9, 7)southBlocked  (row=11, colum=8)->(row=9, colum=8), Player 1 val:184 inhrtd:0 piece: X(row=9, colum=8) wall: H (9, 8)southBlocked  (9, 9)southBlocked  (row=11, colum=8)->(row=9, colum=8), Player 1 val:184 inhrtd:0 piece: X(row=9, colum=4) wall: H (10, 4)southBlocked  (10, 3)southBlocked  (row=11, colum=4)->(row=9, colum=4), Player 1 val:184 inhrtd:0 piece: X(row=9, colum=4) wall: H (10, 4)southBlocked  (10, 5)southBlocked  (row=11, colum=4)->(row=9, colum=4), Player 1 val:184 inhrtd:0 piece: X(row=9, colum=4) wall: H (9, 4)southBlocked  (9, 3)southBlocked  (row=11, colum=4)->(row=9, colum=4), Player 1 val:184 inhrtd:0 piece: X(row=9, colum=4) wall: H (9, 4)southBlocked  (9, 5)southBlocked  (row=11, colum=4)->(row=9, colum=4), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=8) wall: V (11, 6)eastBlocked  (12, 6)eastBlocked  (row=11, colum=8)->(row=9, colum=8), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=8) wall: V (11, 6)eastBlocked  (10, 6)eastBlocked  (row=11, colum=8)->(row=9, colum=8), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=8) wall: V (11, 7)eastBlocked  (12, 7)eastBlocked  (row=11, colum=8)->(row=9, colum=8), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=8) wall: V (11, 7)eastBlocked  (10, 7)eastBlocked  (row=11, colum=8)->(row=9, colum=8), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=8) wall: V X (11, 4)eastBlocked  (12, 4)eastBlocked  (row=11, colum=8)->(row=9, colum=8), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=8) wall: V X (11, 4)eastBlocked  (10, 4)eastBlocked  (row=11, colum=8)->(row=9, colum=8), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=8) wall: V (11, 5)eastBlocked  (12, 5)eastBlocked  (row=11, colum=8)->(row=9, colum=8), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=8) wall: V (11, 5)eastBlocked  (10, 5)eastBlocked  (row=11, colum=8)->(row=9, colum=8), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=8) wall: H (10, 4)southBlocked  (10, 3)southBlocked  (row=11, colum=8)->(row=9, colum=8), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=8) wall: H (10, 4)southBlocked  (10, 5)southBlocked  (row=11, colum=8)->(row=9, colum=8), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=8) wall: H (8, 4)southBlocked  (8, 3)southBlocked  (row=11, colum=8)->(row=9, colum=8), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=8) wall: H (8, 4)southBlocked  (8, 5)southBlocked  (row=11, colum=8)->(row=9, colum=8), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=8) wall: H (9, 4)southBlocked  (9, 3)southBlocked  (row=11, colum=8)->(row=9, colum=8), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=8) wall: H (9, 4)southBlocked  (9, 5)southBlocked  (row=11, colum=8)->(row=9, colum=8), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=8) wall: H (6, 4)southBlocked  (6, 3)southBlocked  (row=11, colum=8)->(row=9, colum=8), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=8) wall: H (6, 4)southBlocked  (6, 5)southBlocked  (row=11, colum=8)->(row=9, colum=8), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=8) wall: H (7, 4)southBlocked  (7, 3)southBlocked  (row=11, colum=8)->(row=9, colum=8), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=8) wall: H (7, 4)southBlocked  (7, 5)southBlocked  (row=11, colum=8)->(row=9, colum=8), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=8) wall: H O (4, 4)southBlocked  (4, 3)southBlocked  (row=11, colum=8)->(row=9, colum=8), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=8) wall: H O (4, 4)southBlocked  (4, 5)southBlocked  (row=11, colum=8)->(row=9, colum=8), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=8) wall: H (5, 4)southBlocked  (5, 3)southBlocked  (row=11, colum=8)->(row=9, colum=8), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=8) wall: H (5, 4)southBlocked  (5, 5)southBlocked  (row=11, colum=8)->(row=9, colum=8), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=4) wall: H (10, 8)southBlocked  (10, 7)southBlocked  (row=11, colum=4)->(row=9, colum=4), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=4) wall: H (10, 8)southBlocked  (10, 9)southBlocked  (row=11, colum=4)->(row=9, colum=4), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=4) wall: H (8, 8)southBlocked  (8, 7)southBlocked  (row=11, colum=4)->(row=9, colum=4), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=4) wall: H (8, 8)southBlocked  (8, 9)southBlocked  (row=11, colum=4)->(row=9, colum=4), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=4) wall: H (9, 8)southBlocked  (9, 7)southBlocked  (row=11, colum=4)->(row=9, colum=4), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=4) wall: H (9, 8)southBlocked  (9, 9)southBlocked  (row=11, colum=4)->(row=9, colum=4), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=4) wall: H (6, 8)southBlocked  (6, 7)southBlocked  (row=11, colum=4)->(row=9, colum=4), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=4) wall: H (6, 8)southBlocked  (6, 9)southBlocked  (row=11, colum=4)->(row=9, colum=4), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=4) wall: H (7, 8)southBlocked  (7, 7)southBlocked  (row=11, colum=4)->(row=9, colum=4), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=4) wall: H (7, 8)southBlocked  (7, 9)southBlocked  (row=11, colum=4)->(row=9, colum=4), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=4) wall: H O (4, 8)southBlocked  (4, 7)southBlocked  (row=11, colum=4)->(row=9, colum=4), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=4) wall: H O (4, 8)southBlocked  (4, 9)southBlocked  (row=11, colum=4)->(row=9, colum=4), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=4) wall: H (5, 8)southBlocked  (5, 7)southBlocked  (row=11, colum=4)->(row=9, colum=4), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=4) wall: H (5, 8)southBlocked  (5, 9)southBlocked  (row=11, colum=4)->(row=9, colum=4), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=4) wall: V (11, 6)eastBlocked  (12, 6)eastBlocked  (row=11, colum=4)->(row=9, colum=4), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=4) wall: V (11, 6)eastBlocked  (10, 6)eastBlocked  (row=11, colum=4)->(row=9, colum=4), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=4) wall: V (11, 7)eastBlocked  (12, 7)eastBlocked  (row=11, colum=4)->(row=9, colum=4), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=4) wall: V (11, 7)eastBlocked  (10, 7)eastBlocked  (row=11, colum=4)->(row=9, colum=4), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=4) wall: V X (11, 4)eastBlocked  (12, 4)eastBlocked  (row=11, colum=4)->(row=9, colum=4), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=4) wall: V X (11, 4)eastBlocked  (10, 4)eastBlocked  (row=11, colum=4)->(row=9, colum=4), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=4) wall: V (11, 5)eastBlocked  (12, 5)eastBlocked  (row=11, colum=4)->(row=9, colum=4), Player 1 val:104 inhrtd:0 piece: X(row=9, colum=4) wall: V (11, 5)eastBlocked  (10, 5)eastBlocked  (row=11, colum=4)->(row=9, colum=4), Player 1 val:80 inhrtd:0 piece: X(row=10, colum=5) wall: H (10, 4)southBlocked  (10, 3)southBlocked  (row=11, colum=4)->(row=10, colum=5), Player 1 val:80 inhrtd:0 piece: X(row=10, colum=5) wall: H (10, 4)southBlocked  (10, 5)southBlocked  (row=11, colum=4)->(row=10, colum=5), Player 1 val:80 inhrtd:0 piece: X(row=10, colum=5) wall: H (8, 4)southBlocked  (8, 3)southBlocked  (row=11, colum=4)->(row=10, colum=5), Player 1 val:80 inhrtd:0 piece: X(row=10, colum=5) wall: H (9, 4)southBlocked  (9, 3)southBlocked  (row=11, colum=4)->(row=10, colum=5), Player 1 val:80 inhrtd:0 piece: X(row=10, colum=5) wall: H (6, 4)southBlocked  (6, 3)southBlocked  (row=11, colum=4)->(row=10, colum=5), Player 1 val:80 inhrtd:0 piece: X(row=10, colum=5) wall: H (7, 4)southBlocked  (7, 3)southBlocked  (row=11, colum=4)->(row=10, colum=5), Player 1 val:80 inhrtd:0 piece: X(row=10, colum=5) wall: H O (4, 4)southBlocked  (4, 3)southBlocked  (row=11, colum=4)->(row=10, colum=5), Player 1 val:80 inhrtd:0 piece: X(row=10, colum=5) wall: H (5, 4)southBlocked  (5, 3)southBlocked  (row=11, colum=4)->(row=10, colum=5), Player 1 val:80 inhrtd:0 piece: X(row=9, colum=8) wall: H (8, 8)southBlocked  (8, 7)southBlocked  (row=11, colum=8)->(row=9, colum=8), Player 1 val:80 inhrtd:0 piece: X(row=9, colum=8) wall: H (8, 8)southBlocked  (8, 9)southBlocked  (row=11, colum=8)->(row=9, colum=8), Player 1 val:80 inhrtd:0 piece: X(row=9, colum=8) wall: H (6, 8)southBlocked  (6, 7)southBlocked  (row=11, colum=8)->(row=9, colum=8), Player 1 val:80 inhrtd:0 piece: X(row=9, colum=8) wall: H (6, 8)southBlocked  (6, 9)southBlocked  (row=11, colum=8)->(row=9, colum=8), Player 1 val:80 inhrtd:0 piece: X(row=9, colum=8) wall: H (7, 8)southBlocked  (7, 7)southBlocked  (row=11, colum=8)->(row=9, colum=8), Player 1 val:80 inhrtd:0 piece: X(row=9, colum=8) wall: H (7, 8)southBlocked  (7, 9)southBlocked  (row=11, colum=8)->(row=9, colum=8), Player 1 val:80 inhrtd:0 piece: X(row=9, colum=8) wall: H O (4, 8)southBlocked  (4, 7)southBlocked  (row=11, colum=8)->(row=9, colum=8), Player 1 val:80 inhrtd:0 piece: X(row=9, colum=8) wall: H O (4, 8)southBlocked  (4, 9)southBlocked  (row=11, colum=8)->(row=9, colum=8), Player 1 val:80 inhrtd:0 piece: X(row=9, colum=8) wall: H (5, 8)southBlocked  (5, 7)southBlocked  (row=11, colum=8)->(row=9, colum=8), Player 1 val:80 inhrtd:0 piece: X(row=9, colum=8) wall: H (5, 8)southBlocked  (5, 9)southBlocked  (row=11, colum=8)->(row=9, colum=8), Player 1 val:80 inhrtd:0 piece: X(row=9, colum=4) wall: H (8, 4)southBlocked  (8, 3)southBlocked  (row=11, colum=4)->(row=9, colum=4), Player 1 val:80 inhrtd:0 piece: X(row=9, colum=4) wall: H (8, 4)southBlocked  (8, 5)southBlocked  (row=11, colum=4)->(row=9, colum=4), Player 1 val:80 inhrtd:0 piece: X(row=9, colum=4) wall: H (6, 4)southBlocked  (6, 3)southBlocked  (row=11, colum=4)->(row=9, colum=4), Player 1 val:80 inhrtd:0 piece: X(row=9, colum=4) wall: H (6, 4)southBlocked  (6, 5)southBlocked  (row=11, colum=4)->(row=9, colum=4), Player 1 val:80 inhrtd:0 piece: X(row=9, colum=4) wall: H (7, 4)southBlocked  (7, 3)southBlocked  (row=11, colum=4)->(row=9, colum=4), Player 1 val:80 inhrtd:0 piece: X(row=9, colum=4) wall: H (7, 4)southBlocked  (7, 5)southBlocked  (row=11, colum=4)->(row=9, colum=4), Player 1 val:80 inhrtd:0 piece: X(row=9, colum=4) wall: H O (4, 4)southBlocked  (4, 3)southBlocked  (row=11, colum=4)->(row=9, colum=4), Player 1 val:80 inhrtd:0 piece: X(row=9, colum=4) wall: H O (4, 4)southBlocked  (4, 5)southBlocked  (row=11, colum=4)->(row=9, colum=4), Player 1 val:80 inhrtd:0 piece: X(row=9, colum=4) wall: H (5, 4)southBlocked  (5, 3)southBlocked  (row=11, colum=4)->(row=9, colum=4), Player 1 val:80 inhrtd:0 piece: X(row=9, colum=4) wall: H (5, 4)southBlocked  (5, 5)southBlocked  (row=11, colum=4)->(row=9, colum=4), Player 1 val:0 inhrtd:0 piece: X(row=11, colum=6) wall: H (10, 8)southBlocked  (10, 7)southBlocked  (row=11, colum=8)->(row=11, colum=6), Player 1 val:0 inhrtd:0 piece: X(row=11, colum=6) wall: H (10, 8)southBlocked  (10, 9)southBlocked  (row=11, colum=8)->(row=11, colum=6), Player 1 val:0 inhrtd:0 piece: X(row=11, colum=6) wall: H (8, 8)southBlocked  (8, 7)southBlocked  (row=11, colum=8)->(row=11, colum=6), Player 1 val:0 inhrtd:0 piece: X(row=11, colum=6) wall: H (8, 8)southBlocked  (8, 9)southBlocked  (row=11, colum=8)->(row=11, colum=6), Player 1 val:0 inhrtd:0 piece: X(row=11, colum=6) wall: H (9, 8)southBlocked  (9, 7)southBlocked  (row=11, colum=8)->(row=11, colum=6), Player 1 val:0 inhrtd:0 piece: X(row=11, colum=6) wall: H (9, 8)southBlocked  (9, 9)southBlocked  (row=11, colum=8)->(row=11, colum=6), Player 1 val:0 inhrtd:0 piece: X(row=11, colum=6) wall: H (6, 8)southBlocked  (6, 7)southBlocked  (row=11, colum=8)->(row=11, colum=6), Player 1 val:0 inhrtd:0 piece: X(row=11, colum=6) wall: H (6, 8)southBlocked  (6, 9)southBlocked  (row=11, colum=8)->(row=11, colum=6), Player 1 val:0 inhrtd:0 piece: X(row=11, colum=6) wall: H (7, 8)southBlocked  (7, 7)southBlocked  (row=11, colum=8)->(row=11, colum=6), Player 1 val:0 inhrtd:0 piece: X(row=11, colum=6) wall: H (7, 8)southBlocked  (7, 9)southBlocked  (row=11, colum=8)->(row=11, colum=6), Player 1 val:0 inhrtd:0 piece: X(row=11, colum=6) wall: H O (4, 8)southBlocked  (4, 7)southBlocked  (row=11, colum=8)->(row=11, colum=6), Player 1 val:0 inhrtd:0 piece: X(row=11, colum=6) wall: H O (4, 8)southBlocked  (4, 9)southBlocked  (row=11, colum=8)->(row=11, colum=6), Player 1 val:0 inhrtd:0 piece: X(row=11, colum=6) wall: H (5, 8)southBlocked  (5, 7)southBlocked  (row=11, colum=8)->(row=11, colum=6), Player 1 val:0 inhrtd:0 piece: X(row=11, colum=6) wall: H (5, 8)southBlocked  (5, 9)southBlocked  (row=11, colum=8)->(row=11, colum=6), Player 1 val:0 inhrtd:0 piece: X(row=10, colum=5) wall: H (10, 8)southBlocked  (10, 7)southBlocked  (row=11, colum=4)->(row=10, colum=5), Player 1 val:0 inhrtd:0 piece: X(row=10, colum=5) wall: H (10, 8)southBlocked  (10, 9)southBlocked  (row=11, colum=4)->(row=10, colum=5), Player 1 val:0 inhrtd:0 piece: X(row=10, colum=5) wall: H (8, 8)southBlocked  (8, 7)southBlocked  (row=11, colum=4)->(row=10, colum=5), Player 1 val:0 inhrtd:0 piece: X(row=10, colum=5) wall: H (8, 8)southBlocked  (8, 9)southBlocked  (row=11, colum=4)->(row=10, colum=5), Player 1 val:0 inhrtd:0 piece: X(row=10, colum=5) wall: H (9, 8)southBlocked  (9, 7)southBlocked  (row=11, colum=4)->(row=10, colum=5), Player 1 val:0 inhrtd:0 piece: X(row=10, colum=5) wall: H (9, 8)southBlocked  (9, 9)southBlocked  (row=11, colum=4)->(row=10, colum=5), Player 1 val:0 inhrtd:0 piece: X(row=10, colum=5) wall: H (6, 8)southBlocked  (6, 7)southBlocked  (row=11, colum=4)->(row=10, colum=5), Player 1 val:0 inhrtd:0 piece: X(row=10, colum=5) wall: H (6, 8)southBlocked  (6, 9)southBlocked  (row=11, colum=4)->(row=10, colum=5), Player 1 val:0 inhrtd:0 piece: X(row=10, colum=5) wall: H (7, 8)southBlocked  (7, 7)southBlocked  (row=11, colum=4)->(row=10, colum=5), Player 1 val:0 inhrtd:0 piece: X(row=10, colum=5) wall: H (7, 8)southBlocked  (7, 9)southBlocked  (row=11, colum=4)->(row=10, colum=5), Player 1 val:0 inhrtd:0 piece: X(row=10, colum=5) wall: H O (4, 8)southBlocked  (4, 7)southBlocked  (row=11, colum=4)->(row=10, colum=5), Player 1 val:0 inhrtd:0 piece: X(row=10, colum=5) wall: H O (4, 8)southBlocked  (4, 9)southBlocked  (row=11, colum=4)->(row=10, colum=5), Player 1 val:0 inhrtd:0 piece: X(row=10, colum=5) wall: H (5, 8)southBlocked  (5, 7)southBlocked  (row=11, colum=4)->(row=10, colum=5), Player 1 val:0 inhrtd:0 piece: X(row=10, colum=5) wall: H (5, 8)southBlocked  (5, 9)southBlocked  (row=11, colum=4)->(row=10, colum=5), Player 1 val:0 inhrtd:0 piece: X(row=10, colum=5) wall: V (11, 6)eastBlocked  (12, 6)eastBlocked  (row=11, colum=4)->(row=10, colum=5), Player 1 val:0 inhrtd:0 piece: X(row=10, colum=5) wall: V (11, 6)eastBlocked  (10, 6)eastBlocked  (row=11, colum=4)->(row=10, colum=5), Player 1 val:0 inhrtd:0 piece: X(row=10, colum=5) wall: V (11, 7)eastBlocked  (12, 7)eastBlocked  (row=11, colum=4)->(row=10, colum=5), Player 1 val:0 inhrtd:0 piece: X(row=10, colum=5) wall: V (11, 7)eastBlocked  (10, 7)eastBlocked  (row=11, colum=4)->(row=10, colum=5), Player 1 val:0 inhrtd:0 piece: X(row=10, colum=5) wall: V X (11, 4)eastBlocked  (12, 4)eastBlocked  (row=11, colum=4)->(row=10, colum=5), Player 1 val:0 inhrtd:0 piece: X(row=10, colum=5) wall: V X (11, 4)eastBlocked  (10, 4)eastBlocked  (row=11, colum=4)->(row=10, colum=5), Player 1 val:0 inhrtd:0 piece: X(row=10, colum=5) wall: V (11, 5)eastBlocked  (12, 5)eastBlocked  (row=11, colum=4)->(row=10, colum=5), Player 1 val:0 inhrtd:0 piece: X(row=10, colum=5) wall: V (11, 5)eastBlocked  (10, 5)eastBlocked  (row=11, colum=4)->(row=10, colum=5), Player 1 val:0 inhrtd:0 piece: X(row=10, colum=5) wall: H (8, 4)southBlocked  (8, 5)southBlocked  (row=11, colum=4)->(row=10, colum=5), Player 1 val:0 inhrtd:0 piece: X(row=10, colum=5) wall: H (9, 4)southBlocked  (9, 5)southBlocked  (row=11, colum=4)->(row=10, colum=5), Player 1 val:0 inhrtd:0 piece: X(row=10, colum=5) wall: H (6, 4)southBlocked  (6, 5)southBlocked  (row=11, colum=4)->(row=10, colum=5), Player 1 val:0 inhrtd:0 piece: X(row=10, colum=5) wall: H (7, 4)southBlocked  (7, 5)southBlocked  (row=11, colum=4)->(row=10, colum=5), Player 1 val:0 inhrtd:0 piece: X(row=10, colum=5) wall: H O (4, 4)southBlocked  (4, 5)southBlocked  (row=11, colum=4)->(row=10, colum=5), Player 1 val:0 inhrtd:0 piece: X(row=10, colum=5) wall: H (5, 4)southBlocked  (5, 5)southBlocked  (row=11, colum=4)->(row=10, colum=5), Player 1 val:-80 inhrtd:0 piece: X(row=11, colum=6) wall: V (11, 6)eastBlocked  (12, 6)eastBlocked  (row=11, colum=8)->(row=11, colum=6), Player 1 val:-80 inhrtd:0 piece: X(row=11, colum=6) wall: V (11, 6)eastBlocked  (10, 6)eastBlocked  (row=11, colum=8)->(row=11, colum=6), Player 1 val:-80 inhrtd:0 piece: X(row=11, colum=6) wall: V (11, 7)eastBlocked  (12, 7)eastBlocked  (row=11, colum=8)->(row=11, colum=6), Player 1 val:-80 inhrtd:0 piece: X(row=11, colum=6) wall: V (11, 7)eastBlocked  (10, 7)eastBlocked  (row=11, colum=8)->(row=11, colum=6), Player 1 val:-80 inhrtd:0 piece: X(row=11, colum=6) wall: V X (11, 4)eastBlocked  (12, 4)eastBlocked  (row=11, colum=8)->(row=11, colum=6), Player 1 val:-80 inhrtd:0 piece: X(row=11, colum=6) wall: V X (11, 4)eastBlocked  (10, 4)eastBlocked  (row=11, colum=8)->(row=11, colum=6), Player 1 val:-80 inhrtd:0 piece: X(row=11, colum=6) wall: V (11, 5)eastBlocked  (12, 5)eastBlocked  (row=11, colum=8)->(row=11, colum=6), Player 1 val:-80 inhrtd:0 piece: X(row=11, colum=6) wall: V (11, 5)eastBlocked  (10, 5)eastBlocked  (row=11, colum=8)->(row=11, colum=6), Player 1 val:-104 inhrtd:0 piece: X(row=11, colum=6) wall: H (10, 4)southBlocked  (10, 3)southBlocked  (row=11, colum=8)->(row=11, colum=6), Player 1 val:-104 inhrtd:0 piece: X(row=11, colum=6) wall: H (10, 4)southBlocked  (10, 5)southBlocked  (row=11, colum=8)->(row=11, colum=6), Player 1 val:-104 inhrtd:0 piece: X(row=11, colum=6) wall: H (8, 4)southBlocked  (8, 3)southBlocked  (row=11, colum=8)->(row=11, colum=6), Player 1 val:-104 inhrtd:0 piece: X(row=11, colum=6) wall: H (8, 4)southBlocked  (8, 5)southBlocked  (row=11, colum=8)->(row=11, colum=6), Player 1 val:-104 inhrtd:0 piece: X(row=11, colum=6) wall: H (9, 4)southBlocked  (9, 3)southBlocked  (row=11, colum=8)->(row=11, colum=6), Player 1 val:-104 inhrtd:0 piece: X(row=11, colum=6) wall: H (9, 4)southBlocked  (9, 5)southBlocked  (row=11, colum=8)->(row=11, colum=6), Player 1 val:-104 inhrtd:0 piece: X(row=11, colum=6) wall: H (6, 4)southBlocked  (6, 3)southBlocked  (row=11, colum=8)->(row=11, colum=6), Player 1 val:-104 inhrtd:0 piece: X(row=11, colum=6) wall: H (6, 4)southBlocked  (6, 5)southBlocked  (row=11, colum=8)->(row=11, colum=6), Player 1 val:-104 inhrtd:0 piece: X(row=11, colum=6) wall: H (7, 4)southBlocked  (7, 3)southBlocked  (row=11, colum=8)->(row=11, colum=6), Player 1 val:-104 inhrtd:0 piece: X(row=11, colum=6) wall: H (7, 4)southBlocked  (7, 5)southBlocked  (row=11, colum=8)->(row=11, colum=6), Player 1 val:-104 inhrtd:0 piece: X(row=11, colum=6) wall: H O (4, 4)southBlocked  (4, 3)southBlocked  (row=11, colum=8)->(row=11, colum=6), Player 1 val:-104 inhrtd:0 piece: X(row=11, colum=6) wall: H O (4, 4)southBlocked  (4, 5)southBlocked  (row=11, colum=8)->(row=11, colum=6), Player 1 val:-104 inhrtd:0 piece: X(row=11, colum=6) wall: H (5, 4)southBlocked  (5, 3)southBlocked  (row=11, colum=8)->(row=11, colum=6), Player 1 val:-104 inhrtd:0 piece: X(row=11, colum=6) wall: H (5, 4)southBlocked  (5, 5)southBlocked  (row=11, colum=8)->(row=11, colum=6)]
+helper = com.becker.game.twoplayer.blockade.BlockadeHelper@4e0c0251
+helper = com.becker.game.twoplayer.blockade.BlockadeHelper@3d3ee5c4
+helper = com.becker.game.twoplayer.blockade.BlockadeHelper@422b1398
+------------- ---------------- ---------------
+------------- Standard Error -----------------
+***  created new ZOBRIST HASH  ***
+
+***  created new ZOBRIST HASH  ***
+
+***  created new ZOBRIST HASH  ***
+
+***  created new ZOBRIST HASH  ***
+
+***  created new ZOBRIST HASH  ***
+
+***  created new ZOBRIST HASH  ***
+
+***  created new ZOBRIST HASH  ***
+
+***  created new ZOBRIST HASH  ***
+
+***  created new ZOBRIST HASH  ***
+
+***  created new ZOBRIST HASH  ***
+
+***  created new ZOBRIST HASH  ***
+
+***  created new ZOBRIST HASH  ***
+
+***  created new ZOBRIST HASH  ***
+
+***  created new ZOBRIST HASH  ***
+
+***  created new ZOBRIST HASH  ***
+
+***  created new ZOBRIST HASH  ***
+
+***  created new ZOBRIST HASH  ***
+
+Game is over because there are no more moves.
+
+***  created new ZOBRIST HASH  ***
+
+***  created new ZOBRIST HASH  ***
+
+***  created new ZOBRIST HASH  ***
+
+***  created new ZOBRIST HASH  ***
+
+***  created new ZOBRIST HASH  ***
+
+------------- ---------------- ---------------
+
+Testcase: testPositionStates took 1.337 sec
+	Caused an ERROR
+null
+java.lang.NullPointerException
+	at com.becker.game.common.GameContext.loadGameResources(GameContext.java:169)
+	at com.becker.game.twoplayer.blockade.BlockadeTestCase.setUp(BlockadeTestCase.java:35)
+
+Testcase: testPossibleMoveList took 0 sec
+	Caused an ERROR
+null
+java.lang.NullPointerException
+	at com.becker.game.common.GameContext.loadGameResources(GameContext.java:169)
+	at com.becker.game.twoplayer.blockade.BlockadeTestCase.setUp(BlockadeTestCase.java:35)
+
+Testcase: testFindOpponentShortestPaths took 0 sec
+	Caused an ERROR
+null
+java.lang.NullPointerException
+	at com.becker.game.common.GameContext.loadGameResources(GameContext.java:169)
+	at com.becker.game.twoplayer.blockade.BlockadeTestCase.setUp(BlockadeTestCase.java:35)
+
+Testcase: testShortestPathLength took 0 sec
+	Caused an ERROR
+null
+java.lang.NullPointerException
+	at com.becker.game.common.GameContext.loadGameResources(GameContext.java:169)
+	at com.becker.game.twoplayer.blockade.BlockadeTestCase.setUp(BlockadeTestCase.java:35)
+
+Testcase: testShortestPaths2 took 0 sec
+	Caused an ERROR
+null
+java.lang.NullPointerException
+	at com.becker.game.common.GameContext.loadGameResources(GameContext.java:169)
+	at com.becker.game.twoplayer.blockade.BlockadeTestCase.setUp(BlockadeTestCase.java:35)
+
+Testcase: testFindShortestPaths took 0 sec
+	Caused an ERROR
+null
+java.lang.NullPointerException
+	at com.becker.game.common.GameContext.loadGameResources(GameContext.java:169)
+	at com.becker.game.twoplayer.blockade.BlockadeTestCase.setUp(BlockadeTestCase.java:35)
+
+Testcase: testWorthOfWinningMove took 0 sec
+	Caused an ERROR
+null
+java.lang.NullPointerException
+	at com.becker.game.common.GameContext.loadGameResources(GameContext.java:169)
+	at com.becker.game.twoplayer.blockade.BlockadeTestCase.setUp(BlockadeTestCase.java:35)
+
+Testcase: testGetWallsForMove took 0 sec
+	Caused an ERROR
+null
+java.lang.NullPointerException
+	at com.becker.game.common.GameContext.loadGameResources(GameContext.java:169)
+	at com.becker.game.twoplayer.blockade.BlockadeTestCase.setUp(BlockadeTestCase.java:35)
+	at com.becker.game.twoplayer.blockade.MoveGeneratorTest.setUp(MoveGeneratorTest.java:32)
+
+Testcase: testGenerateMoves took 0.001 sec
+	Caused an ERROR
+null
+java.lang.NullPointerException
+	at com.becker.game.common.GameContext.loadGameResources(GameContext.java:169)
+	at com.becker.game.twoplayer.blockade.BlockadeTestCase.setUp(BlockadeTestCase.java:35)
+	at com.becker.game.twoplayer.blockade.MoveGeneratorTest.setUp(MoveGeneratorTest.java:32)
+
+Testcase: testGenerateMoves2 took 0 sec
+	Caused an ERROR
+null
+java.lang.NullPointerException
+	at com.becker.game.common.GameContext.loadGameResources(GameContext.java:169)
+	at com.becker.game.twoplayer.blockade.BlockadeTestCase.setUp(BlockadeTestCase.java:35)
+	at com.becker.game.twoplayer.blockade.MoveGeneratorTest.setUp(MoveGeneratorTest.java:32)
+
+Testcase: testNotDoneMidGame took 1.334 sec
+Testcase: testDoneForMidGameWin took 0.002 sec
+Testcase: testDoneEndGame took 0.003 sec
+Testcase: testGenerateAllP1MovesMidGame took 1.847 sec
+	FAILED
+There were unexpected generated moves for middleGameP1Turn
+4) Unexpected moves.
+ Expected Player 2 val:30 inhrtd:30 piece: O(row=9, colum=5) wall: V (8, 10)eastBlocked  (7, 10)eastBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:392 inhrtd:0 piece: O(row=10, colum=2) wall: H X (8, 3)southBlocked  (8, 2)southBlocked  (row=10, colum=4)->(row=10, colum=2)
+5) Unexpected moves.
+ Expected Player 2 val:29 inhrtd:29 piece: O(row=10, colum=2) wall: H (8, 3)southBlocked  (8, 2)southBlocked  (row=10, colum=4)->(row=10, colum=2) 
+But got Player 2 val:392 inhrtd:0 piece: O(row=10, colum=2) wall: H (9, 3)southBlocked  (9, 2)southBlocked  (row=10, colum=4)->(row=10, colum=2)
+6) Unexpected moves.
+ Expected Player 2 val:29 inhrtd:29 piece: O(row=10, colum=2) wall: H (9, 3)southBlocked  (9, 2)southBlocked  (row=10, colum=4)->(row=10, colum=2) 
+But got Player 2 val:384 inhrtd:0 piece: O(row=9, colum=5) wall: V (8, 10)eastBlocked  (7, 10)eastBlocked  (row=10, colum=4)->(row=9, colum=5)
+11) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: H (3, 9)southBlocked  (3, 10)southBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=10, colum=2) wall: V (8, 10)eastBlocked  (7, 10)eastBlocked  (row=10, colum=4)->(row=10, colum=2)
+12) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: H (5, 9)southBlocked  (5, 10)southBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: H (3, 9)southBlocked  X (3, 10)southBlocked  (row=10, colum=4)->(row=9, colum=5)
+13) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: H (5, 9)southBlocked  (5, 8)southBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: H (5, 9)southBlocked  (5, 10)southBlocked  (row=10, colum=4)->(row=9, colum=5)
+14) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: H (4, 9)southBlocked  (4, 10)southBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: H (5, 9)southBlocked  (5, 8)southBlocked  (row=10, colum=4)->(row=9, colum=5)
+15) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: V (6, 10)eastBlocked  (5, 10)eastBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: H (4, 9)southBlocked  (4, 10)southBlocked  (row=10, colum=4)->(row=9, colum=5)
+16) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: V (6, 9)eastBlocked  (5, 9)eastBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: V (6, 10)eastBlocked  (5, 10)eastBlocked  (row=10, colum=4)->(row=9, colum=5)
+17) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: H (6, 11)southBlocked  (6, 10)southBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: V (6, 9)eastBlocked  (5, 9)eastBlocked  (row=10, colum=4)->(row=9, colum=5)
+18) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: H (8, 6)southBlocked  (8, 7)southBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: H (6, 11)southBlocked  (6, 10)southBlocked  (row=10, colum=4)->(row=9, colum=5)
+19) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: V (9, 5)eastBlocked  (10, 5)eastBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: H (8, 6)southBlocked  (8, 7)southBlocked  (row=10, colum=4)->(row=9, colum=5)
+20) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: V (10, 3)eastBlocked  (11, 3)eastBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: V (9, 5)eastBlocked  (10, 5)eastBlocked  (row=10, colum=4)->(row=9, colum=5)
+21) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: V (10, 3)eastBlocked  (9, 3)eastBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: V (10, 3)eastBlocked  (11, 3)eastBlocked  (row=10, colum=4)->(row=9, colum=5)
+22) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: H (8, 3)southBlocked  (8, 2)southBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: V (10, 3)eastBlocked  (9, 3)eastBlocked  (row=10, colum=4)->(row=9, colum=5)
+23) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: H (9, 3)southBlocked  (9, 2)southBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: H X (8, 3)southBlocked  (8, 2)southBlocked  (row=10, colum=4)->(row=9, colum=5)
+24) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: V (4, 5)eastBlocked  (5, 5)eastBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: H (9, 3)southBlocked  (9, 2)southBlocked  (row=10, colum=4)->(row=9, colum=5)
+25) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: V (4, 5)eastBlocked  (3, 5)eastBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: V (4, 5)eastBlocked  (5, 5)eastBlocked  (row=10, colum=4)->(row=9, colum=5)
+26) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: V (4, 4)eastBlocked  (5, 4)eastBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: V (4, 5)eastBlocked  (3, 5)eastBlocked  (row=10, colum=4)->(row=9, colum=5)
+27) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: V (4, 4)eastBlocked  (3, 4)eastBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: V (4, 4)eastBlocked  (5, 4)eastBlocked  (row=10, colum=4)->(row=9, colum=5)
+28) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: V (4, 7)eastBlocked  (5, 7)eastBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: V (4, 4)eastBlocked  (3, 4)eastBlocked  (row=10, colum=4)->(row=9, colum=5)
+29) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: V (4, 7)eastBlocked  (3, 7)eastBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: V (4, 7)eastBlocked  (5, 7)eastBlocked  (row=10, colum=4)->(row=9, colum=5)
+30) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: V (4, 6)eastBlocked  (5, 6)eastBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: V (4, 7)eastBlocked  (3, 7)eastBlocked  (row=10, colum=4)->(row=9, colum=5)
+31) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: V (4, 6)eastBlocked  (3, 6)eastBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: V (4, 6)eastBlocked  (5, 6)eastBlocked  (row=10, colum=4)->(row=9, colum=5)
+32) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: V (1, 9)eastBlocked  (2, 9)eastBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: V (4, 6)eastBlocked  (3, 6)eastBlocked  (row=10, colum=4)->(row=9, colum=5)
+33) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: H (2, 10)southBlocked  (2, 11)southBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: V (1, 9)eastBlocked  (2, 9)eastBlocked  (row=10, colum=4)->(row=9, colum=5)
+34) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: H (1, 10)southBlocked  (1, 11)southBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: H (2, 10)southBlocked  (2, 11)southBlocked  (row=10, colum=4)->(row=9, colum=5)
+35) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=10, colum=2) wall: V (8, 10)eastBlocked  (7, 10)eastBlocked  (row=10, colum=4)->(row=10, colum=2) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: H (1, 10)southBlocked  (1, 11)southBlocked  (row=10, colum=4)->(row=9, colum=5)
+65) Unexpected moves.
+ Expected Player 2 val:15 inhrtd:15 piece: O(row=10, colum=2) wall: H (8, 3)southBlocked  (8, 4)southBlocked  (row=10, colum=4)->(row=10, colum=2) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=9, colum=5) wall: H (3, 8)southBlocked  (3, 9)southBlocked  (row=10, colum=4)->(row=9, colum=5)
+66) Unexpected moves.
+ Expected Player 2 val:15 inhrtd:15 piece: O(row=10, colum=2) wall: H (9, 3)southBlocked  (9, 4)southBlocked  (row=10, colum=4)->(row=10, colum=2) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=9, colum=5) wall: H (1, 8)southBlocked  (1, 9)southBlocked  (row=10, colum=4)->(row=9, colum=5)
+67) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=9, colum=5) wall: H (3, 8)southBlocked  (3, 9)southBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: H (3, 9)southBlocked  X (3, 10)southBlocked  (row=7, colum=9)->(row=7, colum=11)
+68) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=9, colum=5) wall: H (1, 8)southBlocked  (1, 9)southBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: H (5, 9)southBlocked  (5, 10)southBlocked  (row=7, colum=9)->(row=7, colum=11)
+69) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: H (3, 9)southBlocked  (3, 10)southBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: H (5, 9)southBlocked  (5, 8)southBlocked  (row=7, colum=9)->(row=7, colum=11)
+70) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: H (5, 9)southBlocked  (5, 10)southBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: H (4, 9)southBlocked  (4, 10)southBlocked  (row=7, colum=9)->(row=7, colum=11)
+71) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: H (5, 9)southBlocked  (5, 8)southBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (6, 10)eastBlocked  (7, 10)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+72) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: H (4, 9)southBlocked  (4, 10)southBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (6, 10)eastBlocked  (5, 10)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+73) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (6, 10)eastBlocked  (7, 10)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (6, 9)eastBlocked  O (7, 9)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+74) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (6, 10)eastBlocked  (5, 10)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (6, 9)eastBlocked  (5, 9)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+75) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (6, 9)eastBlocked  (7, 9)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: H (6, 11)southBlocked  (6, 10)southBlocked  (row=7, colum=9)->(row=7, colum=11)
+76) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (6, 9)eastBlocked  (5, 9)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (8, 7)eastBlocked  (9, 7)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+77) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: H (6, 11)southBlocked  (6, 10)southBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (8, 8)eastBlocked  (9, 8)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+78) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (8, 7)eastBlocked  (9, 7)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (8, 6)eastBlocked  (9, 6)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+79) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (8, 8)eastBlocked  (9, 8)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: H (8, 6)southBlocked  (8, 7)southBlocked  (row=7, colum=9)->(row=7, colum=11)
+80) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (8, 6)eastBlocked  (9, 6)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (9, 5)eastBlocked  (10, 5)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+81) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: H (8, 6)southBlocked  (8, 7)southBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: H (9, 5)southBlocked  (9, 6)southBlocked  (row=7, colum=9)->(row=7, colum=11)
+82) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (9, 5)eastBlocked  (10, 5)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (10, 3)eastBlocked  (11, 3)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+83) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: H (9, 5)southBlocked  (9, 6)southBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (10, 3)eastBlocked  (9, 3)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+84) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (10, 3)eastBlocked  (11, 3)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: H X (8, 3)southBlocked  (8, 2)southBlocked  (row=7, colum=9)->(row=7, colum=11)
+85) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (10, 3)eastBlocked  (9, 3)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: H (9, 3)southBlocked  (9, 2)southBlocked  (row=7, colum=9)->(row=7, colum=11)
+86) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: H (8, 3)southBlocked  (8, 2)southBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (4, 5)eastBlocked  (5, 5)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+87) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: H (9, 3)southBlocked  (9, 2)southBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (4, 5)eastBlocked  (3, 5)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+88) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (4, 5)eastBlocked  (5, 5)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (4, 4)eastBlocked  (5, 4)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+89) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (4, 5)eastBlocked  (3, 5)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (4, 4)eastBlocked  (3, 4)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+90) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (4, 4)eastBlocked  (5, 4)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (4, 7)eastBlocked  (5, 7)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+91) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (4, 4)eastBlocked  (3, 4)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (4, 7)eastBlocked  (3, 7)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+92) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (4, 7)eastBlocked  (5, 7)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (4, 6)eastBlocked  (5, 6)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+93) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (4, 7)eastBlocked  (3, 7)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (4, 6)eastBlocked  (3, 6)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+94) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (4, 6)eastBlocked  (5, 6)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (1, 9)eastBlocked  (2, 9)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+95) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (4, 6)eastBlocked  (3, 6)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: H (2, 10)southBlocked  (2, 11)southBlocked  (row=7, colum=9)->(row=7, colum=11)
+96) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (1, 9)eastBlocked  (2, 9)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: H (1, 10)southBlocked  (1, 11)southBlocked  (row=7, colum=9)->(row=7, colum=11)
+97) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: H (2, 10)southBlocked  (2, 11)southBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:168 inhrtd:0 piece: O(row=10, colum=2) wall: H X (8, 3)southBlocked  (8, 4)southBlocked  (row=10, colum=4)->(row=10, colum=2)
+98) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: H (1, 10)southBlocked  (1, 11)southBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:168 inhrtd:0 piece: O(row=10, colum=2) wall: H (9, 3)southBlocked  (9, 4)southBlocked  (row=10, colum=4)->(row=10, colum=2)
+99) Unexpected moves.
+ Expected Player 2 val:13 inhrtd:13 piece: O(row=10, colum=2) wall: V (8, 10)eastBlocked  (9, 10)eastBlocked  (row=10, colum=4)->(row=10, colum=2) 
+But got Player 2 val:144 inhrtd:0 piece: O(row=7, colum=11) wall: V (8, 10)eastBlocked  (7, 10)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+100) Unexpected moves.
+ Expected Player 2 val:12 inhrtd:12 piece: O(row=7, colum=11) wall: V (8, 10)eastBlocked  (7, 10)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:144 inhrtd:0 piece: O(row=7, colum=11) wall: H X (8, 3)southBlocked  (8, 4)southBlocked  (row=7, colum=9)->(row=7, colum=11)
+101) Unexpected moves.
+ Expected Player 2 val:12 inhrtd:12 piece: O(row=7, colum=11) wall: H (8, 3)southBlocked  (8, 4)southBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:144 inhrtd:0 piece: O(row=7, colum=11) wall: H (9, 3)southBlocked  (9, 4)southBlocked  (row=7, colum=9)->(row=7, colum=11)
+102) Unexpected moves.
+ Expected Player 2 val:12 inhrtd:12 piece: O(row=7, colum=11) wall: H (9, 3)southBlocked  (9, 4)southBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:136 inhrtd:0 piece: O(row=10, colum=2) wall: V (8, 10)eastBlocked  (9, 10)eastBlocked  (row=10, colum=4)->(row=10, colum=2)
+104) Unexpected moves.
+ Expected Player 2 val:9 inhrtd:9 piece: O(row=9, colum=5) wall: H (2, 10)southBlocked  (2, 9)southBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:96 inhrtd:0 piece: O(row=10, colum=2) wall: H (3, 8)southBlocked  (3, 9)southBlocked  (row=10, colum=4)->(row=10, colum=2)
+105) Unexpected moves.
+ Expected Player 2 val:9 inhrtd:9 piece: O(row=9, colum=5) wall: H (1, 10)southBlocked  (1, 9)southBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:96 inhrtd:0 piece: O(row=10, colum=2) wall: H (1, 8)southBlocked  (1, 9)southBlocked  (row=10, colum=4)->(row=10, colum=2)
+106) Unexpected moves.
+ Expected Player 2 val:9 inhrtd:9 piece: O(row=10, colum=2) wall: H (3, 8)southBlocked  (3, 9)southBlocked  (row=10, colum=4)->(row=10, colum=2) 
+But got Player 2 val:96 inhrtd:0 piece: O(row=9, colum=5) wall: H (2, 10)southBlocked  (2, 9)southBlocked  (row=10, colum=4)->(row=9, colum=5)
+107) Unexpected moves.
+ Expected Player 2 val:9 inhrtd:9 piece: O(row=10, colum=2) wall: H (1, 8)southBlocked  (1, 9)southBlocked  (row=10, colum=4)->(row=10, colum=2) 
+But got Player 2 val:96 inhrtd:0 piece: O(row=9, colum=5) wall: H (1, 10)southBlocked  (1, 9)southBlocked  (row=10, colum=4)->(row=9, colum=5)
+
+junit.framework.AssertionFailedError: There were unexpected generated moves for middleGameP1Turn
+4) Unexpected moves.
+ Expected Player 2 val:30 inhrtd:30 piece: O(row=9, colum=5) wall: V (8, 10)eastBlocked  (7, 10)eastBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:392 inhrtd:0 piece: O(row=10, colum=2) wall: H X (8, 3)southBlocked  (8, 2)southBlocked  (row=10, colum=4)->(row=10, colum=2)
+5) Unexpected moves.
+ Expected Player 2 val:29 inhrtd:29 piece: O(row=10, colum=2) wall: H (8, 3)southBlocked  (8, 2)southBlocked  (row=10, colum=4)->(row=10, colum=2) 
+But got Player 2 val:392 inhrtd:0 piece: O(row=10, colum=2) wall: H (9, 3)southBlocked  (9, 2)southBlocked  (row=10, colum=4)->(row=10, colum=2)
+6) Unexpected moves.
+ Expected Player 2 val:29 inhrtd:29 piece: O(row=10, colum=2) wall: H (9, 3)southBlocked  (9, 2)southBlocked  (row=10, colum=4)->(row=10, colum=2) 
+But got Player 2 val:384 inhrtd:0 piece: O(row=9, colum=5) wall: V (8, 10)eastBlocked  (7, 10)eastBlocked  (row=10, colum=4)->(row=9, colum=5)
+11) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: H (3, 9)southBlocked  (3, 10)southBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=10, colum=2) wall: V (8, 10)eastBlocked  (7, 10)eastBlocked  (row=10, colum=4)->(row=10, colum=2)
+12) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: H (5, 9)southBlocked  (5, 10)southBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: H (3, 9)southBlocked  X (3, 10)southBlocked  (row=10, colum=4)->(row=9, colum=5)
+13) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: H (5, 9)southBlocked  (5, 8)southBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: H (5, 9)southBlocked  (5, 10)southBlocked  (row=10, colum=4)->(row=9, colum=5)
+14) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: H (4, 9)southBlocked  (4, 10)southBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: H (5, 9)southBlocked  (5, 8)southBlocked  (row=10, colum=4)->(row=9, colum=5)
+15) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: V (6, 10)eastBlocked  (5, 10)eastBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: H (4, 9)southBlocked  (4, 10)southBlocked  (row=10, colum=4)->(row=9, colum=5)
+16) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: V (6, 9)eastBlocked  (5, 9)eastBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: V (6, 10)eastBlocked  (5, 10)eastBlocked  (row=10, colum=4)->(row=9, colum=5)
+17) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: H (6, 11)southBlocked  (6, 10)southBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: V (6, 9)eastBlocked  (5, 9)eastBlocked  (row=10, colum=4)->(row=9, colum=5)
+18) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: H (8, 6)southBlocked  (8, 7)southBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: H (6, 11)southBlocked  (6, 10)southBlocked  (row=10, colum=4)->(row=9, colum=5)
+19) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: V (9, 5)eastBlocked  (10, 5)eastBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: H (8, 6)southBlocked  (8, 7)southBlocked  (row=10, colum=4)->(row=9, colum=5)
+20) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: V (10, 3)eastBlocked  (11, 3)eastBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: V (9, 5)eastBlocked  (10, 5)eastBlocked  (row=10, colum=4)->(row=9, colum=5)
+21) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: V (10, 3)eastBlocked  (9, 3)eastBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: V (10, 3)eastBlocked  (11, 3)eastBlocked  (row=10, colum=4)->(row=9, colum=5)
+22) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: H (8, 3)southBlocked  (8, 2)southBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: V (10, 3)eastBlocked  (9, 3)eastBlocked  (row=10, colum=4)->(row=9, colum=5)
+23) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: H (9, 3)southBlocked  (9, 2)southBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: H X (8, 3)southBlocked  (8, 2)southBlocked  (row=10, colum=4)->(row=9, colum=5)
+24) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: V (4, 5)eastBlocked  (5, 5)eastBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: H (9, 3)southBlocked  (9, 2)southBlocked  (row=10, colum=4)->(row=9, colum=5)
+25) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: V (4, 5)eastBlocked  (3, 5)eastBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: V (4, 5)eastBlocked  (5, 5)eastBlocked  (row=10, colum=4)->(row=9, colum=5)
+26) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: V (4, 4)eastBlocked  (5, 4)eastBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: V (4, 5)eastBlocked  (3, 5)eastBlocked  (row=10, colum=4)->(row=9, colum=5)
+27) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: V (4, 4)eastBlocked  (3, 4)eastBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: V (4, 4)eastBlocked  (5, 4)eastBlocked  (row=10, colum=4)->(row=9, colum=5)
+28) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: V (4, 7)eastBlocked  (5, 7)eastBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: V (4, 4)eastBlocked  (3, 4)eastBlocked  (row=10, colum=4)->(row=9, colum=5)
+29) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: V (4, 7)eastBlocked  (3, 7)eastBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: V (4, 7)eastBlocked  (5, 7)eastBlocked  (row=10, colum=4)->(row=9, colum=5)
+30) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: V (4, 6)eastBlocked  (5, 6)eastBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: V (4, 7)eastBlocked  (3, 7)eastBlocked  (row=10, colum=4)->(row=9, colum=5)
+31) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: V (4, 6)eastBlocked  (3, 6)eastBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: V (4, 6)eastBlocked  (5, 6)eastBlocked  (row=10, colum=4)->(row=9, colum=5)
+32) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: V (1, 9)eastBlocked  (2, 9)eastBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: V (4, 6)eastBlocked  (3, 6)eastBlocked  (row=10, colum=4)->(row=9, colum=5)
+33) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: H (2, 10)southBlocked  (2, 11)southBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: V (1, 9)eastBlocked  (2, 9)eastBlocked  (row=10, colum=4)->(row=9, colum=5)
+34) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=9, colum=5) wall: H (1, 10)southBlocked  (1, 11)southBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: H (2, 10)southBlocked  (2, 11)southBlocked  (row=10, colum=4)->(row=9, colum=5)
+35) Unexpected moves.
+ Expected Player 2 val:22 inhrtd:22 piece: O(row=10, colum=2) wall: V (8, 10)eastBlocked  (7, 10)eastBlocked  (row=10, colum=4)->(row=10, colum=2) 
+But got Player 2 val:280 inhrtd:0 piece: O(row=9, colum=5) wall: H (1, 10)southBlocked  (1, 11)southBlocked  (row=10, colum=4)->(row=9, colum=5)
+65) Unexpected moves.
+ Expected Player 2 val:15 inhrtd:15 piece: O(row=10, colum=2) wall: H (8, 3)southBlocked  (8, 4)southBlocked  (row=10, colum=4)->(row=10, colum=2) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=9, colum=5) wall: H (3, 8)southBlocked  (3, 9)southBlocked  (row=10, colum=4)->(row=9, colum=5)
+66) Unexpected moves.
+ Expected Player 2 val:15 inhrtd:15 piece: O(row=10, colum=2) wall: H (9, 3)southBlocked  (9, 4)southBlocked  (row=10, colum=4)->(row=10, colum=2) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=9, colum=5) wall: H (1, 8)southBlocked  (1, 9)southBlocked  (row=10, colum=4)->(row=9, colum=5)
+67) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=9, colum=5) wall: H (3, 8)southBlocked  (3, 9)southBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: H (3, 9)southBlocked  X (3, 10)southBlocked  (row=7, colum=9)->(row=7, colum=11)
+68) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=9, colum=5) wall: H (1, 8)southBlocked  (1, 9)southBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: H (5, 9)southBlocked  (5, 10)southBlocked  (row=7, colum=9)->(row=7, colum=11)
+69) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: H (3, 9)southBlocked  (3, 10)southBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: H (5, 9)southBlocked  (5, 8)southBlocked  (row=7, colum=9)->(row=7, colum=11)
+70) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: H (5, 9)southBlocked  (5, 10)southBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: H (4, 9)southBlocked  (4, 10)southBlocked  (row=7, colum=9)->(row=7, colum=11)
+71) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: H (5, 9)southBlocked  (5, 8)southBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (6, 10)eastBlocked  (7, 10)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+72) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: H (4, 9)southBlocked  (4, 10)southBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (6, 10)eastBlocked  (5, 10)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+73) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (6, 10)eastBlocked  (7, 10)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (6, 9)eastBlocked  O (7, 9)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+74) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (6, 10)eastBlocked  (5, 10)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (6, 9)eastBlocked  (5, 9)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+75) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (6, 9)eastBlocked  (7, 9)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: H (6, 11)southBlocked  (6, 10)southBlocked  (row=7, colum=9)->(row=7, colum=11)
+76) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (6, 9)eastBlocked  (5, 9)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (8, 7)eastBlocked  (9, 7)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+77) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: H (6, 11)southBlocked  (6, 10)southBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (8, 8)eastBlocked  (9, 8)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+78) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (8, 7)eastBlocked  (9, 7)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (8, 6)eastBlocked  (9, 6)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+79) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (8, 8)eastBlocked  (9, 8)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: H (8, 6)southBlocked  (8, 7)southBlocked  (row=7, colum=9)->(row=7, colum=11)
+80) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (8, 6)eastBlocked  (9, 6)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (9, 5)eastBlocked  (10, 5)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+81) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: H (8, 6)southBlocked  (8, 7)southBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: H (9, 5)southBlocked  (9, 6)southBlocked  (row=7, colum=9)->(row=7, colum=11)
+82) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (9, 5)eastBlocked  (10, 5)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (10, 3)eastBlocked  (11, 3)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+83) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: H (9, 5)southBlocked  (9, 6)southBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (10, 3)eastBlocked  (9, 3)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+84) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (10, 3)eastBlocked  (11, 3)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: H X (8, 3)southBlocked  (8, 2)southBlocked  (row=7, colum=9)->(row=7, colum=11)
+85) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (10, 3)eastBlocked  (9, 3)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: H (9, 3)southBlocked  (9, 2)southBlocked  (row=7, colum=9)->(row=7, colum=11)
+86) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: H (8, 3)southBlocked  (8, 2)southBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (4, 5)eastBlocked  (5, 5)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+87) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: H (9, 3)southBlocked  (9, 2)southBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (4, 5)eastBlocked  (3, 5)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+88) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (4, 5)eastBlocked  (5, 5)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (4, 4)eastBlocked  (5, 4)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+89) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (4, 5)eastBlocked  (3, 5)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (4, 4)eastBlocked  (3, 4)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+90) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (4, 4)eastBlocked  (5, 4)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (4, 7)eastBlocked  (5, 7)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+91) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (4, 4)eastBlocked  (3, 4)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (4, 7)eastBlocked  (3, 7)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+92) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (4, 7)eastBlocked  (5, 7)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (4, 6)eastBlocked  (5, 6)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+93) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (4, 7)eastBlocked  (3, 7)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (4, 6)eastBlocked  (3, 6)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+94) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (4, 6)eastBlocked  (5, 6)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: V (1, 9)eastBlocked  (2, 9)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+95) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (4, 6)eastBlocked  (3, 6)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: H (2, 10)southBlocked  (2, 11)southBlocked  (row=7, colum=9)->(row=7, colum=11)
+96) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: V (1, 9)eastBlocked  (2, 9)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:176 inhrtd:0 piece: O(row=7, colum=11) wall: H (1, 10)southBlocked  (1, 11)southBlocked  (row=7, colum=9)->(row=7, colum=11)
+97) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: H (2, 10)southBlocked  (2, 11)southBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:168 inhrtd:0 piece: O(row=10, colum=2) wall: H X (8, 3)southBlocked  (8, 4)southBlocked  (row=10, colum=4)->(row=10, colum=2)
+98) Unexpected moves.
+ Expected Player 2 val:14 inhrtd:14 piece: O(row=7, colum=11) wall: H (1, 10)southBlocked  (1, 11)southBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:168 inhrtd:0 piece: O(row=10, colum=2) wall: H (9, 3)southBlocked  (9, 4)southBlocked  (row=10, colum=4)->(row=10, colum=2)
+99) Unexpected moves.
+ Expected Player 2 val:13 inhrtd:13 piece: O(row=10, colum=2) wall: V (8, 10)eastBlocked  (9, 10)eastBlocked  (row=10, colum=4)->(row=10, colum=2) 
+But got Player 2 val:144 inhrtd:0 piece: O(row=7, colum=11) wall: V (8, 10)eastBlocked  (7, 10)eastBlocked  (row=7, colum=9)->(row=7, colum=11)
+100) Unexpected moves.
+ Expected Player 2 val:12 inhrtd:12 piece: O(row=7, colum=11) wall: V (8, 10)eastBlocked  (7, 10)eastBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:144 inhrtd:0 piece: O(row=7, colum=11) wall: H X (8, 3)southBlocked  (8, 4)southBlocked  (row=7, colum=9)->(row=7, colum=11)
+101) Unexpected moves.
+ Expected Player 2 val:12 inhrtd:12 piece: O(row=7, colum=11) wall: H (8, 3)southBlocked  (8, 4)southBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:144 inhrtd:0 piece: O(row=7, colum=11) wall: H (9, 3)southBlocked  (9, 4)southBlocked  (row=7, colum=9)->(row=7, colum=11)
+102) Unexpected moves.
+ Expected Player 2 val:12 inhrtd:12 piece: O(row=7, colum=11) wall: H (9, 3)southBlocked  (9, 4)southBlocked  (row=7, colum=9)->(row=7, colum=11) 
+But got Player 2 val:136 inhrtd:0 piece: O(row=10, colum=2) wall: V (8, 10)eastBlocked  (9, 10)eastBlocked  (row=10, colum=4)->(row=10, colum=2)
+104) Unexpected moves.
+ Expected Player 2 val:9 inhrtd:9 piece: O(row=9, colum=5) wall: H (2, 10)southBlocked  (2, 9)southBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:96 inhrtd:0 piece: O(row=10, colum=2) wall: H (3, 8)southBlocked  (3, 9)southBlocked  (row=10, colum=4)->(row=10, colum=2)
+105) Unexpected moves.
+ Expected Player 2 val:9 inhrtd:9 piece: O(row=9, colum=5) wall: H (1, 10)southBlocked  (1, 9)southBlocked  (row=10, colum=4)->(row=9, colum=5) 
+But got Player 2 val:96 inhrtd:0 piece: O(row=10, colum=2) wall: H (1, 8)southBlocked  (1, 9)southBlocked  (row=10, colum=4)->(row=10, colum=2)
+106) Unexpected moves.
+ Expected Player 2 val:9 inhrtd:9 piece: O(row=10, colum=2) wall: H (3, 8)southBlocked  (3, 9)southBlocked  (row=10, colum=4)->(row=10, colum=2) 
+But got Player 2 val:96 inhrtd:0 piece: O(row=9, colum=5) wall: H (2, 10)southBlocked  (2, 9)southBlocked  (row=10, colum=4)->(row=9, colum=5)
+107) Unexpected moves.
+ Expected Player 2 val:9 inhrtd:9 piece: O(row=10, colum=2) wall: H (1, 8)southBlocked  (1, 9)southBlocked  (row=10, colum=4)->(row=10, colum=2) 
+But got Player 2 val:96 inhrtd:0 piece: O(row=9, colum=5) wall: H (1, 10)southBlocked  (1, 9)southBlocked  (row=10, colum=4)->(row=9, colum=5)
+
+	at com.becker.game.twoplayer.blockade.BlockadeSearchableTest.checkGeneratedMoves(BlockadeSearchableTest.java:150)
+	at com.becker.game.twoplayer.blockade.BlockadeSearchableTest.testGenerateAllP1MovesMidGame(BlockadeSearchableTest.java:69)
+
+Testcase: testGenerateTopP1MovesMidGame took 0.429 sec
+	FAILED
+Unexpected number of generated moves. expected:<24> but was:<25>
+junit.framework.AssertionFailedError: Unexpected number of generated moves. expected:<24> but was:<25>
+	at com.becker.game.twoplayer.blockade.BlockadeSearchableTest.checkGeneratedMoves(BlockadeSearchableTest.java:136)
+	at com.becker.game.twoplayer.blockade.BlockadeSearchableTest.testGenerateTopP1MovesMidGame(BlockadeSearchableTest.java:76)
+
+Testcase: testGenerateAllP1MovesEndGame took 0.275 sec
+Testcase: testGenerateTopP1MovesEndGame took 0.243 sec
+	FAILED
+Unexpected number of generated moves. expected:<3> but was:<4>
+junit.framework.AssertionFailedError: Unexpected number of generated moves. expected:<3> but was:<4>
+	at com.becker.game.twoplayer.blockade.BlockadeSearchableTest.checkGeneratedMoves(BlockadeSearchableTest.java:136)
+	at com.becker.game.twoplayer.blockade.BlockadeSearchableTest.testGenerateTopP1MovesEndGame(BlockadeSearchableTest.java:92)
+
+Testcase: testGenerateAllP2MovesMidGame took 0.353 sec
+	FAILED
+There were unexpected generated moves for middleGameP2Turn
+57) Unexpected moves.
+ Expected Player 1 val:3 inhrtd:3 piece: X(row=1, colum=10) wall: V (10, 4)eastBlocked  (11, 4)eastBlocked  (row=3, colum=10)->(row=1, colum=10) 
+But got Player 1 val:32 inhrtd:0 piece: X(row=10, colum=3) wall: H (8, 10)southBlocked  (8, 9)southBlocked  (row=8, colum=3)->(row=10, colum=3)
+58) Unexpected moves.
+ Expected Player 1 val:2 inhrtd:2 piece: X(row=10, colum=3) wall: H (8, 10)southBlocked  (8, 9)southBlocked  (row=8, colum=3)->(row=10, colum=3) 
+But got Player 1 val:32 inhrtd:0 piece: X(row=10, colum=3) wall: H (12, 9)southBlocked  (12, 10)southBlocked  (row=8, colum=3)->(row=10, colum=3)
+59) Unexpected moves.
+ Expected Player 1 val:2 inhrtd:2 piece: X(row=10, colum=3) wall: H (12, 9)southBlocked  (12, 10)southBlocked  (row=8, colum=3)->(row=10, colum=3) 
+But got Player 1 val:24 inhrtd:0 piece: X(row=1, colum=10) wall: V O (10, 4)eastBlocked  (11, 4)eastBlocked  (row=3, colum=10)->(row=1, colum=10)
+
+junit.framework.AssertionFailedError: There were unexpected generated moves for middleGameP2Turn
+57) Unexpected moves.
+ Expected Player 1 val:3 inhrtd:3 piece: X(row=1, colum=10) wall: V (10, 4)eastBlocked  (11, 4)eastBlocked  (row=3, colum=10)->(row=1, colum=10) 
+But got Player 1 val:32 inhrtd:0 piece: X(row=10, colum=3) wall: H (8, 10)southBlocked  (8, 9)southBlocked  (row=8, colum=3)->(row=10, colum=3)
+58) Unexpected moves.
+ Expected Player 1 val:2 inhrtd:2 piece: X(row=10, colum=3) wall: H (8, 10)southBlocked  (8, 9)southBlocked  (row=8, colum=3)->(row=10, colum=3) 
+But got Player 1 val:32 inhrtd:0 piece: X(row=10, colum=3) wall: H (12, 9)southBlocked  (12, 10)southBlocked  (row=8, colum=3)->(row=10, colum=3)
+59) Unexpected moves.
+ Expected Player 1 val:2 inhrtd:2 piece: X(row=10, colum=3) wall: H (12, 9)southBlocked  (12, 10)southBlocked  (row=8, colum=3)->(row=10, colum=3) 
+But got Player 1 val:24 inhrtd:0 piece: X(row=1, colum=10) wall: V O (10, 4)eastBlocked  (11, 4)eastBlocked  (row=3, colum=10)->(row=1, colum=10)
+
+	at com.becker.game.twoplayer.blockade.BlockadeSearchableTest.checkGeneratedMoves(BlockadeSearchableTest.java:150)
+	at com.becker.game.twoplayer.blockade.BlockadeSearchableTest.testGenerateAllP2MovesMidGame(BlockadeSearchableTest.java:99)
+
+Testcase: testGenerateTopP2MovesMidGame took 0.228 sec
+	FAILED
+Unexpected number of generated moves. expected:<18> but was:<19>
+junit.framework.AssertionFailedError: Unexpected number of generated moves. expected:<18> but was:<19>
+	at com.becker.game.twoplayer.blockade.BlockadeSearchableTest.checkGeneratedMoves(BlockadeSearchableTest.java:136)
+	at com.becker.game.twoplayer.blockade.BlockadeSearchableTest.testGenerateTopP2MovesMidGame(BlockadeSearchableTest.java:106)
+
+Testcase: testGenerateAllP2MovesEndGame took 0.033 sec
+Testcase: testGenerateTopP2MovesEndGame took 0.051 sec
+Testcase: testGenerateUrgentMoves took 0.001 sec
+Testcase: testLookaheadValue took 0.001 sec
+Testcase: testAlphaBetaValue took 0 sec
+Testcase: testQuiescenceValue took 0.001 sec
+Testcase: testDoneBeforeAnyMovesMade took 0.001 sec
+Testcase: testDoneNullAfterFirstMove took 0.319 sec
+Testcase: testDoneStartGame took 0.001 sec
+Testcase: testGenerateMovesBeforeFirstMove took 0.308 sec
+Testcase: testGenerateMovesAfterFirstMove took 0.52 sec
+Testcase: testGenerateUrgentMovesAtStartOfGame took 0.002 sec
+	FAILED
+We expected move list to be non-null.
+junit.framework.AssertionFailedError: We expected move list to be non-null.
+	at com.becker.game.twoplayer.common.search.test.TwoPlayerSearchableBaseTst.testGenerateUrgentMovesAtStartOfGame(TwoPlayerSearchableBaseTst.java:221)
+
+Testcase: testInJeopardy took 0.001 sec
