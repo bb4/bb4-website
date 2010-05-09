@@ -178,7 +178,7 @@ public abstract class GameOptionsDialog extends OptionsDialog
     }
 
     /**
-     * add a section for loggin options to panel p.
+     * add a section for logging options to panel p.
      * @param p  the panel to add to
      */
     protected void addLoggerSection(JPanel p)

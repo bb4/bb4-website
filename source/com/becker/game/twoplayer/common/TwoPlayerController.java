@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * This is an abstract base class for a Game Controller.
  * It contains the key logic for 2 player zero sum games with perfect information.
- * Some examples include chess, checkers, go, othello, pente, blockade, mancala, nine-mens morris, etc.
+ * Some examples include chess, checkers, go, othello, pente, com.becker.game.twoplayer.blockade, mancala, nine-mens morris, etc.
  * It implements Optimizee because the games derived from this class
  * can be optimized to improve their playing ability.
  *

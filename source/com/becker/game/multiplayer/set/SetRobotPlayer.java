@@ -39,7 +39,7 @@ public class SetRobotPlayer extends SetPlayer
     }
 
     /**
-     * speed in milliseconds in which the robot player will find the next pair
+     * @return speed in milliseconds in which the robot player will find the next pair
      */
     private int getSpeed()
     {

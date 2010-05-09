@@ -7,7 +7,7 @@ import com.becker.game.twoplayer.common.persistence.tokens.TwoPlayerMoveToken;
 
 
 /**
- * Loads a blockade game from a text file.
+ * Loads a com.becker.game.twoplayer.blockade game from a text file.
  *
  * @author Barry Becker
  */

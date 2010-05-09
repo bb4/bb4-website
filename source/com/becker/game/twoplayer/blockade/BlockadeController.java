@@ -12,7 +12,7 @@ import com.becker.optimization.parameter.ParameterArray;
 import java.util.*;
 
 /**
- * Defines for the computer how it should play blockade.
+ * Defines for the computer how it should play com.becker.game.twoplayer.blockade.
  *
  * Todo items
  *   - Restrict to N vertical and N horizontal walls, or allow not to place a wall.
@@ -79,7 +79,7 @@ public class BlockadeController extends TwoPlayerController
 
 
     /**
-     * save the current state of the blockade game to a file in SGF (4) format (standard game format).
+     * save the current state of the com.becker.game.twoplayer.blockade game to a file in SGF (4) format (standard game format).
      *This should some day be xml (xgf)
      * @param fileName name of the file to save the state to
      * @param ae the exception that occurred causing us to want to save state
@@ -168,7 +168,7 @@ public class BlockadeController extends TwoPlayerController
 
         /**
          * Generate all possible legal and reasonable next moves.
-         * In blockade, there are a huge amount of possible next moves because of all the possible
+         * In com.becker.game.twoplayer.blockade, there are a huge amount of possible next moves because of all the possible
          * wall placements. So restrict wall placements to those that hinder the enemy while not hindering you.
          * lastMove may be null if there was no last move.
          */

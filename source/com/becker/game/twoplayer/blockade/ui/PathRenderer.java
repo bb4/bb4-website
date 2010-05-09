@@ -11,7 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Render the paths on the blockade board.
+ * Render the paths on the com.becker.game.twoplayer.blockade board.
  * Mostly for debuggin puposes.
  * Usually the human players do not want to see these paths during a normal game.
  *

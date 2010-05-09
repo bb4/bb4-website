@@ -114,7 +114,7 @@
            <classpath path="${libDir}/junit.jar;${classesDir}"/>
            <assertions><enable/></assertions>
            <formatter type="plain"/>
-           <test name="com.becker.common.test.TestAll" outfile="../test/common/commonTestResults"/>
+           <test name="com.becker.common.TestAll" outfile="../test/com/becker/common/commonTestResults"/>
        </junit>
   </target>
 
@@ -143,7 +143,7 @@
            <!--jvmarg value="-agentlib:jdwp=transport=dt_socket,server=y,address=8000"/-->
            <assertions><enable/></assertions>
            <formatter type="plain"/>
-           <test name="com.becker.game.twoplayer.pente.test.TestAll" outfile="../test/pente/penteTestResults"/>
+           <test name="com.becker.game.twoplayer.pente.TestAll" outfile="../test/com/becker/game/twoplayer/pente/penteTestResults"/>
        </junit>
   </target>
 
@@ -162,15 +162,15 @@
            <!--jvmarg value="-agentlib:jdwp=transport=dt_socket,server=y,address=8000"/-->
            <assertions><enable/></assertions>
            <formatter type="plain"/>
-           <test name="com.becker.game.twoplayer.tictactoe.test.TestAll" outfile="../test/tictactoe/tictactoeTestResults"/>
+           <test name="com.becker.game.twoplayer.tictactoe.TestAll" outfile="../test/com/becker/game/twoplayer/tictactoe/tictactoeTestResults"/>
        </junit>
   </target>
 
-  <target name="executeBlockade" description="Run the blockade program">
+  <target name="executeBlockade" description="Run the com.becker.game.twoplayer.blockade program">
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
-      <param name="args" value="-name blockade -locale ENGLISH"/>
+      <param name="args" value="-name com.becker.game.twoplayer.blockade -locale ENGLISH"/>
     </antcall>
   </target>
 
@@ -181,7 +181,7 @@
            <formatter type="plain"/>
            <!--formatter type="brief" usefile="false" /-->
           <!--jvmarg value="-agentlib:jdwp=transport=dt_socket,server=y,address=8000"/-->  <!--   for Netbeans debugging-->
-           <test name="com.becker.game.twoplayer.blockade.test.TestAll" outfile="../test/blockade/blockadeTestResults"/>
+           <test name="com.becker.game.twoplayer.blockade.TestAll" outfile="../test/com/becker/game/twoplayer/blockade/blockadeTestResults"/>
        </junit>
   </target>
 
@@ -295,7 +295,7 @@
            <!--jvmarg value="-agentlib:jdwp=transport=dt_socket,server=y,address=8000"/-->
            <assertions><enable/></assertions>
            <formatter type="plain"/>
-           <test name="com.becker.game.twoplayer.go.test.TestAll" outfile="../test/go/goTestResults"/>
+           <test name="com.becker.game.twoplayer.go.TestAll" outfile="../test/com/becker/game/twoplayer/go/goTestResults"/>
            <!--test name="com.becker.game.twoplayer.go.test.whitebox.TestAllWhiteBox" outfile="../test/go/goTestResults"/-->
            <!-- test name="com.becker.game.twoplayer.go.test.TestEyes" outfile="../test/go/goTestResults"/-->
        </junit>
@@ -323,13 +323,21 @@
     </antcall>
   </target>
 
-<target name="executeStock" description="Run the Stock simulator">
+  <target name="executeStock" description="Run the Stock simulator">
     <antcall target="executeProgram">
       <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
       <param name="args" value="com.becker.simulation.stock.StockSimulator"/>
     </antcall>
   </target>
+
+  <target name="executeGraph" description="Run the Graph simulator">
+      <antcall target="executeProgram">
+        <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
+        <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar"/>
+        <param name="args" value="com.becker.simulation.graphing.GraphSimulator"/>
+      </antcall>
+    </target>
 
 
   <target name="executeParameterDistribution" description="Run the Parameter Distribution simulator">
@@ -395,7 +403,7 @@
            <assertions><enable/></assertions>
            <formatter type="plain"/>
            <!--formatter type="brief" usefile="false" /-->
-           <test name="com.becker.simulation.liquid.test.TestAll" outfile="../test/liquid/liquidTestResults"/>
+           <test name="com.becker.simulation.liquid.TestAll" outfile="../test/liquid/liquidTestResults"/>
        </junit>
   </target>
 

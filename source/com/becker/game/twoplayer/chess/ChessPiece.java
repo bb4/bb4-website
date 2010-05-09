@@ -54,6 +54,9 @@ public class ChessPiece extends GamePiece
         return pieceType_ == type;
     }
 
+    public ChessPieceType getPieceType() {
+        return pieceType_;
+    }
     /**
      * @return  true if this is the first time that this piece has been moved in the game.
      */

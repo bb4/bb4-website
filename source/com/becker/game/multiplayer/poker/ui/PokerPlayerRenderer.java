@@ -32,16 +32,16 @@ public class PokerPlayerRenderer extends GamePieceRenderer
     private static final Color FOLDED_COLOR = new Color(50, 50, 55, 30);
 
     // the suit images
-    private static ImageIcon[] suitImages_ = new ImageIcon[Card.Suit.values().length];
+    private static ImageIcon[] suitImages_ = new ImageIcon[Suit.values().length];
 
     private static final String IMAGE_DIR = GameContext.GAME_ROOT + "multiplayer/poker/ui/images/";
     static {
         // gets the images from resources or the filesystem
         // depending if we are running as an applet or application respectively.
-        suitImages_[Card.Suit.CLUBS.ordinal()] = GUIUtil.getIcon(IMAGE_DIR + "club_small.gif");
-        suitImages_[Card.Suit.SPADES.ordinal()] = GUIUtil.getIcon(IMAGE_DIR + "spade_small.gif");
-        suitImages_[Card.Suit.HEARTS.ordinal()] = GUIUtil.getIcon(IMAGE_DIR + "heart_small.gif");
-        suitImages_[Card.Suit.DIAMONDS.ordinal()] = GUIUtil.getIcon(IMAGE_DIR + "diamond_small.gif");
+        suitImages_[Suit.CLUBS.ordinal()] = GUIUtil.getIcon(IMAGE_DIR + "club_small.gif");
+        suitImages_[Suit.SPADES.ordinal()] = GUIUtil.getIcon(IMAGE_DIR + "spade_small.gif");
+        suitImages_[Suit.HEARTS.ordinal()] = GUIUtil.getIcon(IMAGE_DIR + "heart_small.gif");
+        suitImages_[Suit.DIAMONDS.ordinal()] = GUIUtil.getIcon(IMAGE_DIR + "diamond_small.gif");
     }
 
     /**
@@ -183,7 +183,7 @@ public class PokerPlayerRenderer extends GamePieceRenderer
                      imageWidth, (int)(rat * imageWidth), null);
 
         g2.setFont(font);
-        g2.setColor((c.suit() == Card.Suit.HEARTS || c.suit() == Card.Suit.DIAMONDS)? RED_COLOR : BLACK_COLOR);
+        g2.setColor((c.suit() == Suit.HEARTS || c.suit() == Suit.DIAMONDS)? RED_COLOR : BLACK_COLOR);
 
         String symbol = c.rank().getSymbol();
         Rectangle2D r = font.getStringBounds(symbol, g2.getFontRenderContext());

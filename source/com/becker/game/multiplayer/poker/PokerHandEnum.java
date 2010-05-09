@@ -52,6 +52,5 @@ public enum PokerHandEnum {
         return score;
     }
 
-
 }
 

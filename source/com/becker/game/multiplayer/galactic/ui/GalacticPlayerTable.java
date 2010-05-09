@@ -124,7 +124,7 @@ public class GalacticPlayerTable extends PlayerTable implements TableModelListen
     protected Player createPlayer() {
         int ct = table_.getRowCount();
         Planet planet = new Planet((char)('A'+ct), GalacticPlayer.DEFAULT_NUM_SHIPS, 10, new Location(0,0));
-        Color newColor = MultiGamePlayer.getNewPlayerColor((List<GalacticPlayer>)getPlayers());
+        Color newColor = MultiGamePlayer.getNewPlayerColor(getPlayers());
         GalacticPlayer player = GalacticPlayer.createGalacticPlayer(
                                              "Admiral "+(ct+1), planet, newColor, true);
         planet.setOwner(player);
@@ -132,7 +132,7 @@ public class GalacticPlayerTable extends PlayerTable implements TableModelListen
     }
 
     /**
-     * The user has switched from human to alien or vice versa.
+     * The user has changed from human to alien or vice versa.
      * @param e
      */
     public void tableChanged(TableModelEvent e) {
