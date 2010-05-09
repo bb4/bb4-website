@@ -922,6 +922,6 @@ Testcase: testGenerateUrgentMovesAtStartOfGame took 0.002 sec
 	FAILED
 We expected move list to be non-null.
 junit.framework.AssertionFailedError: We expected move list to be non-null.
-	at com.becker.game.twoplayer.common.search.test.TwoPlayerSearchableBaseTst.testGenerateUrgentMovesAtStartOfGame(TwoPlayerSearchableBaseTst.java:221)
+	at com.becker.game.twoplayer.common.search.TwoPlayerSearchableBaseTst.testGenerateUrgentMovesAtStartOfGame(TwoPlayerSearchableBaseTst.java:221)
 
 Testcase: testInJeopardy took 0.001 sec

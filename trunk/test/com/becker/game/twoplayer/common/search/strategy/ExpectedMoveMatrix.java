@@ -1,7 +1,7 @@
-package com.becker.game.twoplayer.common.search.test.strategy;
+package com.becker.game.twoplayer.common.search.strategy;
 
 import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.common.search.test.Progress;
+import com.becker.game.twoplayer.common.search.Progress;
 
 /**
  * The expected moves for a given game for each combination of game progress and player.

@@ -1,17 +1,14 @@
-package com.becker.game.twoplayer.common.search.test.strategy;
+package com.becker.game.twoplayer.common.search.strategy;
 
-import com.becker.common.math.Range;
 import com.becker.common.util.Util;
 import com.becker.game.common.GamePiece;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
+import com.becker.game.twoplayer.common.search.ISearchableHelper;
 import com.becker.game.twoplayer.common.search.SearchOptions;
-import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
-import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
-import com.becker.game.twoplayer.common.search.test.ISearchableHelper;
-import com.becker.game.twoplayer.common.search.test.Progress;
-import com.becker.game.twoplayer.common.search.test.SearchableHelper;
+import com.becker.game.twoplayer.common.search.Progress;
+import com.becker.game.twoplayer.common.search.SearchableHelper;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import junit.framework.TestCase;
 

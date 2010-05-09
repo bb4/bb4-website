@@ -2,8 +2,8 @@ package com.becker.game.twoplayer.tictactoe;
 
 import com.becker.game.common.GamePiece;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.common.search.test.ISearchableHelper;
-import com.becker.game.twoplayer.common.search.test.TwoPlayerSearchableBaseTst;
+import com.becker.game.twoplayer.common.search.ISearchableHelper;
+import com.becker.game.twoplayer.common.search.TwoPlayerSearchableBaseTst;
 import junit.framework.Assert;
 import junit.framework.TestSuite;
 import junit.framework.Test;

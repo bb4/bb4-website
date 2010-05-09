@@ -1,11 +1,9 @@
-package com.becker.game.twoplayer.common.search.test;
+package com.becker.game.twoplayer.common.search;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
-import com.becker.game.twoplayer.common.search.SearchOptions;
-import junit.framework.*;
 import com.becker.optimization.parameter.ParameterArray;
 import java.util.List;
 
@@ -88,33 +86,33 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
     @Override
     public void testLookaheadValue() {
 
-        Assert.assertEquals("Unexpected lookahead value.", DEFAULT_LOOKAHEAD, searchable.getSearchOptions().getLookAhead());
+        assertEquals("Unexpected lookahead value.", DEFAULT_LOOKAHEAD, searchable.getSearchOptions().getLookAhead());
         getSearchOptions().setLookAhead(7);
-        Assert.assertEquals("Unexpected lookahead value.", 7, searchable.getSearchOptions().getLookAhead());
+        assertEquals("Unexpected lookahead value.", 7, searchable.getSearchOptions().getLookAhead());
     }
 
     /** verify that we can retrieve the lookahead value. */
     @Override
     public void testAlphaBetaValue() {
 
-        Assert.assertEquals("Unexpected alphabeta value.", true, searchable.getSearchOptions().getAlphaBeta());
+        assertEquals("Unexpected alphabeta value.", true, searchable.getSearchOptions().getAlphaBeta());
         getSearchOptions().setAlphaBeta(false);
-        Assert.assertEquals("Unexpected alphabeta value.", false, searchable.getSearchOptions().getAlphaBeta());
+        assertEquals("Unexpected alphabeta value.", false, searchable.getSearchOptions().getAlphaBeta());
     }
 
     /** verify that we can retrieve the quiescence value. */
     @Override
     public void testQuiescenceValue()  {
-        Assert.assertEquals("Unexpected quiessence value.", false, searchable.getSearchOptions().getQuiescence());
+        assertEquals("Unexpected quiessence value.", false, searchable.getSearchOptions().getQuiescence());
         getSearchOptions().setQuiescence(true);
-        Assert.assertEquals("Unexpected quiessence value.", true, searchable.getSearchOptions().getQuiescence());
+        assertEquals("Unexpected quiessence value.", true, searchable.getSearchOptions().getQuiescence());
     }
 
 
     /**verify that we are not done if we are at the very start of the game.  */
     public void testDoneBeforeAnyMovesMade() {
 
-        Assert.assertFalse("We cannot be done if no moves have been made yet. ",
+        assertFalse("We cannot be done if no moves have been made yet. ",
                 searchable.done(null, false));
     }
 
@@ -123,13 +121,13 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
 
         controller.computerMovesFirst();
 
-        Assert.assertTrue("We expect to be done if our next move is null and at least one move has been made. ",
+        assertTrue("We expect to be done if our next move is null and at least one move has been made. ",
                 searchable.done(null, false));
     }
 
     /** Verify not done after first move.  */
     public void testDoneStartGame() {
-        Assert.assertFalse("We don't expect to be done after making the very first move. ",
+        assertFalse("We don't expect to be done after making the very first move. ",
                searchable.done(createInitialMove(), false));
     }
 
@@ -149,11 +147,11 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
    public void testGenerateMovesBeforeFirstMove() {
  
        List moves = searchable.generateMoves(null, weights(), true);
-       Assert.assertTrue("We expect the move list to be non-null at the very start of the game.", moves!= null);
+       assertTrue("We expect the move list to be non-null at the very start of the game.", moves!= null);
        // usually we have a special way to generate the first move (see computerMovesFirst).
         System.out.println("first moves="+ moves); 
        int exp = getExpectedNumGeneratedMovesBeforeFirstMove();
-       Assert.assertEquals("Unexpected number of generated moves before the first move has been played: " +moves.size(),
+       assertEquals("Unexpected number of generated moves before the first move has been played: " +moves.size(),
                exp, moves.size() );
    }
 
@@ -171,62 +169,62 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
        TwoPlayerMove lastMove = (TwoPlayerMove)controller.getLastMove();
        List moves = searchable.generateMoves(lastMove, wts, true);
 
-       Assert.assertTrue("We expect the move list to be non-null very start of the game.", moves!= null);
-       Assert.assertTrue("We expected some valid next moves at the very start of the game.",  moves.size() > 0);
+       assertTrue("We expect the move list to be non-null very start of the game.", moves!= null);
+       assertTrue("We expected some valid next moves at the very start of the game.",  moves.size() > 0);
    }
 
     /**  Load a game in the middle and verify that we can get all the reasonable next moves. */
    public void testGenerateAllP1MovesMidGame() {
-       Assert.assertFalse(false);
+       assertFalse(false);
    }
 
    /**  Load a game in the middle and verify that we can get the expected high value next moves. */
    public void testGenerateTopP1MovesMidGame() {
-       Assert.assertFalse(false);
+       assertFalse(false);
    }
 
     /** Load a game at the end and verify that we can get all the reasonable next moves. */
    public void testGenerateAllP1MovesEndGame() {
-       Assert.assertFalse(false);
+       assertFalse(false);
    }
 
    /** Load a game at the end and verify that we can get all the high value next moves. */
    public void testGenerateTopP1MovesEndGame() {
-       Assert.assertFalse(false);
+       assertFalse(false);
    }
 
    /**  Load a game in the middle and verify that we can get all the reasonable next moves. */
    public void testGenerateAllP2MovesMidGame() {
-       Assert.assertFalse(false);
+       assertFalse(false);
    }
 
    /**  Load a game in the middle and verify that we can get the expected high value next moves. */
    public void testGenerateTopP2MovesMidGame() {
-       Assert.assertFalse(false);
+       assertFalse(false);
    }
 
    /** Load a game at the end and verify that we can get all the reasonable next moves. */
    public void testGenerateAllP2MovesEndGame() {
-       Assert.assertFalse(false);
+       assertFalse(false);
    }
 
    /** Load a game at the end and verify that we can get all the high value next moves. */
    public void testGenerateTopP2MovesEndGame() {
-       Assert.assertFalse(false);
+       assertFalse(false);
    }
 
    /**  There should not be any urgent moves at the very start of the game.  */
    public void  testGenerateUrgentMovesAtStartOfGame() {
          List moves = searchable.generateUrgentMoves(null, weights(), true);
-         Assert.assertTrue("We expected move list to be non-null.",
+         assertTrue("We expected move list to be non-null.",
                  moves != null );
-         Assert.assertTrue("We expected no urgent moves at the start of the game, but was:" + moves,
+         assertTrue("We expected no urgent moves at the start of the game, but was:" + moves,
                  moves.size() == 0);
     }
 
    /**  Verify that we generate a correct list of urgent moves.  */
    public void  testGenerateUrgentMoves() {
-         Assert.assertFalse(false);
+         assertFalse(false);
          // load a typical game in the beginning and verify that there are no urgent next moves.
 
          // load a critical game in the middle and verify that there are urgent next moves.
@@ -238,13 +236,13 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
     public void testInJeopardy() {
         boolean actualInJeopardy =
                 searchable.inJeopardy(null, weights(), true);
-        Assert.assertFalse("We don't expect anything to be in jeopardy at the very start of the game.", actualInJeopardy);
+        assertFalse("We don't expect anything to be in jeopardy at the very start of the game.", actualInJeopardy);
 
         actualInJeopardy =
                 searchable.inJeopardy(createInitialMove(),
                                       getController().getComputerWeights().getPlayer2Weights(),
                                       false);
-        Assert.assertFalse("We don't expect anything to be in jeopardy at the very start of the game.", actualInJeopardy);
+        assertFalse("We don't expect anything to be in jeopardy at the very start of the game.", actualInJeopardy);
 
         // load a typical game in the middle and verify a move that does not put anything in jeopardy.
 
@@ -258,7 +256,7 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
             printMoves( title, moves);
         }
 
-        Assert.assertEquals("Unexpected number of generated moves.",
+        assertEquals("Unexpected number of generated moves.",
                 expectedMoves.length, moves.size());
 
         StringBuilder diffs = new StringBuilder("");
@@ -277,7 +275,7 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
         if (diffs.length() > 0) {
             printMoves( title, moves);
         }
-        Assert.assertTrue("There were unexpected generated moves for " + title +"\n" + diffs,
+        assertTrue("There were unexpected generated moves for " + title +"\n" + diffs,
                     diffs.length() == 0);
     }
 

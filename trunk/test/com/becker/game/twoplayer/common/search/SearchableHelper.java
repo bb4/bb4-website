@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.common.search.test;
+package com.becker.game.twoplayer.common.search;
 
 import com.becker.common.util.FileUtil;
 
