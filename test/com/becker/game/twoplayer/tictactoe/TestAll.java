@@ -6,7 +6,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Master test suire to test all aspects of my tic-tac-toe program.
+ * Master test suite to test all aspects of my tic-tac-toe program.
  *
  * @author Barry Becker
  */

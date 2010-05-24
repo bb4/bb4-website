@@ -6,15 +6,13 @@ import junit.framework.TestSuite;
 
 /**
  * Master test suire to test all aspects of my com.becker.game.twoplayer.blockade program.
- * Created on May 28, 2007, 7:13 AM
- *@author Barry Becker
+ * @author Barry Becker
  */
 public class TestAll extends TestCase {
 
-
     public static Test suite() {
 
-        TestSuite suite =  new TestSuite("All Go Tests");
+        TestSuite suite =  new TestSuite("All Blockade Tests");
 
         suite.addTestSuite(BlockadeBoardTest.class);
         suite.addTestSuite(BlockadeControllerTest.class);

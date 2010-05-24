@@ -53,6 +53,13 @@ public class GoTestCase extends TestCase {
         setOptionOverrides(options.getSearchOptions());
     }
 
+
+    @Override
+    protected void tearDown() throws Exception {
+        controller_ = null;
+        super.tearDown();
+    }
+
     /**
      * Derived classes should override if they want different options.
      * @param sOptions default options to override
@@ -156,11 +163,4 @@ public class GoTestCase extends TestCase {
     protected static boolean approximatelyEqual(double value, double expectedValue, double thresh) {
         return (Math.abs(value - expectedValue) < thresh);
     }
-
-
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-
 }

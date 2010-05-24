@@ -1,12 +1,12 @@
 package com.becker.game.twoplayer.go.board.analysis;
 
+import com.becker.game.twoplayer.go.GoProfiler;
 import com.becker.game.twoplayer.go.board.EyeType;
 import com.becker.game.twoplayer.go.board.GoEye;
 import com.becker.game.twoplayer.go.board.GoGroup;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.common.util.Util;
-import com.becker.game.twoplayer.go.*;
-import com.becker.game.twoplayer.go.test.GoTestCase;
+import com.becker.game.twoplayer.go.GoTestCase;
 import java.util.Set;
 import junit.framework.Assert;
 
@@ -567,11 +567,11 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
                 + expectedRelHealthDifference + "\n but instead got  ("+brh+" -"+ wrh+") = "+ drh, relDifOK);
     }
 
-    private final String errorMarker(boolean OK) {
+    private String errorMarker(boolean OK) {
         return (OK?"":"      *Error*");
     }
 
-    private final void verifyEyes(Set<GoEye> eyes, EyeType[] expectedEyes, boolean black)
+    private void verifyEyes(Set<GoEye> eyes, EyeType[] expectedEyes, boolean black)
     {
         String color = black? "black" : "white";
         Assert.assertEquals("unequal numbers of "+color+" eyes", expectedEyes.length, eyes.size());

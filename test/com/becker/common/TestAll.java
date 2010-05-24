@@ -27,8 +27,6 @@ public class TestAll extends TestCase {
         suite.addTest(TestAllFunction.suite());
         suite.addTest(TestAllUtil.suite());
 
-        suite.addTest(TestAllUtil.suite());
-
         return suite;
     }
 }

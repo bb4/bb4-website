@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.go.board.analysis;
 
-import com.becker.game.twoplayer.go.test.*;
+import com.becker.game.twoplayer.go.GoTestCase;
 import com.becker.game.twoplayer.go.board.GoEye;
 import com.becker.game.twoplayer.go.board.GoGroup;
 import com.becker.game.twoplayer.go.board.GoBoard;
@@ -482,12 +482,12 @@ public class TestEyeAnalyzer extends GoTestCase {
 
         @Override
         public String toString() {
-            StringBuilder buf = new StringBuilder('\n');
+            StringBuilder buf = new StringBuilder("\n");
             String nl = "\r\n";
-            buf.append(" False Eyes: "+numFalseEyes+nl);
-            buf.append(" True Eyes: "+numTrueEyes+nl);
-            buf.append(" Big Eyes  : "+numBigEyes+nl);
-            buf.append(" Territorial: "+numTerritorialEyes+nl);
+            buf.append(" False Eyes: ").append(numFalseEyes).append(nl);
+            buf.append(" True Eyes: ").append(numTrueEyes).append(nl);
+            buf.append(" Big Eyes  : ").append(numBigEyes).append(nl);
+            buf.append(" Territorial: ").append(numTerritorialEyes).append(nl);
             return buf.toString();
         }
     }

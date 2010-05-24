@@ -92,18 +92,20 @@ public class TestGoBoard extends GoTestCase {
 
     private void verifyGroupLiberties(String file,
                                       int bRow, int bCol, int expectedBlackLiberties,
-                                      int wRow, int wCol, int expectedWhiteLiberties)   {
+                                      int wRow, int wCol, int expectedWhiteLiberties) {
         restore(PREFIX + file);
 
         GoBoard board = (GoBoard)controller_.getBoard();
 
         GoBoardPosition pos = (GoBoardPosition)board.getPosition(bRow, bCol);
         int numGroupLiberties = pos.getGroup().getLiberties(board).size();
-        Assert.assertTrue("numGroupLiberties="+numGroupLiberties+" expected="+expectedBlackLiberties, numGroupLiberties == expectedBlackLiberties);
+        Assert.assertTrue("numGroupLiberties="+numGroupLiberties+" expected="+expectedBlackLiberties,
+                numGroupLiberties == expectedBlackLiberties);
 
         pos = (GoBoardPosition)board.getPosition(wRow, wCol);
         numGroupLiberties = pos.getGroup().getLiberties(board).size();
-        Assert.assertTrue("numGroupLiberties="+numGroupLiberties+" expected="+expectedWhiteLiberties, numGroupLiberties == expectedWhiteLiberties);
+        Assert.assertTrue("numGroupLiberties="+numGroupLiberties+" expected="+expectedWhiteLiberties,
+                numGroupLiberties == expectedWhiteLiberties);
     }
 
 }

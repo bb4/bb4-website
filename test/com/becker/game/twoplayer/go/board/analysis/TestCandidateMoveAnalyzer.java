@@ -2,7 +2,7 @@ package com.becker.game.twoplayer.go.board.analysis;
 
 import com.becker.common.Location;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.test.GoTestCase;
+import com.becker.game.twoplayer.go.GoTestCase;
 import java.util.ArrayList;
 import java.util.List;
 import junit.framework.Assert;
@@ -21,6 +21,7 @@ public class TestCandidateMoveAnalyzer extends GoTestCase {
         verifyCandidateMoves("problem_score1", 71, null);
     }
 
+    /** XXXX sometimes passes sometimes fails. odd */
     public void testCandidateMoves2() {
         verifyCandidateMoves("problem_score2", 79, null);   // or 74?
     }
@@ -40,6 +41,7 @@ public class TestCandidateMoveAnalyzer extends GoTestCase {
         verifyCandidateMoves("problem_score55a", 10, expCandidates);
     }
 
+    /** XXXX sometimes passes sometimes fails. odd */
     public void testCandidateMoves4() {
 
         System.out.println("------------cm4 --------------------------");
@@ -52,15 +54,15 @@ public class TestCandidateMoveAnalyzer extends GoTestCase {
         expCandidates.add(new Location(3, 2));
         expCandidates.add(new Location(4, 1));
         expCandidates.add(new Location(5, 1));
-        //expCandidates.add(new Location(5, 4));
-        //expCandidates.add(new Location(5, 5));
+        expCandidates.add(new Location(5, 4));
+        expCandidates.add(new Location(5, 5));
 
-        verifyCandidateMoves("problem_score55b", 8, expCandidates);   // 10?
+        verifyCandidateMoves("problem_score55b", 10, expCandidates);
     }
 
 
     /**
-     * Veridy candidate move generation.
+     * Verify candidate move generation.
      */
     private void verifyCandidateMoves(String file, int expNumCandidates, List<Location> expCandidates) {
         restore(PREFIX + file);
