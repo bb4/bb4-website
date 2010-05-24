@@ -271,7 +271,7 @@ public class GroupHealthAnalyzer implements Cloneable {
     private static final float BEST_ONE_EYED_HEALTH = 0.89f;
 
     /**
-     *Calculate the health of a group that has 2 eyes.
+     * Calculate the health of a group that has 2 eyes.
      */
     private float calcTwoEyedHealth(float side, GoBoard board) {
         float health;

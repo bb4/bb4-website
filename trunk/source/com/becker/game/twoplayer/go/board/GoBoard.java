@@ -18,6 +18,7 @@ import java.util.*;
  * For example, we update strings, and groups (and eventually armies) after each move.
  * After updating we can use these structures to estimate territory for each side.
  *
+ * Could move many methods to StringFinder and GroupFinder classes.
  * @author Barry Becker
  */
 public final class GoBoard extends TwoPlayerBoard

@@ -38,11 +38,10 @@ public abstract class GameImporter {
         GameContext.log( 1, "move sequence= " + moveSequence );
         controller_.reset();
 
-        Iterator it = moveSequence.iterator();
-        while ( it.hasNext() ) {
-            Move m = (Move) it.next();
-            GameContext.log(1, "now making:"+ m);
-            controller_.makeMove( m );
+        for (Move aMoveSequence : moveSequence) {
+            Move m = aMoveSequence;
+            GameContext.log(1, "now making:" + m);
+            controller_.makeMove(m);
         }
     }
 
@@ -67,6 +66,7 @@ public abstract class GameImporter {
 
     /**
      * create a Move from an SGF token.
+     * @return move that was created from the token.
      */
     protected abstract Move createMoveFromToken( SGFToken token );
 

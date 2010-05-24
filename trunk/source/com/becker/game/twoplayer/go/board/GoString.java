@@ -24,9 +24,6 @@ public class GoString extends GoSet
     
     /** The group to which this string belongs. */
     protected GoGroup group_;
-
-    /** Used by Benson's algorithm to help determine unconditional life. */
-    private Set<GoString> neighbors_;
     
     /** If true, then we are an eye in an unconditionally alive group (according to Benson's algorithm). */
     private boolean unconditionallyAlive_;
@@ -300,6 +297,7 @@ public class GoString extends GoSet
     public String toString()
     {
         StringBuffer sb = new StringBuffer( getPrintPrefix() );
+        sb.append(" UA=").append(isUnconditionallyAlive()).append(" ");
         Iterator it = getMembers().iterator();
         if ( it.hasNext() ) {
             GoBoardPosition p = (GoBoardPosition) it.next();
@@ -341,20 +339,6 @@ public class GoString extends GoSet
                 assert ( list.contains( s )): list + " does not contain " + s + ". getMembers() =" + getMembers() ;
             }
         }
-    }
-
-    /**
-     * @return neighbor eyes if string, or neighboring strings if we are an eye.
-     */
-    public Set<GoString> getNeighbors() {
-        return neighbors_;
-    }
-
-    /**
-     * Set our neigbors (eyes if string, or neighboring strings if we are an eye).
-     */
-    public void setNbrs(Set<GoString> nbrEyes) {
-        neighbors_ = nbrEyes;
     }
 
     /**
