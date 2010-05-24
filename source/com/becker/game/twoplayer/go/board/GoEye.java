@@ -100,12 +100,10 @@ public final class GoEye extends GoString implements GoMember
      */
     public void clear()
     {
-         Iterator it = getMembers().iterator();
-         while (it.hasNext()) {
-             GoBoardPosition pos = (GoBoardPosition)it.next();
-             pos.setEye(null);
-             pos.setVisited(false);
-         }
+        for (GoBoardPosition pos : getMembers()) {
+            pos.setEye(null);
+            pos.setVisited(false);
+        }
          setGroup(null);
     }
 

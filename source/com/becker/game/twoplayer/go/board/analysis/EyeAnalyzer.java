@@ -73,6 +73,7 @@ public class EyeAnalyzer {
      *
      * @param space check to see if this space is part of a false eye.
      * @param board the go game board.
+     * @return true if htis is a false eye.
      */
     private boolean isFalseEye( GoBoardPosition space, GoBoard board )
     {

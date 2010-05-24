@@ -22,6 +22,11 @@ public abstract class PostChangeUpdater {
     protected Captures captures_;
 
 
+    /**
+     * Update the board meta data after a change has been made (like an add or a remove of a stone)
+     * @param board board that changed.
+     * @param captures captures added or removed during the change
+     */
     PostChangeUpdater(GoBoard board, Captures captures) {
         board_ = board;
         captures_ = captures;

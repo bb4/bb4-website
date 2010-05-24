@@ -6,12 +6,11 @@ import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.GoMove;
 import com.becker.game.twoplayer.go.GoProfiler;
 import com.becker.game.twoplayer.go.board.*;
-import com.becker.game.twoplayer.go.board.update.Captures;
 
 import java.util.*;
 
 /**
- * Responsible for updating a go board after making or undoing a move.
+ * Responsible for updating a go board after making a move.
  *
  * @author Barry Becker
  */
@@ -210,11 +209,18 @@ public class PostMoveUpdater extends PostChangeUpdater {
         unvisitAll();
 
         // verify that the string to which we added the stone has at least one liberty
-        assert (pos.getString().getNumLiberties(board_) > 0): "The placed stone "+pos+" has no liberties "+pos.getGroup();
+        assert (pos.getString().getNumLiberties(board_) > 0):
+                "The placed stone "+pos+" has no liberties "+pos.getGroup();
 
         // this gets used when calculating the worth of the board
         board_.updateTerritory(false);
 
+        consistencyCheck(pos);
+
+        profiler.stopUpdateGroupsAfterMove();
+    }
+
+    private void consistencyCheck(GoBoardPosition pos) {
         if ( GameContext.getDebugMode() > 1 ) {
             BoardValidationUtil.confirmNoEmptyStrings(board_.getGroups());
             BoardValidationUtil.confirmStonesInValidGroups(board_);
@@ -226,10 +232,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
                 throw e;
             }
         }
-
-        profiler.stopUpdateGroupsAfterMove();
     }
-
 
     /**
      * Make sure that all the positions on the board are reset to the unvisited state.

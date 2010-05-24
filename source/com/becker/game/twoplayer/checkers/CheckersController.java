@@ -430,7 +430,7 @@ public class CheckersController extends TwoPlayerController
         public List<? extends TwoPlayerMove> generateUrgentMoves(
                 TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
         {
-            return null;
+            return new LinkedList<CheckersMove>();
         }
     }
 }

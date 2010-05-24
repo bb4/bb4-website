@@ -222,7 +222,7 @@ public class BlockadeController extends TwoPlayerController
          */
         public List<BlockadeMove> generateUrgentMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
         {
-            return null;
+            return new LinkedList<BlockadeMove>();
         }
 
         /**

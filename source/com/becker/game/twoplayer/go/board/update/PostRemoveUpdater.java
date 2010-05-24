@@ -11,7 +11,7 @@ import com.becker.game.twoplayer.go.board.update.Captures;
 import java.util.*;
 
 /**
- * Responsible for updating a go board after making or undoing a move.
+ * Responsible for updating a go board after undoing a move.
  *
  * @author Barry Becker
  */
@@ -372,16 +372,15 @@ public class PostRemoveUpdater extends PostChangeUpdater {
 
         // if the string that the stone is being removed from was considered unconditionally alive,
         // then we need to clear out all the unconditionally alive information for board_ group since it is now invalid.
+        // not to sure about this...
         if (string.isUnconditionallyAlive()) {
             for (Object s : group.getMembers())  {
                 GoString str = (GoString) s;
                 str.setUnconditionallyAlive(false);
-                str.setNbrs(null);
             }
             Set<GoEye> eyes = group.getEyes(board_);
             for (GoEye eye : eyes)  {
                 eye.setUnconditionallyAlive(false);
-                eye.setNbrs(null);
             }
         }
 

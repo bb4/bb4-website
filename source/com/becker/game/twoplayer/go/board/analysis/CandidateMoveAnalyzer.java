@@ -6,7 +6,7 @@ import com.becker.game.common.BoardPosition;
 /**
  * Creates a set of reasonable next moves for a given player.
  *
- * @author Barry Becker  Date: Aug 21, 2005
+ * @author Barry Becker
  */
 public class CandidateMoveAnalyzer {
 
@@ -31,7 +31,7 @@ public class CandidateMoveAnalyzer {
     }
 
     /**
-     * In theory all empties should be considered, but in practice we keep
+     * In theory, all empties should be considered, but in practice, we keep
      * a shorter list of reasonable moves lest things get intractable.
      *
      * @return true if this position is a reasonable next move.
@@ -91,7 +91,6 @@ public class CandidateMoveAnalyzer {
      */
     private void determineAdjacentCandidates()
     {
-        //  set the footprints
         for (int i = 1; i <= size_; i++ ) {
             for (int j = 1; j <= size_; j++ ) {
                 GoBoardPosition pos = (GoBoardPosition) board_.getPosition(i,j);
@@ -122,13 +121,15 @@ public class CandidateMoveAnalyzer {
     }
 
     /**
-     * Add only of unoccupied and not an unconditionally alize eye.
+     * Add only of unoccupied and not an unconditionally alive eye.
      * never add a stone from either side to an unconditonally alive eye. There is no advantage to it.
-     * @param position the poistion to try adding as a possible candidate move.
+     * @param position the position to try adding as a possible candidate move.
      */
     private void tryToAddCandidateMove(BoardPosition position) {
         GoBoardPosition pos = (GoBoardPosition) position;
-        if (pos.isUnoccupied() && !(pos.getEye()!=null && pos.getEye().isUnconditionallyAlive())) {
+
+        if (pos.isUnoccupied() && !(pos.getEye() != null && pos.getEye().isUnconditionallyAlive())) {
+
             candidateMoves_[pos.getRow()][pos.getCol()] = true;
         }
     }
