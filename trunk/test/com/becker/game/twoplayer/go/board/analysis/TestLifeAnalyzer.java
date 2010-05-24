@@ -2,7 +2,7 @@ package com.becker.game.twoplayer.go.board.analysis;
 
 import com.becker.game.twoplayer.go.board.GoGroup;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.test.GoTestCase;
+import com.becker.game.twoplayer.go.GoTestCase;
 import junit.framework.Assert;
 
 /**
@@ -15,7 +15,6 @@ public class TestLifeAnalyzer extends GoTestCase {
 
     // test for unconditional life
     public void testUnconditionalLife1() {
-        controller_.reset();
         verifyUnconditionalLife("unconditionalLife1", true, 12, true);
     }
 
@@ -73,13 +72,13 @@ public class TestLifeAnalyzer extends GoTestCase {
      public void testUnconditionalLife15() {
         verifyUnconditionalLife("unconditionalLife15", true, 12, true);
     }
- 
 
     /**
      * Use Benson's algorithm for detecting unconditionally alive groups.
      */
     private void verifyUnconditionalLife(String file,
-                                         boolean forBlackGroup, int expectedSizeOfGroup, boolean expectedUnconditionalyAlive) {
+                                         boolean forBlackGroup, int expectedSizeOfGroup,
+                                         boolean expectedUnconditionalyAlive) {
         restore(PREFIX + file);
 
         // find the biggest black and white groups
@@ -89,7 +88,7 @@ public class TestLifeAnalyzer extends GoTestCase {
         Assert.assertTrue("We expected the size of the test group to be "+ expectedSizeOfGroup
                 +" but instead it was "+ size,
                 size == expectedSizeOfGroup);
-        System.out.println("now testing unconditional life.");
+
         LifeAnalyzer analyzer = new LifeAnalyzer(group, (GoBoard) controller_.getBoard());
         boolean unconditionallyAlive = analyzer.isUnconditionallyAlive();
 
