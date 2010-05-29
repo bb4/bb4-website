@@ -55,7 +55,7 @@ public class GroupHealthAnalyzer implements Cloneable {
      * This is the cached number of liberties.
      * It updates whenever something has changed.
      */
-    private Set cachedLiberties_;
+    private Set<GoBoardPosition> cachedLiberties_;
 
     /** Number of stones in the group. */
     private int cachedNumStonesInGroup_;
@@ -107,7 +107,7 @@ public class GroupHealthAnalyzer implements Cloneable {
      * Get the number of liberties that the group has.
      * @return the number of liberties that the group has
      */
-    public Set getLiberties(GoBoard board)
+    public Set<GoBoardPosition> getLiberties(GoBoard board)
     {
         if (!eyeCacheBroken_) {
              return cachedLiberties_;
@@ -178,7 +178,6 @@ public class GroupHealthAnalyzer implements Cloneable {
      */
     public float calculateAbsoluteHealth( GoBoard board, GameProfiler profiler )
     {
-
         if ( !eyeCacheBroken_ ) {
             return absoluteHealth_;
         }

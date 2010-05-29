@@ -16,10 +16,10 @@ class HandicapStones {
     /** Initially the handicap stones have this health score */
     private static final float HANDICAP_STONE_HEALTH = 0.8f;
 
-    // the number of initial handicap stones to use
+    /** the number of initial handicap stones to use. */
     private int numHandicapStones_ = 0;
 
-    // typically there are at most 9 handicap stones in an uneven game
+    /** typically there are at most 9 handicap stones in an uneven game  */
     private List<GoBoardPosition> starPoints_ = null;
 
 

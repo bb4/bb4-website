@@ -6,7 +6,7 @@ import com.becker.game.twoplayer.go.board.*;
 import java.util.*;
 
 /**
- * Determine if group is unconditionally alive using
+ * Determine if group is pass-alive using
  * Benson's algorithm for unconditional life.
  * see http://senseis.xmp.net/?BensonSAlgorithm
  *
@@ -83,7 +83,7 @@ public final class LifeAnalyzer {
 
     /**
      * Find the neighbor string sets for a specific empty point within an eye.
-     * @param eye
+     * @param eye eye the eye space string we are currently analyzing.
      * @param pos empty position within eye.
      * @param nbrStrings the list to add neighboring still living strings to.
      */
@@ -158,9 +158,8 @@ public final class LifeAnalyzer {
 
         Set<GoString> candidateStrings = initializeCandidateStrings();
         boolean done;
-        int ct = 0;
+
         do {
-            GameContext.log(2, "\nIteration  = " + (ct++) + " num cand strings="+ candidateStrings.size());
             initializeEyeLife();
             Iterator<GoString> it = candidateStrings.iterator();
 
@@ -177,7 +176,6 @@ public final class LifeAnalyzer {
             }
 
         }  while ( !(done || candidateStrings.isEmpty()));
-        GameContext.log(2, "Done Iterating. num cand strings="+ candidateStrings.size());
         return candidateStrings;
     }
 

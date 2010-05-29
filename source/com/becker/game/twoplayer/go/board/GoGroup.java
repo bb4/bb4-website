@@ -185,7 +185,7 @@ public final class GoGroup extends GoSet
      * @return the number of liberties that the group has
      */
     @Override
-    public Set getLiberties(GoBoard board)
+    public Set<GoBoardPosition> getLiberties(GoBoard board)
     {
         return healthAnalyzer_.getLiberties(board);
     }
