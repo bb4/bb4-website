@@ -31,8 +31,9 @@ public abstract class GoSet implements GoMember
     /**
      * Get the number of liberties (open surrounding spaces)
      * @param board
+     * @return the liberties/positions for the set.
      */
-    public abstract Set getLiberties(GoBoard board);
+    public abstract Set<GoBoardPosition> getLiberties(GoBoard board);
 
     /**
      * @return  true if set is owned by player one
@@ -76,17 +77,14 @@ public abstract class GoSet implements GoMember
 
         if (getMembers()!=null)  {
             ((GoSet)clone).initializeMembers();
-            //((GoSet)clone).members_ = new HashSet();
+
             Set m = ((GoSet)clone).getMembers();
 
-            Iterator it = getMembers().iterator();
-            while (it.hasNext()) {
-                Object c = null;
+            for (GoMember goMember : getMembers()) {
                 try {
-                    c = it.next();
-                    m.add(((GoMember)c).clone());
+                    m.add((goMember).clone());
                 } catch (ClassCastException e) {
-                    GameContext.log(0,  "class "+c.getClass() +" is not a GoMember" );
+                    GameContext.log(0, "class " + goMember.getClass() + " is not a GoMember");
                     e.printStackTrace();
                 }
             }

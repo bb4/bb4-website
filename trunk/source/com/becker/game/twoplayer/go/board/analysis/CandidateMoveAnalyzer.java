@@ -10,7 +10,7 @@ import com.becker.game.common.BoardPosition;
  */
 public class CandidateMoveAnalyzer {
 
-    /** don't check for candidates at the very edge unless thre are nieghboring stones */
+    /** don't check for candidates at the very edge unless thre are neighboring stones. */
     private static final int CANDIDATE_MOVE_OFFSET = 1;
 
     private final GoBoard board_;
@@ -121,7 +121,7 @@ public class CandidateMoveAnalyzer {
     }
 
     /**
-     * Add only of unoccupied and not an unconditionally alive eye.
+     * Add only if unoccupied and not an unconditionally alive eye.
      * never add a stone from either side to an unconditonally alive eye. There is no advantage to it.
      * @param position the position to try adding as a possible candidate move.
      */
@@ -133,5 +133,4 @@ public class CandidateMoveAnalyzer {
             candidateMoves_[pos.getRow()][pos.getCol()] = true;
         }
     }
-
 }

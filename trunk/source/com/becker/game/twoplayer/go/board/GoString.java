@@ -312,6 +312,19 @@ public class GoString extends GoSet
         return sb.toString();
     }
 
+
+    /**
+     * @return true if unconditionally alive.
+     */
+    public boolean isUnconditionallyAlive() {
+        return unconditionallyAlive_;
+    }
+
+    public void setUnconditionallyAlive(boolean unconditionallyAlive) {
+        System.out.println("setting ua to "+ unconditionallyAlive +" on " + this);
+        this.unconditionallyAlive_ = unconditionallyAlive;
+    }
+    
     ////////////////// debugging methods //////////////////////////////
     /**
      * return true if any of the stones in the string are blank (should never happen)
@@ -325,8 +338,9 @@ public class GoString extends GoSet
         return false;
     }
 
-    /** confirm that all the stones in the string have the same ownership as the string
-     *  we throw and error if this is not true
+    /**
+     * Confirm that all the stones in the string have the same ownership as the string
+     * we throw and error if this is not true
      */
     public final void confirmValid( GoBoard b )
     {
@@ -339,17 +353,6 @@ public class GoString extends GoSet
                 assert ( list.contains( s )): list + " does not contain " + s + ". getMembers() =" + getMembers() ;
             }
         }
-    }
-
-    /**
-     * @return true if unconditionally alive.
-     */
-    public boolean isUnconditionallyAlive() {
-        return unconditionallyAlive_;
-    }
-
-    public void setUnconditionallyAlive(boolean unconditionallyAlive) {
-        this.unconditionallyAlive_ = unconditionallyAlive;
     }
 }
 

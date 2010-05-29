@@ -368,22 +368,9 @@ public class PostRemoveUpdater extends PostChangeUpdater {
             return;
         }
 
+        createAliveStatus(string);
+
         GoGroup group = string.getGroup();
-
-        // if the string that the stone is being removed from was considered unconditionally alive,
-        // then we need to clear out all the unconditionally alive information for board_ group since it is now invalid.
-        // not to sure about this...
-        if (string.isUnconditionallyAlive()) {
-            for (Object s : group.getMembers())  {
-                GoString str = (GoString) s;
-                str.setUnconditionallyAlive(false);
-            }
-            Set<GoEye> eyes = group.getEyes(board_);
-            for (GoEye eye : eyes)  {
-                eye.setUnconditionallyAlive(false);
-            }
-        }
-
         Set nbrs = board_.getGroupNeighbors( stone, group.isOwnedByPlayer1(), false );
 
         // create a set of friendly group nbrs and a separate set of enemy ones.
@@ -411,6 +398,28 @@ public class PostRemoveUpdater extends PostChangeUpdater {
 
         cleanupGroups();
         profiler.stopUpdateGroupsAfterRemove();
+    }
+
+    /**
+     * if the string that the stone is being removed from was considered unconditionally alive,
+     * then we need to clear out all the unconditionally alive information for the group since it is now invalid.
+     * not to sure about this...
+     * @param string
+     */
+    private void createAliveStatus(GoString string) {
+
+        if (string.isUnconditionallyAlive()) {
+            GameContext.log(0, "Clearing alive status for group. String=" + string);
+            GoGroup group = string.getGroup();
+            for (Object s : group.getMembers())  {
+                GoString str = (GoString) s;
+                str.setUnconditionallyAlive(false);
+            }
+            Set<GoEye> eyes = group.getEyes(board_);
+            for (GoEye eye : eyes)  {
+                eye.setUnconditionallyAlive(false);
+            }
+        }
     }
 
     /**
