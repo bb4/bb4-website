@@ -3,7 +3,6 @@ package com.becker.game.twoplayer.go.board;
 import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
 import com.becker.game.twoplayer.go.board.analysis.GroupHealthAnalyzer;
 import com.becker.game.twoplayer.go.*;
-import com.becker.common.*;
 import com.becker.common.util.Util;
 import com.becker.game.common.*;
 
@@ -20,7 +19,6 @@ import java.util.*;
  */
 public final class GoGroup extends GoSet
 {
-
     /** a set of the strings that are in the group. */
     private Set<GoString> members_;
 
@@ -47,25 +45,23 @@ public final class GoGroup extends GoSet
      * and every string must be wholy owned by this new group.
      * @param stones list of stones to create a group from.
      */
-    public GoGroup( List stones )
+    public GoGroup( List<GoBoardPosition> stones )
     {
         commonInit( );
-        ownedByPlayer1_ = ((GoBoardPosition) stones.get( 0 )).getPiece().isOwnedByPlayer1();
-        Iterator it = stones.iterator();
-        while ( it.hasNext() ) {
-            GoBoardPosition stone = (GoBoardPosition) it.next();
-            assert stone.getPiece().isOwnedByPlayer1() == ownedByPlayer1_ : 
-                "Stones in group must all be owned by the same player. stones="+ stones;
+        ownedByPlayer1_ = (stones.get(0)).getPiece().isOwnedByPlayer1();
+        for (GoBoardPosition stone : stones) {
+            assert stone.getPiece().isOwnedByPlayer1() == ownedByPlayer1_ :
+                    "Stones in group must all be owned by the same player. stones=" + stones;
             //actually this is ok - sometimes happens legitimately
             //assert isFalse(stone.isVisited(), stone+" is marked visited in "+stones+" when it should not be.");
             GoString string = stone.getString();
-            assert ( string != null ): "There is no owning string for "+stone;
-            if ( !getMembers().contains( string ) ) {
-                assert ( ownedByPlayer1_ == string.isOwnedByPlayer1()): string +"ownership not the same as " + this;
+            assert (string != null) : "There is no owning string for " + stone;
+            if (!getMembers().contains(string)) {
+                assert (ownedByPlayer1_ == string.isOwnedByPlayer1()) : string + "ownership not the same as " + this;
                 //string.confirmOwnedByOnlyOnePlayer();
-                getMembers().add( string );
+                getMembers().add(string);
             }
-            string.setGroup( this );
+            string.setGroup(this);
         }       
     }
 
@@ -76,7 +72,7 @@ public final class GoGroup extends GoSet
     
     @Override
     protected void initializeMembers() {
-        members_ = new HashSet<GoString>();
+        members_ = new LinkedHashSet<GoString>();
     }
     
     /**
@@ -90,9 +86,8 @@ public final class GoGroup extends GoSet
     /**
      * add a string to the group.
      * @param string the string to add
-     * @param board the owning board
      */
-    public void addMember( GoString string, GoBoard board )
+    public void addMember(GoString string)
     {
         assert ( string.isOwnedByPlayer1() == ownedByPlayer1_):
                 "strings added to a group must have like ownership. String="+string
@@ -111,28 +106,6 @@ public final class GoGroup extends GoSet
         string.setGroup( this );
         getMembers().add( string );
         healthAnalyzer_.breakEyeCache();       
-    }
-
-
-    /**
-     * merge another group into this one.
-     * @param group the group to merge into this one
-     * @param board owning board
-     */
-    public void merge( GoGroup group, GoBoard board )
-    {
-        if ( this == group ) {
-            // its a self join
-            GameContext.log( 1, "Warning: attempting a self join." );
-            return;
-        }
-        for (Object s : group.getMembers()) {
-            GoString string = (GoString) s;
-            string.setGroup(this);
-            addMember(string, board);
-        }
-        group.removeAll();
-        healthAnalyzer_.breakEyeCache();  
     }
 
     /**
@@ -179,7 +152,6 @@ public final class GoGroup extends GoSet
        healthAnalyzer_.breakEyeCache();     
     }
 
-
     /**
      * Get the number of liberties that the group has.
      * @return the number of liberties that the group has
@@ -222,10 +194,8 @@ public final class GoGroup extends GoSet
     public Set<GoBoardPosition> getStones()
     {
         Set<GoBoardPosition> stones = new HashSet<GoBoardPosition>(10);
-        Iterator<GoString> it = getMembers().iterator();
-        while ( it.hasNext() ) {
-            GoString string = it.next();
-            stones.addAll( string.getMembers() );
+        for (GoString string : getMembers()) {
+            stones.addAll(string.getMembers());
         }
         // verify that none of these member stones are null.
         for (GoBoardPosition s: stones)
@@ -244,20 +214,17 @@ public final class GoGroup extends GoSet
         return healthAnalyzer_.getEyes(board);
     }
 
-
     /**
      * set the health of strings in this group
      * @param health the health of the group
      */
     public void updateTerritory( float health )
     {
-        Iterator it = getMembers().iterator();
-        while ( it.hasNext() ) {
-            GoString string = (GoString) it.next();
+        for (GoString string : getMembers()) {
             if (string.isUnconditionallyAlive()) {
-                string.updateTerritory( ownedByPlayer1_? 1.0f : -1.0f );
+                string.updateTerritory(ownedByPlayer1_ ? 1.0f : -1.0f);
             } else {
-                string.updateTerritory( health );
+                string.updateTerritory(health);
             }
         }
     }
@@ -286,15 +253,12 @@ public final class GoGroup extends GoSet
      */
     public  boolean containsStone(GoBoardPosition stone )
     {
-        Iterator it = getMembers().iterator();
-        while ( it.hasNext() ) {
-            GoString string = (GoString) it.next();
-            if ( string.getMembers().contains( stone ) )
+        for (GoString string : getMembers()) {
+            if (string.getMembers().contains(stone))
                 return true;
         }
         return false;
     }
-    
     
     /**
      * @param stones list of stones to check if same as those in this group
@@ -306,27 +270,30 @@ public final class GoGroup extends GoSet
             return false;
         // make sure that every stone in the group is also in the list.
         // that way we are assured that they are the same.
-        Iterator<GoBoardPosition> sIt = getStones().iterator();
-        while ( sIt.hasNext() ) {
-            GoBoardPosition s = sIt.next();
-            if ( !stones.contains( s ) )
+        for (GoBoardPosition stone : getStones()) {
+
+            if (!stones.contains(stone))
                 return false;
         }
         return true;
     }
     
     /**
-     * see if the group contains all the stones that are in the specified list (it may contain others as well)
+     * See if the group contains all the stones that are in the specified list (it may contain others as well)
      * @param stones list of stones to check if same as those in this group
      * @return true if all the strings are in this group
      */
     private boolean contains( List<GoBoardPosition> stones )
     {
-        Iterator<GoBoardPosition> it = stones.iterator();
-        while ( it.hasNext() ) {
-            GoString s = (it.next()).getString();
-            if ( !getMembers().contains( s ) )
-                return false;
+        for (GoBoardPosition stone : stones) {
+            boolean found = false;
+            for (GoString str : getMembers()) {
+                if (str.getMembers().contains(stone)) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) return false;
         }
         return true;
     }
@@ -345,8 +312,6 @@ public final class GoGroup extends GoSet
 
         return ( stone.isOwnedByPlayer1() != ownedByPlayer1_  && !muchWeaker);
     }
-    
-    
 
     /**
      * get the textual representation of the group.
@@ -369,6 +334,7 @@ public final class GoGroup extends GoSet
 
     /**
      * @param newline string to use for the newline - eg "\n" or "<br>".
+     * @return string form.
      */
     private String toString( String newline )
     {
@@ -377,24 +343,23 @@ public final class GoGroup extends GoSet
         // print the member strings
         if ( it.hasNext() ) {
             GoString p = (GoString) it.next();
-            sb.append( "    " + p.toString() );
+            sb.append("    ").append(p.toString());
         }
         while ( it.hasNext() ) {
             GoString p = (GoString) it.next();
-            sb.append( ',' + newline + "    "+ p.toString() );
+            sb.append(',').append(newline).append("    ").append(p.toString());
         }
-        sb.append( newline+ '}' );
+        sb.append(newline).append('}');
         Set<GoEye> eyes = getEyes(null);
         if (eyes!=null && !eyes.isEmpty())
-            sb.append(eyes.toString() +newline);
+            sb.append(eyes.toString()).append(newline);
         // make sure that the health and eyes are up to date
         //calculateHealth();
-        sb.append( "abs health=" + Util.formatNumber(healthAnalyzer_.getAbsoluteHealth()) );
-        sb.append( " rel health=" + Util.formatNumber(healthAnalyzer_.getRelativeHealth()));
-        sb.append( " group Liberties=" + healthAnalyzer_.getNumLiberties() + '\n' );
+        sb.append("abs health=").append(Util.formatNumber(healthAnalyzer_.getAbsoluteHealth()));
+        sb.append(" rel health=").append(Util.formatNumber(healthAnalyzer_.getRelativeHealth()));
+        sb.append(" group Liberties=").append(healthAnalyzer_.getNumLiberties()).append('\n');
         return sb.toString();
     }
-
 }
 
 

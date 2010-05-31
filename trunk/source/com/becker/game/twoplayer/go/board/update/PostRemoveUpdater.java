@@ -6,7 +6,6 @@ import com.becker.game.twoplayer.go.GoMove;
 import com.becker.game.twoplayer.go.GoProfiler;
 import com.becker.game.twoplayer.go.board.*;
 import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
-import com.becker.game.twoplayer.go.board.update.Captures;
 
 import java.util.*;
 
@@ -75,7 +74,7 @@ public class PostRemoveUpdater extends PostChangeUpdater {
                 if ( !nbrStone.isVisited() ) {
                     List<GoBoardPosition> stones1 = board_.findStringFromInitialPosition( nbrStone, false );
                     GoString newString = new GoString( stones1, board_ );
-                    group.addMember( newString, board_ );
+                    group.addMember( newString);
                     // string.remove( stones1, board_ );  // already done in the process of creating the new string.
                     lists.add( stones1 );
                 }
@@ -243,7 +242,7 @@ public class PostRemoveUpdater extends PostChangeUpdater {
                 firstString = false;
             }
             else {
-                group.addMember( string, board_ );
+                group.addMember( string);
                 //GameContext.log( 2, "GoMove: restoring ----------------" + string );
             }
             string.unvisit();

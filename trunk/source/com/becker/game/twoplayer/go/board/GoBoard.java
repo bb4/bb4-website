@@ -43,7 +43,7 @@ public final class GoBoard extends TwoPlayerBoard
      */
     public GoBoard( int numRows, int numCols, int numHandicapStones )
     {
-        groups_ = Collections.synchronizedSet(new HashSet<GoGroup>(10));
+        groups_ = createGroupSet();
         setSize( numRows, numCols );
         setHandicap(numHandicapStones);
         boardUpdater_ = new BoardUpdater(this);
@@ -82,7 +82,7 @@ public final class GoBoard extends TwoPlayerBoard
 
         // make copies of all the groups
         if (groups_ != null) {
-            ((GoBoard)clone).groups_ = new HashSet<GoGroup>(10);
+            ((GoBoard)clone).groups_ = createGroupSet();
 
             Set<GoGroup> groupsCopy = ((GoBoard)clone).groups_;
 
@@ -93,6 +93,13 @@ public final class GoBoard extends TwoPlayerBoard
             }
         }
         return clone;
+    }
+
+    /**
+     * @return  synchronized and ordered set of groups.
+     */
+    private Set<GoGroup> createGroupSet() {
+        return Collections.synchronizedSet(new LinkedHashSet<GoGroup>(10));
     }
 
     /**
@@ -271,7 +278,7 @@ public final class GoBoard extends TwoPlayerBoard
     }
 
     /**
-     * determines a string connected from a seed stone within a specified bounding area
+     * Determines a string connected from a seed stone within a specified bounding area.
      * @return string from seed stone
      */
     public List<GoBoardPosition> findStringFromInitialPosition( GoBoardPosition stone,  boolean friendOwnedByP1,
