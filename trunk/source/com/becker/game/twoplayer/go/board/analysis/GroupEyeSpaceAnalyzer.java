@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.go.board.analysis;
 
+import com.becker.common.Location;
 import com.becker.game.twoplayer.go.board.*;
 import com.becker.common.Box;
 
@@ -35,57 +36,25 @@ class GroupEyeSpaceAnalyzer {
      */
     public Set<GoEye> determineEyes() {
 
-        Set<GoEye> eyes = new LinkedHashSet<GoEye>();
-         // list of lists of spaces to unvisit at the end
-        List<List> lists = new ArrayList<List>();
+        List<List> candidateEyeLists = createEyeSpaceLists();
+        return findEyeFromCandidates(candidateEyeLists);
+    }
 
-        // next eliminate all the stones and spaces that are in the bounding rect,
-        // but not in the group. We do this by marching around the perimeter cutting out
-        // the strings of empty or opponent spaces that do not belong.
-        // Note : we do not go all the way to the edge. If the border of a group includes an edge of the board,
-        // then empty spaces there are most likely eyes (but not necessarily).
-        int rMin = boundingBox_.getMinRow();
-        int rMax = boundingBox_.getMaxRow();
-        int cMin = boundingBox_.getMinCol();
-        int cMax = boundingBox_.getMaxCol();
+    /**
+     * Now do a paint fill on each of the empty unvisited spaces left.
+     * Most of these remaining empty spaces are connected to an eye of some type.
+     * There will be some that fill spaces between black and white stones.
+     * Don't count these as eyes unless the stones of the opposite color are much weaker -
+     * in which case they are assumed dead and hence part of the eye.
+     * @param candidateEyeLists eye space lists
+     * @return set of eyes in this group/
+     */
+    private Set<GoEye> findEyeFromCandidates(List<List> candidateEyeLists) {
+        Set<GoEye> eyes = new LinkedHashSet<GoEye>();
         boolean ownedByPlayer1 = group_.isOwnedByPlayer1();
 
-        if ( boundingBox_.getMinCol() > 1 ) {
-            for ( int r = rMin; r <= rMax; r++ )
-                excludeSeed( (GoBoardPosition) board_.getPosition( r, cMin ),
-                        ownedByPlayer1, board_, lists, boundingBox_  );
-        }
-        if ( boundingBox_.getMaxCol() < board_.getNumCols() ) {
-            for ( int r = rMin; r <= rMax; r++ )
-                excludeSeed( (GoBoardPosition) board_.getPosition( r, cMax ),
-                        ownedByPlayer1, board_, lists, boundingBox_  );
-        }
-        if ( rMin > 1 ) {
-            for ( int c = cMin; c <= cMax; c++ )
-                excludeSeed( (GoBoardPosition) board_.getPosition( rMin, c ),
-                        ownedByPlayer1, board_, lists, boundingBox_  );
-        }
-        if ( rMax < board_.getNumRows() ) {
-            for ( int c = cMin; c <= cMax; c++ )
-                excludeSeed( (GoBoardPosition) board_.getPosition( rMax, c ),
-                        ownedByPlayer1, board_, lists, boundingBox_  );
-        }
-
-        // did not used to need this. do we still?
-        for ( int r = rMin; r <= rMax; r++ ) {
-            for ( int c = cMin; c <= cMax; c++ ) {
-                GoBoardPosition space = (GoBoardPosition) board_.getPosition( r, c );
-                space.setEye(null);
-            }
-        }
-
-        // Now do a paint fill on each of the empty unvisited spaces left.
-        // Most of these remaining empty spaces are connected to an eye of some type.
-        // There will be some that fill spaces between black and white stones.
-        // Don't count these as eyes unless the stones of the opposite color are much weaker -
-        // in which case they are assumed dead and hence part of the eye.
-        for ( int r = rMin; r <= rMax; r++ ) {
-            for ( int c = cMin; c <= cMax; c++ ) {
+        for ( int r = boundingBox_.getMinRow(); r <= boundingBox_.getMaxRow(); r++ ) {
+            for ( int c = boundingBox_.getMinCol(); c <= boundingBox_.getMaxCol(); c++ ) {
                 // if the empty space is already marked as being an eye, skip
                 GoBoardPosition space = (GoBoardPosition) board_.getPosition( r, c );
                 if ( !space.isVisited() && space.isUnoccupied() && !space.isInEye() ) {
@@ -93,7 +62,7 @@ class GroupEyeSpaceAnalyzer {
                             board_.findStringFromInitialPosition( space, ownedByPlayer1,
                                                                  false, NeighborType.NOT_FRIEND,
                                                                  boundingBox_  );
-                    lists.add( eyeSpaces );
+                    candidateEyeLists.add( eyeSpaces );
                     // make sure this is a real eye.
                     // this method checks that opponent stones don't border it.
                     if ( confirmEye( eyeSpaces) ) {
@@ -101,47 +70,109 @@ class GroupEyeSpaceAnalyzer {
                         eyes.add( eye );
                     }
                     else {
-                        BoardDebugUtil.debugPrintList(3, "This list of stones was rejected as being an eye: ", eyeSpaces);
+                        BoardDebugUtil.debugPrintList(3,
+                                "This list of stones was rejected as being an eye: ", eyeSpaces);
                     }
                 }
             }
         }
-        GoBoardUtil.unvisitPositionsInLists( lists );
+        GoBoardUtil.unvisitPositionsInLists( candidateEyeLists );
         return eyes;
     }
 
+    /**
+     * Eliminate all the stones and spaces that are in the bounding rect,
+     * but not in the group. We do this by marching around the perimeter cutting out
+     * the strings of empty or opponent spaces that do not belong.
+     * Note : we do not go all the way to the edge. If the border of a group includes an edge of the board,
+     * then empty spaces there are most likely eyes (but not necessarily).
+     * @return list of lists of eye space spaces find real eye from (and to unvisit at the end)
+     */
+    private List<List> createEyeSpaceLists() {
+        //
+        List<List> lists = new ArrayList<List>();
+        boolean ownedByPlayer1 = group_.isOwnedByPlayer1();
+
+        int rMin = boundingBox_.getMinRow();
+        int rMax = boundingBox_.getMaxRow();
+        int cMin = boundingBox_.getMinCol();
+        int cMax = boundingBox_.getMaxCol();
+
+        if ( boundingBox_.getMinCol() > 1 ) {
+            for ( int r = rMin; r <= rMax; r++ )
+                excludeSeed( (GoBoardPosition) board_.getPosition( r, cMin ),
+                        ownedByPlayer1, board_, lists, boundingBox_ );
+        }
+        if ( boundingBox_.getMaxCol() < board_.getNumCols() ) {
+            for ( int r = rMin; r <= rMax; r++ )
+                excludeSeed( (GoBoardPosition) board_.getPosition( r, cMax ),
+                        ownedByPlayer1, board_, lists, boundingBox_ );
+        }
+        if ( rMin > 1 ) {
+            for ( int c = cMin; c <= cMax; c++ )
+                excludeSeed( (GoBoardPosition) board_.getPosition( rMin, c ),
+                        ownedByPlayer1, board_, lists, boundingBox_ );
+        }
+        if ( rMax < board_.getNumRows() ) {
+            for ( int c = cMin; c <= cMax; c++ )
+                excludeSeed( (GoBoardPosition) board_.getPosition( rMax, c ),
+                        ownedByPlayer1, board_, lists, boundingBox_ );
+        }
+
+        clearEyes(rMin, rMax, cMin, cMax);
+        return lists;
+    }
 
     /**
-     *@return eyePtoential - a measure of how easily this group can make 2 eyes (0 - 2; 2 meaning has 2 eyes).
+     * Make sure all the positions do not cache their eye
+     */
+    private void clearEyes(int rMin, int rMax, int cMin, int cMax) {
+        for ( int r = rMin; r <= rMax; r++ ) {
+            for ( int c = cMin; c <= cMax; c++ ) {
+                ((GoBoardPosition) board_.getPosition( r, c )).setEye(null);
+            }
+        }
+    }
+
+    /**
+     * Expand the bbox by one in all directions.
+     * if the bbox is within one space of the edge, extend it all the way to the edge.
+     * loop through the rows and columns calculating distances from group stones
+     * to the edge and to other stones.
+     * if there is a (mostly living) enemy stone in the run, don't count the run.
+     * @return eyePtoential - a measure of how easily this group can make 2 eyes (0 - 2; 2 meaning has 2 eyes).
      */
     public float calculateEyePotential() {
         int numRows = board_.getNumRows();
         int numCols = board_.getNumCols();
-        // Expand the bbox by one in all directions.
-        // if the bbox is within one space of the edge, extend it all the way to the edge.
-        // loop through the rows and columns calculating distances from group stones
-        // to the edge and to other stones.
-        // if there is a (mostly living) enemy stone in the run, don't count the run.
 
         boundingBox_.expandGloballyBy(1, numRows, numCols);
         boundingBox_.expandBordersToEdge(1, numRows, numCols);
-        float totalPotential = 0;
+        return findTotalEyePotential();
+    }
+
+    /**
+     * @return eyePtoential - a measure of how easily this group can make 2 eyes (0 - 2; 2 meaning has 2 eyes).
+     */
+    private float findTotalEyePotential() {
 
         // make sure that every internal enemy stone is really an enemy and not just dead.
         // compare it with one of the group strings.
         GoString gs = group_.getMembers().iterator().next();
 
+        int rMin = boundingBox_.getMinRow();
+        int rMax = boundingBox_.getMaxRow();
+        int cMin = boundingBox_.getMinCol();
+        int cMax = boundingBox_.getMaxCol();
+        float totalPotential = 0;
+
         // first look at the row runs
         for ( int r = boundingBox_.getMinRow(); r <= boundingBox_.getMaxRow(); r++ ) {
-            //System.out.println("row run = "+ r);
-            totalPotential +=
-                    getRowColPotential(r, boundingBox_.getMinCol(), 0, 1, boundingBox_.getMaxRow(), boundingBox_.getMaxCol(), board_, gs);
+            totalPotential += getRowColPotential(r, cMin, 0, 1, rMax, cMax, board_, gs);
         }
-        // now acrue column run potentials
-        for ( int c = boundingBox_.getMinCol(); c <= boundingBox_.getMaxCol(); c++ ) {
-            //System.out.println("col run = "+ c);
-            totalPotential +=
-                    getRowColPotential(boundingBox_.getMinRow(), c, 1, 0, boundingBox_.getMaxRow(), boundingBox_.getMaxCol(), board_, gs);
+        // now accrue column run potentials
+        for ( int c = cMin; c <= cMax; c++ ) {
+            totalPotential += getRowColPotential(rMin, c, 1, 0, rMax, cMax, board_, gs);
         }
 
         return (float)Math.min(1.9, Math.sqrt(totalPotential)/1.3);
@@ -149,88 +180,107 @@ class GroupEyeSpaceAnalyzer {
 
     /**
      * Find the potential for one of the bbox's rows or columns.
+     * @return eye potential for row and column at r,c
      */
     private float getRowColPotential(int r, int c, int rowInc, int colInc, int maxRow, int maxCol,
-                                                          GoBoard board, GoString groupString) {
-        float rowPotential = 0;
-        int breadth = (rowInc ==1)? (maxRow - r) : (maxCol - c);
-        GoBoardPosition startSpace = (GoBoardPosition) board.getPosition( r, c );
-        do {
-            GoBoardPosition space = (GoBoardPosition) board.getPosition( r, c );
-            GoBoardPosition firstSpace = space;
-            boolean containsEnemy = false;
-            int runLength = 0;
-            boolean ownedByPlayer1 = group_.isOwnedByPlayer1();
+                                     GoBoard board, GoString groupString) {
+            float rowPotential = 0;
+            int breadth = (rowInc ==1)? (maxRow - r) : (maxCol - c);
+            GoBoardPosition startSpace = (GoBoardPosition) board.getPosition( r, c );
+            do {
+                GoBoardPosition space = (GoBoardPosition) board.getPosition( r, c );
+                GoBoardPosition firstSpace = space;
+                boolean containsEnemy = false;
+                int runLength = 0;
+                boolean ownedByPlayer1 = group_.isOwnedByPlayer1();
 
-            while (c <= maxCol && r <= maxRow && (space.isUnoccupied() ||
-                      (space.isOccupied() && space.getPiece().isOwnedByPlayer1() != ownedByPlayer1))) {
-                if (space.isOccupied() &&  space.getPiece().isOwnedByPlayer1() != ownedByPlayer1
-                    && groupString.isEnemy(space)) {
-                    containsEnemy =  true;
+                while (c <= maxCol && r <= maxRow && (space.isUnoccupied() ||
+                          (space.isOccupied() && space.getPiece().isOwnedByPlayer1() != ownedByPlayer1))) {
+                    if (space.isOccupied() &&  space.getPiece().isOwnedByPlayer1() != ownedByPlayer1
+                        && groupString.isEnemy(space)) {
+                        containsEnemy =  true;
+                    }
+                    runLength++;
+                    r += rowInc;
+                    c += colInc;
+                    space = (GoBoardPosition) board.getPosition( r, c );
                 }
-                runLength++;
-                r += rowInc; c += colInc;
-                space = (GoBoardPosition) board.getPosition( r, c );
-            }
-            boolean bounded = !(firstSpace.equals(startSpace)) && space!=null && space.isOccupied();
-            // now acrue the potential
-            //System.out.println("check containsEnemy="+containsEnemy+" runLength="+runLength + " ("+r+","+c+") useIt="
-            //  +(!containsEnemy && runLength < breadth && runLength > 0));
-            if (!containsEnemy && runLength < breadth && runLength > 0) {
-                 int firstPos, max, currentPos;
-                 if (rowInc ==1) {
-                     firstPos = firstSpace.getRow();
-                     max = board.getNumRows();
-                     currentPos = r;
-                 } else {
-                     firstPos = firstSpace.getCol();
-                     max = board.getNumCols();
-                     currentPos = c;
-                 }
-                 rowPotential += getRunPotential(runLength, firstPos, currentPos, max, bounded);
-            }
-            r += rowInc; c += colInc;
-        } while (c <= maxCol && r <= maxRow);
-        // System.out.println("rcPotential = " + rowPotential);
-        return rowPotential;
-    }
+                boolean bounded = !(firstSpace.equals(startSpace)) && space!=null && space.isOccupied();
+                // now acrue the potential
+                if (!containsEnemy && runLength < breadth && runLength > 0) {
+                     int firstPos, max, currentPos;
+                     if (rowInc ==1) {
+                         firstPos = firstSpace.getRow();
+                         max = board.getNumRows();
+                         currentPos = r;
+                     } else {
+                         firstPos = firstSpace.getCol();
+                         max = board.getNumCols();
+                         currentPos = c;
+                     }
+                     rowPotential += getRunPotential(runLength, firstPos, currentPos, max, bounded);
+                }
+                r += rowInc;
+                c += colInc;
+            } while (c <= maxCol && r <= maxRow);
+            return rowPotential;
+        }
+
 
 
     /**
-     *
-     * @return
+     * @return potential score for the runlength.
      */
     private float getRunPotential(int runLength, int firstPos, int endPosP1, int max,
-                                                    boolean boundedByStones) {
+                                                    boolean boundedByFriendStones) {
         float potential = 0;
         assert(runLength > 0);
-        // this case is where the run is next to an edge or bounded by friend stones.
-        // Weight the potential more heavily.
-        if ((firstPos == 1 || endPosP1 == max || boundedByStones)) {
-            switch (runLength) {
-                case 1: potential = 0.25f; break;
-                case 2: potential = 0.35f; break;
-                case 3: potential = 0.4f; break;
-                case 4: potential = 0.3f; break;
-                case 5: potential = 0.2f; break;
-                case 6: potential = 0.15f; break;
-                case 7: potential = 0.1f; break;
-                default : potential = 0.05f;
-            }
+
+        if ((firstPos == 1 || endPosP1 == max || boundedByFriendStones)) {
+            potential = getRunPotentialOnEdge(runLength);
         }
         else {
-            // a run to boundary. Less weight attributed.
-            switch (runLength) {
-                case 1: potential = 0.05f; break;
-                case 2: potential = 0.15f; break;
-                case 3: potential = 0.2f; break;
-                case 4: potential = 0.25f; break;
-                case 5: potential = 0.2f; break;
-                case 6: potential = 0.15f; break;
-                case 7: potential = 0.1f; break;
-                case 8: potential = 0.6f; break;
-                default : potential = 0.05f;
-            }
+            potential = getRunPotentialToBoundary(runLength);
+        }
+        return potential;
+    }
+
+    /**
+     * this case is where the run is next to an edge or bounded by friend stones.
+     * Weight the potential more heavily.
+     * @return potential score for the runlength.
+     */
+    private float getRunPotentialOnEdge(int runLength) {
+        float potential;
+        switch (runLength) {
+            case 1: potential = 0.25f; break;
+            case 2: potential = 0.35f; break;
+            case 3: potential = 0.4f; break;
+            case 4: potential = 0.3f; break;
+            case 5: potential = 0.2f; break;
+            case 6: potential = 0.15f; break;
+            case 7: potential = 0.1f; break;
+            default : potential = 0.05f;
+        }
+        return potential;
+    }
+
+    /**
+     * a run to boundary. Less weight attributed.
+     * @return potential score for the runlength.
+     */
+    private float getRunPotentialToBoundary(int runLength) {
+        float potential;
+        switch (runLength) {
+            case 1: potential = 0.05f; break;
+            case 2: potential = 0.15f; break;
+            case 3: potential = 0.2f; break;
+            case 4: potential = 0.25f; break;
+            case 5: potential = 0.2f; break;
+            case 6: potential = 0.15f; break;
+            case 7: potential = 0.1f; break;
+            case 8: potential = 0.6f; break;
+            default : potential = 0.05f;
         }
         return potential;
     }
@@ -311,17 +361,15 @@ class GroupEyeSpaceAnalyzer {
      * @param positions to find bounding box of
      * @return bounding box of set of stones/positions passed in
      */
-    private static Box findBoundingBox(Set positions)  {
+    private static Box findBoundingBox(Set<GoString> positions)  {
         int rMin = 100000; // something huge ( more than max rows)
         int rMax = 0;
         int cMin = 100000; // something huge ( more than max cols)
         int cMax = 0;
 
         // first determine a bounding rectangle for the group.
-        Iterator it = positions.iterator();
 
-        while ( it.hasNext() ) {
-            GoString string = (GoString) it.next();
+        for (GoString string : positions) {
 
             for (GoBoardPosition stone : string.getMembers()) {
                 int row = stone.getRow();
@@ -335,5 +383,4 @@ class GroupEyeSpaceAnalyzer {
 
         return new Box(rMin, cMin, rMax, cMax);
     }
-
 }

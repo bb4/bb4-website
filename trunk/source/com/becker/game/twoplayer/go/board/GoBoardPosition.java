@@ -13,15 +13,19 @@ import com.becker.game.common.BoardPosition;
  */
 public final class GoBoardPosition extends BoardPosition implements GoMember
 {
-
-    // the string (connected set of stones) to which this stone belongs.
+    /** the string (connected set of stones) to which this stone belongs. */
     private GoString string_;
-    // if non-null then this position belongs to an eye string.
-    // The group owner of the eye is different than the owner of the string.
+
+    /**
+     * if non-null then this position belongs to an eye string.
+     * The group owner of the eye is different than the owner of the string.
+     */
     private GoEye eye_;
 
-    // when true the stone has been visited already during a search.
-    // This is a temporary state that is used for some traversal operations.
+    /**
+     * when true the stone has been visited already during a search.
+     * This is a temporary state that is used for some traversal operations.
+     */
     private boolean visited_;
 
     // the amount this position contributes to the overall score.
@@ -196,7 +200,6 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
         assert false : "must use clear(board) instead";
     }
 
-    
     /**
      * @return a string representation of the go board position
      */
@@ -205,7 +208,6 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
     {
         return super.getDescription()+ " score:"+Util.formatNumber(scoreContribution_);
     }
-
 
     /**
      * @return a string representation of the go board position

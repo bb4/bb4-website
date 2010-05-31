@@ -26,7 +26,7 @@ public class TestBlunderCollection extends GoTestCase {
         options.setLookAhead(2);
         options.setPercentageBestMoves(80);
         options.setQuiescence(true);
-        options.setSearchStrategyMethod(SearchStrategyType.MINIMAX);     
+        options.setSearchStrategyMethod(SearchStrategyType.NEGASCOUT_W_MEMORY);
     }
 
     public void test1() {

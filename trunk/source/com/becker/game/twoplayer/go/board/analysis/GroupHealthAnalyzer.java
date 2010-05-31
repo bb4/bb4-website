@@ -154,7 +154,6 @@ public class GroupHealthAnalyzer implements Cloneable {
         return eyes_;
     }
 
-
     /**
      * Calculate the absolute health of a group.
      * All the stones in the group have the same health rating because the
@@ -215,9 +214,10 @@ public class GroupHealthAnalyzer implements Cloneable {
 
 
     /**
-     *Determine approximately how many eyes the group has.
-     *This is purposely a little vague, but if more than 2.0, then must be unconditionally alive.
-     *The value that we count for each type of eye could be optimized.
+     * Determine approximately how many eyes the group has.
+     * This is purposely a little vague, but if more than 2.0, then must be unconditionally alive.
+     * The value that we count for each type of eye could be optimized.
+     * @return approximation to the number of eyes in group
      */
     private float calcNumEyes() {
         // figure out how many of each eye type we have
@@ -245,7 +245,7 @@ public class GroupHealthAnalyzer implements Cloneable {
     }
 
     /**
-     * determine the health of the group based on the number of eyes and the number of liberties.
+     * @return the health of the group based on the number of eyes and the number of liberties.
      */
     private float determineHealth(float side, float numEyes, int numLiberties, GoBoard board)  {
         float health;
@@ -270,7 +270,7 @@ public class GroupHealthAnalyzer implements Cloneable {
     private static final float BEST_ONE_EYED_HEALTH = 0.89f;
 
     /**
-     * Calculate the health of a group that has 2 eyes.
+     * @return the health of a group that has 2 eyes.
      */
     private float calcTwoEyedHealth(float side, GoBoard board) {
         float health;
@@ -370,75 +370,93 @@ public class GroupHealthAnalyzer implements Cloneable {
     }
 
     /**
-     *   Calculate the health of a group that has no eyes.
+     *  @return the health of a group that has no eyes.
      */
     float calcNoEyeHealth(float side, int numLiberties) {
-        float health = 0;
+
         int numStones = getNumStones();
 
-        if ( numLiberties > 5 )  {// numEyes == 0
-            health = side * Math.min(0.8f, (1.2f - 46.0f/(numLiberties+40.0f)));
+        if ( numLiberties > 5 )  {
+            return side * Math.min(0.8f, (1.2f - 46.0f/(numLiberties+40.0f)));
         }
         else if (numStones == 1) {
-            switch (numLiberties) { // numEyes == 0
-                case 0:
-                    // this can't happen because the stone should already be captured.
-                    assert false : "can't have no liberties and still be on the board! "+ this;
-                    health = -side;
-                    break;
-                case 1:
-                    health = -side * 0.6f;
-                    break;
-                case 2:
-                    // @@ consider seki situations where the adjacent enemy group also has no eyes.
-                    //      XXXXXXX     example of seki here.
-                    //    XXooooooX
-                    //    Xo.XXX.oX
-                    //    XooooooXX
-                    //    XXXXXXX
-                    health = side * 0.02f;
-                    break;
-                case 3:
-                    health = side * 0.1f;
-                    break;
-                case 4:
-                    health = side * 0.1f;
-                    break;
-                default: assert false : "there were too many liberties for a single stone: "+numLiberties;
-            }
+            return calcSingleStoneHealth(side, numLiberties);
         } else {
-            switch (numLiberties) { // numEyes == 0
-                case 0:
-                    // this can't happen because the stone should already be captured.
-                    //assert false : "can't have no liberties and still be on the board! "+ this;
-                    health = -side;
-                    break;
-                case 1:
-                    health = -side * 0.6f;
-                    break;
-                case 2:
-                    // @@ consider seki situations where the adjacent enemy group also has no eyes.
-                    //      XXXXXXX     example of seki here.
-                    //    XXooooooX
-                    //    Xo.XXX.oX
-                    //    XooooooXX
-                    //    XXXXXXX
-                    health = -side * 0.3f;
-                    break;
-                case 3:
-                    health = side * 0.02f;
-                    break;
-                case 4:
-                    health = side * 0.05f;
-                    break;
-                case 5:
-                    health = side * 0.1f;
-                    break;
-                default: assert false;
-            }
+            return calcMultiStoneHealth(side, numLiberties);
+        }
+    }
+
+    /**
+     * @return health of a single stone mased on numbe rof liberties it has.
+     */
+    private float calcSingleStoneHealth(float side, int numLiberties) {
+        float health = 0;
+        switch (numLiberties) { // numEyes == 0
+            case 0:
+                // this can't happen because the stone should already be captured.
+                assert false : "can't have no liberties and still be on the board! "+ this;
+                health = -side;
+                break;
+            case 1:
+                health = -side * 0.6f;
+                break;
+            case 2:
+                // @@ consider seki situations where the adjacent enemy group also has no eyes.
+                //      XXXXXXX     example of seki here.
+                //    XXooooooX
+                //    Xo.XXX.oX
+                //    XooooooXX
+                //    XXXXXXX
+                health = side * 0.02f;
+                break;
+            case 3:
+                health = side * 0.1f;
+                break;
+            case 4:
+                health = side * 0.1f;
+                break;
+            default: assert false : "there were too many liberties for a single stone: "+numLiberties;
         }
         return health;
     }
+
+    /*
+     * @return health for multi-stone groupe iwth less than 5 liberties.
+     */
+    private float calcMultiStoneHealth(float side, int numLiberties) {
+        float health = 0;
+        switch (numLiberties) { // numEyes == 0
+            case 0:
+                // this can't happen because the stone should already be captured.
+                //assert false : "can't have no liberties and still be on the board! "+ this;
+                health = -side;
+                break;
+            case 1:
+                health = -side * 0.6f;
+                break;
+            case 2:
+                // @@ consider seki situations where the adjacent enemy group also has no eyes.
+                //      XXXXXXX     example of seki here.
+                //    XXooooooX
+                //    Xo.XXX.oX
+                //    XooooooXX
+                //    XXXXXXX
+                health = -side * 0.3f;
+                break;
+            case 3:
+                health = side * 0.02f;
+                break;
+            case 4:
+                health = side * 0.05f;
+                break;
+            case 5:
+                health = side * 0.1f;
+                break;
+            default: assert false : "We should have already covered the case of >5 liberties";
+        }
+        return health;
+    }
+
 
     /**
      * Calculate the relative health of a group.
@@ -453,16 +471,51 @@ public class GroupHealthAnalyzer implements Cloneable {
      */
     public float calculateRelativeHealth( GoBoard board, GoProfiler profiler )
     {
-        // we multiply by a +/- sign depending on the side
-        float side = group_.isOwnedByPlayer1()? 1.0f : -1.0f;
-
         // the default if there is no weakest group.
         relativeHealth_ = absoluteHealth_;
+
+        boostRelativeHealthBasedOnWeakNbr(board, profiler);
+
+        if (GameContext.getDebugMode() > 1)
+                BoardValidationUtil.confirmAllUnvisited(board);
+
+        return relativeHealth_;
+    }
+
+    /**
+     * If there is a weakest group, then boost ourselves relative to it.
+     * it may be a positive or negative boost to our health depending on its relative strength.
+     */
+    private void boostRelativeHealthBasedOnWeakNbr(GoBoard board, GoProfiler profiler) {
+
         Set<GoBoardPosition> groupStones = group_.getStones();
 
+        GoGroup weakestGroup = findWeakestGroup(board, profiler, groupStones);
+
+        if (weakestGroup != null)  {
+            double proportionWithEnemyNbrs = findProportionWithEnemyNbrs(groupStones);
+
+            double diff = absoluteHealth_ + weakestGroup.getAbsoluteHealth();
+            // @@ should use a weight to help determine how much to give a boost.
+
+            // must be bounded by -1 and 1
+            relativeHealth_ =
+                    (float) (Math.min(1.0, Math.max(-1.0, absoluteHealth_ + diff * proportionWithEnemyNbrs)));
+        }
+        GoBoardUtil.unvisitPositions(groupStones);
+    }
+
+
+    /**
+     * @return  the weakest bordering enemy group.
+     */
+    private GoGroup findWeakestGroup(GoBoard board, GoProfiler profiler, Set<GoBoardPosition> groupStones) {
         profiler.start(GoProfiler.GET_ENEMY_GROUPS_NBRS);
         Set cachedEnemyNbrGroups = getEnemyGroupNeighbors(board, groupStones);
         profiler.stop(GoProfiler.GET_ENEMY_GROUPS_NBRS);
+
+        // we multiply by a +/- sign depending on the side
+        float side = group_.isOwnedByPlayer1()? 1.0f : -1.0f;
 
         // of these enemy groups which is the weakest?
         double weakestHealth = -side;
@@ -475,38 +528,28 @@ public class GroupHealthAnalyzer implements Cloneable {
                 weakestGroup = enemyGroup;
             }
         }
+        return weakestGroup;
+    }
 
-        // if there is a weakest group then boost ourselves relative to it.
-        // it may be a positive or negative boost to our health depending on its relative strength.
-        if (weakestGroup != null)  {
-            // what proportion of the groups stones are close to enemy groups?
-            // this gives us an indication of how surrounded we are.
-            // If we are very surrounded then we give a big boost for being stronger or weaker than a nbr.
-            // If we are not very surrounded then we don't give much of a boost because there are other
-            // ways to make life (i.e. run out/away).
-            int numWithEnemyNbrs = 0;
-            for (Object p : groupStones) {
-                GoBoardPosition stone = (GoBoardPosition)p;
-                if (stone.isVisited()) {
-                    numWithEnemyNbrs++;
-                    stone.setVisited(false); // clear the visited state.
-                }
+    /**
+     * What proportion of the groups stones are close to enemy groups?
+     * this gives us an indication of how surrounded we are.
+     * If we are very surrounded then we give a big boost for being stronger or weaker than a nbr.
+     * If we are not very surrounded then we don't give much of a boost because there are other
+     * ways to make life (i.e. run out/away).
+     * @return proportion of our group stones with enemy neighbors.
+     */
+    private double findProportionWithEnemyNbrs(Set<GoBoardPosition> groupStones) {
+
+        int numWithEnemyNbrs = 0;
+        for (Object p : groupStones) {
+            GoBoardPosition stone = (GoBoardPosition)p;
+            if (stone.isVisited()) {
+                numWithEnemyNbrs++;
+                stone.setVisited(false); // clear the visited state.
             }
-            double proportionWithEnemyNbrs = (double)numWithEnemyNbrs / ((double)groupStones.size() + 2);
-
-            double diff = absoluteHealth_ + weakestGroup.getAbsoluteHealth();
-            // @@ should use a weight to help determine how much to give a boost.
-
-            // must be bounded by -1 and 1
-            relativeHealth_ =
-                    (float) (Math.min(1.0, Math.max(-1.0, absoluteHealth_ + diff * proportionWithEnemyNbrs)));
         }
-
-        GoBoardUtil.unvisitPositions(groupStones);
-        if (GameContext.getDebugMode() > 1)
-                BoardValidationUtil.confirmAllUnvisited(board);
-
-        return relativeHealth_;
+        return(double)numWithEnemyNbrs / ((double)groupStones.size() + 2);
     }
 
     public float getRelativeHealth()

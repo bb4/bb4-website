@@ -45,15 +45,15 @@ public class PositionalScore {
         StringBuilder buf =
                 new StringBuilder("<html>Breakdown for <b>value</b> = "+ Util.formatNumber(worth));
         buf.append("<br>");
-        buf.append("captureScore=" + Util.formatNumber(captureScore) + "<br>");
-        buf.append("territoryDelta=" + Util.formatNumber(territoryDelta) + "<br>");
-        buf.append("scaleFactor=" + Util.formatNumber(scaleFactor) + "<br>");
-        buf.append("positionScore=" + Util.formatNumber(positionScore_) + "<br>");
-        buf.append("  deadStoneScore=" + Util.formatNumber(deadStoneScore) + "<br>");
-        buf.append("  eyeSpaceScore=" + Util.formatNumber(eyeSpaceScore) + "<br>");
-        buf.append("  badShapeScore=" + Util.formatNumber(badShapeScore) + "<br>");
-        buf.append("  posScore=" + Util.formatNumber(posScore) + "<br>");
-        buf.append("  healthScore=" + Util.formatNumber(healthScore) + "</html>");
+        buf.append("captureScore=").append(Util.formatNumber(captureScore)).append("<br>");
+        buf.append("territoryDelta=").append(Util.formatNumber(territoryDelta)).append("<br>");
+        buf.append("scaleFactor=").append(Util.formatNumber(scaleFactor)).append("<br>");
+        buf.append("positionScore=").append(Util.formatNumber(positionScore_)).append("<br>");
+        buf.append("  deadStoneScore=").append(Util.formatNumber(deadStoneScore)).append("<br>");
+        buf.append("  eyeSpaceScore=").append(Util.formatNumber(eyeSpaceScore)).append("<br>");
+        buf.append("  badShapeScore=").append(Util.formatNumber(badShapeScore)).append("<br>");
+        buf.append("  posScore=").append(Util.formatNumber(posScore)).append("<br>");
+        buf.append("  healthScore=").append(Util.formatNumber(healthScore)).append("</html>");
         return buf.toString();
     }
 }

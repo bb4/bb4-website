@@ -209,7 +209,6 @@ final class GoBoardViewer extends AbstractTwoPlayerBoardViewer
         message += p1Name +' '+ SCORE + gc.getFinalScore(true) +'\n';
         message += p2Name +' '+ SCORE + gc.getFinalScore(false) +'\n';
 
-
         return super.getGameOverMessage() +'\n'+ message;
     }
 
@@ -233,7 +232,7 @@ final class GoBoardViewer extends AbstractTwoPlayerBoardViewer
             GoEye eye = space.getEye();
             if ( string != null ) {
                 sb.append( "<br>" );
-                sb.append( "string liberties = " + string.getNumLiberties((GoBoard)controller_.getBoard()) );
+                sb.append("string liberties = ").append(string.getNumLiberties((GoBoard) controller_.getBoard()));
                 String stringText = string.toString();
                 if ( string.getGroup() != null ) {
                     sb.append( "<br>" );
@@ -252,7 +251,7 @@ final class GoBoardViewer extends AbstractTwoPlayerBoardViewer
                sb.append(eyeText);
                // to debug show the group that contains this eye
                sb.append( "<br>" );
-               sb.append("The group that contains this eye is "+eye.getGroup());
+                sb.append("The group that contains this eye is ").append(eye.getGroup());
             }
         }
         else {

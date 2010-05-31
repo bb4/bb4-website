@@ -36,7 +36,7 @@ class BigEyeAnalyzer {
      * the opponent plays first, or 2 eyes if you play first.
      * @return the eye type determined based on the properties and nbrs of the positions in the spaces list.
      */
-    public EyeType determineEyeType(GoBoard board)
+    public EyeType determineEyeType()
     {
         GoBoardPosition keyPoint = null;
            
@@ -55,6 +55,14 @@ class BigEyeAnalyzer {
         int size = spaces.size();
 
         assert keyPoint != null : "There must be a space with at least 1 nobi nbr";
+        return getEyeType(keyPoint, max, sum, size);
+
+    }
+
+    /**
+     * @return  type of eye.
+     */
+    private EyeType getEyeType(GoBoardPosition keyPoint, int max, int sum, int size) {
         // check for different cases of big eyes
         boolean farmersHatOrClump =  ((size == 4) && ((max == 3 && sum == 6) || (max == 2 && sum == 8)));
         boolean bulkyOrCrossedFive = ((size == 5) && ((max == 4 && sum == 8) || (max == 3 && sum == 10)));
@@ -79,8 +87,6 @@ class BigEyeAnalyzer {
         assert ( size > 3): "there must be at least 4 spaces for a territorial eye";
         return EyeType.TERRITORIAL_EYE;
     }
-
-
 
     /**
      * @return number of eye-space nobi neighbors.
