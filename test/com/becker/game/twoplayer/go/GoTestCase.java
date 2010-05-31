@@ -17,8 +17,8 @@ import junit.framework.*;
 import java.util.*;
 
 /**
- *Base class for all Go test cases.
- *@@ merge with BlockadeTestCase.
+ * Base class for all Go test cases.
+ * @@ merge with BlockadeTestCase.
  *
  * @author Barry Becker
  */
@@ -69,7 +69,7 @@ public class GoTestCase extends TestCase {
         sOptions.setLookAhead(2);
         sOptions.setPercentageBestMoves(40);
         //sOptions.setQuiescence(true); // takes too long if on
-        sOptions.setSearchStrategyMethod(SearchStrategyType.MINIMAX);
+        sOptions.setSearchStrategyMethod(SearchStrategyType.NEGAMAX_W_MEMORY);
     }
 
     /**

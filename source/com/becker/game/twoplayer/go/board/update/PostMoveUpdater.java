@@ -92,45 +92,70 @@ public class PostMoveUpdater extends PostChangeUpdater {
 
         GoString str;
         if ( nbrs.size() == 0 ) {
-            // there are no strongly connected nbrs, create a new string
+            // there are no strongly connected neighbors, create a new string
             new GoString( stone, board_);  // stone points to the new string
         }
         else {
-            // there is at least one nbr, so we join to it/them
-            Iterator nbrIt = nbrs.iterator();
-            GoBoardPosition nbrStone = (GoBoardPosition) nbrIt.next();
-            str = nbrStone.getString();
-            str.addMember( stone, board_ );
-            BoardDebugUtil.debugPrintGroups( 3, "groups before merging:", true, true, board_.getGroups());
-
-            if ( nbrs.size() > 1 ) {
-                // then we probably need to merge the strings.
-                // We would not, for example, if we are completing a clump of four
-                while ( nbrIt.hasNext() ) {
-                    // if its the same string then there is nothing to merge
-                    nbrStone = (GoBoardPosition) nbrIt.next();
-                    GoString nbrString = nbrStone.getString();
-                    if ( str != nbrString )   {
-                        str.merge( nbrString, board_ );
-                    }
-                }
-            }
-            // now that we have merged the stone into a new string, we need to verify that that string is not in atari.
-            // if it is, then we need to split that ataried string off from its group and form a new group.
-            if (stone.isInAtari(board_)) {
-                GoGroup oldGroup = str.getGroup();
-                GameContext.log(3, "Before splitting off ataried string (due to " + stone + ") containing (" +
-                                   str + ") we have: " + oldGroup);
-
-                oldGroup.remove(str);
-                GoGroup newGroup = new GoGroup(str);
-                //GameContext.log(3, "after splitting we have: "+newGroup);
-                assert (!newGroup.getMembers().isEmpty()) : "The group we are trying to add is empty";
-                board_.getGroups().add(newGroup);
-            }
+            updateNeighborStringsAfterMove(stone, nbrs);
         }
         cleanupGroups();
         profiler.stopUpdateStringsAfterMove();
+    }
+
+    /**
+     * There is at least one neighbor string, so we will join to it/them.
+     * @param stone position where we just placed a stone.
+     * @param nbrs
+     */
+    private void updateNeighborStringsAfterMove(GoBoardPosition stone, Set<GoBoardPosition> nbrs) {
+        GoString str;
+        Iterator nbrIt = nbrs.iterator();
+        GoBoardPosition nbrStone = (GoBoardPosition) nbrIt.next();
+        str = nbrStone.getString();
+        str.addMember( stone, board_ );
+        BoardDebugUtil.debugPrintGroups( 3, "groups before merging:", true, true, board_.getGroups());
+
+        if ( nbrs.size() > 1 ) {
+            mergeStringsIfNeeded(str, nbrIt);
+        }
+        verifyNewStringNotInAtari(stone, str);
+    }
+
+    /**
+     * Now that we have merged the stone into a new string, we need to verify that that string is not in atari.
+     * If it is, then we need to split that ataried string off from its group and form a new group.
+     * @param stone stone just added.
+     * @param str newly formed string to check for atari on.
+     */
+    private void verifyNewStringNotInAtari(GoBoardPosition stone, GoString str) {
+
+        if (stone.isInAtari(board_)) {
+            GoGroup oldGroup = str.getGroup();
+            GameContext.log(3, "Before splitting off ataried string (due to " + stone + ") containing (" +
+                               str + ") we have: " + oldGroup);
+
+            oldGroup.remove(str);
+            GoGroup newGroup = new GoGroup(str);
+            // GameContext.log(3, "after splitting we have: " + newGroup);
+            assert (!newGroup.getMembers().isEmpty()) : "The group we are trying to add is empty";
+            board_.getGroups().add(newGroup);
+        }
+    }
+
+    /**
+     * Then we probably need to merge the strings.
+     * We will not, for example, if we are completing a clump of four.
+     */
+    private void mergeStringsIfNeeded(GoString str, Iterator nbrIt) {
+        GoBoardPosition nbrStone;
+        while ( nbrIt.hasNext() ) {
+            // if its the same string then there is nothing to merge
+            nbrStone = (GoBoardPosition) nbrIt.next();
+            GoString nbrString = nbrStone.getString();
+            if ( str != nbrString )   {
+                str.merge( nbrString, board_ );
+            }
+        }
     }
 
     /**
@@ -143,19 +168,32 @@ public class PostMoveUpdater extends PostChangeUpdater {
         }
     }
 
-
     /**
      * Make the positions on the board represented by the captureList show up empty.
      * Afterwards these empty spaces should not belong to any strings.
      */
     private void removeCapturesOnBoard(CaptureList captureList)
     {
-        // remove the captured strings from the owning group (there could be up to 4)
         GoString capString = ((GoBoardPosition) captureList.get( 0 )).getString();
         GoGroup group = capString.getGroup();
+        removeCapturedStringsFromGroup(captureList, group);
+
+        // if there are no more stones in the group, remove it.
+        if ( group.getNumStones() == 0 ) {
+            board_.getGroups().remove( group );
+        }
+
+        adjustStringLiberties(captureList);
+    }
+
+    /**
+     * Remove the captured strings from the owning group (there could be up to 4)
+     * We can't just call captureList.removeOnBoard because we need to do additional updates for go.
+     */
+    private void removeCapturedStringsFromGroup(CaptureList captureList, GoGroup group) {
+        GoString capString;
         Set<GoString> capStrings = new HashSet<GoString>();
 
-        // we can't just call captureList.removeOnBoard because we need to do additional updates for go.
         for (Object aCaptureList : captureList) {
             GoBoardPosition capStone = (GoBoardPosition) aCaptureList;
             capString = capStone.getString();
@@ -170,13 +208,6 @@ public class PostMoveUpdater extends PostChangeUpdater {
             stoneOnBoard.clear(board_);
             // ?? restore disconnected groups?
         }
-
-        // if there are no more stones in the group, remove it.
-        if ( group.getNumStones() == 0 ) {
-            board_.getGroups().remove( group );
-        }
-
-        adjustStringLiberties(captureList);
     }
 
     /**
@@ -193,19 +224,8 @@ public class PostMoveUpdater extends PostChangeUpdater {
             BoardValidationUtil.confirmAllStonesInUniqueGroups(board_.getGroups());
         }
 
-        // remove all the current groups (we will then add them back)
-        board_.getGroups().clear();
+        recreateGroupsAfterMove();
 
-        for ( int i = 1; i <= board_.getNumRows(); i++ )  {
-           for ( int j = 1; j <= board_.getNumCols(); j++ ) {
-               GoBoardPosition seed = (GoBoardPosition)board_.getPosition(i, j);
-               if (seed.isOccupied() && !seed.isVisited()) {
-                   List newGroup = board_.findGroupFromInitialPosition(seed, false);
-                   GoGroup g = new GoGroup(newGroup);
-                   board_.getGroups().add(g);
-               }
-           }
-        }
         unvisitAll();
 
         // verify that the string to which we added the stone has at least one liberty
@@ -220,6 +240,30 @@ public class PostMoveUpdater extends PostChangeUpdater {
         profiler.stopUpdateGroupsAfterMove();
     }
 
+    /**
+     * The structure of the groups can change after a move.
+     * First remove all the current groups then rediscover them.
+     */
+    private void recreateGroupsAfterMove() {
+
+        board_.getGroups().clear();
+
+        for ( int i = 1; i <= board_.getNumRows(); i++ )  {
+           for ( int j = 1; j <= board_.getNumCols(); j++ ) {
+               GoBoardPosition seed = (GoBoardPosition)board_.getPosition(i, j);
+               if (seed.isOccupied() && !seed.isVisited()) {
+                   List<GoBoardPosition> newGroup = board_.findGroupFromInitialPosition(seed, false);
+                   GoGroup g = new GoGroup(newGroup);
+                   board_.getGroups().add(g);
+               }
+           }
+        }
+    }
+
+    /**
+     * Confirm no empty strings, stones in valid groups, all stones in unique groups, and all stones in groups claimed.
+     * @param pos position to check
+     */
     private void consistencyCheck(GoBoardPosition pos) {
         if ( GameContext.getDebugMode() > 1 ) {
             BoardValidationUtil.confirmNoEmptyStrings(board_.getGroups());
@@ -268,7 +312,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
             seedStone = finalStone;
         }
         assert seedStone.isOccupied();
-        List bigGroup = board_.findGroupFromInitialPosition( seedStone );
+        List<GoBoardPosition> bigGroup = board_.findGroupFromInitialPosition( seedStone );
         assert ( bigGroup.size() > 0 );
 
         removeGroupsForListOfStones(bigGroup);

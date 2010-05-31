@@ -70,14 +70,14 @@ public class TestKiseido2002 extends GoTestCase {
         GameContext.log(0, "Now checking "+ problemPattern);
         String[] files = getFilesMatching("games2002/", problemPattern);
 
-        for (int i = 0; i < files.length; i++) {
+        for (String file : files) {
 
-            String filename =  files[i].substring(0, files[i].length() - 4);
-            GameContext.log(0, " about to restore :"+filename);
+            String filename = file.substring(0, file.length() - 4);
+            GameContext.log(0, " about to restore :" + filename);
             try {
-            restore("games2002/" + filename);
+                restore("games2002/" + filename);
             } catch (AssertionError e) {
-                System.out.println("error on "+ filename);
+                System.out.println("error on " + filename);
                 e.printStackTrace();
             }
         }

@@ -401,7 +401,7 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
         EyeType[] whiteEyes = {};
         double bPotential = 0.93;
         double wPotential = 1.31;
-        double blackHealth = 0.9399999976158142;  // 1.0
+        double blackHealth = 1.0; //0.9399999976158142;  
         double whiteHealth = -0.5;
         double AbsAbsHealthDiff = 0.49;
         double AbsHealthDiff = 1.5;
@@ -493,11 +493,11 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
         double bah = blackHealthAnalyzer.calculateAbsoluteHealth( board, p );
         double wah = whiteHealthAnalyzer.calculateAbsoluteHealth( board, p );
 
-         int numBlackLiberties = blackHealthAnalyzer.getNumLiberties();
-         int numWhiteLiberties = whiteHealthAnalyzer.getNumLiberties();
+        int numBlackLiberties = blackHealthAnalyzer.getNumLiberties();
+        int numWhiteLiberties = whiteHealthAnalyzer.getNumLiberties();
 
-         blackHealthAnalyzer.breakEyeCache();
-         whiteHealthAnalyzer.breakEyeCache();
+        blackHealthAnalyzer.breakEyeCache();
+        whiteHealthAnalyzer.breakEyeCache();
 
          // verify that we have the expected number and type of eyes for that biggest group
         verifyEyes(blackHealthAnalyzer.getEyes(board), blackEyes, true);

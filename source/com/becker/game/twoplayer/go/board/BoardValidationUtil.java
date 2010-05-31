@@ -38,12 +38,10 @@ public class BoardValidationUtil {
      * 
      * @param stones
      */
-    public static void confirmUnvisited( List stones )
+    public static void confirmUnvisited( List<GoBoardPosition> stones )
     {
-        Iterator it = stones.iterator();
-        while (it.hasNext()) {
-            GoBoardPosition p = (GoBoardPosition) it.next();
-            assert !p.isVisited(): p+" in "+stones+" was visited";
+        for (GoBoardPosition pos : stones) {
+            assert !pos.isVisited() : pos + " in " + stones + " was visited";
         }
     }
 
@@ -68,7 +66,6 @@ public class BoardValidationUtil {
     private static void confirmStoneInValidGroup( GoBoardPosition stone, Set groups )
     {
         GoString str = stone.getString();
-        //boolean b = stone.getPiece().isOwnedByPlayer1();
         assert ( str!=null) : stone + " does not belong to any string!" ;
         GoGroup g = str.getGroup();
         boolean valid = false;
@@ -100,6 +97,7 @@ public class BoardValidationUtil {
 
     /**
      * verify that all the stones are marked unvisited.
+     * @return positiont hat is still marked visited.
      */
     private static GoBoardPosition areAllUnvisited(GoBoard board)
     {
@@ -117,33 +115,26 @@ public class BoardValidationUtil {
     /**
      * for every stone one the board verify that it belongs to exactly one group
     */
-    public static void confirmAllStonesInUniqueGroups(Set groups)
+    public static void confirmAllStonesInUniqueGroups(Set<GoGroup> groups)
     {
-        Iterator grIt = groups.iterator();
-        while ( grIt.hasNext() ) {  // for each group on the board
-            GoGroup g = (GoGroup) grIt.next();
-            confirmStonesInOneGroup( g, groups );
+        for (GoGroup g : groups) {
+            confirmStonesInOneGroup(g, groups);
         }
     }
 
     /**
      * confirm that the stones in this group are not contained in any other group.
      */
-    public static void confirmStonesInOneGroup( GoGroup group, Set groups)
+    public static void confirmStonesInOneGroup( GoGroup group, Set<GoGroup> groups)
     {
-        Iterator strIt = group.getMembers().iterator();
-        while ( strIt.hasNext() ) {  // foir each string in the group
-            GoString string1 = (GoString) strIt.next();
-            Iterator grIt = groups.iterator();
-            while ( grIt.hasNext() ) {  // for each group on the board
-                GoGroup g = (GoGroup) grIt.next();
-                if ( !g.equals(group) ) {
-                    Iterator it = g.getMembers().iterator();
-                    while ( it.hasNext() ) {   // fro each string in that group
-                        GoString s = (GoString) it.next();
-                        if ( string1.equals(s) ) {
-                            BoardDebugUtil.debugPrintGroups( 0, groups );
-                            assert false: "ERROR: " + s + " contained by 2 groups" ;
+        for (GoString string : group.getMembers()) {
+            for (GoGroup g : groups) {  // for each group on the board
+
+                if (!g.equals(group)) {
+                    for (GoString s : g.getMembers()) {   // fro each string in that group
+                        if (string.equals(s)) {
+                            BoardDebugUtil.debugPrintGroups(0, groups);
+                            assert false : "ERROR: " + s + " contained by 2 groups";
                         }
                         confirmStoneInStringAlsoInGroup(s, g, groups);
                     }
@@ -154,14 +145,12 @@ public class BoardValidationUtil {
 
     private static void confirmStoneInStringAlsoInGroup(GoString str, GoGroup group, Set groups) {
         //make sure that every stone in the string belongs in this group
-        Iterator stoneIt = str.getMembers().iterator();
-        while ( stoneIt.hasNext() ) {
-            GoBoardPosition st1 = (GoBoardPosition) stoneIt.next();
-            if ( st1.getGroup() != null && !group.equals(st1.getGroup()) ) {
-                BoardDebugUtil.debugPrintGroups( 0, "Confirm stones in one group failed. Groups are:", true, true, groups );
-                assert false:
-                       st1 + " does not just belong to " + st1.getGroup()
-                        + " as its ancestry indicates. It also belongs to " + group;
+        for (GoBoardPosition pos : str.getMembers()) {
+
+            if (pos.getGroup() != null && !group.equals(pos.getGroup())) {
+                BoardDebugUtil.debugPrintGroups(0, "Confirm stones in one group failed. Groups are:", true, true, groups);
+                assert false : pos + " does not just belong to " + pos.getGroup()
+                              + " as its ancestry indicates. It also belongs to " + group;
             }
         }
     }
@@ -172,23 +161,20 @@ public class BoardValidationUtil {
      * matches the group that is claims by ancestry.
      * (expesnsive to check)
      */
-    public static void confirmAllStonesInGroupsClaimed(Set groups, GoBoard board)
+    public static void confirmAllStonesInGroupsClaimed(Set<GoGroup> groups, GoBoard board)
     {
-        Iterator grIt = groups.iterator();
-        while ( grIt.hasNext() ) {  // for each group on the board
-            GoGroup parentGroup = (GoGroup) grIt.next();
+        for (GoGroup parentGroup : groups) {  // for each group on the board
             // for eash stone in that group
-            Set parentGroupStones = parentGroup.getStones();
-            Iterator sit = parentGroupStones.iterator();
-            while ( sit.hasNext() ) {   // fro each string in that group
-                 GoBoardPosition s = (GoBoardPosition) sit.next();
-                 // compute the group from this stone and confirm it matches the parent group
-                 List<GoBoardPosition> g = board.findGroupFromInitialPosition(s);
-                 // perhaps we should do something more than check the size.
-                if (g.size() != parentGroupStones.size())   {
-                    BoardDebugUtil.debugPrintGroups( 0, "Confirm stones in groups they Claim failed. Groups are:", true, true, groups );
+            Set<GoBoardPosition> parentGroupStones = parentGroup.getStones();
+            for (GoBoardPosition stone : parentGroupStones) {
+                // compute the group from this stone and confirm it matches the parent group
+                List<GoBoardPosition> g = board.findGroupFromInitialPosition(stone);
+                // perhaps we should do something more than check the size.
+                if (g.size() != parentGroupStones.size()) {
+                    BoardDebugUtil.debugPrintGroups(0, "Confirm stones in groups they Claim failed. Groups are:", true, true, groups);
                     assert false :
-                      BoardDebugUtil.debugPrintListText(0,"Calculated Group (seeded by "+s+"):", g) +"\n is not equal to the expected parent group:\n"+parentGroup;
+                            BoardDebugUtil.debugPrintListText(0, "Calculated Group (seeded by " + stone + "):", g)
+                                    + "\n is not equal to the expected parent group:\n" + parentGroup;
                 }
             }
         }
@@ -207,8 +193,7 @@ public class BoardValidationUtil {
     static void confirmNoStringsWithEmpties(Set<GoGroup> groups)
     {
         for (GoGroup g : groups)  {
-            for (GoString s : g.getMembers()) {
-                GoString string = s;
+            for (GoString string : g.getMembers()) {
                 assert (!string.areAnyBlank()): "There is a string with unoccupied positions: " + string;
             }
         }
@@ -217,11 +202,9 @@ public class BoardValidationUtil {
     /**
      *  confirm that all the strings in a group have nobi connections.
      */
-    static void confirmGroupsHaveValidStrings(Set groups, GoBoard board)
+    static void confirmGroupsHaveValidStrings(Set<GoGroup> groups, GoBoard board)
     {
-        Iterator it = groups.iterator();
-        while ( it.hasNext() ) {
-            GoGroup group = (GoGroup) it.next();
+        for (GoGroup group : groups) {
             confirmValidStrings(group, board);
         }
     }
@@ -233,15 +216,13 @@ public class BoardValidationUtil {
      * @param smallerGroup
      * @return
      */
-    static boolean confirmStoneListContains(List largerGroup, List smallerGroup)
+    static boolean confirmStoneListContains(List<GoBoardPosition> largerGroup, List<GoBoardPosition> smallerGroup)
     {
-        Iterator smallIt = smallerGroup.iterator();
-        while (smallIt.hasNext()) {
-            GoBoardPosition smallPos = (GoBoardPosition)smallIt.next();
+        for (GoBoardPosition smallPos : smallerGroup) {
             boolean found = false;
             Iterator largeIt = largerGroup.iterator();
             while (largeIt.hasNext() && !found) {
-                GoBoardPosition largePos = (GoBoardPosition)largeIt.next();
+                GoBoardPosition largePos = (GoBoardPosition) largeIt.next();
                 if (largePos.getRow() == smallPos.getRow() && largePos.getCol() == smallPos.getCol())
                     found = true;
             }
@@ -257,10 +238,8 @@ public class BoardValidationUtil {
      */
     private static void confirmValidStrings(GoGroup group, GoBoard b )
     {
-        Iterator it = group.getMembers().iterator();
-        while ( it.hasNext() ) {
-            GoString string = (GoString) it.next();
-            string.confirmValid( b );
+        for (GoString string : group.getMembers()) {
+            string.confirmValid(b);
         }
     }
 

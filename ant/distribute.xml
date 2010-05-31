@@ -132,7 +132,7 @@
           <param name="jarFile" value="tictactoe.jar"/>
       </antcall>
 
-      <!-- copy the class files that are needed for com.becker.game.twoplayer.blockade deployment -->
+      <!-- copy the class files that are needed for blockade deployment -->
       <antcall target="deployJar">
           <param name="componentDir" value="game/twoplayer/blockade"/>
           <param name="jarFile" value="blockade.jar"/>

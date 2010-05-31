@@ -23,7 +23,7 @@ public final class BoardDebugUtil {
      * pretty print a list of all the current groups (and the strings they contain)
      * @param stones list of stones to print
      */
-    public static void debugPrintList( int logLevel, String title, Collection stones)
+    public static void debugPrintList( int logLevel, String title, Collection<GoBoardPosition> stones)
       {
            GameContext.log(logLevel, debugPrintListText(logLevel, title, stones));
       }
@@ -32,22 +32,20 @@ public final class BoardDebugUtil {
      * pretty print a list of all the current groups (and the strings they contain)
      * @param stones list of stones to print
      */
-    static String debugPrintListText( int logLevel, String title, Collection stones)
+    static String debugPrintListText( int logLevel, String title, Collection<GoBoardPosition> stones)
     {
         if (stones == null)
             return "";
         StringBuffer buf = new StringBuffer(title+'\n');
         if (logLevel <= GameContext.getDebugMode())  {
-            Iterator it = stones.iterator();
-            while (it.hasNext()) {
-                GoBoardPosition stone = (GoBoardPosition)it.next();
-                buf.append( stone.toString() +", ");
+            for (GoBoardPosition stone : stones) {
+                buf.append(stone.toString()).append(", ");
             }
         }
         return buf.substring(0, buf.length() - 2);
     }
 
-    static void debugPrintList( int logLevel, String title, List stones)
+    static void debugPrintList( int logLevel, String title, List<GoBoardPosition> stones)
     {
         if (stones == null)
             return;
@@ -93,7 +91,8 @@ public final class BoardDebugUtil {
     {
         StringBuffer groupText = new StringBuffer( "" );
         StringBuffer blackGroupsText = new StringBuffer(showBlack? "The black groups are :\n" : "" );
-        StringBuffer whiteGroupsText = new StringBuffer((showBlack?"\n":"") + (showWhite? "The white groups are :\n" : ""));
+        StringBuffer whiteGroupsText =
+                new StringBuffer((showBlack?"\n":"") + (showWhite? "The white groups are :\n" : ""));
 
         for (Object group1 : groups) {
             GoGroup group = (GoGroup) group1;

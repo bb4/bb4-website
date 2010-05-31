@@ -166,11 +166,11 @@
        </junit>
   </target>
 
-  <target name="executeBlockade" description="Run the com.becker.game.twoplayer.blockade program">
+  <target name="executeBlockade" description="Run the blockade program">
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
       <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;"/>
-      <param name="args" value="-name com.becker.game.twoplayer.blockade -locale ENGLISH"/>
+      <param name="args" value="-name blockade -locale ENGLISH"/>
     </antcall>
   </target>
 

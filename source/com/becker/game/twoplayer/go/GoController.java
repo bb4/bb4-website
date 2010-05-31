@@ -311,7 +311,7 @@ public final class GoController extends TwoPlayerController
 
         if (position.isInEye())  {
             if (position.isOccupied()) {
-                // a dead enemy stone in the eye coiunts twice.
+                // a dead enemy stone in the eye counts twice.
                 score.deadStoneScore = position.getEye().isOwnedByPlayer1()? 2.0 : -2.0;
             }
             else {

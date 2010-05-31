@@ -30,8 +30,7 @@ public class NeighborAnalyzer {
      */
     public List<GoBoardPosition> findStringFromInitialPosition( GoBoardPosition stone,  boolean friendOwnedByP1,
                                                      boolean returnToUnvisitedState, NeighborType type,
-                                                     int rMin, int rMax, int cMin, int cMax )
-    {
+                                                     int rMin, int rMax, int cMin, int cMax ) {
         List<GoBoardPosition> stones = new ArrayList<GoBoardPosition>();
         // perform a breadth first search  until all found.
         // use the visited flag to indicate that a stone has been added to the string
@@ -61,7 +60,8 @@ public class NeighborAnalyzer {
     /**
      * get neighboring stones of the specified stone.
      * @param stone the stone (or space) whose neighbors we are to find.
-     * @param friendOwnedByP1 need to specify this in the case that the stone is a blank space and has undefined ownership.
+     * @param friendOwnedByP1 need to specify this in the case that the stone is a blank space
+     * and has undefined ownership.
      * @param neighborType (EYE, NOT_FRIEND etc)
      * @return a set of stones that are immediate (nobi) neighbors.
      */
@@ -89,7 +89,7 @@ public class NeighborAnalyzer {
     }
 
     /**
-     * @param stone
+     * @param stone stone to find string neighbors for.
      * @return string neighbors
      */
     public Set<GoString> findStringNeighbors(GoBoardPosition stone ) {
@@ -116,7 +116,6 @@ public class NeighborAnalyzer {
     private static void getNobiNeighbor( GoBoardPosition nbrStone, boolean friendOwnedByP1,
                                          Set<GoBoardPosition> nbrs, NeighborType neighborType )
     {
-
         boolean correctNeighborType = true;
         switch (neighborType) {
             case ANY:
@@ -156,8 +155,9 @@ public class NeighborAnalyzer {
      * @param stone (not necessarily occupied)
      * @param friendPlayer1 typically stone.isOwnedByPlayer1 value of stone unless it is blank.
      * @param samePlayerOnly if true then find group nbrs that are have same ownership as friendPlayer1
+     * @return group neighbors for specified stone.
      */
-    public Set<GoBoardPosition> getGroupNeighbors( GoBoardPosition stone, boolean friendPlayer1, boolean samePlayerOnly )
+    public Set<GoBoardPosition> getGroupNeighbors(GoBoardPosition stone, boolean friendPlayer1, boolean samePlayerOnly)
     {
         List<GoBoardPosition> stack = new LinkedList<GoBoardPosition>();
 
@@ -345,7 +345,6 @@ public class NeighborAnalyzer {
      */
     public List<GoBoardPosition> findGroupFromInitialPosition( GoBoardPosition stone, boolean returnToUnvisitedState )
     {
-
         List<GoBoardPosition> stones = new ArrayList<GoBoardPosition>();
         // perform a breadth first search  until all found.
         // use the visited flag to indicate that a stone has been added to the group
@@ -385,6 +384,28 @@ public class NeighborAnalyzer {
             allNbrs.addAll(nbrs);
         }
         return allNbrs;
+    }
+
+    /**
+     * return 1 if this is a valid neighbor according to specification.
+     * These are the immediately adjacent (nobi) nbrs within the specified rectangular bounds
+     * @return number of neighbors added (0 or 1).
+     */
+    private int checkNeighbor( Location loc, int rowOffset, int colOffset,
+                               boolean friendOwnedByPlayer1, List<GoBoardPosition> stack,
+                               boolean samePlayerOnly, NeighborType type,
+                               Box bbox )
+    {
+        int r = loc.getRow();
+        int c = loc.getCol();
+        GoBoardPosition nbr = (GoBoardPosition) board_.getPosition(r + rowOffset, c + colOffset);
+        if ( nbr.getRow() >= bbox.getMinRow() && nbr.getRow() <= bbox.getMaxRow()
+          && nbr.getCol() >= bbox.getMinCol() && nbr.getCol() <= bbox.getMaxCol() ) {
+            return checkNeighbor( r, c, rowOffset, colOffset, friendOwnedByPlayer1, stack, samePlayerOnly, type );
+        }
+        else {
+            return 0;
+        }
     }
 
     /**
@@ -433,28 +454,6 @@ public class NeighborAnalyzer {
            default : assert false: "unknown or unsupported neighbor type:"+type;
         }
         return 0;
-    }
-
-
-    /**
-     * return 1 if this is a valid neighbor according to specification.
-     * These are the immediately adjacent (nobi) nbrs within the specified rectangular bounds
-     */
-    private int checkNeighbor( Location loc, int rowOffset, int colOffset,
-                               boolean friendOwnedByPlayer1, List<GoBoardPosition> stack,
-                               boolean samePlayerOnly, NeighborType type,
-                               Box bbox )
-    {
-        int r = loc.getRow();
-        int c = loc.getCol();
-        GoBoardPosition nbr = (GoBoardPosition) board_.getPosition(r + rowOffset, c + colOffset);
-        if ( nbr.getRow() >= bbox.getMinRow() && nbr.getRow() <= bbox.getMaxRow()
-          && nbr.getCol() >= bbox.getMinCol() && nbr.getCol() <= bbox.getMaxCol() ) {
-            return checkNeighbor( r, c, rowOffset, colOffset, friendOwnedByPlayer1, stack, samePlayerOnly, type );
-        }
-        else {
-            return 0;
-        }
     }
 
     /**
@@ -529,6 +528,8 @@ public class NeighborAnalyzer {
 
     /**
      * for the knight's move we consider it cut if there is an enemy stone at the base.
+     * @param stack kogeima neighbors, if found, are added to this stack.
+     * @return number of kogeima neighbors added.
      */
     private int checkKogeimaNeighbor( int r, int c, int rowOffset, int colOffset,
                                       boolean friendPlayer1, boolean sameSideOnly,
@@ -543,7 +544,8 @@ public class NeighborAnalyzer {
             return 0;
         }
 
-        if ( nbr.isOccupied() && (!sameSideOnly || nbr.getPiece().isOwnedByPlayer1() == friendPlayer1) && !nbr.isVisited() ) {
+        if ( nbr.isOccupied() &&
+            (!sameSideOnly || nbr.getPiece().isOwnedByPlayer1() == friendPlayer1) && !nbr.isVisited() ) {
             boolean cut;
             // consider it cut if there is an opponent stone in one of the 2 spaces between.
             if ( Math.abs( rowOffset ) == 2 ) {

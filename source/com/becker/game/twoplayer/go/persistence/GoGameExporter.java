@@ -13,10 +13,9 @@ import java.util.*;
 /**
  * Exports the state of a Go game to a file.
  *
- * @author Barry Becker Date: Oct 28, 2006
+ * @author Barry Becker
  */
 public class GoGameExporter extends GameExporter {
-
 
     public GoGameExporter(GoController controller)
     {

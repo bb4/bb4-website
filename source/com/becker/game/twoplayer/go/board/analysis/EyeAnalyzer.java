@@ -43,7 +43,7 @@ public class EyeAnalyzer {
     
         if ( size > 2 && size < 8 ) {
             BigEyeAnalyzer bigEyeAnalyzer = new BigEyeAnalyzer(eye_);
-            return bigEyeAnalyzer.determineEyeType(board);
+            return bigEyeAnalyzer.determineEyeType();
         }
         return EyeType.TERRITORIAL_EYE;
     }

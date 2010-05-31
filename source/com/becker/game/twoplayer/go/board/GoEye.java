@@ -1,6 +1,5 @@
 package com.becker.game.twoplayer.go.board;
 
-import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GameContext;
 
 import com.becker.game.twoplayer.go.board.analysis.EyeAnalyzer;
@@ -14,8 +13,6 @@ import java.util.*;
  *  Some convenience operations for eyes are contained in this class
  *  A group needs 2 provably true eyes to live.
  *
- *  @see GoGroup
- *  @see GoBoard
  *  @see EyeType for the the possible types of eyes that can occur
  *  @author Barry Becker
  */
@@ -24,7 +21,7 @@ public final class GoEye extends GoString implements GoMember
     /** a set of the stones that are in the eye space. */
     private Set<GoBoardPosition> members_;
     
-    // the kind of eye that this is
+    /** the kind of eye that this is. */
     private final EyeType type_;
     
     private EyeAnalyzer eyeAnalyzer_;

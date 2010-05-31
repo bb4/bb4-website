@@ -22,7 +22,7 @@ public enum EyeType
      *
      * @param description string name of the eye type (eg "False Eye")
      */
-    private EyeType(String label, String description) {
+    EyeType(String label, String description) {
         label_ = label;
         description_ = description;
     }

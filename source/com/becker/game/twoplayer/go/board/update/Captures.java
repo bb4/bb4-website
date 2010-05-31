@@ -8,7 +8,6 @@ import com.becker.game.twoplayer.go.GoMove;
  */
 public class Captures {
 
-
     protected int numWhiteStonesCaptured_ = 0;
     protected int numBlackStonesCaptured_ = 0;
 
@@ -21,7 +20,6 @@ public class Captures {
     public int getNumCaptures(boolean player1StonesCaptured) {
         return player1StonesCaptured ? numBlackStonesCaptured_ : numWhiteStonesCaptured_ ;
     }
-
 
     /**
      * @param move the move just made or removed.
