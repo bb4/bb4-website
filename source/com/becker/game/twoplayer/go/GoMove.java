@@ -65,6 +65,7 @@ public final class GoMove extends TwoPlayerMove
      * Usually a move is suicidal if you play on your last liberty.
      * However, if you kill an enemy string by playing on your last liberty,
      * then it is legal.
+     * @return true if this move is suicidal.
      */
     public boolean isSuicidal( GoBoard board )
     {

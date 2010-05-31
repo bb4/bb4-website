@@ -18,7 +18,6 @@ import java.util.*;
  */
 public class GoString extends GoSet
 {
-
     /** a set of the stones that are in the string */
     private Set<GoBoardPosition> members_;
     
@@ -321,13 +320,12 @@ public class GoString extends GoSet
     }
 
     public void setUnconditionallyAlive(boolean unconditionallyAlive) {
-        System.out.println("setting ua to "+ unconditionallyAlive +" on " + this);
         this.unconditionallyAlive_ = unconditionallyAlive;
     }
     
     ////////////////// debugging methods //////////////////////////////
     /**
-     * return true if any of the stones in the string are blank (should never happen)
+     * @return true if any of the stones in the string are blank (should never happen)
      */
     public final boolean areAnyBlank()
     {
