@@ -20,6 +20,7 @@ public enum EyeType
     /**
      * constructor for eye type enum
      *
+     * @param label nice label.
      * @param description string name of the eye type (eg "False Eye")
      */
     EyeType(String label, String description) {

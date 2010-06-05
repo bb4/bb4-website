@@ -2,7 +2,7 @@ package com.becker.game.twoplayer.go;
 
 import com.becker.game.twoplayer.go.board.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.analysis.ShapeAnalyzer;
+import com.becker.game.twoplayer.go.board.analysis.StringShapeAnalyzer;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -32,7 +32,7 @@ public class TestShape extends GoTestCase {
     private void checkShape(int r, int c, int expectedShapeScore) {
         GoBoard board = (GoBoard)controller_.getBoard();
         GoBoardPosition position = (GoBoardPosition)board.getPosition(r, c);
-        ShapeAnalyzer sa = new ShapeAnalyzer(board);
+        StringShapeAnalyzer sa = new StringShapeAnalyzer(board);
         int n = sa.formsBadShape(position);
         assertTrue("Expected "+expectedShapeScore+" but got "+n+" for "+position, n == expectedShapeScore);
     }
