@@ -4,12 +4,12 @@ import com.becker.game.twoplayer.go.board.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.GoStone;
 import com.becker.game.twoplayer.go.board.PositionalScore;
 import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.analysis.StringShapeAnalyzer;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.*;
 import com.becker.game.twoplayer.common.search.*;
 import com.becker.game.twoplayer.go.board.analysis.CandidateMoveAnalyzer;
-import com.becker.game.twoplayer.go.board.analysis.ShapeAnalyzer;
 import com.becker.game.twoplayer.go.persistence.GoGameExporter;
 import com.becker.game.twoplayer.go.persistence.GoGameImporter;
 
@@ -323,7 +323,7 @@ public final class GoController extends TwoPlayerController
 
             int side = position.getPiece().isOwnedByPlayer1()? 1: -1;
             // penalize bad shape like empty triangles
-            ShapeAnalyzer sa = new ShapeAnalyzer(board);
+            StringShapeAnalyzer sa = new StringShapeAnalyzer(board);
             score.badShapeScore = -(side * sa.formsBadShape(position)
                                    * weights.get(GoWeights.BAD_SHAPE_WEIGHT_INDEX).getValue());
 

@@ -14,14 +14,14 @@ import com.becker.game.common.BoardPosition;
  * 
  * @author Barry Becker
  */
-public class ShapeAnalyzer {
+public class StringShapeAnalyzer {
 
     private static final int EMPTY_TRIANGLE_PENALTY = 1;
     private static final int CLUMP_OF_FOUR_PENALTY = 1;
 
     private GoBoard board_;
     
-    public ShapeAnalyzer(GoBoard board) {
+    public StringShapeAnalyzer(GoBoard board) {
         board_ =board;
     }
     

@@ -78,6 +78,7 @@ public class GroupHealthAnalyzer implements Cloneable {
 
     /**
      * only used in tester. otherwise would be private.
+     * @return health score independent of neighboring groups.
      */
     public float getAbsoluteHealth()
     {
@@ -101,7 +102,6 @@ public class GroupHealthAnalyzer implements Cloneable {
     {
         return eyeCacheBroken_;
     }
-
 
     /**
      * Get the number of liberties that the group has.

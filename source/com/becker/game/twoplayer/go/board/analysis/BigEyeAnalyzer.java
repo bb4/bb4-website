@@ -3,7 +3,6 @@ package com.becker.game.twoplayer.go.board.analysis;
 import com.becker.game.twoplayer.go.board.EyeType;
 import com.becker.game.twoplayer.go.board.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.GoEye;
-import com.becker.game.twoplayer.go.board.GoBoard;
 import java.util.Set;
 
 /**
@@ -17,6 +16,7 @@ class BigEyeAnalyzer {
 
     private GoEye eye_;
 
+    /** spaces in the eye */
     Set<GoBoardPosition> spaces;
 
     /**
@@ -41,11 +41,11 @@ class BigEyeAnalyzer {
         GoBoardPosition keyPoint = null;
            
         // check for a big-eye shape (also called a dead eye)
-        // the keypoint is the space with the most nobi ngbors
+        // the keypoint is the space with the most nobi neighbors
         int max = 0;
         int sum = 0;
         for (GoBoardPosition space : spaces) {
-            int numNobiNbrs = getNumEyeNobiNeighbors( space);
+            int numNobiNbrs = getNumEyeNobiNeighbors(space);
             sum += numNobiNbrs;
             if ( numNobiNbrs > max ) {
                 keyPoint = space;
@@ -84,20 +84,21 @@ class BigEyeAnalyzer {
             }
         }
 
-        assert ( size > 3): "there must be at least 4 spaces for a territorial eye";
+        assert (size > 3): "there must be at least 4 spaces for a territorial eye";
         return EyeType.TERRITORIAL_EYE;
     }
 
     /**
+     * @param space eye space to check
      * @return number of eye-space nobi neighbors.
      * these neighbors may either be blanks or dead stones of the opponent
      */
-    private int getNumEyeNobiNeighbors( GoBoardPosition space)
+    private int getNumEyeNobiNeighbors(GoBoardPosition space)
     {
         int numNbrs = 0;
-        for (GoBoardPosition ns : eye_.getMembers()) {
+        for (GoBoardPosition eyeSpace : eye_.getMembers()) {
        
-            if ( space.getDistanceFrom( ns ) == 1.0 )
+            if ( space.getDistanceFrom( eyeSpace ) == 1.0 )
                 numNbrs++;
         }
         return numNbrs;

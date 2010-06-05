@@ -30,7 +30,7 @@ public class TestShapeAnalyzer extends GoTestCase {
 
         GoBoard board = (GoBoard)controller_.getBoard();
         GoBoardPosition pos = (GoBoardPosition)board.getPosition(row, col);
-        ShapeAnalyzer sa = new ShapeAnalyzer(board);
+        StringShapeAnalyzer sa = new StringShapeAnalyzer(board);
         int badShapeScore = sa.formsBadShape(pos);
         Assert.assertTrue("badShapeScore="+badShapeScore+" expected="+expected, badShapeScore == expected);
     }
