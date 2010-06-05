@@ -1,7 +1,8 @@
-package com.becker.game.twoplayer.go.board.analysis;
+package com.becker.game.twoplayer.go.board.analysis.group;
 
 import com.becker.game.twoplayer.go.board.*;
 import com.becker.common.Box;
+import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
 
 import java.util.*;
 
@@ -10,7 +11,7 @@ import java.util.*;
  *
  * @author Barry Becker
  */
-class GroupEyeSpaceAnalyzer {
+class EyeSpaceAnalyzer {
 
     /** The group of go stones that we are analyzing. */
     private GoGroup group_;
@@ -23,7 +24,7 @@ class GroupEyeSpaceAnalyzer {
     /**
      * Constructor.
      */
-    public GroupEyeSpaceAnalyzer(GoGroup group, GoBoard board) {
+    public EyeSpaceAnalyzer(GoGroup group, GoBoard board) {
         group_ = group;
         board_ = board;
         assert board_ != null;
@@ -183,49 +184,47 @@ class GroupEyeSpaceAnalyzer {
      */
     private float getRowColPotential(int r, int c, int rowInc, int colInc, int maxRow, int maxCol,
                                      GoBoard board, GoString groupString) {
-            float rowPotential = 0;
-            int breadth = (rowInc ==1)? (maxRow - r) : (maxCol - c);
-            GoBoardPosition startSpace = (GoBoardPosition) board.getPosition( r, c );
-            do {
-                GoBoardPosition space = (GoBoardPosition) board.getPosition( r, c );
-                GoBoardPosition firstSpace = space;
-                boolean containsEnemy = false;
-                int runLength = 0;
-                boolean ownedByPlayer1 = group_.isOwnedByPlayer1();
+        float rowPotential = 0;
+        int breadth = (rowInc ==1)? (maxRow - r) : (maxCol - c);
+        GoBoardPosition startSpace = (GoBoardPosition) board.getPosition( r, c );
+        do {
+            GoBoardPosition space = (GoBoardPosition) board.getPosition( r, c );
+            GoBoardPosition firstSpace = space;
+            boolean containsEnemy = false;
+            int runLength = 0;
+            boolean ownedByPlayer1 = group_.isOwnedByPlayer1();
 
-                while (c <= maxCol && r <= maxRow && (space.isUnoccupied() ||
-                          (space.isOccupied() && space.getPiece().isOwnedByPlayer1() != ownedByPlayer1))) {
-                    if (space.isOccupied() &&  space.getPiece().isOwnedByPlayer1() != ownedByPlayer1
-                        && groupString.isEnemy(space)) {
-                        containsEnemy =  true;
-                    }
-                    runLength++;
-                    r += rowInc;
-                    c += colInc;
-                    space = (GoBoardPosition) board.getPosition( r, c );
+            while (c <= maxCol && r <= maxRow && (space.isUnoccupied() ||
+                      (space.isOccupied() && space.getPiece().isOwnedByPlayer1() != ownedByPlayer1))) {
+                if (space.isOccupied() &&  space.getPiece().isOwnedByPlayer1() != ownedByPlayer1
+                    && groupString.isEnemy(space)) {
+                    containsEnemy =  true;
                 }
-                boolean bounded = !(firstSpace.equals(startSpace)) && space!=null && space.isOccupied();
-                // now acrue the potential
-                if (!containsEnemy && runLength < breadth && runLength > 0) {
-                     int firstPos, max, currentPos;
-                     if (rowInc ==1) {
-                         firstPos = firstSpace.getRow();
-                         max = board.getNumRows();
-                         currentPos = r;
-                     } else {
-                         firstPos = firstSpace.getCol();
-                         max = board.getNumCols();
-                         currentPos = c;
-                     }
-                     rowPotential += getRunPotential(runLength, firstPos, currentPos, max, bounded);
-                }
+                runLength++;
                 r += rowInc;
                 c += colInc;
-            } while (c <= maxCol && r <= maxRow);
-            return rowPotential;
-        }
-
-
+                space = (GoBoardPosition) board.getPosition( r, c );
+            }
+            boolean bounded = !(firstSpace.equals(startSpace)) && space!=null && space.isOccupied();
+            // now acrue the potential
+            if (!containsEnemy && runLength < breadth && runLength > 0) {
+                 int firstPos, max, currentPos;
+                 if (rowInc ==1) {
+                     firstPos = firstSpace.getRow();
+                     max = board.getNumRows();
+                     currentPos = r;
+                 } else {
+                     firstPos = firstSpace.getCol();
+                     max = board.getNumCols();
+                     currentPos = c;
+                 }
+                 rowPotential += getRunPotential(runLength, firstPos, currentPos, max, bounded);
+            }
+            r += rowInc;
+            c += colInc;
+        } while (c <= maxCol && r <= maxRow);
+        return rowPotential;
+    }
 
     /**
      * @return potential score for the runlength.

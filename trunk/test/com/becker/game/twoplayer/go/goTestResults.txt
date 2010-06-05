@@ -354,8 +354,8 @@ junit.framework.AssertionFailedError: Expected this group be unconditionally ali
 }[ Eye: Territory:  (13, 6) s:0 hc:3906,  (12, 5) s:0 hc:3605,  (12, 4) s:0 hc:3604,  (13, 4) s:0 hc:3904, W (13, 5) s:0 hc:3905,  (12, 6) s:0 hc:3606),  Eye: TrueEye:  (13, 8) s:0 hc:3908)]
 abs health=0.94 rel health=0.94 group Liberties=18
 
-	at com.becker.game.twoplayer.go.board.analysis.TestLifeAnalyzer.verifyUnconditionalLife(TestLifeAnalyzer.java:99)
-	at com.becker.game.twoplayer.go.board.analysis.TestLifeAnalyzer.testUnconditionalLife1(TestLifeAnalyzer.java:21)
+	at com.becker.game.twoplayer.go.board.analysis.group.TestLifeAnalyzer.verifyUnconditionalLife(TestLifeAnalyzer.java:99)
+	at com.becker.game.twoplayer.go.board.analysis.group.TestLifeAnalyzer.testUnconditionalLife1(TestLifeAnalyzer.java:21)
 
 Testcase: testUnconditionalLife2 took 0.048 sec
 Testcase: testUnconditionalLife3 took 0.056 sec
@@ -375,8 +375,8 @@ junit.framework.AssertionFailedError: Expected this group be unconditionally ali
 }[ Eye: TrueEye:  (12, 1) s:0 hc:3601),  Eye: TrueEye: W (13, 3) s:0 hc:3903,  (13, 2) s:0 hc:3902)]
 abs health=0.94 rel health=1.00 group Liberties=2
 
-	at com.becker.game.twoplayer.go.board.analysis.TestLifeAnalyzer.verifyUnconditionalLife(TestLifeAnalyzer.java:99)
-	at com.becker.game.twoplayer.go.board.analysis.TestLifeAnalyzer.testUnconditionalLife6(TestLifeAnalyzer.java:42)
+	at com.becker.game.twoplayer.go.board.analysis.group.TestLifeAnalyzer.verifyUnconditionalLife(TestLifeAnalyzer.java:99)
+	at com.becker.game.twoplayer.go.board.analysis.group.TestLifeAnalyzer.testUnconditionalLife6(TestLifeAnalyzer.java:42)
 
 Testcase: testUnconditionalLife7 took 0.022 sec
 	FAILED
@@ -390,8 +390,8 @@ junit.framework.AssertionFailedError: Expected this group be unconditionally ali
 }[ Eye: TrueEye:  (13, 5) s:0 hc:3905),  Eye: TrueEye:  (13, 7) s:0 hc:3907)]
 abs health=-0.94 rel health=-1.00 group Liberties=6
 
-	at com.becker.game.twoplayer.go.board.analysis.TestLifeAnalyzer.verifyUnconditionalLife(TestLifeAnalyzer.java:99)
-	at com.becker.game.twoplayer.go.board.analysis.TestLifeAnalyzer.testUnconditionalLife7(TestLifeAnalyzer.java:46)
+	at com.becker.game.twoplayer.go.board.analysis.group.TestLifeAnalyzer.verifyUnconditionalLife(TestLifeAnalyzer.java:99)
+	at com.becker.game.twoplayer.go.board.analysis.group.TestLifeAnalyzer.testUnconditionalLife7(TestLifeAnalyzer.java:46)
 
 Testcase: testUnconditionalLife8 took 0.04 sec
 	FAILED
@@ -409,8 +409,8 @@ junit.framework.AssertionFailedError: Expected this group be unconditionally ali
 }[ Eye: TrueEye:  (7, 3) s:0 hc:2103,  (6, 3) s:0 hc:1803),  Eye: TrueEye:  (8, 2) s:0 hc:2402),  Eye: TrueEye:  (9, 1) s:0 hc:2701)]
 abs health=0.94 rel health=0.94 group Liberties=18
 
-	at com.becker.game.twoplayer.go.board.analysis.TestLifeAnalyzer.verifyUnconditionalLife(TestLifeAnalyzer.java:99)
-	at com.becker.game.twoplayer.go.board.analysis.TestLifeAnalyzer.testUnconditionalLife8(TestLifeAnalyzer.java:51)
+	at com.becker.game.twoplayer.go.board.analysis.group.TestLifeAnalyzer.verifyUnconditionalLife(TestLifeAnalyzer.java:99)
+	at com.becker.game.twoplayer.go.board.analysis.group.TestLifeAnalyzer.testUnconditionalLife8(TestLifeAnalyzer.java:51)
 
 Testcase: testUnconditionalLife9 took 0.055 sec
 Testcase: testUnconditionalLife11 took 0.089 sec
@@ -427,8 +427,8 @@ junit.framework.AssertionFailedError: Expected this group be unconditionally ali
 }[ Eye: TrueEye:  (8, 8) s:1.00 hc:2408,  (7, 8) s:1.00 hc:2108),  Eye: TrueEye:  (9, 9) s:1.00 hc:2709)]
 abs health=0.94 rel health=1.00 group Liberties=3
 
-	at com.becker.game.twoplayer.go.board.analysis.TestLifeAnalyzer.verifyUnconditionalLife(TestLifeAnalyzer.java:99)
-	at com.becker.game.twoplayer.go.board.analysis.TestLifeAnalyzer.testUnconditionalLife11(TestLifeAnalyzer.java:60)
+	at com.becker.game.twoplayer.go.board.analysis.group.TestLifeAnalyzer.verifyUnconditionalLife(TestLifeAnalyzer.java:99)
+	at com.becker.game.twoplayer.go.board.analysis.group.TestLifeAnalyzer.testUnconditionalLife11(TestLifeAnalyzer.java:60)
 
 Testcase: testUnconditionalLife12 took 0.106 sec
 	FAILED
@@ -444,8 +444,8 @@ junit.framework.AssertionFailedError: Expected this group be unconditionally ali
 }[ Eye: TrueEye:  (7, 5) s:0.10 hc:2105),  Eye: FalseEye:  (7, 8) s:0.10 hc:2108),  Eye: TrueEye:  (7, 13) s:0.10 hc:2113)]
 abs health=0.94 rel health=1.00 group Liberties=5
 
-	at com.becker.game.twoplayer.go.board.analysis.TestLifeAnalyzer.verifyUnconditionalLife(TestLifeAnalyzer.java:99)
-	at com.becker.game.twoplayer.go.board.analysis.TestLifeAnalyzer.testUnconditionalLife12(TestLifeAnalyzer.java:64)
+	at com.becker.game.twoplayer.go.board.analysis.group.TestLifeAnalyzer.verifyUnconditionalLife(TestLifeAnalyzer.java:99)
+	at com.becker.game.twoplayer.go.board.analysis.group.TestLifeAnalyzer.testUnconditionalLife12(TestLifeAnalyzer.java:64)
 
 Testcase: testUnconditionalLife13 took 0.028 sec
 Testcase: testUnconditionalLife14 took 0.009 sec
@@ -461,8 +461,8 @@ junit.framework.AssertionFailedError: Expected this group be unconditionally ali
 }[ Eye: Territory:  (1, 4) s:0 hc:304,  (1, 1) s:0 hc:301,  (1, 2) s:0 hc:302,  (1, 3) s:0 hc:303),  Eye: Territory:  (3, 4) s:0 hc:904,  (3, 3) s:0 hc:903,  (3, 2) s:0 hc:902,  (3, 1) s:0 hc:901)]
 abs health=0.94 rel health=0.94 group Liberties=17
 
-	at com.becker.game.twoplayer.go.board.analysis.TestLifeAnalyzer.verifyUnconditionalLife(TestLifeAnalyzer.java:99)
-	at com.becker.game.twoplayer.go.board.analysis.TestLifeAnalyzer.testUnconditionalLife15(TestLifeAnalyzer.java:76)
+	at com.becker.game.twoplayer.go.board.analysis.group.TestLifeAnalyzer.verifyUnconditionalLife(TestLifeAnalyzer.java:99)
+	at com.becker.game.twoplayer.go.board.analysis.group.TestLifeAnalyzer.testUnconditionalLife15(TestLifeAnalyzer.java:76)
 
 Testcase: testBadShape1 took 0.004 sec
 Testcase: testBadShape2 took 0.005 sec

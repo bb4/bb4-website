@@ -27,58 +27,69 @@ package com.becker.game.twoplayer.go.board;
  */
 public enum EyeShape
 {
-    E0(false, 1),
-    E11(false, 1),
-    E121(false, 2),
+    E0(false, 1, 1),
+    E11(false, 2, 1),
+    E121(false, 3, 2),
 
     /* E4 shapes */
-    E1122(false, 3),
-    E1113(false, 1),
-    E2222(false, 1),
+    E1122(false, 4, 3),
+    E1113(false, 4, 1),
+    E2222(false, 4, 1),
 
     /* E5 shapes */
-    E11222(true, 7),
-    E11123(false, 1),
-    E11114(false, 1),
-    E12223(false, 1),
+    E11222(true, 5, 7),
+    E11123(false, 5, 1),
+    E11114(false, 5, 1),
+    E12223(false, 5, 1),
 
     /* E6 shapes */
-    E112222(true, 13),
-    E111223(true, 12),
-    E111133(true, 1),
-    E112233(false, 4),
-    E122223(false, 2),
-    E112224(false, 1),
-    E111124(false, 1),
-    E222233(false, 1),
+    E112222(true, 6, 13),
+    E111223(true, 6, 12),
+    E111133(true, 6, 1),
+    E112233(false, 6, 4),
+    E122223(false, 6, 2),
+    E112224(false, 6, 1),
+    E111124(false, 6, 1),
+    E222233(false, 6, 1),
 
     /* E7 shapes */
-    E1122222(true, 30),
-    E1112223(true, 40),
-    E1122233(true, 11),
-    E1111233(true, 8),
-    E1222223(true, 5),
-    E1111224(true, 4),
-    E1112333(true, 2),
-    E1222333(true, 2),
-    E1112234(false, 2),
-    E1222234(false, 1),
-    E1122224(false, 1),
-    E2222224(false, 1);
-
+    E1122222(true, 7, 30),
+    E1112223(true, 7, 40),
+    E1122233(true, 7, 11),
+    E1111233(true, 7, 8),
+    E1222223(true, 7, 5),
+    E1111224(true, 7, 4),
+    E1112333(true, 7, 2),
+    E1222333(true, 7, 2),
+    E1112234(false, 7, 2),
+    E1222234(false, 7, 1),
+    E1122224(false, 7, 1),
+    E2222224(false, 7, 1);
 
 
     private boolean life;
+    private byte size;
     private byte numPatterns;
+    private boolean canBeSideEye;
+    private boolean canBeCornerEye;
+    private byte numVitalPoints;
+    private byte numEndPoints;
 
 
     /**
      * constructor
-     *
      */
-    EyeShape(boolean life, int numPatterns) {
+    EyeShape(boolean life, int eyeSize, int numPatterns /*, boolean canBeSideEye, boolean canBeCornerEye*/) {
         this.life = life;
+        this.size = (byte)eyeSize;
         this.numPatterns = (byte)numPatterns;
+    }
+
+    /**
+     * @return the number of spaces in they eye (maybe be filled with some enemy stones).
+     */
+    public byte getSize()    {
+        return size;
     }
 
     /**
