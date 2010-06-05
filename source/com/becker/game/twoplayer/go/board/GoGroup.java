@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.go.board;
 
 import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
-import com.becker.game.twoplayer.go.board.analysis.GroupHealthAnalyzer;
+import com.becker.game.twoplayer.go.board.analysis.group.GroupHealthAnalyzer;
 import com.becker.game.twoplayer.go.*;
 import com.becker.common.util.Util;
 import com.becker.game.common.*;

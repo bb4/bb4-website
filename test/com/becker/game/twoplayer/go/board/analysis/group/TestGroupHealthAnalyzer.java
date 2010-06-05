@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.go.board.analysis;
+package com.becker.game.twoplayer.go.board.analysis.group;
 
 import com.becker.game.twoplayer.go.GoProfiler;
 import com.becker.game.twoplayer.go.board.EyeType;
@@ -8,6 +8,8 @@ import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.common.util.Util;
 import com.becker.game.twoplayer.go.GoTestCase;
 import java.util.Set;
+
+import com.becker.game.twoplayer.go.board.analysis.group.GroupHealthAnalyzer;
 import junit.framework.Assert;
 
 /**

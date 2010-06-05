@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.go.board.analysis;
+package com.becker.game.twoplayer.go.board.analysis.group;
 
 import com.becker.game.twoplayer.go.GoTestCase;
 import com.becker.game.twoplayer.go.board.GoEye;
@@ -379,7 +379,7 @@ public class TestEyeAnalyzer extends GoTestCase {
        * See if we can identify eyes in a real 19x19 game.
        */
       public void testComplex() {
-          EyeCounts blackEyes = new EyeCounts(1, 6, 1, 2);
+          EyeCounts blackEyes = new EyeCounts(1, 6, 1, 1);    // used to have 2 terr eyes.
           EyeCounts whiteEyes = new EyeCounts(1, 1, 0, 3);
           checkEyes("problem_complex", 12, blackEyes, whiteEyes);
       }
@@ -409,7 +409,7 @@ public class TestEyeAnalyzer extends GoTestCase {
         GoGroup biggestWhiteGroup = getBiggestGroup(false);
 
         // this indirectly calls EyeAnalyzer.determineEyeType through
-        // GroupHealthAnalyzer.updateEyes(board) -> GroupEyeSpaceAnalyzer.determinEyes()
+        // GroupHealthAnalyzer.updateEyes(board) -> EyeSpaceAnalyzer.determinEyes()
         EyeCounts eyeCounts = getEyeCounts(biggestBlackGroup.getEyes(board));
         Assert.assertTrue("Actual Black Eye counts were \n"+eyeCounts+" but was expecting \n"+ expectedBlackEyes,
                               eyeCounts.equals(expectedBlackEyes));

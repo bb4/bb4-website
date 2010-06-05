@@ -45,6 +45,11 @@ public enum EyeStatus
             " block, and capturing the opponent stones inside the eye grants an alive status."),
 
     /**
+     * This can aries when there is a ko on the edge or corner.
+     */
+    UNSETTLED_KO("Unsettled ko", "Unsettled ko status can only happen on the edge or in the corner."),
+    
+    /**
      * Other possibilities: Unknown, dead, false
      */
     UNCLASSIFIED("Unclassified", "The status has not been determined yet");
