@@ -3,7 +3,6 @@ package com.becker.game.twoplayer.go.board.analysis.group;
 import com.becker.game.twoplayer.go.board.*;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 

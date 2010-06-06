@@ -131,7 +131,6 @@ public final class GoGroup extends GoSet
             // remove the string associated with the stone
             remove( str );
         }
-        groupAnalyzer_.invalidate();
     }
 
     /**

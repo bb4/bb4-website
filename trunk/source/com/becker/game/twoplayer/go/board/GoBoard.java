@@ -181,7 +181,7 @@ public final class GoBoard extends TwoPlayerBoard
 
     @Override
     protected GameProfiler createProfiler() {
-        return new GoProfiler();
+        return GoProfiler.getInstance();
     }
 
     /**

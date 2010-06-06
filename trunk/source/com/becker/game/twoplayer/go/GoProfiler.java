@@ -10,7 +10,10 @@ import com.becker.game.common.GameProfiler;
  * @author Barry Becker
  */
 public final class GoProfiler extends GameProfiler {
-  
+
+    /** singleton instance */
+    private static GoProfiler instance;
+
     private static final String UPDATE_STRINGS_AFTER_REMOVE = "updating strings after remove";
     private static final String UPDATE_GROUPS_AFTER_REMOVE = "updating groups after remove";
     private static final String UPDATE_STRINGS_AFTER_MOVE = "updating strings after move";
@@ -28,7 +31,14 @@ public final class GoProfiler extends GameProfiler {
     public static final String UPDATE_EYES = "update eyes";
     public static final String GET_ENEMY_GROUPS_NBRS = "get enemy group nbrs";
 
-    public GoProfiler() {
+    public static GoProfiler getInstance() {
+        if (instance == null) {
+            instance = new GoProfiler();
+        }
+        return instance;
+    }
+
+    private GoProfiler() {
         add(GENERATE_MOVES);
           add(CALC_WORTH, GENERATE_MOVES);
         add(UNDO_MOVE);

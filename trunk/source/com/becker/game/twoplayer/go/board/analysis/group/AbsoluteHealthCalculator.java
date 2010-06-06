@@ -100,7 +100,6 @@ public class AbsoluteHealthCalculator {
             return absoluteHealth_;
         }
 
-        // if nothing has changed about the group, then we can return the cached value
         int numLiberties = getNumLiberties(board);
 
         // we multiply by a +/- sign depending on the side
@@ -159,11 +158,10 @@ public class AbsoluteHealthCalculator {
     /**
      * If nothing cached, this may not be accurate.
      * @param board if null, then the number of liberties returned is just what is in the cache and may not be accurate.
-     * @return number of cached liberties.
+     * @return number of cached liberties if board is null, else exact number of liberties.
      */
     public int getNumLiberties(GoBoard board) {
-        if (board==null)
-        {
+        if (board == null) {
             return cachedLiberties_ == null ? 0 :cachedLiberties_.size();
         }
         return getLiberties(board).size();
