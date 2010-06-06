@@ -110,6 +110,11 @@ public final class GoController extends TwoPlayerController
         }
     }
 
+    @Override
+    protected GoProfiler getProfiler() {
+        return GoProfiler.getInstance();
+    }
+
     /**
      * specify the number of handicap stones.
      * @param handicap number of handicap stones to place on the board at star points.
@@ -298,10 +303,6 @@ public final class GoController extends TwoPlayerController
     }
 
     /**
-     * @param position
-     * @param weights
-     * @param positionalScore
-     * @param board
      * @return the score contribution from a single point on the board
      */
     private static PositionalScore calcPositionalScore(GoBoardPosition position, ParameterArray weights,
@@ -342,13 +343,9 @@ public final class GoController extends TwoPlayerController
 
 
     /**
-     * it is a takeback move if the proposed move position (row,col) would immdiately replace the last captured piece
+     * It is a takeback move if the proposed move position (row,col) would immdiately replace the last captured piece
      *  and capture the stone that did the capturing.
-     * @param row
-     * @param col
-     * @param lastMove
-     * @param board
-     * @return
+     * @return true of this is an immediate take-back (not allowed in go - see "rule of ko")
      */
     public static boolean isTakeBack( int row, int col, GoMove lastMove, GoBoard board )
     {
@@ -568,7 +565,7 @@ public final class GoController extends TwoPlayerController
         public final List<? extends TwoPlayerMove> generateMoves(TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
         {
             GoBoard board = (GoBoard) board_;
-            board.getProfiler().startGenerateMoves();
+            GoProfiler prof = getProfiler();
             List<GoMove> moveList = new LinkedList<GoMove>();
             int nCols = board.getNumCols();
             int nRows = board.getNumRows();
@@ -578,9 +575,9 @@ public final class GoController extends TwoPlayerController
 
             boolean player1 = (lastMove == null) || !lastMove.isPlayer1();
 
-            for (int i = 1; i <= nCols; i++ )      //cols
-                for (int j = 1; j <= nRows; j++ )    //rows
-                    // if its a candidate move and not an immediate takeback (which would break the rule of ko)
+            for (int i = 1; i <= nCols; i++ )
+                for (int j = 1; j <= nRows; j++ )
+                    // if its a candidate move and not an immediate take-back (which would break the rule of ko)
                     if ( candidateMoves.isCandidateMove( j, i ) && !isTakeBack( j, i, (GoMove) lastMove, board ) ) {
                         GoMove m = GoMove.createGoMove( j, i, lastMove.getValue(), new GoStone(player1) );
 
@@ -588,18 +585,18 @@ public final class GoController extends TwoPlayerController
                             GameContext.log( 2, "The move was a suicide (can't add it to the list): " + m );
                         }
                         else {
-                            board.getProfiler().stopGenerateMoves();
+                            prof.stopGenerateMoves();
                             board.makeMove( m );
-                            board.getProfiler().startGenerateMoves();
+                            prof.startGenerateMoves();
                             // this value is not likely to change much except local to last move,
                             // anyway we could cache that?
-                            board.getProfiler().startCalcWorth();
+                            prof.startCalcWorth();
                             m.setValue(worth( m, weights, player1sPerspective ));
-                            board.getProfiler().stopCalcWorth();
+                            prof.stopCalcWorth();
                             // now revert the board
-                            board.getProfiler().stopGenerateMoves();
+                            prof.stopGenerateMoves();
                             board.undoMove();
-                            board.getProfiler().startGenerateMoves();
+                            prof.startGenerateMoves();
                             moveList.add( m );
                         }
                     }
@@ -612,7 +609,7 @@ public final class GoController extends TwoPlayerController
             if (getNumMoves() > nCols+nRows)  {
                 moveList.add(moveList.size(), GoMove.createPassMove(lastMove.getValue(), player1));
             }
-            board.getProfiler().stopGenerateMoves();
+            prof.stopGenerateMoves();
 
             return moveList;
         }

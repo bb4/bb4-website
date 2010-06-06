@@ -489,10 +489,8 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
         GroupAnalyzer blackHealthAnalyzer = new GroupAnalyzer(bg);
         GroupAnalyzer whiteHealthAnalyzer = new GroupAnalyzer(wg);
 
-        GoProfiler p = GoProfiler.getInstance();
-
-        double bah = blackHealthAnalyzer.calculateAbsoluteHealth( board, p );
-        double wah = whiteHealthAnalyzer.calculateAbsoluteHealth( board, p );
+        double bah = blackHealthAnalyzer.calculateAbsoluteHealth(board);
+        double wah = whiteHealthAnalyzer.calculateAbsoluteHealth(board);
 
         int numBlackLiberties = blackHealthAnalyzer.getNumLiberties(null);
         int numWhiteLiberties = whiteHealthAnalyzer.getNumLiberties(null);
@@ -508,8 +506,8 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
         float bPotential = blackHealthAnalyzer.getEyePotential();
         float wPotential = whiteHealthAnalyzer.getEyePotential();
 
-        double brh = blackHealthAnalyzer.calculateRelativeHealth( board, p );
-        double wrh = whiteHealthAnalyzer.calculateRelativeHealth( board, p );
+        double brh = blackHealthAnalyzer.calculateRelativeHealth(board);
+        double wrh = whiteHealthAnalyzer.calculateRelativeHealth(board);
 
         double abah = Math.abs(bah);
         double awah = Math.abs(wah);

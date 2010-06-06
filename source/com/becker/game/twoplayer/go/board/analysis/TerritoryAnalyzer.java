@@ -101,10 +101,10 @@ public class TerritoryAnalyzer {
      *  A large positive number indicates black is winning, while a negative number indicates that white has the edge.
      */
     public float updateTerritory(boolean isEndOfGame) {
-        GoProfiler prof = (GoProfiler)board_.getProfiler();
+        GoProfiler prof = GoProfiler.getInstance();
         prof.start(GoProfiler.UPDATE_TERRITORY);
 
-        float delta = calcAbsoluteHealth(prof);
+        float delta = calcAbsoluteHealth();
         delta = calcRelativeHealth(prof, delta);
 
         prof.start(GoProfiler.UPDATE_EMPTY);
@@ -121,12 +121,13 @@ public class TerritoryAnalyzer {
      * be used in the more accurate relative health computation.
      * @return total health of all stones in all groups in absolute terms.
      */
-    private float calcAbsoluteHealth(GoProfiler prof) {
+    private float calcAbsoluteHealth() {
         float delta = 0;
+        GoProfiler prof = GoProfiler.getInstance();
         prof.start(GoProfiler.ABSOLUTE_TERRITORY);
         for (GoGroup g : board_.getGroups()) {
 
-            float health = g.calculateAbsoluteHealth(board_, board_.getProfiler());
+            float health = g.calculateAbsoluteHealth(board_);
 
             if (!USE_RELATIVE_GROUP_SCORING) {
                 g.updateTerritory(health);
@@ -147,7 +148,7 @@ public class TerritoryAnalyzer {
         if (USE_RELATIVE_GROUP_SCORING) {
             prof.start(GoProfiler.RELATIVE_TERRITORY);
             for (GoGroup g : board_.getGroups()) {
-                float health = g.calculateRelativeHealth(board_, prof);
+                float health = g.calculateRelativeHealth(board_);
                 g.updateTerritory(health);
                 delta += health * g.getNumStones();
             }
@@ -171,7 +172,7 @@ public class TerritoryAnalyzer {
             return diffScore;
         }
         // later in the game we can take the analysis all the way to the edge.
-        float ratio = (float)board_.getNumMoves() / ((GoBoard)board_).getTypicalNumMoves();
+        float ratio = (float)board_.getNumMoves() / board_.getTypicalNumMoves();
         if ((ratio > EMPTY_REGION_EDGE_THRESH) || isEndOfGame) {
             edgeOffset = 0;
         }

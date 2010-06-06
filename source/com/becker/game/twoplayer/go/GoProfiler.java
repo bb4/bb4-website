@@ -5,7 +5,7 @@ import com.becker.game.common.GameProfiler;
 
 /**
  * Keep track of how much time is spent in each time critical part of the 
- * comupter move processing.
+ * comupter move processing.   Singleton.
  * 
  * @author Barry Becker
  */

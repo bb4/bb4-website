@@ -13,13 +13,29 @@ public class GameProfiler extends Profiler {
     protected static final String UNDO_MOVE = "undoing move";
     protected static final String MAKE_MOVE = "making move";    
     protected static final String CALC_WORTH = "calculating worth";
-    
-    public GameProfiler() {
+
+    private static GameProfiler instance;
+
+    /**
+     * @return singleton instance.
+     */
+    public static GameProfiler getInstance() {
+        if (instance == null) {
+            instance = new GameProfiler();
+        }
+        return instance;
+    }
+
+    /**
+     * protected constructor.
+     */
+    protected GameProfiler() {
         add(GENERATE_MOVES);
             add(CALC_WORTH, GENERATE_MOVES);
         add(UNDO_MOVE);      
         add(MAKE_MOVE);      
     }
+     
 
     public void initialize() {
         resetAll();

@@ -114,7 +114,7 @@ public class BlockadeController extends TwoPlayerController
     @Override
     protected int worth( Move lastMove, ParameterArray weights )
     {
-        board_.getProfiler().startCalcWorth();
+        getProfiler().startCalcWorth();
         BlockadeBoard board = (BlockadeBoard)board_;
         BlockadeMove m = (BlockadeMove)lastMove;
         // if its a winning move then return the winning value
@@ -128,7 +128,7 @@ public class BlockadeController extends TwoPlayerController
 
         PlayerPathLengths pathLengths = board.findPlayerPathLengths(m);
         int worth = pathLengths.determineWorth(WINNING_VALUE, weights);
-        board_.getProfiler().stopCalcWorth();
+        getProfiler().stopCalcWorth();
         return worth;
     }
 
@@ -175,7 +175,7 @@ public class BlockadeController extends TwoPlayerController
         public List<? extends TwoPlayerMove> generateMoves( TwoPlayerMove lastMove, ParameterArray weights,
                                                                                                   boolean player1sPerspective )
         {
-            board_.getProfiler().startGenerateMoves();
+            getProfiler().startGenerateMoves();
 
             MoveGenerator generator = new MoveGenerator(weights, (BlockadeBoard)board_);
             List<BlockadeMove> moveList  = generator.generateMoves(lastMove);
@@ -184,7 +184,7 @@ public class BlockadeController extends TwoPlayerController
             List<? extends TwoPlayerMove> bestMoves = 
                     getBestMoves( player1, moveList, player1sPerspective );
 
-            board_.getProfiler().stopGenerateMoves();
+            getProfiler().stopGenerateMoves();
             return bestMoves;
         }
 

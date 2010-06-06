@@ -1,7 +1,6 @@
 package com.becker.game.twoplayer.go.board.analysis.group;
 
 import com.becker.game.common.GameContext;
-import com.becker.game.common.GameProfiler;
 import com.becker.game.twoplayer.go.GoProfiler;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.GoBoardPosition;
@@ -68,7 +67,10 @@ public class AbsoluteHealthCalculator {
         eyeCache_.invalidate();
     }
 
-    /** used only for test. */
+    /**
+     * used only for test.
+     * @return eye potential
+     */
     public float getEyePotential() {
         return eyeCache_.getEyePotential();
     }
@@ -94,7 +96,7 @@ public class AbsoluteHealthCalculator {
      *
      * @return the overall health of the group independent of nbr groups.
      */
-    public float calculateAbsoluteHealth(GoBoard board, GameProfiler profiler )
+    public float calculateAbsoluteHealth(GoBoard board)
     {
         if ( eyeCache_.isValid() ) {
             return absoluteHealth_;
@@ -112,9 +114,9 @@ public class AbsoluteHealthCalculator {
 
         absoluteHealth_ = eyeEvaluator.determineHealth(side, numEyes, numLiberties, numStones);
 
-        profiler.start(GoProfiler.UPDATE_EYES);
+        GoProfiler.getInstance().start(GoProfiler.UPDATE_EYES);
         eyeCache_.updateEyes(board);  // expensive
-        profiler.stop(GoProfiler.UPDATE_EYES);
+        GoProfiler.getInstance().stop(GoProfiler.UPDATE_EYES);
 
         numEyes = Math.max(eyeCache_.getEyePotential(), eyeCache_.calcNumEyes());
 

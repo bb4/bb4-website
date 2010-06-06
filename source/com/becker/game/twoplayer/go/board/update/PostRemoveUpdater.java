@@ -27,18 +27,19 @@ public class PostRemoveUpdater extends PostChangeUpdater {
     @Override
     public void update(GoMove move) {
 
-         GoBoardPosition stone =  (GoBoardPosition) (board_.getPosition(move.getToRow(), move.getToCol()));
+        GoBoardPosition stone =  (GoBoardPosition) (board_.getPosition(move.getToRow(), move.getToCol()));
 
-         GoString stringThatItBelongedTo = stone.getString();
-         stone.clear(board_);   // clearing a stone may cause a string to split into smaller strings
-         adjustLiberties(stone);
+        GoString stringThatItBelongedTo = stone.getString();
+        // clearing a stone may cause a string to split into smaller strings
+        stone.clear(board_);
+        adjustLiberties(stone);
 
-         updateStringsAfterRemove( stone, stringThatItBelongedTo);
-         restoreCaptures(move.getCaptures());
-         updateGroupsAfterRemove( stone, stringThatItBelongedTo);
+        updateStringsAfterRemove( stone, stringThatItBelongedTo);
+        restoreCaptures(move.getCaptures());
+        updateGroupsAfterRemove( stone, stringThatItBelongedTo);
 
-         captures_.updateCaptures(move, false);
-     }
+        captures_.updateCaptures(move, false);
+    }
 
     /**
      * update the strings after a stone has been removed.
@@ -48,7 +49,7 @@ public class PostRemoveUpdater extends PostChangeUpdater {
      */
     private void updateStringsAfterRemove( GoBoardPosition stone, GoString string )
     {
-        GoProfiler profiler = (GoProfiler)board_.getProfiler();
+        GoProfiler profiler = GoProfiler.getInstance();
         profiler.startUpdateStringsAfterRemove();
 
         // avoid error when calling from treeDlg
@@ -98,7 +99,7 @@ public class PostRemoveUpdater extends PostChangeUpdater {
     /**
      * If there is not already a group for stones, then create one.
      * If we remove a stone from a string that is in atari, that string may rejoin a group.
-     * @param stones
+     * @param stones stones to create the new group from.
      */
     private void createNewGroupIfNeeded(List<GoBoardPosition> stones) {
         if ( !groupAlreadyExists( stones) ) {
@@ -176,7 +177,8 @@ public class PostRemoveUpdater extends PostChangeUpdater {
         adjustStringLiberties(captureList);
         GoGroup group = getRestoredGroup(strings);
 
-        assert ( group!=null): "no group was formed when restoring " + captureList + " the list of strings was "+strings;
+        assert ( group!=null): "no group was formed when restoring "
+                + captureList + " the list of strings was "+strings;
         board_.getGroups().add( group );
     }
 
@@ -365,7 +367,7 @@ public class PostRemoveUpdater extends PostChangeUpdater {
      */
     private void updateGroupsAfterRemove( GoBoardPosition stone, GoString string )
     {
-        GoProfiler profiler = (GoProfiler)board_.getProfiler();
+        GoProfiler profiler = GoProfiler.getInstance();
         profiler.startUpdateGroupsAfterRemove();
 
         if ( string == null ) {

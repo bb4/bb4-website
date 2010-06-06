@@ -49,7 +49,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
      */
     private CaptureList determineCaptures(GoBoardPosition stone)
     {
-        board_.getProfiler().start(GoProfiler.FIND_CAPTURES);
+        GoProfiler.getInstance().start(GoProfiler.FIND_CAPTURES);
         assert ( stone!=null );
         Set nbrs = board_.getNobiNeighbors( stone, NeighborType.ENEMY );
         CaptureList captureList = null;
@@ -72,7 +72,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
                 captureList.addAllCopied( str.getMembers() );
             }
         }
-        board_.getProfiler().stop(GoProfiler.FIND_CAPTURES);
+        GoProfiler.getInstance().stop(GoProfiler.FIND_CAPTURES);
         return  captureList;
     }
 
@@ -85,12 +85,11 @@ public class PostMoveUpdater extends PostChangeUpdater {
      */
     private void updateStringsAfterMove( GoBoardPosition stone )
     {
-        GoProfiler profiler = (GoProfiler)board_.getProfiler();
+        GoProfiler profiler = GoProfiler.getInstance();
         profiler.startUpdateStringsAfterMove();
 
         Set<GoBoardPosition> nbrs = board_.getNobiNeighbors( stone, NeighborType.FRIEND );
 
-        GoString str;
         if ( nbrs.size() == 0 ) {
             // there are no strongly connected neighbors, create a new string
             new GoString( stone, board_);  // stone points to the new string
@@ -217,7 +216,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
      */
     private void updateGroupsAfterMove(GoBoardPosition pos)
     {
-        GoProfiler profiler = (GoProfiler)board_.getProfiler();
+        GoProfiler profiler = GoProfiler.getInstance();
         profiler.startUpdateGroupsAfterMove();
 
         if (GameContext.getDebugMode() > 1) {

@@ -178,9 +178,7 @@ public final class GoBoard extends TwoPlayerBoard
         return groups_;
     }
 
-
-    @Override
-    protected GameProfiler createProfiler() {
+    private GoProfiler getProfiler() {
         return GoProfiler.getInstance();
     }
 
@@ -304,7 +302,7 @@ public final class GoBoard extends TwoPlayerBoard
         NeighborAnalyzer na = new NeighborAnalyzer(this);
         List<GoBoardPosition> stones =
                 na.findStringFromInitialPosition(stone, friendOwnedByP1, returnToUnvisitedState,
-                                                                  type, rMin, rMax, cMin, cMax);
+                                                 type, rMin, rMax, cMin, cMax);
         getProfiler().stop(GoProfiler.FIND_STRINGS);
 
         return stones;

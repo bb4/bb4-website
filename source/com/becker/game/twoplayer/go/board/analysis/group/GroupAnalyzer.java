@@ -1,9 +1,7 @@
 package com.becker.game.twoplayer.go.board.analysis.group;
 
 import com.becker.game.twoplayer.go.board.*;
-import com.becker.game.twoplayer.go.*;
 import com.becker.game.common.GameContext;
-import com.becker.game.common.GameProfiler;
 
 import java.util.Set;
 
@@ -105,12 +103,15 @@ public class GroupAnalyzer implements Cloneable {
         return absHealthCalculator_.getEyes(board);
     }
 
-    public float calculateAbsoluteHealth(GoBoard board, GameProfiler profiler) {
-        absoluteHealth_ = absHealthCalculator_.calculateAbsoluteHealth(board, profiler);
+    public float calculateAbsoluteHealth(GoBoard board) {
+        absoluteHealth_ = absHealthCalculator_.calculateAbsoluteHealth(board);
         return absoluteHealth_;
     }
 
-    /** used only for test. Remove when tested thru AbsoluteGroupHealthCalc */
+    /**
+     * used only for test. Remove when tested thru AbsoluteGroupHealthCalc
+     * @return eye potential
+     */
     public float getEyePotential() {
         return absHealthCalculator_.getEyePotential();
     }
@@ -126,10 +127,10 @@ public class GroupAnalyzer implements Cloneable {
      *
      * @return the overall health of the group.
      */
-    public float calculateRelativeHealth(GoBoard board, GoProfiler profiler )
+    public float calculateRelativeHealth(GoBoard board)
     {
         RelativeHealthCalculator relativeCalculator = new RelativeHealthCalculator(group_);
-        relativeHealth_ = relativeCalculator.calculateRelativeHealth(board, profiler, absoluteHealth_);
+        relativeHealth_ = relativeCalculator.calculateRelativeHealth(board, absoluteHealth_);
 
         return relativeHealth_;
     }

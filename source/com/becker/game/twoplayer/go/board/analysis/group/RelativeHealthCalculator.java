@@ -36,9 +36,9 @@ public class RelativeHealthCalculator {
      *
      * @return the overall health of the group.
      */
-    public float calculateRelativeHealth(GoBoard board, GoProfiler profiler, float absoluteHealth )
+    public float calculateRelativeHealth(GoBoard board,float absoluteHealth )
     {
-        float relativeHealth = boostRelativeHealthBasedOnWeakNbr(board, profiler, absoluteHealth);
+        float relativeHealth = boostRelativeHealthBasedOnWeakNbr(board, absoluteHealth);
 
         if (GameContext.getDebugMode() > 1)
                 BoardValidationUtil.confirmAllUnvisited(board);
@@ -50,12 +50,12 @@ public class RelativeHealthCalculator {
      * If there is a weakest group, then boost ourselves relative to it.
      * it may be a positive or negative boost to our health depending on its relative strength.
      */
-    private float boostRelativeHealthBasedOnWeakNbr(GoBoard board, GoProfiler profiler, float absoluteHealth) {
+    private float boostRelativeHealthBasedOnWeakNbr(GoBoard board, float absoluteHealth) {
 
         // the default if there is no weakest group.
         float relativeHealth = absoluteHealth;
         Set<GoBoardPosition> groupStones = group_.getStones();
-        GoGroup weakestGroup = findWeakestGroup(board, profiler, groupStones);
+        GoGroup weakestGroup = findWeakestGroup(board, groupStones);
 
         if (weakestGroup != null)  {
             double proportionWithEnemyNbrs = findProportionWithEnemyNbrs(groupStones);
@@ -72,12 +72,12 @@ public class RelativeHealthCalculator {
     }
 
     /**
-     * @return  the weakest bordering enemy group.
+     * @return the weakest bordering enemy group.
      */
-    private GoGroup findWeakestGroup(GoBoard board, GoProfiler profiler, Set<GoBoardPosition> groupStones) {
-        profiler.start(GoProfiler.GET_ENEMY_GROUPS_NBRS);
+    private GoGroup findWeakestGroup(GoBoard board, Set<GoBoardPosition> groupStones) {
+        GoProfiler.getInstance().start(GoProfiler.GET_ENEMY_GROUPS_NBRS);
         Set cachedEnemyNbrGroups = getEnemyGroupNeighbors(board, groupStones);
-        profiler.stop(GoProfiler.GET_ENEMY_GROUPS_NBRS);
+        GoProfiler.getInstance().stop(GoProfiler.GET_ENEMY_GROUPS_NBRS);
 
         // we multiply by a +/- sign depending on the side
         float side = group_.isOwnedByPlayer1()? 1.0f : -1.0f;
