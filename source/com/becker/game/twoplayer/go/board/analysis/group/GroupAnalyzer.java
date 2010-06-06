@@ -42,9 +42,9 @@ public class GroupAnalyzer implements Cloneable {
      */
     public float getAbsoluteHealth()
     {
-        if (!isValid()) {
-            GameContext.log(0, "Getting stale relative health = " + relativeHealth_);
-        }
+        //if (!isValid()) {
+        //    GameContext.log(0, "Getting stale absolute health = " + relativeHealth_);
+        //}
         return absoluteHealth_;
     }
 
@@ -53,9 +53,9 @@ public class GroupAnalyzer implements Cloneable {
      */
     public float getRelativeHealth()
     {
-        //if (!isValid()) {
-        //    GameContext.log(0, "Getting stale relative health = " + relativeHealth_);
-        //}
+        if (!isValid()) {
+            GameContext.log(0, "Getting stale relative health = " + relativeHealth_);
+        }
         return relativeHealth_;
     }
 

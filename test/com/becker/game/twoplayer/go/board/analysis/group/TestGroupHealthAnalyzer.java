@@ -489,7 +489,7 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
         GroupAnalyzer blackHealthAnalyzer = new GroupAnalyzer(bg);
         GroupAnalyzer whiteHealthAnalyzer = new GroupAnalyzer(wg);
 
-        GoProfiler p = new GoProfiler();
+        GoProfiler p = GoProfiler.getInstance();
 
         double bah = blackHealthAnalyzer.calculateAbsoluteHealth( board, p );
         double wah = whiteHealthAnalyzer.calculateAbsoluteHealth( board, p );
