@@ -328,7 +328,7 @@ final class GoGroupRenderer
     {
         GroupRegion cachedRegion = hmRegionCache_.get(group);
 
-        if ( group.hasChanged() || cachedRegion == null || cellSize != cachedRegion.cellSize ) {
+        if ( !group.isValid() || cachedRegion == null || cellSize != cachedRegion.cellSize ) {
 
             // the colormap will show red if close to dead,
             // so reverse the health value for the other player

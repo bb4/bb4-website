@@ -104,21 +104,46 @@ public class TerritoryAnalyzer {
         GoProfiler prof = (GoProfiler)board_.getProfiler();
         prof.start(GoProfiler.UPDATE_TERRITORY);
 
+        float delta = calcAbsoluteHealth(prof);
+        delta = calcRelativeHealth(prof, delta);
+
+        prof.start(GoProfiler.UPDATE_EMPTY);
+        delta += updateEmptyRegions(isEndOfGame);
+        prof.stop(GoProfiler.UPDATE_EMPTY);
+
+        prof.stop(GoProfiler.UPDATE_TERRITORY);
+        territoryDelta_ = delta;
+        return delta;
+    }
+
+    /**
+     * First calculate the absolute health of the groups so that measure can
+     * be used in the more accurate relative health computation.
+     * @return total health of all stones in all groups in absolute terms.
+     */
+    private float calcAbsoluteHealth(GoProfiler prof) {
         float delta = 0;
-        // first calculate the absolute health of the groups so that measure can
-        // be used in the more accurate relative health computation.
         prof.start(GoProfiler.ABSOLUTE_TERRITORY);
         for (GoGroup g : board_.getGroups()) {
-                     
+
             float health = g.calculateAbsoluteHealth(board_, board_.getProfiler());
 
             if (!USE_RELATIVE_GROUP_SCORING) {
                 g.updateTerritory(health);
                 delta += health * g.getNumStones();
-            }            
+            }
         }
         prof.stop(GoProfiler.ABSOLUTE_TERRITORY);
+        return delta;
+    }
 
+    /**
+     *
+     * @param initDelta  initial value.
+     * @return total health of all stones in all groups in relative terms.
+     */
+    private float calcRelativeHealth(GoProfiler prof, float initDelta) {
+        float delta = initDelta;
         if (USE_RELATIVE_GROUP_SCORING) {
             prof.start(GoProfiler.RELATIVE_TERRITORY);
             for (GoGroup g : board_.getGroups()) {
@@ -128,19 +153,13 @@ public class TerritoryAnalyzer {
             }
             prof.stop(GoProfiler.RELATIVE_TERRITORY);
         }
-        // need to loop over the board and determine for each space if it is territory for the specified player.
-        // We will first mark visited all the stones that are "controlled" by the specified player.
-        // The unoccupied "controlled" positions will be territory.
-        prof.start(GoProfiler.UPDATE_EMPTY);
-        delta += updateEmptyRegions(isEndOfGame);
-        prof.stop(GoProfiler.UPDATE_EMPTY);
-
-        prof.stop(GoProfiler.UPDATE_TERRITORY);
-        territoryDelta_ = delta;
         return delta;
     }
-    
+
     /**
+     * Need to loop over the board and determine for each space if it is territory for the specified player.
+     * We will first mark visited all the stones that are "controlled" by the specified player.
+     * The unoccupied "controlled" positions will be territory.
      * @return the change in score after updating the empty regions
      */
     private float updateEmptyRegions(boolean isEndOfGame) {

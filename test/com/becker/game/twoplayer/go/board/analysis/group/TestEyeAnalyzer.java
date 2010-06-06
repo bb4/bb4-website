@@ -409,7 +409,7 @@ public class TestEyeAnalyzer extends GoTestCase {
         GoGroup biggestWhiteGroup = getBiggestGroup(false);
 
         // this indirectly calls EyeAnalyzer.determineEyeType through
-        // GroupHealthAnalyzer.updateEyes(board) -> EyeSpaceAnalyzer.determinEyes()
+        // GroupAnalyzer.updateEyes(board) -> EyeSpaceAnalyzer.determinEyes()
         EyeCounts eyeCounts = getEyeCounts(biggestBlackGroup.getEyes(board));
         Assert.assertTrue("Actual Black Eye counts were \n"+eyeCounts+" but was expecting \n"+ expectedBlackEyes,
                               eyeCounts.equals(expectedBlackEyes));

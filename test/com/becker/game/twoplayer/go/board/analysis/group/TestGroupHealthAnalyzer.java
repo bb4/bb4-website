@@ -9,7 +9,6 @@ import com.becker.common.util.Util;
 import com.becker.game.twoplayer.go.GoTestCase;
 import java.util.Set;
 
-import com.becker.game.twoplayer.go.board.analysis.group.GroupHealthAnalyzer;
 import junit.framework.Assert;
 
 /**
@@ -487,19 +486,19 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
         GoGroup wg = getBiggestGroup(false);
 
         GoBoard board = (GoBoard) controller_.getBoard();
-        GroupHealthAnalyzer blackHealthAnalyzer = new GroupHealthAnalyzer(bg);
-        GroupHealthAnalyzer whiteHealthAnalyzer = new GroupHealthAnalyzer(wg);
+        GroupAnalyzer blackHealthAnalyzer = new GroupAnalyzer(bg);
+        GroupAnalyzer whiteHealthAnalyzer = new GroupAnalyzer(wg);
 
         GoProfiler p = new GoProfiler();
 
         double bah = blackHealthAnalyzer.calculateAbsoluteHealth( board, p );
         double wah = whiteHealthAnalyzer.calculateAbsoluteHealth( board, p );
 
-        int numBlackLiberties = blackHealthAnalyzer.getNumLiberties();
-        int numWhiteLiberties = whiteHealthAnalyzer.getNumLiberties();
+        int numBlackLiberties = blackHealthAnalyzer.getNumLiberties(null);
+        int numWhiteLiberties = whiteHealthAnalyzer.getNumLiberties(null);
 
-        blackHealthAnalyzer.breakEyeCache();
-        whiteHealthAnalyzer.breakEyeCache();
+        blackHealthAnalyzer.invalidate();
+        whiteHealthAnalyzer.invalidate();
 
          // verify that we have the expected number and type of eyes for that biggest group
         verifyEyes(blackHealthAnalyzer.getEyes(board), blackEyes, true);

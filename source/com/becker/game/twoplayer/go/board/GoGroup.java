@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.go.board;
 
 import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
-import com.becker.game.twoplayer.go.board.analysis.group.GroupHealthAnalyzer;
+import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzer;
 import com.becker.game.twoplayer.go.*;
 import com.becker.common.util.Util;
 import com.becker.game.common.*;
@@ -19,11 +19,11 @@ import java.util.*;
  */
 public final class GoGroup extends GoSet
 {
-    /** a set of the strings that are in the group. */
+    /** a set of same color strings that are in the group. */
     private Set<GoString> members_;
 
     /** Responsible for determining how alive or dead the group is. */
-    private GroupHealthAnalyzer healthAnalyzer_;
+    private GroupAnalyzer groupAnalyzer_;
 
     /**
      * constructor. Create a new group containing the specified string.
@@ -47,7 +47,7 @@ public final class GoGroup extends GoSet
      */
     public GoGroup( List<GoBoardPosition> stones )
     {
-        commonInit( );
+        commonInit();
         ownedByPlayer1_ = (stones.get(0)).getPiece().isOwnedByPlayer1();
         for (GoBoardPosition stone : stones) {
             assert stone.getPiece().isOwnedByPlayer1() == ownedByPlayer1_ :
@@ -67,7 +67,7 @@ public final class GoGroup extends GoSet
 
     private void commonInit()
     {
-        healthAnalyzer_ = new GroupHealthAnalyzer(this);       
+        groupAnalyzer_ = new GroupAnalyzer(this);
     }
     
     @Override
@@ -105,7 +105,7 @@ public final class GoGroup extends GoSet
         }
         string.setGroup( this );
         getMembers().add( string );
-        healthAnalyzer_.breakEyeCache();       
+        groupAnalyzer_.invalidate();
     }
 
     /**
@@ -131,7 +131,7 @@ public final class GoGroup extends GoSet
             // remove the string associated with the stone
             remove( str );
         }
-        healthAnalyzer_.breakEyeCache();     
+        groupAnalyzer_.invalidate();
     }
 
     /**
@@ -149,7 +149,7 @@ public final class GoGroup extends GoSet
             return;
         }
         getMembers().remove( string );
-       healthAnalyzer_.breakEyeCache();     
+       groupAnalyzer_.invalidate();
     }
 
     /**
@@ -159,7 +159,7 @@ public final class GoGroup extends GoSet
     @Override
     public Set<GoBoardPosition> getLiberties(GoBoard board)
     {
-        return healthAnalyzer_.getLiberties(board);
+        return groupAnalyzer_.getLiberties(board);
     }
 
     /**
@@ -168,24 +168,24 @@ public final class GoGroup extends GoSet
      */
     public int getNumStones()
     {
-        return healthAnalyzer_.getNumStones();
+        return groupAnalyzer_.getNumStones();
     }
     
     public float calculateAbsoluteHealth( GoBoard board, GameProfiler profiler )
     {
-        return healthAnalyzer_.calculateAbsoluteHealth(board, profiler);
+        return groupAnalyzer_.calculateAbsoluteHealth(board, profiler);
     }
     
     public float calculateRelativeHealth( GoBoard board, GoProfiler profiler )
     {
-        return healthAnalyzer_.calculateRelativeHealth(board,  profiler);
+        return groupAnalyzer_.calculateRelativeHealth(board,  profiler);
     }
     
     public float getAbsoluteHealth() {
-        return healthAnalyzer_.getAbsoluteHealth();
+        return groupAnalyzer_.getAbsoluteHealth();
     }
     public float getRelativeHealth() {
-        return healthAnalyzer_.getRelativeHealth();
+        return groupAnalyzer_.getRelativeHealth();
     }
 
     /**
@@ -197,11 +197,6 @@ public final class GoGroup extends GoSet
         for (GoString string : getMembers()) {
             stones.addAll(string.getMembers());
         }
-        // verify that none of these member stones are null.
-        for (GoBoardPosition s: stones)
-        {
-            assert (s != null): "unexpected null stone in "+ stones;
-        }
         return stones;
     }
     
@@ -211,7 +206,7 @@ public final class GoGroup extends GoSet
      */
     public Set<GoEye> getEyes(GoBoard board)
     {
-        return healthAnalyzer_.getEyes(board);
+        return groupAnalyzer_.getEyes(board);
     }
 
     /**
@@ -229,7 +224,6 @@ public final class GoGroup extends GoSet
         }
     }
 
-
     /**
      * @return a deep copy of this GoGroup
      * @throws CloneNotSupportedException
@@ -238,12 +232,12 @@ public final class GoGroup extends GoSet
     public Object clone() throws CloneNotSupportedException
     {
         Object clone = super.clone();
-        ((GoGroup)clone).healthAnalyzer_ = new GroupHealthAnalyzer((GoGroup) clone);
+        ((GoGroup)clone).groupAnalyzer_ = new GroupAnalyzer((GoGroup) clone);
         return clone;     
     }
 
-    public boolean hasChanged() {
-        return healthAnalyzer_.hasChanged();
+    public boolean isValid() {
+        return groupAnalyzer_.isValid();
     }
 
     /**
@@ -283,7 +277,7 @@ public final class GoGroup extends GoSet
      * @param stones list of stones to check if same as those in this group
      * @return true if all the strings are in this group
      */
-    private boolean contains( List<GoBoardPosition> stones )
+    private boolean contains(List<GoBoardPosition> stones)
     {
         for (GoBoardPosition stone : stones) {
             boolean found = false;
@@ -299,7 +293,7 @@ public final class GoGroup extends GoSet
     }
 
     /**
-     *  @return true if the piece is an enemy of the set owner.
+     * @return true if the piece is an enemy of the set owner.
      *  If the difference in health between the stones is great, then they are not really enemies
      *  because one of them is dead.
      */
@@ -355,12 +349,9 @@ public final class GoGroup extends GoSet
             sb.append(eyes.toString()).append(newline);
         // make sure that the health and eyes are up to date
         //calculateHealth();
-        sb.append("abs health=").append(Util.formatNumber(healthAnalyzer_.getAbsoluteHealth()));
-        sb.append(" rel health=").append(Util.formatNumber(healthAnalyzer_.getRelativeHealth()));
-        sb.append(" group Liberties=").append(healthAnalyzer_.getNumLiberties()).append('\n');
+        sb.append("abs health=").append(Util.formatNumber(groupAnalyzer_.getAbsoluteHealth()));
+        sb.append(" rel health=").append(Util.formatNumber(groupAnalyzer_.getRelativeHealth()));
+        sb.append(" group Liberties=").append(groupAnalyzer_.getNumLiberties(null)).append('\n');
         return sb.toString();
     }
 }
-
-
-

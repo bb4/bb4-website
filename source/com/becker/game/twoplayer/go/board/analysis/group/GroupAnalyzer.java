@@ -8,11 +8,11 @@ import com.becker.game.common.GameProfiler;
 import java.util.Set;
 
 /**
- * Analyzes a group to determine how alive it is.
+ * Analyzes a group to determine how alive it is, and also find other properties like eyes and liberties.
  *
  * @author Barry Becker
  */
-public class GroupHealthAnalyzer implements Cloneable {
+public class GroupAnalyzer implements Cloneable {
 
     /** The group of go stones that we are analyzing. */
     private GoGroup group_;
@@ -32,31 +32,43 @@ public class GroupHealthAnalyzer implements Cloneable {
      * Constructor.
      * @param group group to analyze.
      */
-    public GroupHealthAnalyzer(GoGroup group) {
+    public GroupAnalyzer(GoGroup group) {
         group_ = group;
         absHealthCalculator_ = new AbsoluteHealthCalculator(group);
     }
 
     /**
-     * only used in tester. otherwise would be private.
      * @return health score independent of neighboring groups.
      */
     public float getAbsoluteHealth()
     {
-        //assert !eyeCacheBroken_;
+        if (!isValid()) {
+            GameContext.log(0, "Getting stale relative health = " + relativeHealth_);
+        }
         return absoluteHealth_;
     }
 
-    public void breakEyeCache() {
-        absHealthCalculator_.breakEyeCache();
+    /**
+     * @return health score dependent on strength of neighboring groups.
+     */
+    public float getRelativeHealth()
+    {
+        //if (!isValid()) {
+        //    GameContext.log(0, "Getting stale relative health = " + relativeHealth_);
+        //}
+        return relativeHealth_;
+    }
+
+    public void invalidate() {
+        absHealthCalculator_.invalidate();
     }
 
     /**
      * @return true if the group has changed (structurally) in any way.
      */
-    public boolean hasChanged()
+    public boolean isValid()
     {
-        return absHealthCalculator_.hasChanged();
+        return absHealthCalculator_.isValid();
     }
 
     /**
@@ -72,8 +84,8 @@ public class GroupHealthAnalyzer implements Cloneable {
      * If nothing cached, this may not be accurate.
      * @return number of cached liberties.
      */
-    public int getNumLiberties() {
-        return absHealthCalculator_.getNumLiberties();
+    public int getNumLiberties(GoBoard board) {
+        return absHealthCalculator_.getNumLiberties(board);
     }
 
     /**
@@ -122,24 +134,15 @@ public class GroupHealthAnalyzer implements Cloneable {
         return relativeHealth_;
     }
 
-
-    public float getRelativeHealth()
-    {
-        if (hasChanged()) {
-            GameContext.log(0, "Getting stale relative health = " + relativeHealth_);
-        }
-        return relativeHealth_;
-    }
-
     /**
-     * @return a deep copy of this GroupHealthAnalyzer
+     * @return a deep copy of this GroupAnalyzer
      * @throws CloneNotSupportedException
      */
     @Override
     public Object clone() throws CloneNotSupportedException
     {
         Object clone = super.clone();
-        ((GroupHealthAnalyzer)clone).absHealthCalculator_ = new AbsoluteHealthCalculator(group_);
+        ((GroupAnalyzer)clone).absHealthCalculator_ = new AbsoluteHealthCalculator(group_);
         return clone;
     }
 }

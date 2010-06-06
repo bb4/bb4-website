@@ -52,7 +52,7 @@ public abstract class GoSet implements GoMember
     }
 
     /**
-     * @return  the hashSet containing the members
+     * @return the hashSet containing the members
      */
     public abstract Set<? extends GoMember> getMembers();
     

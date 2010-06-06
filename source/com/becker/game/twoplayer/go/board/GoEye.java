@@ -18,10 +18,10 @@ import java.util.*;
  */
 public final class GoEye extends GoString implements GoMember
 {
-    /** a set of the stones that are in the eye space. */
+    /** A set of poisitions that are in the eye space. Need not be empty. */
     private Set<GoBoardPosition> members_;
     
-    /** the kind of eye that this is. */
+    /** The kind of eye that this is. */
     private final EyeType type_;
     
     private EyeAnalyzer eyeAnalyzer_;
