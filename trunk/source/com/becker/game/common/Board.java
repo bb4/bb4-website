@@ -30,9 +30,6 @@ public abstract class Board implements BoardInterface, Cloneable
     protected int numCols_;
     protected int rowsTimesCols_;
 
-     /** a global profiler for recording timing stats. */
-    private GameProfiler profiler_;
-
     /**
      * We keep a list of the moves that have been made.
      * We can navigate forward or backward in time using this
@@ -222,7 +219,7 @@ public abstract class Board implements BoardInterface, Cloneable
     }
 
     /**
-     * @param move
+     * @param move the move to make
      * @return  false if the move is illegal
      */
     protected abstract boolean makeInternalMove( Move move );
@@ -240,33 +237,6 @@ public abstract class Board implements BoardInterface, Cloneable
     {
         return !(r < 1 || r > getNumRows() || c < 1 || c > getNumCols());
     }
-
-
-    public void initializeProfilingStats()
-    {
-        getProfiler().initialize();
-    }
-
-    /**
-      * For profiling output in a log
-      * Record times for these operations so we get an accurate picture of where the bottlenecks are.
-     * @return  the profiler object
-     */
-    public GameProfiler getProfiler() {
-        if (profiler_ == null)
-        {
-            profiler_ = createProfiler();
-        }
-        return profiler_;
-    }
-
-    /**
-     * @return object to keep track of profiling statistics.
-     */
-    protected GameProfiler createProfiler() {
-        return new GameProfiler();
-    }
-
 
     @Override
     public String toString() {

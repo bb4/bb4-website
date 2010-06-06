@@ -170,14 +170,14 @@ public final class GoGroup extends GoSet
         return groupAnalyzer_.getNumStones();
     }
     
-    public float calculateAbsoluteHealth( GoBoard board, GameProfiler profiler )
+    public float calculateAbsoluteHealth( GoBoard board)
     {
-        return groupAnalyzer_.calculateAbsoluteHealth(board, profiler);
+        return groupAnalyzer_.calculateAbsoluteHealth(board);
     }
     
-    public float calculateRelativeHealth( GoBoard board, GoProfiler profiler )
+    public float calculateRelativeHealth( GoBoard board)
     {
-        return groupAnalyzer_.calculateRelativeHealth(board,  profiler);
+        return groupAnalyzer_.calculateRelativeHealth(board);
     }
     
     public float getAbsoluteHealth() {

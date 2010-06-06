@@ -361,7 +361,7 @@ public abstract class TwoPlayerController extends GameController
         GameContext.log( 0, "There were " + numMovesConsidered + " moves considered." );
         GameContext.log( 0, "The total time for the computer to move was : " +
                 Util.formatNumber((float)totalTime/1000) + " seconds." );
-        board_.getProfiler().print();
+        getProfiler().print();
     }
 
     /**

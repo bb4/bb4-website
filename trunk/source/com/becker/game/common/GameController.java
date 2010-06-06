@@ -240,8 +240,12 @@ public abstract class GameController
 
     protected void initializeProfilingStats()
     {
-        board_.initializeProfilingStats();
+        getProfiler().initialize();
     }
+
+    protected GameProfiler getProfiler() {
+        return GameProfiler.getInstance();
+    }        
 
     /**
      * You should probably check to see if online play is available before calling this.

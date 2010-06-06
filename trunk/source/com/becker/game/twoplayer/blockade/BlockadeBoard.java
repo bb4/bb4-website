@@ -16,7 +16,6 @@ import java.util.*;
  */
 public class BlockadeBoard extends TwoPlayerBoard
 {
-
     /** The number of home bases for each player.  Traditional rules call for 2. */
     public static final int NUM_HOMES = 2;
 
@@ -565,6 +564,10 @@ public class BlockadeBoard extends TwoPlayerBoard
         }
     }
 
+    private GameProfiler getProfiler() {
+        return GameProfiler.getInstance();
+    }
+
     /**
      * Given a move specification, execute it on the board.
      * This places the players symbol at the position specified by move,
@@ -625,11 +628,6 @@ public class BlockadeBoard extends TwoPlayerBoard
     @Override
     public  int getStateIndex(BoardPosition pos) {
         return ((BlockadeBoardPosition) pos).getStateIndex();
-    }
-    
-    @Override
-    protected GameProfiler createProfiler() {     
-        return new GameProfiler();
     }
 
     @Override
