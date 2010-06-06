@@ -5,13 +5,12 @@ import com.becker.game.common.ui.GamePanel;
 
 import javax.swing.*;
 
-
 /**
  * Immutable class representing meta info about a game plugin.
  * There is a game plugin for each game that we support.
  * see plugins.xml
  *
- * @author Barry Becker Date: Jan 20, 2007
+ * @author Barry Becker
  */
 public class GamePlugin {
 
@@ -55,12 +54,7 @@ public class GamePlugin {
         return msgBundleBase_;
     }
 
-    public String getMsgKey() {
-        return label_;
-    }
-
     private String getPanelClass() {
-        //return Util.loadClass(panelClass_);
         return panelClass_;
     }
 
@@ -82,7 +76,6 @@ public class GamePlugin {
     }
 
     public String getControllerClass() {
-        //return Util.loadClass(controllerClass_);
         return controllerClass_;
     }
 
@@ -93,9 +86,9 @@ public class GamePlugin {
     @Override
     public String toString() {
         StringBuilder bldr = new StringBuilder(name_);
-        bldr.append('('+ getLabel());
-        bldr.append("panelClass="+panelClass_+' ');
-        bldr.append("controllerClass="+controllerClass_+")\n");
+        bldr.append('(').append(getLabel());
+        bldr.append("panelClass=").append(panelClass_).append(' ');
+        bldr.append("controllerClass=").append(controllerClass_).append(")\n");
         return bldr.toString();
     }
 
