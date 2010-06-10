@@ -35,17 +35,43 @@ public class EyeAnalyzer {
         int size = spaces.size();
 
         if (isFalseEye( board )) {
-            return EyeType.FALSE_EYE;
+            return EyeType.FalseEye;
         }
-        if ( size <= 2 ) {
-            return EyeType.TRUE_EYE;
+        if ( size == 1 ) {
+            return EyeType.E0;
+        }
+        if ( size == 2 ) {
+            return EyeType.E11;
+        }
+        if ( size == 3 ) {
+            return EyeType.E112;
         }
     
-        if ( size > 2 && size < 8 ) {
+        if ( size > 3 && size < 8 ) {
             BigEyeAnalyzer bigEyeAnalyzer = new BigEyeAnalyzer(eye_);
             return bigEyeAnalyzer.determineEyeType();
         }
-        return EyeType.TERRITORIAL_EYE;
+        return EyeType.TerritorialEye;
+    }
+
+    /**
+     *  @return true if the piece is an enemy of the string owner.
+     *  If the difference in health between the stones is great, then they are not really enemies
+     *  because one of them is dead.
+     */
+    public boolean isEnemy( GoBoardPosition pos)
+    {
+        GoGroup g = eye_.getGroup();
+        assert (g != null): "group for "+ eye_ +" is null";
+        if (pos.isUnoccupied()) {
+            return false;
+        }
+        GoStone stone = (GoStone)pos.getPiece();
+        boolean weaker = GoBoardUtil.isStoneMuchWeaker(g, stone);
+
+        assert (g.isOwnedByPlayer1() == eye_.isOwnedByPlayer1()):
+                 "Bad group ownership for eye="+ eye_ +". Owning Group="+g;
+        return (stone.isOwnedByPlayer1() != eye_.isOwnedByPlayer1() && !weaker);
     }
 
     /**
@@ -125,50 +151,5 @@ public class EyeAnalyzer {
         return (pos1.isOccupied() && pos1.getPiece().isOwnedByPlayer1() == groupP1 &&
                 pos2.isOccupied() && pos2.getPiece().isOwnedByPlayer1() == groupP1 &&
                 isEnemy( diagPos ));
-    }
-
-    /**
-     *  @return true if the piece is an enemy of the string owner.
-     *  If the difference in health between the stones is great, then they are not really enemies
-     *  because one of them is dead.
-     */
-    public boolean isEnemy( GoBoardPosition pos)
-    {
-        GoGroup g = eye_.getGroup();
-        assert (g != null): "group for "+ eye_ +" is null";
-        if (pos.isUnoccupied()) {
-            return false;
-        }
-        GoStone stone = (GoStone)pos.getPiece();
-        boolean weaker = GoBoardUtil.isStoneMuchWeaker(g, stone);
-
-        assert (g.isOwnedByPlayer1() == eye_.isOwnedByPlayer1()):
-                 "Bad group ownership for eye="+ eye_ +". Owning Group="+g;
-        return (stone.isOwnedByPlayer1() != eye_.isOwnedByPlayer1() && !weaker);
-    }
-
-
-    /**
-     * @return true if all the empty spaces in this eye are touching the specified string.
-     */
-    public boolean allUnocupiedAdjacentToString(GoString string, GoBoard b)   {
-        for (GoBoardPosition pos : eye_.getMembers()) {
-            if (pos.isUnoccupied()) {
-                Set<GoBoardPosition> nbrs = b.getNobiNeighbors(pos, eye_.isOwnedByPlayer1(), NeighborType.FRIEND);
-                // verify that at least one of the nbrs is in this string
-                boolean thereIsaNbr = false;
-                for  (GoBoardPosition nbr : nbrs) { 
-                    if (string.getMembers().contains(nbr)) {
-                        thereIsaNbr = true;
-                        break;
-                    }
-                }
-                if (!thereIsaNbr) {
-                    //GameContext.log(2, "pos:"+pos+" was found to not be adjacent to the bordering string : "+this);
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 }

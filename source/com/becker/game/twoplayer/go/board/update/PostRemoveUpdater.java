@@ -487,7 +487,7 @@ public class PostRemoveUpdater extends PostChangeUpdater {
     private void createAliveStatus(GoString string) {
 
         if (string.isUnconditionallyAlive()) {
-            GameContext.log(0, "Clearing alive status for group. String=" + string);
+            GameContext.log(1, "Clearing alive status for group. String=" + string);
             GoGroup group = string.getGroup();
             for (Object s : group.getMembers())  {
                 GoString str = (GoString) s;

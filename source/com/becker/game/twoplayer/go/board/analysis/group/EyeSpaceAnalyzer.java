@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.go.board.analysis.group;
 
+import com.becker.common.Location;
 import com.becker.game.twoplayer.go.board.*;
 import com.becker.common.Box;
 import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
@@ -32,6 +33,7 @@ class EyeSpaceAnalyzer {
     }
 
     /**
+     * Determine the set of eyes within a group
      * @return the set of eyes that are in this group.
      */
     public Set<GoEye> determineEyes() {
@@ -152,13 +154,13 @@ class EyeSpaceAnalyzer {
     }
 
     /**
-     * @return eyePtoential - a measure of how easily this group can make 2 eyes (0 - 2; 2 meaning has 2 eyes).
+     * @return eyePotential - a measure of how easily this group can make 2 eyes (0 - 2; 2 meaning has 2 eyes).
      */
     private float findTotalEyePotential() {
 
         // make sure that every internal enemy stone is really an enemy and not just dead.
         // compare it with one of the group strings.
-        GoString gs = group_.getMembers().iterator().next();
+        GoString groupString = group_.getMembers().iterator().next();
 
         int rMin = boundingBox_.getMinRow();
         int rMax = boundingBox_.getMaxRow();
@@ -168,11 +170,11 @@ class EyeSpaceAnalyzer {
 
         // first look at the row runs
         for ( int r = boundingBox_.getMinRow(); r <= boundingBox_.getMaxRow(); r++ ) {
-            totalPotential += getRowColPotential(r, cMin, 0, 1, rMax, cMax, board_, gs);
+            totalPotential += getRowColPotential(r, cMin, 0, 1, rMax, cMax, board_, groupString);
         }
         // now accrue column run potentials
         for ( int c = cMin; c <= cMax; c++ ) {
-            totalPotential += getRowColPotential(rMin, c, 1, 0, rMax, cMax, board_, gs);
+            totalPotential += getRowColPotential(rMin, c, 1, 0, rMax, cMax, board_, groupString);
         }
 
         return (float)Math.min(1.9, Math.sqrt(totalPotential)/1.3);
@@ -182,47 +184,46 @@ class EyeSpaceAnalyzer {
      * Find the potential for one of the bbox's rows or columns.
      * @return eye potential for row and column at r,c
      */
-    private float getRowColPotential(int r, int c, int rowInc, int colInc, int maxRow, int maxCol,
+    private float getRowColPotential(int row, int col, int rowInc, int colInc, int maxRow, int maxCol,
                                      GoBoard board, GoString groupString) {
         float rowPotential = 0;
-        int breadth = (rowInc ==1)? (maxRow - r) : (maxCol - c);
-        GoBoardPosition startSpace = (GoBoardPosition) board.getPosition( r, c );
+        Location pos  = new Location(row, col);
+        int breadth = (rowInc ==1)? (maxRow - row) : (maxCol - col);
+        GoBoardPosition startSpace = (GoBoardPosition) board.getPosition( pos );
         do {
-            GoBoardPosition space = (GoBoardPosition) board.getPosition( r, c );
+            GoBoardPosition space = (GoBoardPosition) board.getPosition( pos );
             GoBoardPosition firstSpace = space;
             boolean containsEnemy = false;
             int runLength = 0;
             boolean ownedByPlayer1 = group_.isOwnedByPlayer1();
 
-            while (c <= maxCol && r <= maxRow && (space.isUnoccupied() ||
+            while (pos.getCol() <= maxCol && pos.getRow() <= maxRow && (space.isUnoccupied() ||
                       (space.isOccupied() && space.getPiece().isOwnedByPlayer1() != ownedByPlayer1))) {
                 if (space.isOccupied() &&  space.getPiece().isOwnedByPlayer1() != ownedByPlayer1
                     && groupString.isEnemy(space)) {
                     containsEnemy =  true;
                 }
                 runLength++;
-                r += rowInc;
-                c += colInc;
-                space = (GoBoardPosition) board.getPosition( r, c );
+                pos.increment(rowInc, colInc);
+                space = (GoBoardPosition) board.getPosition( pos );
             }
             boolean bounded = !(firstSpace.equals(startSpace)) && space!=null && space.isOccupied();
-            // now acrue the potential
+            // now accrue the potential
             if (!containsEnemy && runLength < breadth && runLength > 0) {
                  int firstPos, max, currentPos;
                  if (rowInc ==1) {
                      firstPos = firstSpace.getRow();
                      max = board.getNumRows();
-                     currentPos = r;
+                     currentPos = pos.getRow();
                  } else {
                      firstPos = firstSpace.getCol();
                      max = board.getNumCols();
-                     currentPos = c;
+                     currentPos = pos.getCol();
                  }
                  rowPotential += getRunPotential(runLength, firstPos, currentPos, max, bounded);
             }
-            r += rowInc;
-            c += colInc;
-        } while (c <= maxCol && r <= maxRow);
+            pos.increment(rowInc, colInc);
+        } while (pos.getCol() <= maxCol && pos.getRow() <= maxRow);
         return rowPotential;
     }
 
@@ -277,7 +278,7 @@ class EyeSpaceAnalyzer {
             case 5: potential = 0.2f; break;
             case 6: potential = 0.15f; break;
             case 7: potential = 0.1f; break;
-            case 8: potential = 0.6f; break;
+            case 8: potential = 0.06f; break;    // was 0.6
             default : potential = 0.05f;
         }
         return potential;
