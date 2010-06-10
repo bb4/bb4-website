@@ -3,17 +3,24 @@ package com.becker.game.twoplayer.go.board.analysis;
 import com.becker.game.twoplayer.go.board.EyeType;
 import com.becker.game.twoplayer.go.board.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.GoEye;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 /**
  * Determine properties about a big eye on the board.
  * This analyizer is only used by the EyeAnalyzer.
+ * It classifies eyes that are not false eye and have between 2 and 8 spaces.
+ * Some of those spaces may have enemy stones in them.
  * See EyeAnalyzer
  *
  * @author Barry Becker
  */
 class BigEyeAnalyzer {
 
+    /** the eye to classify. */
     private GoEye eye_;
 
     /** spaces in the eye */
@@ -27,65 +34,37 @@ class BigEyeAnalyzer {
         eye_ = eye;
         spaces = eye_.getMembers();
         int size = spaces.size();
-        assert ( size > 2 && size < 8 );
+        assert ( size > 3 && size < 8 );
     }
-    
-      
+
     /**
-     * For some eyes (like big eyes) there is a key point that will make a single eye if
-     * the opponent plays first, or 2 eyes if you play first.
+     * For some eyes (like big eyes) there are one or more key points that will make a single eye if
+     * the opponent plays first (or first and second if 2 key points), or 2 eyes if you play first.
+     * We refer to the paper "When One Eye is Sufficient: A Static Classification"
+     * to classify the different eye types based solely on eye-point neighbors.
+     *
+     * The pattern formed by the sorted list of neighbor counts uniquely determines the type.
+     *
      * @return the eye type determined based on the properties and nbrs of the positions in the spaces list.
      */
     public EyeType determineEyeType()
     {
-        GoBoardPosition keyPoint = null;
-           
-        // check for a big-eye shape (also called a dead eye)
-        // the keypoint is the space with the most nobi neighbors
-        int max = 0;
-        int sum = 0;
+        List<Integer> counts = new ArrayList<Integer>(7);
+
         for (GoBoardPosition space : spaces) {
-            int numNobiNbrs = getNumEyeNobiNeighbors(space);
-            sum += numNobiNbrs;
-            if ( numNobiNbrs > max ) {
-                keyPoint = space;
-                max = numNobiNbrs;
-            }
+            counts.add(getNumEyeNobiNeighbors(space));
         }
-        int size = spaces.size();
+        Collections.sort(counts);
 
-        assert keyPoint != null : "There must be a space with at least 1 nobi nbr";
-        return getEyeType(keyPoint, max, sum, size);
-
+        return getEyeType(counts);
     }
 
-    /**
-     * @return  type of eye.
-     */
-    private EyeType getEyeType(GoBoardPosition keyPoint, int max, int sum, int size) {
-        // check for different cases of big eyes
-        boolean farmersHatOrClump =  ((size == 4) && ((max == 3 && sum == 6) || (max == 2 && sum == 8)));
-        boolean bulkyOrCrossedFive = ((size == 5) && ((max == 4 && sum == 8) || (max == 3 && sum == 10)));
-        boolean rabbitySix = ((size == 6) && (max == 4 && sum == 12));
-        boolean butterflySeven = ((size == 7) && (max == 4 && sum == 16));
-
-        if ( (size == 3)
-                || farmersHatOrClump
-                || bulkyOrCrossedFive
-                || rabbitySix
-                || butterflySeven) {
-            if ( keyPoint.isUnoccupied() ) {
-                // it has the potential to be 2 eyes depending on who plays the keypoint
-                return EyeType.BIG_EYE;
-            }
-            else {
-                // only one true eye if the keypoint is occupied by opponent piece.
-                return EyeType.TRUE_EYE;
-            }
+    private EyeType getEyeType(List<Integer> counts) {
+        StringBuilder bldr = new StringBuilder("E");
+        for (int num : counts) {
+            bldr.append(num);
         }
-
-        assert (size > 3): "there must be at least 4 spaces for a territorial eye";
-        return EyeType.TERRITORIAL_EYE;
+        return EyeType.valueOf(bldr.toString());
     }
 
     /**

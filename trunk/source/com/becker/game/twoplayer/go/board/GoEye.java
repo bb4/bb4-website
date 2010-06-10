@@ -23,7 +23,8 @@ public final class GoEye extends GoString implements GoMember
     
     /** The kind of eye that this is. */
     private final EyeType type_;
-    
+
+    /** Used to determine the eye type */
     private EyeAnalyzer eyeAnalyzer_;
 
     /**
@@ -57,7 +58,7 @@ public final class GoEye extends GoString implements GoMember
     }
     
     /**
-     * @return  the hashSet containing the members
+     * @return the hashSet containing the members
      */
     @Override
     public Set<GoBoardPosition> getMembers() {
@@ -107,5 +108,4 @@ public final class GoEye extends GoString implements GoMember
     {
         return " Eye: " + getEyeTypeName() + ": ";
     }
-
 }

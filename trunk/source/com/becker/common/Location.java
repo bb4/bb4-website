@@ -59,6 +59,19 @@ public final class Location implements Serializable
         return row_;
     }
 
+    public void incrementRow(int rowChange) {
+        row_ += rowChange;
+    }
+
+    public void incrementCol(int colChange) {
+        col_ += colChange;
+    }
+
+    public void increment(int rowChange, int colChange) {
+        incrementRow(rowChange);
+        incrementRow(colChange);
+    }
+
     /**
      * Checks to see if the given location has the same coordinates as this
      * one.

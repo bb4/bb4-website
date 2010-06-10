@@ -2,7 +2,6 @@ package com.becker.game.twoplayer.go.board.analysis.group;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.board.*;
-import com.becker.game.twoplayer.go.board.analysis.EyeAnalyzer;
 
 import java.util.*;
 
@@ -124,7 +123,6 @@ public final class LifeAnalyzer {
      */
     private void updateVitalEyesForStringNeighbors(GoEye eye) {
 
-        EyeAnalyzer analyzer = new EyeAnalyzer(eye);
         for (GoString str : eyeStringNbrMap.get(eye)) {
             // only add the eye if every unoccupied position in the eye is adjacent to the string
             List<GoEye> vitalEyes;
@@ -136,11 +134,35 @@ public final class LifeAnalyzer {
                 stringEyeNbrMap.put(str, vitalEyes);
             }
 
-            if (analyzer.allUnocupiedAdjacentToString(str, board_)) {
+            if (allUnocupiedAdjacentToString(eye, str, board_)) {
                 eye.setUnconditionallyAlive(true);
                 vitalEyes.add(eye);
             }
         }
+    }
+
+    /**
+     * @return true if all the empty spaces in this eye are touching the specified string.
+     */
+    private boolean allUnocupiedAdjacentToString(GoEye eye, GoString string, GoBoard b)   {
+        for (GoBoardPosition pos : eye.getMembers()) {
+            if (pos.isUnoccupied()) {
+                Set<GoBoardPosition> nbrs = b.getNobiNeighbors(pos, eye.isOwnedByPlayer1(), NeighborType.FRIEND);
+                // verify that at least one of the nbrs is in this string
+                boolean thereIsaNbr = false;
+                for  (GoBoardPosition nbr : nbrs) {
+                    if (string.getMembers().contains(nbr)) {
+                        thereIsaNbr = true;
+                        break;
+                    }
+                }
+                if (!thereIsaNbr) {
+                    //GameContext.log(2, "pos:"+pos+" was found to not be adjacent to the bordering string : "+this);
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     /**

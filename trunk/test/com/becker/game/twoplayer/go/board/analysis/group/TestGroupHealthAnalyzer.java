@@ -1,10 +1,6 @@
 package com.becker.game.twoplayer.go.board.analysis.group;
 
-import com.becker.game.twoplayer.go.GoProfiler;
-import com.becker.game.twoplayer.go.board.EyeType;
-import com.becker.game.twoplayer.go.board.GoEye;
-import com.becker.game.twoplayer.go.board.GoGroup;
-import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.*;
 import com.becker.common.util.Util;
 import com.becker.game.twoplayer.go.GoTestCase;
 import java.util.Set;
@@ -226,7 +222,7 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
     }
 
     public void testAbsHealth3() {
-        EyeType[] blackEyes = {EyeType.TERRITORIAL_EYE, EyeType.TERRITORIAL_EYE};
+        EyeType[] blackEyes = {EyeType.TerritorialEye, EyeType.TerritorialEye};
         EyeType[] whiteEyes = {};
         double bPotential = 1.58;
         double wPotential = 0.57;
@@ -272,7 +268,7 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
     public void testAbsHealth3c() {
-        EyeType[] blackEyes = {EyeType.FALSE_EYE};
+        EyeType[] blackEyes = {EyeType.FalseEye};
         EyeType[] whiteEyes = {};
         double bPotential = 0.344;
         double wPotential = 0.384;
@@ -289,7 +285,7 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
 
     public void testAbsHealth4() {
         EyeType[] blackEyes = {};  // should really have a territorial eye here: EyeType.TERRITORIAL_EYE
-        EyeType[] whiteEyes = {EyeType.TRUE_EYE};
+        EyeType[] whiteEyes = {EyeType.E0};
         double bPotential = 1.9;
         double wPotential = 0.877;
         double blackHealth = 0.79;
@@ -334,7 +330,7 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
     }
 
     public void testAbsHealth5() {
-        EyeType[] blackEyes = {EyeType.TRUE_EYE};
+        EyeType[] blackEyes = {EyeType.E11};
         EyeType[] whiteEyes = {};
         double bPotential = 0.67;
         double wPotential = 0.54;
@@ -366,7 +362,7 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
     }
 
     public void testAbsHealth5b() {
-        EyeType[] blackEyes = {EyeType.BIG_EYE};
+        EyeType[] blackEyes = {EyeType.E112};
         EyeType[] whiteEyes = {};
         double bPotential = 0.877;
         double wPotential = 1.14;
@@ -382,8 +378,8 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
     }
 
     public void testAbsHealth6() {
-        EyeType[] blackEyes = {EyeType.TRUE_EYE};
-        EyeType[] whiteEyes = {EyeType.TRUE_EYE};
+        EyeType[] blackEyes = {EyeType.E0};
+        EyeType[] whiteEyes = {EyeType.E0};
         double bPotential = 0.67;
         double wPotential = 0.57;
         double blackHealth = -0.30;
@@ -398,7 +394,7 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
     }
 
     public void testAbsHealth6a() {
-        EyeType[] blackEyes = {EyeType.TRUE_EYE, EyeType.TRUE_EYE};
+        EyeType[] blackEyes = {EyeType.E0, EyeType.E0};
         EyeType[] whiteEyes = {};
         double bPotential = 0.93;
         double wPotential = 1.31;
@@ -414,7 +410,7 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
     }
 
      public void testAbsHealth7() {
-        EyeType[] blackEyes = {EyeType.TERRITORIAL_EYE, EyeType.BIG_EYE};
+        EyeType[] blackEyes = {EyeType.TerritorialEye, EyeType.E112};
         EyeType[] whiteEyes = {};
         double bPotential = 1.55;
         double wPotential = 0.69;
