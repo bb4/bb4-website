@@ -69,7 +69,7 @@ public final class Location implements Serializable
 
     public void increment(int rowChange, int colChange) {
         incrementRow(rowChange);
-        incrementRow(colChange);
+        incrementCol(colChange);
     }
 
     /**
@@ -123,6 +123,5 @@ public final class Location implements Serializable
     {
         return "row=" + row_ + ", colum=" + col_;
     }
-
 }
 

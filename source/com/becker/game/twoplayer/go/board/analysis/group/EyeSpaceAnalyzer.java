@@ -183,6 +183,7 @@ class EyeSpaceAnalyzer {
     /**
      * Find the potential for one of the bbox's rows or columns.
      * @return eye potential for row and column at r,c
+     *
      */
     private float getRowColPotential(int row, int col, int rowInc, int colInc, int maxRow, int maxCol,
                                      GoBoard board, GoString groupString) {
@@ -225,7 +226,7 @@ class EyeSpaceAnalyzer {
             pos.increment(rowInc, colInc);
         } while (pos.getCol() <= maxCol && pos.getRow() <= maxRow);
         return rowPotential;
-    }
+    }     
 
     /**
      * @return potential score for the runlength.

@@ -222,7 +222,7 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
     }
 
     public void testAbsHealth3() {
-        EyeType[] blackEyes = {EyeType.TerritorialEye, EyeType.TerritorialEye};
+        EyeType[] blackEyes = {EyeType.E222233, EyeType.E222233};
         EyeType[] whiteEyes = {};
         double bPotential = 1.58;
         double wPotential = 0.57;
@@ -362,7 +362,7 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
     }
 
     public void testAbsHealth5b() {
-        EyeType[] blackEyes = {EyeType.E112};
+        EyeType[] blackEyes = {EyeType.E2222};
         EyeType[] whiteEyes = {};
         double bPotential = 0.877;
         double wPotential = 1.14;
@@ -410,7 +410,7 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
     }
 
      public void testAbsHealth7() {
-        EyeType[] blackEyes = {EyeType.TerritorialEye, EyeType.E112};
+        EyeType[] blackEyes = {EyeType.E222233, EyeType.E12223};
         EyeType[] whiteEyes = {};
         double bPotential = 1.55;
         double wPotential = 0.69;
