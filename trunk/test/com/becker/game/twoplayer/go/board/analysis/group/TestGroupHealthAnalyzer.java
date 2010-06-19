@@ -5,6 +5,8 @@ import com.becker.common.util.Util;
 import com.becker.game.twoplayer.go.GoTestCase;
 import java.util.Set;
 
+import com.becker.game.twoplayer.go.board.analysis.eye.OldEyeType;
+import com.becker.game.twoplayer.go.board.analysis.eye.metadata.EyeInformation;
 import junit.framework.Assert;
 
 /**
@@ -19,8 +21,8 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
     // testAbsHealth1* test configurations with 1 stone in each group.
     public void testAbsHealth1() {
         controller_.reset();
-        EyeType[] blackEyes = {};
-        EyeType[] whiteEyes = {};
+        OldEyeType[] blackEyes = {};
+        OldEyeType[] whiteEyes = {};
         double bPotential = 0.344;
         double wPotential = 0.49;
         double blackHealth = 0.1;
@@ -37,8 +39,8 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
 
     public void testAbsHealth1a() {
         controller_.reset();
-        EyeType[] blackEyes = {};
-        EyeType[] whiteEyes = {};
+        OldEyeType[] blackEyes = {};
+        OldEyeType[] whiteEyes = {};
         double bPotential = 0.3;
         double wPotential = 0.3;
         double blackHealth = 0.1;
@@ -53,8 +55,8 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
     }
     public void testAbsHealth1b() {
         controller_.reset();
-        EyeType[] blackEyes = {};
-        EyeType[] whiteEyes = {};
+        OldEyeType[] blackEyes = {};
+        OldEyeType[] whiteEyes = {};
         double bPotential = 0.34;
         double wPotential = 0.34;
         double blackHealth = 0.1;
@@ -69,8 +71,8 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
     }
     public void testAbsHealth1c() {
         controller_.reset();
-        EyeType[] blackEyes = {};
-        EyeType[] whiteEyes = {};
+        OldEyeType[] blackEyes = {};
+        OldEyeType[] whiteEyes = {};
         double bPotential = 0.49;
         double wPotential = 0.49;
         double blackHealth = 0.1;
@@ -85,8 +87,8 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
     }
     public void testAbsHealth1d() {
         controller_.reset();
-        EyeType[] blackEyes = {};
-        EyeType[] whiteEyes = {};
+        OldEyeType[] blackEyes = {};
+        OldEyeType[] whiteEyes = {};
         double bPotential = 0.24;
         double wPotential = 0.0;
         double blackHealth = 0.1;
@@ -101,8 +103,8 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
     }
 
     public void testAbsHealth2() {
-        EyeType[] blackEyes = {};
-        EyeType[] whiteEyes = {};
+        OldEyeType[] blackEyes = {};
+        OldEyeType[] whiteEyes = {};
         double bPotential = 1.127;
         double wPotential = 0.769;
         double blackHealth = 0.52;
@@ -116,8 +118,8 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
     public void testAbsHealth2a() {
-        EyeType[] blackEyes = {};
-        EyeType[] whiteEyes = {};
+        OldEyeType[] blackEyes = {};
+        OldEyeType[] whiteEyes = {};
         double bPotential = 0.42;
         double wPotential = 0.42;
         double blackHealth = 0.2;
@@ -131,8 +133,8 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
    }
     public void testAbsHealth2b() {
-        EyeType[] blackEyes = {};
-        EyeType[] whiteEyes = {};
+        OldEyeType[] blackEyes = {};
+        OldEyeType[] whiteEyes = {};
         double bPotential = 0.73;
         double wPotential = 0.64;
         double blackHealth = 0.2;
@@ -146,8 +148,8 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
     public void testAbsHealth2c() {
-        EyeType[] blackEyes = {};
-        EyeType[] whiteEyes = {};
+        OldEyeType[] blackEyes = {};
+        OldEyeType[] whiteEyes = {};
         double bPotential = 0.54;
         double wPotential = 0.38;
         double blackHealth = 0.2;
@@ -161,8 +163,8 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
    }
     public void testAbsHealth2d() {
-        EyeType[] blackEyes = {};
-        EyeType[] whiteEyes = {};
+        OldEyeType[] blackEyes = {};
+        OldEyeType[] whiteEyes = {};
         double bPotential = 0.385;
         double wPotential = 0.384;
         double blackHealth = 0.1;
@@ -176,8 +178,8 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
     public void testAbsHealth2e() {
-        EyeType[] blackEyes = {};
-        EyeType[] whiteEyes = {};
+        OldEyeType[] blackEyes = {};
+        OldEyeType[] whiteEyes = {};
         double bPotential = 0.516;
         double wPotential = 0.344;
         double blackHealth = 0.1;
@@ -191,8 +193,8 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
    }
     public void testAbsHealth2f() {
-        EyeType[] blackEyes = {};
-        EyeType[] whiteEyes = {};
+        OldEyeType[] blackEyes = {};
+        OldEyeType[] whiteEyes = {};
         double bPotential = 0.596;
         double wPotential = 0.385;
         double blackHealth = 0.1;
@@ -206,8 +208,8 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
     public void testAbsHealth2g() {
-        EyeType[] blackEyes = {};
-        EyeType[] whiteEyes = {};
+        OldEyeType[] blackEyes = {};
+        OldEyeType[] whiteEyes = {};
         double bPotential = 0.17;
         double wPotential = 0.544; //0.5439
         double blackHealth = -0.3;
@@ -222,8 +224,8 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
     }
 
     public void testAbsHealth3() {
-        EyeType[] blackEyes = {EyeType.E222233, EyeType.E222233};
-        EyeType[] whiteEyes = {};
+        OldEyeType[] blackEyes = {OldEyeType.E222233, OldEyeType.E222233};
+        OldEyeType[] whiteEyes = {};
         double bPotential = 1.58;
         double wPotential = 0.57;
         double blackHealth = 0.94;
@@ -238,8 +240,8 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
     }
 
     public void testAbsHealth3a() {
-        EyeType[] blackEyes = {};
-        EyeType[] whiteEyes = {};
+        OldEyeType[] blackEyes = {};
+        OldEyeType[] whiteEyes = {};
         double bPotential = 0.877;
         double wPotential = 0.49;
         double blackHealth = 0.24;
@@ -253,8 +255,8 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
     public void testAbsHealth3b() {
-        EyeType[] blackEyes = {};
-        EyeType[] whiteEyes = {};
+        OldEyeType[] blackEyes = {};
+        OldEyeType[] whiteEyes = {};
         double bPotential = 0.82;
         double wPotential = 0.51;
         double blackHealth = 0.10;
@@ -268,8 +270,8 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
     public void testAbsHealth3c() {
-        EyeType[] blackEyes = {EyeType.FalseEye};
-        EyeType[] whiteEyes = {};
+        OldEyeType[] blackEyes = {OldEyeType.FalseEye};
+        OldEyeType[] whiteEyes = {};
         double bPotential = 0.344;
         double wPotential = 0.384;
         double blackHealth = 0.02;
@@ -284,8 +286,8 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
     }
 
     public void testAbsHealth4() {
-        EyeType[] blackEyes = {};  // should really have a territorial eye here: EyeType.TERRITORIAL_EYE
-        EyeType[] whiteEyes = {EyeType.E0};
+        OldEyeType[] blackEyes = {};  // should really have a territorial eye here: OldEyeType.TERRITORIAL_EYE
+        OldEyeType[] whiteEyes = {OldEyeType.E0};
         double bPotential = 1.9;
         double wPotential = 0.877;
         double blackHealth = 0.79;
@@ -299,8 +301,8 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
     public void testAbsHealth4a() {
-        EyeType[] blackEyes = {};  // should really have a territorial eye here: EyeType.TERRITORIAL_EYE
-        EyeType[] whiteEyes = {};
+        OldEyeType[] blackEyes = {};  // should really have a territorial eye here: OldEyeType.TERRITORIAL_EYE
+        OldEyeType[] whiteEyes = {};
         double bPotential = 1.0;
         double wPotential = 0.54;
         double blackHealth = 0.36;
@@ -314,8 +316,8 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
                                                  AbsAbsHealthDiff, AbsHealthDiff, RelHealthDiff);
     }
     public void testAbsHealth4b() {
-        EyeType[] blackEyes = {};  // should really have a territorial eye here: EyeType.TERRITORIAL_EYE
-        EyeType[] whiteEyes = {};
+        OldEyeType[] blackEyes = {};  // should really have a territorial eye here: OldEyeType.TERRITORIAL_EYE
+        OldEyeType[] whiteEyes = {};
         double bPotential = 0.788;
         double wPotential = 0.91;
         double blackHealth = 0.26;
@@ -330,8 +332,8 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
     }
 
     public void testAbsHealth5() {
-        EyeType[] blackEyes = {EyeType.E11};
-        EyeType[] whiteEyes = {};
+        OldEyeType[] blackEyes = {OldEyeType.E11};
+        OldEyeType[] whiteEyes = {};
         double bPotential = 0.67;
         double wPotential = 0.54;
         double blackHealth = -0.05;
@@ -346,8 +348,8 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
     }
 
     public void testAbsHealth5a() {
-        EyeType[] blackEyes = {};
-        EyeType[] whiteEyes = {};
+        OldEyeType[] blackEyes = {};
+        OldEyeType[] whiteEyes = {};
         double bPotential = 0.71;
         double wPotential = 1.09;
         double blackHealth = 0.28;
@@ -362,8 +364,8 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
     }
 
     public void testAbsHealth5b() {
-        EyeType[] blackEyes = {EyeType.E2222};
-        EyeType[] whiteEyes = {};
+        OldEyeType[] blackEyes = {OldEyeType.E2222};
+        OldEyeType[] whiteEyes = {};
         double bPotential = 0.877;
         double wPotential = 1.14;
         double blackHealth = 0.34;
@@ -378,8 +380,8 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
     }
 
     public void testAbsHealth6() {
-        EyeType[] blackEyes = {EyeType.E0};
-        EyeType[] whiteEyes = {EyeType.E0};
+        OldEyeType[] blackEyes = {OldEyeType.E0};
+        OldEyeType[] whiteEyes = {OldEyeType.E0};
         double bPotential = 0.67;
         double wPotential = 0.57;
         double blackHealth = -0.30;
@@ -394,8 +396,8 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
     }
 
     public void testAbsHealth6a() {
-        EyeType[] blackEyes = {EyeType.E0, EyeType.E0};
-        EyeType[] whiteEyes = {};
+        OldEyeType[] blackEyes = {OldEyeType.E0, OldEyeType.E0};
+        OldEyeType[] whiteEyes = {};
         double bPotential = 0.93;
         double wPotential = 1.31;
         double blackHealth = 1.0; //0.9399999976158142;  
@@ -410,8 +412,8 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
     }
 
      public void testAbsHealth7() {
-        EyeType[] blackEyes = {EyeType.E222233, EyeType.E12223};
-        EyeType[] whiteEyes = {};
+        OldEyeType[] blackEyes = {OldEyeType.E222233, OldEyeType.E12223};
+        OldEyeType[] whiteEyes = {};
         double bPotential = 1.55;
         double wPotential = 0.69;
         double blackHealth = 0.94;
@@ -426,8 +428,8 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
     }
 
     public void testAbsHealth8() {
-        EyeType[] blackEyes = {};
-        EyeType[] whiteEyes = {};
+        OldEyeType[] blackEyes = {};
+        OldEyeType[] whiteEyes = {};
         double bPotential = 0.54;
         double wPotential = 0.89;
         double blackHealth = 0.315;
@@ -442,8 +444,8 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
     }
 
     public void testAbsHealth9() {
-        EyeType[] blackEyes = {};
-        EyeType[] whiteEyes = {};
+        OldEyeType[] blackEyes = {};
+        OldEyeType[] whiteEyes = {};
         double bPotential = 1.49;
         double wPotential = 0.77;
         double blackHealth = 0.44;
@@ -468,7 +470,7 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
      */
     private void verifyHealthDifferences(String file,
                                          int expectedNumberOfBlackLiberties, int expectedNumberOfWhiteLiberties,
-                                         EyeType[] blackEyes,  EyeType[] whiteEyes,
+                                         OldEyeType[] blackEyes,  OldEyeType[] whiteEyes,
                                          double expectedBlackEyePotential, double expectedWhiteEyePotential,
                                          double expectedBlackHealth,  double expectedWhiteHealth,
                                          double expectedAbsAbsHealthDifference,
@@ -566,7 +568,7 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
         return (OK?"":"      *Error*");
     }
 
-    private void verifyEyes(Set<GoEye> eyes, EyeType[] expectedEyes, boolean black)
+    private void verifyEyes(Set<GoEye> eyes, OldEyeType[] expectedEyes, boolean black)
     {
         String color = black? "black" : "white";
         Assert.assertEquals("unequal numbers of "+color+" eyes", expectedEyes.length, eyes.size());
@@ -574,7 +576,7 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
         {
             int i = 0;
             for (GoEye eye : eyes) {
-                EyeType eType = eye.getEyeType();
+                EyeInformation eType = eye.getInformation();
                 Assert.assertTrue(color + "Eye " + i + " was not the type that we expected. " +
                         "It was " + eType +" , but we expected " + expectedEyes[i],
                          (expectedEyes[i] == eType));

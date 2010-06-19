@@ -15,7 +15,7 @@ public abstract class TableBase
 {
     protected JTable table_;
 
-    /** meta data information about each column and its header. */
+    /** metadata data information about each column and its header. */
     protected TableColumnMeta[] columnMeta_;
 
     public TableBase() {

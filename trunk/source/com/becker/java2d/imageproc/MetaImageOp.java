@@ -150,7 +150,7 @@ public class MetaImageOp {
             }
            
             //System.out.println("arg="+args[0] + " type="+args[0].getClass().getName() +" v="+p.getValue());
-            method.invoke(filter, args); // p.getType().cast(p.getValue()));            
+            method.invoke(filter, args); // p.getInformation().cast(p.getValue()));
         } 
         return newParams;        
     }

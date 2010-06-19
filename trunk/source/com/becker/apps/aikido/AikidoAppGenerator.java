@@ -48,7 +48,7 @@ public class AikidoAppGenerator {
          String head =  "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n"
                 + "<html>\n"
                 + "<head>\n"
-                + "<meta content=\"text/html; charset=ISO-8859-1\""
+                + "<metadata content=\"text/html; charset=ISO-8859-1\""
                 + "http-equiv=\"content-type\">"
                 + "<title>"+title+"</title>"
                 + "\n\n";

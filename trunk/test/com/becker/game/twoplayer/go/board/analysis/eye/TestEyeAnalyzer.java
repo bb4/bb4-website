@@ -1,7 +1,6 @@
-package com.becker.game.twoplayer.go.board.analysis.group;
+package com.becker.game.twoplayer.go.board.analysis.eye;
 
 import com.becker.game.twoplayer.go.GoTestCase;
-import com.becker.game.twoplayer.go.board.EyeType;
 import com.becker.game.twoplayer.go.board.GoEye;
 import com.becker.game.twoplayer.go.board.GoGroup;
 import com.becker.game.twoplayer.go.board.GoBoard;
@@ -19,53 +18,57 @@ public class TestEyeAnalyzer extends GoTestCase {
 
     // simple eye tests
     public void testEyes1() {             
-        EyeCounts blackEyes = new EyeCounts(new EyeType[] {EyeType.E11, EyeType.E11});
-        EyeCounts whiteEyes = new EyeCounts( new EyeType[] {EyeType.E0, });
+        EyeCounts blackEyes = new EyeCounts(new OldEyeType[] {OldEyeType.E11, OldEyeType.E11});
+        EyeCounts whiteEyes = new EyeCounts(new OldEyeType[] {OldEyeType.E0, });
         checkEyes("problem_eyes1", 2, blackEyes, whiteEyes);
     }
-     /*
+
     public void testEyes2() {
-        EyeCounts blackEyes = new EyeCounts(0, 2, 0, 0);
-        EyeCounts whiteEyes = new EyeCounts(0, 1, 1, 0);
+
+        // used to be:    false, true, big, territory
+        //                  0,     2,    0,      0);
+
+        EyeCounts blackEyes = new EyeCounts(new OldEyeType[] {OldEyeType.E0, OldEyeType.E11});
+        EyeCounts whiteEyes = new EyeCounts(new OldEyeType[] {OldEyeType.E0, OldEyeType.E112});
         checkEyes("problem_eyes2", 2, blackEyes, whiteEyes);
     }
 
     public void testFalseEye1() {
-        EyeCounts blackEyes = new EyeCounts(1, 1, 0, 0);
-        EyeCounts whiteEyes = new EyeCounts(0, 1, 0, 0);
+        EyeCounts blackEyes = new EyeCounts(new OldEyeType[] {OldEyeType.FalseEye, OldEyeType.E0});
+        EyeCounts whiteEyes = new EyeCounts(new OldEyeType[] {OldEyeType.E0});
         checkEyes("problem_eyes3", 2, blackEyes, whiteEyes);
     }
 
     public void testCornerLife4() {
-        EyeCounts blackEyes = new EyeCounts(0, 2, 0, 0);
-        EyeCounts whiteEyes = new EyeCounts(0, 0, 0, 0);
+        EyeCounts blackEyes = new EyeCounts(new OldEyeType[] {OldEyeType.E0, OldEyeType.E11});
+        EyeCounts whiteEyes = new  EyeCounts(new OldEyeType[] {});
         checkEyes("problem_eyes4", 2, blackEyes, whiteEyes);
     }
 
      public void testCornerLife4a() {
-        EyeCounts blackEyes = new EyeCounts(0, 2, 0, 0);
-        EyeCounts whiteEyes = new EyeCounts(0, 0, 0, 0);
+        EyeCounts blackEyes = new EyeCounts(new OldEyeType[] {OldEyeType.E0, OldEyeType.E11});
+        EyeCounts whiteEyes = new EyeCounts(new OldEyeType[] {});
         checkEyes("problem_eyes4a", 5,  blackEyes, whiteEyes);
     }
 
      public void testEyes5() {
-        EyeCounts blackEyes = new EyeCounts(0, 1, 0, 1);
-        EyeCounts whiteEyes = new EyeCounts(0, 0, 0, 0);
+        EyeCounts blackEyes = new EyeCounts(new OldEyeType[] {OldEyeType.E222233, OldEyeType.E0});
+        EyeCounts whiteEyes = new EyeCounts(new OldEyeType[] {});
         checkEyes("problem_eyes5", 2, blackEyes, whiteEyes);
     }
 
     public void testFalsesOnEdge() {
-        EyeCounts blackEyes = new EyeCounts(0, 0, 0, 0);
-        EyeCounts whiteEyes = new EyeCounts(3, 0, 0, 0);
+        EyeCounts blackEyes = new EyeCounts(new OldEyeType[] {});
+        EyeCounts whiteEyes = new EyeCounts(new OldEyeType[] {OldEyeType.FalseEye, OldEyeType.FalseEye, OldEyeType.FalseEye});
         checkEyes("problem_falseeyes_on_edge", 2, blackEyes, whiteEyes);
     }
 
     public void testStoneInEye1() {
-        EyeCounts blackEyes = new EyeCounts(0, 1, 0, 0);
-        EyeCounts whiteEyes = new EyeCounts(0, 1, 0, 0);
+        EyeCounts blackEyes = new EyeCounts(new OldEyeType[] {OldEyeType.E11, }); //new EyeCounts(0, 1, 0, 0);
+        EyeCounts whiteEyes = new EyeCounts(new OldEyeType[] {OldEyeType.E0}); //new EyeCounts(0, 1, 0, 0);
         checkEyes("problem_stone_in_eye1", 3, blackEyes, whiteEyes);
     }
-
+    /*
     public void testStoneInEye2() {
         EyeCounts blackEyes = new EyeCounts(0, 1, 0, 1);
         EyeCounts whiteEyes = new EyeCounts(0, 0, 0, 0);
@@ -84,7 +87,6 @@ public class TestEyeAnalyzer extends GoTestCase {
           checkEyes("problem_stone_in_eye4", 3, blackEyes, whiteEyes);
    }
       */
-
 
     ////////////////// test the different big eye shapes /////////////////
     /**
@@ -407,7 +409,7 @@ public class TestEyeAnalyzer extends GoTestCase {
         GoGroup biggestBlackGroup = getBiggestGroup(true);
         GoGroup biggestWhiteGroup = getBiggestGroup(false);
 
-        // this indirectly calls EyeAnalyzer.determineEyeType through
+        // this indirectly calls EyeTypeAnalyzer.determineEyeInformation through
         // GroupAnalyzer.updateEyes(board) -> EyeSpaceAnalyzer.determinEyes()
         EyeCounts eyeCounts = getEyeCounts(biggestBlackGroup.getEyes(board));
         Assert.assertTrue("Actual Black Eye counts were \n"+eyeCounts+" but was expecting \n"+ expectedBlackEyes,
@@ -427,27 +429,27 @@ public class TestEyeAnalyzer extends GoTestCase {
 
         for (Object e : eyes) {
             GoEye eye = (GoEye) e;
-            counts.increment(eye.getEyeType());
+            counts.increment(eye.getInformation());
         }
         return counts;
     }
 
 
     private static class EyeCounts {
-        Map<EyeType, Integer> countMap;
+        Map<OldEyeType, Integer> countMap;
 
         public EyeCounts() {
-            countMap = new HashMap<EyeType, Integer>();
+            countMap = new HashMap<OldEyeType, Integer>();
         }
 
-        public EyeCounts(EyeType[] types) {
+        public EyeCounts(OldEyeType[] types) {
             this();
-            for (EyeType type : types) {
+            for (OldEyeType type : types) {
                 increment(type);
             }
         }
 
-        public void increment(EyeType type) {
+        public void increment(OldEyeType type) {
             if (countMap.containsKey(type)) {
                 countMap.put(type, countMap.get(type)+1);
             }
@@ -456,14 +458,14 @@ public class TestEyeAnalyzer extends GoTestCase {
             }
         }
 
-        public int getCountFor(EyeType type) {
+        public int getCountFor(OldEyeType type) {
             return countMap.containsKey(type) ? countMap.get(type) : 0;
         }
 
         @Override
         public boolean equals(Object ocounts) {
             EyeCounts counts = (EyeCounts)ocounts;
-            for (EyeType type : EyeType.values()) {
+            for (OldEyeType type : OldEyeType.values()) {
                 if (getCountFor(type) != counts.getCountFor(type))
                     return false;
             }
@@ -475,7 +477,7 @@ public class TestEyeAnalyzer extends GoTestCase {
 
             int dec = 1;
             int hash = 0;
-            for (EyeType type : EyeType.values()) {
+            for (OldEyeType type : OldEyeType.values()) {
                 hash += dec * getCountFor(type);
                 dec *=10;
             }
