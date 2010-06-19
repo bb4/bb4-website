@@ -1,0 +1,68 @@
+package com.becker.game.twoplayer.go.board.analysis.eye.metadata;
+
+import com.becker.game.twoplayer.go.board.GoEye;
+import com.becker.game.twoplayer.go.board.analysis.eye.EyeNeighborMap;
+import com.becker.game.twoplayer.go.board.analysis.eye.EyeStatus;
+
+/**
+ * Meta data about the eye type.
+ * See http://www.ai.univ-paris8.fr/~cazenave/eyeLabelling.pdf
+ *
+ * @author Barry Becker
+ */
+public interface EyeInformation
+{
+    /**
+     * The life property should be regarded as a property slightly below Benson’s definition
+     * of unconditional life, because if we have an AliveInAtari status for an eye, it might be
+     * necessary to play inside the eye, but with the great advantage that detecting it
+     * is just a matter of counting neighbours as it will be shown in Section 4.
+     * @return true if the shape has the life property
+     */
+    boolean hasLifeProperty();
+
+    /**
+     * @return The number of different ways this eye pattern can occur (independent of symmetries)
+     */
+    byte getNumPatterns();
+
+    /**
+     * @return score contribution for eye.   About 1 for single eye, 2 for 2 real eyes.
+     * May need to be adjusted by eye status.
+     */
+    float getEyeValue();
+
+    /**
+     * A list of vital points described by indices.
+     * @return list of vital points where a point is described by an index created by adding the number of
+     * neighbors to (those neighvor's neighbors)/100. so for example, 2.03 means the space has 2 nobi neighbors
+     * and those 2 neighbors have a total of 3 neighbors.
+     * Returns an empty array if we have no vitals or the type has the life property.
+     */
+    float[] getVitalPoints();
+
+    /**
+     * A list of end points described by indices.  End points are bad to play by either side until all the other eye
+     * spaces have been played. If the opponent plays them they are not playing in the nakade (big eye) shape, and
+     * hence missing a likely opportunity to kill the group. If the same color plays them they are helping to create a
+     * nakade eye shape.  End points are the spaces left after the nakade shape of size n-1 fills the eye.
+     * @return list of end points where a point is described by an index created by adding the number of
+     * neighbors to (those neighvor's neighbors)/100. so for example, 2.03 means the space has 2 nobi neighbors
+     * and those 2 neighbors have a total of 3 neighbors.
+     * Returns an empty array if we have no vitals or the type has the life property.
+     */
+    float[] getEndPoints();
+
+    /**
+     * 
+     * @param eye
+     * @param nbrMap
+     * @return
+     */
+    EyeStatus determineStatus(GoEye eye, EyeNeighborMap nbrMap);
+
+    /**
+     * @return Name of the eye type
+     */
+    String getTypeName();
+}

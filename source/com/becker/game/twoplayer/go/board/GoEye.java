@@ -2,7 +2,9 @@ package com.becker.game.twoplayer.go.board;
 
 import com.becker.game.common.GameContext;
 
-import com.becker.game.twoplayer.go.board.analysis.EyeAnalyzer;
+import com.becker.game.twoplayer.go.board.analysis.eye.*;
+import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
+import com.becker.game.twoplayer.go.board.analysis.eye.metadata.EyeInformation;
 
 import java.util.*;
 
@@ -13,7 +15,6 @@ import java.util.*;
  *  Some convenience operations for eyes are contained in this class
  *  A group needs 2 provably true eyes to live.
  *
- *  @see EyeType for the the possible types of eyes that can occur
  *  @author Barry Becker
  */
 public final class GoEye extends GoString implements GoMember
@@ -22,34 +23,36 @@ public final class GoEye extends GoString implements GoMember
     private Set<GoBoardPosition> members_;
     
     /** The kind of eye that this is. */
-    private final EyeType type_;
+    private final EyeInformation information_;
 
-    /** Used to determine the eye type */
-    private EyeAnalyzer eyeAnalyzer_;
+    /** In addition to the type, an eye can have a status like nakade, unsettled, or aliveInAtari. */
+    private final EyeStatus status_;
 
     /**
      * constructor. Create a new eye shape containing the specified list of stones/spaces
      */
-    public GoEye( List<GoBoardPosition> spaces, GoBoard board, GoGroup g )
-    {
+    public GoEye( List<GoBoardPosition> spaces, GoBoard board, GoGroup g ) {
         super( spaces, board );
         group_ = g;
-        ownedByPlayer1_ = g.isOwnedByPlayer1();        
-        eyeAnalyzer_ = new EyeAnalyzer(this);
-        type_ = eyeAnalyzer_.determineEyeType( board );
-        
+        ownedByPlayer1_ = g.isOwnedByPlayer1();
+
+        EyeAnalyzer eyeAnalyzer = new EyeAnalyzer(this, board);
+        information_ = eyeAnalyzer.getEyeInformation();
+        status_ = eyeAnalyzer.getEyeStatus();
     }
 
-    public EyeType getEyeType()
-    {
-        return type_;
+    public EyeInformation getInformation() {
+        return information_;
     }
 
-    public String getEyeTypeName()
-    {
-        if (type_==null)
+    public EyeStatus getStatus() {
+        return status_;
+    }
+
+    public String getEyeTypeName() {
+        if (information_ ==null)
             return "unknown eye type";
-        return type_.toString();
+        return information_.getTypeName();
     }
     
     @Override
@@ -66,22 +69,31 @@ public final class GoEye extends GoString implements GoMember
     }
 
     /**
-     *  @return true if the piece is an enemy of the string owner
+     *  @return true if the piece is an enemy of the string owner.
      *  If the difference in health between the stones is great, then they are not really enemies
      *  because one of them is dead.
      */
     @Override
-    public boolean isEnemy( GoBoardPosition pos)
+    public boolean isEnemy(GoBoardPosition pos)
     {
-        return eyeAnalyzer_.isEnemy(pos);
+        GoGroup g = getGroup();
+        assert (g != null): "group for "+ this +" is null";
+        if (pos.isUnoccupied()) {
+            return false;
+        }
+        GoStone stone = (GoStone)pos.getPiece();
+        boolean weaker = GoBoardUtil.isStoneMuchWeaker(g, stone);
+
+        assert (g.isOwnedByPlayer1() == isOwnedByPlayer1()):
+                 "Bad group ownership for eye="+ this +". Owning Group="+g;
+        return (stone.isOwnedByPlayer1() != isOwnedByPlayer1() && !weaker);
     }
     
     /**
      * Add a space to the eye string.
      * The space is either blank or a dead enemy stone.
      */
-    @Override protected void addMemberInternal(GoBoardPosition space, GoBoard board)
-    {
+    @Override protected void addMemberInternal(GoBoardPosition space, GoBoard board) {
         if ( getMembers().contains( space ) ) {
             GameContext.log( 1, "Warning: the eye, " + this + ", already contains " + space );
             assert ( (space.getString() == null) || (this == space.getString())):
@@ -94,8 +106,7 @@ public final class GoEye extends GoString implements GoMember
     /**
      * empty the positions from the eye.
      */
-    public void clear()
-    {
+    public void clear() {
         for (GoBoardPosition pos : getMembers()) {
             pos.setEye(null);
             pos.setVisited(false);
@@ -104,8 +115,7 @@ public final class GoEye extends GoString implements GoMember
     }
 
     @Override
-    protected String getPrintPrefix()
-    {
+    protected String getPrintPrefix() {
         return " Eye: " + getEyeTypeName() + ": ";
     }
 }

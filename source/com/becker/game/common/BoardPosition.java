@@ -166,6 +166,17 @@ public class BoardPosition
 
 
     /**
+     * @param position to check if neighboring
+     * @return true if immediate neighbor (nobi neighbor)
+     */
+    public final boolean isNeighbor( BoardPosition position )
+    {
+        double deltaX = this.getCol() - position.getCol();
+        double deltaY = this.getRow() - position.getRow();
+        return Math.abs(deltaX) + Math.abs(deltaY) == 1;
+    }
+
+    /**
      * make it show an empty board position.
      */
     public void clear()

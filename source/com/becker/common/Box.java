@@ -13,35 +13,20 @@ public class Box {
 
     /**
      * Constructor
-     *@param topLeftCorner top left corner coordinates.
-     *@param bottomRightCorner bottom right corner coordinates.
+     * Two points that define the box.
+     * @param pt0 one corner of the box
+     * @param pt1 the opposite corner of the box.
      */
-    public Box(Location topLeftCorner, Location bottomRightCorner) {
-        topLeftCorner_ = topLeftCorner;
-        bottomRightCorner_ = bottomRightCorner;
-        verify();
+    public Box(Location pt0, Location pt1) {
+
+        this(Math.min(pt0.getRow(), pt1.getRow()), Math.min(pt0.getCol(), pt1.getCol()),
+             Math.max(pt0.getRow(), pt1.getRow()), Math.max(pt0.getCol(), pt1.getCol()));
     }
 
     public Box(int rowMin, int colMin, int rowMax, int colMax) {
         topLeftCorner_ = new Location(rowMin, colMin);
         bottomRightCorner_ = new Location(rowMax, colMax);
         verify();
-    }
-
-    /**
-     *  make sure corner 1 is the top left and corner 2 is the bottom right
-     */
-    private void verify() {
-       if (topLeftCorner_.getRow() > bottomRightCorner_.getRow()) {
-            byte temp = topLeftCorner_.getRow();
-            topLeftCorner_.setRow(bottomRightCorner_.getRow());
-            bottomRightCorner_.setRow(temp);
-        }
-        if (topLeftCorner_.getCol() > bottomRightCorner_.getCol()) {
-            byte temp = topLeftCorner_.getCol();
-            topLeftCorner_.setCol(bottomRightCorner_.getCol());
-            bottomRightCorner_.setCol(temp);
-        }
     }
 
     public int getWidth() {
@@ -74,6 +59,16 @@ public class Box {
 
     public int getMaxCol() {
         return bottomRightCorner_.getCol();
+    }
+
+    /**
+     * @param pt point to check for containment in the box.
+     * @return true if the box contains the specified point
+     */
+    public boolean contains(Location pt) {
+        int row = pt.getRow();
+        int col = pt.getCol();
+        return (row >= getMinRow() && row <= getMaxRow() && col >= getMinCol() && col <= getMaxCol());
     }
 
     public void expandBy(Location loc) {
@@ -124,7 +119,22 @@ public class Box {
             bottomRightCorner_.setCol(maxCol);
         }
     }
-    
+
+    /**
+     *  make sure corner 1 is the top left and corner 2 is the bottom right
+     */
+    private void verify() {
+       if (topLeftCorner_.getRow() > bottomRightCorner_.getRow()) {
+            byte temp = topLeftCorner_.getRow();
+            topLeftCorner_.setRow(bottomRightCorner_.getRow());
+            bottomRightCorner_.setRow(temp);
+        }
+        if (topLeftCorner_.getCol() > bottomRightCorner_.getCol()) {
+            byte temp = topLeftCorner_.getCol();
+            topLeftCorner_.setCol(bottomRightCorner_.getCol());
+            bottomRightCorner_.setCol(temp);
+        }
+    }
 
     @Override
     public String toString() {

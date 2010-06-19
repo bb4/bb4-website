@@ -7,7 +7,6 @@ import com.becker.game.twoplayer.go.board.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.GoGroup;
 import com.becker.game.twoplayer.go.board.GoString;
 import com.becker.game.twoplayer.go.board.analysis.NeighborAnalyzer;
-import com.becker.game.twoplayer.go.board.update.Captures;
 
 import java.util.*;
 
@@ -23,7 +22,7 @@ public abstract class PostChangeUpdater {
 
 
     /**
-     * Update the board meta data after a change has been made (like an add or a remove of a stone)
+     * Update the board metadata data after a change has been made (like an add or a remove of a stone)
      * @param board board that changed.
      * @param captures captures added or removed during the change
      */

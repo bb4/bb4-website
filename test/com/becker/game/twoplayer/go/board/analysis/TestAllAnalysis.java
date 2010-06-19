@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.go.board.analysis;
 
 import com.becker.game.twoplayer.go.GoTestCase;
-import com.becker.game.twoplayer.go.board.analysis.group.TestEyeAnalyzer;
+import com.becker.game.twoplayer.go.board.analysis.eye.TestEyeAnalyzer;
 import com.becker.game.twoplayer.go.board.analysis.group.TestGroupHealthAnalyzer;
 import com.becker.game.twoplayer.go.board.analysis.group.TestLifeAnalyzer;
 import junit.framework.Test;
