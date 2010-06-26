@@ -1,10 +1,12 @@
-package com.becker.game.twoplayer.go.board.analysis.eye.metadata;
+package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
+import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.GoEye;
 import com.becker.game.twoplayer.go.board.analysis.eye.EyeNeighborMap;
 import com.becker.game.twoplayer.go.board.analysis.eye.EyeStatus;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,7 +16,7 @@ import java.util.List;
  *
  * @author Barry Becker
  */
-public abstract class AbstractEyeSubtype implements EyeInformation
+public abstract class AbstractEyeSubtypeInformation extends AbstractEyeInformation
 {
     private boolean life;
     private byte size;
@@ -26,9 +28,9 @@ public abstract class AbstractEyeSubtype implements EyeInformation
     protected static final float[] EMPTY_POINTS = new float[] {};
 
     /**
-     * constructor
+     * Constructor
      */
-    AbstractEyeSubtype() {
+    AbstractEyeSubtypeInformation() {
     }
 
     protected void initialize(boolean life, int eyeSize, int numPatterns, float eyeValue)  {
@@ -56,7 +58,7 @@ public abstract class AbstractEyeSubtype implements EyeInformation
     /**
      * @return the number of spaces in they eye (maybe be filled with some enemy stones).
      */
-    public byte getSize()    {
+    public byte getSize()  {
         return size;
     }
 
@@ -90,10 +92,10 @@ public abstract class AbstractEyeSubtype implements EyeInformation
     /**
      * We only need to consider the non-life property status.
      * @param eye
-     * @param nbrMap
+     * @param board
      * @return status of the eye shape.
      */
-    public EyeStatus determineStatus(GoEye eye, EyeNeighborMap nbrMap) {
+    public EyeStatus determineStatus(GoEye eye, GoBoard board) {
         return EyeStatus.NAKADE;
     }
 
@@ -116,21 +118,9 @@ public abstract class AbstractEyeSubtype implements EyeInformation
 
 
     /**
-     * When the eye type has the alive property, we can only be alive or alive in atari.
-     * @return either alive or alive in atari (rare)
-     *
-    protected EyeStatus handleSubtypeWithLifeProperty(GoEye eye, GoBoard board) {
-        List<GoBoardPosition> filledSpaces = findFilledSpaces(eye);
-        if (eye.size() - filledSpaces.size() == 1 && eye.getGroup().getLiberties(board).size() == 1) {
-            return EyeStatus.ALIVE_IN_ATARI;
-        }
-        return EyeStatus.ALIVE;
-    }   */
-
-    /**
      * I suppose, in very rare cases, there could be a same side stone among the enemy filled spaces in the eye.
      * @return the eye spaces that have enemy stones in them.
-     *
+     */
     protected List<GoBoardPosition> findFilledSpaces(GoEye eye) {
         List<GoBoardPosition> filledSpaces = new ArrayList<GoBoardPosition>(6);
         for (GoBoardPosition space : eye.getMembers()) {
@@ -140,7 +130,7 @@ public abstract class AbstractEyeSubtype implements EyeInformation
             }
         }
         return filledSpaces;
-    } */
+    }
 
 
     /**
@@ -160,7 +150,16 @@ public abstract class AbstractEyeSubtype implements EyeInformation
         return specialFilledSpaces;
     }
 
-    protected void handleSubtypeWithLifeProperty() {
-        assert false : "shape with life status handled in EyeStatusAnalyszer";
+
+    /**
+     * When the eye type has the alive property, we can only be alive or alive in atari.
+     * @return either alive or alive in atari (rare)
+     */
+    protected EyeStatus handleSubtypeWithLifeProperty(GoEye eye, GoBoard board) {
+        List<GoBoardPosition> filledSpaces = findFilledSpaces(eye);
+        if (eye.size() - filledSpaces.size() == 1 && eye.getGroup().getLiberties(board).size() == 1) {
+            return EyeStatus.ALIVE_IN_ATARI;
+        }
+        return EyeStatus.ALIVE;
     }
 }

@@ -1,7 +1,8 @@
 package com.becker.game.twoplayer.go.board.analysis.eye;
 
 /**
- *
+ * Scores for various sorts of prototypical eye types.
+ * 0 means dead. 1 means unconditionally alive.
  *
  * @author Barry Becker
  */

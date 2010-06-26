@@ -4,7 +4,7 @@ import com.becker.common.ClassLoaderSingleton;
 import com.becker.game.common.ui.GamePanel;
 
 /**
- * Immutable class representing metadata info about a game plugin.
+ * Immutable class representing information info about a game plugin.
  * There is a game plugin for each game that we support.
  * see plugins.xml
  *

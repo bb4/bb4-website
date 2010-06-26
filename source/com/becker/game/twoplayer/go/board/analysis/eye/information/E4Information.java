@@ -1,5 +1,6 @@
-package com.becker.game.twoplayer.go.board.analysis.eye.metadata;
+package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
+import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.GoEye;
 import com.becker.game.twoplayer.go.board.analysis.eye.EyeNeighborMap;
 import com.becker.game.twoplayer.go.board.analysis.eye.EyeStatus;
@@ -11,7 +12,7 @@ import static com.becker.game.twoplayer.go.board.analysis.eye.EyeShapeScores.*;
  *
  * @author Barry Becker
  */
-public class E4Subtype extends AbstractEyeSubtype
+public class E4Information extends AbstractEyeSubtypeInformation
 {
     /** Different sorts of eye with 4 spaces. */
     enum Eye4Type {E1122, E1113, E2222}
@@ -21,7 +22,7 @@ public class E4Subtype extends AbstractEyeSubtype
      * Constructor
      * @param subTypeDesc description of the type - something like "E1122".
      */
-    E4Subtype(String subTypeDesc) {
+    E4Information(String subTypeDesc) {
         e4Type = Eye4Type.valueOf(subTypeDesc);
         switch(e4Type) {
            case E1122 : initialize(false, 4, 3, PROBABLE_TWO_EYES, new float[] {2.03f, 2.03f});
@@ -37,7 +38,8 @@ public class E4Subtype extends AbstractEyeSubtype
      * @return eye status for E4 types.
      */
     @Override
-    public EyeStatus determineStatus(GoEye eye, EyeNeighborMap nbrMap) {
+    public EyeStatus determineStatus(GoEye eye, GoBoard board) {
+        EyeNeighborMap nbrMap = new EyeNeighborMap(eye);
         switch (e4Type) {
             case E1122 :
                 return handleVitalPointCases(nbrMap, eye, 2);

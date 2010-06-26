@@ -89,7 +89,6 @@ public abstract class GoSet implements GoMember
                 }
             }
         }
-
         return clone;
     }
 
@@ -97,7 +96,6 @@ public abstract class GoSet implements GoMember
      *  @return true if the piece is an enemy of the set owner
      */
     protected abstract boolean isEnemy(GoBoardPosition p);
-
 }
 
 

@@ -1,10 +1,9 @@
 package com.becker.game.twoplayer.go.board;
 
 import com.becker.game.common.GameContext;
-
 import com.becker.game.twoplayer.go.board.analysis.eye.*;
 import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
-import com.becker.game.twoplayer.go.board.analysis.eye.metadata.EyeInformation;
+import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeInformation;
 
 import java.util.*;
 
@@ -17,7 +16,7 @@ import java.util.*;
  *
  *  @author Barry Becker
  */
-public final class GoEye extends GoString implements GoMember
+public class GoEye extends GoString implements GoMember
 {
     /** A set of poisitions that are in the eye space. Need not be empty. */
     private Set<GoBoardPosition> members_;
@@ -28,6 +27,9 @@ public final class GoEye extends GoString implements GoMember
     /** In addition to the type, an eye can have a status like nakade, unsettled, or aliveInAtari. */
     private final EyeStatus status_;
 
+    private int numCornerPoints_;
+    private int numEdgePoints_;
+
     /**
      * constructor. Create a new eye shape containing the specified list of stones/spaces
      */
@@ -36,10 +38,12 @@ public final class GoEye extends GoString implements GoMember
         group_ = g;
         ownedByPlayer1_ = g.isOwnedByPlayer1();
 
-        EyeAnalyzer eyeAnalyzer = new EyeAnalyzer(this, board);
-        information_ = eyeAnalyzer.getEyeInformation();
-        status_ = eyeAnalyzer.getEyeStatus();
+        EyeTypeAnalyzer eyeAnalyzer = new EyeTypeAnalyzer(this, board);
+        information_ = eyeAnalyzer.determineEyeInformation();
+        status_ = information_.determineStatus(this, board);
+        initializePositionCounts(board);
     }
+
 
     public EyeInformation getInformation() {
         return information_;
@@ -54,10 +58,32 @@ public final class GoEye extends GoString implements GoMember
             return "unknown eye type";
         return information_.getTypeName();
     }
-    
+
+    public int getNumCornerPoints() {
+        return numCornerPoints_;
+    }
+
+    public int getNumEdgePoints() {
+        return numEdgePoints_;
+    }
+
+
     @Override
     protected void initializeMembers() {
         members_ = new HashSet<GoBoardPosition>();
+    }
+
+    private void initializePositionCounts(GoBoard board) {
+        numCornerPoints_ = 0;
+        numEdgePoints_ = 0;
+        for (GoBoardPosition pos : getMembers()) {
+            if (board.isCornerTriple(pos))  {
+               numCornerPoints_++;
+            }
+            if (board.isOnEdge(pos))  {
+               numEdgePoints_++;
+            }
+        }
     }
     
     /**
@@ -92,8 +118,10 @@ public final class GoEye extends GoString implements GoMember
     /**
      * Add a space to the eye string.
      * The space is either blank or a dead enemy stone.
+     * @deprecated not needed.
      */
-    @Override protected void addMemberInternal(GoBoardPosition space, GoBoard board) {
+    @Override
+    protected void addMemberInternal(GoBoardPosition space, GoBoard board) {
         if ( getMembers().contains( space ) ) {
             GameContext.log( 1, "Warning: the eye, " + this + ", already contains " + space );
             assert ( (space.getString() == null) || (this == space.getString())):

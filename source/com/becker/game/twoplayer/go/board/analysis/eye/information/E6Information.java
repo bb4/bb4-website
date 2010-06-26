@@ -1,6 +1,7 @@
-package com.becker.game.twoplayer.go.board.analysis.eye.metadata;
+package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
 import com.becker.common.Box;
+import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.GoEye;
 import com.becker.game.twoplayer.go.board.analysis.eye.EyeNeighborMap;
@@ -17,7 +18,7 @@ import static com.becker.game.twoplayer.go.board.analysis.eye.EyeShapeScores.*;
  *
  * @author Barry Becker
  */
-public class E6Subtype extends AbstractEyeSubtype
+public class E6Information extends AbstractEyeSubtypeInformation
 {
     /** Different sorts of eye with 6 spaces. */
     enum Subtype {E112222, E111223, E111133, E112233, E112233a, E112233b, E122223, E112224, E111124, E222233}
@@ -27,7 +28,7 @@ public class E6Subtype extends AbstractEyeSubtype
      * Constructor
      * @param subTypeDesc description of the type - something like "E112223".
      */
-    E6Subtype(String subTypeDesc) {
+    E6Information(String subTypeDesc) {
         type = Subtype.valueOf(subTypeDesc);
         switch(type) {
            case E112222 : initialize(true, 6, 13, GUARANTEED_TWO_EYES);
@@ -61,12 +62,13 @@ public class E6Subtype extends AbstractEyeSubtype
      * @return eye status for E6 types.
      */
     @Override
-    public EyeStatus determineStatus(GoEye eye, EyeNeighborMap nbrMap) {
+    public EyeStatus determineStatus(GoEye eye, GoBoard board) {
+        EyeNeighborMap nbrMap = new EyeNeighborMap(eye);
         switch (type) {
             case E112222 :
             case E111223 :
             case E111133 :
-                handleSubtypeWithLifeProperty();
+                handleSubtypeWithLifeProperty(eye, board);
             case E112233 :
                 Subtype E112233Subtype = determineE112233Subtype(nbrMap);
                 if (E112233Subtype == Subtype.E112233a) {

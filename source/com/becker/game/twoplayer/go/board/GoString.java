@@ -16,7 +16,7 @@ import java.util.*;
  *  @see GoBoard
  *  @author Barry Becker
  */
-public class GoString extends GoSet
+public class GoString extends GoSet implements IGoString
 {
     /** a set of the stones that are in the string */
     private Set<GoBoardPosition> members_;
@@ -44,24 +44,24 @@ public class GoString extends GoSet
     }
 
     /**
-     * constructor. Create a new string containing the specified list of stones
+     * Constructor.
+     * Create a new string containing the specified list of stones
      */
-    public GoString( List stones, GoBoard board )
+    public GoString( List<GoBoardPosition> stones, GoBoard board )
     {
         assert (stones != null && stones.size() > 0): "Tried to create list from empty list";
         GoStone stone =  (GoStone)((BoardPosition) stones.get( 0 )).getPiece();
         // GoEye constructor calls this method. For eyes the stone is null.
         if (stone != null)
             ownedByPlayer1_ = stone.isOwnedByPlayer1();
-        for (Object stone1 : stones) {
-            GoBoardPosition pos = (GoBoardPosition) stone1;
+        for (GoBoardPosition pos : stones) {
             addMemberInternal(pos, board);
         }
         initializeLiberties(board);
     }
     
     /**
-     * @return  the hashSet containing the members
+     * @return  the set of member positions
      */
     @Override
     public Set<GoBoardPosition> getMembers() {
@@ -110,7 +110,6 @@ public class GoString extends GoSet
         // if the stone is already owned by another string, we need to verify that that other string has given it up.
         if (stone.getString() != null) {
             stone.getString().remove(stone, board);
-            //: stone +" is already owned by another string: "+ stone.getString();
         }
 
         stone.setString( this );
@@ -156,12 +155,7 @@ public class GoString extends GoSet
      */
     public final void remove( GoBoardPosition stone, GoBoard board )
     {
-        boolean removed = getMembers().remove( stone );
-        assert (removed) : "failed to remove "+stone+" from"+ this;
-        stone.setString(null);
-        if ( getMembers().isEmpty()) {
-            group_.remove( this );
-        }
+        removeInternal(stone);
         initializeLiberties(board);
     }
 
@@ -170,16 +164,23 @@ public class GoString extends GoSet
      * Its an error if the argument is not a proper substring.
      * @param stones stones to remove (error if not a proper substring)
      */
-    public final void remove( Collection stones, GoBoard board )
+    public final void remove( Collection<GoBoardPosition> stones, GoBoard board )
     {
-        for (Object stone1 : stones) {
-            GoBoardPosition stone = (GoBoardPosition) stone1;
-            remove(stone, board);
+        for (GoBoardPosition stone : stones) {
+            removeInternal(stone);
         }
         initializeLiberties(board);
         assert ( size() > 0 );
     }
 
+    protected void removeInternal(GoBoardPosition stone ) {
+       boolean removed = getMembers().remove( stone );
+       assert (removed) : "failed to remove "+stone+" from"+ this;
+       stone.setString(null);
+       if ( getMembers().isEmpty()) {
+           group_.remove( this );
+       }
+    }
 
     public int getNumLiberties(GoBoard board) {
         return getLiberties(board).size();
@@ -256,7 +257,6 @@ public class GoString extends GoSet
         }
     }
 
-
     /**
      *  @return true if the piece at the specified position is an enemy of the string owner
      *  If the difference in health between the stones is great, then they are not really enemies
@@ -323,7 +323,7 @@ public class GoString extends GoSet
         this.unconditionallyAlive_ = unconditionallyAlive;
     }
     
-    ////////////////// debugging methods //////////////////////////////
+    ////////////////// debugging/consistency check methods //////////////////////////////
     /**
      * @return true if any of the stones in the string are blank (should never happen)
      */

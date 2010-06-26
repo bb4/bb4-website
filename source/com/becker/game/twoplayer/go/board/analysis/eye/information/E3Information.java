@@ -1,5 +1,6 @@
-package com.becker.game.twoplayer.go.board.analysis.eye.metadata;
+package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
+import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.GoEye;
 import com.becker.game.twoplayer.go.board.analysis.eye.EyeNeighborMap;
 import com.becker.game.twoplayer.go.board.analysis.eye.EyeStatus;
@@ -12,9 +13,9 @@ import static com.becker.game.twoplayer.go.board.analysis.eye.EyeShapeScores.BIG
  *
  * @author Barry Becker
  */
-public class E3Subtype extends AbstractEyeSubtype
+public class E3Information extends AbstractEyeSubtypeInformation
 {
-    public E3Subtype() {
+    public E3Information() {
         initialize(false, 3, 1, BIG_EYE, new float[] {2.02f} );
     }
 
@@ -23,8 +24,9 @@ public class E3Subtype extends AbstractEyeSubtype
      * @return eye status for E3 type.
      */
     @Override
-    public EyeStatus determineStatus(GoEye eye, EyeNeighborMap nbrMap) {
+    public EyeStatus determineStatus(GoEye eye, GoBoard board) {
 
+        EyeNeighborMap nbrMap = new EyeNeighborMap(eye);
         return handleVitalPointCases(nbrMap, eye, 1);
     }
 

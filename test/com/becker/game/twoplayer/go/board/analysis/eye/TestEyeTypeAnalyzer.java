@@ -1,23 +1,30 @@
 package com.becker.game.twoplayer.go.board.analysis.eye;
 
 import com.becker.game.twoplayer.go.GoTestCase;
+import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.GoEye;
 import com.becker.game.twoplayer.go.board.GoGroup;
-import com.becker.game.twoplayer.go.board.GoBoard;
-import junit.framework.*;
+import junit.framework.Assert;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 
 /**
+ * Test that we can get the correct type and status for all the different eyes that can arise.
+ * There are a lot.
+ * 
  * @author Barry Becker
  */
-public class TestEyeAnalyzer extends GoTestCase {
+public class TestEyeTypeAnalyzer extends GoTestCase {
 
     private static final String PATH_PREFIX = "board/eyes/";
 
     // simple eye tests
-    public void testEyes1() {             
+    public void testEyes1() {
         EyeCounts blackEyes = new EyeCounts(new OldEyeType[] {OldEyeType.E11, OldEyeType.E11});
         EyeCounts whiteEyes = new EyeCounts(new OldEyeType[] {OldEyeType.E0, });
         checkEyes("problem_eyes1", 2, blackEyes, whiteEyes);
@@ -421,7 +428,7 @@ public class TestEyeAnalyzer extends GoTestCase {
 
 
     public static Test suite() {
-        return new TestSuite(TestEyeAnalyzer.class);
+        return new TestSuite(TestEyeTypeAnalyzer.class);
     }
 
     private EyeCounts getEyeCounts(Set eyes)  {
