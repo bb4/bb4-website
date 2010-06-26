@@ -401,22 +401,46 @@ public final class GoBoard extends TwoPlayerBoard
         return stones;
     }
 
+
     /**
-     * clear all the eyes from all the stones on the board
+     * Corner triples are the 3 points closest to a corner
+     * @param position position to see if in corner of board.
+     * @return true if the specified BoardPosition is on the corder of the board
      */
-    private void clearEyes()
+    public boolean isCornerTriple(BoardPosition position)
     {
-        for ( int i = 1; i <= getNumRows(); i++ ) {
-            for ( int j = 1; j <= getNumCols(); j++ ) {
-                GoBoardPosition space = (GoBoardPosition)positions_[i][j];
-                if ( space.isInEye() )     {
-                    // remove reference to the owning group so it can be garbage collected.
-                    space.getEye().clear();
-                    space.setEye(null);
-                }
-            }
-        }
+        return (isULCornerTriple(position) || isURCornerTriple(position)
+             || isLLCornerTriple(position) || isLRCornerTriple(position));
     }
+
+    private boolean isULCornerTriple(BoardPosition position) {
+        return ((position.getRow()==1 && position.getCol()==1) ||
+                (position.getRow()==2 && position.getCol()==1) ||
+                (position.getRow()==1 && position.getCol()==2));
+    }
+
+    private boolean isURCornerTriple(BoardPosition position) {
+        int numCols = getNumCols();
+        return ((position.getRow()==1 && position.getCol()==numCols) ||
+                (position.getRow()==2 && position.getCol()==numCols) ||
+                (position.getRow()==1 && position.getCol()==numCols-1));
+    }
+
+    private boolean isLLCornerTriple(BoardPosition position) {
+        int numRows = getNumRows();
+        return ((position.getRow()==numRows && position.getCol()==1) ||
+                (position.getRow()==numRows && position.getCol()==2) ||
+                (position.getRow()==numRows-1 && position.getCol()==1));
+    }
+
+    private boolean isLRCornerTriple(BoardPosition position) {
+        int numCols = getNumCols();
+        int numRows = getNumRows();
+        return ((position.getRow()==numRows && position.getCol()==numCols) ||
+                (position.getRow()==numRows-1 && position.getCol()==numCols) ||
+                (position.getRow()==numRows && position.getCol()==numCols-1));
+    }
+
 
     /**
      * @return either the number of black or white stones.
@@ -436,6 +460,24 @@ public final class GoBoard extends TwoPlayerBoard
         }
         return numStones;
     }
+
+    /**
+     * clear all the eyes from all the stones on the board
+     */
+    private void clearEyes()
+    {
+        for ( int i = 1; i <= getNumRows(); i++ ) {
+            for ( int j = 1; j <= getNumCols(); j++ ) {
+                GoBoardPosition space = (GoBoardPosition)positions_[i][j];
+                if ( space.isInEye() )     {
+                    // remove reference to the owning group so it can be garbage collected.
+                    space.getEye().clear();
+                    space.setEye(null);
+                }
+            }
+        }
+    }
+
 
     @Override
     public String toString() {

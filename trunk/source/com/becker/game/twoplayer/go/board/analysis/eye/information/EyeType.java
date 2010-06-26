@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.go.board.analysis.eye.metadata;
+package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
 import com.becker.game.twoplayer.go.board.GoEye;
 
@@ -33,42 +33,42 @@ public enum EyeType
     /** False eye always have the potential to become no eyes */
     FalseEye(0) {
         @Override
-        public EyeInformation getMetaData(String name) { return new FalseEyeInformation(); }
+        public EyeInformation getInformation(String name) { return new FalseEyeInformation(); }
     },
 
     E1(1)  {
         @Override
-        public EyeInformation getMetaData(String name) { return new E1Subtype(); }
+        public EyeInformation getInformation(String name) { return new E1Information(); }
     },
     E2(2) {
         @Override
-        public EyeInformation getMetaData(String name) { return new E2Subtype(); }
+        public EyeInformation getInformation(String name) { return new E2Information(); }
     },
     E3(3) {
         @Override
-        public EyeInformation getMetaData(String name) { return new E3Subtype(); }
+        public EyeInformation getInformation(String name) { return new E3Information(); }
     },
     E4(4) {
         @Override
-        public EyeInformation getMetaData(String name) { return new E4Subtype(name); }
+        public EyeInformation getInformation(String name) { return new E4Information(name); }
     },
     E5(5) {
         @Override
-        public EyeInformation getMetaData(String name) { return new E5Subtype(name); }
+        public EyeInformation getInformation(String name) { return new E5Information(name); }
     },
     E6(6) {
         @Override
-        public EyeInformation getMetaData(String name) { return new E6Subtype(name); }
+        public EyeInformation getInformation(String name) { return new E6Information(name); }
     },
     E7(7) {
         @Override
-        public EyeInformation getMetaData(String name) { return new E7Subtype(name); }
+        public EyeInformation getInformation(String name) { return new E7Information(name); }
     },
 
     /** Usually 2 or more eyes, but may be none or one in some rare cases. */
     TerritorialEye(8) {
         @Override
-        public EyeInformation getMetaData(String name) { return new TerritorialEyeInformation(); }
+        public EyeInformation getInformation(String name) { return new TerritorialEyeInformation(); }
     };
 
     private byte size;
@@ -92,5 +92,5 @@ public enum EyeType
      *
      * @return true if the shape has the life property
      */
-    public abstract EyeInformation getMetaData(String name);
+    public abstract EyeInformation getInformation(String name);
 }

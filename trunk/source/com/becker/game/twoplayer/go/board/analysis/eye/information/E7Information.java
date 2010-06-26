@@ -1,6 +1,7 @@
-package com.becker.game.twoplayer.go.board.analysis.eye.metadata;
+package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
 import com.becker.common.Box;
+import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.GoEye;
 import com.becker.game.twoplayer.go.board.analysis.eye.EyeNeighborMap;
@@ -17,7 +18,7 @@ import static com.becker.game.twoplayer.go.board.analysis.eye.EyeShapeScores.*;
  *
  * @author Barry Becker
  */
-public class E7Subtype extends AbstractEyeSubtype
+public class E7Information extends AbstractEyeSubtypeInformation
 {
     /** Different sorts of eye with 7 spaces. */
     enum Subtype {E1122222, E1112223, E1122233, E1111233, E1222223, E1111224, E1112333,
@@ -28,7 +29,7 @@ public class E7Subtype extends AbstractEyeSubtype
      * Constructor
      * @param subTypeDesc description of the type - something like "E112223".
      */
-    E7Subtype(String subTypeDesc) {
+    E7Information(String subTypeDesc) {
         type = Subtype.valueOf(subTypeDesc);
         switch(type) {
            case E1122222 : initialize(true, 7, 30, GUARANTEED_TWO_EYES);
@@ -71,7 +72,8 @@ public class E7Subtype extends AbstractEyeSubtype
      * @return eye status for E6 types.
      */
     @Override
-    public EyeStatus determineStatus(GoEye eye, EyeNeighborMap nbrMap) {
+    public EyeStatus determineStatus(GoEye eye, GoBoard board) {
+        EyeNeighborMap nbrMap = new EyeNeighborMap(eye);
         switch (type) {
             case E1122222 :
             case E1112223 :
@@ -81,7 +83,7 @@ public class E7Subtype extends AbstractEyeSubtype
             case E1111224 :
             case E1112333 :
             case E1222333 :
-                handleSubtypeWithLifeProperty();
+                handleSubtypeWithLifeProperty(eye, board);
             case E1112234 :
                 Subtype E112233Subtype = determineE1112234Subtype(nbrMap);
                 if (E112233Subtype == Subtype.E1112234a) {

@@ -1,8 +1,7 @@
 package com.becker.game.twoplayer.go.board.analysis.eye;
 
-import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.GoEye;
+import com.becker.game.twoplayer.go.board.IGoString;
 
 import java.util.*;
 
@@ -13,21 +12,28 @@ import java.util.*;
  */
 public class EyeNeighborMap {
 
-    private GoEye eye_;
+    private IGoString eye_;
     private Map<GoBoardPosition, List<GoBoardPosition>> nbrMap_;
 
     /**
      * Constructor
+     * @param eye we take an IGoString because that is all we need, but typically you want to pass in a GoEye.
      */
-    public EyeNeighborMap(GoEye eye) {
+    public EyeNeighborMap(IGoString eye) {
         eye_ = eye;
         nbrMap_ = createMap();
     }
-    
+
+    /**
+     * @return list of eye neighbors for the specified eyeSpace position.
+     */
     public List<GoBoardPosition> getEyeNeighbors(GoBoardPosition eyeSpace) {
         return nbrMap_.get(eyeSpace);
     }
 
+    /**
+     * @return number of eye neighbors for the specified eyeSpace position.
+     */
     public int getNumEyeNeighbors(GoBoardPosition eyeSpace) {
         return getEyeNeighbors(eyeSpace).size();
     }
@@ -61,17 +67,48 @@ public class EyeNeighborMap {
     }
 
     /**
-     * @return eye status
+     * Do a breadth first search of all the positions in the eye, adding their nbr set to the map as we go.
+     * @return the new neighbor map
      */
     private Map<GoBoardPosition, List<GoBoardPosition>> createMap()
     {
         Map<GoBoardPosition, List<GoBoardPosition>> nbrMap = new HashMap<GoBoardPosition, List<GoBoardPosition>>();
 
+        List<GoBoardPosition> queue = new LinkedList<GoBoardPosition>();
         GoBoardPosition firstPos = eye_.getMembers().iterator().next();
-        for (GoBoardPosition space : getEyeNeighbors(firstPos))  {
-            nbrMap.put(space, getEyeNobiNeighbors(space));
+        firstPos.setVisited(true);
+        queue.add(firstPos);
+
+        int count = proecessSearchQueue(queue, nbrMap);
+
+        if (count != eye_.getMembers().size()) {
+            throw new IllegalArgumentException("The eye string must not have been nobi connected because " +
+                    "not all memebers were searched");
         }
+        eye_.unvisit();
         return nbrMap;
+    }
+
+    /**
+     * Do a breadth first search of all the positions in the eye, adding their nbr set to the map as we go.
+     * @return the number of element that were searched.
+     */
+    private int proecessSearchQueue(List<GoBoardPosition> queue, Map<GoBoardPosition, List<GoBoardPosition>> nbrMap) {
+        int count = 0;
+        while (!queue.isEmpty())
+        {
+            GoBoardPosition current = queue.remove(0);
+            List<GoBoardPosition> nbrs = getEyeNobiNeighbors(current);
+            nbrMap.put(current, nbrs);
+            count++;
+            for (GoBoardPosition space : nbrs)  {
+                if (!space.isVisited()) {
+                    space.setVisited(true);
+                    queue.add(space);
+                }
+            }
+        }
+        return count;
     }
 
     /**
@@ -88,5 +125,9 @@ public class EyeNeighborMap {
                 nbrs.add(eyeSpace);
         }
         return nbrs;
+    }
+
+    public String toString() {
+        return nbrMap_.toString();
     }
 }

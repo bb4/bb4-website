@@ -2,7 +2,7 @@ package com.becker.game.twoplayer.go.board.analysis.eye;
 
 import com.becker.game.common.BoardPosition;
 import com.becker.game.twoplayer.go.board.*;
-import com.becker.game.twoplayer.go.board.analysis.eye.metadata.*;
+import com.becker.game.twoplayer.go.board.analysis.eye.information.*;
 
 import java.util.Set;
 
@@ -11,13 +11,13 @@ import java.util.Set;
  * 
  * @author Barry Becker
  */
-class EyeTypeAnalyzer {
+public class EyeTypeAnalyzer {
 
     private GoEye eye_;
     private GoBoard board_;
 
     
-    EyeTypeAnalyzer(GoEye eye, GoBoard board) {
+    public EyeTypeAnalyzer(GoEye eye, GoBoard board) {
         eye_ = eye;
         board_ = board;
     }
@@ -26,7 +26,7 @@ class EyeTypeAnalyzer {
      * @return the eye type determined based on the properties and
      *     nbrs of the positions in the spaces list.
      */
-     EyeInformation determineEyeInformation()
+    public EyeInformation determineEyeInformation()
     {
         Set<GoBoardPosition> spaces = eye_.getMembers();
         assert (spaces != null): "spaces is null";
@@ -36,13 +36,13 @@ class EyeTypeAnalyzer {
             return new FalseEyeInformation();
         }
         if ( size == 1 ) {
-            return new E1Subtype();
+            return new E1Information();
         }
         if ( size == 2 ) {
-            return new E2Subtype();
+            return new E2Information();
         }
         if ( size == 3 ) {
-            return new E3Subtype();
+            return new E3Information();
         }  
         if ( size > 3 && size < 8 ) {
             BigEyeAnalyzer bigEyeAnalyzer = new BigEyeAnalyzer(eye_);
@@ -82,23 +82,10 @@ class EyeTypeAnalyzer {
         GoGroup ourGroup = eye_.getGroup();
         boolean groupP1 = ourGroup.isOwnedByPlayer1();
         Set nbrs = board_.getNobiNeighbors( space, groupP1, NeighborType.FRIEND );
-        int r = space.getRow();
-        int c = space.getCol();
 
         if ( nbrs.size() >= 2 ) {
 
-            int numOppDiag = 0;
-            // check the diagonals for > 2 of the opponents pieces.
-            // there are 2 cases: both opponent pieces on the same vert or horiz, or
-            // the opponents pieces are on the opposite diagonals
-            if (qualifiedOpponentDiagonal(-1,-1, r,c, groupP1))
-                numOppDiag++;
-            if (qualifiedOpponentDiagonal(-1, 1, r,c, groupP1))
-                numOppDiag++;
-            if (qualifiedOpponentDiagonal( 1,-1, r,c, groupP1))
-                numOppDiag++;
-            if (qualifiedOpponentDiagonal( 1, 1, r,c, groupP1))
-                numOppDiag++;
+            int numOppDiag = getNumOpponentDiagonals(space, groupP1);
 
             // now decide if false eye based on nbrs and proximity to edge.
             if ( numOppDiag >= 2  && (nbrs.size() >= 3))
@@ -108,6 +95,27 @@ class EyeTypeAnalyzer {
             }
         }
         return false;
+    }
+
+    /**
+     * @return  The number of diagonal points that are occupied by opponent stones (0, 1, or 2)
+     */
+    private int getNumOpponentDiagonals(GoBoardPosition space, boolean groupP1) {
+        int numOppDiag = 0;
+        int r = space.getRow();
+        int c = space.getCol();
+        // check the diagonals for > 2 of the opponents pieces.
+        // there are 2 cases: both opponent pieces on the same vert or horiz, or
+        // the opponents pieces are on the opposite diagonals
+        if (qualifiedOpponentDiagonal(-1,-1, r,c, groupP1))
+            numOppDiag++;
+        if (qualifiedOpponentDiagonal(-1, 1, r,c, groupP1))
+            numOppDiag++;
+        if (qualifiedOpponentDiagonal( 1,-1, r,c, groupP1))
+            numOppDiag++;
+        if (qualifiedOpponentDiagonal( 1, 1, r,c, groupP1))
+            numOppDiag++;
+        return numOppDiag;
     }
 
     /**

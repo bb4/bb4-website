@@ -1,7 +1,7 @@
-package com.becker.game.twoplayer.go.board.analysis.eye.metadata;
+package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
+import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.GoEye;
-import com.becker.game.twoplayer.go.board.analysis.eye.EyeNeighborMap;
 import com.becker.game.twoplayer.go.board.analysis.eye.EyeShapeScores;
 import com.becker.game.twoplayer.go.board.analysis.eye.EyeStatus;
 
@@ -20,7 +20,7 @@ public class FalseEyeInformation extends AbstractEyeInformation {
         return EyeShapeScores.FALSE_EYE;
     }
 
-    public EyeStatus determineStatus(GoEye eye, EyeNeighborMap nbrMap) {
+    public EyeStatus determineStatus(GoEye eye, GoBoard board) {
         return EyeStatus.UNSETTLED;
     }
 

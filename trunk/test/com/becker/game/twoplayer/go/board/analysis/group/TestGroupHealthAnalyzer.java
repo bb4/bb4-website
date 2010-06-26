@@ -6,7 +6,7 @@ import com.becker.game.twoplayer.go.GoTestCase;
 import java.util.Set;
 
 import com.becker.game.twoplayer.go.board.analysis.eye.OldEyeType;
-import com.becker.game.twoplayer.go.board.analysis.eye.metadata.EyeInformation;
+import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeInformation;
 import junit.framework.Assert;
 
 /**

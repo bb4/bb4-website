@@ -1,5 +1,6 @@
-package com.becker.game.twoplayer.go.board.analysis.eye.metadata;
+package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
+import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.GoEye;
 import com.becker.game.twoplayer.go.board.analysis.eye.EyeNeighborMap;
 import com.becker.game.twoplayer.go.board.analysis.eye.EyeStatus;
@@ -12,7 +13,7 @@ import static com.becker.game.twoplayer.go.board.analysis.eye.EyeShapeScores.*;
  *
  * @author Barry Becker
  */
-public class E5Subtype extends AbstractEyeSubtype
+public class E5Information extends AbstractEyeSubtypeInformation
 {
     /** Different sorts of eye with 5 spaces. */
     enum Eye5Type {E11222, E11123, E11114,  E12223}
@@ -22,7 +23,7 @@ public class E5Subtype extends AbstractEyeSubtype
      * Constructor
      * @param subTypeDesc description of the type - something like "E11223".
      */
-    E5Subtype(String subTypeDesc) {
+    E5Information(String subTypeDesc) {
         e5Type = Eye5Type.valueOf(subTypeDesc);
         switch(e5Type) {
            case E11222 : initialize(true, 5, 3, GUARANTEED_TWO_EYES);
@@ -40,10 +41,11 @@ public class E5Subtype extends AbstractEyeSubtype
      * @return eye status for E5 types.
      */
     @Override
-    public EyeStatus determineStatus(GoEye eye, EyeNeighborMap nbrMap) {
+    public EyeStatus determineStatus(GoEye eye, GoBoard board) {
+        EyeNeighborMap nbrMap = new EyeNeighborMap(eye);
         switch (e5Type) {
             case E11222 :
-                handleSubtypeWithLifeProperty();
+                handleSubtypeWithLifeProperty(eye, board);
             case E11123 :
                 return handleVitalPointCases(nbrMap, eye, 2);
             case E11114 :

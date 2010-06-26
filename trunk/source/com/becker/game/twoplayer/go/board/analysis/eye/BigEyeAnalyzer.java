@@ -2,8 +2,8 @@ package com.becker.game.twoplayer.go.board.analysis.eye;
 
 import com.becker.game.twoplayer.go.board.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.GoEye;
-import com.becker.game.twoplayer.go.board.analysis.eye.metadata.EyeType;
-import com.becker.game.twoplayer.go.board.analysis.eye.metadata.EyeInformation;
+import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeType;
+import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeInformation;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -57,16 +57,16 @@ class BigEyeAnalyzer {
         }
         Collections.sort(counts);
 
-        return getEyeType(counts);
+        return getEyeInformation(counts);
     }
 
-    private EyeInformation getEyeType(List<Integer> counts) {
+    private EyeInformation getEyeInformation(List<Integer> counts) {
         StringBuilder bldr = new StringBuilder("E");
         for (int num : counts) {
             bldr.append(num);
         }
         EyeType type = EyeType.valueOf("E" + counts.size());
-        return type.getMetaData(bldr.toString());
+        return type.getInformation(bldr.toString());
     }
 
     /**

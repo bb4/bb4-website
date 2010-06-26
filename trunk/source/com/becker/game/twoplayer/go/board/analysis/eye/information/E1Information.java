@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.go.board.analysis.eye.metadata;
+package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
 import static com.becker.game.twoplayer.go.board.analysis.eye.EyeShapeScores.*;
 
@@ -7,9 +7,9 @@ import static com.becker.game.twoplayer.go.board.analysis.eye.EyeShapeScores.*;
  *
  * @author Barry Becker
  */
-public class E1Subtype extends AbstractEyeSubtype
+public class E1Information extends AbstractEyeSubtypeInformation
 {
-    public E1Subtype() {
+    public E1Information() {
         initialize(false, 1, 1, SINGLE_EYE);
     }
 

@@ -22,7 +22,7 @@ public abstract class PostChangeUpdater {
 
 
     /**
-     * Update the board metadata data after a change has been made (like an add or a remove of a stone)
+     * Update the board information data after a change has been made (like an add or a remove of a stone)
      * @param board board that changed.
      * @param captures captures added or removed during the change
      */

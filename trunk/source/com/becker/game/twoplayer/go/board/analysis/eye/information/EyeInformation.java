@@ -1,7 +1,7 @@
-package com.becker.game.twoplayer.go.board.analysis.eye.metadata;
+package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
+import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.GoEye;
-import com.becker.game.twoplayer.go.board.analysis.eye.EyeNeighborMap;
 import com.becker.game.twoplayer.go.board.analysis.eye.EyeStatus;
 
 /**
@@ -54,12 +54,20 @@ public interface EyeInformation
     float[] getEndPoints();
 
     /**
-     * 
-     * @param eye
-     * @param nbrMap
-     * @return
+     * @return eye status
      */
-    EyeStatus determineStatus(GoEye eye, EyeNeighborMap nbrMap);
+    EyeStatus determineStatus(GoEye eye, GoBoard board);
+
+    /**
+     * The 3 points closed to a corner are considered a corner point triple
+     * @return true if three of the eye points are one of the corner point triples.
+     */
+    boolean isInCorner(GoEye eye);
+
+    /**
+     * @return true if at least three points line on the edge (corner triples are considered on edge too).
+     */
+    boolean isOnEdge(GoEye eye);
 
     /**
      * @return Name of the eye type

@@ -93,7 +93,7 @@ public class GroupEyeCache {
      */
     public float calcNumEyes() {
         float numEyes = 0;
-        for (GoEye eye : eyes_  ) {
+        for (GoEye eye : eyes_) {
             numEyes += eye.getInformation().getEyeValue();
         }
         return numEyes;
