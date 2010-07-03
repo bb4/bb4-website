@@ -20,7 +20,6 @@ public class TestAll extends TestCase {
         suite.addTest(TestAllBoard.suite());
         suite.addTestSuite(TestShape.class);
         suite.addTestSuite(TestScoring.class);
-        suite.addTestSuite(TestGoString.class);
         ////suite.addTestSuite(TestLifeAndDeath.class);
 
         // these 2 can take really long.

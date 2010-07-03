@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.go.board;
+package com.becker.game.twoplayer.go.board.analysis.neighbor;
 
 /**
  * Enum for the different possible Neighbor types.
@@ -8,7 +8,6 @@ package com.becker.game.twoplayer.go.board;
  */
 public enum NeighborType
 {
-
     /** Has a stone in the space */
     OCCUPIED,
             
@@ -26,6 +25,5 @@ public enum NeighborType
     
     /** any kind of nbr. */
     ANY
-
 }
 
