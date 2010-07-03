@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.go.board.analysis.eye;
 import com.becker.game.common.BoardPosition;
 import com.becker.game.twoplayer.go.board.*;
 import com.becker.game.twoplayer.go.board.analysis.eye.information.*;
+import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 
 import java.util.Set;
 
@@ -15,11 +16,13 @@ public class EyeTypeAnalyzer {
 
     private GoEye eye_;
     private GoBoard board_;
+    private NeighborAnalyzer nbrAnalyzer_;
 
     
     public EyeTypeAnalyzer(GoEye eye, GoBoard board) {
         eye_ = eye;
         board_ = board;
+        nbrAnalyzer_ = new NeighborAnalyzer(board);
     }
       
     /**
@@ -81,7 +84,7 @@ public class EyeTypeAnalyzer {
     {
         GoGroup ourGroup = eye_.getGroup();
         boolean groupP1 = ourGroup.isOwnedByPlayer1();
-        Set nbrs = board_.getNobiNeighbors( space, groupP1, NeighborType.FRIEND );
+        Set nbrs = nbrAnalyzer_.getNobiNeighbors( space, groupP1, NeighborType.FRIEND );
 
         if ( nbrs.size() >= 2 ) {
 

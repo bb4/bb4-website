@@ -1,11 +1,15 @@
 package com.becker.game.twoplayer.go.board.analysis;
 
+import com.becker.common.Box;
 import com.becker.game.common.GamePiece;
 import com.becker.game.twoplayer.go.GoProfiler;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.GoGroup;
 import com.becker.game.twoplayer.go.board.NeighborType;
+import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
+import com.becker.game.twoplayer.go.board.analysis.neighbor.NobiNeighborAnalyzer;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -30,12 +34,15 @@ public class TerritoryAnalyzer {
      */
     private static float EMPTY_REGION_EDGE_THRESH = 0.24f;
 
+    private NeighborAnalyzer nbrAnalyzer_;
+
     /**
      * Constructor
      * @param board board to analyze
      */
     public TerritoryAnalyzer(GoBoard board)  {
         board_ = board;
+        nbrAnalyzer_ = new NeighborAnalyzer(board);
     }
     
     public float getTerritoryDelta() {
@@ -165,7 +172,7 @@ public class TerritoryAnalyzer {
      */
     private float updateEmptyRegions(boolean isEndOfGame) {
         float diffScore = 0;
-        //only do this when the midgame starts, since early on there is always only one connected empty region.
+        //only do this when the mid-game starts, since early on there is always only one connected empty region.
         int edgeOffset = 1;
 
         if (board_.getNumMoves() <= 2 * board_.getNumRows()) {
@@ -180,7 +187,7 @@ public class TerritoryAnalyzer {
         int rMax = board_.getNumRows() - edgeOffset;
         int cMax = board_.getNumCols() - edgeOffset;
 
-        List<List> emptyLists = new LinkedList<List>();
+        List<List<GoBoardPosition>> emptyLists = new LinkedList<List<GoBoardPosition>>();
         NeighborAnalyzer na = new NeighborAnalyzer(board_);
         for ( int i = min; i <= rMax; i++ )  {
            for ( int j = min; j <= cMax; j++ ) {
@@ -192,11 +199,11 @@ public class TerritoryAnalyzer {
                        // don't go all the way to the borders (until the end of the game),
                        // since otherwise we will likely get only one big empty region.
                        List<GoBoardPosition> empties =
-                               board_.findStringFromInitialPosition(pos, false, false, NeighborType.UNOCCUPIED,
-                                                                    min, rMax,  min, cMax);
+                               nbrAnalyzer_.findStringFromInitialPosition(pos, false, false, NeighborType.UNOCCUPIED,
+                                                                          new Box(min, min, rMax, cMax));
                        emptyLists.add(empties);
                        
-                       Set<GoBoardPosition> nbrs = na.findOccupiedNeighbors(empties);
+                       Set<GoBoardPosition> nbrs = na.findOccupiedNobiNeighbors(empties);
                        float avg = calcAverageScore(nbrs);
 
                        float score = avg * (float)nbrs.size() / Math.max(1, Math.max(nbrs.size(), empties.size()));

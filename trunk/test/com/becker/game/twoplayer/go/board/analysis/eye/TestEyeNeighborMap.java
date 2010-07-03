@@ -15,9 +15,14 @@ public class TestEyeNeighborMap extends GoTestCase {
 
     private EyeNeighborMap nbrMap;
 
-    private static final Location[] RABBITY_SIX =  new Location[] {
+    private static final Location[] RABBITY_SIX = new Location[] {
             new Location(4, 2), new Location(3, 2), new Location(2, 3),
             new Location(3, 3), new Location(4, 3), new Location(3, 4)
+    };
+
+    private static final Location[] BLOCK_OF_SIX = new Location[] {
+            new Location(13, 6), new Location(12, 5), new Location(12, 4),
+            new Location(13, 4), new Location(13, 5), new Location(12, 6)
     };
 
     public void testSingleEyeSpace() {
@@ -65,7 +70,7 @@ public class TestEyeNeighborMap extends GoTestCase {
     }
 
 
-    public void testComplexEye() {
+    public void testRabbittySixEye() {
 
         List<GoBoardPosition> spaces = createPositionList(RABBITY_SIX);
         IGoString eye = new StubGoEye(spaces);
@@ -77,7 +82,7 @@ public class TestEyeNeighborMap extends GoTestCase {
     }
 
 
-    public void testComplexEye1() {
+    public void testRabbittySixSpecialPoints() {
 
         List<GoBoardPosition> spaces = createPositionList(RABBITY_SIX);
         IGoString eye = new StubGoEye(spaces);
@@ -92,6 +97,17 @@ public class TestEyeNeighborMap extends GoTestCase {
         assertTrue(nbrMap.isSpecialPoint(spaces.get(3), specialPoints));
 
         verifyNumEyeNbrs( new int[]{2, 2, 1, 4, 2, 1}, spaces);
+    }
+
+    public void testBockOfSixEye() {
+
+        List<GoBoardPosition> spaces = createPositionList(BLOCK_OF_SIX);
+        IGoString eye = new StubGoEye(spaces);
+        nbrMap = new EyeNeighborMap(eye);
+
+        assertEquals("unexpected size", 6, nbrMap.keySet().size());
+
+        verifyNumEyeNbrs( new int[]{2, 3, 2, 2, 3, 2}, spaces);
     }
 
 

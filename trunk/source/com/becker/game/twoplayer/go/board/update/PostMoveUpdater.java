@@ -51,7 +51,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
     {
         GoProfiler.getInstance().start(GoProfiler.FIND_CAPTURES);
         assert ( stone!=null );
-        Set nbrs = board_.getNobiNeighbors( stone, NeighborType.ENEMY );
+        Set nbrs = nbrAnalyzer_.getNobiNeighbors( stone, NeighborType.ENEMY );
         CaptureList captureList = null;
         Iterator it = nbrs.iterator();
         // keep track of the strings captured so we don't capture the same one twice
@@ -62,7 +62,8 @@ public class PostMoveUpdater extends PostChangeUpdater {
             assert (enbr.isOccupied()): "enbr=" + enbr;
 
             GoString str = enbr.getString();
-            assert ( str.isOwnedByPlayer1() != stone.getPiece().isOwnedByPlayer1()): "The "+str+" is not an enemy of "+stone;
+            assert ( str.isOwnedByPlayer1() != stone.getPiece().isOwnedByPlayer1()):
+                    "The "+str+" is not an enemy of "+stone;
             if ( str.getNumLiberties(board_) == 0 && str.size() > 0 && !capturedStrings.contains(str) ) {
                 capturedStrings.add( str );
                 // we need to add copies so that when the original stones on the board are
@@ -88,7 +89,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
         GoProfiler profiler = GoProfiler.getInstance();
         profiler.startUpdateStringsAfterMove();
 
-        Set<GoBoardPosition> nbrs = board_.getNobiNeighbors( stone, NeighborType.FRIEND );
+        Set<GoBoardPosition> nbrs = nbrAnalyzer_.getNobiNeighbors( stone, NeighborType.FRIEND );
 
         if ( nbrs.size() == 0 ) {
             // there are no strongly connected neighbors, create a new string
@@ -203,14 +204,15 @@ public class PostMoveUpdater extends PostChangeUpdater {
                 group.remove(capString);
 
             }
-            GoBoardPosition stoneOnBoard = (GoBoardPosition) board_.getPosition(capStone.getRow(), capStone.getCol());
+            GoBoardPosition stoneOnBoard =
+                    (GoBoardPosition) board_.getPosition(capStone.getRow(), capStone.getCol());
             stoneOnBoard.clear(board_);
             // ?? restore disconnected groups?
         }
     }
 
     /**
-     * Remove all the groups on the board.
+     * First remove all the groups on the board.
      * Then for each stone, find its group and add that new group to the board's group list.
      * Continue until all stone accounted for.
      */
@@ -220,7 +222,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
         profiler.startUpdateGroupsAfterMove();
 
         if (GameContext.getDebugMode() > 1) {
-            BoardValidationUtil.confirmAllStonesInUniqueGroups(board_.getGroups());
+            validator_.confirmAllStonesInUniqueGroups(board_.getGroups());
         }
 
         recreateGroupsAfterMove();
@@ -234,7 +236,8 @@ public class PostMoveUpdater extends PostChangeUpdater {
         // this gets used when calculating the worth of the board
         board_.updateTerritory(false);
 
-        consistencyCheck(pos);
+        if ( GameContext.getDebugMode() > 1 )
+            validator_.consistencyCheck(pos);
 
         profiler.stopUpdateGroupsAfterMove();
     }
@@ -251,29 +254,11 @@ public class PostMoveUpdater extends PostChangeUpdater {
            for ( int j = 1; j <= board_.getNumCols(); j++ ) {
                GoBoardPosition seed = (GoBoardPosition)board_.getPosition(i, j);
                if (seed.isOccupied() && !seed.isVisited()) {
-                   List<GoBoardPosition> newGroup = board_.findGroupFromInitialPosition(seed, false);
+                   List<GoBoardPosition> newGroup = nbrAnalyzer_.findGroupFromInitialPosition(seed, false);
                    GoGroup g = new GoGroup(newGroup);
                    board_.getGroups().add(g);
                }
            }
-        }
-    }
-
-    /**
-     * Confirm no empty strings, stones in valid groups, all stones in unique groups, and all stones in groups claimed.
-     * @param pos position to check
-     */
-    private void consistencyCheck(GoBoardPosition pos) {
-        if ( GameContext.getDebugMode() > 1 ) {
-            BoardValidationUtil.confirmNoEmptyStrings(board_.getGroups());
-            BoardValidationUtil.confirmStonesInValidGroups(board_);
-            BoardValidationUtil.confirmAllStonesInUniqueGroups(board_.getGroups());
-            try {
-                BoardValidationUtil.confirmAllStonesInGroupsClaimed(board_.getGroups(), board_);
-            } catch (AssertionError e) {
-                GameContext.log(1, "The move was :"+pos);
-                throw e;
-            }
         }
     }
 
@@ -311,7 +296,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
             seedStone = finalStone;
         }
         assert seedStone.isOccupied();
-        List<GoBoardPosition> bigGroup = board_.findGroupFromInitialPosition( seedStone );
+        List<GoBoardPosition> bigGroup = nbrAnalyzer_.findGroupFromInitialPosition( seedStone );
         assert ( bigGroup.size() > 0 );
 
         removeGroupsForListOfStones(bigGroup);

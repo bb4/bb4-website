@@ -1,9 +1,8 @@
 package com.becker.game.twoplayer.go.board.analysis;
 
 import com.becker.game.twoplayer.go.GoTestCase;
-import com.becker.game.twoplayer.go.board.analysis.eye.TestEyeAnalyzer;
-import com.becker.game.twoplayer.go.board.analysis.group.TestGroupHealthAnalyzer;
-import com.becker.game.twoplayer.go.board.analysis.group.TestLifeAnalyzer;
+import com.becker.game.twoplayer.go.board.analysis.eye.TestAllEye;
+import com.becker.game.twoplayer.go.board.analysis.group.TestAllGroup;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -21,16 +20,13 @@ public class TestAllAnalysis extends GoTestCase {
 
         TestSuite suite =  new TestSuite("Analysis Tests");
 
-        suite.addTestSuite(TestLifeAnalyzer.class);
+        suite.addTest(TestAllGroup.suite());
+        suite.addTest(TestAllEye.suite());
+
         suite.addTestSuite(TestShapeAnalyzer.class);
         suite.addTestSuite(TestCandidateMoveAnalyzer.class);
         suite.addTestSuite(TestNeighborAnalyzer.class);
         
-        suite.addTestSuite(TestEyeAnalyzer.class);
-        //suite.addTestSuite(TestGroupeEyeSpaceAnalyzer.class);
-        suite.addTestSuite(TestGroupHealthAnalyzer.class);
-        //suite.addTestSuite(TestTerritoryAnalyzer.class);
-
         return suite;
     }
 

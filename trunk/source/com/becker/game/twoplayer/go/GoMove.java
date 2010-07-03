@@ -7,6 +7,7 @@ import com.becker.game.twoplayer.go.board.GoString;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 
 import java.util.*;
 
@@ -71,7 +72,8 @@ public final class GoMove extends TwoPlayerMove
     {
         GoBoardPosition stone = (GoBoardPosition) board.getPosition( getToRow(), getToCol() );
 
-        Set <GoBoardPosition>nobiNbrs = board.getNobiNeighbors(stone, false, NeighborType.ANY);
+        NeighborAnalyzer na = new NeighborAnalyzer(board);
+        Set <GoBoardPosition>nobiNbrs = na.getNobiNeighbors(stone, false, NeighborType.ANY);
         Set<GoBoardPosition> occupiedNbrs = new HashSet<GoBoardPosition>();
         for (GoBoardPosition pos : nobiNbrs) {
             if (pos.isOccupied()) {
@@ -114,7 +116,8 @@ public final class GoMove extends TwoPlayerMove
             return 0; // a pass cannot cause an atari
 
         GoBoardPosition pos = (GoBoardPosition)board.getPosition( getToRow(), getToCol() );
-        Set<GoBoardPosition> enemyNbrs = board.getNobiNeighbors( pos, NeighborType.ENEMY );
+        NeighborAnalyzer na = new NeighborAnalyzer(board);
+        Set<GoBoardPosition> enemyNbrs = na.getNobiNeighbors( pos, NeighborType.ENEMY );
         Iterator it = enemyNbrs.iterator();
         int numInAtari = 0;
         Set<GoString> stringSet = new HashSet<GoString>();

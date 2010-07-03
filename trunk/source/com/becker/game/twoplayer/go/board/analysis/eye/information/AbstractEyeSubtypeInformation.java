@@ -7,6 +7,7 @@ import com.becker.game.twoplayer.go.board.analysis.eye.EyeNeighborMap;
 import com.becker.game.twoplayer.go.board.analysis.eye.EyeStatus;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -63,6 +64,7 @@ public abstract class AbstractEyeSubtypeInformation extends AbstractEyeInformati
     }
 
 
+    @Override
     public boolean hasLifeProperty() {
         return life;
     }
@@ -81,10 +83,12 @@ public abstract class AbstractEyeSubtypeInformation extends AbstractEyeInformati
         return eyeValue;
     }
 
+    @Override
     public float[] getVitalPoints() {
         return vitalPoints;
     }
 
+    @Override
     public float[] getEndPoints() {
         return endPoints;
     }
@@ -161,5 +165,41 @@ public abstract class AbstractEyeSubtypeInformation extends AbstractEyeInformati
             return EyeStatus.ALIVE_IN_ATARI;
         }
         return EyeStatus.ALIVE;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AbstractEyeSubtypeInformation that = (AbstractEyeSubtypeInformation) o;
+
+        if (!getTypeName().equals(that.getTypeName())) return false;
+        if (Float.compare(that.eyeValue, eyeValue) != 0) return false;
+        if (life != that.life) return false;
+        if (numPatterns != that.numPatterns) return false;
+        if (size != that.size) return false;
+        if (!Arrays.equals(endPoints, that.endPoints)) return false;
+        return Arrays.equals(vitalPoints, that.vitalPoints);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (life ? 1 : 0);
+        result = 31 * result + (int) size;
+        result = 31 * result + (int) numPatterns;
+        result = (31 * result) + (eyeValue != +0.0f ? Float.floatToIntBits(eyeValue) : 0);
+        result = 31 * result + (vitalPoints != null ? Arrays.hashCode(vitalPoints) : 0);
+        result = 31 * result + (endPoints != null ? Arrays.hashCode(endPoints) : 0);
+        result = 31 * result + getTypeName().hashCode();
+        return result;
+    }
+    
+    public String toString() {
+        StringBuilder bldr = new StringBuilder();
+        bldr.append(this.getTypeName());
+        bldr.append(" lifeProp=").append(life);
+        bldr.append(" size=").append(size);
+        return bldr.toString();
     }
 }

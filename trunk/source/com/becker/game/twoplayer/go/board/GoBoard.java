@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.go.board;
 
 import com.becker.common.Box;
-import com.becker.game.twoplayer.go.board.analysis.NeighborAnalyzer;
+import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 import com.becker.game.twoplayer.go.*;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.*;
@@ -23,10 +23,7 @@ import java.util.*;
  */
 public final class GoBoard extends TwoPlayerBoard
 {
-    /**
-     * This is a set of active groups. Groups are composed of strings.
-     * need to synchronize this to avoid concurrent modification error during search.
-     */
+    /** This is a set of active groups. Groups are composed of strings. */
     private volatile Set<GoGroup> groups_;
 
     private HandicapStones handicap_;
@@ -34,6 +31,7 @@ public final class GoBoard extends TwoPlayerBoard
     private BoardUpdater boardUpdater_;
 
     private TerritoryAnalyzer territoryAnalyzer_;
+
 
     /**
      *  Constructor.
@@ -254,8 +252,7 @@ public final class GoBoard extends TwoPlayerBoard
      * @see TerritoryAnalyzer#getTerritoryEstimate
      * @return estimate of size of territory for specified player.
      */
-    public int getTerritoryEstimate( boolean forPlayer1, boolean isEndOfGame)
-    {
+    public int getTerritoryEstimate( boolean forPlayer1, boolean isEndOfGame) {
         return territoryAnalyzer_.getTerritoryEstimate(forPlayer1, isEndOfGame);
     }
 
@@ -268,179 +265,13 @@ public final class GoBoard extends TwoPlayerBoard
     }
 
     /**
-     * determine a set of stones that are tightly connected to the specified stone.
-     * This set of stones constitutes a string, but since stones cannot belong to more than
-     * one string we must return a List.
-     * @param stone he stone from which to begin searching for the string
-     * @param returnToUnvisitedState if true then the stomes will all be marked unvisited when done searching
-     * @return fund string.
-     */
-    public List<GoBoardPosition> findStringFromInitialPosition( GoBoardPosition stone, boolean returnToUnvisitedState )
-    {
-        return findStringFromInitialPosition(
-                stone, stone.getPiece().isOwnedByPlayer1(), returnToUnvisitedState, NeighborType.OCCUPIED,
-                1, numRows_, 1, numCols_ );
-    }
-
-    public List<GoBoardPosition> findStringFromInitialPosition( GoBoardPosition stone,  boolean friendOwnedByP1,
-                                                     boolean returnToUnvisitedState, NeighborType type,
-                                                     Box box) {
-         return findStringFromInitialPosition(
-                stone, friendOwnedByP1, returnToUnvisitedState, type,
-                box.getMinRow(), box.getMaxRow(), box.getMinCol(), box.getMaxCol() );
-    }
-
-    /**
-     * Determines a string connected from a seed stone within a specified bounding area.
-     * @return string from seed stone
-     */
-    public List<GoBoardPosition> findStringFromInitialPosition( GoBoardPosition stone,  boolean friendOwnedByP1,
-                                                     boolean returnToUnvisitedState, NeighborType type,
-                                                     int rMin, int rMax, int cMin, int cMax )
-    {
-        getProfiler().start(GoProfiler.FIND_STRINGS);
-        NeighborAnalyzer na = new NeighborAnalyzer(this);
-        List<GoBoardPosition> stones =
-                na.findStringFromInitialPosition(stone, friendOwnedByP1, returnToUnvisitedState,
-                                                 type, rMin, rMax, cMin, cMax);
-        getProfiler().stop(GoProfiler.FIND_STRINGS);
-
-        return stones;
-    }
-
-    /**
-     * get neighboring stones of the specified stone.
-     * @param stone the stone (or space) whose neighbors we are to find (it must contain a piece).
-     * @param neighborType (EYE, NOT_FRIEND etc)
-     * @return a set of stones that are immediate (nobi) neighbors.
-     */
-    public Set<GoBoardPosition> getNobiNeighbors( GoBoardPosition stone, NeighborType neighborType )
-    {
-       return getNobiNeighbors( stone, stone.getPiece().isOwnedByPlayer1(), neighborType);
-    }
-
-    /**
-     * get neighboring stones of the specified stone.
-     * @param stone the stone (or space) whose neighbors we are to find.
-     * @param friendOwnedByP1 need to specify this in the case that the stone is a blank space and has undefined ownership.
-     * @param neighborType (EYE, NOT_FRIEND etc)
-     * @return a set of stones that are immediate (nobi) neighbors.
-     */
-    public Set<GoBoardPosition> getNobiNeighbors( GoBoardPosition stone, boolean friendOwnedByP1, NeighborType neighborType )
-    {
-        NeighborAnalyzer na = new NeighborAnalyzer(this);
-        return na.getNobiNeighbors(stone, friendOwnedByP1, neighborType);
-    }
-
-    /**
-     * return a set of stones which are loosely connected to this stone.
-     * Check the 16 purely group neighbors and 4 string neighbors
-     *         ***
-     *        **S**
-     *        *SXS*
-     *        **S**
-     *         ***
-     * @param stone (not necessarily occupied)
-     * @param friendPlayer1 typically stone.isOwnedByPlayer1 value of stone unless it is blank.
-     * @param samePlayerOnly if true then find group nbrs that are have same ownership as friendPlayer1
-     * @return group neighbors
-     */
-    public Set<GoBoardPosition> getGroupNeighbors( GoBoardPosition stone, boolean friendPlayer1, boolean samePlayerOnly )
-    {
-        getProfiler().start(GoProfiler.GET_GROUP_NBRS);
-
-        NeighborAnalyzer na = new NeighborAnalyzer(this);
-        Set<GoBoardPosition> nbrStones = na.getGroupNeighbors(stone, friendPlayer1, samePlayerOnly);
-
-        getProfiler().stop(GoProfiler.GET_GROUP_NBRS);
-        return nbrStones;
-    }
-
-    /**
-     * This version assumes that the stone is occupied.
-     * @return the list of stones in the group that was found.
-     */
-    public Set<GoBoardPosition> getGroupNeighbors( GoBoardPosition position, boolean samePlayerOnly )
-    {
-        assert (position != null);
-        assert (position.getPiece() != null);
-        return getGroupNeighbors( position, position.getPiece().isOwnedByPlayer1(), samePlayerOnly );
-    }
-
-    /**
-     * determine a set of stones that are loosely connected to the specified stone.
-     * This set of stones constitutes a group, but since stones cannot belong to more than
-     * one group (or string) we must return a List.
-     *
-     * @param stone the stone to search from for group neighbors.
-     * @return the list of stones in the group that was found.
-     */
-    public List<GoBoardPosition> findGroupFromInitialPosition( GoBoardPosition stone )
-    {
-        return findGroupFromInitialPosition( stone, true );
-    }
-
-    /**
-     * determine a set of stones that have group connections to the specified stone.
-     * This set of stones constitutes a group, but since stones cannot belong to more than
-     * one group (or string) we must return a List.
-     * Group connections include nobi, ikken tobi, and kogeima.
-     *
-     * @param stone the stone to search from for group neighbors.
-     * @param returnToUnvisitedState if true, then mark everything unvisited when done.
-     * @return the list of stones in the group that was found.
-     */
-    public List<GoBoardPosition> findGroupFromInitialPosition( GoBoardPosition stone, boolean returnToUnvisitedState )
-    {
-        getProfiler().start(GoProfiler.FIND_GROUPS);
-
-        NeighborAnalyzer na = new NeighborAnalyzer(this);
-        List<GoBoardPosition> stones = na.findGroupFromInitialPosition(stone, returnToUnvisitedState);
-
-        getProfiler().stop(GoProfiler.FIND_GROUPS);
-        return stones;
-    }
-
-
-    /**
      * Corner triples are the 3 points closest to a corner
      * @param position position to see if in corner of board.
      * @return true if the specified BoardPosition is on the corder of the board
      */
-    public boolean isCornerTriple(BoardPosition position)
-    {
-        return (isULCornerTriple(position) || isURCornerTriple(position)
-             || isLLCornerTriple(position) || isLRCornerTriple(position));
+    public boolean isCornerTriple(BoardPosition position) {
+        return new CornerChecker(getNumRows(), getNumCols()).isCornerTriple(position);
     }
-
-    private boolean isULCornerTriple(BoardPosition position) {
-        return ((position.getRow()==1 && position.getCol()==1) ||
-                (position.getRow()==2 && position.getCol()==1) ||
-                (position.getRow()==1 && position.getCol()==2));
-    }
-
-    private boolean isURCornerTriple(BoardPosition position) {
-        int numCols = getNumCols();
-        return ((position.getRow()==1 && position.getCol()==numCols) ||
-                (position.getRow()==2 && position.getCol()==numCols) ||
-                (position.getRow()==1 && position.getCol()==numCols-1));
-    }
-
-    private boolean isLLCornerTriple(BoardPosition position) {
-        int numRows = getNumRows();
-        return ((position.getRow()==numRows && position.getCol()==1) ||
-                (position.getRow()==numRows && position.getCol()==2) ||
-                (position.getRow()==numRows-1 && position.getCol()==1));
-    }
-
-    private boolean isLRCornerTriple(BoardPosition position) {
-        int numCols = getNumCols();
-        int numRows = getNumRows();
-        return ((position.getRow()==numRows && position.getCol()==numCols) ||
-                (position.getRow()==numRows-1 && position.getCol()==numCols) ||
-                (position.getRow()==numRows && position.getCol()==numCols-1));
-    }
-
 
     /**
      * @return either the number of black or white stones.
@@ -477,7 +308,6 @@ public final class GoBoard extends TwoPlayerBoard
             }
         }
     }
-
 
     @Override
     public String toString() {
