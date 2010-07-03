@@ -1,10 +1,6 @@
-package com.becker.game.twoplayer.go;
+package com.becker.game.twoplayer.go.board;
 
-import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.GoStone;
-import com.becker.game.twoplayer.go.board.GoString;
-import com.becker.game.twoplayer.go.board.analysis.StringShapeAnalyzer;
+import com.becker.game.twoplayer.go.GoTestCase;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

@@ -6,6 +6,7 @@ import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.GoMove;
 import com.becker.game.twoplayer.go.GoProfiler;
 import com.becker.game.twoplayer.go.board.*;
+import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborType;
 
 import java.util.*;
 

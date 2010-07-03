@@ -6,9 +6,8 @@ import com.becker.game.twoplayer.go.GoProfiler;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.GoGroup;
-import com.becker.game.twoplayer.go.board.NeighborType;
+import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborType;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
-import com.becker.game.twoplayer.go.board.analysis.neighbor.NobiNeighborAnalyzer;
 
 import java.util.LinkedList;
 import java.util.List;

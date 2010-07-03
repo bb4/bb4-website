@@ -5,6 +5,7 @@ import com.becker.game.twoplayer.go.board.*;
 import com.becker.common.Box;
 import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
+import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborType;
 
 import java.util.*;
 

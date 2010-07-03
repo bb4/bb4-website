@@ -3,7 +3,6 @@ package com.becker.game.twoplayer.go.board.analysis.neighbor;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.GoStone;
-import com.becker.game.twoplayer.go.board.NeighborType;
 
 import java.util.HashSet;
 import java.util.List;

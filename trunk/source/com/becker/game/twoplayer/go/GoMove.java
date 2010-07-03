@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.go;
 
-import com.becker.game.twoplayer.go.board.NeighborType;
+import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborType;
 import com.becker.game.twoplayer.go.board.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.GoStone;
 import com.becker.game.twoplayer.go.board.GoString;

@@ -20,7 +20,6 @@ public class BoardValidator {
         board_ = board;
     }
 
-
     /**
      * Confirm no empty strings, stones in valid groups, all stones in unique groups, and all stones in groups claimed.
      * @param pos position to check

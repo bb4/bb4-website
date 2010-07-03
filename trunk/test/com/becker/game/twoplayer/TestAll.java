@@ -18,8 +18,8 @@ public class TestAll extends TestCase {
 
         TestSuite suite =  new TestSuite("All TwoP layer Game Tests");
 
-        suite.addTest(com.becker.game.twoplayer.blockade.TestAll.suite());
         suite.addTest(com.becker.game.twoplayer.common.search.TestAll.suite());
+        suite.addTest(com.becker.game.twoplayer.blockade.TestAll.suite());
         suite.addTest(com.becker.game.twoplayer.go.TestAll.suite());
         suite.addTest(com.becker.game.twoplayer.pente.TestAll.suite());
         suite.addTest(com.becker.game.twoplayer.tictactoe.TestAll.suite());
