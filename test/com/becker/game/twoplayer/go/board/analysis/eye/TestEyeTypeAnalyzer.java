@@ -19,7 +19,7 @@ import java.util.Set;
  */
 public abstract class TestEyeTypeAnalyzer extends GoTestCase {
 
-    protected static final String PATH_PREFIX = "board/eye/";
+    protected static final String PATH_PREFIX = "board/analysis/eye/";
 
     private enum GroupType {BIGGEST, SURROUNDED};
 
