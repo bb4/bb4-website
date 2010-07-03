@@ -135,7 +135,8 @@ public class BoardValidator {
     }
 
 
-    /**
+    
+/**
      * for every stone one the board verify that it belongs to exactly one group
     */
     public void confirmAllStonesInUniqueGroups(Set<GoGroup> groups)
