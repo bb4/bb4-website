@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.go.board.analysis;
+package com.becker.game.twoplayer.go.board.analysis.neighbor;
 
 import com.becker.game.twoplayer.go.board.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.GoBoard;
@@ -14,7 +14,10 @@ import java.util.*;
  */
 public class TestNeighborAnalyzer extends GoTestCase {
 
-    private static final String PREFIX = "board/neighbor/";
+    private static final String PREFIX = "board/analysis/neighbor/";
+
+    /** instance under test */
+    private NeighborAnalyzer nbrAnalyzer_;
 
     // test group neighbor detection
     public void testGetGroupNbrs1() {
@@ -73,9 +76,10 @@ public class TestNeighborAnalyzer extends GoTestCase {
         restore(PREFIX +file);
 
         GoBoard board = (GoBoard)controller_.getBoard();
+        nbrAnalyzer_ = new NeighborAnalyzer(board);
         GoBoardPosition pos = (GoBoardPosition)board.getPosition(row, col);
-        int numSameNbrs = board.getGroupNeighbors(pos, true).size();
-        int numNbrs = board.getGroupNeighbors(pos, false).size();
+        int numSameNbrs = nbrAnalyzer_.getGroupNeighbors(pos, true).size();
+        int numNbrs = nbrAnalyzer_.getGroupNeighbors(pos, false).size();
 
         Assert.assertTrue("numSameNbrs="+numSameNbrs+" expected "+ expectedNumSameNbrs, numSameNbrs == expectedNumSameNbrs);
         Assert.assertTrue("numNbrs="+numNbrs+" expected "+ expectedNumNbrs, numNbrs == expectedNumNbrs);
@@ -98,8 +102,8 @@ public class TestNeighborAnalyzer extends GoTestCase {
 
     private void verifyOccupiedNbrs(GoBoard board, List empties, int expectedNumNbrs) {
       
-        NeighborAnalyzer na = new NeighborAnalyzer(board);
-        int numNbrs = na.findOccupiedNeighbors(empties).size();
+        nbrAnalyzer_ = new NeighborAnalyzer(board);
+        int numNbrs = nbrAnalyzer_.findOccupiedNobiNeighbors(empties).size();
 
         Assert.assertTrue("numNbrs="+numNbrs+" expected "+ expectedNumNbrs, numNbrs == expectedNumNbrs);
     }

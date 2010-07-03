@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.go.board.analysis;
 import com.becker.game.twoplayer.go.GoTestCase;
 import com.becker.game.twoplayer.go.board.analysis.eye.TestAllEye;
 import com.becker.game.twoplayer.go.board.analysis.group.TestAllGroup;
+import com.becker.game.twoplayer.go.board.analysis.neighbor.TestNeighborAnalyzer;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

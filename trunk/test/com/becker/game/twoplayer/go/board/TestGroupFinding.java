@@ -4,6 +4,7 @@ import com.becker.common.Location;
 import com.becker.game.common.BoardPosition;
 import com.becker.game.twoplayer.go.GoMove;
 import com.becker.game.twoplayer.go.GoTestCase;
+import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 import junit.framework.Assert;
 
 import java.util.List;
@@ -15,13 +16,13 @@ import java.util.Set;
  */
 public class TestGroupFinding extends GoTestCase {
 
-    private static final String PREFIX = "board/";
+    private static final String PREFIX = "board/analysis/eye/";
 
 
     // ----------- check that we can find group neighbors -------
 
     public void testFindKoGroupNeighbors() {
-        GoBoard b = initializeBoard("eye/false_ko_eye1");
+        GoBoard b = initializeBoard("false_ko_eye1");
 
         // white group neighbors
         verifyGroupNeighbors(b, new Location(4, 5), 3);
@@ -38,7 +39,7 @@ public class TestGroupFinding extends GoTestCase {
     }
 
     public void testFindKoGroupNeighbors2() {
-        GoBoard b = initializeBoard("eye/false_ko_eye2");
+        GoBoard b = initializeBoard("false_ko_eye2");
 
         // white group neighbors
         verifyGroupNeighbors(b, new Location(13, 7), 4);   // 6
@@ -58,7 +59,7 @@ public class TestGroupFinding extends GoTestCase {
      * The position we give to look from does not contain a stone.
      */
     public void testFindNoGroup() {
-        GoBoard b = initializeBoard("eye/false_ko_eye1");
+        GoBoard b = initializeBoard("false_ko_eye1");
         try {
             verifyGroup(b, new Location(2, 3), 6);
             fail();
@@ -68,17 +69,16 @@ public class TestGroupFinding extends GoTestCase {
     }
 
     public void testFindFalseEyeGroup1() {
-        GoBoard b = initializeBoard("eye/false_ko_eye1");
+        GoBoard b = initializeBoard("false_ko_eye1");
         verifyGroup(b, new Location(5, 5), 10);
         verifyGroup(b, new Location(6, 8), 11);
     }
 
     public void testFindFalseEyeGroup2() {
-        GoBoard b = initializeBoard("eye/false_ko_eye2");
+        GoBoard b = initializeBoard("false_ko_eye2");
         verifyGroup(b, new Location(8, 8), 18);
         verifyGroup(b, new Location(13, 10), 18);
     }
-
     
 
     private GoBoard initializeBoard(String file) {
@@ -87,15 +87,17 @@ public class TestGroupFinding extends GoTestCase {
     }
 
     private void verifyGroupNeighbors(GoBoard board, Location loc, int expectedNumNeighbors)  {
+        NeighborAnalyzer na = new NeighborAnalyzer(board);
         GoBoardPosition position = (GoBoardPosition)board.getPosition(loc);
-        Set<GoBoardPosition> group = board.getGroupNeighbors(position, true);
+        Set<GoBoardPosition> group = na.getGroupNeighbors(position, true);
         assertEquals("Unexpected number of group neighbors for : "+ position +" \n" + group + "\n",
                 expectedNumNeighbors, group.size());
     }
 
     private void verifyGroup(GoBoard board, Location loc, int expectedNumStonesInGroup)  {
+        NeighborAnalyzer na = new NeighborAnalyzer(board);
         GoBoardPosition position = (GoBoardPosition)board.getPosition(loc);
-        List<GoBoardPosition> group = board.findGroupFromInitialPosition(position);
+        List<GoBoardPosition> group = na.findGroupFromInitialPosition(position);
         assertEquals("Unexpected number of stones in group: \n" + group + "\n",
                 expectedNumStonesInGroup, group.size());
     }

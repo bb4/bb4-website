@@ -15,7 +15,7 @@ import junit.framework.Assert;
  */
 public class TestGroupHealthAnalyzer extends GoTestCase {
 
-    private static final String PREFIX = "board/grouphealth/";
+    private static final String PREFIX = "board/analysis/grouphealth/";
 
     // test absolute health calculation, and the number of liberties for the main black and white groups.
     // testAbsHealth1* test configurations with 1 stone in each group.

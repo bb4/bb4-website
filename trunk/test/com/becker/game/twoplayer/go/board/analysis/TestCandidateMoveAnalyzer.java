@@ -17,30 +17,25 @@ public class TestCandidateMoveAnalyzer extends GoTestCase {
     /** we can just reuse one of the other file sets */
     private static final String PREFIX = "scoring/";
 
-    /**   */
+
     public void testCandidateMoves1() {
-        verifyCandidateMoves("problem_score1", 71, null);
+        verifyCandidateMoves("problem_score1", 114, null);
     }
 
     /** XXXX sometimes passes sometimes fails. odd. */
     public void testCandidateMoves2() {
-        verifyCandidateMoves("problem_score2", 74, null);   // or 79?
+        verifyCandidateMoves("problem_score2", 103, null);   // or 79?
     }
     
     public void testCandidateMoves3() {
         List<Location> expCandidates = new ArrayList<Location>(10);
-        //expCandidates.add(new Location(1, 1));
-        //expCandidates.add(new Location(1, 4));
-        //expCandidates.add(new Location(2, 1));
         expCandidates.add(new Location(2, 5));
         expCandidates.add(new Location(4, 1));
         expCandidates.add(new Location(4, 3));
-        //expCandidates.add(new Location(4, 5));
         expCandidates.add(new Location(5, 1));
-        //expCandidates.add(new Location(5, 2));
-        //expCandidates.add(new Location(5, 5));
 
-        verifyCandidateMoves("problem_score55a", 6, expCandidates);
+
+        verifyCandidateMoves("problem_score55a", 4, expCandidates);
     }
 
     /** XXXX sometimes passes sometimes fails. odd  */
@@ -75,10 +70,12 @@ public class TestCandidateMoveAnalyzer extends GoTestCase {
         int actNumCandidates = cma.getNumCandidates();
         Assert.assertEquals("Unexpected number of candidate moves for case  "+ file, expNumCandidates, actNumCandidates);
 
-        if (expCandidates != null) {
+        if (expCandidates != null) { 
+            System.out.println("actual candidates="+ actNumCandidates);
             for (Location loc : expCandidates) {
                 Assert.assertTrue("Invalid candidate position:" + loc, cma.isCandidateMove(loc.getRow(), loc.getCol()));
             }
+
         }
     }
 
