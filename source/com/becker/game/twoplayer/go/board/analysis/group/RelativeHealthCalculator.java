@@ -4,6 +4,7 @@ import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.GoProfiler;
 import com.becker.game.twoplayer.go.board.*;
 import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
+import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -38,12 +39,7 @@ public class RelativeHealthCalculator {
      */
     public float calculateRelativeHealth(GoBoard board,float absoluteHealth )
     {
-        float relativeHealth = boostRelativeHealthBasedOnWeakNbr(board, absoluteHealth);
-
-        if (GameContext.getDebugMode() > 1)
-                BoardValidationUtil.confirmAllUnvisited(board);
-
-        return relativeHealth;
+        return boostRelativeHealthBasedOnWeakNbr(board, absoluteHealth);
     }
 
     /**
@@ -127,10 +123,11 @@ public class RelativeHealthCalculator {
     private Set getEnemyGroupNeighbors(GoBoard board, Set<GoBoardPosition> groupStones)
     {
         Set<GoGroup> enemyNbrs = new HashSet<GoGroup>();
-
+        NeighborAnalyzer nbrAnalyzer =  new NeighborAnalyzer(board);
+        
         // for every stone in the group.
         for (GoBoardPosition stone : groupStones) {
-            Set nbrs = board.getGroupNeighbors(stone, false);
+            Set nbrs = nbrAnalyzer.getGroupNeighbors(stone, false);
 
             // if the stone has any enemy nbrs then mark it visited.
             // later we will count how many got visited.

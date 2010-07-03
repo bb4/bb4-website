@@ -6,6 +6,7 @@ import static com.becker.game.twoplayer.go.GoControllerConstants.*;   // jdk 1.5
 import com.becker.common.ColorMap;
 import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GameContext;
+import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 
 import java.awt.*;
 import java.awt.geom.Area;
@@ -65,13 +66,14 @@ final class GoGroupRenderer
         q.add( firstStone.copy() );
         qset.add( firstStone );
         Area area = new Area();
+        NeighborAnalyzer nbrAnalyzer = new NeighborAnalyzer(board);
 
         while ( !q.isEmpty() ) {
             GoBoardPosition stone = (GoBoardPosition) q.remove( 0 );
             qset.remove( stone );
             stone.setVisited( true );
             visitedSet.add(stone);
-            Set<GoBoardPosition> nbrs = board.getGroupNeighbors( stone, true );
+            Set<GoBoardPosition> nbrs = nbrAnalyzer.getGroupNeighbors( stone, true );
             for (GoBoardPosition nbrStone : nbrs) {
                 // accumulate all the borders to arrive at the final group border
                 area.add( new Area( getBorderBetween( stone, nbrStone, cellSize, margin ) ) );
@@ -83,8 +85,9 @@ final class GoGroupRenderer
         }
         // mark all the stones in the group unvisited again.
         GoBoardUtil.unvisitPositions( visitedSet );
-        if (GameContext.getDebugMode() > 1)
-                BoardValidationUtil.confirmAllUnvisited(board);
+        if (GameContext.getDebugMode() > 1) {
+            new BoardValidator(board).confirmAllUnvisited();
+        }
         return area;
     }
 
@@ -321,7 +324,6 @@ final class GoGroupRenderer
 
     /**
      * draw debugging information about the group like its border and eyeshapes.
-     * @see GoGroupRenderer
      */
     public static void drawGroupDecoration(GoGroup group, ColorMap colormap, float cellSize,
                                            int margin, GoBoard board, Graphics2D g2)

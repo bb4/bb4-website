@@ -5,13 +5,14 @@ import com.becker.game.common.BoardPosition;
 
 /**
  * Creates a set of reasonable next moves for a given player.
- *
+ * In theory, all empties should be considered, but in practice, we keep
+ * a shorter list of reasonable moves lest things get intractable.
  * @author Barry Becker
  */
 public class CandidateMoveAnalyzer {
 
-    /** don't check for candidates at the very edge unless thre are neighboring stones. */
-    private static final int CANDIDATE_MOVE_OFFSET = 1;
+    /** Distance from already played stones that we will splat a footprint of cancdidate stones to add. */
+    private static final int CANDIDATE_MOVE_OFFSET = 2;
 
     private final GoBoard board_;
 
@@ -31,8 +32,7 @@ public class CandidateMoveAnalyzer {
     }
 
     /**
-     * In theory, all empties should be considered, but in practice, we keep
-     * a shorter list of reasonable moves lest things get intractable.
+     * If there is any chance at all that this could be a reasonable move, true is returned.
      *
      * @return true if this position is a reasonable next move.
      */
@@ -58,21 +58,20 @@ public class CandidateMoveAnalyzer {
 
     /**
      * we start with a default list of good starting moves, and
-     * add to it all moves within 2 spaces of those that are played.
+     * add to it all moves within 2 spaces of those that have already been played.
+     *
+     * Fill a 2 stone wide strip on the 3rd and 4rth lines of the board.
+     * This includes the star points and many others as candidates to consider
      */
     private void initiallize()
     {
-        int i,j;
-
-        // this will fill a 2 stone wide strip on the 3rd and 4rth lines of the board.
-        // this includes the star points and many others as candidates to consider
-        for ( i = 3; i <= size_ - 2; i++ ) {
+        for (int i = 3; i <= size_ - 2; i++ ) {
              tryToAddCandidateMove(board_.getPosition(i, 3));
              tryToAddCandidateMove(board_.getPosition(i, 4));
              tryToAddCandidateMove(board_.getPosition(i, size_ - 2));
              tryToAddCandidateMove(board_.getPosition(i, size_ - 3));
         }
-        for ( j = 5; j <= size_ - 4; j++ ) {
+        for (int j = 5; j <= size_ - 4; j++ ) {
             tryToAddCandidateMove(board_.getPosition(3, j));
             tryToAddCandidateMove(board_.getPosition(4, j));
             tryToAddCandidateMove(board_.getPosition(size_ - 2, j));
@@ -102,7 +101,7 @@ public class CandidateMoveAnalyzer {
     }
 
     /**
-     * this method splats a footprint of trues around the specified move.
+     * This method splats a footprint of trues around the specified move.
      * @param stone
      */
     private void addCandidateMoves( GoBoardPosition stone )

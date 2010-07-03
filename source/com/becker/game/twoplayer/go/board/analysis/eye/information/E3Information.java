@@ -19,7 +19,6 @@ public class E3Information extends AbstractEyeSubtypeInformation
         initialize(false, 3, 1, BIG_EYE, new float[] {2.02f} );
     }
 
-
     /**
      * @return eye status for E3 type.
      */

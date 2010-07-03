@@ -17,7 +17,7 @@ import java.util.*;
  *  @see GoBoard
  *  @author Barry Becker
  */
-public final class GoGroup extends GoSet
+public final class GoGroup extends GoSet implements IGoGroup
 {
     /** a set of same color strings that are in the group. */
     private Set<GoString> members_;
@@ -29,7 +29,7 @@ public final class GoGroup extends GoSet
      * constructor. Create a new group containing the specified string.
      * @param string make the group from this string.
      */
-    public GoGroup( GoString string )
+    public GoGroup(GoString string)
     {
         commonInit();
         ownedByPlayer1_ = string.isOwnedByPlayer1();
@@ -183,6 +183,7 @@ public final class GoGroup extends GoSet
     public float getAbsoluteHealth() {
         return groupAnalyzer_.getAbsoluteHealth();
     }
+    
     public float getRelativeHealth() {
         return groupAnalyzer_.getRelativeHealth();
     }

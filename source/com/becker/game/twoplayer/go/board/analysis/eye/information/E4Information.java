@@ -51,6 +51,7 @@ public class E4Information extends AbstractEyeSubtypeInformation
         return EyeStatus.NAKADE; // never reached
     }
 
+
     public String getTypeName() {
         return e4Type.toString();
     }

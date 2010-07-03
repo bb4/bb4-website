@@ -47,6 +47,11 @@ public enum EyeStatus
             " block, and capturing the opponent stones inside the eye grants an alive status."),
 
     /**
+     * For exmaple if may be a false eye with only one space in the eye - in other words a ko.
+     */
+    KO("Ko", "Will never be an eye no matter who plays first."),
+
+    /**
      * This can aries when there is a ko on the edge or corner.
      */
     UNSETTLED_KO("Unsettled ko", "Unsettled ko status can only happen on the edge or in the corner."),

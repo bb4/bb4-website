@@ -73,7 +73,9 @@ public class EyeNeighborMap {
     private Map<GoBoardPosition, List<GoBoardPosition>> createMap()
     {
         Map<GoBoardPosition, List<GoBoardPosition>> nbrMap = new HashMap<GoBoardPosition, List<GoBoardPosition>>();
-
+        // we should probably be able to assume that the eye spaces are unvisted, but apparently not. assert instead?
+        eye_.unvisit();
+        
         List<GoBoardPosition> queue = new LinkedList<GoBoardPosition>();
         GoBoardPosition firstPos = eye_.getMembers().iterator().next();
         firstPos.setVisited(true);
@@ -83,7 +85,7 @@ public class EyeNeighborMap {
 
         if (count != eye_.getMembers().size()) {
             throw new IllegalArgumentException("The eye string must not have been nobi connected because " +
-                    "not all memebers were searched");
+                    "not all memebers were searched. " + eye_);
         }
         eye_.unvisit();
         return nbrMap;

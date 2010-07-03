@@ -21,7 +21,13 @@ public class FalseEyeInformation extends AbstractEyeInformation {
     }
 
     public EyeStatus determineStatus(GoEye eye, GoBoard board) {
-        return EyeStatus.UNSETTLED;
+        if (eye.getMembers().size() > 5)  {
+            return EyeStatus.NAKADE;
+        }
+        if (eye.getMembers().size() > 2)  {
+            return EyeStatus.UNSETTLED;
+        }
+        else return EyeStatus.KO;
     }
 
     public String getTypeName() {

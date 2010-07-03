@@ -22,6 +22,7 @@ public class TestAllBoard extends GoTestCase {
 
         suite.addTest(TestAllAnalysis.suite());
         suite.addTestSuite(TestGoBoard.class);
+        suite.addTestSuite(TestGroupFinding.class);
 
         return suite;
     }

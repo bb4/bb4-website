@@ -2,428 +2,143 @@ package com.becker.game.twoplayer.go.board.analysis.eye;
 
 import com.becker.game.twoplayer.go.GoTestCase;
 import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.GoEye;
 import com.becker.game.twoplayer.go.board.GoGroup;
+import com.becker.game.twoplayer.go.board.analysis.eye.information.*;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
-
 
 /**
  * Test that we can get the correct type and status for all the different eyes that can arise.
- * There are a lot.
  * 
  * @author Barry Becker
  */
-public class TestEyeTypeAnalyzer extends GoTestCase {
+public abstract class TestEyeTypeAnalyzer extends GoTestCase {
 
-    private static final String PATH_PREFIX = "board/eyes/";
+    protected static final String PATH_PREFIX = "board/eye/";
 
-    // simple eye tests
-    public void testEyes1() {
-        EyeCounts blackEyes = new EyeCounts(new OldEyeType[] {OldEyeType.E11, OldEyeType.E11});
-        EyeCounts whiteEyes = new EyeCounts(new OldEyeType[] {OldEyeType.E0, });
-        checkEyes("problem_eyes1", 2, blackEyes, whiteEyes);
+    private enum GroupType {BIGGEST, SURROUNDED};
+
+    protected GoBoard initializeBoard(String eyesProblemFile) {
+        return initializeBoard(eyesProblemFile, 2);
     }
 
-    public void testEyes2() {
-
-        // used to be:    false, true, big, territory
-        //                  0,     2,    0,      0);
-
-        EyeCounts blackEyes = new EyeCounts(new OldEyeType[] {OldEyeType.E0, OldEyeType.E11});
-        EyeCounts whiteEyes = new EyeCounts(new OldEyeType[] {OldEyeType.E0, OldEyeType.E112});
-        checkEyes("problem_eyes2", 2, blackEyes, whiteEyes);
+    protected String getPathPrefix() {
+        return PATH_PREFIX;
     }
 
-    public void testFalseEye1() {
-        EyeCounts blackEyes = new EyeCounts(new OldEyeType[] {OldEyeType.FalseEye, OldEyeType.E0});
-        EyeCounts whiteEyes = new EyeCounts(new OldEyeType[] {OldEyeType.E0});
-        checkEyes("problem_eyes3", 2, blackEyes, whiteEyes);
-    }
-
-    public void testCornerLife4() {
-        EyeCounts blackEyes = new EyeCounts(new OldEyeType[] {OldEyeType.E0, OldEyeType.E11});
-        EyeCounts whiteEyes = new  EyeCounts(new OldEyeType[] {});
-        checkEyes("problem_eyes4", 2, blackEyes, whiteEyes);
-    }
-
-     public void testCornerLife4a() {
-        EyeCounts blackEyes = new EyeCounts(new OldEyeType[] {OldEyeType.E0, OldEyeType.E11});
-        EyeCounts whiteEyes = new EyeCounts(new OldEyeType[] {});
-        checkEyes("problem_eyes4a", 5,  blackEyes, whiteEyes);
-    }
-
-     public void testEyes5() {
-        EyeCounts blackEyes = new EyeCounts(new OldEyeType[] {OldEyeType.E222233, OldEyeType.E0});
-        EyeCounts whiteEyes = new EyeCounts(new OldEyeType[] {});
-        checkEyes("problem_eyes5", 2, blackEyes, whiteEyes);
-    }
-
-    public void testFalsesOnEdge() {
-        EyeCounts blackEyes = new EyeCounts(new OldEyeType[] {});
-        EyeCounts whiteEyes = new EyeCounts(new OldEyeType[] {OldEyeType.FalseEye, OldEyeType.FalseEye, OldEyeType.FalseEye});
-        checkEyes("problem_falseeyes_on_edge", 2, blackEyes, whiteEyes);
-    }
-
-    public void testStoneInEye1() {
-        EyeCounts blackEyes = new EyeCounts(new OldEyeType[] {OldEyeType.E11, }); //new EyeCounts(0, 1, 0, 0);
-        EyeCounts whiteEyes = new EyeCounts(new OldEyeType[] {OldEyeType.E0}); //new EyeCounts(0, 1, 0, 0);
-        checkEyes("problem_stone_in_eye1", 3, blackEyes, whiteEyes);
-    }
-    /*
-    public void testStoneInEye2() {
-        EyeCounts blackEyes = new EyeCounts(0, 1, 0, 1);
-        EyeCounts whiteEyes = new EyeCounts(0, 0, 0, 0);
-        checkEyes("problem_stone_in_eye2", 3, blackEyes, whiteEyes);
-    }
-
-    public void testStoneInEye3() {
-          EyeCounts blackEyes = new EyeCounts(0, 1, 0, 0);
-          EyeCounts whiteEyes = new EyeCounts(0, 0, 0, 0);
-          checkEyes("problem_stone_in_eye3", 3,  blackEyes, whiteEyes);
-    }
-
-    public void testStoneInEye4() {
-          EyeCounts blackEyes = new EyeCounts(0, 1, 0, 1);
-          EyeCounts whiteEyes = new EyeCounts(0, 0, 0, 0);
-          checkEyes("problem_stone_in_eye4", 3, blackEyes, whiteEyes);
-   }
-      */
-
-    ////////////////// test the different big eye shapes /////////////////
     /**
-     * ***
-     *
-    public void testBigEye1() {
-        EyeCounts blackEyes = new EyeCounts(0, 0, 1, 0);
-        EyeCounts whiteEyes = new EyeCounts(0, 0, 0, 0);
-        checkEyes("problem_bigeye1", 2, blackEyes, whiteEyes);
-    }   */
-
-    /**
-     *   *
-     *   **
-     *
-    public void testBigEye2() {
-        EyeCounts blackEyes = new EyeCounts(0, 0, 1, 0);
-        EyeCounts whiteEyes = new EyeCounts(0, 1, 0, 0);
-        checkEyes("problem_bigeye2", 2, blackEyes, whiteEyes);
-    }   */
-
-    /**
-     *  **
-     *  **
-     *
-    public void testBigEye3() {
-        EyeCounts blackEyes = new EyeCounts(0, 0, 1, 0);
-        EyeCounts whiteEyes = new EyeCounts(0, 1, 0, 0);
-        checkEyes("problem_bigeye3", 2, blackEyes, whiteEyes);
-    }   */
-
-    /**
-     *   ***
-     *    **
-     *
-    public void testBigEye4() {
-        EyeCounts blackEyes = new EyeCounts(0, 0, 1, 0);
-        EyeCounts whiteEyes = new EyeCounts(0, 1, 0, 0);
-        checkEyes("problem_bigeye4", 2, blackEyes, whiteEyes);
-    }   */
-
-    /**
-     *   *
-     *  ***
-     *   **
-     *
-    public void testBigEye5() {
-        EyeCounts blackEyes = new EyeCounts(0, 0, 1, 0);
-        EyeCounts whiteEyes = new EyeCounts(0, 1, 0, 0);
-        checkEyes("problem_bigeye5", 2, blackEyes, whiteEyes);
-    }     */
-
-    /**
-     *  **
-     *  ***
-     *   **
-     *
-    public void testBigEye6() {
-        EyeCounts blackEyes = new EyeCounts(0, 0, 1, 0);
-        EyeCounts whiteEyes = new EyeCounts(0, 1, 0, 0);
-        checkEyes("problem_bigeye6", 2, blackEyes, whiteEyes);
-    }   */
-
-    /**
-     *  ***
-     *   *
-     *
-    public void testBigEye7() {
-        EyeCounts blackEyes = new EyeCounts(0, 0, 1, 0);
-        EyeCounts whiteEyes = new EyeCounts(0, 1, 0, 0);
-        checkEyes("problem_bigeye7", 2, blackEyes, whiteEyes);
-    }   */
-
-    /**
-     *   *
-     *  ***
-     *   *
-     *
-    public void testBigEye8() {
-        EyeCounts blackEyes = new EyeCounts(0, 0, 1, 0);
-        EyeCounts whiteEyes = new EyeCounts(0, 1, 0, 0);
-        checkEyes("problem_bigeye8", 2, blackEyes, whiteEyes);
-    }  */
-
-    ////////////////// test the different big eye shapes in the corner /////////////////
-    /**
-     * ***
-     *
-    public void testCornerBigEye1() {
-        EyeCounts blackEyes = new EyeCounts(0, 0, 1, 0);
-        EyeCounts whiteEyes = new EyeCounts(0, 1, 0, 0);
-        checkEyes("problem_cornerbigeye1", 2, blackEyes, whiteEyes);
-    } */
-
-    /**
-     *   *
-     *   **
-     *
-    public void testCornerBigEye2() {
-        EyeCounts blackEyes = new EyeCounts(0, 0, 1, 0);
-        EyeCounts whiteEyes = new EyeCounts(0, 1, 0, 0);
-        checkEyes("problem_cornerbigeye2", 2, blackEyes, whiteEyes);
-    }  */
-
-    /**
-     *  **
-     *  **
-     *
-    public void testCornerBigEye3() {
-        EyeCounts blackEyes = new EyeCounts(0, 0, 1, 0);
-        EyeCounts whiteEyes = new EyeCounts(0, 1, 0, 0);
-        checkEyes("problem_cornerbigeye3", 2, blackEyes, whiteEyes);
-    }   */
-
-    /**
-     *   ***
-     *    **
-     *
-    public void testCornerBigEye4() {
-        EyeCounts blackEyes = new EyeCounts(0, 0, 1, 0);
-        EyeCounts whiteEyes = new EyeCounts(0, 1, 0, 0);
-        checkEyes("problem_cornerbigeye4", 2, blackEyes, whiteEyes);
-    }   */
-
-    /**
-     *   *
-     *  ***
-     *   **
-     *
-    public void testCornerBigEye5() {
-        EyeCounts blackEyes = new EyeCounts(0, 0, 1, 0);
-        EyeCounts whiteEyes = new EyeCounts(0, 1, 0, 0);
-        checkEyes("problem_cornerbigeye5", 2, blackEyes, whiteEyes);
-    }   */
-
-    /**
-     *  **
-     *  ***
-     *   **
-     *
-    public void testCornerBigEye6() {
-        EyeCounts blackEyes = new EyeCounts(0, 0, 1, 0);
-        EyeCounts whiteEyes = new EyeCounts(0, 1, 0, 0);
-        checkEyes("problem_cornerbigeye6", 2, blackEyes, whiteEyes);
-    }     */
-
-    /**
-     *  ***
-     *   *
-     *
-    public void testCornerBigEye7() {
-        EyeCounts blackEyes = new EyeCounts(0, 0, 1, 0);
-        EyeCounts whiteEyes = new EyeCounts(0, 1, 0, 0);
-        checkEyes("problem_cornerbigeye7", 2, blackEyes, whiteEyes);
-    }     */
-
-    /**
-     *   *
-     *  ***
-     *   *
-     *
-    public void testCornerBigEye8() {
-        EyeCounts blackEyes = new EyeCounts(0, 0, 1, 0);
-        EyeCounts whiteEyes = new EyeCounts(0, 1, 0, 0);
-        checkEyes("problem_cornerbigeye8", 2, blackEyes, whiteEyes);
-    }   */
-
-    ///////////////// check for territorial eyes
-
-    /**
-      *  ****
-      *  ****
-      *  ****
-      *  ****
-      *
-     public void testTerritoryEye() {
-         EyeCounts blackEyes = new EyeCounts(0, 1, 0, 0);
-         EyeCounts whiteEyes = new EyeCounts(0, 0, 0, 1);
-         checkEyes("problem_terreye5", 2, blackEyes, whiteEyes);
-     }   */
-
-
-    /**
-     *   ****
-     *
-    public void testTerritoryEye1() {
-        EyeCounts blackEyes = new EyeCounts(0, 0, 0, 1);
-        EyeCounts whiteEyes = new EyeCounts(0, 1, 0, 0);
-        checkEyes("problem_terreye1", 2, blackEyes, whiteEyes);
-    }    */
-
-    /**
-     *  ***
-     *  *
-     *
-    public void testTerritoryEye2() {
-        EyeCounts blackEyes = new EyeCounts(0, 0, 0, 1);
-        EyeCounts whiteEyes = new EyeCounts(0, 1, 0, 0);
-        checkEyes("problem_terreye2", 2, blackEyes, whiteEyes);
-    }   */
-
-    /**
-     *  ***
-     *  ***
-     *
-    public void testTerritoryEye3() {
-        EyeCounts blackEyes = new EyeCounts(0, 0, 0, 1);
-        EyeCounts whiteEyes = new EyeCounts(0, 1, 0, 0);
-        checkEyes("problem_terreye3", 2, blackEyes, whiteEyes);
-    }  */
-
-    /**
-     *  ***
-     *  ***
-     *  ***
-     *
-    public void testTerritoryEye4() {
-        EyeCounts blackEyes = new EyeCounts(0, 1, 0, 0);
-        EyeCounts whiteEyes = new EyeCounts(0, 0, 0, 1);
-        checkEyes("problem_terreye4", 2, blackEyes, whiteEyes);
-    }    */
-
-    /**
-     *  ****
-     *  ****
-     *  ****
-     *  ****
-     *
-    public void testTerritoryEye5() {
-        EyeCounts blackEyes = new EyeCounts(0, 1, 0, 0);
-        EyeCounts whiteEyes = new EyeCounts(0, 0, 0, 1);
-        checkEyes("problem_terreye5", 2, blackEyes, whiteEyes);
-    }  */
-
-    ///////////////// check for territorial eyes in the corner
-
-    /**
-     *   ****
-     *
-    public void testCornerTerritoryEye1() {
-        EyeCounts blackEyes = new EyeCounts(0, 1, 0, 0);
-        EyeCounts whiteEyes = new EyeCounts(0, 0, 0, 1);
-        checkEyes("problem_cornerterreye1", 2, blackEyes, whiteEyes);
-    }   */
-
-    /**
-     *  ***
-     *  *
-     *
-    public void testCornerTerritoryEye2() {
-        EyeCounts blackEyes = new EyeCounts(0, 1, 0, 0);
-        EyeCounts whiteEyes = new EyeCounts(0, 0, 0, 1);
-        checkEyes("problem_cornerterreye2", 2, blackEyes, whiteEyes);
-    }   */
-
-    /**
-     *  ***
-     *  ***
-     *
-    public void testCornerTerritoryEye3() {
-        EyeCounts blackEyes = new EyeCounts(0, 1, 0, 0);
-        EyeCounts whiteEyes = new EyeCounts(0, 0, 0, 1);
-        checkEyes("problem_cornerterreye3", 2, blackEyes, whiteEyes);
-    }   */
-
-    /**
-     *  ***
-     *  ***
-     *  ***
-     *
-    public void testCornerTerritoryEye4() {
-        EyeCounts blackEyes = new EyeCounts(0, 1, 0, 0);
-        EyeCounts whiteEyes = new EyeCounts(0, 0, 0, 1);
-        checkEyes("problem_cornerterreye4", 2, blackEyes, whiteEyes);
-    }   */
-
-    /**
-       *  ****
-       *  ****
-       *  ****
-       *  ****
-       *
-      public void testCornerTerritoryEye5() {
-          EyeCounts blackEyes = new EyeCounts(0, 1, 0, 0);
-          EyeCounts whiteEyes = new EyeCounts(0, 0, 0, 1);
-          checkEyes("problem_cornerterreye5", 2, blackEyes, whiteEyes);
-      }  */
-
-
-      /**
-       * See if we can identify eyes in a real 19x19 game.
-       *
-      public void testComplex() {
-          EyeCounts blackEyes = new EyeCounts(1, 6, 1, 1);    // used to have 2 terr eyes.
-          EyeCounts whiteEyes = new EyeCounts(1, 1, 0, 3);
-          checkEyes("problem_complex", 12, blackEyes, whiteEyes);
-      }   */
-
-
-    //--------------------------------------------------------------------------------------------------
-    /**
-     *
-     * @param eyesProblemFile
-     * @param expectedBlackEyes number of black eyes in the group.
-     * @param expectedWhiteEyes number of white eyes in the group.
+     * @param eyesProblemFile saved sgf game file to load
+     * @return the initialized board. Must have 2 groups.
      */
-    private void checkEyes(String eyesProblemFile, int expectedNumGroups,
-                           EyeCounts expectedBlackEyes, EyeCounts expectedWhiteEyes) {
-
-        System.out.println("finding eyes for "+eyesProblemFile+" ...");
-        //GameContext.log(0, "finding eyes for "+eyesProblemFile+" ...");
-        restore(PATH_PREFIX + eyesProblemFile);
+    protected GoBoard initializeBoard(String eyesProblemFile, int expectedNumGroups) {
+        System.out.println("finding eyes for " + eyesProblemFile + "...");
+        restore(getPathPrefix() + eyesProblemFile);
 
         GoBoard board = (GoBoard)controller_.getBoard();
 
         // consider the 2 biggest groups
         Set<GoGroup> groups = board.getGroups();
-        Assert.assertTrue("There were not two groups. Instead there were :"+groups.size(), groups.size() == expectedNumGroups);
+        Assert.assertEquals("Unexpected number of groups.",
+                expectedNumGroups, groups.size());
 
-        GoGroup biggestBlackGroup = getBiggestGroup(true);
-        GoGroup biggestWhiteGroup = getBiggestGroup(false);
+        return board;
+    }
 
-        // this indirectly calls EyeTypeAnalyzer.determineEyeInformation through
-        // GroupAnalyzer.updateEyes(board) -> EyeSpaceAnalyzer.determinEyes()
-        EyeCounts eyeCounts = getEyeCounts(biggestBlackGroup.getEyes(board));
-        Assert.assertTrue("Actual Black Eye counts were \n"+eyeCounts+" but was expecting \n"+ expectedBlackEyes,
-                              eyeCounts.equals(expectedBlackEyes));
-        eyeCounts = getEyeCounts(biggestWhiteGroup.getEyes(board));
-        Assert.assertTrue("Actual White Eye counts were \n"+eyeCounts+" but was expecting \n"+ expectedWhiteEyes,
-                              eyeCounts.equals(expectedWhiteEyes));
+    protected void checkBlackEye(GoBoard board, EyeInformation expectedInfo, EyeStatus expectedStatus) {
+         checkEyeInfo(board, expectedInfo, expectedStatus, true, false, false, GroupType.BIGGEST);
+    }
+
+    protected void checkWhiteEye(GoBoard board, EyeInformation expectedInfo, EyeStatus expectedStatus) {
+         checkEyeInfo(board, expectedInfo, expectedStatus, false, false, false, GroupType.BIGGEST);
+    }
+
+
+    protected void checkEdgeBlackEye(GoBoard board, EyeInformation expectedInfo, EyeStatus expectedStatus) {
+        checkEyeInfo(board, expectedInfo, expectedStatus, true, false, true, GroupType.BIGGEST);
+    }
+
+    protected void checkEdgeWhiteEye(GoBoard board, EyeInformation expectedInfo, EyeStatus expectedStatus) {
+        checkEyeInfo(board, expectedInfo, expectedStatus, false, false, true, GroupType.BIGGEST);
+    }
+
+    protected void checkCornerBlackEye(GoBoard board, EyeInformation expectedInfo, EyeStatus expectedStatus) {
+        checkEyeInfo(board, expectedInfo, expectedStatus, true, true, true, GroupType.BIGGEST);
+    }
+
+    protected void checkCornerWhiteEye(GoBoard board, EyeInformation expectedInfo, EyeStatus expectedStatus) {
+        checkEyeInfo(board, expectedInfo, expectedStatus, false, true, true, GroupType.BIGGEST);
+    }
+
+    /** Check the eye of the surrounded group, not the biggest group as we usually do. */
+    protected void checkBlackEyeSurrounded(GoBoard board, EyeInformation expectedInfo, EyeStatus expectedStatus) {
+         checkEyeInfo(board, expectedInfo, expectedStatus, true, false, false, GroupType.SURROUNDED);
+    }
+
+    /** Check the eye of the surrounded group, not the biggest group as we usually do. */
+    protected void checkWhiteEyeSurrounded(GoBoard board, EyeInformation expectedInfo, EyeStatus expectedStatus) {
+         checkEyeInfo(board, expectedInfo, expectedStatus, false, false, false, GroupType.SURROUNDED);
+    }
+
+    /**
+     * Check information and status for specified eye.
+     */
+    protected void checkEyeInfo(GoBoard board,
+                              EyeInformation expectedInfo, EyeStatus expectedStatus, boolean isBlack,
+                              boolean isInCorner, boolean isOnEdge, GroupType groupType) {
+
+        GoGroup group = getGroupToCheck(isBlack, groupType, board);
+
+        Set<GoEye> eyes = group.getEyes(board);
+
+        assertEquals("The group\n" + group + "\n did not have one eye",
+                1, eyes.size());
+        GoEye firstEye = group.getEyes(board).iterator().next();
+
+        EyeTypeAnalyzer eyeAnalyzer = new EyeTypeAnalyzer(firstEye, board);
+        EyeInformation information = eyeAnalyzer.determineEyeInformation();
+        String eyeColor = isBlack? "black" : "white";
+        assertEquals("Unexpected information found for " + eyeColor + " eye.",
+                expectedInfo, information);
+        EyeStatus status = information.determineStatus(firstEye, board);
+        assertEquals("Unexpected status found for " + eyeColor + " eye.",
+                expectedStatus, status);
+
+        assertEquals("Corner status unexpected", isInCorner, information.isInCorner(firstEye));
+        assertEquals("Edge status unexpected", isOnEdge, information.isOnEdge(firstEye));
+    }
+
+    private GoGroup getGroupToCheck(boolean isBlack, GroupType type, GoBoard board) {
+        switch (type) {
+            case BIGGEST : return getBiggestGroup(isBlack);
+            case SURROUNDED : return getSurroundedGroup(isBlack, board);
+        }
+        return null;
+    }
+
+    /**
+     * @param isBlack true if black
+     * @return a large group of the specified side with 2 or fewer liberties.
+     */
+    protected GoGroup getSurroundedGroup(boolean isBlack, GoBoard board) {
+
+        Set<GoGroup> groups = ((GoBoard) controller_.getBoard()).getGroups();
+        GoGroup surroundedGroup = null;
+
+        for (GoGroup group : groups) {
+            Set<GoBoardPosition> stones = group.getStones();
+            if (stones.iterator().next().getPiece().isOwnedByPlayer1() == isBlack) {
+                if (surroundedGroup == null ||
+                    (group.getNumStones() > 5 && group.getLiberties(board).size() < 3)) {
+                    surroundedGroup = group;
+                }
+            }
+        }
+        return surroundedGroup;
     }
 
 
@@ -431,69 +146,5 @@ public class TestEyeTypeAnalyzer extends GoTestCase {
         return new TestSuite(TestEyeTypeAnalyzer.class);
     }
 
-    private EyeCounts getEyeCounts(Set eyes)  {
-        EyeCounts counts = new EyeCounts();
 
-        for (Object e : eyes) {
-            GoEye eye = (GoEye) e;
-            //counts.increment(eye.getInformation());
-        }
-        return counts;
-    }
-
-
-    private static class EyeCounts {
-        Map<OldEyeType, Integer> countMap;
-
-        public EyeCounts() {
-            countMap = new HashMap<OldEyeType, Integer>();
-        }
-
-        public EyeCounts(OldEyeType[] types) {
-            this();
-            for (OldEyeType type : types) {
-                increment(type);
-            }
-        }
-
-        public void increment(OldEyeType type) {
-            if (countMap.containsKey(type)) {
-                countMap.put(type, countMap.get(type)+1);
-            }
-            else {
-                countMap.put(type, 1);
-            }
-        }
-
-        public int getCountFor(OldEyeType type) {
-            return countMap.containsKey(type) ? countMap.get(type) : 0;
-        }
-
-        @Override
-        public boolean equals(Object ocounts) {
-            EyeCounts counts = (EyeCounts)ocounts;
-            for (OldEyeType type : OldEyeType.values()) {
-                if (getCountFor(type) != counts.getCountFor(type))
-                    return false;
-            }
-            return true;
-        }
-
-        @Override
-        public int hashCode() {
-
-            int dec = 1;
-            int hash = 0;
-            for (OldEyeType type : OldEyeType.values()) {
-                hash += dec * getCountFor(type);
-                dec *=10;
-            }
-            return hash;
-        }
-
-        @Override
-        public String toString() {
-            return countMap.toString();
-        }
-    }
 }

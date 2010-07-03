@@ -2,11 +2,8 @@ package com.becker.game.twoplayer.go.board.update;
 
 import com.becker.game.common.CaptureList;
 import com.becker.game.twoplayer.go.GoMove;
-import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.GoGroup;
-import com.becker.game.twoplayer.go.board.GoString;
-import com.becker.game.twoplayer.go.board.analysis.NeighborAnalyzer;
+import com.becker.game.twoplayer.go.board.*;
+import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 
 import java.util.*;
 
@@ -19,6 +16,8 @@ public abstract class PostChangeUpdater {
 
     protected GoBoard board_;
     protected Captures captures_;
+    protected NeighborAnalyzer nbrAnalyzer_;
+    protected BoardValidator validator_;
 
 
     /**
@@ -29,6 +28,8 @@ public abstract class PostChangeUpdater {
     PostChangeUpdater(GoBoard board, Captures captures) {
         board_ = board;
         captures_ = captures;
+        nbrAnalyzer_ = new NeighborAnalyzer(board);
+        validator_ = new BoardValidator(board);
     }
 
     /**

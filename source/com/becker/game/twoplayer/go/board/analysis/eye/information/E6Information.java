@@ -91,7 +91,6 @@ public class E6Information extends AbstractEyeSubtypeInformation
                 return handleVitalPointCases(nbrMap, eye, 2);
             case E222233 :
                 return handleVitalPointCases(nbrMap, eye, 2);
-
         }
         return EyeStatus.NAKADE; // never reached
     }

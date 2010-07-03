@@ -2,6 +2,7 @@ package com.becker.game.twoplayer.go.board.analysis.group;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.board.*;
+import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 
 import java.util.*;
 
@@ -23,6 +24,7 @@ public final class LifeAnalyzer {
     /** Keep track of vital eyes neighboring living string. */
     private Map<GoString, List<GoEye>> stringEyeNbrMap;
 
+    private NeighborAnalyzer nbrAnalyzer_;
 
     /**
      * Constructor.
@@ -32,6 +34,7 @@ public final class LifeAnalyzer {
     public LifeAnalyzer(GoGroup group, GoBoard board) {
         group_ = group;
         board_ = board;
+        nbrAnalyzer_ = new NeighborAnalyzer(board);
     }
 
     /**
@@ -89,7 +92,7 @@ public final class LifeAnalyzer {
      */
     private void findNeighborStringsForEyeSpace(GoEye eye, GoBoardPosition pos, List<GoString> nbrStrings) {
         Set<GoBoardPosition> nbrs =
-                board_.getNobiNeighbors(pos, eye.isOwnedByPlayer1(), NeighborType.FRIEND);
+                nbrAnalyzer_.getNobiNeighbors(pos, eye.isOwnedByPlayer1(), NeighborType.FRIEND);
         for (GoBoardPosition nbr : nbrs) {
 
             if (nbr.getString().getGroup() != group_) {
@@ -147,7 +150,8 @@ public final class LifeAnalyzer {
     private boolean allUnocupiedAdjacentToString(GoEye eye, GoString string, GoBoard b)   {
         for (GoBoardPosition pos : eye.getMembers()) {
             if (pos.isUnoccupied()) {
-                Set<GoBoardPosition> nbrs = b.getNobiNeighbors(pos, eye.isOwnedByPlayer1(), NeighborType.FRIEND);
+                Set<GoBoardPosition> nbrs =
+                        nbrAnalyzer_.getNobiNeighbors(pos, eye.isOwnedByPlayer1(), NeighborType.FRIEND);
                 // verify that at least one of the nbrs is in this string
                 boolean thereIsaNbr = false;
                 for  (GoBoardPosition nbr : nbrs) {

@@ -17,10 +17,10 @@ public final class GoBoardUtil
      * if its not that much weaker then we don't really have an eye.
      * @@ make this a game parameter .6 - 1.8 that can be optimized.
      */
-    private static final float DIFFERENCE_THRESHOLD = 0.7f;
+    private static final float DIFFERENCE_THRESHOLD = 0.6f;
     
     /** used to determine if a stone is dead or alive. */
-    private static final float MIN_LIFE_THRESH = 0.3f;
+    private static final float MIN_LIFE_THRESH = 0.2f;
 
     private GoBoardUtil() {}
 
@@ -28,9 +28,9 @@ public final class GoBoardUtil
     /**
      * set the visited flag back to false for a list of lists of stones
      */
-    public static void unvisitPositionsInLists( List<List> lists )
+    public static void unvisitPositionsInLists( List<List<GoBoardPosition>> lists )
     {
-        for (List list : lists) {
+        for (List<GoBoardPosition> list : lists) {
             unvisitPositions( list );
         }
     }
@@ -38,19 +38,18 @@ public final class GoBoardUtil
     /**
      * set the visited flag back to false for a set of stones
      */
-    public static void unvisitPositions( Collection positions )
+    public static void unvisitPositions( Collection<GoBoardPosition> positions )
     {
         // return the stone to the unvisited state
-        for (Object position : positions) {
-            GoBoardPosition s = (GoBoardPosition) position;
-            s.setVisited(false);
+        for (GoBoardPosition position : positions) {
+            position.setVisited(false);
         }
     }
     
     /**
      * @return true if the stone is much weaker than the group
      */
-    public static boolean isStoneMuchWeaker(GoGroup group, GoStone stone)
+    public static boolean isStoneMuchWeaker(IGoGroup group, GoStone stone)
     {
         return isStoneWeakerThanGroup(group, stone, DIFFERENCE_THRESHOLD);
     }
@@ -61,9 +60,10 @@ public final class GoBoardUtil
      * @param threshold
      * @return return true of the stone is greater than threshold weaker than the group.
      */
-    private static boolean isStoneWeakerThanGroup(GoGroup group, GoStone stone, float threshold)
+    private static boolean isStoneWeakerThanGroup(IGoGroup group, GoStone stone, float threshold)
     {
         float groupHealth = group.getAbsoluteHealth();
+
         // for purposes of determining relative weakness. Don't allow the outer group to go out of its living range.
         if (group.isOwnedByPlayer1() &&  groupHealth < MIN_LIFE_THRESH) {
             groupHealth = MIN_LIFE_THRESH;
@@ -71,15 +71,22 @@ public final class GoBoardUtil
             groupHealth = -MIN_LIFE_THRESH;
         }
         float stoneHealth = stone.getHealth();
+        boolean muchWeaker;
         if (stone.isOwnedByPlayer1())  {
             assert (!group.isOwnedByPlayer1());
-            //System.out.println("-" + groupHealth +" - "+ stoneHealth +" = "+ (-groupHealth - stoneHealth) );
-            return (-groupHealth - stoneHealth > threshold);
+            //System.out.println("-" + groupHealth +"(groupH) - "+ stoneHealth +"(stoneH) = "+ (-groupHealth - stoneHealth) );
+
+            muchWeaker = (-groupHealth - stoneHealth > threshold);
         }
         else {
             assert (group.isOwnedByPlayer1());
-            return ( groupHealth + stoneHealth > threshold);
+            //System.out.println(groupHealth +"(groupH) + "+stoneHealth + "(stoneH) = "+ (groupHealth + stoneHealth) );
+            muchWeaker = (groupHealth + stoneHealth > threshold);
         }
+        //if (group.getNumStones() > 5)
+            //System.out.println("muchWeaker="+ muchWeaker + "\n group=" + group +"\nstone=" + stone );
+
+        return muchWeaker;
     }
 
 }

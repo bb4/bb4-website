@@ -4,6 +4,7 @@ import com.becker.common.Location;
 import com.becker.game.twoplayer.go.board.*;
 import com.becker.common.Box;
 import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
+import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 
 import java.util.*;
 
@@ -22,12 +23,15 @@ class EyeSpaceAnalyzer {
     /** bounding box around our group that we are analyzing. */
     private Box boundingBox_;
 
+    private NeighborAnalyzer nbrAnalyzer_;
+
     /**
      * Constructor.
      */
     public EyeSpaceAnalyzer(GoGroup group, GoBoard board) {
         group_ = group;
         board_ = board;
+        nbrAnalyzer_ = new NeighborAnalyzer(board);
         assert board_ != null;
         boundingBox_ = findBoundingBox(group_.getMembers());
     }
@@ -38,7 +42,7 @@ class EyeSpaceAnalyzer {
      */
     public Set<GoEye> determineEyes() {
 
-        List<List> candidateEyeLists = createEyeSpaceLists();
+        List<List<GoBoardPosition>> candidateEyeLists = createEyeSpaceLists();
         return findEyeFromCandidates(candidateEyeLists);
     }
 
@@ -51,7 +55,7 @@ class EyeSpaceAnalyzer {
      * @param candidateEyeLists eye space lists
      * @return set of eyes in this group/
      */
-    private Set<GoEye> findEyeFromCandidates(List<List> candidateEyeLists) {
+    private Set<GoEye> findEyeFromCandidates(List<List<GoBoardPosition>> candidateEyeLists) {
         Set<GoEye> eyes = new LinkedHashSet<GoEye>();
         boolean ownedByPlayer1 = group_.isOwnedByPlayer1();
 
@@ -61,7 +65,7 @@ class EyeSpaceAnalyzer {
                 GoBoardPosition space = (GoBoardPosition) board_.getPosition( r, c );
                 if ( !space.isVisited() && space.isUnoccupied() && !space.isInEye() ) {
                     List<GoBoardPosition> eyeSpaces =
-                            board_.findStringFromInitialPosition( space, ownedByPlayer1,
+                            nbrAnalyzer_.findStringFromInitialPosition( space, ownedByPlayer1,
                                                                  false, NeighborType.NOT_FRIEND,
                                                                  boundingBox_  );
                     candidateEyeLists.add( eyeSpaces );
@@ -90,9 +94,9 @@ class EyeSpaceAnalyzer {
      * then empty spaces there are most likely eyes (but not necessarily).
      * @return list of lists of eye space spaces find real eye from (and to unvisit at the end)
      */
-    private List<List> createEyeSpaceLists() {
+    private List<List<GoBoardPosition>> createEyeSpaceLists() {
         //
-        List<List> lists = new ArrayList<List>();
+        List<List<GoBoardPosition>> lists = new ArrayList<List<GoBoardPosition>>();
         boolean ownedByPlayer1 = group_.isOwnedByPlayer1();
 
         int rMin = boundingBox_.getMinRow();
@@ -292,13 +296,15 @@ class EyeSpaceAnalyzer {
      * @param board owner
      * @param lists list of stones connected to the seed stone
      */
-    private void excludeSeed( GoBoardPosition space, boolean groupOwnership, GoBoard board, List<List> lists, Box box)
+    private void excludeSeed( GoBoardPosition space, boolean groupOwnership, GoBoard board,
+                              List<List<GoBoardPosition>> lists, Box box)
     {
         if ( !space.isVisited()
              && (space.isUnoccupied() || space.getPiece().isOwnedByPlayer1() != group_.isOwnedByPlayer1())) {
             // this will leave stones outside the group visited
-            List list = board.findStringFromInitialPosition( space, groupOwnership, false,
-                                                             NeighborType.NOT_FRIEND, box );
+            List<GoBoardPosition> list =
+                    nbrAnalyzer_.findStringFromInitialPosition(space, groupOwnership, false,
+                                                                NeighborType.NOT_FRIEND, box);
 
             // make sure that every occupied stone in the list is a real enemy and not just a dead opponent stone.
             // compare it with one of the group strings
@@ -327,6 +333,12 @@ class EyeSpaceAnalyzer {
      * Check this list of stones to confirm that enemy stones don't border it.
      * If they do, then it is not an eye - return false.
      *
+     * If there are less than 7 stones in the surrounded enemy string, then it does not have an eye
+     * and is assumed to be weaker than the surrounding group of the opposite color.
+     *
+     * If more than 6 stones, we need to compare the health of the position relative to the surrounding group
+     * to see if it is dead enough to still consider an eye.
+     *
      * @param eyeList the candidate string of stones to misc for eye status
      * @return true if the list of stones is an eye
      */
@@ -335,21 +347,14 @@ class EyeSpaceAnalyzer {
         if ( eyeList == null )
             return false;
 
-        // each occupied stone of the eye must be very weak (ie not an enemy, but dead opponent)
-        // compare it with one of the group strings
         GoString groupString = group_.getMembers().iterator().next();
 
         for (GoBoardPosition position : eyeList) {
             GoString string = position.getString();
 
             if (position.isOccupied()) {
-                GoStone stone = (GoStone) position.getPiece();
-                if (string.size() == 1 && Math.abs(stone.getHealth()) <= 0.11) {
-                    // since its a lone stone inside an enemy eye, we assume it is more dead than alive
-                    stone.setHealth(stone.isOwnedByPlayer1() ? -0.6f : 0.6f);
-                }
-                if (groupString.isEnemy(position)) {
-                    return false;  // not eye
+                if (string.size() > 6 && groupString.isEnemy(position)) {
+                    return false;  // then not eye
                 }
             }
         }
