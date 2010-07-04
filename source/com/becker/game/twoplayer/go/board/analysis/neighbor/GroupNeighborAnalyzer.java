@@ -128,10 +128,8 @@ public class GroupNeighborAnalyzer {
         int c = pos.getCol();
         int numPushed = 0;
 
-        // if the stone of which we are checking nbrs is in atari, then there are no pure group nbrs because an
-        // atari counts as a cut. Maybe not.
-        //if (pos.isInAtari(board_))
-        //  return 0;
+        // if the stone of which we are checking nbrs is in atari, then there are no pure group nbrs. no
+        // if (pos.isInAtari(board_))  return 0;
 
         int numRows = board_.getNumRows();
         int numCols = board_.getNumCols();
@@ -267,13 +265,13 @@ public class GroupNeighborAnalyzer {
             boolean cut;
             if ( rowOffset == 0 ) {
                 int col = c + (colOffset >> 1);
-                cut =  (board_.getPosition(r, col).isOccupied() &&
-                        (board_.getPosition(r, col).getPiece().isOwnedByPlayer1() != friendPlayer1));
+                cut = (board_.getPosition(r, col).isOccupied() &&
+                      (board_.getPosition(r, col).getPiece().isOwnedByPlayer1() != friendPlayer1));
             }
             else {
                 int row = r + (rowOffset >> 1);
-                cut =   (board_.getPosition(row, c).isOccupied() &&
-                        (board_.getPosition(row, c).getPiece().isOwnedByPlayer1() != friendPlayer1));
+                cut = (board_.getPosition(row, c).isOccupied() &&
+                      (board_.getPosition(row, c).getPiece().isOwnedByPlayer1() != friendPlayer1));
             }
             if ( !cut ) {
                 stack.add( 0, nbr );

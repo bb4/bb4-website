@@ -156,20 +156,20 @@ class StringNeighborAnalyzer {
         GoBoardPosition nbr = (GoBoardPosition) board_.getPosition(r + rowOffset, c + colOffset);
 
         switch (type) {
-            case OCCUPIED:  // occupied black or white
+            case OCCUPIED:
                 if ( !nbr.isVisited() && nbr.isOccupied() &&
                      (!samePlayerOnly || nbr.getPiece().isOwnedByPlayer1() == friendOwnedByPlayer1)) {
                     stack.add( 0, nbr );
                     return 1;
                 }
                 break;
-           case UNOCCUPIED:  // empty space
+           case UNOCCUPIED:
                 if ( !nbr.isVisited() && nbr.isUnoccupied() ) {
                     stack.add( 0, nbr );
                     return 1;
                 }
                 break;
-           case NOT_FRIEND:   // blank or enemy
+           case NOT_FRIEND:
                 if ( !nbr.isVisited() &&
                     ( nbr.isUnoccupied() ||
                        ( nbr.isOccupied() && (nbr.getPiece().isOwnedByPlayer1() != friendOwnedByPlayer1))
