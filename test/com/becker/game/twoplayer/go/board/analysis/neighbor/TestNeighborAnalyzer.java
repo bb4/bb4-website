@@ -1,12 +1,12 @@
 package com.becker.game.twoplayer.go.board.analysis.neighbor;
 
-import com.becker.game.twoplayer.go.board.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.GoTestCase;
-import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
-import junit.framework.*;
+import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.GoBoardPosition;
+import junit.framework.Assert;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Verify that all our neighbor analysis methods work.
@@ -86,7 +86,7 @@ public class TestNeighborAnalyzer extends GoTestCase {
     }
 
     public void testFindOccupiedNbrs() {
-        
+
         String file = "occupiedNbrs1";
         restore(PREFIX + file);
         GoBoard board = (GoBoard)controller_.getBoard();
@@ -96,12 +96,12 @@ public class TestNeighborAnalyzer extends GoTestCase {
         empties.add(board.getPosition(3, 4));
         empties.add(board.getPosition(4, 3));
         empties.add(board.getPosition(4, 4));
-       
+
         verifyOccupiedNbrs(board, empties, 6); // or 9?
     }
 
     private void verifyOccupiedNbrs(GoBoard board, List empties, int expectedNumNbrs) {
-      
+
         nbrAnalyzer_ = new NeighborAnalyzer(board);
         int numNbrs = nbrAnalyzer_.findOccupiedNobiNeighbors(empties).size();
 

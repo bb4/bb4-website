@@ -22,7 +22,7 @@ class StringNeighborAnalyzer {
      * Constructor
      * @param board
      */
-    public StringNeighborAnalyzer(GoBoard board) {
+    StringNeighborAnalyzer(GoBoard board) {
         board_ = board;
         validator_ = new BoardValidator(board);
     }
@@ -33,8 +33,9 @@ class StringNeighborAnalyzer {
      * Use the visited flag to indicate that a stone has been added to the string.
      * @return string from seed stone
      */
-    List<GoBoardPosition> findStringFromInitialPosition( GoBoardPosition stone,  boolean friendOwnedByP1,
-                                                     boolean returnToUnvisitedState, NeighborType type, Box box) {
+    List<GoBoardPosition> findStringFromInitialPosition(GoBoardPosition stone, boolean friendOwnedByP1,
+                                                        boolean returnToUnvisitedState, NeighborType type,
+                                                        Box box) {
         List<GoBoardPosition> stones = new ArrayList<GoBoardPosition>();
 
         List<GoBoardPosition> stack = new LinkedList<GoBoardPosition>();
@@ -77,6 +78,16 @@ class StringNeighborAnalyzer {
     }
 
     /**
+     * @return all string neighbors of specified position.
+     */
+    int pushStringNeighbors( GoBoardPosition s, boolean friendPlayer1, List<GoBoardPosition> stack,
+                                     boolean samePlayerOnly )
+    {
+        return pushStringNeighbors(s, friendPlayer1, stack, samePlayerOnly, NeighborType.OCCUPIED,
+                                   new Box(1, 1, board_.getNumRows(), board_.getNumCols()));
+    }
+
+    /**
      * Check all nobi neighbors (at most 4).
      * @param s the stone of which to check the neighbors of
      * @param stack the stack to add unvisited neighbors
@@ -101,17 +112,6 @@ class StringNeighborAnalyzer {
 
         return numPushed;
     }
-
-    /**
-     * @return all string neighbors of specified position.
-     */
-    int pushStringNeighbors( GoBoardPosition s, boolean friendPlayer1, List<GoBoardPosition> stack,
-                                     boolean samePlayerOnly )
-    {
-        return pushStringNeighbors( s, friendPlayer1, stack, samePlayerOnly,
-                                    NeighborType.OCCUPIED, new Box(1, 1, board_.getNumRows(), board_.getNumCols()));
-    }
-
 
     /**
      * return 1 if this is a valid neighbor according to specification.
