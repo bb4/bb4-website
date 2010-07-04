@@ -118,14 +118,4 @@ public class TestEyeNeighborMap extends GoTestCase {
                 expectedNumNbrs[i], nbrMap.getNumEyeNeighbors(spaces.get(i)));
         }
     }
-
-    private List<GoBoardPosition> createPositionList(Location[] positions) {
-
-        List<GoBoardPosition> spaces = new ArrayList<GoBoardPosition>();
-        for (Location pos : positions) {
-            spaces.add(new GoBoardPosition(pos.getRow(), pos.getCol(), null, null));
-        }
-        return spaces;
-    }
-
 }

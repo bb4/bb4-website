@@ -14,10 +14,10 @@ public enum NeighborType
     /** No stone at the nbr position. */
     UNOCCUPIED,
     
-    /** nbr stone same color as current sotne. */
+    /** nbr stone same color as current stone. */
     FRIEND,
     
-    /** nbr stone enemy of current sotne. */
+    /** nbr stone enemy of current stone. */
     ENEMY,
     
     /** Enemy or unoccupied. */

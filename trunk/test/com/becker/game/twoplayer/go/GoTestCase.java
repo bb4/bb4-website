@@ -158,6 +158,14 @@ public class GoTestCase extends TestCase {
         return biggestGroup;
     }
 
+    protected List<GoBoardPosition> createPositionList(Location[] positions) {
+
+        List<GoBoardPosition> spaces = new ArrayList<GoBoardPosition>();
+        for (Location pos : positions) {
+            spaces.add(new GoBoardPosition(pos.getRow(), pos.getCol(), null, null));
+        }
+        return spaces;
+    }
 
     protected static boolean approximatelyEqual(double value, double expectedValue, double thresh) {
         return (Math.abs(value - expectedValue) < thresh);

@@ -74,7 +74,7 @@ public class NobiNeighborAnalyzer {
      * @param nbrStone   the neighbor to check
      * @param friendOwnedByP1  type of the center stone (can't use center.owner since center may be unnoccupied)
      * @param nbrs  hashset of the ngbors matching the criteria.
-     * @param neighborType  one of NEIGHBOR_ANY, NEIGHBOR_ENEMY_ONLY, or NEIGHBOR_FRIENDLY_ONLY
+     * @param neighborType  one of the defined neighbor types.
      */
     private static void getNobiNeighbor(GoBoardPosition nbrStone, boolean friendOwnedByP1,
                                         Set<GoBoardPosition> nbrs, NeighborType neighborType) {
@@ -87,6 +87,10 @@ public class NobiNeighborAnalyzer {
                 // note friendOwnedByP1 is intentionally ignored
                 correctNeighborType = nbrStone.isOccupied();
                 break;
+            case UNOCCUPIED:
+                // note friendOwnedByP1 is intentionally ignored
+                correctNeighborType = nbrStone.isUnoccupied();
+                break;
             case ENEMY: // the opposite color
                 if (nbrStone.isUnoccupied())
                     return;
@@ -97,6 +101,10 @@ public class NobiNeighborAnalyzer {
                 if (nbrStone.isUnoccupied())
                     return;
                 correctNeighborType = (nbrStone.getPiece().isOwnedByPlayer1() == friendOwnedByP1);
+                break;
+            case NOT_FRIEND: // the opposite color or empty
+                GoStone stone = (GoStone)nbrStone.getPiece();
+                correctNeighborType = (nbrStone.isUnoccupied() || stone.isOwnedByPlayer1() != friendOwnedByP1);
                 break;
         }
         if (correctNeighborType ) {

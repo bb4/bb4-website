@@ -81,11 +81,27 @@ public final class GoMove extends TwoPlayerMove
             }
         }
 
-        if (occupiedNbrs.size() < nobiNbrs.size()) {
-            // can't be suicidal if we have a liberty
+        if (hasLiberties(occupiedNbrs, nobiNbrs)) {
             return false;
         }
 
+        return partOfDeadString(occupiedNbrs, board);
+    }
+
+    /**
+     * Can't be suicidal if we have a liberty.
+     * @return true if one or more liberties still available.
+     */
+    private boolean hasLiberties(Set<GoBoardPosition> occupiedNbrs, Set <GoBoardPosition>nobiNbrs) {
+        return (nobiNbrs.size() > occupiedNbrs.size());
+    }
+
+    /**
+     * If the newly placed stone captures an opponent string, then we reutnr false.
+     * @param occupiedNbrs The 4 occupied Nbrs neighbors to check
+     * @return true if the newly placed stone is part of a string that is now captured as a reuslt of playing.
+     */
+    private boolean partOfDeadString(Set<GoBoardPosition> occupiedNbrs, GoBoard board ) {
         for (GoBoardPosition nbr : occupiedNbrs)  {
             if (nbr.getPiece().isOwnedByPlayer1() == this.isPlayer1()) {
                 // friendly string
@@ -103,6 +119,7 @@ public final class GoMove extends TwoPlayerMove
         }
         return true;
     }
+
 
 
     /**
@@ -186,7 +203,6 @@ public final class GoMove extends TwoPlayerMove
         }
         return s;
     }
-
 }
 
 
