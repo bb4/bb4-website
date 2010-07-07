@@ -73,7 +73,7 @@ final class GoGroupRenderer
             qset.remove( stone );
             stone.setVisited( true );
             visitedSet.add(stone);
-            Set<GoBoardPosition> nbrs = nbrAnalyzer.getGroupNeighbors( stone, true );
+            Set<GoBoardPosition> nbrs = nbrAnalyzer.findGroupNeighbors( stone, true );
             for (GoBoardPosition nbrStone : nbrs) {
                 // accumulate all the borders to arrive at the final group border
                 area.add( new Area( getBorderBetween( stone, nbrStone, cellSize, margin ) ) );

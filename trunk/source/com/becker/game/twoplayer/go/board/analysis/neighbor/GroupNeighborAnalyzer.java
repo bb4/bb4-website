@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.go.board.analysis.neighbor;
 
-import com.becker.game.common.GameContext;
-import com.becker.game.twoplayer.go.board.BoardValidator;
+import com.becker.game.common.BoardPosition;
+import com.becker.game.twoplayer.go.GoProfiler;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
@@ -17,7 +17,6 @@ public class GroupNeighborAnalyzer {
 
     private GoBoard board_;
     private StringNeighborAnalyzer stringAnalyzer_;
-    private BoardValidator validator_;
 
     /**
      * Constructor
@@ -25,7 +24,39 @@ public class GroupNeighborAnalyzer {
     GroupNeighborAnalyzer(GoBoard board) {
         board_ = board;
         stringAnalyzer_ = new StringNeighborAnalyzer(board);
-        validator_ = new BoardValidator(board);
+    }
+
+    /**
+     * determine a set of stones that have group connections to the specified stone.
+     * This set of stones constitutes a group, but since stones cannot belong to more than
+     * one group (or string) we must return a List.
+     * Group connections include nobi, ikken tobi, and kogeima.
+     *
+     * @param stone the stone to search from for group neighbors.
+     * @param returnToUnvisitedState if true, then mark everything unvisited when done.
+     * @return the list of stones in the group that was found.
+     */
+    List<GoBoardPosition> findGroupFromInitialPosition( GoBoardPosition stone, boolean returnToUnvisitedState )
+    {
+     List<GoBoardPosition> stones = new ArrayList<GoBoardPosition>();
+     // perform a breadth first search  until all found.
+     // use the visited flag to indicate that a stone has been added to the group
+     List<GoBoardPosition> stack = new LinkedList<GoBoardPosition>();
+     stack.add( 0, stone );
+     while ( !stack.isEmpty() ) {
+         GoBoardPosition s = stack.remove( 0 );
+         if ( !s.isVisited()) {
+             s.setVisited( true );
+             assert (s.getPiece().isOwnedByPlayer1()==stone.getPiece().isOwnedByPlayer1()):
+                     s+" does not have same ownership as "+stone;
+             stones.add( s );
+             pushGroupNeighbors(s, s.getPiece().isOwnedByPlayer1(), stack );
+         }
+     }
+     if (returnToUnvisitedState) {
+         GoBoardUtil.unvisitPositions( stones );
+     }
+     return stones;
     }
 
     /**
@@ -41,8 +72,8 @@ public class GroupNeighborAnalyzer {
      * @param samePlayerOnly if true then find group nbrs that are have same ownership as friendPlayer1
      * @return group neighbors for specified stone.
      */
-    Set<GoBoardPosition> getGroupNeighbors(GoBoardPosition stone, boolean friendPlayer1, boolean samePlayerOnly)
-    {
+    Set<GoBoardPosition> findGroupNeighbors(GoBoardPosition stone,
+                                            boolean friendPlayer1, boolean samePlayerOnly) {
         List<GoBoardPosition> stack = new LinkedList<GoBoardPosition>();
 
         pushGroupNeighbors( stone, friendPlayer1, stack, samePlayerOnly );
@@ -50,30 +81,6 @@ public class GroupNeighborAnalyzer {
         nbrStones.addAll( stack );
 
         return nbrStones;
-    }
-
-    /**
-     * Check all diagonal neighbors (at most 4).
-     * @param s the stone of which to check the neighbors of
-     * @param stack the stack to add unvisited neighbors
-     * @return number of stones added to the stack
-     */
-    private int pushEnemyDiagonalNeighbors( GoBoardPosition s, boolean friendPlayer1,
-                                                                           List<GoBoardPosition> stack )
-    {
-        int r = s.getRow();
-        int c = s.getCol();
-        int numPushed = 0;
-        if ( r > 1 && c > 1 )
-            numPushed += checkDiagonalNeighbor( r, c, -1, -1, friendPlayer1, false, stack );
-        if ( r + 1 <= board_.getNumRows() && c > 1 )
-            numPushed += checkDiagonalNeighbor( r, c, 1, -1, friendPlayer1, false, stack );
-        if ( r + 1 <= board_.getNumRows() && c + 1 <= board_.getNumCols() )
-            numPushed += checkDiagonalNeighbor( r, c, 1, 1, friendPlayer1, false, stack );
-        if ( r > 1 && c + 1 <= board_.getNumCols() )
-            numPushed += checkDiagonalNeighbor( r, c, -1, 1, friendPlayer1, false, stack );
-
-        return numPushed;
     }
 
     /**
@@ -101,6 +108,7 @@ public class GroupNeighborAnalyzer {
      */
     private int pushGroupNeighbors( GoBoardPosition s, boolean friendPlayer1, List<GoBoardPosition> stack,
                                     boolean samePlayerOnly ) {
+        GoProfiler.getInstance().start(GoProfiler.GET_GROUP_NBRS);
         // start with the nobi string nbrs
         int numPushed = stringAnalyzer_.pushStringNeighbors( s, friendPlayer1, stack, samePlayerOnly );
 
@@ -110,8 +118,21 @@ public class GroupNeighborAnalyzer {
 
         // we only find pure group neighbors of the same color
         numPushed += pushPureGroupNeighbors( s, friendPlayer1, true, stack );
-
+        GoProfiler.getInstance().stop(GoProfiler.GET_GROUP_NBRS);
         return numPushed;
+    }
+
+    /**
+     * Check all diagonal neighbors (at most 4).
+     * @param s the stone of which to check the neighbors of
+     * @param stack the stack to add unvisited neighbors
+     * @return number of stones added to the stack
+     */
+    private int pushEnemyDiagonalNeighbors( GoBoardPosition s, boolean friendPlayer1,
+                                            List<GoBoardPosition> stack ) {
+        int r = s.getRow();
+        int c = s.getCol();
+        return checkDiagonalNeighbors(r, c, !friendPlayer1, true, stack);
     }
 
     /**
@@ -131,10 +152,23 @@ public class GroupNeighborAnalyzer {
         // if the stone of which we are checking nbrs is in atari, then there are no pure group nbrs. no
         // if (pos.isInAtari(board_))  return 0;
 
+        numPushed += checkDiagonalNeighbors(r, c, friendPlayer1, sameSideOnly, stack);
+        numPushed += checkOneSpaceNeighbors(r, c, friendPlayer1, sameSideOnly, stack);
+        numPushed += checkKogeimaNeighbors(r, c, friendPlayer1, sameSideOnly, stack);
+
+        return numPushed;
+    }
+
+    /**
+     * @return diagonal neighbors.
+     */
+    private int checkDiagonalNeighbors(int r, int c, boolean friendPlayer1, boolean sameSideOnly,
+                                       List<GoBoardPosition> stack) {
+
         int numRows = board_.getNumRows();
         int numCols = board_.getNumCols();
+        int numPushed = 0;
 
-        // now check the diagonals
         if ( r > 1 && c > 1 )
             numPushed += checkDiagonalNeighbor( r, c, -1, -1, friendPlayer1, sameSideOnly, stack );
         if ( r > 1 && c + 1 <= numCols )
@@ -143,8 +177,20 @@ public class GroupNeighborAnalyzer {
             numPushed += checkDiagonalNeighbor( r, c, 1, 1, friendPlayer1, sameSideOnly, stack );
         if ( r + 1 <= numRows && c > 1 )
             numPushed += checkDiagonalNeighbor( r, c, 1, -1, friendPlayer1, sameSideOnly, stack );
+        return numPushed;
+    }
 
-        // now check the 1-space jumps
+    /**
+     * @return  the 1-space jumps from r,c
+     */
+    private int checkOneSpaceNeighbors(int r, int c, boolean friendPlayer1, boolean sameSideOnly,
+                                       List<GoBoardPosition> stack) {
+        // now check the diagonals
+
+        int numRows = board_.getNumRows();
+        int numCols = board_.getNumCols();
+        int numPushed = 0;
+
         if ( r > 2 )
             numPushed += checkOneSpaceNeighbor( r, c, -2, 0, friendPlayer1, sameSideOnly, stack );
         if ( c > 2 )
@@ -153,8 +199,19 @@ public class GroupNeighborAnalyzer {
             numPushed += checkOneSpaceNeighbor( r, c, 2, 0, friendPlayer1, sameSideOnly, stack );
         if ( c + 2 <= numCols )
             numPushed += checkOneSpaceNeighbor( r, c, 0, 2, friendPlayer1, sameSideOnly, stack );
+        return numPushed;
+    }
 
-        // now check knights move neighbors
+    /**
+     * @return  the diagonal moves from r,c
+     */
+    private int checkKogeimaNeighbors(int r, int c, boolean friendPlayer1, boolean sameSideOnly,
+                                       List<GoBoardPosition> stack) {
+
+        int numRows = board_.getNumRows();
+        int numCols = board_.getNumCols();
+        int numPushed = 0;
+
         if ( (r > 2) && (c > 1) )
             numPushed += checkKogeimaNeighbor( r, c, -2, -1, friendPlayer1,  sameSideOnly, stack );
         if ( (r > 2) && (c + 1 <= numCols) )
@@ -174,44 +231,9 @@ public class GroupNeighborAnalyzer {
             numPushed += checkKogeimaNeighbor( r, c, -1, 2, friendPlayer1, sameSideOnly, stack );
         if ( (r + 1 <= numRows) && (c + 2 <= numCols) )
             numPushed += checkKogeimaNeighbor( r, c, 1, 2, friendPlayer1, sameSideOnly, stack );
-
         return numPushed;
     }
 
-    /**
-     * determine a set of stones that have group connections to the specified stone.
-     * This set of stones constitutes a group, but since stones cannot belong to more than
-     * one group (or string) we must return a List.
-     * Group connections include nobi, ikken tobi, and kogeima.
-     *
-     * @param stone the stone to search from for group neighbors.
-     * @param returnToUnvisitedState if true, then mark everything unvisited when done.
-     * @return the list of stones in the group that was found.
-     */
-    List<GoBoardPosition> findGroupFromInitialPosition( GoBoardPosition stone, boolean returnToUnvisitedState )
-    {
-        List<GoBoardPosition> stones = new ArrayList<GoBoardPosition>();
-        // perform a breadth first search  until all found.
-        // use the visited flag to indicate that a stone has been added to the group
-        List<GoBoardPosition> stack = new LinkedList<GoBoardPosition>();
-        stack.add( 0, stone );
-        while ( !stack.isEmpty() ) {
-            GoBoardPosition s = stack.remove( 0 );
-            if ( !s.isVisited()) {
-                s.setVisited( true );
-                assert (s.getPiece().isOwnedByPlayer1()==stone.getPiece().isOwnedByPlayer1()):
-                        s+" does not have same ownership as "+stone;
-                stones.add( s );
-                pushGroupNeighbors(s, s.getPiece().isOwnedByPlayer1(), stack );
-            }
-        }
-        if ( returnToUnvisitedState ) {
-            GoBoardUtil.unvisitPositions( stones );
-            if (GameContext.getDebugMode() > 1) //failing
-                validator_.confirmAllUnvisited();
-        }
-        return stones;
-    }
 
     /**
      *  We allow these connections as long as the diagonal has not been fully cut.
@@ -227,24 +249,22 @@ public class GroupNeighborAnalyzer {
         if (nbr.isUnoccupied()) {
             return 0;
         }
-        // don't add it if it is in atari
-        // but this leads to a problem in that ataried stones then don't belong to a group.
-        ////if  (nbr.isInAtari(board_)) {
-        ////    return 0;
-        ////}
         // determine the side we are checking for (one or the other)
         boolean sideTest = sameSideOnly ? friendPlayer1 : !friendPlayer1;
         if ( (nbr.getPiece().isOwnedByPlayer1() == sideTest) && !nbr.isVisited()) {
-            if (!((board_.getPosition(r + rowOffset, c).isOccupied() &&
-                   board_.getPosition(r + rowOffset, c).getPiece().isOwnedByPlayer1() != sideTest) &&
-                   (board_.getPosition(r, c + colOffset).isOccupied() &&
-                   board_.getPosition(r, c + colOffset).getPiece().isOwnedByPlayer1() != sideTest)) )  {
-                // then not cut
-                 stack.add( 0, nbr );
+            BoardPosition diag1 = board_.getPosition(r + rowOffset, c);
+            BoardPosition diag2 = board_.getPosition(r, c + colOffset);
+            if (!isDiagonalCut(diag1, diag2, sideTest) )  {
+                stack.add( 0, nbr );
                 return 1;
             }
         }
         return 0;
+    }
+
+    private boolean isDiagonalCut(BoardPosition diag1, BoardPosition diag2, boolean sideTest) {
+        return ((diag1.isOccupied() && diag1.getPiece().isOwnedByPlayer1() != sideTest) &&
+                (diag2.isOccupied() && diag2.getPiece().isOwnedByPlayer1() != sideTest));
     }
 
     /**
@@ -259,26 +279,34 @@ public class GroupNeighborAnalyzer {
         if (nbr.isInAtari(board_))
             return 0;
         if ( nbr.isOccupied() &&
-                (!samePlayerOnly || nbr.getPiece().isOwnedByPlayer1() == friendPlayer1) && !nbr.isVisited() ) {
-            // we consider the link cut if there is an opponent piece between the 2 stones
-            //     eg:          *|*
-            boolean cut;
+            (!samePlayerOnly || nbr.getPiece().isOwnedByPlayer1() == friendPlayer1) && !nbr.isVisited() ) {
+            BoardPosition oneSpacePt;
             if ( rowOffset == 0 ) {
                 int col = c + (colOffset >> 1);
-                cut = (board_.getPosition(r, col).isOccupied() &&
-                      (board_.getPosition(r, col).getPiece().isOwnedByPlayer1() != friendPlayer1));
+                oneSpacePt = board_.getPosition(r, col);
             }
             else {
                 int row = r + (rowOffset >> 1);
-                cut = (board_.getPosition(row, c).isOccupied() &&
-                      (board_.getPosition(row, c).getPiece().isOwnedByPlayer1() != friendPlayer1));
+                oneSpacePt = board_.getPosition(row, c);
             }
-            if ( !cut ) {
+            if ( !isOneSpaceCut(friendPlayer1, oneSpacePt)) {
                 stack.add( 0, nbr );
                 return 1;
             }
         }
         return 0;
+    }
+
+    /**
+     * We consider the link cut if there is an opponent piece between the 2 stones
+     *      eg:          *|*
+     * @return  true if cut by eenemy stone.
+     */
+    private boolean isOneSpaceCut(boolean friendPlayer1, BoardPosition oneSpacePt) {
+        if (oneSpacePt.isUnoccupied()) {
+            return false;
+        }
+        return oneSpacePt.getPiece().isOwnedByPlayer1() != friendPlayer1;
     }
 
     /**
@@ -300,27 +328,34 @@ public class GroupNeighborAnalyzer {
 
         if ( nbr.isOccupied() &&
             (!sameSideOnly || nbr.getPiece().isOwnedByPlayer1() == friendPlayer1) && !nbr.isVisited() ) {
-            boolean cut;
-            // consider it cut if there is an opponent stone in one of the 2 spaces between.
+
+            BoardPosition intermediate1, intermediate2;
             if ( Math.abs( rowOffset ) == 2 ) {
                 int rr = r + (rowOffset >> 1);
-                cut = (board_.getPosition(rr, c).isOccupied()
-                        && (board_.getPosition(rr, c).getPiece().isOwnedByPlayer1() != friendPlayer1)) ||
-                        (board_.getPosition(rr, c + colOffset).isOccupied()
-                        && (board_.getPosition(rr, c + colOffset).getPiece().isOwnedByPlayer1() != friendPlayer1));
+                intermediate1 = board_.getPosition(rr, c);
+                intermediate2 = board_.getPosition(rr, c + colOffset);
             }
             else {
                 int cc = c + (colOffset >> 1);
-                cut = (board_.getPosition(r, cc).isOccupied()
-                        && (board_.getPosition(r, cc).getPiece().isOwnedByPlayer1() != friendPlayer1)) ||
-                        (board_.getPosition(r + rowOffset, cc).isOccupied()
-                        && (board_.getPosition(r + rowOffset, cc).getPiece().isOwnedByPlayer1() != friendPlayer1));
+                intermediate1 = board_.getPosition(r, cc);
+                intermediate2 = board_.getPosition(r + rowOffset, cc);
             }
-            if ( !cut ) {
+            if ( !isKogeimaCut(friendPlayer1, intermediate1, intermediate2) ) {
                 stack.add( 0, nbr );
                 return 1;
             }
         }
         return 0;
+    }
+
+    /**
+     * Consider the knights move it cut if there is an opponent stone in one of the 2 spaces between.
+     * @return true if cut by one or more enemy sontes.
+     */
+    private boolean isKogeimaCut(boolean friendPlayer1, BoardPosition intermediate1, BoardPosition intermediate2) {
+        return (intermediate1.isOccupied()
+                && (intermediate1.getPiece().isOwnedByPlayer1() != friendPlayer1)) ||
+                (intermediate2.isOccupied()
+                && (intermediate2.getPiece().isOwnedByPlayer1() != friendPlayer1));
     }
 }

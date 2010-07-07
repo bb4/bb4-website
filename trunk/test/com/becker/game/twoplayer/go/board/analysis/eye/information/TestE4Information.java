@@ -48,7 +48,7 @@ public class TestE4Information extends TestEyeTypeAnalyzer {
     }
 
     public void testFourBentTwoEndsFilled() {
-        GoBoard b = initializeBoard("four_space_bent_two_ends_filled", 7);
+        GoBoard b = initializeBoard("four_space_bent_two_ends_filled", 6);
 
         checkBlackEye(b, new E4Information(E1122.toString()), EyeStatus.ALIVE);
         checkWhiteEye(b, new E4Information(E1122.toString()), EyeStatus.ALIVE);
@@ -65,8 +65,8 @@ public class TestE4Information extends TestEyeTypeAnalyzer {
     public void testFourBentThreeFilled() {
         GoBoard b = initializeBoard("four_space_bent_three_filled", 5);
 
-        checkBlackEye(b, new E4Information(E1122.toString()), EyeStatus.UNSETTLED);
-        checkWhiteEye(b, new E4Information(E1122.toString()), EyeStatus.UNSETTLED); //?
+        checkBlackEye(b, new E4Information(E1122.toString()), EyeStatus.NAKADE);
+        checkWhiteEye(b, new E4Information(E1122.toString()), EyeStatus.UNSETTLED); 
     }
 
     public void testFourAliveInAtariVitalsSplit() {

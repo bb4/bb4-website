@@ -20,7 +20,7 @@ class StringNeighborAnalyzer {
 
     /**
      * Constructor
-     * @param board
+     * @param board the board
      */
     StringNeighborAnalyzer(GoBoard board) {
         board_ = board;
@@ -39,7 +39,7 @@ class StringNeighborAnalyzer {
         List<GoBoardPosition> stones = new ArrayList<GoBoardPosition>();
 
         List<GoBoardPosition> stack = new LinkedList<GoBoardPosition>();
-        assert box.contains(stone.getLocation()) : "stone " +  stone +" not in " + box;
+        assert box.contains(stone.getLocation()) : "stone " +  stone + " not in " + box;
 
         assert ( !stone.isVisited() ): "stone="+stone;
         stack.add( 0, stone );
@@ -62,16 +62,16 @@ class StringNeighborAnalyzer {
 
     /**
      * @param stone stone to find string neighbors for.
-     * @return string neighbors
+     * @return list of string neighbors of specified position.
      */
-    Set<GoString> findStringNeighbors(GoBoardPosition stone ) {
+    Set<GoString> findStringNeighbors(GoBoardPosition stone) {
         Set<GoString> stringNbrs = new HashSet<GoString>();
         List<GoBoardPosition> nobiNbrs = new LinkedList<GoBoardPosition>();
-        pushStringNeighbors(stone, false, nobiNbrs, false);
+
+        pushStringNeighbors(stone, true, nobiNbrs, false);
 
         // add strings only once
-        for (Object nn : nobiNbrs) {
-            GoBoardPosition nbr = (GoBoardPosition)nn;
+        for (GoBoardPosition nbr : nobiNbrs) {
             stringNbrs.add(nbr.getString());
         }
         return stringNbrs;
@@ -80,10 +80,9 @@ class StringNeighborAnalyzer {
     /**
      * @return all string neighbors of specified position.
      */
-    int pushStringNeighbors( GoBoardPosition s, boolean friendPlayer1, List<GoBoardPosition> stack,
-                                     boolean samePlayerOnly )
-    {
-        return pushStringNeighbors(s, friendPlayer1, stack, samePlayerOnly, NeighborType.OCCUPIED,
+    int pushStringNeighbors( GoBoardPosition s, boolean friendIsPlayer1, List<GoBoardPosition> stack,
+                                     boolean samePlayerOnly ) {
+        return pushStringNeighbors(s, friendIsPlayer1, stack, samePlayerOnly, NeighborType.OCCUPIED,
                                    new Box(1, 1, board_.getNumRows(), board_.getNumCols()));
     }
 
@@ -151,34 +150,34 @@ class StringNeighborAnalyzer {
      */
     private int checkNeighbor( int r, int c, int rowOffset, int colOffset,
                                     boolean friendOwnedByPlayer1, List<GoBoardPosition> stack,
-                                    boolean samePlayerOnly, NeighborType type)
-    {
+                                    boolean samePlayerOnly, NeighborType type) {
         GoBoardPosition nbr = (GoBoardPosition) board_.getPosition(r + rowOffset, c + colOffset);
 
         switch (type) {
+            case FRIEND:
             case OCCUPIED:
-                if ( !nbr.isVisited() && nbr.isOccupied() &&
+                 if ( !nbr.isVisited() && nbr.isOccupied() &&
                      (!samePlayerOnly || nbr.getPiece().isOwnedByPlayer1() == friendOwnedByPlayer1)) {
-                    stack.add( 0, nbr );
-                    return 1;
-                }
-                break;
-           case UNOCCUPIED:
-                if ( !nbr.isVisited() && nbr.isUnoccupied() ) {
-                    stack.add( 0, nbr );
-                    return 1;
-                }
-                break;
-           case NOT_FRIEND:
-                if ( !nbr.isVisited() &&
+                     stack.add( 0, nbr );
+                     return 1;
+                 }
+                 break;
+            case UNOCCUPIED:
+                 if ( !nbr.isVisited() && nbr.isUnoccupied() ) {
+                     stack.add( 0, nbr );
+                     return 1;
+                 }
+                 break;
+            case NOT_FRIEND:
+                 if ( !nbr.isVisited() &&
                     ( nbr.isUnoccupied() ||
                        ( nbr.isOccupied() && (nbr.getPiece().isOwnedByPlayer1() != friendOwnedByPlayer1))
                     ))  {
-                    stack.add( 0, nbr );
-                    return 1;
-                }
+                     stack.add( 0, nbr );
+                     return 1;
+                 }
                 break;
-           default : assert false: "unknown or unsupported neighbor type:"+type;
+           default : throw new IllegalArgumentException("Unsupported string neighbor type:" + type);
         }
         return 0;
     }

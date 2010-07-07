@@ -14,18 +14,21 @@ import com.becker.game.twoplayer.go.board.PositionalScore;
  */
 public final class GoStone extends GamePiece implements GoMember
 {
-
-    // The health is a number representing the influence of player1(black).
-    // A living black stone has a positive health, while a black stone in poor health
-    // has a negative health. The reverse is true for white.
-    // the range  is (-1.0 to 1.0)
+    /**
+     * The health is a number representing the influence of player1(black).
+     * A living black stone has a positive health, while a black stone in poor health
+     * has a negative health. The reverse is true for white.
+     * the range  is (-1.0 to 1.0)
+     */
     private float health_;
 
-    // if true then the stone is dead and implicitly removed from the board.
-    // this can only get set to true at the very end of the game when both players have passed.
+    /**
+     * If true then the stone is dead and implicitly removed from the board.
+     * this can only get set to true at the very end of the game when both players have passed.
+     */
     private boolean isDead_;
 
-    // This structure is used to store a detailed breakdown of this stones score. (for debugging).
+    /** This structure is used to store a detailed breakdown of this stones score. (for debugging). */
     private PositionalScore positionalScore_ = null;
 
 

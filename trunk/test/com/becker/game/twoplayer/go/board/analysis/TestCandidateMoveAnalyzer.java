@@ -30,10 +30,9 @@ public class TestCandidateMoveAnalyzer extends GoTestCase {
     public void testCandidateMoves3() {
         List<Location> expCandidates = new ArrayList<Location>(10);
         expCandidates.add(new Location(2, 5));
-        expCandidates.add(new Location(4, 1));
+        expCandidates.add(new Location(1, 4));
         expCandidates.add(new Location(4, 3));
-        expCandidates.add(new Location(5, 1));
-
+        expCandidates.add(new Location(5, 2));
 
         verifyCandidateMoves("problem_score55a", 4, expCandidates);
     }
@@ -75,7 +74,6 @@ public class TestCandidateMoveAnalyzer extends GoTestCase {
             for (Location loc : expCandidates) {
                 Assert.assertTrue("Invalid candidate position:" + loc, cma.isCandidateMove(loc.getRow(), loc.getCol()));
             }
-
         }
     }
 

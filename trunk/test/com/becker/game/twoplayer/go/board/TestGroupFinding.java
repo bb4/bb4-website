@@ -1,11 +1,8 @@
 package com.becker.game.twoplayer.go.board;
 
 import com.becker.common.Location;
-import com.becker.game.common.BoardPosition;
-import com.becker.game.twoplayer.go.GoMove;
 import com.becker.game.twoplayer.go.GoTestCase;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
-import junit.framework.Assert;
 
 import java.util.List;
 import java.util.Set;
@@ -89,7 +86,7 @@ public class TestGroupFinding extends GoTestCase {
     private void verifyGroupNeighbors(GoBoard board, Location loc, int expectedNumNeighbors)  {
         NeighborAnalyzer na = new NeighborAnalyzer(board);
         GoBoardPosition position = (GoBoardPosition)board.getPosition(loc);
-        Set<GoBoardPosition> group = na.getGroupNeighbors(position, true);
+        Set<GoBoardPosition> group = na.findGroupNeighbors(position, true);
         assertEquals("Unexpected number of group neighbors for : "+ position +" \n" + group + "\n",
                 expectedNumNeighbors, group.size());
     }

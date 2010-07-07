@@ -380,7 +380,7 @@ public class PostRemoveUpdater extends PostChangeUpdater {
         createAliveStatus(string);
 
         GoGroup group = string.getGroup();
-        Set nbrs = nbrAnalyzer_.getGroupNeighbors( stone, group.isOwnedByPlayer1(), false );
+        Set nbrs = nbrAnalyzer_.findGroupNeighbors( stone, group.isOwnedByPlayer1(), false );
 
         // create a set of friendly group nbrs and a separate set of enemy ones.
         Set<GoBoardPosition> friendlyNbrs = new HashSet<GoBoardPosition>(10);

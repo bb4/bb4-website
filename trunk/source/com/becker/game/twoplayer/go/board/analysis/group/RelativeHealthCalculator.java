@@ -1,6 +1,5 @@
 package com.becker.game.twoplayer.go.board.analysis.group;
 
-import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.GoProfiler;
 import com.becker.game.twoplayer.go.board.*;
 import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
@@ -127,7 +126,7 @@ public class RelativeHealthCalculator {
         
         // for every stone in the group.
         for (GoBoardPosition stone : groupStones) {
-            Set nbrs = nbrAnalyzer.getGroupNeighbors(stone, false);
+            Set nbrs = nbrAnalyzer.findGroupNeighbors(stone, false);
 
             // if the stone has any enemy nbrs then mark it visited.
             // later we will count how many got visited.
