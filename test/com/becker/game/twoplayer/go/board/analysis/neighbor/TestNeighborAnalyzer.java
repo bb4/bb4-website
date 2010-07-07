@@ -78,8 +78,8 @@ public class TestNeighborAnalyzer extends GoTestCase {
         GoBoard board = (GoBoard)controller_.getBoard();
         nbrAnalyzer_ = new NeighborAnalyzer(board);
         GoBoardPosition pos = (GoBoardPosition)board.getPosition(row, col);
-        int numSameNbrs = nbrAnalyzer_.getGroupNeighbors(pos, true).size();
-        int numNbrs = nbrAnalyzer_.getGroupNeighbors(pos, false).size();
+        int numSameNbrs = nbrAnalyzer_.findGroupNeighbors(pos, true).size();
+        int numNbrs = nbrAnalyzer_.findGroupNeighbors(pos, false).size();
 
         Assert.assertTrue("numSameNbrs="+numSameNbrs+" expected "+ expectedNumSameNbrs, numSameNbrs == expectedNumSameNbrs);
         Assert.assertTrue("numNbrs="+numNbrs+" expected "+ expectedNumNbrs, numNbrs == expectedNumNbrs);

@@ -93,21 +93,21 @@ public class NeighborAnalyzer {
     }
 
     /**
-     * @param stone stone to find string neighbors for.
+     * @param position stone or space to find string neighbors of.
      * @return string neighbors
      */
-    public Set<GoString> findStringNeighbors(GoBoardPosition stone ) {
-        return stringNbrAnalyzer_.findStringNeighbors(stone);
+    public Set<GoString> findStringNeighbors(GoBoardPosition position ) {
+        return stringNbrAnalyzer_.findStringNeighbors(position);
     }
 
     /**
      * This version assumes that the stone is occupied.
      * @return the list of stones in the group that was found.
      */
-    public Set<GoBoardPosition> getGroupNeighbors( GoBoardPosition position, boolean samePlayerOnly ) {
+    public Set<GoBoardPosition> findGroupNeighbors( GoBoardPosition position, boolean samePlayerOnly ) {
         assert (position != null);
         assert (position.getPiece() != null);
-        return getGroupNeighbors( position, position.getPiece().isOwnedByPlayer1(), samePlayerOnly );
+        return findGroupNeighbors( position, position.getPiece().isOwnedByPlayer1(), samePlayerOnly );
     }
 
     /**
@@ -123,14 +123,10 @@ public class NeighborAnalyzer {
      * @param samePlayerOnly if true then find group nbrs that are have same ownership as friendPlayer1
      * @return group neighbors
      */
-    public Set<GoBoardPosition> getGroupNeighbors( GoBoardPosition stone, boolean friendPlayer1,
+    public Set<GoBoardPosition> findGroupNeighbors( GoBoardPosition stone, boolean friendPlayer1,
                                                    boolean samePlayerOnly ) {
-        GoProfiler.getInstance().start(GoProfiler.GET_GROUP_NBRS);
-
         Set<GoBoardPosition> nbrStones =
-                groupNbrAnalyzer_.getGroupNeighbors(stone, friendPlayer1, samePlayerOnly);
-
-        GoProfiler.getInstance().stop(GoProfiler.GET_GROUP_NBRS);
+                groupNbrAnalyzer_.findGroupNeighbors(stone, friendPlayer1, samePlayerOnly);
         return nbrStones;
     }
 

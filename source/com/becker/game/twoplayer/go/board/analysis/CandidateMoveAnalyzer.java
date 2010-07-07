@@ -28,7 +28,7 @@ public class CandidateMoveAnalyzer {
         board_ = board;
         size_ = board.getNumRows();
         candidateMoves_ = new boolean[size_ + 1][size_ + 1];
-        initiallize();
+        initialize();
     }
 
     /**
@@ -49,6 +49,7 @@ public class CandidateMoveAnalyzer {
         for (int i = 1; i <= size_; i++ ) {
             for (int j = 1; j <= size_; j++ ) {
                 if ( isCandidateMove(i, j) ) {
+                    System.out.println("cand="  + i +  " " + j);
                     num++;
                 }
             }
@@ -63,7 +64,7 @@ public class CandidateMoveAnalyzer {
      * Fill a 2 stone wide strip on the 3rd and 4rth lines of the board.
      * This includes the star points and many others as candidates to consider
      */
-    private void initiallize()
+    private void initialize()
     {
         for (int i = 3; i <= size_ - 2; i++ ) {
              tryToAddCandidateMove(board_.getPosition(i, 3));
@@ -128,7 +129,6 @@ public class CandidateMoveAnalyzer {
         GoBoardPosition pos = (GoBoardPosition) position;
 
         if (pos.isUnoccupied() && !(pos.getEye() != null && pos.getEye().isUnconditionallyAlive())) {
-
             candidateMoves_[pos.getRow()][pos.getCol()] = true;
         }
     }

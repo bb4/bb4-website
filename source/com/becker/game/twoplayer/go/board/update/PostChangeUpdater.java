@@ -52,7 +52,7 @@ public abstract class PostChangeUpdater {
     }
 
     /**
-     * adjust the liberties on the strings (both black and white) that we touch.
+     * Adjust the liberties on the strings (both black and white) that we touch.
      * @param liberty  - either occupied or not depending on if we are placing the stone or removing it.
      */
     protected void adjustLiberties(GoBoardPosition liberty) {

@@ -27,5 +27,4 @@ public class TestAllBoard extends GoTestCase {
 
         return suite;
     }
-
 }
