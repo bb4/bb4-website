@@ -8,7 +8,7 @@ import com.becker.game.twoplayer.go.board.analysis.group.StubGoGroup;
 /**
  * @author Barry Becker
  */
-public class GoBoardUtilTest extends GoTestCase {
+public class TestGoBoardUtil extends GoTestCase {
 
     public void testDeadWhiteStoneInLiveBlackGroupIsMuchWeaker() {
 

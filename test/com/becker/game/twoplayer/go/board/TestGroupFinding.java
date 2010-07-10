@@ -23,7 +23,7 @@ public class TestGroupFinding extends GoTestCase {
 
         // white group neighbors
         verifyGroupNeighbors(b, new Location(4, 5), 3);
-        verifyGroupNeighbors(b, new Location(5, 6), 5);
+        verifyGroupNeighbors(b, new Location(5, 6), 6);
         verifyGroupNeighbors(b, new Location(6, 7), 5);
         verifyGroupNeighbors(b, new Location(7, 5), 6);   // 8?
 
@@ -31,7 +31,7 @@ public class TestGroupFinding extends GoTestCase {
         verifyGroupNeighbors(b, new Location(4, 6), 3);
         verifyGroupNeighbors(b, new Location(8, 8), 5);   // 6?
         verifyGroupNeighbors(b, new Location(6, 7), 5);
-        verifyGroupNeighbors(b, new Location(9, 7), 4);
+        verifyGroupNeighbors(b, new Location(9, 7), 5);
         verifyGroupNeighbors(b, new Location(8, 6), 5);
     }
 
@@ -39,12 +39,11 @@ public class TestGroupFinding extends GoTestCase {
         GoBoard b = initializeBoard("false_ko_eye2");
 
         // white group neighbors
-        verifyGroupNeighbors(b, new Location(13, 7), 4);   // 6
-        verifyGroupNeighbors(b, new Location(12, 8), 2);   // 3
+        verifyGroupNeighbors(b, new Location(13, 7), 5);   // 6
+        verifyGroupNeighbors(b, new Location(12, 8), 3);   
         
-
         // black group neighbors
-        verifyGroupNeighbors(b, new Location(10, 8), 8);
+        verifyGroupNeighbors(b, new Location(10, 8), 9);
         verifyGroupNeighbors(b, new Location(12, 7), 1);   
         
     }

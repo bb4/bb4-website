@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.go.board.analysis;
 import com.becker.game.twoplayer.go.GoTestCase;
 import com.becker.game.twoplayer.go.board.analysis.eye.TestAllEye;
 import com.becker.game.twoplayer.go.board.analysis.group.TestAllGroup;
+import com.becker.game.twoplayer.go.board.analysis.neighbor.TestAllNeighbor;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.TestNeighborAnalyzer;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -23,10 +24,11 @@ public class TestAllAnalysis extends GoTestCase {
 
         suite.addTest(TestAllGroup.suite());
         suite.addTest(TestAllEye.suite());
+        suite.addTest(TestAllNeighbor.suite());
 
         suite.addTestSuite(TestShapeAnalyzer.class);
         suite.addTestSuite(TestCandidateMoveAnalyzer.class);
-        suite.addTestSuite(TestNeighborAnalyzer.class);
+        suite.addTestSuite(TestGoBoardUtil.class);
         
         return suite;
     }
