@@ -72,6 +72,10 @@ public class TestNeighborAnalyzer extends GoTestCase {
         verifyGroupNbrs("groupNbr12", 4, 4, 5, 5);
     }
 
+    public void testGetGroupNbrs13() {
+        verifyGroupNbrs("groupNbr13", 2, 6, 2, 6);  // 4, 5?
+    }
+
     private void verifyGroupNbrs(String file, int row, int col, int expectedNumSameNbrs, int expectedNumNbrs) {
         restore(PREFIX +file);
 

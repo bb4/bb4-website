@@ -1,14 +1,9 @@
 package com.becker.game.twoplayer.go.board.analysis.neighbor;
 
-import com.becker.common.Box;
 import com.becker.game.twoplayer.go.GoTestCase;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.GoStone;
 import junit.framework.Assert;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Verify that all our neighbor analysis methods work.

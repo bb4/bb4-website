@@ -13,7 +13,7 @@ import java.util.List;
 import static com.becker.game.twoplayer.go.board.analysis.eye.EyeShapeScores.*;
 
 /**
- * Subtype containing MetaData for the different possible Eye shapes of size 6.
+ * Eye6Type containing MetaData for the different possible Eye shapes of size 6.
  * There are 8 different subtypes to consider.
  *
  * @author Barry Becker
@@ -21,15 +21,15 @@ import static com.becker.game.twoplayer.go.board.analysis.eye.EyeShapeScores.*;
 public class E6Information extends AbstractEyeSubtypeInformation
 {
     /** Different sorts of eye with 6 spaces. */
-    enum Subtype {E112222, E111223, E111133, E112233, E112233a, E112233b, E122223, E112224, E111124, E222233}
-    private Subtype type;
+    public enum Eye6Type {E112222, E111223, E111133, E112233, E112233a, E112233b, E122223, E112224, E111124, E222233}
+    private Eye6Type type;
 
     /**
      * Constructor
      * @param subTypeDesc description of the type - something like "E112223".
      */
     E6Information(String subTypeDesc) {
-        type = Subtype.valueOf(subTypeDesc);
+        type = Eye6Type.valueOf(subTypeDesc);
         switch(type) {
            case E112222 : initialize(true, 6, 13, GUARANTEED_TWO_EYES);
                break;
@@ -70,8 +70,8 @@ public class E6Information extends AbstractEyeSubtypeInformation
             case E111133 :
                 handleSubtypeWithLifeProperty(eye, board);
             case E112233 :
-                Subtype E112233Subtype = determineE112233Subtype(nbrMap);
-                if (E112233Subtype == Subtype.E112233a) {
+                Eye6Type E112233Subtype = determineE112233Subtype(nbrMap);
+                if (E112233Subtype == Eye6Type.E112233a) {
                    return handleVitalPointCases(nbrMap, eye, 2);
                 }
                 else {
@@ -100,7 +100,7 @@ public class E6Information extends AbstractEyeSubtypeInformation
      * if the box defined by those 2 positions contains the other 4 spaces, then case b, else a
      * @return the subtype E112233a or E112233b
      */
-    private Subtype determineE112233Subtype(EyeNeighborMap nbrMap) {
+    private Eye6Type determineE112233Subtype(EyeNeighborMap nbrMap) {
 
         List<GoBoardPosition> oneNbrPoints = new ArrayList<GoBoardPosition>(2);
         List<GoBoardPosition> otherPoints = new ArrayList<GoBoardPosition>(4);
@@ -118,10 +118,10 @@ public class E6Information extends AbstractEyeSubtypeInformation
 
         for (GoBoardPosition otherPt : otherPoints) {
             if (!bounds.contains(otherPt.getLocation())) {
-                return Subtype.E112233a;
+                return Eye6Type.E112233a;
             }
         }
-        return Subtype.E112233b;
+        return Eye6Type.E112233b;
     }
 
     public String getTypeName() {

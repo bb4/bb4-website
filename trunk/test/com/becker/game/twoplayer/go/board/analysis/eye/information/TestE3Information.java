@@ -89,6 +89,21 @@ public class TestE3Information extends TestEyeTypeAnalyzer {
     }
 
 
+    public void testThreeSpaceEyeWithTwoFilledInAtari() {
+        GoBoard b = initializeBoard("three_space_eye_two_filled_in_atari", 4);
+
+        checkBlackEye(b, new E3Information(), EyeStatus.NAKADE);
+        checkWhiteEye(b, new E3Information(), EyeStatus.NAKADE);
+    }
+
+    public void testThreeSpaceEyeWithTwoEndsFilledInAtari() {
+        GoBoard b = initializeBoard("three_space_eye_two_ends_filled_in_atari", 7);
+
+        checkBlackEye(b, new E3Information(), EyeStatus.UNSETTLED);
+        //checkWhiteEye(b, new E3Information(), EyeStatus.UNSETTLED);
+    }
+
+
     public static Test suite() {
         return new TestSuite(TestE3Information.class);
     }

@@ -8,7 +8,7 @@ import com.becker.game.twoplayer.go.board.analysis.eye.EyeStatus;
 import static com.becker.game.twoplayer.go.board.analysis.eye.EyeShapeScores.*;
 
 /**
- * Subtype containing MetaData for the different possible Eye shapes of size 5.
+ * Eye6Type containing MetaData for the different possible Eye shapes of size 5.
  * There are 4 different subtypes to consider.
  *
  * @author Barry Becker
@@ -16,7 +16,7 @@ import static com.becker.game.twoplayer.go.board.analysis.eye.EyeShapeScores.*;
 public class E5Information extends AbstractEyeSubtypeInformation
 {
     /** Different sorts of eye with 5 spaces. */
-    enum Eye5Type {E11222, E11123, E11114,  E12223}
+    public enum Eye5Type {E11222, E11123, E11114,  E12223}
     private Eye5Type e5Type;
 
     /**
