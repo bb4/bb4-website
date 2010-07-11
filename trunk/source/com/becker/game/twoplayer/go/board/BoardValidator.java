@@ -38,8 +38,8 @@ public class BoardValidator {
 
     /**
      * 
-     * @param seed
-     * @param list
+     * @param seed stone to start checking from .
+     * @param list list of stones to verify no duplicates in.
      */
     void confirmNoDupes( GoBoardPosition seed, List list )
     {
@@ -234,10 +234,9 @@ public class BoardValidator {
     }
 
     /**
-     * 
      * @param largerGroup
      * @param smallerGroup
-     * @return
+     * @return true if larger group contains smaller group.
      */
     static boolean confirmStoneListContains(List<GoBoardPosition> largerGroup, List<GoBoardPosition> smallerGroup)
     {

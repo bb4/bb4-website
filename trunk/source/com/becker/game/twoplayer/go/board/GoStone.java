@@ -1,9 +1,7 @@
 package com.becker.game.twoplayer.go.board;
 
-import com.becker.common.*;
 import com.becker.common.util.Util;
 import com.becker.game.common.*;
-import com.becker.game.twoplayer.go.board.PositionalScore;
 
 /**
  * A GoStone describes the physical marker at a location on the board.

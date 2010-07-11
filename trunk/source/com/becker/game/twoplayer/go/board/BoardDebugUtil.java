@@ -7,7 +7,6 @@ package com.becker.game.twoplayer.go.board;
 
 import com.becker.game.common.GameContext;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -44,14 +43,6 @@ public final class BoardDebugUtil {
         }
         return buf.substring(0, buf.length() - 2);
     }
-
-    static void debugPrintList( int logLevel, String title, List<GoBoardPosition> stones)
-    {
-        if (stones == null)
-            return;
-        GameContext.log(logLevel, debugPrintListText(logLevel, title, stones));
-    }
-
 
     /**
      * pretty print a list of all the current groups (and the strings they contain)

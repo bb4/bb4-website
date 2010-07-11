@@ -67,11 +67,12 @@ public abstract class GoSet implements GoMember
     }
 
     /**
+     * @@ need synchronized?
      * @return a deep copy of this GoSet
      * @throws CloneNotSupportedException
      */
     @Override
-    public Object clone() throws CloneNotSupportedException
+    public synchronized Object clone() throws CloneNotSupportedException
     {
         Object clone = super.clone();
 

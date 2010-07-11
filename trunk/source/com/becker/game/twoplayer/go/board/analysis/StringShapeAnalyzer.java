@@ -26,7 +26,8 @@ public class StringShapeAnalyzer {
     }
     
     /**
-     * @return a number corresponding to the number of clumps of 4 or empty triangles that this stone is connected to.
+     * @return a measure of the severity - a number corresponding to the number of clumps
+     *  of 4 or empty triangles that this stone is connected to.
      * returns 0 if does not form bad shape at all. Large numbers indicate worse shape.
      * Possible bad shapes are :
      *  SHAPE_EMPTY_TRIANGLE :  
@@ -42,13 +43,10 @@ public class StringShapeAnalyzer {
         int r = position.getRow();
         int c = position.getCol();
 
-        int severity =
-                checkBadShape(stone, r, c,  1,-1)
+        return checkBadShape(stone, r, c,  1,-1)
              + checkBadShape(stone, r, c, -1,-1)
              + checkBadShape(stone, r, c,  1, 1)
              + checkBadShape(stone, r, c, -1, 1);
-
-        return severity;
     }
 
     /**

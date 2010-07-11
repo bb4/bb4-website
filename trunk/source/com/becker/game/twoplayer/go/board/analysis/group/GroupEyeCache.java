@@ -63,8 +63,9 @@ public class GroupEyeCache {
         }
 
         EyeSpaceAnalyzer eyeAnalyzer = new EyeSpaceAnalyzer(group_, board);
+        EyePotentialAnalyzer potentialAnalyzer = new EyePotentialAnalyzer(group_, board);
         eyes_ = eyeAnalyzer.determineEyes();
-        eyePotential_ = eyeAnalyzer.calculateEyePotential();
+        eyePotential_ = potentialAnalyzer.calculateEyePotential();
         isValid_ = true;
     }
 

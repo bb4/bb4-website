@@ -185,42 +185,53 @@ public class TerritoryAnalyzer {
         int min = 1+edgeOffset;
         int rMax = board_.getNumRows() - edgeOffset;
         int cMax = board_.getNumCols() - edgeOffset;
+        Box box = new Box(min, min, rMax, cMax);
 
         List<List<GoBoardPosition>> emptyLists = new LinkedList<List<GoBoardPosition>>();
-        NeighborAnalyzer na = new NeighborAnalyzer(board_);
+
         for ( int i = min; i <= rMax; i++ )  {
            for ( int j = min; j <= cMax; j++ ) {
                GoBoardPosition pos = (GoBoardPosition)board_.getPosition(i, j);
-               if (pos.getString() == null && !pos.isInEye()) {
-                   assert pos.isUnoccupied();
-                   if (!pos.isVisited()) {
-
-                       // don't go all the way to the borders (until the end of the game),
-                       // since otherwise we will likely get only one big empty region.
-                       List<GoBoardPosition> empties =
-                               nbrAnalyzer_.findStringFromInitialPosition(pos, false, false, NeighborType.UNOCCUPIED,
-                                                                          new Box(min, min, rMax, cMax));
-                       emptyLists.add(empties);
-                       
-                       Set<GoBoardPosition> nbrs = na.findOccupiedNobiNeighbors(empties);
-                       float avg = calcAverageScore(nbrs);
-
-                       float score = avg * (float)nbrs.size() / Math.max(1, Math.max(nbrs.size(), empties.size()));
-                       assert (score <= 1.0 && score >= -1.0): "score="+score+" avg="+avg;
-                      
-                       for (GoBoardPosition space : empties) {
-                           space.setScoreContribution(score);
-                           diffScore += score;
-                       }
-                   }
-               }
-               else if (pos.isInEye()) {
-                   pos.setScoreContribution(pos.getGroup().isOwnedByPlayer1()? 0.1 : -0.1);
-               }
+               diffScore = updateEmptyRegionFromSeed(diffScore, box, emptyLists, pos);
            }
         }
 
         GoBoardUtil.unvisitPositionsInLists(emptyLists);
+        return diffScore;
+    }
+
+    /**
+     * Update diff?Score for the who string connected to pos and mark it visited.
+     * If pos is in an eye, update the score contribution for that eye space.
+     * @return update diffScore value.
+     */
+    private float updateEmptyRegionFromSeed(float diffScore, Box box, List<List<GoBoardPosition>> emptyLists,
+                                            GoBoardPosition pos) {
+        if (pos.getString() == null && !pos.isInEye()) {
+            assert pos.isUnoccupied();
+            if (!pos.isVisited()) {
+
+                // don't go all the way to the borders (until the end of the game),
+                // since otherwise we will likely get only one big empty region.
+                List<GoBoardPosition> empties =
+                        nbrAnalyzer_.findStringFromInitialPosition(pos, false, false, NeighborType.UNOCCUPIED, box);
+                emptyLists.add(empties);
+
+                Set<GoBoardPosition> nbrs = nbrAnalyzer_.findOccupiedNobiNeighbors(empties);
+                float avg = calcAverageScore(nbrs);
+
+                float score = avg * (float)nbrs.size() / Math.max(1, Math.max(nbrs.size(), empties.size()));
+                assert (score <= 1.0 && score >= -1.0): "score="+score+" avg="+avg;
+
+                for (GoBoardPosition space : empties) {
+                    space.setScoreContribution(score);
+                    diffScore += score;
+                }
+            }
+        }
+        else if (pos.isInEye()) {
+            pos.setScoreContribution(pos.getGroup().isOwnedByPlayer1()? 0.1 : -0.1);
+        }
         return diffScore;
     }
 
