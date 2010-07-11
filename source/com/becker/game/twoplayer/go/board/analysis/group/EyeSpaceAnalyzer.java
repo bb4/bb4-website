@@ -1,6 +1,5 @@
 package com.becker.game.twoplayer.go.board.analysis.group;
 
-import com.becker.common.Location;
 import com.becker.game.twoplayer.go.board.*;
 import com.becker.common.Box;
 import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
@@ -10,13 +9,13 @@ import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborType;
 import java.util.*;
 
 /**
- * Methods related to understanding the eyes within a group.
+ * Methods related to understanding the eye spaces within a group.
  *
  * @author Barry Becker
  */
 class EyeSpaceAnalyzer {
 
-    /** The group of go stones that we are analyzing. */
+    /** The group of go stones that we are analyzing eyespace for. */
     private GoGroup group_;
 
     private GoBoard board_;
@@ -34,7 +33,7 @@ class EyeSpaceAnalyzer {
         board_ = board;
         nbrAnalyzer_ = new NeighborAnalyzer(board);
         assert board_ != null;
-        boundingBox_ = findBoundingBox(group_.getMembers());
+        boundingBox_ = group_.findBoundingBox();
     }
 
     /**
@@ -108,22 +107,22 @@ class EyeSpaceAnalyzer {
         if ( boundingBox_.getMinCol() > 1 ) {
             for ( int r = rMin; r <= rMax; r++ )
                 excludeSeed( (GoBoardPosition) board_.getPosition( r, cMin ),
-                        ownedByPlayer1, board_, lists, boundingBox_ );
+                        ownedByPlayer1, lists, boundingBox_ );
         }
         if ( boundingBox_.getMaxCol() < board_.getNumCols() ) {
             for ( int r = rMin; r <= rMax; r++ )
                 excludeSeed( (GoBoardPosition) board_.getPosition( r, cMax ),
-                        ownedByPlayer1, board_, lists, boundingBox_ );
+                        ownedByPlayer1, lists, boundingBox_ );
         }
         if ( rMin > 1 ) {
             for ( int c = cMin; c <= cMax; c++ )
                 excludeSeed( (GoBoardPosition) board_.getPosition( rMin, c ),
-                        ownedByPlayer1, board_, lists, boundingBox_ );
+                        ownedByPlayer1, lists, boundingBox_ );
         }
         if ( rMax < board_.getNumRows() ) {
             for ( int c = cMin; c <= cMax; c++ )
                 excludeSeed( (GoBoardPosition) board_.getPosition( rMax, c ),
-                        ownedByPlayer1, board_, lists, boundingBox_ );
+                        ownedByPlayer1, lists, boundingBox_ );
         }
 
         clearEyes(rMin, rMax, cMin, cMax);
@@ -141,163 +140,14 @@ class EyeSpaceAnalyzer {
         }
     }
 
-    /**
-     * Expand the bbox by one in all directions.
-     * if the bbox is within one space of the edge, extend it all the way to the edge.
-     * loop through the rows and columns calculating distances from group stones
-     * to the edge and to other stones.
-     * if there is a (mostly living) enemy stone in the run, don't count the run.
-     * @return eyePtoential - a measure of how easily this group can make 2 eyes (0 - 2; 2 meaning has 2 eyes).
-     */
-    public float calculateEyePotential() {
-        int numRows = board_.getNumRows();
-        int numCols = board_.getNumCols();
-
-        boundingBox_.expandGloballyBy(1, numRows, numCols);
-        boundingBox_.expandBordersToEdge(1, numRows, numCols);
-        return findTotalEyePotential();
-    }
-
-    /**
-     * @return eyePotential - a measure of how easily this group can make 2 eyes (0 - 2; 2 meaning has 2 eyes).
-     */
-    private float findTotalEyePotential() {
-
-        // make sure that every internal enemy stone is really an enemy and not just dead.
-        // compare it with one of the group strings.
-        GoString groupString = group_.getMembers().iterator().next();
-
-        int rMin = boundingBox_.getMinRow();
-        int rMax = boundingBox_.getMaxRow();
-        int cMin = boundingBox_.getMinCol();
-        int cMax = boundingBox_.getMaxCol();
-        float totalPotential = 0;
-
-        // first look at the row runs
-        for ( int r = boundingBox_.getMinRow(); r <= boundingBox_.getMaxRow(); r++ ) {
-            totalPotential += getRowColPotential(r, cMin, 0, 1, rMax, cMax, board_, groupString);
-        }
-        // now accrue column run potentials
-        for ( int c = cMin; c <= cMax; c++ ) {
-            totalPotential += getRowColPotential(rMin, c, 1, 0, rMax, cMax, board_, groupString);
-        }
-
-        return (float)Math.min(1.9, Math.sqrt(totalPotential)/1.3);
-    }
-
-    /**
-     * Find the potential for one of the bbox's rows or columns.
-     * @return eye potential for row and column at r,c
-     *
-     */
-    private float getRowColPotential(int row, int col, int rowInc, int colInc, int maxRow, int maxCol,
-                                     GoBoard board, GoString groupString) {
-        float rowPotential = 0;
-        Location pos  = new Location(row, col);
-        int breadth = (rowInc ==1)? (maxRow - row) : (maxCol - col);
-        GoBoardPosition startSpace = (GoBoardPosition) board.getPosition( pos );
-        do {
-            GoBoardPosition space = (GoBoardPosition) board.getPosition( pos );
-            GoBoardPosition firstSpace = space;
-            boolean containsEnemy = false;
-            int runLength = 0;
-            boolean ownedByPlayer1 = group_.isOwnedByPlayer1();
-
-            while (pos.getCol() <= maxCol && pos.getRow() <= maxRow && (space.isUnoccupied() ||
-                      (space.isOccupied() && space.getPiece().isOwnedByPlayer1() != ownedByPlayer1))) {
-                if (space.isOccupied() &&  space.getPiece().isOwnedByPlayer1() != ownedByPlayer1
-                    && groupString.isEnemy(space)) {
-                    containsEnemy =  true;
-                }
-                runLength++;
-                pos.increment(rowInc, colInc);
-                space = (GoBoardPosition) board.getPosition( pos );
-            }
-            boolean bounded = !(firstSpace.equals(startSpace)) && space!=null && space.isOccupied();
-            // now accrue the potential
-            if (!containsEnemy && runLength < breadth && runLength > 0) {
-                 int firstPos, max, currentPos;
-                 if (rowInc ==1) {
-                     firstPos = firstSpace.getRow();
-                     max = board.getNumRows();
-                     currentPos = pos.getRow();
-                 } else {
-                     firstPos = firstSpace.getCol();
-                     max = board.getNumCols();
-                     currentPos = pos.getCol();
-                 }
-                 rowPotential += getRunPotential(runLength, firstPos, currentPos, max, bounded);
-            }
-            pos.increment(rowInc, colInc);
-        } while (pos.getCol() <= maxCol && pos.getRow() <= maxRow);
-        return rowPotential;
-    }     
-
-    /**
-     * @return potential score for the runlength.
-     */
-    private float getRunPotential(int runLength, int firstPos, int endPosP1, int max,
-                                                    boolean boundedByFriendStones) {
-        float potential = 0;
-        assert(runLength > 0);
-
-        if ((firstPos == 1 || endPosP1 == max || boundedByFriendStones)) {
-            potential = getRunPotentialOnEdge(runLength);
-        }
-        else {
-            potential = getRunPotentialToBoundary(runLength);
-        }
-        return potential;
-    }
-
-    /**
-     * this case is where the run is next to an edge or bounded by friend stones.
-     * Weight the potential more heavily.
-     * @return potential score for the runlength.
-     */
-    private float getRunPotentialOnEdge(int runLength) {
-        float potential;
-        switch (runLength) {
-            case 1: potential = 0.25f; break;
-            case 2: potential = 0.35f; break;
-            case 3: potential = 0.4f; break;
-            case 4: potential = 0.3f; break;
-            case 5: potential = 0.2f; break;
-            case 6: potential = 0.15f; break;
-            case 7: potential = 0.1f; break;
-            default : potential = 0.05f;
-        }
-        return potential;
-    }
-
-    /**
-     * a run to boundary. Less weight attributed.
-     * @return potential score for the runlength.
-     */
-    private float getRunPotentialToBoundary(int runLength) {
-        float potential;
-        switch (runLength) {
-            case 1: potential = 0.05f; break;
-            case 2: potential = 0.15f; break;
-            case 3: potential = 0.2f; break;
-            case 4: potential = 0.25f; break;
-            case 5: potential = 0.2f; break;
-            case 6: potential = 0.15f; break;
-            case 7: potential = 0.1f; break;
-            case 8: potential = 0.06f; break;    // was 0.6
-            default : potential = 0.05f;
-        }
-        return potential;
-    }
 
     /**
      * Mark as visited all the non-friend (empty or enemy) spaces connected to this one.
      *
      * @param space seed
-     * @param board owner
      * @param lists list of stones connected to the seed stone
      */
-    private void excludeSeed( GoBoardPosition space, boolean groupOwnership, GoBoard board,
+    private void excludeSeed( GoBoardPosition space, boolean groupOwnership,
                               List<List<GoBoardPosition>> lists, Box box)
     {
         if ( !space.isVisited()
@@ -328,7 +178,6 @@ class EyeSpaceAnalyzer {
             }
         }
     }
-
 
     /**
      * Check this list of stones to confirm that enemy stones don't border it.
@@ -361,32 +210,5 @@ class EyeSpaceAnalyzer {
         }
         // if we make it here, its a bonafied eye.
         return true;
-    }
-
-    /**
-     * @param positions to find bounding box of
-     * @return bounding box of set of stones/positions passed in
-     */
-    private static Box findBoundingBox(Set<GoString> positions)  {
-        int rMin = 100000; // something huge ( more than max rows)
-        int rMax = 0;
-        int cMin = 100000; // something huge ( more than max cols)
-        int cMax = 0;
-
-        // first determine a bounding rectangle for the group.
-
-        for (GoString string : positions) {
-
-            for (GoBoardPosition stone : string.getMembers()) {
-                int row = stone.getRow();
-                int col = stone.getCol();
-                if (row < rMin) rMin = row;
-                if (row > rMax) rMax = row;
-                if (col < cMin) cMin = col;
-                if (col > cMax) cMax = col;
-            }
-        }
-
-        return new Box(rMin, cMin, rMax, cMax);
     }
 }

@@ -8,7 +8,6 @@ package com.becker.game.twoplayer.go.board.analysis;
 import com.becker.game.common.BoardPosition;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.GoStone;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -21,7 +20,7 @@ import java.util.Set;
 public class StringLibertyAnalyzer {
 
 
-/** Keep track of number of liberties instead of computing each time (for performance). */
+    /** Keep track of number of liberties instead of computing each time (for performance). */
     private Set<GoBoardPosition> liberties_;
 
     //private GoBoard board_;
@@ -29,7 +28,6 @@ public class StringLibertyAnalyzer {
     public StringLibertyAnalyzer(GoBoard board, Set<GoBoardPosition> members) {
         initializeLiberties(board, members);
     }
-
 
 
     public Set initializeLiberties(GoBoard board, Set<GoBoardPosition> members) {
@@ -44,9 +42,9 @@ public class StringLibertyAnalyzer {
 
     /**
      * return the set of liberty positions that the string has
-     * @param board
+     * @return number of liberties taht the string has
      */
-    public final Set<GoBoardPosition> getLiberties(GoBoard board)
+    public final Set<GoBoardPosition> getLiberties()
     {
         return liberties_;
     }
@@ -67,7 +65,6 @@ public class StringLibertyAnalyzer {
              liberties_.add(libertyPos);
          }
     }
-
 
 
     /**
@@ -98,6 +95,5 @@ public class StringLibertyAnalyzer {
         if ( libertySpace.isUnoccupied() )
             liberties.add( (GoBoardPosition)libertySpace );
     }
-
 
 }

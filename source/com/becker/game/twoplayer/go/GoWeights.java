@@ -34,10 +34,10 @@ public class GoWeights extends GameWeights {
         //"Min Difference between health of two groups for one to be considered dead relative to the other"
     };
 
-    static final int HEALTH_WEIGHT_INDEX = 0;
-    static final int POSITIONAL_WEIGHT_INDEX = 1;
-    static final int BAD_SHAPE_WEIGHT_INDEX = 2;
-    static final int CAPTURE_WEIGHT_INDEX = 3;
+    public static final int HEALTH_WEIGHT_INDEX = 0;
+    public static final int POSITIONAL_WEIGHT_INDEX = 1;
+    public static final int BAD_SHAPE_WEIGHT_INDEX = 2;
+    public static final int CAPTURE_WEIGHT_INDEX = 3;
 
     public GoWeights() {
         super( DEFAULT_WEIGHTS, MIN_WEIGHTS, MAX_WEIGHTS,

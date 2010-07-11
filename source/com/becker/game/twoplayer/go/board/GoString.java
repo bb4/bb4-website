@@ -195,7 +195,7 @@ public class GoString extends GoSet implements IGoString
     @Override
     public final Set<GoBoardPosition> getLiberties(GoBoard board)
     {
-        return libertyAnalyzer_.getLiberties(board);
+        return libertyAnalyzer_.getLiberties();
     }
 
     /**
@@ -234,7 +234,7 @@ public class GoString extends GoSet implements IGoString
         assert (getGroup().isOwnedByPlayer1() == this.isOwnedByPlayer1()): getGroup()+" string=" + this;
         return ((stone.isOwnedByPlayer1() != this.isOwnedByPlayer1() && !stoneMuchWeaker));
     }
-
+    
     /**
      * make sure all the stones in the string are unvisited
      */

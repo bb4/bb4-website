@@ -1,8 +1,8 @@
 package com.becker.game.twoplayer.go.board;
 
+import com.becker.common.Box;
 import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
 import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzer;
-import com.becker.game.twoplayer.go.*;
 import com.becker.common.util.Util;
 import com.becker.game.common.*;
 
@@ -305,6 +305,33 @@ public final class GoGroup extends GoSet implements IGoGroup
         boolean muchWeaker = GoBoardUtil.isStoneMuchWeaker(this, stone);
 
         return ( stone.isOwnedByPlayer1() != ownedByPlayer1_  && !muchWeaker);
+    }
+
+
+    /**
+     * @return bounding box of set of stones/positions passed in
+     */
+    public Box findBoundingBox()  {
+        int rMin = 100000; // something huge ( more than max rows)
+        int rMax = 0;
+        int cMin = 100000; // something huge ( more than max cols)
+        int cMax = 0;
+
+        // first determine a bounding rectangle for the group.
+
+        for (GoString string : this.getMembers()) {
+
+            for (GoBoardPosition stone : string.getMembers()) {
+                int row = stone.getRow();
+                int col = stone.getCol();
+                if (row < rMin) rMin = row;
+                if (row > rMax) rMax = row;
+                if (col < cMin) cMin = col;
+                if (col > cMax) cMax = col;
+            }
+        }
+
+        return new Box(rMin, cMin, rMax, cMax);
     }
 
     /**

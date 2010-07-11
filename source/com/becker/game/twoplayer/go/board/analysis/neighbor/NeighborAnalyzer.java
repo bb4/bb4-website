@@ -125,9 +125,8 @@ public class NeighborAnalyzer {
      */
     public Set<GoBoardPosition> findGroupNeighbors( GoBoardPosition stone, boolean friendPlayer1,
                                                    boolean samePlayerOnly ) {
-        Set<GoBoardPosition> nbrStones =
-                groupNbrAnalyzer_.findGroupNeighbors(stone, friendPlayer1, samePlayerOnly);
-        return nbrStones;
+       return groupNbrAnalyzer_.findGroupNeighbors(stone, friendPlayer1, samePlayerOnly);
+
     }
 
     /**

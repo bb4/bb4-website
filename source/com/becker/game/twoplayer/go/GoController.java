@@ -1,9 +1,7 @@
 package com.becker.game.twoplayer.go;
 
-import com.becker.game.twoplayer.go.board.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.GoStone;
-import com.becker.game.twoplayer.go.board.PositionalScore;
-import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.*;
+import com.becker.game.twoplayer.go.board.analysis.PositionalScoreAnalyzer;
 import com.becker.game.twoplayer.go.board.analysis.StringShapeAnalyzer;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.game.common.*;
@@ -28,13 +26,11 @@ public final class GoController extends TwoPlayerController
 {
     public static final String VERSION = "0.99";
 
-    // a lookup table of scores to attribute to the board positions when calculating the worth
-    private float[][] positionalScore_ = null;
+    /** a lookup table of scores to attribute to the board positions when calculating the worth */
+    private PositionalScoreAnalyzer positionalScorer_;
 
-
-    // at the very end of the game we mark dead stones dead.
-    private int numDeadBlackStonesOnBoard_ = 0;
-    private int numDeadWhiteStonesOnBoard_ = 0;
+    /** keeps track of dead stones.  */
+    private DeadStones deadStones_;
 
 
     /**
@@ -42,13 +38,11 @@ public final class GoController extends TwoPlayerController
      */
     public GoController()
     {
-        GameContext.setDebugMode(DEFAULT_DEBUG_LEVEL);
-        board_ = new GoBoard( DEFAULT_NUM_ROWS, DEFAULT_NUM_ROWS, 0 );
-        initializeData();
+        this( DEFAULT_NUM_ROWS, DEFAULT_NUM_ROWS, 0);
     }
 
     /**
-     *  Construct the Go game controller given dimensions and number of handicap stones.
+     * Construct the Go game controller given dimensions and number of handicap stones.
      * @param nrows
      * @param ncols
      * @param numHandicapStones
@@ -57,6 +51,7 @@ public final class GoController extends TwoPlayerController
     {
         board_ = new GoBoard( nrows, ncols, numHandicapStones );
         initializeData();
+        positionalScorer_ = new PositionalScoreAnalyzer((GoBoard)board_);
     }
 
     @Override
@@ -73,41 +68,8 @@ public final class GoController extends TwoPlayerController
     @Override
     protected void initializeData()
     {
-        numDeadBlackStonesOnBoard_ = 0;
-        numDeadWhiteStonesOnBoard_ = 0;
+        deadStones_ = new DeadStones();
         weights_ = new GoWeights();
-    }
-
-    /**
-     * initialize the lookup table of scores to attribute to the board positions when calculating the worth.
-     * These weights are counted more heavily at te beggiing of the game.
-     */
-    private void initializePositionalScoreArray()
-    {
-        int numRows = board_.getNumRows();
-        int numCols = board_.getNumCols();
-        int row, col, rowmin, colmin;
-        positionalScore_ = new float[numRows + 1][numCols + 1];
-
-        for ( row = 1; row <= numRows; row++ ) {    //rows
-            rowmin = Math.min( row, numRows - row + 1 );
-            for ( col = 1; col <= numCols; col++ ) {  //cols
-                colmin = Math.min( col, numCols - col + 1 );
-                positionalScore_[row][col] = 0.0f; // default neutral value
-
-
-                int lineNo = Math.min(rowmin, colmin);
-                if (lineNo < LINE_VALS.length) {
-                    if (rowmin == colmin)  {
-                        // corners get emphasized
-                        positionalScore_[row][col] = 1.5f * (LINE_VALS[lineNo - 1]);
-                    }
-                    else {
-                        positionalScore_[row][col] = LINE_VALS[lineNo - 1];
-                    }
-                }
-            }
-        }
     }
 
     @Override
@@ -195,12 +157,11 @@ public final class GoController extends TwoPlayerController
     public void reset()
     {
         super.reset();
-        initializePositionalScoreArray();
+        positionalScorer_ = new PositionalScoreAnalyzer((GoBoard)board_);
         if ( ((GoBoard) board_).getHandicap() > 0 )
             player1sTurn_ = false;
         // make sure the number of dead stones is not carried over.
-        numDeadBlackStonesOnBoard_ = 0;
-        numDeadWhiteStonesOnBoard_ = 0;
+        deadStones_.clear();
     }
 
     public void computerMovesFirst()
@@ -275,11 +236,7 @@ public final class GoController extends TwoPlayerController
         for ( row = 1; row <= board.getNumRows(); row++ ) {
             for ( col = 1; col <= board.getNumCols(); col++ ) {
 
-                GoBoardPosition position = (GoBoardPosition) board.getPosition( row, col );
-                double positionalScore = gameStageBoost * positionalScore_[row][col];
-                PositionalScore score = calcPositionalScore(position, weights, positionalScore, board);
-                totalScore.incrementBy(score);
-                position.setScoreContribution(score.getPositionScore());
+                totalScore = positionalScorer_.updateScoreForPosition(row, col, gameStageBoost, totalScore, weights);
             }
         }
         double territoryDelta = board.getTerritoryDelta();
@@ -301,46 +258,6 @@ public final class GoController extends TwoPlayerController
         }
         return (int)worth;
     }
-
-    /**
-     * @return the score contribution from a single point on the board
-     */
-    private static PositionalScore calcPositionalScore(GoBoardPosition position, ParameterArray weights,
-                                                       double positionalScore, GoBoard board) {
-
-        PositionalScore score = new PositionalScore();
-
-        if (position.isInEye())  {
-            if (position.isOccupied()) {
-                // a dead enemy stone in the eye counts twice.
-                score.deadStoneScore = position.getEye().isOwnedByPlayer1()? 2.0 : -2.0;
-            }
-            else {
-                score.eyeSpaceScore = position.getEye().isOwnedByPlayer1()? 1.0 : -1.0;
-            }
-        }
-        else if ( position.isOccupied() ) {
-            GoStone stone = (GoStone)position.getPiece();
-
-            int side = position.getPiece().isOwnedByPlayer1()? 1: -1;
-            // penalize bad shape like empty triangles
-            StringShapeAnalyzer sa = new StringShapeAnalyzer(board);
-            score.badShapeScore = -(side * sa.formsBadShape(position)
-                                   * weights.get(GoWeights.BAD_SHAPE_WEIGHT_INDEX).getValue());
-
-            // Usually a very low weight is assigned to where stone is played unless we are at the start of the game.
-            score.posScore = side * weights.get(GoWeights.POSITIONAL_WEIGHT_INDEX).getValue() * positionalScore;
-            score.healthScore =  weights.get(GoWeights.HEALTH_WEIGHT_INDEX).getValue() * stone.getHealth();
-
-            if (GameContext.getDebugMode() > 1)  {
-                stone.setPositionalScore(score);
-            }
-        }
-
-        score.calcPositionScore();
-        return score;
-    }
-
 
     /**
      * It is a takeback move if the proposed move position (row,col) would immdiately replace the last captured piece
@@ -382,8 +299,7 @@ public final class GoController extends TwoPlayerController
                 }
             }
         }
-        numDeadBlackStonesOnBoard_ = 0;
-        numDeadWhiteStonesOnBoard_ = 0;
+        deadStones_.clear();
     }
 
     /**
@@ -396,13 +312,13 @@ public final class GoController extends TwoPlayerController
             GameContext.log(0,  "Error: tried to get Score() while processing!");
             return 0;
         }
-        int captures = getNumCaptures(player1) + (player1 ? numDeadWhiteStonesOnBoard_ : numDeadBlackStonesOnBoard_);
+        int captures =  deadStones_.getNumberOnBoard(!player1);
 
         String side = (player1? "black":"white");
         GameContext.log(0, "----");
         GameContext.log(0, "final score for "+ side);
         GameContext.log(0, "getNumCaptures("+side+")="+ getNumCaptures(player1));
-        GameContext.log(0, "num dead "+side+" stones on board= "+ (player1 ? numDeadWhiteStonesOnBoard_ : numDeadBlackStonesOnBoard_));
+        GameContext.log(0, "num dead "+side+" stones on board: "+ captures);
 
         int p1Territory = getTerritory(player1);
         GameContext.log(0, "getTerritory("+side+")="+p1Territory);
@@ -411,9 +327,6 @@ public final class GoController extends TwoPlayerController
         return p1Territory - captures;
     }
 
-    public int getNumDeadStonesOnBoard(boolean black) {
-        return black ?  numDeadBlackStonesOnBoard_ : numDeadWhiteStonesOnBoard_;
-    }
 
    /**
     * Update the final life and death status of all the stones still on the board.
@@ -437,10 +350,7 @@ public final class GoController extends TwoPlayerController
                         // then the stone is more dead than alive, so mark it so
                         GameContext.log(1, "setting "+space+" to dead");
                         stone.setDead(true);
-                        if (space.getPiece().isOwnedByPlayer1())
-                            numDeadBlackStonesOnBoard_++;
-                        else
-                            numDeadWhiteStonesOnBoard_++;
+                        deadStones_.increment(space.getPiece().isOwnedByPlayer1());
                     }
                 }
             }
