@@ -109,7 +109,10 @@ public abstract class AbstractEyeSubtypeInformation extends AbstractEyeInformati
     protected  EyeStatus handleVitalPointCases(EyeNeighborMap nbrMap, GoEye eye, final int numVitals)   {
         List<GoBoardPosition> vitalFilledSpaces = findSpecialFilledSpaces(nbrMap, getVitalPoints(), eye);
         int numFilledVitals = vitalFilledSpaces.size();
-        assert numFilledVitals <= numVitals;
+        assert numFilledVitals <= numVitals :
+                "The number of filled vitals ("+ numFilledVitals +") " +
+                "was greater than the total number of vitals ("+numVitals + ") vitals="
+                + Arrays.toString(getVitalPoints()) + " eye="+ eye;
         
         if (numFilledVitals == numVitals) {
             return EyeStatus.NAKADE;

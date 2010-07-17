@@ -50,13 +50,13 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
         SearchOptions searchOptions =  options.getSearchOptions();
 
         searchOptions.setAlphaBeta(alphabetaCheckbox_.isSelected());
-        searchOptions.setQuiescence( quiescenceCheckbox_.isSelected() );
-        searchOptions.setLookAhead( lookAheadField_.getIntValue() );
+        searchOptions.setQuiescence(quiescenceCheckbox_.isSelected());
+        searchOptions.setLookAhead(lookAheadField_.getIntValue());
 
         searchOptions.setSearchStrategyMethod(getSelectedStrategy());
-        searchOptions.setPercentageBestMoves(bestPercentageField_.getIntValue() );
-        options.setShowGameTree( gameTreeCheckbox_.isSelected() );
-        options.setShowComputerAnimation( computerAnimationCheckbox_.isSelected() );
+        searchOptions.setPercentageBestMoves(bestPercentageField_.getIntValue());
+        options.setShowGameTree(gameTreeCheckbox_.isSelected() );
+        options.setShowComputerAnimation(computerAnimationCheckbox_.isSelected());
         return options;
     }
 
@@ -145,6 +145,7 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
     @Override
     protected JPanel createDebugParamPanel()
     {
+        JPanel outerContainer = new JPanel(new BorderLayout());
         JPanel p = createDebugOptionsPanel();
 
         addDebugLevel(p);
@@ -167,8 +168,9 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
         computerAnimationCheckbox_.setAlignmentX( Component.LEFT_ALIGNMENT );
         //computerAnimationCheckbox_.setEnabled(gameTreeCheckbox_.isSelected());
         p.add( computerAnimationCheckbox_ );
+        outerContainer.add(p, BorderLayout.NORTH);
 
-        return p;
+        return outerContainer;
     }
 
 

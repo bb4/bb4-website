@@ -35,7 +35,8 @@ public final class BoardDebugUtil {
     {
         if (stones == null)
             return "";
-        StringBuffer buf = new StringBuffer(title+'\n');
+        StringBuffer buf = new StringBuffer(title);
+        buf.append("\n  ");
         if (logLevel <= GameContext.getDebugMode())  {
             for (GoBoardPosition stone : stones) {
                 buf.append(stone.toString()).append(", ");

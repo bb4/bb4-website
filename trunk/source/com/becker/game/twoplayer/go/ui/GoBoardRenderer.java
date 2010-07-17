@@ -18,6 +18,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.*;
+import java.util.List;
 
 /**
  * Singleton class that takes a game board and renders it for the GameBoardViewer.
@@ -138,8 +139,8 @@ public class GoBoardRenderer extends TwoPlayerBoardRenderer
     {
         GoBoard board = (GoBoard)controller.getBoard();
 
-        // draw the starpoint markers
-        java.util.List starpoints = board.getHandicapPositions();
+        // draw the star point markers
+        List starpoints = board.getHandicapPositions();
         Iterator it = starpoints.iterator();
         g2.setColor(Color.black);
         double rad = (float)cellSize_/21.0 + 0.46;
@@ -150,11 +151,10 @@ public class GoBoardRenderer extends TwoPlayerBoardRenderer
                         (int)(2.0*rad+1.7), (int)(2.0*rad+1.7));
         }
 
-        Set<GoGroup> groups = board.getGroups();
         // draw the group borders
         if ( GameContext.getDebugMode() > 0 ) {
-            synchronized(groups) {
-                for (GoGroup group : groups) {
+            synchronized(board.getGroups()) {
+                for (GoGroup group : board.getGroups()) {
                     GoGroupRenderer.drawGroupDecoration(group, COLORMAP, (float) cellSize_, getMargin(), board, g2 );
                 }
             }
@@ -164,6 +164,8 @@ public class GoBoardRenderer extends TwoPlayerBoardRenderer
 
         drawNextMoveMarkers(controller, g2);
     }
+
+
 
     /**
      * draw markers for the next moves (if they have been specified)

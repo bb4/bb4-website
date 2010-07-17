@@ -166,6 +166,7 @@ public abstract class GameOptionsDialog extends OptionsDialog
         JLabel label = new JLabel( "     " );
         label.setAlignmentX( Component.LEFT_ALIGNMENT );
         p.add( label );
+
         return p;
     }
 

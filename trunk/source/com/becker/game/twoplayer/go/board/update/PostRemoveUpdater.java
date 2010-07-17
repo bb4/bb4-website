@@ -28,11 +28,11 @@ public class PostRemoveUpdater extends PostChangeUpdater {
     @Override
     public void update(GoMove move) {
 
-        GoBoardPosition stone =  (GoBoardPosition) (board_.getPosition(move.getToRow(), move.getToCol()));
+        GoBoardPosition stone =  (GoBoardPosition) (getBoard().getPosition(move.getToRow(), move.getToCol()));
 
         GoString stringThatItBelongedTo = stone.getString();
         // clearing a stone may cause a string to split into smaller strings
-        stone.clear(board_);
+        stone.clear(getBoard());
         adjustLiberties(stone);
 
         updateStringsAfterRemove( stone, stringThatItBelongedTo);
@@ -64,9 +64,9 @@ public class PostRemoveUpdater extends PostChangeUpdater {
         splitStringsIfNeeded(group, nbrs);
 
         if ( GameContext.getDebugMode() > 1 ) {
-            validator_.confirmNoEmptyStrings(board_.getGroups());
+            validator_.confirmNoEmptyStrings(getAllGroups());
             validator_.confirmStonesInValidGroups();
-            validator_.confirmStonesInOneGroup( group, board_.getGroups() );
+            validator_.confirmStonesInOneGroup( group, getAllGroups() );
         }
         profiler.stopUpdateStringsAfterRemove();
     }
@@ -88,7 +88,7 @@ public class PostRemoveUpdater extends PostChangeUpdater {
                 GoBoardPosition nbrStone = (GoBoardPosition) nbrIt.next();
                 if ( !nbrStone.isVisited() ) {
                     List<GoBoardPosition> stones1 = nbrAnalyzer_.findStringFromInitialPosition( nbrStone, false );
-                    GoString newString = new GoString( stones1, board_ );
+                    GoString newString = new GoString( stones1, getBoard() );
                     group.addMember( newString);
                     lists.add( stones1 );
                 }
@@ -106,11 +106,11 @@ public class PostRemoveUpdater extends PostChangeUpdater {
         if ( !groupAlreadyExists( stones) ) {
             //
             GoGroup newGroup = new GoGroup( stones );
-            board_.getGroups().add( newGroup );
+            getAllGroups().add( newGroup );
             //group.remove( stones );
 
             if ( GameContext.getDebugMode() > 1 )
-                validator_.confirmStonesInOneGroup( newGroup, board_.getGroups() );
+                validator_.confirmStonesInOneGroup( newGroup, getAllGroups() );
         }
     }
 
@@ -159,8 +159,8 @@ public class PostRemoveUpdater extends PostChangeUpdater {
             updateAfterRestoringCaptures(captures);
             if (GameContext.getDebugMode() > 1) {
                 validator_.confirmStonesInValidGroups();
-                validator_.confirmAllStonesInUniqueGroups(board_.getGroups());
-                GameContext.log( 3, "GoBoard: undoInternalMove: " + board_ + "  groups after restoring captures:" );
+                validator_.confirmAllStonesInUniqueGroups(getAllGroups());
+                GameContext.log( 3, "GoBoard: undoInternalMove: " + getBoard() + "  groups after restoring captures:" );
             }
         }
     }
@@ -170,7 +170,7 @@ public class PostRemoveUpdater extends PostChangeUpdater {
      */
     private void restoreCapturesOnBoard( CaptureList captureList )
     {
-        captureList.restoreOnBoard( board_ );
+        captureList.restoreOnBoard( getBoard() );
 
         GameContext.log( 3, "GoMove: restoring these captures: " + captureList );
 
@@ -180,7 +180,7 @@ public class PostRemoveUpdater extends PostChangeUpdater {
 
         assert ( group!=null): "no group was formed when restoring "
                 + captureList + " the list of strings was "+strings;
-        board_.getGroups().add( group );
+        getAllGroups().add( group );
     }
 
     /**
@@ -210,7 +210,7 @@ public class PostRemoveUpdater extends PostChangeUpdater {
         while ( it.hasNext() ) {
             GoBoardPosition capStone = (GoBoardPosition) it.next();
             GoBoardPosition stoneOnBoard =
-                    (GoBoardPosition) board_.getPosition( capStone.getRow(), capStone.getCol() );
+                    (GoBoardPosition) getBoard().getPosition( capStone.getRow(), capStone.getCol() );
             stoneOnBoard.setVisited(false);    // make sure in virgin unvisited state
 
             //adjustLiberties(stoneOnBoard, board);
@@ -227,7 +227,7 @@ public class PostRemoveUpdater extends PostChangeUpdater {
         boolean firstString = true;
         GoGroup group = null;
         for  (List<GoBoardPosition> stringList : strings) {
-            GoString string = new GoString( stringList, board_ );
+            GoString string = new GoString( stringList, getBoard() );
             if ( firstString ) {
                 group = new GoGroup( string );
                 firstString = false;
@@ -274,10 +274,10 @@ public class PostRemoveUpdater extends PostChangeUpdater {
             GoBoardUtil.unvisitPositions(list);
             GoGroup group = new GoGroup(list);
             if (GameContext.getDebugMode() > 1) {
-                validator_.confirmStonesInOneGroup(group, board_.getGroups());
+                validator_.confirmStonesInOneGroup(group, getAllGroups());
                 GameContext.log(2, "updateAfterRestoringCaptures(): adding sub group :" + group);
             }
-            board_.getGroups().add(group);
+            getAllGroups().add(group);
         }
     }
 
@@ -296,11 +296,11 @@ public class PostRemoveUpdater extends PostChangeUpdater {
         List<List<GoBoardPosition>> listsToUnvisit = new ArrayList<List<GoBoardPosition>>();
         Set<GoBoardPosition> gStones = bigEnemyGroup.getStones();
 
-        board_.getGroups().remove( bigEnemyGroup );
+        getAllGroups().remove( bigEnemyGroup );
         if (secondaryEnemyGroup != null) {
             GameContext.log(1, "There was a secondary enemy group before restoring (*RARE*). The 2 groups were :" +
                                bigEnemyGroup+" and "+secondaryEnemyGroup);
-            board_.getGroups().remove(secondaryEnemyGroup);
+            getAllGroups().remove(secondaryEnemyGroup);
         }
 
         // Combine all the enemy nobi nbrs with the stones from the bigEnemyGroup when trying to find the new groups.
@@ -402,7 +402,7 @@ public class PostRemoveUpdater extends PostChangeUpdater {
         updateEnemyGroupsAfterRemoval(enemyNbrs);
 
         if ( GameContext.getDebugMode() > 1 )  {
-            validator_.confirmNoEmptyStrings(board_.getGroups());
+            validator_.confirmNoEmptyStrings(getAllGroups());
         }
 
         cleanupGroups();
@@ -469,11 +469,11 @@ public class PostRemoveUpdater extends PostChangeUpdater {
             removeGroupsForListOfStones(mergedStones);
             GoGroup restoredGroup = new GoGroup(mergedStones);
 
-            board_.getGroups().add(restoredGroup);
+            getBoard().getGroups().add(restoredGroup);
         }
         if ( GameContext.getDebugMode() > 1 ) {
             validator_.confirmStonesInValidGroups();
-            validator_.confirmAllStonesInGroupsClaimed(board_.getGroups());
+            validator_.confirmAllStonesInGroupsClaimed(getBoard().getGroups());
         }
     }
 
@@ -493,7 +493,7 @@ public class PostRemoveUpdater extends PostChangeUpdater {
                 GoString str = (GoString) s;
                 str.setUnconditionallyAlive(false);
             }
-            Set<GoEye> eyes = group.getEyes(board_);
+            Set<GoEye> eyes = group.getEyes(getBoard());
             for (GoEye eye : eyes)  {
                 eye.setUnconditionallyAlive(false);
             }
@@ -507,9 +507,11 @@ public class PostRemoveUpdater extends PostChangeUpdater {
     protected boolean groupAlreadyExists( List<GoBoardPosition> stones )
     {
         // first find the group that contains the stones
-        for (GoGroup goGroup : board_.getGroups()) {
-            if (goGroup.exactlyContains(stones))
-                return true;
+        synchronized(getBoard().getGroups()) {
+            for (GoGroup goGroup : getBoard().getGroups()) {
+                if (goGroup.exactlyContains(stones))
+                    return true;
+            }
         }
         return false;
     }

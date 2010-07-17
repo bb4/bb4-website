@@ -11,12 +11,7 @@ public class Captures {
     protected int numWhiteStonesCaptured_ = 0;
     protected int numBlackStonesCaptured_ = 0;
 
-    /**
-     * Constructor
-     */
-    public Captures() {}
-
-
+ 
     public int getNumCaptures(boolean player1StonesCaptured) {
         return player1StonesCaptured ? numBlackStonesCaptured_ : numWhiteStonesCaptured_ ;
     }

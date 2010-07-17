@@ -4,7 +4,10 @@ import com.becker.game.common.GameContext;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
  *  A GoSet is an abstract class representing a set of go entities
@@ -72,7 +75,7 @@ public abstract class GoSet implements GoMember
      * @throws CloneNotSupportedException
      */
     @Override
-    public synchronized Object clone() throws CloneNotSupportedException
+    public Object clone() throws CloneNotSupportedException
     {
         Object clone = super.clone();
 
@@ -81,7 +84,8 @@ public abstract class GoSet implements GoMember
 
             Set m = ((GoSet)clone).getMembers();
 
-            for (GoMember goMember : getMembers()) {
+            Set<GoMember> members = new CopyOnWriteArraySet<GoMember>(getMembers());
+            for (GoMember goMember : members) {
                 try {
                     m.add((goMember).clone());
                 } catch (ClassCastException e) {

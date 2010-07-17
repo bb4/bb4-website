@@ -22,6 +22,7 @@ public class E6Information extends AbstractEyeSubtypeInformation
 {
     /** Different sorts of eye with 6 spaces. */
     public enum Eye6Type {E112222, E111223, E111133, E112233, E112233a, E112233b, E122223, E112224, E111124, E222233}
+    
     private Eye6Type type;
 
     /**
@@ -68,9 +69,10 @@ public class E6Information extends AbstractEyeSubtypeInformation
             case E112222 :
             case E111223 :
             case E111133 :
-                handleSubtypeWithLifeProperty(eye, board);
+                return handleSubtypeWithLifeProperty(eye, board);
             case E112233 :
                 Eye6Type E112233Subtype = determineE112233Subtype(nbrMap);
+
                 if (E112233Subtype == Eye6Type.E112233a) {
                    return handleVitalPointCases(nbrMap, eye, 2);
                 }
@@ -110,10 +112,11 @@ public class E6Information extends AbstractEyeSubtypeInformation
                oneNbrPoints.add(pos);
             }
             else {
-                otherPoints.add(pos);
+               otherPoints.add(pos);
             }
         }
-        assert oneNbrPoints.size() == 2;
+        assert oneNbrPoints.size() == 2 : "Did not get 2 one nbr points. Instead got "
+                + oneNbrPoints.size()+ "\n nbrmap="+ nbrMap;
         Box bounds = new Box(oneNbrPoints.get(0).getLocation(), oneNbrPoints.get(1).getLocation());
 
         for (GoBoardPosition otherPt : otherPoints) {

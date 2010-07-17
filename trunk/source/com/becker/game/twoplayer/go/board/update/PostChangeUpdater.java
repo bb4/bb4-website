@@ -14,7 +14,7 @@ import java.util.*;
  */
 public abstract class PostChangeUpdater {
 
-    protected GoBoard board_;
+    private GoBoard board_;
     protected Captures captures_;
     protected NeighborAnalyzer nbrAnalyzer_;
     protected BoardValidator validator_;
@@ -37,6 +37,14 @@ public abstract class PostChangeUpdater {
      * @param move the move that was just made or undone.
      */
     public abstract void update( GoMove move );
+
+    protected GoBoard getBoard() {
+        return board_;
+    }
+
+    protected Set<GoGroup> getAllGroups() {
+        return board_.getGroups();
+    }
 
 
     /**
@@ -69,13 +77,14 @@ public abstract class PostChangeUpdater {
      */
     protected void cleanupGroups()
     {
-        Iterator it = board_.getGroups().iterator();
-        while ( it.hasNext() ) {
-            GoGroup group = (GoGroup) it.next();
-            //group.confirmNoNullMembers();
-            if ( group.getNumStones() == 0 )  {
-                //assert (group.getEyes().isEmpty()): group+ " has eyes! It was assumed not to.\n"+board_;
-                it.remove();
+        Iterator it = getAllGroups().iterator();
+        synchronized(getAllGroups())
+        {
+            while ( it.hasNext() ) {
+                GoGroup group = (GoGroup) it.next();
+                if ( group.getNumStones() == 0 )  {
+                    it.remove();
+                }
             }
         }
     }
@@ -89,7 +98,7 @@ public abstract class PostChangeUpdater {
             GoBoardPosition nbrStone = (GoBoardPosition) stone;
             // In the case where the removed stone was causing an atari in a string in an enemy group,
             // there is a group that does not contain a nbr stone that also needs to be removed here.
-            board_.getGroups().remove(nbrStone.getGroup());
+            getAllGroups().remove(nbrStone.getGroup());
         }
     }
 }

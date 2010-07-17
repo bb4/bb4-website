@@ -60,17 +60,20 @@ public interface EyeInformation
 
     /**
      * The 3 points closed to a corner are considered a corner point triple
+     * If an eye is in the corner, it is also on the edge.
      * @return true if three of the eye points are one of the corner point triples.
      */
     boolean isInCorner(GoEye eye);
 
     /**
+     * An eye can be both in the corner and on the edge.
      * @return true if at least three points line on the edge (corner triples are considered on edge too).
      */
     boolean isOnEdge(GoEye eye);
 
     /**
-     * @return Name of the eye type
+     * @return Name of the eye type (a descriptive string line like E112233 where the numbers are the eye
+     * neighbors for each space int eh eye in sorted order.
      */
     String getTypeName();
 }
