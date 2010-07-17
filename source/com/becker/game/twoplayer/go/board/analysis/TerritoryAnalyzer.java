@@ -131,13 +131,16 @@ public class TerritoryAnalyzer {
         float delta = 0;
         GoProfiler prof = GoProfiler.getInstance();
         prof.start(GoProfiler.ABSOLUTE_TERRITORY);
-        for (GoGroup g : board_.getGroups()) {
+        
+        synchronized(board_.getGroups()) {
+            for (GoGroup g : board_.getGroups()) {
 
-            float health = g.calculateAbsoluteHealth(board_);
+                float health = g.calculateAbsoluteHealth(board_);
 
-            if (!USE_RELATIVE_GROUP_SCORING) {
-                g.updateTerritory(health);
-                delta += health * g.getNumStones();
+                if (!USE_RELATIVE_GROUP_SCORING) {
+                    g.updateTerritory(health);
+                    delta += health * g.getNumStones();
+                }
             }
         }
         prof.stop(GoProfiler.ABSOLUTE_TERRITORY);
@@ -153,10 +156,12 @@ public class TerritoryAnalyzer {
         float delta = initDelta;
         if (USE_RELATIVE_GROUP_SCORING) {
             prof.start(GoProfiler.RELATIVE_TERRITORY);
-            for (GoGroup g : board_.getGroups()) {
-                float health = g.calculateRelativeHealth(board_);
-                g.updateTerritory(health);
-                delta += health * g.getNumStones();
+            synchronized(board_.getGroups()) {
+                for (GoGroup g : board_.getGroups()) {
+                    float health = g.calculateRelativeHealth(board_);
+                    g.updateTerritory(health);
+                    delta += health * g.getNumStones();
+                }
             }
             prof.stop(GoProfiler.RELATIVE_TERRITORY);
         }

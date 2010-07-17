@@ -21,7 +21,7 @@ public abstract class TestEyeTypeAnalyzer extends GoTestCase {
 
     protected static final String PATH_PREFIX = "board/analysis/eye/";
 
-    private enum GroupType {BIGGEST, SURROUNDED};
+    private enum GroupType {BIGGEST, SURROUNDED}
 
     protected GoBoard initializeBoard(String eyesProblemFile) {
         return initializeBoard(eyesProblemFile, 2);

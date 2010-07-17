@@ -13,8 +13,8 @@ import java.util.Set;
 /**
  * Determine properties about a big eye on the board.
  * This analyizer is only used by the EyeTypeAnalyzer.
- * It classifies eyes that are not false eye and have between 2 and 8 spaces.
- * Some of those spaces may have enemy stones in them.
+ * It classifies eyes that are not false eye and have between 2 and 8 spaces_.
+ * Some of those spaces_ may have enemy stones in them.
  * See EyeTypeAnalyzer
  *
  * @author Barry Becker
@@ -24,17 +24,17 @@ class BigEyeAnalyzer {
     /** the eye to classify. */
     private GoEye eye_;
 
-    /** spaces in the eye */
-    Set<GoBoardPosition> spaces;
+    /** spaces_ in the eye */
+    Set<GoBoardPosition> spaces_;
 
     /**
-     * The eye must have between 3 and 8 spaces.
+     * The eye must have between 3 and 8 spaces_.
      * @param eye the eye to analyze
      */
     BigEyeAnalyzer(GoEye eye) {
         eye_ = eye;
-        spaces = eye_.getMembers();
-        int size = spaces.size();
+        spaces_ = eye_.getMembers();
+        int size = spaces_.size();
         assert ( size > 3 && size < 8 );
     }
 
@@ -46,13 +46,13 @@ class BigEyeAnalyzer {
      *
      * The pattern formed by the sorted list of neighbor counts uniquely determines the type.
      *
-     * @return the eye type determined based on the properties and nbrs of the positions in the spaces list.
+     * @return the eye type determined based on the properties and nbrs of the positions in the spaces_ list.
      */
     EyeInformation determineEyeInformation()
     {
         List<Integer> counts = new ArrayList<Integer>(7);
 
-        for (GoBoardPosition space : spaces) {
+        for (GoBoardPosition space : spaces_) {
             counts.add(getNumEyeNobiNeighbors(space));
         }
         Collections.sort(counts);
@@ -66,6 +66,7 @@ class BigEyeAnalyzer {
             bldr.append(num);
         }
         EyeType type = EyeType.valueOf("E" + counts.size());
+        
         return type.getInformation(bldr.toString());
     }
 
@@ -77,7 +78,7 @@ class BigEyeAnalyzer {
     private int getNumEyeNobiNeighbors(GoBoardPosition space)
     {
         int numNbrs = 0;
-        for (GoBoardPosition eyeSpace : eye_.getMembers()) {
+        for (GoBoardPosition eyeSpace : spaces_) {
        
             if ( space.isNeighbor( eyeSpace ))
                 numNbrs++;

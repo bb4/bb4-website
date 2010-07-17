@@ -5,6 +5,8 @@ import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.GoBoardPosition;
 import junit.framework.Assert;
 
+import java.util.List;
+
 /**
  * Verify that all our neighbor analysis methods work.
  * @author Barry Becker
@@ -77,6 +79,16 @@ public class TestGroupNeighborAnalyzer extends GoTestCase {
         verifyFriendGroupNbrs(5, 8, false, 1);
     }
 
+    /**
+     *   This should not be a cut of the knights move.
+     */
+    public void testGroupNbrs_OneKogeimaFriendPartialCutInCorner() {
+        initializeAnalyzer("groupNbr_cornerGroupKogeima");
+        verifyFriendGroupNbrs(1, 7, false, 1);
+        verifyFriendGroupNbrs(2, 5, false, 1);
+    }
+
+
     public void testGroupNbrs_OneFriend() {
         initializeAnalyzer("groupNbr_oneFriend");
         verifyFriendGroupNbrs(5, 5, true, 1);
@@ -128,6 +140,25 @@ public class TestGroupNeighborAnalyzer extends GoTestCase {
         verifyFriendGroupNbrs(9, 9, false, 2);
         verifyAllGroupNbrs(5, 5, true, 4);
         verifyAllGroupNbrs(9, 9, false, 3);
+    }
+
+
+    /**
+     * Corner group on a 7*7 board from a real game.
+     */
+    public void testFindGroupFromInitialPosition() {
+        initializeAnalyzer("groupNbr_cornerGroupKogeima");
+        GoBoardPosition pos1 = (GoBoardPosition)board_.getPosition(2, 5);
+        List<GoBoardPosition> group1 = groupAnalyzer_.findGroupFromInitialPosition(pos1, true);
+
+
+        GoBoardPosition pos2 = (GoBoardPosition)board_.getPosition(1, 7);
+        List<GoBoardPosition> group2 = groupAnalyzer_.findGroupFromInitialPosition(pos2, true);
+
+        System.out.println("group1=" + group1);
+        System.out.println("group2=" + group2);
+        assertEquals("Group1 did not have expected size.", 2, group1.size());
+        assertEquals("Groups did not have the same size", group1.size(), group2.size());
     }
 
 

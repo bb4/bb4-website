@@ -114,7 +114,6 @@ public class GoTestCase extends TestCase {
     }
 
 
-
     protected static boolean isExpected(GoMove m, Location loc) {
 
         return isExpected(m, m.getToRow(), loc.getCol());

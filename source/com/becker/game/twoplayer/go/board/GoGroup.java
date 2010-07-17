@@ -114,8 +114,7 @@ public final class GoGroup extends GoSet implements IGoGroup
      * Really we just remove the strings that own these stones.
      * @param stones the list of stones to subtract from this one
      */
-    public void remove( List stones )
-    {
+    public void remove( List stones ) {
         // use a HashSet to avoid duplicate strings
         // otherwise we might try to remove the same string twice.
         Set<GoString> hsStrings = new HashSet<GoString>();
@@ -137,8 +136,7 @@ public final class GoGroup extends GoSet implements IGoGroup
      * remove a string from this group
      * @param string the string to remove from the group
      */
-    public void remove( GoString string )
-    {
+    public void remove( GoString string ) {
         if (string == null) {
             GameContext.log(2, "attempting to remove "+string+" string from group. "+this);
             return;

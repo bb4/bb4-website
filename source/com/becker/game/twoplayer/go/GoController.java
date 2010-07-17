@@ -119,6 +119,11 @@ public final class GoController extends TwoPlayerController
         return ((GoBoard) getBoard()).getNumCaptures(player1sStones);
     }
 
+    public int getNumDeadStonesOnBoard(boolean forPlayer1)  
+    {
+        return deadStones_.getNumberOnBoard(forPlayer1);
+    }
+
     /**
      * get a territory estimate for player1 or player2
      * When the game is over, this should return a precise value for the amount of territory

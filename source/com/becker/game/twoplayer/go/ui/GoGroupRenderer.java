@@ -41,11 +41,17 @@ final class GoGroupRenderer
 
     /**
      * accumulate an area geometry that can be rendered to show the group border.
+     * @return the groups border shape.
      */
-    private static Area calcGroupBorder( Set groupStones, float cellSize, int margin, GoBoard board )
-    {
+    private static Area calcGroupBorder( Set groupStones, float cellSize, int margin, GoBoard board )  {
         if (groupStones == null || groupStones.isEmpty()) {
             return null;  // nothing to draw an area for.
+        }
+        GoBoard boardCopy = null;
+        try {
+            boardCopy = (GoBoard)board.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
         }
 
         GoBoardPosition firstStone = (GoBoardPosition) groupStones.iterator().next();
@@ -66,7 +72,7 @@ final class GoGroupRenderer
         q.add( firstStone.copy() );
         qset.add( firstStone );
         Area area = new Area();
-        NeighborAnalyzer nbrAnalyzer = new NeighborAnalyzer(board);
+        NeighborAnalyzer nbrAnalyzer = new NeighborAnalyzer(boardCopy);
 
         while ( !q.isEmpty() ) {
             GoBoardPosition stone = (GoBoardPosition) q.remove( 0 );
@@ -86,7 +92,7 @@ final class GoGroupRenderer
         // mark all the stones in the group unvisited again.
         GoBoardUtil.unvisitPositions( visitedSet );
         if (GameContext.getDebugMode() > 1) {
-            new BoardValidator(board).confirmAllUnvisited();
+            new BoardValidator(boardCopy).confirmAllUnvisited();
         }
         return area;
     }

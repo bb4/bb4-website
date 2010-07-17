@@ -54,7 +54,6 @@ public class BoardValidator {
         }
     }
 
-
     /**
      * 
      * @param stones
@@ -85,7 +84,7 @@ public class BoardValidator {
     /**
      * @param stone verify that this stone has a valid string and a group in the board's member list.
      */
-    private static void confirmStoneInValidGroup( GoBoardPosition stone, Set groups )
+    private static void confirmStoneInValidGroup( GoBoardPosition stone, final Set groups )
     {
         GoString str = stone.getString();
         assert ( str!=null) : stone + " does not belong to any string!" ;
@@ -180,25 +179,38 @@ public class BoardValidator {
 
 
     /**
-     * For every stone in every group verify that the group determined from using that stone as a seed
+     * For every stone in every group specified in groups, verify that the group determined from using that stone as a seed
      * matches the group that is claims by ancestry.
-     * (expesnsive to check)
+     * (expensive to check)
+     * @param groups we will check each stone in each of these groups.
      */
     public void confirmAllStonesInGroupsClaimed(Set<GoGroup> groups)
     {
         NeighborAnalyzer na = new NeighborAnalyzer(board_);
         for (GoGroup parentGroup : groups) {  // for each group on the board
-            // for each stone in that group
             Set<GoBoardPosition> parentGroupStones = parentGroup.getStones();
-            for (GoBoardPosition stone : parentGroupStones) {
+            for (GoBoardPosition stone : parentGroupStones) {  // for each stone in that group
                 // compute the group from this stone and confirm it matches the parent group
                 List<GoBoardPosition> g = na.findGroupFromInitialPosition(stone);
                 // perhaps we should do something more than check the size.
                 if (g.size() != parentGroupStones.size()) {
-                    BoardDebugUtil.debugPrintGroups(0, "Confirm stones in groups they Claim failed. Groups are:", true, true, groups);
-                    assert false :
+                    BoardDebugUtil.debugPrintGroups(0,
+                            "Confirm stones in groups they Claim failed. \nGroups are:\n", true, true, groups);
+                    StringBuilder bldr = new StringBuilder();
+                    bldr.append(board_.toString());
+                    bldr.append("\n");
+                    bldr.append("\n\nIt seems that using different seeds yields different groups:");
+                    for (GoBoardPosition stone1 : parentGroupStones) {  // for each stone in that group
+                         List<GoBoardPosition> gg = na.findGroupFromInitialPosition(stone);
+                        bldr.append(BoardDebugUtil.debugPrintListText(0, "\nSEED STONE = "+ stone1, gg));
+                    }
+                    System.out.println(bldr.toString());
+                    System.out.flush();
+                    //assert false :
+                    System.out.println(
                             BoardDebugUtil.debugPrintListText(0, "Calculated Group (seeded by " + stone + "):", g)
-                                    + "\n is not equal to the expected parent group:\n" + parentGroup;
+                                + "\n is not equal to the expected parent group:\n" + parentGroup);
+                    System.out.flush();
                 }
             }
         }

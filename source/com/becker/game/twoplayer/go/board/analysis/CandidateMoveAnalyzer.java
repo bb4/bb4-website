@@ -48,10 +48,7 @@ public class CandidateMoveAnalyzer {
         int num = 0;
         for (int i = 1; i <= size_; i++ ) {
             for (int j = 1; j <= size_; j++ ) {
-                if ( isCandidateMove(i, j) ) {
-                    System.out.println("cand="  + i +  " " + j);
-                    num++;
-                }
+                if ( isCandidateMove(i, j) )  num++;
             }
         }
         return num;

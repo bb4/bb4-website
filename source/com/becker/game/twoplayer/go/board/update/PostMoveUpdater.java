@@ -28,7 +28,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
     @Override
     public void update(GoMove move) {
 
-        GoBoardPosition stone = (GoBoardPosition) (board_.getPosition(move.getToRow(), move.getToCol()));
+        GoBoardPosition stone = (GoBoardPosition) (getBoard().getPosition(move.getToRow(), move.getToCol()));
 
         adjustLiberties(stone);
 
@@ -37,8 +37,8 @@ public class PostMoveUpdater extends PostChangeUpdater {
 
         updateStringsAfterMove(stone);
         removeCaptures(move.getToRow(), move.getToCol(), captures);
-        assert (stone.getString().getNumLiberties(board_) > 0):
-            "The placed stone "+stone+" has no liberties "+stone.getGroup() +"\n"+ board_.toString();
+        assert (stone.getString().getNumLiberties(getBoard()) > 0):
+            "The placed stone "+stone+" has no liberties "+stone.getGroup() +"\n"+ getBoard().toString();
         updateGroupsAfterMove(stone);
         captures_.updateCaptures(move, true);
     }
@@ -65,7 +65,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
             GoString str = enbr.getString();
             assert ( str.isOwnedByPlayer1() != stone.getPiece().isOwnedByPlayer1()):
                     "The "+str+" is not an enemy of "+stone;
-            if ( str.getNumLiberties(board_) == 0 && str.size() > 0 && !capturedStrings.contains(str) ) {
+            if ( str.getNumLiberties(getBoard()) == 0 && str.size() > 0 && !capturedStrings.contains(str) ) {
                 capturedStrings.add( str );
                 // we need to add copies so that when the original stones on the board are
                 // changed we don't change the captures
@@ -94,7 +94,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
 
         if ( nbrs.size() == 0 ) {
             // there are no strongly connected neighbors, create a new string
-            new GoString( stone, board_);  // stone points to the new string
+            new GoString( stone, getBoard());  // stone points to the new string
         }
         else {
             updateNeighborStringsAfterMove(stone, nbrs);
@@ -113,8 +113,8 @@ public class PostMoveUpdater extends PostChangeUpdater {
         Iterator nbrIt = nbrs.iterator();
         GoBoardPosition nbrStone = (GoBoardPosition) nbrIt.next();
         str = nbrStone.getString();
-        str.addMember( stone, board_ );
-        BoardDebugUtil.debugPrintGroups( 3, "groups before merging:", true, true, board_.getGroups());
+        str.addMember( stone, getBoard() );
+        BoardDebugUtil.debugPrintGroups( 3, "groups before merging:", true, true, getAllGroups());
 
         if ( nbrs.size() > 1 ) {
             mergeStringsIfNeeded(str, nbrIt);
@@ -130,7 +130,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
      */
     private void verifyNewStringNotInAtari(GoBoardPosition stone, GoString str) {
 
-        if (stone.isInAtari(board_)) {
+        if (stone.isInAtari(getBoard())) {
             GoGroup oldGroup = str.getGroup();
             GameContext.log(3, "Before splitting off ataried string (due to " + stone + ") containing (" +
                                str + ") we have: " + oldGroup);
@@ -139,7 +139,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
             GoGroup newGroup = new GoGroup(str);
             // GameContext.log(3, "after splitting we have: " + newGroup);
             assert (!newGroup.getMembers().isEmpty()) : "The group we are trying to add is empty";
-            board_.getGroups().add(newGroup);
+            getAllGroups().add(newGroup);
         }
     }
 
@@ -154,7 +154,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
             nbrStone = (GoBoardPosition) nbrIt.next();
             GoString nbrString = nbrStone.getString();
             if ( str != nbrString )   {
-                str.merge( nbrString, board_ );
+                str.merge( nbrString, getBoard() );
             }
         }
     }
@@ -181,7 +181,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
 
         // if there are no more stones in the group, remove it.
         if ( group.getNumStones() == 0 ) {
-            board_.getGroups().remove( group );
+            getAllGroups().remove( group );
         }
 
         adjustStringLiberties(captureList);
@@ -206,8 +206,8 @@ public class PostMoveUpdater extends PostChangeUpdater {
 
             }
             GoBoardPosition stoneOnBoard =
-                    (GoBoardPosition) board_.getPosition(capStone.getRow(), capStone.getCol());
-            stoneOnBoard.clear(board_);
+                    (GoBoardPosition) getBoard().getPosition(capStone.getRow(), capStone.getCol());
+            stoneOnBoard.clear(getBoard());
             // ?? restore disconnected groups?
         }
     }
@@ -223,19 +223,22 @@ public class PostMoveUpdater extends PostChangeUpdater {
         profiler.startUpdateGroupsAfterMove();
 
         if (GameContext.getDebugMode() > 1) {
-            validator_.confirmAllStonesInUniqueGroups(board_.getGroups());
+            validator_.confirmAllStonesInUniqueGroups(getAllGroups());
         }
 
         recreateGroupsAfterMove();
 
-        unvisitAll();
+        getBoard().unvisitAll();
 
         // verify that the string to which we added the stone has at least one liberty
-        assert (pos.getString().getNumLiberties(board_) > 0):
+        assert (pos.getString().getNumLiberties(getBoard()) > 0):
                 "The placed stone "+pos+" has no liberties "+pos.getGroup();
 
+        if ( GameContext.getDebugMode() > 1 )
+            validator_.consistencyCheck(pos);
+
         // this gets used when calculating the worth of the board
-        board_.updateTerritory(false);
+        getBoard().updateTerritory(false);
 
         if ( GameContext.getDebugMode() > 1 )
             validator_.consistencyCheck(pos);
@@ -249,30 +252,17 @@ public class PostMoveUpdater extends PostChangeUpdater {
      */
     private void recreateGroupsAfterMove() {
 
-        board_.getGroups().clear();
+        getAllGroups().clear();
 
-        for ( int i = 1; i <= board_.getNumRows(); i++ )  {
-           for ( int j = 1; j <= board_.getNumCols(); j++ ) {
-               GoBoardPosition seed = (GoBoardPosition)board_.getPosition(i, j);
+        for ( int i = 1; i <= getBoard().getNumRows(); i++ )  {
+           for ( int j = 1; j <= getBoard().getNumCols(); j++ ) {
+               GoBoardPosition seed = (GoBoardPosition)getBoard().getPosition(i, j);
                if (seed.isOccupied() && !seed.isVisited()) {
                    List<GoBoardPosition> newGroup = nbrAnalyzer_.findGroupFromInitialPosition(seed, false);
                    GoGroup g = new GoGroup(newGroup);
-                   board_.getGroups().add(g);
+                   getAllGroups().add(g);
                }
            }
-        }
-    }
-
-    /**
-     * Make sure that all the positions on the board are reset to the unvisited state.
-     */
-    protected void unvisitAll()
-    {
-        for ( int i = 1; i <= board_.getNumRows(); i++ ) {
-            for ( int j = 1; j <= board_.getNumCols(); j++ ) {
-                GoBoardPosition pos = (GoBoardPosition) board_.getPosition( i, j );
-                pos.setVisited(false);
-            }
         }
     }
 
@@ -284,13 +274,13 @@ public class PostMoveUpdater extends PostChangeUpdater {
      */
     private void updateAfterRemovingCaptures(int toRow, int toCol)
     {
-        GoBoardPosition finalStone = (GoBoardPosition) board_.getPosition(toRow, toCol);
+        GoBoardPosition finalStone = (GoBoardPosition) getBoard().getPosition(toRow, toCol);
 
         GoBoardPosition seedStone;
         // Its a bit of a special case if the finalStone's string is in atari after the capture.
         // The string that the finalStone belongs to is still cut from the larger joined group,
         // but we need to determine the big group from some other stone not from finalStone's string.
-        if (finalStone.isInAtari(board_)) {
+        if (finalStone.isInAtari(getBoard())) {
             seedStone = findAlternativeSeed(finalStone);
         }
         else {
@@ -303,7 +293,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
         removeGroupsForListOfStones(bigGroup);
 
         GoGroup newBigGroup = new GoGroup( bigGroup );
-        board_.getGroups().add( newBigGroup );
+        getAllGroups().add( newBigGroup );
     }
 
     /**
@@ -351,18 +341,18 @@ public class PostMoveUpdater extends PostChangeUpdater {
     private GoBoardPosition getConfirmedAlternative(BoardPosition stone,
                                                     int r, int c, int rowOffset, int colOffset)
     {
-        BoardPosition blankPos = board_.getPosition(r + rowOffset, c + colOffset);
+        BoardPosition blankPos = getBoard().getPosition(r + rowOffset, c + colOffset);
         if (blankPos != null && blankPos.isUnoccupied()) {
             BoardPosition enemy1;
             BoardPosition enemy2;
             if (rowOffset == 0) {
-                enemy1 = board_.getPosition(r + 1, c + colOffset);
-                enemy2 = board_.getPosition(r - 1, c + colOffset);
+                enemy1 = getBoard().getPosition(r + 1, c + colOffset);
+                enemy2 = getBoard().getPosition(r - 1, c + colOffset);
             }
             else {
                 assert (colOffset == 0);
-                enemy1 = board_.getPosition(r + rowOffset, c + 1);
-                enemy2 = board_.getPosition(r + rowOffset, c - 1);
+                enemy1 = getBoard().getPosition(r + rowOffset, c + 1);
+                enemy2 = getBoard().getPosition(r + rowOffset, c - 1);
             }
             if (enemy1 != null && enemy2 != null) {
                 assert( enemy1.getPiece().isOwnedByPlayer1() == enemy2.getPiece().isOwnedByPlayer1()

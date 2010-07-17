@@ -23,7 +23,7 @@ import java.util.*;
 public final class GoBoard extends TwoPlayerBoard
 {
     /** This is a set of active groups. Groups are composed of strings. */
-    private volatile Set<GoGroup> groups_;
+    private Set<GoGroup> groups_;
 
     private HandicapStones handicap_;
 
@@ -174,6 +174,21 @@ public final class GoBoard extends TwoPlayerBoard
     {
         return groups_;
     }
+
+
+    /**
+     * Make sure that all the positions on the board are reset to the unvisited state.
+     */
+    public void unvisitAll()
+    {
+        for ( int i = 1; i <= getNumRows(); i++ ) {
+            for ( int j = 1; j <= getNumCols(); j++ ) {
+                GoBoardPosition pos = (GoBoardPosition) getPosition( i, j );
+                pos.setVisited(false);
+            }
+        }
+    }
+
 
     private GoProfiler getProfiler() {
         return GoProfiler.getInstance();

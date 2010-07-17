@@ -99,7 +99,7 @@ public class GroupNeighborAnalyzer {
     /**
      * Check all 20 neighbors (including diagonals, 1-space jumps, and knights moves).
      * Make sure diagonals and 1-space jumps are not cut.
-     * Don't push a group neighbor if it is part of a string which is in atari
+     * We currently push group neighbors even  if they are part of a string that is in atari.
      *
      * @param s the position of a stone of which to check the neighbors of.
      * @param friendPlayer1 side to find group stones for.
@@ -276,8 +276,8 @@ public class GroupNeighborAnalyzer {
                                        List<GoBoardPosition> stack ) {
         GoBoardPosition nbr = (GoBoardPosition)board_.getPosition(r + rowOffset, c + colOffset);
         // don't add it if it is in atari
-        if (nbr.isInAtari(board_))
-            return 0;
+        //if (nbr.isInAtari(board_))
+        //    return 0;
         if ( nbr.isOccupied() &&
             (!samePlayerOnly || nbr.getPiece().isOwnedByPlayer1() == friendPlayer1) && !nbr.isVisited() ) {
             BoardPosition oneSpacePt;
@@ -310,7 +310,7 @@ public class GroupNeighborAnalyzer {
     }
 
     /**
-     * for the knight's move we consider it cut if there is an enemy stone at the base.
+     * For the knight's move (kogeima) we consider it cut if there is an enemy stone at the base.
      * @param stack kogeima neighbors, if found, are added to this stack.
      * @return number of kogeima neighbors added.
      */
@@ -322,9 +322,9 @@ public class GroupNeighborAnalyzer {
         }
         GoBoardPosition nbr = (GoBoardPosition) board_.getPosition(r + rowOffset, c + colOffset);
         // don't add it if it is in atari
-        if (nbr.isInAtari(board_)) {
-            return 0;
-        }
+        //if (nbr.isInAtari(board_)) {
+        //    return 0;
+        //}
 
         if ( nbr.isOccupied() &&
             (!sameSideOnly || nbr.getPiece().isOwnedByPlayer1() == friendPlayer1) && !nbr.isVisited() ) {

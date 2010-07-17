@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.becker.game.twoplayer.go.board.analysis;
 
 import com.becker.game.common.BoardPosition;
@@ -19,30 +14,26 @@ import java.util.Set;
  */
 public class StringLibertyAnalyzer {
 
-
     /** Keep track of number of liberties instead of computing each time (for performance). */
     private Set<GoBoardPosition> liberties_;
 
-    //private GoBoard board_;
 
     public StringLibertyAnalyzer(GoBoard board, Set<GoBoardPosition> members) {
         initializeLiberties(board, members);
     }
 
 
-    public Set initializeLiberties(GoBoard board, Set<GoBoardPosition> members) {
+    private void initializeLiberties(GoBoard board, Set<GoBoardPosition> members) {
         liberties_ = new HashSet<GoBoardPosition>();
 
         for (GoBoardPosition stone : members) {
             addLiberties(stone, liberties_, board);
         }
-        return liberties_;
     }
 
 
     /**
-     * return the set of liberty positions that the string has
-     * @return number of liberties taht the string has
+     * @return number of liberties that the string has
      */
     public final Set<GoBoardPosition> getLiberties()
     {
@@ -51,7 +42,7 @@ public class StringLibertyAnalyzer {
 
 
     /**
-     * If the libertyPos is occupied, then we subract this liberty, else add it.
+     * If the libertyPos is occupied, then we remove this liberty, else add it.
      * @param libertyPos  position to check for liberty
      */
     public void changedLiberty(GoBoardPosition libertyPos) {

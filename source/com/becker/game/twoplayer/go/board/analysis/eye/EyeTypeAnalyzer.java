@@ -28,12 +28,12 @@ public class EyeTypeAnalyzer {
       
     /**
      * @return the eye type determined based on the properties and
-     *     nbrs of the positions in the spaces list.
+     *     nbrs of the positions in the spaces_ list.
      */
     public EyeInformation determineEyeInformation()
     {
         Set<GoBoardPosition> spaces = eye_.getMembers();
-        assert (spaces != null): "spaces is null";
+        assert (spaces != null): "spaces_ is null";
         int size = spaces.size();
 
         if (isFalseEye()) {
@@ -56,7 +56,7 @@ public class EyeTypeAnalyzer {
     }
 
     /**
-     * Iterate through the spaces in the eye.
+     * Iterate through the spaces_ in the eye.
      * if any are determined to be a false-eye, then return false-eye for the eye type.
      * @return true if we are a false eye.
      */
@@ -109,7 +109,7 @@ public class EyeTypeAnalyzer {
         int r = space.getRow();
         int c = space.getCol();
         // check the diagonals for > 2 of the opponents pieces.
-        // there are 2 cases: both opponent pieces on the same vert or horiz, or
+        // there are 2 cases: both opponent pieces on the same vertical or horizontal, or
         // the opponents pieces are on the opposite diagonals
         if (qualifiedOpponentDiagonal(-1,-1, r,c, groupP1))
             numOppDiag++;

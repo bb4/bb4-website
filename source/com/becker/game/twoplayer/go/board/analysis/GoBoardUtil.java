@@ -74,17 +74,13 @@ public final class GoBoardUtil
         boolean muchWeaker;
         if (stone.isOwnedByPlayer1())  {
             assert (!group.isOwnedByPlayer1());
-            //System.out.println("-" + groupHealth +"(groupH) - "+ stoneHealth +"(stoneH) = "+ (-groupHealth - stoneHealth) );
 
             muchWeaker = (-groupHealth - stoneHealth > threshold);
         }
         else {
             assert (group.isOwnedByPlayer1());
-            //System.out.println(groupHealth +"(groupH) + "+stoneHealth + "(stoneH) = "+ (groupHealth + stoneHealth) );
             muchWeaker = (groupHealth + stoneHealth > threshold);
         }
-        //if (group.getNumStones() > 5)
-            //System.out.println("muchWeaker="+ muchWeaker + "\n group=" + group +"\nstone=" + stone );
 
         return muchWeaker;
     }

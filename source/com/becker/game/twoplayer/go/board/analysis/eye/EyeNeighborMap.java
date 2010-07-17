@@ -6,7 +6,7 @@ import com.becker.game.twoplayer.go.board.IGoString;
 import java.util.*;
 
 /**
- * Maps eye positions to lists of neighboring eye spaces.
+ * Maps eye positions to lists of neighboring eye spaces_.
  *
  * @author Barry Becker
  */
@@ -73,7 +73,7 @@ public class EyeNeighborMap {
     private Map<GoBoardPosition, List<GoBoardPosition>> createMap()
     {
         Map<GoBoardPosition, List<GoBoardPosition>> nbrMap = new HashMap<GoBoardPosition, List<GoBoardPosition>>();
-        // we should probably be able to assume that the eye spaces are unvisted, but apparently not. assert instead?
+        // we should probably be able to assume that the eye spaces_ are unvisted, but apparently not. assert instead?
         eye_.unvisit();
         
         List<GoBoardPosition> queue = new LinkedList<GoBoardPosition>();

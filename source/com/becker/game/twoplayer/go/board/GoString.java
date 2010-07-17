@@ -91,7 +91,7 @@ public class GoString extends GoSet implements IGoString
     public void addMember( GoBoardPosition stone, GoBoard board)
     {
         addMemberInternal(stone, board);
-        libertyAnalyzer_.initializeLiberties(board, getMembers());
+        libertyAnalyzer_ = new StringLibertyAnalyzer(board, getMembers());
     }
 
     /**
@@ -147,7 +147,7 @@ public class GoString extends GoSet implements IGoString
             addMemberInternal( stone, board);
         }
         stringMembers.clear();
-        libertyAnalyzer_.initializeLiberties(board, getMembers());
+        libertyAnalyzer_ = new StringLibertyAnalyzer(board, getMembers());
     }
 
     /**
@@ -158,7 +158,7 @@ public class GoString extends GoSet implements IGoString
     public final void remove( GoBoardPosition stone, GoBoard board )
     {
         removeInternal(stone);
-        libertyAnalyzer_.initializeLiberties(board, getMembers());
+        libertyAnalyzer_ = new StringLibertyAnalyzer(board, getMembers());
     }
 
     /**
@@ -171,7 +171,7 @@ public class GoString extends GoSet implements IGoString
         for (GoBoardPosition stone : stones) {
             removeInternal(stone);
         }
-        libertyAnalyzer_.initializeLiberties(board, getMembers());
+        libertyAnalyzer_ = new StringLibertyAnalyzer(board, getMembers());
         assert ( size() > 0 );
     }
 

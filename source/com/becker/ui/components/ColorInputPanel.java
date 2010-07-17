@@ -21,8 +21,6 @@ public class ColorInputPanel extends JPanel
      */
     public ColorInputPanel(final String label, String toolTip, final JButton colorButton)
     {
-
-        //JPanel colorPanel = new JPanel();
         this.setLayout( new BoxLayout( this, BoxLayout.X_AXIS ) );
         this.setAlignmentX( Component.LEFT_ALIGNMENT );
 
