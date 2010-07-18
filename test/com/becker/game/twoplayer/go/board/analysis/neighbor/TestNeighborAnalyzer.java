@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.go.board.analysis.neighbor;
 import com.becker.game.twoplayer.go.GoTestCase;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPositionList;
 import junit.framework.Assert;
 
 import java.util.ArrayList;
@@ -95,16 +96,16 @@ public class TestNeighborAnalyzer extends GoTestCase {
         restore(PREFIX + file);
         GoBoard board = (GoBoard)controller_.getBoard();
 
-        List empties = new ArrayList(4);
-        empties.add(board.getPosition(3, 3));
-        empties.add(board.getPosition(3, 4));
-        empties.add(board.getPosition(4, 3));
-        empties.add(board.getPosition(4, 4));
+        GoBoardPositionList empties = new GoBoardPositionList(4);
+        empties.add((GoBoardPosition)board.getPosition(3, 3));
+        empties.add((GoBoardPosition)board.getPosition(3, 4));
+        empties.add((GoBoardPosition)board.getPosition(4, 3));
+        empties.add((GoBoardPosition)board.getPosition(4, 4));
 
         verifyOccupiedNbrs(board, empties, 6); // or 9?
     }
 
-    private void verifyOccupiedNbrs(GoBoard board, List empties, int expectedNumNbrs) {
+    private void verifyOccupiedNbrs(GoBoard board, GoBoardPositionList empties, int expectedNumNbrs) {
 
         nbrAnalyzer_ = new NeighborAnalyzer(board);
         int numNbrs = nbrAnalyzer_.findOccupiedNobiNeighbors(empties).size();
