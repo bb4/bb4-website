@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.go;
 import com.becker.game.twoplayer.common.search.SearchOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPositionList;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPositionSet;
 import com.becker.game.twoplayer.go.board.elements.GoGroup;
 import com.becker.game.twoplayer.go.board.GoBoard;
@@ -157,9 +158,9 @@ public class GoTestCase extends TestCase {
         return biggestGroup;
     }
 
-    protected List<GoBoardPosition> createPositionList(Location[] positions) {
+    protected GoBoardPositionList createPositionList(Location[] positions) {
 
-        List<GoBoardPosition> spaces = new ArrayList<GoBoardPosition>();
+        GoBoardPositionList spaces = new GoBoardPositionList();
         for (Location pos : positions) {
             spaces.add(new GoBoardPosition(pos.getRow(), pos.getCol(), null, null));
         }

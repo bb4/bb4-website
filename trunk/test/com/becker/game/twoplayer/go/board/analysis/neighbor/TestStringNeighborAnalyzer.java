@@ -4,6 +4,7 @@ import com.becker.common.Box;
 import com.becker.game.twoplayer.go.GoTestCase;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPositionList;
 import junit.framework.Assert;
 
 import java.util.ArrayList;
@@ -89,7 +90,7 @@ public class TestStringNeighborAnalyzer extends GoTestCase {
                                       int expectedNumNbrs) {
         GoBoardPosition pos = (GoBoardPosition) board_.getPosition(row, col);
 
-        List<GoBoardPosition> stack = new ArrayList<GoBoardPosition>();
+        GoBoardPositionList stack = new GoBoardPositionList();
         int numNbrs = stringAnalyzer_.pushStringNeighbors(pos, friendP1, stack, samePlayerOnly);
 
         Assert.assertEquals("Unexpected number of neigbors pushed on stack.",
