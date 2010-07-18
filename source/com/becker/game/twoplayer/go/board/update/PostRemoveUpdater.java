@@ -7,6 +7,7 @@ import com.becker.game.twoplayer.go.GoProfiler;
 import com.becker.game.twoplayer.go.board.*;
 import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborType;
+import com.becker.game.twoplayer.go.board.elements.*;
 
 import java.util.*;
 
@@ -80,14 +81,14 @@ public class PostRemoveUpdater extends PostChangeUpdater {
 
         if ( nbrs.size() > 1 ) {
             Iterator nbrIt = nbrs.iterator();
-            List<List<GoBoardPosition>> lists = new ArrayList<List<GoBoardPosition>>(8);
+            List<GoBoardPositionList> lists = new ArrayList<GoBoardPositionList>(8);
             GoBoardPosition firstNbr = (GoBoardPosition) nbrIt.next();
-            List<GoBoardPosition> stones = nbrAnalyzer_.findStringFromInitialPosition( firstNbr, false );
+            GoBoardPositionList stones = nbrAnalyzer_.findStringFromInitialPosition( firstNbr, false );
             lists.add( stones );
             while ( nbrIt.hasNext() ) {
                 GoBoardPosition nbrStone = (GoBoardPosition) nbrIt.next();
                 if ( !nbrStone.isVisited() ) {
-                    List<GoBoardPosition> stones1 = nbrAnalyzer_.findStringFromInitialPosition( nbrStone, false );
+                    GoBoardPositionList stones1 = nbrAnalyzer_.findStringFromInitialPosition( nbrStone, false );
                     GoString newString = new GoString( stones1, getBoard() );
                     group.addMember( newString);
                     lists.add( stones1 );
@@ -102,7 +103,7 @@ public class PostRemoveUpdater extends PostChangeUpdater {
      * If we remove a stone from a string that is in atari, that string may rejoin a group.
      * @param stones stones to create the new group from.
      */
-    private void createNewGroupIfNeeded(List<GoBoardPosition> stones) {
+    private void createNewGroupIfNeeded(GoBoardPositionList stones) {
         if ( !groupAlreadyExists( stones) ) {
             //
             GoGroup newGroup = new GoGroup( stones );
@@ -118,9 +119,9 @@ public class PostRemoveUpdater extends PostChangeUpdater {
      * @param enemyNbrs enemy neighbor stones.
      * @return The mergedGroup(s) from stones in the enemy nbr list.
      */
-    private List<List<GoBoardPosition>> findMergedGroupLists(Set enemyNbrs) {
+    private List<GoBoardPositionList> findMergedGroupLists(Set enemyNbrs) {
         Iterator enemyIt = enemyNbrs.iterator();
-        List<List<GoBoardPosition>> mergedGroupLists = new ArrayList<List<GoBoardPosition>>();
+        List<GoBoardPositionList> mergedGroupLists = new ArrayList<GoBoardPositionList>();
         while (enemyIt.hasNext()) {
             GoBoardPosition seed = (GoBoardPosition)enemyIt.next();
             checkEnemyPoistionForMergeGroup(seed, mergedGroupLists);
@@ -134,9 +135,9 @@ public class PostRemoveUpdater extends PostChangeUpdater {
     /**
      * add the mergedStones to the list only if the seed is not already a member of one of the lists.
      */
-    private void checkEnemyPoistionForMergeGroup(GoBoardPosition seed, List<List<GoBoardPosition>> mergedGroupLists) {
+    private void checkEnemyPoistionForMergeGroup(GoBoardPosition seed, List<GoBoardPositionList> mergedGroupLists) {
         // the restored merged group
-        List<GoBoardPosition> mergedStones = nbrAnalyzer_.findGroupFromInitialPosition( seed );
+        GoBoardPositionList mergedStones = nbrAnalyzer_.findGroupFromInitialPosition( seed );
 
         boolean newList = true;
         Iterator lit = mergedGroupLists.iterator();
@@ -174,7 +175,7 @@ public class PostRemoveUpdater extends PostChangeUpdater {
 
         GameContext.log( 3, "GoMove: restoring these captures: " + captureList );
 
-        List<List<GoBoardPosition>> strings = getRestoredStringList(captureList);
+        List<GoBoardPositionList> strings = getRestoredStringList(captureList);
         adjustStringLiberties(captureList);
         GoGroup group = getRestoredGroup(strings);
 
@@ -187,14 +188,14 @@ public class PostRemoveUpdater extends PostChangeUpdater {
      * There may have been more than one string in the captureList
      * @return list of strings that were restored ont he board.
      */
-    private List<List<GoBoardPosition>> getRestoredStringList(CaptureList captureList) {
+    private List<GoBoardPositionList> getRestoredStringList(CaptureList captureList) {
 
-        List<GoBoardPosition> restoredList = getRestoredList(captureList);
-        List<List<GoBoardPosition>> strings = new LinkedList<List<GoBoardPosition>>();
+        GoBoardPositionList restoredList = getRestoredList(captureList);
+        List<GoBoardPositionList> strings = new LinkedList<GoBoardPositionList>();
 
         for (GoBoardPosition s : restoredList) {
             if (!s.isVisited()) {
-                List<GoBoardPosition> string1 = nbrAnalyzer_.findStringFromInitialPosition(s, false);
+                GoBoardPositionList string1 = nbrAnalyzer_.findStringFromInitialPosition(s, false);
                 strings.add(string1);
             }
         }
@@ -204,9 +205,9 @@ public class PostRemoveUpdater extends PostChangeUpdater {
     /**
      * @return list of captured stones that were restored on the board.
      */
-    private List<GoBoardPosition> getRestoredList(CaptureList captureList) {
+    private GoBoardPositionList getRestoredList(CaptureList captureList) {
         Iterator it = captureList.iterator();
-        List<GoBoardPosition> restoredList = new LinkedList<GoBoardPosition>();
+        GoBoardPositionList restoredList = new GoBoardPositionList();
         while ( it.hasNext() ) {
             GoBoardPosition capStone = (GoBoardPosition) it.next();
             GoBoardPosition stoneOnBoard =
@@ -222,11 +223,11 @@ public class PostRemoveUpdater extends PostChangeUpdater {
     /**
      * @return the group that was restored when the captured stones were replaced on the board.
      */
-    private GoGroup getRestoredGroup(List<List<GoBoardPosition>> strings) {
+    private GoGroup getRestoredGroup(List<GoBoardPositionList> strings) {
         // ?? form new group, or check group nbrs to see if we can add to an existing one.
         boolean firstString = true;
         GoGroup group = null;
-        for  (List<GoBoardPosition> stringList : strings) {
+        for  (GoBoardPositionList stringList : strings) {
             GoString string = new GoString( stringList, getBoard() );
             if ( firstString ) {
                 group = new GoGroup( string );
@@ -251,7 +252,7 @@ public class PostRemoveUpdater extends PostChangeUpdater {
              validator_.confirmStonesInValidGroups();
         }
 
-        List<GoBoardPosition> enemyNobiNbrs = getEnemyNeighbors(captures);
+        GoBoardPositionList enemyNobiNbrs = getEnemyNeighbors(captures);
         // in some bizarre cases there might actually be no enemy nobi neighbors
         // (such as when one stone killed all the stones on the board?)
         if (enemyNobiNbrs.size() == 0) {
@@ -266,11 +267,11 @@ public class PostRemoveUpdater extends PostChangeUpdater {
         }
     }
 
-    private void updateGroupsAfterRestoringCaptures(List<GoBoardPosition> enemyNobiNbrs) {
+    private void updateGroupsAfterRestoringCaptures(GoBoardPositionList enemyNobiNbrs) {
 
-        List<List<GoBoardPosition>> listsToUnvisit = replaceBigEnemyGroupWithSmallerOnes(enemyNobiNbrs);
+        List<GoBoardPositionList> listsToUnvisit = replaceBigEnemyGroupWithSmallerOnes(enemyNobiNbrs);
 
-        for (List<GoBoardPosition> list : listsToUnvisit) {
+        for (GoBoardPositionList list : listsToUnvisit) {
             GoBoardUtil.unvisitPositions(list);
             GoGroup group = new GoGroup(list);
             if (GameContext.getDebugMode() > 1) {
@@ -286,14 +287,14 @@ public class PostRemoveUpdater extends PostChangeUpdater {
      * by the potentially disparate smaller ones.
      * @return lists of stones to unvisit.
      */
-    private List<List<GoBoardPosition>> replaceBigEnemyGroupWithSmallerOnes(List<GoBoardPosition> enemyNobiNbrs) {
+    private List<GoBoardPositionList> replaceBigEnemyGroupWithSmallerOnes(GoBoardPositionList enemyNobiNbrs) {
         GoBoardPosition firstEnemyStone = enemyNobiNbrs.get(0);
         GoGroup bigEnemyGroup = firstEnemyStone.getGroup();
         GoGroup secondaryEnemyGroup = findSecondaryEnemyGroup(enemyNobiNbrs, bigEnemyGroup);
         Iterator ennIt;
 
         //
-        List<List<GoBoardPosition>> listsToUnvisit = new ArrayList<List<GoBoardPosition>>();
+        List<GoBoardPositionList> listsToUnvisit = new ArrayList<GoBoardPositionList>();
         GoBoardPositionSet gStones = bigEnemyGroup.getStones();
 
         getAllGroups().remove( bigEnemyGroup );
@@ -304,13 +305,13 @@ public class PostRemoveUpdater extends PostChangeUpdater {
         }
 
         // Combine all the enemy nobi nbrs with the stones from the bigEnemyGroup when trying to find the new groups.
-        List<GoBoardPosition> enemyNbrs = new ArrayList<GoBoardPosition>(enemyNobiNbrs);
+        GoBoardPositionList enemyNbrs = new GoBoardPositionList(enemyNobiNbrs);
         enemyNbrs.addAll(gStones);
         ennIt = enemyNbrs.iterator();
         while ( ennIt.hasNext() ) {
             GoBoardPosition enn = (GoBoardPosition) ennIt.next();
             if ( !enn.isVisited() ) {
-                List<GoBoardPosition> list = nbrAnalyzer_.findGroupFromInitialPosition( enn, false );
+                GoBoardPositionList list = nbrAnalyzer_.findGroupFromInitialPosition( enn, false );
                 listsToUnvisit.add( list );
             }
         }
@@ -320,8 +321,8 @@ public class PostRemoveUpdater extends PostChangeUpdater {
     /**
      * @return  all the enemy neighbors of the stones in the captured group being restored.
      */
-    private List<GoBoardPosition> getEnemyNeighbors(CaptureList captures) {
-        List<GoBoardPosition> enemyNobiNbrs = new LinkedList<GoBoardPosition>();
+    private GoBoardPositionList getEnemyNeighbors(CaptureList captures) {
+        GoBoardPositionList enemyNobiNbrs = new GoBoardPositionList();
         for (Object capture1 : captures) {
             GoBoardPosition capture = (GoBoardPosition) capture1;
             GoBoardPositionSet enns = nbrAnalyzer_.getNobiNeighbors(capture, NeighborType.ENEMY);
@@ -343,7 +344,7 @@ public class PostRemoveUpdater extends PostChangeUpdater {
      * @param bigEnemyGroup big group that the enemies blong to.
      * @return secondary enemy group if there is one.
      */
-    private GoGroup findSecondaryEnemyGroup(List<GoBoardPosition> enemyNobiNbrs, GoGroup bigEnemyGroup) {
+    private GoGroup findSecondaryEnemyGroup(GoBoardPositionList enemyNobiNbrs, GoGroup bigEnemyGroup) {
 
         Iterator ennIt = enemyNobiNbrs.iterator();
 
@@ -430,13 +431,13 @@ public class PostRemoveUpdater extends PostChangeUpdater {
     private void updateFriendlyGroups(Set friendlyNbrs) {
 
         Iterator friendIt = friendlyNbrs.iterator();
-        List<List<GoBoardPosition>> lists = new ArrayList<List<GoBoardPosition>>();
+        List<GoBoardPositionList> lists = new ArrayList<GoBoardPositionList>();
 
         while ( friendIt.hasNext() ) {
             GoBoardPosition nbrStone = (GoBoardPosition) friendIt.next();
 
             if ( !nbrStone.isVisited() ) {
-                List<GoBoardPosition> stones1 = nbrAnalyzer_.findGroupFromInitialPosition( nbrStone, false );
+                GoBoardPositionList stones1 = nbrAnalyzer_.findGroupFromInitialPosition( nbrStone, false );
                 removeGroupsForListOfStones(stones1);
                 createNewGroupIfNeeded(stones1);
                 lists.add( stones1 );
@@ -456,14 +457,14 @@ public class PostRemoveUpdater extends PostChangeUpdater {
     {
         if ( enemyNbrs.size() > 0 ) {
 
-            List<List<GoBoardPosition>> mergedGroupLists = findMergedGroupLists(enemyNbrs);
+            List<GoBoardPositionList> mergedGroupLists = findMergedGroupLists(enemyNbrs);
             createRestoredGroups(mergedGroupLists);
         }
     }
 
-    private void createRestoredGroups(List<List<GoBoardPosition>> mergedGroupLists) {
+    private void createRestoredGroups(List<GoBoardPositionList> mergedGroupLists) {
 
-        for (List<GoBoardPosition> mergedStones : mergedGroupLists) {
+        for (GoBoardPositionList mergedStones : mergedGroupLists) {
 
             // remove all the old groups and replace them with the big ones
             removeGroupsForListOfStones(mergedStones);
@@ -504,7 +505,7 @@ public class PostRemoveUpdater extends PostChangeUpdater {
      * return true if the stones in this list exactly match those in an existing group
      * @return true of group already exists on the board.
      */
-    protected boolean groupAlreadyExists( List<GoBoardPosition> stones )
+    protected boolean groupAlreadyExists( GoBoardPositionList stones )
     {
         // first find the group that contains the stones
         synchronized(getBoard().getGroups()) {

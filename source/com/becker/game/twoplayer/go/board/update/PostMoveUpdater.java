@@ -7,6 +7,7 @@ import com.becker.game.twoplayer.go.GoMove;
 import com.becker.game.twoplayer.go.GoProfiler;
 import com.becker.game.twoplayer.go.board.*;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborType;
+import com.becker.game.twoplayer.go.board.elements.*;
 
 import java.util.*;
 
@@ -114,7 +115,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
         GoBoardPosition nbrStone = (GoBoardPosition) nbrIt.next();
         str = nbrStone.getString();
         str.addMember( stone, getBoard() );
-        BoardDebugUtil.debugPrintGroups( 3, "groups before merging:", true, true, getAllGroups());
+        getAllGroups().debugPrint( 3, "groups before merging:", true, true);
 
         if ( nbrs.size() > 1 ) {
             mergeStringsIfNeeded(str, nbrIt);
@@ -258,7 +259,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
            for ( int j = 1; j <= getBoard().getNumCols(); j++ ) {
                GoBoardPosition seed = (GoBoardPosition)getBoard().getPosition(i, j);
                if (seed.isOccupied() && !seed.isVisited()) {
-                   List<GoBoardPosition> newGroup = nbrAnalyzer_.findGroupFromInitialPosition(seed, false);
+                   GoBoardPositionList newGroup = nbrAnalyzer_.findGroupFromInitialPosition(seed, false);
                    GoGroup g = new GoGroup(newGroup);
                    getAllGroups().add(g);
                }
@@ -287,7 +288,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
             seedStone = finalStone;
         }
         assert seedStone.isOccupied();
-        List<GoBoardPosition> bigGroup = nbrAnalyzer_.findGroupFromInitialPosition( seedStone );
+        GoBoardPositionList bigGroup = nbrAnalyzer_.findGroupFromInitialPosition( seedStone );
         assert ( bigGroup.size() > 0 );
 
         removeGroupsForListOfStones(bigGroup);

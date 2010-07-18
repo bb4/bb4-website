@@ -1,29 +1,12 @@
 package com.becker.game.twoplayer.go.board.analysis;
 
-import com.becker.game.common.CaptureList;
 import com.becker.game.common.GameContext;
-import com.becker.game.common.Move;
-import com.becker.game.twoplayer.common.TwoPlayerController;
-import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.common.TwoPlayerOptions;
-import com.becker.game.twoplayer.common.search.Searchable;
-import com.becker.game.twoplayer.go.GoMove;
-import com.becker.game.twoplayer.go.GoOptions;
-import com.becker.game.twoplayer.go.GoProfiler;
 import com.becker.game.twoplayer.go.GoWeights;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.GoStone;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.GoStone;
 import com.becker.game.twoplayer.go.board.PositionalScore;
-import com.becker.game.twoplayer.go.persistence.GoGameExporter;
-import com.becker.game.twoplayer.go.persistence.GoGameImporter;
 import com.becker.optimization.parameter.ParameterArray;
-
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-
-import static com.becker.game.twoplayer.go.GoControllerConstants.*;
 
 /**
  * Used to keep track of evaluating a measure of score pased only on values at positions.

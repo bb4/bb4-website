@@ -1,6 +1,5 @@
 package com.becker.game.twoplayer.go.persistence;
 
-import com.becker.game.twoplayer.go.board.BoardDebugUtil;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.Move;
@@ -62,7 +61,7 @@ public class GoGameExporter extends GameExporter {
             // include error info and stack trace in the comments to help debug
             if ( ae != null ) {
                 out.write( "C[" );
-                out.write( BoardDebugUtil.getGroupsText(((GoBoard) gc.getBoard()).getGroups() ));
+                out.write(  board.getGroups().toString()  );
                 if ( ae.getMessage() != null ) {
                     out.write( ae.getMessage() );
                     //out would need to be a PrintWriter for this to work

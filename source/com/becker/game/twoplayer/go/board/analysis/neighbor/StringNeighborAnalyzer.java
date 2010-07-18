@@ -5,6 +5,9 @@ import com.becker.common.Location;
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.board.*;
 import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPositionList;
+import com.becker.game.twoplayer.go.board.elements.GoStringSet;
 
 import java.util.*;
 
@@ -33,18 +36,18 @@ class StringNeighborAnalyzer {
      * Use the visited flag to indicate that a stone has been added to the string.
      * @return string from seed stone
      */
-    List<GoBoardPosition> findStringFromInitialPosition(GoBoardPosition stone, boolean friendOwnedByP1,
+    GoBoardPositionList findStringFromInitialPosition(GoBoardPosition stone, boolean friendOwnedByP1,
                                                         boolean returnToUnvisitedState, NeighborType type,
                                                         Box box) {
-        List<GoBoardPosition> stones = new ArrayList<GoBoardPosition>();
+        GoBoardPositionList stones = new GoBoardPositionList();
 
-        List<GoBoardPosition> stack = new LinkedList<GoBoardPosition>();
+        GoBoardPositionList stack = new GoBoardPositionList();
         assert box.contains(stone.getLocation()) : "stone " +  stone + " not in " + box;
 
         assert ( !stone.isVisited() ): "stone="+stone;
         stack.add( 0, stone );
         while ( !stack.isEmpty() ) {
-            GoBoardPosition s = stack.remove( 0 );
+            GoBoardPosition s = stack.remove( stack.size()-1 );
             if ( !s.isVisited() ) {
                 s.setVisited( true );
                 stones.add( s );
@@ -66,7 +69,7 @@ class StringNeighborAnalyzer {
      */
     GoStringSet findStringNeighbors(GoBoardPosition stone) {
         GoStringSet stringNbrs = new GoStringSet();
-        List<GoBoardPosition> nobiNbrs = new LinkedList<GoBoardPosition>();
+        GoBoardPositionList nobiNbrs = new GoBoardPositionList();
 
         pushStringNeighbors(stone, true, nobiNbrs, false);
 
@@ -80,7 +83,7 @@ class StringNeighborAnalyzer {
     /**
      * @return all string neighbors of specified position.
      */
-    int pushStringNeighbors( GoBoardPosition s, boolean friendIsPlayer1, List<GoBoardPosition> stack,
+    int pushStringNeighbors( GoBoardPosition s, boolean friendIsPlayer1, GoBoardPositionList stack,
                                      boolean samePlayerOnly ) {
         return pushStringNeighbors(s, friendIsPlayer1, stack, samePlayerOnly, NeighborType.OCCUPIED,
                                    new Box(1, 1, board_.getNumRows(), board_.getNumCols()));
@@ -93,7 +96,7 @@ class StringNeighborAnalyzer {
      * @return number of stones added to the stack
      */
     private int pushStringNeighbors( GoBoardPosition s, boolean friendPlayer1,
-                                     List<GoBoardPosition> stack, boolean samePlayerOnly,
+                                     GoBoardPositionList stack, boolean samePlayerOnly,
                                      NeighborType type, Box bbox )  {
         int r = s.getRow();
         int c = s.getCol();
@@ -118,7 +121,7 @@ class StringNeighborAnalyzer {
      * @return number of neighbors added (0 or 1).
      */
     private int checkNeighbor( Location loc, int rowOffset, int colOffset,
-                               boolean friendOwnedByPlayer1, List<GoBoardPosition> stack,
+                               boolean friendOwnedByPlayer1, GoBoardPositionList stack,
                                boolean samePlayerOnly, NeighborType type,
                                Box bbox )
     {
@@ -149,7 +152,7 @@ class StringNeighborAnalyzer {
      * @return  1 if this is a valid neighbor of the type that we want
      */
     private int checkNeighbor( int r, int c, int rowOffset, int colOffset,
-                                    boolean friendOwnedByPlayer1, List<GoBoardPosition> stack,
+                                    boolean friendOwnedByPlayer1, GoBoardPositionList stack,
                                     boolean samePlayerOnly, NeighborType type) {
         GoBoardPosition nbr = (GoBoardPosition) board_.getPosition(r + rowOffset, c + colOffset);
 

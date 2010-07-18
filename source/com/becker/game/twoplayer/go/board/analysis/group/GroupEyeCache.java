@@ -1,6 +1,8 @@
 package com.becker.game.twoplayer.go.board.analysis.group;
 
 import com.becker.game.twoplayer.go.board.*;
+import com.becker.game.twoplayer.go.board.elements.GoEye;
+import com.becker.game.twoplayer.go.board.elements.GoGroup;
 
 import java.util.HashSet;
 import java.util.LinkedHashSet;

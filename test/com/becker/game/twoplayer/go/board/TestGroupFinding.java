@@ -3,9 +3,10 @@ package com.becker.game.twoplayer.go.board;
 import com.becker.common.Location;
 import com.becker.game.twoplayer.go.GoTestCase;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPositionSet;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * Check that we can identifiy groups on the board.

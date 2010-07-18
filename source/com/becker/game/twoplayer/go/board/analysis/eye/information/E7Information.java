@@ -2,8 +2,9 @@ package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
 import com.becker.common.Box;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.GoEye;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPositionList;
+import com.becker.game.twoplayer.go.board.elements.GoEye;
 import com.becker.game.twoplayer.go.board.analysis.eye.EyeNeighborMap;
 import com.becker.game.twoplayer.go.board.analysis.eye.EyeStatus;
 
@@ -109,8 +110,8 @@ public class E7Information extends AbstractEyeSubtypeInformation
      */
     private Eye7Type determineE1112234Subtype(EyeNeighborMap nbrMap) {
 
-        List<GoBoardPosition> oneNbrPoints = new ArrayList<GoBoardPosition>(3);
-        List<GoBoardPosition> otherPoints = new ArrayList<GoBoardPosition>(4);
+        GoBoardPositionList oneNbrPoints = new GoBoardPositionList(3);
+        GoBoardPositionList otherPoints = new GoBoardPositionList(4);
 
         for (GoBoardPosition pos : nbrMap.keySet()) {
             if (nbrMap.getNumEyeNeighbors(pos) == 1)  {

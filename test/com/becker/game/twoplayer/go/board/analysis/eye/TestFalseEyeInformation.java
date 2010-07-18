@@ -1,18 +1,9 @@
 package com.becker.game.twoplayer.go.board.analysis.eye;
 
-import com.becker.game.twoplayer.go.GoTestCase;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.GoEye;
-import com.becker.game.twoplayer.go.board.GoGroup;
-import com.becker.game.twoplayer.go.board.analysis.eye.information.E1Information;
-import com.becker.game.twoplayer.go.board.analysis.eye.information.E2Information;
-import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeInformation;
 import com.becker.game.twoplayer.go.board.analysis.eye.information.FalseEyeInformation;
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
-import java.util.Set;
 
 /**
  * Test that we can get the correct type and status for all the different eyes that can arise.

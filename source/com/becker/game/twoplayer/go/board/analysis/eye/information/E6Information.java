@@ -2,8 +2,9 @@ package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
 import com.becker.common.Box;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.GoEye;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPositionList;
+import com.becker.game.twoplayer.go.board.elements.GoEye;
 import com.becker.game.twoplayer.go.board.analysis.eye.EyeNeighborMap;
 import com.becker.game.twoplayer.go.board.analysis.eye.EyeStatus;
 
@@ -82,7 +83,7 @@ public class E6Information extends AbstractEyeSubtypeInformation
             case E122223 :
                 return handleVitalPointCases(nbrMap, eye, 4);
             case E112224 :
-                List<GoBoardPosition> endFilledSpaces = findSpecialFilledSpaces(nbrMap, getEndPoints(), eye);
+                GoBoardPositionList endFilledSpaces = findSpecialFilledSpaces(nbrMap, getEndPoints(), eye);
                 switch (endFilledSpaces.size())
                 {
                     case 0 :  return handleVitalPointCases(nbrMap, eye, 2);
@@ -104,8 +105,8 @@ public class E6Information extends AbstractEyeSubtypeInformation
      */
     private Eye6Type determineE112233Subtype(EyeNeighborMap nbrMap) {
 
-        List<GoBoardPosition> oneNbrPoints = new ArrayList<GoBoardPosition>(2);
-        List<GoBoardPosition> otherPoints = new ArrayList<GoBoardPosition>(4);
+        GoBoardPositionList oneNbrPoints = new GoBoardPositionList(2);
+        GoBoardPositionList otherPoints = new GoBoardPositionList(4);
 
         for (GoBoardPosition pos : nbrMap.keySet()) {
             if (nbrMap.getNumEyeNeighbors(pos) == 1)  {

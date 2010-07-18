@@ -4,15 +4,16 @@ import com.becker.common.Box;
 import com.becker.game.common.GamePiece;
 import com.becker.game.twoplayer.go.GoProfiler;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.GoBoardPositionSet;
-import com.becker.game.twoplayer.go.board.GoGroup;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPositionList;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPositionSet;
+import com.becker.game.twoplayer.go.board.elements.GoGroup;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborType;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
+
 import static com.becker.game.twoplayer.go.GoControllerConstants.USE_RELATIVE_GROUP_SCORING;
 
 /**
@@ -193,7 +194,7 @@ public class TerritoryAnalyzer {
         int cMax = board_.getNumCols() - edgeOffset;
         Box box = new Box(min, min, rMax, cMax);
 
-        List<List<GoBoardPosition>> emptyLists = new LinkedList<List<GoBoardPosition>>();
+        List<GoBoardPositionList> emptyLists = new LinkedList<GoBoardPositionList>();
 
         for ( int i = min; i <= rMax; i++ )  {
            for ( int j = min; j <= cMax; j++ ) {
@@ -211,7 +212,7 @@ public class TerritoryAnalyzer {
      * If pos is in an eye, update the score contribution for that eye space.
      * @return update diffScore value.
      */
-    private float updateEmptyRegionFromSeed(float diffScore, Box box, List<List<GoBoardPosition>> emptyLists,
+    private float updateEmptyRegionFromSeed(float diffScore, Box box, List<GoBoardPositionList> emptyLists,
                                             GoBoardPosition pos) {
         if (pos.getString() == null && !pos.isInEye()) {
             assert pos.isUnoccupied();
@@ -219,7 +220,7 @@ public class TerritoryAnalyzer {
 
                 // don't go all the way to the borders (until the end of the game),
                 // since otherwise we will likely get only one big empty region.
-                List<GoBoardPosition> empties =
+                GoBoardPositionList empties =
                         nbrAnalyzer_.findStringFromInitialPosition(pos, false, false, NeighborType.UNOCCUPIED, box);
                 emptyLists.add(empties);
 

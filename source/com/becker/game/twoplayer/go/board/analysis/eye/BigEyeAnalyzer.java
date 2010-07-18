@@ -1,15 +1,14 @@
 package com.becker.game.twoplayer.go.board.analysis.eye;
 
-import com.becker.game.twoplayer.go.board.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.GoBoardPositionSet;
-import com.becker.game.twoplayer.go.board.GoEye;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPositionSet;
+import com.becker.game.twoplayer.go.board.elements.GoEye;
 import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeType;
 import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeInformation;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Determine properties about a big eye on the board.

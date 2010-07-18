@@ -2,6 +2,9 @@ package com.becker.game.twoplayer.go.board;
 
 import com.becker.game.common.GamePiece;
 import com.becker.game.twoplayer.go.GoMove;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPositionList;
+import com.becker.game.twoplayer.go.board.elements.GoStone;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +23,7 @@ class HandicapStones {
     private int numHandicapStones_ = 0;
 
     /** typically there are at most 9 handicap stones in an uneven game  */
-    private List<GoBoardPosition> starPoints_ = null;
+    private GoBoardPositionList starPoints_ = null;
 
 
     /**
@@ -71,7 +74,7 @@ class HandicapStones {
         // initialize the list of handicap stones.
         // The number of these that actually get placed on the board
         // depends on the handicap
-        starPoints_ = new ArrayList<GoBoardPosition>(9);
+        starPoints_ = new GoBoardPositionList(9);
         int min = 4;
         // on a really small board we put the corner star points at 3-3.
         if (boardSize < 13)

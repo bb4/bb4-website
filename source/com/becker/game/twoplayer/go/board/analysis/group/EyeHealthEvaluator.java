@@ -2,6 +2,7 @@ package com.becker.game.twoplayer.go.board.analysis.group;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.board.*;
+import com.becker.game.twoplayer.go.board.elements.GoGroup;
 
 
 /**

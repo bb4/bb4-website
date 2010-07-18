@@ -1,8 +1,9 @@
 package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.GoEye;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPositionList;
+import com.becker.game.twoplayer.go.board.elements.GoEye;
 import com.becker.game.twoplayer.go.board.analysis.eye.EyeNeighborMap;
 import com.becker.game.twoplayer.go.board.analysis.eye.EyeStatus;
 
@@ -107,7 +108,7 @@ public abstract class AbstractEyeSubtypeInformation extends AbstractEyeInformati
      * @return status of shape with numVitals vital points.
      */
     protected  EyeStatus handleVitalPointCases(EyeNeighborMap nbrMap, GoEye eye, final int numVitals)   {
-        List<GoBoardPosition> vitalFilledSpaces = findSpecialFilledSpaces(nbrMap, getVitalPoints(), eye);
+        GoBoardPositionList vitalFilledSpaces = findSpecialFilledSpaces(nbrMap, getVitalPoints(), eye);
         int numFilledVitals = vitalFilledSpaces.size();
         assert numFilledVitals <= numVitals :
                 "The number of filled vitals ("+ numFilledVitals +") " +
@@ -128,8 +129,8 @@ public abstract class AbstractEyeSubtypeInformation extends AbstractEyeInformati
      * I suppose, in very rare cases, there could be a same side stone among the enemy filled spaces in the eye.
      * @return the eye spaces that have enemy stones in them.
      */
-    protected List<GoBoardPosition> findFilledSpaces(GoEye eye) {
-        List<GoBoardPosition> filledSpaces = new ArrayList<GoBoardPosition>(6);
+    protected GoBoardPositionList findFilledSpaces(GoEye eye) {
+        GoBoardPositionList filledSpaces = new GoBoardPositionList(6);
         for (GoBoardPosition space : eye.getMembers()) {
             if (space.isOccupied()) {
                 assert eye.isOwnedByPlayer1() != space.getPiece().isOwnedByPlayer1();
@@ -144,8 +145,8 @@ public abstract class AbstractEyeSubtypeInformation extends AbstractEyeInformati
      *
      * @return the set of special spaces (vital or end) that have enemy stones in them.
      */
-    protected List<GoBoardPosition> findSpecialFilledSpaces(EyeNeighborMap nbrMap, float[] specialPoints, GoEye eye) {
-        List<GoBoardPosition> specialFilledSpaces = new LinkedList<GoBoardPosition>();
+    protected GoBoardPositionList findSpecialFilledSpaces(EyeNeighborMap nbrMap, float[] specialPoints, GoEye eye) {
+        GoBoardPositionList specialFilledSpaces = new GoBoardPositionList();
         for (GoBoardPosition space : eye.getMembers()) {
             if (space.isOccupied()) {
                 assert eye.isOwnedByPlayer1() != space.getPiece().isOwnedByPlayer1();
@@ -163,7 +164,7 @@ public abstract class AbstractEyeSubtypeInformation extends AbstractEyeInformati
      * @return either alive or alive in atari (rare)
      */
     protected EyeStatus handleSubtypeWithLifeProperty(GoEye eye, GoBoard board) {
-        List<GoBoardPosition> filledSpaces = findFilledSpaces(eye);
+        GoBoardPositionList filledSpaces = findFilledSpaces(eye);
         if (eye.size() - filledSpaces.size() == 1 && eye.getGroup().getLiberties(board).size() == 1) {
             return EyeStatus.ALIVE_IN_ATARI;
         }

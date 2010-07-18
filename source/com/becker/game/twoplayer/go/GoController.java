@@ -2,6 +2,8 @@ package com.becker.game.twoplayer.go;
 
 import com.becker.game.twoplayer.go.board.*;
 import com.becker.game.twoplayer.go.board.analysis.PositionalScoreAnalyzer;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.GoStone;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.*;
@@ -146,7 +148,7 @@ public final class GoController extends TwoPlayerController
 
     /**
      * Call this at the end of the game when we need to try to get an accurate score.
-     * @param forPlayer1
+     * @param forPlayer1  true if player one (black)
      * @return the actual score (each empty space counts as one)
      */
     public int getTerritory( boolean forPlayer1 )
@@ -428,11 +430,6 @@ public final class GoController extends TwoPlayerController
 
         /**
          * return any moves that take captures or get out of atari.
-         *
-         * @param lastMove
-         * @param weights
-         * @param player1sPerspective
-         * @return list of urgent moves
          */
         public final List<? extends TwoPlayerMove> generateUrgentMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
         {
@@ -458,9 +455,6 @@ public final class GoController extends TwoPlayerController
          * returns true if the specified move caused one or more opponent pieces to become jeopardized
          * For go, if the specified move caused a group to become in atari, then we return true.
          *
-         * @param lastMove
-         * @param weights
-         * @param player1sPerspective
          * @return true if the last move created a big change in the score
          */
         @Override

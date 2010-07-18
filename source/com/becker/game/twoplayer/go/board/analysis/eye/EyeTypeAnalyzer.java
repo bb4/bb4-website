@@ -5,6 +5,10 @@ import com.becker.game.twoplayer.go.board.*;
 import com.becker.game.twoplayer.go.board.analysis.eye.information.*;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborType;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPositionSet;
+import com.becker.game.twoplayer.go.board.elements.GoEye;
+import com.becker.game.twoplayer.go.board.elements.GoGroup;
 
 import java.util.Set;
 

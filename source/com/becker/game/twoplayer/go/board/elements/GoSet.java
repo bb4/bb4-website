@@ -1,12 +1,9 @@
-package com.becker.game.twoplayer.go.board;
+package com.becker.game.twoplayer.go.board.elements;
 
 import com.becker.game.common.GameContext;
+import com.becker.game.twoplayer.go.board.GoBoard;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 /**

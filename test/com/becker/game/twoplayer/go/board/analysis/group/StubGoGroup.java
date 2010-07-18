@@ -1,13 +1,6 @@
 package com.becker.game.twoplayer.go.board.analysis.group;
 
-import com.becker.game.twoplayer.go.board.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.GoGroup;
-import com.becker.game.twoplayer.go.board.IGoGroup;
-import com.becker.game.twoplayer.go.board.IGoString;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import com.becker.game.twoplayer.go.board.elements.IGoGroup;
 
 /**
  * @author Barry Becker

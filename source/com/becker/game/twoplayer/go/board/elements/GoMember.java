@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.go.board;
+package com.becker.game.twoplayer.go.board.elements;
 
 
 /**

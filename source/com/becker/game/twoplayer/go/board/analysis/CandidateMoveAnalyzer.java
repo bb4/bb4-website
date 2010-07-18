@@ -2,6 +2,7 @@ package com.becker.game.twoplayer.go.board.analysis;
 
 import com.becker.game.twoplayer.go.board.*;
 import com.becker.game.common.BoardPosition;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
 
 /**
  * Creates a set of reasonable next moves for a given player.

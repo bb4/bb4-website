@@ -1,9 +1,6 @@
-package com.becker.game.twoplayer.go.board;
+package com.becker.game.twoplayer.go.board.elements;
 
-import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.Random;
-import java.util.Set;
 
 /**
  *  A set of GoStrings.

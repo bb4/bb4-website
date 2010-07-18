@@ -1,6 +1,11 @@
 package com.becker.game.twoplayer.go.board.analysis;
 
 import com.becker.game.twoplayer.go.board.*;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPositionList;
+import com.becker.game.twoplayer.go.board.elements.GoStone;
+import com.becker.game.twoplayer.go.board.elements.IGoGroup;
+
 import java.util.*;
 
 
@@ -28,9 +33,9 @@ public final class GoBoardUtil
     /**
      * set the visited flag back to false for a list of lists of stones
      */
-    public static void unvisitPositionsInLists( List<List<GoBoardPosition>> lists )
+    public static void unvisitPositionsInLists( List<GoBoardPositionList> lists )
     {
-        for (List<GoBoardPosition> list : lists) {
+        for (GoBoardPositionList list : lists) {
             unvisitPositions( list );
         }
     }
