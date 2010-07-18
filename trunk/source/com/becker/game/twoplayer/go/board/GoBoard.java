@@ -6,6 +6,9 @@ import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.*;
 
 import com.becker.game.twoplayer.go.board.analysis.TerritoryAnalyzer;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.GoGroup;
+import com.becker.game.twoplayer.go.board.elements.GoGroupSet;
 import com.becker.game.twoplayer.go.board.update.BoardUpdater;
 
 import java.util.*;

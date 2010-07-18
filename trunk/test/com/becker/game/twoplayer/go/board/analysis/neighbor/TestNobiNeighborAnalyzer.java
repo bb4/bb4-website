@@ -3,10 +3,9 @@ package com.becker.game.twoplayer.go.board.analysis.neighbor;
 import com.becker.common.Location;
 import com.becker.game.twoplayer.go.GoTestCase;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
 import junit.framework.Assert;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

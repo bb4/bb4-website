@@ -4,6 +4,7 @@ import com.becker.game.common.CaptureList;
 import com.becker.game.twoplayer.go.GoMove;
 import com.becker.game.twoplayer.go.board.*;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
+import com.becker.game.twoplayer.go.board.elements.*;
 
 import java.util.*;
 

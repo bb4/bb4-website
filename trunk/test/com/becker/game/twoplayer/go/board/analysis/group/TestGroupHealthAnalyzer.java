@@ -6,19 +6,19 @@ import com.becker.game.twoplayer.go.GoTestCase;
 import java.util.Set;
 
 import com.becker.game.twoplayer.go.board.analysis.eye.information.*;
+import com.becker.game.twoplayer.go.board.elements.GoEye;
+import com.becker.game.twoplayer.go.board.elements.GoGroup;
 import junit.framework.Assert;
 import static com.becker.game.twoplayer.go.board.analysis.eye.information.EyeType.*;
 import static com.becker.game.twoplayer.go.board.analysis.eye.information.E4Information.Eye4Type.*;
 import static com.becker.game.twoplayer.go.board.analysis.eye.information.E5Information.Eye5Type.*;
 import static com.becker.game.twoplayer.go.board.analysis.eye.information.E6Information.Eye6Type.*;
-import static com.becker.game.twoplayer.go.board.analysis.eye.information.E7Information.Eye7Type.*;
-
 
 
 /**
- * Mostly test that the scoring of groups works correctly.
- * @author Barry Becker
- */
+* Mostly test that the scoring of groups works correctly.
+* @author Barry Becker
+*/
 public class TestGroupHealthAnalyzer extends GoTestCase {
 
     private static final String PREFIX = "board/analysis/grouphealth/";

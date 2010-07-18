@@ -11,9 +11,6 @@ public final class GoControllerConstants {
 
     private GoControllerConstants() {}
 
-    /** debug level can be overridden in ui.  */
-    public static final int DEFAULT_DEBUG_LEVEL = 0;
-
     /** if true use an additional heuristic to get more accurate scoring of group health in a second pass. */
     public static final boolean USE_RELATIVE_GROUP_SCORING = true;
 

@@ -6,8 +6,8 @@ import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.GoStone;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.GoStone;
 import com.becker.ui.GUIUtil;
 
 import javax.swing.*;

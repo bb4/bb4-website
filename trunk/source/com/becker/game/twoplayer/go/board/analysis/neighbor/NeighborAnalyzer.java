@@ -3,9 +3,12 @@ package com.becker.game.twoplayer.go.board.analysis.neighbor;
 import com.becker.common.Box;
 import com.becker.game.twoplayer.go.GoProfiler;
 import com.becker.game.twoplayer.go.board.*;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPositionList;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPositionSet;
+import com.becker.game.twoplayer.go.board.elements.GoStringSet;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * Performs static analysis of a go board to determine strings and
@@ -36,7 +39,7 @@ public class NeighborAnalyzer {
      * @param empties a list of unoccupied positions.
      * @return a list of stones bordering the set of empty board positions.
      */
-    public GoBoardPositionSet findOccupiedNobiNeighbors(List<GoBoardPosition> empties) {
+    public GoBoardPositionSet findOccupiedNobiNeighbors(GoBoardPositionList empties) {
         return nobiAnalyzer_.findOccupiedNobiNeighbors(empties);
     }
 
@@ -70,7 +73,7 @@ public class NeighborAnalyzer {
      * @param returnToUnvisitedState if true then the stomes will all be marked unvisited when done searching
      * @return find string.
      */
-    public List<GoBoardPosition> findStringFromInitialPosition(GoBoardPosition stone,
+    public GoBoardPositionList findStringFromInitialPosition(GoBoardPosition stone,
                                                                boolean returnToUnvisitedState) {
         return findStringFromInitialPosition(
                 stone, stone.getPiece().isOwnedByPlayer1(), returnToUnvisitedState, NeighborType.OCCUPIED,
@@ -81,10 +84,10 @@ public class NeighborAnalyzer {
      * Determines a string connected from a seed stone within a specified bounding area.
      * @return string from seed stone.
      */
-    public List<GoBoardPosition> findStringFromInitialPosition( GoBoardPosition stone,  boolean friendOwnedByP1,
+    public GoBoardPositionList findStringFromInitialPosition( GoBoardPosition stone,  boolean friendOwnedByP1,
                                                      boolean returnToUnvisitedState, NeighborType type, Box box) {
         GoProfiler.getInstance().start(GoProfiler.FIND_STRINGS);
-        List<GoBoardPosition> stones =
+        GoBoardPositionList stones =
                 stringNbrAnalyzer_.findStringFromInitialPosition(stone, friendOwnedByP1, returnToUnvisitedState,
                                                  type, box);
         GoProfiler.getInstance().stop(GoProfiler.FIND_STRINGS);
@@ -137,7 +140,7 @@ public class NeighborAnalyzer {
      * @param stone the stone to search from for group neighbors.
      * @return the list of stones in the group that was found.
      */
-    public List<GoBoardPosition> findGroupFromInitialPosition( GoBoardPosition stone )
+    public GoBoardPositionList findGroupFromInitialPosition( GoBoardPosition stone )
     {
         return findGroupFromInitialPosition( stone, true );
     }
@@ -152,7 +155,7 @@ public class NeighborAnalyzer {
      * @param returnToUnvisitedState if true, then mark everything unvisited when done.
      * @return the list of stones in the group that was found.
      */
-    public List<GoBoardPosition> findGroupFromInitialPosition(GoBoardPosition stone, boolean returnToUnvisitedState) {
+    public GoBoardPositionList findGroupFromInitialPosition(GoBoardPosition stone, boolean returnToUnvisitedState) {
         return groupNbrAnalyzer_.findGroupFromInitialPosition(stone, returnToUnvisitedState);
     }
 }

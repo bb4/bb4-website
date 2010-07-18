@@ -1,6 +1,8 @@
 package com.becker.game.twoplayer.go.board;
 
 import com.becker.game.twoplayer.go.*;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.GoStone;
 import junit.framework.*;
 
 /**

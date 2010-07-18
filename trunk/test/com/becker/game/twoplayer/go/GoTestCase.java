@@ -2,16 +2,15 @@ package com.becker.game.twoplayer.go;
 
 import com.becker.game.twoplayer.common.search.SearchOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
-import com.becker.game.twoplayer.go.board.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.GoBoardPositionSet;
-import com.becker.game.twoplayer.go.board.GoGroup;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPositionSet;
+import com.becker.game.twoplayer.go.board.elements.GoGroup;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.common.util.Util;
 import com.becker.common.Location;
 import com.becker.common.util.FileUtil;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.*;
-import com.becker.game.twoplayer.go.*;
 import com.becker.ui.file.GenericFileFilter;
 import junit.framework.*;
 

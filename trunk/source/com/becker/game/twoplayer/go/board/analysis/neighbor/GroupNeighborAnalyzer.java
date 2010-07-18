@@ -3,8 +3,9 @@ package com.becker.game.twoplayer.go.board.analysis.neighbor;
 import com.becker.game.common.BoardPosition;
 import com.becker.game.twoplayer.go.GoProfiler;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.GoBoardPositionSet;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPositionList;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPositionSet;
 import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
 
 import java.util.*;
@@ -37,15 +38,15 @@ public class GroupNeighborAnalyzer {
      * @param returnToUnvisitedState if true, then mark everything unvisited when done.
      * @return the list of stones in the group that was found.
      */
-    List<GoBoardPosition> findGroupFromInitialPosition( GoBoardPosition stone, boolean returnToUnvisitedState )
+    GoBoardPositionList findGroupFromInitialPosition( GoBoardPosition stone, boolean returnToUnvisitedState )
     {
-     List<GoBoardPosition> stones = new ArrayList<GoBoardPosition>();
+     GoBoardPositionList stones = new GoBoardPositionList();
      // perform a breadth first search  until all found.
      // use the visited flag to indicate that a stone has been added to the group
-     List<GoBoardPosition> stack = new LinkedList<GoBoardPosition>();
+     GoBoardPositionList stack = new GoBoardPositionList();
      stack.add( 0, stone );
      while ( !stack.isEmpty() ) {
-         GoBoardPosition s = stack.remove( 0 );
+         GoBoardPosition s = stack.remove(stack.size()-1);
          if ( !s.isVisited()) {
              s.setVisited( true );
              assert (s.getPiece().isOwnedByPlayer1()==stone.getPiece().isOwnedByPlayer1()):
@@ -75,7 +76,7 @@ public class GroupNeighborAnalyzer {
      */
     GoBoardPositionSet findGroupNeighbors(GoBoardPosition stone,
                                             boolean friendPlayer1, boolean samePlayerOnly) {
-        List<GoBoardPosition> stack = new LinkedList<GoBoardPosition>();
+        GoBoardPositionList stack = new GoBoardPositionList();
 
         pushGroupNeighbors( stone, friendPlayer1, stack, samePlayerOnly );
         GoBoardPositionSet nbrStones = new GoBoardPositionSet();
@@ -93,7 +94,7 @@ public class GroupNeighborAnalyzer {
      * @param stack the stack to add unvisited neighbors.
      * @return number of stones added to the stack.
      */
-    private int pushGroupNeighbors( GoBoardPosition s, boolean friendPlayer1, List<GoBoardPosition> stack ) {
+    private int pushGroupNeighbors( GoBoardPosition s, boolean friendPlayer1, GoBoardPositionList stack ) {
         return pushGroupNeighbors( s, friendPlayer1, stack, true );
     }
 
@@ -107,7 +108,7 @@ public class GroupNeighborAnalyzer {
      * @param stack the stack on which we add unvisited neighbors.
      * @return number of stones added to the stack.
      */
-    private int pushGroupNeighbors( GoBoardPosition s, boolean friendPlayer1, List<GoBoardPosition> stack,
+    private int pushGroupNeighbors( GoBoardPosition s, boolean friendPlayer1, GoBoardPositionList stack,
                                     boolean samePlayerOnly ) {
         GoProfiler.getInstance().start(GoProfiler.GET_GROUP_NBRS);
         // start with the nobi string nbrs
@@ -130,7 +131,7 @@ public class GroupNeighborAnalyzer {
      * @return number of stones added to the stack
      */
     private int pushEnemyDiagonalNeighbors( GoBoardPosition s, boolean friendPlayer1,
-                                            List<GoBoardPosition> stack ) {
+                                            GoBoardPositionList stack ) {
         int r = s.getRow();
         int c = s.getCol();
         return checkDiagonalNeighbors(r, c, !friendPlayer1, true, stack);
@@ -144,7 +145,7 @@ public class GroupNeighborAnalyzer {
      * @return number of stones added to the stack
      */
     private int pushPureGroupNeighbors( GoBoardPosition pos, boolean friendPlayer1, boolean sameSideOnly,
-                                        List<GoBoardPosition> stack )
+                                        GoBoardPositionList stack )
     {
         int r = pos.getRow();
         int c = pos.getCol();
@@ -164,7 +165,7 @@ public class GroupNeighborAnalyzer {
      * @return diagonal neighbors.
      */
     private int checkDiagonalNeighbors(int r, int c, boolean friendPlayer1, boolean sameSideOnly,
-                                       List<GoBoardPosition> stack) {
+                                       GoBoardPositionList stack) {
 
         int numRows = board_.getNumRows();
         int numCols = board_.getNumCols();
@@ -185,7 +186,7 @@ public class GroupNeighborAnalyzer {
      * @return  the 1-space jumps from r,c
      */
     private int checkOneSpaceNeighbors(int r, int c, boolean friendPlayer1, boolean sameSideOnly,
-                                       List<GoBoardPosition> stack) {
+                                       GoBoardPositionList stack) {
         // now check the diagonals
 
         int numRows = board_.getNumRows();
@@ -207,7 +208,7 @@ public class GroupNeighborAnalyzer {
      * @return  the diagonal moves from r,c
      */
     private int checkKogeimaNeighbors(int r, int c, boolean friendPlayer1, boolean sameSideOnly,
-                                       List<GoBoardPosition> stack) {
+                                       GoBoardPositionList stack) {
 
         int numRows = board_.getNumRows();
         int numCols = board_.getNumCols();
@@ -245,7 +246,7 @@ public class GroupNeighborAnalyzer {
      */
     private int checkDiagonalNeighbor( int r, int c, int rowOffset, int colOffset,
                                        boolean friendPlayer1, boolean sameSideOnly,
-                                       List<GoBoardPosition> stack ) {
+                                       GoBoardPositionList stack ) {
         GoBoardPosition nbr = (GoBoardPosition) board_.getPosition(r + rowOffset, c + colOffset);
         if (nbr.isUnoccupied()) {
             return 0;
@@ -274,7 +275,7 @@ public class GroupNeighborAnalyzer {
      */
     private int checkOneSpaceNeighbor( int r, int c, int rowOffset, int colOffset,
                                        boolean friendPlayer1, boolean samePlayerOnly,
-                                       List<GoBoardPosition> stack ) {
+                                       GoBoardPositionList stack ) {
         GoBoardPosition nbr = (GoBoardPosition)board_.getPosition(r + rowOffset, c + colOffset);
         // don't add it if it is in atari
         //if (nbr.isInAtari(board_))
@@ -317,7 +318,7 @@ public class GroupNeighborAnalyzer {
      */
     private int checkKogeimaNeighbor( int r, int c, int rowOffset, int colOffset,
                                       boolean friendPlayer1, boolean sameSideOnly,
-                                      List<GoBoardPosition> stack ) {
+                                      GoBoardPositionList stack ) {
         if ( !board_.inBounds( r + rowOffset, c + colOffset )) {
             return 0;
         }

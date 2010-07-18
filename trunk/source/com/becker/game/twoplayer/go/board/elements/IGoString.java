@@ -1,6 +1,4 @@
-package com.becker.game.twoplayer.go.board;
-
-import java.util.Set;
+package com.becker.game.twoplayer.go.board.elements;
 
 /**
  * Makes some unit tests much simpler if we create the tests to use this interface instead

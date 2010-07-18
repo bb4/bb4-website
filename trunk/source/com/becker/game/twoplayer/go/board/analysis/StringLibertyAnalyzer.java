@@ -2,11 +2,8 @@ package com.becker.game.twoplayer.go.board.analysis;
 
 import com.becker.game.common.BoardPosition;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.GoBoardPositionSet;
-
-import java.util.HashSet;
-import java.util.Set;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPositionSet;
 
 /**
  * Determines number of liberties on a string.
@@ -19,6 +16,11 @@ public class StringLibertyAnalyzer {
     private GoBoardPositionSet liberties_;
 
 
+    /**
+     * Constructor.
+     * @param board game board
+     * @param members the initial set of liberties.
+     */
     public StringLibertyAnalyzer(GoBoard board, GoBoardPositionSet members) {
         initializeLiberties(board, members);
     }

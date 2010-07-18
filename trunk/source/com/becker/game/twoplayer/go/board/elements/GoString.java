@@ -1,5 +1,6 @@
-package com.becker.game.twoplayer.go.board;
+package com.becker.game.twoplayer.go.board.elements;
 
+import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
 import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GameContext;
@@ -15,7 +16,7 @@ import java.util.*;
  *  Groups may be connected by diagonals, or ikken tobi, or kogeima (knight's move).
  *
  *  @see GoGroup
- *  @see GoBoard
+ *  @see com.becker.game.twoplayer.go.board.GoBoard
  *  @author Barry Becker
  */
 public class GoString extends GoSet implements IGoString
@@ -49,7 +50,7 @@ public class GoString extends GoSet implements IGoString
      * Constructor.
      * Create a new string containing the specified list of stones
      */
-    public GoString( List<GoBoardPosition> stones, GoBoard board )
+    public GoString( GoBoardPositionList stones, GoBoard board )
     {
         assert (stones != null && stones.size() > 0): "Tried to create list from empty list";
         GoStone stone =  (GoStone)((BoardPosition) stones.get(0)).getPiece();

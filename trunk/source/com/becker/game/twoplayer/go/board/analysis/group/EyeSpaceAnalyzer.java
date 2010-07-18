@@ -1,10 +1,12 @@
 package com.becker.game.twoplayer.go.board.analysis.group;
 
+import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.board.*;
 import com.becker.common.Box;
 import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborType;
+import com.becker.game.twoplayer.go.board.elements.*;
 
 import java.util.*;
 
@@ -42,7 +44,7 @@ class EyeSpaceAnalyzer {
      */
     public Set<GoEye> determineEyes() {
 
-        List<List<GoBoardPosition>> candidateEyeLists = createEyeSpaceLists();
+        List<GoBoardPositionList> candidateEyeLists = createEyeSpaceLists();
         return findEyeFromCandidates(candidateEyeLists);
     }
 
@@ -55,7 +57,7 @@ class EyeSpaceAnalyzer {
      * @param candidateEyeLists eye space lists
      * @return set of eyes in this group/
      */
-    private Set<GoEye> findEyeFromCandidates(List<List<GoBoardPosition>> candidateEyeLists) {
+    private Set<GoEye> findEyeFromCandidates(List<GoBoardPositionList> candidateEyeLists) {
         Set<GoEye> eyes = new LinkedHashSet<GoEye>();
         boolean ownedByPlayer1 = group_.isOwnedByPlayer1();
 
@@ -64,7 +66,7 @@ class EyeSpaceAnalyzer {
                 // if the empty space is already marked as being an eye, skip
                 GoBoardPosition space = (GoBoardPosition) board_.getPosition( r, c );
                 if ( !space.isVisited() && space.isUnoccupied() && !space.isInEye() ) {
-                    List<GoBoardPosition> eyeSpaces =
+                    GoBoardPositionList eyeSpaces =
                             nbrAnalyzer_.findStringFromInitialPosition( space, ownedByPlayer1,
                                                                  false, NeighborType.NOT_FRIEND,
                                                                  boundingBox_  );
@@ -76,8 +78,7 @@ class EyeSpaceAnalyzer {
                         eyes.add( eye );
                     }
                     else {
-                        BoardDebugUtil.debugPrintList(3,
-                                "This list of stones was rejected as being an eye: ", eyeSpaces);
+                        GameContext.log(3, eyeSpaces.toString("This list of stones was rejected as being an eye: "));
                     }
                 }
             }
@@ -94,9 +95,9 @@ class EyeSpaceAnalyzer {
      * then empty spaces there are most likely eyes (but not necessarily).
      * @return list of lists of eye space spaces find real eye from (and to unvisit at the end)
      */
-    private List<List<GoBoardPosition>> createEyeSpaceLists() {
+    private List<GoBoardPositionList> createEyeSpaceLists() {
         //
-        List<List<GoBoardPosition>> lists = new ArrayList<List<GoBoardPosition>>();
+        List<GoBoardPositionList> lists = new ArrayList<GoBoardPositionList>();
         boolean ownedByPlayer1 = group_.isOwnedByPlayer1();
 
         int rMin = boundingBox_.getMinRow();
@@ -148,12 +149,12 @@ class EyeSpaceAnalyzer {
      * @param lists list of stones connected to the seed stone
      */
     private void excludeSeed( GoBoardPosition space, boolean groupOwnership,
-                              List<List<GoBoardPosition>> lists, Box box)
+                              List<GoBoardPositionList> lists, Box box)
     {
         if ( !space.isVisited()
              && (space.isUnoccupied() || space.getPiece().isOwnedByPlayer1() != group_.isOwnedByPlayer1())) {
             // this will leave stones outside the group visited
-            List<GoBoardPosition> list =
+            GoBoardPositionList list =
                     nbrAnalyzer_.findStringFromInitialPosition(space, groupOwnership, false,
                                                                 NeighborType.NOT_FRIEND, box);
 
@@ -192,7 +193,7 @@ class EyeSpaceAnalyzer {
      * @param eyeList the candidate string of stones to misc for eye status
      * @return true if the list of stones is an eye
      */
-    private boolean confirmEye( List<GoBoardPosition> eyeList)
+    private boolean confirmEye( GoBoardPositionList eyeList)
     {
         if ( eyeList == null )
             return false;

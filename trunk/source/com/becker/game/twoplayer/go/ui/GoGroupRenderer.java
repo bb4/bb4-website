@@ -7,6 +7,7 @@ import com.becker.common.ColorMap;
 import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
+import com.becker.game.twoplayer.go.board.elements.*;
 
 import java.awt.*;
 import java.awt.geom.Area;
@@ -43,7 +44,7 @@ final class GoGroupRenderer
      * accumulate an area geometry that can be rendered to show the group border.
      * @return the groups border shape.
      */
-    private static Area calcGroupBorder( Set groupStones, float cellSize, int margin, GoBoard board )  {
+    private static Area calcGroupBorder( GoBoardPositionSet groupStones, float cellSize, int margin, GoBoard board )  {
         if (groupStones == null || groupStones.isEmpty()) {
             return null;  // nothing to draw an area for.
         }
@@ -54,7 +55,7 @@ final class GoGroupRenderer
             e.printStackTrace();
         }
 
-        GoBoardPosition firstStone = (GoBoardPosition) groupStones.iterator().next();
+        GoBoardPosition firstStone = groupStones.iterator().next();
 
         if ( groupStones.size() == 1 ) {
             float offset = + BORDER_OFFSET + 0.5f;
@@ -68,7 +69,7 @@ final class GoGroupRenderer
         // which does not allow dupes.
         List<BoardPosition> q = new ArrayList<BoardPosition>();
         GoBoardPositionSet qset = new GoBoardPositionSet();
-        List<GoBoardPosition> visitedSet = new ArrayList<GoBoardPosition>();
+        GoBoardPositionList visitedSet = new GoBoardPositionList();
         q.add( firstStone.copy() );
         qset.add( firstStone );
         Area area = new Area();

@@ -1,13 +1,12 @@
 package com.becker.game.twoplayer.go.board.analysis.neighbor;
 
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.GoBoardPositionSet;
-import com.becker.game.twoplayer.go.board.GoStone;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPositionList;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPositionSet;
+import com.becker.game.twoplayer.go.board.elements.GoStone;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Performs static analysis of a go board to determine
@@ -27,7 +26,7 @@ public class NobiNeighborAnalyzer {
      * @param empties a list of unoccupied positions.
      * @return a list of stones bordering the set of empty board positions.
      */
-    GoBoardPositionSet findOccupiedNobiNeighbors(List<GoBoardPosition> empties) {
+    GoBoardPositionSet findOccupiedNobiNeighbors(GoBoardPositionList empties) {
         GoBoardPositionSet allNbrs = new GoBoardPositionSet();
         for (GoBoardPosition empty : empties) {
             assert (empty.isUnoccupied());

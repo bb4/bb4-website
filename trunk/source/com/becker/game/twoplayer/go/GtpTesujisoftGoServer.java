@@ -2,10 +2,9 @@ package com.becker.game.twoplayer.go;
 
 import com.becker.game.twoplayer.common.search.SearchOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
-import com.becker.game.twoplayer.go.board.GoStone;
+import com.becker.game.twoplayer.go.board.elements.GoStone;
 import com.becker.common.util.FileUtil;
 import com.becker.game.common.*;
-import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import go.Point;
 import gtp.GtpServer;
 import utils.Options;

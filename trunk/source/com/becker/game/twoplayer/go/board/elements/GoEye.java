@@ -1,6 +1,7 @@
-package com.becker.game.twoplayer.go.board;
+package com.becker.game.twoplayer.go.board.elements;
 
 import com.becker.game.common.GameContext;
+import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.eye.*;
 import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
 import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeInformation;
@@ -33,7 +34,7 @@ public class GoEye extends GoString implements GoMember
     /**
      * constructor. Create a new eye shape containing the specified list of stones/spaces
      */
-    public GoEye( List<GoBoardPosition> spaces, GoBoard board, GoGroup g ) {
+    public GoEye( GoBoardPositionList spaces, GoBoard board, GoGroup g ) {
         super( spaces, board );
         group_ = g;
         ownedByPlayer1_ = g.isOwnedByPlayer1();

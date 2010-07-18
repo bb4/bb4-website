@@ -1,6 +1,7 @@
-package com.becker.game.twoplayer.go.board;
+package com.becker.game.twoplayer.go.board.elements;
 
 import com.becker.common.Box;
+import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
 import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzer;
 import com.becker.common.util.Util;
@@ -14,7 +15,7 @@ import java.util.*;
  *  Groups may be connected by diagonals or one space jumps, or uncut knights moves, but not nikken tobi.
  *
  *  @see GoString
- *  @see GoBoard
+ *  @see com.becker.game.twoplayer.go.board.GoBoard
  *  @author Barry Becker
  */
 public final class GoGroup extends GoSet implements IGoGroup
@@ -45,7 +46,7 @@ public final class GoGroup extends GoSet implements IGoGroup
      * and every string must be wholy owned by this new group.
      * @param stones list of stones to create a group from.
      */
-    public GoGroup( List<GoBoardPosition> stones )
+    public GoGroup( GoBoardPositionList stones )
     {
         commonInit();
         ownedByPlayer1_ = (stones.get(0)).getPiece().isOwnedByPlayer1();
@@ -259,7 +260,7 @@ public final class GoGroup extends GoSet implements IGoGroup
      * @param stones list of stones to check if same as those in this group
      * @return true if this group exacly contains the list of stones and no others
      */
-    public boolean exactlyContains(List<GoBoardPosition> stones)
+    public boolean exactlyContains(GoBoardPositionList stones)
     {
         if ( !contains(stones ) )
             return false;
@@ -278,7 +279,7 @@ public final class GoGroup extends GoSet implements IGoGroup
      * @param stones list of stones to check if same as those in this group
      * @return true if all the strings are in this group
      */
-    private boolean contains(List<GoBoardPosition> stones)
+    private boolean contains(GoBoardPositionList stones)
     {
         for (GoBoardPosition stone : stones) {
             boolean found = false;
