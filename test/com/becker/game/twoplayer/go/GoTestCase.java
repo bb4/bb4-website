@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.go;
 import com.becker.game.twoplayer.common.search.SearchOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
 import com.becker.game.twoplayer.go.board.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.GoBoardPositionSet;
 import com.becker.game.twoplayer.go.board.GoGroup;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.common.util.Util;
@@ -147,7 +148,7 @@ public class GoTestCase extends TestCase {
         GoGroup biggestGroup = null;
 
         for (GoGroup group : groups) {
-            Set<GoBoardPosition> stones = group.getStones();
+            GoBoardPositionSet stones = group.getStones();
             if (stones.iterator().next().getPiece().isOwnedByPlayer1() == isBlack) {
                 if (biggestGroup == null || group.getNumStones() > biggestGroup.getNumStones()) {
                     biggestGroup = group;

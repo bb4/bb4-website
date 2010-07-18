@@ -82,7 +82,7 @@ public class TestE3Information extends TestEyeTypeAnalyzer {
     }
 
     public void testThreeSpaceEyeWithTwoEndsFilled() {
-        GoBoard b = initializeBoard("three_space_eye_two_ends_filled", 6);
+        GoBoard b = initializeBoard("three_space_eye_two_ends_filled", 4);
 
         checkBlackEye(b, new E3Information(), EyeStatus.UNSETTLED);
         checkWhiteEye(b, new E3Information(), EyeStatus.UNSETTLED);
@@ -97,7 +97,7 @@ public class TestE3Information extends TestEyeTypeAnalyzer {
     }
 
     public void testThreeSpaceEyeWithTwoEndsFilledInAtari() {
-        GoBoard b = initializeBoard("three_space_eye_two_ends_filled_in_atari", 7);
+        GoBoard b = initializeBoard("three_space_eye_two_ends_filled_in_atari", 5);
 
         checkBlackEye(b, new E3Information(), EyeStatus.UNSETTLED);
         //checkWhiteEye(b, new E3Information(), EyeStatus.UNSETTLED);

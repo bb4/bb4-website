@@ -13,7 +13,7 @@ public interface IGoString {
     /**
      * @return  set of member positions.
      */
-    Set<GoBoardPosition> getMembers();
+    GoBoardPositionSet getMembers();
 
 
     /**

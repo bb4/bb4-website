@@ -63,7 +63,7 @@ public class TestE4Information extends TestEyeTypeAnalyzer {
     }
 
     public void testFourBentThreeFilled() {
-        GoBoard b = initializeBoard("four_space_bent_three_filled", 5);
+        GoBoard b = initializeBoard("four_space_bent_three_filled", 4);
 
         checkBlackEye(b, new E4Information(E1122.toString()), EyeStatus.NAKADE);
         checkWhiteEye(b, new E4Information(E1122.toString()), EyeStatus.UNSETTLED); 
@@ -84,21 +84,21 @@ public class TestE4Information extends TestEyeTypeAnalyzer {
     }
 
     public void testFourAliveInAtariEndsStandard() {
-        GoBoard b = initializeBoard("four_space_bent_in_atari_ends_standard", 8);
+        GoBoard b = initializeBoard("four_space_bent_in_atari_ends_standard", 6);
 
         checkBlackEyeSurrounded(b, new E4Information(E1122.toString()), EyeStatus.UNSETTLED);
         checkWhiteEyeSurrounded(b, new E4Information(E1122.toString()), EyeStatus.UNSETTLED);
     }
 
     public void testFourAliveInAtariEndsSeparate() {
-        GoBoard b = initializeBoard("four_space_bent_in_atari_ends_separate", 8);
+        GoBoard b = initializeBoard("four_space_bent_in_atari_ends_separate", 6);
 
         checkBlackEyeSurrounded(b, new E4Information(E1122.toString()), EyeStatus.UNSETTLED);
         checkWhiteEyeSurrounded(b, new E4Information(E1122.toString()), EyeStatus.UNSETTLED);
     }
 
     public void testFourAliveInAtariEndsSplit() {
-        GoBoard b = initializeBoard("four_space_bent_in_atari_ends_split", 10);
+        GoBoard b = initializeBoard("four_space_bent_in_atari_ends_split", 6);
 
         checkBlackEyeSurrounded(b, new E4Information(E1122.toString()), EyeStatus.UNSETTLED);
         //checkWhiteEyeSurrounded(b, new E4Information(E1122.toString()), EyeStatus.UNSETTLED);

@@ -36,7 +36,7 @@ public abstract class GoSet implements GoMember
      * @param board
      * @return the liberties/positions for the set.
      */
-    public abstract Set<GoBoardPosition> getLiberties(GoBoard board);
+    public abstract GoBoardPositionSet getLiberties(GoBoard board);
 
     /**
      * @return  true if set is owned by player one

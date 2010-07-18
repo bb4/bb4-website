@@ -64,8 +64,8 @@ class StringNeighborAnalyzer {
      * @param stone stone to find string neighbors for.
      * @return list of string neighbors of specified position.
      */
-    Set<GoString> findStringNeighbors(GoBoardPosition stone) {
-        Set<GoString> stringNbrs = new HashSet<GoString>();
+    GoStringSet findStringNeighbors(GoBoardPosition stone) {
+        GoStringSet stringNbrs = new GoStringSet();
         List<GoBoardPosition> nobiNbrs = new LinkedList<GoBoardPosition>();
 
         pushStringNeighbors(stone, true, nobiNbrs, false);

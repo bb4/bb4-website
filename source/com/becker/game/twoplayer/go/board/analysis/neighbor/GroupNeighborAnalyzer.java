@@ -4,6 +4,7 @@ import com.becker.game.common.BoardPosition;
 import com.becker.game.twoplayer.go.GoProfiler;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.GoBoardPositionSet;
 import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
 
 import java.util.*;
@@ -72,12 +73,12 @@ public class GroupNeighborAnalyzer {
      * @param samePlayerOnly if true then find group nbrs that are have same ownership as friendPlayer1
      * @return group neighbors for specified stone.
      */
-    Set<GoBoardPosition> findGroupNeighbors(GoBoardPosition stone,
+    GoBoardPositionSet findGroupNeighbors(GoBoardPosition stone,
                                             boolean friendPlayer1, boolean samePlayerOnly) {
         List<GoBoardPosition> stack = new LinkedList<GoBoardPosition>();
 
         pushGroupNeighbors( stone, friendPlayer1, stack, samePlayerOnly );
-        Set<GoBoardPosition> nbrStones = new HashSet<GoBoardPosition>();
+        GoBoardPositionSet nbrStones = new GoBoardPositionSet();
         nbrStones.addAll( stack );
 
         return nbrStones;

@@ -25,9 +25,9 @@ public class BoardValidator {
      * @param pos position to check
      */
     public void consistencyCheck(GoBoardPosition pos) {
-        confirmNoEmptyStrings(board_.getGroups());
+        board_.getGroups().confirmNoEmptyStrings();
         confirmStonesInValidGroups();
-        confirmAllStonesInUniqueGroups(board_.getGroups());
+        board_.getGroups().confirmAllStonesInUniqueGroups();
         try {
             confirmAllStonesInGroupsClaimed(board_.getGroups());
         } catch (AssertionError e) {
@@ -133,51 +133,6 @@ public class BoardValidator {
     }
 
 
-    
-/**
-     * for every stone one the board verify that it belongs to exactly one group
-    */
-    public void confirmAllStonesInUniqueGroups(Set<GoGroup> groups)
-    {
-        for (GoGroup g : groups) {
-            confirmStonesInOneGroup(g, groups);
-        }
-    }
-
-    /**
-     * confirm that the stones in this group are not contained in any other group.
-     */
-    public void confirmStonesInOneGroup( GoGroup group, Set<GoGroup> groups)
-    {
-        for (GoString string : group.getMembers()) {
-            for (GoGroup g : groups) {  // for each group on the board
-
-                if (!g.equals(group)) {
-                    for (GoString s : g.getMembers()) {   // fro each string in that group
-                        if (string.equals(s)) {
-                            BoardDebugUtil.debugPrintGroups(0, groups);
-                            assert false : "ERROR: " + s + " contained by 2 groups";
-                        }
-                        confirmStoneInStringAlsoInGroup(s, g, groups);
-                    }
-                }
-            }
-        }
-    }
-
-    private void confirmStoneInStringAlsoInGroup(GoString str, GoGroup group, Set groups) {
-        //make sure that every stone in the string belongs in this group
-        for (GoBoardPosition pos : str.getMembers()) {
-
-            if (pos.getGroup() != null && !group.equals(pos.getGroup())) {
-                BoardDebugUtil.debugPrintGroups(0, "Confirm stones in one group failed. Groups are:", true, true, groups);
-                assert false : pos + " does not just belong to " + pos.getGroup()
-                              + " as its ancestry indicates. It also belongs to " + group;
-            }
-        }
-    }
-
-
     /**
      * For every stone in every group specified in groups, verify that the group determined from using that stone as a seed
      * matches the group that is claims by ancestry.
@@ -188,7 +143,7 @@ public class BoardValidator {
     {
         NeighborAnalyzer na = new NeighborAnalyzer(board_);
         for (GoGroup parentGroup : groups) {  // for each group on the board
-            Set<GoBoardPosition> parentGroupStones = parentGroup.getStones();
+            GoBoardPositionSet parentGroupStones = parentGroup.getStones();
             for (GoBoardPosition stone : parentGroupStones) {  // for each stone in that group
                 // compute the group from this stone and confirm it matches the parent group
                 List<GoBoardPosition> g = na.findGroupFromInitialPosition(stone);
@@ -212,16 +167,6 @@ public class BoardValidator {
                                 + "\n is not equal to the expected parent group:\n" + parentGroup);
                     System.out.flush();
                 }
-            }
-        }
-    }
-
-    public void confirmNoEmptyStrings(Set groups)
-    {
-        for (Object g : groups)  {
-            for (Object s : ((GoSet) g).getMembers()) {
-                GoString string = (GoString) s;
-                assert (string.size() > 0): "There is an empty string in " + string.getGroup();
             }
         }
     }

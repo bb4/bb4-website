@@ -1,6 +1,7 @@
 package com.becker.game.twoplayer.go.board.analysis.eye;
 
 import com.becker.game.twoplayer.go.board.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.GoBoardPositionSet;
 import com.becker.game.twoplayer.go.board.IGoString;
 
 import java.util.*;
@@ -38,8 +39,8 @@ public class EyeNeighborMap {
         return getEyeNeighbors(eyeSpace).size();
     }
 
-    public Set<GoBoardPosition> keySet() {
-        return nbrMap_.keySet();
+    public GoBoardPositionSet keySet() {
+        return new GoBoardPositionSet(nbrMap_.keySet());
     }
 
     /**

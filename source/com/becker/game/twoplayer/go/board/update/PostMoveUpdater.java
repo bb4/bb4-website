@@ -56,7 +56,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
         CaptureList captureList = null;
         Iterator it = nbrs.iterator();
         // keep track of the strings captured so we don't capture the same one twice
-        Set<GoString> capturedStrings = new HashSet<GoString>();
+        GoStringSet capturedStrings = new GoStringSet();
 
         while ( it.hasNext() ) {
             GoBoardPosition enbr = (GoBoardPosition) it.next();
@@ -90,7 +90,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
         GoProfiler profiler = GoProfiler.getInstance();
         profiler.startUpdateStringsAfterMove();
 
-        Set<GoBoardPosition> nbrs = nbrAnalyzer_.getNobiNeighbors( stone, NeighborType.FRIEND );
+       GoBoardPositionSet nbrs = nbrAnalyzer_.getNobiNeighbors( stone, NeighborType.FRIEND );
 
         if ( nbrs.size() == 0 ) {
             // there are no strongly connected neighbors, create a new string
@@ -108,7 +108,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
      * @param stone position where we just placed a stone.
      * @param nbrs
      */
-    private void updateNeighborStringsAfterMove(GoBoardPosition stone, Set<GoBoardPosition> nbrs) {
+    private void updateNeighborStringsAfterMove(GoBoardPosition stone, GoBoardPositionSet nbrs) {
         GoString str;
         Iterator nbrIt = nbrs.iterator();
         GoBoardPosition nbrStone = (GoBoardPosition) nbrIt.next();
@@ -193,7 +193,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
      */
     private void removeCapturedStringsFromGroup(CaptureList captureList, GoGroup group) {
         GoString capString;
-        Set<GoString> capStrings = new HashSet<GoString>();
+        GoStringSet capStrings = new GoStringSet();
 
         for (Object aCaptureList : captureList) {
             GoBoardPosition capStone = (GoBoardPosition) aCaptureList;
@@ -223,7 +223,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
         profiler.startUpdateGroupsAfterMove();
 
         if (GameContext.getDebugMode() > 1) {
-            validator_.confirmAllStonesInUniqueGroups(getAllGroups());
+            getAllGroups().confirmAllStonesInUniqueGroups();
         }
 
         recreateGroupsAfterMove();

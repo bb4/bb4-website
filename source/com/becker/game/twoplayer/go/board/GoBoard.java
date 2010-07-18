@@ -23,7 +23,7 @@ import java.util.*;
 public final class GoBoard extends TwoPlayerBoard
 {
     /** This is a set of active groups. Groups are composed of strings. */
-    private Set<GoGroup> groups_;
+    private GoGroupSet groups_;
 
     private HandicapStones handicap_;
 
@@ -40,7 +40,7 @@ public final class GoBoard extends TwoPlayerBoard
      */
     public GoBoard( int numRows, int numCols, int numHandicapStones )
     {
-        groups_ = createGroupSet();
+        groups_ = new GoGroupSet(true);
         setSize( numRows, numCols );
         setHandicap(numHandicapStones);
         boardUpdater_ = new BoardUpdater(this);
@@ -79,9 +79,9 @@ public final class GoBoard extends TwoPlayerBoard
 
         // make copies of all the groups
         if (groups_ != null) {
-            ((GoBoard)clone).groups_ = createGroupSet();
+            ((GoBoard)clone).groups_ = new GoGroupSet(true);
 
-            Set<GoGroup> groupsCopy = ((GoBoard)clone).groups_;
+            GoGroupSet groupsCopy = ((GoBoard)clone).groups_;
 
             synchronized(groups_) {
                 for (GoGroup g : groups_)  {
@@ -90,13 +90,6 @@ public final class GoBoard extends TwoPlayerBoard
             }
         }
         return clone;
-    }
-
-    /**
-     * @return  synchronized and ordered set of groups.
-     */
-    private Set<GoGroup> createGroupSet() {
-        return Collections.synchronizedSet(new LinkedHashSet<GoGroup>(10));
     }
 
     /**
@@ -170,7 +163,7 @@ public final class GoBoard extends TwoPlayerBoard
      * get the current set of active groups
      * @return all the valid groups on the board (for both sides)
      */
-    public Set<GoGroup> getGroups()
+    public GoGroupSet getGroups()
     {
         return groups_;
     }

@@ -2,6 +2,7 @@ package com.becker.game.twoplayer.go.board.analysis.eye;
 
 import com.becker.common.Location;
 import com.becker.game.twoplayer.go.board.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.GoBoardPositionSet;
 import com.becker.game.twoplayer.go.board.GoGroup;
 import com.becker.game.twoplayer.go.board.IGoString;
 
@@ -14,20 +15,20 @@ import java.util.Set;
  */
 class StubGoEye implements IGoString {
 
-    private  Set<GoBoardPosition> members;
+    private GoBoardPositionSet members;
 
     public StubGoEye(List<GoBoardPosition> list) {
 
-        this.members = new HashSet<GoBoardPosition>();
+        this.members = new GoBoardPositionSet();
         this.members.addAll(list);
     }
 
-    public StubGoEye(Set<GoBoardPosition> members) {
+    public StubGoEye(GoBoardPositionSet members) {
         this.members = members;
     }
 
 
-    public Set<GoBoardPosition> getMembers() {
+    public GoBoardPositionSet getMembers() {
         return members;
     }
 

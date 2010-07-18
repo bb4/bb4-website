@@ -32,7 +32,7 @@ public class EyeTypeAnalyzer {
      */
     public EyeInformation determineEyeInformation()
     {
-        Set<GoBoardPosition> spaces = eye_.getMembers();
+        GoBoardPositionSet spaces = eye_.getMembers();
         assert (spaces != null): "spaces_ is null";
         int size = spaces.size();
 
@@ -61,7 +61,7 @@ public class EyeTypeAnalyzer {
      * @return true if we are a false eye.
      */
     private boolean isFalseEye()  {
-        Set<GoBoardPosition> spaces = eye_.getMembers();
+        GoBoardPositionSet spaces = eye_.getMembers();
         for (GoBoardPosition space : spaces) {
             if ( isFalseEye( space) ) {
                 return true;

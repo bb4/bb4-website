@@ -25,11 +25,11 @@ public class TestGroupFinding extends GoTestCase {
         verifyGroupNeighbors(b, new Location(4, 5), 3);
         verifyGroupNeighbors(b, new Location(5, 6), 6);
         verifyGroupNeighbors(b, new Location(6, 7), 5);
-        verifyGroupNeighbors(b, new Location(7, 5), 6);   // 8?
+        verifyGroupNeighbors(b, new Location(7, 5), 7);   // 8?
 
         // black group neighbors
         verifyGroupNeighbors(b, new Location(4, 6), 3);
-        verifyGroupNeighbors(b, new Location(8, 8), 5);   // 6?
+        verifyGroupNeighbors(b, new Location(8, 8), 6);  
         verifyGroupNeighbors(b, new Location(6, 7), 5);
         verifyGroupNeighbors(b, new Location(9, 7), 5);
         verifyGroupNeighbors(b, new Location(8, 6), 5);
@@ -39,7 +39,7 @@ public class TestGroupFinding extends GoTestCase {
         GoBoard b = initializeBoard("false_ko_eye2");
 
         // white group neighbors
-        verifyGroupNeighbors(b, new Location(13, 7), 5);   // 6
+        verifyGroupNeighbors(b, new Location(13, 7), 6);  
         verifyGroupNeighbors(b, new Location(12, 8), 3);   
         
         // black group neighbors
@@ -85,7 +85,7 @@ public class TestGroupFinding extends GoTestCase {
     private void verifyGroupNeighbors(GoBoard board, Location loc, int expectedNumNeighbors)  {
         NeighborAnalyzer na = new NeighborAnalyzer(board);
         GoBoardPosition position = (GoBoardPosition)board.getPosition(loc);
-        Set<GoBoardPosition> group = na.findGroupNeighbors(position, true);
+        GoBoardPositionSet group = na.findGroupNeighbors(position, true);
         assertEquals("Unexpected number of group neighbors for : "+ position +" \n" + group + "\n",
                 expectedNumNeighbors, group.size());
     }

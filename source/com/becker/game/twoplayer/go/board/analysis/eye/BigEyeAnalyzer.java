@@ -1,6 +1,7 @@
 package com.becker.game.twoplayer.go.board.analysis.eye;
 
 import com.becker.game.twoplayer.go.board.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.GoBoardPositionSet;
 import com.becker.game.twoplayer.go.board.GoEye;
 import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeType;
 import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeInformation;
@@ -25,7 +26,7 @@ class BigEyeAnalyzer {
     private GoEye eye_;
 
     /** spaces_ in the eye */
-    Set<GoBoardPosition> spaces_;
+    GoBoardPositionSet spaces_;
 
     /**
      * The eye must have between 3 and 8 spaces_.

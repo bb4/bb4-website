@@ -2,6 +2,7 @@ package com.becker.game.twoplayer.go.board.analysis.neighbor;
 
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.GoBoardPositionSet;
 import com.becker.game.twoplayer.go.board.GoStone;
 
 import java.util.HashSet;
@@ -26,11 +27,11 @@ public class NobiNeighborAnalyzer {
      * @param empties a list of unoccupied positions.
      * @return a list of stones bordering the set of empty board positions.
      */
-    Set<GoBoardPosition> findOccupiedNobiNeighbors(List<GoBoardPosition> empties) {
-        Set<GoBoardPosition> allNbrs = new HashSet<GoBoardPosition>();
+    GoBoardPositionSet findOccupiedNobiNeighbors(List<GoBoardPosition> empties) {
+        GoBoardPositionSet allNbrs = new GoBoardPositionSet();
         for (GoBoardPosition empty : empties) {
             assert (empty.isUnoccupied());
-            Set<GoBoardPosition> nbrs = getNobiNeighbors(empty, false, NeighborType.OCCUPIED);
+            GoBoardPositionSet nbrs = getNobiNeighbors(empty, false, NeighborType.OCCUPIED);
             // add these nbrs to the set of all nbrs
             // (dupes automatically culled because HashSets only have unique members)
             allNbrs.addAll(nbrs);
@@ -46,9 +47,9 @@ public class NobiNeighborAnalyzer {
      * @param neighborType (EYE, NOT_FRIEND etc)
      * @return a set of stones that are immediate (nobi) neighbors.
      */
-    Set<GoBoardPosition> getNobiNeighbors( GoBoardPosition stone, boolean friendOwnedByP1,
-                                           NeighborType neighborType) {
-        Set<GoBoardPosition> nbrs = new HashSet<GoBoardPosition>();
+    GoBoardPositionSet getNobiNeighbors(GoBoardPosition stone, boolean friendOwnedByP1,
+                                        NeighborType neighborType) {
+       GoBoardPositionSet nbrs = new GoBoardPositionSet();
         int row = stone.getRow();
         int col = stone.getCol();
 
@@ -77,7 +78,7 @@ public class NobiNeighborAnalyzer {
      * @param neighborType  one of the defined neighbor types.
      */
     private static void getNobiNeighbor(GoBoardPosition nbrStone, boolean friendOwnedByP1,
-                                        Set<GoBoardPosition> nbrs, NeighborType neighborType) {
+                                        GoBoardPositionSet nbrs, NeighborType neighborType) {
         boolean correctNeighborType = true;
         switch (neighborType) {
             case ANY:

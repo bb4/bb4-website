@@ -42,7 +42,7 @@ public abstract class PostChangeUpdater {
         return board_;
     }
 
-    protected Set<GoGroup> getAllGroups() {
+    protected GoGroupSet getAllGroups() {
         return board_.getGroups();
     }
 
@@ -66,7 +66,7 @@ public abstract class PostChangeUpdater {
     protected void adjustLiberties(GoBoardPosition liberty) {
 
          NeighborAnalyzer na = new NeighborAnalyzer(board_);
-         Set<GoString> stringNbrs = na.findStringNeighbors( liberty );
+         GoStringSet stringNbrs = na.findStringNeighbors( liberty );
          for (GoString sn : stringNbrs) {
              sn.changedLiberty(liberty);
          }
@@ -77,9 +77,9 @@ public abstract class PostChangeUpdater {
      */
     protected void cleanupGroups()
     {
-        Iterator it = getAllGroups().iterator();
         synchronized(getAllGroups())
         {
+            Iterator it = getAllGroups().iterator();
             while ( it.hasNext() ) {
                 GoGroup group = (GoGroup) it.next();
                 if ( group.getNumStones() == 0 )  {

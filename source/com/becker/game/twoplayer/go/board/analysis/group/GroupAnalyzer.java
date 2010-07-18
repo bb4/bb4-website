@@ -73,7 +73,7 @@ public class GroupAnalyzer implements Cloneable {
      * Get the number of liberties that the group has.
      * @return the number of liberties that the group has
      */
-    public Set<GoBoardPosition> getLiberties(GoBoard board)
+    public GoBoardPositionSet getLiberties(GoBoard board)
     {
         return absHealthCalculator_.getLiberties(board);
     }

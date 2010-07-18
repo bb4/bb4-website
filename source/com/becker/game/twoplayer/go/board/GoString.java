@@ -21,7 +21,7 @@ import java.util.*;
 public class GoString extends GoSet implements IGoString
 {
     /** a set of the stones that are in the string */
-    private Set<GoBoardPosition> members_;
+    private GoBoardPositionSet members_;
     
     /** The group to which this string belongs. */
     protected GoGroup group_;
@@ -66,13 +66,13 @@ public class GoString extends GoSet implements IGoString
      * @return  the set of member positions
      */
     @Override
-    public Set<GoBoardPosition> getMembers() {
+    public GoBoardPositionSet getMembers() {
         return members_;
     }
     
     @Override
     protected void initializeMembers() {
-        members_ = new HashSet<GoBoardPosition>();
+        members_ = new GoBoardPositionSet();
     }
 
     public final void setGroup( GoGroup group )
@@ -129,7 +129,7 @@ public class GoString extends GoSet implements IGoString
             return;
         }
 
-        Set<GoBoardPosition> stringMembers = new HashSet<GoBoardPosition>();
+        GoBoardPositionSet stringMembers = new GoBoardPositionSet();
         stringMembers.addAll(string.getMembers());
         // must remove these after iterating otherwise we get a ConcurrentModificationException
         string.getGroup().remove(string);
@@ -193,7 +193,7 @@ public class GoString extends GoSet implements IGoString
      * @param board
      */
     @Override
-    public final Set<GoBoardPosition> getLiberties(GoBoard board)
+    public final GoBoardPositionSet getLiberties(GoBoard board)
     {
         return libertyAnalyzer_.getLiberties();
     }
