@@ -1,10 +1,7 @@
 package com.becker.game.twoplayer.go;
 
+import com.becker.game.twoplayer.go.board.*;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborType;
-import com.becker.game.twoplayer.go.board.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.GoStone;
-import com.becker.game.twoplayer.go.board.GoString;
-import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
@@ -73,8 +70,8 @@ public final class GoMove extends TwoPlayerMove
         GoBoardPosition stone = (GoBoardPosition) board.getPosition( getToRow(), getToCol() );
 
         NeighborAnalyzer na = new NeighborAnalyzer(board);
-        Set <GoBoardPosition>nobiNbrs = na.getNobiNeighbors(stone, false, NeighborType.ANY);
-        Set<GoBoardPosition> occupiedNbrs = new HashSet<GoBoardPosition>();
+        GoBoardPositionSet nobiNbrs = na.getNobiNeighbors(stone, false, NeighborType.ANY);
+        GoBoardPositionSet occupiedNbrs = new GoBoardPositionSet();
         for (GoBoardPosition pos : nobiNbrs) {
             if (pos.isOccupied()) {
                 occupiedNbrs.add(pos);
@@ -92,7 +89,7 @@ public final class GoMove extends TwoPlayerMove
      * Can't be suicidal if we have a liberty.
      * @return true if one or more liberties still available.
      */
-    private boolean hasLiberties(Set<GoBoardPosition> occupiedNbrs, Set <GoBoardPosition>nobiNbrs) {
+    private boolean hasLiberties(GoBoardPositionSet occupiedNbrs, GoBoardPositionSet nobiNbrs) {
         return (nobiNbrs.size() > occupiedNbrs.size());
     }
 
@@ -101,7 +98,7 @@ public final class GoMove extends TwoPlayerMove
      * @param occupiedNbrs The 4 occupied Nbrs neighbors to check
      * @return true if the newly placed stone is part of a string that is now captured as a reuslt of playing.
      */
-    private boolean partOfDeadString(Set<GoBoardPosition> occupiedNbrs, GoBoard board ) {
+    private boolean partOfDeadString(GoBoardPositionSet occupiedNbrs, GoBoard board ) {
         for (GoBoardPosition nbr : occupiedNbrs)  {
             if (nbr.getPiece().isOwnedByPlayer1() == this.isPlayer1()) {
                 // friendly string
@@ -121,7 +118,6 @@ public final class GoMove extends TwoPlayerMove
     }
 
 
-
     /**
      * returns true if the specified move caused one or more opponent groups to be in atari
      *
@@ -134,10 +130,10 @@ public final class GoMove extends TwoPlayerMove
 
         GoBoardPosition pos = (GoBoardPosition)board.getPosition( getToRow(), getToCol() );
         NeighborAnalyzer na = new NeighborAnalyzer(board);
-        Set<GoBoardPosition> enemyNbrs = na.getNobiNeighbors( pos, NeighborType.ENEMY );
+        GoBoardPositionSet enemyNbrs = na.getNobiNeighbors( pos, NeighborType.ENEMY );
         Iterator it = enemyNbrs.iterator();
         int numInAtari = 0;
-        Set<GoString> stringSet = new HashSet<GoString>();
+        GoStringSet stringSet = new GoStringSet();
         while ( it.hasNext() ) {
             GoBoardPosition s = (GoBoardPosition) it.next();
             GoString atariedString = s.getString();

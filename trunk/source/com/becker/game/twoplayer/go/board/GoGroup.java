@@ -20,7 +20,7 @@ import java.util.*;
 public final class GoGroup extends GoSet implements IGoGroup
 {
     /** a set of same color strings that are in the group. */
-    private Set<GoString> members_;
+    private GoStringSet members_;
 
     /** Responsible for determining how alive or dead the group is. */
     private GroupAnalyzer groupAnalyzer_;
@@ -69,17 +69,20 @@ public final class GoGroup extends GoSet implements IGoGroup
     {
         groupAnalyzer_ = new GroupAnalyzer(this);
     }
-    
+
+    /**
+     * Must be ordered (i.e. LinkedHashSet
+     */
     @Override
     protected void initializeMembers() {
-        members_ = new LinkedHashSet<GoString>();
+        members_ = new GoStringSet();
     }
     
     /**
      * @return  the hashSet containing the members
      */
     @Override
-    public Set<GoString> getMembers() {
+    public GoStringSet getMembers() {
         return members_;
     }
     
@@ -117,7 +120,7 @@ public final class GoGroup extends GoSet implements IGoGroup
     public void remove( List stones ) {
         // use a HashSet to avoid duplicate strings
         // otherwise we might try to remove the same string twice.
-        Set<GoString> hsStrings = new HashSet<GoString>();
+        GoStringSet hsStrings = new GoStringSet();
 
         Iterator it = stones.iterator();
         while ( it.hasNext() ) {
@@ -154,7 +157,7 @@ public final class GoGroup extends GoSet implements IGoGroup
      * @return the number of liberties that the group has
      */
     @Override
-    public Set<GoBoardPosition> getLiberties(GoBoard board)
+    public GoBoardPositionSet getLiberties(GoBoard board)
     {
         return groupAnalyzer_.getLiberties(board);
     }
@@ -189,9 +192,9 @@ public final class GoGroup extends GoSet implements IGoGroup
     /**
      * @return a list of the stones in this group.
      */
-    public Set<GoBoardPosition> getStones()
+    public GoBoardPositionSet getStones()
     {
-        Set<GoBoardPosition> stones = new HashSet<GoBoardPosition>(10);
+        GoBoardPositionSet stones = new GoBoardPositionSet();
         for (GoString string : getMembers()) {
             stones.addAll(string.getMembers());
         }

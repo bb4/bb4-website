@@ -36,7 +36,7 @@ public class NeighborAnalyzer {
      * @param empties a list of unoccupied positions.
      * @return a list of stones bordering the set of empty board positions.
      */
-    public Set<GoBoardPosition> findOccupiedNobiNeighbors(List<GoBoardPosition> empties) {
+    public GoBoardPositionSet findOccupiedNobiNeighbors(List<GoBoardPosition> empties) {
         return nobiAnalyzer_.findOccupiedNobiNeighbors(empties);
     }
 
@@ -46,7 +46,7 @@ public class NeighborAnalyzer {
      * @param neighborType (EYE, NOT_FRIEND etc)
      * @return a set of stones that are immediate (nobi) neighbors.
      */
-    public Set<GoBoardPosition> getNobiNeighbors( GoBoardPosition stone, NeighborType neighborType ) {
+    public GoBoardPositionSet getNobiNeighbors( GoBoardPosition stone, NeighborType neighborType ) {
        return getNobiNeighbors( stone, stone.getPiece().isOwnedByPlayer1(), neighborType);
     }
 
@@ -57,7 +57,7 @@ public class NeighborAnalyzer {
      * @param neighborType (EYE, NOT_FRIEND etc)
      * @return a set of stones that are immediate (nobi) neighbors.
      */
-    public Set<GoBoardPosition> getNobiNeighbors( GoBoardPosition stone, boolean friendOwnedByP1,
+    public GoBoardPositionSet getNobiNeighbors( GoBoardPosition stone, boolean friendOwnedByP1,
                                                   NeighborType neighborType ) {
         return nobiAnalyzer_.getNobiNeighbors(stone, friendOwnedByP1, neighborType);
     }
@@ -96,7 +96,7 @@ public class NeighborAnalyzer {
      * @param position stone or space to find string neighbors of.
      * @return string neighbors
      */
-    public Set<GoString> findStringNeighbors(GoBoardPosition position ) {
+    public GoStringSet findStringNeighbors(GoBoardPosition position ) {
         return stringNbrAnalyzer_.findStringNeighbors(position);
     }
 
@@ -104,7 +104,7 @@ public class NeighborAnalyzer {
      * This version assumes that the stone is occupied.
      * @return the list of stones in the group that was found.
      */
-    public Set<GoBoardPosition> findGroupNeighbors( GoBoardPosition position, boolean samePlayerOnly ) {
+    public GoBoardPositionSet findGroupNeighbors( GoBoardPosition position, boolean samePlayerOnly ) {
         assert (position != null);
         assert (position.getPiece() != null);
         return findGroupNeighbors( position, position.getPiece().isOwnedByPlayer1(), samePlayerOnly );
@@ -123,7 +123,7 @@ public class NeighborAnalyzer {
      * @param samePlayerOnly if true then find group nbrs that are have same ownership as friendPlayer1
      * @return group neighbors
      */
-    public Set<GoBoardPosition> findGroupNeighbors( GoBoardPosition stone, boolean friendPlayer1,
+    public GoBoardPositionSet findGroupNeighbors( GoBoardPosition stone, boolean friendPlayer1,
                                                    boolean samePlayerOnly ) {
        return groupNbrAnalyzer_.findGroupNeighbors(stone, friendPlayer1, samePlayerOnly);
 

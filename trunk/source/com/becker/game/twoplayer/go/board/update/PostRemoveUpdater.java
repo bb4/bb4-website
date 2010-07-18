@@ -57,16 +57,16 @@ public class PostRemoveUpdater extends PostChangeUpdater {
         if (string == null) return;
 
         GoGroup group = string.getGroup();
-        Set<GoBoardPosition> nbrs =
+        GoBoardPositionSet nbrs =
                 nbrAnalyzer_.getNobiNeighbors( stone, group.isOwnedByPlayer1(), NeighborType.FRIEND );
         //assert (string.size() > 0) : " String has 0 members! " + string;
 
         splitStringsIfNeeded(group, nbrs);
 
         if ( GameContext.getDebugMode() > 1 ) {
-            validator_.confirmNoEmptyStrings(getAllGroups());
+            getAllGroups().confirmNoEmptyStrings();
             validator_.confirmStonesInValidGroups();
-            validator_.confirmStonesInOneGroup( group, getAllGroups() );
+            getAllGroups().confirmStonesInOneGroup(group);
         }
         profiler.stopUpdateStringsAfterRemove();
     }
@@ -76,7 +76,7 @@ public class PostRemoveUpdater extends PostChangeUpdater {
      * @param group group that may have been split by the removal of the stone.
      * @param nbrs stones that are neighbors of the stone that was removed.
      */
-    private void splitStringsIfNeeded(GoGroup group, Set<GoBoardPosition> nbrs) {
+    private void splitStringsIfNeeded(GoGroup group, GoBoardPositionSet nbrs) {
 
         if ( nbrs.size() > 1 ) {
             Iterator nbrIt = nbrs.iterator();
@@ -110,7 +110,7 @@ public class PostRemoveUpdater extends PostChangeUpdater {
             //group.remove( stones );
 
             if ( GameContext.getDebugMode() > 1 )
-                validator_.confirmStonesInOneGroup( newGroup, getAllGroups() );
+                getAllGroups().confirmStonesInOneGroup( newGroup );
         }
     }
 
@@ -159,7 +159,7 @@ public class PostRemoveUpdater extends PostChangeUpdater {
             updateAfterRestoringCaptures(captures);
             if (GameContext.getDebugMode() > 1) {
                 validator_.confirmStonesInValidGroups();
-                validator_.confirmAllStonesInUniqueGroups(getAllGroups());
+                getAllGroups().confirmAllStonesInUniqueGroups();
                 GameContext.log( 3, "GoBoard: undoInternalMove: " + getBoard() + "  groups after restoring captures:" );
             }
         }
@@ -274,7 +274,7 @@ public class PostRemoveUpdater extends PostChangeUpdater {
             GoBoardUtil.unvisitPositions(list);
             GoGroup group = new GoGroup(list);
             if (GameContext.getDebugMode() > 1) {
-                validator_.confirmStonesInOneGroup(group, getAllGroups());
+                getAllGroups().confirmStonesInOneGroup(group);
                 GameContext.log(2, "updateAfterRestoringCaptures(): adding sub group :" + group);
             }
             getAllGroups().add(group);
@@ -294,7 +294,7 @@ public class PostRemoveUpdater extends PostChangeUpdater {
 
         //
         List<List<GoBoardPosition>> listsToUnvisit = new ArrayList<List<GoBoardPosition>>();
-        Set<GoBoardPosition> gStones = bigEnemyGroup.getStones();
+        GoBoardPositionSet gStones = bigEnemyGroup.getStones();
 
         getAllGroups().remove( bigEnemyGroup );
         if (secondaryEnemyGroup != null) {
@@ -324,7 +324,7 @@ public class PostRemoveUpdater extends PostChangeUpdater {
         List<GoBoardPosition> enemyNobiNbrs = new LinkedList<GoBoardPosition>();
         for (Object capture1 : captures) {
             GoBoardPosition capture = (GoBoardPosition) capture1;
-            Set<GoBoardPosition> enns = nbrAnalyzer_.getNobiNeighbors(capture, NeighborType.ENEMY);
+            GoBoardPositionSet enns = nbrAnalyzer_.getNobiNeighbors(capture, NeighborType.ENEMY);
             enemyNobiNbrs.addAll(enns);
         }
         return enemyNobiNbrs;
@@ -383,8 +383,8 @@ public class PostRemoveUpdater extends PostChangeUpdater {
         Set nbrs = nbrAnalyzer_.findGroupNeighbors( stone, group.isOwnedByPlayer1(), false );
 
         // create a set of friendly group nbrs and a separate set of enemy ones.
-        Set<GoBoardPosition> friendlyNbrs = new HashSet<GoBoardPosition>(10);
-        Set<GoBoardPosition> enemyNbrs = new HashSet<GoBoardPosition>(10);
+        GoBoardPositionSet friendlyNbrs = new GoBoardPositionSet();
+        GoBoardPositionSet enemyNbrs = new GoBoardPositionSet();
         for (Object nbr : nbrs) {
             GoBoardPosition nbrStone = (GoBoardPosition) nbr;
             if (nbrStone.getPiece().isOwnedByPlayer1() == group.isOwnedByPlayer1())
@@ -402,7 +402,7 @@ public class PostRemoveUpdater extends PostChangeUpdater {
         updateEnemyGroupsAfterRemoval(enemyNbrs);
 
         if ( GameContext.getDebugMode() > 1 )  {
-            validator_.confirmNoEmptyStrings(getAllGroups());
+            getAllGroups().confirmNoEmptyStrings();
         }
 
         cleanupGroups();
@@ -482,7 +482,7 @@ public class PostRemoveUpdater extends PostChangeUpdater {
      * if the string that the stone is being removed from was considered unconditionally alive,
      * then we need to clear out all the unconditionally alive information for the group since it is now invalid.
      * not to sure about this...
-     * @param string
+     * @param string string to determine if unconditionally alive or not and set status on.
      */
     private void createAliveStatus(GoString string) {
 

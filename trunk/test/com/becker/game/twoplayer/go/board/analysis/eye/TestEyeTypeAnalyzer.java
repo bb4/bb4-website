@@ -1,10 +1,7 @@
 package com.becker.game.twoplayer.go.board.analysis.eye;
 
 import com.becker.game.twoplayer.go.GoTestCase;
-import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.GoEye;
-import com.becker.game.twoplayer.go.board.GoGroup;
+import com.becker.game.twoplayer.go.board.*;
 import com.becker.game.twoplayer.go.board.analysis.eye.information.*;
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -130,7 +127,7 @@ public abstract class TestEyeTypeAnalyzer extends GoTestCase {
         GoGroup surroundedGroup = null;
 
         for (GoGroup group : groups) {
-            Set<GoBoardPosition> stones = group.getStones();
+            GoBoardPositionSet stones = group.getStones();
             if (stones.iterator().next().getPiece().isOwnedByPlayer1() == isBlack) {
                 if (surroundedGroup == null ||
                     (group.getNumStones() > 5 && group.getLiberties(board).size() < 3)) {

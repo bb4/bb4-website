@@ -19,7 +19,7 @@ import java.util.*;
 public class GoEye extends GoString implements GoMember
 {
     /** A set of poisitions that are in the eye space. Need not be empty. */
-    private Set<GoBoardPosition> members_;
+    private GoBoardPositionSet members_;
     
     /** The kind of eye that this is. */
     private final EyeInformation information_;
@@ -70,7 +70,7 @@ public class GoEye extends GoString implements GoMember
 
     @Override
     protected void initializeMembers() {
-        members_ = new HashSet<GoBoardPosition>();
+        members_ = new GoBoardPositionSet();
     }
 
     private void initializePositionCounts(GoBoard board) {
@@ -90,7 +90,7 @@ public class GoEye extends GoString implements GoMember
      * @return the hashSet containing the members
      */
     @Override
-    public Set<GoBoardPosition> getMembers() {
+    public GoBoardPositionSet getMembers() {
         return members_;
     }
 

@@ -67,7 +67,7 @@ final class GoGroupRenderer
         // to avoid adding the same stone to the queue twice we maintain a hashSet
         // which does not allow dupes.
         List<BoardPosition> q = new ArrayList<BoardPosition>();
-        Set<GoBoardPosition> qset = new HashSet<GoBoardPosition>();
+        GoBoardPositionSet qset = new GoBoardPositionSet();
         List<GoBoardPosition> visitedSet = new ArrayList<GoBoardPosition>();
         q.add( firstStone.copy() );
         qset.add( firstStone );
@@ -79,7 +79,7 @@ final class GoGroupRenderer
             qset.remove( stone );
             stone.setVisited( true );
             visitedSet.add(stone);
-            Set<GoBoardPosition> nbrs = nbrAnalyzer.findGroupNeighbors( stone, true );
+            GoBoardPositionSet nbrs = nbrAnalyzer.findGroupNeighbors( stone, true );
             for (GoBoardPosition nbrStone : nbrs) {
                 // accumulate all the borders to arrive at the final group border
                 area.add( new Area( getBorderBetween( stone, nbrStone, cellSize, margin ) ) );

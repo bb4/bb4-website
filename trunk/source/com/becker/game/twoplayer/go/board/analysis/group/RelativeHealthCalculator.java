@@ -49,7 +49,7 @@ public class RelativeHealthCalculator {
 
         // the default if there is no weakest group.
         float relativeHealth = absoluteHealth;
-        Set<GoBoardPosition> groupStones = group_.getStones();
+        GoBoardPositionSet groupStones = group_.getStones();
         GoGroup weakestGroup = findWeakestGroup(board, groupStones);
 
         if (weakestGroup != null)  {
@@ -69,7 +69,7 @@ public class RelativeHealthCalculator {
     /**
      * @return the weakest bordering enemy group.
      */
-    private GoGroup findWeakestGroup(GoBoard board, Set<GoBoardPosition> groupStones) {
+    private GoGroup findWeakestGroup(GoBoard board, GoBoardPositionSet groupStones) {
         GoProfiler.getInstance().start(GoProfiler.GET_ENEMY_GROUPS_NBRS);
         Set cachedEnemyNbrGroups = getEnemyGroupNeighbors(board, groupStones);
         GoProfiler.getInstance().stop(GoProfiler.GET_ENEMY_GROUPS_NBRS);
@@ -99,7 +99,7 @@ public class RelativeHealthCalculator {
      * ways to make life (i.e. run out/away).
      * @return proportion of our group stones with enemy neighbors.
      */
-    private double findProportionWithEnemyNbrs(Set<GoBoardPosition> groupStones) {
+    private double findProportionWithEnemyNbrs(GoBoardPositionSet groupStones) {
 
         int numWithEnemyNbrs = 0;
         for (Object p : groupStones) {
@@ -119,9 +119,9 @@ public class RelativeHealthCalculator {
      * @param groupStones the set of stones in the group to find enemies of.
      * @return a HashSet of the groups that are enemies of this group
      */
-    private Set getEnemyGroupNeighbors(GoBoard board, Set<GoBoardPosition> groupStones)
+    private Set getEnemyGroupNeighbors(GoBoard board, GoBoardPositionSet groupStones)
     {
-        Set<GoGroup> enemyNbrs = new HashSet<GoGroup>();
+        GoGroupSet enemyNbrs = new GoGroupSet();
         NeighborAnalyzer nbrAnalyzer =  new NeighborAnalyzer(board);
         
         // for every stone in the group.

@@ -2,7 +2,6 @@ package com.becker.game.twoplayer.go;
 
 import com.becker.game.twoplayer.go.board.*;
 import com.becker.game.twoplayer.go.board.analysis.PositionalScoreAnalyzer;
-import com.becker.game.twoplayer.go.board.analysis.StringShapeAnalyzer;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.*;
@@ -452,8 +451,6 @@ public final class GoController extends TwoPlayerController
                     move.setUrgent(true);
                 }
             }
-            //if (moves.size() > 0)
-            //    GameContext.log(2,"gocontroller: the number of urgent moves are:"+moves.size());
             return moves;
         }
 

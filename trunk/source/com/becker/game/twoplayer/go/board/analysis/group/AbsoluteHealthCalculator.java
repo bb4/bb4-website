@@ -2,11 +2,7 @@ package com.becker.game.twoplayer.go.board.analysis.group;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.GoProfiler;
-import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.GoEye;
-import com.becker.game.twoplayer.go.board.GoGroup;
-import com.becker.game.twoplayer.go.board.GoString;
+import com.becker.game.twoplayer.go.board.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -43,7 +39,7 @@ public class AbsoluteHealthCalculator {
      * This is the cached number of liberties.
      * It updates whenever something has changed.
      */
-    private Set<GoBoardPosition> cachedLiberties_;
+    private GoBoardPositionSet cachedLiberties_;
 
 
     /**
@@ -144,12 +140,12 @@ public class AbsoluteHealthCalculator {
      * Get the number of liberties that the group has.
      * @return the number of liberties that the group has
      */
-    public Set<GoBoardPosition> getLiberties(GoBoard board)
+    public GoBoardPositionSet getLiberties(GoBoard board)
     {
         if (eyeCache_.isValid()) {
              return cachedLiberties_;
         }
-        Set<GoBoardPosition> liberties = new HashSet<GoBoardPosition>();
+        GoBoardPositionSet liberties = new GoBoardPositionSet();
         for (GoString str : group_.getMembers()) {
             liberties.addAll(str.getLiberties(board));
         }

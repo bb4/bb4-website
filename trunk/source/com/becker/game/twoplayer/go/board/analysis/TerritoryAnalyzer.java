@@ -5,6 +5,7 @@ import com.becker.game.common.GamePiece;
 import com.becker.game.twoplayer.go.GoProfiler;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.GoBoardPositionSet;
 import com.becker.game.twoplayer.go.board.GoGroup;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborType;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
@@ -222,7 +223,7 @@ public class TerritoryAnalyzer {
                         nbrAnalyzer_.findStringFromInitialPosition(pos, false, false, NeighborType.UNOCCUPIED, box);
                 emptyLists.add(empties);
 
-                Set<GoBoardPosition> nbrs = nbrAnalyzer_.findOccupiedNobiNeighbors(empties);
+                GoBoardPositionSet nbrs = nbrAnalyzer_.findOccupiedNobiNeighbors(empties);
                 float avg = calcAverageScore(nbrs);
 
                 float score = avg * (float)nbrs.size() / Math.max(1, Math.max(nbrs.size(), empties.size()));
@@ -244,7 +245,7 @@ public class TerritoryAnalyzer {
      * @param stones actually the positions containing the stones.
      * @return the average scores of the stones in the list.
      */
-    private static float calcAverageScore(Set<GoBoardPosition> stones)
+    private static float calcAverageScore(GoBoardPositionSet stones)
     {
         float totalScore = 0;
 

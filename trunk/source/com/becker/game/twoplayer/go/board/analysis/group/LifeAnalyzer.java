@@ -92,7 +92,7 @@ public final class LifeAnalyzer {
      * @param nbrStrings the list to add neighboring still living strings to.
      */
     private void findNeighborStringsForEyeSpace(GoEye eye, GoBoardPosition pos, List<GoString> nbrStrings) {
-        Set<GoBoardPosition> nbrs =
+        GoBoardPositionSet nbrs =
                 nbrAnalyzer_.getNobiNeighbors(pos, eye.isOwnedByPlayer1(), NeighborType.FRIEND);
         for (GoBoardPosition nbr : nbrs) {
 
@@ -138,7 +138,7 @@ public final class LifeAnalyzer {
                 stringEyeNbrMap.put(str, vitalEyes);
             }
 
-            if (allUnocupiedAdjacentToString(eye, str, board_)) {
+            if (allUnocupiedAdjacentToString(eye, str)) {
                 eye.setUnconditionallyAlive(true);
                 vitalEyes.add(eye);
             }
@@ -148,10 +148,10 @@ public final class LifeAnalyzer {
     /**
      * @return true if all the empty spaces in this eye are touching the specified string.
      */
-    private boolean allUnocupiedAdjacentToString(GoEye eye, GoString string, GoBoard b)   {
+    private boolean allUnocupiedAdjacentToString(GoEye eye, GoString string)   {
         for (GoBoardPosition pos : eye.getMembers()) {
             if (pos.isUnoccupied()) {
-                Set<GoBoardPosition> nbrs =
+                GoBoardPositionSet nbrs =
                         nbrAnalyzer_.getNobiNeighbors(pos, eye.isOwnedByPlayer1(), NeighborType.FRIEND);
                 // verify that at least one of the nbrs is in this string
                 boolean thereIsaNbr = false;
@@ -175,16 +175,16 @@ public final class LifeAnalyzer {
      */
     private boolean determineUnconditionalLife() {
 
-        Set<GoString> livingStrings = findPassAliveStrings();
+        GoStringSet livingStrings = findPassAliveStrings();
         return !livingStrings.isEmpty();
     }
 
     /**
      * @return the set of strings in the group that are unconditionally alive.
      */
-    private Set<GoString> findPassAliveStrings() {
+    private GoStringSet findPassAliveStrings() {
 
-        Set<GoString> candidateStrings = initializeCandidateStrings();
+        GoStringSet candidateStrings = new GoStringSet(group_.getMembers());
         boolean done;
 
         do {
@@ -237,17 +237,5 @@ public final class LifeAnalyzer {
             }
         }
         return numLivingAdjacentEyes;
-    }
-
-    /**
-     * mark all the strings in the group as not UA.
-     * @return set of candidate strings initially marked not UA
-     */
-    private Set<GoString> initializeCandidateStrings() {
-        Set<GoString> candidateStrings = new HashSet<GoString>();
-        for (GoString str : group_.getMembers()) {
-            candidateStrings.add(str);
-        }
-        return candidateStrings;
     }
 }
