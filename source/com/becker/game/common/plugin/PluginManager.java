@@ -1,5 +1,6 @@
-package com.becker.game.common;
+package com.becker.game.common.plugin;
 
+import com.becker.game.common.GameContext;
 import com.becker.ui.*;
 import com.becker.common.xml.*;
 import org.w3c.dom.*;

@@ -227,7 +227,7 @@ public class PokerPlayerRenderer extends GamePieceRenderer
         }
         // amount of cash represented by chips
         g2.setColor(BLACK_COLOR);
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(GameContext.getDefaultLocaleType().getLocale());
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(JComponent.getDefaultLocale());
         String cashAmount = currencyFormat.format(amount);
         x = (int)((location.getCol() +1 +firstNonZeroPile*CHIP_PILE_WIDTH) * cellSize);
         Font f = POKER_CHIP_FONT.deriveFont((float) cellSize /

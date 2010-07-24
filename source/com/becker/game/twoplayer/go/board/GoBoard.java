@@ -43,7 +43,7 @@ public final class GoBoard extends TwoPlayerBoard
      */
     public GoBoard( int numRows, int numCols, int numHandicapStones )
     {
-        groups_ = new GoGroupSet(true);
+        groups_ = new GoGroupSet();
         setSize( numRows, numCols );
         setHandicap(numHandicapStones);
         boardUpdater_ = new BoardUpdater(this);
@@ -57,7 +57,7 @@ public final class GoBoard extends TwoPlayerBoard
     public void reset()
     {
         super.reset();
-        groups_.clear();
+        groups_ = new GoGroupSet();
         for ( int i = 1; i <= getNumRows(); i++ )  {
             for ( int j = 1; j <= getNumCols(); j++ ) {
                 positions_[i][j] = new GoBoardPosition(i,j, null, null);
@@ -82,15 +82,14 @@ public final class GoBoard extends TwoPlayerBoard
 
         // make copies of all the groups
         if (groups_ != null) {
-            ((GoBoard)clone).groups_ = new GoGroupSet(true);
 
-            GoGroupSet groupsCopy = ((GoBoard)clone).groups_;
-
-            synchronized(groups_) {
-                for (GoGroup g : groups_)  {
-                    groupsCopy.add((GoGroup)g.clone());
-                }
+            GoGroupSet tempGroups = new GoGroupSet(groups_);
+            GoGroupSet groupsCopy = new GoGroupSet();
+            for (GoGroup g : tempGroups)  {
+                groupsCopy.add((GoGroup)g.clone());
             }
+            ((GoBoard)clone).setGroups(groupsCopy);
+
         }
         return clone;
     }
@@ -163,7 +162,7 @@ public final class GoBoard extends TwoPlayerBoard
     }
 
     /**
-     * get the current set of active groups
+     * get the current set of active groups. Should be read only. Do not modify.
      * @return all the valid groups on the board (for both sides)
      */
     public GoGroupSet getGroups()
@@ -171,6 +170,10 @@ public final class GoBoard extends TwoPlayerBoard
         return groups_;
     }
 
+
+    public void setGroups(GoGroupSet groups){
+        groups_ = groups;
+    }
 
     /**
      * Make sure that all the positions on the board are reset to the unvisited state.

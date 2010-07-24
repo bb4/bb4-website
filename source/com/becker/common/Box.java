@@ -61,6 +61,10 @@ public class Box {
         return bottomRightCorner_.getCol();
     }
 
+    public int getArea() {
+        return getWidth() * getHeight();
+    }
+
     /**
      * @param pt point to check for containment in the box.
      * @return true if the box contains the specified point

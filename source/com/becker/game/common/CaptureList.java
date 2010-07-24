@@ -1,5 +1,7 @@
 package com.becker.game.common;
 
+import com.becker.game.twoplayer.go.board.elements.GoBoardPositionSet;
+
 import java.util.*;
 
 /**
@@ -36,20 +38,18 @@ public class CaptureList extends LinkedList<BoardPosition>
      */
     private void modifyCaptures( Board b, boolean remove )
     {
-        Iterator it = this.iterator();
-        while ( it.hasNext() ) {
-            BoardPosition capture = (BoardPosition) it.next();
-            BoardPosition pos = b.getPosition( capture.getRow(), capture.getCol() );
-            if ( remove )
-                pos.setPiece( null );
-            else  {
-                pos.setPiece( capture.getPiece().copy() );
+        for (BoardPosition capture : this) {
+            BoardPosition pos = b.getPosition(capture.getRow(), capture.getCol());
+            if (remove)
+                pos.setPiece(null);
+            else {
+                pos.setPiece(capture.getPiece().copy());
             }
         }
     }
 
     /**
-     *  returns true if the piece was already captured
+     *  @return true if the piece was already captured
      */
     public boolean alreadyCaptured( BoardPosition p )
     {
@@ -80,18 +80,16 @@ public class CaptureList extends LinkedList<BoardPosition>
     /**
      * @return true if list is not null and not 0 sized.
      */
-    public boolean addAllCopied( Collection list )
+    public boolean addAllCopied( GoBoardPositionSet list )
     {
         if ( list == null )
             return false;
         // we need to add copies so that when the original stones on the board are
         // changed we don't change the captures
-        Iterator it = list.iterator();
-        while ( it.hasNext() ) {
-            BoardPosition capture = (BoardPosition) it.next();
+        for (BoardPosition capture : list) {
             // make sure none of the captures are blanks
             assert capture.isOccupied();
-            this.add( capture.copy() );
+            this.add(capture.copy());
         }
         return (!list.isEmpty());
     }
@@ -103,9 +101,7 @@ public class CaptureList extends LinkedList<BoardPosition>
     public String toString()
     {
         String s = " These piece(s) were captured by this move:\n";
-        Iterator it = this.iterator();
-        while ( it.hasNext() ) {
-            BoardPosition p = (BoardPosition) it.next();
+        for (BoardPosition p : this) {
             s += '(' + p.toString() + "),";
         }
         return s;

@@ -1,7 +1,9 @@
 package com.becker.game.common.ui;
 
 import com.becker.common.*;
+import com.becker.common.i18n.LocaleType;
 import com.becker.game.common.*;
+import com.becker.game.common.plugin.PluginManager;
 import com.becker.ui.*;
 
 import javax.swing.*;

@@ -1,7 +1,6 @@
 package com.becker.game.twoplayer.go.board.elements;
 
 import com.becker.game.common.GameContext;
-import com.becker.game.twoplayer.go.board.GoBoard;
 
 import java.util.*;
 
@@ -12,7 +11,7 @@ import java.util.*;
  */
 public class GoGroupSet implements Set<GoGroup>
 {
-    Set<GoGroup> groups;
+    private Set<GoGroup> groups;
 
     /**
      * Default constructor creates unsynchronized version.
@@ -25,12 +24,20 @@ public class GoGroupSet implements Set<GoGroup>
      * Constructor
      * @param synchronize  if true, then create synchronized set.
      */
-    public GoGroupSet(boolean synchronize) {
+    private GoGroupSet(boolean synchronize) {
         groups = synchronize? Collections.synchronizedSet(new LinkedHashSet<GoGroup>()) :
                               new LinkedHashSet<GoGroup>();
     }
 
-
+    /**
+     * Copy constructor.
+     * @param groups to add initially.
+     */
+    public GoGroupSet(GoGroupSet groups) {
+        this(false);
+        addAll(groups);
+    }
+    
     public int size() {
         return groups.size();
     }
@@ -67,20 +74,25 @@ public class GoGroupSet implements Set<GoGroup>
         return groups.containsAll(c);
     }
 
-    public boolean addAll(Collection<? extends GoGroup> c) {
+    public synchronized boolean addAll(Collection<? extends GoGroup> c) {
         return groups.addAll(c);
     }
 
+    /** Intentionally not implemented for thread safety reasons.*/
     public boolean retainAll(Collection<?> c) {
-        return groups.retainAll(c);
+        assert false : "unsafe";
+        return false;
     }
 
+    /** Intentionally not implemented for thread safety reasons.*/
     public boolean removeAll(Collection<?> c) {
-        return groups.removeAll(c);
+        assert false : "unsafe";
+        return false;
     }
 
+    /** Intentionally not implemented for thread safety reasons.*/
     public void clear() {
-        groups.clear();
+        assert false : "unsafe";
     }
 
 
@@ -189,26 +201,6 @@ public class GoGroupSet implements Set<GoGroup>
     }
 
 
-    public void confirmNoStringsWithEmpties()
-    {
-        for (GoGroup g : this)  {
-            for (GoString string : g.getMembers()) {
-                assert (!string.areAnyBlank()): "There is a string with unoccupied positions: " + string;
-            }
-        }
-    }
-
-    /**
-     *  confirm that all the strings in a group have nobi connections.
-     */
-    public void confirmGroupsHaveValidStrings(GoBoard board)
-    {
-        for (GoGroup group : this) {
-            confirmValidStrings(group, board);
-        }
-    }
-
-
     /**
      * @param stone verify that this stone has a valid string and a group in the board's member list.
      */
@@ -232,18 +224,6 @@ public class GoGroupSet implements Set<GoGroup>
                     g + " \nThe valid groups are:" + groups;
         }
     }
-
-    /**
-     * go through the groups strings and verify that they are valid (have all nobi connections)
-     */
-    private void confirmValidStrings(GoGroup group, GoBoard b )
-    {
-        for (GoString string : group.getMembers()) {
-            string.confirmValid(b);
-        }
-    }
-
-
 
     private void confirmStoneInStringAlsoInGroup(GoString str, GoGroup group) {
         //make sure that every stone in the string belongs in this group

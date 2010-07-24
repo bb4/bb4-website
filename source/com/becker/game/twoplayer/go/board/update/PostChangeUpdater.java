@@ -15,7 +15,7 @@ import java.util.*;
  */
 public abstract class PostChangeUpdater {
 
-    private GoBoard board_;
+    protected GoBoard board_;
     protected Captures captures_;
     protected NeighborAnalyzer nbrAnalyzer_;
     protected BoardValidator validator_;
@@ -78,16 +78,15 @@ public abstract class PostChangeUpdater {
      */
     protected void cleanupGroups()
     {
-        synchronized(getAllGroups())
-        {
-            Iterator it = getAllGroups().iterator();
-            while ( it.hasNext() ) {
-                GoGroup group = (GoGroup) it.next();
-                if ( group.getNumStones() == 0 )  {
-                    it.remove();
-                }
+        GoGroupSet newGroups = new GoGroupSet();
+
+        for (GoGroup group: getAllGroups()) {
+
+            if ( group.getNumStones() > 0 )  {
+                newGroups.add(group);
             }
         }
+        board_.setGroups(newGroups);
     }
 
     /**
@@ -95,11 +94,13 @@ public abstract class PostChangeUpdater {
      * @param stones the stones to remove.
      */
     protected void removeGroupsForListOfStones(List stones) {
+        GoGroupSet groupsCopy = new GoGroupSet(getAllGroups());
         for (Object stone : stones) {
             GoBoardPosition nbrStone = (GoBoardPosition) stone;
             // In the case where the removed stone was causing an atari in a string in an enemy group,
             // there is a group that does not contain a nbr stone that also needs to be removed here.
-            getAllGroups().remove(nbrStone.getGroup());
+            groupsCopy.remove(nbrStone.getGroup());
         }
+        board_.setGroups(groupsCopy);
     }
 }

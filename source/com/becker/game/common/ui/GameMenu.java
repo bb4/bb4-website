@@ -1,8 +1,9 @@
 package com.becker.game.common.ui;
 
 import com.becker.game.common.GameContext;
-import com.becker.game.common.GamePlugin;
-import com.becker.game.common.PluginManager;
+import com.becker.game.common.plugin.GamePlugin;
+import com.becker.game.common.plugin.PluginManager;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Iterator;

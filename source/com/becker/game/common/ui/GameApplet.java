@@ -1,7 +1,8 @@
 package com.becker.game.common.ui;
 
-import com.becker.common.*;
+import com.becker.common.i18n.LocaleType;
 import com.becker.game.common.*;
+import com.becker.game.common.plugin.PluginManager;
 import com.becker.ui.*;
 
 import javax.swing.*;
@@ -33,8 +34,9 @@ public class GameApplet extends JApplet
 
         LocaleType locale = GameContext.getLocale(localeName, true);
         System.out.println("setting the locale to " + locale + " for language="+ localeName);
-        GameContext.setLocale(locale);
+
         GameContext.loadGameResources(gameName);
+        GameContext.setLocale(locale);
 
         gamePanel_ = PluginManager.getInstance().getPlugin(gameName).getPanelInstance();
         gamePanel_.init(null);   // applet has no frame.
