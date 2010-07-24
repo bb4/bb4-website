@@ -180,10 +180,12 @@ public class PostMoveUpdater extends PostChangeUpdater {
         GoGroup group = capString.getGroup();
         removeCapturedStringsFromGroup(captureList, group);
 
+        GoGroupSet groupsCopy = new GoGroupSet(getAllGroups());
         // if there are no more stones in the group, remove it.
         if ( group.getNumStones() == 0 ) {
-            getAllGroups().remove( group );
+            groupsCopy.remove( group );
         }
+        board_.setGroups(groupsCopy);
 
         adjustStringLiberties(captureList);
     }
@@ -253,7 +255,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
      */
     private void recreateGroupsAfterMove() {
 
-        getAllGroups().clear();
+        GoGroupSet groups = new GoGroupSet();
 
         for ( int i = 1; i <= getBoard().getNumRows(); i++ )  {
            for ( int j = 1; j <= getBoard().getNumCols(); j++ ) {
@@ -261,10 +263,11 @@ public class PostMoveUpdater extends PostChangeUpdater {
                if (seed.isOccupied() && !seed.isVisited()) {
                    GoBoardPositionList newGroup = nbrAnalyzer_.findGroupFromInitialPosition(seed, false);
                    GoGroup g = new GoGroup(newGroup);
-                   getAllGroups().add(g);
+                   groups.add(g);
                }
            }
         }
+        board_.setGroups(groups);
     }
 
     /**

@@ -1,4 +1,4 @@
-package com.becker.game.common;
+package com.becker.common.i18n;
 
 import java.util.Locale;
 

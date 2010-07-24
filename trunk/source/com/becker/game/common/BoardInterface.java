@@ -68,6 +68,7 @@ public interface BoardInterface
      /**
       * Allow reverting a move so we can step backwards in time.
       * Board is returned to the exact state it was in before the last move was made.
+      * @return the move that was just undone.
       */
      Move undoMove();
 

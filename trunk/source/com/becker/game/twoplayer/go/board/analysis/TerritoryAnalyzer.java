@@ -4,10 +4,7 @@ import com.becker.common.Box;
 import com.becker.game.common.GamePiece;
 import com.becker.game.twoplayer.go.GoProfiler;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.elements.GoBoardPositionList;
-import com.becker.game.twoplayer.go.board.elements.GoBoardPositionSet;
-import com.becker.game.twoplayer.go.board.elements.GoGroup;
+import com.becker.game.twoplayer.go.board.elements.*;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborType;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 
@@ -133,18 +130,17 @@ public class TerritoryAnalyzer {
         float delta = 0;
         GoProfiler prof = GoProfiler.getInstance();
         prof.start(GoProfiler.ABSOLUTE_TERRITORY);
-        
-        synchronized(board_.getGroups()) {
-            for (GoGroup g : board_.getGroups()) {
 
-                float health = g.calculateAbsoluteHealth(board_);
+        for (GoGroup g : board_.getGroups()) {
 
-                if (!USE_RELATIVE_GROUP_SCORING) {
-                    g.updateTerritory(health);
-                    delta += health * g.getNumStones();
-                }
+            float health = g.calculateAbsoluteHealth(board_);
+
+            if (!USE_RELATIVE_GROUP_SCORING) {
+                g.updateTerritory(health);
+                delta += health * g.getNumStones();
             }
         }
+
         prof.stop(GoProfiler.ABSOLUTE_TERRITORY);
         return delta;
     }
@@ -158,13 +154,12 @@ public class TerritoryAnalyzer {
         float delta = initDelta;
         if (USE_RELATIVE_GROUP_SCORING) {
             prof.start(GoProfiler.RELATIVE_TERRITORY);
-            synchronized(board_.getGroups()) {
-                for (GoGroup g : board_.getGroups()) {
-                    float health = g.calculateRelativeHealth(board_);
-                    g.updateTerritory(health);
-                    delta += health * g.getNumStones();
-                }
+            for (GoGroup g : board_.getGroups()) {
+                float health = g.calculateRelativeHealth(board_);
+                g.updateTerritory(health);
+                delta += health * g.getNumStones();
             }
+
             prof.stop(GoProfiler.RELATIVE_TERRITORY);
         }
         return delta;

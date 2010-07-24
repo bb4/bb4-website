@@ -65,6 +65,7 @@ class EyeSpaceAnalyzer {
             for ( int c = boundingBox_.getMinCol(); c <= boundingBox_.getMaxCol(); c++ ) {
                 // if the empty space is already marked as being an eye, skip
                 GoBoardPosition space = (GoBoardPosition) board_.getPosition( r, c );
+                assert space != null : "pos r="+r +" c="+c;
                 if ( !space.isVisited() && space.isUnoccupied() && !space.isInEye() ) {
                     GoBoardPositionList eyeSpaces =
                             nbrAnalyzer_.findStringFromInitialPosition( space, ownedByPlayer1,
@@ -96,34 +97,39 @@ class EyeSpaceAnalyzer {
      * @return list of lists of eye space spaces find real eye from (and to unvisit at the end)
      */
     private List<GoBoardPositionList> createEyeSpaceLists() {
-        //
+
         List<GoBoardPositionList> lists = new ArrayList<GoBoardPositionList>();
         boolean ownedByPlayer1 = group_.isOwnedByPlayer1();
 
+        if (boundingBox_.getArea() == 0) return lists;
         int rMin = boundingBox_.getMinRow();
         int rMax = boundingBox_.getMaxRow();
         int cMin = boundingBox_.getMinCol();
         int cMax = boundingBox_.getMaxCol();
 
         if ( boundingBox_.getMinCol() > 1 ) {
-            for ( int r = rMin; r <= rMax; r++ )
+            for ( int r = rMin; r <= rMax; r++ )  {
                 excludeSeed( (GoBoardPosition) board_.getPosition( r, cMin ),
                         ownedByPlayer1, lists, boundingBox_ );
+            }
         }
         if ( boundingBox_.getMaxCol() < board_.getNumCols() ) {
-            for ( int r = rMin; r <= rMax; r++ )
+            for ( int r = rMin; r <= rMax; r++ ) {
                 excludeSeed( (GoBoardPosition) board_.getPosition( r, cMax ),
                         ownedByPlayer1, lists, boundingBox_ );
+            }
         }
         if ( rMin > 1 ) {
-            for ( int c = cMin; c <= cMax; c++ )
+            for ( int c = cMin; c <= cMax; c++ )  {
                 excludeSeed( (GoBoardPosition) board_.getPosition( rMin, c ),
                         ownedByPlayer1, lists, boundingBox_ );
+            }
         }
         if ( rMax < board_.getNumRows() ) {
-            for ( int c = cMin; c <= cMax; c++ )
+            for ( int c = cMin; c <= cMax; c++ )  {
                 excludeSeed( (GoBoardPosition) board_.getPosition( rMax, c ),
                         ownedByPlayer1, lists, boundingBox_ );
+            }
         }
 
         clearEyes(rMin, rMax, cMin, cMax);

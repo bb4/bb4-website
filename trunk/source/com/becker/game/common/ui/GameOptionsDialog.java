@@ -1,5 +1,7 @@
 package com.becker.game.common.ui;
 
+import com.becker.common.i18n.LocaleType;
+import com.becker.common.i18n.MessageContext;
 import com.becker.ui.components.NumberInput;
 import com.becker.ui.components.GradientButton;
 import com.becker.ui.components.ColorInputPanel;
@@ -309,7 +311,7 @@ public abstract class GameOptionsDialog extends OptionsDialog
             String item = GameContext.getLabel(newVar.toString());
             localeComboBox_.addItem(item);
         }
-         localeComboBox_.setSelectedItem(GameContext.getDefaultLocaleType());
+         localeComboBox_.setSelectedItem(MessageContext.DEFAULT_LOCALE);
          localeComboBox_.addActionListener( this );
          localeComboBox_.setAlignmentX( Component.LEFT_ALIGNMENT );
          p.add( localeComboBox_,  BorderLayout.NORTH );

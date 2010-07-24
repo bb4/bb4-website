@@ -97,7 +97,7 @@ public final class BettingDialog extends ActionDialog
 
     public static NumberFormat getCurrencyFormat() {
         //@@ fix i18n
-        return NumberFormat.getCurrencyInstance(GameContext.getDefaultLocaleType().getLocale());
+        return NumberFormat.getCurrencyInstance(JComponent.getDefaultLocale());
     }
 
     @Override

@@ -45,7 +45,6 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
         super( row, col, stone );
         string_ = string;
         eye_ = null;
-        //assert ( string == null || string_.size() > 0 ): "Error creating board position at "+row+","+col+" String = "+string;
         visited_ = false;
     }
 
@@ -55,7 +54,7 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
     @Override
     public BoardPosition copy()
     {
-        return new GoBoardPosition( row_, col_, string_, (GoStone)piece_);
+        return new GoBoardPosition( location_.getRow(), location_.getCol(), string_, (GoStone)piece_);
     }
 
     /**

@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.go.board.elements;
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.board.GoBoard;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
@@ -81,7 +82,8 @@ public abstract class GoSet implements GoMember
 
             Set m = ((GoSet)clone).getMembers();
 
-            Set<GoMember> members = new CopyOnWriteArraySet<GoMember>(getMembers());
+            Set<? extends GoMember> members = new HashSet<GoMember>(getMembers());
+
             for (GoMember goMember : members) {
                 try {
                     m.add((goMember).clone());

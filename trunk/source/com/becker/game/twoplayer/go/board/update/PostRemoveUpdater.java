@@ -297,12 +297,15 @@ public class PostRemoveUpdater extends PostChangeUpdater {
         List<GoBoardPositionList> listsToUnvisit = new ArrayList<GoBoardPositionList>();
         GoBoardPositionSet gStones = bigEnemyGroup.getStones();
 
-        getAllGroups().remove( bigEnemyGroup );
+        // create a copy because we need to make modifications.
+        GoGroupSet groupsCopy = new GoGroupSet(getAllGroups());
+        groupsCopy.remove( bigEnemyGroup );
         if (secondaryEnemyGroup != null) {
             GameContext.log(1, "There was a secondary enemy group before restoring (*RARE*). The 2 groups were :" +
                                bigEnemyGroup+" and "+secondaryEnemyGroup);
-            getAllGroups().remove(secondaryEnemyGroup);
+            groupsCopy.remove(secondaryEnemyGroup);
         }
+        board_.setGroups(groupsCopy);
 
         // Combine all the enemy nobi nbrs with the stones from the bigEnemyGroup when trying to find the new groups.
         GoBoardPositionList enemyNbrs = new GoBoardPositionList(enemyNobiNbrs);
@@ -508,11 +511,9 @@ public class PostRemoveUpdater extends PostChangeUpdater {
     protected boolean groupAlreadyExists( GoBoardPositionList stones )
     {
         // first find the group that contains the stones
-        synchronized(getBoard().getGroups()) {
-            for (GoGroup goGroup : getBoard().getGroups()) {
-                if (goGroup.exactlyContains(stones))
-                    return true;
-            }
+        for (GoGroup goGroup : getBoard().getGroups()) {
+            if (goGroup.exactlyContains(stones))
+                return true;
         }
         return false;
     }

@@ -1,4 +1,4 @@
-package com.becker.game.common;
+package com.becker.game.common.plugin;
 
 import com.becker.common.ClassLoaderSingleton;
 import com.becker.game.common.ui.GamePanel;

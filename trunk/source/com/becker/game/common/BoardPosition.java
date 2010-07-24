@@ -12,12 +12,10 @@ import com.becker.common.*;
  */
 public class BoardPosition
 {
+    /** we need to store the location so we can restore captures.  */
+    protected Location location_;
 
-    // we need to store the location so we can restore captures
-    protected int row_;
-    protected int col_;
-
-    // the piece to display at this position. Null if the position is unoccupied.
+    /** the piece to display at this position. Null if the position is unoccupied. */
     protected GamePiece piece_ = null;
 
 
@@ -27,13 +25,19 @@ public class BoardPosition
      * @param col - x position on the board.
      * @param piece - the pice to put at this position (use null if there is none).
      */
-    public BoardPosition( int row, int col, GamePiece piece)
-    {
-        row_ = row;
-        col_ = col;
-        piece_ = piece;
+    public BoardPosition( int row, int col, GamePiece piece)  {
+        this(new Location(row, col), piece);
     }
 
+    /**
+     * constructor
+     * @param loc -  location on the board.
+     * @param piece - the pice to put at this position (use null if there is none).
+     */
+    public BoardPosition( Location loc, GamePiece piece)  {
+        location_ = loc;
+        piece_ = piece;
+    }
             
     /**
      * @return  true if values are equal.
@@ -52,11 +56,8 @@ public class BoardPosition
          else {
              sameSide = (getPiece() == null && comparisonPos.getPiece() == null);
          }
-         boolean equal =
-                     (getRow() == comparisonPos.getRow()) &&
-                     (getCol() == comparisonPos.getCol()) && (sameSide);
-          
-         return equal;
+         return (getRow() == comparisonPos.getRow()) &&
+                (getCol() == comparisonPos.getCol()) && (sameSide);
     }
     
     /**
@@ -70,64 +71,54 @@ public class BoardPosition
     /**
      * @return the piece at this position if there is one.
      */
-    public GamePiece getPiece()
-    {
+    public GamePiece getPiece()  {
         return piece_;
     }
 
     /**
      * @param piece the piece to assign to this position.
      */
-    public void setPiece(GamePiece piece)
-    {
+    public void setPiece(GamePiece piece) {
         piece_ = piece;
     }
 
     /**
      * @return true if the piece space is currently unoccupied
      */
-    public final boolean isUnoccupied()
-    {
+    public final boolean isUnoccupied() {
         return (piece_ == null);
     }
 
     /**
      * @return true if the piece space is currently occupied
      */
-    public final boolean isOccupied()
-    {
+    public final boolean isOccupied() {
          return (piece_ != null);
     }
 
-    public final void setRow( int row )
-    {
-        row_ = row;
+    public final void setRow( int row ) {
+        location_.setRow(row);
     }
 
-    public final int getRow()
-    {
-        return row_;
+    public final int getRow() {
+        return location_.getRow();
     }
 
-    public final void setCol( int col )
-    {
-        col_ = col;
+    public final void setCol( int col ) {
+        location_.setCol(col);
     }
 
-    public final int getCol()
-    {
-        return col_;
+    public final int getCol() {
+        return location_.getCol();
     }
 
-     public final void setLocation( Location loc )
-    {
-        row_ = loc.getRow();
-        col_ = loc.getCol();
+     public final void setLocation( Location loc ) {
+        location_ = loc;
     }
 
     public final Location getLocation()
     {
-        return new Location(row_, col_);
+        return location_;
     }
 
     /**
@@ -135,7 +126,7 @@ public class BoardPosition
      */
     public BoardPosition copy()
     {
-        return new BoardPosition( row_, col_, (piece_== null) ? null : piece_.copy());
+        return new BoardPosition( location_, (piece_== null) ? null : piece_.copy());
     }
 
     /**
@@ -143,8 +134,7 @@ public class BoardPosition
      */
     public void copy(BoardPosition p)
     {
-        row_ = p.row_;
-        col_ = p.col_;
+        location_ = new Location(p.getRow(), p.getCol());
         if (p.piece_ != null)
             piece_ = p.piece_.copy();
         else
@@ -157,11 +147,8 @@ public class BoardPosition
      * @param position to get the distance from
      * @return distance from another position
      */
-    public final double getDistanceFrom( BoardPosition position )
-    {
-        double deltaX = this.getCol() - position.getCol();
-        double deltaY = this.getRow() - position.getRow();
-        return Math.sqrt( deltaX * deltaX + deltaY * deltaY );
+    public final double getDistanceFrom( BoardPosition position ) {
+        return location_.getDistanceFrom(position.getLocation());
     }
 
 
@@ -169,26 +156,21 @@ public class BoardPosition
      * @param position to check if neighboring
      * @return true if immediate neighbor (nobi neighbor)
      */
-    public final boolean isNeighbor( BoardPosition position )
-    {
-        double deltaX = this.getCol() - position.getCol();
-        double deltaY = this.getRow() - position.getRow();
-        return Math.abs(deltaX) + Math.abs(deltaY) == 1;
+    public final boolean isNeighbor( BoardPosition position ) {
+        return getDistanceFrom(position) == 1.0;
     }
 
     /**
      * make it show an empty board position.
      */
-    public void clear()
-    {
+    public void clear() {
         setPiece( null );
     }
 
     /**
      * @return a string representation of the board position
      */
-    public String getDescription()
-    {
+    public String getDescription() {
         return toString(true);
     }
 
@@ -196,16 +178,18 @@ public class BoardPosition
      * @return a string representation of the board position
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return toString(false);
     }
 
+    /**
+     * @return string form.
+     */
     private String toString(boolean longForm) {
         StringBuffer sb = new StringBuffer( "" );
         if (piece_ != null)
             sb.append(longForm? piece_.getDescription() : piece_.toString());
-        sb.append(" (").append(row_).append(", ").append(col_).append(')');
+        sb.append(" (").append(location_.toString()).append(')');
         return sb.toString();
     }
 

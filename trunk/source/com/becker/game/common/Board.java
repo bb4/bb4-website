@@ -127,6 +127,32 @@ public abstract class Board implements BoardInterface, Cloneable
         return getPosition(loc.getRow(), loc.getCol());
     }
 
+
+    /**
+     * @param move  to make
+     * @return false if the move is illegal
+     */
+    public final boolean makeMove( Move move ) {
+        boolean done = makeInternalMove(move);
+        getMoveList().add( move );
+        return done;
+    }
+
+
+    /**
+     * undo the last move made.
+     * @return  the move that got undone
+     */
+    public Move undoMove() {
+        if ( !getMoveList().isEmpty() ) {
+            Move move = getMoveList().removeLast();
+            undoInternalMove( move );
+            return move;
+        }
+        return null;
+    }
+
+
     /**
      * @return a deep copy of the board.
      * @throws CloneNotSupportedException if this object should not be cloned.
@@ -148,7 +174,7 @@ public abstract class Board implements BoardInterface, Cloneable
 
     /**
      * Two boards are considered equal if all the pieces are in the same spot and have like ownership.
-     * @param b
+     * @param b the board to compare to.
      * @return true if all the pieces in board b in the same spot and have like ownership as this.
      */
     @Override
@@ -192,30 +218,6 @@ public abstract class Board implements BoardInterface, Cloneable
            }
         }
         return hash;
-    }
-
-    /**
-     * @param move  to make
-     * @return false if the move is illegal
-     */
-    public final boolean makeMove( Move move ) {
-        boolean done = makeInternalMove(move);
-        getMoveList().add( move );
-        return done;
-    }
-
-
-    /**
-     * undo the last move made.
-     * @return  the move that got undone
-     */
-    public Move undoMove() {
-        if ( !getMoveList().isEmpty() ) {
-            Move move = getMoveList().removeLast();
-            undoInternalMove( move );
-            return move;
-        }
-        return null;
     }
 
     /**

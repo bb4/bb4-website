@@ -150,7 +150,7 @@ public final class GoGroup extends GoSet implements IGoGroup
             return;
         }
         getMembers().remove( string );
-       groupAnalyzer_.invalidate();
+        groupAnalyzer_.invalidate();
     }
 
     /**
@@ -314,13 +314,12 @@ public final class GoGroup extends GoSet implements IGoGroup
      * @return bounding box of set of stones/positions passed in
      */
     public Box findBoundingBox()  {
-        int rMin = 100000; // something huge ( more than max rows)
+        int rMin = 10000; // something huge ( more than max rows)
         int rMax = 0;
-        int cMin = 100000; // something huge ( more than max cols)
+        int cMin = 10000; // something huge ( more than max cols)
         int cMax = 0;
 
         // first determine a bounding rectangle for the group.
-
         for (GoString string : this.getMembers()) {
 
             for (GoBoardPosition stone : string.getMembers()) {
@@ -332,8 +331,7 @@ public final class GoGroup extends GoSet implements IGoGroup
                 if (col > cMax) cMax = col;
             }
         }
-
-        return new Box(rMin, cMin, rMax, cMax);
+        return (rMin > rMax) ? new Box(0, 0, 0, 0) : new Box(rMin, cMin, rMax, cMax);
     }
 
     /**

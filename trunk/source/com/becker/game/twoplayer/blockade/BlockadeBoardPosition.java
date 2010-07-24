@@ -40,7 +40,7 @@ public final class BlockadeBoardPosition extends BoardPosition
     public BlockadeBoardPosition( int row, int col, GamePiece piece, BlockadeWall southWall, BlockadeWall eastWall,
                                   boolean isP1Home, boolean isP2Home)
     {
-        super( row, col, piece );
+        super( new Location(row, col), piece );
         visited_ = false;
         southWall_ = southWall;
         eastWall_ = eastWall;
@@ -124,12 +124,12 @@ public final class BlockadeBoardPosition extends BoardPosition
     @Override
     public BoardPosition copy()
     {
-        BlockadeBoardPosition pos =
-            new BlockadeBoardPosition( row_, col_, (piece_ == null) ? null:piece_.copy(),
+        return
+            new BlockadeBoardPosition( location_.getRow(), location_.getCol(),
+                                      (piece_ == null) ? null:piece_.copy(),
                                       (southWall_ != null) ? southWall_.copy():null,
                                       (eastWall_ != null) ? eastWall_.copy() :null,
                                       isPlayer1Home_, isPlayer2Home_);
-        return pos;
     }
 
 

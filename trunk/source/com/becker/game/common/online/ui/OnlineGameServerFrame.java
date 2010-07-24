@@ -1,8 +1,8 @@
 package com.becker.game.common.online.ui;
 
 import com.becker.game.common.online.*;
-import com.becker.game.common.*;
 import com.becker.common.*;
+import com.becker.game.common.plugin.PluginManager;
 
 import javax.swing.*;
 import java.awt.*;
