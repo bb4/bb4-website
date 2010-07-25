@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.chess.ui;
 
+import com.becker.game.common.ui.ViewerMouseListener;
 import com.becker.game.twoplayer.checkers.ui.CheckersBoardViewer;
 import com.becker.game.twoplayer.chess.*;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
@@ -7,8 +8,6 @@ import com.becker.game.common.*;
 import com.becker.game.common.ui.GameBoardRenderer;
 
 import javax.swing.*;
-import java.awt.event.MouseMotionListener;
-import java.util.List;
 
 
 /**
@@ -16,19 +15,17 @@ import java.util.List;
  *  Current state of the Chess Game. The ChessController contains a ChessBoard
  *  which describes this state.
  *  Since the chess board is very much like the checkers board viewer, we derive from that
- *  @see com.becker.game.twoplayer.checkers.ui.CheckersBoardViewer
+ *  @see CheckersBoardViewer
  *
  *  @author Barry Becker
  */
-public class ChessBoardViewer extends CheckersBoardViewer implements MouseMotionListener
+public class ChessBoardViewer extends CheckersBoardViewer
 {
-
     /**
      * Construct the viewer
      */
     public ChessBoardViewer()
     {}
-
 
 
     @Override
@@ -38,27 +35,13 @@ public class ChessBoardViewer extends CheckersBoardViewer implements MouseMotion
     }
 
     @Override
-protected GameBoardRenderer getBoardRenderer() {
+    protected ViewerMouseListener createViewerMouseListener() {
+        return new ChessViewerMouseListener(this);
+    }
+
+    @Override
+    protected GameBoardRenderer getBoardRenderer() {
         return ChessBoardRenderer.getRenderer();
-    }
-
-
-    @Override
-    protected boolean customCheckFails(BoardPosition position, BoardPosition destp)
-    {
-       // intentionally do nothing.
-       return false;
-    }
-
-    @Override
-    protected List getPossibleMoveList(BoardPosition position)
-    {
-        ChessPiece piece = (ChessPiece)position.getPiece();
-        List possibleMoveList =
-            piece.findPossibleMoves(getBoard(), position.getRow(), position.getCol(),
-                                    getBoard().getLastMove());
-        ((ChessController)controller_).removeSelfCheckingMoves(possibleMoveList);
-        return possibleMoveList;
     }
 
     /**

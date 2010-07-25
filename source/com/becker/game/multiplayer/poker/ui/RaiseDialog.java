@@ -107,7 +107,7 @@ public final class RaiseDialog extends OptionsDialog
         JPanel buttonsPanel = new JPanel( new FlowLayout() );
 
         okButton_ = new GradientButton();
-        initBottomButton( okButton_, GameContext.getLabel("OK"), GameContext.getLabel("RAISE_TIP") );
+        initBottomButton( okButton_, GameContext.getLabel("OK"), GameContext.getLabel("RAISE_BUTTON_TIP") );
         initBottomButton( cancelButton_, GameContext.getLabel("CANCEL"), GameContext.getLabel("CANCEL") );
 
         buttonsPanel.add( okButton_ );

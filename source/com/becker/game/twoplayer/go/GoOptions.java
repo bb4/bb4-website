@@ -30,7 +30,7 @@ public class GoOptions extends TwoPlayerOptions {
     public GoOptions() {}
 
     public GoOptions(SearchOptions searchOptions,
-                                 String preferredTone, float komi) {
+                     String preferredTone, float komi) {
         super(searchOptions, preferredTone);
         setKomi(komi);
     }

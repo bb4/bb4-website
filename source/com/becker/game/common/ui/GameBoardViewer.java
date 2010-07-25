@@ -28,14 +28,14 @@ import java.util.List;
  *  @author Barry Becker
  */
 public abstract class GameBoardViewer extends JPanel
-                                      implements GameViewable, MouseListener, GameChangedListener
-{
-
+                                      implements GameViewable,GameChangedListener {
     /** every GameBoardViewer must contain a controller. */
     protected GameController controller_ = null;
 
     /** for restoring undone moves. */
     protected final LinkedList<Move> undoneMoves_ = new LinkedList<Move>();
+
+    protected ViewerMouseListener mouseListener_;
 
     /** for dispatching events */
     private final EventQueue evtq_;
@@ -53,8 +53,7 @@ public abstract class GameBoardViewer extends JPanel
     /**
      * Construct the viewer.
      */
-    public GameBoardViewer()
-    {
+    public GameBoardViewer() {
         controller_ = createController();
         controller_.setViewer(this);
         // = createController();  used to do this, but I want only one controller, while I may have several viewers.
@@ -66,9 +65,15 @@ public abstract class GameBoardViewer extends JPanel
         ToolTipManager.sharedInstance().setDismissDelay( 100000 );
         origCursor_ = this.getCursor();
 
-        addMouseListener( this );
+        mouseListener_ = createViewerMouseListener();
+        addMouseListener( mouseListener_ );
+        addMouseMotionListener(mouseListener_);
         // add a listener so that we realize when the computer (or human) has finished making his move
         addGameChangedListener(this);
+    }
+
+    protected ViewerMouseListener createViewerMouseListener() {
+        return new ViewerMouseListener(this);
     }
 
     /**
@@ -195,10 +200,14 @@ public abstract class GameBoardViewer extends JPanel
      */
     public void setViewOnly( boolean viewOnly )
     {
-        if ( viewOnly )
-            removeMouseListener( this );
-        else
-            addMouseListener( this );
+        if ( viewOnly ) {
+            removeMouseListener( mouseListener_ );
+            removeMouseMotionListener( mouseListener_ );
+        }
+        else {
+            addMouseListener( mouseListener_ );
+            addMouseMotionListener(mouseListener_);
+        }
     }
 
     /**
@@ -242,7 +251,7 @@ public abstract class GameBoardViewer extends JPanel
      * display a dialog at the end of the game showing who won and other relevant
      * game specific information.
      */
-    protected void showWinnerDialog()
+    public void showWinnerDialog()
     {
         String message = getGameOverMessage();
         JOptionPane.showMessageDialog( this, message, GameContext.getLabel("GAME_OVER"),
@@ -320,19 +329,11 @@ public abstract class GameBoardViewer extends JPanel
                 gcl.gameChanged((GameChangedEvent) evt);
             }
         }
-        else
-            super.processEvent( evt );  // defer to the super's handling
+        else  {
+            // defer to the super's handling
+            super.processEvent( evt );
+        }
     }
-
-    // ---  these methods implement the MouseListener interface   ---
-    // make the human move and show it on the screen,
-    // then depending on the options, the computer may move.
-    // do nothing be default for all these. Subclasses must override some of them.
-    public void mouseClicked( MouseEvent e ) {}
-    public void mousePressed( MouseEvent e ) {}
-    public void mouseReleased( MouseEvent e ) {}
-    public void mouseEntered( MouseEvent e ) {}
-    public void mouseExited( MouseEvent e ) {}
 
     /**
      * This renders the current state of the Board to the screen.
@@ -371,7 +372,8 @@ public abstract class GameBoardViewer extends JPanel
      */
     public void dispose()
     {
-        removeMouseListener( this );
+        removeMouseListener( mouseListener_ );
+        removeMouseMotionListener( mouseListener_);
         removeGameChangedListener( this );
     }
 }

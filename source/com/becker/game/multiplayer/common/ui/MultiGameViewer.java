@@ -50,7 +50,7 @@ public abstract class MultiGameViewer extends GameBoardViewer
       * game specific information.
       */
     @Override
-    protected void showWinnerDialog()
+    public void showWinnerDialog()
     {
         String message = getGameOverMessage();
         JOptionPane.showMessageDialog( this, message, GameContext.getLabel("GAME_OVER"),

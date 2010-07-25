@@ -22,7 +22,9 @@ import javax.swing.*;
 public class PokerGameViewer extends MultiGameViewer
 {
 
-    //Construct the application
+    /**
+     * Construct the application
+     */
     public PokerGameViewer()
     {}
 
@@ -46,7 +48,7 @@ public class PokerGameViewer extends MultiGameViewer
         StringBuffer buf = new StringBuffer("Game Over\n");
 
         // find the player with the most money. That's the winner.
-        java.util.List<? extends Player> players = controller_.getPlayers();
+        List<? extends Player> players = controller_.getPlayers();
         int max = -1;
         PokerPlayer winner = null;
         for (final Player p : players) {
@@ -57,7 +59,7 @@ public class PokerGameViewer extends MultiGameViewer
             }
         }
 
-        buf.append(winner.getName() + " won the game with $"+ winner.getCash() +'.');
+        buf.append(winner.getName()).append(" won the game with $").append(winner.getCash()).append('.');
         return buf.toString();
     }
 

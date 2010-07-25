@@ -45,7 +45,8 @@ public final class MessageContext
      * @param applicationResourcePath  application specific messages
      */
     public void setApplicationResourcePath(String applicationResourcePath)    {
-         applicationResourcePath_ = applicationResourcePath;
+        applicationResourcePath_ = applicationResourcePath;
+        applicationMessages_ = null;
     }
 
     public void setDebugMode(int debugMode) {

@@ -321,7 +321,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
       * @param m the current move
       * @return false if the game is at an end, otherwise return true
       */
-     protected final boolean continuePlay( TwoPlayerMove m )
+     public final boolean continuePlay( TwoPlayerMove m )
      {
          boolean done = false;
          TwoPlayerController contoller = get2PlayerController();

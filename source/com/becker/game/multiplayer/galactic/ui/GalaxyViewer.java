@@ -43,15 +43,12 @@ public class GalaxyViewer extends MultiGameViewer
       * game specific information.
       */
     @Override
-     protected void showWinnerDialog()
-     {
-         //String message = getGameOverMessage();
-         GalacticTallyDialog tallyDialog = new GalacticTallyDialog(parent_, (GalacticController)controller_);
-         tallyDialog.showDialog();
-
-         //JOptionPane.showMessageDialog( this, message, GameContext.getLabel("GAME_OVER"),
-         //          JOptionPane.INFORMATION_MESSAGE );
-     }
+    public void showWinnerDialog()
+    {
+        //String message = getGameOverMessage();
+        GalacticTallyDialog tallyDialog = new GalacticTallyDialog(parent_, (GalacticController)controller_);
+        tallyDialog.showDialog();
+    }
 
 
     /**

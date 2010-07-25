@@ -29,11 +29,8 @@ public class GameMenu extends AbstractGameMenu implements ActionListener  {
 
         frame_ = frame;
 
-        Iterator pluginIt = PluginManager.getInstance().getPlugins().iterator();
-
-        while (pluginIt.hasNext()) {
-            GamePlugin p = (GamePlugin) pluginIt.next();
-            String gameNameLabel = (p.getLabel());
+        for (GamePlugin gamePlugin : PluginManager.getInstance().getPlugins()) {
+            String gameNameLabel = (gamePlugin.getLabel());
             add(createMenuItem(gameNameLabel));
         }
 

@@ -22,8 +22,10 @@ public class CheckersController extends TwoPlayerController
     protected static final int NUM_ROWS = 8;
     protected static final int NUM_COLS = 8;
 
-    // normally this would be an argument to generateMoves, but worth is not called directly
-    // and I want to avoid adding it to the aqrlists for 3 functions
+    /**
+     * normally this would be an argument to generateMoves, but worth is not called directly
+     * and I want to avoid adding it to the argument lists for 3 functions
+     */
     protected boolean player1sPerspective_ = true;
 
     /**
@@ -83,6 +85,7 @@ public class CheckersController extends TwoPlayerController
      *
      * @param m the move to check
      * @param recordWin if true then the controller state will record wins
+     * @return true if the game is over.
      */
     public boolean done( TwoPlayerMove m, boolean recordWin )
     {
@@ -174,6 +177,7 @@ public class CheckersController extends TwoPlayerController
      * Check to see if this jump requires additional jumps
      * If it does, we create a new move, because there could potentially be 2 jumps possible
      * from the last position.
+     * @return number of additional jump moves added.
      */
     private int checkJumpMove( BoardPosition current,
                                CheckersMove m, int rowInc, int colInc,
@@ -229,6 +233,7 @@ public class CheckersController extends TwoPlayerController
      * When jumping we remove the piece and add it to the captureList so they
      * won't be taken twice in the same move. At the end we return the captured
      * pieces to the board so the state is not change.
+     * @return list of jump moves.
      */
     private List<CheckersMove> findJumpMoves( BoardPosition current,
                                       int rowInc, CheckersMove m,
@@ -281,7 +286,6 @@ public class CheckersController extends TwoPlayerController
         CheckersMove m;
         BoardPosition next = board_.getPosition( pos.getRow() + rowInc, pos.getCol() + colInc );
         if ( next!=null && next.isUnoccupied() ) {
-            assert ( pos!=null): "pos is null" ;
             int val = 0;
             if ( lastMove != null ) {
                 // then not the first move of the game
@@ -401,7 +405,7 @@ public class CheckersController extends TwoPlayerController
             int j, row,col;
             player1sPerspective_ = player1sPerspective;
 
-            boolean player1 = (lastMove != null)?  !(lastMove.isPlayer1()) : true;
+            boolean player1 = (lastMove == null) || !(lastMove.isPlayer1());
 
             // scan through the board positions. For each each piece of the current player's,
             // add all the moves that it can make.
@@ -422,9 +426,6 @@ public class CheckersController extends TwoPlayerController
          * @@ quiescent search not yet implemented for checkers
          * Probably we should return all moves that capture opponent pieces.
          *
-         * @param lastMove
-         * @param weights
-         * @param player1sPerspective
          * @return list of urgent moves
          */
         public List<? extends TwoPlayerMove> generateUrgentMoves(

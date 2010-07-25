@@ -8,6 +8,7 @@ import com.becker.game.multiplayer.trivial.*;
 import com.becker.game.multiplayer.trivial.player.*;
 
 import javax.swing.*;
+import java.util.List;
 
 /**
  *  Takes a TrivialController as input and displays the
@@ -18,7 +19,6 @@ import javax.swing.*;
  */
 public class TrivialGameViewer extends MultiGameViewer
 {
-
     /**
      *  Construct the application
      */
@@ -46,7 +46,7 @@ public class TrivialGameViewer extends MultiGameViewer
         StringBuffer buf = new StringBuffer("Game Over\n");
 
         // find the player with the most money. That's the winner.
-        java.util.List<? extends Player> players = controller_.getPlayers();
+        List<? extends Player> players = controller_.getPlayers();
         int max = -1;
         TrivialPlayer winner = null;
         for (final Player p : players) {
@@ -57,7 +57,7 @@ public class TrivialGameViewer extends MultiGameViewer
             }
         }
 
-        buf.append(winner.getName() + " won the game with a value of "+ winner.getValue() +'.');
+        buf.append(winner.getName()).append(" won the game with a value of ").append(winner.getValue()).append('.');
         return buf.toString();
     }
 
