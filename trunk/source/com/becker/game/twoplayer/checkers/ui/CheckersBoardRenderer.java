@@ -8,7 +8,6 @@ import com.becker.game.twoplayer.checkers.CheckersMove;
 import com.becker.game.twoplayer.common.ui.TwoPlayerBoardRenderer;
 
 import java.awt.*;
-import java.util.Iterator;
 
 /**
  * Singleton class that takes a game board and renders it for the GameBoardViewer.
@@ -22,7 +21,7 @@ public class CheckersBoardRenderer extends TwoPlayerBoardRenderer
     private  static GameBoardRenderer renderer_;
 
     // colors of the squares on the chess board.
-    // make them transparend so the background color shows through.
+    // make them transparent so the background color shows through.
     protected static final Color BLACK_SQUARE_COLOR = new Color(2, 2, 2, 80);
     protected static final Color RED_SQUARE_COLOR = new Color(250, 0, 0, 80);
 
@@ -70,7 +69,7 @@ public class CheckersBoardRenderer extends TwoPlayerBoardRenderer
 
 
     /**
-     *  animate the last move so the player does not lose orientation.
+     * animate the last move so the player does not lose orientation.
      * @@ probably does not work.
      */
     @Override
@@ -106,7 +105,6 @@ public class CheckersBoardRenderer extends TwoPlayerBoardRenderer
     @Override
     protected void drawGrid(Graphics2D g2, int startPos, int rightEdgePos, int bottomEdgePos, int start,
                             int nrows1, int ncols1, int gridOffset) {}
-
 
 }
 

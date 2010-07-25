@@ -554,7 +554,7 @@ public abstract class TwoPlayerController extends GameController
      * @param player1sPerspective if true than bestMoves are from player1s perspective
      * @return the best moves in order of how good they are.
      */
-    protected final List<? extends TwoPlayerMove> getBestMoves(boolean player1, List<? extends TwoPlayerMove> moveList,
+    protected List<? extends TwoPlayerMove> getBestMoves(boolean player1, List<? extends TwoPlayerMove> moveList,
                                                                boolean player1sPerspective )
     {
         Collections.sort( moveList );

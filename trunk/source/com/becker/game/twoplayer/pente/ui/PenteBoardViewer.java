@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.pente.ui;
 import com.becker.common.*;
 import com.becker.game.common.*;
 import com.becker.game.common.ui.GameBoardRenderer;
+import com.becker.game.common.ui.ViewerMouseListener;
 import com.becker.game.twoplayer.common.*;
 import com.becker.game.twoplayer.common.ui.*;
 import com.becker.game.twoplayer.pente.*;
@@ -19,9 +20,7 @@ import java.awt.event.*;
 public class PenteBoardViewer extends AbstractTwoPlayerBoardViewer
 {
 
-    public PenteBoardViewer()
-    {
-    }
+    public PenteBoardViewer() {}
 
     @Override
     protected GameController createController()
@@ -34,27 +33,8 @@ public class PenteBoardViewer extends AbstractTwoPlayerBoardViewer
         return PenteBoardRenderer.getRenderer();
     }
 
-
-    @Override
-    public void mousePressed( MouseEvent e )
-    {
-        if (get2PlayerController().isProcessing() || get2PlayerController().isDone())   {
-            return;
-        }
-        Location loc = getBoardRenderer().createLocation(e);
-
-        PenteBoard board = (PenteBoard) controller_.getBoard();
-
-        // if there is already a piece where the user clicked or its
-        // out of bounds, then return without doing anything
-        BoardPosition p = board.getPosition( loc);
-        if ( (p == null) || !p.isUnoccupied() )
-            return;
-
-        TwoPlayerMove m =
-            TwoPlayerMove.createMove( loc.getRow(), loc.getCol(), 0,
-                                      new GamePiece(get2PlayerController().isPlayer1sTurn()));
-
-        continuePlay( m );
+    protected ViewerMouseListener createViewerMouseListener() {
+        return new PenteViewerMouseListener(this);
     }
+
 }

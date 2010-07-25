@@ -1,10 +1,10 @@
 package com.becker.game.twoplayer.checkers.ui;
 
-import com.becker.game.common.*;
-import com.becker.game.twoplayer.common.ui.*;
+import com.becker.game.common.GameViewable;
+import com.becker.game.twoplayer.common.ui.TwoPlayerNewGameDialog;
 
 import javax.swing.*;
-import java.awt.event.*;
+import java.awt.event.ActionListener;
 
 /**
  *  Any special options that are needed for Checkers

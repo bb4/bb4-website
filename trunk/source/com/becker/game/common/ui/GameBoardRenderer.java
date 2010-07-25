@@ -1,8 +1,11 @@
 package com.becker.game.common.ui;
 
-import com.becker.game.common.*;
-import com.becker.ui.GUIUtil;
 import com.becker.common.Location;
+import com.becker.game.common.Board;
+import com.becker.game.common.BoardPosition;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.GameControllerInterface;
+import com.becker.ui.GUIUtil;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -14,10 +17,7 @@ import java.awt.event.MouseEvent;
  *
  * @author Barry Becker
  */
-public abstract class GameBoardRenderer
-{
-
-    protected static final Font BASE_FONT = new Font( "Sans-serif", Font.PLAIN, 11 );
+public abstract class GameBoardRenderer {
 
     /** the size of a game board cell where the pieces go */
     protected int cellSize_;
@@ -57,9 +57,7 @@ public abstract class GameBoardRenderer
      * private constructor because this class is a singleton.
      * Use getPieceRenderer instead.
      */
-    protected GameBoardRenderer()
-    {
-    }
+    protected GameBoardRenderer()  {}
 
 
     public GamePieceRenderer getPieceRenderer() {
@@ -80,21 +78,18 @@ public abstract class GameBoardRenderer
     /**
      * @param c  the new color of the board.
      */
-    public void setBackground( Color c )
-    {
+    public void setBackground( Color c ) {
         backgroundColor_ = c;
     }
 
     /**
      * @return c  the board color
      */
-    public Color getBackground()
-    {
+    public Color getBackground() {
         return backgroundColor_;
     }
 
-    public void setDraggedPiece(BoardPosition position)
-    {
+    public void setDraggedPiece(BoardPosition position)  {
         draggedPiece_ = position;
         if (position != null)  {
             draggedShowPiece_ = position.copy();
@@ -123,8 +118,7 @@ public abstract class GameBoardRenderer
      * @param e  the row  coordinate.
      * @return new location based on mouse position.
      */
-    public Location createLocation( MouseEvent e)
-    {
+    public Location createLocation( MouseEvent e) {
         int size = Math.max(1, getCellSize());
         int row = (e.getY()- getMargin())/ size + 1;
         int col = (e.getX()- getMargin())/ size + 1;
@@ -135,31 +129,27 @@ public abstract class GameBoardRenderer
     /**
      * @return  default cell size (override for specific games).
      */
-    protected int getPreferredCellSize()
-    {
+    protected int getPreferredCellSize()  {
         return PREFERRED_CELL_SIZE;
     }
 
     /**
      * @return the space to the left and at the top of the board.
      */
-    protected int getMargin()
-    {
+    protected int getMargin() {
         return BOARD_MARGIN;
     }
     /**
      * @return whether or not to draw the pieces on cell centers or vertices (like go or pente, but not like checkers).
      */
-    protected boolean offsetGrid()
-    {
+    protected boolean offsetGrid() {
         return false;
     }
 
     /**
      * @param c  the new color of the board's grid.
      */
-    public void setGridColor( Color c )
-    {
+    public void setGridColor( Color c ) {
         gridColor_ = c;
         GameContext.log(1, "setting gridColor to " + c);
     }
@@ -167,16 +157,14 @@ public abstract class GameBoardRenderer
     /**
      * @return c  the new color of the board's grid.
      */
-    public Color getGridColor()
-    {
+    public Color getGridColor() {
         return gridColor_;
     }
 
     /**
      * @return  the size of a board position cell (must be square).
      */
-    protected final int getCellSize()
-    {
+    protected final int getCellSize() {
         return cellSize_;
     }
 
@@ -185,8 +173,7 @@ public abstract class GameBoardRenderer
      * Clear the background so old pieces are erased.
      */
     protected void drawBackground( Graphics g, Board b, int startPos, int rightEdgePos, int bottomEdgePos,
-                                   int panelWidth, int panelHeight)
-    {
+                                   int panelWidth, int panelHeight) {
         g.setColor( backgroundColor_ );
         g.fillRect( 0, 0, panelWidth, panelHeight);
     }
@@ -197,8 +184,7 @@ public abstract class GameBoardRenderer
      * The viewer window may be resized causing the cell size to change dynamically
      * @return the current cell size given the board and panel dimensions.
      */
-    protected int calcCellSize( Board board, int panelWidth, int panelHeight )
-    {
+    protected int calcCellSize( Board board, int panelWidth, int panelHeight )  {
         int size;
         int nrows = board.getNumRows();
         int ncols = board.getNumCols();

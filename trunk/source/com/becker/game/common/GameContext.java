@@ -160,9 +160,9 @@ public final class GameContext
         String resourcePath = plugin.getMsgBundleBase();
         log(2, "searching for "+ resourcePath);
 
-        messageContext_.setApplicationResourcePath(resourcePath);
         messageContext_.setLogger(logger_);
         messageContext_.setDebugMode(debug_);
+        messageContext_.setApplicationResourcePath(resourcePath);
     }
 
     /**

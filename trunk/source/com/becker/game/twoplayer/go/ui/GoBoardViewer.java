@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.go.ui;
 
+import com.becker.game.common.ui.ViewerMouseListener;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.GoEye;
 import com.becker.game.twoplayer.go.board.elements.GoStone;
@@ -24,39 +25,30 @@ import java.awt.event.MouseMotionListener;
  *
  *  @author Barry Becker
  */
-final class GoBoardViewer extends AbstractTwoPlayerBoardViewer
-                          implements MouseMotionListener
-{
+final class GoBoardViewer extends AbstractTwoPlayerBoardViewer {
 
     private static final String STONES_CAPTURED = GameContext.getLabel("CAPTURES_EQUALS");
     private static final String TERRITORY = GameContext.getLabel("TERRITORY_EQUALS");
     private static final String SCORE = GameContext.getLabel("SCORE_EQUALS");
 
-    /** Still remember the dragged show piece when the players mouse goes off the board. */
-    private BoardPosition savedShowPiece_;
 
     /**
      * Construct the viewer given the controller.
      */
-    GoBoardViewer()
-    {
-        addMouseMotionListener( this );
-    }
+    GoBoardViewer() {}
 
+
+    @Override
+    protected ViewerMouseListener createViewerMouseListener() {
+        return new GoViewerMouseListener(this);
+    }
     /**
      * start over with a new game using the current options.
      */
     @Override
-    public void startNewGame()
-    {
+    public void startNewGame()  {
         super.startNewGame();
         getBoardRenderer().setDraggedShowPiece(null);
-
-        if (!controller_.allPlayersComputer()) {
-            getBoardRenderer().setDraggedShowPiece(
-                    new GoBoardPosition(0, 0, null, new GoStone(get2PlayerController().isPlayer1sTurn())));
-            savedShowPiece_ = getBoardRenderer().getDraggedShowPiece();
-        }
     }
 
     @Override
@@ -74,8 +66,7 @@ final class GoBoardViewer extends AbstractTwoPlayerBoardViewer
     /**
      * perform a pass for the current player.
      */
-    public void pass()
-    {
+    public void pass() {
         GameContext.log( 1, "passing" );
         GoMove m = GoMove.createPassMove( 0, get2PlayerController().isPlayer1sTurn() );
         continuePlay( m );
@@ -83,96 +74,11 @@ final class GoBoardViewer extends AbstractTwoPlayerBoardViewer
 
 
     /**
-     *  mouseClicked requires both the mouse down and mouse up event to occur at the same location.
-     *  classes derived from TwoPlayerBoardViewer must call mousePressed first.
-     */
-    @Override
-    public void mousePressed( MouseEvent e )
-    {
-        // all derived classes must check this to disable user clicks while the computer is thinking
-        if (get2PlayerController().isProcessing()) {
-            return;
-        }
-        Location loc = getBoardRenderer().createLocation(e);
-        GoBoard board = (GoBoard) controller_.getBoard();
-        GoController controller = (GoController) controller_;
-
-        boolean player1sTurn = controller.isPlayer1sTurn();
-        GameContext.log( 3, "GoBoardViewer: mousePressed: player1sTurn()=" + player1sTurn);
-
-        GoMove m = GoMove.createGoMove( loc.getRow(), loc.getCol(), 0, new GoStone(player1sTurn));
-
-        // if there is already a piece where the user clicked, or its
-        // out of bounds, or its a suicide move, then return without doing anything
-        GoBoardPosition stone = (GoBoardPosition) board.getPosition( loc );
-        if ( stone == null ) {
-            return;      // user clicked out of bounds
-        }
-
-        if ( stone.isOccupied() ) {
-            JOptionPane.showMessageDialog( null, GameContext.getLabel("CANT_PLAY_ON_STONE") );
-            GameContext.log( 0, "GoBoardViewer: There is already a stone there: " + stone );
-            return;
-        }
-        if ( GoController.isTakeBack( m.getToRow(), m.getToCol(), (GoMove) getBoard().getLastMove(), board ) ) {
-            JOptionPane.showMessageDialog( null, GameContext.getLabel("NO_TAKEBACKS"));
-            return;
-        }
-        assert(!stone.isVisited());
-
-        if (m.isSuicidal(board)) {
-            JOptionPane.showMessageDialog( null, GameContext.getLabel("SUICIDAL") );
-            GameContext.log( 1, "GoBoardViewer: That move is suicidal (and hence illegal): " + stone );
-            return;
-        }
-
-        if ( !continuePlay( m ) ) {   // then game over
-            getBoardRenderer().setDraggedShowPiece(null);
-            showWinnerDialog();
-        } else if (controller_.allPlayersHuman()) {
-            // create a stone to show for the next players move
-            getBoardRenderer().setDraggedShowPiece(
-                    new GoBoardPosition(loc.getRow(), loc.getCol(), null, new GoStone(!player1sTurn)));
-        }
-    }
-
-     /**
-     * if we are in wallPlacingMode, then we show the wall being dragged around.
-     * When the player clicks the wall is irrevocably placed.
-     */
-    public void mouseMoved( MouseEvent e )
-    {
-        if (get2PlayerController().isProcessing()) {
-            return;
-        }
-        Location loc = getBoardRenderer().createLocation(e);
-
-        if ( getBoardRenderer().getDraggedShowPiece() != null ) {
-            getBoardRenderer().getDraggedShowPiece().setLocation( loc );
-        }
-        repaint();
-    }
-
-    public void mouseDragged(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseEntered( MouseEvent e ) {
-        getBoardRenderer().setDraggedShowPiece(savedShowPiece_);
-    }
-
-    @Override
-    public void mouseExited( MouseEvent e ) {
-        getBoardRenderer().setDraggedShowPiece(null);
-        //repaint();
-    }
-
-    /**
      * display a dialog at the end of the game showing who won and other relevant
      * game specific information.
      */
     @Override
-    protected void showWinnerDialog()
+    public void showWinnerDialog()
     {
          super.showWinnerDialog();
          controller_.clearGameOver();

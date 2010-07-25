@@ -1,20 +1,26 @@
 package com.becker.game.twoplayer.go;
 
-import com.becker.game.twoplayer.go.board.*;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.Move;
+import com.becker.game.twoplayer.common.TwoPlayerController;
+import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.twoplayer.common.TwoPlayerOptions;
+import com.becker.game.twoplayer.common.search.Searchable;
+import com.becker.game.twoplayer.go.board.DeadStones;
+import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.PositionalScore;
 import com.becker.game.twoplayer.go.board.analysis.PositionalScoreAnalyzer;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.GoStone;
-import com.becker.optimization.parameter.ParameterArray;
-import com.becker.game.common.*;
-import com.becker.game.twoplayer.common.*;
-import com.becker.game.twoplayer.common.search.*;
-import com.becker.game.twoplayer.go.board.analysis.CandidateMoveAnalyzer;
 import com.becker.game.twoplayer.go.persistence.GoGameExporter;
 import com.becker.game.twoplayer.go.persistence.GoGameImporter;
+import com.becker.optimization.parameter.ParameterArray;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
 
-import static com.becker.game.twoplayer.go.GoControllerConstants.*;
+import static com.becker.game.twoplayer.go.GoControllerConstants.DEFAULT_NUM_ROWS;
+import static com.becker.game.twoplayer.go.GoControllerConstants.WIN_THRESHOLD;
 
 /**
  * Defines everything the computer needs to know to play Go.
@@ -44,9 +50,7 @@ public final class GoController extends TwoPlayerController
 
     /**
      * Construct the Go game controller given dimensions and number of handicap stones.
-     * @param nrows
-     * @param ncols
-     * @param numHandicapStones
+     * @param numHandicapStones  0 - 9 handicap stones to show initially.
      */
     public GoController( int nrows, int ncols, int numHandicapStones )
     {
@@ -82,8 +86,7 @@ public final class GoController extends TwoPlayerController
      * specify the number of handicap stones.
      * @param handicap number of handicap stones to place on the board at star points.
      */
-    public void setHandicap( int handicap )
-    {
+    public void setHandicap( int handicap ) {
         ((GoBoard) board_).setHandicap( handicap );
         player1sTurn_ = false;
     }
@@ -92,8 +95,7 @@ public final class GoController extends TwoPlayerController
      * @return true if the computer is to make the first move.
      */
     @Override
-    public boolean doesComputerMoveFirst()
-    {
+    public boolean doesComputerMoveFirst() {
         int handicap = ((GoBoard) board_).getHandicap();
         return ((!getPlayer1().isHuman() && (handicap == 0)) ||
                 (getPlayer1().isHuman() && (handicap > 0)));
@@ -105,8 +107,7 @@ public final class GoController extends TwoPlayerController
      * @return some measure of how overwhelming the win was. May need to negate based on which player one.
      */
     @Override
-    public int getStrengthOfWin()
-    {
+    public int getStrengthOfWin() {
         return (int)Math.abs(getFinalScore(true) - getFinalScore(false));
     }
 
@@ -115,13 +116,11 @@ public final class GoController extends TwoPlayerController
      * @param player1sStones if true, get the captures for player1, else for player2.
      * @return num captures
      */
-    public int getNumCaptures( boolean player1sStones )
-    {
+    public int getNumCaptures( boolean player1sStones )  {
         return ((GoBoard) getBoard()).getNumCaptures(player1sStones);
     }
 
-    public int getNumDeadStonesOnBoard(boolean forPlayer1)  
-    {
+    public int getNumDeadStonesOnBoard(boolean forPlayer1)  {
         return deadStones_.getNumberOnBoard(forPlayer1);
     }
 
@@ -137,8 +136,7 @@ public final class GoController extends TwoPlayerController
      * @param forPlayer1 if true, get the captures for player1, else for player2
      * @return estimate of the amount of territory the player has
      */
-    public int getTerritoryEstimate( boolean forPlayer1 )
-    {
+    public int getTerritoryEstimate( boolean forPlayer1 ) {
         Move m = board_.getLastMove();
         if ( m == null )
             return 0;
@@ -151,8 +149,7 @@ public final class GoController extends TwoPlayerController
      * @param forPlayer1  true if player one (black)
      * @return the actual score (each empty space counts as one)
      */
-    public int getTerritory( boolean forPlayer1 )
-    {
+    public int getTerritory( boolean forPlayer1 ) {
         return((GoBoard) board_).getTerritoryEstimate(forPlayer1, true);
     }
 
@@ -160,8 +157,7 @@ public final class GoController extends TwoPlayerController
      * *return the game board back to its initial opening state
      */
     @Override
-    public void reset()
-    {
+    public void reset() {
         super.reset();
         positionalScorer_ = new PositionalScoreAnalyzer((GoBoard)board_);
         if ( ((GoBoard) board_).getHandicap() > 0 )
@@ -170,8 +166,7 @@ public final class GoController extends TwoPlayerController
         deadStones_.clear();
     }
 
-    public void computerMovesFirst()
-    {
+    public void computerMovesFirst()  {
         List moveList = getSearchable().generateMoves( null, weights_.getPlayer1Weights(), true );
         // select the best(first since sorted) move to use
         GoMove m = (GoMove) moveList.get( 0 );
@@ -186,8 +181,7 @@ public final class GoController extends TwoPlayerController
      * @param ae the exception that occurred causing us to want to save state
      */
     @Override
-    public void saveToFile( String fileName, AssertionError ae )
-    {
+    public void saveToFile( String fileName, AssertionError ae ) {
         GoGameExporter exporter = new GoGameExporter(this);
         exporter.saveToFile(fileName, ae);
     }
@@ -198,6 +192,29 @@ public final class GoController extends TwoPlayerController
         importer.restoreFromFile(fileName);
     }
 
+
+    /**
+     *  Statically evaluate the board position.
+     *
+     *  @return statically evaluated value of the board.
+     *   a positive value means that player1 has the advantage.
+     *   A big negative value means a good move for p2.
+     */
+    @Override
+    protected int worth( Move lastMove, ParameterArray weights ) {
+        double worth = calculateWorth(lastMove, weights);
+
+        GameContext.log(3,"GoController.worth: worth="+worth);
+        if ( worth < -WIN_THRESHOLD ) {
+            // then the margin is too great
+            return -WINNING_VALUE;
+        }
+        else if ( worth > WIN_THRESHOLD ) {
+            // then the margin is too great
+            return WINNING_VALUE;
+        }
+        return (int)worth;
+    }
 
     /**
      *  Statically evaluate the board position.
@@ -214,29 +231,17 @@ public final class GoController extends TwoPlayerController
      *  of 0. A white stone might have a positive score if its part of a white group
      *  which is considered mostly dead.
      *
-     *  Here are some ideas for things to influence the evaluation:
-     *   - give 10 points for every stone on the board and every stone captured
-     *   - give bonus for star points and other special points
-     *   - give credit for stone influence in its neighborhood
-     *   - weight stones by how alive they are
-     *
      *  @return statically evaluated value of the board.
      *   a positive value means that player1 has the advantage.
      *   A big negative value means a good move for p2.
      */
-    @Override
-    protected int worth( Move lastMove, ParameterArray weights )
-    {
+    private double calculateWorth(Move lastMove, ParameterArray weights) {
         int row, col;
         double worth;
         GoBoard board = (GoBoard)board_;
         // adjust for board size - so worth will be comparable regardless of board size.
         double scaleFactor = 361.0 / Math.pow(board.getNumRows(), 2);
-        double captureWt = weights.get(GoWeights.CAPTURE_WEIGHT_INDEX).getValue();
-        double captureScore = captureWt * (getNumCaptures( false ) - getNumCaptures( true ));
-        float n = 2.0f * board.getNumRows();
-        // opening = 1.99 - 1.5;   middle = 1.5 - 1.01;    end = 1.0
-        double gameStageBoost = 0.5 + 2.0 * Math.max((n - (float)getNumMoves())/n, 0.0);
+        double gameStageBoost = getGameStageBoost();
 
         PositionalScore totalScore = new PositionalScore();
         for ( row = 1; row <= board.getNumRows(); row++ ) {
@@ -245,47 +250,33 @@ public final class GoController extends TwoPlayerController
                 totalScore = positionalScorer_.updateScoreForPosition(row, col, gameStageBoost, totalScore, weights);
             }
         }
+
         double territoryDelta = board.getTerritoryDelta();
+        double captureScore = getCaptureScore(weights);
         worth = scaleFactor * (totalScore.getPositionScore() + captureScore + territoryDelta);
 
         if (GameContext.getDebugMode() > 0)  {
             String desc = totalScore.getDescription(worth, captureScore, territoryDelta, scaleFactor);
             ((TwoPlayerMove) lastMove).setScoreDescription(desc);
         }
-
-        GameContext.log(3,"GoController.worth: worth="+worth);
-        if ( worth < -WIN_THRESHOLD ) {
-            // then the margin is too great
-            return -WINNING_VALUE;
-        }
-        else if ( worth > WIN_THRESHOLD ) {
-            // then the margin is too great
-            return WINNING_VALUE;
-        }
-        return (int)worth;
+        return worth;
     }
 
     /**
-     * It is a takeback move if the proposed move position (row,col) would immdiately replace the last captured piece
-     *  and capture the stone that did the capturing.
-     * @return true of this is an immediate take-back (not allowed in go - see "rule of ko")
+     * Opening = 1.99 - 1.5;   middle = 1.5 - 1.01;    end = 1.0
+     * @return a weight for the positional score based on how far along into the game we are.
      */
-    public static boolean isTakeBack( int row, int col, GoMove lastMove, GoBoard board )
-    {
-        if ( lastMove == null ) return false;
+    private double getGameStageBoost() {
+        float n = 2.0f * board_.getNumRows();
+        return 0.5 + 2.0 * Math.max((n - (float)getNumMoves())/n, 0.0);
+    }
 
-        CaptureList captures = lastMove.getCaptures();
-        if ( captures != null && captures.size() == 1 ) {
-            GoBoardPosition capture = (GoBoardPosition) captures.getFirst();
-            if ( capture.getRow() == row && capture.getCol() == col ) {
-                GoBoardPosition lastStone = (GoBoardPosition) board.getPosition( lastMove.getToRow(), lastMove.getToCol() );
-                if ( lastStone.getNumLiberties( board ) == 1 && lastStone.getString().getMembers().size() == 1 ) {
-                    GameContext.log( 2, "it is a takeback " );
-                    return true;
-                }
-            }
-        }
-        return false;
+    /**
+     * @return score attributed to captured stones.
+     */
+    private double getCaptureScore(ParameterArray weights) {
+        double captureWt = weights.get(GoWeights.CAPTURE_WEIGHT_INDEX).getValue();
+        return captureWt * (getNumCaptures( false ) - getNumCaptures( true ));
     }
 
     /**
@@ -295,8 +286,8 @@ public final class GoController extends TwoPlayerController
     public void clearGameOver() {
         super.clearGameOver();
 
-         for ( int row = 1; row <= board_.getNumRows(); row++ ) {    //rows
-            for ( int col = 1; col <= board_.getNumCols(); col++ ) {  //cols
+         for ( int row = 1; row <= board_.getNumRows(); row++ ) {
+            for ( int col = 1; col <= board_.getNumCols(); col++ ) {
                 GoBoardPosition space = (GoBoardPosition)board_.getPosition( row, col );
                 if (space.isOccupied())  {
                     GoStone stone = (GoStone)space.getPiece();
@@ -363,12 +354,18 @@ public final class GoController extends TwoPlayerController
         }
     }
 
+    /** Overridden to it can be accessed from MoveGenerator. */
+    @Override
+    protected List<GoMove> getBestMoves(boolean player1, List<? extends TwoPlayerMove> moveList,
+                                                               boolean player1sPerspective )  {
+       return (List<GoMove>) super.getBestMoves(player1, moveList, player1sPerspective);      
+    }
+
 
     @Override
     public Searchable createSearchable() {
          return new GoSearchable();
     }
-
 
 
     protected class GoSearchable extends TwoPlayerSearchable {
@@ -468,56 +465,11 @@ public final class GoController extends TwoPlayerController
         /**
          * generate all possible next moves
          */
-        public final List<? extends TwoPlayerMove> generateMoves(TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
+        public final List<? extends TwoPlayerMove> generateMoves(TwoPlayerMove lastMove, ParameterArray weights,
+                                                                 boolean player1sPerspective )
         {
-            GoBoard board = (GoBoard) board_;
-            GoProfiler prof = getProfiler();
-            List<GoMove> moveList = new LinkedList<GoMove>();
-            int nCols = board.getNumCols();
-            int nRows = board.getNumRows();
-            assert (nRows == nCols) : " rows and cols must be the same in go";
-
-            CandidateMoveAnalyzer candidateMoves = new CandidateMoveAnalyzer(board);
-
-            boolean player1 = (lastMove == null) || !lastMove.isPlayer1();
-
-            for (int i = 1; i <= nCols; i++ )
-                for (int j = 1; j <= nRows; j++ )
-                    // if its a candidate move and not an immediate take-back (which would break the rule of ko)
-                    if ( candidateMoves.isCandidateMove( j, i ) && !isTakeBack( j, i, (GoMove) lastMove, board ) ) {
-                        GoMove m = GoMove.createGoMove( j, i, lastMove.getValue(), new GoStone(player1) );
-
-                        if ( m.isSuicidal(board) ) {
-                            GameContext.log( 2, "The move was a suicide (can't add it to the list): " + m );
-                        }
-                        else {
-                            prof.stopGenerateMoves();
-                            board.makeMove( m );
-                            prof.startGenerateMoves();
-                            // this value is not likely to change much except local to last move,
-                            // anyway we could cache that?
-                            prof.startCalcWorth();
-                            m.setValue(worth( m, weights, player1sPerspective ));
-                            prof.stopCalcWorth();
-                            // now revert the board
-                            prof.stopGenerateMoves();
-                            board.undoMove();
-                            prof.startGenerateMoves();
-                            moveList.add( m );
-                        }
-                    }
-
-            moveList = (List<GoMove>) getBestMoves(player1, moveList, player1sPerspective);
-
-            // if we are well into the game, include a passing move.
-            // if none of the generated moves have an inherited value better than the passing move
-            // (which just uses the value of the current move) then we should pass
-            if (getNumMoves() > nCols+nRows)  {
-                moveList.add(moveList.size(), GoMove.createPassMove(lastMove.getValue(), player1));
-            }
-            prof.stopGenerateMoves();
-
-            return moveList;
+            MoveGenerator generator = new MoveGenerator(GoController.this);
+            return generator.generateMoves(lastMove, weights, player1sPerspective);
         }
     }
 
