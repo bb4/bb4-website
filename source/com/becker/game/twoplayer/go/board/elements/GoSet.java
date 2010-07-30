@@ -68,7 +68,6 @@ public abstract class GoSet implements GoMember
     }
 
     /**
-     * @@ need synchronized?
      * @return a deep copy of this GoSet
      * @throws CloneNotSupportedException
      */

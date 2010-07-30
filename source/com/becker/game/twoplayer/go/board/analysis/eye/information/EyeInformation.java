@@ -22,17 +22,6 @@ public interface EyeInformation
     boolean hasLifeProperty();
 
     /**
-     * @return The number of different ways this eye pattern can occur (independent of symmetries)
-     */
-    byte getNumPatterns();
-
-    /**
-     * @return score contribution for eye.   About 1 for single eye, 2 for 2 real eyes.
-     * May need to be adjusted by eye status.
-     */
-    float getEyeValue();
-
-    /**
      * A list of vital points described by indices.
      * @return list of vital points where a point is described by an index created by adding the number of
      * neighbors to (those neighvor's neighbors)/100. so for example, 2.03 means the space has 2 nobi neighbors

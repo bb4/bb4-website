@@ -11,7 +11,7 @@ import java.util.*;
  */
 public class GoGroupSet implements Set<GoGroup>
 {
-    private Set<GoGroup> groups;
+    private final Set<GoGroup> groups;
 
     /**
      * Default constructor creates unsynchronized version.

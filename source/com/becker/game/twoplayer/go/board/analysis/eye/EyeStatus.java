@@ -1,9 +1,12 @@
 package com.becker.game.twoplayer.go.board.analysis.eye;
 
+import com.becker.game.twoplayer.go.board.elements.GoEye;
+import static  com.becker.game.twoplayer.go.board.analysis.eye.EyeShapeScores.*;
+
 /**
  * Enum for the different possible center Eye Status'.
  * See http://www.ai.univ-paris8.fr/~cazenave/eyeLabelling.pdf
- * @see com.becker.game.twoplayer.go.board.elements.GoEye
+ * @see GoEye
  *
  * @author Barry Becker
  */
@@ -14,7 +17,7 @@ public enum EyeStatus
      * live. A nakade eye can be the result of: (1) an eye with an empty set of vital
      * points or (2) an eye with all the set of vital points filled by the opponent’s stones.
      */
-    NAKADE("Nakade", "Ends up as one eye and this will not be sufficient to live."),
+    NAKADE("Nakade", "Ends up as one eye and this will not be sufficient to live.", SINGLE_EYE),
 
     /**
      * The eye can end up as a nakade eye or an
@@ -22,16 +25,16 @@ public enum EyeStatus
      * eye is the result of an eye with one and only one empty
      * intersection in the set of vital points.
      */
-    UNSETTLED("Unsettled", "Ends up either nakade or alive depending on who moves first."),
+    UNSETTLED("Unsettled", "Ends up either nakade or alive depending on who moves first.", BIG_EYE),
 
     /**
      * The string owning the eye is alive no matter who plays first and no matter what the surrounding conditions are.
      * An alive eye can be the result of: (1) an eye with two or more empty intersections in the set of vital points
      * or (2) the eye is a shape that cannot be filled by the opponent with an n-1 nakade shape.
-	 * We will make no distinction between being alive or being alive in seki, because in many cases
+ 	 * We will make no distinction between being alive or being alive in seki, because in many cases
      * being alive in seki is nearly as good.
      */
-    ALIVE("Alive", "Unconditionally alive no matter who plays first."),
+    ALIVE("Alive", "Unconditionally alive no matter who plays first.", GUARANTEED_TWO_EYES),
 
     /**
      * This is a particular case in which the surrounding conditions
@@ -42,25 +45,26 @@ public enum EyeStatus
      * necessary to capture the stones inside the eye.
      */
     ALIVE_IN_ATARI("Alive in atari", "There are only one or zero empty intersections adjacent to the surrounding" +
-            " block, and capturing the opponent stones inside the eye grants an alive status."),
+            " block, and capturing the opponent stones inside the eye grants an alive status.", FALSE_EYE),
 
     /**
      * For exmaple if may be a false eye with only one space in the eye - in other words a ko.
      */
-    KO("Ko", "Will never be an eye no matter who plays first."),
+    KO("Ko", "Will never be an eye no matter who plays first.", FALSE_EYE),
 
     /**
-     * This can aries when there is a ko on the edge or corner.
+     * This can arise when there is a ko on the edge or corner.
      */
-    UNSETTLED_KO("Unsettled ko", "Unsettled ko status can only happen on the edge or in the corner."),
+    UNSETTLED_KO("Unsettled ko", "Unsettled ko status can only happen on the edge or in the corner.", FALSE_EYE),
     
     /**
      * Other possibilities: Unknown, dead, false
      */
-    UNCLASSIFIED("Unclassified", "The status has not been determined yet");
+    UNCLASSIFIED("Unclassified", "The status has not been determined yet", SINGLE_EYE);
 
     private String label_;
     private String description_;
+    private float score_;
 
     
 
@@ -70,9 +74,10 @@ public enum EyeStatus
      * @param label simple label
      * @param description long description of the eye status.
      */
-    EyeStatus(String label, String description) {
+    EyeStatus(String label, String description, float score) {
         label_ = label;
         description_ = description;
+        score_ = score;
     }
 
 
@@ -83,6 +88,10 @@ public enum EyeStatus
 
     public String getDescription() {
         return description_;
+    }
+
+    public float getScore() {
+        return score_;
     }
 
 }
