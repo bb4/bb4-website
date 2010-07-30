@@ -153,10 +153,8 @@ public class GoBoardRenderer extends TwoPlayerBoardRenderer
 
         // draw the group borders
         if ( GameContext.getDebugMode() > 0 ) {
-            synchronized(board.getGroups()) {
-                for (GoGroup group : board.getGroups()) {
-                    GoGroupRenderer.drawGroupDecoration(group, COLORMAP, (float) cellSize_, getMargin(), board, g2 );
-                }
+            for (GoGroup group : board.getGroups()) {
+                GoGroupRenderer.drawGroupDecoration(group, COLORMAP, (float) cellSize_, getMargin(), board, g2 );
             }
         }
 

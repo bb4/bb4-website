@@ -70,19 +70,13 @@ public abstract class AbstractEyeSubtypeInformation extends AbstractEyeInformati
         return life;
     }
 
-    /**
-     * @return The number of different ways this eye pattern can occur (independent of symmetries)
-     */
-    public byte getNumPatterns() {
-        return numPatterns;
-    }
 
     /**
      * @return score contribution for eye.   About 1 for single eye, 2 for 2 real eyes.
-     */
+     *
     public float getEyeValue() {
         return eyeValue;
-    }
+    } */
 
     @Override
     public float[] getVitalPoints() {
@@ -105,14 +99,17 @@ public abstract class AbstractEyeSubtypeInformation extends AbstractEyeInformati
     }
 
     /**
+     * If all the vital points have been filled, then we have nakade status (one big eye).
+     * If all but one vital point has been filled, then we are unsettles - could be on eor two eyes.
+     * If 2 or more vitals are still open, then we assume that this will become 2 eyes.
      * @return status of shape with numVitals vital points.
      */
     protected  EyeStatus handleVitalPointCases(EyeNeighborMap nbrMap, GoEye eye, final int numVitals)   {
         GoBoardPositionList vitalFilledSpaces = findSpecialFilledSpaces(nbrMap, getVitalPoints(), eye);
         int numFilledVitals = vitalFilledSpaces.size();
         assert numFilledVitals <= numVitals :
-                "The number of filled vitals ("+ numFilledVitals +") " +
-                "was greater than the total number of vitals ("+numVitals + ") vitals="
+                "The number of filled vitals (" + numFilledVitals + ") " +
+                "was greater than the total number of vitals ("+ numVitals + ") vitals="
                 + Arrays.toString(getVitalPoints()) + " eye="+ eye;
         
         if (numFilledVitals == numVitals) {
@@ -192,7 +189,7 @@ public abstract class AbstractEyeSubtypeInformation extends AbstractEyeInformati
         int result = (life ? 1 : 0);
         result = 31 * result + (int) size;
         result = 31 * result + (int) numPatterns;
-        result = (31 * result) + (eyeValue != +0.0f ? Float.floatToIntBits(eyeValue) : 0);
+        result = (31 * result) + (eyeValue == 0.0f ? 0 : Float.floatToIntBits(eyeValue));
         result = 31 * result + (vitalPoints != null ? Arrays.hashCode(vitalPoints) : 0);
         result = 31 * result + (endPoints != null ? Arrays.hashCode(endPoints) : 0);
         result = 31 * result + getTypeName().hashCode();

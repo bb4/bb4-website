@@ -32,7 +32,6 @@ public abstract class AbstractEyeInformation implements EyeInformation
          return eye.getNumEdgePoints() >= 3;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

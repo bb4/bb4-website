@@ -18,6 +18,6 @@ public final class GoControllerConstants {
     static final int DEFAULT_NUM_ROWS = 5;
 
     /** if difference greater than this, then consider a win. */
-    static final int WIN_THRESHOLD = 1000;
+    static final int WIN_THRESHOLD = 2000;
 
 }

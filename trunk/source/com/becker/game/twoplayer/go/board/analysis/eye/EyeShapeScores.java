@@ -20,6 +20,7 @@ public final class EyeShapeScores
     /** Can be made one eye if opponent plays twice. */
     public static final float PROBABLE_TWO_EYES = 1.6f;
 
+
     /** We are guaranteed to have 2 eyes. */
     public static final float GUARANTEED_TWO_EYES = 2.0f;
 

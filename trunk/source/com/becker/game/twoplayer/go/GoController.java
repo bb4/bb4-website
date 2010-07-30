@@ -206,11 +206,11 @@ public final class GoController extends TwoPlayerController
 
         GameContext.log(3,"GoController.worth: worth="+worth);
         if ( worth < -WIN_THRESHOLD ) {
-            // then the margin is too great
+            // then the margin is too great the losing player should resign
             return -WINNING_VALUE;
         }
         else if ( worth > WIN_THRESHOLD ) {
-            // then the margin is too great
+            // then the margin is too great the losing player should resign
             return WINNING_VALUE;
         }
         return (int)worth;
@@ -375,7 +375,7 @@ public final class GoController extends TwoPlayerController
         /**
          * given a move determine whether the game is over.
          * If recordWin is true then the variables for player1/2HasWon can get set.
-         *  sometimes, like when we are looking ahead we do not want to set these.
+         * Sometimes, like when we are looking ahead, we do not want to set these.
          *
          * @param m the move to check
          * @param recordWin if true then the controller state will record wins
@@ -412,9 +412,9 @@ public final class GoController extends TwoPlayerController
 
             if (gameOver && recordWin) {
                 //we should not call this twice
-                //assert(numDeadBlackStonesOnBoard_==0 && numDeadWhiteStonesOnBoard_==0):" should not update life and death twice.";
-                GameContext.log(0, " Error: should not update life and death twice.");
-
+                if (getNumDeadStonesOnBoard(true)  > 0 || getNumDeadStonesOnBoard(false) > 0) {
+                    GameContext.log(0, " Error: should not update life and death twice.");
+                }
                 // now that we are finally at the end of the game,
                 // update the life and death of all the stones still on the board
                 GameContext.log(1,  "about to update life and death." );

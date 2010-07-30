@@ -69,9 +69,9 @@ public final class PositionalScoreAnalyzer
         int row, col, rowmin, colmin;
         positionalScore_ = new float[numRows + 1][numCols + 1];
 
-        for ( row = 1; row <= numRows; row++ ) {    //rows
+        for ( row = 1; row <= numRows; row++ ) {
             rowmin = Math.min( row, numRows - row + 1 );
-            for ( col = 1; col <= numCols; col++ ) {  //cols
+            for ( col = 1; col <= numCols; col++ ) {
                 colmin = Math.min( col, numCols - col + 1 );
                 positionalScore_[row][col] = 0.0f; // default neutral value
 
