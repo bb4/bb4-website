@@ -7,8 +7,11 @@ package com.becker.game.twoplayer.blockade;
 
 import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GameContext;
+import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.twoplayer.common.search.Searchable;
+import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
 import com.becker.optimization.parameter.ParameterArray;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -30,9 +33,9 @@ public class MoveGenerator {
         weights_ = weights;
     }
 
-    public List<BlockadeMove> generateMoves(TwoPlayerMove lastMove) {
+    public MoveList generateMoves(TwoPlayerMove lastMove) {
 
-        List<BlockadeMove> moveList = new LinkedList<BlockadeMove>();
+        MoveList moveList = new MoveList();
         boolean player1 = (lastMove != null)?  !lastMove.isPlayer1() : true;
 
 
@@ -70,7 +73,7 @@ public class MoveGenerator {
       * @param weights to use.
       * @return the number of moves added.
       */
-     private int addMoves( BoardPosition p, List<BlockadeMove> moveList, List<Path> opponentPaths,
+     private int addMoves( BoardPosition p, MoveList moveList, List<Path> opponentPaths,
                                           ParameterArray weights )
      {
          int numMovesAdded = 0;
@@ -121,13 +124,14 @@ public class MoveGenerator {
      * @return all move variations on firstStep based on different wall placements.
      */
     private List<BlockadeMove> findWallPlacementsForMove(BlockadeMove firstStep,
-                                                                                                  List<Path> paths, List<Path> opponentPaths,
-                                                                                                  ParameterArray weights)
+                                                         List<Path> paths, List<Path> opponentPaths,
+                                                         ParameterArray weights)
     {
         List<BlockadeMove> moves = new LinkedList<BlockadeMove>();
         BlockadeMove ourmove = firstStep;
 
-        // is it true that the set of walls we could add for any constant set of opponent paths is always the same regardless of firstStep?
+        // is it true that the set of walls we could add for any constant set
+        // of opponent paths is always the same regardless of firstStep?
         // I think its only true as long as firstStep is not touching any of those opponent paths
         GameContext.log(2, firstStep+"\nopaths="+opponentPaths+"\n [[");
 
@@ -193,7 +197,7 @@ public class MoveGenerator {
         board_.undoMove();
 
         if (pathLengths.isValid()) {
-            m.setValue(pathLengths.determineWorth(TwoPlayerController.WINNING_VALUE, weights));
+            m.setValue(pathLengths.determineWorth(SearchStrategy.WINNING_VALUE, weights));
             moves.add(m);
         }
         else {

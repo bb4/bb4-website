@@ -1,6 +1,8 @@
 package com.becker.game.twoplayer.common.search;
 
 import com.becker.game.common.GameContext;
+import com.becker.game.common.Move;
+import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
@@ -251,7 +253,7 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
 
 
     protected void checkMoveListAgainstExpected(String title, TwoPlayerMove[] expectedMoves,
-                                              List<? extends TwoPlayerMove> moves) {
+                                                MoveList moves) {
         if (expectedMoves.length != moves.size()) {
             printMoves( title, moves);
         }
@@ -261,7 +263,7 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
 
         StringBuilder diffs = new StringBuilder("");
         for (int i=0; i<moves.size(); i++) {
-            TwoPlayerMove move = moves.get(i);
+            TwoPlayerMove move = (TwoPlayerMove) moves.get(i);
             TwoPlayerMove expMove = expectedMoves[i];
             if (!move.equals(expMove)) {
                 diffs.append(i);
@@ -283,10 +285,10 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
        return getController().getComputerWeights().getPlayer1Weights(); 
     }
 
-    protected void printMoves(String name, List<? extends TwoPlayerMove> moves) {
+    protected void printMoves(String name, MoveList moves) {
         System.out.println("generated moves for "+ name + " were:" );
-        for (TwoPlayerMove m : moves) {
-             System.out.println(m.getConstructorString());
+        for (Move m : moves) {
+             System.out.println(((TwoPlayerMove)m).getConstructorString());
         }
     }
 }

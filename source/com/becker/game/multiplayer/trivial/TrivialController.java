@@ -55,15 +55,14 @@ public class TrivialController extends MultiGameController
         // After that, they can change manually to get different players.
         if (players_ == null) {
             // create the default players. One human and one robot.
-            players_ = new ArrayList<TrivialPlayer>(2);
-             List<TrivialPlayer> pplayers = (List<TrivialPlayer>)players_;
+            players_ = new PlayerList();
 
-            pplayers.add(TrivialPlayer.createTrivialPlayer("Player 1",
-                                  MultiGamePlayer.getNewPlayerColor(pplayers), true));
+            players_.add(TrivialPlayer.createTrivialPlayer("Player 1",
+                                  MultiGamePlayer.getNewPlayerColor(players_), true));
 
-            pplayers.add(TrivialPlayer.createTrivialPlayer("Player 2",
-                                  TrivialPlayer.getNewPlayerColor(pplayers), false));
-            players_.get(1).setName(pplayers.get(1).getName()+'('+((TrivialRobotPlayer)players_.get(1)).getType()+')');
+            players_.add(TrivialPlayer.createTrivialPlayer("Player 2",
+                                  TrivialPlayer.getNewPlayerColor(players_), false));
+            players_.get(1).setName(players_.get(1).getName()+'('+((TrivialRobotPlayer)players_.get(1)).getType()+')');
         }
 
         currentPlayerIndex_ = 0;
@@ -105,14 +104,14 @@ public class TrivialController extends MultiGameController
      */
     @Override
     public MultiGamePlayer determineWinner() {
-        List<TrivialPlayer> players = (List<TrivialPlayer>)getPlayers();
+        PlayerList players = getPlayers();
         TrivialPlayer winner = null;
-        int first=0;
-        int maxValue = -1;    
 
-        for (int i = 0; i < players.size(); i++) {
-            TrivialPlayer p = players.get(i);
-            if (p.getValue()  > maxValue) {
+        int maxValue = -1;
+
+        for (Player player : players) {
+            TrivialPlayer p = (TrivialPlayer)player;
+            if (p.getValue() > maxValue) {
                 maxValue = p.getValue();
                 winner = p;
             }

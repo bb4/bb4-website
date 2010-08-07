@@ -33,7 +33,7 @@ public abstract class GameImporter {
     {
         parseSGFGameInfo(game);
 
-        List<Move> moveSequence = new LinkedList<Move>();
+        MoveList moveSequence = new MoveList();
         extractMoveList( game.getTree(), moveSequence );
         GameContext.log( 1, "move sequence= " + moveSequence );
         controller_.reset();
@@ -79,7 +79,7 @@ public abstract class GameImporter {
      * @param moveList - The place to store the moves for the game's main
      * variation.
      */
-    private void extractMoveList( SGFTree tree, List<Move> moveList )
+    private void extractMoveList( SGFTree tree, MoveList moveList )
     {
         Enumeration trees = tree.getTrees();
         Enumeration leaves = tree.getLeaves();
@@ -110,7 +110,7 @@ public abstract class GameImporter {
      * @param moveList to add the processed token to
      * @return true if the token is an instance of PlacementToken.
      */
-    protected boolean processToken(SGFToken token, List<Move> moveList) {
+    protected boolean processToken(SGFToken token, MoveList moveList) {
 
         boolean found = false;
         if (token instanceof PlacementToken ) {

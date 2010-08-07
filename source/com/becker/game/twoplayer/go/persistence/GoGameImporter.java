@@ -77,7 +77,7 @@ public class GoGameImporter extends TwoPlayerGameImporter {
 
 
     @Override
-    protected boolean processToken(SGFToken token, List<Move> moveList) {
+    protected boolean processToken(SGFToken token, MoveList moveList) {
 
         boolean found = false;
         if (token instanceof MoveToken ) {
@@ -115,7 +115,7 @@ public class GoGameImporter extends TwoPlayerGameImporter {
      * Such as placing handicaps when reading from an sgf file.
      * @param token
      */
-    private static void addMoves(PlacementListToken token, List<Move> moveList) {
+    private static void addMoves(PlacementListToken token, MoveList moveList) {
         Iterator<Point> points = token.getPoints();
         // System.out.println("num points ="+token.getPoints2().size());
         boolean player1 = token instanceof AddBlackToken;

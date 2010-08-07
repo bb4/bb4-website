@@ -84,7 +84,7 @@ public class GoViewerMouseListener extends ViewerMouseListener {
             GameContext.log( 0, "GoBoardViewer: There is already a stone there: " + stone );
             return;
         }
-        if ( MoveGenerator.isTakeBack( m.getToRow(), m.getToCol(), (GoMove) board.getLastMove(), board ) ) {
+        if ( MoveGenerator.isTakeBack( m.getToRow(), m.getToCol(), (GoMove) controller.getLastMove(), board ) ) {
             JOptionPane.showMessageDialog( null, GameContext.getLabel("NO_TAKEBACKS"));
             return;
         }

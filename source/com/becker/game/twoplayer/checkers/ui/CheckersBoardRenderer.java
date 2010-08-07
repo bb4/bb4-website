@@ -76,7 +76,7 @@ public class CheckersBoardRenderer extends TwoPlayerBoardRenderer
     protected void drawLastMoveMarker(Graphics2D g2, GameControllerInterface controller)
     {
         Board board = controller.getBoard();
-        CheckersMove m = (CheckersMove)board.getLastMove();
+        CheckersMove m = (CheckersMove)board.getMoveList().getLastMove();
         // if we have captures, then we want to show each one
         if (m!=null && m.captureList != null) {
             controller.undoLastMove();

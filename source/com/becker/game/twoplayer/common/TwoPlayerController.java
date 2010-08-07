@@ -19,7 +19,6 @@ import com.becker.optimization.Optimizee;
 import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WINNING_VALUE;
 
 import java.util.Collections;
-import java.util.List;
 
 /**
  * This is an abstract base class for a Game Controller.
@@ -132,7 +131,7 @@ public abstract class TwoPlayerController extends GameController {
     public void restoreFromFile( String fileName ) {
         TwoPlayerGameImporter importer = new TwoPlayerGameImporter(this);
         importer.restoreFromFile(fileName);
-        TwoPlayerMove m = (TwoPlayerMove)getLastMove();
+        TwoPlayerMove m = (TwoPlayerMove)(getLastMove());
         if (m != null)
             m.setValue( worth( m, weights_.getDefaultWeights()));
     }
@@ -182,16 +181,6 @@ public abstract class TwoPlayerController extends GameController {
         return players_.get(1);
     }
     
-    /**
-     *
-     * @param moveList list of moves
-     * @return a randome move from the list of genereated moves.
-     */
-    protected TwoPlayerMove getRandomMove(List moveList) {
-       
-        int r = (int) (RANDOM.nextFloat() * moveList.size());
-        return (TwoPlayerMove) moveList.get( r );
-    }
 
     /**
      * Returns a number between 0 and 1 representing the estimated probability of player 1 winning the game.
@@ -200,7 +189,7 @@ public abstract class TwoPlayerController extends GameController {
      */
     public final double getChanceOfPlayer1Winning() {
         // if true then too early in the game to tell.
-        TwoPlayerMove lastMove = (TwoPlayerMove) board_.getLastMove();
+        TwoPlayerMove lastMove = (TwoPlayerMove) getLastMove();
         if (board_.getMoveList().size() < 4 )
             return 0.5f;
 
@@ -485,7 +474,8 @@ public abstract class TwoPlayerController extends GameController {
      * {@inheritDoc}}
      */
     public boolean isDone() {
-        return getSearchable().done((TwoPlayerMove)board_.getLastMove(), false);
+        TwoPlayerMove lastMove = (TwoPlayerMove)getLastMove();
+        return getSearchable().done(lastMove, false);
     }
 
     /**
@@ -524,8 +514,8 @@ public abstract class TwoPlayerController extends GameController {
      * @param player1sPerspective if true than bestMoves are from player1s perspective
      * @return the best moves in order of how good they are.
      */
-    protected List<? extends TwoPlayerMove> getBestMoves(boolean player1, List<? extends TwoPlayerMove> moveList,
-                                                         boolean player1sPerspective ) {
+    protected MoveList getBestMoves(boolean player1, MoveList moveList, boolean player1sPerspective ) {
+
         Collections.sort( moveList );
 
         // reverse the order so the best move (using static board evaluation) is first
@@ -539,7 +529,7 @@ public abstract class TwoPlayerController extends GameController {
         // A move which has a low score this time might actually lead to the best move later.
         int numMoves = moveList.size();
 
-        List<? extends TwoPlayerMove> bestMoveList = moveList;
+        MoveList bestMoveList = moveList;
         int best = (int) ((float) searchOptions.getPercentageBestMoves() / HUNDRED * numMoves) + 1;
         if ( best < numMoves && numMoves > searchOptions.getMinBestMoves())  {
             bestMoveList = moveList.subList(0, best);
@@ -678,7 +668,7 @@ public abstract class TwoPlayerController extends GameController {
         public final void makeInternalMove( TwoPlayerMove m )
         {
             TwoPlayerBoard b = (TwoPlayerBoard) board_;
-            TwoPlayerMove lastMove = (TwoPlayerMove)b.getLastMove();
+            TwoPlayerMove lastMove = (TwoPlayerMove)getLastMove();
             if (getNumMoves() > 0)
                 assert(lastMove.isPlayer1() != m.isPlayer1()):
                         "can't go twice in a row m="+m+" getLastMove()="+ lastMove + " movelist = " + getMoveList();

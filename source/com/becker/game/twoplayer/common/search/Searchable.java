@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.common.search;
 
+import com.becker.game.common.MoveList;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.game.twoplayer.common.*;
 
@@ -51,10 +52,7 @@ public interface Searchable
      * @param player1sPerspective if true assign worth values according to p1.
      * @return list of possible next moves.
      */
-    List<? extends TwoPlayerMove> generateMoves(
-                                    TwoPlayerMove lastMove,
-                                    ParameterArray weights,
-                                    boolean player1sPerspective );
+    MoveList generateMoves(TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective );
 
     /**
      * generate those moves that are critically urgent
@@ -66,9 +64,7 @@ public interface Searchable
      * @param player1sPerspective if true, then the values are generated from player one's perpective.
      * @return a list of moves that the current player needs to urgently play or face imminent defeat.
      */
-    List<? extends TwoPlayerMove> generateUrgentMoves(
-                                     TwoPlayerMove lastMove, ParameterArray weights,
-                                     boolean player1sPerspective );
+    MoveList generateUrgentMoves(TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective );
 
     /**
      * returns true if the specified move caused one or more opponent pieces to become jeopardized

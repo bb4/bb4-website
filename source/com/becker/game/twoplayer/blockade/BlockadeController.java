@@ -8,6 +8,7 @@ import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.optimization.parameter.ParameterArray;
+import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WINNING_VALUE;
 
 import java.util.*;
 
@@ -58,9 +59,9 @@ public class BlockadeController extends TwoPlayerController
      */
     public void computerMovesFirst() {
         // determine the possible moves and choose one at random.
-        List moveList = getSearchable().generateMoves( null, weights_.getPlayer1Weights(), true );
+        MoveList moveList = getSearchable().generateMoves( null, weights_.getPlayer1Weights(), true );
 
-        makeMove( getRandomMove(moveList) );
+        makeMove( moveList.getRandomMove() );
     }
 
     /**
@@ -74,7 +75,7 @@ public class BlockadeController extends TwoPlayerController
         if (!getPlayer1().hasWon() && !getPlayer2().hasWon()) {
              return 0;
         }
-        return worth(board_.getLastMove(), weights_.getDefaultWeights());
+        return worth(getLastMove(), weights_.getDefaultWeights());
     }
 
 
@@ -172,16 +173,16 @@ public class BlockadeController extends TwoPlayerController
          * wall placements. So restrict wall placements to those that hinder the enemy while not hindering you.
          * lastMove may be null if there was no last move.
          */
-        public List<? extends TwoPlayerMove> generateMoves( TwoPlayerMove lastMove, ParameterArray weights,
-                                                                                                  boolean player1sPerspective )
+        public MoveList generateMoves( TwoPlayerMove lastMove, ParameterArray weights,
+                                        boolean player1sPerspective )
         {
             getProfiler().startGenerateMoves();
 
             MoveGenerator generator = new MoveGenerator(weights, (BlockadeBoard)board_);
-            List<BlockadeMove> moveList  = generator.generateMoves(lastMove);
+            MoveList moveList  = generator.generateMoves(lastMove);
 
             boolean player1 = (lastMove == null) || !lastMove.isPlayer1();
-            List<? extends TwoPlayerMove> bestMoves = 
+            MoveList bestMoves =
                     getBestMoves( player1, moveList, player1sPerspective );
 
             getProfiler().stopGenerateMoves();
@@ -220,17 +221,9 @@ public class BlockadeController extends TwoPlayerController
          *
          * @return list of urgent moves
          */
-        public List<BlockadeMove> generateUrgentMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
+        public MoveList generateUrgentMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
         {
-            return new LinkedList<BlockadeMove>();
-        }
-
-        /**
-         * returns true if the specified move caused one or more opponent pieces to become jeopardized
-         */
-        public boolean inJeopardy( TwoPlayerMove m )
-        {
-            return false;
+            return new MoveList();
         }
     }
 }

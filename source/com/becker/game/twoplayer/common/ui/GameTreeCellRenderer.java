@@ -1,8 +1,8 @@
 package com.becker.game.twoplayer.common.ui;
 
 import com.becker.common.ColorMap;
-import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 
 import javax.swing.*;
@@ -43,11 +43,11 @@ public class GameTreeCellRenderer extends DefaultTreeCellRenderer
     private static ColorMap createColormap(TwoPlayerPieceRenderer renderer) {
         // we will use this colormap for both the text tree and the graphical
         // tree viewers so they have consistent coloring.
-        final double[] values = {-TwoPlayerController.WINNING_VALUE,
-                                 -TwoPlayerController.WINNING_VALUE/20.0,
+        final double[] values = {-SearchStrategy.WINNING_VALUE,
+                                 -SearchStrategy.WINNING_VALUE/20.0,
                                  0.0,
-                                 TwoPlayerController.WINNING_VALUE/20.0,
-                                 TwoPlayerController.WINNING_VALUE};
+                                 SearchStrategy.WINNING_VALUE/20.0,
+                                 SearchStrategy.WINNING_VALUE};
         final Color[] colors = {renderer.getPlayer2Color().darker(),
                                 renderer.getPlayer2Color(),
                                 new Color( 160, 160, 160),

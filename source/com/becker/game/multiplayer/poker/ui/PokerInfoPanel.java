@@ -207,7 +207,7 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
         //Player currentPlayer = controller_.getCurrentPlayer();
         setPlayerLabel();
         //Galaxy g = (Galaxy)controller_.getBoard();
-        Move lastMove =  controller_.getBoard().getLastMove();
+        Move lastMove =  controller_.getLastMove();
         if (lastMove != null)  {
             moveNumLabel_.setText( (controller_.getNumMoves() + 2) + " " );
         }

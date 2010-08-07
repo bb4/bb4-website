@@ -441,7 +441,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
             return;
         Move firstMove = (Move) moveSequence.get( 0 );
         // the first time we click on a row in the tree, the controller has no moves.
-        Move lastMove = getBoard().getLastMove();
+        Move lastMove = getController().getLastMove();
         if ( lastMove == null ) {
             reset();
         }
@@ -454,7 +454,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
                 while ( ct < numMovesToBackup ) {
                     getController().undoLastMove();
                     // I suppose this is possible
-                    if (getBoard().getLastMove() == null) {
+                    if (getController().getLastMove() == null) {
                         throw new IllegalArgumentException("Reached the end after backing up "
                                 + ct + " out of " + numMovesToBackup + " steps." +
                                 "\n moveSequence=" + moveSequence);

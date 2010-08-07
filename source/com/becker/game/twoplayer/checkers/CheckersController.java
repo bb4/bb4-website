@@ -6,6 +6,7 @@ import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.optimization.parameter.ParameterArray;
+import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WINNING_VALUE;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -56,10 +57,10 @@ public class CheckersController extends TwoPlayerController
      */
     public void computerMovesFirst() {
         // determine the possible moves and choose one at random.
-        List moveList = getSearchable().generateMoves( null, weights_.getPlayer1Weights(), true );
+        MoveList moveList = getSearchable().generateMoves( null, weights_.getPlayer1Weights(), true );
 
         assert (!moveList.isEmpty());
-        makeMove( getRandomMove(moveList) );
+        makeMove( moveList.getRandomMove() );
 
         player1sTurn_ = false;
     }
@@ -74,7 +75,7 @@ public class CheckersController extends TwoPlayerController
     {
         if (!getPlayer1().hasWon() && !getPlayer2().hasWon())
              return 0;
-        return worth(board_.getLastMove(), weights_.getDefaultWeights());
+        return worth(getLastMove(), weights_.getDefaultWeights());
     }
 
 
@@ -280,7 +281,7 @@ public class CheckersController extends TwoPlayerController
      * @param moveList add the potential moves to this existing list
      * @return the number of moves added
      */
-    private int addMovesForDirection( BoardPosition pos, List<CheckersMove> moveList,
+    private int addMovesForDirection( BoardPosition pos, MoveList moveList,
                                       int rowInc, int colInc, TwoPlayerMove lastMove, ParameterArray weights )
     {
         CheckersMove m;
@@ -328,7 +329,7 @@ public class CheckersController extends TwoPlayerController
      * @param weights to use.
      * @return the number of moves added.
      */
-    public int addMoves( BoardPosition p, List<CheckersMove> moveList, TwoPlayerMove lastMove, ParameterArray weights )
+    public int addMoves( BoardPosition p, MoveList moveList, TwoPlayerMove lastMove, ParameterArray weights )
     {
         int direction = -1;
         if ( p.getPiece().isOwnedByPlayer1() )
@@ -343,48 +344,56 @@ public class CheckersController extends TwoPlayerController
         // if its a KING we need to check the other direction too
         CheckersPiece piece = (CheckersPiece) p.getPiece();
         if ( piece.isKing() ) {
-            int numKingMoves = 0;
-            numKingMoves += addMovesForDirection( p, moveList, -direction, -1, lastMove, weights );
-            numKingMoves += addMovesForDirection( p, moveList, -direction, 1, lastMove, weights );
-
-            // we also need to verify that we are not cycling over previous moves (not allowed).
-            // check moves in the list against the move 4 moves back if the same, we must remove it
-            // we can skip if there were captures, since captures cannot be undone.
-            int numMoves = getNumMoves();
-
-            if ( numMoves - 4 > 1 ) {
-                CheckersMove moveToCheck = (CheckersMove) getMoveList().get( numMoves - 4 );
-                if ( moveToCheck.captureList == null ) {
-                    int i = 0;
-
-                    while ( i < numKingMoves ) {
-                        CheckersMove m = moveList.get( initialNumMoves + numMovesAdded + i );
-                        GameContext.log( 1, "lastMove="+ lastMove);
-                        assert ( m.isPlayer1() == moveToCheck.isPlayer1()):
-                                "player ownership not equal comparing \n"+m+" with \n"+moveToCheck;
-                        if ( m.captureList == null &&
-                                m.getToRow() == moveToCheck.getToRow() &&
-                                m.getToCol() == moveToCheck.getToCol() &&
-                                m.getFromRow() == moveToCheck.getFromRow() &&
-                                m.getFromCol() == moveToCheck.getFromCol() &&
-                                m.getPiece().getType() == moveToCheck.getPiece().getType() ) {
-                            GameContext.log(0, "found a cycle. new score = " + m.getValue() +
-                                    " old score=" + moveToCheck.getValue() + " remove move= " + m );
-                            moveList.remove( m );
-                            numKingMoves--;
-                            break;
-                        }
-                        else {
-                            i++;
-                        }
-                    }
-                }
-            }
-            numMovesAdded += numKingMoves;
+            numMovesAdded = addMovesForKing(p, moveList, lastMove, weights, direction, numMovesAdded, initialNumMoves);
         }
         return numMovesAdded;
     }
 
+    /**
+     * @return number of king moves added.
+     */
+    private int addMovesForKing(BoardPosition p, MoveList moveList, TwoPlayerMove lastMove, ParameterArray weights,
+                                int direction, int numMovesAdded, int initialNumMoves) {
+        int numKingMoves = 0;
+        numKingMoves += addMovesForDirection( p, moveList, -direction, -1, lastMove, weights );
+        numKingMoves += addMovesForDirection( p, moveList, -direction, 1, lastMove, weights );
+
+        // we also need to verify that we are not cycling over previous moves (not allowed).
+        // check moves in the list against the move 4 moves back if the same, we must remove it
+        // we can skip if there were captures, since captures cannot be undone.
+        int numMoves = getNumMoves();
+
+        if ( numMoves - 4 > 1 ) {
+            CheckersMove moveToCheck = (CheckersMove) getMoveList().get( numMoves - 4 );
+            if ( moveToCheck.captureList == null ) {
+                int i = 0;
+
+                while ( i < numKingMoves ) {
+                    CheckersMove m = (CheckersMove)moveList.get( initialNumMoves + numMovesAdded + i );
+                    GameContext.log( 1, "lastMove="+ lastMove);
+                    assert ( m.isPlayer1() == moveToCheck.isPlayer1()):
+                            "player ownership not equal comparing \n"+m+" with \n"+moveToCheck;
+                    if ( m.captureList == null &&
+                            m.getToRow() == moveToCheck.getToRow() &&
+                            m.getToCol() == moveToCheck.getToCol() &&
+                            m.getFromRow() == moveToCheck.getFromRow() &&
+                            m.getFromCol() == moveToCheck.getFromCol() &&
+                            m.getPiece().getType() == moveToCheck.getPiece().getType() ) {
+                        GameContext.log(0, "found a cycle. new score = " + m.getValue() +
+                                " old score=" + moveToCheck.getValue() + " remove move= " + m );
+                        moveList.remove( m );
+                        numKingMoves--;
+                        break;
+                    }
+                    else {
+                        i++;
+                    }
+                }
+            }
+        }
+        numMovesAdded += numKingMoves;
+        return numMovesAdded;
+    }
 
 
     @Override
@@ -398,10 +407,10 @@ public class CheckersController extends TwoPlayerController
         /**
          *  generate all possible next moves
          */
-        public List<? extends TwoPlayerMove> generateMoves(
+        public MoveList generateMoves(
                 TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
         {
-            List<CheckersMove> moveList = new LinkedList<CheckersMove>();
+            MoveList moveList = new MoveList();
             int j, row,col;
             player1sPerspective_ = player1sPerspective;
 
@@ -428,10 +437,10 @@ public class CheckersController extends TwoPlayerController
          *
          * @return list of urgent moves
          */
-        public List<? extends TwoPlayerMove> generateUrgentMoves(
+        public MoveList generateUrgentMoves(
                 TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
         {
-            return new LinkedList<CheckersMove>();
+            return new MoveList();
         }
     }
 }

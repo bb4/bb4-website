@@ -1,5 +1,7 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
+import com.becker.game.common.Move;
+import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.game.twoplayer.common.search.tree.PruneType;
 import com.becker.game.twoplayer.common.search.*;
@@ -30,7 +32,7 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
      */
     @Override
     protected TwoPlayerMove findBestMove(TwoPlayerMove lastMove, 
-                                       int depth,  List<? extends TwoPlayerMove> list,  
+                                       int depth, MoveList list,
                                        int alpha, int beta, SearchTreeNode parent) {
         int i = 0;
         int selectedValue;
@@ -39,12 +41,12 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
         boolean player1 = lastMove.isPlayer1();
         int bestInheritedValue = player1? SearchStrategy.INFINITY: -SearchStrategy.INFINITY;
 
-        TwoPlayerMove bestMove = list.get( 0 );
+        TwoPlayerMove bestMove = (TwoPlayerMove)list.get(0);
         while ( !list.isEmpty() ) {
             if (pauseInterrupted())
                 return lastMove;
 
-            TwoPlayerMove theMove = list.remove(0);
+            TwoPlayerMove theMove = (TwoPlayerMove)list.remove(0);
             updatePercentDone(depth, list);
 
             searchable_.makeInternalMove( theMove );
@@ -129,20 +131,21 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
                 if ( val > beta )
                     beta = val;
             }
+
         }
-        List<? extends TwoPlayerMove> list =
-                searchable_.generateUrgentMoves( lastMove, weights_, true );
+        MoveList list = searchable_.generateUrgentMoves( lastMove, weights_, true );
 
         if ( list.isEmpty() ) {
             return lastMove; // nothing to check
         }
 
         int bestInheritedValue = player1 ?  SearchStrategy.INFINITY : -SearchStrategy.INFINITY;
-        TwoPlayerMove bestMove = list.get(0);
+        TwoPlayerMove bestMove = (TwoPlayerMove)list.get(0);
         movesConsidered_ += list.size();
         int i = 0;
 
-        for (TwoPlayerMove theMove : list) {
+        for (Move m : list) {
+            TwoPlayerMove theMove = (TwoPlayerMove) m;
             searchable_.makeInternalMove( theMove );
             SearchTreeNode child = addNodeToTree(parent,  theMove, alpha, beta, i++ );
 

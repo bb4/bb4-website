@@ -97,7 +97,7 @@ public class TwoPlayerGameImporter extends GameImporter {
      *
      */
     @Override
-    protected boolean processToken(SGFToken token, List<Move> moveList) {
+    protected boolean processToken(SGFToken token, MoveList moveList) {
 
         boolean found = false;
         if (token instanceof PlacementToken ) {

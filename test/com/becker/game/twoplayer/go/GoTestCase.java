@@ -101,7 +101,7 @@ public class GoTestCase extends TestCase {
         //System.out.println("problem restored.");
         controller_.requestComputerMove( blackPlays, true );
 
-        GoMove m = (GoMove) controller_.getBoard().getLastMove();
+        GoMove m = (GoMove) controller_.getLastMove();
 
         double elapsedTime = (System.currentTimeMillis() - time) / 1000.0;
         System.out.println("got " + m + " in " + Util.formatNumber(elapsedTime) + " seconds.");

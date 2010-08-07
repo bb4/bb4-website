@@ -33,7 +33,7 @@ public abstract class GameBoardViewer extends JPanel
     protected GameController controller_ = null;
 
     /** for restoring undone moves. */
-    protected final LinkedList<Move> undoneMoves_ = new LinkedList<Move>();
+    protected final MoveList undoneMoves_ = new MoveList();
 
     protected ViewerMouseListener mouseListener_;
 
@@ -236,7 +236,7 @@ public abstract class GameBoardViewer extends JPanel
      */
     public final boolean canUndoMove()
     {
-        return  (getBoard().getLastMove()!=null);
+        return  (controller_.getLastMove() != null);
     }
 
     /**

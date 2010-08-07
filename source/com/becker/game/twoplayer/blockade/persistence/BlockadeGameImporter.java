@@ -63,7 +63,7 @@ public class BlockadeGameImporter extends TwoPlayerGameImporter {
      *
      */
     @Override
-    protected boolean processToken(SGFToken token, List<Move> moveList) {
+    protected boolean processToken(SGFToken token, MoveList moveList) {
 
         boolean found = false;
         if (token instanceof BlockadeMoveToken ) {

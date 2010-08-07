@@ -120,13 +120,15 @@ public abstract class TwoPlayerPanel extends GamePanel
     }
 
 
+    /**
+     *  Take the root from the treeDialog and set it on the TwoPlayerController so it can
+     * create the tree and allow the treeDialog to show it when the
+     * change event happens.
+     */
     private void showGameTreeDialog()
     {
          treeDialog_.reset();
          boardViewer_.addGameChangedListener( treeDialog_ );
-         // take the root from the treeDialog and set it on the TwoPlayerController so it can
-         // create the tree and allow the treeDialog to show it when the
-         // change event happens.
          get2PlayerController().setGameTreeListener( treeDialog_ );
          treeDialog_.setVisible(true);
     }

@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.common.search.tree;
 
+import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public interface GameTreeViewable {
     /**
      * Add a set of pruned nodes to the viewable search tree.
      */
-    void addPrunedNodes(List<? extends TwoPlayerMove> list, SearchTreeNode parent,
+    void addPrunedNodes(MoveList list, SearchTreeNode parent,
                         int i, int val, int thresh, PruneType type);
 
     /**

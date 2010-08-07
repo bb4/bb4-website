@@ -15,9 +15,7 @@ import java.awt.Dimension;
 import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * Manage multiplayer online game tables.
@@ -156,8 +154,7 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
     public void updateTables(OnlineGameTableList tableList) {  
         onlineGameTablesTable_.removeAllRows();
 
-        for (int i = 0; i < tableList.size(); i++) {
-            OnlineGameTable table = tableList.get(i);
+        for (OnlineGameTable table : tableList) {
             onlineGameTablesTable_.addRow(table, table.hasPlayer(currentName_));
         }
 
@@ -191,7 +188,7 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
         
         // since we are on the client we need to create surrogates for the players which are not the current player
         Iterator<Player> it = onlineGameTablesTable_.getSelectedTable().getPlayers().iterator();
-        List<MultiGamePlayer> players = new ArrayList<MultiGamePlayer>();
+        PlayerList players = new PlayerList();
         while (it.hasNext()) {
             MultiGamePlayer player = (MultiGamePlayer)it.next();
             if (!player.getName().equals(this.currentName_)) {

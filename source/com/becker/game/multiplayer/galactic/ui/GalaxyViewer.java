@@ -79,7 +79,7 @@ public class GalaxyViewer extends MultiGameViewer
 
         /*
         // records the result on the board.
-        Move lastMove = getBoard().getLastMove();
+        Move lastMove = getController().getLastMove();
         GalacticTurn gmove = GalacticTurn.createMove((lastMove==null)? 0 : lastMove.moveNumber + 1);
         gc.makeMove(gmove);
         */

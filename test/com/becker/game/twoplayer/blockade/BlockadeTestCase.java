@@ -69,7 +69,7 @@ public class BlockadeTestCase extends TestCase {
         restore(problemFile);
         controller_.requestComputerMove( firstPlayerPlays, true );
 
-        Move m = controller_.getBoard().getLastMove();
+        Move m = controller_.getLastMove();
 
         long elapsedTime = (System.currentTimeMillis() - time) / 1000;
         GameContext.log(1, "got " + m + " in " + elapsedTime + " seconds.");
@@ -80,12 +80,6 @@ public class BlockadeTestCase extends TestCase {
 
         Assert.assertTrue("Was expecting "+ row +", "+ col +", but instead got "+m,
                           m.getToRow() == row && m.getToCol() == col);
-    }
-
-
-
-    protected static boolean approximatelyEqual(double value, double expectedValue, double thresh) {
-        return (Math.abs(value - expectedValue) < thresh);
     }
 
 

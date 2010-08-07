@@ -23,7 +23,7 @@ public class PokerNewGameDialog extends MultiPlayerNewGameDialog
 
     @Override
     protected PlayerTable createPlayerTable() {
-        return  new PokerPlayerTable((List<PokerPlayer>) controller_.getPlayers());
+        return  new PokerPlayerTable(controller_.getPlayers());
     }
 
     @Override

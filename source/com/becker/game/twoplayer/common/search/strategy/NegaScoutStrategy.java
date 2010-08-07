@@ -1,11 +1,10 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
+import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.optimization.parameter.ParameterArray;
-
-import java.util.List;
 
 /**
  *  This strategy class defines the NegaScout search algorithm.
@@ -86,16 +85,15 @@ public class NegaScoutStrategy extends NegaMaxStrategy
      * @inheritDoc
      */
     @Override
-    protected TwoPlayerMove findBestMove(TwoPlayerMove lastMove,
-                                       int depth,  List<? extends TwoPlayerMove> list,
-                                       int alpha, int beta, SearchTreeNode parent) {
+    protected TwoPlayerMove findBestMove(TwoPlayerMove lastMove, int depth, MoveList list,
+                                         int alpha, int beta, SearchTreeNode parent) {
         int i = 0;
         int newBeta = beta;
         TwoPlayerMove selectedMove;
-        TwoPlayerMove bestMove = list.get(0);
+        TwoPlayerMove bestMove = (TwoPlayerMove)list.getFirstMove();
 
         while ( !list.isEmpty() ) {
-            TwoPlayerMove theMove = list.remove(0);
+            TwoPlayerMove theMove = (TwoPlayerMove) list.remove(0);
             if (pauseInterrupted())
                 return lastMove;
             updatePercentDone(depth, list);

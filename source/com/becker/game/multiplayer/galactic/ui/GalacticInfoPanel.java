@@ -5,9 +5,7 @@ import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
 import com.becker.game.multiplayer.galactic.*;
 import com.becker.game.multiplayer.galactic.player.*;
-import com.becker.ui.*;
 
-import javax.swing.Box;
 import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
@@ -171,7 +169,7 @@ class GalacticInfoPanel extends GameInfoPanel implements GameChangedListener, Ac
         //Player currentPlayer = controller_.getCurrentPlayer();
         setPlayerLabel();
         //Galaxy g = (Galaxy)controller_.getBoard();
-        Move lastMove =  controller_.getBoard().getLastMove();
+        Move lastMove =  controller_.getLastMove();
         if (lastMove != null)  {
             //moveNumLabel_.setText( lastMove.moveNumber * controller_.getNumPlayers()
             //                      + ((GalacticController)controller_).getCurrentPlayerIndex()+" " );

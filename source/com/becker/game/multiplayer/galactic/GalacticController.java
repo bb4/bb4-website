@@ -98,7 +98,7 @@ public class GalacticController extends MultiGameController
      * @return the number of years (turns) remaining in the game.
      */
     public int getNumberOfYearsRemaining() {
-        Move m = board_.getLastMove();
+        Move m = getLastMove();
         return ((GalacticOptions)getOptions()).getMaxYearsToPlay() - ((m != null)? this.getNumMoves() : 0) - 2;
     }
 
@@ -111,7 +111,7 @@ public class GalacticController extends MultiGameController
      */
     public boolean isDone()
     {
-        if (board_.getLastMove()==null)
+        if (getLastMove()==null)
             return false;
         // add one so indexed by 1 instead of 0, add 1 because its the "last" move
         if ((this.getNumMoves() + 2) >= ((GalacticOptions)getOptions()).getMaxYearsToPlay())
@@ -165,7 +165,7 @@ public class GalacticController extends MultiGameController
             // the result in the move to the client.
             // however, there are problems with that, so I just calculate it in the veiwer for now.
 
-            GalacticTurn gmove = gviewer.createMove(board_.getLastMove());
+            GalacticTurn gmove = gviewer.createMove(getLastMove());
             //gviewer.showMove(gmove);
 
             // records the result on the board.

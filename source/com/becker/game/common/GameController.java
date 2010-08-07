@@ -34,9 +34,6 @@ public abstract class GameController
      */
     protected IServerConnection serverConnection_;
 
-    /** Make sure that the program runs in a reproducible way by always starting from the same random seed. */
-    protected static final Random RANDOM = new Random(1);
-
 
     /**
      * Construct the game controller
@@ -63,8 +60,23 @@ public abstract class GameController
           board_.reset();
     }
 
+
+    public MoveList getMoveList() {
+        return board_.getMoveList();
+    }
+
+    /**
+     * @return the last move played.
+     */
+    public Move getLastMove() {
+        return getMoveList().getLastMove();
+    }
+
+    /**
+     * @return number of moves made so far.
+     */
     public int getNumMoves() {
-        return board_.getNumMoves();
+        return board_.getMoveList().getNumMoves();
     }
 
     /**
@@ -74,21 +86,6 @@ public abstract class GameController
     public GameViewable getViewer()
     {
         return viewer_;
-    }
-
-    public LinkedList<Move> getMoveList() {
-        return board_.getMoveList();
-    }
-
-    /**
-     *
-     * @return the most recent move played
-     */
-    public Move getLastMove() {
-        if (getMoveList() == null || getMoveList().size() == 0) {
-            return null;
-        }
-        return getMoveList().getLast();
     }
 
     /**

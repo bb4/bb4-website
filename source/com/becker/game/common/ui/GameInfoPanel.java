@@ -239,7 +239,7 @@ public abstract class GameInfoPanel extends TexturedPanel implements GameChanged
     {
         if ( controller_ == null )
             return;
-        if ( controller_.getBoard().getLastMove() != null ) {
+        if ( controller_.getLastMove() != null ) {
             setPlayerLabel();
             moveNumLabel_.setText( " "+ controller_.getNumMoves() );
         }

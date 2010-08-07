@@ -60,9 +60,9 @@ public class ChessController extends CheckersController
     public void computerMovesFirst() {
 
         // determine the possible moves and choose one at random.
-        List moveList = getSearchable().generateMoves( null, weights_.getPlayer1Weights(), true );
+        MoveList moveList = getSearchable().generateMoves( null, weights_.getPlayer1Weights(), true );
 
-        makeMove( getRandomMove(moveList) );
+        makeMove( moveList.getRandomMove() );
         player1sTurn_ = false;
     }
 
@@ -112,9 +112,11 @@ public class ChessController extends CheckersController
      * @param weights to use.
      * @return the number of moves added.
      */
-    public int addMoves( BoardPosition pos, List<ChessMove> moveList, TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
+    public int addMoves( BoardPosition pos, MoveList moveList, TwoPlayerMove lastMove,
+                         ParameterArray weights, boolean player1sPerspective )
     {
-        List<ChessMove> moves = ((ChessPiece)pos.getPiece()).findPossibleMoves(board_, pos.getRow(), pos.getCol(), lastMove);
+        List<ChessMove> moves =
+                ((ChessPiece)pos.getPiece()).findPossibleMoves(board_, pos.getRow(), pos.getCol(), lastMove);
 
         // score the moves in this list
         for (ChessMove move : moves) {
@@ -159,9 +161,9 @@ public class ChessController extends CheckersController
           *  generate all possible next moves.
           */
         @Override
-        public List<? extends TwoPlayerMove> generateMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
+        public MoveList generateMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
         {
-            List<ChessMove> moveList = new LinkedList<ChessMove>();
+            MoveList moveList = new MoveList();
             int row,col;
             player1sPerspective_ = player1sPerspective;
 
@@ -189,10 +191,10 @@ public class ChessController extends CheckersController
          * @return those moves that result in check or getting out of check.
          */
         @Override
-        public List<? extends TwoPlayerMove> generateUrgentMoves(
+        public MoveList generateUrgentMoves(
                 TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
         {
-            return new LinkedList<ChessMove>();
+            return new MoveList();
         }
 
         /**

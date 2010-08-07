@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
+import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.search.transposition.Entry;
 import com.becker.game.twoplayer.common.search.transposition.TranspositionTable;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
@@ -94,14 +95,14 @@ public final class NegaScoutMemoryStrategy extends NegaScoutStrategy
         }
 
         // generate a list of all (or bestPercent) candidate next moves, and pick the best one
-        List<? extends TwoPlayerMove> list =
+        MoveList list =
                 searchable_.generateMoves(lastMove, weights_, true);
 
         movesConsidered_ += list.size();
         if (depth == lookAhead_)
             numTopLevelMoves_ = list.size();
 
-        if ( emptyMoveList( list, lastMove) ) {
+        if ( emptyMoveList(list, lastMove) ) {
             // if there are no possible next moves, return null (we hit the end of the game).
             return null;
         }
@@ -145,19 +146,18 @@ public final class NegaScoutMemoryStrategy extends NegaScoutStrategy
      * @inheritDoc
      */
     @Override
-    protected TwoPlayerMove findBestMove(TwoPlayerMove lastMove,
-                                         int depth,  List<? extends TwoPlayerMove> list,
+    protected TwoPlayerMove findBestMove(TwoPlayerMove lastMove,int depth,  MoveList list,
                                          int alpha, int beta, SearchTreeNode parent) {
         int i = 0;
         int newBeta = beta;
         TwoPlayerMove selectedMove;
 
-        TwoPlayerMove bestMove = list.get(0);
+        TwoPlayerMove bestMove = (TwoPlayerMove) list.get(0);
         Entry entry = new Entry(bestMove, depth, alpha, beta);
 
         System.out.println("list.size="+ list.size() + " int depth=" + depth + "     alpha="+ alpha +" beta=" + beta);
         while ( !list.isEmpty() ) {
-            TwoPlayerMove theMove = list.remove(0);
+            TwoPlayerMove theMove = (TwoPlayerMove) list.remove(0);
             if (pauseInterrupted())
                 return lastMove;
             updatePercentDone(depth, list);

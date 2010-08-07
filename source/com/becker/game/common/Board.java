@@ -2,8 +2,6 @@ package com.becker.game.common;
 
 import com.becker.common.*;
 
-import java.util.*;
-
 
 /**
  *  the Board describes the physical layout of the game.
@@ -20,8 +18,7 @@ import java.util.*;
  *
  *  @author Barry Becker
  */
-public abstract class Board implements BoardInterface, Cloneable
-{
+public abstract class Board implements BoardInterface, Cloneable {
 
     /** the internal data structures representing the game board and the positions on it. */
     protected BoardPosition positions_[][] = null;
@@ -34,11 +31,12 @@ public abstract class Board implements BoardInterface, Cloneable
      * We keep a list of the moves that have been made.
      * We can navigate forward or backward in time using this
      */
-    private LinkedList<Move> moveList_;
+    private MoveList moveList_;
 
    public Board() {
-       moveList_ = new LinkedList<Move>();
+       moveList_ = new MoveList();
    }
+
     /**
      *  Reset the board to its initial state.
      */
@@ -81,30 +79,9 @@ public abstract class Board implements BoardInterface, Cloneable
      * consider making a defensive copy to avoid concurrent modification exception.
      * @return moves made so far.
      */
-    public LinkedList<Move> getMoveList() {
+    public MoveList getMoveList() {
         return moveList_;
     }
-
-    /**
-     * Will return null before the first move has been played.
-     * @return the most recent move played on the board. Returns null if there isn't one.
-     */
-    public final Move getLastMove()
-    {
-        if ( getMoveList().isEmpty() ) {
-            return null;
-        }
-        return getMoveList().getLast();
-    }
-
-    /**
-     * @return  the number of moves currently played.
-     */
-    public final int getNumMoves()
-    {
-        return getMoveList().size();
-    }
-
 
     /**
      * returns null if there is no game piece at the position specified.

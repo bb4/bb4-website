@@ -27,7 +27,7 @@ public abstract class TwoPlayerBoardRenderer extends GameBoardRenderer
     @Override
     protected void drawLastMoveMarker(Graphics2D g2, GameControllerInterface controller)
     {
-        TwoPlayerMove last = (TwoPlayerMove)controller.getBoard().getLastMove();
+        TwoPlayerMove last = (TwoPlayerMove)controller.getBoard().getMoveList().getLastMove();
         // this draws a small indicator on the last move to show where it was played
         if ( last != null ) {
             g2.setColor( LAST_MOVE_INDICATOR_COLOR );
