@@ -66,7 +66,7 @@ public class Galaxy extends Board
         }
     }
 
-    public void initPlanets(List<GalacticPlayer> players, GalacticOptions options)
+    public void initPlanets(PlayerList players, GalacticOptions options)
     {
         hmPlanets_.clear();
 
@@ -79,7 +79,6 @@ public class Galaxy extends Board
         planets_.clear();
         for (int i = 0; i < getNumPlanets(); i++)
         {
-
             // find a random position
             int randRow;
             int randCol;
@@ -99,7 +98,8 @@ public class Galaxy extends Board
             position.setPiece(planet);
 
             // substitute in the players home planets that have already been created.
-            for (final GalacticPlayer newVar : players) {
+            for (Player p : players) {
+                GalacticPlayer newVar = (GalacticPlayer) p;
                 if (planet.getName() == newVar.getHomePlanet().getName()) {
                     Planet home = newVar.getHomePlanet();
                     position.setPiece(home);    // replace
@@ -130,10 +130,9 @@ public class Galaxy extends Board
     {
         if (player==null)
             return getPlanets();
-        List playerPlanets = new ArrayList();
-        Iterator it = planets_.iterator();
-        while (it.hasNext()) {
-            Planet planet = (Planet)it.next();
+        List<Planet> playerPlanets = new ArrayList<Planet>();
+        for (Planet planet : planets_) {
+
             if (planet.getOwner() == player)
                 playerPlanets.add(planet);
         }

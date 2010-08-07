@@ -96,32 +96,32 @@ public class PokerController extends MultiGameController
 
 
     /**
-     * by default we start with one human and one robot player.
+     * By default we start with one human and one robot player.
+     * We just init the first time,
+     * after that, they can change manually to get different players.
      */
     @Override
     protected void initPlayers()
     {
-        // we just init the first time.
-        // After that, they can change manually to get different players.
+        //
         if (players_ == null) {
             // create the default players. One human and one robot.
-            players_ = new ArrayList<PokerPlayer>(2);
-            @SuppressWarnings("unchecked")
-            List<PokerPlayer> pplayers = (List<PokerPlayer>)players_;
-
-            pplayers.add(PokerPlayer.createPokerPlayer("Player 1",
-                                       100, MultiGamePlayer.getNewPlayerColor(pplayers), true));
+            players_ = new PlayerList();
 
 
-            pplayers.add(PokerPlayer.createPokerPlayer("Player 2",
-                                       100, PokerPlayer.getNewPlayerColor(pplayers), false));
-            players_.get(1).setName(pplayers.get(1).getName()+'('+((PokerRobotPlayer)players_.get(1)).getType()+')');
+            players_.add(PokerPlayer.createPokerPlayer("Player 1",
+                                       100, MultiGamePlayer.getNewPlayerColor(players_), true));
+
+
+            players_.add(PokerPlayer.createPokerPlayer("Player 2",
+                                       100, PokerPlayer.getNewPlayerColor(players_), false));
+            players_.get(1).setName(players_.get(1).getName()+'('+((PokerRobotPlayer)players_.get(1)).getType()+')');
         }
 
         dealCardsToPlayers(5);
         currentPlayerIndex_ = 0;
         
-        ((PokerTable)board_).initPlayers(players_, this);
+        ((PokerTable)board_).initPlayers(players_);
     }
 
     /**
@@ -174,7 +174,8 @@ public class PokerController extends MultiGameController
      */
     public int getCurrentMaxContribution() {
        int max = Integer.MIN_VALUE;
-        for (final PokerPlayer player : getPokerPlayers()) {
+        for (final Player p : getPlayers()) {
+            PokerPlayer player  =  (PokerPlayer)p;
             if (player.getContribution() > max) {
                 max = player.getContribution();
             }
@@ -188,7 +189,8 @@ public class PokerController extends MultiGameController
     public int getAllInAmount() {
         // loop through the players and return the min number of chips of any player
         int min = Integer.MAX_VALUE;
-        for (final PokerPlayer player : getPokerPlayers()) {
+        for (final Player p : getPlayers()) {
+            PokerPlayer player  =  (PokerPlayer)p;
             if (!player.hasFolded() && ((player.getCash() + player.getContribution()) < min)) {
                 min = player.getCash() + player.getContribution();
             }
@@ -220,7 +222,7 @@ public class PokerController extends MultiGameController
         if (getBoard().getLastMove() == null)
             return false;
         int numPlayersStillPlaying = 0;
-        for (Player p : getPokerPlayers()) {
+        for (Player p : getPlayers()) {
             PokerPlayer player = (PokerPlayer) p;
             if (!player.isOutOfGame())
                 numPlayersStillPlaying++;
@@ -305,8 +307,9 @@ public class PokerController extends MultiGameController
      public int getNumNonFoldedPlayers()
      {
         int count = 0;
-        for (final PokerPlayer p : getPokerPlayers()) {
-            if (!p.isOutOfGame())
+        for (final Player p : getPlayers()) {
+            PokerPlayer player = (PokerPlayer)p;
+            if (!player.isOutOfGame())
                count++;
         }
         return count;
@@ -330,7 +333,7 @@ public class PokerController extends MultiGameController
             anteUp();
             // the player to start the betting in the next round is the next player who still has some money left.
             do {
-               startingPlayerIndex_ = (++startingPlayerIndex_) % this.getNumPlayers();
+               startingPlayerIndex_ = (++startingPlayerIndex_) % this.getPlayers().getNumPlayers();
             }
             while (((PokerPlayer)getPlayer(startingPlayerIndex_)).isOutOfGame());
 
@@ -342,7 +345,8 @@ public class PokerController extends MultiGameController
     private boolean allButOneFolded() {
 
         int numNotFolded = 0;
-        for (final PokerPlayer p : getPokerPlayers()) {
+        for (final Player pp : getPlayers()) {
+            PokerPlayer p = (PokerPlayer)pp;
             if (!p.hasFolded()) {
                 numNotFolded++;
             }
@@ -356,22 +360,22 @@ public class PokerController extends MultiGameController
      */
     @Override
     public MultiGamePlayer determineWinner() {
-        List<PokerPlayer> players = getPokerPlayers();
+        PlayerList players = getPlayers();
         PokerPlayer winner;
         PokerHand bestHand;
         int first=0;
         
-        while (players.get(first).hasFolded() && first < players.size()) {
+        while (((PokerPlayer)players.get(first)).hasFolded() && first < players.size()) {
             first++;
         }
-        if (players.get(first).hasFolded())
+        if (((PokerPlayer)players.get(first)).hasFolded())
             GameContext.log(0, "All players folded. That was dumb. The winner will be random.");
 
-        winner = players.get(first);
+        winner = (PokerPlayer)players.get(first);
         bestHand = winner.getHand();
 
         for (int i = first+1; i < players.size(); i++) {
-            PokerPlayer p = players.get(i);
+            PokerPlayer p = (PokerPlayer) players.get(i);
             if (!p.hasFolded() && p.getHand().compareTo(bestHand) > 0) {
                 bestHand = p.getHand();
                 winner = p;
@@ -401,15 +405,12 @@ public class PokerController extends MultiGameController
      * @param players  the players currently playing the game
      */
     @Override
-    public void setPlayers( List<? extends Player> players )
+    public void setPlayers( PlayerList players )
     {
         super.setPlayers(players);
         // deal cards to the players
         dealCardsToPlayers(5);
     }
 
-    protected List<PokerPlayer> getPokerPlayers() {
-        return (List<PokerPlayer>)getPlayers();
-    }
 
 }

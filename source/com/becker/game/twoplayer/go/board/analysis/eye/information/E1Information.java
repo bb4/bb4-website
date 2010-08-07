@@ -10,7 +10,7 @@ import static com.becker.game.twoplayer.go.board.analysis.eye.EyeShapeScores.*;
 public class E1Information extends AbstractEyeSubtypeInformation
 {
     public E1Information() {
-        initialize(false, 1, 1, SINGLE_EYE);
+        initialize(false, 1);
     }
 
     public String getTypeName() {

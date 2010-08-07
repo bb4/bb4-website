@@ -4,6 +4,7 @@ import com.becker.common.util.Util;
 import com.becker.game.common.Board;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.Move;
+import com.becker.game.common.PlayerList;
 import com.becker.game.common.ui.GameBoardViewer;
 import com.becker.game.common.ui.GameChangedEvent;
 import com.becker.game.common.ui.GameChangedListener;
@@ -140,7 +141,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
         if (get2PlayerController().getTwoPlayerOptions().isAutoOptimize())
             runOptimization();
 
-        if (c.allPlayersComputer() ) {
+        if (c.getPlayers().allPlayersComputer() ) {
             c.computerMovesFirst();
             doComputerMove( false );
         }
@@ -309,7 +310,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
         if (c.getSearchable().done( (TwoPlayerMove)evt.getMove(), true) && !c.getTwoPlayerOptions().isAutoOptimize())
             showWinnerDialog();
         else {
-            if (get2PlayerController().allPlayersComputer()) {
+            if (get2PlayerController().getPlayers().allPlayersComputer()) {
                 continuePlay((TwoPlayerMove)evt.getMove());
             }
         }
@@ -325,7 +326,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
      {
          boolean done = false;
          TwoPlayerController contoller = get2PlayerController();
-         if (contoller.allPlayersComputer()) {
+         if (contoller.getPlayers().allPlayersComputer()) {
              refresh();
              doComputerMove( !m.isPlayer1() );
          }
@@ -356,7 +357,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
     {
         if (m == null)
             return;
-        if (m.isPassingMove() && !get2PlayerController().allPlayersComputer())
+        if (m.isPassingMove() && !get2PlayerController().getPlayers().allPlayersComputer())
             JOptionPane.showMessageDialog( this,
                     GameContext.getLabel("COMPUTER_PASSES"),
                     GameContext.getLabel("INFORMATION"),
@@ -369,12 +370,13 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
     public void undoLastManMove()
     {
         TwoPlayerController c = get2PlayerController();
-        if ( c.allPlayersComputer() )
+        PlayerList players = c.getPlayers();
+        if ( players.allPlayersComputer() )
             return;
         Move move = c.undoLastMove();
         if ( move != null ) {
             undoneMoves_.add( move );
-            if ( !c.allPlayersHuman() ) {
+            if ( !players.allPlayersHuman() ) {
                 undoneMoves_.add( c.undoLastMove() );
             }
             refresh();
@@ -392,6 +394,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
     public void redoLastManMove()
     {
         TwoPlayerController c = get2PlayerController();
+        PlayerList players = c.getPlayers();
         if ( undoneMoves_.isEmpty() ) {
             JOptionPane.showMessageDialog( null,
                     GameContext.getLabel("NO_MOVES_TO_REDO"),
@@ -399,10 +402,10 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
                     JOptionPane.WARNING_MESSAGE );
             return;
         }
-        if ( c.allPlayersComputer() )
+        if ( players.allPlayersComputer() )
             return;
         c.makeMove(undoneMoves_.removeLast());
-        if ( !c.allPlayersHuman() ) {
+        if ( !players.allPlayersHuman() ) {
             c.makeMove(undoneMoves_.removeLast());
         }
         refresh();

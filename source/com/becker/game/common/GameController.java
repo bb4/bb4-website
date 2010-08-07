@@ -14,8 +14,7 @@ import java.util.*;
  *  @author Barry Becker
  */
 public abstract class GameController
-           implements GameControllerInterface
-{
+           implements GameControllerInterface {
 
     /** the board has the layout of the pieces. */
     protected Board board_;
@@ -23,9 +22,8 @@ public abstract class GameController
     /** sometimes we want to draw directly to the ui while thinking (for debugging purposes) . */
     protected GameViewable viewer_;
 
-
     /** the list of players actively playing the game, in the order that they move. */
-    protected List<? extends Player> players_;
+    protected PlayerList players_;
 
     /** collections of game specific options.  They may be modified through the ui (see GameOptionsDialog)*/
     protected GameOptions gameOptions_;
@@ -103,14 +101,6 @@ public abstract class GameController
     }
 
     /**
-     *  @return the player that goes first.
-     */
-    public Player getFirstPlayer()
-    {
-        return getPlayers().get(0);
-    }
-
-    /**
      * @return the board representation object.
      */
     public final Board getBoard()
@@ -161,19 +151,18 @@ public abstract class GameController
 
     /**
      * Restore the current state of the game from a file.
-     * @param fileName
+     * @param fileName file to load from
      */
     public void restoreFromFile( String fileName)
     {
         GameContext.log(0,  "Error: restoreFromFile("+fileName+") not implemented yet" );
     }
 
-
     /**
      *
      * @return a list of the players playing the game (in the order that they move).
      */
-    public List<? extends Player> getPlayers()
+    public PlayerList getPlayers()
     {
         return players_;
     }
@@ -182,7 +171,7 @@ public abstract class GameController
      * Maybe use list of players rather than array.
      * @param players the players currently playing the game
      */
-    public void setPlayers( List<? extends Player> players )
+    public void setPlayers( PlayerList players )
     {
         if (board_ != null)
             reset();
@@ -209,28 +198,6 @@ public abstract class GameController
        }
     }
 
-
-    /**
-     * @return true if there are only human players
-     */
-    public boolean allPlayersHuman()
-    {
-       for (int i = 0; i < getNumPlayers(); i++)  {
-           if (!players_.get(i).isHuman()) return false;
-       }
-       return true;
-    }
-
-    /**
-     * @return true if there are only computer players
-     */
-    public boolean allPlayersComputer()
-    {
-       for (int i=0; i<getNumPlayers(); i++)  {
-           if (players_.get(i).isHuman()) return false;
-       }
-       return true;
-    }
 
     public void setOptions(GameOptions options) {
         gameOptions_ = options;

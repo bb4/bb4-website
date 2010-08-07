@@ -45,7 +45,7 @@ class GalacticInfoPanel extends GameInfoPanel implements GameChangedListener, Ac
 
         // the custom panel shows game specific info. In this case the command button.
         // if all the players are robots, don't even show this panel.
-        if (!controller_.allPlayersComputer())
+        if (!controller_.getPlayers().allPlayersComputer())
             this.add( createCustomInfoPanel() );
     }
 
@@ -175,7 +175,7 @@ class GalacticInfoPanel extends GameInfoPanel implements GameChangedListener, Ac
         if (lastMove != null)  {
             //moveNumLabel_.setText( lastMove.moveNumber * controller_.getNumPlayers()
             //                      + ((GalacticController)controller_).getCurrentPlayerIndex()+" " );
-            moveNumLabel_.setText( (controller_.getNumPlayers() + 2) + " " );
+            moveNumLabel_.setText( (controller_.getPlayers().getNumPlayers() + 2) + " " );
         }
         else {
             moveNumLabel_.setText( 1 + " " );

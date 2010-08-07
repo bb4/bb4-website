@@ -12,14 +12,6 @@ import com.becker.game.twoplayer.go.board.analysis.eye.EyeStatus;
  */
 public class FalseEyeInformation extends AbstractEyeInformation {
     
-    public byte getNumPatterns() {
-        return 0;
-    }
-
-    public float getEyeValue() {
-        return EyeShapeScores.FALSE_EYE;
-    }
-
     public EyeStatus determineStatus(GoEye eye, GoBoard board) {
         if (eye.getMembers().size() > 5)  {
             return EyeStatus.NAKADE;

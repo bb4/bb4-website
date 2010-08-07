@@ -86,7 +86,8 @@ public abstract class TwoPlayerPanel extends GamePanel
     {
         JProgressBar progressBar = new JProgressBar();
         progressBar.setOpaque(false);
-        progressBar.setVisible(!get2PlayerController().allPlayersHuman());  // show only when used
+        // show only when used
+        progressBar.setVisible(!get2PlayerController().getPlayers().allPlayersHuman());
         progressBar.setMinimum(0);
         progressBar.setMaximum(100);
         progressBar.setBackground(GUIUtil.UI_COLOR_SECONDARY1);
@@ -144,12 +145,11 @@ public abstract class TwoPlayerPanel extends GamePanel
         AbstractTwoPlayerBoardViewer v = (AbstractTwoPlayerBoardViewer)boardViewer_;
 
         if ( source == toolBar_.getNewGameButton()) {
-            //newGameDialog_.setLocationRelativeTo( this );
             get2PlayerController().pause();
             boolean canceled = newGameDialog_.showDialog();
             if ( !canceled ) { // newGame a game with the newly defined options
                 // the only case we don't show the progress bar is if both players are human.
-                progressBar_.setVisible(!get2PlayerController().allPlayersHuman());
+                progressBar_.setVisible(!get2PlayerController().getPlayers().allPlayersHuman());
                 v.startNewGame();
             }
             else {

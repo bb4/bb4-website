@@ -57,7 +57,7 @@ public class ChessBoardViewer extends CheckersBoardViewer
     {
         super.warnOnSpecialMoves(m);
         // we don't show dialogs if both players are computers.
-        if (get2PlayerController().allPlayersComputer())
+        if (get2PlayerController().getPlayers().allPlayersComputer())
             return;
 
         int row, col;

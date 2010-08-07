@@ -16,7 +16,7 @@ import static com.becker.game.twoplayer.go.board.analysis.eye.EyeShapeScores.BIG
 public class E3Information extends AbstractEyeSubtypeInformation
 {
     public E3Information() {
-        initialize(false, 3, 1, BIG_EYE, new float[] {2.02f} );
+        initialize(false, 3, new float[] {2.02f} );
     }
 
     /**

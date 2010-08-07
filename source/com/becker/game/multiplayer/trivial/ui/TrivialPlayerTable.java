@@ -42,11 +42,11 @@ public class TrivialPlayerTable extends PlayerTable
      * @return  the players represented by rows in the table
      */
     @Override
-    public List<? extends Player> getPlayers()
+    public PlayerList getPlayers()
     {
         TableModel model = table_.getModel();
         int nRows = model.getRowCount();
-        List<TrivialPlayer> players = new ArrayList<TrivialPlayer>(nRows);
+        PlayerList players = new PlayerList();
         for (int i = 0; i < nRows; i++) {
             players.add( TrivialPlayer.createTrivialPlayer(
                                     (String) model.getValueAt(i, NAME_INDEX),                              

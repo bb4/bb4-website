@@ -7,9 +7,9 @@ import java.io.*;
 
 /**
  * Some number of players sitting around a virtual game table online.
- * Each table has a name, set of Players and other game specific properties.
+ * Each table has a name, set of PlayerList and other game specific properties.
  *
- * @author Barry Becker Date: May 13, 2006
+ * @author Barry Becker
  */
 public class OnlineGameTable implements Serializable {
 
@@ -22,7 +22,7 @@ public class OnlineGameTable implements Serializable {
     private Player owner_;
 
     /** list of players currently sitting at the table.  */
-    private List<Player> players_;
+    private PlayerList players_;
 
     private GameOptions gameOptions_;
 
@@ -38,7 +38,7 @@ public class OnlineGameTable implements Serializable {
         name_ = name;
         owner_ = owner;
         newestHumanPlayer_ = owner;
-        players_ = new LinkedList<Player>();
+        players_ = new PlayerList();
         gameOptions_ = options;
         for (Player p : initialPlayers) {
             players_.add(p);
@@ -63,7 +63,7 @@ public class OnlineGameTable implements Serializable {
         name_ = name;
     }
 
-    public List<Player> getPlayers() {
+    public PlayerList getPlayers() {
         return players_;
     }
 

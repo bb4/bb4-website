@@ -76,18 +76,6 @@ public interface GameControllerInterface
     Player getCurrentPlayer();
 
     /**
-     *
-     * @return true if there are only human players
-     */
-    boolean allPlayersHuman();
-
-    /**
-     *
-     * @return true if there are only coputer players
-     */
-    boolean allPlayersComputer();
-
-    /**
      * a coputer player makes the first move
      */
     void computerMovesFirst();

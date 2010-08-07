@@ -25,11 +25,11 @@ public class E4Information extends AbstractEyeSubtypeInformation
     E4Information(String subTypeDesc) {
         e4Type = Eye4Type.valueOf(subTypeDesc);
         switch(e4Type) {
-           case E1122 : initialize(false, 4, 3, PROBABLE_TWO_EYES, new float[] {2.03f, 2.03f});
+           case E1122 : initialize(false, 4, new float[] {2.03f, 2.03f});
                break;
-           case E1113 : initialize(false, 4, 1, BIG_EYE, new float[] {3.01f});  
+           case E1113 : initialize(false, 4, new float[] {3.01f});
                break;
-           case E2222 : initialize(false, 4, 1, SINGLE_EYE);
+           case E2222 : initialize(false, 4);
                break;
         }
     }

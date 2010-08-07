@@ -76,21 +76,21 @@ public class GalacticController extends MultiGameController
         // After that, they can change manually to get different players.
         if (players_ == null) {
             // create the default players. One human and one robot.
-            players_ = new ArrayList<GalacticPlayer>(2);
-            List<GalacticPlayer> gplayers = (List<GalacticPlayer>)players_;
+            players_ = new PlayerList();
+
             Planet homePlanet = new Planet('A', GalacticPlayer.DEFAULT_NUM_SHIPS, 10, new Location(5, 5));
-            gplayers.add(GalacticPlayer.createGalacticPlayer("Admiral 1",
-                                      homePlanet, MultiGamePlayer.getNewPlayerColor(gplayers), true));
+            players_.add(GalacticPlayer.createGalacticPlayer("Admiral 1",
+                                      homePlanet, MultiGamePlayer.getNewPlayerColor(players_), true));
             homePlanet.setOwner((GalacticPlayer)players_.get(0));
 
             homePlanet = new Planet('B', GalacticPlayer.DEFAULT_NUM_SHIPS, 10, new Location(10, 10));
-            gplayers.add(GalacticPlayer.createGalacticPlayer("Admiral 2",
-                                      homePlanet, MultiGamePlayer.getNewPlayerColor(gplayers), false));
+            players_.add(GalacticPlayer.createGalacticPlayer("Admiral 2",
+                                      homePlanet, MultiGamePlayer.getNewPlayerColor(players_), false));
             homePlanet.setOwner((GalacticPlayer)players_.get(1));
         }
         currentPlayerIndex_ = 0;
         
-        ((Galaxy)board_).initPlanets((List<GalacticPlayer>)players_, (GalacticOptions)getOptions());
+        ((Galaxy)board_).initPlanets(players_, (GalacticOptions)getOptions());
     }
 
     /**
@@ -158,7 +158,7 @@ public class GalacticController extends MultiGameController
 
         int nextIndex = advanceToNextPlayerIndex();
 
-        if (getCurrentPlayer() == getFirstPlayer()) {
+        if (getCurrentPlayer() == getPlayers().getFirstPlayer()) {
 
             // @@ I would really like to
             // Precalculate the battle sequence on the server and store it in the move, then send
