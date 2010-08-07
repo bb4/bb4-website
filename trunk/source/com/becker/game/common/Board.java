@@ -95,6 +95,10 @@ public abstract class Board implements BoardInterface, Cloneable {
         return positions_[row][col];
     }
 
+    public int getTypicalNumMoves() {
+        return 40;
+    }
+
     /**
      * returns null if there is no game piece at the position specified.
      * @return the piece at the specified location. Returns null if there is no piece there.

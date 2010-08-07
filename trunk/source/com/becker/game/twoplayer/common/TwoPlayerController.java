@@ -182,15 +182,15 @@ public abstract class TwoPlayerController extends GameController {
             return 0.5f;
 
         assert(lastMove != null);
-        // @@ is this right?
+
         // we can use this formula to estimate the outcome:       
         double inherVal = lastMove.getInheritedValue();
         if ( Math.abs( inherVal ) > WINNING_VALUE )
             GameContext.log( 1, "TwoPlayerController: warning: the score for p1 is greater than WINNING_VALUE(" +
                     WINNING_VALUE + ")  inheritedVal=" + inherVal );
 
-        double val = Math.min( Math.abs( inherVal ), WINNING_VALUE );
-        return val / WINNING_VALUE;
+        double val = inherVal + WINNING_VALUE;
+        return val / (2 * WINNING_VALUE);
     }
 
     /**
@@ -201,16 +201,9 @@ public abstract class TwoPlayerController extends GameController {
     public int getStrengthOfWin() {
         if (!getPlayers().anyPlayerWon())
             return 0;
-        return 50 / getNumMoves();
+        return board_.getTypicalNumMoves() / getNumMoves();
     }
 
-
-    /**
-     * @return  suggested default weights for the computer to use when playing.
-     */
-    public ParameterArray getDefaultWeights() {
-        return weights_.getDefaultWeights();
-    }
 
     /**
      * this returns a reference to the weights class for editing

@@ -192,9 +192,8 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
      * @return the next move that was found after searching using the strategy and game under test.
      */
     protected SearchStrategy createSearchStrategy() {
-        return searchOptions.getSearchStrategy(controller.getSearchable(), controller.getDefaultWeights());
+        return searchOptions.getSearchStrategy(controller.getSearchable(),
+                                               controller.getComputerWeights().getDefaultWeights());
 
     }
-
-
 }
