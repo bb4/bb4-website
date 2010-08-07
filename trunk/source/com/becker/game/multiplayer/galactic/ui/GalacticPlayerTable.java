@@ -19,7 +19,7 @@ import javax.swing.*;
 /**
  * GalacticPlayerTable contains a list of players.
  * All the cells are editable.
- * It is initialized with a list of Players and returns a list of Players.
+ * It is initialized with a list of PlayerList and returns a list of PlayerList.
  * @see GalacticPlayer
  *
  * @author Barry Becker
@@ -79,11 +79,11 @@ public class GalacticPlayerTable extends PlayerTable implements TableModelListen
      * @return  the players represented by rows in the table
      */
     @Override
-    public List<? extends Player> getPlayers()
+    public PlayerList getPlayers()
     {
         TableModel model = table_.getModel();
         int nRows = model.getRowCount();
-        List<GalacticPlayer> players = new ArrayList<GalacticPlayer>(nRows);
+        PlayerList players = new PlayerList();
         for (int i=0; i<nRows; i++) {
             char planetName = (Character) model.getValueAt(i, HOME_PLANET_INDEX);
             Planet planet = Galaxy.getPlanet(planetName);

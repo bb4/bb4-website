@@ -56,7 +56,7 @@ public abstract class PlayerTable extends TableBase
     /**
      * @return  the players represented by rows in the table
      */
-    public abstract List<? extends Player> getPlayers();
+    public abstract PlayerList getPlayers();
 
 
     /**
@@ -102,8 +102,7 @@ public abstract class PlayerTable extends TableBase
 
     @Override
     protected TableModel createTableModel(String[] columnNames) {
-        TableModel m = new PlayerTableModel(columnNames, 0, true);
-        return m;
+        return new PlayerTableModel(columnNames, 0, true);
     }
 
 }

@@ -37,10 +37,10 @@ public abstract class MultiGameViewer extends GameBoardViewer
         winnerDialogShown_ = false;
         this.sendGameChangedEvent(null);  // get the info panel to refresh with 1st players name
 
-        if (controller_.getFirstPlayer().isSurrogate()) {
+        if (controller_.getPlayers().getFirstPlayer().isSurrogate()) {
             doSurrogateMove((SurrogateMultiPlayer) controller_.getCurrentPlayer());
         }
-        else if (!controller_.getFirstPlayer().isHuman()) {
+        else if (!controller_.getPlayers().getFirstPlayer().isHuman()) {
             controller_.computerMovesFirst();
         }
     }

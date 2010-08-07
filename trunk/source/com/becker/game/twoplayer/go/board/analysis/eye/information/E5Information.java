@@ -26,13 +26,13 @@ public class E5Information extends AbstractEyeSubtypeInformation
     E5Information(String subTypeDesc) {
         e5Type = Eye5Type.valueOf(subTypeDesc);
         switch(e5Type) {
-           case E11222 : initialize(true, 5, 3, GUARANTEED_TWO_EYES);
+           case E11222 : initialize(true, 5);
                break;
-           case E11123 : initialize(false, 5, 1, BIG_EYE, new float[] {3.04f, 2.04f}, new float[] {1.02f});
+           case E11123 : initialize(false, 5, new float[] {3.04f, 2.04f}, new float[] {1.02f});
                break;
-           case E11114 : initialize(false, 5, 1, BIG_EYE, new float[] {4.04f});
+           case E11114 : initialize(false, 5, new float[] {4.04f});
                break;
-           case E12223 : initialize(false, 5, 1, SINGLE_EYE);
+           case E12223 : initialize(false, 5);
                break;
         }
     }

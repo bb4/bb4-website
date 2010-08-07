@@ -172,9 +172,9 @@ public class ServerCommandProcessor {
         GameContext.log(1, "NOW starting game on Server! "+ table);
 
         // Create players from the table and start.
-        List<Player> players = table.getPlayers();
+        PlayerList players = table.getPlayers();
         assert (players.size() == table.getNumPlayersNeeded());
-        List<Player> newPlayers = new ArrayList<Player>(players.size());
+        PlayerList newPlayers = new PlayerList();
         for (Player player : players) {
             if (player.isHuman()) {
                 newPlayers.add(player.createSurrogate(controller_.getServerConnection()));
@@ -185,7 +185,7 @@ public class ServerCommandProcessor {
         controller_.reset();
         controller_.setPlayers(newPlayers);
         // if getFirstPlayer returns null, then it is not a turn based game
-        if (controller_.getFirstPlayer() != null &&  !controller_.getFirstPlayer().isHuman()) {
+        if (controller_.getPlayers().getFirstPlayer() != null &&  !controller_.getPlayers().getFirstPlayer().isHuman()) {
             controller_.computerMovesFirst();
         }
        

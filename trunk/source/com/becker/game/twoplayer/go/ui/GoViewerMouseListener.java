@@ -32,7 +32,7 @@ public class GoViewerMouseListener extends ViewerMouseListener {
         super(viewer);
 
         GoController controller = (GoController) viewer.getController();
-        if (!controller.allPlayersComputer()) {
+        if (!controller.getPlayers().allPlayersComputer()) {
             getRenderer().setDraggedShowPiece(
                     new GoBoardPosition(0, 0, null, new GoStone(controller.isPlayer1sTurn())));
             savedShowPiece_ = getRenderer().getDraggedShowPiece();
@@ -100,7 +100,7 @@ public class GoViewerMouseListener extends ViewerMouseListener {
             getRenderer().setDraggedShowPiece(null);
             viewer.showWinnerDialog();
         }
-        else if (controller.allPlayersHuman()) {
+        else if (controller.getPlayers().allPlayersHuman()) {
             // create a stone to show for the next players move
             getRenderer().setDraggedShowPiece(
                     new GoBoardPosition(loc.getRow(), loc.getCol(), null, new GoStone(!player1sTurn)));

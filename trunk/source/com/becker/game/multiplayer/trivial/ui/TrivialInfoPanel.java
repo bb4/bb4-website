@@ -5,8 +5,7 @@ import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
 import com.becker.game.multiplayer.trivial.*;
 import com.becker.game.multiplayer.trivial.player.*;
-import com.becker.ui.*;
-import com.becker.ui.legend.*;
+
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -42,7 +41,7 @@ class TrivialInfoPanel extends GameInfoPanel implements GameChangedListener, Act
 
         // the custom panel shows game specific info. In this case, the command button.
         // if all the players are robots, don't even show this panel.
-        if (!controller_.allPlayersComputer())   {
+        if (!controller_.getPlayers().allPlayersComputer())   {
             add( createCustomInfoPanel() );
         }     
     }

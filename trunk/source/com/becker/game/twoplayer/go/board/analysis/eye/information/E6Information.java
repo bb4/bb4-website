@@ -33,28 +33,28 @@ public class E6Information extends AbstractEyeSubtypeInformation
     E6Information(String subTypeDesc) {
         type = Eye6Type.valueOf(subTypeDesc);
         switch(type) {
-           case E112222 : initialize(true, 6, 13, GUARANTEED_TWO_EYES);
+           case E112222 : initialize(true, 6);
                break;
-           case E111223 : initialize(true, 6, 12, GUARANTEED_TWO_EYES);
+           case E111223 : initialize(true, 6);
                break;
-           case E111133 : initialize(true, 6, 1, GUARANTEED_TWO_EYES);
+           case E111133 : initialize(true, 6);
                break;
-           case E112233 : initialize(false, 6, 4, PROBABLE_TWO_EYES);
+           case E112233 : initialize(false, 6);
                break;
-           case E112233a : initialize(false, 6, 2, PROBABLE_TWO_EYES, new float[] {3.06f, 3.06f});
+           case E112233a : initialize(false, 6, new float[] {3.06f, 3.06f});
                break;
-           case E112233b : initialize(false, 6, 2, SINGLE_EYE, new float[] {3.05f, 3.05f, 2.06f, 2.06f});
+           case E112233b : initialize(false, 6, new float[] {3.05f, 3.05f, 2.06f, 2.06f});
                break;
-           case E122223 : initialize(false, 6, 2, PROBABLE_TWO_EYES, new float[] {2.04f, 3.06f, 2.05f, 2.05f, 2.04f},
-                                                                     new float[] {1.02f});
+           case E122223 : initialize(false, 6, new float[] {2.04f, 3.06f, 2.05f, 2.05f, 2.04f},
+                                               new float[] {1.02f});
                break;
-           case E112224 : initialize(false, 6, 1, PROBABLE_TWO_EYES, new float[] {4.06f},
-                                                                     new float[] {2.04f});
+           case E112224 : initialize(false, 6, new float[] {4.06f},
+                                               new float[] {2.04f});
                break;
-           case E111124 : initialize(false, 6, 1, PROBABLE_TWO_EYES, new float[] {2.05f, 4.05f},
-                                                                     new float[] {1.02f});
+           case E111124 : initialize(false, 6, new float[] {2.05f, 4.05f},
+                                               new float[] {1.02f});
                break;
-           case E222233 : initialize(false, 6, 1, PROBABLE_TWO_EYES, new float[] {3.07f, 3.07f});
+           case E222233 : initialize(false, 6, new float[] {3.07f, 3.07f});
                break;
         }
     }

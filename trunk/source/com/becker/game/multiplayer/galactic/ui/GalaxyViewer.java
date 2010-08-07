@@ -24,7 +24,7 @@ import java.util.List;
 public class GalaxyViewer extends MultiGameViewer
 {
 
-    //Construct the application
+    /** Construct the application   */
     public GalaxyViewer()
     {}
 
@@ -139,7 +139,7 @@ public class GalaxyViewer extends MultiGameViewer
                     gmove.addSimulation(battle);
 
                     //  show battle dialog if not all computers playing
-                    if (!controller_.allPlayersComputer()) {
+                    if (!controller_.getPlayers().allPlayersComputer()) {
 
                         BattleDialog bDlg = new BattleDialog(parent_, battle, this);
                         //bDlg.setLocationRelativeTo(this);

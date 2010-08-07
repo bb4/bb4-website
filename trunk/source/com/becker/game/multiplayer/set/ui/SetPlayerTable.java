@@ -43,11 +43,11 @@ public class SetPlayerTable extends PlayerTable
      * @return  the players represented by rows in the table
      */
     @Override
-    public List<SetPlayer> getPlayers()
+    public PlayerList getPlayers()
     {
         TableModel model = table_.getModel();
         int nRows = model.getRowCount();
-        List<SetPlayer> players = new ArrayList<SetPlayer>(nRows);
+        PlayerList players = new PlayerList();
         for (int i = 0; i < nRows; i++) {
             players.add( SetPlayer.createSetPlayer(
                                  (String) model.getValueAt(i, NAME_INDEX),
@@ -77,8 +77,6 @@ public class SetPlayerTable extends PlayerTable
     protected Player createPlayer() {
         int ct = table_.getRowCount();
         Color newColor = SetPlayer.getNewPlayerColor(getPlayers());
-        SetPlayer player = SetPlayer.createSetPlayer("Player "+(ct+1), newColor, true);
-        return player;
+        return SetPlayer.createSetPlayer("Player "+(ct+1), newColor, true);
     }
-
 }

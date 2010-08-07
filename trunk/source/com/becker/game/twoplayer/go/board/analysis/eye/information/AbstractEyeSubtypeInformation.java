@@ -22,8 +22,6 @@ public abstract class AbstractEyeSubtypeInformation extends AbstractEyeInformati
 {
     private boolean life;
     private byte size;
-    private byte numPatterns;
-    private float eyeValue;
     private float[] vitalPoints;
     private float[] endPoints;
 
@@ -32,26 +30,22 @@ public abstract class AbstractEyeSubtypeInformation extends AbstractEyeInformati
     /**
      * Constructor
      */
-    AbstractEyeSubtypeInformation() {
+    AbstractEyeSubtypeInformation() {}
+
+    protected void initialize(boolean life, int eyeSize)  {
+        initialize(life, eyeSize, EMPTY_POINTS, EMPTY_POINTS);
     }
 
-    protected void initialize(boolean life, int eyeSize, int numPatterns, float eyeValue)  {
-        initialize(life, eyeSize, numPatterns, eyeValue, EMPTY_POINTS, EMPTY_POINTS);
-    }
-
-    protected void initialize(boolean life, int eyeSize, int numPatterns, float eyeValue,
-                                  float[] vitalPts)  {
-        initialize(life, eyeSize, numPatterns, eyeValue, vitalPts, EMPTY_POINTS);
+    protected void initialize(boolean life, int eyeSize, float[] vitalPts)  {
+        initialize(life, eyeSize, vitalPts, EMPTY_POINTS);
     }
 
 
     @SuppressWarnings({"AssignmentToCollectionOrArrayFieldFromParameter"})
-    protected void initialize(boolean life, int eyeSize, int numPatterns, float eyeValue,
+    protected void initialize(boolean life, int eyeSize,
                               final float[] vitalPts, final float[] endPts)  {
         this.life = life;
         this.size = (byte)eyeSize;
-        this.numPatterns = (byte)numPatterns;
-        this.eyeValue = eyeValue;
         this.vitalPoints = vitalPts;
         this.endPoints = endPts;
     }
@@ -69,14 +63,6 @@ public abstract class AbstractEyeSubtypeInformation extends AbstractEyeInformati
     public boolean hasLifeProperty() {
         return life;
     }
-
-
-    /**
-     * @return score contribution for eye.   About 1 for single eye, 2 for 2 real eyes.
-     *
-    public float getEyeValue() {
-        return eyeValue;
-    } */
 
     @Override
     public float[] getVitalPoints() {
@@ -176,9 +162,7 @@ public abstract class AbstractEyeSubtypeInformation extends AbstractEyeInformati
         AbstractEyeSubtypeInformation that = (AbstractEyeSubtypeInformation) o;
 
         if (!getTypeName().equals(that.getTypeName())) return false;
-        if (Float.compare(that.eyeValue, eyeValue) != 0) return false;
-        if (life != that.life) return false;
-        if (numPatterns != that.numPatterns) return false;
+        if (life != that.life) return false;   
         if (size != that.size) return false;
         if (!Arrays.equals(endPoints, that.endPoints)) return false;
         return Arrays.equals(vitalPoints, that.vitalPoints);
@@ -188,8 +172,6 @@ public abstract class AbstractEyeSubtypeInformation extends AbstractEyeInformati
     public int hashCode() {
         int result = (life ? 1 : 0);
         result = 31 * result + (int) size;
-        result = 31 * result + (int) numPatterns;
-        result = (31 * result) + (eyeValue == 0.0f ? 0 : Float.floatToIntBits(eyeValue));
         result = 31 * result + (vitalPoints != null ? Arrays.hashCode(vitalPoints) : 0);
         result = 31 * result + (endPoints != null ? Arrays.hashCode(endPoints) : 0);
         result = 31 * result + getTypeName().hashCode();

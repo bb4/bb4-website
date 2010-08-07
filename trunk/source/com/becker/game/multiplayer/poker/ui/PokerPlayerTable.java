@@ -15,7 +15,7 @@ import javax.swing.table.*;
  * GalacticPlayerTable contains a list of players.
  * All the cells are editable.
  * It is initialized with a list of Players and returns a list of Players.
- * @see com.becker.game.multiplayer.poker.player.PokerPlayer
+ * @see PokerPlayer
  *
  * @author Barry Becker
  */
@@ -50,11 +50,11 @@ public class PokerPlayerTable extends PlayerTable
      * @return  the players represented by rows in the table
      */
     @Override
-    public List<? extends Player> getPlayers()
+    public PlayerList getPlayers()
     {
         TableModel model = table_.getModel();
         int nRows = model.getRowCount();
-        List<PokerPlayer> players = new ArrayList<PokerPlayer>(nRows);
+        PlayerList players = new PlayerList();
         for (int i = 0; i < nRows; i++) {
             players.add( PokerPlayer.createPokerPlayer(
                                     (String) model.getValueAt(i, NAME_INDEX),

@@ -16,7 +16,7 @@ import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.Optimizer;
 import com.becker.optimization.strategy.OptimizationStrategyType;
 import com.becker.optimization.Optimizee;
-import java.util.ArrayList;
+import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WINNING_VALUE;
 
 import java.util.Collections;
 import java.util.List;
@@ -24,7 +24,8 @@ import java.util.List;
 /**
  * This is an abstract base class for a Game Controller.
  * It contains the key logic for 2 player zero sum games with perfect information.
- * Some examples include chess, checkers, go, othello, pente, com.becker.game.twoplayer.blockade, mancala, nine-mens morris, etc.
+ * Some examples include chess, checkers, go, othello, pente, com.becker.game.twoplayer.blockade,
+ * mancala, nine-mens morris, etc.
  * It implements Optimizee because the games derived from this class
  * can be optimized to improve their playing ability.
  *
@@ -34,13 +35,8 @@ import java.util.List;
  *
  *  @author Barry Becker
  */
-public abstract class TwoPlayerController extends GameController
-{
-    /** anything greater than this is considered a won game  */
-    public static final int WINNING_VALUE = SearchStrategy.WINNING_VALUE;
+public abstract class TwoPlayerController extends GameController {
 
-    /** not really infinty, but close enough for our purposes. */
-    private static final int INFINITY = SearchStrategy.INFINITY;
 
     private static final double HUNDRED = 100.0;
 
@@ -68,8 +64,7 @@ public abstract class TwoPlayerController extends GameController
     /**
      * Construct the game controller.
      */
-    public TwoPlayerController()
-    {
+    public TwoPlayerController() {
         createPlayers();
     }
 
@@ -95,8 +90,7 @@ public abstract class TwoPlayerController extends GameController
         return (TwoPlayerOptions) getOptions();
     }
 
-    public TwoPlayerViewable get2PlayerViewer()
-    {
+    public TwoPlayerViewable get2PlayerViewer() {
        return (TwoPlayerViewable)viewer_;
     }
 
@@ -104,8 +98,7 @@ public abstract class TwoPlayerController extends GameController
      * Return the game board back to its initial openning state
      */
     @Override
-    public void reset()
-    {
+    public void reset() {
         if (isProcessing()) {
             pause();
             if (worker_!=null) {
@@ -147,9 +140,8 @@ public abstract class TwoPlayerController extends GameController
     /**
      * create the 2 players.
      */
-    private void createPlayers()
-    {
-        List<Player> players = new ArrayList<Player>(2);
+    private void createPlayers() {
+        PlayerList players = new PlayerList();
         players.add(new Player(getTwoPlayerOptions().getPlayerName(true), null, true));
         players.add(new Player(getTwoPlayerOptions().getPlayerName(false), null, false));
         setPlayers(players);
@@ -158,40 +150,35 @@ public abstract class TwoPlayerController extends GameController
     /**
      * @return the amount of progress (in precentage terms) that we have made toward finding the next computer move.
      */
-    public final SearchStrategy getSearchStrategy()
-    {
+    public final SearchStrategy getSearchStrategy() {
        return strategy_;
     }
 
     /**
      * @return true if it is currently player1's turn.
      */
-    public final boolean isPlayer1sTurn()
-    {
+    public final boolean isPlayer1sTurn() {
         return player1sTurn_;
     }
 
     /**
      * @return true if player2 is a computer player
      */
-    public final Player getCurrentPlayer()
-    {
+    public final Player getCurrentPlayer() {
         return player1sTurn_? getPlayer1() : getPlayer2();
     }
 
     /**
      * @return the player who went first.
      */
-    public Player getPlayer1()
-    {
+    public Player getPlayer1() {
         return players_.get(0);
     }
 
     /**
      * @return the player who went second.
      */
-    public Player getPlayer2()
-    {
+    public Player getPlayer2() {
         return players_.get(1);
     }
     
@@ -211,8 +198,7 @@ public abstract class TwoPlayerController extends GameController
      * The chance of player2 winning = 1 - chance of p1 winning.
      * @return estimated chance of player one winning the game
      */
-    public final double getChanceOfPlayer1Winning()
-    {
+    public final double getChanceOfPlayer1Winning() {
         // if true then too early in the game to tell.
         TwoPlayerMove lastMove = (TwoPlayerMove) board_.getLastMove();
         if (board_.getMoveList().size() < 4 )
@@ -235,8 +221,7 @@ public abstract class TwoPlayerController extends GameController
      * @return some measure of how overwhelming the win was. May need to negate based on which player one.
      */
     @Override
-    public int getStrengthOfWin()
-    {
+    public int getStrengthOfWin() {
         if (!( getPlayer1().hasWon() || getPlayer2().hasWon()))
             return 0;
         return 50 / getNumMoves();
@@ -246,8 +231,7 @@ public abstract class TwoPlayerController extends GameController
     /**
      * @return  suggested default weights for the computer to use when playing.
      */
-    public ParameterArray getDefaultWeights()
-    {
+    public ParameterArray getDefaultWeights() {
         return weights_.getDefaultWeights();
     }
 
@@ -255,8 +239,7 @@ public abstract class TwoPlayerController extends GameController
      * this returns a reference to the weights class for editing
      * @return  contains the weights used for computer player1 and 2.
      */
-    public final GameWeights getComputerWeights()
-    {
+    public final GameWeights getComputerWeights() {
         return weights_;
     }
 
@@ -265,8 +248,7 @@ public abstract class TwoPlayerController extends GameController
      * @return  the move which was undone (null returned if no prior move)
      */
     @Override
-    public Move undoLastMove()
-    {
+    public Move undoLastMove() {
         TwoPlayerMove m = (TwoPlayerMove) board_.undoMove();
         if (m != null) {
             player1sTurn_ = m.isPlayer1();
@@ -297,8 +279,7 @@ public abstract class TwoPlayerController extends GameController
      * @param player1 if true then the computer moving is player1
      * @return the move the computer selected (may return null if no move possible)
      */
-    private TwoPlayerMove findComputerMove( boolean player1 )
-    {
+    private TwoPlayerMove findComputerMove( boolean player1 ) {
         ParameterArray weights;
         player1sTurn_ = player1;
 
@@ -355,8 +336,7 @@ public abstract class TwoPlayerController extends GameController
      * @param totalTime total elapsed time.
      * @param numMovesConsidered number of moves inspected during search.
      */
-    protected void showProfileStats( long totalTime, long numMovesConsidered )
-    {
+    protected void showProfileStats( long totalTime, long numMovesConsidered ) {
         GameContext.log( 0, "----------------------------------------------------------------------------------" );
         GameContext.log( 0, "There were " + numMovesConsidered + " moves considered." );
         GameContext.log( 0, "The total time for the computer to move was : " +
@@ -369,10 +349,9 @@ public abstract class TwoPlayerController extends GameController
      * @param m the move the player made
      * @return the same move with some of the fields filled in
      */
-    public final Move manMoves( Move m )
-    {
-        // we use the default weights because we just need to know if the game is over
+    public final Move manMoves( Move m ) {
         makeMove( m );
+        // we pass the default weights because we just need to know if the game is over
         m.setValue(worth( m, weights_.getDefaultWeights() ));
         return m;
     }
@@ -384,8 +363,7 @@ public abstract class TwoPlayerController extends GameController
      *  @param m the move to play.
      */
     @Override
-    public void makeMove( Move m )
-    {
+    public void makeMove( Move m ) {
         board_.makeMove( m );
         player1sTurn_ = !((TwoPlayerMove)m).isPlayer1();
     }
@@ -400,22 +378,20 @@ public abstract class TwoPlayerController extends GameController
      * @return true if the game is over.
      * @throws AssertionError thrown if something bad happened while searching.
      */
-    public boolean requestComputerMove(boolean isPlayer1) throws AssertionError
-    {
+    public boolean requestComputerMove(boolean isPlayer1) throws AssertionError {
         return requestComputerMove(isPlayer1, getTwoPlayerOptions().isAutoOptimize());
     }
 
     /**
      * Request the next computer move. It will be the best move that the computer can find.
-     *
-     * @param isPlayer1
+     * Launches a separate thread to do the search for the next move.
+     * @param isPlayer1 true if player one to move.
      * @param synchronous if true then the method does not return until the next move has been found.
      * @return true if the game is over
      * @throws AssertionError  if something bad happenned.
      */
-    public boolean requestComputerMove(final boolean isPlayer1, boolean synchronous) throws AssertionError
-    {
-        // launch a separate thread to do the search for the next move.
+    public boolean requestComputerMove(final boolean isPlayer1, boolean synchronous) throws AssertionError {
+
         worker_ = new Worker() {
 
             private Move move_ = null;
@@ -468,13 +444,11 @@ public abstract class TwoPlayerController extends GameController
     /**
      *  @return true if the viewer is currently processing (i.e. searching)
      */
-    public boolean isProcessing()
-    {
+    public boolean isProcessing() {
         return processing_;
     }
 
-    public void pause()
-    {
+    public void pause() {
         if (getSearchStrategy() == null) {
             GameContext.log(1, "There is no search to pause" );
             return;
@@ -483,8 +457,7 @@ public abstract class TwoPlayerController extends GameController
         GameContext.log(1, "search strategy paused." );
     }
 
-    public boolean isPaused()
-    {
+    public boolean isPaused()  {
         return getSearchStrategy().isPaused();
     }
 
@@ -504,16 +477,14 @@ public abstract class TwoPlayerController extends GameController
      * If this method is never called, the controller knows
      * that it should not bother to create the tree when searching.
      */
-    public final void setGameTreeListener( GameTreeViewable gameTreeListener )
-    {
+    public final void setGameTreeListener( GameTreeViewable gameTreeListener ) {
         gameTreeListener_ = gameTreeListener;
     }
 
     /**
      * {@inheritDoc}}
      */
-    public boolean isDone()
-    {
+    public boolean isDone() {
         return getSearchable().done((TwoPlayerMove)board_.getLastMove(), false);
     }
 
@@ -529,8 +500,7 @@ public abstract class TwoPlayerController extends GameController
      *  @param player1sPerspective if true, evaluate the board from p1's perspective, else p2's.
      *  @return the worth of the board from the specified players point of view
      */
-    public final int worth( Move lastMove, ParameterArray weights, boolean player1sPerspective )
-    {
+    public final int worth( Move lastMove, ParameterArray weights, boolean player1sPerspective ) {
         int value = worth( lastMove, weights );
         return (player1sPerspective) ? value : -value;
     }
@@ -555,8 +525,7 @@ public abstract class TwoPlayerController extends GameController
      * @return the best moves in order of how good they are.
      */
     protected List<? extends TwoPlayerMove> getBestMoves(boolean player1, List<? extends TwoPlayerMove> moveList,
-                                                               boolean player1sPerspective )
-    {
+                                                         boolean player1sPerspective ) {
         Collections.sort( moveList );
 
         // reverse the order so the best move (using static board evaluation) is first

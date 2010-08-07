@@ -37,14 +37,16 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
         super(controller);
     }
 
+    /**
+     * The custom panel shows game specific info. In this case, the command button.
+     * if all the players are robots, don't even show this panel.
+     */
     @Override
     protected void createSubPanels()
     {
         add( createGeneralInfoPanel() );
 
-        // the custom panel shows game specific info. In this case, the command button.
-        // if all the players are robots, don't even show this panel.
-        if (!controller_.allPlayersComputer())   {
+        if (!controller_.getPlayers().allPlayersComputer())   {
             add( createCustomInfoPanel() );
         }
 
