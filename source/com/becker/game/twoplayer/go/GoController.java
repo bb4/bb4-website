@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.go;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.Move;
 import com.becker.game.common.MoveList;
+import com.becker.game.common.Player;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
@@ -99,8 +100,9 @@ public final class GoController extends TwoPlayerController
     @Override
     public boolean doesComputerMoveFirst() {
         int handicap = ((GoBoard) board_).getHandicap();
-        return ((!getPlayer1().isHuman() && (handicap == 0)) ||
-                (getPlayer1().isHuman() && (handicap > 0)));
+        Player player1 = getPlayers().getPlayer1();
+        return ((!player1.isHuman() && (handicap == 0)) ||
+                (player1.isHuman() && (handicap > 0)));
     }
 
     /**
@@ -400,9 +402,9 @@ public final class GoController extends TwoPlayerController
 
                     if (recordWin) {
                         if (getFinalScore(true) > getFinalScore(false))
-                            getPlayer1().setWon(true);
+                            getPlayers().getPlayer1().setWon(true);
                         else
-                            getPlayer2().setWon(true);
+                            getPlayers().getPlayer2().setWon(true);
                     }
                     gameOver = true;
                 }

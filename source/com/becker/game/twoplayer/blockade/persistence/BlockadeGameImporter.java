@@ -49,11 +49,11 @@ public class BlockadeGameImporter extends TwoPlayerGameImporter {
             }
             else if (token instanceof Player2NameToken) {
                 Player2NameToken nameToken = (Player2NameToken) token;
-                gc.getPlayer2().setName(nameToken.getName());
+                gc.getPlayers().getPlayer2().setName(nameToken.getName());
             }
             else if (token instanceof Player1NameToken) {
                 Player1NameToken nameToken = (Player1NameToken) token;
-                gc.getPlayer1().setName(nameToken.getName());
+                gc.getPlayers().getPlayer1().setName(nameToken.getName());
             }
         }
         gc.getBoard().setSize(numRows, numCols);

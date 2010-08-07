@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.go.persistence;
 
+import com.becker.game.common.PlayerList;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.Move;
@@ -33,6 +34,7 @@ public class GoGameExporter extends GameExporter {
         GameContext.log( 1, "saving state to :" + fileName );
         GoController gc = (GoController) controller_;
         GoBoard board = (GoBoard) gc.getBoard();
+        PlayerList players = gc.getPlayers();
 
         try {
             FileWriter out = new FileWriter( fileName );
@@ -45,8 +47,8 @@ public class GoGameExporter extends GameExporter {
             out.write( "ST[2]\n" );
             out.write( "RU[japanese]\n" );
             out.write( "SZ[" + gc.getBoard().getNumRows() + "]\n" );
-            out.write( "PB[" + gc.getPlayer1().getName() + "]\n" );
-            out.write( "PW[" + gc.getPlayer2().getName() + "]\n" );
+            out.write( "PB[" + players.getPlayer1().getName() + "]\n" );
+            out.write( "PW[" + players.getPlayer2().getName() + "]\n" );
             out.write( "KM[" + ((GoOptions) gc.getOptions()).getKomi() + "]\n" );
             out.write( "PC[US]\n" );
             out.write( "HA[" + board.getHandicap() + "]\n" );

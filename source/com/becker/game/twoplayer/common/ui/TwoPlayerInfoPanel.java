@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.common.ui;
 import com.becker.common.util.Util;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameController;
+import com.becker.game.common.PlayerList;
 import com.becker.game.common.ui.GameChangedEvent;
 import com.becker.game.common.ui.GameChangedListener;
 import com.becker.game.common.ui.GameInfoPanel;
@@ -52,7 +53,7 @@ public class TwoPlayerInfoPanel extends GameInfoPanel implements GameChangedList
         moveNumTextLabel.setHorizontalAlignment(JLabel.LEFT);
         moveNumLabel_ = createLabel( "  " );
 
-        Object[] args = {getController().getPlayer1().getName()};
+        Object[] args = {getController().getPlayers().getPlayer1().getName()};
         String m = MessageFormat.format(GameContext.getLabel("CHANCE_OF_WINNING") + COLON, args );
         JLabel chanceOfWinningTextLabel = createLabel( m );
         chanceOfWinningTextLabel.setHorizontalAlignment(JLabel.LEFT);
@@ -70,7 +71,6 @@ public class TwoPlayerInfoPanel extends GameInfoPanel implements GameChangedList
     }
 
 
-
     /**
      * set the appropriate text and color for the player label.
      */
@@ -79,8 +79,9 @@ public class TwoPlayerInfoPanel extends GameInfoPanel implements GameChangedList
     {
         AbstractTwoPlayerBoardViewer viewer = (AbstractTwoPlayerBoardViewer)controller_.getViewer();
         TwoPlayerPieceRenderer renderer = (TwoPlayerPieceRenderer)viewer.getPieceRenderer();
+        PlayerList players = getController().getPlayers();
         boolean p1sturn = getController().isPlayer1sTurn();
-        String player = p1sturn? getController().getPlayer1().getName() : getController().getPlayer2().getName();
+        String player = p1sturn? players.getPlayer1().getName() : players.getPlayer2().getName();
         playerLabel_.setText(' ' + player + ' ');
 
         Color pColor = p1sturn? renderer.getPlayer1Color() : renderer.getPlayer2Color();

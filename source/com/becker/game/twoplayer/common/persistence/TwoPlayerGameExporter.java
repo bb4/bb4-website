@@ -42,8 +42,8 @@ public class TwoPlayerGameExporter extends GameExporter {
             out.write( "GM[1]\n" );
             //out.write( "CA[UTF-8]\n" );
             out.write( "SZ2[" + gc.getBoard().getNumRows() + "][" + gc.getBoard().getNumCols() + "]\n" );
-            out.write( "Player1[" + gc.getPlayer1().getName() + "]\n" );
-            out.write( "Player2[" + gc.getPlayer2().getName() + "]\n" );
+            out.write( "Player1[" + gc.getPlayers().getPlayer1().getName() + "]\n" );
+            out.write( "Player2[" + gc.getPlayers().getPlayer2().getName() + "]\n" );
             out.write( "GN[test1]\n" );
 
             Iterator<Move> it = gc.getMoveList().iterator();

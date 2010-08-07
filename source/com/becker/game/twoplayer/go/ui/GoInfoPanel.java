@@ -2,6 +2,7 @@ package com.becker.game.twoplayer.go.ui;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameController;
+import com.becker.game.common.PlayerList;
 import com.becker.game.common.ui.GameChangedEvent;
 import com.becker.game.common.ui.GameChangedListener;
 import com.becker.game.twoplayer.common.ui.TwoPlayerInfoPanel;
@@ -72,8 +73,9 @@ final class GoInfoPanel extends TwoPlayerInfoPanel implements GameChangedListene
         p2TerritoryLabel_ = createLabel();
 
         JPanel capturesPanel = createSectionPanel(GameContext.getLabel("NUMBER_OF_CAPTURES"));
-        JLabel p1 = createLabel( getController().getPlayer1().getName() + COLON );
-        JLabel p2 = createLabel( getController().getPlayer2().getName() + COLON );
+        PlayerList players = getController().getPlayers();
+        JLabel p1 = createLabel( players.getPlayer1().getName() + COLON );
+        JLabel p2 = createLabel( players.getPlayer2().getName() + COLON );
         capturesPanel.add(createRowEntryPanel( p1, p1CapturesLabel_ ));
         capturesPanel.add(createRowEntryPanel( p2, p2CapturesLabel_ ));
 

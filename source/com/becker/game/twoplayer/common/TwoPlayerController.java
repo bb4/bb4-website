@@ -21,7 +21,7 @@ import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WI
 import java.util.Collections;
 
 /**
- * This is an abstract base class for a Game Controller.
+ * This is an abstract base class for a two player Game Controller.
  * It contains the key logic for 2 player zero sum games with perfect information.
  * Some examples include chess, checkers, go, othello, pente, com.becker.game.twoplayer.blockade,
  * mancala, nine-mens morris, etc.
@@ -57,6 +57,7 @@ public abstract class TwoPlayerController extends GameController {
     /** this is true while the computer thinks about its next move. */
     private boolean processing_ = false;
 
+    /** Capable of searching for the best next move */
     private Searchable searchable_;
 
 
@@ -109,8 +110,9 @@ public abstract class TwoPlayerController extends GameController {
             Util.sleep(100);
         }
         super.reset();
-        getPlayer1().setWon(false);
-        getPlayer2().setWon(false);
+        PlayerList players = getPlayers();
+        players.getPlayer1().setWon(false);
+        players.getPlayer2().setWon(false);
         player1sTurn_ = true;
     }
 
@@ -147,7 +149,7 @@ public abstract class TwoPlayerController extends GameController {
     }
 
     /**
-     * @return the amount of progress (in precentage terms) that we have made toward finding the next computer move.
+     * @return the search strategy to use to find the next move.
      */
     public final SearchStrategy getSearchStrategy() {
        return strategy_;
@@ -164,21 +166,7 @@ public abstract class TwoPlayerController extends GameController {
      * @return true if player2 is a computer player
      */
     public final Player getCurrentPlayer() {
-        return player1sTurn_? getPlayer1() : getPlayer2();
-    }
-
-    /**
-     * @return the player who went first.
-     */
-    public Player getPlayer1() {
-        return players_.get(0);
-    }
-
-    /**
-     * @return the player who went second.
-     */
-    public Player getPlayer2() {
-        return players_.get(1);
+        return player1sTurn_? getPlayers().getPlayer1() : getPlayers().getPlayer2();
     }
     
 
@@ -211,7 +199,7 @@ public abstract class TwoPlayerController extends GameController {
      */
     @Override
     public int getStrengthOfWin() {
-        if (!( getPlayer1().hasWon() || getPlayer2().hasWon()))
+        if (!getPlayers().anyPlayerWon())
             return 0;
         return 50 / getNumMoves();
     }
@@ -250,7 +238,7 @@ public abstract class TwoPlayerController extends GameController {
      */
     public boolean doesComputerMoveFirst()
     {
-        return !getPlayer1().isHuman();
+        return !getPlayers().getPlayer1().isHuman();
     }
 
     /**
@@ -630,7 +618,7 @@ public abstract class TwoPlayerController extends GameController {
                     }
                 }
             }
-            if (getPlayer1().hasWon())
+            if (getPlayers().getPlayer1().hasWon())
                 return getStrengthOfWin();
             else
                 return -getStrengthOfWin();
@@ -712,15 +700,15 @@ public abstract class TwoPlayerController extends GameController {
                 GameContext.log(0, "Game is over because there are no more moves");
                 return true;
             }
-            if (getPlayer1().hasWon() || getPlayer2().hasWon())
+            if (getPlayers().anyPlayerWon())
                 return true;
 
             boolean won = (Math.abs( lastMove.getValue() ) >= WINNING_VALUE);
             if ( won && recordWin ) {
                 if ( lastMove.getValue() >= WINNING_VALUE )
-                    getPlayer1().setWon(true);
+                    getPlayers().getPlayer1().setWon(true);
                 else
-                    getPlayer2().setWon(true);
+                    getPlayers().getPlayer2().setWon(true);
             }
             return ( getNumMoves() >= board_.getMaxNumMoves() || won);
         }

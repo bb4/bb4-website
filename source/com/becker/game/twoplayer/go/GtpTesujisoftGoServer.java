@@ -285,7 +285,7 @@ public class GtpTesujisoftGoServer
 
     private boolean cmdGenmove(StringBuffer response)
     {
-        boolean blackPlays = controller_.getCurrentPlayer().equals(controller_.getPlayer1());
+        boolean blackPlays = controller_.getCurrentPlayer().equals(controller_.getPlayers().getPlayer1());
         controller_.requestComputerMove( blackPlays, true );
 
         GoMove m = (GoMove) controller_.getLastMove();
@@ -313,7 +313,7 @@ public class GtpTesujisoftGoServer
         Point point = argument.m_point;
 
         if (point != null)  {
-            boolean isBlack = controller_.getCurrentPlayer().equals(controller_.getPlayer1());
+            boolean isBlack = controller_.getCurrentPlayer().equals(controller_.getPlayers().getPlayer1());
             GoMove move = new GoMove(point.getX()+1, point.getY()+1,  0, new GoStone(isBlack));
             controller_.manMoves(move);
         }

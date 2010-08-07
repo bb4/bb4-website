@@ -3,8 +3,6 @@ package com.becker.game.common;
 import com.becker.game.common.online.IServerConnection;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -34,7 +32,15 @@ public class PlayerList extends ArrayList<Player> {
     /**
      *  @return the player that goes first.
      */
-    public Player getSecondPlayer()
+    public Player getPlayer1()
+    {
+        return get(0);
+    }
+
+    /**
+     *  @return the player that goes second.
+     */
+    public Player getPlayer2()
     {
         return get(1);
     }
@@ -45,6 +51,18 @@ public class PlayerList extends ArrayList<Player> {
     public int getNumPlayers()
     {
         return size();
+    }
+
+    /**
+     * @return true if any of the players have won.
+     */
+    public boolean anyPlayerWon() {
+        for (Player p : this) {
+            if (p.hasWon()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
