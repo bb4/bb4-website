@@ -43,7 +43,7 @@ public class MoveGeneratorTest extends BlockadeTestCase {
 
         BlockadeBoard board = (BlockadeBoard)controller_.getBoard();
         BlockadeMove lastMove = (BlockadeMove) controller_.getMoveList().getLast();
-        MoveGenerator generator = new MoveGenerator(controller_.getDefaultWeights(), board);
+        MoveGenerator generator = new MoveGenerator(controller_.getComputerWeights().getDefaultWeights(), board);
 
         List moves = generator.generateMoves(lastMove);
         int expectedNumMoves = 64;
@@ -69,7 +69,7 @@ public class MoveGeneratorTest extends BlockadeTestCase {
         BlockadeMove lastMove = (BlockadeMove) controller_.getMoveList().getLast();
         GameContext.log(2, "lastMove="+lastMove);
 
-        MoveGenerator generator = new MoveGenerator(controller_.getDefaultWeights(), board);
+        MoveGenerator generator = new MoveGenerator(controller_.getComputerWeights().getDefaultWeights(), board);
         List moves = generator.generateMoves(lastMove);
 
         int expectedNumMoves = 66;

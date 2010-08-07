@@ -1,6 +1,8 @@
 package com.becker.game.twoplayer.blockade;
 
 import com.becker.game.common.GamePiece;
+import com.becker.game.common.GameWeights;
+import com.becker.optimization.parameter.ParameterArray;
 import junit.framework.*;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
 
@@ -30,8 +32,9 @@ public class BlockadeControllerTest extends BlockadeTestCase {
 
         controller_.makeMove(winningMove);
 
-        int winFromP1Persp = controller_.worth(winningMove, controller_.getDefaultWeights(), true);
-        int winFromP2Persp = controller_.worth(winningMove, controller_.getDefaultWeights(), false);
+        ParameterArray weights = controller_.getComputerWeights().getDefaultWeights();
+        int winFromP1Persp = controller_.worth(winningMove, weights, true);
+        int winFromP2Persp = controller_.worth(winningMove, weights, false);
 
         Assert.assertEquals("Unexpected value of winning move from P1 perspective",
                 SearchStrategy.WINNING_VALUE, winFromP1Persp);

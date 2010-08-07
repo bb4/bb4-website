@@ -137,7 +137,7 @@ public class CheckersViewerMouseListener extends ViewerMouseListener {
         // a list of moves so use default weights.
         controller.addMoves( position, possibleMoveList,
                              (TwoPlayerMove)controller.getLastMove(),
-                             viewer.get2PlayerController().getDefaultWeights() );
+                             viewer.get2PlayerController().getComputerWeights().getDefaultWeights() );
         return possibleMoveList;
     }
 
