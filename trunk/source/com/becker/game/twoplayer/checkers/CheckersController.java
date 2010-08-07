@@ -73,7 +73,7 @@ public class CheckersController extends TwoPlayerController
     @Override
     public int getStrengthOfWin()
     {
-        if (!getPlayer1().hasWon() && !getPlayer2().hasWon())
+        if (!getPlayers().anyPlayerWon())
              return 0;
         return worth(getLastMove(), weights_.getDefaultWeights());
     }
@@ -97,17 +97,17 @@ public class CheckersController extends TwoPlayerController
 
         if ( won && recordWin ) {
             if ( m.isPlayer1() )
-                getPlayer1().setWon(true);
+                getPlayers().getPlayer1().setWon(true);
             else
-                getPlayer2().setWon(true);
+                getPlayers().getPlayer2().setWon(true);
         }
         if ( getNumMoves() >= board_.getMaxNumMoves() ) {
             won = true;
             if ( recordWin ) {
                 if ( Math.abs( m.getValue() ) >= 0 )
-                    getPlayer1().setWon(true);
+                    getPlayers().getPlayer1().setWon(true);
                 else
-                    getPlayer2().setWon(true);
+                    getPlayers().getPlayer2().setWon(true);
             }
         }
         return (won);

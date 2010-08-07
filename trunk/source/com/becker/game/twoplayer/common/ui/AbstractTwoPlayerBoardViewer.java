@@ -334,12 +334,12 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
              if ( contoller.isPlayer1sTurn() ) {
                  assert !contoller.isProcessing();
                  done = manMoves( m );
-                 if ( !contoller.getPlayer2().isHuman() && !done )
+                 if ( !contoller.getPlayers().getPlayer2().isHuman() && !done )
                      doComputerMove( false );
              }
              else { // player 2s turn
                  done = manMoves( m );
-                 if ( !contoller.getPlayer1().isHuman() && !done )
+                 if ( !contoller.getPlayers().getPlayer1().isHuman() && !done )
                      doComputerMove( true );
              }
 
@@ -489,21 +489,20 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
     {
         String message;
         TwoPlayerController c = get2PlayerController();
+        PlayerList players = c.getPlayers();
 
-        boolean p1won = c.getPlayer1().hasWon();
-        boolean p2won = c.getPlayer2().hasWon();
-
-        if ( !p1won && !p2won )
-            message = GameContext.getLabel("TIE_MSG");
-        else {
-            assert (!(p1won && p2won)) : "Both players cannot be winners!";
+        if ( players.anyPlayerWon())    {
+            boolean p1won = players.getPlayer1().hasWon();
             MessageFormat formatter = new MessageFormat(GameContext.getLabel("WON_MSG"));
             Object[] args = new String[5];
             args[0] = p1won? GameContext.getLabel("YOU") : GameContext.getLabel("THE_COMPUTER");
-            args[1] = p1won? c.getPlayer1().getName() : c.getPlayer2().getName();
+            args[1] = p1won? players.getPlayer1().getName() : players.getPlayer2().getName();
             args[2] = Integer.toString(c.getNumMoves());
             args[3] = Util.formatNumber(c.getStrengthOfWin());
             message = formatter.format(args);
+        }
+        else {
+           message = GameContext.getLabel("TIE_MSG");
         }
         return message;
     }

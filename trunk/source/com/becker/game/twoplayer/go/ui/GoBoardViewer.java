@@ -100,8 +100,8 @@ final class GoBoardViewer extends AbstractTwoPlayerBoardViewer {
         int blackCaptures = gc.getNumCaptures(true);
         int whiteCaptures = gc.getNumCaptures(false);
 
-        String p1Name = gc.getPlayer1().getName();
-        String p2Name = gc.getPlayer2().getName();
+        String p1Name = gc.getPlayers().getPlayer1().getName();
+        String p2Name = gc.getPlayers().getPlayer2().getName();
 
         message += p1Name +' '+ STONES_CAPTURED + blackCaptures +'\n';
         message += p2Name +' '+ STONES_CAPTURED + whiteCaptures +"\n\n";

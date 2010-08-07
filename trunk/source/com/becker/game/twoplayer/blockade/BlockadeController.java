@@ -72,7 +72,7 @@ public class BlockadeController extends TwoPlayerController
     @Override
     public int getStrengthOfWin()
     {
-        if (!getPlayer1().hasWon() && !getPlayer2().hasWon()) {
+        if (!getPlayers().anyPlayerWon()) {
              return 0;
         }
         return worth(getLastMove(), weights_.getDefaultWeights());
@@ -208,9 +208,9 @@ public class BlockadeController extends TwoPlayerController
             boolean p1Won = checkForWin(true, board.getPlayer2Homes());
             boolean p2Won = checkForWin(false, board.getPlayer1Homes());
             if (p1Won)
-                getPlayer1().setWon(true);
+                getPlayers().getPlayer1().setWon(true);
             else if (p2Won)
-                getPlayer2().setWon(true);
+                getPlayers().getPlayer2().setWon(true);
             return (p1Won || p2Won);
         }
 

@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.common.ui;
 
+import com.becker.game.common.PlayerList;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.common.util.Util;
 import com.becker.ui.*;
@@ -54,8 +55,9 @@ public class GameTreeInfoPanel extends JPanel {
         Color c = renderer.getPlayer2Color();
         if ( m.isPlayer1() )
             c = renderer.getPlayer1Color();
-        if ( (m.isPlayer1() && !controller.getPlayer1().isHuman()) ||
-             (!m.isPlayer1() && !controller.getPlayer2().isHuman()) )
+        PlayerList players = controller.getPlayers();
+        if ( (m.isPlayer1() && !players.getPlayer1().isHuman()) ||
+             (!m.isPlayer1() && !players.getPlayer2().isHuman()) )
             entity = "Computer's move";
 
         StringBuilder sBuf = new StringBuilder("<html>");

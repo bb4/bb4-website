@@ -103,8 +103,8 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
                 BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(),
                                                   GameContext.getLabel("PLAYER_ASSIGNMENT") ) );
 
-        Player p1 = c.getPlayer1();
-        Player p2 = c.getPlayer2();
+        Player p1 = c.getPlayers().getPlayer1();
+        Player p2 = c.getPlayers().getPlayer2();
 
         human1Button_ = new JRadioButton( human, p1.isHuman() );
         computer1Button_ = new JRadioButton( computer, !p2.isHuman() );
@@ -196,15 +196,16 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
     protected void ok()
     {
         TwoPlayerController c = get2PlayerController();
+        PlayerList players = c.getPlayers();
         if (optimizationCheckbox_.isSelected())
         {
-            c.getPlayer1().setHuman(false);
-            c.getPlayer2().setHuman(false);
+            players.getPlayer1().setHuman(false);
+            players.getPlayer2().setHuman(false);
             c.getTwoPlayerOptions().setAutoOptimize(true);
         }
         else {
-            c.getPlayer1().setHuman( human1Button_.isSelected() );
-            c.getPlayer2().setHuman( human2Button_.isSelected() );
+            players.getPlayer1().setHuman( human1Button_.isSelected() );
+            players.getPlayer2().setHuman( human2Button_.isSelected() );
         }
         board_.setSize( rowSizeField_.getIntValue(), colSizeField_.getIntValue() );
         canceled_ = false;

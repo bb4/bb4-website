@@ -32,6 +32,7 @@ public class GoGameImporter extends TwoPlayerGameImporter {
     protected void parseSGFGameInfo( SGFGame game) {
 
         GoController gc = (GoController) controller_;
+        PlayerList players = gc.getPlayers();
 
         Enumeration e = game.getInfoTokens();
         int size = 13; // default unless specified
@@ -54,11 +55,11 @@ public class GoGameImporter extends TwoPlayerGameImporter {
             }*/
             else if (token instanceof WhiteNameToken) {
                 WhiteNameToken nameToken = (WhiteNameToken) token;
-                gc.getPlayer2().setName(nameToken.getName());
+                players.getPlayer2().setName(nameToken.getName());
             }
             else if (token instanceof BlackNameToken) {
                 BlackNameToken nameToken = (BlackNameToken) token;
-                gc.getPlayer1().setName(nameToken.getName());
+                players.getPlayer1().setName(nameToken.getName());
             }
             else if (token instanceof KomiToken) {
                 KomiToken komiToken = (KomiToken) token;
