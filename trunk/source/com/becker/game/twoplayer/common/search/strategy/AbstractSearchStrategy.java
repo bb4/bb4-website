@@ -1,6 +1,7 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
 import com.becker.common.math.Range;
+import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.game.twoplayer.common.search.tree.PruneType;
 import com.becker.game.twoplayer.common.search.*;
@@ -107,7 +108,7 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
         }
 
         // generate a list of all (or bestPercent) candidate next moves, and pick the best one
-        List<? extends TwoPlayerMove> list =
+        MoveList list =
                 searchable_.generateMoves(lastMove,  weights_, true);
 
         movesConsidered_ += list.size();
@@ -135,9 +136,8 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
      * @param parent for constructing a ui tree. If null no game tree is constructed.
      * @return the chosen move (ie the best move) (may be null if no next move).
      */
-    protected abstract TwoPlayerMove findBestMove(TwoPlayerMove lastMove, 
-                                       int depth, List<? extends TwoPlayerMove> list,
-                                       int alpha, int beta, SearchTreeNode parent);
+    protected abstract TwoPlayerMove findBestMove(TwoPlayerMove lastMove, int depth, MoveList list,
+                                                  int alpha, int beta, SearchTreeNode parent);
 
 
     /**
@@ -175,7 +175,7 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
      * @param thresh the alpha or beta threshold compared to.
      * @param type either PRUNE_ALPHA or PRUNE_BETA - pruned by comparison with Alpha or Beta.
      */
-    protected void showPrunedNodesInTree( List<? extends TwoPlayerMove> list, SearchTreeNode parent,
+    protected void showPrunedNodesInTree( MoveList list, SearchTreeNode parent,
                                           int i, int val, int thresh, PruneType type)
     {
         if (gameTree_ != null) {
@@ -186,7 +186,7 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
     /**
      * @return true if the move list is empty.
      */
-    static boolean emptyMoveList( List<? extends TwoPlayerMove> list, TwoPlayerMove lastMove )
+    static boolean emptyMoveList( MoveList list, TwoPlayerMove lastMove )
     {
         if ( !list.isEmpty() ) return false;
 

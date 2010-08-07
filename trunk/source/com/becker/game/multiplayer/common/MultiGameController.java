@@ -190,7 +190,6 @@ public abstract class MultiGameController extends GameController
     /**
      *  @return the player that goes first.
      */
-    @Override
     public Player getFirstPlayer()
     {
         return players_.get(startingPlayerIndex_);
@@ -215,9 +214,9 @@ public abstract class MultiGameController extends GameController
      * generate all possible next moves.
      * impossible for this game.
      */
-    public List generateMoves( Move lastMove, ParameterArray weights, boolean player1sPerspective )
+    public MoveList generateMoves( Move lastMove, ParameterArray weights, boolean player1sPerspective )
     {
-        return new LinkedList();
+        return new MoveList();
     }
 
     /**

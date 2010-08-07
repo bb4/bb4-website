@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.go;
 import com.becker.game.common.Board;
 import com.becker.game.common.CaptureList;
 import com.becker.game.common.GameContext;
+import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.CandidateMoveAnalyzer;
@@ -35,12 +36,12 @@ public final class MoveGenerator {
     /**
      * @return all reasonably good next moves.
      */
-    public final List<? extends TwoPlayerMove> generateMoves(TwoPlayerMove lastMove, ParameterArray weights,
-                                                             boolean player1sPerspective )
+    public final MoveList generateMoves(TwoPlayerMove lastMove, ParameterArray weights,
+                                        boolean player1sPerspective )
     {
         GoProfiler prof = GoProfiler.getInstance();
         GoBoard board = (GoBoard)controller_.getBoard();
-        List<GoMove> moveList = new LinkedList<GoMove>();
+        MoveList moveList = new MoveList();
         int nCols = board.getNumCols();
         int nRows = board.getNumRows();
         assert (nRows == nCols) : " rows and cols must be the same in go";
@@ -92,7 +93,7 @@ public final class MoveGenerator {
      * if none of the generated moves have an inherited value better than the passing move
      * (which just uses the value of the current move) then we should pass.
      */
-    private void addPassingMoveIfNeeded(TwoPlayerMove lastMove, List<GoMove> moveList, boolean player1) {
+    private void addPassingMoveIfNeeded(TwoPlayerMove lastMove, MoveList moveList, boolean player1) {
 
         Board b = controller_.getBoard();
         if (controller_.getNumMoves() > (b.getNumCols() + b.getNumRows()))  {

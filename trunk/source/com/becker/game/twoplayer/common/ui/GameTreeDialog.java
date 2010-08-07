@@ -367,10 +367,10 @@ public final class GameTreeDialog extends AbstractDialog
         });
     }
 
-    public void addPrunedNodes(final List<? extends TwoPlayerMove> list, final SearchTreeNode parent,
+    public void addPrunedNodes(final MoveList list, final SearchTreeNode parent,
                                final int i, final int val, final int thresh, final PruneType type) {
         // make a defensive copy of the list because we may modify it.
-        final List listCopy = new ArrayList<TwoPlayerMove>(list);
+        final MoveList listCopy = new MoveList(list);
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 parent.addPrunedChildNodes(listCopy, i, val, thresh, type);

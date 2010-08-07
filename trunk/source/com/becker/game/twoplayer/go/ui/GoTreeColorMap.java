@@ -2,6 +2,7 @@ package com.becker.game.twoplayer.go.ui;
 
 import com.becker.game.twoplayer.common.*;
 import com.becker.common.*;
+import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WINNING_VALUE;
 
 import java.awt.*;
 
@@ -17,15 +18,15 @@ public class GoTreeColorMap extends ColorMap {
 
 
         private static final double[] myValues_ = {
-                                  -TwoPlayerController.WINNING_VALUE,
-                                  -TwoPlayerController.WINNING_VALUE/2.0,
-                                  -TwoPlayerController.WINNING_VALUE/10.0,
-                                  -TwoPlayerController.WINNING_VALUE/100.0,
+                                  -WINNING_VALUE,
+                                  -WINNING_VALUE/2.0,
+                                  -WINNING_VALUE/10.0,
+                                  -WINNING_VALUE/100.0,
                                    0.0,
-                                   TwoPlayerController.WINNING_VALUE/100.0,
-                                   TwoPlayerController.WINNING_VALUE/10.0,
-                                   TwoPlayerController.WINNING_VALUE/2.0,
-                                   TwoPlayerController.WINNING_VALUE};
+                                   WINNING_VALUE/100.0,
+                                   WINNING_VALUE/10.0,
+                                   WINNING_VALUE/2.0,
+                                   WINNING_VALUE};
 
         private static final Color[] myColors_ = {
                                   new Color(180, 0, 20),

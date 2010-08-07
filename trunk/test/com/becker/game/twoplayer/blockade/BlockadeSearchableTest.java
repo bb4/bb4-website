@@ -1,6 +1,7 @@
 package com.becker.game.twoplayer.blockade;
 
 import com.becker.game.common.GamePiece;
+import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.TwoPlayerSearchableBaseTst;
 import com.becker.game.twoplayer.common.search.ISearchableHelper;
@@ -122,7 +123,7 @@ public class BlockadeSearchableTest extends TwoPlayerSearchableBaseTst {
         restore(fileName);
         ParameterArray wts = weights();
         TwoPlayerMove lastMove = (TwoPlayerMove) getController().getLastMove();
-        List<? extends TwoPlayerMove> moves =
+        MoveList moves =
                 getController().getSearchable().generateMoves(lastMove, wts, !lastMove.isPlayer1());
 
         if (expectedMoves.length != moves.size()) {

@@ -288,7 +288,7 @@ public class GtpTesujisoftGoServer
         boolean blackPlays = controller_.getCurrentPlayer().equals(controller_.getPlayer1());
         controller_.requestComputerMove( blackPlays, true );
 
-        GoMove m = (GoMove) controller_.getBoard().getLastMove();
+        GoMove m = (GoMove) controller_.getLastMove();
         //System.out.println("got " + m);
 
         Point  point = new Point(m.getToRow()-1, m.getToCol()-1);

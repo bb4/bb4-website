@@ -45,7 +45,7 @@ public class ChessViewerMouseListener extends CheckersViewerMouseListener {
         ChessPiece piece = (ChessPiece)position.getPiece();
         List possibleMoveList =
             piece.findPossibleMoves(board, position.getRow(), position.getCol(),
-                                    board.getLastMove());
+                                    controller.getLastMove());
         controller.removeSelfCheckingMoves(possibleMoveList);
         return possibleMoveList;
     }

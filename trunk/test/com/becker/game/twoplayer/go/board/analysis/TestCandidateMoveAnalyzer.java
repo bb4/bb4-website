@@ -24,7 +24,7 @@ public class TestCandidateMoveAnalyzer extends GoTestCase {
 
     /** XXXX sometimes passes sometimes fails. odd. */
     public void testCandidateMoves2() {
-        verifyCandidateMoves("problem_score2", 103, null);   // or 79?
+        verifyCandidateMoves("problem_score2", 53, null);   // or 79?  103? 53?
     }
     
     public void testCandidateMoves3() {

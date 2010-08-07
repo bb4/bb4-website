@@ -219,7 +219,7 @@ public class PokerController extends MultiGameController
      */
     public boolean isDone()
     {
-        if (getBoard().getLastMove() == null)
+        if (getLastMove() == null)
             return false;
         int numPlayersStillPlaying = 0;
         for (Player p : getPlayers()) {
@@ -245,7 +245,7 @@ public class PokerController extends MultiGameController
 
         if (roundOver()) {
             // every player left in the game has called.
-            PokerRound round = pviewer.createMove(getBoard().getLastMove());
+            PokerRound round = pviewer.createMove(getLastMove());
             // records the result on the board.
             makeMove(round);
             pviewer.refresh();

@@ -1,6 +1,7 @@
 package com.becker.game.twoplayer.pente;
 
 import com.becker.game.common.GamePiece;
+import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.TwoPlayerSearchableBaseTst;
 import com.becker.game.twoplayer.common.search.ISearchableHelper;
@@ -125,7 +126,7 @@ public class PenteSearchableTest extends TwoPlayerSearchableBaseTst {
 
         restore("urgentMoveP1ToPlay");
         // there should not be any urgent moves at the very start of the game.
-        List<? extends TwoPlayerMove> moves =
+        MoveList moves =
             searchable.generateUrgentMoves((TwoPlayerMove)getController().getLastMove(), weights(), true);
 
         checkMoveListAgainstExpected("urgentMoveP1ToPlay", EXPECTED_URGENT_MOVES_P1, moves);
@@ -136,7 +137,7 @@ public class PenteSearchableTest extends TwoPlayerSearchableBaseTst {
 
         restore("urgentMoveP2ToPlay");
         // there should not be any urgent moves at the very start of the game.
-        List<? extends TwoPlayerMove> moves =
+        MoveList moves =
             searchable.generateUrgentMoves((TwoPlayerMove)getController().getLastMove(), weights(), true);
 
         checkMoveListAgainstExpected("urgentMoveP2ToPlay", EXPECTED_URGENT_MOVES_P2, moves);
@@ -146,7 +147,7 @@ public class PenteSearchableTest extends TwoPlayerSearchableBaseTst {
     private void checkGeneratedMoves(String fileName, TwoPlayerMove[] expectedMoves) {
         restore(fileName);
         TwoPlayerMove lastMove = (TwoPlayerMove) getController().getLastMove();
-        List<? extends TwoPlayerMove> moves =
+        MoveList moves =
                 getController().getSearchable().generateMoves(lastMove, weights(), !lastMove.isPlayer1());
 
         checkMoveListAgainstExpected(fileName, expectedMoves, moves);

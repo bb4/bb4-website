@@ -21,7 +21,7 @@ public class TrivialNewGameDialog extends MultiPlayerNewGameDialog
 
     @Override
     protected PlayerTable createPlayerTable() {
-        return  new TrivialPlayerTable((List<TrivialPlayer>) controller_.getPlayers());
+        return  new TrivialPlayerTable(controller_.getPlayers());
     }
 
     @Override

@@ -31,7 +31,7 @@ public abstract class TwoPlayerBoard extends Board
                     "The piece was " + piece + ". Moved to " + m.getToRow() + ", " + m.getToCol();
             // make the moveList part of the board instead of the controller
             if ( GameContext.getDebugMode() > 0 ) {
-                piece.setAnnotation( Integer.toString(getNumMoves()) );
+                piece.setAnnotation( Integer.toString(getMoveList().getNumMoves()) );
             }
         }
         return true;
@@ -74,7 +74,7 @@ public abstract class TwoPlayerBoard extends Board
         bldr.append("\n");
         int nRows = getNumRows();
         int nCols = getNumCols();
-        TwoPlayerMove m = (TwoPlayerMove) getLastMove();
+        TwoPlayerMove m = (TwoPlayerMove) getMoveList().getLastMove();
         for ( int i = 1; i <= nRows; i++ )   {
           for ( int j = 1; j <= nCols; j++ ) {
               BoardPosition pos = this.getPosition(i,j);

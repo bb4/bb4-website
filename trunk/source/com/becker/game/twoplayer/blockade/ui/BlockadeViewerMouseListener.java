@@ -233,7 +233,7 @@ public class BlockadeViewerMouseListener extends ViewerMouseListener {
 
         if (newPosition.isHomeBase( !isPlayer1 )) {
             hasWon_ = true;
-            assert(isPlayer1 == (controller.getCurrentPlayer() == controller.getFirstPlayer()));
+            assert(isPlayer1 == (controller.getCurrentPlayer() == controller.getPlayers().getFirstPlayer()));
             controller.getCurrentPlayer().setWon(true);
         }
         else {

@@ -1,6 +1,7 @@
 package com.becker.game.twoplayer.tictactoe;
 
 import com.becker.game.common.GamePiece;
+import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.ISearchableHelper;
 import com.becker.game.twoplayer.common.search.TwoPlayerSearchableBaseTst;
@@ -138,7 +139,7 @@ public class TicTacToeSearchableTest extends TwoPlayerSearchableBaseTst {
         restore("urgentMoves");
         // there should not be any urgent moves at the very start of the game.
         System.out.println("lastMove="+getController().getLastMove() );   // 1,1
-        List<? extends TwoPlayerMove> moves =
+        MoveList moves =
             searchable.generateUrgentMoves((TwoPlayerMove)getController().getLastMove(), weights(), true);
 
         checkMoveListAgainstExpected("urgentMoves", EXPECTED_URGENT_MOVES, moves);
@@ -152,7 +153,7 @@ public class TicTacToeSearchableTest extends TwoPlayerSearchableBaseTst {
         restore("urgentMoves");
         // there should not be any urgent moves at the very start of the game.
         System.out.println("lastMove="+getController().getLastMove() );   // 1,1
-        List<? extends TwoPlayerMove> moves =
+        MoveList moves =
             searchable.generateUrgentMoves((TwoPlayerMove)getController().getLastMove(), weights(), true);
 
         checkMoveListAgainstExpected("urgentMoves", EXPECTED_URGENT_MOVES, moves);
@@ -163,7 +164,7 @@ public class TicTacToeSearchableTest extends TwoPlayerSearchableBaseTst {
     private void checkGeneratedMoves(String fileName, TwoPlayerMove[] expectedMoves) {
         restore(fileName);
         TwoPlayerMove lastMove = (TwoPlayerMove) getController().getLastMove();
-        List<? extends TwoPlayerMove> moves =
+        MoveList moves =
                 getController().getSearchable().generateMoves(lastMove, weights(), !lastMove.isPlayer1());
 
         checkMoveListAgainstExpected(fileName, expectedMoves, moves);

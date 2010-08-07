@@ -176,11 +176,11 @@ public class TerritoryAnalyzer {
         //only do this when the mid-game starts, since early on there is always only one connected empty region.
         int edgeOffset = 1;
 
-        if (board_.getNumMoves() <= 2 * board_.getNumRows()) {
+        if (board_.getMoveList().getNumMoves() <= 2 * board_.getNumRows()) {
             return diffScore;
         }
         // later in the game we can take the analysis all the way to the edge.
-        float ratio = (float)board_.getNumMoves() / board_.getTypicalNumMoves();
+        float ratio = (float)board_.getMoveList().getNumMoves() / board_.getTypicalNumMoves();
         if ((ratio > EMPTY_REGION_EDGE_THRESH) || isEndOfGame) {
             edgeOffset = 0;
         }

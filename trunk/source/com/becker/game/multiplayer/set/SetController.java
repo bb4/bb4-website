@@ -188,12 +188,9 @@ public class SetController extends MultiGameController
         // After that, they can change manually to get different players.
         if (players_ == null) {
             // create the default players. One human and one robot.
-            players_ = new ArrayList<SetPlayer>(2);
-            List<SetPlayer> splayers = (List<SetPlayer>)players_;
-            splayers.add(SetPlayer.createSetPlayer("Player 1", 
-                                                                              SetPlayer.getNewPlayerColor(splayers), true));
-            splayers.add(SetPlayer.createSetPlayer("Player 2", 
-                                                                             SetPlayer.getNewPlayerColor(splayers), false));
+            players_ = new PlayerList();
+            players_.add(SetPlayer.createSetPlayer("Player 1", SetPlayer.getNewPlayerColor(players_), true));
+            players_.add(SetPlayer.createSetPlayer("Player 2", SetPlayer.getNewPlayerColor(players_), false));
             players_.get(1).setName(players_.get(1).getName()+'('+((SetRobotPlayer)players_.get(1)).getRobotType()+')');
         }
     }
@@ -235,16 +232,16 @@ public class SetController extends MultiGameController
      */
     @Override
     public SetPlayer determineWinner() {
-        List<SetPlayer> players = (List<SetPlayer>)getPlayers();
+        PlayerList players = getPlayers();
         SetPlayer winner;
 
         int first=0;
 
-        winner = players.get(first);
+        winner = (SetPlayer)players.get(first);
         int mostSets = winner.getNumSetsFound();
 
         for (int i = first+1; i < players.size(); i++) {
-            SetPlayer p = players.get(i);
+            SetPlayer p = (SetPlayer)players.get(i);
             if (p.getNumSetsFound() > mostSets) {
                 mostSets = p.getNumSetsFound();
                 winner = p;

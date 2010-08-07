@@ -2,6 +2,7 @@ package com.becker.game.twoplayer.go;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.common.Move;
+import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
@@ -21,6 +22,7 @@ import java.util.List;
 
 import static com.becker.game.twoplayer.go.GoControllerConstants.DEFAULT_NUM_ROWS;
 import static com.becker.game.twoplayer.go.GoControllerConstants.WIN_THRESHOLD;
+import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WINNING_VALUE;
 
 /**
  * Defines everything the computer needs to know to play Go.
@@ -137,7 +139,7 @@ public final class GoController extends TwoPlayerController
      * @return estimate of the amount of territory the player has
      */
     public int getTerritoryEstimate( boolean forPlayer1 ) {
-        Move m = board_.getLastMove();
+        Move m = getLastMove();
         if ( m == null )
             return 0;
 
@@ -356,9 +358,9 @@ public final class GoController extends TwoPlayerController
 
     /** Overridden to it can be accessed from MoveGenerator. */
     @Override
-    protected List<GoMove> getBestMoves(boolean player1, List<? extends TwoPlayerMove> moveList,
-                                                               boolean player1sPerspective )  {
-       return (List<GoMove>) super.getBestMoves(player1, moveList, player1sPerspective);      
+    protected MoveList getBestMoves(boolean player1, MoveList moveList, boolean player1sPerspective )  {
+
+       return super.getBestMoves(player1, moveList, player1sPerspective);
     }
 
 
@@ -428,14 +430,15 @@ public final class GoController extends TwoPlayerController
         /**
          * return any moves that take captures or get out of atari.
          */
-        public final List<? extends TwoPlayerMove> generateUrgentMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
+        public final MoveList generateUrgentMoves( TwoPlayerMove lastMove, ParameterArray weights,
+                                                   boolean player1sPerspective )
         {
-            List<? extends TwoPlayerMove> moves = generateMoves( lastMove, weights, player1sPerspective );
+            MoveList moves = generateMoves(lastMove, weights, player1sPerspective );
             GoBoard gb = (GoBoard) board_;
             GoMove lastMovePlayed = (GoMove) lastMove;
 
             // just keep the moves that take captures
-            Iterator<? extends TwoPlayerMove> it = moves.iterator();
+            Iterator<Move> it = moves.iterator();
             while ( it.hasNext() ) {
                 GoMove move = (GoMove) it.next();
                 if ( move.getNumCaptures() == 0 || lastMovePlayed.causesAtari(gb) > 0 ) {
@@ -465,8 +468,8 @@ public final class GoController extends TwoPlayerController
         /**
          * generate all possible next moves
          */
-        public final List<? extends TwoPlayerMove> generateMoves(TwoPlayerMove lastMove, ParameterArray weights,
-                                                                 boolean player1sPerspective )
+        public final MoveList generateMoves(TwoPlayerMove lastMove, ParameterArray weights,
+                                            boolean player1sPerspective )
         {
             MoveGenerator generator = new MoveGenerator(GoController.this);
             return generator.generateMoves(lastMove, weights, player1sPerspective);

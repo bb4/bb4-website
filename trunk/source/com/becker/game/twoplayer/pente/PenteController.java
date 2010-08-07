@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.pente;
 
+import com.becker.common.Location;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerController;
@@ -8,6 +9,7 @@ import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.pente.analysis.MoveEvaluator;
 import com.becker.optimization.parameter.ParameterArray;
+import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WINNING_VALUE;
 
 import java.util.*;
 
@@ -21,6 +23,8 @@ public class PenteController extends TwoPlayerController
     private static final int DEFAULT_NUM_ROWS = 20;
 
     protected MoveEvaluator moveEvaluator_;
+
+    private Random RANDOM = new Random(0);
 
     /**
      *  Constructor
@@ -94,10 +98,10 @@ public class PenteController extends TwoPlayerController
         /**
          * generate all possible next moves.
          */
-        public List<? extends TwoPlayerMove> generateMoves( TwoPlayerMove lastMove,
-                                                            ParameterArray weights, boolean player1sPerspective )
+        public MoveList generateMoves(TwoPlayerMove lastMove,
+                                      ParameterArray weights, boolean player1sPerspective )
         {
-            List<TwoPlayerMove> moveList = new LinkedList<TwoPlayerMove>();
+            MoveList moveList = new MoveList();
 
             PenteBoard pb = (PenteBoard) board_;
             pb.determineCandidateMoves();
@@ -131,20 +135,19 @@ public class PenteController extends TwoPlayerController
          * Opponent moves that result in a win should be blocked.
          * @return Set of moves the moves that result in a certain win or a certain loss.
          */
-        public List<? extends TwoPlayerMove> generateUrgentMoves(
-                TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
+        public MoveList generateUrgentMoves(TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective)
         {
             // no urgent moves at start of game.
             if (lastMove == null)  {
-                return new LinkedList<TwoPlayerMove>();
+                return new MoveList();
             }
-            List<TwoPlayerMove> allMoves = findMovesForBothPlayers(lastMove, weights, player1sPerspective);
+            MoveList allMoves = findMovesForBothPlayers(lastMove, weights, player1sPerspective);
 
             // now keep only those that result in a win or loss.
-            Iterator<TwoPlayerMove> it = allMoves.iterator();
-            List<TwoPlayerMove> urgentMoves = new LinkedList<TwoPlayerMove>();
+            Iterator<Move> it = allMoves.iterator();
+            MoveList urgentMoves = new MoveList();
             while ( it.hasNext() ) {
-                TwoPlayerMove move = it.next();
+                TwoPlayerMove move = (TwoPlayerMove)it.next();
                 // if its not a winning move or we already have it, then skip
                 if ( Math.abs(move.getValue()) >= WINNING_VALUE  && !contains(move, urgentMoves) ) {
                     move.setUrgent(true);
@@ -158,16 +161,17 @@ public class PenteController extends TwoPlayerController
          * Consider both our moves and and opponent moves.
          * @return Set of all next moves.
          */
-        private List<TwoPlayerMove> findMovesForBothPlayers(TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective) {
-            List<TwoPlayerMove> allMoves = new ArrayList<TwoPlayerMove>();
-            List<? extends TwoPlayerMove> moves = generateMoves( lastMove, weights, player1sPerspective );
+        private MoveList findMovesForBothPlayers(TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective) {
+            MoveList allMoves = new MoveList();
+            MoveList moves = generateMoves( lastMove, weights, player1sPerspective );
             allMoves.addAll(moves);
 
             TwoPlayerMove oppLastMove = lastMove.copy();
             oppLastMove.setPlayer1(!lastMove.isPlayer1());
-            List<? extends TwoPlayerMove> opponentMoves =
+            MoveList opponentMoves =
                     generateMoves( oppLastMove, weights, !player1sPerspective );
-            for (TwoPlayerMove move : opponentMoves){
+            for (Move m : opponentMoves){
+                TwoPlayerMove move = (TwoPlayerMove) m;
                 move.setPlayer1(!lastMove.isPlayer1());
                 move.setPiece(new GamePiece(!lastMove.isPlayer1()));
                 allMoves.add(move);
@@ -177,10 +181,11 @@ public class PenteController extends TwoPlayerController
         }
 
 
-        private boolean contains(TwoPlayerMove move, List<TwoPlayerMove> moves)
+        private boolean contains(TwoPlayerMove move, MoveList moves)
         {
-            for (TwoPlayerMove m : moves) {
-                if (m.getToLocation().equals(move.getToLocation())) {
+            for (Move m : moves) {
+                Location moveLocation = ((TwoPlayerMove)m).getToLocation();
+                if (moveLocation.equals(move.getToLocation())) {
                     return true;
                 }
             }

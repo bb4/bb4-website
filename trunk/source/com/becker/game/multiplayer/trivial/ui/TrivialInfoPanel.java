@@ -156,7 +156,7 @@ class TrivialInfoPanel extends GameInfoPanel implements GameChangedListener, Act
             return;
 
         setPlayerLabel();
-        Move lastMove =  controller_.getBoard().getLastMove();
+        Move lastMove =  controller_.getLastMove();
         if (lastMove != null)  {
             moveNumLabel_.setText( (controller_.getNumMoves() + 2) + " " );
         }

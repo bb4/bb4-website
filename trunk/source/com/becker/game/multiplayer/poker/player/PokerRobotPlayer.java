@@ -1,5 +1,6 @@
 package com.becker.game.multiplayer.poker.player;
 
+import com.becker.game.common.Player;
 import com.becker.game.multiplayer.common.MultiGameController;
 import com.becker.game.common.PlayerAction;
 import com.becker.game.multiplayer.poker.*;
@@ -103,9 +104,10 @@ public abstract class PokerRobotPlayer extends PokerPlayer
     }
 
     protected boolean allOthersFolded(PokerController pc) {
-        List<PokerPlayer> players = (List<PokerPlayer>) pc.getPlayers();
-        for (final PokerPlayer newVar : players) {
-            if (!newVar.hasFolded() && (newVar != this)) {
+
+        for (Player player : pc.getPlayers()) {
+            PokerPlayer pp = (PokerPlayer) player;
+            if (!pp.hasFolded() && (pp != this)) {
                 return false;
             }
         }

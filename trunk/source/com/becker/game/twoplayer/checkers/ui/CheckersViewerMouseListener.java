@@ -1,20 +1,15 @@
 package com.becker.game.twoplayer.checkers.ui;
 
 import com.becker.common.Location;
-import com.becker.game.common.Board;
-import com.becker.game.common.BoardPosition;
-import com.becker.game.common.GameContext;
-import com.becker.game.common.GamePiece;
+import com.becker.game.common.*;
 import com.becker.game.common.ui.GameBoardViewer;
 import com.becker.game.common.ui.ViewerMouseListener;
 import com.becker.game.twoplayer.checkers.CheckersController;
-import com.becker.game.twoplayer.checkers.CheckersMove;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -136,12 +131,12 @@ public class CheckersViewerMouseListener extends ViewerMouseListener {
         CheckersBoardViewer viewer = (CheckersBoardViewer)viewer_;
         CheckersController controller = (CheckersController)viewer.getController();
 
-        List<CheckersMove> possibleMoveList = new LinkedList<CheckersMove>();
+        MoveList possibleMoveList = new MoveList();
 
         // it doesn't matter which set of wts are pass in here since we just need
         // a list of moves so use default weights.
         controller.addMoves( position, possibleMoveList,
-                             (TwoPlayerMove)viewer.getBoard().getLastMove(),
+                             (TwoPlayerMove)controller.getLastMove(),
                              viewer.get2PlayerController().getDefaultWeights() );
         return possibleMoveList;
     }
