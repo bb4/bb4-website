@@ -1,7 +1,5 @@
 package com.becker.game.common;
 
-import com.becker.game.twoplayer.go.board.elements.GoBoardPositionSet;
-
 import java.util.*;
 
 /**
@@ -82,7 +80,7 @@ public class CaptureList extends LinkedList<BoardPosition>
     /**
      * @return true if list is not null and not 0 sized.
      */
-    public boolean addAllCopied( GoBoardPositionSet list )
+    public boolean addAllCopied(Set<BoardPosition> list)
     {
         if ( list == null )
             return false;

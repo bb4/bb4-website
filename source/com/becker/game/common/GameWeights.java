@@ -1,5 +1,6 @@
 package com.becker.game.common;
 
+
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
 import com.becker.optimization.parameter.ParameterArray;
 
@@ -17,7 +18,7 @@ public class GameWeights
     protected static final double ASSUMED_WINNING_VALUE = 1024;
 
     /** the weights are created assuming a winning vbalue of 1000. It that changes we need to scale them */
-    protected static final double SCALE = SearchStrategy.WINNING_VALUE /ASSUMED_WINNING_VALUE;
+    protected static final double SCALE = SearchStrategy.WINNING_VALUE / ASSUMED_WINNING_VALUE;
 
     private static int numWeights_;
 

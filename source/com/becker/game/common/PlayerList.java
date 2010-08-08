@@ -1,7 +1,5 @@
 package com.becker.game.common;
 
-import com.becker.game.common.online.IServerConnection;
-
 import java.util.ArrayList;
 import java.util.Random;
 

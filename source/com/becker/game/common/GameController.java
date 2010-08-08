@@ -1,8 +1,7 @@
 package com.becker.game.common;
 
-import com.becker.game.common.online.*;
+import com.becker.game.common.online.IServerConnection;
 
-import java.util.*;
 
 /**
  * This is an abstract base class for a Game Controller.
