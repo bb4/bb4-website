@@ -18,7 +18,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Generates candidate next moves for a game of com.becker.game.twoplayer.blockade given a current board state.
+ * Generates candidate next moves for a game of cBlockade given a current board state.
  *
  * @author Barry Becker
  */
@@ -73,9 +73,7 @@ public class MoveGenerator {
       * @param weights to use.
       * @return the number of moves added.
       */
-     private int addMoves( BoardPosition p, MoveList moveList, List<Path> opponentPaths,
-                                          ParameterArray weights )
-     {
+     private int addMoves( BoardPosition p, MoveList moveList, List<Path> opponentPaths, ParameterArray weights) {
          int numMovesAdded = 0;
 
          // first find the NUM_HOMES shortest paths for p.
@@ -83,9 +81,8 @@ public class MoveGenerator {
 
          // for each of these paths, add possible wall positions.
          // Take the first move from each shortest path and add the wall positions to it.
-         List<Integer> nMovesAtEachStep = new LinkedList<Integer>();
-         for (int i = 0; i < paths.size(); i++) {
-             BlockadeMove firstStep = paths.get(i).get(0);
+         for (Path path : paths) {
+             BlockadeMove firstStep = path.get(0);
              // make the move
              board_.makeMove(firstStep);
 
@@ -96,7 +93,7 @@ public class MoveGenerator {
              List<Path> ourPaths = board_.findShortestPaths(newPos);
 
              List<BlockadeMove> wallMoves = findWallPlacementsForMove(firstStep, ourPaths, opponentPaths, weights);
-             GameContext.log(2, "num wall placements for Move = " +wallMoves.size());
+             GameContext.log(2, "num wall placements for Move = " + wallMoves.size());
              board_.undoMove();
 
              // iterate through the wallMoves and add only the ones that are not there already
@@ -105,11 +102,8 @@ public class MoveGenerator {
                      moveList.add(wallMove);
                  }
              }
-
-             nMovesAtEachStep.add(wallMoves.size());
              numMovesAdded += wallMoves.size();
          }
-         // GameContext.log(0, "addMoves nummoves add="+numMovesAdded );
 
          return numMovesAdded;
     }
@@ -125,10 +119,8 @@ public class MoveGenerator {
      */
     private List<BlockadeMove> findWallPlacementsForMove(BlockadeMove firstStep,
                                                          List<Path> paths, List<Path> opponentPaths,
-                                                         ParameterArray weights)
-    {
+                                                         ParameterArray weights) {
         List<BlockadeMove> moves = new LinkedList<BlockadeMove>();
-        BlockadeMove ourmove = firstStep;
 
         // is it true that the set of walls we could add for any constant set
         // of opponent paths is always the same regardless of firstStep?
@@ -159,7 +151,7 @@ public class MoveGenerator {
                 // typically 0-4 walls
                 assert walls.size() <=4:"num walls = " + walls.size();
                 for (BlockadeWall wall: walls) {
-                    addMoveWithWallPlacement(ourmove, wall, weights, moves);
+                    addMoveWithWallPlacement(firstStep, wall, weights, moves);
                }
            }
            if (moves.isEmpty()) {
@@ -171,7 +163,7 @@ public class MoveGenerator {
 
         // if no move was added add the more with no wall placement
         if (moves.isEmpty()) {
-           addMoveWithWallPlacement(ourmove, null, weights, moves);
+           addMoveWithWallPlacement(firstStep, null, weights, moves);
         }
 
         return moves;
@@ -214,8 +206,7 @@ public class MoveGenerator {
      * @return the walls for a specific move along an opponent path.
      */
     @SuppressWarnings("fallthrough")
-    public List<BlockadeWall> getWallsForMove(BlockadeMove move, List<Path> paths)
-    {
+    public List<BlockadeWall> getWallsForMove(BlockadeMove move, List<Path> paths) {
         List<BlockadeWall> wallsList = new LinkedList<BlockadeWall>();
 
         // 12 cases
@@ -275,8 +266,7 @@ public class MoveGenerator {
      * @return the accumulated list of walls.
      */
     private List<BlockadeWall> checkAddWallsForDirection(BlockadeBoardPosition pos, List<Path> paths,
-                                                         Direction direction, List<BlockadeWall> wallsList)
-    {
+                                                         Direction direction, List<BlockadeWall> wallsList) {
         BlockadeBoard b = board_;
         List<BlockadeWall> wallsToCheck = new LinkedList<BlockadeWall>();
         BlockadeBoardPosition westPos = pos.getNeighbor(Direction.WEST, b);
@@ -326,11 +316,9 @@ public class MoveGenerator {
      */
     private List<BlockadeWall> getBlockedWalls(List<BlockadeWall> wallsToCheck, List<Path> paths,
                                                                              List<BlockadeWall> wallsList)  {
-        Iterator<BlockadeWall> it = wallsToCheck.iterator();
-        while (it.hasNext()) {
-            BlockadeWall w = it.next();
-            if (w != null && !arePathsBlockedByWall(paths, w, board_))
-              wallsList.add(w);
+        for (BlockadeWall wall : wallsToCheck) {
+            if (wall != null && !arePathsBlockedByWall(paths, wall, board_))
+                wallsList.add(wall);
         }
 
         return wallsList;
@@ -443,8 +431,7 @@ public class MoveGenerator {
     private List<BlockadeWall> checkWallsForDiagonal(
                                                     BlockadeBoardPosition topLeft,
                                                     BlockadeBoardPosition topRight,
-                                                    BlockadeBoardPosition bottomLeft )
-    {
+                                                    BlockadeBoardPosition bottomLeft ) {
         boolean leftWall = topLeft.isSouthBlocked();
         boolean rightWall = topRight.isSouthBlocked();
         boolean topWall = topLeft.isEastBlocked();
@@ -456,7 +443,7 @@ public class MoveGenerator {
             wallsToCheck.add( new BlockadeWall(topLeft, topRight) );
             wallsToCheck.add( new BlockadeWall(topLeft, bottomLeft) );
         }
-       else if (leftWall && bottomWall) {
+        else if (leftWall && bottomWall) {
             wallsToCheck = handleDirectionCase(topRight, 0, 1, wallsToCheck);
             wallsToCheck = handleDirectionCase(topLeft, -1, 1, wallsToCheck);
         }
@@ -511,5 +498,4 @@ public class MoveGenerator {
         }
         return wallsToCheck;
     }
-
 }
