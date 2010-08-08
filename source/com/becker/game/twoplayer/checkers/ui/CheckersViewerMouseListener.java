@@ -90,8 +90,10 @@ public class CheckersViewerMouseListener extends ViewerMouseListener {
             return; // it was not valid
         }
 
-        if ( !viewer.continuePlay( m ) )    // then game over
+        if (!viewer.continuePlay( m )) {
+            // then game over
             viewer.showWinnerDialog();
+        }
     }
 
 
