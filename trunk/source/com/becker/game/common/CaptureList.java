@@ -33,13 +33,15 @@ public class CaptureList extends LinkedList<BoardPosition>
     }
 
     /**
-     * @param b the game board
+     * Either take the peices off the board, or put them back on based on the value of remove.
+     * @param b the game board.
      * @param remove if true then remove the pieces, else restore them
      */
     private void modifyCaptures( Board b, boolean remove )
     {
         for (BoardPosition capture : this) {
             BoardPosition pos = b.getPosition(capture.getRow(), capture.getCol());
+            assert pos != null : "Captured position was null " + capture;
             if (remove)
                 pos.setPiece(null);
             else {

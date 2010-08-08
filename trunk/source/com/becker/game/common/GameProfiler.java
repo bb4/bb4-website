@@ -1,11 +1,11 @@
 package com.becker.game.common;
 
 import com.becker.common.Profiler;
+import com.becker.common.util.Util;
 
 /**
- * User: Barry Becker
- * Date: Apr 16, 2005
- * Time: 6:20:14 AM
+ * Keep krack of timing info for different game searching aspects.
+ * @author Barry Becker
  */
 public class GameProfiler extends Profiler {
 
@@ -15,6 +15,8 @@ public class GameProfiler extends Profiler {
     protected static final String CALC_WORTH = "calculating worth";
 
     private static GameProfiler instance;
+
+    private long searchTime;
 
     /**
      * @return singleton instance.
@@ -35,7 +37,43 @@ public class GameProfiler extends Profiler {
         add(UNDO_MOVE);      
         add(MAKE_MOVE);      
     }
-     
+
+    /**
+     * Start profiling the game search.
+     */
+    public void startProfiling()  {
+
+        searchTime = 0;
+        if ( GameContext.isProfiling() ) {
+            searchTime = System.currentTimeMillis();
+            initialize();
+        }
+    }
+
+    /**
+     * Stop profiling and report the stats.
+     * @param numMovesConsidered the number of moves considered duering search.
+     */
+    public void stopProfiling(long numMovesConsidered) {
+        if ( GameContext.isProfiling() ) {
+            long totalTime = System.currentTimeMillis() - searchTime;
+            showProfileStats(totalTime, numMovesConsidered);
+        }
+    }
+
+
+    /**
+     * Export some usefule performance profile statistics in the log.
+     * @param totalTime total elapsed time.
+     * @param numMovesConsidered number of moves inspected during search.
+     */
+    protected void showProfileStats( long totalTime, long numMovesConsidered ) {
+        GameContext.log( 0, "----------------------------------------------------------------------------------" );
+        GameContext.log( 0, "There were " + numMovesConsidered + " moves considered." );
+        GameContext.log( 0, "The total time for the computer to move was : " +
+                Util.formatNumber((float)totalTime/1000) + " seconds." );
+        print();
+    }
 
     public void initialize() {
         resetAll();

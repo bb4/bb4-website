@@ -29,13 +29,11 @@ public class CheckersBoardRenderer extends TwoPlayerBoardRenderer
      * private constructor because this class is a singleton.
      * Use getRenderer instead
      */
-    protected CheckersBoardRenderer()
-    {
+    protected CheckersBoardRenderer() {
         pieceRenderer_ = CheckersPieceRenderer.getRenderer();
     }
 
-    public static GameBoardRenderer getRenderer()
-    {
+    public static GameBoardRenderer getRenderer() {
         if (renderer_ == null)
             renderer_ = new CheckersBoardRenderer();
         return renderer_;
@@ -43,15 +41,13 @@ public class CheckersBoardRenderer extends TwoPlayerBoardRenderer
 
 
     @Override
-    protected int getPreferredCellSize()
-    {
+    protected int getPreferredCellSize() {
         return 34;
     }
 
     @Override
     protected void drawBackground( Graphics g, Board b, int startPos, int rightEdgePos, int bottomEdgePos,
-                                   int panelWidth, int panelHeight)
-    {
+                                   int panelWidth, int panelHeight)  {
         super.drawBackground(g, b, startPos, rightEdgePos, bottomEdgePos, panelWidth, panelHeight);
 
         int nrows = b.getNumRows();
@@ -64,36 +60,6 @@ public class CheckersBoardRenderer extends TwoPlayerBoardRenderer
                 int joff = getMargin() + cellSize_ * j;
                 g.fillRect( ioff, joff, cellSize_, cellSize_ );
             }
-        }
-    }
-
-
-    /**
-     * animate the last move so the player does not lose orientation.
-     * @@ probably does not work.
-     */
-    @Override
-    protected void drawLastMoveMarker(Graphics2D g2, GameControllerInterface controller)
-    {
-        Board board = controller.getBoard();
-        CheckersMove m = (CheckersMove)board.getMoveList().getLastMove();
-        // if we have captures, then we want to show each one
-        if (m!=null && m.captureList != null) {
-            controller.undoLastMove();
-            BoardPosition origPos = board.getPosition(m.getFromRow(), m.getFromCol());
-            draggedShowPiece_ = origPos.copy();
-            origPos.setPiece(null);
-            for (BoardPosition capPos : m.captureList) {
-                int rOrig = draggedShowPiece_.getRow();
-                int cOrig = draggedShowPiece_.getCol();
-                int rdir = capPos.getRow() - rOrig;
-                int cdir = capPos.getCol() - cOrig;
-                draggedShowPiece_.setRow(rOrig + 2 * rdir);
-                draggedShowPiece_.setCol(cOrig + 2 * cdir);
-                board.getPosition(capPos.getLocation()).setPiece(null);
-            }
-            draggedShowPiece_ = null;
-            controller.makeMove(m);
         }
     }
 

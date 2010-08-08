@@ -3,16 +3,14 @@ package com.becker.game.twoplayer.checkers;
 import com.becker.game.common.*;
 
 /**
- *  These weights determine how the computer values features of the board
+ * These weights determine how the computer values features of the board
  * if only one computer is playing, then only one of the weights arrays is used.
  *
- * @author Barry Becker Date: Feb 11, 2007
+ * @author Barry Becker
  */
 public class CheckersWeights extends GameWeights {
 
-    /** 
-     * Use these weights if no others are provided.
-     */
+    /**  Use these weights if no others are provided. */
     private static final double[] DEFAULT_WEIGHTS = {21.0, 29.0, 1.5};
 
     /** don't allow the weights to exceed these maximum values */
