@@ -177,17 +177,8 @@ public abstract class GameController
     }
 
     /**
-     * @return  number of active players.
+     * Clear the game over state in case the user decides to undo moves or play another game.
      */
-    public int getNumPlayers()
-    {
-        return players_.size();
-    }
-
-
-     /**
-      * Clear the game over state in case the user decides to undo moves or play another game.
-      */
     public void clearGameOver() {
 
        for (Player p : getPlayers()) {
@@ -202,10 +193,6 @@ public abstract class GameController
 
     public abstract GameOptions getOptions();
 
-    protected void initializeProfilingStats()
-    {
-        getProfiler().initialize();
-    }
 
     protected GameProfiler getProfiler() {
         return GameProfiler.getInstance();

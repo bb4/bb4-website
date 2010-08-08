@@ -9,20 +9,19 @@ import com.becker.game.twoplayer.common.TwoPlayerBoard;
  *
  * @author Barry Becker
  */
-public class CheckersBoard extends TwoPlayerBoard
-{
+public class CheckersBoard extends TwoPlayerBoard {
 
+    public static final int SIZE = 8;
     private static final int TWO = 2;
 
     /**
-     *   constructor
-     *   dimensions must be 8*8 for a checkers/chess board.
+     *  Constructor
+     *  dimensions must be 8*8 for a checkers/chess board.
      */
-    public CheckersBoard()
-    {
-        numRows_ = 8;
-        numCols_ = 8;
-        rowsTimesCols_ = 64;
+    public CheckersBoard() {
+        numRows_ = SIZE;
+        numCols_ = SIZE;
+        rowsTimesCols_ = SIZE * SIZE;
         positions_ = new BoardPosition[numRows_ + 1][numCols_ + 1];
         reset();
     }
@@ -56,7 +55,7 @@ public class CheckersBoard extends TwoPlayerBoard
     {
         for ( int j = 1; j <= 4; j++ )
             positions_[row][TWO * j - odd] = new BoardPosition( row, (TWO * j - odd),
-                                                                new CheckersPiece(player1, CheckersPiece.REGULAR_PIECE));
+                                             new CheckersPiece(player1, CheckersPiece.REGULAR_PIECE));
     }
 
     /**
@@ -65,8 +64,9 @@ public class CheckersBoard extends TwoPlayerBoard
     @Override
     public void setSize( int numRows, int numCols )
     {
-        if ( numRows != 8 || numCols != 8 )
+        if ( numRows != SIZE || numCols != SIZE) {
             GameContext.log(0,  "Can't change the size of a checkers/chess board. It must be 8x8" );
+        }
     }
 
     /**
@@ -82,8 +82,7 @@ public class CheckersBoard extends TwoPlayerBoard
      * This places the players symbol at the position specified by move.
      */
     @Override
-    protected boolean makeInternalMove( Move move )
-    {
+    protected boolean makeInternalMove( Move move ) {
         CheckersMove m = (CheckersMove) move;
         positions_[m.getToRow()][m.getToCol()].setPiece(m.getPiece());
 
@@ -98,12 +97,14 @@ public class CheckersBoard extends TwoPlayerBoard
      * for checkers, undoing a move means moving the piece back and restoring any captures.
      */
     @Override
-    protected void undoInternalMove( Move move )
-    {
+    protected void undoInternalMove( Move move ) {
+
         CheckersMove m = (CheckersMove) move;
         BoardPosition startPos = positions_[m.getFromRow()][m.getFromCol()];
+
         startPos.setPiece( m.getPiece().copy() );     // @@ set to a copy of the piece ??
-        if ( m.kinged ) { // then it was just kinged and we need to undo it
+        if ( m.kinged ) {
+            // then it was just kinged and we need to undo it
             startPos.getPiece().setType( CheckersPiece.REGULAR_PIECE );
         }
         // restore the captured pieces to the board

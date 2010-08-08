@@ -63,12 +63,6 @@ public interface GameControllerInterface
      */
     List<? extends Player> getPlayers();
 
-
-    /**
-     *  @return the number of active players
-     */
-    int getNumPlayers();
-
     /**
      *
      * @return the player whos turn it is now.

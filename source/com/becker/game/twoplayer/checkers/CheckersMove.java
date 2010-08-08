@@ -11,8 +11,7 @@ import com.becker.game.twoplayer.common.TwoPlayerMove;
  *  @see CheckersBoard
  *  @author Barry Becker
  */
-public class CheckersMove extends TwoPlayerMove
-{
+public class CheckersMove extends TwoPlayerMove {
 
     /** the position that the piece is moving from */
     protected Location fromLocation_;
@@ -32,8 +31,7 @@ public class CheckersMove extends TwoPlayerMove
     private CheckersMove( byte originRow, byte originCol,
                           byte destinationRow, byte destinationCol,
                           CaptureList captures,
-                          int val, GamePiece piece)
-    {
+                          int val, GamePiece piece)  {
         super( destinationRow, destinationCol, val,  piece );
         fromLocation_ = new Location(originRow, originCol);
         kinged = false;
@@ -41,15 +39,16 @@ public class CheckersMove extends TwoPlayerMove
     }
 
     /**
-     *  factory method for getting new moves.
-     *  used to use recycled objects, but did not increase performance, so I removed it.
+     * Factory method for getting new moves.
+     * used to use recycled objects, but did not increase performance, so I removed it.
+     * @return new checkers move
      */
     public static CheckersMove createMove(
             int originRow, int originCol,
             int destinationRow, int destinationCol,
             CaptureList captures,
-            int val, GamePiece piece )
-    {
+            int val, GamePiece piece ) {
+
         CheckersMove m = new CheckersMove( (byte)originRow, (byte)originCol,
                 (byte)destinationRow, (byte)destinationCol, captures, val, piece );
 
@@ -68,6 +67,7 @@ public class CheckersMove extends TwoPlayerMove
     {
         toLocation_.setRow(toRow);
     }
+    
     public void setToCol(int toCol)
     {
         toLocation_.setCol(toCol);

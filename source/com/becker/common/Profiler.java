@@ -180,6 +180,5 @@ public class Profiler
             print(INDENT, log);
             return bldr.toString();
         }
-
     }
 }

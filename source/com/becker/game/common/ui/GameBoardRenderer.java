@@ -115,14 +115,14 @@ public abstract class GameBoardRenderer {
     /**
      * Constructs a new Location given a MouseEvent
      *
-     * @param e  the row  coordinate.
+     * @param e event containing the coordinates.
      * @return new location based on mouse position.
      */
     public Location createLocation( MouseEvent e) {
         int size = Math.max(1, getCellSize());
         int row = (e.getY()- getMargin())/ size + 1;
         int col = (e.getX()- getMargin())/ size + 1;
-        return  new Location(row, col);
+        return new Location(row, col);
     }
 
 

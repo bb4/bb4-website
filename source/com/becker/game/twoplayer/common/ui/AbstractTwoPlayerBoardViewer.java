@@ -26,7 +26,7 @@ import java.util.List;
  * The game specific TwoPlayerController is created upon construction to be used internally.
  * This class delegates to a boardRenderer to render the board and its pieces.
  * There should be no references to swing classes outside the ui subpackage.
- *     This class sends a GameChangedEvent after each move in case there are other
+ *   This class sends a GameChangedEvent after each move in case there are other
  * components (like the GameTreeViewer) that need to update based on the new board state.
  * Since the computer can take a long time to think about its move before playing it, that
  * computation is handled asynchronously in a separate thread. The way it works is that the
@@ -50,8 +50,7 @@ import java.util.List;
  *  @author Barry Becker
  */
 public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
-                      implements GameChangedListener, TwoPlayerViewable
-{
+                                                   implements GameChangedListener, TwoPlayerViewable {
 
     private static final int PROGRESS_UPDATE_DELAY = 700;
     private static final int PROGRESS_STEP_DELAY = 100;
@@ -154,10 +153,10 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
         // see the mouseClicked callback method for details
     }
 
-
     /**
      * register the humans move.
      * @param m the move to make.
+     * @return true if the game is over now.
      */
     private boolean manMoves( TwoPlayerMove m )
     {
@@ -186,7 +185,6 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
             }
         }
     }
-
 
     /**
      * make the computer move and show it on the screen.
@@ -218,8 +216,8 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
         }
 
         try {
-            // this will spawn the worker thread and return immediately
-            get2PlayerController().requestComputerMove( isPlayer1);
+            // this will spawn the worker thread and return immediately (unless autoOptimiz on)
+            get2PlayerController().requestComputerMove(isPlayer1);
         }
         catch  (AssertionError ae) {
             // if any errors occur during search, I want to save the state of the game to
@@ -235,8 +233,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
      * Currently this does not actually step forward just one search step, but instead
      * stops after PROGRESS_STEP_DELAY more milliseconds.
      */
-    public final void step()
-    {
+    public final void step() {
         if (timer_ != null) {
             timer_.setDelay(PROGRESS_STEP_DELAY);
             timer_.restart();
@@ -251,8 +248,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
     /**
      * resume computation
      */
-    public final void continueProcessing()
-    {
+    public final void continueProcessing()  {
         if (get2PlayerController().getSearchStrategy()!=null) {
             timer_.setDelay(PROGRESS_UPDATE_DELAY);
             get2PlayerController().getSearchStrategy().continueProcessing();
@@ -264,8 +260,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
      * The actionPerformed method in this class
      * is called each time the Timer "goes off".
      */
-    private class TimerListener implements ActionListener
-    {
+    private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent evt) {
             if (get2PlayerController().getSearchStrategy() == null) return;
             int percentDone = get2PlayerController().getSearchStrategy().getPercentDone();
@@ -290,8 +285,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
      *  The runnable body will run on the event-dispatch thread when the search has completed.
      * @param m the move that was selected by the computer.
      */
-    public void computerMoved(final Move m)
-    {
+    public void computerMoved(final Move m) {
         final Runnable postMoveCleanup = new PostMoveCleanup(m);
 
       SwingUtilities.invokeLater(postMoveCleanup);
@@ -300,11 +294,10 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
     /**
      * Implements the GameChangedListener interface.
      * Called when the game has changed in some way
-     * @param evt
+     * @param evt change event
      */
     @Override
-    public void gameChanged(GameChangedEvent evt)
-    {
+    public void gameChanged(GameChangedEvent evt) {
         TwoPlayerController c = get2PlayerController();
         // note: we don't show the winner dialog if we are optimizing the weights.
         if (c.getSearchable().done( (TwoPlayerMove)evt.getMove(), true) && !c.getTwoPlayerOptions().isAutoOptimize())
@@ -322,8 +315,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
       * @param m the current move
       * @return false if the game is at an end, otherwise return true
       */
-     public final boolean continuePlay( TwoPlayerMove m )
-     {
+     public final boolean continuePlay( TwoPlayerMove m ) {
          boolean done = false;
          TwoPlayerController contoller = get2PlayerController();
          if (contoller.getPlayers().allPlayersComputer()) {
@@ -345,7 +337,6 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
 
          }
          return !done;
-         // we should check the memory here
      }
 
 
@@ -353,8 +344,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
      * some moves require that the human players be given some kind of notification.
      * @param m the last move made
      */
-    public void warnOnSpecialMoves( TwoPlayerMove m )
-    {
+    public void warnOnSpecialMoves( TwoPlayerMove m )  {
         if (m == null)
             return;
         if (m.isPassingMove() && !get2PlayerController().getPlayers().allPlayersComputer())
@@ -367,8 +357,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
     /**
      * return the game to its state before the last human move.
      */
-    public void undoLastManMove()
-    {
+    public void undoLastManMove()  {
         TwoPlayerController c = get2PlayerController();
         PlayerList players = c.getPlayers();
         if ( players.allPlayersComputer() )
@@ -391,8 +380,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
     /**
      * redo the last human player's move.
      */
-    public void redoLastManMove()
-    {
+    public void redoLastManMove()  {
         TwoPlayerController c = get2PlayerController();
         PlayerList players = c.getPlayers();
         if ( undoneMoves_.isEmpty() ) {
@@ -413,13 +401,11 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
 
 
 
-    public final synchronized void showMoveSequence( List moveSequence )
-    {
+    public final synchronized void showMoveSequence( List moveSequence ) {
         showMoveSequence( moveSequence, getController().getNumMoves() );
     }
 
-    public final synchronized void showMoveSequence( List moveSequence, int numMovesToBackup)
-    {
+    public final synchronized void showMoveSequence( List moveSequence, int numMovesToBackup) {
         showMoveSequence( moveSequence, getController().getNumMoves(), null);
     }
 
@@ -435,8 +421,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
      *       (see subclass implementations for game specific usages)
      */
     public final synchronized void showMoveSequence( List moveSequence,
-                                               int numMovesToBackup, TwoPlayerMove[] nextMoves )
-    {
+                                               int numMovesToBackup, TwoPlayerMove[] nextMoves ) {
         if ( moveSequence == null || moveSequence.size() == 0 )
             return;
         Move firstMove = (Move) moveSequence.get( 0 );

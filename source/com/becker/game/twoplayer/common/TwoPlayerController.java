@@ -36,7 +36,6 @@ import java.util.Collections;
  */
 public abstract class TwoPlayerController extends GameController {
 
-
     private static final double HUNDRED = 100.0;
 
     protected boolean player1sTurn_ = true;
@@ -168,7 +167,14 @@ public abstract class TwoPlayerController extends GameController {
     public final Player getCurrentPlayer() {
         return player1sTurn_? getPlayers().getPlayer1() : getPlayers().getPlayer2();
     }
-    
+        
+    /**
+     * @return true if the computer is supposed to make the first move.
+     */
+    public boolean doesComputerMoveFirst()
+    {
+        return !getPlayers().getPlayer1().isHuman();
+    }
 
     /**
      * Returns a number between 0 and 1 representing the estimated probability of player 1 winning the game.
@@ -227,14 +233,6 @@ public abstract class TwoPlayerController extends GameController {
     }
 
     /**
-     * @return true if the computer is supposed to make the first move.
-     */
-    public boolean doesComputerMoveFirst()
-    {
-        return !getPlayers().getPlayer1().isHuman();
-    }
-
-    /**
      * Currently online play not available for 2 player games - coming soon!
      * @return false
      */
@@ -249,24 +247,18 @@ public abstract class TwoPlayerController extends GameController {
      * @param player1 if true then the computer moving is player1
      * @return the move the computer selected (may return null if no move possible)
      */
-    private TwoPlayerMove findComputerMove( boolean player1 ) {
+    TwoPlayerMove findComputerMove( boolean player1 ) {
         ParameterArray weights;
         player1sTurn_ = player1;
 
-        long time = 0;
-        if ( GameContext.isProfiling() ) {
-            time = System.currentTimeMillis();
-            initializeProfilingStats();
-        }
+        getProfiler().startProfiling();
 
         assert (!getMoveList().isEmpty()) : "Error: null before search";
         TwoPlayerMove move = (TwoPlayerMove) getMoveList().getLast();
         TwoPlayerMove lastMove = move.copy();
 
-        if ( player1 )
-            weights = weights_.getPlayer1Weights();
-        else
-            weights = weights_.getPlayer2Weights();
+        weights = player1 ? weights_.getPlayer1Weights() : weights_.getPlayer2Weights();
+
         if ( gameTreeListener_ != null ) {
             gameTreeListener_.resetTree(lastMove);
         }
@@ -277,9 +269,7 @@ public abstract class TwoPlayerController extends GameController {
             GameContext.log( 2, "computer move :" + selectedMove.toString() );
         }
 
-        if ( GameContext.isProfiling() ) {
-            showProfileStats( System.currentTimeMillis() - time, strategy_.getNumMovesConsidered() );
-        }
+        getProfiler().stopProfiling(strategy_.getNumMovesConsidered());
 
         return selectedMove;
     }
@@ -298,20 +288,6 @@ public abstract class TwoPlayerController extends GameController {
         }
 
         return strategy_.search( lastMove, root );
-    }
-
-
-    /**
-     * Export some usefule performance profile statistics in the log.
-     * @param totalTime total elapsed time.
-     * @param numMovesConsidered number of moves inspected during search.
-     */
-    protected void showProfileStats( long totalTime, long numMovesConsidered ) {
-        GameContext.log( 0, "----------------------------------------------------------------------------------" );
-        GameContext.log( 0, "There were " + numMovesConsidered + " moves considered." );
-        GameContext.log( 0, "The total time for the computer to move was : " +
-                Util.formatNumber((float)totalTime/1000) + " seconds." );
-        getProfiler().print();
     }
 
     /**
@@ -519,105 +495,8 @@ public abstract class TwoPlayerController extends GameController {
     }
 
     public final Optimizee getOptimizee() {
-        return new TwoPlayerOptimizee();
+        return new TwoPlayerOptimizee(this);
     }
-
-    /**
-     * Two sets of gameweights that can be optimized by repetitive play.
-     */
-    private class TwoPlayerOptimizee implements Optimizee {
-
-        /**
-         * If true is returned, then compareFitness will be used and evaluateFitness will not
-         * otherwise the reverse will be true.
-         * @return return true if we evaluate the fitness by comparison
-         */
-        public boolean  evaluateByComparison()
-        {
-            return true;
-        }
-
-        /**
-         * Attributes a measure of fitness to the specified set of parameters.
-         * There's no good way for a game playing program to do this because it
-         * can only evaluate itself relative to another player.
-         * see compareFitness below.
-         * @param params the set of parameters to misc
-         * @return the fitness measure. The higher the better
-         */
-        public double evaluateFitness( ParameterArray params )
-        {
-           return 0.0;
-        }
-
-        public double getOptimalFitness() {
-            return 0;
-        }
-
-        /**
-         * @return the number of factors we take into consideration when optimizing.
-         */
-        public int getNumParameters() {
-            return weights_.getDefaultWeights().size();
-        }
-
-        /**
-         * Compares to sets of game parameters.
-         * It does this by playing the computer against itself. One computer player has the params1
-         * weights and the other computer player uses the params2 weights.
-         * If the player using params1 wins then a positive value proportional to the strength of the win is returned.
-         *
-         * @param params1 set of weight for one of the sides
-         * @param params2 set of weights for the other side
-         * @return the amount that params1 are better than params2. May be negative if params1 are better.
-         */
-        public double compareFitness( ParameterArray params1, ParameterArray params2 )
-        {
-            // to remove the advantage we get from playing first, 2 runs are done
-            // The first one where params1 plays first, and the second where params2 plays first.
-            // This should remove the bias.
-
-            weights_.setPlayer1Weights(params1);
-            weights_.setPlayer2Weights(params2);
-            double run1 = runComputerVsComputer();
-
-            weights_.setPlayer1Weights(params2);
-            weights_.setPlayer2Weights(params1);
-            double run2 = runComputerVsComputer();
-
-            return (run1 - run2);
-        }
-
-        /**
-         *  @return if positive then computer1 won, else computer2 won.
-         *   the magnitude of this returned value indicates how much it won by.
-         */
-        private double runComputerVsComputer()
-        {
-            boolean done = false;
-            reset();
-            computerMovesFirst();
-
-            if (get2PlayerViewer() != null)  {
-                get2PlayerViewer().showComputerVsComputerGame();
-            }
-            else {
-                // run in batch mode where the viewer is not available.
-                while ( !done ) {
-                    done = getSearchable().done(findComputerMove( false ), true);
-                    // if done the final move was played
-                    if ( !done ) {
-                        done = getSearchable().done(findComputerMove( true ), true);
-                    }
-                }
-            }
-            if (getPlayers().getPlayer1().hasWon())
-                return getStrengthOfWin();
-            else
-                return -getStrengthOfWin();
-        }
-    }
-
 
     public Searchable getSearchable() {
         if (searchable_ == null)

@@ -11,31 +11,28 @@ import java.util.*;
 
 /**
  * Defines for the computer how it should play Chess.
- * Chess is very similar to Checkers so we derive from the CheckersController
+ * Chess is very similar to Checkers so we derive from the CheckersController.
+ *
+ * Chess features to add:
+ *  - show indicator of invalid move while dragging piece (before placed)
+ *        Should show piece grayed our or transparent until in a valid position
+ *       If you drop the piece in an invlid position, instead of showing an error messagem
+ *      animate the piece back to its original position.
+ * - exchange pawn for best piece when it reaches the other side.
+ * - if you are in check, then don't allow moves other than those that get you out of check.
+ * - game is over if no moves available (because of check mate usually).
+ * - there is a tendancy to get into an infinite cycle at the end of a computer vs computer game.
+ * - castling.
+ * - account for amount of king endangerment in worth.
+ * - Checkers and Chess should probably have a common abstract base class, but I can't think of a good
+ *   name for it, so currently Chess just derives from Checkers.
  *
  * @author Barry Becker
  */
 public class ChessController extends CheckersController
 {
     /**
-     *  Chess features to add:
-     *
-     *  - show indicator of invalid move while dragging piece (before placed)
-     *        Should show piece grayed our or transparent until in a valid position
-     *       If you drop the piece in an invlid position, instead of showing an error messagem
-     *      animate the piece back to its original position.
-     * - exchange pawn for best piece when it reaches the other side.
-     * - if you are in check, then don't allow moves other than those that get you out of check.
-     * - game is over if no moves available (because of check mate usually).
-     * - there is a tendancy to get into an infinite cycle at the end of a computer vs computer game.
-     * - castling.
-     * - account for amount of king endangerment in worth.
-     * - Checkers and Chess should probably have a common abstract base class, but I can't think of a good
-     *   name for it, so currently Chess just derives from Checkers.
-     */
-
-    /**
-     *   Construct the Chess game controller.
+     *  Constructor.
      */
     public ChessController()
     {
@@ -165,7 +162,6 @@ public class ChessController extends CheckersController
         {
             MoveList moveList = new MoveList();
             int row,col;
-            player1sPerspective_ = player1sPerspective;
 
             boolean player1 = (lastMove == null) || !(lastMove.isPlayer1());
 
@@ -175,7 +171,7 @@ public class ChessController extends CheckersController
                 for ( col = 1; col <= NUM_COLS; col++ ) {
                     BoardPosition pos = board_.getPosition( row, col );
                     if ( pos.isOccupied() && pos.getPiece().isOwnedByPlayer1() == player1 ) {
-                        addMoves( pos, moveList, lastMove, weights,  player1sPerspective);
+                        addMoves( pos, moveList, lastMove, weights, player1sPerspective);
                     }
                 }
             }
@@ -192,8 +188,7 @@ public class ChessController extends CheckersController
          */
         @Override
         public MoveList generateUrgentMoves(
-                TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
-        {
+                TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective ) {
             return new MoveList();
         }
 
@@ -201,8 +196,7 @@ public class ChessController extends CheckersController
          * @@todo
          * @return true if the specified move caused one or more opponent pieces to become jeopardized
          */
-        public boolean inJeopardy( TwoPlayerMove m )
-        {
+        public boolean inJeopardy( TwoPlayerMove m ) {
             return false;
         }
     }

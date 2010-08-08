@@ -5,6 +5,7 @@ import com.becker.game.common.*;
 import com.becker.game.common.ui.GameBoardViewer;
 import com.becker.game.common.ui.ViewerMouseListener;
 import com.becker.game.twoplayer.checkers.CheckersController;
+import com.becker.game.twoplayer.checkers.MoveGenerator;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 
 import javax.swing.*;
@@ -26,10 +27,8 @@ public class CheckersViewerMouseListener extends ViewerMouseListener {
         super(viewer);
     }
 
-
     @Override
-    public void mousePressed( MouseEvent e )
-    {
+    public void mousePressed( MouseEvent e ) {
         CheckersController controller = (CheckersController)viewer_.getController();
 
         if (controller.isProcessing())
@@ -50,12 +49,11 @@ public class CheckersViewerMouseListener extends ViewerMouseListener {
     }
 
     @Override
-    public void mouseReleased( MouseEvent e )
-    {
+    public void mouseReleased( MouseEvent e ) {
         CheckersBoardViewer viewer = (CheckersBoardViewer)viewer_;
         CheckersController controller = (CheckersController)viewer.getController();
 
-        // compute the coords of the position that we dropped the piece on.
+        // compute the coordinates of the position that we dropped the piece on.
         Location loc = getRenderer().createLocation(e);
 
         if ( getRenderer().getDraggedPiece() == null )
@@ -99,19 +97,18 @@ public class CheckersViewerMouseListener extends ViewerMouseListener {
 
     /**
      * if there is a piece at the destination already, or destination is out of bounds,
-     *    then return without doing anything
+     * then return without doing anything.
      * @return true if custom check failed.
      */
     protected boolean customCheckFails(BoardPosition position, BoardPosition destp) {
-        return  ( (position == null) || (destp == null) || (!destp.isUnoccupied()) );
+        return  ( (position == null) || (destp == null) || (destp.isOccupied()) );
     }
 
     /**
      *   implements the MouseMotionListener interface
      */
     @Override
-    public void mouseDragged( MouseEvent e )
-    {
+    public void mouseDragged( MouseEvent e ) {
         Location loc = getRenderer().createLocation(e);
 
         if ( getRenderer().getDraggedShowPiece() != null ) {
@@ -120,30 +117,31 @@ public class CheckersViewerMouseListener extends ViewerMouseListener {
         viewer_.refresh();
     }
 
-
-
     /**
-     * @param position moves to consider moves from.
-     * @return  a list of all possible moves from the given position.
+     * @param position place to consider possible moves from.
+     * @return a list of all possible moves from the given position.
      */
-    protected List getPossibleMoveList(BoardPosition position)
-    {
+    protected List getPossibleMoveList(BoardPosition position) {
+
         CheckersBoardViewer viewer = (CheckersBoardViewer)viewer_;
         CheckersController controller = (CheckersController)viewer.getController();
 
         MoveList possibleMoveList = new MoveList();
 
+        TwoPlayerMove lastMove = (TwoPlayerMove)controller.getLastMove();
+        boolean player1 = (lastMove == null) || !lastMove.isPlayer1();
+        MoveGenerator generator =
+                new MoveGenerator(controller, possibleMoveList,
+                                  controller.getComputerWeights().getDefaultWeights(), player1);
+
         // it doesn't matter which set of wts are pass in here since we just need
-        // a list of moves so use default weights.
-        controller.addMoves( position, possibleMoveList,
-                             (TwoPlayerMove)controller.getLastMove(),
-                             viewer.get2PlayerController().getComputerWeights().getDefaultWeights() );
+        // a list of valid moves, so use default weights.
+        generator.addMoves(position, lastMove);
         return possibleMoveList;
     }
 
 
-    private void invalidMove()
-    {
+    private void invalidMove() {
         JOptionPane.showMessageDialog(viewer_, GameContext.getLabel("ILLEGAL_MOVE"));
         viewer_.refresh();
     }

@@ -15,8 +15,7 @@ public class CheckersPiece extends GamePiece
     // the basic kinds of pieces: REGULAR_PIECE, KING.
     public static final char KING = 'X';
 
-    public CheckersPiece( boolean player1, char type )
-    {
+    public CheckersPiece( boolean player1, char type ) {
         super( player1, type);
     }
 
@@ -28,11 +27,10 @@ public class CheckersPiece extends GamePiece
     }
 
     /**
-     *   create a deep copy of the position
+     *  Create a deep copy of the position
      */
     @Override
-    public GamePiece copy()
-    {
+    public GamePiece copy()  {
         CheckersPiece p = new CheckersPiece( ownedByPlayer1_, type_ );
         p.setTransparency( (short) 0 );
         p.setAnnotation( null );
