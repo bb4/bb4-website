@@ -56,7 +56,7 @@ public class GalacticPlayerTable extends PlayerTable implements TableModelListen
      * constructor
      * @param players to initializet the rows in the table with.
      */
-    public GalacticPlayerTable(List<? extends Player> players)
+    public GalacticPlayerTable(PlayerList players)
     {
         super(players, galacticColumnNames_);
         table_.getModel().addTableModelListener(this);

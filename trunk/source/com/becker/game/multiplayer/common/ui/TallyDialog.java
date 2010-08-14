@@ -58,7 +58,7 @@ public abstract class TallyDialog extends OptionsDialog
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
 
-        List<? extends Player> players = controller_.getPlayers();
+        PlayerList players = controller_.getPlayers();
         String winningPlayer = findWinner(players).getName();
 
         // show a label at the top with who the winner is
@@ -79,9 +79,10 @@ public abstract class TallyDialog extends OptionsDialog
         return mainPanel;
     }
 
-    protected abstract SummaryTable createSummaryTable(List<? extends Player> players);
+    protected abstract SummaryTable createSummaryTable(PlayerList players);
 
-    protected abstract MultiGamePlayer findWinner(List<? extends Player> players);
+    
+    protected abstract MultiGamePlayer findWinner(PlayerList players);
 
 
     /**

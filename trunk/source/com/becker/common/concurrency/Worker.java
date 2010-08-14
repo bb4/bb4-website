@@ -40,15 +40,12 @@ public abstract class Worker {
     }
 
 
-
     /**
-     * Get the value produced by the worker thread, or null if it
-     * hasn't been constructed yet.
+     * @return the value produced by the worker thread, or null if it hasn't been constructed yet.
      */
     protected synchronized Object getValue() {
         return returnValue_;
     }
-
 
 
     /**
@@ -117,9 +114,8 @@ public abstract class Worker {
                 }
 
                 // old: SwingUtilities.invokeLater(doFinished);
-                // call directly.
-                // the body of finished is in the ui and should
-                // call SwingUtilities.invokeLater()
+                // Now call directly, but if the body of finished is in the ui,
+                // it should call SwingUtilities.invokeLater()
                 finished();
             }
         };

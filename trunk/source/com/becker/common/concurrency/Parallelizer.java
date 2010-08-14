@@ -24,23 +24,27 @@ import java.util.logging.Logger;
  */
 public class Parallelizer <T> {
 
-  
     /** The number of processors available on this computer */
     public static final int NUM_PROCESSORS = Runtime.getRuntime().availableProcessors();
     
     /** Recycle threads so we do not create thousands and eventually run out of memory. */
     private ExecutorService exec;   
-    
+
+    /** By default, the number of threads we use is equal to the number of processors plus 1 */
     private static final int DEFAULT_NUM_THREADS = NUM_PROCESSORS + 1;
     
     private int numThreads;
-   
+
+    /**
+     * Constructs with default number of threads.
+     */
     public Parallelizer()
     {
         this(DEFAULT_NUM_THREADS);
     }
 
     /**
+     * Construct with specified number of threads.
      * @param numThreads number of thread. Must be 1 or greater. One means not parallelism.
      */
     public Parallelizer(int numThreads)

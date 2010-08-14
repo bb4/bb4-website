@@ -15,7 +15,6 @@ import java.io.IOException;
 public class ShowOff
         extends Component
 {
-    
     private BufferedImage mImage;
     private Font mFont;
     private String mMessage;
@@ -29,7 +28,7 @@ public class ShowOff
      * @param split
      */
     public ShowOff( String filename, String message, int split )
-            throws IOException, ImageFormatException
+            throws IOException
     {
         
         Image img = Utilities.blockingLoad( filename );
@@ -49,7 +48,7 @@ public class ShowOff
     {
         Graphics2D g2 = (Graphics2D) g;
 
-        // Turn on antialiasing.
+        // Turn on anti-aliasing.
         g2.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON );
 
@@ -162,30 +161,32 @@ public class ShowOff
         g2.drawString( s, (float) x, (float) -bounds.getY() );
         return advance;
     }
-    
+
+    /**
+     * The image is loaded either from this
+     * default filename or the first command-
+     * line argument.
+     * The second command-line argument specifies
+     * what string will be displayed. The third
+     * specifies at what point in the string the
+     * background color will change.
+     * @param args
+     * @throws IOException
+     */
     public static void main( String[] args ) throws IOException
     {
-            // The image is loaded either from this
-            //   default filename or the first command-
-            //   line argument.
-            // The second command-line argument specifies
-            //   what string will be displayed. The third
-            //   specifies at what point in the string the
-            //   background color will change.
-            String filename = Utilities.DEFAULT_IMAGE_DIR +"Raphael.jpg";
-            String message = "Java2D";
-            int split = 4;
-            if ( args.length > 0 ) filename = args[0];
-            if ( args.length > 1 ) message = args[1];
-            if ( args.length > 2 ) split = Integer.parseInt( args[2] );
-            ApplicationFrame f = new ApplicationFrame( "ShowOff v1.0" );
-            f.getContentPane().setLayout( new BorderLayout() );
-            ShowOff showOff = new ShowOff( filename, message, split );
-            f.getContentPane().add( showOff, BorderLayout.CENTER );
-            f.center();
-            f.setResizable( false );
-
-
+        String filename = Utilities.DEFAULT_IMAGE_DIR +"Raphael.jpg";
+        String message = "Java2D";
+        int split = 4;
+        if ( args.length > 0 ) filename = args[0];
+        if ( args.length > 1 ) message = args[1];
+        if ( args.length > 2 ) split = Integer.parseInt( args[2] );
+        ApplicationFrame f = new ApplicationFrame( "ShowOff v1.0" );
+        f.getContentPane().setLayout( new BorderLayout() );
+        ShowOff showOff = new ShowOff( filename, message, split );
+        f.getContentPane().add( showOff, BorderLayout.CENTER );
+        f.center();
+        f.setResizable( false );
     }
 
 }

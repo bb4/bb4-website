@@ -32,7 +32,7 @@ final class GalacticTallyDialog extends TallyDialog
     }
 
     @Override
-    protected SummaryTable createSummaryTable(List<? extends Player> players) {
+    protected SummaryTable createSummaryTable(PlayerList players) {
         return new GalacticSummaryTable(players);
     }
 
@@ -42,7 +42,7 @@ final class GalacticTallyDialog extends TallyDialog
      * @return the player with the most planets (num ships used only as a tie breaker).
      */
     @Override
-    public MultiGamePlayer findWinner(List<? extends Player> players)
+    public MultiGamePlayer findWinner(PlayerList players)
     {
         return controller_.determineWinner();        
     }

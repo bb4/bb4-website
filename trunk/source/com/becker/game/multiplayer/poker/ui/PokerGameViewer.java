@@ -48,7 +48,7 @@ public class PokerGameViewer extends MultiGameViewer
         StringBuffer buf = new StringBuffer("Game Over\n");
 
         // find the player with the most money. That's the winner.
-        List<? extends Player> players = controller_.getPlayers();
+        PlayerList players = controller_.getPlayers();
         int max = -1;
         PokerPlayer winner = null;
         for (final Player p : players) {
@@ -162,7 +162,7 @@ public class PokerGameViewer extends MultiGameViewer
      */
     public void showRoundOver(PokerPlayer winner, int winnings) {
 
-        List<? extends Player> players = controller_.getPlayers();
+        PlayerList players = controller_.getPlayers();
         for (final Player p : players) {
             PokerPlayer player = (PokerPlayer) p;
             player.getHand().setFaceUp(true);

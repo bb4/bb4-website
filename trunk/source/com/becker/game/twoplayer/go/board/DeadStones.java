@@ -50,7 +50,7 @@ public final class DeadStones
 
     /**
      *
-     * @param player1
+     * @param player1 black player if true
      * @return the number of dead stones on the board for the specified player
      */
     public int getNumberOnBoard(boolean player1) {

@@ -34,7 +34,7 @@ public abstract class PlayerTable extends TableBase
      * constructor
      * @param players to initializet the rows in the table with.
      */
-    public PlayerTable(List<? extends Player> players, String[] columnNames)
+    public PlayerTable(PlayerList players, String[] columnNames)
     {
         super(players, columnNames);
 

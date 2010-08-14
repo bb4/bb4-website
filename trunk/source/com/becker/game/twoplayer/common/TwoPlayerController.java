@@ -1,7 +1,5 @@
 package com.becker.game.twoplayer.common;
 
-import com.becker.common.concurrency.Worker;
-import com.becker.common.util.Util;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.persistence.TwoPlayerGameExporter;
 import com.becker.game.twoplayer.common.persistence.TwoPlayerGameImporter;
@@ -36,8 +34,6 @@ import java.util.Collections;
  */
 public abstract class TwoPlayerController extends GameController {
 
-    private static final double HUNDRED = 100.0;
-
     protected boolean player1sTurn_ = true;
 
     /** these weights determine how the computer values each move.
@@ -51,10 +47,7 @@ public abstract class TwoPlayerController extends GameController {
     private GameTreeViewable gameTreeListener_;
 
     /** Worker represents a separate thread for computing the next move. */
-    private Worker worker_;
-
-    /** this is true while the computer thinks about its next move. */
-    private boolean processing_ = false;
+    private TwoPlayerSearchWorker worker_;
 
     /** Capable of searching for the best next move */
     private Searchable searchable_;
@@ -65,6 +58,7 @@ public abstract class TwoPlayerController extends GameController {
      */
     public TwoPlayerController() {
         createPlayers();
+        worker_ = new TwoPlayerSearchWorker(this);
     }
 
     @Override
@@ -98,16 +92,7 @@ public abstract class TwoPlayerController extends GameController {
      */
     @Override
     public void reset() {
-        if (isProcessing()) {
-            pause();
-            if (worker_!=null) {
-                worker_.interrupt();
-                processing_ = false;
-                // make the move even though we did not finish computing it
-                get2PlayerViewer().computerMoved((Move)worker_.get());
-            }
-            Util.sleep(100);
-        }
+        worker_.interrupt();
         super.reset();
         PlayerList players = getPlayers();
         players.getPlayer1().setWon(false);
@@ -320,56 +305,25 @@ public abstract class TwoPlayerController extends GameController {
      * for the computer to make. It returns immediately (unless the computer is playing itself).
      * Usually returns false, but will return true if it is a computer vs computer game, and the
      * game is over.
-     * @param isPlayer1 true if is player one to move.
+     * @param player1ToMove true if is player one to move.
      * @return true if the game is over.
      * @throws AssertionError thrown if something bad happened while searching.
      */
-    public boolean requestComputerMove(boolean isPlayer1) throws AssertionError {
-        return requestComputerMove(isPlayer1, getTwoPlayerOptions().isAutoOptimize());
+    public boolean requestComputerMove(boolean player1ToMove) throws AssertionError {
+        return requestComputerMove(player1ToMove, getTwoPlayerOptions().isAutoOptimize());
     }
 
     /**
      * Request the next computer move. It will be the best move that the computer can find.
      * Launches a separate thread to do the search for the next move.
-     * @param isPlayer1 true if player one to move.
+     * @param player1ToMove true if player one to move.
      * @param synchronous if true then the method does not return until the next move has been found.
      * @return true if the game is over
-     * @throws AssertionError  if something bad happenned.
+     * @throws AssertionError if something bad happenned while searching.
      */
-     boolean requestComputerMove(final boolean isPlayer1, boolean synchronous) throws AssertionError {
+     public boolean requestComputerMove(final boolean player1ToMove, boolean synchronous) throws AssertionError {
 
-        worker_ = new Worker() {
-
-            private Move move_ = null;
-
-            @Override
-            public Object construct() {
-                processing_ = true;
-
-                move_ = findComputerMove( isPlayer1 );
-
-                return move_;
-            }
-
-            @Override
-            public void finished() {
-                processing_ = false;
-                if (get2PlayerViewer() != null)  {
-                    get2PlayerViewer().computerMoved(move_);
-                }
-            }
-        };
-
-        worker_.start();
-
-        if (synchronous) {
-            // this blocks until the value is available.
-            // We could probably use a Future here.
-            TwoPlayerMove m = (TwoPlayerMove)worker_.get();
-            //refresh();
-            return getSearchable().done( m, true );
-        }
-        return false;
+        return worker_.requestComputerMove(player1ToMove, synchronous);
     }
 
     /**
@@ -391,7 +345,7 @@ public abstract class TwoPlayerController extends GameController {
      *  @return true if the viewer is currently processing (i.e. searching)
      */
     public boolean isProcessing() {
-        return processing_;
+        return worker_.isProcessing();
     }
 
     public void pause() {
@@ -487,7 +441,7 @@ public abstract class TwoPlayerController extends GameController {
         int numMoves = moveList.size();
 
         MoveList bestMoveList = moveList;
-        int best = (int) ((float) searchOptions.getPercentageBestMoves() / HUNDRED * numMoves) + 1;
+        int best = (int) ((float) searchOptions.getPercentageBestMoves() / 100.0 * numMoves) + 1;
         if ( best < numMoves && numMoves > searchOptions.getMinBestMoves())  {
             bestMoveList = moveList.subList(0, best);
         }
