@@ -216,7 +216,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
         }
 
         try {
-            // this will spawn the worker thread and return immediately (unless autoOptimiz on)
+            // this will spawn the worker thread and return immediately (unless autoOptimize on)
             get2PlayerController().requestComputerMove(isPlayer1);
         }
         catch  (AssertionError ae) {

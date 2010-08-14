@@ -242,7 +242,7 @@ public abstract class TwoPlayerController extends GameController {
     }
 
     /**
-     * the computer will search for and make its move.
+     * The computer will search for and make its next move.
      * The search for the best computer move happens on a separate thread so the UI does not lock up.
      * @param player1 if true then the computer moving is player1
      * @return the move the computer selected (may return null if no move possible)
@@ -336,7 +336,7 @@ public abstract class TwoPlayerController extends GameController {
      * @return true if the game is over
      * @throws AssertionError  if something bad happenned.
      */
-    public boolean requestComputerMove(final boolean isPlayer1, boolean synchronous) throws AssertionError {
+     boolean requestComputerMove(final boolean isPlayer1, boolean synchronous) throws AssertionError {
 
         worker_ = new Worker() {
 
