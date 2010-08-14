@@ -55,20 +55,24 @@ public class RDSimulator extends Simulator {
         oldHeight = this.getHeight();
     }
     
+    @Override
     protected void reset() {
-         grayScott_.reset();
-         rdOptions_.reset();
+        grayScott_.reset();
+        rdOptions_.reset();
     }
 
+    @Override
     protected SimulatorOptionsDialog createOptionsDialog() {
-         return new RDOptionsDialog( frame_, this );
+        return new RDOptionsDialog( frame_, this );
     }
 
 
+    @Override
     protected double getInitialTimeStep() {
         return INITIAL_TIME_STEP;
     }
 
+    @Override
     public double timeStep()
     {
         if ( !isPaused() ) {

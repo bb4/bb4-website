@@ -81,9 +81,6 @@ public abstract class AbstractPuzzleController<P, M> implements PuzzleController
                 }
                 return null;
             }
-
-            @Override
-            public void finished() {}
         };
 
         worker.start();

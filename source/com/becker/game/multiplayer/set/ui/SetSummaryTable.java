@@ -31,7 +31,7 @@ public class SetSummaryTable extends SummaryTable
      * constructor
      * @param players to initializet the rows in the table with.
      */
-    public SetSummaryTable(List<? extends Player> players)
+    public SetSummaryTable(PlayerList players)
     {
         super(players, COLUMN_NAMES);
         getTable().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

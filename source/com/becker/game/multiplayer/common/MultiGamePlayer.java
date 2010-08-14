@@ -42,9 +42,8 @@ public abstract class MultiGamePlayer extends Player {
      * try to give a unique color based on the name
      * and knowing what the current player colors are.
      */
-    public static Color getNewPlayerColor(List<? extends Player> players)
+    public static Color getNewPlayerColor(PlayerList players)
     {
-
         boolean uniqueEnough;
         float candidateHue;
 
@@ -63,7 +62,7 @@ public abstract class MultiGamePlayer extends Player {
      * @param players
      * @return true if hue is different enough from the others.
      */
-    private static boolean isHueUniqueEnough(float hue, List<? extends Player> players)
+    private static boolean isHueUniqueEnough(float hue, PlayerList players)
     {
         int ct=0;
         float tolerance = 1.0f/(1.0f+1.8f*players.size());

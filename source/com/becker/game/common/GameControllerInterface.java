@@ -20,7 +20,6 @@ import java.util.*;
  */
 public interface GameControllerInterface
 {
-
     /**
      * @return the board representation object.
      */
@@ -46,7 +45,6 @@ public interface GameControllerInterface
      */
     void makeMove( Move m );
 
-
     /**
      * @return the list of moves made so far.
      */
@@ -57,11 +55,10 @@ public interface GameControllerInterface
      */
     int getNumMoves();
 
-
     /**
      * @return an array of the players playing the game
      */
-    List<? extends Player> getPlayers();
+    PlayerList getPlayers();
 
     /**
      *

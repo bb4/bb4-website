@@ -116,7 +116,7 @@ public final class GoController extends TwoPlayerController
     }
 
     /**
-     * get the number of black (player1=true) or white (player1=false) stones captured.
+     * get the number of black (player1=true) or white (player1=false) stones that were captured and removed.
      * @param player1sStones if true, get the captures for player1, else for player2.
      * @return num captures
      */
@@ -313,19 +313,18 @@ public final class GoController extends TwoPlayerController
             GameContext.log(0,  "Error: tried to get Score() while processing!");
             return 0;
         }
-        int captures =  deadStones_.getNumberOnBoard(!player1);
+        int numDead = getNumDeadStonesOnBoard(player1);
+        int totalCaptures = numDead + getNumCaptures(player1);
+        int p1Territory = getTerritory(player1);
 
         String side = (player1? "black":"white");
         GameContext.log(0, "----");
         GameContext.log(0, "final score for "+ side);
-        GameContext.log(0, "getNumCaptures("+side+")="+ getNumCaptures(player1));
-        GameContext.log(0, "num dead "+side+" stones on board: "+ captures);
-
-        int p1Territory = getTerritory(player1);
-        GameContext.log(0, "getTerritory("+side+")="+p1Territory);
-        GameContext.log(0, "captures="+captures);
-        GameContext.log(0, "final = terr - captures="+ (p1Territory - captures));
-        return p1Territory - captures;
+        GameContext.log(0, "getNumCaptures(" + side + ")=" + getNumCaptures(player1));
+        GameContext.log(0, "num dead " + side + " stones on board: "+ numDead); 
+        GameContext.log(0, "getTerritory(" + side + ")="+p1Territory);
+        GameContext.log(0, "final = terr - totalCaptures="+ (p1Territory - totalCaptures));
+        return p1Territory - totalCaptures;
     }
 
 

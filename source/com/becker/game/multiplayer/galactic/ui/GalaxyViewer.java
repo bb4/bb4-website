@@ -118,7 +118,7 @@ public class GalaxyViewer extends MultiGameViewer
 
         // for each order of each player, apply it for one year
         // if there are battles, show them in the battle dialog and record the result in the move.
-        List<? extends Player> players = controller_.getPlayers();
+        PlayerList players = controller_.getPlayers();
 
         for (final Player player : players) {
             //GalacticPlayer gp = (GalacticPlayer) player;

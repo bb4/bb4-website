@@ -11,7 +11,7 @@ import java.util.List;
  * This is the core of the Gray-Scott reaction diffusion simulation.
  * based on implementation by Joakim Linde and modified by Barry Becker.
  *
- *Here are some parallelism results using my Core2Duo 6400.
+ * Here are some parallelism results using my Core2Duo 6400.
  * Without parallelism  8.62 fps
  * With parallelism (but not borders) 10.16 fps
  * With parallelism (and borders in sep thread) 10.36 fps
@@ -31,8 +31,7 @@ final class GrayScott {
     
     /** Recycle threads so we do not create thousands and eventually run out of memory. */
     private Parallelizer<Worker> parallelizer;
-   
-   
+
     /** concentrations of the 2 chemicals. */
     private double[][] u_;
     private double[][] v_;
@@ -132,12 +131,10 @@ final class GrayScott {
     public int getWidth() {
         return width_;
     }
+
     public int getHeight() {
         return height_;
     }
-    public double getF() { return f_; }
-    public double getK() { return k_; }
-    public double getH() { return h_; }
 
     public void setF(double f) {
         f_ = f;
@@ -220,14 +217,15 @@ final class GrayScott {
             }
         }
     }
-    
+
+
     private void computeNewEdgeValues(double dt) {
-        /* top and bottom edges*/       
+        /* top and bottom edges*/
         for (int x = 0; x < width_; x++) {
             calcEdge(x, 0, dt);
             calcEdge(x, height_ - 1, dt);
         }
-       
+
          /* left and right edges*/
         for (int y = 0; y < height_; y++) {
             calcEdge(0, y, dt);
@@ -256,15 +254,6 @@ final class GrayScott {
         return calcNewAux(tmp, x, y, sum, dDivh2, useF, uv2, dt);
     }
 
-
-    private final double calcNewCenter(double[][] tmp, int x, int y,
-                                 double dDivh2, boolean useF, double uv2, double dt) {
-
-        double sum = tmp[x + 1][y] + tmp[x - 1][y] +
-                tmp[x][y + 1] + tmp[x][y - 1] -
-                4 * tmp[x][y];
-        return calcNewAux(tmp, x, y, sum, dDivh2, useF, uv2, dt);
-    }
 
     private double calcNewAux(double[][] tmp, int x, int y, double sum,
                               double dDivh2, boolean useF, double uv2, double dt) {
@@ -319,6 +308,16 @@ final class GrayScott {
                 }
             }       
         }
+
+        private double calcNewCenter(double[][] tmp, int x, int y,
+                                     double dDivh2, boolean useF, double uv2, double dt) {
+
+            double sum = tmp[x + 1][y] + tmp[x - 1][y] +
+                    tmp[x][y + 1] + tmp[x][y - 1] -
+                    4 * tmp[x][y];
+            return calcNewAux(tmp, x, y, sum, dDivh2, useF, uv2, dt);
+        }
+
     }
 
 }

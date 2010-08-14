@@ -9,6 +9,7 @@ import java.awt.*;
 import java.util.*;
 import java.util.List;
 
+import com.becker.game.common.PlayerList;
 import com.becker.game.common.ui.GameBoardRenderer;
 import com.becker.game.common.ui.GameBoardViewer;
 import com.becker.game.multiplayer.common.ui.MultiGameBoardRenderer;
@@ -59,12 +60,10 @@ public class GalaxyRenderer extends MultiGameBoardRenderer
     protected void drawMarkers(GameControllerInterface controller, Graphics2D g2 )
     {
         // before we draw the planets, draw the fleets and their paths
-        java.util.List<? extends Player> players = controller.getPlayers();
+        PlayerList players = controller.getPlayers();
         for (final Player player : players) {
-            java.util.List orders = ((GalacticPlayer) player).getOrders();
-            Iterator orderIt = orders.iterator();
-            while (orderIt.hasNext()) {
-                Order order = (Order) orderIt.next();
+            for (Order order : ((GalacticPlayer) player).getOrders()) {
+
                 int margin = getMargin();
 
                 Location begin = order.getOrigin().getLocation();
@@ -76,7 +75,7 @@ public class GalaxyRenderer extends MultiGameBoardRenderer
                 int endX = (int) (margin + cellSize_ * (end.getX() - 0.5));
                 int endY = (int) (margin + cellSize_ * (end.getY() - 0.5));
 
-                g2.drawLine(beginX, beginY,  endX, endY);
+                g2.drawLine(beginX, beginY, endX, endY);
 
                 // the glyph at the end of the line representing the fleet
                 int rad = (int) Math.round(Math.sqrt(order.getFleetSize()));

@@ -68,7 +68,7 @@ public class TrivialTable extends Board
      * @param players
      * @param controller
      */
-    public void initPlayers(List<? extends Player> players, TrivialController controller) {
+    public void initPlayers(PlayerList players, TrivialController controller) {
         double angle = 0.6 * Math.PI;
         double angleIncrement = 2.0 * Math.PI / (players.size());
         double rowRad = getNumRows() >> 1;
