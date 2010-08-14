@@ -1,5 +1,7 @@
 package com.becker.simulation.reactiondiffusion;
 
+import com.becker.simulation.reactiondiffusion.algorithm.GrayScottController;
+import com.becker.simulation.reactiondiffusion.algorithm.GrayScottModel;
 import com.becker.ui.legend.*;
 import com.becker.ui.sliders.SliderGroupChangeListener;
 import com.becker.ui.sliders.SliderGroup;
@@ -16,7 +18,7 @@ import java.awt.event.*;
 public class RDDynamicOptions extends JPanel
                               implements ActionListener, SliderGroupChangeListener {
 
-    private GrayScott gs_;
+    private GrayScottController gs_;
     private RDSimulator simulator_;
 
     private JCheckBox showU_;
@@ -24,8 +26,6 @@ public class RDDynamicOptions extends JPanel
     private JCheckBox useConcurrency_;
     private JCheckBox useFixedSize_;
 
-    private ContinuousColorLegend legend_;
-    
     private static final String K_SLIDER = "K";
     private static final String F_SLIDER = "F";
     private static final String H_SLIDER = "H";    
@@ -39,18 +39,20 @@ public class RDDynamicOptions extends JPanel
     private static final double MAX_NUM_STEPS = 4.0*RDSimulator.DEFAULT_STEPS_PER_FRAME;
 
     private static final SliderProperties[] SLIDER_PROPS = {
-        new SliderProperties(K_SLIDER,      0,           0.3,      GrayScott.K0,     1000),
-        new SliderProperties(F_SLIDER,      0,           0.3,      GrayScott.F0,     1000),
-        new SliderProperties(H_SLIDER,      0.008,    0.05,    GrayScott.H0,    10000),
-        new SliderProperties(BH_SLIDER,     0,          30.0,     0.0,                     10),
-        new SliderProperties(SH_SLIDER,     0,          1.0,      0.0,                     100),
+        new SliderProperties(K_SLIDER,      0,           0.3,      GrayScottModel.K0,     1000),
+        new SliderProperties(F_SLIDER,      0,           0.3,      GrayScottModel.F0,     1000),
+        new SliderProperties(H_SLIDER,      0.008,      0.05,      GrayScottController.H0,     10000),
+        new SliderProperties(BH_SLIDER,     0,          30.0,     0.0,               10),
+        new SliderProperties(SH_SLIDER,     0,          1.0,      0.0,               100),
         new SliderProperties(NS_SLIDER,  MIN_NUM_STEPS,   MAX_NUM_STEPS,   RDSimulator.DEFAULT_STEPS_PER_FRAME, 1),
         new SliderProperties(TIMESTEP_SLIDER,   0.1,     2.0,     RDSimulator.INITIAL_TIME_STEP,    100),
     };
-    
-    
 
-    RDDynamicOptions(GrayScott gs, RDSimulator simulator) {
+
+    /**
+     * Constructor
+     */
+    RDDynamicOptions(GrayScottController gs, RDSimulator simulator) {
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(BorderFactory.createEtchedBorder());
@@ -62,8 +64,9 @@ public class RDDynamicOptions extends JPanel
         sliderGroup_ = new SliderGroup(SLIDER_PROPS);
         sliderGroup_.addSliderChangeListener(this);
 
-        JPanel uvCheckBoxes = createCheckBoxes();      
-        legend_ = new ContinuousColorLegend(null, simulator_.getRenderer().getColorMap(), true);
+        JPanel uvCheckBoxes = createCheckBoxes();
+        ContinuousColorLegend legend_ =
+                new ContinuousColorLegend(null, simulator_.getRenderer().getColorMap(), true);
         
         add(sliderGroup_);
         add(Box.createVerticalStrut(10));
@@ -125,14 +128,14 @@ public class RDDynamicOptions extends JPanel
     }
 
     /**
-     * one of the sliders was moved.
+     * One of the sliders was moved.
      */
     public void sliderChanged(int sliderIndex, String sliderName, double value) {
         if (sliderName.equals(F_SLIDER)) {
-            gs_.setF(value);
+            gs_.getModel().setF(value);
         }
         else if (sliderName.equals(K_SLIDER)) {
-            gs_.setK(value);
+            gs_.getModel().setK(value);
         }
         else if (sliderName.equals(H_SLIDER)) {
             gs_.setH(value);

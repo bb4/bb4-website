@@ -1,23 +1,24 @@
 package com.becker.simulation.reactiondiffusion;
 
 import com.becker.common.*;
+import com.becker.simulation.reactiondiffusion.algorithm.GrayScottModel;
 
 import javax.vecmath.*;
 import java.awt.*;
 
 /**
- * @author Barry Becker Date: Nov 5, 2006
+ * Randers the state of the GrayScottController model to the screen.
+ * @author Barry Becker
  */
 public final class RDRenderer {
 
-    private GrayScott gs_;
+    private GrayScottModel model_;
 
     private boolean isShowingU_ = false;
     private boolean isShowingV_ = true;
 
     /** used for scaling the bump height. if 0, then no bumpiness. */
     private double heightScale_ = 0;
-
 
     /** the bigger this is the smaller the specular highlight will be. */
     private static final double SPECULAR_HIGHLIGHT_EXP = 4.0;
@@ -30,46 +31,17 @@ public final class RDRenderer {
         HALF_ANGLE.add(LIGHT_SOURCE_DIR);
         HALF_ANGLE.normalize();
     }
-    private double specularConst_ = 0;
 
-    private static final int MARGIN = 0;
+    private double specularConst_ = 0;
 
     private ColorMap cmap_;
 
-    double minC_ = 0;
-    double maxC_ = 1.0;
-
-    RDRenderer(GrayScott gs) {
-        gs_ = gs;
-        cmap_ = createColorMap();
-    }
-
-
-    private ColorMap createColorMap() {
-
-        double range = maxC_ - minC_;
-
-        double[] values = {
-              minC_,
-              minC_ + 0.04 * range,
-              minC_ + 0.1 * range,
-              minC_ + 0.3 * range,
-              minC_ + 0.5 * range,
-              minC_ + 0.7 * range,
-              minC_ + 0.94 * range,
-              minC_ + range
-        };
-        Color[] colors = {
-            new Color(0, 0, 0),
-            new Color(0, 0, 255),   // .04
-            new Color(100, 0, 250),   // .1
-            new Color(0, 255, 255),   // .3
-            new Color(0, 255, 0),     // .5
-            new Color(255, 255, 0),   // .7
-            new Color(255, 0, 0),     // .94
-            new Color(0, 0, 0)
-        };
-        return new ColorMap(values, colors);
+    /**
+     * Constructor
+     */
+    RDRenderer(GrayScottModel model) {
+        model_ = model;
+        cmap_ = new RDColorMap();
     }
 
     public void setHeightScale(double h) {
@@ -85,12 +57,12 @@ public final class RDRenderer {
     }
 
     /**
-     * Draw the model representing the current state of the GrayScott rd implementation.
+     * Draw the model representing the current state of the GrayScottController rd implementation.
      */
     public void render(Graphics2D g2) {
 
-        int xmax = gs_.getWidth();
-        int ymax = gs_.getHeight();
+        int xmax = model_.getWidth();
+        int ymax = model_.getHeight();
 
         for (int x = 0; x < xmax; x++) {
             for (int y = 0; y < ymax; y++) {
@@ -103,17 +75,16 @@ public final class RDRenderer {
                 }
 
                 g2.setColor(c);
-                
-                // no significant performance difference between these 2
-                g2.drawLine(MARGIN + x, MARGIN + y, MARGIN + x, MARGIN + y);
+
+                g2.drawLine(x, y, x, y);  // a point
             }
         }
     }
 
     public double getConcentration(int x, int y) {
-        double concentration = isShowingU() ? gs_.getU(x, y): 0.0;
+        double concentration = isShowingU() ? model_.getU(x, y): 0.0;
         if (isShowingV()) {
-            concentration += gs_.getV(x, y);
+            concentration += model_.getV(x, y);
         }
         return concentration;
     }
@@ -136,7 +107,6 @@ public final class RDRenderer {
 
 
     /**
-     *
      * @param c color of surface
      * @return new color based on old, but accounting for lighting effects using the Phong reflection model.
      */
@@ -158,9 +128,15 @@ public final class RDRenderer {
         return computeColor(c, surfaceNormal);
     }
 
+    /**
+     * Diffuse the surface normal with the light source direction, to determine the shading effect.
+     * @param c base color
+     * @param surfaceNormal surface normal for lighting calculations.
+     * @return color adjusted for lighting.
+     */
     private Color computeColor(Color c, Vector3d surfaceNormal) {
 
-        // duffuse the surface notrmal with the light source direction, to determine the shading effect.
+        //
         double duffuse = Math.abs(surfaceNormal.dot(LIGHT_SOURCE_DIR));
         double specular = 0;
         if (specularConst_ > 0)

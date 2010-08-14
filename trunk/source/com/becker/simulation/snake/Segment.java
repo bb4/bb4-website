@@ -237,7 +237,7 @@ public class Segment
     {
         // don't contract the nose because there are no muscles there
         if ( !isNose() ) {
-            //Vector2d muscleForce = v_;
+            //Vector2d muscleForce = v;
             double theta = (double) segmentIndex_ / period - waveSpeed * time;
             double offset = 0;
             switch (Snake.waveType_) {

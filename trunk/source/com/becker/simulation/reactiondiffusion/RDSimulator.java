@@ -1,6 +1,7 @@
 package com.becker.simulation.reactiondiffusion;
 
 import com.becker.simulation.common.*;
+import com.becker.simulation.reactiondiffusion.algorithm.GrayScottController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +14,7 @@ public class RDSimulator extends Simulator {
 
     private static final int FIXED_SIZE_DIM = 250;
 
-    private GrayScott grayScott_;
+    private GrayScottController grayScott_;
     private RDRenderer renderer_;
     private RDDynamicOptions rdOptions_;
 
@@ -46,9 +47,9 @@ public class RDSimulator extends Simulator {
 
     private void commonInit() {
         initCommonUI();
-        grayScott_ = new GrayScott(1, 1);
+        grayScott_ = new GrayScottController(1, 1);
 
-        renderer_ = new RDRenderer(grayScott_);
+        renderer_ = new RDRenderer(grayScott_.getModel());
 
         setNumStepsPerFrame(DEFAULT_STEPS_PER_FRAME);
         oldWidth = this.getWidth();
