@@ -4,7 +4,7 @@ import com.becker.game.card.*;
 import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
 import com.becker.game.multiplayer.poker.*;
-import com.becker.java2d.*;
+import com.becker.java2d.gradient.RoundGradientPaint;
 import com.becker.ui.*;
 import com.becker.common.*;
 

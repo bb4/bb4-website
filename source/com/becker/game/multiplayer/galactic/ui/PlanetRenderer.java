@@ -3,7 +3,7 @@ package com.becker.game.multiplayer.galactic.ui;
 import com.becker.game.common.*;
 import com.becker.game.common.ui.GamePieceRenderer;
 import com.becker.game.multiplayer.galactic.Planet;
-import com.becker.java2d.RoundGradientPaint;
+import com.becker.java2d.gradient.RoundGradientPaint;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;

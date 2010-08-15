@@ -1,4 +1,4 @@
-package com.becker.java2d;
+package com.becker.java2d.png;
 
 import com.becker.ui.ApplicationFrame;
 

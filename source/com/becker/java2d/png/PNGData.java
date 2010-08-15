@@ -1,4 +1,4 @@
-package com.becker.java2d;
+package com.becker.java2d.png;
 
 import java.awt.image.*;
 import java.io.*;

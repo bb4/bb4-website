@@ -1,4 +1,4 @@
-package com.becker.java2d;
+package com.becker.java2d.examples;
 
 import java.applet.Applet;
 import java.awt.*;

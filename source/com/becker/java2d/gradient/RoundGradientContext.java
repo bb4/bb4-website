@@ -1,4 +1,4 @@
-package com.becker.java2d;
+package com.becker.java2d.gradient;
 
 import java.awt.*;
 import java.awt.geom.Point2D;

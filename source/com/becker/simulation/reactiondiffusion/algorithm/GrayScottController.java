@@ -8,14 +8,17 @@ import java.util.List;
 
 /**
  * Makes the GrayScott algorithm run concurrently if setParallelized is set to true.
+ * Primary purpose of this class is to handle breaking the algorithm up into concurrent worker threads.
  *
  * Here are some parallelism results using my Core2Duo 6400.
  * Without parallelism  8.62 fps
  * With parallelism (but not borders) 10.16 fps
  * With parallelism (and borders in sep thread) 10.36 fps
- * After more tuning 19fps (num steps per frame = 10)
- *TODO:
- * - restore last valid state when no activity or all black.
+ * After more tuning 18 fps (num steps per frame = 10)
+ *
+ * Using offscreen rendering gained about a 10% performance improvement
+ *  17.5 -> 18.6 (10 iterations per frame)
+ *  8.3 -> 9.0  (40 iterations per frame)
  *
  * @author Barry Becker
  */

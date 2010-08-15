@@ -23,7 +23,7 @@ public abstract class AnimationComponent extends Container implements Runnable
     protected boolean previousFilled_;
     /** frames per second. */
     protected double frameRate_;
-    protected Image image_;
+    protected volatile Image image_;
 
     // incremented for every frame
     protected int frameCount_ = 0;
@@ -152,11 +152,12 @@ public abstract class AnimationComponent extends Container implements Runnable
                 // Clean up.
                 imageGraphics.dispose();
             }
-            //g.dispose();
         }
     }
 
-    // Offscreen image.
+    /**
+     *  Offscreen image.
+     */
     protected boolean checkImage( Dimension d )
     {
         if ( d.width <= 0 || d.height <= 0 ) return false;
@@ -213,7 +214,10 @@ public abstract class AnimationComponent extends Container implements Runnable
     }
 
 
-    // if paused is true the animation is stopped
+    /**
+     * If paused is true the animation is stopped
+     */
+
     public void setPaused( boolean bPaused )
     {
         bPaused_ = bPaused;

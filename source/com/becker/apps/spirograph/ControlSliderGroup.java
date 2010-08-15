@@ -71,15 +71,12 @@ public class ControlSliderGroup extends SliderGroup
             }
             setSliderMinimum(ControlSliderGroup.RADIUS2, ( 2 - value ));
             state_.setR1(value);
-            autoUpdate();
         }
         else if ( src == ControlSliderGroup.RADIUS2) {
             state_.setR2(value);
-            autoUpdate();
         }
         else if ( src == ControlSliderGroup.POSITION) {
             state_.setPos(value);
-            autoUpdate();
         }
         else if ( src == ControlSliderGroup.VELOCITY) {
             state_.setVelocity(value);
@@ -89,7 +86,12 @@ public class ControlSliderGroup extends SliderGroup
         }
         else if ( src == ControlSliderGroup.SEGMENTS ) {
             state_.setNumSegmentsPerRev(value);
+
         }
+        else {
+            throw new IllegalArgumentException("Unexpected slider index=" + src);
+        }
+        autoUpdate();
     }
 
     private void autoUpdate()

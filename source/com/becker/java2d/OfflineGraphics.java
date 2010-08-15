@@ -1,4 +1,4 @@
-package com.becker.apps.spirograph;
+package com.becker.java2d;
 
 import com.becker.common.util.ImageUtil;
 
@@ -6,8 +6,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /**
- * For rendering into an offscreen image.
- * Partially imlements Graphics2D interface.
+ * For fast rendering into an offscreen image.
+ * Partially imlements methods found in Graphics2D.
  * @author Barry Becker
  */
 public class OfflineGraphics  {
@@ -25,8 +25,10 @@ public class OfflineGraphics  {
      */
     public OfflineGraphics(Dimension dim, Color backgroundColor) {
 
+        assert backgroundColor!=null;
         width_ = dim.width;
         height_ = dim.height;
+        assert width_ >0 && height_ > 0;
         bgColor_ = backgroundColor;
         offlineGraphics_ = createOfflineGraphics();
         clear();
@@ -52,6 +54,11 @@ public class OfflineGraphics  {
             offlineGraphics_.fillRect(x, y, width, height);
     }
 
+    public void drawPoint(int x1, int y1) {
+        if (offlineGraphics_ != null)
+            offlineGraphics_.drawLine(x1, y1, x1, y1);
+    }
+
     /**
      * @return image we render into for better performance. Created lazily.
      */
@@ -63,12 +70,13 @@ public class OfflineGraphics  {
     }
 
     public void clear() {
+
         offlineGraphics_.setColor( bgColor_ );
         offlineGraphics_.fillRect( 0, 0, width_,  height_);
     }
 
     /**
-     * @return the offline graphics created with lazily initialization.
+     * @return the offline graphics created with lazy initialization.
      */
     private Graphics2D createOfflineGraphics() {
         Graphics2D offlineGraphics = null;

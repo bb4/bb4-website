@@ -52,6 +52,43 @@ public final class GrayScottModel {
     }
 
 
+    public int getWidth() {
+        return width_;
+    }
+
+    public int getHeight() {
+        return height_;
+    }
+
+    public void setSize(Dimension requestedNewSize) {
+        width_ = requestedNewSize.width;
+        height_ = requestedNewSize.height;
+    }
+
+    public void setF(double f) {
+        f_ = f;
+    }
+
+    double getF() {
+        return f_;
+    }
+
+    public void setK(double k) {
+        k_ = k;
+    }
+
+    double getK() {
+        return k_;
+    }
+
+    public void commitChanges() {
+         for (int x = 0; x < width_; x++) {
+             System.arraycopy(u[x], 0, tmpU[x], 0, height_);
+             System.arraycopy(v[x], 0, tmpV[x], 0, height_);
+        }
+    }
+
+
     /**
      * Create some initial pattern of chemical that represents the initial condition.
      */
@@ -86,44 +123,6 @@ public final class GrayScottModel {
             for (int y = 0; y < height; y++) {
                 tmpU[startX + x][startY + y] = initialU;
                 tmpV[startX + x][startY + y] = initialV;
-            }
-        }
-    }
-
-    public int getWidth() {
-        return width_;
-    }
-
-    public int getHeight() {
-        return height_;
-    }
-
-    public void setSize(Dimension requestedNewSize) {
-        width_ = requestedNewSize.width;
-        height_ = requestedNewSize.height;
-    }
-
-    public void setF(double f) {
-        f_ = f;
-    }
-
-    public void setK(double k) {
-        k_ = k;
-    }
-
-    double getF() {
-        return f_;
-    }
-
-    double getK() {
-        return k_;
-    }
-
-    public void commitChanges() {
-         for (int x = 0; x < width_; x++) {
-            for (int y = 0; y < height_; y++) {
-                tmpU[x][y] = u[x][y];
-                tmpV[x][y] = v[x][y];
             }
         }
     }

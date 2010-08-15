@@ -96,6 +96,11 @@ public class Profiler
         enabled_ = enable;
     }
 
+    public boolean isEnabled() {
+       return enabled_;
+    }
+    
+
     public void setLogger(ILog logger) {
         logger_ = logger;
     }
