@@ -3,10 +3,10 @@ package com.becker.game.multiplayer.trivial.ui;
 import com.becker.game.common.*;
 import com.becker.game.common.ui.*;
 import com.becker.game.multiplayer.trivial.player.TrivialPlayer;
-import com.becker.java2d.*;
 import com.becker.common.*;
 
 import com.becker.game.multiplayer.common.MultiPlayerMarker;
+import com.becker.java2d.gradient.RoundGradientPaint;
 
 import java.awt.*;
 import java.awt.geom.*;

@@ -1,6 +1,6 @@
 package com.becker.java2d.examples;
 
-import com.becker.java2d.PatchworkComponent;
+import com.becker.java2d.print.PatchworkComponent;
 
 import java.awt.*;
 import java.awt.print.*;

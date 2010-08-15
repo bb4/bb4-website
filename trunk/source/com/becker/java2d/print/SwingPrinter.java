@@ -1,4 +1,4 @@
-package com.becker.java2d;
+package com.becker.java2d.print;
 
 import javax.swing.*;
 import java.awt.*;
@@ -44,7 +44,7 @@ public class SwingPrinter
         setJMenuBar( mb );
 
         // Add the contents of the window.
-        getContentPane().add( new com.becker.java2d.PatchworkComponent() );
+        getContentPane().add( new PatchworkComponent() );
 
         // Exit the application when the window is closed.
         addWindowListener( new WindowAdapter()

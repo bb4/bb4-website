@@ -1,4 +1,4 @@
-package com.becker.java2d;
+package com.becker.java2d.gradient;
 
 import com.becker.ui.ApplicationFrame;
 

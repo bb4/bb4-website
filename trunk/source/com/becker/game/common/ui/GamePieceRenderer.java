@@ -1,7 +1,7 @@
 package com.becker.game.common.ui;
 
 import com.becker.game.common.*;
-import com.becker.java2d.*;
+import com.becker.java2d.gradient.RoundGradientPaint;
 
 import java.awt.*;
 import java.awt.geom.*;

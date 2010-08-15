@@ -1,4 +1,4 @@
-package com.becker.simulation.reactiondiffusion;
+package com.becker.simulation.reactiondiffusion.rendering;
 
 import com.becker.common.ColorMap;
 
@@ -10,7 +10,7 @@ import java.awt.*;
  * 
  * @author Barry Becker
  */
-class RDColorMap extends ColorMap {
+public class RDColorMap extends ColorMap {
 
     private static final double MIN_CONCENTRATION = 0;
     private static final  double MAX_CONCENTRATION = 1.0;
@@ -28,14 +28,14 @@ class RDColorMap extends ColorMap {
     };
 
     private static final Color[] COLORS =  {
-        new Color(0, 0, 0),
+        Color.BLACK,
         new Color(0, 0, 255),     // .04
         new Color(100, 0, 250),   // .1
         new Color(0, 255, 255),   // .3
         new Color(0, 255, 0),     // .5
         new Color(255, 255, 0),   // .7
         new Color(255, 0, 0),     // .94
-        new Color(0, 0, 0)
+        Color.BLACK
     };
 
     public RDColorMap() {

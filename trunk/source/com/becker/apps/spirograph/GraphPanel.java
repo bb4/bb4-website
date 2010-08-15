@@ -20,7 +20,7 @@ public class GraphPanel extends JPanel implements Runnable
     private GraphRenderer graphRenderer_;
     private DecorationRenderer decorRenderer_;
     
-    // synchronization monitor.
+    /** synchronization monitor.  */
     private final Object pauseLock_ = new Object();
     private volatile boolean paused_ = false;
     private volatile GraphState state_;
@@ -74,11 +74,21 @@ public class GraphPanel extends JPanel implements Runnable
         this.repaint();
     }
 
+    /**
+     * If we are just going to draw the graph as quickly as possible, and block until its done,
+     * then don't mess with trying to draw it in a separate thread.
+     */
     public void startDrawingGraph() {
         if ( paused_ ){
             paused_ = false;
         }
-        thread_.start();
+
+        if (state_.isMaxVelocity()) {
+            graphRenderer_.startDrawingGraph();
+        }
+        else {
+            thread_.start();
+        }
     }
 
     private void stopCurrentThread() {

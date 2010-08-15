@@ -2,6 +2,8 @@ package com.becker.simulation.reactiondiffusion;
 
 import com.becker.simulation.reactiondiffusion.algorithm.GrayScottController;
 import com.becker.simulation.reactiondiffusion.algorithm.GrayScottModel;
+import com.becker.simulation.reactiondiffusion.rendering.RDRenderer;
+import com.becker.simulation.reactiondiffusion.rendering.RDRenderingOptions;
 import com.becker.ui.legend.*;
 import com.becker.ui.sliders.SliderGroupChangeListener;
 import com.becker.ui.sliders.SliderGroup;
@@ -66,7 +68,7 @@ public class RDDynamicOptions extends JPanel
 
         JPanel uvCheckBoxes = createCheckBoxes();
         ContinuousColorLegend legend_ =
-                new ContinuousColorLegend(null, simulator_.getRenderer().getColorMap(), true);
+                new ContinuousColorLegend(null, simulator_.getColorMap(), true);
         
         add(sliderGroup_);
         add(Box.createVerticalStrut(10));
@@ -81,7 +83,7 @@ public class RDDynamicOptions extends JPanel
     
     private JPanel createCheckBoxes() {
      
-        RDRenderer r = simulator_.getRenderer();
+        RDRenderingOptions r = simulator_.getRenderingOptions();
         showU_ = new JCheckBox("U Value", r.isShowingU());
         showU_.addActionListener(this);
         showV_ = new JCheckBox("V Value", r.isShowingV());
@@ -91,8 +93,9 @@ public class RDDynamicOptions extends JPanel
         useConcurrency_.addActionListener(this);
         useFixedSize_ = new JCheckBox("Fixed Size", simulator_.getUseFixedSize());
         useFixedSize_.addActionListener(this);
-         JPanel checkBoxes = new JPanel(new GridLayout(0, 2));
-        checkBoxes.add(showU_);     //, BorderLayout.EAST);
+
+        JPanel checkBoxes = new JPanel(new GridLayout(0, 2));
+        checkBoxes.add(showU_);
         checkBoxes.add(useConcurrency_);
         checkBoxes.add(showV_);   
         checkBoxes.add(useFixedSize_);
@@ -110,7 +113,7 @@ public class RDDynamicOptions extends JPanel
      * One of the buttons was pressed/
      */
     public void actionPerformed(ActionEvent e) {
-        RDRenderer r = simulator_.getRenderer();
+        RDRenderingOptions r = simulator_.getRenderingOptions();
 
         if (e.getSource() == showU_) {
             r.setShowingU(!r.isShowingU());
@@ -141,12 +144,11 @@ public class RDDynamicOptions extends JPanel
             gs_.setH(value);
         }
         else if (sliderName.equals(BH_SLIDER)) {
-            simulator_.getRenderer().setHeightScale(value);
+            simulator_.getRenderingOptions().setHeightScale(value);
             sliderGroup_.setEnabled(SH_SLIDER, value > 0);
-            //specularSlider_.setEnabled(value > 0);
         }
         else if (sliderName.equals(SH_SLIDER)) {
-            simulator_.getRenderer().setSpecular(value);
+            simulator_.getRenderingOptions().setSpecular(value);
         }
         else if (sliderName.equals(NS_SLIDER)) {
             simulator_.setNumStepsPerFrame((int) value);

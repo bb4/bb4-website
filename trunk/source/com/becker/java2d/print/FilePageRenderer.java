@@ -1,4 +1,4 @@
-package com.becker.java2d;
+package com.becker.java2d.print;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,7 +8,7 @@ import java.io.*;
 import java.util.Vector;
 
 public class FilePageRenderer extends JComponent
-                                                   implements Printable
+                              implements Printable
 {
     private int mCurrentPage;
     // mLines contains all the lines of the file.

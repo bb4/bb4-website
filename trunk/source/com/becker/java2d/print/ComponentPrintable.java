@@ -1,4 +1,4 @@
-package com.becker.java2d;
+package com.becker.java2d.print;
 
 import javax.swing.*;
 import java.awt.*;

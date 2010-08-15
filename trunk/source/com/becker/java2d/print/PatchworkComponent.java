@@ -1,4 +1,4 @@
-package com.becker.java2d;
+package com.becker.java2d.print;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,9 +9,8 @@ import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 
 public class PatchworkComponent extends JComponent
-                                                         implements Printable
+                                implements Printable
 {
-
     private float mSide = 36;
     private float mOffset = 36;
     private int mColumns = 8;
