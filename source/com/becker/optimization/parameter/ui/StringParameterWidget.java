@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.becker.optimization.parameter.ui;
 
 import com.becker.optimization.parameter.Parameter;
@@ -29,6 +24,7 @@ public class StringParameterWidget extends ParameterWidget implements ActionList
    /**
      * Create a ui widget appropriate for the parameter type.
      */
+    @Override
     protected void addChildren() {
              
            // create a dropdown
@@ -51,10 +47,12 @@ public class StringParameterWidget extends ParameterWidget implements ActionList
         doNotification();
     }
     
+    @Override
     public void refreshInternal() {
         dropdown.setSelectedItem((String)parameter.getNaturalValue());
     }
     
+    @Override
     protected int getMaxHeight() { 
         return 20; 
     }

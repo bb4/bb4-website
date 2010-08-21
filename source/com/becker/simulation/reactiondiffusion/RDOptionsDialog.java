@@ -3,7 +3,6 @@ package com.becker.simulation.reactiondiffusion;
 import com.becker.simulation.common.*;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 
 /**
@@ -14,6 +13,8 @@ public class RDOptionsDialog extends SimulatorOptionsDialog {
     private JCheckBox offscreenRenderingCheckbox_;
 
     private JCheckBox showProfilingCheckbox_;
+    private JCheckBox useParallelRenderingCheckbox_;
+    private JCheckBox synchronizeRenderingCheckbox_;
 
 
     public RDOptionsDialog( JFrame parent, Simulator simulator ) {
@@ -27,15 +28,35 @@ public class RDOptionsDialog extends SimulatorOptionsDialog {
 
         RDSimulator sim = (RDSimulator) getSimulator();
 
-        showProfilingCheckbox_ = new JCheckBox("Show Profiling Information", RDProfiler.getInstance().isEnabled());
-        showProfilingCheckbox_.addActionListener(this);
+        showProfilingCheckbox_ = addCheckBox("Show Profiling Information",
+                        "If checked, profiling statistics will be displayed in the console when paused.",
+                        RDProfiler.getInstance().isEnabled());
+
+        offscreenRenderingCheckbox_ =  addCheckBox("Use offscreen rendering",
+                        "If checked, rendering graphics to an offscreen buffer before copying to the screen.",
+                        sim.getUseOffScreenRendering());
+
+        useParallelRenderingCheckbox_ = addCheckBox("Use parallel rendering",
+                        "If you turn this on, your should also turn on synchronized rendering to avoid artifacts",
+                        sim.getRenderingOptions().isParallelized());
+
+        synchronizeRenderingCheckbox_ = addCheckBox("Use synchronized rendering",
+                        "You don't need this unless parallelized rendering is also checked.",
+                        sim.getRenderingOptions().isSynchRendering());
+
         panel.add(showProfilingCheckbox_);
-
-        offscreenRenderingCheckbox_ = new JCheckBox("Use offscreen rendering", sim.getUseOffScreenRendering());
-        offscreenRenderingCheckbox_.addActionListener(this);
         panel.add(offscreenRenderingCheckbox_);
-
+        panel.add(useParallelRenderingCheckbox_);
+        panel.add(synchronizeRenderingCheckbox_);
+               
         return panel;
+    }
+
+    private JCheckBox addCheckBox(String label, String tooltip, boolean initiallySelected) {
+        JCheckBox cb = new JCheckBox(label, initiallySelected);
+        cb.setToolTipText(tooltip);
+        cb.addActionListener(this);
+        return cb;
     }
 
     @Override
@@ -51,6 +72,11 @@ public class RDOptionsDialog extends SimulatorOptionsDialog {
         else if ( source == offscreenRenderingCheckbox_ ) {
             sim.setUseOffscreenRendering(offscreenRenderingCheckbox_.isSelected());
         }
+        else if ( source == useParallelRenderingCheckbox_ ) {
+            sim.getRenderingOptions().setParallelized(useParallelRenderingCheckbox_.isSelected());
+        }
+        else if ( source == synchronizeRenderingCheckbox_ ) {
+            sim.getRenderingOptions().setSynchRendering(synchronizeRenderingCheckbox_.isSelected());
+        }
     }
-
 }

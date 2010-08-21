@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.becker.optimization.parameter.ui;
 
 import com.becker.optimization.parameter.Parameter;
@@ -27,6 +22,7 @@ public class DoubleParameterWidget extends ParameterWidget implements SliderChan
    /**
      * Create a ui widget appropriate for the parameter type.
      */
+    @Override
     protected void addChildren() {
         
              slider_ = 
@@ -47,6 +43,7 @@ public class DoubleParameterWidget extends ParameterWidget implements SliderChan
          doNotification();        
     }
     
+    @Override
     public void refreshInternal() {
         slider_.setValue(parameter.getValue());
     }

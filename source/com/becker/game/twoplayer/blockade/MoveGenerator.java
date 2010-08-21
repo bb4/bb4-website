@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.becker.game.twoplayer.blockade;
 
 import com.becker.game.common.BoardPosition;

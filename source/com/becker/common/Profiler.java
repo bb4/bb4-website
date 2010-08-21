@@ -40,7 +40,7 @@ public class Profiler
      * @param parent entry above us.
      */
     public void add(String name, String parent)  {
-        ProfilerEntry par = hmEntries_.get(parent);
+        ProfilerEntry par = getEntry(parent);
         assert par!=null : "invalid parent: "+parent;
         ProfilerEntry e = new ProfilerEntry(name);
         par.addChild(e);
@@ -52,7 +52,7 @@ public class Profiler
      */
     public void start(String name)  {
          if (!enabled_) return;
-         ProfilerEntry p = hmEntries_.get(name);
+         ProfilerEntry p = getEntry(name);
          p.start();
      }
 
@@ -61,9 +61,13 @@ public class Profiler
      */
      public void stop(String name) {
          if (!enabled_) return;
-         ProfilerEntry p = hmEntries_.get(name);
+         ProfilerEntry p = getEntry(name);
          p.stop();
      }
+
+    protected ProfilerEntry getEntry(String name) {
+        return hmEntries_.get(name);
+    }
 
     /**
      * reset all the timing numbers to 0
@@ -105,6 +109,15 @@ public class Profiler
         logger_ = logger;
     }
 
+    public void printMessage(String message) {
+        if (logger_ != null) {
+            logger_.print(message);
+        }
+        else {
+            System.out.println(message);
+        }
+    }
+
 
     /**
      * internal calss that represents the timing numbers for a names region of the code.
@@ -138,10 +151,15 @@ public class Profiler
             totalTime_ += System.currentTimeMillis() - startTime_;
         }
 
-        protected long getTime()
+        public long getTime()
         {
             return totalTime_;
         }
+
+        public double getTimeInSeconds()
+        {
+            return (double)totalTime_/1000.0;
+        }       
 
 
         protected void resetAll()
@@ -159,19 +177,19 @@ public class Profiler
 
         protected void print(String indent, ILog logger)
         {
-            double seconds = (double)totalTime_/1000.0;
+            double seconds = getTimeInSeconds();
             String text = indent+ "Time for "+name_+" : "+ Util.formatNumber(seconds) +" seconds";
             if (logger==null)
                 System.out.println(text);
             else
-                 logger.println(text);
+                logger.println(text);
             Iterator childIt = children_.iterator();
 
             long totalChildTime = 0;
             while (childIt.hasNext()) {
                 ProfilerEntry p = (ProfilerEntry)childIt.next();
                 totalChildTime += p.getTime();
-                p.print(indent+INDENT);
+                p.print(indent + INDENT);
             }
             assert (totalChildTime <= 1.1 * totalTime_ ): "The sum of the child times("+totalChildTime
                     +") cannot be greater than the parent time ("+totalTime_+").";

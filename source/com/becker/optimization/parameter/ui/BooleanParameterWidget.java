@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.becker.optimization.parameter.ui;
 
 import com.becker.optimization.parameter.BooleanParameter;
@@ -29,6 +24,7 @@ public class BooleanParameterWidget extends ParameterWidget implements ItemListe
    /**
      * Create a ui widget appropriate for the parameter type.
      */
+    @Override
     protected void addChildren() {
              
             cb = new JCheckBox();            
@@ -49,6 +45,7 @@ public class BooleanParameterWidget extends ParameterWidget implements ItemListe
         doNotification();
     }
     
+    @Override
     public void refreshInternal() {
         cb.setSelected((Boolean)parameter.getNaturalValue());
     }

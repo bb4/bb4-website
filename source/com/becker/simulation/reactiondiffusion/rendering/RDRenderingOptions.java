@@ -1,10 +1,8 @@
 package com.becker.simulation.reactiondiffusion.rendering;
 
-import com.becker.common.ColorMap;
-import com.becker.simulation.reactiondiffusion.algorithm.GrayScottModel;
+import com.becker.common.concurrency.Parallelizer;
 
 import javax.vecmath.Vector3d;
-import java.awt.*;
 
 /**
  * Date: Aug 15, 2010
@@ -28,6 +26,11 @@ public class RDRenderingOptions {
     private static final double SPECULAR_HIGHLIGHT_EXP = 4.0;
     private static final Vector3d HALF_ANGLE;
 
+    /** Manages the worker threads. */
+    private Parallelizer<RenderWorker> parallelizer_;
+
+    private boolean isSynchRendering_ = false;
+
     static {
         LIGHT_SOURCE_DIR.normalize();
         HALF_ANGLE = new Vector3d(0, 0, 1);
@@ -40,6 +43,34 @@ public class RDRenderingOptions {
      * Constructor
      */
     public RDRenderingOptions() {
+        setParallelized(false);
+    }
+
+    public void setParallelized(boolean useParallelization) {
+
+        parallelizer_ =
+             useParallelization ? new Parallelizer<RenderWorker>() : new Parallelizer<RenderWorker>(1);
+    }
+
+    public Parallelizer<RenderWorker> getParallelizer() {
+        return parallelizer_;
+    }
+
+    public boolean isParallelized() {
+        return parallelizer_.getNumThreads() > 1;
+    }
+
+    /**
+     * Wihtout synchronized rendering, there will be grainy artifacts because of setColor not necessarily
+     * matching render point call if running in different thread.
+     * @param synch
+     */
+    public void setSynchRendering(boolean synch) {
+        isSynchRendering_ = synch;
+    }
+
+    public boolean isSynchRendering() {
+        return isSynchRendering_;
     }
 
     public void setHeightScale(double h) {
@@ -53,10 +84,6 @@ public class RDRenderingOptions {
 
     public void setSpecular(double s) {
         specularConst_ = s;
-    }
-
-   public double getSpecular() {
-        return specularConst_;
     }
 
     public double getSpecularExponent(Vector3d surfaceNormal) {

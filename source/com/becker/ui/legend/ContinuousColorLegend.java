@@ -85,9 +85,8 @@ public class ContinuousColorLegend extends JPanel {
         setMaximumSize(new Dimension(2000, height));
 
         this.addComponentListener( new ComponentAdapter()  {
-            public void componentResized( ComponentEvent ce )
-            {
-            }
+            @Override
+            public void componentResized( ComponentEvent ce ) {}
         } );
     }
 
@@ -174,14 +173,11 @@ public class ContinuousColorLegend extends JPanel {
             legend1.setMax( -leg1Min * ( 1.0 - meanProp) / meanProp);
             legend2.setMin( -meanProp * legend2.getMax() / (1.0 - meanProp));
         }
-        //leg1Length = Math.abs(legend1.getMax()) + Math.abs(legend1.getMin());
-        //leg2Length = Math.abs(legend2.getMax()) + Math.abs(legend2.getMin());
-        //System.out.println("leg1Prop="+ legend1.getMin()/leg1Length);
-        //System.out.println("leg2Prop="+ legend2.getMin()/leg2Length);
     }
 
 
-    /** ------------ hese inner classes are used to draw the legend  --------------- */
+
+    /** -------------- these inner classes are used to draw the interactive legend  --------------- */
 
     /**
      * The bar that is the color legend.
@@ -195,6 +191,7 @@ public class ContinuousColorLegend extends JPanel {
             cmap_ = colormap;
         }
 
+        @Override
         public void paintComponent(Graphics g) {
             super.paintComponents(g);
             Graphics2D g2 = (Graphics2D) g;
@@ -237,6 +234,7 @@ public class ContinuousColorLegend extends JPanel {
             addMouseMotionListener(this);
         }
 
+        @Override
         public void paintComponent(Graphics g) {
             super.paintComponents(g);
             Graphics2D g2 = (Graphics2D) g;
@@ -388,6 +386,7 @@ public class ContinuousColorLegend extends JPanel {
             cmap_ = colormap;
         }
 
+        @Override
         public void paintComponent(Graphics g) {
             super.paintComponents(g);
             Graphics2D g2 = (Graphics2D) g;

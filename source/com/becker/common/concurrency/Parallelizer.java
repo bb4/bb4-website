@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.becker.common.concurrency;
 
 import java.util.ArrayList;
@@ -17,8 +12,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Using this class you should be able to easily parallelize a loop of long running tasks.
- * Immutable
+ * Using this class you should be able to easily parallelize a set of long running tasks.
+ * Immutable.
  * 
  * @author Barry Becker
  */
@@ -58,12 +53,12 @@ public class Parallelizer <T> {
         return numThreads;
     }
     
-     /**
-      * Invoke all the workers at once and block until they are all done
-      * Once all the separate threads have completed there assigned work, you may want to commit the results.
-      */
+    /**
+     * Invoke all the workers at once and blocks until they are all done.
+     * Once all the separate threads have completed their assigned work, you may want to commit the results.
+     */
     public void invokeAllRunnables(List<Runnable> workers)  {
-            
+
         // convert the runnables to callables so the invokeAll api works
         List<Callable<T>> callables = new ArrayList<Callable<T>>(workers.size());
         for (Runnable r : workers) {
@@ -72,7 +67,7 @@ public class Parallelizer <T> {
         
         List<Future<T>> futures =  invokeAll(callables);   
         
-        for (Future<T> f :  futures) {
+        for (Future<T> f : futures) {
             try {
                 f.get();
             } catch (InterruptedException ex) {
@@ -95,7 +90,7 @@ public class Parallelizer <T> {
            f =  exec.invokeAll(callables);
         } catch (InterruptedException ex) {
             ex.printStackTrace();
-        } 
+        }
         return f;
     }
     
@@ -115,5 +110,4 @@ public class Parallelizer <T> {
             return null;
         }
     }
-
 }

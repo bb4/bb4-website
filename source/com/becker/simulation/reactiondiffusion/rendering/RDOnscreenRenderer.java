@@ -11,7 +11,6 @@ import java.awt.*;
  */
 public class RDOnscreenRenderer extends RDRenderer {
 
-
     /**
      * Constructor
      */
@@ -19,23 +18,9 @@ public class RDOnscreenRenderer extends RDRenderer {
         super(model, cmap, options);
     }
 
-
     @Override
-    public void render(Graphics2D g2) {
-
-        int xmax = model_.getWidth();
-        int ymax = model_.getHeight();
-
-        for (int x = 0; x < xmax; x++) {
-            for (int y = 0; y < ymax; y++) {
-
-                double concentration = getConcentration(x, y);
-                Color c = getColorForConcentration(concentration, x, y);
-
-                g2.setColor(c);
-                g2.drawLine(x, y, x, y);  // a point
-            }
-        }
-    }
-
+    protected void renderPoint(int x, int y, Color color, Graphics2D g2) {
+        g2.setColor(color);
+        g2.drawLine(x, y, x, y);  // a point
+    }  
 }

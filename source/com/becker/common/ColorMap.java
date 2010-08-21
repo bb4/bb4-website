@@ -15,7 +15,6 @@ public class ColorMap
     final private List<Double> values_;
     final private List<Color> colors_;
 
-
     /**
      * give a list of (increasing) values and colors to map to.
      * the 2 arrays must be of the same length.
@@ -42,7 +41,12 @@ public class ColorMap
         return getColorForValue( (double) value );
     }
 
-    public synchronized Color getColorForValue( final double value )
+    /**
+     *
+     * @param value numeric value to get a color for from the continuous map.
+     * @return color that corresponds to specified value.
+     */
+    public Color getColorForValue( final double value )
     {
         int len = getNumValues();
         if ( value <= values_.get(0)) {
@@ -63,9 +67,9 @@ public class ColorMap
         return interpolate( x );
     }
 
-    // temp vars for interpolation
-    private static final float[] rgba_ = new float[4];
-    private static final float[] rgba1_ = new float[4];
+    // temporary variables for interpolation
+    //private static final float[] rgba_ = new float[4];
+    //private static final float[] rgba1_ = new float[4];
 
     /**
      * I don't think we should get a race condition because the static rgb variables are only used in this
@@ -73,11 +77,12 @@ public class ColorMap
      * @param x value to retur color for.
      * @return interpolated color
      */
-    @SuppressWarnings({"AccessToStaticFieldLockedOnInstance"})
-    private synchronized Color interpolate( double x )
+    private Color interpolate( double x )
     {
         int i = (int) x;
         double delta = x - (double) i;
+        float[] rgba_ = new float[4];
+        float[] rgba1_ = new float[4];
         colors_.get(i).getComponents( rgba_ );
         colors_.get(i + 1).getComponents( rgba1_ );
         return new Color( (float) (rgba_[0] + delta * (rgba1_[0] - rgba_[0])),
@@ -86,33 +91,19 @@ public class ColorMap
                 (float) (rgba_[3] + delta * (rgba1_[3] - rgba_[3])) );
     }
 
-    public synchronized Color getMinColor()
-    {
-        return colors_.get(0);
-    }
-
-    public synchronized Color getMaxColor()
-    {
-        return colors_.get(getNumValues() - 1);
-    }
-
-    public synchronized double getMinValue() {
+    public double getMinValue() {
         return values_.get(0);
     }
 
-    public synchronized double getMaxValue() {
+    public double getMaxValue() {
         return values_.get(getNumValues() - 1);
     }
 
-    public synchronized double getMidPointValue() {
-        return (getMaxValue() - getMinValue())/2.0;
-    }
-
-    public synchronized double getValueRange() {
+    public double getValueRange() {
         return getMaxValue() - getMinValue();
     }
 
-    public synchronized double getValue(int index) {
+    public double getValue(int index) {
         return values_.get(index);
     }
 
@@ -129,7 +120,7 @@ public class ColorMap
     }
 
 
-    public synchronized Color getColor(int index) {
+    public Color getColor(int index) {
         return colors_.get(index);
     }
 
@@ -137,30 +128,34 @@ public class ColorMap
          colors_.set(index, newColor);
     }
 
-    public synchronized int getNumValues() {
+    public int getNumValues() {
         return values_.size();
     }
 
-    public synchronized void insertControlPoint(int index, double value, Color color) {
+    public void insertControlPoint(int index, double value, Color color) {
         values_.add(index, value);
         colors_.add(index, color);
     }
 
-    public synchronized void removeControlPoint(int index) {
+    public void removeControlPoint(int index) {
         values_.remove(index);
         colors_.remove(index);
     }
 
     /**
      * Given a value, return the closest control index.
+     * @return closest index looking to left or right.
      */
-    public synchronized int getClosestIndexForValue(double value) {
+    public int getClosestIndexForValue(double value) {
 
         int len = getNumValues();
-        if ( value <= values_.get(0))
+        if ( value <= values_.get(0)) {
             return 0;
-        else if (value >= values_.get(len-1))
+        }
+        else if (value >= values_.get(len-1)) {
             return len-1;
+        }
+
         int i = 1;
         while ( i < len && value > values_.get(i) ) {
             i++;
@@ -178,8 +173,9 @@ public class ColorMap
 
     /**
      * Given a value, return the control index to the left of value.
+     * @return closest index just to the left.
      */
-    public synchronized int getLeftIndexForValue(double value) {
+    public int getLeftIndexForValue(double value) {
         int len = getNumValues();
         assert(value >= values_.get(0));
         if (value >= values_.get(len-2))
