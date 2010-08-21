@@ -10,7 +10,7 @@ import java.awt.*;
 /**
  * Reaction diffusion viewer.
  */
-public class RDViewer extends JPanel {
+public class RDViewer {
 
     private static final int FIXED_SIZE_DIM = 250;
 
@@ -21,6 +21,7 @@ public class RDViewer extends JPanel {
     private boolean useFixedSize_ = false;
     private boolean useOfflineRendering = false;
 
+    private Container parent_;
     private int oldWidth;
     private int oldHeight;
 
@@ -31,10 +32,11 @@ public class RDViewer extends JPanel {
     /**
      * Constructor
      */
-    public RDViewer(GrayScottController grayScott) {
+    public RDViewer(GrayScottController grayScott, Container parent) {
         grayScott_ = grayScott;
-        oldWidth = getWidth();
-        oldHeight = getHeight();
+        parent_ = parent;
+        oldWidth = parent_.getWidth();
+        oldHeight = parent_.getHeight();
         cmap_ = new RDColorMap();
         renderOptions_ = new RDRenderingOptions();
     }
@@ -66,7 +68,6 @@ public class RDViewer extends JPanel {
         return cmap_;
     }
 
-    @Override
     public void paint( Graphics g )
     {
         checkDimensions();
@@ -82,8 +83,8 @@ public class RDViewer extends JPanel {
         int w = FIXED_SIZE_DIM;
         int h = FIXED_SIZE_DIM;
         if (!useFixedSize_) {
-            w = getWidth();
-            h = getHeight();
+            w = parent_.getWidth();
+            h = parent_.getHeight();
         }
         initRenderers(w, h);
     }
@@ -91,15 +92,28 @@ public class RDViewer extends JPanel {
     private void initRenderers(int w, int h) {
         if (w != oldWidth || h != oldHeight) {
             grayScott_.setSize(w, h);
-            onScreenRenderer_ = new RDOnscreenRenderer(grayScott_.getModel(), cmap_, renderOptions_);
-            offScreenRenderer_ = new RDOffscreenRenderer(grayScott_.getModel(), cmap_, renderOptions_, this);
+            onScreenRenderer_ = null;
+            offScreenRenderer_ = null;
             oldWidth = w;
             oldHeight = h;
         }
     }
 
+    private RDRenderer getOffScreenRenderer() {
+        if (offScreenRenderer_ == null) {
+           offScreenRenderer_ = new RDOffscreenRenderer(grayScott_.getModel(), cmap_, renderOptions_, parent_);
+        }
+        return offScreenRenderer_;
+    }
+
+    private RDRenderer getOnScreenRenderer() {
+        if (onScreenRenderer_ == null) {
+           onScreenRenderer_ = new RDOnscreenRenderer(grayScott_.getModel(), cmap_, renderOptions_);
+        }
+        return onScreenRenderer_;
+    }
 
     private RDRenderer getRenderer() {
-        return  (useOfflineRendering) ? offScreenRenderer_: onScreenRenderer_;
+        return  (useOfflineRendering) ? getOffScreenRenderer() : getOnScreenRenderer();
     }
 }

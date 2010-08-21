@@ -5,6 +5,8 @@ import com.becker.simulation.reactiondiffusion.algorithm.GrayScottModel;
 
 import javax.vecmath.*;
 import java.awt.*;
+import java.util.*;
+import java.util.List;
 
 /**
  * Renders the state of the GrayScottController model to the screen.
@@ -39,15 +41,66 @@ public abstract class RDRenderer {
     /**
      * Draw the model representing the current state of the GrayScottController rd implementation.
      */
-    public abstract void render(Graphics2D g2);
+    public void render(Graphics2D g2) {
 
+        int width = model_.getWidth();
+
+        int numProcs = options_.getParallelizer().getNumThreads();
+        boolean synch = options_.isSynchRendering();
+        List<Runnable> workers = new ArrayList<Runnable>(numProcs);
+        int range = (width / numProcs);
+        for (int i = 0; i < (numProcs - 1); i++) {
+            int offset = i * range;
+            workers.add(new RenderWorker(offset, offset + range, this, synch, g2));
+        }
+        // leftover in the last strip, or all of it if only one processor.
+        workers.add(new RenderWorker(range * (numProcs - 1), width, this, synch, g2));
+
+        // blocks until all Callables are done running.
+        options_.getParallelizer().invokeAllRunnables(workers);
+
+        postRender(g2);
+    }
+
+    /**
+     * Renders a rectangular strip of pixels.
+     */
+    public synchronized void renderStripSynchronized(int minX, int maxX, Graphics2D g2) {
+
+        renderStrip(minX, maxX, g2);
+    }
+
+    /**
+     * Renders a rectangular strip of pixels.
+     */
+    public void renderStrip(int minX, int maxX, Graphics2D g2) {
+
+        int ymax = model_.getHeight();
+        for (int x = minX; x < maxX; x++) {
+            for (int y = 0; y < ymax; y++) {
+
+                double concentration = getConcentration(x, y);
+                Color c = getColorForConcentration(concentration, x, y);
+                renderPoint(x, y, c, g2);
+            }
+        }
+    }
+
+
+    /**
+     * Render a single point at specified position with specified color.
+     */
+    protected abstract void renderPoint(int x, int y, Color color, Graphics2D g2);
+
+    /**
+     * Follow up step after rendering. Does nothing by default.
+     */
+    protected void postRender(Graphics2D g2) {}
 
     public double getConcentration(int x, int y) {
-        double concentration = options_.isShowingU() ? model_.getU(x, y): 0.0;
-        if (options_.isShowingV()) {
-            concentration += model_.getV(x, y);
-        }
-        return concentration;
+        return
+                (options_.isShowingU() ? model_.getU(x, y) : 0.0)
+              + (options_.isShowingV() ? model_.getV(x, y) : 0.0);
     }
 
 
@@ -100,5 +153,4 @@ public abstract class RDRenderer {
                 (int)Math.min(255, cc.getGreen() * diffuse + LIGHT_SOURCE_COLOR.getGreen() * specular),
                 (int)Math.min(255, cc.getBlue() * diffuse + LIGHT_SOURCE_COLOR.getBlue() * specular));
     }
-
 }

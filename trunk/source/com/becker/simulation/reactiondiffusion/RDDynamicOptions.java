@@ -2,7 +2,6 @@ package com.becker.simulation.reactiondiffusion;
 
 import com.becker.simulation.reactiondiffusion.algorithm.GrayScottController;
 import com.becker.simulation.reactiondiffusion.algorithm.GrayScottModel;
-import com.becker.simulation.reactiondiffusion.rendering.RDRenderer;
 import com.becker.simulation.reactiondiffusion.rendering.RDRenderingOptions;
 import com.becker.ui.legend.*;
 import com.becker.ui.sliders.SliderGroupChangeListener;
@@ -15,9 +14,10 @@ import java.awt.event.*;
 
 /**
  * Dynamic controls for the RD simulation that will show on the right.
- * @author Barry Becker Date: Nov 5, 2006
+ * They change the behavior of the simulation while it is running.
+ * @author Barry Becker
  */
-public class RDDynamicOptions extends JPanel
+class RDDynamicOptions extends JPanel
                               implements ActionListener, SliderGroupChangeListener {
 
     private GrayScottController gs_;
@@ -83,14 +83,18 @@ public class RDDynamicOptions extends JPanel
     
     private JPanel createCheckBoxes() {
      
-        RDRenderingOptions r = simulator_.getRenderingOptions();
-        showU_ = new JCheckBox("U Value", r.isShowingU());
+        RDRenderingOptions renderingOptions = simulator_.getRenderingOptions();
+        showU_ = new JCheckBox("U Value", renderingOptions.isShowingU());
         showU_.addActionListener(this);
-        showV_ = new JCheckBox("V Value", r.isShowingV());
+
+        showV_ = new JCheckBox("V Value", renderingOptions.isShowingV());
         showV_.addActionListener(this);
+
         useConcurrency_ = new JCheckBox("Parallel", gs_.isParallelized());
-        useConcurrency_.setToolTipText("Will take advantage of multiple processors if present.");
+        useConcurrency_.setToolTipText(
+                "Take advantage of multiple processors for calculation and rendering if present.");
         useConcurrency_.addActionListener(this);
+
         useFixedSize_ = new JCheckBox("Fixed Size", simulator_.getUseFixedSize());
         useFixedSize_.addActionListener(this);
 
@@ -113,17 +117,18 @@ public class RDDynamicOptions extends JPanel
      * One of the buttons was pressed/
      */
     public void actionPerformed(ActionEvent e) {
-        RDRenderingOptions r = simulator_.getRenderingOptions();
+        RDRenderingOptions renderingOptions = simulator_.getRenderingOptions();
 
         if (e.getSource() == showU_) {
-            r.setShowingU(!r.isShowingU());
+            renderingOptions.setShowingU(!renderingOptions.isShowingU());
         }
         else if (e.getSource() == showV_) {
-            r.setShowingV(!r.isShowingV());
+            renderingOptions.setShowingV(!renderingOptions.isShowingV());
             repaint();
         }
         else if (e.getSource() == useConcurrency_) {
-            gs_.setParallelized(!gs_.isParallelized());
+            boolean isParallelized = !gs_.isParallelized();
+            gs_.setParallelized(isParallelized);
         }
         else if (e.getSource() == useFixedSize_) {
             simulator_.setUseFixedSize(useFixedSize_.isSelected());

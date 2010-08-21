@@ -46,6 +46,8 @@ public class RDSimulator extends Simulator {
         return viewer_.getUseOffScreenRendering();
     }
 
+
+
     @Override
     public void setPaused( boolean bPaused )
     {
@@ -62,8 +64,7 @@ public class RDSimulator extends Simulator {
 
         setNumStepsPerFrame(DEFAULT_STEPS_PER_FRAME);
 
-        viewer_ = new RDViewer(grayScott_);
-        this.add(viewer_);
+        viewer_ = new RDViewer(grayScott_, this);
     }
 
     @Override
@@ -94,12 +95,11 @@ public class RDSimulator extends Simulator {
         return timeStep_;
     }
 
-
     @Override
     public void paint( Graphics g )
     {
         super.paint(g);
-        viewer_.setSize(getSize());
+
         RDProfiler.getInstance().startRenderingTime();
         viewer_.paint(g);
         RDProfiler.getInstance().stopRenderingTime();

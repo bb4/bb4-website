@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.becker.optimization.parameter.redistribution;
 
 import com.becker.common.math.function.Function;

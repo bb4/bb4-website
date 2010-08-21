@@ -14,7 +14,7 @@ import java.awt.image.ImageObserver;
  */
 public class RDOffscreenRenderer extends RDRenderer {
 
-    /** offline rendering is fast */
+    /** offline rendering is fast  (I wish it was anyway)  */
     private OfflineGraphics offlineGraphics_;
 
     private ImageObserver observer_;
@@ -22,7 +22,8 @@ public class RDOffscreenRenderer extends RDRenderer {
     /**
      * Constructor
      */
-    public RDOffscreenRenderer(GrayScottModel model, ColorMap cmap, RDRenderingOptions options, Container imageObserver) {
+    public RDOffscreenRenderer(GrayScottModel model, ColorMap cmap, RDRenderingOptions options,
+                               Container imageObserver) {
         super(model, cmap, options);
         observer_ = imageObserver;
         offlineGraphics_ = new OfflineGraphics(imageObserver.getSize(), Color.BLACK);
@@ -30,20 +31,14 @@ public class RDOffscreenRenderer extends RDRenderer {
 
 
     @Override
-    public void render(Graphics2D g2) {
+    protected void renderPoint(int x, int y, Color color, Graphics2D g2) {
+        offlineGraphics_.setColor(color);
+        offlineGraphics_.drawPoint(x, y);
+    }
 
-        int xmax = model_.getWidth();
-        int ymax = model_.getHeight();
 
-        for (int x = 0; x < xmax; x++) {
-            for (int y = 0; y < ymax; y++) {
-
-                double concentration = getConcentration(x, y);
-                Color c = getColorForConcentration(concentration, x, y);
-                offlineGraphics_.setColor(c);
-                offlineGraphics_.drawPoint(x, y);
-            }
-        }
+    @Override
+    protected void postRender(Graphics2D g2) {
         g2.drawImage(offlineGraphics_.getOfflineImage(), 0, 0, observer_);
     }
 

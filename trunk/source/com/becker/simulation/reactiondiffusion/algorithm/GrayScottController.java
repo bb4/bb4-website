@@ -16,9 +16,7 @@ import java.util.List;
  * With parallelism (and borders in sep thread) 10.36 fps
  * After more tuning 18 fps (num steps per frame = 10)
  *
- * Using offscreen rendering gained about a 10% performance improvement
- *  17.5 -> 18.6 (10 iterations per frame)
- *  8.3 -> 9.0  (40 iterations per frame)
+ * Using offscreen rendering slowed things by about 10%
  *
  * @author Barry Becker
  */
@@ -27,7 +25,7 @@ public final class GrayScottController {
     /** default values for constants. */
     public static final double H0 = 0.01;
     
-    /** Recycle threads so we do not create thousands and eventually run out of memory. */
+    /** Manages the worker threads. */
     private Parallelizer<Worker> parallelizer;
 
     private GrayScottModel model_;
@@ -80,7 +78,7 @@ public final class GrayScottController {
      */
     public void setParallelized(boolean parallelized) {
          parallelizer =
-             parallelized? new Parallelizer<Worker>() : new Parallelizer<Worker>(1);
+             parallelized ? new Parallelizer<Worker>() : new Parallelizer<Worker>(1);
     }
  
     public boolean isParallelized() {
@@ -94,8 +92,7 @@ public final class GrayScottController {
      * @param dt time step in seconds.
      */
     public void timeStep(final double dt) {
-       
-        // calculate center concurrently with multiple threads
+
         int numProcs = parallelizer.getNumThreads();
         List<Runnable> workers = new ArrayList<Runnable>(numProcs);
         int range = model_.getWidth() / numProcs;

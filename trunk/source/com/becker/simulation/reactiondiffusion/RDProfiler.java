@@ -23,6 +23,8 @@ public class RDProfiler extends Profiler {
 
     private static RDProfiler instance;
 
+    private int numFrames;
+
 
     /**
      * @return singleton instance.
@@ -39,7 +41,6 @@ public class RDProfiler extends Profiler {
      */
     protected RDProfiler() {
         add(CALCULATION);
-        //    add(CALC_WORTH, GENERATE_MOVES);
         add(RENDERING);
     }
 
@@ -48,6 +49,27 @@ public class RDProfiler extends Profiler {
         resetAll();
         setEnabled(GameContext.isProfiling());
         setLogger(GameContext.getLogger());
+    }
+
+
+    @Override
+    public void print() {
+
+        if (!isEnabled()) return;
+        double calcTime = getEntry(CALCULATION).getTimeInSeconds();
+        double renderingTime = getEntry(RENDERING).getTimeInSeconds();
+        double ratio = calcTime / renderingTime;
+        printMessage("Number of Frames: " + Util.formatNumber(numFrames));
+        printMessage("Calculation time per frame (sec):" + Util.formatNumber(calcTime/numFrames));
+        printMessage("Rendering time per frame   (sec):" + Util.formatNumber(renderingTime/numFrames));
+        printMessage("Ratio of calculation to rendering time:" + Util.formatNumber(ratio) );
+        super.print();
+    }
+
+    @Override
+    public void resetAll()  {
+        super.resetAll();
+        numFrames = 0;
     }
 
     public void startCalculationTime() {
@@ -64,6 +86,7 @@ public class RDProfiler extends Profiler {
 
     public void stopRenderingTime() {
         this.stop(RENDERING);
+        numFrames++;
     }
 
 }

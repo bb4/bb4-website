@@ -7,13 +7,17 @@ package com.becker.simulation.reactiondiffusion.algorithm;
  */
 final class GrayScottAlgorithm {
 
+    /** We could add scrollbars to scale these */
     private static final double DU = 2.0e-5;
     private static final double DV = 1.0e-5;
 
-    GrayScottModel model_;
+    private GrayScottModel model_;
 
     private double duDivh2;
     private double dvDivh2;
+
+    private int width;
+    private int height;
 
 
     /**
@@ -25,12 +29,17 @@ final class GrayScottAlgorithm {
 
 
     public void computeNextTimeStep(int minX, int maxX, double dt) {
+
         double uv2;
+        double[][] u = model_.tmpU;
+        double[][] v = model_.tmpV;
+        width = model_.getWidth();
+        height = model_.getHeight();
         for (int x = minX; x <= maxX; x++) {
-            for (int y = 1; y < model_.getHeight() - 1; y++) {
-                uv2 = model_.tmpU[x][y] * model_.tmpV[x][y] * model_.tmpV[x][y];
-                model_.u[x][y] = calcNewCenter(model_.tmpU, x, y, duDivh2, true, uv2, dt);
-                model_.v[x][y] = calcNewCenter(model_.tmpV, x, y, dvDivh2, false, uv2, dt);
+            for (int y = 1; y < height - 1; y++) {
+                uv2 = u[x][y] * v[x][y] * v[x][y];
+                model_.u[x][y] = calcNewCenter(u, x, y, duDivh2, true, uv2, dt);
+                model_.v[x][y] = calcNewCenter(v, x, y, dvDivh2, false, uv2, dt);
             }
         }
     }
@@ -38,15 +47,15 @@ final class GrayScottAlgorithm {
     public void computeNewEdgeValues(double dt) {
 
         // top and bottom edges
-        for (int x = 0; x < model_.getWidth(); x++) {
+        for (int x = 0; x < width; x++) {
             calcEdge(x, 0, dt);
-            calcEdge(x, model_.getHeight() - 1, dt);
+            calcEdge(x, height - 1, dt);
         }
 
          // left and right edges
-        for (int y = 0; y < model_.getHeight(); y++) {
+        for (int y = 0; y < height; y++) {
             calcEdge(0, y, dt);
-            calcEdge(model_.getWidth() - 1, y, dt);
+            calcEdge(width - 1, y, dt);
         }
     }
 
@@ -64,17 +73,19 @@ final class GrayScottAlgorithm {
     private void calcEdge(int x, int y, double dt) {
 
         double uv2 = model_.tmpU[x][y] * model_.tmpV[x][y] * model_.tmpV[x][y];
-        model_.u[x][y] = calcNewEdge(model_.tmpU, x, y, model_.getWidth(), model_.getHeight(), duDivh2, true, uv2, dt);
-        model_.v[x][y] = calcNewEdge(model_.tmpV, x, y, model_.getWidth(), model_.getHeight(), dvDivh2, false, uv2, dt);
+        model_.u[x][y] = calcNewEdge(model_.tmpU, x, y, width, height, duDivh2, true, uv2, dt);
+        model_.v[x][y] = calcNewEdge(model_.tmpV, x, y, width, height, dvDivh2, false, uv2, dt);
     }
 
 
     private double calcNewCenter(double[][] tmp, int x, int y,
                                  double dDivh2, boolean useF, double uv2, double dt) {
 
-        double sum = tmp[x + 1][y] + tmp[x - 1][y] +
-                tmp[x][y + 1] + tmp[x][y - 1] -
-                4 * tmp[x][y];
+        double sum = tmp[x + 1][y]
+                + tmp[x - 1][y]
+                + tmp[x][y + 1]
+                + tmp[x][y - 1]
+                - 4 * tmp[x][y];
         return calcNewAux(tmp, x, y, sum, dDivh2, useF, uv2, dt);
     }
 
@@ -97,13 +108,8 @@ final class GrayScottAlgorithm {
                         :  uv2 - model_.getK() * txy;
 
         double newVal = txy + dt * (dDivh2 * sum  + c);
-        if (newVal < 0) {
-            return 0;
-        } else if (newVal > 1.0 || Double.isInfinite(newVal)) {
-            return 1.0;
-        } else {
-            return newVal;
-        }
+        return Math.min(1.0, Math.max(0.0, newVal));
+
     }
 
     /**
