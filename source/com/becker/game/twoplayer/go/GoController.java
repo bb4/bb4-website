@@ -376,9 +376,10 @@ public final class GoController extends TwoPlayerController
         private static final int CRITICAL_GROUP_SIZE = 4;
 
         /**
-         * given a move determine whether the game is over.
+         * Given a move determine whether the game is over.
          * If recordWin is true then the variables for player1/2HasWon can get set.
          * Sometimes, like when we are looking ahead, we do not want to set these.
+         * The game is over if we have a resignation move, or the last two moves were passing moves.
          *
          * @param m the move to check
          * @param recordWin if true then the controller state will record wins
@@ -388,25 +389,21 @@ public final class GoController extends TwoPlayerController
         public final boolean done( TwoPlayerMove m, boolean recordWin )
         {
             boolean gameOver = false;
-            // if the last 2 moves are passing moves then the game is over
-            List moves = getMoveList();
 
-            if (m == null) {
+            if (m == null ) {
                 gameOver = true;
             }
-            else if ( m.isPassingMove() && moves.size() > 2 ) {
-                GoMove secondToLast = (GoMove) moves.get( moves.size() - 2 );
-                if ( secondToLast.isPassingMove() ) {
-                    GameContext.log( 0, "Done: The last 2 moves were passes :" + m + ", " + secondToLast );
-
-                    if (recordWin) {
-                        if (getFinalScore(true) > getFinalScore(false))
-                            getPlayers().getPlayer1().setWon(true);
-                        else
-                            getPlayers().getPlayer2().setWon(true);
-                    }
-                    gameOver = true;
+            else if (m.isResignationMove())  {
+                if (recordWin) {
+                    setWinner(!m.isPlayer1());
                 }
+                gameOver = true;
+            }
+            else if (twoPasses(m)) {
+                if (recordWin) {
+                    setWinner(getFinalScore(true) > getFinalScore(false));
+                }
+                gameOver = true;
             }
             if (!gameOver) {
                 // try normal handling
@@ -427,6 +424,34 @@ public final class GoController extends TwoPlayerController
             return gameOver;
         }
 
+        /**
+         * @param move last move
+         * @return true if last two moves were passing moves.
+         */
+        private boolean twoPasses(TwoPlayerMove move) {
+
+            List moves = getMoveList();
+            if ( move.isPassingMove() && moves.size() > 2 ) {
+                GoMove secondToLast = (GoMove) moves.get( moves.size() - 2 );
+                if ( secondToLast.isPassingMove() ) {
+                    GameContext.log( 0, "Done: The last 2 moves were passes :" + move + ", " + secondToLast );
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /**
+         *  @param player1 if true, set player1 as the winner, else player2.
+         */
+        private void setWinner(boolean player1) {
+            if (player1) {
+                getPlayers().getPlayer1().setWon(true);
+            }
+            else {
+                getPlayers().getPlayer2().setWon(true);
+            }
+        }
 
         /**
          * return any moves that take captures or get out of atari.
@@ -476,5 +501,4 @@ public final class GoController extends TwoPlayerController
             return generator.generateMoves(lastMove, weights, player1sPerspective);
         }
     }
-
 }

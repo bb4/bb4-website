@@ -22,7 +22,7 @@ public abstract class TwoPlayerBoard extends Board
     protected boolean makeInternalMove( Move move )
     {
         TwoPlayerMove m = (TwoPlayerMove)move;
-        if ( !m.isPassingMove() ) {
+        if ( !m.isPassOrResignation() ) {
             BoardPosition pos = positions_[m.getToRow()][m.getToCol()];
             assert(m.getPiece() != null): "moves piece was null :" + m;
             pos.setPiece(m.getPiece());  // need copy?  I don't think so.

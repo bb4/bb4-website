@@ -59,6 +59,18 @@ public final class GoMove extends TwoPlayerMove
     }
 
     /**
+     * factory method for creating a passing move
+     * @return new passing move
+     */
+    public static GoMove createResignationMove(boolean player1)
+    {
+        GoMove m = createGoMove( 1, 1, 0, null );
+        m.isResignation_ = true;
+        m.setPlayer1(player1);
+        return m;
+    }
+
+    /**
      * check if the current move is suicidal.
      * suicidal moves (ones that kill your own pieces) are illegal.
      * Usually a move is suicidal if you play on your last liberty.
@@ -79,11 +91,8 @@ public final class GoMove extends TwoPlayerMove
             }
         }
 
-        if (hasLiberties(occupiedNbrs, nobiNbrs)) {
-            return false;
-        }
+        return !hasLiberties(occupiedNbrs, nobiNbrs) && partOfDeadString(occupiedNbrs, board);
 
-        return partOfDeadString(occupiedNbrs, board);
     }
 
     /**

@@ -94,6 +94,9 @@ public final class GoPanel extends TwoPlayerPanel
         if ( source == ((GoToolBar)toolBar_).getPassButton() ) {
             ((GoBoardViewer) boardViewer_).pass();
         }
+        else if ( source == ((GoToolBar)toolBar_).getResignButton() ) {
+            ((GoBoardViewer) boardViewer_).resign();
+        }
         super.actionPerformed( e );
     }
 

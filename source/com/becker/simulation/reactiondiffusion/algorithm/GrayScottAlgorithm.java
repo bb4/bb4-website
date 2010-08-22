@@ -16,9 +16,6 @@ final class GrayScottAlgorithm {
     private double duDivh2;
     private double dvDivh2;
 
-    private int width;
-    private int height;
-
 
     /**
      * Constructor
@@ -33,8 +30,7 @@ final class GrayScottAlgorithm {
         double uv2;
         double[][] u = model_.tmpU;
         double[][] v = model_.tmpV;
-        width = model_.getWidth();
-        height = model_.getHeight();
+        int height = model_.getHeight();
         for (int x = minX; x <= maxX; x++) {
             for (int y = 1; y < height - 1; y++) {
                 uv2 = u[x][y] * v[x][y] * v[x][y];
@@ -45,6 +41,9 @@ final class GrayScottAlgorithm {
     }
 
     public void computeNewEdgeValues(double dt) {
+
+        int width = model_.getWidth();
+        int height = model_.getHeight();
 
         // top and bottom edges
         for (int x = 0; x < width; x++) {
@@ -73,57 +72,40 @@ final class GrayScottAlgorithm {
     private void calcEdge(int x, int y, double dt) {
 
         double uv2 = model_.tmpU[x][y] * model_.tmpV[x][y] * model_.tmpV[x][y];
-        model_.u[x][y] = calcNewEdge(model_.tmpU, x, y, width, height, duDivh2, true, uv2, dt);
-        model_.v[x][y] = calcNewEdge(model_.tmpV, x, y, width, height, dvDivh2, false, uv2, dt);
+        model_.u[x][y] = calcNewEdge(model_.tmpU, x, y, duDivh2, true, uv2, dt);
+        model_.v[x][y] = calcNewEdge(model_.tmpV, x, y, dvDivh2, false, uv2, dt);
     }
 
 
+    /**
+     * @return new value for a center point.
+     */
     private double calcNewCenter(double[][] tmp, int x, int y,
                                  double dDivh2, boolean useF, double uv2, double dt) {
 
-        double sum = tmp[x + 1][y]
-                + tmp[x - 1][y]
-                + tmp[x][y + 1]
-                + tmp[x][y - 1]
-                - 4 * tmp[x][y];
-        return calcNewAux(tmp, x, y, sum, dDivh2, useF, uv2, dt);
-    }
+        double sum = model_.getNeighborSum(tmp, x, y) - 4 * tmp[x][y];
 
-
-    private double calcNewEdge(double[][] tmp, int x, int y, int ww, int hh,
-                               double dDivh2, boolean useF, double uv2, double dt) {
-
-        double sum = tmp[getPeriodicXValue(x + 1, ww)][y] + tmp[getPeriodicXValue(x - 1, ww)][y] +
-                tmp[x][getPeriodicXValue(y + 1, hh)] + tmp[x][getPeriodicXValue(y - 1, hh)] -
-                4 * tmp[x][y];
-
-        return calcNewAux(tmp, x, y, sum, dDivh2, useF, uv2, dt);
-    }
-
-
-    private double calcNewAux(double[][] tmp, int x, int y, double sum,
-                              double dDivh2, boolean useF, double uv2, double dt) {
-        double txy = tmp[x][y];
-        double c = useF ? -uv2 + model_.getF() * (1.0 - txy)
-                        :  uv2 - model_.getK() * txy;
-
-        double newVal = txy + dt * (dDivh2 * sum  + c);
-        return Math.min(1.0, Math.max(0.0, newVal));
-
+        return calcNewAux(tmp[x][y], sum, dDivh2, useF, uv2, dt);
     }
 
     /**
-     * Periodic boundary conditions.
-     * @return new x value taking into account wrapping boundaries.
+     * @return new value for an edge point.
      */
-    private static int getPeriodicXValue(int x, int max) {
-        int xp = x;
-        while (xp < 0) {
-            xp += max;
-        }
-        while (xp >= max) {
-            xp -= max;
-        }
-        return xp;
+    private double calcNewEdge(double[][] tmp, int x, int y,
+                               double dDivh2, boolean useF, double uv2, double dt) {
+
+        double sum = model_.getEdgeNeighborSum(tmp, x, y) - 4 * tmp[x][y];
+
+        return calcNewAux(tmp[x][y], sum, dDivh2, useF, uv2, dt);
     }
+
+
+    private double calcNewAux(double txy, double sum,
+                              double dDivh2, boolean useF, double uv2, double dt) {
+
+        double c = useF ? -uv2 + model_.getF() * (1.0 - txy)
+                        :  uv2 - model_.getK() * txy;
+
+        return txy + dt * (dDivh2 * sum  + c);
+    }  
 }

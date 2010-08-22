@@ -208,8 +208,8 @@ public final class GoBoard extends TwoPlayerBoard
         GoMove m = (GoMove)move;
 
         // if its a passing move, there is nothing to do
-        if ( m.isPassingMove() ) {
-            GameContext.log( 2, "making passing move" );
+        if ( m.isPassOrResignation() ) {
+            GameContext.log( 2, m.isPassingMove() ? "Making passing move" : "Resigning");
             getProfiler().stopMakeMove();
             return true;
         }

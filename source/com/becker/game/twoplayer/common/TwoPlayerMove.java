@@ -28,7 +28,7 @@ public class TwoPlayerMove extends Move
     private static final String P1 = GameContext.getLabel("PLAYER1");
     private static final String P2 = GameContext.getLabel("PLAYER2");
 
-    /** the location of the move */
+    /** The location of the move. */
     protected Location toLocation_;
 
     /**
@@ -38,30 +38,25 @@ public class TwoPlayerMove extends Move
      */
     private int inheritedValue_;
 
-    /**
-     * true if player1 made the move
-     */
+    /** true if player1 made the move. */
     private boolean player1_;
     
-    /**
-     * this is the piece to use on the board. Some games only have one kind of piece .
-     */
-
+    /** This is the piece to use on the board. Some games only have one kind of piece. */
     private GamePiece piece_;
+
     /**
      * true if this move was generated during quiescent search.
      * @@ should not be in this class.
      */
     private boolean urgent_;
 
-    /**
-     *  if true then this move is a passing move.
-     */
+    /**  If true then this move is a passing move. */
     protected boolean isPass_ = false;
 
-    /**
-     * if true then this move is in the path to selected move.  The game tree viewer may highlight it.
-     */
+    /** True if the player has resigned with this move. */
+    protected boolean isResignation_ = false;
+
+    /** If true then this move is in the path to selected move.  The game tree viewer may highlight it. */
     private boolean selected_;
 
     /** This is a move that we anticipate will be made in the future. Will be rendered differently. */
@@ -143,9 +138,9 @@ public class TwoPlayerMove extends Move
 
 
     /**
-     *  we sort based on the statically evaluated board value
-     *  because the inherited value is not known yet.
-     *  @return  >0 if move m is bigger, < 0 if smaller, =0 if equal
+     * We sort based on the statically evaluated board value
+     * because the inherited value is not known yet.
+     * @return  > 0 if move m is bigger, < 0 if smaller, =0 if equal
      */
     @Override
     public int compareTo( Move m )
@@ -198,6 +193,14 @@ public class TwoPlayerMove extends Move
     public final boolean isPassingMove()
     {
         return isPass_;
+    }
+
+    public final boolean isResignationMove() {
+        return isResignation_;
+    }
+
+    public final boolean isPassOrResignation() {
+        return isPass_ || isResignation_;
     }
 
     public int getInheritedValue() {

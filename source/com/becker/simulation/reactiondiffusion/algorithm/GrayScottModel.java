@@ -44,11 +44,11 @@ public final class GrayScottModel {
     }
 
     public double getU(int x, int y) {
-        return u[x % width_][y % height_];
+        return u[x][y];
     }
     
     public double getV(int x, int y) {
-        return v[x % width_][y % height_];
+        return v[x][y];
     }
 
 
@@ -88,6 +88,21 @@ public final class GrayScottModel {
         }
     }
 
+    public double getNeighborSum(double tmp[][], int x, int y) {
+
+       return tmp[x + 1][y]
+                + tmp[x - 1][y]
+                + tmp[x][y + 1]
+                + tmp[x][y - 1];
+    }
+
+    public double getEdgeNeighborSum(double tmp[][], int x, int y) {
+
+        return tmp[getPeriodicXValue(x + 1, width_)][y]
+                  + tmp[getPeriodicXValue(x - 1, width_)][y]
+                  + tmp[x][getPeriodicXValue(y + 1, height_)]
+                  + tmp[x][getPeriodicXValue(y - 1, height_)];       
+    }
 
     /**
      * Create some initial pattern of chemical that represents the initial condition.
@@ -125,5 +140,14 @@ public final class GrayScottModel {
                 tmpV[startX + x][startY + y] = initialV;
             }
         }
+    }
+
+      /**
+     * Periodic boundary conditions.
+     * @return new x value taking into account wrapping boundaries.
+     */
+    private static int getPeriodicXValue(int x, int max) {
+        int xp = x % max;
+        return xp<0 ? xp + max : xp;
     }
 }
