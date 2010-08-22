@@ -12,9 +12,12 @@ import java.awt.event.ActionListener;
  */
 class GoToolBar extends GameToolBar {
 
-    // go needs an extra button for passing
-    // do not initiallize to null or it will not work because of the way initialization happens
+    /** go needs an extra button for passing. Do not init with null. */
     private GradientButton passButton_;
+
+    /** go needs an extra button for resigning.  */
+    private GradientButton resignButton_;
+
 
     GoToolBar(ImageIcon texture, ActionListener listener) {
         super(texture, listener);
@@ -31,8 +34,19 @@ class GoToolBar extends GameToolBar {
                                            GameContext.getLabel("PASS_BTN_TIP"),
                                            null/*passImage_*/ );
         add( passButton_ );
+
+        resignButton_ = createToolBarButton( GameContext.getLabel("RESIGN_BTN"),
+                                           GameContext.getLabel("RESIGN_BTN_TIP"),
+                                           null/*resignImage_*/ );
+        add( resignButton_ );
     }
 
-    public JButton getPassButton() { return passButton_; }
+    public JButton getPassButton() { 
+        return passButton_;
+    }
+
+    public JButton getResignButton() {
+        return resignButton_;
+    }
 
 }

@@ -31,18 +31,21 @@ public class Move implements Comparable<Move>
      */
     public int compareTo( Move move )
     {
-        if ( getValue() < move.getValue() )
+        if ( getValue() < move.getValue() )   {
             return -1;
-        else if ( getValue() > move.getValue() )
+        }
+        else if ( getValue() > move.getValue() )  {
             return 1;
-        else
+        }
+        else {
             return 0;
+        }
     }
 
     @Override
     public String toString()
     {
-        return "The value of this move is "+value_;
+        return "The value of this move is " + value_;
     }
 
     public int getValue() {

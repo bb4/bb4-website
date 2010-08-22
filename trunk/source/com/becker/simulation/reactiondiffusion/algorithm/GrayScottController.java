@@ -18,6 +18,17 @@ import java.util.List;
  *
  * Using offscreen rendering slowed things by about 10%
  *
+ *                       pr/ns  pr/sync  npr/ns  npr/synch
+ *                      ------- -------  -------  -------
+ * parallel calc       | 23.8     21.1    20.9    20.5
+ * n-par calc          | 19.0     17.1            17.0
+ * n-par calc/offscreen|                  12.8    12.9
+ * par calc/ofscreen   | 17.2     14.2    14.3    14.1
+ *
+ *    pr/ns : parallel rendering/ no synchronized
+ *    npr/ns : no parallel renderin no synch.
+ *   * Parallel rendering without synchranization is fast, but has bad renderin artifacts.
+ *
  * @author Barry Becker
  */
 public final class GrayScottController {

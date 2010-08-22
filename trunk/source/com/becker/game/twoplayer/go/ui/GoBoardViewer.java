@@ -62,13 +62,21 @@ final class GoBoardViewer extends AbstractTwoPlayerBoardViewer {
         return GoBoardRenderer.getRenderer();
     }
 
-
     /**
      * perform a pass for the current player.
      */
     public void pass() {
         GameContext.log( 1, "passing" );
         GoMove m = GoMove.createPassMove( 0, get2PlayerController().isPlayer1sTurn() );
+        continuePlay( m );
+    }
+
+    /**
+     * Current player resigns from the game.
+     */
+    public void resign() {
+        GameContext.log( 1, "player resigns" );
+        GoMove m = GoMove.createResignationMove(get2PlayerController().isPlayer1sTurn() );
         continuePlay( m );
     }
 

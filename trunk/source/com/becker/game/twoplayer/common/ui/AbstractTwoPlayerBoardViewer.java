@@ -317,21 +317,21 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
       */
      public final boolean continuePlay( TwoPlayerMove m ) {
          boolean done = false;
-         TwoPlayerController contoller = get2PlayerController();
-         if (contoller.getPlayers().allPlayersComputer()) {
+         TwoPlayerController controller = get2PlayerController();
+         if (controller.getPlayers().allPlayersComputer()) {
              refresh();
              doComputerMove( !m.isPlayer1() );
          }
          else {
-             if ( contoller.isPlayer1sTurn() ) {
-                 assert !contoller.isProcessing();
+             if ( controller.isPlayer1sTurn() ) {
+                 assert !controller.isProcessing();
                  done = manMoves( m );
-                 if ( !contoller.getPlayers().getPlayer2().isHuman() && !done )
+                 if ( !controller.getPlayers().getPlayer2().isHuman() && !done )
                      doComputerMove( false );
              }
              else { // player 2s turn
                  done = manMoves( m );
-                 if ( !contoller.getPlayers().getPlayer1().isHuman() && !done )
+                 if ( !controller.getPlayers().getPlayer1().isHuman() && !done )
                      doComputerMove( true );
              }
 

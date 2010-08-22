@@ -98,8 +98,8 @@ public abstract class RDRenderer {
     protected void postRender(Graphics2D g2) {}
 
     public double getConcentration(int x, int y) {
-        return
-                (options_.isShowingU() ? model_.getU(x, y) : 0.0)
+
+        return (options_.isShowingU() ? model_.getU(x, y) : 0.0)
               + (options_.isShowingV() ? model_.getV(x, y) : 0.0);
     }
 

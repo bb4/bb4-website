@@ -114,7 +114,7 @@ class RDDynamicOptions extends JPanel
     }
     
     /**
-     * One of the buttons was pressed/
+     * One of the buttons was pressed.
      */
     public void actionPerformed(ActionEvent e) {
         RDRenderingOptions renderingOptions = simulator_.getRenderingOptions();

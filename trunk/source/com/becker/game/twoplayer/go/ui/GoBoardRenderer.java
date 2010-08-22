@@ -29,7 +29,7 @@ import java.util.List;
  */
 public class GoBoardRenderer extends TwoPlayerBoardRenderer
 {
-    private  static GameBoardRenderer renderer_;
+    private static GameBoardRenderer renderer_;
 
     public static final ColorMap COLORMAP = new GoColorMap();
 
@@ -153,8 +153,9 @@ public class GoBoardRenderer extends TwoPlayerBoardRenderer
 
         // draw the group borders
         if ( GameContext.getDebugMode() > 0 ) {
+            GoGroupRenderer groupRenderer = new GoGroupRenderer(board, COLORMAP, (float) cellSize_, getMargin(), g2);
             for (GoGroup group : board.getGroups()) {
-                GoGroupRenderer.drawGroupDecoration(group, COLORMAP, (float) cellSize_, getMargin(), board, g2 );
+                groupRenderer.drawGroupDecoration(group);
             }
         }
 
