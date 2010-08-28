@@ -9,6 +9,7 @@ import com.becker.game.common.ui.GamePanel;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.ui.*;
+import com.becker.ui.themes.BarryTheme;
 
 import javax.swing.*;
 import java.awt.*;
@@ -90,8 +91,8 @@ public abstract class TwoPlayerPanel extends GamePanel
         progressBar.setVisible(!get2PlayerController().getPlayers().allPlayersHuman());
         progressBar.setMinimum(0);
         progressBar.setMaximum(100);
-        progressBar.setBackground(GUIUtil.UI_COLOR_SECONDARY1);
-        progressBar.setForeground(GUIUtil.UI_COLOR_PRIMARY2);
+        progressBar.setBackground(BarryTheme.UI_COLOR_SECONDARY1);
+        progressBar.setForeground(BarryTheme.UI_COLOR_PRIMARY2);
         progressBar.setStringPainted(true);
         progressBar.setBorderPainted(false);
         progressBar.setString(" ");

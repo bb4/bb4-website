@@ -6,7 +6,7 @@ import com.becker.common.math.function.LinearFunction;
 import com.becker.common.math.function.LogFunction;
 import com.becker.simulation.common.DistributionSimulator;
 import com.becker.simulation.common.SimulatorOptionsDialog;
-import com.becker.ui.HistogramRenderer;
+import com.becker.ui.renderers.HistogramRenderer;
 
 /**
  * Simluates the N stocks over M time periods (and other options).

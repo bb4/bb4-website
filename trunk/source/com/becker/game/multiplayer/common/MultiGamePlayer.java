@@ -69,7 +69,7 @@ public abstract class MultiGamePlayer extends Player {
         while ( ct < players.size()) {
             if (players.get(ct) == null)
                 ct++;
-            else if (Math.abs(GUIUtil.getColorHue(players.get(ct).getColor()) - hue) > tolerance)
+            else if (Math.abs(ColorUtil.getColorHue(players.get(ct).getColor()) - hue) > tolerance)
                 ct++;
             else break;
         }

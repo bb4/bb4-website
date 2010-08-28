@@ -2,6 +2,7 @@ package com.becker.game.multiplayer.set.ui;
 
 import com.becker.game.multiplayer.set.*;
 import com.becker.ui.*;
+import com.becker.ui.themes.BarryTheme;
 
 import javax.swing.*;
 import java.util.*;
@@ -22,7 +23,7 @@ public class SolutionPanel extends JPanel
 
     private SetGameViewer viewer_;
 
-    private static final Color BACKGROUND_COLOR = GUIUtil.UI_COLOR_SECONDARY3;
+    private static final Color BACKGROUND_COLOR = BarryTheme.UI_COLOR_SECONDARY3;
 
     /**
      * Constructor.

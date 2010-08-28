@@ -2,7 +2,7 @@ package com.becker.simulation.dice;
 
 import com.becker.common.format.IntegerFormatter;
 import com.becker.common.math.function.LinearFunction;
-import com.becker.ui.HistogramRenderer;
+import com.becker.ui.renderers.HistogramRenderer;
 import com.becker.simulation.common.*;
 
 

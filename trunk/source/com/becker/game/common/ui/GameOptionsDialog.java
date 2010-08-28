@@ -300,20 +300,14 @@ public abstract class GameOptionsDialog extends OptionsDialog
          JPanel p = new JPanel();
          p.setLayout( new BorderLayout() );
          p.setAlignmentX( Component.LEFT_ALIGNMENT );
-         p.setBorder( BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), GameContext.getLabel("LOCALE_OPTIONS") ) );
+         p.setBorder(
+             BorderFactory.createTitledBorder(
+                 BorderFactory.createEtchedBorder(),
+                 GameContext.getLabel("LOCALE_OPTIONS")
+         ));
 
-         localeComboBox_ = new JComboBox();
-         localeComboBox_.setToolTipText( GameContext.getLabel("LOCALE_TIP") );
 
-         // add the available locales to the dropdown
-         LocaleType[] locales = LocaleType.values();
-        for (final LocaleType newVar : locales) {
-            String item = GameContext.getLabel(newVar.toString());
-            localeComboBox_.addItem(item);
-        }
-         localeComboBox_.setSelectedItem(MessageContext.DEFAULT_LOCALE);
-         localeComboBox_.addActionListener( this );
-         localeComboBox_.setAlignmentX( Component.LEFT_ALIGNMENT );
+         localeComboBox_ = createLocaleCombo();
          p.add( localeComboBox_,  BorderLayout.NORTH );
 
          JPanel filler = new JPanel();
@@ -321,6 +315,21 @@ public abstract class GameOptionsDialog extends OptionsDialog
          return p;
      }
 
+    private JComboBox createLocaleCombo() {
+        JComboBox localeComboBox = new JComboBox();
+        localeComboBox.setToolTipText( GameContext.getLabel("LOCALE_TIP") );
+
+        // add the available locales to the dropdown
+        LocaleType[] locales = LocaleType.values();
+        for (final LocaleType newVar : locales) {
+            String item = GameContext.getLabel(newVar.toString());
+            localeComboBox.addItem(item);
+        }
+        localeComboBox.setSelectedItem(MessageContext.DEFAULT_LOCALE);
+        localeComboBox.addActionListener( this );
+        localeComboBox.setAlignmentX( Component.LEFT_ALIGNMENT );
+        return localeComboBox;
+    }
 
     /**
      * ok button pressed.

@@ -6,6 +6,7 @@ import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameControllerInterface;
 import com.becker.ui.GUIUtil;
+import com.becker.ui.themes.BarryTheme;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -38,8 +39,8 @@ public abstract class GameBoardRenderer {
 
     // defaults for the grid and board colors.
     // The may be changed using the options panel in the ui.
-    protected static final Color BACKGROUND_COLOR = GUIUtil.UI_COLOR_SECONDARY3;
-    protected static final Color GRID_COLOR = GUIUtil.UI_COLOR_SECONDARY1;
+    protected static final Color BACKGROUND_COLOR = BarryTheme.UI_COLOR_SECONDARY3;
+    protected static final Color GRID_COLOR = BarryTheme.UI_COLOR_SECONDARY1;
     private static final int BOARD_MARGIN = 5;
     private static final int PREFERRED_CELL_SIZE = 16;
 

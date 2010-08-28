@@ -104,7 +104,6 @@ public class GoGameImporter extends TwoPlayerGameImporter {
          */
         else if (token instanceof TextToken ) {
             TextToken textToken = (TextToken) token;
-            //System.out.println("text="+textToken.getText());
         } else {
             GameContext.log(0, "Ignoring token "+token.getClass().getName() + " while processing.");
         }
