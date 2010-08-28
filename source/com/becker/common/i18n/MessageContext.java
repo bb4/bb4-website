@@ -1,7 +1,6 @@
 package com.becker.common.i18n;
 
 import com.becker.common.ILog;
-import com.becker.ui.Log;
 
 import javax.swing.*;
 import java.util.*;
@@ -16,7 +15,7 @@ public final class MessageContext
     public static final LocaleType DEFAULT_LOCALE = LocaleType.ENGLISH;
 
     /** logger object. Use console by default. */
-    private ILog logger_ = new Log();
+    private ILog logger_;
 
     /** now the variable forms of the above defaults */
     private int debug_ = 0;
@@ -63,6 +62,9 @@ public final class MessageContext
 
 
     private void log(int logLevel, String message) {
+        if (logger_ == null) {
+            throw new RuntimeException("You need to set a logger on the MessageContext before you can call log.");
+        }
        logger_.print(logLevel, debug_, message);
     }
 
@@ -213,7 +215,7 @@ public final class MessageContext
 
 
     /**
-     * Looks up an {@link com.becker.common.i18n.LocaleType} for a given locale name.
+     * Looks up an {@link LocaleType} for a given locale name.
      * @param finf fail if not found.
      * @return locale
      * @throws Error if the name is not a member of the enumeration

@@ -1,6 +1,6 @@
 package com.becker.simulation.common;
 
-import com.becker.ui.HistogramRenderer;
+import com.becker.ui.renderers.HistogramRenderer;
 
 import com.becker.ui.animation.AnimationFrame;
 import java.awt.*;

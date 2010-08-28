@@ -1,4 +1,4 @@
-package com.becker.ui;
+package com.becker.ui.renderers;
 
 import com.becker.common.format.DefaultNumberFormatter;
 import com.becker.common.format.INumberFormatter;

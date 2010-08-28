@@ -320,10 +320,10 @@ public final class GoController extends TwoPlayerController
         String side = (player1? "black":"white");
         GameContext.log(0, "----");
         GameContext.log(0, "final score for "+ side);
-        GameContext.log(0, "getNumCaptures(" + side + ")=" + getNumCaptures(player1));
-        GameContext.log(0, "num dead " + side + " stones on board: "+ numDead); 
-        GameContext.log(0, "getTerritory(" + side + ")="+p1Territory);
-        GameContext.log(0, "final = terr - totalCaptures="+ (p1Territory - totalCaptures));
+        GameContext.log(1, "getNumCaptures(" + side + ")=" + getNumCaptures(player1));
+        GameContext.log(1, "num dead " + side + " stones on board: "+ numDead);
+        GameContext.log(1, "getTerritory(" + side + ")="+p1Territory);
+        GameContext.log(0, "terr - totalCaptures="+ (p1Territory - totalCaptures));
         return p1Territory - totalCaptures;
     }
 

@@ -61,7 +61,7 @@ public class GameTreeInfoPanel extends JPanel {
             entity = "Computer's move";
 
         StringBuilder sBuf = new StringBuilder("<html>");
-        sBuf.append("<font size=\"+1\" color="+GUIUtil.getHTMLColorFromColor(c) +
+        sBuf.append("<font size=\"+1\" color=" + ColorUtil.getHTMLColorFromColor(c) +
                     " bgcolor=#99AA99>" + entity + passSuffix + "</font><br>");
         sBuf.append("Static value = " + Util.formatNumber(m.getValue()) +"<br>");
         sBuf.append("Inherited value = " + Util.formatNumber(m.getInheritedValue()) +"<br>");
