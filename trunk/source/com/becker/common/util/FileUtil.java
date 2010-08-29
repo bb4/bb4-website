@@ -16,15 +16,14 @@ import java.io.PrintWriter;
  */
 public final class FileUtil
 {
+    /** Get the correct file separator whether orn windows (\) or linux (/). */
+    public static final String FILE_SEPARATOR = System.getProperty("file.separator");
+    
     /**
      *  This path should be changed if you run the application form of the applets on a different machine.
      *  use this if running under windows
      */
-    public static final String USER_HOME = "G:";
-
-    // use this running under Linux
-    // public static final String USER_HOME = "/windows";
-    public static final String PROJECT_DIR = USER_HOME + "/projects/java_projects/trunk/";
+    public static final String PROJECT_HOME = System.getenv("PROJECT_HOME") + FILE_SEPARATOR;
     
     /**
      * cannot instantiate static class.
@@ -34,10 +33,8 @@ public final class FileUtil
     /**
      * @return home directory. Assumes running as an Application.
      */
-    public static String getHomeDir()
-    {
-        String userHome = FileUtil.USER_HOME;   // System.getProperty("user.home");
-        return userHome + "/projects/java_projects/trunk";
+    public static String getHomeDir() {
+        return PROJECT_HOME;
     }
 
     /**

@@ -44,7 +44,7 @@ public class OpaqueTest extends JFrame {
 
 
 class RainPanel extends JPanel {
-	ImageIcon rain = new ImageIcon(FileUtil.PROJECT_DIR + "source/com/becker/apps/misc/jfcbook/rain.gif");
+	ImageIcon rain = new ImageIcon(FileUtil.PROJECT_HOME + "source/com/becker/apps/misc/jfcbook/rain.gif");
 	private int rainw = rain.getIconWidth();
 	private int rainh = rain.getIconHeight();
 

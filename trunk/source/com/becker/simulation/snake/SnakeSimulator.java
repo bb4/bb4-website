@@ -137,7 +137,7 @@ public class SnakeSimulator extends NewtonianSimulator
         if (GUIUtil.isStandAlone())
             optimizer = new Optimizer( this );
         else
-            optimizer = new Optimizer( this, FileUtil.PROJECT_DIR+"performance/snake/snake_optimization.txt" );
+            optimizer = new Optimizer( this, FileUtil.PROJECT_HOME +"performance/snake/snake_optimization.txt" );
 
         setPaused(false);
         optimizer.doOptimization(  OptimizationStrategyType.GENETIC_SEARCH, INITIAL_PARAMS, 0.3);

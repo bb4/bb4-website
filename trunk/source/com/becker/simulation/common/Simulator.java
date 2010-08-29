@@ -21,8 +21,8 @@ public abstract class Simulator extends AnimationComponent
                                 implements Optimizee {
 
 
-    protected static final String CONFIG_FILE_PATH_PREFIX = FileUtil.PROJECT_DIR + "source/com/becker/simulation/";
-    protected static final String ANIMATION_FRAME_FILE_NAME_PREFIX = FileUtil.PROJECT_DIR + "temp/animations/simulation/";
+    protected static final String CONFIG_FILE_PATH_PREFIX = FileUtil.PROJECT_HOME + "source/com/becker/simulation/";
+    protected static final String ANIMATION_FRAME_FILE_NAME_PREFIX = FileUtil.PROJECT_HOME + "temp/animations/simulation/";
 
     // debug level of 0 means no debug info, 3 is all debug info
     public static final int DEBUG_LEVEL = 0;
