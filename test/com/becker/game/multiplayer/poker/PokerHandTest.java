@@ -1,7 +1,6 @@
 package com.becker.game.multiplayer.poker;
 
 import com.becker.common.util.FileUtil;
-import com.becker.game.multiplayer.poker.PokerHand;
 import com.becker.game.common.GameContext;
 import com.becker.game.card.Card;
 import junit.framework.TestCase;
@@ -47,7 +46,7 @@ public class PokerHandTest extends TestCase {
 
         List<Result> results = new LinkedList<Result>();
         BufferedReader breader;
-        String fullPath = FileUtil.PROJECT_DIR + "test/" + GameContext.GAME_ROOT + file;
+        String fullPath = FileUtil.PROJECT_HOME + "test/" + GameContext.GAME_ROOT + file;
         try {
             FileReader reader = new FileReader(fullPath);
             breader = new BufferedReader(reader);

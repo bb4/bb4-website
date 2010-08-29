@@ -4,7 +4,6 @@ import com.becker.common.*;
 import com.becker.common.util.FileUtil;
 import com.becker.common.util.ImageUtil;
 import com.becker.ui.themes.BarryTheme;
-import com.sun.java.swing.plaf.windows.*;
 
 import javax.jnlp.*;
 import javax.swing.*;
@@ -29,7 +28,7 @@ public final class GUIUtil
     private static boolean isStandAlone_ = true;
 
     /** default location of files on the local system unless otherwise specified. */
-    public static final String RESOURCE_ROOT = FileUtil.PROJECT_DIR + "source/";
+    public static final String RESOURCE_ROOT = FileUtil.PROJECT_HOME + "source/";
 
     /**
      * For opening files.

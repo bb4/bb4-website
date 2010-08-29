@@ -36,23 +36,27 @@ public class AikidoAppGenerator {
     private static final int THUMB_IMG_WIDTH = 170;
     private static final int THUMB_IMG_HEIGHT = 130;
 
-    private static final String RESULT_PATH = FileUtil.USER_HOME + "/projects/javascript_projects/aikido_builder/";
-    // the builder DHTML application
+    /**
+     * Used to be /projects/javascript_projects/aikido_builder/,
+     * but I need everything in the PROJECT_HOME to be self contained and transferrable.
+     */
+    private static final String RESULT_PATH = FileUtil.PROJECT_HOME + "/dist/aikido_builder/";
+
+    /** the builder DHTML application */
     private static final String RESULT_BULDER_FILE = "technique_builder.html";
-    // all the techniques in one file (for debugging mostly)
+    /** all the techniques in one file (for debugging mostly) */
     private static final String RESULT_ALL_FILE = "all_techniques.html";
 
     private AikidoAppGenerator() {}
 
     private static String getHTMLHead(String title) {
-         String head =  "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n"
+         return "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n"
                 + "<html>\n"
                 + "<head>\n"
                 + "<information content=\"text/html; charset=ISO-8859-1\""
                 + "http-equiv=\"content-type\">"
                 + "<title>"+title+"</title>"
                 + "\n\n";
-         return head;
     }
 
     private static String getScriptOpen() {

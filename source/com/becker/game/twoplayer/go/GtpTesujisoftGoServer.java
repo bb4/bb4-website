@@ -398,7 +398,7 @@ public class GtpTesujisoftGoServer
             {
                 String helpText =
                     "Usage: java -classpath "+
-                        FileUtil.PROJECT_DIR +
+                        FileUtil.PROJECT_HOME +
                         "/classes com.becker.game.twoplayer.go.GtpTesujisoftGoServer [options]\n" +
                         '\n' +
                     "-config       config file\n" +

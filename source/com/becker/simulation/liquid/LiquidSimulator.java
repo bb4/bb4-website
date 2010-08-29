@@ -138,7 +138,7 @@ public class LiquidSimulator extends NewtonianSimulator
         if (GUIUtil.isStandAlone())
             optimizer = new Optimizer( this );
         else
-            optimizer = new Optimizer( this, FileUtil.PROJECT_DIR+"performance/liquid/liquid_optimization.txt" );
+            optimizer = new Optimizer( this, FileUtil.PROJECT_HOME +"performance/liquid/liquid_optimization.txt" );
         Parameter[] params = new Parameter[3];
         //params[0] = new Parameter( WAVE_SPEED, 0.0001, 0.02, "wave speed" );
         //params[1] = new Parameter( WAVE_AMPLITUDE, 0.001, 0.2, "wave amplitude" );
