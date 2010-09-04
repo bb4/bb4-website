@@ -9,7 +9,10 @@ import junit.framework.TestSuite;
 /**
  * @author Barry Becker
  */
-public class TestAllInformation extends GoTestCase {
+public class
+
+
+        TestAllInformation extends GoTestCase {
 
     /**
      * @return all the junit test caes to run (in this class)
@@ -22,6 +25,9 @@ public class TestAllInformation extends GoTestCase {
         suite.addTestSuite(TestE2Information.class);
         suite.addTestSuite(TestE3Information.class);
         suite.addTestSuite(TestE4Information.class);
+        suite.addTestSuite(TestE5Information.class);
+        suite.addTestSuite(TestE6Information.class);
+        suite.addTestSuite(TestE7Information.class);
 
         return suite;
     }

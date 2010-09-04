@@ -32,7 +32,6 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
 
     protected NumberInput rowSizeField_;
     protected NumberInput colSizeField_;
-    protected JTextField openFileField_;
 
     protected GradientButton startButton_;
 

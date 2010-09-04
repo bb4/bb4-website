@@ -36,6 +36,21 @@ public abstract class AbstractEyeSubtypeInformation extends AbstractEyeInformati
         initialize(life, eyeSize, EMPTY_POINTS, EMPTY_POINTS);
     }
 
+    /**
+     * Initialize the subtype information.
+     * Vital points are encoded as a floating point number of the form <num nobi neighbors>.<num neighbor neigbors>
+     * where the number of neighbor neighbors is the total of all the nobie neighbors nobi neighbors.
+     * For example the encoded vital point for a pyramid shaped eye is 3.03 because
+     *  - the central key point position has 3 neighbors and
+     *  - each of those neighobrs has only one neighbor (the center)
+     * A few other examples:
+     *  For a star shape, the vital point is 4.04.
+     *  For three in a row, the vital point is 1.02.
+     * 
+     * @param life  true if this shape has the life property.
+     * @param eyeSize number of spaces in the eye (e.g. 4 for a pyramid eye shape)
+     * @param vitalPts Encoded location of the vital points
+     */
     protected void initialize(boolean life, int eyeSize, float[] vitalPts)  {
         initialize(life, eyeSize, vitalPts, EMPTY_POINTS);
     }
@@ -143,7 +158,7 @@ public abstract class AbstractEyeSubtypeInformation extends AbstractEyeInformati
 
 
     /**
-     * When the eye type has the alive property, we can only be alive or alive in atari.
+     * When the eye type has the life property, we can only be alive or alive in atari.
      * @return either alive or alive in atari (rare)
      */
     protected EyeStatus handleSubtypeWithLifeProperty(GoEye eye, GoBoard board) {
