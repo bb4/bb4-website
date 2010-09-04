@@ -14,8 +14,8 @@ import junit.framework.TestSuite;
 public class TestE3Information extends TestEyeTypeAnalyzer {
 
     @Override
-    protected String getPathPrefix() {
-        return PATH_PREFIX + "information/E3/";
+    protected EyeType getEyeType() {
+        return EyeType.E3;
     }
 
     public void testThreeSpaceEye() {
@@ -100,7 +100,7 @@ public class TestE3Information extends TestEyeTypeAnalyzer {
         GoBoard b = initializeBoard("three_space_eye_two_ends_filled_in_atari", 5);
 
         checkBlackEye(b, new E3Information(), EyeStatus.UNSETTLED);
-        //checkWhiteEye(b, new E3Information(), EyeStatus.UNSETTLED);
+        //checkWhiteEye(b, new E3Information(), EyeStatus.UNSETTLED); can't make in atari
     }
 
 

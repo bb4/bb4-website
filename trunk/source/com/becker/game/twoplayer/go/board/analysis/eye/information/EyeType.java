@@ -1,9 +1,11 @@
 package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
+import com.becker.game.twoplayer.go.board.elements.GoEye;
+
 /**
  * Enum for the different possible Eye shapes.
  * See http://www.ai.univ-paris8.fr/~cazenave/eyeLabelling.pdf
- * @see com.becker.game.twoplayer.go.board.elements.GoEye
+ * @see GoEye
  *
  * We define the Neighbour Classification of  an eye as a number
  * of  digits sorted from low to high, where every intersection in the eye space is associated

@@ -1,7 +1,8 @@
-package com.becker.game.twoplayer.go.board.analysis.eye;
+package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.analysis.eye.information.FalseEyeInformation;
+import com.becker.game.twoplayer.go.board.analysis.eye.EyeStatus;
+import com.becker.game.twoplayer.go.board.analysis.eye.TestEyeTypeAnalyzer;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -11,6 +12,11 @@ import junit.framework.TestSuite;
  * @author Barry Becker
  */
 public class TestFalseEyeInformation extends TestEyeTypeAnalyzer {
+
+    @Override
+    protected EyeType getEyeType() {
+        return EyeType.FalseEye;
+    }
 
     public void testFalseKoEye1() {
         GoBoard b = initializeBoard("false_ko_eye1");

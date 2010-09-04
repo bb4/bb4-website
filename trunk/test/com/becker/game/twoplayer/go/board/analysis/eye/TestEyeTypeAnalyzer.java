@@ -6,6 +6,7 @@ import com.becker.game.twoplayer.go.board.analysis.eye.information.*;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPositionSet;
 import com.becker.game.twoplayer.go.board.elements.GoEye;
 import com.becker.game.twoplayer.go.board.elements.GoGroup;
+import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeType;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -19,7 +20,7 @@ import java.util.Set;
  */
 public abstract class TestEyeTypeAnalyzer extends GoTestCase {
 
-    protected static final String PATH_PREFIX = "board/analysis/eye/";
+    protected static final String PATH_PREFIX = "board/analysis/eye/information/";
 
     private enum GroupType {BIGGEST, SURROUNDED}
 
@@ -27,9 +28,14 @@ public abstract class TestEyeTypeAnalyzer extends GoTestCase {
         return initializeBoard(eyesProblemFile, 2);
     }
 
+    /**
+     * @return Place where test SGF files are stored.
+     */
     protected String getPathPrefix() {
-        return PATH_PREFIX;
+        return PATH_PREFIX + getEyeType().toString() + "/";
     }
+
+    protected abstract EyeType getEyeType();
 
     /**
      * @param eyesProblemFile saved sgf game file to load
@@ -56,7 +62,6 @@ public abstract class TestEyeTypeAnalyzer extends GoTestCase {
     protected void checkWhiteEye(GoBoard board, EyeInformation expectedInfo, EyeStatus expectedStatus) {
          checkEyeInfo(board, expectedInfo, expectedStatus, false, false, false, GroupType.BIGGEST);
     }
-
 
     protected void checkEdgeBlackEye(GoBoard board, EyeInformation expectedInfo, EyeStatus expectedStatus) {
         checkEyeInfo(board, expectedInfo, expectedStatus, true, false, true, GroupType.BIGGEST);
@@ -95,7 +100,7 @@ public abstract class TestEyeTypeAnalyzer extends GoTestCase {
 
         Set<GoEye> eyes = group.getEyes(board);
 
-        assertEquals("The group\n" + group + "\n did not have one eye",
+        assertEquals("The group\n" + group + "\n did not have one eye.",
                 1, eyes.size());
         GoEye firstEye = group.getEyes(board).iterator().next();
 
@@ -105,11 +110,11 @@ public abstract class TestEyeTypeAnalyzer extends GoTestCase {
         assertEquals("Unexpected information found for " + eyeColor + " eye.",
                 expectedInfo, information);
         EyeStatus status = information.determineStatus(firstEye, board);
-        assertEquals("Unexpected status found for " + eyeColor + " eye.",
+        assertEquals("Unexpected status found for " + eyeColor + " eye in group=" + group,
                 expectedStatus, status);
 
-        assertEquals("Corner status unexpected", isInCorner, information.isInCorner(firstEye));
-        assertEquals("Edge status unexpected", isOnEdge, information.isOnEdge(firstEye));
+        assertEquals("Corner status unexpected.", isInCorner, information.isInCorner(firstEye));
+        assertEquals("Edge status unexpected.", isOnEdge, information.isOnEdge(firstEye));
     }
 
     private GoGroup getGroupToCheck(boolean isBlack, GroupType type, GoBoard board) {
@@ -145,6 +150,4 @@ public abstract class TestEyeTypeAnalyzer extends GoTestCase {
     public static Test suite() {
         return new TestSuite(TestEyeTypeAnalyzer.class);
     }
-
-
 }

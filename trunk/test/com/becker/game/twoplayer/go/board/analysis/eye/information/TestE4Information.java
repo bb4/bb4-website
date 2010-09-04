@@ -5,6 +5,7 @@ import com.becker.game.twoplayer.go.board.analysis.eye.EyeStatus;
 import com.becker.game.twoplayer.go.board.analysis.eye.TestEyeTypeAnalyzer;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import com.becker.game.twoplayer.go.board.analysis.eye.information.EyeType;
 import static com.becker.game.twoplayer.go.board.analysis.eye.information.E4Information.Eye4Type.*;
 
 /**
@@ -15,9 +16,11 @@ import static com.becker.game.twoplayer.go.board.analysis.eye.information.E4Info
 public class TestE4Information extends TestEyeTypeAnalyzer {
 
     @Override
-    protected String getPathPrefix() {
-        return PATH_PREFIX + "information/E4/";
+    protected EyeType getEyeType() {
+        return EyeType.E4;
     }
+
+    // All in a row E1122
 
     public void testFourBentSpaceEye() {
         GoBoard b = initializeBoard("four_space_bent_eye", 2);
@@ -101,7 +104,7 @@ public class TestE4Information extends TestEyeTypeAnalyzer {
         GoBoard b = initializeBoard("four_space_bent_in_atari_ends_split", 6);
 
         checkBlackEyeSurrounded(b, new E4Information(E1122.toString()), EyeStatus.UNSETTLED);
-        //checkWhiteEyeSurrounded(b, new E4Information(E1122.toString()), EyeStatus.UNSETTLED);
+        checkWhiteEyeSurrounded(b, new E4Information(E1122.toString()), EyeStatus.UNSETTLED);
     }
 
     public void testFourBentEdgeKo() {
@@ -115,7 +118,7 @@ public class TestE4Information extends TestEyeTypeAnalyzer {
         GoBoard b = initializeBoard("four_space_bent_corner_ko", 6);
 
         checkCornerBlackEye(b, new E4Information(E1122.toString()), EyeStatus.UNSETTLED); //ALIVE_IN_ATARI or KO?);
-        checkCornerWhiteEye(b, new E4Information(E1122.toString()), EyeStatus.UNSETTLED);   // KO
+        checkCornerWhiteEye(b, new E4Information(E1122.toString()), EyeStatus.UNSETTLED); // KO
     }
 
 
@@ -127,6 +130,16 @@ public class TestE4Information extends TestEyeTypeAnalyzer {
         checkBlackEye(b, new E4Information(E1113.toString()), EyeStatus.UNSETTLED);
         checkWhiteEye(b, new E4Information(E1113.toString()), EyeStatus.UNSETTLED);
     }
+
+    public void testFourPyramidSpaceVitalFilled() {
+        GoBoard b = initializeBoard("four_space_pyramid_vital_filled", 4);
+
+        checkBlackEye(b, new E4Information(E1113.toString()), EyeStatus.NAKADE);
+        checkWhiteEye(b, new E4Information(E1113.toString()), EyeStatus.NAKADE);
+    }
+
+
+    // clump
 
     public void testFourClumpSpaceEye() {
         GoBoard b = initializeBoard("four_space_clump_eye", 2);

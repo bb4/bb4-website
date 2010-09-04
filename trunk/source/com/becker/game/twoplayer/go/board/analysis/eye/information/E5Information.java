@@ -45,7 +45,7 @@ public class E5Information extends AbstractEyeSubtypeInformation
         EyeNeighborMap nbrMap = new EyeNeighborMap(eye);
         switch (e5Type) {
             case E11222 :
-                handleSubtypeWithLifeProperty(eye, board);
+                return handleSubtypeWithLifeProperty(eye, board);
             case E11123 :
                 return handleVitalPointCases(nbrMap, eye, 2);
             case E11114 :

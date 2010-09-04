@@ -14,7 +14,8 @@ import java.util.List;
  */
 public class TestGroupFinding extends GoTestCase {
 
-    private static final String PREFIX = "board/analysis/eye/";
+    /** where to go for the test files. */
+    private static final String PREFIX = "board/analysis/eye/information/FalseEye/";
 
 
     // ----------- check that we can find group neighbors -------

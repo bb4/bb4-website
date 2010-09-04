@@ -157,6 +157,7 @@ public final class GoBoard extends TwoPlayerBoard
     /**
      * @return typical number of moves in a go game.
      */
+    @Override
     public int getTypicalNumMoves() {
         return rowsTimesCols_ - getNumRows();
     }

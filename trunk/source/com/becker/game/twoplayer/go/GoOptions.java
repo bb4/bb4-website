@@ -5,10 +5,9 @@ import com.becker.game.twoplayer.common.search.SearchOptions;
 import com.becker.sound.*;
 
 /**
- * @author Barry Becker Date: Nov 23, 2006
+ * @author Barry Becker
  */
 public class GoOptions extends TwoPlayerOptions {
-
 
     /** The komi can vary, but 5.5 seems most commonly used. */
     public static final float DEFAULT_KOMI = 5.5f;

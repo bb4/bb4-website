@@ -20,8 +20,7 @@ import java.io.*;
  *
  * @author Barry Becker
  */
-public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListener
-{
+public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListener {
     // radio buttons for selecting 1st and second players
     private JRadioButton human1Button_;
     private JRadioButton computer1Button_;
@@ -37,13 +36,11 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
     /**
      * constructor
      */
-    public TwoPlayerNewGameDialog( JFrame parent, GameViewable viewer )
-    {
+    public TwoPlayerNewGameDialog( JFrame parent, GameViewable viewer ) {
         super( parent, viewer );    
     }
 
-    private TwoPlayerController get2PlayerController()
-    {
+    private TwoPlayerController get2PlayerController() {
         return (TwoPlayerController) controller_;
     }
 
@@ -51,8 +48,7 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
      * @return panel for the local player
      */
     @Override
-    protected JPanel createPlayLocalPanel()
-    {
+    protected JPanel createPlayLocalPanel() {
         JPanel playLocalPanel = new JPanel();
         playLocalPanel.setLayout( new BoxLayout( playLocalPanel, BoxLayout.Y_AXIS ) );
         JPanel playerPanel = createPlayerPanel();
@@ -69,8 +65,7 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
     }
 
 
-    private JPanel createOptimizationPanel()
-    {
+    private JPanel createOptimizationPanel() {
         JPanel p = new JPanel();
         p.setLayout( new BoxLayout( p, BoxLayout.Y_AXIS ) );
         p.setBorder(
@@ -87,8 +82,7 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
 
 
     @Override
-    protected JPanel createPlayerPanel()
-    {
+    protected JPanel createPlayerPanel() {
         TwoPlayerController c = get2PlayerController();
 
 
@@ -132,21 +126,18 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
     }
 
 
-    protected String getPlayer1Label()
-    {
+    protected String getPlayer1Label() {
         return GameContext.getLabel("FIRST_PLAYER" ) + COLON;
     }
 
-    protected String getPlayer2Label()
-    {
+    protected String getPlayer2Label() {
         return GameContext.getLabel("SECOND_PLAYER") + COLON;
     }
 
     private JPanel createPlayerEntry( String message,
                                       JRadioButton humanButton,
                                       JRadioButton computerButton,
-                                      GradientButton editWtsButton )
-    {
+                                      GradientButton editWtsButton ) {
         JPanel p = new JPanel();
         p.setLayout( new BoxLayout( p, BoxLayout.X_AXIS ) );
 
@@ -178,8 +169,7 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
     /**
      *  @return return true if canceled
      */
-    private boolean showEditWeightsDialog( ParameterArray weights )
-    {
+    private boolean showEditWeightsDialog( ParameterArray weights ) {
         GameWeights gameWeights = get2PlayerController().getComputerWeights();
         EditWeightsDialog editWtsDlg = new EditWeightsDialog( parent_, weights, gameWeights );
         Dimension dlgSize = editWtsDlg.getPreferredSize();
@@ -193,8 +183,7 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
     }
 
     @Override
-    protected void ok()
-    {
+    protected void ok() {
         TwoPlayerController c = get2PlayerController();
         PlayerList players = c.getPlayers();
         if (optimizationCheckbox_.isSelected())
@@ -213,8 +202,7 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
     }
 
     @Override
-    public void actionPerformed( ActionEvent e )
-    {
+    public void actionPerformed( ActionEvent e ) {
         Object source = e.getSource();
         GameWeights gameWeights = get2PlayerController().getComputerWeights();
 

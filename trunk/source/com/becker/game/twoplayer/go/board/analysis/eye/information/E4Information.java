@@ -27,7 +27,7 @@ public class E4Information extends AbstractEyeSubtypeInformation
         switch(e4Type) {
            case E1122 : initialize(false, 4, new float[] {2.03f, 2.03f});
                break;
-           case E1113 : initialize(false, 4, new float[] {3.01f});
+           case E1113 : initialize(false, 4, new float[] {3.03f});
                break;
            case E2222 : initialize(false, 4);
                break;
