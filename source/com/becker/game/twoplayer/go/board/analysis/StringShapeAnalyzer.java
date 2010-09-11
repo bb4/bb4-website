@@ -19,7 +19,7 @@ public class StringShapeAnalyzer {
     private GoBoard board_;
     
     public StringShapeAnalyzer(GoBoard board) {
-        board_ =board;
+        board_ = board;
     }
     
     /**

@@ -116,12 +116,7 @@ public final class GoStone extends GamePiece implements GoMember
         //sb.append( type_ );
         sb.append( (ownedByPlayer1_ ? "Black" : "White") + "stone");
         if (positionalScore_ != null)  {
-            sb.append(" (<br>  overall score for stone:"+Util.formatNumber(positionalScore_.getPositionScore()) +" = ");
-            sb.append("<br>    deadStone:" + Util.formatNumber(positionalScore_.deadStoneScore));
-            sb.append("<br>    eyeSpace: "+Util.formatNumber(positionalScore_.eyeSpaceScore));
-            sb.append("<br>    badShape: "+Util.formatNumber(positionalScore_.badShapeScore));
-            sb.append("<br>    position: "+Util.formatNumber(positionalScore_.posScore));
-            sb.append("<br>    health:  "+Util.formatNumber(positionalScore_.healthScore) + " ) <br>");
+            sb.append(positionalScore_.toString(true));
         }
 
         return sb.toString();

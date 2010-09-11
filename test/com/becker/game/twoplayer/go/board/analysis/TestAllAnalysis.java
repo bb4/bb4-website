@@ -27,6 +27,7 @@ public class TestAllAnalysis extends GoTestCase {
 
         suite.addTestSuite(TestShapeAnalyzer.class);
         suite.addTestSuite(TestCandidateMoveAnalyzer.class);
+        suite.addTestSuite(TestPositionalScoreAnalyzer.class);
         suite.addTestSuite(TestGoBoardUtil.class);
         
         return suite;

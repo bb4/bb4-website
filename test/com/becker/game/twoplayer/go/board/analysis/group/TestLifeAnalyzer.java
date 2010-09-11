@@ -85,9 +85,7 @@ public class TestLifeAnalyzer extends GoTestCase {
         GoGroup group = getBiggestGroup(forBlackGroup);
 
         int size = group.getNumStones();
-        Assert.assertTrue("We expected the size of the test group to be "+ expectedSizeOfGroup
-                +" but instead it was "+ size,
-                size == expectedSizeOfGroup);
+        Assert.assertEquals("Unexpected size of test group.", expectedSizeOfGroup, size);
 
         LifeAnalyzer analyzer = new LifeAnalyzer(group, (GoBoard) controller_.getBoard());
         boolean unconditionallyAlive = analyzer.isUnconditionallyAlive();

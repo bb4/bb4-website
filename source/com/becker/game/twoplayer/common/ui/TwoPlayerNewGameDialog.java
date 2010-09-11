@@ -185,6 +185,7 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
     @Override
     protected void ok() {
         TwoPlayerController c = get2PlayerController();
+
         PlayerList players = c.getPlayers();
         if (optimizationCheckbox_.isSelected())
         {

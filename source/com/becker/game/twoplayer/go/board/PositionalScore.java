@@ -4,16 +4,18 @@ import com.becker.common.util.Util;
 
 /**
  * For debugging purposes we want to keep more detail on what composes the overall score.
- * @author Barry Becker Date: Dec 30, 2006
+ * @author Barry Becker 
  */
 public class PositionalScore {
 
-    public double positionScore_ = 0; // loosely based on badShapeScore, posScore, and healthScore
     public double deadStoneScore = 0;
     public double eyeSpaceScore = 0;
     public double badShapeScore = 0;
     public double posScore = 0;
     public double healthScore = 0;
+
+    /** Loosely based on badShapeScore, posScore, and healthScore */
+    private double positionScore_ = 0;
     
     private boolean incremented_ = false;
 
@@ -48,12 +50,29 @@ public class PositionalScore {
         buf.append("captureScore=").append(Util.formatNumber(captureScore)).append("<br>");
         buf.append("territoryDelta=").append(Util.formatNumber(territoryDelta)).append("<br>");
         buf.append("scaleFactor=").append(Util.formatNumber(scaleFactor)).append("<br>");
-        buf.append("positionScore=").append(Util.formatNumber(positionScore_)).append("<br>");
-        buf.append("  deadStoneScore=").append(Util.formatNumber(deadStoneScore)).append("<br>");
-        buf.append("  eyeSpaceScore=").append(Util.formatNumber(eyeSpaceScore)).append("<br>");
-        buf.append("  badShapeScore=").append(Util.formatNumber(badShapeScore)).append("<br>");
-        buf.append("  posScore=").append(Util.formatNumber(posScore)).append("<br>");
-        buf.append("  healthScore=").append(Util.formatNumber(healthScore)).append("</html>");
+        buf.append(toString(true));
+        buf.append("</html>");
         return buf.toString();
+    }
+
+    public String toString() {
+        return toString(false);
+    }
+
+    public String toString(boolean htmlForm) {
+        StringBuilder buf = new StringBuilder();
+        String sep = htmlForm ? "<br>" : "\n";
+        buf.append("overall positionScore=").append(format(positionScore_)).append(sep);
+        buf.append("  deadStoneScore=").append(format(deadStoneScore)).append(sep);
+        buf.append("  eyeSpaceScore=").append(format(eyeSpaceScore)).append(sep);
+        buf.append("  badShapeScore=").append(format(badShapeScore)).append(sep);
+        buf.append("  posScore=").append(format(posScore)).append(sep);
+        buf.append("  healthScore=").append(format(healthScore));
+        return buf.toString();
+    }
+
+    private String format(double num) {
+        // Util.formatNumber(num);
+        return Double.toString(num);
     }
 }

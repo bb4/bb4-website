@@ -59,7 +59,6 @@ public final class GoController extends TwoPlayerController
     {
         board_ = new GoBoard( nrows, ncols, numHandicapStones );
         initializeData();
-        positionalScorer_ = new PositionalScoreAnalyzer((GoBoard)board_);
     }
 
     @Override
@@ -74,8 +73,7 @@ public final class GoController extends TwoPlayerController
      * this gets the Go specific patterns and weights.
      */
     @Override
-    protected void initializeData()
-    {
+    protected void initializeData() {
         deadStones_ = new DeadStones();
         weights_ = new GoWeights();
     }
@@ -158,7 +156,7 @@ public final class GoController extends TwoPlayerController
     }
 
     /**
-     * *return the game board back to its initial opening state
+     * return the game board back to its initial opening state.
      */
     @Override
     public void reset() {
@@ -240,7 +238,7 @@ public final class GoController extends TwoPlayerController
      *   A big negative value means a good move for p2.
      */
     private double calculateWorth(Move lastMove, ParameterArray weights) {
-        int row, col;
+
         double worth;
         GoBoard board = (GoBoard)board_;
         // adjust for board size - so worth will be comparable regardless of board size.
@@ -248,17 +246,17 @@ public final class GoController extends TwoPlayerController
         double gameStageBoost = getGameStageBoost();
 
         PositionalScore totalScore = new PositionalScore();
-        for ( row = 1; row <= board.getNumRows(); row++ ) {
-            for ( col = 1; col <= board.getNumCols(); col++ ) {
+        for (int row = 1; row <= board.getNumRows(); row++ ) {
+            for (int col = 1; col <= board.getNumCols(); col++ ) {
 
-                totalScore = positionalScorer_.updateScoreForPosition(row, col, gameStageBoost, totalScore, weights);
+                totalScore.incrementBy(positionalScorer_.determineScoreForPosition(row, col, gameStageBoost, weights));
             }
         }
 
         double territoryDelta = board.getTerritoryDelta();
         double captureScore = getCaptureScore(weights);
         worth = scaleFactor * (totalScore.getPositionScore() + captureScore + territoryDelta);
-
+        
         if (GameContext.getDebugMode() > 0)  {
             String desc = totalScore.getDescription(worth, captureScore, territoryDelta, scaleFactor);
             ((TwoPlayerMove) lastMove).setScoreDescription(desc);
@@ -284,26 +282,6 @@ public final class GoController extends TwoPlayerController
     }
 
     /**
-     * clear the game over state in case the user decides to undo moves
-     */
-    @Override
-    public void clearGameOver() {
-        super.clearGameOver();
-
-         for ( int row = 1; row <= board_.getNumRows(); row++ ) {
-            for ( int col = 1; col <= board_.getNumCols(); col++ ) {
-                GoBoardPosition space = (GoBoardPosition)board_.getPosition( row, col );
-                if (space.isOccupied())  {
-                    GoStone stone = (GoStone)space.getPiece();
-
-                    stone.setDead(false);
-                }
-            }
-        }
-        deadStones_.clear();
-    }
-
-    /**
      * @param player1 if true, then the score for player one is returned else player2's score is returned
      * @return the score
      */
@@ -318,12 +296,12 @@ public final class GoController extends TwoPlayerController
         int p1Territory = getTerritory(player1);
 
         String side = (player1? "black":"white");
-        GameContext.log(0, "----");
-        GameContext.log(0, "final score for "+ side);
-        GameContext.log(1, "getNumCaptures(" + side + ")=" + getNumCaptures(player1));
-        GameContext.log(1, "num dead " + side + " stones on board: "+ numDead);
-        GameContext.log(1, "getTerritory(" + side + ")="+p1Territory);
-        GameContext.log(0, "terr - totalCaptures="+ (p1Territory - totalCaptures));
+        GameContext.log(1, "----");
+        GameContext.log(1, "final score for "+ side);
+        GameContext.log(2, "getNumCaptures(" + side + ")=" + getNumCaptures(player1));
+        GameContext.log(2, "num dead " + side + " stones on board: "+ numDead);
+        GameContext.log(2, "getTerritory(" + side + ")="+p1Territory);
+        GameContext.log(1, "terr - totalCaptures="+ (p1Territory - totalCaptures));
         return p1Territory - totalCaptures;
     }
 
@@ -355,13 +333,6 @@ public final class GoController extends TwoPlayerController
                 }
             }
         }
-    }
-
-    /** Overridden to it can be accessed from MoveGenerator. */
-    @Override
-    protected MoveList getBestMoves(boolean player1, MoveList moveList, boolean player1sPerspective )  {
-
-       return super.getBestMoves(player1, moveList, player1sPerspective);
     }
 
 
@@ -495,8 +466,7 @@ public final class GoController extends TwoPlayerController
          * generate all possible next moves
          */
         public final MoveList generateMoves(TwoPlayerMove lastMove, ParameterArray weights,
-                                            boolean player1sPerspective )
-        {
+                                            boolean player1sPerspective ) {
             MoveGenerator generator = new MoveGenerator(GoController.this);
             return generator.generateMoves(lastMove, weights, player1sPerspective);
         }

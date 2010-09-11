@@ -11,13 +11,11 @@ import com.becker.game.twoplayer.pente.PenteController;
  *
  * @author Barry Becker
 */
-public class TicTacToeController extends PenteController
-{
+public class TicTacToeController extends PenteController {
     /**
      *  Constructor
      */
-    public TicTacToeController()
-    {
+    public TicTacToeController() {
         board_ = new TicTacToeBoard();
         initializeData();
     }
@@ -31,8 +29,7 @@ public class TicTacToeController extends PenteController
      *  this gets the game specific patterns and weights
      */
     @Override
-    protected void initializeData()
-    {
+    protected void initializeData() {
         weights_ = new TicTacToeWeights();
         moveEvaluator_ = new MoveEvaluator((TwoPlayerBoard)board_, new TicTacToePatterns());
     }

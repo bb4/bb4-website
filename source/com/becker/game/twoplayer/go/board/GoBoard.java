@@ -41,36 +41,12 @@ public final class GoBoard extends TwoPlayerBoard
      *  @param numCols num cols
      *  @param numHandicapStones number of black handicap stones to initialize with.
      */
-    public GoBoard( int numRows, int numCols, int numHandicapStones )
-    {
-        groups_ = new GoGroupSet();
-        setSize( numRows, numCols );
+    public GoBoard( int numRows, int numCols, int numHandicapStones ) {
+
         setHandicap(numHandicapStones);
-        boardUpdater_ = new BoardUpdater(this);
-        territoryAnalyzer_ = new TerritoryAnalyzer(this);
+        setSize( numRows, numCols );
     }
 
-    /**
-     * start over from the beggining and reinitialize everything.
-     */
-    @Override
-    public void reset()
-    {
-        super.reset();
-        groups_ = new GoGroupSet();
-        for ( int i = 1; i <= getNumRows(); i++ )  {
-            for ( int j = 1; j <= getNumCols(); j++ ) {
-                positions_[i][j] = new GoBoardPosition(i,j, null, null);
-            }
-        }
-        // first time through we need to initialize the star-point positions
-        setHandicap(getHandicap());
-    }
-
-    public void setHandicap(int handicap) {
-        handicap_ = new HandicapStones(handicap, getNumRows());
-        makeMoves(handicap_.getHandicapMoves());
-    }
 
     /**
      * @return a deep copy of the board.
@@ -115,6 +91,33 @@ public final class GoBoard extends TwoPlayerBoard
         // we don't use the 0 edges of the board
         positions_ = new BoardPosition[numRows_ + 1][numCols_ + 1];
         reset();
+    }
+
+
+    /**
+     * start over from the beggining and reinitialize everything.
+     * The first time through we need to initialize the star-point positions
+     */
+    @Override
+    public void reset() {
+
+        super.reset();
+        groups_ = new GoGroupSet();
+        for ( int i = 1; i <= getNumRows(); i++ )  {
+            for ( int j = 1; j <= getNumCols(); j++ ) {
+                positions_[i][j] = new GoBoardPosition(i,j, null, null);
+            }
+        }
+
+        boardUpdater_ = new BoardUpdater(this);
+        territoryAnalyzer_ = new TerritoryAnalyzer(this);
+
+        setHandicap(getHandicap());
+    }
+
+    public void setHandicap(int handicap) {
+        handicap_ = new HandicapStones(handicap, getNumRows());
+        makeMoves(handicap_.getHandicapMoves());
     }
 
     /**

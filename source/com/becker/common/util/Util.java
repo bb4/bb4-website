@@ -39,7 +39,7 @@ public final class Util
         }
         else if (absnum > 1.0) {
             format_.setMinimumFractionDigits(1);
-            format_.setMaximumFractionDigits(2);
+            format_.setMaximumFractionDigits(3);
         }
         else if (absnum > 0.0001) {
             format_.setMinimumFractionDigits(2);
@@ -51,7 +51,7 @@ public final class Util
         }
         else {
             format_.setMinimumFractionDigits(6);
-            format_.setMaximumFractionDigits(10);
+            format_.setMaximumFractionDigits(11);
         }
 
         return format_.format(num);
