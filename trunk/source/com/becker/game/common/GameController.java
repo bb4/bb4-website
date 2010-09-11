@@ -56,7 +56,7 @@ public abstract class GameController
      */
     public void reset()
     {
-          board_.reset();
+        board_.reset();
     }
 
 
@@ -82,8 +82,7 @@ public abstract class GameController
      * @return the class which shows the current state of the game board.
      * May be null if the viewer was never set.
      */
-    public GameViewable getViewer()
-    {
+    public GameViewable getViewer() {
         return viewer_;
     }
 
@@ -91,16 +90,14 @@ public abstract class GameController
      * If called before the end of the game it just reutrns 0 - same as it does in the case of a tie.
      * @return some measure of how overwhelming the win was. May need to negate based on which player one.
      */
-    public int getStrengthOfWin()
-    {
+    public int getStrengthOfWin() {
         return 0;
     }
 
     /**
      * @return the board representation object.
      */
-    public final Board getBoard()
-    {
+    public final Board getBoard() {
         return board_;
     }
 
@@ -149,8 +146,7 @@ public abstract class GameController
      * Restore the current state of the game from a file.
      * @param fileName file to load from
      */
-    public void restoreFromFile( String fileName)
-    {
+    public void restoreFromFile( String fileName) {
         GameContext.log(0,  "Error: restoreFromFile("+fileName+") not implemented yet" );
     }
 
@@ -158,8 +154,7 @@ public abstract class GameController
      *
      * @return a list of the players playing the game (in the order that they move).
      */
-    public PlayerList getPlayers()
-    {
+    public PlayerList getPlayers() {
         return players_;
     }
 
@@ -167,22 +162,9 @@ public abstract class GameController
      * Maybe use list of players rather than array.
      * @param players the players currently playing the game
      */
-    public void setPlayers( PlayerList players )
-    {
-        if (board_ != null)
-            reset();
+    public void setPlayers( PlayerList players ) {
        players_ = players;
        initializeData();
-    }
-
-    /**
-     * Clear the game over state in case the user decides to undo moves or play another game.
-     */
-    public void clearGameOver() {
-
-       for (Player p : getPlayers()) {
-           p.setWon(false);
-       }
     }
 
 

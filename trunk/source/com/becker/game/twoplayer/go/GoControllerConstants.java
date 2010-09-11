@@ -15,7 +15,7 @@ public final class GoControllerConstants {
     public static final boolean USE_RELATIVE_GROUP_SCORING = true;
 
     /** default num row and columns for a default square go board.   */
-    static final int DEFAULT_NUM_ROWS = 13;
+    static final int DEFAULT_NUM_ROWS = 5;
 
     /** if difference greater than this, then consider a win. */
     static final int WIN_THRESHOLD = 2000;

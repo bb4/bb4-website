@@ -19,7 +19,7 @@ import java.awt.event.*;
 public abstract class MultiGameViewer extends GameBoardViewer
 {
 
-    protected boolean winnerDialogShown_ = false;
+    protected boolean winnerDialogShown_;
 
     // Construct the application
     public MultiGameViewer() {}

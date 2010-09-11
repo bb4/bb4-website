@@ -94,9 +94,8 @@ public abstract class TwoPlayerController extends GameController {
     public void reset() {
         worker_.interrupt();
         super.reset();
-        PlayerList players = getPlayers();
-        players.getPlayer1().setWon(false);
-        players.getPlayer2().setWon(false);
+        searchable_ = null;
+        createPlayers();
         player1sTurn_ = true;
     }
 
@@ -107,8 +106,7 @@ public abstract class TwoPlayerController extends GameController {
      * @param ae the exception that occurred causing us to want to save state
      */
     @Override
-    public void saveToFile( String fileName, AssertionError ae )
-    {
+    public void saveToFile( String fileName, AssertionError ae ) {
         TwoPlayerGameExporter exporter = new TwoPlayerGameExporter(this);
         exporter.saveToFile(fileName, ae);
     }
@@ -156,8 +154,7 @@ public abstract class TwoPlayerController extends GameController {
     /**
      * @return true if the computer is supposed to make the first move.
      */
-    public boolean doesComputerMoveFirst()
-    {
+    public boolean doesComputerMoveFirst() {
         return !getPlayers().getPlayer1().isHuman();
     }
 
@@ -425,7 +422,7 @@ public abstract class TwoPlayerController extends GameController {
      * @param player1sPerspective if true than bestMoves are from player1s perspective
      * @return the best moves in order of how good they are.
      */
-    protected MoveList getBestMoves(boolean player1, MoveList moveList, boolean player1sPerspective ) {
+    public MoveList getBestMoves(boolean player1, MoveList moveList, boolean player1sPerspective ) {
 
         Collections.sort( moveList );
 
@@ -526,17 +523,22 @@ public abstract class TwoPlayerController extends GameController {
                 GameContext.log(0, "Game is over because there are no more moves");
                 return true;
             }
-            if (getPlayers().anyPlayerWon())
+            if (getPlayers().anyPlayerWon()) {
+                GameContext.log(0, "Game over because one of the players has won.");
                 return true;
+            }
 
             boolean won = (Math.abs( lastMove.getValue() ) >= WINNING_VALUE);
+
             if ( won && recordWin ) {
                 if ( lastMove.getValue() >= WINNING_VALUE )
                     getPlayers().getPlayer1().setWon(true);
                 else
                     getPlayers().getPlayer2().setWon(true);
             }
-            return ( getNumMoves() >= board_.getMaxNumMoves() || won);
+            boolean maxMovesExceeded = getNumMoves() >= board_.getMaxNumMoves();
+
+            return (maxMovesExceeded || won);
         }
 
         /**

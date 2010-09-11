@@ -11,9 +11,6 @@ import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.GoStone;
 import com.becker.optimization.parameter.ParameterArray;
 
-import java.util.LinkedList;
-import java.util.List;
-
 /**
  * Responsible for determining a set of reasonable next moves
  *

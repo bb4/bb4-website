@@ -170,7 +170,9 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
         c.manMoves( m );
         refresh();
         sendGameChangedEvent( m );
-        return c.getSearchable().done( m, true );
+        boolean done = c.getSearchable().done( m, true );
+        System.out.println("ATPBV done="+ done + " move="+ m);
+        return done;
     }
 
 

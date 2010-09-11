@@ -21,7 +21,8 @@ public class TerritoryAnalyzer {
 
     private GoBoard board_;
     
-    /** The difference between the 2 player's territory.
+    /**
+     * The difference between the 2 player's territory.
      * It is computed as black-white = sum(health of stone i) 
      */
     private float territoryDelta_ = 0;

@@ -91,5 +91,4 @@ public class TwoPlayerSearchWorker {
     public boolean isProcessing() {
         return processing_;
     }
-
 }

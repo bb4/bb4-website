@@ -80,7 +80,7 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
         EyeInformation[] blackEyes = {};
         EyeInformation[] whiteEyes = {};
         double bPotential = 0.49;
-        double wPotential = 0.49;
+        double wPotential = 0.5958;
         double blackHealth = 0.1;
         double whiteHealth = -0.1;
         double AbsAbsHealthDiff = 0.0;
@@ -111,7 +111,7 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
     public void testAbsHealth2() {
         EyeInformation[] blackEyes = {};
         EyeInformation[] whiteEyes = {};
-        double bPotential = 1.127;
+        double bPotential = 1.18;
         double wPotential = 0.769;
         double blackHealth = 0.52;
         double whiteHealth = -0.348;
@@ -217,7 +217,7 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
         EyeInformation[] blackEyes = {};
         EyeInformation[] whiteEyes = {};
         double bPotential = 0.17;
-        double wPotential = 0.544; //0.5439
+        double wPotential = 0.807; //0.5439
         double blackHealth = -0.3;
         double whiteHealth = -0.05;
         double AbsAbsHealthDiff = 0.25;
@@ -249,7 +249,7 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
         EyeInformation[] blackEyes = {};
         EyeInformation[] whiteEyes = {};
         double bPotential = 0.877;
-        double wPotential = 0.49;
+        double wPotential = 0.596;
         double blackHealth = 0.24;
         double whiteHealth = -0.24;
         double AbsAbsHealthDiff = 0.0;
@@ -278,8 +278,8 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
     public void testAbsHealth3c() {
         EyeInformation[] blackEyes = {new FalseEyeInformation()};
         EyeInformation[] whiteEyes = {};
-        double bPotential = 0.344;
-        double wPotential = 0.384;
+        double bPotential = 0.59584;
+        double wPotential = 0.51602;
         double blackHealth = 0.02;
         double whiteHealth = -0.1;
         double AbsAbsHealthDiff = -0.08;
@@ -309,7 +309,7 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
     public void testAbsHealth4a() {
         EyeInformation[] blackEyes = {};  // should really have a territorial eye here: EyeInformation.TERRITORIAL_EYE
         EyeInformation[] whiteEyes = {};
-        double bPotential = 1.0;
+        double bPotential = 1.06;
         double wPotential = 0.54;
         double blackHealth = 0.36;
         double whiteHealth = -0.28;
@@ -340,8 +340,8 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
     public void testAbsHealth5() {
         EyeInformation[] blackEyes = {new E2Information()};
         EyeInformation[] whiteEyes = {};
-        double bPotential = 0.67;
-        double wPotential = 0.54;
+        double bPotential = 0.7497;
+        double wPotential = 0.6436;
         double blackHealth = -0.05;
         double whiteHealth = -0.24;
         double AbsAbsHealthDiff = -0.1;
@@ -372,7 +372,7 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
     public void testAbsHealth5b() {
         EyeInformation[] blackEyes = {E4.getInformation(E2222.toString())};
         EyeInformation[] whiteEyes = {};
-        double bPotential = 0.877;
+        double bPotential = 1.003;
         double wPotential = 1.14;
         double blackHealth = 0.34;
         double whiteHealth = -0.42;
@@ -404,8 +404,8 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
     public void testAbsHealth6a() {
         EyeInformation[] blackEyes = {new E1Information(), new E1Information()};
         EyeInformation[] whiteEyes = {};
-        double bPotential = 0.93;
-        double wPotential = 1.31;
+        double bPotential = 0.9881;
+        double wPotential = 1.397;
         double blackHealth = 1.0; //0.9399999976158142;  
         double whiteHealth = -0.5;
         double AbsAbsHealthDiff = 0.49;
@@ -453,7 +453,7 @@ public class TestGroupHealthAnalyzer extends GoTestCase {
         EyeInformation[] blackEyes = {};
         EyeInformation[] whiteEyes = {};
         double bPotential = 1.49;
-        double wPotential = 0.77;
+        double wPotential = 0.91;
         double blackHealth = 0.44;
         double whiteHealth = -0.22;
         double AbsAbsHealthDiff = 0.22;

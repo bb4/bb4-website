@@ -17,10 +17,10 @@ public class GameWeights
     /** scores computed from weights are assumed to be between [0 and 1000] for player1 */
     protected static final double ASSUMED_WINNING_VALUE = 1024;
 
-    /** the weights are created assuming a winning vbalue of 1000. It that changes we need to scale them */
+    /** the weights are created assuming a winning value of 1000. It that changes we need to scale them */
     protected static final double SCALE = SearchStrategy.WINNING_VALUE / ASSUMED_WINNING_VALUE;
 
-    private static int numWeights_;
+    private int numWeights_;
 
     private final ParameterArray defaultWeights_;
     private ParameterArray p1Weights_;
@@ -45,7 +45,8 @@ public class GameWeights
         init();
     }
 
-    public GameWeights( double[] defaultWeights, double[] minWeights, double[] maxWeights, String[] names, String[] descriptions )
+    public GameWeights( double[] defaultWeights, double[] minWeights, double[] maxWeights,
+                        String[] names, String[] descriptions )
     {
         numWeights_ = defaultWeights.length;
         double[] minVals = new double[numWeights_];
@@ -100,7 +101,7 @@ public class GameWeights
        p1Weights_ = p2Weights;
     }
 
-    private static void verify( ParameterArray wts)
+    private void verify( ParameterArray wts)
     {
        assert wts.size() == numWeights_:
                "Incorrect number of weights: "+ wts.size()+" you need "+ numWeights_;

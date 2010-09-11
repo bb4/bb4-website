@@ -227,7 +227,7 @@ public class GtpTesujisoftGoServer
 
     private static void listCommands(StringBuffer response) {
         for (int i=0; i<Command.values().length; i++) {
-           response.append(Command.values()[i] + "\n");
+            response.append(Command.values()[i]).append("\n");
         }
     }
 
@@ -235,9 +235,9 @@ public class GtpTesujisoftGoServer
         double blackScore = controller_.getFinalScore(true);
         double whiteScore = controller_.getFinalScore(false);
         if (blackScore > whiteScore) {
-            response.append("B+" + (blackScore - whiteScore));
+            response.append("B + ").append(blackScore - whiteScore);
         } else if (blackScore < whiteScore) {
-            response.append("W+" + (whiteScore - blackScore));
+            response.append("W + ").append(whiteScore - blackScore);
         } else {
             response.append('0');
         }

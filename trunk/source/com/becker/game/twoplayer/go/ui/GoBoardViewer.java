@@ -82,18 +82,6 @@ final class GoBoardViewer extends AbstractTwoPlayerBoardViewer {
 
 
     /**
-     * display a dialog at the end of the game showing who won and other relevant
-     * game specific information.
-     */
-    @Override
-    public void showWinnerDialog()
-    {
-         super.showWinnerDialog();
-         controller_.clearGameOver();
-    }
-
-
-    /**
      * @return   the message to display at the completion of the game.
      */
     @Override

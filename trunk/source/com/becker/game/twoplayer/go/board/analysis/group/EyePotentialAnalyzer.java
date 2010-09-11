@@ -39,8 +39,8 @@ class EyePotentialAnalyzer {
      * loop through the rows and columns calculating distances from group stones
      * to the edge and to other stones.
      * if there is a (mostly living) enemy stone in the run, don't count the run.
-     * @return eyePtoential - a measure of how easily this group can make 2 eyes
-     *    (0 - 2; 2 meaning has 2 guaranteed eyes).
+     * @return eye potential - a measure of how easily this group can make 2 eyes
+     *    (0 - 2; 2 meaning it already has 2 guaranteed eyes or can easily get them).
      */
     public float calculateEyePotential() {
         int numRows = board_.getNumRows();
@@ -52,79 +52,120 @@ class EyePotentialAnalyzer {
     }
 
     /**
+     * Make sure that every internal enemy stone is really an enemy and not just dead.
+     * compare it with one of the group strings.
      * @return eyePotential - a measure of how easily this group can make 2 eyes (0 - 2; 2 meaning has 2 eyes).
      */
     private float findTotalEyePotential() {
 
-        // make sure that every internal enemy stone is really an enemy and not just dead.
-        // compare it with one of the group strings.
         GoString groupString = group_.getMembers().iterator().next();
 
         int rMin = boundingBox_.getMinRow();
         int rMax = boundingBox_.getMaxRow();
         int cMin = boundingBox_.getMinCol();
         int cMax = boundingBox_.getMaxCol();
-        float totalPotential = 0;
 
-        // first look at the row runs
-        for ( int r = boundingBox_.getMinRow(); r <= boundingBox_.getMaxRow(); r++ ) {
-            totalPotential += getRowColPotential(r, cMin, 0, 1, rMax, cMax, board_, groupString);
-        }
-        // now accrue column run potentials
-        for ( int c = cMin; c <= cMax; c++ ) {
-            totalPotential += getRowColPotential(rMin, c, 1, 0, rMax, cMax, board_, groupString);
-        }
+        float totalPotential = 0;
+        totalPotential += getTotalRowPotentials(groupString, rMin, rMax, cMin, cMax);
+        totalPotential += getTotalColumnPotentials(groupString, rMin, rMax, cMin, cMax);
 
         return (float)Math.min(1.9, Math.sqrt(totalPotential)/1.3);
     }
 
     /**
-     * Find the potential for one of the bbox's rows or columns.
-     * @return eye potential for row and column at r,c
-     *
+     * @return  total of all the row run potentials.
      */
-    private float getRowColPotential(int row, int col, int rowInc, int colInc, int maxRow, int maxCol,
-                                     GoBoard board, GoString groupString) {
-        float rowPotential = 0;
-        Location pos  = new Location(row, col);
-        int breadth = (rowInc ==1)? (maxRow - row) : (maxCol - col);
-        GoBoardPosition startSpace = (GoBoardPosition) board.getPosition( pos );
+    private float getTotalRowPotentials(GoString groupString, int rMin, int rMax, int cMin, int cMax) {
+        float totalPotential = 0;
+        for ( int r = rMin; r <= rMax; r++ ) {
+            totalPotential += getRowColPotential(new Location(r, cMin), 0, 1, rMax, cMax, groupString);
+        }
+        return totalPotential;
+    }
+
+    /**
+     * @return total of all the column run potentials.
+     */
+    private float getTotalColumnPotentials(GoString groupString, int rMin, int rMax, int cMin, int cMax) {
+        float totalPotential = 0;
+        for ( int c = cMin; c <= cMax; c++ ) {
+            totalPotential += getRowColPotential(new Location(rMin, c), 1, 0, rMax, cMax, groupString);
+        }
+        return totalPotential;
+    }
+
+    /**
+     * Find the potential for one of the bbox's rows or columns.
+     * @return eye potential for row and column at pos
+     */
+    private float getRowColPotential(Location pos, int rowInc, int colInc, int maxRow, int maxCol,
+                                     GoString groupString) {
+        float runPotential = 0;
+        int breadth = (rowInc == 1) ? (maxRow - pos.getRow()) : (maxCol - pos.getCol());
+        GoBoardPosition startSpace = (GoBoardPosition) board_.getPosition( pos );
+        boolean ownedByPlayer1 = group_.isOwnedByPlayer1();
         do {
-            GoBoardPosition space = (GoBoardPosition) board.getPosition( pos );
-            GoBoardPosition firstSpace = space;
+            GoBoardPosition nextSpace = (GoBoardPosition) board_.getPosition( pos );
+            GoBoardPosition firstSpace = nextSpace;
             boolean containsEnemy = false;
             int runLength = 0;
-            boolean ownedByPlayer1 = group_.isOwnedByPlayer1();
 
-            while (pos.getCol() <= maxCol && pos.getRow() <= maxRow && (space.isUnoccupied() ||
-                      (space.isOccupied() && space.getPiece().isOwnedByPlayer1() != ownedByPlayer1))) {
-                if (space.isOccupied() &&  space.getPiece().isOwnedByPlayer1() != ownedByPlayer1
-                    && groupString.isEnemy(space)) {
-                    containsEnemy =  true;
+            while (inRun(pos, maxRow, maxCol, nextSpace, ownedByPlayer1)) {
+                if (containsEnemy(groupString, ownedByPlayer1, nextSpace)) {
+                    containsEnemy = true;
                 }
                 runLength++;
                 pos.increment(rowInc, colInc);
-                space = (GoBoardPosition) board.getPosition( pos );
+                nextSpace = (GoBoardPosition) board_.getPosition( pos );
             }
-            boolean bounded = !(firstSpace.equals(startSpace)) && space!=null && space.isOccupied();
-            // now accrue the potential
-            if (!containsEnemy && runLength < breadth && runLength > 0) {
-                 int firstPos, max, currentPos;
-                 if (rowInc ==1) {
-                     firstPos = firstSpace.getRow();
-                     max = board.getNumRows();
-                     currentPos = pos.getRow();
-                 } else {
-                     firstPos = firstSpace.getCol();
-                     max = board.getNumCols();
-                     currentPos = pos.getCol();
-                 }
-                 rowPotential += getRunPotential(runLength, firstPos, currentPos, max, bounded);
-            }
+            boolean bounded = isBounded(startSpace, nextSpace, firstSpace);
+            runPotential += accrueRunPotential(rowInc, pos, breadth, firstSpace, containsEnemy, runLength, bounded);
+
             pos.increment(rowInc, colInc);
         } while (pos.getCol() <= maxCol && pos.getRow() <= maxRow);
-        return rowPotential;
+        return runPotential;
     }
+
+    private boolean containsEnemy(GoString groupString, boolean ownedByPlayer1, GoBoardPosition space) {
+        return space.isOccupied() && space.getPiece().isOwnedByPlayer1() != ownedByPlayer1
+                && groupString.isEnemy(space);
+    }
+
+    private boolean inRun(Location pos, int maxRow, int maxCol, GoBoardPosition space, boolean ownedByPlayer1) {
+        return (pos.getCol() <= maxCol && pos.getRow() <= maxRow
+                && (space.isUnoccupied() ||
+                   (space.isOccupied() && space.getPiece().isOwnedByPlayer1() != ownedByPlayer1)));
+    }
+
+    private boolean isBounded(GoBoardPosition startSpace, GoBoardPosition space, GoBoardPosition firstSpace) {
+        return !(firstSpace.equals(startSpace)) && space!=null && space.isOccupied();
+    }
+
+    /**
+     * Accumulate the potential for this run.
+     * @return  accrued run potential.
+     */
+    private float accrueRunPotential(int rowInc, Location pos, int breadth,
+                                     GoBoardPosition firstSpace, boolean containsEnemy,
+                                     int runLength, boolean bounded) {
+        float runPotential = 0;
+        if (!containsEnemy && runLength < breadth && runLength > 0) {
+            int firstPos, max, currentPos;
+            if (rowInc == 1) {
+                firstPos = firstSpace.getRow();
+                max = board_.getNumRows();
+                currentPos = pos.getRow();
+            } else {
+                firstPos = firstSpace.getCol();
+                max = board_.getNumCols();
+                currentPos = pos.getCol();
+            }
+
+            runPotential += getRunPotential(runLength, firstPos, currentPos, max, bounded);
+        }
+        return runPotential;
+    }
+
 
     /**
      * @return potential score for the runlength.
@@ -134,8 +175,8 @@ class EyePotentialAnalyzer {
         float potential;
         assert(runLength > 0);
 
-        if ((firstPos == 1 || endPosP1 == max || boundedByFriendStones)) {
-            potential = getRunPotentialOnEdge(runLength);
+        if ((firstPos == 1 || endPosP1 == max + 1 || boundedByFriendStones)) {
+            potential = getRunPotentialInternal(runLength);
         }
         else {
             potential = getRunPotentialToBoundary(runLength);
@@ -144,11 +185,11 @@ class EyePotentialAnalyzer {
     }
 
     /**
-     * this case is where the run is next to an edge or bounded by friend stones.
+     * This case is where the run is next to an edge or bounded by friend stones.
      * Weight the potential more heavily.
      * @return potential score for the runlength.
      */
-    private float getRunPotentialOnEdge(int runLength) {
+    private float getRunPotentialInternal(int runLength) {
         float potential;
         switch (runLength) {
             case 1: potential = 0.25f; break;
@@ -164,7 +205,7 @@ class EyePotentialAnalyzer {
     }
 
     /**
-     * a run to boundary. Less weight attributed.
+     * A run to boundary. Less weight attributed.
      * @return potential score for the runlength.
      */
     private float getRunPotentialToBoundary(int runLength) {
@@ -177,7 +218,7 @@ class EyePotentialAnalyzer {
             case 5: potential = 0.2f; break;
             case 6: potential = 0.15f; break;
             case 7: potential = 0.1f; break;
-            case 8: potential = 0.06f; break;    // was 0.6
+            case 8: potential = 0.06f; break;
             default : potential = 0.05f;
         }
         return potential;

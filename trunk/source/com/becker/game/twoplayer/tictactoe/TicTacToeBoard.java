@@ -7,8 +7,7 @@ import com.becker.game.twoplayer.pente.PenteBoard;
  *
  * @author Barry Becker
  */
-public class TicTacToeBoard extends PenteBoard
-{
+public class TicTacToeBoard extends PenteBoard {
 
     /** 
      * Constructor.
@@ -28,8 +27,7 @@ public class TicTacToeBoard extends PenteBoard
      * This is a bit simler than what we do for pente.
      */
     @Override
-    public void determineCandidateMoves()
-    {
+    public void determineCandidateMoves() {
         boolean[][] b = candidateMoves_;
         // first clear out what we had before
         initCandidateMoves();

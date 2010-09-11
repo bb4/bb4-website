@@ -29,8 +29,7 @@ public final class GoMove extends TwoPlayerMove
      * instead call the factory method so we recycle objects.
      * use createMove to get moves, and dispose to recycle them
      */
-    public GoMove( int destinationRow, int destinationCol, int val, GoStone stone )
-    {
+    public GoMove( int destinationRow, int destinationCol, int val, GoStone stone ) {
         super( (byte)destinationRow, (byte)destinationCol, val, stone );
     }
 
@@ -39,10 +38,8 @@ public final class GoMove extends TwoPlayerMove
      * it uses recycled objects if possible.
      * @return new go move
      */
-    public static GoMove createGoMove(
-            int destinationRow, int destinationCol,
-            int val, GoStone stone )
-    {
+    public static GoMove createGoMove( int destinationRow, int destinationCol,
+                                       int val, GoStone stone ) {
         return new GoMove( (byte)destinationRow, (byte)destinationCol, val, stone );
     }
 
@@ -50,8 +47,7 @@ public final class GoMove extends TwoPlayerMove
      * factory method for creating a passing move
      * @return new passing move
      */
-    public static GoMove createPassMove( int val,  boolean player1)
-    {
+    public static GoMove createPassMove( int val,  boolean player1) {
         GoMove m = createGoMove( 1, 1, val, null );
         m.isPass_ = true;
         m.setPlayer1(player1);
@@ -62,8 +58,7 @@ public final class GoMove extends TwoPlayerMove
      * factory method for creating a passing move
      * @return new passing move
      */
-    public static GoMove createResignationMove(boolean player1)
-    {
+    public static GoMove createResignationMove(boolean player1) {
         GoMove m = createGoMove( 1, 1, 0, null );
         m.isResignation_ = true;
         m.setPlayer1(player1);
@@ -78,8 +73,7 @@ public final class GoMove extends TwoPlayerMove
      * then it is legal.
      * @return true if this move is suicidal.
      */
-    public boolean isSuicidal( GoBoard board )
-    {
+    public boolean isSuicidal( GoBoard board ) {
         GoBoardPosition stone = (GoBoardPosition) board.getPosition( getToRow(), getToCol() );
 
         NeighborAnalyzer na = new NeighborAnalyzer(board);
@@ -133,8 +127,7 @@ public final class GoMove extends TwoPlayerMove
      *
      * @return a number > 0 if the move m caused an atari. The number gives the number of stones in atari.
      */
-    public int causesAtari( GoBoard board )
-    {
+    public int causesAtari( GoBoard board ) {
         if ( isPassingMove() )
             return 0; // a pass cannot cause an atari
 
