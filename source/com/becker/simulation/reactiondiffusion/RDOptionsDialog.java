@@ -52,13 +52,6 @@ public class RDOptionsDialog extends SimulatorOptionsDialog {
         return panel;
     }
 
-    private JCheckBox addCheckBox(String label, String tooltip, boolean initiallySelected) {
-        JCheckBox cb = new JCheckBox(label, initiallySelected);
-        cb.setToolTipText(tooltip);
-        cb.addActionListener(this);
-        return cb;
-    }
-
     @Override
     public void actionPerformed( ActionEvent e )
     {
