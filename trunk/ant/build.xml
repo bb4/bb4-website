@@ -380,6 +380,14 @@
     </antcall>
   </target>
 
+  <target name="executeFractalExplorer" description="Run the Fractal Explorer">
+    <antcall target="executeProgram">
+      <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
+      <param name="libPath" value="${libDir}/jai_codec.jar"/>
+      <param name="args" value="com.becker.simulation.fractals.FractalExplorer"/>
+    </antcall>
+  </target>
+
   <target name="executeLiquid" description="Run the Liquid simulator">
     <antcall target="executeProgram">
       <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>

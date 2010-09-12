@@ -45,6 +45,7 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog
         return simulator_;
     }
 
+    @Override
     protected JComponent createDialogContent()
     {
         setResizable( true );
@@ -79,6 +80,7 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog
     }
 
 
+    @Override
     protected JPanel createButtonsPanel()
     {
         JPanel buttonsPanel = new JPanel( new FlowLayout() );
@@ -90,6 +92,13 @@ public abstract class SimulatorOptionsDialog extends OptionsDialog
         buttonsPanel.add( cancelButton_ );
 
         return buttonsPanel;
+    }
+
+    protected JCheckBox addCheckBox(String label, String tooltip, boolean initiallySelected) {
+        JCheckBox cb = new JCheckBox(label, initiallySelected);
+        cb.setToolTipText(tooltip);
+        cb.addActionListener(this);
+        return cb;
     }
 
     @Override
