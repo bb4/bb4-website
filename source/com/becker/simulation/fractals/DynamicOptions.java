@@ -1,7 +1,6 @@
 package com.becker.simulation.fractals;
 
-import com.becker.simulation.fractals.algorithm.FractalAlgorithm;
-import com.becker.simulation.reactiondiffusion.algorithm.GrayScottModel;
+import com.becker.simulation.fractals.algorithm1.FractalAlgorithm;
 import com.becker.ui.legend.ContinuousColorLegend;
 import com.becker.ui.sliders.SliderGroup;
 import com.becker.ui.sliders.SliderGroupChangeListener;

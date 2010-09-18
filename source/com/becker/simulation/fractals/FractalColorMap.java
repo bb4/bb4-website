@@ -1,7 +1,7 @@
 package com.becker.simulation.fractals;
 
 import com.becker.common.ColorMap;
-import com.becker.simulation.fractals.algorithm.MandelbrotAlgorithm;
+import com.becker.simulation.fractals.algorithm1.MandelbrotAlgorithm;
 
 import java.awt.*;
 

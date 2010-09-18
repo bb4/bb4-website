@@ -1,9 +1,9 @@
-package com.becker.simulation.fractals.algorithm;
+package com.becker.simulation.fractals.algorithm1;
 
 import com.becker.common.math.ComplexNumber;
 
 /**
- * Populates the FractalModel using the iterative Mandelbrot algorithm..
+ * Populates the FractalModel using the iterative Mandelbrot algorithm1..
  *
  * @author Barry Becker
  */

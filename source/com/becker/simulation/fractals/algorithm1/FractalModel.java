@@ -1,8 +1,4 @@
-package com.becker.simulation.fractals.algorithm;
-
-import com.becker.common.math.ComplexNumber;
-
-import java.awt.*;
+package com.becker.simulation.fractals.algorithm1;
 
 /**
  * Nothing but a big matrix to hold the resuling values.
