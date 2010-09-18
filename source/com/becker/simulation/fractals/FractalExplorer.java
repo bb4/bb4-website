@@ -5,7 +5,6 @@ import com.becker.simulation.common.Simulator;
 import com.becker.simulation.common.SimulatorOptionsDialog;
 import com.becker.simulation.fractals.algorithm.FractalAlgorithm;
 import com.becker.simulation.fractals.algorithm.FractalModel;
-import com.becker.simulation.fractals.algorithm.JuliaAlgorithm;
 import com.becker.simulation.fractals.algorithm.MandelbrotAlgorithm;
 
 import javax.swing.*;
