@@ -1,7 +1,7 @@
 package com.becker.simulation.fractals;
 
 import com.becker.common.ColorMap;
-import com.becker.simulation.fractals.algorithm1.FractalModel;
+import com.becker.simulation.fractals.algorithm.FractalModel;
 
 import java.awt.*;
 
