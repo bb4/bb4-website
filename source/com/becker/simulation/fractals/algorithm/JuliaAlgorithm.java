@@ -7,11 +7,11 @@ import com.becker.common.math.ComplexNumber;
  *
  * @author Barry Becker
  */
-public class JuliatAlgorithm extends FractalAlgorithm  {
+public class JuliaAlgorithm extends FractalAlgorithm  {
 
     public static final int MAX_ITERATIONS = 500;
 
-    public JuliatAlgorithm(FractalModel model) {
+    public JuliaAlgorithm(FractalModel model) {
         super(model, new ComplexNumber(-2.1, -1.5), new ComplexNumber(1.1, 1.5));
         model.setCurrentRow(0);
     }
