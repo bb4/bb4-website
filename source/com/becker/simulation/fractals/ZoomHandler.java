@@ -1,7 +1,7 @@
 package com.becker.simulation.fractals;
 
 import com.becker.common.math.ComplexNumber;
-import com.becker.simulation.fractals.algorithm1.FractalAlgorithm;
+import com.becker.simulation.fractals.algorithm.FractalAlgorithm;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
