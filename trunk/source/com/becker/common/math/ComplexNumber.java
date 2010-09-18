@@ -82,7 +82,7 @@ public class ComplexNumber {
     public ComplexNumber power(int exponent) {
         ComplexNumber current = new ComplexNumber(this);
 
-        for (int i=0; i<exponent; i++) {
+        for (int i=1; i<exponent; i++) {
             current = current.multiply(this);
         }
         return current;

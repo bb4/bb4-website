@@ -1,6 +1,6 @@
 package com.becker.game.common;
 
-import com.becker.common.Profiler;
+import com.becker.common.profile.Profiler;
 import com.becker.common.util.Util;
 
 /**

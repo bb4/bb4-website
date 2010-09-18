@@ -82,10 +82,10 @@ public final class GrayScottController {
     }
 
     /** 
-     *Set this to true if you want to run the version
-     *that will partition the task of computing the next timeStop
-     *into smaller pieces that can be run on different threads.
-     *This should speed thinks up on a multi-core computer.
+     * Set this to true if you want to run the version
+     * that will partition the task of computing the next timeStop
+     * into smaller pieces that can be run on different threads.
+     * This should speed thinks up on a multi-core computer.
      */
     public void setParallelized(boolean parallelized) {
          parallelizer =

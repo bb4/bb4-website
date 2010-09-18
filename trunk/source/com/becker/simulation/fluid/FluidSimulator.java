@@ -72,10 +72,12 @@ public class FluidSimulator extends NewtonianSimulator
         this.addMouseMotionListener(handler_);
     }
 
+    @Override
     protected SimulatorOptionsDialog createOptionsDialog() {
          return new FluidOptionsDialog( frame_, this );
     }    
     
+    @Override
     public JPanel createDynamicControls() {
         fluidOptions_ = new FluidDynamicOptions(this);
         return fluidOptions_;
@@ -94,6 +96,7 @@ public class FluidSimulator extends NewtonianSimulator
         return handler_;
     }
     
+    @Override
     protected void reset() {
         // remove the listeners in order to prevent a memory leak.
         this.removeMouseListener(handler_);      
@@ -102,6 +105,7 @@ public class FluidSimulator extends NewtonianSimulator
         commonInit();
     }
 
+    @Override
     protected double getInitialTimeStep() {
         return TIME_STEP;
     }
@@ -110,6 +114,7 @@ public class FluidSimulator extends NewtonianSimulator
     /**
      * @return  a new recommended time step change.
      */
+    @Override
     public double timeStep()
     {
         if ( !isPaused() ) {
@@ -119,52 +124,65 @@ public class FluidSimulator extends NewtonianSimulator
     }
 
 
+    @Override
     public void setScale( double scale ) {
         envRenderer_.setScale(scale);
 
     }
+    @Override
     public double getScale() {
         return envRenderer_.getScale();
     }
 
+    @Override
     public void setShowVelocityVectors( boolean show ) {
         envRenderer_.setShowVelocities(show);
     }
+    @Override
     public boolean getShowVelocityVectors() {
         return envRenderer_.getShowVelocities();
     }
 
-    public void setShowForceVectors( boolean show ) {  
+    @Override
+    public void setShowForceVectors( boolean show ) {
     }
     
+    @Override
     public boolean getShowForceVectors() {
          return envRenderer_.getShowPressures();
     }
 
+    @Override
     public void setDrawMesh( boolean use ) {
     }
     
+    @Override
     public boolean getDrawMesh() {
         return false;
     }
 
 
+    @Override
     public void setStaticFriction( double staticFriction ) {
         // do nothing
     }
+    @Override
     public double getStaticFriction() {
         // do nothing
         return 0.1;
     }
 
+    @Override
     public void setDynamicFriction( double dynamicFriction ) {
        // do nothing
     }
+    @Override
     public double getDynamicFriction() {
         // do nothing
         return 0.01;
     }
 
+    @Override
     public void doOptimization()
     {
         Optimizer optimizer;
@@ -182,6 +200,7 @@ public class FluidSimulator extends NewtonianSimulator
         optimizer.doOptimization(OptimizationStrategyType.GENETIC_SEARCH, paramArray, 0.3);
     }
 
+    @Override
     public int getNumParameters() {
         return NUM_OPT_PARAMS;
     }
@@ -192,27 +211,32 @@ public class FluidSimulator extends NewtonianSimulator
      *
      * evaluates the liquids fitness.
      */
+    @Override
     public double evaluateFitness( ParameterArray params )
     {
         assert false : "not implemented yet";
         return 0.0;
     }
 
+    @Override
     public double getOptimalFitness() {
         return 0;
     }
 
+    @Override
     public Color getBackground()
     {
         return BG_COLOR;
     }
 
+    @Override
     public void paint( Graphics g )
     {
         Graphics2D g2 = (Graphics2D) g;
         envRenderer_.render(environment_, g2 );
     }
 
+    @Override
     protected String getFileNameBase()
     {
         return FILE_NAME_BASE;

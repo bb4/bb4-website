@@ -5,6 +5,7 @@ import com.becker.simulation.common.Simulator;
 import com.becker.simulation.common.SimulatorOptionsDialog;
 import com.becker.simulation.fractals.algorithm.FractalAlgorithm;
 import com.becker.simulation.fractals.algorithm.FractalModel;
+import com.becker.simulation.fractals.algorithm.JuliaAlgorithm;
 import com.becker.simulation.fractals.algorithm.MandelbrotAlgorithm;
 
 import javax.swing.*;
@@ -20,11 +21,11 @@ public class FractalExplorer extends Simulator {
     private FractalModel model_;
     private DynamicOptions options_;
     private FractalRenderer renderer_;
-    private ZoomHandler handler_;
+    private ZoomHandler zoomHandler_;
 
-    private boolean useFixedSize_ = true;
+    private boolean useFixedSize_ = false;
 
-    protected static final double INITIAL_TIME_STEP = 1.0;
+    protected static final double INITIAL_TIME_STEP = 10.0;
     protected static final int DEFAULT_STEPS_PER_FRAME = 1;
 
 
@@ -46,21 +47,24 @@ public class FractalExplorer extends Simulator {
 
 
     private void commonInit() {
-        initCommonUI();
+        initCommonUI();  
+        reset();
+    }
+
+    @Override
+    protected void reset() {
+
         model_ = new FractalModel();
         algorithm_ = new MandelbrotAlgorithm(model_);
 
         renderer_ = new FractalRenderer(model_, new FractalColorMap());
         setNumStepsPerFrame(DEFAULT_STEPS_PER_FRAME);
 
-        handler_ = new ZoomHandler(algorithm_);
-        this.addMouseListener(handler_);
-        this.addMouseMotionListener(handler_);
-    }
+        zoomHandler_ = new ZoomHandler(algorithm_);
+        this.addMouseListener(zoomHandler_);
+        this.addMouseMotionListener(zoomHandler_);
 
-    @Override
-    protected void reset() {
-        options_.reset();
+        if (options_ != null) options_.reset();
     }
 
     @Override
@@ -91,7 +95,8 @@ public class FractalExplorer extends Simulator {
     {
         super.paint(g);
 
-        renderer_.render((Graphics2D) g);
+        renderer_.render(g);
+        zoomHandler_.render(g, model_.getAspectRatio());
     }
 
     @Override
