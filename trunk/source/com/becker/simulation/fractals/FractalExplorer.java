@@ -3,9 +3,9 @@ package com.becker.simulation.fractals;
 import com.becker.common.ColorMap;
 import com.becker.simulation.common.Simulator;
 import com.becker.simulation.common.SimulatorOptionsDialog;
-import com.becker.simulation.fractals.algorithm.FractalAlgorithm;
-import com.becker.simulation.fractals.algorithm.FractalModel;
-import com.becker.simulation.fractals.algorithm.MandelbrotAlgorithm;
+import com.becker.simulation.fractals.algorithm1.FractalAlgorithm;
+import com.becker.simulation.fractals.algorithm1.FractalModel;
+import com.becker.simulation.fractals.algorithm1.MandelbrotAlgorithm;
 
 import javax.swing.*;
 import java.awt.*;

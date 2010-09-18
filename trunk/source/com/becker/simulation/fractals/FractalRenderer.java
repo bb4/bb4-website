@@ -1,15 +1,9 @@
 package com.becker.simulation.fractals;
 
 import com.becker.common.ColorMap;
-import com.becker.simulation.fractals.algorithm.FractalModel;
-import com.becker.simulation.reactiondiffusion.algorithm.GrayScottModel;
-import com.becker.simulation.reactiondiffusion.rendering.RDRenderingOptions;
-import com.becker.simulation.reactiondiffusion.rendering.RenderWorker;
+import com.becker.simulation.fractals.algorithm1.FractalModel;
 
-import javax.vecmath.Vector3d;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Renders the state of the fractal model to the screen.
