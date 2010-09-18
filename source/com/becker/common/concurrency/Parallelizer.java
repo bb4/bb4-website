@@ -25,8 +25,11 @@ public class Parallelizer <T> {
     /** Recycle threads so we do not create thousands and eventually run out of memory. */
     private ExecutorService exec;   
 
-    /** By default, the number of threads we use is equal to the number of processors plus 1 */
-    private static final int DEFAULT_NUM_THREADS = NUM_PROCESSORS + 1;
+    /**
+     * By default, the number of threads we use is equal to the number of processors
+     * (in some cases I read it may be better to add 1 to this, but I have not seen better results doing that.)
+     */
+    private static final int DEFAULT_NUM_THREADS = NUM_PROCESSORS;
     
     private int numThreads;
 

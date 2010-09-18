@@ -1,15 +1,8 @@
 package com.becker.simulation.reactiondiffusion;
 
-import com.becker.common.Profiler;
+import com.becker.common.profile.Profiler;
 import com.becker.common.util.Util;
 import com.becker.game.common.GameContext;
-import com.becker.simulation.common.Simulator;
-import com.becker.simulation.common.SimulatorOptionsDialog;
-import com.becker.simulation.reactiondiffusion.algorithm.GrayScottController;
-import com.becker.simulation.reactiondiffusion.rendering.RDRenderer;
-
-import javax.swing.*;
-import java.awt.*;
 
 /**
  * Singleton for RD profiling.

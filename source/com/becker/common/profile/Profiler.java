@@ -1,5 +1,6 @@
-package com.becker.common;
+package com.becker.common.profile;
 
+import com.becker.common.ILog;
 import com.becker.common.util.Util;
 
 import java.util.*;
@@ -12,8 +13,6 @@ import java.util.*;
  */
 public class Profiler
 {
-    private static final String INDENT = "    ";
-
     private final Map<String,ProfilerEntry> hmEntries_ = new HashMap<String,ProfilerEntry>();
     private final List<ProfilerEntry> topLevelEntries_ = new LinkedList<ProfilerEntry>();
     private boolean enabled_ = true;
@@ -84,7 +83,7 @@ public class Profiler
     public void print() {
         if (!enabled_) return;
         for (ProfilerEntry entry : topLevelEntries_) {
-            entry.print("");
+            entry.print("", logger_);
         }
     }
 
@@ -115,93 +114,6 @@ public class Profiler
         }
         else {
             System.out.println(message);
-        }
-    }
-
-
-    /**
-     * internal calss that represents the timing numbers for a names region of the code.
-     */
-    protected static class ProfilerEntry {
-
-        // the name of this profiler entry
-        private final String name_;
-        private long startTime_ = 0;
-        // the total time used by this named code section while the app was running
-        private long totalTime_ = 0;
-        private final List<ProfilerEntry> children_ = new LinkedList<ProfilerEntry>();
-
-        protected ProfilerEntry(String name)
-        {
-            name_ = name;
-        }
-
-        protected void addChild(ProfilerEntry child)
-        {
-            children_.add(child);
-        }
-
-        protected void start()
-        {
-            startTime_ = System.currentTimeMillis();
-        }
-
-        protected void stop()
-        {
-            totalTime_ += System.currentTimeMillis() - startTime_;
-        }
-
-        public long getTime()
-        {
-            return totalTime_;
-        }
-
-        public double getTimeInSeconds()
-        {
-            return (double)totalTime_/1000.0;
-        }       
-
-
-        protected void resetAll()
-        {
-            totalTime_ = 0;
-            for (ProfilerEntry p : children_) {
-                p.resetAll();
-            }
-        }
-
-        protected void print(String indent)
-        {
-            print(indent, logger_);
-        }
-
-        protected void print(String indent, ILog logger)
-        {
-            double seconds = getTimeInSeconds();
-            String text = indent+ "Time for "+name_+" : "+ Util.formatNumber(seconds) +" seconds";
-            if (logger==null)
-                System.out.println(text);
-            else
-                logger.println(text);
-            Iterator childIt = children_.iterator();
-
-            long totalChildTime = 0;
-            while (childIt.hasNext()) {
-                ProfilerEntry p = (ProfilerEntry)childIt.next();
-                totalChildTime += p.getTime();
-                p.print(indent + INDENT);
-            }
-            assert (totalChildTime <= 1.1 * totalTime_ ): "The sum of the child times("+totalChildTime
-                    +") cannot be greater than the parent time ("+totalTime_+").";
-        }
-
-        public String toString(ILog log)
-        {
-            log.setDestination(ILog.LOG_TO_STRING);
-            StringBuilder bldr = new StringBuilder();
-            log.setStringBuilder(bldr);
-            print(INDENT, log);
-            return bldr.toString();
         }
     }
 }

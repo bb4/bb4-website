@@ -26,21 +26,19 @@ class DynamicOptions extends JPanel
     private JCheckBox useFixedSize_;
 
     private static final String K_SLIDER = "K";
-    private static final String BH_SLIDER = "Bump Height";
-    private static final String SH_SLIDER = "Specular Highlight";
-    private static final String NS_SLIDER = "Num Steps per Frame";
-    private static final String TIMESTEP_SLIDER = "Time Step Size";
+    //private static final String BH_SLIDER = "Bump Height";
+    //private static final String SH_SLIDER = "Specular Highlight";
+    private static final String TIMESTEP_SLIDER = "Num Rows per Frame";
 
     private SliderGroup sliderGroup_;
-    private static final double MIN_NUM_STEPS = FractalExplorer.DEFAULT_STEPS_PER_FRAME/10.0;
-    private static final double MAX_NUM_STEPS = 4.0 * FractalExplorer.DEFAULT_STEPS_PER_FRAME;
+    private static final int MIN_NUM_STEPS = (int)(FractalExplorer.INITIAL_TIME_STEP/10.0);
+    private static final int MAX_NUM_STEPS = (int)(10.0 * FractalExplorer.INITIAL_TIME_STEP);
 
     private static final SliderProperties[] SLIDER_PROPS = {
-        new SliderProperties(K_SLIDER,      0,           0.3,      GrayScottModel.K0,     1000),
-        new SliderProperties(BH_SLIDER,     0,          30.0,     0.0,               10),
-        new SliderProperties(SH_SLIDER,     0,          1.0,      0.0,               100),
-        new SliderProperties(NS_SLIDER,  MIN_NUM_STEPS,   MAX_NUM_STEPS,   FractalExplorer.DEFAULT_STEPS_PER_FRAME, 1),
-        new SliderProperties(TIMESTEP_SLIDER,   0.1,     2.0,     FractalExplorer.INITIAL_TIME_STEP,    100),
+        //new SliderProperties(K_SLIDER,      0,           0.3,      GrayScottModel.K0,     1000),
+        //new SliderProperties(BH_SLIDER,     0,          30.0,     0.0,               10),
+        //new SliderProperties(SH_SLIDER,     0,          1.0,      0.0,               100),
+        new SliderProperties(TIMESTEP_SLIDER,  MIN_NUM_STEPS,   MAX_NUM_STEPS,   FractalExplorer.INITIAL_TIME_STEP, 1),
     };
 
 
@@ -131,10 +129,10 @@ class DynamicOptions extends JPanel
         }
         else if (sliderName.equals(SH_SLIDER)) {
             simulator_.getRenderingOptions().setSpecular(value);
-        }*/
+        }
         else if (sliderName.equals(NS_SLIDER)) {
             simulator_.setNumStepsPerFrame((int) value);
-        }
+        } */
         else if (sliderName.equals(TIMESTEP_SLIDER)) {
             simulator_.setTimeStep(value);
         }
