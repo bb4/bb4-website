@@ -4,9 +4,6 @@ import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.strategy.OptimizationStrategy;
 import com.becker.optimization.strategy.OptimizationStrategyType;
 
-import java.io.FileWriter;
-import java.io.IOException;
-
 /**
  * This class (the optimizer) uses a specified optimization strategy to optimize something (the optimizee).
  * @see OptimizationStrategyType for a list of the possible algorithms.

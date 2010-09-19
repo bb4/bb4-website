@@ -7,7 +7,7 @@ package com.becker.simulation.fractals.algorithm;
  */
 public class FractalModel  {
 
-    int[][] values;
+    double[][] values;
     private static final int FIXED_SIZE = 200;
     private int currentRow;
 
@@ -27,17 +27,17 @@ public class FractalModel  {
     }
 
     private void initialize(int width, int height) {
-        values = new int[width][height];
+        values = new double[width][height];
         currentRow = 0;
     }
 
-    public void setFractalValue(int x, int y, int value) {
+    public void setFractalValue(int x, int y, double value) {
         if (x<getWidth() && y<getHeight())
             values[x][y] = value;
     }
 
-    public int getFractalValue(int x, int y) {
-        if (x >= getWidth() || y >= getHeight())  {
+    public double getFractalValue(int x, int y) {
+        if (x<0 || x >= getWidth() || y<0 || y >= getHeight())  {
             return 0;
         }
         return values[x][y];

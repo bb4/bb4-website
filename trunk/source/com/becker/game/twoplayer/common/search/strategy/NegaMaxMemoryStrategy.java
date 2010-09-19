@@ -10,8 +10,6 @@ import com.becker.game.twoplayer.common.search.tree.PruneType;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.optimization.parameter.ParameterArray;
 
-import java.util.List;
-
 /**
  *  This strategy class defines the NegaMax with memory search algorithm.
  *  This version stores the values of moves that have already been searched.

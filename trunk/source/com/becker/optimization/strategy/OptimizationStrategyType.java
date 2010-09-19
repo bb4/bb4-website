@@ -2,7 +2,6 @@ package com.becker.optimization.strategy;
 
 import com.becker.optimization.Optimizee;
 import com.becker.optimization.Optimizer;
-import com.becker.optimization.parameter.ParameterArray;
 
 /**
  * Enum for the different possible Optimization Strategies.

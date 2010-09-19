@@ -21,7 +21,6 @@ package ca.dj.jigo;
 
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Vector;
 
 /**
  * The rules that govern the behaviour of a particular Goban.  The Super Ko
