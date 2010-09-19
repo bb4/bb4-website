@@ -1,7 +1,7 @@
 package com.becker.simulation.fractals;
 
 import com.becker.common.ColorMap;
-import com.becker.simulation.fractals.algorithm.MandelbrotAlgorithm;
+import com.becker.simulation.fractals.algorithm.FractalAlgorithm;
 
 import java.awt.*;
 
@@ -14,7 +14,7 @@ import java.awt.*;
 public class FractalColorMap extends ColorMap {
 
     private static final double MIN_VALUE = 0;
-    private static final  double MAX_VALUE = MandelbrotAlgorithm.MAX_ITERATIONS;
+    private static final  double MAX_VALUE = 1.0;
     private static final  double RANGE = MAX_VALUE - MIN_VALUE;
 
     private static final double[] VALUES = {

@@ -7,7 +7,6 @@ import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.game.twoplayer.common.search.*;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.optimization.parameter.ParameterArray;
-import java.util.List;
 
 /**
  *  This strategy class defines the NegaScout with memory search algorithm.

@@ -10,9 +10,6 @@ import com.becker.game.twoplayer.common.search.*;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.optimization.parameter.ParameterArray;
 
-import java.util.Iterator;
-import java.util.List;
-
 /**
  *  This strategy class defines the NegaMax search algorithm.
  *  Negamax is very much like minimax, but it avoids having separate

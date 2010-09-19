@@ -19,6 +19,8 @@ import java.util.List;
  */
 public abstract class FractalAlgorithm {
 
+    public static final int DEFAULT_MAX_ITERATIONS = 500;
+
     protected FractalModel model;
 
     /** lower left corner of bounding box in complex plane. */
@@ -29,15 +31,20 @@ public abstract class FractalAlgorithm {
 
 
     /** Manages the worker threads. */
-    private Parallelizer<Worker> parallelizer;
+    private Parallelizer<Worker> parallelizer_;
 
     private ProfilerEntry timer_;
+
+    private int maxIterations_ = DEFAULT_MAX_ITERATIONS;
+
+    private RowCalculator rowCalculator_;
 
 
     public FractalAlgorithm(FractalModel model, ComplexNumber firstCorner, ComplexNumber secondCorner) {
         this.model = model;
         setRange(firstCorner, secondCorner);
         setParallelized(true);
+        rowCalculator_ = new RowCalculator(this);
     }
 
     public void setRange(ComplexNumber firstCorner, ComplexNumber secondCorner)  {
@@ -47,12 +54,39 @@ public abstract class FractalAlgorithm {
     }
 
     public boolean isParallelized() {
-        return (parallelizer.getNumThreads() > 1);
+        return (parallelizer_.getNumThreads() > 1);
     }
 
     public void setParallelized(boolean parallelized) {
-        parallelizer =
-             parallelized ? new Parallelizer<Worker>() : new Parallelizer<Worker>(1);
+        if (parallelizer_ == null || parallelized != isParallelized()) {
+
+            parallelizer_ =
+                 parallelized ? new Parallelizer<Worker>() : new Parallelizer<Worker>(1);
+            model.setCurrentRow(0);
+        }
+    }
+
+    public int getMaxIterations() {
+        return maxIterations_;
+    }
+
+    public void setMaxIterations(int value) {
+        if (value != maxIterations_)  {
+            maxIterations_ = value;
+            model.setCurrentRow(0);
+        }
+    }
+
+    public boolean getUseRunLengthOptimization() {
+        return rowCalculator_.getUseRunLengthOptimization();
+    }
+
+    public void setUseRunLengthOptimization(boolean value) {
+        rowCalculator_.setUseRunLengthOptimization(value);
+    }
+
+    public FractalModel getModel() {
+        return model;
     }
 
     /**
@@ -66,7 +100,7 @@ public abstract class FractalAlgorithm {
             return true;  // we are done.
         }
 
-        int numProcs = parallelizer.getNumThreads();
+        int numProcs = parallelizer_.getNumThreads();
         List<Runnable> workers = new ArrayList<Runnable>(numProcs);
         
         // we calculate a little more each "timestep"
@@ -74,7 +108,6 @@ public abstract class FractalAlgorithm {
         if (currentRow == 0) {
             startTiming();
         }
-
 
         int computeToRow = Math.min(model.getHeight(), currentRow + (int)timeStep * numProcs);
 
@@ -91,7 +124,7 @@ public abstract class FractalAlgorithm {
         }
 
         // blocks until all Callables are done running.
-        parallelizer.invokeAllRunnables(workers);
+        parallelizer_.invokeAllRunnables(workers);
 
         model.setCurrentRow(currentRow);
         return false;
@@ -99,9 +132,10 @@ public abstract class FractalAlgorithm {
 
 
     /**
-     * @return the number of times we had to iterate before the point escaped (or not)
+     * @return a  number between 0 and 1.
+     *  Typically corresponds to the number times we had to iterate before the point escaped (or not).
      */
-    public abstract int getFractalValue(ComplexNumber seed);
+    public abstract double getFractalValue(ComplexNumber seed);
 
     /**
      * Converts from screen coordinates to data coordinates.
@@ -154,10 +188,7 @@ public abstract class FractalAlgorithm {
 
             int width = model.getWidth();
             for (int y = fromRow; y < toRow; y++)   {
-                for (int x = 0; x < width; x++)   {
-                    ComplexNumber z = getComplexPosition(x, y);
-                    model.setFractalValue(x, y, getFractalValue(z));
-                }
+                rowCalculator_.calculateRow(width, y);
             }
         }
     }

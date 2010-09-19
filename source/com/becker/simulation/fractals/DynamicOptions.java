@@ -23,8 +23,9 @@ class DynamicOptions extends JPanel
     private FractalExplorer simulator_;
     private JCheckBox useConcurrency_;
     private JCheckBox useFixedSize_;
+    private JCheckBox useRunLengthOptimization_;
 
-    private static final String K_SLIDER = "K";
+    private static final String ITER_SLIDER = "Max Iterations";
     //private static final String BH_SLIDER = "Bump Height";
     //private static final String SH_SLIDER = "Specular Highlight";
     private static final String TIMESTEP_SLIDER = "Num Rows per Frame";
@@ -34,7 +35,7 @@ class DynamicOptions extends JPanel
     private static final int MAX_NUM_STEPS = (int)(10.0 * FractalExplorer.INITIAL_TIME_STEP);
 
     private static final SliderProperties[] SLIDER_PROPS = {
-        //new SliderProperties(K_SLIDER,      0,           0.3,      GrayScottModel.K0,     1000),
+        new SliderProperties(ITER_SLIDER,      100,           10000,      FractalAlgorithm.DEFAULT_MAX_ITERATIONS,   1),
         //new SliderProperties(BH_SLIDER,     0,          30.0,     0.0,               10),
         //new SliderProperties(SH_SLIDER,     0,          1.0,      0.0,               100),
         new SliderProperties(TIMESTEP_SLIDER,  MIN_NUM_STEPS,   MAX_NUM_STEPS,   FractalExplorer.INITIAL_TIME_STEP, 1),
@@ -83,10 +84,14 @@ class DynamicOptions extends JPanel
         useFixedSize_ = new JCheckBox("Fixed Size", simulator_.getUseFixedSize());
         useFixedSize_.addActionListener(this);
 
-        JPanel checkBoxes = new JPanel(new GridLayout(0, 2));
+        useRunLengthOptimization_ = new JCheckBox("Run Length Optimization", algorithm_.getUseRunLengthOptimization());
+        useRunLengthOptimization_.addActionListener(this);
+
+        JPanel checkBoxes = new JPanel(new GridLayout(0, 1));
 
         checkBoxes.add(useConcurrency_);
         checkBoxes.add(useFixedSize_);
+        checkBoxes.add(useRunLengthOptimization_);
         
         checkBoxes.setBorder(BorderFactory.createEtchedBorder());
         return checkBoxes;
@@ -111,6 +116,9 @@ class DynamicOptions extends JPanel
         else if (e.getSource() == useFixedSize_) {
             simulator_.setUseFixedSize(useFixedSize_.isSelected());
         }
+        else if (e.getSource() == useRunLengthOptimization_) {
+            algorithm_.setUseRunLengthOptimization(useRunLengthOptimization_.isSelected());
+        }
     }
 
     /**
@@ -118,8 +126,8 @@ class DynamicOptions extends JPanel
      */
     public void sliderChanged(int sliderIndex, String sliderName, double value) {
 
-        if (sliderName.equals(K_SLIDER)) {
-            //algorithm_.getModel().setK(value);
+        if (sliderName.equals(ITER_SLIDER)) {
+            algorithm_.setMaxIterations((int)value);
         }
         /*
         else if (sliderName.equals(BH_SLIDER)) {

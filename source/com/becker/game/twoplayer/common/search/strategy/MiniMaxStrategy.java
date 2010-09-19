@@ -8,9 +8,6 @@ import com.becker.game.twoplayer.common.search.*;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.optimization.parameter.ParameterArray;
 
-import java.util.Iterator;
-import java.util.List;
-
 /**
  * This strategy class defines the MiniMax search algorithm.
  * This is the simplest search strategy to which the other variants are compared.

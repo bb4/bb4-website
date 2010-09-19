@@ -3,7 +3,6 @@ package com.becker.game.twoplayer.common.search.strategy;
 import com.becker.common.math.Range;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.game.twoplayer.common.search.*;
-import com.becker.optimization.parameter.ParameterArray;
 import com.becker.game.twoplayer.common.*;
 import com.becker.game.twoplayer.common.search.tree.GameTreeViewable;
 

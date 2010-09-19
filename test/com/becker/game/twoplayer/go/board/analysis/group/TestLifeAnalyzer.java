@@ -74,7 +74,7 @@ public class TestLifeAnalyzer extends GoTestCase {
     }
 
     /**
-     * Use Benson's algorithm for detecting unconditionally alive groups.
+     * Use Benson's algorithm1 for detecting unconditionally alive groups.
      */
     private void verifyUnconditionalLife(String file,
                                          boolean forBlackGroup, int expectedSizeOfGroup,
