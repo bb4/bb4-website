@@ -1,4 +1,4 @@
-package com.becker.simulation.fractals.algorithm;
+package com.becker.simulation.fractalexplorer.algorithm;
 
 import com.becker.common.concurrency.Parallelizer;
 import com.becker.common.math.ComplexNumber;
