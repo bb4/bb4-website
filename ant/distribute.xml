@@ -276,14 +276,8 @@
 
        <!-- copy the class files that are needed for fractalexplorer deployment -->
       <antcall target="deployJar">
-          <param name="componentDir" value="simulation/fractals"/>
+          <param name="componentDir" value="simulation/fractalexplorer"/>
           <param name="jarFile" value="fractalexplorer.jar"/>
-      </antcall>
-
-      <!-- copy the class files that are needed for fract explorer deployment -->
-      <antcall target="deployJar">
-          <param name="componentDir" value="simulation/fractals"/>
-          <param name="jarFile" value="fractals.jar"/>
       </antcall>
 
       <!-- copy the class files that are needed for trebuchet deployment -->

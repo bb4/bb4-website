@@ -27,6 +27,13 @@
   <property name="java_compiler" value="${java16}"/>
   <property name="sleepTime" value="100"/>
 
+  <!-- Load additional tasks   -->
+   <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+     <classpath>
+       <pathelement location="${antHome}/lib/ant-contrib-1.0b3.jar"/>
+     </classpath>
+   </taskdef>
+
 
   <!-- source metrics
   <taskdef name="javancss"
@@ -376,7 +383,7 @@
     <antcall target="executeProgram">
       <param name="className" value="com.becker.simulation.common.SimulatorApplet"/>
       <param name="libPath" value="${libDir}/jai_codec.jar"/>
-      <param name="args" value="com.becker.simulation.fractals.FractalExplorer"/>
+      <param name="args" value="com.becker.simulation.fractalexplorer.FractalExplorer"/>
     </antcall>
   </target>
 
