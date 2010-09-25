@@ -1,6 +1,7 @@
 package com.becker.simulation.fractals;
 
 import com.becker.common.math.ComplexNumber;
+import com.becker.common.math.ComplexNumberRange;
 import com.becker.simulation.fractals.algorithm.FractalAlgorithm;
 
 import java.awt.*;
@@ -78,7 +79,8 @@ public class ZoomHandler implements MouseListener, MouseMotionListener {
 
             ComplexNumber firstCorner = algorithm_.getComplexPosition(left, top);
             ComplexNumber secondCorner = algorithm_.getComplexPosition(left + width, top + height);
-            algorithm_.setRange(firstCorner, secondCorner);
+            ComplexNumberRange range = new   ComplexNumberRange(firstCorner, secondCorner);
+            algorithm_.setRange(range);
         }
         dragStartX = UNSET;
         dragStartY = UNSET;
