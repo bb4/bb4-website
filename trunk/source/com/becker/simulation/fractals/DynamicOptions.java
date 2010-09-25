@@ -24,6 +24,7 @@ class DynamicOptions extends JPanel
     private JCheckBox useConcurrency_;
     private JCheckBox useFixedSize_;
     private JCheckBox useRunLengthOptimization_;
+    private JButton backButton_;
 
     private static final String ITER_SLIDER = "Max Iterations";
     //private static final String BH_SLIDER = "Bump Height";
@@ -67,6 +68,10 @@ class DynamicOptions extends JPanel
         add(Box.createVerticalStrut(10));
         add(legend_);
 
+        backButton_ = new JButton("Go Back");
+        backButton_.addActionListener(this);
+        add(backButton_);
+
         JPanel fill = new JPanel();
         fill.setPreferredSize(new Dimension(10, 1000));
         add(fill);
@@ -108,7 +113,6 @@ class DynamicOptions extends JPanel
     public void actionPerformed(ActionEvent e) {
         //RDRenderingOptions renderingOptions = simulator_.getRenderingOptions();
 
-
         if (e.getSource() == useConcurrency_) {
             boolean isParallelized = !algorithm_.isParallelized();
             algorithm_.setParallelized(isParallelized);
@@ -118,6 +122,9 @@ class DynamicOptions extends JPanel
         }
         else if (e.getSource() == useRunLengthOptimization_) {
             algorithm_.setUseRunLengthOptimization(useRunLengthOptimization_.isSelected());
+        }
+        else if (e.getSource() == backButton_) {
+            algorithm_.goBack();
         }
     }
 

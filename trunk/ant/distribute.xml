@@ -274,6 +274,12 @@
           <param name="jarFile" value="reactiondiffusion.jar"/>
       </antcall>
 
+       <!-- copy the class files that are needed for fractalexplorer deployment -->
+      <antcall target="deployJar">
+          <param name="componentDir" value="simulation/fractals"/>
+          <param name="jarFile" value="fractalexplorer.jar"/>
+      </antcall>
+
       <!-- copy the class files that are needed for fract explorer deployment -->
       <antcall target="deployJar">
           <param name="componentDir" value="simulation/fractals"/>

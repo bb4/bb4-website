@@ -1,6 +1,7 @@
 package com.becker.simulation.fractals.algorithm;
 
 import com.becker.common.math.ComplexNumber;
+import com.becker.common.math.ComplexNumberRange;
 
 /**
  * Populates the FractalModel using the iterative Julia set algorithm.
@@ -9,9 +10,11 @@ import com.becker.common.math.ComplexNumber;
  */
 public class JuliaAlgorithm extends FractalAlgorithm  {
 
+    private static final ComplexNumberRange INITIAL_RANGE =
+            new ComplexNumberRange(new ComplexNumber(-1.8, -1.7), new ComplexNumber(1.8, 1.7));
 
     public JuliaAlgorithm(FractalModel model) {
-        super(model, new ComplexNumber(-2.1, -1.5), new ComplexNumber(1.1, 1.5));
+        super(model, INITIAL_RANGE);
         model.setCurrentRow(0);
     }
 

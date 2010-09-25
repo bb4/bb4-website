@@ -1,6 +1,7 @@
 package com.becker.simulation.fractals.algorithm;
 
 import com.becker.common.math.ComplexNumber;
+import com.becker.common.math.ComplexNumberRange;
 
 /**
  * Populates the FractalModel using the iterative Mandelbrot algorithm..
@@ -9,9 +10,11 @@ import com.becker.common.math.ComplexNumber;
  */
 public class MandelbrotAlgorithm extends FractalAlgorithm  {
 
+    private static final ComplexNumberRange INITIAL_RANGE =
+            new ComplexNumberRange(new ComplexNumber(-2.1, -1.5), new ComplexNumber(1.1, 1.5));
 
     public MandelbrotAlgorithm(FractalModel model) {
-        super(model, new ComplexNumber(-2.1, -1.5), new ComplexNumber(1.1, 1.5));
+        super(model, INITIAL_RANGE);
         model.setCurrentRow(0);
     }
 

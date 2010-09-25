@@ -2,6 +2,7 @@ package com.becker.simulation.fractals.algorithm;
 
 import com.becker.common.concurrency.Parallelizer;
 import com.becker.common.math.ComplexNumber;
+import com.becker.common.math.ComplexNumberRange;
 import com.becker.common.profile.ProfilerEntry;
 
 import java.util.ArrayList;
@@ -21,14 +22,10 @@ public abstract class FractalAlgorithm {
 
     public static final int DEFAULT_MAX_ITERATIONS = 500;
 
-    protected FractalModel model;
-
-    /** lower left corner of bounding box in complex plane. */
-    private ComplexNumber firstCorner;
+    protected final FractalModel model;
 
     /** range of bounding box in complex plane. */
-    private ComplexNumber range;
-
+    private ComplexNumberRange range;
 
     /** Manages the worker threads. */
     private Parallelizer<Worker> parallelizer_;
@@ -39,18 +36,38 @@ public abstract class FractalAlgorithm {
 
     private RowCalculator rowCalculator_;
 
+    private boolean restartRequested = false;
 
-    public FractalAlgorithm(FractalModel model, ComplexNumber firstCorner, ComplexNumber secondCorner) {
+    private History history_ = new History();
+
+
+    public FractalAlgorithm(FractalModel model, ComplexNumberRange range) {
         this.model = model;
-        setRange(firstCorner, secondCorner);
+        setRange(range);
         setParallelized(true);
         rowCalculator_ = new RowCalculator(this);
     }
 
-    public void setRange(ComplexNumber firstCorner, ComplexNumber secondCorner)  {
-        this.firstCorner = firstCorner;
-        this.range = secondCorner.subtract(firstCorner);
-        model.setCurrentRow(0);
+    public void setRange(ComplexNumberRange range)  {
+
+        history_.addRangeToHistory(range);
+        processRange(range);
+    }
+
+    /**
+     * Back up one step in the history
+     */
+    public void goBack() {
+        ComplexNumberRange newRange = history_.popLastRange();
+        if (range.equals(newRange)) {
+            newRange = history_.popLastRange();
+        }
+        processRange(newRange);
+    }
+
+    private void processRange(ComplexNumberRange range) {
+        this.range = range;
+        restartRequested = true;
     }
 
     public boolean isParallelized() {
@@ -95,6 +112,10 @@ public abstract class FractalAlgorithm {
      */
     public boolean timeStep(double timeStep) {
 
+        if (restartRequested) {
+            model.setCurrentRow(0);
+            restartRequested = false;
+        }
         if (model.isDone()) {
             stopTiming();
             return true;  // we are done.
@@ -127,12 +148,13 @@ public abstract class FractalAlgorithm {
         parallelizer_.invokeAllRunnables(workers);
 
         model.setCurrentRow(currentRow);
+
         return false;
     }
 
 
     /**
-     * @return a  number between 0 and 1.
+     * @return a number between 0 and 1.
      *  Typically corresponds to the number times we had to iterate before the point escaped (or not).
      */
     public abstract double getFractalValue(ComplexNumber seed);
@@ -144,8 +166,7 @@ public abstract class FractalAlgorithm {
      * @return corresponding position in complex number plane represented by the model.
      */
     public ComplexNumber getComplexPosition(int x, int y) {
-         return new ComplexNumber(firstCorner.getReal() + range.getReal() * x / model.getWidth(),
-                                  firstCorner.getImaginary() + range.getImaginary() * y / model.getHeight());
+        return range.getInterpolatedPosition((double)x / model.getWidth(), (double)y / model.getHeight()); 
     }
 
 

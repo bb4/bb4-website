@@ -28,19 +28,11 @@
   <property name="sleepTime" value="100"/>
 
 
-  <!-- Load additional tasks   -->
-  <taskdef resource="net/sf/antcontrib/antcontrib.properties">
-    <classpath>
-      <pathelement location="${antHome}/lib/ant-contrib-1.0b3.jar"/>
-    </classpath>
-  </taskdef>
-
   <!-- source metrics
   <taskdef name="javancss"
            classname="javancss.JavancssAntTask"
            classpath="${antHome}/lib"/>
-   -->
-
+  -->
 
   <path id="compile.classpath">
     <pathelement location="${libDir}/oalnf/oalnf.jar"/>
