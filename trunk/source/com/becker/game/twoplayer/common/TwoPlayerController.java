@@ -5,7 +5,6 @@ import com.becker.game.twoplayer.common.persistence.TwoPlayerGameExporter;
 import com.becker.game.twoplayer.common.persistence.TwoPlayerGameImporter;
 import com.becker.game.twoplayer.common.search.SearchOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
-import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.transposition.ZobristHash;
 import com.becker.game.twoplayer.common.search.tree.GameTreeViewable;
@@ -36,8 +35,9 @@ public abstract class TwoPlayerController extends GameController {
 
     protected boolean player1sTurn_ = true;
 
-    /** these weights determine how the computer values each move.
-     * they serve as parameters to a game dependent evaluation function. */
+    /**
+     * These weights determine how the computer values each move as parameters to a game dependent evaluation function.
+     */
     protected GameWeights weights_;
 
     /** the method the computer will use for searching for the next move.  */
@@ -116,8 +116,16 @@ public abstract class TwoPlayerController extends GameController {
         TwoPlayerGameImporter importer = new TwoPlayerGameImporter(this);
         importer.restoreFromFile(fileName);
         TwoPlayerMove m = (TwoPlayerMove)(getLastMove());
-        if (m != null)
+        if (m != null) {
             m.setValue( worth( m, weights_.getDefaultWeights()));
+        }
+    }
+
+    /**
+     * @return true if the computer is supposed to make the first move.
+     */
+    public boolean doesComputerMoveFirst() {
+        return !getPlayers().getPlayer1().isHuman();
     }
 
     /**
@@ -149,36 +157,6 @@ public abstract class TwoPlayerController extends GameController {
      */
     public final Player getCurrentPlayer() {
         return player1sTurn_? getPlayers().getPlayer1() : getPlayers().getPlayer2();
-    }
-        
-    /**
-     * @return true if the computer is supposed to make the first move.
-     */
-    public boolean doesComputerMoveFirst() {
-        return !getPlayers().getPlayer1().isHuman();
-    }
-
-    /**
-     * Returns a number between 0 and 1 representing the estimated probability of player 1 winning the game.
-     * The chance of player2 winning = 1 - chance of p1 winning.
-     * @return estimated chance of player one winning the game
-     */
-    public final double getChanceOfPlayer1Winning() {
-        // if true then too early in the game to tell.
-        TwoPlayerMove lastMove = (TwoPlayerMove) getLastMove();
-        if (board_.getMoveList().size() < 4 )
-            return 0.5f;
-
-        assert(lastMove != null);
-
-        // we can use this formula to estimate the outcome:       
-        double inherVal = lastMove.getInheritedValue();
-        if ( Math.abs( inherVal ) > WINNING_VALUE )
-            GameContext.log( 1, "TwoPlayerController: warning: the score for p1 is greater than WINNING_VALUE(" +
-                    WINNING_VALUE + ")  inheritedVal=" + inherVal );
-
-        double val = inherVal + WINNING_VALUE;
-        return val / (2 * WINNING_VALUE);
     }
 
     /**
@@ -296,7 +274,6 @@ public abstract class TwoPlayerController extends GameController {
         player1sTurn_ = !((TwoPlayerMove)m).isPlayer1();
     }
 
-
     /**
      * When this method is called the game controller will asynchronously search for the next move
      * for the computer to make. It returns immediately (unless the computer is playing itself).
@@ -410,41 +387,6 @@ public abstract class TwoPlayerController extends GameController {
      */
     protected abstract int worth( Move lastMove, ParameterArray weights );
 
-    /**
-     * Take the list of all possible next moves and return just the top bestPercentage of them 
-     * (or 10 moves, whichever is greater).
-     *
-     * sort the list so the better moves appear first.
-     * This is a terrific improvement when used in conjunction with alpha-beta pruning.
-     *
-     * @param player1 true if its player one's turn
-     * @param moveList the list of all generated moves
-     * @param player1sPerspective if true than bestMoves are from player1s perspective
-     * @return the best moves in order of how good they are.
-     */
-    public MoveList getBestMoves(boolean player1, MoveList moveList, boolean player1sPerspective ) {
-
-        Collections.sort( moveList );
-
-        // reverse the order so the best move (using static board evaluation) is first
-        SearchOptions searchOptions = ((TwoPlayerOptions) getOptions()).getSearchOptions();
-        SearchStrategyType searchType = searchOptions.getSearchStrategyMethod();
-        if ( searchType.sortAscending(player1, player1sPerspective)) {
-           Collections.reverse( moveList );
-        }
-
-        // We could potentially eliminate the best move doing this.
-        // A move which has a low score this time might actually lead to the best move later.
-        int numMoves = moveList.size();
-
-        MoveList bestMoveList = moveList;
-        int best = (int) ((float) searchOptions.getPercentageBestMoves() / 100.0 * numMoves) + 1;
-        if ( best < numMoves && numMoves > searchOptions.getMinBestMoves())  {
-            bestMoveList = moveList.subList(0, best);
-        }
-        return bestMoveList;
-    }
-
     public final Optimizee getOptimizee() {
         return new TwoPlayerOptimizee(this);
     }
@@ -463,10 +405,14 @@ public abstract class TwoPlayerController extends GameController {
         /** Used to generate hashkeys. */
         ZobristHash hash;
 
+        /** helps to find the best moves. */
+        protected BestMoveFinder bestMoveFinder_;
+
 
         public TwoPlayerSearchable() {
             TwoPlayerBoard b = (TwoPlayerBoard)board_;
             hash =  new ZobristHash(b);
+            bestMoveFinder_ = new BestMoveFinder(getSearchOptions());
         }
 
         public SearchOptions getSearchOptions() {

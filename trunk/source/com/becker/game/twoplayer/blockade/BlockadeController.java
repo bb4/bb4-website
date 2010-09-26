@@ -182,8 +182,9 @@ public class BlockadeController extends TwoPlayerController
             MoveList moveList  = generator.generateMoves(lastMove);
 
             boolean player1 = (lastMove == null) || !lastMove.isPlayer1();
+
             MoveList bestMoves =
-                    getBestMoves( player1, moveList, player1sPerspective );
+                bestMoveFinder_.getBestMoves( player1, moveList, player1sPerspective );
 
             getProfiler().stopGenerateMoves();
             return bestMoves;

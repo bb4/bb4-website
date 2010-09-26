@@ -8,12 +8,10 @@ import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
-import com.becker.game.twoplayer.go.board.DeadStones;
+import com.becker.game.twoplayer.go.board.update.DeadStoneUpdater;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.PositionalScore;
 import com.becker.game.twoplayer.go.board.analysis.PositionalScoreAnalyzer;
-import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.elements.GoStone;
 import com.becker.game.twoplayer.go.persistence.GoGameExporter;
 import com.becker.game.twoplayer.go.persistence.GoGameImporter;
 import com.becker.optimization.parameter.ParameterArray;
@@ -40,7 +38,7 @@ public final class GoController extends TwoPlayerController
     private PositionalScoreAnalyzer positionalScorer_;
 
     /** keeps track of dead stones.  */
-    private DeadStones deadStones_;
+    private DeadStoneUpdater deadStoneUpdater_;
 
 
     /**
@@ -74,7 +72,7 @@ public final class GoController extends TwoPlayerController
      */
     @Override
     protected void initializeData() {
-        deadStones_ = new DeadStones();
+        deadStoneUpdater_ = new DeadStoneUpdater((GoBoard)board_);
         weights_ = new GoWeights();
     }
 
@@ -123,7 +121,7 @@ public final class GoController extends TwoPlayerController
     }
 
     public int getNumDeadStonesOnBoard(boolean forPlayer1)  {
-        return deadStones_.getNumberOnBoard(forPlayer1);
+        return deadStoneUpdater_.getNumDeadStonesOnBoard(forPlayer1);
     }
 
     /**
@@ -165,7 +163,7 @@ public final class GoController extends TwoPlayerController
         if ( ((GoBoard) board_).getHandicap() > 0 )
             player1sTurn_ = false;
         // make sure the number of dead stones is not carried over.
-        deadStones_.clear();
+        deadStoneUpdater_.reset();
     }
 
     public void computerMovesFirst()  {
@@ -193,7 +191,6 @@ public final class GoController extends TwoPlayerController
         GoGameImporter importer = new GoGameImporter(this);
         importer.restoreFromFile(fileName);
     }
-
 
     /**
      *  Statically evaluate the board position.
@@ -306,36 +303,6 @@ public final class GoController extends TwoPlayerController
     }
 
 
-   /**
-    * Update the final life and death status of all the stones still on the board.
-    * This method must only be called at the end of the game or stones will get prematurely marked as dead.
-    * @@ should do in 2 passes.
-    * The first can update the health of groups and perhaps remove obviously dead stones.
-    */
-    public void updateLifeAndDeath()
-    {
-       ((GoBoard)board_).updateTerritory(true);
-
-       for ( int row = 1; row <= board_.getNumRows(); row++ ) {    //rows
-            for ( int col = 1; col <= board_.getNumCols(); col++ ) {  //cols
-                GoBoardPosition space = (GoBoardPosition)board_.getPosition( row, col );
-                if (space.isOccupied())  {
-                    GoStone stone = (GoStone)space.getPiece();
-                    int side = (stone.isOwnedByPlayer1() ? 1: -1);
-                    GameContext.log(1, "life & death: "+space+" health="+stone.getHealth()
-                                       +" string health=" +space.getGroup().getRelativeHealth());
-                    if (side*stone.getHealth() < 0)  {
-                        // then the stone is more dead than alive, so mark it so
-                        GameContext.log(1, "setting "+space+" to dead");
-                        stone.setDead(true);
-                        deadStones_.increment(space.getPiece().isOwnedByPlayer1());
-                    }
-                }
-            }
-        }
-    }
-
-
     @Override
     public Searchable createSearchable() {
          return new GoSearchable();
@@ -389,7 +356,7 @@ public final class GoController extends TwoPlayerController
                 // now that we are finally at the end of the game,
                 // update the life and death of all the stones still on the board
                 GameContext.log(1,  "about to update life and death." );
-                updateLifeAndDeath();
+                deadStoneUpdater_.determineDeadStones();
             }
 
             return gameOver;
@@ -467,7 +434,7 @@ public final class GoController extends TwoPlayerController
          */
         public final MoveList generateMoves(TwoPlayerMove lastMove, ParameterArray weights,
                                             boolean player1sPerspective ) {
-            MoveGenerator generator = new MoveGenerator(GoController.this);
+            GoMoveGenerator generator = new GoMoveGenerator(GoController.this);
             return generator.generateMoves(lastMove, weights, player1sPerspective);
         }
     }

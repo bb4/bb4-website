@@ -1,7 +1,5 @@
 package com.becker.game.common;
 
-import com.becker.game.twoplayer.go.board.elements.GoBoardPositionSet;
-
 import java.util.*;
 
 /**
@@ -77,23 +75,6 @@ public class CaptureList extends LinkedList<BoardPosition>
             newList.add( capture.copy() );
         }
         return newList;
-    }
-
-    /**
-     * @return true if list is not null and not 0 sized.
-     */
-    public boolean addAllCopied(GoBoardPositionSet list)
-    {
-        if ( list == null )
-            return false;
-        // we need to add copies so that when the original stones on the board are
-        // changed we don't change the captures
-        for (BoardPosition capture : list) {
-            // make sure none of the captures are blanks
-            assert capture.isOccupied();
-            this.add(capture.copy());
-        }
-        return (!list.isEmpty());
     }
 
     /**

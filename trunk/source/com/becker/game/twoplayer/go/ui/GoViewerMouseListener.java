@@ -7,7 +7,7 @@ import com.becker.game.common.ui.GameBoardViewer;
 import com.becker.game.common.ui.ViewerMouseListener;
 import com.becker.game.twoplayer.go.GoController;
 import com.becker.game.twoplayer.go.GoMove;
-import com.becker.game.twoplayer.go.MoveGenerator;
+import com.becker.game.twoplayer.go.GoMoveGenerator;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.GoStone;
@@ -84,7 +84,7 @@ public class GoViewerMouseListener extends ViewerMouseListener {
             GameContext.log( 0, "GoBoardViewer: There is already a stone there: " + stone );
             return;
         }
-        if ( MoveGenerator.isTakeBack( m.getToRow(), m.getToCol(), (GoMove) controller.getLastMove(), board ) ) {
+        if ( GoMoveGenerator.isTakeBack( m.getToRow(), m.getToCol(), (GoMove) controller.getLastMove(), board ) ) {
             JOptionPane.showMessageDialog( null, GameContext.getLabel("NO_TAKEBACKS"));
             return;
         }

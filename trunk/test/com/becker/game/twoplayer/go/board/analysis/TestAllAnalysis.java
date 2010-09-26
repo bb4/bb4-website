@@ -20,11 +20,12 @@ public class TestAllAnalysis extends GoTestCase {
     public static Test suite() {
 
         TestSuite suite =  new TestSuite("Analysis Tests");
-
+       
         suite.addTest(TestAllGroup.suite());
         suite.addTest(TestAllEye.suite());
         suite.addTest(TestAllNeighbor.suite());
 
+        suite.addTestSuite(TestStringShapeAnalyzer.class);
         suite.addTestSuite(TestShapeAnalyzer.class);
         suite.addTestSuite(TestCandidateMoveAnalyzer.class);
         suite.addTestSuite(TestPositionalScoreAnalyzer.class);

@@ -99,13 +99,11 @@ public abstract class MultiGameController extends GameController
      *
      * @return the player whos turn it is now.
      */
-    public MultiGamePlayer getCurrentPlayer()
-    {
+    public MultiGamePlayer getCurrentPlayer() {
         return (MultiGamePlayer)players_.get(currentPlayerIndex_);
     }
 
-    public void computerMovesFirst()
-    {
+    public void computerMovesFirst() {
         MultiGameViewer gviewer  = (MultiGameViewer) this.getViewer();
         gviewer.doComputerMove(getCurrentPlayer());
     }
@@ -125,8 +123,7 @@ public abstract class MultiGameController extends GameController
     }
 
     @Override
-    public int getServerPort()
-    {
+    public int getServerPort() {
         assert false : "online game play not supported for " + this.getClass().getName();
         return 0;
     }
@@ -148,8 +145,7 @@ public abstract class MultiGameController extends GameController
      * advance to the next player turn in order.
      * @return the index of the next player to play.
      */
-    public int advanceToNextPlayer()
-    {
+    public int advanceToNextPlayer() {
         MultiGameViewer pviewer = (MultiGameViewer) getViewer();
         pviewer.refresh();
 

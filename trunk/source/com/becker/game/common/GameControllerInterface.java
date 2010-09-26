@@ -67,7 +67,7 @@ public interface GameControllerInterface
     Player getCurrentPlayer();
 
     /**
-     * a coputer player makes the first move
+     * a computer player makes the first move
      */
     void computerMovesFirst();
 

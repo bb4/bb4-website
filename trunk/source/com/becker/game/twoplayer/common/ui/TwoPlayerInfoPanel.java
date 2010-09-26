@@ -8,6 +8,7 @@ import com.becker.game.common.ui.GameChangedEvent;
 import com.becker.game.common.ui.GameChangedListener;
 import com.becker.game.common.ui.GameInfoPanel;
 import com.becker.game.twoplayer.common.TwoPlayerController;
+import com.becker.game.twoplayer.common.WinProbabilityCaclulator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,7 +31,6 @@ public class TwoPlayerInfoPanel extends GameInfoPanel implements GameChangedList
     public TwoPlayerInfoPanel( GameController controller )
     {
         super(controller);
-
     }
 
     protected TwoPlayerController getController()
@@ -102,7 +102,10 @@ public class TwoPlayerInfoPanel extends GameInfoPanel implements GameChangedList
         if ( controller_.getLastMove() != null ) {
             setPlayerLabel();
             moveNumLabel_.setText( controller_.getNumMoves() + " " );
-            chanceOfWinningLabel_.setText( Util.formatNumber(getController().getChanceOfPlayer1Winning()) + ' ' );
+            WinProbabilityCaclulator calc = new WinProbabilityCaclulator();
+            String formattedPropability =
+                    Util.formatNumber(calc.getChanceOfPlayer1Winning(getController().getMoveList()));
+            chanceOfWinningLabel_.setText(  formattedPropability + ' ' );
         }
         
     }

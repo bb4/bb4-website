@@ -1,6 +1,5 @@
 package com.becker.game.twoplayer.pente;
 
-import com.becker.common.Location;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerController;
@@ -9,7 +8,6 @@ import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.pente.analysis.MoveEvaluator;
 import com.becker.optimization.parameter.ParameterArray;
-import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WINNING_VALUE;
 
 import java.util.*;
 
@@ -95,7 +93,7 @@ public class PenteController extends TwoPlayerController
 
     protected class PenteSearchable extends TwoPlayerSearchable {
 
-        MoveGenerator generator = new MoveGenerator(PenteController.this);
+        PenteMoveGenerator generator = new PenteMoveGenerator(PenteController.this);
 
         /**
          * generate all possible next moves.

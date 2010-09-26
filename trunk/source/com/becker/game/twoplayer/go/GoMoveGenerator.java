@@ -4,6 +4,7 @@ import com.becker.game.common.Board;
 import com.becker.game.common.CaptureList;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.MoveList;
+import com.becker.game.twoplayer.common.BestMoveFinder;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.CandidateMoveAnalyzer;
@@ -12,11 +13,11 @@ import com.becker.game.twoplayer.go.board.elements.GoStone;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**
- * Responsible for determining a set of reasonable next moves
+ * Responsible for determining a set of reasonable next moves.
  *
  * @author Barry Becker
  */
-public final class MoveGenerator {
+public final class GoMoveGenerator {
 
     GoController controller_;
 
@@ -24,7 +25,7 @@ public final class MoveGenerator {
     /**
      * Constructor.
      */
-    public MoveGenerator(GoController controller)
+    public GoMoveGenerator(GoController controller)
     {
         controller_ = controller;
     }
@@ -58,31 +59,42 @@ public final class MoveGenerator {
                         GameContext.log( 2, "The move was a suicide (can't add it to the list): " + m );
                     }
                     else {
-                        prof.stopGenerateMoves();
-                        board.makeMove( m );
-                        prof.startGenerateMoves();
-                        // this value is not likely to change much except local to last move,
-                        // anyway we could cache that?
-                        prof.startCalcWorth();
-                        m.setValue(controller_.worth( m, weights, player1sPerspective ));
-                        prof.stopCalcWorth();
-                        // now revert the board
-                        prof.stopGenerateMoves();
-                        board.undoMove();
-                        prof.startGenerateMoves();
+                        setMoveValue(weights, player1sPerspective, board, m);
                         moveList.add( m );
                     }
                 }
             }
         }
 
-        moveList = controller_.getBestMoves(player1, moveList, player1sPerspective);
+        BestMoveFinder finder = new BestMoveFinder(controller_.getTwoPlayerOptions().getSearchOptions());
+        moveList = finder.getBestMoves(player1, moveList, player1sPerspective);
 
         addPassingMoveIfNeeded(lastMove, moveList, player1);
 
         prof.stopGenerateMoves();
 
         return moveList;
+    }
+
+    /**
+     * Make the generated move, determine its value, set it into the move, and undo the move on the baord.
+     */
+    private void setMoveValue(ParameterArray weights, boolean player1sPerspective, GoBoard board, GoMove m) {
+        GoProfiler prof = GoProfiler.getInstance();
+        prof.stopGenerateMoves();
+        board.makeMove( m );
+        prof.startGenerateMoves();
+
+        // this value is not likely to change much except local to last move,
+        // anyway we could cache that?
+        prof.startCalcWorth();
+        m.setValue(controller_.worth( m, weights, player1sPerspective ));
+        prof.stopCalcWorth();
+
+        // now revert the board
+        prof.stopGenerateMoves();
+        board.undoMove();
+        prof.startGenerateMoves();
     }
 
     /**
@@ -99,7 +111,7 @@ public final class MoveGenerator {
     }
 
     /**
-     * It is a takeback move if the proposed move position (row,col) would immdiately replace the last captured piece
+     * It is a takeback move if the proposed move position (row,col) would immediately replace the last captured piece
      *  and capture the stone that did the capturing.
      * @return true of this is an immediate take-back (not allowed in go - see "rule of ko")
      */
@@ -111,7 +123,8 @@ public final class MoveGenerator {
         if ( captures != null && captures.size() == 1 ) {
             GoBoardPosition capture = (GoBoardPosition) captures.getFirst();
             if ( capture.getRow() == row && capture.getCol() == col ) {
-                GoBoardPosition lastStone = (GoBoardPosition) board.getPosition( lastMove.getToRow(), lastMove.getToCol() );
+                GoBoardPosition lastStone =
+                        (GoBoardPosition) board.getPosition( lastMove.getToRow(), lastMove.getToCol() );
                 if ( lastStone.getNumLiberties( board ) == 1 && lastStone.getString().getMembers().size() == 1 ) {
                     GameContext.log( 2, "it is a takeback " );
                     return true;
@@ -120,5 +133,10 @@ public final class MoveGenerator {
         }
         return false;
     }
-
 }
+
+
+
+
+
+

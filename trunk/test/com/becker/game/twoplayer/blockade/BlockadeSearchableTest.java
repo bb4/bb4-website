@@ -55,7 +55,7 @@ public class BlockadeSearchableTest extends TwoPlayerSearchableBaseTst {
 
     @Override
     protected int getExpectedNumGeneratedMovesBeforeFirstMove() {
-       return 144;
+       return 101; // 144
    }
 
 

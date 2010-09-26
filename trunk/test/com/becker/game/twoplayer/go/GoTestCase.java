@@ -134,7 +134,10 @@ public class GoTestCase extends TestCase {
         //List moves =
         controller_.getMoveList();
         //double w = controller_.worth((GoMove)moves.get(moves.size()-3), controller_.getDefaultWeights(), true); // need?
-        controller_.updateLifeAndDeath();   // this updates the groups and territory as well.
+
+        // force dead stones to be updated by calling done with resignation move.
+        controller_.getSearchable().done(GoMove.createResignationMove(true), true);
+        //controller_.updateLifeAndDeath();   // this updates the groups and territory as well.
     }
 
 
