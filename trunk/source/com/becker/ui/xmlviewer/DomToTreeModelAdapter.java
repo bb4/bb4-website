@@ -2,10 +2,12 @@ package com.becker.ui.xmlviewer;
 
 import org.w3c.dom.Document;
 
-import javax.swing.tree.*;
-import javax.swing.event.TreeModelListener;
 import javax.swing.event.TreeModelEvent;
-import java.util.*;
+import javax.swing.event.TreeModelListener;
+import javax.swing.tree.TreeModel;
+import javax.swing.tree.TreePath;
+import java.util.LinkedList;
+import java.util.List;
 
     /**
      * This adapter converts the current Document (a DOM) into

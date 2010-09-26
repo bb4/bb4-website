@@ -5,7 +5,6 @@ import com.becker.game.common.Board;
 import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameControllerInterface;
-import com.becker.ui.GUIUtil;
 import com.becker.ui.themes.BarryTheme;
 
 import java.awt.*;

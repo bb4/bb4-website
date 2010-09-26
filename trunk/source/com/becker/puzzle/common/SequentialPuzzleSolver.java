@@ -1,6 +1,8 @@
 package com.becker.puzzle.common;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Sequential puzzle solver.

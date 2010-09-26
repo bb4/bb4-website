@@ -1,15 +1,16 @@
 package com.becker.simulation.liquid.config;
 
 import com.becker.common.Location;
-import com.becker.ui.GUIUtil;
 import com.becker.common.xml.DomUtil;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import javax.vecmath.Vector2d;
+import com.becker.ui.GUIUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import javax.vecmath.Vector2d;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Configuration constraints and initial conditions to use while running the simulation.

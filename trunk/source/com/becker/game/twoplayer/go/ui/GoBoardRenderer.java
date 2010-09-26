@@ -1,23 +1,23 @@
 package com.becker.game.twoplayer.go.ui;
 
+import com.becker.common.ColorMap;
 import com.becker.game.common.Board;
-import com.becker.game.common.GameControllerInterface;
 import com.becker.game.common.GameContext;
+import com.becker.game.common.GameControllerInterface;
 import com.becker.game.common.ui.GameBoardRenderer;
+import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.ui.AbstractTwoPlayerBoardViewer;
 import com.becker.game.twoplayer.common.ui.TwoPlayerBoardRenderer;
 import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
-import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.GoGroup;
-import com.becker.common.ColorMap;
 import com.becker.ui.GUIUtil;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
-import java.util.*;
+import java.util.Iterator;
 import java.util.List;
 
 /**

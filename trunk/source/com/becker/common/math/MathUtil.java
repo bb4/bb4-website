@@ -1,8 +1,5 @@
 package com.becker.common.math;
 
-import com.becker.common.math.Range;
-import com.becker.common.math.interplolation.LinearInterpolator;
-
 import java.util.Arrays;
 
 

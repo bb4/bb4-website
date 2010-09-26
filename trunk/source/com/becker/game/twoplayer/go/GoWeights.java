@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.go;
 
-import com.becker.game.common.*;
+import com.becker.game.common.GameWeights;
 
 /**
  * These weights determine how the computer values each term of the polynomial evaluation function.

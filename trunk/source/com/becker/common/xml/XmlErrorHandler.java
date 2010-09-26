@@ -1,6 +1,8 @@
 package com.becker.common.xml;
 
-import org.xml.sax.*;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 /**
  * @author Barry Becker

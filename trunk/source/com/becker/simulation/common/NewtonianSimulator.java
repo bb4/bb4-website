@@ -1,6 +1,6 @@
 package com.becker.simulation.common;
 
-import javax.vecmath.*;
+import javax.vecmath.Vector2d;
 import java.awt.*;
 
 /**

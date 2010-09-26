@@ -1,6 +1,6 @@
 package com.becker.ui.file;
 
-import javax.swing.filechooser.*;
+import javax.swing.filechooser.FileFilter;
 import java.io.File;
 
 /**

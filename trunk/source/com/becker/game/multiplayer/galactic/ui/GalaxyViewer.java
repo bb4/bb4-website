@@ -1,17 +1,18 @@
 package com.becker.game.multiplayer.galactic.ui;
 
-import com.becker.common.*;
+import com.becker.common.Location;
 import com.becker.game.common.*;
-import com.becker.game.common.ui.*;
+import com.becker.game.common.ui.GameBoardRenderer;
 import com.becker.game.multiplayer.common.MultiGameController;
 import com.becker.game.multiplayer.common.online.SurrogateMultiPlayer;
 import com.becker.game.multiplayer.common.ui.MultiGameViewer;
 import com.becker.game.multiplayer.galactic.*;
-import com.becker.game.multiplayer.galactic.player.*;
+import com.becker.game.multiplayer.galactic.player.GalacticPlayer;
+import com.becker.game.multiplayer.galactic.player.GalacticRobotPlayer;
 
 import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
+import java.awt.event.MouseEvent;
+import java.util.Iterator;
 import java.util.List;
 
 /**

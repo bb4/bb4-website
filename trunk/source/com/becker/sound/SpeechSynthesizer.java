@@ -3,11 +3,11 @@
  */
 package com.becker.sound;
 
-import com.becker.ui.*;
+import com.becker.ui.GUIUtil;
 
 import javax.sound.sampled.*;
-import java.net.*;
-import java.util.*;
+import java.net.URL;
+import java.util.StringTokenizer;
 
 /**
  * See http://www.javaworld.com/javaworld/jw-08-2001/jw-0817-javatalk.html?page=1

@@ -3,9 +3,8 @@ package com.becker.simulation.graphing;
 import com.becker.common.math.function.Function;
 import com.becker.simulation.common.Simulator;
 import com.becker.simulation.common.SimulatorOptionsDialog;
-
-import com.becker.ui.renderers.FunctionRenderer;
 import com.becker.ui.animation.AnimationFrame;
+import com.becker.ui.renderers.FunctionRenderer;
 
 import javax.swing.*;
 import java.awt.*;

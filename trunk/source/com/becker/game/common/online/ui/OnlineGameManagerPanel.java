@@ -1,12 +1,15 @@
 package com.becker.game.common.online.ui;
 
-import com.becker.game.common.*;
-import com.becker.game.common.online.*;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.GameController;
+import com.becker.game.common.GameViewable;
+import com.becker.game.common.online.GameCommand;
+import com.becker.game.common.online.OnlineChangeListener;
 
 import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionListener;
 
 /**
  * Manage the online game tables.

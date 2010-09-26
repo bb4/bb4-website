@@ -2,7 +2,6 @@ package com.becker.game.twoplayer.pente;
 
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.SearchOptions;
-import com.becker.sound.MusicMaker;
 
 /**
  *

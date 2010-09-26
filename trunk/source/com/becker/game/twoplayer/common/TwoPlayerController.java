@@ -4,18 +4,17 @@ import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.persistence.TwoPlayerGameExporter;
 import com.becker.game.twoplayer.common.persistence.TwoPlayerGameImporter;
 import com.becker.game.twoplayer.common.search.SearchOptions;
-import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
 import com.becker.game.twoplayer.common.search.Searchable;
+import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
 import com.becker.game.twoplayer.common.search.transposition.ZobristHash;
 import com.becker.game.twoplayer.common.search.tree.GameTreeViewable;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
-import com.becker.optimization.parameter.ParameterArray;
-import com.becker.optimization.Optimizer;
-import com.becker.optimization.strategy.OptimizationStrategyType;
 import com.becker.optimization.Optimizee;
-import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WINNING_VALUE;
+import com.becker.optimization.Optimizer;
+import com.becker.optimization.parameter.ParameterArray;
+import com.becker.optimization.strategy.OptimizationStrategyType;
 
-import java.util.Collections;
+import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WINNING_VALUE;
 
 /**
  * This is an abstract base class for a two player Game Controller.

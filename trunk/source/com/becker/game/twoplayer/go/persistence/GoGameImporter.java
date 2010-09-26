@@ -1,13 +1,20 @@
 package com.becker.game.twoplayer.go.persistence;
 
-import com.becker.game.twoplayer.go.board.elements.GoStone;
-import com.becker.game.common.*;
+import ca.dj.jigo.sgf.Point;
+import ca.dj.jigo.sgf.SGFGame;
+import ca.dj.jigo.sgf.SGFLoader;
 import ca.dj.jigo.sgf.tokens.*;
-import ca.dj.jigo.sgf.*;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.MoveList;
+import com.becker.game.common.PlayerList;
 import com.becker.game.twoplayer.common.persistence.TwoPlayerGameImporter;
-import com.becker.game.twoplayer.go.*;
+import com.becker.game.twoplayer.go.GoController;
+import com.becker.game.twoplayer.go.GoMove;
+import com.becker.game.twoplayer.go.GoOptions;
+import com.becker.game.twoplayer.go.board.elements.GoStone;
 
-import java.util.*;
+import java.util.Enumeration;
+import java.util.Iterator;
 
 /**
  * Imports the stat of a Go game from a file.

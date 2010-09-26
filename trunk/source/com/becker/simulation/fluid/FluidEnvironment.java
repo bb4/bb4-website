@@ -1,12 +1,5 @@
 package com.becker.simulation.fluid;
 
-import com.becker.ui.*;
-
-import javax.vecmath.*;
-import java.util.*;
-
-import static com.becker.simulation.common.PhysicsConstants.*;
-
 /**
  *  this is the global space containing all the cells, walls, and particles
  *  Assumes an M*N grid of cells.

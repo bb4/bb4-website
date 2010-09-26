@@ -1,10 +1,14 @@
 package com.becker.game.twoplayer.tictactoe.ui;
 
-import com.becker.game.common.*;
-import com.becker.game.common.ui.*;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.GameController;
+import com.becker.game.common.GameViewable;
+import com.becker.game.common.ui.GameBoardViewer;
+import com.becker.game.common.ui.GameInfoPanel;
+import com.becker.game.common.ui.NewGameDialog;
 import com.becker.game.twoplayer.common.ui.TwoPlayerInfoPanel;
-
 import com.becker.game.twoplayer.pente.ui.PentePanel;
+
 import javax.swing.*;
 
 /**

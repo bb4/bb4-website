@@ -1,22 +1,19 @@
 package com.becker.game.twoplayer.go.ui;
 
-import com.becker.game.common.ui.ViewerMouseListener;
-import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.elements.GoEye;
-import com.becker.game.twoplayer.go.board.elements.GoStone;
-import com.becker.game.twoplayer.go.board.elements.GoString;
-import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.common.*;
-import com.becker.game.common.BoardPosition;
+import com.becker.common.Location;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameController;
 import com.becker.game.common.ui.GameBoardRenderer;
+import com.becker.game.common.ui.ViewerMouseListener;
 import com.becker.game.twoplayer.common.ui.AbstractTwoPlayerBoardViewer;
-import com.becker.game.twoplayer.go.*;
+import com.becker.game.twoplayer.go.GoController;
+import com.becker.game.twoplayer.go.GoMove;
+import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.GoEye;
+import com.becker.game.twoplayer.go.board.elements.GoString;
 
-import javax.swing.*;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 
 /**
  *  Takes a GoController as input and displays the

@@ -1,13 +1,15 @@
 package com.becker.game.twoplayer.go.board.elements;
 
 import com.becker.common.Box;
+import com.becker.common.util.Util;
+import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
 import com.becker.game.twoplayer.go.board.analysis.group.GroupAnalyzer;
-import com.becker.common.util.Util;
-import com.becker.game.common.*;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 /**
  *  A GoGroup is composed of a loosely connected set of one or more same color strings.

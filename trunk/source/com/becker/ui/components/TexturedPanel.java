@@ -1,6 +1,7 @@
 package com.becker.ui.components;
 
-import com.becker.ui.*;
+import com.becker.ui.GUIUtil;
+
 import javax.swing.*;
 import java.awt.*;
 

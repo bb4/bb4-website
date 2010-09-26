@@ -1,9 +1,10 @@
 package com.becker.game.multiplayer.galactic;
 
-import com.becker.game.common.*;
-import com.becker.game.multiplayer.galactic.player.*;
+import com.becker.game.common.Player;
+import com.becker.game.multiplayer.galactic.player.GalacticPlayer;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  *  Captures the delta state change of everything that happened during one turn of the game.

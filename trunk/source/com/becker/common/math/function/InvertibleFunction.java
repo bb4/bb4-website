@@ -1,7 +1,5 @@
 package com.becker.common.math.function;
 
-import com.becker.common.math.Range;
-
 /**
  * Defines interface for generic 1-1 function f(x).
  * @author Barry Becker

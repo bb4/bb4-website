@@ -1,11 +1,11 @@
 package com.becker.simulation.reactiondiffusion.rendering;
 
-import com.becker.common.*;
+import com.becker.common.ColorMap;
 import com.becker.simulation.reactiondiffusion.algorithm.GrayScottModel;
 
-import javax.vecmath.*;
+import javax.vecmath.Vector3d;
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**

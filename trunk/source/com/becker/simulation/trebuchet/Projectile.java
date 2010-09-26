@@ -2,7 +2,7 @@ package com.becker.simulation.trebuchet;
 
 import com.becker.common.math.LinearUtil;
 
-import javax.vecmath.*;
+import javax.vecmath.Vector2d;
 import java.awt.*;
 
 /**

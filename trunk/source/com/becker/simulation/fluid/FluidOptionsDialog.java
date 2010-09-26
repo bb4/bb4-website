@@ -1,10 +1,10 @@
 package com.becker.simulation.fluid;
 
-import com.becker.simulation.common.*;
+import com.becker.simulation.common.NewtonianSimOptionsDialog;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionListener;
 
 /**
  * Use this modal dialog to let the user choose from among the

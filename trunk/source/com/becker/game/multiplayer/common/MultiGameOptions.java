@@ -1,6 +1,6 @@
 package com.becker.game.multiplayer.common;
 
-import com.becker.game.common.*;
+import com.becker.game.common.GameOptions;
 
 /**
  * @author Barry Becker Date: Sep 9, 2006

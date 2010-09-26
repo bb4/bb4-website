@@ -1,7 +1,5 @@
 package com.becker.game.twoplayer.go.board.elements;
 
-import java.util.Set;
-
 /**
  * Makes some unit tests much simpler if we create the tests to use this interface instead
  * of the full-blown GoGroup class.

@@ -5,7 +5,6 @@ import com.becker.game.twoplayer.go.board.GoBoard;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
  *  A GoSet is an abstract class representing a set of go entities

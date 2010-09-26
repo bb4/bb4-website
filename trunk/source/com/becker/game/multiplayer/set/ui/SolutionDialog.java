@@ -1,15 +1,14 @@
 package com.becker.game.multiplayer.set.ui;
 
+import com.becker.game.common.GameContext;
+import com.becker.game.multiplayer.set.Card;
+import com.becker.game.multiplayer.set.SetController;
 import com.becker.ui.components.GradientButton;
 import com.becker.ui.dialogs.OptionsDialog;
-import com.becker.game.common.*;
-import com.becker.game.multiplayer.set.*;
-import com.becker.ui.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
+import java.awt.event.ActionEvent;
 import java.util.List;
 
 /**

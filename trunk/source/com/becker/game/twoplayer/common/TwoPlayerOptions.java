@@ -1,10 +1,8 @@
 package com.becker.game.twoplayer.common;
 
-import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
-import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
-import com.becker.game.twoplayer.common.search.*;
-import com.becker.game.common.*;
-import com.becker.optimization.parameter.ParameterArray;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.GameOptions;
+import com.becker.game.twoplayer.common.search.SearchOptions;
 import com.becker.sound.MusicMaker;
 
 /**

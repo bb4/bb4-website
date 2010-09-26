@@ -1,15 +1,15 @@
 package com.becker.game.twoplayer.go;
 
 import com.becker.common.util.FileUtil;
-import com.becker.game.common.*;
-import java.io.*;
+import com.becker.game.common.GameContext;
+import org.igoweb.kgs.client.gtp.GtpClient;
+import org.igoweb.kgs.client.gtp.Options;
 
+import javax.swing.*;
+import java.io.*;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.SwingUtilities;
-import org.igoweb.kgs.client.gtp.GtpClient;
-import org.igoweb.kgs.client.gtp.Options;
 
 
 

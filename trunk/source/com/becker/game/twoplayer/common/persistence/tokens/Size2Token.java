@@ -1,9 +1,11 @@
 package com.becker.game.twoplayer.common.persistence.tokens;
 
 import ca.dj.jigo.sgf.SGFException;
-import ca.dj.jigo.sgf.tokens.*;
-import java.io.StreamTokenizer;
+import ca.dj.jigo.sgf.tokens.InfoToken;
+import ca.dj.jigo.sgf.tokens.SGFToken;
+
 import java.io.IOException;
+import java.io.StreamTokenizer;
 
 /**
  * The size of the game board.

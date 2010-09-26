@@ -1,13 +1,14 @@
 package com.becker.game.multiplayer.common.ui;
 
-import com.becker.common.*;
+import com.becker.common.Location;
 import com.becker.game.common.*;
-import com.becker.game.common.ui.*;
+import com.becker.game.common.ui.GameBoardViewer;
+import com.becker.game.common.ui.GameChangedEvent;
 import com.becker.game.multiplayer.common.MultiGameController;
 import com.becker.game.multiplayer.common.online.SurrogateMultiPlayer;
 
 import javax.swing.*;
-import java.awt.event.*;
+import java.awt.event.MouseEvent;
 
 /**
  *  Takes a TrivialController as input and displays the

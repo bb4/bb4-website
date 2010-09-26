@@ -5,7 +5,7 @@ import com.becker.ui.GUIUtil;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
-import java.io.*;
+import java.io.File;
 
 /**
  * Miscelaneous commonly used file chooser related utility methods.

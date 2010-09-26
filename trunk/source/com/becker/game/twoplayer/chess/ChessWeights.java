@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.chess;
 
-import com.becker.game.common.*;
+import com.becker.game.common.GameWeights;
 
 /**
  * These weights determine how the computer values features of the board

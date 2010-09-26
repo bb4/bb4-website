@@ -1,7 +1,7 @@
 package com.becker.ui;
 
-import com.becker.ui.dialogs.OutputWindow;
 import com.becker.common.ILog;
+import com.becker.ui.dialogs.OutputWindow;
 
 import java.io.*;
 

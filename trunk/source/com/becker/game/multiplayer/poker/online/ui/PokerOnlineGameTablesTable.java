@@ -1,17 +1,14 @@
 package com.becker.game.multiplayer.poker.online.ui;
 
-import com.becker.game.multiplayer.poker.*;
-import com.becker.game.multiplayer.poker.player.*;
-import com.becker.game.multiplayer.poker.online.*;
-import com.becker.game.multiplayer.common.*;
-import com.becker.game.multiplayer.common.online.ui.*;
-import com.becker.game.common.online.*;
-import com.becker.game.common.*;
-
+import com.becker.game.common.GameContext;
+import com.becker.game.common.Player;
+import com.becker.game.common.online.OnlineGameTable;
+import com.becker.game.multiplayer.common.MultiGameOptions;
+import com.becker.game.multiplayer.common.online.ui.MultiPlayerOnlineGameTablesTable;
+import com.becker.game.multiplayer.poker.PokerOptions;
+import com.becker.game.multiplayer.poker.online.OnlinePokerTable;
+import com.becker.game.multiplayer.poker.player.PokerHumanPlayer;
 import com.becker.ui.table.TableButtonListener;
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
 
 /**
  * Show poker specific game options in the table row.

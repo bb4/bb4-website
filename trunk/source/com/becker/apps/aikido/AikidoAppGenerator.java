@@ -1,14 +1,17 @@
 package com.becker.apps.aikido;
 
-import com.becker.common.xml.DomUtil;
 import com.becker.common.util.FileUtil;
-import org.w3c.dom.*;
+import com.becker.common.xml.DomUtil;
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.FileOutputStream;
-import java.util.List;
+import java.io.IOException;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  *

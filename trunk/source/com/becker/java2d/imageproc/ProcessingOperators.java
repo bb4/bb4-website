@@ -1,15 +1,12 @@
 package com.becker.java2d.imageproc;
 
-import com.becker.common.*;
-
-import com.becker.optimization.parameter.BooleanParameter;
-import com.becker.optimization.parameter.DoubleParameter;
-import com.becker.optimization.parameter.IntegerParameter;
-import com.becker.optimization.parameter.Parameter;
-import com.becker.optimization.parameter.StringParameter;
+import com.becker.optimization.parameter.*;
 import com.jhlabs.image.*;
-import java.awt.event.*;
-import java.awt.image.*;
+
+import java.awt.image.ConvolveOp;
+import java.awt.image.Kernel;
+import java.awt.image.LookupOp;
+import java.awt.image.ShortLookupTable;
 import java.util.*;
 
 /**

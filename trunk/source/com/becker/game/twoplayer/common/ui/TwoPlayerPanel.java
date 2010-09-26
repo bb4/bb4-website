@@ -1,6 +1,5 @@
 package com.becker.game.twoplayer.common.ui;
 
-import com.becker.ui.components.TexturedPanel;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameController;
 import com.becker.game.common.ui.GameChangedListener;
@@ -8,7 +7,7 @@ import com.becker.game.common.ui.GameOptionsDialog;
 import com.becker.game.common.ui.GamePanel;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
-import com.becker.ui.*;
+import com.becker.ui.components.TexturedPanel;
 import com.becker.ui.themes.BarryTheme;
 
 import javax.swing.*;

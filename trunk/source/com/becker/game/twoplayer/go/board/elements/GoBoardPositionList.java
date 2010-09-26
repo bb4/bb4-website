@@ -2,7 +2,8 @@ package com.becker.game.twoplayer.go.board.elements;
 
 import com.becker.game.common.GameContext;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *  A list of GoStrings.

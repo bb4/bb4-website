@@ -4,10 +4,10 @@ import com.becker.common.math.Range;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.Move;
 import com.becker.game.common.MoveList;
-import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
-import com.becker.game.twoplayer.common.search.tree.PruneType;
-import com.becker.game.twoplayer.common.search.*;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.twoplayer.common.search.Searchable;
+import com.becker.game.twoplayer.common.search.tree.PruneType;
+import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**

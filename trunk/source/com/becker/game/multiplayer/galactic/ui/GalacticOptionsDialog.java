@@ -1,13 +1,16 @@
 package com.becker.game.multiplayer.galactic.ui;
 
+import com.becker.game.common.GameContext;
+import com.becker.game.common.GameController;
+import com.becker.game.common.GameOptions;
+import com.becker.game.multiplayer.common.ui.MultiGameOptionsDialog;
+import com.becker.game.multiplayer.galactic.GalacticOptions;
+import com.becker.game.multiplayer.galactic.Galaxy;
 import com.becker.ui.components.NumberInput;
-import com.becker.game.common.*;
-import com.becker.game.multiplayer.common.ui.*;
-import com.becker.game.multiplayer.galactic.*;
-import com.becker.ui.*;
 
 import javax.swing.*;
-import java.awt.event.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
 
 /**
  * Use this modal dialog to let the user choose from among the

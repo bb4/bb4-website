@@ -1,11 +1,12 @@
 package com.becker.game.multiplayer.galactic.ui;
 
-import com.becker.game.common.*;
-import com.becker.game.multiplayer.common.ui.*;
-import com.becker.game.multiplayer.galactic.*;
-import com.becker.game.multiplayer.galactic.player.*;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.PlayerList;
+import com.becker.game.multiplayer.common.ui.SummaryTable;
+import com.becker.game.multiplayer.galactic.Galaxy;
+import com.becker.game.multiplayer.galactic.player.GalacticPlayer;
 
-import java.util.*;
+import java.util.List;
 
 
 /**

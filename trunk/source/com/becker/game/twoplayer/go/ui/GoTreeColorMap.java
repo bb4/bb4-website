@@ -1,10 +1,10 @@
 package com.becker.game.twoplayer.go.ui;
 
-import com.becker.game.twoplayer.common.*;
-import com.becker.common.*;
-import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WINNING_VALUE;
+import com.becker.common.ColorMap;
 
 import java.awt.*;
+
+import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WINNING_VALUE;
 
 /**
  * Use to color the cells in the game tree by their values.

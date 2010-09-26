@@ -1,6 +1,7 @@
 package com.becker.puzzle.sudoku;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A block of n*n cells in a sudoku puzzle.

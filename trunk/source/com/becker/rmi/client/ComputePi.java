@@ -1,10 +1,13 @@
 package com.becker.rmi.client;
 
-import com.becker.rmi.common.*;
+import com.becker.rmi.common.Compute;
 
-import java.math.*;
-import java.rmi.*;
-import java.net.*;
+import java.math.BigDecimal;
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RMISecurityManager;
+import java.rmi.RemoteException;
 
 /**
  * This client side rmi program to compute Pi to n digits accepts 3 arguments

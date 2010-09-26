@@ -1,6 +1,6 @@
 package com.becker.simulation.snake;
 
-import javax.vecmath.*;
+import javax.vecmath.Vector2d;
 import java.awt.*;
 
 import static com.becker.simulation.snake.SnakeConstants.*;

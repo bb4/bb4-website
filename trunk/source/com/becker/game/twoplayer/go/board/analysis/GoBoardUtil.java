@@ -1,12 +1,13 @@
 package com.becker.game.twoplayer.go.board.analysis;
 
-import com.becker.game.twoplayer.go.board.*;
+import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPositionList;
 import com.becker.game.twoplayer.go.board.elements.GoStone;
 import com.becker.game.twoplayer.go.board.elements.IGoGroup;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
 
 
 /**

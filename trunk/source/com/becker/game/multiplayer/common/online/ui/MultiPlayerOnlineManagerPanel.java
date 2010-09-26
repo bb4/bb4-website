@@ -1,19 +1,25 @@
 package com.becker.game.multiplayer.common.online.ui;
 
+import com.becker.game.common.GameContext;
+import com.becker.game.common.GameViewable;
+import com.becker.game.common.Player;
+import com.becker.game.common.PlayerList;
+import com.becker.game.common.online.GameCommand;
+import com.becker.game.common.online.OnlineGameTable;
+import com.becker.game.common.online.OnlineGameTableList;
+import com.becker.game.common.online.ui.OnlineGameManagerPanel;
+import com.becker.game.common.ui.GameOptionsDialog;
+import com.becker.game.multiplayer.common.MultiGameOptions;
+import com.becker.game.multiplayer.common.MultiGamePlayer;
 import com.becker.game.multiplayer.common.online.SurrogateMultiPlayer;
+import com.becker.game.multiplayer.common.ui.PlayerTableModel;
 import com.becker.ui.components.GradientButton;
-import com.becker.game.common.*;
-import com.becker.game.common.online.ui.*;
-import com.becker.game.common.online.*;
-import com.becker.game.common.ui.*;
-import com.becker.game.multiplayer.common.*;
-import com.becker.game.multiplayer.common.ui.*;
-
 import com.becker.ui.table.TableButtonListener;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+
 import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
 import java.awt.event.*;
 import java.util.Iterator;
 

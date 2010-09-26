@@ -1,14 +1,10 @@
 package com.becker.game.twoplayer.pente.ui;
 
-import com.becker.common.*;
-import com.becker.game.common.*;
+import com.becker.game.common.GameController;
 import com.becker.game.common.ui.GameBoardRenderer;
 import com.becker.game.common.ui.ViewerMouseListener;
-import com.becker.game.twoplayer.common.*;
-import com.becker.game.twoplayer.common.ui.*;
-import com.becker.game.twoplayer.pente.*;
-
-import java.awt.event.*;
+import com.becker.game.twoplayer.common.ui.AbstractTwoPlayerBoardViewer;
+import com.becker.game.twoplayer.pente.PenteController;
 
 /**
  *  Takes a PenteController as input and displays the

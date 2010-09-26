@@ -1,6 +1,8 @@
 package com.becker.game.twoplayer.pente;
 
-import com.becker.game.common.*;
+import com.becker.game.common.GamePiece;
+import com.becker.game.common.Move;
+import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
@@ -9,7 +11,7 @@ import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.pente.analysis.MoveEvaluator;
 import com.becker.optimization.parameter.ParameterArray;
 
-import java.util.*;
+import java.util.Random;
 
 /**
  * Defines everything the computer needs to know to play Pente.

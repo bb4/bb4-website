@@ -1,11 +1,12 @@
 package com.becker.game.multiplayer.set;
 
+import com.becker.game.common.GameContext;
 import com.becker.game.common.PlayerAction;
-import com.becker.game.common.*;
-import com.becker.game.multiplayer.common.*;
+import com.becker.game.multiplayer.common.MultiGameController;
+import com.becker.game.multiplayer.common.MultiGamePlayer;
 
 import java.awt.*;
-import java.text.*;
+import java.text.MessageFormat;
 
 /**
  * Represents a Player in a Set game

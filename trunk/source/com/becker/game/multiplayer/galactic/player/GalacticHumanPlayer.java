@@ -1,6 +1,6 @@
 package com.becker.game.multiplayer.galactic.player;
 
-import com.becker.game.multiplayer.galactic.*;
+import com.becker.game.multiplayer.galactic.Planet;
 
 import javax.swing.*;
 import java.awt.*;

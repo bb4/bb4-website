@@ -1,8 +1,6 @@
 package com.becker.game.multiplayer.trivial;
 
 
-import java.util.*;
-
 /**
  * User: Barry Becker
  * Date: Feb 26, 2005

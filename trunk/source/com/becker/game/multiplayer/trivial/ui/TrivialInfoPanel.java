@@ -1,17 +1,23 @@
 package com.becker.game.multiplayer.trivial.ui;
 
+import com.becker.game.common.GameContext;
+import com.becker.game.common.GameController;
+import com.becker.game.common.Move;
+import com.becker.game.common.Player;
+import com.becker.game.common.ui.GameChangedEvent;
+import com.becker.game.common.ui.GameChangedListener;
+import com.becker.game.common.ui.GameInfoPanel;
+import com.becker.game.multiplayer.trivial.TrivialAction;
+import com.becker.game.multiplayer.trivial.TrivialController;
+import com.becker.game.multiplayer.trivial.player.TrivialPlayer;
 import com.becker.ui.components.GradientButton;
-import com.becker.game.common.*;
-import com.becker.game.common.ui.*;
-import com.becker.game.multiplayer.trivial.*;
-import com.becker.game.multiplayer.trivial.player.*;
-
 
 import javax.swing.*;
-import javax.swing.border.*;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.awt.event.*;
-import java.text.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.MessageFormat;
 
 
 /**

@@ -1,20 +1,26 @@
 package com.becker.game.twoplayer.common.persistence;
 
-import com.becker.game.common.*;
-import ca.dj.jigo.sgf.tokens.*;
-import ca.dj.jigo.sgf.*;
+import ca.dj.jigo.sgf.SGFException;
+import ca.dj.jigo.sgf.SGFGame;
+import ca.dj.jigo.sgf.SGFLoader;
+import ca.dj.jigo.sgf.tokens.InfoToken;
+import ca.dj.jigo.sgf.tokens.PlacementToken;
+import ca.dj.jigo.sgf.tokens.SGFToken;
+import ca.dj.jigo.sgf.tokens.TextToken;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.GamePiece;
+import com.becker.game.common.Move;
+import com.becker.game.common.MoveList;
 import com.becker.game.common.persistence.GameImporter;
-
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.common.persistence.tokens.Player1MoveToken;
-import com.becker.game.twoplayer.common.persistence.tokens.Player1NameToken;
-import com.becker.game.twoplayer.common.persistence.tokens.Player2NameToken;
-import com.becker.game.twoplayer.common.persistence.tokens.Size2Token;
-import com.becker.game.twoplayer.common.persistence.tokens.TwoPlayerMoveToken;
+import com.becker.game.twoplayer.common.persistence.tokens.*;
+
 import javax.swing.*;
-import java.util.*;
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Enumeration;
 
 /**
  * Imports the state of a two player game from a file.

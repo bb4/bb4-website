@@ -2,7 +2,6 @@ package com.becker.game.twoplayer.go.board.elements;
 
 import com.becker.game.common.GameContext;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 

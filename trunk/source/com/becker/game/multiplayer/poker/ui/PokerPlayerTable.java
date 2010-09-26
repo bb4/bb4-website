@@ -1,14 +1,14 @@
 package com.becker.game.multiplayer.poker.ui;
 
 
-import com.becker.game.common.*;
-import com.becker.game.multiplayer.common.ui.*;
-import com.becker.game.multiplayer.poker.player.*;
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.Player;
+import com.becker.game.common.PlayerList;
+import com.becker.game.multiplayer.common.ui.PlayerTable;
+import com.becker.game.multiplayer.poker.player.PokerPlayer;
 
-import javax.swing.table.*;
+import javax.swing.table.TableModel;
+import java.awt.*;
 
 
 /**

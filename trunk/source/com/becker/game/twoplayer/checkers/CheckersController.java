@@ -1,15 +1,15 @@
 package com.becker.game.twoplayer.checkers;
 
-import com.becker.game.common.*;
+import com.becker.game.common.BoardPosition;
+import com.becker.game.common.Move;
+import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.optimization.parameter.ParameterArray;
-import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WINNING_VALUE;
 
-import java.util.LinkedList;
-import java.util.List;
+import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WINNING_VALUE;
 
 /**
  * Defines how the computer should play checkers.

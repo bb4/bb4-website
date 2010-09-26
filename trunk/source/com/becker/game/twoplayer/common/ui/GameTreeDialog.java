@@ -1,21 +1,28 @@
 package com.becker.game.twoplayer.common.ui;
 
-import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
-import com.becker.game.common.*;
-import com.becker.game.common.ui.*;
-import com.becker.game.twoplayer.common.*;
+import com.becker.game.common.Board;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.MoveList;
+import com.becker.game.common.ui.GameChangedEvent;
+import com.becker.game.common.ui.GameChangedListener;
+import com.becker.game.twoplayer.common.TwoPlayerController;
+import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.twoplayer.common.TwoPlayerViewable;
 import com.becker.game.twoplayer.common.search.tree.GameTreeViewable;
 import com.becker.game.twoplayer.common.search.tree.PruneType;
+import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.ui.dialogs.AbstractDialog;
-import com.becker.ui.legend.*;
+import com.becker.ui.legend.ContinuousColorLegend;
 
-import java.awt.*;
 import javax.swing.*;
-import javax.swing.border.*;
-import javax.swing.event.*;
-import javax.swing.tree.*;
-import java.awt.event.*;
-import java.util.*;
+import javax.swing.border.BevelBorder;
+import javax.swing.event.TreeExpansionEvent;
+import javax.swing.event.TreeExpansionListener;
+import javax.swing.tree.TreePath;
+import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
+import java.util.LinkedList;
 import java.util.List;
 
 /**

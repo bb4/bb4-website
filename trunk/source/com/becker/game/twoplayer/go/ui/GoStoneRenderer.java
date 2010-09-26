@@ -12,7 +12,8 @@ import com.becker.ui.GUIUtil;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.RescaleOp;
 
 /**
  * Singleton class that takes a checkers piece and renders it for the GoBoardViewer.

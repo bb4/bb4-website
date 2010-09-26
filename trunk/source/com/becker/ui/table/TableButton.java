@@ -1,18 +1,19 @@
 package com.becker.ui.table;
 
 import com.becker.ui.components.GradientButton;
-import java.awt.Component;
+
+import javax.swing.*;
+import javax.swing.event.CellEditorListener;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.LinkedList;
 import java.util.List;
-import javax.swing.JTable;
-import javax.swing.event.CellEditorListener;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableModel;
 
 /**
  * A button that can be placed in a table cell.

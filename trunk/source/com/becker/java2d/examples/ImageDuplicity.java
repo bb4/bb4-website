@@ -1,13 +1,11 @@
 package com.becker.java2d.examples;
 
 import com.becker.ui.ApplicationFrame;
-//import com.sun.image.codec.jpeg.JPEGCodec;
-//import com.sun.image.codec.jpeg.JPEGImageDecoder;
-import javax.imageio.*;
 
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.InputStream;
 
 public class ImageDuplicity

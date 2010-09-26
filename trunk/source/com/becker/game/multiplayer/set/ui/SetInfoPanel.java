@@ -1,11 +1,16 @@
 package com.becker.game.multiplayer.set.ui;
 
-import com.becker.game.common.*;
-import com.becker.game.common.ui.*;
-import com.becker.game.multiplayer.set.*;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.GameController;
+import com.becker.game.common.ui.GameChangedEvent;
+import com.becker.game.common.ui.GameChangedListener;
+import com.becker.game.common.ui.GameInfoPanel;
+import com.becker.game.multiplayer.set.SetController;
+import com.becker.game.multiplayer.set.SetPlayer;
 
 import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 
 

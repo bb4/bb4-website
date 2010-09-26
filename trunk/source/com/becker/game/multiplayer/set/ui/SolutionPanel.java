@@ -1,15 +1,15 @@
 package com.becker.game.multiplayer.set.ui;
 
-import com.becker.game.multiplayer.set.*;
-import com.becker.ui.*;
+import com.becker.game.multiplayer.set.Card;
 import com.becker.ui.themes.BarryTheme;
 
 import javax.swing.*;
-import java.util.*;
-import java.util.List;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Barry Becker Date: Apr 2, 2006

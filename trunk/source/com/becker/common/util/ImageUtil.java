@@ -1,14 +1,17 @@
 package com.becker.common.util;
 
-import com.sun.image.codec.jpeg.*;
-//import com.sun.image.codec.jpeg.JPEGEncodeParam;
-import com.sun.media.jai.codec.*;
+import com.sun.media.jai.codec.ImageCodec;
+import com.sun.media.jai.codec.ImageEncoder;
+import com.sun.media.jai.codec.PNGEncodeParam;
 
-import javax.imageio.*;
-import javax.imageio.metadata.IIOMetadata;
+import javax.imageio.IIOImage;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
 import javax.imageio.plugins.jpeg.JPEGImageWriteParam;
 import java.awt.*;
-import java.awt.image.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.io.*;
 
 /**

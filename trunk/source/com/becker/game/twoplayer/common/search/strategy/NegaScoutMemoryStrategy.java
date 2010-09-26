@@ -1,11 +1,11 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
 import com.becker.game.common.MoveList;
+import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.transposition.Entry;
 import com.becker.game.twoplayer.common.search.transposition.TranspositionTable;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
-import com.becker.game.twoplayer.common.search.*;
-import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**

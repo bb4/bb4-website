@@ -1,12 +1,12 @@
 package com.becker.game.multiplayer.galactic.ui;
 
-import com.becker.game.common.*;
+import com.becker.game.common.PlayerList;
 import com.becker.game.multiplayer.common.MultiGamePlayer;
-import com.becker.game.multiplayer.common.ui.*;
-import com.becker.game.multiplayer.galactic.*;
+import com.becker.game.multiplayer.common.ui.SummaryTable;
+import com.becker.game.multiplayer.common.ui.TallyDialog;
+import com.becker.game.multiplayer.galactic.GalacticController;
 
-import java.util.List;
-import javax.swing.JFrame;
+import javax.swing.*;
 
 
 

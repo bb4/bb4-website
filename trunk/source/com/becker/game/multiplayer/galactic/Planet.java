@@ -1,8 +1,9 @@
 package com.becker.game.multiplayer.galactic;
 
-import com.becker.game.common.*;
-import com.becker.game.multiplayer.galactic.player.*;
-import com.becker.common.*;
+import com.becker.common.Location;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.GamePiece;
+import com.becker.game.multiplayer.galactic.player.GalacticPlayer;
 
 import java.awt.*;
 import java.awt.geom.Point2D;

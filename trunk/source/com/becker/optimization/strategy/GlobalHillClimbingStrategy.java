@@ -1,8 +1,6 @@
 package com.becker.optimization.strategy;
 
-import com.becker.common.util.Util;
 import com.becker.optimization.Optimizee;
-import com.becker.optimization.parameter.Parameter;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**

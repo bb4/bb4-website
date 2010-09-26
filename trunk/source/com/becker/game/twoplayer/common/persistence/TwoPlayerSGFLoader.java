@@ -1,9 +1,11 @@
 package com.becker.game.twoplayer.common.persistence;
 
-import ca.dj.jigo.sgf.*;
+import ca.dj.jigo.sgf.SGFException;
+import ca.dj.jigo.sgf.SGFLoader;
 import ca.dj.jigo.sgf.tokens.*;
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.common.persistence.tokens.*;
+
 import java.io.IOException;
 import java.io.StreamTokenizer;
 

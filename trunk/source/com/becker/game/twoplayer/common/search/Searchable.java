@@ -1,10 +1,9 @@
 package com.becker.game.twoplayer.common.search;
 
 import com.becker.game.common.MoveList;
+import com.becker.game.twoplayer.common.TwoPlayerController;
+import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.optimization.parameter.ParameterArray;
-import com.becker.game.twoplayer.common.*;
-
-import java.util.*;
 
 
 /**

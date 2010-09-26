@@ -1,7 +1,7 @@
 package com.becker.common.math.function;
 
-import com.becker.common.math.Range;
 import com.becker.common.math.MathUtil;
+import com.becker.common.math.Range;
 import com.becker.common.math.interplolation.InterpolationMethod;
 import com.becker.common.math.interplolation.Interpolator;
 

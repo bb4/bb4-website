@@ -1,11 +1,9 @@
 package com.becker.puzzle.sudoku;
 
-import com.becker.common.util.Util;
-
-import javax.swing.*;
-import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 
 /**

@@ -1,18 +1,15 @@
 package com.becker.game.twoplayer.blockade.ui;
 
-import com.becker.common.*;
-import com.becker.game.common.*;
+import com.becker.common.Location;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.GameController;
 import com.becker.game.common.ui.GameBoardRenderer;
 import com.becker.game.common.ui.ViewerMouseListener;
-import com.becker.game.twoplayer.blockade.*;
-import com.becker.game.twoplayer.common.ui.*;
+import com.becker.game.twoplayer.blockade.BlockadeBoardPosition;
+import com.becker.game.twoplayer.blockade.BlockadeController;
+import com.becker.game.twoplayer.common.ui.AbstractTwoPlayerBoardViewer;
 
-import javax.swing.*;
-import java.awt.event.*;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.awt.event.MouseEvent;
 
 /**
  *  This class takes a BlockadeController as input and displays the

@@ -3,7 +3,7 @@ package com.becker.game.common;
 import com.becker.game.common.online.IServerConnection;
 
 import java.awt.*;
-import java.io.*;
+import java.io.Serializable;
 
 /**
  * Represents a player in a game (either human or computer).

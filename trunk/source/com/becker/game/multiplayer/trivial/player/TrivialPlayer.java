@@ -1,12 +1,14 @@
 package com.becker.game.multiplayer.trivial.player;
 
+import com.becker.game.common.GameContext;
 import com.becker.game.common.PlayerAction;
-import com.becker.game.common.*;
-import com.becker.game.multiplayer.common.*;
-import com.becker.game.multiplayer.trivial.*;
+import com.becker.game.multiplayer.common.MultiGameController;
+import com.becker.game.multiplayer.common.MultiGamePlayer;
+import com.becker.game.multiplayer.common.MultiPlayerMarker;
+import com.becker.game.multiplayer.trivial.TrivialAction;
 
 import java.awt.*;
-import java.text.*;
+import java.text.MessageFormat;
 
 /**
  * Represents a Player in a game

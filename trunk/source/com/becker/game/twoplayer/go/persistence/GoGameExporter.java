@@ -1,14 +1,17 @@
 package com.becker.game.twoplayer.go.persistence;
 
-import com.becker.game.common.PlayerList;
-import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.Move;
+import com.becker.game.common.PlayerList;
 import com.becker.game.common.persistence.GameExporter;
-import com.becker.game.twoplayer.go.*;
+import com.becker.game.twoplayer.go.GoController;
+import com.becker.game.twoplayer.go.GoMove;
+import com.becker.game.twoplayer.go.GoOptions;
+import com.becker.game.twoplayer.go.board.GoBoard;
 
-import java.io.*;
-import java.util.*;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Iterator;
 
 /**
  * Exports the state of a Go game to a file.

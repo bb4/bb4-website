@@ -4,7 +4,10 @@ import com.becker.java2d.Utilities;
 import com.becker.ui.ApplicationFrame;
 
 import java.awt.*;
-import java.awt.font.*;
+import java.awt.font.GraphicAttribute;
+import java.awt.font.ImageGraphicAttribute;
+import java.awt.font.ShapeGraphicAttribute;
+import java.awt.font.TextAttribute;
 import java.awt.geom.Ellipse2D;
 import java.text.AttributedString;
 

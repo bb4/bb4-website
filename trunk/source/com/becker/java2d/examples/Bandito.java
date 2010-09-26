@@ -1,11 +1,14 @@
 package com.becker.java2d.examples;
 
-import com.becker.ui.ApplicationFrame;
 import com.becker.java2d.Utilities;
 import com.becker.java2d.ui.SplitImageComponent;
+import com.becker.ui.ApplicationFrame;
 
 import java.awt.*;
-import java.awt.image.*;
+import java.awt.image.BandCombineOp;
+import java.awt.image.BufferedImage;
+import java.awt.image.Raster;
+import java.awt.image.WritableRaster;
 
 public class Bandito
 {

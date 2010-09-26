@@ -1,8 +1,8 @@
 package com.becker.ui.themes;
 
 import javax.swing.*;
-import javax.swing.plaf.*;
-import javax.swing.plaf.metal.*;
+import javax.swing.plaf.ColorUIResource;
+import javax.swing.plaf.metal.DefaultMetalTheme;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;

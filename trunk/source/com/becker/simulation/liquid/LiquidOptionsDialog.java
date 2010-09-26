@@ -1,11 +1,11 @@
 package com.becker.simulation.liquid;
 
+import com.becker.simulation.common.NewtonianSimOptionsDialog;
 import com.becker.simulation.liquid.config.ConfigurationEnum;
-import com.becker.simulation.common.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
 
 /**
  * Use this modal dialog to let the user choose from among the

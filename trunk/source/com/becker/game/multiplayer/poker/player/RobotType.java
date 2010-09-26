@@ -1,6 +1,6 @@
 package com.becker.game.multiplayer.poker.player;
 
-import java.io.*;
+import java.io.Serializable;
 
 /**
  * Available robot player types.

@@ -1,7 +1,8 @@
 package com.becker.simulation.trebuchet;
 
 import java.awt.*;
-import static com.becker.simulation.trebuchet.TrebuchetConstants.*;
+
+import static com.becker.simulation.trebuchet.TrebuchetConstants.HEIGHT;
 
 /**
  * A physical piece of an object.

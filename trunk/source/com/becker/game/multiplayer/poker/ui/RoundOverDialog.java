@@ -1,14 +1,14 @@
 package com.becker.game.multiplayer.poker.ui;
 
+import com.becker.game.common.GameContext;
+import com.becker.game.multiplayer.common.ui.PlayerLabel;
+import com.becker.game.multiplayer.poker.player.PokerPlayer;
 import com.becker.ui.components.GradientButton;
 import com.becker.ui.dialogs.OptionsDialog;
-import com.becker.game.common.*;
-import com.becker.game.multiplayer.common.ui.PlayerLabel;
-import com.becker.game.multiplayer.poker.player.*;
 
 import javax.swing.*;
-import java.awt.event.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.text.NumberFormat;
 
 

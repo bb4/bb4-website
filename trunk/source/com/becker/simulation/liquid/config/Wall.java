@@ -1,7 +1,10 @@
 package com.becker.simulation.liquid.config;
 
 import com.becker.common.Location;
-import java.awt.geom.*;
+
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 
 /**
  *  Walls form a basis for solid objects in the simulation space.

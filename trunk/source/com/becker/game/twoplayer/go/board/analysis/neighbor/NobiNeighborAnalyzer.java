@@ -6,8 +6,6 @@ import com.becker.game.twoplayer.go.board.elements.GoBoardPositionList;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPositionSet;
 import com.becker.game.twoplayer.go.board.elements.GoStone;
 
-import java.util.List;
-
 /**
  * Performs static analysis of a go board to determine
  * immediately adjacent, strongly connected (nobi) neighbor locations.

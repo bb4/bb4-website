@@ -2,9 +2,10 @@ package com.becker.simulation.parameter;
 
 import com.becker.common.math.function.InvertibleFunction;
 import com.becker.common.math.function.LinearFunction;
-import com.becker.ui.renderers.HistogramRenderer;
-import com.becker.simulation.common.*;
 import com.becker.optimization.parameter.Parameter;
+import com.becker.simulation.common.DistributionSimulator;
+import com.becker.simulation.common.SimulatorOptionsDialog;
+import com.becker.ui.renderers.HistogramRenderer;
 
 /**
  * Simluates the rolling of N number of M sided dice lots of times

@@ -1,6 +1,8 @@
 package com.becker.game.multiplayer.galactic.ui;
 
-import com.becker.game.common.*;
+import com.becker.game.common.Board;
+import com.becker.game.common.BoardPosition;
+import com.becker.game.common.GamePiece;
 import com.becker.game.common.ui.GamePieceRenderer;
 import com.becker.game.multiplayer.galactic.Planet;
 import com.becker.java2d.gradient.RoundGradientPaint;

@@ -3,9 +3,10 @@ package com.becker.game.common.ui;
 import com.becker.common.util.FileUtil;
 import com.becker.game.common.GameContext;
 import com.becker.ui.GUIUtil;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.*;
 
 /**
  * The standard file menu for all game programs.

@@ -1,9 +1,11 @@
 package com.becker.ui.sliders;
 
 import com.becker.common.util.Util;
+
 import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.border.*;
+import javax.swing.border.EtchedBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 
 /**

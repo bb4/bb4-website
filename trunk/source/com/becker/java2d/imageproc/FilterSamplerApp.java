@@ -1,16 +1,18 @@
 package com.becker.java2d.imageproc;
 
-import com.becker.optimization.parameter.ParameterChangeListener;
-import com.becker.java2d.ui.SplitImageComponent;
 import com.becker.java2d.Utilities;
-import com.becker.common.*;
-import com.becker.ui.ApplicationFrame;
+import com.becker.java2d.ui.SplitImageComponent;
 import com.becker.optimization.parameter.Parameter;
+import com.becker.optimization.parameter.ParameterChangeListener;
+import com.becker.ui.ApplicationFrame;
 
 import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.*;
-import java.util.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageOp;
 
 /**
  * Allows you to test filters and modify their parameters on the fly.

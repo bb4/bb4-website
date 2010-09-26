@@ -1,14 +1,13 @@
 package com.becker.game.multiplayer.trivial.ui;
 
 
-import com.becker.game.common.*;
-import com.becker.game.multiplayer.common.ui.*;
-import com.becker.game.multiplayer.trivial.player.*;
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
+import com.becker.game.common.Player;
+import com.becker.game.common.PlayerList;
+import com.becker.game.multiplayer.common.ui.PlayerTable;
+import com.becker.game.multiplayer.trivial.player.TrivialPlayer;
 
-import javax.swing.table.*;
+import javax.swing.table.TableModel;
+import java.awt.*;
 
 
 /**

@@ -5,7 +5,10 @@ import com.becker.game.twoplayer.go.board.elements.GoBoardPositionList;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPositionSet;
 import com.becker.game.twoplayer.go.board.elements.IGoString;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Maps eye positions to lists of neighboring eye spaces_.

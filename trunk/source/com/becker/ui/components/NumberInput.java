@@ -1,9 +1,10 @@
 package com.becker.ui.components;
 
-import com.becker.ui.dialogs.OptionsDialog;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 /**
  * NumberInputPanel is a panel that has a label on the left

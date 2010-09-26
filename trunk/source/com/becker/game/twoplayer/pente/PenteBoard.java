@@ -1,9 +1,9 @@
 package com.becker.game.twoplayer.pente;
 
-import com.becker.game.common.*;
+import com.becker.game.common.BoardPosition;
 import com.becker.game.common.Move;
-import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
+import com.becker.game.twoplayer.common.TwoPlayerMove;
 
 /**
  * Representation of a Pente Game Board.

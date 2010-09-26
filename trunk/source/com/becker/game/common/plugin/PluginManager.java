@@ -1,12 +1,17 @@
 package com.becker.game.common.plugin;
 
+import com.becker.common.xml.DomUtil;
 import com.becker.game.common.GameContext;
-import com.becker.ui.*;
-import com.becker.common.xml.*;
-import org.w3c.dom.*;
+import com.becker.ui.GUIUtil;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
-import java.net.*;
-import java.util.*;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Singleton class for loading and managing the GamePlugins.

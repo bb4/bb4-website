@@ -1,10 +1,10 @@
 package com.becker.game.twoplayer.blockade.persistence.tokens;
 
 import ca.dj.jigo.sgf.Point;
-
 import com.becker.game.twoplayer.common.persistence.tokens.TwoPlayerMoveToken;
-import java.io.StreamTokenizer;
+
 import java.io.IOException;
+import java.io.StreamTokenizer;
 
 /**
  * A generic com.becker.game.twoplayer.blockade move.

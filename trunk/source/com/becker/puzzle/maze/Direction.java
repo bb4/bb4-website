@@ -1,8 +1,10 @@
 package com.becker.puzzle.maze;
 
-import java.util.*;
-import java.util.List;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 /**
  * Possible directions that we can go.

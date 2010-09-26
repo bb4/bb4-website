@@ -1,15 +1,14 @@
 package com.becker.game.multiplayer.poker.ui;
 
-import com.becker.ui.components.NumberInput;
+import com.becker.game.common.GameContext;
+import com.becker.game.multiplayer.poker.player.PokerPlayer;
 import com.becker.ui.components.GradientButton;
+import com.becker.ui.components.NumberInput;
 import com.becker.ui.dialogs.OptionsDialog;
-import com.becker.game.common.*;
-import com.becker.game.multiplayer.poker.player.*;
-import com.becker.ui.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
 
 /**
  * Allow the user to specify amount to raise the pot.

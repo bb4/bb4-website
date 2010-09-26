@@ -2,7 +2,6 @@ package com.becker.puzzle.adventure.ui.editor;
 
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
-import java.util.Vector;
 
 
 /**

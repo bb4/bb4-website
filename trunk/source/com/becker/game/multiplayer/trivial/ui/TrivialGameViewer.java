@@ -1,14 +1,17 @@
 package com.becker.game.multiplayer.trivial.ui;
 
-import com.becker.game.common.*;
-import com.becker.game.common.ui.*;
+import com.becker.game.common.Player;
+import com.becker.game.common.PlayerAction;
+import com.becker.game.common.PlayerList;
+import com.becker.game.common.ui.GameBoardRenderer;
 import com.becker.game.multiplayer.common.online.SurrogateMultiPlayer;
 import com.becker.game.multiplayer.common.ui.MultiGameViewer;
-import com.becker.game.multiplayer.trivial.*;
-import com.becker.game.multiplayer.trivial.player.*;
+import com.becker.game.multiplayer.trivial.TrivialAction;
+import com.becker.game.multiplayer.trivial.TrivialController;
+import com.becker.game.multiplayer.trivial.player.TrivialPlayer;
+import com.becker.game.multiplayer.trivial.player.TrivialRobotPlayer;
 
 import javax.swing.*;
-import java.util.List;
 
 /**
  *  Takes a TrivialController as input and displays the

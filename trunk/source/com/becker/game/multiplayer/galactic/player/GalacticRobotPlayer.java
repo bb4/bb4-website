@@ -2,13 +2,17 @@ package com.becker.game.multiplayer.galactic.player;
 
 
 import com.becker.game.common.GameContext;
-import com.becker.game.multiplayer.galactic.player.*;
-import com.becker.game.multiplayer.galactic.*;
+import com.becker.game.multiplayer.galactic.Galaxy;
+import com.becker.game.multiplayer.galactic.Order;
+import com.becker.game.multiplayer.galactic.Planet;
+import com.becker.game.multiplayer.galactic.PlanetComparator;
 
 import javax.swing.*;
-import java.util.*;
-import java.util.List;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Represents a Robot Admiral commanding an intergalactic fleet of starships.

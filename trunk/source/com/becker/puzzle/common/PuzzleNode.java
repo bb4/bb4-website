@@ -1,5 +1,7 @@
 package com.becker.puzzle.common;
-import java.util.*;
+
+import java.util.LinkedList;
+import java.util.List;
 
 //import net.jcip.annotations.*;
 

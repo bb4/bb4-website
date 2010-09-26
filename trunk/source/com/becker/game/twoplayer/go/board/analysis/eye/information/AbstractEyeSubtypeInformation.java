@@ -1,16 +1,13 @@
 package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
 import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.analysis.eye.EyeNeighborMap;
+import com.becker.game.twoplayer.go.board.analysis.eye.EyeStatus;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPositionList;
 import com.becker.game.twoplayer.go.board.elements.GoEye;
-import com.becker.game.twoplayer.go.board.analysis.eye.EyeNeighborMap;
-import com.becker.game.twoplayer.go.board.analysis.eye.EyeStatus;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Enum for the different possible Eye shapes.

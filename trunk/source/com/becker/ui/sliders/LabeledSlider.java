@@ -2,10 +2,10 @@ package com.becker.ui.sliders;
 
 import com.becker.common.util.Util;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
 import java.util.ArrayList;
 
 /**

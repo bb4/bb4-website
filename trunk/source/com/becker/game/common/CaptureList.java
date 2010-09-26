@@ -1,6 +1,7 @@
 package com.becker.game.common;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 /**
  *  This class represents a linked list of captured pieces.

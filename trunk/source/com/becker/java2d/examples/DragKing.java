@@ -3,7 +3,9 @@ package com.becker.java2d.examples;
 import com.becker.ui.ApplicationFrame;
 
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.geom.*;
 
 public class DragKing extends ApplicationFrame

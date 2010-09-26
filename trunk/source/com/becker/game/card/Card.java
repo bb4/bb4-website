@@ -1,6 +1,8 @@
 package com.becker.game.card;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Represents a standard playing card.

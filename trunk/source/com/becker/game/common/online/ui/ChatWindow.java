@@ -1,10 +1,13 @@
 package com.becker.game.common.online.ui;
 
-import com.becker.game.common.online.*;
+import com.becker.game.common.online.GameCommand;
+import com.becker.game.common.online.IServerConnection;
+import com.becker.game.common.online.OnlineChangeListener;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 /**
  * Allows IM chatting with other online players.

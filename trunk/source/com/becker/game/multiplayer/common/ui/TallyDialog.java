@@ -1,16 +1,15 @@
 package com.becker.game.multiplayer.common.ui;
 
-import com.becker.ui.components.GradientButton;
-import com.becker.ui.dialogs.OptionsDialog;
-import com.becker.game.common.*;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.PlayerList;
 import com.becker.game.multiplayer.common.MultiGameController;
 import com.becker.game.multiplayer.common.MultiGamePlayer;
-import java.awt.FlowLayout;
-import java.util.List;
+import com.becker.ui.components.GradientButton;
+import com.becker.ui.dialogs.OptionsDialog;
 
 import javax.swing.*;
-import java.awt.BorderLayout;
-import java.awt.event.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
 
 /**
  * Show a summary of the final results.

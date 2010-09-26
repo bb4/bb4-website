@@ -1,6 +1,6 @@
 package com.becker.puzzle.common;
 
-import java.util.concurrent.atomic.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * PuzzleSolver

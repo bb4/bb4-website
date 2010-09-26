@@ -2,16 +2,11 @@ package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
 import com.becker.common.Box;
 import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.analysis.eye.EyeNeighborMap;
+import com.becker.game.twoplayer.go.board.analysis.eye.EyeStatus;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPositionList;
 import com.becker.game.twoplayer.go.board.elements.GoEye;
-import com.becker.game.twoplayer.go.board.analysis.eye.EyeNeighborMap;
-import com.becker.game.twoplayer.go.board.analysis.eye.EyeStatus;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.becker.game.twoplayer.go.board.analysis.eye.EyeShapeScores.*;
 
 /**
  * Eye6Type containing MetaData for the different possible Eye shapes of size 6.

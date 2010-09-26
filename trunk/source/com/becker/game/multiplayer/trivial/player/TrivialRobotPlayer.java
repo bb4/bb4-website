@@ -1,8 +1,10 @@
 package com.becker.game.multiplayer.trivial.player;
 
 import com.becker.game.common.GameContext;
-import com.becker.game.multiplayer.trivial.*;
-import java.awt.Color;
+import com.becker.game.multiplayer.trivial.TrivialAction;
+import com.becker.game.multiplayer.trivial.TrivialController;
+
+import java.awt.*;
 
 /**
  * Represents a Robot player.

@@ -1,11 +1,18 @@
 package com.becker.game.multiplayer.common.ui;
 
-import com.becker.game.common.*;
-import com.becker.ui.table.*;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.Player;
+import com.becker.game.common.PlayerList;
+import com.becker.ui.table.ColorCellEditor;
+import com.becker.ui.table.ColorCellRenderer;
+import com.becker.ui.table.TableBase;
+import com.becker.ui.table.TableColumnMeta;
 
 import javax.swing.*;
-import javax.swing.table.*;
-import java.util.*;
+import javax.swing.table.TableModel;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 
 
 /**

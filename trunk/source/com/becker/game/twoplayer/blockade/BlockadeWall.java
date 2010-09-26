@@ -1,6 +1,8 @@
 package com.becker.game.twoplayer.blockade;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  *  The BlockadeWall describes the physical marker at a location on the board.

@@ -1,12 +1,15 @@
 package com.becker.game.multiplayer.set;
 
-import com.becker.game.common.*;
-import com.becker.game.common.ui.*;
+import com.becker.game.common.Board;
+import com.becker.game.common.GameOptions;
+import com.becker.game.common.Player;
+import com.becker.game.common.PlayerList;
+import com.becker.game.common.ui.GameBoardViewer;
 import com.becker.game.multiplayer.common.MultiGameController;
 import com.becker.game.multiplayer.common.MultiGamePlayer;
-import com.becker.optimization.*;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Defines everything the computer needs to know to play Set with multiple players.

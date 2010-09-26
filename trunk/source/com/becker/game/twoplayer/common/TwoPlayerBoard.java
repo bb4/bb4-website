@@ -1,7 +1,8 @@
 package com.becker.game.twoplayer.common;
 
 import com.becker.game.common.*;
-import java.util.*;
+
+import java.util.List;
 
 
 /**

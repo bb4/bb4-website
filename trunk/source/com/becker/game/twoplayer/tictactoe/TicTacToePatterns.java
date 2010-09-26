@@ -1,7 +1,6 @@
 package com.becker.game.twoplayer.tictactoe;
 
 import com.becker.game.common.GameContext;
-
 import com.becker.game.twoplayer.pente.Patterns;
 
 /**

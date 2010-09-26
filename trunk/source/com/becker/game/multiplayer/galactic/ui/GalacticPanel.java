@@ -1,6 +1,8 @@
 package com.becker.game.multiplayer.galactic.ui;
 
-import com.becker.game.common.*;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.GameController;
+import com.becker.game.common.GameViewable;
 import com.becker.game.common.ui.*;
 
 import javax.swing.*;

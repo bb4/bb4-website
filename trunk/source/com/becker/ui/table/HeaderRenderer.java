@@ -1,8 +1,8 @@
 package com.becker.ui.table;
 
+import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
-import javax.swing.*;
 import java.awt.*;
 
 /**

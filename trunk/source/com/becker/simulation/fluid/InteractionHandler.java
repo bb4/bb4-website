@@ -1,6 +1,8 @@
 package com.becker.simulation.fluid;
 
-import java.awt.event.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 /**
  * Handle mouse interactions - converting them in to physical manifestations.

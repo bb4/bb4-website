@@ -1,13 +1,12 @@
 package com.becker.game.common.ui;
 
-import com.becker.ui.components.TexturedToolBar;
+import com.becker.game.common.GameContext;
+import com.becker.ui.GUIUtil;
 import com.becker.ui.components.GradientButton;
-import com.becker.game.common.*;
-import com.becker.ui.*;
+import com.becker.ui.components.TexturedToolBar;
 
-import javax.swing.Box;
 import javax.swing.*;
-import java.awt.event.*;
+import java.awt.event.ActionListener;
 
 /**
  * Toolbar that appears a the top of the game application window.

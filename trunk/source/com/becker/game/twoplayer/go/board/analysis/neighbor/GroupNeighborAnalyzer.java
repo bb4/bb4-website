@@ -3,12 +3,10 @@ package com.becker.game.twoplayer.go.board.analysis.neighbor;
 import com.becker.game.common.BoardPosition;
 import com.becker.game.twoplayer.go.GoProfiler;
 import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPositionList;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPositionSet;
-import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
-
-import java.util.*;
 
 /**
  * Performs static analysis of a go board to determine groups.

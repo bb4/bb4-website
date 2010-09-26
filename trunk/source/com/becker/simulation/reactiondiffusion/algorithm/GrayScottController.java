@@ -2,7 +2,7 @@ package com.becker.simulation.reactiondiffusion.algorithm;
 
 import com.becker.common.concurrency.Parallelizer;
 
-import java.awt.Dimension;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 

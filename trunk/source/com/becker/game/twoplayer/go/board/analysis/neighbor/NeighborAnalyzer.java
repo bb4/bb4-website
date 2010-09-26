@@ -2,13 +2,11 @@ package com.becker.game.twoplayer.go.board.analysis.neighbor;
 
 import com.becker.common.Box;
 import com.becker.game.twoplayer.go.GoProfiler;
-import com.becker.game.twoplayer.go.board.*;
+import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPositionList;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPositionSet;
 import com.becker.game.twoplayer.go.board.elements.GoStringSet;
-
-import java.util.List;
 
 /**
  * Performs static analysis of a go board to determine strings and

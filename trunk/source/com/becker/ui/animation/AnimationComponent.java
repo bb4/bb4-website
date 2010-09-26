@@ -5,7 +5,8 @@ import com.becker.common.util.Util;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 /**
  * A ui component for showing animations.

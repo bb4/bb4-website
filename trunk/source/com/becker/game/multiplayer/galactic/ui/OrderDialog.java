@@ -1,19 +1,23 @@
 package com.becker.game.multiplayer.galactic.ui;
 
-import com.becker.ui.components.NumberInput;
+import com.becker.game.common.GameContext;
+import com.becker.game.multiplayer.galactic.Galaxy;
+import com.becker.game.multiplayer.galactic.Order;
+import com.becker.game.multiplayer.galactic.Planet;
+import com.becker.game.multiplayer.galactic.player.GalacticPlayer;
 import com.becker.ui.components.GradientButton;
+import com.becker.ui.components.NumberInput;
 import com.becker.ui.dialogs.OptionsDialog;
-import com.becker.game.common.*;
-import com.becker.game.multiplayer.galactic.*;
-import com.becker.game.multiplayer.galactic.player.*;
-import com.becker.ui.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.text.MessageFormat;
-import java.util.*;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Allow the user to specify a single order

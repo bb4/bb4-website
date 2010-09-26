@@ -4,9 +4,8 @@ import com.becker.game.twoplayer.blockade.BlockadeBoard;
 import com.becker.game.twoplayer.blockade.BlockadeBoardPosition;
 import com.becker.game.twoplayer.blockade.BlockadeMove;
 import com.becker.game.twoplayer.blockade.Path;
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics2D;
+
+import java.awt.*;
 import java.util.Iterator;
 import java.util.List;
 

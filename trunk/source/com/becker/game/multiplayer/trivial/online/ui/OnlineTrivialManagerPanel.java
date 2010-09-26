@@ -1,13 +1,13 @@
 package com.becker.game.multiplayer.trivial.online.ui;
 
-import com.becker.game.common.*;
-import com.becker.game.common.ui.*;
-import com.becker.game.multiplayer.common.online.ui.*;
-import com.becker.game.multiplayer.trivial.ui.*;
-
+import com.becker.game.common.GameViewable;
+import com.becker.game.common.ui.GameOptionsDialog;
+import com.becker.game.multiplayer.common.online.ui.MultiPlayerOnlineGameTablesTable;
+import com.becker.game.multiplayer.common.online.ui.MultiPlayerOnlineManagerPanel;
+import com.becker.game.multiplayer.trivial.ui.TrivialOptionsDialog;
 import com.becker.ui.table.TableButtonListener;
-import javax.swing.event.*;
-import java.awt.event.*;
+
+import javax.swing.event.ChangeListener;
 
 /**
  * Manage online player games.

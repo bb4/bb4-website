@@ -1,9 +1,10 @@
 package com.becker.game.common.online;
 
-import com.becker.game.common.*;
+import com.becker.game.common.GameOptions;
+import com.becker.game.common.Player;
+import com.becker.game.common.PlayerList;
 
-import java.util.*;
-import java.io.*;
+import java.io.Serializable;
 
 /**
  * Some number of players sitting around a virtual game table online.

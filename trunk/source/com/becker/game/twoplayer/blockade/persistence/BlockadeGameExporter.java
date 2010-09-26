@@ -1,8 +1,9 @@
 package com.becker.game.twoplayer.blockade.persistence;
 
-import com.becker.game.common.*;
-import com.becker.game.twoplayer.blockade.*;
-
+import com.becker.game.common.Move;
+import com.becker.game.twoplayer.blockade.BlockadeBoardPosition;
+import com.becker.game.twoplayer.blockade.BlockadeController;
+import com.becker.game.twoplayer.blockade.BlockadeMove;
 import com.becker.game.twoplayer.common.persistence.TwoPlayerGameExporter;
 
 /**

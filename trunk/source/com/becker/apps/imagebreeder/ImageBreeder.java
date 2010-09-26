@@ -1,10 +1,10 @@
 package com.becker.apps.imagebreeder;
 
 import com.becker.common.concurrency.Parallelizer;
-import com.becker.optimization.parameter.Parameter;
 import com.becker.java2d.imageproc.MetaImageOp;
+import com.becker.optimization.parameter.Parameter;
 
-import java.awt.image.*;
+import java.awt.image.BufferedImage;
 import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;

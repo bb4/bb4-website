@@ -2,8 +2,13 @@ package com.becker.java2d.print;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.awt.print.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.print.PageFormat;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 
 public class SwingPrinter
         extends JFrame

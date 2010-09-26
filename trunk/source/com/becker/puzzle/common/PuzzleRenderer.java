@@ -1,6 +1,6 @@
 package com.becker.puzzle.common;
 
-import java.awt.Graphics;
+import java.awt.*;
 
 /**
  * Singleton class that takes a PieceList and renders it for the PuzzleViewer.

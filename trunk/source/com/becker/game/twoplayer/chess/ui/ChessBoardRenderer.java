@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.chess.ui;
 
-import com.becker.game.common.ui.GameBoardRenderer;
 import com.becker.game.common.GameControllerInterface;
+import com.becker.game.common.ui.GameBoardRenderer;
 import com.becker.game.twoplayer.checkers.ui.CheckersBoardRenderer;
 
 import java.awt.*;

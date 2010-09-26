@@ -1,11 +1,14 @@
 package com.becker.game.multiplayer.poker.player;
 
-import com.becker.game.common.*;
-import com.becker.game.multiplayer.common.*;
-import com.becker.game.multiplayer.poker.*;
+import com.becker.game.common.GameContext;
+import com.becker.game.multiplayer.common.MultiGamePlayer;
+import com.becker.game.multiplayer.poker.PokerAction;
+import com.becker.game.multiplayer.poker.PokerController;
+import com.becker.game.multiplayer.poker.PokerHand;
+import com.becker.game.multiplayer.poker.PokerPlayerMarker;
 
 import java.awt.*;
-import java.text.*;
+import java.text.MessageFormat;
 
 /**
  * Represents a Player in a poker game

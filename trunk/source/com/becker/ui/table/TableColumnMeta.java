@@ -1,7 +1,9 @@
 package com.becker.ui.table;
 
 import javax.swing.*;
-import javax.swing.table.*;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 
 /**
  * Meta data information about a column in a Table.

@@ -1,9 +1,9 @@
 package com.becker.ui.table;
 
-import java.util.List;
 import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.table.*;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.TableModel;
+import java.util.List;
 
 
 /**

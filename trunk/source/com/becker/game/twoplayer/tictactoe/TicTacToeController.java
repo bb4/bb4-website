@@ -3,8 +3,8 @@ package com.becker.game.twoplayer.tictactoe;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
-import com.becker.game.twoplayer.pente.analysis.MoveEvaluator;
 import com.becker.game.twoplayer.pente.PenteController;
+import com.becker.game.twoplayer.pente.analysis.MoveEvaluator;
 
 /**
  * Defines everything the computer needs to know to play TicTacToe.

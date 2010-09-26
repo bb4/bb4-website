@@ -1,10 +1,10 @@
 package com.becker.ui.components;
 
-import com.becker.ui.*;
-import com.becker.ui.components.GradientButton;
+import com.becker.ui.GUIUtil;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionListener;
 
 /**
  * a panel with a textured background.

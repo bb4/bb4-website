@@ -1,14 +1,10 @@
 package com.becker.optimization.strategy;
 
-import com.becker.common.util.Util;
 import com.becker.optimization.Logger;
 import com.becker.optimization.OptimizationListener;
 import com.becker.optimization.Optimizee;
 import com.becker.optimization.Optimizer;
 import com.becker.optimization.parameter.ParameterArray;
-
-import java.io.FileWriter;
-import java.io.IOException;
 
 /**
  * Abstract base class for Optimization strategy.

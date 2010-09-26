@@ -1,15 +1,20 @@
 package com.becker.game.common.ui;
 
-import com.becker.ui.components.NumberInput;
+import com.becker.game.common.Board;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.GameController;
+import com.becker.game.common.GameViewable;
+import com.becker.game.common.online.ui.OnlineGameManagerPanel;
 import com.becker.ui.components.GradientButton;
+import com.becker.ui.components.NumberInput;
 import com.becker.ui.dialogs.OptionsDialog;
-import com.becker.game.common.*;
-import com.becker.game.common.online.ui.*;
 
 import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.WindowEvent;
 
 /**
  * Use this modal dialog to let the user configure a new local game.

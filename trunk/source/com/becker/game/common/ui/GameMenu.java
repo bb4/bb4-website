@@ -4,10 +4,9 @@ import com.becker.game.common.GameContext;
 import com.becker.game.common.plugin.GamePlugin;
 import com.becker.game.common.plugin.PluginManager;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Iterator;
-import javax.swing.*;
 
 /**
  * The standard main menu for all game programs.

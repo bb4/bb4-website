@@ -1,5 +1,7 @@
 package com.becker.simulation.liquid;
-import javax.vecmath.*;
+
+import javax.vecmath.Point2d;
+import javax.vecmath.Vector2d;
 
 /**
  *  A region of space containing particles, walls, or liquid.

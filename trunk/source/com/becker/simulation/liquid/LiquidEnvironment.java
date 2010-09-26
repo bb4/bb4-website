@@ -1,16 +1,20 @@
 package com.becker.simulation.liquid;
 
-import com.becker.ui.dialogs.OutputWindow;
-import com.becker.simulation.liquid.config.Conditions;
-import com.becker.simulation.liquid.config.Source;
-import com.becker.simulation.liquid.config.Region;
-import com.becker.ui.*;
-
-import javax.vecmath.*;
-import java.util.*;
-
-import static com.becker.simulation.common.PhysicsConstants.*;
 import com.becker.common.ILog;
+import com.becker.simulation.liquid.config.Conditions;
+import com.becker.simulation.liquid.config.Region;
+import com.becker.simulation.liquid.config.Source;
+import com.becker.ui.Log;
+import com.becker.ui.dialogs.OutputWindow;
+
+import javax.vecmath.Vector2d;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Random;
+import java.util.Set;
+
+import static com.becker.simulation.common.PhysicsConstants.ATMOSPHERIC_PRESSURE;
+import static com.becker.simulation.common.PhysicsConstants.GRAVITY;
 
 /**
  *  This is the global space containing all the cells, walls, and particles

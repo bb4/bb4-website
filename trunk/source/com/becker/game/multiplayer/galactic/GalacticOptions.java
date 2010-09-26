@@ -1,6 +1,6 @@
 package com.becker.game.multiplayer.galactic;
 
-import com.becker.game.multiplayer.common.*;
+import com.becker.game.multiplayer.common.MultiGameOptions;
 
 /**
  * Container for the different Galactic Game options.

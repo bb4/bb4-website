@@ -4,11 +4,9 @@ import com.becker.game.common.*;
 import com.becker.ui.file.FileChooserUtil;
 
 import javax.swing.*;
-import javax.swing.Timer;
 import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**

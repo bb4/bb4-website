@@ -1,12 +1,16 @@
 package com.becker.puzzle.maze;
 
-import com.becker.ui.components.NumberInput;
+import com.becker.ui.ApplicationApplet;
+import com.becker.ui.GUIUtil;
 import com.becker.ui.components.GradientButton;
-import com.becker.ui.*;
+import com.becker.ui.components.NumberInput;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 /**
  * A maze generator and solver

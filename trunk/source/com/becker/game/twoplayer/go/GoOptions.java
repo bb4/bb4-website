@@ -1,8 +1,7 @@
 package com.becker.game.twoplayer.go;
 
-import com.becker.game.twoplayer.common.*;
+import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.SearchOptions;
-import com.becker.sound.*;
 
 /**
  * @author Barry Becker

@@ -1,6 +1,6 @@
 package com.becker.simulation.trebuchet;
 
-import javax.vecmath.*;
+import javax.vecmath.Vector2d;
 import java.awt.*;
 
 import static java.lang.Math.PI;

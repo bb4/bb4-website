@@ -2,7 +2,6 @@ package com.becker.game.twoplayer.common.search.tree;
 
 import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
-import java.util.List;
 
 /**
  * This interface is implemented by classes that can show the game tree as it is searched.

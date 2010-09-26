@@ -29,17 +29,18 @@ package com.becker.sound;
  * redistribute the Software for such purposes.
  */
 
-import java.awt.*;
-import java.awt.event.*;
+import javax.sound.midi.*;
 import javax.swing.*;
 import javax.swing.border.*;
-import javax.swing.table.*;
 import javax.swing.event.*;
-import javax.sound.midi.*;
-import java.util.Vector;
-
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.Vector;
 
 /**
  * Illustrates general MIDI melody instruments and MIDI controllers.

@@ -1,14 +1,13 @@
 package com.becker.simulation.trebuchet;
 
-import com.becker.ui.*;
+import com.becker.common.ILog;
+import com.becker.ui.Log;
 
-import javax.vecmath.*;
+import javax.vecmath.Vector2d;
 import java.awt.*;
 
+import static com.becker.simulation.common.PhysicsConstants.GRAVITY;
 import static com.becker.simulation.trebuchet.TrebuchetConstants.*;
-import static com.becker.simulation.common.PhysicsConstants.*;
-import com.becker.common.ILog;
-
 import static java.lang.Math.*;
 
 /**
