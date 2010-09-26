@@ -1,8 +1,8 @@
-package com.becker.game.twoplayer.go;
+package com.becker.game.twoplayer.go.board.analysis;
 
+import com.becker.game.twoplayer.go.GoTestCase;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.analysis.StringShapeAnalyzer;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * @author Barry Becker
  */
-public class TestShape extends GoTestCase {
+public class TestStringShapeAnalyzer extends GoTestCase {
 
 
     public void testShape1() {
@@ -39,6 +39,6 @@ public class TestShape extends GoTestCase {
 
 
     public static Test suite() {
-        return new TestSuite(TestShape.class);
+        return new TestSuite(TestStringShapeAnalyzer.class);
     }
 }

@@ -72,11 +72,31 @@ public class PostMoveUpdater extends PostChangeUpdater {
                 // changed we don't change the captures
                 if ( captureList == null )
                     captureList = new CaptureList();
-                captureList.addAllCopied( str.getMembers() );
+
+                addCaptures(captureList, str.getMembers() );
             }
         }
         GoProfiler.getInstance().stop(GoProfiler.FIND_CAPTURES);
         return  captureList;
+    }
+
+
+    /**
+     * @return true if set is not null and not 0 sized.
+     */
+    private boolean addCaptures(CaptureList captureList, GoBoardPositionSet set)
+    {
+        if ( set == null )  {
+            return false;
+        }
+        // we need to add copies so that when the original stones on the board are
+        // changed we don't change the captures
+        for (BoardPosition capture : set) {
+            // make sure none of the captures are blanks
+            assert capture.isOccupied();
+            captureList.add(capture.copy());
+        }
+        return (!set.isEmpty());
     }
 
     /**

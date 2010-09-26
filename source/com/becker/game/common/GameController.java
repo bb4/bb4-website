@@ -6,8 +6,6 @@ import com.becker.game.common.online.IServerConnection;
 /**
  * This is an abstract base class for a Game Controller.
  * It contains the key logic for n player games.
- * It is a much more general form of the TwoPlayerController subclass.
- *
  * Instance of this class process requests from the GameViewer.
  *
  *  @author Barry Becker

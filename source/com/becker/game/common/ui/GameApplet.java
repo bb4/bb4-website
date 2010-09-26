@@ -10,7 +10,7 @@ import java.awt.*;
 
 /**
  * This is the applet wrapper for the game programs.
- * It contains a TwoPlayerPanel corresponding to the specified game.
+ * It contains a PlayerPanel corresponding to the specified game.
  *
  * @see GamePanel
  * @author Barry Becker

@@ -155,7 +155,7 @@ public abstract class FractalAlgorithm {
 
     /**
      * @return a number between 0 and 1.
-     *  Typically corresponds to the number times we had to iterate before the point escaped (or not).
+     * Typically corresponds to the number times we had to iterate before the point escaped (or not).
      */
     public abstract double getFractalValue(ComplexNumber seed);
 

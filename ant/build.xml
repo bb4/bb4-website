@@ -13,8 +13,6 @@
 
   <!-- place to put .class files, images and resources, so they can be jar'd up -->
   <property name="stagingDir" value="../temp/classes"/>
-  <!-- root dir for auxilliary ant libraries. standby is "/usr/share/ant" or "/usr/local/Intellij/idea-2253/lib/ant"-->
-  <property name="antHome" value="D:/apps/java/netbeans-5.5/ide7/ant"/>    <!-- "/usr/share/ant" -->
   <!-- the base game applicaiton class -->
   <property name="gameAppClass" value="com.becker.game.common.ui.GameApp"/>
   <!-- the jvm to use when executing -->
@@ -27,13 +25,9 @@
   <property name="java_compiler" value="${java16}"/>
   <property name="sleepTime" value="100"/>
 
-  <!-- Load additional tasks   -->
+  <!-- Load additional tasks -->
    <taskdef resource="net/sf/antcontrib/antcontrib.properties">
-     <classpath>
-       <pathelement location="${antHome}/lib/ant-contrib-1.0b3.jar"/>
-     </classpath>
    </taskdef>
-
 
   <!-- source metrics
   <taskdef name="javancss"

@@ -179,7 +179,7 @@ public class ChessController extends CheckersController
             // remove any moves that causes the king goes into jeopardy (ie check).
             removeSelfCheckingMoves(moveList);
 
-            return getBestMoves( player1, moveList, player1sPerspective );
+            return  bestMoveFinder_.getBestMoves( player1, moveList, player1sPerspective );                           
         }
 
         /**

@@ -194,7 +194,7 @@ public class CheckersController extends TwoPlayerController {
                     }
                 }
             }
-            return getBestMoves( player1, moveList, player1sPerspective );
+            return bestMoveFinder_.getBestMoves( player1, moveList, player1sPerspective );
         }
 
         /**

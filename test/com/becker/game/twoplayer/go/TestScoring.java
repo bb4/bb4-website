@@ -11,7 +11,7 @@ public class TestScoring extends GoTestCase {
 
     private static final String PATH_PREFIX = "scoring/";
     
-    // give some leeway on the territory estimate since its a heuristic.
+    /** give some leeway on the territory estimate since its a heuristic. */
     private static final double TOLERANCE = 5;
 
     public void testScoring1() {

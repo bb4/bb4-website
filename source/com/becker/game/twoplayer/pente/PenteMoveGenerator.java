@@ -2,14 +2,8 @@ package com.becker.game.twoplayer.pente;
 
 import com.becker.common.Location;
 import com.becker.game.common.*;
+import com.becker.game.twoplayer.common.BestMoveFinder;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.go.GoController;
-import com.becker.game.twoplayer.go.GoMove;
-import com.becker.game.twoplayer.go.GoProfiler;
-import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.analysis.CandidateMoveAnalyzer;
-import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.elements.GoStone;
 import com.becker.optimization.parameter.ParameterArray;
 
 import java.util.Iterator;
@@ -21,14 +15,14 @@ import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WI
  *
  * @author Barry Becker
  */
-public final class MoveGenerator {
+public final class PenteMoveGenerator {
 
     PenteController controller_;
 
     /**
      * Constructor.
      */
-    public MoveGenerator(PenteController controller)
+    public PenteMoveGenerator(PenteController controller)
     {
         controller_ = controller;
     }
@@ -64,7 +58,8 @@ public final class MoveGenerator {
                 }
             }
         }
-        return controller_.getBestMoves( player1, moveList, player1sPerspective );
+        BestMoveFinder finder = new BestMoveFinder(controller_.getTwoPlayerOptions().getSearchOptions());
+        return finder.getBestMoves( player1, moveList, player1sPerspective );
     }
 
     /**

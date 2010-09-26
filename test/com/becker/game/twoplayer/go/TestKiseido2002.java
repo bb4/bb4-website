@@ -85,7 +85,8 @@ public class TestKiseido2002 extends GoTestCase {
         // must check the worth of the board once to update the scoreContributions fo empty spaces.
         List moves = controller_.getMoveList();
         //double w = controller_.worth((GoMove)moves.get(moves.size()-3), controller_.getDefaultWeights(), true);
-        controller_.updateLifeAndDeath();   // this updates the groups and territory as well.
+        controller_.getSearchable().done(GoMove.createResignationMove(true), true);
+        //controller_.updateLifeAndDeath();   // this updates the groups and territory as well.
 
         assertTrue(true);
     }
