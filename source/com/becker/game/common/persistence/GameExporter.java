@@ -1,7 +1,8 @@
 package com.becker.game.common.persistence;
 
 import com.becker.common.Location;
-import com.becker.game.common.*;
+import com.becker.game.common.GameController;
+import com.becker.game.common.Move;
 
 
 

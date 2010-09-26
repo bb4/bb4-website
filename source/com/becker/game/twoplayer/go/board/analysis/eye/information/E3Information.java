@@ -1,11 +1,9 @@
 package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.elements.GoEye;
 import com.becker.game.twoplayer.go.board.analysis.eye.EyeNeighborMap;
 import com.becker.game.twoplayer.go.board.analysis.eye.EyeStatus;
-
-import static com.becker.game.twoplayer.go.board.analysis.eye.EyeShapeScores.BIG_EYE;
+import com.becker.game.twoplayer.go.board.elements.GoEye;
 
 /**
  * Three space eye *** - there is only one type.

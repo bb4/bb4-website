@@ -1,14 +1,14 @@
 package com.becker.game.twoplayer.go.ui;
 
-import com.becker.ui.components.NumberInput;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.GameViewable;
+import com.becker.game.twoplayer.common.ui.TwoPlayerNewGameDialog;
+import com.becker.game.twoplayer.go.GoController;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.common.*;
-import com.becker.game.twoplayer.common.ui.*;
-import com.becker.game.twoplayer.go.*;
-import com.becker.ui.*;
+import com.becker.ui.components.NumberInput;
 
 import javax.swing.*;
-import java.awt.event.*;
+import java.awt.event.ActionListener;
 
 final class GoNewGameDialog extends TwoPlayerNewGameDialog implements ActionListener
 {

@@ -3,14 +3,15 @@ package com.becker.simulation.reactiondiffusion;
 import com.becker.simulation.reactiondiffusion.algorithm.GrayScottController;
 import com.becker.simulation.reactiondiffusion.algorithm.GrayScottModel;
 import com.becker.simulation.reactiondiffusion.rendering.RDRenderingOptions;
-import com.becker.ui.legend.*;
-import com.becker.ui.sliders.SliderGroupChangeListener;
+import com.becker.ui.legend.ContinuousColorLegend;
 import com.becker.ui.sliders.SliderGroup;
-
+import com.becker.ui.sliders.SliderGroupChangeListener;
 import com.becker.ui.sliders.SliderProperties;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Dynamic controls for the RD simulation that will show on the right.

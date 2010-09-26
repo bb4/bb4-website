@@ -1,10 +1,7 @@
 package com.becker.game.twoplayer.checkers.ui;
 
 import com.becker.game.common.Board;
-import com.becker.game.common.BoardPosition;
-import com.becker.game.common.GameControllerInterface;
 import com.becker.game.common.ui.GameBoardRenderer;
-import com.becker.game.twoplayer.checkers.CheckersMove;
 import com.becker.game.twoplayer.common.ui.TwoPlayerBoardRenderer;
 
 import java.awt.*;

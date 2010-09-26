@@ -1,18 +1,21 @@
 package com.becker.game.common.ui;
 
+import com.becker.common.ILog;
 import com.becker.common.i18n.LocaleType;
 import com.becker.common.i18n.MessageContext;
-import com.becker.ui.components.NumberInput;
-import com.becker.ui.components.GradientButton;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.GameController;
+import com.becker.game.common.GameOptions;
 import com.becker.ui.components.ColorInputPanel;
+import com.becker.ui.components.GradientButton;
+import com.becker.ui.components.NumberInput;
 import com.becker.ui.dialogs.OptionsDialog;
-import com.becker.game.common.*;
-import com.becker.common.ILog;
 
 import javax.swing.*;
-import javax.swing.Box;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 /**
  * Use this modal dialog to let the user choose from among the

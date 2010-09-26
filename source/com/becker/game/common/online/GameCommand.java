@@ -1,6 +1,6 @@
 package com.becker.game.common.online;
 
-import java.io.*;
+import java.io.Serializable;
 
 /**
  * These game commands are passed over the wire between client and server

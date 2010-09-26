@@ -1,6 +1,6 @@
 package com.becker.puzzle.common;
 
-import java.util.concurrent.*;
+import java.util.concurrent.CountDownLatch;
 
 
 /**

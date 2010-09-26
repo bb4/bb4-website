@@ -1,11 +1,10 @@
 package com.becker.game.twoplayer.chess.ui;
 
-import com.becker.game.twoplayer.chess.ChessPiece;
-import com.becker.game.twoplayer.chess.ChessPieceType;
-import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
+import com.becker.game.common.Board;
 import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GameContext;
-import com.becker.game.common.Board;
+import com.becker.game.twoplayer.chess.ChessPiece;
+import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
 import com.becker.ui.GUIUtil;
 
 import javax.swing.*;

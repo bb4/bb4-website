@@ -1,16 +1,20 @@
 package com.becker.game.multiplayer.poker.ui;
 
-import com.becker.ui.components.GradientButton;
-import com.becker.common.*;
-import com.becker.game.common.*;
+import com.becker.common.Location;
+import com.becker.game.common.GameContext;
 import com.becker.game.multiplayer.common.ui.ActionDialog;
-import com.becker.game.multiplayer.poker.*;
-import com.becker.game.multiplayer.poker.player.*;
+import com.becker.game.multiplayer.poker.PokerAction;
+import com.becker.game.multiplayer.poker.PokerController;
+import com.becker.game.multiplayer.poker.PokerHand;
+import com.becker.game.multiplayer.poker.PokerOptions;
+import com.becker.game.multiplayer.poker.player.PokerHumanPlayer;
+import com.becker.game.multiplayer.poker.player.PokerPlayer;
+import com.becker.ui.components.GradientButton;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.text.*;
+import java.awt.event.ActionEvent;
+import java.text.NumberFormat;
 
 /**
  * Allow the user to specify a poker action

@@ -3,9 +3,11 @@ package com.becker.java2d.examples;
 import com.becker.ui.animation.AnimationComponent;
 import com.becker.ui.animation.AnimationFrame;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
 import java.awt.geom.GeneralPath;

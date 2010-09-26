@@ -1,14 +1,14 @@
 package com.becker.game.twoplayer.common.ui;
 
-import com.becker.game.common.PlayerList;
-import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.common.util.Util;
-import com.becker.ui.*;
-import com.becker.game.twoplayer.common.*;
-import com.becker.game.twoplayer.common.search.*;
+import com.becker.game.common.PlayerList;
+import com.becker.game.twoplayer.common.TwoPlayerController;
+import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
+import com.becker.ui.ColorUtil;
 
 import javax.swing.*;
-import javax.swing.border.*;
+import javax.swing.border.EtchedBorder;
 import java.awt.*;
 
 /**

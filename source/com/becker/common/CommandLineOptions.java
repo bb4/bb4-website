@@ -1,6 +1,8 @@
 package com.becker.common;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * A convenient packaging of command line options that are specified for a program when you

@@ -1,11 +1,7 @@
 package com.becker.game.multiplayer.poker;
 
-import com.becker.game.common.*;
-import com.becker.game.multiplayer.poker.player.*;
-import com.becker.common.*;
-
 import com.becker.game.multiplayer.common.MultiPlayerMarker;
-import java.awt.*;
+import com.becker.game.multiplayer.poker.player.PokerPlayer;
 
 /**
  * Represents a Poker player in the viewer.

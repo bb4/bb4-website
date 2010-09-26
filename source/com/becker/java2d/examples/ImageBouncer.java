@@ -1,12 +1,14 @@
 package com.becker.java2d.examples;
 
+import com.becker.java2d.Utilities;
 import com.becker.ui.animation.AnimationComponent;
 import com.becker.ui.animation.AnimationFrame;
-import com.becker.ui.animation.*;
-import com.becker.java2d.Utilities;
 
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.Random;

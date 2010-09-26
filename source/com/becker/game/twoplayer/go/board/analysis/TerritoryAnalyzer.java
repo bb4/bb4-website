@@ -4,9 +4,12 @@ import com.becker.common.Box;
 import com.becker.game.common.GamePiece;
 import com.becker.game.twoplayer.go.GoProfiler;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.elements.*;
-import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborType;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
+import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborType;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPositionList;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPositionSet;
+import com.becker.game.twoplayer.go.board.elements.GoGroup;
 
 import java.util.LinkedList;
 import java.util.List;

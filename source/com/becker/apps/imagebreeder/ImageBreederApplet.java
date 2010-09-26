@@ -1,24 +1,26 @@
 package com.becker.apps.imagebreeder;
 
 import com.becker.java2d.Utilities;
+import com.becker.java2d.imageproc.MetaImageOp;
 import com.becker.java2d.imageproc.ParameterPanel;
 import com.becker.java2d.imageproc.ProcessingOperators;
-import com.becker.java2d.imageproc.MetaImageOp;
-import com.becker.ui.GUIUtil;
-import com.becker.ui.ApplicationApplet;
 import com.becker.optimization.parameter.Parameter;
-
+import com.becker.ui.ApplicationApplet;
+import com.becker.ui.GUIUtil;
 import com.becker.ui.components.ImageListPanel;
 import com.becker.ui.components.ImageSelectionListener;
 import com.becker.ui.sliders.LabeledSlider;
 import com.becker.ui.sliders.SliderChangeListener;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.*;
-import java.util.*;
-import java.util.List;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.image.BufferedImage;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Allows you to mix filters together using a genetic algorithm

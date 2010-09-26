@@ -1,10 +1,14 @@
 package com.becker.game.common.ui;
 
-import com.becker.game.common.*;
+import com.becker.game.common.Board;
+import com.becker.game.common.BoardPosition;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.GamePiece;
 import com.becker.java2d.gradient.RoundGradientPaint;
 
 import java.awt.*;
-import java.awt.geom.*;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Point2D;
 
 /**
  * Abstract singleton class that takes a game piece and renders it for the GameBoardViewer.

@@ -1,9 +1,12 @@
 package com.becker.game.multiplayer.set.ui;
 
-import com.becker.game.multiplayer.set.*;
+import com.becker.game.multiplayer.set.Card;
 
 import java.awt.*;
-import java.awt.geom.*;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 
 /**
  * Takes a card and renders it to the Viewer.

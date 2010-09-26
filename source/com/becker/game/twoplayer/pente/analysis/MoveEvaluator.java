@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.pente.analysis;
 
-import com.becker.game.common.*;
+import com.becker.game.common.Move;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.pente.Patterns;

@@ -8,7 +8,6 @@ import com.becker.game.common.ui.GameChangedListener;
 import com.becker.game.twoplayer.common.ui.TwoPlayerInfoPanel;
 import com.becker.game.twoplayer.go.GoController;
 import com.becker.ui.legend.ContinuousColorLegend;
-import com.becker.ui.legend.*;
 
 import javax.swing.*;
 

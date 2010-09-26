@@ -1,10 +1,10 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
 import com.becker.common.math.Range;
-import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
-import com.becker.game.twoplayer.common.search.*;
-import com.becker.game.twoplayer.common.*;
+import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.twoplayer.common.search.SearchOptions;
 import com.becker.game.twoplayer.common.search.tree.GameTreeViewable;
+import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 
 /**
  * Memory enhanced Test Driver search.

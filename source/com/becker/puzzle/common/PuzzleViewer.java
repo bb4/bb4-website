@@ -1,8 +1,9 @@
 package com.becker.puzzle.common;
 
 import com.becker.common.util.Util;
+
+import javax.swing.*;
 import java.util.List;
-import javax.swing.JPanel;
 
 /**
  * Shows the current state of the puzzle in the ui.

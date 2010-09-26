@@ -1,16 +1,12 @@
 package com.becker.java2d.imageproc;
 
-import com.becker.common.*;
 import com.becker.optimization.parameter.Parameter;
-
 import com.becker.optimization.parameter.ParameterChangeListener;
 import com.becker.optimization.parameter.ui.ParameterWidget;
-import java.awt.event.*;
-import java.awt.image.*;
-import java.util.*;
-import javax.swing.BoxLayout;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**

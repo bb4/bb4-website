@@ -3,7 +3,9 @@ package com.becker.java2d.examples;
 import com.becker.ui.ApplicationFrame;
 
 import java.awt.*;
-import java.awt.geom.*;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Rectangle2D;
 
 public abstract class Transformers extends Component
 {

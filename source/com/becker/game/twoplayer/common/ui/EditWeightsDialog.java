@@ -10,7 +10,6 @@ import com.becker.ui.dialogs.OptionsDialog;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * Allow for editing the polynomial weights used in the static

@@ -1,6 +1,6 @@
 package com.becker.simulation.liquid.config;
 
-import com.becker.common.*;
+import com.becker.common.ColorMap;
 
 import java.awt.*;
 

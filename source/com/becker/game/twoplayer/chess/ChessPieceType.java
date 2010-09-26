@@ -1,6 +1,9 @@
 package com.becker.game.twoplayer.chess;
 
-import com.becker.game.common.*;
+import com.becker.game.common.Board;
+import com.becker.game.common.BoardPosition;
+import com.becker.game.common.CaptureList;
+import com.becker.game.common.Move;
 import com.becker.optimization.parameter.ParameterArray;
 
 import java.util.LinkedList;

@@ -1,12 +1,17 @@
 package com.becker.game.common.online;
 
-import com.becker.common.*;
-import com.becker.game.common.*;
+import com.becker.common.CommandLineOptions;
+import com.becker.game.common.GameContext;
 
 import javax.swing.*;
-import java.io.*;
-import java.net.*;
-import java.util.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.BindException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * The abstract server for online games.

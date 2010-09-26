@@ -7,7 +7,9 @@ import com.becker.game.common.plugin.GamePlugin;
 import com.becker.game.common.plugin.PluginManager;
 import com.becker.sound.MusicMaker;
 import com.becker.ui.Log;
-import java.util.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Manage game context info such as logging, debugging, resources, and profiling.

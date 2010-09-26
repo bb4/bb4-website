@@ -2,11 +2,12 @@ package com.becker.game.twoplayer.go.board.update;
 
 import com.becker.game.common.CaptureList;
 import com.becker.game.twoplayer.go.GoMove;
-import com.becker.game.twoplayer.go.board.*;
+import com.becker.game.twoplayer.go.board.BoardValidator;
+import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 import com.becker.game.twoplayer.go.board.elements.*;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * Base class for classes responsible for updating a go board after making or undoing a move.

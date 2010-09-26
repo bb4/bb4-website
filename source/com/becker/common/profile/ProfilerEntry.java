@@ -2,9 +2,7 @@ package com.becker.common.profile;
 
 import com.becker.common.ILog;
 import com.becker.common.util.Util;
-import com.becker.optimization.Logger;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 

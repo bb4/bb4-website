@@ -1,7 +1,7 @@
 package com.becker.game.common.ui;
 
-import java.awt.event.ActionListener;
 import javax.swing.*;
+import java.awt.event.ActionListener;
 
 /**
  * The standard file menu for all game programs.

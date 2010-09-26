@@ -8,10 +8,10 @@ import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
-import com.becker.game.twoplayer.go.board.update.DeadStoneUpdater;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.PositionalScore;
 import com.becker.game.twoplayer.go.board.analysis.PositionalScoreAnalyzer;
+import com.becker.game.twoplayer.go.board.update.DeadStoneUpdater;
 import com.becker.game.twoplayer.go.persistence.GoGameExporter;
 import com.becker.game.twoplayer.go.persistence.GoGameImporter;
 import com.becker.optimization.parameter.ParameterArray;
@@ -19,9 +19,9 @@ import com.becker.optimization.parameter.ParameterArray;
 import java.util.Iterator;
 import java.util.List;
 
+import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WINNING_VALUE;
 import static com.becker.game.twoplayer.go.GoControllerConstants.DEFAULT_NUM_ROWS;
 import static com.becker.game.twoplayer.go.GoControllerConstants.WIN_THRESHOLD;
-import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WINNING_VALUE;
 
 /**
  * Defines everything the computer needs to know to play Go.

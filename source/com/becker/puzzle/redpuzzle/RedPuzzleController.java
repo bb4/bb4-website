@@ -2,6 +2,7 @@ package com.becker.puzzle.redpuzzle;
 
 import com.becker.puzzle.common.AbstractPuzzleController;
 import com.becker.puzzle.common.Refreshable;
+
 import java.util.LinkedList;
 import java.util.List;
 

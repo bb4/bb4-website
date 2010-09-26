@@ -1,7 +1,5 @@
 package com.becker.common.math.interplolation;
 
-import com.becker.common.math.Range;
-
 /**
  * Defines a way to interploate between 2 points in function that is defined by an array of y values
  * .

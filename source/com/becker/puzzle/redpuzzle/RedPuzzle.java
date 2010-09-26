@@ -1,14 +1,10 @@
 package com.becker.puzzle.redpuzzle;
 
-import com.becker.puzzle.common.AlgorithmEnum;
-import com.becker.puzzle.common.PuzzleApplet;
-import com.becker.puzzle.common.PuzzleController;
-import com.becker.puzzle.common.PuzzleViewer;
-import com.becker.puzzle.common.Refreshable;
-import com.becker.ui.*;
+import com.becker.puzzle.common.*;
+import com.becker.ui.GUIUtil;
 import com.becker.ui.sliders.LabeledSlider;
-
 import com.becker.ui.sliders.SliderChangeListener;
+
 import javax.swing.*;
 
 /**

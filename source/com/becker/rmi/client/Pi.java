@@ -1,6 +1,6 @@
 package com.becker.rmi.client;
 
-import com.becker.rmi.common.*;
+import com.becker.rmi.common.Task;
 
 import java.math.BigDecimal;
 

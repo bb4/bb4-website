@@ -1,14 +1,12 @@
 package com.becker.ui.components;
 
-import com.becker.ui.components.ImageSelectionListener;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.util.*;
-import java.util.Timer;
 import java.util.List;
+import java.util.Timer;
 
 /**
  *  Displays an array of images.

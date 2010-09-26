@@ -1,11 +1,11 @@
 package com.becker.simulation.common;
 
+import com.becker.ui.animation.AnimationFrame;
 import com.becker.ui.renderers.HistogramRenderer;
 
-import com.becker.ui.animation.AnimationFrame;
+import javax.swing.*;
 import java.awt.*;
-import java.util.*;
-import javax.swing.JFrame;
+import java.util.Random;
 
 /**
  * Simluates the the generation of a historgram based on

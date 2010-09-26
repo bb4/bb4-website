@@ -1,12 +1,14 @@
 package com.becker.game.common.online.ui;
 
-import com.becker.game.common.online.*;
-import com.becker.common.*;
+import com.becker.common.CommandLineOptions;
+import com.becker.game.common.online.OnlineGameServer;
 import com.becker.game.common.plugin.PluginManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 /**
  * UI Frame to show what the GameServer is doing.

@@ -1,19 +1,21 @@
 package com.becker.game.multiplayer.galactic.ui;
 
-import com.becker.common.*;
-import com.becker.game.common.*;
+import com.becker.common.Location;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.Player;
+import com.becker.game.common.PlayerList;
 import com.becker.game.multiplayer.common.MultiGamePlayer;
-import com.becker.game.multiplayer.common.ui.*;
-import com.becker.game.multiplayer.galactic.*;
-import com.becker.game.multiplayer.galactic.player.*;
-import com.becker.ui.table.*;
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
+import com.becker.game.multiplayer.common.ui.PlayerTable;
+import com.becker.game.multiplayer.galactic.Galaxy;
+import com.becker.game.multiplayer.galactic.Planet;
+import com.becker.game.multiplayer.galactic.player.GalacticPlayer;
+import com.becker.ui.table.TableColumnMeta;
 
-import javax.swing.table.*;
-import javax.swing.event.*;
 import javax.swing.*;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.TableModel;
+import java.awt.*;
 
 
 /**

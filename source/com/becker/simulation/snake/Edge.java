@@ -1,10 +1,11 @@
 package com.becker.simulation.snake;
 
-import com.becker.common.*;
+import com.becker.common.ColorMap;
 
-import javax.vecmath.*;
+import javax.vecmath.Vector2d;
 import java.awt.*;
-import java.awt.geom.*;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
 
 /**
  *  A snake edge (line geometry) is modeled as a spring to simulate muscles.

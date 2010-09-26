@@ -1,13 +1,11 @@
 package com.becker.game.twoplayer.blockade.ui;
 
-import com.becker.game.twoplayer.blockade.BlockadeBoardPosition;
-import com.becker.game.common.BoardPosition;
-import com.becker.game.common.GamePiece;
 import com.becker.game.common.Board;
+import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GameContext;
-import com.becker.game.twoplayer.common.ui.AbstractTwoPlayerBoardViewer;
+import com.becker.game.common.GamePiece;
+import com.becker.game.twoplayer.blockade.BlockadeBoardPosition;
 import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
-import com.becker.game.twoplayer.common.ui.TwoPlayerBoardRenderer;
 
 import java.awt.*;
 

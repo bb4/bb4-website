@@ -3,7 +3,10 @@ package com.becker.java2d.examples;
 import com.becker.ui.ApplicationFrame;
 
 import java.awt.*;
-import java.awt.font.*;
+import java.awt.font.FontRenderContext;
+import java.awt.font.LineBreakMeasurer;
+import java.awt.font.TextAttribute;
+import java.awt.font.TextLayout;
 import java.text.AttributedCharacterIterator;
 import java.text.AttributedString;
 

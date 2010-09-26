@@ -2,7 +2,6 @@ package com.becker.java2d.examples;
 
 import com.becker.java2d.Utilities;
 import com.becker.ui.ApplicationFrame;
-import com.sun.image.codec.jpeg.*;
 
 import java.awt.*;
 import java.awt.font.FontRenderContext;

@@ -1,11 +1,14 @@
 package com.becker.game.twoplayer.common.ui;
 
-import com.becker.game.common.*;
-import com.becker.game.common.ui.*;
-import com.becker.game.twoplayer.common.*;
+import com.becker.game.common.Board;
+import com.becker.game.common.BoardPosition;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.GamePiece;
+import com.becker.game.common.ui.GamePieceRenderer;
+import com.becker.game.twoplayer.common.TwoPlayerMove;
 
 import java.awt.*;
-import java.text.*;
+import java.text.DecimalFormat;
 
 /**
  * a singleton class that takes a game piece and renders it for the TwoPlayerBoardViewer.

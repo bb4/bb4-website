@@ -1,13 +1,17 @@
 package com.becker.apps.misc.colormixer;
 
+import com.becker.ui.ApplicationApplet;
+import com.becker.ui.GUIUtil;
 import com.becker.ui.components.ColorInputPanel;
-import com.becker.ui.*;
 
 import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Dictionary;
+import java.util.Hashtable;
 
 public class ColorMixer extends ApplicationApplet implements ActionListener, ChangeListener
 {

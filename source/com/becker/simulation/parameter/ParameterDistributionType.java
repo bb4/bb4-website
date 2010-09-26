@@ -1,7 +1,10 @@
 package com.becker.simulation.parameter;
 
+import com.becker.optimization.parameter.BooleanParameter;
+import com.becker.optimization.parameter.DoubleParameter;
+import com.becker.optimization.parameter.IntegerParameter;
+import com.becker.optimization.parameter.Parameter;
 import com.becker.optimization.parameter.redistribution.*;
-import com.becker.optimization.parameter.*;
 
 /**
  * Different types of parmeter distributions to test.

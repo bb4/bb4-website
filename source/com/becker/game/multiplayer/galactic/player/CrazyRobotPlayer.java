@@ -1,11 +1,14 @@
 package com.becker.game.multiplayer.galactic.player;
 
 
-import com.becker.game.multiplayer.galactic.*;
+import com.becker.game.multiplayer.galactic.Galaxy;
+import com.becker.game.multiplayer.galactic.Order;
+import com.becker.game.multiplayer.galactic.Planet;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**

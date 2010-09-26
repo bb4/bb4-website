@@ -1,13 +1,14 @@
 package com.becker.simulation.snake;
 
-import com.becker.ui.*;
+import com.becker.common.ILog;
+import com.becker.ui.Log;
 
-import javax.vecmath.*;
+import javax.vecmath.Point2d;
+import javax.vecmath.Vector2d;
 import java.awt.*;
 import java.io.*;
 
 import static com.becker.simulation.snake.SnakeConstants.*;
-import com.becker.common.ILog;
 
 /**
  *  Data structure and methods for representing a single dynamic snake

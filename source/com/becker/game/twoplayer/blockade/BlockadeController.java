@@ -8,9 +8,10 @@ import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.optimization.parameter.ParameterArray;
-import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WINNING_VALUE;
 
-import java.util.*;
+import java.util.List;
+
+import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WINNING_VALUE;
 
 /**
  * Defines for the computer how it should play com.becker.game.twoplayer.blockade.

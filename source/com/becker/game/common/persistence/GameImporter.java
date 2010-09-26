@@ -1,10 +1,19 @@
 package com.becker.game.common.persistence;
 
-import ca.dj.jigo.sgf.*;
-import ca.dj.jigo.sgf.tokens.*;
-import com.becker.game.common.*;
+import ca.dj.jigo.sgf.SGFGame;
+import ca.dj.jigo.sgf.SGFLeaf;
+import ca.dj.jigo.sgf.SGFLoader;
+import ca.dj.jigo.sgf.SGFTree;
+import ca.dj.jigo.sgf.tokens.InfoToken;
+import ca.dj.jigo.sgf.tokens.PlacementToken;
+import ca.dj.jigo.sgf.tokens.SGFToken;
+import ca.dj.jigo.sgf.tokens.SizeToken;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.GameController;
+import com.becker.game.common.Move;
+import com.becker.game.common.MoveList;
 
-import java.util.*;
+import java.util.Enumeration;
 
 /**
  * Import the state of a game from a file.

@@ -1,8 +1,7 @@
 package com.becker.game.multiplayer.common;
 
-import com.becker.game.common.*;
-import com.becker.game.multiplayer.trivial.player.*;
-import com.becker.common.*;
+import com.becker.common.Location;
+import com.becker.game.common.GamePiece;
 
 import java.awt.*;
 

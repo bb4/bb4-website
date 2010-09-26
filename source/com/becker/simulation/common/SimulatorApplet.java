@@ -1,8 +1,9 @@
 package com.becker.simulation.common;
 
-import com.becker.common.*;
-import com.becker.ui.*;
-import com.becker.ui.animation.*;
+import com.becker.common.ClassLoaderSingleton;
+import com.becker.ui.ApplicationApplet;
+import com.becker.ui.GUIUtil;
+import com.becker.ui.animation.AnimationPanel;
 
 import javax.swing.*;
 import java.awt.*;

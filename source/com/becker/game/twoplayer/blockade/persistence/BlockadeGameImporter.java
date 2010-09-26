@@ -1,16 +1,26 @@
 package com.becker.game.twoplayer.blockade.persistence;
 
-import com.becker.game.common.*;
-import ca.dj.jigo.sgf.tokens.*;
-import ca.dj.jigo.sgf.*;
-import com.becker.game.twoplayer.blockade.*;
-import com.becker.game.twoplayer.blockade.persistence.tokens.*;
-
+import ca.dj.jigo.sgf.SGFGame;
+import ca.dj.jigo.sgf.SGFLoader;
+import ca.dj.jigo.sgf.tokens.InfoToken;
+import ca.dj.jigo.sgf.tokens.SGFToken;
+import ca.dj.jigo.sgf.tokens.TextToken;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.GamePiece;
+import com.becker.game.common.Move;
+import com.becker.game.common.MoveList;
+import com.becker.game.twoplayer.blockade.BlockadeBoardPosition;
+import com.becker.game.twoplayer.blockade.BlockadeController;
+import com.becker.game.twoplayer.blockade.BlockadeMove;
+import com.becker.game.twoplayer.blockade.BlockadeWall;
+import com.becker.game.twoplayer.blockade.persistence.tokens.BlockadeMoveToken;
+import com.becker.game.twoplayer.blockade.persistence.tokens.Player1BlockadeMoveToken;
 import com.becker.game.twoplayer.common.persistence.TwoPlayerGameImporter;
 import com.becker.game.twoplayer.common.persistence.tokens.Player1NameToken;
 import com.becker.game.twoplayer.common.persistence.tokens.Player2NameToken;
 import com.becker.game.twoplayer.common.persistence.tokens.Size2Token;
-import java.util.*;
+
+import java.util.Enumeration;
 
 /**
  * Imports the stat of a Go game from a file.

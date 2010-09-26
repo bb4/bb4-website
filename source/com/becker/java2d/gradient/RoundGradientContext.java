@@ -2,7 +2,9 @@ package com.becker.java2d.gradient;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
-import java.awt.image.*;
+import java.awt.image.ColorModel;
+import java.awt.image.Raster;
+import java.awt.image.WritableRaster;
 
 public class RoundGradientContext
         implements PaintContext

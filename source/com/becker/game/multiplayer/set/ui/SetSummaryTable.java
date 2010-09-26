@@ -1,9 +1,9 @@
 package com.becker.game.multiplayer.set.ui;
 
-import com.becker.game.common.*;
-import com.becker.game.multiplayer.common.ui.*;
-import com.becker.game.multiplayer.set.*;
-import java.util.List;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.PlayerList;
+import com.becker.game.multiplayer.common.ui.SummaryTable;
+import com.becker.game.multiplayer.set.SetPlayer;
 
 import javax.swing.*;
 

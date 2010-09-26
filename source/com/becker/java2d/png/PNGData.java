@@ -1,7 +1,9 @@
 package com.becker.java2d.png;
 
 import java.awt.image.*;
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.zip.InflaterInputStream;
 
 public class PNGData

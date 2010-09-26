@@ -1,11 +1,11 @@
 package com.becker.game.twoplayer.go.ui;
 
-import com.becker.game.twoplayer.go.board.*;
-import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
-import static com.becker.game.twoplayer.go.GoControllerConstants.*;   // jdk 1.5 feature
 import com.becker.common.ColorMap;
 import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GameContext;
+import com.becker.game.twoplayer.go.board.BoardValidator;
+import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 import com.becker.game.twoplayer.go.board.elements.*;
 
@@ -16,6 +16,8 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
 import java.util.*;
 import java.util.List;
+
+import static com.becker.game.twoplayer.go.GoControllerConstants.USE_RELATIVE_GROUP_SCORING;
 
 /**
  *  Static Utility methods for rendering GoGroup description.

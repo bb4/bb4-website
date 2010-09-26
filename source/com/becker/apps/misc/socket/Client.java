@@ -1,10 +1,14 @@
 package com.becker.apps.misc.socket;
 
 import javax.swing.*;
-import java.awt.event.*;
 import java.awt.*;
-import java.io.*;
-import java.net.*;
+import java.awt.event.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.net.UnknownHostException;
 
 /**
  * Socket portion of client-server program using sockets.

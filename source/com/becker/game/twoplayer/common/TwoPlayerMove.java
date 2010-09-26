@@ -2,9 +2,10 @@ package com.becker.game.twoplayer.common;
 
 import com.becker.common.Location;
 import com.becker.common.util.Util;
-import com.becker.game.common.*;
-
-import java.util.Iterator;
+import com.becker.game.common.Board;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.GamePiece;
+import com.becker.game.common.Move;
 
 /**
  *  This base class describes a change in state from one board

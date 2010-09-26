@@ -1,16 +1,18 @@
 package com.becker.simulation.snake;
 
-import com.becker.optimization.parameter.ParameterArray;
-import com.becker.optimization.parameter.Parameter;
 import com.becker.common.util.FileUtil;
 import com.becker.common.util.Util;
-import com.becker.optimization.*;
+import com.becker.optimization.Optimizer;
 import com.becker.optimization.parameter.DoubleParameter;
+import com.becker.optimization.parameter.Parameter;
+import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.strategy.OptimizationStrategyType;
-import com.becker.simulation.common.*;
-import com.becker.ui.*;
+import com.becker.simulation.common.NewtonianSimulator;
+import com.becker.simulation.common.SimulatorOptionsDialog;
+import com.becker.ui.GUIUtil;
 
-import javax.vecmath.*;
+import javax.vecmath.Point2d;
+import javax.vecmath.Vector2d;
 import java.awt.*;
 
 import static com.becker.simulation.snake.SnakeConstants.*;

@@ -1,13 +1,13 @@
 package com.becker.game.common.ui;
 
+import com.becker.game.common.GameContext;
+import com.becker.game.common.GameController;
+import com.becker.game.common.online.ui.ChatWindow;
 import com.becker.ui.components.TexturedPanel;
-import com.becker.game.common.*;
-import com.becker.game.common.online.ui.*;
-import com.becker.ui.*;
 
 import javax.swing.*;
-import javax.swing.Box;
-import javax.swing.border.*;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 
 /**

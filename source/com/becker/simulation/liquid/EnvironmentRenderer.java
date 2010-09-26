@@ -1,10 +1,10 @@
 package com.becker.simulation.liquid;
 
+import com.becker.common.ColorMap;
 import com.becker.simulation.liquid.config.PressureColorMap;
-import com.becker.common.*;
 
-import java.awt.*;
 import javax.vecmath.Vector2d;
+import java.awt.*;
 
 /**
  *  Renders a specified liquid environment.

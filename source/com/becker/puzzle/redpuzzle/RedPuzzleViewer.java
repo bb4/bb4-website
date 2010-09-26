@@ -2,10 +2,9 @@ package com.becker.puzzle.redpuzzle;
 
 import com.becker.common.util.Util;
 import com.becker.puzzle.common.PuzzleViewer;
-import com.becker.sound.*;
-import java.awt.Dimension;
-import java.awt.Graphics;
+import com.becker.sound.MusicMaker;
 
+import java.awt.*;
 import java.util.List;
 
 

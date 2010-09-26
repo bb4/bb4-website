@@ -1,6 +1,6 @@
 package com.becker.game.multiplayer.poker;
 
-import com.becker.game.common.*;
+import com.becker.game.common.Move;
 
 /**
  * Captures the delta state change of everything that happened during one round of the poker game.

@@ -3,11 +3,6 @@ package com.becker.simulation.graphing;
 import com.becker.common.math.function.ArrayFunction;
 import com.becker.common.math.function.ErrorFunction;
 import com.becker.common.math.function.Function;
-import com.becker.optimization.parameter.BooleanParameter;
-import com.becker.optimization.parameter.DoubleParameter;
-import com.becker.optimization.parameter.IntegerParameter;
-import com.becker.optimization.parameter.Parameter;
-import com.becker.optimization.parameter.redistribution.*;
 
 /**
  * Different types of parmeter distributions to test.

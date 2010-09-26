@@ -1,9 +1,8 @@
 package com.becker.game.multiplayer.poker;
 
 import com.becker.game.common.*;
-import com.becker.game.common.Move;
 import com.becker.game.multiplayer.common.online.SurrogateMultiPlayer;
-import com.becker.game.multiplayer.poker.player.*;
+import com.becker.game.multiplayer.poker.player.PokerPlayer;
 
 /**
  * Representation of a Poker Game Board

@@ -1,11 +1,12 @@
 package com.becker.game.multiplayer.poker.player;
 
 import com.becker.game.common.Player;
-import com.becker.game.multiplayer.common.MultiGameController;
 import com.becker.game.common.PlayerAction;
-import com.becker.game.multiplayer.poker.*;
-import java.awt.Color;
-import java.util.List;
+import com.becker.game.multiplayer.common.MultiGameController;
+import com.becker.game.multiplayer.poker.PokerAction;
+import com.becker.game.multiplayer.poker.PokerController;
+
+import java.awt.*;
 
 /**
  * Represents a Robot poker player.

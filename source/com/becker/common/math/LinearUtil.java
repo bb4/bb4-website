@@ -2,7 +2,9 @@ package com.becker.common.math;
 
 import com.becker.common.util.Util;
 
-import javax.vecmath.*;
+import javax.vecmath.GMatrix;
+import javax.vecmath.GVector;
+import javax.vecmath.Vector2d;
 
 /**
  * This class implements a number of static utility functions that are useful for math.

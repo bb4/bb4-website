@@ -1,7 +1,7 @@
 package com.becker.puzzle.adventure.ui;
 
-import com.becker.ui.components.ImageListPanel;
 import com.becker.puzzle.adventure.Story;
+import com.becker.ui.components.ImageListPanel;
 
 import javax.swing.*;
 import java.awt.*;

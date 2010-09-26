@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
-import com.becker.game.twoplayer.common.search.*;
-import com.becker.game.common.*;
+import com.becker.game.common.GameContext;
+import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**

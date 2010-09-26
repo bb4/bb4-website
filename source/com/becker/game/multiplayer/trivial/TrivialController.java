@@ -1,12 +1,14 @@
 package com.becker.game.multiplayer.trivial;
 
-import com.becker.game.common.*;
-import com.becker.game.multiplayer.common.*;
+import com.becker.game.common.Board;
+import com.becker.game.common.GameOptions;
+import com.becker.game.common.Player;
+import com.becker.game.common.PlayerList;
+import com.becker.game.multiplayer.common.MultiGameController;
+import com.becker.game.multiplayer.common.MultiGamePlayer;
 import com.becker.game.multiplayer.common.online.SurrogateMultiPlayer;
-import com.becker.game.multiplayer.trivial.player.*;
-
-import java.util.*;
-import java.util.List;
+import com.becker.game.multiplayer.trivial.player.TrivialPlayer;
+import com.becker.game.multiplayer.trivial.player.TrivialRobotPlayer;
 
 /**
  * Defines everything the computer needs to know to play Trivial game.

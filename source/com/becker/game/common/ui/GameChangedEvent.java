@@ -1,6 +1,7 @@
 package com.becker.game.common.ui;
 
-import com.becker.game.common.*;
+import com.becker.game.common.GameControllerInterface;
+import com.becker.game.common.Move;
 
 import java.awt.*;
 

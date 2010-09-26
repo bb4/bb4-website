@@ -1,18 +1,20 @@
 package com.becker.game.multiplayer.galactic.ui;
 
+import com.becker.game.common.GameContext;
+import com.becker.game.multiplayer.galactic.BattleSimulation;
+import com.becker.game.multiplayer.galactic.Planet;
+import com.becker.game.multiplayer.galactic.player.GalacticPlayer;
+import com.becker.sound.MusicMaker;
 import com.becker.ui.components.GradientButton;
 import com.becker.ui.dialogs.OptionsDialog;
-import com.becker.game.common.*;
-import com.becker.game.multiplayer.galactic.*;
-import com.becker.game.multiplayer.galactic.player.*;
-import com.becker.sound.MusicMaker;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import java.awt.*;
-import java.awt.event.*;
-import java.util.List;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Play a battle sequence that is stored in a GalacticTurn.

@@ -1,9 +1,8 @@
 package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.elements.GoEye;
-import com.becker.game.twoplayer.go.board.analysis.eye.EyeShapeScores;
 import com.becker.game.twoplayer.go.board.analysis.eye.EyeStatus;
+import com.becker.game.twoplayer.go.board.elements.GoEye;
 
 /**
  * Info about a false eye

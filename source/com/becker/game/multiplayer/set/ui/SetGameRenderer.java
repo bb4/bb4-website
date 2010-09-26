@@ -1,11 +1,10 @@
 package com.becker.game.multiplayer.set.ui;
 
-import com.becker.game.multiplayer.common.ui.MultiGameBoardRenderer;
-import com.becker.game.multiplayer.set.SetController;
-import com.becker.game.multiplayer.set.Card;
-import com.becker.game.common.ui.GameBoardRenderer;
 import com.becker.game.common.GameControllerInterface;
-import com.becker.common.Location;
+import com.becker.game.common.ui.GameBoardRenderer;
+import com.becker.game.multiplayer.common.ui.MultiGameBoardRenderer;
+import com.becker.game.multiplayer.set.Card;
+import com.becker.game.multiplayer.set.SetController;
 
 import java.awt.*;
 import java.awt.geom.Point2D;

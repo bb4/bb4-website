@@ -1,16 +1,17 @@
 package com.becker.simulation.common;
 
-import com.becker.ui.components.GradientButton;
-import com.becker.optimization.parameter.ParameterArray;
 import com.becker.common.util.FileUtil;
 import com.becker.common.util.Util;
-import com.becker.optimization.*;
-import com.becker.ui.*;
-import com.becker.ui.animation.*;
+import com.becker.optimization.Optimizee;
+import com.becker.optimization.parameter.ParameterArray;
+import com.becker.ui.GUIUtil;
+import com.becker.ui.animation.AnimationComponent;
+import com.becker.ui.components.GradientButton;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Base class for all simulations.

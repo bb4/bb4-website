@@ -1,9 +1,9 @@
 package com.becker.game.multiplayer.common.ui;
 
-import java.awt.Dimension;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import com.becker.game.common.Player;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  *

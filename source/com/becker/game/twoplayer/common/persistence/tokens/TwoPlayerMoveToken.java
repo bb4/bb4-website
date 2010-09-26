@@ -1,10 +1,10 @@
 package com.becker.game.twoplayer.common.persistence.tokens;
 
 import ca.dj.jigo.sgf.Point;
-
 import ca.dj.jigo.sgf.tokens.PlacementToken;
-import java.io.StreamTokenizer;
+
 import java.io.IOException;
+import java.io.StreamTokenizer;
 
 /**
  * A generic two player move.

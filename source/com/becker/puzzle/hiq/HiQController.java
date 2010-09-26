@@ -2,6 +2,7 @@ package com.becker.puzzle.hiq;
 
 import com.becker.puzzle.common.AbstractPuzzleController;
 import com.becker.puzzle.common.Refreshable;
+
 import java.util.List;
 import java.util.Set;
 

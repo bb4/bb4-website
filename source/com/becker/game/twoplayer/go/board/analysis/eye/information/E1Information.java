@@ -1,7 +1,5 @@
 package com.becker.game.twoplayer.go.board.analysis.eye.information;
 
-import static com.becker.game.twoplayer.go.board.analysis.eye.EyeShapeScores.*;
-
 /**
  * Single space eye  - *
  *

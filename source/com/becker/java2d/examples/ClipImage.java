@@ -8,8 +8,6 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.File;
 
 public class ClipImage extends ApplicationFrame
 {

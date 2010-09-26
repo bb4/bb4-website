@@ -1,7 +1,5 @@
 package com.becker.java2d.examples;
 
-import com.becker.java2d.examples.Transformers;
-
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 

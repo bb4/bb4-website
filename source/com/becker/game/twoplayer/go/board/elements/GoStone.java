@@ -1,7 +1,6 @@
 package com.becker.game.twoplayer.go.board.elements;
 
-import com.becker.common.util.Util;
-import com.becker.game.common.*;
+import com.becker.game.common.GamePiece;
 import com.becker.game.twoplayer.go.board.PositionalScore;
 
 /**

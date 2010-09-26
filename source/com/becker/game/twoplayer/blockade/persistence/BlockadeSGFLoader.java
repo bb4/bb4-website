@@ -1,8 +1,8 @@
 package com.becker.game.twoplayer.blockade.persistence;
 
-import com.becker.game.twoplayer.common.persistence.*;
 import com.becker.game.twoplayer.blockade.persistence.tokens.Player1BlockadeMoveToken;
 import com.becker.game.twoplayer.blockade.persistence.tokens.Player2BlockadeMoveToken;
+import com.becker.game.twoplayer.common.persistence.TwoPlayerSGFLoader;
 import com.becker.game.twoplayer.common.persistence.tokens.TwoPlayerMoveToken;
 
 

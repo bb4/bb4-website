@@ -1,9 +1,9 @@
 package com.becker.game.twoplayer.blockade;
 
+import javax.swing.tree.DefaultMutableTreeNode;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
  * A path that connects a pawn to an opponent home base.

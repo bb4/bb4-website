@@ -1,10 +1,11 @@
 package com.becker.game.multiplayer.galactic.ui;
 
+import com.becker.game.common.Board;
+import com.becker.game.common.GameController;
+import com.becker.game.common.ui.GameBoardViewer;
 import com.becker.ui.components.GradientButton;
-import com.becker.game.common.*;
-import com.becker.game.common.ui.*;
-
 import com.becker.ui.dialogs.AbstractDialog;
+
 import javax.swing.*;
 
 /**

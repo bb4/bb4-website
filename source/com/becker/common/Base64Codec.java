@@ -1,9 +1,14 @@
 package com.becker.common;
 
 import org.apache.commons.codec.binary.Base64;
+
 import java.io.*;
-import java.util.zip.*;
-import static com.becker.common.EncodingConstants.*;
+import java.util.zip.Deflater;
+import java.util.zip.DeflaterOutputStream;
+import java.util.zip.Inflater;
+import java.util.zip.InflaterInputStream;
+
+import static com.becker.common.EncodingConstants.CONVERTER_UTF8;
 
 
 /**

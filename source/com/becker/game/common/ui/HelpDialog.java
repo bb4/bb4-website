@@ -1,15 +1,17 @@
 package com.becker.game.common.ui;
 
+import com.becker.game.common.GameContext;
+import com.becker.ui.GUIUtil;
 import com.becker.ui.components.GradientButton;
-import com.becker.game.common.*;
-import com.becker.ui.*;
-
 import com.becker.ui.dialogs.AbstractDialog;
+
 import javax.swing.*;
-import javax.swing.border.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
 import java.awt.*;
-import java.awt.event.*;
-import java.text.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.MessageFormat;
 
 /**
  * A dialog to show version information and instructions on how to play the game.

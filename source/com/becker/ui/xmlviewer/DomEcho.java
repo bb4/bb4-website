@@ -1,7 +1,8 @@
 package com.becker.ui.xmlviewer;
 
 import com.becker.common.xml.DomUtil;
-import org.w3c.dom.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;

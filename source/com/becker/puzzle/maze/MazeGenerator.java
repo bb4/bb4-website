@@ -1,7 +1,7 @@
 package com.becker.puzzle.maze;
 
 import java.awt.*;
-import java.util.*;
+import java.util.LinkedList;
 import java.util.List;
 
 /**

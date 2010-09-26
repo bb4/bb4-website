@@ -1,6 +1,8 @@
 package com.becker.puzzle.sudoku;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Barry Becker Date: Jul 3, 2006

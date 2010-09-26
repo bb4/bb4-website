@@ -1,9 +1,12 @@
 package com.becker.puzzle.redpuzzle;
 
+import com.becker.optimization.OptimizationListener;
+import com.becker.optimization.Optimizee;
+import com.becker.optimization.Optimizer;
 import com.becker.optimization.parameter.ParameterArray;
-import com.becker.optimization.*;
 import com.becker.optimization.strategy.OptimizationStrategyType;
 import com.becker.puzzle.common.Refreshable;
+
 import java.util.List;
 
 /**

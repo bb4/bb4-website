@@ -1,6 +1,6 @@
 package com.becker.game.common;
 
-import java.io.*;
+import java.io.Serializable;
 
 
 /**

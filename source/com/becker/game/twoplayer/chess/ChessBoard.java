@@ -1,9 +1,10 @@
 package com.becker.game.twoplayer.chess;
 
-import com.becker.game.twoplayer.checkers.*;
-import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.common.BoardPosition;
+import com.becker.game.common.CaptureList;
 import com.becker.game.common.Move;
-import com.becker.game.common.*;
+import com.becker.game.twoplayer.checkers.CheckersBoard;
+import com.becker.game.twoplayer.common.TwoPlayerMove;
 
 import java.util.List;
 

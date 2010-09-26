@@ -1,6 +1,6 @@
 package com.becker.game.common;
 
-import com.becker.common.*;
+import com.becker.common.Location;
 
 
 /**

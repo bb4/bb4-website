@@ -1,18 +1,19 @@
 package com.becker.game.twoplayer.common.ui;
 
-import com.becker.ui.components.GradientButton;
 import com.becker.common.util.FileUtil;
-import com.becker.optimization.parameter.ParameterArray;
 import com.becker.game.common.*;
-import com.becker.game.common.ui.*;
-import com.becker.game.twoplayer.common.*;
-import com.becker.ui.*;
-import com.becker.ui.file.*;
+import com.becker.game.common.ui.NewGameDialog;
+import com.becker.game.twoplayer.common.TwoPlayerController;
+import com.becker.optimization.parameter.ParameterArray;
+import com.becker.ui.GUIUtil;
+import com.becker.ui.components.GradientButton;
+import com.becker.ui.file.TextFileFilter;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 
 /**
  * Use this modal dialog to initialize the required game parameters that

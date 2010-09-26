@@ -1,16 +1,16 @@
 package com.becker.game.multiplayer.galactic.ui;
 
-import com.becker.game.common.*;
-import com.becker.game.multiplayer.galactic.*;
-import com.becker.game.multiplayer.galactic.player.*;
+import com.becker.game.common.GameContext;
+import com.becker.game.multiplayer.galactic.Order;
+import com.becker.game.multiplayer.galactic.player.GalacticPlayer;
 import com.becker.ui.components.GradientButton;
 import com.becker.ui.dialogs.OptionsDialog;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.util.List;
+import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
+import java.util.List;
 
 /**
  * Allow the user to maintain their current orders and add new ones.

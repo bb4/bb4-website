@@ -1,12 +1,14 @@
 package com.becker.game.twoplayer.common.persistence;
 
-import com.becker.game.common.*;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.Move;
 import com.becker.game.common.persistence.GameExporter;
-
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
-import java.io.*;
-import java.util.*;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Iterator;
 
 /**
  * Exports the state of a two player game to a file.

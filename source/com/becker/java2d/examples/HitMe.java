@@ -5,7 +5,9 @@ import com.becker.ui.ApplicationFrame;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.font.*;
+import java.awt.font.FontRenderContext;
+import java.awt.font.TextHitInfo;
+import java.awt.font.TextLayout;
 
 public class HitMe extends ApplicationFrame
 {

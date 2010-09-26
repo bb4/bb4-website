@@ -3,8 +3,13 @@ package com.becker.java2d.png;
 import com.becker.ui.ApplicationFrame;
 
 import java.awt.*;
-import java.awt.image.*;
-import java.io.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.WritableRaster;
+import java.io.DataInputStream;
+import java.io.EOFException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.zip.CRC32;
 
 public class PNGDecoder

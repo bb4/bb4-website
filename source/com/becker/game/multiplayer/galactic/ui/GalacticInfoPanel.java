@@ -1,16 +1,23 @@
 package com.becker.game.multiplayer.galactic.ui;
 
+import com.becker.game.common.GameContext;
+import com.becker.game.common.GameController;
+import com.becker.game.common.Move;
+import com.becker.game.common.Player;
+import com.becker.game.common.ui.GameChangedEvent;
+import com.becker.game.common.ui.GameChangedListener;
+import com.becker.game.common.ui.GameInfoPanel;
+import com.becker.game.multiplayer.galactic.GalacticController;
+import com.becker.game.multiplayer.galactic.Galaxy;
+import com.becker.game.multiplayer.galactic.player.GalacticPlayer;
 import com.becker.ui.components.GradientButton;
-import com.becker.game.common.*;
-import com.becker.game.common.ui.*;
-import com.becker.game.multiplayer.galactic.*;
-import com.becker.game.multiplayer.galactic.player.*;
 
 import javax.swing.*;
-import javax.swing.border.*;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.awt.event.*;
-import java.text.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.MessageFormat;
 
 
 /**

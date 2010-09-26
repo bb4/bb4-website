@@ -1,12 +1,14 @@
 package com.becker.ui.table;
 
 import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.table.*;
-import javax.swing.tree.*;
+import javax.swing.event.CellEditorListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.EventListenerList;
+import javax.swing.table.TableCellEditor;
+import javax.swing.tree.TreeCellEditor;
 import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
+import java.awt.event.MouseEvent;
+import java.util.EventObject;
 
 /**
  * Copied with modification from from Graphic Java (Swing) book (by David Geary).

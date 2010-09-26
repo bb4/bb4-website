@@ -1,6 +1,6 @@
 package com.becker.game.multiplayer.galactic;
 
-import java.util.*;
+import java.util.Comparator;
 
 /**
  * Sort planets by how far they are from a comparisonPlanet.

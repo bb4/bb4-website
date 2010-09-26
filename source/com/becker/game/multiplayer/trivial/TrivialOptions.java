@@ -1,6 +1,6 @@
 package com.becker.game.multiplayer.trivial;
 
-import com.becker.game.multiplayer.common.*;
+import com.becker.game.multiplayer.common.MultiGameOptions;
 
 /**
  * @author Barry Becker Date: Sep 2, 2006

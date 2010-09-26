@@ -6,9 +6,9 @@ import com.becker.common.util.Util;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.*;
-import java.awt.font.*;
 import java.awt.event.*;
+import java.awt.font.FontRenderContext;
+import java.awt.geom.Rectangle2D;
 
 /**
  * shows a continuous color legend given a list of colors and corresponding values.

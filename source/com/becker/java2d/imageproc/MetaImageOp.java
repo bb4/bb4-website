@@ -2,14 +2,15 @@ package com.becker.java2d.imageproc;
 
 import com.becker.optimization.parameter.BooleanParameter;
 import com.becker.optimization.parameter.Parameter;
+
 import java.awt.image.BufferedImageOp;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.lang.reflect.*;
-import java.util.ArrayList;
-import java.util.Random;
 
 
 /**

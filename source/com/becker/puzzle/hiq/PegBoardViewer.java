@@ -1,10 +1,11 @@
 package com.becker.puzzle.hiq;
 
 import com.becker.puzzle.common.PuzzleViewer;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 /**

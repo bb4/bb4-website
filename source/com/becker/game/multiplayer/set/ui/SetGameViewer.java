@@ -1,17 +1,20 @@
 package com.becker.game.multiplayer.set.ui;
 
 
-import com.becker.game.common.*;
-import com.becker.game.common.ui.*;
-import com.becker.game.multiplayer.common.online.SurrogateMultiPlayer;
-import com.becker.game.multiplayer.set.*;
-
+import com.becker.game.common.Player;
+import com.becker.game.common.ui.GameBoardRenderer;
+import com.becker.game.common.ui.ViewerMouseListener;
 import com.becker.game.multiplayer.common.MultiGameController;
+import com.becker.game.multiplayer.common.online.SurrogateMultiPlayer;
 import com.becker.game.multiplayer.common.ui.MultiGameViewer;
-import java.awt.*;
-import java.awt.event.*;
-import java.text.*;
-import java.util.*;
+import com.becker.game.multiplayer.set.Card;
+import com.becker.game.multiplayer.set.SetController;
+import com.becker.game.multiplayer.set.SetPlayer;
+
+import java.awt.event.MouseEvent;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 /**

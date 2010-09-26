@@ -1,8 +1,9 @@
 package com.becker.puzzle.hiq;
 
-import com.becker.common.*;
+import com.becker.common.Location;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Immutable representation of a PegBoard.

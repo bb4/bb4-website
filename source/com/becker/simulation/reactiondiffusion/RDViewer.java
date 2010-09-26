@@ -4,7 +4,6 @@ import com.becker.common.ColorMap;
 import com.becker.simulation.reactiondiffusion.algorithm.GrayScottController;
 import com.becker.simulation.reactiondiffusion.rendering.*;
 
-import javax.swing.*;
 import java.awt.*;
 
 /**

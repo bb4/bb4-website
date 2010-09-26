@@ -1,7 +1,9 @@
 package com.becker.game.twoplayer.blockade;
 
 import com.becker.common.Location;
-import java.util.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Possible Blockade move directions.

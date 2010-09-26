@@ -1,10 +1,8 @@
 package com.becker.game.multiplayer.trivial;
 
 import com.becker.game.common.*;
-import com.becker.game.common.Move;
 import com.becker.game.multiplayer.common.online.SurrogateMultiPlayer;
-import com.becker.game.multiplayer.trivial.player.*;
-import java.util.List;
+import com.becker.game.multiplayer.trivial.player.TrivialPlayer;
 
 /**
  * Representation of a Trivial Game Board

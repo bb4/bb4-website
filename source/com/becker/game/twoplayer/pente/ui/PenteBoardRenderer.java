@@ -1,9 +1,8 @@
 package com.becker.game.twoplayer.pente.ui;
 
 import com.becker.game.common.ui.GameBoardRenderer;
-import com.becker.game.twoplayer.checkers.ui.CheckersBoardRenderer;
-import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
 import com.becker.game.twoplayer.common.ui.TwoPlayerBoardRenderer;
+import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
 
 /**
  * Singleton class that takes a game board and renders it for the GameBoardViewer.

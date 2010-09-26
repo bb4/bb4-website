@@ -1,6 +1,6 @@
 package com.becker.simulation.fluid;
 
-import com.becker.common.*;
+import com.becker.common.ColorMap;
 import com.becker.common.util.ImageUtil;
 
 import java.awt.*;

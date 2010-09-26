@@ -1,6 +1,5 @@
 package com.becker.ui.components;
 
-import com.becker.ui.dialogs.OptionsDialog;
 import javax.swing.*;
 import java.awt.*;
 

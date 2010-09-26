@@ -1,8 +1,9 @@
 package com.becker.game.multiplayer.poker.player;
 
-import com.becker.game.multiplayer.common.MultiGameController;
 import com.becker.game.common.PlayerAction;
+import com.becker.game.multiplayer.common.MultiGameController;
 import com.becker.game.multiplayer.poker.PokerAction;
+
 import java.awt.*;
 
 

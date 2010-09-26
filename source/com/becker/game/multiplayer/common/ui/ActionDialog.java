@@ -1,8 +1,8 @@
 package com.becker.game.multiplayer.common.ui;
 
-import com.becker.ui.dialogs.OptionsDialog;
 import com.becker.game.multiplayer.common.MultiGameController;
 import com.becker.game.multiplayer.common.MultiGamePlayer;
+import com.becker.ui.dialogs.OptionsDialog;
 
 import javax.swing.*;
 import java.awt.*;

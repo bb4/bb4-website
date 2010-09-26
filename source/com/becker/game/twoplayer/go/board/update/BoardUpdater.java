@@ -1,10 +1,7 @@
 package com.becker.game.twoplayer.go.board.update;
 
-import com.becker.game.twoplayer.go.board.update.Captures;
-import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.update.PostMoveUpdater;
-import com.becker.game.twoplayer.go.board.update.PostRemoveUpdater;
 import com.becker.game.twoplayer.go.GoMove;
+import com.becker.game.twoplayer.go.board.GoBoard;
 
 /**
  * Responsible for updating a go board after making or undoing a move.

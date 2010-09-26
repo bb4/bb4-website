@@ -1,21 +1,16 @@
 package com.becker.game.multiplayer.galactic.ui;
 
-import com.becker.game.common.Board;
-import com.becker.game.common.Player;
+import com.becker.common.Location;
 import com.becker.game.common.GameControllerInterface;
-
-import java.awt.geom.Point2D;
-import java.awt.*;
-import java.util.*;
-import java.util.List;
-
+import com.becker.game.common.Player;
 import com.becker.game.common.PlayerList;
 import com.becker.game.common.ui.GameBoardRenderer;
-import com.becker.game.common.ui.GameBoardViewer;
 import com.becker.game.multiplayer.common.ui.MultiGameBoardRenderer;
-import com.becker.game.multiplayer.galactic.player.GalacticPlayer;
 import com.becker.game.multiplayer.galactic.Order;
-import com.becker.common.Location;
+import com.becker.game.multiplayer.galactic.player.GalacticPlayer;
+
+import java.awt.*;
+import java.awt.geom.Point2D;
 
 
 /**

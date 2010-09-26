@@ -1,10 +1,9 @@
 package com.becker.puzzle.sudoku;
 
 import com.becker.puzzle.common.PuzzleRenderer;
-import java.awt.*;
 
+import java.awt.*;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 /**

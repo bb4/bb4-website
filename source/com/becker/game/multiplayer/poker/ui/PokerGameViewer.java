@@ -1,16 +1,20 @@
 package com.becker.game.multiplayer.poker.ui;
 
-import com.becker.game.common.*;
-import com.becker.game.common.ui.*;
+import com.becker.game.common.Move;
+import com.becker.game.common.Player;
+import com.becker.game.common.PlayerAction;
+import com.becker.game.common.PlayerList;
+import com.becker.game.common.ui.GameBoardRenderer;
 import com.becker.game.multiplayer.common.online.SurrogateMultiPlayer;
 import com.becker.game.multiplayer.common.ui.MultiGameViewer;
-import com.becker.game.multiplayer.poker.*;
-import com.becker.game.multiplayer.poker.player.*;
-
-import java.awt.Point;
-import java.util.List;
+import com.becker.game.multiplayer.poker.PokerAction;
+import com.becker.game.multiplayer.poker.PokerController;
+import com.becker.game.multiplayer.poker.PokerRound;
+import com.becker.game.multiplayer.poker.player.PokerPlayer;
+import com.becker.game.multiplayer.poker.player.PokerRobotPlayer;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  *  Takes a PokerController as input and displays the

@@ -1,15 +1,16 @@
 package com.becker.simulation.fluid;
 
-import com.becker.optimization.parameter.ParameterArray;
-import com.becker.optimization.parameter.Parameter;
 import com.becker.common.util.FileUtil;
-import com.becker.optimization.*;
+import com.becker.optimization.Optimizer;
+import com.becker.optimization.parameter.Parameter;
+import com.becker.optimization.parameter.ParameterArray;
 import com.becker.optimization.strategy.OptimizationStrategyType;
-import com.becker.simulation.common.*;
-import com.becker.ui.*;
+import com.becker.simulation.common.NewtonianSimulator;
+import com.becker.simulation.common.SimulatorOptionsDialog;
+import com.becker.ui.GUIUtil;
 
+import javax.swing.*;
 import java.awt.*;
-import javax.swing.JPanel;
 
 /**
  *Simulate deep water.

@@ -1,18 +1,21 @@
 package com.becker.ui;
 
-import com.becker.common.*;
+import com.becker.common.ClassLoaderSingleton;
 import com.becker.common.util.FileUtil;
 import com.becker.common.util.ImageUtil;
 import com.becker.ui.themes.BarryTheme;
 
-import javax.jnlp.*;
+import javax.jnlp.BasicService;
+import javax.jnlp.ServiceManager;
 import javax.swing.*;
-import javax.swing.plaf.metal.*;
+import javax.swing.plaf.metal.MetalLookAndFeel;
 import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.*;
-import java.io.*;
-import java.net.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 
 /**

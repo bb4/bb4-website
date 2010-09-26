@@ -1,12 +1,12 @@
 package com.becker.simulation.common;
 
-import com.becker.ui.components.NumberInput;
 import com.becker.ui.components.GradientButton;
+import com.becker.ui.components.NumberInput;
 import com.becker.ui.dialogs.OptionsDialog;
 
 import javax.swing.*;
-import java.awt.event.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 
 /**
  * @author Barry Becker Date: Sep 18, 2005

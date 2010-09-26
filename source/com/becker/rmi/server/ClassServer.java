@@ -14,7 +14,8 @@
 package com.becker.rmi.server;
 
 import java.io.*;
-import java.net.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 /**
  * ClassServer is an abstract class that provides the

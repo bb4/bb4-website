@@ -1,6 +1,6 @@
 package com.becker.game.multiplayer.set;
 
-import com.becker.game.multiplayer.common.*;
+import com.becker.game.multiplayer.common.MultiGameOptions;
 
 /**
  * Set Game options

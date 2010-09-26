@@ -1,13 +1,17 @@
 package com.becker.game.twoplayer.chess;
 
+import com.becker.game.common.BoardPosition;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.Move;
+import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.checkers.CheckersController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
-import com.becker.game.common.*;
 import com.becker.optimization.parameter.ParameterArray;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Defines for the computer how it should play Chess.

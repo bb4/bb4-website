@@ -1,12 +1,14 @@
 package com.becker.game.twoplayer.common.ui;
 
-import com.becker.game.twoplayer.common.search.SearchOptions;
-import com.becker.ui.components.NumberInput;
-import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
-import com.becker.game.common.*;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.GameController;
+import com.becker.game.common.GameOptions;
 import com.becker.game.common.ui.GameOptionsDialog;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
+import com.becker.game.twoplayer.common.search.SearchOptions;
+import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
+import com.becker.ui.components.NumberInput;
 
 import javax.swing.*;
 import java.awt.*;

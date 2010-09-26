@@ -1,16 +1,20 @@
 package com.becker.game.multiplayer.common.online.ui;
 
-import com.becker.game.common.*;
-import com.becker.game.common.online.ui.*;
-import com.becker.game.common.online.*;
-import com.becker.game.multiplayer.common.*;
-import com.becker.game.multiplayer.common.ui.*;
-import com.becker.ui.table.*;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.Player;
+import com.becker.game.common.online.OnlineGameTable;
+import com.becker.game.multiplayer.common.MultiGameOptions;
+import com.becker.game.multiplayer.common.ui.PlayerTableModel;
+import com.becker.ui.table.TableBase;
+import com.becker.ui.table.TableButton;
+import com.becker.ui.table.TableButtonListener;
+import com.becker.ui.table.TableColumnMeta;
 
-import javax.swing.table.*;
-import java.awt.event.*;
-import java.util.*;
-import java.awt.Color;
+import javax.swing.table.TableModel;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 /**
  * A table that has a row for each virtual online game table.

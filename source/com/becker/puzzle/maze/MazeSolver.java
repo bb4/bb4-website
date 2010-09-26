@@ -1,8 +1,8 @@
 package com.becker.puzzle.maze;
 
-import java.util.*;
-import java.util.List;
 import java.awt.*;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author Barry Becker

@@ -1,7 +1,7 @@
 package com.becker.game.card;
 
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Barry Becker  Date: Mar 5, 2005

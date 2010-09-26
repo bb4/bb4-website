@@ -1,6 +1,8 @@
 package com.becker.apps.misc.ids;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
 
 public class UniqueIdGenerator  {
  

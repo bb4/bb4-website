@@ -1,24 +1,15 @@
 package com.becker.game.twoplayer.pente.ui;
 
 import com.becker.common.Location;
-import com.becker.game.common.Board;
 import com.becker.game.common.BoardPosition;
-import com.becker.game.common.GameContext;
 import com.becker.game.common.GamePiece;
 import com.becker.game.common.ui.GameBoardViewer;
 import com.becker.game.common.ui.ViewerMouseListener;
-import com.becker.game.twoplayer.checkers.CheckersController;
-import com.becker.game.twoplayer.checkers.CheckersMove;
-import com.becker.game.twoplayer.checkers.ui.CheckersBoardViewer;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.pente.PenteBoard;
 import com.becker.game.twoplayer.pente.PenteController;
 
-import javax.swing.*;
 import java.awt.event.MouseEvent;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  *  Mouse handling for checkers game.

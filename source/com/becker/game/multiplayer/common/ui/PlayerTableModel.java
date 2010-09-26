@@ -1,7 +1,8 @@
 package com.becker.game.multiplayer.common.ui;
 
-import javax.swing.table.*;
-import java.util.*;
+import javax.swing.table.DefaultTableModel;
+import java.util.List;
+import java.util.Vector;
 
 
 /**

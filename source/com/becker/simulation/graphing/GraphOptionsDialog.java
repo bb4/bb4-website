@@ -6,9 +6,6 @@ import com.becker.common.math.function.Function;
 import com.becker.common.math.interplolation.InterpolationMethod;
 import com.becker.simulation.common.Simulator;
 import com.becker.simulation.common.SimulatorOptionsDialog;
-import com.becker.simulation.dice.DiceSimulator;
-import com.becker.simulation.parameter.ParameterDistributionType;
-import com.becker.ui.components.NumberInput;
 
 import javax.swing.*;
 import java.awt.*;

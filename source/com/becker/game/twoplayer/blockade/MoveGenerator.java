@@ -3,12 +3,10 @@ package com.becker.game.twoplayer.blockade;
 import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.MoveList;
-import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
 import com.becker.optimization.parameter.ParameterArray;
-import java.util.Iterator;
+
 import java.util.LinkedList;
 import java.util.List;
 

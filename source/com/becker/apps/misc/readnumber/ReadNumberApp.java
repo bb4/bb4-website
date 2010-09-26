@@ -2,8 +2,9 @@ package com.becker.apps.misc.readnumber;
 
 import com.becker.sound.SpeechSynthesizer;
 import com.becker.ui.GUIUtil;
-import java.math.*;
-import java.util.*;
+
+import java.math.BigInteger;
+import java.util.Scanner;
 
 /**
  * @author Barry Becker Date: May 6, 2006

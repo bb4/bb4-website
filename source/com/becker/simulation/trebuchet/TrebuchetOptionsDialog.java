@@ -1,11 +1,11 @@
 package com.becker.simulation.trebuchet;
 
+import com.becker.simulation.common.NewtonianSimOptionsDialog;
 import com.becker.ui.components.NumberInput;
-import com.becker.simulation.common.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionListener;
 
 /**
  * Use this modal dialog to let the user choose from among the

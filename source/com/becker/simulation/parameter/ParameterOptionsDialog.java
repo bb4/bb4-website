@@ -1,6 +1,7 @@
 package com.becker.simulation.parameter;
 
-import com.becker.simulation.common.*;
+import com.becker.simulation.common.Simulator;
+import com.becker.simulation.common.SimulatorOptionsDialog;
 
 import javax.swing.*;
 import java.awt.*;

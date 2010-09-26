@@ -1,8 +1,9 @@
 package com.becker.game.twoplayer.blockade;
 
 import com.becker.common.Location;
-import com.becker.game.common.*;
-import com.becker.game.twoplayer.common.*;
+import com.becker.game.common.GamePiece;
+import com.becker.game.twoplayer.common.TwoPlayerMove;
+
 import java.util.Iterator;
 
 /**

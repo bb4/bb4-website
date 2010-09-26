@@ -1,12 +1,13 @@
 package com.becker.game.multiplayer.trivial.ui;
 
-import com.becker.game.common.*;
-import com.becker.game.multiplayer.common.ui.*;
-import com.becker.game.multiplayer.trivial.*;
-import com.becker.ui.*;
+import com.becker.game.common.GameController;
+import com.becker.game.common.GameOptions;
+import com.becker.game.multiplayer.common.ui.MultiGameOptionsDialog;
+import com.becker.game.multiplayer.trivial.TrivialOptions;
 
 import javax.swing.*;
-import java.awt.event.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
 
 /**
  * Use this modal dialog to let the user choose from among the

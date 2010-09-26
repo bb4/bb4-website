@@ -1,11 +1,12 @@
 package com.becker.apps.misc.axes;
 
-import com.becker.common.*;
-import com.becker.ui.legend.*;
+import com.becker.common.ColorMap;
+import com.becker.ui.legend.ContinuousColorLegend;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * User: Barry Becker

@@ -1,9 +1,12 @@
 package com.becker.game.common.online;
 
-import com.becker.game.common.*;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.Player;
 
-import java.io.*;
-import java.util.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * A list of tables that players can sit down at in rder to play a game in an online environment.

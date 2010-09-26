@@ -1,14 +1,17 @@
 package com.becker.game.multiplayer.common.ui;
 
+import com.becker.game.common.GameContext;
+import com.becker.game.common.GameViewable;
+import com.becker.game.common.ui.NewGameDialog;
+import com.becker.game.multiplayer.common.MultiGameOptions;
 import com.becker.ui.components.GradientButton;
-import com.becker.game.common.*;
-import com.becker.game.common.ui.*;
-import com.becker.game.multiplayer.common.*;
 
 import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Manager players for new local game.

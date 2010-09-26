@@ -1,6 +1,7 @@
 package com.becker.ui.xmlviewer;
 
-import org.w3c.dom.*;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  *  This class wraps a DOM node and returns the text we want to

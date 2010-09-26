@@ -1,15 +1,14 @@
 package com.becker.game.multiplayer.galactic;
 
+import com.becker.common.Location;
 import com.becker.game.common.*;
-import com.becker.game.common.Move;
 import com.becker.game.common.ui.GameBoardViewer;
-import com.becker.game.multiplayer.common.MultiGamePlayer;
-import com.becker.game.multiplayer.galactic.ui.GalaxyViewer;
-import com.becker.game.multiplayer.galactic.player.*;
-import com.becker.common.*;
-
 import com.becker.game.multiplayer.common.MultiGameController;
-import java.util.*;
+import com.becker.game.multiplayer.common.MultiGamePlayer;
+import com.becker.game.multiplayer.galactic.player.GalacticPlayer;
+import com.becker.game.multiplayer.galactic.ui.GalaxyViewer;
+
+import java.util.List;
 
 /**
  * Defines everything the computer needs to know to play Galactic Empire.

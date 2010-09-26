@@ -1,13 +1,13 @@
 package com.becker.game.multiplayer.poker.ui;
 
+import com.becker.common.Location;
+import com.becker.game.common.Board;
+import com.becker.game.common.GameControllerInterface;
+import com.becker.game.common.ui.GameBoardRenderer;
 import com.becker.game.multiplayer.common.ui.MultiGameBoardRenderer;
 import com.becker.game.multiplayer.poker.PokerController;
 import com.becker.game.multiplayer.poker.PokerPlayerMarker;
 import com.becker.game.multiplayer.poker.player.PokerPlayer;
-import com.becker.game.common.ui.GameBoardRenderer;
-import com.becker.game.common.GameControllerInterface;
-import com.becker.game.common.Board;
-import com.becker.common.Location;
 
 import java.awt.*;
 

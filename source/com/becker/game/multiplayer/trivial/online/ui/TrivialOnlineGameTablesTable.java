@@ -1,15 +1,13 @@
 package com.becker.game.multiplayer.trivial.online.ui;
 
-import com.becker.game.multiplayer.trivial.*;
-import com.becker.game.multiplayer.trivial.player.*;
-import com.becker.game.multiplayer.trivial.online.*;
-import com.becker.game.multiplayer.common.*;
-import com.becker.game.multiplayer.common.online.ui.*;
-import com.becker.game.common.online.*;
-import com.becker.game.common.*;
-
+import com.becker.game.common.Player;
+import com.becker.game.common.online.OnlineGameTable;
+import com.becker.game.multiplayer.common.MultiGameOptions;
+import com.becker.game.multiplayer.common.online.ui.MultiPlayerOnlineGameTablesTable;
+import com.becker.game.multiplayer.trivial.TrivialOptions;
+import com.becker.game.multiplayer.trivial.online.OnlineTrivialTable;
+import com.becker.game.multiplayer.trivial.player.TrivialHumanPlayer;
 import com.becker.ui.table.TableButtonListener;
-import java.awt.event.*;
 
 /**
  * Show Trivial specific game options in the table row.

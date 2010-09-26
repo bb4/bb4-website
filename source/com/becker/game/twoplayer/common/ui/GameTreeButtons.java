@@ -1,13 +1,13 @@
 package com.becker.game.twoplayer.common.ui;
 
+import com.becker.game.common.GameContext;
+import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.ui.components.GradientButton;
-import com.becker.ui.*;
-import com.becker.game.twoplayer.common.*;
-import com.becker.game.common.*;
 
 import javax.swing.*;
-import java.awt.event.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Set of buttons to control debug animation at the bottom fot he gameTreeDialog.

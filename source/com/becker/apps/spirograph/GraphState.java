@@ -3,7 +3,7 @@ package com.becker.apps.spirograph;
 import com.becker.common.math.MathUtil;
 import com.becker.ui.sliders.ColorChangeListener;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 

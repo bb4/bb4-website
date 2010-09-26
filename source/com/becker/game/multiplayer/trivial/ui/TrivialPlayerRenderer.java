@@ -1,15 +1,17 @@
 package com.becker.game.multiplayer.trivial.ui;
 
-import com.becker.game.common.*;
-import com.becker.game.common.ui.*;
-import com.becker.game.multiplayer.trivial.player.TrivialPlayer;
-import com.becker.common.*;
-
+import com.becker.common.Location;
+import com.becker.game.common.Board;
+import com.becker.game.common.BoardPosition;
+import com.becker.game.common.GamePiece;
+import com.becker.game.common.ui.GameBoardRenderer;
+import com.becker.game.common.ui.GamePieceRenderer;
 import com.becker.game.multiplayer.common.MultiPlayerMarker;
+import com.becker.game.multiplayer.trivial.player.TrivialPlayer;
 import com.becker.java2d.gradient.RoundGradientPaint;
 
 import java.awt.*;
-import java.awt.geom.*;
+import java.awt.geom.Ellipse2D;
 
 
 /**

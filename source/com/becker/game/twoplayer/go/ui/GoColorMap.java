@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.go.ui;
 
-import com.becker.common.*;
+import com.becker.common.ColorMap;
 
 import java.awt.*;
 

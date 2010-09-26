@@ -1,20 +1,25 @@
 package com.becker.game.multiplayer.poker.ui;
 
-import com.becker.game.card.*;
-import com.becker.game.common.*;
-import com.becker.game.common.ui.*;
-import com.becker.game.multiplayer.poker.*;
-import com.becker.java2d.gradient.RoundGradientPaint;
-import com.becker.ui.*;
-import com.becker.common.*;
-
+import com.becker.common.Location;
+import com.becker.game.card.Card;
+import com.becker.game.card.Suit;
+import com.becker.game.common.Board;
+import com.becker.game.common.BoardPosition;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.GamePiece;
+import com.becker.game.common.ui.GamePieceRenderer;
+import com.becker.game.multiplayer.poker.PokerHand;
+import com.becker.game.multiplayer.poker.PokerPlayerMarker;
 import com.becker.game.multiplayer.poker.player.PokerPlayer;
 import com.becker.game.twoplayer.common.ui.TwoPlayerBoardRenderer;
+import com.becker.java2d.gradient.RoundGradientPaint;
+import com.becker.ui.GUIUtil;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.*;
-import java.text.*;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
+import java.text.NumberFormat;
 
 
 /**
