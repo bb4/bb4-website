@@ -47,13 +47,13 @@ public final class GoMoveGenerator {
         CandidateMoveAnalyzer candidateMoves = new CandidateMoveAnalyzer(board);
 
         boolean player1 = (lastMove == null) || !lastMove.isPlayer1();
+        int lastMoveValue = (lastMove== null) ? 0 : lastMove.getValue(); 
 
         for (int i = 1; i <= nCols; i++ )  {
             for (int j = 1; j <= nRows; j++ )  {
                 // if its a candidate move and not an immediate take-back (which would break the rule of ko)
                 if ( candidateMoves.isCandidateMove( j, i ) && !isTakeBack( j, i, (GoMove) lastMove, board ) ) {
-                    assert lastMove != null;
-                    GoMove m = GoMove.createGoMove( j, i, lastMove.getValue(), new GoStone(player1) );
+                    GoMove m = GoMove.createGoMove( j, i, lastMoveValue, new GoStone(player1) );
 
                     if ( m.isSuicidal(board) ) {
                         GameContext.log( 2, "The move was a suicide (can't add it to the list): " + m );

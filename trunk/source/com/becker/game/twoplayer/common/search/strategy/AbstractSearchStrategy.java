@@ -222,7 +222,7 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
      * Update the percentage done serching variable for the progress bar
      * if we are at the top level (otherwise this is a no-op).
      */
-    protected void updatePercentDone(int depth,  List remainingNextMoves) {
+    protected void updatePercentDone(int depth, List remainingNextMoves) {
         if (depth == lookAhead_)   {
             percentDone_ = 100 * (numTopLevelMoves_ - remainingNextMoves.size()) / numTopLevelMoves_;
         }

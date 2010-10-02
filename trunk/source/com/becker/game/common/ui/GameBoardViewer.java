@@ -41,7 +41,6 @@ public abstract class GameBoardViewer extends JPanel
     private final List<GameChangedListener> gameListeners_ = new ArrayList<GameChangedListener>();
 
     protected JProgressBar progressBar_ = null;
-    protected Timer timer_ = null;
 
     protected final Cursor waitCursor_ = new Cursor( Cursor.WAIT_CURSOR );
     protected Cursor origCursor_ = null;
@@ -157,7 +156,7 @@ public abstract class GameBoardViewer extends JPanel
     {
         // this will paint the component immediately
         Graphics g = this.getGraphics();
-        if (g!=null) {
+        if (g != null) {
             this.paint(g);
         }
     }
