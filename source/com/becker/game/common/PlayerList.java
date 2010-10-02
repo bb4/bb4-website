@@ -52,6 +52,15 @@ public class PlayerList extends ArrayList<Player> {
     }
 
     /**
+     * Reset won state so no one is marked as having won.
+     */
+    public void reset()  {
+        for (Player p : this) {
+            p.setWon(false);
+        }
+    }
+
+    /**
      * @return true if any of the players have won.
      */
     public boolean anyPlayerWon() {

@@ -86,7 +86,6 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
     protected JPanel createPlayerPanel() {
         TwoPlayerController c = get2PlayerController();
 
-
         JPanel outerPanel = new JPanel(new BorderLayout());
 
         JPanel p = new JPanel();

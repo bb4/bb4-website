@@ -26,6 +26,8 @@ public class TestE7Information extends TestEyeTypeAnalyzer {
         checkBlackEye(b, new E7Information(E1122222.toString()), EyeStatus.ALIVE);
         checkWhiteEye(b, new E7Information(E1122222.toString()), EyeStatus.ALIVE);
     }
+
+    
     // TODO
 
 

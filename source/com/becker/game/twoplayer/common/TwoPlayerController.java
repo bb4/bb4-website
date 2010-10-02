@@ -131,10 +131,15 @@ public abstract class TwoPlayerController extends GameController {
      * create the 2 players.
      */
     private void createPlayers() {
-        PlayerList players = new PlayerList();
-        players.add(new Player(getTwoPlayerOptions().getPlayerName(true), null, true));
-        players.add(new Player(getTwoPlayerOptions().getPlayerName(false), null, false));
-        setPlayers(players);
+        if (getPlayers() == null) {
+            PlayerList players = new PlayerList();
+            players.add(new Player(getTwoPlayerOptions().getPlayerName(true), null, true));
+            players.add(new Player(getTwoPlayerOptions().getPlayerName(false), null, false));
+            setPlayers(players);
+        }
+        else {
+            getPlayers().reset();
+        }
     }
 
     /**

@@ -31,10 +31,9 @@ import java.awt.event.ActionListener;
  *  @author Barry Becker
  */
 public abstract class TwoPlayerPanel extends GamePanel
-                                implements ActionListener, GameChangedListener
-{
+                                implements ActionListener, GameChangedListener {
 
-    // for showing progress while the computer thinks.
+    /** for showing progress while the computer thinks. */
     protected JProgressBar progressBar_;
 
     protected GameTreeDialog treeDialog_;

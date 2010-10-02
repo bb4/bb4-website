@@ -280,7 +280,7 @@ public final class GoController extends TwoPlayerController
 
     /**
      * @param player1 if true, then the score for player one is returned else player2's score is returned
-     * @return the score
+     * @return the score (larger is better regardless of player)
      */
     public double getFinalScore(boolean player1)
     {
@@ -298,7 +298,7 @@ public final class GoController extends TwoPlayerController
         GameContext.log(2, "getNumCaptures(" + side + ")=" + getNumCaptures(player1));
         GameContext.log(2, "num dead " + side + " stones on board: "+ numDead);
         GameContext.log(2, "getTerritory(" + side + ")="+p1Territory);
-        GameContext.log(1, "terr - totalCaptures="+ (p1Territory - totalCaptures));
+        GameContext.log(0, "terr - totalCaptures="+ (p1Territory - totalCaptures));
         return p1Territory - totalCaptures;
     }
 
