@@ -127,7 +127,7 @@ public class PostRemoveUpdater extends PostChangeUpdater {
             checkEnemyPoistionForMergeGroup(seed, mergedGroupLists);
         }
         if (mergedGroupLists.size() > 1) {
-            GameContext.log(2, "More than one merged group:"+mergedGroupLists.size());
+            GameContext.log(2, "More than one merged group:" + mergedGroupLists.size() + "\n");
         }
         return mergedGroupLists;
     }

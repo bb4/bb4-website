@@ -66,7 +66,7 @@ final class GoGroupRenderer {
 
             // the colormap will show red if close to dead,
             // so reverse the health value for the other player
-            double h = (USE_RELATIVE_GROUP_SCORING ? group.getRelativeHealth():group.getAbsoluteHealth());
+            double h = (USE_RELATIVE_GROUP_SCORING ? group.getRelativeHealth(board_, true):group.getAbsoluteHealth());
             if (!group.isOwnedByPlayer1())  {
                 h = -h;
             }

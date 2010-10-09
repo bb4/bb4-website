@@ -38,6 +38,7 @@ public final class GoMoveGenerator {
                                         boolean player1sPerspective )
     {
         GoProfiler prof = GoProfiler.getInstance();
+        prof.startGenerateMoves();
         GoBoard board = (GoBoard)controller_.getBoard();
         MoveList moveList = new MoveList();
         int nCols = board.getNumCols();
