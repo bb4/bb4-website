@@ -47,6 +47,7 @@ public class RelativeHealthCalculator {
     /**
      * If there is a weakest group, then boost ourselves relative to it.
      * it may be a positive or negative boost to our health depending on its relative strength.
+     * @return realtive health
      */
     private float boostRelativeHealthBasedOnWeakNbr(GoBoard board, float absoluteHealth) {
 
@@ -130,22 +131,31 @@ public class RelativeHealthCalculator {
         // for every stone in the group.
         for (GoBoardPosition stone : groupStones) {
             Set nbrs = nbrAnalyzer.findGroupNeighbors(stone, false);
-
-            // if the stone has any enemy nbrs then mark it visited.
-            // later we will count how many got visited.
-            // this is a bit of a hack to determine how surrounded the group is by enemy groups
-            for (Object peNbr : nbrs) {
-                GoBoardPosition possibleEnemy = (GoBoardPosition)peNbr;
-                if (possibleEnemy.getPiece().isOwnedByPlayer1() != group_.isOwnedByPlayer1()
-                        && !possibleEnemy.isInEye()) {
-                    // setting visited to true to indicate there is an enemy nbr within group distance.
-                    stone.setVisited(true);
-                    // if the group is already there, it does not get added again.
-                    assert (possibleEnemy.getGroup()!=null);
-                    enemyNbrs.add(possibleEnemy.getGroup());
-                }
-            }
+            addEnemyNeighborsForStone(enemyNbrs, stone, nbrs);
         }
         return enemyNbrs;
+    }
+
+    /**
+     * if the stone has any enemy nbrs then mark it visited.
+     * later we will count how many got visited.
+     * this is a bit of a hack to determine how surrounded the group is by enemy groups.
+     * @param enemyNbrs
+     * @param stone
+     * @param nbrs
+     */
+    private void addEnemyNeighborsForStone(GoGroupSet enemyNbrs, GoBoardPosition stone, Set nbrs) {
+         
+        for (Object possibleEnemyNbr : nbrs) {
+            GoBoardPosition possibleEnemy = (GoBoardPosition)possibleEnemyNbr;
+            if (possibleEnemy.getPiece().isOwnedByPlayer1() != group_.isOwnedByPlayer1()
+                    && !possibleEnemy.isInEye()) {
+                // setting visited to true to indicate there is an enemy nbr within group distance.
+                stone.setVisited(true);
+                // if the group is already there, it does not get added again.
+                assert (possibleEnemy.getGroup()!=null) : "Possible enemy, "+ possibleEnemy +", had no group!";
+                enemyNbrs.add(possibleEnemy.getGroup());
+            }
+        }
     }
 }

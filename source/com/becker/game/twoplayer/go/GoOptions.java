@@ -12,7 +12,7 @@ public class GoOptions extends TwoPlayerOptions {
     public static final float DEFAULT_KOMI = 5.5f;
 
     /** initial look ahead factor. */
-    static final int DEFAULT_LOOK_AHEAD = 2;
+    static final int DEFAULT_LOOK_AHEAD = 3;
 
     /** for any given ply never consider more that BEST_PERCENTAGE of the top moves. */
     static final int DEFAULT_PERCENTAGE_BEST_MOVES = 70;
@@ -21,8 +21,10 @@ public class GoOptions extends TwoPlayerOptions {
     static final int DEFAULT_MIN_BEST_MOVES = 10;
 
 
-    // additional score given to black or white to bring things into balance.
-    // sort of like giving a partial handicap stone.
+    /**
+     *  additional score given to black or white to bring things into balance.
+     * sort of like giving a partial handicap stone.
+     */
     private float komi_ = DEFAULT_KOMI;
 
     public GoOptions() {}

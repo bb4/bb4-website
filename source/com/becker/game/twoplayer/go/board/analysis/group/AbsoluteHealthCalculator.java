@@ -143,8 +143,7 @@ public class AbsoluteHealthCalculator {
      * Get the number of liberties that the group has.
      * @return the number of liberties that the group has
      */
-    public GoBoardPositionSet getLiberties(GoBoard board)
-    {
+    public GoBoardPositionSet getLiberties(GoBoard board) {
         if (eyeCache_.isValid()) {
              return cachedLiberties_;
         }
@@ -172,8 +171,7 @@ public class AbsoluteHealthCalculator {
      * Calculate the number of stones in the group.
      * @return number of stones in the group.
      */
-    public int getNumStones()
-    {
+    public int getNumStones() {
         if (eyeCache_.isValid()) {
             return cachedNumStonesInGroup_;
         }

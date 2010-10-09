@@ -269,6 +269,8 @@ public final class GoBoard extends TwoPlayerBoard
 
     /**
      * @see TerritoryAnalyzer#getTerritoryEstimate
+     * @param forPlayer1 the player to get the estimate for
+     * @param isEndOfGame then we need the estimate to be more accurate.
      * @return estimate of size of territory for specified player.
      */
     public int getTerritoryEstimate( boolean forPlayer1, boolean isEndOfGame) {

@@ -57,6 +57,8 @@ public class TerritoryAnalyzer {
      * This estimate is computed by summing all spaces in eyes + dead opponent stones that are still on the board in eyes.
      * Empty spaces are weighted by how likely they are to eventually be territory of one side or the other.
      * At the end of the game this + the number of pieces captured so far should give the true score.
+     * @param isEndOfGame use 0 or 1 instead of pos.scoreContribution if true.
+     * @return estimate of territory for forPlayer1
      */
     public int getTerritoryEstimate( boolean forPlayer1, boolean isEndOfGame)
     {
@@ -83,10 +85,10 @@ public class TerritoryAnalyzer {
                    assert(piece != null);
                    if (group != null) {
                        // add credit for probable captured stones.
-                       if (forPlayer1 && !piece.isOwnedByPlayer1() && group.getRelativeHealth() >= 0) {
+                       if (forPlayer1 && !piece.isOwnedByPlayer1() && group.getRelativeHealth(board_, isEndOfGame) >= 0) {
                            territoryEstimate += val;
                        }
-                       else if (!forPlayer1 && piece.isOwnedByPlayer1() && group.getRelativeHealth() <= 0)  {
+                       else if (!forPlayer1 && piece.isOwnedByPlayer1() && group.getRelativeHealth(board_, isEndOfGame) <= 0)  {
                            territoryEstimate -= val;
                        }
                    }
@@ -173,7 +175,7 @@ public class TerritoryAnalyzer {
      * Need to loop over the board and determine for each space if it is territory for the specified player.
      * We will first mark visited all the stones that are "controlled" by the specified player.
      * The unoccupied "controlled" positions will be territory.
-     * @return the change in score after updating the empty regions
+     * @return the change in score after updating the empty regions.
      */
     private float updateEmptyRegions(boolean isEndOfGame) {
         float diffScore = 0;
@@ -245,14 +247,14 @@ public class TerritoryAnalyzer {
      * @param stones actually the positions containing the stones.
      * @return the average scores of the stones in the list.
      */
-    private static float calcAverageScore(GoBoardPositionSet stones)
+    private float calcAverageScore(GoBoardPositionSet stones)
     {
         float totalScore = 0;
 
         for (GoBoardPosition stone : stones) {           
             GoGroup group = stone.getString().getGroup();
             if (USE_RELATIVE_GROUP_SCORING) {
-                totalScore += group.getRelativeHealth();
+                totalScore += group.getRelativeHealth(board_, false);
             }
             else {
                 totalScore += group.getAbsoluteHealth();

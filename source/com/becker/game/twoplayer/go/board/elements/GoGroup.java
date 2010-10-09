@@ -17,7 +17,6 @@ import java.util.Set;
  *  Groups may be connected by diagonals or one space jumps, or uncut knights moves, but not nikken tobi.
  *
  *  @see GoString
- *  @see com.becker.game.twoplayer.go.board.GoBoard
  *  @author Barry Becker
  */
 public final class GoGroup extends GoSet implements IGoGroup
@@ -187,9 +186,21 @@ public final class GoGroup extends GoSet implements IGoGroup
     public float getAbsoluteHealth() {
         return groupAnalyzer_.getAbsoluteHealth();
     }
-    
-    public float getRelativeHealth() {
-        return groupAnalyzer_.getRelativeHealth();
+
+    /**
+     * We try to use the cached relative health value if we can.
+     * @param board needed to calculate new value if not cached
+     * @param useCachedValue if true, just return the cached value instead of checking for validity.
+     * @return relative health
+     */
+    public float getRelativeHealth(GoBoard board, boolean useCachedValue) {
+        if (groupAnalyzer_.isValid() || useCachedValue) {
+            if (!groupAnalyzer_.isValid())
+                System.out.println("using cached relative health when not valid");
+            return groupAnalyzer_.getRelativeHealth();
+        }
+        System.out.println("stale abs health. recalculating relative health");
+        return groupAnalyzer_.calculateRelativeHealth(board);
     }
 
     /**

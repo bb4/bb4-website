@@ -27,6 +27,8 @@ public class GroupAnalyzer implements Cloneable {
     private float relativeHealth_;
 
     private AbsoluteHealthCalculator absHealthCalculator_;
+
+    /** cached absolute health to avoid needless recalculation. */
     private float absoluteHealth_;
 
     /**
@@ -41,10 +43,9 @@ public class GroupAnalyzer implements Cloneable {
     /**
      * @return health score independent of neighboring groups.
      */
-    public float getAbsoluteHealth()
-    {
+    public float getAbsoluteHealth() {
         //if (!isValid()) {
-        //    GameContext.log(0, "Getting stale absolute health = " + relativeHealth_);
+        //    assert false :  "Getting stale absolute health = " + absoluteHealth_;
         //}
         return absoluteHealth_;
     }
@@ -52,11 +53,7 @@ public class GroupAnalyzer implements Cloneable {
     /**
      * @return health score dependent on strength of neighboring groups.
      */
-    public float getRelativeHealth()
-    {
-        if (!isValid()) {
-            GameContext.log(0, "Getting stale relative health = " + relativeHealth_);
-        }
+    public float getRelativeHealth() {
         return relativeHealth_;
     }
 
@@ -76,8 +73,7 @@ public class GroupAnalyzer implements Cloneable {
      * Get the number of liberties that the group has.
      * @return the number of liberties that the group has
      */
-    public GoBoardPositionSet getLiberties(GoBoard board)
-    {
+    public GoBoardPositionSet getLiberties(GoBoard board) {
         return absHealthCalculator_.getLiberties(board);
     }
 
@@ -93,16 +89,14 @@ public class GroupAnalyzer implements Cloneable {
      * Calculate the number of stones in the group.
      * @return number of stones in the group.
      */
-    public int getNumStones()
-    {
+    public int getNumStones() {
        return absHealthCalculator_.getNumStones();
     }
 
     /**
      * @return  set of eyes currently identified for this group.
      */
-    public Set<GoEye> getEyes(GoBoard board)
-    {
+    public Set<GoEye> getEyes(GoBoard board) {
         return absHealthCalculator_.getEyes(board);
     }
 
@@ -130,8 +124,11 @@ public class GroupAnalyzer implements Cloneable {
      *
      * @return the overall health of the group.
      */
-    public float calculateRelativeHealth(GoBoard board)
-    {
+    public float calculateRelativeHealth(GoBoard board) {
+        if (!isValid()) {
+            calculateAbsoluteHealth(board);
+        }
+
         RelativeHealthCalculator relativeCalculator = new RelativeHealthCalculator(group_);
         relativeHealth_ = relativeCalculator.calculateRelativeHealth(board, absoluteHealth_);
 
@@ -143,8 +140,7 @@ public class GroupAnalyzer implements Cloneable {
      * @throws CloneNotSupportedException
      */
     @Override
-    public Object clone() throws CloneNotSupportedException
-    {
+    public Object clone() throws CloneNotSupportedException {
         Object clone = super.clone();
         ((GroupAnalyzer)clone).absHealthCalculator_ = new AbsoluteHealthCalculator(group_);
         return clone;
