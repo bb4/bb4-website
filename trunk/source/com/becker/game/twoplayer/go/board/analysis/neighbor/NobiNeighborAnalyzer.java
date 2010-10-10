@@ -51,16 +51,16 @@ public class NobiNeighborAnalyzer {
         int col = stone.getCol();
 
         if ( row > 1 )
-            getNobiNeighbor( (GoBoardPosition) board_.getPosition(row - 1, col),
+            addNobiNeighbor( (GoBoardPosition) board_.getPosition(row - 1, col),
                                          friendOwnedByP1, nbrs, neighborType );
         if ( row + 1 <= board_.getNumRows() )
-            getNobiNeighbor( (GoBoardPosition) board_.getPosition(row + 1, col),
+            addNobiNeighbor( (GoBoardPosition) board_.getPosition(row + 1, col),
                                          friendOwnedByP1, nbrs, neighborType );
         if ( col > 1 )
-            getNobiNeighbor( (GoBoardPosition) board_.getPosition(row, col - 1),
+            addNobiNeighbor( (GoBoardPosition) board_.getPosition(row, col - 1),
                                          friendOwnedByP1, nbrs, neighborType );
         if ( col + 1 <= board_.getNumCols() )
-            getNobiNeighbor( (GoBoardPosition)board_.getPosition(row, col + 1),
+            addNobiNeighbor( (GoBoardPosition)board_.getPosition(row, col + 1),
                                          friendOwnedByP1, nbrs, neighborType );
 
         return nbrs;
@@ -74,7 +74,7 @@ public class NobiNeighborAnalyzer {
      * @param nbrs  hashset of the ngbors matching the criteria.
      * @param neighborType  one of the defined neighbor types.
      */
-    private static void getNobiNeighbor(GoBoardPosition nbrStone, boolean friendOwnedByP1,
+    private static void addNobiNeighbor(GoBoardPosition nbrStone, boolean friendOwnedByP1,
                                         GoBoardPositionSet nbrs, NeighborType neighborType) {
         boolean correctNeighborType = true;
         switch (neighborType) {

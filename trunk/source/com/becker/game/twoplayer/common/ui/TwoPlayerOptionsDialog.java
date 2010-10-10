@@ -58,7 +58,6 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
         searchOptions.setSearchStrategyMethod(getSelectedStrategy());
         searchOptions.setPercentageBestMoves(bestPercentageField_.getIntValue());
         options.setShowGameTree(gameTreeCheckbox_.isSelected() );
-        options.setShowComputerAnimation(computerAnimationCheckbox_.isSelected());
         return options;
     }
 
@@ -162,14 +161,6 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
         gameTreeCheckbox_.setAlignmentX( Component.LEFT_ALIGNMENT );
         p.add( gameTreeCheckbox_ );
 
-        // animation option
-        computerAnimationCheckbox_ =
-            new JCheckBox( GameContext.getLabel("SHOW_ANIMATION"), options.getShowComputerAnimation() );
-        computerAnimationCheckbox_.setToolTipText( GameContext.getLabel("SHOW_ANIMATION_TIP") );
-        computerAnimationCheckbox_.addActionListener( this );
-        computerAnimationCheckbox_.setAlignmentX( Component.LEFT_ALIGNMENT );
-        //computerAnimationCheckbox_.setEnabled(gameTreeCheckbox_.isSelected());
-        p.add( computerAnimationCheckbox_ );
         outerContainer.add(p, BorderLayout.NORTH);
 
         return outerContainer;

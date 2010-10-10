@@ -238,8 +238,9 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
     public void gameChanged(GameChangedEvent evt) {
         TwoPlayerController c = get2PlayerController();
         // note: we don't show the winner dialog if we are optimizing the weights.
-        if (c.getSearchable().done( (TwoPlayerMove)evt.getMove(), true) && !c.getTwoPlayerOptions().isAutoOptimize())
+        if (c.getSearchable().done( (TwoPlayerMove)evt.getMove(), true) && !c.getTwoPlayerOptions().isAutoOptimize()) {
             showWinnerDialog();
+        }
         else {
             if (get2PlayerController().getPlayers().allPlayersComputer()) {
                 continuePlay((TwoPlayerMove)evt.getMove());

@@ -34,6 +34,13 @@ public class GoBoardPositionList extends ArrayList<GoBoardPosition>
         super(positionList);
     }
 
+    /**
+     * Pop a position off the end of the list
+     * @return position removed from the end of the list.
+     */
+    public GoBoardPosition pop() {
+        return remove( size()-1 );
+    }
 
     /**
      * pretty print this list.
@@ -42,6 +49,7 @@ public class GoBoardPositionList extends ArrayList<GoBoardPosition>
     {
        GameContext.log(logLevel, this.toString(title));
     }
+
 
 
     /**

@@ -17,7 +17,7 @@ public final class TicTacToePatterns extends Patterns
 
     private static final int NUM_PATTERNS = 5;
 
-    private static String[] patternString = {
+    private static final String[] patternString = {
         "_X", "_X_", "_XX", "X_X", "XXX"
     };
 

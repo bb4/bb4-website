@@ -16,10 +16,11 @@ public class TestAll extends TestCase {
 
     public static Test suite() {
 
-        TestSuite suite = new TestSuite("All TicTacToe Tests");
+        TestSuite suite = new TestSuite("All Search Tests");
 
         suite.addTest(com.becker.game.twoplayer.common.search.transposition.TestAll.suite());
-        
+        suite.addTest(com.becker.game.twoplayer.common.search.strategy.TestAll.suite());
+
         return suite;
     }
 }

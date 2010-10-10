@@ -63,12 +63,12 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
     /**
      * Construct the strategy.
      * do not call directly. Use createSearchStrategy factory method instead.
-     * @param controller the game controller that has options and can make/undo moves.
+     * @param searchable the game controller that has options and can make/undo moves.
      * @param weights coefficients for the evaluation polunomial that indirectly determines the best move.
      */
-    protected AbstractSearchStrategy( Searchable controller, ParameterArray weights )
+    protected AbstractSearchStrategy( Searchable searchable, ParameterArray weights )
     {
-        searchable_ = controller;
+        searchable_ = searchable;
         SearchOptions opts = getOptions();
         alphaBeta_ = opts.getAlphaBeta();
         quiescence_ = opts.getQuiescence();
@@ -88,7 +88,7 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
     public TwoPlayerMove search( TwoPlayerMove lastMove, SearchTreeNode parent ) {
 
         Range window = getOptions().getInitialSearchWindow();
-        return searchInternal( lastMove,  lookAhead_, (int)window.getMin(), (int)window.getMax(),  parent );
+        return searchInternal( lastMove, lookAhead_, (int)window.getMin(), (int)window.getMax(),  parent );
     }
 
     /**

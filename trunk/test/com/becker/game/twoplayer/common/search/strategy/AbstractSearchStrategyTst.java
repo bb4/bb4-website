@@ -43,7 +43,7 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
     protected abstract SearchStrategyType getSearchStrategyToTest();
 
     /**
-     * Edge case where not searching is actually done. The found move will be the last move.
+     * Edge case where no searching is actually done. The found move will be the last move.
      */
     public void testZeroLookAheadSearch() {
         searchOptions.setLookAhead(0);
@@ -113,7 +113,7 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
         searchOptions.setLookAhead(4);
         searchOptions.setAlphaBeta(false);
         verifyMoves("FourLevelNoAlphaBeta", getExpectedFourLevelNoAlphaBetaMoves());
-    } 
+    }
 
     public void verifyMoves(String desc, ExpectedMoveMatrix expectedMoves) {
         searchOptions.setSearchStrategyMethod(getSearchStrategyToTest());

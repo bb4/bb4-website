@@ -24,7 +24,7 @@ public class TicTacToeBoard extends PenteBoard {
 
     /**
      * All empty positions are candidate moves dor tic tac toe.
-     * This is a bit simler than what we do for pente.
+     * This is a bit similar than what we do for pente.
      */
     @Override
     public void determineCandidateMoves() {
@@ -32,7 +32,6 @@ public class TicTacToeBoard extends PenteBoard {
         // first clear out what we had before
         initCandidateMoves();
 
-        // set the footprints
         int i,j;
 
         for ( i = 1; i <= getNumRows(); i++ )

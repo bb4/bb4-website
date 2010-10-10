@@ -36,8 +36,7 @@ public class Line {
      * Extend the line by an additional position.
      * @param pos the position to extend ourselves by.
      */
-    public void append(BoardPosition pos)
-    {
+    public void append(BoardPosition pos) {
         assert (pos != null): "Cannot append at null board position.";
         if ( pos.getPiece() == null )
             line.append( PentePatterns.UNOCCUPIED );
@@ -107,8 +106,7 @@ public class Line {
             return (evalLine( player1Perspective, pos, minpos, pos)
                     + evalLine( player1Perspective, pos, pos, maxpos));
         }
-        int wt = getWeight(opponentSymb, pos, minpos, maxpos);
-        return wt;
+        return getWeight(opponentSymb, pos, minpos, maxpos);
     }
 
     /**

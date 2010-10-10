@@ -3,7 +3,7 @@ package com.becker.game.twoplayer.common.search.strategy;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 
 /**
- * Date: Apr 3, 2010
+ * Meta informatino about a move made during search.
  *
  * @author Barry Becker
  */

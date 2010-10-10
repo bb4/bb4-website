@@ -174,7 +174,6 @@ public abstract class TwoPlayerController extends GameController {
         return board_.getTypicalNumMoves() / getNumMoves();
     }
 
-
     /**
      * this returns a reference to the weights class for editing
      * @return  contains the weights used for computer player1 and 2.
@@ -360,7 +359,7 @@ public abstract class TwoPlayerController extends GameController {
     }
 
     /**
-     * {@inheritDoc}}
+     * {@inheritDoc}
      */
     public boolean isDone() {
         TwoPlayerMove lastMove = (TwoPlayerMove)getLastMove();
@@ -436,12 +435,6 @@ public abstract class TwoPlayerController extends GameController {
 
             board_.makeMove( m );
 
-            // should show in game tree dlg if present
-            /* @@ this is not working because the gameTree dialog does not have the current search state
-            if ( viewer_ != null && getShowComputerAnimation() ) {
-                viewer_.refresh();
-            }*/
-
             BoardPosition pos = b.getPosition(m.getToLocation());
             //assert pos != null : "pos was null at " + m.getToLocation() + " pass="+  m.isPassingMove();
             hash.applyMove(m, b.getStateIndex(pos));
@@ -453,6 +446,8 @@ public abstract class TwoPlayerController extends GameController {
          */
         public final void undoInternalMove( TwoPlayerMove m ) {
             TwoPlayerBoard b = (TwoPlayerBoard) board_;
+            TwoPlayerMove lastMove = (TwoPlayerMove)getLastMove();
+            assert m.equals(lastMove) : "The move we are trying to undo ("+m+") was not equal to the last move ("+lastMove+")";
             hash.applyMove(m, b.getStateIndex(b.getPosition(m.getToLocation())));
             b.undoMove();  
         }

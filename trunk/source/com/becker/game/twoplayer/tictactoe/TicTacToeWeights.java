@@ -40,7 +40,7 @@ public class TicTacToeWeights extends GameWeights {
         "1 in a row weight (_X_)",             // _X_
         "open 2 in a row weight (XX_)",        // XX_
         "open of 2 in a row weight (X_X)",     // X_X
-        "3 in a row weight (XXX)",              // XXX
+        "3 in a row weight (XXX)",             // XXX
     };
 
     public TicTacToeWeights() {

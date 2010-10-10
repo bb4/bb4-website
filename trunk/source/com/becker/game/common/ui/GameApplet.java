@@ -28,12 +28,11 @@ public class GameApplet extends JApplet
 
         String gameName = getParameter("name");
         String localeName = getParameter("locale");
-        System.out.println("locale=" + localeName);
         if (localeName == null)
             localeName = "ENGLISH";
 
         LocaleType locale = GameContext.getLocale(localeName, true);
-        System.out.println("setting the locale to " + locale + " for language="+ localeName);
+        GameContext.log(0, "setting the locale to " + locale + " for language="+ localeName);
 
         GameContext.loadGameResources(gameName);
         GameContext.setLocale(locale);
