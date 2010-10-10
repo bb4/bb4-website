@@ -25,7 +25,7 @@ public final class PositionalScoreAnalyzer
 
     /** we assign a value to a stone based on the line on which it falls when calculating worth. */
     private static final float[] LINE_VALS = {
-        -0.5f,  // first line
+       -0.5f,   // first line
         0.1f,   // second line
         1.0f,   // third line
         0.9f,   // fourth line

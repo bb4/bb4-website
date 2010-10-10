@@ -23,8 +23,7 @@ public class MoveEvaluator
     /**
      *  Constructor
      */
-    public MoveEvaluator(TwoPlayerBoard board, Patterns patterns)
-    {
+    public MoveEvaluator(TwoPlayerBoard board, Patterns patterns) {
         patterns_ = patterns;
         board_ = board;
         lineFactory_ = new LineFactory();
@@ -42,8 +41,7 @@ public class MoveEvaluator
      *  @return the lastMoves value modified by the value add of the new move.
      *   a large positive value means that the move is good from the specified players viewpoint
      */
-    public int worth( Move lastMove, ParameterArray weights )
-    {
+    public int worth( Move lastMove, ParameterArray weights ) {
         TwoPlayerMove move = (TwoPlayerMove)lastMove;
         int row = move.getToRow();
         int col = move.getToCol();
@@ -91,7 +89,6 @@ public class MoveEvaluator
 
         int position = currentPos - start;
         int diff = line.computeValueDifference(position);
-        //line.worthDebug(dir.name(), position, diff);
         return diff;
     }
 

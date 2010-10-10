@@ -29,8 +29,7 @@ public class PenteController extends TwoPlayerController
     /**
      *  Constructor
      */
-    public PenteController()
-    { 
+    public PenteController() {
         board_ = new PenteBoard( DEFAULT_NUM_ROWS, DEFAULT_NUM_ROWS );
         initializeData();
     }
@@ -38,8 +37,7 @@ public class PenteController extends TwoPlayerController
     /**
      *  Construct the Pente game controller given an initial board size
      */
-    public PenteController(int nrows, int ncols )
-    {
+    public PenteController(int nrows, int ncols ) {
         board_ = new PenteBoard( nrows, ncols );
         initializeData();
     }
@@ -82,8 +80,7 @@ public class PenteController extends TwoPlayerController
      *   a large positive value means that the move is good from the specified players viewpoint
      */
     @Override
-    protected int worth( Move lastMove, ParameterArray weights )
-    {
+    protected int worth( Move lastMove, ParameterArray weights ) {
         return moveEvaluator_.worth(lastMove, weights);
     }
 

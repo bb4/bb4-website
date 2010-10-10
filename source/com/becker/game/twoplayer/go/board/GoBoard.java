@@ -49,7 +49,6 @@ public final class GoBoard extends TwoPlayerBoard
         setSize( numRows, numCols );
     }
 
-
     /**
      * @return a deep copy of the board.
      */
@@ -81,8 +80,7 @@ public final class GoBoard extends TwoPlayerBoard
      * @@ Bill says just create new board instead of calling reset or resize
      */
     @Override
-    public void setSize( int numRows, int numCols )
-    {
+    public void setSize( int numRows, int numCols ) {
         numRows_ = numRows;
         numCols_ = numRows; // intentionally same as numRows
 
@@ -126,8 +124,7 @@ public final class GoBoard extends TwoPlayerBoard
      * get the number of handicap stones used in this game.
      * @return number of handicap stones
      */
-    public int getHandicap()
-    {
+    public int getHandicap() {
         if (handicap_ == null) {
             return 0;
         }
@@ -184,8 +181,7 @@ public final class GoBoard extends TwoPlayerBoard
     /**
      * Make sure that all the positions on the board are reset to the unvisited state.
      */
-    public void unvisitAll()
-    {
+    public void unvisitAll() {
         for ( int i = 1; i <= getNumRows(); i++ ) {
             for ( int j = 1; j <= getNumCols(); j++ ) {
                 GoBoardPosition pos = (GoBoardPosition) getPosition( i, j );
@@ -233,8 +229,7 @@ public final class GoBoard extends TwoPlayerBoard
      * @param move  the move to undo.
      */
     @Override
-    protected void undoInternalMove( Move move )
-    {
+    protected void undoInternalMove( Move move ) {
         getProfiler().startUndoMove();
 
         GoMove m = (GoMove) move;
@@ -262,13 +257,12 @@ public final class GoBoard extends TwoPlayerBoard
      * @see TerritoryAnalyzer#getTerritoryDelta
      * @return change in territorial score
      */
-    public float getTerritoryDelta()
-    {
+    public float getTerritoryDelta() {
         return territoryAnalyzer_.getTerritoryDelta();
     }
 
     /**
-     * @see TerritoryAnalyzer#getTerritoryEstimate
+     * Get estimate of territory for specified player.
      * @param forPlayer1 the player to get the estimate for
      * @param isEndOfGame then we need the estimate to be more accurate.
      * @return estimate of size of territory for specified player.
@@ -297,8 +291,7 @@ public final class GoBoard extends TwoPlayerBoard
     /**
      * @return either the number of black or white stones.
      */
-    public int getNumStones(boolean forPlayer1)
-    {
+    public int getNumStones(boolean forPlayer1) {
         int numStones = 0;
 
         // we should be able to just sum all the position scores now.
@@ -316,8 +309,7 @@ public final class GoBoard extends TwoPlayerBoard
     /**
      * clear all the eyes from all the stones on the board
      */
-    private void clearEyes()
-    {
+    private void clearEyes() {
         for ( int i = 1; i <= getNumRows(); i++ ) {
             for ( int j = 1; j <= getNumCols(); j++ ) {
                 GoBoardPosition space = (GoBoardPosition)positions_[i][j];

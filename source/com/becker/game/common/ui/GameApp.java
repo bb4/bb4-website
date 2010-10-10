@@ -92,7 +92,6 @@ public class GameApp
         else if (args.length > 1) {
             CommandLineOptions options = new CommandLineOptions(args);
 
-            System.out.println("options=" + options);
             if (options.contains("help")) {
                 GameContext.log(0, "Usage: -name <game> [-locale <locale>]");
             }

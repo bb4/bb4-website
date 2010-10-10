@@ -128,7 +128,6 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
                 if ( val > beta )
                     beta = val;
             }
-
         }
         MoveList list = searchable_.generateUrgentMoves( lastMove, weights_, true );
 

@@ -22,17 +22,17 @@ public class SearchTreeNode extends DefaultMutableTreeNode
     private static final long serialVersionUID = 1L;
 
     /**
-     *  true if this move is the leaf of a pruned path in the game tree.
+     * True if this move is the leaf of a pruned path in the game tree.
      */
     private boolean pruned_;
 
     /**
-     *  store the alpha value(for debug printing).
+     * Store the alpha value(for debug printing).
      */
     private double alpha_ = 0;
 
     /**
-     *  store the beta value(for debug printing).
+     * Store the beta value(for debug printing).
      */
     private double beta_ = 0;
 

@@ -19,9 +19,6 @@ public class TwoPlayerOptions extends GameOptions
     /** if true then try to show a dialog visualizing the game tree.  */
     private boolean showGameTree_ = false;
 
-    /** if true then show all the moves the computer is considering when it considers them. */
-    private boolean showComputerAnimation_ = false;
-
     private boolean autoOptimize_;
     private String autoOptimizeFile_ = null;
 
@@ -82,20 +79,6 @@ public class TwoPlayerOptions extends GameOptions
     public final void setShowGameTree( boolean show )
     {
         showGameTree_ = show;
-    }
-
-    /**
-     * @return whether we are showing an animated representation of the computers thought process for each move
-     * (takes a long time)
-     */
-    public final boolean getShowComputerAnimation()
-    {
-        return showComputerAnimation_;
-    }
-
-    public final void setShowComputerAnimation( boolean computerAnimation )
-    {
-        showComputerAnimation_ = computerAnimation;
     }
 
     /**

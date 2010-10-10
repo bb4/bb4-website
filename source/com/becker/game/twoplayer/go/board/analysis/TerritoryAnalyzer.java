@@ -34,7 +34,7 @@ public class TerritoryAnalyzer {
      * When the ratio of actual moves to expected moves exceeds this, then
      * take the analysis all the way to the edge of the board.
      */
-    private static float EMPTY_REGION_EDGE_THRESH = 0.24f;
+    private static final float EMPTY_REGION_EDGE_THRESH = 0.24f;
 
     private NeighborAnalyzer nbrAnalyzer_;
 
@@ -53,8 +53,8 @@ public class TerritoryAnalyzer {
   
             
     /**
-     * get an estimate of the territory for the specified player.
-     * This estimate is computed by summing all spaces in eyes + dead opponent stones that are still on the board in eyes.
+     * Get an estimate of the territory for the specified player.
+     * This estimate is computed by summing all spaces in eyes with dead opponent stones that are still on the board.
      * Empty spaces are weighted by how likely they are to eventually be territory of one side or the other.
      * At the end of the game this + the number of pieces captured so far should give the true score.
      * @param isEndOfGame use 0 or 1 instead of pos.scoreContribution if true.
@@ -68,36 +68,45 @@ public class TerritoryAnalyzer {
         for ( int i = 1; i <= board_.getNumRows(); i++ )  {
            for ( int j = 1; j <= board_.getNumCols(); j++ ) {
                GoBoardPosition pos =  (GoBoardPosition) board_.getPosition(i, j);
-               double val = isEndOfGame?  (forPlayer1? 1.0 : -1.0) : pos.getScoreContribution() ;
-
-               // the territory estimate will always be positive for both sides.
-               if (pos.isUnoccupied()) {
-                   if (forPlayer1 && pos.getScoreContribution() > 0) {
-                       territoryEstimate += val;
-                   }
-                   else if (!forPlayer1 && pos.getScoreContribution() < 0)  {
-                       territoryEstimate -= val;  // will be positive
-                   }
-               }
-               else { // occupied
-                   GamePiece piece = pos.getPiece();
-                   GoGroup group = pos.getGroup();
-                   assert(piece != null);
-                   if (group != null) {
-                       // add credit for probable captured stones.
-                       if (forPlayer1 && !piece.isOwnedByPlayer1() && group.getRelativeHealth(board_, isEndOfGame) >= 0) {
-                           territoryEstimate += val;
-                       }
-                       else if (!forPlayer1 && piece.isOwnedByPlayer1() && group.getRelativeHealth(board_, isEndOfGame) <= 0)  {
-                           territoryEstimate -= val;
-                       }
-                   }
-               }
+               territoryEstimate += getTerritoryEstimateForPosition(pos, forPlayer1, isEndOfGame);
            }
         }
         return (int)territoryEstimate;
     }
-    
+
+    /**
+     * @return  the estimate for a single position.
+     */
+    private float getTerritoryEstimateForPosition(GoBoardPosition pos, boolean forPlayer1, boolean isEndOfGame) {
+        double val = isEndOfGame?  (forPlayer1? 1.0 : -1.0) : pos.getScoreContribution() ;
+        float territoryEstimate = 0;
+
+        // the territory estimate will always be positive for both sides.
+        if (pos.isUnoccupied()) {
+            if (forPlayer1 && pos.getScoreContribution() > 0) {
+                territoryEstimate += val;
+            }
+            else if (!forPlayer1 && pos.getScoreContribution() < 0)  {
+                territoryEstimate -= val;  // will be positive
+            }
+        }
+        else { // occupied
+            GamePiece piece = pos.getPiece();
+            GoGroup group = pos.getGroup();
+            assert(piece != null);
+            if (group != null) {
+                // add credit for probable captured stones.
+                if (forPlayer1 && !piece.isOwnedByPlayer1() && group.getRelativeHealth(board_, isEndOfGame) >= 0) {
+                    territoryEstimate += val;
+                }
+                else if (!forPlayer1 && piece.isOwnedByPlayer1() && group.getRelativeHealth(board_, isEndOfGame) <= 0)  {
+                    territoryEstimate -= val;
+                }
+            }
+        }
+        return territoryEstimate;
+    }
+
     /**
      * Loops through the groups to determine the territorial difference between the players.
      * Then it loops through and determines a score for positions that are not part of groups.
@@ -200,7 +209,7 @@ public class TerritoryAnalyzer {
         for ( int i = min; i <= rMax; i++ )  {
            for ( int j = min; j <= cMax; j++ ) {
                GoBoardPosition pos = (GoBoardPosition)board_.getPosition(i, j);
-               diffScore = updateEmptyRegionFromSeed(diffScore, box, emptyLists, pos);
+               diffScore += updateEmptyRegionFromSeed(box, emptyLists, pos);
            }
         }
 
@@ -211,10 +220,11 @@ public class TerritoryAnalyzer {
     /**
      * Update diff?Score for the who string connected to pos and mark it visited.
      * If pos is in an eye, update the score contribution for that eye space.
-     * @return update diffScore value.
+     * @return diffScore value.
      */
-    private float updateEmptyRegionFromSeed(float diffScore, Box box, List<GoBoardPositionList> emptyLists,
+    private float updateEmptyRegionFromSeed(Box box, List<GoBoardPositionList> emptyLists,
                                             GoBoardPosition pos) {
+        float diffScore = 0;
         if (pos.getString() == null && !pos.isInEye()) {
             assert pos.isUnoccupied();
             if (!pos.isVisited()) {

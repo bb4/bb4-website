@@ -31,13 +31,13 @@ class StringNeighborAnalyzer {
 
     /**
      * Determines a string connected from a seed stone within a specified bounding area
-     * Perform a breadth first search  until all found.
+     * Perform a breadth first search until all neighbors found.
      * Use the visited flag to indicate that a stone has been added to the string.
      * @return string from seed stone
      */
     GoBoardPositionList findStringFromInitialPosition(GoBoardPosition stone, boolean friendOwnedByP1,
-                                                        boolean returnToUnvisitedState, NeighborType type,
-                                                        Box box) {
+                                                      boolean returnToUnvisitedState, NeighborType type,
+                                                      Box box) {
         GoBoardPositionList stones = new GoBoardPositionList();
 
         GoBoardPositionList stack = new GoBoardPositionList();
@@ -46,7 +46,7 @@ class StringNeighborAnalyzer {
         assert ( !stone.isVisited() ): "stone="+stone;
         stack.add( 0, stone );
         while ( !stack.isEmpty() ) {
-            GoBoardPosition s = stack.remove( stack.size()-1 );
+            GoBoardPosition s = stack.pop();
             if ( !s.isVisited() ) {
                 s.setVisited( true );
                 stones.add( s );

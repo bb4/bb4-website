@@ -25,7 +25,7 @@ public interface SearchStrategy {
      * Derived classes work by narrowing a bound on the value of the optimal move.
      *
      * @param lastMove the most recent move made by one of the players.
-     * @param parent for constructing a ui tree. If null no game tree is constructed.
+     * @param parent for constructing a ui tree. If null, no game tree is constructed.
      * @return the chosen move (ie the best move) (may be null if no next move).
      */
     TwoPlayerMove search( TwoPlayerMove lastMove, SearchTreeNode parent );
