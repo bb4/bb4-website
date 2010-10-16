@@ -19,20 +19,20 @@ public class SimpleGameTreeExample extends AbstractGameTreeExample  {
 
     public SimpleGameTreeExample() {
 
-        initialMove = new TwoPlayerMoveStub(5, true, null);
+        initialMove = new TwoPlayerMoveStub(6, true, null);
 
         // first ply
-        TwoPlayerMoveStub move0 = new TwoPlayerMoveStub(-5, false, initialMove);
-        TwoPlayerMoveStub move1 = new TwoPlayerMoveStub(-4, false, initialMove);
+        TwoPlayerMoveStub move0 = new TwoPlayerMoveStub(-8, false, initialMove);
+        TwoPlayerMoveStub move1 = new TwoPlayerMoveStub(-2, false, initialMove);
 
         // second ply
-        TwoPlayerMoveStub move00 = new TwoPlayerMoveStub(5, true, move0);
-        TwoPlayerMoveStub move01 = new TwoPlayerMoveStub(6, true, move0);
+        TwoPlayerMoveStub move00 = new TwoPlayerMoveStub(-1, true, move0);
+        TwoPlayerMoveStub move01 = new TwoPlayerMoveStub(7, true, move0);
 
         TwoPlayerMoveStub move10 = new TwoPlayerMoveStub(8, true, move1);
-        TwoPlayerMoveStub move11 = new TwoPlayerMoveStub(4, true, move1);
+        TwoPlayerMoveStub move11 = new TwoPlayerMoveStub(2, true, move1);
 
-        // third ply
+        // third ply   (the leaves. These values get inherited)
         TwoPlayerMoveStub move000 = new TwoPlayerMoveStub(-5, false, move00);
         TwoPlayerMoveStub move001 = new TwoPlayerMoveStub(-4, false, move00);
 
@@ -56,6 +56,5 @@ public class SimpleGameTreeExample extends AbstractGameTreeExample  {
 
         move10.setChildren(createList(move100, move101));
         move11.setChildren(createList(move110, move111));
-
     }
 }

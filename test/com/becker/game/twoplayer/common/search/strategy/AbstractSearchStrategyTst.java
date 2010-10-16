@@ -1,199 +1,157 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
-import com.becker.common.util.Util;
-import com.becker.game.common.GamePiece;
-import com.becker.game.twoplayer.common.TwoPlayerController;
-import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.common.GameWeights;
+import com.becker.game.common.GameWeightsStub;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
-import com.becker.game.twoplayer.common.search.ISearchableHelper;
 import com.becker.game.twoplayer.common.search.SearchOptions;
-import com.becker.game.twoplayer.common.search.Progress;
-import com.becker.game.twoplayer.common.search.SearchableHelper;
-import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
+import com.becker.game.twoplayer.common.search.Searchable;
+import com.becker.game.twoplayer.common.search.SearchableStub;
+import com.becker.game.twoplayer.common.search.TwoPlayerMoveStub;
+import com.becker.game.twoplayer.common.search.examples.AlphaPrunePlayer1Example;
+import com.becker.game.twoplayer.common.search.examples.AlphaPrunePlayer2Example;
+import com.becker.game.twoplayer.common.search.examples.GameTreeExample;
+import com.becker.game.twoplayer.common.search.examples.SimpleGameTreeExample;
+import com.becker.optimization.parameter.ParameterArray;
 import junit.framework.TestCase;
 
 /**
- * Verify that all the methods in the SearchStrategy interface work as expected (especially search).
- * Derived test classes will excersize these methods for specific game instances.
- *
+ * Test minimax strategy independent of any particular game implementation.
+ * @@ create base class and create tests for other strategies.
  * @author Barry Becker
  */
 public abstract class AbstractSearchStrategyTst extends TestCase {
 
-    protected TwoPlayerController controller;
     protected SearchOptions searchOptions;
-    protected ISearchableHelper helper;
-
-    protected static final GamePiece PLAYER1_PIECE = new GamePiece(true);
-    protected static final GamePiece PLAYER2_PIECE = new GamePiece(false);
 
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        helper = createSearchableHelper();
-        controller = helper.createController();
-        TwoPlayerOptions options = helper.createTwoPlayerGameOptions();
+
+        TwoPlayerOptions options = createTwoPlayerGameOptions();
         searchOptions = options.getSearchOptions();
-        controller.setOptions(options);
     }
 
-    protected abstract SearchableHelper createSearchableHelper();
+    protected SearchStrategy createSearchStrategy() {
+        Searchable searchable = new SearchableStub(searchOptions);
+        GameWeights weights = new GameWeightsStub();
+        return createSearchStrategy(searchable, weights.getDefaultWeights());
+    }
 
-    protected abstract SearchStrategyType getSearchStrategyToTest();
+    protected abstract SearchStrategy createSearchStrategy(Searchable searchable, ParameterArray weights);
+
+    protected abstract boolean negateInheritedValue();
 
     /**
-     * Edge case where no searching is actually done. The found move will be the last move.
+     * @return default search options for all games
+     */
+    public TwoPlayerOptions createTwoPlayerGameOptions() {
+        TwoPlayerOptions opts =  new TwoPlayerOptions();
+        SearchOptions options = opts.getSearchOptions();
+        options.setLookAhead(3);
+        options.setAlphaBeta(false);
+        options.setPercentageBestMoves(100);
+        options.setQuiescence(false);
+        return opts;
+    }
+
+
+    /**
+     * Edge case where no searching is actually done. There will be no found move.
      */
     public void testZeroLookAheadSearch() {
+
         searchOptions.setLookAhead(0);
-        verifyMoves("ZeroLookAhead", getExpectedZeroLookAheadMoves());
+        verifyResult(new SimpleGameTreeExample(), TwoPlayerMoveStub.ROOT_ID, 6, 0);
     }
 
+    /**
+     * Look ahead one level and get the best move.
+     */
     public void testOneLevelLookAheadSearch() {
         searchOptions.setLookAhead(1);
-        verifyMoves("OneLevelLookAhead", getExpectedOneLevelLookAheadMoves());
-    }
-
-    public void testOneLevelWithQuiescenceSearch() {
-        searchOptions.setLookAhead(1);
-        searchOptions.setQuiescence(true);
-        verifyMoves("OneLevelWithQuiescence", getExpectedOneLevelWithQuiescenceMoves());
+        verifyResult(new SimpleGameTreeExample(), "0", -8, 2);
     }
 
     public void testOneLevelWithQuiescenceAndABSearch() {
         searchOptions.setLookAhead(1);
         searchOptions.setQuiescence(true);
         searchOptions.setAlphaBeta(true);
-        verifyMoves("OneLevelWithQuiescenceAndAB", getExpectedOneLevelWithQuiescenceAndABMoves());
+        verifyResult(new SimpleGameTreeExample(), "0", -8, 2);
     }
 
-    public void testTwoLevelLookAheadSearch() {
-        searchOptions.setLookAhead(2);
-        verifyMoves("TwoLevelLookAhead", getExpectedTwoLevelLookAheadMoves());
-    }
-
-    public void testFourLevelLookAheadSearch() {
-        searchOptions.setLookAhead(4);
-        verifyMoves("FourLevelLookAhead", getExpectedFourLevelLookaheadMoves());
-    }
-
-    public void testFourLevelBest20PercentSearch() {
-        searchOptions.setLookAhead(4);
-        searchOptions.setPercentageBestMoves(20);
-        verifyMoves("FourLevelBest20Percent", getExpectedFourLevelBest20PercentMoves());
-    }
-
-    public void testTwoLevelWithQuiescenceLookAheadSearch() {
-        searchOptions.setLookAhead(2);
-        searchOptions.setQuiescence(true);
-        verifyMoves("TwoLevelWithQuiescence", getExpectedTwoLevelWithQuiescenceMoves());
-    }
-
-    public void testTwoLevelWithQuiescenceAndABSearch() {
+    public void testOneLevelWithQuiescenceSearch() {
         searchOptions.setLookAhead(1);
         searchOptions.setQuiescence(true);
-        searchOptions.setAlphaBeta(true);
-        verifyMoves("TwoLevelWithQuiescenceAndAB", getExpectedTwoLevelWithQuiescenceAndABMoves());
+        verifyResult(new SimpleGameTreeExample(), "0", -8, 2);
     }
 
-    public void testThreeLevelWithQuiescenceLookAheadSearch() {
+    public void testTwoLevelSearch() {
+        searchOptions.setLookAhead(2);
+        verifyResult(new SimpleGameTreeExample(), "0", 7, 6);
+    }
+
+    public void testThreeLevelSearch() {
+        verifyResult(new SimpleGameTreeExample(), "0", -5, 14);
+    }
+
+    /** best percentage ignore by base search algorithm. Only used when generating moves. */
+    public void testThreeLevelBest20PercentSearch() {
         searchOptions.setLookAhead(3);
-        searchOptions.setQuiescence(true);
-        verifyMoves("ThreeLevelWithQuiescence", getExpectedThreeLevelWithQuiescenceMoves());
+        searchOptions.setPercentageBestMoves(20);
+        verifyResult(new SimpleGameTreeExample(), "0", -5, 14);
     }
 
-    public void testFourLevelWithQuiescenceLookAheadSearch() {
-        searchOptions.setLookAhead(4);
-        searchOptions.setQuiescence(true);
-        verifyMoves("FourLevelWithQuiescence", getExpectedFourLevelWithQuiescenceMoves());
+    public void testThreeLevelWithABSearch() {
+        searchOptions.setLookAhead(3);
+        searchOptions.setAlphaBeta(true);
+        verifyResult(new SimpleGameTreeExample(), "0", -5, 14);
     }
 
-    public void testFourLevelNoAlphaBetaSearch() {
-        searchOptions.setLookAhead(4);
+    public void testPruneTwoLevelWithoutABSearch() {
+        searchOptions.setLookAhead(2);
         searchOptions.setAlphaBeta(false);
-        verifyMoves("FourLevelNoAlphaBeta", getExpectedFourLevelNoAlphaBetaMoves());
+        verifyResult(new AlphaPrunePlayer1Example(), "0", -5, 6);
     }
 
-    public void verifyMoves(String desc, ExpectedMoveMatrix expectedMoves) {
-        searchOptions.setSearchStrategyMethod(getSearchStrategyToTest());
-
-        System.out.println(desc + " " + getSearchStrategyToTest());
-        long time = System.currentTimeMillis();
-        for (Progress prog : Progress.values()) {
-            verifyMove(prog, true, expectedMoves, desc);
-            verifyMove(prog, false, expectedMoves, desc);
-        }
-        double elapsed = (float)(System.currentTimeMillis() - time) / 1000.0;
-        assertTrue("Took too long: " + elapsed, elapsed < 1.0);
-        System.out.println("TOTAL TIME = " + Util.formatNumber( elapsed));
+    public void testPruneTwoLevelWithABSearchPlayer1() {
+        searchOptions.setLookAhead(2);
+        searchOptions.setAlphaBeta(true);
+        verifyResult(new AlphaPrunePlayer1Example(), "0", -5, 5);
     }
 
-    public void verifyMove(Progress prog, boolean player1, ExpectedMoveMatrix expectedMoves, String desc) {
-
-        controller.restoreFromFile(helper.getTestFile(prog, player1));
-
-        MoveInfo expectedNext = expectedMoves.getExpectedMove(prog, player1);
-
-        SearchStrategy strategy = createSearchStrategy();
-        TwoPlayerMove nextMove = searchForNextMove(strategy);
-        long numMoves = strategy.getNumMovesConsidered();
-
-        String info = getSearchStrategyToTest() + " " + desc + " "  + prog + " player1=" + player1;
-        //System.out.print(info);
-        //System.out.println("    new MoveInfo(" + nextMove.getConstructorString() + " " + numMoves + "),"  );
-
-        if (expectedNext.hasMovesConsidered()) {
-            assertEquals("Unexpected number of moves considered.",
-                expectedNext.getNumMovesConsidered(), numMoves);
-        }
-
-        assertEquals(info +"\nWe did not get the next move that we expected after searching.",
-                expectedNext.getMove(), nextMove);
+    public void testPruneTwoLevelWithABSearchPlayer2() {
+        searchOptions.setLookAhead(2);
+        searchOptions.setAlphaBeta(true);
+        verifyResult(new AlphaPrunePlayer2Example(), "1", -5, 5);
     }
 
-    /**
-     * @return the found move should match this for the test to pass.
-     */
-    protected abstract ExpectedMoveMatrix getExpectedZeroLookAheadMoves();
-    protected abstract ExpectedMoveMatrix getExpectedOneLevelLookAheadMoves();
-    protected abstract ExpectedMoveMatrix getExpectedOneLevelWithQuiescenceMoves();
-    protected abstract ExpectedMoveMatrix getExpectedOneLevelWithQuiescenceAndABMoves();
-    protected abstract ExpectedMoveMatrix getExpectedTwoLevelLookAheadMoves();
-    protected abstract ExpectedMoveMatrix getExpectedFourLevelLookaheadMoves();
-    protected abstract ExpectedMoveMatrix getExpectedFourLevelBest20PercentMoves();
-    protected abstract ExpectedMoveMatrix getExpectedTwoLevelWithQuiescenceMoves();
-    protected abstract ExpectedMoveMatrix getExpectedTwoLevelWithQuiescenceAndABMoves();
-    protected abstract ExpectedMoveMatrix getExpectedThreeLevelWithQuiescenceMoves();
-    protected abstract ExpectedMoveMatrix getExpectedFourLevelWithQuiescenceMoves();
-    protected abstract ExpectedMoveMatrix getExpectedFourLevelNoAlphaBetaMoves();
 
 
     /**
-     * do the search for the next move.
-     * @return the next move that was found after searching using the strategy and game under test.
+     * Verify move that was found using search strategy under test.
+     * @param example  game tree to use
+     * @param expectedId
+     * @param expectedInheritedValue
+     * @param expectedConsideredMoves
      */
-    protected TwoPlayerMove searchForNextMove(SearchStrategy strategy) {
+    protected void verifyResult(GameTreeExample example, String expectedId, int expectedInheritedValue, int expectedConsideredMoves) {
 
-        TwoPlayerMove lastMove = (TwoPlayerMove)controller.getLastMove();
+        SearchStrategy searchStrategy = createSearchStrategy();
+        TwoPlayerMoveStub foundMove =
+                (TwoPlayerMoveStub)searchStrategy.search(example.getInitialMove(), null);
 
-        SearchTreeNode root = new SearchTreeNode(lastMove);
-        TwoPlayerMove nextMove =
-               strategy.search(lastMove, root);
 
-        if (searchOptions.getLookAhead() > 0) {
-            assertTrue("The last move (" + lastMove + ") was the same player as the next move (" + nextMove + ")",
-                    lastMove.isPlayer1() != nextMove.isPlayer1());
-        }
-        return nextMove;
-    }
+        String prefix = searchStrategy.getClass().getName() + ": Unexpected ";
 
-    /**
-     * @return the next move that was found after searching using the strategy and game under test.
-     */
-    protected SearchStrategy createSearchStrategy() {
-        return searchOptions.getSearchStrategy(controller.getSearchable(),
-                                               controller.getComputerWeights().getDefaultWeights());
+        assertEquals(prefix + "found move. got:" + foundMove,
+                expectedId, foundMove.getId());
 
+        int inheritedValue = negateInheritedValue() ? -foundMove.getInheritedValue() : foundMove.getInheritedValue();
+        assertEquals(prefix + "inherited value for found move",
+                expectedInheritedValue, inheritedValue);
+        
+        assertEquals(prefix + "number of searched nodes.",
+                expectedConsideredMoves, searchStrategy.getNumMovesConsidered());
     }
 }

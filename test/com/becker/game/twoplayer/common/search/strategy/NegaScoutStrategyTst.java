@@ -6,7 +6,7 @@ package com.becker.game.twoplayer.common.search.strategy;
  *
  * @author Barry Becker
  */
-public abstract class NegaScoutStrategyTst extends AbstractSearchStrategyTst {
+public abstract class NegaScoutStrategyTst extends AbstractStrategyTst {
 
     @Override
     protected SearchStrategyType getSearchStrategyToTest() {

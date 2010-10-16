@@ -38,7 +38,7 @@ public class TwoPlayerMoveStub extends TwoPlayerMove {
         children_.addAll(children);
     }
 
-    public MoveList getChildren() {
+    public MoveList getChildren() {      
         return children_;
     }
 
@@ -92,24 +92,4 @@ public class TwoPlayerMoveStub extends TwoPlayerMove {
         bldr.append(isUrgent()?" urgent":" ").append(isInJeopardy()?"jeopardy":"");
         return bldr.toString();
     }
-
-    /*
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-
-        TwoPlayerMoveStub that = (TwoPlayerMoveStub) o;
-
-
-        return that.getValue() == ((TwoPlayerMoveStub) o).getValue();
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + getValue();
-        return result;
-    }*/
 }
