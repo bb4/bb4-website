@@ -59,7 +59,10 @@ public class NegaMaxStrategy extends AbstractSearchStrategy
             searchable_.makeInternalMove( theMove );
             SearchTreeNode child = addNodeToTree(parent, theMove, alpha, beta, i++);
 
+            //System.out.println("depth="+ depth + " alpha=" + alpha + " beta=" + beta);
             selectedMove = searchInternal( theMove, depth-1, -beta, -alpha, child );
+            //System.out.println("selected at depth="+ depth + " value="+ selectedMove.getValue()
+            //        +" inherited=" + selectedMove.getInheritedValue());
 
             searchable_.undoInternalMove( theMove );
 
@@ -79,6 +82,7 @@ public class NegaMaxStrategy extends AbstractSearchStrategy
                     }
                     if ( alpha >= beta ) {
                         showPrunedNodesInTree( list, parent, i, selectedValue, beta, PruneType.BETA);
+                        System.out.println("pruned " + selectedValue);
                         break;
                     }
                 }

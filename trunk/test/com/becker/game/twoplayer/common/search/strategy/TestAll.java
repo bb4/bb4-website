@@ -17,7 +17,12 @@ public class TestAll extends TestCase {
         TestSuite suite =  new TestSuite("All Search Strategy Tests");
 
 
-        suite.addTestSuite(MiniMaxStrategyTest.class);
+        suite.addTestSuite(MiniMaxSearchStrategyTest.class);
+        suite.addTestSuite(NegaMaxSearchStrategyTest.class);
+        suite.addTestSuite(NegaScoutSearchStrategyTest.class);
+        suite.addTestSuite(NegaMaxMemorySearchStrategyTest.class);
+        suite.addTestSuite(NegaScoutMemorySearchStrategyTest.class);
+        suite.addTestSuite(MtdSearchStrategyTest.class);
 
         return suite;
     }

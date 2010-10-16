@@ -5,7 +5,7 @@ import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**
- * Currently supported search method strategy
+ * Currently supported search method strategies
  *
  * @author Barry Becker
  */
@@ -18,7 +18,7 @@ public enum SearchStrategyType {
         }
         @Override
         public boolean sortAscending(boolean player1, boolean playerOnesPerspective) {
-            return  ( player1 == playerOnesPerspective);
+            return (player1 == playerOnesPerspective);
         }
     },
     NEGAMAX("NEGAMAX_SEARCH") {

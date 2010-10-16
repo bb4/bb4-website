@@ -80,7 +80,7 @@ public final class MtdStrategy implements SearchStrategy
             if (g < beta)  upperBound = g;
             else           lowerBound = g;
 
-            System.out.println("lowerBound =" + lowerBound + " upperBound=" + upperBound  + " beta=" + beta);
+            //System.out.println("lowerBound =" + lowerBound + " upperBound=" + upperBound  + " beta=" + beta);
         } while (lowerBound < upperBound);
         return selectedMove;
     }

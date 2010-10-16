@@ -108,7 +108,7 @@ public final class NegaScoutMemoryStrategy extends NegaScoutStrategy
 
         TwoPlayerMove bestMove = findBestMove(lastMove, depth, list, alpha, beta, parent);
 
-        System.out.println("Cache hits=" + cacheHits + " nearHits=" + cacheNearHits +" misses="  + cacheMisses);
+        //System.out.println("Cache hits=" + cacheHits + " nearHits=" + cacheNearHits +" misses="  + cacheMisses);
 
         return bestMove;
     }
@@ -120,7 +120,7 @@ public final class NegaScoutMemoryStrategy extends NegaScoutStrategy
     private boolean entryExists(TwoPlayerMove lastMove, int depth, int alpha, int beta, Entry entry) {
         if (entry != null && entry.depth >= depth) {
             cacheHits++;
-            System.out.println("Cache hit. \nentry.depth=" + entry.depth + " depth=" + depth  + "\n" + entry);
+            //System.out.println("Cache hit. \nentry.depth=" + entry.depth + " depth=" + depth  + "\n" + entry);
 
             if (entry.upperValue <= alpha || entry.upperValue == entry.lowerValue)  {
                 entry.bestMove.setInheritedValue(entry.upperValue);
@@ -154,7 +154,7 @@ public final class NegaScoutMemoryStrategy extends NegaScoutStrategy
         TwoPlayerMove bestMove = (TwoPlayerMove) list.get(0);
         Entry entry = new Entry(bestMove, depth, alpha, beta);
 
-        System.out.println("list.size="+ list.size() + " int depth=" + depth + "     alpha="+ alpha +" beta=" + beta);
+        //System.out.println("list.size="+ list.size() + " int depth=" + depth + "     alpha="+ alpha +" beta=" + beta);
         while ( !list.isEmpty() ) {
             TwoPlayerMove theMove = (TwoPlayerMove) list.remove(0);
             if (pauseInterrupted())
@@ -183,7 +183,7 @@ public final class NegaScoutMemoryStrategy extends NegaScoutStrategy
                 }
                 if (alpha >= newBeta) {
                     // re-search with narrower window (typical alpha beta search).
-                    System.out.println("re-searching with narrower window a=" + -beta +" b="+ -alpha);
+                    //System.out.println("re-searching with narrower window a=" + -beta +" b="+ -alpha);
                     searchable_.makeInternalMove( theMove );
                     selectedMove = searchInternal( theMove, depth-1 , -beta, -alpha, child );
                     searchable_.undoInternalMove( theMove );
