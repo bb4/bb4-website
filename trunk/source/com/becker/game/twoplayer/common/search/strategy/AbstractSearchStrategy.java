@@ -112,7 +112,6 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
         MoveList list =
                 searchable_.generateMoves(lastMove,  weights_, true);
 
-        movesConsidered_ += list.size();
         if (depth == lookAhead_)
             numTopLevelMoves_ = list.size();
 
@@ -226,6 +225,15 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
         if (depth == lookAhead_)   {
             percentDone_ = 100 * (numTopLevelMoves_ - remainingNextMoves.size()) / numTopLevelMoves_;
         }
+    }
+
+    /**
+     * Get the next move and increment the number of moves considered.
+     * @return next move in sorted generated next move list.
+     */
+    protected TwoPlayerMove getNextMove(MoveList list) {
+        movesConsidered_ ++;
+        return (TwoPlayerMove)list.remove(0);
     }
 
     /**

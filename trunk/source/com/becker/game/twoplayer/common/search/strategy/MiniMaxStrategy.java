@@ -43,7 +43,7 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
             if (pauseInterrupted())
                 return lastMove;
 
-            TwoPlayerMove theMove = (TwoPlayerMove)list.remove(0);
+            TwoPlayerMove theMove = getNextMove(list);
             updatePercentDone(depth, list);
 
             searchable_.makeInternalMove( theMove );
@@ -139,11 +139,11 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
 
         int bestInheritedValue = player1 ?  SearchStrategy.INFINITY : -SearchStrategy.INFINITY;
         TwoPlayerMove bestMove = (TwoPlayerMove)list.get(0);
-        movesConsidered_ += list.size();
         int i = 0;
 
         for (Move m : list) {
             TwoPlayerMove theMove = (TwoPlayerMove) m;
+            movesConsidered_ ++;
             searchable_.makeInternalMove( theMove );
             SearchTreeNode child = addNodeToTree(parent,  theMove, alpha, beta, i++ );
 

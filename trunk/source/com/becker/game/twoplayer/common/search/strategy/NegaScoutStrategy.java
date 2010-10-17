@@ -93,7 +93,7 @@ public class NegaScoutStrategy extends NegaMaxStrategy
         TwoPlayerMove bestMove = (TwoPlayerMove)list.getFirstMove();
 
         while ( !list.isEmpty() ) {
-            TwoPlayerMove theMove = (TwoPlayerMove) list.remove(0);
+            TwoPlayerMove theMove = getNextMove(list);
             if (pauseInterrupted())
                 return lastMove;
             updatePercentDone(depth, list);

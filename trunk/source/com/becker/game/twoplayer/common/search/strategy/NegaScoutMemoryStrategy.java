@@ -156,7 +156,7 @@ public final class NegaScoutMemoryStrategy extends NegaScoutStrategy
 
         //System.out.println("list.size="+ list.size() + " int depth=" + depth + "     alpha="+ alpha +" beta=" + beta);
         while ( !list.isEmpty() ) {
-            TwoPlayerMove theMove = (TwoPlayerMove) list.remove(0);
+            TwoPlayerMove theMove = getNextMove(list);
             if (pauseInterrupted())
                 return lastMove;
             updatePercentDone(depth, list);
