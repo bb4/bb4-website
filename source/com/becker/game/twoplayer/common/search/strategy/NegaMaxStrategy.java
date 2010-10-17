@@ -6,7 +6,6 @@ import com.becker.game.common.Move;
 import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.Searchable;
-import com.becker.game.twoplayer.common.search.tree.PruneType;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.optimization.parameter.ParameterArray;
 
@@ -51,7 +50,7 @@ public class NegaMaxStrategy extends AbstractSearchStrategy
         TwoPlayerMove bestMove = (TwoPlayerMove)list.get( 0 );
 
         while ( !list.isEmpty() ) {
-            TwoPlayerMove theMove = (TwoPlayerMove)list.remove(0);
+            TwoPlayerMove theMove = getNextMove(list);
             if (pauseInterrupted())
                 return lastMove;
             updatePercentDone(depth, list);
@@ -60,7 +59,7 @@ public class NegaMaxStrategy extends AbstractSearchStrategy
             SearchTreeNode child = addNodeToTree(parent, theMove, alpha, beta, i++);
 
             //System.out.println("depth="+ depth + " alpha=" + alpha + " beta=" + beta);
-            selectedMove = searchInternal( theMove, depth-1, -beta, -alpha, child );
+            selectedMove = searchInternal( theMove, depth-1, -beta, -Math.max(alpha, bestInheritedValue), child );
             //System.out.println("selected at depth="+ depth + " value="+ selectedMove.getValue()
             //        +" inherited=" + selectedMove.getInheritedValue());
 
@@ -74,18 +73,14 @@ public class NegaMaxStrategy extends AbstractSearchStrategy
                 if ( selectedValue > bestInheritedValue ) {
                     bestMove = theMove;
                     bestInheritedValue = selectedValue;
-                }
-                if ( alphaBeta_ ) {
-                    if ( bestInheritedValue > alpha ) {
-                        alpha = bestInheritedValue;
-                        bestMove = theMove;
-                    }
-                    if ( alpha >= beta ) {
-                        showPrunedNodesInTree( list, parent, i, selectedValue, beta, PruneType.BETA);
-                        System.out.println("pruned " + selectedValue);
-                        break;
+                    if ( alphaBeta_ ) {
+                        if (bestInheritedValue >= beta) {
+                            System.out.println("pruning because bestInheritedValue="+bestInheritedValue+" > "+ beta);
+                            break;
+                        }
                     }
                 }
+
             }
         }
         bestMove.setSelected(true);

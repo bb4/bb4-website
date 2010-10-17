@@ -150,7 +150,7 @@ public final class NegaMaxMemoryStrategy extends NegaMaxStrategy
         Entry entry = new Entry(bestMove, depth, alpha, beta);
 
         while ( !list.isEmpty() ) {
-            TwoPlayerMove theMove = (TwoPlayerMove)list.remove(0);
+            TwoPlayerMove theMove = getNextMove(list);
             if (pauseInterrupted())
                 return lastMove;
             updatePercentDone(depth, list);

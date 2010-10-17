@@ -17,15 +17,15 @@ public class AlphaPrunePlayer2Example extends AbstractGameTreeExample  {
         initialMove = new TwoPlayerMoveStub(7, true, null);
 
         // first ply
-        TwoPlayerMoveStub move0 = new TwoPlayerMoveStub(3, false, initialMove);
-        TwoPlayerMoveStub move1 = new TwoPlayerMoveStub(2, false, initialMove);
+        TwoPlayerMoveStub move0 = new TwoPlayerMoveStub(2, false, initialMove);
+        TwoPlayerMoveStub move1 = new TwoPlayerMoveStub(3, false, initialMove);
 
         // second ply
         TwoPlayerMoveStub move00 = new TwoPlayerMoveStub(5, true, move0);
         TwoPlayerMoveStub move01 = new TwoPlayerMoveStub(9, true, move0);
 
-        TwoPlayerMoveStub move10 = new TwoPlayerMoveStub(4, true, move1);
-        TwoPlayerMoveStub move11 = new TwoPlayerMoveStub(3, true, move1);  // this should get alpha pruned
+        TwoPlayerMoveStub move10 = new TwoPlayerMoveStub(10, true, move1);
+        TwoPlayerMoveStub move11 = new TwoPlayerMoveStub(11, true, move1);  // this should get alpha pruned
 
 
         initialMove.setChildren(createList(move0, move1));

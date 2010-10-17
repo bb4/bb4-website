@@ -24,10 +24,10 @@ public class NegaMaxSearchStrategyTest extends AbstractSearchStrategyTst {
     }
 
     @Override
-    public void testThreeLevelWithABSearch() {
-        searchOptions.setLookAhead(3);
-        searchOptions.setAlphaBeta(true);
-        verifyResult(new SimpleGameTreeExample(), "0", -5, 14);
+    public void testPruneTwoLevelWithoutABSearch() {
+        searchOptions.setLookAhead(2);
+        searchOptions.setAlphaBeta(false);
+        verifyResult(new AlphaPrunePlayer1Example(), "0", -5, 6);
     }
 
     @Override
@@ -37,11 +37,13 @@ public class NegaMaxSearchStrategyTest extends AbstractSearchStrategyTst {
         verifyResult(new AlphaPrunePlayer1Example(), "0", -5, 5);
     }
 
+
     @Override
     public void testPruneTwoLevelWithABSearchPlayer2() {
         searchOptions.setLookAhead(2);
         searchOptions.setAlphaBeta(true);
-        verifyResult(new AlphaPrunePlayer2Example(), "1", 4, 5);
+        verifyResult(new AlphaPrunePlayer2Example(), "0", 9, 5);
     }
+
 
 }

@@ -105,25 +105,25 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
     public void testThreeLevelWithABSearch() {
         searchOptions.setLookAhead(3);
         searchOptions.setAlphaBeta(true);
-        verifyResult(new SimpleGameTreeExample(), "0", -5, 14);
+        verifyResult(new SimpleGameTreeExample(), "0", -5, 13);
     }
 
     public void testPruneTwoLevelWithoutABSearch() {
         searchOptions.setLookAhead(2);
         searchOptions.setAlphaBeta(false);
-        verifyResult(new AlphaPrunePlayer1Example(), "0", -5, 6);
+        verifyResult(new AlphaPrunePlayer1Example(), "0", 5, 6);
     }
 
     public void testPruneTwoLevelWithABSearchPlayer1() {
         searchOptions.setLookAhead(2);
         searchOptions.setAlphaBeta(true);
-        verifyResult(new AlphaPrunePlayer1Example(), "0", -5, 5);
+        verifyResult(new AlphaPrunePlayer1Example(), "0", 5, 5);
     }
 
     public void testPruneTwoLevelWithABSearchPlayer2() {
         searchOptions.setLookAhead(2);
         searchOptions.setAlphaBeta(true);
-        verifyResult(new AlphaPrunePlayer2Example(), "1", -5, 5);
+        verifyResult(new AlphaPrunePlayer2Example(), "0", 9, 5);
     }
 
 
