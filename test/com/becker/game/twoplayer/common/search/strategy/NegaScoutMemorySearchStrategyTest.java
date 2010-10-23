@@ -1,6 +1,9 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
 import com.becker.game.twoplayer.common.search.Searchable;
+import com.becker.game.twoplayer.common.search.examples.AlphaPrunePlayer1Example;
+import com.becker.game.twoplayer.common.search.examples.AlphaPrunePlayer2Example;
+import com.becker.game.twoplayer.common.search.examples.SimpleGameTreeExample;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**
@@ -15,9 +18,67 @@ public class NegaScoutMemorySearchStrategyTest extends AbstractSearchStrategyTst
         return new NegaScoutMemoryStrategy(searchable, weights);
     }
 
+
     @Override
     protected boolean negateInheritedValue() {
         return true;
+    }
+
+
+    /**
+     * Look ahead one level and get the best move.
+     */
+    @Override
+    protected SearchResult getOneLevelLookAheadResult() {
+        return new SearchResult("0", -8, 4);
+    }
+
+    @Override
+    protected SearchResult getOneLevelWithQuiescenceAndABResult() {
+        return new SearchResult("0", -8, 4);
+    }
+
+    @Override
+    protected SearchResult getOneLevelWithQuiescenceResult() {
+        return new SearchResult("0", -8, 4);
+    }
+
+
+    @Override
+    protected SearchResult getTwoLevelResult() {
+        return new SearchResult("0", 7, 11);
+    }
+
+    @Override
+    protected SearchResult getPruneTwoLevelWithoutABResult() {
+        return new SearchResult("0", -5, 11);
+    }
+
+    @Override
+    protected SearchResult getPruneTwoLevelWithABSearchPlayer1() {
+        return new SearchResult("0", -5, 11);
+    }
+
+    @Override
+    protected SearchResult getPruneTwoLevelWithABSearchPlayer2() {
+        return new SearchResult("0", 9, 11);
+    }
+
+
+
+    @Override
+    protected SearchResult getThreeLevelResult() {
+        return new SearchResult("0", -5, 26);
+    }
+
+    @Override
+    protected SearchResult getThreeLevelBest20PercentResult() {
+        return new SearchResult("0", -5, 26);
+    }
+
+    @Override
+    protected SearchResult getThreeLevelWithABResult() {
+        return new SearchResult("0", -5, 26);
     }
 
 }

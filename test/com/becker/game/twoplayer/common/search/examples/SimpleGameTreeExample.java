@@ -11,6 +11,14 @@ import java.util.Arrays;
 
 /**
  * A simple game tree for testing search strategies.
+ * It looks something like this
+ *                 ____   []  _____
+ *                /                \
+ *            [-8]                  [-2]
+ *         /      \               /      \
+ *     [-1]       [7]           [8]       [2]
+ *    /   \      /   \         /  \       /  \
+ *  [-5] [-4]   [-6] [-2]    [-7] [-8]  [-4] [-4]
  *
  * @author Barry Becker
  */

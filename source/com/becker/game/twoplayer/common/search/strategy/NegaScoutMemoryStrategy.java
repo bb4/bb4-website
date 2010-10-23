@@ -107,9 +107,7 @@ public final class NegaScoutMemoryStrategy extends NegaScoutStrategy
         }
 
         TwoPlayerMove bestMove = findBestMove(lastMove, depth, list, alpha, beta, parent);
-
         //System.out.println("Cache hits=" + cacheHits + " nearHits=" + cacheNearHits +" misses="  + cacheMisses);
-
         return bestMove;
     }
 

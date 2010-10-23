@@ -15,9 +15,9 @@ public class MiniMaxSearchStrategyTest extends AbstractSearchStrategyTst {
         return new MiniMaxStrategy(searchable, weights);
     }
 
+
     @Override
     protected boolean negateInheritedValue() {
         return false;
     }
-
 }

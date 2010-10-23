@@ -17,7 +17,6 @@ import java.util.List;
  *  This is an abstract base class for a search strategy.
  *  It's sublcasses define the key search algorithms for 2 player zero sum games with perfect information.
  *  Create one of these right before you do a search.
- * 
  *
  *  @author Barry Becker
  */

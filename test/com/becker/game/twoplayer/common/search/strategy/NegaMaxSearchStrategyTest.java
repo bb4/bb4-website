@@ -24,26 +24,18 @@ public class NegaMaxSearchStrategyTest extends AbstractSearchStrategyTst {
     }
 
     @Override
-    public void testPruneTwoLevelWithoutABSearch() {
-        searchOptions.setLookAhead(2);
-        searchOptions.setAlphaBeta(false);
-        verifyResult(new AlphaPrunePlayer1Example(), "0", -5, 6);
+    protected SearchResult getPruneTwoLevelWithoutABResult() {
+        return new SearchResult("0", -5, 6);
     }
 
     @Override
-    public void testPruneTwoLevelWithABSearchPlayer1() {
-        searchOptions.setLookAhead(2);
-        searchOptions.setAlphaBeta(true);
-        verifyResult(new AlphaPrunePlayer1Example(), "0", -5, 5);
+    protected SearchResult getPruneTwoLevelWithABSearchPlayer1() {
+        return new SearchResult("0", -5, 5);
     }
-
 
     @Override
-    public void testPruneTwoLevelWithABSearchPlayer2() {
-        searchOptions.setLookAhead(2);
-        searchOptions.setAlphaBeta(true);
-        verifyResult(new AlphaPrunePlayer2Example(), "0", 9, 5);
+    protected SearchResult getPruneTwoLevelWithABSearchPlayer2() {
+        return new SearchResult("0", 9, 5);
     }
-
 
 }

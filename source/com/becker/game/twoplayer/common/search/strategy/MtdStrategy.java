@@ -26,7 +26,6 @@ import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
  *</pre>
  *
  * @@ add iterative deepening (https://chessprogramming.wikispaces.com/MTD(f))
- * @@ try implementing NegaMaxWithMemory
  * 
  * @author Barry Becker
  */

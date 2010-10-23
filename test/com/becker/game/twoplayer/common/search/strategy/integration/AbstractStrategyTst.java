@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.common.search.strategy;
+package com.becker.game.twoplayer.common.search.strategy.integration;
 
 import com.becker.common.util.Util;
 import com.becker.game.common.GamePiece;
@@ -9,12 +9,16 @@ import com.becker.game.twoplayer.common.search.ISearchableHelper;
 import com.becker.game.twoplayer.common.search.SearchOptions;
 import com.becker.game.twoplayer.common.search.Progress;
 import com.becker.game.twoplayer.common.search.SearchableHelper;
+import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
+import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import junit.framework.TestCase;
 
 /**
  * Verify that all the methods in the SearchStrategy interface work as expected (especially search).
  * Derived test classes will excersize these methods for specific game instances.
+ *
+ * These classes are called by specific game implementations.
  *
  * @author Barry Becker
  */
