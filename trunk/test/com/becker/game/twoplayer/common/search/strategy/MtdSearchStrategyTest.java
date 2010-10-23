@@ -2,6 +2,8 @@ package com.becker.game.twoplayer.common.search.strategy;
 
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.TwoPlayerMoveStub;
+import com.becker.game.twoplayer.common.search.examples.AlphaPrunePlayer1Example;
+import com.becker.game.twoplayer.common.search.examples.AlphaPrunePlayer2Example;
 import com.becker.game.twoplayer.common.search.examples.SimpleGameTreeExample;
 import com.becker.optimization.parameter.ParameterArray;
 
@@ -23,48 +25,54 @@ public class MtdSearchStrategyTest extends AbstractSearchStrategyTst {
     }
 
     @Override
-    public void testOneLevelLookAheadSearch() {
-        searchOptions.setLookAhead(1);
-        verifyResult(new SimpleGameTreeExample(), "0", -8, 4);
+    protected SearchResult getOneLevelLookAheadResult() {
+        return new SearchResult("0", -8, 4);
     }
 
     @Override
-    public void testOneLevelWithQuiescenceAndABSearch() {
-        searchOptions.setLookAhead(1);
-        searchOptions.setQuiescence(true);
-        searchOptions.setAlphaBeta(true);
-        verifyResult(new SimpleGameTreeExample(), "0", -8, 4);
+    protected SearchResult getOneLevelWithQuiescenceAndABResult() {
+        return new SearchResult( "0", -8, 3);
     }
 
     @Override
-    public void testOneLevelWithQuiescenceSearch() {
-        searchOptions.setLookAhead(1);
-        searchOptions.setQuiescence(true);
-        verifyResult(new SimpleGameTreeExample(), "0", -8, 4);
+    protected SearchResult getOneLevelWithQuiescenceResult() {
+        return new SearchResult( "0", -8, 4);
     }
 
     @Override
-    public void testTwoLevelSearch() {
-        searchOptions.setLookAhead(2);
-        verifyResult(new SimpleGameTreeExample(), "0", 7, 12);
+    protected SearchResult getTwoLevelResult() {
+        return new SearchResult("0", 7, 12);
+    }
+    
+    @Override
+    protected SearchResult getPruneTwoLevelWithoutABResult() {
+        return new SearchResult("0", -5, 12);
     }
 
     @Override
-    public void testThreeLevelSearch() {
-        verifyResult(new SimpleGameTreeExample(), "0", -5, 28);
+    protected SearchResult getPruneTwoLevelWithABSearchPlayer1() {
+        return new SearchResult("0", -5, 7);
     }
 
     @Override
-    public void testThreeLevelBest20PercentSearch() {
-        searchOptions.setLookAhead(3);
-        searchOptions.setPercentageBestMoves(20);
-        verifyResult(new SimpleGameTreeExample(), "0", -5, 28);
+    protected SearchResult getPruneTwoLevelWithABSearchPlayer2() {
+        return new SearchResult("0", 9, 12);
+    }
+
+
+    @Override
+    protected SearchResult getThreeLevelResult() {
+        return new SearchResult("0", -5, 28);
+    }
+
+
+    @Override
+    protected SearchResult getThreeLevelBest20PercentResult() {
+        return new SearchResult("0", -5, 28);
     }
 
     @Override
-    public void testThreeLevelWithABSearch() {
-        searchOptions.setLookAhead(3);
-        searchOptions.setAlphaBeta(true);
-        verifyResult(new SimpleGameTreeExample(), "0", -5, 20);
+    protected SearchResult getThreeLevelWithABResult() {
+        return new SearchResult("0", -5, 15);
     }
 }

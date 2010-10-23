@@ -22,45 +22,37 @@ public class NegaScoutSearchStrategyTest extends AbstractSearchStrategyTst {
         return true;
     }
 
-    @Override
-    public void testTwoLevelSearch() {
-        searchOptions.setLookAhead(2);
-        verifyResult(new SimpleGameTreeExample(), "0", 7, 5);
-    }
 
     @Override
-    public void testThreeLevelSearch() {
-        verifyResult(new SimpleGameTreeExample(), "0", -5, 12);
+    protected SearchResult getTwoLevelResult() {
+        return new SearchResult("0", 7, 5);
     }
+
 
     /** best percentage ignore by base search algorithm. Only used when generating moves. */
     @Override
-    public void testThreeLevelBest20PercentSearch() {
-        searchOptions.setLookAhead(3);
-        searchOptions.setPercentageBestMoves(20);
-        verifyResult(new SimpleGameTreeExample(), "0", -5, 12);
+    protected SearchResult getThreeLevelBest20PercentResult() {
+        return new SearchResult("0", -5, 12);
     }
 
     @Override
-    public void testPruneTwoLevelWithABSearchPlayer1() {
-        searchOptions.setLookAhead(2);
-        searchOptions.setAlphaBeta(true);
-        verifyResult(new AlphaPrunePlayer1Example(), "0", -5, 5);
-    }
-
+    protected SearchResult getPruneTwoLevelWithABSearchPlayer1() {
+        return new SearchResult("0", -5, 5);
+    }    
 
     @Override
-    public void testThreeLevelWithABSearch() {
-        searchOptions.setLookAhead(3);
-        searchOptions.setAlphaBeta(true);
-        verifyResult(new SimpleGameTreeExample(), "0", -5, 12);
+    protected SearchResult getThreeLevelResult() {
+        return new SearchResult("0", -5, 12);
     }
 
     @Override
-    public void testPruneTwoLevelWithoutABSearch() {
-        searchOptions.setLookAhead(2);
-        searchOptions.setAlphaBeta(false);
-        verifyResult(new AlphaPrunePlayer1Example(), "0", -5, 5);
+    protected SearchResult getThreeLevelWithABResult() {
+        return new SearchResult("0", -5, 12);
+    }
+
+    @Override
+    protected SearchResult getPruneTwoLevelWithoutABResult() {
+        return new SearchResult("0", -5, 5);
     }
 
 }

@@ -2,7 +2,6 @@ package com.becker.game.twoplayer.common.search.examples;
 
 import com.becker.game.twoplayer.common.search.TwoPlayerMoveStub;
 
-
 /**
  * A simple game tree where one of the moves should get alpha pruned when alpha beta pruning is on.
  * Player2 to move next.

@@ -1,4 +1,6 @@
-package com.becker.game.twoplayer.common.search.strategy;
+package com.becker.game.twoplayer.common.search.strategy.integration;
+
+import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
 
 /**
  * Verify that all the methods in the Searchable interface work as expected.

@@ -72,7 +72,7 @@ public class ZobristHashTest  extends TestCase {
         applyMoveToHash(2, 2, true);
         applyMoveToHash(1, 1, false);
         assertEquals("Unexpected hashkey for board after 2 moves",
-                new Long(-6422371760107745138L), hash.getKey()); // -642237176010774513
+                new Long(-6422371760107745138L), hash.getKey());
     }
 
     public void testHashAfterTwoMovesThenUndo() {

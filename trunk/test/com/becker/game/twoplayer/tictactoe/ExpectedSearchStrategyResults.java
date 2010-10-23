@@ -3,8 +3,8 @@ package com.becker.game.twoplayer.tictactoe;
 import com.becker.common.Location;
 import com.becker.game.common.GamePiece;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.common.search.strategy.ExpectedMoveMatrix;
-import com.becker.game.twoplayer.common.search.strategy.MoveInfo;
+import com.becker.game.twoplayer.common.search.strategy.integration.ExpectedMoveMatrix;
+import com.becker.game.twoplayer.common.search.strategy.integration.MoveInfo;
 
 /**
  * Expected generated moves for search tests for both MiniMax and NegaMax algorthms since
