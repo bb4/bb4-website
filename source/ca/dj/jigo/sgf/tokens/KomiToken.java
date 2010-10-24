@@ -19,9 +19,6 @@
 
 package ca.dj.jigo.sgf.tokens;
 
-import java.io.StreamTokenizer;
-import java.io.IOException;
-
 /**
  * The number of points given to White to compensate for Black having the
  * first move.  This is typically 5.5 points, but defaults to 0.5 points

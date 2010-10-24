@@ -21,8 +21,8 @@ package ca.dj.jigo.sgf.tokens;
 
 import ca.dj.jigo.sgf.Point;
 
-import java.io.StreamTokenizer;
 import java.io.IOException;
+import java.io.StreamTokenizer;
 
 /**
  * A token that contains the point at which is was played, or the point

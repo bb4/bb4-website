@@ -19,9 +19,6 @@
 
 package ca.dj.jigo.sgf.tokens;
 
-import java.io.StreamTokenizer;
-import java.io.IOException;
-
 /**
  * A comment made during the game.  Typically, the comment applies to the
  * move which is found in the same game leaf.

@@ -19,10 +19,10 @@
 
 package ca.dj.jigo.sgf.tokens;
 
-import java.io.StreamTokenizer;
-import java.io.IOException;
-
 import ca.dj.jigo.sgf.SGFException;
+
+import java.io.IOException;
+import java.io.StreamTokenizer;
 
 /**
  * The big daddy of all SGFTokens.  All SGFTokens are subclassed from this
