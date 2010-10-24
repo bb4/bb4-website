@@ -19,9 +19,6 @@
 
 package ca.dj.jigo.sgf.tokens;
 
-import java.io.StreamTokenizer;
-import java.io.IOException;
-
 /**
  * Used by all mark-up tokens to help categorize them.  Here is the list
  * of known board mark-ups:

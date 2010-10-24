@@ -19,9 +19,6 @@
 
 package ca.dj.jigo.sgf.tokens;
 
-import java.io.StreamTokenizer;
-import java.io.IOException;
-
 /**
  * A list of dimmed points.
  */

@@ -19,9 +19,6 @@
 
 package ca.dj.jigo.sgf.tokens;
 
-import java.io.StreamTokenizer;
-import java.io.IOException;
-
 /**
  * A generic player name.  Superclass for WhiteNameToken and BlackNameToken.
  */

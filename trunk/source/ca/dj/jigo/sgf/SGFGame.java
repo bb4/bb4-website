@@ -19,9 +19,10 @@
 
 package ca.dj.jigo.sgf;
 
-import ca.dj.jigo.sgf.tokens.*;
+import ca.dj.jigo.sgf.tokens.InfoToken;
 
-import java.util.*;
+import java.util.Enumeration;
+import java.util.Vector;
 
 /**
  * Represents a full Go game; typically after having been parsed from

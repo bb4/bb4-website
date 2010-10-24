@@ -21,13 +21,11 @@ package ca.dj.jigo.sgf.tokens;
 
 import ca.dj.jigo.sgf.Point;
 
-import java.io.StreamTokenizer;
 import java.io.IOException;
+import java.io.StreamTokenizer;
 import java.util.Iterator;
-
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * A list of points.

@@ -19,9 +19,6 @@
 
 package ca.dj.jigo.sgf.tokens;
 
-import java.io.StreamTokenizer;
-import java.io.IOException;
-
 /**
  * The print mode to use for numbering the moves:
  * <PRE>

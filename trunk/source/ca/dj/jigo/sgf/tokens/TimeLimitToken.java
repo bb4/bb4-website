@@ -19,9 +19,6 @@
 
 package ca.dj.jigo.sgf.tokens;
 
-import java.io.StreamTokenizer;
-import java.io.IOException;
-
 /**
  * The time limit for both players.  Time is always given in seconds.
  */

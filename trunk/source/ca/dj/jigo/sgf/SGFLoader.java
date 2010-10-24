@@ -22,7 +22,8 @@ package ca.dj.jigo.sgf;
 import ca.dj.jigo.sgf.tokens.*;
 
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A way to load SGF files.  This class handles SGF File Formats 3 and 4.

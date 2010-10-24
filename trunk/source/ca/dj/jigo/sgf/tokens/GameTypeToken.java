@@ -19,9 +19,6 @@
 
 package ca.dj.jigo.sgf.tokens;
 
-import java.io.StreamTokenizer;
-import java.io.IOException;
-
 /**
  * The type of game in this SGF stream.  Normally, a program won't continue if
  * it doesn't read a 1 in this token which indicates a game of Go:

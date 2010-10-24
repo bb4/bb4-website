@@ -19,9 +19,10 @@
 
 package ca.dj.jigo.sgf.tokens;
 
-import ca.dj.jigo.sgf.*;
+import ca.dj.jigo.sgf.SGFException;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.StreamTokenizer;
 
 /**
  * A generic token.  This class is responsible for parsing simple text --

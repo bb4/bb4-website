@@ -19,8 +19,10 @@
 
 package ca.dj.jigo.sgf;
 
-import java.util.*;
 import ca.dj.jigo.sgf.tokens.SGFToken;
+
+import java.util.Enumeration;
+import java.util.Vector;
 
 /**
  * Contains all tokens for a particular node; it's an end-point for a game
