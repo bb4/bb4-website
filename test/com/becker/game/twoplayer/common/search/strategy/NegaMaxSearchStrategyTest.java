@@ -1,9 +1,10 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
 import com.becker.game.twoplayer.common.search.Searchable;
-import com.becker.game.twoplayer.common.search.examples.AlphaPrunePlayer1Example;
-import com.becker.game.twoplayer.common.search.examples.AlphaPrunePlayer2Example;
-import com.becker.game.twoplayer.common.search.examples.SimpleGameTreeExample;
+import com.becker.game.twoplayer.common.search.TwoPlayerMoveStub;
+import com.becker.game.twoplayer.common.search.examples.EvaluationPerspective;
+import com.becker.game.twoplayer.common.search.examples.FourLevelGameTreeExample;
+import com.becker.game.twoplayer.common.search.examples.ThreeLevelGameTreeExample;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**
@@ -19,23 +20,16 @@ public class NegaMaxSearchStrategyTest extends AbstractSearchStrategyTst {
     }
 
     @Override
-    protected boolean negateInheritedValue() {
-        return true;
+    protected EvaluationPerspective getEvaluationPerspective() {
+        return EvaluationPerspective.CURRENT_PLAYER;
     }
 
-    @Override
-    protected SearchResult getPruneTwoLevelWithoutABResult() {
-        return new SearchResult("0", -5, 6);
-    }
 
-    @Override
-    protected SearchResult getPruneTwoLevelWithABSearchPlayer1() {
-        return new SearchResult("0", -5, 5);
-    }
-
-    @Override
-    protected SearchResult getPruneTwoLevelWithABSearchPlayer2() {
-        return new SearchResult("0", 9, 5);
+     public void testThreeLevelWithABSearch() {
+        searchOptions.setLookAhead(3);
+        searchOptions.setAlphaBeta(true);
+        verifyResult(new ThreeLevelGameTreeExample(false, getEvaluationPerspective()),
+                getThreeLevelWithABResult());
     }
 
 }

@@ -33,10 +33,6 @@ public class Matrix4f {
 		set( m );
 	}
 
-	public Matrix4f(float[] m) {
-		set( m );
-	}
-
 	public void set( Matrix4f m) {
 		m00 = m.m00;
 		m01 = m.m01;

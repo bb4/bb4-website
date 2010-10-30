@@ -1,9 +1,8 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
 import com.becker.game.twoplayer.common.search.Searchable;
-import com.becker.game.twoplayer.common.search.examples.AlphaPrunePlayer1Example;
-import com.becker.game.twoplayer.common.search.examples.AlphaPrunePlayer2Example;
-import com.becker.game.twoplayer.common.search.examples.SimpleGameTreeExample;
+import com.becker.game.twoplayer.common.search.examples.EvaluationPerspective;
+import com.becker.game.twoplayer.common.search.examples.FourLevelGameTreeExample;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**
@@ -20,36 +19,28 @@ public class NegaMaxMemorySearchStrategyTest extends AbstractSearchStrategyTst {
 
 
     @Override
-    protected boolean negateInheritedValue() {
-        return true;
+    protected EvaluationPerspective getEvaluationPerspective() {
+        return EvaluationPerspective.CURRENT_PLAYER;
     }
     
-    /**
-     * Look ahead one level and get the best move.
-     */
+
     @Override
-    protected SearchResult getOneLevelLookAheadResult() {
+    protected SearchResult getOneLevelLookAheadPlayer1Result() {
+        return new SearchResult("0", -2, 4);
+    }
+
+    @Override
+    protected SearchResult getOneLevelLookAheadPlayer2Result() {
         return new SearchResult("0", -8, 4);
     }
 
     @Override
-    protected SearchResult getOneLevelWithQuiescenceAndABResult() {
-        return new SearchResult("0", -8, 3);
-    }
-
-    @Override
-    protected SearchResult getOneLevelWithQuiescenceResult() {
-        return new SearchResult("0", -8, 4);
-    }
-
-
-    @Override
-    protected SearchResult getTwoLevelResult() {
+    protected SearchResult getTwoLevelPlayer1Result() {
         return new SearchResult("0", 7, 12);
     }
 
     @Override
-    protected SearchResult getPruneTwoLevelWithoutABResult() {
+    protected SearchResult getPruneTwoLevelWithoutABResultPlayer1() {
         return new SearchResult("0", -5, 12);
     }
 
@@ -64,14 +55,8 @@ public class NegaMaxMemorySearchStrategyTest extends AbstractSearchStrategyTst {
     }
 
 
-
     @Override
-    protected SearchResult getThreeLevelResult() {
-        return new SearchResult("0", -5, 16);
-    }
-
-    @Override
-    protected SearchResult getThreeLevelBest20PercentResult() {
+    protected SearchResult getThreeLevelPlayer1Result() {
         return new SearchResult("0", -5, 16);
     }
 

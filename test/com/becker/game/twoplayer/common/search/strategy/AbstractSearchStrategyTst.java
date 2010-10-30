@@ -7,10 +7,7 @@ import com.becker.game.twoplayer.common.search.SearchOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.SearchableStub;
 import com.becker.game.twoplayer.common.search.TwoPlayerMoveStub;
-import com.becker.game.twoplayer.common.search.examples.AlphaPrunePlayer1Example;
-import com.becker.game.twoplayer.common.search.examples.AlphaPrunePlayer2Example;
-import com.becker.game.twoplayer.common.search.examples.GameTreeExample;
-import com.becker.game.twoplayer.common.search.examples.SimpleGameTreeExample;
+import com.becker.game.twoplayer.common.search.examples.*;
 import com.becker.optimization.parameter.ParameterArray;
 import junit.framework.TestCase;
 
@@ -19,6 +16,7 @@ import junit.framework.TestCase;
  *
  * @author Barry Becker
  */
+@SuppressWarnings({"ClassWithTooManyMethods"})
 public abstract class AbstractSearchStrategyTst extends TestCase {
 
     protected SearchOptions searchOptions;
@@ -38,9 +36,11 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
         return createSearchStrategy(searchable, weights.getDefaultWeights());
     }
 
+    /** @return the Search strategy to test. */
     protected abstract SearchStrategy createSearchStrategy(Searchable searchable, ParameterArray weights);
 
-    protected abstract boolean negateInheritedValue();
+    /** @return Describes the way that we should evaluate moves at each ply. */
+    protected abstract EvaluationPerspective getEvaluationPerspective();
 
     /**
      * @return default search options for all games
@@ -57,113 +57,158 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
 
 
     /**
-     * Edge case where no searching is actually done. There will be no found move.
+     * Edge case where no searching is actually done. The found move will be the root.
      */
     public void testZeroLookAheadSearch() {
         searchOptions.setLookAhead(0);
-        verifyResult(new SimpleGameTreeExample(), getZeroLookAheadResult());
+        verifyResult(new ZeroLevelGameTreeExample(false, getEvaluationPerspective()),
+                getZeroLookAheadResult());
     }
-    protected SearchResult getZeroLookAheadResult() {
-        return new SearchResult(TwoPlayerMoveStub.ROOT_ID, 6, 0);
-    }
-
 
     /**
      * Look ahead one level and get the best move.
      */
-    public void testOneLevelLookAheadSearch() {
+    public void testOneLevelLookAheadPlayer1Search() {
         searchOptions.setLookAhead(1);
-        verifyResult(new SimpleGameTreeExample(), getOneLevelLookAheadResult());
-    }
-    protected SearchResult getOneLevelLookAheadResult() {
-        return new SearchResult("0", -8, 2);
+        verifyResult(new OneLevelGameTreeExample(true, getEvaluationPerspective()),
+                getOneLevelLookAheadPlayer1Result());
     }
 
-
-    public void testOneLevelWithQuiescenceAndABSearch() {
+    /**
+     * Look ahead one level and get the best move.
+     */
+    public void testOneLevelLookAheadPlayer2Search() {
         searchOptions.setLookAhead(1);
-        searchOptions.setQuiescence(true);
-        searchOptions.setAlphaBeta(true);
-        verifyResult(new SimpleGameTreeExample(), getOneLevelWithQuiescenceAndABResult());
-    }
-    protected SearchResult getOneLevelWithQuiescenceAndABResult() {
-        return new SearchResult( "0", -8, 2);
+        verifyResult(new OneLevelGameTreeExample(false, getEvaluationPerspective()),
+                getOneLevelLookAheadPlayer2Result());
     }
 
-    public void testOneLevelWithQuiescenceSearch() {
-        searchOptions.setLookAhead(1);
-        searchOptions.setQuiescence(true);
-        verifyResult(new SimpleGameTreeExample(), getOneLevelWithQuiescenceResult());
-    }
-    protected SearchResult getOneLevelWithQuiescenceResult() {
-        return new SearchResult( "0", -8, 2);
-    }
-
-
-    public void testTwoLevelSearch() {
+    public void testTwoLevelPlayer1Search() {
         searchOptions.setLookAhead(2);
-        verifyResult(new SimpleGameTreeExample(), getTwoLevelResult());
-    }
-    protected SearchResult getTwoLevelResult() {
-        return new SearchResult("0", 7, 6);
+        verifyResult(new TwoLevelGameTreeExample(true, getEvaluationPerspective()),
+                getTwoLevelPlayer1Result());
     }
 
-    public void testPruneTwoLevelWithoutABSearch() {
+    public void testTwoLevelPlayer2Search() {
+        searchOptions.setLookAhead(2);
+        verifyResult(new TwoLevelGameTreeExample(false, getEvaluationPerspective()),
+                getTwoLevelPlayer2Result());
+    }
+
+    public void testPruneTwoLevelWithoutABSearchPlayer1() {
         searchOptions.setLookAhead(2);
         searchOptions.setAlphaBeta(false);
-        verifyResult(new AlphaPrunePlayer1Example(), getPruneTwoLevelWithoutABResult());
-    }
-    protected SearchResult getPruneTwoLevelWithoutABResult() {
-        return new SearchResult("0", 5, 6);
+        verifyResult(new AlphaPruneExample(true, getEvaluationPerspective()),
+                getPruneTwoLevelWithoutABResultPlayer1());
     }
 
     public void testPruneTwoLevelWithABSearchPlayer1() {
         searchOptions.setLookAhead(2);
         searchOptions.setAlphaBeta(true);
-        verifyResult(new AlphaPrunePlayer1Example(), getPruneTwoLevelWithABSearchPlayer1());
+        verifyResult(new AlphaPruneExample(true, getEvaluationPerspective()),
+                getPruneTwoLevelWithABSearchPlayer1());
     }
-    protected SearchResult getPruneTwoLevelWithABSearchPlayer1() {
-        return new SearchResult( "0", 5, 5);
-    }
-
 
     public void testPruneTwoLevelWithABSearchPlayer2() {
         searchOptions.setLookAhead(2);
         searchOptions.setAlphaBeta(true);
-        verifyResult(new AlphaPrunePlayer2Example(), getPruneTwoLevelWithABSearchPlayer2());
-    }
-    protected SearchResult getPruneTwoLevelWithABSearchPlayer2() {
-        return new SearchResult( "0", 9, 5);
+        verifyResult(new AlphaPruneExample(false, getEvaluationPerspective()),
+                getPruneTwoLevelWithABSearchPlayer2());
     }
 
-
-
-    public void testThreeLevelSearch() {
-        verifyResult(new SimpleGameTreeExample(), getThreeLevelResult());
-    }
-    protected SearchResult getThreeLevelResult() {
-        return new SearchResult("0", -5, 14);
+    public void testThreeLevelPlayer1Search() {
+        verifyResult(new ThreeLevelGameTreeExample(true, getEvaluationPerspective()),
+                getThreeLevelPlayer1Result());
     }
 
-    /** best percentage ignore by base search algorithm. Only used when generating moves. */
-    public void testThreeLevelBest20PercentSearch() {
-        searchOptions.setLookAhead(3);
-        searchOptions.setPercentageBestMoves(20);
-        verifyResult(new SimpleGameTreeExample(), getThreeLevelBest20PercentResult());
+    public void testThreeLevelPlayer2Search() {
+        verifyResult(new ThreeLevelGameTreeExample(false, getEvaluationPerspective()),
+                getThreeLevelPlayer2Result());
     }
-    protected SearchResult getThreeLevelBest20PercentResult() {
-        return new SearchResult( "0", -5, 14);
-    }
+
 
     public void testThreeLevelWithABSearch() {
         searchOptions.setLookAhead(3);
         searchOptions.setAlphaBeta(true);
-        verifyResult(new SimpleGameTreeExample(), getThreeLevelWithABResult());
+        verifyResult(new ThreeLevelGameTreeExample(false, getEvaluationPerspective()),
+                getThreeLevelWithABResult());
+    }
+
+
+    public void testFourLevelSearchPlayer1() {
+        searchOptions.setLookAhead(4);
+        verifyResult(new FourLevelGameTreeExample(true, getEvaluationPerspective()),
+                getFourLevelPlayer1Result());
+    }
+
+    public void testFourLevelSearchPlayer2() {
+        searchOptions.setLookAhead(4);
+        verifyResult(new FourLevelGameTreeExample(false, getEvaluationPerspective()),
+                getFourLevelPlayer2Result());
+    }
+
+    public void testFourLevelABSearchPlayer1() {
+        searchOptions.setLookAhead(4);
+        searchOptions.setAlphaBeta(true);
+        verifyResult(new FourLevelGameTreeExample(true, getEvaluationPerspective()),
+                getFourLevelABPlayer1Result());
+    }
+
+    public void testFourLevelABSearchPlayer2() {
+        searchOptions.setLookAhead(4);
+        searchOptions.setAlphaBeta(true);
+        verifyResult(new FourLevelGameTreeExample(false, getEvaluationPerspective()),
+                getFourLevelABPlayer2Result());
+    }
+
+    // the following results are for minimax, but negamax should match.
+
+    protected SearchResult getZeroLookAheadResult() {
+        return new SearchResult(TwoPlayerMoveStub.ROOT_ID, 6, 0);
+    }
+
+    protected SearchResult getOneLevelLookAheadPlayer1Result() {
+        return new SearchResult("1", -2, 2);
+    }
+    protected SearchResult getOneLevelLookAheadPlayer2Result() {
+        return new SearchResult("0", -8, 2);
+    }
+    protected SearchResult getTwoLevelPlayer1Result() {
+        return new SearchResult("1", 2, 6);
+    }
+    protected SearchResult getTwoLevelPlayer2Result() {
+        return new SearchResult("0", 7, 6);
+    }
+    protected SearchResult getPruneTwoLevelWithoutABResultPlayer1() {
+        return new SearchResult("0", 5, 6);
+    }
+    protected SearchResult getPruneTwoLevelWithABSearchPlayer1() {
+        return new SearchResult( "0", 5, 5);
+    }
+    protected SearchResult getPruneTwoLevelWithABSearchPlayer2() {
+        return new SearchResult( "1", 4, 6);
+    }
+    protected SearchResult getThreeLevelPlayer1Result() {
+        return new SearchResult("0", -4, 14);
+    }
+    protected SearchResult getThreeLevelPlayer2Result() {
+        return new SearchResult("0", -5, 14);
     }
     protected SearchResult getThreeLevelWithABResult() {
         return new SearchResult( "0", -5, 13);
     }
-
+    protected SearchResult getFourLevelPlayer1Result() {
+        return new SearchResult("0", 27, 30);
+    }
+    protected SearchResult getFourLevelPlayer2Result() {
+        return new SearchResult("1", 14, 30);
+    }
+    protected SearchResult getFourLevelABPlayer1Result() {
+        return new SearchResult("0", 27, 18);
+    }
+    protected SearchResult getFourLevelABPlayer2Result() {
+        return new SearchResult("1", 14, 26);
+    }
 
     /**
      * Verify move that was found using search strategy under test.
@@ -178,16 +223,17 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
 
         String prefix = searchStrategy.getClass().getName();
 
-        int inheritedValue = (negateInheritedValue()) ?
-                               -foundMove.getInheritedValue() : foundMove.getInheritedValue();
+        int inheritedValue = determineInheritedValue(foundMove.getInheritedValue(), example);
+
         SearchResult actualResult =
                 new SearchResult(foundMove.getId(), inheritedValue, searchStrategy.getNumMovesConsidered());
 
         assertEquals(prefix + " Unexpected search result", expectedSearchResult, actualResult);
-
     }
 
-    private boolean oddLookAhead() {
-        return searchOptions.getLookAhead()%2==0;
+    private int determineInheritedValue(int value, GameTreeExample example) {
+        int depthOffset = example.getInitialMove().isPlayer1() ? 1 : 0;
+        return (getEvaluationPerspective() == EvaluationPerspective.CURRENT_PLAYER) ?
+                             (int) Math.pow(-1, /*example.getMaxDepth() + */depthOffset) * value : value;
     }
 }

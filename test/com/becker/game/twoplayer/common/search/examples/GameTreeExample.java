@@ -22,6 +22,11 @@ public interface GameTreeExample {
     TwoPlayerMove getInitialMove();
 
     /**
+     * @return  maximum depth of the example tree
+     */
+    int getMaxDepth();
+
+    /**
      * Print the tree in depth first search for debugging purposes
      */
     void print();

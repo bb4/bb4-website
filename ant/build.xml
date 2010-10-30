@@ -42,7 +42,6 @@
     <pathelement location="../lib/jai_codec.jar"/>
     <pathelement location="${libDir}/jnlp.jar"/>
     <pathelement location="${libDir}/junit.jar"/>
-    <pathelement location="${libDir}/jigo.jar"/>
     <pathelement location="${libDir}/gogui7.1.jar"/>
     <pathelement location="${libDir}/kgsGtp.jar"/>
     <pathelement location="${libDir}/gtpserver.jar"/>
@@ -276,7 +275,7 @@
   <target name="executeGo" description="Run the go program">
     <antcall target="executeProgram">
       <param name="className" value="${gameAppClass}"/>
-      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;${libDir}/jigo.jar;${libDir}/gtpserver.jar;"/>
+      <param name="libPath" value="${libDir}/vecmath.jar;${libDir}/jai_codec.jar;${libDir}/gtpserver.jar;"/>
       <param name="args" value="-name go -locale ENGLISH"/>
     </antcall>
   </target>
@@ -523,12 +522,12 @@
   </target>
   
   <target name="GoGui" depends="compile">
-    <echo message="${java_compiler} -ea -classpath ${classesDir};${libDir}/gogui7.1.jar;${libDir}/jigo.jar com.becker.game.twoplayer.go.GtpTesujisoftGoServer"/>
+    <echo message="${java_compiler} -ea -classpath ${classesDir};${libDir}/gogui7.1.jar com.becker.game.twoplayer.go.GtpTesujisoftGoServer"/>
     <antcall target="executeProgram2">
       <param name="className" value="gogui.Main"/>
       <param name="libPath" value="${libDir}/gogui7.1.jar"/>
       <param name="arg1" value="-program"/>
-      <param name="arg2" value="${java_compiler} -ea -classpath ${classesDir};${libDir}/gogui7.1.jar;${libDir}/jigo.jar com.becker.game.twoplayer.go.GtpTesujisoftGoServer"/>
+      <param name="arg2" value="${java_compiler} -ea -classpath ${classesDir};${libDir}/gogui7.1.jar com.becker.game.twoplayer.go.GtpTesujisoftGoServer"/>
     </antcall>
   </target>
 

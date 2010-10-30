@@ -92,7 +92,6 @@ public final class NegaMaxMemoryStrategy extends NegaMaxStrategy
         MoveList list =
                 searchable_.generateMoves(lastMove, weights_, true);
 
-        movesConsidered_ += list.size();
         if (depth == lookAhead_)
             numTopLevelMoves_ = list.size();
 
