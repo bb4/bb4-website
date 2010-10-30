@@ -23,13 +23,4 @@ public class NegaMaxSearchStrategyTest extends AbstractSearchStrategyTst {
     protected EvaluationPerspective getEvaluationPerspective() {
         return EvaluationPerspective.CURRENT_PLAYER;
     }
-
-
-     public void testThreeLevelWithABSearch() {
-        searchOptions.setLookAhead(3);
-        searchOptions.setAlphaBeta(true);
-        verifyResult(new ThreeLevelGameTreeExample(false, getEvaluationPerspective()),
-                getThreeLevelWithABResult());
-    }
-
 }

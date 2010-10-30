@@ -231,9 +231,16 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
         assertEquals(prefix + " Unexpected search result", expectedSearchResult, actualResult);
     }
 
+    /**
+     * This does not need to be as complicated as I once thought.
+     * @return  adjusted inherited value
+     */
     private int determineInheritedValue(int value, GameTreeExample example) {
-        int depthOffset = example.getInitialMove().isPlayer1() ? 1 : 0;
-        return (getEvaluationPerspective() == EvaluationPerspective.CURRENT_PLAYER) ?
-                             (int) Math.pow(-1, /*example.getMaxDepth() + */depthOffset) * value : value;
+
+        if (getEvaluationPerspective() == EvaluationPerspective.CURRENT_PLAYER)
+        {
+            return   example.getInitialMove().isPlayer1() ? -value : value;
+        }
+        return value;
     }
 }
