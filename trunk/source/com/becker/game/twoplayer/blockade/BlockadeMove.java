@@ -57,6 +57,20 @@ public class BlockadeMove extends TwoPlayerMove
         return m;
     }
 
+    /**
+     *  factory method for getting new moves.
+     *  used to use recycled objects, but did not increase performance, so I removed it.
+     */
+    public static BlockadeMove createMove(
+            Location originLocation,
+            Location destinationLocation,
+            int val, GamePiece piece, BlockadeWall w)
+    {
+        BlockadeMove m = new BlockadeMove( originLocation.getRow(), originLocation.getCol(),
+                destinationLocation.getRow(), destinationLocation.getCol(), val,  piece, w);
+
+        return m;
+    }
 
     /**
      * make a deep copy.

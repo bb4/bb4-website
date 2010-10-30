@@ -26,20 +26,24 @@ public class MoveGenerator {
         weights_ = weights;
     }
 
+    /**
+     * First find the opponent's shortest paths.
+     * Then For each piece of the current player's NUM_HOME pieces, add a move that represents a step along
+     * its shortest paths to the opponent homes and all reasonable wall placements.
+     * To limit the number of wall placements we will restrict possibilities to those positions which
+     * effect one of the *opponents* shortest paths.
+     * @param lastMove
+     * @return list of generated moves.
+     */
     public MoveList generateMoves(TwoPlayerMove lastMove) {
 
         MoveList moveList = new MoveList();
         boolean player1 = (lastMove == null) || !lastMove.isPlayer1();
 
-
-        // first find the opponent's shortest paths. There must be NUM_HOMES squared of them (unless the player won).
+        //  There must be NUM_HOMES squared of them (unless the player won).
         // There is one path from every piece to every opponent home (i.e. n*n)
         List<Path> opponentPaths = board_.findAllOpponentShortestPaths(player1);
 
-        // For each piece of the current player's NUM_HOME pieces, add a move that represents a step along
-        // its shortest paths to the opponent homes and all reasonable wall placements.
-        // To limit the number of wall placements we will restrict possibilities to those positions which
-        // effect one of the *opponents* shortest paths.
         List<BoardPosition> pawnLocations = new LinkedList<BoardPosition>();
         for ( int row = 1; row <= board_.getNumRows(); row++ ) {
             for ( int col = 1; col <= board_.getNumCols(); col++ ) {
@@ -464,7 +468,7 @@ public class MoveGenerator {
             wallsToCheck.add( new BlockadeWall(topLeft, topRight) );
             wallsToCheck = handleDirectionCase(bottomLeft, 1, 0, wallsToCheck);
         }
-        else if (bottomWall) {
+        else {  // bottomWall is true
             wallsToCheck.add( new BlockadeWall(topLeft, topRight) );
             wallsToCheck = handleDirectionCase(topLeft, -1, 0, wallsToCheck);
         }
