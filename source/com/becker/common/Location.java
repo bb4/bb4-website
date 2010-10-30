@@ -72,6 +72,10 @@ public final class Location implements Serializable
         incrementCol(colChange);
     }
 
+    public Location copyOnIncrement(int rowChange, int colChange) {
+        return new Location(row_ + rowChange, col_+colChange);
+    }
+
     /**
      * Checks to see if the given location has the same coordinates as this
      * one.
