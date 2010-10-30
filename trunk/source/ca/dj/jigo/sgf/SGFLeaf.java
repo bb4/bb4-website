@@ -45,9 +45,9 @@ public final class SGFLeaf
    * Creates a new SGFLeaf; use with caution.  All SGFLeaves must have
    * at least one token.  So if you add this leaf to a tree without having
    * any tokens inside, you can potentially hose the system.  That's why
-   * it's protected.
+   * it's private.
    */
-  protected SGFLeaf()
+  private SGFLeaf()
   {
   }
 

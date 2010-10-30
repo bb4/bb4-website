@@ -24,12 +24,14 @@
             <jar href="checkers.jar" main="false"/>
             <jar href="chess.jar" main="false"/>
             <jar href="go.jar" main="false"/>
+            <jar href="jigo_sgf.jar" main="false"/>
             <jar href="blockade.jar" main="false"/>
             <jar href="galactic.jar" main="false"/>
             <jar href="poker.jar" main="false"/>
             <jar href="set.jar" main="false"/>
             <jar href="vecmath.jar" main="false"/>
             <jar href="jai_codec.jar" main="false"/>
+            <jar href="imageproc.jar" main="false"/>
             {jarElement1}
             {jarElement2}
        </resources>

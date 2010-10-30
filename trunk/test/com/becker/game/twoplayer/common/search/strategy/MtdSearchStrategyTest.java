@@ -1,10 +1,7 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
 import com.becker.game.twoplayer.common.search.Searchable;
-import com.becker.game.twoplayer.common.search.TwoPlayerMoveStub;
-import com.becker.game.twoplayer.common.search.examples.AlphaPrunePlayer1Example;
-import com.becker.game.twoplayer.common.search.examples.AlphaPrunePlayer2Example;
-import com.becker.game.twoplayer.common.search.examples.SimpleGameTreeExample;
+import com.becker.game.twoplayer.common.search.examples.EvaluationPerspective;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**
@@ -20,32 +17,28 @@ public class MtdSearchStrategyTest extends AbstractSearchStrategyTst {
     }
 
     @Override
-    protected boolean negateInheritedValue() {
-        return true;
+    protected EvaluationPerspective getEvaluationPerspective() {
+        return EvaluationPerspective.CURRENT_PLAYER;
     }
 
     @Override
-    protected SearchResult getOneLevelLookAheadResult() {
+    protected SearchResult getOneLevelLookAheadPlayer1Result() {
+        return new SearchResult("0", -2, 4);
+    }
+
+    @Override
+    protected SearchResult getOneLevelLookAheadPlayer2Result() {
         return new SearchResult("0", -8, 4);
     }
 
-    @Override
-    protected SearchResult getOneLevelWithQuiescenceAndABResult() {
-        return new SearchResult( "0", -8, 3);
-    }
 
     @Override
-    protected SearchResult getOneLevelWithQuiescenceResult() {
-        return new SearchResult( "0", -8, 4);
-    }
-
-    @Override
-    protected SearchResult getTwoLevelResult() {
+    protected SearchResult getTwoLevelPlayer1Result() {
         return new SearchResult("0", 7, 12);
     }
     
     @Override
-    protected SearchResult getPruneTwoLevelWithoutABResult() {
+    protected SearchResult getPruneTwoLevelWithoutABResultPlayer1() {
         return new SearchResult("0", -5, 12);
     }
 
@@ -56,18 +49,12 @@ public class MtdSearchStrategyTest extends AbstractSearchStrategyTst {
 
     @Override
     protected SearchResult getPruneTwoLevelWithABSearchPlayer2() {
-        return new SearchResult("0", 9, 12);
+        return new SearchResult("1", 4, 9);
     }
 
 
     @Override
-    protected SearchResult getThreeLevelResult() {
-        return new SearchResult("0", -5, 28);
-    }
-
-
-    @Override
-    protected SearchResult getThreeLevelBest20PercentResult() {
+    protected SearchResult getThreeLevelPlayer1Result() {
         return new SearchResult("0", -5, 28);
     }
 

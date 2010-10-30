@@ -37,8 +37,10 @@ public class FileFormatToken extends NumberToken implements InfoToken
   /**
    * Presume SGF File Format 3 by default.
    */
+  @Override
   protected float getDefault() { return 3; }
 
+  @Override
   protected boolean parseContent( StreamTokenizer st )
     throws IOException, SGFException
   {

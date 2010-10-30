@@ -1,8 +1,7 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
 import com.becker.game.twoplayer.common.search.Searchable;
-import com.becker.game.twoplayer.common.search.examples.AlphaPrunePlayer1Example;
-import com.becker.game.twoplayer.common.search.examples.SimpleGameTreeExample;
+import com.becker.game.twoplayer.common.search.examples.EvaluationPerspective;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**
@@ -18,30 +17,28 @@ public class NegaScoutSearchStrategyTest extends AbstractSearchStrategyTst {
     }
 
     @Override
-    protected boolean negateInheritedValue() {
-        return true;
+    protected EvaluationPerspective getEvaluationPerspective() {
+        return EvaluationPerspective.CURRENT_PLAYER;
     }
 
 
     @Override
-    protected SearchResult getTwoLevelResult() {
+    protected SearchResult getTwoLevelPlayer1Result() {
         return new SearchResult("0", 7, 5);
     }
-
-
-    /** best percentage ignore by base search algorithm. Only used when generating moves. */
-    @Override
-    protected SearchResult getThreeLevelBest20PercentResult() {
-        return new SearchResult("0", -5, 12);
-    }
-
+    
     @Override
     protected SearchResult getPruneTwoLevelWithABSearchPlayer1() {
         return new SearchResult("0", -5, 5);
-    }    
+    }
 
     @Override
-    protected SearchResult getThreeLevelResult() {
+    protected SearchResult getPruneTwoLevelWithABSearchPlayer2() {
+        return new SearchResult("1", 4, 7);
+    }
+
+    @Override
+    protected SearchResult getThreeLevelPlayer1Result() {
         return new SearchResult("0", -5, 12);
     }
 
@@ -51,7 +48,7 @@ public class NegaScoutSearchStrategyTest extends AbstractSearchStrategyTst {
     }
 
     @Override
-    protected SearchResult getPruneTwoLevelWithoutABResult() {
+    protected SearchResult getPruneTwoLevelWithoutABResultPlayer1() {
         return new SearchResult("0", -5, 5);
     }
 

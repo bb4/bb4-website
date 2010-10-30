@@ -127,8 +127,7 @@ public class SGFLoader
     throws IOException, SGFException
   {
     SGFTree tree = new SGFTree();
-    SGFLeaf leaf = null;
-    int token = 0;
+    int token;
 
     // Continue reading in from the file while the next token is one of:
     //   leaf, sub-tree, or end of current tree.
@@ -182,9 +181,9 @@ public class SGFLoader
     throws IOException, SGFException
   {
     SGFLeaf leaf = null;
-    SGFToken sgfToken = null;
+    SGFToken sgfToken;
 
-    int token = 0;
+    int token;
 
     // Keep reading in tokens until the end of the file, the start of a new
     // leaf, start of a new tree, or end of the current tree/game.  These
@@ -235,7 +234,7 @@ public class SGFLoader
     */
   protected SGFToken readToken( StreamTokenizer st )  throws IOException, SGFException
   {
-    SGFToken token = null;
+    SGFToken token;
     String tokenName = st.sval.toUpperCase();
 
     // Black and White moves are the most common token in an SGF file.
@@ -400,7 +399,7 @@ public class SGFLoader
     st.eolIsSignificant( false );
 
     // There's a bug in StreamTokenizer: parsing of numbers is turned on
-    // automagically (how nice, eh?).  So the only way to get rid of this is
+    // auto-magically (how nice, eh?).  So the only way to get rid of this is
     // to make all numeric-related characters ordinary, then make them word
     // characters.  Only by looking at the source to StreamTokenizer can it be
     // discerned that "ordinaryChars( ... )" removes all numeric properties

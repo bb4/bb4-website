@@ -71,6 +71,7 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
                     if ( player1 && (selectedValue < alpha) ) {
                         if ( selectedValue < beta ) {
                             showPrunedNodesInTree( list, parent, i, selectedValue, beta, PruneType.BETA);
+                            System.out.println("d"+depth+" pruning because selectedValue="+ selectedValue +" < "+ beta);
                             break; // pruned
                         }
                         else
@@ -79,6 +80,7 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
                     if ( !player1 && (selectedValue > beta) ) {
                         if ( selectedValue > alpha ) {
                             showPrunedNodesInTree( list, parent, i, selectedValue, alpha, PruneType.ALPHA);
+                            System.out.println("d"+depth+" pruning because selectedValue ="+ selectedValue +" > "+ alpha);
                             break; // pruned
                         }
                         else

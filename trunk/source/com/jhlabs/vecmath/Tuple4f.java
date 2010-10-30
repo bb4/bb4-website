@@ -25,13 +25,6 @@ public class Tuple4f {
 	public Tuple4f() {
 		this( 0, 0, 0, 0 );
 	}
-	
-	public Tuple4f( float[] x ) {
-		this.x = x[0];
-		this.y = x[1];
-		this.z = x[2];
-		this.w = x[2];
-	}
 
 	public Tuple4f( float x, float y, float z, float w ) {
 		this.x = x;
@@ -39,14 +32,7 @@ public class Tuple4f {
 		this.z = z;
 		this.w = w;
 	}
-
-	public Tuple4f( Tuple4f t ) {
-		this.x = t.x;
-		this.y = t.y;
-		this.z = t.z;
-		this.w = t.w;
-	}
-
+    
 	public void absolute() {
 		x = Math.abs(x);
 		y = Math.abs(y);

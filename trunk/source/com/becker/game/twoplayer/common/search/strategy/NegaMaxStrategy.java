@@ -33,7 +33,8 @@ public class NegaMaxStrategy extends AbstractSearchStrategy
     public TwoPlayerMove search( TwoPlayerMove lastMove, SearchTreeNode parent ) {
         // need to negate alpha and beta on initial call.
         Range window = getOptions().getInitialSearchWindow();
-        return searchInternal( lastMove, lookAhead_, (int)window.getMax(), (int)window.getMin(), parent );
+        TwoPlayerMove selected = searchInternal( lastMove, lookAhead_, (int)window.getMax(), (int)window.getMin(), parent);
+        return selected;
     }
 
 
@@ -58,29 +59,22 @@ public class NegaMaxStrategy extends AbstractSearchStrategy
             searchable_.makeInternalMove( theMove );
             SearchTreeNode child = addNodeToTree(parent, theMove, alpha, beta, i++);
 
-            //System.out.println("depth="+ depth + " alpha=" + alpha + " beta=" + beta);
             selectedMove = searchInternal( theMove, depth-1, -beta, -Math.max(alpha, bestInheritedValue), child );
-            //System.out.println("selected at depth="+ depth + " value="+ selectedMove.getValue()
-            //        +" inherited=" + selectedMove.getInheritedValue());
 
             searchable_.undoInternalMove( theMove );
 
-            if (selectedMove != null) {
+            int selectedValue = -selectedMove.getInheritedValue();
+            theMove.setInheritedValue( selectedValue );
 
-                int selectedValue = -selectedMove.getInheritedValue();
-                theMove.setInheritedValue( selectedValue );
-
-                if ( selectedValue > bestInheritedValue ) {
-                    bestMove = theMove;
-                    bestInheritedValue = selectedValue;
-                    if ( alphaBeta_ ) {
-                        if (bestInheritedValue >= beta) {
-                            System.out.println("pruning because bestInheritedValue="+bestInheritedValue+" > "+ beta);
-                            break;
-                        }
+            if ( selectedValue > bestInheritedValue ) {
+                bestMove = theMove;
+                bestInheritedValue = selectedValue;
+                if ( alphaBeta_ ) {
+                    if (bestInheritedValue >= beta) {
+                        System.out.println("pruning because bestInheritedValue=" + bestInheritedValue+" > "+ beta);
+                        break;
                     }
                 }
-
             }
         }
         bestMove.setSelected(true);

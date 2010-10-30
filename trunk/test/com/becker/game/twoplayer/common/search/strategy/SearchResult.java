@@ -36,6 +36,10 @@ public class SearchResult {
         return numMovesConsidered;
     }
 
+    public String toString() {
+        return "moveId:" + moveId +" inheritedValue:" + inheritedValue +" numMovesConsidered=" + numMovesConsidered;
+    }
+
 
     @Override
     public boolean equals(Object o) {

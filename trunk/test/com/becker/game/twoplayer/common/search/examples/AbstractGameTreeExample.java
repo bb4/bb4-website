@@ -14,12 +14,15 @@ import java.util.Arrays;
  *
  * @author Barry Becker
  */
-public class AbstractGameTreeExample implements GameTreeExample {
+public abstract class AbstractGameTreeExample implements GameTreeExample {
 
     /** the root of the game tree. */
     protected TwoPlayerMoveStub initialMove;
 
-    public AbstractGameTreeExample() {
+    protected MoveCreator moveCreator;
+
+    public AbstractGameTreeExample(EvaluationPerspective persp) {
+        moveCreator = new MoveCreator(persp);
     }
 
     protected MoveList createList(TwoPlayerMoveStub... moves) {
@@ -31,6 +34,7 @@ public class AbstractGameTreeExample implements GameTreeExample {
     public TwoPlayerMove getInitialMove() {
         return initialMove;
     }
+   
 
     /**
      * Print the tree in depth first search for debugging purposes
