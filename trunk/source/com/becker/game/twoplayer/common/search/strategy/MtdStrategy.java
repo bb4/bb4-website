@@ -69,7 +69,7 @@ public final class MtdStrategy implements SearchStrategy
 
             //selectedMove = searchWithMemory_.search(lastMove, beta - 1, beta, parent);
             //g = selectedMove.getInheritedValue();
-            getOptions().setInitialSearchWindow(new Range(-beta + 1, -beta));
+            getOptions().setInitialSearchWindow(new SearchWindow(-beta + 1, -beta));
             selectedMove = searchWithMemory_.search(lastMove, parent);
             g = -selectedMove.getInheritedValue();
 

@@ -29,9 +29,9 @@ public class NegaMaxStrategy extends AbstractSearchStrategy {
      */
     @Override
     public TwoPlayerMove search( TwoPlayerMove lastMove, SearchTreeNode parent ) {
-        // need to negate alpha and beta on initial call.
-        Range window = getOptions().getInitialSearchWindow();
-        return searchInternal( lastMove, lookAhead_, (int)window.getMax(), (int)window.getMin(), parent);
+
+        SearchWindow window = getOptions().getInitialSearchWindow();
+        return searchInternal( lastMove, lookAhead_, new SearchWindow(window.beta, window.alpha), parent);
     }
 
     /**
@@ -39,7 +39,7 @@ public class NegaMaxStrategy extends AbstractSearchStrategy {
      */
     @Override
     protected TwoPlayerMove findBestMove(TwoPlayerMove lastMove, int depth, MoveList list,
-                                       int alpha, int beta, SearchTreeNode parent) {
+                                       SearchWindow window, SearchTreeNode parent) {
         int i = 0;
         int bestInheritedValue = -SearchStrategy.INFINITY;
         TwoPlayerMove selectedMove;
@@ -52,9 +52,10 @@ public class NegaMaxStrategy extends AbstractSearchStrategy {
             updatePercentDone(depth, list);
 
             searchable_.makeInternalMove( theMove );
-            SearchTreeNode child = addNodeToTree(parent, theMove, alpha, beta, i++);
+            SearchTreeNode child = addNodeToTree(parent, theMove, window, i++);
 
-            selectedMove = searchInternal( theMove, depth-1, -beta, -Math.max(alpha, bestInheritedValue), child );
+            selectedMove = searchInternal( theMove, depth-1,
+                     new SearchWindow(-window.beta, -Math.max(window.alpha, bestInheritedValue)), child );
 
             searchable_.undoInternalMove( theMove );
 
@@ -65,8 +66,8 @@ public class NegaMaxStrategy extends AbstractSearchStrategy {
                 bestMove = theMove;
                 bestInheritedValue = selectedValue;
                 if ( alphaBeta_ ) {
-                    if (bestInheritedValue >= beta) {
-                        System.out.println("pruning because bestInheritedValue=" + bestInheritedValue+" > "+ beta);
+                    if (bestInheritedValue >= window.beta) {
+                        System.out.println("pruning because bestInheritedValue=" + bestInheritedValue+" > "+ window.beta);
                         break;
                     }
                 }

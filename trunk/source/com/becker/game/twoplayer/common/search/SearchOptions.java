@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.common.search;
 import com.becker.common.math.Range;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
+import com.becker.game.twoplayer.common.search.strategy.SearchWindow;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**
@@ -34,7 +35,7 @@ public class SearchOptions
     private boolean quiescence_ = QUIESCENCE;
 
     /** default alpha beta values. Some strategies (like nega* reverse them) */
-    private static final Range DEFAULT_SEARCH_WINDOW = new Range(SearchStrategy.INFINITY, -SearchStrategy.INFINITY);
+    private static final SearchWindow DEFAULT_SEARCH_WINDOW = new SearchWindow();
 
     // the default search method.
     private SearchStrategyType strategyMethod_ = SearchStrategyType.MINIMAX;
@@ -42,7 +43,7 @@ public class SearchOptions
     private int bestPercentage_;
     private int minBestMoves_;
     private int maxQuiescentDepth_ = DEFAULT_MAX_QUIESCENT_DEPTH;       
-    private Range initialSearchWindow_ = DEFAULT_SEARCH_WINDOW;
+    private SearchWindow initialSearchWindow_ = DEFAULT_SEARCH_WINDOW;
 
 
     /**
@@ -179,12 +180,12 @@ public class SearchOptions
         return maxQuiescentDepth_;
     }
 
-    public final void setInitialSearchWindow(Range window) {
+    public final void setInitialSearchWindow(SearchWindow window) {
         initialSearchWindow_ = window;
     }
 
-    public Range getInitialSearchWindow() {
-        return initialSearchWindow_;
+    public SearchWindow getInitialSearchWindow() {
+        return initialSearchWindow_.copy();
     }
 
     /**

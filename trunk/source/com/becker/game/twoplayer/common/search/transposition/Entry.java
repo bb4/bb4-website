@@ -1,6 +1,7 @@
 package com.becker.game.twoplayer.common.search.transposition;
 
 import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.twoplayer.common.search.strategy.SearchWindow;
 
 /**
  * An entry in the transposition table.
@@ -18,11 +19,10 @@ public class Entry {
     /**
      * Constructor.
      */
-    public Entry(TwoPlayerMove bestMove, int depth, int lowerValue, int upperValue)
-     {
+    public Entry(TwoPlayerMove bestMove, int depth, SearchWindow window) {
          this.bestMove = bestMove;
-         this.upperValue = upperValue;
-         this.lowerValue = lowerValue;
+         this.upperValue = window.beta;
+         this.lowerValue = window.alpha;
          this.depth = depth;
     }
 
@@ -31,8 +31,7 @@ public class Entry {
      * Use this version if the upper and lower bounds are the same.
      * We must be at level 0 in this case
      */
-    public Entry(TwoPlayerMove bestMove, int value)
-     {
+    public Entry(TwoPlayerMove bestMove, int value) {
          this.bestMove = bestMove;
          this.upperValue = value;
          this.lowerValue = value;       
