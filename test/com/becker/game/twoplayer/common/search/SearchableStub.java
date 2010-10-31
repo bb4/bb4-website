@@ -60,16 +60,17 @@ public class SearchableStub implements Searchable {
 
     /**
      * {@inheritDoc}
+     * sould return only the children that are urgent moves
      */
     public MoveList generateUrgentMoves(TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective ) {
-        return new MoveList();
+        return new MoveList(((TwoPlayerMoveStub) lastMove).getChildren());
     }
 
     /**
      * {@inheritDoc}
      */
-    public boolean inJeopardy( TwoPlayerMove m, ParameterArray weights, boolean player1sPerspective ) {
-        return false;
+    public boolean inJeopardy( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective ) {
+        return ((TwoPlayerMoveStub)lastMove).causedUrgency();
     }
 
     /**

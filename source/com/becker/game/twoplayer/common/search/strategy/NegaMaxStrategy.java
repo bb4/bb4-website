@@ -15,14 +15,12 @@ import com.becker.optimization.parameter.ParameterArray;
  *  sections of code for minimizing and maximizing search.
  *  @author Barry Becker
  */
-public class NegaMaxStrategy extends AbstractSearchStrategy
-{
+public class NegaMaxStrategy extends AbstractSearchStrategy {
     /**
      * Construct NegaMax the strategy given a controller interface.
      * @inheritDoc
      */
-    public NegaMaxStrategy( Searchable controller, ParameterArray weights )
-    {
+    public NegaMaxStrategy( Searchable controller, ParameterArray weights ) {
         super( controller , weights);
     }
 
@@ -33,17 +31,14 @@ public class NegaMaxStrategy extends AbstractSearchStrategy
     public TwoPlayerMove search( TwoPlayerMove lastMove, SearchTreeNode parent ) {
         // need to negate alpha and beta on initial call.
         Range window = getOptions().getInitialSearchWindow();
-        TwoPlayerMove selected = searchInternal( lastMove, lookAhead_, (int)window.getMax(), (int)window.getMin(), parent);
-        return selected;
+        return searchInternal( lastMove, lookAhead_, (int)window.getMax(), (int)window.getMin(), parent);
     }
-
 
     /**
      * @inheritDoc
      */
     @Override
-    protected TwoPlayerMove findBestMove(TwoPlayerMove lastMove,
-                                       int depth, MoveList list,
+    protected TwoPlayerMove findBestMove(TwoPlayerMove lastMove, int depth, MoveList list,
                                        int alpha, int beta, SearchTreeNode parent) {
         int i = 0;
         int bestInheritedValue = -SearchStrategy.INFINITY;
@@ -79,74 +74,6 @@ public class NegaMaxStrategy extends AbstractSearchStrategy
         }
         bestMove.setSelected(true);
         lastMove.setInheritedValue(-bestMove.getInheritedValue());
-        return bestMove;
-    }
-
-    /**
-     * This continues the search in situations where the board position is not stable.
-     * For example, perhaps we are in the middle of a piece exchange.
-     */
-    @Override
-    protected TwoPlayerMove quiescentSearch( TwoPlayerMove lastMove,
-                                          int depth, int oldAlpha, int beta, SearchTreeNode parent )
-    {
-        int alpha = oldAlpha;
-        int val = lastMove.getValue();
-        lastMove.setInheritedValue(val);
-        if ( depth >= maxQuiescentDepth_) {
-            return lastMove;
-        }
-        if (searchable_.inJeopardy( lastMove, weights_, true)) {
-            // then search a little deeper
-            return searchInternal( lastMove, depth+1, -alpha, -beta, parent );
-        }
-
-        if ( alphaBeta_ ) {
-            if ( val >= beta )
-                return lastMove; // prune
-            if ( val > alpha )
-                alpha = val;
-        }
-
-        MoveList list = searchable_.generateUrgentMoves( lastMove, weights_, true);
-
-        if (list.isEmpty())
-            return lastMove; // nothing to check
-
-        int bestInheritedValue = -SearchStrategy.INFINITY;
-        TwoPlayerMove bestMove = null;
-        movesConsidered_ += list.size();
-        GameContext.log( 2, "********* urgent moves = " + list );
-        int i = 0;
-
-        for (Move m : list) {
-            TwoPlayerMove theMove = (TwoPlayerMove) m;
-            searchable_.makeInternalMove( theMove );
-            SearchTreeNode child = addNodeToTree(parent, theMove, alpha, beta, i++ );
-
-            TwoPlayerMove selectedMove = quiescentSearch( theMove, depth+1, beta, alpha, child );   // neg a/b?
-            assert selectedMove!=null;
-
-            int selectedValue = -selectedMove.getInheritedValue();
-            theMove.setInheritedValue(val);
-
-            searchable_.undoInternalMove( theMove );
-            if ( selectedValue > bestInheritedValue ) {
-                bestMove = theMove;
-                bestInheritedValue = selectedValue;
-            }
-            if ( alphaBeta_ ) {
-                if ( selectedValue >= beta ) {
-                    return bestMove;
-                }
-                if ( selectedValue > alpha ) {
-                    alpha = selectedValue;
-                }
-            }
-        }
-        assert (bestMove != null);
-        bestMove.setSelected(true);
-        lastMove.setInheritedValue(bestMove.getInheritedValue());
         return bestMove;
     }
 

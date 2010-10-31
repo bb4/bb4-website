@@ -21,7 +21,7 @@ public class NegaScoutSearchStrategyTest extends AbstractSearchStrategyTst {
         return EvaluationPerspective.CURRENT_PLAYER;
     }
 
-
+    /*
     @Override
     protected SearchResult getTwoLevelPlayer1Result() {
         return new SearchResult("0", 7, 5);
@@ -51,5 +51,5 @@ public class NegaScoutSearchStrategyTest extends AbstractSearchStrategyTst {
     protected SearchResult getPruneTwoLevelWithoutABResultPlayer1() {
         return new SearchResult("0", -5, 5);
     }
-
+    */
 }

@@ -171,6 +171,10 @@ public class SearchOptions
         quiescence_ = quiescence;
     }
 
+    public void setMaxQuiescentDepth(int value) {
+        maxQuiescentDepth_ = value;
+    }
+
     public int getMaxQuiescentDepth() {
         return maxQuiescentDepth_;
     }

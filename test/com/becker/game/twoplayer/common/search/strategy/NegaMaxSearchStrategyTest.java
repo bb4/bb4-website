@@ -5,6 +5,7 @@ import com.becker.game.twoplayer.common.search.TwoPlayerMoveStub;
 import com.becker.game.twoplayer.common.search.examples.EvaluationPerspective;
 import com.becker.game.twoplayer.common.search.examples.FourLevelGameTreeExample;
 import com.becker.game.twoplayer.common.search.examples.ThreeLevelGameTreeExample;
+import com.becker.game.twoplayer.common.search.examples.TwoLevelQuiescentExample;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**
@@ -22,5 +23,12 @@ public class NegaMaxSearchStrategyTest extends AbstractSearchStrategyTst {
     @Override
     protected EvaluationPerspective getEvaluationPerspective() {
         return EvaluationPerspective.CURRENT_PLAYER;
+    }
+
+    public void testTwoLevelQuiescensePlayer2Search() {
+        searchOptions.setLookAhead(2);
+        searchOptions.setQuiescence(true);
+        verifyResult(new TwoLevelQuiescentExample(false, getEvaluationPerspective()),
+                getTwoLevelQuiescensePlayer2Result());
     }
 }

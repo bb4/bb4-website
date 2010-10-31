@@ -41,8 +41,4 @@ public class TwoLevelGameTreeExample extends AbstractGameTreeExample  {
         move1.setChildren(createList(move10, move11));
 
     }
-
-    public int getMaxDepth() {
-        return 2;
-    }
 }

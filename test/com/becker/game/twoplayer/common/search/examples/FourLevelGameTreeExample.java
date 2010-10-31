@@ -98,8 +98,4 @@ public class FourLevelGameTreeExample extends AbstractGameTreeExample  {
         move110.setChildren(createList(move1100, move1101));
         move111.setChildren(createList(move1110, move1111));
     }
-
-    public int getMaxDepth() {
-        return 4;
-    }
 }
