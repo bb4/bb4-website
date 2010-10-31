@@ -86,9 +86,9 @@ public class NegaScoutStrategy extends NegaMaxStrategy
      */
     @Override
     protected TwoPlayerMove findBestMove(TwoPlayerMove lastMove, int depth, MoveList list,
-                                         int alpha, int beta, SearchTreeNode parent) {
+                                         SearchWindow window, SearchTreeNode parent) {
         int i = 0;
-        int newBeta = beta;
+        int newBeta = window.beta;
         TwoPlayerMove selectedMove;
         TwoPlayerMove bestMove = (TwoPlayerMove)list.getFirstMove();
 
@@ -99,10 +99,10 @@ public class NegaScoutStrategy extends NegaMaxStrategy
             updatePercentDone(depth, list);
 
             searchable_.makeInternalMove( theMove );
-            SearchTreeNode child = addNodeToTree(parent, theMove, alpha, beta, i );
+            SearchTreeNode child = addNodeToTree(parent, theMove, window, i );
 
             // search with minimal search window
-            selectedMove = searchInternal( theMove, depth-1, -newBeta, -alpha, child );
+            selectedMove = searchInternal( theMove, depth-1, new SearchWindow(-newBeta, -window.alpha), child );
 
             searchable_.undoInternalMove( theMove );
             if (selectedMove != null) {
@@ -110,18 +110,18 @@ public class NegaScoutStrategy extends NegaMaxStrategy
                 int selectedValue = -selectedMove.getInheritedValue();
                 theMove.setInheritedValue( selectedValue );
                 
-                if (selectedValue > alpha) {
-                    alpha = selectedValue;
+                if (selectedValue > window.alpha) {
+                    window.alpha = selectedValue;
                 }
-                if (alpha >= beta) {
-                    theMove.setInheritedValue(alpha);
+                if (window.alpha >= window.beta) {
+                    theMove.setInheritedValue(window.alpha);
                     bestMove = theMove;
                     break;
                 }
-                if (alpha >= newBeta) {
+                if (window.alpha >= newBeta) {
                     // re-search with narrower window (typical alpha beta search).
                     searchable_.makeInternalMove( theMove );
-                    selectedMove = searchInternal( theMove, depth-1 , -beta, -alpha, child );
+                    selectedMove = searchInternal( theMove, depth-1, window.negateAndSwap(), child );
                     searchable_.undoInternalMove( theMove );
 
                     selectedValue = -selectedMove.getInheritedValue();
@@ -129,12 +129,12 @@ public class NegaScoutStrategy extends NegaMaxStrategy
                     //theMove.setInheritedValue(alpha); // which is right?
                     bestMove = theMove;
 
-                    if (alpha >= beta) {
+                    if (window.alpha >= window.beta) {
                         break;
                     }
                 }
                 i++;
-                newBeta = alpha + 1;
+                newBeta = window.alpha + 1;
             }
         }
 

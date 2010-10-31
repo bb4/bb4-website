@@ -65,8 +65,8 @@ public class GameTreeInfoPanel extends JPanel {
                     " bgcolor=#99AA99>" + entity + passSuffix + "</font><br>");
         sBuf.append("Static value = " + Util.formatNumber(m.getValue()) +"<br>");
         sBuf.append("Inherited value = " + Util.formatNumber(m.getInheritedValue()) +"<br>");
-        sBuf.append("Alpha = "+Util.formatNumber(lastNode.getAlpha())+"<br>");
-        sBuf.append("Beta = "+Util.formatNumber(lastNode.getBeta())+"<br>");
+        sBuf.append("Alpha = "+Util.formatNumber(lastNode.getWindow().alpha)+"<br>");
+        sBuf.append("Beta = "+Util.formatNumber(lastNode.getWindow().beta)+"<br>");
         sBuf.append(((lastNode.getComment()!=null) ? lastNode.getComment() : "") + "<br>");
         sBuf.append("Number of descendants = " + numKids + "<br>");
         if (m.isUrgent())

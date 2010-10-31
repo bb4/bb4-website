@@ -102,7 +102,7 @@ final class GoTreeCellRenderer extends GameTreeCellRenderer
         }  else {
             int numKids = node_.getChildMoves()==null? 0 : node_.getChildMoves().length;
             text += " kids="+ numKids;
-            text += " a="+Util.formatNumber(node_.getAlpha())+" b="+ Util.formatNumber(node_.getBeta());
+            text += " a="+Util.formatNumber(node_.getWindow().alpha)+" b="+ Util.formatNumber(node_.getWindow().beta);
         }
 
         g2.drawString(inhrtdValText, TEXT_MARGIN + STONE_IMG_SIZE + 2, 8);

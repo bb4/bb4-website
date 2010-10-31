@@ -1,6 +1,5 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
-import com.becker.game.common.Move;
 import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.Searchable;
@@ -28,7 +27,7 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
      */
     @Override
     protected TwoPlayerMove findBestMove(TwoPlayerMove lastMove, int depth, MoveList list,
-                                         int alpha, int beta, SearchTreeNode parent) {
+                                         SearchWindow window, SearchTreeNode parent) {
         int i = 0;
         int selectedValue;
         TwoPlayerMove selectedMove;
@@ -45,10 +44,10 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
             updatePercentDone(depth, list);
 
             searchable_.makeInternalMove( theMove );
-            SearchTreeNode child = addNodeToTree(parent, theMove, alpha, beta, i++);
+            SearchTreeNode child = addNodeToTree(parent, theMove, window, i++);
 
             // recursive call
-            selectedMove = searchInternal( theMove, depth-1, alpha, beta, child );
+            selectedMove = searchInternal( theMove, depth-1, window.copy(), child );
 
             searchable_.undoInternalMove( theMove );
 
@@ -66,23 +65,23 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
                 }
 
                 if ( alphaBeta_ ) {
-                    if ( player1 && (selectedValue < alpha) ) {
-                        if ( selectedValue < beta ) {
-                            showPrunedNodesInTree( list, parent, i, selectedValue, beta, PruneType.BETA);
+                    if ( player1 && (selectedValue < window.alpha) ) {
+                        if ( selectedValue < window.beta ) {
+                            showPrunedNodesInTree( list, parent, i, selectedValue, window.beta, PruneType.BETA);
                             //System.out.println("d"+depth+" pruning because selectedValue="+ selectedValue +" < "+ beta);
                             break; // pruned
                         }
                         else
-                            alpha = selectedValue;
+                            window.alpha = selectedValue;
                     }
-                    if ( !player1 && (selectedValue > beta) ) {
-                        if ( selectedValue > alpha ) {
-                            showPrunedNodesInTree( list, parent, i, selectedValue, alpha, PruneType.ALPHA);
+                    if ( !player1 && (selectedValue > window.beta) ) {
+                        if ( selectedValue > window.alpha ) {
+                            showPrunedNodesInTree( list, parent, i, selectedValue, window.alpha, PruneType.ALPHA);
                             //System.out.println("d"+depth+" pruning because selectedValue ="+ selectedValue +" > "+ alpha);
                             break; // pruned
                         }
                         else
-                            beta = selectedValue;
+                            window.beta = selectedValue;
                     }
                 }
             }
@@ -92,48 +91,6 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
         lastMove.setInheritedValue(bestMove.getInheritedValue());
         return bestMove;
     }
-
-
-    /**
-     * This continues the search in situations where the board position is not stable.
-     * For example, perhaps we are in the middle of a piece exchange
-     *
-    protected TwoPlayerMove quiescentSearch(TwoPlayerMove lastMove,
-                                            int depth, int alpha, int beta, SearchTreeNode parent) {
-        int val = lastMove.getValue();
-        lastMove.setInheritedValue(val);
-        if ( depth >= maxQuiescentDepth_ || searchable_.done( lastMove, false )) {
-            return lastMove;
-        }
-        if ( searchable_.inJeopardy( lastMove, weights_,  true )) {
-            // then search  a little deeper
-            return searchInternal( lastMove,  depth+1, alpha, beta, parent );
-        }
-
-        boolean player1 = lastMove.isPlayer1();
-        if ( alphaBeta_ ) {
-            if ( player1 ) {
-                if ( val >= beta )
-                    return lastMove; // prune
-                if ( val > alpha )
-                    alpha = val;
-            }
-            else {
-                if ( val >= alpha )
-                    return lastMove; // prune
-                if ( val > beta )
-                    beta = val;
-            }
-        }
-        MoveList list = searchable_.generateUrgentMoves( lastMove, weights_, true );
-
-        if ( list.isEmpty() ) {
-            return lastMove; // nothing to check
-        }
-
-        // TwoPlayerMove selectedMove = quiescentSearch( theMove, depth+1, alpha, beta, child );
-        return findBestMove(lastMove, depth, list, alpha, beta, parent);
-    }   */
 
     @Override
     protected boolean fromPlayer1sPerspective(TwoPlayerMove lastMove) {

@@ -1,6 +1,5 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
-import com.becker.common.math.Range;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
@@ -16,9 +15,6 @@ import java.util.List;
 /**
  *  This is an abstract base class for a search strategy.
  *  It's sublcasses define the key search algorithms for 2 player zero sum games with perfect information.
- *  Create one of these right before you do a search.
- *
- * @@ replace alpha beta with SearchWindow window.
  *
  *  @author Barry Becker
  */
@@ -88,20 +84,19 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
      */
     public TwoPlayerMove search( TwoPlayerMove lastMove, SearchTreeNode parent ) {
 
-        Range window = getOptions().getInitialSearchWindow();
-        return searchInternal( lastMove, lookAhead_, (int)window.getMin(), (int)window.getMax(),  parent );
+        return searchInternal( lastMove, lookAhead_, getOptions().getInitialSearchWindow(),  parent );
     }
 
     /**
      * {@inheritDoc}
      */
     protected TwoPlayerMove searchInternal( TwoPlayerMove lastMove,
-                                            int depth, int alpha, int beta, SearchTreeNode parent) {
+                                            int depth, SearchWindow window, SearchTreeNode parent) {
 
         boolean done = searchable_.done( lastMove, false);
         if ( depth <= 0 || done ) {
             if (doQuiescentSearch(depth, done, lastMove)) {
-                return quiescentSearch(lastMove, depth-1, alpha, beta, parent);
+                return quiescentSearch(lastMove, depth-1, window, parent);
             }
             else {
                 int sign = fromPlayer1sPerspective(lastMove) ? 1 : -1;
@@ -121,7 +116,7 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
             return null;
         }
 
-        return findBestMove(lastMove, depth, list, alpha, beta, parent);
+        return findBestMove(lastMove, depth, list, window, parent);
     }
 
     /**
@@ -144,13 +139,13 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
      * @return best quescent move
      */
     protected TwoPlayerMove quiescentSearch(TwoPlayerMove lastMove,
-                                            int depth, int alpha, int beta, SearchTreeNode parent) {
+                                            int depth, SearchWindow window, SearchTreeNode parent) {
 
         MoveList list = searchable_.generateUrgentMoves(lastMove, weights_, true);
         if (emptyMoveList(list, lastMove)) return null;
 
-        System.out.println("quiescent search depth=" + depth + " a="+ alpha + " b="+ beta);
-        return findBestMove(lastMove, depth, list, alpha, beta, parent);
+        System.out.println("quiescent search depth=" + depth + " win="+ window);
+        return findBestMove(lastMove, depth, list, window, parent);
     }
 
     /**
@@ -161,13 +156,12 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
      * @param depth how deep in this local game tree that we are to search.
      *   When depth becomes 0 we are at a leaf and should terminate (unless its an urgent move and quiescence is on).
       *@param list generated list of next moves to search.
-     * @param alpha same as p2best but for the other player. (alpha)
-     * @param beta the maximum of the value that it inherits from above and the best move found at this level (beta).
+     * @param window search window - alpha nd abeta
      * @param parent for constructing a ui tree. If null no game tree is constructed.
      * @return the chosen move (ie the best move) (may be null if no next move).
      */
     protected abstract TwoPlayerMove findBestMove(TwoPlayerMove lastMove, int depth, MoveList list,
-                                                  int alpha, int beta, SearchTreeNode parent);
+                                                  SearchWindow window, SearchTreeNode parent);
 
 
 
@@ -176,13 +170,12 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
      * @return the node added to the tree.
      */
     protected SearchTreeNode addNodeToTree( SearchTreeNode parent, TwoPlayerMove theMove,
-                                         int alpha, int beta, int i )
+                                         SearchWindow window, int i )
     {
         SearchTreeNode child = null;
         if (gameTree_ != null) {
             child = new SearchTreeNode( theMove );
-            child.setAlpha(alpha);
-            child.setBeta(beta);
+            child.setWindow(window);
             gameTree_.addNode(parent, child, i);
         }
         return child;

@@ -2,6 +2,7 @@ package com.becker.game.twoplayer.common.search.tree;
 
 import com.becker.common.util.Util;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.twoplayer.common.search.strategy.SearchWindow;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
@@ -27,14 +28,9 @@ public class SearchTreeNode extends DefaultMutableTreeNode
     private boolean pruned_;
 
     /**
-     * Store the alpha value(for debug printing).
+     * Store the alpha and beta values (for debug printing).
      */
-    private double alpha_ = 0;
-
-    /**
-     * Store the beta value(for debug printing).
-     */
-    private double beta_ = 0;
+    private SearchWindow window_ = new SearchWindow(0, 0);
 
     /**
      * Used to layout the tree. Roughly based on the num descendants.
@@ -80,17 +76,15 @@ public class SearchTreeNode extends DefaultMutableTreeNode
     /**
      * Add a move to the visual game tree (if parent not null).
      * @param theMove the two player move to add.
-     * @param alpha for the added node
-     * @param beta beta for the added node.
+     * @param window alpha and beta
      * @param i the child index of the added node.
      * @return the childNode that was added.
      */
     public SearchTreeNode addChild(TwoPlayerMove theMove,
-                                       int alpha, int beta, int i ) {
+                                       SearchWindow window, int i ) {
 
         SearchTreeNode child = new SearchTreeNode( theMove );
-        child.setAlpha(alpha);
-        child.setBeta(beta);
+        child.setWindow(window);
         this.insert( child, i );
 
         return child;
@@ -153,7 +147,7 @@ public class SearchTreeNode extends DefaultMutableTreeNode
         if ( pruned_ )
             s.append( " *PRUNED*" );
         else
-            s.append(" a=").append(Util.formatNumber(alpha_)).append(" b=").append(Util.formatNumber(beta_));
+            s.append(" a=").append(Util.formatNumber(window_.alpha)).append(" b=").append(Util.formatNumber(window_.beta));
 
         return s.toString();
     }
@@ -166,20 +160,12 @@ public class SearchTreeNode extends DefaultMutableTreeNode
         this.pruned_ = pruned;
     }
 
-    public double getAlpha() {
-        return alpha_;
+    public SearchWindow getWindow() {
+        return window_;
     }
 
-    public void setAlpha(double alpha) {
-        this.alpha_ = alpha;
-    }
-
-    public double getBeta() {
-        return beta_;
-    }
-
-    public void setBeta(double beta) {
-        this.beta_ = beta;
+    public void setWindow(SearchWindow window) {
+        this.window_ = window;
     }
 
     public int getSpaceAllocation() {

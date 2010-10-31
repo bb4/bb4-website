@@ -1,6 +1,5 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
-import com.becker.common.math.Range;
 import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.Searchable;
@@ -31,8 +30,7 @@ public final class NegaMaxMemoryStrategy extends NegaMaxStrategy
     /**
      * Constructor.
      */
-    public NegaMaxMemoryStrategy( Searchable controller, ParameterArray weights )
-    {
+    public NegaMaxMemoryStrategy( Searchable controller, ParameterArray weights ) {
         super( controller, weights );
         lookupTable = new TranspositionTable();
     }
@@ -43,9 +41,9 @@ public final class NegaMaxMemoryStrategy extends NegaMaxStrategy
     @Override
     public TwoPlayerMove search( TwoPlayerMove lastMove, SearchTreeNode parent ) {
         // need to negate alpha and beta on initial call.
-        Range window = getOptions().getInitialSearchWindow();
-        int g = (int)((window.getMax() +  window.getMin())/2);
-        return searchInternal( lastMove, lookAhead_, g, g, parent );
+        SearchWindow window = getOptions().getInitialSearchWindow();
+        int g = window.getMidPoint();
+        return searchInternal( lastMove, lookAhead_, new SearchWindow(g, g), parent );
     }
 
     /**
@@ -54,27 +52,27 @@ public final class NegaMaxMemoryStrategy extends NegaMaxStrategy
     @Override
     protected TwoPlayerMove searchInternal( TwoPlayerMove lastMove,
                                           int depth,
-                                          int alpha, int beta, SearchTreeNode parent ) {
+                                          SearchWindow window, SearchTreeNode parent ) {
         Long key = searchable_.getHashKey();
         Entry entry = lookupTable.get(key);
-        if (entryExists(lastMove, depth, alpha, beta, entry)) {
-            if (entry.lowerValue > alpha) {
+        if (entryExists(lastMove, depth, window, entry)) {
+            if (entry.lowerValue > window.alpha) {
                 entry.bestMove.setInheritedValue(entry.lowerValue);
                 return entry.bestMove;
             }
-            else if (entry.upperValue < beta) {
+            else if (entry.upperValue < window.beta) {
                 entry.bestMove.setInheritedValue(entry.upperValue);
                 return entry.bestMove;
             }
         }
 
-        entry = new Entry(lastMove, depth, -SearchStrategy.INFINITY, SearchStrategy.INFINITY);
+        entry = new Entry(lastMove, depth, new SearchWindow(-SearchStrategy.INFINITY, SearchStrategy.INFINITY));
 
         boolean done = searchable_.done( lastMove, false);
         if ( depth == 0 || done ) {
 
             if ( quiescence_ && depth == 0 && !done)  {
-                TwoPlayerMove qMove = quiescentSearch(lastMove, depth, alpha, beta, parent);
+                TwoPlayerMove qMove = quiescentSearch(lastMove, depth, window, parent);
                 entry = new Entry(qMove, qMove.getInheritedValue());
                 lookupTable.put(key, entry);
                 return qMove;
@@ -100,7 +98,7 @@ public final class NegaMaxMemoryStrategy extends NegaMaxStrategy
             return null;
         }
 
-        TwoPlayerMove bestMove = findBestMove(lastMove, depth, list, alpha, beta, parent);
+        TwoPlayerMove bestMove = findBestMove(lastMove, depth, list, window, parent);
 
         //System.out.println("Cache hits=" + cacheHits + " nearHits=" + cacheNearHits +" misses="  + cacheMisses);
 
@@ -111,17 +109,17 @@ public final class NegaMaxMemoryStrategy extends NegaMaxStrategy
      * if we can just look up the best move in the transposition table, then just do that.
      * @return saved best move in entry
      */
-    private boolean entryExists(TwoPlayerMove lastMove, int depth, int alpha, int beta, Entry entry) {
+    private boolean entryExists(TwoPlayerMove lastMove, int depth, SearchWindow window, Entry entry) {
         if (entry != null && entry.depth >= depth) {
             cacheHits++;
             System.out.println("Cache hit. \nentry.depth=" + entry.depth + " depth=" + depth  + "\n" + entry);
 
-            if (entry.upperValue <= alpha || entry.upperValue == entry.lowerValue)  {
+            if (entry.upperValue <= window.alpha || entry.upperValue == entry.lowerValue)  {
                 entry.bestMove.setInheritedValue(entry.upperValue);
                 lastMove.setInheritedValue(-entry.upperValue);
                 return true;
             }
-            if (entry.lowerValue >= beta) {
+            if (entry.lowerValue >= window.beta) {
                 entry.bestMove.setInheritedValue(entry.lowerValue);
                 lastMove.setInheritedValue(-entry.lowerValue);
                 return true;
@@ -140,13 +138,13 @@ public final class NegaMaxMemoryStrategy extends NegaMaxStrategy
      */
     @Override
     protected TwoPlayerMove findBestMove(TwoPlayerMove lastMove, int depth, MoveList list,
-                                         int alpha, int beta, SearchTreeNode parent) {
+                                         SearchWindow window, SearchTreeNode parent) {
         int i = 0;
         int bestInheritedValue = -SearchStrategy.INFINITY;
         TwoPlayerMove selectedMove;
 
         TwoPlayerMove bestMove = (TwoPlayerMove)list.get(0);
-        Entry entry = new Entry(bestMove, depth, alpha, beta);
+        Entry entry = new Entry(bestMove, depth, window);
 
         while ( !list.isEmpty() ) {
             TwoPlayerMove theMove = getNextMove(list);
@@ -155,9 +153,9 @@ public final class NegaMaxMemoryStrategy extends NegaMaxStrategy
             updatePercentDone(depth, list);
 
             searchable_.makeInternalMove( theMove );
-            SearchTreeNode child = addNodeToTree(parent, theMove, alpha, beta, i++);
+            SearchTreeNode child = addNodeToTree(parent, theMove, window, i++);
 
-            selectedMove = searchInternal( theMove, depth-1, -beta, -alpha, child );
+            selectedMove = searchInternal( theMove, depth-1, window.negateAndSwap(), child );
 
             searchable_.undoInternalMove( theMove );
 
@@ -172,19 +170,19 @@ public final class NegaMaxMemoryStrategy extends NegaMaxStrategy
                     bestInheritedValue = selectedValue;
                 }
                 if ( alphaBeta_ ) {
-                    if ( bestInheritedValue > alpha ) {
-                        alpha = bestInheritedValue;
+                    if ( bestInheritedValue > window.alpha ) {
+                        window.alpha = bestInheritedValue;
                         bestMove = theMove;
                         entry.bestMove = theMove;
                     }
-                    if ( alpha >= beta ) {
-                        showPrunedNodesInTree( list, parent, i, selectedValue, beta, PruneType.BETA);
+                    if ( window.alpha >= window.beta ) {
+                        showPrunedNodesInTree( list, parent, i, selectedValue, window.beta, PruneType.BETA);
                         break;
                     }
                 }
             }
         }
-        storeBestMove(alpha,entry, bestMove.getInheritedValue());
+        storeBestMove(window.alpha, entry, bestMove.getInheritedValue());
         bestMove.setSelected(true);
         lastMove.setInheritedValue(-bestMove.getInheritedValue());
         return bestMove;
