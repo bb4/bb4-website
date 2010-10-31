@@ -22,6 +22,8 @@ public class TwoPlayerMoveStub extends TwoPlayerMove {
     /** every move but the root of the tree has a parent_ */
     private TwoPlayerMoveStub parent_;
 
+    private boolean causedUrgency;
+
 
     public TwoPlayerMoveStub(int val, boolean isPlayer1, TwoPlayerMoveStub parent) {
         super(1, 1, val, new GamePiece(isPlayer1));
@@ -42,8 +44,12 @@ public class TwoPlayerMoveStub extends TwoPlayerMove {
         return children_;
     }
 
-    public boolean isInJeopardy() {
-        return false;
+    public void setCausedUrgency(boolean value) {
+        causedUrgency = value;
+    }
+
+    public boolean causedUrgency() {
+        return causedUrgency;
     }
 
     /**
@@ -89,7 +95,7 @@ public class TwoPlayerMoveStub extends TwoPlayerMove {
     public String toString() {
         StringBuilder bldr = new StringBuilder();
         bldr.append("id:").append(getId()).append(" value:").append(getValue());
-        bldr.append(isUrgent()?" urgent":" ").append(isInJeopardy()?"jeopardy":"");
+        bldr.append(isUrgent()?" urgent":" ").append(causedUrgency()?"jeopardy":"");
         return bldr.toString();
     }
 }

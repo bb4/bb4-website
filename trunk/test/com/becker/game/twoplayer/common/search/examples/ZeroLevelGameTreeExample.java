@@ -19,8 +19,4 @@ public class ZeroLevelGameTreeExample extends AbstractGameTreeExample  {
 
         initialMove = moveCreator.createMove(6, !player1PlaysNext, null);
     }
-
-    public int getMaxDepth() {
-        return 0;
-    }
 }

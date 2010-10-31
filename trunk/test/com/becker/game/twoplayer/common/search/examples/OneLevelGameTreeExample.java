@@ -28,8 +28,4 @@ public class OneLevelGameTreeExample extends AbstractGameTreeExample  {
 
         initialMove.setChildren(createList(move0, move1));
     }
-
-    public int getMaxDepth() {
-        return 1;
-    }
 }

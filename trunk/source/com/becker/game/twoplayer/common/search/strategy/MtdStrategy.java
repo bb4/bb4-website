@@ -40,8 +40,7 @@ public final class MtdStrategy implements SearchStrategy
     /**
      * Constructor.
     */
-    public MtdStrategy(SearchStrategy testSearchStrategy)
-    {
+    public MtdStrategy(SearchStrategy testSearchStrategy) {
         searchWithMemory_ = testSearchStrategy;
     }
 
@@ -52,16 +51,14 @@ public final class MtdStrategy implements SearchStrategy
     /**
      * @inheritDoc
      */
-    public TwoPlayerMove search( TwoPlayerMove lastMove, SearchTreeNode parent )
-    {
+    public TwoPlayerMove search( TwoPlayerMove lastMove, SearchTreeNode parent ) {
         TwoPlayerMove selectedMove = searchInternal( lastMove, 0, parent);
         return (selectedMove != null)? selectedMove : lastMove;
     }
 
 
     private TwoPlayerMove searchInternal( TwoPlayerMove lastMove, 
-                                          int f,  SearchTreeNode parent )
-    {
+                                          int f,  SearchTreeNode parent ) {
         int g = f;
         int upperBound =  SearchStrategy.INFINITY;
         int lowerBound = -SearchStrategy.INFINITY;

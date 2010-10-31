@@ -19,7 +19,8 @@ public class MoveCreator {
 
     public TwoPlayerMoveStub createMove(int value, boolean player1Move, TwoPlayerMoveStub parent) {
 
-        return new TwoPlayerMoveStub(getPerspectiveValue(value, player1Move), player1Move, parent);
+        return new TwoPlayerMoveStub(value, player1Move, parent);
+        //return new TwoPlayerMoveStub(getPerspectiveValue(value, player1Move), player1Move, parent);
     }
 
     /**
@@ -35,15 +36,5 @@ public class MoveCreator {
             depth++;
         }
         return depth;
-    }
-
-    /**
-     * I originally thought I needed to do seomthing fancy here to advust the scores added for different search
-     * algorithms, but it turned out not to be needed.
-     * @return  value adjusted for players point of view.
-     */
-    private int getPerspectiveValue(int value, boolean player1Move) {
-        //int depth = getDepth(parent);
-        return value;
     }
 }

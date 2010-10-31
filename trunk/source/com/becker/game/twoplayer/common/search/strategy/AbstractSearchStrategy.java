@@ -18,6 +18,8 @@ import java.util.List;
  *  It's sublcasses define the key search algorithms for 2 player zero sum games with perfect information.
  *  Create one of these right before you do a search.
  *
+ * @@ replace alpha beta with SearchWindow window.
+ *
  *  @author Barry Becker
  */
 public abstract class AbstractSearchStrategy implements SearchStrategy
@@ -43,7 +45,7 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
     /** don't search more levels ahead than this during quiescent search. */
     protected int maxQuiescentDepth_ = 0;
 
-    /** weights coefficients for the evaluation polunomial that indirectly determines the best move.   */
+    /** weights coefficients for the evaluation polynomial that indirectly determines the best move.   */
     protected ParameterArray weights_;
 
     /** True when search is paused. */
@@ -94,31 +96,60 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
      * {@inheritDoc}
      */
     protected TwoPlayerMove searchInternal( TwoPlayerMove lastMove,
-                                          int depth,
-                                          int alpha, int beta, SearchTreeNode parent ) {
+                                            int depth, int alpha, int beta, SearchTreeNode parent) {
 
         boolean done = searchable_.done( lastMove, false);
-        if ( depth == 0 || done ) {
-            if ( quiescence_ && depth == 0 && !done)  {
-                return quiescentSearch(lastMove, depth, alpha, beta, parent);
+        if ( depth <= 0 || done ) {
+            if (doQuiescentSearch(depth, done, lastMove)) {
+                return quiescentSearch(lastMove, depth-1, alpha, beta, parent);
             }
-            int sign = fromPlayer1sPerspective(lastMove) ? 1 : -1;
-            lastMove.setInheritedValue(sign * lastMove.getValue());
-            return lastMove;
+            else {
+                int sign = fromPlayer1sPerspective(lastMove) ? 1 : -1;
+                lastMove.setInheritedValue(sign * lastMove.getValue());
+                return lastMove;
+            }
         }
 
         // generate a list of all (or bestPercent) candidate next moves, and pick the best one
-        MoveList list =
-                searchable_.generateMoves(lastMove,  weights_, true);
+        MoveList list = searchable_.generateMoves(lastMove,  weights_, true);
 
         if (depth == lookAhead_)
             numTopLevelMoves_ = list.size();
 
-        if ( emptyMoveList( list, lastMove) ) {
+        if (emptyMoveList(list, lastMove)) {
             // if there are no possible next moves, return null (we hit the end of the game).
             return null;
         }
 
+        return findBestMove(lastMove, depth, list, alpha, beta, parent);
+    }
+
+    /**
+     * Search more if quiescense is on, depth is negative, but not yet at -maxQiuiescentDepth
+     * and the last moved played created an urgent situation.
+     * @return true of we should continue searching a bit to find a stable/quiescnet move.
+     */
+    private boolean doQuiescentSearch(int depth, boolean done, TwoPlayerMove lastMove) {
+        boolean inJeopardy = searchable_.inJeopardy(lastMove, weights_, true);
+         return quiescence_
+                 && depth > -maxQuiescentDepth_
+                 && !done
+                 && inJeopardy;
+    }
+
+
+    /**
+     * This continues the search in situations where the board position is not stable.
+     * For example, perhaps we are in the middle of a piece exchange (chess), or a large group is in atari (go).
+     * @return best quescent move
+     */
+    protected TwoPlayerMove quiescentSearch(TwoPlayerMove lastMove,
+                                            int depth, int alpha, int beta, SearchTreeNode parent) {
+
+        MoveList list = searchable_.generateUrgentMoves(lastMove, weights_, true);
+        if (emptyMoveList(list, lastMove)) return null;
+
+        System.out.println("quiescent search depth=" + depth + " a="+ alpha + " b="+ beta);
         return findBestMove(lastMove, depth, list, alpha, beta, parent);
     }
 
@@ -139,13 +170,6 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
                                                   int alpha, int beta, SearchTreeNode parent);
 
 
-    /**
-     * This continues the search in situations where the board position is not stable.
-     * For example, perhaps we are in the middle of a piece exchange
-     * @return the move to use after employing quiescent search.
-     */
-    protected abstract TwoPlayerMove quiescentSearch( TwoPlayerMove lastMove,
-                                          int depth, int alpha, int beta, SearchTreeNode parent );
 
     /**
      * add a move to the visual game tree (if parent not null).

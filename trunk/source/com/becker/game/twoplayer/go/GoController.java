@@ -393,7 +393,7 @@ public final class GoController extends TwoPlayerController
         }
 
         /**
-         * return any moves that take captures or get out of atari.
+         * @return any moves that take captures or get out of atari.
          */
         public final MoveList generateUrgentMoves( TwoPlayerMove lastMove, ParameterArray weights,
                                                    boolean player1sPerspective )

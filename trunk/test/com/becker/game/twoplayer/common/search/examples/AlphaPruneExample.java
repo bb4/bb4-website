@@ -35,8 +35,4 @@ public class AlphaPruneExample extends AbstractGameTreeExample  {
         move0.setChildren(createList(move00, move01));
         move1.setChildren(createList(move10, move11));
     }
-
-    public int getMaxDepth() {
-        return 2;
-    }
 }

@@ -52,6 +52,7 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
         options.setAlphaBeta(false);
         options.setPercentageBestMoves(100);
         options.setQuiescence(false);
+        options.setMaxQuiescentDepth(3);
         return opts;
     }
 
@@ -95,6 +96,36 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
                 getTwoLevelPlayer2Result());
     }
 
+    public void testTwoLevelQuiescensePlayer1Search() {
+        searchOptions.setLookAhead(2);
+        searchOptions.setQuiescence(true);
+        verifyResult(new TwoLevelQuiescentExample(true, getEvaluationPerspective()),
+                getTwoLevelQuiescensePlayer1Result());
+    }
+
+    public void testTwoLevelQuiescensePlayer2Search() {
+        searchOptions.setLookAhead(2);
+        searchOptions.setQuiescence(true);
+        verifyResult(new TwoLevelQuiescentExample(false, getEvaluationPerspective()),
+                getTwoLevelQuiescensePlayer2Result());
+    }
+
+    public void testTwoLevelQuiescenseABPlayer1Search() {
+        searchOptions.setLookAhead(2);
+        searchOptions.setQuiescence(true);
+        searchOptions.setAlphaBeta(true);
+        verifyResult(new TwoLevelQuiescentExample(true, getEvaluationPerspective()),
+                getTwoLevelQuiescenseABPlayer1Result());
+    }
+
+    public void testTwoLevelQuiescenseABPlayer2Search() {
+        searchOptions.setLookAhead(2);
+        searchOptions.setQuiescence(true);
+        searchOptions.setAlphaBeta(true);
+        verifyResult(new TwoLevelQuiescentExample(false, getEvaluationPerspective()),
+                getTwoLevelQuiescenseABPlayer2Result());
+    }
+
     public void testPruneTwoLevelWithoutABSearchPlayer1() {
         searchOptions.setLookAhead(2);
         searchOptions.setAlphaBeta(false);
@@ -126,14 +157,12 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
                 getThreeLevelPlayer2Result());
     }
 
-
     public void testThreeLevelWithABSearch() {
         searchOptions.setLookAhead(3);
         searchOptions.setAlphaBeta(true);
         verifyResult(new ThreeLevelGameTreeExample(false, getEvaluationPerspective()),
                 getThreeLevelWithABResult());
     }
-
 
     public void testFourLevelSearchPlayer1() {
         searchOptions.setLookAhead(4);
@@ -161,7 +190,7 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
                 getFourLevelABPlayer2Result());
     }
 
-    // the following results are for minimax, but negamax should match.
+    // the following results are for minimax and negamax. Other algorithms may be slightly different (better)
 
     protected SearchResult getZeroLookAheadResult() {
         return new SearchResult(TwoPlayerMoveStub.ROOT_ID, 6, 0);
@@ -179,6 +208,20 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
     protected SearchResult getTwoLevelPlayer2Result() {
         return new SearchResult("0", 7, 6);
     }
+
+    protected SearchResult getTwoLevelQuiescensePlayer1Result() {
+        return new SearchResult("0", 3, 12);
+    }
+    protected SearchResult getTwoLevelQuiescensePlayer2Result() {
+        return new SearchResult("1", 4, 12);
+    }
+    protected SearchResult getTwoLevelQuiescenseABPlayer1Result() {
+        return new SearchResult("0", 3, 12);
+    }
+    protected SearchResult getTwoLevelQuiescenseABPlayer2Result() {
+        return new SearchResult("1", 4, 11);
+    }
+
     protected SearchResult getPruneTwoLevelWithoutABResultPlayer1() {
         return new SearchResult("0", 5, 6);
     }

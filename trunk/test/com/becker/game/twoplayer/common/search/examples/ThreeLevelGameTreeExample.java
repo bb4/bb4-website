@@ -70,8 +70,4 @@ public class ThreeLevelGameTreeExample extends AbstractGameTreeExample  {
         move10.setChildren(createList(move100, move101));
         move11.setChildren(createList(move110, move111));
     }
-
-    public int getMaxDepth() {
-        return 3;
-    }
 }
