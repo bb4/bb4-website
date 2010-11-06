@@ -17,7 +17,7 @@ import java.awt.image.RescaleOp;
 
 /**
  * Singleton class that takes a checkers piece and renders it for the GoBoardViewer.
- * @see com.becker.game.twoplayer.go.ui.GoBoardViewer
+ * @see GoBoardViewer
  * @author Barry Becker
  */
 public final class GoStoneRenderer extends TwoPlayerPieceRenderer

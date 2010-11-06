@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * @author Barry Becker Date: Apr 2, 2006
  */
-public class SolutionPanel extends JPanel
+class SolutionPanel extends JPanel
                            implements MouseMotionListener{
 
     private List<Card> sets_;
@@ -37,11 +37,11 @@ public class SolutionPanel extends JPanel
     }
 
 
-    public int getCanvasWidth() {
+    int getCanvasWidth() {
         return getWidth() - 2 * CardRenderer.LEFT_MARGIN;
     }
 
-    public int getNumColumns() {
+    int getNumColumns() {
 
         return 3;
     }

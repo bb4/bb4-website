@@ -78,7 +78,7 @@ public class PokerHand implements Comparable {
     }
 
 
-    public PokerHandEnum determineType() {
+    PokerHandEnum determineType() {
 
         // first sort the cards so its easier to tell what we have.
         sort();
@@ -97,7 +97,7 @@ public class PokerHand implements Comparable {
      * @param handType type of poker hand to check for.
      * @return true if we have the specified handType.
      */
-    public boolean hasA(PokerHandEnum handType) {
+    boolean hasA(PokerHandEnum handType) {
         boolean hasStraight = hasStraight();
         boolean hasFlush = hasFlush();
 
@@ -276,7 +276,7 @@ public class PokerHand implements Comparable {
      * @param hand2
      * @return  return 1 if hand1 greater than hand2, 0 if equal, -1 if less.
      */
-    public static int compareHandsOfEqualType(PokerHand hand1, PokerHand hand2) {
+    private static int compareHandsOfEqualType(PokerHand hand1, PokerHand hand2) {
         assert(hand1.determineType() == hand2.determineType());
         int diff = hand1.determineType().getTieBreakerScore(hand1) - hand2.determineType().getTieBreakerScore(hand2);
         if ( diff > 0) {

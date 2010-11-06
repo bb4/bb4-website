@@ -107,7 +107,7 @@ public class TrivialPlayerRenderer extends GamePieceRenderer
     /**
      * Draw the trivial hand (the cards are all face up or all face down)
      */
-    public void renderValue(Graphics2D g2, Location location, int value, int cellSize) {
+    void renderValue(Graphics2D g2, Location location, int value, int cellSize) {
 
         int x = ((location.getCol()-1) * cellSize);
         int y = (int) ((location.getRow() + 1.6) * cellSize);

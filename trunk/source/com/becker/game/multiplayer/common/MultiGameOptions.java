@@ -17,12 +17,12 @@ public class MultiGameOptions extends GameOptions {
     private int numRobotPlayers_ = DEFAULT_NUM_ROBOT_PLAYERS;
 
 
-    public MultiGameOptions() {
+    protected MultiGameOptions() {
           this(DEFAULT_PLAYER_LIMIT, DEFAULT_NUM_ROBOT_PLAYERS);
     }
 
 
-    public MultiGameOptions(int maxNumPlayers, int numRobotPlayers) {
+    protected MultiGameOptions(int maxNumPlayers, int numRobotPlayers) {
          maxNumPlayers_ = maxNumPlayers;
          numRobotPlayers_ = numRobotPlayers;
     }
@@ -43,7 +43,7 @@ public class MultiGameOptions extends GameOptions {
      * You wont be able to add more than this many players.
      * @param playerLimit
      */
-    public void setMaxNumPlayers(int playerLimit) {
+    protected void setMaxNumPlayers(int playerLimit) {
         maxNumPlayers_ = playerLimit;
     }
 

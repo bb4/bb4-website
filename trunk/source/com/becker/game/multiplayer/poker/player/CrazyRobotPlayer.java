@@ -23,6 +23,7 @@ public class CrazyRobotPlayer extends PokerRobotPlayer
         super(name, cash, color, rType);
     }
     
+    @Override
     protected PokerAction createAction(PokerController pc) {
         PokerAction.Name action;
         int raise = 0;
@@ -37,6 +38,7 @@ public class CrazyRobotPlayer extends PokerRobotPlayer
         return new PokerAction(getName(), action, raise);
     }
 
+    @Override
     protected int getRaise(PokerController pc) {
         int allInAmt = pc.getAllInAmount() - getContribution() - getCallAmount(pc);
         int raiseAmt = 0;
@@ -49,6 +51,7 @@ public class CrazyRobotPlayer extends PokerRobotPlayer
         return raiseAmt;
     }
 
+    @Override
     public String getType() {
         return "Crazy";
     }

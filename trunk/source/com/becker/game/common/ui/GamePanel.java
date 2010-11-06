@@ -46,9 +46,9 @@ public abstract class GamePanel extends TexturedPanel
     // toolbar is protected rather than private so derived classes can add buttons to it.
     protected GameToolBar toolBar_;
 
-    protected TexturedPanel statusBar_;
+    private TexturedPanel statusBar_;
 
-    protected final JScrollPane boardViewerScrollPane_ = new JScrollPane();
+    private final JScrollPane boardViewerScrollPane_ = new JScrollPane();
 
     // must contain a GameBoardViewer to graphically represent the status of the board.
     protected GameBoardViewer boardViewer_;
@@ -56,18 +56,18 @@ public abstract class GamePanel extends TexturedPanel
     protected NewGameDialog newGameDialog_;
     //protected OnlineGameManagerPanel onlineGameDialog_;
     protected GameOptionsDialog optionsDialog_;
-    protected GameInfoPanel infoPanel_;
+    private GameInfoPanel infoPanel_;
 
     // for a resizable applet
-    protected ResizableAppletPanel resizablePanel_;
+    private ResizableAppletPanel resizablePanel_;
 
     // font for the undo/redo buttons
-    protected static final Font STATUS_FONT = new Font( "SansSerif", Font.PLAIN, 10 );
+    private static final Font STATUS_FONT = new Font( "SansSerif", Font.PLAIN, 10 );
 
     // A greeting specified using allophones. See SpeechSynthesizer.
     protected static final String[] GREETING = {"w|u|d", "y|ouu", "l|ii|k", "t|ouu", "p|l|ay", "aa", "gg|AY|M"};
 
-    protected static final String CORE_IMAGE_PATH = GameContext.GAME_ROOT+"common/ui/images/";
+    private static final String CORE_IMAGE_PATH = GameContext.GAME_ROOT+"common/ui/images/";
     protected static final ImageIcon BG_TEXTURE;
     static {
         // this image shows as the transparent background for textured panels.
@@ -87,7 +87,7 @@ public abstract class GamePanel extends TexturedPanel
     /**
      * common initialization in the event that there are multiple constructors.
      */
-    protected void init(JFrame parent)
+    void init(JFrame parent)
     {
         enableEvents( AWTEvent.WINDOW_EVENT_MASK );
         initGui(parent);

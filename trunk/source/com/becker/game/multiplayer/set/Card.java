@@ -33,7 +33,7 @@ public class Card {
     }
 
 
-    public AttributeValue valueOfAttribute(Attribute a) {
+    AttributeValue valueOfAttribute(Attribute a) {
          return attributes_[a.ordinal()];
     }
     public AttributeValue color() { return attributes_[Attribute.COLOR.ordinal()]; }

@@ -142,13 +142,13 @@ public class ChessBoard extends CheckersBoard
         restoreCaptures( m.captureList );
     }
 
-     public void removeCaptures( CaptureList captureList )
+     void removeCaptures( CaptureList captureList )
     {
         if ( captureList != null )
             captureList.removeFromBoard( this );
     }
 
-    public void restoreCaptures( CaptureList captureList )
+    void restoreCaptures( CaptureList captureList )
     {
         if ( captureList != null )
             captureList.restoreOnBoard( this );

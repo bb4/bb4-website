@@ -63,9 +63,8 @@ public class SearchWindow {
         SearchWindow that = (SearchWindow) o;
 
         if (beta != that.beta) return false;
-        if (alpha != that.alpha) return false;
+        return alpha == that.alpha;
 
-        return true;
     }
 
     @Override

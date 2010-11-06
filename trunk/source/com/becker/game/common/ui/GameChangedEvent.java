@@ -8,7 +8,7 @@ import java.awt.*;
 /**
  * This event gets fired whenever the Game state changes.
  *
- * @see com.becker.game.common.ui.GameChangedListener
+ * @see GameChangedListener
  *
  * @author Barry Becker
  */

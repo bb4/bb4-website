@@ -12,14 +12,14 @@ import com.becker.optimization.parameter.ParameterArray;
  */
 public class Line {
 
-    static final char P1_SYMB = 'X';
-    static final char P2_SYMB = 'O';
+    private static final char P1_SYMB = 'X';
+    private static final char P2_SYMB = 'O';
 
     /** contains the symbols in the line (run) */
     protected StringBuilder line;
 
     protected Patterns patterns_;
-    protected ParameterArray weights_;
+    private ParameterArray weights_;
 
     /**
      * Constructor

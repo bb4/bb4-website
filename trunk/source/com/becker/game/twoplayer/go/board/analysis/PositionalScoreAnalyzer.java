@@ -17,7 +17,7 @@ public final class PositionalScoreAnalyzer
 {
     private GoBoard board_;
 
-    StringShapeAnalyzer shapeAnalyzer_;
+    private StringShapeAnalyzer shapeAnalyzer_;
 
     /** a lookup table of scores to attribute to the board positions when calculating the worth */
     private final float[][] positionalScore_;

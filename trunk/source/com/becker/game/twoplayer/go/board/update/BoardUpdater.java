@@ -10,9 +10,9 @@ import com.becker.game.twoplayer.go.board.GoBoard;
  */
 public class BoardUpdater {
 
-    PostMoveUpdater postMoveUpdater_;
-    PostRemoveUpdater postRemoveUpdater_;
-    Captures captures_;
+    private PostMoveUpdater postMoveUpdater_;
+    private PostRemoveUpdater postRemoveUpdater_;
+    private Captures captures_;
 
     /**
      * Constructor

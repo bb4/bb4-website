@@ -25,7 +25,7 @@ class BigEyeAnalyzer {
     private GoEye eye_;
 
     /** spaces_ in the eye */
-    GoBoardPositionSet spaces_;
+    private GoBoardPositionSet spaces_;
 
     /**
      * The eye must have between 3 and 8 spaces_.

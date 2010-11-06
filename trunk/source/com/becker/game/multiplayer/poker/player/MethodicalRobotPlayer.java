@@ -23,6 +23,7 @@ public class MethodicalRobotPlayer extends PokerRobotPlayer
     /**
      * @return an appropriate action based on the situation
      */
+    @Override
     protected PokerAction createAction(PokerController pc) {
         boolean othersFolded = allOthersFolded(pc);
 
@@ -39,6 +40,7 @@ public class MethodicalRobotPlayer extends PokerRobotPlayer
         return new PokerAction(getName(), action, raise);
     }
 
+    @Override
     protected int getRaise(PokerController pc) {
         int allInAmt = pc.getAllInAmount() - this.getContribution();
         int max = getCash();

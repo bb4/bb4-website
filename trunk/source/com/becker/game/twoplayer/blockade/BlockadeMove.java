@@ -119,7 +119,7 @@ public class BlockadeMove extends TwoPlayerMove
          return fromLocation_.getCol();
     }
 
-    public Location getFromLocation()
+    Location getFromLocation()
     {
         return fromLocation_;
     }

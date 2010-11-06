@@ -201,7 +201,7 @@ public class Planet extends GamePiece
      }
 
 
-    public String toString(String newLine)
+    String toString(String newLine)
     {
         StringBuffer sb = new StringBuffer("Planet: "+type_+newLine);
 

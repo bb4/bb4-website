@@ -16,10 +16,10 @@ import java.util.List;
  */
 public abstract class PostChangeUpdater {
 
-    protected GoBoard board_;
-    protected Captures captures_;
-    protected NeighborAnalyzer nbrAnalyzer_;
-    protected BoardValidator validator_;
+    GoBoard board_;
+    Captures captures_;
+    NeighborAnalyzer nbrAnalyzer_;
+    BoardValidator validator_;
 
 
     /**
@@ -40,11 +40,11 @@ public abstract class PostChangeUpdater {
      */
     public abstract void update( GoMove move );
 
-    protected GoBoard getBoard() {
+    GoBoard getBoard() {
         return board_;
     }
 
-    protected GoGroupSet getAllGroups() {
+    GoGroupSet getAllGroups() {
         return board_.getGroups();
     }
 
@@ -53,7 +53,7 @@ public abstract class PostChangeUpdater {
      * update the liberties of the surrounding strings
      * @param captureList the liberties of the stones in this list will be adjusted.
      */
-    protected void adjustStringLiberties(CaptureList captureList) {
+    void adjustStringLiberties(CaptureList captureList) {
         for (Object aCaptureList : captureList) {
             GoBoardPosition captured = (GoBoardPosition) aCaptureList;
             GoBoardPosition newLiberty = (GoBoardPosition) board_.getPosition(captured.getRow(), captured.getCol());
@@ -65,7 +65,7 @@ public abstract class PostChangeUpdater {
      * Adjust the liberties on the strings (both black and white) that we touch.
      * @param liberty  - either occupied or not depending on if we are placing the stone or removing it.
      */
-    protected void adjustLiberties(GoBoardPosition liberty) {
+    void adjustLiberties(GoBoardPosition liberty) {
 
          NeighborAnalyzer na = new NeighborAnalyzer(board_);
          GoStringSet stringNbrs = na.findStringNeighbors( liberty );
@@ -77,7 +77,7 @@ public abstract class PostChangeUpdater {
     /**
      * remove groups that have no stones in them.
      */
-    protected void cleanupGroups()
+    void cleanupGroups()
     {
         GoGroupSet newGroups = new GoGroupSet();
 
@@ -94,7 +94,7 @@ public abstract class PostChangeUpdater {
      * Remove all the groups in groups_ corresponding to the specified list of stones.
      * @param stones the stones to remove.
      */
-    protected void removeGroupsForListOfStones(List stones) {
+    void removeGroupsForListOfStones(List stones) {
         GoGroupSet groupsCopy = new GoGroupSet(getAllGroups());
         for (Object stone : stones) {
             GoBoardPosition nbrStone = (GoBoardPosition) stone;

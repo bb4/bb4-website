@@ -29,7 +29,7 @@ public abstract class GameController
      * Optional. Only present if we are online
      * this allows us to talk with the game server (if it is available). null if not
      */
-    protected IServerConnection serverConnection_;
+    private IServerConnection serverConnection_;
 
 
     /**

@@ -156,7 +156,7 @@ public class SearchTreeNode extends DefaultMutableTreeNode
         return pruned_;
     }
 
-    public void setPruned(boolean pruned) {
+    void setPruned(boolean pruned) {
         this.pruned_ = pruned;
     }
 
@@ -180,7 +180,7 @@ public class SearchTreeNode extends DefaultMutableTreeNode
         return comment_;
     }
 
-    public void setComment(String comment) {
+    void setComment(String comment) {
         this.comment_ = comment;
     }
 

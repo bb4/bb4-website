@@ -19,8 +19,8 @@ public class CheckersBoardRenderer extends TwoPlayerBoardRenderer
 
     // colors of the squares on the chess board.
     // make them transparent so the background color shows through.
-    protected static final Color BLACK_SQUARE_COLOR = new Color(2, 2, 2, 80);
-    protected static final Color RED_SQUARE_COLOR = new Color(250, 0, 0, 80);
+    private static final Color BLACK_SQUARE_COLOR = new Color(2, 2, 2, 80);
+    private static final Color RED_SQUARE_COLOR = new Color(250, 0, 0, 80);
 
     /**
      * private constructor because this class is a singleton.

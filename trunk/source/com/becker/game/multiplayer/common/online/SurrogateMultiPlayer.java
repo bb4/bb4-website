@@ -15,10 +15,10 @@ import com.becker.game.multiplayer.common.MultiPlayerMarker;
  *
  * @author Barry Becker 
  */
-public  class SurrogateMultiPlayer extends MultiGamePlayer implements OnlineChangeListener {
+public class SurrogateMultiPlayer extends MultiGamePlayer implements OnlineChangeListener {
 
-    protected IServerConnection connection_;
-    protected MultiGamePlayer player_;
+    private IServerConnection connection_;
+    private MultiGamePlayer player_;
     
     // wait about 10 seconds for the player to move before timing out.
     private static final int TIMEOUT_DURATION = 40000;

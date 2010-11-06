@@ -33,27 +33,27 @@ public abstract class GameOptionsDialog extends OptionsDialog
     private static final long serialVersionUID = 0L;
 
     // debug params
-    protected NumberInput dbgLevelField_;
-    protected JRadioButton consoleOutputButton_;  // output radio button group
-    protected JRadioButton windowOutputButton_;  // output radio button group
-    protected JRadioButton fileOutputButton_;  // output radio button group
-    protected int logDestination_;
-    protected JCheckBox profileCheckbox_;
+    private NumberInput dbgLevelField_;
+    private JRadioButton consoleOutputButton_;  // output radio button group
+    private JRadioButton windowOutputButton_;  // output radio button group
+    private JRadioButton fileOutputButton_;  // output radio button group
+    private int logDestination_;
+    private JCheckBox profileCheckbox_;
 
     // look and feel params
-    protected JCheckBox soundCheckbox_;
-    protected JCheckBox imagesCheckbox_;
-    protected JButton boardColorButton_;
-    protected JButton gridColorButton_;
+    private JCheckBox soundCheckbox_;
+    private JCheckBox imagesCheckbox_;
+    private JButton boardColorButton_;
+    private JButton gridColorButton_;
 
-    protected JComboBox localeComboBox_;
+    private JComboBox localeComboBox_;
 
-    protected GradientButton okButton_;
+    private GradientButton okButton_;
 
     /**
      *  constructor
      */
-    public GameOptionsDialog( JFrame parent, GameController controller )
+    protected GameOptionsDialog( JFrame parent, GameController controller )
     {
         super(parent);
         controller_ = controller;
@@ -249,7 +249,7 @@ public abstract class GameOptionsDialog extends OptionsDialog
     /**
      * @return look & feel params tab panel
      */
-    protected JPanel createLookAndFeelParamPanel()
+    JPanel createLookAndFeelParamPanel()
     {
         JPanel p = new JPanel();
         p.setLayout( new BoxLayout( p, BoxLayout.Y_AXIS ) );
@@ -298,7 +298,7 @@ public abstract class GameOptionsDialog extends OptionsDialog
      * Perhaps we should not allow this. It does not really make sense.
      * @return locale tab panel.
      */
-     protected JPanel createLocalePanel()
+    JPanel createLocalePanel()
      {
          JPanel p = new JPanel();
          p.setLayout( new BorderLayout() );
@@ -337,7 +337,7 @@ public abstract class GameOptionsDialog extends OptionsDialog
     /**
      * ok button pressed.
      */
-    protected void ok()
+    void ok()
     {
         GameContext.setDebugMode( dbgLevelField_.getIntValue() );
         GameContext.setProfiling( profileCheckbox_.isSelected() );

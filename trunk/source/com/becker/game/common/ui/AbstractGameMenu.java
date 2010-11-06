@@ -10,14 +10,14 @@ import java.awt.event.ActionListener;
  */
 public abstract class AbstractGameMenu extends JMenu implements ActionListener {
 
-    protected GamePanel gamePanel_;
+    GamePanel gamePanel_;
 
 
     /**
      * Game file menu constructor
      * @param title user visible menu title.
      */
-    public AbstractGameMenu(String title)
+    AbstractGameMenu(String title)
     {
         super(title);
         
@@ -30,7 +30,7 @@ public abstract class AbstractGameMenu extends JMenu implements ActionListener {
      * @param name name of the menu item. The label.
      * @return the menu item to add.
      */
-    protected JMenuItem createMenuItem(String name)
+    JMenuItem createMenuItem(String name)
     {
         JMenuItem item = new JMenuItem(name);
         item.addActionListener(this);

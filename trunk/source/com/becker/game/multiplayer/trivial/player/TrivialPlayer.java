@@ -34,7 +34,7 @@ public abstract class TrivialPlayer extends MultiGamePlayer
     /**
      * 
      */
-    protected TrivialPlayer(String name, Color color, boolean isHuman)
+    TrivialPlayer(String name, Color color, boolean isHuman)
     {
         super(name, color, isHuman);
         

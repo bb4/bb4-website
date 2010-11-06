@@ -26,7 +26,7 @@ public abstract class PlayerTable extends TableBase
 {
 
     // remember the deleted rows, so we can add them back when the user clicks add again
-    protected List<Vector> deletedRows_;
+    private List<Vector> deletedRows_;
 
     protected static final int NAME_INDEX = 0;
     protected static final int COLOR_INDEX = 1;
@@ -41,7 +41,7 @@ public abstract class PlayerTable extends TableBase
      * constructor
      * @param players to initializet the rows in the table with.
      */
-    public PlayerTable(PlayerList players, String[] columnNames)
+    protected PlayerTable(PlayerList players, String[] columnNames)
     {
         super(players, columnNames);
 

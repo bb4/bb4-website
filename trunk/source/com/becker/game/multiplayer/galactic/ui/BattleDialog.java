@@ -173,7 +173,7 @@ final class BattleDialog extends OptionsDialog
     /**
      * refresh the game tree.
      */
-    protected void refresh(int attackers, int defenders)
+    void refresh(int attackers, int defenders)
     {
         canvas_.setFleetSizes(attackers, defenders);
     }

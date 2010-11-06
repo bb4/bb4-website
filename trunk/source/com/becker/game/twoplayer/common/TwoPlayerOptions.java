@@ -42,7 +42,7 @@ public class TwoPlayerOptions extends GameOptions
      * @param searchOptions search options to use.
      * @param preferredTone sound to make on each move.
      */
-    public TwoPlayerOptions(SearchOptions searchOptions, String preferredTone) {
+    protected TwoPlayerOptions(SearchOptions searchOptions, String preferredTone) {
 
         searchOptions_ = searchOptions;
         preferredTone_ = preferredTone;

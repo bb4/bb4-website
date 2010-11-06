@@ -15,7 +15,7 @@ import com.becker.game.twoplayer.common.TwoPlayerMove;
 public class ChessMove extends TwoPlayerMove
 {
     /** the position that the piece is moving from */
-    protected Location fromLocation_;
+    private Location fromLocation_;
 
     /**
      * this is null (if no captures) or 1 if there was a capture.

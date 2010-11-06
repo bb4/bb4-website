@@ -19,7 +19,7 @@ import com.becker.optimization.parameter.ParameterArray;
  */
 public final class GoMoveGenerator {
 
-    GoController controller_;
+    private GoController controller_;
 
 
     /**
@@ -35,8 +35,8 @@ public final class GoMoveGenerator {
      * @return all reasonably good next moves.
      */
     public final MoveList generateMoves(TwoPlayerMove lastMove, ParameterArray weights,
-                                        boolean player1sPerspective )
-    {
+                                        boolean player1sPerspective ) {
+        assert player1sPerspective;
         GoProfiler prof = GoProfiler.getInstance();
         prof.startGenerateMoves();
         GoBoard board = (GoBoard)controller_.getBoard();

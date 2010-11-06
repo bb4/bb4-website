@@ -21,7 +21,7 @@ public abstract class ActionDialog extends OptionsDialog
      * constructor - create the tree dialog.
      * @param gc pokerController
      */
-    public ActionDialog(MultiGameController gc, Component parent)
+    protected ActionDialog(MultiGameController gc, Component parent)
     {
         controller_ = gc;
         player_ = controller_.getCurrentPlayer();

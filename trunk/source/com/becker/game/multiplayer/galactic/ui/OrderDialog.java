@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.lang.Object;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +26,7 @@ import java.util.Map;
  *
  * @author Barry Becker
  */
-public final class OrderDialog extends OptionsDialog
+final class OrderDialog extends OptionsDialog
                                                   implements ActionListener, ItemListener
 {
     private GradientButton okButton_;
@@ -35,11 +36,11 @@ public final class OrderDialog extends OptionsDialog
 
     private JLabel availableShips_;
     private NumberInput numShips_;
-    GalacticPlayer player_;
+    private GalacticPlayer player_;
 
     private int numYearsRemaining_;
 
-    Map totalOutgoing_;
+    private Map totalOutgoing_;
 
     private static final int DEFAULT_FLEET_SIZE = 10;
 
@@ -150,7 +151,7 @@ public final class OrderDialog extends OptionsDialog
 
         int availShips = planet.getNumShips() - getOutgoingShips(planet);
         String[] arg = {(""+planet.getName()), Integer.toString(availShips)};
-        String text = MessageFormat.format(GameContext.getLabel("AVAILABLE_SHIPS"), (java.lang.Object[])arg);
+        String text = MessageFormat.format(GameContext.getLabel("AVAILABLE_SHIPS"), (Object[])arg);
         availableShips_.setText(text);
     }
 

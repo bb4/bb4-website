@@ -37,7 +37,7 @@ public class TwoPlayerNewGameDialog extends NewGameDialog implements ActionListe
     /**
      * constructor
      */
-    public TwoPlayerNewGameDialog( JFrame parent, GameViewable viewer ) {
+    protected TwoPlayerNewGameDialog( JFrame parent, GameViewable viewer ) {
         super( parent, viewer );    
     }
 

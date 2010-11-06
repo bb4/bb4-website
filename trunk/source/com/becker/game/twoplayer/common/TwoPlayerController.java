@@ -390,7 +390,7 @@ public abstract class TwoPlayerController extends GameController {
      */
     protected abstract int worth( Move lastMove, ParameterArray weights );
 
-    public final Optimizee getOptimizee() {
+    final Optimizee getOptimizee() {
         return new TwoPlayerOptimizee(this);
     }
 
@@ -400,7 +400,7 @@ public abstract class TwoPlayerController extends GameController {
         return searchable_;
     }
 
-    public abstract Searchable createSearchable();
+    protected abstract Searchable createSearchable();
 
 
     public abstract class TwoPlayerSearchable implements Searchable {

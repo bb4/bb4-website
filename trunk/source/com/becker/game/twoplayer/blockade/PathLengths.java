@@ -13,7 +13,7 @@ public class PathLengths {
     int secondShortestLength = Integer.MAX_VALUE;
     int furthestLength = 0;
     
-    boolean isValid = true;
+    private boolean isValid = true;
    
     /**
      * Default constructor

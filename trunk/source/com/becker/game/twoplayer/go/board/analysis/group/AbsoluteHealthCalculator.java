@@ -14,7 +14,7 @@ import java.util.Set;
  * Determine the absolute health of a group independent of the health of neighboring groups.
  * @author Barry Becker
  */
-public class AbsoluteHealthCalculator {
+class AbsoluteHealthCalculator {
 
     /** The group of go stones that we are analyzing. */
     private GoGroup group_;

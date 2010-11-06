@@ -32,7 +32,7 @@ public abstract class MultiPlayerNewGameDialog extends NewGameDialog
     /**
      * Constructor.
      */
-    public MultiPlayerNewGameDialog( JFrame parent, GameViewable viewer)
+    protected MultiPlayerNewGameDialog( JFrame parent, GameViewable viewer)
     {
         super( parent, viewer);
         this.setResizable(true);

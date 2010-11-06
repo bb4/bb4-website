@@ -8,7 +8,7 @@ import com.becker.game.common.GameWeights;
  *
  * @author Barry Becker
  */
-public class CheckersWeights extends GameWeights {
+class CheckersWeights extends GameWeights {
 
     /**  Use these weights if no others are provided. */
     private static final double[] DEFAULT_WEIGHTS = {21.0, 29.0, 1.5};

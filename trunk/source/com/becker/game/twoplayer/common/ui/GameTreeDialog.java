@@ -73,7 +73,7 @@ public final class GameTreeDialog extends AbstractDialog
         initialize(boardViewer, cellRenderer);
     }
 
-    public synchronized void initialize(AbstractTwoPlayerBoardViewer boardViewer, GameTreeCellRenderer cellRenderer) {
+    synchronized void initialize(AbstractTwoPlayerBoardViewer boardViewer, GameTreeCellRenderer cellRenderer) {
         boardViewer_ = boardViewer;
         controller_ = (TwoPlayerController)boardViewer.getController();
         board_ = controller_.getBoard();
@@ -119,7 +119,7 @@ public final class GameTreeDialog extends AbstractDialog
     }
 
 
-    public synchronized JSplitPane createTopSplitPane() {
+    synchronized JSplitPane createTopSplitPane() {
 
         JPanel previewPanel = new JPanel(new BorderLayout());
 

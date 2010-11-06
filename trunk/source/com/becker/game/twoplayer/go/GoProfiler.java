@@ -25,7 +25,7 @@ public final class GoProfiler extends GameProfiler {
     public static final String UPDATE_EMPTY = "updating empty regions";
     //private static final String CHECK_FOR_CUTS = "checking for cuts";
     public static final String GET_GROUP_NBRS = "getting group nbrs";
-    public static final String FIND_GROUPS = "finding groups";
+    private static final String FIND_GROUPS = "finding groups";
     public static final String FIND_STRINGS = "finding strings";
     public static final String FIND_CAPTURES = "finding capturess";
     public static final String UPDATE_EYES = "update eyes";

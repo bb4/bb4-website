@@ -21,7 +21,7 @@ public class SolutionDialog extends OptionsDialog
 {
     private static final long serialVersionUID = 0L;
 
-    protected GradientButton okButton_ = new GradientButton();
+    private GradientButton okButton_ = new GradientButton();
 
     private SolutionPanel solutionPanel_;
     private SetController controller_;
@@ -82,7 +82,7 @@ public class SolutionDialog extends OptionsDialog
     /**
      * ok button pressed.
      */
-    protected void ok()
+    void ok()
     {
         solutionPanel_.closed();
         this.setVisible( false );

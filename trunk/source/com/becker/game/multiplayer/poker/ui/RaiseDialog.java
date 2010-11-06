@@ -15,7 +15,7 @@ import java.awt.event.ActionEvent;
  *
  * @author Barry Becker
  */
-public final class RaiseDialog extends OptionsDialog
+final class RaiseDialog extends OptionsDialog
 {
     private PokerPlayer player_;
 

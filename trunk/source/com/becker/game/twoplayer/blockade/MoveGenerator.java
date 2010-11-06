@@ -17,8 +17,8 @@ import java.util.List;
  */
 public class MoveGenerator {
 
-    BlockadeBoard board_;
-    ParameterArray weights_;
+    private BlockadeBoard board_;
+    private ParameterArray weights_;
 
     public MoveGenerator(ParameterArray weights, BlockadeBoard board) {
 
@@ -203,7 +203,7 @@ public class MoveGenerator {
      * @return the walls for a specific move along an opponent path.
      */
     @SuppressWarnings("fallthrough")
-    public List<BlockadeWall> getWallsForMove(BlockadeMove move, List<Path> paths) {
+    List<BlockadeWall> getWallsForMove(BlockadeMove move, List<Path> paths) {
         List<BlockadeWall> wallsList = new LinkedList<BlockadeWall>();
 
         // 12 cases

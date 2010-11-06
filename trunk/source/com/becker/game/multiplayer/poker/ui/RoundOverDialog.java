@@ -18,7 +18,7 @@ import java.text.NumberFormat;
  *
  * @author Barry Becker
  */
-public class RoundOverDialog extends OptionsDialog
+class RoundOverDialog extends OptionsDialog
 {
     private GradientButton closeButton_;
 

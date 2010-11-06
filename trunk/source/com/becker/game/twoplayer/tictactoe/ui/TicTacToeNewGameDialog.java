@@ -5,7 +5,7 @@ import com.becker.game.twoplayer.pente.ui.PenteNewGameDialog;
 
 import javax.swing.*;
 
-public class TicTacToeNewGameDialog extends PenteNewGameDialog
+class TicTacToeNewGameDialog extends PenteNewGameDialog
 {
 
     public TicTacToeNewGameDialog( JFrame parent, GameViewable viewer )

@@ -29,7 +29,7 @@ public class OnlineGameServerFrame  extends JFrame {
     /**
      * Create the online game server to serve all online clients.
      */
-    public OnlineGameServerFrame(String gameName) {
+    private OnlineGameServerFrame(String gameName) {
         initUI(gameName);
         server_ = new OnlineGameServer(gameName, textArea_);
     }

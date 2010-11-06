@@ -16,7 +16,7 @@ import java.awt.*;
  *
  * @author Barry Becker Date: Dec 24, 2006
  */
-public class GameTreeInfoPanel extends JPanel {
+class GameTreeInfoPanel extends JPanel {
 
     private JLabel infoLabel_;
     private JLabel leafDetailLabel_;

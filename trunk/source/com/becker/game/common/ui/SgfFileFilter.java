@@ -7,7 +7,7 @@ import com.becker.ui.file.ExtensionFileFilter;
  *
  * @author Barry Becker Date: Oct 29, 2006
  */
-public class SgfFileFilter extends ExtensionFileFilter {
+class SgfFileFilter extends ExtensionFileFilter {
 
     public static final String SGF_EXTENSION = "sgf";
 

@@ -18,12 +18,12 @@ public abstract class GoSet implements GoMember
 {
 
     // true if this set of stones is owned by player one (black)
-    protected boolean ownedByPlayer1_;
+    boolean ownedByPlayer1_;
 
     /**
      * constructor.
      */
-    protected GoSet()
+    GoSet()
     {
         initializeMembers();
     }

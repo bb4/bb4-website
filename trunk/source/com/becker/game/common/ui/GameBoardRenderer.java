@@ -23,10 +23,10 @@ public abstract class GameBoardRenderer {
     protected int cellSize_;
 
     /** to move pieces you drag them (if the move is valid) */
-    protected BoardPosition draggedPiece_ = null;
+    private BoardPosition draggedPiece_ = null;
 
     /**  this copy of the dragged piece is only for show   */
-    protected BoardPosition draggedShowPiece_ = null;
+    private BoardPosition draggedShowPiece_ = null;
 
     /**
      * singleton class for rendering the game pieces
@@ -38,20 +38,20 @@ public abstract class GameBoardRenderer {
 
     // defaults for the grid and board colors.
     // The may be changed using the options panel in the ui.
-    protected static final Color BACKGROUND_COLOR = BarryTheme.UI_COLOR_SECONDARY3;
-    protected static final Color GRID_COLOR = BarryTheme.UI_COLOR_SECONDARY1;
+    private static final Color BACKGROUND_COLOR = BarryTheme.UI_COLOR_SECONDARY3;
+    private static final Color GRID_COLOR = BarryTheme.UI_COLOR_SECONDARY1;
     private static final int BOARD_MARGIN = 5;
     private static final int PREFERRED_CELL_SIZE = 16;
 
     protected Color backgroundColor_ = BACKGROUND_COLOR;
-    protected Color gridColor_ = GRID_COLOR;
+    private Color gridColor_ = GRID_COLOR;
 
-    protected static final Font VIEWER_FONT = new Font( "SansSerif", Font.PLAIN, 8 );
+    private static final Font VIEWER_FONT = new Font( "SansSerif", Font.PLAIN, 8 );
     protected static final Color LAST_MOVE_INDICATOR_COLOR = new Color( 255, 100, 0 );
     protected static final Stroke LAST_MOVE_INDICATOR_STROKE = new BasicStroke(2);
     // dont allow the cells of the game board to get smaller than this
     public static final int MINIMUM_CELL_SIZE = 8;
-    protected static final short DRAG_TRANSPARENCY = 170;
+    private static final short DRAG_TRANSPARENCY = 170;
 
     /**
      * private constructor because this class is a singleton.
@@ -184,7 +184,7 @@ public abstract class GameBoardRenderer {
      * The viewer window may be resized causing the cell size to change dynamically
      * @return the current cell size given the board and panel dimensions.
      */
-    protected int calcCellSize( Board board, int panelWidth, int panelHeight )  {
+    int calcCellSize( Board board, int panelWidth, int panelHeight )  {
         int size;
         int nrows = board.getNumRows();
         int ncols = board.getNumCols();

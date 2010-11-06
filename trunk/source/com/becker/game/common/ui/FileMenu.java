@@ -13,9 +13,9 @@ import java.awt.event.ActionListener;
  * Allows such common operations as new, load, save, exit.
  * @author Barry Becker
  */
-public class FileMenu extends JMenu implements ActionListener {
+class FileMenu extends JMenu implements ActionListener {
 
-    GameMenu gameMenu_;
+    private GameMenu gameMenu_;
     private JMenuItem openItem_;
     private JMenuItem saveItem_;
     private JMenuItem saveImageItem_;

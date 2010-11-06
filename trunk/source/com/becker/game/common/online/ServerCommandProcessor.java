@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @author Barry Becker Date: Sep 16, 2006
  */
-public class ServerCommandProcessor {
+class ServerCommandProcessor {
 
     /** Maintain a list of game tables. */
     private OnlineGameTableList tables_;

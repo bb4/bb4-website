@@ -12,22 +12,22 @@ import java.util.*;
  *
  * @author Barry Becker
  */
-public class PossibleMoveAnalyzer {
+class PossibleMoveAnalyzer {
 
     private BlockadeBoard board;
 
-    BlockadeBoardPosition pos;
-    Location fromLocation;
+    private BlockadeBoardPosition pos;
+    private Location fromLocation;
 
     /** true if opposing player is player1; false if player2. */
     private boolean opponentPlayer1;
 
-    List<BlockadeMove> possibleMoveList;
+    private List<BlockadeMove> possibleMoveList;
 
-    BlockadeBoardPosition westPos;
-    BlockadeBoardPosition eastPos;
-    BlockadeBoardPosition northPos;
-    BlockadeBoardPosition southPos;
+    private BlockadeBoardPosition westPos;
+    private BlockadeBoardPosition eastPos;
+    private BlockadeBoardPosition northPos;
+    private BlockadeBoardPosition southPos;
 
 
     /**

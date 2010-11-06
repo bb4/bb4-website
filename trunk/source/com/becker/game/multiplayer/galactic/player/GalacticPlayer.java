@@ -24,17 +24,17 @@ import java.util.List;
  */
 public class GalacticPlayer extends MultiGamePlayer
 {
-    protected static final String GALACTIC_IMAGE_DIR = GameContext.GAME_ROOT+"multiplayer/galactic/ui/images/";
+    private static final String GALACTIC_IMAGE_DIR = GameContext.GAME_ROOT+"multiplayer/galactic/ui/images/";
 
     // this player's home planet. (like earth is for humans)
     private Planet homePlanet_;
 
     // a list of outstanding Orders
-    protected List<Order> orders_;
+    List<Order> orders_;
 
-    protected ImageIcon icon_;
-    protected String iconBaseName_;
-    protected int iconIndex_;
+    ImageIcon icon_;
+    String iconBaseName_;
+    int iconIndex_;
 
     // ? have list of planets owned?
 
@@ -44,13 +44,13 @@ public class GalacticPlayer extends MultiGamePlayer
     /**
      * use this constructor if you already have an icon for the palyer.
      */
-    protected GalacticPlayer(String name, Planet homePlanet, Color color, boolean isHuman, ImageIcon icon) {
+    GalacticPlayer(String name, Planet homePlanet, Color color, boolean isHuman, ImageIcon icon) {
         this(name, homePlanet, color, isHuman);
         icon_ = icon;
     }
 
 
-    protected GalacticPlayer(String name, Planet homePlanet, Color color, boolean isHuman) {
+    GalacticPlayer(String name, Planet homePlanet, Color color, boolean isHuman) {
         super(name, color, isHuman);
         homePlanet_ = homePlanet;
         homePlanet_.setOwner(this);

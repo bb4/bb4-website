@@ -4,6 +4,7 @@ import com.becker.game.common.Board;
 import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GamePiece;
 import com.becker.game.common.ui.GamePieceRenderer;
+import com.becker.game.multiplayer.galactic.Galaxy;
 import com.becker.game.multiplayer.galactic.Planet;
 import com.becker.java2d.gradient.RoundGradientPaint;
 
@@ -12,7 +13,7 @@ import java.awt.geom.Ellipse2D;
 
 /**
  *  a singleton class that takes a checkers piece and renders it for the CheckersBoardViewer.
- * @see com.becker.game.multiplayer.galactic.Galaxy
+ * @see Galaxy
  * @author Barry Becker
  */
 public class PlanetRenderer extends GamePieceRenderer
@@ -25,7 +26,7 @@ public class PlanetRenderer extends GamePieceRenderer
     private static final Color HIGHLIGHT_COLOR = new Color(245, 255, 0);
     private static final BasicStroke HIGHLIGHT_STROKE = new BasicStroke(2);
 
-    protected static final Font PLANET_FONT = new Font( "Serif", Font.PLAIN, 11 );
+    private static final Font PLANET_FONT = new Font( "Serif", Font.PLAIN, 11 );
 
     /**
      * private constructor because this class is a singleton.

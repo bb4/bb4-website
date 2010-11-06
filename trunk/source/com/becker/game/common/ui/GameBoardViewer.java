@@ -33,14 +33,14 @@ public abstract class GameBoardViewer extends JPanel
     /** for restoring undone moves. */
     protected final MoveList undoneMoves_ = new MoveList();
 
-    protected ViewerMouseListener mouseListener_;
+    private ViewerMouseListener mouseListener_;
 
     /** for dispatching events */
     private final EventQueue evtq_;
     /** list of listeners for handling those events. */
     private final List<GameChangedListener> gameListeners_ = new ArrayList<GameChangedListener>();
 
-    protected JProgressBar progressBar_ = null;
+    private JProgressBar progressBar_ = null;
 
     protected final Cursor waitCursor_ = new Cursor( Cursor.WAIT_CURSOR );
     protected Cursor origCursor_ = null;
@@ -122,7 +122,7 @@ public abstract class GameBoardViewer extends JPanel
      * save the current game to the specified file (in SGF = Smart Game Format)
      * Derived classes should implement the details of the save
      */
-    public void saveGame( AssertionError ae )
+    void saveGame( AssertionError ae )
     {
         JFileChooser chooser = FileChooserUtil.getFileChooser(new SgfFileFilter());
         int state = chooser.showSaveDialog( null );
@@ -152,7 +152,7 @@ public abstract class GameBoardViewer extends JPanel
      *  By default this just redraws the board, but for games with complex moves,
      *  we may want to do more.
      */
-    public void showLastMove()
+    protected void showLastMove()
     {
         // this will paint the component immediately
         Graphics g = this.getGraphics();

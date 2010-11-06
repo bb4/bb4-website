@@ -29,6 +29,7 @@ public class PenteBoardViewer extends AbstractTwoPlayerBoardViewer
         return PenteBoardRenderer.getRenderer();
     }
 
+    @Override
     protected ViewerMouseListener createViewerMouseListener() {
         return new PenteViewerMouseListener(this);
     }

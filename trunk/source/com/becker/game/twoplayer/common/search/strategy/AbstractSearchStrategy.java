@@ -21,40 +21,40 @@ import java.util.List;
 public abstract class AbstractSearchStrategy implements SearchStrategy
 {
     /** if true, then use alpha-beta pruning. */
-    protected final boolean alphaBeta_;
+    final boolean alphaBeta_;
 
     /** If true, then use additional qeiscent search to extent the search tree for urgent moves. */
-    protected final boolean quiescence_;
+    final boolean quiescence_;
 
     /** the number of plys to look ahead when searching. */
-    protected final int lookAhead_;
+    final int lookAhead_;
 
     /** the interface implemented by the generic game controller that provides standard methods. */
-    protected Searchable searchable_ = null;
+    Searchable searchable_ = null;
 
     /** keep track of the number of moves searched so far. Long because there could be quite a few. */
-    protected long movesConsidered_ = 0;
+    long movesConsidered_ = 0;
 
     /** approximate percent of search that is complete at given moment. */
     private int percentDone_ = 0;
 
     /** don't search more levels ahead than this during quiescent search. */
-    protected int maxQuiescentDepth_ = 0;
+    private int maxQuiescentDepth_ = 0;
 
     /** weights coefficients for the evaluation polynomial that indirectly determines the best move.   */
-    protected ParameterArray weights_;
+    ParameterArray weights_;
 
     /** True when search is paused. */
     private volatile boolean paused_ = false;
 
     /** The optional ui component that will be updated to reflect the current search tree.  */
-    protected GameTreeViewable gameTree_;
+    private GameTreeViewable gameTree_;
 
     /**
      * Number of moves to consider at the top ply.
      * we use this number to determine how far into the search that we are.
      */
-    protected int numTopLevelMoves_;
+    int numTopLevelMoves_;
 
 
     /**
@@ -63,7 +63,7 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
      * @param searchable the game controller that has options and can make/undo moves.
      * @param weights coefficients for the evaluation polunomial that indirectly determines the best move.
      */
-    protected AbstractSearchStrategy( Searchable searchable, ParameterArray weights )
+    AbstractSearchStrategy( Searchable searchable, ParameterArray weights )
     {
         searchable_ = searchable;
         SearchOptions opts = getOptions();
@@ -90,7 +90,7 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
     /**
      * {@inheritDoc}
      */
-    protected TwoPlayerMove searchInternal( TwoPlayerMove lastMove,
+    TwoPlayerMove searchInternal( TwoPlayerMove lastMove,
                                             int depth, SearchWindow window, SearchTreeNode parent) {
 
         boolean done = searchable_.done( lastMove, false);
@@ -124,7 +124,7 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
      * and the last moved played created an urgent situation.
      * @return true of we should continue searching a bit to find a stable/quiescnet move.
      */
-    private boolean doQuiescentSearch(int depth, boolean done, TwoPlayerMove lastMove) {
+    protected boolean doQuiescentSearch(int depth, boolean done, TwoPlayerMove lastMove) {
         boolean inJeopardy = searchable_.inJeopardy(lastMove, weights_, true);
         return quiescence_
                  && depth > -maxQuiescentDepth_
@@ -138,7 +138,7 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
      * For example, perhaps we are in the middle of a piece exchange (chess), or a large group is in atari (go).
      * @return best quescent move
      */
-    protected TwoPlayerMove quiescentSearch(TwoPlayerMove lastMove,
+    TwoPlayerMove quiescentSearch(TwoPlayerMove lastMove,
                                             int depth, SearchWindow window, SearchTreeNode parent) {
 
         MoveList urgentMoves = searchable_.generateUrgentMoves(lastMove, weights_, true);
@@ -168,7 +168,7 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
      * add a move to the visual game tree (if parent not null).
      * @return the node added to the tree.
      */
-    protected SearchTreeNode addNodeToTree( SearchTreeNode parent, TwoPlayerMove theMove,
+    SearchTreeNode addNodeToTree( SearchTreeNode parent, TwoPlayerMove theMove,
                                          SearchWindow window, int i )
     {
         SearchTreeNode child = null;
@@ -190,7 +190,7 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
      * @param thresh the alpha or beta threshold compared to.
      * @param type either PRUNE_ALPHA or PRUNE_BETA - pruned by comparison with Alpha or Beta.
      */
-    protected void showPrunedNodesInTree( MoveList list, SearchTreeNode parent,
+    void showPrunedNodesInTree( MoveList list, SearchTreeNode parent,
                                           int i, int val, int thresh, PruneType type)
     {
         if (gameTree_ != null) {
@@ -236,7 +236,7 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
      * Update the percentage done serching variable for the progress bar
      * if we are at the top level (otherwise this is a no-op).
      */
-    protected void updatePercentDone(int depth, List remainingNextMoves) {
+    void updatePercentDone(int depth, List remainingNextMoves) {
         if (depth == lookAhead_)   {
             percentDone_ = 100 * (numTopLevelMoves_ - remainingNextMoves.size()) / numTopLevelMoves_;
         }
@@ -246,7 +246,7 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
      * Get the next move and increment the number of moves considered.
      * @return next move in sorted generated next move list.
      */
-    protected TwoPlayerMove getNextMove(MoveList list) {
+    TwoPlayerMove getNextMove(MoveList list) {
         movesConsidered_ ++;
         return (TwoPlayerMove)list.remove(0);
     }

@@ -45,7 +45,7 @@ public class GoBoardRenderer extends TwoPlayerBoardRenderer
      * private constructor because this class is a singleton.
      * Use getRenderer instead
      */
-    protected GoBoardRenderer() {
+    private GoBoardRenderer() {
         pieceRenderer_ = GoStoneRenderer.getRenderer();
     }
 
@@ -169,7 +169,7 @@ public class GoBoardRenderer extends TwoPlayerBoardRenderer
     /**
      * draw markers for the next moves (if they have been specified)
      */
-    protected void drawNextMoveMarkers(GameControllerInterface controller, Graphics2D g2) {
+    void drawNextMoveMarkers(GameControllerInterface controller, Graphics2D g2) {
 
         TwoPlayerMove[] nextMoves = ((AbstractTwoPlayerBoardViewer) controller.getViewer()).getNextMoves();
         Board board = controller.getBoard();

@@ -7,7 +7,7 @@ import com.becker.game.common.GameWeights;
  * if only one computer is playing, then only one of the weights arrays is used.
  * @author Barry Becker
  */
-public class ChessWeights extends GameWeights {
+class ChessWeights extends GameWeights {
 
 
     /** use these weights if no others are provided. */

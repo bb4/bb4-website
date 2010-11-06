@@ -76,13 +76,13 @@ public class SearchOptions
     }
 
 
-    protected int getDefaultLookAhead() {
+    int getDefaultLookAhead() {
         return DEFAULT_LOOK_AHEAD;
     }
-    protected int getDefaultPercentageBestMoves() {
+    int getDefaultPercentageBestMoves() {
         return DEFAULT_PERCENTAGE_BEST_MOVES;
     }
-    protected int getDefaultMinBestMoves() {
+    int getDefaultMinBestMoves() {
         return DEFAULT_MIN_BEST_MOVES;
     }
 

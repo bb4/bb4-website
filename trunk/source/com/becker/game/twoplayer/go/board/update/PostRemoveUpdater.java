@@ -508,7 +508,7 @@ public class PostRemoveUpdater extends PostChangeUpdater {
      * return true if the stones in this list exactly match those in an existing group
      * @return true of group already exists on the board.
      */
-    protected boolean groupAlreadyExists( GoBoardPositionList stones )
+    boolean groupAlreadyExists( GoBoardPositionList stones )
     {
         // first find the group that contains the stones
         for (GoGroup goGroup : getBoard().getGroups()) {

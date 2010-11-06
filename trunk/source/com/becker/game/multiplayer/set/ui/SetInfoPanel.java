@@ -98,7 +98,7 @@ class SetInfoPanel extends GameInfoPanel
     protected void setPlayerLabel() {
     }
 
-    public void insertPlayerTable() {
+    void insertPlayerTable() {
 
         playerPanel_.removeAll();
 

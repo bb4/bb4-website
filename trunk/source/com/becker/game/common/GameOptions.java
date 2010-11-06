@@ -13,7 +13,7 @@ public abstract class GameOptions implements Serializable {
     private static final long serialVersionUID = 1L;
 
 
-    public GameOptions() {}
+    protected GameOptions() {}
 
 
     /**

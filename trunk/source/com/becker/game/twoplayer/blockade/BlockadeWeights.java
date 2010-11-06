@@ -8,7 +8,7 @@ import com.becker.game.common.GameWeights;
  *
  * @author Barry Becker Date: Feb 11, 2007
  */
-public class BlockadeWeights extends GameWeights {
+class BlockadeWeights extends GameWeights {
 
 
     /**

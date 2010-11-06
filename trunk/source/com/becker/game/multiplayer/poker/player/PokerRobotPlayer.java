@@ -21,7 +21,7 @@ public abstract class PokerRobotPlayer extends PokerPlayer
 
     private RobotType robotType_;
 
-    public PokerRobotPlayer(String name, int money, Color color, RobotType rType)
+    PokerRobotPlayer(String name, int money, Color color, RobotType rType)
     {
         super(name, money, color, false);
         robotType_ = rType;
@@ -100,11 +100,11 @@ public abstract class PokerRobotPlayer extends PokerPlayer
     }
 
 
-    protected int min(int a, int b, int c) {
+    int min(int a, int b, int c) {
         return Math.min(Math.min(a, b), c);
     }
 
-    protected boolean allOthersFolded(PokerController pc) {
+    boolean allOthersFolded(PokerController pc) {
 
         for (Player player : pc.getPlayers()) {
             PokerPlayer pp = (PokerPlayer) player;

@@ -29,7 +29,7 @@ public abstract class SummaryTable extends TableBase  {
      * constructor
      * @param players to initializet the rows in the table with.
      */
-    public SummaryTable(PlayerList players, String[] columnNames)
+    protected SummaryTable(PlayerList players, String[] columnNames)
     {
         super(players, columnNames);
     }
