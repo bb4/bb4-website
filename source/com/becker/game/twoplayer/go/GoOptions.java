@@ -9,16 +9,16 @@ import com.becker.game.twoplayer.common.search.SearchOptions;
 public class GoOptions extends TwoPlayerOptions {
 
     /** The komi can vary, but 5.5 seems most commonly used. */
-    public static final float DEFAULT_KOMI = 5.5f;
+    private static final float DEFAULT_KOMI = 5.5f;
 
     /** initial look ahead factor. */
-    static final int DEFAULT_LOOK_AHEAD = 3;
+    private static final int DEFAULT_LOOK_AHEAD = 3;
 
     /** for any given ply never consider more that BEST_PERCENTAGE of the top moves. */
-    static final int DEFAULT_PERCENTAGE_BEST_MOVES = 70;
+    private static final int DEFAULT_PERCENTAGE_BEST_MOVES = 70;
 
     /** for any given ply never consider less taht this many moves. */
-    static final int DEFAULT_MIN_BEST_MOVES = 10;
+    private static final int DEFAULT_MIN_BEST_MOVES = 10;
 
 
     /**

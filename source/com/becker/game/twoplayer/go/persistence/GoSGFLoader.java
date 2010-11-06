@@ -12,7 +12,7 @@ import java.io.StreamTokenizer;
  * Created on May 27, 2007, 5:35 AM
  * @author Barry Becker
  */
-public class GoSGFLoader extends SGFLoader {
+class GoSGFLoader extends SGFLoader {
 
     /**
      * Creates a new instance of SGFGoLoader

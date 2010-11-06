@@ -11,7 +11,7 @@ import java.awt.*;
 
 /**
  *  a singleton class that takes a checkers piece and renders it for the BlockadeBoardViewer.
- * @see com.becker.game.twoplayer.blockade.ui.BlockadeBoardViewer
+ * @see BlockadeBoardViewer
  * @author Barry Becker
  */
 class BlockadePieceRenderer extends TwoPlayerPieceRenderer
@@ -26,7 +26,7 @@ class BlockadePieceRenderer extends TwoPlayerPieceRenderer
      * private constructor because this class is a singleton.
      * Use getRenderer instead
      */
-    protected BlockadePieceRenderer()
+    private BlockadePieceRenderer()
     {}
 
     public static TwoPlayerPieceRenderer getRenderer()

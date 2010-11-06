@@ -12,7 +12,7 @@ import com.becker.game.multiplayer.common.MultiGameOptions;
 public abstract class MultiPlayerOnlineTable extends OnlineGameTable {
 
 
-    public MultiPlayerOnlineTable(String name, Player initialPlayer, GameOptions options) {
+    protected MultiPlayerOnlineTable(String name, Player initialPlayer, GameOptions options) {
         super(name, initialPlayer, options);
         int numRobots = ((MultiGameOptions) options).getNumRobotPlayers();
         for (int i=0; i<numRobots; i++) {

@@ -7,13 +7,13 @@ import java.util.Vector;
 
 /**
  * Basically the DefaultTableModel with a few customizations
- * @see com.becker.game.multiplayer.common.ui.PlayerTable
+ * @see PlayerTable
  *
  * @author Barry Becker
  */
 public class PlayerTableModel extends DefaultTableModel
 {
-    boolean editable_;
+    private boolean editable_;
     private static final long serialVersionUID = 0;
 
     public PlayerTableModel(Object[][] data, Object[] columnNames, boolean editable)
@@ -31,7 +31,7 @@ public class PlayerTableModel extends DefaultTableModel
     @Override
     public Class getColumnClass(int col)
     {
-        List v = (Vector)dataVector.elementAt(0);
+        List v = (List)dataVector.elementAt(0);
         return v.get(col).getClass();
     }
 

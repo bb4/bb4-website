@@ -11,7 +11,7 @@ import java.util.List;
  *
  *  @author Barry Becker
  */
-public class MoveSequencePlayback {
+class MoveSequencePlayback {
 
     /** Piece transparency for moves that have not been played yet. */
     private static final short FUTURE_MOVE_TRANSP = 190;

@@ -12,7 +12,7 @@ import java.util.Random;
 public class MoveList extends LinkedList<Move> {
 
     /** Make sure that the program runs in a reproducible way by always starting from the same random seed. */
-    protected static final Random RANDOM = new Random(1);
+    private static final Random RANDOM = new Random(1);
 
     /**
      * Construct set of players

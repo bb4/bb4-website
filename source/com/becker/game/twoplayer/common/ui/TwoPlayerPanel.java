@@ -34,14 +34,14 @@ public abstract class TwoPlayerPanel extends GamePanel
                                 implements ActionListener, GameChangedListener {
 
     /** for showing progress while the computer thinks. */
-    protected JProgressBar progressBar_;
+    private JProgressBar progressBar_;
 
-    protected GameTreeDialog treeDialog_;
+    private GameTreeDialog treeDialog_;
 
     /**
      * Construct the panel.
      */
-    public TwoPlayerPanel()  {}
+    protected TwoPlayerPanel()  {}
 
     private TwoPlayerController get2PlayerController()
     {
@@ -81,7 +81,7 @@ public abstract class TwoPlayerPanel extends GamePanel
         return progressPanel;
     }
 
-    protected JProgressBar createProgressBar()
+    JProgressBar createProgressBar()
     {
         JProgressBar progressBar = new JProgressBar();
         progressBar.setOpaque(false);

@@ -14,20 +14,20 @@ public class Player implements Serializable
 {
     private static final long serialVersionUID = 1;
 
-    public static final int HUMAN_PLAYER = 1;
-    public static final int COMPUTER_PLAYER = 2;    
+    private static final int HUMAN_PLAYER = 1;
+    private static final int COMPUTER_PLAYER = 2;
 
     /** name of the pplayer. */
     protected String name_;
 
     /** each player has an associated color. */
-    protected Color color_;
+    private Color color_;
 
     /** each player is either human or robot. */
-    protected int type_;
+    private int type_;
 
     /** Becomes true if this player has won the game. */
-    protected boolean hasWon_ = false;
+    private boolean hasWon_ = false;
 
 
     /**

@@ -141,7 +141,7 @@ public class BlockadeController extends TwoPlayerController
       * @param homes the array of home bases.
       * @return true if player has reached an opponent home. (for player1 or player2 depending on boolean player1 value)
       */
-    protected static boolean checkForWin(boolean player1, BoardPosition[] homes) {
+    private static boolean checkForWin(boolean player1, BoardPosition[] homes) {
         for (BoardPosition home : homes) {
             GamePiece p = home.getPiece();
             if (p != null && p.isOwnedByPlayer1() == player1)

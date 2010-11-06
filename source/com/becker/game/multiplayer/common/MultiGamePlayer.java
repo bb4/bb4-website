@@ -42,6 +42,7 @@ public abstract class MultiGamePlayer extends Player {
     /**
      * try to give a unique color based on the name
      * and knowing what the current player colors are.
+     * @return new player color
      */
     public static Color getNewPlayerColor(PlayerList players)
     {

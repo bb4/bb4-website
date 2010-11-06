@@ -15,7 +15,7 @@ import com.becker.game.twoplayer.common.TwoPlayerMove;
 public class CheckersMove extends TwoPlayerMove {
 
     /** the position that the piece is moving from */
-    protected Location fromLocation_;
+    private Location fromLocation_;
 
     /** True if the piece just got kinged as a result of this move. */
     public boolean kinged;

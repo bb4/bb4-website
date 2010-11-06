@@ -17,7 +17,7 @@ public abstract class TwoPlayerMoveToken extends PlacementToken {
     /**
      * A token the describes where a players pawn started and where it ended after moving.
      */
-    public TwoPlayerMoveToken() { }
+    protected TwoPlayerMoveToken() { }
   
     /**
      * Parse in the position of the piece.

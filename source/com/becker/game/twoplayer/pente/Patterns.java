@@ -93,7 +93,7 @@ public abstract class Patterns
      * this integer can be used like a hash for a quick lookup of the weight
      * in the weightIndexTable
      */
-    protected static int convertPatternToInt( String pattern )
+    private static int convertPatternToInt( String pattern )
     {
         StringBuilder buf = new StringBuilder( pattern );
         return convertPatternToInt( buf, 0, pattern.length()-1 );
@@ -105,7 +105,7 @@ public abstract class Patterns
      * in the weightIndexTable
      * @return integer representation of pattern
      */
-    protected static int convertPatternToInt( StringBuilder pattern, int minpos, int maxpos )
+    private static int convertPatternToInt( StringBuilder pattern, int minpos, int maxpos )
     {
         int power = 1;
         int sum = 0;

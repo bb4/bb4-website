@@ -6,7 +6,7 @@ package com.becker.game.twoplayer.go.board.analysis.eye;
  *
  * @author Barry Becker
  */
-public final class EyeShapeScores
+final class EyeShapeScores
 {
     /** any shape that have a false eye point. */
     public static final float FALSE_EYE = 0.19f;

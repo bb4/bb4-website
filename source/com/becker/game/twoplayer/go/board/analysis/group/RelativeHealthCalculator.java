@@ -15,7 +15,7 @@ import java.util.Set;
  * Determine the absolute health of a group independent of the health of neighboring groups.
  * @author Barry Becker
  */
-public class RelativeHealthCalculator {
+class RelativeHealthCalculator {
 
     /** The group of go stones that we are analyzing. */
     private GoGroup group_;
@@ -148,7 +148,8 @@ public class RelativeHealthCalculator {
          
         for (Object possibleEnemyNbr : nbrs) {
             GoBoardPosition possibleEnemy = (GoBoardPosition)possibleEnemyNbr;
-            if (possibleEnemy.getPiece().isOwnedByPlayer1() != group_.isOwnedByPlayer1()
+            if (possibleEnemy.getPiece() != null
+                    && possibleEnemy.getPiece().isOwnedByPlayer1() != group_.isOwnedByPlayer1()
                     && !possibleEnemy.isInEye()) {
                 // setting visited to true to indicate there is an enemy nbr within group distance.
                 stone.setVisited(true);

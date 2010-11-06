@@ -10,7 +10,7 @@ import java.awt.*;
  *
  * @author Barry Becker Date: Oct 29, 2006
  */
-public class GoColorMap extends ColorMap {
+class GoColorMap extends ColorMap {
 
     private static final double[] myValues_ = {-1.1, -1.0, -0.2, 0.1, -0.05,
                                                0.0,

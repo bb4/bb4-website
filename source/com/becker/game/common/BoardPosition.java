@@ -34,7 +34,7 @@ public class BoardPosition
      * @param loc -  location on the board.
      * @param piece - the pice to put at this position (use null if there is none).
      */
-    public BoardPosition( Location loc, GamePiece piece)  {
+    protected BoardPosition( Location loc, GamePiece piece)  {
         location_ = loc;
         piece_ = piece;
     }
@@ -132,7 +132,7 @@ public class BoardPosition
     /**
      * copy data from another position into me.
      */
-    public void copy(BoardPosition p)
+    protected void copy(BoardPosition p)
     {
         location_ = new Location(p.getRow(), p.getCol());
         if (p.piece_ != null)
@@ -170,7 +170,7 @@ public class BoardPosition
     /**
      * @return a string representation of the board position
      */
-    public String getDescription() {
+    protected String getDescription() {
         return toString(true);
     }
 

@@ -14,7 +14,7 @@ import java.awt.*;
  * GalacticPlayerTable contains a list of players.
  * All the cells are editable.
  * It is initialized with a list of Players and returns a list of Players.
- * @see com.becker.game.multiplayer.set.SetPlayer
+ * @see SetPlayer
  *
  * @author Barry Becker
  */

@@ -22,21 +22,21 @@ public abstract class GameInfoPanel extends TexturedPanel implements GameChanged
 
     protected GameController controller_ = null;
 
-    protected JFrame parent_;
+    private JFrame parent_;
 
     protected JLabel moveNumLabel_;
     protected JLabel playerLabel_;
 
-    protected static final Font SECTION_TITLE_FONT = new Font( "SansSerif", Font.BOLD, 12 );
+    private static final Font SECTION_TITLE_FONT = new Font( "SansSerif", Font.BOLD, 12 );
     private static final Font PLAYER_FONT = new Font( "SansSerif", Font.BOLD, 12 );
-    protected static final Font LABEL_FONT = new Font( "SansSerif", Font.PLAIN, 12 );
-    protected static final int DEFAULT_MIN_WIDTH = 210;
-    protected static final int MAX_HEIGHT = 1000;
+    private static final Font LABEL_FONT = new Font( "SansSerif", Font.PLAIN, 12 );
+    private static final int DEFAULT_MIN_WIDTH = 210;
+    private static final int MAX_HEIGHT = 1000;
 
     /**
      * Constructor
      */
-    public GameInfoPanel( GameController controller )
+    protected GameInfoPanel( GameController controller )
     {
         super(null);
         controller_ = controller;

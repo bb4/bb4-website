@@ -154,7 +154,7 @@ public class PokerController extends MultiGameController
     /**
      * collect the antes
      */
-    public void anteUp() {
+    void anteUp() {
         // get players to ante up, if they have not already
         if (this.getPotValue() == 0) {
             for (final Player p : players_) {
@@ -305,7 +305,7 @@ public class PokerController extends MultiGameController
       * a player is not counted as active if he is "out of the game".
       * @return  number of active players.
       */
-     public int getNumNonFoldedPlayers()
+     int getNumNonFoldedPlayers()
      {
         int count = 0;
         for (final Player p : getPlayers()) {

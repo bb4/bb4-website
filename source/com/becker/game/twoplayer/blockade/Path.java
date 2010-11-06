@@ -15,12 +15,12 @@ import java.util.List;
 public class Path {
 
     /** the path elements that represent steps to the opponent home. */
-    List<BlockadeMove> elements_;
+    private List<BlockadeMove> elements_;
     
     /**
      * Creates a new instance of Path 
      */
-    public Path() {
+    private Path() {
         elements_ = new LinkedList<BlockadeMove>();
     }
     
@@ -40,7 +40,7 @@ public class Path {
         }
     }
     
-    public void add(BlockadeMove move) {
+    void add(BlockadeMove move) {
         elements_.add(move);
     }
     
@@ -67,7 +67,7 @@ public class Path {
     }
 
     
-    public void addPathElements(DefaultMutableTreeNode node) {
+    void addPathElements(DefaultMutableTreeNode node) {
         Object[] ps = node.getUserObjectPath();
         if (ps.length > 1)  {
             // skip the first null move.

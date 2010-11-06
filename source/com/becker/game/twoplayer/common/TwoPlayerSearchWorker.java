@@ -9,7 +9,7 @@ import com.becker.game.common.Move;
  *                                                                                                      O
  * @author Barry Becker
  */
-public class TwoPlayerSearchWorker {
+class TwoPlayerSearchWorker {
 
     private TwoPlayerController controller_;
 

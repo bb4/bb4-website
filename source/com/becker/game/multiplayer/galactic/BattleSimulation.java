@@ -78,7 +78,7 @@ public class BattleSimulation
      * @param order
      * @param destPlanet
      */
-    public void createSimulation(Order order, Planet destPlanet)
+    void createSimulation(Order order, Planet destPlanet)
     {
         hits_ = new LinkedList<Player>();
 

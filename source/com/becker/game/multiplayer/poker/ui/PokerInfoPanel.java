@@ -84,7 +84,7 @@ class PokerInfoPanel extends GameInfoPanel implements GameChangedListener, Actio
     /**
      * This panel shows a discrete color legend for the poker chip values
      */
-    protected JPanel createChipLegendPanel()
+    JPanel createChipLegendPanel()
     {
         JPanel legendPanel = createSectionPanel("Chip Values");
         PokerChip[] chipTypes = PokerChip.values();

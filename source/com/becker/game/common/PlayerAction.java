@@ -19,7 +19,7 @@ public abstract class PlayerAction implements Serializable {
      * 
      * @param playerName the name of the player making the action.
      */
-    public PlayerAction(String playerName) {
+    protected PlayerAction(String playerName) {
         playerName_ = playerName;
     }
 

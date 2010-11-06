@@ -67,7 +67,7 @@ public class GameProfiler extends Profiler {
      * @param totalTime total elapsed time.
      * @param numMovesConsidered number of moves inspected during search.
      */
-    protected void showProfileStats( long totalTime, long numMovesConsidered ) {
+    void showProfileStats( long totalTime, long numMovesConsidered ) {
         GameContext.log( 0, "----------------------------------------------------------------------------------" );
         GameContext.log( 0, "There were " + numMovesConsidered + " moves considered." );
         GameContext.log( 0, "The total time for the computer to move was : " +
@@ -75,7 +75,7 @@ public class GameProfiler extends Profiler {
         print();
     }
 
-    public void initialize() {
+    void initialize() {
         resetAll();
         setEnabled(GameContext.isProfiling());
         setLogger(GameContext.getLogger());

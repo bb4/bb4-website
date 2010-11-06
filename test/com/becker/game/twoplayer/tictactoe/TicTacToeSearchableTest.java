@@ -165,7 +165,7 @@ public class TicTacToeSearchableTest extends TwoPlayerSearchableBaseTst {
         restore(fileName);
         TwoPlayerMove lastMove = (TwoPlayerMove) getController().getLastMove();
         MoveList moves =
-                getController().getSearchable().generateMoves(lastMove, weights(), !lastMove.isPlayer1());
+                getController().getSearchable().generateMoves(lastMove, weights(), true/*!lastMove.isPlayer1()*/);
 
         checkMoveListAgainstExpected(fileName, expectedMoves, moves);
     }

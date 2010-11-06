@@ -16,7 +16,7 @@ public abstract class GameExporter {
     protected GameController controller_;
 
 
-    public GameExporter(GameController controller) {
+    protected GameExporter(GameController controller) {
         controller_ = controller;
     }
 

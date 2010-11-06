@@ -5,6 +5,7 @@ import com.becker.game.common.Player;
 import com.becker.game.common.PlayerList;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * Some number of players sitting around a virtual game table online.
@@ -31,19 +32,18 @@ public class OnlineGameTable implements Serializable {
     private Player newestHumanPlayer_;
 
 
-    public OnlineGameTable(String name, Player initialPlayer, GameOptions options) {
+    protected OnlineGameTable(String name, Player initialPlayer, GameOptions options) {
         this(name, initialPlayer, new Player[] {initialPlayer}, options);
     }
 
-    public OnlineGameTable(String name, Player owner, Player[] initialPlayers, GameOptions options) {
+    private OnlineGameTable(String name, Player owner, Player[] initialPlayers, GameOptions options) {
         name_ = name;
         owner_ = owner;
         newestHumanPlayer_ = owner;
         players_ = new PlayerList();
         gameOptions_ = options;
-        for (Player p : initialPlayers) {
-            players_.add(p);
-        }
+        players_.addAll(Arrays.asList(initialPlayers));
+
     }
 
     /**

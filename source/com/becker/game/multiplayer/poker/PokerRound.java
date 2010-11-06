@@ -7,7 +7,7 @@ import com.becker.game.common.Move;
  * This should include the amount that each player has contributed to the pot.
  * Allows for undo.
  *
- * @see com.becker.game.multiplayer.poker.PokerTable
+ * @see PokerTable
  * @author Barry Becker
  */
 public class PokerRound extends Move

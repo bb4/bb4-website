@@ -21,7 +21,7 @@ public class SetPlayer extends MultiGamePlayer
     public static final int DEFAULT_CASH = 100;
 
 
-    protected SetPlayer(String name, Color color, boolean isHuman)
+    SetPlayer(String name, Color color, boolean isHuman)
     {
         super(name, color, isHuman);
     }

@@ -15,7 +15,7 @@ import java.awt.geom.Point2D;
  * We use a separate piece rendering class to avoid having ui in the piece class itself.
  * This allows us to more cleanly separate the client and server code.
  *
- * @see com.becker.game.common.ui.GameBoardViewer
+ * @see GameBoardViewer
  * @author Barry Becker
  */
 public abstract class GamePieceRenderer
@@ -55,7 +55,7 @@ public abstract class GamePieceRenderer
     }
 
 
-    public static Point getPosition(BoardPosition position, int cellSize, int pieceSize, int margin)
+    protected static Point getPosition(BoardPosition position, int cellSize, int pieceSize, int margin)
     {
         int offset = (cellSize - pieceSize) >> 1;
         position_.x = margin + cellSize*(position.getCol()-1) + offset;

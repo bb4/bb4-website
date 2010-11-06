@@ -27,7 +27,7 @@ public abstract class OnlineGameManagerPanel extends JPanel
 
     /** the options get set directly on the game controller that is passed in. */
     protected GameController controller_;
-    protected GameViewable viewer_;
+    private GameViewable viewer_;
     // typically the dlg that we live in. Called when table ready to play.
     protected ChangeListener gameStartedListener_;
 
@@ -47,7 +47,7 @@ public abstract class OnlineGameManagerPanel extends JPanel
         initGUI();
     }
 
-    protected void initGUI() {
+    void initGUI() {
 
         JPanel playOnlinePanel = createPlayOnlinePanel();
         add( playOnlinePanel );       

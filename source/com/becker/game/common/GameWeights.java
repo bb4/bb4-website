@@ -18,7 +18,7 @@ public class GameWeights
     protected static final double ASSUMED_WINNING_VALUE = 1024;
 
     /** the weights are created assuming a winning value of 1000. It that changes we need to scale them */
-    protected static final double SCALE = SearchStrategy.WINNING_VALUE / ASSUMED_WINNING_VALUE;
+    private static final double SCALE = SearchStrategy.WINNING_VALUE / ASSUMED_WINNING_VALUE;
 
     private int numWeights_;
 

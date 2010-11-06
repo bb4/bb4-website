@@ -15,7 +15,7 @@ import javax.swing.*;
  *
  * @author Barry Becker
  */
-public class SetSummaryTable extends SummaryTable
+class SetSummaryTable extends SummaryTable
 {
 
     private static final int NUM_SETS_INDEX = 2;

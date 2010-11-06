@@ -12,8 +12,8 @@ import com.becker.game.common.online.OnlineChangeListener;
  */
 public  class SurrogatePlayer extends Player implements OnlineChangeListener {
 
-    protected IServerConnection connection_;
-    protected Player player_;
+    private IServerConnection connection_;
+    private Player player_;
 
     // wait about 10 seconds for the player to move before timing out.
     private static final int TIMEOUT_DURATION = 40000;

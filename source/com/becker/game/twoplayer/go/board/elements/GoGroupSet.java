@@ -110,7 +110,7 @@ public class GoGroupSet implements Set<GoGroup>
      * create a nice list of all the current groups (and the strings they contain)
      * @return String containing the current groups
      */
-    public String toString(boolean showBlack, boolean showWhite)
+    String toString(boolean showBlack, boolean showWhite)
     {
         StringBuffer groupText = new StringBuffer( "" );
         StringBuffer blackGroupsText = new StringBuffer(showBlack? "The black groups are :\n" : "" );
@@ -137,7 +137,7 @@ public class GoGroupSet implements Set<GoGroup>
     /**
      * pretty print a list of all the current groups (and the strings they contain)
      */
-    public void debugPrint( int logLevel)
+    void debugPrint( int logLevel)
     {
         debugPrint( logLevel,  "---The groups are:", true, true);
     }

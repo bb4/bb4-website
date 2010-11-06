@@ -11,7 +11,7 @@ import java.util.List;
 public class GalacticAction extends PlayerAction {
     
      // a list of outstanding Orders
-     protected List<Order> orders_;
+     private List<Order> orders_;
      
      
      public GalacticAction(String playerName, List<Order> orders) {

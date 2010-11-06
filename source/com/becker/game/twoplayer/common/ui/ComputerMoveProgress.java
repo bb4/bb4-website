@@ -15,7 +15,7 @@ import java.awt.event.ActionListener;
  *
  * @author Barry Becker
  */
-public class ComputerMoveProgress {
+class ComputerMoveProgress {
 
     private static final int PROGRESS_UPDATE_DELAY = 700;
     private static final int PROGRESS_STEP_DELAY = 100;
@@ -24,7 +24,7 @@ public class ComputerMoveProgress {
     private JProgressBar progressBar_;
 
     /** Periodically updates the progress bar.  */
-    protected Timer timer_;
+    private Timer timer_;
 
     /** becomes true when stepping through the search.   */
     private boolean stepping_ = false;
@@ -55,7 +55,7 @@ public class ComputerMoveProgress {
      * @param isPlayer1 if the computer player now moving is player 1.
      * @return done always returns false unless auto optimizing
      */
-    protected boolean doComputerMove( boolean isPlayer1 ) {
+    boolean doComputerMove( boolean isPlayer1 ) {
 
         if (progressBar_ != null) {
             // initialize the progress bar if there is one.

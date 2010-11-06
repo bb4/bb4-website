@@ -76,8 +76,7 @@ public class NegaScoutStrategy extends NegaMaxStrategy
      * Construct NegaScout strategy given a controller interface.
      * @inheritDoc
      */
-    public NegaScoutStrategy( Searchable controller, ParameterArray weights )
-    {
+    public NegaScoutStrategy( Searchable controller, ParameterArray weights) {
         super( controller, weights );
     }
 
@@ -102,7 +101,7 @@ public class NegaScoutStrategy extends NegaMaxStrategy
             SearchTreeNode child = addNodeToTree(parent, theMove, window, i );
 
             // search with minimal search window
-            selectedMove = searchInternal( theMove, depth-1, new SearchWindow(-newBeta, -window.alpha), child );
+            selectedMove = searchInternal( theMove, depth-1, new SearchWindow(-newBeta, -window.alpha), child);
 
             searchable_.undoInternalMove( theMove );
             if (selectedMove != null) {

@@ -18,7 +18,7 @@ import java.util.List;
  *  Groups may be connected by diagonals, or ikken tobi, or kogeima (knight's move).
  *
  *  @see GoGroup
- *  @see com.becker.game.twoplayer.go.board.GoBoard
+ *  @see GoBoard
  *  @author Barry Becker
  */
 public class GoString extends GoSet implements IGoString
@@ -27,7 +27,7 @@ public class GoString extends GoSet implements IGoString
     private GoBoardPositionSet members_;
     
     /** The group to which this string belongs. */
-    protected GoGroup group_;
+    GoGroup group_;
     
     /** If true, then we are an eye in an unconditionally alive group (according to Benson's algorithm). */
     private boolean unconditionallyAlive_;
@@ -100,7 +100,7 @@ public class GoString extends GoSet implements IGoString
     /**
      * add a stone to the string
      */
-    protected void addMemberInternal(GoBoardPosition stone, GoBoard board)
+    void addMemberInternal(GoBoardPosition stone, GoBoard board)
     {
         assert ( stone.isOccupied()): "trying to add empty space to string. stone=" + stone ;
         assert ( stone.getPiece().isOwnedByPlayer1() == ownedByPlayer1_):
@@ -178,7 +178,7 @@ public class GoString extends GoSet implements IGoString
         assert ( size() > 0 );
     }
 
-    protected void removeInternal(GoBoardPosition stone ) {
+    void removeInternal(GoBoardPosition stone ) {
        boolean removed = getMembers().remove( stone );
        assert (removed) : "failed to remove "+stone+" from"+ this;
        stone.setString(null);

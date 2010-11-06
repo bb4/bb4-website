@@ -9,7 +9,7 @@ import java.awt.*;
 
 /**
  *  a singleton class that takes a checkers piece and renders it for the CheckersBoardViewer.
- * @see com.becker.game.twoplayer.checkers.ui.CheckersBoardViewer
+ * @see CheckersBoardViewer
  * @author Barry Becker
  */
 public class CheckersPieceRenderer extends TwoPlayerPieceRenderer
@@ -20,7 +20,7 @@ public class CheckersPieceRenderer extends TwoPlayerPieceRenderer
      * private constructor because this class is a singleton.
      * Use getRenderer instead
      */
-    protected CheckersPieceRenderer()
+    private CheckersPieceRenderer()
     {}
 
     public static TwoPlayerPieceRenderer getRenderer()

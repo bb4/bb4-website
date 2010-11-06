@@ -61,7 +61,7 @@ public class PokerOptions extends MultiGameOptions {
         return ante_;
     }
 
-    public void setAnte(int ante) {
+    void setAnte(int ante) {
         this.ante_ = ante;
     }
 
@@ -69,7 +69,7 @@ public class PokerOptions extends MultiGameOptions {
         return maxAbsoluteRaise_;
     }
 
-    public void setMaxAbsoluteRaise(int maxAbsoluteRaise) {
+    void setMaxAbsoluteRaise(int maxAbsoluteRaise) {
         this.maxAbsoluteRaise_ = maxAbsoluteRaise;
     }
 
@@ -77,7 +77,7 @@ public class PokerOptions extends MultiGameOptions {
         return initialChips_;
     }
 
-    public void setInitialChips(int initialChips) {
+    void setInitialChips(int initialChips) {
         this.initialChips_ = initialChips;
     }
 

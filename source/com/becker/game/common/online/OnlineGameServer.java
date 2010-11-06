@@ -32,15 +32,15 @@ public class OnlineGameServer  {
 
     public static final String GAME_OPTION = "game";
 
-    protected JTextArea textArea_;
-    protected ServerSocket server_;
+    private JTextArea textArea_;
+    private ServerSocket server_;
     private int port_;
 
     /** processes server commands. May someday need sublassing.  */
     private ServerCommandProcessor cmdProcessor_;
 
     /** keep a list of the threads that we have for each client connection.  */
-    List<ClientWorker> clientConnections_;
+    private List<ClientWorker> clientConnections_;
 
     /**
      * Create the online game server to serve all online clients.
@@ -64,7 +64,7 @@ public class OnlineGameServer  {
      * Maintain a list of clientConnections corresponding to the players
      * that we need to broadcast to when something changes.
      */
-    public void openListenSocket() {
+    void openListenSocket() {
 
         try {
             server_ = new ServerSocket(port_);

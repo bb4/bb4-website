@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
  *
  *  @author Barry Becker
  */
-public class CheckersNewGameDialog extends TwoPlayerNewGameDialog implements ActionListener
+class CheckersNewGameDialog extends TwoPlayerNewGameDialog implements ActionListener
 {
 
     // constructor

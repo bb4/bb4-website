@@ -35,7 +35,7 @@ public abstract class MultiGameBoardRenderer extends GameBoardRenderer
         return 8;
     }
 
-    protected Color getDefaultTableColor()
+    Color getDefaultTableColor()
     {
         return DEFAULT_TABLE_COLOR;
     }

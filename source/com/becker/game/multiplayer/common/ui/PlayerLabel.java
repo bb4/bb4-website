@@ -11,8 +11,8 @@ import java.awt.*;
  */
 public class PlayerLabel extends JPanel {
 
-    JPanel swatch;
-    JLabel playerLabel;
+    private JPanel swatch;
+    private JLabel playerLabel;
 
     public PlayerLabel() {
         swatch = new JPanel();

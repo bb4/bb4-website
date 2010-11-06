@@ -92,7 +92,7 @@ public class Order
         return owner_;
     }
 
-    public double getDistanceRemaining()
+    double getDistanceRemaining()
     {
         return destination_.getDistanceFrom( getCurrentLocation() );
     }

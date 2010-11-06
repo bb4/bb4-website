@@ -9,8 +9,8 @@ import com.becker.game.common.BoardPosition;
  */
 public final class CornerChecker
 {
-    int numRows;
-    int numCols;
+    private int numRows;
+    private int numCols;
 
     /**
      *  Constructor.

@@ -38,7 +38,7 @@ public class GamePiece implements Serializable
     /**
      * default constructor
      */
-    public GamePiece()
+    protected GamePiece()
     {
         ownedByPlayer1_ = false;
         type_ = REGULAR_PIECE;
@@ -62,7 +62,7 @@ public class GamePiece implements Serializable
      * @param player1 if owned by player1
      * @param type there may be different types of pieces (for example in chess there are many; checkers has 2)
      */
-    public GamePiece( boolean player1, char type)
+    protected GamePiece( boolean player1, char type)
     {
         ownedByPlayer1_ = player1;
         type_ = type;
@@ -124,7 +124,7 @@ public class GamePiece implements Serializable
     /**
      * copy data from another game piece into me.
      */
-    public void copy(GamePiece p)
+    protected void copy(GamePiece p)
     {
         ownedByPlayer1_ = p.ownedByPlayer1_;
         type_ = p.type_;

@@ -9,7 +9,7 @@ import com.becker.game.twoplayer.go.board.elements.GoGroup;
  * Evaluate the health of a group based on the status of its eye(s).
  * @author Barry Becker
  */
-public class EyeHealthEvaluator {
+class EyeHealthEvaluator {
 
     private GoGroup group_;
     private GoBoard board_;

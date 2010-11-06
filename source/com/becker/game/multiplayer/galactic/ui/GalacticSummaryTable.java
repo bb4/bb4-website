@@ -12,11 +12,11 @@ import java.util.List;
 /**
  * Shows a list of the players stats at the end of the game.
  * None of the cells are editable.
- * @see com.becker.game.multiplayer.galactic.player.GalacticPlayer
+ * @see GalacticPlayer
  *
  * @author Barry Becker
  */
-public class GalacticSummaryTable extends SummaryTable
+class GalacticSummaryTable extends SummaryTable
 {
 
     private static final int NUM_PLANETS_INDEX = 2;

@@ -33,13 +33,13 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase  {
     protected static final String PLAYER_NAMES = GameContext.getLabel("PLAYER_NAMES");
 
     protected static final String JOIN_TIP = GameContext.getLabel("ACTION_TIP");
-    protected static final String MIN_NUM_PLAYERS_TIP = GameContext.getLabel("MIN_NUM_PLAYERS_TIP");
+    private static final String MIN_NUM_PLAYERS_TIP = GameContext.getLabel("MIN_NUM_PLAYERS_TIP");
     protected static final String PLAYER_NAMES_TIP = GameContext.getLabel("PLAYER_NAMES_TIP");
 
     private static final String[] COLUMN_NAMES = {JOIN, MIN_NUM_PLAYERS, PLAYER_NAMES};
 
-    protected OnlineGameTable selectedTable_;
-    protected List<OnlineGameTable> tableList_;
+    private OnlineGameTable selectedTable_;
+    private List<OnlineGameTable> tableList_;
     private static int counter_;
 
     private TableButtonListener tableButtonListener_;
@@ -56,7 +56,7 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase  {
         this(COLUMN_NAMES, tableButtonListener);
     }
 
-    public MultiPlayerOnlineGameTablesTable(String[] colNames, TableButtonListener tableButtonListener) {
+    protected MultiPlayerOnlineGameTablesTable(String[] colNames, TableButtonListener tableButtonListener) {
 
         initColumnMeta(colNames);
 
@@ -106,7 +106,7 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase  {
     }
 
 
-    protected PlayerTableModel getPlayerModel()
+    PlayerTableModel getPlayerModel()
     {
         return (PlayerTableModel)getModel();
     }
@@ -142,7 +142,7 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase  {
      * @param onlineTable to add
      * @param localPlayerAtTable you cannot join a table you are already at.
      */
-    protected void addRow(OnlineGameTable onlineTable, boolean localPlayerAtTable) {
+    void addRow(OnlineGameTable onlineTable, boolean localPlayerAtTable) {
 
         getPlayerModel().addRow(getRowObject(onlineTable, localPlayerAtTable));
         tableList_.add(onlineTable);

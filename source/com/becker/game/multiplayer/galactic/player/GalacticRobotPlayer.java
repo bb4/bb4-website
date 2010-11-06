@@ -26,7 +26,7 @@ public abstract class GalacticRobotPlayer extends GalacticPlayer
 
     private enum RobotType {CRAZY_ROBOT, METHODICAL_ROBOT}
 
-    public GalacticRobotPlayer(String name, Planet homePlanet, Color color) {
+    GalacticRobotPlayer(String name, Planet homePlanet, Color color) {
         super(name, homePlanet, color, false);
     }
 
@@ -41,7 +41,7 @@ public abstract class GalacticRobotPlayer extends GalacticPlayer
      * @param numAttacks
      * @return list of orders
      */
-    protected List<Order> getOrders(Planet origin, int numAttacks, int numShipsToLeaveBehind, int numYearsRemaining)
+    List<Order> getOrders(Planet origin, int numAttacks, int numShipsToLeaveBehind, int numYearsRemaining)
     {
         List<Order> orders = new ArrayList<Order>();
 

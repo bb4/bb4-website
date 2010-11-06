@@ -39,7 +39,7 @@ public enum PokerChip {
         return label_;
     }
 
-    public int getValue() {
+    int getValue() {
         return value_;
     }
 

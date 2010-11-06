@@ -14,7 +14,7 @@ import java.text.MessageFormat;
  *
  * @author Barry Becker
  */
-public class GameOverMessage {
+class GameOverMessage {
 
     private String text_;
 

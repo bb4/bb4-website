@@ -47,23 +47,21 @@ import com.becker.optimization.parameter.ParameterArray;
  * </pre>
  *  @author Barry Becker 
  */
-public final class NegaScoutMemoryStrategy extends NegaScoutStrategy
-{
+public final class NegaScoutMemoryStrategy extends NegaScoutStrategy {
     /** Stores positions that have already been evaluated, so we do not need to repeat work. */
     private TranspositionTable lookupTable;
 
     private int cacheHits = 0;
     private int cacheNearHits = 0;
     private int cacheMisses = 0;
+
     /**
      * Constructor.
      */
-    public NegaScoutMemoryStrategy( Searchable controller, ParameterArray weights )
-    {
+    public NegaScoutMemoryStrategy(Searchable controller, ParameterArray weights) {
         super( controller, weights );
         lookupTable = new TranspositionTable();
     }
-
 
     /**
      * {@inheritDoc}
@@ -77,9 +75,9 @@ public final class NegaScoutMemoryStrategy extends NegaScoutStrategy
             return entry.bestMove;
 
         boolean done = searchable_.done( lastMove, false);
-        if ( depth == 0 || done ) {
+        if ( depth <= 0 || done ) {
 
-            if ( quiescence_ && depth == 0 && !done)  {
+            if (doQuiescentSearch(depth, done, lastMove))  {
                 TwoPlayerMove qMove = quiescentSearch(lastMove, depth, window, parent);
                 entry = new Entry(qMove, qMove.getInheritedValue());
                 lookupTable.put(key, entry);
@@ -92,9 +90,7 @@ public final class NegaScoutMemoryStrategy extends NegaScoutStrategy
             return lastMove;
         }
 
-        // generate a list of all (or bestPercent) candidate next moves, and pick the best one
-        MoveList list =
-                searchable_.generateMoves(lastMove, weights_, true);
+        MoveList list = searchable_.generateMoves(lastMove, weights_, true);
 
         movesConsidered_ += list.size();
         if (depth == lookAhead_)
@@ -117,7 +113,7 @@ public final class NegaScoutMemoryStrategy extends NegaScoutStrategy
     private boolean entryExists(TwoPlayerMove lastMove, int depth, SearchWindow window, Entry entry) {
         if (entry != null && entry.depth >= depth) {
             cacheHits++;
-            //System.out.println("Cache hit. \nentry.depth=" + entry.depth + " depth=" + depth  + "\n" + entry);
+            //System.out.println("Cache hit. \n entry.depth=" + entry.depth + " depth=" + depth  + "\n" + entry);
 
             if (entry.upperValue <= window.alpha || entry.upperValue == entry.lowerValue)  {
                 entry.bestMove.setInheritedValue(entry.upperValue);

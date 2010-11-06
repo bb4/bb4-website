@@ -21,7 +21,7 @@ public final class RevealDialog extends ActionDialog
     // selected when the user desires to reveal his value.
     private JRadioButton revealButton_;
     
-    protected GradientButton okButton_;
+    private GradientButton okButton_;
 
     /**
      * constructor - create the tree dialog.

@@ -48,7 +48,7 @@ public class GalacticOptions extends MultiGameOptions {
     public int getNumPlanets() {
         return numPlanets_;
     }
-    public void setNumPlanets(int numPlanets) {
+    void setNumPlanets(int numPlanets) {
         numPlanets_ = numPlanets;
     }
 
@@ -56,7 +56,7 @@ public class GalacticOptions extends MultiGameOptions {
     public int getPlanetProductionRate() {
         return planetProductionRate_;
     }
-    public void setPlanetProductionRate(int planetProductionRate) {
+    void setPlanetProductionRate(int planetProductionRate) {
         planetProductionRate_ = planetProductionRate;
     }
 
@@ -64,7 +64,7 @@ public class GalacticOptions extends MultiGameOptions {
     public int getMaxYearsToPlay() {
         return maxYearsToPlay_;
     }
-    public void setMaxYearsToPlay(int maxYearsToPlay) {
+    void setMaxYearsToPlay(int maxYearsToPlay) {
         maxYearsToPlay_ = maxYearsToPlay;
     }
 
@@ -72,7 +72,7 @@ public class GalacticOptions extends MultiGameOptions {
     public boolean doNeutralsBuild() {
         return neutralsBuild_;
     }
-    public void setNeutralsBuild(boolean neutralsBuild) {
+    void setNeutralsBuild(boolean neutralsBuild) {
         neutralsBuild_ = neutralsBuild;
     }
 
@@ -80,7 +80,7 @@ public class GalacticOptions extends MultiGameOptions {
     public int getInitialFleetSize() {
         return initialFleetSize_;
     }
-    public void setInitialFleetSize(int initialFleetSize) {
+    void setInitialFleetSize(int initialFleetSize) {
         initialFleetSize_ = initialFleetSize;
     }
 }

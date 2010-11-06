@@ -21,7 +21,7 @@ public abstract class MultiGameOptionsDialog extends GameOptionsDialog
 
     private static final int ABS_MAX_NUM_PLAYERS = 30;
 
-    public MultiGameOptionsDialog(JFrame parent, GameController controller ) {
+    protected MultiGameOptionsDialog(JFrame parent, GameController controller ) {
         super(parent, controller);
     }
 

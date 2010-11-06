@@ -28,12 +28,12 @@ public class SetController extends MultiGameController
     private List<Card> deck_;
 
     // num cards on the board at the current moment.
-    int numCardsShown_;
+    private int numCardsShown_;
 
-    public static final int NO_PLAYER_SELECTED = -1;
+    private static final int NO_PLAYER_SELECTED = -1;
 
     // currently selected player. -1 if none selected
-    int currentPlayerIndex_ = NO_PLAYER_SELECTED;
+    private int currentPlayerIndex_ = NO_PLAYER_SELECTED;
 
     // the maximum number of cards you can have and still not have a set (exceedingly rare).
     private static final int MAX_CARDS_BEFORE_SET = 20;

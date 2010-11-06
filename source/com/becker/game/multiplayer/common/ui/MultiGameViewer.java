@@ -20,10 +20,10 @@ import java.awt.event.MouseEvent;
 public abstract class MultiGameViewer extends GameBoardViewer
 {
 
-    protected boolean winnerDialogShown_;
+    private boolean winnerDialogShown_;
 
     // Construct the application
-    public MultiGameViewer() {}
+    protected MultiGameViewer() {}
 
     @Override
     protected abstract MultiGameController createController();

@@ -33,7 +33,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
     protected JTabbedPane tabbedPanel_;
 
     protected JPanel playLocalPanel_;
-    protected OnlineGameManagerPanel playOnlinePanel_;
+    private OnlineGameManagerPanel playOnlinePanel_;
 
     protected NumberInput rowSizeField_;
     protected NumberInput colSizeField_;
@@ -48,7 +48,7 @@ public abstract class NewGameDialog extends OptionsDialog implements ChangeListe
     /**
      *  constructor
      */
-    public NewGameDialog( JFrame parent, GameViewable viewer)
+    protected NewGameDialog( JFrame parent, GameViewable viewer)
     {
         super( parent );
         controller_ = viewer.getController();

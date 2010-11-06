@@ -10,6 +10,7 @@ import com.becker.game.common.GamePiece;
 import com.becker.game.common.ui.GamePieceRenderer;
 import com.becker.game.multiplayer.poker.PokerHand;
 import com.becker.game.multiplayer.poker.PokerPlayerMarker;
+import com.becker.game.multiplayer.poker.PokerTable;
 import com.becker.game.multiplayer.poker.player.PokerPlayer;
 import com.becker.game.twoplayer.common.ui.TwoPlayerBoardRenderer;
 import com.becker.java2d.gradient.RoundGradientPaint;
@@ -25,7 +26,7 @@ import java.text.NumberFormat;
 /**
  *  A singleton class that takes a poker player and renders it for the PokerGameViewer.
  *
- * @see com.becker.game.multiplayer.poker.PokerTable
+ * @see PokerTable
  * @author Barry Becker
  */
 public class PokerPlayerRenderer extends GamePieceRenderer

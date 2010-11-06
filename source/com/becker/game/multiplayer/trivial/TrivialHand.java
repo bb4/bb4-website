@@ -5,7 +5,7 @@ package com.becker.game.multiplayer.trivial;
  * User: Barry Becker
  * Date: Feb 26, 2005
  */
-public class TrivialHand implements Comparable {
+class TrivialHand implements Comparable {
 
     private int value;
 
@@ -20,7 +20,7 @@ public class TrivialHand implements Comparable {
      *  Calculate a score for this trivial hand so it can be compared with others
      * @return
      */
-    public int getValue() {
+    int getValue() {
         // need to take into account the suit and rank when determining the score to break ties if 2 hands are the same
         return value;
     }

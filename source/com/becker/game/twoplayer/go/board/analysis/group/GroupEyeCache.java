@@ -12,7 +12,7 @@ import java.util.Set;
  * Keep a cache of the eyes in a group because its expensive to recompute them.
  * @author Barry Becker
  */
-public class GroupEyeCache {
+class GroupEyeCache {
 
     /** The group we are maintaining eyes for. */
     private GoGroup group_;

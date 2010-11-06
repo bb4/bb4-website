@@ -32,7 +32,7 @@ public class EyeNeighborMap {
     /**
      * @return list of eye neighbors for the specified eyeSpace position.
      */
-    public GoBoardPositionList getEyeNeighbors(GoBoardPosition eyeSpace) {
+    GoBoardPositionList getEyeNeighbors(GoBoardPosition eyeSpace) {
         return nbrMap_.get(eyeSpace);
     }
 

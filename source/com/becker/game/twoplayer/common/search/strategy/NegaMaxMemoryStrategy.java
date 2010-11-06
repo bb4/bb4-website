@@ -69,9 +69,8 @@ public final class NegaMaxMemoryStrategy extends NegaMaxStrategy
         entry = new Entry(lastMove, depth, new SearchWindow(-SearchStrategy.INFINITY, SearchStrategy.INFINITY));
 
         boolean done = searchable_.done( lastMove, false);
-        if ( depth == 0 || done ) {
-
-            if ( quiescence_ && depth == 0 && !done)  {
+        if ( depth <= 0 || done ) {
+            if (doQuiescentSearch(depth, done, lastMove))  {
                 TwoPlayerMove qMove = quiescentSearch(lastMove, depth, window, parent);
                 entry = new Entry(qMove, qMove.getInheritedValue());
                 lookupTable.put(key, entry);
@@ -98,12 +97,9 @@ public final class NegaMaxMemoryStrategy extends NegaMaxStrategy
             return null;
         }
 
-        TwoPlayerMove bestMove = findBestMove(lastMove, depth, list, window, parent);
-
-        //System.out.println("Cache hits=" + cacheHits + " nearHits=" + cacheNearHits +" misses="  + cacheMisses);
-
-        return bestMove;
+        return findBestMove(lastMove, depth, list, window, parent);
     }
+
 
     /**
      * if we can just look up the best move in the transposition table, then just do that.

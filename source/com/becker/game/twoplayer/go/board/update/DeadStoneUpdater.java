@@ -11,7 +11,7 @@ import com.becker.game.twoplayer.go.board.elements.GoStone;
  */
 public final class DeadStoneUpdater
 {
-    GoBoard board_;
+    private GoBoard board_;
 
     /** keeps track of dead stones.  */
     private DeadStones deadStones_;

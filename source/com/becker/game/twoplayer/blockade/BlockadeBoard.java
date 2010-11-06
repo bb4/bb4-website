@@ -196,12 +196,12 @@ public class BlockadeBoard extends TwoPlayerBoard
     }
 
     
-    public void addWall(BlockadeWall wall)
+    void addWall(BlockadeWall wall)
     {
         showWall(wall, true);
     }
 
-    public void removeWall(BlockadeWall wall)
+    void removeWall(BlockadeWall wall)
     {
         showWall(wall, false);
     }

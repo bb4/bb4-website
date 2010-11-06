@@ -13,7 +13,7 @@ import java.util.Collections;
  */
 public class BestMoveFinder {
 
-    SearchOptions searchOptions_;
+    private SearchOptions searchOptions_;
 
     /**
      * Constructor.

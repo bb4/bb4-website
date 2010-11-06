@@ -76,7 +76,7 @@ public class GameTreeCellRenderer extends DefaultTreeCellRenderer
         return colormap_;
     }
 
-    public void setColorMap(ColorMap cmap) {
+    protected void setColorMap(ColorMap cmap) {
         colormap_ = cmap;
     }
 

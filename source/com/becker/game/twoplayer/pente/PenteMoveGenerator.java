@@ -17,9 +17,9 @@ import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WI
  *
  * @author Barry Becker
  */
-public final class PenteMoveGenerator {
+final class PenteMoveGenerator {
 
-    PenteController controller_;
+    private PenteController controller_;
 
     /**
      * Constructor.

@@ -47,7 +47,7 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
     /**
      * Constructor
      */
-    public MultiPlayerOnlineManagerPanel(GameViewable viewer, ChangeListener dlg) {
+    protected MultiPlayerOnlineManagerPanel(GameViewable viewer, ChangeListener dlg) {
         super(viewer, dlg);
     }
 
@@ -157,7 +157,7 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
      * 
      * @param tableList list of tables to update.
      */
-    public void updateTables(OnlineGameTableList tableList) {  
+    void updateTables(OnlineGameTableList tableList) {
         onlineGameTablesTable_.removeAllRows();
 
         for (OnlineGameTable table : tableList) {
@@ -188,7 +188,7 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
      * An online table has filled with players and is ready to start.
      * Initiallize the players for the controller with surrogates for all but the single current player on this client.
      */
-    protected void startGame()
+    void startGame()
     {
         System.out.println("Start the game for player:" + currentName_ +" on the client. Table=" +  onlineGameTablesTable_.getSelectedTable());
         
@@ -247,7 +247,7 @@ public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPan
     /**
      * The create new table button at the top was clicked.
      */
-    public void createNewGameTable() {
+    void createNewGameTable() {
         if (currentName_.equals(DEFAULT_NAME)) {
             JOptionPane.showMessageDialog(this, "You need to select a name for yourself first.",
                                           "Information", JOptionPane.INFORMATION_MESSAGE);

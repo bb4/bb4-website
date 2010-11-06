@@ -24,7 +24,7 @@ import java.util.Map;
  *
  * @author Barry Becker
  */
-public class OrdersTable extends TableBase
+class OrdersTable extends TableBase
 {
     private List<Order> lastOrders_;
 
@@ -125,7 +125,7 @@ public class OrdersTable extends TableBase
      *
      * @return total outgoing ships for new orders (excluding existing)
      */
-    protected Map getCurrentOutGoingShips()
+    Map getCurrentOutGoingShips()
     {
         Map<Planet,Integer> outgoingMap = new HashMap<Planet,Integer>();
         TableModel model = table_.getModel();

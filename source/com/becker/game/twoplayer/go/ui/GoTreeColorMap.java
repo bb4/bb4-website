@@ -14,7 +14,7 @@ import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WI
  *
  * @author Barry Becker Date: Oct 29, 2006
  */
-public class GoTreeColorMap extends ColorMap {
+class GoTreeColorMap extends ColorMap {
 
 
         private static final double[] myValues_ = {
@@ -30,7 +30,7 @@ public class GoTreeColorMap extends ColorMap {
 
         private static final Color[] myColors_ = {
                                   new Color(180, 0, 20),
-                                  new Color(255, 0, 00),
+                                  new Color(255, 0, 0),
                                   new Color(255, 190, 0),
                                   new Color(255, 255, 0),
                                   new Color(255, 255, 255),    // new Color(240, 240, 240, 120)

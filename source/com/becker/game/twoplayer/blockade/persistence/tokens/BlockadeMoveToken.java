@@ -20,7 +20,7 @@ public abstract class BlockadeMoveToken extends TwoPlayerMoveToken
     /**
      * A token the describes where a players pawn started and where it ended after moving.
      */
-    public BlockadeMoveToken() { }
+    BlockadeMoveToken() { }
   
     /**
      * Parse in the wall locations.
@@ -54,7 +54,7 @@ public abstract class BlockadeMoveToken extends TwoPlayerMoveToken
    *   true - The wall was perfectly parsed.
    *   false - The wall wasn't perfectly parsed.
    */
-  protected boolean parseWall( StreamTokenizer st)  throws IOException
+  boolean parseWall( StreamTokenizer st)  throws IOException
   {         
         if( st.nextToken() != (int)'[' )
             return false;

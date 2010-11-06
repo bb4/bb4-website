@@ -152,7 +152,7 @@ public class BlockadeSearchableTest extends TwoPlayerSearchableBaseTst {
     /**  Verify that we generate a correct list of urgent moves.  */
     @Override
     public void  testGenerateUrgentMoves() {
-         // there should not be any urgent moves at the very start of the gamel
+         // there should not be any urgent moves at the very start of the game
          List moves = searchable.generateUrgentMoves(null, weights(), true);
          Assert.assertTrue("We expect move list to be empty since generateUrgentMoves is not implemented for Blockade.",
                  moves.isEmpty());

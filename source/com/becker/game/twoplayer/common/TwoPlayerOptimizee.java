@@ -11,7 +11,7 @@ import com.becker.optimization.parameter.ParameterArray;
  */
 class TwoPlayerOptimizee implements Optimizee {
 
-    TwoPlayerController controller_;
+    private TwoPlayerController controller_;
 
     /**
      * Constructor.

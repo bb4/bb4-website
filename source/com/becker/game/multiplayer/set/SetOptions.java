@@ -33,7 +33,7 @@ public class SetOptions extends MultiGameOptions {
         return initialNumCardsShown_;
     }
 
-    public void setInitialNumCardsShown(int initialNumCardsShown) {
+    void setInitialNumCardsShown(int initialNumCardsShown) {
         this.initialNumCardsShown_ = initialNumCardsShown;
     }
 }

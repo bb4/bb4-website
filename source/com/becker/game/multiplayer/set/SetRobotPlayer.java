@@ -12,10 +12,10 @@ public class SetRobotPlayer extends SetPlayer
 
     public enum RobotType { SLOW_ROBOT, AVERAGE_ROBOT, EXPERT_ROBOT }
 
-    RobotType robotType_;
+    private RobotType robotType_;
 
 
-    public SetRobotPlayer(String name, RobotType robotType, Color color)
+    private SetRobotPlayer(String name, RobotType robotType, Color color)
     {
         super(name, color, false);
         robotType_ = robotType;

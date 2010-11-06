@@ -143,7 +143,7 @@ public final class BettingDialog extends ActionDialog
     }
 
 
-    public void showRaiseDialog() {
+    void showRaiseDialog() {
         // open a dlg to get an order
         PokerController pc = (PokerController)controller_;
         PokerOptions options = (PokerOptions)controller_.getOptions();

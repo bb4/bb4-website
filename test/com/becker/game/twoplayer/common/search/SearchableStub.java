@@ -53,6 +53,7 @@ public class SearchableStub implements Searchable {
 
     /**
      * {@inheritDoc}
+     * @@ we should remove the final argument because it always seems to be true
      */
     public MoveList generateMoves(TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective ) {
         return new MoveList(((TwoPlayerMoveStub) lastMove).getChildren());
@@ -60,6 +61,7 @@ public class SearchableStub implements Searchable {
 
     /**
      * {@inheritDoc}
+     * @@ we should remove the final argument because it always seems to be true
      */
     public MoveList generateUrgentMoves(TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective ) {
         MoveList urgentMoves = new MoveList();

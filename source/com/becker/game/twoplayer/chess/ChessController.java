@@ -113,7 +113,7 @@ public class ChessController extends CheckersController
      * @param weights to use.
      * @return the number of moves added.
      */
-    public int addMoves( BoardPosition pos, MoveList moveList, TwoPlayerMove lastMove,
+    int addMoves( BoardPosition pos, MoveList moveList, TwoPlayerMove lastMove,
                          ParameterArray weights, boolean player1sPerspective )
     {
         List<ChessMove> moves =

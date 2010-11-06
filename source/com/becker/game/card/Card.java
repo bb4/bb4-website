@@ -28,7 +28,7 @@ public class Card {
      * @param rank 2 - Ace
      * @param suit - space, diamond, clubs, hearts
      */
-    public Card(Rank rank, Suit suit) {
+    private Card(Rank rank, Suit suit) {
         this.rank_ = rank;
         this.suit_ = suit;
     }

@@ -26,7 +26,7 @@ public enum Suit {
         symbol_ = symbol;
     }
 
-    public String getSymbol() {
+    String getSymbol() {
         return symbol_;
     }
 

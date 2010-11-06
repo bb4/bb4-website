@@ -64,7 +64,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
     /**
      * Construct the viewer.
      */
-    public AbstractTwoPlayerBoardViewer() {
+    protected AbstractTwoPlayerBoardViewer() {
         controller_.setViewer(this);
         moveProgress_ = new ComputerMoveProgress(get2PlayerController());
         moveSequencePlayer_ = new MoveSequencePlayback(get2PlayerController());
@@ -89,7 +89,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
         return nextMoves_;
     }
 
-    public void setNextMoves(TwoPlayerMove[] nextMoves) {
+    void setNextMoves(TwoPlayerMove[] nextMoves) {
         nextMoves_ = nextMoves;
     }
 
@@ -187,7 +187,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
      * @param isPlayer1 if the computer player now moving is player 1.
      * @return done always returns false unless auto optimizing
      */
-    protected boolean doComputerMove( boolean isPlayer1 ) {
+    boolean doComputerMove( boolean isPlayer1 ) {
         setCursor( waitCursor_ );
 
         try {
@@ -282,7 +282,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
      * some moves require that the human players be given some kind of notification.
      * @param m the last move made
      */
-    public void warnOnSpecialMoves( TwoPlayerMove m )  {
+    protected void warnOnSpecialMoves( TwoPlayerMove m )  {
         if (m == null) {
             return;
         }
@@ -343,7 +343,7 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
         showMoveSequence( moveSequence, getController().getNumMoves() );
     }
 
-    public final synchronized void showMoveSequence( List moveSequence, int numMovesToBackup) {
+    final synchronized void showMoveSequence( List moveSequence, int numMovesToBackup) {
         showMoveSequence(moveSequence, numMovesToBackup, null);
     }
 

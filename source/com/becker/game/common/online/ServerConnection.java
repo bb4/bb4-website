@@ -76,7 +76,7 @@ public class ServerConnection implements IServerConnection {
      * Open a socket to the server to listen for, and send information.
      * @param port to open the connection on.
      */
-    public void createListenSocket(int port) {
+    void createListenSocket(int port) {
         try {
             isConnected_ = false;
             GameContext.log(1, "Attempting to connect to Server=" + DEFAULT_HOST + " port="+port);

@@ -33,7 +33,7 @@ public class GoBoardPositionSet extends HashSet<GoBoardPosition>
      * pretty print a list of all the current groups (and the strings they contain)
      * @return string form of list of stones.
      */
-    public String toString(String title)
+    String toString(String title)
     {
         StringBuffer buf = new StringBuffer(title);
         buf.append("\n  ");

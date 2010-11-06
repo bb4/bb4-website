@@ -16,9 +16,9 @@ public class MultiPlayerMarker extends GamePiece
 
     private static final long serialVersionUID = 1;
 
-    protected MultiGamePlayer owner_;
-    protected Location location_;
-    protected boolean highlighted_;
+    private MultiGamePlayer owner_;
+    private Location location_;
+    private boolean highlighted_;
 
 
     public MultiPlayerMarker(MultiGamePlayer owner)
@@ -87,7 +87,7 @@ public class MultiPlayerMarker extends GamePiece
      }
 
 
-    public String toString(String newLine)
+    String toString(String newLine)
     {
         StringBuffer sb = new StringBuffer("");
 
