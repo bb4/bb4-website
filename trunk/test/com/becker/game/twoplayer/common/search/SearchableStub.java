@@ -60,10 +60,16 @@ public class SearchableStub implements Searchable {
 
     /**
      * {@inheritDoc}
-     * sould return only the children that are urgent moves
      */
     public MoveList generateUrgentMoves(TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective ) {
-        return new MoveList(((TwoPlayerMoveStub) lastMove).getChildren());
+        MoveList urgentMoves = new MoveList();
+        for (Move m : ((TwoPlayerMoveStub) lastMove).getChildren()) {
+            TwoPlayerMove move = (TwoPlayerMove)m;
+            if (move.isUrgent())  {
+                urgentMoves.add(move);
+            }
+        }
+        return urgentMoves;
     }
 
     /**

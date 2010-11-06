@@ -22,7 +22,7 @@ public class NegaMaxMemorySearchStrategyTest extends AbstractSearchStrategyTst {
     protected EvaluationPerspective getEvaluationPerspective() {
         return EvaluationPerspective.CURRENT_PLAYER;
     }
-    
+
 
     @Override
     protected SearchResult getOneLevelLookAheadPlayer1Result() {

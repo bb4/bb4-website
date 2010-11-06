@@ -59,16 +59,18 @@ public class NegaMaxStrategy extends AbstractSearchStrategy {
 
             searchable_.undoInternalMove( theMove );
 
-            int selectedValue = -selectedMove.getInheritedValue();
-            theMove.setInheritedValue( selectedValue );
+            if (selectedMove != null) {
+                int selectedValue = -selectedMove.getInheritedValue();
+                theMove.setInheritedValue( selectedValue );
 
-            if ( selectedValue > bestInheritedValue ) {
-                bestMove = theMove;
-                bestInheritedValue = selectedValue;
-                if ( alphaBeta_ ) {
-                    if (bestInheritedValue >= window.beta) {
-                        System.out.println("pruning because bestInheritedValue=" + bestInheritedValue+" > "+ window.beta);
-                        break;
+                if ( selectedValue > bestInheritedValue ) {
+                    bestMove = theMove;
+                    bestInheritedValue = selectedValue;
+                    if ( alphaBeta_ ) {
+                        if (bestInheritedValue >= window.beta) {
+                            System.out.println("pruning because bestInheritedValue=" + bestInheritedValue+" > "+ window.beta);
+                            break;
+                        }
                     }
                 }
             }

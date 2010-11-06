@@ -25,8 +25,8 @@ class GoToolBar extends GameToolBar {
 
 
      /**
-     * add the button for passing.
-     */
+      * add the button for passing and resigning.
+      */
     @Override
     protected final void addCustomToolBarButtons()
     {

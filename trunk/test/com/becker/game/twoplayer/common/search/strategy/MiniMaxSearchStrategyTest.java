@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.common.search.strategy;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.examples.EvaluationPerspective;
 import com.becker.game.twoplayer.common.search.examples.FourLevelGameTreeExample;
+import com.becker.game.twoplayer.common.search.examples.LadderQuiescentExample;
 import com.becker.game.twoplayer.common.search.examples.TwoLevelQuiescentExample;
 import com.becker.optimization.parameter.ParameterArray;
 
@@ -23,3 +24,4 @@ public class MiniMaxSearchStrategyTest extends AbstractSearchStrategyTst {
         return EvaluationPerspective.ALWAYS_PLAYER1;
     }
 }
+

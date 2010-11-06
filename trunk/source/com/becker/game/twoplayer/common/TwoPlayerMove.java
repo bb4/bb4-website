@@ -47,7 +47,7 @@ public class TwoPlayerMove extends Move
 
     /**
      * true if this move was generated during quiescent search.
-     * @@ should not be in this class.
+     * Perhaps should not be in this class.
      */
     private boolean urgent_;
 
