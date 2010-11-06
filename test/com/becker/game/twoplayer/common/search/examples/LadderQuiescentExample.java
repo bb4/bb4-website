@@ -4,28 +4,33 @@ import com.becker.game.twoplayer.common.search.TwoPlayerMoveStub;
 
 
 /**
- * A simple game tree for testing search strategies.
- * It looks something like this.
+ * A simple game tree for testing quiescent search to a maximum depth.
  * cu subscipt = cause urgency
  * u subscript indicates an urgetn move.
- * 
+ *
  *                 ____  [6]  _____
  *                /                \
- *            [-8]                  [-2]
- *         /      \               /      \
- *     [-1cu]     [7]           [8cu]     [2]
- *    /    \  \                  /    \
- *  [3u]  [2u][1]             [4u]   [5cu]
- *                                  /  \  \
- *                               [5u]  [6][4u]
+ *            [-8]                  [-2]          // 1
+ *         /      \                /     \
+ *     [-1cu]     [7]           [8cu]    [2]      // 2
+ *    /    \  \                 /    \
+ *  [3u]  [2u][1]            [4u]   [5cu]         // 3
+ *                                 /  \  \
+ *                              [-5cu][6][4cu]    // 4
+ *                               /
+ *                             [5cu]              // 5
+ *                             /    \
+ *                          [-6cu]  [-7u]         // 6
+ *                          /
+ *                        [8cu]                   // 7
  *
  * Move scores are evaluated from player one's perspective.
  * @author Barry Becker
  */
-public class TwoLevelQuiescentExample extends AbstractGameTreeExample  {
+public class LadderQuiescentExample extends AbstractGameTreeExample  {
 
 
-    public TwoLevelQuiescentExample(boolean player1PlaysNext, EvaluationPerspective persp) {
+    public LadderQuiescentExample(boolean player1PlaysNext, EvaluationPerspective persp) {
 
         super(persp);
 
@@ -58,12 +63,33 @@ public class TwoLevelQuiescentExample extends AbstractGameTreeExample  {
         move101.setUrgent(true);
 
         // fourth ply
-        TwoPlayerMoveStub move1010 = moveCreator.createMove(5, !player1PlaysNext, move101);
+        TwoPlayerMoveStub move1010 = moveCreator.createMove(-5, !player1PlaysNext, move101);
+        move1010.setCausedUrgency(true);
         move1010.setUrgent(true);
         TwoPlayerMoveStub move1011 = moveCreator.createMove(6, !player1PlaysNext, move101);
         TwoPlayerMoveStub move1012 = moveCreator.createMove(4, !player1PlaysNext, move101);
+        move1011.setCausedUrgency(true);
         move1011.setUrgent(true);
 
+        // fifth ply
+        TwoPlayerMoveStub move10100 = moveCreator.createMove(5, player1PlaysNext, move1010);
+        move10100.setCausedUrgency(true);
+        move10100.setUrgent(true);
+
+        // sixth ply
+        TwoPlayerMoveStub move101000 = moveCreator.createMove(-6, !player1PlaysNext, move10100);
+        move101000.setCausedUrgency(true);
+        move101000.setUrgent(true);
+
+        TwoPlayerMoveStub move101001 = moveCreator.createMove(-7, !player1PlaysNext, move10100);
+        move101001.setUrgent(true);
+
+        // seventh ply
+        TwoPlayerMoveStub move1010000 = moveCreator.createMove(8, player1PlaysNext, move101000);
+        move1010000.setCausedUrgency(true);
+        move1010000.setUrgent(true);
+
+        // parenting
         initialMove.setChildren(createList(move0, move1));
 
         move0.setChildren(createList(move00, move01));
@@ -73,5 +99,8 @@ public class TwoLevelQuiescentExample extends AbstractGameTreeExample  {
         move10.setChildren(createList(move100, move101));
 
         move101.setChildren(createList(move1010, move1011, move1012));
+        move1010.setChildren(createList(move10100));
+        move10100.setChildren(createList(move101000, move101001));
+        move101000.setChildren(createList(move1010000));
     }
 }

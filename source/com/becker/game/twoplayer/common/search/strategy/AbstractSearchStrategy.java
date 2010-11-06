@@ -96,7 +96,7 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
         boolean done = searchable_.done( lastMove, false);
         if ( depth <= 0 || done ) {
             if (doQuiescentSearch(depth, done, lastMove)) {
-                return quiescentSearch(lastMove, depth-1, window, parent);
+                return quiescentSearch(lastMove, depth, window, parent);
             }
             else {
                 int sign = fromPlayer1sPerspective(lastMove) ? 1 : -1;
@@ -126,7 +126,7 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
      */
     private boolean doQuiescentSearch(int depth, boolean done, TwoPlayerMove lastMove) {
         boolean inJeopardy = searchable_.inJeopardy(lastMove, weights_, true);
-         return quiescence_
+        return quiescence_
                  && depth > -maxQuiescentDepth_
                  && !done
                  && inJeopardy;
@@ -141,11 +141,10 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
     protected TwoPlayerMove quiescentSearch(TwoPlayerMove lastMove,
                                             int depth, SearchWindow window, SearchTreeNode parent) {
 
-        MoveList list = searchable_.generateUrgentMoves(lastMove, weights_, true);
-        if (emptyMoveList(list, lastMove)) return null;
+        MoveList urgentMoves = searchable_.generateUrgentMoves(lastMove, weights_, true);
+        if (emptyMoveList(urgentMoves, lastMove)) return null;
 
-        System.out.println("quiescent search depth=" + depth + " win="+ window);
-        return findBestMove(lastMove, depth, list, window, parent);
+        return findBestMove(lastMove, depth, urgentMoves, window, parent);
     }
 
     /**

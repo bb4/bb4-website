@@ -126,6 +126,39 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
                 getTwoLevelQuiescenseABPlayer2Result());
     }
 
+    public void testLadderMax3QuiescensePlayer1Search() {
+        searchOptions.setLookAhead(2);
+        searchOptions.setQuiescence(true);
+        searchOptions.setMaxQuiescentDepth(3); // max 3 plies beyond normal look-ahead.
+        verifyResult(new LadderQuiescentExample(true, getEvaluationPerspective()),
+                getLadderMax3QuiescensePlayer1Result());
+    }
+
+    public void testLadderMax3QuiescensePlayer2Search() {
+        searchOptions.setLookAhead(2);
+        searchOptions.setQuiescence(true);
+        searchOptions.setMaxQuiescentDepth(3); // max 3 plies beyond normal look-ahead.
+        verifyResult(new LadderQuiescentExample(false, getEvaluationPerspective()),
+                getLadderMax3QuiescensePlayer2Result());
+    }
+
+    public void testLadderMax4QuiescensePlayer1Search() {
+        searchOptions.setLookAhead(2);
+        searchOptions.setQuiescence(true);
+        searchOptions.setMaxQuiescentDepth(4); // max 4 plies beyond normal look-ahead.
+        verifyResult(new LadderQuiescentExample(true, getEvaluationPerspective()),
+                getLadderMax4QuiescensePlayer1Result());
+    }
+
+    public void testLadderMax4QuiescensePlayer2Search() {
+        searchOptions.setLookAhead(2);
+        searchOptions.setQuiescence(true);
+        searchOptions.setMaxQuiescentDepth(4); // max 4 plies beyond normal look-ahead.
+        verifyResult(new LadderQuiescentExample(false, getEvaluationPerspective()),
+                getLadderMax4QuiescensePlayer2Result());
+    }
+
+
     public void testPruneTwoLevelWithoutABSearchPlayer1() {
         searchOptions.setLookAhead(2);
         searchOptions.setAlphaBeta(false);
@@ -220,6 +253,18 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
     }
     protected SearchResult getTwoLevelQuiescenseABPlayer2Result() {
         return new SearchResult("1", 4, 11);
+    }
+    protected SearchResult getLadderMax3QuiescensePlayer1Result() {
+        return new SearchResult("0", 3, 13);
+    }
+    protected SearchResult getLadderMax3QuiescensePlayer2Result() {
+        return new SearchResult("1", 4, 13);
+    }
+    protected SearchResult getLadderMax4QuiescensePlayer1Result() {
+        return new SearchResult("0", 3, 15);
+    }
+    protected SearchResult getLadderMax4QuiescensePlayer2Result() {
+        return new SearchResult("1", 2, 15);
     }
 
     protected SearchResult getPruneTwoLevelWithoutABResultPlayer1() {

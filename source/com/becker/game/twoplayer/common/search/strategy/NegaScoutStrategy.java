@@ -8,7 +8,7 @@ import com.becker.optimization.parameter.ParameterArray;
 
 /**
  *  This strategy class defines the NegaScout search algorithm.
- * (also known as principal variation search /PVS)
+ * (also known as principal variation search (PVS)
  *  Negascout is very much like negamax except that it uses a 0 sized search window
  *  and iterative deepening.
  *  See http://en.wikipedia.org/wiki/Negascout
@@ -126,7 +126,7 @@ public class NegaScoutStrategy extends NegaMaxStrategy
 
                     selectedValue = -selectedMove.getInheritedValue();
                     theMove.setInheritedValue(selectedValue);
-                    //theMove.setInheritedValue(alpha); // which is right?
+                    //theMove.setInheritedValue(window.alpha); // which is right?
                     bestMove = theMove;
 
                     if (window.alpha >= window.beta) {
