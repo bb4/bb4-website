@@ -354,7 +354,7 @@ public abstract class TwoPlayerController extends GameController {
      * If this method is never called, the controller knows
      * that it should not bother to create the tree when searching.
      */
-    public final void setGameTreeListener( GameTreeViewable gameTreeListener ) {
+    public final void setGameTreeViewable( GameTreeViewable gameTreeListener ) {
         gameTreeListener_ = gameTreeListener;
     }
 

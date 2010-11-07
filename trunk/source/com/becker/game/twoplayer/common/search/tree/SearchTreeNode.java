@@ -95,21 +95,19 @@ public class SearchTreeNode extends DefaultMutableTreeNode
      * Show nodes corresponding to pruyned branches in the game tree (if one is used).
      *
      * @param list list of moves that resulted in pruned branches.
-     * @param val the worth of the node/move
-     * @param thresh the alpha or beta threshold compared to.
-     * @param type either PRUNE_ALPHA or PRUNE_BETA - pruned by comparison with Alpha or Beta.
      * @param i th child.
+     * @param val the worth of the node/move
+     * @param window the search window.
      */
-    public void addPrunedChildNodes( List list, int i, int val, int thresh, PruneType type)
+    public void addPrunedChildNodes( List list, int i, int val, SearchWindow window)
     {
         int index = i;
         while ( !list.isEmpty() ) {
             TwoPlayerMove theMove = (TwoPlayerMove) (list.remove(0));
             SearchTreeNode child = new SearchTreeNode( theMove );
             child.setPruned(true);
-            String sComp = (type == PruneType.ALPHA) ? " < " : " > ";
             child.setComment("Children pruned because " +
-                            Util.formatNumber(val) + sComp + Util.formatNumber(thresh) + '.');
+                            Util.formatNumber(val) + "outside" + window);
             this.insert( child, index );
             index++;
         }

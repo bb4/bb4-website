@@ -3,7 +3,6 @@ package com.becker.game.twoplayer.common.search.strategy;
 import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.Searchable;
-import com.becker.game.twoplayer.common.search.tree.PruneType;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.optimization.parameter.ParameterArray;
 
@@ -64,25 +63,9 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
                     bestInheritedValue = bestMove.getInheritedValue();
                 }
 
-                if ( alphaBeta_ ) {
-                    if ( player1 && (selectedValue < window.alpha) ) {
-                        if ( selectedValue < window.beta ) {
-                            showPrunedNodesInTree( list, parent, i, selectedValue, window.beta, PruneType.BETA);
-                            //System.out.println("d"+depth+" pruning because selectedValue="+ selectedValue +" < "+ beta);
-                            break; // pruned
-                        }
-                        else
-                            window.alpha = selectedValue;
-                    }
-                    if ( !player1 && (selectedValue > window.beta) ) {
-                        if ( selectedValue > window.alpha ) {
-                            showPrunedNodesInTree( list, parent, i, selectedValue, window.alpha, PruneType.ALPHA);
-                            //System.out.println("d"+depth+" pruning because selectedValue ="+ selectedValue +" > "+ alpha);
-                            break; // pruned
-                        }
-                        else
-                            window.beta = selectedValue;
-                    }
+                if (alphaBeta_ && pruneAtCurrnentNode(window, selectedValue, player1)) {
+                    showPrunedNodesInTree(list, parent, i, selectedValue, window);
+                    break;
                 }
             }
         }
@@ -90,6 +73,30 @@ public final class MiniMaxStrategy extends AbstractSearchStrategy
         bestMove.setSelected(true);
         lastMove.setInheritedValue(bestMove.getInheritedValue());
         return bestMove;
+    }
+
+    /**
+     * Note: The SearchWindow may be adjusted as a side effect.
+     * @return  whether or not we should prune the current subtree.
+     */
+    private boolean pruneAtCurrnentNode(SearchWindow window, int selectedValue, boolean player1) {
+        if ( player1 && (selectedValue < window.alpha) ) {
+            if ( selectedValue < window.beta ) {
+                return true;
+            }
+            else {
+                window.alpha = selectedValue;
+            }
+        }
+        if ( !player1 && (selectedValue > window.beta) ) {
+            if ( selectedValue > window.alpha ) {
+                return true;
+            }
+            else {
+                window.beta = selectedValue;
+            }
+        }
+        return false;
     }
 
     @Override

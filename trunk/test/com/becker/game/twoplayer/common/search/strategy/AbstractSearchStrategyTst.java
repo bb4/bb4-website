@@ -190,11 +190,18 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
                 getThreeLevelPlayer2Result());
     }
 
-    public void testThreeLevelWithABSearch() {
+    public void testThreeLevelPlayer1WithABSearch() {
+        searchOptions.setLookAhead(3);
+        searchOptions.setAlphaBeta(true);
+        verifyResult(new ThreeLevelGameTreeExample(true, getEvaluationPerspective()),
+                getThreeLevelPlayer1WithABResult());
+    }
+
+    public void testThreeLevelPlayer2WithABSearch() {
         searchOptions.setLookAhead(3);
         searchOptions.setAlphaBeta(true);
         verifyResult(new ThreeLevelGameTreeExample(false, getEvaluationPerspective()),
-                getThreeLevelWithABResult());
+                getThreeLevelPlayer2WithABResult());
     }
 
     public void testFourLevelSearchPlayer1() {
@@ -275,6 +282,7 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
     }
     protected SearchResult getPruneTwoLevelWithABSearchPlayer2() {
         return new SearchResult( "1", 4, 6);
+
     }
     protected SearchResult getThreeLevelPlayer1Result() {
         return new SearchResult("0", -4, 14);
@@ -282,9 +290,13 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
     protected SearchResult getThreeLevelPlayer2Result() {
         return new SearchResult("0", -5, 14);
     }
-    protected SearchResult getThreeLevelWithABResult() {
+    protected SearchResult getThreeLevelPlayer1WithABResult() {
+        return new SearchResult( "0", -4, 11);
+    }
+    protected SearchResult getThreeLevelPlayer2WithABResult() {
         return new SearchResult( "0", -5, 13);
     }
+    
     protected SearchResult getFourLevelPlayer1Result() {
         return new SearchResult("0", 27, 30);
     }

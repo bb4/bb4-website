@@ -129,6 +129,7 @@ public class NegaScoutStrategy extends NegaMaxStrategy
                     bestMove = theMove;
 
                     if (window.alpha >= window.beta) {
+                        showPrunedNodesInTree(list, parent, i, selectedValue, window);
                         break;
                     }
                 }

@@ -2,6 +2,7 @@ package com.becker.game.twoplayer.common.search.tree;
 
 import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.twoplayer.common.search.strategy.SearchWindow;
 
 /**
  * This interface is implemented by classes that can show the game tree as it is searched.
@@ -32,7 +33,7 @@ public interface GameTreeViewable {
      * Add a set of pruned nodes to the viewable search tree.
      */
     void addPrunedNodes(MoveList list, SearchTreeNode parent,
-                        int i, int val, int thresh, PruneType type);
+                        int i, int val, SearchWindow window);
 
     /**
      * Clear out the visible search tree.

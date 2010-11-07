@@ -28,7 +28,7 @@ class GameTreeButtons extends JPanel implements ActionListener {
 
         setLayout(new FlowLayout());
 
-        gameTreeDlg_  = gameTreeDlg;
+        gameTreeDlg_ = gameTreeDlg;
 
         pauseButton_ = addButton("Pause", "Pause processing", true);
         stepButton_ = addButton("Step", "Step forward through the search computation", false);

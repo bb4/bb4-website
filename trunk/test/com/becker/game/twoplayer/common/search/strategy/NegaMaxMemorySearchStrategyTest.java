@@ -61,7 +61,7 @@ public class NegaMaxMemorySearchStrategyTest extends AbstractSearchStrategyTst {
     }
 
     @Override
-    protected SearchResult getThreeLevelWithABResult() {
+    protected SearchResult getThreeLevelPlayer1WithABResult() {
         return new SearchResult("0", -5, 9);
     }
 }

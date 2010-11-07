@@ -6,7 +6,6 @@ import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.SearchOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.tree.GameTreeViewable;
-import com.becker.game.twoplayer.common.search.tree.PruneType;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.optimization.parameter.ParameterArray;
 
@@ -61,7 +60,7 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
      * Construct the strategy.
      * do not call directly. Use createSearchStrategy factory method instead.
      * @param searchable the game controller that has options and can make/undo moves.
-     * @param weights coefficients for the evaluation polunomial that indirectly determines the best move.
+     * @param weights coefficients for the evaluation polynomial that indirectly determines the best move.
      */
     AbstractSearchStrategy( Searchable searchable, ParameterArray weights )
     {
@@ -163,7 +162,6 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
                                                   SearchWindow window, SearchTreeNode parent);
 
 
-
     /**
      * add a move to the visual game tree (if parent not null).
      * @return the node added to the tree.
@@ -187,22 +185,20 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
      * @param parent the tree node entry above the current position.
      * @param i th child.
      * @param val the worth of the node/move
-     * @param thresh the alpha or beta threshold compared to.
-     * @param type either PRUNE_ALPHA or PRUNE_BETA - pruned by comparison with Alpha or Beta.
+     * @param window the lastPruned value of the window tells the alpha or beta threshold compared to.
+     *   type either PRUNE_ALPHA or PRUNE_BETA - pruned by comparison with Alpha or Beta.
      */
     void showPrunedNodesInTree( MoveList list, SearchTreeNode parent,
-                                          int i, int val, int thresh, PruneType type)
-    {
+                                          int i, int val, SearchWindow window) {
         if (gameTree_ != null) {
-            gameTree_.addPrunedNodes(list, parent, i, val, thresh, type);
+           gameTree_.addPrunedNodes(list, parent, i, val, window);
         }
     }
 
     /**
      * @return true if the move list is empty.
      */
-    static boolean emptyMoveList( MoveList list, TwoPlayerMove lastMove )
-    {
+    static boolean emptyMoveList( MoveList list, TwoPlayerMove lastMove ) {
         if ( !list.isEmpty() ) return false;
 
         //If there are no next moves, the game is over and the last player to move won
@@ -214,13 +210,11 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
         return true;
     }
 
-    public final long getNumMovesConsidered()
-    {
+    public final long getNumMovesConsidered() {
         return movesConsidered_;
     }
 
-    public final int getPercentDone()
-    {
+    public final int getPercentDone() {
         return percentDone_;
     }
 

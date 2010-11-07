@@ -64,7 +64,7 @@ public final class GoPanel extends TwoPlayerPanel
     protected GameTreeDialog createGameTreeDialog()
     {
         AbstractTwoPlayerBoardViewer v =(AbstractTwoPlayerBoardViewer)createBoardViewer();
-        v.setViewOnly( true ); // we don't want it to recieve click events
+        v.setViewOnly( true ); // we don't want it to receive click events
         return new GameTreeDialog( null, v, new GoTreeCellRenderer());
     }
 

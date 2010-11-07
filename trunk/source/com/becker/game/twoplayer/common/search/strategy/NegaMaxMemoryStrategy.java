@@ -5,7 +5,6 @@ import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.transposition.Entry;
 import com.becker.game.twoplayer.common.search.transposition.TranspositionTable;
-import com.becker.game.twoplayer.common.search.tree.PruneType;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.optimization.parameter.ParameterArray;
 
@@ -172,7 +171,7 @@ public final class NegaMaxMemoryStrategy extends NegaMaxStrategy
                         entry.bestMove = theMove;
                     }
                     if ( window.alpha >= window.beta ) {
-                        showPrunedNodesInTree( list, parent, i, selectedValue, window.beta, PruneType.BETA);
+                        showPrunedNodesInTree( list, parent, i, selectedValue, window);
                         break;
                     }
                 }

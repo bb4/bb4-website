@@ -1,6 +1,9 @@
 package com.becker.game.twoplayer.common.ui;
 
-import com.becker.game.common.*;
+import com.becker.game.common.Board;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.Move;
+import com.becker.game.common.PlayerList;
 import com.becker.game.common.ui.GameBoardViewer;
 import com.becker.game.common.ui.GameChangedEvent;
 import com.becker.game.common.ui.GameChangedListener;

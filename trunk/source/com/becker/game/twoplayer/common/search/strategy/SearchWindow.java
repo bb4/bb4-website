@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
+
 /**
  * Manages alpha and beta - the search window thresholds.
  *
@@ -7,9 +8,15 @@ package com.becker.game.twoplayer.common.search.strategy;
  */
 public class SearchWindow {
 
+    /** A lower bound on the inherited value that will eventually be found. */
     public int alpha;
+
+    /** A lower bound on the inherited value that will eventually be found. */
     public int beta;
 
+    /**
+     * Default Constructor.
+     */
     public SearchWindow() {
         this(SearchStrategy.INFINITY, -SearchStrategy.INFINITY);
     }
@@ -29,13 +36,16 @@ public class SearchWindow {
     }
 
     /**
-     *
+     * Negate and then swap the alpha and beta values.
      * @return a new window which spas and negates the alpha and beta values.
      */
     public SearchWindow negateAndSwap() {
        return new SearchWindow(-alpha, -beta); 
     }
 
+    /**
+     * @return  the difference between the alpha nad beta values.  Returns negative infinity of alpha > beta.
+     */
     public int getExtent() {
         if (alpha > beta) {
             return -Integer.MAX_VALUE;
@@ -44,14 +54,14 @@ public class SearchWindow {
     }
 
     /**
-     * @return midway betwee alpha and beta.
+     * @return a value midway between alpha and beta.
      */
     public int getMidPoint() {
         return (alpha +  beta)/2;
     }
 
     public String toString() {
-        return "alpha=" + alpha + " beta=" + beta;
+        return "(" + alpha + ", " + beta + ")";
     }
 
 
@@ -73,6 +83,4 @@ public class SearchWindow {
         result = 31 * result + beta;
         return result;
     }
-
-
 }
