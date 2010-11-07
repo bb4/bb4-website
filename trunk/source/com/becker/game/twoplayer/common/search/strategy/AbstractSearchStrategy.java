@@ -5,7 +5,7 @@ import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.SearchOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
-import com.becker.game.twoplayer.common.search.tree.GameTreeViewable;
+import com.becker.game.twoplayer.common.search.tree.IGameTreeViewable;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.optimization.parameter.ParameterArray;
 
@@ -47,7 +47,7 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
     private volatile boolean paused_ = false;
 
     /** The optional ui component that will be updated to reflect the current search tree.  */
-    private GameTreeViewable gameTree_;
+    private IGameTreeViewable gameTree_;
 
     /**
      * Number of moves to consider at the top ply.
@@ -222,7 +222,7 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
      * Set an optional ui component that will update when the search tree is modified.
      * @param listener game tree listener
      */
-    public void setGameTreeEventListener(GameTreeViewable listener) {
+    public void setGameTreeEventListener(IGameTreeViewable listener) {
         gameTree_ = listener;
     }
 

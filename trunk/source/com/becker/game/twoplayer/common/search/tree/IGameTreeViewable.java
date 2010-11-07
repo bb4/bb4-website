@@ -13,7 +13,7 @@ import com.becker.game.twoplayer.common.search.strategy.SearchWindow;
  *
  * @author Barry Becker Date: May 21, 2006
  */
-public interface GameTreeViewable {
+public interface IGameTreeViewable {
 
     /**
      *

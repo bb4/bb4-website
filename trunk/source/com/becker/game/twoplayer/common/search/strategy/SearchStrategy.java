@@ -2,7 +2,7 @@ package com.becker.game.twoplayer.common.search.strategy;
 
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.SearchOptions;
-import com.becker.game.twoplayer.common.search.tree.GameTreeViewable;
+import com.becker.game.twoplayer.common.search.tree.IGameTreeViewable;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 
 /**
@@ -52,7 +52,7 @@ public interface SearchStrategy {
      * An optional game tree event listener. There can be at most one.
      * @param listener event listener
      */
-    void setGameTreeEventListener(GameTreeViewable listener);
+    void setGameTreeEventListener(IGameTreeViewable listener);
 
 
     // these methods give an external thread debugging controls over the search.
