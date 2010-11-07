@@ -1,8 +1,5 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
-import com.becker.common.math.Range;
-import com.becker.game.common.GameContext;
-import com.becker.game.common.Move;
 import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.Searchable;
@@ -66,11 +63,9 @@ public class NegaMaxStrategy extends AbstractSearchStrategy {
                 if ( selectedValue > bestInheritedValue ) {
                     bestMove = theMove;
                     bestInheritedValue = selectedValue;
-                    if ( alphaBeta_ ) {
-                        if (bestInheritedValue >= window.beta) {
-                            System.out.println("pruning because bestInheritedValue=" + bestInheritedValue+" > "+ window.beta);
-                            break;
-                        }
+                    if ( alphaBeta_ && bestInheritedValue >= window.beta) {
+                        showPrunedNodesInTree(list, parent, i, selectedValue, window);
+                        break;
                     }
                 }
             }

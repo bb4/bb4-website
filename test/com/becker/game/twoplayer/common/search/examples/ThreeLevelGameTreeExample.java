@@ -12,7 +12,7 @@ import java.util.Arrays;
 /**
  * A simple game tree for testing search strategies.
  * It looks something like this
- *                 ____   []  _____
+ *                 ____   [6]  _____
  *                /                \
  *            [-8]                  [-2]
  *         /      \               /      \
@@ -22,6 +22,9 @@ import java.util.Arrays;
  *
  * Move scores are evaluated from player one's perspective.
  * Some search algorithms evaluate from the current players perspective.
+ * This example comes from page 688 in AI for Games by Millington and Funge
+ * Internal nodes intentionally do not match what is in the book because the book shows
+ * inherited values.
  *
  * @author Barry Becker
  */

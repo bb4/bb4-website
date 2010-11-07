@@ -8,8 +8,8 @@ import com.becker.game.common.ui.GameChangedListener;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerViewable;
+import com.becker.game.twoplayer.common.search.strategy.SearchWindow;
 import com.becker.game.twoplayer.common.search.tree.GameTreeViewable;
-import com.becker.game.twoplayer.common.search.tree.PruneType;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.ui.dialogs.AbstractDialog;
 import com.becker.ui.legend.ContinuousColorLegend;
@@ -41,14 +41,13 @@ public final class GameTreeDialog extends AbstractDialog
 
     private volatile JScrollPane scrollPane_;
     private volatile GameTreeViewer treeViewer_;
-    private volatile JTree textTree_;
+    private volatile TextGameTree textTree_;
     private volatile SearchTreeNode root_;
     private int oldChainLength_ = 0;
     private volatile GameTreeButtons gameTreeButtons_;
 
     private GameTreeInfoPanel infoPanel_;
 
-    private static final int TREE_WIDTH = 420;
     private static final boolean SHOW_SUCCESSIVE_MOVES  = true;
 
     private Board board_ = null;
@@ -67,8 +66,8 @@ public final class GameTreeDialog extends AbstractDialog
      * @param parent frame to display relative to
      * @param boardViewer
      */
-    public GameTreeDialog( JFrame parent, AbstractTwoPlayerBoardViewer boardViewer, GameTreeCellRenderer cellRenderer )
-    {
+    public GameTreeDialog(JFrame parent, AbstractTwoPlayerBoardViewer boardViewer,
+                          GameTreeCellRenderer cellRenderer) {
         super( parent );
         initialize(boardViewer, cellRenderer);
     }
@@ -78,7 +77,6 @@ public final class GameTreeDialog extends AbstractDialog
         controller_ = (TwoPlayerController)boardViewer.getController();
         board_ = controller_.getBoard();
         cellRenderer_ = cellRenderer;
-        //treeViewer_.setPieceRenderer();
         showContent();
     }
 
@@ -86,12 +84,12 @@ public final class GameTreeDialog extends AbstractDialog
      * ui initialization of the tree control.
      */
     @Override
-    protected JComponent createDialogContent()
-    {
+    protected JComponent createDialogContent() {
         setTitle( "Game Tree" );
         TwoPlayerMove m = null;
         root_ = new SearchTreeNode(m);
         textTree_ = createTree( root_ );
+
 
         JPanel mainPanel = new JPanel(new BorderLayout() );
 
@@ -127,7 +125,7 @@ public final class GameTreeDialog extends AbstractDialog
 
         JPanel viewerPanel = new JPanel();
         viewerPanel.setLayout(new BorderLayout());
-        viewerPanel.setBorder(BorderFactory.createEmptyBorder(3,3,3,3));
+        viewerPanel.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
         infoPanel_ = new GameTreeInfoPanel();
 
         ContinuousColorLegend colorLegend =
@@ -228,38 +226,18 @@ public final class GameTreeDialog extends AbstractDialog
      * @param root of the game tree
      * @return the the java tree control itself
      */
-    private synchronized JTree createTree( SearchTreeNode root )
-    {
-        JTree tree = null;
-
-        try {
-            tree = new JTree( root );
-
-            ToolTipManager.sharedInstance().registerComponent( tree );
-
-            tree.setBackground(UIManager.getColor( "Tree.textBackground" ));
-            tree.setCellRenderer( cellRenderer_ );
-            tree.setPreferredSize( new Dimension( TREE_WIDTH, 900 ) );
-            tree.setShowsRootHandles( true );
-            tree.putClientProperty( "JTree.lineStyle", "Angled" );
-            tree.setRowHeight( ROW_HEIGHT );
-            tree.addTreeExpansionListener( this );
-        }
-        catch (ArrayIndexOutOfBoundsException e) {
-            GameContext.log(0,
-                "Error: There was an ArayIndexOutOfBounds exception when creating a JTree from this root node: "+root);
-            e.printStackTrace();
-        }
-
-        return tree;
+    private synchronized TextGameTree createTree( SearchTreeNode root ) {
+        TextGameTree textTree = new TextGameTree( root, cellRenderer_ );
+        textTree.addTreeExpansionListener( this );
+        return textTree;
     }
 
 
     /**
      * called when a particular move in the game tree has been selected by the user (by clicking on it or mouse-over).
      */
-    private synchronized void selectCallback( MouseEvent e )
-    {
+    private synchronized void selectCallback( MouseEvent e ) {
+
         JTree tree = (JTree) e.getSource();
 
         if (mainController_.isProcessing())  {
@@ -304,6 +282,7 @@ public final class GameTreeDialog extends AbstractDialog
     /**
      * Add to the list all the moves that we expect are most likely to occur given the current game state.
      * This is how the computer expects the game to play out.
+     * @return the list of successive moves.
      */
     private static List<TwoPlayerMove> addSuccessiveMoves(List<TwoPlayerMove> moveList, SearchTreeNode finalNode) {
 
@@ -320,15 +299,8 @@ public final class GameTreeDialog extends AbstractDialog
     /**
      *  initialize the tree previewer to show the moves made so far.
      */
-    private synchronized void setMoveList( List moveList )
-    {
+    private synchronized void setMoveList( List moveList ) {
         boardViewer_.reset();
-        // make sure that these are all permanent moves (what was this for?
-        //Iterator it = moveList.iterator();
-        //while ( it.hasNext() ) {
-        //    it.next();
-        //}
-        // show in this debug window, and not the main viewer window.
         ((AbstractTwoPlayerBoardViewer)boardViewer_).showMoveSequence( moveList );
     }
 
@@ -344,8 +316,7 @@ public final class GameTreeDialog extends AbstractDialog
      */
     private synchronized void refresh()
     {
-        textTree_.setPreferredSize(
-                new Dimension( TREE_WIDTH, textTree_.getRowCount() * ROW_HEIGHT ) );
+        textTree_.refresh();
         paint( getGraphics() );
     }
 
@@ -356,8 +327,8 @@ public final class GameTreeDialog extends AbstractDialog
     @Override
     public void close()
     {
-        // if we set the root to null, then it doesnt have to build the tree
-        controller_.setGameTreeListener( null );
+        // if we set the root to null, then it doesn't have to build the tree
+        controller_.setGameTreeViewable( null );
         super.close();
     }
 
@@ -375,12 +346,12 @@ public final class GameTreeDialog extends AbstractDialog
     }
 
     public void addPrunedNodes(final MoveList list, final SearchTreeNode parent,
-                               final int i, final int val, final int thresh, final PruneType type) {
+                               final int i, final int val, final SearchWindow window) {
         // make a defensive copy of the list because we may modify it.
         final MoveList listCopy = new MoveList(list);
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                parent.addPrunedChildNodes(listCopy, i, val, thresh, type);
+                parent.addPrunedChildNodes(listCopy, i, val, window);
             }
         });
     }

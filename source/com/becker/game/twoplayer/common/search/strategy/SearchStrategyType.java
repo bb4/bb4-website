@@ -5,7 +5,7 @@ import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**
- * Currently supported search method strategies
+ * Currently supported search strategies.
  *
  * @author Barry Becker
  */

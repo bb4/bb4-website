@@ -23,9 +23,6 @@ public abstract class AbstractDialog extends JDialog implements ActionListener {
 
     /** Cache a pointer to this in case we have children */
     protected JFrame parent_;
-    
-    /** the height of an option row in a panel */
-    public static final int ROW_HEIGHT = 18;
 
 
     /**

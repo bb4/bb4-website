@@ -30,8 +30,6 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
     private JCheckBox alphabetaCheckbox_;
     private JCheckBox quiescenceCheckbox_;
     private JCheckBox gameTreeCheckbox_;
-    private JCheckBox computerAnimationCheckbox_;
-    private JLabel treeUpperBound_;
 
     // constructor
     public TwoPlayerOptionsDialog( JFrame parent, GameController controller )
@@ -175,9 +173,6 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
     {
         Object source = e.getSource();
         super.actionPerformed(e);
-
-        if (source == gameTreeCheckbox_)
-            computerAnimationCheckbox_.setEnabled(gameTreeCheckbox_.isSelected());
     }
 
     /**
