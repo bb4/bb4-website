@@ -6,6 +6,7 @@ import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import javax.swing.tree.TreePath;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -60,6 +61,7 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
     {
         colormap_ = cmap;
         pieceRenderer_ = pieceRenderer;
+        setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
         setRoot(root);
     }
 

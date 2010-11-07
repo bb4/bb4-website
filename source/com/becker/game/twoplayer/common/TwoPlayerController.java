@@ -7,7 +7,7 @@ import com.becker.game.twoplayer.common.search.SearchOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
 import com.becker.game.twoplayer.common.search.transposition.ZobristHash;
-import com.becker.game.twoplayer.common.search.tree.GameTreeViewable;
+import com.becker.game.twoplayer.common.search.tree.IGameTreeViewable;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.optimization.Optimizee;
 import com.becker.optimization.Optimizer;
@@ -43,7 +43,7 @@ public abstract class TwoPlayerController extends GameController {
     private SearchStrategy strategy_;
 
     /** if this becomes non-null, we will fill in the game tree for display in a UI. */
-    private GameTreeViewable gameTreeListener_;
+    private IGameTreeViewable gameTreeListener_;
 
     /** Worker represents a separate thread for computing the next move. */
     private TwoPlayerSearchWorker worker_;
@@ -354,8 +354,8 @@ public abstract class TwoPlayerController extends GameController {
      * If this method is never called, the controller knows
      * that it should not bother to create the tree when searching.
      */
-    public final void setGameTreeViewable( GameTreeViewable gameTreeListener ) {
-        gameTreeListener_ = gameTreeListener;
+    public final void setGameTreeViewable( IGameTreeViewable gameTreeViewable ) {
+        gameTreeListener_ = gameTreeViewable;
     }
 
     /**

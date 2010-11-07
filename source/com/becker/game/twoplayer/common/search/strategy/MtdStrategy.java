@@ -1,9 +1,8 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
-import com.becker.common.math.Range;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.SearchOptions;
-import com.becker.game.twoplayer.common.search.tree.GameTreeViewable;
+import com.becker.game.twoplayer.common.search.tree.IGameTreeViewable;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 
 /**
@@ -96,7 +95,7 @@ public final class MtdStrategy implements SearchStrategy
      * Set an optional ui component that will update when the search tree is modified.
      * @param listener listener
      */
-    public void setGameTreeEventListener(GameTreeViewable listener) {
+    public void setGameTreeEventListener(IGameTreeViewable listener) {
          searchWithMemory_.setGameTreeEventListener(listener);
     }
 

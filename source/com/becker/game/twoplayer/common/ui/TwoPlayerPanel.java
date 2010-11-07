@@ -128,7 +128,7 @@ public abstract class TwoPlayerPanel extends GamePanel
     {
          treeDialog_.reset();
          boardViewer_.addGameChangedListener( treeDialog_ );
-         get2PlayerController().setGameTreeViewable( treeDialog_ );
+         get2PlayerController().setGameTreeViewable( treeDialog_.getGameTreeViewable() );
          treeDialog_.setVisible(true);
     }
 
