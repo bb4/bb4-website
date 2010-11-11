@@ -4,6 +4,7 @@ import com.becker.game.common.GameContext;
 import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.SearchOptions;
+import com.becker.game.twoplayer.common.search.SearchWindow;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.tree.IGameTreeViewable;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
@@ -81,7 +82,7 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
     /**
      * {@inheritDoc}
      */
-    public TwoPlayerMove search( TwoPlayerMove lastMove, SearchTreeNode parent ) {
+    public TwoPlayerMove search(TwoPlayerMove lastMove, SearchTreeNode parent) {
 
         return searchInternal( lastMove, lookAhead_, getOptions().getInitialSearchWindow(),  parent );
     }
@@ -89,10 +90,11 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
     /**
      * {@inheritDoc}
      */
-    TwoPlayerMove searchInternal( TwoPlayerMove lastMove,
-                                            int depth, SearchWindow window, SearchTreeNode parent) {
+    TwoPlayerMove searchInternal(TwoPlayerMove lastMove,
+                                int depth, SearchWindow window, SearchTreeNode parent) {
 
         boolean done = searchable_.done( lastMove, false);
+        //System.out.print(getIndent(depth) + window);
         if ( depth <= 0 || done ) {
             if (doQuiescentSearch(depth, done, lastMove)) {
                 return quiescentSearch(lastMove, depth, window, parent);
@@ -100,9 +102,11 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
             else {
                 int sign = fromPlayer1sPerspective(lastMove) ? 1 : -1;
                 lastMove.setInheritedValue(sign * lastMove.getValue());
+                System.out.println("  leaf=" + lastMove.getValue());
                 return lastMove;
             }
         }
+        System.out.println("");
 
         // generate a list of all (or bestPercent) candidate next moves, and pick the best one
         MoveList list = searchable_.generateMoves(lastMove,  weights_, true);
@@ -269,6 +273,15 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
     public void continueProcessing()
     {
         paused_ = false;
+    }
+
+    protected String getIndent(int depth) {
+        String indent = "";
+        int numTabs = lookAhead_ - depth;
+        for (int i=0; i < numTabs; i++) {
+           indent += "   ";
+        }
+        return indent;
     }
 
     /**

@@ -48,29 +48,29 @@ public class FourLevelGameTreeExample extends AbstractGameTreeExample  {
         TwoPlayerMoveStub move111 = moveCreator.createMove(-4, player1PlaysNext, move11);
 
         // fourth ply   (the leaves. These values get inherited)
-        TwoPlayerMoveStub move0000 = moveCreator.createMove(17, !player1PlaysNext, move00);
-        TwoPlayerMoveStub move0001 = moveCreator.createMove( 6, !player1PlaysNext, move00);
+        TwoPlayerMoveStub move0000 = moveCreator.createMove(17, !player1PlaysNext, move000);
+        TwoPlayerMoveStub move0001 = moveCreator.createMove( 6, !player1PlaysNext, move000);
 
-        TwoPlayerMoveStub move0010 = moveCreator.createMove(46, !player1PlaysNext, move01);
-        TwoPlayerMoveStub move0011 = moveCreator.createMove(27, !player1PlaysNext, move01);
+        TwoPlayerMoveStub move0010 = moveCreator.createMove(46, !player1PlaysNext, move001);
+        TwoPlayerMoveStub move0011 = moveCreator.createMove(27, !player1PlaysNext, move001);
 
-        TwoPlayerMoveStub move0100 = moveCreator.createMove(48, !player1PlaysNext, move10);
-        TwoPlayerMoveStub move0101 = moveCreator.createMove(33, !player1PlaysNext, move10);
+        TwoPlayerMoveStub move0100 = moveCreator.createMove(48, !player1PlaysNext, move010);
+        TwoPlayerMoveStub move0101 = moveCreator.createMove(33, !player1PlaysNext, move010);
 
-        TwoPlayerMoveStub move0110 = moveCreator.createMove(10, !player1PlaysNext, move11);
-        TwoPlayerMoveStub move0111 = moveCreator.createMove(25, !player1PlaysNext, move11);
+        TwoPlayerMoveStub move0110 = moveCreator.createMove(10, !player1PlaysNext, move011);
+        TwoPlayerMoveStub move0111 = moveCreator.createMove(25, !player1PlaysNext, move011);
 
-        TwoPlayerMoveStub move1000 = moveCreator.createMove(22, !player1PlaysNext, move00);
-        TwoPlayerMoveStub move1001 = moveCreator.createMove( 1, !player1PlaysNext, move00);
+        TwoPlayerMoveStub move1000 = moveCreator.createMove(22, !player1PlaysNext, move100);
+        TwoPlayerMoveStub move1001 = moveCreator.createMove( 1, !player1PlaysNext, move100);
 
-        TwoPlayerMoveStub move1010 = moveCreator.createMove(14, !player1PlaysNext, move01);
-        TwoPlayerMoveStub move1011 = moveCreator.createMove( 6, !player1PlaysNext, move01);
+        TwoPlayerMoveStub move1010 = moveCreator.createMove(14, !player1PlaysNext, move101);
+        TwoPlayerMoveStub move1011 = moveCreator.createMove( 6, !player1PlaysNext, move101);
 
-        TwoPlayerMoveStub move1100 = moveCreator.createMove( 2, !player1PlaysNext, move10);
-        TwoPlayerMoveStub move1101 = moveCreator.createMove(12, !player1PlaysNext, move10);
+        TwoPlayerMoveStub move1100 = moveCreator.createMove( 2, !player1PlaysNext, move110);
+        TwoPlayerMoveStub move1101 = moveCreator.createMove(12, !player1PlaysNext, move110);
 
-        TwoPlayerMoveStub move1110 = moveCreator.createMove(24, !player1PlaysNext, move11);
-        TwoPlayerMoveStub move1111 = moveCreator.createMove(48, !player1PlaysNext, move11);
+        TwoPlayerMoveStub move1110 = moveCreator.createMove(24, !player1PlaysNext, move111);
+        TwoPlayerMoveStub move1111 = moveCreator.createMove(48, !player1PlaysNext, move111);
 
         initialMove.setChildren(createList(move0, move1));
 

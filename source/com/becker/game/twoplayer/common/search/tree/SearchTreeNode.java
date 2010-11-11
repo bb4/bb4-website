@@ -2,7 +2,7 @@ package com.becker.game.twoplayer.common.search.tree;
 
 import com.becker.common.util.Util;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.common.search.strategy.SearchWindow;
+import com.becker.game.twoplayer.common.search.SearchWindow;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
