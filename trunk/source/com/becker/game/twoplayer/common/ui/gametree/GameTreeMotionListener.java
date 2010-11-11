@@ -1,10 +1,11 @@
-package com.becker.game.twoplayer.common.ui;
+package com.becker.game.twoplayer.common.ui.gametree;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerViewable;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
+import com.becker.game.twoplayer.common.ui.AbstractTwoPlayerBoardViewer;
 
 import javax.swing.*;
 import javax.swing.tree.TreePath;
@@ -24,7 +25,7 @@ public final class GameTreeMotionListener implements MouseMotionListener {
     private TwoPlayerController mainController_;
 
     private volatile GameTreeViewer treeViewer_;
-    private GameTreeInfoPanel infoPanel_;
+    private MoveInfoPanel moveInfoPanel_;
 
     /** the viewer in the debug window. */
     private TwoPlayerViewable boardViewer_;
@@ -39,9 +40,10 @@ public final class GameTreeMotionListener implements MouseMotionListener {
      * constructor - create the tree dialog.
      */
     public GameTreeMotionListener(GameTreeViewer treeViewer,
-                              TwoPlayerViewable boardViewer, GameTreeInfoPanel infoPanel) {
+                                  TwoPlayerViewable boardViewer,
+                                  MoveInfoPanel detailsPanel) {
         treeViewer_ = treeViewer;
-        infoPanel_ = infoPanel;
+        moveInfoPanel_ = detailsPanel;
         boardViewer_ = boardViewer;
         oldChainLength_ = 0;
     }
@@ -103,7 +105,7 @@ public final class GameTreeMotionListener implements MouseMotionListener {
         // remember the old chain length so we know how much to back up next time
         oldChainLength_ = chainLength;
 
-        infoPanel_.setText(viewer, m, lastNode);
+        moveInfoPanel_.setText(viewer, m, lastNode);
     }
 
     /**

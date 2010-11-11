@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.common.ui;
+package com.becker.game.twoplayer.common.ui.gametree;
 
 import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;

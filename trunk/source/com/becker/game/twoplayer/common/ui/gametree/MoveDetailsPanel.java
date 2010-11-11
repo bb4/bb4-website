@@ -1,10 +1,12 @@
-package com.becker.game.twoplayer.common.ui;
+package com.becker.game.twoplayer.common.ui.gametree;
 
 import com.becker.common.util.Util;
 import com.becker.game.common.PlayerList;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
+import com.becker.game.twoplayer.common.ui.AbstractTwoPlayerBoardViewer;
+import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
 import com.becker.ui.ColorUtil;
 
 import javax.swing.*;
@@ -12,17 +14,17 @@ import javax.swing.border.EtchedBorder;
 import java.awt.*;
 
 /**
- * Presents info to the user about the currently moused over node int eh tree.
+ * Presents info to the user about the currently moused over node in the tree.
  *
  * @author Barry Becker Date: Dec 24, 2006
  */
-class GameTreeInfoPanel extends JPanel {
+class MoveDetailsPanel extends JPanel {
 
     private JLabel infoLabel_;
     private JLabel leafDetailLabel_;
 
 
-    public GameTreeInfoPanel() {
+    public MoveDetailsPanel() {
         setLayout(new BorderLayout());
         setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED),
                              BorderFactory.createEmptyBorder(5,5,5,5)));
@@ -61,14 +63,14 @@ class GameTreeInfoPanel extends JPanel {
             entity = "Computer's move";
 
         StringBuilder sBuf = new StringBuilder("<html>");
-        sBuf.append("<font size=\"+1\" color=" + ColorUtil.getHTMLColorFromColor(c) +
-                    " bgcolor=#99AA99>" + entity + passSuffix + "</font><br>");
-        sBuf.append("Static value = " + Util.formatNumber(m.getValue()) +"<br>");
-        sBuf.append("Inherited value = " + Util.formatNumber(m.getInheritedValue()) +"<br>");
-        sBuf.append("Alpha = "+Util.formatNumber(lastNode.getWindow().alpha)+"<br>");
-        sBuf.append("Beta = "+Util.formatNumber(lastNode.getWindow().beta)+"<br>");
-        sBuf.append(((lastNode.getComment()!=null) ? lastNode.getComment() : "") + "<br>");
-        sBuf.append("Number of descendants = " + numKids + "<br>");
+        sBuf.append("<font size=\"+1\" color=").append(ColorUtil.getHTMLColorFromColor(c)).
+                append(" bgcolor=#99AA99>").append(entity).append(passSuffix).append("</font><br>");
+        sBuf.append("Static value = ").append(Util.formatNumber(m.getValue())).append("<br>");
+        sBuf.append("Inherited value = ").append(Util.formatNumber(m.getInheritedValue())).append("<br>");
+        sBuf.append("Alpha = ").append(Util.formatNumber(lastNode.getWindow().alpha)).append("<br>");
+        sBuf.append("Beta = ").append(Util.formatNumber(lastNode.getWindow().beta)).append("<br>");
+        sBuf.append((lastNode.getComment() != null) ? lastNode.getComment() : "").append("<br>");
+        sBuf.append("Number of descendants = ").append(numKids).append("<br>");
         if (m.isUrgent())
             sBuf.append( "<font color=#FF6611>Urgent move!</font>");
         sBuf.append("</html>");
@@ -88,7 +90,5 @@ class GameTreeInfoPanel extends JPanel {
         }
         leafDetailLabel_.setText(buf.toString());
     }
-
-
 
 }

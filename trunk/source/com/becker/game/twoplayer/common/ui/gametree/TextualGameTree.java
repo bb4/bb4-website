@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.common.ui;
+package com.becker.game.twoplayer.common.ui.gametree;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
@@ -18,7 +18,7 @@ import java.awt.event.MouseMotionListener;
 public final class TextualGameTree extends JScrollPane {
 
     private static final int TREE_WIDTH = 420;
-    private static final int ROW_HEIGHT = 16;
+    private static final int ROW_HEIGHT = 14;
 
     private JTree tree_;
     private GameTreeCellRenderer cellRenderer_;

@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.common.ui;
+package com.becker.game.twoplayer.common.ui.gametree;
 
 import com.becker.game.common.Board;
 import com.becker.game.common.ui.GameChangedEvent;
@@ -6,8 +6,9 @@ import com.becker.game.common.ui.GameChangedListener;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerViewable;
 import com.becker.game.twoplayer.common.search.tree.IGameTreeViewable;
+import com.becker.game.twoplayer.common.ui.AbstractTwoPlayerBoardViewer;
+import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
 import com.becker.ui.dialogs.AbstractDialog;
-import com.becker.ui.legend.ContinuousColorLegend;
 
 import javax.swing.*;
 import javax.swing.event.TreeExpansionEvent;
@@ -31,7 +32,7 @@ public final class GameTreeDialog extends AbstractDialog
     private volatile TextualGameTree textTree_;
     private volatile GameTreeButtons gameTreeButtons_;
     private volatile GameTreeViewable tree_;
-    private GameTreeInfoPanel infoPanel_;
+    private MoveInfoPanel moveInfo_;
 
     /** the viewer in the debug window. */
     private volatile TwoPlayerViewable boardViewer_;
@@ -61,7 +62,7 @@ public final class GameTreeDialog extends AbstractDialog
         controller_ = (TwoPlayerController)boardViewer.getController();
         cellRenderer_ = cellRenderer;
         showContent();
-        motionListener_ = new GameTreeMotionListener(treeViewer_, boardViewer_, infoPanel_);
+        motionListener_ = new GameTreeMotionListener(treeViewer_, boardViewer_, moveInfo_);
     }
 
     /**
@@ -100,19 +101,11 @@ public final class GameTreeDialog extends AbstractDialog
         JPanel viewerPanel = new JPanel();
         viewerPanel.setLayout(new BorderLayout());
         viewerPanel.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
-        infoPanel_ = new GameTreeInfoPanel();
-
-        ContinuousColorLegend colorLegend =
-                new ContinuousColorLegend("Relative Score for Player", cellRenderer_.getColorMap(), true);
-
-        JPanel infoPanel = new JPanel();
-        infoPanel.setLayout(new BorderLayout());
-        infoPanel.add(infoPanel_, BorderLayout.CENTER);
-        infoPanel.add(colorLegend, BorderLayout.SOUTH);
+        moveInfo_ = new MoveInfoPanel(cellRenderer_.getColorMap());
 
         // this goes to the right of the test tree view
         viewerPanel.add((Component) boardViewer_, BorderLayout.CENTER);
-        viewerPanel.add( infoPanel, BorderLayout.SOUTH);
+        viewerPanel.add( moveInfo_, BorderLayout.SOUTH);
         previewPanel.add( viewerPanel, BorderLayout.CENTER );
 
         return new JSplitPane( JSplitPane.HORIZONTAL_SPLIT, true, textTree_, previewPanel );
@@ -215,7 +208,7 @@ public final class GameTreeDialog extends AbstractDialog
      * refresh the game tree.
      */
     private synchronized void refresh() {
-        textTree_.refresh();;
+        textTree_.refresh();
         paint( getGraphics() );
     }
 
