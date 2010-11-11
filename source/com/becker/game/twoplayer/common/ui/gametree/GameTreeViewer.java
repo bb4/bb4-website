@@ -1,9 +1,10 @@
-package com.becker.game.twoplayer.common.ui;
+package com.becker.game.twoplayer.common.ui.gametree;
 
 import com.becker.common.ColorMap;
 import com.becker.common.util.Util;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
+import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;

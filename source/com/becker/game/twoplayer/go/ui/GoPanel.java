@@ -8,7 +8,7 @@ import com.becker.game.common.ui.GameInfoPanel;
 import com.becker.game.common.ui.GameToolBar;
 import com.becker.game.common.ui.NewGameDialog;
 import com.becker.game.twoplayer.common.ui.AbstractTwoPlayerBoardViewer;
-import com.becker.game.twoplayer.common.ui.GameTreeDialog;
+import com.becker.game.twoplayer.common.ui.gametree.GameTreeDialog;
 import com.becker.game.twoplayer.common.ui.TwoPlayerPanel;
 
 import javax.swing.*;
