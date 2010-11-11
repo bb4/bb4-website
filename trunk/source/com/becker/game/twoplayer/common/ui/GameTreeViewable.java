@@ -1,20 +1,12 @@
 package com.becker.game.twoplayer.common.ui;
 
-import com.becker.game.common.GameContext;
 import com.becker.game.common.MoveList;
-import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.common.TwoPlayerViewable;
-import com.becker.game.twoplayer.common.search.strategy.SearchWindow;
+import com.becker.game.twoplayer.common.search.SearchWindow;
 import com.becker.game.twoplayer.common.search.tree.IGameTreeViewable;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 
 import javax.swing.*;
-import javax.swing.tree.TreePath;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Responsible for handling events related to modifying the nodes in the game tree.

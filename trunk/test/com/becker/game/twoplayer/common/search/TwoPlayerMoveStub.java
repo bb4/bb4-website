@@ -69,8 +69,8 @@ public class TwoPlayerMoveStub extends TwoPlayerMove {
         String id = "";
         while (parentMove != null) {
             int index = parentMove.getChildren().indexOf(current);
-            if (index<0)
-                System.out.println(" not found among " + getParent().getChildren().size() + " parent children");
+            if (index < 0)
+                System.out.println(getValue() + " not found among " + getParent().getChildren().size() + " parent children of " + getParent());
             id += Integer.toString(index);
             current = parentMove;
             parentMove = parentMove.getParent();
@@ -95,6 +95,7 @@ public class TwoPlayerMoveStub extends TwoPlayerMove {
     public String toString() {
         StringBuilder bldr = new StringBuilder();
         bldr.append("id:").append(getId()).append(" value:").append(getValue());
+        bldr.append(" inh val:").append(getInheritedValue());
         bldr.append(isUrgent()?" urgent":" ").append(causedUrgency()?"jeopardy":"");
         return bldr.toString();
     }

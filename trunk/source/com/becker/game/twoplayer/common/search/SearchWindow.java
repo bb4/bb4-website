@@ -1,4 +1,6 @@
-package com.becker.game.twoplayer.common.search.strategy;
+package com.becker.game.twoplayer.common.search;
+
+import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
 
 
 /**

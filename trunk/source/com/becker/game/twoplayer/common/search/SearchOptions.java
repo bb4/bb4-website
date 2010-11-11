@@ -1,9 +1,7 @@
 package com.becker.game.twoplayer.common.search;
 
-import com.becker.common.math.Range;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
-import com.becker.game.twoplayer.common.search.strategy.SearchWindow;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**

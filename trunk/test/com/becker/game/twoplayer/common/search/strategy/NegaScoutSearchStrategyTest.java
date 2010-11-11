@@ -3,6 +3,8 @@ package com.becker.game.twoplayer.common.search.strategy;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.TwoPlayerMoveStub;
 import com.becker.game.twoplayer.common.search.examples.EvaluationPerspective;
+import com.becker.game.twoplayer.common.search.examples.FourLevelGameTreeExample;
+import com.becker.game.twoplayer.common.search.examples.ThreeLevelGameTreeExample;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**
@@ -70,6 +72,38 @@ public class NegaScoutSearchStrategyTest extends AbstractSearchStrategyTst {
     protected SearchResult getPruneTwoLevelWithABSearchPlayer2() {
         return new SearchResult( "1", 4, 7);
     }
+
+    /*
+    // from Millington and Funge book page 688
+    public void testThreeLevelPlayer1WithABSearch() {
+        searchOptions.setLookAhead(3);
+        searchOptions.setAlphaBeta(true);
+        verifyResult(new ThreeLevelGameTreeExample(true, getEvaluationPerspective()),
+                getThreeLevelPlayer1WithABResult());
+    }
+
+    public void testThreeLevelPlayer2WithABSearch() {
+        searchOptions.setLookAhead(3);
+        searchOptions.setAlphaBeta(true);
+        verifyResult(new ThreeLevelGameTreeExample(false, getEvaluationPerspective()),
+                getThreeLevelPlayer2WithABResult());
+    }  */
+
+    // from Millington and Funge book page 708
+    public void testFourLevelABSearchPlayer1() {
+        searchOptions.setLookAhead(4);
+        searchOptions.setAlphaBeta(true);
+        verifyResult(new FourLevelGameTreeExample(true, getEvaluationPerspective()),
+                getFourLevelABPlayer1Result());
+    }
+
+    public void testFourLevelABSearchPlayer2() {
+        searchOptions.setLookAhead(4);
+        searchOptions.setAlphaBeta(true);
+        verifyResult(new FourLevelGameTreeExample(false, getEvaluationPerspective()),
+                getFourLevelABPlayer2Result());
+    }
+
 
     @Override
     protected SearchResult getThreeLevelPlayer1Result() {

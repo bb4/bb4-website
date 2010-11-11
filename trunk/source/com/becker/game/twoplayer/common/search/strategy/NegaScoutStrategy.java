@@ -2,37 +2,36 @@ package com.becker.game.twoplayer.common.search.strategy;
 
 import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.twoplayer.common.search.SearchWindow;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**
- *  This strategy class defines the NegaScout search algorithm.
- * (also known as principal variation search (PVS)
- *  Negascout is very much like negamax except that it uses a 0 sized search window
- *  and iterative deepening.
- *  See http://en.wikipedia.org/wiki/Negascout
+ * This strategy class defines the NegaScout search algorithm.
+ * (sometimes known as principal variation search (PVS) )
+ * Negascout is very much like negamax except that it uses a 0 sized search window
+ * and iterative deepening.
+ * See http://en.wikipedia.org/wiki/Negascout
  *
  *  psudo code:<pre>
- *  int negascout(node, depth, α, β)   {}
+ *  int negascout(node, depth, α, β) {
  *     if node is a terminal node or depth = 0 {
  *         return the heuristic value of node
  *     }
- *     b = β                                 // initial window is (-β, -α)
+ *     b = β                           // initial window is (-β, -α)
  *     foreach child of node {
  *        a = -negascout (child, depth-1, -b, -α)
- *        if a>α
- *             α = a
- *        if α≥β
- *             return α                      // Beta cut-off
- *        if α≥b                           // check if null-window failed high
+ *        if (a>α) α = a
+ *        if (α≥β) return α            // Beta cut-off
+ *        if (α≥b) {                   // check if null-window failed high
  *            α = -negascout(child, depth-1, -β, -α)  // full re-search
- *            if α≥β
- *                return α                   // Beta cut-off
- *        b = α+1                           // set new null window
- *   }
- *   return α
- *}
+ *            if (α≥β) return α        // Beta cut-off
+ *        }
+ *        b = α+1                      // set new null window
+ *      }
+ *    return α
+ *  }
  *
  * int NegaScout ( p, α, β );   {
  *    determine successors p_1,...,p_w of p
@@ -49,25 +48,26 @@ import com.becker.optimization.parameter.ParameterArray;
  *       b = α + 1                      // set new null window
  *    }
  *    return α
- *}
+ * }
  *
+ * from http://lurgee.net/abstract-strategy-games/
  * negascout(node, alpha, beta)
-    if node is a leaf
-        return an evaluated score for the node
-    maxscore = alpha
-    b = beta
-    for each child of node
-        v = -negascout(child, -b, -alpha)
-        if alpha < v < beta and not the first child and depth > 1
-              v = -negascout(child, -beta, -v)  // re-search
-        alpha = max(alpha, v)
-        if alpha >= beta
-            return alpha  // cut-off
-        b = alpha + 1  // set new null window
-    return alpha
-
+ *   if node is a leaf
+ *       return an evaluated score for the node
+ *   maxscore = alpha
+ *   b = beta
+ *   for each child of node
+ *       v = -negascout(child, -b, -alpha)
+ *       if alpha < v < beta and not the first child and depth > 1
+ *             v = -negascout(child, -beta, -v)  // re-search
+ *       alpha = max(alpha, v)
+ *       if alpha >= beta
+ *           return alpha  // cut-off
+ *      b = alpha + 1      // set new null window
+ *   return alpha
+ *
  *  </pre>
-
+ *
  *  @author Barry Becker
  */
 public class NegaScoutStrategy extends NegaMaxStrategy
@@ -101,6 +101,7 @@ public class NegaScoutStrategy extends NegaMaxStrategy
             SearchTreeNode child = addNodeToTree(parent, theMove, window, i );
 
             // search with minimal search window
+            //System.out.println(getIndent(depth) + "search a=" + -newBeta + " b="+ window.alpha);
             selectedMove = searchInternal( theMove, depth-1, new SearchWindow(-newBeta, -window.alpha), child);
 
             searchable_.undoInternalMove( theMove );
@@ -112,7 +113,8 @@ public class NegaScoutStrategy extends NegaMaxStrategy
                 if (selectedValue > window.alpha) {
                     window.alpha = selectedValue;
                 }
-                if (window.alpha >= window.beta) {
+                if (window.alpha >= window.beta) {      // beta cut-off
+                    System.out.println(getIndent(depth) + "beta cut-off1 because a=" + window.alpha + " >= " + window.beta);
                     theMove.setInheritedValue(window.alpha);
                     bestMove = theMove;
                     break;
@@ -120,6 +122,7 @@ public class NegaScoutStrategy extends NegaMaxStrategy
                 if (window.alpha >= newBeta) {
                     // re-search with narrower window (typical alpha beta search).
                     searchable_.makeInternalMove( theMove );
+                    System.out.println(getIndent(depth) + "doing full re-search because a=" + window.alpha + " >= newBeta="+ newBeta);
                     selectedMove = searchInternal( theMove, depth-1, window.negateAndSwap(), child );
                     searchable_.undoInternalMove( theMove );
 
@@ -129,6 +132,7 @@ public class NegaScoutStrategy extends NegaMaxStrategy
                     bestMove = theMove;
 
                     if (window.alpha >= window.beta) {
+                        System.out.println(getIndent(depth) + "beta cut-off2 because a=" + window.alpha + ">= " + window.beta);
                         showPrunedNodesInTree(list, parent, i, selectedValue, window);
                         break;
                     }
@@ -137,7 +141,7 @@ public class NegaScoutStrategy extends NegaMaxStrategy
                 newBeta = window.alpha + 1;
             }
         }
-
+        System.out.println(getIndent(depth) + "bestMove="+ bestMove); // + " "+ window);
         bestMove.setSelected(true);
         lastMove.setInheritedValue(-bestMove.getInheritedValue());
         return bestMove;

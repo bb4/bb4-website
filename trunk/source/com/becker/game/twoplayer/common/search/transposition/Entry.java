@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.common.search.transposition;
 
 import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.common.search.strategy.SearchWindow;
+import com.becker.game.twoplayer.common.search.SearchWindow;
 
 /**
  * An entry in the transposition table.

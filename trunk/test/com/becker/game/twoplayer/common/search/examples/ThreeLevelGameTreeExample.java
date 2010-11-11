@@ -18,7 +18,7 @@ import java.util.Arrays;
  *         /      \               /      \
  *     [-1]       [7]           [8]       [2]
  *    /   \      /   \         /  \       /  \
- *  [-5] [-4]   [-6] [-2]    [-7] [-8]  [-4] [-4]
+ *  [-5] [-4]  [-6] [-2]    [-7] [-8]  [-4] [-4]
  *
  * Move scores are evaluated from player one's perspective.
  * Some search algorithms evaluate from the current players perspective.

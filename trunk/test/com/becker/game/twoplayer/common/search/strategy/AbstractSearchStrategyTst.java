@@ -56,7 +56,6 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
         return opts;
     }
 
-
     /**
      * Edge case where no searching is actually done. The found move will be the root.
      */
