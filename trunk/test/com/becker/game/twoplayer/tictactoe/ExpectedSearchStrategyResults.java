@@ -41,7 +41,7 @@ public class ExpectedSearchStrategyResults {
             TwoPlayerMove.createMove(new Location(1, 2), 4, PLAYER2_PIECE),  // beginningP1
             TwoPlayerMove.createMove(new Location(3, 3), -4, PLAYER1_PIECE), //             "midGameCenterO"
             TwoPlayerMove.createMove(new Location(3, 2), 28, PLAYER2_PIECE), // middleP1    "lateMidGameX" :
-            TwoPlayerMove.createMove(new Location(1, 2), 0, PLAYER1_PIECE),//             "lateMidGameO";   
+            TwoPlayerMove.createMove(new Location(2, 3), -32, PLAYER1_PIECE),//              "lateMidGameO";   
             TwoPlayerMove.createMove(new Location(2, 1), 0, PLAYER2_PIECE),  // endP1       "endGameX";
             TwoPlayerMove.createMove(new Location(3, 3), -52, PLAYER1_PIECE) // endP2       "endGame0";
     );
@@ -51,7 +51,7 @@ public class ExpectedSearchStrategyResults {
             TwoPlayerMove.createMove(new Location(1, 2), 4, PLAYER2_PIECE),  // beginningP1
             TwoPlayerMove.createMove(new Location(3, 3), -4, PLAYER1_PIECE), //             "midGameCenterO"
             TwoPlayerMove.createMove(new Location(3, 2), 28, PLAYER2_PIECE), // middleP1    "lateMidGameX" :
-            TwoPlayerMove.createMove(new Location(1, 2), 0, PLAYER1_PIECE),//             "lateMidGameO";
+            TwoPlayerMove.createMove(new Location(2, 3), -32, PLAYER1_PIECE),//             "lateMidGameO";
             TwoPlayerMove.createMove(new Location(2, 1), 0, PLAYER2_PIECE),  // endP1       "endGameX";
             TwoPlayerMove.createMove(new Location(3, 3), -52, PLAYER1_PIECE) // endP2       "endGame0";
     );
@@ -70,7 +70,7 @@ public class ExpectedSearchStrategyResults {
             TwoPlayerMove.createMove(new Location(1, 2), 4, PLAYER2_PIECE),  // beginningP1
             TwoPlayerMove.createMove(new Location(3, 3), -4, PLAYER1_PIECE), //             "midGameCenterO"
             TwoPlayerMove.createMove(new Location(3, 2), 28, PLAYER2_PIECE), // middleP1    "lateMidGameX" :
-            TwoPlayerMove.createMove(new Location(1, 2), 0, PLAYER1_PIECE),  //             "lateMidGameO";   
+            TwoPlayerMove.createMove(new Location(2, 3), -32, PLAYER1_PIECE),  //             "lateMidGameO";   
             TwoPlayerMove.createMove(new Location(2, 1), 0, PLAYER2_PIECE),  // endP1       "endGameX";
             TwoPlayerMove.createMove(new Location(3, 3), -52, PLAYER1_PIECE) // endP2       "endGame0";
     );
