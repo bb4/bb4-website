@@ -144,8 +144,8 @@ public abstract class AbstractStrategyTst extends TestCase {
         long numMoves = strategy.getNumMovesConsidered();
 
         String info = getSearchStrategyToTest() + " " + desc + " "  + prog + " player1=" + player1;
-        //System.out.print(info);
-        //System.out.println("    new MoveInfo(" + nextMove.getConstructorString() + " " + numMoves + "),"  );
+        System.out.print(info);
+        System.out.println("    new MoveInfo(" + nextMove.getConstructorString() + " " + numMoves + "),"  );
 
         if (expectedNext.hasMovesConsidered()) {
             assertEquals("Unexpected number of moves considered.",

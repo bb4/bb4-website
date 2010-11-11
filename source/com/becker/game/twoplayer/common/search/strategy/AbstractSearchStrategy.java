@@ -102,11 +102,11 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
             else {
                 int sign = fromPlayer1sPerspective(lastMove) ? 1 : -1;
                 lastMove.setInheritedValue(sign * lastMove.getValue());
-                System.out.println("  leaf=" + lastMove.getValue());
+                //System.out.println("  leaf=" + lastMove.getValue());
                 return lastMove;
             }
         }
-        System.out.println("");
+        //System.out.println("");
 
         // generate a list of all (or bestPercent) candidate next moves, and pick the best one
         MoveList list = searchable_.generateMoves(lastMove,  weights_, true);
