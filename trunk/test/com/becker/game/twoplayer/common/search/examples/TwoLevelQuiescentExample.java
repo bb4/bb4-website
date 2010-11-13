@@ -9,13 +9,13 @@ import com.becker.game.twoplayer.common.search.TwoPlayerMoveStub;
  * cu subscipt = cause urgency
  * u subscript indicates an urgetn move.
  * 
- *                 ____  [6]  _____
- *                /                \
- *            [-8]                  [-2]
- *         /      \               /      \
- *     [-1cu]     [7]           [8cu]     [2]
- *    /    \  \                  /    \
- *  [3u]  [2u][1]             [4u]   [5cu]
+ *                 ____ [6] ____
+ *                /             \
+ *            [-8]              [-2]
+ *          /     \            /     \
+ *     [-1cu]     [7]       [8cu]   [2]
+ *    /    \  \              /        \
+ *  [3u]  [2u][1]          [4u]      [5cu]
  *                                  /  \  \
  *                               [5u]  [6][4u]
  *

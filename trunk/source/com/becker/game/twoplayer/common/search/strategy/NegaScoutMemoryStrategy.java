@@ -48,13 +48,10 @@ import com.becker.optimization.parameter.ParameterArray;
  * </pre>
  *  @author Barry Becker 
  */
-public final class NegaScoutMemoryStrategy extends NegaScoutStrategy {
+public final class NegaScoutMemoryStrategy extends NegaScoutStrategy
+                                           implements MemorySearchStrategy {
     /** Stores positions that have already been evaluated, so we do not need to repeat work. */
     private TranspositionTable lookupTable;
-
-    private int cacheHits = 0;
-    private int cacheNearHits = 0;
-    private int cacheMisses = 0;
 
     /**
      * Constructor.
@@ -64,6 +61,11 @@ public final class NegaScoutMemoryStrategy extends NegaScoutStrategy {
         lookupTable = new TranspositionTable();
     }
 
+    public TranspositionTable getTranspositionTable() {
+        return lookupTable;
+    }
+
+
     /**
      * {@inheritDoc}
      */
@@ -72,17 +74,18 @@ public final class NegaScoutMemoryStrategy extends NegaScoutStrategy {
                                           SearchWindow window, SearchTreeNode parent ) {
         Long key = searchable_.getHashKey();
         Entry entry = lookupTable.get(key);
-        if (entryExists(lastMove, depth, window, entry))
+        if (lookupTable.entryExists(entry, lastMove, depth, window))
             return entry.bestMove;
 
         boolean done = searchable_.done( lastMove, false);
         if ( depth <= 0 || done ) {
-
             if (doQuiescentSearch(depth, done, lastMove))  {
                 TwoPlayerMove qMove = quiescentSearch(lastMove, depth, window, parent);
-                entry = new Entry(qMove, qMove.getInheritedValue());
-                lookupTable.put(key, entry);
-                return qMove;
+                if (qMove != null)  {
+                    entry = new Entry(qMove, qMove.getInheritedValue());
+                    lookupTable.put(key, entry);
+                    return qMove;
+                }
             }
             int sign = fromPlayer1sPerspective(lastMove) ? 1 : -1;
             lastMove.setInheritedValue(sign * lastMove.getValue());
@@ -93,45 +96,12 @@ public final class NegaScoutMemoryStrategy extends NegaScoutStrategy {
 
         MoveList list = searchable_.generateMoves(lastMove, weights_, true);
 
-        movesConsidered_ += list.size();
         if (depth == lookAhead_)
             numTopLevelMoves_ = list.size();
 
-        if ( emptyMoveList(list, lastMove) ) {
-            // if there are no possible next moves, return null (we hit the end of the game).
-            return null;
-        }
+        if ( emptyMoveList(list, lastMove) )  return null;
 
-        TwoPlayerMove bestMove = findBestMove(lastMove, depth, list, window, parent);
-        //System.out.println("Cache hits=" + cacheHits + " nearHits=" + cacheNearHits +" misses="  + cacheMisses);
-        return bestMove;
-    }
-
-    /**
-     * if we can just look up the best move in the transposition table, then just do that.
-     * @return saved best move in entry
-     */
-    private boolean entryExists(TwoPlayerMove lastMove, int depth, SearchWindow window, Entry entry) {
-        if (entry != null && entry.depth >= depth) {
-            cacheHits++;
-            //System.out.println("Cache hit. \n entry.depth=" + entry.depth + " depth=" + depth  + "\n" + entry);
-
-            if (entry.upperValue <= window.alpha || entry.upperValue == entry.lowerValue)  {
-                entry.bestMove.setInheritedValue(entry.upperValue);
-                lastMove.setInheritedValue(-entry.upperValue);
-                return true;
-            }
-            if (entry.lowerValue >= window.beta) {
-                entry.bestMove.setInheritedValue(entry.lowerValue);
-                lastMove.setInheritedValue(-entry.lowerValue);
-                return true;
-            }
-        }
-        else {
-            if (entry != null) cacheNearHits++;
-            else cacheMisses++;
-        }
-        return false;
+        return findBestMove(lastMove, depth, list, window, parent);
     }
 
 

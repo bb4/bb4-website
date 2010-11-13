@@ -73,38 +73,6 @@ public class NegaScoutSearchStrategyTest extends AbstractSearchStrategyTst {
         return new SearchResult( "1", 4, 7);
     }
 
-    /*
-    // from Millington and Funge book page 688
-    public void testThreeLevelPlayer1WithABSearch() {
-        searchOptions.setLookAhead(3);
-        searchOptions.setAlphaBeta(true);
-        verifyResult(new ThreeLevelGameTreeExample(true, getEvaluationPerspective()),
-                getThreeLevelPlayer1WithABResult());
-    }
-
-    public void testThreeLevelPlayer2WithABSearch() {
-        searchOptions.setLookAhead(3);
-        searchOptions.setAlphaBeta(true);
-        verifyResult(new ThreeLevelGameTreeExample(false, getEvaluationPerspective()),
-                getThreeLevelPlayer2WithABResult());
-    }  */
-
-    // from Millington and Funge book page 708
-    public void testFourLevelABSearchPlayer1() {
-        searchOptions.setLookAhead(4);
-        searchOptions.setAlphaBeta(true);
-        verifyResult(new FourLevelGameTreeExample(true, getEvaluationPerspective()),
-                getFourLevelABPlayer1Result());
-    }
-
-    public void testFourLevelABSearchPlayer2() {
-        searchOptions.setLookAhead(4);
-        searchOptions.setAlphaBeta(true);
-        verifyResult(new FourLevelGameTreeExample(false, getEvaluationPerspective()),
-                getFourLevelABPlayer2Result());
-    }
-
-
     @Override
     protected SearchResult getThreeLevelPlayer1Result() {
         return new SearchResult("0", -4, 11);

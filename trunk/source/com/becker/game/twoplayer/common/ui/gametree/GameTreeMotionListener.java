@@ -105,6 +105,7 @@ public final class GameTreeMotionListener implements MouseMotionListener {
         // remember the old chain length so we know how much to back up next time
         oldChainLength_ = chainLength;
 
+        // we should throw an event instead of have this dependency.
         moveInfoPanel_.setText(viewer, m, lastNode);
     }
 

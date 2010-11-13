@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.common.search;
 
+import com.becker.common.Location;
 import com.becker.game.common.GamePiece;
 import com.becker.game.common.Move;
 import com.becker.game.common.MoveList;
@@ -25,8 +26,8 @@ public class TwoPlayerMoveStub extends TwoPlayerMove {
     private boolean causedUrgency;
 
 
-    public TwoPlayerMoveStub(int val, boolean isPlayer1, TwoPlayerMoveStub parent) {
-        super(1, 1, val, new GamePiece(isPlayer1));
+    public TwoPlayerMoveStub(int val, boolean isPlayer1, Location toLocation, TwoPlayerMoveStub parent) {
+        super(toLocation.getRow(), toLocation.getCol(), val, new GamePiece(isPlayer1));
         this.parent_ = parent;
         this.children_ = new MoveList();
     }

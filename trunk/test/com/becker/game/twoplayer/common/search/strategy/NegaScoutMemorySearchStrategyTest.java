@@ -2,6 +2,8 @@ package com.becker.game.twoplayer.common.search.strategy;
 
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.examples.EvaluationPerspective;
+import com.becker.game.twoplayer.common.search.examples.LadderQuiescentExample;
+import com.becker.game.twoplayer.common.search.examples.OneLevelGameTreeExample;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**
@@ -9,62 +11,47 @@ import com.becker.optimization.parameter.ParameterArray;
  * 
  * @author Barry Becker
  */
-public class NegaScoutMemorySearchStrategyTest extends AbstractSearchStrategyTst {
+public class NegaScoutMemorySearchStrategyTest extends NegaScoutSearchStrategyTest {
 
     @Override
     protected SearchStrategy createSearchStrategy(Searchable searchable, ParameterArray weights) {
         return new NegaScoutMemoryStrategy(searchable, weights);
     }
 
-   @Override
-    protected EvaluationPerspective getEvaluationPerspective() {
-        return EvaluationPerspective.CURRENT_PLAYER;
-    }
 
-    /**
-     * Look ahead one level and get the best move.
-     */
     @Override
-    protected SearchResult getOneLevelLookAheadPlayer1Result() {
-        return new SearchResult("0", -2, 4);
-    }
+    protected SearchResult getTwoLevelQuiescensePlayer2Result() {
+        return new SearchResult("1", 4, 10);
+    }   
 
-    /**
-     * Look ahead one level and get the best move.
-     */
     @Override
-    protected SearchResult getOneLevelLookAheadPlayer2Result() {
-        return new SearchResult("0", -8, 4);
+    protected SearchResult getTwoLevelQuiescenseABPlayer2Result() {
+        return new SearchResult("1", 4, 10);
     }
 
     @Override
-    protected SearchResult getTwoLevelPlayer1Result() {
-        return new SearchResult("0", 7, 11);
+    protected SearchResult getLadderMax3QuiescensePlayer2Result() {
+        return new SearchResult("1", 4, 10);
     }
 
     @Override
-    protected SearchResult getPruneTwoLevelWithoutABResultPlayer1() {
-        return new SearchResult("0", -5, 11);
+    protected SearchResult getLadderMax4QuiescensePlayer2Result() {
+        return new SearchResult("1", 4, 10);
     }
 
     @Override
-    protected SearchResult getPruneTwoLevelWithABSearchPlayer1() {
-        return new SearchResult("0", -5, 11);
+    protected SearchResult getFourLevelPlayer1Result() {
+        return new SearchResult("0", 33, 22);
+    }
+    @Override
+    protected SearchResult getFourLevelPlayer2Result() {
+        return new SearchResult("1", 22, 27);
     }
 
-    @Override
-    protected SearchResult getPruneTwoLevelWithABSearchPlayer2() {
-        return new SearchResult("1", 4, 15);
-    }
 
     @Override
-    protected SearchResult getThreeLevelPlayer1Result() {
-        return new SearchResult("0", -5, 26);
-    }
-
-    @Override
-    protected SearchResult getThreeLevelPlayer1WithABResult() {
-        return new SearchResult("0", -5, 26);
+    protected SearchResult getFourLevelABPlayer1Result() {
+        return new SearchResult("0", 33, 22);
     }
 
 }
