@@ -68,8 +68,8 @@ public class LadderQuiescentExample extends AbstractGameTreeExample  {
         move1010.setUrgent(true);
         TwoPlayerMoveStub move1011 = moveCreator.createMove(6, !player1PlaysNext, move101);
         TwoPlayerMoveStub move1012 = moveCreator.createMove(4, !player1PlaysNext, move101);
-        move1011.setCausedUrgency(true);
-        move1011.setUrgent(true);
+        move1012.setCausedUrgency(true);
+        move1012.setUrgent(true);
 
         // fifth ply
         TwoPlayerMoveStub move10100 = moveCreator.createMove(5, player1PlaysNext, move1010);

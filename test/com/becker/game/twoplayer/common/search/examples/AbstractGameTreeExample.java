@@ -35,7 +35,6 @@ public abstract class AbstractGameTreeExample implements GameTreeExample {
         return initialMove;
     }
    
-
     /**
      * Print the tree in depth first search for debugging purposes
      */

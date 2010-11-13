@@ -14,18 +14,12 @@ import com.becker.optimization.parameter.ParameterArray;
  *  This version stores the values of moves that have already been searched.
  *  Based on psuedo code from Artificial Intelligence for Games by Millington and Funge.
  *
- *  @@ Need to fix.
  *  @author Barry Becker
  */
 public final class NegaMaxMemoryStrategy extends NegaMaxStrategy
-{
+                                         implements MemorySearchStrategy {
     /** Stores positions that have already been evaluated, so we do not need to repeat work. */
     private TranspositionTable lookupTable;
-
-    private int cacheHits = 0;
-    private int cacheNearHits = 0;
-    private int cacheMisses = 0;
-
 
     /**
      * Constructor.
@@ -33,6 +27,10 @@ public final class NegaMaxMemoryStrategy extends NegaMaxStrategy
     public NegaMaxMemoryStrategy( Searchable controller, ParameterArray weights ) {
         super( controller, weights );
         lookupTable = new TranspositionTable();
+    }
+
+    public TranspositionTable getTranspositionTable() {
+        return lookupTable;
     }
 
     /**
@@ -51,11 +49,11 @@ public final class NegaMaxMemoryStrategy extends NegaMaxStrategy
      */
     @Override
     protected TwoPlayerMove searchInternal( TwoPlayerMove lastMove,
-                                          int depth,
-                                          SearchWindow window, SearchTreeNode parent ) {
+                                           int depth,
+                                           SearchWindow window, SearchTreeNode parent ) {
         Long key = searchable_.getHashKey();
         Entry entry = lookupTable.get(key);
-        if (entryExists(lastMove, depth, window, entry)) {
+        if (lookupTable.entryExists(entry, lastMove, depth, window)) {
             if (entry.lowerValue > window.alpha) {
                 entry.bestMove.setInheritedValue(entry.lowerValue);
                 return entry.bestMove;
@@ -72,9 +70,11 @@ public final class NegaMaxMemoryStrategy extends NegaMaxStrategy
         if ( depth <= 0 || done ) {
             if (doQuiescentSearch(depth, done, lastMove))  {
                 TwoPlayerMove qMove = quiescentSearch(lastMove, depth, window, parent);
-                entry = new Entry(qMove, qMove.getInheritedValue());
-                lookupTable.put(key, entry);
-                return qMove;
+                if (qMove != null)  {
+                    entry = new Entry(qMove, qMove.getInheritedValue());
+                    lookupTable.put(key, entry);
+                    return qMove;
+                }
             }
             int sign = fromPlayer1sPerspective(lastMove) ? 1 : -1;
             int value = sign * lastMove.getValue();
@@ -85,47 +85,14 @@ public final class NegaMaxMemoryStrategy extends NegaMaxStrategy
             return lastMove;
         }
 
-        // generate a list of all (or bestPercent) candidate next moves, and pick the best one
-        MoveList list =
-                searchable_.generateMoves(lastMove, weights_, true);
+        MoveList list = searchable_.generateMoves(lastMove, weights_, true);
 
         if (depth == lookAhead_)
             numTopLevelMoves_ = list.size();
 
-        if ( emptyMoveList( list, lastMove) ) {
-            // if there are no possible next moves, return null (we hit the end of the game).
-            return null;
-        }
+        if ( emptyMoveList( list, lastMove) )   return null;
 
         return findBestMove(lastMove, depth, list, window, parent);
-    }
-
-
-    /**
-     * if we can just look up the best move in the transposition table, then just do that.
-     * @return saved best move in entry
-     */
-    private boolean entryExists(TwoPlayerMove lastMove, int depth, SearchWindow window, Entry entry) {
-        if (entry != null && entry.depth >= depth) {
-            cacheHits++;
-            System.out.println("Cache hit. \nentry.depth=" + entry.depth + " depth=" + depth  + "\n" + entry);
-
-            if (entry.upperValue <= window.alpha || entry.upperValue == entry.lowerValue)  {
-                entry.bestMove.setInheritedValue(entry.upperValue);
-                lastMove.setInheritedValue(-entry.upperValue);
-                return true;
-            }
-            if (entry.lowerValue >= window.beta) {
-                entry.bestMove.setInheritedValue(entry.lowerValue);
-                lastMove.setInheritedValue(-entry.lowerValue);
-                return true;
-            }
-        }
-        else {
-            if (entry != null) cacheNearHits++;
-            else cacheMisses++;
-        }
-        return false;
     }
 
 
@@ -164,18 +131,11 @@ public final class NegaMaxMemoryStrategy extends NegaMaxStrategy
                     bestMove = theMove;
                     entry.bestMove = theMove;
                     bestInheritedValue = selectedValue;
-                }
-                if ( alphaBeta_ ) {
-                    if ( bestInheritedValue > window.alpha ) {
-                        window.alpha = bestInheritedValue;
-                        bestMove = theMove;
-                        entry.bestMove = theMove;
-                    }
-                    if ( window.alpha >= window.beta ) {
-                        showPrunedNodesInTree( list, parent, i, selectedValue, window);
+                    if ( alphaBeta_ && bestInheritedValue >= window.beta) {
+                        showPrunedNodesInTree(list, parent, i, selectedValue, window);
                         break;
                     }
-                }
+                }  
             }
         }
         storeBestMove(window.alpha, entry, bestMove.getInheritedValue());

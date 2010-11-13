@@ -2,6 +2,7 @@ package com.becker.game.twoplayer.common.search.strategy;
 
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.examples.EvaluationPerspective;
+import com.becker.game.twoplayer.common.search.examples.OneLevelGameTreeExample;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**
@@ -13,14 +14,25 @@ public class MtdSearchStrategyTest extends AbstractSearchStrategyTst {
 
     @Override
     protected SearchStrategy createSearchStrategy(Searchable searchable, ParameterArray weights) {
-        return new MtdStrategy(new NegaMaxStrategy(searchable, weights));
+        return new MtdStrategy(new NegaMaxMemoryStrategy(searchable, weights));
     }
+
 
     @Override
     protected EvaluationPerspective getEvaluationPerspective() {
         return EvaluationPerspective.CURRENT_PLAYER;
     }
 
+    /**
+     * Look ahead one level and get the best move.
+     */
+    public void testOneLevelLookAheadPlayer1Search() {
+        searchOptions.setLookAhead(1);
+        verifyResult(new OneLevelGameTreeExample(true, getEvaluationPerspective()),
+                getOneLevelLookAheadPlayer1Result());
+    }
+
+    /*
     @Override
     protected SearchResult getOneLevelLookAheadPlayer1Result() {
         return new SearchResult("0", -2, 4);
@@ -61,5 +73,5 @@ public class MtdSearchStrategyTest extends AbstractSearchStrategyTst {
     @Override
     protected SearchResult getThreeLevelPlayer1WithABResult() {
         return new SearchResult("0", -5, 15);
-    }
+    }    */
 }

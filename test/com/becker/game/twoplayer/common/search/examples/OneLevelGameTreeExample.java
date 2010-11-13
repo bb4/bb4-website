@@ -6,9 +6,9 @@ import com.becker.game.twoplayer.common.search.TwoPlayerMoveStub;
 /**
  * A simple game tree for testing search strategies.
  * It looks something like this
- *                 ____   []  _____
- *                /                \
- *             [-8]               [-2]
+ *                 ___[6]____
+ *                /          \
+ *             [-8]         [-2]
  *
  * Move scores are evaluated from player one's perspective.
  * @author Barry Becker

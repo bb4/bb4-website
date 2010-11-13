@@ -33,14 +33,14 @@ public final class MtdStrategy implements SearchStrategy
 {
     /**
      * The "memory" search strategy to use. Must use memory/cache to avoid researching overhead.
-     * Either a memory enhanced negascout or memory enhanced NegaScout would work.
+     * Either a memory enhanced NegaMax or memory enhanced NegaScout would work.
      */
-    private SearchStrategy searchWithMemory_;
+    private MemorySearchStrategy searchWithMemory_;
 
     /**
      * Constructor.
     */
-    public MtdStrategy(SearchStrategy testSearchStrategy) {
+    public MtdStrategy(MemorySearchStrategy testSearchStrategy) {
         searchWithMemory_ = testSearchStrategy;
     }
 
@@ -53,19 +53,19 @@ public final class MtdStrategy implements SearchStrategy
      */
     public TwoPlayerMove search( TwoPlayerMove lastMove, SearchTreeNode parent ) {
         TwoPlayerMove selectedMove = searchInternal( lastMove, 0, parent);
-        return (selectedMove != null)? selectedMove : lastMove;
+        return (selectedMove != null) ? selectedMove : lastMove;
     }
 
 
     private TwoPlayerMove searchInternal( TwoPlayerMove lastMove, 
-                                          int f,  SearchTreeNode parent ) {
+                                          int f, SearchTreeNode parent ) {
         int g = f;
         int upperBound =  SearchStrategy.INFINITY;
         int lowerBound = -SearchStrategy.INFINITY;
 
         TwoPlayerMove selectedMove;
         do  {
-            int beta = (g == lowerBound)? g + 1 : g;
+            int beta = (g == lowerBound) ? g + 1 : g;
 
             //selectedMove = searchWithMemory_.search(lastMove, beta - 1, beta, parent);
             //g = selectedMove.getInheritedValue();

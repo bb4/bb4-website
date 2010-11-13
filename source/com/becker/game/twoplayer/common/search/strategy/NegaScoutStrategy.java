@@ -114,7 +114,7 @@ public class NegaScoutStrategy extends NegaMaxStrategy
                     window.alpha = selectedValue;
                 }
                 if (window.alpha >= window.beta) {      // beta cut-off
-                    System.out.println(getIndent(depth) + "beta cut-off1 because a=" + window.alpha + " >= " + window.beta);
+                    //System.out.println(getIndent(depth) + "beta cut-off1 because a=" + window.alpha + " >= " + window.beta);
                     theMove.setInheritedValue(window.alpha);
                     bestMove = theMove;
                     break;
@@ -122,7 +122,7 @@ public class NegaScoutStrategy extends NegaMaxStrategy
                 if (window.alpha >= newBeta) {
                     // re-search with narrower window (typical alpha beta search).
                     searchable_.makeInternalMove( theMove );
-                    System.out.println(getIndent(depth) + "doing full re-search because a=" + window.alpha + " >= newBeta="+ newBeta);
+                    //System.out.println(getIndent(depth) + "doing full re-search because a=" + window.alpha + " >= newBeta="+ newBeta);
                     selectedMove = searchInternal( theMove, depth-1, window.negateAndSwap(), child );
                     searchable_.undoInternalMove( theMove );
 
@@ -132,7 +132,7 @@ public class NegaScoutStrategy extends NegaMaxStrategy
                     bestMove = theMove;
 
                     if (window.alpha >= window.beta) {
-                        System.out.println(getIndent(depth) + "beta cut-off2 because a=" + window.alpha + ">= " + window.beta);
+                        //System.out.println(getIndent(depth) + "beta cut-off2 because a=" + window.alpha + ">= " + window.beta);
                         showPrunedNodesInTree(list, parent, i, selectedValue, window);
                         break;
                     }
@@ -141,7 +141,7 @@ public class NegaScoutStrategy extends NegaMaxStrategy
                 newBeta = window.alpha + 1;
             }
         }
-        System.out.println(getIndent(depth) + "bestMove="+ bestMove); // + " "+ window);
+        //System.out.println(getIndent(depth) + "bestMove="+ bestMove); // + " "+ window);
         bestMove.setSelected(true);
         lastMove.setInheritedValue(-bestMove.getInheritedValue());
         return bestMove;

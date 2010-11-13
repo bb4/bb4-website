@@ -8,6 +8,7 @@ import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.SearchableStub;
 import com.becker.game.twoplayer.common.search.TwoPlayerMoveStub;
 import com.becker.game.twoplayer.common.search.examples.*;
+import com.becker.game.twoplayer.common.search.transposition.TranspositionTable;
 import com.becker.optimization.parameter.ParameterArray;
 import junit.framework.TestCase;
 
@@ -281,7 +282,6 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
     }
     protected SearchResult getPruneTwoLevelWithABSearchPlayer2() {
         return new SearchResult( "1", 4, 6);
-
     }
     protected SearchResult getThreeLevelPlayer1Result() {
         return new SearchResult("0", -4, 14);
@@ -327,6 +327,10 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
         SearchResult actualResult =
                 new SearchResult(foundMove.getId(), inheritedValue, searchStrategy.getNumMovesConsidered());
 
+        if (searchStrategy instanceof MemorySearchStrategy) {
+            TranspositionTable table = ((MemorySearchStrategy) searchStrategy ).getTranspositionTable();
+            System.out.println("table=" + table);
+        }
         assertEquals(prefix + " Unexpected search result", expectedSearchResult, actualResult);
     }
 
