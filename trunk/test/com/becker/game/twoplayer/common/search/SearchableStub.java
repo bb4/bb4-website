@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.common.search;
 import com.becker.game.common.Move;
 import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
 import com.becker.optimization.parameter.ParameterArray;
 

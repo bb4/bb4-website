@@ -3,7 +3,7 @@ package com.becker.game.twoplayer.common;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.persistence.TwoPlayerGameExporter;
 import com.becker.game.twoplayer.common.persistence.TwoPlayerGameImporter;
-import com.becker.game.twoplayer.common.search.SearchOptions;
+import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
 import com.becker.game.twoplayer.common.search.transposition.ZobristHash;

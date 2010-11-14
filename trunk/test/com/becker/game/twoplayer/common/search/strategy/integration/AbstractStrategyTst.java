@@ -6,7 +6,7 @@ import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.ISearchableHelper;
-import com.becker.game.twoplayer.common.search.SearchOptions;
+import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.Progress;
 import com.becker.game.twoplayer.common.search.SearchableHelper;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;

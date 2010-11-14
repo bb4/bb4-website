@@ -1,7 +1,8 @@
 package com.becker.game.twoplayer.go;
 
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
-import com.becker.game.twoplayer.common.search.SearchOptions;
+import com.becker.game.twoplayer.common.search.options.BruteSearchOptions;
+import com.becker.game.twoplayer.common.search.options.SearchOptions;
 
 /**
  * @author Barry Becker
@@ -37,7 +38,9 @@ public class GoOptions extends TwoPlayerOptions {
 
     @Override
     protected SearchOptions createDefaultSearchOptions() {
-        return new SearchOptions(DEFAULT_LOOK_AHEAD, DEFAULT_PERCENTAGE_BEST_MOVES, DEFAULT_MIN_BEST_MOVES, 16);
+
+        return new SearchOptions(new BruteSearchOptions(DEFAULT_LOOK_AHEAD, 16),
+                DEFAULT_PERCENTAGE_BEST_MOVES, DEFAULT_MIN_BEST_MOVES);
     }
 
 

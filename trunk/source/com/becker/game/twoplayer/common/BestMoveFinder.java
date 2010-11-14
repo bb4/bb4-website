@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.common;
 
 import com.becker.game.common.MoveList;
-import com.becker.game.twoplayer.common.search.SearchOptions;
+import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
 
 import java.util.Collections;
@@ -41,7 +41,7 @@ public class BestMoveFinder {
 
         // reverse the order so the best move (using static board evaluation) is first
         SearchStrategyType searchType = searchOptions_.getSearchStrategyMethod();
-        if ( searchType.sortAscending(player1, player1sPerspective)) {
+        if (player1 == player1sPerspective) { //( searchType.sortAscending(player1, player1sPerspective)) {
            Collections.reverse( moveList );
         }
 
