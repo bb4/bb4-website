@@ -1,12 +1,14 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
+import com.becker.game.common.Move;
+import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.optimization.parameter.ParameterArray;
 
-import java.util.List;
+import java.util.LinkedList;
 
 /**
  *  Implementation of Upper Confidedence Tree (UCT) search strategy.
@@ -17,14 +19,16 @@ import java.util.List;
  */
 public class UctStrategy extends AbstractSearchStrategy {
 
+    private double exploreExploitRatio;
+
     /**
-     * Construct the strategy.
-     * do not call directly. Use createSearchStrategy factory method instead.
+     * Constructor - do not call directly.
      * @param searchable the game controller that has options and can make/undo moves.
      * @param weights coefficients for the evaluation polynomial that indirectly determines the best move.
      */
     UctStrategy( Searchable searchable, ParameterArray weights ) {
         super(searchable, weights);
+        exploreExploitRatio = getOptions().getMonteCarloSearchOptions().getExploreExploitRatio();
     }
 
     @Override
@@ -37,39 +41,93 @@ public class UctStrategy extends AbstractSearchStrategy {
      */
     public TwoPlayerMove search(TwoPlayerMove lastMove, SearchTreeNode parent) {
 
-        return searchInternal( lastMove, parent );
+        int numSimulations = 0;
+        int maxSimulations = getOptions().getMonteCarloSearchOptions().getMaxSimulations();
+        boolean interrupted = false;
+
+        UctNode root = new UctNode(lastMove);
+
+        while (numSimulations < maxSimulations && !interrupted) {
+            playSimulation(root, parent);
+            numSimulations++;
+            percentDone_ = (100 * numSimulations) / maxSimulations;
+        }
+        return root.bestNode.move;
     }
 
-     /**
-     * {@inheritDoc}
-     */
-    TwoPlayerMove searchInternal(TwoPlayerMove lastMove, SearchTreeNode parent) {
+    public boolean playSimulation(UctNode node, SearchTreeNode parent) {
 
-        boolean done = searchable_.done( lastMove, false);
+        boolean player1Wins = false;
+        if (node.numVisits == 0) {
+            player1Wins = playRandomGame(node.move);
+        }
+        else {
+            if (node.children == null) {
+                createChildren(node);
+            }
+            UctNode nextNode = uctSelect(node);
 
-        // TODO
-        return lastMove;
+            // may be null if there are no move valid moves.
+            // this may be happening a little more than expected.
+            if (nextNode != null) {
+                searchable_.makeInternalMove(nextNode.move);
+                player1Wins = playSimulation(nextNode, parent);
+                searchable_.undoInternalMove(nextNode.move);
+            }
+        }
+
+        node.numVisits++;
+        node.updateWin(player1Wins);
+
+        node.setBestNode();
+        return player1Wins;
     }
-
 
     /**
-     * Update the percentage done serching variable for the progress bar
-     * if we are at the top level (otherwise this is a no-op).
+     * Selects the best child of node.
+     * @return the best child of node.
      */
-    @Override
-    protected void updatePercentDone(int depth, List remainingNextMoves) {
-        percentDone_ = 100 * (numTopLevelMoves_ - remainingNextMoves.size()) / numTopLevelMoves_;
+    private UctNode uctSelect(UctNode node) {
+        double bestUct = -1.0;
+        UctNode selected = null;
+        for (UctNode child : node.children) {
+            double uctValue = node.calculateUctValue(exploreExploitRatio, node.numVisits);
+            if (uctValue > bestUct) {
+                bestUct = uctValue;
+                selected = child;
+            }
+        }
+        return selected;
     }
-
 
     /**
-     * For minimax this is always true, but it depends on the player for the nega type searches.
-     * @return true if we should evaluate the board from the point of view of player one.
+     * Add the children to the node.
+     * @param node parent node to add children to.
      */
-    @Override
-    protected boolean fromPlayer1sPerspective(TwoPlayerMove lastMove) {
-        return true;
+    private void createChildren(UctNode node) {
+        node.children = new LinkedList<UctNode>();
+        MoveList moves = searchable_.generateMoves(node.move, weights_, true);
+        for (Move m : moves) {
+             node.children.add(new UctNode((TwoPlayerMove) m));
+        }
     }
 
+    /**
+     * Plays a semi-random game from the current node position.
+     * Its semi random in the sense that we try to avoid obviosly bad moves.
+     * @return whether or not player1 won.
+     */
+    private boolean playRandomGame(TwoPlayerMove move) {
 
+        if (searchable_.done(move, false)) {
+            return move.getValue() > 0;
+        }
+        MoveList moves = searchable_.generateMoves(move, weights_, true);
+        TwoPlayerMove randomMove = (TwoPlayerMove) moves.getRandomMove();
+
+        searchable_.makeInternalMove(randomMove);
+        boolean result = playRandomGame(randomMove);
+        searchable_.undoInternalMove(randomMove);
+        return result;
+    }
 }

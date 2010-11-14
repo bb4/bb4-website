@@ -127,12 +127,6 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
     }
 
     /**
-     * Update the percentage done serching variable for the progress bar
-     * if we are at the top level (otherwise this is a no-op).
-     */
-    protected abstract void updatePercentDone(int depth, List remainingNextMoves);
-
-    /**
      * Get the next move and increment the number of moves considered.
      * @return next move in sorted generated next move list.
      */

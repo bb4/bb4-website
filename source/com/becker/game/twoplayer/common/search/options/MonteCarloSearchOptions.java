@@ -15,8 +15,11 @@ public class MonteCarloSearchOptions {
     /** Number of moves to look ahead while searching for the best move. */
     private static final int DEFAULT_MAX_SIMULATIONS = 1000;
 
+    private static final double DEFAULT_EXPLORE_EXPLOIT_RATIO = 1.0;
 
     private int maxSimulations_;
+
+
 
 
     /**
@@ -51,5 +54,14 @@ public class MonteCarloSearchOptions {
      */
     public final void setMaxSimulations( int maxSim) {
         maxSimulations_ = maxSim;
+    }
+
+    /**
+     * The larget this is (bigger than 1) the closer to uniform search we get (i.e exploration).
+     * The smaller it is (less tahn 1) the more selective the search becomes (i.e. we exploit the known good moves).
+     * There needs to be a balance.
+     */
+    public final double getExploreExploitRatio() {
+         return DEFAULT_EXPLORE_EXPLOIT_RATIO;
     }
 }

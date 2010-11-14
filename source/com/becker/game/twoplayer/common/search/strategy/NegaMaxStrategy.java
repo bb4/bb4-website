@@ -28,7 +28,7 @@ public class NegaMaxStrategy extends AbstractBruteSearchStrategy {
     @Override
     public TwoPlayerMove search( TwoPlayerMove lastMove, SearchTreeNode parent ) {
 
-        SearchWindow window = getOptions().getInitialSearchWindow();
+        SearchWindow window = getOptions().getBruteSearchOptions().getInitialSearchWindow();
         return searchInternal( lastMove, lookAhead_, new SearchWindow(window.beta, window.alpha), parent);
     }
 
