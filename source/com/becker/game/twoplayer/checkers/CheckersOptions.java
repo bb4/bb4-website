@@ -1,7 +1,8 @@
 package com.becker.game.twoplayer.checkers;
 
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
-import com.becker.game.twoplayer.common.search.SearchOptions;
+import com.becker.game.twoplayer.common.search.options.BruteSearchOptions;
+import com.becker.game.twoplayer.common.search.options.SearchOptions;
 
 /**
  *
@@ -13,6 +14,6 @@ public class CheckersOptions extends TwoPlayerOptions {
 
     @Override
     protected SearchOptions createDefaultSearchOptions() {
-        return new SearchOptions(4, 100, 10);
+        return new SearchOptions(new BruteSearchOptions(4), 100, 10);
     }
 }

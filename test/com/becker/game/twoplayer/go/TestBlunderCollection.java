@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.go;
 
-import com.becker.game.twoplayer.common.search.SearchOptions;
+import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -21,7 +21,7 @@ public class TestBlunderCollection extends GoTestCase {
      * @param options default options to override
      */
     @Override
-    protected void setOptionOverrides(SearchOptions options) { 
+    protected void setOptionOverrides(SearchOptions options) {
         options.setAlphaBeta(true);
         options.setLookAhead(2);
         options.setPercentageBestMoves(80);

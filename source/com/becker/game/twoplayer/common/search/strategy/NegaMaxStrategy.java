@@ -13,7 +13,7 @@ import com.becker.optimization.parameter.ParameterArray;
  *  sections of code for minimizing and maximizing search.
  *  @author Barry Becker
  */
-public class NegaMaxStrategy extends AbstractSearchStrategy {
+public class NegaMaxStrategy extends AbstractBruteSearchStrategy {
     /**
      * Construct NegaMax the strategy given a controller interface.
      * @inheritDoc

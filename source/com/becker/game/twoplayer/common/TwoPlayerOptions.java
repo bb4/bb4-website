@@ -2,7 +2,7 @@ package com.becker.game.twoplayer.common;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameOptions;
-import com.becker.game.twoplayer.common.search.SearchOptions;
+import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.sound.MusicMaker;
 
 /**

@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
 import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.common.search.SearchOptions;
+import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.SearchWindow;
 import com.becker.game.twoplayer.common.search.tree.IGameTreeViewable;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
@@ -67,9 +67,9 @@ public final class MtdStrategy implements SearchStrategy
         do  {
             int beta = (g == lowerBound) ? g + 1 : g;
 
-            //selectedMove = searchWithMemory_.search(lastMove, beta - 1, beta, parent);
-            //g = selectedMove.getInheritedValue();
-            getOptions().setInitialSearchWindow(new SearchWindow(-beta + 1, -beta));
+            // selectedMove = searchWithMemory_.search(lastMove, beta - 1, beta, parent);
+            // g = selectedMove.getInheritedValue();
+            getOptions().getBruteSearchOptions().setInitialSearchWindow(new SearchWindow(beta - 1, beta));
             selectedMove = searchWithMemory_.search(lastMove, parent);
             g = -selectedMove.getInheritedValue();
 

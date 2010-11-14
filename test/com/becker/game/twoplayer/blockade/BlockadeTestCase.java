@@ -1,11 +1,9 @@
 package com.becker.game.twoplayer.blockade;
 
 import com.becker.common.util.FileUtil;
-import com.becker.game.twoplayer.common.search.SearchOptions;
+import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
 import com.becker.game.common.*;
-import com.becker.game.twoplayer.blockade.BlockadeController;
-import com.becker.game.twoplayer.blockade.BlockadeMove;
 import com.becker.game.twoplayer.common.*;
 import com.becker.ui.file.GenericFileFilter;
 import junit.framework.*;

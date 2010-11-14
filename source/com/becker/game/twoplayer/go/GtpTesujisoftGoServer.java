@@ -3,7 +3,7 @@ package com.becker.game.twoplayer.go;
 import com.becker.common.util.FileUtil;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.Move;
-import com.becker.game.twoplayer.common.search.SearchOptions;
+import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
 import com.becker.game.twoplayer.go.board.elements.GoStone;
 import go.Point;
@@ -169,16 +169,15 @@ public class GtpTesujisoftGoServer
         controller_ = new GoController(size, size, 0);
         SearchOptions options = controller_.getTwoPlayerOptions().getSearchOptions();
 
-        options.setAlphaBeta(true);
-        options.setLookAhead(2);
+        options.getBruteSearchOptions().setAlphaBeta(true);
+        options.getBruteSearchOptions().setLookAhead(2);
+        options.getBruteSearchOptions().setQuiescence(false);
         options.setPercentageBestMoves(50);
-        options.setQuiescence(false);
         options.setSearchStrategyMethod(SearchStrategyType.MINIMAX);
         boardSize_ = size;
     }
 
-    private void bwBoard(StringBuffer response)
-    {
+    private void bwBoard(StringBuffer response) {
         response.append('\n');
         for (int x = 0; x < boardSize_; ++x)
         {
@@ -188,8 +187,7 @@ public class GtpTesujisoftGoServer
         }
     }
 
-    private boolean cmdBoardsize(String[] cmdArray, StringBuffer response)
-    {
+    private boolean cmdBoardsize(String[] cmdArray, StringBuffer response) {
         IntegerArgument argument = parseIntegerArgument(cmdArray, response);
         if (argument == null)
             return false;
@@ -202,14 +200,12 @@ public class GtpTesujisoftGoServer
         return true;
     }
 
-    private boolean cmdClearBoard()
-    {
+    private boolean cmdClearBoard() {
         controller_.reset();
         return true;
     }
 
-    private boolean cmdDelay(String[] cmdArray, StringBuffer response)
-    {
+    private boolean cmdDelay(String[] cmdArray, StringBuffer response) {
         IntegerArgument argument = parseIntegerArgument(cmdArray, response);
         if (argument == null)
         {
@@ -284,8 +280,7 @@ public class GtpTesujisoftGoServer
         return true;
     }
 
-    private boolean cmdGenmove(StringBuffer response)
-    {
+    private boolean cmdGenmove(StringBuffer response) {
         boolean blackPlays = controller_.getCurrentPlayer().equals(controller_.getPlayers().getPlayer1());
         controller_.requestComputerMove( blackPlays, true );
 
@@ -298,14 +293,12 @@ public class GtpTesujisoftGoServer
         return true;
     }
 
-    private void cmdInvalid()
-    {
+    private void cmdInvalid() {
         printInvalidResponse("This is an invalid GTP response.\n" +
                              "It does not start with a status character.\n");
     }
 
-    private boolean cmdPlay(String[] cmdArray, StringBuffer response)
-    {
+    private boolean cmdPlay(String[] cmdArray, StringBuffer response) {
         ColorPointArgument argument =
             parseColorPointArgument(cmdArray, response, boardSize_);
         if (argument == null)

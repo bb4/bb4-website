@@ -6,7 +6,8 @@ import com.becker.game.common.GameOptions;
 import com.becker.game.common.ui.GameOptionsDialog;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
-import com.becker.game.twoplayer.common.search.SearchOptions;
+import com.becker.game.twoplayer.common.search.SearchAttribute;
+import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
 import com.becker.ui.components.NumberInput;
 
@@ -21,25 +22,27 @@ import java.awt.event.*;
  * @author Barry Becker
  */
 public class TwoPlayerOptionsDialog extends GameOptionsDialog
-                                    implements ActionListener, ItemListener
-{
+                                    implements ActionListener, ItemListener {
+
     private JRadioButton[] strategyButtons_;  // search alg radio button group
     private SearchStrategyType algorithm_;
-    private NumberInput lookAheadField_;
     private NumberInput bestPercentageField_;
-    private JCheckBox alphabetaCheckbox_;
-    private JCheckBox quiescenceCheckbox_;
     private JCheckBox gameTreeCheckbox_;
 
-    // constructor
-    public TwoPlayerOptionsDialog( JFrame parent, GameController controller )
-    {
+    private BruteSearchOptionsPanel bruteOptionsPanel_;
+    private MonteCarloOptionsPanel monteCarloOptionsPanel_;
+
+    /**
+     * Constructor
+     */
+    public TwoPlayerOptionsDialog( JFrame parent, GameController controller ) {
         super( parent, controller);
     }
 
-
-    private TwoPlayerController get2PlayerController()
-    {
+    /**
+     * @return controller
+     */
+    private TwoPlayerController get2PlayerController() {
         return (TwoPlayerController) controller_;
     }
 
@@ -47,11 +50,10 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
     public GameOptions getOptions() {
 
         TwoPlayerOptions options = (TwoPlayerOptions) get2PlayerController().getOptions();
-        SearchOptions searchOptions =  options.getSearchOptions();
+        SearchOptions searchOptions = getSearchOptions();
 
-        searchOptions.setAlphaBeta(alphabetaCheckbox_.isSelected());
-        searchOptions.setQuiescence(quiescenceCheckbox_.isSelected());
-        searchOptions.setLookAhead(lookAheadField_.getIntValue());
+        bruteOptionsPanel_.updateBruteOptionsOptions();
+        monteCarloOptionsPanel_.updateMonteCarloOptionsOptions();
 
         searchOptions.setSearchStrategyMethod(getSelectedStrategy());
         searchOptions.setPercentageBestMoves(bestPercentageField_.getIntValue());
@@ -59,16 +61,18 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
         return options;
     }
 
+
     /**
      * @return algorithm tab panel.
      */
     @Override
-    protected JPanel createControllerParamPanel()
-    {
-        TwoPlayerOptions options = get2PlayerController().getTwoPlayerOptions();
-        SearchOptions searchOptions =  options.getSearchOptions();
+    protected JPanel createControllerParamPanel() {
+
+        SearchOptions searchOptions = getSearchOptions();
 
         JPanel p = new JPanel();
+        p.setName(GameContext.getLabel("ALGORITHM"));
+
         p.setLayout( new BoxLayout( p, BoxLayout.Y_AXIS ) );
         p.setBorder( BorderFactory.createTitledBorder(
                        BorderFactory.createEtchedBorder(),
@@ -83,6 +87,31 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
         algorithmLabel.setAlignmentX( Component.LEFT_ALIGNMENT );
         p.add( algorithmLabel );
 
+        p.add(createStrategyRadioButtons());
+
+        bruteOptionsPanel_ = new BruteSearchOptionsPanel(searchOptions);
+        monteCarloOptionsPanel_ = new MonteCarloOptionsPanel(searchOptions);
+
+        // best percentage moves
+        bestPercentageField_ =
+                new NumberInput( GameContext.getLabel("PERCENTAGE_AT_PLY"), searchOptions.getPercentageBestMoves(),
+                                 GameContext.getLabel("PERCENTAGE_AT_PLY_TIP"), 0, 100, true);
+
+        p.add( bestPercentageField_ );
+        p.add( bruteOptionsPanel_ );
+        p.add( monteCarloOptionsPanel_ );
+        return p;
+    }
+
+    /**
+     * @return Radio buttons for selecting the strategy.
+     */
+    private JPanel createStrategyRadioButtons() {
+        JPanel p = new JPanel();
+        p.setLayout( new BoxLayout( p, BoxLayout.Y_AXIS ) );
+
+        SearchOptions searchOptions = getSearchOptions();
+
         ButtonGroup buttonGroup = new ButtonGroup();
         int numStrategies = SearchStrategyType.values().length;
         strategyButtons_ = new JRadioButton[numStrategies];
@@ -90,60 +119,23 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
         algorithm_ = searchOptions.getSearchStrategyMethod();
         for (int i=0; i<numStrategies; i++) {
             SearchStrategyType alg = SearchStrategyType.values()[i];
-            strategyButtons_[i] = new JRadioButton( alg.getLabel());
-            p.add( createRadioButtonPanel( strategyButtons_[i], buttonGroup, algorithm_ == alg ) );
+            strategyButtons_[i] = new JRadioButton(alg.getLabel());
+            strategyButtons_[i].setToolTipText(alg.getTooltip());
+            p.add( createRadioButtonPanel( strategyButtons_[i], buttonGroup, algorithm_ == alg ));
         }
-
-        // look ahead
-        JLabel treeUpperBound = new JLabel();
-        lookAheadField_ =
-                new NumberInput( GameContext.getLabel("MOVES_TO_LOOKAHEAD"), searchOptions.getLookAhead(),
-                                 GameContext.getLabel("MOVES_TO_LOOKAHEAD_TIP"), 1, 16, true);
-        lookAheadField_.addKeyListener( new UpperBoundKeyListener( lookAheadField_, treeUpperBound) );
-
-        // best percentage moves
-        bestPercentageField_ =
-                new NumberInput( GameContext.getLabel("PERCENTAGE_AT_PLY"), searchOptions.getPercentageBestMoves(),
-                                 GameContext.getLabel("PERCENTAGE_AT_PLY_TIP"), 0, 100, true);
-        bestPercentageField_.addKeyListener( new UpperBoundKeyListener( bestPercentageField_, treeUpperBound) );
-
-        JPanel p3 = new JPanel( new FlowLayout() );
-        JLabel treeUpperBoundLabel = new JLabel( GameContext.getLabel("UPPER_BOUND") );
-
-        treeUpperBound.setText(calcTreeUpperBound(searchOptions.getLookAhead(),
-                               searchOptions.getPercentageBestMoves() ) + "  ");
-        p3.setAlignmentX( Component.LEFT_ALIGNMENT );
-        p3.add( treeUpperBoundLabel );
-        p3.add( treeUpperBound );
-
-        p.add( lookAheadField_ );
-        p.add( bestPercentageField_ );
-        p.add( p3 );
-
-        // alpha-beta pruning option
-        alphabetaCheckbox_ = new JCheckBox( GameContext.getLabel("USE_PRUNING"), searchOptions.getAlphaBeta() );
-        alphabetaCheckbox_.setToolTipText( GameContext.getLabel("USE_PRUNING_TIP") );
-        alphabetaCheckbox_.addActionListener( this );
-        p.add( alphabetaCheckbox_ );
-
-        // show profile info option
-        quiescenceCheckbox_ = new JCheckBox( GameContext.getLabel("USE_QUIESCENCE"), searchOptions.getQuiescence() );
-        quiescenceCheckbox_.setToolTipText( GameContext.getLabel("USE_QUIESCENCE_TIP") );
-        quiescenceCheckbox_.addActionListener( this );
-        //quiescenceCheckbox_.setEnabled(false); // not currently implemented
-        p.add( quiescenceCheckbox_ );
-
-        p.setName(GameContext.getLabel("ALGORITHM"));
-
         return p;
+    }
+
+    private SearchOptions getSearchOptions() {
+        TwoPlayerOptions options = (TwoPlayerOptions) get2PlayerController().getOptions();
+        return  options.getSearchOptions();
     }
 
     /**
      * @return debug params tab panel
      */
     @Override
-    protected JPanel createDebugParamPanel()
-    {
+    protected JPanel createDebugParamPanel() {
         JPanel outerContainer = new JPanel(new BorderLayout());
         JPanel p = createDebugOptionsPanel();
 
@@ -164,38 +156,21 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
         return outerContainer;
     }
 
-
-    /**
-     * called when a button has been pressed
-     */
-    @Override
-    public void actionPerformed( ActionEvent e )
-    {
-        Object source = e.getSource();
-        super.actionPerformed(e);
-    }
-
-    /**
-     * Calculate an upper limit on the number of moves that will be examined by the minimax algorithm.
-     * The actual number of moves may be much less if alpha-beta is used or if
-     * the natural branch factor for the game is less then the numBestMoves limit
-     */
-    private static long calcTreeUpperBound( int lookAhead, int numBestMoves )
-    {
-        long upperBound = numBestMoves;
-        for ( int i = 2; i <= lookAhead; i++ )
-            upperBound += Math.pow( (double) numBestMoves, (double) i );
-        return upperBound;
-    }
-
     /**
      * Invoked when a radio button has changed its selection state.
      */
     @Override
-    public void itemStateChanged( ItemEvent e )
-    {
+    public void itemStateChanged( ItemEvent e ) {
         super.itemStateChanged(e);
         algorithm_ = getSelectedStrategy();
+        showOptionsBasedOnAlgorithm();
+    }
+
+    private void showOptionsBasedOnAlgorithm() {
+
+        boolean bruteForceStrategy = algorithm_.hasAttribute(SearchAttribute.BRUTE_FORCE);
+        bruteOptionsPanel_.setVisible(bruteForceStrategy);
+        monteCarloOptionsPanel_.setVisible(!bruteForceStrategy);
     }
 
     private SearchStrategyType getSelectedStrategy() {
@@ -207,26 +182,4 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
         }
         return SearchStrategyType.MINIMAX; // default
     }
-
-
-    private class UpperBoundKeyListener extends KeyAdapter
-    {
-        NumberInput field_ = null;
-        JLabel treeBound_ = null;
-
-        // constructor
-        // field the field to check for changed text
-        UpperBoundKeyListener( NumberInput field, JLabel treeBound )
-        {
-            field_ = field;
-            treeBound_ = treeBound;
-        }
-
-        @Override
-        public void keyPressed( KeyEvent evt )
-        {
-            treeBound_.setText( "" + calcTreeUpperBound( lookAheadField_.getIntValue(),  bestPercentageField_.getIntValue()) );
-        }
-    }
-
 }

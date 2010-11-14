@@ -10,17 +10,11 @@ import com.becker.optimization.parameter.ParameterArray;
  * 
  * @author Barry Becker
  */
-public class MtdSearchStrategyTest extends AbstractSearchStrategyTst {
+public class MtdNegaMaxSearchStrategyTest extends NegaMaxMemorySearchStrategyTest {
 
     @Override
     protected SearchStrategy createSearchStrategy(Searchable searchable, ParameterArray weights) {
         return new MtdStrategy(new NegaMaxMemoryStrategy(searchable, weights));
-    }
-
-
-    @Override
-    protected EvaluationPerspective getEvaluationPerspective() {
-        return EvaluationPerspective.CURRENT_PLAYER;
     }
 
     /**

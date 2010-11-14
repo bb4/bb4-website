@@ -3,7 +3,7 @@ package com.becker.game.twoplayer.common.search.strategy;
 import com.becker.game.common.GameWeights;
 import com.becker.game.common.GameWeightsStub;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
-import com.becker.game.twoplayer.common.search.SearchOptions;
+import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.SearchableStub;
 import com.becker.game.twoplayer.common.search.TwoPlayerMoveStub;

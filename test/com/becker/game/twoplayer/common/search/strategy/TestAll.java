@@ -23,7 +23,8 @@ public class TestAll extends TestCase {
         // these still need work.
         suite.addTestSuite(NegaMaxMemorySearchStrategyTest.class);
         suite.addTestSuite(NegaScoutMemorySearchStrategyTest.class);
-        suite.addTestSuite(MtdSearchStrategyTest.class);
+        suite.addTestSuite(MtdNegaMaxSearchStrategyTest.class);
+        suite.addTestSuite(MtdNegaScoutSearchStrategyTest.class);
 
         return suite;
     }

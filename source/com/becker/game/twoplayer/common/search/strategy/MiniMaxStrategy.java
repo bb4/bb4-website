@@ -12,7 +12,7 @@ import com.becker.optimization.parameter.ParameterArray;
  * This is the simplest search strategy to which the other variants are compared.
  *  @author Barry Becker
  */
-public final class MiniMaxStrategy extends AbstractSearchStrategy
+public final class MiniMaxStrategy extends AbstractBruteSearchStrategy
 {
     /**
      * Constructor for the strategy.

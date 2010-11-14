@@ -1,7 +1,8 @@
 package com.becker.game.twoplayer.tictactoe;
 
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
-import com.becker.game.twoplayer.common.search.SearchOptions;
+import com.becker.game.twoplayer.common.search.options.BruteSearchOptions;
+import com.becker.game.twoplayer.common.search.options.SearchOptions;
 
 /**
  * @author Barry Becker
@@ -18,11 +19,11 @@ public class TicTacToeOptions extends TwoPlayerOptions {
     private static final int DEFAULT_MIN_BEST_MOVES = 5;
 
 
-    public TicTacToeOptions() {
-    }
+    public TicTacToeOptions() {}
 
     @Override
     protected SearchOptions createDefaultSearchOptions() {
-        return new SearchOptions(DEFAULT_LOOK_AHEAD, DEFAULT_PERCENTAGE_BEST_MOVES, DEFAULT_MIN_BEST_MOVES);
+        return new SearchOptions(new BruteSearchOptions(DEFAULT_LOOK_AHEAD),
+                                 DEFAULT_PERCENTAGE_BEST_MOVES, DEFAULT_MIN_BEST_MOVES);
     }
 }
