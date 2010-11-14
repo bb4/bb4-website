@@ -18,6 +18,7 @@ import com.becker.optimization.parameter.ParameterArray;
  */
 public final class NegaMaxMemoryStrategy extends NegaMaxStrategy
                                          implements MemorySearchStrategy {
+
     /** Stores positions that have already been evaluated, so we do not need to repeat work. */
     private TranspositionTable lookupTable;
 
@@ -39,7 +40,7 @@ public final class NegaMaxMemoryStrategy extends NegaMaxStrategy
     @Override
     public TwoPlayerMove search( TwoPlayerMove lastMove, SearchTreeNode parent ) {
         // need to negate alpha and beta on initial call.
-        SearchWindow window = getOptions().getInitialSearchWindow();
+        SearchWindow window = getOptions().getBruteSearchOptions().getInitialSearchWindow();
         int g = window.getMidPoint();
         return searchInternal( lastMove, lookAhead_, new SearchWindow(g, g), parent );
     }

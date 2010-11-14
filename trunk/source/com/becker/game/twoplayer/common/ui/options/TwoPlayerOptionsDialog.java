@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.common.ui;
+package com.becker.game.twoplayer.common.ui.options;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameController;
@@ -100,6 +100,7 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
         p.add( bestPercentageField_ );
         p.add( bruteOptionsPanel_ );
         p.add( monteCarloOptionsPanel_ );
+        showOptionsBasedOnAlgorithm();
         return p;
     }
 

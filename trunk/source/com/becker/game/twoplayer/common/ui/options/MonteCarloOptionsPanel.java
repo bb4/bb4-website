@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.common.ui;
+package com.becker.game.twoplayer.common.ui.options;
 
 import com.becker.common.util.Util;
 import com.becker.game.common.GameContext;
