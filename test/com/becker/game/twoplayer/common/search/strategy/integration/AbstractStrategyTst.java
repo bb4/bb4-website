@@ -6,6 +6,7 @@ import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.ISearchableHelper;
+import com.becker.game.twoplayer.common.search.options.BruteSearchOptions;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.Progress;
 import com.becker.game.twoplayer.common.search.SearchableHelper;
@@ -50,72 +51,72 @@ public abstract class AbstractStrategyTst extends TestCase {
      * Edge case where no searching is actually done. The found move will be the last move.
      */
     public void testZeroLookAheadSearch() {
-        searchOptions.setLookAhead(0);
+        searchOptions.getBruteSearchOptions().setLookAhead(0);
         verifyMoves("ZeroLookAhead", getExpectedZeroLookAheadMoves());
     }
 
     public void testOneLevelLookAheadSearch() {
-        searchOptions.setLookAhead(1);
+        searchOptions.getBruteSearchOptions().setLookAhead(1);
         verifyMoves("OneLevelLookAhead", getExpectedOneLevelLookAheadMoves());
     }
 
     public void testOneLevelWithQuiescenceSearch() {
-        searchOptions.setLookAhead(1);
-        searchOptions.setQuiescence(true);
+        searchOptions.getBruteSearchOptions().setLookAhead(1);
+        searchOptions.getBruteSearchOptions().setQuiescence(true);
         verifyMoves("OneLevelWithQuiescence", getExpectedOneLevelWithQuiescenceMoves());
     }
 
     public void testOneLevelWithQuiescenceAndABSearch() {
-        searchOptions.setLookAhead(1);
-        searchOptions.setQuiescence(true);
-        searchOptions.setAlphaBeta(true);
+        searchOptions.getBruteSearchOptions().setLookAhead(1);
+        searchOptions.getBruteSearchOptions().setQuiescence(true);
+        searchOptions.getBruteSearchOptions().setAlphaBeta(true);
         verifyMoves("OneLevelWithQuiescenceAndAB", getExpectedOneLevelWithQuiescenceAndABMoves());
     }
 
     public void testTwoLevelLookAheadSearch() {
-        searchOptions.setLookAhead(2);
+        searchOptions.getBruteSearchOptions().setLookAhead(2);
         verifyMoves("TwoLevelLookAhead", getExpectedTwoLevelLookAheadMoves());
     }
 
     public void testFourLevelLookAheadSearch() {
-        searchOptions.setLookAhead(4);
+        searchOptions.getBruteSearchOptions().setLookAhead(4);
         verifyMoves("FourLevelLookAhead", getExpectedFourLevelLookaheadMoves());
     }
 
     public void testFourLevelBest20PercentSearch() {
-        searchOptions.setLookAhead(4);
+        searchOptions.getBruteSearchOptions().setLookAhead(4);
         searchOptions.setPercentageBestMoves(20);
         verifyMoves("FourLevelBest20Percent", getExpectedFourLevelBest20PercentMoves());
     }
 
     public void testTwoLevelWithQuiescenceLookAheadSearch() {
-        searchOptions.setLookAhead(2);
-        searchOptions.setQuiescence(true);
+        searchOptions.getBruteSearchOptions().setLookAhead(2);
+        searchOptions.getBruteSearchOptions().setQuiescence(true);
         verifyMoves("TwoLevelWithQuiescence", getExpectedTwoLevelWithQuiescenceMoves());
     }
 
     public void testTwoLevelWithQuiescenceAndABSearch() {
-        searchOptions.setLookAhead(1);
-        searchOptions.setQuiescence(true);
-        searchOptions.setAlphaBeta(true);
+        searchOptions.getBruteSearchOptions().setLookAhead(1);
+        searchOptions.getBruteSearchOptions().setQuiescence(true);
+        searchOptions.getBruteSearchOptions().setAlphaBeta(true);
         verifyMoves("TwoLevelWithQuiescenceAndAB", getExpectedTwoLevelWithQuiescenceAndABMoves());
     }
 
     public void testThreeLevelWithQuiescenceLookAheadSearch() {
-        searchOptions.setLookAhead(3);
-        searchOptions.setQuiescence(true);
+        searchOptions.getBruteSearchOptions().setLookAhead(3);
+        searchOptions.getBruteSearchOptions().setQuiescence(true);
         verifyMoves("ThreeLevelWithQuiescence", getExpectedThreeLevelWithQuiescenceMoves());
     }
 
     public void testFourLevelWithQuiescenceLookAheadSearch() {
-        searchOptions.setLookAhead(4);
-        searchOptions.setQuiescence(true);
+        searchOptions.getBruteSearchOptions().setLookAhead(4);
+        searchOptions.getBruteSearchOptions().setQuiescence(true);
         verifyMoves("FourLevelWithQuiescence", getExpectedFourLevelWithQuiescenceMoves());
     }
 
     public void testFourLevelNoAlphaBetaSearch() {
-        searchOptions.setLookAhead(4);
-        searchOptions.setAlphaBeta(false);
+        searchOptions.getBruteSearchOptions().setLookAhead(4);
+        searchOptions.getBruteSearchOptions().setAlphaBeta(false);
         verifyMoves("FourLevelNoAlphaBeta", getExpectedFourLevelNoAlphaBetaMoves());
     }
 
@@ -185,7 +186,7 @@ public abstract class AbstractStrategyTst extends TestCase {
         TwoPlayerMove nextMove =
                strategy.search(lastMove, root);
 
-        if (searchOptions.getLookAhead() > 0) {
+        if (searchOptions.getBruteSearchOptions().getLookAhead() > 0) {
             assertTrue("The last move (" + lastMove + ") was the same player as the next move (" + nextMove + ")",
                     lastMove.isPlayer1() != nextMove.isPlayer1());
         }

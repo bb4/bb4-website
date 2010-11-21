@@ -1,7 +1,6 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
 import com.becker.game.twoplayer.common.search.Searchable;
-import com.becker.game.twoplayer.common.search.examples.EvaluationPerspective;
 import com.becker.game.twoplayer.common.search.examples.OneLevelGameTreeExample;
 import com.becker.optimization.parameter.ParameterArray;
 
@@ -21,7 +20,7 @@ public class MtdNegaMaxSearchStrategyTest extends NegaMaxMemorySearchStrategyTes
      * Look ahead one level and get the best move.
      */
     public void testOneLevelLookAheadPlayer1Search() {
-        searchOptions.setLookAhead(1);
+        bruteSearchOptions.setLookAhead(1);
         verifyResult(new OneLevelGameTreeExample(true, getEvaluationPerspective()),
                 getOneLevelLookAheadPlayer1Result());
     }

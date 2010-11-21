@@ -20,8 +20,6 @@ public class MonteCarloSearchOptions {
     private int maxSimulations_;
 
 
-
-
     /**
      * Default Constructor
      */
@@ -57,9 +55,10 @@ public class MonteCarloSearchOptions {
     }
 
     /**
-     * The larget this is (bigger than 1) the closer to uniform search we get (i.e exploration).
-     * The smaller it is (less tahn 1) the more selective the search becomes (i.e. we exploit the known good moves).
+     * The larger this is (bigger than 1) the closer to uniform search we get (i.e exploration).
+     * The smaller it is (less than 1) the more selective the search becomes (i.e. we exploit the known good moves).
      * There needs to be a balance.
+     * @return the ratio of exploraration to exploitation.
      */
     public final double getExploreExploitRatio() {
          return DEFAULT_EXPLORE_EXPLOIT_RATIO;

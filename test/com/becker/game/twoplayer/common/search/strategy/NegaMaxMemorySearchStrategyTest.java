@@ -18,9 +18,9 @@ public class NegaMaxMemorySearchStrategyTest extends NegaMaxSearchStrategyTest {
 
     // suspect result
     public void testTwoLevelQuiescenseABPlayer2Search() {
-        searchOptions.setLookAhead(2);
-        searchOptions.setQuiescence(true);
-        searchOptions.setAlphaBeta(true);
+        bruteSearchOptions.setLookAhead(2);
+        bruteSearchOptions.setQuiescence(true);
+        bruteSearchOptions.setAlphaBeta(true);
         GameTreeExample eg = new TwoLevelQuiescentExample(false, getEvaluationPerspective());
         verifyResult(eg, getTwoLevelQuiescenseABPlayer2Result());
     }

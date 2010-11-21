@@ -16,10 +16,10 @@ public class TicTacToeHelper extends SearchableHelper {
     public TwoPlayerOptions createTwoPlayerGameOptions() {
         TwoPlayerOptions opts =  new TicTacToeOptions();
         SearchOptions options = opts.getSearchOptions();
-        options.setLookAhead(2);
-        options.setAlphaBeta(true);
+        options.getBruteSearchOptions().setLookAhead(2);
+        options.getBruteSearchOptions().setAlphaBeta(true);
         options.setPercentageBestMoves(100);
-        options.setQuiescence(false);
+        options.getBruteSearchOptions().setQuiescence(false);
         return opts;
     }
 

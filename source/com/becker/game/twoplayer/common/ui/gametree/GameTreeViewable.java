@@ -4,6 +4,7 @@ import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.SearchWindow;
 import com.becker.game.twoplayer.common.search.tree.IGameTreeViewable;
+import com.becker.game.twoplayer.common.search.tree.NodeAttributes;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 
 import javax.swing.*;
@@ -24,7 +25,7 @@ public final class GameTreeViewable implements IGameTreeViewable {
      * constructor - create the tree dialog.
      */
     public GameTreeViewable(TwoPlayerMove m) {
-        root_ = new SearchTreeNode(m);
+        root_ = new SearchTreeNode(m, new NodeAttributes());
     }
 
     public SearchTreeNode getRootNode() {
@@ -47,12 +48,12 @@ public final class GameTreeViewable implements IGameTreeViewable {
      *  Show the specified list of pruned nodes under the specified parent.
      */
     public void addPrunedNodes(final MoveList list, final SearchTreeNode parent,
-                               final int i, final int val, final SearchWindow window) {
+                               final int i, final NodeAttributes attributes) {
         // make a defensive copy of the list because we may modify it.
         final MoveList listCopy = new MoveList(list);
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                parent.addPrunedChildNodes(listCopy, i, val, window);
+                parent.addPrunedChildNodes(listCopy, i, attributes);
             }
         });
     }

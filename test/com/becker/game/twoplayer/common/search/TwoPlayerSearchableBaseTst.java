@@ -6,6 +6,7 @@ import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
+import com.becker.game.twoplayer.common.search.options.BruteSearchOptions;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.optimization.parameter.ParameterArray;
 import java.util.List;
@@ -45,10 +46,11 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
 
     protected TwoPlayerOptions createDefaultOptions() {
         TwoPlayerOptions options = helper.createTwoPlayerGameOptions();
-        SearchOptions sOptions = options.getSearchOptions();
+        options.getSearchOptions().setPercentageBestMoves(DEFAULT_BEST_PERCENTAGE);
+        BruteSearchOptions sOptions = options.getSearchOptions().getBruteSearchOptions();
         sOptions.setLookAhead(DEFAULT_LOOKAHEAD);
         sOptions.setAlphaBeta(true);
-        sOptions.setPercentageBestMoves(DEFAULT_BEST_PERCENTAGE);
+
         sOptions.setQuiescence(false);
         return options;
     }
@@ -89,26 +91,29 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
     @Override
     public void testLookaheadValue() {
 
-        assertEquals("Unexpected lookahead value.", DEFAULT_LOOKAHEAD, searchable.getSearchOptions().getLookAhead());
-        getSearchOptions().setLookAhead(7);
-        assertEquals("Unexpected lookahead value.", 7, searchable.getSearchOptions().getLookAhead());
+        BruteSearchOptions opts = getSearchOptions().getBruteSearchOptions();
+        assertEquals("Unexpected lookahead value.", DEFAULT_LOOKAHEAD, opts.getLookAhead());
+        opts.setLookAhead(7);
+        assertEquals("Unexpected lookahead value.", 7, opts.getLookAhead());
     }
 
     /** verify that we can retrieve the lookahead value. */
     @Override
     public void testAlphaBetaValue() {
 
-        assertEquals("Unexpected alphabeta value.", true, searchable.getSearchOptions().getAlphaBeta());
-        getSearchOptions().setAlphaBeta(false);
-        assertEquals("Unexpected alphabeta value.", false, searchable.getSearchOptions().getAlphaBeta());
+        BruteSearchOptions opts = getSearchOptions().getBruteSearchOptions();
+        assertEquals("Unexpected alphabeta value.", true, opts.getAlphaBeta());
+        opts.setAlphaBeta(false);
+        assertEquals("Unexpected alphabeta value.", false, opts.getAlphaBeta());
     }
 
     /** verify that we can retrieve the quiescence value. */
     @Override
     public void testQuiescenceValue()  {
-        assertEquals("Unexpected quiessence value.", false, searchable.getSearchOptions().getQuiescence());
-        getSearchOptions().setQuiescence(true);
-        assertEquals("Unexpected quiessence value.", true, searchable.getSearchOptions().getQuiescence());
+        BruteSearchOptions opts = getSearchOptions().getBruteSearchOptions();
+        assertEquals("Unexpected quiessence value.", false, opts.getQuiescence());
+        opts.setQuiescence(true);
+        assertEquals("Unexpected quiessence value.", true, opts.getQuiescence());
     }
 
 

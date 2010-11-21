@@ -8,6 +8,7 @@ import com.becker.game.common.ui.ViewerMouseListener;
 import com.becker.game.twoplayer.common.ui.AbstractTwoPlayerBoardViewer;
 import com.becker.game.twoplayer.go.GoController;
 import com.becker.game.twoplayer.go.GoMove;
+import com.becker.game.twoplayer.go.GoSearchable;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.GoEye;
@@ -90,8 +91,9 @@ final class GoBoardViewer extends AbstractTwoPlayerBoardViewer {
         // show the dead stones marked as such.
         this.paint( this.getGraphics() );
 
-        int blackCaptures = gc.getNumCaptures(true);
-        int whiteCaptures = gc.getNumCaptures(false);
+        GoSearchable searchable = (GoSearchable)gc.getSearchable();
+        int blackCaptures = searchable.getNumCaptures(true);
+        int whiteCaptures = searchable.getNumCaptures(false);
 
         String p1Name = gc.getPlayers().getPlayer1().getName();
         String p2Name = gc.getPlayers().getPlayer2().getName();

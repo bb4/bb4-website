@@ -66,11 +66,10 @@ class MoveDetailsPanel extends JPanel {
         sBuf.append("<font size=\"+1\" color=").append(ColorUtil.getHTMLColorFromColor(c)).
                 append(" bgcolor=#99AA99>").append(entity).append(passSuffix).append("</font><br>");
         sBuf.append("Static value = ").append(Util.formatNumber(m.getValue())).append("<br>");
-        sBuf.append("Inherited value = ").append(Util.formatNumber(m.getInheritedValue())).append("<br>");
-        sBuf.append("Alpha = ").append(Util.formatNumber(lastNode.getWindow().alpha)).append("<br>");
-        sBuf.append("Beta = ").append(Util.formatNumber(lastNode.getWindow().beta)).append("<br>");
-        sBuf.append((lastNode.getComment() != null) ? lastNode.getComment() : "").append("<br>");
-        sBuf.append("Number of descendants = ").append(numKids).append("<br>");
+
+        sBuf.append(lastNode.toString());
+
+        sBuf.append(" Number of descendants = ").append(numKids).append("<br>");
         if (m.isUrgent())
             sBuf.append( "<font color=#FF6611>Urgent move!</font>");
         sBuf.append("</html>");

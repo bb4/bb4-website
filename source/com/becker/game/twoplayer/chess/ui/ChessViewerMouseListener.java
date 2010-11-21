@@ -25,8 +25,7 @@ public class ChessViewerMouseListener extends CheckersViewerMouseListener {
 
     
     @Override
-    protected List getPossibleMoveList(BoardPosition position)
-    {
+    protected List getPossibleMoveList(BoardPosition position) {
         ChessBoard board = (ChessBoard)viewer_.getBoard();
         ChessController controller = (ChessController)viewer_.getController();
 

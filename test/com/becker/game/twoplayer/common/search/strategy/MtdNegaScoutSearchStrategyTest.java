@@ -20,7 +20,7 @@ public class MtdNegaScoutSearchStrategyTest extends NegaScoutMemorySearchStrateg
      * Look ahead one level and get the best move.
      */
     public void testOneLevelLookAheadPlayer1Search() {
-        searchOptions.setLookAhead(1);
+        bruteSearchOptions.setLookAhead(1);
         verifyResult(new OneLevelGameTreeExample(true, getEvaluationPerspective()),
                 getOneLevelLookAheadPlayer1Result());
     }

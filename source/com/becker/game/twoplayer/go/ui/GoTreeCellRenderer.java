@@ -96,18 +96,18 @@ final class GoTreeCellRenderer extends GameTreeCellRenderer
         g2.setFont(FONT);
         String inhrtdValText = "inhrtd=" + Util.formatNumber(inheritedValue);
         String valText = "val=" + Util.formatNumber(move.getValue()) ;
-        String text = "";
+        StringBuilder bldr = new StringBuilder();
         if (node_.isPruned()) {
-            text += " *PRUNED";
+            bldr.append(" *PRUNED");
         }  else {
             int numKids = node_.getChildMoves()==null? 0 : node_.getChildMoves().length;
-            text += " kids="+ numKids;
-            text += " a="+Util.formatNumber(node_.getWindow().alpha)+" b="+ Util.formatNumber(node_.getWindow().beta);
+            bldr.append(" kids=").append(numKids);
+            bldr.append(" a=").append(node_.toString());
         }
 
         g2.drawString(inhrtdValText, TEXT_MARGIN + STONE_IMG_SIZE + 2, 8);
         g2.drawString(valText, 2 * TEXT_MARGIN + STONE_IMG_SIZE + SWATCH_WIDTH + 2, 8);
-        g2.drawString(text, 3 * TEXT_MARGIN + STONE_IMG_SIZE + 2 * SWATCH_WIDTH, 8);
+        g2.drawString(bldr.toString(), 3 * TEXT_MARGIN + STONE_IMG_SIZE + 2 * SWATCH_WIDTH, 8);
     }
 
 

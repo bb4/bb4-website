@@ -1,14 +1,11 @@
 package com.becker.game.twoplayer.chess;
 
-import com.becker.game.common.BoardPosition;
-import com.becker.game.common.GameContext;
-import com.becker.game.common.Move;
-import com.becker.game.common.MoveList;
+import com.becker.game.common.*;
 import com.becker.game.twoplayer.checkers.CheckersController;
-import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
-import com.becker.optimization.parameter.ParameterArray;
+import com.becker.game.twoplayer.common.search.options.SearchOptions;
 
 import java.util.Iterator;
 import java.util.List;
@@ -38,8 +35,7 @@ public class ChessController extends CheckersController
     /**
      *  Constructor.
      */
-    public ChessController()
-    {
+    public ChessController() {
         initializeData();
         board_ = new ChessBoard();
     }
@@ -48,11 +44,9 @@ public class ChessController extends CheckersController
      * this gets the Chess specific weights.
      */
     @Override
-    protected void initializeData()
-    {
+    protected void initializeData() {
         weights_ = new ChessWeights();
     }
-
 
     /**
      * The computer makes the first move in the game.
@@ -72,71 +66,11 @@ public class ChessController extends CheckersController
         return new ChessOptions();
     }
 
-
-    /**
-     *  The primary way of computing the score for Chess is to just add up the pieces
-     *  Kings should count more heavily. How much more is determined by the weights.
-     *  We also give a slight bonus for advancement of non-kings to incent them to
-     *  become kings.
-     *  note: lastMove is not used
-     *  @return the value of the current board position
-     *   a positive value means that player1 has the advantage.
-     *   A big negative value means a good move for p2.
-     */
-    @Override
-    protected int worth( Move lastMove, ParameterArray weights )
-    {
-        int row, col;
-        double score = 0;
-
-        // evaluate the board after the move has been made
-        for ( row = 1; row <= NUM_ROWS; row++ ) {      //rows
-            for ( col = 1; col <= NUM_COLS; col++ ) {  //cols
-                BoardPosition pos = board_.getPosition( row, col );
-                if ( pos.isOccupied() ) {
-                    ChessPiece piece = (ChessPiece)pos.getPiece();
-                    int side = piece.isOwnedByPlayer1() ? 1 : -1;
-                    int advancement =  (piece.isOwnedByPlayer1() ? pos.getRow()-1 : (NUM_ROWS - pos.getRow()-1));
-                    score += piece.getWeightedScore(side, pos, weights, advancement);
-                }
-            }
-        }
-        return (int)score;
-    }
-
-
-    /**
-     * Find all the moves a piece p can make and insert them into moveList.
-     *
-     * @param pos the piece to check.
-     * @param moveList add the potential moves to this existing list.
-     * @param weights to use.
-     * @return the number of moves added.
-     */
-    int addMoves( BoardPosition pos, MoveList moveList, TwoPlayerMove lastMove,
-                         ParameterArray weights, boolean player1sPerspective )
-    {
-        List<ChessMove> moves =
-                ((ChessPiece)pos.getPiece()).findPossibleMoves(board_, pos.getRow(), pos.getCol(), lastMove);
-
-        // score the moves in this list
-        for (ChessMove move : moves) {
-            // first apply the move
-            board_.makeMove(move);
-            move.setValue(worth(move, weights, player1sPerspective));
-            board_.undoMove();
-        }
-        moveList.addAll( moves );
-
-        return moveList.size();
-    }
-
     /**
      * remove any moves that put the king in jeopardy.
      * @param moveList
      */
-    public void removeSelfCheckingMoves(List moveList)
-    {
+    public void removeSelfCheckingMoves(List moveList) {
         ChessBoard b = (ChessBoard)board_;
         Iterator it = moveList.iterator();
         while (it.hasNext()) {
@@ -148,61 +82,8 @@ public class ChessController extends CheckersController
         }
     }
 
-
-
     @Override
-    public Searchable createSearchable() {
-        return new ChessSearchable();
+    protected Searchable createSearchable(TwoPlayerBoard board, PlayerList players, SearchOptions options) {
+        return new ChessSearchable(board, players, options);
     }
-
-
-    public class ChessSearchable extends CheckersSearchable {
-
-         /**
-          *  generate all possible next moves.
-          */
-        @Override
-        public MoveList generateMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
-        {
-            MoveList moveList = new MoveList();
-            int row,col;
-
-            boolean player1 = (lastMove == null) || !(lastMove.isPlayer1());
-
-            // scan through the board positions. For each each piece of the current player's,
-            // add all the moves that it can make.
-            for ( row = 1; row <= NUM_ROWS; row++ ) {
-                for ( col = 1; col <= NUM_COLS; col++ ) {
-                    BoardPosition pos = board_.getPosition( row, col );
-                    if ( pos.isOccupied() && pos.getPiece().isOwnedByPlayer1() == player1 ) {
-                        addMoves( pos, moveList, lastMove, weights, player1sPerspective);
-                    }
-                }
-            }
-
-            // remove any moves that causes the king goes into jeopardy (ie check).
-            removeSelfCheckingMoves(moveList);
-
-            return  bestMoveFinder_.getBestMoves( player1, moveList, player1sPerspective );                           
-        }
-
-        /**
-         * @@todo
-         * @return those moves that result in check or getting out of check.
-         */
-        @Override
-        public MoveList generateUrgentMoves(
-                TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective ) {
-            return new MoveList();
-        }
-
-        /**
-         * @@todo
-         * @return true if the specified move caused one or more opponent pieces to become jeopardized
-         */
-        public boolean inJeopardy( TwoPlayerMove m ) {
-            return false;
-        }
-    }
-
 }

@@ -7,6 +7,7 @@ import com.becker.game.common.ui.GameChangedEvent;
 import com.becker.game.common.ui.GameChangedListener;
 import com.becker.game.twoplayer.common.ui.TwoPlayerInfoPanel;
 import com.becker.game.twoplayer.go.GoController;
+import com.becker.game.twoplayer.go.GoSearchable;
 import com.becker.ui.legend.ContinuousColorLegend;
 
 import javax.swing.*;
@@ -110,8 +111,9 @@ final class GoInfoPanel extends TwoPlayerInfoPanel implements GameChangedListene
         if ( p1CapturesLabel_ == null )
             return;
 
-        p1CapturesLabel_.setText( goController.getNumCaptures( false ) + " " );
-        p2CapturesLabel_.setText( goController.getNumCaptures( true ) + " " );
+        GoSearchable searchable = (GoSearchable) goController.getSearchable();
+        p1CapturesLabel_.setText( searchable.getNumCaptures( false ) + " " );
+        p2CapturesLabel_.setText( searchable.getNumCaptures( true ) + " " );
 
         p1TerritoryLabel_.setText( goController.getTerritoryEstimate( true ) + " " );
         p2TerritoryLabel_.setText( goController.getTerritoryEstimate( false ) + " " );

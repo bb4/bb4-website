@@ -2,6 +2,7 @@ package com.becker.game.twoplayer.common.search.strategy;
 
 import com.becker.game.common.Move;
 import com.becker.game.common.MoveList;
+import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
@@ -45,7 +46,7 @@ public class UctStrategy extends AbstractSearchStrategy {
         int maxSimulations = getOptions().getMonteCarloSearchOptions().getMaxSimulations();
         boolean interrupted = false;
 
-        UctNode root = new UctNode(lastMove);
+        UctNode root = new UctNode(lastMove, 0);
 
         while (numSimulations < maxSimulations && !interrupted) {
             playSimulation(root, parent);
@@ -55,37 +56,40 @@ public class UctStrategy extends AbstractSearchStrategy {
         return root.bestNode.move;
     }
 
-    public boolean playSimulation(UctNode node, SearchTreeNode parent) {
+    public boolean playSimulation(UctNode lastMoveNode, SearchTreeNode parent) {
 
         boolean player1Wins = false;
-        if (node.numVisits == 0) {
-            player1Wins = playRandomGame(node.move);
+        if (lastMoveNode.numVisits == 0) {
+            player1Wins = playRandomGame(lastMoveNode.move);
         }
         else {
-            if (node.children == null) {
-                createChildren(node);
+            if (lastMoveNode.children == null) {
+                createChildren(lastMoveNode);
             }
-            UctNode nextNode = uctSelect(node);
+            UctNode nextNode = uctSelect(lastMoveNode);
 
             // may be null if there are no move valid moves.
             // this may be happening a little more than expected.
-            if (nextNode != null) {
+
+            if (nextNode != null && parent != null) {
+                SearchTreeNode child = addNodeToTree(parent, lastMoveNode); // nextNode); 
+                
                 searchable_.makeInternalMove(nextNode.move);
-                player1Wins = playSimulation(nextNode, parent);
+                player1Wins = playSimulation(nextNode, child);
                 searchable_.undoInternalMove(nextNode.move);
             }
         }
 
-        node.numVisits++;
-        node.updateWin(player1Wins);
+        lastMoveNode.numVisits++;
+        lastMoveNode.updateWin(player1Wins);
 
-        node.setBestNode();
+        lastMoveNode.setBestNode();
         return player1Wins;
     }
 
     /**
      * Selects the best child of node.
-     * @return the best child of node.
+     * @return the best child of node. May be null if there are no next moves.
      */
     private UctNode uctSelect(UctNode node) {
         double bestUct = -1.0;
@@ -107,14 +111,15 @@ public class UctStrategy extends AbstractSearchStrategy {
     private void createChildren(UctNode node) {
         node.children = new LinkedList<UctNode>();
         MoveList moves = searchable_.generateMoves(node.move, weights_, true);
+        int i=0;
         for (Move m : moves) {
-             node.children.add(new UctNode((TwoPlayerMove) m));
+             node.children.add(new UctNode((TwoPlayerMove) m, i++));
         }
     }
 
     /**
      * Plays a semi-random game from the current node position.
-     * Its semi random in the sense that we try to avoid obviosly bad moves.
+     * Its semi random in the sense that we try to avoid obviously bad moves.
      * @return whether or not player1 won.
      */
     private boolean playRandomGame(TwoPlayerMove move) {
@@ -126,8 +131,49 @@ public class UctStrategy extends AbstractSearchStrategy {
         TwoPlayerMove randomMove = (TwoPlayerMove) moves.getRandomMove();
 
         searchable_.makeInternalMove(randomMove);
-        boolean result = playRandomGame(randomMove);
+        boolean result = playRandomMove(randomMove, getSearchableCopy());
         searchable_.undoInternalMove(randomMove);
         return result;
+    }
+
+    private Searchable getSearchableCopy() {
+        Searchable s = null;
+        try {
+           s = searchable_.copy();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return s;
+    }
+
+    /**
+     * Plays a semi-random game from the current node position.
+     * Its semi random in the sense that we try to avoid obviously bad moves.
+     * @return whether or not player1 won.
+     */
+    private boolean playRandomMove(TwoPlayerMove move, Searchable searchable) {
+
+        if (searchable.done(move, false)) {
+            return move.getValue() > 0;
+        }
+        MoveList moves = searchable.generateMoves(move, weights_, true);
+        TwoPlayerMove randomMove = (TwoPlayerMove) moves.getRandomMove();
+
+        searchable.makeInternalMove(randomMove);
+        return playRandomMove(randomMove, searchable);
+    }
+
+    /**
+     * add a move to the visual game tree (if parent not null).
+     * If the new node is already in the tree, do not add it, but maybe update values.
+     * @return the node added to the tree.
+     */
+    protected SearchTreeNode addNodeToTree(SearchTreeNode parent, UctNode node ) {
+        SearchTreeNode alreadyChild = parent.hasChild(node.move);
+        if (alreadyChild != null)  {
+            alreadyChild.attributes = node.getAttributes();
+            return alreadyChild;
+        }
+        return addNodeToTree(parent, node.move, node.childIndex, node.getAttributes());
     }
 }

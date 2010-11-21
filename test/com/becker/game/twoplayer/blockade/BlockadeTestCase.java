@@ -37,8 +37,8 @@ public class BlockadeTestCase extends TestCase {
 
         TwoPlayerOptions options = controller_.getTwoPlayerOptions();
         SearchOptions sOptions = options.getSearchOptions();
-        sOptions.setAlphaBeta(true);
-        sOptions.setLookAhead(3);
+        sOptions.getBruteSearchOptions().setAlphaBeta(true);
+        sOptions.getBruteSearchOptions().setLookAhead(3);
         sOptions.setPercentageBestMoves(100);
         //sOptions.setQuiescence(true); // takes too long if on
         sOptions.setSearchStrategyMethod(SearchStrategyType.MINIMAX);

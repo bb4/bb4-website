@@ -8,6 +8,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
 
 /**
  *  Represents a move/node in the game tree.
@@ -22,15 +23,7 @@ public class SearchTreeNode extends DefaultMutableTreeNode
 {
     private static final long serialVersionUID = 1L;
 
-    /**
-     * True if this move is the leaf of a pruned path in the game tree.
-     */
-    private boolean pruned_;
-
-    /**
-     * Store the alpha and beta values (for debug printing).
-     */
-    private SearchWindow window_ = new SearchWindow(0, 0);
+    public NodeAttributes attributes;
 
     /**
      * Used to layout the tree. Roughly based on the num descendants.
@@ -39,24 +32,28 @@ public class SearchTreeNode extends DefaultMutableTreeNode
     private int spaceAllocation_ = 0;
 
     /**
-     * provide some useful info about the node, like why it was pruned.
-     */
-    private String comment_ = null;
-
-    /**
      * location in the boardviewer
      */
     private Point position_;
-
 
     /**
      * Default Constructor
      * @param m a twoplayer board move.
      */
-    public SearchTreeNode(TwoPlayerMove m)
-    {
+    public SearchTreeNode(TwoPlayerMove m) {
         setUserObject(m);
-        pruned_ = false;
+        this.attributes = new NodeAttributes();
+    }
+
+
+    /**
+     * Default Constructor
+     * @param m a twoplayer board move.
+     * @param attributes set of name value pairs describing the node.
+     */
+    public SearchTreeNode(TwoPlayerMove m, NodeAttributes attributes) {
+        setUserObject(m);
+        this.attributes = attributes;
     }
 
 
@@ -76,38 +73,46 @@ public class SearchTreeNode extends DefaultMutableTreeNode
     /**
      * Add a move to the visual game tree (if parent not null).
      * @param theMove the two player move to add.
-     * @param window alpha and beta
      * @param i the child index of the added node.
      * @return the childNode that was added.
      */
     public SearchTreeNode addChild(TwoPlayerMove theMove,
-                                       SearchWindow window, int i ) {
+                                   NodeAttributes attributes, int i ) {
 
-        SearchTreeNode child = new SearchTreeNode( theMove );
-        child.setWindow(window);
+        SearchTreeNode child = new SearchTreeNode( theMove, attributes );
         this.insert( child, i );
-
         return child;
     }
 
+    /**
+     * See if the specified move is already a child
+     * @param theMove specified move to check
+     * @return the corresponding search node if it is a child.
+     */
+    public SearchTreeNode hasChild(TwoPlayerMove theMove) {
+        Enumeration enumeration = children();
+        while (enumeration.hasMoreElements()) {
+            SearchTreeNode node = (SearchTreeNode)enumeration.nextElement();
+             if (theMove.equals(node.getUserObject())) {
+                return node;
+            }
+        }
+        return null;
+    }
 
     /**
      * Show nodes corresponding to pruyned branches in the game tree (if one is used).
      *
      * @param list list of moves that resulted in pruned branches.
      * @param i th child.
-     * @param val the worth of the node/move
-     * @param window the search window.
+     * @param attributes list of name values to show.
      */
-    public void addPrunedChildNodes( List list, int i, int val, SearchWindow window)
+    public void addPrunedChildNodes( List list, int i, NodeAttributes attributes)
     {
         int index = i;
         while ( !list.isEmpty() ) {
             TwoPlayerMove theMove = (TwoPlayerMove) (list.remove(0));
-            SearchTreeNode child = new SearchTreeNode( theMove );
-            child.setPruned(true);
-            child.setComment("Children pruned because " +
-                            Util.formatNumber(val) + "outside" + window);
+            SearchTreeNode child = new SearchTreeNode( theMove, attributes );
             this.insert( child, index );
             index++;
         }
@@ -135,36 +140,21 @@ public class SearchTreeNode extends DefaultMutableTreeNode
         return (TwoPlayerMove) this.getUserObject();
     }
 
+    public boolean isPruned() {
+        return attributes.pruned;
+    }
+
     @Override
     public String toString () {
         Object m = getUserObject();
-        if (m==null) return null;
+        if (m == null) return null;
 
-        StringBuffer s = new StringBuffer(m.toString());
-
-        if ( pruned_ )
-            s.append( " *PRUNED*" );
-        else
-            s.append(" a=").append(Util.formatNumber(window_.alpha)).append(" b=").append(Util.formatNumber(window_.beta));
+        StringBuffer s = new StringBuffer();   // m.toString()
+        s.append(attributes.toString());
 
         return s.toString();
     }
 
-    public boolean isPruned() {
-        return pruned_;
-    }
-
-    void setPruned(boolean pruned) {
-        this.pruned_ = pruned;
-    }
-
-    public SearchWindow getWindow() {
-        return window_;
-    }
-
-    public void setWindow(SearchWindow window) {
-        this.window_ = window;
-    }
 
     public int getSpaceAllocation() {
         return spaceAllocation_;
@@ -172,14 +162,6 @@ public class SearchTreeNode extends DefaultMutableTreeNode
 
     public void setSpaceAllocation(int spaceAllocation) {
         this.spaceAllocation_ = spaceAllocation;
-    }
-
-    public String getComment() {
-        return comment_;
-    }
-
-    void setComment(String comment) {
-        this.comment_ = comment;
     }
 
     public Point getPosition() {

@@ -15,8 +15,7 @@ public class BlockadeControllerTest extends BlockadeTestCase {
     /**
      * Creates a new instance of BlockadeControllerTest
      */
-    public BlockadeControllerTest() {
-    }
+    public BlockadeControllerTest() {}
 
     /**
      * Verify that the calculated worth for various moves is within reasonable ranges.
@@ -27,14 +26,14 @@ public class BlockadeControllerTest extends BlockadeTestCase {
 
         BlockadeMove winningMove =
                 new BlockadeMove(5,8,  4,8, 0, new GamePiece(true),
-                                               new BlockadeWall(new BlockadeBoardPosition(12, 5), new BlockadeBoardPosition(12, 4))
-                                               );
+                                 new BlockadeWall(new BlockadeBoardPosition(12, 5), new BlockadeBoardPosition(12, 4))
+                );
 
         controller_.makeMove(winningMove);
 
         ParameterArray weights = controller_.getComputerWeights().getDefaultWeights();
-        int winFromP1Persp = controller_.worth(winningMove, weights, true);
-        int winFromP2Persp = controller_.worth(winningMove, weights, false);
+        int winFromP1Persp = controller_.getSearchable().worth(winningMove, weights, true);
+        int winFromP2Persp = controller_.getSearchable().worth(winningMove, weights, false);
 
         Assert.assertEquals("Unexpected value of winning move from P1 perspective",
                 SearchStrategy.WINNING_VALUE, winFromP1Persp);

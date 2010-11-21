@@ -19,14 +19,13 @@ import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WI
  */
 final class PenteMoveGenerator {
 
-    private PenteController controller_;
+    private PenteSearchable searchable_;
 
     /**
      * Constructor.
      */
-    public PenteMoveGenerator(PenteController controller)
-    {
-        controller_ = controller;
+    public PenteMoveGenerator(PenteSearchable searchable) {
+        searchable_ = searchable;
     }
 
     /**
@@ -36,7 +35,7 @@ final class PenteMoveGenerator {
                                         boolean player1sPerspective ) {
         MoveList moveList = new MoveList();
 
-        PenteBoard pb = (PenteBoard) controller_.getBoard();
+        PenteBoard pb = (PenteBoard) searchable_.getBoard();
         pb.determineCandidateMoves();
 
         boolean player1 = (lastMove == null) || !(lastMove.isPlayer1());
@@ -53,14 +52,14 @@ final class PenteMoveGenerator {
                     else
                        m = TwoPlayerMove.createMove( j, i, lastMove.getValue(), new GamePiece(player1));
                     pb.makeMove( m );
-                    m.setValue(controller_.worth( m, weights, player1sPerspective ));
+                    m.setValue(searchable_.worth( m, weights, player1sPerspective ));
                     // now revert the board
                     pb.undoMove();
                     moveList.add( m );
                 }
             }
         }
-        BestMoveFinder finder = new BestMoveFinder(controller_.getTwoPlayerOptions().getSearchOptions());
+        BestMoveFinder finder = new BestMoveFinder(searchable_.getSearchOptions());
         return finder.getBestMoves( player1, moveList, player1sPerspective );
     }
 

@@ -11,7 +11,7 @@ import com.becker.game.twoplayer.common.search.SearchWindow;
  * indicate changes to the tree should be made during search, and the handler should make the changes
  * to the tree in the eventDispatch thread.
  *
- * @author Barry Becker Date: May 21, 2006
+ * @author Barry Becker
  */
 public interface IGameTreeViewable {
 
@@ -30,10 +30,14 @@ public interface IGameTreeViewable {
     void addNode(SearchTreeNode parent, SearchTreeNode child, int i);
 
     /**
-     * Add a set of pruned nodes to the viewable search tree.
+     * Add a set of pruned nodes to the viewable search tree with associated attributes.
+     * @param list list of moves to add
+     * @param parent parent node
+     * @param i ith child
+     * @param attributes name value pairs to show in ui.
      */
     void addPrunedNodes(MoveList list, SearchTreeNode parent,
-                        int i, int val, SearchWindow window);
+                        int i, NodeAttributes attributes);
 
     /**
      * Clear out the visible search tree.

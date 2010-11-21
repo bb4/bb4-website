@@ -3,11 +3,12 @@ package com.becker.game.twoplayer.common.search.strategy;
 import com.becker.game.common.GameWeights;
 import com.becker.game.common.GameWeightsStub;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
-import com.becker.game.twoplayer.common.search.options.SearchOptions;
+import com.becker.game.twoplayer.common.search.options.BruteSearchOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.SearchableStub;
 import com.becker.game.twoplayer.common.search.TwoPlayerMoveStub;
 import com.becker.game.twoplayer.common.search.examples.*;
+import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.transposition.TranspositionTable;
 import com.becker.optimization.parameter.ParameterArray;
 import junit.framework.TestCase;
@@ -21,6 +22,7 @@ import junit.framework.TestCase;
 public abstract class AbstractSearchStrategyTst extends TestCase {
 
     protected SearchOptions searchOptions;
+    protected BruteSearchOptions bruteSearchOptions;
 
 
     @Override
@@ -29,9 +31,11 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
 
         TwoPlayerOptions options = createTwoPlayerGameOptions();
         searchOptions = options.getSearchOptions();
+        bruteSearchOptions = options.getSearchOptions().getBruteSearchOptions();
     }
 
     protected SearchStrategy createSearchStrategy() {
+
         Searchable searchable = new SearchableStub(searchOptions);
         GameWeights weights = new GameWeightsStub();
         return createSearchStrategy(searchable, weights.getDefaultWeights());
@@ -48,10 +52,10 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
      */
     public TwoPlayerOptions createTwoPlayerGameOptions() {
         TwoPlayerOptions opts =  new TwoPlayerOptions();
-        SearchOptions options = opts.getSearchOptions();
+        opts.getSearchOptions().setPercentageBestMoves(100);
+        BruteSearchOptions options = opts.getSearchOptions().getBruteSearchOptions();
         options.setLookAhead(3);
         options.setAlphaBeta(false);
-        options.setPercentageBestMoves(100);
         options.setQuiescence(false);
         options.setMaxQuiescentDepth(3);
         return opts;
@@ -61,7 +65,7 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
      * Edge case where no searching is actually done. The found move will be the root.
      */
     public void testZeroLookAheadSearch() {
-        searchOptions.setLookAhead(0);
+        bruteSearchOptions.setLookAhead(0);
         verifyResult(new ZeroLevelGameTreeExample(false, getEvaluationPerspective()),
                 getZeroLookAheadResult());
     }
@@ -70,7 +74,7 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
      * Look ahead one level and get the best move.
      */
     public void testOneLevelLookAheadPlayer1Search() {
-        searchOptions.setLookAhead(1);
+        bruteSearchOptions.setLookAhead(1);
         verifyResult(new OneLevelGameTreeExample(true, getEvaluationPerspective()),
                 getOneLevelLookAheadPlayer1Result());
     }
@@ -79,103 +83,103 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
      * Look ahead one level and get the best move.
      */
     public void testOneLevelLookAheadPlayer2Search() {
-        searchOptions.setLookAhead(1);
+        bruteSearchOptions.setLookAhead(1);
         verifyResult(new OneLevelGameTreeExample(false, getEvaluationPerspective()),
                 getOneLevelLookAheadPlayer2Result());
     }
 
     public void testTwoLevelPlayer1Search() {
-        searchOptions.setLookAhead(2);
+        bruteSearchOptions.setLookAhead(2);
         verifyResult(new TwoLevelGameTreeExample(true, getEvaluationPerspective()),
                 getTwoLevelPlayer1Result());
     }
 
     public void testTwoLevelPlayer2Search() {
-        searchOptions.setLookAhead(2);
+        bruteSearchOptions.setLookAhead(2);
         verifyResult(new TwoLevelGameTreeExample(false, getEvaluationPerspective()),
                 getTwoLevelPlayer2Result());
     }
 
     public void testTwoLevelQuiescensePlayer1Search() {
-        searchOptions.setLookAhead(2);
-        searchOptions.setQuiescence(true);
+        bruteSearchOptions.setLookAhead(2);
+        bruteSearchOptions.setQuiescence(true);
         verifyResult(new TwoLevelQuiescentExample(true, getEvaluationPerspective()),
                 getTwoLevelQuiescensePlayer1Result());
     }
 
     public void testTwoLevelQuiescensePlayer2Search() {
-        searchOptions.setLookAhead(2);
-        searchOptions.setQuiescence(true);
+        bruteSearchOptions.setLookAhead(2);
+        bruteSearchOptions.setQuiescence(true);
         verifyResult(new TwoLevelQuiescentExample(false, getEvaluationPerspective()),
                 getTwoLevelQuiescensePlayer2Result());
     }
 
     public void testTwoLevelQuiescenseABPlayer1Search() {
-        searchOptions.setLookAhead(2);
-        searchOptions.setQuiescence(true);
-        searchOptions.setAlphaBeta(true);
+        bruteSearchOptions.setLookAhead(2);
+        bruteSearchOptions.setQuiescence(true);
+        bruteSearchOptions.setAlphaBeta(true);
         verifyResult(new TwoLevelQuiescentExample(true, getEvaluationPerspective()),
                 getTwoLevelQuiescenseABPlayer1Result());
     }
 
     public void testTwoLevelQuiescenseABPlayer2Search() {
-        searchOptions.setLookAhead(2);
-        searchOptions.setQuiescence(true);
-        searchOptions.setAlphaBeta(true);
+        bruteSearchOptions.setLookAhead(2);
+        bruteSearchOptions.setQuiescence(true);
+        bruteSearchOptions.setAlphaBeta(true);
         verifyResult(new TwoLevelQuiescentExample(false, getEvaluationPerspective()),
                 getTwoLevelQuiescenseABPlayer2Result());
     }
 
     public void testLadderMax3QuiescensePlayer1Search() {
-        searchOptions.setLookAhead(2);
-        searchOptions.setQuiescence(true);
-        searchOptions.setMaxQuiescentDepth(3); // max 3 plies beyond normal look-ahead.
+        bruteSearchOptions.setLookAhead(2);
+        bruteSearchOptions.setQuiescence(true);
+        bruteSearchOptions.setMaxQuiescentDepth(3); // max 3 plies beyond normal look-ahead.
         verifyResult(new LadderQuiescentExample(true, getEvaluationPerspective()),
                 getLadderMax3QuiescensePlayer1Result());
     }
 
     public void testLadderMax3QuiescensePlayer2Search() {
-        searchOptions.setLookAhead(2);
-        searchOptions.setQuiescence(true);
-        searchOptions.setMaxQuiescentDepth(3); // max 3 plies beyond normal look-ahead.
+        bruteSearchOptions.setLookAhead(2);
+        bruteSearchOptions.setQuiescence(true);
+        bruteSearchOptions.setMaxQuiescentDepth(3); // max 3 plies beyond normal look-ahead.
         verifyResult(new LadderQuiescentExample(false, getEvaluationPerspective()),
                 getLadderMax3QuiescensePlayer2Result());
     }
 
     public void testLadderMax4QuiescensePlayer1Search() {
-        searchOptions.setLookAhead(2);
-        searchOptions.setQuiescence(true);
-        searchOptions.setMaxQuiescentDepth(4); // max 4 plies beyond normal look-ahead.
+        bruteSearchOptions.setLookAhead(2);
+        bruteSearchOptions.setQuiescence(true);
+        bruteSearchOptions.setMaxQuiescentDepth(4); // max 4 plies beyond normal look-ahead.
         verifyResult(new LadderQuiescentExample(true, getEvaluationPerspective()),
                 getLadderMax4QuiescensePlayer1Result());
     }
 
     public void testLadderMax4QuiescensePlayer2Search() {
-        searchOptions.setLookAhead(2);
-        searchOptions.setQuiescence(true);
-        searchOptions.setMaxQuiescentDepth(4); // max 4 plies beyond normal look-ahead.
+        bruteSearchOptions.setLookAhead(2);
+        bruteSearchOptions.setQuiescence(true);
+        bruteSearchOptions.setMaxQuiescentDepth(4); // max 4 plies beyond normal look-ahead.
         verifyResult(new LadderQuiescentExample(false, getEvaluationPerspective()),
                 getLadderMax4QuiescensePlayer2Result());
     }
 
 
     public void testPruneTwoLevelWithoutABSearchPlayer1() {
-        searchOptions.setLookAhead(2);
-        searchOptions.setAlphaBeta(false);
+        bruteSearchOptions.setLookAhead(2);
+        bruteSearchOptions.setAlphaBeta(false);
         verifyResult(new AlphaPruneExample(true, getEvaluationPerspective()),
                 getPruneTwoLevelWithoutABResultPlayer1());
     }
 
     public void testPruneTwoLevelWithABSearchPlayer1() {
-        searchOptions.setLookAhead(2);
-        searchOptions.setAlphaBeta(true);
+        bruteSearchOptions.setLookAhead(2);
+        bruteSearchOptions.setAlphaBeta(true);
         verifyResult(new AlphaPruneExample(true, getEvaluationPerspective()),
                 getPruneTwoLevelWithABSearchPlayer1());
     }
 
     public void testPruneTwoLevelWithABSearchPlayer2() {
-        searchOptions.setLookAhead(2);
-        searchOptions.setAlphaBeta(true);
+        bruteSearchOptions.setLookAhead(2);
+        bruteSearchOptions.setAlphaBeta(true);
         verifyResult(new AlphaPruneExample(false, getEvaluationPerspective()),
                 getPruneTwoLevelWithABSearchPlayer2());
     }
@@ -191,41 +195,41 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
     }
 
     public void testThreeLevelPlayer1WithABSearch() {
-        searchOptions.setLookAhead(3);
-        searchOptions.setAlphaBeta(true);
+        bruteSearchOptions.setLookAhead(3);
+        bruteSearchOptions.setAlphaBeta(true);
         verifyResult(new ThreeLevelGameTreeExample(true, getEvaluationPerspective()),
                 getThreeLevelPlayer1WithABResult());
     }
 
     public void testThreeLevelPlayer2WithABSearch() {
-        searchOptions.setLookAhead(3);
-        searchOptions.setAlphaBeta(true);
+        bruteSearchOptions.setLookAhead(3);
+        bruteSearchOptions.setAlphaBeta(true);
         verifyResult(new ThreeLevelGameTreeExample(false, getEvaluationPerspective()),
                 getThreeLevelPlayer2WithABResult());
     }
 
     public void testFourLevelSearchPlayer1() {
-        searchOptions.setLookAhead(4);
+        bruteSearchOptions.setLookAhead(4);
         verifyResult(new FourLevelGameTreeExample(true, getEvaluationPerspective()),
                 getFourLevelPlayer1Result());
     }
 
     public void testFourLevelSearchPlayer2() {
-        searchOptions.setLookAhead(4);
+        bruteSearchOptions.setLookAhead(4);
         verifyResult(new FourLevelGameTreeExample(false, getEvaluationPerspective()),
                 getFourLevelPlayer2Result());
     }
 
     public void testFourLevelABSearchPlayer1() {
-        searchOptions.setLookAhead(4);
-        searchOptions.setAlphaBeta(true);
+        bruteSearchOptions.setLookAhead(4);
+        bruteSearchOptions.setAlphaBeta(true);
         verifyResult(new FourLevelGameTreeExample(true, getEvaluationPerspective()),
                 getFourLevelABPlayer1Result());
     }
 
     public void testFourLevelABSearchPlayer2() {
-        searchOptions.setLookAhead(4);
-        searchOptions.setAlphaBeta(true);
+        bruteSearchOptions.setLookAhead(4);
+        bruteSearchOptions.setAlphaBeta(true);
         verifyResult(new FourLevelGameTreeExample(false, getEvaluationPerspective()),
                 getFourLevelABPlayer2Result());
     }

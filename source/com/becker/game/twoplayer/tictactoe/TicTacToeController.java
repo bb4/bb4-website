@@ -1,10 +1,11 @@
 package com.becker.game.twoplayer.tictactoe;
 
+import com.becker.game.common.PlayerList;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
+import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.pente.PenteController;
-import com.becker.game.twoplayer.pente.analysis.MoveEvaluator;
 
 /**
  * Defines everything the computer needs to know to play TicTacToe.
@@ -12,6 +13,7 @@ import com.becker.game.twoplayer.pente.analysis.MoveEvaluator;
  * @author Barry Becker
 */
 public class TicTacToeController extends PenteController {
+    
     /**
      *  Constructor
      */
@@ -31,7 +33,6 @@ public class TicTacToeController extends PenteController {
     @Override
     protected void initializeData() {
         weights_ = new TicTacToeWeights();
-        moveEvaluator_ = new MoveEvaluator((TwoPlayerBoard)board_, new TicTacToePatterns());
     }
 
     @Override
@@ -40,16 +41,8 @@ public class TicTacToeController extends PenteController {
     }
 
     @Override
-    public Searchable createSearchable() {
-         return new TicTacToeSearchable();
-    }
-
-    protected class TicTacToeSearchable extends PenteSearchable {
-
-        @Override
-        protected int getJeopardyWeight()  {
-            return TicTacToeWeights.JEOPARDY_WEIGHT;
-        }
+    protected Searchable createSearchable(TwoPlayerBoard board, PlayerList players, SearchOptions options) {
+        return new TicTacToeSearchable(board, players, options);
     }
 
 }
