@@ -23,6 +23,9 @@ public class MonteCarloOptionsPanel extends JPanel {
 
     private NumberInput maxSimulationsField_;
 
+    /** It would be unreasonable to run more than this many simulations. */
+    private static final int ABS_MAX_NUM_SIMULATIONS = 10000000;
+
     /**
      * Constructor
      */
@@ -53,7 +56,7 @@ public class MonteCarloOptionsPanel extends JPanel {
 
         maxSimulationsField_ =
             new NumberInput(GameContext.getLabel("MAX_NUM_SIMULATIONS"), monteCarloOptions.getMaxSimulations(),
-                            GameContext.getLabel("MAX_NUM_SIMULATIONS_TIP"), 1, 16, true);
+                            GameContext.getLabel("MAX_NUM_SIMULATIONS_TIP"), 1, ABS_MAX_NUM_SIMULATIONS, true);
         this.add( maxSimulationsField_ );
     }
 

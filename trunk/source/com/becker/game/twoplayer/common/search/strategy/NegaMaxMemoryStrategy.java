@@ -117,7 +117,7 @@ public final class NegaMaxMemoryStrategy extends NegaMaxStrategy
             updatePercentDone(depth, list);
 
             searchable_.makeInternalMove( theMove );
-            SearchTreeNode child = addNodeToTree(parent, theMove, window, i++);
+            SearchTreeNode child = addNodeToTree(parent, theMove, window); i++;
 
             selectedMove = searchInternal( theMove, depth-1, window.negateAndSwap(), child );
 

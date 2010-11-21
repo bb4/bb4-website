@@ -98,7 +98,7 @@ public class NegaScoutStrategy extends NegaMaxStrategy
             updatePercentDone(depth, list);
 
             searchable_.makeInternalMove( theMove );
-            SearchTreeNode child = addNodeToTree(parent, theMove, window, i );
+            SearchTreeNode child = addNodeToTree(parent, theMove, window );
 
             // search with minimal search window
             //System.out.println(getIndent(depth) + "search a=" + -newBeta + " b="+ window.alpha);

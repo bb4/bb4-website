@@ -104,8 +104,7 @@ public interface Searchable
     int getNumMoves();
     
     /**
-     *
-     * Creates a copy of our current state so we can make moves and not worry about undoing them.
+     * @return a copy of our current state so we can make moves and not worry about undoing them.
      */
     Searchable copy() throws CloneNotSupportedException;
     /**

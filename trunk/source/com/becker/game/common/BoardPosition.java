@@ -124,8 +124,7 @@ public class BoardPosition
     /**
      * @return a deep copy.
      */
-    public BoardPosition copy()
-    {
+    public BoardPosition copy() {
         return new BoardPosition( location_, (piece_== null) ? null : piece_.copy());
     }
 

@@ -44,7 +44,7 @@ public final class MiniMaxStrategy extends AbstractBruteSearchStrategy
             updatePercentDone(depth, list);
 
             searchable_.makeInternalMove( theMove );
-            SearchTreeNode child = addNodeToTree(parent, theMove, window, i++);
+            SearchTreeNode child = addNodeToTree(parent, theMove, window); i++;
 
             // recursive call
             selectedMove = searchInternal( theMove, depth-1, window.copy(), child );

@@ -177,7 +177,7 @@ public abstract class AbstractBruteSearchStrategy extends AbstractSearchStrategy
      * @return the node added to the tree.
      */
     protected SearchTreeNode addNodeToTree( SearchTreeNode parent, TwoPlayerMove theMove,
-                                         SearchWindow window, int i )
+                                         SearchWindow window )
     {
         NodeAttributes attributes = null;
         if (hasGameTree()) {
@@ -186,7 +186,7 @@ public abstract class AbstractBruteSearchStrategy extends AbstractSearchStrategy
             attributes.put("inhVal", Util.formatNumber(theMove.getInheritedValue()) );
             attributes.put("window", window.toString());
         }
-        return addNodeToTree(parent, theMove, i, attributes);
+        return addNodeToTree(parent, theMove, attributes);
     }
 
     /**

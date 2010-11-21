@@ -175,9 +175,7 @@ public class TwoPlayerMove extends Move
 
         TwoPlayerMove that = (TwoPlayerMove) o;
 
-        return getValue() == that.getValue()
-                && player1_ == that.player1_
-                && !(toLocation_ != null ? !toLocation_.equals(that.toLocation_) : that.toLocation_ != null);
+        return player1_ == that.player1_ && toLocation_ != null && toLocation_.equals(that.toLocation_);
     }
 
     @Override

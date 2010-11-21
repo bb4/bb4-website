@@ -146,7 +146,7 @@ public abstract class Board implements BoardInterface, Cloneable {
 
         for ( int i = 1; i <= getNumRows(); i++ )   {
            for ( int j = 1; j <= getNumCols(); j++ ) {
-              p[i][j] = this.getPosition(i,j).copy();
+              p[i][j] = getPosition(i,j).copy();
            }
         }
         ((Board)clone).positions_ = p;
@@ -161,8 +161,8 @@ public abstract class Board implements BoardInterface, Cloneable {
      * @return true if all the pieces in board b in the same spot and have like ownership as this.
      */
     @Override
-    public boolean equals(Object b)
-    {
+    public boolean equals(Object b) {
+        if (!(b instanceof Board)) return false;
         Board board = (Board)b;
         for ( int i = 1; i <= getNumRows(); i++ )   {
             for ( int j = 1; j <= getNumCols(); j++ ) {

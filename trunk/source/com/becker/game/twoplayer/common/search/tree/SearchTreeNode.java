@@ -75,14 +75,14 @@ public class SearchTreeNode extends DefaultMutableTreeNode
      * @param theMove the two player move to add.
      * @param i the child index of the added node.
      * @return the childNode that was added.
-     */
+     *
     public SearchTreeNode addChild(TwoPlayerMove theMove,
                                    NodeAttributes attributes, int i ) {
 
         SearchTreeNode child = new SearchTreeNode( theMove, attributes );
         this.insert( child, i );
         return child;
-    }
+    }*/
 
     /**
      * See if the specified move is already a child
@@ -91,9 +91,10 @@ public class SearchTreeNode extends DefaultMutableTreeNode
      */
     public SearchTreeNode hasChild(TwoPlayerMove theMove) {
         Enumeration enumeration = children();
+        int i=0;
         while (enumeration.hasMoreElements()) {
             SearchTreeNode node = (SearchTreeNode)enumeration.nextElement();
-             if (theMove.equals(node.getUserObject())) {
+            if (theMove.equals(node.getUserObject())) {
                 return node;
             }
         }
@@ -101,7 +102,7 @@ public class SearchTreeNode extends DefaultMutableTreeNode
     }
 
     /**
-     * Show nodes corresponding to pruyned branches in the game tree (if one is used).
+     * Show nodes corresponding to pruned branches in the game tree (if one is used).
      *
      * @param list list of moves that resulted in pruned branches.
      * @param i th child.
@@ -135,10 +136,10 @@ public class SearchTreeNode extends DefaultMutableTreeNode
         }
         return null;
     }
-
+    /*
     public TwoPlayerMove getMove() {
         return (TwoPlayerMove) this.getUserObject();
-    }
+    } */
 
     public boolean isPruned() {
         return attributes.pruned;
@@ -149,7 +150,7 @@ public class SearchTreeNode extends DefaultMutableTreeNode
         Object m = getUserObject();
         if (m == null) return null;
 
-        StringBuffer s = new StringBuffer();   // m.toString()
+        StringBuffer s = new StringBuffer(m.toString());   
         s.append(attributes.toString());
 
         return s.toString();
