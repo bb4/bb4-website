@@ -1,6 +1,8 @@
 package com.becker.game.twoplayer.common.search;
 
+import com.becker.game.common.Move;
 import com.becker.game.common.MoveList;
+import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
@@ -44,6 +46,27 @@ public interface Searchable
     boolean done( TwoPlayerMove m, boolean recordWin );
 
     /**
+     * Evaluates from player 1's perspective
+     * @return an integer value for the worth of the move.
+     *  must be between -SearchStrategy.WINNING_VALUE and SearchStrategy.WINNING_VALUE.
+     */
+    int worth( Move lastMove, ParameterArray weights );
+
+     /**
+      *  Statically evaluate a boards state to compute the value of the last move
+      *  from player1's perspective.
+      *  This function is a key function that must be created for each type of game added.
+      *  If evaluating from player 1's perpective, then good moves for p1 are given a positive score.
+      *  If evaluating from player 2's perpective, then good moves for p2 are given a positive score.
+      *
+      *  @param lastMove  the last move made
+      *  @param weights  the polynomial weights to use in the polynomial evaluation function
+      *  @param player1sPerspective if true, evaluate the board from p1's perspective, else p2's.
+      *  @return the worth of the board from the specified players point of view
+      */
+    int worth( Move lastMove, ParameterArray weights, boolean player1sPerspective );
+
+    /**
      * Generate a list of candidate next moves given the last move.
      * This function is a key function that must be created for each type of game added.
      *
@@ -72,6 +95,19 @@ public interface Searchable
      */
     boolean inJeopardy( TwoPlayerMove m, ParameterArray weights, boolean player1sPerspective );
 
+    /** The current board state. */
+    TwoPlayerBoard getBoard();
+
+    MoveList getMoveList();
+    
+    /** num moves played so far */
+    int getNumMoves();
+    
+    /**
+     *
+     * Creates a copy of our current state so we can make moves and not worry about undoing them.
+     */
+    Searchable copy() throws CloneNotSupportedException;
     /**
      *
      * @return  the Zobrist hash for the currently searched position

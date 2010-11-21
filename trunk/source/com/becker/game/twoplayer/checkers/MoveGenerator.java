@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class MoveGenerator  {
 
-    private CheckersController controller_;
+    private CheckersSearchable searchable_;
     private CheckersBoard board_;
 
     private MoveList moveList_;
@@ -26,15 +26,15 @@ public class MoveGenerator  {
 
     /**
      * Construct the Checkers game controller.
-     * @param controller
+     * @param searchable
      * @param moveList add the potential moves to this existing list.
      * @param weights to use.
      * @param player1sPerspective if true evaluate the moves from player1s perspective.
      */
-    public MoveGenerator(CheckersController controller, MoveList moveList,
+    public MoveGenerator(CheckersSearchable searchable, MoveList moveList,
                          ParameterArray weights, boolean player1sPerspective) {
-        controller_ = controller;
-        board_ = (CheckersBoard) controller_.getBoard();
+        searchable_ = searchable;
+        board_ = (CheckersBoard) searchable_.getBoard();
         moveList_ = moveList;
         weights_ = weights;
         player1sPerspective_ = player1sPerspective;
@@ -213,7 +213,7 @@ public class MoveGenerator  {
         if ( !moreJumps ) { // base case of recursion
             // we can finally add the move after we evaluate its worth
             board_.makeMove( m );
-            m.setValue(controller_.worth( m, weights, player1sPerspective_ ));
+            m.setValue(searchable_.worth( m, weights, player1sPerspective_ ));
             board_.undoMove();
 
             jumpMoves.add( m );
@@ -235,10 +235,10 @@ public class MoveGenerator  {
         // we also need to verify that we are not cycling over previous moves (not allowed).
         // check moves in the list against the move 4 moves back if the same, we must remove it
         // we can skip if there were captures, since captures cannot be undone.
-        int numMoves = controller_.getNumMoves();
+        int numMoves = searchable_.getNumMoves();
 
         if ( numMoves - 4 > 1 ) {
-            CheckersMove moveToCheck = (CheckersMove) controller_.getMoveList().get( numMoves - 4 );
+            CheckersMove moveToCheck = (CheckersMove) searchable_.getMoveList().get( numMoves - 4 );
             if ( moveToCheck.captureList == null ) {
                 int i = 0;
 

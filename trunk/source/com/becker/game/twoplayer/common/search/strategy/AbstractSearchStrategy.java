@@ -7,10 +7,12 @@ import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.SearchWindow;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.tree.IGameTreeViewable;
+import com.becker.game.twoplayer.common.search.tree.NodeAttributes;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.optimization.parameter.ParameterArray;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  *  This is an abstract base class for a search strategy.
@@ -18,11 +20,10 @@ import java.util.List;
  *
  *  @author Barry Becker
  */
-public abstract class AbstractSearchStrategy implements SearchStrategy
-{
+public abstract class AbstractSearchStrategy implements SearchStrategy {
 
     /** the interface implemented by the generic game controller that provides standard methods. */
-    protected Searchable searchable_ = null;
+    protected Searchable searchable_;
 
     /** keep track of the number of moves searched so far. Long because there could be quite a few. */
     protected long movesConsidered_ = 0;
@@ -38,12 +39,6 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
 
     /** The optional ui component that will be updated to reflect the current search tree.  */
     private IGameTreeViewable gameTree_;
-
-    /**
-     * Number of moves to consider at the top ply.
-     * we use this number to determine how far into the search that we are.
-     */
-    int numTopLevelMoves_;
 
 
     /**
@@ -61,39 +56,40 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
         return searchable_.getSearchOptions();
     }
 
-
-    /**
-     * add a move to the visual game tree (if parent not null).
-     * @return the node added to the tree.
-     */
-    protected SearchTreeNode addNodeToTree( SearchTreeNode parent, TwoPlayerMove theMove,
-                                         SearchWindow window, int i )
-    {
-        SearchTreeNode child = null;
-        if (gameTree_ != null) {
-            child = new SearchTreeNode( theMove );
-            child.setWindow(window);
-            gameTree_.addNode(parent, child, i);
-        }
-        return child;
-    }
-
     /**
      * Show the node in the game tree (if one is used. It is used if parent not null).
      *
      * @param list of pruned nodes
      * @param parent the tree node entry above the current position.
      * @param i th child.
-     * @param val the worth of the node/move
-     * @param window the lastPruned value of the window tells the alpha or beta threshold compared to.
+     * @param attributes name value pairs
      *   type either PRUNE_ALPHA or PRUNE_BETA - pruned by comparison with Alpha or Beta.
      */
-    protected void showPrunedNodesInTree( MoveList list, SearchTreeNode parent,
-                                          int i, int val, SearchWindow window) {
+    protected void addPrunedNodesInTree( MoveList list, SearchTreeNode parent,
+                                          int i, NodeAttributes attributes) {
         if (gameTree_ != null) {
-           gameTree_.addPrunedNodes(list, parent, i, val, window);
+           gameTree_.addPrunedNodes(list, parent, i, attributes);
         }
     }
+
+    /**
+     * add a move to the visual game tree (if parent not null).
+     * @param parent of the node we are adding to the gameTree
+     * @param theMove current move being added.
+     * @param i the ith child node of the parent
+     * @param attributes arbitrary name value pairs to display for the new node in the tree.
+     * @return the node added to the tree.
+     */
+    protected SearchTreeNode addNodeToTree( SearchTreeNode parent, TwoPlayerMove theMove,  int i,
+                                            NodeAttributes attributes) {
+        SearchTreeNode child = null;
+        if (gameTree_ != null) {
+            child = new SearchTreeNode(theMove, attributes);
+            gameTree_.addNode(parent, child, i);
+        }
+        return child;
+    }
+
 
     /**
      * @return true if the move list is empty.
@@ -143,23 +139,23 @@ public abstract class AbstractSearchStrategy implements SearchStrategy
         return true;
     }
 
+    protected boolean hasGameTree() {
+        return gameTree_ != null;
+    }
 
     // these methods give an external thread debugging controls over the search
 
-    public void pause()
-    {
+    public void pause() {
         paused_ = true;
     }
 
 
-    public final boolean isPaused()
-    {
+    public final boolean isPaused() {
         return paused_;
     }
 
 
-    public void continueProcessing()
-    {
+    public void continueProcessing() {
         paused_ = false;
     }
 

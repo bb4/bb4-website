@@ -19,15 +19,14 @@ import com.becker.optimization.parameter.ParameterArray;
  */
 public final class GoMoveGenerator {
 
-    private GoController controller_;
+    private GoSearchable searchable_;
 
 
     /**
      * Constructor.
      */
-    public GoMoveGenerator(GoController controller)
-    {
-        controller_ = controller;
+    public GoMoveGenerator(GoSearchable controller) {
+        searchable_ = controller;
     }
 
 
@@ -39,7 +38,7 @@ public final class GoMoveGenerator {
         assert player1sPerspective;
         GoProfiler prof = GoProfiler.getInstance();
         prof.startGenerateMoves();
-        GoBoard board = (GoBoard)controller_.getBoard();
+        GoBoard board = (GoBoard)searchable_.getBoard();
         MoveList moveList = new MoveList();
         int nCols = board.getNumCols();
         int nRows = board.getNumRows();
@@ -67,7 +66,7 @@ public final class GoMoveGenerator {
             }
         }
 
-        BestMoveFinder finder = new BestMoveFinder(controller_.getTwoPlayerOptions().getSearchOptions());
+        BestMoveFinder finder = new BestMoveFinder(searchable_.getSearchOptions());
         moveList = finder.getBestMoves(player1, moveList, player1sPerspective);
 
         addPassingMoveIfNeeded(lastMove, moveList, player1);
@@ -89,7 +88,7 @@ public final class GoMoveGenerator {
         // this value is not likely to change much except local to last move,
         // anyway we could cache that?
         prof.startCalcWorth();
-        m.setValue(controller_.worth( m, weights, player1sPerspective ));
+        m.setValue(searchable_.worth( m, weights, player1sPerspective ));
         prof.stopCalcWorth();
 
         // now revert the board
@@ -105,8 +104,8 @@ public final class GoMoveGenerator {
      */
     private void addPassingMoveIfNeeded(TwoPlayerMove lastMove, MoveList moveList, boolean player1) {
 
-        Board b = controller_.getBoard();
-        if (controller_.getNumMoves() > (b.getNumCols() + b.getNumRows()))  {
+        Board b = searchable_.getBoard();
+        if (searchable_.getNumMoves() > (b.getNumCols() + b.getNumRows()))  {
             moveList.add(moveList.size(), GoMove.createPassMove(lastMove.getValue(), player1));
         }
     }

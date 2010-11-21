@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
+import com.becker.common.util.Util;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
@@ -7,6 +8,7 @@ import com.becker.game.twoplayer.common.search.options.BruteSearchOptions;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.SearchWindow;
 import com.becker.game.twoplayer.common.search.Searchable;
+import com.becker.game.twoplayer.common.search.tree.NodeAttributes;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.optimization.parameter.ParameterArray;
 
@@ -45,8 +47,7 @@ public abstract class AbstractBruteSearchStrategy extends AbstractSearchStrategy
      * @param searchable the game controller that has options and can make/undo moves.
      * @param weights coefficients for the evaluation polynomial that indirectly determines the best move.
      */
-    AbstractBruteSearchStrategy( Searchable searchable, ParameterArray weights )
-    {
+    AbstractBruteSearchStrategy( Searchable searchable, ParameterArray weights ) {
         super(searchable, weights);
         SearchOptions opts = getOptions();
         BruteSearchOptions bruteOpts = opts.getBruteSearchOptions();
@@ -150,6 +151,44 @@ public abstract class AbstractBruteSearchStrategy extends AbstractSearchStrategy
                                                   SearchWindow window, SearchTreeNode parent);
 
 
+
+    /**
+     * Show the node in the game tree (if one is used. It is used if parent not null).
+     *
+     * @param list of pruned nodes
+     * @param parent the tree node entry above the current position.
+     * @param i th child.
+     */
+    protected void showPrunedNodesInTree( MoveList list, SearchTreeNode parent,
+                                          int i, int selectedValue, SearchWindow window) {
+        if (hasGameTree()) {
+            NodeAttributes attributes = new NodeAttributes();
+            attributes.put("value", Util.formatNumber(selectedValue) );
+            attributes.put("window", window.toString());
+            attributes.pruned = true;
+            attributes.put("pruned", "(value outside window)");
+            super.addPrunedNodesInTree(list, parent, i, attributes);
+        }
+    }
+
+
+    /**
+     * add a move to the visual game tree (if parent not null).
+     * @return the node added to the tree.
+     */
+    protected SearchTreeNode addNodeToTree( SearchTreeNode parent, TwoPlayerMove theMove,
+                                         SearchWindow window, int i )
+    {
+        NodeAttributes attributes = null;
+        if (hasGameTree()) {
+            attributes = new NodeAttributes();
+            attributes.put("value", Util.formatNumber(theMove.getValue()) );
+            attributes.put("inhVal", Util.formatNumber(theMove.getInheritedValue()) );
+            attributes.put("window", window.toString());
+        }
+        return addNodeToTree(parent, theMove, i, attributes);
+    }
+
     /**
      * Update the percentage done serching variable for the progress bar
      * if we are at the top level (otherwise this is a no-op).
@@ -159,7 +198,6 @@ public abstract class AbstractBruteSearchStrategy extends AbstractSearchStrategy
             percentDone_ = 100 * (numTopLevelMoves_ - remainingNextMoves.size()) / numTopLevelMoves_;
         }
     }
-
 
     protected String getIndent(int depth) {
         String indent = "";

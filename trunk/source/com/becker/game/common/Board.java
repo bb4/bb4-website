@@ -33,9 +33,9 @@ public abstract class Board implements BoardInterface, Cloneable {
      */
     private MoveList moveList_;
 
-   public Board() {
-       moveList_ = new MoveList();
-   }
+    public Board() {
+        moveList_ = new MoveList();
+    }
 
     /**
      *  Reset the board to its initial state.
@@ -141,16 +141,18 @@ public abstract class Board implements BoardInterface, Cloneable {
     @Override
     public Object clone() throws CloneNotSupportedException
     {
-       Object clone = super.clone();
-       BoardPosition[][] p = new BoardPosition[getNumRows() + 1][getNumCols() + 1];
+        Object clone = super.clone();
+        BoardPosition[][] p = new BoardPosition[getNumRows() + 1][getNumCols() + 1];
 
-       for ( int i = 1; i <= getNumRows(); i++ )   {
-          for ( int j = 1; j <= getNumCols(); j++ ) {
-             p[i][j] = this.getPosition(i,j).copy();
-          }
-       }
-       ((Board)clone).positions_ = p;
-       return clone;
+        for ( int i = 1; i <= getNumRows(); i++ )   {
+           for ( int j = 1; j <= getNumCols(); j++ ) {
+              p[i][j] = this.getPosition(i,j).copy();
+           }
+        }
+        ((Board)clone).positions_ = p;
+        ((Board)clone).moveList_ = new MoveList(moveList_);
+
+        return clone;
     }
 
     /**

@@ -116,7 +116,7 @@ public abstract class TwoPlayerController extends GameController {
         importer.restoreFromFile(fileName);
         TwoPlayerMove m = (TwoPlayerMove)(getLastMove());
         if (m != null) {
-            m.setValue( worth( m, weights_.getDefaultWeights()));
+            m.setValue( getSearchable().worth( m, weights_.getDefaultWeights()));
         }
     }
 
@@ -261,7 +261,7 @@ public abstract class TwoPlayerController extends GameController {
     public final Move manMoves( Move m ) {
         makeMove( m );
         // we pass the default weights because we just need to know if the game is over
-        m.setValue(worth( m, weights_.getDefaultWeights() ));
+        m.setValue(getSearchable().worth( m, weights_.getDefaultWeights() ));
         return m;
     }
 
@@ -366,138 +366,18 @@ public abstract class TwoPlayerController extends GameController {
         return getSearchable().done(lastMove, false);
     }
 
-    /**
-     *  Statically evaluate a boards state to compute the value of the last move
-     *  from player1's perspective.
-     *  This function is a key function that must be created for each type of game added.
-     *  If evaluating from player 1's perpective, then good moves for p1 are given a positive score.
-     *  If evaluating from player 2's perpective, then good moves for p2 are given a positive score.
-     *
-     *  @param lastMove  the last move made
-     *  @param weights  the polynomial weights to use in the polynomial evaluation function
-     *  @param player1sPerspective if true, evaluate the board from p1's perspective, else p2's.
-     *  @return the worth of the board from the specified players point of view
-     */
-    public final int worth( Move lastMove, ParameterArray weights, boolean player1sPerspective ) {
-        int value = worth( lastMove, weights );
-        return (player1sPerspective) ? value : -value;
-    }
-
-    /**
-     * Evaluates from player 1's perspective
-     * @return an integer value for the worth of the move.
-     *  must be between -SearchStrategy.WINNING_VALUE and SearchStrategy.WINNING_VALUE.
-     */
-    protected abstract int worth( Move lastMove, ParameterArray weights );
-
     final Optimizee getOptimizee() {
         return new TwoPlayerOptimizee(this);
     }
 
     public Searchable getSearchable() {
-        if (searchable_ == null)
-            searchable_ = createSearchable();
+        if (searchable_ == null) {
+            SearchOptions options = ((TwoPlayerOptions) gameOptions_).getSearchOptions();
+            searchable_ = createSearchable((TwoPlayerBoard)board_, getPlayers(),  options);
+        }
         return searchable_;
     }
 
-    protected abstract Searchable createSearchable();
+    protected abstract Searchable createSearchable(TwoPlayerBoard board, PlayerList players, SearchOptions options);
 
-
-    public abstract class TwoPlayerSearchable implements Searchable {
-
-        /** Used to generate hashkeys. */
-        ZobristHash hash;
-
-        /** helps to find the best moves. */
-        protected BestMoveFinder bestMoveFinder_;
-
-
-        public TwoPlayerSearchable() {
-            TwoPlayerBoard b = (TwoPlayerBoard)board_;
-            hash =  new ZobristHash(b);
-            bestMoveFinder_ = new BestMoveFinder(getSearchOptions());
-        }
-
-        public SearchOptions getSearchOptions() {
-            return ((TwoPlayerOptions) gameOptions_).getSearchOptions();
-        }
-
-        /**
-         * @param m the move to play.
-         */
-        public final void makeInternalMove( TwoPlayerMove m )
-        {
-            TwoPlayerBoard b = (TwoPlayerBoard) board_;
-            TwoPlayerMove lastMove = (TwoPlayerMove)getLastMove();
-            if (getNumMoves() > 0)
-                assert(lastMove.isPlayer1() != m.isPlayer1()):
-                        "can't go twice in a row m="+m+" getLastMove()="+ lastMove + " movelist = " + getMoveList();
-
-            board_.makeMove( m );
-
-            BoardPosition pos = b.getPosition(m.getToLocation());
-            //assert pos != null : "pos was null at " + m.getToLocation() + " pass="+  m.isPassingMove();
-            hash.applyMove(m, b.getStateIndex(pos));
-        }
-
-        /**
-         * takes back the most recent move.
-         * @param m  move to undo
-         */
-        public final void undoInternalMove( TwoPlayerMove m ) {
-            TwoPlayerBoard b = (TwoPlayerBoard) board_;
-            TwoPlayerMove lastMove = (TwoPlayerMove)getLastMove();
-            assert m.equals(lastMove) : "The move we are trying to undo ("+m+") was not equal to the last move ("+lastMove+")";
-            hash.applyMove(m, b.getStateIndex(b.getPosition(m.getToLocation())));
-            b.undoMove();  
-        }
-
-        /**
-         * given a move, determine whether the game is over.
-         * If recordWin is true, then the variables for player1/2HasWon can get set.
-         *  sometimes, like when we are looking ahead we do not want to set these.
-         * @param lastMove the move to check. If null then return true. This is typically the last move played.
-         * @param recordWin if true then the controller state will record wins
-         */
-        public boolean done( TwoPlayerMove lastMove, boolean recordWin ) {
-            // the game can't be over if no moves have been made yet.
-            if (getNumMoves() == 0) {
-                return false;
-            }
-            if (getNumMoves() > 0 && lastMove == null) {
-                GameContext.log(0, "Game is over because there are no more moves");
-                return true;
-            }
-            if (getPlayers().anyPlayerWon()) {
-                GameContext.log(0, "Game over because one of the players has won.");
-                return true;
-            }
-
-            boolean won = (Math.abs( lastMove.getValue() ) >= WINNING_VALUE);
-
-            if ( won && recordWin ) {
-                if ( lastMove.getValue() >= WINNING_VALUE )
-                    getPlayers().getPlayer1().setWon(true);
-                else
-                    getPlayers().getPlayer2().setWon(true);
-            }
-            boolean maxMovesExceeded = getNumMoves() >= board_.getMaxNumMoves();
-
-            return (maxMovesExceeded || won);
-        }
-
-        /**
-         * @return true if the specified move caused one or more opponent pieces to become jeopardized
-         */
-        public boolean inJeopardy( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective ) {
-            return false;
-        }
-
-        /**
-         * @return get a hash key that represents this board state (with negligibly small chance of conflict)
-         */
-        public Long getHashKey() {
-            return hash.getKey();
-        }
-    }
 }

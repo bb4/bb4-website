@@ -2,6 +2,7 @@ package com.becker.game.twoplayer.common.search;
 
 import com.becker.game.common.Move;
 import com.becker.game.common.MoveList;
+import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
@@ -51,6 +52,32 @@ public class SearchableStub implements Searchable {
     public boolean done( TwoPlayerMove m, boolean recordWin ) {
         return m.getInheritedValue() >= SearchStrategy.WINNING_VALUE;
     }
+
+    public int worth(Move lastMove, ParameterArray weights) {
+        return lastMove.getValue();
+    }
+
+    public int worth(Move lastMove, ParameterArray weights, boolean player1sPerspective) {
+        return lastMove.getValue();
+    }
+
+
+    public TwoPlayerBoard getBoard() {
+        return null;
+    }
+
+    public MoveList getMoveList() {
+        return moves_;
+    }
+
+    public int getNumMoves() {
+        return moves_.size();
+    }
+
+    public Searchable copy() throws CloneNotSupportedException {
+        return new SearchableStub(searchOptions_);
+    }
+
 
     /**
      * {@inheritDoc}

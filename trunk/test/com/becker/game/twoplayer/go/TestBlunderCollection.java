@@ -22,10 +22,10 @@ public class TestBlunderCollection extends GoTestCase {
      */
     @Override
     protected void setOptionOverrides(SearchOptions options) {
-        options.setAlphaBeta(true);
-        options.setLookAhead(2);
+        options.getBruteSearchOptions().setAlphaBeta(true);
+        options.getBruteSearchOptions().setLookAhead(2);
         options.setPercentageBestMoves(80);
-        options.setQuiescence(true);
+        options.getBruteSearchOptions().setQuiescence(true);
         options.setSearchStrategyMethod(SearchStrategyType.NEGASCOUT_W_MEMORY);
     }
 

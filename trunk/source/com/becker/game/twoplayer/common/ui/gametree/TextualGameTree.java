@@ -57,10 +57,6 @@ public final class TextualGameTree extends JScrollPane {
         return tree_.getRowCount();
     }
 
-    public JTree getTree() {
-        return tree_;
-    }
-
     /**
      * refresh the game tree.
      */

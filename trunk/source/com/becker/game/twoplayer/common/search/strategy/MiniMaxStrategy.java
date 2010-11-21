@@ -64,7 +64,7 @@ public final class MiniMaxStrategy extends AbstractBruteSearchStrategy
                     bestInheritedValue = bestMove.getInheritedValue();
                 }
 
-                if (alphaBeta_ && pruneAtCurrnentNode(window, selectedValue, player1)) {
+                if (alphaBeta_ && pruneAtCurrentNode(window, selectedValue, player1)) {
                     showPrunedNodesInTree(list, parent, i, selectedValue, window);
                     break;
                 }
@@ -80,7 +80,7 @@ public final class MiniMaxStrategy extends AbstractBruteSearchStrategy
      * Note: The SearchWindow may be adjusted as a side effect.
      * @return  whether or not we should prune the current subtree.
      */
-    private boolean pruneAtCurrnentNode(SearchWindow window, int selectedValue, boolean player1) {
+    private boolean pruneAtCurrentNode(SearchWindow window, int selectedValue, boolean player1) {
         if ( player1 && (selectedValue < window.alpha) ) {
             if ( selectedValue < window.beta ) {
                 return true;

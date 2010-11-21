@@ -41,7 +41,8 @@ public class GameTreeCellRenderer extends DefaultTreeCellRenderer
     /**
      * initialize the colormap used to color the game tree rows, nodes, and arcs.
      * We will use this colormap for both the text tree and the graphical
-       tree viewers so they have consistent coloring.
+     * tree viewers so they have consistent coloring.
+     * @return the colormap
      */
     private static synchronized ColorMap createColormap(TwoPlayerPieceRenderer renderer) {
 

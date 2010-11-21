@@ -1,15 +1,13 @@
 package com.becker.game.twoplayer.pente;
 
 import com.becker.game.common.GamePiece;
-import com.becker.game.common.Move;
-import com.becker.game.common.MoveList;
+import com.becker.game.common.PlayerList;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
-import com.becker.game.twoplayer.pente.analysis.MoveEvaluator;
-import com.becker.optimization.parameter.ParameterArray;
+import com.becker.game.twoplayer.common.search.options.SearchOptions;
 
 import java.util.Random;
 
@@ -18,12 +16,11 @@ import java.util.Random;
  *
  * @author Barry Becker
 */
-public class PenteController extends TwoPlayerController
-{
+public class PenteController extends TwoPlayerController {
+
     private static final int DEFAULT_NUM_ROWS = 20;
 
-    protected MoveEvaluator moveEvaluator_;
-
+    /** for genreating the randome first move */
     private Random RANDOM = new Random(0);
 
     /**
@@ -51,10 +48,8 @@ public class PenteController extends TwoPlayerController
      *  this gets the pente specific patterns and weights
      */
     @Override
-    protected void initializeData()
-    {
+    protected void initializeData() {
         weights_ = new PenteWeights();
-        moveEvaluator_ = new MoveEvaluator((TwoPlayerBoard)board_, new PentePatterns());
     }
 
     /**
@@ -74,60 +69,8 @@ public class PenteController extends TwoPlayerController
     }
 
 
-    /**
-     *  Statically evaluate the board position.
-     *  @return the lastMoves value modified by the value add of the new move.
-     *   a large positive value means that the move is good from the specified players viewpoint
-     */
     @Override
-    protected int worth( Move lastMove, ParameterArray weights ) {
-        return moveEvaluator_.worth(lastMove, weights);
-    }
-
-    @Override
-    public Searchable createSearchable() {
-         return new PenteSearchable();
-    }
-
-
-    protected class PenteSearchable extends TwoPlayerSearchable {
-
-        PenteMoveGenerator generator = new PenteMoveGenerator(PenteController.this);
-
-        /**
-         * generate all possible next moves.
-         */
-        public MoveList generateMoves(TwoPlayerMove lastMove,
-                                      ParameterArray weights, boolean player1sPerspective ) {
-            return generator.generateMoves(lastMove, weights, player1sPerspective);
-        }
-
-        /**
-         * Consider both our moves and opponent moves that result in wins.
-         * Opponent moves that result in a win should be blocked.
-         * @return Set of moves the moves that result in a certain win or a certain loss.
-         */
-        public MoveList generateUrgentMoves(TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective)
-        {
-            return generator.generateUrgentMoves(lastMove, weights, player1sPerspective);
-        }
-
-        /**
-         * Consider the delta big if >= w. Where w is the value of a near win.
-         * @return true if the last move created a big change in the score
-         */
-        @Override
-        public boolean inJeopardy( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective  )
-        {
-            if (lastMove == null)
-                return false;
-            double newValue = worth( lastMove, weights, player1sPerspective );
-            double diff = newValue - lastMove.getValue();
-            return (diff > getJeopardyWeight());
-        }
-
-        protected int getJeopardyWeight()  {
-            return PenteWeights.JEOPARDY_WEIGHT;
-        }
+    protected Searchable createSearchable(TwoPlayerBoard board, PlayerList players, SearchOptions options) {
+        return new PenteSearchable(board, players, options);
     }
 }

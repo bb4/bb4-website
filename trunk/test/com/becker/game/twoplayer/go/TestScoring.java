@@ -50,10 +50,11 @@ public class TestScoring extends GoTestCase {
 
         int blackTerrEst = controller_.getTerritory(true);
         int whiteTerrEst = controller_.getTerritory(false);
-        int numBlackCaptures = controller_.getNumCaptures(true);
-        int numWhiteCaptures = controller_.getNumCaptures(false);
-        int numDeadBlack = controller_.getNumDeadStonesOnBoard(true);
-        int numDeadWhite = controller_.getNumDeadStonesOnBoard(false);
+        GoSearchable searchable = (GoSearchable) controller_.getSearchable();
+        int numBlackCaptures = searchable.getNumCaptures(true);
+        int numWhiteCaptures = searchable.getNumCaptures(false);
+        int numDeadBlack = searchable.getNumDeadStonesOnBoard(true);
+        int numDeadWhite = searchable.getNumDeadStonesOnBoard(false);
 
         GameContext.log(0, "Captures :          black = " + numBlackCaptures + "   white = "+ numWhiteCaptures);
         GameContext.log(0, "Territory: black = " + blackTerrEst + "   white = "+ whiteTerrEst);

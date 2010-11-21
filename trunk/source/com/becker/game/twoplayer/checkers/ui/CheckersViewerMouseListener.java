@@ -5,6 +5,7 @@ import com.becker.game.common.*;
 import com.becker.game.common.ui.GameBoardViewer;
 import com.becker.game.common.ui.ViewerMouseListener;
 import com.becker.game.twoplayer.checkers.CheckersController;
+import com.becker.game.twoplayer.checkers.CheckersSearchable;
 import com.becker.game.twoplayer.checkers.MoveGenerator;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 
@@ -133,7 +134,7 @@ public class CheckersViewerMouseListener extends ViewerMouseListener {
         TwoPlayerMove lastMove = (TwoPlayerMove)controller.getLastMove();
         boolean player1 = (lastMove == null) || !lastMove.isPlayer1();
         MoveGenerator generator =
-                new MoveGenerator(controller, possibleMoveList,
+                new MoveGenerator((CheckersSearchable)controller.getSearchable(), possibleMoveList,
                                   controller.getComputerWeights().getDefaultWeights(), player1);
 
         // it doesn't matter which set of wts are pass in here since we just need
