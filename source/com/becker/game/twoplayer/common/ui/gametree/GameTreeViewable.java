@@ -32,6 +32,15 @@ public final class GameTreeViewable implements IGameTreeViewable {
         return root_;
     }
 
+
+    /**
+     * Add a child node at position i to the specified parent node.
+     */
+    public void addNode(final SearchTreeNode parent, final SearchTreeNode child) {
+
+        parent.add(child);
+    }
+
     /**
      * Add a child node at position i to the specified parent node.
      */

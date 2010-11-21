@@ -111,7 +111,7 @@ public class GamePiece implements Serializable
      }
 
     /**
-     * create a deep copy
+     * @return create a deep copy
      */
     public GamePiece copy()
     {

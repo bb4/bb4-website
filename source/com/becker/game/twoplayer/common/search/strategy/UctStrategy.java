@@ -2,7 +2,6 @@ package com.becker.game.twoplayer.common.search.strategy;
 
 import com.becker.game.common.Move;
 import com.becker.game.common.MoveList;
-import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
@@ -72,7 +71,7 @@ public class UctStrategy extends AbstractSearchStrategy {
             // this may be happening a little more than expected.
 
             if (nextNode != null && parent != null) {
-                SearchTreeNode child = addNodeToTree(parent, lastMoveNode); // nextNode); 
+                SearchTreeNode child = addNodeToTree(parent, nextNode);
                 
                 searchable_.makeInternalMove(nextNode.move);
                 player1Wins = playSimulation(nextNode, child);
@@ -94,8 +93,9 @@ public class UctStrategy extends AbstractSearchStrategy {
     private UctNode uctSelect(UctNode node) {
         double bestUct = -1.0;
         UctNode selected = null;
+
         for (UctNode child : node.children) {
-            double uctValue = node.calculateUctValue(exploreExploitRatio, node.numVisits);
+            double uctValue = child.calculateUctValue(exploreExploitRatio, node.numVisits);
             if (uctValue > bestUct) {
                 bestUct = uctValue;
                 selected = child;
@@ -124,16 +124,8 @@ public class UctStrategy extends AbstractSearchStrategy {
      */
     private boolean playRandomGame(TwoPlayerMove move) {
 
-        if (searchable_.done(move, false)) {
-            return move.getValue() > 0;
-        }
-        MoveList moves = searchable_.generateMoves(move, weights_, true);
-        TwoPlayerMove randomMove = (TwoPlayerMove) moves.getRandomMove();
+        return playRandomMove(move, searchable_); // getSearchableCopy()); not doing deep enough copy currently.
 
-        searchable_.makeInternalMove(randomMove);
-        boolean result = playRandomMove(randomMove, getSearchableCopy());
-        searchable_.undoInternalMove(randomMove);
-        return result;
     }
 
     private Searchable getSearchableCopy() {
@@ -157,10 +149,12 @@ public class UctStrategy extends AbstractSearchStrategy {
             return move.getValue() > 0;
         }
         MoveList moves = searchable.generateMoves(move, weights_, true);
-        TwoPlayerMove randomMove = (TwoPlayerMove) moves.getRandomMove();
+        TwoPlayerMove randomMove = (TwoPlayerMove) moves.getFirstMove(); //moves.getRandomMove();
 
         searchable.makeInternalMove(randomMove);
-        return playRandomMove(randomMove, searchable);
+        boolean result = playRandomMove(randomMove, searchable);
+        searchable.undoInternalMove(randomMove);     // really do not want to do this for perf reasons.
+        return result;
     }
 
     /**
@@ -174,6 +168,6 @@ public class UctStrategy extends AbstractSearchStrategy {
             alreadyChild.attributes = node.getAttributes();
             return alreadyChild;
         }
-        return addNodeToTree(parent, node.move, node.childIndex, node.getAttributes());
+        return addNodeToTree(parent, node.move, node.getAttributes());
     }
 }

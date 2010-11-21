@@ -29,6 +29,8 @@ public class BruteSearchOptionsPanel extends JPanel {
     private JCheckBox alphabetaCheckbox_;
     private JCheckBox quiescenceCheckbox_;
 
+    private static final int MAX_ALLOWED_LOOKAHEAD = 20;
+
     /**
      * Constructor
      */
@@ -64,7 +66,7 @@ public class BruteSearchOptionsPanel extends JPanel {
         JLabel treeUpperBound = new JLabel();
         lookAheadField_ =
                 new NumberInput(GameContext.getLabel("MOVES_TO_LOOKAHEAD"), bruteOptions.getLookAhead(),
-                                GameContext.getLabel("MOVES_TO_LOOKAHEAD_TIP"), 1, 16, true);
+                                GameContext.getLabel("MOVES_TO_LOOKAHEAD_TIP"), 1, MAX_ALLOWED_LOOKAHEAD, true);
 
         this.add( lookAheadField_ );
 
@@ -84,6 +86,7 @@ public class BruteSearchOptionsPanel extends JPanel {
      * Calculate an upper limit on the number of moves that will be examined by the minimax algorithm.
      * The actual number of moves may be much less if alpha-beta is used or if
      * the natural branch factor for the game is less then the numBestMoves limit
+     * @return upper limit.
      */
     private static long calcTreeUpperBound( int lookAhead, int numBestMoves )
     {

@@ -63,7 +63,7 @@ public abstract class TwoPlayerSearchable implements Searchable {
      */
     public final void makeInternalMove( TwoPlayerMove m )
     {
-        TwoPlayerBoard b = (TwoPlayerBoard) board_;
+        TwoPlayerBoard b = board_;
         TwoPlayerMove lastMove = (TwoPlayerMove)(moveList_.getLastMove());
         if (moveList_.getNumMoves() > 0)
             assert(lastMove.isPlayer1() != m.isPlayer1()):

@@ -76,16 +76,15 @@ public abstract class AbstractSearchStrategy implements SearchStrategy {
      * add a move to the visual game tree (if parent not null).
      * @param parent of the node we are adding to the gameTree
      * @param theMove current move being added.
-     * @param i the ith child node of the parent
      * @param attributes arbitrary name value pairs to display for the new node in the tree.
      * @return the node added to the tree.
      */
-    protected SearchTreeNode addNodeToTree( SearchTreeNode parent, TwoPlayerMove theMove,  int i,
+    protected SearchTreeNode addNodeToTree( SearchTreeNode parent, TwoPlayerMove theMove,
                                             NodeAttributes attributes) {
         SearchTreeNode child = null;
         if (gameTree_ != null) {
             child = new SearchTreeNode(theMove, attributes);
-            gameTree_.addNode(parent, child, i);
+            gameTree_.addNode(parent, child);
         }
         return child;
     }

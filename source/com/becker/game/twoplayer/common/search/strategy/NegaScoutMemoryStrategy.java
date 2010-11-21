@@ -126,7 +126,7 @@ public final class NegaScoutMemoryStrategy extends NegaScoutStrategy
             updatePercentDone(depth, list);
 
             searchable_.makeInternalMove( theMove );
-            SearchTreeNode child = addNodeToTree(parent, theMove, window, i );
+            SearchTreeNode child = addNodeToTree(parent, theMove, window ); 
 
             // search with minimal search window
             selectedMove = searchInternal( theMove, depth-1, new SearchWindow(-newBeta, -window.alpha), child );

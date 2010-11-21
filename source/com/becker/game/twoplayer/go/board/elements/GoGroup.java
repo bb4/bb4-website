@@ -247,6 +247,7 @@ public final class GoGroup extends GoSet implements IGoGroup
     public Object clone() throws CloneNotSupportedException
     {
         Object clone = super.clone();
+        ((GoGroup)clone).members_ = new GoStringSet(members_); // @@ need to do deep copies of members
         ((GoGroup)clone).groupAnalyzer_ = new GroupAnalyzer((GoGroup) clone);
         return clone;     
     }

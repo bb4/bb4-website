@@ -36,7 +36,7 @@ public class UctNode {
     private static final double DENOM_CONST = 5.0;
 
     /** Some big number. */
-    private static final double BIG = 100;
+    private static final double BIG = 1000;
 
     /** Ensure reproducible random results if all game params stay the same. */
     private static final Random RAND = new Random(0);
@@ -90,7 +90,10 @@ public class UctNode {
      */
     public double calculateUctValue(double exploreExploitRatio, int parentVisits) {
         if (numVisits > 0) {
-            return getWinRate() + exploreExploitRatio * Math.sqrt(Math.log(parentVisits) / (DENOM_CONST * numVisits));
+            double v = getWinRate() + exploreExploitRatio * Math.sqrt(Math.log(parentVisits) / (DENOM_CONST * numVisits));
+            //System.out.println("wr="+ getWinRate() +
+            //        "+"+ exploreExploitRatio+" * " + Math.sqrt(Math.log(parentVisits)) + "/" +(DENOM_CONST * numVisits) + " =" + v);
+            return v;
         }
         else {
             // always play a random unexplored move first.
