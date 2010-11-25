@@ -373,13 +373,9 @@ public abstract class AbstractTwoPlayerBoardViewer extends GameBoardViewer
     @Override
     public Board getBoard() {
        TwoPlayerController c = get2PlayerController();
+        
        if (cachedGameBoard_ == null) {
-           try {
-               cachedGameBoard_ = (Board)c.getBoard().clone();
-           }
-           catch (CloneNotSupportedException e) {
-               e.printStackTrace();
-           }
+           cachedGameBoard_ = (Board)c.getBoard().copy();
        }
        if (c.isProcessing() && !c.getTwoPlayerOptions().isAutoOptimize()) {
            return cachedGameBoard_;

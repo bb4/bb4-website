@@ -63,7 +63,16 @@ public class MoveList extends LinkedList<Move> {
      */
     public Move getRandomMove() {
 
-        int r = (int) (RANDOM.nextFloat() * size());
+        return getRandomMove(size());
+    }
+
+    /**
+     * @param ofFirstN randomly get one of the top n moves and ignore the rest.
+     * @return a random move from the list.
+     */
+    public Move getRandomMove(int ofFirstN) {
+
+        int r = RANDOM.nextInt(Math.min(ofFirstN, size()));
         return get( r );
     }
 }

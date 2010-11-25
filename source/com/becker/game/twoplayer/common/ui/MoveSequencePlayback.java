@@ -79,7 +79,7 @@ class MoveSequencePlayback {
      * Perform the specified sequnce of moves.
      * @param moveSequence the sequence of consecutive moves to play on the board.
      */
-    private void performMoveSequence(List moveSequence) {
+    private synchronized void performMoveSequence(List moveSequence) {
         int firstFuture = 0;
         for ( int i = 0; i < moveSequence.size(); i++ ) {
             TwoPlayerMove m =  (TwoPlayerMove) moveSequence.get( i );

@@ -18,7 +18,7 @@ import com.becker.common.Location;
  *
  *  @author Barry Becker
  */
-public abstract class Board implements BoardInterface, Cloneable {
+public abstract class Board implements BoardInterface {
 
     /** the internal data structures representing the game board and the positions on it. */
     protected BoardPosition positions_[][] = null;
@@ -36,6 +36,29 @@ public abstract class Board implements BoardInterface, Cloneable {
     public Board() {
         moveList_ = new MoveList();
     }
+
+    /**
+     * Copy constructor. Makes a deep copy of the board.
+     */
+    protected Board(Board b) {
+        this();
+        numRows_ = b.getNumRows();
+        numCols_ = b.getNumCols();
+
+        b.moveList_ = new MoveList(moveList_);
+
+        positions_ = createBoard();
+        for ( int i = 1; i <= getNumRows(); i++ )   {
+           for ( int j = 1; j <= getNumCols(); j++ ) {
+              positions_[i][j] = b.getPosition(i, j).copy();
+           }
+        }
+    }    
+
+    protected BoardPosition[][] createBoard() {
+        return new BoardPosition[getNumRows() + 1][getNumCols() + 1];
+    }
+
 
     /**
      *  Reset the board to its initial state.
@@ -131,28 +154,6 @@ public abstract class Board implements BoardInterface, Cloneable {
             return move;
         }
         return null;
-    }
-
-
-    /**
-     * @return a deep copy of the board.
-     * @throws CloneNotSupportedException if this object should not be cloned.
-     */
-    @Override
-    public Object clone() throws CloneNotSupportedException
-    {
-        Object clone = super.clone();
-        BoardPosition[][] p = new BoardPosition[getNumRows() + 1][getNumCols() + 1];
-
-        for ( int i = 1; i <= getNumRows(); i++ )   {
-           for ( int j = 1; j <= getNumCols(); j++ ) {
-              p[i][j] = getPosition(i,j).copy();
-           }
-        }
-        ((Board)clone).positions_ = p;
-        ((Board)clone).moveList_ = new MoveList(moveList_);
-
-        return clone;
     }
 
     /**

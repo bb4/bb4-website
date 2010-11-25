@@ -15,8 +15,7 @@ import java.util.List;
  * @see BlockadeBoard
  * @author Barry Becker
  */
-public final class BlockadeBoardPosition extends BoardPosition
-{
+public final class BlockadeBoardPosition extends BoardPosition {
 
     /** the walls to find if the north or west sides are blocked we must examine the north and west bordering positions respectively. */
     private BlockadeWall southWall_ = null;
@@ -39,14 +38,21 @@ public final class BlockadeBoardPosition extends BoardPosition
      * @param piece the piece at this position if there is one (use null if no stone).
      */
     public BlockadeBoardPosition( int row, int col, GamePiece piece, BlockadeWall southWall, BlockadeWall eastWall,
-                                  boolean isP1Home, boolean isP2Home)
-    {
+                                  boolean isP1Home, boolean isP2Home) {
         super( new Location(row, col), piece );
         visited_ = false;
         southWall_ = southWall;
         eastWall_ = eastWall;
         isPlayer1Home_ = isP1Home;
         isPlayer2Home_ = isP2Home;
+    }
+
+    /**
+     * Copy constructor
+     */
+    public BlockadeBoardPosition(BlockadeBoardPosition pos) {
+        this(pos.getRow(), pos.getCol(), pos.getPiece(), pos.southWall_, pos.eastWall_,
+             pos.isPlayer1Home_, pos.isPlayer2Home_);
     }
     
     /**
@@ -61,11 +67,12 @@ public final class BlockadeBoardPosition extends BoardPosition
     }
     
     /**
-     *reuse previously computed shortest paths if they are still valid.
-     *Caching can cause a subtle problems were it is invalid, so I turned it off.
-     *@param wall the most recently placed wall
+     * Reuse previously computed shortest paths if they are still valid.
+     * Caching can cause a subtle problems were it is invalid, so I turned it off.
+     * @param wall the most recently placed wall
+     * @return list of shortest paths.
      */
-    public List<Path>  findShortestPaths(BlockadeBoard board, BlockadeWall wall) {
+    public List<Path> findShortestPaths(BlockadeBoard board, BlockadeWall wall) {
    
         List<Path> paths = cachedPaths_;
         // Why didn't caching work like I hoped? 
@@ -123,26 +130,8 @@ public final class BlockadeBoardPosition extends BoardPosition
      * create a deep copy of this position.
      */
     @Override
-    public BoardPosition copy()
-    {
-        return
-            new BlockadeBoardPosition( location_.getRow(), location_.getCol(),
-                                      (piece_ == null) ? null:piece_.copy(),
-                                      (southWall_ != null) ? southWall_.copy():null,
-                                      (eastWall_ != null) ? eastWall_.copy() :null,
-                                      isPlayer1Home_, isPlayer2Home_);
-    }
-
-
-    /**
-     * copy all fields from another stone to this one.
-     */
-    public void copy( BlockadeBoardPosition pos )
-    {
-        super.copy(pos);
-        southWall_ = (pos.getSouthWall()!=null)?pos.getSouthWall():null;
-        eastWall_ = (pos.getEastWall()!=null)?pos.getEastWall():null;
-        visited_ = pos.isVisited();
+    public BoardPosition copy() {
+        return new BlockadeBoardPosition(this);
     }
 
     /**

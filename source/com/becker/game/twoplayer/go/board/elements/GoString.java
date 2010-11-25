@@ -21,8 +21,9 @@ import java.util.List;
  *  @see GoBoard
  *  @author Barry Becker
  */
-public class GoString extends GoSet implements IGoString
-{
+public class GoString extends GoSet
+                      implements IGoString {
+
     /** a set of the stones that are in the string */
     private GoBoardPositionSet members_;
     
@@ -38,8 +39,7 @@ public class GoString extends GoSet implements IGoString
     /**
      * Constructor. Create a new string containing the specified stone.
      */
-    public GoString( GoBoardPosition stone, GoBoard board )
-    {
+    public GoString( GoBoardPosition stone, GoBoard board ) {
         assert ( stone.isOccupied() );
         ownedByPlayer1_ = stone.getPiece().isOwnedByPlayer1();
         getMembers().add( stone );
@@ -52,8 +52,7 @@ public class GoString extends GoSet implements IGoString
      * Constructor.
      * Create a new string containing the specified list of stones
      */
-    public GoString( GoBoardPositionList stones, GoBoard board )
-    {
+    public GoString( GoBoardPositionList stones, GoBoard board ) {
         assert (stones != null && stones.size() > 0): "Tried to create list from empty list";
         GoStone stone =  (GoStone)((BoardPosition) stones.get(0)).getPiece();
         // GoEye constructor calls this method. For eyes the stone is null.
@@ -78,21 +77,18 @@ public class GoString extends GoSet implements IGoString
         members_ = new GoBoardPositionSet();
     }
 
-    public final void setGroup( GoGroup group )
-    {
+    public final void setGroup( GoGroup group ) {
         group_ = group;
     }
 
-    public final GoGroup getGroup()
-    {
+    public final GoGroup getGroup() {
         return group_;
     }
 
     /**
      * add a stone to the string
      */
-    public void addMember( GoBoardPosition stone, GoBoard board)
-    {
+    public void addMember( GoBoardPosition stone, GoBoard board) {
         addMemberInternal(stone, board);
         libertyAnalyzer_ = new StringLibertyAnalyzer(board, getMembers());
     }
@@ -100,8 +96,7 @@ public class GoString extends GoSet implements IGoString
     /**
      * add a stone to the string
      */
-    void addMemberInternal(GoBoardPosition stone, GoBoard board)
-    {
+    void addMemberInternal(GoBoardPosition stone, GoBoard board) {
         assert ( stone.isOccupied()): "trying to add empty space to string. stone=" + stone ;
         assert ( stone.getPiece().isOwnedByPlayer1() == ownedByPlayer1_):
                 "stones added to a string must have like ownership";
@@ -124,8 +119,7 @@ public class GoString extends GoSet implements IGoString
     /**
      * merge a string into this one
      */
-    public final void merge( GoString string, GoBoard board )
-    {
+    public final void merge( GoString string, GoBoard board ) {
         if ( this == string ) {
             GameContext.log( 1, "Warning: merging " + string + " into itself" );
             // its a self join
@@ -158,8 +152,7 @@ public class GoString extends GoSet implements IGoString
      * What happens if the string gets split as a result?
      * The caller should handle this case since we cannot create new strings here.
      */
-    public final void remove( GoBoardPosition stone, GoBoard board )
-    {
+    public final void remove( GoBoardPosition stone, GoBoard board ) {
         removeInternal(stone);
         libertyAnalyzer_ = new StringLibertyAnalyzer(board, getMembers());
     }
@@ -196,8 +189,7 @@ public class GoString extends GoSet implements IGoString
      * @param board
      */
     @Override
-    public final GoBoardPositionSet getLiberties(GoBoard board)
-    {
+    public final GoBoardPositionSet getLiberties(GoBoard board) {
         return libertyAnalyzer_.getLiberties();
     }
 
@@ -213,8 +205,7 @@ public class GoString extends GoSet implements IGoString
      * Set the health of members equal to the specified value
      * @param health range = [0-1]
      */
-    public final void updateTerritory( float health )
-    {
+    public final void updateTerritory( float health ) {
         for (GoBoardPosition pos : getMembers()) {
             GoStone stone = (GoStone) pos.getPiece();
             stone.setHealth(health);
@@ -227,8 +218,7 @@ public class GoString extends GoSet implements IGoString
      *  because one of them is dead.
      */
     @Override
-    public boolean isEnemy(GoBoardPosition pos)
-    {
+    public boolean isEnemy(GoBoardPosition pos) {
         assert (group_ != null): "group for "+this+" is null";
         assert (pos.isOccupied()): "pos not occupied: ="+pos;
         GoStone stone = (GoStone)pos.getPiece();
@@ -241,15 +231,13 @@ public class GoString extends GoSet implements IGoString
     /**
      * make sure all the stones in the string are unvisited
      */
-    public final void unvisit()
-    {
+    public final void unvisit() {
         for (GoBoardPosition stone : getMembers()) {
             stone.setVisited(false);
         }
     }
 
-    String getPrintPrefix()
-    {
+    String getPrintPrefix() {
         return " STRING(";
     }
 
@@ -257,8 +245,7 @@ public class GoString extends GoSet implements IGoString
      * @return  a string representation for the string.
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         StringBuffer sb = new StringBuffer( getPrintPrefix() );
         sb.append(" UA=").append(isUnconditionallyAlive()).append(" ");
         Iterator it = getMembers().iterator();
@@ -291,8 +278,7 @@ public class GoString extends GoSet implements IGoString
     /**
      * @return true if any of the stones in the string are blank (should never happen)
      */
-    public final boolean areAnyBlank()
-    {
+    public final boolean areAnyBlank() {
         for (GoBoardPosition stone : getMembers()) {
             if (stone.isUnoccupied())
                 return true;
@@ -304,8 +290,7 @@ public class GoString extends GoSet implements IGoString
      * Confirm that all the stones in the string have the same ownership as the string
      * we throw and error if this is not true
      */
-    public final void confirmValid( GoBoard b )
-    {
+    public final void confirmValid( GoBoard b ) {
         Iterator<GoBoardPosition> it = getMembers().iterator();
         NeighborAnalyzer na = new NeighborAnalyzer(b);
         if ( it.hasNext() ) {

@@ -71,20 +71,6 @@ public class SearchTreeNode extends DefaultMutableTreeNode
     }
 
     /**
-     * Add a move to the visual game tree (if parent not null).
-     * @param theMove the two player move to add.
-     * @param i the child index of the added node.
-     * @return the childNode that was added.
-     *
-    public SearchTreeNode addChild(TwoPlayerMove theMove,
-                                   NodeAttributes attributes, int i ) {
-
-        SearchTreeNode child = new SearchTreeNode( theMove, attributes );
-        this.insert( child, i );
-        return child;
-    }*/
-
-    /**
      * See if the specified move is already a child
      * @param theMove specified move to check
      * @return the corresponding search node if it is a child.
@@ -136,10 +122,6 @@ public class SearchTreeNode extends DefaultMutableTreeNode
         }
         return null;
     }
-    /*
-    public TwoPlayerMove getMove() {
-        return (TwoPlayerMove) this.getUserObject();
-    } */
 
     public boolean isPruned() {
         return attributes.pruned;

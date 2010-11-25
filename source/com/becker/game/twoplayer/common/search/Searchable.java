@@ -106,7 +106,8 @@ public interface Searchable
     /**
      * @return a copy of our current state so we can make moves and not worry about undoing them.
      */
-    Searchable copy() throws CloneNotSupportedException;
+    Searchable copy();
+
     /**
      *
      * @return  the Zobrist hash for the currently searched position

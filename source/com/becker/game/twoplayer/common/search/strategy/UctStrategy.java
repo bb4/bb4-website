@@ -19,7 +19,11 @@ import java.util.LinkedList;
  */
 public class UctStrategy extends AbstractSearchStrategy {
 
+    /** ratio of exploration to exploitaion (of known good moves) while searching.  */
     private double exploreExploitRatio;
+
+    /** When selecting a random move for a random game, select from only this many of the top moves. */
+    private int topMovesToConsider;
 
     /**
      * Constructor - do not call directly.
@@ -29,6 +33,7 @@ public class UctStrategy extends AbstractSearchStrategy {
     UctStrategy( Searchable searchable, ParameterArray weights ) {
         super(searchable, weights);
         exploreExploitRatio = getOptions().getMonteCarloSearchOptions().getExploreExploitRatio();
+        topMovesToConsider = getOptions().getMinBestMoves();
     }
 
     @Override
@@ -74,7 +79,9 @@ public class UctStrategy extends AbstractSearchStrategy {
                 SearchTreeNode child = addNodeToTree(parent, nextNode);
                 
                 searchable_.makeInternalMove(nextNode.move);
+                //System.out.println("before searchable_=" + searchable_.getMoveList());
                 player1Wins = playSimulation(nextNode, child);
+                //System.out.println("after searchable_=" + searchable_.getMoveList());
                 searchable_.undoInternalMove(nextNode.move);
             }
         }
@@ -124,18 +131,7 @@ public class UctStrategy extends AbstractSearchStrategy {
      */
     private boolean playRandomGame(TwoPlayerMove move) {
 
-        return playRandomMove(move, searchable_); // getSearchableCopy()); not doing deep enough copy currently.
-
-    }
-
-    private Searchable getSearchableCopy() {
-        Searchable s = null;
-        try {
-           s = searchable_.copy();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-        return s;
+        return playRandomMove(move, searchable_); // searchable_.copy());
     }
 
     /**
@@ -149,7 +145,7 @@ public class UctStrategy extends AbstractSearchStrategy {
             return move.getValue() > 0;
         }
         MoveList moves = searchable.generateMoves(move, weights_, true);
-        TwoPlayerMove randomMove = (TwoPlayerMove) moves.getFirstMove(); //moves.getRandomMove();
+        TwoPlayerMove randomMove = (TwoPlayerMove) moves.getRandomMove(topMovesToConsider);
 
         searchable.makeInternalMove(randomMove);
         boolean result = playRandomMove(randomMove, searchable);
@@ -163,6 +159,7 @@ public class UctStrategy extends AbstractSearchStrategy {
      * @return the node added to the tree.
      */
     protected SearchTreeNode addNodeToTree(SearchTreeNode parent, UctNode node ) {
+
         SearchTreeNode alreadyChild = parent.hasChild(node.move);
         if (alreadyChild != null)  {
             alreadyChild.attributes = node.getAttributes();

@@ -39,6 +39,14 @@ public final class LifeAnalyzer {
         nbrAnalyzer_ = new NeighborAnalyzer(board);
     }
 
+    /*
+    private LifeAnalyzer() {}
+
+    public LifeAnalyzer copy() {
+        LifeAnalyzer copy = new LifeAnalyzer();
+        copy.group_ = group_
+    }*/
+
     /**
      * Use Benson's algorithm (1977) to determine if a set of strings and eyes within a group
      * is unconditionally alive.

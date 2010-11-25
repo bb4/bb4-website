@@ -82,7 +82,10 @@ class GroupEyeCache {
         return isValid_;
     }
 
-    /** used only for test. */
+    /**
+     * used only for test.
+     * @return eye potential value
+     */
     public float getEyePotential() {
         assert isValid_;
         return eyePotential_;
@@ -113,24 +116,5 @@ class GroupEyeCache {
         }
         eyes_.clear();
         isValid_ = false;
-    }
-
-    /**
-     * @return a deep copy of this instance
-     * @throws CloneNotSupportedException
-     */
-    @Override
-    public Object clone() throws CloneNotSupportedException {
-        Object clone = super.clone();
-
-        if (eyes_ !=null)  {
-            ((GroupEyeCache)clone).eyes_ = new HashSet<GoEye>();
-            Set<GoEye> m = ((GroupEyeCache)clone).eyes_;
-
-            for (GoEye eye : this.eyes_) {
-                m.add((GoEye) eye.clone());
-            }
-        }
-        return clone;
     }
 }

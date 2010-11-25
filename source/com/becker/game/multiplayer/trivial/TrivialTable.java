@@ -9,17 +9,22 @@ import com.becker.game.multiplayer.trivial.player.TrivialPlayer;
  *
  * @author Barry Becker
  */
-public class TrivialTable extends Board
-{
+public class TrivialTable extends Board {
 
     /** 
      * constructor
      *  @param numRows num rows
      *  @param numCols num cols
      */
-    public TrivialTable( int numRows, int numCols )
-    {
+    public TrivialTable( int numRows, int numCols )  {
         setSize( numRows, numCols );
+    }
+
+    public TrivialTable(TrivialTable table) {
+    }
+
+    public TrivialTable copy() {
+        return new TrivialTable(this);
     }
 
 
@@ -27,8 +32,7 @@ public class TrivialTable extends Board
      *  reset the board to its initial state
      */
     @Override
-    public void reset()
-    {
+    public void reset() {
         super.reset();
         for ( int i = 0; i <= getNumRows(); i++ ) {
             for ( int j = 0; j <= getNumCols(); j++ ) {
@@ -39,8 +43,7 @@ public class TrivialTable extends Board
 
 
     @Override
-    public void setSize( int numRows, int numCols )
-    {
+    public void setSize( int numRows, int numCols ) {
         numRows_ = numRows;
         numCols_ = numCols;
         rowsTimesCols_ = numRows_ * numCols_;
@@ -53,8 +56,7 @@ public class TrivialTable extends Board
      * A trivial game has no real limit so we just reutnr a huge number.
      * @return max number of trivial rounds allowed.
      */
-    public int getMaxNumMoves()
-    {
+    public int getMaxNumMoves() {
         return 1000000;
     }
 
@@ -98,8 +100,7 @@ public class TrivialTable extends Board
      * @return false if the move is illegal.
      */
     @Override
-    protected boolean makeInternalMove( Move move )
-    {
+    protected boolean makeInternalMove( Move move ) {
         return true;
     }
 
@@ -110,8 +111,7 @@ public class TrivialTable extends Board
      * @@ todo
      */
     @Override
-    protected void undoInternalMove( Move move )
-    {
+    protected void undoInternalMove( Move move ) {
         GameContext.log(0,  "undo not implemented yet for Trivial." );
     }
 

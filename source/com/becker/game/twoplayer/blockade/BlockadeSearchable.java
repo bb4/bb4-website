@@ -23,10 +23,14 @@ public class BlockadeSearchable extends TwoPlayerSearchable {
         super(board, players, options);
     }
 
-    public TwoPlayerSearchable copy() throws CloneNotSupportedException {
-        return new BlockadeSearchable((TwoPlayerBoard)board_.clone(), (PlayerList)players_.clone(), getSearchOptions());
+    public BlockadeSearchable(BlockadeSearchable searchable) {
+        super(searchable);
     }
 
+    public BlockadeSearchable copy() {
+        return new BlockadeSearchable(this);
+    }
+ 
     /**
      * The primary way of computing the score for Blockade is to
      * weight the difference of the 2 shortest minimum paths plus the

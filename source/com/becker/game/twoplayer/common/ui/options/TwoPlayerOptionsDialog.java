@@ -27,6 +27,7 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
     private JRadioButton[] strategyButtons_;  // search alg radio button group
     private SearchStrategyType algorithm_;
     private NumberInput bestPercentageField_;
+    private NumberInput minBestField_;
     private JCheckBox gameTreeCheckbox_;
 
     private BruteSearchOptionsPanel bruteOptionsPanel_;
@@ -57,6 +58,7 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
 
         searchOptions.setSearchStrategyMethod(getSelectedStrategy());
         searchOptions.setPercentageBestMoves(bestPercentageField_.getIntValue());
+        searchOptions.setMinBestMoves(minBestField_.getIntValue());
         options.setShowGameTree(gameTreeCheckbox_.isSelected() );
         return options;
     }
@@ -92,12 +94,15 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
         bruteOptionsPanel_ = new BruteSearchOptionsPanel(searchOptions);
         monteCarloOptionsPanel_ = new MonteCarloOptionsPanel(searchOptions);
 
-        // best percentage moves
         bestPercentageField_ =
                 new NumberInput( GameContext.getLabel("PERCENTAGE_AT_PLY"), searchOptions.getPercentageBestMoves(),
                                  GameContext.getLabel("PERCENTAGE_AT_PLY_TIP"), 0, 100, true);
+        minBestField_ =
+                new NumberInput( GameContext.getLabel("MIN_BEST_MOVES"), searchOptions.getMinBestMoves(),
+                                 GameContext.getLabel("MIN_BEST_MOVES_TIP"), 1, 100, true);
 
         p.add( bestPercentageField_ );
+        p.add( minBestField_ );
         p.add( bruteOptionsPanel_ );
         p.add( monteCarloOptionsPanel_ );
         showOptionsBasedOnAlgorithm();

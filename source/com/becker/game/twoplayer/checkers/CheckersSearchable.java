@@ -25,10 +25,13 @@ public class CheckersSearchable extends TwoPlayerSearchable {
         super(board, players, options);
     }
 
-    public CheckersSearchable copy() throws CloneNotSupportedException {
-        return new CheckersSearchable((TwoPlayerBoard)board_.clone(), (PlayerList)players_.clone(), options_);
+    public CheckersSearchable(CheckersSearchable searchable) {
+        super(searchable);
     }
 
+    public CheckersSearchable copy() {
+        return new CheckersSearchable(this);
+    }
 
     /**
      *  generate all possible next moves

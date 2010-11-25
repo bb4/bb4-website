@@ -24,7 +24,8 @@ import java.util.List;
  * @author Barry Becker
  */
 public final class GameTreeDialog extends AbstractDialog
-                               implements GameChangedListener, TreeExpansionListener{
+                                  implements GameChangedListener, TreeExpansionListener {
+    
     /** the options get set directly on the game controller that is passed in. */
     private volatile TwoPlayerController controller_;
 

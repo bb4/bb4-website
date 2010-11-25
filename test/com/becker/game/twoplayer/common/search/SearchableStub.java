@@ -25,6 +25,15 @@ public class SearchableStub implements Searchable {
         moves_ = new MoveList();
     }
 
+    public SearchableStub(SearchableStub stub) {
+        this(stub.getSearchOptions());
+        moves_ = new MoveList(stub.getMoveList());
+    }
+
+    public Searchable copy() {
+        return new SearchableStub(this);
+    }
+    
     /** 
      * {@inheritDoc}
      */
@@ -72,10 +81,6 @@ public class SearchableStub implements Searchable {
 
     public int getNumMoves() {
         return moves_.size();
-    }
-
-    public Searchable copy() throws CloneNotSupportedException {
-        return new SearchableStub(searchOptions_);
     }
 
 

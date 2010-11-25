@@ -13,8 +13,7 @@ package com.becker.game.common;
  * @see Board for the base implementation of this interface
  * @author Barry Becker
  */
-public interface BoardInterface
-{
+public interface BoardInterface {
 
     /**
      *  Reset the board to its initial state.
@@ -48,33 +47,38 @@ public interface BoardInterface
       *
       * @return upper limit on the number of moves that the board can support
       */
-     int getMaxNumMoves();
+    int getMaxNumMoves();
 
     /**
-      * returns null if there is no game piece at the position specified.
-      * @return the piece at the specified location. Returns null if there is no piece there.
-      */
-     BoardPosition getPosition( int row, int col );
+     * returns null if there is no game piece at the position specified.
+     * @return the piece at the specified location. Returns null if there is no piece there.
+     */
+    BoardPosition getPosition( int row, int col );
 
-     /**
-      * given a move specification, execute it on the board
-      * This places the players symbol at the position specified by move.
-      *
-      * @param move the move to make, if possible.
-      * @return false if the move is illegal.
-      */
-     boolean makeMove( Move move );
+    /**
+     * given a move specification, execute it on the board
+     * This places the players symbol at the position specified by move.
+     *
+     * @param move the move to make, if possible.
+     * @return false if the move is illegal.
+     */
+    boolean makeMove( Move move );
 
-     /**
-      * Allow reverting a move so we can step backwards in time.
-      * Board is returned to the exact state it was in before the last move was made.
-      * @return the move that was just undone.
-      */
-     Move undoMove();
+    /**
+     * Allow reverting a move so we can step backwards in time.
+     * Board is returned to the exact state it was in before the last move was made.
+     * @return the move that was just undone.
+     */
+    Move undoMove();
 
-     /**
-      * @return true if the specified position is within the bounds of the board
-      */
-     boolean inBounds( int r, int c );
+    /**
+     * @return true if the specified position is within the bounds of the board
+     */
+    boolean inBounds( int r, int c );
 
+    /**
+     * We should be able to create a deep copy of ourselves
+     * @return deep copy of the board.
+     */
+    BoardInterface copy();
 }

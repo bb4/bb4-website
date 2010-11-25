@@ -4,6 +4,7 @@ import com.becker.common.Location;
 import com.becker.game.common.*;
 import com.becker.game.twoplayer.blockade.analysis.BoardAnalyzer;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
+import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
 
 import java.util.*;
 
@@ -33,24 +34,29 @@ public class BlockadeBoard extends TwoPlayerBoard
      * @param numRows number of rows in the board grid.
      * @param numCols number of rows in the board grid.
      */
-    public BlockadeBoard(int numRows, int numCols)
-    {
+    public BlockadeBoard(int numRows, int numCols) {
         setSize(numRows, numCols);
         boardAnalyzer_ = new BoardAnalyzer(this);
+    }
+
+    public BlockadeBoard(BlockadeBoard b) {
+    }
+
+    public BlockadeBoard copy() {
+        return new BlockadeBoard(this);
     }
 
     /**
      * reset the board to its initial state.
      */
     @Override
-    public void reset()
-    {
+    public void reset() {
         super.reset();
         assert ( positions_!=null );
         int i;
         for ( i = 1; i <= getNumRows(); i++ ) {
             for ( int j = 1; j <= getNumCols(); j++ ) {
-                positions_[i][j] = new BlockadeBoardPosition( i, j);
+                positions_[i][j] = new BlockadeBoardPosition(i, j);
             }
         }
         p1Homes_ = new BlockadeBoardPosition[NUM_HOMES];
@@ -83,8 +89,13 @@ public class BlockadeBoard extends TwoPlayerBoard
         numCols_ = numCols;
         rowsTimesCols_ = numRows_ * numCols_;
         // we don't use the 0 edges of the board
-        positions_ = new BoardPosition[numRows_ + 1][numCols_ + 1];
+        positions_ = createBoard();
         reset();
+    }
+
+    @Override
+    protected BlockadeBoardPosition[][] createBoard() {
+        return new BlockadeBoardPosition[getNumRows() + 1][getNumCols() + 1];
     }
 
     /**

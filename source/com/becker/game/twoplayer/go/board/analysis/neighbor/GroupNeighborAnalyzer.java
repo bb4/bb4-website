@@ -4,9 +4,7 @@ import com.becker.game.common.BoardPosition;
 import com.becker.game.twoplayer.go.GoProfiler;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.GoBoardUtil;
-import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.elements.GoBoardPositionList;
-import com.becker.game.twoplayer.go.board.elements.GoBoardPositionSet;
+import com.becker.game.twoplayer.go.board.elements.*;
 
 /**
  * Performs static analysis of a go board to determine groups.
@@ -36,27 +34,46 @@ public class GroupNeighborAnalyzer {
      * @param returnToUnvisitedState if true, then mark everything unvisited when done.
      * @return the list of stones in the group that was found.
      */
-    GoBoardPositionList findGroupFromInitialPosition( GoBoardPosition stone, boolean returnToUnvisitedState )
-    {
-     GoBoardPositionList stones = new GoBoardPositionList();
-     // perform a breadth first search  until all found.
-     // use the visited flag to indicate that a stone has been added to the group
-     GoBoardPositionList stack = new GoBoardPositionList();
-     stack.add( 0, stone );
-     while ( !stack.isEmpty() ) {
-         GoBoardPosition s = stack.remove(stack.size()-1);
-         if ( !s.isVisited()) {
-             s.setVisited( true );
-             assert (s.getPiece().isOwnedByPlayer1()==stone.getPiece().isOwnedByPlayer1()):
-                     s+" does not have same ownership as "+stone;
-             stones.add( s );
-             pushGroupNeighbors(s, s.getPiece().isOwnedByPlayer1(), stack );
-         }
-     }
-     if (returnToUnvisitedState) {
-         GoBoardUtil.unvisitPositions( stones );
-     }
-     return stones;
+    GoBoardPositionList findGroupFromInitialPosition( GoBoardPosition stone,
+                                                      boolean returnToUnvisitedState ) {
+        GoBoardPositionList stones = new GoBoardPositionList();
+        // perform a breadth first search  until all found.
+        // use the visited flag to indicate that a stone has been added to the group
+        GoBoardPositionList stack = new GoBoardPositionList();
+        stack.add( 0, stone );
+        while ( !stack.isEmpty() ) {
+            GoBoardPosition s = stack.remove(stack.size()-1);
+            if ( !s.isVisited()) {
+                s.setVisited( true );
+                assert (s.getPiece().isOwnedByPlayer1()==stone.getPiece().isOwnedByPlayer1()):
+                       s+" does not have same ownership as "+stone;
+                stones.add( s );
+                pushGroupNeighbors(s, s.getPiece().isOwnedByPlayer1(), stack );
+            }
+        }
+        if (returnToUnvisitedState) {
+            GoBoardUtil.unvisitPositions( stones );
+        }
+        return stones;
+    }
+
+
+    /**
+     * @return all the groups on the board for both sides.
+     */
+    GoGroupSet findAllGroups()  {
+        GoGroupSet groups = new GoGroupSet();
+
+        for ( int i = 1; i <= board_.getNumRows(); i++ )  {
+            for ( int j = 1; j <= board_.getNumCols(); j++ ) {
+                GoBoardPosition pos = (GoBoardPosition)board_.getPosition(i, j);
+                if (pos.isOccupied() && !groups.containsPosition(pos)) {
+                    // would this run faster if  second param was false?
+                    groups.add(new GoGroup(findGroupFromInitialPosition(pos, true)));
+                }
+            }
+        }
+        return groups;
     }
 
     /**

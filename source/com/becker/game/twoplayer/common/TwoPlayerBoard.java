@@ -11,8 +11,16 @@ import java.util.List;
  *
  * @author Barry Becker
  */
-public abstract class TwoPlayerBoard extends Board
-{
+public abstract class TwoPlayerBoard extends Board {
+
+    /** default constructor */
+    public TwoPlayerBoard() {}
+
+    /** copy constructor */
+    public TwoPlayerBoard(TwoPlayerBoard board) {
+        super(board);
+    }
+
     /**
      * given a move specification, execute it on the board
      * This places the players symbol at the position specified by move.

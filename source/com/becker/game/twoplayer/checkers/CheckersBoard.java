@@ -20,11 +20,25 @@ public class CheckersBoard extends TwoPlayerBoard {
      *  dimensions must be 8*8 for a checkers/chess board.
      */
     public CheckersBoard() {
+        init();
+        positions_ = new BoardPosition[numRows_ + 1][numCols_ + 1];
+        reset();
+    }
+
+    /** Copy constructor */
+    public CheckersBoard(CheckersBoard b) {
+        super(b);
+        init();
+    }
+
+    public CheckersBoard copy() {
+        return new CheckersBoard(this);        
+    }
+
+    private void init() {
         numRows_ = SIZE;
         numCols_ = SIZE;
         rowsTimesCols_ = SIZE * SIZE;
-        positions_ = new BoardPosition[numRows_ + 1][numCols_ + 1];
-        reset();
     }
 
     /**

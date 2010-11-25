@@ -22,8 +22,12 @@ public class ChessSearchable extends TwoPlayerSearchable {
         super(board, players, options);
     }
 
-    public ChessSearchable copy() throws CloneNotSupportedException {
-        return new ChessSearchable((TwoPlayerBoard)board_.clone(), (PlayerList)players_.clone(), options_);
+    public ChessSearchable(ChessSearchable searchable) {
+        super(searchable);
+    }
+
+    public ChessSearchable copy() {
+        return new ChessSearchable(this);
     }
 
     /**
@@ -61,8 +65,8 @@ public class ChessSearchable extends TwoPlayerSearchable {
     /**
      *  generate all possible next moves.
      */
-   public MoveList generateMoves( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective )
-   {
+   public MoveList generateMoves( TwoPlayerMove lastMove, ParameterArray weights,
+                                  boolean player1sPerspective ) {
        MoveList moveList = new MoveList();
        int row,col;
 
@@ -103,8 +107,7 @@ public class ChessSearchable extends TwoPlayerSearchable {
      * @return the number of moves added.
      */
     int addMoves( BoardPosition pos, MoveList moveList, TwoPlayerMove lastMove,
-                         ParameterArray weights, boolean player1sPerspective )
-    {
+                         ParameterArray weights, boolean player1sPerspective ) {
         List<ChessMove> moves =
                 ((ChessPiece)pos.getPiece()).findPossibleMoves(board_, pos.getRow(), pos.getCol(), lastMove);
 
@@ -124,8 +127,7 @@ public class ChessSearchable extends TwoPlayerSearchable {
      * remove any moves that put the king in jeopardy.
      * @param moveList
      */
-    public void removeSelfCheckingMoves(List moveList)
-    {
+    public void removeSelfCheckingMoves(List moveList) {
         ChessBoard b = (ChessBoard)board_;
         Iterator it = moveList.iterator();
         while (it.hasNext()) {

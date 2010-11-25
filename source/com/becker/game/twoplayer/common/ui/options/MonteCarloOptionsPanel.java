@@ -13,7 +13,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 /**
- * Panel that shows the options for search strategies that use brute force (like minimax and derivatives).
+ * Panel that shows the options for search strategies that use monte carlo methods (like UCT derivatives).
  *
  * @author Barry Becker
  */
@@ -23,8 +23,13 @@ public class MonteCarloOptionsPanel extends JPanel {
 
     private NumberInput maxSimulationsField_;
 
+    private NumberInput exploreExploitRatioField_;
+
     /** It would be unreasonable to run more than this many simulations. */
-    private static final int ABS_MAX_NUM_SIMULATIONS = 10000000;
+    private static final int ABS_MAX_NUM_SIMULATIONS = 100000000;
+
+    /** It would be unreasonable to have a exploreExploit ration more than this. */
+    private static final double ABS_MAX_EE_RATIO = 100;
 
     /**
      * Constructor
@@ -41,7 +46,7 @@ public class MonteCarloOptionsPanel extends JPanel {
 
         MonteCarloSearchOptions monteCarloOptions = searchOptions_.getMonteCarloSearchOptions();
         monteCarloOptions.setMaxSimulations(maxSimulationsField_.getIntValue());
-
+        monteCarloOptions.setExploreExploitRatio(exploreExploitRatioField_.getValue());
         return monteCarloOptions;
     }
 
@@ -57,7 +62,12 @@ public class MonteCarloOptionsPanel extends JPanel {
         maxSimulationsField_ =
             new NumberInput(GameContext.getLabel("MAX_NUM_SIMULATIONS"), monteCarloOptions.getMaxSimulations(),
                             GameContext.getLabel("MAX_NUM_SIMULATIONS_TIP"), 1, ABS_MAX_NUM_SIMULATIONS, true);
-        this.add( maxSimulationsField_ );
+        exploreExploitRatioField_ =
+            new NumberInput(GameContext.getLabel("EXPLORE_EXPLOIT_RATIO"), monteCarloOptions.getExploreExploitRatio(),
+                            GameContext.getLabel("EXPLORE_EXPLOIT_RATIO_TIP"), 0, ABS_MAX_EE_RATIO, false);
+
+        add( maxSimulationsField_ );
+        add( exploreExploitRatioField_ );
     }
 
 }
