@@ -182,16 +182,4 @@ class AbsoluteHealthCalculator {
         cachedNumStonesInGroup_ = numStones;
         return numStones;
     }
-
-    /**
-     * @return a deep copy of this instance
-     * @throws CloneNotSupportedException
-     */
-    @Override
-    public Object clone() throws CloneNotSupportedException
-    {
-        Object clone = super.clone();
-        ((AbsoluteHealthCalculator)clone).eyeCache_ = (GroupEyeCache)eyeCache_.clone();
-        return clone;
-    }
 }

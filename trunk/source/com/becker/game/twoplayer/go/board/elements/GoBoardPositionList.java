@@ -10,9 +10,7 @@ import java.util.Iterator;
  *
  *  @author Barry Becker
  */
-public class GoBoardPositionList extends ArrayList<GoBoardPosition>
-{
-
+public class GoBoardPositionList extends ArrayList<GoBoardPosition>  {
     /**
      * Default construcotr.
      */
@@ -30,7 +28,7 @@ public class GoBoardPositionList extends ArrayList<GoBoardPosition>
      *
      * @param positionList list to initialize with
      */
-    public  GoBoardPositionList(GoBoardPositionList positionList) {
+    public GoBoardPositionList(GoBoardPositionList positionList) {
         super(positionList);
     }
 
@@ -45,8 +43,7 @@ public class GoBoardPositionList extends ArrayList<GoBoardPosition>
     /**
      * pretty print this list.
      */
-    public void debugPrint( int logLevel, String title)
-    {
+    public void debugPrint( int logLevel, String title) {
        GameContext.log(logLevel, this.toString(title));
     }
 
@@ -56,8 +53,7 @@ public class GoBoardPositionList extends ArrayList<GoBoardPosition>
      * pretty print a list of all the current groups (and the strings they contain)
      * @return string form of list of stones.
      */
-    public String toString(String title)
-    {
+    public String toString(String title) {
         StringBuffer buf = new StringBuffer(title);
         buf.append("\n  ");
         for (GoBoardPosition stone : this) {
@@ -73,8 +69,7 @@ public class GoBoardPositionList extends ArrayList<GoBoardPosition>
     /**
      * Verify all stones in this list are marked unvsited.
      */
-    public void confirmUnvisited()
-    {
+    public void confirmUnvisited() {
         for (GoBoardPosition pos : this) {
             assert !pos.isVisited() : pos + " in " + this + " was visited";
         }
@@ -84,8 +79,7 @@ public class GoBoardPositionList extends ArrayList<GoBoardPosition>
      * Verify no duplicate positions in this list
      * @param seed stone to start checking from .
      */
-    public void confirmNoDupes( GoBoardPosition seed)
-    {
+    public void confirmNoDupes( GoBoardPosition seed) {
         Object[] stoneArray = this.toArray();
 
         for ( int i = 0; i < stoneArray.length; i++ ) {
@@ -102,8 +96,7 @@ public class GoBoardPositionList extends ArrayList<GoBoardPosition>
      * @param smallerGroup
      * @return true if larger group contains smaller group.
      */
-    public boolean confirmStoneListContains(GoBoardPositionList smallerGroup)
-    {
+    public boolean confirmStoneListContains(GoBoardPositionList smallerGroup) {
         for (GoBoardPosition smallPos : smallerGroup) {
             boolean found = false;
             Iterator largeIt = this.iterator();

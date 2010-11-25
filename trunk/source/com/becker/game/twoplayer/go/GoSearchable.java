@@ -39,13 +39,23 @@ public class GoSearchable extends TwoPlayerSearchable {
 
     public GoSearchable(TwoPlayerBoard board, PlayerList players, SearchOptions options) {
         super(board, players, options);
-        deadStoneUpdater_ = new DeadStoneUpdater((GoBoard)board);
+        init();
+    }
+
+    public GoSearchable(GoSearchable searchable) {
+        super(searchable);
+        init();
+    }
+
+    public GoSearchable copy() {
+        return new GoSearchable(this);
+    }
+
+    private void init() {
+        deadStoneUpdater_ = new DeadStoneUpdater((GoBoard)board_);
         positionalScorer_ = new PositionalScoreAnalyzer((GoBoard)board_);
     }
 
-    public GoSearchable copy() throws CloneNotSupportedException {
-        return new GoSearchable((TwoPlayerBoard)board_.clone(), (PlayerList)players_.clone(), options_);
-    }
 
     /**
      * Given a move determine whether the game is over.

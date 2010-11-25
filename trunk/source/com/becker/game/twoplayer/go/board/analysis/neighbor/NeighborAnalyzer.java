@@ -3,10 +3,7 @@ package com.becker.game.twoplayer.go.board.analysis.neighbor;
 import com.becker.common.Box;
 import com.becker.game.twoplayer.go.GoProfiler;
 import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.elements.GoBoardPositionList;
-import com.becker.game.twoplayer.go.board.elements.GoBoardPositionSet;
-import com.becker.game.twoplayer.go.board.elements.GoStringSet;
+import com.becker.game.twoplayer.go.board.elements.*;
 
 /**
  * Performs static analysis of a go board to determine strings and
@@ -138,8 +135,7 @@ public class NeighborAnalyzer {
      * @param stone the stone to search from for group neighbors.
      * @return the list of stones in the group that was found.
      */
-    public GoBoardPositionList findGroupFromInitialPosition( GoBoardPosition stone )
-    {
+    public GoBoardPositionList findGroupFromInitialPosition( GoBoardPosition stone ) {
         return findGroupFromInitialPosition( stone, true );
     }
 
@@ -155,5 +151,9 @@ public class NeighborAnalyzer {
      */
     public GoBoardPositionList findGroupFromInitialPosition(GoBoardPosition stone, boolean returnToUnvisitedState) {
         return groupNbrAnalyzer_.findGroupFromInitialPosition(stone, returnToUnvisitedState);
+    }
+
+    public GoGroupSet findAllGroupsOnBoard() {
+       return groupNbrAnalyzer_.findAllGroups();
     }
 }

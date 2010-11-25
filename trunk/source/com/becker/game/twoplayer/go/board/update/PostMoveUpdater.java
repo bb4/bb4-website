@@ -92,7 +92,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
         }
         // we need to add copies so that when the original stones on the board are
         // changed we don't change the captures
-        for (BoardPosition capture : set) {
+        for (GoBoardPosition capture : set) {
             // make sure none of the captures are blanks
             assert capture.isOccupied();
             captureList.add(capture.copy());
@@ -195,8 +195,8 @@ public class PostMoveUpdater extends PostChangeUpdater {
      * Make the positions on the board represented by the captureList show up empty.
      * Afterwards these empty spaces should not belong to any strings.
      */
-    private void removeCapturesOnBoard(CaptureList captureList)
-    {
+    private void removeCapturesOnBoard(CaptureList captureList) {
+
         GoString capString = ((GoBoardPosition) captureList.get( 0 )).getString();
         GoGroup group = capString.getGroup();
         removeCapturedStringsFromGroup(captureList, group);
@@ -230,7 +230,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
 
             }
             GoBoardPosition stoneOnBoard =
-                    (GoBoardPosition) getBoard().getPosition(capStone.getRow(), capStone.getCol());
+                (GoBoardPosition) getBoard().getPosition(capStone.getRow(), capStone.getCol());
             stoneOnBoard.clear(getBoard());
             // ?? restore disconnected groups?
         }
@@ -363,7 +363,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
      * @param stone to find alternative for.
      * @return null if no alternative found
      */
-    private GoBoardPosition getConfirmedAlternative(BoardPosition stone,
+    private GoBoardPosition getConfirmedAlternative(GoBoardPosition stone,
                                                     int r, int c, int rowOffset, int colOffset)
     {
         BoardPosition blankPos = getBoard().getPosition(r + rowOffset, c + colOffset);

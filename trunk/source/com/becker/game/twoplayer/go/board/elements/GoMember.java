@@ -9,7 +9,6 @@ package com.becker.game.twoplayer.go.board.elements;
  *
  * @author Barry Becker
  */
-public interface GoMember extends Cloneable
-{
-    Object clone() throws CloneNotSupportedException;
+public interface GoMember {
+
 }

@@ -32,7 +32,10 @@ public class UctNode {
     /** We are the childIndexth child of our parent. */
     public byte childIndex;
 
-    /** not sure what this is for. See http://senseis.xmp.net/?UCT. Make a param. */
+    /**
+     * not sure what this is for. See http://senseis.xmp.net/?UCT. Make a param.
+     * Seems to make the exploreExploit constant balance at 1.
+      */
     private static final double DENOM_CONST = 5.0;
 
     /** Some big number. */

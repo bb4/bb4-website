@@ -54,8 +54,8 @@ public abstract class PostChangeUpdater {
      * @param captureList the liberties of the stones in this list will be adjusted.
      */
     void adjustStringLiberties(CaptureList captureList) {
-        for (Object aCaptureList : captureList) {
-            GoBoardPosition captured = (GoBoardPosition) aCaptureList;
+        for (Object capture : captureList) {
+            GoBoardPosition captured = (GoBoardPosition) capture;
             GoBoardPosition newLiberty = (GoBoardPosition) board_.getPosition(captured.getRow(), captured.getCol());
             adjustLiberties(newLiberty);
         }

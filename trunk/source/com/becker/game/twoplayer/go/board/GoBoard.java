@@ -1,15 +1,13 @@
 package com.becker.game.twoplayer.go.board;
 
-import com.becker.game.common.BoardPosition;
-import com.becker.game.common.GameContext;
-import com.becker.game.common.Move;
+import com.becker.game.common.*;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.go.GoMove;
 import com.becker.game.twoplayer.go.GoProfiler;
 import com.becker.game.twoplayer.go.board.analysis.CornerChecker;
 import com.becker.game.twoplayer.go.board.analysis.TerritoryAnalyzer;
+import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.elements.GoGroup;
 import com.becker.game.twoplayer.go.board.elements.GoGroupSet;
 import com.becker.game.twoplayer.go.board.update.BoardUpdater;
 
@@ -25,8 +23,8 @@ import java.util.List;
  * Could move many methods to StringFinder and GroupFinder classes.
  * @author Barry Becker
  */
-public final class GoBoard extends TwoPlayerBoard
-{
+public final class GoBoard extends TwoPlayerBoard {
+
     /** This is a set of active groups. Groups are composed of strings. */
     private GoGroupSet groups_;
 
@@ -50,25 +48,26 @@ public final class GoBoard extends TwoPlayerBoard
     }
 
     /**
-     * @return a deep copy of the board.
+     * Copy constructor
      */
+    public GoBoard(GoBoard board) {
+
+        super(board);
+
+        NeighborAnalyzer analyzer = new NeighborAnalyzer(this);
+        groups_ = analyzer.findAllGroupsOnBoard();
+
+        boardUpdater_ = new BoardUpdater(this);
+        territoryAnalyzer_ = new TerritoryAnalyzer(this);
+    }
+
+    public GoBoard copy() {
+        return new GoBoard(this);
+    }
+
     @Override
-    public Object clone() throws CloneNotSupportedException
-    {
-        Object clone = super.clone();
-
-        // make copies of all the groups
-        if (groups_ != null) {
-
-            GoGroupSet tempGroups = new GoGroupSet(groups_);
-            GoGroupSet groupsCopy = new GoGroupSet();
-            for (GoGroup g : tempGroups)  {
-                groupsCopy.add((GoGroup)g.clone());
-            }
-            ((GoBoard)clone).setGroups(groupsCopy);
-
-        }
-        return clone;
+    protected GoBoardPosition[][] createBoard() {
+        return new GoBoardPosition[getNumRows() + 1][getNumCols() + 1];
     }
 
     /**
@@ -168,8 +167,7 @@ public final class GoBoard extends TwoPlayerBoard
      * get the current set of active groups. Should be read only. Do not modify.
      * @return all the valid groups on the board (for both sides)
      */
-    public GoGroupSet getGroups()
-    {
+    public GoGroupSet getGroups() {
         return groups_;
     }
 

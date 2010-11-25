@@ -46,6 +46,24 @@ public class GoGroupSet implements Set<GoGroup>
         return groups.isEmpty();
     }
 
+    /**
+     * Check all the groups of the same color to see if the stone is already in one of them
+     * @param pos position on the board to check
+     * @return true if the specified position is in one of our groups.
+     */
+    public boolean containsPosition(GoBoardPosition pos) {
+        // if there is no stone in the position, then it cannot be part of a group
+        if (!pos.isOccupied())
+            return false;
+
+        for (GoGroup group : this) {
+            if (group.isOwnedByPlayer1() == pos.getPiece().isOwnedByPlayer1() && group.containsStone(pos)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean contains(Object o) {
         return groups.contains(o);
     }

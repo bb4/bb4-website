@@ -1,8 +1,5 @@
 package com.becker.game.twoplayer.common.search.options;
 
-import com.becker.game.twoplayer.common.search.SearchWindow;
-import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
-
 /**
  * The options for search strategies that use brute-force minimax search like MiniMax, NegaMax, NegaScout,
  * and alsot the memory and aspiration variations of these strategies.
@@ -17,42 +14,41 @@ public class MonteCarloSearchOptions {
 
     private static final double DEFAULT_EXPLORE_EXPLOIT_RATIO = 1.0;
 
-    private int maxSimulations_;
+    private int maxSimulations_ = DEFAULT_MAX_SIMULATIONS;
 
+    private double exploreExploitRatio_ = DEFAULT_EXPLORE_EXPLOIT_RATIO;
 
     /**
      * Default Constructor
      */
-    public MonteCarloSearchOptions() {
-        maxSimulations_ = getDefaultMaxSimulations();
-    }
+    public MonteCarloSearchOptions() {}
 
     /**
      * Constructor
      * @param maxSimulations default number simulations to run.
      */
-    public MonteCarloSearchOptions(int maxSimulations) {
+    public MonteCarloSearchOptions(int maxSimulations, double exploreExploitRatio) {
         maxSimulations_ = maxSimulations;
+        exploreExploitRatio_ = exploreExploitRatio;
     }
 
 
-    int getDefaultMaxSimulations() {
-        return DEFAULT_MAX_SIMULATIONS;
-    }
 
     /**
      * @return the max number of simulations to make while searching.
      */
-    public final int getMaxSimulations() {
+    public int getMaxSimulations() {
         return maxSimulations_;
     }
 
     /**
      * @param maxSim the new max number of simulations.
      */
-    public final void setMaxSimulations( int maxSim) {
+    public void setMaxSimulations( int maxSim) {
         maxSimulations_ = maxSim;
     }
+
+
 
     /**
      * The larger this is (bigger than 1) the closer to uniform search we get (i.e exploration).
@@ -60,7 +56,14 @@ public class MonteCarloSearchOptions {
      * There needs to be a balance.
      * @return the ratio of exploraration to exploitation.
      */
-    public final double getExploreExploitRatio() {
-         return DEFAULT_EXPLORE_EXPLOIT_RATIO;
+    public double getExploreExploitRatio() {
+         return exploreExploitRatio_;
+    }
+
+    /**
+     * @param ratio the ratio of exploraration to exploitation.
+     */
+    public void setExploreExploitRatio(double ratio) {
+         exploreExploitRatio_ = ratio;
     }
 }

@@ -1,9 +1,7 @@
 package com.becker.game.twoplayer.go.board.elements;
 
-import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.board.GoBoard;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -14,17 +12,15 @@ import java.util.Set;
  *  @see GoGroup
  *  @author Barry Becker
  */
-public abstract class GoSet implements GoMember
-{
+public abstract class GoSet implements GoMember {
 
-    // true if this set of stones is owned by player one (black)
+    /** true if this set of stones is owned by player one (black)  */
     boolean ownedByPlayer1_;
 
     /**
      * constructor.
      */
-    GoSet()
-    {
+    GoSet() {
         initializeMembers();
     }
 
@@ -38,16 +34,14 @@ public abstract class GoSet implements GoMember
     /**
      * @return  true if set is owned by player one
      */
-    public final boolean isOwnedByPlayer1()
-    {
+    public final boolean isOwnedByPlayer1() {
         return ownedByPlayer1_;
     }
 
     /**
      * @return  the number of stones in the set
      */
-    public final int size()
-    {
+    public final int size() {
         return getMembers().size();
     }
 
@@ -61,37 +55,8 @@ public abstract class GoSet implements GoMember
     /**
      * remove all the elelments of this set.
      */
-    final void removeAll()
-    {
+    final void removeAll() {
         getMembers().clear();
-    }
-
-    /**
-     * @return a deep copy of this GoSet
-     * @throws CloneNotSupportedException
-     */
-    @Override
-    public Object clone() throws CloneNotSupportedException
-    {
-        Object clone = super.clone();
-
-        if (getMembers()!=null)  {
-            ((GoSet)clone).initializeMembers();
-
-            Set m = ((GoSet)clone).getMembers();
-
-            Set<? extends GoMember> members = new HashSet<GoMember>(getMembers());
-
-            for (GoMember goMember : members) {
-                try {
-                    m.add((goMember).clone());
-                } catch (ClassCastException e) {
-                    GameContext.log(0, "class " + goMember.getClass() + " is not a GoMember");
-                    e.printStackTrace();
-                }
-            }
-        }
-        return clone;
     }
 
     /**

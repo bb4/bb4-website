@@ -37,6 +37,10 @@ public abstract class TwoPlayerSearchable implements Searchable {
         bestMoveFinder_ = new BestMoveFinder(getSearchOptions());
     }
 
+    public TwoPlayerSearchable(TwoPlayerSearchable searchable) {
+       this((TwoPlayerBoard)searchable.getBoard().copy(), (PlayerList)searchable.players_.clone(), searchable.options_);
+    }
+
     public TwoPlayerBoard getBoard() {
         return board_;
     }
@@ -82,7 +86,7 @@ public abstract class TwoPlayerSearchable implements Searchable {
      */
     public final void undoInternalMove( TwoPlayerMove m ) {
         TwoPlayerMove lastMove = (TwoPlayerMove)moveList_.getLastMove();
-        assert m.equals(lastMove) : "The move we are trying to undo ("+m+") was not equal to the last move ("+lastMove+")";
+        assert m.equals(lastMove) : "The move we are trying to undo ("+m+") in list="+ moveList_+" was not equal to the last move ("+lastMove+"). all move=" + board_.getMoveList();
         hash.applyMove(m, board_.getStateIndex(board_.getPosition(m.getToLocation())));
         board_.undoMove();
     }

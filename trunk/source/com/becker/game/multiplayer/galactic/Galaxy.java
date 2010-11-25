@@ -46,11 +46,13 @@ public class Galaxy extends Board
      *  @param numRows num rows
      *  @param numCols num cols
      */
-    public Galaxy( int numRows, int numCols )
-    {
+    public Galaxy( int numRows, int numCols ) {
         setSize( numRows, numCols );
     }
 
+    public Galaxy copy() {
+        return new Galaxy(this.getNumRows(), this.getNumCols());
+    }
 
     /**
      *  reset the board to its initial state
@@ -165,10 +167,8 @@ public class Galaxy extends Board
      * @param name  name of the planet to find
      * @return the planet that has the specified name
      */
-    public static Planet getPlanet(char name)
-    {
-        Character c = name;
-        Planet p = hmPlanets_.get(c);
+    public static Planet getPlanet(char name) {
+        Planet p = hmPlanets_.get(name);
         assert(p!=null);
         return p;
     }
@@ -176,8 +176,7 @@ public class Galaxy extends Board
 
     // must call reset() after changing the size
     @Override
-    public void setSize( int numRows, int numCols )
-    {
+    public void setSize( int numRows, int numCols ) {
         numRows_ = numRows;
         numCols_ = numCols;
         rowsTimesCols_ = numRows_ * numCols_;
@@ -186,8 +185,7 @@ public class Galaxy extends Board
         reset();
     }
 
-    public int getMaxNumMoves()
-    {
+    public int getMaxNumMoves() {
         return rowsTimesCols_;
     }
 
@@ -199,8 +197,7 @@ public class Galaxy extends Board
      * @return false if the move is illegal.
      */
     @Override
-    protected boolean makeInternalMove( Move move )
-    {
+    protected boolean makeInternalMove( Move move ) {
         // first allow all the planets to build for the year
         build();
         // go through all the battle results in order and adjust the planets to account for one elapsed year.
@@ -211,8 +208,7 @@ public class Galaxy extends Board
         return true;
     }
 
-    private static void build()
-    {
+    private static void build() {
         for (Planet aPlanets_ : planets_)
             aPlanets_.incrementYear();
     }

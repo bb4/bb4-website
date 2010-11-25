@@ -19,7 +19,8 @@ import java.util.Set;
  *  @see GoString
  *  @author Barry Becker
  */
-public final class GoGroup extends GoSet implements IGoGroup
+public final class GoGroup extends GoSet 
+                           implements IGoGroup
 {
     /** a set of same color strings that are in the group. */
     private GoStringSet members_;
@@ -31,14 +32,22 @@ public final class GoGroup extends GoSet implements IGoGroup
      * constructor. Create a new group containing the specified string.
      * @param string make the group from this string.
      */
-    public GoGroup(GoString string)
-    {
+    public GoGroup(GoString string)  {
         commonInit();
         ownedByPlayer1_ = string.isOwnedByPlayer1();
          
         getMembers().add( string );
         string.setGroup( this );        
     }
+
+    /**
+     * Copy constructor
+     *
+    public GoGroup(GoGroup group) {
+        members_ = new GoStringSet(group.members_);
+        ownedByPlayer1_ = group.isOwnedByPlayer1();
+        commonInit();
+    }*/
 
     /**
      * Constructor. 
@@ -67,8 +76,7 @@ public final class GoGroup extends GoSet implements IGoGroup
         }       
     }
 
-    private void commonInit()
-    {
+    private void commonInit()  {
         groupAnalyzer_ = new GroupAnalyzer(this);
     }
 
@@ -228,8 +236,7 @@ public final class GoGroup extends GoSet implements IGoGroup
      * set the health of strings in this group
      * @param health the health of the group
      */
-    public void updateTerritory( float health )
-    {
+    public void updateTerritory( float health ) {
         for (GoString string : getMembers()) {
             if (string.isUnconditionallyAlive()) {
                 string.updateTerritory(ownedByPlayer1_ ? 1.0f : -1.0f);
@@ -237,19 +244,6 @@ public final class GoGroup extends GoSet implements IGoGroup
                 string.updateTerritory(health);
             }
         }
-    }
-
-    /**
-     * @return a deep copy of this GoGroup
-     * @throws CloneNotSupportedException
-     */
-    @Override
-    public Object clone() throws CloneNotSupportedException
-    {
-        Object clone = super.clone();
-        ((GoGroup)clone).members_ = new GoStringSet(members_); // @@ need to do deep copies of members
-        ((GoGroup)clone).groupAnalyzer_ = new GroupAnalyzer((GoGroup) clone);
-        return clone;     
     }
 
     public boolean isValid() {
@@ -261,8 +255,7 @@ public final class GoGroup extends GoSet implements IGoGroup
      * @param stone the stone to check for containment of
      * @return true if the stone is in this group
      */
-    public  boolean containsStone(GoBoardPosition stone )
-    {
+    public  boolean containsStone(GoBoardPosition stone ) {
         for (GoString string : getMembers()) {
             if (string.getMembers().contains(stone))
                 return true;
@@ -274,8 +267,7 @@ public final class GoGroup extends GoSet implements IGoGroup
      * @param stones list of stones to check if same as those in this group
      * @return true if this group exacly contains the list of stones and no others
      */
-    public boolean exactlyContains(GoBoardPositionList stones)
-    {
+    public boolean exactlyContains(GoBoardPositionList stones) {
         if ( !contains(stones ) )
             return false;
         // make sure that every stone in the group is also in the list.
@@ -293,8 +285,7 @@ public final class GoGroup extends GoSet implements IGoGroup
      * @param stones list of stones to check if same as those in this group
      * @return true if all the strings are in this group
      */
-    private boolean contains(GoBoardPositionList stones)
-    {
+    private boolean contains(GoBoardPositionList stones) {
         for (GoBoardPosition stone : stones) {
             boolean found = false;
             for (GoString str : getMembers()) {
@@ -314,8 +305,7 @@ public final class GoGroup extends GoSet implements IGoGroup
      *  because one of them is dead.
      */
     @Override
-    protected boolean isEnemy( GoBoardPosition pos)
-    {
+    protected boolean isEnemy( GoBoardPosition pos) {
         assert (pos.isOccupied());
         GoStone stone = (GoStone)pos.getPiece();
         boolean muchWeaker = GoBoardUtil.isStoneMuchWeaker(this, stone);
@@ -353,8 +343,7 @@ public final class GoGroup extends GoSet implements IGoGroup
      * @return string form
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return toString( "\n" );
     }
 
@@ -362,8 +351,7 @@ public final class GoGroup extends GoSet implements IGoGroup
      * get the html representation of the group.
      * @return html form
      */
-    public String toHtml()
-    {
+    public String toHtml() {
         return toString( "<br>" );
     }
 

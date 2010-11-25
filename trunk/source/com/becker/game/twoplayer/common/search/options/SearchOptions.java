@@ -1,6 +1,5 @@
 package com.becker.game.twoplayer.common.search.options;
 
-import com.becker.game.twoplayer.common.search.SearchWindow;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
@@ -89,24 +88,27 @@ public class SearchOptions {
     /**
      * @return  the percentage of top moves considered at each ply
      */
-    public final int getPercentageBestMoves()
-    {
+    public final int getPercentageBestMoves() {
         return bestPercentage_;
     }
 
     /**
      * @param bestPercentage  the percentage of top moves considered at each ply
      */
-    public final void setPercentageBestMoves( int bestPercentage )
-    {
+    public final void setPercentageBestMoves( int bestPercentage ) {
         bestPercentage_ = bestPercentage;
     }
+
 
     /**
      * @return  never return fewer than this many best moves.
      */
     public int getMinBestMoves() {
         return minBestMoves_;
+    }
+
+    public void setMinBestMoves(int minBest) {
+        minBestMoves_ = minBest;
     }
 
     /**

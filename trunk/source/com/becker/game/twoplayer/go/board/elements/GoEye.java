@@ -44,7 +44,6 @@ public class GoEye extends GoString implements GoMember
         initializePositionCounts(board);
     }
 
-
     public EyeInformation getInformation() {
         return information_;
     }

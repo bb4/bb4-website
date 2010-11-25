@@ -22,14 +22,27 @@ public class PenteSearchable extends TwoPlayerSearchable {
 
     public PenteSearchable(TwoPlayerBoard board, PlayerList players, SearchOptions options) {
         super(board, players, options);
+        init();
+    }
+
+    public PenteSearchable(PenteSearchable searchable) {
+        super(searchable);
+        init();
+    }
+
+    public PenteSearchable copy() {
+        return new PenteSearchable(this);
+    }
+
+    private void init() {
         generator = new PenteMoveGenerator(this);
-        moveEvaluator_ = new MoveEvaluator(board_, new PentePatterns());
+        moveEvaluator_ = new MoveEvaluator(board_, createPatterns());
     }
 
-    public PenteSearchable copy() throws CloneNotSupportedException {
-        return new PenteSearchable((TwoPlayerBoard)board_.clone(), (PlayerList)players_.clone(), options_);
+    protected Patterns createPatterns() {
+        return new PentePatterns();
     }
-
+    
     /**
      *  Statically evaluate the board position.
      *  @return the lastMoves value modified by the value add of the new move.

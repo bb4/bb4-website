@@ -1,5 +1,7 @@
 package com.becker.game.common;
 
+import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
+
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -18,16 +20,14 @@ public class CaptureList extends LinkedList<BoardPosition>
     /**
      * remove the captured pieces from the board.
      */
-    public void removeFromBoard( Board b )
-    {
+    public void removeFromBoard( Board b ) {
         modifyCaptures( b, true );
     }
 
     /**
      * restore the captured pieces on the board.
      */
-    public void restoreOnBoard( Board b )
-    {
+    public void restoreOnBoard( Board b )  {
         modifyCaptures( b, false );
     }
 

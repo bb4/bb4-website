@@ -10,8 +10,7 @@ import java.util.Set;
  *
  *  @author Barry Becker
  */
-public class GoBoardPositionSet extends HashSet<GoBoardPosition>
-{
+public class GoBoardPositionSet extends HashSet<GoBoardPosition> {
 
     public GoBoardPositionSet() {}
 
@@ -19,12 +18,10 @@ public class GoBoardPositionSet extends HashSet<GoBoardPosition>
         super(set);
     }
 
-
     /**
      * pretty print this set of stones.
      */
-    public void debugPrint( int logLevel, String title)
-    {
+    public void debugPrint( int logLevel, String title) {
         GameContext.log(logLevel, this.toString(title));
     }
 
@@ -33,8 +30,7 @@ public class GoBoardPositionSet extends HashSet<GoBoardPosition>
      * pretty print a list of all the current groups (and the strings they contain)
      * @return string form of list of stones.
      */
-    String toString(String title)
-    {
+    String toString(String title) {
         StringBuffer buf = new StringBuffer(title);
         buf.append("\n  ");
         for (GoBoardPosition stone : this) {

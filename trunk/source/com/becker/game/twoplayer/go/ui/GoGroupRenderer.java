@@ -58,8 +58,8 @@ final class GoGroupRenderer {
     /**
      * draw debugging information about the group like its border and eyeshapes.
      */
-    public void drawGroupDecoration(GoGroup group)
-    {
+    public void drawGroupDecoration(GoGroup group) {
+        
         GroupRegion cachedRegion = hmRegionCache_.get(group);
 
         if ( !group.isValid() || cachedRegion == null || cellSize_ != cachedRegion.cellSize ) {
@@ -106,17 +106,6 @@ final class GoGroupRenderer {
         return createMultiStoneBorder(firstStone);
     }
 
-    private GoBoard createBoardCopy(GoBoard board)
-    {
-        GoBoard boardCopy = null;
-        try {
-            boardCopy = (GoBoard)board.clone();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-        return boardCopy;
-    }
-
     /**
      * @return the boarder for a single stone.
      */
@@ -136,7 +125,7 @@ final class GoGroupRenderer {
      */
     private Area createMultiStoneBorder(GoBoardPosition firstStone) {
 
-        GoBoard boardCopy = createBoardCopy(board_);
+        GoBoard boardCopy = board_.copy();
 
         List<BoardPosition> q = new ArrayList<BoardPosition>();
         GoBoardPositionSet qset = new GoBoardPositionSet();

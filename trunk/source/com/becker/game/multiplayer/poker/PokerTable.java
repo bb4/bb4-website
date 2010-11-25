@@ -9,25 +9,33 @@ import com.becker.game.multiplayer.poker.player.PokerPlayer;
  *
  * @author Barry Becker
  */
-public class PokerTable extends Board
-{
+public class PokerTable extends Board {
 
-    /** constructor
-     *  @param numRows num rows
-     *  @param numCols num cols
+    /** size of a players marker  */
+    private static final double RADIUS = 0.65;
+
+
+    /**
+     * Constructor
+     * @param numRows num rows
+     * @param numCols num cols
      */
-    public PokerTable( int numRows, int numCols )
-    {
+    public PokerTable( int numRows, int numCols )  {
         setSize( numRows, numCols );
     }
 
+    public PokerTable(PokerTable table) {
+    }
+
+    public PokerTable copy() {
+        return new PokerTable(this);
+    }
 
     /**
      *  reset the board to its initial state
      */
     @Override
-    public void reset()
-    {
+    public void reset() {
         super.reset();
         for ( int i = 1; i <= getNumRows(); i++ ) {
             for ( int j = 1; j <= getNumCols(); j++ ) {
@@ -38,8 +46,7 @@ public class PokerTable extends Board
 
 
     @Override
-    public void setSize( int numRows, int numCols )
-    {
+    public void setSize( int numRows, int numCols ) {
         numRows_ = numRows;
         numCols_ = numCols;
         rowsTimesCols_ = numRows_ * numCols_;
@@ -52,14 +59,11 @@ public class PokerTable extends Board
      * A poker game has no real limit so we just reutnr a huge number.
      * @return max number of poker rounds allowed.
      */
-    public int getMaxNumMoves()
-    {
+    public int getMaxNumMoves() {
         return 1000000;
     }
 
-    // size of a players marker
-    private static final double RADIUS = 0.65;
-    
+
     /**
      * place the players around the poker table
      * @param players
@@ -96,8 +100,7 @@ public class PokerTable extends Board
      * @return false if the move is illegal.
      */
     @Override
-    protected boolean makeInternalMove( Move move )
-    {
+    protected boolean makeInternalMove( Move move ) {
         //PokerTurn gmove = (PokerTurn)move;
         return true;
     }
@@ -109,8 +112,7 @@ public class PokerTable extends Board
      * @@ todo
      */
     @Override
-    protected void undoInternalMove( Move move )
-    {
+    protected void undoInternalMove( Move move ) {
         GameContext.log(0,  "undo no implemented yet for poker." );
         //clear(positions_[move.getToRow()][move.getToCol()]);
     }

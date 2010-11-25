@@ -10,8 +10,7 @@ import com.becker.common.Location;
  * @see Board
  * @author Barry Becker
  */
-public class BoardPosition
-{
+public class BoardPosition {
     /** we need to store the location so we can restore captures.  */
     protected Location location_;
 
@@ -29,6 +28,23 @@ public class BoardPosition
         this(new Location(row, col), piece);
     }
 
+    public BoardPosition(BoardPosition p) {
+
+        location_ = new Location(p.getRow(), p.getCol());
+        if (p.piece_ != null)
+            piece_ = p.piece_.copy();
+        else
+            piece_ = null;
+    }
+
+    /**
+     * @return copy of this position.
+     */
+    public BoardPosition copy() {
+        return new BoardPosition(this);
+    }
+
+
     /**
      * constructor
      * @param loc -  location on the board.
@@ -38,7 +54,7 @@ public class BoardPosition
         location_ = loc;
         piece_ = piece;
     }
-            
+
     /**
      * @return  true if values are equal.
      */
@@ -49,7 +65,7 @@ public class BoardPosition
          }
 
          BoardPosition comparisonPos = (BoardPosition) pos;
-         boolean sameSide = true;
+         boolean sameSide;
          if (getPiece() != null && comparisonPos.getPiece() != null)   {
              sameSide = (getPiece().isOwnedByPlayer1() == comparisonPos.getPiece().isOwnedByPlayer1());
          }  
@@ -96,48 +112,20 @@ public class BoardPosition
          return (piece_ != null);
     }
 
-    public final void setRow( int row ) {
-        location_.setRow(row);
-    }
-
     public final int getRow() {
         return location_.getRow();
-    }
-
-    public final void setCol( int col ) {
-        location_.setCol(col);
     }
 
     public final int getCol() {
         return location_.getCol();
     }
 
-     public final void setLocation( Location loc ) {
+    public final void setLocation( Location loc ) {
         location_ = loc;
     }
 
-    public final Location getLocation()
-    {
+    public final Location getLocation() {
         return location_;
-    }
-
-    /**
-     * @return a deep copy.
-     */
-    public BoardPosition copy() {
-        return new BoardPosition( location_, (piece_== null) ? null : piece_.copy());
-    }
-
-    /**
-     * copy data from another position into me.
-     */
-    protected void copy(BoardPosition p)
-    {
-        location_ = new Location(p.getRow(), p.getCol());
-        if (p.piece_ != null)
-            piece_ = p.piece_.copy();
-        else
-            piece_ = null;
     }
 
 
