@@ -1,13 +1,12 @@
 package com.becker.apps.misc.brian;
 
-
 /**
- * Brian's Second Program
+ * Compare two methods for finding the greatest comon factor.
+ * See gcf subpackage for a better way to do this same thing.
  */
-
 public final class GCFProgram  {
 
-
+    /** can take very long to run */
     private static long bruteGCF(long a, long b) {
 
         if (a > b) {
@@ -23,15 +22,15 @@ public final class GCFProgram  {
         return 1;
     }
 
-
+    /** recursive */
     private static long euclidGCF(long a, long b) {
         if (a == 0) {
             return b;
         } else {
             return euclidGCF(b % a, a);
         }
-
     }
+
 
     public static void main( String[] args ) {
 
