@@ -308,7 +308,7 @@ public class BlockadeBoard extends TwoPlayerBoard
     @Override
     public String toString()
     {
-        StringBuffer buf = new StringBuffer(50);
+        StringBuilder buf = new StringBuilder(50);
         // print just the walls
         for ( int i = 1; i <= getNumRows(); i++ ) {
             for ( int j = 1; j <= getNumCols(); j++ ) {

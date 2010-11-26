@@ -101,7 +101,7 @@ public class ChessMove extends TwoPlayerMove
     @Override
     public String toString()
     {
-        StringBuffer sb = new StringBuffer(super.toString());
+        StringBuilder sb = new StringBuilder(super.toString());
         if (this.isFirstTimeMoved())
           sb.append(" firstTimeMoved ");
 

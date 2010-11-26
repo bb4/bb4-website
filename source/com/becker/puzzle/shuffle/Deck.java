@@ -56,7 +56,7 @@ public class Deck {
 
     @Override
     public String toString() {
-        StringBuffer buf = new StringBuffer("Deck: ");
+        StringBuilder buf = new StringBuilder("Deck: ");
 
         for (int i=0; i<data_.length-1; i++) {
             buf.append(data_[i]+", ");

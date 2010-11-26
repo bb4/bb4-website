@@ -78,7 +78,7 @@ public class AikidoAppGenerator {
     private static String generateHierarchyStructures(Document document)
     {
         //return "\n"+ document.toString() + "\n\n";
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
 
         buf.append('\n');
         buf.append("  // setup structures for grammar\n");
@@ -103,7 +103,7 @@ public class AikidoAppGenerator {
     {
         // first print the img and label for the node, then next ptrs for all children,
         // then do the same for all its children
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         NodeInfo nodeInfo = new NodeInfo(node.getAttributes());
         if (nodeInfo.id == null)  {
             System.out.println("null id for "+node.getNodeName()+' '+node.getNodeValue());
@@ -325,7 +325,7 @@ public class AikidoAppGenerator {
 
     private static String genRowForNode(Node node, Document document, List parentList) {
 
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         NodeInfo nodeInfo = new NodeInfo(node.getAttributes());
 
         if (nodeInfo.id==null)  {
@@ -387,7 +387,7 @@ public class AikidoAppGenerator {
 
 
     private static String getTechniqueTable(Document document) {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         List parentList = new LinkedList();
 
         // recursive call

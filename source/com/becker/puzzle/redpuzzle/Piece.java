@@ -146,7 +146,7 @@ public final class Piece
      */
     @Override
     public String toString() {
-        StringBuffer buf = new StringBuffer("Piece "+ getNumber() + " (orientation="+orientation_+"): ");
+        StringBuilder buf = new StringBuilder("Piece "+ getNumber() + " (orientation="+orientation_+"): ");
         for (Direction d : Direction.values()) {
             Nub n = getNub(d);
             buf.append(d.toString()).append(':').append(n.toString()).append(";  ");
@@ -155,7 +155,7 @@ public final class Piece
     }
     
     public String toRawString() {
-        StringBuffer buf = new StringBuffer("Piece "+ getNumber() + ":");
+        StringBuilder buf = new StringBuilder("Piece "+ getNumber() + ":");
         for (int i=0; i<4; i++) {
             buf.append(nubs_[i].toString()).append(" ");
         }

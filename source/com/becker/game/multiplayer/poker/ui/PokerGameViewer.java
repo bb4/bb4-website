@@ -49,7 +49,7 @@ public class PokerGameViewer extends MultiGameViewer
     @Override
     protected String getGameOverMessage()
     {
-        StringBuffer buf = new StringBuffer("Game Over\n");
+        StringBuilder buf = new StringBuilder("Game Over\n");
 
         // find the player with the most money. That's the winner.
         PlayerList players = controller_.getPlayers();

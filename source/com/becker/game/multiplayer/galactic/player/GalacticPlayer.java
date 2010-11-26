@@ -178,7 +178,7 @@ public class GalacticPlayer extends MultiGamePlayer
 
     @Override
     protected String additionalInfo() {
-        StringBuffer sb = new StringBuffer();   
+        StringBuilder sb = new StringBuilder();
         sb.append("Fleet size: "+getTotalNumShips());
         sb.append("Home planet: "+homePlanet_.getName());
         return sb.toString();

@@ -145,7 +145,7 @@ public class GamePiece implements Serializable
     @Override
     public String toString()
     {
-        StringBuffer sb = new StringBuffer( "" );
+        StringBuilder sb = new StringBuilder();
         if ( ownedByPlayer1_ )
             sb.append( " X" );
         else

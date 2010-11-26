@@ -125,7 +125,7 @@ public final class Location implements Serializable
      */
     public String toString()
     {
-        return "row=" + row_ + ", colum=" + col_;
+        return "row=" + row_ + ", column=" + col_;
     }
 }
 

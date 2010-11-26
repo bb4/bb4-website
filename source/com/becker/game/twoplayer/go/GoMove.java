@@ -173,8 +173,7 @@ public final class GoMove extends TwoPlayerMove
      *  make a deep copy of the move object
      */
     @Override
-    public TwoPlayerMove copy()
-    {
+    public TwoPlayerMove copy() {
         CaptureList newList = null;
         if ( captureList_ != null ) {
             // then make a deep copy
@@ -195,8 +194,7 @@ public final class GoMove extends TwoPlayerMove
      * @return stringified form.
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         String s = super.toString();
         if ( captureList_ != null ) {
             s += "num captured="+captureList_.size();

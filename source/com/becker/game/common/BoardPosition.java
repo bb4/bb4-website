@@ -173,7 +173,7 @@ public class BoardPosition {
      * @return string form.
      */
     private String toString(boolean longForm) {
-        StringBuffer sb = new StringBuffer( "" );
+        StringBuilder sb = new StringBuilder( "" );
         if (piece_ != null)
             sb.append(longForm? piece_.getDescription() : piece_.toString());
         sb.append(" (").append(location_.toString()).append(')');

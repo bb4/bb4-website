@@ -69,7 +69,7 @@ public final class Base64Codec {
         final Inflater inflater = new Inflater();
         final InflaterInputStream iStream = new InflaterInputStream( in, inflater );
         final char cBuffer[] = new char[4096];
-        StringBuffer sBuf = new StringBuffer();
+        StringBuilder sBuf = new StringBuilder();
         try {
             InputStreamReader iReader = new InputStreamReader( iStream, CONVERTER_UTF8 );
             while ( true ) {

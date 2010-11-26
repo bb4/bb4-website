@@ -325,7 +325,7 @@ public class PegBoard {
 
     @Override
     public String toString() {      
-        StringBuffer buf= new StringBuffer(finalBit_?"1":"0");
+        StringBuilder buf= new StringBuilder(finalBit_?"1":"0");
         buf.append(nextToFinalBit_?"1":"0");
         buf.append(Integer.toBinaryString(bits_));
         return buf.toString();

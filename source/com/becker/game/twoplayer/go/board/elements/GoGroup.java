@@ -361,7 +361,7 @@ public final class GoGroup extends GoSet
      */
     private String toString( String newline )
     {
-        StringBuffer sb = new StringBuffer( " GROUP {" + newline );
+        StringBuilder sb = new StringBuilder( " GROUP {" + newline );
         Iterator it = getMembers().iterator();
         // print the member strings
         if ( it.hasNext() ) {

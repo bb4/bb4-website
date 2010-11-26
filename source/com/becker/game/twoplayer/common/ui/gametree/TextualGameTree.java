@@ -48,7 +48,6 @@ public final class TextualGameTree extends JScrollPane {
        tree_.addTreeExpansionListener(listener);
     }
 
-
     public void expandRow(int row) {
         tree_.expandRow(row);
     }

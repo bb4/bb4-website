@@ -122,7 +122,7 @@ final class GoBoardViewer extends AbstractTwoPlayerBoardViewer {
             return "";  // avoids concurrent modification exception
 
         Location loc = getBoardRenderer().createLocation(e);
-        StringBuffer sb = new StringBuffer( "<html><font=-3>" );
+        StringBuilder sb = new StringBuilder( "<html><font=-3>" );
 
         GoBoardPosition space = (GoBoardPosition) controller_.getBoard().getPosition( loc );
         if ( space != null && GameContext.getDebugMode() > 0 ) {

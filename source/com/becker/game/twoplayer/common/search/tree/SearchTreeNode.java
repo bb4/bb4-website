@@ -45,7 +45,6 @@ public class SearchTreeNode extends DefaultMutableTreeNode
         this.attributes = new NodeAttributes();
     }
 
-
     /**
      * Default Constructor
      * @param m a twoplayer board move.
@@ -75,9 +74,8 @@ public class SearchTreeNode extends DefaultMutableTreeNode
      * @param theMove specified move to check
      * @return the corresponding search node if it is a child.
      */
-    public SearchTreeNode hasChild(TwoPlayerMove theMove) {
+    public synchronized SearchTreeNode hasChild(TwoPlayerMove theMove) {
         Enumeration enumeration = children();
-        int i=0;
         while (enumeration.hasMoreElements()) {
             SearchTreeNode node = (SearchTreeNode)enumeration.nextElement();
             if (theMove.equals(node.getUserObject())) {
@@ -94,8 +92,7 @@ public class SearchTreeNode extends DefaultMutableTreeNode
      * @param i th child.
      * @param attributes list of name values to show.
      */
-    public void addPrunedChildNodes( List list, int i, NodeAttributes attributes)
-    {
+    public void addPrunedChildNodes( List list, int i, NodeAttributes attributes) {
         int index = i;
         while ( !list.isEmpty() ) {
             TwoPlayerMove theMove = (TwoPlayerMove) (list.remove(0));
@@ -132,7 +129,7 @@ public class SearchTreeNode extends DefaultMutableTreeNode
         Object m = getUserObject();
         if (m == null) return null;
 
-        StringBuffer s = new StringBuffer(m.toString());   
+        StringBuilder s = new StringBuilder(m.toString());
         s.append(attributes.toString());
 
         return s.toString();

@@ -317,7 +317,7 @@ public class PieceList {
             
     @Override
     public String toString() {
-        StringBuffer buf = new StringBuffer("PieceList: ("+size()+" pieces)\n");
+        StringBuilder buf = new StringBuilder("PieceList: ("+size()+" pieces)\n");
         for (Piece p : pieces_) {
             buf.append(p.toString() + '\n');
         }

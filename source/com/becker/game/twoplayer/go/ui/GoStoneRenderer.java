@@ -16,7 +16,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.RescaleOp;
 
 /**
- * Singleton class that takes a checkers piece and renders it for the GoBoardViewer.
+ * Singleton class that takes a go piece and renders it for the GoBoardViewer.
  * @see GoBoardViewer
  * @author Barry Becker
  */
@@ -41,7 +41,7 @@ public final class GoStoneRenderer extends TwoPlayerPieceRenderer
     private static final ImageIcon BLACK_STONE_DEAD_IMG = GUIUtil.getIcon(DIR+"goStoneBlackDead.png");
     private static final ImageIcon WHITE_STONE_DEAD_IMG = GUIUtil.getIcon(DIR+"goStoneWhiteDead.png");
 
-    private static float[] scaleFactors_ = {1.0f, 1.0f, 1.0f, 1.0f};
+    private static final float[] scaleFactors_ = {1.0f, 1.0f, 1.0f, 1.0f};
     private static final float[] OFFSETS = {0.0f, 0.0f, 0.0f, 0.0f};
     private static final Font ANNOTATION_FONT = new Font( "Sans-serif", Font.BOLD, 14 );
 
@@ -52,8 +52,7 @@ public final class GoStoneRenderer extends TwoPlayerPieceRenderer
     private GoStoneRenderer()
     {}
 
-    public static TwoPlayerPieceRenderer getRenderer()
-    {
+    public static TwoPlayerPieceRenderer getRenderer() {
         if (renderer_ == null)
             renderer_ = new GoStoneRenderer();
         return renderer_;
@@ -63,8 +62,7 @@ public final class GoStoneRenderer extends TwoPlayerPieceRenderer
      * @return the color the pieces for player1.   (black)
      */
     @Override
-    public Color getPlayer1Color()
-    {
+    public Color getPlayer1Color() {
         return PLAYER1_STONE_COLOR;
     }
 
@@ -72,16 +70,14 @@ public final class GoStoneRenderer extends TwoPlayerPieceRenderer
      * @return the color the pieces for player2.   (white)
      */
     @Override
-    public Color getPlayer2Color()
-    {
+    public Color getPlayer2Color() {
         return PLAYER2_STONE_COLOR;
     }
 
     /**
      * @return  the image to show for the graphical represention of the go stone
      */
-    private static Image getImage(GoStone stone)
-    {
+    private static Image getImage(GoStone stone) {
         if (stone.isDead())
             return (stone.isOwnedByPlayer1() ? BLACK_STONE_DEAD_IMG.getImage(): WHITE_STONE_DEAD_IMG.getImage());
         else
@@ -98,8 +94,7 @@ public final class GoStoneRenderer extends TwoPlayerPieceRenderer
      * @param position of the piece to render
      */
     @Override
-    public void render( Graphics2D g2, BoardPosition position, int cellSize, int margin, Board board)
-    {
+    public void render( Graphics2D g2, BoardPosition position, int cellSize, int margin, Board board) {
         GoBoardPosition stonePos = (GoBoardPosition)position;
         if (GameContext.getDebugMode() > 0)  {
             //  as a debugging aid draw the background as a function of the territorial score (-1 : 1)
