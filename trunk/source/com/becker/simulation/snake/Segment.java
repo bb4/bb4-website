@@ -525,7 +525,7 @@ public class Segment
 
     public String toString()
     {
-        StringBuffer str = new StringBuffer( "Segment particles:\n" );
+        StringBuilder str = new StringBuilder( "Segment particles:\n" );
         for ( int i = 0; i < 5; i++ )
             str.append( " p" + i + '=' + particle_[i] + " \n" );
         return str.toString();

@@ -246,7 +246,7 @@ public class GoString extends GoSet
      */
     @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer( getPrintPrefix() );
+        StringBuilder sb = new StringBuilder( getPrintPrefix() );
         sb.append(" UA=").append(isUnconditionallyAlive()).append(" ");
         Iterator it = getMembers().iterator();
         if ( it.hasNext() ) {

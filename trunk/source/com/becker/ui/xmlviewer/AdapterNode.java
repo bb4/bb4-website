@@ -114,7 +114,7 @@ public class AdapterNode
         //   while EntityRef has it in a text node underneath.
         //   (because EntityRef can contain multiple subelements)
         // Convert angle brackets and ampersands for display
-        StringBuffer sb = new StringBuffer( node.getNodeValue() );
+        StringBuilder sb = new StringBuilder( node.getNodeValue() );
         int j=0;
         while (j<sb.length()) {
           if (sb.charAt(j) == '<') {

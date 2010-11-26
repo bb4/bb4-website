@@ -85,7 +85,7 @@ public class Deck2 {
     @Override
     public String toString() {
 
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         buffer.append("Deck [");
         buffer.append(cards[0]);
 

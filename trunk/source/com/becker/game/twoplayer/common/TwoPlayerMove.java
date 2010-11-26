@@ -18,9 +18,6 @@ import com.becker.game.common.Move;
  *  We could save significant space by removing some of these members,
  *  and reducing the size of the remaining ones. eg toRow, toCol can be byte, value can be float, etc.
  *
- *  This is the only class where I dispense with setter and getter methods because I think efficiency
- *  of access for this class is important when searching 2 player games.
- *
  *  @see Board
  *  @author Barry Becker
  */
@@ -78,8 +75,7 @@ public class TwoPlayerMove extends Move
      * create a move object representing a transition on the board.
      */
     protected TwoPlayerMove( int destinationRow, int destinationCol,
-                    int val, GamePiece p )
-    {
+                    int val, GamePiece p ) {
         toLocation_ = new Location(destinationRow, destinationCol);
 
         setValue(val);
@@ -96,8 +92,7 @@ public class TwoPlayerMove extends Move
      * @return the newly created move.
      */
     public static TwoPlayerMove createMove( int destinationRow, int destinationCol,
-                                   int val, GamePiece piece )
-    {
+                                            int val, GamePiece piece ) {
         return new TwoPlayerMove(destinationRow, destinationCol, val, piece);
     }
 
@@ -106,37 +101,31 @@ public class TwoPlayerMove extends Move
      * @return the newly created move.
      */
     public static TwoPlayerMove createMove( Location destinationLocation,
-                                   int val, GamePiece piece )
-    {
+                                            int val, GamePiece piece )  {
         return new TwoPlayerMove(destinationLocation.getRow(), destinationLocation.getCol(), val, piece );
     }
 
     /**
      * @return  a deep copy.
      */
-    public TwoPlayerMove copy()
-    {
+    public TwoPlayerMove copy()  {
         TwoPlayerMove cp = createMove( toLocation_, getValue(),  piece_ );
         cp.selected_ = selected_;
         cp.urgent_ = urgent_;
         return cp;
     }
 
-    public final byte getToRow()
-    {
+    public final byte getToRow()  {
         return toLocation_.getRow();
     }
 
-    public final byte getToCol()
-    {
+    public final byte getToCol() {
         return toLocation_.getCol();
     }
 
-    public final Location getToLocation()
-    {
+    public final Location getToLocation() {
         return toLocation_;
     }
-
 
     /**
      * We sort based on the statically evaluated board value
@@ -144,8 +133,8 @@ public class TwoPlayerMove extends Move
      * @return  > 0 if move m is bigger, < 0 if smaller, =0 if equal
      */
     @Override
-    public int compareTo( Move m )
-    {
+    public int compareTo( Move m ) {
+
         int result = super.compareTo(m);
         if (result != 0)
             return result;
@@ -189,8 +178,7 @@ public class TwoPlayerMove extends Move
     /**
      * @return  true if the player (or computer) chose to pass this turn.
      */
-    public final boolean isPassingMove()
-    {
+    public final boolean isPassingMove() {
         return isPass_;
     }
 
@@ -274,7 +262,7 @@ public class TwoPlayerMove extends Move
 
     @Override
     public String toString() {
-        StringBuffer s = new StringBuffer();
+        StringBuilder s = new StringBuilder();
         if (piece_!=null)
             s.append( piece_.isOwnedByPlayer1()? P1 : P2 );
 
@@ -286,6 +274,7 @@ public class TwoPlayerMove extends Move
         s.append('(').append(toLocation_.toString()).append(')');
         if (urgent_)
             s.append(" urgent!");
+        s.append(" ");
         return s.toString();
     }
 }

@@ -122,15 +122,6 @@ public abstract class AbstractSearchStrategy implements SearchStrategy {
     }
 
     /**
-     * Get the next move and increment the number of moves considered.
-     * @return next move in sorted generated next move list.
-     */
-    protected TwoPlayerMove getNextMove(MoveList list) {
-        movesConsidered_ ++;
-        return (TwoPlayerMove)list.remove(0);
-    }
-
-    /**
      * For minimax this is always true, but it depends on the player for the nega type searches.
      * @return true if we should evaluate the board from the point of view of player one.
      */

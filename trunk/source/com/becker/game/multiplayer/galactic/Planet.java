@@ -150,7 +150,7 @@ public class Planet extends GamePiece
     @Override
     public String getDescription()
     {
-        StringBuffer sb = new StringBuffer( this.toString() );
+        StringBuilder sb = new StringBuilder( this.toString() );
 
         sb.append("Planet: "+type_+" production:"+getProductionCapacity());
         return sb.toString();
@@ -203,7 +203,7 @@ public class Planet extends GamePiece
 
     String toString(String newLine)
     {
-        StringBuffer sb = new StringBuffer("Planet: "+type_+newLine);
+        StringBuilder sb = new StringBuilder("Planet: "+type_+newLine);
 
         if (getOwner()!=null)
             sb.append("Owner: "+this.getOwner().getName()+newLine);

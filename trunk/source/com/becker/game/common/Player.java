@@ -117,7 +117,7 @@ public class Player implements Serializable
     
     @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer( 100 );
+        StringBuilder sb = new StringBuilder();
 
         sb.append("[ *").append(name_).append("* ");
         if (!isHuman())

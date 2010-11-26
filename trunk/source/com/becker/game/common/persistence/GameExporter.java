@@ -38,7 +38,7 @@ public abstract class GameExporter {
      * append the board position to the buffer in the form [<c><r>]
      * Where c and r are the column and row letters whose range depends on the game.
      */
-    protected void serializePosition(Location pos, StringBuffer buf) {
+    protected void serializePosition(Location pos, StringBuilder buf) {
         buf.append( '[' );
         buf.append( (char) ('a' + pos.getCol() - 1) );
         buf.append( (char) ('a' + pos.getRow() - 1) );

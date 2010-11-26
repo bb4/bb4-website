@@ -88,7 +88,7 @@ public class OnlineGameTable implements Serializable {
      * @return the list of players at the table in a comman delimited list.
      */
     public String getPlayerNames() {
-        StringBuffer buf = new StringBuffer("");
+        StringBuilder buf = new StringBuilder("");
         if (players_.isEmpty()) {
             return "-";
         }

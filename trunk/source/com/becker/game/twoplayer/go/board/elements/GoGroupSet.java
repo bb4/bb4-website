@@ -130,10 +130,10 @@ public class GoGroupSet implements Set<GoGroup>
      */
     String toString(boolean showBlack, boolean showWhite)
     {
-        StringBuffer groupText = new StringBuffer( "" );
-        StringBuffer blackGroupsText = new StringBuffer(showBlack? "The black groups are :\n" : "" );
-        StringBuffer whiteGroupsText =
-                new StringBuffer((showBlack?"\n":"") + (showWhite? "The white groups are :\n" : ""));
+        StringBuilder groupText = new StringBuilder( "" );
+        StringBuilder blackGroupsText = new StringBuilder(showBlack? "The black groups are :\n" : "" );
+        StringBuilder whiteGroupsText =
+                new StringBuilder((showBlack?"\n":"") + (showWhite? "The white groups are :\n" : ""));
 
         for (Object group1 : groups) {
             GoGroup group = (GoGroup) group1;

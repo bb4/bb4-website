@@ -89,7 +89,7 @@ public class MultiPlayerMarker extends GamePiece
 
     String toString(String newLine)
     {
-        StringBuffer sb = new StringBuffer("");
+        StringBuilder sb = new StringBuilder("");
 
         if (getOwner()!=null)
             sb.append("Owner: "+this.getOwner().getName()+newLine);

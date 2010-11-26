@@ -80,7 +80,7 @@ public class TwoPlayerGameExporter extends GameExporter {
         TwoPlayerMove m = (TwoPlayerMove) move;
         // passes are not represented in SGF - so just skip it if the piece is null.
     
-        StringBuffer buf = new StringBuffer("");
+        StringBuilder buf = new StringBuilder("");
         String player = "P2";
         if ( m.isPlayer1() )
         {

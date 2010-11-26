@@ -36,8 +36,7 @@ public class StringUtil
            
         StringBuffer sb = new StringBuffer();
         matcher.reset();
-        if (matcher.find())
-        {
+        if (matcher.find()) {
             matcher.appendReplacement(sb, newString);
         }
         matcher.appendTail(sb);

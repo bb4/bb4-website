@@ -222,7 +222,7 @@ public final class EnvironmentRenderer
         Cell[][] grid = env_.getGrid();
         g.setColor( TEXT_COLOR );
         g.setFont( BASE_FONT );
-        StringBuffer strBuf = new StringBuffer( "12" );
+        StringBuilder strBuf = new StringBuilder( "12" );
         for ( int j = 0; j < env_.getYDim(); j++ ) {
             for (int  i = 0; i < env_.getXDim(); i++ ) {
                 int x = (int) (scale_ * i) + OFFSET;

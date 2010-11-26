@@ -32,6 +32,7 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
     private static final BasicStroke HIGHLIGHT_STROKE = new BasicStroke(1.4f);
     private static final BasicStroke BRUSH_HIGHLIGHT_STROKE = new BasicStroke(3.7f);
     private static final int PRUNE_SPACING = 12;
+
     /** circle around highlighted node   */
     private static final int HL_NODE_RADIUS = 3;
     private static final int HL_NODE_DIAMETER = 8;
@@ -58,16 +59,14 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
      * Construct the viewer
      * @param root root of text tree to base tree graph on.
      */
-    GameTreeViewer( SearchTreeNode root, ColorMap cmap, TwoPlayerPieceRenderer pieceRenderer)
-    {
+    GameTreeViewer( SearchTreeNode root, ColorMap cmap, TwoPlayerPieceRenderer pieceRenderer) {
         colormap_ = cmap;
         pieceRenderer_ = pieceRenderer;
         setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
         setRoot(root);
     }
 
-    public synchronized void setRoot( SearchTreeNode root)
-    {
+    public synchronized void setRoot( SearchTreeNode root) {
         root_ = root;
         // this is very expensive because it traverses the whole tree.
         // it might be simpler to just use the depth from the controller, but that would
@@ -85,8 +84,7 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
     /**
      *  draw the currently visible game tree.
      */
-    public synchronized void refresh()
-    {
+    public synchronized void refresh() {
         // this will paint the component immediately
         paint( getGraphics() );
         oldHighlightPath_ = null;
@@ -96,14 +94,12 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
      * @param c  the new color of the tree.
      */
     @Override
-    public synchronized void setBackground( Color c )
-    {
+    public synchronized void setBackground( Color c ) {
         backgroundColor_ = c;
         refresh();
     }
 
-    private synchronized void initializeTreeStats( SearchTreeNode node, int depth)
-    {
+    private synchronized void initializeTreeStats( SearchTreeNode node, int depth) {
         if (node.isLeaf())  {
             if (node.isPruned()) {
                 // give pruned nodes a little more space
@@ -142,8 +138,7 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
      *
      * @param path path corresponding to a the list of moves to make
      */
-    public synchronized void highlightPath( TreePath path )
-    {
+    public synchronized void highlightPath( TreePath path ) {
         // unhighlight the old path and highlight the new one without redrawing the whole tree.
         // GameContext.log(2, "about to highlight "+path );
         Graphics2D g2 = (Graphics2D)getGraphics();
@@ -160,8 +155,7 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
         oldHighlightPath_ = path;
     }
 
-    private void highlight( TreePath path, Graphics2D g2)
-    {
+    private void highlight( TreePath path, Graphics2D g2) {
         Object[] pathNodes = path.getPath();
         SearchTreeNode lastNode = (SearchTreeNode)pathNodes[0];
         int diameter = HL_NODE_DIAMETER;
@@ -185,8 +179,7 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
      * It can get quite huge.
      * @return the number of nodes that were drawn.
      */
-    private long drawTree( SearchTreeNode root, Graphics2D g2)
-    {
+    private long drawTree( SearchTreeNode root, Graphics2D g2) {
         int oldDepth = 0;
         int depth;
         int[] offsetAtLevel = new int[depth_+2];
@@ -221,8 +214,7 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
     /**
      * Draw one of the game tree nodes
      */
-    private synchronized void drawNode( SearchTreeNode node, int depth, int offset, Graphics2D g2)
-    {
+    private synchronized void drawNode( SearchTreeNode node, int depth, int offset, Graphics2D g2) {
         TwoPlayerMove m = (TwoPlayerMove)node.getUserObject();
         g2.setColor( colormap_.getColorForValue(m.getValue()));
         int x = MARGIN + (int) (width_ * (offset + node.getSpaceAllocation() / 2.0) / totalAtLevel_[depth]);
@@ -248,8 +240,7 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
      * Draw a line/arc connecting a parent and child node.
      */
     private synchronized void drawArc( SearchTreeNode parent, SearchTreeNode child,
-                                       int depth, int offset1, int offset2, Graphics2D g2)
-    {
+                                       int depth, int offset1, int offset2, Graphics2D g2) {
         TwoPlayerMove m = (TwoPlayerMove)child.getUserObject();
         boolean highlighted = m.isSelected() && ((TwoPlayerMove)parent.getUserObject()).isSelected();
         if (highlighted)
@@ -264,13 +255,11 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
         }
     }
 
-
     /**
      * draw colored bands to give an indication of who is moving on each ply.
      * @param g2
      */
-    private synchronized void drawBackground( Graphics2D g2 )
-    {
+    private synchronized void drawBackground( Graphics2D g2 ) {
         g2.setColor( backgroundColor_ );
         g2.fillRect( 0, 0, getWidth(), getHeight() );
 
@@ -288,8 +277,7 @@ final class GameTreeViewer extends JPanel implements MouseMotionListener
      * This renders the current tree to the canvas
      */
     @Override
-    protected synchronized void paintComponent( Graphics g )
-    {
+    protected synchronized void paintComponent( Graphics g )  {
         Graphics2D g2 = (Graphics2D)g;
 
         g2.setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);

@@ -234,7 +234,7 @@ public class ParameterArray implements Comparable<ParameterArray>
      */
     public String vecToString( double[] vec )
     {
-        StringBuffer buf = new StringBuffer( vec[0] + " " );
+        StringBuilder buf = new StringBuilder( vec[0] + " " );
         for ( int i = 1; i < params_.length; i++ ) {
             buf.append( vec[i] + " " );
         }
@@ -253,7 +253,7 @@ public class ParameterArray implements Comparable<ParameterArray>
 
     public String toString()
     {
-        StringBuffer sb = new StringBuffer("fitness="+this.getFitness()+'\n');
+        StringBuilder sb = new StringBuilder("fitness="+this.getFitness()+'\n');
         sb.append( "parameter[0] = " + params_[0].toString() );
         for ( int i = 1; i < params_.length; i++ ) {
             sb.append( '\n' );
@@ -267,7 +267,7 @@ public class ParameterArray implements Comparable<ParameterArray>
      */
     public String toCSVString()
     {
-        StringBuffer sb = new StringBuffer("");
+        StringBuilder sb = new StringBuilder("");
         for ( int i = 0; i < params_.length-1; i++ ) {
             sb.append(  Util.formatNumber(params_[i].getValue()) + ", " );
         }

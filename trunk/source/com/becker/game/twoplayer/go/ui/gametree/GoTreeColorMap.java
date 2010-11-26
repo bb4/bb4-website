@@ -1,4 +1,4 @@
-package com.becker.game.twoplayer.go.ui;
+package com.becker.game.twoplayer.go.ui.gametree;
 
 import com.becker.common.ColorMap;
 

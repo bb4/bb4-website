@@ -183,7 +183,7 @@ public class GalaxyViewer extends MultiGameViewer
     public String getToolTipText( MouseEvent e )
     {
         Location loc = getBoardRenderer().createLocation(e);
-        StringBuffer sb = new StringBuffer( "<html><font=-3>" );
+        StringBuilder sb = new StringBuilder( "<html><font=-3>" );
 
         BoardPosition space = controller_.getBoard().getPosition( loc );
         if ( space != null && space.isOccupied() && GameContext.getDebugMode() >= 0 ) {

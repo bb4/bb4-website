@@ -91,7 +91,7 @@ public class GoGameExporter extends GameExporter {
         // passes are not represented in SGF - so just skip it if the piece is null.
         if (m.getPiece() == null)
              return "[]";
-        StringBuffer buf = new StringBuffer("");
+        StringBuilder buf = new StringBuilder("");
         char player = 'W';
         if ( m.getPiece().isOwnedByPlayer1() ) {
             player = 'B';

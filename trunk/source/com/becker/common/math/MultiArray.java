@@ -153,7 +153,7 @@ public class MultiArray
      */
     public String getIndexKey( int[] index )
     {
-        StringBuffer key = new StringBuffer( "" );
+        StringBuilder key = new StringBuilder( "" );
         for ( int i = 0; i < numDims_; i++ ) {
             key.append( Integer.toString( index[i] ) );
             if ( i < numDims_ - 1 )

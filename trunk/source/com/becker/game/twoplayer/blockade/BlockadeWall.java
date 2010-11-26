@@ -120,7 +120,7 @@ public class BlockadeWall
     public String toString()
     {
         // we may also want to include the position that the wall is at.
-        StringBuffer buf = new StringBuffer("wall: "+(isVertical()?"V":"H"));
+        StringBuilder buf = new StringBuilder("wall: "+(isVertical()?"V":"H"));
         Iterator<BlockadeBoardPosition> it = positions_.iterator();
         while (it.hasNext()) {
             BlockadeBoardPosition pos = it.next();

@@ -111,7 +111,7 @@ public final class GoStone extends GamePiece implements GoMember
 
     @Override
     public String getDescription() {
-        StringBuffer sb = new StringBuffer( "" );
+        StringBuilder sb = new StringBuilder( "" );
         //sb.append( type_ );
         sb.append( (ownedByPlayer1_ ? "Black" : "White") + "stone");
         if (positionalScore_ != null)  {
@@ -127,7 +127,7 @@ public final class GoStone extends GamePiece implements GoMember
     @Override
     public String toString()
     {
-        StringBuffer sb = new StringBuffer( "" );
+        StringBuilder sb = new StringBuilder( "" );
         //sb.append( type_ );
         sb.append( ownedByPlayer1_ ? 'B' : 'W' );
 

@@ -229,7 +229,7 @@ public class OnlineGameServer  {
       * Implements OnlineGameServerInterface which is also implemented by GtpTesujiSoftGoServer.
       * not currently used, but I'm trying to have a consistent game server interface.
       *
-     public boolean handleCommand(String cmdLine, StringBuffer response) {
+     public boolean handleCommand(String cmdLine, StringBuilder response) {
          String[] cmdArray = StringUtils.tokenize(cmdLine);
          String cmdStr = cmdArray[0];
          boolean status = true;

@@ -16,7 +16,7 @@ import java.awt.*;
 /**
  * Presents info to the user about the currently moused over node in the tree.
  *
- * @author Barry Becker Date: Dec 24, 2006
+ * @author Barry Becker
  */
 class MoveDetailsPanel extends JPanel {
 
@@ -27,7 +27,7 @@ class MoveDetailsPanel extends JPanel {
     public MoveDetailsPanel() {
         setLayout(new BorderLayout());
         setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED),
-                             BorderFactory.createEmptyBorder(5,5,5,5)));
+                             BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
         infoLabel_ = new JLabel();
         leafDetailLabel_ = new JLabel();
@@ -49,7 +49,7 @@ class MoveDetailsPanel extends JPanel {
      */
     public void setText(AbstractTwoPlayerBoardViewer viewer, TwoPlayerMove m, SearchTreeNode lastNode) {
         TwoPlayerPieceRenderer renderer = (TwoPlayerPieceRenderer)viewer.getPieceRenderer();
-        TwoPlayerController controller = (TwoPlayerController)viewer.getController();   // ?? correct?
+        TwoPlayerController controller = (TwoPlayerController)viewer.getController();
         String passSuffix = m.isPassingMove() ? " (Pass)" : "";
         String entity = "Human's move";
         int numKids = lastNode.getChildMoves()==null? 0 : lastNode.getChildMoves().length;
@@ -63,15 +63,15 @@ class MoveDetailsPanel extends JPanel {
             entity = "Computer's move";
 
         StringBuilder sBuf = new StringBuilder("<html>");
-        sBuf.append("<font size=\"+1\" color=").append(ColorUtil.getHTMLColorFromColor(c)).
-                append(" bgcolor=#99AA99>").append(entity).append(passSuffix).append("</font><br>");
+        sBuf.append("<font size=\"+1\" color=\"").append(ColorUtil.getHTMLColorFromColor(c)).
+                append("\" bgcolor=\"#99AA99>\">").append(entity).append(passSuffix).append("</font><br>");
         sBuf.append("Static value = ").append(Util.formatNumber(m.getValue())).append("<br>");
 
         sBuf.append(lastNode.toString());
 
-        sBuf.append(" Number of descendants = ").append(numKids).append("<br>");
+        sBuf.append("<br>Number of descendants = ").append(numKids).append("<br>");
         if (m.isUrgent())
-            sBuf.append( "<font color=#FF6611>Urgent move!</font>");
+            sBuf.append( "<font color=\"#FF6611\">Urgent move!</font>");
         sBuf.append("</html>");
         infoLabel_.setText(sBuf.toString());
 

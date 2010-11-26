@@ -43,7 +43,7 @@ public class Card {
 
 
     public String toString() {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         for (int i = 0; i < attributes_.length; i++) {
             AttributeValue value = attributes_[i];
             buf.append(Attribute.values()[i] + ":" + value +"  ");

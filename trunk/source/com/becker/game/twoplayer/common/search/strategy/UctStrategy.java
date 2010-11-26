@@ -46,13 +46,14 @@ public class UctStrategy extends AbstractSearchStrategy {
         int numSimulations = 0;
         int maxSimulations = getOptions().getMonteCarloSearchOptions().getMaxSimulations();
         boolean interrupted = false;
+        //long maxPercentValue = maxSimulations * maxSimulations;
 
         UctNode root = new UctNode(lastMove);
 
         while (numSimulations < maxSimulations && !interrupted) {
             playSimulation(root, parent);
             numSimulations++;
-            percentDone_ = (100 * numSimulations) / maxSimulations;
+            percentDone_ = (100 *  numSimulations) / maxSimulations;
         }
         return root.bestNode.move;
     }
@@ -112,7 +113,7 @@ public class UctStrategy extends AbstractSearchStrategy {
      */
     private boolean playRandomGame(TwoPlayerMove move) {
 
-        return playRandomMove(move, searchable_.copy()); // searchable_); // searchable_.copy());
+        return playRandomMove(move, searchable_.copy());
     }
 
     /**
@@ -132,9 +133,7 @@ public class UctStrategy extends AbstractSearchStrategy {
         TwoPlayerMove randomMove = (TwoPlayerMove) moves.getRandomMove(topMovesToConsider);
 
         searchable.makeInternalMove(randomMove);
-        boolean result = playRandomMove(randomMove, searchable);
-        //searchable.undoInternalMove(randomMove);     // really do not want to do this for perf reasons.
-        return result;
+        return playRandomMove(randomMove, searchable);
     }
 
     /**

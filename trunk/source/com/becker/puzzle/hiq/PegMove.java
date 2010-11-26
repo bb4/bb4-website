@@ -63,7 +63,7 @@ public final class PegMove
     @Override
     public String toString()
     {
-        StringBuffer s = new StringBuffer();
+        StringBuilder s = new StringBuilder();
         s.append("from(").append(fromRow_).append(", ").append(fromCol_).append(") to (");
         s.append(toRow_).append(", ").append(toCol_).append(')');
         return s.toString();

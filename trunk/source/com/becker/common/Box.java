@@ -142,7 +142,7 @@ public class Box {
 
     @Override
     public String toString() {
-        StringBuffer buf = new StringBuffer("Box:");
+        StringBuilder buf = new StringBuilder("Box:");
         buf.append(topLeftCorner_);
         buf.append(" - ");
         buf.append(bottomRightCorner_);

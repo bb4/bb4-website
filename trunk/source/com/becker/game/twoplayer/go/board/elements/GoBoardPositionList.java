@@ -54,7 +54,7 @@ public class GoBoardPositionList extends ArrayList<GoBoardPosition>  {
      * @return string form of list of stones.
      */
     public String toString(String title) {
-        StringBuffer buf = new StringBuffer(title);
+        StringBuilder buf = new StringBuilder(title);
         buf.append("\n  ");
         for (GoBoardPosition stone : this) {
             buf.append(stone.toString()).append(", ");

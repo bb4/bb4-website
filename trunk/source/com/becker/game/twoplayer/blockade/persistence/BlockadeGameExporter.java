@@ -30,7 +30,7 @@ public class BlockadeGameExporter extends TwoPlayerGameExporter {
         // passes are not represented in SGF - so just skip it if the piece is null.
         if (m.getPiece() == null)
              return "[]";
-        StringBuffer buf = new StringBuffer("");
+        StringBuilder buf = new StringBuilder("");
         String player = "P2";
         if ( m.getPiece().isOwnedByPlayer1() )
         {

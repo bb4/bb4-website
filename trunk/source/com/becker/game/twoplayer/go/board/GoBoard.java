@@ -324,7 +324,7 @@ public final class GoBoard extends TwoPlayerBoard {
     public String toString() {
         int rows = getNumRows();
         int cols = getNumCols();
-        StringBuffer buf = new StringBuffer((rows + 2) * (cols + 2));
+        StringBuilder buf = new StringBuilder((rows + 2) * (cols + 2));
 
         buf.append("   ");
         for ( int j = 1; j <= rows; j++ ) {

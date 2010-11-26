@@ -104,6 +104,16 @@ public abstract class AbstractBruteSearchStrategy extends AbstractSearchStrategy
         return findBestMove(lastMove, depth, list, window, parent);
     }
 
+
+    /**
+     * Get the next move and increment the number of moves considered.
+     * @return next move in sorted generated next move list.
+     */
+    protected TwoPlayerMove getNextMove(MoveList list) {
+        movesConsidered_++;
+        return (TwoPlayerMove)list.remove(0);
+    }
+
     /**
      * Search more if quiescense is on, depth is negative, but not yet at -maxQiuiescentDepth
      * and the last moved played created an urgent situation.

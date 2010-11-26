@@ -152,7 +152,7 @@ public class Order
 
     public String toString()
     {
-        StringBuffer sb = new StringBuffer(50);
+        StringBuilder sb = new StringBuilder(50);
         sb.append("Target: "+destination_+'\n');
         sb.append("Fleet size: "+fleetSize_+'\n');
         sb.append("Location: "+currentLocation_+'\n');

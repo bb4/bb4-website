@@ -210,7 +210,7 @@ public class Scene {
     }
 
     public String print() {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         buf.append('\n').append(this.getText()).append('\n');
 
         if (choices_ != null) {

@@ -15,8 +15,7 @@ import java.awt.*;
  *
  *  @author Barry Becker
  */
-public class GameTreeCellRenderer extends DefaultTreeCellRenderer
-{
+public class GameTreeCellRenderer extends DefaultTreeCellRenderer {
 
     private Color p1Color_ = Color.green;
     private ColorMap colormap_ = null;
@@ -64,7 +63,7 @@ public class GameTreeCellRenderer extends DefaultTreeCellRenderer
         cellPanel_.setBackground( UIManager.getColor( "Tree.textBackground" ) );
         setOpaque( false );
         pieceLabel_.setOpaque( true );
-        pieceLabel_.setText( " " );
+        pieceLabel_.setText(" ");
         pieceLabel_.setBackground( p1Color_ );
 
         cellPanel_.setLayout( new FlowLayout() );

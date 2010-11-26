@@ -1,28 +1,27 @@
-package com.becker.game.twoplayer.go.ui;
+package com.becker.game.twoplayer.go.ui.gametree;
 
 import com.becker.common.ColorMap;
 import com.becker.common.util.Util;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.game.twoplayer.common.ui.gametree.GameTreeCellRenderer;
+import com.becker.game.twoplayer.go.ui.GoStoneRenderer;
 
 import javax.swing.*;
 import java.awt.*;
 
 /**
- *  this class defines how to draw entrees in the text game tree ui.
+ *  This class defines how to draw entrees in the textual game tree ui.
  *
  *  @author Barry Becker
  */
-final class GoTreeCellRenderer extends GameTreeCellRenderer
-{
+public final class GoTreeCellRenderer extends GameTreeCellRenderer {
 
     private static final Color ROW_BG_COLOR = new Color( 220, 210, 240 );
 
     private static final int STONE_IMG_SIZE = 11;
-    private static final int SWATCH_WIDTH = 75;
     private static final int TEXT_MARGIN = 4;
-    private static final Font FONT = new Font("Sans Serif", Font.PLAIN, 9);
+    private static final Font FONT = new Font("Sans Serif", Font.PLAIN, 10);
 
     /** the node we are going to render. */
     private SearchTreeNode node_;
@@ -32,17 +31,17 @@ final class GoTreeCellRenderer extends GameTreeCellRenderer
     /**
      *  Default Constructor.
      */
-    GoTreeCellRenderer()
-    {
+    public GoTreeCellRenderer() {
         setColorMap(COLORMAP);
+        this.setPreferredSize(new Dimension(1000, 16));
     }
 
     @Override
     public Component getTreeCellRendererComponent(
             JTree tree, Object value,
             boolean sel, boolean expanded,
-            boolean leaf, int row, boolean hasFocus1 )
-    {
+            boolean leaf, int row, boolean hasFocus1 ) {
+
         super.getTreeCellRendererComponent( tree, value, sel,
                 expanded, leaf, row, hasFocus1 );
 
@@ -57,14 +56,13 @@ final class GoTreeCellRenderer extends GameTreeCellRenderer
     }
 
     @Override
-    protected Color getBGColor( Object value )
-    {
+    protected Color getBGColor( Object value ) {
         return ROW_BG_COLOR;
     }
 
 
     /**
-      * Paints the value.  The background is filled based on selected.
+      * Paints the value.  The background is filled based on what was selected.
       */
     @Override
     public void paint(Graphics g) {
@@ -76,26 +74,35 @@ final class GoTreeCellRenderer extends GameTreeCellRenderer
             return;
         }
 
-        double inheritedValue = move.getInheritedValue();
-        double value = move.getValue();
-        if (move.isPlayer1())  {
+        drawStoneIcon(move.isPlayer1(), g2);
+        drawMoveText(move, g2);
+    }
+
+    /**
+     * Draw a nice icon to show whos move it corresponds to
+     */
+    private void drawStoneIcon(boolean isPlayer1, Graphics2D g2) {
+        if (isPlayer1)  {
             g2.drawImage(GoStoneRenderer.BLACK_STONE_IMG.getImage(), 1, 0, STONE_IMG_SIZE, STONE_IMG_SIZE, null);
         } else {
             g2.drawImage(GoStoneRenderer.WHITE_STONE_IMG.getImage(), 1, 0, STONE_IMG_SIZE, STONE_IMG_SIZE, null);
         }
+    }
 
-        Color c = getColorMap().getColorForValue(inheritedValue);
+    /**
+     * Draw the inhertied value, the base value, and the move(with its attributes) to the right of the icon.
+     */
+    private void drawMoveText(TwoPlayerMove move, Graphics2D g2) {
 
-        g2.setColor(c);
-        g2.fillRect(TEXT_MARGIN + STONE_IMG_SIZE, 1, SWATCH_WIDTH, 9);
-        c = getColorMap().getColorForValue(value);
-        g2.setColor(c);
-        g2.fillRect(2 * TEXT_MARGIN + STONE_IMG_SIZE + SWATCH_WIDTH, 1, SWATCH_WIDTH, 9);
+        int inheritedValue = move.getInheritedValue();
+        int value = move.getValue();
 
-        g2.setColor(this.getForeground());
         g2.setFont(FONT);
-        String inhrtdValText = "inhrtd=" + Util.formatNumber(inheritedValue);
-        String valText = "val=" + Util.formatNumber(move.getValue()) ;
+
+        int end = TEXT_MARGIN + STONE_IMG_SIZE;
+        end = drawStringValue("inhrtd=", inheritedValue, end, g2);
+        end = drawStringValue("val=", value, end, g2);
+
         StringBuilder bldr = new StringBuilder();
         if (node_.isPruned()) {
             bldr.append(" *PRUNED");
@@ -103,13 +110,23 @@ final class GoTreeCellRenderer extends GameTreeCellRenderer
             int numKids = node_.getChildMoves()==null? 0 : node_.getChildMoves().length;
             bldr.append(" kids=").append(numKids);
             bldr.append(" a=").append(node_.toString());
+            bldr.append(" ").append(node_.attributes);
         }
 
-        g2.drawString(inhrtdValText, TEXT_MARGIN + STONE_IMG_SIZE + 2, 8);
-        g2.drawString(valText, 2 * TEXT_MARGIN + STONE_IMG_SIZE + SWATCH_WIDTH + 2, 8);
-        g2.drawString(bldr.toString(), 3 * TEXT_MARGIN + STONE_IMG_SIZE + 2 * SWATCH_WIDTH, 8);
+        g2.drawString(bldr.toString(), end, 8);
     }
 
+    private int drawStringValue(String prefix, int value, int offset, Graphics2D g2) {
+
+        Color c = getColorMap().getColorForValue(value);
+        String text = prefix + Util.formatNumber(value);
+        g2.setColor(c);
+        int width = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+        g2.fillRect(offset, 1, width + 2 * TEXT_MARGIN, 10);
+        g2.setColor(this.getForeground());
+        g2.drawString(text, offset + TEXT_MARGIN, 9);
+        return offset + width + 3 * TEXT_MARGIN;
+    }
 
     private void drawCellBackground(Graphics g) {
         Color bColor;
@@ -123,17 +140,16 @@ final class GoTreeCellRenderer extends GameTreeCellRenderer
         }
 
         int imageOffset;
-        if(bColor != null) {
+        if (bColor != null) {
             //Icon currentI = getIcon();
 
             imageOffset = 0;
             g.setColor(bColor);
-            if(getComponentOrientation().isLeftToRight()) {
-                g.fillRect(imageOffset, 0, getWidth() - imageOffset,
-                   getHeight());
+            // if I don't  add 500, then some of the text does not have a bg.
+            if (getComponentOrientation().isLeftToRight()) {
+                g.fillRect(imageOffset, 0, getWidth() - imageOffset, getHeight());
             } else {
-                g.fillRect(0, 0, getWidth() - imageOffset,
-                   getHeight());
+                g.fillRect(0, 0, getWidth() - imageOffset, getHeight());
             }
         }
     }

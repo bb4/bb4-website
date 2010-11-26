@@ -22,7 +22,7 @@ final class GoInfoPanel extends TwoPlayerInfoPanel implements GameChangedListene
 
     // do not initialize these to null.
     // if you do, things will not work. With the 1.3.1_02 compiler, they will get initialized to values when
-    // you call createCustomInfoPanel from the super class constructor, but then they will then get initiallized
+    // you call createCustomInfoPanel from the super class constructor, but then they will then get initialized
     // to null when it is done calling the super class constructor and then calls the constructor for this class.
     private JLabel p1CapturesLabel_;
     private JLabel p2CapturesLabel_;
@@ -32,22 +32,21 @@ final class GoInfoPanel extends TwoPlayerInfoPanel implements GameChangedListene
 
     private JPanel legendPanel_;
 
-    //Construct the GoInfoPael
-    GoInfoPanel( GameController controller )
-    {
+    /**
+     * Constructor
+     */
+    GoInfoPanel( GameController controller ) {
         super( controller );
     }
 
     @Override
-    protected String getTitleText()
-    {
+    protected String getTitleText() {
         return GameContext.getLabel("GO_INFO");
     }
 
 
     @Override
-    protected void createSubPanels()
-    {
+    protected void createSubPanels() {
         super.createSubPanels();
 
         legendPanel_ = createLegendPanel();
@@ -61,8 +60,8 @@ final class GoInfoPanel extends TwoPlayerInfoPanel implements GameChangedListene
      * captures and territory estimates
      */
     @Override
-    protected JPanel createCustomInfoPanel()
-    {
+    protected JPanel createCustomInfoPanel() {
+
         JPanel customPanel = createPanel();
         customPanel.setLayout( new BoxLayout( customPanel, BoxLayout.Y_AXIS ) );
 
@@ -103,8 +102,8 @@ final class GoInfoPanel extends TwoPlayerInfoPanel implements GameChangedListene
      * update the info with controller stats when the game changes.
      */
     @Override
-    public void gameChanged( GameChangedEvent gce )
-    {
+    public void gameChanged( GameChangedEvent gce ) {
+        
         super.gameChanged( gce );
         GoController goController = (GoController) controller_;
 
