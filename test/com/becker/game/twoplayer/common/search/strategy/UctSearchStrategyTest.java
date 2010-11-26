@@ -1,10 +1,10 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
+import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.examples.EvaluationPerspective;
-import com.becker.game.twoplayer.common.search.examples.FourLevelGameTreeExample;
-import com.becker.game.twoplayer.common.search.examples.LadderQuiescentExample;
-import com.becker.game.twoplayer.common.search.examples.TwoLevelQuiescentExample;
+import com.becker.game.twoplayer.common.search.options.BruteSearchOptions;
+import com.becker.game.twoplayer.common.search.options.MonteCarloSearchOptions;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**
@@ -12,11 +12,11 @@ import com.becker.optimization.parameter.ParameterArray;
  * 
  * @author Barry Becker
  */
-public class MiniMaxSearchStrategyTest extends AbstractBruteSearchStrategyTst {
+public class UctSearchStrategyTest extends MonteCarloSearchStrategyTst {
 
     @Override
     protected SearchStrategy createSearchStrategy(Searchable searchable, ParameterArray weights) {
-        return new MiniMaxStrategy(searchable, weights);
+        return new UctStrategy(searchable, weights);
     }
 
     @Override

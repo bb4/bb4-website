@@ -3,7 +3,7 @@ package com.becker.game.twoplayer.go.ui;
 import com.becker.common.ColorMap;
 import com.becker.game.common.Board;
 import com.becker.game.common.GameContext;
-import com.becker.game.common.GameControllerInterface;
+import com.becker.game.common.IGameController;
 import com.becker.game.common.ui.GameBoardRenderer;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.ui.AbstractTwoPlayerBoardViewer;
@@ -135,7 +135,7 @@ public class GoBoardRenderer extends TwoPlayerBoardRenderer
      * first draw borders for the groups in the appropriate color, then draw the pieces for both players.
      */
     @Override
-    protected void drawMarkers( GameControllerInterface controller, Graphics2D g2 )
+    protected void drawMarkers( IGameController controller, Graphics2D g2 )
     {
         GoBoard board = (GoBoard)controller.getBoard();
 
@@ -169,7 +169,7 @@ public class GoBoardRenderer extends TwoPlayerBoardRenderer
     /**
      * draw markers for the next moves (if they have been specified)
      */
-    void drawNextMoveMarkers(GameControllerInterface controller, Graphics2D g2) {
+    void drawNextMoveMarkers(IGameController controller, Graphics2D g2) {
 
         TwoPlayerMove[] nextMoves = ((AbstractTwoPlayerBoardViewer) controller.getViewer()).getNextMoves();
         Board board = controller.getBoard();

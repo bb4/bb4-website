@@ -1,14 +1,11 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
-import com.becker.game.common.Move;
 import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.optimization.parameter.ParameterArray;
-
-import java.util.LinkedList;
 
 /**
  *  Implementation of Upper Confidedence Tree (UCT) search strategy.
@@ -50,7 +47,7 @@ public class UctStrategy extends AbstractSearchStrategy {
         int maxSimulations = getOptions().getMonteCarloSearchOptions().getMaxSimulations();
         boolean interrupted = false;
 
-        UctNode root = new UctNode(lastMove, 0);
+        UctNode root = new UctNode(lastMove);
 
         while (numSimulations < maxSimulations && !interrupted) {
             playSimulation(root, parent);
@@ -67,17 +64,17 @@ public class UctStrategy extends AbstractSearchStrategy {
             player1Wins = playRandomGame(lastMoveNode.move);
         }
         else {
-            if (lastMoveNode.children == null) {
-                createChildren(lastMoveNode);
+            if (!lastMoveNode.hasChildren()) {
+                lastMoveNode.addChildren(searchable_.generateMoves(lastMoveNode.move, weights_, true));
             }
             UctNode nextNode = uctSelect(lastMoveNode);
 
             // may be null if there are no move valid moves.
             // this may be happening a little more than expected.
 
-            if (nextNode != null && parent != null) {
+            if (nextNode != null) {
                 SearchTreeNode child = addNodeToTree(parent, nextNode);
-                
+
                 searchable_.makeInternalMove(nextNode.move);
                 //System.out.println("before searchable_=" + searchable_.getMoveList());
                 player1Wins = playSimulation(nextNode, child);
@@ -94,34 +91,21 @@ public class UctStrategy extends AbstractSearchStrategy {
     }
 
     /**
-     * Selects the best child of node.
-     * @return the best child of node. May be null if there are no next moves.
+     * Selects the best child of parentNode.
+     * @return the best child of parentNode. May be null if there are no next moves.
      */
-    private UctNode uctSelect(UctNode node) {
+    private UctNode uctSelect(UctNode parentNode) {
         double bestUct = -1.0;
         UctNode selected = null;
 
-        for (UctNode child : node.children) {
-            double uctValue = child.calculateUctValue(exploreExploitRatio, node.numVisits);
+        for (UctNode child : parentNode.getChildren()) {
+            double uctValue = child.calculateUctValue(exploreExploitRatio, parentNode.numVisits);
             if (uctValue > bestUct) {
                 bestUct = uctValue;
                 selected = child;
             }
         }
         return selected;
-    }
-
-    /**
-     * Add the children to the node.
-     * @param node parent node to add children to.
-     */
-    private void createChildren(UctNode node) {
-        node.children = new LinkedList<UctNode>();
-        MoveList moves = searchable_.generateMoves(node.move, weights_, true);
-        int i=0;
-        for (Move m : moves) {
-             node.children.add(new UctNode((TwoPlayerMove) m, i++));
-        }
     }
 
     /**
@@ -145,6 +129,9 @@ public class UctStrategy extends AbstractSearchStrategy {
             return move.getValue() > 0;
         }
         MoveList moves = searchable.generateMoves(move, weights_, true);
+        if (moves.size() == 0) {
+            return move.getValue() > 0;
+        }
         TwoPlayerMove randomMove = (TwoPlayerMove) moves.getRandomMove(topMovesToConsider);
 
         searchable.makeInternalMove(randomMove);
@@ -160,11 +147,13 @@ public class UctStrategy extends AbstractSearchStrategy {
      */
     protected SearchTreeNode addNodeToTree(SearchTreeNode parent, UctNode node ) {
 
+        if (parent == null) return null;
         SearchTreeNode alreadyChild = parent.hasChild(node.move);
         if (alreadyChild != null)  {
             alreadyChild.attributes = node.getAttributes();
             return alreadyChild;
         }
+        movesConsidered_++;
         return addNodeToTree(parent, node.move, node.getAttributes());
     }
 }

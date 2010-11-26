@@ -10,7 +10,7 @@ import com.becker.optimization.parameter.ParameterArray;
  * 
  * @author Barry Becker
  */
-public class NegaMaxSearchStrategyTest extends AbstractSearchStrategyTst {
+public class NegaMaxSearchStrategyTest extends AbstractBruteSearchStrategyTst {
 
     @Override
     protected SearchStrategy createSearchStrategy(Searchable searchable, ParameterArray weights) {

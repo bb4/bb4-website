@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.chess.ui;
 
-import com.becker.game.common.GameControllerInterface;
+import com.becker.game.common.IGameController;
 import com.becker.game.common.ui.GameBoardRenderer;
 import com.becker.game.twoplayer.checkers.ui.CheckersBoardRenderer;
 
@@ -35,7 +35,7 @@ public class ChessBoardRenderer extends CheckersBoardRenderer
     }
 
     @Override
-    protected void drawLastMoveMarker(Graphics2D g2, GameControllerInterface controller)
+    protected void drawLastMoveMarker(Graphics2D g2, IGameController controller)
     {}
 }
 

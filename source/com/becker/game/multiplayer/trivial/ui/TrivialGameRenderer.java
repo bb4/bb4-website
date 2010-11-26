@@ -1,7 +1,7 @@
 package com.becker.game.multiplayer.trivial.ui;
 
 import com.becker.game.common.Board;
-import com.becker.game.common.GameControllerInterface;
+import com.becker.game.common.IGameController;
 import com.becker.game.common.ui.GameBoardRenderer;
 import com.becker.game.multiplayer.common.MultiGamePlayer;
 import com.becker.game.multiplayer.common.MultiPlayerMarker;
@@ -57,7 +57,7 @@ public class TrivialGameRenderer extends MultiGameBoardRenderer
      * Draw the pieces and possibly other game markers for both players.
      */
     @Override
-    protected void drawMarkers( GameControllerInterface controller, Graphics2D g2 )
+    protected void drawMarkers( IGameController controller, Graphics2D g2 )
     {
         // draw a backround circle for the player whose turn it is
         MultiGamePlayer player = (MultiGamePlayer)controller.getCurrentPlayer();

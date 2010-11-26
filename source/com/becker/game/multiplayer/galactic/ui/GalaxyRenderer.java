@@ -1,7 +1,7 @@
 package com.becker.game.multiplayer.galactic.ui;
 
 import com.becker.common.Location;
-import com.becker.game.common.GameControllerInterface;
+import com.becker.game.common.IGameController;
 import com.becker.game.common.Player;
 import com.becker.game.common.PlayerList;
 import com.becker.game.common.ui.GameBoardRenderer;
@@ -52,7 +52,7 @@ public class GalaxyRenderer extends MultiGameBoardRenderer
      * Draw the pieces and possibly other game markers for both players.
      */
     @Override
-    protected void drawMarkers(GameControllerInterface controller, Graphics2D g2 )
+    protected void drawMarkers(IGameController controller, Graphics2D g2 )
     {
         // before we draw the planets, draw the fleets and their paths
         PlayerList players = controller.getPlayers();

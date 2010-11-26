@@ -1,6 +1,6 @@
 package com.becker.game.multiplayer.set.ui;
 
-import com.becker.game.common.GameControllerInterface;
+import com.becker.game.common.IGameController;
 import com.becker.game.common.ui.GameBoardRenderer;
 import com.becker.game.multiplayer.common.ui.MultiGameBoardRenderer;
 import com.becker.game.multiplayer.set.Card;
@@ -77,7 +77,7 @@ public class SetGameRenderer extends MultiGameBoardRenderer
     /**
      * @return  the card that the mouse is currently over (at x, y coords)
      */
-    public Card findCardOver(GameControllerInterface controller, int x, int y, int panelWidth, int panelHeight) {
+    public Card findCardOver(IGameController controller, int x, int y, int panelWidth, int panelHeight) {
         SetController c = (SetController)controller;
 
         int numCards = c.getNumCardsShowing();
@@ -109,7 +109,7 @@ public class SetGameRenderer extends MultiGameBoardRenderer
      * This renders the current state of the Board to the screen.
      */
     @Override
-    public void render( Graphics g, GameControllerInterface controller, int panelWidth, int panelHeight )
+    public void render( Graphics g, IGameController controller, int panelWidth, int panelHeight )
     {
         // erase what's there and redraw.
         SetController c = (SetController)controller;

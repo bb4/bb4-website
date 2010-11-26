@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.common.ui;
 
-import com.becker.game.common.GameControllerInterface;
+import com.becker.game.common.IGameController;
 import com.becker.game.common.ui.GameBoardRenderer;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 
@@ -24,7 +24,7 @@ public abstract class TwoPlayerBoardRenderer extends GameBoardRenderer
     {}
 
     @Override
-    protected void drawLastMoveMarker(Graphics2D g2, GameControllerInterface controller)
+    protected void drawLastMoveMarker(Graphics2D g2, IGameController controller)
     {
         TwoPlayerMove last = (TwoPlayerMove)controller.getBoard().getMoveList().getLastMove();
         // this draws a small indicator on the last move to show where it was played

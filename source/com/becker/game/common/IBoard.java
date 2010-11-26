@@ -13,7 +13,7 @@ package com.becker.game.common;
  * @see Board for the base implementation of this interface
  * @author Barry Becker
  */
-public interface BoardInterface {
+public interface IBoard {
 
     /**
      *  Reset the board to its initial state.
@@ -80,5 +80,5 @@ public interface BoardInterface {
      * We should be able to create a deep copy of ourselves
      * @return deep copy of the board.
      */
-    BoardInterface copy();
+    IBoard copy();
 }

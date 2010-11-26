@@ -4,7 +4,7 @@ import com.becker.common.Location;
 import com.becker.game.common.Board;
 import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GameContext;
-import com.becker.game.common.GameControllerInterface;
+import com.becker.game.common.IGameController;
 import com.becker.game.common.ui.GameBoardRenderer;
 import com.becker.game.twoplayer.blockade.BlockadeBoard;
 import com.becker.game.twoplayer.blockade.BlockadeBoardPosition;
@@ -145,7 +145,7 @@ public class BlockadeBoardRenderer extends TwoPlayerBoardRenderer
 
 
     @Override
-    protected void drawMarkers( GameControllerInterface controller, Graphics2D g2 )
+    protected void drawMarkers( IGameController controller, Graphics2D g2 )
     {
         BlockadeBoard board = (BlockadeBoard)controller.getBoard();
         int nrows = board.getNumRows();
