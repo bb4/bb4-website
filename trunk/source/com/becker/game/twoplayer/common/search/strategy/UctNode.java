@@ -1,8 +1,11 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
+import com.becker.game.common.Move;
+import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.tree.NodeAttributes;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -14,9 +17,6 @@ import java.util.Random;
  */
 public class UctNode {
 
-    /** The number of times we have won a random game that starts from this node. */
-    public int numWins;
-
     /** The number of times we have visited this node in the tree. */
     public int numVisits;
 
@@ -26,16 +26,16 @@ public class UctNode {
     /** current favorite among child nodes. */
     public UctNode bestNode;
 
-    /** List of childe nodes (moves)  */
-    public List<UctNode> children;
+    /** The number of times we have won a random game that starts from this node. */
+    private int numWins;
 
-    /** We are the childIndexth child of our parent. */
-    public byte childIndex;
+    /** List of childe nodes (moves)  */
+    private List<UctNode> children;
 
     /**
      * not sure what this is for. See http://senseis.xmp.net/?UCT. Make a param.
      * Seems to make the exploreExploit constant balance at 1.
-      */
+     */
     private static final double DENOM_CONST = 5.0;
 
     /** Some big number. */
@@ -47,11 +47,9 @@ public class UctNode {
     /**
      * Constructor.
      * @param move the move we represent
-     * @parma i child Index of parent node.
      */
-    public UctNode(TwoPlayerMove move, int i) {
+    public UctNode(TwoPlayerMove move) {
         this.move = move;
-        this.childIndex = (byte)i;
     }
 
     /**
@@ -68,14 +66,34 @@ public class UctNode {
      * @return ratio of wins to visits.
      */
     public double getWinRate() {
-        return (double) numWins / numVisits;
+        return (numVisits == 0) ? 0 : (double)numWins/ (double)numVisits;
+    }
+
+    public List<UctNode> getChildren() {
+        return children;
+    }
+
+    public boolean hasChildren() {
+        return children != null;
+    }
+
+    /**
+     * Add the children to the node.
+     * @param moves child moves to add.
+     */
+    public void addChildren(MoveList moves) {
+
+        children = new LinkedList<UctNode>();
+        for (Move m : moves) {
+            children.add(new UctNode((TwoPlayerMove) m));
+        }
     }
 
     /**
      * Set the bestNode to the child with the highest winrate
      */
     public void setBestNode() {
-        if (children != null)  {
+        if (hasChildren())  {
             for (UctNode child : children) {
                 if (bestNode == null || child.getWinRate() > bestNode.getWinRate()) {
                     bestNode = child;
@@ -86,6 +104,9 @@ public class UctNode {
 
     /**
      * This is the secret sauce at the core of the UCT algorithm.
+     * See http://www-958.ibm.com/software/data/cognos/manyeyes/visualizations/uct-search-parameters
+     * For analysis of effect of parameters on UCT value returned.
+     *
      * @param exploreExploitRatio bigger values mean more exploration as opposted to exploitation of known good moves.
      * @param parentVisits the number of times our parent node has been visited.
      * @return the uct value which is somewhat related to the winRate
@@ -93,10 +114,9 @@ public class UctNode {
      */
     public double calculateUctValue(double exploreExploitRatio, int parentVisits) {
         if (numVisits > 0) {
-            double v = getWinRate() + exploreExploitRatio * Math.sqrt(Math.log(parentVisits) / (DENOM_CONST * numVisits));
+            return getWinRate() + exploreExploitRatio * Math.sqrt(Math.log(parentVisits) / (DENOM_CONST * numVisits));
             //System.out.println("wr="+ getWinRate() +
             //        "+"+ exploreExploitRatio+" * " + Math.sqrt(Math.log(parentVisits)) + "/" +(DENOM_CONST * numVisits) + " =" + v);
-            return v;
         }
         else {
             // always play a random unexplored move first.

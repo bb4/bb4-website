@@ -18,7 +18,7 @@ import java.util.List;
  *
  * @author Barry Becker
  */
-public interface GameControllerInterface
+public interface IGameController
 {
     /**
      * @return the board representation object.

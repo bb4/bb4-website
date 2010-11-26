@@ -1,6 +1,6 @@
 package com.becker.game.common.ui;
 
-import com.becker.game.common.GameControllerInterface;
+import com.becker.game.common.IGameController;
 import com.becker.game.common.Move;
 
 import java.awt.*;
@@ -16,7 +16,7 @@ public final class GameChangedEvent extends AWTEvent
 {
     private static final int GAME_CHANGED_EVENT = AWTEvent.RESERVED_ID_MAX + 4003;
     private final Move move_;
-    private final GameControllerInterface controller_;
+    private final IGameController controller_;
     private static final long serialVersionUID = 0L;
 
     /**
@@ -24,7 +24,7 @@ public final class GameChangedEvent extends AWTEvent
      * @param mv the most recently played move
      * @param controller
      */
-    public GameChangedEvent(Move mv, GameControllerInterface controller, Object source )
+    public GameChangedEvent(Move mv, IGameController controller, Object source )
     {
         super(source, GAME_CHANGED_EVENT );
         move_ = mv;
@@ -34,7 +34,7 @@ public final class GameChangedEvent extends AWTEvent
     /**
      * @return the game controller for the viewer that sent the evernt.
      */
-    public GameControllerInterface getController()
+    public IGameController getController()
     {
         return controller_;
     }

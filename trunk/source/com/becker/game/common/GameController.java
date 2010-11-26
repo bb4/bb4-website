@@ -11,7 +11,7 @@ import com.becker.game.common.online.IServerConnection;
  *  @author Barry Becker
  */
 public abstract class GameController
-           implements GameControllerInterface {
+           implements IGameController {
 
     /** the board has the layout of the pieces. */
     protected Board board_;

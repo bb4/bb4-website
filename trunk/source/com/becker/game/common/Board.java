@@ -6,7 +6,7 @@ import com.becker.common.Location;
 /**
  *  the Board describes the physical layout of the game.
  *  It is an abstract class that provides a common implementation for many of the
- *  methods in the BoardInterface.
+ *  methods in the IBoard.
  *  Assumes an M*N grid.
  *  Legal positions are [1, numRows_][1, numCols_]
  *
@@ -18,7 +18,7 @@ import com.becker.common.Location;
  *
  *  @author Barry Becker
  */
-public abstract class Board implements BoardInterface {
+public abstract class Board implements IBoard {
 
     /** the internal data structures representing the game board and the positions on it. */
     protected BoardPosition positions_[][] = null;

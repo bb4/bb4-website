@@ -79,7 +79,6 @@ public abstract class AbstractBruteSearchStrategy extends AbstractSearchStrategy
                                 int depth, SearchWindow window, SearchTreeNode parent) {
 
         boolean done = searchable_.done( lastMove, false);
-        //System.out.print(getIndent(depth) + window);
         if ( depth <= 0 || done ) {
             if (doQuiescentSearch(depth, done, lastMove)) {
                 return quiescentSearch(lastMove, depth, window, parent);
@@ -87,11 +86,9 @@ public abstract class AbstractBruteSearchStrategy extends AbstractSearchStrategy
             else {
                 int sign = fromPlayer1sPerspective(lastMove) ? 1 : -1;
                 lastMove.setInheritedValue(sign * lastMove.getValue());
-                //System.out.println("  leaf=" + lastMove.getValue());
                 return lastMove;
             }
         }
-        //System.out.println("");
 
         // generate a list of all (or bestPercent) candidate next moves, and pick the best one
         MoveList list = searchable_.generateMoves(lastMove,  weights_, true);

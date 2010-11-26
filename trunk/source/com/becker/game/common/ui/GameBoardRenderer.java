@@ -4,7 +4,7 @@ import com.becker.common.Location;
 import com.becker.game.common.Board;
 import com.becker.game.common.BoardPosition;
 import com.becker.game.common.GameContext;
-import com.becker.game.common.GameControllerInterface;
+import com.becker.game.common.IGameController;
 import com.becker.ui.themes.BarryTheme;
 
 import java.awt.*;
@@ -229,14 +229,14 @@ public abstract class GameBoardRenderer {
      * Draw some indication of where the last move was made.
      * The default is to show nothing.
      */
-    protected void drawLastMoveMarker(Graphics2D g2, GameControllerInterface controller)
+    protected void drawLastMoveMarker(Graphics2D g2, IGameController controller)
     {}
 
 
     /**
      * Draw the pieces and possibly other game markers for both players.
      */
-    protected void drawMarkers( GameControllerInterface controller, Graphics2D g2 )
+    protected void drawMarkers( IGameController controller, Graphics2D g2 )
     {
         Board board = controller.getBoard();
         int nrows = board.getNumRows();
@@ -252,7 +252,7 @@ public abstract class GameBoardRenderer {
     /**
      * This renders the current state of the Board to the screen.
      */
-    public void render( Graphics g, GameControllerInterface controller, int panelWidth, int panelHeight )
+    public void render( Graphics g, IGameController controller, int panelWidth, int panelHeight )
     {
         Board board = controller.getBoard();
         cellSize_ = calcCellSize( board, panelWidth, panelHeight );

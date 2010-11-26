@@ -30,13 +30,11 @@ public class MoveList extends LinkedList<Move> {
     /**
      *  @return the player that goes first.
      */
-    public Move getFirstMove()
-    {
+    public Move getFirstMove() {
         return get(0);
     }
 
-    public Move getLastMove()
-    {
+    public Move getLastMove() {
         if ( isEmpty() ) {
             return null;
         }
@@ -46,8 +44,7 @@ public class MoveList extends LinkedList<Move> {
     /**
      * @return  number of active players.
      */
-    public int getNumMoves()
-    {
+    public int getNumMoves() {
         return size();
     }
 
