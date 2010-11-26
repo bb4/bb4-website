@@ -45,7 +45,7 @@ public abstract class Board implements IBoard {
         numRows_ = b.getNumRows();
         numCols_ = b.getNumCols();
 
-        b.moveList_ = new MoveList(moveList_);
+        moveList_ = new MoveList(b.moveList_);
 
         positions_ = createBoard();
         for ( int i = 1; i <= getNumRows(); i++ )   {

@@ -71,14 +71,11 @@ public class UctStrategy extends AbstractSearchStrategy {
 
             // may be null if there are no move valid moves.
             // this may be happening a little more than expected.
-
             if (nextNode != null) {
                 SearchTreeNode child = addNodeToTree(parent, nextNode);
 
                 searchable_.makeInternalMove(nextNode.move);
-                //System.out.println("before searchable_=" + searchable_.getMoveList());
                 player1Wins = playSimulation(nextNode, child);
-                //System.out.println("after searchable_=" + searchable_.getMoveList());
                 searchable_.undoInternalMove(nextNode.move);
             }
         }
@@ -115,7 +112,7 @@ public class UctStrategy extends AbstractSearchStrategy {
      */
     private boolean playRandomGame(TwoPlayerMove move) {
 
-        return playRandomMove(move, searchable_); // searchable_.copy());
+        return playRandomMove(move, searchable_.copy()); // searchable_); // searchable_.copy());
     }
 
     /**
@@ -136,7 +133,7 @@ public class UctStrategy extends AbstractSearchStrategy {
 
         searchable.makeInternalMove(randomMove);
         boolean result = playRandomMove(randomMove, searchable);
-        searchable.undoInternalMove(randomMove);     // really do not want to do this for perf reasons.
+        //searchable.undoInternalMove(randomMove);     // really do not want to do this for perf reasons.
         return result;
     }
 

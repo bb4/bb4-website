@@ -43,8 +43,7 @@ public class NativeRenderTest {
                 }
             }
         }
-        
-        
+                
         graphicsDevice.setDisplayMode(originalDisplayMode);
         graphicsDevice.setFullScreenWindow(null);
         System.exit(0);

@@ -38,7 +38,7 @@ public abstract class TwoPlayerSearchable implements Searchable {
     }
 
     public TwoPlayerSearchable(TwoPlayerSearchable searchable) {
-       this((TwoPlayerBoard)searchable.getBoard().copy(), (PlayerList)searchable.players_.clone(), searchable.options_);
+        this((TwoPlayerBoard)searchable.getBoard().copy(), (PlayerList)searchable.players_.clone(), searchable.options_);
     }
 
     public TwoPlayerBoard getBoard() {

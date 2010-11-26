@@ -37,7 +37,7 @@ public final class ZobristHash {
      */
     public ZobristHash(TwoPlayerBoard board) {
         RANDOM = new Random(0);
-        GameContext.log(0, "***  created new ZOBRIST HASH  ***");
+        GameContext.log(2, "***  created new ZOBRIST HASH  ***");
         this.board = board;
         initialize();
     }
