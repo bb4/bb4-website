@@ -26,13 +26,13 @@ public final class GiveChange
     /** 
      * private constructor for class with all static methods. 
      */
-    private GiveChange() {};
+    private GiveChange() {}
 
     /**
      *Get a number from the user.
      *@param max the maximum number allowed to be entered.
      * @return a number of cents between 0 and max. 
-     * @throws java.io.IOException
+     * @throws IOException
      */
     private static long getAmount(long max) throws IOException
     {
