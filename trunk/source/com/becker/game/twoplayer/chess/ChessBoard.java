@@ -28,6 +28,16 @@ public class ChessBoard extends CheckersBoard
     public ChessBoard()
     {}
 
+    /** Copy constructor */
+    public ChessBoard(ChessBoard b) {
+        super(b);
+    }
+
+    public ChessBoard copy() {
+        return new ChessBoard(this);
+    }
+
+
     /**
      *  reset the board to its initial state.
      */
