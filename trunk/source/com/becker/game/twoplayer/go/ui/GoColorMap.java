@@ -8,7 +8,7 @@ import java.awt.*;
  * A colormap for coloring the groups according to how healthy they are.
  * Blue will be healthy, while red will be near dead.
  *
- * @author Barry Becker Date: Oct 29, 2006
+ * @author Barry Becker
  */
 class GoColorMap extends ColorMap {
 
