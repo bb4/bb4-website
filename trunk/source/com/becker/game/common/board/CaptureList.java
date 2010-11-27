@@ -34,8 +34,7 @@ public class CaptureList extends LinkedList<BoardPosition>
      * @param b the game board.
      * @param remove if true then remove the pieces, else restore them
      */
-    private void modifyCaptures( Board b, boolean remove )
-    {
+    private void modifyCaptures( Board b, boolean remove ) {
         for (BoardPosition capture : this) {
             BoardPosition pos = b.getPosition(capture.getRow(), capture.getCol());
             assert pos != null : "Captured position was null " + capture;
@@ -50,8 +49,7 @@ public class CaptureList extends LinkedList<BoardPosition>
     /**
      *  @return true if the piece was already captured
      */
-    public boolean alreadyCaptured( BoardPosition p )
-    {
+    public boolean alreadyCaptured( BoardPosition p ) {
         for (Object o : this) {
             BoardPosition capture = (BoardPosition) o;
             if (capture.getRow() == p.getRow() &&
@@ -65,8 +63,7 @@ public class CaptureList extends LinkedList<BoardPosition>
     /**
      * @return a deep copy of the capture list.
      */
-    public CaptureList copy()
-    {
+    public CaptureList copy()  {
         Iterator it = this.iterator();
         CaptureList newList = new CaptureList();
         while ( it.hasNext() ) {
@@ -80,8 +77,7 @@ public class CaptureList extends LinkedList<BoardPosition>
      * Produces a string representation of the list of captured pieces.
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         String s = " These piece(s) were captured by this move:\n";
         for (BoardPosition p : this) {
             s += '(' + p.toString() + "),";

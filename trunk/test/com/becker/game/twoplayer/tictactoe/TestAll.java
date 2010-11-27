@@ -10,14 +10,16 @@ import junit.framework.TestSuite;
  *
  * @author Barry Becker
  */
-public class TestAll extends TestCase {
+public class TestAll  {
 
+
+    private TestAll() {}
 
     public static Test suite() {
 
         TestSuite suite =  new TestSuite("All TicTacToe Tests");
 
-        suite.addTest(MoveEvaluationTest.suite());
+        suite.addTestSuite(MoveEvaluationTest.class);
         suite.addTestSuite(TicTacToeSearchableTest.class);
         suite.addTestSuite(MiniMaxStrategyTest.class);
         suite.addTestSuite(NegaMaxStrategyTest.class);

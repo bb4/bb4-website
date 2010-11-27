@@ -1,9 +1,6 @@
 package com.becker.game.twoplayer.go;
 
-import com.becker.game.twoplayer.go.board.TestAllBoard;
-import com.becker.game.twoplayer.go.board.analysis.TestStringShapeAnalyzer;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
@@ -11,14 +8,16 @@ import junit.framework.TestSuite;
  *
  * @author Barry Becker
  */
-public class TestAll extends TestCase {
+public class TestAll {
 
+    private TestAll() {}
 
     public static Test suite() {
 
         TestSuite suite =  new TestSuite("All Go Tests");
 
-        suite.addTest(TestAllBoard.suite());
+        // mostly integration tests.
+        suite.addTest(com.becker.game.twoplayer.go.board.TestAll.suite());
         suite.addTestSuite(TestScoring.class);
         ////suite.addTestSuite(TestLifeAndDeath.class);
 

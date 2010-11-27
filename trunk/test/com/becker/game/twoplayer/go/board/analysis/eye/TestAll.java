@@ -9,8 +9,10 @@ import junit.framework.TestSuite;
 /**
  * @author Barry Becker
  */
-public class TestAllEye extends GoTestCase {
+public class TestAll {
 
+    private TestAll() {}
+    
     /**
      * @return all the junit test caes to run (in this class)
      */

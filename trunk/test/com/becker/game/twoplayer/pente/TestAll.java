@@ -22,7 +22,7 @@ public class TestAll extends TestCase {
 
         suite.addTestSuite(PatternsTest.class);
         suite.addTestSuite(LineTest.class);
-        suite.addTest(MoveEvaluatorTest.suite());
+        suite.addTestSuite(MoveEvaluatorTest.class);
         suite.addTestSuite(PenteLineTest.class);
         suite.addTestSuite(PenteSearchableTest.class);
         

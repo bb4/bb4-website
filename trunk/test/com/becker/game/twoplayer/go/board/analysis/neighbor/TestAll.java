@@ -9,8 +9,10 @@ import junit.framework.TestSuite;
 /**
  * @author Barry Becker
  */
-public class TestAllNeighbor extends GoTestCase {
+public class TestAll extends GoTestCase {
 
+    private TestAll() {}
+    
     /**
      * @return all the junit test caes to run (in this class)
      */
