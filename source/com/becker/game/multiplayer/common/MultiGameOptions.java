@@ -3,7 +3,7 @@ package com.becker.game.multiplayer.common;
 import com.becker.game.common.GameOptions;
 
 /**
- * @author Barry Becker Date: Sep 9, 2006
+ * @author Barry Becker
  */
 public class MultiGameOptions extends GameOptions {
 

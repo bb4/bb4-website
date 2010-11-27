@@ -1,4 +1,4 @@
-package com.becker.game.common.ui;
+package com.becker.game.common.ui.dialogs;
 
 import com.becker.game.common.GameContext;
 import com.becker.ui.GUIUtil;

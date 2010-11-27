@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.pente.ui;
 
-import com.becker.game.common.ui.GameBoardRenderer;
+import com.becker.game.common.ui.viewer.GameBoardRenderer;
 import com.becker.game.twoplayer.common.ui.TwoPlayerBoardRenderer;
 import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
 

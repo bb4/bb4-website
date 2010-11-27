@@ -2,6 +2,9 @@ package com.becker.game.multiplayer.poker;
 
 import com.becker.game.card.Card;
 import com.becker.game.common.*;
+import com.becker.game.common.board.Board;
+import com.becker.game.common.player.Player;
+import com.becker.game.common.player.PlayerList;
 import com.becker.game.multiplayer.common.MultiGameController;
 import com.becker.game.multiplayer.common.MultiGamePlayer;
 import com.becker.game.multiplayer.common.online.SurrogateMultiPlayer;

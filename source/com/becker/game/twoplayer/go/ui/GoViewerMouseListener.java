@@ -1,10 +1,10 @@
 package com.becker.game.twoplayer.go.ui;
 
 import com.becker.common.Location;
-import com.becker.game.common.BoardPosition;
+import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.GameContext;
-import com.becker.game.common.ui.GameBoardViewer;
-import com.becker.game.common.ui.ViewerMouseListener;
+import com.becker.game.common.ui.viewer.GameBoardViewer;
+import com.becker.game.common.ui.viewer.ViewerMouseListener;
 import com.becker.game.twoplayer.go.GoController;
 import com.becker.game.twoplayer.go.GoMove;
 import com.becker.game.twoplayer.go.GoMoveGenerator;

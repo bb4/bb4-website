@@ -1,8 +1,8 @@
 package com.becker.game.multiplayer.set.ui;
 
 
-import com.becker.game.common.Player;
-import com.becker.game.common.PlayerList;
+import com.becker.game.common.player.Player;
+import com.becker.game.common.player.PlayerList;
 import com.becker.game.multiplayer.common.ui.PlayerTable;
 import com.becker.game.multiplayer.set.SetPlayer;
 

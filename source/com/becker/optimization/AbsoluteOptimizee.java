@@ -5,7 +5,7 @@ import com.becker.optimization.parameter.ParameterArray;
 /**
  * Concrete adapter class for optimizee that does not evaluate by comparison.
  *
- * @author Barry Becker Date: Aug 20, 2006
+ * @author Barry Becker
  */
 public abstract class AbsoluteOptimizee implements Optimizee {
 

@@ -6,7 +6,7 @@ import ca.dj.jigo.sgf.tokens.InfoToken;
 import ca.dj.jigo.sgf.tokens.SGFToken;
 import ca.dj.jigo.sgf.tokens.TextToken;
 import com.becker.game.common.GameContext;
-import com.becker.game.common.GamePiece;
+import com.becker.game.common.board.GamePiece;
 import com.becker.game.common.Move;
 import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.blockade.BlockadeBoardPosition;

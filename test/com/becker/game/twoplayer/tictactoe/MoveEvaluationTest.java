@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.tictactoe;
 
-import com.becker.game.common.GamePiece;
+import com.becker.game.common.board.GamePiece;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.pente.analysis.Direction;
 import com.becker.game.twoplayer.pente.analysis.MoveEvaluator;

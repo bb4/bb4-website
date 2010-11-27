@@ -14,7 +14,7 @@ import java.net.UnknownHostException;
  * Socket portion of client-server program using sockets.
  * Adapted from http://java.sun.com/developer/onlineTraining/Programming/BasicJava2/socket.html
  *
- * @author Barry Becker Date: May 6, 2006
+ * @author Barry Becker
  */
 public class Client extends JFrame implements ActionListener {
 

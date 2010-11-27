@@ -1,10 +1,12 @@
 package com.becker.game.common.ui;
 
-import com.becker.common.util.FileUtil;
-import com.becker.common.util.ImageUtil;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameController;
 import com.becker.game.common.GameViewable;
+import com.becker.game.common.ui.dialogs.GameOptionsDialog;
+import com.becker.game.common.ui.dialogs.HelpDialog;
+import com.becker.game.common.ui.dialogs.NewGameDialog;
+import com.becker.game.common.ui.viewer.GameBoardViewer;
 import com.becker.ui.GUIUtil;
 import com.becker.ui.Log;
 import com.becker.ui.components.ResizableAppletPanel;
@@ -17,8 +19,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
 
 /**
  * This is an abstract base class for a Game UI.
@@ -38,15 +38,12 @@ import java.io.File;
  *  @author Barry Becker
  */
 public abstract class GamePanel extends TexturedPanel
-                                implements ActionListener, GameChangedListener
-{
+                                implements ActionListener, GameChangedListener {
 
     // ui elements.
     // There are (at least) 5 buttons in the ToolBar. There could be more depending on the game.
     // toolbar is protected rather than private so derived classes can add buttons to it.
     protected GameToolBar toolBar_;
-
-    private TexturedPanel statusBar_;
 
     private final JScrollPane boardViewerScrollPane_ = new JScrollPane();
 
@@ -79,16 +76,15 @@ public abstract class GamePanel extends TexturedPanel
     /**
      * Construct the panel.
      */
-    public GamePanel()
-    {
+    public GamePanel() {
         super(BG_TEXTURE);
     }
 
     /**
      * common initialization in the event that there are multiple constructors.
      */
-    void init(JFrame parent)
-    {
+    public void init(JFrame parent) {
+
         enableEvents( AWTEvent.WINDOW_EVENT_MASK );
         initGui(parent);
 
@@ -126,16 +122,14 @@ public abstract class GamePanel extends TexturedPanel
      * Currently most games do not support online play (see poker)
      * @return true if the game supports online play and there is a server available
      */
-    protected boolean isOnlinePlayAvailable()
-    {
+    protected boolean isOnlinePlayAvailable() {
         return false;
     }
 
     /**
      *  UIComponent initialization.
      */
-    protected void initGui(JFrame parent)
-    {
+    protected void initGui(JFrame parent) {
 
         JPanel mainPanel = new JPanel( new BorderLayout() );
 
@@ -143,7 +137,7 @@ public abstract class GamePanel extends TexturedPanel
         statusBarLabel.setFont(STATUS_FONT);
         statusBarLabel.setOpaque(false);
         statusBarLabel.setText( GameContext.getLabel("STATUS_MSG"));
-        statusBar_ = new TexturedPanel(BG_TEXTURE);
+        TexturedPanel statusBar_ = new TexturedPanel(BG_TEXTURE);
         statusBar_.setLayout(new BorderLayout());
         statusBar_.setMaximumSize(new Dimension(1000, 16));
         statusBar_.add(statusBarLabel, BorderLayout.WEST);
@@ -183,7 +177,7 @@ public abstract class GamePanel extends TexturedPanel
 
         mainPanel.setBorder( BorderFactory.createRaisedBevelBorder() );
         mainPanel.add( toolBar_, BorderLayout.NORTH );
-        mainPanel.add( statusBar_, BorderLayout.SOUTH );
+        mainPanel.add(statusBar_, BorderLayout.SOUTH );
         mainPanel.add( infoPanel_, BorderLayout.EAST );
         mainPanel.add( viewerPanel, BorderLayout.CENTER );
 
@@ -212,8 +206,7 @@ public abstract class GamePanel extends TexturedPanel
         this.setDoubleBuffered(false);
     }
 
-    protected JPanel createBottomDecorationPanel()
-    {
+    protected JPanel createBottomDecorationPanel() {
         return null;
     }
 
@@ -251,8 +244,8 @@ public abstract class GamePanel extends TexturedPanel
      * @param comments  version or other comments.
      * @param overview  Instructions on how to play and other info for the user.
      */
-    protected final void showHelpDialog( String gameName, String comments, String overview )
-    {
+    protected final void showHelpDialog( String gameName, String comments, String overview ) {
+        
         HelpDialog dlg = new HelpDialog( null, gameName, comments, overview );
         //dlg.setLocationRelativeTo( this );
         dlg.setModal( true );
@@ -264,47 +257,17 @@ public abstract class GamePanel extends TexturedPanel
      * This method allows javascript to resize the applet from the browser.
      */
     @Override
-    public final void setSize( int width, int height )
-    {
+    public final void setSize( int width, int height ) {
         resizablePanel_.setSize( width, height );
-    }
-
-    public void saveSnapshot() {
-
-        JFileChooser chooser = GUIUtil.getFileChooser();
-        chooser.setCurrentDirectory( new File( FileUtil.getHomeDir() ) );
-        int state = chooser.showSaveDialog( null );
-        File file = chooser.getSelectedFile();
-        if ( file != null && state == JFileChooser.APPROVE_OPTION ) {
-
-            BufferedImage img = (BufferedImage)createImage(getWidth(), getHeight());
-            this.paint(img.createGraphics());
-
-            ImageUtil.saveAsImage(file.getAbsolutePath(), img, ImageUtil.ImageType.JPG);
-        }
-    }
-
-    /**
-     * do any needed cleanup.
-     */
-    public final void destroy()
-    {
-        // remove all listeners, dispose components.
-        if ( optionsDialog_ != null )
-            optionsDialog_.dispose();
-        if ( boardViewer_ != null )
-            boardViewer_.dispose();
     }
 
     /**
      * implements the GameChangedListener interface.
      * This method called whenever a move has been made.
      */
-    public void gameChanged( GameChangedEvent gce )
-    {
+    public void gameChanged( GameChangedEvent gce ) {
         toolBar_.getUndoButton().setEnabled(boardViewer_.getController().getLastMove() != null);
     }
-
 
     /**
      * handle button click actions.

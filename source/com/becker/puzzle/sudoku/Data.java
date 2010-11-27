@@ -4,7 +4,7 @@ package com.becker.puzzle.sudoku;
  * Some sample sudoku test puzzle data
  * @@ make these into separate date files eventually
  *
- * @author Barry Becker Date: Jul 3, 2006
+ * @author Barry Becker
  */
 public class Data {
 

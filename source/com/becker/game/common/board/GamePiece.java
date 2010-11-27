@@ -1,4 +1,4 @@
-package com.becker.game.common;
+package com.becker.game.common.board;
 
 import java.io.Serializable;
 

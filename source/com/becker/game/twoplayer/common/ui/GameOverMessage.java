@@ -2,8 +2,8 @@ package com.becker.game.twoplayer.common.ui;
 
 import com.becker.common.util.Util;
 import com.becker.game.common.GameContext;
-import com.becker.game.common.Player;
-import com.becker.game.common.PlayerList;
+import com.becker.game.common.player.Player;
+import com.becker.game.common.player.PlayerList;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 
 import java.text.MessageFormat;

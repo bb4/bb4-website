@@ -1,4 +1,6 @@
-package com.becker.game.common.ui;
+package com.becker.game.common.ui.menu;
+
+import com.becker.game.common.ui.GamePanel;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;

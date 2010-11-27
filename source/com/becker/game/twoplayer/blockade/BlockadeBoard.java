@@ -2,9 +2,10 @@ package com.becker.game.twoplayer.blockade;
 
 import com.becker.common.Location;
 import com.becker.game.common.*;
+import com.becker.game.common.board.BoardPosition;
+import com.becker.game.common.board.GamePiece;
 import com.becker.game.twoplayer.blockade.analysis.BoardAnalyzer;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
-import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
 
 import java.util.*;
 

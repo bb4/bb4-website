@@ -73,17 +73,17 @@ public abstract class MonteCarloSearchStrategyTst extends AbstractSearchStrategy
     // the following expected results are for UCT search. Derivations may differ.
 
     protected SearchResult getTwoSimulationSearchPlayer1Result() {
-        return new SearchResult("0", -8, 1);
+        return new SearchResult("0", -8, 2);
     }
     protected SearchResult getTwoSimulationSearchPlayer2Result() {
-        return new SearchResult("0", -8, 1);
+        return new SearchResult("0", -8, 2);
     }
 
     protected SearchResult getTenSimulationSearchPlayer1Result() {
-        return new SearchResult("0", -8, 1);
+        return new SearchResult("0", -8, 10);
     }
     protected SearchResult getTenSimulationSearchPlayer2Result() {
-        return new SearchResult("0", -8, 1);
+        return new SearchResult("1", -2, 10);
     }
 }
 

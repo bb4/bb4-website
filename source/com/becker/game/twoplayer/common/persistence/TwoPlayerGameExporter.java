@@ -2,6 +2,8 @@ package com.becker.game.twoplayer.common.persistence;
 
 import com.becker.game.common.*;
 import com.becker.game.common.persistence.GameExporter;
+import com.becker.game.common.player.Player;
+import com.becker.game.common.player.PlayerList;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 

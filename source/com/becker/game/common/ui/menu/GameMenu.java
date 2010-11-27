@@ -1,8 +1,9 @@
-package com.becker.game.common.ui;
+package com.becker.game.common.ui.menu;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.common.plugin.GamePlugin;
 import com.becker.game.common.plugin.PluginManager;
+import com.becker.game.common.ui.GamePanel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -13,7 +14,7 @@ import java.awt.event.ActionListener;
  * Allows such common operations as new, load, save, exit.
  * @author Barry Becker
  */
-class GameMenu extends AbstractGameMenu implements ActionListener  {
+public class GameMenu extends AbstractGameMenu implements ActionListener  {
 
     private JFrame frame_;
 
@@ -22,8 +23,7 @@ class GameMenu extends AbstractGameMenu implements ActionListener  {
      * @param frame
      * @param initialGame the initially selected game.
      */
-    public GameMenu(JFrame frame, String initialGame)
-    {
+    public GameMenu(JFrame frame, String initialGame) {
         super(GameContext.getLabel("GAME"));
 
         frame_ = frame;
@@ -40,14 +40,13 @@ class GameMenu extends AbstractGameMenu implements ActionListener  {
      * called when the user has selected a different game to play from the game menu
      * @param e
      */
-    public void actionPerformed( ActionEvent e )
-    {
+    public void actionPerformed( ActionEvent e ) {
         JMenuItem item = (JMenuItem) e.getSource();
 
         showGame(PluginManager.getInstance().getPluginFromLabel(item.getText()).getName());
     }
 
-    public GamePanel  getGamePanel() {
+    public GamePanel getGamePanel() {
         return gamePanel_;
     }
 
@@ -55,8 +54,7 @@ class GameMenu extends AbstractGameMenu implements ActionListener  {
      * Show the game panel for the specified game
      * @param gameName name of the game to show in the frame.
      */
-    private void showGame(String gameName)
-    {
+    private void showGame(String gameName) {
         // this will load the resources for the specified game.
         GameContext.loadGameResources(gameName);
 

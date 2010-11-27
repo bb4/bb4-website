@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.pente.analysis;
 
-import com.becker.game.common.BoardPosition;
-import com.becker.game.common.GamePiece;
+import com.becker.game.common.board.BoardPosition;
+import com.becker.game.common.board.GamePiece;
 import com.becker.game.common.GameWeights;
 import com.becker.game.twoplayer.pente.StubPatterns;
 import com.becker.game.twoplayer.pente.StubWeights;

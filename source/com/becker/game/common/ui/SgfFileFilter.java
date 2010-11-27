@@ -5,14 +5,14 @@ import com.becker.ui.file.ExtensionFileFilter;
 /**
  * File filter for SGF files.
  *
- * @author Barry Becker Date: Oct 29, 2006
+ * @author Barry Becker 
  */
 public class SgfFileFilter extends ExtensionFileFilter {
 
     public static final String SGF_EXTENSION = "sgf";
 
 
-    SgfFileFilter() {
+    public SgfFileFilter() {
         super(SGF_EXTENSION);
     }
 

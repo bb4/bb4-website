@@ -1,7 +1,6 @@
 package com.becker.game.twoplayer.blockade;
 
-import com.becker.game.common.GamePiece;
-import com.becker.game.common.GameWeights;
+import com.becker.game.common.board.GamePiece;
 import com.becker.optimization.parameter.ParameterArray;
 import junit.framework.*;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;

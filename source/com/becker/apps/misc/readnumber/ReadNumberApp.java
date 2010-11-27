@@ -7,7 +7,7 @@ import java.math.BigInteger;
 import java.util.Scanner;
 
 /**
- * @author Barry Becker Date: May 6, 2006
+ * @author Barry Becker
  */
 public class ReadNumberApp {
 

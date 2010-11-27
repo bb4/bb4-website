@@ -4,6 +4,8 @@ import com.becker.common.CommandLineOptions;
 import com.becker.common.i18n.LocaleType;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.plugin.PluginManager;
+import com.becker.game.common.ui.menu.FileMenu;
+import com.becker.game.common.ui.menu.GameMenu;
 import com.becker.ui.GUIUtil;
 
 import javax.swing.*;

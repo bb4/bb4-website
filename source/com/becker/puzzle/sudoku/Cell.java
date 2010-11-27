@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * @author Barry Becker Date: Jul 3, 2006
+ * @author Barry Becker
  */
 public class Cell {
 

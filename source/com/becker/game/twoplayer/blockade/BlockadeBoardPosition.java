@@ -1,8 +1,8 @@
 package com.becker.game.twoplayer.blockade;
 
 import com.becker.common.Location;
-import com.becker.game.common.BoardPosition;
-import com.becker.game.common.GamePiece;
+import com.becker.game.common.board.BoardPosition;
+import com.becker.game.common.board.GamePiece;
 
 import java.util.List;
 

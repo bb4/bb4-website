@@ -2,13 +2,13 @@ package com.becker.game.multiplayer.common.online.ui;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameViewable;
-import com.becker.game.common.Player;
-import com.becker.game.common.PlayerList;
+import com.becker.game.common.player.Player;
+import com.becker.game.common.player.PlayerList;
 import com.becker.game.common.online.GameCommand;
 import com.becker.game.common.online.OnlineGameTable;
 import com.becker.game.common.online.OnlineGameTableList;
 import com.becker.game.common.online.ui.OnlineGameManagerPanel;
-import com.becker.game.common.ui.GameOptionsDialog;
+import com.becker.game.common.ui.dialogs.GameOptionsDialog;
 import com.becker.game.multiplayer.common.MultiGameOptions;
 import com.becker.game.multiplayer.common.MultiGamePlayer;
 import com.becker.game.multiplayer.common.online.SurrogateMultiPlayer;
@@ -28,7 +28,7 @@ import java.util.Iterator;
  * Shows a list of the currently active tables to the user in a table.
  * Used only on the client to show list of active game tables.
  *
- * @author Barry Becker Date: May 14, 2006
+ * @author Barry Becker
  */
 public abstract class MultiPlayerOnlineManagerPanel extends OnlineGameManagerPanel
                                                   implements ActionListener, MouseListener, 

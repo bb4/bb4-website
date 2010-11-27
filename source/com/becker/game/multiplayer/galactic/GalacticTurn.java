@@ -1,7 +1,7 @@
 package com.becker.game.multiplayer.galactic;
 
 import com.becker.game.common.Move;
-import com.becker.game.common.Player;
+import com.becker.game.common.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;

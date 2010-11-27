@@ -1,9 +1,6 @@
 package com.becker.game.twoplayer.blockade;
 
-import com.becker.game.common.GamePiece;
-import com.becker.game.twoplayer.blockade.BlockadeBoardPosition;
-import com.becker.game.twoplayer.blockade.BlockadeMove;
-import com.becker.game.twoplayer.blockade.BlockadeWall;
+import com.becker.game.common.board.GamePiece;
 
 /**
  * Expected generated moves for search tests.

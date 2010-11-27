@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.go.board.analysis;
 
 import com.becker.common.Box;
-import com.becker.game.common.GamePiece;
+import com.becker.game.common.board.GamePiece;
 import com.becker.game.twoplayer.go.GoProfiler;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;

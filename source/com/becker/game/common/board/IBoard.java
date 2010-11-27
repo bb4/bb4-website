@@ -1,4 +1,6 @@
-package com.becker.game.common;
+package com.becker.game.common.board;
+
+import com.becker.game.common.Move;
 
 /**
  * This is the interface that all game boards should implement.

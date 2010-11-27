@@ -1,6 +1,7 @@
 package com.becker.game.twoplayer.chess;
 
 import com.becker.game.common.*;
+import com.becker.game.common.player.PlayerList;
 import com.becker.game.twoplayer.checkers.CheckersController;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;

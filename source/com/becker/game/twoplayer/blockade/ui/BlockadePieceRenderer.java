@@ -1,9 +1,9 @@
 package com.becker.game.twoplayer.blockade.ui;
 
-import com.becker.game.common.Board;
-import com.becker.game.common.BoardPosition;
+import com.becker.game.common.board.Board;
+import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.GameContext;
-import com.becker.game.common.GamePiece;
+import com.becker.game.common.board.GamePiece;
 import com.becker.game.twoplayer.blockade.BlockadeBoardPosition;
 import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
 

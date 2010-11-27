@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.go.ui;
 
 import com.becker.common.ColorMap;
-import com.becker.game.common.BoardPosition;
+import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.board.BoardValidator;
 import com.becker.game.twoplayer.go.board.GoBoard;

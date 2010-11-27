@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.tictactoe;
 
-import com.becker.game.common.GamePiece;
+import com.becker.game.common.board.GamePiece;
 import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.ISearchableHelper;
@@ -9,8 +9,6 @@ import junit.framework.Assert;
 import junit.framework.TestSuite;
 import junit.framework.Test;
 import static com.becker.game.twoplayer.tictactoe.ExpectedSearchableResults.*;
-
-import java.util.List;
 
 
 /**

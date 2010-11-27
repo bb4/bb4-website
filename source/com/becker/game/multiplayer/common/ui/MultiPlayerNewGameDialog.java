@@ -2,7 +2,7 @@ package com.becker.game.multiplayer.common.ui;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameViewable;
-import com.becker.game.common.ui.NewGameDialog;
+import com.becker.game.common.ui.dialogs.NewGameDialog;
 import com.becker.game.multiplayer.common.MultiGameOptions;
 import com.becker.ui.components.GradientButton;
 

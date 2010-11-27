@@ -3,6 +3,8 @@ package com.becker.game.common.ui;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameController;
 import com.becker.game.common.online.ui.ChatWindow;
+import com.becker.game.common.ui.GameChangedEvent;
+import com.becker.game.common.ui.GameChangedListener;
 import com.becker.ui.components.TexturedPanel;
 
 import javax.swing.*;
@@ -21,8 +23,6 @@ public abstract class GameInfoPanel extends TexturedPanel implements GameChanged
     protected static final String COLON = ' ' + GameContext.getLabel("COLON")+ ' ';
 
     protected GameController controller_ = null;
-
-    private JFrame parent_;
 
     protected JLabel moveNumLabel_;
     protected JLabel playerLabel_;
@@ -60,10 +60,7 @@ public abstract class GameInfoPanel extends TexturedPanel implements GameChanged
             add( filler );
         }
     }
-
-    public void setParentFrame(JFrame parent) {
-        parent_ = parent;
-    }
+    
     /**
      *  create all the sub panels in the desired order.
      *  Subclasses may override to get a different ordering.

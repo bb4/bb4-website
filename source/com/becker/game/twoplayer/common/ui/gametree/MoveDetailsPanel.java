@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.common.ui.gametree;
 
 import com.becker.common.util.Util;
-import com.becker.game.common.PlayerList;
+import com.becker.game.common.player.PlayerList;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;

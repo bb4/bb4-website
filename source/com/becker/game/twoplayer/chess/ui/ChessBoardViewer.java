@@ -1,10 +1,10 @@
 package com.becker.game.twoplayer.chess.ui;
 
-import com.becker.game.common.BoardPosition;
+import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameController;
-import com.becker.game.common.ui.GameBoardRenderer;
-import com.becker.game.common.ui.ViewerMouseListener;
+import com.becker.game.common.ui.viewer.GameBoardRenderer;
+import com.becker.game.common.ui.viewer.ViewerMouseListener;
 import com.becker.game.twoplayer.checkers.ui.CheckersBoardViewer;
 import com.becker.game.twoplayer.chess.ChessBoard;
 import com.becker.game.twoplayer.chess.ChessController;

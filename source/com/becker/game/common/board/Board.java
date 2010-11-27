@@ -1,6 +1,9 @@
-package com.becker.game.common;
+package com.becker.game.common.board;
 
 import com.becker.common.Location;
+import com.becker.game.common.GameContext;
+import com.becker.game.common.Move;
+import com.becker.game.common.MoveList;
 
 
 /**

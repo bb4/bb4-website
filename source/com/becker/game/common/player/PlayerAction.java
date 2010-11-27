@@ -1,4 +1,4 @@
-package com.becker.game.common;
+package com.becker.game.common.player;
 
 import java.io.Serializable;
 
@@ -7,7 +7,7 @@ import java.io.Serializable;
  * It is what will be serialized and sent between client and server to
  * communicate the player's action (whether robot or human).
  *
- * @author Barry Becker Date: Sep 24, 2006
+ * @author Barry Becker
  */
 public abstract class PlayerAction implements Serializable {
 

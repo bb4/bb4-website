@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.go;
 
-import com.becker.game.common.Board;
-import com.becker.game.common.CaptureList;
+import com.becker.game.common.board.Board;
+import com.becker.game.common.board.CaptureList;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.BestMoveFinder;

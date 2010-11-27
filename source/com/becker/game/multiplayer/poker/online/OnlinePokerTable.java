@@ -1,7 +1,7 @@
 package com.becker.game.multiplayer.poker.online;
 
 import com.becker.game.common.GameOptions;
-import com.becker.game.common.Player;
+import com.becker.game.common.player.Player;
 import com.becker.game.multiplayer.common.MultiGamePlayer;
 import com.becker.game.multiplayer.common.online.ui.MultiPlayerOnlineTable;
 import com.becker.game.multiplayer.poker.PokerOptions;

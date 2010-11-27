@@ -1,8 +1,8 @@
 package com.becker.game.multiplayer.common.ui;
 
 
-import com.becker.game.common.Board;
-import com.becker.game.common.ui.GameBoardRenderer;
+import com.becker.game.common.board.Board;
+import com.becker.game.common.ui.viewer.GameBoardRenderer;
 
 import java.awt.*;
 

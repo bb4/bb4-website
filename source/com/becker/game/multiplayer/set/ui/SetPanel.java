@@ -3,6 +3,10 @@ package com.becker.game.multiplayer.set.ui;
 import com.becker.game.common.GameController;
 import com.becker.game.common.GameViewable;
 import com.becker.game.common.ui.*;
+import com.becker.game.common.ui.dialogs.GameOptionsDialog;
+import com.becker.game.common.ui.dialogs.NewGameDialog;
+import com.becker.game.common.ui.viewer.GameBoardViewer;
+import com.becker.game.common.ui.GameInfoPanel;
 import com.becker.game.multiplayer.set.SetController;
 
 import javax.swing.*;

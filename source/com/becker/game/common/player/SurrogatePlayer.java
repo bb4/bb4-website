@@ -1,4 +1,4 @@
-package com.becker.game.common;
+package com.becker.game.common.player;
 
 import com.becker.game.common.online.GameCommand;
 import com.becker.game.common.online.IServerConnection;

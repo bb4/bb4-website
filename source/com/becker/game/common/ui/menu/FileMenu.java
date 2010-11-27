@@ -1,4 +1,4 @@
-package com.becker.game.common.ui;
+package com.becker.game.common.ui.menu;
 
 import com.becker.common.util.FileUtil;
 import com.becker.game.common.GameContext;
@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
  * Allows such common operations as new, load, save, exit.
  * @author Barry Becker
  */
-class FileMenu extends JMenu implements ActionListener {
+public class FileMenu extends JMenu implements ActionListener {
 
     private GameMenu gameMenu_;
     private JMenuItem openItem_;
@@ -25,8 +25,8 @@ class FileMenu extends JMenu implements ActionListener {
     /**
      * Game file menu constructor
      */
-    public FileMenu(GameMenu gameMenu)
-    {
+    public FileMenu(GameMenu gameMenu) {
+
         super(GameContext.getLabel("FILE"));
         gameMenu_ = gameMenu;
         setBorder(BorderFactory.createEtchedBorder());
@@ -42,8 +42,8 @@ class FileMenu extends JMenu implements ActionListener {
     }
 
 
-    private JMenuItem createMenuItem(String name)
-    {
+    private JMenuItem createMenuItem(String name) {
+
         JMenuItem item = new JMenuItem(name);
         item.addActionListener(this);
         return item;
@@ -53,8 +53,7 @@ class FileMenu extends JMenu implements ActionListener {
      * called when the user has selected a different game to play from the game menu
      * @param e
      */
-    public void actionPerformed( ActionEvent e )
-    {
+    public void actionPerformed( ActionEvent e )  {
         JMenuItem item = (JMenuItem) e.getSource();
         if (item == openItem_)  {
             gameMenu_.getGamePanel().openGame();

@@ -2,6 +2,8 @@ package com.becker.game.twoplayer.blockade.analysis;
 
 import com.becker.common.Location;
 import com.becker.game.common.*;
+import com.becker.game.common.board.BoardPosition;
+import com.becker.game.common.board.GamePiece;
 import com.becker.game.twoplayer.blockade.*;
 
 import javax.swing.tree.DefaultMutableTreeNode;
