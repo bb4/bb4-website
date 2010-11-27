@@ -53,13 +53,16 @@ public class TestGoBoard extends GoTestCase {
         Assert.assertTrue("move.captures=" + actualNumCaptures + " expected "+numCaptures,
                               actualNumCaptures == numCaptures);
         int diffWhite = numWhiteStonesBefore - numWhiteStonesAfter;
-        Assert.assertTrue("diff in num white stones ("+ diffWhite + ") not = numcaptures ("+numCaptures+')', diffWhite == numCaptures);
+        Assert.assertTrue("diff in num white stones ("+ diffWhite
+                + ") not = numcaptures (" + numCaptures
+                + ')', diffWhite == numCaptures);
 
         controller_.undoLastMove();
         // verify that all the captured stones get restored to the board
         numWhiteStonesAfter = board.getNumStones(false);
-        Assert.assertTrue("numWhiteStonesBefore="+numWhiteStonesBefore +" not equal numWhiteStonesAfter="+numWhiteStonesAfter,
-                          numWhiteStonesBefore == numWhiteStonesAfter );
+        Assert.assertTrue("numWhiteStonesBefore="+numWhiteStonesBefore
+                + " not equal numWhiteStonesAfter="+numWhiteStonesAfter,
+                numWhiteStonesBefore == numWhiteStonesAfter );
     }
 
 

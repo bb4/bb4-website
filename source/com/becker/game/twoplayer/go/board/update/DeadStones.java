@@ -38,10 +38,12 @@ final class DeadStones
      * @param player1 player to add a dead stone for.
      */
     public void increment(boolean player1) {
-        if (player1)
+        if (player1) {
             numDeadBlackStonesOnBoard_++;
-        else
+        }
+        else {
             numDeadWhiteStonesOnBoard_++;
+        }
     }
 
 }

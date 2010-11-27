@@ -10,8 +10,9 @@ import junit.framework.TestSuite;
  *
  * @author Barry Becker
  */
-public class TestAll extends TestCase {
+public class TestAll  {
 
+    private TestAll() {}
 
     public static Test suite() {
 

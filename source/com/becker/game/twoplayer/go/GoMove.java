@@ -17,8 +17,8 @@ import java.util.Iterator;
  *  @see GoBoard
  *  @author Barry Becker
  */
-public final class GoMove extends TwoPlayerMove
-{
+public class GoMove extends TwoPlayerMove {
+
     /** 
      * A linked list of the pieces that were captured with this move.
      * null if there were no captures.
