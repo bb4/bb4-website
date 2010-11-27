@@ -12,7 +12,7 @@ import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WI
  * so they have consistent coloring.
  * Used to color the game tree rows, nodes, and arcs.
  *
- * @author Barry Becker Date: Oct 29, 2006
+ * @author Barry Becker
  */
 class GoTreeColorMap extends ColorMap {
 
