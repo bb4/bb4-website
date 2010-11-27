@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.pente.analysis;
 
-import com.becker.game.common.BoardPosition;
-import com.becker.game.common.GamePiece;
+import com.becker.game.common.board.BoardPosition;
+import com.becker.game.common.board.GamePiece;
 import com.becker.game.twoplayer.pente.Patterns;
 import com.becker.optimization.parameter.ParameterArray;
 

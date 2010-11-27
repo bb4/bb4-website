@@ -2,7 +2,7 @@ package com.becker.game.twoplayer.pente;
 
 import com.becker.game.common.Move;
 import com.becker.game.common.MoveList;
-import com.becker.game.common.PlayerList;
+import com.becker.game.common.player.PlayerList;
 import com.becker.game.twoplayer.common.*;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.pente.analysis.MoveEvaluator;

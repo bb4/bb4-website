@@ -3,8 +3,8 @@ package com.becker.game.common.online;
 import com.becker.common.ClassLoaderSingleton;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameController;
-import com.becker.game.common.Player;
-import com.becker.game.common.PlayerList;
+import com.becker.game.common.player.Player;
+import com.becker.game.common.player.PlayerList;
 import com.becker.game.common.plugin.PluginManager;
 
 import java.util.LinkedList;

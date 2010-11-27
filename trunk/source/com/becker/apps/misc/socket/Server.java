@@ -16,7 +16,7 @@ import java.net.Socket;
  * Multi threaded server for client-server application.
  * adapted from http://java.sun.com/developer/onlineTraining/Programming/BasicJava2/socket.html
  *
- * @author Barry Becker Date: May 6, 2006
+ * @author Barry Becker 
  */
 public class Server extends JFrame {
 

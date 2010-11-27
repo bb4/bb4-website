@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.go.board.analysis.eye;
 
-import com.becker.game.common.BoardPosition;
+import com.becker.game.common.board.BoardPosition;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.eye.information.*;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;

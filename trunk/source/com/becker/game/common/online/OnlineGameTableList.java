@@ -1,7 +1,7 @@
 package com.becker.game.common.online;
 
 import com.becker.game.common.GameContext;
-import com.becker.game.common.Player;
+import com.becker.game.common.player.Player;
 
 import java.io.Serializable;
 import java.util.ArrayList;

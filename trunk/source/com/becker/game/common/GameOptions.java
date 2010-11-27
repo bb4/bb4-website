@@ -6,7 +6,7 @@ import java.io.Serializable;
 /**
  * Options specified on a per game basis.
  *
- * @author Barry Becker Date: Sep 2, 2006
+ * @author Barry Becker
  */
 public abstract class GameOptions implements Serializable {
 

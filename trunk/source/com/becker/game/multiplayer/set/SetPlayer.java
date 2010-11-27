@@ -1,7 +1,7 @@
 package com.becker.game.multiplayer.set;
 
 import com.becker.game.common.GameContext;
-import com.becker.game.common.PlayerAction;
+import com.becker.game.common.player.PlayerAction;
 import com.becker.game.multiplayer.common.MultiGameController;
 import com.becker.game.multiplayer.common.MultiGamePlayer;
 

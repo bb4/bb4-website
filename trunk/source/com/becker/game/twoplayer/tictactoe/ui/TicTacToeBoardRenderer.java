@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.tictactoe.ui;
 
-import com.becker.game.common.ui.GameBoardRenderer;
+import com.becker.game.common.ui.viewer.GameBoardRenderer;
 import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
 import com.becker.game.twoplayer.pente.ui.PenteBoardRenderer;
 

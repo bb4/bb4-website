@@ -1,4 +1,4 @@
-package com.becker.game.common.ui;
+package com.becker.game.common.ui.dialogs;
 
 import com.becker.common.ILog;
 import com.becker.common.i18n.LocaleType;
@@ -6,6 +6,7 @@ import com.becker.common.i18n.MessageContext;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameController;
 import com.becker.game.common.GameOptions;
+import com.becker.game.common.ui.viewer.GameBoardViewer;
 import com.becker.ui.components.ColorInputPanel;
 import com.becker.ui.components.GradientButton;
 import com.becker.ui.components.NumberInput;
@@ -34,9 +35,9 @@ public abstract class GameOptionsDialog extends OptionsDialog
 
     // debug params
     private NumberInput dbgLevelField_;
-    private JRadioButton consoleOutputButton_;  // output radio button group
-    private JRadioButton windowOutputButton_;  // output radio button group
-    private JRadioButton fileOutputButton_;  // output radio button group
+    private JRadioButton consoleOutputButton_;
+    private JRadioButton windowOutputButton_;
+    private JRadioButton fileOutputButton_; 
     private int logDestination_;
     private JCheckBox profileCheckbox_;
 

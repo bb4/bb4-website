@@ -1,6 +1,6 @@
 package com.becker.game.multiplayer.galactic;
 
-import com.becker.game.common.Player;
+import com.becker.game.common.player.Player;
 import com.becker.game.multiplayer.galactic.player.GalacticPlayer;
 
 import java.util.LinkedList;

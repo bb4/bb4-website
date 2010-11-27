@@ -2,7 +2,7 @@ package com.becker.game.multiplayer.common.ui;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameController;
-import com.becker.game.common.ui.GameOptionsDialog;
+import com.becker.game.common.ui.dialogs.GameOptionsDialog;
 import com.becker.game.multiplayer.common.MultiGameOptions;
 import com.becker.ui.components.NumberInput;
 
@@ -11,7 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 /**
- * @author Barry Becker Date: Sep 9, 2006
+ * @author Barry Becker
  */
 public abstract class MultiGameOptionsDialog extends GameOptionsDialog
                                     implements KeyListener  {

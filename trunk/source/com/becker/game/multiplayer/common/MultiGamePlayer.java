@@ -1,8 +1,8 @@
 package com.becker.game.multiplayer.common;
 
-import com.becker.game.common.Player;
-import com.becker.game.common.PlayerAction;
-import com.becker.game.common.PlayerList;
+import com.becker.game.common.player.Player;
+import com.becker.game.common.player.PlayerAction;
+import com.becker.game.common.player.PlayerList;
 import com.becker.game.common.online.IServerConnection;
 import com.becker.game.multiplayer.common.online.SurrogateMultiPlayer;
 import com.becker.ui.ColorUtil;

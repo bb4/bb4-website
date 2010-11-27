@@ -1,6 +1,10 @@
-package com.becker.game.common.ui;
+package com.becker.game.common.ui.viewer;
 
 import com.becker.game.common.*;
+import com.becker.game.common.board.Board;
+import com.becker.game.common.ui.GameChangedEvent;
+import com.becker.game.common.ui.GameChangedListener;
+import com.becker.game.common.ui.SgfFileFilter;
 import com.becker.ui.file.FileChooserUtil;
 
 import javax.swing.*;
@@ -26,7 +30,7 @@ import java.util.List;
  *  @author Barry Becker
  */
 public abstract class GameBoardViewer extends JPanel
-                                      implements GameViewable,GameChangedListener {
+                                      implements GameViewable, GameChangedListener {
     /** every GameBoardViewer must contain a controller. */
     protected GameController controller_ = null;
 

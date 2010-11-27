@@ -1,12 +1,11 @@
 package com.becker.game.twoplayer.common.search.strategy.integration;
 
 import com.becker.common.util.Util;
-import com.becker.game.common.GamePiece;
+import com.becker.game.common.board.GamePiece;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.ISearchableHelper;
-import com.becker.game.twoplayer.common.search.options.BruteSearchOptions;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.Progress;
 import com.becker.game.twoplayer.common.search.SearchableHelper;

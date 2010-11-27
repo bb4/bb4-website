@@ -1,13 +1,13 @@
 package com.becker.game.twoplayer.blockade.ui;
 
 import com.becker.common.Location;
-import com.becker.game.common.Board;
-import com.becker.game.common.BoardPosition;
+import com.becker.game.common.board.Board;
+import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.GameContext;
-import com.becker.game.common.GamePiece;
-import com.becker.game.common.ui.GameBoardRenderer;
-import com.becker.game.common.ui.GameBoardViewer;
-import com.becker.game.common.ui.ViewerMouseListener;
+import com.becker.game.common.board.GamePiece;
+import com.becker.game.common.ui.viewer.GameBoardRenderer;
+import com.becker.game.common.ui.viewer.GameBoardViewer;
+import com.becker.game.common.ui.viewer.ViewerMouseListener;
 import com.becker.game.twoplayer.blockade.*;
 
 import javax.swing.*;

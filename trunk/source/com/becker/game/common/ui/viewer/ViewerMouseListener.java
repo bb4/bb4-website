@@ -1,4 +1,4 @@
-package com.becker.game.common.ui;
+package com.becker.game.common.ui.viewer;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;

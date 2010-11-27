@@ -1,6 +1,6 @@
 package com.becker.game.multiplayer.trivial;
 
-import com.becker.game.common.PlayerAction;
+import com.becker.game.common.player.PlayerAction;
 
 /**
  * This is what will get sent between client and server as an action for a particular player.

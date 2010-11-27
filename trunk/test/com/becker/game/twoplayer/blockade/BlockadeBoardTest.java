@@ -1,6 +1,8 @@
 package com.becker.game.twoplayer.blockade;
 
 import com.becker.common.*;
+import com.becker.game.common.board.BoardPosition;
+import com.becker.game.common.board.GamePiece;
 import junit.framework.*;
 import com.becker.game.common.*;
 

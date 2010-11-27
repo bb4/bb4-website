@@ -1,7 +1,7 @@
 package com.becker.game.multiplayer.set.ui;
 
 import com.becker.game.common.IGameController;
-import com.becker.game.common.ui.GameBoardRenderer;
+import com.becker.game.common.ui.viewer.GameBoardRenderer;
 import com.becker.game.multiplayer.common.ui.MultiGameBoardRenderer;
 import com.becker.game.multiplayer.set.Card;
 import com.becker.game.multiplayer.set.SetController;

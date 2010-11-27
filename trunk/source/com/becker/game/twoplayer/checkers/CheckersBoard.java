@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.checkers;
 
-import com.becker.game.common.BoardPosition;
+import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.Move;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;

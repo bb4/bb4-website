@@ -6,7 +6,7 @@ import ca.dj.jigo.sgf.SGFLoader;
 import ca.dj.jigo.sgf.tokens.*;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.MoveList;
-import com.becker.game.common.PlayerList;
+import com.becker.game.common.player.PlayerList;
 import com.becker.game.twoplayer.common.persistence.TwoPlayerGameImporter;
 import com.becker.game.twoplayer.go.GoController;
 import com.becker.game.twoplayer.go.GoMove;

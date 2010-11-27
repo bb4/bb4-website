@@ -1,6 +1,10 @@
 package com.becker.game.common;
 
 
+import com.becker.game.common.board.Board;
+import com.becker.game.common.player.Player;
+import com.becker.game.common.player.PlayerList;
+
 import java.util.List;
 
 /**

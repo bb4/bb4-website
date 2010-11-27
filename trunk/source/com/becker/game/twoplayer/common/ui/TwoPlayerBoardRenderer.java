@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.common.ui;
 
 import com.becker.game.common.IGameController;
-import com.becker.game.common.ui.GameBoardRenderer;
+import com.becker.game.common.ui.viewer.GameBoardRenderer;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 
 import java.awt.*;

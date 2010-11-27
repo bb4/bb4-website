@@ -1,6 +1,8 @@
 package com.becker.game.twoplayer.common;
 
 import com.becker.game.common.*;
+import com.becker.game.common.board.BoardPosition;
+import com.becker.game.common.player.PlayerList;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.transposition.ZobristHash;

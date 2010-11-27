@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.checkers;
 
 import com.becker.game.common.MoveList;
-import com.becker.game.common.PlayerList;
+import com.becker.game.common.player.PlayerList;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;

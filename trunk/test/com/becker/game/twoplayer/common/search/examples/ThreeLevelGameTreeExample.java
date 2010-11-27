@@ -1,12 +1,6 @@
 package com.becker.game.twoplayer.common.search.examples;
 
-import com.becker.game.common.GamePiece;
-import com.becker.game.common.Move;
-import com.becker.game.common.MoveList;
-import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.TwoPlayerMoveStub;
-
-import java.util.Arrays;
 
 
 /**

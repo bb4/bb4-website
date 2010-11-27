@@ -1,8 +1,8 @@
 package com.becker.game.twoplayer.common.search.transposition;
 
 import com.becker.common.Location;
-import com.becker.game.common.BoardPosition;
-import com.becker.game.common.GamePiece;
+import com.becker.game.common.board.BoardPosition;
+import com.becker.game.common.board.GamePiece;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.tictactoe.TicTacToeBoard;

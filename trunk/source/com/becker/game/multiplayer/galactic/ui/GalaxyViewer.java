@@ -2,7 +2,11 @@ package com.becker.game.multiplayer.galactic.ui;
 
 import com.becker.common.Location;
 import com.becker.game.common.*;
-import com.becker.game.common.ui.GameBoardRenderer;
+import com.becker.game.common.board.BoardPosition;
+import com.becker.game.common.player.Player;
+import com.becker.game.common.player.PlayerAction;
+import com.becker.game.common.player.PlayerList;
+import com.becker.game.common.ui.viewer.GameBoardRenderer;
 import com.becker.game.multiplayer.common.MultiGameController;
 import com.becker.game.multiplayer.common.online.SurrogateMultiPlayer;
 import com.becker.game.multiplayer.common.ui.MultiGameViewer;

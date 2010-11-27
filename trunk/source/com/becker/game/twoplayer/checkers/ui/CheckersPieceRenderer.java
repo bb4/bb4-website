@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.checkers.ui;
 
-import com.becker.game.common.Board;
-import com.becker.game.common.BoardPosition;
+import com.becker.game.common.board.Board;
+import com.becker.game.common.board.BoardPosition;
 import com.becker.game.twoplayer.checkers.CheckersPiece;
 import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
 

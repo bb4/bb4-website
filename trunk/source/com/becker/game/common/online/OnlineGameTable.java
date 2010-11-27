@@ -1,8 +1,8 @@
 package com.becker.game.common.online;
 
 import com.becker.game.common.GameOptions;
-import com.becker.game.common.Player;
-import com.becker.game.common.PlayerList;
+import com.becker.game.common.player.Player;
+import com.becker.game.common.player.PlayerList;
 
 import java.io.Serializable;
 import java.util.Arrays;

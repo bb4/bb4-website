@@ -1,7 +1,7 @@
 package com.becker.game.multiplayer.poker.online.ui;
 
 import com.becker.game.common.GameViewable;
-import com.becker.game.common.ui.GameOptionsDialog;
+import com.becker.game.common.ui.dialogs.GameOptionsDialog;
 import com.becker.game.multiplayer.common.online.ui.MultiPlayerOnlineGameTablesTable;
 import com.becker.game.multiplayer.common.online.ui.MultiPlayerOnlineManagerPanel;
 import com.becker.game.multiplayer.poker.ui.PokerOptionsDialog;

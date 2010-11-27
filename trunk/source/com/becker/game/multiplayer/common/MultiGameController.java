@@ -1,8 +1,10 @@
 package com.becker.game.multiplayer.common;
 
 import com.becker.game.common.*;
+import com.becker.game.common.board.Board;
 import com.becker.game.common.online.IServerConnection;
 import com.becker.game.common.online.ServerConnection;
+import com.becker.game.common.player.Player;
 import com.becker.game.multiplayer.common.online.SurrogateMultiPlayer;
 import com.becker.game.multiplayer.common.ui.MultiGameViewer;
 import com.becker.optimization.parameter.ParameterArray;

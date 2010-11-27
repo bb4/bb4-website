@@ -3,7 +3,7 @@ package com.becker.game.twoplayer.common.ui;
 import com.becker.common.util.Util;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameController;
-import com.becker.game.common.PlayerList;
+import com.becker.game.common.player.PlayerList;
 import com.becker.game.common.ui.GameChangedEvent;
 import com.becker.game.common.ui.GameChangedListener;
 import com.becker.game.common.ui.GameInfoPanel;

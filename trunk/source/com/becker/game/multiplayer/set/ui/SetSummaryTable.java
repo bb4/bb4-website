@@ -1,7 +1,7 @@
 package com.becker.game.multiplayer.set.ui;
 
 import com.becker.game.common.GameContext;
-import com.becker.game.common.PlayerList;
+import com.becker.game.common.player.PlayerList;
 import com.becker.game.multiplayer.common.ui.SummaryTable;
 import com.becker.game.multiplayer.set.SetPlayer;
 

@@ -3,7 +3,7 @@ package com.becker.game.multiplayer.galactic.ui;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.GameController;
 import com.becker.game.common.Move;
-import com.becker.game.common.Player;
+import com.becker.game.common.player.Player;
 import com.becker.game.common.ui.GameChangedEvent;
 import com.becker.game.common.ui.GameChangedListener;
 import com.becker.game.common.ui.GameInfoPanel;

@@ -1,6 +1,6 @@
 package com.becker.game.multiplayer.galactic;
 
-import com.becker.game.common.PlayerAction;
+import com.becker.game.common.player.PlayerAction;
 
 import java.util.List;
 

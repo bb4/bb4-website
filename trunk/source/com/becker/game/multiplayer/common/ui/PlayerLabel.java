@@ -1,6 +1,6 @@
 package com.becker.game.multiplayer.common.ui;
 
-import com.becker.game.common.Player;
+import com.becker.game.common.player.Player;
 
 import javax.swing.*;
 import java.awt.*;

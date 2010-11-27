@@ -1,8 +1,8 @@
 package com.becker.game.common.online;
 
 
-import com.becker.game.common.Player;
-import com.becker.game.common.PlayerAction;
+import com.becker.game.common.player.Player;
+import com.becker.game.common.player.PlayerAction;
 
 
 /**

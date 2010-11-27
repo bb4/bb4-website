@@ -2,7 +2,10 @@ package com.becker.game.multiplayer.common.ui;
 
 import com.becker.common.Location;
 import com.becker.game.common.*;
-import com.becker.game.common.ui.GameBoardViewer;
+import com.becker.game.common.board.BoardPosition;
+import com.becker.game.common.player.Player;
+import com.becker.game.common.player.PlayerAction;
+import com.becker.game.common.ui.viewer.GameBoardViewer;
 import com.becker.game.common.ui.GameChangedEvent;
 import com.becker.game.multiplayer.common.MultiGameController;
 import com.becker.game.multiplayer.common.online.SurrogateMultiPlayer;

@@ -5,7 +5,7 @@ import java.util.Set;
 
 /**
  * A block of n*n cells in a sudoku puzzle.
- * @author Barry Becker Date: Jul 3, 2006
+ * @author Barry Becker
  */
 public class BigCell {
 

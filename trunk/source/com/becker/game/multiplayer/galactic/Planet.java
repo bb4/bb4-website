@@ -2,7 +2,7 @@ package com.becker.game.multiplayer.galactic;
 
 import com.becker.common.Location;
 import com.becker.game.common.GameContext;
-import com.becker.game.common.GamePiece;
+import com.becker.game.common.board.GamePiece;
 import com.becker.game.multiplayer.galactic.player.GalacticPlayer;
 
 import java.awt.*;

@@ -2,7 +2,9 @@ package com.becker.game.twoplayer.common.ui;
 
 import com.becker.common.util.FileUtil;
 import com.becker.game.common.*;
-import com.becker.game.common.ui.NewGameDialog;
+import com.becker.game.common.player.Player;
+import com.becker.game.common.player.PlayerList;
+import com.becker.game.common.ui.dialogs.NewGameDialog;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.optimization.parameter.ParameterArray;
 import com.becker.ui.GUIUtil;

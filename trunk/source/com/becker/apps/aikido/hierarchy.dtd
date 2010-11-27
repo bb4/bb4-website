@@ -1,7 +1,7 @@
 # DTD for hierarchy of stuff
 # if you change this doc, you must also update it on http://barrybecker4.com
 #
-# @author Barry Becker  1/2006
+# @author Barry Becker 
 
 <!ELEMENT hierarchy   (node | use)*>
 <!ELEMENT node        (node | use)*>

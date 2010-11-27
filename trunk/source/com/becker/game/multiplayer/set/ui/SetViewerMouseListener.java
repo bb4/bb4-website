@@ -1,7 +1,7 @@
 package com.becker.game.multiplayer.set.ui;
 
-import com.becker.game.common.ui.GameBoardViewer;
-import com.becker.game.common.ui.ViewerMouseListener;
+import com.becker.game.common.ui.viewer.GameBoardViewer;
+import com.becker.game.common.ui.viewer.ViewerMouseListener;
 import com.becker.game.multiplayer.set.Card;
 import com.becker.game.multiplayer.set.SetController;
 import com.becker.game.multiplayer.set.SetPlayer;

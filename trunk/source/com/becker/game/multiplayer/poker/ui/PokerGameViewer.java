@@ -1,10 +1,10 @@
 package com.becker.game.multiplayer.poker.ui;
 
 import com.becker.game.common.Move;
-import com.becker.game.common.Player;
-import com.becker.game.common.PlayerAction;
-import com.becker.game.common.PlayerList;
-import com.becker.game.common.ui.GameBoardRenderer;
+import com.becker.game.common.player.Player;
+import com.becker.game.common.player.PlayerAction;
+import com.becker.game.common.player.PlayerList;
+import com.becker.game.common.ui.viewer.GameBoardRenderer;
 import com.becker.game.multiplayer.common.online.SurrogateMultiPlayer;
 import com.becker.game.multiplayer.common.ui.MultiGameViewer;
 import com.becker.game.multiplayer.poker.PokerAction;

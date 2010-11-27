@@ -2,8 +2,11 @@ package com.becker.game.twoplayer.checkers.ui;
 
 import com.becker.common.Location;
 import com.becker.game.common.*;
-import com.becker.game.common.ui.GameBoardViewer;
-import com.becker.game.common.ui.ViewerMouseListener;
+import com.becker.game.common.board.Board;
+import com.becker.game.common.board.BoardPosition;
+import com.becker.game.common.board.GamePiece;
+import com.becker.game.common.ui.viewer.GameBoardViewer;
+import com.becker.game.common.ui.viewer.ViewerMouseListener;
 import com.becker.game.twoplayer.checkers.CheckersController;
 import com.becker.game.twoplayer.checkers.CheckersSearchable;
 import com.becker.game.twoplayer.checkers.MoveGenerator;

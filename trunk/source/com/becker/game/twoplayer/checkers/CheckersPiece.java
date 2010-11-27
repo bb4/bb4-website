@@ -1,6 +1,6 @@
 package com.becker.game.twoplayer.checkers;
 
-import com.becker.game.common.GamePiece;
+import com.becker.game.common.board.GamePiece;
 
 /**
  *  the CheckersPiece describes the physical marker at a location on the board.
