@@ -25,8 +25,7 @@ public final class NiceNumbers {
     /**
      * private constructor since all methods are static.
      */
-    private NiceNumbers()
-    {}
+    private NiceNumbers() {}
 
     /**
      * @param min lower end of tickmark range.
@@ -40,7 +39,10 @@ public final class NiceNumbers {
 
     private static final double LABEL_PROXIMITY_THRESH = 0.2;
 
-    /** labels for the found cutpoints. */
+    /**
+     * labels for the found cutpoints.
+     * @return cut point labels
+     */
     public static String[] getCutPointLabels(double min, double max, int maxTicks, boolean useTightLabeling) {
         double [] cutPoints  = getCutPoints(min, max, maxTicks, useTightLabeling);
         DECIMAL_FORMAT.setMaximumFractionDigits(getNumberOfFractionDigits(min, max, maxTicks));
@@ -60,6 +62,7 @@ public final class NiceNumbers {
      * @param maximum upper end of tickmark range.
      * @param maxTicks  upper limit on number of cutponts to return.
      * @param useTightLabeling if false then loose labeling is used.
+     * @return the cutpoints
      */
     public static double[] getCutPoints(double minimum, double maximum, int maxTicks, boolean useTightLabeling) {
 
