@@ -1,13 +1,13 @@
 package com.becker.game.twoplayer.common.persistence;
 
-import com.becker.game.common.GameContext;
-import com.becker.game.common.Move;
+import com.becker.game.common.*;
 import com.becker.game.common.persistence.GameExporter;
-import com.becker.game.twoplayer.common.TwoPlayerController;
+import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 
-import java.io.FileWriter;
+import java.awt.*;
 import java.io.IOException;
+import java.io.Writer;
 import java.util.Iterator;
 
 /**
@@ -17,12 +17,23 @@ import java.util.Iterator;
  */
 public class TwoPlayerGameExporter extends GameExporter {
 
+    protected PlayerList players;
     
-    public TwoPlayerGameExporter(TwoPlayerController controller)
-    {
-        super(controller);
+    public TwoPlayerGameExporter(IGameController controller) {
+        super(controller.getBoard());
+        players = controller.getPlayers();
     }
 
+    /**
+     * Use this version if you have only the board and not the controller.
+     * @param board
+     */
+    public TwoPlayerGameExporter(TwoPlayerBoard board) {
+        super(board);
+        players = new PlayerList();
+        players.add(new Player("player1", Color.BLACK, false));
+        players.add(new Player("player2", Color.WHITE, false));
+    }
 
     /**
      * save the current state of the game to a file in SGF (4) format.
@@ -31,43 +42,52 @@ public class TwoPlayerGameExporter extends GameExporter {
      * @param ae the exception that occurred causing us to want to save state
      */
     @Override
-    public void saveToFile( String fileName, AssertionError ae )
-    {
+    public void saveToFile( String fileName, AssertionError ae ) {
+
         GameContext.log( 1, "saving state to :" + fileName );
-        TwoPlayerController gc = (TwoPlayerController) controller_;
+        TwoPlayerBoard b = (TwoPlayerBoard) board_;
 
         try {
-            FileWriter out = new FileWriter( fileName );
+            Writer out = createWriter(fileName);
             // SGF header info
             out.write( "(;\n" );
             out.write( "FF[4]\n" );
             out.write( "GM[1]\n" );
             //out.write( "CA[UTF-8]\n" );
-            out.write( "SZ2[" + gc.getBoard().getNumRows() + "][" + gc.getBoard().getNumCols() + "]\n" );
-            out.write( "Player1[" + gc.getPlayers().getPlayer1().getName() + "]\n" );
-            out.write( "Player2[" + gc.getPlayers().getPlayer2().getName() + "]\n" );
+            out.write( "SZ2[" + b.getNumRows() + "][" + b.getNumCols() + "]\n" );
+            out.write( "Player1[" + players.getPlayer1().getName() + "]\n" );
+            out.write( "Player2[" + players.getPlayer2().getName() + "]\n" );
             out.write( "GN[test1]\n" );
 
-            Iterator<Move> it = gc.getMoveList().iterator();
-            GameContext.log( 0, "movelist size= " + gc.getMoveList().size() );
-            while ( it.hasNext() ) {
-                Move move = it.next();
-                out.write( getSgfForMove(move) );
-            }
-            // include error info and stack trace in the comments to help debug
-            if ( ae != null ) {
-                out.write( "C[" );
-                if ( ae.getMessage() != null ) {
-                    out.write( ae.getMessage() );
-                    //out would need to be a PrintWriter for this to work
-                    //rte.printStackTrace(out);
-                }
-                out.write( "]\n" );
-            }
+            writeMoves(b.getMoveList(), out);
+            writeExceptionIfAny(ae, out);
+
             out.write( ')' );
             out.close();
         } catch (IOException ioe) {
             ioe.printStackTrace();
+        }
+    }
+
+    protected void writeMoves(MoveList moves, Writer out) throws IOException {
+        Iterator<Move> it = moves.iterator();
+        GameContext.log( 0, "movelist size= " + moves.size() );
+        while ( it.hasNext() ) {
+            Move move = it.next();
+            out.write( getSgfForMove(move) );
+        }
+    }
+
+    protected void writeExceptionIfAny(AssertionError ae, Writer out) throws IOException {
+        // include error info and stack trace in the comments to help debug
+        if ( ae != null ) {
+            out.write( "C[" );
+            if ( ae.getMessage() != null ) {
+                out.write( ae.getMessage() );
+                //out would need to be a PrintWriter for this to work
+                //rte.printStackTrace(out);
+            }
+            out.write( "]\n" );
         }
     }
 
@@ -92,5 +112,4 @@ public class TwoPlayerGameExporter extends GameExporter {
         buf.append( '\n' );
         return buf.toString();
     }
-    
 }

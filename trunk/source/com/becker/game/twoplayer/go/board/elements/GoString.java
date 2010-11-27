@@ -273,8 +273,7 @@ public class GoString extends GoSet
     public void setUnconditionallyAlive(boolean unconditionallyAlive) {
         this.unconditionallyAlive_ = unconditionallyAlive;
     }
-    
-    ////////////////// debugging/consistency check methods //////////////////////////////
+
     /**
      * @return true if any of the stones in the string are blank (should never happen)
      */

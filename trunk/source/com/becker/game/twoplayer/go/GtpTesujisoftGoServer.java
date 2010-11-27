@@ -85,7 +85,7 @@ public class GtpTesujisoftGoServer
         String[] cmdArray = StringUtils.tokenize(cmdLine);
         String cmdStr = cmdArray[0];
         boolean status = true;
-        ////log("handling command="+ cmdStr);
+        // log("handling command="+ cmdStr);
 
         Command cmd = Command.valueOf(cmdStr);
 

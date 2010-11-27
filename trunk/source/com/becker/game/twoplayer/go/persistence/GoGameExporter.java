@@ -2,29 +2,37 @@ package com.becker.game.twoplayer.go.persistence;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.common.Move;
-import com.becker.game.common.PlayerList;
-import com.becker.game.common.persistence.GameExporter;
+import com.becker.game.twoplayer.common.persistence.TwoPlayerGameExporter;
 import com.becker.game.twoplayer.go.GoController;
 import com.becker.game.twoplayer.go.GoMove;
 import com.becker.game.twoplayer.go.GoOptions;
 import com.becker.game.twoplayer.go.board.GoBoard;
 
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Iterator;
+import java.io.Writer;
+
 
 /**
  * Exports the state of a Go game to a file.
  *
  * @author Barry Becker
  */
-public class GoGameExporter extends GameExporter {
+public class GoGameExporter extends TwoPlayerGameExporter {
 
-    public GoGameExporter(GoController controller)
-    {
+    float komi = 0.5f;
+
+    public GoGameExporter(GoController controller) {
         super(controller);
+        komi = ((GoOptions) controller.getOptions()).getKomi();
     }
 
+    /**
+     * Use this version if you have only the board and not the controller.
+     * @param board
+     */
+    public GoGameExporter(GoBoard board) {
+        super(board);
+    }
 
     /**
      * save the current state of the go game to a file in SGF (4) format
@@ -35,12 +43,10 @@ public class GoGameExporter extends GameExporter {
     public void saveToFile( String fileName, AssertionError ae )
     {
         GameContext.log( 1, "saving state to :" + fileName );
-        GoController gc = (GoController) controller_;
-        GoBoard board = (GoBoard) gc.getBoard();
-        PlayerList players = gc.getPlayers();
+        GoBoard b = (GoBoard) board_;
 
         try {
-            FileWriter out = new FileWriter( fileName );
+            Writer out = createWriter(fileName);
             //PrintWriter foo;
             // SGF header info
             out.write( "(;\n" );
@@ -49,31 +55,18 @@ public class GoGameExporter extends GameExporter {
             out.write( "CA[UTF-8]\n" );
             out.write( "ST[2]\n" );
             out.write( "RU[japanese]\n" );
-            out.write( "SZ[" + gc.getBoard().getNumRows() + "]\n" );
+            out.write( "SZ[" + b.getNumRows() + "]\n" );
             out.write( "PB[" + players.getPlayer1().getName() + "]\n" );
             out.write( "PW[" + players.getPlayer2().getName() + "]\n" );
-            out.write( "KM[" + ((GoOptions) gc.getOptions()).getKomi() + "]\n" );
+            out.write( "KM[" + komi + "]\n" );
             out.write( "PC[US]\n" );
-            out.write( "HA[" + board.getHandicap() + "]\n" );
+            out.write( "HA[" + b.getHandicap() + "]\n" );
             out.write( "GN[test1]\n" );
             // out.write("PC[US]"); ?? add the handicap stones if present
-            Iterator it = gc.getMoveList().iterator();
-            GameContext.log( 2, "movelist size= " + gc.getMoveList().size() );
-            while ( it.hasNext() ) {
-                GoMove move = (GoMove) it.next();
-                out.write( getSgfForMove(move) );
-            }
-            // include error info and stack trace in the comments to help debug
-            if ( ae != null ) {
-                out.write( "C[" );
-                out.write(  board.getGroups().toString()  );
-                if ( ae.getMessage() != null ) {
-                    out.write( ae.getMessage() );
-                    //out would need to be a PrintWriter for this to work
-                    //rte.printStackTrace(out);
-                }
-                out.write( "]\n" );
-            }
+
+            writeMoves(b.getMoveList(), out);
+            writeExceptionIfAny(ae, out);
+
             out.write( ')' );
             out.close();
         } catch (IOException ioe) {

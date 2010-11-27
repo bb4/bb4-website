@@ -14,8 +14,7 @@ import com.becker.game.twoplayer.common.persistence.TwoPlayerGameExporter;
 public class BlockadeGameExporter extends TwoPlayerGameExporter {
 
     
-    public BlockadeGameExporter(BlockadeController controller)
-    {
+    public BlockadeGameExporter(BlockadeController controller) {
         super(controller);
     }
 

@@ -1,16 +1,26 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
+import com.becker.common.util.FileUtil;
 import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.twoplayer.common.persistence.TwoPlayerGameExporter;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
+import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.persistence.GoGameExporter;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**
  *  Implementation of Upper Confidedence Tree (UCT) search strategy.
  *  This method uses a monte carlo (stochastic) method and is fundamentally different than minimax and its derivatives.
  *  It's sublcasses define the key search algorithms for 2 player zero sum games with perfect information.
+ *
+ * TODO
+ * - More params
+ *    - limit depth so go does not have to play till end.
+ *    - save games at leaf
+ *    - add option to use concurrency. Need lock on uctNodes
  *
  *  @author Barry Becker
  */
@@ -46,7 +56,6 @@ public class UctStrategy extends AbstractSearchStrategy {
         int numSimulations = 0;
         int maxSimulations = getOptions().getMonteCarloSearchOptions().getMaxSimulations();
         boolean interrupted = false;
-        //long maxPercentValue = maxSimulations * maxSimulations;
 
         UctNode root = new UctNode(lastMove);
 
@@ -63,6 +72,7 @@ public class UctStrategy extends AbstractSearchStrategy {
         boolean player1Wins = false;
         if (lastMoveNode.numVisits == 0) {
             player1Wins = playRandomGame(lastMoveNode.move);
+            movesConsidered_++;
         }
         else {
             if (!lastMoveNode.hasChildren()) {
@@ -124,6 +134,8 @@ public class UctStrategy extends AbstractSearchStrategy {
     private boolean playRandomMove(TwoPlayerMove move, Searchable searchable) {
 
         if (searchable.done(move, false)) {
+            //GoGameExporter exporter = new GoGameExporter((GoBoard)searchable.getBoard());
+            //exporter.saveToFile( FileUtil.PROJECT_HOME + "temp/tmp/file_" + encodeName(move.toString()), null);
             return move.getValue() > 0;
         }
         MoveList moves = searchable.generateMoves(move, weights_, true);
@@ -136,6 +148,12 @@ public class UctStrategy extends AbstractSearchStrategy {
         return playRandomMove(randomMove, searchable);
     }
 
+    private String encodeName(String name) {
+        name = name.replaceAll(":", "_");
+        name = name.replaceAll(",", "_");
+        return name.replaceAll(" ", "_");
+    }
+    
     /**
      * add a move to the visual game tree (if parent not null).
      * If the new node is already in the tree, do not add it, but maybe update values.
@@ -149,7 +167,7 @@ public class UctStrategy extends AbstractSearchStrategy {
             alreadyChild.attributes = node.getAttributes();
             return alreadyChild;
         }
-        movesConsidered_++;
+        //movesConsidered_++;
         return addNodeToTree(parent, node.move, node.getAttributes());
     }
 }

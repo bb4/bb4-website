@@ -2,22 +2,28 @@ package com.becker.game.common.persistence;
 
 import com.becker.common.Location;
 import com.becker.game.common.GameController;
+import com.becker.game.common.IBoard;
+import com.becker.game.common.IGameController;
 import com.becker.game.common.Move;
+import com.becker.game.common.ui.SgfFileFilter;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 
 
 /**
  * Export the state of a game to a file.
  *
- * @author Barry Becker Date: Oct 28, 2006
+ * @author Barry Becker
  */
 public abstract class GameExporter {
 
-    protected GameController controller_;
+    protected IBoard board_;
 
 
-    protected GameExporter(GameController controller) {
-        controller_ = controller;
+    protected GameExporter(IBoard board) {
+        board_ = board;
     }
 
     /**
@@ -32,7 +38,23 @@ public abstract class GameExporter {
      * @return the sgf (smart game format) representation for the move.
      */
     protected abstract String getSgfForMove(Move move);
-    
+
+    protected Writer createWriter(String fileName) throws IOException {
+       return new FileWriter( ensureSuffix(fileName) );
+    }
+
+    /**
+     * @param name name to ensure safety of
+     * @return name with the sgf suffix added if the name did not have it.
+     */
+    protected String ensureSuffix(String name) {
+
+        String suffix = "." + SgfFileFilter.SGF_EXTENSION;
+        if (!name.endsWith(suffix)) {
+            return name + suffix;
+        }
+        return name;
+    }
     
     /**
      * append the board position to the buffer in the form [<c><r>]

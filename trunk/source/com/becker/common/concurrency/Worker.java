@@ -12,7 +12,7 @@ package com.becker.common.concurrency;
  * creating it.
  * ----
  *   I have modified the original Worker class so that it no longer
- *  depends on Swing (hence the new name). I sometimes want to use this
+ * depends on Swing (hence the new name). I sometimes want to use this
  * class in a server process. So if you are using it on the gui make sure
  * that the body of the finished method is called from SwingUtilities.invokeLater().
  *   -Barry
