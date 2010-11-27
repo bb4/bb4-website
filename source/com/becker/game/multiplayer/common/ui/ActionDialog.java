@@ -45,7 +45,7 @@ public abstract class ActionDialog extends OptionsDialog
         mainPanel.setLayout( new BorderLayout() );
         mainPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 
-        JPanel personalInfoPanel = createPersonalInfoPanel(); ////new PokerHandPanel(player_.getHand());
+        JPanel personalInfoPanel = createPersonalInfoPanel();
         JPanel buttonsPanel = createButtonsPanel();
 
         JPanel instructions = createInstructionsPanel();

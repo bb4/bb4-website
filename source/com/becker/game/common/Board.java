@@ -44,6 +44,7 @@ public abstract class Board implements IBoard {
         this();
         numRows_ = b.getNumRows();
         numCols_ = b.getNumCols();
+        rowsTimesCols_ = numRows_ * numCols_;
 
         moveList_ = new MoveList(b.moveList_);
 

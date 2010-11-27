@@ -9,6 +9,7 @@ import java.awt.*;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 /**
  *  Represents a move/node in the game tree.
@@ -74,15 +75,22 @@ public class SearchTreeNode extends DefaultMutableTreeNode
      * @param theMove specified move to check
      * @return the corresponding search node if it is a child.
      */
-    public synchronized SearchTreeNode hasChild(TwoPlayerMove theMove) {
+    public SearchTreeNode hasChild(TwoPlayerMove theMove) {
+         /*
+        if (children == null) return null;
+        SearchTreeNode node = new SearchTreeNode(theMove);
+        int i = children.indexOf(node);
+        return (i>=0) ? (SearchTreeNode)children.get(i) : null;
+        */
         Enumeration enumeration = children();
         while (enumeration.hasMoreElements()) {
-            SearchTreeNode node = (SearchTreeNode)enumeration.nextElement();
+            SearchTreeNode node = (SearchTreeNode)enumeration.nextElement();  // throws exception if elem removed after last line
             if (theMove.equals(node.getUserObject())) {
                 return node;
             }
         }
         return null;
+
     }
 
     /**
@@ -151,4 +159,19 @@ public class SearchTreeNode extends DefaultMutableTreeNode
     public void setLocation(int x, int y) {
         position_ = new Point(x, y);
     }
+     /*
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SearchTreeNode that = (SearchTreeNode) o;
+
+        return this.getUserObject().equals(that.getUserObject());
+    }
+
+    @Override
+    public int hashCode() {
+        return spaceAllocation_ + ((getUserObject()!=null)?getUserObject().hashCode():0);
+    }  */
 }
