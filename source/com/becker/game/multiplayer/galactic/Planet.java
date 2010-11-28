@@ -15,26 +15,23 @@ import java.awt.geom.Point2D;
  * @see Galaxy
  * @author Barry Becker
  */
-public class Planet extends GamePiece
-{
+public class Planet extends GamePiece {
 
     private GalacticPlayer owner_;
     private int numShips_;
     private int productionCapacity_;
+
     // the planets never move
     private Location location_;
+
     private boolean underAttack_;
     private boolean highlighted_;
-
-    public static final char OCCUPIED_PLANET= 'O';
-    public static final char UNOCCUPIED_PLANET= 'U';
 
     public static final Color NEUTRAL_COLOR = Color.LIGHT_GRAY;
 
 
 
-    public Planet( char name, int initialNumShips, int productionCapacity, Location pos)
-    {
+    public Planet( char name, int initialNumShips, int productionCapacity, Location pos)  {
         type_ = name;
         setAnnotation(""+name);
         numShips_ = initialNumShips;
@@ -44,23 +41,19 @@ public class Planet extends GamePiece
     }
 
 
-    public char getName()
-    {
+    public char getName()  {
         return type_;
     }
 
-    public GalacticPlayer getOwner()
-    {
+    public GalacticPlayer getOwner()  {
         return owner_;
     }
 
-    public void setOwner( GalacticPlayer owner )
-    {
+    public void setOwner( GalacticPlayer owner )  {
         owner_ = owner;
     }
 
-    public int getNumShips()
-    {
+    public int getNumShips()  {
         return numShips_;
     }
 
@@ -68,8 +61,7 @@ public class Planet extends GamePiece
      * prefer using deductShips.
      * @param numShips
      */
-    public void setNumShips( int numShips )
-    {
+    public void setNumShips( int numShips )  {
         numShips_ = numShips;
     }
 
@@ -92,8 +84,7 @@ public class Planet extends GamePiece
     /**
      * @param numShips to deduct from those currently at the planet.
      */
-    public void deductShips( int numShips)
-    {
+    public void deductShips( int numShips) {
         // for propper bookkeeping, we need to subtract the fleetsize from the planet of origin.
         // do this for new orders only. It was already done for old orders.
         assert (numShips_ >= numShips) :

@@ -54,8 +54,13 @@ public class Galaxy extends Board
         setSize( numRows, numCols );
     }
 
+    /** Copy constructor */
+    protected Galaxy(Galaxy g) {
+       super(g); 
+    }
+
     public Galaxy copy() {
-        return new Galaxy(this.getNumRows(), this.getNumCols());
+        return new Galaxy(this);
     }
 
     /**
@@ -175,18 +180,6 @@ public class Galaxy extends Board
         Planet p = hmPlanets_.get(name);
         assert(p!=null);
         return p;
-    }
-
-
-    // must call reset() after changing the size
-    @Override
-    public void setSize( int numRows, int numCols ) {
-        numRows_ = numRows;
-        numCols_ = numCols;
-        rowsTimesCols_ = numRows_ * numCols_;
-        // we don't use the 0 edges of the board
-        positions_ = new BoardPosition[numRows_ + 1][numCols_ + 1];
-        reset();
     }
 
     public int getMaxNumMoves() {

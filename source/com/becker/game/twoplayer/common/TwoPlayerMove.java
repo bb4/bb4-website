@@ -9,20 +9,22 @@ import com.becker.game.common.Move;
 
 /**
  *  This base class describes a change in state from one board
- *  position to the next in a game.
+ * position to the next in a game.
  *
- *  Note: when I first created this class I used a freeList to recycle
- *  old moves and avoid unnecessary object creation. However, while profiling,
- *  I found that this was actually slower than jnot using it.
+ * Note: when I first created this class I used a freeList to recycle
+ * old moves and avoid unnecessary object creation. However, while profiling,
+ * I found that this was actually slower than not using it.
  *
- *  We could save significant space by removing some of these members,
- *  and reducing the size of the remaining ones. eg toRow, toCol can be byte, value can be float, etc.
+ * We could save significant space by removing some of these members,
+ * and reducing the size of the remaining ones. eg toRow, toCol can be byte, value can be float, etc.
  *
- *  @see Board
- *  @author Barry Becker
+ * Consider splitting this into TwoPlayerMove (immutable part) and TwoPlayerMoveNode (game tree parts)
+ *
+ * @see Board
+ * @author Barry Becker
  */
-public class TwoPlayerMove extends Move
-{
+public class TwoPlayerMove extends Move {
+
     private static final String P1 = GameContext.getLabel("PLAYER1");
     private static final String P2 = GameContext.getLabel("PLAYER2");
 
@@ -60,7 +62,7 @@ public class TwoPlayerMove extends Move
     /** This is a move that we anticipate will be made in the future. Will be rendered differently. */
     private boolean isFuture_;
 
-    /** Some coments about how the score wwas computed. Used for debugging. */
+    /** Some comments about how the score was computed. Used for debugging. */
     private String scoreDescription_ = null;
 
 
@@ -68,15 +70,14 @@ public class TwoPlayerMove extends Move
      * protected Constructor.
      * use the factory method createMove instead.
      */
-    protected TwoPlayerMove()
-    {}
+    protected TwoPlayerMove() {}
 
     /**
      * create a move object representing a transition on the board.
      */
-    protected TwoPlayerMove( int destinationRow, int destinationCol,
+    protected TwoPlayerMove( Location destination,
                     int val, GamePiece p ) {
-        toLocation_ = new Location(destinationRow, destinationCol);
+        toLocation_ = destination;
 
         setValue(val);
         inheritedValue_ = getValue();
@@ -88,12 +89,34 @@ public class TwoPlayerMove extends Move
     }
 
     /**
+     * copy constructor
+     */
+    protected TwoPlayerMove(TwoPlayerMove move) {
+        this(move.getToLocation(), move.getValue(), move.getPiece().copy());
+        this.inheritedValue_ = move.inheritedValue_;
+        this.selected_ = move.selected_;
+        this.isPass_ = move.isPass_;
+        this.isFuture_ = move.isFuture_;
+        this.urgent_ = move.urgent_;
+        this.isResignation_ = move.isResignation_;
+        this.scoreDescription_ = move.scoreDescription_;
+    }
+
+    /**
+     * @return  a deep copy.
+     */
+    @Override
+    public TwoPlayerMove copy() {
+        return new TwoPlayerMove(this);
+    }
+
+    /**
      * factory method for getting new moves. It uses recycled objects if possible.
      * @return the newly created move.
      */
     public static TwoPlayerMove createMove( int destinationRow, int destinationCol,
                                             int val, GamePiece piece ) {
-        return new TwoPlayerMove(destinationRow, destinationCol, val, piece);
+        return new TwoPlayerMove(new Location(destinationRow, destinationCol), val, piece);
     }
 
     /**
@@ -102,17 +125,7 @@ public class TwoPlayerMove extends Move
      */
     public static TwoPlayerMove createMove( Location destinationLocation,
                                             int val, GamePiece piece )  {
-        return new TwoPlayerMove(destinationLocation.getRow(), destinationLocation.getCol(), val, piece );
-    }
-
-    /**
-     * @return  a deep copy.
-     */
-    public TwoPlayerMove copy()  {
-        TwoPlayerMove cp = createMove( toLocation_, getValue(),  piece_ );
-        cp.selected_ = selected_;
-        cp.urgent_ = urgent_;
-        return cp;
+        return new TwoPlayerMove(destinationLocation, val, piece );
     }
 
     public final byte getToRow()  {

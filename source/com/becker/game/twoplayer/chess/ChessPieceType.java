@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.chess;
 
+import com.becker.common.Location;
 import com.becker.game.common.board.Board;
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.board.CaptureList;
@@ -233,7 +234,7 @@ public enum ChessPieceType
       BoardPosition next = board.getPosition( row, col );
 
       while ((next != null) && next.isUnoccupied() )   {
-          ChessMove m = ChessMove.createMove( curRow, curCol, row, col,
+          ChessMove m = ChessMove.createMove( new Location(curRow, curCol), new Location(row, col),
                                               null, 0,  piece );
           // no need to evaluate it since there were no captures
           moveList.add( m );
@@ -257,8 +258,8 @@ public enum ChessPieceType
                                                       ChessPiece piece)
     {
         if ( (next != null) &&  next.isUnoccupied()) {
-            ChessMove m = ChessMove.createMove(row, col, next.getRow(), next.getCol(),
-                                                null, 0, piece);
+            ChessMove m = ChessMove.createMove(new Location(row, col), new Location(next.getRow(), next.getCol()),
+                                               null, 0, piece);
             moveList.add( m );
         }
         return moveList;
@@ -277,8 +278,8 @@ public enum ChessPieceType
             // there can only be one capture in chess.
             CaptureList capture = new CaptureList();
             capture.add( next.copy() );
-            ChessMove m = ChessMove.createMove( row, col, next.getRow(), next.getCol(),
-                                                 capture, 0, piece);
+            ChessMove m = ChessMove.createMove( new Location(row, col), new Location(next.getRow(), next.getCol()),
+                                                capture, 0, piece);
             moveList.add( m );
         }
         return moveList;

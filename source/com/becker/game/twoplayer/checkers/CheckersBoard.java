@@ -20,33 +20,23 @@ public class CheckersBoard extends TwoPlayerBoard {
      *  dimensions must be 8*8 for a checkers/chess board.
      */
     public CheckersBoard() {
-        init();
-        positions_ = new BoardPosition[numRows_ + 1][numCols_ + 1];
-        reset();
+        setSize(SIZE, SIZE);
     }
 
     /** Copy constructor */
     public CheckersBoard(CheckersBoard b) {
         super(b);
-        init();
     }
 
     public CheckersBoard copy() {
         return new CheckersBoard(this);        
     }
 
-    private void init() {
-        numRows_ = SIZE;
-        numCols_ = SIZE;
-        rowsTimesCols_ = SIZE * SIZE;
-    }
-
     /**
      * reset the board to its initial state.
      */
     @Override
-    public void reset()
-    {
+    public void reset() {
         super.reset();
         assert ( positions_!=null );
         int i;
@@ -79,6 +69,7 @@ public class CheckersBoard extends TwoPlayerBoard {
     @Override
     public void setSize( int numRows, int numCols )
     {
+        super.setSize(numRows, numCols);
         if ( numRows != SIZE || numCols != SIZE) {
             GameContext.log(0,  "Can't change the size of a checkers/chess board. It must be 8x8" );
         }
@@ -117,7 +108,7 @@ public class CheckersBoard extends TwoPlayerBoard {
         CheckersMove m = (CheckersMove) move;
         BoardPosition startPos = positions_[m.getFromRow()][m.getFromCol()];
 
-        startPos.setPiece( m.getPiece().copy() );     // @@ set to a copy of the piece ??
+        startPos.setPiece( m.getPiece().copy() );
         if ( m.kinged ) {
             // then it was just kinged and we need to undo it
             startPos.getPiece().setType( CheckersPiece.REGULAR_PIECE );

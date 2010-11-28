@@ -7,13 +7,15 @@ import java.io.Serializable;
  * Represents a location location of something in byte coordinates.
  * The range of bytes are only 0 to 255 and cannot be negative.
  *
+ * Immutable. Use MutableLocation if you really need to modify it.
+ *
  * @author Barry Becker
  */
-public final class Location implements Serializable
+public class Location implements Serializable
 {
     private static final long serialVersionUID = 1;
-    private byte row_ = 0;
-    private byte col_ = 0;
+    protected byte row_ = 0;
+    protected byte col_ = 0;
 
     /**
      * Constructs a new point at (0, 0).
@@ -33,21 +35,12 @@ public final class Location implements Serializable
         col_ = (byte) col;
     }
 
-
     public byte getRow() {
         return row_;
     }
 
-    public void setRow(int row) {
-        this.row_ =(byte) row;
-    }
-
     public byte getCol() {
         return col_;
-    }
-
-    public void setCol(int col) {
-        this.col_ =(byte) col;
     }
 
     public int getX() {
@@ -58,20 +51,10 @@ public final class Location implements Serializable
         return row_;
     }
 
-    public void incrementRow(int rowChange) {
-        row_ += rowChange;
-    }
-
-    public void incrementCol(int colChange) {
-        col_ += colChange;
-    }
-
-    public void increment(int rowChange, int colChange) {
-        incrementRow(rowChange);
-        incrementCol(colChange);
-    }
-
-    public Location copyOnIncrement(int rowChange, int colChange) {
+    /**
+     * @return an immutable copy of the original incremented by the amount specified.
+     */
+    public Location incrementOnCopy(int rowChange, int colChange) {
         return new Location(row_ + rowChange, col_+colChange);
     }
 

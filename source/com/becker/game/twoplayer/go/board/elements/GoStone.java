@@ -10,8 +10,7 @@ import com.becker.game.twoplayer.go.board.PositionalScore;
  * @see GoBoardPosition
  * @author Barry Becker
  */
-public final class GoStone extends GamePiece implements GoMember
-{
+public class GoStone extends GamePiece implements GoMember {
     /**
      * The health is a number representing the influence of player1(black).
      * A living black stone has a positive health, while a black stone in poor health
@@ -34,10 +33,25 @@ public final class GoStone extends GamePiece implements GoMember
      * create a new go stone.
      * @param player1 true if owned by player1.
      */
-    public GoStone( boolean player1)
-    {
+    public GoStone( boolean player1)  {
         super( player1, REGULAR_PIECE);
         health_ = 0.0f;
+    }
+
+    /** copy constructor */
+    protected GoStone(GoStone stone) {
+        super(stone);
+        this.health_ = stone.health_;
+        this.isDead_ = stone.isDead_;
+        this.positionalScore_ = stone.positionalScore_;
+    }
+
+    /**
+     * create a deep copy of this stone
+     */
+    @Override
+    public GoStone copy() {
+        return new GoStone(this);
     }
 
     /**
@@ -45,36 +59,22 @@ public final class GoStone extends GamePiece implements GoMember
      * @param player1 true if owned by player1.
      * @param health health of the group that this stone belongs to.
      */
-    public GoStone( boolean player1, float health)
-    {
+    public GoStone( boolean player1, float health) {
         super( player1, REGULAR_PIECE);
         health_ = health;
     }
 
-    /**
-     * create a deep copy of this stone
-     */
-    @Override
-    public GamePiece copy()
-    {
-        GoStone stone = new GoStone( ownedByPlayer1_, health_);
-        stone.setTransparency( (short) 0 );
-        stone.setAnnotation( null );
-        return stone;
-    }
 
     public void setPositionalScore(PositionalScore s) {
         positionalScore_ = s;
     }
 
 
-    public void setHealth( float health )
-    {
+    public void setHealth( float health ) {
         health_ = health;
     }
 
-    public float getHealth()
-    {
+    public float getHealth() {
         return health_;
     }
 
@@ -85,8 +85,7 @@ public final class GoStone extends GamePiece implements GoMember
     /**
      * @return true if the stone is dead.
      */
-    public boolean isDead()
-    {
+    public boolean isDead() {
         return isDead_;
     }
 
@@ -94,8 +93,7 @@ public final class GoStone extends GamePiece implements GoMember
      * set the dead state of the stone to true.
      * It will now be rendered differently.
      */
-    public void setDead(boolean dead)
-    {
+    public void setDead(boolean dead) {
         isDead_ = dead;
     }
 
@@ -104,8 +102,7 @@ public final class GoStone extends GamePiece implements GoMember
      * @throws CloneNotSupportedException
      */
     @Override
-    public Object clone() throws CloneNotSupportedException
-    {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 
@@ -125,8 +122,7 @@ public final class GoStone extends GamePiece implements GoMember
      *  Print more compactly than super class.
      */
     @Override
-    public String toString()
-    {
+    public String toString()  {
         StringBuilder sb = new StringBuilder( "" );
         //sb.append( type_ );
         sb.append( ownedByPlayer1_ ? 'B' : 'W' );

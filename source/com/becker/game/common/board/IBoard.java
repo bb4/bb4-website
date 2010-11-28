@@ -4,7 +4,7 @@ import com.becker.game.common.Move;
 
 /**
  * This is the interface that all game boards should implement.
- * We assume that the board is composed of an array of BoardPositions.
+ * We assume that the board is composed of a 2D array of BoardPositions.
  *
  * Providing both an interface and an abstract implementation is a pattern
  * which maximizes flexibility in a framework. The interface defines the
@@ -18,7 +18,7 @@ import com.becker.game.common.Move;
 public interface IBoard {
 
     /**
-     *  Reset the board to its initial state.
+     *  Reset the board to its initial starting state .
      */
     void reset();
 

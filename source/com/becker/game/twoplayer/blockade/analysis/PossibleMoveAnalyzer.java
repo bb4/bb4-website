@@ -92,7 +92,7 @@ class PossibleMoveAnalyzer {
 
     private boolean checkSouthOptions(boolean eastOpen, boolean southOpen) {
         if (southPos != null ) {
-             Location toLocation = fromLocation.copyOnIncrement(2, 0);
+             Location toLocation = fromLocation.incrementOnCopy(2, 0);
              addIf2HopLegal(southOpen, southPos.isSouthBlocked(), toLocation);                  // SS
 
              BlockadeBoardPosition southEastPos = pos.getNeighbor(Direction.SOUTH_EAST, board);
@@ -115,7 +115,7 @@ class PossibleMoveAnalyzer {
     private void checkWest(boolean westOpen) {
         BlockadeBoardPosition westWestPos = pos.getNeighbor(Direction.WEST_WEST, board);
         if (westWestPos != null) {
-           Location toLocation = fromLocation.copyOnIncrement(0, -2);
+           Location toLocation = fromLocation.incrementOnCopy(0, -2);
            addIf2HopLegal(westOpen, westWestPos.isEastBlocked(), toLocation);                    // WW
         }
     }
@@ -132,7 +132,7 @@ class PossibleMoveAnalyzer {
 
         BlockadeBoardPosition northNorthPos = pos.getNeighbor(Direction.NORTH_NORTH, board);
         if (northNorthPos != null) {
-            Location toLocation = fromLocation.copyOnIncrement(-2, 0);
+            Location toLocation = fromLocation.incrementOnCopy(-2, 0);
             addIf2HopLegal(northOpen, northNorthPos.isSouthBlocked(), toLocation);                   // NN
         }
 
@@ -145,7 +145,7 @@ class PossibleMoveAnalyzer {
 
     private void checkEast(boolean eastOpen) {
         if (eastPos != null) {
-            Location toLocation = fromLocation.copyOnIncrement(0, 2);
+            Location toLocation = fromLocation.incrementOnCopy(0, 2);
             addIf2HopLegal(eastOpen, eastPos.isEastBlocked(), toLocation);                       // EE
         }
     }
@@ -170,8 +170,9 @@ class PossibleMoveAnalyzer {
          if (directionOpen && !dirPosition.isVisited() &&
                   (pawnBlockingPath || dirPosition.isHomeBase(opponentPlayer1))) {
               possibleMoveList.add(
-                      BlockadeMove.createMove(fromRow, fromCol, fromRow + rowOffset, fromCol + colOffset,
-                              0, pos.getPiece(), null));
+                      BlockadeMove.createMove(new Location(fromRow, fromCol),
+                                              new Location(fromRow + rowOffset, fromCol + colOffset),
+                                              0, pos.getPiece(), null));
                GameContext.log(2, "ADDED 1 HOP" + dirPosition);
           }
      }

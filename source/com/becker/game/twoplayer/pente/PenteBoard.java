@@ -12,8 +12,8 @@ import com.becker.game.twoplayer.common.TwoPlayerMove;
  */
 public class PenteBoard extends TwoPlayerBoard {
 
-    // this is an auxiliary structure to help determine candidate moves
-    protected boolean[][] candidateMoves_ = null;
+    /** this is an auxiliary structure to help determine candidate moves. should extract to sep class. */
+    protected boolean[][] candidateMoves_;
 
     /** constructor
      *  @param numRows num rows
@@ -32,7 +32,7 @@ public class PenteBoard extends TwoPlayerBoard {
 
     public PenteBoard(PenteBoard pb) {
         super(pb);
-        candidateMoves_ = createCandidateMoves();
+        candidateMoves_ = pb.candidateMoves_.clone();
     }
 
 
@@ -45,13 +45,8 @@ public class PenteBoard extends TwoPlayerBoard {
      */
     @Override
     public void setSize( int numRows, int numCols ) {
-        numRows_ = numRows;
-        numCols_ = numCols;
-        rowsTimesCols_ = numRows_ * numCols_;
-        // we don't use the 0 edges of the board
-        positions_ = createBoard();
+        super.setSize(numRows, numCols);
         candidateMoves_ = createCandidateMoves();
-        reset();
     }
 
     private boolean[][] createCandidateMoves() {
@@ -65,11 +60,11 @@ public class PenteBoard extends TwoPlayerBoard {
     @Override
     public void reset() {
         super.reset();
-        for ( int i = 1; i <= getNumRows(); i++ )
+        for ( int i = 1; i <= getNumRows(); i++ )  {
             for ( int j = 1; j <= getNumCols(); j++ ) {
                 positions_[i][j] = new BoardPosition( i, j, null);
             }
-        initCandidateMoves();
+        }
     }
 
     /**

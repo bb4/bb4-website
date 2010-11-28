@@ -33,6 +33,7 @@ public class ChessBoard extends CheckersBoard
         super(b);
     }
 
+    @Override
     public ChessBoard copy() {
         return new ChessBoard(this);
     }
@@ -42,8 +43,7 @@ public class ChessBoard extends CheckersBoard
      *  reset the board to its initial state.
      */
     @Override
-    public void reset()
-    {
+    public void reset() {
         super.reset();
         clearBoard();
         setupPlayerPieces(true); // player1

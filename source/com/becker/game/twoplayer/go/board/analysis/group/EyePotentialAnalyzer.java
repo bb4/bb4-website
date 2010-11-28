@@ -2,6 +2,7 @@ package com.becker.game.twoplayer.go.board.analysis.group;
 
 import com.becker.common.Box;
 import com.becker.common.Location;
+import com.becker.common.MutableLocation;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.GoGroup;
@@ -78,7 +79,7 @@ class EyePotentialAnalyzer {
     private float getTotalRowPotentials(GoString groupString, int rMin, int rMax, int cMin, int cMax) {
         float totalPotential = 0;
         for ( int r = rMin; r <= rMax; r++ ) {
-            totalPotential += getRowColPotential(new Location(r, cMin), 0, 1, rMax, cMax, groupString);
+            totalPotential += getRowColPotential(new MutableLocation(r, cMin), 0, 1, rMax, cMax, groupString);
         }
         return totalPotential;
     }
@@ -89,7 +90,7 @@ class EyePotentialAnalyzer {
     private float getTotalColumnPotentials(GoString groupString, int rMin, int rMax, int cMin, int cMax) {
         float totalPotential = 0;
         for ( int c = cMin; c <= cMax; c++ ) {
-            totalPotential += getRowColPotential(new Location(rMin, c), 1, 0, rMax, cMax, groupString);
+            totalPotential += getRowColPotential(new MutableLocation(rMin, c), 1, 0, rMax, cMax, groupString);
         }
         return totalPotential;
     }
@@ -98,7 +99,7 @@ class EyePotentialAnalyzer {
      * Find the potential for one of the bbox's rows or columns.
      * @return eye potential for row and column at pos
      */
-    private float getRowColPotential(Location pos, int rowInc, int colInc, int maxRow, int maxCol,
+    private float getRowColPotential(MutableLocation pos, int rowInc, int colInc, int maxRow, int maxCol,
                                      GoString groupString) {
         float runPotential = 0;
         int breadth = (rowInc == 1) ? (maxRow - pos.getRow()) : (maxCol - pos.getCol());

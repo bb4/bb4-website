@@ -5,6 +5,7 @@ import ca.dj.jigo.sgf.SGFLoader;
 import ca.dj.jigo.sgf.tokens.InfoToken;
 import ca.dj.jigo.sgf.tokens.SGFToken;
 import ca.dj.jigo.sgf.tokens.TextToken;
+import com.becker.common.Location;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.board.GamePiece;
 import com.becker.game.common.Move;
@@ -94,8 +95,8 @@ public class BlockadeGameImporter extends TwoPlayerGameImporter {
      * Create a com.becker.game.twoplayer.blockade more from the MoveToken
      */
     @Override
-    protected Move createMoveFromToken( SGFToken token)
-    {
+    protected Move createMoveFromToken( SGFToken token) {
+
          BlockadeMoveToken mvToken = (BlockadeMoveToken) token;
 
          boolean player1 = token instanceof Player1BlockadeMoveToken;
@@ -104,10 +105,9 @@ public class BlockadeGameImporter extends TwoPlayerGameImporter {
              wall = new BlockadeWall(new BlockadeBoardPosition(mvToken.getWallPoint1().y, mvToken.getWallPoint1().x),
                                                        new BlockadeBoardPosition(mvToken.getWallPoint2().y, mvToken.getWallPoint2().x));
 
-         BlockadeMove move = BlockadeMove.createMove(mvToken.getFromY(), mvToken.getFromX(),
-                                                                                        mvToken.getToY(), mvToken.getToX(),
-                                                                                        0, new GamePiece(player1), wall);
-         return move;
+         return BlockadeMove.createMove(new Location(mvToken.getFromY(), mvToken.getFromX()),
+                                                     new Location( mvToken.getToY(), mvToken.getToX()),
+                                                     0, new GamePiece(player1), wall);
     }
 
 }

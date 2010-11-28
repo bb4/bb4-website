@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.go.board;
 
+import com.becker.common.Location;
 import com.becker.game.twoplayer.go.*;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.GoStone;
@@ -38,7 +39,7 @@ public class TestGoBoard extends GoTestCase {
 
         restore(PREFIX  + file);
 
-        GoMove move = new GoMove(row, col, 0, new GoStone(true));
+        GoMove move = new GoMove(new Location(row, col), 0, new GoStone(true));
 
         GoBoard board = (GoBoard)controller_.getBoard();
 
@@ -70,7 +71,7 @@ public class TestGoBoard extends GoTestCase {
         restore(PREFIX + "causedAtari1");
         GoBoard board = (GoBoard)controller_.getBoard();
 
-        GoMove m = new GoMove(4, 4, 0, new GoStone(false));
+        GoMove m = new GoMove(new Location(4, 4), 0, new GoStone(false));
         int numInAtari = m.causesAtari(board);
         Assert.assertTrue("numInAtri="+numInAtari+" expected="+4, numInAtari == 4);
     }
@@ -79,7 +80,7 @@ public class TestGoBoard extends GoTestCase {
     public void testCausedAtari2() {
         restore(PREFIX + "causedAtari2");
 
-        GoMove m = new GoMove(2, 12,  0, new GoStone(true));
+        GoMove m = new GoMove(new Location(2, 12), 0, new GoStone(true));
         controller_.makeMove(m);
         GoBoard board = (GoBoard)controller_.getBoard();
         int numInAtari = m.causesAtari(board);

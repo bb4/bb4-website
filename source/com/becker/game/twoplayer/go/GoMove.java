@@ -1,7 +1,7 @@
 package com.becker.game.twoplayer.go;
 
+import com.becker.common.Location;
 import com.becker.game.common.board.CaptureList;
-import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
@@ -30,8 +30,8 @@ public class GoMove extends TwoPlayerMove {
      * instead call the factory method so we recycle objects.
      * use createMove to get moves, and dispose to recycle them
      */
-    public GoMove( int destinationRow, int destinationCol, int val, GoStone stone ) {
-        super( (byte)destinationRow, (byte)destinationCol, val, stone );
+    public GoMove( Location destination, int val, GoStone stone ) {
+        super(destination, val, stone );
     }
 
     /**
@@ -39,9 +39,25 @@ public class GoMove extends TwoPlayerMove {
      * it uses recycled objects if possible.
      * @return new go move
      */
-    public static GoMove createGoMove( int destinationRow, int destinationCol,
-                                       int val, GoStone stone ) {
-        return new GoMove( (byte)destinationRow, (byte)destinationCol, val, stone );
+    public static GoMove createGoMove( Location destination, int val, GoStone stone ) {
+
+        return new GoMove( destination, val, stone );
+    }
+
+    /** Copy constructor */
+    protected GoMove(GoMove move) {
+        super(move);
+        if ( move.captureList_ != null ) {
+            captureList_ = move.captureList_.copy();
+        }
+    }
+
+    /**
+     *  make a deep copy of the move object
+     */
+    @Override
+    public GoMove copy() {
+        return new GoMove(this);
     }
 
     /**
@@ -49,7 +65,7 @@ public class GoMove extends TwoPlayerMove {
      * @return new passing move
      */
     public static GoMove createPassMove( int val,  boolean player1) {
-        GoMove m = createGoMove( 1, 1, val, null );
+        GoMove m = createGoMove( new Location(1, 1), val, null );
         m.isPass_ = true;
         m.setPlayer1(player1);
         return m;
@@ -60,7 +76,7 @@ public class GoMove extends TwoPlayerMove {
      * @return new passing move
      */
     public static GoMove createResignationMove(boolean player1) {
-        GoMove m = createGoMove( 1, 1, 0, null );
+        GoMove m = createGoMove( new Location(1, 1), 0, null );
         m.isResignation_ = true;
         m.setPlayer1(player1);
         return m;
@@ -87,7 +103,6 @@ public class GoMove extends TwoPlayerMove {
         }
 
         return !hasLiberties(occupiedNbrs, nobiNbrs) && partOfDeadString(occupiedNbrs, board);
-
     }
 
     /**
@@ -121,7 +136,6 @@ public class GoMove extends TwoPlayerMove {
         }
         return true;
     }
-
 
     /**
      * returns true if the specified move caused one or more opponent groups to be in atari
@@ -168,26 +182,6 @@ public class GoMove extends TwoPlayerMove {
             return 0;
         }
     }
-
-    /**
-     *  make a deep copy of the move object
-     */
-    @Override
-    public TwoPlayerMove copy() {
-        CaptureList newList = null;
-        if ( captureList_ != null ) {
-            // then make a deep copy
-            GameContext.log( 2, "**** GoMove: this is the capturelist we are copying:" + captureList_.toString() );
-            newList = captureList_.copy();
-        }
-        GoMove cp = 
-                createGoMove( toLocation_.getRow(), toLocation_.getCol(),
-                                       getValue(), (getPiece() == null)? null : (GoStone)getPiece().copy() );
-        cp.captureList_ = newList;
-        cp.setPlayer1(isPlayer1());
-        cp.setSelected(this.isSelected());
-        return cp;
-    }   
 
     /**
      *

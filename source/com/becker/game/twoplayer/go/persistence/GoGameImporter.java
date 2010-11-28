@@ -4,6 +4,7 @@ import ca.dj.jigo.sgf.Point;
 import ca.dj.jigo.sgf.SGFGame;
 import ca.dj.jigo.sgf.SGFLoader;
 import ca.dj.jigo.sgf.tokens.*;
+import com.becker.common.Location;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.MoveList;
 import com.becker.game.common.player.PlayerList;
@@ -123,6 +124,7 @@ public class GoGameImporter extends TwoPlayerGameImporter {
      * @param token
      */
     private static void addMoves(PlacementListToken token, MoveList moveList) {
+
         Iterator<Point> points = token.getPoints();
         // System.out.println("num points ="+token.getPoints2().size());
         boolean player1 = token instanceof AddBlackToken;
@@ -130,19 +132,19 @@ public class GoGameImporter extends TwoPlayerGameImporter {
         while (points.hasNext()) {
             Point point = points.next();
             //System.out.println("adding move at row=" + point.y+" col="+ point.x);
-            moveList.add( new GoMove( point.y, point.x, 0, new GoStone(player1)));
+            moveList.add( new GoMove( new Location(point.y, point.x), 0, new GoStone(player1)));
         }
     }
 
 
     @Override
-    protected GoMove createMoveFromToken( SGFToken token)
-    {        
+    protected GoMove createMoveFromToken( SGFToken token) {
+
           MoveToken mvToken = (MoveToken) token;
           if (mvToken.isPass()) {
               return GoMove.createPassMove(0, !mvToken.isWhite());
           }
-          return new GoMove( mvToken.getY(), mvToken.getX(), 0, new GoStone(!mvToken.isWhite()));
+          return new GoMove( new Location(mvToken.getY(), mvToken.getX()), 0, new GoStone(!mvToken.isWhite()));
     }
 
 }

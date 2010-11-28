@@ -1,14 +1,16 @@
 package com.becker.game.common;
 
+import com.becker.game.common.board.Board;
+
 /**
  *  This base class describes a change in state from one board
  *  position to the next in a game.
  *
- *  @see com.becker.game.common.board.Board
+ *  @see Board
  *  @author Barry Becker
  */
-public class Move implements Comparable<Move>
-{
+public class Move implements Comparable<Move> {
+
     /**
      * The value of this move from the point of view of player1.
      * The value is determined by static evaluation of the board.
@@ -21,8 +23,17 @@ public class Move implements Comparable<Move>
      * protected Constructor.
      * use the factory method createMove instead.
      */
-    protected Move()
-    {}
+    protected Move() {}
+
+    /** Copy constructor */
+    public Move(Move move) {
+        value_ = move.value_;
+    }
+
+    /** @return a deep copy */
+    public Move copy() {
+        return new Move(this);
+    }
 
     /**
      *  we sort based on the statically evaluated board value

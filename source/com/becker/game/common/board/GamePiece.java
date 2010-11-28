@@ -10,8 +10,8 @@ import java.io.Serializable;
  * @see Board
  * @author Barry Becker
  */
-public class GamePiece implements Serializable
-{
+public class GamePiece implements Serializable {
+
     private static final long serialVersionUID = 1;
 
     /** Subclasses should add more types if needed. */
@@ -38,20 +38,17 @@ public class GamePiece implements Serializable
     /**
      * default constructor
      */
-    protected GamePiece()
-    {
+    protected GamePiece() {
         ownedByPlayer1_ = false;
         type_ = REGULAR_PIECE;
         transparency_ = 0;
     }
 
-
     /**
      * constructor   (assumes a regular piece)
      * @param player1 if owned by player1
      */
-    public GamePiece( boolean player1)
-    {
+    public GamePiece( boolean player1)  {
         ownedByPlayer1_ = player1;
         type_ = REGULAR_PIECE;
         transparency_ = 0;
@@ -62,75 +59,61 @@ public class GamePiece implements Serializable
      * @param player1 if owned by player1
      * @param type there may be different types of pieces (for example in chess there are many; checkers has 2)
      */
-    protected GamePiece( boolean player1, char type)
-    {
+    protected GamePiece( boolean player1, char type) {
         ownedByPlayer1_ = player1;
         type_ = type;
         transparency_ = 0;
     }
 
-    public final void setType( char type )
-    {
+    /**
+     * Copy constructor
+     */
+    protected GamePiece(GamePiece piece) {
+        this(piece.isOwnedByPlayer1());
+        this.type_ = piece.getType();
+        transparency_ = piece.transparency_;
+        annotation_ = piece.annotation_;
+    }
+    /**
+     * @return create a deep copy
+     */
+    public GamePiece copy() {
+        return new GamePiece(this);
+    }
+
+    public final void setType( char type ) {
         type_ = type;
     }
 
-    public final char getType()
-    {
+    public final char getType() {
         return type_;
     }
 
-    public final boolean isOwnedByPlayer1()
-    {
+    public final boolean isOwnedByPlayer1() {
         return ownedByPlayer1_;
     }
 
-    public final void setTransparency( short trans )
-    {
+    public final void setTransparency( short trans ) {
         transparency_ = trans;
     }
 
-    public final short getTransparency()
-    {
+    public final short getTransparency() {
         return transparency_;
     }
 
-    /**
+     /**
       * @param annotation   number or word to show next to the game piece.
       */
-     public final void setAnnotation( String annotation )
-     {
+     public final void setAnnotation( String annotation )  {
          annotation_ = annotation;
      }
 
      /**
       * @return  number or word to show next to the game piece.
       */
-     public String getAnnotation()
-     {
+     public String getAnnotation() {
          return annotation_;
      }
-
-    /**
-     * @return create a deep copy
-     */
-    public GamePiece copy()
-    {
-        GamePiece p = new GamePiece( ownedByPlayer1_, type_ );
-        p.setTransparency( (short) 0 );
-        p.setAnnotation( null );
-        return p;
-    }
-
-    /**
-     * copy data from another game piece into me.
-     */
-    protected void copy(GamePiece p)
-    {
-        ownedByPlayer1_ = p.ownedByPlayer1_;
-        type_ = p.type_;
-        transparency_ = p.transparency_;
-        annotation_ = p.annotation_;
-    }
 
     /**
      * @return Possibly give more detail that you would get with just toString().
@@ -143,8 +126,7 @@ public class GamePiece implements Serializable
      * @return a string representation of the board position
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         StringBuilder sb = new StringBuilder();
         if ( ownedByPlayer1_ )
             sb.append( " X" );

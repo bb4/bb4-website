@@ -19,36 +19,31 @@ import java.util.List;
  * @see ChessBoard
  * @author Barry Becker
  */
-public class ChessPiece extends GamePiece
-{
+public class ChessPiece extends GamePiece {
+
     private ChessPieceType pieceType_;
 
     /** true until the piece has been moved the first time.  */
     private boolean firstTimeMoved_ = true;
 
-    public ChessPiece( boolean player1, ChessPieceType type)
-    {
+    public ChessPiece( boolean player1, ChessPieceType type)  {
         super( player1, type.getSymbol());
         pieceType_ = type;
+    }
+
+    /** copy constructor */
+    protected ChessPiece(ChessPiece piece) {
+        super(piece);
+        this.pieceType_ = piece.pieceType_;
+        this.firstTimeMoved_ = piece.firstTimeMoved_;
     }
 
     /**
      *  create a deep copy of the position.
      */
     @Override
-    public GamePiece copy()
-    {
-        ChessPiece p = new ChessPiece( ownedByPlayer1_, pieceType_);
-        p.setTransparency( (short) 0 );
-        p.setAnnotation( null );
-        return p;
-    }
-
-    @Override
-    public void copy(GamePiece p)
-    {
-        super.copy(p);
-        this.firstTimeMoved_ = ((ChessPiece)p).isFirstTimeMoved();
+    public ChessPiece copy() {
+        return new ChessPiece(this);
     }
 
     public boolean is(ChessPieceType type) {
