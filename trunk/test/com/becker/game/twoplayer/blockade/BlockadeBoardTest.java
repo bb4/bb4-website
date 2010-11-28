@@ -159,62 +159,66 @@ public class BlockadeBoardTest extends BlockadeTestCase {
 
     private static final BlockadeMove[][] moves1 =  {
                 {
-                    new BlockadeMove(6,4,  8,4, 0, new GamePiece(false), null),
-                    new BlockadeMove(8,4,  10,4, 0, null, null),
-                    new BlockadeMove(10,4,  11,5, 0, null, null),
-                    new BlockadeMove(11,5,  11,7, 0, null, null),
-                    new BlockadeMove(11,7,  11,8, 0, null, null),
+                    createMove(6,4, 8,4, new GamePiece(false)),
+                    createMove(8,4, 10,4,  null),
+                    createMove(10,4,  11,5, null),
+                    createMove(11,5,  11,7, null),
+                    createMove(11,7,  11,8, null),
                 },
                 {
-                    new BlockadeMove(6,4,  8,4, 0, new GamePiece(false), null),
-                    new BlockadeMove(8,4,  10,4, 0, null, null),
-                    new BlockadeMove(10,4,  10,2, 0, null, null),
-                    new BlockadeMove(10,2,  11,3, 0, null, null),
-                    new BlockadeMove(11,3,  11,4, 0, null, null),
+                    createMove(6,4,  8,4,  new GamePiece(false)),
+                    createMove(8,4,  10,4, null),
+                    createMove(10,4,  10,2, null),
+                    createMove(10,2,  11,3, null),
+                    createMove(11,3,  11,4, null),
                 },
                 {
-                    new BlockadeMove(8,8,  10,8, 0, new GamePiece(false), null),
-                    new BlockadeMove(10,8,  11,9, 0, null, null),
-                    new BlockadeMove(11,9,  11,8, 0, null, null),
+                    createMove(8,8,  10,8,  new GamePiece(false)),
+                    createMove(10,8,  11,9, null),
+                    createMove(11,9,  11,8, null),
                 },
                 {
-                    new BlockadeMove(8,8,  10,8, 0, new GamePiece(false), null),
-                    new BlockadeMove(10,8,  10,6, 0, null, null),
-                    new BlockadeMove(10,6,  12,6, 0, null, null),
-                    new BlockadeMove(12,6,  13,5, 0, null, null),
-                    new BlockadeMove(13,5,  12,4, 0, null, null),
-                    new BlockadeMove(12,4,  11,4, 0, null, null),
+                    createMove(8,8,  10,8, new GamePiece(false)),
+                    createMove(10,8,  10,6, null),
+                    createMove(10,6,  12,6, null),
+                    createMove(12,6,  13,5, null),
+                    createMove(13,5,  12,4, null),
+                    createMove(12,4,  11,4, null),
                 },           
     };
 
 
     private static final BlockadeMove[][] moves2 =  {
             {
-                new BlockadeMove(8,3,  6,3, 0, new GamePiece(true), null),
-                new BlockadeMove(6,3,  5,4, 0, null, null),
-                new BlockadeMove(5,4,  4,4, 0, null, null),
+                createMove(8,3,  6,3, new GamePiece(true)),
+                createMove(6,3,  5,4, null),
+                createMove(5,4,  4,4, null),
             },
             {
-                new BlockadeMove(8,3,  6,3, 0, new GamePiece(true), null),
-                new BlockadeMove(6,3,  5,4, 0, null, null),
-                new BlockadeMove(5,4,  4,4, 0, null, null),
-                new BlockadeMove(4,4,  4,6, 0, null, null),
-                new BlockadeMove(4,6,  4,8, 0, null, null),
+                createMove(8,3,  6,3, new GamePiece(true)),
+                createMove(6,3,  5,4, null),
+                createMove(5,4,  4,4, null),
+                createMove(4,4,  4,6, null),
+                createMove(4,6,  4,8, null),
             },
             {
-                new BlockadeMove(9,8,  8,9, 0, new GamePiece(true), null),
-                new BlockadeMove(8,9,  6,9, 0, null, null),
-                new BlockadeMove(6,9,  4,9, 0, null, null),
-                new BlockadeMove(4,9,  4,8, 0, null, null),
+                createMove(9,8,  8,9, new GamePiece(true)),
+                createMove(8,9,  6,9, null),
+                createMove(6,9,  4,9, null),
+                createMove(4,9,  4,8, null),
             },
             {
-                new BlockadeMove(9,8,  7,8, 0, new GamePiece(true), null),
-                new BlockadeMove(7,8,  7,6, 0, null, null),
-                new BlockadeMove(7,6,  7,4, 0, null, null),
-                new BlockadeMove(7,4,  5,4, 0, null, null),
-                new BlockadeMove(5,4,  4,4, 0, null, null),
+                createMove(9,8,  7,8, new GamePiece(true)),
+                createMove(7,8,  7,6, null),
+                createMove(7,6,  7,4, null),
+                createMove(7,4,  5,4, null),
+                createMove(5,4,  4,4, null),
             }
     };
+
+    private static BlockadeMove createMove(int r1, int c1, int r2, int c2, GamePiece piece) {
+        return new BlockadeMove(new Location(r1, c1), new Location(r2, c2), 0, piece, null);
+    }
 
     private static final Path[] EXPECTED_P1_PATHS = {
        new Path(moves1[0]), new Path(moves1[1]), new Path(moves1[2]), new Path(moves1[3])
