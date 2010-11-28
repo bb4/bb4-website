@@ -57,7 +57,7 @@ public class GoViewerMouseListener extends ViewerMouseListener {
 
         GameContext.log( 3, "GoBoardViewer: mousePressed: player1sTurn()=" + player1sTurn);
 
-        GoMove m = GoMove.createGoMove( loc.getRow(), loc.getCol(), 0, new GoStone(player1sTurn));
+        GoMove m = GoMove.createGoMove( loc, 0, new GoStone(player1sTurn));
 
         // if there is already a piece where the user clicked, or its
         // out of bounds, or its a suicide move, then return without doing anything

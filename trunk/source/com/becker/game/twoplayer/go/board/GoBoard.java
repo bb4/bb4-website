@@ -44,8 +44,11 @@ public final class GoBoard extends TwoPlayerBoard {
      */
     public GoBoard( int numRows, int numCols, int numHandicapStones ) {
 
-        setHandicap(numHandicapStones);
         setSize( numRows, numCols );
+        setHandicap(numHandicapStones);
+
+        boardUpdater_ = new BoardUpdater(this);
+        territoryAnalyzer_ = new TerritoryAnalyzer(this);
     }
 
     /**
@@ -55,6 +58,7 @@ public final class GoBoard extends TwoPlayerBoard {
 
         super(board);
 
+        handicap_ = board.handicap_;
         NeighborAnalyzer analyzer = new NeighborAnalyzer(this);
         groups_ = analyzer.findAllGroupsOnBoard();
 
@@ -65,34 +69,6 @@ public final class GoBoard extends TwoPlayerBoard {
     public GoBoard copy() {
         return new GoBoard(this);
     }
-
-    @Override
-    protected GoBoardPosition[][] createBoard() {
-        return new GoBoardPosition[getNumRows() + 1][getNumCols() + 1];
-    }
-
-    /**
-     * set the dimensions of the game board (must be square).
-     * must call reset() after changing the size.
-     * @param numRows number of rows
-     * @param numCols number of columns
-     *
-     * @@ Bill says just create new board instead of calling reset or resize
-     */
-    @Override
-    public void setSize( int numRows, int numCols ) {
-        numRows_ = numRows;
-        numCols_ = numRows; // intentionally same as numRows
-
-        if ( numRows_ % 2 == 0 ) numRows_++;
-        if ( numCols_ % 2 == 0 ) numCols_++;
-
-        rowsTimesCols_ = numRows_ * numCols_;
-        // we don't use the 0 edges of the board
-        positions_ = new BoardPosition[numRows_ + 1][numCols_ + 1];
-        reset();
-    }
-
 
     /**
      * start over from the beggining and reinitialize everything.
@@ -108,10 +84,6 @@ public final class GoBoard extends TwoPlayerBoard {
                 positions_[i][j] = new GoBoardPosition(i,j, null, null);
             }
         }
-
-        boardUpdater_ = new BoardUpdater(this);
-        territoryAnalyzer_ = new TerritoryAnalyzer(this);
-
         setHandicap(getHandicap());
     }
 

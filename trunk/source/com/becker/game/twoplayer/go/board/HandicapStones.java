@@ -12,6 +12,9 @@ import java.util.List;
 /**
  * The number of star points used for handicap stones on the board
  * There may be none.
+ *
+ * Immutable
+ *
  * @author Barry Becker
  */
 class HandicapStones {
@@ -27,6 +30,8 @@ class HandicapStones {
 
 
     /**
+     * Constructor
+     * You cannot change the number of handicap stones after construction.
      * @param num number of handicap stones
      * @param boardSize on one side.
      */
@@ -59,8 +64,8 @@ class HandicapStones {
         for ( int i = 0; i < numHandicapStones_; i++ ) {
             GoBoardPosition hpos = starPoints_.get( i );
 
-            GoMove m = GoMove.createGoMove( hpos.getRow(), hpos.getCol(), 0, (GoStone)hpos.getPiece());
-                                          new GoStone(hpos.getPiece().isOwnedByPlayer1(), GamePiece.REGULAR_PIECE );
+            GoMove m = GoMove.createGoMove( hpos.getLocation(), 0, (GoStone)hpos.getPiece());
+                                            new GoStone(hpos.getPiece().isOwnedByPlayer1(), GamePiece.REGULAR_PIECE );
             handicapMoves.add(m);
         }
         return handicapMoves;
@@ -84,14 +89,14 @@ class HandicapStones {
 
         // add the star points
         GoStone handicapStone = new GoStone(true, HANDICAP_STONE_HEALTH);
-        starPoints_.add( new GoBoardPosition( min, min, null, (GoStone)handicapStone.copy()) );
-        starPoints_.add( new GoBoardPosition( max, max, null, (GoStone)handicapStone.copy()) );
-        starPoints_.add( new GoBoardPosition( min, max, null, (GoStone)handicapStone.copy()) );
-        starPoints_.add( new GoBoardPosition( max, min, null, (GoStone)handicapStone.copy()) );
-        starPoints_.add( new GoBoardPosition( min, mid, null, (GoStone)handicapStone.copy()) );
-        starPoints_.add( new GoBoardPosition( max, mid, null, (GoStone)handicapStone.copy()) );
-        starPoints_.add( new GoBoardPosition( mid, min, null, (GoStone)handicapStone.copy()) );
-        starPoints_.add( new GoBoardPosition( mid, max, null, (GoStone)handicapStone.copy()) );
+        starPoints_.add( new GoBoardPosition( min, min, null, handicapStone.copy()) );
+        starPoints_.add( new GoBoardPosition( max, max, null, handicapStone.copy()) );
+        starPoints_.add( new GoBoardPosition( min, max, null, handicapStone.copy()) );
+        starPoints_.add( new GoBoardPosition( max, min, null, handicapStone.copy()) );
+        starPoints_.add( new GoBoardPosition( min, mid, null, handicapStone.copy()) );
+        starPoints_.add( new GoBoardPosition( max, mid, null, handicapStone.copy()) );
+        starPoints_.add( new GoBoardPosition( mid, min, null, handicapStone.copy()) );
+        starPoints_.add( new GoBoardPosition( mid, max, null, handicapStone.copy()) );
         starPoints_.add( new GoBoardPosition( mid, mid, null, handicapStone) );
     }
 }

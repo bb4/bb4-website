@@ -13,14 +13,12 @@ import java.util.Iterator;
  *  @see BlockadeBoard
  *  @author Barry Becker
  */
-public class BlockadeMove extends TwoPlayerMove
-{
+public class BlockadeMove extends TwoPlayerMove {
 
     /** the position that the piece is moving from */
     private Location fromLocation_;
 
-
-    // the wall placed as part of this move
+    /** the wall placed as part of this move. Immutable. */
     private BlockadeWall wall_;
 
     private final Direction direction_;
@@ -29,72 +27,55 @@ public class BlockadeMove extends TwoPlayerMove
      *  Constructor. This should never be called directly
      *  use the factory method createMove instead.
      */
-    public BlockadeMove( int originRow, int originCol,
-                          int destinationRow, int destinationCol,
-                          int val, GamePiece piece, BlockadeWall w)
-    {
-        super( destinationRow, destinationCol, val,  piece );
-        fromLocation_ = new Location(originRow, originCol);
+    public BlockadeMove(Location origin, Location destination,
+                        int val, GamePiece piece, BlockadeWall w) {
+        super( destination, val,  piece );
+        fromLocation_ = origin;
         wall_ = w;
-
-        int rowDif = toLocation_.getRow() - fromLocation_.getRow();
-        int colDif = toLocation_.getCol() - fromLocation_.getCol();
-        direction_ = Direction.getDirection(rowDif, colDif);
+        direction_ = initDirection();
     }
 
     /**
-     *  factory method for getting new moves.
-     *  used to use recycled objects, but did not increase performance, so I removed it.
+     * Factory method for getting new moves.
+     * @return new move
      */
-    public static BlockadeMove createMove(
-            int originRow, int originCol,
-            int destinationRow, int destinationCol,
-            int val, GamePiece piece, BlockadeWall w)
-    {
-        BlockadeMove m = new BlockadeMove( (byte)originRow, (byte)originCol,
-                (byte)destinationRow, (byte)destinationCol, val,  piece, w);
+    public static BlockadeMove createMove( Location origin, Location destination,
+                                           int val, GamePiece piece, BlockadeWall w) {
 
-        return m;
+        return new BlockadeMove( origin, destination, val,  piece, w);
     }
 
     /**
-     *  factory method for getting new moves.
-     *  used to use recycled objects, but did not increase performance, so I removed it.
+     * copy constructor
      */
-    public static BlockadeMove createMove(
-            Location originLocation,
-            Location destinationLocation,
-            int val, GamePiece piece, BlockadeWall w)
-    {
-        BlockadeMove m = new BlockadeMove( originLocation.getRow(), originLocation.getCol(),
-                destinationLocation.getRow(), destinationLocation.getCol(), val,  piece, w);
-
-        return m;
+    public BlockadeMove(BlockadeMove move) {
+        super(move);
+        this.fromLocation_ = move.fromLocation_;
+        this.wall_ = move.wall_;
+        direction_ = initDirection();
     }
 
     /**
      * make a deep copy.
      */
     @Override
-    public TwoPlayerMove copy()
-    {
+    public BlockadeMove copy() {
 
-        BlockadeMove cp = 
-                createMove( fromLocation_.getRow(), fromLocation_.getCol(),
-                                   toLocation_.getRow(), toLocation_.getCol(),
-                                   getValue(), getPiece(), wall_);
-        cp.setSelected(this.isSelected());     
-        return cp;
+        return new BlockadeMove(this);
     }
-    
+
+    private Direction initDirection() {
+        int rowDif = toLocation_.getRow() - fromLocation_.getRow();
+        int colDif = toLocation_.getCol() - fromLocation_.getCol();
+        return Direction.getDirection(rowDif, colDif);
+    }    
     
     /**
      * @param mv  the move to compare to.
      * @return  true if values are equal.
      */
     @Override
-    public boolean equals( Object mv )
-    {
+    public boolean equals( Object mv ) {
          BlockadeMove comparisonMove = (BlockadeMove) mv;
          return (getFromLocation().equals(comparisonMove.getFromLocation())) &&
                     (getToLocation().equals(comparisonMove.getToLocation())) &&
@@ -109,34 +90,29 @@ public class BlockadeMove extends TwoPlayerMove
                   + 30* getToLocation().getRow() + getToLocation().getCol() + wall_.hashCode() + (isPlayer1()?54321:0));
     }
 
-    public int getFromRow()
-    {
+    public int getFromRow() {
         return fromLocation_.getRow();
     }
 
-    public int getFromCol()
-    {
+    public int getFromCol() {
          return fromLocation_.getCol();
     }
 
-    Location getFromLocation()
-    {
+    Location getFromLocation() {
         return fromLocation_;
     }
 
-    public BlockadeWall getWall()
-    {
+    public BlockadeWall getWall() {
         return wall_;
     }
-    public void setWall(BlockadeWall wall)
-    {
+
+    public void setWall(BlockadeWall wall) {
         wall_ = wall;
     }
     /**
      * @return one of the directional constants defined above (eg SOUTH_WEST)
      */
-    public Direction getDirection()
-    {
+    public Direction getDirection() {
         return direction_;
     }
     
@@ -149,8 +125,7 @@ public class BlockadeMove extends TwoPlayerMove
      * @return  true if the wall blocks this move.
      */
     @SuppressWarnings("fallthrough")
-    public boolean isMoveBlockedByWall(BlockadeWall wall, BlockadeBoard board)
-    {
+    public boolean isMoveBlockedByWall(BlockadeWall wall, BlockadeBoard board) {
         // We assume that this wall does not interfere with other walls as that would be invalid.
         boolean blocked = false;
 
@@ -257,8 +232,8 @@ public class BlockadeMove extends TwoPlayerMove
 
     
     @Override
-    public String toString()
-    {
+    public String toString() {
+        
         String s = super.toString();
         if (wall_!=null) {
             s += " "+wall_.toString();

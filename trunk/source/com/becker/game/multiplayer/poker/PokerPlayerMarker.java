@@ -10,17 +10,11 @@ import com.becker.game.multiplayer.poker.player.PokerPlayer;
  * @see PokerTable
  * @author Barry Becker
  */
-public class PokerPlayerMarker extends MultiPlayerMarker
-{
+public class PokerPlayerMarker extends MultiPlayerMarker {
 
-    private static final long serialVersionUID = 1;
-
-
-    public PokerPlayerMarker(PokerPlayer owner)
-    {
+    public PokerPlayerMarker(PokerPlayer owner)  {
         super(owner);
     }
-  
 }
 
 

@@ -31,16 +31,33 @@ public class ChessMove extends TwoPlayerMove
      *  Constructor. This should never be called directly
      *  use the factory method createMove instead.
      */
-    private ChessMove( byte originRow, byte originCol,
-                          byte destinationRow, byte destinationCol,
-                          CaptureList captures,
-                          int val, GamePiece piece )
-    {
-        super( destinationRow, destinationCol, val, piece );
-        fromLocation_ = new Location(originRow, originCol);
+    private ChessMove( Location origin, Location destination,
+                       CaptureList captures, int val, GamePiece piece ) {
 
+        super( destination, val, piece );
+        fromLocation_ = origin;
         captureList = captures;
         firstTimeMoved_ = true;
+    }
+
+    /**
+     * Copy constructor.
+     */
+    protected ChessMove(ChessMove move) {
+        super(move);
+        fromLocation_ = move.fromLocation_;
+        if (move.captureList != null)
+            captureList = move.captureList.copy();
+        firstTimeMoved_ = move.firstTimeMoved_;
+    }
+
+
+    /**
+     * make a deep copy of this move.
+     */
+    @Override
+    public ChessMove copy() {
+        return new ChessMove(this);
     }
 
     /**
@@ -48,59 +65,32 @@ public class ChessMove extends TwoPlayerMove
      * I used to use recylced objects, but it did not seem to improve performance so I dropped it.
      * @return new chess move
      */
-    public static ChessMove createMove(
-            int originRow, int originCol,
-            int destinationRow, int destinationCol,
-            CaptureList captures,
-            int val, GamePiece piece )
-    {
-        return new ChessMove( (byte)originRow, (byte)originCol,
-                (byte)destinationRow, (byte)destinationCol, captures, val, piece );
+    public static ChessMove createMove( Location origin, Location destination,
+                                        CaptureList captures, int val, GamePiece piece ) {
+
+        return new ChessMove(origin, destination, captures, val, piece );
     }
 
-    public int getFromRow()
-    {
+    public int getFromRow() {
         return fromLocation_.getRow();
     }
 
-    public int getFromCol()
-    {
+    public int getFromCol() {
         return fromLocation_.getCol();
     }
 
-    /**
-     * make a deep copy of this move.
-     */
-    @Override
-    public TwoPlayerMove copy()
-    {
-        CaptureList newList = null;
-        if ( captureList != null ) {
-            // then make a deep copy
-            newList = captureList.copy();
-        }
-        ChessMove cp =
-                createMove( fromLocation_.getRow(), fromLocation_.getCol(),
-                                   toLocation_.getRow(), toLocation_.getCol(),
-                                   newList, getValue(), getPiece());
-        cp.setSelected(this.isSelected());
-        cp.firstTimeMoved_ = this.firstTimeMoved_;
-        return cp;
-    }
 
-    public boolean isFirstTimeMoved()
-    {
+    public boolean isFirstTimeMoved() {
         return firstTimeMoved_;
     }
-    public void setFirstTimeMoved( boolean firstTimeMoved)
-    {
+    
+    public void setFirstTimeMoved( boolean firstTimeMoved) {
         firstTimeMoved_ = firstTimeMoved;
     }
 
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         StringBuilder sb = new StringBuilder(super.toString());
         if (this.isFirstTimeMoved())
           sb.append(" firstTimeMoved ");

@@ -20,7 +20,8 @@ public class CheckersMove extends TwoPlayerMove {
     /** True if the piece just got kinged as a result of this move. */
     public boolean kinged;
 
-    /**a linked list of the pieces that were captured with this move
+    /**
+     * a linked list of the pieces that were captured with this move
      * Usually this is null (if no captures) or 1, but could be more.
      */
     public CaptureList captureList = null;
@@ -29,12 +30,10 @@ public class CheckersMove extends TwoPlayerMove {
      *  Constructor. This should never be called directly
      *  use the factory method createMove instead.
      */
-    private CheckersMove( byte originRow, byte originCol,
-                          byte destinationRow, byte destinationCol,
-                          CaptureList captures,
-                          int val, GamePiece piece)  {
-        super( destinationRow, destinationCol, val,  piece );
-        fromLocation_ = new Location(originRow, originCol);
+    private CheckersMove( Location origin, Location destination,
+                          CaptureList captures, int val, GamePiece piece)  {
+        super( destination, val,  piece );
+        fromLocation_ = origin;
         kinged = false;
         captureList = captures;
     }
@@ -44,14 +43,10 @@ public class CheckersMove extends TwoPlayerMove {
      * used to use recycled objects, but did not increase performance, so I removed it.
      * @return new checkers move
      */
-    public static CheckersMove createMove(
-            int originRow, int originCol,
-            int destinationRow, int destinationCol,
-            CaptureList captures,
-            int val, GamePiece piece ) {
+    public static CheckersMove createMove( Location origin, Location destination,
+                                           CaptureList captures, int val, GamePiece piece ) {
 
-        CheckersMove m = new CheckersMove( (byte)originRow, (byte)originCol,
-                (byte)destinationRow, (byte)destinationCol, captures, val, piece );
+        CheckersMove m = new CheckersMove( origin, destination, captures, val, piece );
 
         if ( (piece.getType() == CheckersPiece.REGULAR_PIECE) &&
             ((piece.isOwnedByPlayer1() && m.getToRow() == CheckersController.NUM_ROWS) ||
@@ -64,55 +59,45 @@ public class CheckersMove extends TwoPlayerMove {
         return m;
     }
 
-    public void setToRow(int toRow)
-    {
-        toLocation_.setRow(toRow);
-    }
-    
-    public void setToCol(int toCol)
-    {
-        toLocation_.setCol(toCol);
-    }
-
-    public int getFromRow()
-    {
-        return fromLocation_.getRow();
-    }
-    public int getFromCol()
-    {
-        return fromLocation_.getCol();
-    }
-
-    public void removeCaptures( CheckersBoard b )
-    {
-        if ( captureList != null )
-            captureList.removeFromBoard( b );
-    }
-
-    public void restoreCaptures( CheckersBoard b )
-    {
-        if ( captureList != null )
-            captureList.restoreOnBoard( b );
+    /**
+     * Copy constructor
+     */
+    protected CheckersMove(CheckersMove move) {
+        super(move); 
+        fromLocation_ = move.fromLocation_;
+        kinged = move.kinged;
+        if (move.captureList != null)
+            captureList = move.captureList.copy();
     }
 
     /**
      * make a deep copy.
      */
     @Override
-    public TwoPlayerMove copy()
-    {
-        CaptureList newList = null;
-        if ( captureList != null ) {
-            // then make a deep copy
-            newList = captureList.copy();
-        }
-        CheckersMove cp = 
-                createMove( fromLocation_.getRow(), fromLocation_.getCol(),
-                                   toLocation_.getRow(), toLocation_.getCol(),
-                                   newList, getValue(), getPiece().copy());
-        cp.setSelected(this.isSelected());
-        cp.kinged = this.kinged;
-        return cp;
+    public CheckersMove copy() {
+        return new CheckersMove(this);
+    }
+
+    public void setToLocation(Location toPos) {
+        toLocation_ = toPos;
+    }
+    
+    public int getFromRow() {
+        return fromLocation_.getRow();
+    }
+
+    public int getFromCol() {
+        return fromLocation_.getCol();
+    }
+
+    public void removeCaptures( CheckersBoard b )  {
+        if ( captureList != null )
+            captureList.removeFromBoard( b );
+    }
+
+    public void restoreCaptures( CheckersBoard b ) {
+        if ( captureList != null )
+            captureList.restoreOnBoard( b );
     }
 
     public String toString()

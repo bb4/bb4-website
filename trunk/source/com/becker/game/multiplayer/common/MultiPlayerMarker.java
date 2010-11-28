@@ -11,8 +11,7 @@ import java.awt.*;
  *
  * @author Barry Becker
  */
-public class MultiPlayerMarker extends GamePiece
-{
+public class MultiPlayerMarker extends GamePiece {
 
     private static final long serialVersionUID = 1;
 
@@ -21,22 +20,12 @@ public class MultiPlayerMarker extends GamePiece
     private boolean highlighted_;
 
 
-    public MultiPlayerMarker(MultiGamePlayer owner)
-    {
+    public MultiPlayerMarker(MultiGamePlayer owner) {
         setAnnotation(""+owner.getName());
         owner_ = owner;
     }
 
-    public MultiPlayerMarker( MultiGamePlayer owner, Location pos)
-    {
-        this(owner);    
-        location_ = pos;
-        assert(pos!=null);
-    }
-
-
-    public MultiGamePlayer getOwner()
-    {
+    public MultiGamePlayer getOwner() {
         return owner_;
     }
 
@@ -50,21 +39,18 @@ public class MultiPlayerMarker extends GamePiece
     }
 
 
-    public Color getColor()
-    {
+    public Color getColor() {
         return getOwner().getColor();
     }
 
-    public Location getLocation()
-    {
+    public Location getLocation() {
         return location_;
     }
 
     /**
      * ordinarily this does not change
      */
-    public void setLocation(Location loc)
-    {
+    public void setLocation(Location loc) {
         location_ = loc;
     }
 
@@ -72,8 +58,7 @@ public class MultiPlayerMarker extends GamePiece
       * get the textual representation of thel marker.
       * @return string form
       */
-     public String toString()
-     {
+     public String toString() {
          return toString("\n");
      }
 
@@ -81,14 +66,12 @@ public class MultiPlayerMarker extends GamePiece
       * get the html representation of the marker.
       * @return html form
       */
-     public String toHtml()
-     {
+     public String toHtml()  {
          return toString( "<br>" );
      }
 
 
-    String toString(String newLine)
-    {
+    String toString(String newLine)  {
         StringBuilder sb = new StringBuilder("");
 
         if (getOwner()!=null)

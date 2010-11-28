@@ -28,7 +28,9 @@ public class PokerTable extends Board {
         setSize( numRows, numCols );
     }
 
+    /** Copy constructor */
     public PokerTable(PokerTable table) {
+        super(table);
     }
 
     public PokerTable copy() {
@@ -46,17 +48,6 @@ public class PokerTable extends Board {
                 positions_[i][j] = new BoardPosition( i, j, null);
             }
         }
-    }
-
-
-    @Override
-    public void setSize( int numRows, int numCols ) {
-        numRows_ = numRows;
-        numCols_ = numCols;
-        rowsTimesCols_ = numRows_ * numCols_;
-        // we don't use the 0 edges of the board
-        positions_ = new BoardPosition[numRows_ + 1][numCols_ + 1];
-        reset();
     }
 
     /**

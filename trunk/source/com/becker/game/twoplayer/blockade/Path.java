@@ -29,10 +29,6 @@ public class Path {
         addPathElements(node);
     }
 
-    public Path(String[] test) {
-        this();
-    }
-
     public Path(BlockadeMove[] moves) {
         this();
         for (BlockadeMove m : moves) {

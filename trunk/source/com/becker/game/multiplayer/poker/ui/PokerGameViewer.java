@@ -156,9 +156,8 @@ public class PokerGameViewer extends MultiGameViewer
      * @param lastMove the move to show (but now record)
      */
     @Override
-    public PokerRound createMove(Move lastMove)
-    {
-        return PokerRound.createMove();
+    public PokerRound createMove(Move lastMove) {
+        return new PokerRound();
     }
 
     /**

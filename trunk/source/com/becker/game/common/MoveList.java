@@ -20,12 +20,25 @@ public class MoveList extends LinkedList<Move> {
     public MoveList() {}
 
     /**
-     * Copy constructor
+     * Copy constructor. Does not make a deep copy.
      * @param list
      */
     public MoveList(MoveList list) {
         super(list);
     }
+
+    /**
+     * Copyies the constituent moves as well.
+     * @return a deep copy of the movelist.
+     */
+    public MoveList copy() {
+        MoveList copiedList = new MoveList();
+        for (Move m : this) {
+            copiedList.add(m.copy());
+        }
+        return copiedList;
+    }
+
 
     /**
      *  @return the player that goes first.

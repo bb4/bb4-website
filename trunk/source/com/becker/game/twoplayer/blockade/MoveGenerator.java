@@ -177,8 +177,8 @@ public class MoveGenerator {
         // we do not want to compute the path info again by calling findPlayerPathLengths.
         // The value will change based on how much we shorten our paths while lengthening the opponents.
         BlockadeMove m =
-               BlockadeMove.createMove(ourmove.getFromRow(), ourmove.getFromCol(),
-                                       ourmove.getToRow(), ourmove.getToCol(),
+               BlockadeMove.createMove(ourmove.getFromLocation(),
+                                       ourmove.getToLocation(),
                                        value, ourmove.getPiece(), wall);
         // for the time being just call worth directly. Its less efficient, but simpler.
         board_.makeMove(m);

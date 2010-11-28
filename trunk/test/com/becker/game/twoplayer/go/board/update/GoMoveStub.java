@@ -24,7 +24,6 @@ import java.util.Iterator;
  */
 public class GoMoveStub extends GoMove {
 
-
     private int numCaptures = 0;
 
     /**
@@ -33,7 +32,7 @@ public class GoMoveStub extends GoMove {
      * use createMove to get moves, and dispose to recycle them
      */
     public GoMoveStub( GoStone stone ) {
-        super( 1, 1, 1, stone );
+        super( new Location(1, 1), 1, stone );
     }
 
     @Override

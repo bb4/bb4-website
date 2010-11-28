@@ -10,24 +10,12 @@ import com.becker.game.common.Move;
  * @see PokerTable
  * @author Barry Becker
  */
-public class PokerRound extends Move
-{
-    /**
-     *  Constructor. This should never be called directly
-     *  use the factory method createMove instead.
-     */
-    private PokerRound( )
-    {
-    }
+public class PokerRound extends Move {
 
     /**
-     *  factory method for getting new moves.
-     *  used to use recycled objects, but did not increase performance, so I removed it.
+     *  Constructor.
      */
-    public static PokerRound createMove()
-    {
-        return new PokerRound();
-    }
+    public PokerRound() {}
 
 }
 

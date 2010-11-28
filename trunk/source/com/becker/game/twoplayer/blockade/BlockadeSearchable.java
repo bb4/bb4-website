@@ -47,8 +47,7 @@ public class BlockadeSearchable extends TwoPlayerSearchable {
      *   A big negative value means a good move for p2.
      */
     @Override
-    public int worth( Move lastMove, ParameterArray weights )
-    {
+    public int worth( Move lastMove, ParameterArray weights ) {
         getProfiler().startCalcWorth();
         BlockadeBoard board = (BlockadeBoard)board_;
         BlockadeMove m = (BlockadeMove)lastMove;

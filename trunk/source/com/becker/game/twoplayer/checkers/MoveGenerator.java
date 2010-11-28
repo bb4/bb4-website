@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.checkers;
 
+import com.becker.common.Location;
 import com.becker.game.common.board.BoardPosition;
 import com.becker.game.common.board.CaptureList;
 import com.becker.game.common.GameContext;
@@ -100,9 +101,8 @@ public class MoveGenerator  {
             // then not the first move of the game
             val = lastMove.getValue();
         }
-        m = CheckersMove.createMove( pos.getRow(), pos.getCol(),
-                (pos.getRow() + rowInc), (pos.getCol() + colInc),
-                null, val, pos.getPiece().copy() );
+        m = CheckersMove.createMove( pos.getLocation(), pos.getLocation().incrementOnCopy(rowInc, colInc),
+                                     null, val, pos.getPiece().copy() );
 
         // no need to evaluate it since there were no captures
         moveList_.add( m );
@@ -116,8 +116,8 @@ public class MoveGenerator  {
        capture.add( next.copy() );
        // make it blank so a king doesn't loop back and take it again.
        // next.setPiece(null);
-       m = CheckersMove.createMove( pos.getRow(), pos.getCol(), beyondNext.getRow(), beyondNext.getCol(),
-               capture, lastMove.getValue(),  pos.getPiece().copy() );
+       m = CheckersMove.createMove( pos.getLocation(), beyondNext.getLocation(),
+                                    capture, lastMove.getValue(), pos.getPiece().copy() );
 
        List<CheckersMove> jumps = findJumpMoves( beyondNext, rowInc, m, weights_ );
        moveList_.addAll( jumps );
@@ -145,8 +145,7 @@ public class MoveGenerator  {
               && (m.captureList != null) && (!m.captureList.alreadyCaptured( next )) ) {
             // then there is another jump. We must take it.
             CheckersMove mm = (CheckersMove) m.copy();  // base it on the original jump
-            mm.setToRow(beyondNext.getRow());
-            mm.setToCol(beyondNext.getCol());
+            mm.setToLocation(new Location(beyondNext.getLocation().getRow(), beyondNext.getLocation().getCol()));
             mm.captureList.add( next.copy() );
             // next.setPiece(null); ?
 

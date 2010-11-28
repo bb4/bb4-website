@@ -15,8 +15,8 @@ import java.util.*;
  *
  * @author Barry Becker
  */
-public class BlockadeBoard extends TwoPlayerBoard
-{
+public class BlockadeBoard extends TwoPlayerBoard {
+
     /** The number of home bases for each player.  Traditional rules call for 2. */
     public static final int NUM_HOMES = 2;
 
@@ -40,7 +40,12 @@ public class BlockadeBoard extends TwoPlayerBoard
         boardAnalyzer_ = new BoardAnalyzer(this);
     }
 
-    public BlockadeBoard(BlockadeBoard b) {
+    /** copy constructor */
+    protected BlockadeBoard(BlockadeBoard b) {
+        super(b);
+        p1Homes_ = b.p1Homes_.clone();
+        p2Homes_ = b.p2Homes_.clone();
+        boardAnalyzer_ = new BoardAnalyzer(this);
     }
 
     public BlockadeBoard copy() {
@@ -78,25 +83,6 @@ public class BlockadeBoard extends TwoPlayerBoard
             p2Homes_[i] = positions_[homeRow2][c];
             p2Homes_[i].setPiece(new GamePiece(false));
         }
-    }
-
-    /**
-     * Can't change the size of a Blockade board.
-     */
-    @Override
-    public final void setSize( int numRows, int numCols )
-    {
-        numRows_ = numRows;
-        numCols_ = numCols;
-        rowsTimesCols_ = numRows_ * numCols_;
-        // we don't use the 0 edges of the board
-        positions_ = createBoard();
-        reset();
-    }
-
-    @Override
-    protected BlockadeBoardPosition[][] createBoard() {
-        return new BlockadeBoardPosition[getNumRows() + 1][getNumCols() + 1];
     }
 
     /**

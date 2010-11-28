@@ -41,23 +41,21 @@ public abstract class Board implements IBoard {
     }
 
     /**
-     * Copy constructor. Makes a deep copy of the board.
+     * Copy constructor.
+     * Makes a deep copy of the board and all its parts.
      */
     protected Board(Board b) {
         this();
-        numRows_ = b.getNumRows();
-        numCols_ = b.getNumCols();
-        rowsTimesCols_ = numRows_ * numCols_;
+        this.setSize(b.getNumRows(), b.getNumCols());
 
-        moveList_ = new MoveList(b.moveList_);
+        moveList_ = b.moveList_.copy();
 
-        positions_ = createBoard();
         for ( int i = 1; i <= getNumRows(); i++ )   {
            for ( int j = 1; j <= getNumCols(); j++ ) {
               positions_[i][j] = b.getPosition(i, j).copy();
            }
         }
-    }    
+    }
 
     protected BoardPosition[][] createBoard() {
         return new BoardPosition[getNumRows() + 1][getNumCols() + 1];
@@ -77,12 +75,12 @@ public abstract class Board implements IBoard {
      *  @param numRows the new number of rows for the board to have.
      *  @param numCols the new number of cols for the board to have.
      */
-    public void setSize( int numRows, int numCols )
-    {
+    public void setSize( int numRows, int numCols ) {
         numRows_ = numRows;
         numCols_ = numCols;
         GameContext.log(3, "Board rows cols== " + numRows + ", " + numCols );
         rowsTimesCols_ = numRows_ * numCols_;
+        positions_ = createBoard();
         reset();
     }
 

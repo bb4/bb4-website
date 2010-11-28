@@ -8,8 +8,8 @@ package com.becker.common;
 @SuppressWarnings({"UnusedDeclaration"})
 public class Box {
     
-    private final Location topLeftCorner_;
-    private final Location bottomRightCorner_;
+    private Location topLeftCorner_;
+    private Location bottomRightCorner_;
 
     /**
      * Constructor
@@ -24,9 +24,20 @@ public class Box {
     }
 
     public Box(int rowMin, int colMin, int rowMax, int colMax) {
+
+        if (rowMin > rowMax) {
+            int temp = rowMin;
+            rowMin = rowMax;
+            rowMax = temp;
+        }
+        if (colMin > colMax) {
+            int temp = colMin;
+            colMin = colMax;
+            colMax = temp;
+        }
+
         topLeftCorner_ = new Location(rowMin, colMin);
         bottomRightCorner_ = new Location(rowMax, colMax);
-        verify();
     }
 
     public int getWidth() {
@@ -75,18 +86,22 @@ public class Box {
         return (row >= getMinRow() && row <= getMaxRow() && col >= getMinCol() && col <= getMaxCol());
     }
 
+    /**
+     * Note that the corner locations are immutable so we create new objects for them if they change.
+     * @param loc location to expand out box by.
+     */
     public void expandBy(Location loc) {
         if (loc.getRow() < topLeftCorner_.getRow()) {
-            topLeftCorner_.setRow(loc.getRow());
+            topLeftCorner_ = new Location(loc.getRow(), topLeftCorner_.getCol());
         }
         else if (loc.getRow() > bottomRightCorner_.getRow()) {
-            bottomRightCorner_.setRow(loc.getRow());
+            bottomRightCorner_ = new Location(loc.getRow(), bottomRightCorner_.getCol());
         }
         if (loc.getCol() < topLeftCorner_.getCol())  {
-            topLeftCorner_.setCol(loc.getCol());
+            topLeftCorner_ = new Location(topLeftCorner_.getRow(), loc.getCol());
         }
         else if (loc.getCol() > bottomRightCorner_.getCol()) {
-            bottomRightCorner_.setCol(loc.getCol());
+            bottomRightCorner_ = new Location(bottomRightCorner_.getRow(), loc.getCol());
         }
     }
 
@@ -96,12 +111,14 @@ public class Box {
      * @param maxCol don't go further than this though.
      */
     public void expandGloballyBy(int amount, int maxRow, int maxCol) {
-      
-        topLeftCorner_.setRow((byte)Math.max(topLeftCorner_.getRow() - amount, 1));
-        topLeftCorner_.setCol((byte)Math.max(topLeftCorner_.getCol() - amount, 1));
-        
-        bottomRightCorner_.setRow((byte)Math.min(bottomRightCorner_.getRow() + amount, maxRow));
-        bottomRightCorner_.setCol((byte)Math.min(bottomRightCorner_.getCol() + amount, maxCol));
+
+        topLeftCorner_ =
+                new Location(Math.max(topLeftCorner_.getRow() - amount, 1),
+                             Math.max(topLeftCorner_.getCol() - amount, 1));
+
+        bottomRightCorner_ =
+                new Location(Math.min(bottomRightCorner_.getRow() + amount, maxRow),
+                             Math.min(bottomRightCorner_.getCol() + amount, maxCol));
     }
     
     /**
@@ -111,32 +128,16 @@ public class Box {
      */
     public void expandBordersToEdge(int threshold, int maxRow, int maxCol) {
         if (topLeftCorner_.getRow() <= threshold + 1) {
-            topLeftCorner_.setRow((byte)1);
+            topLeftCorner_ = new Location(1, topLeftCorner_.getCol());
         }
         if (topLeftCorner_.getCol() <= threshold + 1) {
-            topLeftCorner_.setCol(1);
+            topLeftCorner_ = new Location(topLeftCorner_.getRow(), 1);
         }
         if (maxRow - bottomRightCorner_.getRow() <= threshold) {
-            bottomRightCorner_.setRow(maxRow);
+            bottomRightCorner_ = new Location(maxRow, bottomRightCorner_.getCol());
         }
         if (maxCol - bottomRightCorner_.getCol() <= threshold) {
-            bottomRightCorner_.setCol(maxCol);
-        }
-    }
-
-    /**
-     *  make sure corner 1 is the top left and corner 2 is the bottom right
-     */
-    private void verify() {
-       if (topLeftCorner_.getRow() > bottomRightCorner_.getRow()) {
-            byte temp = topLeftCorner_.getRow();
-            topLeftCorner_.setRow(bottomRightCorner_.getRow());
-            bottomRightCorner_.setRow(temp);
-        }
-        if (topLeftCorner_.getCol() > bottomRightCorner_.getCol()) {
-            byte temp = topLeftCorner_.getCol();
-            topLeftCorner_.setCol(bottomRightCorner_.getCol());
-            bottomRightCorner_.setCol(temp);
+            bottomRightCorner_ = new Location(bottomRightCorner_.getRow(), maxCol);
         }
     }
 

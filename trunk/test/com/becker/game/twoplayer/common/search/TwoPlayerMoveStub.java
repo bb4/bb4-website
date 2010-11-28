@@ -27,7 +27,7 @@ public class TwoPlayerMoveStub extends TwoPlayerMove {
 
 
     public TwoPlayerMoveStub(int val, boolean isPlayer1, Location toLocation, TwoPlayerMoveStub parent) {
-        super(toLocation.getRow(), toLocation.getCol(), val, new GamePiece(isPlayer1));
+        super(toLocation, val, new GamePiece(isPlayer1));
         this.parent_ = parent;
         this.children_ = new MoveList();
     }

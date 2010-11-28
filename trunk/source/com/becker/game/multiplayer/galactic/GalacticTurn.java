@@ -12,10 +12,9 @@ import java.util.List;
  *  @see Galaxy
  *  @author Barry Becker
  */
-public class GalacticTurn extends Move
-{
+public class GalacticTurn extends Move {
 
-    // a list of battle simulations
+    /** a list of battle simulations */
     private List battles_;
 
 
@@ -23,24 +22,14 @@ public class GalacticTurn extends Move
      *  Constructor. This should never be called directly
      *  use the factory method createMove instead.
      */
-    private GalacticTurn( )
-    {
-
-    }
+    private GalacticTurn() {}
 
     /**
      *  factory method for getting new moves.
      *  used to use recycled objects, but did not increase performance, so I removed it.
      */
-    public static GalacticTurn createMove()
-    {
+    public static GalacticTurn createMove() {
         return new GalacticTurn();
-    }
-
-
-    public List getBattleSimulations()
-    {
-        return battles_;
     }
 
     /**
@@ -48,8 +37,7 @@ public class GalacticTurn extends Move
      * @param order
      * @param destPlanet
      */
-    public void addSimulation(Order order, Planet destPlanet)
-    {
+    public void addSimulation(Order order, Planet destPlanet) {
         BattleSimulation battle = new BattleSimulation(order, destPlanet);
         addSimulation(battle);
     }
@@ -59,10 +47,10 @@ public class GalacticTurn extends Move
      * given an order and destPlanet create a battle sequence that can be played back in the ui.
      * @param battle
      */
-    public void addSimulation(BattleSimulation battle)
-    {
-        if (battles_==null)
+    public void addSimulation(BattleSimulation battle)  {
+        if (battles_==null) {
             battles_ = new ArrayList();
+        }
         battles_.add(battle);
     }
 
@@ -70,13 +58,11 @@ public class GalacticTurn extends Move
     /**
      * private class representing a single melee round result
      */
-    private static class Hit
-    {
+    private static class Hit   {
         int numShipsDestroyed;
         Player playerHit;
 
-        Hit(Player p, int numDestroyed)
-        {
+        Hit(Player p, int numDestroyed) {
             playerHit = p;
             numShipsDestroyed = numDestroyed;
         }

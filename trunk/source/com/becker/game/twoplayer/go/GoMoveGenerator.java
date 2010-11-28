@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.go;
 
+import com.becker.common.Location;
 import com.becker.game.common.board.Board;
 import com.becker.game.common.board.CaptureList;
 import com.becker.game.common.GameContext;
@@ -53,7 +54,7 @@ public final class GoMoveGenerator {
             for (int j = 1; j <= nRows; j++ )  {
                 // if its a candidate move and not an immediate take-back (which would break the rule of ko)
                 if ( candidateMoves.isCandidateMove( j, i ) && !isTakeBack( j, i, (GoMove) lastMove, board ) ) {
-                    GoMove m = GoMove.createGoMove( j, i, lastMoveValue, new GoStone(player1) );
+                    GoMove m = GoMove.createGoMove( new Location(j, i), lastMoveValue, new GoStone(player1) );
 
                     if ( m.isSuicidal(board) ) {
                         GameContext.log( 2, "The move was a suicide (can't add it to the list): " + m );

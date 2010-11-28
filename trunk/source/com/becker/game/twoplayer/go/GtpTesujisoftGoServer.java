@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.go;
 
+import com.becker.common.Location;
 import com.becker.common.util.FileUtil;
 import com.becker.game.common.GameContext;
 import com.becker.game.common.Move;
@@ -308,7 +309,7 @@ public class GtpTesujisoftGoServer
 
         if (point != null)  {
             boolean isBlack = controller_.getCurrentPlayer().equals(controller_.getPlayers().getPlayer1());
-            GoMove move = new GoMove(point.getX()+1, point.getY()+1,  0, new GoStone(isBlack));
+            GoMove move = new GoMove(new Location(point.getX()+1, point.getY()+1),  0, new GoStone(isBlack));
             controller_.manMoves(move);
         }
         return true;
