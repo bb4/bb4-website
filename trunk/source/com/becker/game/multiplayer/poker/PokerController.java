@@ -288,7 +288,7 @@ public class PokerController extends MultiGameController
 
         // special case of no one raising
         int contrib = this.getCurrentMaxContribution();
-        System.out.println("in roundover check max contrib="+contrib);
+        GameContext.log(0, "in roundover check max contrib="+contrib);
 
         for (Player pp : getPlayers()) {
             PokerPlayer p = (PokerPlayer)pp;
@@ -386,7 +386,7 @@ public class PokerController extends MultiGameController
 
             }
         }
-        System.out.println("The winning hand was " + winner.getHand());
+        GameContext.log(0, "The winning hand was " + winner.getHand());
         return winner;
     }
 

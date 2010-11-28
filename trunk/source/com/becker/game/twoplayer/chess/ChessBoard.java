@@ -38,14 +38,12 @@ public class ChessBoard extends CheckersBoard
         return new ChessBoard(this);
     }
 
-
     /**
      *  reset the board to its initial state.
      */
     @Override
     public void reset() {
         super.reset();
-        clearBoard();
         setupPlayerPieces(true); // player1
         setupPlayerPieces(false); // player2
     }
@@ -59,18 +57,8 @@ public class ChessBoard extends CheckersBoard
         int pawnRow = isPlayer1 ? 2 : numRows - 1;
         int kingRow = isPlayer1 ? 1 : numRows;
         for ( int j = 1; j <= getNumCols(); j++ ) {
-            positions_[kingRow][j] = new BoardPosition( kingRow, j, new ChessPiece(isPlayer1, PIECE_ARRANGEMENT[j-1]) );
-            positions_[pawnRow][j] = new BoardPosition( pawnRow, j, new ChessPiece(isPlayer1, ChessPieceType.PAWN) );
-        }
-    }
-
-    private void clearBoard() {
-        assert ( positions_!=null );
-        int numRows = getNumRows();
-        for ( int i = 1; i <= numRows; i++ )  {
-            for ( int j = 1; j <= getNumCols(); j++ ) {
-                positions_[i][j] = new BoardPosition( i, j, null);
-            }
+            setPosition(new BoardPosition( kingRow, j, new ChessPiece(isPlayer1, PIECE_ARRANGEMENT[j-1])));
+            setPosition(new BoardPosition( pawnRow, j, new ChessPiece(isPlayer1, ChessPieceType.PAWN)));
         }
     }
 
@@ -113,8 +101,8 @@ public class ChessBoard extends CheckersBoard
     protected boolean makeInternalMove( Move move )
     {
         ChessMove m = (ChessMove) move;
-        BoardPosition oldPos = positions_[m.getFromRow()][m.getFromCol()];
-        BoardPosition newPos = positions_[m.getToRow()][m.getToCol()];
+        BoardPosition oldPos = getPosition(m.getFromRow(), m.getFromCol());
+        BoardPosition newPos = getPosition(m.getToRow(), m.getToCol());
 
         // remove the captures before we place the moved piece since it may be underneath.
         removeCaptures( m.captureList );
@@ -126,7 +114,7 @@ public class ChessBoard extends CheckersBoard
             // once its been moved its no longer the first time its been moved
             ((ChessPiece)newPos.getPiece()).setFirstTimeMoved(false);
 
-            positions_[m.getFromRow()][m.getFromCol()].clear();
+            getPosition(m.getFromRow(), m.getFromCol()).clear();
         }
         return true;
     }
@@ -140,10 +128,10 @@ public class ChessBoard extends CheckersBoard
     protected void undoInternalMove( Move move )
     {
         ChessMove m = (ChessMove) move;
-        BoardPosition start = positions_[m.getFromRow()][m.getFromCol()];
+        BoardPosition start = getPosition(m.getFromRow(), m.getFromCol());
         start.setPiece(m.getPiece());
 
-        positions_[m.getToRow()][m.getToCol()].clear();
+        getPosition(m.getToRow(), m.getToCol()).clear();
         // restore the firstTimeMoved status of the piece since we
         // may be moving it back to its original position.
         ((ChessPiece)start.getPiece()).setFirstTimeMoved(m.isFirstTimeMoved());

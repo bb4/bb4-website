@@ -131,7 +131,7 @@ public class PokerGameViewer extends MultiGameViewer
                 msg = p.getName() + " folded.";
                 break;
             case CALL :
-                // System.out.println("PGV: robot call amount = currentMaxContrib - robot.getContrib) = "
+                // GameContext.log(0,"PGV: robot call amount = currentMaxContrib - robot.getContrib) = "
                 //                   + pc.getCurrentMaxContribution()+" - "+robot.getContribution());
                 if (callAmount <= p.getCash())  {
                     p.contributeToPot(pc, callAmount);

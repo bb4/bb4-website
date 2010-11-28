@@ -34,10 +34,12 @@ public class TicTacToeBoard extends PenteBoard {
 
         int i,j;
 
-        for ( i = 1; i <= getNumRows(); i++ )
-            for ( j = 1; j <= getNumCols(); j++ )
-                if ( !positions_[i][j].isOccupied())
+        for ( i = 1; i <= getNumRows(); i++ )  {
+            for ( j = 1; j <= getNumCols(); j++ )  {
+                if ( !getPosition(i, j).isOccupied())
                     b[i][j] = true;
+            }
+        }
     }
 
 }

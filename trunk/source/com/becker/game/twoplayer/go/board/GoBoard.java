@@ -79,12 +79,13 @@ public final class GoBoard extends TwoPlayerBoard {
 
         super.reset();
         groups_ = new GoGroupSet();
-        for ( int i = 1; i <= getNumRows(); i++ )  {
-            for ( int j = 1; j <= getNumCols(); j++ ) {
-                positions_[i][j] = new GoBoardPosition(i,j, null, null);
-            }
-        }
+
         setHandicap(getHandicap());
+    }
+
+    @Override
+    protected BoardPosition getPositionPrototype() {
+        return new GoBoardPosition(1, 1, null, null);
     }
 
     public void setHandicap(int handicap) {
@@ -104,13 +105,13 @@ public final class GoBoard extends TwoPlayerBoard {
     }
 
     /**
-     *in go there is not really a theoretical limit to the number of moves,
+     * in go there is not really a theoretical limit to the number of moves,
      * but practically if we exceed this then we award the game to whoever is ahead.
      * @return the maximum number of moves ever expected for this game.
      */
     public int getMaxNumMoves()
     {
-        return 3 * rowsTimesCols_;
+        return 2 * positions_.getNumBoardSpaces();
     }
 
     /**
@@ -133,7 +134,7 @@ public final class GoBoard extends TwoPlayerBoard {
      */
     @Override
     public int getTypicalNumMoves() {
-        return rowsTimesCols_ - getNumRows();
+        return positions_.getNumBoardSpaces() - getNumRows();
     }
 
     /**
@@ -160,7 +161,6 @@ public final class GoBoard extends TwoPlayerBoard {
             }
         }
     }
-
 
     private GoProfiler getProfiler() {
         return GoProfiler.getInstance();
@@ -268,7 +268,7 @@ public final class GoBoard extends TwoPlayerBoard {
         // we should be able to just sum all the position scores now.
         for ( int i = 1; i <= getNumRows(); i++ )  {
            for ( int j = 1; j <= getNumCols(); j++ ) {
-               GoBoardPosition pos = (GoBoardPosition)positions_[i][j];
+               GoBoardPosition pos = (GoBoardPosition)getPosition(i, j);
                if (pos.isOccupied() && pos.getPiece().isOwnedByPlayer1() == forPlayer1)  {
                   numStones++;
                }
@@ -283,7 +283,7 @@ public final class GoBoard extends TwoPlayerBoard {
     private void clearEyes() {
         for ( int i = 1; i <= getNumRows(); i++ ) {
             for ( int j = 1; j <= getNumCols(); j++ ) {
-                GoBoardPosition space = (GoBoardPosition)positions_[i][j];
+                GoBoardPosition space = (GoBoardPosition)getPosition(i, j);
                 if ( space.isInEye() )     {
                     // remove reference to the owning group so it can be garbage collected.
                     space.getEye().clear();

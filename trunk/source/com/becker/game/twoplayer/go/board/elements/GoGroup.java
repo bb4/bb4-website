@@ -204,10 +204,10 @@ public final class GoGroup extends GoSet
     public float getRelativeHealth(GoBoard board, boolean useCachedValue) {
         if (groupAnalyzer_.isValid() || useCachedValue) {
             if (!groupAnalyzer_.isValid())
-                System.out.println("using cached relative health when not valid");
+                GameContext.log(0, "using cached relative health when not valid");
             return groupAnalyzer_.getRelativeHealth();
         }
-        System.out.println("stale abs health. recalculating relative health");
+        GameContext.log(0, "stale abs health. recalculating relative health");
         return groupAnalyzer_.calculateRelativeHealth(board);
     }
 

@@ -1,5 +1,6 @@
 package com.becker.game.multiplayer.set;
 
+import com.becker.game.common.GameContext;
 import com.becker.game.common.board.Board;
 import com.becker.game.common.GameOptions;
 import com.becker.game.common.player.Player;
@@ -185,8 +186,7 @@ public class SetController extends MultiGameController
      * by default we start with one human and one robot player.
      */
     @Override
-    protected void initPlayers()
-    {
+    protected void initPlayers() {
         // we just init the first time.
         // After that, they can change manually to get different players.
         if (players_ == null) {
@@ -213,8 +213,7 @@ public class SetController extends MultiGameController
     }
 
     @Override
-    public void computerMovesFirst()
-    {
+    public void computerMovesFirst() {
         assert false : "No one moves first in set.";
     }
 
@@ -224,8 +223,7 @@ public class SetController extends MultiGameController
      *
      * @return true if the game is over.
      */
-    public boolean isDone()
-    {
+    public boolean isDone() {
         return !Card.hasSet(deck_);
     }
 
@@ -258,9 +256,8 @@ public class SetController extends MultiGameController
      *  @return the player that goes first.
      */
     @Override
-    public Player getFirstPlayer()
-    {
-        System.out.println("There is not actual first player in set");         
+    public Player getFirstPlayer() {
+        GameContext.log(0,"There is not actual first player in set");
         return null;
     }
 

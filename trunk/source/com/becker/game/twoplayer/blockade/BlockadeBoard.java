@@ -36,6 +36,7 @@ public class BlockadeBoard extends TwoPlayerBoard {
      * @param numCols number of rows in the board grid.
      */
     public BlockadeBoard(int numRows, int numCols) {
+        System.out.println("bb numRows=" + numRows +" nc="+ numCols);
         setSize(numRows, numCols);
         boardAnalyzer_ = new BoardAnalyzer(this);
     }
@@ -58,32 +59,33 @@ public class BlockadeBoard extends TwoPlayerBoard {
     @Override
     public void reset() {
         super.reset();
-        assert ( positions_!=null );
-        int i;
-        for ( i = 1; i <= getNumRows(); i++ ) {
-            for ( int j = 1; j <= getNumCols(); j++ ) {
-                positions_[i][j] = new BlockadeBoardPosition(i, j);
-            }
-        }
+
         p1Homes_ = new BlockadeBoardPosition[NUM_HOMES];
         p2Homes_ = new BlockadeBoardPosition[NUM_HOMES];
 
         // determine the home base positions,
         // and place the players 2 pieces on their respective home bases initially.
-        int homeRow1 = getNumRows() - (int) (HOME_BASE_POSITION_PERCENT * getNumRows())+1;
+        int homeRow1 = getNumRows() - (int) (HOME_BASE_POSITION_PERCENT * getNumRows()) + 1;
         int homeRow2 = (int) (HOME_BASE_POSITION_PERCENT * getNumRows());
         float increment = (float)(getNumCols())/(NUM_HOMES+1);
         int baseOffset = Math.round(increment);
-        for (i=0; i<NUM_HOMES; i++) {
+        for (int i=0; i<NUM_HOMES; i++) {
             int c = baseOffset + Math.round(i*increment);
-            positions_[homeRow1][c] = new BlockadeBoardPosition( homeRow1, c, null, null, null, true, false);
-            positions_[homeRow2][c] = new BlockadeBoardPosition( homeRow2, c, null, null, null, false, true);
-            p1Homes_[i] = positions_[homeRow1][c];
+            setPosition(new BlockadeBoardPosition( homeRow1, c, null, null, null, true, false));
+            setPosition(new BlockadeBoardPosition( homeRow2, c, null, null, null, false, true));
+
+            p1Homes_[i] = positions_.getPosition(homeRow1, c);
             p1Homes_[i].setPiece(new GamePiece(true));
-            p2Homes_[i] = positions_[homeRow2][c];
+            p2Homes_[i] = positions_.getPosition(homeRow2, c);
             p2Homes_[i].setPiece(new GamePiece(false));
         }
     }
+
+    @Override
+    protected BoardPosition getPositionPrototype() {
+        return new BlockadeBoardPosition(1, 1);
+    }
+        
 
     /**
      * If the Blockade game has more than this many moves, then we assume it is a draw.
@@ -241,13 +243,13 @@ public class BlockadeBoard extends TwoPlayerBoard {
     {
         getProfiler().startMakeMove();
         BlockadeMove m = (BlockadeMove) move;
-        positions_[m.getToRow()][m.getToCol()].setPiece(m.getPiece());
+        getPosition(m.getToRow(), m.getToCol()).setPiece(m.getPiece());
 
         // we also need to place a wall.
         if (m.getWall() != null) {
             addWall(m.getWall());
         }
-        positions_[m.getFromRow()][m.getFromCol()].clear();
+        getPosition(m.getFromRow(), m.getFromCol()).clear();
         getProfiler().stopMakeMove();
         return true;
     }
@@ -261,9 +263,9 @@ public class BlockadeBoard extends TwoPlayerBoard {
     protected void undoInternalMove( Move move ) {
         getProfiler().startUndoMove();
         BlockadeMove m = (BlockadeMove) move;
-        BoardPosition startPos = positions_[m.getFromRow()][m.getFromCol()];
+        BoardPosition startPos = getPosition(m.getFromRow(), m.getFromCol());
         startPos.setPiece( m.getPiece() );
-        positions_[m.getToRow()][m.getToCol()].clear();
+        getPosition(m.getToRow(), m.getToCol()).clear();
 
         // remove the wall that was placed by this move.
         if (m.getWall()!=null) {
@@ -299,7 +301,7 @@ public class BlockadeBoard extends TwoPlayerBoard {
         // print just the walls
         for ( int i = 1; i <= getNumRows(); i++ ) {
             for ( int j = 1; j <= getNumCols(); j++ ) {
-               BlockadeBoardPosition pos = ((BlockadeBoardPosition)positions_[i][j]);
+               BlockadeBoardPosition pos = ((BlockadeBoardPosition)getPosition(i, j));
                if (pos.getEastWall()!=null)
                    buf.append("East wall at: ").append(i).append(' ').append(j).append('\n');
                if (pos.getSouthWall()!=null)

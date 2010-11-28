@@ -18,36 +18,30 @@ import javax.swing.*;
  *
  *  @author Barry Becker
  */
-public class BlockadePanel extends TwoPlayerPanel
-{
+public class BlockadePanel extends TwoPlayerPanel {
 
     /**
      * Construct the panel.
      */
-    public BlockadePanel()
-    {}
+    public BlockadePanel() {}
 
     @Override
-    public String getTitle()
-    {
+    public String getTitle() {
         return GameContext.getLabel("BLOCKADE_TITLE");
     }
 
     @Override
-    protected GameBoardViewer createBoardViewer()
-    {
+    protected GameBoardViewer createBoardViewer() {
         return new BlockadeBoardViewer();
     }
 
     @Override
-    protected NewGameDialog createNewGameDialog( JFrame parent, GameViewable viewer )
-    {
+    protected NewGameDialog createNewGameDialog( JFrame parent, GameViewable viewer ) {
         return new BlockadeNewGameDialog( parent, viewer );
     }
 
     @Override
-    protected GameInfoPanel createInfoPanel(GameController controller)
-    {
+    protected GameInfoPanel createInfoPanel(GameController controller) {
         return new TwoPlayerInfoPanel( controller );
     }
 
@@ -55,8 +49,7 @@ public class BlockadePanel extends TwoPlayerPanel
      *  Display the help dialog to give instructions
      */
     @Override
-    protected void showHelpDialog()
-    {
+    protected void showHelpDialog() {
         String name = getTitle();
         String comments =GameContext.getLabel("BLOCKADE_COMMENTS");
         String overview = GameContext.getLabel("BLOCKADE_OVERVIEW");

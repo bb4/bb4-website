@@ -208,7 +208,7 @@ public class PokerPlayerRenderer extends GamePieceRenderer
         int[] numChips = PokerChip.getChips(amount);
         int i,x, width, height=0, firstNonZeroPile=0;
         int y = (cellSize * (location.getRow()));
-        //System.out.println("chips stacks = "+numChips[1]+" "+numChips[2] + " "+numChips[3] + " "+numChips[4]);
+        GameContext.log(3,"chips stacks = "+numChips[1]+" "+numChips[2] + " "+numChips[3] + " "+numChips[4]);
         for (i=0; i<numChips.length; i++) {
 
             if (numChips[i] > 0) {
@@ -220,7 +220,6 @@ public class PokerPlayerRenderer extends GamePieceRenderer
                 g2.setColor(PokerChip.values()[i].getColor());
                 x = (int)(((float)i*CHIP_PILE_WIDTH + location.getCol() +1) * cellSize);
                 y = location.getRow() * cellSize - height;
-                //System.out.println("x="+x+"  y="+y+"   w="+width+" ht="+height);
                 g2.fillRect(x, y, width, height);
                 g2.setColor(BLACK_COLOR);
                 g2.drawRect(x, y, width, height);

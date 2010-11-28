@@ -38,26 +38,12 @@ public class PokerTable extends Board {
     }
 
     /**
-     *  reset the board to its initial state
-     */
-    @Override
-    public void reset() {
-        super.reset();
-        for ( int i = 1; i <= getNumRows(); i++ ) {
-            for ( int j = 1; j <= getNumCols(); j++ ) {
-                positions_[i][j] = new BoardPosition( i, j, null);
-            }
-        }
-    }
-
-    /**
      * A poker game has no real limit so we just reutnr a huge number.
      * @return max number of poker rounds allowed.
      */
     public int getMaxNumMoves() {
         return 1000000;
     }
-
 
     /**
      * place the players around the poker table

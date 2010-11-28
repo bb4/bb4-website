@@ -189,7 +189,7 @@ final class OrderDialog extends OptionsDialog
             cancel();
         }
         else {
-           System.out.println( "actionPerformed source="+source+". not cancel and not ok" );
+           GameContext.log(0, "actionPerformed source=" + source + ". not cancel and not ok" );
         }
     }
 
@@ -200,7 +200,6 @@ final class OrderDialog extends OptionsDialog
     public void itemStateChanged( ItemEvent e)
     {
         Object source = e.getSource();
-        System.out.println( "itemStateChanged source="+source );
         if (source == originCombo_)  {
             showAvailableShips(getOrigin());
         }

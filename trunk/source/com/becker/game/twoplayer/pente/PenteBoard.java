@@ -50,21 +50,7 @@ public class PenteBoard extends TwoPlayerBoard {
     }
 
     private boolean[][] createCandidateMoves() {
-        return new boolean[numRows_ + 2][numCols_ + 2];
-    }
-
-
-    /**
-     * Reset the board to its initial state.
-     */
-    @Override
-    public void reset() {
-        super.reset();
-        for ( int i = 1; i <= getNumRows(); i++ )  {
-            for ( int j = 1; j <= getNumCols(); j++ ) {
-                positions_[i][j] = new BoardPosition( i, j, null);
-            }
-        }
+        return new boolean[getNumRows() + 2][getNumCols() + 2];
     }
 
     /**
@@ -79,7 +65,7 @@ public class PenteBoard extends TwoPlayerBoard {
     }
 
     public int getMaxNumMoves() {
-        return rowsTimesCols_;
+        return positions_.getNumBoardSpaces();
     }
 
     /**
@@ -88,7 +74,7 @@ public class PenteBoard extends TwoPlayerBoard {
     @Override
     protected void undoInternalMove( Move move ) {
         TwoPlayerMove m = (TwoPlayerMove)move;
-        positions_[m.getToRow()][m.getToCol()].clear();
+        getPosition(m.getToRow(), m.getToCol()).clear();
     }
 
     /**
@@ -105,7 +91,7 @@ public class PenteBoard extends TwoPlayerBoard {
         boolean hasCandidates = false;
         for ( i = 1; i <= getNumRows(); i++ ) {
             for ( j = 1; j <= getNumCols(); j++ ) {
-                if ( positions_[i][j].isOccupied() ) {
+                if ( getPosition(i, j).isOccupied() ) {
                     b[i - 1][j - 1] = true;
                     b[i - 1][j] = true;
                     b[i - 1][j + 1] = true;
@@ -132,7 +118,7 @@ public class PenteBoard extends TwoPlayerBoard {
      * @return true if this position is a possible next move
      */
     public boolean isCandidateMove( int row, int col )  {
-        return (candidateMoves_[row][col] && positions_[row][col].isUnoccupied());
+        return (candidateMoves_[row][col] && getPosition(row, col).isUnoccupied());
     }
 
     /**
