@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.blockade;
 
+import com.becker.common.Location;
 import com.becker.game.common.board.GamePiece;
 import com.becker.optimization.parameter.ParameterArray;
 import junit.framework.*;
@@ -24,7 +25,7 @@ public class BlockadeControllerTest extends BlockadeTestCase {
         BlockadeBoard board = (BlockadeBoard)controller_.getBoard();
 
         BlockadeMove winningMove =
-                new BlockadeMove(5,8,  4,8, 0, new GamePiece(true),
+                new BlockadeMove(new Location(5, 8), new Location(4, 8), 0, new GamePiece(true),
                                  new BlockadeWall(new BlockadeBoardPosition(12, 5), new BlockadeBoardPosition(12, 4))
                 );
 
