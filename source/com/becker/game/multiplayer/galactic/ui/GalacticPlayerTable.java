@@ -150,7 +150,6 @@ public class GalacticPlayerTable extends PlayerTable implements TableModelListen
             // create a dummy player of the correct type and get the image icon.
             GalacticPlayer np =
                     GalacticPlayer.createGalacticPlayer("", p, Color.WHITE, isHuman);
-            //System.out.println("h="+isHuman);
             m.setValueAt(np.getIcon(), row, ICON_INDEX);
         }
     }

@@ -160,12 +160,10 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
 
         if (string != null)  {
             string.remove(this, board);
-            super.clear();
         } else {
             assert isUnoccupied();
         }
-        setString(null);
-        setVisited(false);
+        clear();
     }
 
     /**
@@ -173,7 +171,9 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
      */
     @Override
     public void clear() {
-        assert false : "must use clear(board) instead";
+        super.clear();
+        setString(null);
+        setVisited(false);
     }
 
     /**

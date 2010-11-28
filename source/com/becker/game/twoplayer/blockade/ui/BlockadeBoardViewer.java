@@ -18,17 +18,14 @@ import java.awt.event.MouseEvent;
  *
  *  @author Barry Becker
  */
-public class BlockadeBoardViewer extends AbstractTwoPlayerBoardViewer
-                                 
-{
+public class BlockadeBoardViewer extends AbstractTwoPlayerBoardViewer {
     /**
      * Construct the viewer.
      */
     public BlockadeBoardViewer() {}
 
     @Override
-    protected GameController createController()
-    {
+    protected GameController createController() {
         return new BlockadeController();
     }
 
@@ -47,8 +44,7 @@ public class BlockadeBoardViewer extends AbstractTwoPlayerBoardViewer
      * @return the tooltip for the panel given a mouse event.
      */
     @Override
-    public String getToolTipText( MouseEvent e )
-    {
+    public String getToolTipText( MouseEvent e ) {
         Location loc = getBoardRenderer().createLocation(e);
         StringBuilder sb = new StringBuilder( "<html><font=-3>" );
 

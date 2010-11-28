@@ -33,20 +33,6 @@ public class TrivialTable extends Board {
         return new TrivialTable(this);
     }
 
-
-    /**
-     *  reset the board to its initial state
-     */
-    @Override
-    public void reset() {
-        super.reset();
-        for ( int i = 0; i <= getNumRows(); i++ ) {
-            for ( int j = 0; j <= getNumCols(); j++ ) {
-                positions_[i][j] = new BoardPosition( i, j, null);
-            }
-        }
-    }
-
     /**
      * A trivial game has no real limit so we just reutnr a huge number.
      * @return max number of trivial rounds allowed.

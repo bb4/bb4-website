@@ -24,11 +24,7 @@ import com.becker.game.common.MoveList;
 public abstract class Board implements IBoard {
 
     /** the internal data structures representing the game board and the positions on it. */
-    protected BoardPosition positions_[][] = null;
-
-    protected int numRows_;
-    protected int numCols_;
-    protected int rowsTimesCols_;
+    protected BoardPositions positions_;
 
     /**
      * We keep a list of the moves that have been made.
@@ -36,6 +32,10 @@ public abstract class Board implements IBoard {
      */
     private MoveList moveList_;
 
+
+    /**
+     * Default constructor
+     */
     public Board() {
         moveList_ = new MoveList();
     }
@@ -49,24 +49,19 @@ public abstract class Board implements IBoard {
         this.setSize(b.getNumRows(), b.getNumCols());
 
         moveList_ = b.moveList_.copy();
-
-        for ( int i = 1; i <= getNumRows(); i++ )   {
-           for ( int j = 1; j <= getNumCols(); j++ ) {
-              positions_[i][j] = b.getPosition(i, j).copy();
-           }
-        }
+        positions_ = b.positions_.copy();
     }
-
-    protected BoardPosition[][] createBoard() {
-        return new BoardPosition[getNumRows() + 1][getNumCols() + 1];
-    }
-
 
     /**
      *  Reset the board to its initial state.
      */
     public void reset() {
         getMoveList().clear();
+        positions_.clear(getPositionPrototype());
+    }
+
+    protected BoardPosition getPositionPrototype() {
+        return new BoardPosition(1, 1, null);
     }
 
     /**
@@ -76,28 +71,23 @@ public abstract class Board implements IBoard {
      *  @param numCols the new number of cols for the board to have.
      */
     public void setSize( int numRows, int numCols ) {
-        numRows_ = numRows;
-        numCols_ = numCols;
         GameContext.log(3, "Board rows cols== " + numRows + ", " + numCols );
-        rowsTimesCols_ = numRows_ * numCols_;
-        positions_ = createBoard();
+        positions_ = new BoardPositions(numRows, numCols);
         reset();
     }
 
     /**
      * @return  retrieve the number of rows that the board has.
      */
-    public final int getNumRows()
-    {
-        return numRows_;
+    public final int getNumRows() {
+        return positions_.getNumRows();
     }
 
     /**
      * @return  retrieve the number of cols that the board has.
      */
-    public final int getNumCols()
-    {
-        return numCols_;
+    public final int getNumCols() {
+        return positions_.getNumCols();
     }
 
     /**
@@ -108,18 +98,6 @@ public abstract class Board implements IBoard {
         return moveList_;
     }
 
-    /**
-     * returns null if there is no game piece at the position specified.
-     * @return the piece at the specified location. Returns null if there is no piece there.
-     */
-    public final BoardPosition getPosition( int row, int col )
-    {
-        if ( row < 1 || row > numRows_ || col < 1 || col > numCols_) {
-            return null;
-        }
-        return positions_[row][col];
-    }
-
     public int getTypicalNumMoves() {
         return 40;
     }
@@ -128,11 +106,21 @@ public abstract class Board implements IBoard {
      * returns null if there is no game piece at the position specified.
      * @return the piece at the specified location. Returns null if there is no piece there.
      */
-    public final BoardPosition getPosition( Location loc )
-    {
+    public final BoardPosition getPosition( int row, int col ) {
+        return positions_.getPosition(row, col);
+    }
+
+    /**
+     * returns null if there is no game piece at the position specified.
+     * @return the piece at the specified location. Returns null if there is no piece there.
+     */
+    public final BoardPosition getPosition( Location loc ) {
         return getPosition(loc.getRow(), loc.getCol());
     }
 
+    protected final void setPosition(BoardPosition pos) {
+        positions_.setPosition(pos);
+    }
 
     /**
      * @param move  to make
@@ -143,7 +131,6 @@ public abstract class Board implements IBoard {
         getMoveList().add( move );
         return done;
     }
-
 
     /**
      * undo the last move made.
@@ -165,45 +152,15 @@ public abstract class Board implements IBoard {
      */
     @Override
     public boolean equals(Object b) {
+
         if (!(b instanceof Board)) return false;
         Board board = (Board)b;
-        for ( int i = 1; i <= getNumRows(); i++ )   {
-            for ( int j = 1; j <= getNumCols(); j++ ) {
-                BoardPosition p1 = this.getPosition(i,j);
-                BoardPosition p2 = board.getPosition(i,j);
-                if (p1.isOccupied() != p2.isOccupied()) {
-                    GameContext.log(2, "Inconsistent occupation status  p1="+p1+ " and p2="+p2 );
-                    return false;
-                }
-                if (p1.isOccupied() && p2.isOccupied()) {
-                    GamePiece piece1 = p1.getPiece();
-                    GamePiece piece2 = p2.getPiece();
-                    if (piece1.isOwnedByPlayer1() != piece2.isOwnedByPlayer1() ||
-                        piece1.getType() != piece2.getType())    {
-                        GameContext.log(2, "There was an inconsistency between p1="+p1+ " and "+p2 );
-                        return false;
-                    }
-                }
-            }
-       }
-       return true;
+        return (board.positions_.equals(positions_));
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        int nRows = getNumRows();
-        int nCols = getNumCols();
-        for ( int i = 1; i <= nRows; i++ )   {
-          int pos = (i-1) * nCols;
-          for ( int j = 1; j <= nCols; j++ ) {
-              BoardPosition p1 = this.getPosition(i,j);
-              if (p1.isOccupied()) {
-                  hash += 2 *(pos + j) + (p1.getPiece().isOwnedByPlayer1()? 1: 2);
-              }
-           }
-        }
-        return hash;
+        return positions_.hashCode();
     }
 
     /**
@@ -221,30 +178,13 @@ public abstract class Board implements IBoard {
     /**
      * @return true if the specified position is within the bounds of the board
      */
-    public final boolean inBounds( int r, int c )
-    {
-        return !(r < 1 || r > getNumRows() || c < 1 || c > getNumCols());
+    public final boolean inBounds( int r, int c ) {
+        return positions_.inBounds(r, c);
     }
 
     @Override
     public String toString() {
-        StringBuilder bldr = new StringBuilder(1000);
-        bldr.append("\n");
-        int nRows = getNumRows();
-        int nCols = getNumCols();
-        for ( int i = 1; i <= nRows; i++ )   {
-          for ( int j = 1; j <= nCols; j++ ) {
-              BoardPosition pos = this.getPosition(i,j);
-              if (pos.isOccupied()) {
-                  bldr.append(pos.getPiece());
-              }
-              else {
-                  bldr.append(" _ ");
-              }
-           }
-           bldr.append("\n");
-        }
-        return bldr.toString();
+        return positions_.toString();
     }
 
      /**
@@ -252,23 +192,16 @@ public abstract class Board implements IBoard {
      * @return true if the specified BoardPosition is on the corder of the board
      * @param position position to see if in corner of board.
      */
-    public boolean isInCorner(BoardPosition position)
-    {
-        return ((position.getRow()==1 && position.getCol()==1) ||
-                (position.getRow()== getNumRows() && position.getCol()== getNumCols()) ||
-                (position.getRow()== getNumRows()  && position.getCol()==1) ||
-                (position.getRow()==1 && position.getCol()== getNumCols()));
+    public boolean isInCorner(BoardPosition position) {
+        return positions_.isInCorner(position);
     }
-    
 
     /**
      * Corner points are also on the edge.
      * @param position position to see if on edge of board.
      * @return true if the specified BoardPosition is on the edge of the board
      */
-    public boolean isOnEdge(BoardPosition position)
-    {
-        return (position.getRow()==1 || position.getRow()== getNumRows()
-                || position.getCol()==1 || position.getCol()== getNumCols());
+    public boolean isOnEdge(BoardPosition position) {
+        return positions_.isOnEdge(position);
     }
 }

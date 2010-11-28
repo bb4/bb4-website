@@ -63,22 +63,7 @@ public class Galaxy extends Board
         return new Galaxy(this);
     }
 
-    /**
-     *  reset the board to its initial state
-     */
-    @Override
-    public void reset()
-    {
-        super.reset();
-        for ( int i = 1; i <= getNumRows(); i++ ) {
-            for ( int j = 1; j <= getNumCols(); j++ ) {
-                positions_[i][j] = new BoardPosition( i, j, null);
-            }
-        }
-    }
-
-    public void initPlanets(PlayerList players, GalacticOptions options)
-    {
+    public void initPlanets(PlayerList players, GalacticOptions options) {
         hmPlanets_.clear();
 
         numPlanets_ = options.getNumPlanets();
@@ -183,7 +168,7 @@ public class Galaxy extends Board
     }
 
     public int getMaxNumMoves() {
-        return rowsTimesCols_;
+        return positions_.getNumBoardSpaces();
     }
 
     /**
@@ -221,17 +206,15 @@ public class Galaxy extends Board
      * @@ todo
      */
     @Override
-    protected void undoInternalMove( Move move )
-    {
+    protected void undoInternalMove( Move move ) {
         GameContext.log(0,  "undo no implemented yet." );
-        //clear(positions_[move.getToRow()][move.getToCol()]);
     }
 
     /**
      * @return true if all the planets are owned by a single player
      */
-    public static boolean allPlanetsOwnedByOnePlayer()
-    {
+    public static boolean allPlanetsOwnedByOnePlayer() {
+
         Iterator it = planets_.iterator();
         Player player = planets_.get(0).getOwner();
         while (it.hasNext()) {

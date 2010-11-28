@@ -38,14 +38,7 @@ public class CheckersBoard extends TwoPlayerBoard {
     @Override
     public void reset() {
         super.reset();
-        assert ( positions_!=null );
         int i;
-        for ( i = 1; i <= getNumRows(); i++ ) {
-            for ( int j = 1; j <= getNumCols(); j++ ) {
-                positions_[i][j] = new BoardPosition( i, j, null);
-            }
-        }
-
         for ( i = 1; i <= 3; i++ )
             fillRow( i, i % TWO, true );
 
@@ -56,19 +49,19 @@ public class CheckersBoard extends TwoPlayerBoard {
     /**
      * fill a reow with pieces during setup.
      */
-    private void fillRow( int row, int odd, boolean player1 )
-    {
+    private void fillRow( int row, int odd, boolean player1 ) {
+        
         for ( int j = 1; j <= 4; j++ )
-            positions_[row][TWO * j - odd] = new BoardPosition( row, (TWO * j - odd),
-                                             new CheckersPiece(player1, CheckersPiece.REGULAR_PIECE));
+            setPosition(new BoardPosition(row, (TWO * j - odd),
+                                          new CheckersPiece(player1, CheckersPiece.REGULAR_PIECE)));
     }
 
     /**
      *  can't change the size of a checkers board.
      */
     @Override
-    public void setSize( int numRows, int numCols )
-    {
+    public void setSize( int numRows, int numCols )  {
+
         super.setSize(numRows, numCols);
         if ( numRows != SIZE || numCols != SIZE) {
             GameContext.log(0,  "Can't change the size of a checkers/chess board. It must be 8x8" );
@@ -78,8 +71,7 @@ public class CheckersBoard extends TwoPlayerBoard {
     /**
      * If a checkers game has more than this many moves, then we assume it is a draw.
      */
-    public int getMaxNumMoves()
-    {
+    public int getMaxNumMoves() {
         return 220;
     }
 
@@ -90,11 +82,11 @@ public class CheckersBoard extends TwoPlayerBoard {
     @Override
     protected boolean makeInternalMove( Move move ) {
         CheckersMove m = (CheckersMove) move;
-        positions_[m.getToRow()][m.getToCol()].setPiece(m.getPiece());
+        getPosition(m.getToRow(), m.getToCol()).setPiece(m.getPiece());
 
         // we also need to remove the captures from the board
         m.removeCaptures( this );
-        positions_[m.getFromRow()][m.getFromCol()].clear();
+        getPosition(m.getFromRow(), m.getFromCol()).clear();
 
         return true;
     }
@@ -106,7 +98,7 @@ public class CheckersBoard extends TwoPlayerBoard {
     protected void undoInternalMove( Move move ) {
 
         CheckersMove m = (CheckersMove) move;
-        BoardPosition startPos = positions_[m.getFromRow()][m.getFromCol()];
+        BoardPosition startPos = getPosition(m.getFromRow(), m.getFromCol());
 
         startPos.setPiece( m.getPiece().copy() );
         if ( m.kinged ) {
@@ -116,7 +108,7 @@ public class CheckersBoard extends TwoPlayerBoard {
         // restore the captured pieces to the board
         m.restoreCaptures( this );
 
-        positions_[m.getToRow()][m.getToCol()].clear();
+        getPosition(m.getToRow(), m.getToCol()).clear();
     }
 
 

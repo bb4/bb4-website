@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.go.board;
 
+import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
 import com.becker.game.twoplayer.go.board.elements.*;
 
@@ -107,13 +108,10 @@ public class BoardValidator {
                          GoBoardPositionList gg = na.findGroupFromInitialPosition(stone);
                         bldr.append(gg.toString("\nSEED STONE = "+ stone1));
                     }
-                    System.out.println(bldr.toString());
-                    System.out.flush();
-                    //assert false :
-                    System.out.println(
+                    GameContext.log(0, bldr.toString());
+                    GameContext.log(0,
                             g.toString("Calculated Group (seeded by ") + stone + "):"
                                 + "\n is not equal to the expected parent group:\n" + parentGroup);
-                    System.out.flush();
                 }
             }
         }

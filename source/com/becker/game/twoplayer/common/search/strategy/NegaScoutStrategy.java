@@ -101,7 +101,6 @@ public class NegaScoutStrategy extends NegaMaxStrategy
             SearchTreeNode child = addNodeToTree(parent, theMove, window );
 
             // search with minimal search window
-            //System.out.println(getIndent(depth) + "search a=" + -newBeta + " b="+ window.alpha);
             selectedMove = searchInternal( theMove, depth-1, new SearchWindow(-newBeta, -window.alpha), child);
 
             searchable_.undoInternalMove( theMove );
@@ -122,17 +121,14 @@ public class NegaScoutStrategy extends NegaMaxStrategy
                 if (window.alpha >= newBeta) {
                     // re-search with narrower window (typical alpha beta search).
                     searchable_.makeInternalMove( theMove );
-                    //System.out.println(getIndent(depth) + "doing full re-search because a=" + window.alpha + " >= newBeta="+ newBeta);
                     selectedMove = searchInternal( theMove, depth-1, window.negateAndSwap(), child );
                     searchable_.undoInternalMove( theMove );
 
                     selectedValue = -selectedMove.getInheritedValue();
                     theMove.setInheritedValue(selectedValue);
-                    //theMove.setInheritedValue(window.alpha); // which is right?
                     bestMove = theMove;
 
                     if (window.alpha >= window.beta) {
-                        //System.out.println(getIndent(depth) + "beta cut-off2 because a=" + window.alpha + ">= " + window.beta);
                         showPrunedNodesInTree(list, parent, i, selectedValue, window);
                         break;
                     }
@@ -141,7 +137,6 @@ public class NegaScoutStrategy extends NegaMaxStrategy
                 newBeta = window.alpha + 1;
             }
         }
-        //System.out.println(getIndent(depth) + "bestMove="+ bestMove); // + " "+ window);
         bestMove.setSelected(true);
         lastMove.setInheritedValue(-bestMove.getInheritedValue());
         return bestMove;
