@@ -26,10 +26,9 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
 
     private JRadioButton[] strategyButtons_;  // search alg radio button group
     private SearchStrategyType algorithm_;
-    private NumberInput bestPercentageField_;
-    private NumberInput minBestField_;
     private JCheckBox gameTreeCheckbox_;
 
+    private BestMovesOptionsPanel bestMovesOptionsPanel_;
     private BruteSearchOptionsPanel bruteOptionsPanel_;
     private MonteCarloOptionsPanel monteCarloOptionsPanel_;
 
@@ -53,12 +52,11 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
         TwoPlayerOptions options = (TwoPlayerOptions) get2PlayerController().getOptions();
         SearchOptions searchOptions = getSearchOptions();
 
+        bestMovesOptionsPanel_.updateBestMovesOptions();
         bruteOptionsPanel_.updateBruteOptionsOptions();
         monteCarloOptionsPanel_.updateMonteCarloOptionsOptions();
 
         searchOptions.setSearchStrategyMethod(getSelectedStrategy());
-        searchOptions.setPercentageBestMoves(bestPercentageField_.getIntValue());
-        searchOptions.setMinBestMoves(minBestField_.getIntValue());
         options.setShowGameTree(gameTreeCheckbox_.isSelected() );
         return options;
     }
@@ -91,18 +89,12 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
 
         p.add(createStrategyRadioButtons());
 
-        bruteOptionsPanel_ = new BruteSearchOptionsPanel(searchOptions);
-        monteCarloOptionsPanel_ = new MonteCarloOptionsPanel(searchOptions);
+        bestMovesOptionsPanel_ = new BestMovesOptionsPanel(searchOptions.getBestMovesSearchOptions());
+        bruteOptionsPanel_ = new BruteSearchOptionsPanel(searchOptions.getBruteSearchOptions());
+        monteCarloOptionsPanel_ = new MonteCarloOptionsPanel(searchOptions.getMonteCarloSearchOptions());
 
-        bestPercentageField_ =
-                new NumberInput( GameContext.getLabel("PERCENTAGE_AT_PLY"), searchOptions.getPercentageBestMoves(),
-                                 GameContext.getLabel("PERCENTAGE_AT_PLY_TIP"), 0, 100, true);
-        minBestField_ =
-                new NumberInput( GameContext.getLabel("MIN_BEST_MOVES"), searchOptions.getMinBestMoves(),
-                                 GameContext.getLabel("MIN_BEST_MOVES_TIP"), 1, 100, true);
 
-        p.add( bestPercentageField_ );
-        p.add( minBestField_ );
+        p.add(bestMovesOptionsPanel_);
         p.add( bruteOptionsPanel_ );
         p.add( monteCarloOptionsPanel_ );
         showOptionsBasedOnAlgorithm();

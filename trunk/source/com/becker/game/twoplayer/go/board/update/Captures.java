@@ -28,10 +28,12 @@ public class Captures {
         if (numCaptures > 0) {
             if (move.isPlayer1()) {
                 numWhiteStonesCaptured_ += num;
-                assert numWhiteStonesCaptured_ > 0;
+                assert numWhiteStonesCaptured_ >= 0 :
+                        "The number of captured white stones became less than 0 :  " + numWhiteStonesCaptured_;
             } else {
                 numBlackStonesCaptured_ += num;
-                assert numBlackStonesCaptured_ > 0;
+                assert numBlackStonesCaptured_ >= 0 :
+                        "The number of captured black stones became less than 0 :  " + numBlackStonesCaptured_;
             }
         }
     }

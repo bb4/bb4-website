@@ -59,7 +59,7 @@ final class PenteMoveGenerator {
                 }
             }
         }
-        BestMoveFinder finder = new BestMoveFinder(searchable_.getSearchOptions());
+        BestMoveFinder finder = new BestMoveFinder(searchable_.getSearchOptions().getBestMovesSearchOptions());
         return finder.getBestMoves( player1, moveList, player1sPerspective );
     }
 

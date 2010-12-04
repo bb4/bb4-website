@@ -14,19 +14,10 @@ import com.becker.optimization.parameter.ParameterArray;
  */
 public class SearchOptions {
 
-    /** Percentage of best moves to consider at each search ply. */
-    private static final int DEFAULT_PERCENTAGE_BEST_MOVES = 60;
-
-    /** No matter what the percentBestMoves is we should not prune if less than this number. */
-    private static final int DEFAULT_MIN_BEST_MOVES = 10;
-
-
-    // the default search method.
+    /** the default search method. */
     private SearchStrategyType strategyMethod_ = SearchStrategyType.MINIMAX;
 
-    private int bestPercentage_;
-    private int minBestMoves_;
-
+    private BestMovesSearchOptions bestMovesOptions_;
     private BruteSearchOptions bruteOptions_;
     private MonteCarloSearchOptions monteCarloOptions_;
 
@@ -35,31 +26,21 @@ public class SearchOptions {
      * Default Constructor
      */
     public SearchOptions() {
+
+        bestMovesOptions_ = new BestMovesSearchOptions();
         bruteOptions_ = new BruteSearchOptions();
         monteCarloOptions_ = new MonteCarloSearchOptions();
-        bestPercentage_ = getDefaultPercentageBestMoves();
-        minBestMoves_ = getDefaultMinBestMoves();
     }
 
     /**
      * Constructor
      * @param bruteOptions brute forst search oiptions to use.
-     * @param defaultBestPercentage default number of best moves to consider at each ply.
-     * @param minBestMoves we will never consider fewer than this many moves when searching.
+     * @param bestMovesOptions for finding best moves out of reasonable set of next moves
      */
-    public SearchOptions(BruteSearchOptions bruteOptions, int defaultBestPercentage, int minBestMoves) {
+    public SearchOptions(BruteSearchOptions bruteOptions, BestMovesSearchOptions bestMovesOptions) {
         bruteOptions_ = bruteOptions;
+        bestMovesOptions_ = bestMovesOptions;
         monteCarloOptions_ = new MonteCarloSearchOptions();
-        bestPercentage_ = defaultBestPercentage;
-        minBestMoves_ = minBestMoves;
-    }
-
-    int getDefaultPercentageBestMoves() {
-        return DEFAULT_PERCENTAGE_BEST_MOVES;
-    }
-    
-    int getDefaultMinBestMoves() {
-        return DEFAULT_MIN_BEST_MOVES;
     }
 
     /**
@@ -81,34 +62,12 @@ public class SearchOptions {
         return bruteOptions_;
     }
 
+    public BestMovesSearchOptions getBestMovesSearchOptions() {
+        return bestMovesOptions_;
+    }
+
     public MonteCarloSearchOptions getMonteCarloSearchOptions() {
         return monteCarloOptions_;
-    }
-    
-    /**
-     * @return  the percentage of top moves considered at each ply
-     */
-    public final int getPercentageBestMoves() {
-        return bestPercentage_;
-    }
-
-    /**
-     * @param bestPercentage  the percentage of top moves considered at each ply
-     */
-    public final void setPercentageBestMoves( int bestPercentage ) {
-        bestPercentage_ = bestPercentage;
-    }
-
-
-    /**
-     * @return  never return fewer than this many best moves.
-     */
-    public int getMinBestMoves() {
-        return minBestMoves_;
-    }
-
-    public void setMinBestMoves(int minBest) {
-        minBestMoves_ = minBest;
     }
 
     /**

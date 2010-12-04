@@ -36,7 +36,7 @@ public abstract class TwoPlayerSearchable implements Searchable {
         options_ = options;
 
         hash =  new ZobristHash(board_);
-        bestMoveFinder_ = new BestMoveFinder(getSearchOptions());
+        bestMoveFinder_ = new BestMoveFinder(getSearchOptions().getBestMovesSearchOptions());
     }
 
     public TwoPlayerSearchable(TwoPlayerSearchable searchable) {

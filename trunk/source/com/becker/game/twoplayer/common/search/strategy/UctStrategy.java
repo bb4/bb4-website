@@ -1,14 +1,10 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
-import com.becker.common.util.FileUtil;
 import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.common.persistence.TwoPlayerGameExporter;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
-import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.persistence.GoGameExporter;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**
@@ -30,7 +26,7 @@ public class UctStrategy extends AbstractSearchStrategy {
     private double exploreExploitRatio;
 
     /** When selecting a random move for a random game, select from only this many of the top moves. */
-    private int topMovesToConsider;
+    private int percentLessThanBestThresh;
 
     /**
      * Constructor - do not call directly.
@@ -40,7 +36,7 @@ public class UctStrategy extends AbstractSearchStrategy {
     UctStrategy( Searchable searchable, ParameterArray weights ) {
         super(searchable, weights);
         exploreExploitRatio = getOptions().getMonteCarloSearchOptions().getExploreExploitRatio();
-        topMovesToConsider = getOptions().getMinBestMoves();
+        percentLessThanBestThresh = getOptions().getBestMovesSearchOptions().getPercentLessThanBestThresh();
     }
 
     @Override
@@ -142,16 +138,10 @@ public class UctStrategy extends AbstractSearchStrategy {
         if (moves.size() == 0) {
             return move.getValue() > 0;
         }
-        TwoPlayerMove randomMove = (TwoPlayerMove) moves.getRandomMove(topMovesToConsider);
+        TwoPlayerMove randomMove = (TwoPlayerMove) moves.getRandomMoveForThresh(percentLessThanBestThresh);
 
         searchable.makeInternalMove(randomMove);
         return playRandomMove(randomMove, searchable);
-    }
-
-    private String encodeName(String name) {
-        name = name.replaceAll(":", "_");
-        name = name.replaceAll(",", "_");
-        return name.replaceAll(" ", "_");
     }
     
     /**

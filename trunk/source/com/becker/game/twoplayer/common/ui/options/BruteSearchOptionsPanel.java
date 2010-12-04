@@ -14,7 +14,7 @@ import javax.swing.*;
  */
 public class BruteSearchOptionsPanel extends JPanel {
 
-    SearchOptions searchOptions_;
+    BruteSearchOptions bruteOptions_;
 
     private NumberInput lookAheadField_;
     private JCheckBox alphabetaCheckbox_;
@@ -25,23 +25,19 @@ public class BruteSearchOptionsPanel extends JPanel {
     /**
      * Constructor
      */
-    public BruteSearchOptionsPanel(SearchOptions sOptions) {
-        searchOptions_ = sOptions;
+    public BruteSearchOptionsPanel(BruteSearchOptions sOptions) {
+        bruteOptions_ = sOptions;
         initialize();
     }
 
     /**
      * @return brute search options
      */
-    public BruteSearchOptions updateBruteOptionsOptions() {
+    public void updateBruteOptionsOptions() {
 
-        BruteSearchOptions bruteOptions = searchOptions_.getBruteSearchOptions();
-
-        bruteOptions.setAlphaBeta(alphabetaCheckbox_.isSelected());
-        bruteOptions.setQuiescence(quiescenceCheckbox_.isSelected());
-        bruteOptions.setLookAhead(lookAheadField_.getIntValue());
-
-        return bruteOptions;
+        bruteOptions_.setAlphaBeta(alphabetaCheckbox_.isSelected());
+        bruteOptions_.setQuiescence(quiescenceCheckbox_.isSelected());
+        bruteOptions_.setLookAhead(lookAheadField_.getIntValue());
     }
 
     /**
@@ -49,64 +45,24 @@ public class BruteSearchOptionsPanel extends JPanel {
      */
     protected void initialize() {
 
-        this.setLayout( new BoxLayout( this, BoxLayout.Y_AXIS ) );
-
-        BruteSearchOptions bruteOptions = searchOptions_.getBruteSearchOptions();
+        setLayout( new BoxLayout( this, BoxLayout.Y_AXIS ) );
 
         // look ahead
-        JLabel treeUpperBound = new JLabel();
         lookAheadField_ =
-                new NumberInput(GameContext.getLabel("MOVES_TO_LOOKAHEAD"), bruteOptions.getLookAhead(),
+                new NumberInput(GameContext.getLabel("MOVES_TO_LOOKAHEAD"), bruteOptions_.getLookAhead(),
                                 GameContext.getLabel("MOVES_TO_LOOKAHEAD_TIP"), 1, MAX_ALLOWED_LOOKAHEAD, true);
 
         this.add( lookAheadField_ );
 
         // alpha-beta pruning option
         alphabetaCheckbox_ =
-                new JCheckBox( GameContext.getLabel("USE_PRUNING"), bruteOptions.getAlphaBeta());
+                new JCheckBox( GameContext.getLabel("USE_PRUNING"), bruteOptions_.getAlphaBeta());
         alphabetaCheckbox_.setToolTipText( GameContext.getLabel("USE_PRUNING_TIP") );
         this.add( alphabetaCheckbox_ );
 
         // show profile info option
-        quiescenceCheckbox_ = new JCheckBox( GameContext.getLabel("USE_QUIESCENCE"), bruteOptions.getQuiescence() );
+        quiescenceCheckbox_ = new JCheckBox( GameContext.getLabel("USE_QUIESCENCE"), bruteOptions_.getQuiescence() );
         quiescenceCheckbox_.setToolTipText( GameContext.getLabel("USE_QUIESCENCE_TIP") );
         this.add( quiescenceCheckbox_ );
     }
-
-    /**
-     * Calculate an upper limit on the number of moves that will be examined by the minimax algorithm.
-     * The actual number of moves may be much less if alpha-beta is used or if
-     * the natural branch factor for the game is less then the numBestMoves limit
-     * @return upper limit.
-     */
-    private static long calcTreeUpperBound( int lookAhead, int numBestMoves )
-    {
-        long upperBound = numBestMoves;
-        for ( int i = 2; i <= lookAhead; i++ )
-            upperBound += Math.pow( (double) numBestMoves, (double) i );
-        return upperBound;
-    }
-
-    /*
-    private class UpperBoundKeyListener extends KeyAdapter
-    {
-        NumberInput field_ = null;
-        JLabel treeBound_ = null;
-
-        // constructor
-        // field the field to check for changed text
-        UpperBoundKeyListener( NumberInput field, JLabel treeBound ) {
-            field_ = field;
-            treeBound_ = treeBound;
-        }
-
-        @Override
-        public void keyPressed( KeyEvent evt ) {
-            long upperBound =
-                    calcTreeUpperBound( lookAheadField_.getIntValue(),
-                                        searchOptions_.getPercentageBestMoves());
-            treeBound_.setText( "" + Util.formatNumber(upperBound));
-        }
-    } */
-
 }

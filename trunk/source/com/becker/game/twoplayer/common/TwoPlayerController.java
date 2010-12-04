@@ -218,7 +218,7 @@ public abstract class TwoPlayerController extends GameController {
         getProfiler().startProfiling();
 
         assert (!getMoveList().isEmpty()) : "Error: null before search";
-        TwoPlayerMove move = (TwoPlayerMove) getMoveList().getLast();
+        TwoPlayerMove move = (TwoPlayerMove) getMoveList().getLastMove();
         TwoPlayerMove lastMove = move.copy();
 
         weights = player1 ? weights_.getPlayer1Weights() : weights_.getPlayer2Weights();

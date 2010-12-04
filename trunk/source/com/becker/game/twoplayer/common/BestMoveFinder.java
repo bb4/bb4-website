@@ -1,24 +1,26 @@
 package com.becker.game.twoplayer.common;
 
+import com.becker.game.common.Move;
 import com.becker.game.common.MoveList;
+import com.becker.game.twoplayer.common.search.options.BestMovesSearchOptions;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
 
 import java.util.Collections;
 
 /**
- * Find the best moves from a list of moves
+ * Find the best moves from a list of reasonable next moves using configured search options
  *
  *  @author Barry Becker
  */
 public class BestMoveFinder {
 
-    private SearchOptions searchOptions_;
+    private BestMovesSearchOptions searchOptions_;
 
     /**
      * Constructor.
      */
-    public BestMoveFinder(SearchOptions searchOptions) {
+    public BestMoveFinder(BestMovesSearchOptions searchOptions) {
         searchOptions_ = searchOptions;
     }
 
@@ -40,18 +42,66 @@ public class BestMoveFinder {
         Collections.sort( moveList );
 
         // reverse the order so the best move (using static board evaluation) is first
-        SearchStrategyType searchType = searchOptions_.getSearchStrategyMethod();
-        if (player1 == player1sPerspective) { //( searchType.sortAscending(player1, player1sPerspective)) {
+        if (player1 == player1sPerspective) {
            Collections.reverse( moveList );
         }
 
-        // We could potentially eliminate the best move doing this.
-        // A move which has a low score this time might actually lead to the best move later.
-        int numMoves = moveList.size();
+        return determineBestMoves(moveList);
+    }
 
+    /**
+     * Select just the best moves after sorting the reasonable next moves.
+     * We could potentially eliminate the best move doing this, but we need to trade that off against search time.
+     * A move which has a low score this time might actually lead to the best move later.
+     *
+     * @param moveList reasonable next moves.
+     * @return  set of best moves from the orignal list
+     */
+    private MoveList determineBestMoves(MoveList moveList) {
+
+        int minBest = searchOptions_.getMinBestMoves();
+        int percentLessThanBestThresh = searchOptions_.getDefaultPercentLessThanBestThresh();
+        MoveList bestMoveList;
+
+        if (percentLessThanBestThresh > 0)   {
+            bestMoveList =
+                    determineMovesExceedingValueThresh(moveList, minBest, percentLessThanBestThresh);
+        }
+        else {
+            int topPercent = searchOptions_.getPercentageBestMoves();
+            bestMoveList =
+                    determineTopPercentMoves(moveList, minBest, topPercent);
+        }
+        return bestMoveList;
+    }
+
+    /**
+     *
+     * @return top moves
+     */
+    private MoveList determineMovesExceedingValueThresh(MoveList moveList, int minBest, int percentLessThanBestThresh) {
+        int ct = 0;
+        int numMoves = moveList.size();
+        Move currentMove = moveList.getFirstMove();
+        double thresholdValue = currentMove.getValue() * (1.0  - (float)percentLessThanBestThresh/100.0);
+        MoveList bestMoveList = new MoveList();
+
+        do {
+            bestMoveList.add(currentMove);
+            currentMove = moveList.get(++ct);
+        } while ((currentMove.getValue() > thresholdValue || ct < minBest) && ct < numMoves-1);
+        return bestMoveList;
+    }
+
+    /**
+     *
+     * @return top moves
+     */
+    private MoveList determineTopPercentMoves(MoveList moveList, int minBest, int topPercent) {
+        int numMoves = moveList.size();
         MoveList bestMoveList = moveList;
-        int best = (int) ((float) searchOptions_.getPercentageBestMoves() / 100.0 * numMoves) + 1;
-        if ( best < numMoves && numMoves > searchOptions_.getMinBestMoves())  {
+        int best = (int) ((float) topPercent / 100.0 * numMoves) + 1;
+        if ( best < numMoves && numMoves > minBest)  {
             bestMoveList = moveList.subList(0, best);
         }
         return bestMoveList;

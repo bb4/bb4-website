@@ -173,7 +173,7 @@ public class GtpTesujisoftGoServer
         options.getBruteSearchOptions().setAlphaBeta(true);
         options.getBruteSearchOptions().setLookAhead(2);
         options.getBruteSearchOptions().setQuiescence(false);
-        options.setPercentageBestMoves(50);
+        options.getBestMovesSearchOptions().setPercentageBestMoves(50);
         options.setSearchStrategyMethod(SearchStrategyType.MINIMAX);
         boardSize_ = size;
     }
