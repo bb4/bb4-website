@@ -42,8 +42,8 @@ public class BoardValidator {
     /**
      * verify that all the stones on the board are in the boards member list of groups.
      */
-    public void confirmStonesInValidGroups()
-    {
+    public void confirmStonesInValidGroups() {
+
         GoGroupSet groups = board_.getGroups();
         for ( int i = 1; i <= board_.getNumRows(); i++ )  {
             for ( int j = 1; j <= board_.getNumCols(); j++ ) {
@@ -58,8 +58,8 @@ public class BoardValidator {
     /**
      * verify that all the stones are marked unvisited.
      */
-    public void confirmAllUnvisited()
-    {
+    public void confirmAllUnvisited() {
+
         GoBoardPosition stone = areAllUnvisited();
         if (stone != null)
            assert false : stone + " is marked visited";
@@ -70,8 +70,8 @@ public class BoardValidator {
      * verify that all the stones are marked unvisited.
      * @return positiont hat is still marked visited.
      */
-    private GoBoardPosition areAllUnvisited()
-    {
+    private GoBoardPosition areAllUnvisited()  {
+
         for ( int i = 1; i <= board_.getNumRows(); i++ ) {
             for ( int j = 1; j <= board_.getNumCols(); j++ ) {
                 GoBoardPosition stone = (GoBoardPosition) board_.getPosition( i, j );
@@ -89,8 +89,8 @@ public class BoardValidator {
      * (expensive to check)
      * @param groups we will check each stone in each of these groups.
      */
-    public void confirmAllStonesInGroupsClaimed(GoGroupSet groups)
-    {
+    public void confirmAllStonesInGroupsClaimed(GoGroupSet groups) {
+
         NeighborAnalyzer na = new NeighborAnalyzer(board_);
         for (GoGroup parentGroup : groups) {  // for each group on the board
             GoBoardPositionSet parentGroupStones = parentGroup.getStones();

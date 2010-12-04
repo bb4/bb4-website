@@ -10,8 +10,9 @@ package com.becker.game.twoplayer.common.search.options;
 public class MonteCarloSearchOptions {
 
     /** Number of moves to look ahead while searching for the best move. */
-    private static final int DEFAULT_MAX_SIMULATIONS = 1000;
+    private static final int DEFAULT_MAX_SIMULATIONS = 2000;
 
+    /** Ratio of exploration to exploitation of good moves. */
     private static final double DEFAULT_EXPLORE_EXPLOIT_RATIO = 1.0;
 
     private int maxSimulations_ = DEFAULT_MAX_SIMULATIONS;
@@ -33,7 +34,6 @@ public class MonteCarloSearchOptions {
     }
 
 
-
     /**
      * @return the max number of simulations to make while searching.
      */
@@ -47,7 +47,6 @@ public class MonteCarloSearchOptions {
     public void setMaxSimulations( int maxSim) {
         maxSimulations_ = maxSim;
     }
-
 
 
     /**

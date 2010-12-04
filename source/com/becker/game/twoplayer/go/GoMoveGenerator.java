@@ -67,7 +67,7 @@ public final class GoMoveGenerator {
             }
         }
 
-        BestMoveFinder finder = new BestMoveFinder(searchable_.getSearchOptions());
+        BestMoveFinder finder = new BestMoveFinder(searchable_.getSearchOptions().getBestMovesSearchOptions());
         moveList = finder.getBestMoves(player1, moveList, player1sPerspective);
 
         addPassingMoveIfNeeded(lastMove, moveList, player1);

@@ -5,12 +5,12 @@ import com.becker.game.common.GameContext;
 import java.util.*;
 
 /**
- *  A set of GoGroups.
+ * A set of GoGroups.
  *
- *  @author Barry Becker
+ * @author Barry Becker
  */
-public class GoGroupSet implements Set<GoGroup>
-{
+public class GoGroupSet implements Set<GoGroup> {
+
     private final Set<GoGroup> groups;
 
     /**
@@ -118,8 +118,7 @@ public class GoGroupSet implements Set<GoGroup>
      * create a nice list of all the current groups (and the strings they contain)
      * @return String containing the current groups
      */
-    public String toString()
-    {
+    public String toString() {
         return toString(true, true);
     }
 
@@ -128,8 +127,8 @@ public class GoGroupSet implements Set<GoGroup>
      * create a nice list of all the current groups (and the strings they contain)
      * @return String containing the current groups
      */
-    String toString(boolean showBlack, boolean showWhite)
-    {
+    String toString(boolean showBlack, boolean showWhite) {
+
         StringBuilder groupText = new StringBuilder( "" );
         StringBuilder blackGroupsText = new StringBuilder(showBlack? "The black groups are :\n" : "" );
         StringBuilder whiteGroupsText =
@@ -155,16 +154,14 @@ public class GoGroupSet implements Set<GoGroup>
     /**
      * pretty print a list of all the current groups (and the strings they contain)
      */
-    void debugPrint( int logLevel)
-    {
+    void debugPrint( int logLevel) {
         debugPrint( logLevel,  "---The groups are:", true, true);
     }
 
     /**
      * pretty print a list of all the current groups (and the strings they contain)
      */
-    public void debugPrint(int logLevel, String title, boolean showBlack, boolean showWhite)
-    {
+    public void debugPrint(int logLevel, String title, boolean showBlack, boolean showWhite) {
         if (logLevel <= GameContext.getDebugMode())  {
             GameContext.log( logLevel, title );
             GameContext.log( logLevel, this.toString(showBlack, showWhite));
@@ -178,8 +175,7 @@ public class GoGroupSet implements Set<GoGroup>
     /**
      * for every stone one the board verify that it belongs to exactly one group
      */
-    public void confirmAllStonesInUniqueGroups()
-    {
+    public void confirmAllStonesInUniqueGroups() {
         for (GoGroup g : this) {
             confirmStonesInOneGroup(g);
         }
@@ -189,8 +185,7 @@ public class GoGroupSet implements Set<GoGroup>
     /**
      * confirm that the stones in this group are not contained in any other group.
      */
-    public void confirmStonesInOneGroup( GoGroup group)
-    {
+    public void confirmStonesInOneGroup( GoGroup group) {
         for (GoString string : group.getMembers()) {
             for (GoGroup g : this) {  // for each group on the board
 
@@ -207,9 +202,10 @@ public class GoGroupSet implements Set<GoGroup>
         }
     }
 
-
-    public void confirmNoEmptyStrings()
-    {
+    /**
+     * verify that we contain no empty strings.
+     */
+    public void confirmNoEmptyStrings() {
         for (Object g : this)  {
             for (Object s : ((GoSet) g).getMembers()) {
                 GoString string = (GoString) s;
@@ -222,8 +218,7 @@ public class GoGroupSet implements Set<GoGroup>
     /**
      * @param stone verify that this stone has a valid string and a group in the board's member list.
      */
-    public void confirmStoneInValidGroup(GoBoardPosition stone)
-    {
+    public void confirmStoneInValidGroup(GoBoardPosition stone) {
         GoString str = stone.getString();
         assert ( str!=null) : stone + " does not belong to any string!" ;
         GoGroup g = str.getGroup();

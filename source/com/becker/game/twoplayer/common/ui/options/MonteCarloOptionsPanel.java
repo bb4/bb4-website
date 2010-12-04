@@ -19,7 +19,7 @@ import java.awt.event.KeyEvent;
  */
 public class MonteCarloOptionsPanel extends JPanel {
 
-    SearchOptions searchOptions_;
+    MonteCarloSearchOptions monteCarloOptions_;
 
     private NumberInput maxSimulationsField_;
 
@@ -34,20 +34,18 @@ public class MonteCarloOptionsPanel extends JPanel {
     /**
      * Constructor
      */
-    public MonteCarloOptionsPanel(SearchOptions sOptions) {
-        searchOptions_ = sOptions;
+    public MonteCarloOptionsPanel(MonteCarloSearchOptions sOptions) {
+        monteCarloOptions_ = sOptions;
         initialize();
     }
 
     /**
      * @return brute search options
      */
-    public MonteCarloSearchOptions updateMonteCarloOptionsOptions() {
+    public void updateMonteCarloOptionsOptions() {
 
-        MonteCarloSearchOptions monteCarloOptions = searchOptions_.getMonteCarloSearchOptions();
-        monteCarloOptions.setMaxSimulations(maxSimulationsField_.getIntValue());
-        monteCarloOptions.setExploreExploitRatio(exploreExploitRatioField_.getValue());
-        return monteCarloOptions;
+        monteCarloOptions_.setMaxSimulations(maxSimulationsField_.getIntValue());
+        monteCarloOptions_.setExploreExploitRatio(exploreExploitRatioField_.getValue());
     }
 
     /**
@@ -55,15 +53,13 @@ public class MonteCarloOptionsPanel extends JPanel {
      */
     protected void initialize() {
 
-        this.setLayout( new BoxLayout( this, BoxLayout.Y_AXIS ) );
-        
-        MonteCarloSearchOptions monteCarloOptions = searchOptions_.getMonteCarloSearchOptions();
+        setLayout( new BoxLayout( this, BoxLayout.Y_AXIS ) );
 
         maxSimulationsField_ =
-            new NumberInput(GameContext.getLabel("MAX_NUM_SIMULATIONS"), monteCarloOptions.getMaxSimulations(),
+            new NumberInput(GameContext.getLabel("MAX_NUM_SIMULATIONS"), monteCarloOptions_.getMaxSimulations(),
                             GameContext.getLabel("MAX_NUM_SIMULATIONS_TIP"), 1, ABS_MAX_NUM_SIMULATIONS, true);
         exploreExploitRatioField_ =
-            new NumberInput(GameContext.getLabel("EXPLORE_EXPLOIT_RATIO"), monteCarloOptions.getExploreExploitRatio(),
+            new NumberInput(GameContext.getLabel("EXPLORE_EXPLOIT_RATIO"), monteCarloOptions_.getExploreExploitRatio(),
                             GameContext.getLabel("EXPLORE_EXPLOIT_RATIO_TIP"), 0, ABS_MAX_EE_RATIO, false);
 
         add( maxSimulationsField_ );
