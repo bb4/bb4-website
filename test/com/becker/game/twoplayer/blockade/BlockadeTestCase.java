@@ -39,7 +39,7 @@ public class BlockadeTestCase extends TestCase {
         SearchOptions sOptions = options.getSearchOptions();
         sOptions.getBruteSearchOptions().setAlphaBeta(true);
         sOptions.getBruteSearchOptions().setLookAhead(3);
-        sOptions.setPercentageBestMoves(100);
+        sOptions.getBestMovesSearchOptions().setPercentageBestMoves(100);
         //sOptions.setQuiescence(true); // takes too long if on
         sOptions.setSearchStrategyMethod(SearchStrategyType.MINIMAX);
 

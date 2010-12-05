@@ -52,6 +52,7 @@ public final class NegaMaxMemoryStrategy extends NegaMaxStrategy
     protected TwoPlayerMove searchInternal( TwoPlayerMove lastMove,
                                            int depth,
                                            SearchWindow window, SearchTreeNode parent ) {
+        System.out.println("moves="+ searchable_.getMoveList());
         Long key = searchable_.getHashKey();
         Entry entry = lookupTable.get(key);
         if (lookupTable.entryExists(entry, lastMove, depth, window)) {

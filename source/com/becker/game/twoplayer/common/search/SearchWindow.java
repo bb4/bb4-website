@@ -13,7 +13,7 @@ public class SearchWindow {
     /** A lower bound on the inherited value that will eventually be found. */
     public int alpha;
 
-    /** A lower bound on the inherited value that will eventually be found. */
+    /** An uper bound on the inherited value that will eventually be found. */
     public int beta;
 
     /**
@@ -39,7 +39,7 @@ public class SearchWindow {
 
     /**
      * Negate and then swap the alpha and beta values.
-     * @return a new window which spas and negates the alpha and beta values.
+     * @return a new window which swaos and negates the alpha and beta values.
      */
     public SearchWindow negateAndSwap() {
        return new SearchWindow(-alpha, -beta); 

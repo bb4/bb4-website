@@ -43,7 +43,7 @@ public class MoveGeneratorTest extends BlockadeTestCase {
         restore("whitebox/noMoves2");
 
         BlockadeBoard board = (BlockadeBoard)controller_.getBoard();
-        BlockadeMove lastMove = (BlockadeMove) controller_.getMoveList().getLast();
+        BlockadeMove lastMove = (BlockadeMove) controller_.getMoveList().getLastMove();
         MoveGenerator generator = new MoveGenerator(controller_.getComputerWeights().getDefaultWeights(), board);
 
         List moves = generator.generateMoves(lastMove);
@@ -67,7 +67,7 @@ public class MoveGeneratorTest extends BlockadeTestCase {
         controller_.makeMove(move1);
         controller_.makeMove(move2);
 
-        BlockadeMove lastMove = (BlockadeMove) controller_.getMoveList().getLast();
+        BlockadeMove lastMove = (BlockadeMove) controller_.getMoveList().getLastMove();
         GameContext.log(2, "lastMove="+lastMove);
 
         MoveGenerator generator = new MoveGenerator(controller_.getComputerWeights().getDefaultWeights(), board);

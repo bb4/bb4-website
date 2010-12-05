@@ -45,7 +45,8 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
      */
     public TwoPlayerOptions createTwoPlayerGameOptions() {
         TwoPlayerOptions opts =  new TwoPlayerOptions();
-        opts.getSearchOptions().setPercentageBestMoves(100);
+        opts.getSearchOptions().getBestMovesSearchOptions().setPercentageBestMoves(100);
+        opts.getSearchOptions().getBestMovesSearchOptions().setPercentLessThanBestThresh(0);
         return opts;
     }
 

@@ -31,7 +31,7 @@ public abstract class MonteCarloSearchStrategyTst extends AbstractSearchStrategy
    public TwoPlayerOptions createTwoPlayerGameOptions() {
        TwoPlayerOptions opts =  super.createTwoPlayerGameOptions();
        // consider all moves (effectively)
-       opts.getSearchOptions().setMinBestMoves(100);
+       opts.getSearchOptions().getBestMovesSearchOptions().setMinBestMoves(100);
        
        MonteCarloSearchOptions options = opts.getSearchOptions().getMonteCarloSearchOptions();
        options.setExploreExploitRatio(1.0);

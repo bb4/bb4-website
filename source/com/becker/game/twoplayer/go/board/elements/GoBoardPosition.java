@@ -29,7 +29,7 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
      */
     private boolean visited_;
 
-    // the amount this position contributes to the overall score.
+    /** the amount this position contributes to the overall score.  */
     private double scoreContribution_ = 0.0;
 
 
@@ -94,7 +94,7 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
     }
 
     /**
-     * @param eye  the eye owner this space is to be assigned to
+     * @param eye the eye owner this space is to be assigned to
      */
     public void setEye( GoEye eye ) {
         eye_ = eye;
@@ -173,6 +173,8 @@ public final class GoBoardPosition extends BoardPosition implements GoMember
     public void clear() {
         super.clear();
         setString(null);
+        setEye(null);
+        scoreContribution_ = 0;
         setVisited(false);
     }
 

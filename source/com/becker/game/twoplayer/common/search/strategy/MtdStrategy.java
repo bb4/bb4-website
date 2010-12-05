@@ -49,14 +49,19 @@ public final class MtdStrategy implements SearchStrategy
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public TwoPlayerMove search( TwoPlayerMove lastMove, SearchTreeNode parent ) {
         TwoPlayerMove selectedMove = searchInternal( lastMove, 0, parent);
         return (selectedMove != null) ? selectedMove : lastMove;
     }
 
-
+    /**
+     * @param lastMove last move played on board.
+     * @param f
+     * @param parent non-null if showing game tree.
+     * @return best next move
+     */
     private TwoPlayerMove searchInternal( TwoPlayerMove lastMove, 
                                           int f, SearchTreeNode parent ) {
         int g = f;
@@ -67,8 +72,6 @@ public final class MtdStrategy implements SearchStrategy
         do  {
             int beta = (g == lowerBound) ? g + 1 : g;
 
-            // selectedMove = searchWithMemory_.search(lastMove, beta - 1, beta, parent);
-            // g = selectedMove.getInheritedValue();
             getOptions().getBruteSearchOptions().setInitialSearchWindow(new SearchWindow(beta - 1, beta));
             selectedMove = searchWithMemory_.search(lastMove, parent);
             g = -selectedMove.getInheritedValue();

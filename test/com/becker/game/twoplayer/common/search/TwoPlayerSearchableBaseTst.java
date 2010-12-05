@@ -6,6 +6,7 @@ import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
+import com.becker.game.twoplayer.common.search.options.BestMovesSearchOptions;
 import com.becker.game.twoplayer.common.search.options.BruteSearchOptions;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.optimization.parameter.ParameterArray;
@@ -46,7 +47,8 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
 
     protected TwoPlayerOptions createDefaultOptions() {
         TwoPlayerOptions options = helper.createTwoPlayerGameOptions();
-        options.getSearchOptions().setPercentageBestMoves(DEFAULT_BEST_PERCENTAGE);
+        options.getSearchOptions().getBestMovesSearchOptions().setPercentageBestMoves(DEFAULT_BEST_PERCENTAGE);
+        options.getSearchOptions().getBestMovesSearchOptions().setPercentLessThanBestThresh(0);
         BruteSearchOptions sOptions = options.getSearchOptions().getBruteSearchOptions();
         sOptions.setLookAhead(DEFAULT_LOOKAHEAD);
         sOptions.setAlphaBeta(true);
@@ -85,6 +87,10 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
 
     protected SearchOptions getSearchOptions() {
         return getTwoPlayerOptions().getSearchOptions();
+    }
+
+    protected BestMovesSearchOptions getBestMovesOptions() {
+        return getTwoPlayerOptions().getSearchOptions().getBestMovesSearchOptions();
     }
 
     /** verify that we can retrieve the lookahead value. */

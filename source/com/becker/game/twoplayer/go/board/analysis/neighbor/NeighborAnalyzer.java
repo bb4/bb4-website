@@ -153,7 +153,55 @@ public class NeighborAnalyzer {
         return groupNbrAnalyzer_.findGroupFromInitialPosition(stone, returnToUnvisitedState);
     }
 
+    /**
+     * Finds all the groups.
+     * Careful about running this without running findAllStringsOnBoard() first
+     * Otherwise you could end up with board positions in multiple groups.
+     * @return all the groups on the board
+     */
     public GoGroupSet findAllGroupsOnBoard() {
        return groupNbrAnalyzer_.findAllGroups();
+    }
+
+    /**
+     * This is an expensive operation because it clears everything we know on the board
+     * and recreates all the string from first principals.
+     * It has the side effect of updating the board state. Careful.
+     * You will need to run findAllGroups on
+     * @return all the strings on the board
+     */
+    public GoStringSet determineAllStringsOnBoard() {
+        clearAllPositions();
+
+        GoStringSet strings = new GoStringSet();
+        for ( int i = 1; i <= board_.getNumRows(); i++ )  {
+            for ( int j = 1; j <= board_.getNumCols(); j++ ) {
+                GoBoardPosition pos = (GoBoardPosition)board_.getPosition(i, j);
+                if (pos.isOccupied()) {
+                    GoString existingString = strings.findStringContainingPosition(pos);
+                    if (existingString == null) {
+                        GoString str = new GoString(findStringFromInitialPosition(pos, true), board_);
+                        strings.add(str);
+                        pos.setString(str);
+                    }
+                    else {
+                        pos.setString(existingString);
+                    }
+                }
+            }
+        }
+        return strings;
+    }
+
+    /**
+     * Gets rid of everything we know about the board. Careful.
+     */
+    private void clearAllPositions() {
+         for ( int i = 1; i <= board_.getNumRows(); i++ ) {
+            for ( int j = 1; j <= board_.getNumCols(); j++ ) {
+                GoBoardPosition pos = (GoBoardPosition) board_.getPosition( i, j );
+                pos.clear();
+            }
+        }
     }
 }

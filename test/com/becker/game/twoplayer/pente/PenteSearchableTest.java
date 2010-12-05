@@ -71,7 +71,7 @@ public class PenteSearchableTest extends TwoPlayerSearchableBaseTst {
     /** Load a game in the middle and verify that we can get the expected high value next moves. */
     @Override
     public void testGenerateTopP1MovesMidGame() {
-        getSearchOptions().setPercentageBestMoves(20);
+        getBestMovesOptions().setPercentageBestMoves(20);
         checkGeneratedMoves("midGameP1ToPlay8x8", EXPECTED_TOP_MIDDLE_GAME_MOVES_P1);
     }
 
@@ -87,7 +87,7 @@ public class PenteSearchableTest extends TwoPlayerSearchableBaseTst {
     /** Load a game at the end and verify that we can get all the high value next moves. */
     @Override
     public void testGenerateTopP1MovesEndGame() {
-        getSearchOptions().setPercentageBestMoves(20);
+        getBestMovesOptions().setPercentageBestMoves(20);
         checkGeneratedMoves("endGameP1ToPlay8x8", EXPECTED_TOP_END_GAME_MOVES_P1);
     }
 
@@ -100,7 +100,7 @@ public class PenteSearchableTest extends TwoPlayerSearchableBaseTst {
     /**  Load a game in the middle and verify that we can get the expected high value next moves. */
     @Override
     public void testGenerateTopP2MovesMidGame() {
-        getSearchOptions().setPercentageBestMoves(20);
+        getBestMovesOptions().setPercentageBestMoves(20);
         checkGeneratedMoves("midGameP2ToPlay8x8", EXPECTED_TOP_MIDDLE_GAME_MOVES_P2);
     }
 
@@ -116,7 +116,7 @@ public class PenteSearchableTest extends TwoPlayerSearchableBaseTst {
      /** Load a game at the end and verify that we can get all the high value next moves. */
      @Override
      public void testGenerateTopP2MovesEndGame() {
-        getSearchOptions().setPercentageBestMoves(20);
+        getBestMovesOptions().setPercentageBestMoves(20);
         checkGeneratedMoves("endGameP2ToPlay8x8", EXPECTED_TOP_END_GAME_MOVES_P2);
     }
 

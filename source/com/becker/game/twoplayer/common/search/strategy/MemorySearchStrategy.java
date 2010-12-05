@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
+import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.transposition.TranspositionTable;
 
 /**

@@ -16,14 +16,14 @@ public final class MiniMaxStrategy extends AbstractBruteSearchStrategy
 {
     /**
      * Constructor for the strategy.
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public MiniMaxStrategy(Searchable controller, ParameterArray weights) {
         super(controller, weights);
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     protected TwoPlayerMove findBestMove(TwoPlayerMove lastMove, int depth, MoveList list,

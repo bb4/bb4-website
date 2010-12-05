@@ -74,14 +74,13 @@ public class NegaScoutStrategy extends NegaMaxStrategy
 {
     /**
      * Construct NegaScout strategy given a controller interface.
-     * @inheritDoc
      */
     public NegaScoutStrategy( Searchable controller, ParameterArray weights) {
         super( controller, weights );
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     protected TwoPlayerMove findBestMove(TwoPlayerMove lastMove, int depth, MoveList list,

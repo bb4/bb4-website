@@ -74,7 +74,7 @@ public class TicTacToeSearchableTest extends TwoPlayerSearchableBaseTst {
     /** Load a game in the middle and verify that we can get the expected high value next moves. */
     @Override
     public void testGenerateTopP1MovesMidGame() {
-        getSearchOptions().setPercentageBestMoves(20);
+        getBestMovesOptions().setPercentageBestMoves(20);
         checkGeneratedMoves("midGameCenterX", EXPECTED_TOP_MIDDLE_GAME_MOVES_CENTER_P1);
         checkGeneratedMoves("midGameCornerX", EXPECTED_TOP_MIDDLE_GAME_MOVES_CORNER_P1);
         checkGeneratedMoves("midGameEdgeX", EXPECTED_TOP_MIDDLE_GAME_MOVES_EDGE_P1);
@@ -92,7 +92,7 @@ public class TicTacToeSearchableTest extends TwoPlayerSearchableBaseTst {
     /** Load a game at the end and verify that we can get all the high value next moves. */
     @Override
     public void testGenerateTopP1MovesEndGame() {
-        getSearchOptions().setPercentageBestMoves(20);
+        getBestMovesOptions().setPercentageBestMoves(20);
         checkGeneratedMoves("endGameX", EXPECTED_TOP_END_GAME_MOVES_P1);
     }
 
@@ -107,7 +107,7 @@ public class TicTacToeSearchableTest extends TwoPlayerSearchableBaseTst {
     /**  Load a game in the middle and verify that we can get the expected high value next moves. */
     @Override
     public void testGenerateTopP2MovesMidGame() {
-        getSearchOptions().setPercentageBestMoves(20);
+        getBestMovesOptions().setPercentageBestMoves(20);
         checkGeneratedMoves("midGameCenterO", EXPECTED_TOP_MIDDLE_GAME_MOVES_CENTER_P2);
         checkGeneratedMoves("midGameCornerO", EXPECTED_TOP_MIDDLE_GAME_MOVES_CORNER_P2);
         checkGeneratedMoves("midGameEdgeO", EXPECTED_TOP_MIDDLE_GAME_MOVES_EDGE_P2);
@@ -125,7 +125,7 @@ public class TicTacToeSearchableTest extends TwoPlayerSearchableBaseTst {
      /** Load a game at the end and verify that we can get all the high value next moves. */
      @Override
      public void testGenerateTopP2MovesEndGame() {
-        getSearchOptions().setPercentageBestMoves(20);
+        getBestMovesOptions().setPercentageBestMoves(20);
         checkGeneratedMoves("endGameO", EXPECTED_TOP_END_GAME_MOVES_P2);
     }
 

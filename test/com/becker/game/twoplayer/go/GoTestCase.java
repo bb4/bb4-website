@@ -67,7 +67,7 @@ public class GoTestCase extends TestCase {
     protected void setOptionOverrides(SearchOptions sOptions) {
         sOptions.getBruteSearchOptions().setAlphaBeta(true);
         sOptions.getBruteSearchOptions().setLookAhead(2);
-        sOptions.setPercentageBestMoves(40);
+        sOptions.getBestMovesSearchOptions().setPercentageBestMoves(40);
         //sOptions.setQuiescence(true); // takes too long if on
         sOptions.setSearchStrategyMethod(SearchStrategyType.NEGAMAX_W_MEMORY);
     }

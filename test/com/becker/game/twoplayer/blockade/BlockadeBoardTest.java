@@ -296,7 +296,7 @@ public class BlockadeBoardTest extends BlockadeTestCase {
     public void testShortestPathLength() {
          restore("whitebox/noMoves2");
          BlockadeBoard board = (BlockadeBoard)controller_.getBoard();
-         BlockadeMove lastMove = (BlockadeMove) controller_.getMoveList().getLast();
+         BlockadeMove lastMove = (BlockadeMove) controller_.getMoveList().getLastMove();
 
          PlayerPathLengths pLengths = board.findPlayerPathLengths( lastMove);
          GameContext.log(1, pLengths.toString());

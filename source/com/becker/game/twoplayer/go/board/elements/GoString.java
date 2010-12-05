@@ -71,6 +71,14 @@ public class GoString extends GoSet
     public GoBoardPositionSet getMembers() {
         return members_;
     }
+
+    /**
+     * @param pos position to look for.
+     * @return  true if we contain the specified position.
+     */
+    public boolean contains(GoBoardPosition pos) {
+        return members_.contains(pos);
+    }
     
     @Override
     protected void initializeMembers() {

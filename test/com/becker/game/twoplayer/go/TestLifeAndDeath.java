@@ -27,7 +27,7 @@ public class TestLifeAndDeath extends GoTestCase {
     protected void setOptionOverrides(SearchOptions options) {
         options.getBruteSearchOptions().setAlphaBeta(true);
         options.getBruteSearchOptions().setLookAhead(3);
-        options.setPercentageBestMoves(60);
+        options.getBestMovesSearchOptions().setPercentageBestMoves(60);
         options.getBruteSearchOptions().setQuiescence(true);
         options.setSearchStrategyMethod(SearchStrategyType.MINIMAX);
     }
