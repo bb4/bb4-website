@@ -52,7 +52,7 @@ public class SearchableStub implements Searchable {
      * {@inheritDoc}
      */
     public void undoInternalMove( TwoPlayerMove m ) {
-        moves_.pop();
+        moves_.removeLast();
     }
 
     /**

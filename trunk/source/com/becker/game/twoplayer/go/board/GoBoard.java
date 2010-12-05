@@ -8,8 +8,7 @@ import com.becker.game.twoplayer.go.GoProfiler;
 import com.becker.game.twoplayer.go.board.analysis.CornerChecker;
 import com.becker.game.twoplayer.go.board.analysis.TerritoryAnalyzer;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborAnalyzer;
-import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
-import com.becker.game.twoplayer.go.board.elements.GoGroupSet;
+import com.becker.game.twoplayer.go.board.elements.*;
 import com.becker.game.twoplayer.go.board.update.BoardUpdater;
 
 import java.util.List;
@@ -60,6 +59,7 @@ public final class GoBoard extends TwoPlayerBoard {
 
         handicap_ = board.handicap_;
         NeighborAnalyzer analyzer = new NeighborAnalyzer(this);
+        analyzer.determineAllStringsOnBoard();
         groups_ = analyzer.findAllGroupsOnBoard();
 
         boardUpdater_ = new BoardUpdater(this);
@@ -146,7 +146,7 @@ public final class GoBoard extends TwoPlayerBoard {
     }
 
 
-    public void setGroups(GoGroupSet groups){
+    public void setGroups(GoGroupSet groups) {
         groups_ = groups;
     }
 
@@ -186,7 +186,6 @@ public final class GoBoard extends TwoPlayerBoard {
             getProfiler().stopMakeMove();
             return true;
         }
-
         clearEyes();
         super.makeInternalMove( m );
         boardUpdater_.updateAfterMove(m);

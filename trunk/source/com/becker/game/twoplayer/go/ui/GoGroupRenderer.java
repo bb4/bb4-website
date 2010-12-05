@@ -59,20 +59,20 @@ final class GoGroupRenderer {
      * draw debugging information about the group like its border and eyeshapes.
      */
     public void drawGroupDecoration(GoGroup group) {
-        
+
         GroupRegion cachedRegion = hmRegionCache_.get(group);
 
         if ( !group.isValid() || cachedRegion == null || cellSize_ != cachedRegion.cellSize ) {
 
             // the colormap will show red if close to dead,
             // so reverse the health value for the other player
-            double h = (USE_RELATIVE_GROUP_SCORING ? group.getRelativeHealth(board_, true):group.getAbsoluteHealth());
+            double h = (USE_RELATIVE_GROUP_SCORING ? group.getRelativeHealth(board_, true) : group.getAbsoluteHealth());
             if (!group.isOwnedByPlayer1())  {
                 h = -h;
             }
 
             cachedRegion = new GroupRegion();
-            cachedRegion.borderArea = calcGroupBorder( group.getStones());
+            cachedRegion.borderArea = calcGroupBorder( group.getStones() );
             cachedRegion.borderColor = colormap_.getColorForValue( h );
             cachedRegion.cellSize = cellSize_;
 

@@ -190,7 +190,7 @@ public class GoGroupSet implements Set<GoGroup> {
             for (GoGroup g : this) {  // for each group on the board
 
                 if (!g.equals(group)) {
-                    for (GoString s : g.getMembers()) {   // fro each string in that group
+                    for (GoString s : g.getMembers()) {   // for each string in that group
                         if (string.equals(s)) {
                             debugPrint(0);
                             assert false : "ERROR: " + s + " contained by 2 groups";
@@ -211,7 +211,7 @@ public class GoGroupSet implements Set<GoGroup> {
                 GoString string = (GoString) s;
                 assert (string.size() > 0): "There is an empty string in " + string.getGroup();
             }
-        }
+        }                  
     }
 
 

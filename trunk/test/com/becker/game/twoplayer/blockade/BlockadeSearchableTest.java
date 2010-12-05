@@ -55,7 +55,7 @@ public class BlockadeSearchableTest extends TwoPlayerSearchableBaseTst {
 
     @Override
     protected int getExpectedNumGeneratedMovesBeforeFirstMove() {
-       return 101; // 144
+       return 53; //101; // 144
    }
 
 
@@ -68,7 +68,7 @@ public class BlockadeSearchableTest extends TwoPlayerSearchableBaseTst {
     /**  Load a game in the middle and verify that we can get the expected high value next moves. */
     @Override
     public void testGenerateTopP1MovesMidGame() {
-        getSearchOptions().setPercentageBestMoves(20);
+        getBestMovesOptions().setPercentageBestMoves(20);
         checkGeneratedMoves("middleGameP1Turn", ExpectedSearchableResults.EXPECTED_TOP_MIDDLE_GAME_MOVES_P1);
     }
 
@@ -84,7 +84,7 @@ public class BlockadeSearchableTest extends TwoPlayerSearchableBaseTst {
     /** Load a game at the end and verify that we can get all the high value next moves. */
     @Override
     public void testGenerateTopP1MovesEndGame() {
-        getSearchOptions().setPercentageBestMoves(20);
+        getBestMovesOptions().setPercentageBestMoves(20);
         checkGeneratedMoves("endGameP1Turn", ExpectedSearchableResults.EXPECTED_TOP_END_GAME_MOVES_P1);
     }
 
@@ -98,7 +98,7 @@ public class BlockadeSearchableTest extends TwoPlayerSearchableBaseTst {
     /**  Load a game in the middle and verify that we can get the expected high value next moves. */
     @Override
     public void testGenerateTopP2MovesMidGame() {
-        getSearchOptions().setPercentageBestMoves(20);
+        getBestMovesOptions().setPercentageBestMoves(20);
         checkGeneratedMoves("middleGameP2Turn", ExpectedSearchableResults.EXPECTED_TOP_MIDDLE_GAME_MOVES_P2);
     }
 
@@ -114,7 +114,7 @@ public class BlockadeSearchableTest extends TwoPlayerSearchableBaseTst {
      /** Load a game at the end and verify that we can get all the high value next moves. */
      @Override
      public void testGenerateTopP2MovesEndGame() {
-        getSearchOptions().setPercentageBestMoves(20);
+        getBestMovesOptions().setPercentageBestMoves(20);
         checkGeneratedMoves("endGameP2Turn", ExpectedSearchableResults.EXPECTED_TOP_END_GAME_MOVES_P2);
     }
 

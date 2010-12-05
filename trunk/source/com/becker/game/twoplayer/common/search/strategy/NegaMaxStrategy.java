@@ -16,14 +16,13 @@ import com.becker.optimization.parameter.ParameterArray;
 public class NegaMaxStrategy extends AbstractBruteSearchStrategy {
     /**
      * Construct NegaMax the strategy given a controller interface.
-     * @inheritDoc
      */
     public NegaMaxStrategy( Searchable controller, ParameterArray weights ) {
         super( controller , weights);
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public TwoPlayerMove search( TwoPlayerMove lastMove, SearchTreeNode parent ) {
@@ -33,7 +32,7 @@ public class NegaMaxStrategy extends AbstractBruteSearchStrategy {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     protected TwoPlayerMove findBestMove(TwoPlayerMove lastMove, int depth, MoveList list,

@@ -92,7 +92,8 @@ public class TwoPlayerMove extends Move {
      * copy constructor
      */
     protected TwoPlayerMove(TwoPlayerMove move) {
-        this(move.getToLocation(), move.getValue(), move.getPiece().copy());
+
+        this(move.getToLocation(), move.getValue(), (move.getPiece()!=null) ? move.getPiece().copy() : null);
         this.inheritedValue_ = move.inheritedValue_;
         this.selected_ = move.selected_;
         this.isPass_ = move.isPass_;

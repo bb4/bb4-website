@@ -48,7 +48,7 @@ public final class GoMoveGenerator {
         CandidateMoveAnalyzer candidateMoves = new CandidateMoveAnalyzer(board);
 
         boolean player1 = (lastMove == null) || !lastMove.isPlayer1();
-        int lastMoveValue = (lastMove== null) ? 0 : lastMove.getValue(); 
+        int lastMoveValue = (lastMove== null) ? 0 : lastMove.getValue();
 
         for (int i = 1; i <= nCols; i++ )  {
             for (int j = 1; j <= nRows; j++ )  {
@@ -66,14 +66,12 @@ public final class GoMoveGenerator {
                 }
             }
         }
-
         BestMoveFinder finder = new BestMoveFinder(searchable_.getSearchOptions().getBestMovesSearchOptions());
         moveList = finder.getBestMoves(player1, moveList, player1sPerspective);
 
         addPassingMoveIfNeeded(lastMove, moveList, player1);
 
         prof.stopGenerateMoves();
-
         return moveList;
     }
 
@@ -116,8 +114,7 @@ public final class GoMoveGenerator {
      *  and capture the stone that did the capturing.
      * @return true of this is an immediate take-back (not allowed in go - see "rule of ko")
      */
-    public static boolean isTakeBack( int row, int col, GoMove lastMove, GoBoard board )
-    {
+    public static boolean isTakeBack( int row, int col, GoMove lastMove, GoBoard board ) {
         if ( lastMove == null ) return false;
 
         CaptureList captures = lastMove.getCaptures();

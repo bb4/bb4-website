@@ -18,7 +18,7 @@ public class BestMovesSearchOptions {
     private static final int DEFAULT_MIN_BEST_MOVES = 10;
 
     /** Select best movest whos values is no less than this percent less than the highest value in the set. */
-    private static final int DEFAULT_PERCENT_LESS_THAN_BEST_THRESH = 40;
+    private static final int DEFAULT_PERCENT_LESS_THAN_BEST_THRESH = 60;
 
     private int bestPercentage_ = DEFAULT_PERCENTAGE_BEST_MOVES;
     private int minBestMoves_ = DEFAULT_MIN_BEST_MOVES;

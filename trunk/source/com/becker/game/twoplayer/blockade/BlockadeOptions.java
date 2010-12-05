@@ -16,7 +16,7 @@ public class BlockadeOptions extends TwoPlayerOptions {
     private static final int DEFAULT_LOOK_AHEAD = 2;
 
     /** for any given ply never consider more that BEST_PERCENTAGE of the top moves. */
-    private static final int DEFAULT_PERCENT_LESS_THAN_BEST_THRESH = 40;
+    private static final int DEFAULT_PERCENT_LESS_THAN_BEST_THRESH = 50;
 
     /** for any given ply never consider more that BEST_PERCENTAGE of the top moves. */
     private static final int DEFAULT_PERCENTAGE_BEST_MOVES = 0;

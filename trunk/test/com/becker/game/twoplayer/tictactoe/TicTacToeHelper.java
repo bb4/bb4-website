@@ -18,7 +18,7 @@ public class TicTacToeHelper extends SearchableHelper {
         SearchOptions options = opts.getSearchOptions();
         options.getBruteSearchOptions().setLookAhead(2);
         options.getBruteSearchOptions().setAlphaBeta(true);
-        options.setPercentageBestMoves(100);
+        options.getBestMovesSearchOptions().setPercentageBestMoves(100);
         options.getBruteSearchOptions().setQuiescence(false);
         return opts;
     }
