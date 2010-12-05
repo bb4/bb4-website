@@ -76,7 +76,7 @@ public class E6Information extends AbstractEyeSubtypeInformation
                    return handleVitalPointCases(nbrMap, eye, 4);
                 }
             case E122223 :
-                return handleVitalPointCases(nbrMap, eye, 4);
+                return handleVitalPointCases(nbrMap, eye, 5);
             case E112224 :
                 GoBoardPositionList endFilledSpaces = findSpecialFilledSpaces(nbrMap, getEndPoints(), eye);
                 switch (endFilledSpaces.size())

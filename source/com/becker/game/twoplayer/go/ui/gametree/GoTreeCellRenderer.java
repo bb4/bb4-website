@@ -109,8 +109,7 @@ public final class GoTreeCellRenderer extends GameTreeCellRenderer {
         }  else {
             int numKids = node_.getChildMoves()==null? 0 : node_.getChildMoves().length;
             bldr.append(" kids=").append(numKids);
-            bldr.append(" a=").append(node_.toString());
-            bldr.append(" ").append(node_.attributes);
+            bldr.append(node_.toString());
         }
 
         g2.drawString(bldr.toString(), end, 8);

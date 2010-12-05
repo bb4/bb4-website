@@ -25,8 +25,12 @@ public class UctStrategy extends AbstractSearchStrategy {
     /** ratio of exploration to exploitaion (of known good moves) while searching.  */
     private double exploreExploitRatio;
 
+    /** Number of moves to play in a randome game from the starting move state */
+    private int numRandomLookAhead;
+
     /** When selecting a random move for a random game, select from only this many of the top moves. */
     private int percentLessThanBestThresh;
+
 
     /**
      * Constructor - do not call directly.
@@ -36,6 +40,7 @@ public class UctStrategy extends AbstractSearchStrategy {
     UctStrategy( Searchable searchable, ParameterArray weights ) {
         super(searchable, weights);
         exploreExploitRatio = getOptions().getMonteCarloSearchOptions().getExploreExploitRatio();
+        numRandomLookAhead = getOptions().getMonteCarloSearchOptions().getRandomLookAhead();
         percentLessThanBestThresh = getOptions().getBestMovesSearchOptions().getPercentLessThanBestThresh();
     }
 
@@ -119,19 +124,22 @@ public class UctStrategy extends AbstractSearchStrategy {
      */
     private boolean playRandomGame(TwoPlayerMove move) {
 
-        return playRandomMove(move, searchable_.copy());
+        return playRandomMove(move, searchable_.copy(), searchable_.getMoveList().getNumMoves());
     }
 
     /**
      * Plays a semi-random game from the current node position.
-     * Its semi random in the sense that we try to avoid obviously bad moves.
+     * Its semi-random in the sense that we try to avoid obviously bad moves.
      * @return whether or not player1 won.
      */
-    private boolean playRandomMove(TwoPlayerMove move, Searchable searchable) {
+    private boolean playRandomMove(TwoPlayerMove move, Searchable searchable, int startNumMoves) {
 
-        if (searchable.done(move, false)) {
+        int numRandMoves = searchable.getNumMoves() - startNumMoves;
+        if (numRandMoves >= numRandomLookAhead || searchable.done(move, false)) {
             //GoGameExporter exporter = new GoGameExporter((GoBoard)searchable.getBoard());
             //exporter.saveToFile( FileUtil.PROJECT_HOME + "temp/tmp/file_" + encodeName(move.toString()), null);
+            //System.out.println("numRandMoves=" + numRandMoves +" startNumMoves="+ startNumMoves + " Curr="
+            //        + searchable.getNumMoves() + "  numRandomLookAhead=" + numRandomLookAhead);
             return move.getValue() > 0;
         }
         MoveList moves = searchable.generateMoves(move, weights_, true);
@@ -141,7 +149,7 @@ public class UctStrategy extends AbstractSearchStrategy {
         TwoPlayerMove randomMove = (TwoPlayerMove) moves.getRandomMoveForThresh(percentLessThanBestThresh);
 
         searchable.makeInternalMove(randomMove);
-        return playRandomMove(randomMove, searchable);
+        return playRandomMove(randomMove, searchable, startNumMoves);
     }
     
     /**
