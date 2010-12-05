@@ -82,15 +82,18 @@ public class BestMoveFinder {
     private MoveList determineMovesExceedingValueThresh(MoveList moveList, int minBest, int percentLessThanBestThresh) {
 
         int numMoves = moveList.size();
-        Move currentMove = moveList.getFirstMove();
-        double thresholdValue = currentMove.getValue() * (1.0  - (float)percentLessThanBestThresh/100.0);
         MoveList bestMoveList = new MoveList();
-        bestMoveList.add(currentMove);
-        int ct = 1;
+        if (numMoves > 0) {
+            Move currentMove = moveList.getFirstMove();
+            double thresholdValue = currentMove.getValue() * (1.0  - (float)percentLessThanBestThresh/100.0);
 
-        while ((currentMove.getValue() > thresholdValue || ct < minBest) && ct < numMoves) {
-            currentMove = moveList.get(ct++);
-            bestMoveList.add(currentMove);            
+            bestMoveList.add(currentMove);
+            int ct = 1;
+
+            while ((currentMove.getValue() > thresholdValue || ct < minBest) && ct < numMoves) {
+                currentMove = moveList.get(ct++);
+                bestMoveList.add(currentMove);
+            }
         }
         return bestMoveList;
     }

@@ -104,14 +104,13 @@ public class MoveList extends ArrayList<Move> {
     public Move getRandomMoveForThresh(int percentLessThanBestThresh) {
 
         // first find the index of the last move that is still above the thresh
-        double thresh = this.getFirstMove().getValue() * (1.0 - (float)percentLessThanBestThresh/100.0);
+        double thresh = getFirstMove().getValue() * (1.0 - (float)percentLessThanBestThresh/100.0);
         int ct = 1;
-        Move currentMove;
+        Move currentMove = getFirstMove();
         int numMoves = size();
-        do {
-            currentMove = this.get(ct++);
-
-        } while (currentMove.getValue() > thresh && ct < numMoves);
+        while (currentMove.getValue() > thresh && ct < numMoves) {
+            currentMove = get(ct++);
+        }
         int r = RANDOM.nextInt(ct);
         return get( r );
     }
