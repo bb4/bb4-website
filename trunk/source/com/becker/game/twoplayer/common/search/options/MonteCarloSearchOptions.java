@@ -15,9 +15,14 @@ public class MonteCarloSearchOptions {
     /** Ratio of exploration to exploitation of good moves. */
     private static final double DEFAULT_EXPLORE_EXPLOIT_RATIO = 1.0;
 
+    /** Default numbe rof randome moves to lookahed when playing a random game. */
+    private static final int DEFAULT_RANDOM_LOOKAHEAD = 20;
+
     private int maxSimulations_ = DEFAULT_MAX_SIMULATIONS;
 
     private double exploreExploitRatio_ = DEFAULT_EXPLORE_EXPLOIT_RATIO;
+
+    private int randomLookAhead_ = DEFAULT_RANDOM_LOOKAHEAD;
 
     /**
      * Default Constructor
@@ -27,10 +32,13 @@ public class MonteCarloSearchOptions {
     /**
      * Constructor
      * @param maxSimulations default number simulations to run.
+     * @param exploreExploitRatio
+     * @param randomLookAhead amount to look ahead during random games.
      */
-    public MonteCarloSearchOptions(int maxSimulations, double exploreExploitRatio) {
+    public MonteCarloSearchOptions(int maxSimulations, double exploreExploitRatio, int randomLookAhead) {
         maxSimulations_ = maxSimulations;
         exploreExploitRatio_ = exploreExploitRatio;
+        randomLookAhead_ = randomLookAhead;
     }
 
 
@@ -65,4 +73,19 @@ public class MonteCarloSearchOptions {
     public void setExploreExploitRatio(double ratio) {
          exploreExploitRatio_ = ratio;
     }
+
+    /**
+     * @return number of moves to look ahead randomly when playing a random game.
+     */
+    public int getRandomLookAhead() {
+        return randomLookAhead_;
+    }
+
+    /**
+     * @param randomLookAhead
+     */
+    public void setRandomLookAhead(int randomLookAhead) {
+        randomLookAhead_ = randomLookAhead;
+    }
+
 }

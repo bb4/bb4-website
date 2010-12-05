@@ -25,6 +25,8 @@ public class MonteCarloOptionsPanel extends JPanel {
 
     private NumberInput exploreExploitRatioField_;
 
+    private NumberInput randomLookHeadField_;
+
     /** It would be unreasonable to run more than this many simulations. */
     private static final int ABS_MAX_NUM_SIMULATIONS = 100000000;
 
@@ -46,6 +48,7 @@ public class MonteCarloOptionsPanel extends JPanel {
 
         monteCarloOptions_.setMaxSimulations(maxSimulationsField_.getIntValue());
         monteCarloOptions_.setExploreExploitRatio(exploreExploitRatioField_.getValue());
+        monteCarloOptions_.setRandomLookAhead(randomLookHeadField_.getIntValue());
     }
 
     /**
@@ -61,9 +64,12 @@ public class MonteCarloOptionsPanel extends JPanel {
         exploreExploitRatioField_ =
             new NumberInput(GameContext.getLabel("EXPLORE_EXPLOIT_RATIO"), monteCarloOptions_.getExploreExploitRatio(),
                             GameContext.getLabel("EXPLORE_EXPLOIT_RATIO_TIP"), 0, ABS_MAX_EE_RATIO, false);
-
+        randomLookHeadField_ =
+            new NumberInput(GameContext.getLabel("RANDOM_LOOK_AHEAD"), monteCarloOptions_.getRandomLookAhead(),
+                            GameContext.getLabel("RANDOM_LOOK_AHEAD_TIP"), 1, 1000, true);
         add( maxSimulationsField_ );
         add( exploreExploitRatioField_ );
+        add( randomLookHeadField_ );
     }
 
 }

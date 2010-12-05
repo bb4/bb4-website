@@ -159,19 +159,4 @@ public class SearchTreeNode extends DefaultMutableTreeNode
     public void setLocation(int x, int y) {
         position_ = new Point(x, y);
     }
-     /*
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        SearchTreeNode that = (SearchTreeNode) o;
-
-        return this.getUserObject().equals(that.getUserObject());
-    }
-
-    @Override
-    public int hashCode() {
-        return spaceAllocation_ + ((getUserObject()!=null)?getUserObject().hashCode():0);
-    }  */
 }

@@ -2,7 +2,6 @@ package com.becker.game.twoplayer.common.ui.gametree;
 
 import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
-import com.becker.game.twoplayer.common.search.SearchWindow;
 import com.becker.game.twoplayer.common.search.tree.IGameTreeViewable;
 import com.becker.game.twoplayer.common.search.tree.NodeAttributes;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;

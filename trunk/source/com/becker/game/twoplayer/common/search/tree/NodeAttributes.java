@@ -22,11 +22,4 @@ public class NodeAttributes extends HashMap<String, String>  {
      */
     public NodeAttributes() {}
 
-
-    @Override
-    public String toString () {
-
-        return super.toString();
-    }
-
 }
