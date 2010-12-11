@@ -65,6 +65,11 @@ public class NegaScoutSearchStrategyTest extends AbstractBruteSearchStrategyTst 
     }
 
     @Override
+    protected SearchResult getPruneTwoLevelWithABSearchPlayer2() {
+        return new SearchResult( "1", 4, 7);
+    }
+
+    @Override
     protected SearchResult getPruneTwoLevelWithoutABResultPlayer1() {
         return new SearchResult("0", 5, 5);
     }
@@ -96,6 +101,6 @@ public class NegaScoutSearchStrategyTest extends AbstractBruteSearchStrategyTst 
     }
     @Override
     protected SearchResult getFourLevelABPlayer2Result() {
-        return new SearchResult("1", 22, 22);
+        return new SearchResult("1", 22, 27);
     }
 }

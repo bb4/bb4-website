@@ -121,6 +121,7 @@ public class TerritoryAnalyzer {
      *  A large positive number indicates black is winning, while a negative number indicates that white has the edge.
      */
     public float updateTerritory(boolean isEndOfGame) {
+
         GoProfiler prof = GoProfiler.getInstance();
         prof.start(GoProfiler.UPDATE_TERRITORY);
 

@@ -12,7 +12,7 @@ import java.util.Set;
  *
  * @author Barry Becker
  */
-public class GroupAnalyzer implements Cloneable {
+public class GroupAnalyzer {
 
     /** The group of go stones that we are analyzing. */
     private GoGroup group_;
@@ -22,7 +22,7 @@ public class GroupAnalyzer implements Cloneable {
      * accurate because it takes into account the health of neighboring enemy groups as well.
      * it uses the absolute health as a base and exaggerates it base on the relative strength of the
      * weakest enemy nbr group.
-      */
+     */
     private float relativeHealth_;
 
     private AbsoluteHealthCalculator absHealthCalculator_;

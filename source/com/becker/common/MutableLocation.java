@@ -24,6 +24,10 @@ public final class MutableLocation extends Location {
         super(row, col);
     }
 
+    public MutableLocation(Location loc) {
+        super(loc.getRow(), loc.getCol());
+    }
+
     public void setRow(int row) {
         this.row_ =(byte) row;
     }

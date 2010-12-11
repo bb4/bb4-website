@@ -214,8 +214,7 @@ public final class GoGroup extends GoSet
     /**
      * @return a list of the stones in this group.
      */
-    public GoBoardPositionSet getStones()
-    {
+    public GoBoardPositionSet getStones() {
         GoBoardPositionSet stones = new GoBoardPositionSet();
         for (GoString string : getMembers()) {
             stones.addAll(string.getMembers());
@@ -227,8 +226,7 @@ public final class GoGroup extends GoSet
     /**
      * @return  set of eyes currently identified for this group.
      */
-    public Set<GoEye> getEyes(GoBoard board)
-    {
+    public Set<GoEye> getEyes(GoBoard board) {
         return groupAnalyzer_.getEyes(board);
     }
 

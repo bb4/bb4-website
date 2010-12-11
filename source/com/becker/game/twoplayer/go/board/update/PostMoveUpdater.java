@@ -241,8 +241,8 @@ public class PostMoveUpdater extends PostChangeUpdater {
      * Then for each stone, find its group and add that new group to the board's group list.
      * Continue until all stone accounted for.
      */
-    private void updateGroupsAfterMove(GoBoardPosition pos)
-    {
+    private void updateGroupsAfterMove(GoBoardPosition pos) {
+
         GoProfiler profiler = GoProfiler.getInstance();
         profiler.startUpdateGroupsAfterMove();
 
@@ -276,6 +276,8 @@ public class PostMoveUpdater extends PostChangeUpdater {
      */
     private void recreateGroupsAfterMove() {
 
+        GoProfiler profiler = GoProfiler.getInstance();
+        profiler.startRecreateGroupsAfterMove();
         GoGroupSet groups = new GoGroupSet();
 
         for ( int i = 1; i <= getBoard().getNumRows(); i++ )  {
@@ -288,6 +290,7 @@ public class PostMoveUpdater extends PostChangeUpdater {
                }
            }
         }
+        profiler.stopRecreateGroupsAfterMove();
         board_.setGroups(groups);
     }
 
@@ -297,8 +300,8 @@ public class PostMoveUpdater extends PostChangeUpdater {
      * There can be two if, for example, the capturing stone joins a string that is
      * still in atari after the captured stones have been removed.
      */
-    private void updateAfterRemovingCaptures(int toRow, int toCol)
-    {
+    private void updateAfterRemovingCaptures(int toRow, int toCol) {
+
         GoBoardPosition finalStone = (GoBoardPosition) getBoard().getPosition(toRow, toCol);
 
         GoBoardPosition seedStone;
@@ -334,8 +337,8 @@ public class PostMoveUpdater extends PostChangeUpdater {
      * @param stone
      * @return one of the other 2 0's in the picture.
      */
-    private GoBoardPosition findAlternativeSeed(GoBoardPosition stone)
-    {
+    private GoBoardPosition findAlternativeSeed(GoBoardPosition stone) {
+
         // List nbrs = this.getNobiNeighbors(stone, NeighborType.ANY)
         // After we find where the blank is we can pretty much just assert the other positions.
         int r = stone.getRow();
@@ -364,8 +367,8 @@ public class PostMoveUpdater extends PostChangeUpdater {
      * @return null if no alternative found
      */
     private GoBoardPosition getConfirmedAlternative(GoBoardPosition stone,
-                                                    int r, int c, int rowOffset, int colOffset)
-    {
+                                                    int r, int c, int rowOffset, int colOffset) {
+        
         BoardPosition blankPos = getBoard().getPosition(r + rowOffset, c + colOffset);
         if (blankPos != null && blankPos.isUnoccupied()) {
             BoardPosition enemy1;

@@ -30,11 +30,13 @@ class EyeSpaceAnalyzer {
     /**
      * Constructor.
      */
-    public EyeSpaceAnalyzer(GoGroup group, GoBoard board) {
+    public EyeSpaceAnalyzer(GoGroup group) {
         group_ = group;
+    }
+
+    public void setBoard(GoBoard board) {
         board_ = board;
         nbrAnalyzer_ = new NeighborAnalyzer(board);
-        assert board_ != null;
         boundingBox_ = group_.findBoundingBox();
     }
 
@@ -44,6 +46,7 @@ class EyeSpaceAnalyzer {
      */
     public Set<GoEye> determineEyes() {
 
+        assert (board_ != null) : "The board must be set before determining eyes.";
         List<GoBoardPositionList> candidateEyeLists = createEyeSpaceLists();
         return findEyeFromCandidates(candidateEyeLists);
     }
@@ -155,8 +158,7 @@ class EyeSpaceAnalyzer {
      * @param lists list of stones connected to the seed stone
      */
     private void excludeSeed( GoBoardPosition space, boolean groupOwnership,
-                              List<GoBoardPositionList> lists, Box box)
-    {
+                              List<GoBoardPositionList> lists, Box box) {
         if ( !space.isVisited()
              && (space.isUnoccupied() || space.getPiece().isOwnedByPlayer1() != group_.isOwnedByPlayer1())) {
             // this will leave stones outside the group visited
@@ -199,8 +201,7 @@ class EyeSpaceAnalyzer {
      * @param eyeList the candidate string of stones to misc for eye status
      * @return true if the list of stones is an eye
      */
-    private boolean confirmEye( GoBoardPositionList eyeList)
-    {
+    private boolean confirmEye( GoBoardPositionList eyeList) {
         if ( eyeList == null )
             return false;
 

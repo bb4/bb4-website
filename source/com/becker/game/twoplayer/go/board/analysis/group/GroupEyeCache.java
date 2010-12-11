@@ -4,7 +4,6 @@ import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.elements.GoEye;
 import com.becker.game.twoplayer.go.board.elements.GoGroup;
 
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -28,6 +27,9 @@ class GroupEyeCache {
     /** measure of how easily the group can make 2 eyes. */
     private float eyePotential_;
 
+    EyeSpaceAnalyzer eyeAnalyzer_;
+    EyePotentialAnalyzer potentialAnalyzer_;
+
     /**
      * Set this to true when the eyes need to be recalculated.
      * It must be set to true if the group has changed in any way.
@@ -42,6 +44,8 @@ class GroupEyeCache {
         group_ = group;
         eyes_ = new LinkedHashSet<GoEye>();
         isValid_ = false;
+        eyeAnalyzer_ = new EyeSpaceAnalyzer(group_);
+        potentialAnalyzer_ = new EyePotentialAnalyzer(group_);
     }
 
     /**
@@ -55,7 +59,7 @@ class GroupEyeCache {
     /**
      * compute how many eyes (connected internal blank areas) this group has.
      * the eyes are either false eyes or true (or big or territorial) eyes.
-     * Also update eyePotential (a measure of how good the groups ability to make 2 eyes(.
+     * Also update eyePotential (a measure of how good the groups ability to make 2 eyes.
      * This method is expensive. That is why the 2 things it computes (eyes and eyePotential) are cached.
      * After this method runs, the cache is valid until something about the group changes.
      */
@@ -64,10 +68,10 @@ class GroupEyeCache {
             return;
         }
 
-        EyeSpaceAnalyzer eyeAnalyzer = new EyeSpaceAnalyzer(group_, board);
-        EyePotentialAnalyzer potentialAnalyzer = new EyePotentialAnalyzer(group_, board);
-        eyes_ = eyeAnalyzer.determineEyes();
-        eyePotential_ = potentialAnalyzer.calculateEyePotential();
+        eyeAnalyzer_.setBoard(board);
+        potentialAnalyzer_.setBoard(board);
+        eyes_ = eyeAnalyzer_.determineEyes();
+        eyePotential_ = potentialAnalyzer_.calculateEyePotential();
         isValid_ = true;
     }
 

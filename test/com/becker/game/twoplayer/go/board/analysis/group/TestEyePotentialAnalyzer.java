@@ -132,9 +132,7 @@ public class TestEyePotentialAnalyzer extends GoTestCase {
 
     public void testEyePotential_ThreeOneSpaceJumps() {
         restoreGame("three_one_space_jumps");
-        System.out.println("BLACK ---------");
         verifyBlackEyePotential(3, 1.115f);
-        System.out.println("WHITE ---------");
         verifyWhiteEyePotential(3, 1.115f);
     }
 
@@ -180,7 +178,8 @@ public class TestEyePotentialAnalyzer extends GoTestCase {
         int size = group.getNumStones();
         Assert.assertEquals("Unexpected size of test group.", expectedSizeOfGroup, size);
 
-        EyePotentialAnalyzer analyzer = new EyePotentialAnalyzer(group, (GoBoard) controller_.getBoard());
+        EyePotentialAnalyzer analyzer = new EyePotentialAnalyzer(group);
+        analyzer.setBoard((GoBoard) controller_.getBoard());
         float eyePotential = analyzer.calculateEyePotential();
 
         Assert.assertEquals("Unexpected group eye potential", expectedPotential, eyePotential, TOLERANCE);
