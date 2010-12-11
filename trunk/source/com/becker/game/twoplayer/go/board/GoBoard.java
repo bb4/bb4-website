@@ -54,7 +54,6 @@ public final class GoBoard extends TwoPlayerBoard {
      * Copy constructor
      */
     public GoBoard(GoBoard board) {
-
         super(board);
 
         handicap_ = board.handicap_;
@@ -67,7 +66,11 @@ public final class GoBoard extends TwoPlayerBoard {
     }
 
     public GoBoard copy() {
-        return new GoBoard(this);
+
+        getProfiler().startCopyBoard();
+        GoBoard b = new GoBoard(this);
+        getProfiler().stopCopyBoard();
+        return b;
     }
 
     /**
@@ -200,8 +203,8 @@ public final class GoBoard extends TwoPlayerBoard {
      */
     @Override
     protected void undoInternalMove( Move move ) {
-        getProfiler().startUndoMove();
 
+        getProfiler().startUndoMove();
         GoMove m = (GoMove) move;
 
         // there is nothing to do if it is a pass
@@ -214,7 +217,6 @@ public final class GoBoard extends TwoPlayerBoard {
         clearEyes();
 
         boardUpdater_.updateAfterRemove(m);
-
         getProfiler().stopUndoMove();
     }
 

@@ -68,10 +68,10 @@ public class GameProfiler extends Profiler {
      * @param numMovesConsidered number of moves inspected during search.
      */
     void showProfileStats( long totalTime, long numMovesConsidered ) {
-        GameContext.log( 0, "----------------------------------------------------------------------------------" );
-        GameContext.log( 0, "There were " + numMovesConsidered + " moves considered." );
+        GameContext.log( 0, "----------------------------------------------------------------------------------\n" );
+        GameContext.log( 0, "There were " + numMovesConsidered + " moves considered.\n" );
         GameContext.log( 0, "The total time for the computer to move was : " +
-                Util.formatNumber((float)totalTime/1000) + " seconds." );
+                Util.formatNumber((float)totalTime/1000) + " seconds.\n" );
         print();
     }
 

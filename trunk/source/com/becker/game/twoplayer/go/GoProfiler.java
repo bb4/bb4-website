@@ -18,6 +18,7 @@ public final class GoProfiler extends GameProfiler {
     private static final String UPDATE_GROUPS_AFTER_REMOVE = "updating groups after remove";
     private static final String UPDATE_STRINGS_AFTER_MOVE = "updating strings after move";
     private static final String UPDATE_GROUPS_AFTER_MOVE = "updating groups after move";
+    private static final String RECREATE_GROUPS_AFTER_MOVE = "recreatine groups after move";
     //private static final String GET_NBR_GROUPS = "getting nbr groups";
     public static final String UPDATE_TERRITORY = "updating territory";
     public static final String ABSOLUTE_TERRITORY = "absolute territory";
@@ -30,6 +31,7 @@ public final class GoProfiler extends GameProfiler {
     public static final String FIND_CAPTURES = "finding capturess";
     public static final String UPDATE_EYES = "update eyes";
     public static final String GET_ENEMY_GROUPS_NBRS = "get enemy group nbrs";
+    public static final String COPY_BOARD = "copy go board";
 
     public static GoProfiler getInstance() {
         if (instance == null) {
@@ -48,6 +50,7 @@ public final class GoProfiler extends GameProfiler {
           add(FIND_CAPTURES, MAKE_MOVE);
           add(UPDATE_STRINGS_AFTER_MOVE, MAKE_MOVE);
           add(UPDATE_GROUPS_AFTER_MOVE, MAKE_MOVE);
+            add(RECREATE_GROUPS_AFTER_MOVE);
             //add(GET_NBR_GROUPS, UPDATE_GROUPS_AFTER_MOVE);
             //add(CHECK_FOR_CUTS, UPDATE_GROUPS_AFTER_MOVE);
             add(UPDATE_TERRITORY, UPDATE_GROUPS_AFTER_MOVE);
@@ -59,6 +62,7 @@ public final class GoProfiler extends GameProfiler {
         add(GET_GROUP_NBRS);
         add(FIND_GROUPS);
         add(FIND_STRINGS);
+        add(COPY_BOARD);
     }
 
 
@@ -78,6 +82,14 @@ public final class GoProfiler extends GameProfiler {
         this.stop(UPDATE_GROUPS_AFTER_REMOVE);
     }
 
+    public void startRecreateGroupsAfterMove() {
+        this.start(RECREATE_GROUPS_AFTER_MOVE);
+    }
+
+    public void stopRecreateGroupsAfterMove() {
+        this.stop(RECREATE_GROUPS_AFTER_MOVE);
+    }
+
     public void startUpdateStringsAfterMove() {
         this.start(UPDATE_STRINGS_AFTER_MOVE);
     }
@@ -85,7 +97,7 @@ public final class GoProfiler extends GameProfiler {
     public void stopUpdateStringsAfterMove() {
         this.stop(UPDATE_STRINGS_AFTER_MOVE);
     }
-
+    
     public void startUpdateGroupsAfterMove() {
         this.start(UPDATE_GROUPS_AFTER_MOVE);
     }
@@ -93,5 +105,14 @@ public final class GoProfiler extends GameProfiler {
     public void stopUpdateGroupsAfterMove() {
         this.stop(UPDATE_GROUPS_AFTER_MOVE);
     }
+
+    public void startCopyBoard() {
+        this.start(COPY_BOARD);
+    }
+
+    public void stopCopyBoard() {
+        this.stop(COPY_BOARD);
+    }
+
 
 }

@@ -20,6 +20,8 @@ public class TestAll extends GoTestCase {
 
         TestSuite suite =  new TestSuite("Group Tests");
 
+        suite.addTestSuite(TestRun.class);
+        suite.addTestSuite(TestEyePotentialAnalyzer.class);
         suite.addTestSuite(TestGroupHealthAnalyzer.class);
         suite.addTestSuite(TestLifeAnalyzer.class);
 

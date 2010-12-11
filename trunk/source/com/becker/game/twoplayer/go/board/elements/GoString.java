@@ -232,8 +232,8 @@ public class GoString extends GoSet
         GoStone stone = (GoStone)pos.getPiece();
         boolean stoneMuchWeaker = GoBoardUtil.isStoneMuchWeaker(getGroup(), stone);
 
-        assert (getGroup().isOwnedByPlayer1() == this.isOwnedByPlayer1()): getGroup()+" string=" + this;
-        return ((stone.isOwnedByPlayer1() != this.isOwnedByPlayer1() && !stoneMuchWeaker));
+        assert (getGroup().isOwnedByPlayer1() == isOwnedByPlayer1()): getGroup() + " string=" + this;
+        return ((stone.isOwnedByPlayer1() != isOwnedByPlayer1() && !stoneMuchWeaker));
     }
     
     /**

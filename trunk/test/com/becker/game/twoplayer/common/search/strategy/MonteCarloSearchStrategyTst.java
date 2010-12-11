@@ -76,7 +76,7 @@ public abstract class MonteCarloSearchStrategyTst extends AbstractSearchStrategy
         return new SearchResult("0", -8, 2);
     }
     protected SearchResult getTwoSimulationSearchPlayer2Result() {
-        return new SearchResult("0", -8, 2);
+        return new SearchResult("0", -2, 2);
     }
 
     protected SearchResult getTenSimulationSearchPlayer1Result() {

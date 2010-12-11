@@ -57,8 +57,7 @@ class AbsoluteHealthCalculator {
     /**
      * @return true if the group has changed (structurally) in any way.
      */
-    public boolean isValid()
-    {
+    public boolean isValid() {
         return eyeCache_.isValid();
     }
 
@@ -95,9 +94,9 @@ class AbsoluteHealthCalculator {
      *
      * @return the overall health of the group independent of nbr groups.
      */
-    public float calculateAbsoluteHealth(GoBoard board)
-    {
+    public float calculateAbsoluteHealth(GoBoard board) {
         if ( eyeCache_.isValid() ) {
+            GameContext.log(0, "cache valid. Returning health="+ absoluteHealth_);
             return absoluteHealth_;
         }
 
