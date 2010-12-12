@@ -1,10 +1,13 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
+import com.becker.common.util.FileUtil;
 import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
+import com.becker.game.twoplayer.go.board.GoBoard;
+import com.becker.game.twoplayer.go.persistence.GoGameExporter;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**
@@ -12,10 +15,6 @@ import com.becker.optimization.parameter.ParameterArray;
  *  This method uses a monte carlo (stochastic) method and is fundamentally different than minimax and its derivatives.
  *  It's sublcasses define the key search algorithms for 2 player zero sum games with perfect information.
  *
- * TODO
- * - More params
- *    - limit depth so go does not have to play till end.
- *    - save games at leaf
  *    - add option to use concurrency. Need lock on uctNodes
  *
  *  @author Barry Becker
@@ -28,6 +27,9 @@ public class UctStrategy extends AbstractSearchStrategy {
     /** Number of moves to play in a randome game from the starting move state */
     private int numRandomLookAhead;
 
+    /** When selecting a random move for a random game, select from only this many of the top moves. */
+    private int percentLessThanBestThresh;
+
 
     /**
      * Constructor - do not call directly.
@@ -38,6 +40,7 @@ public class UctStrategy extends AbstractSearchStrategy {
         super(searchable, weights);
         exploreExploitRatio = getOptions().getMonteCarloSearchOptions().getExploreExploitRatio();
         numRandomLookAhead = getOptions().getMonteCarloSearchOptions().getRandomLookAhead();
+        percentLessThanBestThresh = getOptions().getBestMovesSearchOptions().getPercentLessThanBestThresh();
     }
 
     @Override
@@ -133,16 +136,17 @@ public class UctStrategy extends AbstractSearchStrategy {
         int numRandMoves = searchable.getNumMoves() - startNumMoves;
         if (numRandMoves >= numRandomLookAhead || searchable.done(move, false)) {
             //GoGameExporter exporter = new GoGameExporter((GoBoard)searchable.getBoard());
-            //exporter.saveToFile( FileUtil.PROJECT_HOME + "temp/tmp/file_" + encodeName(move.toString()), null);
-            //System.out.println("numRandMoves=" + numRandMoves +" startNumMoves="+ startNumMoves + " Curr="
-            //        + searchable.getNumMoves() + "  numRandomLookAhead=" + numRandomLookAhead);
-            return searchable.worth( move, weights_, true ) > 0;
+            //exporter.saveToFile( FileUtil.PROJECT_HOME + "temp/tmp/file_" + startNumMoves + "_" + move.hashCode(), null);
+            int score = searchable.worth( move, weights_, true );
+            move.setValue(score);
+            //System.out.println("score="+ score);
+            return score > 0;
         }
         MoveList moves = searchable.generatePossibleMoves(move, weights_, true);
         if (moves.size() == 0) {
             return searchable.worth( move, weights_, true ) > 0;
         }
-        TwoPlayerMove randomMove = (TwoPlayerMove) moves.getRandomMove();
+        TwoPlayerMove randomMove = (TwoPlayerMove) moves.getRandomMoveForThresh(percentLessThanBestThresh);
 
         searchable.makeInternalMove(randomMove);
         return playRandomMove(randomMove, searchable, startNumMoves);

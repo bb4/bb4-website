@@ -53,7 +53,7 @@ public class UctNode {
     }
 
     /**
-     * Incriment our number of wins we won again at this node.
+     * Increment our number of wins we won again at this node.
      * @param player1Won true if player 1 won
      */
     public void updateWin(boolean player1Won) {
@@ -66,7 +66,7 @@ public class UctNode {
      * @return ratio of wins to visits.
      */
     public double getWinRate() {
-        return (numVisits == 0) ? 0 : (double)numWins/ (double)numVisits;
+        return (numVisits == 0) ? 0 : (double)numWins / (double)numVisits;
     }
 
     public List<UctNode> getChildren() {

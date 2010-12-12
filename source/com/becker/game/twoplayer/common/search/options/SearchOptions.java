@@ -14,8 +14,10 @@ import com.becker.optimization.parameter.ParameterArray;
  */
 public class SearchOptions {
 
+    public static final SearchStrategyType DEFAULT_STRATEGY_METHOD = SearchStrategyType.UCT;
+
     /** The default search method. */
-    private SearchStrategyType strategyMethod_ = SearchStrategyType.UCT;
+    private SearchStrategyType strategyMethod_ = DEFAULT_STRATEGY_METHOD;
     
     private BruteSearchOptions bruteOptions_;
     private MonteCarloSearchOptions monteCarloOptions_;

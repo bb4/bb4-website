@@ -12,13 +12,13 @@ import com.becker.game.twoplayer.common.search.SearchWindow;
 public class BestMovesSearchOptions {
 
     /** Percentage of best moves to consider at each search ply. */
-    private static final int DEFAULT_PERCENTAGE_BEST_MOVES = 60;
+    private static final int DEFAULT_PERCENTAGE_BEST_MOVES = 50;
 
     /** No matter what the percentBestMoves is we should not prune if less than this number. */
     private static final int DEFAULT_MIN_BEST_MOVES = 10;
 
     /** Select best movest whos values is no less than this percent less than the highest value in the set. */
-    private static final int DEFAULT_PERCENT_LESS_THAN_BEST_THRESH = 70;
+    private static final int DEFAULT_PERCENT_LESS_THAN_BEST_THRESH = 60;
 
     private int bestPercentage_ = DEFAULT_PERCENTAGE_BEST_MOVES;
     private int minBestMoves_ = DEFAULT_MIN_BEST_MOVES;

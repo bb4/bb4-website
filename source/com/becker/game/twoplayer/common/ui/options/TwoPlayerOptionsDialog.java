@@ -176,6 +176,6 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
                 return SearchStrategyType.values()[i];
             }
         }
-        return null;
+        return SearchOptions.DEFAULT_STRATEGY_METHOD;
     }
 }
