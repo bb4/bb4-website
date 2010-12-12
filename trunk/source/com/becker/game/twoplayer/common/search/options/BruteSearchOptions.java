@@ -34,11 +34,13 @@ public class BruteSearchOptions {
     private int maxQuiescentDepth_ = DEFAULT_MAX_QUIESCENT_DEPTH;
     private SearchWindow initialSearchWindow_ = DEFAULT_SEARCH_WINDOW;
 
+    private BestMovesSearchOptions bestMovesOptions_;
 
     /**
      * Default Constructor
      */
     public BruteSearchOptions() {
+        bestMovesOptions_ = new BestMovesSearchOptions();
         lookAhead_ = getDefaultLookAhead();
     }
 
@@ -46,18 +48,22 @@ public class BruteSearchOptions {
      * Constructor
      * @param defaultLookAhead default number of moves to look ahead.
      */
-    public BruteSearchOptions(int defaultLookAhead) {
+    public BruteSearchOptions(int defaultLookAhead, BestMovesSearchOptions bestMovesOptions) {
         lookAhead_ = defaultLookAhead;
+        bestMovesOptions_ = bestMovesOptions;
     }
 
     /**
      * Constructor
      */
-    public BruteSearchOptions(int defaultLookAhead, int maxQuiescentDepth) {
-        this(defaultLookAhead);
+    public BruteSearchOptions(int defaultLookAhead, int maxQuiescentDepth, BestMovesSearchOptions bestMovesOptions) {
+        this(defaultLookAhead, bestMovesOptions);
         maxQuiescentDepth_ = maxQuiescentDepth;
     }
 
+    public BestMovesSearchOptions getBestMovesSearchOptions() {
+        return bestMovesOptions_;
+    }
 
     int getDefaultLookAhead() {
         return DEFAULT_LOOK_AHEAD;

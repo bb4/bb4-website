@@ -36,7 +36,6 @@ class RunPotentialAnalyzer {
         float runPotential = 0;
         int breadth = (rowInc == 1) ? (maxRow - pos.getRow()) : (maxCol - pos.getCol());
         GoBoardPosition startSpace = (GoBoardPosition) board_.getPosition( pos );
-        //System.out.println(startSpace + " start");
 
         do {
             GoBoardPosition nextSpace = (GoBoardPosition) board_.getPosition( pos );
@@ -100,7 +99,6 @@ class RunPotentialAnalyzer {
             }
 
             runPotential = new Run(firstPos, currentPos, max, bounded).getPotential();
-            System.out.println("accruing " + runPotential);
         }
 
         return runPotential;

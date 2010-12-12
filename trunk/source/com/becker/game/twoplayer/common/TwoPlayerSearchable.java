@@ -63,6 +63,13 @@ public abstract class TwoPlayerSearchable implements Searchable {
         return GameProfiler.getInstance();
     }
 
+    /**
+     * By default just return the good set of staticall evalutated moves.
+     * Probably want to changes this so all games implement without static eval.
+     */
+    public MoveList generatePossibleMoves(TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective ) {
+        return generateMoves(lastMove, weights, player1sPerspective);
+    }
 
     /**
      * @param m the move to play.
@@ -71,9 +78,10 @@ public abstract class TwoPlayerSearchable implements Searchable {
     {
         TwoPlayerBoard b = board_;
         TwoPlayerMove lastMove = (TwoPlayerMove)(moveList_.getLastMove());
-        if (moveList_.getNumMoves() > 0)
+        if (moveList_.getNumMoves() > 0) {
             assert(lastMove.isPlayer1() != m.isPlayer1()):
                     "can't go twice in a row m="+m+" getLastMove()="+ lastMove + " movelist = " + moveList_;
+        }
 
         board_.makeMove( m );
 
@@ -115,6 +123,7 @@ public abstract class TwoPlayerSearchable implements Searchable {
      *  @return the worth of the board from the specified players point of view
      */
     public final int worth( Move lastMove, ParameterArray weights, boolean player1sPerspective ) {
+
         int value = worth( lastMove, weights );
         return (player1sPerspective) ? value : -value;
     }

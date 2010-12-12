@@ -19,6 +19,7 @@ public class BruteSearchOptionsPanel extends JPanel {
     private NumberInput lookAheadField_;
     private JCheckBox alphabetaCheckbox_;
     private JCheckBox quiescenceCheckbox_;
+    private BestMovesOptionsPanel bestMovesOptionsPanel_;
 
     private static final int MAX_ALLOWED_LOOKAHEAD = 20;
 
@@ -38,6 +39,7 @@ public class BruteSearchOptionsPanel extends JPanel {
         bruteOptions_.setAlphaBeta(alphabetaCheckbox_.isSelected());
         bruteOptions_.setQuiescence(quiescenceCheckbox_.isSelected());
         bruteOptions_.setLookAhead(lookAheadField_.getIntValue());
+        bestMovesOptionsPanel_.updateBestMovesOptions();
     }
 
     /**
@@ -64,5 +66,8 @@ public class BruteSearchOptionsPanel extends JPanel {
         quiescenceCheckbox_ = new JCheckBox( GameContext.getLabel("USE_QUIESCENCE"), bruteOptions_.getQuiescence() );
         quiescenceCheckbox_.setToolTipText( GameContext.getLabel("USE_QUIESCENCE_TIP") );
         this.add( quiescenceCheckbox_ );
+
+        bestMovesOptionsPanel_ = new BestMovesOptionsPanel(bruteOptions_.getBestMovesSearchOptions());
+        this.add(bestMovesOptionsPanel_);
     }
 }

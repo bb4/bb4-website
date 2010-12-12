@@ -328,9 +328,18 @@ public class GoSearchable extends TwoPlayerSearchable {
     /**
      * generate all possible next moves
      */
+    public final MoveList generatePossibleMoves(TwoPlayerMove lastMove, ParameterArray weights,
+                                        boolean player1sPerspective ) {
+        GoMoveGenerator generator = new GoMoveGenerator(this);
+        return generator.generatePossibleMoves(lastMove, player1sPerspective);
+    }
+
+    /**
+     * generate all good next moves (statically evaluated)
+     */
     public final MoveList generateMoves(TwoPlayerMove lastMove, ParameterArray weights,
                                         boolean player1sPerspective ) {
         GoMoveGenerator generator = new GoMoveGenerator(this);
-        return generator.generateMoves(lastMove, weights, player1sPerspective);
+        return generator.generateEvaluatedMoves(lastMove, weights, player1sPerspective);
     }
 }
