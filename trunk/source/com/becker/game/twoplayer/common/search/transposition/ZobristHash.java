@@ -32,7 +32,7 @@ public final class ZobristHash {
     private Long currentKey;
 
     /**
-     * Create the static table of randome numbers to use for the Hash from a sample board.
+     * Create the static table of random numbers to use for the Hash from a sample board.
      * @param board game board
      */
     public ZobristHash(TwoPlayerBoard board) {

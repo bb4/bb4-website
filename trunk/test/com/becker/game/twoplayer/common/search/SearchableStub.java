@@ -92,6 +92,15 @@ public class SearchableStub implements Searchable {
         return new MoveList(((TwoPlayerMoveStub) lastMove).getChildren());
     }
 
+/**
+     * {@inheritDoc}
+     * @@ we should remove the final argument because it always seems to be true
+     */
+    public MoveList generatePossibleMoves(TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective ) {
+        return new MoveList(((TwoPlayerMoveStub) lastMove).getChildren());
+    }
+
+
     /**
      * {@inheritDoc}
      * @@ we should remove the final argument because it always seems to be true

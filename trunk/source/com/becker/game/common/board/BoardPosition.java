@@ -11,6 +11,7 @@ import com.becker.common.Location;
  * @author Barry Becker
  */
 public class BoardPosition {
+
     /** we need to store the location so we can restore captures.  */
     protected Location location_;
 
@@ -22,7 +23,7 @@ public class BoardPosition {
      * constructor
      * @param row - y position on the board.
      * @param col - x position on the board.
-     * @param piece - the pice to put at this position (use null if there is none).
+     * @param piece - the piece to put at this position (use null if there is none).
      */
     public BoardPosition( int row, int col, GamePiece piece)  {
         this(new Location(row, col), piece);

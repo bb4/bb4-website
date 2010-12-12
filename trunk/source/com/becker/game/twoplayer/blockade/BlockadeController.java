@@ -57,7 +57,7 @@ public class BlockadeController extends TwoPlayerController {
      */
     public void computerMovesFirst() {
         // determine the possible moves and choose one at random.
-        MoveList moveList = getSearchable().generateMoves( null, weights_.getPlayer1Weights(), true );
+        MoveList moveList = getSearchable().generateMoves(null, weights_.getPlayer1Weights(), true );
 
         makeMove( moveList.getRandomMove() );
     }

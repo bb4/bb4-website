@@ -20,7 +20,7 @@ import static com.becker.game.twoplayer.common.search.strategy.SearchStrategy.WI
 /**
  * This is an abstract base class for a two player Game Controller.
  * It contains the key logic for 2 player zero sum games with perfect information.
- * Some examples include chess, checkers, go, othello, pente, com.becker.game.twoplayer.blockade,
+ * Some examples include chess, checkers, go, othello, pente, blockade,
  * mancala, nine-mens morris, etc.
  * It implements Optimizee because the games derived from this class
  * can be optimized to improve their playing ability.
@@ -88,7 +88,7 @@ public abstract class TwoPlayerController extends GameController {
     }
 
     /**
-     * Return the game board back to its initial openning state
+     * Return the game board back to its initial opening state
      */
     @Override
     public void reset() {
@@ -255,7 +255,7 @@ public abstract class TwoPlayerController extends GameController {
     }
 
     /**
-     * record the human's move p.
+     * record the humans move p.
      * @param m the move the player made
      * @return the same move with some of the fields filled in
      */
@@ -297,7 +297,7 @@ public abstract class TwoPlayerController extends GameController {
      * @param player1ToMove true if player one to move.
      * @param synchronous if true then the method does not return until the next move has been found.
      * @return true if the game is over
-     * @throws AssertionError if something bad happenned while searching.
+     * @throws AssertionError if something bad happened while searching.
      */
      public boolean requestComputerMove(final boolean player1ToMove, boolean synchronous) throws AssertionError {
 

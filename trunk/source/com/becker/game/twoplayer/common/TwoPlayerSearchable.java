@@ -64,8 +64,8 @@ public abstract class TwoPlayerSearchable implements Searchable {
     }
 
     /**
-     * By default just return the good set of staticall evalutated moves.
-     * Probably want to changes this so all games implement without static eval.
+     * By default just return the good set of statically evaluated moves.
+     * Probably want to changes this so all games implement without static evaluation.
      */
     public MoveList generatePossibleMoves(TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective ) {
         return generateMoves(lastMove, weights, player1sPerspective);
@@ -96,7 +96,8 @@ public abstract class TwoPlayerSearchable implements Searchable {
      */
     public final void undoInternalMove( TwoPlayerMove m ) {
         TwoPlayerMove lastMove = (TwoPlayerMove)moveList_.getLastMove();
-        assert m.equals(lastMove) : "The move we are trying to undo ("+m+") in list="+ moveList_+" was not equal to the last move ("+lastMove+"). all move=" + board_.getMoveList();
+        assert m.equals(lastMove) : "The move we are trying to undo ("+m+") in list="
+                + moveList_+" was not equal to the last move ("+lastMove+"). all move=" + board_.getMoveList();
         hash.applyMove(m, board_.getStateIndex(board_.getPosition(m.getToLocation())));
         board_.undoMove();
     }

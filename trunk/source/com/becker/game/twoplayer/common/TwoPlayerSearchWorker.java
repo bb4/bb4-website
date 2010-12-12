@@ -49,7 +49,7 @@ class TwoPlayerSearchWorker {
      * @param isPlayer1 true if player one to move.
      * @param synchronous if true then the method does not return until the next move has been found.
      * @return true if the game is over
-     * @throws AssertionError  if something bad happenned while searching.
+     * @throws AssertionError  if something bad happened while searching.
      */
      public boolean requestComputerMove(final boolean isPlayer1, boolean synchronous) throws AssertionError {
 
