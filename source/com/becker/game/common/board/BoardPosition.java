@@ -15,7 +15,7 @@ public class BoardPosition {
     protected Location location_;
 
     /** the piece to display at this position. Null if the position is unoccupied. */
-    protected GamePiece piece_ = null;
+    protected GamePiece piece_;
 
 
     /**

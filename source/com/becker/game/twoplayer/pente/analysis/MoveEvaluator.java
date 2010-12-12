@@ -47,7 +47,8 @@ public class MoveEvaluator
         int col = move.getToCol();
         int numRows = board_.getNumRows();
         int numCols = board_.getNumCols();
-        assert board_.getPosition(row, col).getPiece() != null : "There must be a piece where the last move was played";
+        assert board_.getPosition(row, col).getPiece() != null :
+                "There must be a piece where the last move was played ("+row+", "+col+")";
         
         // look at every string that passes through this new move to see how the value is effected.
         int diff = findStraightValueDifference(row, col, numCols, weights, Direction.HORIZONTAL);

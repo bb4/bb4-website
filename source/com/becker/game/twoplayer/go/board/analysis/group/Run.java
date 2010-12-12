@@ -39,8 +39,7 @@ class Run {
 
         int runLength = endPos - firstPos;
         assert(runLength > 0);
-        System.out.println("firstPos=" + firstPos + " endPos=" + endPos + " max=" + max + " runLength=" + runLength + " end-first=" + (endPos - firstPos));
-
+        
         if ((firstPos == 1 || endPos == max + 1 || boundedByFriends)) {
             potential = getRunPotentialInternal(runLength);
         }

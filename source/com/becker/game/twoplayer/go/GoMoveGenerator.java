@@ -1,6 +1,7 @@
 package com.becker.game.twoplayer.go;
 
 import com.becker.common.Location;
+import com.becker.game.common.Move;
 import com.becker.game.common.board.Board;
 import com.becker.game.common.board.CaptureList;
 import com.becker.game.common.GameContext;
@@ -30,12 +31,36 @@ public final class GoMoveGenerator {
         searchable_ = controller;
     }
 
+    /**
+     * @return all reasonably good next moves with statically evaluated scores.
+     */
+    public final MoveList generateEvaluatedMoves(TwoPlayerMove lastMove, ParameterArray weights,
+                                                 boolean player1sPerspective ) {
+        assert player1sPerspective;
+        GoProfiler prof = GoProfiler.getInstance();
+        prof.startGenerateMoves();
+
+        GoBoard board = (GoBoard)searchable_.getBoard();
+        MoveList moveList = generatePossibleMoves(lastMove, player1sPerspective);
+
+        for (Move move : moveList)  {
+            setMoveValue(weights, player1sPerspective, board, (GoMove)move);
+        }
+        boolean player1 = (lastMove == null) || !lastMove.isPlayer1();
+        BestMoveFinder finder = new BestMoveFinder(searchable_.getSearchOptions().getBestMovesSearchOptions());
+        moveList = finder.getBestMoves(player1, moveList, player1sPerspective);
+
+        addPassingMoveIfNeeded(lastMove, moveList, player1);
+
+        prof.stopGenerateMoves();
+        return moveList;
+    }
 
     /**
-     * @return all reasonably good next moves.
+     * @return all possible reasonable next moves. We try to limit to reasonable moves as best we can, but that
+     * is difficult without static evalutaion. At least no illegal moves will be returned.
      */
-    public final MoveList generateMoves(TwoPlayerMove lastMove, ParameterArray weights,
-                                        boolean player1sPerspective ) {
+    public final MoveList generatePossibleMoves(TwoPlayerMove lastMove, boolean player1sPerspective ) {
         assert player1sPerspective;
         GoProfiler prof = GoProfiler.getInstance();
         prof.startGenerateMoves();
@@ -60,16 +85,11 @@ public final class GoMoveGenerator {
                         GameContext.log( 2, "The move was a suicide (can't add it to the list): " + m );
                     }
                     else {
-                        setMoveValue(weights, player1sPerspective, board, m);
                         moveList.add( m );
                     }
                 }
             }
         }
-        BestMoveFinder finder = new BestMoveFinder(searchable_.getSearchOptions().getBestMovesSearchOptions());
-        moveList = finder.getBestMoves(player1, moveList, player1sPerspective);
-
-        addPassingMoveIfNeeded(lastMove, moveList, player1);
 
         prof.stopGenerateMoves();
         return moveList;

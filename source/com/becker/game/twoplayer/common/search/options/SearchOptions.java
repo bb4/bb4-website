@@ -14,10 +14,9 @@ import com.becker.optimization.parameter.ParameterArray;
  */
 public class SearchOptions {
 
-    /** the default search method. */
-    private SearchStrategyType strategyMethod_ = SearchStrategyType.MINIMAX;
-
-    private BestMovesSearchOptions bestMovesOptions_;
+    /** The default search method. */
+    private SearchStrategyType strategyMethod_ = SearchStrategyType.UCT;
+    
     private BruteSearchOptions bruteOptions_;
     private MonteCarloSearchOptions monteCarloOptions_;
 
@@ -27,7 +26,6 @@ public class SearchOptions {
      */
     public SearchOptions() {
 
-        bestMovesOptions_ = new BestMovesSearchOptions();
         bruteOptions_ = new BruteSearchOptions();
         monteCarloOptions_ = new MonteCarloSearchOptions();
     }
@@ -35,11 +33,9 @@ public class SearchOptions {
     /**
      * Constructor
      * @param bruteOptions brute forst search oiptions to use.
-     * @param bestMovesOptions for finding best moves out of reasonable set of next moves
      */
-    public SearchOptions(BruteSearchOptions bruteOptions, BestMovesSearchOptions bestMovesOptions) {
+    public SearchOptions(BruteSearchOptions bruteOptions) {
         bruteOptions_ = bruteOptions;
-        bestMovesOptions_ = bestMovesOptions;
         monteCarloOptions_ = new MonteCarloSearchOptions();
     }
 
@@ -63,7 +59,7 @@ public class SearchOptions {
     }
 
     public BestMovesSearchOptions getBestMovesSearchOptions() {
-        return bestMovesOptions_;
+        return bruteOptions_.getBestMovesSearchOptions();
     }
 
     public MonteCarloSearchOptions getMonteCarloSearchOptions() {

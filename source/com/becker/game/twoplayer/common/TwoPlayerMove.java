@@ -288,6 +288,11 @@ public class TwoPlayerMove extends Move {
         s.append('(').append(toLocation_.toString()).append(')');
         if (urgent_)
             s.append(" urgent!");
+        if (isPass_)
+            s.append("Passing move");
+        if (isResignation_) {
+            s.append("Resignation move");
+        }
         s.append(" ");
         return s.toString();
     }

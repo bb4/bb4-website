@@ -24,11 +24,13 @@ import java.awt.event.*;
 public class TwoPlayerOptionsDialog extends GameOptionsDialog
                                     implements ActionListener, ItemListener {
 
-    private JRadioButton[] strategyButtons_;  // search alg radio button group
+    private static final SearchStrategyType DEFAULT_SEARCH_ALG = SearchStrategyType.UCT;
+    /** search alg radio button group */
+    private JRadioButton[] strategyButtons_;
     private SearchStrategyType algorithm_;
     private JCheckBox gameTreeCheckbox_;
 
-    private BestMovesOptionsPanel bestMovesOptionsPanel_;
+    
     private BruteSearchOptionsPanel bruteOptionsPanel_;
     private MonteCarloOptionsPanel monteCarloOptionsPanel_;
 
@@ -52,7 +54,6 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
         TwoPlayerOptions options = (TwoPlayerOptions) get2PlayerController().getOptions();
         SearchOptions searchOptions = getSearchOptions();
 
-        bestMovesOptionsPanel_.updateBestMovesOptions();
         bruteOptionsPanel_.updateBruteOptionsOptions();
         monteCarloOptionsPanel_.updateMonteCarloOptionsOptions();
 
@@ -89,12 +90,9 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
 
         p.add(createStrategyRadioButtons());
 
-        bestMovesOptionsPanel_ = new BestMovesOptionsPanel(searchOptions.getBestMovesSearchOptions());
         bruteOptionsPanel_ = new BruteSearchOptionsPanel(searchOptions.getBruteSearchOptions());
         monteCarloOptionsPanel_ = new MonteCarloOptionsPanel(searchOptions.getMonteCarloSearchOptions());
 
-
-        p.add(bestMovesOptionsPanel_);
         p.add( bruteOptionsPanel_ );
         p.add( monteCarloOptionsPanel_ );
         showOptionsBasedOnAlgorithm();
@@ -178,6 +176,6 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
                 return SearchStrategyType.values()[i];
             }
         }
-        return SearchStrategyType.MINIMAX; // default
+        return null;
     }
 }

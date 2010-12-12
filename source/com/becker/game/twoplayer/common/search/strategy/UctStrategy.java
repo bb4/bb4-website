@@ -28,9 +28,6 @@ public class UctStrategy extends AbstractSearchStrategy {
     /** Number of moves to play in a randome game from the starting move state */
     private int numRandomLookAhead;
 
-    /** When selecting a random move for a random game, select from only this many of the top moves. */
-    private int percentLessThanBestThresh;
-
 
     /**
      * Constructor - do not call directly.
@@ -41,7 +38,6 @@ public class UctStrategy extends AbstractSearchStrategy {
         super(searchable, weights);
         exploreExploitRatio = getOptions().getMonteCarloSearchOptions().getExploreExploitRatio();
         numRandomLookAhead = getOptions().getMonteCarloSearchOptions().getRandomLookAhead();
-        percentLessThanBestThresh = getOptions().getBestMovesSearchOptions().getPercentLessThanBestThresh();
     }
 
     @Override
@@ -140,13 +136,13 @@ public class UctStrategy extends AbstractSearchStrategy {
             //exporter.saveToFile( FileUtil.PROJECT_HOME + "temp/tmp/file_" + encodeName(move.toString()), null);
             //System.out.println("numRandMoves=" + numRandMoves +" startNumMoves="+ startNumMoves + " Curr="
             //        + searchable.getNumMoves() + "  numRandomLookAhead=" + numRandomLookAhead);
-            return move.getValue() > 0;
+            return searchable.worth( move, weights_, true ) > 0;
         }
-        MoveList moves = searchable.generateMoves(move, weights_, true);
+        MoveList moves = searchable.generatePossibleMoves(move, weights_, true);
         if (moves.size() == 0) {
-            return move.getValue() > 0;
+            return searchable.worth( move, weights_, true ) > 0;
         }
-        TwoPlayerMove randomMove = (TwoPlayerMove) moves.getRandomMoveForThresh(percentLessThanBestThresh);
+        TwoPlayerMove randomMove = (TwoPlayerMove) moves.getRandomMove();
 
         searchable.makeInternalMove(randomMove);
         return playRandomMove(randomMove, searchable, startNumMoves);
@@ -165,7 +161,6 @@ public class UctStrategy extends AbstractSearchStrategy {
             alreadyChild.attributes = node.getAttributes();
             return alreadyChild;
         }
-        //movesConsidered_++;
         return addNodeToTree(parent, node.move, node.getAttributes());
     }
 }
