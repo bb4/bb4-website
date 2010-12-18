@@ -164,7 +164,6 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
        assertTrue("We expect the move list to be non-null at the very start of the game.", moves!= null);
 
        // usually we have a special way to generate the first move (see computerMovesFirst).
-       System.out.println("first moves="+ moves);
        int exp = getExpectedNumGeneratedMovesBeforeFirstMove();
        assertEquals("Unexpected number of generated moves before the first move has been played.",
                exp, moves.size() );

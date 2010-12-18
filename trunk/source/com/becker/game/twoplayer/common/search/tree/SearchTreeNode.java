@@ -71,20 +71,17 @@ public class SearchTreeNode extends DefaultMutableTreeNode
     }
 
     /**
-     * See if the specified move is already a child
+     * See if the specified move is already a child.
      * @param theMove specified move to check
      * @return the corresponding search node if it is a child.
      */
     public SearchTreeNode hasChild(TwoPlayerMove theMove) {
-         /*
-        if (children == null) return null;
-        SearchTreeNode node = new SearchTreeNode(theMove);
-        int i = children.indexOf(node);
-        return (i>=0) ? (SearchTreeNode)children.get(i) : null;
-        */
+
         Enumeration enumeration = children();
+        StringBuilder moves = new StringBuilder();
         while (enumeration.hasMoreElements()) {
-            SearchTreeNode node = (SearchTreeNode)enumeration.nextElement();  // throws exception if elem removed after last line
+            SearchTreeNode node = (SearchTreeNode)enumeration.nextElement();
+            moves.append(node).append("\n");
             if (theMove.equals(node.getUserObject())) {
                 return node;
             }

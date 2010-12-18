@@ -33,7 +33,7 @@ public class TestLifeAndDeath extends GoTestCase {
     }
 
     /**
-     * took 77 seconds with lookahead = 3, bestMoves= 60% and quescence.
+     * took 77 seconds with look-ahead = 3, bestMoves= 60% and quiescence.
      */
     public void testProblem57() {
          doLifeAndDeathTest("problem_life57", 6, 1);  // 6, 1 is the correct move  (common mistakes,  5, 1
