@@ -54,8 +54,7 @@ public abstract class GameOptionsDialog extends OptionsDialog
     /**
      *  constructor
      */
-    protected GameOptionsDialog( JFrame parent, GameController controller )
-    {
+    protected GameOptionsDialog( JFrame parent, GameController controller ) {
         super(parent);
         controller_ = controller;
  
@@ -63,8 +62,7 @@ public abstract class GameOptionsDialog extends OptionsDialog
     }
 
     @Override
-    protected JComponent createDialogContent()
-    {
+    protected JComponent createDialogContent()  {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout( new BorderLayout() );
         // contains tabs for Algorithm, Debugging, and Look and Feel
@@ -90,8 +88,7 @@ public abstract class GameOptionsDialog extends OptionsDialog
     }
 
     @Override
-    public String getTitle()
-    {
+    public String getTitle() {
         return GameContext.getLabel("GAME_OPTIONS");
     }
 
@@ -99,8 +96,7 @@ public abstract class GameOptionsDialog extends OptionsDialog
     /**
      * @return game options tab panel.
      */
-    protected JPanel createControllerParamPanel()
-    {
+    protected JPanel createControllerParamPanel() {
         JComponent[] comps = getControllerParamComponents();
         if (comps == null)
             return null;
@@ -130,10 +126,9 @@ public abstract class GameOptionsDialog extends OptionsDialog
     }
 
 
-    // create the OK Cancel buttons that go at the botton
+    /** create the OK Cancel buttons that go at the bottom */
     @Override
-    protected JPanel createButtonsPanel()
-    {
+    protected JPanel createButtonsPanel() {
         JPanel buttonsPanel = new JPanel( new FlowLayout() );
 
         okButton_ =  new GradientButton();
@@ -150,8 +145,7 @@ public abstract class GameOptionsDialog extends OptionsDialog
     /**
      * @return debug params tab panel
      */
-    protected JPanel createDebugParamPanel()
-    {
+    protected JPanel createDebugParamPanel() {
         JPanel p = createDebugOptionsPanel();
 
         addDebugLevel(p);
@@ -161,8 +155,7 @@ public abstract class GameOptionsDialog extends OptionsDialog
         return p;
     }
 
-    protected JPanel createDebugOptionsPanel()
-    {
+    protected JPanel createDebugOptionsPanel() {
         JPanel p =  new JPanel();
         p.setLayout( new BoxLayout( p, BoxLayout.Y_AXIS ) );
         p.setAlignmentX( Component.LEFT_ALIGNMENT );
@@ -176,8 +169,7 @@ public abstract class GameOptionsDialog extends OptionsDialog
         return p;
     }
 
-    protected void addDebugLevel(JPanel p)
-    {
+    protected void addDebugLevel(JPanel p) {
         dbgLevelField_ =
                 new NumberInput( GameContext.getLabel("DEBUG_LEVEL"), GameContext.getDebugMode(),
                                  GameContext.getLabel("DEBUG_LEVEL_TIP"), 0, 3, true);
@@ -188,8 +180,7 @@ public abstract class GameOptionsDialog extends OptionsDialog
      * add a section for logging options to panel p.
      * @param p  the panel to add to
      */
-    protected void addLoggerSection(JPanel p)
-    {
+    protected void addLoggerSection(JPanel p) {
         // radio buttons for where to send the log info
         JLabel logLabel = new JLabel( GameContext.getLabel("SEND_LOG_OUTPUT") );
         logLabel.setAlignmentX( Component.LEFT_ALIGNMENT );
@@ -218,8 +209,7 @@ public abstract class GameOptionsDialog extends OptionsDialog
         }
     }
 
-    protected void addProfileCheckBox(JPanel p)
-    {
+    protected void addProfileCheckBox(JPanel p)  {
         // show profile info option
         profileCheckbox_ = new JCheckBox( GameContext.getLabel("SHOW_PROFILE_STATS"), GameContext.isProfiling() );
         profileCheckbox_.setToolTipText( GameContext.getLabel("SHOW_PROFILE_STATS_TIP") );
@@ -229,8 +219,7 @@ public abstract class GameOptionsDialog extends OptionsDialog
     }
 
 
-    protected JPanel createRadioButtonPanel( JRadioButton radioButton, ButtonGroup buttonGroup, boolean selected )
-    {
+    protected JPanel createRadioButtonPanel( JRadioButton radioButton, ButtonGroup buttonGroup, boolean selected ) {
         JPanel panelEntry = new JPanel( new BorderLayout() );
         panelEntry.setAlignmentX( Component.LEFT_ALIGNMENT );
 
@@ -250,12 +239,13 @@ public abstract class GameOptionsDialog extends OptionsDialog
     /**
      * @return look & feel params tab panel
      */
-    JPanel createLookAndFeelParamPanel()
-    {
+    JPanel createLookAndFeelParamPanel() {
+
         JPanel p = new JPanel();
         p.setLayout( new BoxLayout( p, BoxLayout.Y_AXIS ) );
         p.setAlignmentX( Component.LEFT_ALIGNMENT );
-        p.setBorder( BorderFactory.createTitledBorder( BorderFactory.createEtchedBorder(), GameContext.getLabel("DEBUG_OPTIONS") ) );
+        p.setBorder( BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), GameContext.getLabel("DEBUG_OPTIONS") ) );
 
         JLabel label = new JLabel( "     " );
         label.setAlignmentX( Component.LEFT_ALIGNMENT );
@@ -299,8 +289,7 @@ public abstract class GameOptionsDialog extends OptionsDialog
      * Perhaps we should not allow this. It does not really make sense.
      * @return locale tab panel.
      */
-    JPanel createLocalePanel()
-     {
+    JPanel createLocalePanel() {
          JPanel p = new JPanel();
          p.setLayout( new BorderLayout() );
          p.setAlignmentX( Component.LEFT_ALIGNMENT );
@@ -338,8 +327,7 @@ public abstract class GameOptionsDialog extends OptionsDialog
     /**
      * ok button pressed.
      */
-    void ok()
-    {
+    void ok() {
         GameContext.setDebugMode( dbgLevelField_.getIntValue() );
         GameContext.setProfiling( profileCheckbox_.isSelected() );
         GameContext.getLogger().setDestination( logDestination_ );
@@ -370,8 +358,7 @@ public abstract class GameOptionsDialog extends OptionsDialog
      * called when a button has been pressed
      */
     @Override
-    public void actionPerformed( ActionEvent e )
-    {
+    public void actionPerformed( ActionEvent e ) {
         super.actionPerformed(e);
         Object source = e.getSource();
         if ( source == okButton_ ) {
@@ -386,8 +373,7 @@ public abstract class GameOptionsDialog extends OptionsDialog
     /**
      * Invoked when a radio button has changed its selection state.
      */
-    public void itemStateChanged( ItemEvent e )
-    {
+    public void itemStateChanged( ItemEvent e ) {
         if ( consoleOutputButton_ != null && consoleOutputButton_.isSelected() )
             logDestination_ = ILog.LOG_TO_CONSOLE;
         else if ( windowOutputButton_ != null && windowOutputButton_.isSelected() )

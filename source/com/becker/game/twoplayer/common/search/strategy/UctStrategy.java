@@ -1,19 +1,16 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
-import com.becker.common.util.FileUtil;
 import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
-import com.becker.game.twoplayer.go.board.GoBoard;
-import com.becker.game.twoplayer.go.persistence.GoGameExporter;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**
- *  Implementation of Upper Confidedence Tree (UCT) search strategy.
+ *  Implementation of Upper Confidence Tree (UCT) search strategy.
  *  This method uses a monte carlo (stochastic) method and is fundamentally different than minimax and its derivatives.
- *  It's sublcasses define the key search algorithms for 2 player zero sum games with perfect information.
+ *  It's subclasses define the key search algorithms for 2 player zero sum games with perfect information.
  *
  *    - add option to use concurrency. Need lock on uctNodes
  *
@@ -21,10 +18,10 @@ import com.becker.optimization.parameter.ParameterArray;
  */
 public class UctStrategy extends AbstractSearchStrategy {
 
-    /** ratio of exploration to exploitaion (of known good moves) while searching.  */
+    /** ratio of exploration to exploitation (of known good moves) while searching.  */
     private double exploreExploitRatio;
 
-    /** Number of moves to play in a randome game from the starting move state */
+    /** Number of moves to play in a random game from the starting move state */
     private int numRandomLookAhead;
 
     /** When selecting a random move for a random game, select from only this many of the top moves. */
