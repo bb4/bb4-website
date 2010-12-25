@@ -56,7 +56,7 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
     /**
      * Verify move that was found using search strategy under test.
      * @param example  game tree to use
-     * @param expectedSearchResult
+     * @param expectedSearchResult collection of info regardin ght edsearch result.
      */
     protected void verifyResult(GameTreeExample example, SearchResult expectedSearchResult) {
 
@@ -84,8 +84,7 @@ public abstract class AbstractSearchStrategyTst extends TestCase {
      */
     protected int determineInheritedValue(int value, GameTreeExample example) {
 
-        if (getEvaluationPerspective() == EvaluationPerspective.CURRENT_PLAYER)
-        {
+        if (getEvaluationPerspective() == EvaluationPerspective.CURRENT_PLAYER) {
             return   example.getInitialMove().isPlayer1() ? -value : value;
         }
         return value;

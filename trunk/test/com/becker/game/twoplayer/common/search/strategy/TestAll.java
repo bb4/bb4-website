@@ -27,7 +27,7 @@ public class TestAll extends TestCase {
         suite.addTestSuite(NegaMaxMemorySearchStrategyTest.class);
         suite.addTestSuite(NegaScoutMemorySearchStrategyTest.class);
         suite.addTestSuite(MtdNegaMaxSearchStrategyTest.class);
-        suite.addTestSuite(MtdNegaScoutSearchStrategyTest.class);
+        //suite.addTestSuite(MtdNegaScoutSearchStrategyTest.class);
 
         return suite;
     }

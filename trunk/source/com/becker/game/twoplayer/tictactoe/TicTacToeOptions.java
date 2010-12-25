@@ -16,17 +16,20 @@ public class TicTacToeOptions extends TwoPlayerOptions {
     /** for any given ply never consider more that BEST_PERCENTAGE of the top moves. */
     private static final int DEFAULT_PERCENTAGE_BEST_MOVES = 100;
 
-    /** for any given ply never consider less taht this many moves. */
-    private static final int DEFAULT_MIN_BEST_MOVES = 5;
+    /** for any given ply never consider more that BEST_PERCENTAGE of the top moves. */
+    private static final int DEFAULT_PERCENTAGE_LESS_THAN_BEST_THRESH = 100;
+
+    /** for any given ply never consider less that this many moves. */
+    private static final int DEFAULT_MIN_BEST_MOVES = 3;
 
 
     public TicTacToeOptions() {}
 
     @Override
     protected SearchOptions createDefaultSearchOptions() {
-        return new SearchOptions(new BruteSearchOptions(DEFAULT_LOOK_AHEAD,
+        return new SearchOptions(new BruteSearchOptions(DEFAULT_LOOK_AHEAD),
                                  new BestMovesSearchOptions(DEFAULT_PERCENTAGE_BEST_MOVES,
                                                             DEFAULT_MIN_BEST_MOVES,
-                                                            0)));
+                                                            DEFAULT_PERCENTAGE_LESS_THAN_BEST_THRESH));
     }
 }

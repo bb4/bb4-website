@@ -15,7 +15,7 @@ public class MonteCarloSearchOptions {
     /** Ratio of exploration to exploitation of good moves. */
     private static final double DEFAULT_EXPLORE_EXPLOIT_RATIO = 1.0;
 
-    /** Default numbe rof randome moves to lookahed when playing a random game. */
+    /** Default numbe rof random moves to look-ahead when playing a random game. */
     private static final int DEFAULT_RANDOM_LOOKAHEAD = 20;
 
     private int maxSimulations_ = DEFAULT_MAX_SIMULATIONS;

@@ -125,7 +125,6 @@ public class TicTacToeSearchableTest extends TwoPlayerSearchableBaseTst {
      /** Load a game at the end and verify that we can get all the high value next moves. */
      @Override
      public void testGenerateTopP2MovesEndGame() {
-        getBestMovesOptions().setPercentageBestMoves(20);
         checkGeneratedMoves("endGameO", EXPECTED_TOP_END_GAME_MOVES_P2);
     }
 
@@ -163,7 +162,7 @@ public class TicTacToeSearchableTest extends TwoPlayerSearchableBaseTst {
         restore(fileName);
         TwoPlayerMove lastMove = (TwoPlayerMove) getController().getLastMove();
         MoveList moves =
-                getController().getSearchable().generateMoves(lastMove, weights(), true/*!lastMove.isPlayer1()*/);
+                getController().getSearchable().generateMoves(lastMove, weights(), true);
 
         checkMoveListAgainstExpected(fileName, expectedMoves, moves);
     }

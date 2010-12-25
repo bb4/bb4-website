@@ -29,13 +29,13 @@ public final class TextualGameTree extends JScrollPane {
     public TextualGameTree(SearchTreeNode root, GameTreeCellRenderer cellRenderer) {
 
         cellRenderer_ = cellRenderer;
-        this.setPreferredSize( new Dimension( 400, 600 ) );
-        this.setMinimumSize(new Dimension(200, 120));
         reset(root);
     }
 
     public void reset(SearchTreeNode root) {
         tree_ = createTree(root);
+        this.setPreferredSize( new Dimension( 400, 600 ) );
+        this.setMinimumSize(new Dimension(200, 120));
         this.setViewportView(tree_);
     }
 
@@ -50,17 +50,11 @@ public final class TextualGameTree extends JScrollPane {
 
     public void expandRow(int row) {
         tree_.expandRow(row);
+        tree_.scrollRowToVisible(row);
     }
 
     public int getNumRows() {
         return tree_.getRowCount();
-    }
-
-    /**
-     * refresh the game tree.
-     */
-    public void refresh() {
-        tree_.setPreferredSize(new Dimension( TREE_WIDTH, tree_.getRowCount() * ROW_HEIGHT ) );
     }
 
 
@@ -70,7 +64,7 @@ public final class TextualGameTree extends JScrollPane {
             ToolTipManager.sharedInstance().registerComponent(tree);
             tree.setBackground(UIManager.getColor( "Tree.textBackground" ));
             tree.setCellRenderer( cellRenderer_ );
-            tree.setPreferredSize( new Dimension( TREE_WIDTH, 900 ) );
+            //tree.setPreferredSize( new Dimension( TREE_WIDTH, 900 ) );
             tree.setShowsRootHandles( true );
             tree.putClientProperty( "JTree.lineStyle", "Angled" );
             tree.setRowHeight( ROW_HEIGHT );

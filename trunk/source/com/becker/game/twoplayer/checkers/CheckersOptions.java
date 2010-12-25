@@ -15,6 +15,6 @@ public class CheckersOptions extends TwoPlayerOptions {
 
     @Override
     protected SearchOptions createDefaultSearchOptions() {
-        return new SearchOptions(new BruteSearchOptions(4, new BestMovesSearchOptions(100, 10, 0)));
+        return new SearchOptions(new BruteSearchOptions(4), new BestMovesSearchOptions(100, 10, 0));
     }
 }

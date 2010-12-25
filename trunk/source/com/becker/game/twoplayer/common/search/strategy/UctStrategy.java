@@ -2,10 +2,15 @@ package com.becker.game.twoplayer.common.search.strategy;
 
 import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
+import com.becker.game.twoplayer.common.WinProbabilityCaclulator;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.optimization.parameter.ParameterArray;
+
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
 
 /**
  *  Implementation of Upper Confidence Tree (UCT) search strategy.
@@ -17,6 +22,9 @@ import com.becker.optimization.parameter.ParameterArray;
  *  @author Barry Becker
  */
 public class UctStrategy extends AbstractSearchStrategy {
+
+    private static final double WIN_THRESH = (float)WINNING_VALUE / 6.0;
+
 
     /** ratio of exploration to exploitation (of known good moves) while searching.  */
     private double exploreExploitRatio;
@@ -30,7 +38,7 @@ public class UctStrategy extends AbstractSearchStrategy {
 
     /**
      * Constructor - do not call directly.
-     * @param searchable the game controller that has options and can make/undo moves.
+     * @param searchable the thing to be searched that has options and can make/undo moves.
      * @param weights coefficients for the evaluation polynomial that indirectly determines the best move.
      */
     UctStrategy( Searchable searchable, ParameterArray weights ) {
@@ -38,6 +46,7 @@ public class UctStrategy extends AbstractSearchStrategy {
         exploreExploitRatio = getOptions().getMonteCarloSearchOptions().getExploreExploitRatio();
         numRandomLookAhead = getOptions().getMonteCarloSearchOptions().getRandomLookAhead();
         percentLessThanBestThresh = getOptions().getBestMovesSearchOptions().getPercentLessThanBestThresh();
+
     }
 
     @Override
@@ -52,47 +61,52 @@ public class UctStrategy extends AbstractSearchStrategy {
 
         int numSimulations = 0;
         int maxSimulations = getOptions().getMonteCarloSearchOptions().getMaxSimulations();
-        boolean interrupted = false;
-
         UctNode root = new UctNode(lastMove);
 
-        while (numSimulations < maxSimulations && !interrupted) {
+        while (numSimulations < maxSimulations ) {
             playSimulation(root, parent);
             numSimulations++;
             percentDone_ = (100 *  numSimulations) / maxSimulations;
         }
-        return root.bestNode.move;
+        //root.printTree();
+        return root.findBestChildMove();
     }
 
-    public boolean playSimulation(UctNode lastMoveNode, SearchTreeNode parent) {
+    /**
+     * This recursive method ultimately expands the in memory game try by one node and updates that nodes parents.
+     * @return true if player1 wins when running a simulation from this board position.
+     */
+    public float playSimulation(UctNode lastMoveNode, SearchTreeNode parent) {
 
-        boolean player1Wins = false;
-        if (lastMoveNode.numVisits == 0) {
-            player1Wins = playRandomGame(lastMoveNode.move);
+        float p1Score;
+        if (lastMoveNode.getNumVisits() == 0) {
+            p1Score = playRandomGame(lastMoveNode.move);
             movesConsidered_++;
         }
         else {
-            if (!lastMoveNode.hasChildren()) {
-                lastMoveNode.addChildren(searchable_.generateMoves(lastMoveNode.move, weights_, true));
+            UctNode nextNode = null;
+
+            if (!searchable_.done(lastMoveNode.move, false))  {
+               if (!lastMoveNode.hasChildren()) {
+                   lastMoveNode.addChildren(searchable_.generateMoves(lastMoveNode.move, weights_, true));
+                   addNodesToTree(parent, lastMoveNode.getChildren());
+               }
+               nextNode = uctSelect(lastMoveNode);
             }
-            UctNode nextNode = uctSelect(lastMoveNode);
 
-            // may be null if there are no move valid moves.
-            // this may be happening a little more than expected.
+            // may be null if there are no move valid moves or lastMoveNode won the game.
             if (nextNode != null) {
-                SearchTreeNode child = addNodeToTree(parent, nextNode);
-
                 searchable_.makeInternalMove(nextNode.move);
-                player1Wins = playSimulation(nextNode, child);
+                p1Score = playSimulation(nextNode, findSearchNodeForMove(nextNode.move, parent));
                 searchable_.undoInternalMove(nextNode.move);
+            } else {
+                p1Score = WinProbabilityCaclulator.getChanceOfPlayer1Winning(lastMoveNode.move.getValue());
             }
         }
 
-        lastMoveNode.numVisits++;
-        lastMoveNode.updateWin(player1Wins);
-
-        lastMoveNode.setBestNode();
-        return player1Wins;
+        lastMoveNode.update(p1Score);
+        if (parent != null) parent.attributes = lastMoveNode.getAttributes();
+        return p1Score;
     }
 
     /**
@@ -104,7 +118,7 @@ public class UctStrategy extends AbstractSearchStrategy {
         UctNode selected = null;
 
         for (UctNode child : parentNode.getChildren()) {
-            double uctValue = child.calculateUctValue(exploreExploitRatio, parentNode.numVisits);
+            double uctValue = child.calculateUctValue(exploreExploitRatio, parentNode.getNumVisits());
             if (uctValue > bestUct) {
                 bestUct = uctValue;
                 selected = child;
@@ -116,52 +130,63 @@ public class UctStrategy extends AbstractSearchStrategy {
     /**
      * Plays a semi-random game from the current node position.
      * Its semi random in the sense that we try to avoid obviously bad moves.
-     * @return whether or not player1 won.
+     * @return a score (0 = p1 lost; 0.5 = tie; or 1= p1 won) indication p1 advantage.
      */
-    private boolean playRandomGame(TwoPlayerMove move) {
+    private float playRandomGame(TwoPlayerMove move) {
 
-        return playRandomMove(move, searchable_.copy(), searchable_.getMoveList().getNumMoves());
+        Searchable s = searchable_.copy();
+        return playRandomMove(move, s, s.getNumMoves());
     }
 
     /**
      * Plays a semi-random game from the current node position.
      * Its semi-random in the sense that we try to avoid obviously bad moves.
-     * @return whether or not player1 won.
+     * @return a score (0 = p1 lost; 0.5 = tie; or 1= p1 won) indication p1 advantage.
      */
-    private boolean playRandomMove(TwoPlayerMove move, Searchable searchable, int startNumMoves) {
+    private float playRandomMove(TwoPlayerMove move, Searchable searchable, int startNumMoves) {
 
         int numRandMoves = searchable.getNumMoves() - startNumMoves;
         if (numRandMoves >= numRandomLookAhead || searchable.done(move, false)) {
-            //GoGameExporter exporter = new GoGameExporter((GoBoard)searchable.getBoard());
-            //exporter.saveToFile( FileUtil.PROJECT_HOME + "temp/tmp/file_" + startNumMoves + "_" + move.hashCode(), null);
+            // GoGameExporter exporter = new GoGameExporter((GoBoard)searchable.getBoard());
+            // exporter.saveToFile( FileUtil.PROJECT_HOME + "temp/tmp/file_" + startNumMoves + "_" + move.hashCode(), null);
             int score = searchable.worth( move, weights_, true );
             move.setValue(score);
-            //System.out.println("score="+ score);
-            return score > 0;
+            return WinProbabilityCaclulator.getChanceOfPlayer1Winning(score);
         }
-        MoveList moves = searchable.generatePossibleMoves(move, weights_, true);
+        MoveList moves = searchable.generateMoves(move, weights_, true);
         if (moves.size() == 0) {
-            return searchable.worth( move, weights_, true ) > 0;
+            return WinProbabilityCaclulator.getChanceOfPlayer1Winning(move.getValue());
         }
         TwoPlayerMove randomMove = (TwoPlayerMove) moves.getRandomMoveForThresh(percentLessThanBestThresh);
 
         searchable.makeInternalMove(randomMove);
         return playRandomMove(randomMove, searchable, startNumMoves);
     }
-    
+
     /**
      * add a move to the visual game tree (if parent not null).
      * If the new node is already in the tree, do not add it, but maybe update values.
      * @return the node added to the tree.
      */
-    protected SearchTreeNode addNodeToTree(SearchTreeNode parent, UctNode node ) {
+    protected void addNodesToTree(SearchTreeNode parent, List<UctNode> childUctNodes) {
 
-        if (parent == null) return null;
-        SearchTreeNode alreadyChild = parent.hasChild(node.move);
-        if (alreadyChild != null)  {
-            alreadyChild.attributes = node.getAttributes();
-            return alreadyChild;
+        if (parent == null) return;
+
+        for (UctNode child : childUctNodes)  {
+           addNodeToTree(parent, child.move, child.getAttributes());
         }
-        return addNodeToTree(parent, node.move, node.getAttributes());
+    }
+
+    private SearchTreeNode findSearchNodeForMove(TwoPlayerMove move, SearchTreeNode parent) {
+        if (parent == null) return null;
+
+        Enumeration enumeration = parent.children();
+        while (enumeration.hasMoreElements()) {
+            SearchTreeNode node = (SearchTreeNode)enumeration.nextElement();
+            if (move.equals(node.getUserObject())) {
+                return node;
+            }
+        }
+        return null;
     }
 }

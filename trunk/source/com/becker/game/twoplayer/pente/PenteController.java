@@ -1,5 +1,6 @@
 package com.becker.game.twoplayer.pente;
 
+import com.becker.game.common.GameContext;
 import com.becker.game.common.board.GamePiece;
 import com.becker.game.common.player.PlayerList;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
@@ -19,9 +20,6 @@ import java.util.Random;
 public class PenteController extends TwoPlayerController {
 
     private static final int DEFAULT_NUM_ROWS = 20;
-
-    /** for genreating the randome first move */
-    private Random RANDOM = new Random(0);
 
     /**
      *  Constructor
@@ -58,8 +56,8 @@ public class PenteController extends TwoPlayerController {
     public void computerMovesFirst()
     {
         int delta = getWinRunLength() - 1;
-        int c = (int) (RANDOM.nextFloat() * (board_.getNumCols() - 2 * delta) + delta + 1);
-        int r = (int) (RANDOM.nextFloat() * (board_.getNumRows() - 2 * delta) + delta + 1);
+        int c = (int) (GameContext.random().nextFloat() * (board_.getNumCols() - 2 * delta) + delta + 1);
+        int r = (int) (GameContext.random().nextFloat() * (board_.getNumRows() - 2 * delta) + delta + 1);
         TwoPlayerMove m = TwoPlayerMove.createMove( r, c, 0, new GamePiece(true) );
         makeMove( m );
     }

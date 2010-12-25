@@ -95,7 +95,7 @@ public interface Searchable
      *
      * @param lastMove  the last move made
      * @param weights  the polynomial weights to use in the polynomial evaluation function
-     * @param player1sPerspective if true, then the values are generated from player one's perpective.
+     * @param player1sPerspective if true, then the values are generated from player one's perspective.
      * @return a list of moves that the current player needs to urgently play or face imminent defeat.
      */
     MoveList generateUrgentMoves(TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective );

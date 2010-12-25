@@ -21,6 +21,7 @@ public class SearchOptions {
     
     private BruteSearchOptions bruteOptions_;
     private MonteCarloSearchOptions monteCarloOptions_;
+    private BestMovesSearchOptions bestMovesOptions_;
 
 
     /**
@@ -28,16 +29,18 @@ public class SearchOptions {
      */
     public SearchOptions() {
 
+        bestMovesOptions_ = new BestMovesSearchOptions();
         bruteOptions_ = new BruteSearchOptions();
         monteCarloOptions_ = new MonteCarloSearchOptions();
     }
 
     /**
      * Constructor
-     * @param bruteOptions brute forst search oiptions to use.
+     * @param bruteOptions brute force search options to use.
      */
-    public SearchOptions(BruteSearchOptions bruteOptions) {
+    public SearchOptions(BruteSearchOptions bruteOptions, BestMovesSearchOptions bestMovesOptions) {
         bruteOptions_ = bruteOptions;
+        bestMovesOptions_ = bestMovesOptions;
         monteCarloOptions_ = new MonteCarloSearchOptions();
     }
 
@@ -61,7 +64,7 @@ public class SearchOptions {
     }
 
     public BestMovesSearchOptions getBestMovesSearchOptions() {
-        return bruteOptions_.getBestMovesSearchOptions();
+        return bestMovesOptions_;
     }
 
     public MonteCarloSearchOptions getMonteCarloSearchOptions() {

@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 /**
  * Use this modal dialog as an abstract base for other modal option dialogs.
- * It shows itself relative to a parent, and has support for a group of buttons at the buttom.
+ * It shows itself relative to a parent, and has support for a group of buttons at the bottom.
  *
  * @author Barry Becker
  */
@@ -31,7 +31,7 @@ public abstract class OptionsDialog extends AbstractDialog implements ActionList
     }
 
     /**
-     * initiallize the dialogs ui
+     * initialize the dialogs ui
      */
     public void commonInit()
     {
@@ -42,7 +42,8 @@ public abstract class OptionsDialog extends AbstractDialog implements ActionList
     }
 
     /**
-     *  create the buttons that go at the botton ( eg OK, Cancel, ...)
+     * create the buttons that go at the bottom ( eg OK, Cancel, ...)
+     * @return the panel at the bottom holding the buttons.
      */
     protected abstract JPanel createButtonsPanel();
 

@@ -43,13 +43,11 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase  {
     private static int counter_;
 
     private TableButtonListener tableButtonListener_;
-    
-    private static final Random RANDOM = new Random();
 
 
     /**
      * constructor
-     * @param actionListener called when join button clicked.
+     * @param tableButtonListener called when join button clicked.
      */
     public MultiPlayerOnlineGameTablesTable(TableButtonListener tableButtonListener)
     {
@@ -170,8 +168,8 @@ public abstract class MultiPlayerOnlineGameTablesTable extends TableBase  {
     
      protected static Color getRandomColor() {
 
-        int r = RANDOM.nextInt(256);
-        return new Color(r, 255 - r, RANDOM.nextInt(256));
+        int r = GameContext.random().nextInt(256);
+        return new Color(r, 255 - r, GameContext.random().nextInt(256));
     }
 
 }
