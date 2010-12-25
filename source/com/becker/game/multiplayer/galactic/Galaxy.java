@@ -19,7 +19,6 @@ public class Galaxy extends Board
     private static final int DEFAULT_NUM_PLANETS = 20;
     public static final int MAX_NUM_PLANETS = 80;
     public static final int MIN_NUM_PLANETS = 3;
-    private static final Random RANDOM = new Random(0);
 
     private static char[] PLANET_NAMES ;
     static {
@@ -87,8 +86,8 @@ public class Galaxy extends Board
             } while (position.isOccupied());
 
             // initial ships and production factor
-            int production = (int)( 1 + Math.max(0, RANDOM.nextGaussian()) * options.getPlanetProductionRate());
-            int initialFleet = (int)( 1 + Math.max(0, RANDOM.nextGaussian()) * options.getInitialFleetSize());
+            int production = (int)( 1 + Math.max(0, GameContext.random().nextGaussian()) * options.getPlanetProductionRate());
+            int initialFleet = (int)( 1 + Math.max(0, GameContext.random().nextGaussian()) * options.getInitialFleetSize());
             Planet planet = new Planet(PLANET_NAMES[i], initialFleet,
                                        production, position.getLocation());
             position.setPiece(planet);

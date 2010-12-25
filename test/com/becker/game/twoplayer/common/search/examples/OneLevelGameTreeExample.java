@@ -11,6 +11,9 @@ import com.becker.game.twoplayer.common.search.TwoPlayerMoveStub;
  *             [-8]         [-2]
  *
  * Move scores are evaluated from player one's perspective.
+ * So for this game, if player 1 is going first, he would bick the node on the right, even though it
+ * is suspected to be a losing move (less than 0), but its better than the one on the left.
+ *
  * @author Barry Becker
  */
 public class OneLevelGameTreeExample extends AbstractGameTreeExample  {

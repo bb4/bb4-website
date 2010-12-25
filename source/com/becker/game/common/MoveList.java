@@ -13,9 +13,6 @@ import java.util.Random;
  */
 public class MoveList extends ArrayList<Move> {
 
-    /** Make sure that the program runs in a reproducible way by always starting from the same random seed. */
-    private static final Random RANDOM = new Random(1);
-
     /**
      * Construct set of players
      */
@@ -90,7 +87,7 @@ public class MoveList extends ArrayList<Move> {
      */
     public Move getRandomMove(int ofFirstN) {
 
-        int r = RANDOM.nextInt(Math.min(ofFirstN, size()));
+        int r = GameContext.random().nextInt(Math.min(ofFirstN, size()));
         return get( r );
     }
 
@@ -111,7 +108,7 @@ public class MoveList extends ArrayList<Move> {
         while (currentMove.getValue() > thresh && ct < numMoves) {
             currentMove = get(ct++);
         }
-        int r = RANDOM.nextInt(ct);
+        int r = GameContext.random().nextInt(ct);
         return get( r );
     }
 }

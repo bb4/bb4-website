@@ -25,7 +25,7 @@ public final class ZobristHash {
     private long[][][] randomNumberTable_;
 
     /** Get random numbers with a seed so things are predictable. */
-    private final Random RANDOM;
+    private Random RANDOM;
 
     private TwoPlayerBoard board;
 
@@ -36,9 +36,14 @@ public final class ZobristHash {
      * @param board game board
      */
     public ZobristHash(TwoPlayerBoard board) {
-        RANDOM = new Random(0);
-        GameContext.log(2, "***  created new ZOBRIST HASH  ***");
+
         this.board = board;
+        injectRandom(GameContext.random());
+    }
+
+    /** for unit testing only so we get repeatable tests. */
+    public void injectRandom(Random r) {
+        RANDOM = r;
         initialize();
     }
 

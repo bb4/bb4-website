@@ -33,6 +33,7 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
     
     private BruteSearchOptionsPanel bruteOptionsPanel_;
     private MonteCarloOptionsPanel monteCarloOptionsPanel_;
+    private BestMovesOptionsPanel bestMovesOptionsPanel_;
 
     /**
      * Constructor
@@ -56,6 +57,7 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
 
         bruteOptionsPanel_.updateBruteOptionsOptions();
         monteCarloOptionsPanel_.updateMonteCarloOptionsOptions();
+        bestMovesOptionsPanel_.updateBestMovesOptions();
 
         searchOptions.setSearchStrategyMethod(getSelectedStrategy());
         options.setShowGameTree(gameTreeCheckbox_.isSelected() );
@@ -92,9 +94,12 @@ public class TwoPlayerOptionsDialog extends GameOptionsDialog
 
         bruteOptionsPanel_ = new BruteSearchOptionsPanel(searchOptions.getBruteSearchOptions());
         monteCarloOptionsPanel_ = new MonteCarloOptionsPanel(searchOptions.getMonteCarloSearchOptions());
+        bestMovesOptionsPanel_ = new BestMovesOptionsPanel(searchOptions.getBestMovesSearchOptions());
+
 
         p.add( bruteOptionsPanel_ );
         p.add( monteCarloOptionsPanel_ );
+        p.add(bestMovesOptionsPanel_);
         showOptionsBasedOnAlgorithm();
         return p;
     }

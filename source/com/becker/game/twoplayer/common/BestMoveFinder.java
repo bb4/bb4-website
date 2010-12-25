@@ -63,7 +63,7 @@ public class BestMoveFinder {
         int percentLessThanBestThresh = searchOptions_.getPercentLessThanBestThresh();
         MoveList bestMoveList;
 
-        if (percentLessThanBestThresh > 0)   {
+        if (percentLessThanBestThresh > 0) {
             bestMoveList =
                     determineMovesExceedingValueThresh(moveList, minBest, percentLessThanBestThresh);
         }

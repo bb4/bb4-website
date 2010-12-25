@@ -9,6 +9,7 @@ import com.becker.sound.MusicMaker;
 import com.becker.ui.Log;
 
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 /**
@@ -29,6 +30,9 @@ public final class GameContext
 
     /** this is a singleton. It generates the sounds. */
     private static MusicMaker musicMaker_ = null;
+
+    /** Make sure that the program runs in a reproducible way by always starting from the same random seed. */
+    private static Random RANDOM = new Random(0);
 
 
     static {
@@ -193,5 +197,14 @@ public final class GameContext
     public static LocaleType getLocale(String name, boolean finf) {
 
         return messageContext_.getLocale(name, finf);
+    }
+
+    public static Random random() {
+        return RANDOM;
+    }
+
+    public static void setRandomSeed(int seed)
+    {
+        RANDOM = new Random(seed);
     }
 }

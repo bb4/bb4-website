@@ -8,6 +8,8 @@ import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.tictactoe.TicTacToeBoard;
 import junit.framework.TestCase;
 
+import java.util.Random;
+
 /**
  * Verify expected hash key are generated based on board state.
  * @author Barry Becker
@@ -23,7 +25,7 @@ public class ZobristHashTest  extends TestCase {
     @Override
     public void setUp() {
         board = new TicTacToeBoard();
-        hash = new ZobristHash(board);
+        createZHash(board);
     }
 
     public void testEmptyBoardHash() {
@@ -39,7 +41,8 @@ public class ZobristHashTest  extends TestCase {
     public void testCenterXBoard() {
         TwoPlayerMove m = TwoPlayerMove.createMove(new Location(2, 2), 0, new GamePiece(true));
         board.makeMove(m);
-        hash = new ZobristHash(board);
+
+        hash = createZHash(board);
         assertEquals("Unexpected hashkey for board with center X",
                 CENTER_X_HASH, hash.getKey());
     }
@@ -53,7 +56,7 @@ public class ZobristHashTest  extends TestCase {
     public void testCornerOBoard() {
         TwoPlayerMove m = TwoPlayerMove.createMove(new Location(1, 1), 0, new GamePiece(false));
         board.makeMove(m);
-        hash = new ZobristHash(board);
+        hash = createZHash(board);
         assertEquals("Unexpected hashkey for board with corner O",
                 CORNER_O_HASH, hash.getKey());
     }
@@ -86,12 +89,16 @@ public class ZobristHashTest  extends TestCase {
     }
 
 
-    private void applyMoveToHash(int row, int col, boolean player1)
-    {
+    private void applyMoveToHash(int row, int col, boolean player1) {
         GamePiece p = new GamePiece(player1);
         TwoPlayerMove m = TwoPlayerMove.createMove(new Location(row, col), 0, p);
         int stateIndex = board.getStateIndex(new BoardPosition(row, col, p));
         hash.applyMove(m, stateIndex);
     }
 
+    private ZobristHash createZHash(TwoPlayerBoard board) {
+        hash = new ZobristHash(board);
+        hash.injectRandom(new Random(0));
+        return hash;
+    }
 }

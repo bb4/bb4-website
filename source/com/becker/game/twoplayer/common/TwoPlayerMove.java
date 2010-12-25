@@ -175,7 +175,6 @@ public class TwoPlayerMove extends Move {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof TwoPlayerMove)) return false;
-
         TwoPlayerMove that = (TwoPlayerMove) o;
 
         return player1_ == that.player1_ && toLocation_ != null && toLocation_.equals(that.toLocation_);

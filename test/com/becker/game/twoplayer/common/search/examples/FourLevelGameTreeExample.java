@@ -12,6 +12,8 @@ import com.becker.game.twoplayer.common.search.TwoPlayerMoveStub;
  *  [17][6]  [46][27]  [48][33]  [10][25] [22][1] [14][6] [2][12]  [24][48]
  *
  * Move scores are evaluated from player one's perspective.
+ * Player 1 will want to select the left branch in order to have the best chance of winning, and
+ * Player 2 will wan tthe right.
  *
  * @author Barry Becker
  */

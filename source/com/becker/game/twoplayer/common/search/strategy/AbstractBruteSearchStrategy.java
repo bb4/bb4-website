@@ -184,8 +184,7 @@ public abstract class AbstractBruteSearchStrategy extends AbstractSearchStrategy
      * @return the node added to the tree.
      */
     protected SearchTreeNode addNodeToTree( SearchTreeNode parent, TwoPlayerMove theMove,
-                                         SearchWindow window )
-    {
+                                            SearchWindow window ) {
         NodeAttributes attributes = null;
         if (hasGameTree()) {
             attributes = new NodeAttributes();

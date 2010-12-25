@@ -77,6 +77,7 @@ public class SearchTreeNode extends DefaultMutableTreeNode
      */
     public SearchTreeNode hasChild(TwoPlayerMove theMove) {
 
+        int numKids = children==null ? 0 :children.size();
         Enumeration enumeration = children();
         StringBuilder moves = new StringBuilder();
         while (enumeration.hasMoreElements()) {
@@ -86,6 +87,12 @@ public class SearchTreeNode extends DefaultMutableTreeNode
                 return node;
             }
         }
+
+        //System.out.println("move: " + theMove +" no found among ");
+        //System.out.println(" " + (children!=null? children : null));
+        int numKids2 = children==null ? 0 :children.size();
+        assert(numKids <= 8) : "too many kids: " + numKids + "\nmove: " + theMove +"\nnot found among "
+           + moves.toString();
         return null;
 
     }

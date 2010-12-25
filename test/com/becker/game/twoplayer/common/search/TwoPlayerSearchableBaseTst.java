@@ -49,6 +49,7 @@ public abstract class TwoPlayerSearchableBaseTst extends SearchableBaseTst {
         TwoPlayerOptions options = helper.createTwoPlayerGameOptions();
         options.getSearchOptions().getBestMovesSearchOptions().setPercentageBestMoves(DEFAULT_BEST_PERCENTAGE);
         options.getSearchOptions().getBestMovesSearchOptions().setPercentLessThanBestThresh(0);
+        options.getSearchOptions().getBestMovesSearchOptions().setMinBestMoves(2);
         BruteSearchOptions sOptions = options.getSearchOptions().getBruteSearchOptions();
         sOptions.setLookAhead(DEFAULT_LOOKAHEAD);
         sOptions.setAlphaBeta(true);

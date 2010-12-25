@@ -209,7 +209,6 @@ public final class GameTreeDialog extends AbstractDialog
      * refresh the game tree.
      */
     private synchronized void refresh() {
-        textTree_.refresh();
         paint( getGraphics() );
     }
 

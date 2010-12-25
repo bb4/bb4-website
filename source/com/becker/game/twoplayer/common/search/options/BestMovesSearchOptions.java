@@ -94,4 +94,12 @@ public class BestMovesSearchOptions {
     public void setPercentLessThanBestThresh(int percent) {
         percentLessThanBestThreshold_ = percent;
     }
+
+    public String toString() {
+        StringBuilder bldr = new StringBuilder("BestMovesSearchOptions:\n");
+        bldr.append("bestPercentage = ").append(bestPercentage_).append("\n");
+        bldr.append("minBestMoves = ").append(minBestMoves_).append("\n");
+        bldr.append("percentLessThanBestThreshold = ").append(percentLessThanBestThreshold_).append("\n");
+        return bldr.toString();
+    }
 }

@@ -43,10 +43,10 @@ public class GoOptions extends TwoPlayerOptions {
     @Override
     protected SearchOptions createDefaultSearchOptions() {
 
-        return new SearchOptions(new BruteSearchOptions(DEFAULT_LOOK_AHEAD, 16,
-                                     new BestMovesSearchOptions(DEFAULT_PERCENTAGE_BEST_MOVES,
+        return new SearchOptions(new BruteSearchOptions(DEFAULT_LOOK_AHEAD, 16),
+                                 new BestMovesSearchOptions(DEFAULT_PERCENTAGE_BEST_MOVES,
                                                         DEFAULT_MIN_BEST_MOVES,
-                                                        DEFAULT_PERCENT_LESS_THAN_BEST_THRESH)));
+                                                        DEFAULT_PERCENT_LESS_THAN_BEST_THRESH));
     }
 
 

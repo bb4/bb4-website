@@ -38,6 +38,7 @@ public class BestMovesOptionsPanel extends JPanel {
         bestMovesOptions_.setPercentLessThanBestThresh(percentLessThanBestThreshField_.getIntValue());
         bestMovesOptions_.setPercentageBestMoves(bestPercentageField_.getIntValue());
         bestMovesOptions_.setMinBestMoves(minBestMovesField_.getIntValue());
+        System.out.println("bustMove opts="+ bestMovesOptions_);
     }
 
     /**
@@ -48,7 +49,7 @@ public class BestMovesOptionsPanel extends JPanel {
         this.setLayout( new BoxLayout( this, BoxLayout.Y_AXIS ) );
 
         percentLessThanBestThreshField_ =
-            new NumberInput(GameContext.getLabel("PERCENT_LESS_THAN_BEST_THRESH"), bestMovesOptions_.getDefaultPercentLessThanBestThresh(),
+            new NumberInput(GameContext.getLabel("PERCENT_LESS_THAN_BEST_THRESH"), bestMovesOptions_.getPercentLessThanBestThresh(),
                             GameContext.getLabel("PERCENT_LESS_THAN_BEST_THRESH_TIP"), 0, 100, true);
 
         bestPercentageField_ =
