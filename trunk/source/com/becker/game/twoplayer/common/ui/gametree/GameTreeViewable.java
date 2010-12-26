@@ -7,18 +7,19 @@ import com.becker.game.twoplayer.common.search.tree.NodeAttributes;
 import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 
 import javax.swing.*;
+import java.util.Enumeration;
 
 /**
  * Responsible for handling events related to modifying the nodes in the game tree.
  *
- * We need these methods to occur on the event dispatch thread to avoid
- * threading conflicts that could occur during concurrent rendering.
+ * MOst operations lock on the tree instance because we want to be sure that we do not modify the
+ * tree while we are making a copy of it for use in rendering it.
  *
  * @author Barry Becker
  */
 public final class GameTreeViewable implements IGameTreeViewable {
 
-    private volatile SearchTreeNode root_;
+    private final SearchTreeNode root_;
 
     /**
      * constructor - create the tree dialog.
@@ -27,8 +28,33 @@ public final class GameTreeViewable implements IGameTreeViewable {
         root_ = new SearchTreeNode(m, new NodeAttributes());
     }
 
+    /**
+     * @return the root node so that it can be modified.
+     */
     public SearchTreeNode getRootNode() {
         return root_;
+    }
+
+    /**
+     * @return the root node of a deeply copied tree (se we do not need to worry about it changing.
+     */
+    public SearchTreeNode getTreeCopy() {
+        SearchTreeNode rootCopy;
+        synchronized (root_) {
+            rootCopy = getSubtreeCopy(root_);
+        }
+        return rootCopy;
+    }
+
+    /** @return a copy of the subtree rooted at root */
+    private SearchTreeNode getSubtreeCopy(SearchTreeNode root) {
+        SearchTreeNode rootCopy = (SearchTreeNode) root.clone();
+        Enumeration enumeration = root.children();
+        while (enumeration.hasMoreElements())  {
+            SearchTreeNode child = (SearchTreeNode) enumeration.nextElement();
+            rootCopy.add(getSubtreeCopy(child));   // recurse
+        }
+        return rootCopy;
     }
 
     /**
@@ -36,11 +62,9 @@ public final class GameTreeViewable implements IGameTreeViewable {
      */
     public void addNode(final SearchTreeNode parent, final SearchTreeNode child) {
 
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
+        synchronized (root_) {
                 parent.add(child);
-            }
-        });
+        }
     }
 
     /**
@@ -48,13 +72,11 @@ public final class GameTreeViewable implements IGameTreeViewable {
      */
     public void addPrunedNodes(final MoveList list, final SearchTreeNode parent,
                                final int i, final NodeAttributes attributes) {
-        // make a defensive copy of the list because we may modify it.
-        final MoveList listCopy = new MoveList(list);
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                parent.addPrunedChildNodes(listCopy, i, attributes);
-            }
-        });
+        synchronized (root_) {
+            // make a defensive copy of the list because we may modify it.
+            final MoveList listCopy = new MoveList(list);
+            parent.addPrunedChildNodes(listCopy, i, attributes);
+        }
     }
 
     /**
@@ -62,13 +84,12 @@ public final class GameTreeViewable implements IGameTreeViewable {
      * @param p two player move to set the root to.
      */
     public void resetTree(final TwoPlayerMove p) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
+
+        synchronized (root_) {
                 root_.removeAllChildren(); // clear it out
                 p.setSelected(true);
                 root_.setUserObject( p );
-            }
-        });        
+        }
     }
 }
 

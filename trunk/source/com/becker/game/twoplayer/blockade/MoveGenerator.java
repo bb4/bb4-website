@@ -54,8 +54,9 @@ public class MoveGenerator {
                 }
             }
         }
-        assert (!moveList.isEmpty()): "There aren't any moves to consider for lastMove="+lastMove
-                    +" Complete movelist ="+board_.getMoveList() + " \nThe pieces are at:" + pawnLocations;
+        if (moveList.isEmpty())
+            System.out.println("There aren't any moves to consider for lastMove="+lastMove
+                    +" Complete movelist ="+board_.getMoveList() + " \nThe pieces are at:" + pawnLocations);
 
         return moveList;
     }
@@ -63,46 +64,51 @@ public class MoveGenerator {
 
 
     /**
-      * Find all the moves a piece can make from position p, and insert them into moveList.
-      *
-      * @param p the piece to check from its new location.
-      * @param moveList add the potential moves to this existing list.
-      * @param weights to use.
-      * @return the number of moves added.
-      */
-     private int addMoves( BoardPosition p, MoveList moveList, List<Path> opponentPaths, ParameterArray weights) {
-         int numMovesAdded = 0;
+     * Find all the moves a piece can make from position p, and insert them into moveList.
+     *
+     * @param p the piece to check from its new location.
+     * @param moveList add the potential moves to this existing list.
+     * @param weights to use.
+     * @return the number of moves added.
+     */
+    private int addMoves( BoardPosition p, MoveList moveList, List<Path> opponentPaths, ParameterArray weights) {
+        int numMovesAdded = 0;
 
-         // first find the NUM_HOMES shortest paths for p.
-         List<Path> paths = board_.findShortestPaths((BlockadeBoardPosition)p);
+        // first find the NUM_HOMES shortest paths for p.
+        List<Path> paths = board_.findShortestPaths((BlockadeBoardPosition)p);
 
-         // for each of these paths, add possible wall positions.
-         // Take the first move from each shortest path and add the wall positions to it.
-         for (Path path : paths) {
-             BlockadeMove firstStep = path.get(0);
-             // make the move
-             board_.makeMove(firstStep);
+        // for each of these paths, add possible wall positions.
+        // Take the first move from each shortest path and add the wall positions to it.
+        for (Path path : paths) {
+            if (path.getLength() > 0) {
+                 BlockadeMove firstStep = path.get(0);
+                 // make the move
+                 board_.makeMove(firstStep);
 
-             // after making the first move, the shortest paths may have changed somewhat.
-             // unfortunately, I think we need to recalculate them.
-             BlockadeBoardPosition newPos =
-                     (BlockadeBoardPosition) board_.getPosition(firstStep.getToRow(), firstStep.getToCol());
-             List<Path> ourPaths = board_.findShortestPaths(newPos);
+                 // after making the first move, the shortest paths may have changed somewhat.
+                 // unfortunately, I think we need to recalculate them.
+                 BlockadeBoardPosition newPos =
+                         (BlockadeBoardPosition) board_.getPosition(firstStep.getToRow(), firstStep.getToCol());
+                 List<Path> ourPaths = board_.findShortestPaths(newPos);
 
-             List<BlockadeMove> wallMoves = findWallPlacementsForMove(firstStep, ourPaths, opponentPaths, weights);
-             GameContext.log(2, "num wall placements for Move = " + wallMoves.size());
-             board_.undoMove();
+                 List<BlockadeMove> wallMoves = findWallPlacementsForMove(firstStep, ourPaths, opponentPaths, weights);
+                 GameContext.log(2, "num wall placements for Move = " + wallMoves.size());
+                 board_.undoMove();
 
-             // iterate through the wallMoves and add only the ones that are not there already
-             for (BlockadeMove wallMove : wallMoves) {
-                 if (!moveList.contains(wallMove)) {
-                     moveList.add(wallMove);
+                 // iterate through the wallMoves and add only the ones that are not there already
+                 for (BlockadeMove wallMove : wallMoves) {
+                     if (!moveList.contains(wallMove)) {
+                         moveList.add(wallMove);
+                     }
                  }
-             }
-             numMovesAdded += wallMoves.size();
-         }
+                 numMovesAdded += wallMoves.size();
+            }
+            else {
+                System.out.println("one of the paths was empty : " + paths);
+            }
+        }
 
-         return numMovesAdded;
+        return numMovesAdded;
     }
 
     /**

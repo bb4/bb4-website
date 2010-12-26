@@ -1,7 +1,6 @@
 package com.becker.game.twoplayer.common.search.strategy;
 
 import com.becker.common.util.Util;
-import com.becker.game.common.GameContext;
 import com.becker.game.common.Move;
 import com.becker.game.common.MoveList;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
@@ -82,14 +81,17 @@ public class UctNode {
     /**
      * Add the children to the node.
      * @param moves child moves to add.
+     * @return the number of children added
      */
-    public void addChildren(MoveList moves) {
-
+    public int addChildren(MoveList moves) {
+        int numKids = 0;
         children = new LinkedList<UctNode>();
         for (Move m : moves) {
             UctNode newNode = new UctNode((TwoPlayerMove) m);
             children.add(newNode);
+            numKids++;
         }
+        return numKids;
     }
 
     /**

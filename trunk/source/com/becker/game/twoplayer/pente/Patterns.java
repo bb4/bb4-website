@@ -41,22 +41,24 @@ public abstract class Patterns
     }
 
     /**
-     * This is how many in a row are needed to win
-     * if M is five then the game is pente
+     * @return how many in a row are needed to win. If M is five then the game is pente
      */
     public abstract int getWinRunLength();
 
-    /** patterns shorter than this are not interesting and have weight 0 */
+    /**
+     * @return patterns shorter than this are not interesting and have weight 0
+     */
     public abstract int getMinInterestingLength();
 
-    /** total number of patterns represented */
+    /**
+     * @return total number of patterns represented
+     */
     protected abstract int getNumPatterns();
 
     /**
      * Initialize all the pente patterns.
      */
-    protected void initialize()
-    {
+    protected void initialize() {
         weightIndexTable_ = new int[TABLE_SIZE];
         for ( int i = 0; i < TABLE_SIZE; i++ ) {
             weightIndexTable_[i] = -1;
@@ -138,8 +140,7 @@ public abstract class Patterns
      * the pattern file is fixed for pente
      * this method fills in pattern_ and weightTable_
      */
-    protected void readPatternFile()
-    {
+    protected void readPatternFile() {
         // Open a file of the given name.
         String patternFileName = getPatternFile();
         File file = new File( patternFileName );

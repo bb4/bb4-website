@@ -35,7 +35,7 @@ public final class NegaMaxMemoryStrategy extends NegaMaxStrategy
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public TwoPlayerMove search( TwoPlayerMove lastMove, SearchTreeNode parent ) {

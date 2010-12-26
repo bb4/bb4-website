@@ -87,20 +87,26 @@ public abstract class TwoPlayerBoard extends Board {
         int nRows = getNumRows();
         int nCols = getNumCols();
         TwoPlayerMove m = (TwoPlayerMove) getMoveList().getLastMove();
+
         for ( int i = 1; i <= nRows; i++ )   {
-          for ( int j = 1; j <= nCols; j++ ) {
-              BoardPosition pos = this.getPosition(i,j);
-              if (pos.isOccupied()) {
-                  if (pos.getLocation().equals(m.getToLocation()))
-                      bldr.append("[").append(pos.getPiece()).append("]");
-                  else
-                      bldr.append(pos.getPiece());
-              }
-              else {
-                  bldr.append(" _ ");
-              }
-           }
-           bldr.append("\n");
+            boolean followingLastMove = false;
+            for ( int j = 1; j <= nCols; j++ ) {
+                BoardPosition pos = this.getPosition(i,j);
+                if (pos.isOccupied()) {
+                    if (pos.getLocation().equals(m.getToLocation())) {
+                        bldr.append("[").append(pos.getPiece()).append("]");
+                        followingLastMove = true;
+                    }
+                    else  {
+                        bldr.append(followingLastMove?"":" ").append(pos.getPiece());
+                        followingLastMove = false;
+                    }
+                }
+                else {
+                    bldr.append(followingLastMove?"":" " + "_");
+                }
+            }
+            bldr.append("\n");
         }
         return bldr.toString();
     }

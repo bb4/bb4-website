@@ -6,6 +6,7 @@ import com.becker.game.common.ui.GameChangedListener;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerViewable;
 import com.becker.game.twoplayer.common.search.tree.IGameTreeViewable;
+import com.becker.game.twoplayer.common.search.tree.SearchTreeNode;
 import com.becker.game.twoplayer.common.ui.AbstractTwoPlayerBoardViewer;
 import com.becker.game.twoplayer.common.ui.TwoPlayerPieceRenderer;
 import com.becker.ui.dialogs.AbstractDialog;
@@ -165,9 +166,11 @@ public final class GameTreeDialog extends AbstractDialog
      * show whatever portion of the game tree that has been searched so far.
      */
     public synchronized void showCurrentGameTree() {
-        textTree_.reset(tree_.getRootNode());
+        SearchTreeNode root = tree_.getTreeCopy();
 
-        treeViewer_.setRoot(tree_.getRootNode());
+        textTree_.reset(root);
+
+        treeViewer_.setRoot(root);
         if (textTree_ == null) return;
 
         textTree_.expandRow( 0 );
@@ -176,7 +179,6 @@ public final class GameTreeDialog extends AbstractDialog
         // make the viewer shows the game so far
         setMoveList( mainController_.getMoveList() );
 
-        //textTree_.setVisibleRowCount(textTree_.getRowCount());
         refresh();
     }
 

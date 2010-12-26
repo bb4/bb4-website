@@ -33,7 +33,7 @@ public class SearchTreeNode extends DefaultMutableTreeNode
     private int spaceAllocation_ = 0;
 
     /**
-     * location in the boardviewer
+     * location in the board viewer
      */
     private Point position_;
 
@@ -87,14 +87,7 @@ public class SearchTreeNode extends DefaultMutableTreeNode
                 return node;
             }
         }
-
-        //System.out.println("move: " + theMove +" no found among ");
-        //System.out.println(" " + (children!=null? children : null));
-        int numKids2 = children==null ? 0 :children.size();
-        assert(numKids <= 8) : "too many kids: " + numKids + "\nmove: " + theMove +"\nnot found among "
-           + moves.toString();
         return null;
-
     }
 
     /**
@@ -130,6 +123,51 @@ public class SearchTreeNode extends DefaultMutableTreeNode
                 return node;
         }
         return null;
+    }
+
+    /**
+     * One of our existing children bust be the next node.
+     * It must never be null, but it may not be there yet because they are added in a different thread
+     * So we block until there.
+     * @return  the next child node to use as parent. Must never be null.
+     */
+    public SearchTreeNode findSearchNodeForMove(TwoPlayerMove move) {
+
+        assert move!= null;
+
+        SearchTreeNode node = findChild(move);
+        int ct = 0;
+        while (node == null && ct < 5)  {
+            Util.sleep(20);
+            if (ct > 0) {
+                System.out.println("researching " + ct);
+            }
+            node = findChild(move);
+            ct++;
+        }
+        assert node != null : "Could not find node for "+ move +" after re-searching "+ ct + " times among " + childrenAsString();
+        return node;
+    }
+
+    private SearchTreeNode findChild(TwoPlayerMove move) {
+        Enumeration enumeration = this.children();
+        while (enumeration.hasMoreElements()) {
+            SearchTreeNode node = (SearchTreeNode)enumeration.nextElement();
+            if (move.equals(node.getUserObject())) {
+                return node;
+            }
+        }
+        return null;
+    }
+
+    private String childrenAsString() {
+        StringBuilder bld = new StringBuilder();
+        Enumeration enumeration = this.children();
+        while (enumeration.hasMoreElements()) {
+            SearchTreeNode node = (SearchTreeNode)enumeration.nextElement();
+            bld.append(node);
+        }
+        return bld.toString();
     }
 
     public boolean isPruned() {

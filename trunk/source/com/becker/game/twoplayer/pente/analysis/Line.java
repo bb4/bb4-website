@@ -77,7 +77,10 @@ public class Line {
         int newScore = evalLine(player1Perspective, position, 0, maxpos);
         newScore += evalLine(!player1Perspective, position, 0, maxpos);
 
-        return newScore - oldScore;
+        //if (Math.abs(newScore) > 3000 || Math.abs(oldScore) > 3000 )    {
+        //    System.out.println("newScore="+newScore + " - oldScore="+ oldScore);
+        //}
+        return (newScore - oldScore);
     }
 
     /**

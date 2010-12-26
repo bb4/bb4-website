@@ -14,10 +14,13 @@ import com.becker.optimization.parameter.ParameterArray;
  */
 public class GameWeights
 {
-    /** scores computed from weights are assumed to be between [0 and 1000] for player1 */
+    /** scores computed from weights are assumed to be between [0 and ASSUMED_WINNING_VALUE] for player1 */
     protected static final double ASSUMED_WINNING_VALUE = 1024;
 
-    /** the weights are created assuming a winning value of 1000. It that changes we need to scale them */
+    /**
+     * the weights are created assuming a winning value of ASSUMED_WINNING_VALUE.
+     * If that changes we need to scale them
+     */
     private static final double SCALE = SearchStrategy.WINNING_VALUE / ASSUMED_WINNING_VALUE;
 
     private int numWeights_;
@@ -29,8 +32,7 @@ public class GameWeights
     private final String[] names_;
     private final String[] descriptions_;
 
-    public GameWeights( ParameterArray defaultWeights )
-    {
+    public GameWeights( ParameterArray defaultWeights ) {
         // this will not change once set.
         numWeights_ = defaultWeights.size();
 
@@ -46,15 +48,13 @@ public class GameWeights
     }
 
     public GameWeights( double[] defaultWeights, double[] minWeights, double[] maxWeights,
-                        String[] names, String[] descriptions )
-    {
+                        String[] names, String[] descriptions ) {
         numWeights_ = defaultWeights.length;
         double[] minVals = new double[numWeights_];
         double [] defaultVals = new double[numWeights_];
         double [] maxVals = new double[numWeights_];
 
-        for (int i = 0; i < numWeights_; i++)
-        {
+        for (int i = 0; i < numWeights_; i++) {
             minVals[i] = SCALE * minWeights[i];
             defaultVals[i] = SCALE * defaultWeights[i];
             maxVals[i] = SCALE * maxWeights[i];
@@ -67,8 +67,7 @@ public class GameWeights
         init();
     }
 
-    private void init()
-    {
+    private void init() {
         p1Weights_ = defaultWeights_.copy();
         p2Weights_ = defaultWeights_.copy();
     }
@@ -76,33 +75,28 @@ public class GameWeights
     /**
      * @return the weights for player1. It a reference, so changing them will change the weights in this structure
      */
-    public final ParameterArray getPlayer1Weights()
-    {
+    public final ParameterArray getPlayer1Weights() {
         return p1Weights_;
     }
 
     /**
      * @return the weights for player1. It a reference, so changing them will change the weights in this structure
      */
-    public final ParameterArray getPlayer2Weights()
-    {
+    public final ParameterArray getPlayer2Weights() {
         return p2Weights_;
     }
 
-    public final void setPlayer1Weights( ParameterArray p1Weights)
-    {
+    public final void setPlayer1Weights( ParameterArray p1Weights) {
        verify(p1Weights);
        p1Weights_ = p1Weights;
     }
 
-    public final void setPlayer2Weights( ParameterArray p2Weights)
-    {
+    public final void setPlayer2Weights( ParameterArray p2Weights) {
        verify(p2Weights);
        p1Weights_ = p2Weights;
     }
 
-    private void verify( ParameterArray wts)
-    {
+    private void verify( ParameterArray wts) {
        assert wts.size() == numWeights_:
                "Incorrect number of weights: "+ wts.size()+" you need "+ numWeights_;
     }
@@ -110,32 +104,28 @@ public class GameWeights
     /**
      * @return the default weights. It a reference, so changing them will change the weights in this structure
      */
-    public final ParameterArray getDefaultWeights()
-    {
+    public final ParameterArray getDefaultWeights() {
         return defaultWeights_;
     }
 
     /**
      * @return short description of weight i
      */
-    public final String getName( int i )
-    {
+    public final String getName( int i ) {
         return names_[i];
     }
 
     /**
      * @return description of weight i (good for putting in a tooltip)
      */
-    public final String getDescription( int i )
-    {
+    public final String getDescription( int i ) {
         return descriptions_[i];
     }
 
     /**
      * @return the maximum allowed value of weight i
      */
-    public final double getMaxWeight( int i )
-    {
+    public final double getMaxWeight( int i ) {
         return defaultWeights_.get(i).getMaxValue();
     }
 
@@ -143,9 +133,8 @@ public class GameWeights
      * nicely print the weights
      */
     @Override
-    public final String toString()
-    {
-        return "Player1's weights are:"+p1Weights_+"\nPlayer2's weights are "+p2Weights_;
+    public final String toString() {
+        return "Player1's weights are:" + p1Weights_ + "\nPlayer2's weights are " + p2Weights_;
     }
 }
 

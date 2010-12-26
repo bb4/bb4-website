@@ -282,7 +282,7 @@ public class TwoPlayerMove extends Move {
         s.append(" val:").append(Util.formatNumber(getValue()));
         s.append(" inhrtd:").append(Util.formatNumber(inheritedValue_));
         if (piece_!=null)
-            s.append(" piece:").append(piece_.toString());
+            s.append(" piece: ").append(piece_.toString());
         //s.append(" sel:"+selected);
         s.append('(').append(toLocation_.toString()).append(')');
         if (urgent_)

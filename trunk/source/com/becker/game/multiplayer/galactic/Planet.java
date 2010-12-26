@@ -93,18 +93,15 @@ public class Planet extends GamePiece {
         setNumShips(numShips_ - numShips);
     }
 
-    public int getProductionCapacity()
-    {
+    public int getProductionCapacity() {
         return productionCapacity_;
     }
 
-    public void setProductionCapacity( int productionCapacity )
-    {
+    public void setProductionCapacity( int productionCapacity ) {
         productionCapacity_= productionCapacity;
     }
 
-    public Color getColor()
-    {
+    public Color getColor() {
         // if we have an owner, then use his color, otherwise use the default.
         if (getOwner()!=null)  {
             return getOwner().getColor();
@@ -114,24 +111,21 @@ public class Planet extends GamePiece {
         }
     }
 
-    public void incrementYear()
-    {
+    public void incrementYear() {
         if (this.getOwner()!=null) { // or if neutrals build
             numShips_ += productionCapacity_;
         }
     }
 
 
-    public Location getLocation()
-    {
+    public Location getLocation() {
         return location_;
     }
 
     /**
      * ordinarily this does not change
      */
-    public void setLocation(Location loc)
-    {
+    public void setLocation(Location loc)  {
         location_ = loc;
     }
 
@@ -139,27 +133,23 @@ public class Planet extends GamePiece {
      * @return more detail that toString()
      */
     @Override
-    public String getDescription()
-    {
+    public String getDescription() {
         StringBuilder sb = new StringBuilder( this.toString() );
 
-        sb.append("Planet: "+type_+" production:"+getProductionCapacity());
+        sb.append("Planet: ").append(type_).append(" production:").append(getProductionCapacity());
         return sb.toString();
     }
 
 
-    public double getDistanceFrom(Planet p)
-    {
+    public double getDistanceFrom(Planet p) {
         return getDistanceFrom(p.getLocation());
     }
 
-    private double getDistanceFrom(Location loc)
-    {
+    private double getDistanceFrom(Location loc) {
         return location_.getDistanceFrom(loc);
     }
 
-    public double getDistanceFrom(Point2D loc)
-    {
+    public double getDistanceFrom(Point2D loc) {
         return location_.getDistanceFrom(loc);
     }
 

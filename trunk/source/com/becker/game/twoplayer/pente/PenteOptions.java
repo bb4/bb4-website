@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.pente;
 import com.becker.game.twoplayer.common.TwoPlayerOptions;
 import com.becker.game.twoplayer.common.search.options.BestMovesSearchOptions;
 import com.becker.game.twoplayer.common.search.options.BruteSearchOptions;
+import com.becker.game.twoplayer.common.search.options.MonteCarloSearchOptions;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 
 /**
@@ -33,6 +34,7 @@ public class PenteOptions extends TwoPlayerOptions {
         return new SearchOptions(new BruteSearchOptions(DEFAULT_LOOK_AHEAD, DEFAULT_LOOK_AHEAD + 2),
                                  new BestMovesSearchOptions(DEFAULT_PERCENTAGE_BEST_MOVES, 
                                                             DEFAULT_MIN_BEST_MOVES,
-                                                            DEFAULT_PERCENT_LESS_THAN_BEST_THRESH));
+                                                            DEFAULT_PERCENT_LESS_THAN_BEST_THRESH),
+                                 new MonteCarloSearchOptions(1000, 1.0, 20));
     }
 }

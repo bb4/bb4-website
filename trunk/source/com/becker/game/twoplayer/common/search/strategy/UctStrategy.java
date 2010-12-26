@@ -46,7 +46,6 @@ public class UctStrategy extends AbstractSearchStrategy {
         exploreExploitRatio = getOptions().getMonteCarloSearchOptions().getExploreExploitRatio();
         numRandomLookAhead = getOptions().getMonteCarloSearchOptions().getRandomLookAhead();
         percentLessThanBestThresh = getOptions().getBestMovesSearchOptions().getPercentLessThanBestThresh();
-
     }
 
     @Override
@@ -88,7 +87,10 @@ public class UctStrategy extends AbstractSearchStrategy {
 
             if (!searchable_.done(lastMoveNode.move, false))  {
                if (!lastMoveNode.hasChildren()) {
-                   lastMoveNode.addChildren(searchable_.generateMoves(lastMoveNode.move, weights_, true));
+                   int added = lastMoveNode.addChildren(searchable_.generateMoves(lastMoveNode.move, weights_, true));
+                   if (added == 0) {
+                       System.out.println("no moves added for " + lastMoveNode);
+                   }
                    addNodesToTree(parent, lastMoveNode.getChildren());
                }
                nextNode = uctSelect(lastMoveNode);
@@ -96,8 +98,10 @@ public class UctStrategy extends AbstractSearchStrategy {
 
             // may be null if there are no move valid moves or lastMoveNode won the game.
             if (nextNode != null) {
+
+                SearchTreeNode nextParent = parent!=null ? parent.findSearchNodeForMove(nextNode.move) : null;
                 searchable_.makeInternalMove(nextNode.move);
-                p1Score = playSimulation(nextNode, findSearchNodeForMove(nextNode.move, parent));
+                p1Score = playSimulation(nextNode, nextParent);
                 searchable_.undoInternalMove(nextNode.move);
             } else {
                 p1Score = WinProbabilityCaclulator.getChanceOfPlayer1Winning(lastMoveNode.move.getValue());
@@ -105,7 +109,8 @@ public class UctStrategy extends AbstractSearchStrategy {
         }
 
         lastMoveNode.update(p1Score);
-        if (parent != null) parent.attributes = lastMoveNode.getAttributes();
+        if (parent != null)
+            parent.attributes = lastMoveNode.getAttributes();
         return p1Score;
     }
 
@@ -166,7 +171,6 @@ public class UctStrategy extends AbstractSearchStrategy {
     /**
      * add a move to the visual game tree (if parent not null).
      * If the new node is already in the tree, do not add it, but maybe update values.
-     * @return the node added to the tree.
      */
     protected void addNodesToTree(SearchTreeNode parent, List<UctNode> childUctNodes) {
 
@@ -175,18 +179,5 @@ public class UctStrategy extends AbstractSearchStrategy {
         for (UctNode child : childUctNodes)  {
            addNodeToTree(parent, child.move, child.getAttributes());
         }
-    }
-
-    private SearchTreeNode findSearchNodeForMove(TwoPlayerMove move, SearchTreeNode parent) {
-        if (parent == null) return null;
-
-        Enumeration enumeration = parent.children();
-        while (enumeration.hasMoreElements()) {
-            SearchTreeNode node = (SearchTreeNode)enumeration.nextElement();
-            if (move.equals(node.getUserObject())) {
-                return node;
-            }
-        }
-        return null;
     }
 }
