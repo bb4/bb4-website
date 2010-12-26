@@ -129,9 +129,9 @@ public class GamePiece implements Serializable {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         if ( ownedByPlayer1_ )
-            sb.append( " X" );
+            sb.append( "X" );
         else
-            sb.append( " O" );
+            sb.append( "O" );
         return sb.toString();
     }
 }

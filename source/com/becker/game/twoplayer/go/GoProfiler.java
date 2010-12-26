@@ -18,7 +18,7 @@ public final class GoProfiler extends GameProfiler {
     private static final String UPDATE_GROUPS_AFTER_REMOVE = "updating groups after remove";
     private static final String UPDATE_STRINGS_AFTER_MOVE = "updating strings after move";
     private static final String UPDATE_GROUPS_AFTER_MOVE = "updating groups after move";
-    private static final String RECREATE_GROUPS_AFTER_MOVE = "recreatine groups after move";
+    private static final String RECREATE_GROUPS_AFTER_MOVE = "recreating groups after move";
     //private static final String GET_NBR_GROUPS = "getting nbr groups";
     public static final String UPDATE_TERRITORY = "updating territory";
     public static final String ABSOLUTE_TERRITORY = "absolute territory";

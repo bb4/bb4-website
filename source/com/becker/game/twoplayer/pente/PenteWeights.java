@@ -17,16 +17,16 @@ public class PenteWeights extends GameWeights {
     /** If greater than this threshold, then opponent is in jeopardy. */
     public static final int JEOPARDY_WEIGHT = 80;
 
-    /** These defaults may be overriden in by the user in the UI. */
+    /** These defaults may be overridden in by the user in the UI. */
     private static final double[] DEFAULT_WEIGHTS = {
         0.0,    0.0,    0.0,    0.0,     2.0,     6.0,      JEOPARDY_WEIGHT/2.0,     JEOPARDY_WEIGHT/2 + 2,    JEOPARDY_WEIGHT *2 + 30,
-        2*ASSUMED_WINNING_VALUE,  2*ASSUMED_WINNING_VALUE,  2*ASSUMED_WINNING_VALUE
+        2 * ASSUMED_WINNING_VALUE,  2 * ASSUMED_WINNING_VALUE,  2 * ASSUMED_WINNING_VALUE
     };
 
     /** Don't allow the weights to exceed these maximum values. Upper limit. */
     private static final double[] MAX_WEIGHTS = {
-        10.0,  10.0,  10.0,  20.0,  40.0,  40.0,  200.0,  200.0,  2 * ASSUMED_WINNING_VALUE,
-        4 * ASSUMED_WINNING_VALUE,  6 * ASSUMED_WINNING_VALUE,  8 * ASSUMED_WINNING_VALUE
+        10.0,  10.0,  10.0,  20.0,  40.0,  40.0,  200.0,  200.0,  ASSUMED_WINNING_VALUE,
+        3 * ASSUMED_WINNING_VALUE,  4 * ASSUMED_WINNING_VALUE,  5 * ASSUMED_WINNING_VALUE
     };
 
      /** Don't allow the weights to go below these minimum values. Upper limit. */

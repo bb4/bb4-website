@@ -63,6 +63,13 @@ public class WinProbabilityCaclulator {
      */
     private static float computeChanceOfWinning(float lastMoveValue) {
         float val = lastMoveValue + WINNING_VALUE;
-        return val / (2.0f * WINNING_VALUE);
+        float chance = val / (2.0f * WINNING_VALUE);
+        /*
+        if (Math.abs(chance) > 1.0)
+           System.out.println("The chance was "+ chance + " which is outside [0,1] for score=" + lastMoveValue);
+        else if (Math.abs(chance) > 0.9)
+           System.out.println("The chance of winning was "+ chance + " which is outside [0,1] for score=" + lastMoveValue);
+        */
+        return (float) Math.max(0, Math.min(chance, 1.0));
     }
 }

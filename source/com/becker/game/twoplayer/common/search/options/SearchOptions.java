@@ -3,6 +3,7 @@ package com.becker.game.twoplayer.common.search.options;
 import com.becker.game.twoplayer.common.search.Searchable;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategy;
 import com.becker.game.twoplayer.common.search.strategy.SearchStrategyType;
+import com.becker.game.twoplayer.common.ui.options.MonteCarloOptionsPanel;
 import com.becker.optimization.parameter.ParameterArray;
 
 /**
@@ -28,10 +29,19 @@ public class SearchOptions {
      * Default Constructor
      */
     public SearchOptions() {
+        this(new BruteSearchOptions(), new BestMovesSearchOptions(), new MonteCarloSearchOptions());
+    }
 
-        bestMovesOptions_ = new BestMovesSearchOptions();
-        bruteOptions_ = new BruteSearchOptions();
-        monteCarloOptions_ = new MonteCarloSearchOptions();
+    /**
+     * Constructor
+     * @param bruteOptions brute force search options to use.
+     */
+    public SearchOptions(BruteSearchOptions bruteOptions,
+                         BestMovesSearchOptions bestMovesOptions,
+                         MonteCarloSearchOptions mcOptions) {
+        bruteOptions_ = bruteOptions;
+        bestMovesOptions_ = bestMovesOptions;
+        monteCarloOptions_ = mcOptions;
     }
 
     /**
@@ -39,9 +49,7 @@ public class SearchOptions {
      * @param bruteOptions brute force search options to use.
      */
     public SearchOptions(BruteSearchOptions bruteOptions, BestMovesSearchOptions bestMovesOptions) {
-        bruteOptions_ = bruteOptions;
-        bestMovesOptions_ = bestMovesOptions;
-        monteCarloOptions_ = new MonteCarloSearchOptions();
+        this(bruteOptions, bestMovesOptions, new MonteCarloSearchOptions());
     }
 
     /**

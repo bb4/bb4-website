@@ -22,7 +22,7 @@ public final class TicTacToePatterns extends Patterns
     };
 
     /** index into weights array. @see TicTacTowWeights */
-    private static int[] weightIndex = {
+    private static final int[] weightIndex = {
           0,     1,    2,     3,     4
     };
 

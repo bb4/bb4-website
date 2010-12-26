@@ -17,20 +17,21 @@ public class TicTacToeWeights extends GameWeights {
     /** If greater than this threshold, then opponent is in jeopardy. */
     public static final int JEOPARDY_WEIGHT = 10;
 
-    /** These defaults may be overriden in by the user in the UI. */
+    /** These defaults may be overridden in by the user in the UI. */
     private static final double[] DEFAULT_WEIGHTS = {
-        1.0,    1.0,    JEOPARDY_WEIGHT + 1,    JEOPARDY_WEIGHT,   2 * ASSUMED_WINNING_VALUE
+        1.0,    1.0,   JEOPARDY_WEIGHT + 1,  JEOPARDY_WEIGHT,  2 * ASSUMED_WINNING_VALUE
+    };
+
+    /** Don't allow the weights to go below these minimum values. Upper limit. */
+    private static final double[] MIN_WEIGHTS = {
+        0.0,    0.0,    1.0,                 1.0,             ASSUMED_WINNING_VALUE
     };
 
     /** Don't allow the weights to exceed these maximum values. Upper limit. */
     private static final double[] MAX_WEIGHTS = {
-        50.0,  50.0,  500.0,  500.0,   3 * ASSUMED_WINNING_VALUE
+        50.0,   50.0,   500.0,              500.0,         3 * ASSUMED_WINNING_VALUE
     };
 
-     /** Don't allow the weights to go below these minimum values. Upper limit. */
-    private static final double[] MIN_WEIGHTS = {
-        0.0,    0.0,    1.0,    1.0,   ASSUMED_WINNING_VALUE
-    };
 
     private static final String[] WEIGHT_SHORT_DESCRIPTIONS = {
         "1a weight", "1b weight",  "2a weight", "2b weight", "3 weight"};
