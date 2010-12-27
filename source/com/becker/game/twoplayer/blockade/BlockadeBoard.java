@@ -228,7 +228,7 @@ public class BlockadeBoard extends TwoPlayerBoard {
         }
     }
 
-    private GameProfiler getProfiler() {
+    private AbstractGameProfiler getProfiler() {
         return GameProfiler.getInstance();
     }
 

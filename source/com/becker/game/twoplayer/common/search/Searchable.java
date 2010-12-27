@@ -78,17 +78,6 @@ public interface Searchable
     MoveList generateMoves(TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective );
 
     /**
-     * Generate a list of reasonable next moves given the last move.
-     * This function is a key function that must be created for each type of game added.
-     *
-     * @param lastMove  the last move made if there was one. (null if first move of the game)
-     * @param weights  the polynomial weights to use in the polynomial evaluation function.
-     * @param player1sPerspective if true assign worth values according to p1.  @@ is this always true? remove if so.
-     * @return list of possible next moves.
-     */
-    MoveList generatePossibleMoves(TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective );
-
-    /**
      * generate those moves that are critically urgent
      * If you generate too many, then you run the risk of an explosion in the search tree.
      * These moves should be sorted from most to least urgent

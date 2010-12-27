@@ -6,7 +6,7 @@ import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.GoStone;
 
 /**
- * Responsible for .
+ * Responsible for determining and updating the deadstones on the board.
  * @author Barry Becker
  */
 public final class DeadStoneUpdater
@@ -45,8 +45,8 @@ public final class DeadStoneUpdater
     {
        board_.updateTerritory(true);
 
-       for ( int row = 1; row <= board_.getNumRows(); row++ ) {    //rows
-            for ( int col = 1; col <= board_.getNumCols(); col++ ) {  //cols
+       for ( int row = 1; row <= board_.getNumRows(); row++ ) {
+            for ( int col = 1; col <= board_.getNumCols(); col++ ) {
                 GoBoardPosition space = (GoBoardPosition)board_.getPosition( row, col );
                 if (space.isOccupied())  {
                     GoStone stone = (GoStone)space.getPiece();

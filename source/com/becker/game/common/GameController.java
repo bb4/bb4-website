@@ -176,7 +176,7 @@ public abstract class GameController
     public abstract GameOptions getOptions();
 
 
-    protected GameProfiler getProfiler() {
+    protected AbstractGameProfiler getProfiler() {
         return GameProfiler.getInstance();
     }        
 

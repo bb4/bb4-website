@@ -1,15 +1,15 @@
 package com.becker.game.twoplayer.go;
 
-import com.becker.game.common.GameProfiler;
+import com.becker.game.common.AbstractGameProfiler;
 
 
 /**
  * Keep track of how much time is spent in each time critical part of the 
- * comupter move processing.   Singleton.
+ * computer move processing.   Singleton.
  * 
  * @author Barry Becker
  */
-public final class GoProfiler extends GameProfiler {
+public final class GoProfiler extends AbstractGameProfiler {
 
     /** singleton instance */
     private static GoProfiler instance;
@@ -35,6 +35,7 @@ public final class GoProfiler extends GameProfiler {
 
     public static GoProfiler getInstance() {
         if (instance == null) {
+            System.out.println("creating go profiler");
             instance = new GoProfiler();
         }
         return instance;
@@ -113,6 +114,4 @@ public final class GoProfiler extends GameProfiler {
     public void stopCopyBoard() {
         this.stop(COPY_BOARD);
     }
-
-
 }

@@ -50,8 +50,7 @@ final class GoBoardViewer extends AbstractTwoPlayerBoardViewer {
     }
 
     @Override
-    protected GameController createController()
-    {
+    protected GameController createController()  {
         return new GoController();
     }
 

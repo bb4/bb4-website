@@ -1,8 +1,6 @@
 package com.becker.game.twoplayer.go;
 
-import com.becker.game.common.GameContext;
-import com.becker.game.common.Move;
-import com.becker.game.common.MoveList;
+import com.becker.game.common.*;
 import com.becker.game.common.player.PlayerList;
 import com.becker.game.twoplayer.common.TwoPlayerBoard;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
@@ -56,6 +54,10 @@ public class GoSearchable extends TwoPlayerSearchable {
         positionalScorer_ = new PositionalScoreAnalyzer((GoBoard)board_);
     }
 
+    @Override
+    protected AbstractGameProfiler getProfiler() {
+        return GoProfiler.getInstance();
+    }
 
     /**
      * Given a move determine whether the game is over.
@@ -322,16 +324,6 @@ public class GoSearchable extends TwoPlayerSearchable {
     public boolean inJeopardy( TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective ) {
         GoBoard gb = (GoBoard) board_;
         return (( (GoMove)lastMove ).causesAtari(gb) > CRITICAL_GROUP_SIZE);
-    }
-
-
-    /**
-     * generate all possible next moves
-     */
-    public final MoveList generatePossibleMoves(TwoPlayerMove lastMove, ParameterArray weights,
-                                        boolean player1sPerspective ) {
-        GoMoveGenerator generator = new GoMoveGenerator(this);
-        return generator.generatePossibleMoves(lastMove, player1sPerspective);
     }
 
     /**

@@ -7,10 +7,8 @@ package com.becker.apps.misc.brian.gcf;
 public class EuclidGCFSolver implements GCFSolver {
 
     public long findSolution(long a, long b) {
-        if (a == 0) {
-            return b;
-        } else {
-            return findSolution(b % a, a);
-        }
+
+        return (a == 0) ? b : findSolution(b % a, a);
+
     }
 }

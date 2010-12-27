@@ -59,16 +59,8 @@ public abstract class TwoPlayerSearchable implements Searchable {
         return options_;
     }
 
-    protected GameProfiler getProfiler() {
+    protected AbstractGameProfiler getProfiler() {
         return GameProfiler.getInstance();
-    }
-
-    /**
-     * By default just return the good set of statically evaluated moves.
-     * Probably want to changes this so all games implement without static evaluation.
-     */
-    public MoveList generatePossibleMoves(TwoPlayerMove lastMove, ParameterArray weights, boolean player1sPerspective ) {
-        return generateMoves(lastMove, weights, player1sPerspective);
     }
 
     /**
