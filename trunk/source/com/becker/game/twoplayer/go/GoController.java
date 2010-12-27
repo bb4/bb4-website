@@ -31,8 +31,7 @@ public final class GoController extends TwoPlayerController {
     /**
      * Construct the Go game controller.
      */
-    public GoController()
-    {
+    public GoController() {
         this( DEFAULT_NUM_ROWS, DEFAULT_NUM_ROWS, 0);
     }
 
@@ -40,8 +39,7 @@ public final class GoController extends TwoPlayerController {
      * Construct the Go game controller given dimensions and number of handicap stones.
      * @param numHandicapStones  0 - 9 handicap stones to show initially.
      */
-    public GoController( int nrows, int ncols, int numHandicapStones )
-    {
+    public GoController( int nrows, int ncols, int numHandicapStones ) {
         board_ = new GoBoard( nrows, ncols, numHandicapStones );
         initializeData();
     }
