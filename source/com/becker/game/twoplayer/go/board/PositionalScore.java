@@ -34,13 +34,12 @@ public class PositionalScore {
     }
 
     /**
-     * don't call this after incrementing.
-     * but you must call it if not incremented.
+     * Don't call this after incrementing, but you must call once before incrementing.
      */
     public void calcPositionScore() {
         assert (!incremented_);
         double s = deadStoneScore + eyeSpaceScore + healthScore + posScore + badShapeScore;
-        positionScore_ = Math.max(-1.0, Math.min(1.0, s));
+        positionScore_ = s;  //Math.max(-1.0, Math.min(1.0, s));
     }
 
     public String getDescription(double worth, double captureScore, double territoryDelta, double scaleFactor)  {

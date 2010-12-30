@@ -13,8 +13,8 @@ import com.becker.optimization.parameter.ParameterArray;
  *
  * @author Barry Becker
  */
-public final class PositionalScoreAnalyzer
-{
+public final class PositionalScoreAnalyzer {
+
     private GoBoard board_;
 
     private StringShapeAnalyzer shapeAnalyzer_;
@@ -36,8 +36,7 @@ public final class PositionalScoreAnalyzer
     /**
      * Construct the Go game controller.
      */
-    public PositionalScoreAnalyzer(GoBoard board)
-    {
+    public PositionalScoreAnalyzer(GoBoard board) {
         board_ = board;
         positionalScore_ = createPositionalScoreArray();
         shapeAnalyzer_ = new StringShapeAnalyzer(board_);
@@ -49,11 +48,11 @@ public final class PositionalScoreAnalyzer
      * @return accumulated totalScore so far.
      */
     public PositionalScore determineScoreForPosition(int row, int col, double gameStageBoost,
-                                       ParameterArray weights) {
+                                                     ParameterArray weights) {
 
         GoBoardPosition position = (GoBoardPosition) board_.getPosition(row, col);
-        double positionalScore = gameStageBoost * positionalScore_[row][col];
-        PositionalScore score = calcPositionalScore(position, weights, positionalScore);
+        double positionalScore = positionalScore_[row][col];
+        PositionalScore score = calcPositionalScore(position, weights, positionalScore, gameStageBoost);
 
         position.setScoreContribution(score.getPositionScore());
         return score;
@@ -62,11 +61,10 @@ public final class PositionalScoreAnalyzer
 
     /**
      * Create the lookup table of scores to attribute to the board positions when calculating the worth.
-     * These weights are counted more heavily at te beggiing of the game.
+     * These weights are counted more heavily at te beginning of the game.
      * @return lookup of position scores.
      */
-    private float[][] createPositionalScoreArray()
-    {
+    private float[][] createPositionalScoreArray() {
         int numRows = board_.getNumRows();
         int numCols = board_.getNumCols();
         int row, col, rowmin, colmin;
@@ -99,7 +97,7 @@ public final class PositionalScoreAnalyzer
      * @return the score contribution from a single point on the board
      */
     private PositionalScore calcPositionalScore(GoBoardPosition position, ParameterArray weights,
-                                                       double positionalScore) {
+                                                double positionalScore, double gameStageBoost) {
 
         PositionalScore score = new PositionalScore();
 
@@ -107,7 +105,7 @@ public final class PositionalScoreAnalyzer
             updateEyePointScore(score, position);
         }
         else if (position.isOccupied()) {
-            updateNormalizedOccupiedPositionScore(score, position, weights, positionalScore);
+            updateNormalizedOccupiedPositionScore(score, position, weights, positionalScore, gameStageBoost);
         }
 
         score.calcPositionScore();
@@ -131,7 +129,8 @@ public final class PositionalScoreAnalyzer
      * Normalize each of the scores by the game weights.
      */
     private void updateNormalizedOccupiedPositionScore(PositionalScore score, GoBoardPosition position,
-                                                     ParameterArray weights, double positionalScore) {
+                                                      ParameterArray weights, double positionalScore,
+                                                      double gameStageBoost) {
         GoStone stone = (GoStone)position.getPiece();
 
         int side = position.getPiece().isOwnedByPlayer1()? 1: -1;
@@ -141,10 +140,11 @@ public final class PositionalScoreAnalyzer
         double totalWeight = badShapeWt + positionalWt + healthWt;
 
         // penalize bad shape like empty triangles
-        score.badShapeScore = -(side * shapeAnalyzer_.formsBadShape(position) * badShapeWt) / totalWeight;
+        score.badShapeScore =
+                -(side * shapeAnalyzer_.formsBadShape(position) * badShapeWt) / totalWeight;
 
         // Usually a very low weight is assigned to where stone is played unless we are at the start of the game.
-        score.posScore = side * positionalWt * positionalScore / totalWeight;
+        score.posScore = side * positionalWt * gameStageBoost * positionalScore / totalWeight;
         score.healthScore =  healthWt * stone.getHealth() / totalWeight;
 
         if (GameContext.getDebugMode() > 1)  {

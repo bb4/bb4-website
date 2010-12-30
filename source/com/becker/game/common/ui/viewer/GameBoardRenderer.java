@@ -252,8 +252,7 @@ public abstract class GameBoardRenderer {
     /**
      * This renders the current state of the Board to the screen.
      */
-    public void render( Graphics g, IGameController controller, int panelWidth, int panelHeight )
-    {
+    public void render( Graphics g, IGameController controller, int panelWidth, int panelHeight ) {
         Board board = controller.getBoard();
         cellSize_ = calcCellSize( board, panelWidth, panelHeight );
 

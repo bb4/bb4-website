@@ -8,6 +8,7 @@ import com.becker.game.twoplayer.common.TwoPlayerSearchable;
 import com.becker.game.twoplayer.common.search.options.SearchOptions;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.PositionalScore;
+import com.becker.game.twoplayer.go.board.analysis.GameStageBoostCalculator;
 import com.becker.game.twoplayer.go.board.analysis.PositionalScoreAnalyzer;
 import com.becker.game.twoplayer.go.board.update.DeadStoneUpdater;
 import com.becker.optimization.parameter.ParameterArray;
@@ -23,7 +24,6 @@ import static com.becker.game.twoplayer.go.GoControllerConstants.WIN_THRESHOLD;
  *
  * @author Barry Becker
  */
-
 public class GoSearchable extends TwoPlayerSearchable {
 
     private static final int CRITICAL_GROUP_SIZE = 4;
@@ -168,13 +168,15 @@ public class GoSearchable extends TwoPlayerSearchable {
         GoBoard board = (GoBoard)board_;
         // adjust for board size - so worth will be comparable regardless of board size.
         double scaleFactor = 361.0 / Math.pow(board.getNumRows(), 2);
-        double gameStageBoost = getGameStageBoost();
+        GameStageBoostCalculator gameStageBoostCalc_= new GameStageBoostCalculator(board.getNumRows());
+        double gameStageBoost = gameStageBoostCalc_.getGameStageBoost(getNumMoves());
 
         PositionalScore totalScore = new PositionalScore();
         for (int row = 1; row <= board.getNumRows(); row++ ) {
             for (int col = 1; col <= board.getNumCols(); col++ ) {
 
-                totalScore.incrementBy(positionalScorer_.determineScoreForPosition(row, col, gameStageBoost, weights));
+                PositionalScore s = positionalScorer_.determineScoreForPosition(row, col, gameStageBoost, weights);
+                totalScore.incrementBy(s);
             }
         }
 
@@ -188,16 +190,6 @@ public class GoSearchable extends TwoPlayerSearchable {
         }
         return worth;
     }
-
-    /**
-     * Opening = 1.99 - 1.5;   middle = 1.5 - 1.01;    end = 1.0
-     * @return a weight for the positional score based on how far along into the game we are.
-     */
-    private double getGameStageBoost() {
-        float n = 2.0f * board_.getNumRows();
-        return 0.5 + 2.0 * Math.max((n - (float)moveList_.getNumMoves())/n, 0.0);
-    }
-
 
     /**
      * @param move last move

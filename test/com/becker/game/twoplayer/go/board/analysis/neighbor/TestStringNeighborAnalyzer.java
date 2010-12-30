@@ -7,9 +7,6 @@ import com.becker.game.twoplayer.go.board.elements.GoBoardPosition;
 import com.becker.game.twoplayer.go.board.elements.GoBoardPositionList;
 import junit.framework.Assert;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Verify that all our neighbor analysis methods work.
  * @author Barry Becker

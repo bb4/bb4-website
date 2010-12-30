@@ -1,6 +1,7 @@
 package com.becker.game.twoplayer.common.ui.gametree;
 
 import com.becker.game.common.GameContext;
+import com.becker.game.common.Move;
 import com.becker.game.twoplayer.common.TwoPlayerController;
 import com.becker.game.twoplayer.common.TwoPlayerMove;
 import com.becker.game.twoplayer.common.TwoPlayerViewable;
@@ -118,7 +119,7 @@ public final class GameTreeMotionListener implements MouseMotionListener {
 
         SearchTreeNode nextNode = finalNode.getExpectedNextNode();
         while (nextNode !=  null)  {
-            TwoPlayerMove m = ((TwoPlayerMove)nextNode.getUserObject()).copy();
+            TwoPlayerMove m = (TwoPlayerMove)((Move)nextNode.getUserObject()).copy();
             m.setFuture(true);
             moveList.add(m);
             nextNode = nextNode.getExpectedNextNode();
