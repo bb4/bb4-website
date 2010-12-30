@@ -21,12 +21,12 @@ import java.awt.geom.Point2D;
 public abstract class GamePieceRenderer
 {
 
-    protected static final Font BASE_FONT = new Font( "Sans-serif", Font.PLAIN, 11 );
+    protected static final Font BASE_FONT = new Font( "Sans-serif", Font.PLAIN, 12 );
 
     protected static final Point2D.Double SPEC_HIGHLIGHT_RADIUS = new Point2D.Double( 0, 7 );
 
-    // use static to avoid creating a lot of new objects.
-    private static Point position_ = new Point(0,0);
+    /** use static to avoid creating a lot of new objects. */
+    private static final Point position_ = new Point(0,0);
 
 
     /**

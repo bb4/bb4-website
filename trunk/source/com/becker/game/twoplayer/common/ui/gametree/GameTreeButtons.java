@@ -53,8 +53,7 @@ class GameTreeButtons extends JPanel implements ActionListener {
     /**
      * called when the ok button is clicked.
      */
-    private void pause()
-    {
+    private void pause() {
         // if we set the root to null, then it doesn't have to build the tree
         pauseButton_.setEnabled(false);
         continueButton_.setEnabled(true);
@@ -67,8 +66,7 @@ class GameTreeButtons extends JPanel implements ActionListener {
     /**
      * called when the ok button is clicked.
      */
-    private void step()
-    {
+    private void step() {
         mainController_.get2PlayerViewer().step();
         gameTreeDlg_.showCurrentGameTree();
     }
@@ -76,8 +74,7 @@ class GameTreeButtons extends JPanel implements ActionListener {
     /**
      * called when the ok button is clicked.
      */
-    private void continueProcessing()
-    {
+    private void continueProcessing() {
         GameContext.log(1,  "continue" );
         pauseButton_.setEnabled(true);
         continueButton_.setEnabled(false);
@@ -88,8 +85,7 @@ class GameTreeButtons extends JPanel implements ActionListener {
     /**
      * called when one of the buttons at the bottom have been pressed.
      */
-    public void actionPerformed( ActionEvent e )
-    {
+    public void actionPerformed( ActionEvent e ) {
         Object source = e.getSource();
         if ( source.equals(pauseButton_) ) {
             pause();

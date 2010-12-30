@@ -1,8 +1,6 @@
 package com.becker.game.twoplayer.go.board.analysis.neighbor;
 
 import com.becker.game.twoplayer.go.GoTestCase;
-import com.becker.game.twoplayer.go.board.analysis.group.TestGroupHealthAnalyzer;
-import com.becker.game.twoplayer.go.board.analysis.group.TestLifeAnalyzer;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -20,6 +18,7 @@ public class TestAll extends GoTestCase {
 
         TestSuite suite =  new TestSuite("Neighbor Tests");
 
+        suite.addTestSuite(TestGameStateBoostCalculator.class);
         suite.addTestSuite(TestNeighborAnalyzer.class);
         suite.addTestSuite(TestNobiNeighborAnalyzer.class);
         suite.addTestSuite(TestStringNeighborAnalyzer.class);

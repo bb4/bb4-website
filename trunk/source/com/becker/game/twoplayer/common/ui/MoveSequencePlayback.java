@@ -76,7 +76,7 @@ class MoveSequencePlayback {
     }
 
     /**
-     * Perform the specified sequnce of moves.
+     * Perform the specified sequence of moves.
      * @param moveSequence the sequence of consecutive moves to play on the board.
      */
     private synchronized void performMoveSequence(List moveSequence) {

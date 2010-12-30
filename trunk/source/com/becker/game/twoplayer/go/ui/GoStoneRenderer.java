@@ -43,7 +43,7 @@ public final class GoStoneRenderer extends TwoPlayerPieceRenderer
 
     private static final float[] scaleFactors_ = {1.0f, 1.0f, 1.0f, 1.0f};
     private static final float[] OFFSETS = {0.0f, 0.0f, 0.0f, 0.0f};
-    private static final Font ANNOTATION_FONT = new Font( "Sans-serif", Font.BOLD, 14 );
+    private static final Font ANNOTATION_FONT = new Font( "Sans-serif", Font.BOLD, 16 );
 
     /**
      * protected constructor because this class is a singleton.
@@ -86,7 +86,7 @@ public final class GoStoneRenderer extends TwoPlayerPieceRenderer
 
 
     /**
-     * this draws the actual piece
+     * This draws the actual piece.
      * Draws the go stone as an image.
      * Apply a RescaleOp filter to adjust the transparency if need be.
      *
@@ -105,7 +105,7 @@ public final class GoStoneRenderer extends TwoPlayerPieceRenderer
                 GameContext.log(0, "error score too big ="+score);
             }
             Color c = new Color(pc.getRed(), pc.getGreen(), pc.getBlue(),
-                         Math.min(255, op));    // @@ should not need min
+                         Math.min(255, op));
             g2.setColor(c);
             g2.fillRect(margin + cellSize*(position.getCol()-1),
                         margin + cellSize*(position.getRow()-1),
@@ -113,8 +113,14 @@ public final class GoStoneRenderer extends TwoPlayerPieceRenderer
         }
 
         GoStone stone = (GoStone)position.getPiece();
-        if (stone == null)
-            return; // nothing to render
+        if (stone != null) {
+            boolean inAtari = stonePos.isInAtari((GoBoard)board);
+            drawStone(g2, position, cellSize, margin, inAtari, stone);
+        }
+    }
+
+    private void drawStone(Graphics2D g2, BoardPosition position, int cellSize, int margin, boolean inAtari,
+                       GoStone stone) {
         int pieceSize = getPieceSize(cellSize, stone);
         Point pos = getPosition(position, cellSize, pieceSize, margin);
         float transp = stone.getTransparency();
@@ -127,15 +133,17 @@ public final class GoStoneRenderer extends TwoPlayerPieceRenderer
         }
         g2.drawImage(img, pos.x, pos.y, pieceSize, pieceSize , null);
 
-        if (GameContext.getDebugMode() > 0 && stonePos.isInAtari((GoBoard)board)) {
+        if (GameContext.getDebugMode() > 0 && inAtari) {
             g2.setColor(ATARI_COLOR);
             g2.fillOval(pos.x, pos.y, ATARI_MARKER_RADIUS, ATARI_MARKER_RADIUS);
         }
         if ( stone.getAnnotation() != null ) {
             int offset = (cellSize - pieceSize) >> 1;
-            g2.setColor( stone.isOwnedByPlayer1()? Color.WHITE : Color.BLACK );
             g2.setFont( ANNOTATION_FONT );
+            g2.setColor( stone.isOwnedByPlayer1()? Color.WHITE: Color.BLACK);
             g2.drawString( stone.getAnnotation(), pos.x + 2*offset, pos.y + 4*offset);
+            g2.setColor( stone.isOwnedByPlayer1()? Color.BLACK : Color.WHITE);
+            g2.drawString( stone.getAnnotation(), pos.x + 2*offset + 1, pos.y + 4*offset);
         }
     }
 
