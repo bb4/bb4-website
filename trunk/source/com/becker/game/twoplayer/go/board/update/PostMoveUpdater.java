@@ -2,7 +2,6 @@ package com.becker.game.twoplayer.go.board.update;
 
 import com.becker.game.common.GameContext;
 import com.becker.game.twoplayer.go.GoMove;
-import com.becker.game.twoplayer.go.GoProfiler;
 import com.becker.game.twoplayer.go.board.GoBoard;
 import com.becker.game.twoplayer.go.board.GoCaptureList;
 import com.becker.game.twoplayer.go.board.analysis.neighbor.NeighborType;

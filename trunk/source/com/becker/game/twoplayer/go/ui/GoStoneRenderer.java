@@ -49,8 +49,7 @@ public final class GoStoneRenderer extends TwoPlayerPieceRenderer
      * protected constructor because this class is a singleton.
      * Use getPieceRenderer instead
      */
-    private GoStoneRenderer()
-    {}
+    private GoStoneRenderer() {}
 
     public static TwoPlayerPieceRenderer getRenderer() {
         if (renderer_ == null)
@@ -75,7 +74,7 @@ public final class GoStoneRenderer extends TwoPlayerPieceRenderer
     }
 
     /**
-     * @return  the image to show for the graphical represention of the go stone
+     * @return  the image to show for the graphical representation of the go stone
      */
     private static Image getImage(GoStone stone) {
         if (stone.isDead())
@@ -83,7 +82,6 @@ public final class GoStoneRenderer extends TwoPlayerPieceRenderer
         else
             return (stone.isOwnedByPlayer1() ? BLACK_STONE_IMG.getImage(): WHITE_STONE_IMG.getImage());
     }
-
 
     /**
      * This draws the actual piece.
@@ -97,19 +95,7 @@ public final class GoStoneRenderer extends TwoPlayerPieceRenderer
     public void render( Graphics2D g2, BoardPosition position, int cellSize, int margin, Board board) {
         GoBoardPosition stonePos = (GoBoardPosition)position;
         if (GameContext.getDebugMode() > 0)  {
-            //  as a debugging aid draw the background as a function of the territorial score (-1 : 1)
-            double score = ((GoBoardPosition)position).getScoreContribution();
-            Color pc = (score > 0? PLAYER1_STONE_COLOR : PLAYER2_STONE_COLOR);
-            int op = (int)((100 * Math.abs(score)));
-            if (op > 255) {
-                GameContext.log(1, "error: score too big ="+score + "\n");
-            }
-            Color c = new Color(pc.getRed(), pc.getGreen(), pc.getBlue(),
-                         Math.min(255, op));
-            g2.setColor(c);
-            g2.fillRect(margin + cellSize*(position.getCol()-1),
-                        margin + cellSize*(position.getRow()-1),
-                        cellSize, cellSize );
+            drawTerritoryShading(g2, position, cellSize, margin);
         }
 
         GoStone stone = (GoStone)position.getPiece();
@@ -119,6 +105,27 @@ public final class GoStoneRenderer extends TwoPlayerPieceRenderer
         }
     }
 
+    /**
+     * As a debugging aid draw the background as a function of the territorial score (-1 : 1)
+     */
+    private void drawTerritoryShading(Graphics2D g2, BoardPosition position, int cellSize, int margin) {
+        double score = ((GoBoardPosition)position).getScoreContribution();
+        Color pc = (score > 0? PLAYER1_STONE_COLOR : PLAYER2_STONE_COLOR);
+        int op = (int)((100 * Math.abs(score)));
+        if (op > 255) {
+            GameContext.log(1, "error: score too big =" + score + "\n");
+        }
+        Color c = new Color(pc.getRed(), pc.getGreen(), pc.getBlue(),
+                     Math.min(255, op));
+        g2.setColor(c);
+        g2.fillRect(margin + cellSize*(position.getCol()-1),
+                    margin + cellSize*(position.getRow()-1),
+                    cellSize, cellSize );
+    }
+
+    /**
+     * Draw the stone and its decoration.
+     */
     private void drawStone(Graphics2D g2, BoardPosition position, int cellSize, int margin, boolean inAtari,
                        GoStone stone) {
         int pieceSize = getPieceSize(cellSize, stone);
@@ -138,13 +145,20 @@ public final class GoStoneRenderer extends TwoPlayerPieceRenderer
             g2.fillOval(pos.x, pos.y, ATARI_MARKER_RADIUS, ATARI_MARKER_RADIUS);
         }
         if ( stone.getAnnotation() != null ) {
-            int offset = (cellSize - pieceSize) >> 1;
-            g2.setFont( ANNOTATION_FONT );
-            g2.setColor( stone.isOwnedByPlayer1()? Color.WHITE: Color.BLACK);
-            g2.drawString( stone.getAnnotation(), pos.x + 2*offset, pos.y + 4*offset);
-            g2.setColor( stone.isOwnedByPlayer1()? Color.BLACK : Color.WHITE);
-            g2.drawString( stone.getAnnotation(), pos.x + 2*offset + 1, pos.y + 4*offset);
+            drawAnnotations(g2, cellSize, stone, pieceSize, pos);
         }
+    }
+
+    /**
+     * Textual notes on the board position to aid debugging.
+     */
+    private void drawAnnotations(Graphics2D g2, int cellSize, GoStone stone, int pieceSize, Point pos) {
+        int offset = (cellSize - pieceSize) >> 1;
+        g2.setFont( ANNOTATION_FONT );
+        g2.setColor( stone.isOwnedByPlayer1()? Color.WHITE: Color.BLACK);
+        g2.drawString( stone.getAnnotation(), pos.x + 2*offset, pos.y + 4*offset);
+        g2.setColor( stone.isOwnedByPlayer1()? Color.BLACK : Color.WHITE);
+        g2.drawString( stone.getAnnotation(), pos.x + 2*offset + 1, pos.y + 4*offset);
     }
 
 }
