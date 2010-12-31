@@ -114,19 +114,4 @@ public abstract class PostChangeUpdater {
         }
         board_.setGroups(newGroups);
     }
-
-    /**
-     * Remove all the groups in groups_ corresponding to the specified list of stones.
-     * @param stones the stones to remove.
-     */
-    void removeGroupsForListOfStones(List stones) {
-        GoGroupSet groupsCopy = new GoGroupSet(getAllGroups());
-        for (Object stone : stones) {
-            GoBoardPosition nbrStone = (GoBoardPosition) stone;
-            // In the case where the removed stone was causing an atari in a string in an enemy group,
-            // there is a group that does not contain a nbr stone that also needs to be removed here.
-            groupsCopy.remove(nbrStone.getGroup());
-        }
-        board_.setGroups(groupsCopy);
-    }
 }
